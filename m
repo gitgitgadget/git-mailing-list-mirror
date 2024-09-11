@@ -1,130 +1,88 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0DC186607
-	for <git@vger.kernel.org>; Wed, 11 Sep 2024 13:12:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A499819AA75
+	for <git@vger.kernel.org>; Wed, 11 Sep 2024 13:27:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726060338; cv=none; b=jWvNPNCwutfeHoq1/7PxIC9xOUjPyVIEnytt7zye/JHTAaCi0/PG6fX0eJFOR6ew3vG6ezgRFtYN4te3a+cbwva4ZWa9Xh9JPBJsJWbyVfhCFKOGD66cCvGDTUaRC1RuxrDgcR+xkeWRjVWvQ1nEVrYXXofylLMI0lz+M11vlW0=
+	t=1726061238; cv=none; b=MkaynLcLE2vxMvaEUMOsEcdAwN7kczzyYxa2LHcBAECb/TrwRJZiN8znWy+rP687/9K1QBYULSxnbM4pvM6j0ZBabVq8QpfJ0I3G+uQOR7P2LZ938g7RS4Be8IrRhWMLJ9g0BbdhbVGsTw5EG/ZGpoQ7Ys+lstPOwHwcDairfXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726060338; c=relaxed/simple;
-	bh=zOjwczM+4NGfqUp7YH4qlG/VixO/4jfCr1ea3jVjMvY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ldkJl3410nvb9ekfwYCkOtZMvHwJBe+EU9FEdRjnye0x7rrEOhS/MgN89iN+xKtIm2b2H38E7BoLf1mWjpPAsQATNtfLVcoB3k1xP6HxHpvY3AemtCXKS074bb94iR+8Lz5IJYlxnvxO8THH+RJMpLy0e/8p+8DQtXWIgH/D5UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=kMqz4xay; arc=none smtp.client-ip=95.215.58.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1726061238; c=relaxed/simple;
+	bh=M3wSCoRUK0Vhk3d46lyJcz3R+VcEWqOTzitgJ+VxIig=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=qZeVYIKiO9FRcnfVUdaF/Upcx93B71IBE335FDZoH5GNOVg11kSlROi2na93jSYSigBPsnNnnl1PkjKcel7QmevjRCpc43PGDk2lA7Gq636e0k0YWwEKYPvwpBTOEqdret/ILuZ9/+cK76UiJ2DjWrsKlYWUMoeoNNNF/yt+mMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bLTZAoX7; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="kMqz4xay"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1726060329;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WkpsCa4S+CVYETiBBVMIM96VFDxTxiasO0YZQbWRdjM=;
-	b=kMqz4xayFERQjqlbrU6oooadzmvZPXM989m95NdVY0DwgrPwOdzYf3H5Ug80Uc3nN+wGhC
-	ItYqsTMxFhDmu6GpkDwABvGPcrPYrQLTux7y72YApwL4Gd1B5HJkHt4RaUSuH8mBbWjmR3
-	vOpRhLAZG9IBD9AWBhovpnN9f2jrzrs=
-From: Toon Claes <toon@iotcl.com>
-To: Eric Ju <eric.peijian@gmail.com>, git@vger.kernel.org
-Cc: calvinwan@google.com, jonathantanmy@google.com, chriscool@tuxfamily.org,
- eric.peijian@gmail.com, karthik.188@gmail.com, toon@iotcl.com,
- jltobler@gmail.com
-Subject: Re: [PATCH v2 6/6] cat-file: add remote-object-info to batch-command
-In-Reply-To: <20240720034337.57125-7-eric.peijian@gmail.com>
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20240720034337.57125-1-eric.peijian@gmail.com>
- <20240720034337.57125-7-eric.peijian@gmail.com>
-Date: Wed, 11 Sep 2024 15:11:58 +0200
-Message-ID: <87ldzy9vxd.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bLTZAoX7"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-42cb58d810eso5627495e9.0
+        for <git@vger.kernel.org>; Wed, 11 Sep 2024 06:27:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726061234; x=1726666034; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=M3wSCoRUK0Vhk3d46lyJcz3R+VcEWqOTzitgJ+VxIig=;
+        b=bLTZAoX7pxbCnA4V/JedALmT0WmjTf76vgwtOxyGlDP0zybl4RFSs6KPYJrwyRo11T
+         zyL4fhM4oVK4Hv0SpUVkup4NrD9lf4sJAz6L/XpCNN6/Btw2brQ6aqRFEQpINT2qiQPG
+         QAL0Z1XlkDiBORyiNEFpPshakhQROLFORmbIJQVzj4iEOfytvxo2CYuWfGputhjC8OXt
+         vEt05Hq3hWbzqlHyNJy+PNadg3emzDyhqmA2RKZ3VrX1Q7cFW1xd9G8uMWi9qV/lZTZY
+         BMCW6qAwgWLHom92rbKi8vLrr+ZdyrbwRXh2PtWwlS/nu68SrfLdaVl15x+Re8c3lCNd
+         4QyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726061234; x=1726666034;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=M3wSCoRUK0Vhk3d46lyJcz3R+VcEWqOTzitgJ+VxIig=;
+        b=p7brNyqe/Qypd86LGKcdeodhzX/dpMH2T7OwLXQ/Zg86yIQUuCk8xu6Hod+/kspGOf
+         U4Z5Rirn22zqFMLCVoD6AHSzIUUhyMkmu+aVfr4JaYiDLCqtlOo/f74v3JqJEZ5SeaK4
+         LDW/CksRgB2DUBmS6sgJP3Sfk0BWAHls0KoCXOuuQnfaAtf+we4P+du2xuLDJj1slG1D
+         10+jV8JteXoWloQY3bBbMSzMyCYnml87kSe9PM17pCK3uli96QXlP/G9r0LlMnjXKhvy
+         oA1VcGOLYXmKPjCjvT0VjjH6UWYObewkDSDGRSoyjLWCWd3FqPkJzDnbnSVBNb5MpBlF
+         1ong==
+X-Forwarded-Encrypted: i=1; AJvYcCXf+V8uDyPNMktiKEJREsbgR1uCm8itNnVEA+1MA/amary4V2u1k2zrd+z/4/j4swU9tKg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXu/JkJHyENjDDaHukPrg3KKOTk+bZuh56C5XxvMrWHnFMU0x9
+	A8ZPPP5CBi1dKQun39xXzWYOgtBejuNChKJNQsDNaOcJi1R80Bun
+X-Google-Smtp-Source: AGHT+IEJl3qV8SrZJdhOK5gyplo/8YIdIVm68sTj0GtEmrXBZqk2gOIzg5kBvW3Ft++VPmm4Ax1NuQ==
+X-Received: by 2002:a05:6000:144e:b0:374:c7cd:8818 with SMTP id ffacd0b85a97d-378a8a7aabemr4849596f8f.22.1726061233097;
+        Wed, 11 Sep 2024 06:27:13 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9? ([2a0a:ef40:6d3:8001:7151:e3a9:f71b:e7d9])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42cb116f44esm135040715e9.45.2024.09.11.06.27.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Sep 2024 06:27:12 -0700 (PDT)
+Message-ID: <4c4f51c7-62d9-4257-b072-d2d2b5a8baa2@gmail.com>
+Date: Wed, 11 Sep 2024 14:27:11 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [ANNOUNCE] Outreachy mentor sign-up deadline is Wednesday
+ September 11th at 4pm UTC
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: Christian Couder <christian.couder@gmail.com>, git <git@vger.kernel.org>,
+ Git at SFC <git@sfconservancy.org>, Taylor Blau <me@ttaylorr.com>,
+ Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+ Tilda Udufo - Outreachy Organizer <organizers@outreachy.org>
+References: <CAP8UFD10B4ROEjvP7MPygALuUFgyBQqZVhAjgSUris3cdiowsQ@mail.gmail.com>
+ <Zt6pbMP3Rpjy-pC_@pks.im> <Zt6rC7TtUvxWGXN-@pks.im>
+ <ecf84ea5-2f4a-4a80-b7d4-0198f2fd6ee8@gmail.com> <ZuFju0xlybZ_6Ps5@pks.im>
+Content-Language: en-US
+In-Reply-To: <ZuFju0xlybZ_6Ps5@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Eric Ju <eric.peijian@gmail.com> writes:
+On 11/09/2024 10:32, Patrick Steinhardt wrote:
+> On Tue, Sep 10, 2024 at 07:31:44PM +0100, phillip.wood123@gmail.com wrote:
+> Thanks. I've created the project and invited you as a co-mentor.
 
-[snip]
+Thanks for that, I've filled out the form to sign up as a co-mentor.
 
-> diff --git a/t/t1017-cat-file-remote-object-info.sh b/t/t1017-cat-file-remote-object-info.sh
-> new file mode 100755
-> index 0000000000..64eb55bd9e
-> --- /dev/null
-> +++ b/t/t1017-cat-file-remote-object-info.sh
-> @@ -0,0 +1,748 @@
-> +#!/bin/sh
-> +
-> +test_description='git cat-file --batch-command with remote-object-info command'
-> +
-> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +
-> +. ./test-lib.sh
-> +
-> +echo_without_newline () {
-> +    printf '%s' "$*"
-> +}
-> +
-> +echo_without_newline_nul () {
-> +    echo_without_newline "$@" | tr '\n' '\0'
-> +}
-> +
-> +strlen () {
-> +    echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
-> +}
-> +
-> +hello_content="Hello World"
-> +hello_size=$(strlen "$hello_content")
-> +hello_oid=$(echo_without_newline "$hello_content" | git hash-object --stdin)
-> +
-> +# This is how we get 13:
-> +# 13 = <file mode> + <a_space> + <file name> + <a_null>, where
-> +# file mode is 100644, which is 6 characters;
-> +# file name is hello, which is 5 characters
-> +# a space is 1 character and a null is 1 character
-> +tree_size=$(($(test_oid rawsz) + 13))
-> +
-> +commit_message="Initial commit"
-> +
-> +# This is how we get 137:
-> +# 137 = <tree header> + <a_space> + <a newline> +
-> +# <Author line> + <a newline> +
-> +# <Committer line> + <a newline> +
-> +# <a newline> +
-> +# <commit message length>
-> +# An easier way to calculate is: 1. use `git cat-file commit <commit hash> | wc -c`,
-> +# to get 177, 2. then deduct 40 hex characters to get 137
-> +commit_size=$(($(test_oid hexsz) + 137))
-> +
-> +tag_header_without_oid="type blob
-> +tag hellotag
-> +tagger $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
-> +tag_header_without_timestamp="object $hello_oid
-> +$tag_header_without_oid"
-> +tag_description="This is a tag"
-> +tag_content="$tag_header_without_timestamp 0 +0000
-> +
-> +$tag_description"
-> +
-> +tag_oid=$(echo_without_newline "$tag_content" | git hash-object -t tag --stdin -w)
-> +tag_size=$(strlen "$tag_content")
-> +
-> +set_transport_variables () {
-> +	hello_sha1=$(echo_without_newline "$hello_content" | git hash-object --stdin)
-> +	tree_sha1=$(git -C "$1" write-tree)
-> +	commit_sha1=$(echo_without_newline "$commit_message" | git -C "$1" commit-tree $tree_sha1)
-> +	tag_sha1=$(echo_without_newline "$tag_content" | git -C "$1" hash-object -t tag --stdin -w)
-
-I see here and various other places in this file names with "_sha1". I
-think it makes more sense to name them "_oid" because these works also
-fine with GIT_TEST_DEFAULT_HASH=sha256.
-
-Other than that I don't have any comments about this patch series.
-
---
-Toon
+Phillip
