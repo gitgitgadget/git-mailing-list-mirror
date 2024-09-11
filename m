@@ -1,62 +1,62 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485A9184530
-	for <git@vger.kernel.org>; Wed, 11 Sep 2024 10:31:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA12184547
+	for <git@vger.kernel.org>; Wed, 11 Sep 2024 10:31:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726050686; cv=none; b=V0Lk0IiC1JDt7KXWFlfhrUYM0W/LO3A5eJ9zj81cwpElK3dp/4ef/17rdIONwlAY1/10K4qW6YZ3VgPB5Q79Z/7oGxxUYD86SzLMIRN6p1+pMwnjr2NZ1gEcatO/xMp4Zu8Po33WalSzfzVxZhisGQm9qYg1WVSS4xL6f/qRPFg=
+	t=1726050689; cv=none; b=cjxOScSBQJwpW5RbYlHhJma9lEgG8/Ppn6+LpJTyY2BooEjWDcA1IDxPqZOXDl6q1AN+Lqc50v9cKGl6eJntRcoW29Nc97FhY9VuhPTcAf+VyPzMMuWZd97A3S2F9f2zKtICv7fumLNUjaQpOLYkPzdoz1tL0gL2S3jzWfCGdH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726050686; c=relaxed/simple;
-	bh=Ekp8LomQXDCqDMS3BG+MY46KEUv/iAvBgpRRQ8rqKvY=;
+	s=arc-20240116; t=1726050689; c=relaxed/simple;
+	bh=Am++b4Ca1iMRDF2e2Z/zEP5fyfCTP8LABGo7lO31ihY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PWwZWRvySIm8aODUgP2d+0lF4QO1rGfjCo2QwuGuSyLxsL6Z1uHqkd8Xqac0ITcL9c7lAgcd9JieIHymdDds3AGRhDNJu5cs68bEODS5mn/XymLKNZ6N9/6M90N6OU/Cy5eWrbxq6MvO8k1jPAVpisMAvYDsgPHP0QSS7BdI5CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OV0XVXF7; arc=none smtp.client-ip=209.85.208.181
+	 MIME-Version:Content-Type; b=Z1wBNuylEYTZk7enp0AZIeRpbNqxkcYgG1QnhKuJ3l8mgwN9ERlT/b+Ir/PcTejNMWRGlSQrcBJ1Q2hmgEfnzckipel6COe16fpJhYg3OXgte/qV7v9xJePY37gJmpD+PpQtxF66TIrPc4vtzF8t63y2SOZoD8mkMEmsqsuoW+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TR14JU89; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OV0XVXF7"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2f75c56f16aso22715061fa.0
-        for <git@vger.kernel.org>; Wed, 11 Sep 2024 03:31:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TR14JU89"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2f75d044201so7308641fa.0
+        for <git@vger.kernel.org>; Wed, 11 Sep 2024 03:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726050683; x=1726655483; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1726050685; x=1726655485; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WM9TQVT3TZDQVQtvbnXzD2RT9g2CidwjvvPlHATKXaw=;
-        b=OV0XVXF7f0M4TMIG6Lg/rbTt5Vg19KXhrVaCCXUrvTEoG59gb6BjB5Gj9t7J1gNl8s
-         vxdbag4ENWrKuT1gtJ16AKZZ2290x/hCMudLivwpIkQM+YPWmMtCbp8sCHvrNVRGq//M
-         wUqfFoz/DH2wSRvqHLz2gKKKaCaPs8dY3CTq72uYcUKVkkMbNDBgx92J0s2gCxdD1ChI
-         L0n05qibi14O+GqH5EIP4nbgXRy8YlnlAPhhSvCFUwuArWaLMjwM/kJB4bSvyuf6pN2p
-         eZ0uwzNdM8yrLhoyHsWjn2x0UEYmvbQ9V5ZS0LGKL8Wwf66goCaVupiWdjC82+Ec5Dd7
-         8P4w==
+        bh=fOEuk0AgbYmXu6mSU/a6aI1cHpOl976ONyPQaRXfVC8=;
+        b=TR14JU897nepnkA8fI7eKPpYexTy3EXN7NjffTt6YcsZFMdTURVijDro499/OGAs8V
+         IRyinWN9p7TaedgXNZEqmodryeGgoBQFQS62xFslcACGJD9Gjcg5oceWE1lyj3pBscJE
+         Db4r/pknXwkze+LUBbxw/4GDvJ0zuLB0NxN3myhAHKzgOE3/m4lW1ZaUSCwHoJ9+eMfl
+         PiWqIU4eLOFjl328OHuiipyYAeNrB/SXoKaCFh02rAsG3bWk+40+ZEmMAvjA656UDR3j
+         6H+RQFZhaTEPKBIGjfNsnqg6Dp8d85Nl7guKq5ElXmU18MMlidColdu7SY93cmYysxhq
+         VzTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726050683; x=1726655483;
+        d=1e100.net; s=20230601; t=1726050685; x=1726655485;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WM9TQVT3TZDQVQtvbnXzD2RT9g2CidwjvvPlHATKXaw=;
-        b=UTgfupvs6bdMVjButRMF2NuqKH0NC/zVVU+SFAEFglfElcVSmyNcs6Y0Jv1z+GWyON
-         0LGUIGcXW1M+EMmpEAfwryMIBt6ne7NnqqOpvdkgnP5ZK/hE7zNzaO2Y0hWGOTiKaML9
-         XJsnb3eAx4R4cs1bkhowPHdM1ZTLA++a6tv1FImXWxFb48Wj1qE+xYscZj/g2de0Vi4f
-         fCxU0EpFRIaD61hhL/mxEhHRo7dPGDsM9yXOuyjTwdwgFmamG242r0FogvJ6Ubr6iSti
-         9BeX5b3V3rAkjt/iMwRy33FDJ9Hj//4rxuSJFLjrNosdRpJy/bgdfpt/ZO2OIt4iPZU3
-         XhRg==
-X-Gm-Message-State: AOJu0Yx/A6H5KBTQfaM0wJtR0gXE3qzIUOTfdh0RpyFC7OCUvzGKVlZN
-	6txSx7LpaBpYkaf2ALpk4g3Nqy+Hsjo8Jh3n8Pn+34/DnuSqSX41lFbpyw==
-X-Google-Smtp-Source: AGHT+IHCik/1e3o9ONP8/N5AERbbm1Ub7e/QsaucJ2IBhkNFTDXfA9WTcPqH0OWd96eLOgo/2Xn7bg==
-X-Received: by 2002:a2e:a98a:0:b0:2ef:1d8d:2201 with SMTP id 38308e7fff4ca-2f77b7781b0mr17281911fa.23.1726050682124;
-        Wed, 11 Sep 2024 03:31:22 -0700 (PDT)
+        bh=fOEuk0AgbYmXu6mSU/a6aI1cHpOl976ONyPQaRXfVC8=;
+        b=HGw3K1rheBvcGw63/RZssUzqDiFGpNP/dc3guYW3dGBGSynRIHJkqwFs/rJ/5yEiRt
+         6X8eGxBOworh6VMajhFN8qIjCKo86c+/kAFtRIcdU0z4b8nIejTcYAbyD6ZPIINLq37c
+         g67rd1QrJlQ6yUbFKsT4ZECQJw/5PzmaULeyh8H+hs8f33N20IACBAir5Zd6F+FOEeI+
+         N2BjeGcslmYldakP/RKWBsE4ZG2Z5sl+bJt0eUuqvsX1sQtVQPAgBDKUTXv59Wuok7AV
+         LwT9dibKsKZDGCPWqkF31AGgyHel9poX9a64Yg5+Gb2sYmXUM5JgtbEWoSLKkuSk8Ykg
+         Vo1Q==
+X-Gm-Message-State: AOJu0Yxg5rTHGz6hFbrcuOP9wVjyD0z5xho1yVCnDVDO408RKx8Ksfgz
+	zaRYhyZ2Qf7DVh+EX74GrtW2zmE99rzCqlAw+hCJulBgjszgWANmkGxY1g==
+X-Google-Smtp-Source: AGHT+IE2uoDG46bCIZZ8eIFkYTpOLoGeH6S4vCLeTX6j3kacuwvFOFreqUkhfiA/iFO5ebrl3jYASQ==
+X-Received: by 2002:a05:651c:503:b0:2ef:2843:4135 with SMTP id 38308e7fff4ca-2f7726fb3edmr21248991fa.22.1726050685216;
+        Wed, 11 Sep 2024 03:31:25 -0700 (PDT)
 Received: from localhost.localdomain (78-67-21-133-no600.tbcn.telia.com. [78.67.21.133])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f75c07c81bsm14853871fa.76.2024.09.11.03.31.21
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f75c07c81bsm14853871fa.76.2024.09.11.03.31.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Sep 2024 03:31:21 -0700 (PDT)
+        Wed, 11 Sep 2024 03:31:24 -0700 (PDT)
 From: =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2] t1517: add missing LIBCURL prereq
-Date: Wed, 11 Sep 2024 12:30:59 +0200
-Message-ID: <55d45be1d6775a630b9f61487b6b60efab9c7769.1726049108.git.martin.agren@gmail.com>
+Cc: Jeff Hostetler <jeffhostetler@github.com>
+Subject: [PATCH 2/2] t0211: add missing LIBCURL prereq
+Date: Wed, 11 Sep 2024 12:31:00 +0200
+Message-ID: <4f749b283be03e11af30e6ad14909c22834dc3e5.1726049108.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.46.0.733.g1eb83ef1a1
 In-Reply-To: <cover.1726049108.git.martin.agren@gmail.com>
 References: <cover.1726049108.git.martin.agren@gmail.com>
@@ -69,31 +69,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-After building Git with NO_LIBCURL, there is no `git remote-http`, so
-it's not meaningful to test that it can run outside of a repository.
-Indeed, that test will fail. Add the LIBCURL prereq to it.
+After building Git with NO_LIBCURL, we're lacking `git remote-http` and
+`git http-fetch`, so when we test that they trace as they should, we're
+bound to fail. Add the LIBCURL prereq to those tests.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- This is from b25ec8b8d5 (t1517: more coverage for commands that work
- without repository, 2024-05-31), which first appeared in 2.46.0.
+ This is from around 6111252cbf (trace2: emit 'def_param' set with
+ 'cmd_name' event, 2024-03-07), which first appeared in 2.45.0.
 
- t/t1517-outside-repo.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t0211-trace2-perf.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index 990a036582..342defbb61 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -98,7 +98,7 @@ test_expect_success 'stripspace outside repository' '
- 	nongit git stripspace -s </dev/null
- '
+diff --git a/t/t0211-trace2-perf.sh b/t/t0211-trace2-perf.sh
+index 070fe7a5da..dddc130560 100755
+--- a/t/t0211-trace2-perf.sh
++++ b/t/t0211-trace2-perf.sh
+@@ -337,7 +337,8 @@ test_expect_success 'expect def_params for query command' '
+ # remote-curl.c rather than git.c.  Confirm that we get def_param
+ # events from both layers.
+ #
+-test_expect_success 'expect def_params for remote-curl and _run_dashed_' '
++test_expect_success LIBCURL \
++		'expect def_params for remote-curl and _run_dashed_' '
+ 	test_when_finished "rm prop.perf actual" &&
  
--test_expect_success 'remote-http outside repository' '
-+test_expect_success LIBCURL 'remote-http outside repository' '
- 	test_must_fail git remote-http 2>actual &&
- 	test_grep "^error: remote-curl" actual &&
- 	(
+ 	test_config_global "trace2.configParams" "cfg.prop.*" &&
+@@ -366,7 +367,8 @@ test_expect_success 'expect def_params for remote-curl and _run_dashed_' '
+ # an executable built from http-fetch.c.  Confirm that we get
+ # def_param events from both layers.
+ #
+-test_expect_success 'expect def_params for http-fetch and _run_dashed_' '
++test_expect_success LIBCURL \
++		'expect def_params for http-fetch and _run_dashed_' '
+ 	test_when_finished "rm prop.perf actual" &&
+ 
+ 	test_config_global "trace2.configParams" "cfg.prop.*" &&
 -- 
 2.46.0.733.g1eb83ef1a1
 
