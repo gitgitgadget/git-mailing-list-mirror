@@ -1,135 +1,185 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4047224CC
-	for <git@vger.kernel.org>; Wed, 11 Sep 2024 16:22:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559A51AC8B9
+	for <git@vger.kernel.org>; Wed, 11 Sep 2024 17:03:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726071769; cv=none; b=ctdDTSLARXu0Xp3J/jComg7zzgHbvLWfvEHpUTk32QLg/RaFjiimh1xq2R1e+l9wMz063ESW5McUJdLgEuVwh1WrUg8NZq3RMIXrSc8DAj8ObHppJdKR1Jb1T4jAfX9ws+MiGjXz7eGYWgQoNdA05WyvrCYE2V68XaFbTBfjx/0=
+	t=1726074210; cv=none; b=nuomw/Yl8d93QCm4yBft69zFzNMJ7TVZa7B7AyKfsUy8fOmez1YrX2C5S7IgmyKmnJEV4rHrOCjOoNWNKW1E6rYtoDCI+M+bS6JJfhwCWuUiWWoKHgt26uOByH4Er9hvpEmzYbHg9xLTFpWhP7NiG2+HPKDJpwBPhrfnhnsFNOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726071769; c=relaxed/simple;
-	bh=4F33lt0svyt2Ej26T7kNvvUy6OTUk3uVfQP8CTvwwPQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L4hw8+seAIF1WQBnd4qHOPTnZB/P3psgVuCoY9WqKxL4pjh6GFxqI8preXsFPaffH7lJDgVLZiEAolK/kE3w5hrnDeRz77uNgmlVdm6f51gsU6gycKj7dZdSqNal4wXD4fvzmzIvSXgmrUkU5T0/Y8sdlLpXkpc70HCw5q0sbHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=afGT3Uvr; arc=none smtp.client-ip=209.85.210.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726074210; c=relaxed/simple;
+	bh=eGBChvGJS/kOLPJLkfJm8kb4xg0jfY0Lud8VJeqvx9g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sy6+gT3SPXAxhOzlrVGfN9p6NWmE0WfFN+4opvy38Hr9qntIo2+XI7rP4meRjAn88Ozls3sUbbOESGXVEpOfYk5Lj0JPEw3p2NowYAWBNRRqqaRjBDTci5YJCB7QSO4s9HMbYSaRoKhpvz6JdExqwJuAGEldMbbPWgiUf3c6GlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=G/1DVPgP; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="afGT3Uvr"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7094641d4e6so3116689a34.3
-        for <git@vger.kernel.org>; Wed, 11 Sep 2024 09:22:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726071767; x=1726676567; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=R4HY3sTulYqr4lie+hdNLvPRlAvNhR8G4GEE0xMblAc=;
-        b=afGT3UvrOiCPUQR1gFIM2uDgYBgFDTcbpHtnWS/bCwcglUmnxSMy4+J3nFWm4mC9Ma
-         M3WkN1gzpHj8hOk7dIJ3CGSeve3METuUZNoyg4YzltbNo5eltogQwLxn4Hmk6jEikPcB
-         +ov+oEXcS/WFA16/BXLSEQCNAdxQoRroEi9RkTXqc7/tq/hX3GZfm3z6IrJ5paWzu/Vs
-         vPiM/KIdWIkbb0aqqsIhStrE46Gef3z9UIVHLundQ2JUVfVnlP4lEPK4dR7afzedK6KM
-         JV8pOEzWtZRftQgUH59rsFHas7+CV3IzbTpvYZDhXsmMyaIoOREFpWePKNPUJn5X69/k
-         6cNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726071767; x=1726676567;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R4HY3sTulYqr4lie+hdNLvPRlAvNhR8G4GEE0xMblAc=;
-        b=N5Z7mPIlkHuSkvNSnRp+70W0PBqauEjAWqVyI1HR14hVDSYP+9qZIoarR82CuYiqEc
-         Pv+HLcbPztEKbjziZ+4KGlDgwB/WRFw1rDYiGUEKdHfDpNiwwilv+k5fVHwNRL7XTEfz
-         s8RxJECRejEf41G54nDSon+97gbfEpCfJK+ZSCagr2dP1UoYaRXJNcbUp9XELC4JUgWg
-         ldcMylmJzJrKdC3kgZM5f0f+t2CbLCCSlYr3pbjj/5pVVewn9+RDgu/wk5h2yXi6Hlo8
-         e777XVXqWi15ik15kBILP0BKq7s0X8JRyJ4O6gXtOfdNZv7fQwVmgWFMI1p0gE6FA9Ap
-         24bQ==
-X-Gm-Message-State: AOJu0YysxPXvm4jdp0B1mGcwt8TWSbkcQHw97/j02BdkRc0VohT3lZgW
-	INldQP/pe7o0WCFyhFHph8uSvg3a9UZ8kBENrDOcYJuw21UnUjyG
-X-Google-Smtp-Source: AGHT+IFC+QQH4hj/WcL0DVaAXh1ZFM2KEnlnJ5dkESm4ywdLIFQ5aAEnaENYkBWubBVAgBZ17w6Emg==
-X-Received: by 2002:a05:6830:7199:b0:710:f1cd:b237 with SMTP id 46e09a7af769-7110956c589mr85485a34.20.1726071766851;
-        Wed, 11 Sep 2024 09:22:46 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-710d9dd6ffbsm2368495a34.72.2024.09.11.09.22.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Sep 2024 09:22:46 -0700 (PDT)
-Date: Wed, 11 Sep 2024 11:21:32 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Calvin Wan <calvinwan@google.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 10/21] environment: make `get_git_namespace()`
- self-contained
-Message-ID: <otvkxgywps6smoib32x4gqiwc4klbjl6qbh66bh6wwwfvb2b2p@22gqczmx3p3e>
-References: <cover.1724923648.git.ps@pks.im>
- <cover.1725008897.git.ps@pks.im>
- <f0d3794dfc44cd4393fd79fab9f60b73cf33db89.1725008898.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="G/1DVPgP"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B4F91B001;
+	Wed, 11 Sep 2024 13:03:28 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=eGBChvGJS/kOLPJLkfJm8kb4xg0jfY0Lud8VJe
+	qvx9g=; b=G/1DVPgPo2w+PT+8WXVaIhedBgolaRm0Etu/UKVUb1l/jA2A7InUgh
+	7a3yb5opUqTG1Oopg+QToNbzrWUGyx6gyMJHzQkdYlo6OvDDyW96kZxj2z6ZM6/p
+	haudGTZ7e1bkNR6udplPddEpe74ocquRRANwbcYTtbk9JA09KlS1M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 115731B000;
+	Wed, 11 Sep 2024 13:03:28 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 56F521AFFF;
+	Wed, 11 Sep 2024 13:03:27 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Han Jiang <jhcarl0814@gmail.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 4/4] remote: check branch names
+In-Reply-To: <dba31245607f85c48947da60fe0955a6ed3e2c43.1726067917.git.gitgitgadget@gmail.com>
+	(Phillip Wood via GitGitGadget's message of "Wed, 11 Sep 2024 15:18:37
+	+0000")
+References: <pull.1789.git.1726067917.gitgitgadget@gmail.com>
+	<dba31245607f85c48947da60fe0955a6ed3e2c43.1726067917.git.gitgitgadget@gmail.com>
+Date: Wed, 11 Sep 2024 10:03:26 -0700
+Message-ID: <xmqqfrq686n5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f0d3794dfc44cd4393fd79fab9f60b73cf33db89.1725008898.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C35F30F0-705F-11EF-AA46-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On 24/08/30 11:09AM, Patrick Steinhardt wrote:
-> The logic to set up and retrieve `git_namespace` is distributed across
-> different functions which communicate with each other via a global
-> environment variable. This is rather pointless though, as the value is
-> always derived from an environment variable, and this environment
-> variable does not change after we have parsed global options.
-> 
-> Convert the function to be fully self-contained such that it lazily
-> populates once called.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-[snip]
-> @@ -229,9 +204,35 @@ int have_git_dir(void)
->  
->  const char *get_git_namespace(void)
->  {
-> -	if (!git_namespace)
-> -		BUG("git environment hasn't been setup");
-> -	return git_namespace;
-> +	static const char *namespace;
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> +static int check_branch_names(const char **branches)
+> +{
+> +	int ret = 0;
 > +
-> +	struct strbuf buf = STRBUF_INIT;
-> +	struct strbuf **components, **c;
-> +	const char *raw_namespace;
-> +
-> +	if (namespace)
-> +		return namespace;
-
-We only initialize `namespace` once and do it lazily when
-`get_git_namespace()` is invoked for the first time. This is nice
-because we can simplify and remove the `git_namespace` global.
-
-Makes sense to me.
-
-> +
-> +	raw_namespace = getenv(GIT_NAMESPACE_ENVIRONMENT);
-> +	if (!raw_namespace || !*raw_namespace) {
-> +		namespace = "";
-> +		return namespace;
+> +	for (const char **b = branches; *b; b++) {
+> +		if (check_refname_format(*b, REFNAME_ALLOW_ONELEVEL |
+> +						REFNAME_REFSPEC_PATTERN))
+> +			ret = error(_("invalid branch name '%s'"), *b);
 > +	}
 > +
-> +	strbuf_addstr(&buf, raw_namespace);
-> +	components = strbuf_split(&buf, '/');
-> +	strbuf_reset(&buf);
-> +	for (c = components; *c; c++)
-> +		if (strcmp((*c)->buf, "/") != 0)
-> +			strbuf_addf(&buf, "refs/namespaces/%s", (*c)->buf);
-> +	strbuf_list_free(components);
-> +	if (check_refname_format(buf.buf, 0))
-> +		die(_("bad git namespace path \"%s\""), raw_namespace);
-> +	strbuf_addch(&buf, '/');
-> +
-> +	namespace = strbuf_detach(&buf, NULL);
-> +
-> +	return namespace;
->  }
+> +	return ret;
+> +}
+
+This implementation is inconsistent with what "git branch new HEAD"
+uses to check the validity of "new", which is in this call chain:
+
+    builtin/branch.c:cmd_branch()
+    -> branch.c:create_branch()
+       -> branch.c:validate_new_branchname()
+          -> branch.c:validate_branchname()
+             -> object-name.c:strbuf_check_branch_ref()
+
+At least, we should prepend "refs/heads/" to *b, so that we can
+reject "refs/heads/HEAD".  The authoritative logic in the above
+however may further evolve, and we need to make sure that these two
+checks from drifting away from each other over time.  We probably
+should refactor the leaf function in the above call chain so that
+both places can use it (the main difference is that you allow '*' in
+yours when calling check_refname_format()).
+
+    Side note: we *should* lose "strbuf_" from its name, as it is
+               not about string manipulation but the "strbuf'-ness
+               of the function is merely that as the side effect of
+               checking it computes a full refname and it happens to
+               use strbuf as a mechanism to return it.
+
+Something like the patch attached at the end.
+
+>  static const char mirror_advice[] =
+>  N_("--mirror is dangerous and deprecated; please\n"
+>     "\t use --mirror=fetch or --mirror=push instead");
+> @@ -203,6 +216,9 @@ static int add(int argc, const char **argv, const char *prefix)
+>  	if (!valid_remote_name(name))
+>  		die(_("'%s' is not a valid remote name"), name);
 >  
->  const char *strip_namespace(const char *namespaced_ref)
-> -- 
-> 2.46.0.421.g159f2d50e7.dirty
-> 
+> +	if (check_branch_names(track.v))
+> +		exit(128);
+> +
+
+Seeing that the loop in check_branch_names() is brand new and you
+could have iterated over a string-list just as easily, I somehow
+doubt that step [3/4] was fully warranted.
+
+> @@ -1601,6 +1617,9 @@ static int set_remote_branches(const char *remotename, const char **branches,
+>  		exit(2);
+>  	}
+>  
+> +	if (check_branch_names(branches))
+> +		exit(128);
+
+But here you are already passed "const char *branches[]" to this caller,
+and it would be hassle to turn it into string_list, so [3/4] is fine
+after all.
+
+
+
+ object-name.h |  2 ++
+ object-name.c | 23 +++++++++++++++++++++--
+ 2 files changed, 23 insertions(+), 2 deletions(-)
+
+diff --git i/object-name.h w/object-name.h
+index 8dba4a47a4..fa70d42044 100644
+--- i/object-name.h
++++ w/object-name.h
+@@ -130,4 +130,6 @@ struct object *repo_peel_to_type(struct repository *r,
+ /* used when the code does not know or care what the default abbrev is */
+ #define FALLBACK_DEFAULT_ABBREV 7
+ 
++/* Check if "name" is allowed as a branch */ 
++int valid_branch_name(const char *name, int allow_wildcard);
+ #endif /* OBJECT_NAME_H */
+diff --git i/object-name.c w/object-name.c
+index 09c1bd93a3..e3bed5a664 100644
+--- i/object-name.c
++++ w/object-name.c
+@@ -1747,7 +1747,8 @@ void strbuf_branchname(struct strbuf *sb, const char *name, unsigned allowed)
+ 	strbuf_add(sb, name + used, len - used);
+ }
+ 
+-int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
++static int full_ref_from_branch_name_internal(struct strbuf *sb, const char *name,
++					      int crf_flags)
+ {
+ 	if (startup_info->have_repository)
+ 		strbuf_branchname(sb, name, INTERPRET_BRANCH_LOCAL);
+@@ -1766,7 +1767,25 @@ int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
+ 	    !strcmp(sb->buf, "refs/heads/HEAD"))
+ 		return -1;
+ 
+-	return check_refname_format(sb->buf, 0);
++	return check_refname_format(sb->buf, crf_flags);
++}
++
++/* NEEDSWORK: rename this to full_ref_from_branch_name */
++int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
++{
++	return full_ref_from_branch_name_internal(sb, name, 0);
++}
++
++int valid_branch_name(const char *name, int allow_wildcard)
++{
++	struct strbuf sb = STRBUF_INIT;
++	int ret;
++	int flags;
++
++	flags = allow_wildcard ? REFNAME_REFSPEC_PATTERN : 0;
++	ret = full_ref_from_branch_name_internal(&sb, name, flags);
++	strbuf_release(&sb);
++	return ret;
+ }
+ 
+ void object_context_release(struct object_context *ctx)
