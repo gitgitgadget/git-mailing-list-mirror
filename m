@@ -1,40 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54C87E110
-	for <git@vger.kernel.org>; Wed, 11 Sep 2024 06:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4922BAE3
+	for <git@vger.kernel.org>; Wed, 11 Sep 2024 06:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726035181; cv=none; b=aGrcb1eo51jrboX+eViYHIyedE33c+Cz0K1ZaiIa1Aeqf+uPs+gNQtww0GmXwZab46DPKW15GE/d4ZN9qSG+4tH81NpjrAnWU8QBHMC0V57S8bVa0vsC7ORMbIt1vnWUw1M/my7UGdXjnoBLdBcKfdiJVi2gvASQdQp9wC3D1v4=
+	t=1726036333; cv=none; b=ft9WG41mGLGgly92eiymmW+r3RDhn2KW64uTS7AE5A1QFWgHmwZtZdjdcXInl9IlZA9BV7TLCNioDc8j6C/j9InzJzDdAOoiAifaFPtQT3PBY0w5Ni4APt6fPI/EpXf3wVqQ/2Jbvj9gPSIWcFjnf/FFzhZJLwGsR71etSNo59A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726035181; c=relaxed/simple;
-	bh=LN2jmgqhd5tj/lgObDSgEVyAXKOIT6nK5IWZp0GO0IM=;
+	s=arc-20240116; t=1726036333; c=relaxed/simple;
+	bh=o3uWZmbVMeWlMdcpRiqdQmVOi/+j1e3tWpTAyrRHQkE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=grBjd/imeEOeAkqdYU/1Q7Ylz/5Qzf6pqcMgDxfsw8HwWWVwFcIFYh9JrPCik8gvsVHu0i9P8C1djrGIHghYCqvhH2+d4TE5PLtV5il+zhXtaGpMdlkEGIKaOBtZkl9HsdPnXrbxgGDzAPj7uifmQ1cWMsMVmmP74IIu1TiBwJ0=
+	 Content-Type:Content-Disposition:In-Reply-To; b=aaie44LY8yB+qMadJkD/fedvvmQF8T9mg2Thq20+nMJXwtSsynu6C/mslnxbQTcftthUp0tOpVgcVrOv2Q0XfEO0NY9+l+yl7abHMWMRJvjgEsfZn6wOz521MaHD8AR4Kk5nM2xtJL0yEzuJ0M2Jl2n3odvNAOXiet+ZXEvkI8U=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 9466 invoked by uid 109); 11 Sep 2024 06:12:58 -0000
+Received: (qmail 9597 invoked by uid 109); 11 Sep 2024 06:32:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Sep 2024 06:12:58 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Sep 2024 06:32:05 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5753 invoked by uid 111); 11 Sep 2024 06:12:57 -0000
+Received: (qmail 5880 invoked by uid 111); 11 Sep 2024 06:32:03 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Sep 2024 02:12:57 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Sep 2024 02:32:03 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 11 Sep 2024 02:12:57 -0400
+Date: Wed, 11 Sep 2024 02:32:03 -0400
 From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 5/9] i5500-git-daemon.sh: use compile-able version of
- Git without OpenSSL
-Message-ID: <20240911061257.GA1538490@coredump.intra.peff.net>
-References: <cover.1725206584.git.me@ttaylorr.com>
- <cover.1725651952.git.me@ttaylorr.com>
- <bfe992765cd562b036cb235dfdddb78f5e662812.1725651952.git.me@ttaylorr.com>
- <20240911061009.GA1538383@coredump.intra.peff.net>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, johannes.schindelin@gmx.de, ps@pks.im,
+	johncai86@gmail.com, newren@gmail.com
+Subject: Re: [PATCH 0/4] pack-objects: create new name-hash algorithm
+Message-ID: <20240911063203.GA1538586@coredump.intra.peff.net>
+References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
+ <xmqqjzfkr9b0.fsf@gitster.g>
+ <0e6dde0f-63e2-4db3-9225-9a8ca5e78eb3@gmail.com>
+ <ZuBeHh7uCfhq2XBB@nand.local>
+ <81139d84-b428-4019-bbd1-cda3206d2d68@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,108 +44,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240911061009.GA1538383@coredump.intra.peff.net>
+In-Reply-To: <81139d84-b428-4019-bbd1-cda3206d2d68@gmail.com>
 
-On Wed, Sep 11, 2024 at 02:10:10AM -0400, Jeff King wrote:
+On Tue, Sep 10, 2024 at 05:05:09PM -0400, Derrick Stolee wrote:
 
->   2. That sets the options for _all_ versions of Git that we build. And
->      it's possible for two versions to require conflicting knobs. E.g.,
->      building with "make NO_OPENSSL=Nope OPENSSL_SHA1=Yes" causes
->      imap-send.c to barf, because it declares a fallback typdef for SSL.
->      This is something we may want to fix, but of course many historical
->      versions are affected, and the interop scripts should be flexible
->      enough to build everything.
+> > I'm not sure which value you'd actually record in the pack, though.
+> > Ideally there is a hash function which captures some information about
+> > the full path as well as the final path component, so we could use a
+> > single value here, though I suspect the implementation would be more
+> > complicated than what is presented here.
+> 
+> Is the name hash stored in the pack itself? I know that it is stored
+> in the 'struct object_entry' data in the packing data. While we could
+> add another uint32_t into that struct to store both hash values, this
+> would increase the memory requirements of repacking by four bytes per
+> object. The struct seemed to be very clear about trying as hard as
+> possible to avoid doing that.
 
-And here's the fix to make this combo work (and likewise, the "fast"
-variant). We'd still want the interop fix for the reasons given above,
-but it feels like one less gotcha for people to hit if they are using
-OPENSSL_SHA1_FAST.
+It's stored in the .bitmap files, since otherwise a pack-objects which
+uses bitmaps to serve a fetch would have no clue of their path names.
+See the "HASH_CACHE" bitmap extension.
 
--- >8 --
-Subject: [PATCH] imap-send: handle NO_OPENSSL even when openssl exists
+You generally don't want to make deltas out of two entries in the bitmap
+(they're already in the same pack, so we'd usually skip them), but you
+do want to consider making on-the-fly deltas against other objects.
 
-If NO_OPENSSL is defined, then imap-send.c defines a fallback "SSL"
-type, which is just a void pointer that remains NULL. This works, but it
-has one problem: it is using the type name "SSL", which conflicts with
-the upstream name, if some other part of the system happens to include
-openssl. For example:
+I guess we may also consider deltas between objects in two packs that
+are both covered by the same midx bitmap.
 
-  $ make NO_OPENSSL=Nope OPENSSL_SHA1=Yes imap-send.o
-      CC imap-send.o
-  imap-send.c:35:15: error: conflicting types for ‘SSL’; have ‘void *’
-     35 | typedef void *SSL;
-        |               ^~~
-  In file included from /usr/include/openssl/evp.h:26,
-                   from sha1/openssl.h:4,
-                   from hash.h:10,
-                   from object.h:4,
-                   from commit.h:4,
-                   from refs.h:4,
-                   from setup.h:4,
-                   from imap-send.c:32:
-  /usr/include/openssl/types.h:187:23: note: previous declaration of ‘SSL’ with type ‘SSL’ {aka ‘struct ssl_st’}
-    187 | typedef struct ssl_st SSL;
-        |                       ^~~
-  make: *** [Makefile:2761: imap-send.o] Error 1
+> But maybe an alternative could be replacing that 32-bit number with
+> an index into an array of paths that have their hash values stored
+> there.
 
-This is not a terribly common combination in practice:
+Yes, that would work, though how big is that path array going to be?
+Uncompressed linux.git is probably 3-4MB, which actually doesn't sound
+_too_ bad. You could obviously go a long way with prefix compression,
+too.
 
-  1. Why are we disabling openssl support but still using its sha1? The
-     answer is that you may use the same build options across many
-     versions, and some older versions of Git no longer build with
-     modern versions of openssl.
+But if I understand the proposal, it is just replacing one 32-bit hash
+with another. You could just store that in the bitmap instead (or if the
+direction is to use both, introduce a new extension to store both).
+Obviously you'll get lousy results if the bitmap reader does not use the
+same algorithm for its non-bitmap objects, but I don't think this is
+something you'd be flipping back and forth on.
 
-  2. Why are we using a totally unsafe sha1 that does not detect
-     collisions? You're right, we shouldn't. But in preparation for
-     using unsafe sha1 for non-cryptographic checksums, it would be nice
-     to be able to turn it on without hassle.
+> This is part of the reason why I think the --full-name-hash option is
+> an interesting consideration. It doesn't have any obvious reason why
+> it couldn't work with features like delta islands, so it may provide
+> some quick wins in "large enough" repositories, or at least "large in
+> the right way".
+> 
+> I unfortunately don't know enough about how the delta islands feature
+> works to be confident in the possibility of integrating it with the
+> --path-walk option. At minimum, it would require two object walks:
+> the first would mark the objects and the second would do the delta
+> compression with those markings in mind.
 
-We can make this work by adjusting the way imap-send handles its
-fallback. One solution is something like this:
+The delta islands code already does its own tree walk to propagate the
+bits down (it does rely on the base walk's show_commit() to propagate
+through the commits).
 
-  #ifdef NO_OPENSSL
-  #define git_SSL void *
-  #else
-  #define git_SSL SSL
-  #endif
+Once each object has its island bitmaps, I think however you choose to
+come up with delta candidates (whether the current type/size/namehash
+sorted list, or some path walking), you should be able to use it. It's
+fundamentally just answering the question of "am I allowed to delta
+between these two objects".
 
-But we can observe that we only need this definition in one spot: the
-struct which holds the variable. So rather than play around with macros
-that may cause unexpected effects, we can just directly use the correct
-type in that struct.
+Of course the devil may be in the details. ;)
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- imap-send.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/imap-send.c b/imap-send.c
-index 2dd42807cd..ec68a06687 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -31,9 +31,6 @@
- #include "parse-options.h"
- #include "setup.h"
- #include "strbuf.h"
--#if defined(NO_OPENSSL) && !defined(HAVE_OPENSSL_CSPRNG)
--typedef void *SSL;
--#endif
- #ifdef USE_CURL_FOR_IMAP_SEND
- #include "http.h"
- #endif
-@@ -85,7 +82,11 @@ struct imap_server_conf {
- 
- struct imap_socket {
- 	int fd[2];
-+#if defined(NO_OPENSSL) && !defined(HAVE_OPENSSL_CSPRNG)
-+	void *ssl;
-+#else
- 	SSL *ssl;
-+#endif
- };
- 
- struct imap_buffer {
--- 
-2.46.0.883.g5805d96482
-
+-Peff
