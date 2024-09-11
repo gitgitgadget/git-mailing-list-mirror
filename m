@@ -1,312 +1,290 @@
-Received: from mx-relay80-hz1.antispameurope.com (mx-relay80-hz1.antispameurope.com [94.100.133.250])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DEF19EEB7
-	for <git@vger.kernel.org>; Wed, 11 Sep 2024 13:41:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=94.100.133.250
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726062111; cv=fail; b=SPpetGlHNGFzq+/TD1s0Qo76bW5W9RS8546MaDjkcKbUN2y16UsEyueRVyBI54SlqwTEsUp+mPT135eXQTNTvC5P0O6TLizAwMEyUfeGjunvB0vlmo0FkJxhcqj+0h4uHnjbW0FLenGJeL8QKufjy6BlDFZ5vuf7RHZxzZVHzMU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726062111; c=relaxed/simple;
-	bh=YeuUQrcsdEgyTT7hW4YvwGUa3eTYyCTyGcigPrg2Sxw=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=g9lxZLjLa8vNZn3QyFWQZGTBKbh+IsQdvt7raf7cMvgvatdR8KXvp+pHYe2bV9lhopZSd/uxo+4KzxKt3lb/IdEOCyZuw0RTZCcrlX5vE3JoHDpRDrJkGKYWmIN3KKCBL5eTqmuyWmgAnKaTJ5+EEi1AhGy3yhJp0bXtmwFesgk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=miele.com; spf=pass smtp.mailfrom=miele.com; dkim=pass (1024-bit key) header.d=miele365.onmicrosoft.com header.i=@miele365.onmicrosoft.com header.b=pSxK8fiL; dkim=pass (2048-bit key) header.d=miele.com header.i=@miele.com header.b=rBQ4TWVB; arc=fail smtp.client-ip=94.100.133.250
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=miele.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=miele.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6F25A117
+	for <git@vger.kernel.org>; Wed, 11 Sep 2024 14:23:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1726064626; cv=none; b=iPOL1azzYDv8eUDCr0xGoz9NE5W3QDdY4gnzFSC3CyBJ5kFyMgle5bfRrF7U260fDwuztNEscTJeLW++ZXmZ0/xP3mqFUl2F+MxHZ0c75i/TwpwI13FWJPoHA2wMnh1QoQsiOLe6WW/VA6qzwc7Qq2otMt3IuEoVVYzwXWU1xSo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1726064626; c=relaxed/simple;
+	bh=XQXjAHnjh2gaRbUUsNWrnNZFmqqSUaWTMnt0ITwQg4w=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=uDT/4tcJlA1r6VtCC1w0GwjtjB+L9guTavg+BVES4XNlC8l/zkgUKrLdzZgaHVzEX38LV+SGW19Py/Z86QrBJrI7HdKzNrqrkKX8zwIAkxbT1N2La1CTQhxG5vtODpIwvdCSCIj3aRmC3WpnqgJFNYMCKUF8qYH/G5vWwBAvLiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YZ/9H69K; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=miele365.onmicrosoft.com header.i=@miele365.onmicrosoft.com header.b="pSxK8fiL";
-	dkim=pass (2048-bit key) header.d=miele.com header.i=@miele.com header.b="rBQ4TWVB"
-Received: from mail-db8eur05lp2105.outbound.protection.outlook.com ([104.47.17.105]) by mx-relay80-hz1.antispameurope.com;
- Wed, 11 Sep 2024 15:41:38 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MOyYrAmAvs7hrQ2pA2rb7bqwPGClHBbA5NELPdKUJTjS9DF8g9xPgw/eoeDe68YjrymeaXqkpXqB4a9gjo6H07l7TcandNhdcn4TPbiCTJrNfUc/wrPDiv6U2E2SKf/yymRaGHLrsu/OXkKq+MJVDUO52iHrS26OgAbIDzxuCcY/SGIxqUrWVcG6m1BK1Or9mQXa0AJJ8hzZZyL3h9euv8gD3EOZBW8srpJlppKZTfQvXbsFRC51xrQKqF67mXYvD4ng25kDKqLAKWIbeDn1ul8I5TsxFpVs/wvmex5OBWy5W7pE7ea/9YFrj5Mf2wEfw9ZfoNk2hf4V/dJz9ql8Aw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YeuUQrcsdEgyTT7hW4YvwGUa3eTYyCTyGcigPrg2Sxw=;
- b=yFH5tV/phR2bmYrVklg9g9xmaworlMIrBGtKdqwN18olV4njsno7IWSNHeM1nEvVwbhLZjd7Lbb+fg6bogk3gdRnBnlaRmg82HCEpCwKWZMWkBZVC1aD1zw3Nmz8TxFxD2k5QPENT1e5NIvsb8pqxDogYLlTmz1/bygHVpA17dcdWfypOpPPqQQ0yUnbU4pq6mergCmipMwKz1yHIBUdzPtFekUxcKuOr3CEP5+3hSzfY9rUk1ubYKnyxgcXmtPQ921ajpT84TusV3xeOYum3TC84PqsgU4P32ihD6A1juoI76OyIuvUfkZyvHyuzkYaOuH3defZWDRB20KrGD6SZg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=miele.com; dmarc=pass action=none header.from=miele.com;
- dkim=pass header.d=miele.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YZ/9H69K"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a8b155b5e9eso271016866b.1
+        for <git@vger.kernel.org>; Wed, 11 Sep 2024 07:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=miele365.onmicrosoft.com; s=selector2-miele365-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YeuUQrcsdEgyTT7hW4YvwGUa3eTYyCTyGcigPrg2Sxw=;
- b=pSxK8fiL0xvQsPTvjXAvTqZJ8GLgHYidDMWQfccai730dc0FjsVSC1kS3ZmcxpcmIlGxV9oaxgH3JuXridwoPd1TCPUUAStEJz7NXN002d3hVEwqulC81AkPtizNwcq6/N/ZWmeIDeWF7EvNwA4Fu3CgF83sMsqfc4zEqLjdksg=
-Received: from AS2PR08MB8288.eurprd08.prod.outlook.com (2603:10a6:20b:557::8)
- by AM8PR08MB6577.eurprd08.prod.outlook.com (2603:10a6:20b:355::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7962.17; Wed, 11 Sep
- 2024 13:41:29 +0000
-Received: from AS2PR08MB8288.eurprd08.prod.outlook.com
- ([fe80::85a6:7b0e:5297:24a]) by AS2PR08MB8288.eurprd08.prod.outlook.com
- ([fe80::85a6:7b0e:5297:24a%7]) with mapi id 15.20.7962.016; Wed, 11 Sep 2024
- 13:41:28 +0000
-From: "tobias.boesch@miele.com" <tobias.boesch@miele.com>
-To: Johannes Sixt <j6t@kdbg.org>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>, ToBoMi via GitGitGadget
-	<gitgitgadget@gmail.com>
-Subject: AW: [PATCH v3] git gui: add directly calling merge tool from
- gitconfig
-Thread-Topic: [PATCH v3] git gui: add directly calling merge tool from
- gitconfig
-Thread-Index: AQHbAC5GPNAnBaRiDEWSu1BSPTrF/bJN0uAAgAR15bA=
-Date: Wed, 11 Sep 2024 13:41:28 +0000
-Message-ID: 
- <AS2PR08MB82886B804A9A24F45C6C6F34E19B2@AS2PR08MB8288.eurprd08.prod.outlook.com>
-References: <pull.1773.v2.git.1724833917245.gitgitgadget@gmail.com>
- <pull.1773.v3.git.1725607643479.gitgitgadget@gmail.com>
- <9c7475c8-a666-4033-a4b1-79819ba7717f@kdbg.org>
-In-Reply-To: <9c7475c8-a666-4033-a4b1-79819ba7717f@kdbg.org>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
- MSIP_Label_eef16b98-c9e0-42fa-917d-c446735d6f1c_ActionId=045e0814-e0a5-4562-9cfa-5911b41c6cbf;MSIP_Label_eef16b98-c9e0-42fa-917d-c446735d6f1c_ContentBits=0;MSIP_Label_eef16b98-c9e0-42fa-917d-c446735d6f1c_Enabled=true;MSIP_Label_eef16b98-c9e0-42fa-917d-c446735d6f1c_Method=Standard;MSIP_Label_eef16b98-c9e0-42fa-917d-c446735d6f1c_Name=General;MSIP_Label_eef16b98-c9e0-42fa-917d-c446735d6f1c_SetDate=2024-09-11T08:28:23Z;MSIP_Label_eef16b98-c9e0-42fa-917d-c446735d6f1c_SiteId=22991c1b-aa70-4d9c-85be-637908be565f;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=miele.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AS2PR08MB8288:EE_|AM8PR08MB6577:EE_
-x-ms-office365-filtering-correlation-id: ed42ebaf-4de7-4980-8ec3-08dcd2677057
-x-miele-exorule: Spamfilter umgehen
-x-miele-exorule-disclaimer-company-imperial: 1
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info: 
- =?utf-8?B?T3VxaEkyR3hTek5ZdkVOYmtmaytZWng1a3prWEttQ3FNUndYTEZIOWgwaTBq?=
- =?utf-8?B?amJ0M2ZEMnJUNjRUdGJuWDJGWnJPeFJSQU1ZbVF2QVJEcnBjMGptU01RWEhv?=
- =?utf-8?B?VVB4bDE0RVJlNXJxNjhhWmlXckhqenV5YWd2SGtITVIxMTF0QXFXanNSeVlY?=
- =?utf-8?B?ckxJQ0pLaE5MQWtnbVIyWkRRcFBlOFpWZU42SGEzUDE4SXk1QUF1VjVTZTJP?=
- =?utf-8?B?NzJDUkJrOFVqbVNOelQ5R2RGa3RUMmNEblRNVkhDdFpvTTNQUXNHa1V2SWt6?=
- =?utf-8?B?QmpSbTFxWCtvQmlzNkR5c3l3QW4vTzA2bGRmbXR3UHl5aWhDWWF3NTZDK043?=
- =?utf-8?B?MU1QVWJMd3dFQnIvQWVOUUZEcHI4UWsvQXVhdlhxQytIQ29lb0ZqaHZidlJv?=
- =?utf-8?B?OS9heXlSOEg1eHhYaDg3MlVoS0dRV0RHNEY1L0xydEhySUc3ekpHYnpoYVJM?=
- =?utf-8?B?YkNIUnB4VWlOUVJON3BhMVRKTlFqQnd0TmtEZXQ5L3pqS2ZTNjVwanFHQzF5?=
- =?utf-8?B?RDF1L1ljTCtqNTJlNUlGemUxa0luVDZhMWJ5WlRWMUc1Z0J0RGt4MmZOMzlT?=
- =?utf-8?B?L1FMV1BlTjFVSDRPb3B3cDdXOG5meUFuT1lrbjUybmo1WGlFa3FOT0FvU0Z3?=
- =?utf-8?B?Uk9qR1dXSlJKRFl6Z1R5QWlwSDdXdG1xMkNNMmtseUZ5SUhQUGFyRS8wc0F6?=
- =?utf-8?B?UE1rZVN0UUFPb3NsKzFEdDdNcnRQZWVoSFplM2d4Z0RpTXZ0OU0rWUF1WFp3?=
- =?utf-8?B?d002bndHdEJEY3hUTitReHUrZVJ5TGRpYjdERElZUm5nR3lHK3UrL0lFQisy?=
- =?utf-8?B?SHVRMXdlaXdqTGJvbi8yMjRPUHlXcmtPNlBFYWhEZGVHd1ZCeDExMFF2UUl1?=
- =?utf-8?B?V1hVQ0Vrb3dHekN3b2lkVUoyZTNzN2JoSmpWRndBUFBEVEFqV201aHk5dG93?=
- =?utf-8?B?MDlmOWZQTmJSaGtCa2pCWFVDQi9KamRvQVVVNE50YTdldnMySGtWZi9XZ0pm?=
- =?utf-8?B?c2FUaGdjSEhjNFljVjVRSTY3NVlSMThmYTVBUEQzQVBqd0hwR29EeElSS0hI?=
- =?utf-8?B?TjhlQTVqMUxucEExZENiZXh3ZnA3Sk90Vm8vcGYwMkZxc2g4TXFITlRNZTJs?=
- =?utf-8?B?akhCRzIyd3NzV3FlWGxFRjlodHdrejdEL1FsTk9KNlA2NG1obk5FRE5qd2xn?=
- =?utf-8?B?N2xhdjBHVUp6MURCQmo4dkVTc0JPR0p6T1V1TG9Fdkc4QisxMXczRGk5VlJn?=
- =?utf-8?B?ZlIzYnZxNjA1TXVabDZmZitkMmRlRlJCdUR1aGVzSU9ZMlFxWkNNdE9yZzBk?=
- =?utf-8?B?eGJIVW4yaUp2Q3hVd1ZOL3dYQ1h0RnMxd25TWk1ENE1vWllvK01STWx2Zk80?=
- =?utf-8?B?SlMrRldHZEVsTUt4ZElDM1cyYWFXQ2JsZ3ozcGxxbVVBRkdseTZlMHR2VXBt?=
- =?utf-8?B?UDNRTE55bVhlZFRmZ1lndFh2MDRsbmVRVFVoOU4wMmdrWW5yYVNwbjhXRUo5?=
- =?utf-8?B?T3FUOGgzSDdkbVAwdlpsNHRoRHlSU2E0MjVoc1ptbmRZSFVKWmpJMUlFMFRo?=
- =?utf-8?B?a2UvcXZCbWI0TGxCY2VHOUt3K0tuVFgycFo5OVpJUXNnNWdha0NINVUvMno0?=
- =?utf-8?B?R3lQVm1paDdjTVZSc2E3YmNtRmoxSkx5NUdPQkhWbzM2aU9oajA0bENMck1N?=
- =?utf-8?B?c2RIUlJqeGRPRzlKakhEdW1FeS9keks4VlpOUWgzdEZBM21pZjgxZTZvOVc4?=
- =?utf-8?B?bjl2ejR3cktIZnVYOGc5alVWRDVZUkgrU0p2TFoyNkZrT3hkZUpnY0xmUmhS?=
- =?utf-8?B?UVJncmtEUDN4U2RXdi9LeWpCWGpNZTk3VStXU3RreEtkZnRndkVmUStJQkpa?=
- =?utf-8?B?SmRyVUJEUlhwMVIxamhaY29HOXhiS3RwaTZWSTVOTkg4UUE9PQ==?=
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS2PR08MB8288.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?utf-8?B?M29hM0FnWlYwNVhyTWNUUHpvRmN4OUR5dUJZK0xKcGJJZHkwVTF0a3VIb1BT?=
- =?utf-8?B?ZXZTWGlSY1lvb2NXNFdHb3kvL1lzR3VNc2h2Q2pXQlMyOEhaZEFIN0dNbUFt?=
- =?utf-8?B?dmpoZTUzbVhzeGJodG9RY0NXRXg4TG1RaHoySGU0czdJQWQzZXh1TkZQeWND?=
- =?utf-8?B?a0ZvOHNENEZkbXJFanc0QnVSZytpWVhJSkdLZ1M4OUdUdlVScjk3UWxtb214?=
- =?utf-8?B?b1o1Vi9FNmxCTlFLVmN0Zm9iVkM5QkNMTktVa2xCbGZ2U3hnMlJxYmJDQTNt?=
- =?utf-8?B?b1Uvc1ArVFVxV25lSkxQN2d5QytTRDhSSFR2UEtZOFZsOXFlZnd6WTNuMWl2?=
- =?utf-8?B?WEhrVDhobzRENnpjMTNFeVFmVnV5OWI0djJnbDlxQ1V6a1ZLeVptdlYrdW50?=
- =?utf-8?B?a1ZMMHYrV1pZM1pxb05CSjYzLy9JMnJmMmpFY1l2MW1wbGtTb3IvaGNnZnlM?=
- =?utf-8?B?TnI4bkxHQjIvam9DNjJZdEtUQUR3WUg3TkJ0Q0NkV2lCUUZ2WHQxd3lobzg3?=
- =?utf-8?B?eVZHK1RRTERrUVRENDhvTlBQVVNBZjN4N2pTVTd0YXVWRWZWcVBOWmEyQ1Ez?=
- =?utf-8?B?dE1RZWxTTm4yQXhSeTA4ZzBTOXhSRW5CQzBuRVVXLzkyNlF0YkZtTnVHT1pp?=
- =?utf-8?B?MXh5Vm5uWW5PR0N5cm5PanFYR2Jzbi8vN0hPdjJMci9BY2ExZFIzMExVNzNi?=
- =?utf-8?B?NnhTRGVqL2p6MDVienpvS1dCbE5UUmRad0tBY1o5angyQVhTRjg5cFRZdHdH?=
- =?utf-8?B?MWg4cWxHMEpZUTUwQkN4M0JWNnBNdmsyakFxQkFBTDlmb3NiTTZES2hWRVpx?=
- =?utf-8?B?dVZqbFRRUUU1ekRxTi8ySWRCUHFuamU5akYvTW13ZHMreHpZc3crK2p2d29h?=
- =?utf-8?B?SFpjaVBwOHZaQUc3RmoxTkFCYmJJSU9rcmpoQzBDQ3oxb25GbW1rUjJaTi92?=
- =?utf-8?B?R3JjM1g4WmtqWTJ1S3EyYTBpTFBoUkhTckhuUmtRWHZONG9TLyszV1VBVW80?=
- =?utf-8?B?OWVyVTV4VmNEMWtEQnA3UUVjOXBXazQwclNIa2xQOHY2amdlQ21VdUpYNVJq?=
- =?utf-8?B?SWdaeHQ4cUpEUGtLV1pDZW1YTTRxcTk3cE9ZaENKRjFFbDV3d1UrdzhWSnlY?=
- =?utf-8?B?M2V5ZGtNd0M1TUQxN0pGdWNiL251bEtoZGFpdmgxS051WlFxMXJHcmZSaWRW?=
- =?utf-8?B?cmQ2bXdTRFl0Sk55TWZianJjck1qSEgxeHFOc2dZZ3dPaTR5dG9KU1BmQTc4?=
- =?utf-8?B?RjdHVlN2bTJRV3JxU1VaMlY0ZXZRWC9lN3hxTVRjMW9CZHBIRGM5MitUOThy?=
- =?utf-8?B?QkY3Rzc3Y1NNbm5HSE9nd1pmY211TERYOVRlcHY1bjBrN0ZtMnBMMldJN0ZL?=
- =?utf-8?B?bEwwZkg4L0FKR1NsdGo3c1o5SlRTM2k1elJlR21TNkNSSVpFbS9Rb0FoK2Jv?=
- =?utf-8?B?cldsMDBmdlFXQTQvdFdYN1l5a1JDZk04eDBnYm43SXpFM3Zpa3FiUlZ6amVZ?=
- =?utf-8?B?anlGSVRnMXJ1OVJVWTE1ZHVLSEp6ZVJzSm5ZR1hOVmVJSktNUW16QjZxYVJI?=
- =?utf-8?B?c01McU05U0NFeU9uU3NzNnhrOXo5UVVpbC80VWF0eUREeEFyYUFhbEpERUZY?=
- =?utf-8?B?aGsxalZEYkJkYjRxcFc3VVZwdGRGenZ4N0NBNTlMQXVYaTYyaG1nNXZTa3B2?=
- =?utf-8?B?MkRPMDlSMWJlMklxY0hBd1hGRTBkNVA0VTJ4c2ZRb05HS3gxNElld0J6T2ZZ?=
- =?utf-8?B?UTlWRHg0emRiRDZQQ3ZUMU13b0J5ekJCMktCODdTV0dRK3Y2U3lFWmJJNmdm?=
- =?utf-8?B?QnBZV05KQUhnZW1NSTFpUHR0L25sODJ2SEJjT24rT0YxVlRYZUs0aXVXSW9a?=
- =?utf-8?B?Y0FlcXFaRDNqRURiNU4vdFBkVWNOMkNMaWJJYTFLR2hWOG9wOXU5cDhUV0w2?=
- =?utf-8?B?aDRsMzFDbHZRcG50Wm9UTjlKaDI0bXAwMG9QWWpiNWU4QXRIRzJuU1VmY24r?=
- =?utf-8?B?N1FLTloyZmh3cjRVNWc3bTQvSm5TSzQzRHlJOEJvd1FDbVRUdmRlNDB3SzVj?=
- =?utf-8?B?RUUwUjJOQ2E0ZnlTdFZxWmQ2RUNpUDVSMElpd3lRdDVrTGhjU1ZBSCtBbUVZ?=
- =?utf-8?Q?zBEtMOUA7HJXFadBQW8gk2m0W?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        d=gmail.com; s=20230601; t=1726064622; x=1726669422; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kJQhSsLLvRtXo+TBamERqjhix1cLycG6FLv6mdNN/gs=;
+        b=YZ/9H69KMbJGDgCAPu377qyJmrxuKyP+8XHWZ3qING0oSgTC7HH2J2KH9bfgs/bXfv
+         OjOXRrltg6VRhHJWKWVJolTgMsMCYTep5g8gV4o+iJLVPhL3CdRaa3RCev0RmZRASpeG
+         Mv/Hmloa/xIUOmXaTvyZFclVrbrUG9/sJLAE/q7WCMW4yiHEv6HeZNK9qJMoMRME90gD
+         O8Jcz9kh3FpX991EH8Md6/Fj9JmNVoAmZlMRdcPxU6GhX5wNLNi0AAsKaCYYDCDhENl4
+         bupUAW0ZqdKCCruDtF72s4eiRs5ZEift2DSLfQd7s726oBH5AiCyFk/PAwAm0nli1Aow
+         EnGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726064622; x=1726669422;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kJQhSsLLvRtXo+TBamERqjhix1cLycG6FLv6mdNN/gs=;
+        b=V7Feoq7ypifx4/O71+w83gGcPVlHblO7GZ8o/Tpqt3Q9QluMq8BVsxFpf+5xsdTMTe
+         hMrTSeJlqyXOJB2feR4fZwIXZZ/XV4WDzxz7++EB5Otiec92k623jIcSvmbIglLMtWEK
+         YkcNoKXnOD3la2wnQwYkjK8rbkcn/9+8Z+KZ6QI4ElUdFWoJzGQWOVJKsO0kj5jutWGr
+         PUAeDOUvNUKKyEAmmjIWVn4P2wFSixjzJhnX5D4Spg5TdRUlF9cj5WH7vbF8Mq1LJb4m
+         JL0GueYJJVdFVIUu43Uus4MaffenNXUDArJCvtv5Sy9dIZYzA6m3rmt1atBJ4d1rCTtj
+         By9g==
+X-Gm-Message-State: AOJu0YzFQdWCsL5zIkPNuwxYXz17R6chHCnqR51RpY/Q9OQoTXdWEeqP
+	YzGXq1TY1zDSQgwOIltQDR5VX3zu9fklLaIG6zEw3iad/faNeVH2hTmwAg==
+X-Google-Smtp-Source: AGHT+IEr26TkMMlBUEuw0utfVuD0ipceX+31RVKoMPmiKNhclz4jBWu653JXnBZgaG5RhZUQnA5/qg==
+X-Received: by 2002:a17:907:94c5:b0:a8a:1ffe:70f1 with SMTP id a640c23a62f3a-a9004a46f0amr290727566b.50.1726064621377;
+        Wed, 11 Sep 2024 07:23:41 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25c62511sm622661466b.130.2024.09.11.07.23.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Sep 2024 07:23:40 -0700 (PDT)
+Message-Id: <pull.1773.v4.git.1726064619705.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1773.v3.git.1725607643479.gitgitgadget@gmail.com>
+References: <pull.1773.v3.git.1725607643479.gitgitgadget@gmail.com>
+From: "ToBoMi via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 11 Sep 2024 14:23:39 +0000
+Subject: [PATCH v4] git gui: add directly calling merge tool from
+ configuration
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: miele.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS2PR08MB8288.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ed42ebaf-4de7-4980-8ec3-08dcd2677057
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Sep 2024 13:41:28.7182
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 22991c1b-aa70-4d9c-85be-637908be565f
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: MQE+2rTGJda0Az3S4d8lmD4xmzoqgV5xmQ0cJ8pqw3YRtj9CPPt1D9KvvRNl4EBtu/oGsqnCQYA5+smrOfKeyg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR08MB6577
-X-cloud-security-sender:tobias.boesch@miele.com
-X-cloud-security-recipient:git@vger.kernel.org
-X-cloud-security-crypt: load encryption module
-X-cloud-security-Virusscan:CLEAN
-X-cloud-security-disclaimer: This E-Mail was scanned by E-Mailservice on mx-relay80-hz1.antispameurope.com with 4X3hYl3Fbjz2bWQN
-X-cloud-security-connect: mail-db8eur05lp2105.outbound.protection.outlook.com[104.47.17.105], TLS=1, IP=104.47.17.105
-X-cloud-security-Digest:7cad44dc8333e3c1c8b943a191fc3bb9
-X-cloud-security:scantime:1.484
-DKIM-Signature: a=rsa-sha256;
- bh=YeuUQrcsdEgyTT7hW4YvwGUa3eTYyCTyGcigPrg2Sxw=; c=relaxed/relaxed;
- d=miele.com; h=content-type:mime-version:subject:from:to:message-id:date;
- s=hse1; t=1726062098; v=1;
- b=rBQ4TWVBA1wKVh2R2eBmFw7i0lNQ6yp1ub7/n7zrpzZ1kAKs214qvARCsVCfowCZS//hLo7D
- KsHORvmi9ofrTyJQf/SMYi1F3oS+OVd0QBaMfM+sZmgQaFf6khkYKZ7AsBEEswJGc5zf2XvmoeB
- NUeN+ewxBnIO6Av67YWSr0pfImh3ov0oave+EpEVeZbprPWMG4u1bCDb5u0GO9Fw1nc7X7F4jod
- 6l3VOUIbl47Xfs2p33Riu8mJw61uNJqr1HA+gCV7DLh6JhDsLBuv6wiGgUv/yWZidQkHQ+uvGLW
- H27LhcbxArxKbUr+Q/8r3R4nyqJIHUXRet+I1LnswcEkg==
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+    ToBoMi <tobias.boesch@miele.com>,
+    Tobias Boesch <tobias.boesch@miele.com>
 
-PiAtLS0tLVVyc3Byw7xuZ2xpY2hlIE5hY2hyaWNodC0tLS0tDQo+IFZvbjogSm9oYW5uZXMgU2l4
-dCA8ajZ0QGtkYmcub3JnPg0KPiBHZXNlbmRldDogU29ubnRhZywgOC4gU2VwdGVtYmVyIDIwMjQg
-MTQ6MjENCj4gQW46IEJvZXNjaCwgVG9iaWFzIDx0b2JpYXMuYm9lc2NoQG1pZWxlLmNvbT4NCj4g
-Q2M6IGdpdEB2Z2VyLmtlcm5lbC5vcmc7IFRvQm9NaSB2aWEgR2l0R2l0R2FkZ2V0IDxnaXRnaXRn
-YWRnZXRAZ21haWwuY29tPg0KPiBCZXRyZWZmOiBSZTogW1BBVENIIHYzXSBnaXQgZ3VpOiBhZGQg
-ZGlyZWN0bHkgY2FsbGluZyBtZXJnZSB0b29sIGZyb20gZ2l0Y29uZmlnDQo+DQo+IEFtIDA2LjA5
-LjI0IHVtIDA5OjI3IHNjaHJpZWIgVG9Cb01pIHZpYSBHaXRHaXRHYWRnZXQ6DQo+ID4gRnJvbTog
-VG9iaWFzIEJvZXNjaCA8dG9iaWFzLmJvZXNjaEBtaWVsZS5jb20+DQo+ID4NCj4gPiBnaXQgZ3Vp
-IGNhbiBvcGVuIGEgbWVyZ2UgdG9vbCB3aGVuIGNvbmZsaWN0cyBhcmUgZGV0ZWN0ZWQgKFJpZ2h0
-IGNsaWNrDQo+ID4gaW4gdGhlIGRpZmYgb2YgdGhlIGZpbGUgd2l0aCBjb25mbGljdHMpLg0KPiA+
-IFRoZSBtZXJnZSB0b29scyB0aGF0IGFyZSBhbGxvd2VkIHRvIHVzZSBhcmUgaGFyZCBjb2RlZCBp
-bnRvIGdpdCBndWkuDQo+ID4NCj4gPiBJZiBvbmUgd2FudHMgdG8gYWRkIGEgbmV3IG1lcmdlIHRv
-b2wgaXQgaGFzIHRvIGJlIGFkZGVkIHRvIGdpdCBndWkNCj4gPiB0aHJvdWdoIGEgc291cmNlIGNv
-ZGUgY2hhbmdlLg0KPiA+IFRoaXMgaXMgbm90IGNvbnZlbmllbnQgaW4gY29tcGFyaXNvbiB0byBo
-b3cgaXQgd29ya3MgaW4gZ2l0ICh3aXRob3V0IGd1aSkuDQo+ID4NCj4gPiBnaXQgaXRzZWxmIGhh
-cyBjb25maWd1cmF0aW9uIG9wdGlvbnMgZm9yIGEgbWVyZ2UgdG9vbHMgcGF0aCBhbmQNCj4gPiBj
-b21tYW5kIGluIHRoZSBnaXQgY29uZmlnLg0KPiA+IE5ldyBtZXJnZSB0b29scyBjYW4gYmUgc2V0
-IHVwIHRoZXJlIHdpdGhvdXQgYSBzb3VyY2UgY29kZSBjaGFuZ2UuDQo+ID4NCj4gPiBUaG9zZSBv
-cHRpb25zIGFyZSB1c2VkIG9ubHkgYnkgcHVyZSBnaXQgaW4gY29udHJhc3QgdG8gZ2l0IGd1aS4g
-Z2l0DQo+ID4gY2FsbHMgdGhlIGNvbmZpZ3VyZWQgbWVyZ2UgdG9vbHMgZGlyZWN0bHkgZnJvbSB0
-aGUgY29uZmlnIHdoaWxlIGdpdCBHdWkNCj4gZG9lc24ndC4NCj4gPg0KPiA+IFdpdGggdGhpcyBj
-aGFuZ2UgZ2l0IGd1aSBjYW4gY2FsbCBtZXJnZSB0b29scyBjb25maWd1cmVkIGluIHRoZQ0KPiA+
-IGdpdGNvbmZpZyBkaXJlY3RseSB3aXRob3V0IGEgY2hhbmdlIGluIGdpdCBndWkgc291cmNlIGNv
-ZGUuDQo+ID4gSXQgbmVlZHMgYSBjb25maWd1cmVkIG1lcmdlLnRvb2wgYW5kIGEgY29uZmlndXJl
-ZCBtZXJnZXRvb2wuY21kIGNvbmZpZw0KPiA+IGVudHJ5Lg0KPg0KPiBUaGUgY29uZmlndXJhdGlv
-biBpcyAibWVyZ2V0b29sLiR0b29sLmNtZCIhDQo+DQoNClJpZ2h0IC0gY2hhbmdlZCBpdCB0byAi
-bWVyZ2V0b29sLjxtZXJnZXRvb2wgbmFtZT4uY21kIiwgc2luY2UgdGhpcyBpcyBhIGRlc2NyaXB0
-aXZlDQp0ZXh0IGFuZCBub3QgYSBzY3JpcHQuIEkgcGVyc29uYWxseSBwcmVmZXIgYSBtb3JlIGh1
-bWFuIGZyaWVuZGx5IHdyaXRpbmcuDQoNCj4gUGVyc29uYWxseSwgSSB3b3VsZCBhdm9pZCB0aGUg
-d29yZHMgImdpdGNvbmZpZyIgYW5kICJjb25maWciIChoZXJlIGFuZCBpbiB0aGUNCj4gcmVzdCBv
-ZiB0aGUgY29tbWl0IG1lc3NhZ2UpLCBuZWl0aGVyIG9mIHdoaWNoIGFyZSBFbmdsaXNoLg0KPiAi
-Q29uZmlndXJhdGlvbiIgd291bGQgYmUgT0ssIElNTy4NCj4NCg0KV2lsbCBiZSBjaGFuZ2VkLg0K
-DQo+ID4NCj4gPiBnaXRjb25maWcgZXhhbXBsZToNCj4gPiBbbWVyZ2VdDQo+ID4gICAgIHRvb2wg
-PSB2c2NvZGUNCj4gPiBbbWVyZ2V0b29sICJ2c2NvZGUiXQ0KPiA+ICAgICBwYXRoID0gdGhlL3Bh
-dGgvdG8vQ29kZS5leGUNCj4gPiAgICAgY21kID0gXCJDb2RlLmV4ZVwiIC0td2FpdCAtLW1lcmdl
-IFwiJExPQ0FMXCIgXCIkUkVNT1RFXCINCj4gXCIkQkFTRVwiIFwiJE1FUkdFRFwiDQo+ID4NCj4g
-PiBXaXRob3V0IHRoZSBtZXJnZXRvb2wuY21kIGNvbmZpZ3VyYXRpb24gYW5kIGFuIHVuc3VwcG9y
-dGVkIG1lcmdlLnRvb2wNCj4gPiBlbnRyeSwgZ2l0IGd1aSBiZWhhdmVzIG1haW5seSBhcyBiZWZv
-cmUgdGhpcyBjaGFuZ2UgYW5kIGluZm9ybXMgdGhlDQo+ID4gdXNlciBhYm91dCBhbiB1bnN1cHBv
-cnRlZCBtZXJnZSB0b29sLiBJbiBhZGR0aXRpb24gaXQgYWxzbyBzaG93cyBhDQo+ID4gaGludCB0
-byBhZGQgYSBjb25maWcgZW50cnkgdG8gdXNlIHRoZSB0b29sIGFzIGFuIHVuc3VwcG9ydGVkIHRv
-b2wgd2l0aA0KPiA+IGRlZ3JhZGVkIHN1cHBvcnQuDQo+ID4NCj4gPiBJZiBhIHdyb25nIG1lcmdl
-dG9vbC5jbWQgaXMgY29uZmlndXJlZCBieSBhY2NpZGVudCwgaXQgZ2V0cyBoYW5kbGVkIGJ5DQo+
-ID4gZ2l0IGd1aSBhbHJlYWR5LiBJbiB0aGlzIGNhc2UgZ2l0IGd1aSBpbmZvcm1zIHRoZSB1c2Vy
-IHRoYXQgdGhlIG1lcmdlDQo+ID4gdG9vbCBjb3VsZG4ndCBiZSBvcGVuZWQuIFRoaXMgYmVoYXZp
-b3IgaXMgcHJlc2VydmVkIGJ5IHRoaXMgY2hhbmdlIGFuZA0KPiA+IHNob3VsZCBub3QgY2hhbmdl
-Lg0KPiA+DQo+ID4gIkJleW9uZCBDb21wYXJlIDMiIGFuZCAiVmlzdWFsIFN0dWRpbyBDb2RlIiB3
-ZXJlIHRlc3RlZCBhcyBtYW51YWxseQ0KPiA+IGNvbmZpZ3VyZWQgbWVyZ2UgdG9vbHMuDQo+ID4N
-Cj4gPiBTaWduZWQtb2ZmLWJ5OiBUb2JpYXMgQm9lc2NoIDx0b2JpYXMuYm9lc2NoQG1pZWxlLmNv
-bT4NCj4gPiAtLS0NCj4NCj4gPiAgZ2l0LWd1aS9saWIvbWVyZ2V0b29sLnRjbCB8IDIwICsrKysr
-KysrKysrKysrKysrKy0tDQo+ID4gIDEgZmlsZSBjaGFuZ2VkLCAxOCBpbnNlcnRpb25zKCspLCAy
-IGRlbGV0aW9ucygtKQ0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2dpdC1ndWkvbGliL21lcmdldG9v
-bC50Y2wgYi9naXQtZ3VpL2xpYi9tZXJnZXRvb2wudGNsDQo+ID4gaW5kZXggZTY4OGIwMTZlZjYu
-LmNjYmMxYTQ2NTU0IDEwMDY0NA0KPiA+IC0tLSBhL2dpdC1ndWkvbGliL21lcmdldG9vbC50Y2wN
-Cj4gPiArKysgYi9naXQtZ3VpL2xpYi9tZXJnZXRvb2wudGNsDQo+ID4gQEAgLTI3Miw4ICsyNzIs
-MjQgQEAgcHJvYyBtZXJnZV9yZXNvbHZlX3Rvb2wyIHt9IHsNCj4gPiAgICAgICAgICAgICB9DQo+
-ID4gICAgIH0NCj4gPiAgICAgZGVmYXVsdCB7DQo+ID4gLSAgICAgICAgICAgZXJyb3JfcG9wdXAg
-W21jICJVbnN1cHBvcnRlZCBtZXJnZSB0b29sICclcyciICR0b29sXQ0KPiA+IC0gICAgICAgICAg
-IHJldHVybg0KPiA+ICsgICAgICAgICAgIHNldCB0b29sX2NtZCBbZ2V0X2NvbmZpZyBtZXJnZXRv
-b2wuJHRvb2wuY21kXQ0KPiA+ICsgICAgICAgICAgIGlmIHskdG9vbF9jbWQgbmUge319IHsNCj4g
-PiArICAgICAgICAgICAgICAgICAgIGlmIHsoW3N0cmluZyBmaXJzdCB7W30gJHRvb2xfY21kXSAh
-PSAtMSkgfHwgKFtzdHJpbmcgZmlyc3Qge119DQo+ICR0b29sX2NtZF0gIT0gLTEpfSB7DQo+ID4g
-KyAgICAgICAgICAgICAgICAgICAgICAgICAgIGVycm9yX3BvcHVwIFttYyAiVW5hYmxlIHRvIHBy
-b2Nlc3Mgc3F1YXJlDQo+IGJyYWNrZXRzIGluIG1lcmdldG9vbC5jbWQgY29uZmlndXJhdGlvbiBv
-cHRpb24uXA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIFBsZWFzZSByZW1vdmUNCj4gdGhlIHNxdWFyZSBicmFja2V0cy4iXQ0K
-PiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4NCj4NCj4gQ29uZGl0aW9uIGFu
-ZCBlcnJvciB0ZXh0IGFyZSBPSy4gQnV0IHNlZSBiZWxvdy4NCj4NCj4gPiArICAgICAgICAgICAg
-ICAgICAgIH0gZWxzZSB7DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgIGZvcmVhY2gg
-Y29tbWFuZF9wYXJ0ICR0b29sX2NtZCB7DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgbGFwcGVuZCBjbWRsaW5lIFtzdWJzdCAtbm9iYWNrc2xhc2hlcw0KPiAtbm9jb21t
-YW5kcyAkY29tbWFuZF9wYXJ0XQ0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICB9DQo+
-DQo+IEdvb2QuDQo+DQo+IEkgaGF2ZSBzZWVuIGEgZmV3IGV4YW1wbGVzIGluIHRoZSBUY2wgbWFu
-dWFsIHdpdGggbGFwcGVuZCBpbiB0aGUgbG9vcCBib2R5LA0KPiBhbmQgaXQgc2VlbXMgdG8gYmUg
-Y3VzdG9tYXJ5IHRvIHNldCB0aGUgbGlzdCB2YXJpYWJsZSB0byBhbiBlbXB0eSB2YWx1ZSBiZWZv
-cmUNCj4gdGhlIGxvb3AsIGkuZS4NCj4NCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-c2V0IGNtZGxpbmUge30NCj4NCg0KRG9uZSBpbiBuZXh0IHBhdGNoLg0KDQo+ID4gKyAgICAgICAg
-ICAgICAgICAgICB9DQo+ID4gKyAgICAgICAgICAgfSBlbHNlIHsNCj4gPiArICAgICAgICAgICAg
-ICAgICAgIGVycm9yX3BvcHVwIFttYyAiVW5zdXBwb3J0ZWQgbWVyZ2UgdG9vbCAnJXMnLlxuDQo+
-ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEN1
-cnJlbnRseSB1bnN1cHBvcnRlZA0KPiB0b29scyBjYW4gYmUgYWRkZWQgYW5kIHVzZWQgYXMgdW5z
-dXBwb3J0ZWQgdG9vbHMgd2l0aCBkZWdyYWRlZCBzdXBwb3J0XA0KPiA+ICsgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBieSBhZGRpbmcgdGhlDQo+IGNv
-bW1hbmQgb2YgdGhlIHRvb2wgdG8gdGhlIFwibWVyZ2V0b29sLmNtZFwiIG9wdGlvbiBpbiB0aGUg
-Y29uZmlnLg0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICBTZWUgdGhlIGNvbmZpZ3VyYXRpb24NCj4gZG9jdW1lbnRhdGlvbiBmb3IgbW9yZSBk
-ZXRhaWxzLiIgJHRvb2xdDQo+DQo+IFRoaXMgZXJyb3IgbWVzc2FnZSBuZWVkcyBhIGJpdCBtb3Jl
-IHdvcmsgKHNvbWUgb2YgdGhpcyBhbHNvIGFwcGxpZXMgdG8gdGhlDQo+IG1lc3NhZ2UgYWJvdmUp
-Og0KPg0KPiAtIEEgdG9vbCBpcyBvbmx5IHVuc3VwcG9ydGVkIGFzIGxvbmcgYXMgdGhlcmUgaXMg
-bm8gdXNhYmxlIGNvbmZpZ3VyYXRpb24uIE9uY2UNCj4gbWVyZ2V0b29sLiR0b29sLmNtZCBpcyBz
-ZXQgdG8gc29tZXRoaW5nIHdlIGNhbiBoYW5kbGUsIGNhbGxpbmcgdGhlIHRvb2wNCj4gInVuc3Vw
-cG9ydGVkIiBpc24ndCBhcHByb3ByaWF0ZSwgSSB3b3VsZCB0aGluay4NCg0KSnVuaW8gQyBIYW1h
-bm8gc3VnZ2VzdGVkIHRvIG1hcmsgdGhlIHRvb2xzIHVuc3VwcG9ydGVkIGluIGhpcyByZXZpZXcu
-DQpJJ2xsIGNoYW5nZSBpdCBiYWNrIGFuZCByZW1vdmUgdGhlIHVuc3VwcG9ydGVkIGhpbnQuDQoN
-Cj4gSG93IGFib3V0DQo+DQo+IFVuc3VwcG9ydGVkIG1lcmdlIHRvb2wgJyVzJy4NCj4NCj4gVG8g
-dXNlIHRoaXMgdG9vbCwgY29uZmlndXJlICJtZXJnZXRvb2wuJXMuY21kIiBhcyBzaG93biBpbiB0
-aGUgZ2l0LWNvbmZpZw0KPiBtYW51YWwgcGFnZS4NCj4NCg0KV2lsbCBiZSBjaGFuZ2VkLg0KDQo+
-IC0gVGhlIGNvbmZpZ3VyYXRpb24gdmFyaWFibGUgdGhhdCB3ZSB1c2UgaXMgbm90IG1lcmdldG9v
-bC5jbWQsIGJ1dA0KPiBtZXJnZXRvb2wuJHRvb2wuY21kLg0KPg0KPiAtIENvbnRpbnVhdGlvbiBs
-aW5lcyBtdXN0IG5vdCBiZSBpbmRlbnRlZC4gSW5kZW50ZWQgdGV4dCBhcHBlYXJzIGluZGVudGVk
-IGluDQo+IHRoZSBlcnJvciBtZXNzYWdlLg0KPg0KPiAtIFdhdGNoIG91dCB3aGV0aGVyIGFuIGV4
-cGxpY2l0IFxuIGlzIGdpdmVuLCB3aGV0aGVyIHRoZSBsaW5lLWJyZWFrIGlzIGVzY2FwZWQNCj4g
-b3Igbm90OyBhbGwgb2YgdGhpcyBoYXMgbWVhbmluZy4NCj4NCj4gLSBMb29raW5nIGF0IG90aGVy
-IG11bHRpLWxpbmUgZXJyb3IgbWVzc2FnZXMgaW4gZ2l0LWd1aS5zaCwgdGhlIGNvbnZlbnRpb24g
-aXMNCj4NCj4gICAgICAgbWNbIkZpcnN0IHBhcmFncmFwaCBnb2VzIGhlcmUuDQo+DQo+IFNlY29u
-ZCBwYXJhZ3JhcGguIEFsbCBvZiBpdCBpcyBvbiBvbmUgbGluZSBpbiB0aGUgc291cmNlIGNvZGUu
-DQo+DQo+IFRoaXJkIHBhcmFncmFwaC4gTm8gXG4gYXBwZWFycyBhbnl3aGVyZS4iXQ0KPg0KDQpJ
-IGRpZG4ndCB3YW50IHRvIGhhdmUgdW5pbmRlbnRlZCB0ZXh0IGlvbiB0aGUgc291cmNlIGNvZGUs
-IGJ1dCBJJ2xsIGNoYW5nZSBpdC4NCg0KPiA+ICsgICAgICAgICAgICAgICAgICAgcmV0dXJuDQo+
-ID4gKyAgICAgICAgICAgfQ0KPiA+ICAgICB9DQo+ID4gICAgIH0NCj4NCj4gQXMgYSBtYXR0ZXIg
-b2YgcGVyc29uYWwgdGFzdGUsIEkgcHJlZmVyIHRvIHN0cnVjdHVyZSBjb2RlIHdpdGggZXJyb3Ig
-ZXhpdHMgbGlrZSBzbw0KPiAoYnV0IGl0IGlzIHRvdGFsbHkgYWNjZXB0YWJsZSBpZiB5b3UgZGlz
-YWdyZWUpOg0KPg0KPiAgICBpZiB7Y2hlY2sgZm9yIGVycm9yIDF9IHsNCj4gICAgICAgIGVycm9y
-IG1zZzENCj4gICAgICAgIHJldHVybg0KPiAgICB9DQo+ICAgIGlmIHtjaGVjayBmb3IgZXJyb3Ig
-Mn0gew0KPiAgICAgICAgZXJyb3IgbXNnMg0KPiAgICAgICAgcmV0dXJuDQo+ICAgIH0NCj4gICAg
-cmVndWxhciBjYXNlDQo+ICAgIGdvZXMgaGVyZQ0KPiAgICB3aXRob3V0IGluZGVudGF0aW9uDQo+
-DQo+IE5vdGUgdGhhdCB0aGVyZSBhcmUgbm8gZWxzZS1icmFuY2hlcy4gVGhpcyByZWR1Y2VzIHRo
-ZSBpbmRlbnRhdGlvbiBsZXZlbHMuDQo+DQoNCkkgdHJpZWQgdG8gc2V0IHRoaXMgdXAgLSBpdCBm
-YWlsZWQgYmVjYXVzZSB0aGUgc3F1YXJlIGJyYWNrZXRzIGluIHRoZSBpZiBjb25kaXRpb24gc3Vk
-ZGVubHkgZ2V0ICJjb3VudGVkIiBhcyBjb21tYW5kIGV4ZWN1dGlvbnMgb3IgaW4gb3RoZXIgd29y
-ZHM7IHRoZSBjdXJseSBicmFjZXMgYXJlIGlnbm9yZWQuIEkgd2FzIHVuYWJsZSB0byBnZXQgYXJv
-dW5kIHRoYXQuDQoNCj4gLS0gSGFubmVzDQoNCg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tDQppbXBlcmlhbC1XZXJrZSBvSEcsIFNpdHogQsO8bmRlLCBSZWdpc3Rl
-cmdlcmljaHQgQmFkIE9leW5oYXVzZW4gLSBIUkEgNDgyNQ0K
+From: Tobias Boesch <tobias.boesch@miele.com>
+
+git gui can open a merge tool when conflicts are detected (Right click
+in the diff of the file with conflicts).
+The merge tools that are allowed to use are hard coded into git gui.
+
+If one wants to add a new merge tool it has to be added to git gui
+through a source code change.
+This is not convenient in comparison to how it works in git (without gui).
+
+git itself has configuration options for a merge tools path and command
+in the git configuration.
+New merge tools can be set up there without a source code change.
+
+Those options are used only by pure git in contrast to git gui. git calls
+the configured merge tools directly from the configuration while git Gui
+doesn't.
+
+With this change git gui can call merge tools configured in the
+configuration directly without a change in git gui source code.
+It needs a configured "merge.tool" and a configured
+"mergetool.<mergetool name>.cmd" configuration entry as shown in the
+git-config manual page.
+
+Configuration example:
+[merge]
+	tool = vscode
+[mergetool "vscode"]
+	path = the/path/to/Code.exe
+	cmd = \"Code.exe\" --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+
+Without the "mergetool.cmd" configuration and an unsupported "merge.tool"
+entry, git gui behaves mainly as before this change and informs the user
+about an unsupported merge tool. In addtition it also shows a hint to add
+a configuration entry to use the tool as an unsupported tool with degraded
+support.
+
+If a wrong "mergetool.cmd" is configured by accident, it gets handled
+by git gui already. In this case git gui informs the user that the merge
+tool couldn't be opened. This behavior is preserved by this change and
+should not change.
+
+"Beyond Compare 3" and "Visual Studio Code" were tested as manually
+configured merge tools.
+
+Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
+---
+    git gui: add directly calling merge tool from gitconfig
+    
+    cc: Johannes Sixt j6t@kdbg.org
+    
+    Changes since v1:
+    
+     * Used existing option mergetool.cmd in gitconfig to trigger the direct
+       call of the merge tool configured in the config instead adding a new
+       option mergeToolFromConfig
+     * Removed assignment of merge tool path to a variable and reused the
+       already existing one: merget_tool_path
+     * Changed formatting of the commit message
+     * Added more context and an examples to the commit message
+    
+    Changes since v2:
+    
+     * Changed commit ident
+     * Added hint to add a mergetool as an unsupprted tool
+     * Minor typos
+     * Highlighted proper nouns in commit message
+     * Only using mergetool.cmd now - not using mergetool.path anymore
+     * Removed gitconfig term in user message
+     * Changed lines length of commit message
+     * tcl commands in mergetool.cmd are now detected and not executed
+       anymore
+     * mergetool.cmd string parts are now substituted as list, not as a
+       whole string
+     * Made a more clear user hint on how to configure an unsupported
+       mergetool
+    
+    Changes since v3:
+    
+     * Corrected wrong configuration option in commit message
+     * Replaced "config" and "gitconfig" with "configuration" in commit
+       message
+     * Initialised cmdline list before appending values in loop
+     * Removed hint that unsupported tools have degraded support
+     * Changed popup message formatting in the popup and in the source code
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1773%2FToBoMi%2Fadd_merge_tool_from_config_file-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1773/ToBoMi/add_merge_tool_from_config_file-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1773
+
+Range-diff vs v3:
+
+ 1:  c8c0107ddc5 ! 1:  b5db8997b76 git gui: add directly calling merge tool from gitconfig
+     @@ Metadata
+      Author: Tobias Boesch <tobias.boesch@miele.com>
+      
+       ## Commit message ##
+     -    git gui: add directly calling merge tool from gitconfig
+     +    git gui: add directly calling merge tool from configuration
+      
+          git gui can open a merge tool when conflicts are detected (Right click
+          in the diff of the file with conflicts).
+     @@ Commit message
+          This is not convenient in comparison to how it works in git (without gui).
+      
+          git itself has configuration options for a merge tools path and command
+     -    in the git config.
+     +    in the git configuration.
+          New merge tools can be set up there without a source code change.
+      
+          Those options are used only by pure git in contrast to git gui. git calls
+     -    the configured merge tools directly from the config while git Gui doesn't.
+     +    the configured merge tools directly from the configuration while git Gui
+     +    doesn't.
+      
+     -    With this change git gui can call merge tools configured in the gitconfig
+     -    directly without a change in git gui source code.
+     -    It needs a configured merge.tool and a configured mergetool.cmd config
+     -    entry.
+     +    With this change git gui can call merge tools configured in the
+     +    configuration directly without a change in git gui source code.
+     +    It needs a configured "merge.tool" and a configured
+     +    "mergetool.<mergetool name>.cmd" configuration entry as shown in the
+     +    git-config manual page.
+      
+     -    gitconfig example:
+     +    Configuration example:
+          [merge]
+                  tool = vscode
+          [mergetool "vscode"]
+                  path = the/path/to/Code.exe
+                  cmd = \"Code.exe\" --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+      
+     -    Without the mergetool.cmd configuration and an unsupported merge.tool
+     +    Without the "mergetool.cmd" configuration and an unsupported "merge.tool"
+          entry, git gui behaves mainly as before this change and informs the user
+          about an unsupported merge tool. In addtition it also shows a hint to add
+     -    a config entry to use the tool as an unsupported tool with degraded
+     +    a configuration entry to use the tool as an unsupported tool with degraded
+          support.
+      
+     -    If a wrong mergetool.cmd is configured by accident, it gets handled
+     +    If a wrong "mergetool.cmd" is configured by accident, it gets handled
+          by git gui already. In this case git gui informs the user that the merge
+          tool couldn't be opened. This behavior is preserved by this change and
+          should not change.
+     @@ git-gui/lib/mergetool.tcl: proc merge_resolve_tool2 {} {
+      +		set tool_cmd [get_config mergetool.$tool.cmd]
+      +		if {$tool_cmd ne {}} {
+      +			if {([string first {[} $tool_cmd] != -1) || ([string first {]} $tool_cmd] != -1)} {
+     -+				error_popup [mc "Unable to process square brackets in mergetool.cmd configuration option.\
+     -+								Please remove the square brackets."]
+     ++				error_popup [mc "Unable to process square brackets in mergetool.$tool.cmd configuration option.
+     ++
+     ++Please remove the square brackets."]
+      +				return
+      +			} else {
+     ++				set cmdline {}
+      +				foreach command_part $tool_cmd {
+      +					lappend cmdline [subst -nobackslashes -nocommands $command_part]
+      +				}
+      +			}
+      +		} else {
+     -+			error_popup [mc "Unsupported merge tool '%s'.\n
+     -+							Currently unsupported tools can be added and used as unsupported tools with degraded support\
+     -+							by adding the command of the tool to the \"mergetool.cmd\" option in the config.
+     -+							See the configuration documentation for more details." $tool]
+     ++			error_popup [mc "Unsupported merge tool '%s'.
+     ++							
+     ++To use this tool, configure \"mergetool.%s.cmd\" as shown in the git-config\
+     ++manual page." $tool $tool]
+      +			return
+      +		}
+       	}
+
+
+ git-gui/lib/mergetool.tcl | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/git-gui/lib/mergetool.tcl b/git-gui/lib/mergetool.tcl
+index e688b016ef6..2afc875ea0a 100644
+--- a/git-gui/lib/mergetool.tcl
++++ b/git-gui/lib/mergetool.tcl
+@@ -272,8 +272,26 @@ proc merge_resolve_tool2 {} {
+ 		}
+ 	}
+ 	default {
+-		error_popup [mc "Unsupported merge tool '%s'" $tool]
+-		return
++		set tool_cmd [get_config mergetool.$tool.cmd]
++		if {$tool_cmd ne {}} {
++			if {([string first {[} $tool_cmd] != -1) || ([string first {]} $tool_cmd] != -1)} {
++				error_popup [mc "Unable to process square brackets in mergetool.$tool.cmd configuration option.
++
++Please remove the square brackets."]
++				return
++			} else {
++				set cmdline {}
++				foreach command_part $tool_cmd {
++					lappend cmdline [subst -nobackslashes -nocommands $command_part]
++				}
++			}
++		} else {
++			error_popup [mc "Unsupported merge tool '%s'.
++							
++To use this tool, configure \"mergetool.%s.cmd\" as shown in the git-config\
++manual page." $tool $tool]
++			return
++		}
+ 	}
+ 	}
+ 
+
+base-commit: c5ee8f2d1c9d336e0a46139bd35236d4a0bb93ff
+-- 
+gitgitgadget
