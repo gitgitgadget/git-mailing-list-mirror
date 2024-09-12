@@ -1,85 +1,82 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1791B18BBB5
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 10:22:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BAD1E51D
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 10:41:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726136542; cv=none; b=SKcbnAP64tIJVNUr4b9Npwp9UKMnThBcQ94IydMS/vKdhHeejnJRAnZ0Kym+gPtonhby+bOY43vD4Kv2QtBQxLGAHvvALxAfMTTfn6rIrps4oslBbM3T78/nnwurKL19xGcKyrGOgg/N+m4UUnZveMIi2SysTIWOjcwKWAt0DJw=
+	t=1726137663; cv=none; b=mVy6Ns7ynXJDfqWQ73Rbs15+29Cpq8F1E0MSxtEZUAOVvYz0S/RZuHw0uvbBxvyGV93JrzbbBmF0zGiV+mKaWS8ooHSrUBIftlnCHt3R6ngZQlWJx0SvAEWPXafXSdm3PJCI+l46h9G6mouqyyg2rHGusKkEcpA2CIJzYTf6QAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726136542; c=relaxed/simple;
-	bh=CGj4epCLgsHZuBmYccfr1uV8Fgz5bvyQPbFapjLjAuI=;
+	s=arc-20240116; t=1726137663; c=relaxed/simple;
+	bh=qG0Vx2JnJB3xw5Gaq7PSyuhSwCaYYlVe93ldjuqlmlc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BKMeFouzgSVM7hxBfrbWo+cAzr9yxvrrsLkU9J1EG38fkI//dlEzhV+MF8ZpaoVfVsNzzTaJlxYgMTZdSPJ4282yt4tSlqFOEiESv4mhqd1f2sthv8vpOegRV4wTutsOnRA3Dn+EWF7ymv1zaHNZGNwTwnkYLwGEa9X7krmJAzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hQVgIogB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X2y9gFVQ; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=uDsiiuLSL6ozmbgEvgguoPWjCHI38hm/4lPIyV7/HvmPwov1MYtUMsUZ+twhN+3icEMVp7DOnLOwwcEBA+u2juPFVO6CZVW3manZ/MGEIU9tsG26RlnWGNQfX3DSkmf9PiXHLRI1d65Tn3G0Y/uSAMsCMvDZbGuhpmap4LbeYkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j0yOjjG3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YA1msYFC; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hQVgIogB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X2y9gFVQ"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2C306138032E;
-	Thu, 12 Sep 2024 06:22:20 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Thu, 12 Sep 2024 06:22:20 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j0yOjjG3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YA1msYFC"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5E20B11405C0;
+	Thu, 12 Sep 2024 06:41:00 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Thu, 12 Sep 2024 06:41:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726136540; x=1726222940; bh=UQbu3aWEfU
-	jakS7y7FktSfJrEXdcbK0+b3X2HcvaxrE=; b=hQVgIogBDvum+MwGKcaFHkB1Bv
-	XUaMmCVLfR4cJjWO7CrwYQCBPWGI76oyILC+R8q6mTI71TXP47ONFz0bLTDCJVBj
-	Yr6h5pItKmMQ27aAGCRIKQNnk/M2Or2yPENRVXJLk0fMpSiW43FWb37TDkmkJ+Hj
-	6sPD7Q7UYKO+JhSZK0XyOlHwiHLLGBWAlVAUYnzjvJkCkqwVpCo4+8XEq/RLpQL+
-	ND31p/Gdo7XWKCccPmB8aIYfYiyhvZiVBjS8qWMVpYY4AOu9OPZptU5htBmjepjv
-	9WlzV+zBDP15sqyc/Y59eGbFFvLv40LLWzoi/YR7eAEl5gruZo3BXTjZm8Tg==
+	:subject:to:to; s=fm1; t=1726137660; x=1726224060; bh=vQyX3rHom5
+	Pd8IPt5j4jFk04OgeSoS5KAtAS6O0LN/s=; b=j0yOjjG3cYd3WNadHuE9w4W7OO
+	PnKHEen1F59adGQOwAcaItxwLlR+p+nP7yCycRhSb067k5RboMcuDTuEQDmWZrtc
+	d4aqGTrnNotIh7UpCgDZ+fiQeRjFLoE4XO0GmzlPyavkJgbjXPrgo13XNeJSbUL+
+	HBD912LuCI/2lfKDvB+d08mwHPB5JXeLgsMdSG5kaFi5oCBZBJ1GKuWo22kDkTLF
+	gTQSK/8KpFjrIfHKpzYW3i0A67jVyXNWEb34S6yfINuRDmQBxh/xkZOHVqiYMlEp
+	M1Yyd9L1yDiHBgkOhbuOsGrBGhSHroRU42yPbtxW9jr9mSccR4pL+8sW3ZEw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726136540; x=1726222940; bh=UQbu3aWEfUjakS7y7FktSfJrEXdc
-	bK0+b3X2HcvaxrE=; b=X2y9gFVQiMN8D95WdUDq6su2eFqEAwLmwmaCIudnOdj3
-	0G+7ol9LFCZ+tC7IcsO2HcK5d+WzCDN5G46c9anOk1fc/c4YrBGUU6BRyjBuqkjO
-	gfb1fgLTFjXQqPHA3vd+KIyNESmoZSPGzS0TUmtu2OFFJcoxkOHOXcdDSsqwyK5C
-	++yybnarYmD3xmoJiOquWWNI5F+SbRvQLa10Reaoh6wbMYji2SFQv1SgaRDV5K8N
-	t32ORpYOiMJgsFVql3RPrj2cfclm6hhnzqvlVlYIeovVYsBfvDZcbqpjGQJXMUb6
-	HpV2eaFj1Wv13lOydzqLT/S1OfbRJAahwGjfPRH5tA==
-X-ME-Sender: <xms:28DiZobGKzNmkd96C0Kr5H-GyKgklHVtuthMBnZnwLG96uVCf0g-Ww>
-    <xme:28DiZjYHfp2xqTtXCdZS89jLaqpB7m004XHxeEYki4L3wczeMcOFpuqRBgLSCkgo-
-    mmdLjFzxqZ2JGfmSQ>
-X-ME-Received: <xmr:28DiZi_uS7qlPn8igw76PTtkwihndYuKNQzlHKHrMnDe0dkGWzu0AzRLesnKbanEWhI4vdOlxhlb93VRvSJaTLfqELGWLDSlYAKZN3LQUj3E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedgvdejucetufdoteggodetrfdotf
+	fm1; t=1726137660; x=1726224060; bh=vQyX3rHom5Pd8IPt5j4jFk04OgeS
+	oS5KAtAS6O0LN/s=; b=YA1msYFCvDSJzML1zq0JBp1p/PGns1R1mnZYbEEREJB+
+	0bjVQwmjKkqQdvCNK1xGuVbmAIrcehRR3sFOa7MSUbS36FnJWf7KNkfhzLDMprcI
+	utj2ZIK2aM8FwYzTJTG25Qsug91PJ+Yzvjs+utLt52ZwiJQk2DoGdaAXaKNynqZR
+	8gVk7yMF8Yh4qLVk+r0nAQOuVDS+f/D9KD/4Dh6fNkiQxKTJGUzVP+l06G8TJm6x
+	LzIlmImniUiXHz9PxXHmQ8YMOyjbQPnAbpaT6qcJALeV+awefSsh+ppyS+Y8Ilf4
+	Q+MMXUuqQHBIZo0aiTcyZMZPIymOLmcCRCEA4uByXA==
+X-ME-Sender: <xms:PMXiZkrApUerVi9Tqb56YFupeQZ6tRlpNJlVzi4nG98cYdWFQ9GEKw>
+    <xme:PMXiZqp3gyRz68PGMGgcj-vgA33WFYi4vJpCBhzAiZU4ChNmy4HD9JEGsIAeQhk9E
+    k8lQp86QbJwmSJt9Q>
+X-ME-Received: <xmr:PMXiZpMHlV01N982SOa9yJ4Y-wsk-7CueqCrlf22OfXJKRmqENBujsZdgWEE-rwSEjlTUk8-9JSJGbYjrsKOMH1p1gc6mSrDW7-9o-AN1xri>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedgfeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepieefuddvgffhkeeugfduieelgfdukeeguefgveegtdei
-    gfdtfeffkeevuefhgeefnecuffhomhgrihhnpehrvghfqdhfihhlthgvrhdrtgifnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
-    rdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epsghrohhokhgvsegrlhgthhgvmhhishhtshdrihhopdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhg
-X-ME-Proxy: <xmx:28DiZioQiiQGWgHtfeqWIg-HPiuxEP1KA0_TgmZlPlVd5G-pniiiEg>
-    <xmx:28DiZjpiSih_vkZwCt2ueAMeoGUh_mRNzt6iZwT9aTDEQuyhb67tFg>
-    <xmx:28DiZgSLSla9Un_RI0VEEDciE3xlhCjxdr67GsYrgtC3ptV_xHkxog>
-    <xmx:28DiZjpa8Mg4VkKThCn-FucF1dEwFU-_7krdsVQlFMJLQSdv5pkPuA>
-    <xmx:3MDiZiXNL-U4BFt6LFMkEpuu9tOO3SP2KGuV0viJMxGFDUi6kMxUKnGh>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
+    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:PMXiZr63qXfBksLi23yRcY6udxN7CBjna1b6vXjEGuOKwK9VN0tOzA>
+    <xmx:PMXiZj60w9GiH0Qs462NFTtOe23Kxil1WVx3WtgYFmaCIwhDDyERXQ>
+    <xmx:PMXiZrgOUpIuEVrPmqwGSM6BcFLQqwShli_z2Gi5uNQxycBHIzCOuA>
+    <xmx:PMXiZt4lZ5r7SDj1pHj8GkpTSQBoWECySC7gEvh-xDpu42uPI95Ikw>
+    <xmx:PMXiZlmT-CGBYbTdNvYg4pQobpG7PUFyXE--StVzMS3Ev-msA2v8CueC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Sep 2024 06:22:18 -0400 (EDT)
+ 12 Sep 2024 06:40:59 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 26162ecc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Sep 2024 10:22:08 +0000 (UTC)
-Date: Thu, 12 Sep 2024 12:22:16 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id d187f511 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Sep 2024 10:40:48 +0000 (UTC)
+Date: Thu, 12 Sep 2024 12:40:56 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Brooke Kuhlmann <brooke@alchemists.io>
-Subject: Re: [PATCH 10/9] ref-filter: fix leak with unterminated %(if) atoms
-Message-ID: <ZuLA0SBqhBbBdcd1@pks.im>
-References: <20240909230758.GA921697@coredump.intra.peff.net>
- <4faf815b780218769520561ecf3abca384a2ee6c.1725951400.git.ps@pks.im>
- <xmqqseu7jvz3.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/4] ci: drop run-docker scripts
+Message-ID: <ZuLFODJB3Ak8Y2WK@pks.im>
+References: <20240912094238.GA589050@coredump.intra.peff.net>
+ <20240912094336.GA589828@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,62 +85,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqseu7jvz3.fsf@gitster.g>
+In-Reply-To: <20240912094336.GA589828@coredump.intra.peff.net>
 
-On Tue, Sep 10, 2024 at 09:48:32AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Sep 12, 2024 at 05:43:36AM -0400, Jeff King wrote:
+> We haven't used these scripts since 4a6e4b9602 (CI: remove Travis CI
+> support, 2021-11-23), as the GitHub Actions config has support for
+> directly running jobs within docker containers.
 > 
-> > When parsing `%(if)` atoms we expect a few other atoms to exist to
-> > complete it, like `%(then)` and `%(end)`. Whether or not we have seen
-> > these other atoms is tracked in an allocated `if_then_else` structure,
-> > which gets free'd by the `if_then_else_handler()` once we have parsed
-> > the complete conditional expression.
-> >
-> > This results in a memory leak when the `%(if)` atom is not terminated
-> > correctly and thus incomplete. We never end up executing its handler and
-> > thus don't end up freeing the structure.
-> >
-> > Plug this memory leak by introducing a new `at_end_data_free` callback
-> > function. If set, we'll execute it in `pop_stack_element()` and pass it
-> > the `at_end_data` variable with the intent to free its state. Wire it up
-> > for the `%(if)` atom accordingly.
+> It's possible we might want to resurrect something like this in order to
+> be more agnostic to the CI platform. But it's not clear exactly what it
+> would look like. And in the meantime, it's just a maintenance burden as
+> we make changes to CI config, and is subject to bitrot. In fact it's
+> already broken; it references ci/install-docker-dependencies.sh, which
+> went away in 9cdeb34b96 (ci: merge scripts which install dependencies,
+> 2024-04-12).
 > 
-> Sounds good.  We diagnose unclosed "%(if)", report mismatch, and
-> die() soon, so plugging this may more about "let's silence leak
-> checker so that it can be more effective to help us find real leaks
-> that matter", not "this is leaking proportionally to the size of the
-> user data, and must be plugged".
-> 
-> I see this code snippet (not touched by your patch):
-> 
-> 	if (state.stack->prev) {
-> 		pop_stack_element(&state.stack);
-> 		return strbuf_addf_ret(error_buf, -1, _("format: %%(end) atom missing"));
-> 	}
-> 
-> and wonder how this handles the case where state.stack->prev->prev
-> is also not NULL.  Shouldn't it be looping while .prev is not NULL?
-> 
-> e.g.
-> 
-> diff --git c/ref-filter.c w/ref-filter.c
-> index b06e18a569..d2040f5047 100644
-> --- c/ref-filter.c
-> +++ w/ref-filter.c
-> @@ -3471,7 +3471,8 @@ int format_ref_array_item(struct ref_array_item *info,
->  		}
->  	}
->  	if (state.stack->prev) {
-> -		pop_stack_element(&state.stack);
-> +		while (state.stack->prev)
-> +			pop_stack_element(&state.stack);
->  		return strbuf_addf_ret(error_buf, -1, _("format: %%(end) atom missing"));
->  	}
->  	strbuf_addbuf(final_buf, &state.stack->output);
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I think this is worth doing even if we don't take the rest of the
+> patches. But obviously it gets even more bit-rotted as the other patches
+> change the CI config file.
 
-Hm. It certainly feels like we should do that. I couldn't construct a
-test case that fails with the leak sanitizer though. If it's a leak I'm
-sure I'll eventually hit it when I continue down the road headed towards
-leak-free-ness.
+I initially wanted to use them for GitLab CI, but eventually I figured
+that it makes way more sense to just merge the setup instructions we
+have into a single, unified script. Docker or not doesn't really matter
+all that much when you want to install dependencies. What matters more
+is the actual platform you're on, but that is independent of Docker
+anyway.
+
+The only remaining usecase I could see for these is to run CI-like
+builds on a developer's machine. But the fact that these scripts don't
+work at all anymore and have started to bitrot already demonstrates that
+nobody does seem to do that in the first place.
+
+So I think removing them is the right thing to do.
 
 Patrick
