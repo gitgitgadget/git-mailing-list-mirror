@@ -1,133 +1,103 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16C919FA65
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 10:41:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60C619EEA1
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 10:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726137669; cv=none; b=e32l/lVK/ut2HNwqnouvzRj1W895SY6yBFhWpJFfaCWq367dX24lKea2R10yNROMh1PbrAazguD7OUfsf3Sxruo77U5IaC8L3aHmIIxUqIzHKN+jhmqfwbEwztbe16HMT9IPdz6n/n3G4z6zpUFlfEjrhWYyG9GFttBz3ms3hmA=
+	t=1726137804; cv=none; b=M1U/AGgVDvRtrPy7/Q5uqvPm+ucc8qjyQx73cmj5b0dHrcraDI9yRRRdtUf8Idh4UPomIjQkPYIGLtJP0xScy5j3gbDgclvPr8GRwp8kkxcdXQaiBbXsYRreu0svZ7sk47/zZvlwqqcC8iFP9Rp0viGDyVKjJhzgFOQ27OAXo10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726137669; c=relaxed/simple;
-	bh=eXWa7l8DftCrkNCguPSk5LwLSVsmbD/tPxKIcB92R0w=;
+	s=arc-20240116; t=1726137804; c=relaxed/simple;
+	bh=ucni6qcXIjGN3x8LmQuwBUaFG9XXvylH+cyUIwlE2qc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uXxjVXKAmG5FE30GU8m4oMcBBc69cmpRlmOcX4tz+p1hVrw50WRU8tz2pG2EkpgRjhV/8Pj1TY5UgfOYksDjYBpbibjj9cFxBKBgGfLH+0EBDkizZne/Kbu+gK4kRk4C+CErO/S2UDYnNquffYC0nnatwvzA1fS6BPhH+tV6QMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NdW3pw+K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=al3zTZba; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NdW3pw+K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="al3zTZba"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EAA9911405C2;
-	Thu, 12 Sep 2024 06:41:04 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 12 Sep 2024 06:41:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726137664; x=1726224064; bh=zrVbN197ff
-	+7QrYwcHpxoc3qDYA5EtNMXzcwKueUvPQ=; b=NdW3pw+KWuONV2FUkpVE5Pnwug
-	PmydcFdl31nZ332l5j3iigChAIqtBFhwmLOZobrzBM+qeTDrMGJf3M7QyD0cK7KP
-	dJXY4T6Z/capemJWpDkKgZyGgiJffCFfI43/qWLd/sfwu4xkLVvdTD/KxWbotGGt
-	OBJ2+O7AoY7LK5ZGNbg3Xr5Tf+bhH+4B4dy4PsXMWBRzouq9yOV5U2BqwgFvBr/3
-	OYy9N3Gbi+AVYFX85mrM9Oocs8tqmpYqE6icwJ6zPbBhixR4CapU2byxLIL2/pgL
-	ZpeVP/svWmj4HyR0Hdzs7TsFPd2OECAFpsYIopKk69qxSo3+ZXDsbP4eAK7Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726137664; x=1726224064; bh=zrVbN197ff+7QrYwcHpxoc3qDYA5
-	EtNMXzcwKueUvPQ=; b=al3zTZbahAXDGTIAUIQfjP/Btz8NvWNbQWxu66NhfaUC
-	Wwg/8EE997UCIv2OcSEAia6r29pu+cqp5kmZ/+2fFW/hfjiUp9PINADmD4VTT7o/
-	FHGz9Ytzo/oHBLYwDL4bFcdElNLyV0NfRCGZ+ARndNpydmmpxHQV01N/RuPTaQD7
-	qLlGGfFhWsU4DVIeeqa2KaS+HNkNnPYE0YYua+fgQhtF+GJU6Zeo50HUV9+1Twkl
-	tbjxU219gsn+omU/7H/uhoFPb3LLb7cKZ+5OOvHWOXmeHRlGV0j0vt5e2JnqE29n
-	naR2QWM03mFXYjbAiTU75XISbINuZvDGxf9RWBOhTQ==
-X-ME-Sender: <xms:QMXiZpiGmGxOhHZGp6oxc9C6wt9j8pWIe0K0iJGbVfcPyOixkfz4Jg>
-    <xme:QMXiZuD683E_gQx_QRR4-0pcCUp4HuprsP5lLg4BWC6ghfKk1teERi1Ek2QB88q3f
-    -tirlA7yw3l3KEfbA>
-X-ME-Received: <xmr:QMXiZpFpJzb70y-1HujECv-TTtWGO0BCeNbAOzZKU6qAOpDAXegu2808uqBe0DVL7Y_VJuTTpw1VsUdThPwjDK2FPdxPouizMShQ48277Brc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedgfedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:QMXiZuSkL8zgzHqrYRFi6XK6fhAdU8KBbHjij0p8PbbPcBHAZDSYLQ>
-    <xmx:QMXiZmzR4bS7EQ6XsdrVU7Z_bqlsR47UXuzDwFYgCowhztac5ilo-g>
-    <xmx:QMXiZk7Pwx6cI1FisUFXVgvPd-nXHohzQRPZZZy5Ta5iXYxZVjb6RA>
-    <xmx:QMXiZrzpJDhDHsrGzw0mueEcelG3-CRspnsDE4togvVOXVEgce3V-w>
-    <xmx:QMXiZq-Q7eKpjdby7Rad_cwYFWacd55RXWLdRAN5vrAbrE1fDdOvRelW>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Sep 2024 06:41:03 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e8a2d140 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Sep 2024 10:40:55 +0000 (UTC)
-Date: Thu, 12 Sep 2024 12:41:03 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/4] ci: use more recent linux32 image
-Message-ID: <ZuLFPxsDiMB9UBhF@pks.im>
-References: <20240912094238.GA589050@coredump.intra.peff.net>
- <20240912094730.GC589828@coredump.intra.peff.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=m79i5awibP8SJwYNDA6qVyb29eWZGrb9CKrI5kucYBxSFzxC6KkDY9ULL5U4bdHMXuA9rOTye5SzuQfGQnk/iFERFGOErGwz050l1pispA4qxPuU/4kNYnt3B7loA52dFJFqNkd8cM6R6IHN7HZBIk6MbHIvu8CW7qUXYscDPrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 17424 invoked by uid 109); 12 Sep 2024 10:43:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Sep 2024 10:43:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23882 invoked by uid 111); 12 Sep 2024 10:43:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Sep 2024 06:43:19 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 12 Sep 2024 06:43:19 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 1/3] builtin: add a repository parameter for builtin
+ functions
+Message-ID: <20240912104319.GA593177@coredump.intra.peff.net>
+References: <pull.1778.git.git.1725555467.gitgitgadget@gmail.com>
+ <pull.1778.v2.git.git.1726001960.gitgitgadget@gmail.com>
+ <9aaf966254493678d3e25b93cb11017c814d3087.1726001961.git.gitgitgadget@gmail.com>
+ <xmqqed5rdw61.fsf@gitster.g>
+ <xmqqfrq56gqm.fsf@gitster.g>
+ <ZuK4RXMfherFBIxP@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240912094730.GC589828@coredump.intra.peff.net>
+In-Reply-To: <ZuK4RXMfherFBIxP@pks.im>
 
-On Thu, Sep 12, 2024 at 05:47:30AM -0400, Jeff King wrote:
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index 97f9b06310..db8e8f75a4 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -339,8 +339,8 @@ jobs:
->            image: alpine
->            distro: alpine-latest
->          - jobname: linux32
-> -          image: daald/ubuntu32:xenial
-> -          distro: ubuntu32-16.04
-> +          image: i386/ubuntu:focal
-> +          distro: ubuntu32-20.04
->          - jobname: pedantic
->            image: fedora
->            distro: fedora-latest
+On Thu, Sep 12, 2024 at 11:45:47AM +0200, Patrick Steinhardt wrote:
 
-We could counteract the loss of testing against Ubuntu 16.04 by adding
-it to GitLab CI instead:
+> > It turns out to be an "ar" archive full of *.o files.  Perhaps
+> > creation of libgit.a was interrupted, then later somebody said
+> > "git add .", and the file somehow ended up as a part of Git.
+> > 
+> > I've applied the series after removing the cruft.
+> 
+> I've noticed that something leaves behind this garbage from time to
+> time. It's a shame that its name is just random gibberish, because that
+> makes it impossible to set up a gitignore rule for it.
 
-    diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-    index 2589098eff7..80b1668ebeb 100644
-    --- a/.gitlab-ci.yml
-    +++ b/.gitlab-ci.yml
-    @@ -25,6 +25,9 @@ test:linux:
-           fi
-       parallel:
-         matrix:
-    +      - jobname: linux-old
-    +        image: ubuntu:16.04
-    +        CC: gcc
-           - jobname: linux-sha256
-             image: ubuntu:latest
-             CC: clang
+I've seen it once or twice, too. It's always st[A-Za-z0-9]{6}, at least
+on my system. Doing this:
 
-I didn't test it, but it should work alright. GitLab doesn't put any
-additional executables into the container, so it is entirely self
-contained. Let me know in case you think this is a good idea and I'll
-run a CI pipeline against this change.
+diff --git a/Makefile b/Makefile
+index 91f65d7dc5..b58312edab 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2860,7 +2860,7 @@ scalar$X: scalar.o GIT-LDFLAGS $(GITLIBS)
+ 		$(filter %.o,$^) $(LIBS)
+ 
+ $(LIB_FILE): $(LIB_OBJS)
+-	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
++	$(QUIET_AR)$(RM) $@ && ($(AR) $(ARFLAGS) $@ $^ & sleep 0.01; kill $$!) && false
+ 
+ $(XDIFF_LIB): $(XDIFF_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
 
-It's not 32 bit, but at least we continue to verify that Git builds
-against old distros.
+and then running "make" several times got me:
 
-Patrick
+  Untracked files:
+  	st5AOnzl
+  	st8gTTvD
+  	stJABM4u
+  	stKA7riS
+  	stLZ4yDr
+  	stMWJCVY
+  	stjYXpN0
+  	stwcX3kZ
+
+I don't think we'd want to put anything in the tracked .gitignore, since
+it involves system-specific details. But I think that:
+
+  /st[0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z]
+
+in your .git/info/excludes (or user-level gitignore) would work if you
+want, and is probably not too likely to hit false positives (since it
+lacks an extension).
+
+I do feel like I have only started seeing it in the last month or so. I
+wonder if a new version of binutils changed behavior or something.
+
+-Peff
