@@ -1,53 +1,53 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C151A0BCE
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 11:29:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9928D1A3BD4
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 11:29:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726140589; cv=none; b=hFQxoEyx9xkFRDIt3NvjuuaAFC5Df5/ailNJSgm56TTrQLpO+Rn2moZuxrpxHjAdxwzlc/4NtMgxfcoqXUAlPSiyri/XTG7qHYbith3/haWQuSaNmcYahv/2jnYb/4VeYRTwmnZKvMclsGzPC2XCph8OhQxvbAgwoqNkr4wvi50=
+	t=1726140592; cv=none; b=TGF/65EMEMAJSUHyd3Y3eN0lb3Q9GgK8lXOI/QkvSXslBMq79NPkz4EXKVe5LUNQ/++31MDA4jPmlvtqeq/rRDINXO65GhUMIqy5DMCP4T+eEmDLKd1jscav6b0NjpH0/AvWhNT5zVcyrQpYzcsQBC6oNvONRnEerNkcejO24b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726140589; c=relaxed/simple;
-	bh=bAJswoDzfxaX16rF+qk1R1DcHxDVE4DJyxZ62mhIj1I=;
+	s=arc-20240116; t=1726140592; c=relaxed/simple;
+	bh=PT4lPzQ9G2Ri0F+lmqvBNswi8qSX7ttf7tpfNNIqEWc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gWEoos4NkPkHvkEhM0hLCx5ja8phfE6k1HTzFj2C2AwdU9hrvH3Z9WoRwtfMeAxTutI6HNUL0M+LnNAsJQY7K0/r4ibiW0n+Qcr3WgN9Fbudb0MwaNDY+3zordaZZQkppuI9JD3XS9SUurSQtSoghVFPj66bGEtyDG17RuulJB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MnNXkJr5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qkwWgqlO; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=ST2AVuznXW/8DHncedz4VbTjWRphrh4FpqsaA/Xpn/nlqAvcgSKWd9S3bjNUl7etqnMHkN6J5WYmYjaeLT7eRXUpOGOgYOKbP7OutS0OJjXWidtDzvUCLHT0JNOuSI+T5udBZLVT5wKqcklENbNGRc6vub4eHQkvnQMP5yBb8gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tR95sQqT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HQuaXmr1; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MnNXkJr5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qkwWgqlO"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3C81311405E3;
-	Thu, 12 Sep 2024 07:29:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tR95sQqT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HQuaXmr1"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id B1A721380625;
+	Thu, 12 Sep 2024 07:29:49 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Thu, 12 Sep 2024 07:29:47 -0400
+  by phl-compute-11.internal (MEProxy); Thu, 12 Sep 2024 07:29:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726140587; x=1726226987; bh=dHQOZZFI/M
-	cq+23BlvBJVNXsJfpmkGp4NZk9M6rc/wE=; b=MnNXkJr5FwNg5gsnAHqjA6rdlq
-	mc8kQPqu29YRyCFqmQQ5UXO6TYBe3BSyE6PrbVpUlzF9EUsDLGAXVfVtdwj3DwqI
-	5LKnz3fLEGBNDq/zlnTKel1JvRcx++EUDANNLtzTBw03i6iISTkS9tHKvd5ptmzC
-	iyWDwaHDg9ot8AVu7Y17YAAsiJ6ilKb2Da+gu6kP0E3Zv0is/cpZ9xte15z6+swv
-	/imcB9j+aNav1fVhrxS+bftKNe7bGGITZZmV7Jpr2g3lqn6Qx/w1rX83KuXwEUiU
-	QCeN5MQT0ptlnXoH6YrYZvCnubzC9KPW3G2vbsmZWyElC3vLYAoTQZiQz8Ow==
+	:subject:to:to; s=fm1; t=1726140589; x=1726226989; bh=DYoYt1paYM
+	ZnFG78HHjz4bZEAyCKrpbLNx9qIi48DEY=; b=tR95sQqTyk9HKwTaduoyhiO2lc
+	l+3W639i8X7AHTM+1HgrmDvvb2ot7FTvxm04yTyHbWVFyWq0E8SmkD3+Yb3kSSrU
+	INaT2XPFK0Crwcl/uB64QYl8ErdhojX+5U54vRqkln8dMX4el7O3IsHdi+JpvcjJ
+	1mrUJusctUOZ2HJHgyQ7ZsastBMFosPRBD37XFPxgsO6J4mSFtWqgQB0CKG6BDjA
+	3eUSfhoJhxgWwRuw2HTTa23DQWioS3siUX4tLKQbkosAuut6jQjeQZVyUo20R658
+	zTD/pkRvriSXSq2LtEewcxUl/5/CCUJ+2fRFJe7vLa10Slhku7lP2E0+EtaQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726140587; x=1726226987; bh=dHQOZZFI/Mcq+23BlvBJVNXsJfpm
-	kGp4NZk9M6rc/wE=; b=qkwWgqlOj8yzLhmqKRPp6uQM56DOAeIj8KyTDTFv3m0B
-	hjfkSgCZR3x2ArhqKpKNoqJCH6lk8mucjVF3O8g+odBOWyNJctQzi+iRhdCMYF/w
-	iYIdehhOfQRgCqY9RSkq+ZdWhdRhGC9YoxgKvB7h3pufJo1YGicRk5Fg3y3FaA0+
-	hrCXJODgrGcKZWKDyIXJvB/luzP389cOxFFmXaUgnW/vpyNQSyc2K4xvgiqhM5lT
-	3Vm1iUdFn1+9cUXPC6QUvbDB77ND71GKrRrHE7MomPqs2G3ZItRNT34a45dr0CR3
-	7PSw0uLFVKrYrhGfjxJheCsP2ZoHCmnawek6sxa2sw==
-X-ME-Sender: <xms:qtDiZgy9ptZgknczJDYHeyCKfMpoVjpcxL4xaK0cXkFgNmmgn94E4g>
-    <xme:qtDiZkRi3SkscEXMOkVu5j9B0wTYoZimGDywawrsJ6Pb-8vgxLXDIVXDLDvXfhTmV
-    HdjzGdh0FHExkKV9Q>
-X-ME-Received: <xmr:qtDiZiVHnD89W-KK-Br-DYfbKavQs-jXfWPC2oda_9WNm2g2M9O-icDs4_M1JC9oRvpZ_iLZL7L71aa7ATAsbhV5yre1E7wj_d6bJiJ3YGfF>
+	fm1; t=1726140589; x=1726226989; bh=DYoYt1paYMZnFG78HHjz4bZEAyCK
+	rpbLNx9qIi48DEY=; b=HQuaXmr1Lu+VhTryiA38L7Vlkhq+jwV7k6q4eer40sjN
+	GpT3SFHXWSMJ8dsiZRlg2va2jvc3UjnSzAhjb8GOJeE3bz5AjgdxbALY3szAPcpD
+	xVhXXG/kdTepQVEgiQI4XYg11C/jZN/ngDaTkQHTFv/ioY3RBZTQA7chqmr2utcg
+	PEoNKics058XFZxN+VUEBHuxN002Jsq6VzJ2+ZU4KWC0OuQ6MDIZqfBtvduT1wXS
+	HA31WwoZrJRnjUyFp9Qk9oNB4FOygUfiKXNT0NeB21d/At+FMzEa/bALCBbvPsnh
+	VqBIZFFF9+uuLfRHgMCZQztpIz5/iRTdjauj2wXGHg==
+X-ME-Sender: <xms:rdDiZr1h6QJpmvvg4PLoGukBLhagyx5JUYI8zRSt3mGF4iEu-kGuAg>
+    <xme:rdDiZqGHYDMyoGWIGZhIhIs-3_TjDL5ZjwfezX3i8Xuob1uFznI16Gh9DWv83IECR
+    zrNC6o24fwEx5imRw>
+X-ME-Received: <xmr:rdDiZr69wDftt0Ni4C3AOXoNfB2gtzyOYANCM5qhrhzNwjU1PMoNcTuE8RJJ5kFn0Ee0GxMAYAeAwV2gbzE8mObSYjyNNjy4KYacSEvQy52j>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedggeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,31 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedggeduucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegt
-    rghlvhhinhifrghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:qtDiZuj0dG50Hi19upvmIk98dpk898GjxeThXVpPGNOceKS-aAXkAw>
-    <xmx:qtDiZiB7-E1AGQyXSJAsxxPXxnoiwSDXCIHoYmRUrCjQGbZBaXo--Q>
-    <xmx:qtDiZvLI0TNz5wltlNPwbx2--ZKl7wlZTWMy5MZntUdWEiym3vog6Q>
-    <xmx:qtDiZpCMkRg_g3Rke8ubB2ukDa-BsyyZOoW0h83XNMt0fhXMEskvcw>
-    <xmx:q9DiZp7RtnfSu7ZvEOzyrKpfD44td-AhKs3x3z_vuBK7elLKi_fVCqi6>
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhh
+    ihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrlhhvihhnfigrnhesgh
+    hoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:rdDiZg3qlNvWV43zerHczf_H9jWyDxj2EMcoMJHdfOTeiR2snAFqEg>
+    <xmx:rdDiZuEZ746hhUTCGy2opZtpp2-3Q9Mm4KKyGwaWhbHbHmPA1lTnwA>
+    <xmx:rdDiZh_HYCfPetVhgA2uCLe07xhYkT5oB3fQa1LrnQVW8yBpBTRaZw>
+    <xmx:rdDiZrkzTJxUVuYbQzuoPR1WWOOmposZ6KmWE45hxOGUh8DlHIPObA>
+    <xmx:rdDiZrPNGgrpg4lQeFx3tJRnc7wnJWIJ7loPgN49BU7R2t3YVzdEQPmx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Sep 2024 07:29:45 -0400 (EDT)
+ 12 Sep 2024 07:29:48 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 61a990fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Sep 2024 11:29:37 +0000 (UTC)
-Date: Thu, 12 Sep 2024 13:29:45 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5a25f607 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Sep 2024 11:29:40 +0000 (UTC)
+Date: Thu, 12 Sep 2024 13:29:48 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	karthik nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 08/21] config: make dependency on repo in
- `read_early_config()` explicit
-Message-ID: <1ed3d3f1d7142129212750602585550c69aa599e.1726139990.git.ps@pks.im>
+Subject: [PATCH v3 09/21] environment: move object database functions into
+ object layer
+Message-ID: <b164373d10bea7da632cb30ac85853e3162739a7.1726139990.git.ps@pks.im>
 References: <cover.1724923648.git.ps@pks.im>
  <cover.1726139990.git.ps@pks.im>
 Precedence: bulk
@@ -93,179 +93,188 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726139990.git.ps@pks.im>
 
-The `read_early_config()` function can be used to read configuration
-where a repository has not yet been set up. As such, it is optional
-whether or not `the_repository` has already been initialized. If it was
-initialized we use its commondir and gitdir. If not, the function will
-try to detect the Git directories by itself and, if found, also parse
-their config files.
-
-This means that we implicitly rely on `the_repository`. Make this
-dependency explicit by passing a `struct repository`. This allows us to
-again drop the `USE_THE_REPOSITORY_VARIABLE` define in "config.c".
+The `odb_mkstemp()` and `odb_pack_keep()` functions are quite clearly
+tied to the object store, but regardless of that they are located in
+"environment.c". Move them over, which also helps to get rid of
+dependencies on `the_repository` in the environment subsystem.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- alias.c                |  6 ++++--
- config.c               | 10 ++++------
- config.h               |  2 +-
- help.c                 |  2 +-
- pager.c                |  7 +++++--
- t/helper/test-config.c |  3 ++-
- trace2/tr2_cfg.c       |  4 +++-
- 7 files changed, 20 insertions(+), 14 deletions(-)
+ bundle-uri.c      |  2 +-
+ environment.c     | 34 ----------------------------------
+ environment.h     | 15 ---------------
+ object-file.c     | 33 +++++++++++++++++++++++++++++++++
+ object-store-ll.h | 15 +++++++++++++++
+ 5 files changed, 49 insertions(+), 50 deletions(-)
 
-diff --git a/alias.c b/alias.c
-index 4daafd9bdae..1a1a141a0ae 100644
---- a/alias.c
-+++ b/alias.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "alias.h"
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 1e0ee156ba3..eb8eca078bb 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -4,7 +4,6 @@
+ #include "bundle-uri.h"
+ #include "bundle.h"
+ #include "copy.h"
+-#include "environment.h"
+ #include "gettext.h"
+ #include "refs.h"
+ #include "run-command.h"
+@@ -13,6 +12,7 @@
  #include "config.h"
-@@ -37,7 +39,7 @@ char *alias_lookup(const char *alias)
- {
- 	struct config_alias_data data = { alias, NULL };
+ #include "fetch-pack.h"
+ #include "remote.h"
++#include "object-store-ll.h"
  
--	read_early_config(config_alias_cb, &data);
-+	read_early_config(the_repository, config_alias_cb, &data);
- 
- 	return data.v;
+ static struct {
+ 	enum bundle_list_heuristic heuristic;
+diff --git a/environment.c b/environment.c
+index 4d0637b3822..f337efd1dd5 100644
+--- a/environment.c
++++ b/environment.c
+@@ -23,7 +23,6 @@
+ #include "commit.h"
+ #include "strvec.h"
+ #include "object-file.h"
+-#include "object-store-ll.h"
+ #include "path.h"
+ #include "replace-object.h"
+ #include "tmp-objdir.h"
+@@ -268,39 +267,6 @@ void set_git_work_tree(const char *new_work_tree)
+ 	repo_set_worktree(the_repository, new_work_tree);
  }
-@@ -46,7 +48,7 @@ void list_aliases(struct string_list *list)
- {
- 	struct config_alias_data data = { NULL, NULL, list };
  
--	read_early_config(config_alias_cb, &data);
-+	read_early_config(the_repository, config_alias_cb, &data);
- }
- 
- void quote_cmdline(struct strbuf *buf, const char **argv)
-diff --git a/config.c b/config.c
-index a8357ea9544..043e1c8a078 100644
---- a/config.c
-+++ b/config.c
-@@ -6,8 +6,6 @@
-  *
-  */
- 
--#define USE_THE_REPOSITORY_VARIABLE
+-int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
+-{
+-	int fd;
+-	/*
+-	 * we let the umask do its job, don't try to be more
+-	 * restrictive except to remove write permission.
+-	 */
+-	int mode = 0444;
+-	git_path_buf(temp_filename, "objects/%s", pattern);
+-	fd = git_mkstemp_mode(temp_filename->buf, mode);
+-	if (0 <= fd)
+-		return fd;
 -
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "advice.h"
-@@ -2204,7 +2202,7 @@ static void configset_iter(struct config_set *set, config_fn_t fn, void *data)
- 	}
- }
- 
--void read_early_config(config_fn_t cb, void *data)
-+void read_early_config(struct repository *repo, config_fn_t cb, void *data)
+-	/* slow path */
+-	/* some mkstemp implementations erase temp_filename on failure */
+-	git_path_buf(temp_filename, "objects/%s", pattern);
+-	safe_create_leading_directories(temp_filename->buf);
+-	return xmkstemp_mode(temp_filename->buf, mode);
+-}
+-
+-int odb_pack_keep(const char *name)
+-{
+-	int fd;
+-
+-	fd = open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
+-	if (0 <= fd)
+-		return fd;
+-
+-	/* slow path */
+-	safe_create_leading_directories_const(name);
+-	return open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
+-}
+-
+ static void set_git_dir_1(const char *path)
  {
- 	struct config_options opts = {0};
- 	struct strbuf commondir = STRBUF_INIT;
-@@ -2212,9 +2210,9 @@ void read_early_config(config_fn_t cb, void *data)
+ 	xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
+diff --git a/environment.h b/environment.h
+index 52e1803aba6..682d4f2e3b5 100644
+--- a/environment.h
++++ b/environment.h
+@@ -200,21 +200,6 @@ extern int grafts_keep_true_parents;
  
- 	opts.respect_includes = 1;
+ extern int repository_format_precious_objects;
  
--	if (have_git_dir()) {
--		opts.commondir = repo_get_common_dir(the_repository);
--		opts.git_dir = repo_get_git_dir(the_repository);
-+	if (repo && repo->gitdir) {
-+		opts.commondir = repo_get_common_dir(repo);
-+		opts.git_dir = repo_get_git_dir(repo);
- 	/*
- 	 * When setup_git_directory() was not yet asked to discover the
- 	 * GIT_DIR, we ask discover_git_directory() to figure out whether there
-diff --git a/config.h b/config.h
-index f5fa833cb98..5c730c4f899 100644
---- a/config.h
-+++ b/config.h
-@@ -198,7 +198,7 @@ int git_config_from_parameters(config_fn_t fn, void *data);
-  * `the_repository` has not yet been set up, try to discover the Git
-  * directory to read the configuration from.
-  */
--void read_early_config(config_fn_t cb, void *data);
-+void read_early_config(struct repository *repo, config_fn_t cb, void *data);
+-/*
+- * Create a temporary file rooted in the object database directory, or
+- * die on failure. The filename is taken from "pattern", which should have the
+- * usual "XXXXXX" trailer, and the resulting filename is written into the
+- * "template" buffer. Returns the open descriptor.
+- */
+-int odb_mkstemp(struct strbuf *temp_filename, const char *pattern);
+-
+-/*
+- * Create a pack .keep file named "name" (which should generally be the output
+- * of odb_pack_name). Returns a file descriptor opened for writing, or -1 on
+- * error.
+- */
+-int odb_pack_keep(const char *name);
+-
+ const char *get_log_output_encoding(void);
+ const char *get_commit_output_encoding(void);
  
- /*
-  * Read config but only enumerate system and global settings.
-diff --git a/help.c b/help.c
-index c03863f2265..413c93edaea 100644
---- a/help.c
-+++ b/help.c
-@@ -618,7 +618,7 @@ const char *help_unknown_cmd(const char *cmd)
- 	memset(&other_cmds, 0, sizeof(other_cmds));
- 	memset(&aliases, 0, sizeof(aliases));
- 
--	read_early_config(git_unknown_cmd_config, NULL);
-+	read_early_config(the_repository, git_unknown_cmd_config, NULL);
- 
- 	/*
- 	 * Disable autocorrection prompt in a non-interactive session
-diff --git a/pager.c b/pager.c
-index 9c24ce62633..40b664f893c 100644
---- a/pager.c
-+++ b/pager.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "editor.h"
-@@ -92,7 +94,8 @@ const char *git_pager(int stdout_is_tty)
- 	pager = getenv("GIT_PAGER");
- 	if (!pager) {
- 		if (!pager_program)
--			read_early_config(core_pager_config, NULL);
-+			read_early_config(the_repository,
-+					  core_pager_config, NULL);
- 		pager = pager_program;
- 	}
- 	if (!pager)
-@@ -298,7 +301,7 @@ int check_pager_config(const char *cmd)
- 	data.want = -1;
- 	data.value = NULL;
- 
--	read_early_config(pager_command_config, &data);
-+	read_early_config(the_repository, pager_command_config, &data);
- 
- 	if (data.value)
- 		pager_program = data.value;
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index e193079ed54..33247f0e92e 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -96,7 +96,8 @@ int cmd__config(int argc, const char **argv)
- 	struct config_set cs;
- 
- 	if (argc == 3 && !strcmp(argv[1], "read_early_config")) {
--		read_early_config(early_config_cb, (void *)argv[2]);
-+		read_early_config(the_repository, early_config_cb,
-+				  (void *)argv[2]);
- 		return 0;
- 	}
- 
-diff --git a/trace2/tr2_cfg.c b/trace2/tr2_cfg.c
-index d96d908bb9d..22a99a0682a 100644
---- a/trace2/tr2_cfg.c
-+++ b/trace2/tr2_cfg.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "config.h"
- #include "strbuf.h"
-@@ -124,7 +126,7 @@ void tr2_cfg_list_config_fl(const char *file, int line)
- 	struct tr2_cfg_data data = { file, line };
- 
- 	if (tr2_cfg_load_patterns() > 0)
--		read_early_config(tr2_cfg_cb, &data);
-+		read_early_config(the_repository, tr2_cfg_cb, &data);
+diff --git a/object-file.c b/object-file.c
+index fa4121b98ad..968da27cd41 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -419,6 +419,39 @@ enum scld_error safe_create_leading_directories_const(const char *path)
+ 	return result;
  }
  
- void tr2_list_env_vars_fl(const char *file, int line)
++int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
++{
++	int fd;
++	/*
++	 * we let the umask do its job, don't try to be more
++	 * restrictive except to remove write permission.
++	 */
++	int mode = 0444;
++	git_path_buf(temp_filename, "objects/%s", pattern);
++	fd = git_mkstemp_mode(temp_filename->buf, mode);
++	if (0 <= fd)
++		return fd;
++
++	/* slow path */
++	/* some mkstemp implementations erase temp_filename on failure */
++	git_path_buf(temp_filename, "objects/%s", pattern);
++	safe_create_leading_directories(temp_filename->buf);
++	return xmkstemp_mode(temp_filename->buf, mode);
++}
++
++int odb_pack_keep(const char *name)
++{
++	int fd;
++
++	fd = open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
++	if (0 <= fd)
++		return fd;
++
++	/* slow path */
++	safe_create_leading_directories_const(name);
++	return open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
++}
++
+ static void fill_loose_path(struct strbuf *buf, const struct object_id *oid)
+ {
+ 	int i;
+diff --git a/object-store-ll.h b/object-store-ll.h
+index c5f2bb2fc2f..53b8e693b1b 100644
+--- a/object-store-ll.h
++++ b/object-store-ll.h
+@@ -231,6 +231,21 @@ struct raw_object_store {
+ struct raw_object_store *raw_object_store_new(void);
+ void raw_object_store_clear(struct raw_object_store *o);
+ 
++/*
++ * Create a temporary file rooted in the object database directory, or
++ * die on failure. The filename is taken from "pattern", which should have the
++ * usual "XXXXXX" trailer, and the resulting filename is written into the
++ * "template" buffer. Returns the open descriptor.
++ */
++int odb_mkstemp(struct strbuf *temp_filename, const char *pattern);
++
++/*
++ * Create a pack .keep file named "name" (which should generally be the output
++ * of odb_pack_name). Returns a file descriptor opened for writing, or -1 on
++ * error.
++ */
++int odb_pack_keep(const char *name);
++
+ /*
+  * Put in `buf` the name of the file in the local object database that
+  * would be used to store a loose object with the specified oid.
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
