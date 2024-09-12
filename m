@@ -1,33 +1,33 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EFB19F117
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 09:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A95919C57E
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 09:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726134453; cv=none; b=jLt75R6bJk97AefR+64jN/no4koFbWONLcEmjlkIa0wdHudN1ojaR2S8kPwOLZWLEJEAOokccuOhA3CJGHey/y2xGI5u34scwvCrmnLlJdDFDYHtH6+VTIwFtY5hqk8Ek0Im+PRKTS4cW5cjNQ0f+Ct2vedh7dq2e8UAZDFRMJk=
+	t=1726134525; cv=none; b=bpsaJExBXIlp5v86BM/gtiV4vO2esKESeoeoiPc3HXEgeCt2hmSsHDfk6O7lb610yO7MaKrl22OSXaZSU7p3llGyGtDsBBzGQHkCYp5mWk/w/fyFpi3DeaVH4yXltunDj3iPqTQH56XCAPSBvIeG23X3Iyn6qTbrj2mBsp4MKMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726134453; c=relaxed/simple;
-	bh=RJOHpm/WcLqlNi1wKFQs2REbMSCHENxgsNCnOsu9CEc=;
+	s=arc-20240116; t=1726134525; c=relaxed/simple;
+	bh=0bXaUXVbuI71wy+G/9fNYyPO9PL6CMtaTdX5o0jELRA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YN58XLqfxYKauPmE4BhU83ASjaDI03hitdKZ14IfIdHeHZSox11zCjTw25Z7NyFgadtH1YIWWLsR01Ee8yjme0Y7VzVf4wYJR/DPP1HtyMAdDctQ6EIw4aze4zWrWGX7P1Bgyd2i8ckbc8o/lploDrhSDvW1/FrA2POdi7PTqDw=
+	 Content-Type:Content-Disposition:In-Reply-To; b=GqxVHa50miTry72iCKoz5xOHgZxFQgBIdi9sn6eGg/A+X+0CR/6yz+D9EUQLcbu+glWcVwDeaFyTjqjcbzZE4bcH48EMEcZDwgZe1Z0ROqKFUeijDiR2hD67MerHN4msMbSKRcDbOYTilPqHBQAEza4LDCPKaCRK79ISW0bO+44=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 17317 invoked by uid 109); 12 Sep 2024 09:47:30 -0000
+Received: (qmail 17326 invoked by uid 109); 12 Sep 2024 09:48:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Sep 2024 09:47:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Sep 2024 09:48:42 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23174 invoked by uid 111); 12 Sep 2024 09:47:30 -0000
+Received: (qmail 23179 invoked by uid 111); 12 Sep 2024 09:48:42 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Sep 2024 05:47:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Sep 2024 05:48:42 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 12 Sep 2024 05:47:30 -0400
+Date: Thu, 12 Sep 2024 05:48:41 -0400
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: [PATCH 3/4] ci: use more recent linux32 image
-Message-ID: <20240912094730.GC589828@coredump.intra.peff.net>
+Subject: [PATCH 4/4] ci: use regular action versions for linux32 job
+Message-ID: <20240912094841.GD589828@coredump.intra.peff.net>
 References: <20240912094238.GA589050@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,71 +39,59 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240912094238.GA589050@coredump.intra.peff.net>
 
-The Xenial image we're using was released more than 8 years ago. This is
-a problem for using some recent GitHub Actions scripts, as they require
-Node.js 20, and all of the binaries they ship need glibc 2.28 or later.
-We're not using them yet, but moving forward prepares us for a future
-patch which will.
+The linux32 job runs inside a docker container with a 32-bit libc, etc.
+This breaks any GitHub Actions scripts that are implemented in
+javascript, because they ship with their own 64-bit version of Node.js
+that's dynamically linked. They'll fail with a message like:
 
-Xenial was actually the last official 32-bit Ubuntu release, but you can
-still find i386 images for more recent releases. This patch uses Focal,
-which was released in 2020 (and is the oldest one with glibc 2.28).
+    exec /__e/node20/bin/node: no such file or directory
 
-There are two small downsides here:
+because they can't find the runtime linker.
 
-  - while Xenial is pretty old, it is still in LTS support until April
-    2026. So there's probably some value in testing with such an old
-    system, and we're losing that.
+This hasn't been a problem until recently because we special-case older,
+non-javascript versions of these actions for the linux32 job. But it
+recently became an issue when our old version of actions/upload-artifact
+was deprecated, causing the job to fail. We worked around that in
+90f2c7240c (ci: remove 'Upload failed tests' directories' step from
+linux32 jobs, 2024-09-09), but it meant a loss of functionality for that
+job. And we may eventually run into the same deprecation problem with
+actions/checkout, which can't just be removed.
 
-  - there are no i386 subversion packages in the Focal repository. So we
-    won't be able to test that (OTOH, we had never tested it until the
-    previous patch which unified the 32/64-bit dependency code).
+We can solve the linking issue by installing the 64-bit libc and stdc++
+packages before doing anything else. Coupled with the switch to a more
+recent image in the previous patch, that lets us remove the
+special-casing of the action scripts entirely.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- .github/workflows/main.yml |  4 ++--
- ci/install-dependencies.sh | 11 ++++++++++-
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ .github/workflows/main.yml | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 97f9b06310..db8e8f75a4 100644
+index db8e8f75a4..916a64b673 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -339,8 +339,8 @@ jobs:
-           image: alpine
-           distro: alpine-latest
-         - jobname: linux32
--          image: daald/ubuntu32:xenial
--          distro: ubuntu32-16.04
-+          image: i386/ubuntu:focal
-+          distro: ubuntu32-20.04
-         - jobname: pedantic
-           image: fedora
-           distro: fedora-latest
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 00cb7df67a..735ee6f463 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -37,9 +37,18 @@ ubuntu-*|ubuntu32-*)
- 	# Required so that apt doesn't wait for user input on certain packages.
- 	export DEBIAN_FRONTEND=noninteractive
- 
-+	case "$distro" in
-+	ubuntu-*)
-+		SVN='libsvn-perl subversion'
-+		;;
-+	*)
-+		SVN=
-+		;;
-+	esac
-+
- 	sudo apt-get -q update
- 	sudo apt-get -q -y install \
--		language-pack-is libsvn-perl apache2 cvs cvsps git gnupg subversion \
-+		language-pack-is apache2 cvs cvsps git gnupg $SVN \
- 		make libssl-dev libcurl4-openssl-dev libexpat-dev wget sudo default-jre \
- 		tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl \
- 		libemail-valid-perl libio-pty-perl libio-socket-ssl-perl libnet-smtp-ssl-perl libdbd-sqlite3-perl libcgi-pm-perl \
+@@ -350,17 +350,17 @@ jobs:
+     runs-on: ubuntu-latest
+     container: ${{matrix.vector.image}}
+     steps:
+-    - uses: actions/checkout@v4
+-      if: matrix.vector.jobname != 'linux32'
+-    - uses: actions/checkout@v1 # cannot be upgraded because Node.js Actions aren't supported in this container
++    - name: prepare libc6 for actions
+       if: matrix.vector.jobname == 'linux32'
++      run: apt -q update && apt -q -y install libc6-amd64 lib64stdc++6
++    - uses: actions/checkout@v4
+     - run: ci/install-dependencies.sh
+     - run: ci/run-build-and-tests.sh
+     - name: print test failures
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+-      if: failure() && env.FAILED_TEST_ARTIFACTS != '' && matrix.vector.jobname != 'linux32'
++      if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       uses: actions/upload-artifact@v4
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
 -- 
 2.46.0.918.gab30941bff
-
