@@ -1,86 +1,86 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01E81A42D3
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 11:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF911A4B83
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 11:30:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726140609; cv=none; b=uOBSI4u/SyatDfdFCXGNdhU18aqO2Z36fmtgzZXMjOrr9O36K+qGZ2GnscspGQKgT2fSsnCxeojySgJYXSzL4OB1UsGkNF37oiHVvEByXKbn0IS7CiNhi4JJi8ikgFDCcF8YGbOPG2SKpmTz23rhSfF7KnjC5EqE+i+kCnne9cc=
+	t=1726140611; cv=none; b=C7eWb7xX+hgriDnHkBXsgBTijKHhk/tGsN45gxpUDMLtnelOjMSpLb2I3xwuQyZMPsiZl2eD4FU+9qBMHneIvjBeOmuItLO1a/ugnxkCsnOFdeBK94JFHWtwlbS3bJCtLvCnf2UhGTprUynDBuzYtMZhhd9hfB0V7Cuo146gFqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726140609; c=relaxed/simple;
-	bh=LO+zotbZUd05gVv8/HiZ4GvIhpRNdm/bs7lYGXz3bl4=;
+	s=arc-20240116; t=1726140611; c=relaxed/simple;
+	bh=xTJp0r2uyp7kQmtAtR+uPlL9gzrRdRCdM7TW5oVBjkY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PQMPz3gm1ULZXkQbvbS5DyqQkJ2fKm7ed2lbrdrv0wqhOijF+/KaNdN37baLecgQLwZ7SZFtm8IuWWc6qLv5XOdqnCiH5E+etC7QbxSTZyiNaCipva56oRayUuNOndifLyJJQl9uD8+8eMo5lqPjSpXEVhVhKfGmO+ZlhWMM0TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kvS6FOPR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=psticSmU; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=npY+ABy9TrZTzdk8uH/TvpAJcrmCObOP8jRd3RIHqrhUaBikvfgHwxZ64e0zsNVzRXc2vWkrf42KQJGHEC1z5u2Ivy7bbez2nXu98UCBjcEX5eIW/4GccBEf5a3TeouO0H9Xq8M49d7A74EhoqwHWljuy1J7H+PLX+SZ76yl+MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IAnJUK/s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H1jqtInL; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kvS6FOPR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="psticSmU"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0F45E11405B2;
-	Thu, 12 Sep 2024 07:30:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IAnJUK/s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H1jqtInL"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7CEE61380651;
+	Thu, 12 Sep 2024 07:30:09 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 12 Sep 2024 07:30:06 -0400
+  by phl-compute-09.internal (MEProxy); Thu, 12 Sep 2024 07:30:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726140606; x=1726227006; bh=WNhDvg3Xn2
-	L5Gxaf0O2TfCsRu8l24hNy7LNPtqbnRpU=; b=kvS6FOPRTnjKj6dmMGpT8pUQ+E
-	gz9eLszRZokJO8qU0YBpixDvxjSNsFVtE3PLLXNEjUWRG5HvQdRsASZQemtsLh8I
-	6zpRfqstkEtR9IBGT2VyHGYtxAERTV4wb14hnQIcaqEiMsv9QpkbQo8DCmBlv9AN
-	xzKRupgWXwR68XBI4O01C7bqAvR6YSkYUoogQXj1PWaa1v8uo6UgAoNSOH+KkKK8
-	ZvNEnBmSoLVE/Natl8yeESxIMdhWh3/uWyf8bYLJ4nXWKHKzlQ2Ok7rUJDb3VTWK
-	iKJWRyH1Wl5L1Rl78BNFL7UqzMQAU0jCFSbk8TFC4O1F715gaXQCD6XrKe/Q==
+	:subject:to:to; s=fm1; t=1726140609; x=1726227009; bh=ZSnv6vhaZX
+	8OQCDnGZ5JhPacEt+WfvRjvxW3Mx61PXs=; b=IAnJUK/sXf3nRN/q9SJbZSaD9w
+	oOd9gXY20gX0KuW+KWgDNcZUU3xQ+/bV1cQw7KH2rcM0GOVEcyYGNyDS2isappMl
+	OnsJyxbBx9wjrfOJHCwznGQXqFxu9syEgtJLeIxFSOEXo3dyNKPRvFhXePOc2FN4
+	XHdOAP78AHcEjbGlqqnK/hsSXjqR/QiAs7W5kltlyzXy9hK7AZ7vqDh8cMrxXc9P
+	KuPcjW0ZP+XPIBEkvIWXJoQArGCf39ewZLFj1F1kDN9h3HKOV2Kc9dwdc+Url6Or
+	UhdfEQE1D+6N1KSA9dHO4K62XSCu1HJ3naNt03mOWcwJwh0lImezp8orC3sQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726140606; x=1726227006; bh=WNhDvg3Xn2L5Gxaf0O2TfCsRu8l2
-	4hNy7LNPtqbnRpU=; b=psticSmUUWo2bi+GzYIfgnYoaFqIBC9DKQ+gwfWLIK+N
-	Rju2p/8Ovqip/6LU2Ap2FjknF4oeMeSWrOfde13HCLt+ohokfhBHe2sUQWI133o0
-	wbPVqGgAK1Q0n+dPHnMbGWhC5+YpQpc1Y+ocvR5IZFQ7kh18T8ccWj0yQ1TjozbF
-	bsUGyDHCeL+Rsk6lxqWRCf760QTIqmRoPisWrQf7HjRcNdB5SaLKcVqbo/wGLhsb
-	eJZOhKfNjEebsmoqty3S1cd1thveqrG6Y01/qLi0uHk8mXn32HQE2lcp8o05zMEM
-	C/bWXI4nONsTnSQsBNVBovEoeFX5hv+pp4LQ7TwMaA==
-X-ME-Sender: <xms:vdDiZlWUTAjHdxMXbTSaQW4AL2PPCrHKq-kD0GCZ0vVVnxunKY82nw>
-    <xme:vdDiZlmiMRL3gX7VQLvCb65vQsYlJfxBlzi--FlqPgvH99PFi0Ph4ENbnCg4sWpsx
-    Bw7mJCpUerwZsSmJQ>
-X-ME-Received: <xmr:vdDiZhZuaiZexlwEKk_JohhieDj9eW7VxovLPmntgn5pmlVIanFZqluxMuQ86PYLSSqvt8S88wHGoI1yh56SiG340TjeG-o_j9aDiIWyU_vT>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedggeduucetufdoteggodetrfdotf
+	fm1; t=1726140609; x=1726227009; bh=ZSnv6vhaZX8OQCDnGZ5JhPacEt+W
+	fvRjvxW3Mx61PXs=; b=H1jqtInLPjLlkFT1uVVxZmdRV3nay0fLP8IETCosK9gV
+	9njCp2qXR1UqmGoxKF6MYSj6QZayGxFa45n119REIHccLp+6BUqEUcuYnYrL4lOj
+	EEAgESrHVZ9vtDCgzX4tftbslCOF0pce5oQ0QBhVj5mywPFl9eU3XOtZfbJGmCo1
+	rGYpDccTZNF6BS3ClTqKvewwoMoYaGgHxixJHIxqbrO3PDI/lemVTyIdg0pMkTYT
+	wJ8kcBb0wz8oDxBRz3V9DeuvSIlyUKPcYHfxXkGODiQo2Khzf9bb0LV3PFPoFnAI
+	QU4FY1SEW1FSzTOrCJGRHOC+cbeZDdGjGwo4I1A02Q==
+X-ME-Sender: <xms:wdDiZtLrLbccQGZVF54X1Ah5KGi_5i_89c0UWi4xopXaDGsMc2EEvw>
+    <xme:wdDiZpIw-glh9myqO8APRTZKz27PWAYUZexfTMfi_u71muiH5JGQNKuoIw7DwcQpS
+    jpCpiaJ-VuqGzOICw>
+X-ME-Received: <xmr:wdDiZlsyImFNTPoECY6TsWYEnoQkZqnf4XVCS--eaMkJAVhL6B43jOv-X1xeYfLmnYqu_Vf2NhZPsFTw-3heLUA-noXo1Pla4bUgh5M5-JDO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedggedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghr
-    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtgho
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptggrlhhv
+    ihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
     mh
-X-ME-Proxy: <xmx:vdDiZoUPZM97GDtFwI-gMwU8S3DxmWg8KKmTjNnpv_aDPqvoQ0fz0Q>
-    <xmx:vdDiZvndaxSwZUdPuI5x6grrUf54yfBd2oPy5NXCg9K8bpQ0jr5PUA>
-    <xmx:vdDiZlfVzas8RS8bHqRCr1ZKliuMQeSitnPXQbN3A37VciieeOfszg>
-    <xmx:vdDiZpGRIaXf2zVgGokrTpXTaZ2gUWtY5qcXnDAArDBq-AQtMYm9dQ>
-    <xmx:vtDiZqt5cnWVc4XAe1mRZ7uKnbsfac0u-D69vcRsgMwJ2qZJOaVKJeWm>
+X-ME-Proxy: <xmx:wdDiZuaelK_CL_HX6UbJUKNwsZ_7FqLvNXkHDSYWNyV_mQYJxu67ig>
+    <xmx:wdDiZkYQVnU3KHiTar3w9vFVgFbV2TRcwVMLFxJOd52mgmUj6tTiXw>
+    <xmx:wdDiZiBusn1usMD3pAB-d1HBiwbpUHFKxA1p7ymkc1AllJ4yJZC2Qw>
+    <xmx:wdDiZiY1B4z4e_39rmOsYxZ38AWJ3uOLEXY1VerblnFA6FroDgtNzw>
+    <xmx:wdDiZjy7dGgJ03697ygjUG8zBcmrR_Bd7ssNg-KOUbNiGkOoqCDbk99Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Sep 2024 07:30:04 -0400 (EDT)
+ 12 Sep 2024 07:30:08 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b328ee6f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Sep 2024 11:29:56 +0000 (UTC)
-Date: Thu, 12 Sep 2024 13:30:04 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3caa263e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Sep 2024 11:29:59 +0000 (UTC)
+Date: Thu, 12 Sep 2024 13:30:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	karthik nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 14/21] repo-settings: split out declarations into a
- standalone header
-Message-ID: <a9d032b3ec7cb4cc99198c66ac8d003fea3f6883.1726139990.git.ps@pks.im>
+Subject: [PATCH v3 15/21] repo-settings: track defaults close to `struct
+ repo_settings`
+Message-ID: <7a74c8d8a8d640c2f0784984da93813c34fe3982.1726139990.git.ps@pks.im>
 References: <cover.1724923648.git.ps@pks.im>
  <cover.1726139990.git.ps@pks.im>
 Precedence: bulk
@@ -93,178 +93,64 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726139990.git.ps@pks.im>
 
-While we have "repo-settings.c", we do not have a corresponding
-"repo-settings.h" file. Instead, this functionality is part of the
-"repository.h" header, making it hard to discover.
+The default values for `struct repo_settings` are set up in
+`prepare_repo_settings()`. This is somewhat different from how we
+typically do this, namely by providing an `INIT` macro that sets up the
+default values for us.
 
-Split the declarations out of "repository.h" and create a standalone
-header file with them.
+Refactor the code to do the same.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- repo-settings.c |  1 +
- repo-settings.h | 56 +++++++++++++++++++++++++++++++++++++++++++++++++
- repository.h    | 51 +-------------------------------------------
- 3 files changed, 58 insertions(+), 50 deletions(-)
- create mode 100644 repo-settings.h
+ repo-settings.c | 9 ++++-----
+ repo-settings.h | 5 +++++
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/repo-settings.c b/repo-settings.c
-index 2b4e68731be..6165546e80a 100644
+index 6165546e80a..3a76ba276c9 100644
 --- a/repo-settings.c
 +++ b/repo-settings.c
-@@ -1,5 +1,6 @@
- #include "git-compat-util.h"
- #include "config.h"
-+#include "repo-settings.h"
- #include "repository.h"
- #include "midx.h"
+@@ -20,6 +20,7 @@ static void repo_cfg_int(struct repository *r, const char *key, int *dest,
  
+ void prepare_repo_settings(struct repository *r)
+ {
++	const struct repo_settings defaults = REPO_SETTINGS_INIT;
+ 	int experimental;
+ 	int value;
+ 	const char *strval;
+@@ -29,13 +30,11 @@ void prepare_repo_settings(struct repository *r)
+ 	if (!r->gitdir)
+ 		BUG("Cannot add settings for uninitialized repository");
+ 
+-	if (r->settings.initialized++)
++	if (r->settings.initialized)
+ 		return;
+ 
+-	/* Defaults */
+-	r->settings.index_version = -1;
+-	r->settings.core_untracked_cache = UNTRACKED_CACHE_KEEP;
+-	r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_CONSECUTIVE;
++	memcpy(&r->settings, &defaults, sizeof(defaults));
++	r->settings.initialized++;
+ 
+ 	/* Booleans config or default, cascades to other settings */
+ 	repo_cfg_bool(r, "feature.manyfiles", &manyfiles, 0);
 diff --git a/repo-settings.h b/repo-settings.h
-new file mode 100644
-index 00000000000..ff20a965373
---- /dev/null
+index ff20a965373..28f95695b3a 100644
+--- a/repo-settings.h
 +++ b/repo-settings.h
-@@ -0,0 +1,56 @@
-+#ifndef REPO_SETTINGS_H
-+#define REPO_SETTINGS_H
-+
-+struct fsmonitor_settings;
-+struct repository;
-+
-+enum untracked_cache_setting {
-+	UNTRACKED_CACHE_KEEP,
-+	UNTRACKED_CACHE_REMOVE,
-+	UNTRACKED_CACHE_WRITE,
-+};
-+
-+enum fetch_negotiation_setting {
-+	FETCH_NEGOTIATION_CONSECUTIVE,
-+	FETCH_NEGOTIATION_SKIPPING,
-+	FETCH_NEGOTIATION_NOOP,
-+};
-+
-+struct repo_settings {
-+	int initialized;
-+
-+	int core_commit_graph;
-+	int commit_graph_generation_version;
-+	int commit_graph_changed_paths_version;
-+	int gc_write_commit_graph;
-+	int fetch_write_commit_graph;
-+	int command_requires_full_index;
-+	int sparse_index;
-+	int pack_read_reverse_index;
-+	int pack_use_bitmap_boundary_traversal;
-+	int pack_use_multi_pack_reuse;
-+
-+	/*
-+	 * Does this repository have core.useReplaceRefs=true (on by
-+	 * default)? This provides a repository-scoped version of this
-+	 * config, though it could be disabled process-wide via some Git
-+	 * builtins or the --no-replace-objects option. See
-+	 * replace_refs_enabled() for more details.
-+	 */
-+	int read_replace_refs;
-+
-+	struct fsmonitor_settings *fsmonitor; /* lazily loaded */
-+
-+	int index_version;
-+	int index_skip_hash;
-+	enum untracked_cache_setting core_untracked_cache;
-+
-+	int pack_use_sparse;
-+	enum fetch_negotiation_setting fetch_negotiation_algorithm;
-+
-+	int core_multi_pack_index;
-+};
-+
-+void prepare_repo_settings(struct repository *r);
-+
-+#endif /* REPO_SETTINGS_H */
-diff --git a/repository.h b/repository.h
-index c603e969ae7..24a66a496a6 100644
---- a/repository.h
-+++ b/repository.h
-@@ -2,9 +2,9 @@
- #define REPOSITORY_H
+@@ -50,6 +50,11 @@ struct repo_settings {
  
- #include "strmap.h"
-+#include "repo-settings.h"
- 
- struct config_set;
--struct fsmonitor_settings;
- struct git_hash_algo;
- struct index_state;
- struct lock_file;
-@@ -14,59 +14,12 @@ struct submodule_cache;
- struct promisor_remote_config;
- struct remote_state;
- 
--enum untracked_cache_setting {
--	UNTRACKED_CACHE_KEEP,
--	UNTRACKED_CACHE_REMOVE,
--	UNTRACKED_CACHE_WRITE,
--};
--
--enum fetch_negotiation_setting {
--	FETCH_NEGOTIATION_CONSECUTIVE,
--	FETCH_NEGOTIATION_SKIPPING,
--	FETCH_NEGOTIATION_NOOP,
--};
--
- enum ref_storage_format {
- 	REF_STORAGE_FORMAT_UNKNOWN,
- 	REF_STORAGE_FORMAT_FILES,
- 	REF_STORAGE_FORMAT_REFTABLE,
+ 	int core_multi_pack_index;
  };
++#define REPO_SETTINGS_INIT { \
++	.index_version = -1, \
++	.core_untracked_cache = UNTRACKED_CACHE_KEEP, \
++	.fetch_negotiation_algorithm = FETCH_NEGOTIATION_CONSECUTIVE, \
++}
  
--struct repo_settings {
--	int initialized;
--
--	int core_commit_graph;
--	int commit_graph_generation_version;
--	int commit_graph_changed_paths_version;
--	int gc_write_commit_graph;
--	int fetch_write_commit_graph;
--	int command_requires_full_index;
--	int sparse_index;
--	int pack_read_reverse_index;
--	int pack_use_bitmap_boundary_traversal;
--	int pack_use_multi_pack_reuse;
--
--	/*
--	 * Does this repository have core.useReplaceRefs=true (on by
--	 * default)? This provides a repository-scoped version of this
--	 * config, though it could be disabled process-wide via some Git
--	 * builtins or the --no-replace-objects option. See
--	 * replace_refs_enabled() for more details.
--	 */
--	int read_replace_refs;
--
--	struct fsmonitor_settings *fsmonitor; /* lazily loaded */
--
--	int index_version;
--	int index_skip_hash;
--	enum untracked_cache_setting core_untracked_cache;
--
--	int pack_use_sparse;
--	enum fetch_negotiation_setting fetch_negotiation_algorithm;
--
--	int core_multi_pack_index;
--};
--
- struct repo_path_cache {
- 	char *squash_msg;
- 	char *merge_msg;
-@@ -273,8 +226,6 @@ int repo_read_index_unmerged(struct repository *);
-  */
- void repo_update_index_if_able(struct repository *, struct lock_file *);
+ void prepare_repo_settings(struct repository *r);
  
--void prepare_repo_settings(struct repository *r);
--
- /*
-  * Return 1 if upgrade repository format to target_version succeeded,
-  * 0 if no upgrade is necessary, and -1 when upgrade is not possible.
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
