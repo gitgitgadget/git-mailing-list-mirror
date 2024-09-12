@@ -1,53 +1,53 @@
 Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74571A3037
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 11:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAA51BC089
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 11:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726139827; cv=none; b=X5jPjseNIdYiwS3wr2ZvC7WtikCnKPoKUQEQf6gWnOJ2iiwiiDCN3RbUC7jRmmOF7VJqzrz2YIfyu0fLDlsGUchyRvgd39VLJNaXhMOgOdb4bFoxgUOzDYCc0vnA7hpJLsou5ihn2TECqSKet0GqVehYX2kF7mUQ+gWr+1GKynE=
+	t=1726139828; cv=none; b=skIz1hXy19gKVQoi9NoC+CLDa1Xz4PM/SZXjyBm/zqlDAEWXLtGKL86vec9w95unc1zsLNFCNTqfM+VGbJ1vzQ/g+RrmRelYjjfdjb08Ll5bm55PqIKyw45ICHAXXyT8YeKSVPBdmbjMWCmDSDSn3S8wnagZkhY0Wmuwxuo3rgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726139827; c=relaxed/simple;
-	bh=Mf1MpboTSLp3Jp8e0jbW53sMLGQo6eHgQW1U+vsbcI4=;
+	s=arc-20240116; t=1726139828; c=relaxed/simple;
+	bh=69fW4DPSz0Sze+uWticeV28/ywo8P9q+poKzximUNWI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GfWKZcPoBbjmtbQSuwjE0kmRmSz3XxpGG8elUhZam53ofZGHUlOb+/Anjo7dnlDaduhb95CVCVtq1fNmLUtO9RAcYkEu348vEQe5qU8P28o3+C7pNiRlPTDhuMgKnuh/e8CDKL1axPWFdcJKRai36HoFCbLK3ux1uvdHsbKf5YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=s2Llw+lb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S6hZuzIw; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZFd5ZnOvEBJ3gfxr9G7aBgKSMez4q897vzD413mHoF57W/GLTeX1AlTPyRVn9NBdAPipXhJV3Kyj4IfYw00N8mGlCT+1jKZUza4Tl9UXvNpG4pZc9D4VCvsjVVL4bK/nAdWkIjymKI18h28+8mRhhn42jZU2pRAayBaXHnfjp4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BQLoNIU+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F1Aj6eaP; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="s2Llw+lb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S6hZuzIw"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1817F1140598;
-	Thu, 12 Sep 2024 07:17:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BQLoNIU+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F1Aj6eaP"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7DA181140596;
+	Thu, 12 Sep 2024 07:17:06 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Thu, 12 Sep 2024 07:17:04 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 12 Sep 2024 07:17:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726139824; x=1726226224; bh=IgLZH+TjVl
-	JU4VvkNd7YkFHENYD7dOlO1nEKDDQQZpw=; b=s2Llw+lbXegqhj1CyxCr1rMtPu
-	30xOa8kjP08eZi+bjIeX/xtscg7nkygYa85IPEV0b+d6XhiCVZ7WPtYgTV5vxGXb
-	AgL5DAgKGjC62HF4fxU8PfNjYFgkrIiiOkUg1/kkAP6B2TkuJTMOqgpc2rUsVdsf
-	NK2A2sDXwWqmxFCSkF05ugrXG4cXlyENRmeE81L/3KEufHSrR61amjMm4rRJz5qB
-	kB5h/VAl/I46/VmIEEv5ete3ShlzYT6FswdyzRtAQJHQuv5uC+jjbCM258At5CQ2
-	cV1zfDINecYK8pa3IVdyh71KPkLLkGMU+liE7ulBlNgqyKztT3Y2ciOonMZw==
+	:subject:to:to; s=fm1; t=1726139826; x=1726226226; bh=094AirS7cS
+	VHGYZfxTyqKrE24iEWrPrSNg/bntMJ+4Y=; b=BQLoNIU+M6IYvvmt36GwvmY3wd
+	r5RQG9KVBqVZFE06AzEfnR+lDYXHY2bUDragw9DBgUFTLfG2ADHj9USROO7aYfKv
+	9x703zVezG1EyV89mA4pg7Yz6XEaMTgsg79hn3l/2QX4s95TDt0GiEcOZW0uueYp
+	2zEhnmxTE/CXXhYSi1sDzmBfXEki6shB8XmzFy5keBpEv/XuMXsbBI2ZuyIcsk7k
+	dem16+rUdaiJNr3jXaM0Ndi0Fuzu2Qtbq1whRpcZhBox8ogUeEvqzfaOKapQNW/E
+	bIJKkGnFic+RmCy3QWbJdAEFAvxD3G4wpinyCrZ7SFxoBB5HUGWw1ohOt4lg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726139824; x=1726226224; bh=IgLZH+TjVlJU4VvkNd7YkFHENYD7
-	dOlO1nEKDDQQZpw=; b=S6hZuzIwx9/dzY+22H6U8PGWzcABeaLgi/n2Y1GrzBIY
-	PMJWjDhY4qC0nEI/Dl7h0qNRPMkLj7g0kg9iPtJNZ8kWLzdk0RgFbcOPhE5Z5nsU
-	NyqDmiVXLGcIa5h3lzuKMtU+8nDrsyM+T2Bg+14uUIO54WD9Zseytr9YcKMYxFbt
-	l2he0l0fHMTo4yKg9OhtbkL6rSW3e7+GFc9d3Glxw5fWGqOpL5TA1x+c3nYmdsYR
-	HBMitXSdBEB/rRqUV4pgxSX2BJd79L0wr18wlW3QWOcb3ZNexToxmlE0zN81mlPF
-	Yk8hyeoI969Cy7DtF+VXJTYgOYZON4naCtlKJrgSyQ==
-X-ME-Sender: <xms:r83iZoAmQUglh35SjeYjp1YCHN2lVRMyMTlu5rc1MTDwkhqq4DtGjg>
-    <xme:r83iZqiAShIKG3BZFxj7_c1nqQfqr_lv9MlLYN53NOZpNL-ePjc1pOXi-LhTJts3N
-    4HqYBkwZZQVm7WTGQ>
-X-ME-Received: <xmr:r83iZrkPkPvFIlI3dJXDvSrMEqGwflAM99QqXseEN5rH7iDx9XXVjdcwmqFyp1v7jFiuOf-X_Msm2vQdyWljJ33uKv2wa0XHolnkCFRW_Lwm>
+	fm1; t=1726139826; x=1726226226; bh=094AirS7cSVHGYZfxTyqKrE24iEW
+	rPrSNg/bntMJ+4Y=; b=F1Aj6eaP0oAkhwTU7+D044P2iR1/ogmFQjQ54C3t0Wvx
+	KgORo/kPPU703+tFs8uOzzlxqFqOj5miUXf0LQQmkv9qP+wHfAliFoLAPmFvgp0y
+	4VnLSQOHOaLyhopwZHHe+6EYnDEfjOWJQ2O/vaF0QhDuNzXig0pF9sVaqHtNjO5s
+	nNKwNTsIlwLoVud2pUoWyvwYUNfVUjtJnHwQ5BBE0AEBUOXho6NowW5405hbMK0J
+	XoZKvqxbcVJdOwzJLIgnXpnUzSIosPd4ARDcyWWPHrLgzw+ToUJ5CYY4mL2rSWNQ
+	GwwI2AVHhjQ529n/7T8fwk21gmw3znHqaUrkPs1Kow==
+X-ME-Sender: <xms:ss3iZteydR3BGEIwuqcPqAHWiRGItsowaEEKqDrRv9NS-CcTSABAWQ>
+    <xme:ss3iZrNr9OHMVKv-ebf_5z29BSC9gWgvUT983mBuIc5MZPaCy_IotHA-cDlFgKI1X
+    RuVy3eKr6GYSj26jA>
+X-ME-Received: <xmr:ss3iZmgFOUhT9ijq-osTE0n0dAqW1Ky_Y0Mhu1MGJb7lMscLrn3pK4y-VZR-7VppB24u_NhfAwLLlqfL-4CFo6G7EnOu04cF-jTzMhgwryoO>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedgfeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,33 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedgfeelucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthho
-    sghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhooh
-    hglhgvrdgtohhm
-X-ME-Proxy: <xmx:r83iZuxT5rvWCus5fvh-ls9YFSMP2F5uWtRHV-VfcoizZZNNhcEa0w>
-    <xmx:r83iZtSHSzJz0X9shtMOoPRL_l549wX9wr1b6klQtqlD04L6326VqA>
-    <xmx:r83iZpbph9ZLjnlomlsfhfxF-OmJWjA56TsEsuwjziveJSNCNBC0Ag>
-    <xmx:r83iZmTKoFAA359LHFJY2tJrXwPJIMllt4e6Z76-ho6QjopC1udxZw>
-    <xmx:sM3iZrPB0_OoTsfJek1Y63f2IrQt4YRQJ5A0SOEnsnHP8_brux4UQj1r>
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhg
+X-ME-Proxy: <xmx:ss3iZm8p5mucySaUrTRSWRD76xBg5BWo5wauS0ELEso7b4E5ZX05EA>
+    <xmx:ss3iZpsi0Wppn005W4yrot0cz8MDLQElUemydpSqkkZs-ZjtvB5-2A>
+    <xmx:ss3iZlGa7THVILTV39C2mTNJC1XJyIgL1icgl9Gq_CgnhXtACIL5ZA>
+    <xmx:ss3iZgMMGa7Ay1Ak06itSQe1QHQYe4hqXefnt5bN7w72kTKMG_nsSQ>
+    <xmx:ss3iZjL4EO6p8gIzRrf_vz5eBwoiIEH2vGlNVzyu_iQ79aHoY_whQ_Yv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Sep 2024 07:17:02 -0400 (EDT)
+ 12 Sep 2024 07:17:05 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fb8b2aa5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Sep 2024 11:16:52 +0000 (UTC)
-Date: Thu, 12 Sep 2024 13:16:59 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4871a39b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Sep 2024 11:16:56 +0000 (UTC)
+Date: Thu, 12 Sep 2024 13:17:04 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 06/21] environment: make `get_git_work_tree()` accept
- a repository
-Message-ID: <ZuLNjhWtNpO6T8Bs@pks.im>
+Subject: Re: [PATCH v2 07/21] config: document `read_early_config()` and
+ `read_very_early_config()`
+Message-ID: <ZuLNsC7akB64OPpa@pks.im>
 References: <cover.1724923648.git.ps@pks.im>
  <cover.1725008897.git.ps@pks.im>
- <22e9dcb28a981eaa1a37a8b41e8d061347ed6c2e.1725008898.git.ps@pks.im>
- <wnorpwj5stwekbdvqzz6oyom5ppqhcsg3afvujslmy45r2djdb@sn6voa5d2e5v>
+ <ec4804a99bf70f9a97d1faea60bd55aaa97d1b80.1725008898.git.ps@pks.im>
+ <q4bmhi7dhadwhhuijatrpiayi7zjhrlgshcgucfp2s7uiczkth@o4jtzzqv2dmt>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,40 +91,83 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <wnorpwj5stwekbdvqzz6oyom5ppqhcsg3afvujslmy45r2djdb@sn6voa5d2e5v>
+In-Reply-To: <q4bmhi7dhadwhhuijatrpiayi7zjhrlgshcgucfp2s7uiczkth@o4jtzzqv2dmt>
 
-On Wed, Sep 11, 2024 at 10:15:06AM -0500, Justin Tobler wrote:
+On Wed, Sep 11, 2024 at 10:59:42AM -0500, Justin Tobler wrote:
 > On 24/08/30 11:09AM, Patrick Steinhardt wrote:
-> > The `get_git_work_tree()` function retrieves the path of the work tree
-> > of `the_repository`. Make it accept a `struct repository` such that it
-> > can work on arbitrary repositories and make it part of the repository
-> > subsystem. This reduces our reliance on `the_repository` and clarifies
-> > scope.
+> > It's not clear what `read_early_config()` and `read_very_early_config()`
+> > do differently compared to `repo_read_config()` from just looking at
+> > their names. Document both of these in the header file to clarify their
+> > intent.
 > > 
 > > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > > ---
-> [snip]
-> > diff --git a/repository.c b/repository.c
-> > index cdefcb4002d..92238da3d9e 100644
-> > --- a/repository.c
-> > +++ b/repository.c
-> > @@ -126,6 +126,11 @@ const char *repo_get_graft_file(struct repository *repo)
-> >  	return repo->graft_file;
+> >  config.c |  4 ----
+> >  config.h | 11 +++++++++++
+> >  2 files changed, 11 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/config.c b/config.c
+> > index 0b87f0f9050..a8357ea9544 100644
+> > --- a/config.c
+> > +++ b/config.c
+> > @@ -2234,10 +2234,6 @@ void read_early_config(config_fn_t cb, void *data)
+> >  	strbuf_release(&gitdir);
 > >  }
 > >  
-> > +const char *repo_get_work_tree(struct repository *repo)
-> > +{
-> > +	return repo->worktree;
-> > +}
+> > -/*
+> > - * Read config but only enumerate system and global settings.
+> > - * Omit any repo-local, worktree-local, or command-line settings.
+> > - */
+> >  void read_very_early_config(config_fn_t cb, void *data)
+> >  {
+> >  	struct config_options opts = { 0 };
+> > diff --git a/config.h b/config.h
+> > index d0497157c52..f5fa833cb98 100644
+> > --- a/config.h
+> > +++ b/config.h
+> > @@ -192,7 +192,18 @@ int git_config_from_blob_oid(config_fn_t fn, const char *name,
+> >  void git_config_push_parameter(const char *text);
+> >  void git_config_push_env(const char *spec);
+> >  int git_config_from_parameters(config_fn_t fn, void *data);
 > > +
+> > +/*
+> > + * Read config when the Git directory has not yet been set up. In case
+> > + * `the_repository` has not yet been set up, try to discover the Git
+> > + * directory to read the configuration from.
+> > + */
+> >  void read_early_config(config_fn_t cb, void *data);
 > 
-> Now that `repo_get_work_tree()` is accepting a `struct repository`, it's
-> only functioning as a simple accessor and seems somewhat unneccesary. Is
-> it preferrable to keep this?
+> To restate in my own words, `read_early_config()` allows a config to be
+> read before `the_repository` is setup by discovering the git dir itself.
+> Out of curiousity, what prevents us from just ensuring `the_repository`
+> is properly setup first?
 
-I think it still makes sense to keep it, mostly because we also have
-accessor functions for the other paths, too. It would feel weirdly
-asymmetric to have `repo_get_git_dir()` but not `repo_get_work_tree()`,
-in my opinion.
+This function is mostly called when we may or may not have a repository.
+This is for example important for alias handling: we want aliases to
+work when outside a repository, and they are not yet set up at the point
+in time where we need to resolve such an alias. If you happen to be in a
+repository, you also want to make its aliases available. If you aren't,
+you only want to make aliases in your global and system configuration
+available.
+
+> > +
+> > +/*
+> > + * Read config but only enumerate system and global settings.
+> > + * Omit any repo-local, worktree-local, or command-line settings.
+> > + */
+> >  void read_very_early_config(config_fn_t cb, void *data);
+> 
+> Here `read_very_early_config()` looks like it only cares about system
+> and global configuration so it doesn't require a git dir or
+> `the_repository` to be set up. Makes sense.
+> 
+> Not really related to this change, but it would be nice if the name of
+> the function itself was more descript. Something like
+> `config_read_system_and_global()`.
+> 
+> Overall, I find these new comments to be very helpful. Thanks! :)
+
+Agreed, the names aren't great. But as you say, I'd rather not fix them
+as part of this patch series.
 
 Patrick
