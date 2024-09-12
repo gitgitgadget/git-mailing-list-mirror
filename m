@@ -1,94 +1,113 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12759481C0
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 21:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83D719004A
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 22:34:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726178265; cv=none; b=EGBEuzX7ViSJSEhA3yi7XJnL3lFZ9TZcsVdGPFG+oGNkpmGdiAsv67HqNsjxJ76S0c/UuA7tsy/MrsJkr37ERbz0WqMHEAxPRxZi9rrsArL/ocUJsHelCJ9DrRmKlbLi2qMzujrXuYgZrFvuVFXhNzV+AqjZV1BIbAdNua6wTx0=
+	t=1726180458; cv=none; b=XykGAPVBE4qgqH14qyAedickUCKgcGJyoSVpRqztvpCuwSGGkqkuvD2q4soXwtb/I3zPOGEmIt5M6fvTG7PRdAXD6E0YdIBI8V2xLjtKoLKrX9Lb+lr3Rk/z6YwW6L53VBPUa9iVjxAmtMsxIcYa2Hd9d+XYlA4sdwP1943CM1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726178265; c=relaxed/simple;
-	bh=BcSJjR93iYFiK9M6hyycm1eaJ5UquhtoAprSW3EZ7zQ=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QWYll9BadCZ107HEjcYhEPrWQoiSXJqGwTHYG8B2+7ddqYL4IMqvi+3XVsLI4cpi5G12b26TKO/wVZj1fZ+1dbo7Ku4Kcx+MlnFcgIjct6Ut32GSoDKBhcYIRLDUSDCX6qqUxPEdsjab/HHatAB6plpCLEcsS+GbGgngjGTe4BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dV1/yY93; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dV1/yY93"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BA67C31619;
-	Thu, 12 Sep 2024 17:57:42 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=BcSJjR93iYFiK9M6hyycm1eaJ5UquhtoAprSW3
-	EZ7zQ=; b=dV1/yY93FDBQ0VzC/GAeIGBc7FZ1YwGsqwZZZfT0erSyNhPf9QnlQ3
-	4smsLMc3L8rHwKs5VyvfSd42P4epjfSdAvKTV/b8pZ2wApQp3HDUdI7tulb6T+Xb
-	TEDl71gALDKpp7NSEGyS/boZS/yuShyekT1Nt5rE3AR7QEQaafYkg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B223631618;
-	Thu, 12 Sep 2024 17:57:42 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2124C31617;
-	Thu, 12 Sep 2024 17:57:42 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Simplify "commented" API functions
-In-Reply-To: <20240912205301.1809355-1-gitster@pobox.com> (Junio C. Hamano's
-	message of "Thu, 12 Sep 2024 13:52:59 -0700")
-References: <20240912205301.1809355-1-gitster@pobox.com>
-Date: Thu, 12 Sep 2024 14:57:40 -0700
-Message-ID: <xmqq8qvw357v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1726180458; c=relaxed/simple;
+	bh=yM/SZCaOHWGJO3P3AGolJJApJ3YG4y3y1DZzxv8juwE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dvuYh4vA9j/YJUDyilZYDO0irWUZbwZA9bXggpMV0ZReBuszp6JWAf+b0oK5iC6yxr6sJgtNOasXhSvXr0rhW6UJQheBQQuDIHEsccM+hCYYzIX3JG/tq0OpqRo/lJ3aAD0Qpi7PpFzq+uOHXd2ruq6Gi3A62+8n4hM//BM8cos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 19363 invoked by uid 109); 12 Sep 2024 22:34:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Sep 2024 22:34:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29328 invoked by uid 111); 12 Sep 2024 22:34:13 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Sep 2024 18:34:13 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 12 Sep 2024 18:34:13 -0400
+From: Jeff King <peff@peff.net>
+To: Rodrigo <rodrigolive@gmail.com>
+Cc: git@vger.kernel.org
+Subject: [PATCH 0/2] fix bare repositories with Git.pm
+Message-ID: <20240912223413.GA649897@coredump.intra.peff.net>
+References: <CAGUZU_JZd_+8y19=kGif6u1+4n_+iOcVWV4p-kC0Uo=8Ev=aBA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 08DA0388-7152-11EF-A035-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGUZU_JZd_+8y19=kGif6u1+4n_+iOcVWV4p-kC0Uo=8Ev=aBA@mail.gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Sep 12, 2024 at 06:32:00PM +0200, Rodrigo wrote:
 
-> [earlier] https://lore.kernel.org/git/xmqq7cn4g3nx.fsf@gitster.g/
->
-> Junio C Hamano (2):
->   strbuf: retire strbuf_commented_addf()
->   strbuf: retire strbuf_commented_lines()
+> We're having an issue migrating from 2.31.1 to 2.46.0. The following
+> Perl code does not work in 2.46.0 as it did in 2.31.1 (tested linux
+> and darwin, did not check Windows):
+> 
+>     # test.pl
+>     use Git;
+>     my $repo = Git->repository( Directory => '/repo/bare.git' );
+>     my ($fh, $ctx) = $repo->command_output_pipe('rev-list', "2acf3456");
+>     print do { local $/; <$fh> };
+> 
+> Run:
+> 
+>    $ cd /home/rodrigo
+>    $ perl test.pl
+> 
+> Fails with the error:
+> 
+>     fatal: not a git repository: '/home/rodrigo'
 
-This of course has a semantic conflict with the change that hides
-not just "the_repository" and functions that implicitly use that
-variable but other unrelated globals from environment.h behind a
-compatibility macro.
+Yikes, good catch. That's a pretty bad bug. I'm surprised we didn't
+cover this in the tests, but it's specific to bare repositories.
 
-A trivial merge-fix to be used to annotate the merge to make it an
-evil merge whose result compiles looks like this:
+> Bug hunting through the Git.pm code and skimming through the Git SCM
+> repo, there's a significant change (commit 20da61f25) that makes the
+> recent Git.pm rely on:
+> 
+>      git rev-parse --is-bare-repository --git-dir
 
-    merge-fix/jc/strbuf-commented-something
+Yep, I confirmed via bisection that that commit is the culprit. Your
+analysis is mostly good, though...
 
-diff --git a/strbuf.c b/strbuf.c
-index 05a6dc944b..cb972b07f7 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -7,6 +7,14 @@
- #include "utf8.h"
- #include "date.h"
- 
-+/*
-+ * We do not need the_repository at all, but the comment_line_str is
-+ * hidden behind USE_THE_REPOSITORY_VARIABLE CPP macro.  We could
-+ * #define it before including "envirnoment.h".  Or we can make an
-+ * external declaration ourselves here.
-+ */
-+extern const char *comment_line_str;
-+
- int starts_with(const char *str, const char *prefix)
- {
- 	for (; ; str++, prefix++)
+> for locating the correct (maybe a parent) repo directory. The change
+> was understandably done for security (and other many) reasons. It
+> started using --is-bare-repository to detect if it's a bare repository
+> we're dealing with, instead of relying on the old Git.pm redundant
+> code for bare repo detection, which was a sound decision. But some
+> crucial code was taken out.
+
+...the problem is actually that not enough code was taken out. ;) I left
+the code in the bare-only code to turn the relative path to absolute,
+but it used the wrong path (the one returned by rev-parse, rather than
+the original Directory option that was passed in). That bare-only path
+should just go away entirely, and both should use the same (correct)
+code to get the absolute path.
+
+> SOLUTION: I propose using "--absolute-git-dir" instead of "--git-dir":
+> 
+>     git rev-parse --is-bare-repository --absolute-git-dir
+> 
+> Which will replace the `.`  rev-parse response with a full path
+> resolved by git itself (and not Perl). This means the change to the
+> Perl code is minimal. I don't know if this will resolve all possible
+> cases, but it does fix our issue.
+
+It does fix all cases, but it leaves some redundant code in place.
+Here are two patches. The first does the minimal fix within the code
+(what 20da61f25 should have done!) and corrects the problem. The second
+switches to --absolute-git-dir and drops the now-redundant code.
+
+Thank you for a very thorough bug report!
+
+  [1/2]: Git.pm: fix bare repository search with Directory option
+  [2/2]: Git.pm: use "rev-parse --absolute-git-dir" rather than perl code
+
+ perl/Git.pm         | 14 ++++++--------
+ t/t9700-perl-git.sh |  3 ++-
+ t/t9700/test.pl     |  5 +++++
+ 3 files changed, 13 insertions(+), 9 deletions(-)
+
+-Peff
