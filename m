@@ -1,53 +1,53 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F42018E043
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 11:29:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5491A2567
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 11:30:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726140600; cv=none; b=K12H4vj5zxfrkMA8quxaBbInNVCi7fG50EZSw1RSeqnj+8yDpRaHUeMPimJXmi36vOm9u7bAoKsa6RMNzC/0Xgosee23xWS97WnGiU2Srq/ndlOUbvWoO8cTOskRX7C7jGYRHA9vdcg4XMLCnqE/UdTEPSz4EMVO57Sccfunlys=
+	t=1726140603; cv=none; b=JNa5Id3/bDvb9u76YC6D/+k8gpWjm1LOjb5qcsceU1R4lW3JK3QXDiUStfhmClX24wt4u9pEJFRqzEFvTpUREX0FfZGsZdalWbXZ1kzi67Q2gKGZmItQHtotuu4QktHoXZ/k14TEQD512pb2pvuZgADYgkCIagiKgUH1oqvguJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726140600; c=relaxed/simple;
-	bh=rXrxOUiglOTReDdqdjkEfEM/zPSH64LxKP8xDk2JA8o=;
+	s=arc-20240116; t=1726140603; c=relaxed/simple;
+	bh=x0gHHgsySr3jILwR3M6yuzvr1Gqle8iVBTnrbOETR2g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I+H3EUOivZhVjLx9Ttq8w8jNhEQ7ye9SYr7NYiMaZAVvgadoin8uIsETzVC6hZjCcQ7bIadiPMicicTVL0Gpnx3oAIqq+b6/25Ne792DtoQId2a9CGJhsdPcaH78tuKE1LZ7T7iLVMe1J4UHVMgXQeQGMEdgN5TlPAb0uNixmYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WCODk+rv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IqncLUsd; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=QzzbyWCr5yQEg2XHR7q78o05KYChZ1tw2ptXqce+t/nfB+DskXBQonWdFgRTaVo1w7/xkqW9oVm9TPaDT6cArhfFtTv2Ymx2PT9O3j+kjADb3i02/UvaRRPMu1lYOfdQG5/9IgsxYJ5+r66Ujn5p8DckaIC8BTTwtXQOfODTkdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R07+ed1s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p/ShZvrh; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WCODk+rv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IqncLUsd"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 77A1E11405DF;
-	Thu, 12 Sep 2024 07:29:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R07+ed1s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p/ShZvrh"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id D7492138061F;
+	Thu, 12 Sep 2024 07:30:00 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 12 Sep 2024 07:29:58 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 12 Sep 2024 07:30:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726140598; x=1726226998; bh=BrtEbDbCMD
-	Q2twxdtHYway/CZE9075hCnWTgjb1fuEQ=; b=WCODk+rvh51EQxm7/yqJHWemUL
-	QJM5VJL7tfBArT//KT74AWW4r+9isJTWMFBTJPWmiCRoPJaMIAqxDHjj8qHArJmT
-	B5+HnYmF8cTaUN5pXVAxD9gGKNFH7DDGdDcMrAZ1JfAC4j8o5jp5a9iR5JKiB0pT
-	Le9r3E/D6f2Q4PFVentyII6B1TdnxuXy4d/yCa5K0oXOmu8qCG7CJzyR3Cr8vGXM
-	qqB1AnoJk+FVQoiNjP68e2RA+22sR6m8OYWll0fO4pP/ZwjN3O/Z+QZMVSuDDd4u
-	rmhnW/QJXuvWoWKJOMTb7mCCLuQ/5mmYPzpHeUXfu7ZXomFUt9HxorgSGggA==
+	:subject:to:to; s=fm1; t=1726140600; x=1726227000; bh=nulMwl1dF7
+	OpHLp3ERJdcKDaMzu4b1PhPa0JGt7XDvY=; b=R07+ed1sUMGVeg7rdi58bw1T9n
+	DbM/uieZR6xKWTEm4oCpS4hDFyi31LLsckHJhM17PzwEzrGgVvVh/OKNWRSI6sNe
+	11FMYNK6xgH/iTDlhViOacVMv/1AmA3/ikUbvHHrAuNwda9DQ2G+p+DsZ/PKMMW4
+	o5EKuLPPeXLKMpt9sLUdufkmGsWm83zEu4lPsbAkEByoHnjYXU5kRbWfIxhtRxGG
+	unrbzc4BRHQysPx1xJASJh/CsfP9pdSzaSI0HaUvrTUlerB1hqXBXt74zcl+UyGS
+	8T07jRu0fuDeFJzLQh1YtO5jGTR5YPTkFabSk5DIr+cDb6/BQ897cR/pktMg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726140598; x=1726226998; bh=BrtEbDbCMDQ2twxdtHYway/CZE90
-	75hCnWTgjb1fuEQ=; b=IqncLUsdQGOkAs7vbtr7WqkiflmKHXMmyyJfe/lCkw+D
-	m1ERpWArEi2dmpxnWSsKFtR5NVm/R6VTEXHzP9dVgxADjVbrqaR9jb2wF3wTACZ6
-	m44aluecOoRq3lTGAeubK5RsPV/AVdpeXcTByDPFH/QqKi++jAMi7MwsvoXwDir3
-	FuOk26bvnVAmcWXknmPVGMtJyLBGcp0vYTZpi87i3S5HMTsbrvDUkQp9BoKxAbrW
-	KFcdCWh3uarQc/jLiHr19/ZwSw1hzE9kNfQRtDmm1e36ZBUTe9o91fS3mQPdT0Ut
-	gFu02ID3DpOHP1IZau4MyUqPdrNcIemzHoQxtiplAQ==
-X-ME-Sender: <xms:ttDiZl1V0v5bX9g3RDvqnuWtWfwVL-6ZmSfi7ufO7Qhs3hfDEryJ5A>
-    <xme:ttDiZsEC8hcD_Rihwhayx84z1SsjFPFsBT9NDlRI3lvWSYnpUVEaBGgfQq1_vwzFV
-    TK7uZiLEV5MaMeNiQ>
-X-ME-Received: <xmr:ttDiZl7q0H_XIh5ubsYIQ6hm6XLdY4Horsiu6l3qMdGdMaesKNd0iMq42NE473g_PU5xfHpX5AQaIJlaEiKajyu3hvjuAcnBnkf81qLrZIuo>
+	fm1; t=1726140600; x=1726227000; bh=nulMwl1dF7OpHLp3ERJdcKDaMzu4
+	b1PhPa0JGt7XDvY=; b=p/ShZvrh19Da6U2MtGVHCSwjglk3E06AEwp/XRYpaKtj
+	aaujHvqC7stYlRk+LLu+RYeznTvDhXTNjNsFjNbY1cSXwf7l1z6RJ8aiZevJNV/s
+	DJbVBqDgoxc4qRPILidakI+V3ZUQQPyfX/F5CdO+DDnsSDjRhsQ2/sBs3TWBXpXY
+	O+ItS4kk9O/zudBrKTwQdRtjeXqqZPxC9IINEItp5SDJtT3Dhf4GTJu1Xh6pkZSU
+	Zfo5hO9nSC6lniHOGUQtFraRk0bOA4MNS9gpE+Hcr6VQy/D4crcZTaKGx18ygM84
+	jw59hzhonpzZk658q28gtSxbRx1C19nzQYNIVCsXIg==
+X-ME-Sender: <xms:uNDiZrL8uO-8FKG1fcwz0Pk5ymsGMeVeP4aDM6xMPXU46HlYhEsJjw>
+    <xme:uNDiZvKf2dylvwDlunDS1pzq7fK-2R-KamxfRRmIj1dkO506I8LO7ihYgu4ykDVYh
+    Uno2Z_AVrpvfIt3hw>
+X-ME-Received: <xmr:uNDiZjve1NS1VEmNGBT6Hs7TYlP_jSyT-Zu2W7HDP6iUdoXGzdELh7priYqap05sVuwznR5IyJ9jxBqEi65dhR6ZYA8aEzbUO4kIQS3dBI4D>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedggeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,31 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedggeduucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehj
-    lhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrdduke
-    eksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthho
+    sghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhooh
+    hglhgvrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
     mh
-X-ME-Proxy: <xmx:ttDiZi2qD_b8neP-44Pyg-Jg9mTtCiAYs_F_uU3yC6Cf89E7Qo2KzQ>
-    <xmx:ttDiZoGnT_vH8kBaU-b4SG3Rh1q2idEcEeW45pwqJCk4elq--k97jQ>
-    <xmx:ttDiZj_UOlvM_TlvOH6q-CUth_xXPBgG4bD_zLcNDXRpingng7OH2Q>
-    <xmx:ttDiZlmKbnF2C3KJXxGvJ2-Fuonmbvl4kZFnalOMmfn5CS1ATWEtLQ>
-    <xmx:ttDiZtOTs97bxmZlSMu1fIM_-hNMRA6bZ3T9AZCZn7RcihBtvS9UWgbJ>
+X-ME-Proxy: <xmx:uNDiZkYNkytKVmFOrSrn1FCBjSE73e4eAf1SmBSQbFSx7WXH0Yb60A>
+    <xmx:uNDiZiZPVdg1F7BuhbHMDKA1Uw8qImfSZgmlqt1NzkAJUoyIKp8NfA>
+    <xmx:uNDiZoBzXS2-IXa6HYGZyKmUD6_f4jEbmXCVPr_VkAsw_Y-j8mzm3w>
+    <xmx:uNDiZga_LDNaqEva6ubzZPWF0Frag9QDiaoCkgfr8HO_JYcfy-MHXQ>
+    <xmx:uNDiZpzb1QJE9igfVgRB256EGiuJecH5daDWtGpFh311FiWa1wbjE46j>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Sep 2024 07:29:57 -0400 (EDT)
+ 12 Sep 2024 07:29:59 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 45fc3538 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Sep 2024 11:29:48 +0000 (UTC)
-Date: Thu, 12 Sep 2024 13:29:54 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7398c30f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Sep 2024 11:29:50 +0000 (UTC)
+Date: Thu, 12 Sep 2024 13:29:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	karthik nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 11/21] environment: move `set_git_dir()` and related into
- setup layer
-Message-ID: <437b6f1f30d1e582e2e8a35f43d60a1fccb86740.1726139990.git.ps@pks.im>
+Subject: [PATCH v3 12/21] environment: reorder header to split out
+ `the_repository`-free section
+Message-ID: <8de5b246dadd7de97ffebb22f6f018aeb7a74917.1726139990.git.ps@pks.im>
 References: <cover.1724923648.git.ps@pks.im>
  <cover.1726139990.git.ps@pks.im>
 Precedence: bulk
@@ -93,316 +93,183 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726139990.git.ps@pks.im>
 
-The functions `set_git_dir()` and friends are used to set up
-repositories. As such, they are quite clearly part of the setup
-subsystem, but still live in "environment.c". Move them over, which also
-helps to get rid of dependencies on `the_repository` in the environment
-subsystem.
+Reorder the "environment.h" header such that declarations which are free
+from `the_repository` come before those which aren't. The new structure
+is now:
+
+    - Defines for environment variable names.
+
+    - Things which do not rely on a repository.
+
+    - Things which do, including those that implicitly rely on a parsed
+      repository. This includes for example variables which get
+      populated when reading repository config.
+
+This will allow us to guard the last category of declarations with
+`USE_THE_REPOSITORY_VARIABLE`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- environment.c | 105 -------------------------------------------------
- environment.h |   2 -
- setup.c       | 106 ++++++++++++++++++++++++++++++++++++++++++++++++++
- setup.h       |   3 ++
- 4 files changed, 109 insertions(+), 107 deletions(-)
+ environment.h | 81 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 40 insertions(+), 41 deletions(-)
 
-diff --git a/environment.c b/environment.c
-index 49844418419..64ae13ef240 100644
---- a/environment.c
-+++ b/environment.c
-@@ -22,14 +22,9 @@
- #include "fmt-merge-msg.h"
- #include "commit.h"
- #include "strvec.h"
--#include "object-file.h"
- #include "path.h"
--#include "replace-object.h"
--#include "tmp-objdir.h"
- #include "chdir-notify.h"
- #include "setup.h"
--#include "shallow.h"
--#include "trace.h"
- #include "write-or-die.h"
- 
- int trust_executable_bit = 1;
-@@ -155,41 +150,6 @@ const char *getenv_safe(struct strvec *argv, const char *name)
- 	return argv->v[argv->nr - 1];
- }
- 
--void setup_git_env(const char *git_dir)
--{
--	char *git_replace_ref_base;
--	const char *shallow_file;
--	const char *replace_ref_base;
--	struct set_gitdir_args args = { NULL };
--	struct strvec to_free = STRVEC_INIT;
--
--	args.commondir = getenv_safe(&to_free, GIT_COMMON_DIR_ENVIRONMENT);
--	args.object_dir = getenv_safe(&to_free, DB_ENVIRONMENT);
--	args.graft_file = getenv_safe(&to_free, GRAFT_ENVIRONMENT);
--	args.index_file = getenv_safe(&to_free, INDEX_ENVIRONMENT);
--	args.alternate_db = getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT);
--	if (getenv(GIT_QUARANTINE_ENVIRONMENT)) {
--		args.disable_ref_updates = 1;
--	}
--
--	repo_set_gitdir(the_repository, git_dir, &args);
--	strvec_clear(&to_free);
--
--	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
--		disable_replace_refs();
--	replace_ref_base = getenv(GIT_REPLACE_REF_BASE_ENVIRONMENT);
--	git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
--							  : "refs/replace/");
--	update_ref_namespace(NAMESPACE_REPLACE, git_replace_ref_base);
--
--	shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
--	if (shallow_file)
--		set_alternate_shallow_file(the_repository, shallow_file, 0);
--
--	if (git_env_bool(NO_LAZY_FETCH_ENVIRONMENT, 0))
--		fetch_if_missing = 0;
--}
--
- int is_bare_repository(void)
- {
- 	/* if core.bare is not 'false', let's see if there is a work tree */
-@@ -243,71 +203,6 @@ const char *strip_namespace(const char *namespaced_ref)
- 	return NULL;
- }
- 
--static int git_work_tree_initialized;
--
--/*
-- * Note.  This works only before you used a work tree.  This was added
-- * primarily to support git-clone to work in a new repository it just
-- * created, and is not meant to flip between different work trees.
-- */
--void set_git_work_tree(const char *new_work_tree)
--{
--	if (git_work_tree_initialized) {
--		struct strbuf realpath = STRBUF_INIT;
--
--		strbuf_realpath(&realpath, new_work_tree, 1);
--		new_work_tree = realpath.buf;
--		if (strcmp(new_work_tree, the_repository->worktree))
--			die("internal error: work tree has already been set\n"
--			    "Current worktree: %s\nNew worktree: %s",
--			    the_repository->worktree, new_work_tree);
--		strbuf_release(&realpath);
--		return;
--	}
--	git_work_tree_initialized = 1;
--	repo_set_worktree(the_repository, new_work_tree);
--}
--
--static void set_git_dir_1(const char *path)
--{
--	xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
--	setup_git_env(path);
--}
--
--static void update_relative_gitdir(const char *name UNUSED,
--				   const char *old_cwd,
--				   const char *new_cwd,
--				   void *data UNUSED)
--{
--	char *path = reparent_relative_path(old_cwd, new_cwd,
--					    repo_get_git_dir(the_repository));
--	struct tmp_objdir *tmp_objdir = tmp_objdir_unapply_primary_odb();
--
--	trace_printf_key(&trace_setup_key,
--			 "setup: move $GIT_DIR to '%s'",
--			 path);
--	set_git_dir_1(path);
--	if (tmp_objdir)
--		tmp_objdir_reapply_primary_odb(tmp_objdir, old_cwd, new_cwd);
--	free(path);
--}
--
--void set_git_dir(const char *path, int make_realpath)
--{
--	struct strbuf realpath = STRBUF_INIT;
--
--	if (make_realpath) {
--		strbuf_realpath(&realpath, path, 1);
--		path = realpath.buf;
--	}
--
--	set_git_dir_1(path);
--	if (!is_absolute_path(path))
--		chdir_notify_register(NULL, update_relative_gitdir, NULL);
--
--	strbuf_release(&realpath);
--}
--
- const char *get_log_output_encoding(void)
- {
- 	return git_log_output_encoding ? git_log_output_encoding
 diff --git a/environment.h b/environment.h
-index 682d4f2e3b5..b8460396790 100644
+index b8460396790..f1a7c645db5 100644
 --- a/environment.h
 +++ b/environment.h
-@@ -105,10 +105,8 @@ int have_git_dir(void);
+@@ -1,22 +1,6 @@
+ #ifndef ENVIRONMENT_H
+ #define ENVIRONMENT_H
+ 
+-struct strvec;
+-
+-/*
+- * The character that begins a commented line in user-editable file
+- * that is subject to stripspace.
+- */
+-extern const char *comment_line_str;
+-extern char *comment_line_str_to_free;
+-extern int auto_comment_line_char;
+-
+-/*
+- * Wrapper of getenv() that returns a strdup value. This value is kept
+- * in argv to be freed later.
+- */
+-const char *getenv_safe(struct strvec *argv, const char *name);
+-
+ /* Double-check local_repo_env below if you add to this list. */
+ #define GIT_DIR_ENVIRONMENT "GIT_DIR"
+ #define GIT_COMMON_DIR_ENVIRONMENT "GIT_COMMON_DIR"
+@@ -86,6 +70,8 @@ const char *getenv_safe(struct strvec *argv, const char *name);
+  */
+ #define GIT_IMPLICIT_WORK_TREE_ENVIRONMENT "GIT_IMPLICIT_WORK_TREE"
+ 
++#define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
++
+ /*
+  * Repository-local GIT_* environment variables; these will be cleared
+  * when git spawns a sub-process that runs inside another repository.
+@@ -94,6 +80,28 @@ const char *getenv_safe(struct strvec *argv, const char *name);
+  */
+ extern const char * const local_repo_env[];
+ 
++struct strvec;
++
++/*
++ * Wrapper of getenv() that returns a strdup value. This value is kept
++ * in argv to be freed later.
++ */
++const char *getenv_safe(struct strvec *argv, const char *name);
++
++/*
++ * Should we print an ellipsis after an abbreviated SHA-1 value
++ * when doing diff-raw output or indicating a detached HEAD?
++ */
++int print_sha1_ellipsis(void);
++
++/*
++ * Returns the boolean value of $GIT_OPTIONAL_LOCKS (or the default value).
++ */
++int use_optional_locks(void);
++
++const char *get_git_namespace(void);
++const char *strip_namespace(const char *namespaced_ref);
++
+ void setup_git_env(const char *git_dir);
+ 
+ /*
+@@ -102,13 +110,19 @@ void setup_git_env(const char *git_dir);
+  */
+ int have_git_dir(void);
+ 
++/*
++ * Accessors for the core.sharedrepository config which lazy-load the value
++ * from the config (if not already set). The "reset" function can be
++ * used to unset "set" or cached value, meaning that the value will be loaded
++ * fresh from the config file on the next call to get_shared_repository().
++ */
++void set_shared_repository(int value);
++int get_shared_repository(void);
++void reset_shared_repository(void);
++
  extern int is_bare_repository_cfg;
  int is_bare_repository(void);
  extern char *git_work_tree_cfg;
--void set_git_dir(const char *path, int make_realpath);
- const char *get_git_namespace(void);
- const char *strip_namespace(const char *namespaced_ref);
--void set_git_work_tree(const char *tree);
+-const char *get_git_namespace(void);
+-const char *strip_namespace(const char *namespaced_ref);
+-
+-#define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
  
- #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+ /* Environment bits from configuration mechanism */
+ extern int trust_executable_bit;
+@@ -134,16 +148,6 @@ extern unsigned long big_file_threshold;
+ extern unsigned long pack_size_limit_cfg;
+ extern int max_allowed_tree_depth;
  
-diff --git a/setup.c b/setup.c
-index 1bfec288ab6..19cce5afa72 100644
---- a/setup.c
-+++ b/setup.c
-@@ -7,16 +7,22 @@
- #include "exec-cmd.h"
- #include "gettext.h"
- #include "hex.h"
-+#include "object-file.h"
- #include "object-name.h"
- #include "refs.h"
-+#include "replace-object.h"
- #include "repository.h"
- #include "config.h"
- #include "dir.h"
- #include "setup.h"
-+#include "shallow.h"
- #include "string-list.h"
-+#include "strvec.h"
- #include "chdir-notify.h"
- #include "path.h"
- #include "quote.h"
-+#include "tmp-objdir.h"
-+#include "trace.h"
- #include "trace2.h"
- #include "worktree.h"
- #include "exec-cmd.h"
-@@ -1613,6 +1619,106 @@ enum discovery_result discover_git_directory_reason(struct strbuf *commondir,
- 	return result;
- }
+-/*
+- * Accessors for the core.sharedrepository config which lazy-load the value
+- * from the config (if not already set). The "reset" function can be
+- * used to unset "set" or cached value, meaning that the value will be loaded
+- * fresh from the config file on the next call to get_shared_repository().
+- */
+-void set_shared_repository(int value);
+-int get_shared_repository(void);
+-void reset_shared_repository(void);
+-
+ extern int core_preload_index;
+ extern int precomposed_unicode;
+ extern int protect_hfs;
+@@ -153,11 +157,6 @@ extern int core_apply_sparse_checkout;
+ extern int core_sparse_checkout_cone;
+ extern int sparse_expect_files_outside_of_patterns;
  
-+void setup_git_env(const char *git_dir)
-+{
-+	char *git_replace_ref_base;
-+	const char *shallow_file;
-+	const char *replace_ref_base;
-+	struct set_gitdir_args args = { NULL };
-+	struct strvec to_free = STRVEC_INIT;
-+
-+	args.commondir = getenv_safe(&to_free, GIT_COMMON_DIR_ENVIRONMENT);
-+	args.object_dir = getenv_safe(&to_free, DB_ENVIRONMENT);
-+	args.graft_file = getenv_safe(&to_free, GRAFT_ENVIRONMENT);
-+	args.index_file = getenv_safe(&to_free, INDEX_ENVIRONMENT);
-+	args.alternate_db = getenv_safe(&to_free, ALTERNATE_DB_ENVIRONMENT);
-+	if (getenv(GIT_QUARANTINE_ENVIRONMENT)) {
-+		args.disable_ref_updates = 1;
-+	}
-+
-+	repo_set_gitdir(the_repository, git_dir, &args);
-+	strvec_clear(&to_free);
-+
-+	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
-+		disable_replace_refs();
-+	replace_ref_base = getenv(GIT_REPLACE_REF_BASE_ENVIRONMENT);
-+	git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
-+							  : "refs/replace/");
-+	update_ref_namespace(NAMESPACE_REPLACE, git_replace_ref_base);
-+
-+	shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
-+	if (shallow_file)
-+		set_alternate_shallow_file(the_repository, shallow_file, 0);
-+
-+	if (git_env_bool(NO_LAZY_FETCH_ENVIRONMENT, 0))
-+		fetch_if_missing = 0;
-+}
-+
-+static void set_git_dir_1(const char *path)
-+{
-+	xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
-+	setup_git_env(path);
-+}
-+
-+static void update_relative_gitdir(const char *name UNUSED,
-+				   const char *old_cwd,
-+				   const char *new_cwd,
-+				   void *data UNUSED)
-+{
-+	char *path = reparent_relative_path(old_cwd, new_cwd,
-+					    repo_get_git_dir(the_repository));
-+	struct tmp_objdir *tmp_objdir = tmp_objdir_unapply_primary_odb();
-+
-+	trace_printf_key(&trace_setup_key,
-+			 "setup: move $GIT_DIR to '%s'",
-+			 path);
-+	set_git_dir_1(path);
-+	if (tmp_objdir)
-+		tmp_objdir_reapply_primary_odb(tmp_objdir, old_cwd, new_cwd);
-+	free(path);
-+}
-+
-+void set_git_dir(const char *path, int make_realpath)
-+{
-+	struct strbuf realpath = STRBUF_INIT;
-+
-+	if (make_realpath) {
-+		strbuf_realpath(&realpath, path, 1);
-+		path = realpath.buf;
-+	}
-+
-+	set_git_dir_1(path);
-+	if (!is_absolute_path(path))
-+		chdir_notify_register(NULL, update_relative_gitdir, NULL);
-+
-+	strbuf_release(&realpath);
-+}
-+
-+static int git_work_tree_initialized;
-+
-+/*
-+ * Note.  This works only before you used a work tree.  This was added
-+ * primarily to support git-clone to work in a new repository it just
-+ * created, and is not meant to flip between different work trees.
-+ */
-+void set_git_work_tree(const char *new_work_tree)
-+{
-+	if (git_work_tree_initialized) {
-+		struct strbuf realpath = STRBUF_INIT;
-+
-+		strbuf_realpath(&realpath, new_work_tree, 1);
-+		new_work_tree = realpath.buf;
-+		if (strcmp(new_work_tree, the_repository->worktree))
-+			die("internal error: work tree has already been set\n"
-+			    "Current worktree: %s\nNew worktree: %s",
-+			    the_repository->worktree, new_work_tree);
-+		strbuf_release(&realpath);
-+		return;
-+	}
-+	git_work_tree_initialized = 1;
-+	repo_set_worktree(the_repository, new_work_tree);
-+}
-+
- const char *setup_git_directory_gently(int *nongit_ok)
- {
- 	static struct strbuf cwd = STRBUF_INIT;
-diff --git a/setup.h b/setup.h
-index fd2df7cd525..e496ab3e4de 100644
---- a/setup.h
-+++ b/setup.h
-@@ -94,6 +94,9 @@ static inline int discover_git_directory(struct strbuf *commondir,
- 	return 0;
- }
+-/*
+- * Returns the boolean value of $GIT_OPTIONAL_LOCKS (or the default value).
+- */
+-int use_optional_locks(void);
+-
+ enum log_refs_config {
+ 	LOG_REFS_UNSET = -1,
+ 	LOG_REFS_NONE = 0,
+@@ -172,6 +171,7 @@ enum rebase_setup_type {
+ 	AUTOREBASE_REMOTE,
+ 	AUTOREBASE_ALWAYS
+ };
++extern enum rebase_setup_type autorebase;
  
-+void set_git_dir(const char *path, int make_realpath);
-+void set_git_work_tree(const char *tree);
-+
- const char *setup_git_directory_gently(int *);
- const char *setup_git_directory(void);
- char *prefix_path(const char *prefix, int len, const char *path);
+ enum push_default_type {
+ 	PUSH_DEFAULT_NOTHING = 0,
+@@ -181,15 +181,12 @@ enum push_default_type {
+ 	PUSH_DEFAULT_CURRENT,
+ 	PUSH_DEFAULT_UNSPECIFIED
+ };
+-
+-extern enum rebase_setup_type autorebase;
+ extern enum push_default_type push_default;
+ 
+ enum object_creation_mode {
+ 	OBJECT_CREATION_USES_HARDLINKS = 0,
+ 	OBJECT_CREATION_USES_RENAMES = 1
+ };
+-
+ extern enum object_creation_mode object_creation_mode;
+ 
+ extern char *notes_ref_name;
+@@ -209,9 +206,11 @@ extern char *askpass_program;
+ extern char *excludes_file;
+ 
+ /*
+- * Should we print an ellipsis after an abbreviated SHA-1 value
+- * when doing diff-raw output or indicating a detached HEAD?
++ * The character that begins a commented line in user-editable file
++ * that is subject to stripspace.
+  */
+-int print_sha1_ellipsis(void);
++extern const char *comment_line_str;
++extern char *comment_line_str_to_free;
++extern int auto_comment_line_char;
+ 
+ #endif
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
