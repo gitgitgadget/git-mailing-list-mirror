@@ -1,111 +1,140 @@
 Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F6C19F429
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 10:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955F619F429
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 10:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726135506; cv=none; b=QdmXwt4PMpT9PDMM/bNsx5eJhMNljK0GyhupHkvPLCHQXJQkhUCcJ2A48o0AfErJMwMXzbgB5jYaQuVnXKly9D1OZQy9kq1uGwDElbLSKr6Tk2XBFEdB66XFmSj+m/8LEt66VVhZZwdXeWkt+09RxGs+O7xPBcB9J5ptRoyWqUU=
+	t=1726135510; cv=none; b=TTbclHKZRJVrRU/FxlayKzVuPpHeFNptlTjiGaeLN+t3Tj35RZHtUSquMCziETCIZczVAHlJZujVcetl+SnafQZFLrs10gJNn4RtDk3WsujGs5s3BaA3T05JGfa/eNL+K3zU1mLQng3ztpB11YB54FDUknLYmTrCfLwDfAbr85o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726135506; c=relaxed/simple;
-	bh=HqxG1Hrx12hKPsXix2Riv3LEez/jbZDObYwY31QQExg=;
+	s=arc-20240116; t=1726135510; c=relaxed/simple;
+	bh=0jT6iC7/kP83Pp+BltLsL0tPniWUMnvhqISHDv5iM0k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RC8F1Q9Mi96ooZu82eOVrZ2om5AKtLuJ+Phttik7qpCItZZxPY+a/pAC9l4CVUee/oyD4JXFmfFiirBMYTToGZO5pqNvSlIfP/Fn7vZEC7b6BjfC2BXZepmdbHYrN7PQlrqrbbPey5gMuTWFYGc7Fja2ynedlF4AGdm6ogZikZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gBONglNS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gN55fAFZ; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=kXqC2hgdnLPjJqbr1S5GWsZ0ChzKd4wNZisdPMg+oql597bnwiUl/fsiAqePWB/pl2Od7VjztJHgRIbLwlsilbyoAmDjDm8Cfwz9d/5BQqZ8RP5uTXf93nQ8DYeby+/4x7BX8M9Qw/zi1JQmIBTZ7gVy2md6H40NTV9qag2x7Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KwOuqOpr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bXfoVNZx; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gBONglNS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gN55fAFZ"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 12C7B114043A;
-	Thu, 12 Sep 2024 06:05:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KwOuqOpr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bXfoVNZx"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A08611140247;
+	Thu, 12 Sep 2024 06:05:07 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Thu, 12 Sep 2024 06:05:04 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 12 Sep 2024 06:05:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1726135504;
-	 x=1726221904; bh=Nsr5WVqrJ1yfFUacL/eMivJBq4MLIK18Zh9phrbhfgs=; b=
-	gBONglNSoqXeJhsxfss2hTgP+d+Fn7qUOmCsq+4bawDtGPPUZ96+das+4nLSRGqT
-	/eBkl3FxEmL+ZjNg5F1TU9n0th21EgIGZ2INEhkIMVF6CecStK1MTrQD4bvE9hpu
-	DXH7zkWkY7GvNjUWc7Hgzg2r1IdOxiLTJdcG3VgRIfDTVZxBzes4+4wE85v/mWi4
-	Oiv/6z0hDUtinDYntX5p5KACgn44mGWbGR+LLNUlswAAk+RiDTFyh5Do2qgQMJXu
-	rP+ZZAo1ZDodXVfmcGfypsk42ZGxYb7MRVRukMzbcZVBf0SrwhFXmAE97e6K6q1i
-	Hv1Nrskw8Yu22XACzqVT7A==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1726135507; x=1726221907; bh=XViXVyQAFA
+	CAVJe7mGyoQusMDneJVNsDkexb9JM/LqM=; b=KwOuqOprm6+NOFnwjECkYcTWSv
+	6worb91bBdOSJQmwQwnL6RAGb/eF8uigV+EgJhtM8nVu4V+/U/ZR71aVO3d64Pbj
+	x7YfgCRx2W+NlwghrWU5Av9BgtFwcnfxi0hj+/N6kDRQ9WsDnLVwsr4VXayfZbmX
+	hOWVyx2HNB+Se/NNQbDThSn2Nr3rY+mw0OatRf/qVhrp+YdCkVwnq3efTvEg/7SR
+	3c084VPWiLfwKzPkvVWAiTUuE9oIGpP7rvtg2H1WLeMZl6v3FWpXr+VJdmHIZJoD
+	F+rhEOgH7OtatluMCEnIT9ZKKSjjq/W+b9SE7Ow4yek7D8JYFz3HSeREbnkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1726135504; x=
-	1726221904; bh=Nsr5WVqrJ1yfFUacL/eMivJBq4MLIK18Zh9phrbhfgs=; b=g
-	N55fAFZybSAvl4Tw/MqqUPipIyuD/jFOcNfPVwSlKOiWmt50fjeYXySHJDu2qOM7
-	pg3njwDvFeCPAxOcWJ/2drEfFnXiVOg/Y9Om97xSAcc7FD4l0oiYe70x3SCls931
-	p5FPNIjwl9C6PkJoMaH9jz6FMsrqMPXEwYBmhPIM8bFCJESwu5e0Ys2FOogubPTk
-	xD9uQh0y3CZ41uwHVmixiZPHy8tv6tJaqPj14+EOFuxFC0bpy6LOzJzgGcQC4afE
-	4p+Q8NLhDISXQEl6OIQa9GMqGS2ZqnVKVbZrgHFYpZk2s6BHn6G8o5JUN8KHwQHT
-	v6fbbU1FKHiSnvZETzJUA==
-X-ME-Sender: <xms:z7ziZh69WCuegdKiX_F4bVzFa4X0bji2MuLDrPckycXmt9aTKeHT6A>
-    <xme:z7ziZu6VT9IqUhPFqCUwxwY-3WjK4tFtYLOP9IxpdX6fAjG4ZuelnSoAZgIK_PD4z
-    gGxt7ThKQ9BcdIhgQ>
-X-ME-Received: <xmr:z7ziZocCX58K5I1ClGdztA8RfygEyJN_Ibd1qbL_x__xyQ1c6G9jDs4oEIA2P4goJo7INOAYFuf9m95CbyUaixhPudb-7ruffrzqG17Okvk4>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1726135507; x=1726221907; bh=XViXVyQAFACAVJe7mGyoQusMDneJ
+	VNsDkexb9JM/LqM=; b=bXfoVNZxC4f+OpEBl782Zj9576vyCmcERkCDaTH/FwL5
+	j8Xdr8SChIaNoeelVbHxVtxmn1GLi/6fxnsEhziR3lnhadv6BkkSubBV9qOTWtKW
+	1itwOXQHikQSHaLA/JJyLVnoSKDez0OSvAPZ9QJKNdiEcTNjOlfeEf4eOOSLBabJ
+	SXXd56ZWAZddiDAAwkVqiQ8NJiV/15sV0i6pygFiWAHN2gyUR3VEtoGfNxz2GrP9
+	Glt0hBSj1bEE5KlI8V7CEq9+X7QXvQMjgO3HrAFdkXHrGULDUeq1jrbZOMfmkUUo
+	kCHvBn/r8GZHNH6TMkEnailbi12TnBgyUG0YZq0emA==
+X-ME-Sender: <xms:07ziZgoZMowcdKUzgnypjyX90nHwAcZvYkMkGGT6KVxnTgrNVm721A>
+    <xme:07ziZmrBAb0sdIBiJmYQqCywWhegG-_0MYd9_wbLKHPbvt54TAWmC3KdPcM9QU8h-
+    krxXG95eNZ-ksetGw>
+X-ME-Received: <xmr:07ziZlPunD42F5K9hqH-B35pSHzA9OYdln0Zg1Nhw5xpLhbzvd-59OMrtQ50ik-au3ThgJ93RxhWf5cdn1TNtA8_MvRVFqxrM1surksMhske>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedgvdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
-    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhu
-    khdprhgtphhtthhopehjhhgtrghrlhdtkedugeesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:z7ziZqLJEONXJI_sxSyM3W6Y26arSVK9ByyMuNUrvpdquhMx6XJhkQ>
-    <xmx:z7ziZlIq6VwEnZgd6lp9JCibS6O2OuJaft88oL8wYf57z0lf2S8_RA>
-    <xmx:z7ziZjxNy6uNRRLDk6rrLHvEfRaBSDUKW7SSsEWAqy9qzVPoFJ-ViQ>
-    <xmx:z7ziZhJc4XoriHk6YM5CUxxBSjiyGBxmtaiuOafZkRToahCkYPkf1Q>
-    <xmx:0LziZiGbx6CIcB3j6aOZqJ3n6ENHfUv26YHe_0NbdIUyxnhePy7PFhTv>
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhl
+    lhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhgih
+    htghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhhtggrrhhltdekudeg
+    sehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:07ziZn53V5pTAeLzXBqGU6p92EdH9Yk_In_6OK5gSES34fAMxFoSsw>
+    <xmx:07ziZv7YBPUgbNp5QWGbCe9NY9UBgcz-i44IJ9Uo6k347ub3i3RC2g>
+    <xmx:07ziZng0E32Y0vQEN1ecmN7PkwndEWOlw1bqDAAo16OrIKD3_sHw8g>
+    <xmx:07ziZp64jmNu3vMNKPxdaCMtY3djUlPapHvkB3FwUz-cW3KC6dIFPQ>
+    <xmx:07ziZlSw-0jxj_TOBYau2K5yZZPTtoUVc6SPS0lkPlR4-WYwa34kSCpD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Sep 2024 06:05:02 -0400 (EDT)
+ 12 Sep 2024 06:05:06 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5dd4d13b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Sep 2024 10:04:54 +0000 (UTC)
-Date: Thu, 12 Sep 2024 12:05:02 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 07dd86b2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Sep 2024 10:04:57 +0000 (UTC)
+Date: Thu, 12 Sep 2024 12:05:05 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Han Jiang <jhcarl0814@gmail.com>,
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Han Jiang <jhcarl0814@gmail.com>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 3/4] remote add: use strvec to store tracking branches
-Message-ID: <ZuK8zjWyvMc77eQH@pks.im>
+Subject: Re: [PATCH 4/4] remote: check branch names
+Message-ID: <ZuK80YvPSo8WUpp2@pks.im>
 References: <pull.1789.git.1726067917.gitgitgadget@gmail.com>
- <f30c77bc36072df57662cac0cb7bf1bbea378062.1726067917.git.gitgitgadget@gmail.com>
+ <dba31245607f85c48947da60fe0955a6ed3e2c43.1726067917.git.gitgitgadget@gmail.com>
+ <xmqqfrq686n5.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f30c77bc36072df57662cac0cb7bf1bbea378062.1726067917.git.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqfrq686n5.fsf@gitster.g>
 
-On Wed, Sep 11, 2024 at 03:18:36PM +0000, Phillip Wood via GitGitGadget wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Wed, Sep 11, 2024 at 10:03:26AM -0700, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> Store the list of branches to track in a ’struct strvec' instead of a
-> 'struct string_list'. This in preparation for the next commit where it
+> > +static int check_branch_names(const char **branches)
+> > +{
+> > +	int ret = 0;
+> > +
+> > +	for (const char **b = branches; *b; b++) {
+> > +		if (check_refname_format(*b, REFNAME_ALLOW_ONELEVEL |
+> > +						REFNAME_REFSPEC_PATTERN))
+> > +			ret = error(_("invalid branch name '%s'"), *b);
+> > +	}
+> > +
+> > +	return ret;
+> > +}
+> 
+> This implementation is inconsistent with what "git branch new HEAD"
+> uses to check the validity of "new", which is in this call chain:
+> 
+>     builtin/branch.c:cmd_branch()
+>     -> branch.c:create_branch()
+>        -> branch.c:validate_new_branchname()
+>           -> branch.c:validate_branchname()
+>              -> object-name.c:strbuf_check_branch_ref()
+> 
+> At least, we should prepend "refs/heads/" to *b, so that we can
+> reject "refs/heads/HEAD".  The authoritative logic in the above
+> however may further evolve, and we need to make sure that these two
+> checks from drifting away from each other over time.  We probably
+> should refactor the leaf function in the above call chain so that
+> both places can use it (the main difference is that you allow '*' in
+> yours when calling check_refname_format()).
+> 
+>     Side note: we *should* lose "strbuf_" from its name, as it is
+>                not about string manipulation but the "strbuf'-ness
+>                of the function is merely that as the side effect of
+>                checking it computes a full refname and it happens to
+>                use strbuf as a mechanism to return it.
+> 
+> Something like the patch attached at the end.
 
-s/in/is &/
-
-> will be convenient to have them stored in a NULL terminated array. This
-> means that we now duplicate the strings when storing them but the
-> overhead is not significant.
-
-Yup. Micro-optimizations like this typically don't really have any real
-world effect anyway.
+Agreed. It's also kind of curious that the function lives in
+"object-name.c" and not in "refs.c".
 
 Patrick
