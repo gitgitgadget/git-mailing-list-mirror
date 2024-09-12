@@ -1,53 +1,53 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460B51A3023
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 11:29:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795A91A3037
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 11:29:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726140574; cv=none; b=e2eudnPnlGpyKjddV3odWyGEqAOHRPlU6OXndF7nnBwld/h/P/Taa0xSZ2W0rBvrh3BpIljXFOCldgp//fIkAwM/Uws/ElOvVdiUVsW+dI3gbc7oDCddoZZQ4gywq0TdcKpxNSleC5vkCUXs4aCt/vuvl+DLVMc3PgA2taxxy5M=
+	t=1726140576; cv=none; b=fZc1tY8YEmk+vUyDLZM92s6+DDpidv8l6wHZy11e4QpNwGuljVEOHDMGapfx4/lrseoPAR03hMEDdH6fj9lAIAnztOLklwrLXNekCcAKYuw7vViuvEwbMlzji+a+KsRYCze4D9pxesbsxeBC/SlceIN6Z6Cyww0gy1VhbjVJOeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726140574; c=relaxed/simple;
-	bh=fyTRTbH630nfg4G8ISK1X0RfnTAgfPID4YJvBHRm0ks=;
+	s=arc-20240116; t=1726140576; c=relaxed/simple;
+	bh=LnIXckUGzoxDq3PToU69Tp9lgD147tCqeUuj7GYplfo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NjjNOXME/0jIMaGjiqL+voJYa2mnc5FqSWJy9Kb0GTRwHq/tThgvKw47AxOTE1z6Bc6yiXIAgn4Z2hK4npm4fq/YPNrAuy9ozfdJUEQnahM00bXq4a5g/AALox7E+x1voTJ7urprAyzkW2hupVg3/4aws6kOwmhSTFnnowE6FM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kUij7bi0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ccCsQvAh; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=ttyyVs7vxTFgtkgbrl0JdH4PzzFA6auD6sPUvGPpzLdlczFrJp5Cz485VGInqTpRC9Ea5FWzS0kvo+AodVUDzTOmf9X9GJRJUm1WfLaHmehom5ajnh7baqo4rQHgTcmS8xOgW+3lFISOyTO188SxBVWtB/iL7SR5DXM0unn2zXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R8ztkZtw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LkxutxNX; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kUij7bi0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ccCsQvAh"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6B5E4138061F;
-	Thu, 12 Sep 2024 07:29:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R8ztkZtw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LkxutxNX"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D847111405B2;
+	Thu, 12 Sep 2024 07:29:33 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Thu, 12 Sep 2024 07:29:31 -0400
+  by phl-compute-10.internal (MEProxy); Thu, 12 Sep 2024 07:29:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726140571; x=1726226971; bh=eNVL3p8+PA
-	cCEVhuDZAFQdxxsCLltRRUtrdMy2wHCxg=; b=kUij7bi0UEbCGCZejVoROb9xCd
-	tJL4aREs1QVjXmmrZiOAX7Nlk5z6+13ZnTAhuofBtJ5MbNdwl1j0Okdb/pHvZHjw
-	8BW05qYWrSXL6hLKy9at5n5SEmbonh5g11Klzm8L4XcmI62vB9abNjXkzIPwidA8
-	2ux0E2nWBykKerLfxWiVIrf9A062DleYpfL9R5ZmmczJQW0e4CVohOjmmIDJOQ/Y
-	3OMYJnxO7DX3QCO/XSmUB5jIRCj+avUWcVYl46it5rJS37PurPenq+Y87x7ecJ52
-	vdFZMJ1T1MxSxvnxaxtfP1BXZmB1u+0rQffIjF+B8uHE8VQslS5DdoEXqWug==
+	:subject:to:to; s=fm1; t=1726140573; x=1726226973; bh=n9r/RHC3y6
+	68bCqn4KgmXwMRB3Xke8P0UlGtq+99XnA=; b=R8ztkZtwBKRczTaTLV+nQtllYM
+	4sxhWbIRnWtueRgGHA8wLrKOWRKN3ulZX5m+BPougeJrlRJAhezn5NqPcT89PwlI
+	ZnjgMkfuBIJBxt/E+IIEVMlUwsuN1XRo6oy9hQ+DLy0Pbc5p4P9FQd2Gn+CXQwnD
+	CoLWgRj49TpY66Jxq2YUlWePxShtkMTVvg+cs6BDZBj5Qcw9+MO+b8LwQWeC6FB1
+	OtqyQVN+2PHzxYEo3KgUJtrR+yjnRdn7/feZUqyIonu1a7qNfpCtjBi4pHqZ3nQH
+	KeOsAmzTNCTlN9xEVeTN3Mt/MR9oFjBIiVbKPz82RT9lpPWwyCTq9RNTz71w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726140571; x=1726226971; bh=eNVL3p8+PAcCEVhuDZAFQdxxsCLl
-	tRRUtrdMy2wHCxg=; b=ccCsQvAhRRtIoIymFeRD2xx0u3iCJgCkAmGJ1JmYRX4H
-	Y8r0oXUAPoE7RaP7k4pkMsuzYmlHMS4Iv/0IIhVjG+6PbaZ6rhBKkRyoRE4VAI3r
-	+J4MyP3wuNB4YUH3r/iqmM9QeeFRPQNyI4wRGZySjCq62T4YX0s032u7iqD5Gu1J
-	HX3A6uK1upWChiYBkDcPlDo8PP6uNoSY3sulYxkLXPKid+TTPYXjpwjWCBCvSeKy
-	fqYgvnP7daq+qKeGgx4KtF/GIab2KRIAcuJFpEiNNZ6KHjmbzsV5GdGla2PLNDcu
-	TxuEsRjbntwH9r8tevVUYvqkSfZyLLnYqN921vyIow==
-X-ME-Sender: <xms:m9DiZvY_GnMFrDf9ytK-LXAR8D1QrO7sBZ28l4dbsswGdwHJK_MkjA>
-    <xme:m9DiZuZbYiq-wbhzrKNc-A_9_Jjc8bCtsCQH0Q0q1JAe59qcePgJEYecyHS0M74iO
-    gW-n2-FSUAMNSCnZg>
-X-ME-Received: <xmr:m9DiZh8d2o3zd7TMkkHjwz9JiXFDR7bgdk4pa-q2lP1t9F66rlJ_RKJpO3n5rdwD0st4FZlyiifx3uTzs_x_peQBDgLbOXBvsH3h2baIizm9>
+	fm1; t=1726140573; x=1726226973; bh=n9r/RHC3y668bCqn4KgmXwMRB3Xk
+	e8P0UlGtq+99XnA=; b=LkxutxNX9zdyu68KzPRi09a9syUIwsDX959gQLZ80TO1
+	cJQ7pvHmBk56v85W+/hrXoD+jdS/Bn0PfSvkuuM0MCBuYmsMpkIbag7DbyEUGL4Q
+	UL3bhOvPf+6XSm4zj+V58/4W01IVDwWDo0QkIQNFVEpux7OdG0qg1KsZ2RydfWNX
+	Iy49Nyn3hth8kg4AkH73D4PwSBXmjY/sWGLLNllxNKulEVYqrnTIaSwSq2rjKRho
+	r5Bm7PLhj75FDtkpcDuBMeEqGrSwituHQghZVq3/ofIkAW2Yvg/GaJTlbCm8nEIt
+	qi27ZdCxrNeuAq/N7D/Jb01DKVpxHnldm4nmxsoD4A==
+X-ME-Sender: <xms:ndDiZgWHevTFRwyZD7EJC2PLdNgTuhEcZIXLqUfUrUKJFvbjEGF2OQ>
+    <xme:ndDiZkkXDER573sjYZRJvu46P816X2LratRjKEcm7uaEnWo3Q7-SbOARE7xuIRCJX
+    h-3b4eQy7UssBQM4Q>
+X-ME-Received: <xmr:ndDiZkbYvZLqtTJCmzThiMzkMxjlfscHNRmbMFXT1mNnu4Vl_FcyOoKr2Mo0AlAvqffSUNQZczRBdKgCkVShDX-EbrBcGwhghrGiKBgFwwz0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedggeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -57,30 +57,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejfedggeduucetufdoteggod
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggrlhhv
-    ihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
+    htthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehkrghr
+    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtgho
     mh
-X-ME-Proxy: <xmx:m9DiZlqsf1v3C4f6CNG1N8a68Bw9j8jQs32rS2NXMJXpWpm4jXZaTg>
-    <xmx:m9DiZqoCcdUjgYy8HyUB08j3JvatIT4W1HnHKtg9-PmdqK_280GBLA>
-    <xmx:m9DiZrR6IcuN-rPTD1imYxYfT_gnhTnBG2AvYS3t-pgabxZEyL-khQ>
-    <xmx:m9DiZiqIDDrzx0IEPyvk7Zgv2W7pBuuf9_WlfDhYXPD-z2XoUpR6Vg>
-    <xmx:m9DiZnCOwJykUq-yutvwrqlw8ax1zsB3VFxx4-PJp5um8LhtWxMMwKRg>
+X-ME-Proxy: <xmx:ndDiZvVlj2QaFacwl9pOQH9VqKbp4AzjIpLd3925wLsHc9V3lO0CMg>
+    <xmx:ndDiZqlLyFYNlWEuwehFVzHAg29LA91jvH2DFzM8c1TQh0zSowwFYA>
+    <xmx:ndDiZkep9LVINrVtYxwMz82O8NhS83yJKmGzqgDxe-phdGlt_50Xdw>
+    <xmx:ndDiZsFuU1t61GZUvlcyvVOohQXpK2zaduL8JysY-Zt5ZN4bBJhajg>
+    <xmx:ndDiZhsFeaFh1anUT7m6zb-uoq5Mo04KsjkjD7i4-DHwREWBCBteomGH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Sep 2024 07:29:30 -0400 (EDT)
+ 12 Sep 2024 07:29:32 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 776f5041 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Sep 2024 11:29:21 +0000 (UTC)
-Date: Thu, 12 Sep 2024 13:29:30 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 87f3297a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Sep 2024 11:29:24 +0000 (UTC)
+Date: Thu, 12 Sep 2024 13:29:32 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Justin Tobler <jltobler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	karthik nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 03/21] environment: make `get_object_directory()` accept a
+Subject: [PATCH v3 04/21] environment: make `get_index_file()` accept a
  repository
-Message-ID: <b2edc57163cb379020c3d8c198dc6a19658a67c9.1726139990.git.ps@pks.im>
+Message-ID: <f82bee6d04f59d3f340dde8c309150a14f58420d.1726139990.git.ps@pks.im>
 References: <cover.1724923648.git.ps@pks.im>
  <cover.1726139990.git.ps@pks.im>
 Precedence: bulk
@@ -93,448 +93,290 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726139990.git.ps@pks.im>
 
-The `get_object_directory()` function retrieves the path to the object
-directory for `the_repository`. Make it accept a `struct repository`
-such that it can work on arbitrary repositories and make it part of the
-repository subsystem. This reduces our reliance on `the_repository` and
-clarifies scope.
+The `get_index_file()` function retrieves the path to the index file
+of `the_repository`. Make it accept a `struct repository` such that it
+can work on arbitrary repositories and make it part of the repository
+subsystem. This reduces our reliance on `the_repository` and clarifies
+scope.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/commit-graph.c     | 5 ++---
- builtin/count-objects.c    | 3 +--
- builtin/multi-pack-index.c | 4 ++--
- builtin/pack-objects.c     | 2 +-
- builtin/prune.c            | 8 ++++----
- builtin/repack.c           | 7 ++++---
- bulk-checkin.c             | 4 ++--
- environment.c              | 7 -------
- environment.h              | 1 -
- fetch-pack.c               | 2 +-
- http-backend.c             | 2 +-
- object-file.c              | 4 ++--
- pack-write.c               | 3 ++-
- packfile.c                 | 2 +-
- prune-packed.c             | 6 ++++--
- repository.c               | 7 +++++++
- repository.h               | 1 +
- server-info.c              | 4 ++--
- setup.c                    | 2 +-
- tmp-objdir.c               | 8 +++++---
- 20 files changed, 43 insertions(+), 39 deletions(-)
+ builtin/am.c           |  8 ++++++--
+ builtin/commit.c       |  6 +++---
+ builtin/merge.c        | 14 ++++++++------
+ builtin/stash.c        | 12 ++++++------
+ builtin/update-index.c |  2 +-
+ builtin/write-tree.c   |  4 ++--
+ environment.c          |  7 -------
+ environment.h          |  1 -
+ repository.c           |  7 +++++++
+ repository.h           |  1 +
+ wt-status.c            |  3 ++-
+ 11 files changed, 36 insertions(+), 29 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 7102ee90a00..7411e6244f2 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -1,7 +1,6 @@
+diff --git a/builtin/am.c b/builtin/am.c
+index 405214e242a..5498ddeb6aa 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1668,7 +1668,9 @@ static void do_commit(const struct am_state *state)
+ 	if (!state->no_verify && run_hooks(the_repository, "pre-applypatch"))
+ 		exit(1);
+ 
+-	if (write_index_as_tree(&tree, the_repository->index, get_index_file(), 0, NULL))
++	if (write_index_as_tree(&tree, the_repository->index,
++				repo_get_index_file(the_repository),
++				0, NULL))
+ 		die(_("git write-tree failed to write a tree"));
+ 
+ 	if (!repo_get_oid_commit(the_repository, "HEAD", &parent)) {
+@@ -2078,7 +2080,9 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
+ 	if (fast_forward_to(head_tree, head_tree, 1))
+ 		return -1;
+ 
+-	if (write_index_as_tree(&index, the_repository->index, get_index_file(), 0, NULL))
++	if (write_index_as_tree(&index, the_repository->index,
++				repo_get_index_file(the_repository),
++				0, NULL))
+ 		return -1;
+ 
+ 	index_tree = parse_tree_indirect(&index);
+diff --git a/builtin/commit.c b/builtin/commit.c
+index a1c1d16a099..b09320f9070 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -473,7 +473,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 				       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+ 			die(_("unable to write new index file"));
+ 		commit_style = COMMIT_AS_IS;
+-		ret = get_index_file();
++		ret = repo_get_index_file(the_repository);
+ 		goto out;
+ 	}
+ 
+@@ -1874,8 +1874,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 
+ 	repo_rerere(the_repository, 0);
+ 	run_auto_maintenance(quiet);
+-	run_commit_hook(use_editor, get_index_file(), NULL, "post-commit",
+-			NULL);
++	run_commit_hook(use_editor, repo_get_index_file(the_repository),
++			NULL, "post-commit", NULL);
+ 	if (amend && !no_post_rewrite) {
+ 		commit_post_rewrite(the_repository, current_head, &oid);
+ 	}
+diff --git a/builtin/merge.c b/builtin/merge.c
+index a2bae0700b4..7f5475f738c 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -696,7 +696,9 @@ static int read_tree_trivial(struct object_id *common, struct object_id *head,
+ 
+ static void write_tree_trivial(struct object_id *oid)
+ {
+-	if (write_index_as_tree(oid, the_repository->index, get_index_file(), 0, NULL))
++	if (write_index_as_tree(oid, the_repository->index,
++				repo_get_index_file(the_repository),
++				0, NULL))
+ 		die(_("git write-tree failed to write a tree"));
+ }
+ 
+@@ -758,7 +760,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 		}
+ 		if (write_locked_index(the_repository->index, &lock,
+ 				       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+-			die(_("unable to write %s"), get_index_file());
++			die(_("unable to write %s"), repo_get_index_file(the_repository));
+ 		return clean ? 0 : 1;
+ 	} else {
+ 		return try_merge_command(the_repository,
+@@ -840,7 +842,7 @@ static void write_merge_heads(struct commit_list *);
+ static void prepare_to_commit(struct commit_list *remoteheads)
+ {
+ 	struct strbuf msg = STRBUF_INIT;
+-	const char *index_file = get_index_file();
++	const char *index_file = repo_get_index_file(the_repository);
+ 
+ 	if (!no_verify) {
+ 		int invoked_hook;
+@@ -880,8 +882,8 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 		append_signoff(&msg, ignored_log_message_bytes(msg.buf, msg.len), 0);
+ 	write_merge_heads(remoteheads);
+ 	write_file_buf(git_path_merge_msg(the_repository), msg.buf, msg.len);
+-	if (run_commit_hook(0 < option_edit, get_index_file(), NULL,
+-			    "prepare-commit-msg",
++	if (run_commit_hook(0 < option_edit, repo_get_index_file(the_repository),
++			    NULL, "prepare-commit-msg",
+ 			    git_path_merge_msg(the_repository), "merge", NULL))
+ 		abort_commit(remoteheads, NULL);
+ 	if (0 < option_edit) {
+@@ -889,7 +891,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 			abort_commit(remoteheads, NULL);
+ 	}
+ 
+-	if (!no_verify && run_commit_hook(0 < option_edit, get_index_file(),
++	if (!no_verify && run_commit_hook(0 < option_edit, repo_get_index_file(the_repository),
+ 					  NULL, "commit-msg",
+ 					  git_path_merge_msg(the_repository), NULL))
+ 		abort_commit(remoteheads, NULL);
+diff --git a/builtin/stash.c b/builtin/stash.c
+index ad6bcefb770..f2ec9549a47 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -540,8 +540,8 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+ 					 NULL, NULL, NULL))
+ 		return error(_("could not write index"));
+ 
+-	if (write_index_as_tree(&c_tree, the_repository->index, get_index_file(), 0,
+-				NULL))
++	if (write_index_as_tree(&c_tree, the_repository->index,
++				repo_get_index_file(the_repository), 0, NULL))
+ 		return error(_("cannot apply a stash in the middle of a merge"));
+ 
+ 	if (index) {
+@@ -566,7 +566,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+ 			discard_index(the_repository->index);
+ 			repo_read_index(the_repository);
+ 			if (write_index_as_tree(&index_tree, the_repository->index,
+-						get_index_file(), 0, NULL))
++						repo_get_index_file(the_repository), 0, NULL))
+ 				return error(_("could not save index tree"));
+ 
+ 			reset_head();
+@@ -1406,8 +1406,8 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 
+ 	strbuf_addf(&commit_tree_label, "index on %s\n", msg.buf);
+ 	commit_list_insert(head_commit, &parents);
+-	if (write_index_as_tree(&info->i_tree, the_repository->index, get_index_file(), 0,
+-				NULL) ||
++	if (write_index_as_tree(&info->i_tree, the_repository->index,
++				repo_get_index_file(the_repository), 0, NULL) ||
+ 	    commit_tree(commit_tree_label.buf, commit_tree_label.len,
+ 			&info->i_tree, parents, &info->i_commit, NULL, NULL)) {
+ 		if (!quiet)
+@@ -1905,7 +1905,7 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+ 
+-	index_file = get_index_file();
++	index_file = repo_get_index_file(the_repository);
+ 	strbuf_addf(&stash_index_path, "%s.stash.%" PRIuMAX, index_file,
+ 		    (uintmax_t)pid);
+ 
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 35a1f957adc..86c5d40e400 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1239,7 +1239,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		if (newfd < 0) {
+ 			if (refresh_args.flags & REFRESH_QUIET)
+ 				exit(128);
+-			unable_to_lock_die(get_index_file(), lock_error);
++			unable_to_lock_die(repo_get_index_file(the_repository), lock_error);
+ 		}
+ 		if (write_locked_index(the_repository->index, &lock_file, COMMIT_LOCK))
+ 			die("Unable to write new index file");
+diff --git a/builtin/write-tree.c b/builtin/write-tree.c
+index 8c75b4609b5..9bcc4470ce1 100644
+--- a/builtin/write-tree.c
++++ b/builtin/write-tree.c
+@@ -6,7 +6,6 @@
+ 
  #include "builtin.h"
- #include "commit.h"
  #include "config.h"
 -#include "environment.h"
  #include "gettext.h"
  #include "hex.h"
- #include "parse-options.h"
-@@ -95,7 +94,7 @@ static int graph_verify(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_commit_graph_verify_usage, options);
+ #include "tree.h"
+@@ -44,7 +43,8 @@ int cmd_write_tree(int argc, const char **argv, const char *cmd_prefix)
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
  
- 	if (!opts.obj_dir)
--		opts.obj_dir = get_object_directory();
-+		opts.obj_dir = repo_get_object_directory(the_repository);
- 	if (opts.shallow)
- 		flags |= COMMIT_GRAPH_VERIFY_SHALLOW;
- 	if (opts.progress)
-@@ -275,7 +274,7 @@ static int graph_write(int argc, const char **argv, const char *prefix)
- 	if (opts.reachable + opts.stdin_packs + opts.stdin_commits > 1)
- 		die(_("use at most one of --reachable, --stdin-commits, or --stdin-packs"));
- 	if (!opts.obj_dir)
--		opts.obj_dir = get_object_directory();
-+		opts.obj_dir = repo_get_object_directory(the_repository);
- 	if (opts.append)
- 		flags |= COMMIT_GRAPH_WRITE_APPEND;
- 	if (opts.split)
-diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-index ec6098a149d..42275f62d59 100644
---- a/builtin/count-objects.c
-+++ b/builtin/count-objects.c
-@@ -7,7 +7,6 @@
- #include "builtin.h"
- #include "config.h"
- #include "dir.h"
--#include "environment.h"
- #include "gettext.h"
- #include "path.h"
- #include "repository.h"
-@@ -116,7 +115,7 @@ int cmd_count_objects(int argc, const char **argv, const char *prefix)
- 		report_linked_checkout_garbage(the_repository);
- 	}
- 
--	for_each_loose_file_in_objdir(get_object_directory(),
-+	for_each_loose_file_in_objdir(repo_get_object_directory(the_repository),
- 				      count_loose, count_cruft, NULL, NULL);
- 
- 	if (verbose) {
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 8805cbbeb3b..55289e989df 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -1,7 +1,6 @@
- #include "builtin.h"
- #include "abspath.h"
- #include "config.h"
--#include "environment.h"
- #include "gettext.h"
- #include "parse-options.h"
- #include "midx.h"
-@@ -9,6 +8,7 @@
- #include "trace2.h"
- #include "object-store-ll.h"
- #include "replace-object.h"
-+#include "repository.h"
- 
- #define BUILTIN_MIDX_WRITE_USAGE \
- 	N_("git multi-pack-index [<options>] write [--preferred-pack=<pack>]" \
-@@ -63,7 +63,7 @@ static int parse_object_dir(const struct option *opt, const char *arg,
- 	char **value = opt->value;
- 	free(*value);
- 	if (unset)
--		*value = xstrdup(get_object_directory());
-+		*value = xstrdup(repo_get_object_directory(the_repository));
- 	else
- 		*value = real_pathdup(arg, 1);
- 	return 0;
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 778be80f564..44341b206d4 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3940,7 +3940,7 @@ static int add_loose_object(const struct object_id *oid, const char *path,
-  */
- static void add_unreachable_loose_objects(void)
- {
--	for_each_loose_file_in_objdir(get_object_directory(),
-+	for_each_loose_file_in_objdir(repo_get_object_directory(the_repository),
- 				      add_loose_object,
- 				      NULL, NULL, NULL);
- }
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 57fe31467fe..47eeabbd13a 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -193,12 +193,12 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 		revs.exclude_promisor_objects = 1;
- 	}
- 
--	for_each_loose_file_in_objdir(get_object_directory(), prune_object,
--				      prune_cruft, prune_subdir, &revs);
-+	for_each_loose_file_in_objdir(repo_get_object_directory(the_repository),
-+				      prune_object, prune_cruft, prune_subdir, &revs);
- 
- 	prune_packed_objects(show_only ? PRUNE_PACKED_DRY_RUN : 0);
--	remove_temporary_files(get_object_directory());
--	s = mkpathdup("%s/pack", get_object_directory());
-+	remove_temporary_files(repo_get_object_directory(the_repository));
-+	s = mkpathdup("%s/pack", repo_get_object_directory(the_repository));
- 	remove_temporary_files(s);
- 	free(s);
- 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 62cfa50c50f..40feacb73f8 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1240,7 +1240,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (write_midx && write_bitmaps) {
- 		struct strbuf path = STRBUF_INIT;
- 
--		strbuf_addf(&path, "%s/%s_XXXXXX", get_object_directory(),
-+		strbuf_addf(&path, "%s/%s_XXXXXX", repo_get_object_directory(the_repository),
- 			    "bitmap-ref-tips");
- 
- 		refs_snapshot = xmks_tempfile(path.buf);
-@@ -1249,7 +1249,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&path);
- 	}
- 
--	packdir = mkpathdup("%s/pack", get_object_directory());
-+	packdir = mkpathdup("%s/pack", repo_get_object_directory(the_repository));
- 	packtmp_name = xstrfmt(".tmp-%d-pack", (int)getpid());
- 	packtmp = mkpathdup("%s/%s", packdir, packtmp_name);
- 
-@@ -1519,7 +1519,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		unsigned flags = 0;
- 		if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL, 0))
- 			flags |= MIDX_WRITE_INCREMENTAL;
--		write_midx_file(get_object_directory(), NULL, NULL, flags);
-+		write_midx_file(repo_get_object_directory(the_repository),
-+				NULL, NULL, flags);
- 	}
- 
- cleanup:
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 9089c214fa4..2753d5bbe4a 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -75,7 +75,7 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
- 		close(fd);
- 	}
- 
--	strbuf_addf(&packname, "%s/pack/pack-%s.", get_object_directory(),
-+	strbuf_addf(&packname, "%s/pack/pack-%s.", repo_get_object_directory(the_repository),
- 		    hash_to_hex(hash));
- 	finish_tmp_packfile(&packname, state->pack_tmp_name,
- 			    state->written, state->nr_written,
-@@ -113,7 +113,7 @@ static void flush_batch_fsync(void)
- 	 * to ensure that the data in each new object file is durable before
- 	 * the final name is visible.
- 	 */
--	strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", get_object_directory());
-+	strbuf_addf(&temp_path, "%s/bulk_fsync_XXXXXX", repo_get_object_directory(the_repository));
- 	temp = xmks_tempfile(temp_path.buf);
- 	fsync_or_die(get_tempfile_fd(temp), get_tempfile_path(temp));
- 	delete_tempfile(&temp);
+-	ret = write_index_as_tree(&oid, the_repository->index, get_index_file(),
++	ret = write_index_as_tree(&oid, the_repository->index,
++				  repo_get_index_file(the_repository),
+ 				  flags, tree_prefix);
+ 	switch (ret) {
+ 	case 0:
 diff --git a/environment.c b/environment.c
-index 7c4a142ca25..0a2057399e0 100644
+index 0a2057399e0..10ef77576c3 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -273,13 +273,6 @@ const char *get_git_work_tree(void)
- 	return the_repository->worktree;
+@@ -306,13 +306,6 @@ int odb_pack_keep(const char *name)
+ 	return open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
  }
  
--const char *get_object_directory(void)
+-char *get_index_file(void)
 -{
--	if (!the_repository->objects->odb)
+-	if (!the_repository->index_file)
 -		BUG("git environment hasn't been setup");
--	return the_repository->objects->odb->path;
+-	return the_repository->index_file;
 -}
 -
- int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
+ char *get_graft_file(struct repository *r)
  {
- 	int fd;
+ 	if (!r->graft_file)
 diff --git a/environment.h b/environment.h
-index d778614158f..91125d82991 100644
+index 91125d82991..ff590cfff73 100644
 --- a/environment.h
 +++ b/environment.h
 @@ -106,7 +106,6 @@ int have_git_dir(void);
  extern int is_bare_repository_cfg;
  int is_bare_repository(void);
  extern char *git_work_tree_cfg;
--const char *get_object_directory(void);
- char *get_index_file(void);
+-char *get_index_file(void);
  char *get_graft_file(struct repository *r);
  void set_git_dir(const char *path, int make_realpath);
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 58b4581ad80..fddb90f2e78 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1839,7 +1839,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 
- 		string_list_append_nodup(pack_lockfiles,
- 					 xstrfmt("%s/pack/pack-%s.keep",
--						 get_object_directory(),
-+						 repo_get_object_directory(the_repository),
- 						 packname));
- 	}
- 	string_list_clear(&packfile_uris, 0);
-diff --git a/http-backend.c b/http-backend.c
-index 79ce097359b..73eec4ea3d8 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -601,7 +601,7 @@ static void get_head(struct strbuf *hdr, char *arg UNUSED)
- 
- static void get_info_packs(struct strbuf *hdr, char *arg UNUSED)
- {
--	size_t objdirlen = strlen(get_object_directory());
-+	size_t objdirlen = strlen(repo_get_object_directory(the_repository));
- 	struct strbuf buf = STRBUF_INIT;
- 	struct packed_git *p;
- 	size_t cnt = 0;
-diff --git a/object-file.c b/object-file.c
-index c5994202ba0..fa4121b98ad 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2053,7 +2053,7 @@ static int start_loose_object_common(struct strbuf *tmp_file,
- 		else if (errno == EACCES)
- 			return error(_("insufficient permission for adding "
- 				       "an object to repository database %s"),
--				     get_object_directory());
-+				     repo_get_object_directory(the_repository));
- 		else
- 			return error_errno(
- 				_("unable to create temporary file"));
-@@ -2228,7 +2228,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
- 		prepare_loose_object_bulk_checkin();
- 
- 	/* Since oid is not determined, save tmp file to odb path. */
--	strbuf_addf(&filename, "%s/", get_object_directory());
-+	strbuf_addf(&filename, "%s/", repo_get_object_directory(the_repository));
- 	hdrlen = format_object_header(hdr, sizeof(hdr), OBJ_BLOB, len);
- 
- 	/*
-diff --git a/pack-write.c b/pack-write.c
-index d07f03d0ab0..27965672f17 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -12,6 +12,7 @@
- #include "pack-objects.h"
- #include "pack-revindex.h"
- #include "path.h"
-+#include "repository.h"
- #include "strbuf.h"
- 
- void reset_pack_idx_option(struct pack_idx_option *opts)
-@@ -473,7 +474,7 @@ char *index_pack_lockfile(int ip_out, int *is_well_formed)
- 		packname[len-1] = 0;
- 		if (skip_prefix(packname, "keep\t", &name))
- 			return xstrfmt("%s/pack/pack-%s.keep",
--				       get_object_directory(), name);
-+				       repo_get_object_directory(the_repository), name);
- 		return NULL;
- 	}
- 	if (is_well_formed)
-diff --git a/packfile.c b/packfile.c
-index cf12a539eac..df4ba677197 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -30,7 +30,7 @@ char *odb_pack_name(struct strbuf *buf,
- 		    const char *ext)
- {
- 	strbuf_reset(buf);
--	strbuf_addf(buf, "%s/pack/pack-%s.%s", get_object_directory(),
-+	strbuf_addf(buf, "%s/pack/pack-%s.%s", repo_get_object_directory(the_repository),
- 		    hash_to_hex(hash), ext);
- 	return buf->buf;
- }
-diff --git a/prune-packed.c b/prune-packed.c
-index e54daf740a2..2bb99c29dfb 100644
---- a/prune-packed.c
-+++ b/prune-packed.c
-@@ -1,10 +1,12 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
--#include "environment.h"
- #include "gettext.h"
- #include "object-store-ll.h"
- #include "packfile.h"
- #include "progress.h"
- #include "prune-packed.h"
-+#include "repository.h"
- 
- static struct progress *progress;
- 
-@@ -37,7 +39,7 @@ void prune_packed_objects(int opts)
- 	if (opts & PRUNE_PACKED_VERBOSE)
- 		progress = start_delayed_progress(_("Removing duplicate objects"), 256);
- 
--	for_each_loose_file_in_objdir(get_object_directory(),
-+	for_each_loose_file_in_objdir(repo_get_object_directory(the_repository),
- 				      prune_object, NULL, prune_subdir, &opts);
- 
- 	/* Ensure we show 100% before finishing progress */
+ const char *get_git_namespace(void);
 diff --git a/repository.c b/repository.c
-index c8dcba1997a..49c42c25daa 100644
+index 49c42c25daa..849a912b031 100644
 --- a/repository.c
 +++ b/repository.c
-@@ -105,6 +105,13 @@ const char *repo_get_common_dir(struct repository *repo)
- 	return repo->commondir;
+@@ -112,6 +112,13 @@ const char *repo_get_object_directory(struct repository *repo)
+ 	return repo->objects->odb->path;
  }
  
-+const char *repo_get_object_directory(struct repository *repo)
++const char *repo_get_index_file(struct repository *repo)
 +{
-+	if (!repo->objects->odb)
++	if (!repo->index_file)
 +		BUG("repository hasn't been set up");
-+	return repo->objects->odb->path;
++	return repo->index_file;
 +}
 +
  static void repo_set_commondir(struct repository *repo,
  			       const char *commondir)
  {
 diff --git a/repository.h b/repository.h
-index 404435ad029..778f1511ab1 100644
+index 778f1511ab1..15660ac2f19 100644
 --- a/repository.h
 +++ b/repository.h
-@@ -208,6 +208,7 @@ extern struct repository *the_repository;
- 
+@@ -209,6 +209,7 @@ extern struct repository *the_repository;
  const char *repo_get_git_dir(struct repository *repo);
  const char *repo_get_common_dir(struct repository *repo);
-+const char *repo_get_object_directory(struct repository *repo);
+ const char *repo_get_object_directory(struct repository *repo);
++const char *repo_get_index_file(struct repository *repo);
  
  /*
   * Define a custom repository layout. Any field can be NULL, which
-diff --git a/server-info.c b/server-info.c
-index 1508fa6f825..c5af4cd98a6 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -2,7 +2,6 @@
- 
- #include "git-compat-util.h"
- #include "dir.h"
--#include "environment.h"
- #include "hex.h"
- #include "repository.h"
- #include "refs.h"
-@@ -342,7 +341,8 @@ static int write_pack_info_file(struct update_info_ctx *uic)
- 
- static int update_info_packs(int force)
- {
--	char *infofile = mkpathdup("%s/info/packs", get_object_directory());
-+	char *infofile = mkpathdup("%s/info/packs",
-+				   repo_get_object_directory(the_repository));
- 	int ret;
- 
- 	init_pack_info(infofile, force);
-diff --git a/setup.c b/setup.c
-index fe4a5dfc43b..1ebcab625fe 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2282,7 +2282,7 @@ static void create_object_directory(void)
- 	struct strbuf path = STRBUF_INIT;
- 	size_t baselen;
- 
--	strbuf_addstr(&path, get_object_directory());
-+	strbuf_addstr(&path, repo_get_object_directory(the_repository));
- 	baselen = path.len;
- 
- 	safe_create_dir(path.buf, 1);
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index a8e4553f274..c2fb9f91930 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -13,6 +13,7 @@
- #include "strvec.h"
+diff --git a/wt-status.c b/wt-status.c
+index b477239039d..b813d3fe1c4 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -16,6 +16,7 @@
+ #include "revision.h"
+ #include "diffcore.h"
  #include "quote.h"
- #include "object-store-ll.h"
 +#include "repository.h"
- 
- struct tmp_objdir {
- 	struct strbuf path;
-@@ -132,7 +133,8 @@ struct tmp_objdir *tmp_objdir_create(const char *prefix)
- 	 * can recognize any stale objdirs left behind by a crash and delete
- 	 * them.
- 	 */
--	strbuf_addf(&t->path, "%s/tmp_objdir-%s-XXXXXX", get_object_directory(), prefix);
-+	strbuf_addf(&t->path, "%s/tmp_objdir-%s-XXXXXX",
-+		    repo_get_object_directory(the_repository), prefix);
- 
- 	if (!mkdtemp(t->path.buf)) {
- 		/* free, not destroy, as we never touched the filesystem */
-@@ -152,7 +154,7 @@ struct tmp_objdir *tmp_objdir_create(const char *prefix)
- 	}
- 
- 	env_append(&t->env, ALTERNATE_DB_ENVIRONMENT,
--		   absolute_path(get_object_directory()));
-+		   absolute_path(repo_get_object_directory(the_repository)));
- 	env_replace(&t->env, DB_ENVIRONMENT, absolute_path(t->path.buf));
- 	env_replace(&t->env, GIT_QUARANTINE_ENVIRONMENT,
- 		    absolute_path(t->path.buf));
-@@ -267,7 +269,7 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
- 	}
- 
- 	strbuf_addbuf(&src, &t->path);
--	strbuf_addstr(&dst, get_object_directory());
-+	strbuf_addstr(&dst, repo_get_object_directory(the_repository));
- 
- 	ret = migrate_paths(&src, &dst);
- 
+ #include "run-command.h"
+ #include "strvec.h"
+ #include "remote.h"
+@@ -152,7 +153,7 @@ void wt_status_prepare(struct repository *r, struct wt_status *s)
+ 					"HEAD", 0, NULL, NULL);
+ 	s->reference = "HEAD";
+ 	s->fp = stdout;
+-	s->index_file = get_index_file();
++	s->index_file = repo_get_index_file(the_repository);
+ 	s->change.strdup_strings = 1;
+ 	s->untracked.strdup_strings = 1;
+ 	s->ignored.strdup_strings = 1;
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
