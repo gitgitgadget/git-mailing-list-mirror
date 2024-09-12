@@ -1,54 +1,57 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAAC1420DD
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 20:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901C1A5F
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 20:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726172658; cv=none; b=Y7DAaXhH+2NgaGqsZQoDUJjIz/vf8M80Oab+lmkBsWqJkukFUAGKiag2CdSxu8bZq9swIikCdnoq16Gf/lu8/iMQs2ECWRoBOdIhYTuGXQ0UDUbOHhVFGH0racMdTjxaDHBQzT9IPI09fGRluqBQPeh6BCRmg7xcMmQcp9pHLJA=
+	t=1726172896; cv=none; b=aTHFQq5ov3FYjXngDQ/FF8O7v2FjTXEojliYMHWH/JbsrqewRS8u84psQlSLf/6j+J6avJM9NccPJ/8X2grvTvexolA6zJ3cdXnAbof9hnXPSPPUJwpyLF0/R8tFmDWBMgnCcAEoY5Swops685Lx4WxhYreNjYA/7HadB1OcLVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726172658; c=relaxed/simple;
-	bh=Ta6+QITXQmf8JbWNyn5xojioCmSoG07yArlarw8/qqc=;
+	s=arc-20240116; t=1726172896; c=relaxed/simple;
+	bh=mFESX8Piu3/lcEipTdMH1tee7Dm9V1TZyk2JEqwaf8E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=koNvT5BGnRpVg16iC44AJj/AF1uo/g2XEUNLY9D2QCKnYTN2/TfGcQwTW2QnQfObbONQmMLJKpbzKzbH+7D5CEduYsxwHZM/KtDrYo3XjqYaNMO5OEluYU2WdlOKpxLa/HdE00uSoCKUmJVdtxExO6HUrWQ0mBSakxw7iubgIt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ifm/BI/7; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=hCbdHvH7qIs/0tyNTt14XMjc2M2mBB04wUTSFn6CoQ41GRP6EQ9VUWZlihA7Gt3H6DdWQM9C7so97wrzaIVQaJqPsVmc0BBUuJbmvpYm+7N3R4xkr7Tqp0em9k4BXlSkQCuF8Ic3ueq9lEbpvOM77TSYZgy11Ghn5MX5I4B0wP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HqHltXi3; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ifm/BI/7"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HqHltXi3"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 125D830048;
-	Thu, 12 Sep 2024 16:24:15 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 477C7300CC;
+	Thu, 12 Sep 2024 16:28:13 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Ta6+QITXQmf8JbWNyn5xojioCmSoG07yArlarw
-	8/qqc=; b=Ifm/BI/7JMuJ98cAL3FGY4kxtLZ5cRk7GCw71J/v0GfKuQ360X1YQ7
-	Ke1fmxSg+BHPTagVTBUZzILqeKV+fTo9dVo4Hjq2PFozxSPiVEa1HkYlQRQNk0dR
-	0aIx55gFSB8pad3WNV9I8PZEjkAQuEXeh2GoVWcZaV8kE7k+xd8GQ=
+	:content-type; s=sasl; bh=mFESX8Piu3/lcEipTdMH1tee7Dm9V1TZyk2JEq
+	waf8E=; b=HqHltXi3xcJJMBLvGLSTGNP/DqXieKldoWzdWHt7m14Y/Hgl9Mm6wG
+	fEUVBAtkFGXaC+1RV6/0ENiaQJR2ylNrlF5zy/KyK8JjXPp88cKZooNF6Sc9ZJFE
+	CxuxOt5ck4vcVT9S6tsfzFmBCTRj6pelIaQAtTgzsS6OFwwOM0uao=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 09D2330047;
-	Thu, 12 Sep 2024 16:24:15 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 39E0A300CB;
+	Thu, 12 Sep 2024 16:28:13 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6884630044;
-	Thu, 12 Sep 2024 16:24:14 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F0DC7300CA;
+	Thu, 12 Sep 2024 16:28:10 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Brooke Kuhlmann
- <brooke@alchemists.io>
-Subject: Re: [PATCH 10/9] ref-filter: fix leak with unterminated %(if) atoms
-In-Reply-To: <20240912111858.GA617985@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 12 Sep 2024 07:18:58 -0400")
-References: <20240909230758.GA921697@coredump.intra.peff.net>
-	<4faf815b780218769520561ecf3abca384a2ee6c.1725951400.git.ps@pks.im>
-	<xmqqseu7jvz3.fsf@gitster.g> <ZuLA0SBqhBbBdcd1@pks.im>
-	<20240912111858.GA617985@coredump.intra.peff.net>
-Date: Thu, 12 Sep 2024 13:24:13 -0700
-Message-ID: <xmqqa5gc4o42.fsf@gitster.g>
+Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Elijah Newren <newren@gmail.com>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 5/9] i5500-git-daemon.sh: use compile-able version of
+ Git without OpenSSL
+In-Reply-To: <20240911061257.GA1538490@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 11 Sep 2024 02:12:57 -0400")
+References: <cover.1725206584.git.me@ttaylorr.com>
+	<cover.1725651952.git.me@ttaylorr.com>
+	<bfe992765cd562b036cb235dfdddb78f5e662812.1725651952.git.me@ttaylorr.com>
+	<20240911061009.GA1538383@coredump.intra.peff.net>
+	<20240911061257.GA1538490@coredump.intra.peff.net>
+Date: Thu, 12 Sep 2024 13:28:09 -0700
+Message-ID: <xmqq5xr04nxi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,56 +61,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- FA6570CE-7144-11EF-AFC9-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ 87660902-7145-11EF-98BE-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
 Jeff King <peff@peff.net> writes:
 
-> On Thu, Sep 12, 2024 at 12:22:16PM +0200, Patrick Steinhardt wrote:
->
->> > diff --git c/ref-filter.c w/ref-filter.c
->> > index b06e18a569..d2040f5047 100644
->> > --- c/ref-filter.c
->> > +++ w/ref-filter.c
->> > @@ -3471,7 +3471,8 @@ int format_ref_array_item(struct ref_array_item *info,
->> >  		}
->> >  	}
->> >  	if (state.stack->prev) {
->> > -		pop_stack_element(&state.stack);
->> > +		while (state.stack->prev)
->> > +			pop_stack_element(&state.stack);
->> >  		return strbuf_addf_ret(error_buf, -1, _("format: %%(end) atom missing"));
->> >  	}
->> >  	strbuf_addbuf(final_buf, &state.stack->output);
->> 
->> Hm. It certainly feels like we should do that. I couldn't construct a
->> test case that fails with the leak sanitizer though. If it's a leak I'm
->> sure I'll eventually hit it when I continue down the road headed towards
->> leak-free-ness.
->
-> Hmm. I think just:
->
->   ./git for-each-ref --format='%(if)%(then)%(if)%(then)%(if)%(then)'
->
-> should trigger it, and running it in the debugger I can see that we exit
-> the function with multiple entries.
->
-> Valgrind claims the memory is still reachable, but I don't see how. The
-> "state" variable is accessible only inside that function. The only thing
-> we do after returning is die(). I wonder if it is a false negative
-> because the stack is left undisturbed (especially because the compiler
-> knows that die() does not return).
-
-Yup, the reason why I didn't add any test was because the leak
-checker failed to notice the apparent leak.
-
-> At any rate, I think the same would apply to the earlier error returns:
+> Subject: [PATCH] imap-send: handle NO_OPENSSL even when openssl exists
 > ...
-> All that said, I am content to leave it for now. Even if it's a real
-> leak, it's one that happens once per program right before exiting with
-> an error. Most of the value in cleaning up trivial leaks like that are
-> to reduce the noise from analyzers so that we can find the much more
-> important leaks that scale with the input. If the analyzers aren't
-> complaining and we think it's trivial, it may not be worth spending a
-> lot of time on.
+> But we can observe that we only need this definition in one spot: the
+> struct which holds the variable. So rather than play around with macros
+> that may cause unexpected effects, we can just directly use the correct
+> type in that struct.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  imap-send.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
 
-That is good to me, too.
+Neat.  Will queue.  Thanks.
