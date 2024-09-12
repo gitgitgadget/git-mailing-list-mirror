@@ -1,33 +1,34 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491281C1AB5
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 22:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BC217DFF5
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 22:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726180568; cv=none; b=CeFs5y43JHzPqH90XH+/hAWjW06V8sFvh9nZbvT0t0aChjh2OcSo9q4P1Wi6rMiTPgrLVgh00SyvbP+4/nXjeFVHgOVOOBiAvTIij/Ido2grJGZPCPdwMi/Fa5mQWsIjAWt2TwSPZK0PvhrK/u2ud+HxFmeDsUNOmryPQEPFmXQ=
+	t=1726180648; cv=none; b=nKwHuyh0CkbTiyYOQV9GUkJ8S/Qk5zOPVmcSMPEscVHLw8SC8xuwXNW8mBUKrzdNzT2btUcsxN6EhG06vqiCvVdLanF6XlxN3pWykGdKYWja+iAK9sFPm0EVoWsoiJJykFSo6eN5Q00XGL4S7keTtpdiEz0RR/z5CUIpMibx3iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726180568; c=relaxed/simple;
-	bh=lCBt5B6aeEAly74FtQLSqn/rSY2ZxBOai7lHH5Cwi+o=;
+	s=arc-20240116; t=1726180648; c=relaxed/simple;
+	bh=iWMLJFAh4kTeo8zoUdmpCC2upGxhiuHustUQf8/XfyA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ibj4zEifizwmzHYl37LAOzdmFdExMKeJYxLg99gJheT43ZZVmhyzWCexmuoPbJH7T7AZDRxSZpGIqktxspRaOBSsyI4zw1V+QwERPiUq3N7xeJ/aLsckXuFKDCI016fJ7NzLKHVW3QKjPOoaeQVLdZLvAuyvk/ZbbvkOxJOmK6U=
+	 Content-Type:Content-Disposition:In-Reply-To; b=EfAUnw1dgbhaROVhGag2CqSgoaujTZCuc7mtg/VZ9LLCnmdrEIOh/FoGVlus34nElrdFhokzO/ufxd+TaUrdei/sy/S6xX2KfhdAFlG61W2PBPOIp5/hrvXH1QIRF7eEoIWFNqIIL5aolNw0oTIzJgfZwnkygBsGvpicDwwLo0Y=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 19385 invoked by uid 109); 12 Sep 2024 22:36:05 -0000
+Received: (qmail 19398 invoked by uid 109); 12 Sep 2024 22:37:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Sep 2024 22:36:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Sep 2024 22:37:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29364 invoked by uid 111); 12 Sep 2024 22:36:04 -0000
+Received: (qmail 29371 invoked by uid 111); 12 Sep 2024 22:37:25 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Sep 2024 18:36:04 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Sep 2024 18:37:25 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 12 Sep 2024 18:36:04 -0400
+Date: Thu, 12 Sep 2024 18:37:25 -0400
 From: Jeff King <peff@peff.net>
 To: Rodrigo <rodrigolive@gmail.com>
 Cc: git@vger.kernel.org
-Subject: [PATCH 1/2] Git.pm: fix bare repository search with Directory option
-Message-ID: <20240912223604.GA650605@coredump.intra.peff.net>
+Subject: [PATCH 2/2] Git.pm: use "rev-parse --absolute-git-dir" rather than
+ perl code
+Message-ID: <20240912223725.GB650605@coredump.intra.peff.net>
 References: <20240912223413.GA649897@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,103 +40,57 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240912223413.GA649897@coredump.intra.peff.net>
 
-When opening a bare repository like:
+When we open a repository with the "Directory" option, we use "rev-parse
+--git-dir" to get the path relative to that directory, and then use
+Cwd::abs_path() to make it absolute (since our process working directory
+may not be the same).
 
-  Git->repository(Directory => '/path/to/bare.git');
+These days we can just ask for "--absolute-git-dir" instead, which saves
+us a little code. That option was added in Git v2.13.0 via a2f5a87626
+(rev-parse: add '--absolute-git-dir' option, 2017-02-03). I don't think
+we make any promises about running mismatched versions of git and
+Git.pm, but even if somebody tries it, that's sufficiently old that it
+should be OK.
 
-we will incorrectly point the repository object at the _current_
-directory, not the one specified by the option.
-
-The bug was introduced by 20da61f25f (Git.pm: trust rev-parse to find
-bare repositories, 2022-10-22). Before then, we'd ask "rev-parse
---git-dir" if it was a Git repo, and if it returned anything, we'd
-correctly convert that result to an absolute path using File::Spec and
-Cwd::abs_path(). If it didn't, we'd guess it might be a bare repository
-and find it ourselves, which was wrong (rev-parse should find even a
-bare repo, and our search circumvented some of its rules).
-
-That commit dropped most of the custom bare-repo search code in favor of
-using "rev-parse --is-bare-repository" and trusting the "--git-dir" it
-returned. But it mistakenly left some of the bare-repo code path in
-place, which was now broken. That code calls Cwd::abs_path($dir); prior
-to 20da61f25f $dir contained the "Directory" option the user passed in.
-But afterwards, it contains the output of "rev-parse --git-dir". And
-since our tentative rev-parse command is invoked after changing
-directory, it will always be the relative path "."! So we'll end up with
-the absolute path of the process's current directory, not the Directory
-option the caller asked for.
-
-So the non-bare case is correct, but the bare one is broken. Our tests
-only check the non-bare one, so we didn't notice. We can fix this by
-running the same absolute-path fixup code for both sides.
-
-Helped-by: Rodrigo <rodrigolive@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- perl/Git.pm         | 10 ++++------
- t/t9700-perl-git.sh |  3 ++-
- t/t9700/test.pl     |  5 +++++
- 3 files changed, 11 insertions(+), 7 deletions(-)
+I retained the "require Cwd" here since we use it in the conditional
+(but moved it closer to the point of use). It's not strictly necessary,
+as earlier code will have required it as a side effect, but it's
+probably best not to rely on that.
+
+ perl/Git.pm | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/perl/Git.pm b/perl/Git.pm
-index aebfe0c6e0..cf1ef0b32a 100644
+index cf1ef0b32a..667152c6c6 100644
 --- a/perl/Git.pm
 +++ b/perl/Git.pm
-@@ -197,11 +197,11 @@ sub repository {
+@@ -187,7 +187,7 @@ sub repository {
+ 		try {
+ 		  # Note that "--is-bare-repository" must come first, as
+ 		  # --git-dir output could contain newlines.
+-		  $out = $search->command([qw(rev-parse --is-bare-repository --git-dir)],
++		  $out = $search->command([qw(rev-parse --is-bare-repository --absolute-git-dir)],
+ 			                  STDERR => 0);
+ 		} catch Git::Error::Command with {
+ 			throw Error::Simple("fatal: not a git repository: $opts{Directory}");
+@@ -196,12 +196,12 @@ sub repository {
+ 		chomp $out;
  		my ($bare, $dir) = split /\n/, $out, 2;
  
- 		require Cwd;
--		if ($bare ne 'true') {
--			require File::Spec;
--			File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
--			$opts{Repository} = Cwd::abs_path($dir);
-+		require File::Spec;
-+		File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
-+		$opts{Repository} = Cwd::abs_path($dir);
+-		require Cwd;
+-		require File::Spec;
+-		File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
+-		$opts{Repository} = Cwd::abs_path($dir);
++		# We know this is an absolute path, because we used
++		# --absolute-git-dir above.
++		$opts{Repository} = $dir;
  
-+		if ($bare ne 'true') {
+ 		if ($bare ne 'true') {
++			require Cwd;
  			# If --git-dir went ok, this shouldn't die either.
  			my $prefix = $search->command_oneline('rev-parse', '--show-prefix');
  			$dir = Cwd::abs_path($opts{Directory}) . '/';
-@@ -214,8 +214,6 @@ sub repository {
- 			$opts{WorkingCopy} = $dir;
- 			$opts{WorkingSubdir} = $prefix;
- 
--		} else {
--			$opts{Repository} = Cwd::abs_path($dir);
- 		}
- 
- 		delete $opts{Directory};
-diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
-index ccc8212d73..4431697122 100755
---- a/t/t9700-perl-git.sh
-+++ b/t/t9700-perl-git.sh
-@@ -45,7 +45,8 @@ test_expect_success 'set up test repository' '
- '
- 
- test_expect_success 'set up bare repository' '
--	git init --bare bare.git
-+	git init --bare bare.git &&
-+	git -C bare.git --work-tree=. commit --allow-empty -m "bare commit"
- '
- 
- test_expect_success 'use t9700/test.pl to test Git.pm' '
-diff --git a/t/t9700/test.pl b/t/t9700/test.pl
-index d8e85482ab..2e1d50d4d1 100755
---- a/t/t9700/test.pl
-+++ b/t/t9700/test.pl
-@@ -147,6 +147,11 @@ sub adjust_dirsep {
- unlink $tmpfile3;
- chdir($abs_repo_dir);
- 
-+# open alternate bare repo
-+my $r4 = Git->repository(Directory => "$abs_repo_dir/bare.git");
-+is($r4->command_oneline(qw(log --format=%s)), "bare commit",
-+	"log of bare repo works");
-+
- # unquoting paths
- is(Git::unquote_path('abc'), 'abc', 'unquote unquoted path');
- is(Git::unquote_path('"abc def"'), 'abc def', 'unquote simple quoted path');
 -- 
 2.46.0.918.gab30941bff
-
