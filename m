@@ -1,84 +1,149 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB0D1448DC
-	for <git@vger.kernel.org>; Thu, 12 Sep 2024 16:32:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29691850AF
+	for <git@vger.kernel.org>; Thu, 12 Sep 2024 16:32:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726158732; cv=none; b=Xc4ixiDpr2rL5ZfckXChhPmRh6FG1sRsB63crEuZSA7uwaKUmU7LLVZtqzFd0MxOWCXGMMdNX1mRy5RvaSg7HmeowT6mWYKzxgkTqn3zT49hPrw/Qr/qtB5WRC1+d6/4xBBRmyBuugofdrccNJSY39c4JYGI2+vJuSjL6ShKzw4=
+	t=1726158750; cv=none; b=QCUPeDKn4JvFds8uxqXh8jJl/95F7APMdCDAyqUJ5uq3olZXM3Im4167llGPVQ9TpG5/VIHHkWHYOSevLOYVAnkfOsFkhXHW3tl2ny+NbojE1THnquxuuikQKWsH+nNRxoUwMQ2nNWGAHH3kz4w318FUgAsvIi1S1ueDQGlQkJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726158732; c=relaxed/simple;
-	bh=PSVUvovacoPkpZu+qqZIInNJje9ZNMegllHqSeYUJbY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OTDdSmrRG01bKMULdvSoUZZmD7u55ZHSNl3Zw0Ww4xGsiBrEYAWQpxQAQb7vczvQ0fYFa+T7kVvsVy1ubrZs10w/qMVtEeuICgjKbT1FYudJdNtAVC0iOn2T7ebsvaOk7U8VTSt99mu8boaQJClZaFVYyyKNMM00GiZDYvgK3g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Cc++7qGc; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1726158750; c=relaxed/simple;
+	bh=a8X+oVtrtbifd5XGeiqI1I9tO34NmK1SniMRkFErYDc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Jcmp4Gln3gN7vHxR+HQJiaeAScA154A4KOMvJod4qYhbkakBBBb2cf1ggODhqpP5NhWDMzwKlFd8LKB8ckJIveQDEOsyq+esbBkUVWh1MtngMp2k1UZze7iQ8utjy/F3oizaEWEC7CW7zX2ZHJcZl91W7nMo8MICY/yE6LvANp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mK9r6sch; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Cc++7qGc"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B00D333AEB;
-	Thu, 12 Sep 2024 12:32:08 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=PSVUvovacoPkpZu+qqZIInNJje9ZNMegllHqSe
-	YUJbY=; b=Cc++7qGc4bDSZJ+frVbH1OQ204NO57dAvNjiAAKd/rQL/HvULsyL7Z
-	20yU7dWKrl4q7ZD96mxUHI4e8veu55B0CKtBHgrU/9g6LKqgufhMiVkV28IH1Tgs
-	YJCtkxYWkdU0RuwHA/VDw5TeA2xynqCCmA5swpWPSeFxLv3h9mulM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 80F5E33AEA;
-	Thu, 12 Sep 2024 12:32:06 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C5D1933AE6;
-	Thu, 12 Sep 2024 12:32:03 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Han Jiang <jhcarl0814@gmail.com>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 4/4] remote: check branch names
-In-Reply-To: <ZuK80YvPSo8WUpp2@pks.im> (Patrick Steinhardt's message of "Thu,
-	12 Sep 2024 12:05:05 +0200")
-References: <pull.1789.git.1726067917.gitgitgadget@gmail.com>
-	<dba31245607f85c48947da60fe0955a6ed3e2c43.1726067917.git.gitgitgadget@gmail.com>
-	<xmqqfrq686n5.fsf@gitster.g> <ZuK80YvPSo8WUpp2@pks.im>
-Date: Thu, 12 Sep 2024 09:32:02 -0700
-Message-ID: <xmqqjzfg4yv1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mK9r6sch"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42cba8340beso14317545e9.1
+        for <git@vger.kernel.org>; Thu, 12 Sep 2024 09:32:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726158747; x=1726763547; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=87LGVFt6VmcQzmMb9ON0qQvryXtfmrbvt2ERGxZWKNE=;
+        b=mK9r6schBurcTEWUQRExqd0jySftCYTvrUok54xrUQyp9NZ7WglmIeroAGBX/lmp3E
+         VLJwLMoC6UfrUPUOe7wgxccMetuaqG+LPBuA0qknD4M6lTGKxPqkko1avfYvfvU7aM4t
+         +WFlTvUfD5HNh7lY9riS2FRQtK65y8yHoGFmx1h7nb4XynNWLZ0/uf4xNU9VsTI792xz
+         jPy0S2wz8UCeB8OQ1qhOHuICgtGroUjRHc6hleWe+Yj/48yi9PnLEgK4x06kJdqx/8/W
+         FJITFZNCv61N89TF2PgQ/J4rkDl1eZDCOmOpxCGPY83fzZpkQXSy6eyz/1PThX4/+hkX
+         5v0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726158747; x=1726763547;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=87LGVFt6VmcQzmMb9ON0qQvryXtfmrbvt2ERGxZWKNE=;
+        b=J27FBWwBndx5952oIWMgU8NP3VYuga5egNHtVzqufYr0g1rYS/cw6nS4mwFItl5LC9
+         CKtO/rk8ZNAIjN8Drr30jUJHDt/T2zMzKcZvk0SlR7vbgaVW34h4GCYQVU1dAWgPrZMy
+         a++Z6xH80+1MSaruRv5GlPNP2Rw9lARnaiXdEaJxFuL5Fx1EjTPlX8QV2KUliBHS9LEx
+         nYe2xhqrD+fwMLNZLzWorwjIia740l1BTZCfBdjq2p6rVWr762TodlFs8hUnh2TK/gG3
+         VcxOlFEPcZ0axS+GNGZunzIsmNItG6jjKShuwA60qziGyKefDfp0Mn9CLPmhNjBA+rQK
+         kuCg==
+X-Gm-Message-State: AOJu0Yy3Ba/6lMlELWwQkDNP/Phbvo25g2p4ZLYwmJcu8TOYOFPcj1sy
+	LAktBTqjAQcTQdSfV1/1pvft0gx2JK73tMISNLlMdqdiDvtrw16coNZ07JEtIyIf7XNbDNAB4II
+	lPMp3W5IN2nyZfuyJsMtnZZQRGuDAO2OI
+X-Google-Smtp-Source: AGHT+IGAuVHJNJrVlLyWPcmGDAR33OuHUj6h3fd0PJX1QoA0I9UdawjDg+otHnqvvdJVwWCdoJTdEK90xaMY/hZV5XM=
+X-Received: by 2002:a05:6000:1b86:b0:374:be11:22d7 with SMTP id
+ ffacd0b85a97d-378c27a9120mr1947880f8f.13.1726158746066; Thu, 12 Sep 2024
+ 09:32:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8B1C1058-7124-11EF-A064-9B0F950A682E-77302942!pb-smtp2.pobox.com
+From: Rodrigo <rodrigolive@gmail.com>
+Date: Thu, 12 Sep 2024 18:32:00 +0200
+Message-ID: <CAGUZU_JZd_+8y19=kGif6u1+4n_+iOcVWV4p-kC0Uo=8Ev=aBA@mail.gmail.com>
+Subject: Can't use bare repositories with Git.pm
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+We're having an issue migrating from 2.31.1 to 2.46.0. The following
+Perl code does not work in 2.46.0 as it did in 2.31.1 (tested linux
+and darwin, did not check Windows):
 
-> Agreed. It's also kind of curious that the function lives in
-> "object-name.c" and not in "refs.c".
+    # test.pl
+    use Git;
+    my $repo = Git->repository( Directory => '/repo/bare.git' );
+    my ($fh, $ctx) = $repo->command_output_pipe('rev-list', "2acf3456");
+    print do { local $/; <$fh> };
 
-Because the helper groks things like "-" (aka "@{-1}"), it does a
-bit more than "is this a reasonable name for a ref" and "please give
-me the current value of this ref".  Also "refs/remotes/origin/HEAD"
-may be valid as a refname, but forbidding "refs/heads/HEAD" is done
-conceptually one level closer to the end-users.  Eventually, I think
-it should move next to branch.c:validate_branchname() as a common
-helper between "git branch" and "git remote" (possibly also with
-"git switch/checkout", if they need to do validation themselves, but
-I suspect they just call into branch.c at a bit higher "here is a
-name, create it and you are free to complain---I do not care about
-the details of why you decide the name is bad" interface).
+Run:
 
-Thanks.
+   $ cd /home/rodrigo
+   $ perl test.pl
+
+Fails with the error:
+
+    fatal: not a git repository: '/home/rodrigo'
+
+If the repository it points to is a *bare repository* outside of the
+current working directory, it only works if the directory is a child
+directory to the bare (/repo/bare.git/info). The code above does work
+for non-bare repos, and also works if we set `Repository =>
+"/repo/bare.git"` instead of `Directory => ...`, but the Git.pm
+documentation states `Directory => ...` should work for both bare and
+non-bare alike, like it did in 2.31.1 (and other versions).
+
+Bug hunting through the Git.pm code and skimming through the Git SCM
+repo, there's a significant change (commit 20da61f25) that makes the
+recent Git.pm rely on:
+
+     git rev-parse --is-bare-repository --git-dir
+
+for locating the correct (maybe a parent) repo directory. The change
+was understandably done for security (and other many) reasons. It
+started using --is-bare-repository to detect if it's a bare repository
+we're dealing with, instead of relying on the old Git.pm redundant
+code for bare repo detection, which was a sound decision. But some
+crucial code was taken out.
+
+Now if the directory path we're passing to `Directory => ...` is a
+bare repo this new code will fail because git rev-parse --git-dir will
+return a dot `.` (internally Git.pm will chdir() to the directory
+before running git rev-parse, hence the result). The issue is that the
+dot is now is being taken as is by Git.pm as the intended directory,
+tricking it to think my cwd /home/rodrigo is the bare repository,
+leading finally to the fatal error.
+
+This could even become a security issue if the Perl program runs from
+another working dir which happens to be a sensitive repo. Git.pm
+commands would take action on the wrong repo. This hypothetical Perl
+program, if run as, ie., a server program, could reveal / change
+sensitive information from/on a server.
+
+SOLUTION: I propose using "--absolute-git-dir" instead of "--git-dir":
+
+    git rev-parse --is-bare-repository --absolute-git-dir
+
+Which will replace the `.`  rev-parse response with a full path
+resolved by git itself (and not Perl). This means the change to the
+Perl code is minimal. I don't know if this will resolve all possible
+cases, but it does fix our issue.
+
+Here's a diff on my proposal -- sorry, noob in this neck of the woods,
+didn't know if this is the correct way to contribute, but the change
+is tiny and better if parsed by seasoned eyes anyway:
+
+diff --git a/perl/Git.pm b/perl/Git.pm
+index aebfe0c..63d0f92 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -187,7 +187,7 @@ sub repository {
+                try {
+                  # Note that "--is-bare-repository" must come first, as
+                  # --git-dir output could contain newlines.
+-                 $out = $search->command([qw(rev-parse
+--is-bare-repository --git-dir)],
++                 $out = $search->command([qw(rev-parse
+--is-bare-repository --absolute-git-dir)],
+                                          STDERR => 0);
+                } catch Git::Error::Command with {
+                        throw Error::Simple("fatal: not a git
+repository: $opts{Directory}");
 
 
-
-
+thanks and best regards,
+Rod
+gihub.com/rodrigolive
