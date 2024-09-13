@@ -1,117 +1,97 @@
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5944C839EB
-	for <git@vger.kernel.org>; Fri, 13 Sep 2024 18:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F18127E37
+	for <git@vger.kernel.org>; Fri, 13 Sep 2024 18:15:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726250443; cv=none; b=EDAtd1m+3XmbuGAXIauou0aThq5mq0wvM9Gaz4bQzbuWptqqeY5O6/NKzGB7oyY7CHsTUBf5PlIBdY41QAh1S1q6JGfia/8U1cGRnU/5eSPN0vZIJJYp2UUu3joyJK5owi7jPl3Bja6ZvkWtPy11Dnpw9mJtaGxIkV4JWw582PY=
+	t=1726251348; cv=none; b=b14AzE5C/tWvqMYhkxBjXw1PIWQ1OOaWyivv85lYSiPwIL9HMPGkwEY9QGBy+11VJt0p6qeLTKXKJkaOOTX2K8D0QQd/94GqcT5PsQ9AP0HrFbppZxSsEIVROa5xW47+47rK9CWladm2zLYWXQ5xXRanMSXsKGO/pThwS9xWUzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726250443; c=relaxed/simple;
-	bh=nKn+oJauyEG1v+8uubMQMAvKlOI1ZCq5HRPRACHCSEM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hA7+Qp99Dl/c0Sd77vZIw1+/hRfOAc4EzowmlZzEGLTr5lHZfBxfTG2tXzQ98mmnwKw8sWMp2nJSXTwyB2YeprnKZ1OTvJaMxFFY3Npai6Fmjx/sIh4SrfBA/FOeF/5QiuaznMATkFWUgDFj5WfcxmmsRDMT2zdYbH0QxPt1BPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hKnE0MAd; arc=none smtp.client-ip=209.85.219.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726251348; c=relaxed/simple;
+	bh=U8gV48HAMw7NOcKX/GFW9mPG5fADdPdBLNoAKZ7szjI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ct61sCBUnXTygC4fI9hQQZWbq3TL0/FHi/xF4TTfcrUpARKyh6KusUZld8ENeHKDGegrIJGTQYMpfPr+UUjQjP4h8NNQTBc9JcxMys8JZyWDomQ/D55cF8Wk8dTedAYtg38/JeivBYy9JkpaOyPwU+9+la55clH6PLGlbaaEy2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=B9aRwaJq; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hKnE0MAd"
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e1a80979028so2445397276.1
-        for <git@vger.kernel.org>; Fri, 13 Sep 2024 11:00:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726250441; x=1726855241; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yzJo7hhwgzqtiJoTPGlpbB8coBRXCYutfNpcWN8Il30=;
-        b=hKnE0MAdSdRZJPB8JlJ9HOdu3oMRoh9QU23E00FDvlpQTegEKDRTNChUgFZf8d8ACK
-         Jb890XPoXlhcETducvvuQKxMyoHUM8Jd261nTJIBNldJ11fcP9JfXxHy18wX3P66rRaU
-         rpsacaOQaBxDtQYFfIliMIFLDnB1vEnRXZ1P6NkdY+LiXiI5Ld5F5CyKyOhAfMG8aQme
-         lcr93QaZx9c153XwR3/Ciyf19B9Xzm0QEH3OafILhBm2QveGfhQ8x+piglgu83XCG+Tj
-         /mAUJl5c9DRieo3C8XYLQPQ33aMazHD1oAcv5A/6p4T6NeAtZY+DSSa3jw/a7K+BMhSV
-         fMQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726250441; x=1726855241;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yzJo7hhwgzqtiJoTPGlpbB8coBRXCYutfNpcWN8Il30=;
-        b=HEpbeo9hSTF/R4b3NznKuVT38zDaFtJ3NyM0eVczKm4F/075/ynmTxD0VtEuwPivq9
-         6b6iJESoT8kjMXk3sEPjxMDGibRjdhrCYYsq2PgQZftcuHX78AevbmNYm20FbB4C1SiK
-         39Z2PBmFa4nkylCuegZ7IwtjxMyImIkOSy7KA1k3IkyfPUUwkE56LGN7LLEXHobIqmCJ
-         mpxEghYU1dbpdKuHLoL5AifFgsSKiai+2lQop0FfTFuHetzWbu1fQtPfVii35E0i5YR+
-         hoUqiLMKW5nLfzCQTIfeGkisVlePXyHJv/chWdBdMPEl1eHS+OEGYrNXBSl93MY76Q+7
-         nvkw==
-X-Forwarded-Encrypted: i=1; AJvYcCWiYLX/1CYh30HE6Wuz/EQadqSTtd0of55gl998Gg0d1H2YPT99FqIZ/mpkza42bDBdAg8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwssdRHh2PGABOJi25zbOSoN3vc10rhS/wWHK56LOHCEd9qfm/7
-	J/fGG3U6RjrJMPK2VHMfZyoyc8wHX25uNW2x1PbdrgQlE68NX5i6WKAGHCexJzE7kLbcq1716bW
-	dNIiXK+bzxUscjkTL6Vr6A51AqUI=
-X-Google-Smtp-Source: AGHT+IE6ucVzyv+A9vBRr70k8olUsGwGh2iu8T5vJFgyZLkea5vQjzOmanacCjNVn79tvYJmu0egvbQyRivUXI6P6ZQ=
-X-Received: by 2002:a05:6902:2682:b0:e11:7b5b:18b0 with SMTP id
- 3f1490d57ef6-e1d9dc5fee7mr7146035276.47.1726250441287; Fri, 13 Sep 2024
- 11:00:41 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="B9aRwaJq"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 24A0620AF6;
+	Fri, 13 Sep 2024 14:15:45 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=U8gV48HAMw7N
+	OcKX/GFW9mPG5fADdPdBLNoAKZ7szjI=; b=B9aRwaJqgYW4KoLAx5C41++vNVPa
+	DemwLWndBXn70xy6VNPDFE/YQR7TFEegDK8/lF5jcKAzrhEJkyLcNUuTTYjgcjRe
+	UxCarMDPS74EIV4RzvxLUV4+uHJwiHO2u2LEqTM9k/MhMzFnKmbxJ6MUjzYab4WQ
+	fHlcIW4mKv0ZltA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C1C620AF3;
+	Fri, 13 Sep 2024 14:15:45 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A1F920AF0;
+	Fri, 13 Sep 2024 14:15:44 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,
+  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH v4 0/3] doc: introducing synopsis para
+In-Reply-To: <pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
+ (=?utf-8?Q?=22Jean-No=C3=ABl?=
+	Avila via GitGitGadget"'s message of "Thu, 05 Sep 2024 21:52:03
+	+0000")
+References: <pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
+	<pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
+Date: Fri, 13 Sep 2024 11:15:43 -0700
+Message-ID: <xmqqo74rxvw0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1778.git.git.1725555467.gitgitgadget@gmail.com>
- <pull.1778.v2.git.git.1726001960.gitgitgadget@gmail.com> <434c8babbb140b7e66321deec0cd8e8a0d706475.1726001963.git.gitgitgadget@gmail.com>
- <xmqqikv26oq4.fsf@gitster.g>
-In-Reply-To: <xmqqikv26oq4.fsf@gitster.g>
-From: John Cai <johncai86@gmail.com>
-Date: Fri, 13 Sep 2024 14:00:31 -0400
-Message-ID: <CAOCgCU+Fh_mpRsx_wT72j0_m2Pk4Zuri+zfu8W2qeQ1bUZjd8A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] builtin: remove USE_THE_REPOSITORY_VARIABLE from builtin.h
-To: Junio C Hamano <gitster@pobox.com>
-Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 315566C2-71FC-11EF-8E3A-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 11, 2024 at 2:15=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: John Cai <johncai86@gmail.com>
-> >
-> > Instead of including USE_THE_REPOSITORY_VARIABLE by default on every
-> > builtin, remove it from builtin.h and add it to all the builtins that
-> > reference the_repository.
-> >
-> > Also, remove the include statement for repository.h since it gets
-> > brought in through builtin.h.
->
-> Can we have _all_ builtin/*.c files that include "builtin.h" to gain
-> "#define USE_THE_REPOSITORY_VARIABLE" in this step to make it more
-> mechanical?  That way we do not have to go through this large patch
-> manually to review it.
->
-> Then another patch can immediately remove the "#define" (and doing
-> nothing else) from some of the files in builtin/*.c with its commit
-> message saying "These do not need implicit or explicit accesses to
-> the_repository as-is", which would make it trivially reviewable,
-> because such a claim in its commit message can trivially be verified
-> by simply compiling these files.
->
-> After that, manual work to remove implicit or explicit accesses to
-> the_repository, which would remove the "#define" that becomes
-> unnecessary, one-patch-per-file can build on top.  Each of them
-> would be reviewable again.
+"Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Okay I see what you mean. Yeah I can do that.
-
+> In the continuation of the simplification of manpage editing, the synop=
+sis
+> processing that was developed for synopsis paragraph style is also appl=
+ied
+> to all inline backquoted texts.
 >
-> > The next step will be to migrate each builtin
-> > from having to use the_repository.
+> Refining the magic regexp took more time than expected, but this one sh=
+ould
+> really enhance writers'experience. I had to fight a bit more with
+> asciidoctor, due to discrepancies between version 2.0 on my laptop and =
+the
+> 1.5.6 used by Github actions.
 >
-> I am not sure what this "to migrate" refers to.  Is it referring
-> exactly the same thing as what I called "manual work" above?
+> The git-init and git-clone manpages are converted to this new system.
 
-Yes, by migrate I meant the process of removing #define and passing in
-the repository
-argument through to replace the_repository global.
+The fact that such a "magic" processing will hide the gory details
+from those whose primary interest is to describe the commands and
+their options cuts both ways.  While I can understand that purists
+would find it ugly, as `backticks` is now much more than a mark-up
+that means "this text is typeset in monospace", it is a very welcome
+thing for developers around here, who just want to write their
+document in a way even whose source is readable without having to
+worry about suh gory details.  Maybe this gets popular enough after
+other projects notice what you did to AsciiDoctor, love it, adopt
+it, and eventually it feeds back to improve AsciiDoctor proper ;-).
 
-> Thanks.
+So, unless there are objections and people want to discuss it further,
+I'll mark the topic for 'next' soonish.
+
+Thanks.
