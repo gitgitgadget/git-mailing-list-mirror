@@ -1,112 +1,93 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C04B18C36
-	for <git@vger.kernel.org>; Fri, 13 Sep 2024 15:11:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799A314A85
+	for <git@vger.kernel.org>; Fri, 13 Sep 2024 16:17:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726240317; cv=none; b=T2+9Nwz57VrnYQeZoAgGKEP7X3yPM2Y3qYIqY90w/TtcFH+y1cN02sQ8jsGZiIgF/2q+9w5NtNGVjJnKcY/P2JdPUDj4JOX9L/iR3q1E3aA6NHbS1PWQCjrVj8qndkYwHWGYFc5AR6VNy+Y3OJ/d6XkTxsg6+qHfAGMWrRcp8Jc=
+	t=1726244271; cv=none; b=fdZ//S1kNHrwYT/2kLZdVAzhzQaoXvrQN4pfWI8bM2sPoHnFiV/ONmwcGIxJ5ndRmWJ4Dbg1Vqu/ZDpeTWpibjsmjAJv6trZbWNwwVjLbyOYoUf+oLRdDdnXLBTOR+F4WaiX+JuuTj41+YQ5T2PT5tPXxVU2Z7TSVYNrTsKxVsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726240317; c=relaxed/simple;
-	bh=AG2MCNncc6T4jCD2gu8pOpqAbWwEn5/zDDusxMVUwxk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fvN/FfdM3PsWZBKKML2rcfiUZs5W2tuCp3ivCuwTgefhjYVkwz2jx8+pcg0Q+xGe1NwnkWgnoxE/1/QhWVp/P5W93yIBBwvdQ9LWJgCr07J/+f+cJAuR9p1nxKta7S47Mw2fcyhUfcUMMNLhL+FoKFEI1fDSdrfRKVvdhj/lyNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EunkUck8; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726244271; c=relaxed/simple;
+	bh=+WI9Z85HfrAfODGmIPjn/xviJxXYdH51pvmGxUdLerc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uBX7lULlvDAIvLL+SIGj3raSdEFORpIW6gWbX/2TuH+fGBk3kfwzW418QFvxoy8SEChpvulGYdRg9OxhP2+HIjCdXRIpjCfJ4osl0MA41pNPIYxcIy+koEpru7AOqp9n7fk8ceVjWNhFPjWkf+gPPs0Gx1xSWMkhyOEF5ac8C4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qJ0SQGpq; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EunkUck8"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42cae4eb026so21965815e9.0
-        for <git@vger.kernel.org>; Fri, 13 Sep 2024 08:11:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726240314; x=1726845114; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=q7jbXaRjRs6342+JpXckajPFfNx/nC66XwXy043hyxg=;
-        b=EunkUck84QWpaqAYGl5OvvfOfARVcT0SUtRfK9RZ8glue8StFYGQlSfJP0lhElfIkR
-         6u1wbChpwUBm4rxY3Zq2Pqw1L/fwKazFWSXuuYAdO4J6rSoPAL0tfbxGqpCFFVyWW47F
-         QOcOqdMhAjiS9B1t2AdwGqSAwTe0mMrPQ7LYTB2gAIYcQGzpZhZV+BiRygggWr070Q83
-         glYy1CZxuhO8tzzPvB7AAgBv/oh1XFBrbVXMWPhhPZSyFBNAi6a1++DQuqILLkNll17C
-         X5GrxsXGQDMhY6GEkFlvokpursYNLU6Fw+J0+eelMQCjJ9vqFuVL7UM1Bg9XC67ScXem
-         4FxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726240314; x=1726845114;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q7jbXaRjRs6342+JpXckajPFfNx/nC66XwXy043hyxg=;
-        b=lFtWP/yD4LO2fgImh5pRXjusMwglhLW/08hVjp00bEMySx0tE+VVhru38A85TUhm2p
-         /xDyRlUqqiLAtdG0SGYL78AkX2u0KM3H2XS5ODo3cy8VqJUU26DoStB8zV7AMvU8XHK9
-         ASumo4E1YITBv5SQwZSYW+jQFPYIBxZrTYbSrsEo8FCdj/cwrjCtLm7IQRqJxeh8EWg4
-         Uk12HywUrJwIMu3LH23NHITWm6y5L9uQU+KnKuyoRdmLNkj/TciQYaIN95hYimD1OJyX
-         rWZUAowfvLcKTDVUgri8WwSzPt37RLSkdsCYJK6J6EdbtBGVpjK+720hkMcrfoJ79g4Q
-         rL9Q==
-X-Gm-Message-State: AOJu0YydEpTGjdWoMqYrRahYhdidc4X/BIoKcp0awHV4q35VLux4Ro5b
-	m7ZzWeoueDWV9WSV/PbSuGxtcgBXhIcswVzKC+wP9jDUkYpgUYgc
-X-Google-Smtp-Source: AGHT+IGHsZKiqlGIf2yhSb/xrtcRM/ukmXArdMi2992+RQxfhXFTef0jLNGcDXwnGT665LFhV9DByw==
-X-Received: by 2002:a5d:4e81:0:b0:378:90fe:f753 with SMTP id ffacd0b85a97d-378c2d11838mr4433654f8f.28.1726240313833;
-        Fri, 13 Sep 2024 08:11:53 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:628:b501:20f0:d089:108a:54d3? ([2a0a:ef40:628:b501:20f0:d089:108a:54d3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378956d2ec2sm17323601f8f.75.2024.09.13.08.11.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Sep 2024 08:11:53 -0700 (PDT)
-Message-ID: <acd287c8-990b-42b7-85dd-a206a887b8ee@gmail.com>
-Date: Fri, 13 Sep 2024 16:11:53 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qJ0SQGpq"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 162A82610C;
+	Fri, 13 Sep 2024 12:17:48 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=+WI9Z85HfrAfODGmIPjn/xviJxXYdH51pvmGxU
+	dLerc=; b=qJ0SQGpqaOWOlSdTg5xlc3IYMPWs0Ifny2exnmmYeAgctrM8myxgWw
+	nSyGNQ5mD2wgMXLiYrfhkq03cKtMbyKzxDWmt/tyPnxLEv+RXgpBxpr4yeBeux60
+	NThP8NMCuvKDCMtgcSLRCiXrJkY64LC1xqmlPQSWhFOp4RnC7xZyU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0DC0B2610B;
+	Fri, 13 Sep 2024 12:17:48 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 76D4A2610A;
+	Fri, 13 Sep 2024 12:17:47 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 5/4] ci: add Ubuntu 16.04 job to GitLab CI
+In-Reply-To: <20240913062113.GA1232933@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 13 Sep 2024 02:21:13 -0400")
+References: <20240912094238.GA589050@coredump.intra.peff.net>
+	<00a9fe6b7d77c16c9fd6dfe746aacf9068a76942.1726206484.git.ps@pks.im>
+	<20240913062113.GA1232933@coredump.intra.peff.net>
+Date: Fri, 13 Sep 2024 09:17:46 -0700
+Message-ID: <xmqqseu31qad.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/4] remote: print an error if refspec cannot be removed
-To: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Han Jiang <jhcarl0814@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1789.git.1726067917.gitgitgadget@gmail.com>
- <a8dfe403d0683aec4265bf920921e45d5b59cec3.1726067917.git.gitgitgadget@gmail.com>
- <xmqqseu56hhb.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqseu56hhb.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B71ACEDE-71EB-11EF-B9CB-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On 11/09/2024 21:52, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>   	if (!add_mode && remove_all_fetch_refspecs(key.buf)) {
->> +		error(_("could not remove existing fetch refspec"));
->>   		strbuf_release(&key);
->>   		return 1;
->>   	}
-> 
-> It is a minor point, but would it help to say what we tried to
-> remove (e.g. "from remote X") or is it too obvious to the end user
-> in the context they get this error?
+Jeff King <peff@peff.net> writes:
 
-The user has to give the remote name on the command line so I think it 
-should be obvious to the user.
+> On Fri, Sep 13, 2024 at 07:52:51AM +0200, Patrick Steinhardt wrote:
+>
+>> In the preceding commits we had to convert the linux32 job to be based
+>> on Ubuntu 20.04 instead of Ubuntu 16.04 due to a limitation in GitHub
+>> Workflows. This was the only job left that still tested against this old
+>> but supported Ubuntu version, and we have no other jobs that test with a
+>> comparatively old Linux distribution.
+>> 
+>> Add a new job to GitLab CI that tests with Ubuntu 16.04 to cover the
+>> resulting test gap. GitLab doesn't modify Docker images in the same way
+>> GitHub does and thus doesn't fall prey to the same issue. There are two
+>> compatibility issues uncovered by this:
+>> 
+>>   - Ubuntu 16.04 does not support HTTP/2 in Apache. We thus cannot set
+>>     `GIT_TEST_HTTPD=true`, which would otherwise cause us to fail when
+>>     Apache fails to start.
+>> 
+>>   - Ubuntu 16.04 cannot use recent JGit versions as they depend on a
+>>     more recent Java runtime than we have available. We thus disable
+>>     installing any kind of optional dependencies that do not come from
+>>     the package manager.
+>
+> OK, this looks reasonable to me. I do think we could have our cake and
+> eat it too on the Apache support if we added a GIT_TEST_HTTP2 knob. But
+> it's probably not all that big a deal in practice, and after another 1.5
+> years I think we'd drop this 16.04 job anyway (since it will be out of
+> LTS then).
+>
+> Thanks for putting this together.
 
-> The reason why I had the above question was because inserting error()
-> before strbuf_release(&key) looked curious and I initially suspected
-> that it was because key was used in the error message somehow, but it
-> turns out that is not the case at all.
-
-Arguably we should refactor this to use our standard "goto cleanup" pattern.
-
-Best Wishes
-
-Phillip
-
-> IOW, I would have expected something more like this:
-> 
->   	if (!add_mode && remove_all_fetch_refspecs(key.buf)) {
->   		strbuf_release(&key);
-> +		return error(_("failed to remove fetch refspec from '%s'"),
-> +				remotename);
-> 
->   	}
-> 
+Yes, thanks, both.  Queued.
