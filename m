@@ -1,53 +1,53 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D953154C0B
-	for <git@vger.kernel.org>; Fri, 13 Sep 2024 06:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0458224CF
+	for <git@vger.kernel.org>; Fri, 13 Sep 2024 06:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726207529; cv=none; b=jQ9C7Yh9GZz49XgIfXq4LNp6xn6xW+qJDA9/9wEmW4d+DWclsuaQ2N7i/YX9maegYwXmrIC8ImVt/DtFhrgT6eFpGCyYpbaAVBhrCxTvOuuUDEuzBFAXMUktQhDI/3Fe9ybdEreKwvR1iszQN2MfhRVkenHJNxhOX2bZOeXMpLE=
+	t=1726207530; cv=none; b=b5J9xgI9xNzPrpPPJmYrdeZn0lg9Sfd6Ko0a5Fm+fuRqQxX0Cgpeo7Q/8NU6zx8EAtdm+4opqX0AtmIYLh4DVFIAFVek8WY3JLcpWJyHX9ugHMC7FuAaieG4C8o+vC32r41u4HRUUC0v0YBS7YouElJMSuPe8T4J2DORBniZ4qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726207529; c=relaxed/simple;
-	bh=GKMP9OZ+AXa48AHAn97KD1YNtKg+ffp8oOfTm+ZHKkc=;
+	s=arc-20240116; t=1726207530; c=relaxed/simple;
+	bh=GS4tEYGLTquy6khq/74lIpfxQOKhwWMqvfgqWMid9vI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a57sJO2wk25A7ppLKnALJCJ+9H5BnwBPZgTFWpN8GNFUAQZxXtTDsSETKa50fL8nJO6OgJYEU+hL2uS8Et2FjVIDuA2ea6qQdEDDMpI4H4o9n7OWHlF9y8tw/JCTNwXkaUbqemRneoj4qq7DwOo9H5oUURJC5jPU9siOHe+L5hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JbTsUjti; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O8ipiV4x; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=qlDCmaQPEpxeTj6TaW3hjFjeu8G2kyedIRZHalw2IxLLm6GMhfCxhmF6nA6gArtym6lRpx1HU+1hPHs7IUpNS2vilPvCUYvyU8XXax1ZzAiaD28o8e3kDp7FqcAEbzIW3bbda3KCPiPaAxV+AilK0h9ewl7m0//i2BvzQJvdhQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lJqkeGD5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eZeA4Juu; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JbTsUjti";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O8ipiV4x"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 976FE13801F4;
-	Fri, 13 Sep 2024 02:05:26 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 13 Sep 2024 02:05:26 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lJqkeGD5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eZeA4Juu"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C3FB41140110;
+	Fri, 13 Sep 2024 02:05:27 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 13 Sep 2024 02:05:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726207526; x=1726293926; bh=hEv6shlOSX
-	3YBM+RnqJvFaAJ2e7XH14rqQ9l62CMFV8=; b=JbTsUjtiTUw3FFf34LiBJkhW16
-	EkGTFL3mI6f7o8MbgbEwZ/z5PBybfg4C5fi/jDA6CMm9y48awAP8eskDEIYT29C9
-	q8gu7zSXR6uNVgWzBRA+5Y9dAMUHm8rnOjvRUzYkavS/pzcQgQz/kdsd7VpT4g+k
-	FdRx4h7tjH9bGGTcGLN/OA5LR0hywTJEGpJ9C7wiVKxNEArUQtF/EJLEzzU+7ZbP
-	a0EMU25O+sz9/Pm1tpTk+2nsR4B+CZHEZ1XqEeAXcnq+R2M4Jta/ZtPij0WFq8r1
-	/Ic7jhyHFTVyyaKEeFx/hNaAPpxAiookj5w7WU4TSWEsprpFPuczgqQU5eAQ==
+	:subject:to:to; s=fm1; t=1726207527; x=1726293927; bh=tewzzbwZeQ
+	54wBD6asg6o39oBFx4lsoW9AEuTUv+zLY=; b=lJqkeGD5rYAQKuA6tBJ7CY/m+6
+	Frz1OjoMDvEukejFeyRCSqR0CDc9bUOYtJ/s4RZn1dd2MA7CYQrRqWtYmbGXOEj1
+	iBXWzKyNaNAMegEsn1DbbZumuG7YZKfSuSP0LJ5SmEVBtXCcsd0T2ARFDtgg4Dvs
+	//QARtARG+RahMLLBqaEGN8HROFsd4isUM0T6aUFa0nzGcxH4tjRmWOWh5Z7u/u4
+	mFuHkU+ORQb4ks2vTlrTLF1bl725jySr9bADZS7+L0kaUNzjue5Qt9Q4AFE6qioN
+	1gLKOFQISo/qt34FHwRL+fHLAFvlcmNC6WBed/Wwfxm02NivJxzPXkISYmMg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726207526; x=1726293926; bh=hEv6shlOSX3YBM+RnqJvFaAJ2e7X
-	H14rqQ9l62CMFV8=; b=O8ipiV4xdD81+1iC9hHv+YGw2GdTqjzR9QSTYCtp9CH+
-	q0dt4s7C6WP5DdQG6TJOqVEzNiuJrFp6MMHnHy+7BPhFIm8G85+MR10o85ky7F7n
-	RClA1IkNg7LUQBcuUvtyJ+rdFTW/Vdtiv1+B2PRLDb1VKQpKuiwBzh5S8jxwTJOH
-	vu6PZXzb/CJXLDBjDJ3JG23byTLU4nBelTj2pJ6GYk4UBaCMpedUH8eEeaW7D1k3
-	1F3/Xzzmh7vPhZgDcxMB3oGJBiW2RFy91XPssKJZoG1fCH+ONE5A3mI+zm8mWTT4
-	lzalM8cz7Z+DRwvWC9MWm6iMXNnZNzIKSBlujWQ0AA==
-X-ME-Sender: <xms:JtbjZsCxxHgqVZwsubdpsIkR5Ftygg0IeVwn0SrUTXmnpouvjQAZSg>
-    <xme:JtbjZuhKaMjIERSRQFuu9rtYqwMowgiX3Nb-BzNhx93_g7KfT4skTmqig_8ncA7bP
-    6MMzp4fyPxGx00gKQ>
-X-ME-Received: <xmr:JtbjZvms9Dw1OXV0-sTVHtYoDN-Br_ufFUFBp5c5_I7PAKDPiK4rJeL80dK6VHb-s_ea-0oo878ZKyW7DFsyNGVZDqlyEzd5g1vSBndN47yaFw>
+	fm1; t=1726207527; x=1726293927; bh=tewzzbwZeQ54wBD6asg6o39oBFx4
+	lsoW9AEuTUv+zLY=; b=eZeA4JuuYytGOmSTD+GCKl9W2nDGW2uZ5ImTEhsx8NHF
+	uwIwhgyZiz/bYzEbBHfGOqZS4n3B4C3Kav7ULhN06y9Ttg1d4PM13D8aLbfU1tRd
+	qZRUMc023px1NCGVbpGuxb8Dxb3IN5njKZ4SvJ/05NYDGFSEf3iKfJLKdHiIK2Xt
+	vJFsMgU2GsjBW30ghJFNPvJueyv43yXp8Kxep/Y3Jc+JcwNejX4lyCSFo03XCptc
+	PC/m2MVVlPsWooKjxlRXyLmjhHVxYHE//fP0e7tCsmbs7AklgFxYddCXP2fOJ2aI
+	6fnCLURGIfh+MQlzMj32ejYp+Ww7kQ54raoxefI19A==
+X-ME-Sender: <xms:J9bjZggpdONQz2fdHFA0FM18ue4DNaJ7dsZL1G0GR-mlN4s6ZA1Cyg>
+    <xme:J9bjZpDEqEDJgRdnFydq2N4puSfyxt33Xau2XcWHasCRuqs_aZ6geB3FQu82eC0gf
+    IKGeIWHw8l_EQgm5g>
+X-ME-Received: <xmr:J9bjZoFplTRSURqPR-ToTB-D9R5k-lhjLgPvHbDa_8XjnhWKz_UBY01QvEmBwptQsQY1mODoUxq9WOLtmPtJRsRSnqimPWMgQG3ZcPokovi7eA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejiedgvdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
@@ -55,29 +55,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejiedgvdefucetufdoteggod
     hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
     dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtoheprhhoughrihhgohhlihhvvgesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:JtbjZizIBHC5YXE7GoQXar9P1XpsMdGH8Qq9w3VmMWDMc0Rrd8rY5Q>
-    <xmx:JtbjZhSHtOpLxeG5ep8s-ELM0rH3qNtbQinWw4jfn4FytZwbezM2-w>
-    <xmx:JtbjZtYXkH8m80DsAUGiiMfMgDxJTRYpMNZY5kwQRO9pLEGqKD31kA>
-    <xmx:JtbjZqT7qcWKawAS7-HAtiSg6rBckmPf2ZXcSzXQkcZcaJGsabw_TQ>
-    <xmx:JtbjZjdi9zEIlZ3VKDv4zx_vxhxBIB0plW1vK6hkptPuQxvFi8I6YgvU>
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrohgurhhi
+    ghholhhivhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
+    gvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:J9bjZhQ-NwZk3O69_9E5RU7H7TDj6PcAj3-3eivmAEyDGRtqKYSTDA>
+    <xmx:J9bjZtwq_xVulT-hd77brhJtopCoRVfdfuilAp_Zgf4vf9v_yFF_Iw>
+    <xmx:J9bjZv6D3WnaA8YojCgqpd5ewlTATtDFeJzJB_JM2ncIF6PvVQJpmw>
+    <xmx:J9bjZqz4rHzxr12cGVNkGsoSIa4UgAM5ZzuYxxxtR7DPibYeJ1XVOQ>
+    <xmx:J9bjZl8r5_WXi3vEEi_2SrIye8w0RUZY7izP37Aj8_NlhJVGc6nR8vPf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Sep 2024 02:05:25 -0400 (EDT)
+ 13 Sep 2024 02:05:26 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 60c6ce3b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Sep 2024 06:05:13 +0000 (UTC)
-Date: Fri, 13 Sep 2024 08:05:23 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id db0ec6f4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Sep 2024 06:05:16 +0000 (UTC)
+Date: Fri, 13 Sep 2024 08:05:26 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
 Cc: Rodrigo <rodrigolive@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] Git.pm: fix bare repository search with Directory
- option
-Message-ID: <ZuPWIzzYda5aVjMa@pks.im>
+Subject: Re: [PATCH 2/2] Git.pm: use "rev-parse --absolute-git-dir" rather
+ than perl code
+Message-ID: <ZuPWJtPo-2f2Mgbl@pks.im>
 References: <20240912223413.GA649897@coredump.intra.peff.net>
- <20240912223604.GA650605@coredump.intra.peff.net>
+ <20240912223725.GB650605@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,62 +86,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240912223604.GA650605@coredump.intra.peff.net>
+In-Reply-To: <20240912223725.GB650605@coredump.intra.peff.net>
 
-On Thu, Sep 12, 2024 at 06:36:04PM -0400, Jeff King wrote:
+On Thu, Sep 12, 2024 at 06:37:25PM -0400, Jeff King wrote:
+> When we open a repository with the "Directory" option, we use "rev-parse
+> --git-dir" to get the path relative to that directory, and then use
+> Cwd::abs_path() to make it absolute (since our process working directory
+> may not be the same).
+> 
+> These days we can just ask for "--absolute-git-dir" instead, which saves
+> us a little code. That option was added in Git v2.13.0 via a2f5a87626
+> (rev-parse: add '--absolute-git-dir' option, 2017-02-03). I don't think
+> we make any promises about running mismatched versions of git and
+> Git.pm, but even if somebody tries it, that's sufficiently old that it
+> should be OK.
+
+Agreed. We should eventually be able to rely on things that we have
+implemented many years ago.
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I retained the "require Cwd" here since we use it in the conditional
+> (but moved it closer to the point of use). It's not strictly necessary,
+> as earlier code will have required it as a side effect, but it's
+> probably best not to rely on that.
+> 
+>  perl/Git.pm | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
 > diff --git a/perl/Git.pm b/perl/Git.pm
-> index aebfe0c6e0..cf1ef0b32a 100644
+> index cf1ef0b32a..667152c6c6 100644
 > --- a/perl/Git.pm
 > +++ b/perl/Git.pm
-> @@ -197,11 +197,11 @@ sub repository {
+> @@ -187,7 +187,7 @@ sub repository {
+>  		try {
+>  		  # Note that "--is-bare-repository" must come first, as
+>  		  # --git-dir output could contain newlines.
+> -		  $out = $search->command([qw(rev-parse --is-bare-repository --git-dir)],
+> +		  $out = $search->command([qw(rev-parse --is-bare-repository --absolute-git-dir)],
+>  			                  STDERR => 0);
+>  		} catch Git::Error::Command with {
+>  			throw Error::Simple("fatal: not a git repository: $opts{Directory}");
+> @@ -196,12 +196,12 @@ sub repository {
+>  		chomp $out;
 >  		my ($bare, $dir) = split /\n/, $out, 2;
->  
->  		require Cwd;
-> -		if ($bare ne 'true') {
-> -			require File::Spec;
-> -			File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
-> -			$opts{Repository} = Cwd::abs_path($dir);
-> +		require File::Spec;
-> +		File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
-> +		$opts{Repository} = Cwd::abs_path($dir);
->  
-> +		if ($bare ne 'true') {
->  			# If --git-dir went ok, this shouldn't die either.
->  			my $prefix = $search->command_oneline('rev-parse', '--show-prefix');
->  			$dir = Cwd::abs_path($opts{Directory}) . '/';
-> @@ -214,8 +214,6 @@ sub repository {
->  			$opts{WorkingCopy} = $dir;
->  			$opts{WorkingSubdir} = $prefix;
->  
-> -		} else {
-> -			$opts{Repository} = Cwd::abs_path($dir);
->  		}
->  
->  		delete $opts{Directory};
 
-Makes sense. We already knew that the $dir was relative, but only
-remembered to handle this in case the repository was non-bare. Now both
-cases use the same code to translate the relative path to an absolute
-one.
-
-> diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
-> index ccc8212d73..4431697122 100755
-> --- a/t/t9700-perl-git.sh
-> +++ b/t/t9700-perl-git.sh
-> @@ -45,7 +45,8 @@ test_expect_success 'set up test repository' '
->  '
->  
->  test_expect_success 'set up bare repository' '
-> -	git init --bare bare.git
-> +	git init --bare bare.git &&
-> +	git -C bare.git --work-tree=. commit --allow-empty -m "bare commit"
->  '
->  
->  test_expect_success 'use t9700/test.pl to test Git.pm' '
-
-I didn't even know that this hack was possible. I guess the alternative
-would be to use git-commit-tree(1) with the empty tree ID, but that'd
-also require us to update branches manually via git-update-ref(1). So...
-a bit gross, but hey, if it works...
+This line here made me think for a second what happens if the absolute
+path contains newlines. But it should be fine, because we only split at
+the first newline character we find. And as the first parameter that we
+pass to git-rev-parse(1) is `--is-bare-repository`, we know that it will
+output either `true` or `false` as the first line. Any subsequent
+newlines should thus be handled alright.
 
 Patrick
