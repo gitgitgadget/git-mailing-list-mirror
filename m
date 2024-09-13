@@ -1,110 +1,128 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03BA2F860
-	for <git@vger.kernel.org>; Fri, 13 Sep 2024 18:28:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C474148832
+	for <git@vger.kernel.org>; Fri, 13 Sep 2024 19:01:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726252134; cv=none; b=gy5rYkw/svmdvJsD5kv02rGwllHVXmOBiQB7QM47UwSzaKvOroxR6ktBINS8wzA8lNgwlJX2rWJK4DIfb5DUXSYJy0TGFPToiJtxar6TA9NbRe4FGSU7Iafp+aCRWcW5+T/QUHbEVyLPnJZp7TMU9KiDAa6hP/y2Xar6CrmPLVc=
+	t=1726254107; cv=none; b=aa9yzaAQMeJvOqdtA0Cmf1oavJpQhbciV352P6foiKWgmQMg5n9FHAMPI6C5XeXnHXNw7i8H9imaL/uZRELb7gtRtcQFeOCCMPXE7UdGbBsZXrEgWzpbEMZtgeHQj3fMwPzs9n8zhUMkID7Oh5rV0LvsMHne9EryOT91XSHyqBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726252134; c=relaxed/simple;
-	bh=JIYi2N0SJrVbrGnkkQpZWse+Dr2T9VFgcTtnzoXrY4c=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=ZN1r+Mmi/bbrORm2lbvJ9SYc/5xlfwU78Gdhc7hKIxElS714WJ9YHXf4DBUqlItbkb1HlFQFseWzIGz981UpovoEV0B9rnMBEdkz6DsvzluCVf0mStbly42HJp4cQYHFVD8SF2KkThcYnRtFdQtkgh9ZBHso2g6/xa4JLcLLcxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZUpXKfky; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726254107; c=relaxed/simple;
+	bh=VPSvYPSOLP3fEQARQNjcbt54PxJ95872cm1tsbVR4fE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FgG4J9hCBPMhaJca86OvDGsRpPTq3gNZl6eva6sGI4aSTCMh025TphLYHmimInybr2NStaWCCKAJRM+UcWMbAiVHgPk1/MMfiifnTt2p5SUOAP/3BMP81o2b4NOY3bNIzirai8ZgwdxjBzL/NNlVUeeDwn0QDp48KOganS6iwRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=NR5jLbZP; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZUpXKfky"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-710f0415ac8so1366385a34.1
-        for <git@vger.kernel.org>; Fri, 13 Sep 2024 11:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726252132; x=1726856932; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cFR1IWnO9w/CW+q+/cZQaqDN6RNgRrQ/qsaQNzqH5ek=;
-        b=ZUpXKfky+PJb1rej/+wbuSFkeaffnz0lxj0VDVMpVSsNe64Y2MgY8yH8oLUa9JdtaD
-         ZmPMB3VMmU2SWzxiE2G1YTqiFg5GM3aSZy/YI5MynqOPX+Yci6pUHFOMPi66MV5ilwXv
-         UNhS0XU4+FSuNs2x4eH1Xe9CQZj2bkvY4v0qUd6rhR+CKBgBTkPF9kcuS2pYvNWqDp8V
-         m79v/NvJMRyKK7akKuHE216gGe8P2e7JGw7LUiiWnTTQskW1OmkZrTh/mRi4uUmDS83s
-         NNylD+HIhMukI5C9n8UPl35nzGEf8ah2WN1VRuLe/A43egXvmTs0klO4ktKtDOUKTpQz
-         lyzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726252132; x=1726856932;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cFR1IWnO9w/CW+q+/cZQaqDN6RNgRrQ/qsaQNzqH5ek=;
-        b=HgPMWoJy5LZFttfFETjKv97E4fh7P1Qrp9TnqeDSRxY13gtGRKRiW6rFbiZ2yaq9f+
-         C+mYZvhzDCuUgBG3lR1wzIk9MIvvAns0N4jiC0l+30N/LoDsY97CZO387fq568dfWrUu
-         bNESpDCuwJNeh1AU2KYDtKDiTk/ZDU3g9LOOx07GnfyG2tm1hvVojTEpAX50Pzybaiqq
-         h/zyGFeelHm+/oZjuF2BrolLF/yyEHIMEvpwrfIgeZvdP6/80KZAYU6SgUo6FG6rgNjj
-         5L7q/ajfNfoIoP73227JyBO35+58Swuv93muWWGgndvEPSsSJD39lC8cJGS6ES9/pu0F
-         lotQ==
-X-Gm-Message-State: AOJu0YyYVN2HcdEp/tSekeb241pYHaKQiAsZ4DflJZPd/tfzURfsI302
-	82+RZkvY4O6+zjKTCFhZBa6JQRQABQQwtkog0Vr0zGuekyjFREdFQ6LocQ==
-X-Google-Smtp-Source: AGHT+IGUCcZJHxcyTiwRTBPeci27CcTC/Ggs6D1jjalskTcYR1IOuzRBYoLSK5Zamm/Jm7m+P0x0zA==
-X-Received: by 2002:a05:6830:6994:b0:710:f8ef:6482 with SMTP id 46e09a7af769-7110946c0e8mr5112388a34.9.1726252131808;
-        Fri, 13 Sep 2024 11:28:51 -0700 (PDT)
-Received: from smtpclient.apple ([2600:381:bf09:b97d:2d58:69b1:365e:5f42])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-710fee7f075sm1275991a34.11.2024.09.13.11.28.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Sep 2024 11:28:51 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Stephen Smith <ishchis2@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="NR5jLbZP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1726254103;
+	bh=VPSvYPSOLP3fEQARQNjcbt54PxJ95872cm1tsbVR4fE=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=NR5jLbZPvZe8TvStUnzCLT/Uteyvlh49a4bACt+XmrCBfdlK2ChcI+5sCycTukxvB
+	 55cuj3ZD4dCc7+VEyFmdMHPiw37SqMLb1Sf0VZvoWWlpKhHUgDSPm01vtpNA78TTHT
+	 XKsAFxpZVTsTt+rl7kJb+hvcTiWhBzU/gGn6fyttxBT3ztZZEAXOVh2zthgPGomInH
+	 BKlP1tMqzh+uAzBWtj3zi9nFLgBIscW2u2wugWzQgFzvJ28LY7q3xfRScm5lV2PcTI
+	 suLufXvuR23eXSxp0G1ePmdhJ8SO5UgnSXRYcdwXBHwFrH9929qjj8Oo5FYL9HVCN+
+	 hT4o9NlBaNxLUVEuDFOdDRXD+tIvsLNJYWcGknuS3OuGtEGrQ9K2dpmtdYIg7f2u7o
+	 etf+Lt3PO4Y4sIqGNoEcS+NdFeqFCJ8+s2Yh31pT+MiFrjZKCTaLMBwchLJw6opjB6
+	 yjahwLaYD+sj4BUy0DbA7cEn6YzMeDoNOe7NeF2Mh87v2xOpDu+
+Received: from tapette.crustytoothpaste.net (unknown [204.148.121.182])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2124A2447C;
+	Fri, 13 Sep 2024 19:01:43 +0000 (UTC)
+Date: Fri, 13 Sep 2024 19:01:40 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Sean Allred <allred.sean@gmail.com>
+Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
+	steadmon@google.com, spectral@google.com, emilyshaffer@google.com,
+	emrass@google.com, rsbecker@nexbridge.com, gitster@pobox.com,
+	mh@glandium.org, Jason@zx2c4.com, dsimic@manjaro.org
+Subject: Re: [PATCH v3 6/6] Makefile: add option to build and test libgit-rs
+ and libgit-rs-sys
+Message-ID: <ZuSMFAyoD0CIfE3H@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Sean Allred <allred.sean@gmail.com>,
+	Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
+	steadmon@google.com, spectral@google.com, emilyshaffer@google.com,
+	emrass@google.com, rsbecker@nexbridge.com, gitster@pobox.com,
+	mh@glandium.org, Jason@zx2c4.com, dsimic@manjaro.org
+References: <20240906221853.257984-1-calvinwan@google.com>
+ <20240906222116.270196-6-calvinwan@google.com>
+ <m0seubo5q7.fsf@epic96565.epic.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: SyntaxWarning for   '\S'
-Date: Fri, 13 Sep 2024 11:28:39 -0700
-Message-Id: <C7F37713-E65A-4200-A810-C71CFAA55926@gmail.com>
-References: <ZuSDQPssBOujNCrF@tapette.crustytoothpaste.net>
-Cc: git@vger.kernel.org
-In-Reply-To: <ZuSDQPssBOujNCrF@tapette.crustytoothpaste.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-Mailer: iPhone Mail (21G93)
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+Z8ZEVkh+vcFq5UW"
+Content-Disposition: inline
+In-Reply-To: <m0seubo5q7.fsf@epic96565.epic.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Given that you don=E2=80=99t see it and that Ubuntu release is due a month f=
-rom now I will see if it is part of the update.  If the fix isn=E2=80=99t pa=
-rt of the update I will report it.=20
 
-Thanks. =20
-SPS
+--+Z8ZEVkh+vcFq5UW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Sep 13, 2024, at 11:24=E2=80=AFAM, brian m. carlson <sandals@crustytoot=
-hpaste.net> wrote:
+On 2024-09-07 at 15:15:12, Sean Allred wrote:
+> Calvin Wan <calvinwan@google.com> writes:
+> > Add libgitrs, libgitrs-sys, libgitrs-test, and libgitrs-sys-test targets
+> > to their respective Makefiles so they can be built and tested without
+> > having to run cargo build/test.
 >=20
-> =EF=BB=BFOn 2024-09-10 at 03:49:33, Stephen Smith wrote:
->> When compiling Git from source on my Ubuntu machine I've lately been gett=
-ing
->> some warnings when the docs are built.
->>=20
->> An example of is:
->>=20
->> ASCIIDOC git-sh-i18n--envsubst.html
->> <unknown>:1: SyntaxWarning: invalid escape sequence '\S'
->> <unknown>:1: SyntaxWarning: invalid escape sequence '\S'
->>=20
->> This syntax warning shows up for nearly every man page or html file.
->>=20
->> Is there are current documented solution?   If there isn't a documented
->> solution, where do I start looking and I will craft a patch and submit it=
-.
+> I feel like clippy should be run as part of these somehow, but I'm not
+> sure where.
+
+Yes, that seems like a good idea in CI.
+
+> > +libgitrs-sys:
+> > +	$(QUIET)(\
+> > +		cd contrib/libgit-rs/libgit-sys && \
+> > +		cargo build \
+> > +	)
+> > +.PHONY: libgitrs
+> > +libgitrs:
+> > +	$(QUIET)(\
+> > +		cd contrib/libgit-rs && \
+> > +		cargo build \
+> > +	)
 >=20
-> I believe this is a warning from Python about the asciidoc program
-> itself.  I don't see this on my Debian unstable system, so it may be
-> that it's fixed upstream (you can check at
-> https://gitlab.com/asciidoc3/asciidoc3/) and if so, you can open an
-> issue with Ubuntu to get it fixed.
->=20
-> If it bothers you, you could also use Asciidoctor, which is written in
-> Ruby, and which won't have that warning.
-> --
-> brian m. carlson (they/them or he/him)
-> Toronto, Ontario, CA
-> <signature.asc>
+> We should definitely be setting `RUSTFLAGS=3D-Dwarnings` as an analog to
+> `-Wall` in the C world, no? These crates should build without warnings.
+
+I believe -Dwarnings turns warnings into errors (at least it does in my
+tests), which is equivalent to -Werror.  We don't want that because it
+breaks compiling older code with newer versions of the compiler, which
+makes it harder to bisect changes or compiler on the system compiler (or
+sometimes, other architectures or OSes).
+
+That would be fine for clippy, however, because that would only run in
+CI, where we _would_ want to catch newer changes, but we want to
+compile nonetheless.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--+Z8ZEVkh+vcFq5UW
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZuSMEwAKCRB8DEliiIei
+gVqXAQD2Wfse8aVPldTX/8wx55vT73m4omRSqeH9sqm0sPjlHwD9FftQ1aiuV6Wq
+KiQ3/Hz8uT00mW+8vdpfjd38R1jbVAU=
+=Q7u3
+-----END PGP SIGNATURE-----
+
+--+Z8ZEVkh+vcFq5UW--
