@@ -1,83 +1,81 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0458224CF
-	for <git@vger.kernel.org>; Fri, 13 Sep 2024 06:05:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1E21BAEFB
+	for <git@vger.kernel.org>; Fri, 13 Sep 2024 06:15:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726207530; cv=none; b=b5J9xgI9xNzPrpPPJmYrdeZn0lg9Sfd6Ko0a5Fm+fuRqQxX0Cgpeo7Q/8NU6zx8EAtdm+4opqX0AtmIYLh4DVFIAFVek8WY3JLcpWJyHX9ugHMC7FuAaieG4C8o+vC32r41u4HRUUC0v0YBS7YouElJMSuPe8T4J2DORBniZ4qI=
+	t=1726208106; cv=none; b=dcZ7P3AyApqeDhXMrCMZltCsyGQIOyip30uWhApGXVfyPXOh0HY7/rswupkvvQzGicf1OL+8Eu4pxb57zC+63nFlQbvEJMW2VLvcMn9hVQS1Wlw1GY4M0aGUXFgImkNvPUi11PuBqaDfXOGJBDvqNSWF+/gNdwiHqS26e8tl5zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726207530; c=relaxed/simple;
-	bh=GS4tEYGLTquy6khq/74lIpfxQOKhwWMqvfgqWMid9vI=;
+	s=arc-20240116; t=1726208106; c=relaxed/simple;
+	bh=x3ujw2QIKXuCpbJdiQc0D8W7J7lBmrmrnEqlUMPg+24=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qlDCmaQPEpxeTj6TaW3hjFjeu8G2kyedIRZHalw2IxLLm6GMhfCxhmF6nA6gArtym6lRpx1HU+1hPHs7IUpNS2vilPvCUYvyU8XXax1ZzAiaD28o8e3kDp7FqcAEbzIW3bbda3KCPiPaAxV+AilK0h9ewl7m0//i2BvzQJvdhQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lJqkeGD5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eZeA4Juu; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=YS3sqfyDMnULqn8DQbVojlJbbA6MGerg1giCNNbhXxh+LVExYQa62hTV6LVAogF6Gnb5pzJQBTltxyo4xXHplRcnfO5b2AHenCs+eK6eiIPwzp/KYB8dporqRZ44G1XcEYYMFe9SPKhCtkfc0CuAB0IN59rX3oX4LWupYbLGjho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d7lPOAS6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bhZsgTDA; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lJqkeGD5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eZeA4Juu"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C3FB41140110;
-	Fri, 13 Sep 2024 02:05:27 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d7lPOAS6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bhZsgTDA"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7F9C41380624;
+	Fri, 13 Sep 2024 02:15:03 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 13 Sep 2024 02:05:27 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 13 Sep 2024 02:15:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726207527; x=1726293927; bh=tewzzbwZeQ
-	54wBD6asg6o39oBFx4lsoW9AEuTUv+zLY=; b=lJqkeGD5rYAQKuA6tBJ7CY/m+6
-	Frz1OjoMDvEukejFeyRCSqR0CDc9bUOYtJ/s4RZn1dd2MA7CYQrRqWtYmbGXOEj1
-	iBXWzKyNaNAMegEsn1DbbZumuG7YZKfSuSP0LJ5SmEVBtXCcsd0T2ARFDtgg4Dvs
-	//QARtARG+RahMLLBqaEGN8HROFsd4isUM0T6aUFa0nzGcxH4tjRmWOWh5Z7u/u4
-	mFuHkU+ORQb4ks2vTlrTLF1bl725jySr9bADZS7+L0kaUNzjue5Qt9Q4AFE6qioN
-	1gLKOFQISo/qt34FHwRL+fHLAFvlcmNC6WBed/Wwfxm02NivJxzPXkISYmMg==
+	:subject:to:to; s=fm1; t=1726208103; x=1726294503; bh=KtpbMfMg8r
+	PX197hBGZuXxI0lSF6MTU3KLwcr8Re+Qw=; b=d7lPOAS6EAN0vc0m/YQmQ6bczp
+	WCXDva+kDinArCIsSsd91NoE4XOb4K9uJGOj11xd/y+CuqjII2PUQjZS8pH9FN72
+	Sp8kabUCH3sJmBEz9XzXfDmSbp6cGYF1L/3FCuupE3ZIFN0n9/yaa0amgMUxTFTk
+	xyiyErB5xjwTTfCYeRpMptWIJK43W3e8aC9wpNKQ/8r1aZ/7Lsn7G+5TfOEcI/Ok
+	eytV7uCM/PnPHTYpbkDhUXFQnvWmZ4OCfxe5N4FGFKE1vim7/KD/epflc0MjbVDz
+	f0+5uE5fleu7+N938pEhqvuorUJAzTMDMrOlbjU3iy3DmAoKY2xQ7yWgcNgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726207527; x=1726293927; bh=tewzzbwZeQ54wBD6asg6o39oBFx4
-	lsoW9AEuTUv+zLY=; b=eZeA4JuuYytGOmSTD+GCKl9W2nDGW2uZ5ImTEhsx8NHF
-	uwIwhgyZiz/bYzEbBHfGOqZS4n3B4C3Kav7ULhN06y9Ttg1d4PM13D8aLbfU1tRd
-	qZRUMc023px1NCGVbpGuxb8Dxb3IN5njKZ4SvJ/05NYDGFSEf3iKfJLKdHiIK2Xt
-	vJFsMgU2GsjBW30ghJFNPvJueyv43yXp8Kxep/Y3Jc+JcwNejX4lyCSFo03XCptc
-	PC/m2MVVlPsWooKjxlRXyLmjhHVxYHE//fP0e7tCsmbs7AklgFxYddCXP2fOJ2aI
-	6fnCLURGIfh+MQlzMj32ejYp+Ww7kQ54raoxefI19A==
-X-ME-Sender: <xms:J9bjZggpdONQz2fdHFA0FM18ue4DNaJ7dsZL1G0GR-mlN4s6ZA1Cyg>
-    <xme:J9bjZpDEqEDJgRdnFydq2N4puSfyxt33Xau2XcWHasCRuqs_aZ6geB3FQu82eC0gf
-    IKGeIWHw8l_EQgm5g>
-X-ME-Received: <xmr:J9bjZoFplTRSURqPR-ToTB-D9R5k-lhjLgPvHbDa_8XjnhWKz_UBY01QvEmBwptQsQY1mODoUxq9WOLtmPtJRsRSnqimPWMgQG3ZcPokovi7eA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejiedgvdefucetufdoteggodetrfdotf
+	fm1; t=1726208103; x=1726294503; bh=KtpbMfMg8rPX197hBGZuXxI0lSF6
+	MTU3KLwcr8Re+Qw=; b=bhZsgTDA0XtszzW8mwjrH3L5VCIxCyCloq4vP8cYI6Zu
+	2hvkaBZcXixf4YSprjomeRv2I87rc6kTVU/VGv68nIpW7o1cIFVoApSQRpRTeb32
+	KkBYzRfxfMEXJZdeZKClitoW4+98pCAA+CNtDqS4gWrita7XVr3wshsnX4cIz88N
+	W4HIuOeEm8rNd25IBJR3CjMuhlb9T339gngfam/MC8Oizj2XanNOw5zkOdI2h5pP
+	+yDO2nF8fsiDgvfT7aNDlu/ybFeDMfbGvpcHCzA9n1vDcdcRX9B+rwex1X16nP5B
+	XjsVwkwOLIF6VYrs3ve0/DG3KRmik6dk04ubGzb3MQ==
+X-ME-Sender: <xms:Z9jjZtsph9Zv_xehW83bdiUKfbpwEDLGegYr5t_fRUDixtWXbJ_BcQ>
+    <xme:Z9jjZmewAY8wH-1Jg-taI6oxQRJRtNVYfVZ34d3rfG4tG_apwJhVDl_kSo7467YOY
+    5AWdVcpXaBgFpOlWQ>
+X-ME-Received: <xmr:Z9jjZgz-iFAZ8yM1V-9Y9kPYc-Qg2ysA8pXe8rsgM3U9V89Dgy4G8CdpfN3hqJydc4Jpe0XSGoNqi_CoCbBc4m6nf9Ye1eU29XE5O5Tanb4r7A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejiedgvdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
     fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
     hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
     dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrohgurhhi
-    ghholhhivhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:J9bjZhQ-NwZk3O69_9E5RU7H7TDj6PcAj3-3eivmAEyDGRtqKYSTDA>
-    <xmx:J9bjZtwq_xVulT-hd77brhJtopCoRVfdfuilAp_Zgf4vf9v_yFF_Iw>
-    <xmx:J9bjZv6D3WnaA8YojCgqpd5ewlTATtDFeJzJB_JM2ncIF6PvVQJpmw>
-    <xmx:J9bjZqz4rHzxr12cGVNkGsoSIa4UgAM5ZzuYxxxtR7DPibYeJ1XVOQ>
-    <xmx:J9bjZl8r5_WXi3vEEi_2SrIye8w0RUZY7izP37Aj8_NlhJVGc6nR8vPf>
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:Z9jjZkNfhj5CT7KZ19Myl4T3-R01-9bs_Qqp3CBwBsJ36AJjvCTp0g>
+    <xmx:Z9jjZt-F1ID-R1Fspnz7aEwhZW8fRe6-DyXy2_jEqnKKXbtavBxhqg>
+    <xmx:Z9jjZkX2PRePE3-Bq_7Xc9YF2qYlOObJLQPleBZjisqCCGM2hdFl4Q>
+    <xmx:Z9jjZudq3eDGQ4_-mCTZtIH3_j7nXL_5gAq4R8XiM5Lh-Dde5EW9yw>
+    <xmx:Z9jjZvLPkDHCtB8Bp2jsJG7uk9rP7hoNcn4OZrBsBqCijXPeUdIlAWlG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Sep 2024 02:05:26 -0400 (EDT)
+ 13 Sep 2024 02:15:02 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id db0ec6f4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Sep 2024 06:05:16 +0000 (UTC)
-Date: Fri, 13 Sep 2024 08:05:26 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c1f8baaf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Sep 2024 06:14:50 +0000 (UTC)
+Date: Fri, 13 Sep 2024 08:15:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Rodrigo <rodrigolive@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Git.pm: use "rev-parse --absolute-git-dir" rather
- than perl code
-Message-ID: <ZuPWJtPo-2f2Mgbl@pks.im>
-References: <20240912223413.GA649897@coredump.intra.peff.net>
- <20240912223725.GB650605@coredump.intra.peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/2] Simplify "commented" API functions
+Message-ID: <ZuPYZW3jYas4kJzC@pks.im>
+References: <20240912205301.1809355-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,56 +84,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240912223725.GB650605@coredump.intra.peff.net>
+In-Reply-To: <20240912205301.1809355-1-gitster@pobox.com>
 
-On Thu, Sep 12, 2024 at 06:37:25PM -0400, Jeff King wrote:
-> When we open a repository with the "Directory" option, we use "rev-parse
-> --git-dir" to get the path relative to that directory, and then use
-> Cwd::abs_path() to make it absolute (since our process working directory
-> may not be the same).
+On Thu, Sep 12, 2024 at 01:52:59PM -0700, Junio C Hamano wrote:
+> We [earlier] noticed that a few helper functions that format strings
+> into a strbuf, prefixed with an arbitrary comment leading character,
+> are forcing their callers to always pass the same argument.  Instead
+> of keeping this excess flexibility nobody wants in practice, narrow
+> the API so that all callers of these functions will get the same
+> comment leading character.
 > 
-> These days we can just ask for "--absolute-git-dir" instead, which saves
-> us a little code. That option was added in Git v2.13.0 via a2f5a87626
-> (rev-parse: add '--absolute-git-dir' option, 2017-02-03). I don't think
-> we make any promises about running mismatched versions of git and
-> Git.pm, but even if somebody tries it, that's sufficiently old that it
-> should be OK.
+> Superficially it may appear that this goes against one of the recent
+> trend, "war on global variables", but I doubt it matters much in the
+> longer run.
 
-Agreed. We should eventually be able to rely on things that we have
-implemented many years ago.
+I'm not quite sure I agree. The comment strings we have are in theory
+broken, because they can be configured differently per repository. So if
+you happen to have a Git command that operates on multiple repositories
+at once and that needs to pay attention to that config then it would now
+use the same comment character for both repositories, which I'd argue is
+the wrong thing to do.
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I retained the "require Cwd" here since we use it in the conditional
-> (but moved it closer to the point of use). It's not strictly necessary,
-> as earlier code will have required it as a side effect, but it's
-> probably best not to rely on that.
-> 
->  perl/Git.pm | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> index cf1ef0b32a..667152c6c6 100644
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -187,7 +187,7 @@ sub repository {
->  		try {
->  		  # Note that "--is-bare-repository" must come first, as
->  		  # --git-dir output could contain newlines.
-> -		  $out = $search->command([qw(rev-parse --is-bare-repository --git-dir)],
-> +		  $out = $search->command([qw(rev-parse --is-bare-repository --absolute-git-dir)],
->  			                  STDERR => 0);
->  		} catch Git::Error::Command with {
->  			throw Error::Simple("fatal: not a git repository: $opts{Directory}");
-> @@ -196,12 +196,12 @@ sub repository {
->  		chomp $out;
->  		my ($bare, $dir) = split /\n/, $out, 2;
+The recent patch series that makes "environment.c" aware of
+`USE_THE_REPOSITORY_VARIABLE` already converted some of the global
+config variables to be per-repository, because ultimately all of them
+are broken in the described way. So from my point of view we should aim
+to convert remaining ones to be per-repository, as well.
 
-This line here made me think for a second what happens if the absolute
-path contains newlines. But it should be fine, because we only split at
-the first newline character we find. And as the first parameter that we
-pass to git-rev-parse(1) is `--is-bare-repository`, we know that it will
-output either `true` or `false` as the first line. Any subsequent
-newlines should thus be handled alright.
+> These call sites all have already been relying on the global
+> "comment_line_str" anyway, and passing the variable from the top of
+> arbitrary deep call chain, which may not care specifically about
+> this single variable comment_line_str, would not scale as a
+> solution.  If we were to make it a convention to pass something from
+> the very top of the call chain everywhere, it should not be an
+> individual variable that is overly specific, like comment_line_str.
+> Rather, it has to be something that allows access to a bag of all
+> the global settings (possibly wider than "the_repository" struct).
+> We can also limit our reliance to the globals by allowing a single
+> global function call to obtaion such a bag of all global settings,
+> i.e. "get_the_environment()", and allow everybody, including
+> functions at the leaf level, to ask "what is the comment_line_str in
+> the environment I am working in?".  As part of the libification, we
+> can plug in an appropriate shim for get_the_environment().
+
+This here I can definitely agree with. I think the best fit we have in
+general is the "repo-settings.c" subsystem, which is also where I've
+moved some of the previously-global settings into. It still has some
+downsides in its current format:
+
+  - It depends on a repository, but I'd argue it shouldn't such that we
+    can also query configuration in repo-less settings.
+
+  - `prepare_repo_settings()` makes up for a bad calling convention. I
+    think that lazy accessors are way easier to use.
+
+But it is a start, and something we can continue to build on.
 
 Patrick
