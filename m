@@ -1,128 +1,95 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C474148832
-	for <git@vger.kernel.org>; Fri, 13 Sep 2024 19:01:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A7B140360
+	for <git@vger.kernel.org>; Fri, 13 Sep 2024 19:26:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726254107; cv=none; b=aa9yzaAQMeJvOqdtA0Cmf1oavJpQhbciV352P6foiKWgmQMg5n9FHAMPI6C5XeXnHXNw7i8H9imaL/uZRELb7gtRtcQFeOCCMPXE7UdGbBsZXrEgWzpbEMZtgeHQj3fMwPzs9n8zhUMkID7Oh5rV0LvsMHne9EryOT91XSHyqBg=
+	t=1726255606; cv=none; b=Ws2RndXo/b/VNz46wnl5lExMfn7NDIOPx6gquBkx4R1wIu5bXGTdjN96me3zx0qlET2x/6IsyPZVgZwJjOVAnTSmOYWuEoRInEIQwTOY2HuZfWTjmsVn2BU1Nh/YM9FzEaVr2RKVB9GfPn7oSONKM1j0pNdv/w0yN/m7/h8TDG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726254107; c=relaxed/simple;
-	bh=VPSvYPSOLP3fEQARQNjcbt54PxJ95872cm1tsbVR4fE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FgG4J9hCBPMhaJca86OvDGsRpPTq3gNZl6eva6sGI4aSTCMh025TphLYHmimInybr2NStaWCCKAJRM+UcWMbAiVHgPk1/MMfiifnTt2p5SUOAP/3BMP81o2b4NOY3bNIzirai8ZgwdxjBzL/NNlVUeeDwn0QDp48KOganS6iwRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=NR5jLbZP; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1726255606; c=relaxed/simple;
+	bh=7PHUwBVOXsAn4vQpfoVmEVzW8OAgJgk/lqn5mUOaQo0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cEEDK5nzHa1tI2S+fSCJbxir7GP9IHtadMWbfJ+dJQ65NWQhK1jVF6pOLI6a/bJx1XHVEUP48j/645z15bqXCCXa2pWPMZp8cCIXDAiDbnyQjFR71EX5ZMFqm0emhYw4rWm7Bo+tqDbBeGQ3211doiBWee+9MaibeNJLqJ3r1Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=iIsCJUvC; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="NR5jLbZP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1726254103;
-	bh=VPSvYPSOLP3fEQARQNjcbt54PxJ95872cm1tsbVR4fE=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=NR5jLbZPvZe8TvStUnzCLT/Uteyvlh49a4bACt+XmrCBfdlK2ChcI+5sCycTukxvB
-	 55cuj3ZD4dCc7+VEyFmdMHPiw37SqMLb1Sf0VZvoWWlpKhHUgDSPm01vtpNA78TTHT
-	 XKsAFxpZVTsTt+rl7kJb+hvcTiWhBzU/gGn6fyttxBT3ztZZEAXOVh2zthgPGomInH
-	 BKlP1tMqzh+uAzBWtj3zi9nFLgBIscW2u2wugWzQgFzvJ28LY7q3xfRScm5lV2PcTI
-	 suLufXvuR23eXSxp0G1ePmdhJ8SO5UgnSXRYcdwXBHwFrH9929qjj8Oo5FYL9HVCN+
-	 hT4o9NlBaNxLUVEuDFOdDRXD+tIvsLNJYWcGknuS3OuGtEGrQ9K2dpmtdYIg7f2u7o
-	 etf+Lt3PO4Y4sIqGNoEcS+NdFeqFCJ8+s2Yh31pT+MiFrjZKCTaLMBwchLJw6opjB6
-	 yjahwLaYD+sj4BUy0DbA7cEn6YzMeDoNOe7NeF2Mh87v2xOpDu+
-Received: from tapette.crustytoothpaste.net (unknown [204.148.121.182])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iIsCJUvC"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8335D28EEF;
+	Fri, 13 Sep 2024 15:26:43 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=7
+	PHUwBVOXsAn4vQpfoVmEVzW8OAgJgk/lqn5mUOaQo0=; b=iIsCJUvCBbgSmHfJj
+	l0KenRiBNHTvZAagYH71riPwIgaIVkIkcHmTmUNZmbMcZZlnC8r8XVOUZf117bkz
+	n5ouCL1fAULRnGzEynvFtlFDNkGE7Lak/PJwEaErLQTMDisGAQYbXD6+nE5T3HgF
+	zjpoOrCQVUJjqwssKckse2mzp8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A6E428EEE;
+	Fri, 13 Sep 2024 15:26:43 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2124A2447C;
-	Fri, 13 Sep 2024 19:01:43 +0000 (UTC)
-Date: Fri, 13 Sep 2024 19:01:40 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Sean Allred <allred.sean@gmail.com>
-Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
-	steadmon@google.com, spectral@google.com, emilyshaffer@google.com,
-	emrass@google.com, rsbecker@nexbridge.com, gitster@pobox.com,
-	mh@glandium.org, Jason@zx2c4.com, dsimic@manjaro.org
-Subject: Re: [PATCH v3 6/6] Makefile: add option to build and test libgit-rs
- and libgit-rs-sys
-Message-ID: <ZuSMFAyoD0CIfE3H@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Sean Allred <allred.sean@gmail.com>,
-	Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
-	steadmon@google.com, spectral@google.com, emilyshaffer@google.com,
-	emrass@google.com, rsbecker@nexbridge.com, gitster@pobox.com,
-	mh@glandium.org, Jason@zx2c4.com, dsimic@manjaro.org
-References: <20240906221853.257984-1-calvinwan@google.com>
- <20240906222116.270196-6-calvinwan@google.com>
- <m0seubo5q7.fsf@epic96565.epic.com>
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D9EF228EED;
+	Fri, 13 Sep 2024 15:26:42 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
+Subject: [PATCH] t5512.40 sometimes dies by SIGPIPE
+Date: Fri, 13 Sep 2024 12:26:41 -0700
+Message-ID: <xmqqmskbwe1a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+Z8ZEVkh+vcFq5UW"
-Content-Disposition: inline
-In-Reply-To: <m0seubo5q7.fsf@epic96565.epic.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1B892306-7206-11EF-8592-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
+The last test in t5512 we recently added seems to be flaky.
+Running
 
---+Z8ZEVkh+vcFq5UW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    $ make && cd t && sh ./t5512-ls-remote.sh --stress
 
-On 2024-09-07 at 15:15:12, Sean Allred wrote:
-> Calvin Wan <calvinwan@google.com> writes:
-> > Add libgitrs, libgitrs-sys, libgitrs-test, and libgitrs-sys-test targets
-> > to their respective Makefiles so they can be built and tested without
-> > having to run cargo build/test.
->=20
-> I feel like clippy should be run as part of these somehow, but I'm not
-> sure where.
+shows that "git ls-remote foo::bar" exited with status 141, which
+means we got a SIGPIPE.  This test piece was introduced by 9e89dcb6
+(builtin/ls-remote: fall back to SHA1 outside of a repo, 2024-08-02)
+and is pretty much independent from all other tests in the script
+(it can even run standalone with everything before it removed).
 
-Yes, that seems like a good idea in CI.
+The transport-helper.c:get_helper() function tries to write to the
+helper.  As we can see the helper script is very short and can exit
+even before it reads anything, when get_helper() tries to give the
+first command, "capabilities", the helper may already be gone.
 
-> > +libgitrs-sys:
-> > +	$(QUIET)(\
-> > +		cd contrib/libgit-rs/libgit-sys && \
-> > +		cargo build \
-> > +	)
-> > +.PHONY: libgitrs
-> > +libgitrs:
-> > +	$(QUIET)(\
-> > +		cd contrib/libgit-rs && \
-> > +		cargo build \
-> > +	)
->=20
-> We should definitely be setting `RUSTFLAGS=3D-Dwarnings` as an analog to
-> `-Wall` in the C world, no? These crates should build without warnings.
+A trivial fix, presented here, os to make sure that the helper reads
+the first command it is given, as what it writes later is a response
+to that command.
 
-I believe -Dwarnings turns warnings into errors (at least it does in my
-tests), which is equivalent to -Werror.  We don't want that because it
-breaks compiling older code with newer versions of the compiler, which
-makes it harder to bisect changes or compiler on the system compiler (or
-sometimes, other architectures or OSes).
+I however would wonder if the interactions with the helper initiated
+by get_helper() should be done on a non-blocking I/O (we do check
+the return value from our write(2) system calls, do we?).
 
-That would be fine for clippy, however, because that would only run in
-CI, where we _would_ want to catch newer changes, but we want to
-compile nonetheless.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t5512-ls-remote.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
---+Z8ZEVkh+vcFq5UW
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZuSMEwAKCRB8DEliiIei
-gVqXAQD2Wfse8aVPldTX/8wx55vT73m4omRSqeH9sqm0sPjlHwD9FftQ1aiuV6Wq
-KiQ3/Hz8uT00mW+8vdpfjd38R1jbVAU=
-=Q7u3
------END PGP SIGNATURE-----
-
---+Z8ZEVkh+vcFq5UW--
+diff --git c/t/t5512-ls-remote.sh w/t/t5512-ls-remote.sh
+index d64b40e408..64b3491e4e 100755
+--- c/t/t5512-ls-remote.sh
++++ w/t/t5512-ls-remote.sh
+@@ -406,6 +406,7 @@ test_expect_success 'v0 clients can handle multiple symrefs' '
+ test_expect_success 'helper with refspec capability fails gracefully' '
+ 	mkdir test-bin &&
+ 	write_script test-bin/git-remote-foo <<-EOF &&
++	read capabilities
+ 	echo import
+ 	echo refspec ${SQ}*:*${SQ}
+ 	EOF
