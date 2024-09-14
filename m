@@ -1,34 +1,34 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3669F748D
-	for <git@vger.kernel.org>; Sat, 14 Sep 2024 06:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B9F18037
+	for <git@vger.kernel.org>; Sat, 14 Sep 2024 07:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726296100; cv=none; b=TA7xdJtTasjW/nFio3fALS9Q/U1Zp1kGBlGtkYg28D/mhwO3rBn54V+NoScZVwOpWZM6kQmM0jUOsDIg4Jo+4K9XEqHgZFW42M6t1Nejhk/juec2yOTH/wk78kOAUw8LqX19qZAPUSF8dU1J5E2M6XJt6MBZCGF8JdEkgSQFfuo=
+	t=1726298978; cv=none; b=hmpMBAr32vSiDW1kGkk1TjaYP6j3t3edmDgjIduV6PWUvaV2YyiffSysq3xd4aj43wzSs4wq9tjTIRE205ev+ss4M1J3aN3u7NvRgrXs0XNKkC39T6RYonsUX2z7D8Nq4ANC5pZl0WqdH5KSNJY9EmooJXxSvvaLi73QWsagkvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726296100; c=relaxed/simple;
-	bh=eZ1yqxh9Yeah8JtofZiFZP+qb4NjvQLItOpSaz+ha18=;
+	s=arc-20240116; t=1726298978; c=relaxed/simple;
+	bh=VJsYvtLPCoqfG7rD6cfE0DKKicm9ayR8eGr+cHAElcU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ukSzOcSveGdgH0X3zcahTo4UDh/948YdYwZVxIjUxvFM3AGif26nBjo9GDNz5bitVZJJMV26fHipOUwhh0nPg8g8z07HU1zfEo+vDUM0L9ASFPz3UBJXSEPysOppYDI14zhQsz7YF9wEs3EbPgkOz5fD1XP8B9bZmb4gdlEI2cg=
+	 Content-Type:Content-Disposition:In-Reply-To; b=JdygePoXAvwspRYaXgSHCOff4rL6pfJqoV+Y0M8IQW2OjUW/vcJVfawWA58HGKiUq0jeMANCVDb8t7xHGwemTWvSeDhYFFhtC9WFVYKTvxJ/65wAMILopDtANN1J9JttvYMxMFZ/uTUlBDNP+3C2342AbBB06ohJP+/l872j4Pg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 32231 invoked by uid 109); 14 Sep 2024 06:41:31 -0000
+Received: (qmail 32429 invoked by uid 109); 14 Sep 2024 07:29:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 14 Sep 2024 06:41:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 14 Sep 2024 07:29:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11635 invoked by uid 111); 14 Sep 2024 06:41:30 -0000
+Received: (qmail 11874 invoked by uid 111); 14 Sep 2024 07:29:32 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 14 Sep 2024 02:41:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 14 Sep 2024 03:29:32 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 14 Sep 2024 02:41:30 -0400
+Date: Sat, 14 Sep 2024 03:29:32 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] t5512.40 sometimes dies by SIGPIPE
-Message-ID: <20240914064130.GA1284567@coredump.intra.peff.net>
-References: <xmqqmskbwe1a.fsf@gitster.g>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci(linux32): make Javascript Actions work in x86 mode
+Message-ID: <20240914072932.GB1284567@coredump.intra.peff.net>
+References: <pull.1790.git.1726274559928.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -37,211 +37,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqmskbwe1a.fsf@gitster.g>
+In-Reply-To: <pull.1790.git.1726274559928.gitgitgadget@gmail.com>
 
-On Fri, Sep 13, 2024 at 12:26:41PM -0700, Junio C Hamano wrote:
+On Sat, Sep 14, 2024 at 12:42:39AM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-> The last test in t5512 we recently added seems to be flaky.
-> Running
+> To get the CI builds to work again, a work-around was implemented in
+> https://lore.kernel.org/git/20240912094841.GD589828@coredump.intra.peff.net
+> to let the 32-bit container make use of the 64-bit node 20 provided by
+> the Actions runner.
 > 
->     $ make && cd t && sh ./t5512-ls-remote.sh --stress
-> 
-> shows that "git ls-remote foo::bar" exited with status 141, which
-> means we got a SIGPIPE.  This test piece was introduced by 9e89dcb6
-> (builtin/ls-remote: fall back to SHA1 outside of a repo, 2024-08-02)
-> and is pretty much independent from all other tests in the script
-> (it can even run standalone with everything before it removed).
-> 
-> The transport-helper.c:get_helper() function tries to write to the
-> helper.  As we can see the helper script is very short and can exit
-> even before it reads anything, when get_helper() tries to give the
-> first command, "capabilities", the helper may already be gone.
-> 
-> A trivial fix, presented here, os to make sure that the helper reads
-> the first command it is given, as what it writes later is a response
-> to that command.
+> This, however, runs the risk of using 64-bit executables when we
+> purposefully chose a Docker image that only contains 32-bit bits and
+> pieces so that accidental use of 64-bit libraries or executables would
+> not happen.
 
-This analysis looks right, and I think the test change here is a good
-minimal fix. It does leave "real world" cases where we'd hit SIGPIPE
-vulnerable to the same problem, but I don't think that happens all that
-often (any helper that doesn't speak the protocol correctly and causes
-spurious pipe failures will annoy users and get fixed).
+How big a risk is this? In my experience with multiarch systems, the
+difficulty is the opposite: convincing the non-base toolchain to work at
+all, rather than using it accidentally. Especially as the solution in my
+patch is not configuring apt for multiarch support, where you could
+accidentally install gcc:amd64 versus gcc:i386. Even if we were to
+accidentally bring in the cross-platform compiler via the
+gcc-10-x86-64-linux-gnu package, you'd have to point $(CC) at it
+explicitly.
 
-So I think we should apply it as-is. But see below for some interesting
-historical context.
+But maybe others have had a different experience?
 
-> I however would wonder if the interactions with the helper initiated
-> by get_helper() should be done on a non-blocking I/O (we do check
-> the return value from our write(2) system calls, do we?).
+> Let's go about this the other way round instead, by overriding the amd64
+> version of node 20 the Actions runner provides with an x86 one (which is
+> "officially unofficial" by virtue of being hosted on
+> unofficial-builds.nodejs.org).
 
-You still get SIGPIPE with non-blocking I/O. I assume you meant ignoring
-SIGPIPE?
+I'm not totally opposed to this direction, but I'm a little concerned
+about the stability/maintenance of the solution. In particular:
 
-That's certainly an option, but unfortunately it does mean we'd ignore
-SIGPIPE everywhere. We do generally check the return value of write(),
-but not always for buffered I/O. So in something like:
+> +        NODE_URL=https://unofficial-builds.nodejs.org/download/release/v20.17.0/node-v20.17.0-linux-x86.tar.gz &&
 
-  git ls-remote | head -1
+Will this URL work forever? Looking at the release/ directory, it looks
+like it should hang around. They have entries going back to 2019 (which
+is not all that old, but I suspect that's when they started the build
+repository).
 
-we'd probably do a bunch of useless writes to the closed pipe. That's
-not the end of the world, given that we've done most of the work before
-generating the first line of output anyway, but that's the case that
-SIGPIPE is really supposed to be helping with. It's much worse on
-something like git-log, but if we are just talking about ignoring
-SIGPIPE in users of transport-helper.c, that's much more limited (though
-a confusing concept when you start thinking about libification, which
-may do many things in one process).
+The flip side is: will node20 be sufficient for Actions forever? Node16
+was already deprecated in Actions in 2023, and it was released in 2021
+(looks like Node releases have a 2-year lifespan in general). So node20
+takes us to April 2026 or so.
 
-I really wish there was a way to ignore SIGPIPE per-descriptor (or even
-tell which descriptor triggered it in a signal handler), but I don't
-think there is. Some environments like "go" claim to do this, but I
-think it's really that they ignore SIGPIPE, and then assume all writes
-are going through their wrapper, which converts EPIPE into the signal.
-That's a bit harder for us to do (even if we got xwrite(), you have to
-similarly wrap fprintf, and so on).
+Of course my solution has similar problems. Probably node24 or whatever
+comes next will need another glibc bump.
 
-Another option is to selectively disable/re-enable SIGPIPE for
-individual write() calls. That's not thread-safe, and I imagine may have
-some performance penalty in practice due to the extra syscalls. But it
-might make sense to do it selectively.
+I was mildly surprised that the build you reference didn't run into that
+problem, actually. But I double-checked and it appears to run OK in
+Xenial; it needs 2.17, according to some "objdump -T" sleuthing. I'm not
+sure why that's so different from the official 64-bit builds.
 
-And now we get into the historical bits.
+> +        curl -Lo /tmp/node.tar.gz $NODE_URL &&
+> +        tar -C /__e/node20 -x --strip-components=1 -f /tmp/node.tar.gz
 
-A long time ago, we noticed that a totally broken helper (i.e., one that
-exits immediately) would cause Git to exit silently, which could be
-confusing. So we added an error message when we saw an unexpected close
-of the pipe. But people found that annoying, because most of the time
-the helper already said something useful to stderr, and the user did not
-even care that a helper was in use. So we got rid of it.
+This is pretty intimate with how Actions work (both the node20 version
+and the "/__e/" magic). It's hard to say if/when that would bite us.
 
-But we discussed the concept of complaining only about the initial
-"capabilities" request, which would catch helpers that failed to even
-start. There's some discussion in this thread:
+>     For good measure, I also reported this problem with that deprecation at
+>     https://github.com/actions/upload-artifact/issues/616 even though I know
+>     that the GitHub Actions team saw a headcount-losing reorg recently and
+>     therefore I do not really expect that they have any bandwidth to help
+>     with this. So this work-around is the best we can do for now, I believe.
 
-  https://lore.kernel.org/git/20140117201325.GB775@sigill.intra.peff.net/
+I think it's reasonably well known there already. Here are some relevant
+issues I came across:
 
-But the most interesting part to me is that on that same day over 10
-years ago I wrote the patch below, but apparently never sent it. And
-I've been rebasing it forward ever since (I have several dozen of these
-"to look at and think about again" topic branches, and I guess I let
-this one slide for quite a while).
+  - https://github.com/actions/checkout/issues/334
+  - https://github.com/actions/checkout/issues/1590
+  - https://github.com/actions/setup-node/issues/922
+  - https://github.com/actions/runner/issues/2906
 
-Anyway, the interesting thing is that it does the exact "turn off
-SIGPIPE only for this call" strategy discussed above. And so I did not
-even see the race in t5512, because it was "fixed" in my fork. I use
-quotation marks there, though, because the test was sometimes racily
-succeeding for the wrong reason (because we got EPIPE, not because of
-the forbidden capability response). So even if we took the patch below,
-I think your test fix is the right thing to do.
+Most folks are hitting the glibc issue rather than the i386 one, but the
+core of the problem is the same.
 
--- >8 --
-From: Jeff King <peff@peff.net>
-Date: Fri, 17 Jan 2014 15:36:21 -0500
-Subject: [PATCH] print an error when remote helpers die during capabilities
+IMHO the ultimate solution is a statically-linked node binary (you'd
+still be relying on the kernel, but that has a very good track record of
+userspace compatibility).
 
-The transport-helper code generally relies on the
-remote-helper to provide an informative message to the user
-when it encounters an error. In the rare cases where the
-helper does not do so, the output can be quite confusing.
-E.g.:
-
-  $ git clone https://example.com/foo.git
-  Cloning into 'foo'...
-  $ echo $?
-  128
-  $ ls foo
-  /bin/ls: cannot access foo: No such file or directory
-
-We tried to address this with 81d340d (transport-helper:
-report errors properly, 2013-04-10).
-
-But that makes the common case much more confusing. The
-remote helper protocol's method for signaling normal errors
-is to simply hang up. So when the helper does encounter a
-routine error and prints something to stderr, the extra
-error message is redundant and misleading. So we dropped it
-again in 266f1fd (transport-helper: be quiet on read errors
-from helpers, 2013-06-21).
-
-This puts the uncommon case right back where it started. We
-may be able to do a little better, though. It is common for
-the helper to die during a "real" command, like fetching the
-list of remote refs. It is not common for it to die during
-the initial "capabilities" negotiation, right after we
-start. Reporting failure here is likely to catch fundamental
-problems that prevent the helper from running (and reporting
-errors) at all. Anything after that is the responsibility of
-the helper itself to report.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t5801-remote-helpers.sh | 11 +++++++++++
- transport-helper.c        | 16 +++++++++++++---
- 2 files changed, 24 insertions(+), 3 deletions(-)
-
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 20f43f7b7d..d21877150e 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -344,4 +344,15 @@ test_expect_success 'fetch tag' '
- 	compare_refs local v1.0 server v1.0
- '
- 
-+test_expect_success 'totally broken helper reports failure message' '
-+	write_script git-remote-broken <<-\EOF &&
-+	read cap_cmd
-+	exit 1
-+	EOF
-+	test_must_fail \
-+		env PATH="$PWD:$PATH" \
-+		git clone broken://example.com/foo.git 2>stderr &&
-+	grep aborted stderr
-+'
-+
- test_done
-diff --git a/transport-helper.c b/transport-helper.c
-index 09b3560ffd..98dbeb6d3d 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -89,11 +89,18 @@ static int recvline(struct helper_data *helper, struct strbuf *buffer)
- 	return recvline_fh(helper->out, buffer);
- }
- 
--static void write_constant(int fd, const char *str)
-+static int write_constant_gently(int fd, const char *str)
- {
- 	if (debug)
- 		fprintf(stderr, "Debug: Remote helper: -> %s", str);
- 	if (write_in_full(fd, str, strlen(str)) < 0)
-+		return -1;
-+	return 0;
-+}
-+
-+static void write_constant(int fd, const char *str)
-+{
-+	if (write_constant_gently(fd, str) < 0)
- 		die_errno(_("full write to remote helper failed"));
- }
- 
-@@ -168,13 +175,16 @@ static struct child_process *get_helper(struct transport *transport)
- 		die_errno(_("can't dup helper output fd"));
- 	data->out = xfdopen(duped, "r");
- 
--	write_constant(helper->in, "capabilities\n");
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+	if (write_constant_gently(helper->in, "capabilities\n") < 0)
-+		die("remote helper '%s' aborted session", data->name);
-+	sigchain_pop(SIGPIPE);
- 
- 	while (1) {
- 		const char *capname, *arg;
- 		int mandatory = 0;
- 		if (recvline(data, &buf))
--			exit(128);
-+			die("remote helper '%s' aborted session", data->name);
- 
- 		if (!*buf.buf)
- 			break;
--- 
-2.46.0.942.g308ef7fa08
-
+-Peff
