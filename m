@@ -1,216 +1,117 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0926225570
-	for <git@vger.kernel.org>; Sun, 15 Sep 2024 11:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA8714286
+	for <git@vger.kernel.org>; Sun, 15 Sep 2024 14:06:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726400290; cv=none; b=GEwdpa1mQbnh3Y+9FhEfmEqj1Chrc/r5WWAqaSfZb09cWO/nwQCL7LkVktz7SWuUvAJIjjvOxx0p4m+DQcLpavxtsurAAykNP6o4rn/k6H6vNAalUBev0Sblye/bHaeKx0RfigWLe6AjY822vlSYQAr+TzOXGi5YGIkODBb/JgI=
+	t=1726409209; cv=none; b=knBqUQOfEhzZmvFebi++4iddfiYF+/JPoK9NV0jgPRDK2E1evbyBYxGJmt6v4P4neJQmG8K60z2/WlcqmZKAzHCa2FDRWn8C7lderzCS/gJQez8tbbfhjcQl5IYwW57j9qGwtP6AIWNjK5/hjgrSaXnH/187LFbjk8dSgiq3W7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726400290; c=relaxed/simple;
-	bh=8Orh8tHAN4r5fJx0M+klvaKDwkGYQgCLU2IVjDNHwjo=;
-	h=Message-ID:Date:MIME-Version:From:To:Cc:Subject:Content-Type; b=ezV0W6q/YX8h5Qvdj4b2X5jxo70oF2zhzm3aOwc6VOPZdt9/8obKrWoQf8ig+jpjvRbA4Z7tR4taN2vhCfBEUmpCNbENAAxNX2aqUKwWSG3c/tLYBvsvkJGBXJLeRLBpchPLyBt4H2tG/pLn+d59YmjM+nDBwlDtZTif+WVypHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O5hf8i0E; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1726409209; c=relaxed/simple;
+	bh=NOTxi/h4D2zlRjZnF8lbDbqvOVheadHlvDD66fqV0Q8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MV3diVw7U+aa5ZwVmvR3RF2KgfTpCYOJVJ2GWuLZ+1BJDLvh/M+t4FiImghbUZNqzjoRVYaNWremNp/LkSV/qnkwEm3W5buSbO2clgEcyPH5XZvCQ4xiPaR9jIdEiH8O2TFCvs809TR2UfGuADVVhWxVu15YS82yS7jNQF36jCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jKSf0hCy; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O5hf8i0E"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42cae102702so19118395e9.0
-        for <git@vger.kernel.org>; Sun, 15 Sep 2024 04:38:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jKSf0hCy"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2d87196ec9fso1677346a91.1
+        for <git@vger.kernel.org>; Sun, 15 Sep 2024 07:06:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726400287; x=1727005087; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:cc:to:content-language:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1726409207; x=1727014007; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ea828ll0qGcYWVMWvM0HRdMucXIi3SWfdfCGLXJ7V9s=;
-        b=O5hf8i0EaXC7pfNFTmTDcfNYV9sSG0pO3rlPguChNhMKXb16j4K9POJaSXHfd1ZBxM
-         QvKQc9ab0KxE8UqPBzZKvj5RDP7LMfTWpkHAjTF490aJMrLcM9842bQzuxJYHzgVvtCM
-         tjKRttBtbhdi+YV350Lfi9SnEZ2zinl75a0DsjAmNMaigX2eTD/7yQBNlyx8i9Kcn3IT
-         QYpFrLsIeYIkl2lZFTOfr2rW6CVqn2PeMv6f5e0Nd94fgCAVc5sy/u4sXoSqeHl+yIfd
-         ci9GdwkRYpf6oylG+tmGNCphXbHBIFvumtfNWXiOiDneau2xh5aULjCnJYwoKs31KbxJ
-         FOfA==
+        bh=t9/VN2lBTceQANZWhevStUbg1O32Ykn1YyF9ecBRHYA=;
+        b=jKSf0hCymRFCq2sSfla9ZSwJN17eq7UmjltNsT63WOPLO57UjVfDEMfazd5P465vyK
+         nqzDE7msPY7OMA2WqzFaQOI6phMQnfWQzNyGZFEw45tP06nHMyLTdEkSy11MbjsTCp1X
+         0lp1V7ZH/lsKfAH04JWvdjzqerF1/zLfWNi4qEvDc/jSqrsYAmoDWqMvhVCiO5cfAicC
+         VhCxdulMJ+WuwxKorTRoQTJuYPyWUXZPxxIA5kVCJVqVJ71IPASTCh9lMN+Y2zVtVE4K
+         If8iaE83kqFWHwtnQ83wju6+ALEzixSwKQgLk8cy/JWT82Snmqw1h9muY7oZOobOzeaX
+         ukOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726400287; x=1727005087;
-        h=content-transfer-encoding:subject:cc:to:content-language:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ea828ll0qGcYWVMWvM0HRdMucXIi3SWfdfCGLXJ7V9s=;
-        b=PDNJfA6aZ/Xe+mT/j6gOZLJoPaqpaQEa05TnMdoErUqwwP0+00jKsCiDiSwAKsp5H6
-         Q1N2/CsH3XVJrOztwoi76+5A5JlUxwJCe2ll0oyZcOfnIocZSMViSc/Vl2E7SUrJib+S
-         DbGNr7SkohLqkeak4MQaYZEXdDR6drmmAbkmcw1F9Y54z7zs1OEDhxT0EeYzsMcjvOGy
-         HaaNAtcAxCUAaDLcFIMVKtzeQZ+2dfDj+5ifgykYsqwv8kmv3kr89ANLWonwiD7qOBG2
-         ZavNOnJ+iLx35aTx2KGSzhQvJsPyGKprIGs6yHrqQMoyFW0ifS1yx11cyzM1bGDqyRoF
-         WtcQ==
-X-Gm-Message-State: AOJu0Yx3SUgQeyUg6pdwlPZFI99St5bPAfzsi/r4jS7pOmB+8DmRkEl7
-	VMzdmH4JY2sPtK5boYFemk0tJxy/YHIrhWHjSVAJs/TcB4uVf2kf+ApKeg==
-X-Google-Smtp-Source: AGHT+IE05N5RGkjDIHTPpFDXkBLI6fLPUGgQqOz5vuMsuLXSU/5GmsmSeRe9Ssegz+8IevlDFZA4lA==
-X-Received: by 2002:a05:600c:354b:b0:428:36e:be59 with SMTP id 5b1f17b1804b1-42d9081bb39mr48167795e9.11.1726400286838;
-        Sun, 15 Sep 2024 04:38:06 -0700 (PDT)
-Received: from gmail.com (139.red-88-14-201.dynamicip.rima-tde.net. [88.14.201.139])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42da22d8f8asm46634325e9.19.2024.09.15.04.38.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Sep 2024 04:38:06 -0700 (PDT)
-Message-ID: <21ddf64f-10c2-4087-a778-0bd2e82aef42@gmail.com>
-Date: Sun, 15 Sep 2024 13:38:05 +0200
+        d=1e100.net; s=20230601; t=1726409207; x=1727014007;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t9/VN2lBTceQANZWhevStUbg1O32Ykn1YyF9ecBRHYA=;
+        b=Rki4iXx9qzTu5o348yXx+a/8Pa/6jzCNIsV5ubfm9gdR4fea+o1ybEy3Bgh0TBNgKB
+         R+EU5rbnJEwq1iZq1xGVhDE0SZno+h04S3b8OVrAsLVIOz7AhW/tpTE6EPkpBNWjpeed
+         TZ/iteC6kj4Kmu3TqFmCINr/IBG70Vo5R3gLTGOMx4yS4yJ4rPyA3O+RAd190gjGiiNn
+         JgsIhEpfmzeihcXH2z00tlXfoHWLF5Vxnp/xl16Pjg5a0F+5VFBSvezYgrgRT/2qzpzq
+         ioXRqnaKwvSKJKuyM5wmMYcrWajWgWMTWA9RFNCOzo12ScbIar4Tlap6AqEi91twxM8i
+         jC7A==
+X-Forwarded-Encrypted: i=1; AJvYcCVrndOBhCYTCDgPmQaGRqdUttDOZXWGru4/kFjJxH1hkStMGzLtxbH0gK8DplJ6CywC13w=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzxaap5IrHKhWqGQGy4kHsg3csyVzYGLAUtRvMugmY6q7brrq2D
+	f7kcoRTxepUXfSCViF797tZAXLPiMPBxCAIpWZliYAk2AvwZaODKWG+JKIcfa0Ibz0ACCOvrLRV
+	Fy3sRic0pSOWT8uqcLt5VJOx+ysU=
+X-Google-Smtp-Source: AGHT+IFaqJLnzCGqlk/XR6vE6YB0s7KFYOvvGnIY2ouvzUED/eF8a/hGswtFJuZk7Aa9qCiCOtj8XK5uKQ34+TzFoYw=
+X-Received: by 2002:a17:90b:4c05:b0:2d3:cf20:80bd with SMTP id
+ 98e67ed59e1d1-2dbb9e1cf4amr10193906a91.17.1726409207160; Sun, 15 Sep 2024
+ 07:06:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH] add-patch: edit the hunk again
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1782.git.1725875232922.gitgitgadget@gmail.com>
+ <xmqqzfogsrqo.fsf@gitster.g> <CAG=Um+0GvFzdAZrCgoS52xh9DF2pntQ+7i+vqYMFQf-MWr3H5A@mail.gmail.com>
+ <xmqq5xr4r818.fsf@gitster.g> <CAG=Um+3WSckyZ2P2o2igQr4hbMyMNTDZ_kqjrfdufvL6hUhMjA@mail.gmail.com>
+ <xmqqplp7ze0h.fsf@gitster.g> <CAG=Um+2e7kSL8wGFJcJtFAJt8AxyNwpemJNnxDNfsrm1SVVw1Q@mail.gmail.com>
+ <xmqqo74qro6f.fsf@gitster.g>
+In-Reply-To: <xmqqo74qro6f.fsf@gitster.g>
+From: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Date: Sun, 15 Sep 2024 19:36:11 +0530
+Message-ID: <CAG=Um+2DiQswQr86zhT3_quO3eYH8EBpwVNQir_SvMWwAsPk5g@mail.gmail.com>
+Subject: Re: [PATCH] remote: introduce config to set prefetch refs
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"Patrick Steinhardt [ ]" <ps@pks.im>, "Derrick Stolee [ ]" <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The "edit" option allows the user to directly modify the hunk to be
-applied.
+On Sun, Sep 15, 2024 at 1:41=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Shubham Kanodia <shubham.kanodia10@gmail.com> writes:
+>
+> > If we're trying to determine if a pattern
+> > (remote.<remote>.prefetchref) is a subset of another or not
+> > (remote.<remote>.fetch) (to not accidentally expand the scope beyond
+> > `fetch`),
+> > we'd need a function that does that pattern-to-pattern. Are you aware
+> > of any existing functions that do so?
+>
+> There is no such computation for this application.  Such a
+> computation might become needed if you wanted to complain that the
+> user gave .prefetchref pattern that would never match what .fetch
+> patterns would allow to pass.  But there is no such need.
+>
+> You will first get the advertised refs from the remote.
+>
+> Existing logic filteres them down to what matches configured
+> remote.$name.fetch variable.  filter_prefetch_refspec() may further
+> reduces the result by removing those whose .src side begins with
+> "refs/tags/".
+>
+> Now you only look at what survived the above existing filtering, and
+> further narrow it down by picking only ones that match the prefetch
+> condition.  If the refspec that survived the filtering by the fetch
+> refspec (and existing logic in filter_prefetch_refspec()) does not
+> satisfy the prefetch condition, it won't be prefetched.
+>
+> Since you are using .prefetch ONLY TO narrow the result down, by
+> definition, you are not adding anything what .fetch configuration
+> would not have fetched.
+>
+>
 
-If the modified hunk returned is not an applicable patch, we give the
-opportunity to try again.
+Ah I see =E2=80=94 I assumed you expected all filtering for `prefetch`
+(existing & new) to happen inside `filter_prefetch_refspec`.
+But that threw me off, because `filter_prefetch_refspec` doesn't deal
+with advertised refs from remote, and only patterns.
 
-For this new attempt we provide, again, the original hunk;  the user
-has to repeat the modification from scratch.
-
-Instead, let's give them the faulty modified patch back, so they can
-identify and fix the problem.
-
-If they really want to start over with a fresh patch they still can
-say 'no' to cancel the "edit" and start anew [*].
-
-    * In the old script-based version of "add -p", this "no" meant
-      discarding the current hunk and moving on to the next one.
-
-      This changed, presumably unintentionally, during the conversion
-      to C in bcdd297b78 (built-in add -p: implement hunk editing,
-      2019-12-13).
-
-      Now makes perfect sense not to move to the next hunk when the
-      user requests to discard their edits.
-
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
-
-The message "saying 'no' discards!" comes from ac083c47ea
-(git-add--interactive: manual hunk editing mode, 2008-07-03).
-
-I think it was referring to discarding user modifications, not the
-current hunk; which is what we were doing then (and now regaining).
-
-However, we stopped behaving that way in 2b8ea7f3c7 (add -p:
-calculate offset delta for edited patches, 2018-03-05), perhaps for
-some reason I'm missing.
-
-Therefore, this patch also modifies what we did, possibly
-unintentionally, in 2b8ea7f3c7.
-
-Thanks.
-
-
- add-patch.c                | 26 ++++++++++++++++----------
- t/t3701-add-interactive.sh | 14 ++++++++++++++
- 2 files changed, 30 insertions(+), 10 deletions(-)
-
-diff --git a/add-patch.c b/add-patch.c
-index 557903310d..125e79a5ae 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1111,7 +1111,8 @@ static void recolor_hunk(struct add_p_state *s, struct hunk *hunk)
- 	hunk->colored_end = s->colored.len;
- }
- 
--static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
-+static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk,
-+			      size_t plain_len, size_t colored_len)
- {
- 	size_t i;
- 
-@@ -1146,6 +1147,10 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
- 				      "addp-hunk-edit.diff", NULL) < 0)
- 		return -1;
- 
-+	/* Drop possible previous edits */
-+	strbuf_setlen(&s->plain, plain_len);
-+	strbuf_setlen(&s->colored, colored_len);
-+
- 	/* strip out commented lines */
- 	hunk->start = s->plain.len;
- 	for (i = 0; i < s->buf.len; ) {
-@@ -1257,15 +1262,14 @@ static int edit_hunk_loop(struct add_p_state *s,
- 	backup = *hunk;
- 
- 	for (;;) {
--		int res = edit_hunk_manually(s, hunk);
-+		int res = edit_hunk_manually(s, hunk, plain_len, colored_len);
- 		if (res == 0) {
- 			/* abandoned */
--			*hunk = backup;
--			return -1;
-+			break;
- 		}
- 
- 		if (res > 0) {
--			hunk->delta +=
-+			hunk->delta = backup.delta +
- 				recount_edited_hunk(s, hunk,
- 						    backup.header.old_count,
- 						    backup.header.new_count);
-@@ -1273,10 +1277,6 @@ static int edit_hunk_loop(struct add_p_state *s,
- 				return 0;
- 		}
- 
--		/* Drop edits (they were appended to s->plain) */
--		strbuf_setlen(&s->plain, plain_len);
--		strbuf_setlen(&s->colored, colored_len);
--		*hunk = backup;
- 
- 		/*
- 		 * TRANSLATORS: do not translate [y/n]
-@@ -1289,8 +1289,14 @@ static int edit_hunk_loop(struct add_p_state *s,
- 					"Edit again (saying \"no\" discards!) "
- 					"[y/n]? "));
- 		if (res < 1)
--			return -1;
-+			break;
- 	}
-+
-+	/* Drop a possible edit */
-+	strbuf_setlen(&s->plain, plain_len);
-+	strbuf_setlen(&s->colored, colored_len);
-+	*hunk = backup;
-+	return -1;
- }
- 
- static int apply_for_checkout(struct add_p_state *s, struct strbuf *diff,
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 718438ffc7..6af5636221 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -165,6 +165,20 @@ test_expect_success 'dummy edit works' '
- 	diff_cmp expected diff
- '
- 
-+test_expect_success 'setup re-edit editor' '
-+	write_script "fake_editor.sh" <<-\EOF &&
-+	grep been-here "$1" && echo found >output
-+	echo been-here > "$1"
-+	EOF
-+	test_set_editor "$(pwd)/fake_editor.sh"
-+'
-+
-+test_expect_success 'editing again works' '
-+	git reset &&
-+	test_write_lines e y | GIT_TRACE=1 git add -p &&
-+	grep found output
-+'
-+
- test_expect_success 'setup patch' '
- 	cat >patch <<-\EOF
- 	@@ -1,1 +1,4 @@
--- 
-2.46.1.507.gbcf32d0979
+Let me know if the diff in the following mail is closer to what you
+were expecting?
