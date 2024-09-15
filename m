@@ -1,54 +1,50 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1804F38DD1
-	for <git@vger.kernel.org>; Sun, 15 Sep 2024 16:25:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C877517C6C
+	for <git@vger.kernel.org>; Sun, 15 Sep 2024 16:37:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726417523; cv=none; b=IDi5booPQPWh/dsM4hgKkzvdD74XJgpVRWWG/Y03gYAk1YsfQCIDQM+Mblotu3dmO+RMUlRU3aJfgHFoMV4St39j2tjFfHiyB4HZuTsN4g/dUW3hNHn6e2sLiOmQzI+OzxCpjqUDpkGc06wf7NtG5v4D9IF2QiPi+kJmY726V9o=
+	t=1726418259; cv=none; b=YOttLsKcEjugt0qNluOh+yQa2/eWrHD5Alfii9EtXhvMdQ85jzcU9jRZXWEMyLDrGOSJylsqZZN0m7ecpA6WzdyEFeA9O0+9R4HC4ylXxsGpYy+56l71uwYKcxgSNosWmKjzXZNjI8tsg2BR8gaLZfvnUjg86RaWd0mTMjnH1zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726417523; c=relaxed/simple;
-	bh=h6Tt9wGm9XMjspb2Ppi1hC0o6mogLyqE5Ye0Nrx46CQ=;
+	s=arc-20240116; t=1726418259; c=relaxed/simple;
+	bh=kHcALqcZx6b+IYtV17s0DLyvoC/ox5pIR5IKjQsMeww=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eiXLvkx9TTKJs9TgurkGuBQOkjiAIVfdlsF77RW+jcBU8kVojFKxkZwKkrYngdCqeVu9nfImJkhew2Zkglnoal47v2aSx5dAAGSzY/C31bgXZ90srtvbfz1NGny7Gz56/FJtYudZj99OgnuzAcXRi7MjmHMYZ/Pd09T6hgc3uRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OesOfb3N; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=dmE09ubdDVOJWsnepg7W/C7JLOVPRs5vFyo6knoigYkPWL3s2gpwlpP4BgQA0/50bFY8KBluMN11uSwn5xvPH5xshmZujp6J6Frtepm1Fe+rCY3D7kPuC6RWWImMsYOxYzkhsG/nAxXWXwvo/j+QL/lI3gEMJw9pBC8iQGRnyDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=tCbD6i/J; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OesOfb3N"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E8C9622583;
-	Sun, 15 Sep 2024 12:25:12 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tCbD6i/J"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 97B2629AA2;
+	Sun, 15 Sep 2024 12:37:36 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=h6Tt9wGm9XMjspb2Ppi1hC0o6mogLyqE5Ye0Nr
-	x46CQ=; b=OesOfb3NmtFC225KECvZC87V1AIC+7AN06OQDkc5Y3NRBSpeUQPQYV
-	Pl913+c+oHSYAdEu4dDELhfQcEqim97vkKzQVXzASFrdPgpUtST1quAxsHXvaabs
-	vPUUDO3m+qd/6UIdcfhyOi36fBtIQTZ8URPvN6IpOtks/K/0di28o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DD77422582;
-	Sun, 15 Sep 2024 12:25:12 -0400 (EDT)
+	:content-type; s=sasl; bh=kHcALqcZx6b+IYtV17s0DLyvoC/ox5pIR5IKjQ
+	sMeww=; b=tCbD6i/J1K3mi4jlRKS8xwlNnVGQQlRZcpYKFAUb+kAbGXprDCCWBd
+	IHhxOQeTSzAifEeIvPpNZ9uynH5Y/J6ZQf4LDxcoRBYi2AlnRu0tMgUBHGjcrbGo
+	oXDSYCiCe7kUvpdKpCsswsA2L6oFIt5jDB/wirbv5iiExfNG1UdTM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9034E29AA1;
+	Sun, 15 Sep 2024 12:37:36 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3E49F22580;
-	Sun, 15 Sep 2024 12:25:12 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F3FCB29AA0;
+	Sun, 15 Sep 2024 12:37:35 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci(linux32): make Javascript Actions work in x86 mode
-In-Reply-To: <20240915110706.GA2017642@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 15 Sep 2024 07:07:06 -0400")
-References: <pull.1790.git.1726274559928.gitgitgadget@gmail.com>
-	<20240914072932.GB1284567@coredump.intra.peff.net>
-	<xmqq34m2tasj.fsf@gitster.g>
-	<20240915110706.GA2017642@coredump.intra.peff.net>
-Date: Sun, 15 Sep 2024 09:25:11 -0700
-Message-ID: <xmqqr09krijc.fsf@gitster.g>
+To: Henrik Holst <henrik.holst@outlook.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: ./configure fails to link test program due to missing dependencies
+In-Reply-To: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+	(Henrik Holst's message of "Sat, 14 Sep 2024 22:57:39 +0000")
+References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+Date: Sun, 15 Sep 2024 09:37:34 -0700
+Message-ID: <xmqqldzsrhyp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,33 +54,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 150935B4-737F-11EF-B5A9-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ D05700F2-7380-11EF-B587-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Henrik Holst <henrik.holst@outlook.com> writes:
 
-> On Sat, Sep 14, 2024 at 10:17:16AM -0700, Junio C Hamano wrote:
+> If I set LDFLAGS to whatever pkg-config --libs libcurl says on my system (actually: -lcurl -lssl -lcrypto -lzstd -lbrotlidec -lz) then it compiles just fine. If I add LDFLAGS to the configure environment it will accept that test, and then detect, as expected, the pkg-config settings for libcurl.
 >
->> Each of these approaches may have its pros and cons, but I somehow
->> do not see that the newly proposed alternative is 10x better than
->> what was reviewed and queued already to be worth the effort to
->> replace it.
->
-> That's my feeling, too, but I'd reserve final judgement to see Dscho's
-> response; it's possible I am under-estimating the 32/64-bit confusion
-> risk.
+> Should not ./configure FIRST check for a pkg-config environment without assuming that even the most trivial curl programs should compile without any additional dependencies like zstd etc?
 
-FWIW, what you said matches my recollection from years ago ;-) back
-when I had to deal with that.
+Looking at configure.ac, pkg-config is not used for any package.
+Specifically for curl, it seems that "curl-config --libs" is used.
 
-> I'd also note that his patch does not require bumping the distro
-> version, which would let us continue testing that old version in GitHub
-> Actions. That might be worth considering.
+Presumably the reason behind the current behaviour is combination of
+(1) ./configure is an after-thought in the build infrastructure for
+this project, (2) pkg-config was not ubiquitous back when autoconf
+support was written for this project, and (3) nobody considered
+"upgrading" our use of "curl-config" and our manual detection of
+dependency detection for other libraries to just use "pkg-config".
 
-Yes, that is true.
-
-Considering that 16.04 has passed its expiration date for standard
-support a few years ago, I am not sure how many more years of
-practical/unsupported use and testing we would be getting by giving
-cycles for the release in CI, though.
+Patches welcome ;-)
 
 Thanks.
