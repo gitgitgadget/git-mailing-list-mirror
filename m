@@ -1,151 +1,89 @@
-Received: from aib29agh123.zrh1.oracleemaildelivery.com (aib29agh123.zrh1.oracleemaildelivery.com [192.29.178.123])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0D622334
-	for <git@vger.kernel.org>; Sun, 15 Sep 2024 22:17:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8400A4779F
+	for <git@vger.kernel.org>; Sun, 15 Sep 2024 23:01:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726438635; cv=none; b=AevsQAeuX7rdlj1gH8/0l6k48SkTIT0x4Ypn3fyi98vG+9M6yvoLYagdDZg91D+dtqK9ItO//okS9BLKQOO2Lpt4pYn1Ct04cL8WUldSV7xY0p3KQ5o3uDnr+ejVc8r8gjaPdLs1S+D6glMkttqKrfxcvGDsatUq5FqsRwtxR3c=
+	t=1726441297; cv=none; b=uJGlK+xdylckKg79rz4yw9D6a+po1VId+vIKTxrYCiYn7053PM54iYh+bolxdIMj2WvJ69ZASfgmojqdRG0OwTu+eQolK1aMZDPJXl82pCd2CqKKS1RgHwers2NNfddkfQl7qqmcRNHhzsAIDZ3Jd+bIyvq+UHld6J1aeIvYD3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726438635; c=relaxed/simple;
-	bh=MdBKKEFRZz6FqCgUgiZDREwHJT5dcAZX4+sshJO+PU0=;
-	h=From:To:Cc:Subject:Date:Message-id:MIME-version; b=uWSJh5LyglTZdObkJ9/mFckkfJ7FNI5eJL0A6s/sJ/CppVBkgZouvkUnT8Wx+qsbxQshfxQ1dj65rEp1U6h9UtLgueENK8ycPfGBgLGnZF7cUOjDtjQhX0MBwMSMu8blac88Y/TR7SAXZ0lx0NQITe1mEVkFO0JoVMqj5RcE1IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=eLAZo28m; arc=none smtp.client-ip=192.29.178.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1726441297; c=relaxed/simple;
+	bh=vluW+hyLtsD8KiP0CPz+yy6Uu3MKs7vWh0sPWbbRNGc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=cYcllGAhO09nDTZpA1xwzqBiBkxvCbDRxcKusgR2SHcxQFDlPaa6D0pHV6PmjYo+EufuHLcM5P7SKEEXKNNaky5lVxAYo82XM/sCJPsiKLKgWEFFWXCfwtL1W4RKgNZjX45faNUKAFeLJWvXcYUV2jVCyY+JILkssKMryyAzW8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5gT+jgX; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="eLAZo28m"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=2CMemVOza8I3frPnQK7JPHh6baO/huG6ZNyRELkMFLA=;
- b=eLAZo28mienMwj94Zr537SuYJPu2LDyOnIQVdnReYSrfA8/N3oTL1IytKzO3tl6ZZi6JsVoXfs4S
-   UxgtgN4p+FdmUjzeVQtSh9B7u1qejEUOqiCeQ4s5qN5TyuoMkZ9ltvKbSIF1RSm2bGIaV3UN57KO
-   PDgUtOCXUp9GH4VJU3HiG8/LkCa4A2WKU6SrgC1wRCo/nJ2bHO3VE/vDVNENzKjb26EVQkLWrAVJ
-   3yvyzIxxHyguWfIL5oaf1suaVexx4okLAIZeDXS55SN50dYY7k/3H2hBwl99nSgm11y/FZ2t11gE
-   /kN3rwznsjv9yn/gx5yOImzfsM73FgXcLj85WQ==
-Received: by omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240709 64bit (built Jul  9
- 2024))
- with ESMTPS id <0SJV00BS2KC48Y90@omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sun, 15 Sep 2024 22:12:04 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-From: Bence Ferdinandy <bence@ferdinandy.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5gT+jgX"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-374c180d123so1453065f8f.3
+        for <git@vger.kernel.org>; Sun, 15 Sep 2024 16:01:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726441293; x=1727046093; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PiZY0+Z127EA6bCPcZd9PJA5Ho7/5LfL5s9CgeMvEiQ=;
+        b=C5gT+jgX7JGDNjIMU0MSdn9Fg02evy7HJcFOGkkV6f+KEGQCpo+l+tGrDr5T0HSIrf
+         lr+rhadJOUmphFOWk5wnbKEXPwM4N7Qt2qH+HtCI+d2kwg0B9Oj3/si/j28/YCU7GSpy
+         cKXHMs4WtBxyItH8MHfeeUUYL8bogWcnkkVIG0CK7q5UkYD079/6EIF95Iyd3tMO1eyq
+         AcqSZf1ffVDST1Giuba3wKP7Y0FmXNLWbEfcv2yKmcFG89qXMESzOrR0P4Qn/tJWRrGX
+         MLPXnxv6cawsKjdDil2NFUkFED7NHH0U+fhFbifq1OF5tTVSY9RVIgkMoIB4reEfzIGZ
+         YWHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726441293; x=1727046093;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PiZY0+Z127EA6bCPcZd9PJA5Ho7/5LfL5s9CgeMvEiQ=;
+        b=bxnsIC1GYXHgsC7qaDLXj+noKyAoImyTh9S+U/7Se6UAZjkSRTiM891ig1CLh2AEoX
+         aCRDCT3b1CyVfxmMRav8Ar+2F2uU3XkdzrXkr+zjeTSqf/4x75SvWFQaRy53UDYf+3XY
+         dLUN+CQCLcIcK3ZwgeSSPUmdOSTSvLLQYmW7FTDfDTDN1E6ZUY/GjZPhLTznKfhLv5E8
+         buDTg5HsvHRq6n4//NXZo0gM5RfsJ93MuqxK6yVGoNY4q7ccEluTqHyJ0c83I32CWbFA
+         +iateZqn777bIhp89hfNZybT6Q1+QilpG2Yz1qzyAiIkyIsZW8pSxRN01Kg5ONV3UMRm
+         9cSg==
+X-Gm-Message-State: AOJu0YwH0uoZLn5DXIZdWY3ReQXPItuMBM01bP26JAJkwG5s+0Ms4cEf
+	3n0RTlyWUxHoBJxQsdSQWS+cFei16vcZ7kan1keCl+0Nz/3jlPwES+mNqnfR
+X-Google-Smtp-Source: AGHT+IErZptLw7EaXORW86s3S6hx9UxMdvuMhizm3MgdIT2O+rubXBrlckHZ/+p027Gla+A4RRgwHA==
+X-Received: by 2002:a5d:5c88:0:b0:378:e8b4:1900 with SMTP id ffacd0b85a97d-378e8b41a8dmr2277333f8f.41.1726441292651;
+        Sun, 15 Sep 2024 16:01:32 -0700 (PDT)
+Received: from void.void ([141.226.169.213])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42da2427227sm58872265e9.44.2024.09.15.16.01.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Sep 2024 16:01:32 -0700 (PDT)
+From: Andrew Kreimer <algonell@gmail.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,	Christian Schlack <christian@backhub.co>,
-	Jeff King <peff@peff.net>,	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH v3] set-head: no update without change and better output for
- --auto
-Date: Mon, 16 Sep 2024 00:09:54 +0200
-Message-id: <20240915221055.904107-1-bence@ferdinandy.com>
+Cc: Andrew Kreimer <algonell@gmail.com>
+Subject: [PATCH] attr: fix a typo
+Date: Mon, 16 Sep 2024 02:01:25 +0300
+Message-Id: <20240915230125.128941-1-algonell@gmail.com>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: 8bit
-Reporting-Meta:
- AAFMVAX37FWqw6InH04EkN/ZoR9LNbOILQYs91DV/m+9UCvXTuMZAxlSt4ynbZjr
- /NFk0oyc9eInZjnypTOaHlhz/ICQkbxyjYluNucA4z7AooGc9NavAPiG0HQFjbv9
- BWGzoBpBOTi+V1C1z4bcjhHQcVRWJWJni5c3EJ2He3aMExW5rOqS3YTiAh1YXcEX
- QXiItSI355+O1ix7GxI8ZV9ghEd37CLqk3wCayqGUE9Ejeeym86shiocwFUe4FRP
- Jw2ToeO+kq1McK7b0MZ9hhUCQuO+SEXbo5d0OvGEPZrdTGKhEXFU5HIMSUhcmeoT
- 0aW3j8KaHLGq+jGCOGE/I4/F8plB7rkZvskLyRCk5oA6ANGEQWsA6r5KLizbztKk
- hrISGzUWp+bUBRhK/jbQglrSO5b0yWd/VcJMXnuObqynJNRcHKR3+elJT+S/GzJ1
- 3HuXO5Gl+DymjHpLc3fs6TIxyblAF/QcyNsNVoFDIAqS8YQ8DCKlWv9m
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Currently, even if there is no actual change to remote/HEAD calling
-remote set-head will overwrite the appropriate file and if set to --auto
-will also print a message saying "remote/HEAD set to branch", which
-implies something was changed.
+Fix a typo in comments.
 
-Change the behaviour of remote set-head so that the reference is only
-updated if it actually needs to change.
-
-Change the output of --auto, so the output actually reflects what was
-done: a) set a previously unset HEAD, b) change HEAD because remote
-changed or c) no updates. Make the output easily parsable, by using
-a slightly clunky wording that allows all three outputs to have the same
-structure and number of words.
-
-Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 ---
+ attr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Notes:
-    v1-v2:
-    
-        was RFC in https://lore.kernel.org/git/20240910203835.2288291-1-bence@ferdinandy.com/
-    
-    v3:
-    
-        This patch was originally sent along when I thought set-head was
-        going to be invoked by fetch, but the discussion on the RFC
-        concluded that it should be not. This opened the possibility to make
-        it more explicit.
-    
-        Note: although I feel both things the patch does are really just
-        cosmetic, an argument could be made for breaking it into two, one
-        for the no-op part and one for the --auto print update.
-
- builtin/remote.c  | 14 ++++++++++----
- t/t5505-remote.sh |  2 +-
- 2 files changed, 11 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 0acc547d69..4b116dfc19 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1400,8 +1400,8 @@ static int show(int argc, const char **argv, const char *prefix)
+diff --git a/attr.c b/attr.c
+index 06b5b5e55e..c605d2c170 100644
+--- a/attr.c
++++ b/attr.c
+@@ -187,7 +187,7 @@ static void all_attrs_init(struct attr_hashmap *map, struct attr_check *check)
+ }
  
- static int set_head(int argc, const char **argv, const char *prefix)
- {
--	int i, opt_a = 0, opt_d = 0, result = 0;
--	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
-+	int i, opt_a = 0, opt_d = 0, is_ref_changed = 0, result = 0;
-+	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT, buf3 = STRBUF_INIT;
- 	char *head_name = NULL;
- 
- 	struct option options[] = {
-@@ -1440,13 +1440,19 @@ static int set_head(int argc, const char **argv, const char *prefix)
- 
- 	if (head_name) {
- 		strbuf_addf(&buf2, "refs/remotes/%s/%s", argv[0], head_name);
-+		refs_read_symbolic_ref(get_main_ref_store(the_repository),buf.buf,&buf3);
-+		is_ref_changed = strcmp(buf2.buf,buf3.buf);
- 		/* make sure it's valid */
- 		if (!refs_ref_exists(get_main_ref_store(the_repository), buf2.buf))
- 			result |= error(_("Not a valid ref: %s"), buf2.buf);
--		else if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote set-head"))
-+		else if (is_ref_changed && refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote set-head"))
- 			result |= error(_("Could not setup %s"), buf.buf);
-+		else if (opt_a && !strcmp(buf3.buf,""))
-+			printf("%s/HEAD was unset: set to %s\n", argv[0], head_name);
-+		else if (opt_a && is_ref_changed)
-+			printf("%s/HEAD was changed: set to %s\n", argv[0], head_name);
- 		else if (opt_a)
--			printf("%s/HEAD set to %s\n", argv[0], head_name);
-+			printf("%s/HEAD was unchanged: set to %s\n", argv[0], head_name);
- 		free(head_name);
- 	}
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 532035933f..6b61f043d3 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -434,7 +434,7 @@ test_expect_success 'set-head --auto has no problem w/multiple HEADs' '
- 		cd test &&
- 		git fetch two "refs/heads/*:refs/remotes/two/*" &&
- 		git remote set-head --auto two >output 2>&1 &&
--		echo "two/HEAD set to main" >expect &&
-+		echo "two/HEAD was unset: set to main" >expect &&
- 		test_cmp expect output
- 	)
- '
+ /*
+- * Atribute name cannot begin with "builtin_" which
++ * Attribute name cannot begin with "builtin_" which
+  * is a reserved namespace for built in attributes values.
+  */
+ static int attr_name_reserved(const char *name)
 -- 
-2.46.1.507.g531a0ea24e.dirty
+2.39.5
 
