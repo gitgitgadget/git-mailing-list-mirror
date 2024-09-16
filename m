@@ -1,384 +1,191 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DAA1591E3
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 12:29:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5896213B2B6
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 13:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726489770; cv=none; b=nCKMRj5E/C3B1+KlvrNLXYitav1rdQT4YZ1gPvNHgF/cv6EieuLUc99SquVTOYYw/3Nyi6lj+24le4uk2pCzrVcrRYtA+/VRj9J04CCwP+XGjhWrzztYivyrNhAlu9ZLowbCK7JU5uHb44cOQZkbejfgA7xBXP9557/WL486I8g=
+	t=1726493640; cv=none; b=pC0rA/PqrjIYyxLyyViutW6BNGmkaP/y4h2lheP+vynQDF7w2xcznGoKbCZikpgEVAlK4J18kbUp0v+IV3c4+du5y32gaorQV20H763rKJ5MBVJgVAJKP/9tJ02LKhI/YYCtRz/uGHpZoxELHpm3NLOPOusoSUdELGnKZ3249BQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726489770; c=relaxed/simple;
-	bh=7AeQaaHsClVpe0KEPoavxjpVBE6YNXUCn4Vj33CEd18=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pq/afcmcTBRhLTxgmDE9SKlmPLo6y0W3zlkLDF9sRf7vdpbywGLVZxPHhc1+RS/hM9CSsQQ9v9pnTG6WxztjYtsjjPXW32GLrg2Fo607rvC5/7MdghLWefZoTu8N8C5QgPwKHdNByqEopDjUeNgBrYbIq0+QDpiQKXdECWgD2kQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fOsMj2AV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p/Kk0sLY; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1726493640; c=relaxed/simple;
+	bh=Dt8W49Td003rOIFg8+Cjax+3DtZJKrX2L9WL9vAboAA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=KcMgQ2Q2XyGxu0sQDy11XW8jzihMFhgbXA2VS6jGor3wcn5fSGVV/pK0nv1cHe9s3+a/76Hh1lfFSR3PNNCgW0ew7Tsx4P1hPyOdgCehFZeu23ljID1SOs6IjBnC374WosPbP7gP8MYADcBMZ4U8wOVaTjIi6SWjQhd2mktuX+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J/BrQEbI; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fOsMj2AV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p/Kk0sLY"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id B5D031380267;
-	Mon, 16 Sep 2024 08:29:27 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 16 Sep 2024 08:29:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726489767; x=1726576167; bh=kqJbu8RSS5
-	FyPOe6noronqgaPdqL6YhdYmocVj/xqhU=; b=fOsMj2AVOd4K9ZrDzPrTcbndw+
-	pXoARzCAIdzdmXPxEnzxeHwuUqNPnumMmraFVQ1QJPGH7ElduiebA5W2DPCPlRyp
-	LNWlwVnSNcNZ5kjzusik6pWTv6totd4hB+UiP7kExpKSGv6FKV2YnDr85ch+mwW3
-	i2ClnKarrOy7ODXQ/TuGmBggVEvXk/Kg4w1+u9Jehf0HoJHm77rkQOD8jOrs5McM
-	59L8FdSjBQ+ro3FNekWsNd2Irkg2jV+XmD9kUOFMPBi2X2Et1s68VM+aRO/7U/pl
-	WJaNBU5a//8tvADoHe07D595PKBMseXqdEWS4D2An/5Ayw8oLRJLM9eFme0w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726489767; x=1726576167; bh=kqJbu8RSS5FyPOe6noronqgaPdqL
-	6YhdYmocVj/xqhU=; b=p/Kk0sLYwZ87tHJWoC0GP5Dke/sdHa0a8Op0Z0LpE73D
-	95p2V8NINOMcTTBXt/jhbpICR0WPmuXVtRHFwp2dN0CwHpFHkE4p3wWQxgibdbyg
-	kFNwXRc1fQbVuKcTv0OhmOYUi41f6GXJw39UTpR6/c689NRvZdepoerZVXnQhh1r
-	6y2+F3iLlsOpQIW+xlJbUTBe7Cm/5HmnoPTlciCWN6rcaDZ+1KVxdfcH6GF73jLf
-	1Hkh8X7aIXamR6ZYXRvXSC3dWZ68BqmFDsqTDMNPMcPw3FU11qfmnYLtrObWnWX+
-	fWFqhoEKNYhEprkv+u3DYMWKsofzBw2xzoZI5u+tOA==
-X-ME-Sender: <xms:pyToZmGYflOtu5xQw1nbvF4jdffZZFzneIfNkqWJKIBFg_SD3QypEg>
-    <xme:pyToZnUjMClD5gghT4gia47djROXLaS0cRFIzN4jGdwunhVNStdrpFOWlhtQitFlq
-    pBzPXLgR3YNeWUvrA>
-X-ME-Received: <xmr:pyToZgKPlubCNo_o5kseIQJcFQPSGAqIMMYG6sNB3IQGfs1rlCHud7vxxaSbU2gsuczToIf_CfdfDV6fICJ-e1YlU2WGEU4Rc9LKY4YsWP2VLZE8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedgheduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsoh
-    hnrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:pyToZgEcUkmhaah-MMd1TljKQYfsdhpYpYET4zNRh2IHexNzoOb4Lg>
-    <xmx:pyToZsWWTug8PWQOkO6qpWewOcgVTvI-RMx8b61uZtj9Z0spmIPPFg>
-    <xmx:pyToZjPMbdlLGiOOOEQjJVjh0LrWz323UYMhoUbK8jqLu0lnO9hl6g>
-    <xmx:pyToZj1V1yRu3vBishZ6DbF2EzVhW_3fOOImZ8oSzvAOhVCbhDlGug>
-    <xmx:pyToZpjXCaQOfmFTz-snHNKobvqwjQj3-dGEsVTuCpOTIShsVa3DybFy>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Sep 2024 08:29:26 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 65d4f158 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Sep 2024 12:29:09 +0000 (UTC)
-Date: Mon, 16 Sep 2024 14:29:26 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Edward Thomson <ethomson@edwardthomson.com>
-Subject: [PATCH 22/22] reftable: handle trivial allocation failures
-Message-ID: <02073dafb96d58b76d37f2dad5efe9807634dc82.1726489647.git.ps@pks.im>
-References: <cover.1726489647.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J/BrQEbI"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-374bd059b12so2002153f8f.1
+        for <git@vger.kernel.org>; Mon, 16 Sep 2024 06:33:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726493637; x=1727098437; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8thVAp0MVXrc/m5w3ELeM3v5+w53fPTXBN5jZbu3LDk=;
+        b=J/BrQEbIzvnVMkNWZMosrMnCrL8KxCwepXUezF0pBQaclsfxrrf7tiivTaBbxRFqts
+         9tgRH72ew09c6EUCft+Y+r20DF9HE65+mm5oSX0LyWkmXvs8E2wZ+Uqe8NUgoNRi4wWi
+         eDyRaszON/xjxBPoXd97ZjbZ8TVaFm6t+1EnHSRei8fI/RFrGLJ6RQgF4ndfmcxSwZFw
+         4b1cGfc2GLU5kNLKBv8dHviPp4e4GmJnhlKVXxm0cCtBmFjbNmMQs90fUnX8PIDLdzsf
+         4FU5jG/wnuYkvuHyiefK/aRSBkcKMhpqL+7HUQ5xkMjqV75mCd+0xJNo5EqsRGVBigPP
+         S7kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726493637; x=1727098437;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8thVAp0MVXrc/m5w3ELeM3v5+w53fPTXBN5jZbu3LDk=;
+        b=D0K6dIZi0uaUoQNbGQtRb5NjU05dBYtyQawppX/Vlwga5rQLEFEkwiaD1BnNdiqT3+
+         boSAOCRCHoZBxjdGmXvFoIHoYsFuBvGlNmd5JYjhWD3kUZ+X611y5kesoXrsB7plOzFG
+         74bB3vbKodsgc8y8g0ECVBKHHDpx9i8wlAwCxavRCWvYBrxzlS7K/wrtwCdzgfC4Cg14
+         1HAcZqhOOP6agADWrbIUZNnQO7K+8T55ztMR7aiFySZ/ZaVictJRLNGo3EugSILCeXic
+         eUgsK72B3VMEQi+hg49hoC1rBR1tTSrgtloeQIIEZIl4wn2c0pNWhnpsxmGPHBkRDUTE
+         Szig==
+X-Forwarded-Encrypted: i=1; AJvYcCXYLIXLOmE7rtHoPXAYschHDYJhXFvKdZ2MR4zmQH6+938Ivyma71zFYErnd4RbKAeAHO8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzk2JCEvJ8WLLLYB172MCakvqnwSUGjn/e9/V4kU9nvtgKxNKcH
+	gTbIxlRvhvSp9D3OtxBBT1xcmOPXTZfIFJImnKnWvfBKrPRzPxo9XGXqkQ==
+X-Google-Smtp-Source: AGHT+IEJGLZxxNN8uSdBbPtkb6RpqJI+phBDnGXIW8ct1KNj/M1QwQ/aClygsO2lss+/5sQ1RF7a0Q==
+X-Received: by 2002:a05:6000:1bca:b0:374:c847:85c with SMTP id ffacd0b85a97d-378d61e2c1fmr5660854f8f.24.1726493635666;
+        Mon, 16 Sep 2024 06:33:55 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:628:b501:20f0:d089:108a:54d3? ([2a0a:ef40:628:b501:20f0:d089:108a:54d3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42da24213a7sm78748075e9.37.2024.09.16.06.33.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Sep 2024 06:33:55 -0700 (PDT)
+Message-ID: <cba63486-2186-4e8e-aad4-ed7f54606ec7@gmail.com>
+Date: Mon, 16 Sep 2024 14:33:54 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1726489647.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] add-patch: edit the hunk again
+To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+ Git List <git@vger.kernel.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <21ddf64f-10c2-4087-a778-0bd2e82aef42@gmail.com>
+Content-Language: en-US
+In-Reply-To: <21ddf64f-10c2-4087-a778-0bd2e82aef42@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Handle trivial allocation failures in the reftable library and its unit
-tests.
+Hi Rubén
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/merged.c                   |  3 +++
- reftable/reader.c                   | 10 +++++++++-
- reftable/stack.c                    | 20 ++++++++++++++++++++
- reftable/writer.c                   | 13 +++++++++++--
- t/unit-tests/t-reftable-block.c     |  4 ++++
- t/unit-tests/t-reftable-merged.c    |  4 ++++
- t/unit-tests/t-reftable-readwrite.c | 27 ++++++++++++++++-----------
- 7 files changed, 67 insertions(+), 14 deletions(-)
+On 15/09/2024 12:38, Rubén Justo wrote:
+> The "edit" option allows the user to directly modify the hunk to be
+> applied.
+> 
+> If the modified hunk returned is not an applicable patch, we give the
+> opportunity to try again.
+> 
+> For this new attempt we provide, again, the original hunk;  the user
+> has to repeat the modification from scratch.
 
-diff --git a/reftable/merged.c b/reftable/merged.c
-index 2c20845d624..52bc66c5273 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -203,6 +203,9 @@ int reftable_merged_table_new(struct reftable_merged_table **dest,
- 	}
- 
- 	REFTABLE_CALLOC_ARRAY(m, 1);
-+	if (!m)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
-+
- 	m->readers = readers;
- 	m->readers_len = n;
- 	m->min = first_min;
-diff --git a/reftable/reader.c b/reftable/reader.c
-index 0179e4e73dd..98e7aa26373 100644
---- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -598,6 +598,10 @@ int reftable_reader_new(struct reftable_reader **out,
- 	int err;
- 
- 	REFTABLE_CALLOC_ARRAY(r, 1);
-+	if (!r) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
- 
- 	/*
- 	 * We need one extra byte to read the type of first block. We also
-@@ -627,7 +631,11 @@ int reftable_reader_new(struct reftable_reader **out,
- 
- 	r->size = file_size - footer_size(r->version);
- 	r->source = *source;
--	r->name = xstrdup(name);
-+	r->name = reftable_strdup(name);
-+	if (!r->name) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
- 	r->hash_id = 0;
- 	r->refcount = 1;
- 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 990784d9d2f..7df28ab3438 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -116,6 +116,11 @@ static int fd_read_lines(int fd, char ***namesp)
- 	}
- 
- 	REFTABLE_ALLOC_ARRAY(buf, size + 1);
-+	if (!buf) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
-+
- 	if (read_in_full(fd, buf, size) != size) {
- 		err = REFTABLE_IO_ERROR;
- 		goto done;
-@@ -140,6 +145,8 @@ int read_lines(const char *filename, char ***namesp)
- 	if (fd < 0) {
- 		if (errno == ENOENT) {
- 			REFTABLE_CALLOC_ARRAY(*namesp, 1);
-+			if (!*namesp)
-+				return REFTABLE_OUT_OF_MEMORY_ERROR;
- 			return 0;
- 		}
- 
-@@ -420,6 +427,10 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
- 			}
- 
- 			REFTABLE_CALLOC_ARRAY(names, 1);
-+			if (!names) {
-+				err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+				goto out;
-+			}
- 		} else {
- 			err = fd_read_lines(fd, &names);
- 			if (err < 0)
-@@ -779,7 +790,11 @@ int reftable_stack_new_addition(struct reftable_addition **dest,
- {
- 	int err = 0;
- 	struct reftable_addition empty = REFTABLE_ADDITION_INIT;
-+
- 	REFTABLE_CALLOC_ARRAY(*dest, 1);
-+	if (!*dest)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
-+
- 	**dest = empty;
- 	err = reftable_stack_init_addition(*dest, st);
- 	if (err) {
-@@ -886,7 +901,12 @@ int reftable_addition_add(struct reftable_addition *add,
- 
- 	REFTABLE_ALLOC_GROW(add->new_tables, add->new_tables_len + 1,
- 			    add->new_tables_cap);
-+	if (!add->new_tables) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
- 	add->new_tables[add->new_tables_len++] = strbuf_detach(&next_name, NULL);
-+
- done:
- 	delete_tempfile(&tab_file);
- 	strbuf_release(&temp_tab_file_name);
-diff --git a/reftable/writer.c b/reftable/writer.c
-index 44bed92f467..ad4718edecb 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -49,8 +49,14 @@ static int padded_write(struct reftable_writer *w, uint8_t *data, size_t len,
- {
- 	int n = 0;
- 	if (w->pending_padding > 0) {
--		uint8_t *zeroed = reftable_calloc(w->pending_padding, sizeof(*zeroed));
--		int n = w->write(w->write_arg, zeroed, w->pending_padding);
-+		uint8_t *zeroed;
-+		int n;
-+
-+		zeroed = reftable_calloc(w->pending_padding, sizeof(*zeroed));
-+		if (!zeroed)
-+			return -1;
-+
-+		n = w->write(w->write_arg, zeroed, w->pending_padding);
- 		if (n < 0)
- 			return n;
- 
-@@ -767,6 +773,9 @@ static int writer_flush_nonempty_block(struct reftable_writer *w)
- 	 * case we will end up with a multi-level index.
- 	 */
- 	REFTABLE_ALLOC_GROW(w->index, w->index_len + 1, w->index_cap);
-+	if (!w->index)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
-+
- 	index_record.offset = w->next;
- 	strbuf_reset(&index_record.last_key);
- 	strbuf_addbuf(&index_record.last_key, &w->block_writer->last_key);
-diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
-index e52a612e852..d470060e8be 100644
---- a/t/unit-tests/t-reftable-block.c
-+++ b/t/unit-tests/t-reftable-block.c
-@@ -32,6 +32,7 @@ static void t_ref_block_read_write(void)
- 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
- 
- 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	check(block.data != NULL);
- 	block.len = block_size;
- 	block_source_from_strbuf(&block.source ,&buf);
- 	ret = block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
-@@ -125,6 +126,7 @@ static void t_log_block_read_write(void)
- 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
- 
- 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	check(block.data != NULL);
- 	block.len = block_size;
- 	block_source_from_strbuf(&block.source ,&buf);
- 	ret = block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
-@@ -214,6 +216,7 @@ static void t_obj_block_read_write(void)
- 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
- 
- 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	check(block.data != NULL);
- 	block.len = block_size;
- 	block_source_from_strbuf(&block.source, &buf);
- 	ret = block_writer_init(&bw, BLOCK_TYPE_OBJ, block.data, block_size,
-@@ -297,6 +300,7 @@ static void t_index_block_read_write(void)
- 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
- 
- 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	check(block.data != NULL);
- 	block.len = block_size;
- 	block_source_from_strbuf(&block.source, &buf);
- 	ret = block_writer_init(&bw, BLOCK_TYPE_INDEX, block.data, block_size,
-diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
-index 3d2848632db..3c84363e980 100644
---- a/t/unit-tests/t-reftable-merged.c
-+++ b/t/unit-tests/t-reftable-merged.c
-@@ -29,7 +29,9 @@ merged_table_from_records(struct reftable_ref_record **refs,
- 	int err;
- 
- 	REFTABLE_CALLOC_ARRAY(*readers, n);
-+	check(*readers != NULL);
- 	REFTABLE_CALLOC_ARRAY(*source, n);
-+	check(*source != NULL);
- 
- 	for (size_t i = 0; i < n; i++) {
- 		t_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0, &opts);
-@@ -285,7 +287,9 @@ merged_table_from_log_records(struct reftable_log_record **logs,
- 	int err;
- 
- 	REFTABLE_CALLOC_ARRAY(*readers, n);
-+	check(*readers != NULL);
- 	REFTABLE_CALLOC_ARRAY(*source, n);
-+	check(*source != NULL);
- 
- 	for (size_t i = 0; i < n; i++) {
- 		t_reftable_write_to_buf(&buf[i], NULL, 0, logs[i], sizes[i], &opts);
-diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
-index acca927a2cf..bfa069caff7 100644
---- a/t/unit-tests/t-reftable-readwrite.c
-+++ b/t/unit-tests/t-reftable-readwrite.c
-@@ -52,8 +52,11 @@ static void write_table(char ***names, struct strbuf *buf, int N,
- 	int i;
- 
- 	REFTABLE_CALLOC_ARRAY(*names, N + 1);
-+	check(*names != NULL);
- 	REFTABLE_CALLOC_ARRAY(refs, N);
-+	check(refs != NULL);
- 	REFTABLE_CALLOC_ARRAY(logs, N);
-+	check(logs != NULL);
- 
- 	for (i = 0; i < N; i++) {
- 		refs[i].refname = (*names)[i] = xstrfmt("refs/heads/branch%02d", i);
-@@ -150,23 +153,25 @@ static void t_log_overflow(void)
- 
- static void t_log_write_read(void)
- {
--	int N = 2;
--	char **names = reftable_calloc(N + 1, sizeof(*names));
--	int err;
- 	struct reftable_write_options opts = {
- 		.block_size = 256,
- 	};
- 	struct reftable_ref_record ref = { 0 };
--	int i = 0;
- 	struct reftable_log_record log = { 0 };
--	int n;
- 	struct reftable_iterator it = { 0 };
- 	struct reftable_reader *reader;
- 	struct reftable_block_source source = { 0 };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w = t_reftable_strbuf_writer(&buf, &opts);
- 	const struct reftable_stats *stats = NULL;
-+	int N = 2, err, i, n;
-+	char **names;
-+
-+	names = reftable_calloc(N + 1, sizeof(*names));
-+	check(names != NULL);
-+
- 	reftable_writer_set_limits(w, 0, N);
-+
- 	for (i = 0; i < N; i++) {
- 		char name[256];
- 		struct reftable_ref_record ref = { 0 };
-@@ -178,6 +183,7 @@ static void t_log_write_read(void)
- 		err = reftable_writer_add_ref(w, &ref);
- 		check(!err);
- 	}
-+
- 	for (i = 0; i < N; i++) {
- 		struct reftable_log_record log = { 0 };
- 
-@@ -476,8 +482,7 @@ static void t_table_read_write_seek_index(void)
- 
- static void t_table_refs_for(int indexed)
- {
--	int N = 50;
--	char **want_names = reftable_calloc(N + 1, sizeof(*want_names));
-+	char **want_names;
- 	int want_names_len = 0;
- 	uint8_t want_hash[GIT_SHA1_RAWSZ];
- 
-@@ -485,15 +490,15 @@ static void t_table_refs_for(int indexed)
- 		.block_size = 256,
- 	};
- 	struct reftable_ref_record ref = { 0 };
--	int i = 0;
--	int n;
--	int err;
- 	struct reftable_reader *reader;
- 	struct reftable_block_source source = { 0 };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w = t_reftable_strbuf_writer(&buf, &opts);
- 	struct reftable_iterator it = { 0 };
--	int j;
-+	int N = 50, n, j, err, i;
-+
-+	want_names = reftable_calloc(N + 1, sizeof(*want_names));
-+	check(want_names != NULL);
- 
- 	t_reftable_set_hash(want_hash, 4, GIT_SHA1_FORMAT_ID);
- 
--- 
-2.46.0.551.gc5ee8f2d1c.dirty
+As you say below it looks like we started doing this by accident with 
+2b8ea7f3c7 (add -p: calculate offset delta for edited patches, 
+2018-03-05). I think that although the change was accidental it was 
+actually a move in the right direction for several reasons.
 
+  - The error message from "git apply" makes it is virtually impossible
+    to tell what is wrong with the edited patch. The line numbers in the
+    error message refer to the complete patch but the user is editing a
+    single hunk so the user has no idea which line of the hunk the error
+    message applies to.
+
+  - If the user uses a terminal based editor then they cannot see the
+    error messages while they're re-editing the hunk.
+
+  - If the user has deleted a pre-image line then they need to somehow
+    magic it back before the hunk will apply.
+
+> Instead, let's give them the faulty modified patch back, so they can
+> identify and fix the problem.
+
+The problem is how do they identify the problem? I have some unfinished 
+patches [1] that annotate the edited patch with comments explaining 
+what's wrong. Because we know what the unedited patch looked like and 
+that the pre-image lines should be unchanged it is possible to provide 
+much better error messages than we get from trying to apply the whole 
+patch with "git apply". It also makes it possible to restore deleted 
+pre-image lines.
+
+[1] https://github.com/phillipwood/git/tree/wip/add-p-editing-improvements
+     Note that the later patches do not even compile at the moment. I've
+     been meaning to split out the first eight patches and clean them up
+     as they're mostly functional and just need the commit messages
+     cleaning up.
+
+> diff --git a/add-patch.c b/add-patch.c
+> index 557903310d..125e79a5ae 100644
+> --- a/add-patch.c
+> +++ b/add-patch.c
+> @@ -1146,6 +1147,10 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
+>   				      "addp-hunk-edit.diff", NULL) < 0)
+>   		return -1;
+>   
+> +	/* Drop possible previous edits */
+> +	strbuf_setlen(&s->plain, plain_len);
+> +	strbuf_setlen(&s->colored, colored_len);
+> +
+
+At this point hunk->end points past s->plain.len. If the user has 
+deleted all the lines then we return with hunk->end in this invalid 
+state. I think that turns out not to matter as we end up restoring 
+hunk->end from the backup we make at the beginning of edit_hunk_loop() 
+but it is not straight forward to reason about.
+
+> @@ -1273,10 +1277,6 @@ static int edit_hunk_loop(struct add_p_state *s,
+>   				return 0;
+>   		}
+>   
+> -		/* Drop edits (they were appended to s->plain) */
+> -		strbuf_setlen(&s->plain, plain_len);
+> -		strbuf_setlen(&s->colored, colored_len);
+> -		*hunk = backup;
+
+In the old version we always restore the hunk from the backup when we 
+trim the edited patch which maintains the invariant "hunk->end <= 
+s->plain->end"
+
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 718438ffc7..6af5636221 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -165,6 +165,20 @@ test_expect_success 'dummy edit works' '
+>   	diff_cmp expected diff
+>   '
+>   
+> +test_expect_success 'setup re-edit editor' '
+> +	write_script "fake_editor.sh" <<-\EOF &&
+> +	grep been-here "$1" && echo found >output
+
+'grep been-here "$1" >output' should be sufficient I think
+
+> +	echo been-here > "$1"
+> +	EOF
+> +	test_set_editor "$(pwd)/fake_editor.sh"
+> +'
+
+I don't think we need to write the fake editor in a separate test. Also 
+it would be better to call test_set_editor in a subshell so that it does 
+not affect later tests.
+
+> +test_expect_success 'editing again works' '
+> +	git reset &&
+> +	test_write_lines e y | GIT_TRACE=1 git add -p &&
+
+It would be nice to add "n q" to the input to make it complete.
+
+> +	grep found output
+
+Using test_grep makes it easier to debug test failures.
+
+
+Best Wishes
+
+Phillip
