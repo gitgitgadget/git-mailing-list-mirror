@@ -1,147 +1,98 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98B05258
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 20:13:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F7B15E5C8
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 20:15:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726517635; cv=none; b=srNDW3tdmp1rruvPaCkbhMN+9MAuaKy/DVCaFI0+69aF0/NkUSfnSenX3pcJiCXgfQyy2F/Zy7jnPb7PETHqGwAaT+0KsjJwfkHVQ85KE+ksL06gTsTXpFWF4j7rrZAix/ZnVaHNoLFJa6Pb0f4ylaW6saok+6is9BBm8MdmKzQ=
+	t=1726517710; cv=none; b=W/iTWl7gv1hSk3VC1K6p7QB0N1gOarctT1X3V/YkP4IBn+DMzDllvVOheBkDKsvouIkc3LN+7KmdaX3w4HVijMgTUyVg+dwWnPRhfBDLL2ddu9ntn+Q10vKY+GdTpZ69mW9lp82KWUXrXEbEvEUK+kg5NH637PZA1bh+CStM858=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726517635; c=relaxed/simple;
-	bh=0Wkack4ehVGl3qskWXYC5yAe65QHG00sZ2TJq7Hwr7E=;
+	s=arc-20240116; t=1726517710; c=relaxed/simple;
+	bh=F2wS0X0ZcDZAqFolbU34ytMF6BaMtru9lVa1c+9QZ50=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mfRmjNcYO3YeaxJS/IbpQZp+vIx031XaHP8SjDWon+n6nKsOx7k3mKqtnyH7iPIHMupFj1QONiG7o6zqOo3+IdDFAjS/DS82cq8koyMiT3JZeb5kvVxTTlW59FLAk8LuzD5dWlX8CPwXLLDBEzHSJH7tVmxikuy3QJayrjmWx2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DyGPvjZV; arc=none smtp.client-ip=209.85.221.53
+	 To:Cc:Content-Type; b=klAU2juHRR9/BKsVJxONks/fGFp0qeQa1slp2tmjMjtNV0xWzhEO6BVhqEe1Ij/XEAH9YSPTlLoJwB/SHxVBWbiAg3v1gWTqL4ASb0utrhp8nkpRIR0YEuJ4jD6utkU8SJqWso2q6cyKJbhPuW03A1AqP+7YNSUd8/hZa1H8vuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fyhBRokT; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DyGPvjZV"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3780c8d689aso3676740f8f.0
-        for <git@vger.kernel.org>; Mon, 16 Sep 2024 13:13:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fyhBRokT"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42cb60aff1eso48673755e9.0
+        for <git@vger.kernel.org>; Mon, 16 Sep 2024 13:15:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726517632; x=1727122432; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1726517707; x=1727122507; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=du2BZO1iurEXLWlGlOeOrFU8E2xYCdMA6vwuK2FX600=;
-        b=DyGPvjZVFtmTY0S7BO+urpVPHCjcfN47pMvDHhv457JKALkyWMl9F5spoq/aYhraeB
-         zY2KwzKOtdajTH9wIjZZmixLGu1C3iuwZNMQocWAR6DAiINjA5zUwz7BOp/uvCK+GpOv
-         xKUwm5PmBv2b5H7BVDAsh5MEG+MCUqDghaAlqYsp2MFWYyOSUpzRvTeBBe5t0j/cTnRc
-         uvMwbsnV2WJ1DrLMdz+adHib7qwJWGiZRiDOiDQUXjHtldLoAklljItN5AQ3D5yNUZqS
-         gODKfn4u0KkgZ/9zagbgwUkmzVuK1na5OYNnwgwfaTuB8kaNU7c8GsSOcA8Grzlnlc2e
-         ifpA==
+        bh=nL0wsvqH4vRGBOh+KU+tqwXRBJFiwJLt/6EDUkibUr4=;
+        b=fyhBRokT5CqW0wI1XEP86/c+daJPH5RnlmFUrhCOtORjAH9xye4ehte3ttVRNCa5ID
+         u/2CvUaWhwfKPMyXPKNvOi5BGGeI3yG0y/tiFKbah2djgr+fpBJQ29d1GSdwYJItj3dp
+         HkmPfqUrddzWkWkXqUiOP8o2JUTyXutM/o71iR9VhrQeqrJ3i7vCfHIY/twFDNI3zH/8
+         T3iJlqIIoTAgx8+fRNYrBC/7zcyyOlPCiyMvMenTC8EIqMxxvY7eL6CDrLY6x7K4tW0c
+         /sicLIEVXUB/DJRabbPnukWvK4qEuz6oB47ll6r33hyGAru/MYEkMlXVQCQNKDigogCp
+         9Hww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726517632; x=1727122432;
+        d=1e100.net; s=20230601; t=1726517707; x=1727122507;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=du2BZO1iurEXLWlGlOeOrFU8E2xYCdMA6vwuK2FX600=;
-        b=jhSGU/wKQ7hF2Xv2Lns1Lms3QwUY67/Q6XyC2ACZBgcMBPOEkQaiBK7Dx5+CcXinCV
-         t6TdHUEmkwS/Lj8uLV0e3W9XYlKVP1qiQashNirglJAgo82ZvsuJSenftsCfxSqo9Zeh
-         dFPI88pZ0v3M/RnxX9Dkr5tUsGUzcuQn1V6k1LBtGYA5RBAhgKEuY+gKKLBXTPBbToFW
-         C931KRzXUcHNxkhhpcIboY0NkYBKK/e0e30jTIEL4aYKioCt+xH/2MVHlt4VJJvM4ZGf
-         2X13boppTxM0HPY/gCT1yrvCaJlKvIGePWdgdN47ytbchLWlv4ShgJAzBagoQlNYrfV7
-         XjPg==
-X-Gm-Message-State: AOJu0YygmK9qUA+z2pdYMI5mpxKbgF8B26WpQUwZtgKK00MAW+gk705s
-	sKzU3ejXhW7QdTFeoHGysqaf49WH+w3Y2qoUXl9BiFgaAePq0URQZPShpVSc7Wmhu+3wxEXcPWI
-	VRy3tPvi3sf0QlkawOSo5GuumFLCK3Q==
-X-Google-Smtp-Source: AGHT+IElw022aKyDj0cBo0oe+0mHBVYIzHx9Roq3xZU6wOGKF3txcrRUrNB4YZ5B04Rg3xm5n940Sq+ZEw1TkVPTHaM=
-X-Received: by 2002:a05:6000:1247:b0:374:c29f:8ddc with SMTP id
- ffacd0b85a97d-378c2d638bemr10432506f8f.40.1726517631188; Mon, 16 Sep 2024
- 13:13:51 -0700 (PDT)
+        bh=nL0wsvqH4vRGBOh+KU+tqwXRBJFiwJLt/6EDUkibUr4=;
+        b=iOOjMbE67OnPTqTQsBndCgGr7RjK/uNqdMquWlUVjb1AXSOO1uXj7YhoWqENItnriA
+         dgdFg8HsUSdUkTBErkaNuVHU8zdMxJqootbao8CMvxMPmEfFHG8Kl9gBTwUTAZKTXt+j
+         OvDf4C2iTUc6y4H1K5yeEJM9wAEgpGoTWZn3ALSIpzktlDbycj6AGzxOij/+UmHxOFdA
+         qdlXuxJRSc9XOcW+iE3RpEuy7wg0FIn6XYSXkzTg3NUfc83v7EljQwK/4y98n6wZJ4P4
+         ok5unwRK4Hkp9J5++FtNMl78Ydin/0da/mz6jUOqWV9JuHHJBtca9OUkX8zZBAo4ZApL
+         hkGg==
+X-Gm-Message-State: AOJu0YyVBTl+Mb1WraYoYvEYXSALh5Fl+K5zD7WTG/nQlbbLya7n5ENO
+	mwSqjpYOdL9sKwFwnwQsO/RJvUvgy8LO/TlqeXpW/zuBa6D0Y08G3zVZeUYS/p/jOhEUt6Jm/8Y
+	6EHulx+NhCBrikWL5jYic8tIFubI=
+X-Google-Smtp-Source: AGHT+IFnBVq5MVTZhFUJjZXv8/Kep96T6sfPxZXB/yfBuYrZN7psETerjHLfsB1Y4P4K4vO/UO0s3L7OgMffPJL1Mvo=
+X-Received: by 2002:a5d:4811:0:b0:374:c6ad:a7c6 with SMTP id
+ ffacd0b85a97d-378c2d065c0mr8141795f8f.20.1726517706337; Mon, 16 Sep 2024
+ 13:15:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240915111119.GA2017770@coredump.intra.peff.net> <20240915111846.GA2017851@coredump.intra.peff.net>
-In-Reply-To: <20240915111846.GA2017851@coredump.intra.peff.net>
+References: <20240915111119.GA2017770@coredump.intra.peff.net> <20240915112024.GB2017851@coredump.intra.peff.net>
+In-Reply-To: <20240915112024.GB2017851@coredump.intra.peff.net>
 From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date: Mon, 16 Sep 2024 22:13:39 +0200
-Message-ID: <CAN0heSrQiV6WOP4C5mFPh1AMgX9yy3CcHx2RPraKMFtmNJ2fPw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] git-jump: always specify column 1 for diff entries
+Date: Mon, 16 Sep 2024 22:14:55 +0200
+Message-ID: <CAN0heSpk0f1-8tbguqAyTOQbuWrHYpkE-W6H29CJ-QBzqULCrg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] git-jump: ignore deleted files in diff mode
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 15 Sept 2024 at 13:18, Jeff King <peff@peff.net> wrote:
+On Sun, 15 Sept 2024 at 13:20, Jeff King <peff@peff.net> wrote:
 >
-> When we generate a quickfix entry for a diff hunk, we provide just the
-> filename and line number along with the content, like:
+> If you do something like this:
 >
->   file:1: contents of the line
+>   rm file_a
+>   echo change >file_b
+>   git jump diff
 >
-> This can be a problem if the line itself looks like a quickfix header.
-> For example (and this is adapted from a real-world case that bit me):
->
->   echo 'static_lease 10:11:12:13:14:15:16 10.0.0.1' >file
->   git add file
->   echo change >file
->
-> produces:
->
->   file:1: static_lease 10:11:12:13:14:15:16 10.0.0.1
->
-> which is ambiguous. It could be line 1 of "file", or line 11 of the file
-> "file:1: static_lease 10", and so on. In the case of vim's default
-> config, it seems to prefer the latter (you can configure "errorformat"
-> with a variety of patterns, but out of the box it matches some common
-> ones).
+> then we'll generate two quickfix entries for the diff, one for each
+> file. But the one for the deleted file is rather pointless. There's no
+> content to show since the file is gone, and in fact we open the editor
+> with the path /dev/null!
 
-I've never hit this, but it doesn't look too crazy. A couple of digits
-and a colon and things begin to match. Ok.
+Ah, yes, I've seen this. I just went "I can see why this would happen"
+and moved on to the next hunk. Thanks for actually patching.
 
-> One easy way to fix this is to provide a column number, like:
->
->   file:1:1: static_lease 10:11:12:13:14:15:16 10.0.0.1
->
-> which causes vim to prefer line 1 of "file" again (due to the preference
-> order of the various patterns in the default errorformat).
+> Let's skip such entries entirely. There's nothing useful to show, since
+> the point is that the file has been deleted.
 
-Makes sense.
+Agreed. Anybody who relies on `git jump diff` to produce an empty
+quickfix list (no entries to go through) if *and only if* the diff is
+empty is already in for a surprise due to binary files. Skipping
+/dev/null makes perfect sense.
 
-> There are other options. For example, at least in my version of vim,
-> wrapping the file in quotation marks like:
->
->   "file":1: static_lease 10:11:12:13:14:15:16 10.0.0.1
->
-> also works. That perhaps would the right thing even if you had the silly
-> file name "file:1:1: foo 10". But it's not clear what would happen if
-> you had a filename with quotes in it.
+>         perl -ne '
+> -       if (m{^\+\+\+ (.*)}) { $file = $1; next }
+> +       if (m{^\+\+\+ (.*)}) { $file = $1 eq "/dev/null" ? undef : $1; next }
+>         defined($file) or next;
 
-Right. Looking around, I can find someone asking the Internet how to
-escape the filename and not getting any response.
-
-> This feature is inherently scraping text, and there's bound to be some
-> ambiguities. I don't think it's worth worrying too much about unlikely
-> filenames, as its the file content that is more likely to introduce
-> unexpected characters.
-
-Agreed. (s/its/it's/)
-
-> So let's just go with the extra ":1" column specifier. We know this is
-> supported everywhere, as git-jump's "grep" mode already uses it (and
-> thus doesn't exhibit the same problem).
->
-> The "merge" mode is mostly immune to this, as it only matches "<<<<<<<"
-> conflict marker lines. It's possible of course to have a marker that
-> says "foo 10:11" later in the line, but in practice these will only have
-> branches and perhaps file names, so it's probably not worth worrying
-> about (and fixing it would involve passing --column to the system grep,
-> which may not be portable).
-
-I suppose we could use `git grep --no-index` instead of `grep` for `git
-jump merge`. Anyway, that's out of scope here.
-
-> I also gave some thought as to whether we could put something more
-> useful than "1" in the column field for diffs. In theory we could find
-
-Heh. Yes, in theory everything is possible. Your approach makes sense.
-
-> -               print "$file:$line: $1\n";
-> +               print "$file:$line:1: $1\n";
-
-Looks good to me and from my testing, this fixes the problem as
-described.
+This looks very reasonable. From my testing, this patch fixes the issue.
 
 Martin
