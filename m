@@ -1,109 +1,147 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACC85258
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 20:12:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98B05258
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 20:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726517579; cv=none; b=DDtwPYumn60Y1KCFslyfqYHjHesG8xMz8Hl+ZStYkQhE45z8/5rOhitnhUtwlTNlndnNHLUyOU+mTa8hziVFb7K6ycZg1Ce/yOaEBEVj0B8QsAa8DyVqd7tIlGYDILWKOf+HRubu/IqG4ACTeT8aHhwrmpuwQbnSZrEryhldVC0=
+	t=1726517635; cv=none; b=srNDW3tdmp1rruvPaCkbhMN+9MAuaKy/DVCaFI0+69aF0/NkUSfnSenX3pcJiCXgfQyy2F/Zy7jnPb7PETHqGwAaT+0KsjJwfkHVQ85KE+ksL06gTsTXpFWF4j7rrZAix/ZnVaHNoLFJa6Pb0f4ylaW6saok+6is9BBm8MdmKzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726517579; c=relaxed/simple;
-	bh=iQzKox8aQULZ1tww0JHEPK64W3frbCC587U1dIH4OGk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HYgPrPVU/f8T59Ci9no/O1YRw+Dfkym83MK2FEUsldH88ne7cDN7HcYep5uF20Kub8p7xVEnPKgCmHAiffwkCse6/OWl+nDrBUOsCgkobqO+X1rqXRuFYGz8qBClsjDWfZgxI18/okidA7L7HzTOQIN/pEKxyTQ8B8ErNqqoTBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=SA4Thj3R; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1726517635; c=relaxed/simple;
+	bh=0Wkack4ehVGl3qskWXYC5yAe65QHG00sZ2TJq7Hwr7E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mfRmjNcYO3YeaxJS/IbpQZp+vIx031XaHP8SjDWon+n6nKsOx7k3mKqtnyH7iPIHMupFj1QONiG7o6zqOo3+IdDFAjS/DS82cq8koyMiT3JZeb5kvVxTTlW59FLAk8LuzD5dWlX8CPwXLLDBEzHSJH7tVmxikuy3QJayrjmWx2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DyGPvjZV; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="SA4Thj3R"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1726517569;
-	bh=iQzKox8aQULZ1tww0JHEPK64W3frbCC587U1dIH4OGk=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=SA4Thj3R+fLjN6Sp6niNGbQaOY+vGFv01jkZsf/qaPQQXciqlDQhrpV9XjAg8JTkx
-	 FIyvFx8ShZ45s3yGYsV94+sVJ/9/2btlEdu6JwhjPOzlKiQhZrKJuorAORf2b938Zj
-	 Vkq2LBLI68zjJrIPgKTNOzsEvzF356tx19D804deiZCerO+clcPHGnohegVOQw3Ate
-	 p0eIaqOW4KpRsbHUXr5YplOdfkuc9xtJSJpHgBlD/ZkKNpePg8W09mIqj+DXCM2reD
-	 e5QTLVZXyH3fi9J6iRw1qM/a7sbSHeu6i2JiDOazNnLCEfEIX5kj4iVgHOPpjXpsXY
-	 f/q6fdEkmuAWzM47P6YKxRlWsvR/3KvpGWzf/9T63dJ0Z2ZVojZX4az0f1X4/+oEwo
-	 YCGtXK8/OiMNcToEbQQi0vHs6AnomtWrAYR8m9mTWB55AMXrMrq0QHgfMZRzLPX1kc
-	 Xq8PBkQsTBksb+N/XCXaHIgHiUVTUtAx5IDYQTn14YJfxNFF4GM
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C8F5820067;
-	Mon, 16 Sep 2024 20:12:49 +0000 (UTC)
-Date: Mon, 16 Sep 2024 20:12:48 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Git Mailing <gitmailing3@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: get file watcher is keeping lock on files for a long time
-Message-ID: <ZuiRQFVHgN98qBfS@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Git Mailing <gitmailing3@gmail.com>, git@vger.kernel.org
-References: <CAHmn3WWZ+vHT33z5_bQ07yTM0apY5gLDtErk_2fuLeGw509JPw@mail.gmail.com>
- <CAHmn3WVakAs4XPtmvBYB4inKah0WPYACaXJGScerbVMTi4D4eA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DyGPvjZV"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3780c8d689aso3676740f8f.0
+        for <git@vger.kernel.org>; Mon, 16 Sep 2024 13:13:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726517632; x=1727122432; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=du2BZO1iurEXLWlGlOeOrFU8E2xYCdMA6vwuK2FX600=;
+        b=DyGPvjZVFtmTY0S7BO+urpVPHCjcfN47pMvDHhv457JKALkyWMl9F5spoq/aYhraeB
+         zY2KwzKOtdajTH9wIjZZmixLGu1C3iuwZNMQocWAR6DAiINjA5zUwz7BOp/uvCK+GpOv
+         xKUwm5PmBv2b5H7BVDAsh5MEG+MCUqDghaAlqYsp2MFWYyOSUpzRvTeBBe5t0j/cTnRc
+         uvMwbsnV2WJ1DrLMdz+adHib7qwJWGiZRiDOiDQUXjHtldLoAklljItN5AQ3D5yNUZqS
+         gODKfn4u0KkgZ/9zagbgwUkmzVuK1na5OYNnwgwfaTuB8kaNU7c8GsSOcA8Grzlnlc2e
+         ifpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726517632; x=1727122432;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=du2BZO1iurEXLWlGlOeOrFU8E2xYCdMA6vwuK2FX600=;
+        b=jhSGU/wKQ7hF2Xv2Lns1Lms3QwUY67/Q6XyC2ACZBgcMBPOEkQaiBK7Dx5+CcXinCV
+         t6TdHUEmkwS/Lj8uLV0e3W9XYlKVP1qiQashNirglJAgo82ZvsuJSenftsCfxSqo9Zeh
+         dFPI88pZ0v3M/RnxX9Dkr5tUsGUzcuQn1V6k1LBtGYA5RBAhgKEuY+gKKLBXTPBbToFW
+         C931KRzXUcHNxkhhpcIboY0NkYBKK/e0e30jTIEL4aYKioCt+xH/2MVHlt4VJJvM4ZGf
+         2X13boppTxM0HPY/gCT1yrvCaJlKvIGePWdgdN47ytbchLWlv4ShgJAzBagoQlNYrfV7
+         XjPg==
+X-Gm-Message-State: AOJu0YygmK9qUA+z2pdYMI5mpxKbgF8B26WpQUwZtgKK00MAW+gk705s
+	sKzU3ejXhW7QdTFeoHGysqaf49WH+w3Y2qoUXl9BiFgaAePq0URQZPShpVSc7Wmhu+3wxEXcPWI
+	VRy3tPvi3sf0QlkawOSo5GuumFLCK3Q==
+X-Google-Smtp-Source: AGHT+IElw022aKyDj0cBo0oe+0mHBVYIzHx9Roq3xZU6wOGKF3txcrRUrNB4YZ5B04Rg3xm5n940Sq+ZEw1TkVPTHaM=
+X-Received: by 2002:a05:6000:1247:b0:374:c29f:8ddc with SMTP id
+ ffacd0b85a97d-378c2d638bemr10432506f8f.40.1726517631188; Mon, 16 Sep 2024
+ 13:13:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="fJc4H4Ysyo/MNoGC"
-Content-Disposition: inline
-In-Reply-To: <CAHmn3WVakAs4XPtmvBYB4inKah0WPYACaXJGScerbVMTi4D4eA@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+References: <20240915111119.GA2017770@coredump.intra.peff.net> <20240915111846.GA2017851@coredump.intra.peff.net>
+In-Reply-To: <20240915111846.GA2017851@coredump.intra.peff.net>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Mon, 16 Sep 2024 22:13:39 +0200
+Message-ID: <CAN0heSrQiV6WOP4C5mFPh1AMgX9yy3CcHx2RPraKMFtmNJ2fPw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] git-jump: always specify column 1 for diff entries
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+On Sun, 15 Sept 2024 at 13:18, Jeff King <peff@peff.net> wrote:
+>
+> When we generate a quickfix entry for a diff hunk, we provide just the
+> filename and line number along with the content, like:
+>
+>   file:1: contents of the line
+>
+> This can be a problem if the line itself looks like a quickfix header.
+> For example (and this is adapted from a real-world case that bit me):
+>
+>   echo 'static_lease 10:11:12:13:14:15:16 10.0.0.1' >file
+>   git add file
+>   echo change >file
+>
+> produces:
+>
+>   file:1: static_lease 10:11:12:13:14:15:16 10.0.0.1
+>
+> which is ambiguous. It could be line 1 of "file", or line 11 of the file
+> "file:1: static_lease 10", and so on. In the case of vim's default
+> config, it seems to prefer the latter (you can configure "errorformat"
+> with a variety of patterns, but out of the box it matches some common
+> ones).
 
---fJc4H4Ysyo/MNoGC
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I've never hit this, but it doesn't look too crazy. A couple of digits
+and a colon and things begin to match. Ok.
 
-On 2024-09-16 at 19:00:17, Git Mailing wrote:
-> I'm not able to delete a folder minutes after the last git operation
-> as the git process keeps running in the background and won't stop.
->=20
-> How can I have git stop after, say, 30 secs. of non-operation?
+> One easy way to fix this is to provide a column number, like:
+>
+>   file:1:1: static_lease 10:11:12:13:14:15:16 10.0.0.1
+>
+> which causes vim to prefer line 1 of "file" again (due to the preference
+> order of the various patterns in the default errorformat).
 
-There's not enough information here for us to give you any useful
-advice.  First, we need to know what operating system and version you're
-using, since the advice we give will depend on what OS you have.  For
-example, it's well known that Windows has a design flaw that prevents
-most files from being removed while they're being used.
+Makes sense.
 
-Second, we need to know the exact command line of the process that's
-running in the background.  For example, if the process that's running
-is git gc, then there's an option to disable that and let you repack on
-your own terms.  It could also be that there's a process being invoked
-by your editor, for example, that you might need to adjust in your
-editor.  Determining this should be possible with `ps auxf` on Linux and
-it should show the processes in a tree format which will also indicate
-the parent process (such as an editor).
+> There are other options. For example, at least in my version of vim,
+> wrapping the file in quotation marks like:
+>
+>   "file":1: static_lease 10:11:12:13:14:15:16 10.0.0.1
+>
+> also works. That perhaps would the right thing even if you had the silly
+> file name "file:1:1: foo 10". But it's not clear what would happen if
+> you had a filename with quotes in it.
 
-As for the request to stop after 30 seconds, there is no such option.
-Git isn't actually doing nothing in most cases, or it would have exited
-already, and it would be very undesirable to have most Git operations
-(such as a clone) spontaneously abort after 30 seconds.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Right. Looking around, I can find someone asking the Internet how to
+escape the filename and not getting any response.
 
---fJc4H4Ysyo/MNoGC
-Content-Type: application/pgp-signature; name="signature.asc"
+> This feature is inherently scraping text, and there's bound to be some
+> ambiguities. I don't think it's worth worrying too much about unlikely
+> filenames, as its the file content that is more likely to introduce
+> unexpected characters.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+Agreed. (s/its/it's/)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZuiRPwAKCRB8DEliiIei
-gW0TAP4xyEvJmjLNrN8FdmT/kGYeSUoM/m5zUtZLzYLjTnQ7ugD/SUF14NKr5mMn
-3xDJFieouzqN0DDgXChV66ZNaVFnwQA=
-=Wgur
------END PGP SIGNATURE-----
+> So let's just go with the extra ":1" column specifier. We know this is
+> supported everywhere, as git-jump's "grep" mode already uses it (and
+> thus doesn't exhibit the same problem).
+>
+> The "merge" mode is mostly immune to this, as it only matches "<<<<<<<"
+> conflict marker lines. It's possible of course to have a marker that
+> says "foo 10:11" later in the line, but in practice these will only have
+> branches and perhaps file names, so it's probably not worth worrying
+> about (and fixing it would involve passing --column to the system grep,
+> which may not be portable).
 
---fJc4H4Ysyo/MNoGC--
+I suppose we could use `git grep --no-index` instead of `grep` for `git
+jump merge`. Anyway, that's out of scope here.
+
+> I also gave some thought as to whether we could put something more
+> useful than "1" in the column field for diffs. In theory we could find
+
+Heh. Yes, in theory everything is possible. Your approach makes sense.
+
+> -               print "$file:$line: $1\n";
+> +               print "$file:$line:1: $1\n";
+
+Looks good to me and from my testing, this fixes the problem as
+described.
+
+Martin
