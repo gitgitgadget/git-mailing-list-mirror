@@ -1,80 +1,81 @@
 Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E15C14F9D5
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 12:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632D014F9E2
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 12:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726489702; cv=none; b=Q0Jne/96UotwTekjTmatZKO/NeouRRmgoAKT4sgBt379ABHw9Y/72ElKhCndMwDnSMakc2kccrR2VieIm4rPupY4xdcRSEpqungYKG3ljstuz19KkszKGyvzgAHQGKXYTTLcQz9mPWDq+V4mW2YjJiYFXIM1ll0G+C9DT6FyIW0=
+	t=1726489703; cv=none; b=GDUvJfQ57I/h9m5eP0B0qp3jmK/mke8AfJ0TJ7lYcD2tadJDlBYXCUGD7nfJYEoh3SoW7jfy5DFxl684HjKvT1YHsJ5EHK9iY7tnEC8Fisl/FgqAc+RRO063oKhD1wD9X8tOd3gowd3DsQFBup1P3JC3g6jDexhGz9cjLn4mhm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726489702; c=relaxed/simple;
-	bh=iM+Sl8BVNyJWVXLNmLeAV7olR/MYgUpOeQhwpqrPAM4=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=kb+JzLq8zk6K8o9ufYDrLDIqvknBo/d2FbndFr7e6pSKVyML3VZcTh7Ks0cTSlfXTctY/RNbvFqCJ9rgferZB9/VYJeB9Sz/88W+U4FarxqIAPOR0qEdrpPRXHH0ZFBP6nAau3oT6fdD2Fliw3psaG9MnQYBKi9Ejw/aVOVKVIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VrtRsNN8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MWplDEgZ; arc=none smtp.client-ip=103.168.172.149
+	s=arc-20240116; t=1726489703; c=relaxed/simple;
+	bh=+DOZSTq/i4U7orj7fVwQw1eq3QJNrXkFYb3D1nF6/Ls=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OYphtJG2ZZlyZblHND4ByNdHLHD3Q7Fdizho6Wzjikuikka+OC0MJDbM0yzR0HPKiwdyuEIpHMYiDtlxqmMYW7sQtI+Z7fh3R3Nf0NsGL0J6xP3uJKquLxi8YcWDQGkJ5arK00K5jQ+4dRJLpEZ5VIM7uFCbvq5JYdov+97pQkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Lt8dYi9A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CWHjo4Bl; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VrtRsNN8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MWplDEgZ"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 903EC13801E8;
-	Mon, 16 Sep 2024 08:28:19 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 16 Sep 2024 08:28:19 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Lt8dYi9A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CWHjo4Bl"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7904113801DC;
+	Mon, 16 Sep 2024 08:28:20 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Mon, 16 Sep 2024 08:28:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1726489699; x=1726576099; bh=jBbApbwkoEQNUa6t0IoemJu+4FnFL6sx
-	VBCiJC9LvkM=; b=VrtRsNN8Yi1Q90ZZ/sMUSnZ2SHHIBzuCEfhJwZFasjZ6+H3l
-	fmuAnLaChv+eTHH2iicFmok+Ufbe+F+NHQKgG1CQd7sqYTXlnqSwa7z7InQvW81h
-	TPdsvqwQEYg+nnQAzreukSd7XaP96fUO392QPlI6jSZk5+QsPodNxSRlXMaVDQzL
-	CzZT3JM5vQCdOuERAqwUCqn0vNn4oS7MC7b/F6szeHZoXj2yeJQpNAZWF6wwgaum
-	gIXL2A8Ku6bD9Nf7OABKNvQqE5M5oGkMC1K50bj/Y92C0mfgyc0zY2TBxBnQbegS
-	8VR41TwwyY5e5BtyBZHL5mHTj0AVmUj8wfTnyw==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1726489700; x=1726576100; bh=mDSWjPlscf
+	zkzslwa+67kg5MWIFBL/Wc0iV116EuAnw=; b=Lt8dYi9ABqES9D2LnlguMWvKje
+	Hc/R4Ccu7tdrDTPo8peSZhS1Kp9/2SWPzvZ4kgeLoW2qxgKkkn2vJAr68w0HKnCg
+	ZYdV9Ub4M8TV4lB49xpagWch+O0B4WAtSb5Bd4SosKAijq0bB81jkuYi4wjLJeyq
+	b6KfYs4+XZ7aS5QL4IyDsVl8w6waxCp0AdpLMRkYy2NzvS73u76Q4X0oE49a6Cpq
+	ZEuK0q5yVecT/b2O8UKUznYMz254jZlUiEfkn5TYaBx4nh9jD0hY+IJDZHvX9Zwz
+	Zam+WPbez3oTxQkPlhYjgNrgkwkr6BNEknVXa2T20b5qZa1V4HZ2WmKvu3vA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1726489699; x=1726576099; bh=jBbApbwkoEQNUa6t0IoemJu+4FnFL6sxVBC
-	iJC9LvkM=; b=MWplDEgZkc9gqRuOIPkU69D7XDMmyxB39TFAUsdXeoIWUDikeoi
-	+nXwyt5RDj4k+DRp2eBPpgm6XXRH2XYLzVpi3tx8F3Za0en42fGffUKhZmlvbozs
-	aJ1tWpm/YL/rB7y1ycSPIxKIjqS1w6x927vguyl/yR3FKgSL+x4Kzrdt2HghSZMC
-	7Y8bP9xHyvcubkE5dv2v1fpNyxcrWlx0H0RftPL1UxLOjpbsxCuw/YVHrT3+hHKV
-	TFY6IoJwBHpX8TrNsJqg3RtiQHVNa/VGSxf7KSrUhDbVHjcR4+x1Sw0zNWk76zPP
-	LTGn6Q4Jay3kKTG/zVPVt5EAntwUAvMW8vg==
-X-ME-Sender: <xms:YyToZu4ju1U51g800ncQaLGiTJjfkaRLHuwH-dOtHeJeqGMLgVKitw>
-    <xme:YyToZn48VG4Qe-vH2IkdV8eCGtQAx_lJrkj8x02a0-gYAAbLSZpjFYTnrPmBWq7Iz
-    DTV7AqigI7_t1Lc0Q>
-X-ME-Received: <xmr:YyToZtdNv6dt4fBfmMyg_ldwI3S3H1TQYwMCxyfOR1Kz5lShOtWJX-NVnxXOVT5OpfjRUgBVz2r2wxN4VA90PU0vjG7Fw-9zdjm_rqi39t07c8TH>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1726489700; x=1726576100; bh=mDSWjPlscfzkzslwa+67kg5MWIFB
+	L/Wc0iV116EuAnw=; b=CWHjo4BlR3hpoRvIPMdvhbL81oAtEQa532wGxSgtjZpt
+	7lM9BVdI5sl7YGjwAGDIpDaaExwa0eY4fXRiAq+Q5xZcxc8dBnyAxfsi8en6PA1C
+	RZXonFyEQqbqVg3QqcuWmt3eGCaw76S+En1agrO1MUeX/lIJREnoryT8HqIoGzJl
+	UB/xzoQZOa/kweaa5RbB7msngyljkDqCu79iAdNoIIzALluDNrtPJ3WSzF3kzdel
+	r9quqMXmczc1IGR8m+0KvRTMq3zck38+LB3XphEUU/nXPkEePcu60yKK7fpF8J8J
+	dijzA0vdkezzvZYTdKAtnfltg6Y3r6EQ8Nh8LVq6Xg==
+X-ME-Sender: <xms:ZCToZloPR4YF06_F8arw9e-elOwEi3Javqk6Mzrl5z0QtI92rDJtFA>
+    <xme:ZCToZnqB-n6TzKekjYZuMKQvSoQNHMXsogljTIgw3vEp5-eyCKJNJy4V9iEUWlgDq
+    ezI6E0VXr2NKp8Zsw>
+X-ME-Received: <xmr:ZCToZiMV1UDrrkva3k5lcbSEQDIe3MCnOaywPiXFQQSnngG3FhPWYfP8QqK02YdmEdeD8Tccmyr0xsDHsRPFsV2F6tft5fhGKWeGrAqpDwF_4DqM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkgggtugesthdtredttddtvdenucfh
-    rhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqne
-    cuggftrfgrthhtvghrnhepieeuvdfhteetlefghfehtddvheelhfdtfffhhffgleejfedv
-    teefveeltdeuiedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomh
-X-ME-Proxy: <xmx:YyToZrK6esUB5Q7SugbTzzJZJqsquelFjrPVWmCXWuB-vGMv-h-rUQ>
-    <xmx:YyToZiIuWQ1U5isiju3Xeo0qlyYcJ6pSAuTIrSqGEwG_eqGPH6lbQw>
-    <xmx:YyToZszMqVJcI6qo2uO0vRnImjpcNryXvrzfwuGLACmDtySf8qqe3A>
-    <xmx:YyToZmIM-eZj2a4_P9EcdiJfOcljSIEBTegPg6ARbrehWyw7EsJrYQ>
-    <xmx:YyToZpUd26FAoQjVsPerEqNjySvL7VebBmoeBPEGvpYhAlLPDUxliYtG>
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomh
+X-ME-Proxy: <xmx:ZCToZg7e3iZYXs5XoewM8PDrT6lQGEVhuNVRsU5iEPMmalefX5P5Ag>
+    <xmx:ZCToZk7kkN3OJ2RAyvdJqo9952VM_Jb2RgeSfIV-67PAL4pWAK8V0g>
+    <xmx:ZCToZojlnSCbLJYwacmYztckNJBLgLXrMQdJAtIJnyZXgCXCL_-Y8g>
+    <xmx:ZCToZm58cLu-ibLWisqSCNHRXIwBAxbuIBeLjVWgaM0rizln-Y1Z9g>
+    <xmx:ZCToZkHtirtep07mxW3TxAKXjInO2gu5-RWZVfbLcdrwXt1dWILKUV0h>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Sep 2024 08:28:18 -0400 (EDT)
+ 16 Sep 2024 08:28:19 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b45f1cf4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Sep 2024 12:27:59 +0000 (UTC)
-Date: Mon, 16 Sep 2024 14:28:15 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6f756a41 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Sep 2024 12:28:01 +0000 (UTC)
+Date: Mon, 16 Sep 2024 14:28:18 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>
-Subject: [PATCH 00/22] reftable: handle allocation errors
-Message-ID: <cover.1726489647.git.ps@pks.im>
+Subject: [PATCH 01/22] reftable/error: introduce out-of-memory error code
+Message-ID: <8c99ecc3255b1b10cdec047da01804dc23a7d287.1726489647.git.ps@pks.im>
+References: <cover.1726489647.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,116 +84,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1726489647.git.ps@pks.im>
 
-Hi,
+The reftable library does not use the same memory allocation functions
+as the rest of the Git codebase. Instead, as the reftable library is
+supposed to be usable as a standalone library without Git, it provides a
+set of pluggable memory allocators.
 
-the reftable library provides pluggable allocators that can be switched
-out via `reftable_set_alloc()`. These pluggable allocators are not
-expected to behave like `xmalloc()` and friends -- in other words, they
-are allowed to fail. This is done such that the reftable library can
-truly behave like a library and let its callers handle such conditions.
+Compared to `xmalloc()` and friends these allocators are _not_ expected
+to die when an allocation fails. This design choice is concious, as a
+library should leave it to its caller to handle any kind of error. While
+it is very likely that the caller cannot really do much in the case of
+an out-of-memory situation anyway, we are not the ones to make that
+decision.
 
-It has been true since the inception of the reftable library that
-allocations may fail. But regardless of that we do not have any error
-handling for this scenario at all. Consequently, we can easily cause a
-segfault when running into an out-of-memory situation.
+Curiously though, we never handle allocation errors even though memory
+allocation functions are allowed to fail. And as we do not plug in Git's
+memory allocator via `reftable_set_alloc()` either the consequence is
+that we'd instead segfault as soon as we run out of memory.
 
-While the easy solution would be to plug in `xmalloc()` and friends such
-that we abort on these cases, that would contradict the very notion of
-what this library should be. Most importantly, I want to soonish revive
-the effort to implement a reftable backend in libgit2, and thus I have
-to make sure that the reftable library (of which we are the canonical
-upstream now) can be used in such contexts.
+While the easy fix would be to wire up `xmalloc()` and friends, it
+would only fix the usage of the reftable library in Git itself. Other
+users like libgit2, which is about to revive its efforts to land a
+backend for reftables, wouldn't be able to benefit from this solution.
 
-This patch series here is the first one in a set of series that will
-detangle the reftable library from the rest of the Git codebase again so
-that it becomes a true standalone library that other projects can use.
+Instead, we are about to do it the hard way: adapt all allocation sites
+to perform error checking. Introduce a new error code for out-of-memory
+errors that we will wire up in subsequent steps.
 
-The series is based on top of ed155187b4 (Sync with Git 2.46.1,
-2024-09-13) with the following two depedencies merged into it to avoid
-conflicts:
+This commit also serves as the motivator for all the remaining steps in
+this series such that we do not have to repeat the same arguments in
+every single subsequent commit.
 
-  - cp/unit-test-reftable-stack at 2b14ced370 (t-reftable-stack: add
-    test for stack iterators, 2024-09-08).
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ reftable/error.c          | 2 ++
+ reftable/reftable-error.h | 3 +++
+ 2 files changed, 5 insertions(+)
 
-  - ps/reftable-exclude at adf7a0ceef (refs/reftable: wire up support
-    for exclude patterns, 2024-09-09).
-
-Thanks!
-
-Patrick
-
-Patrick Steinhardt (22):
-  reftable/error: introduce out-of-memory error code
-  reftable/basics: merge "publicbasics" into "basics"
-  reftable: introduce `reftable_strdup()`
-  reftable/basics: handle allocation failures in `reftable_calloc()`
-  reftable/basics: handle allocation failures in `parse_names()`
-  reftable/record: handle allocation failures on copy
-  reftable/record: handle allocation failures when decoding records
-  reftable/writer: handle allocation failures in `writer_index_hash()`
-  reftable/writer: handle allocation failures in `reftable_new_writer()`
-  reftable/merged: handle allocation failures in
-    `merged_table_init_iter()`
-  reftable/reader: handle allocation failures for unindexed reader
-  reftable/reader: handle allocation failures in `reader_init_iter()`
-  reftable/stack: handle allocation failures on reload
-  reftable/stack: handle allocation failures in `reftable_new_stack()`
-  reftable/stack: handle allocation failures in `stack_compact_range()`
-  reftable/stack: handle allocation failures in auto compaction
-  reftable/iter: handle allocation failures when creating indexed table
-    iter
-  reftable/blocksource: handle allocation failures
-  reftable/block: handle allocation failures
-  reftable/pq: handle allocation failures when adding entries
-  reftable/tree: handle allocation failures
-  reftable: handle trivial allocation failures
-
- Makefile                            |   1 -
- refs/reftable-backend.c             |  39 ++++--
- reftable/basics.c                   |  87 +++++++++++++-
- reftable/basics.h                   |  13 +-
- reftable/block.c                    |  23 +++-
- reftable/block.h                    |   4 +-
- reftable/blocksource.c              |  25 +++-
- reftable/error.c                    |   2 +
- reftable/iter.c                     |  22 +++-
- reftable/iter.h                     |   2 +-
- reftable/merged.c                   |  84 ++++++++-----
- reftable/merged.h                   |   6 +-
- reftable/pq.c                       |   7 +-
- reftable/pq.h                       |   2 +-
- reftable/publicbasics.c             |  66 -----------
- reftable/reader.c                   |  68 ++++++++---
- reftable/reader.h                   |   6 +-
- reftable/record.c                   | 164 +++++++++++++++++++-------
- reftable/record.h                   |   6 +-
- reftable/reftable-basics.h          |  18 +++
- reftable/reftable-error.h           |   3 +
- reftable/reftable-malloc.h          |  18 ---
- reftable/reftable-merged.h          |   8 +-
- reftable/reftable-reader.h          |   8 +-
- reftable/reftable-stack.h           |   8 +-
- reftable/reftable-writer.h          |  12 +-
- reftable/stack.c                    | 177 ++++++++++++++++++++++------
- reftable/tree.c                     |  42 +++++--
- reftable/tree.h                     |  21 +++-
- reftable/writer.c                   | 150 +++++++++++++++--------
- t/helper/test-reftable.c            |  10 +-
- t/unit-tests/lib-reftable.c         |   8 +-
- t/unit-tests/t-reftable-basics.c    |  11 +-
- t/unit-tests/t-reftable-block.c     |  24 ++--
- t/unit-tests/t-reftable-merged.c    |  16 ++-
- t/unit-tests/t-reftable-readwrite.c |  61 ++++++----
- t/unit-tests/t-reftable-stack.c     |   4 +-
- t/unit-tests/t-reftable-tree.c      |  10 +-
- 38 files changed, 848 insertions(+), 388 deletions(-)
- delete mode 100644 reftable/publicbasics.c
- create mode 100644 reftable/reftable-basics.h
- delete mode 100644 reftable/reftable-malloc.h
-
-
-base-commit: 1755182f5a2e12ff27c230f34f0040a8afee58e4
+diff --git a/reftable/error.c b/reftable/error.c
+index a25f28a43eb..660d0296170 100644
+--- a/reftable/error.c
++++ b/reftable/error.c
+@@ -35,6 +35,8 @@ const char *reftable_error_str(int err)
+ 		return "entry too large";
+ 	case REFTABLE_OUTDATED_ERROR:
+ 		return "data concurrently modified";
++	case REFTABLE_OUT_OF_MEMORY_ERROR:
++		return "out of memory";
+ 	case -1:
+ 		return "general error";
+ 	default:
+diff --git a/reftable/reftable-error.h b/reftable/reftable-error.h
+index 6368cd9ed9d..f4048265629 100644
+--- a/reftable/reftable-error.h
++++ b/reftable/reftable-error.h
+@@ -57,6 +57,9 @@ enum reftable_error {
+ 
+ 	/* Trying to write out-of-date data. */
+ 	REFTABLE_OUTDATED_ERROR = -12,
++
++	/* An allocation has failed due to an out-of-memory situation. */
++	REFTABLE_OUT_OF_MEMORY_ERROR = -13,
+ };
+ 
+ /* convert the numeric error code to a string. The string should not be
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
