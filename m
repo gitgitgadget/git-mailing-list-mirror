@@ -1,63 +1,89 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D849213A863
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 09:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCD434CC4
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 10:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726480357; cv=none; b=MvWl/8W4nvJIQX+IQNOU0NR0LlZ8I+GzDBmC2dtOhV/EhaiCRSPYzuEugJJsjFFxLHF3KpeOuC0IAUjUhlJ9LTaLOI+THmZ0WAeGvKDjy08FHiWa2GxqpTpL/NN+tJx+RcO07sTxyL0HNP84RSifDDGbzUHsXT6VK414mYOHt3o=
+	t=1726483549; cv=none; b=f9TCaq1s391/+jVw/zzLihqBPFlJb/PU/hiL75sWb3D4n48O3tjis2q16ifKfHFsVv5s5H3TFa1iLshpZ52kvdp3/jEb1EKgfiSI3hh/xSl6pKZDraHTATRYu3YKFwn38oE+9WjQzLX/z4ME+/PvCei5ztrBD2ZEzMN6pRD3w2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726480357; c=relaxed/simple;
-	bh=LVDkvvaLTpsY+1PhLnwolHl1Jgeebpk+xhH9WKFsEMo=;
+	s=arc-20240116; t=1726483549; c=relaxed/simple;
+	bh=rGgMjarPqutr1VnlLgGp6DNrWEwsgM8kOoME81SA5uw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cFVQ8w7PxCQfwQQIMnE50/2VwrgzubYuOusqJxcpSloZfB8NTXY3tE+rRJ2r8MeMJXsF65rTO6Utw1K1ZFy2nEoaOy/yINzAfwtkgem2lcQ1wma1VFI9IT4B4PGzvPkk9Qz5GxIi8PSUOzrebLJQK2SwqxGEhw2exCOaKnVCTTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fEUqBfXw; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=JdA91+L0BIHDjKwZMGIPQPZ9HOiu7n46auQFyJLV7ZwMg5xEgGry7LTQPnxhduRtt4fIPthNZArjjk19Jc34uV+R2XEG03A8Fsl6CD+7TkzXbWOcsjyX4JF7qocyAAaaMALf3ZQrKhpi7rjXMmqAELzn9wlRfCRiBUXlD9m+Uu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MZFU9Mko; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FJLiR1l0; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fEUqBfXw"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-374c4d4f219so2732799f8f.1
-        for <git@vger.kernel.org>; Mon, 16 Sep 2024 02:52:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726480354; x=1727085154; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YCbLxI6OGtnxuJHlW3zRi1Fx4wocASGhodTapFRf+Gs=;
-        b=fEUqBfXw3ZmNS553ejT59Y6LQ/F0VANv95nDaY1vEp8gvFHqHRpOqNE67aW1hWtL3q
-         IwXkebkYXTbVRP+JZKfhTXUE9svf5S+nuyCUnm3Ilnrp4Pbwxc6/plk3JXWhT/O15OpO
-         Vt21WvZUnjgomQliXAbwZ/w7+Q1wLMllDeI+JjZ3yF19efyKPKUYVHU6Mm6L3LEK11mT
-         RXw/1mXw6sGxpunTzdYx5qf/0TGvxVy90OW144Mt6cZq8oqWuw7JmlICD12bOhgPare0
-         Mo1nQUYd+VhrsmcTgsgU2VBj3BSyln1j0U8MgxqlpU0hiJs9NvuYHCj34bZ1reTlvmTK
-         ejAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726480354; x=1727085154;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YCbLxI6OGtnxuJHlW3zRi1Fx4wocASGhodTapFRf+Gs=;
-        b=ukFsa1skwQqrOg5mn5qxdE31QQ/zfu6XMolHycho+rRvpyOHnuEi6naPCACm3vHFiA
-         nEm64PXam43UgDhogvE/R74mo+5R/dge+Iv/4xhqm1jgCbe7dqbPFSuipZkf79LUy2Eh
-         DDhS+YVdrPMJLh+9K5Lh02q9Ey2rYbeM7Wd1UZ1ZUo3VJp4bYhHF3aLLgSFcaj7YGQ4z
-         19XrI1CICsgMPgnPLObBIvE34Cb0byFZXu+FkBGf7IHdLyIPpWGwKrMF/BgY1DA6yTRC
-         J+nd4nBxNVV6RFIg2wiSp82fTLzA6kbn1kmwVZWAgZ21RCzFZUdwtHTnV5RD2rbnakYe
-         XJew==
-X-Gm-Message-State: AOJu0YxMFUtMnVsZBu6dDVCHsnsDMdHaRWIu3zgMrFjntMpEZlJHf70E
-	8ld/pLI25iA1UOL5tqba/d+AuSGhObBypbs9DBXbkdBKxY09hH6V
-X-Google-Smtp-Source: AGHT+IHq63qRGInkXCYMW6xwB0y4rbqVQwOBmRsHKO9J+P6/5+eBktzMfVge61143HJHwaKiKFC7UQ==
-X-Received: by 2002:adf:f6c6:0:b0:374:baf1:41cb with SMTP id ffacd0b85a97d-378c2cfedebmr7899773f8f.4.1726480353336;
-        Mon, 16 Sep 2024 02:52:33 -0700 (PDT)
-Received: from void.void ([141.226.169.200])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378e73e8388sm6745660f8f.32.2024.09.16.02.52.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Sep 2024 02:52:33 -0700 (PDT)
-Date: Mon, 16 Sep 2024 12:52:30 +0300
-From: Andrew Kreimer <algonell@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] cbtree: fix a typo
-Message-ID: <Zuf_3mNRm3KuQxlV@void.void>
-References: <20240915230522.129253-1-algonell@gmail.com>
- <Zufef70mfdUwSwnY@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MZFU9Mko";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FJLiR1l0"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9324D13802B8;
+	Mon, 16 Sep 2024 06:45:46 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Mon, 16 Sep 2024 06:45:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1726483546; x=1726569946; bh=zB8pZCUd5y
+	TbhNqWgEZ2YFAUQWHIJsPekpiA/gB0LSg=; b=MZFU9MkoSPggZhNb5AAstEZ2ow
+	vyCm3SYxG03WUsLNWrsHsVoqshwFXTUzaLJmZYhGXZ1rL/M+1JAgLDnHIlW9+tCz
+	ZuVYsE2VEFNAyJMUqebuHd3OQqZT4W7yl2dMCqTkYl41FsFfyPIDzsq68mvRKWVV
+	+MCk2xSknHxpWjT42EB6USO+yIiRCP17Ux2EKaq+3SwKfIpW8waFlIydrhknF5rR
+	AJOalwPViyW3eqfnW+tCXC4pFZaPR2Xh8B80i2J0iAepXe8A4cUuFdvM39Y+KR7t
+	RCq/32aPZih/ilBavzd0tPMjrQdnNrFwx+oxsgGP8MuWrvGj+vyfHdr8YgjA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1726483546; x=1726569946; bh=zB8pZCUd5yTbhNqWgEZ2YFAUQWHI
+	JsPekpiA/gB0LSg=; b=FJLiR1l0uFXKkdKvArjx9qzfNbnjGIdG0LB3MvtRvKNf
+	lMMJ87/IXWza1iubqbG0tvHd65zwh3LGKJg2buVgweb/nPZAFlFO0gI9IfCGFjbX
+	5SP0q+YSGrd01fxafBYVJyxpZajHUugDgp4CGrr8QnbF1jgk3ZmF7svPSf0sau0E
+	GrLKwaFgqrIREqxngzcfHRwnqS0eJQvC1Zlx8gYii/DsUMHdWuIAS28UEWI2Wbw2
+	EMLTmNtuSx7gvK9kT3toLqXpo5fJUbBI4LiQSU9zgokaT9fe8CvMXZJyF4HXHKWU
+	SSJrEY09Ysj0vJGesc1juervC+XoCjcuy5xrVNOfDw==
+X-ME-Sender: <xms:WgzoZvEpIite-Q1SqaeaGITLaG3fZjgRBMMfhk_80zDEcAgiXk8GvQ>
+    <xme:WgzoZsV9XP-xEvk1ei4pfhKG085DnJ4hejwIM9UNQqfKUrkK4_Od7yQoAM8XfvsZh
+    itV_lpu-yvYvjNBlA>
+X-ME-Received: <xmr:WgzoZhLjXJIkl5kBIv8JXr764we8KSY8iUzxC3w-TKb3hseH12ONFFUctY2POWvKqc7SjUPgl01f_R9Rv49KCM04bdP3Bn8MUr2_uIFwonK3mmQY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedgfeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
+    hpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghl
+    shestghruhhsthihthhoohhthhhprghsthgvrdhnvght
+X-ME-Proxy: <xmx:WgzoZtFGCvvYfBuFXya8hXzrkfl9ce8qIoy1FIzz_vHUE5YK2UsRig>
+    <xmx:WgzoZlWx7-E5nqNKV2FEpRFCdl5491a747AL3eDFDAvG2e3Y5sDrDQ>
+    <xmx:WgzoZoN7oz0d9O8O8O4FhXbfeK9lvC0e7oB-MYvTc5MxuMoDArUO3A>
+    <xmx:WgzoZk3a9AjGruMA-cnT-MWV7NzdotSlDrkWJJkKwa9eYrtocvRTLw>
+    <xmx:WgzoZkEDJV-69CP0K2b_b1jQQ1QggtPysXPwUjOlN7y-kN5nx_8QUJLI>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Sep 2024 06:45:44 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id d995b39f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Sep 2024 10:45:24 +0000 (UTC)
+Date: Mon, 16 Sep 2024 12:45:38 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 3/9] finalize_object_file(): implement collision check
+Message-ID: <ZugMUv1xbnjYH-el@pks.im>
+References: <cover.1725206584.git.me@ttaylorr.com>
+ <cover.1725651952.git.me@ttaylorr.com>
+ <0feee5d1d4fc1e0aa1ca5d98f2f404ecdbb2f6b6.1725651952.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,46 +92,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zufef70mfdUwSwnY@pks.im>
+In-Reply-To: <0feee5d1d4fc1e0aa1ca5d98f2f404ecdbb2f6b6.1725651952.git.me@ttaylorr.com>
 
-On Mon, Sep 16, 2024 at 09:30:07AM +0200, Patrick Steinhardt wrote:
-> On Mon, Sep 16, 2024 at 02:05:22AM +0300, Andrew Kreimer wrote:
-> > Fix a typo in comments.
-> > 
-> > Signed-off-by: Andrew Kreimer <algonell@gmail.com>
-> 
-> Thanks for these fixes, all three of them look good to me. For future
-> such patch series I'd recommend to send a single series that combines
-> such related fixes. It makes it a bit easier to keep track of these
-> similar patches and review them in one go.
-> 
+On Fri, Sep 06, 2024 at 03:46:12PM -0400, Taylor Blau wrote:
+> diff --git a/object-file.c b/object-file.c
+> index 54a82a5f7a0..85f91516429 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1899,6 +1899,57 @@ static void write_object_file_prepare_literally(const struct git_hash_algo *algo
+>  	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
+>  }
+>  
+> +static int check_collision(const char *filename_a, const char *filename_b)
+> +{
+> +	char buf_a[4096], buf_b[4096];
+> +	int fd_a = -1, fd_b = -1;
+> +	int ret = 0;
+> +
+> +	fd_a = open(filename_a, O_RDONLY);
+> +	if (fd_a < 0) {
+> +		ret = error_errno(_("unable to open %s"), filename_a);
+> +		goto out;
+> +	}
+> +
+> +	fd_b = open(filename_b, O_RDONLY);
+> +	if (fd_b < 0) {
+> +		ret = error_errno(_("unable to open %s"), filename_b);
+> +		goto out;
+> +	}
+> +
+> +	while (1) {
+> +		ssize_t sz_a, sz_b;
+> +
+> +		sz_a = read_in_full(fd_a, buf_a, sizeof(buf_a));
+> +		if (sz_a < 0) {
+> +			ret = error_errno(_("unable to read %s"), filename_a);
+> +			goto out;
+> +		}
+> +
+> +		sz_b = read_in_full(fd_b, buf_b, sizeof(buf_b));
+> +		if (sz_b < 0) {
+> +			ret = error_errno(_("unable to read %s"), filename_b);
+> +			goto out;
+> +		}
+> +
+> +		if (sz_a != sz_b || memcmp(buf_a, buf_b, sz_a)) {
+> +			ret = error(_("files '%s' and '%s' differ in contents"),
+> +				    filename_a, filename_b);
+> +			goto out;
+> +		}
+> +
+> +		if (sz_a < sizeof(buf_a))
+> +			break;
+> +	}
+> +
+> +out:
+> +	if (fd_a > -1)
+> +		close(fd_a);
+> +	if (fd_b > -1)
+> +		close(fd_b);
+> +	return ret;
+> +}
+> +
+>  /*
+>   * Move the just written object into its final resting place.
+>   */
 
-Understood.
+This function compares the exact contents, but isn't that wrong? The
+contents may differ even though the object is the same because the
+object hash is derived from the uncompressed data, whereas we store
+compressed data on disk.
 
-> > ---
-> >  cbtree.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/cbtree.c b/cbtree.c
-> > index c1cc30a5dc..cf8cf75b89 100644
-> > --- a/cbtree.c
-> > +++ b/cbtree.c
-> > @@ -12,7 +12,7 @@ static struct cb_node *cb_node_of(const void *p)
-> >  	return (struct cb_node *)((uintptr_t)p - 1);
-> >  }
-> >  
-> > -/* locate the best match, does not do a final comparision */
-> > +/* locate the best match, does not do a final comparison */
-> >  static struct cb_node *cb_internal_best_match(struct cb_node *p,
-> >  					const uint8_t *k, size_t klen)
-> >  {
-> 
-> We might convert this to be a proper sentence while at it, namely
-> s/locate/Locate/ and s/comparison/&./. But no need to reroll this patch
-> for that, as your change is a strict improvement by itself already.
-> 
-> Thanks!
-> 
-> Patrick
+So this might trigger when you have different zlib versions, but also if
+you configure core.compression differently.
 
-Thank you!
+Patrick
