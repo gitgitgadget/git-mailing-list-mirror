@@ -1,79 +1,80 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072ED157469
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 11:46:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF848157476
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 11:46:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726487163; cv=none; b=broYpvY+vaR7c9AgVn6qg2UuOd/8PFfEPaGeJuLctpQgGwfNNt0v5nnjmpCxPTazVwmmu96YnppnlPsQV4OGWCH+0noxs4H9q/cCN+D0RL590Y46xmJrdSYAD6uZDT0GhJbbJF+4o+dG0IAU99Bu47YhCAWiS4lD3EUEmnu+atU=
+	t=1726487166; cv=none; b=DV+U003/YKWgDpHSodcajGTpYYiJlHoqnKaFm9tpQtyzs96WXcqF/3DCEnC8hi/DZbW9ESF4O7O3yyJyKqsAObCwgTzkz+Fkz2ZJcRKrLWmzPfX1id052yJzDMOXRjNm2UAx+FChBeLAJjOz8GhqkDAj7j42WeCb1W0RXMxbDNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726487163; c=relaxed/simple;
-	bh=nfgtXQhLoByL0Kya3WgGCHW1r8a3zL8Ja8SZ+nXoLN0=;
+	s=arc-20240116; t=1726487166; c=relaxed/simple;
+	bh=qBEPRQvlxemZhQvyWNjTgnneRAZSg3GbNnrKOGmRMro=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WEZEDrEbnYdJqkfkUurCA6l3U0PFt07twcRGGZ0gk0Wqs0Fi5QLlQ6FR+0mOuk0t1Sdn1EcYi2oLpvec0rWdGyikNRH1LJ4Zo/AlH8bqKLnWpfFe5RJyTmUGES89AAMMYDGnblWtkBU1JsGYA9Gs0kA8PNFEUrhMAb2TmUS7U8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BgiTqZSj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ai2INHjI; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=swVWUA1IoMRiWRCvbVZDwYaZcQqUx4trOmEUCRyLO/zAEFKozwkttjk2riwlrCjaFs0Os+o/B0TPHe07nqIAv0VSbXKBkT3lg+yEKDV5RALGx68sRarAYjZQ2Z/3GH9fx5Js0EuXKql+s03kGJZ96bHu8f+kZ2AL0CHYOCGHLo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kM+CmYAN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jhI/Ri7i; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BgiTqZSj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ai2INHjI"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 12ADE114023E
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 07:46:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kM+CmYAN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jhI/Ri7i"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id E28FD13802D9
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 07:46:03 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 16 Sep 2024 07:46:01 -0400
+  by phl-compute-12.internal (MEProxy); Mon, 16 Sep 2024 07:46:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726487161; x=1726573561; bh=zp2kMQQ97T
-	frUpfJ5oYHVkDFmvwcTdJD/YWn185ZEpg=; b=BgiTqZSjQ4//wD+gXZNgaYrXXQ
-	F218eVtIzvSYX7GVL+RLCMStHl/Sut6SaZwStQSQiiKbyf2xF4ko+kwvpq+mNj25
-	NIdgjZfIRLECDLk4ulTHU2AbVjxBYh+nMYhw9bRmSgV5WLHF3l4xi4N8lx6LLv/0
-	cxm/XSdc5KRLrRTKi5xqnC55fHk0VY2yA/NxcysR8AufEidMqhBNSDtSfUZZBrR2
-	5OBPbhBIp/mqTxbNw3Yu3uKdKyCd3ANA4fJp747hIlQX1iBcPfEl97jxtAtHZl83
-	w/RJ9dvdOBLCJMPcXBWbw0UgGlzl9VvBlU/miARSu70zQ6Xnp+D42tjGEZZw==
+	:subject:to:to; s=fm1; t=1726487163; x=1726573563; bh=iZCyIkM3+c
+	DWiX1gyqpos3rXPi080AUguuyvKb/GWQA=; b=kM+CmYANaFoMiC/twG/9cCS0Nr
+	naUTethv8TN6z1bErHXMYR5Bin6sosfD3P1+ny6piKOSNoDubiERAr8k9mwVRY+j
+	wXKBrwKZMs5brgJut53DnUgvjUUBbhouXAydJXCJT2cxbxSVY36vXmrswQkodkZu
+	kFChZIs9J/iuaJXo0mCOYeHDHutouoi0qnCmz0nRciESTtPra4p8Y51OqEZh5UDg
+	Fd0LKuD+rLKfrRCeyPHGXlDQ+JL1F+NjkaFzvD79gQJPk5SHuHzt1KtAm6Q0WsT1
+	hSVDkwltDxccbSZiVHxgIebLxoomrVeDGatvvckEOivimveMlL45/nYDbHaQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726487161; x=1726573561; bh=zp2kMQQ97TfrUpfJ5oYHVkDFmvwc
-	TdJD/YWn185ZEpg=; b=Ai2INHjIl7We6N9w0j5V92euGl6tixwtR5xrswWoLRpc
-	vwyAUiQnvZ2TeB9MWP16sVASjoCZLpeP1AtZtEw8rwflffrVTfUnYZc2eIN+bOFH
-	cb2DEH74wOXcaJPXxNkeBrNisUKHbLVbNYa5VHHIM1yrfsqGzo5SYcTyEBl05r40
-	2PElT5qgznBxAemOnp5PN3OfDd7+WZBbhOs75Edx/swpZCskuoFa4ZJfuXXc8WMK
-	noHfhZuPmpn8sa8AF08WoQIXn8vK/RcCWqFl5By3aFRqf2SgTo2XuJxiYPC81Wcv
-	2DcrFaqiQOMs/73xFweBemy8F7pxB6H7SJ3c3vI8YA==
-X-ME-Sender: <xms:eBroZog9M5bEryUSY-ZboTHHcpmeVuKE8zacHPTgklfZLw9T0kmxFA>
-    <xme:eBroZhB_b-5yZhk506M6xUHXJSYbQ4DTXc1msZnxEEvZwe97JymoxLGYDrd-P5JjB
-    s53gBS073dwhddrPw>
-X-ME-Received: <xmr:eBroZgHSwatb0YheVf0COFlctIZlzhY_eBSFFXGjmDRK9YebZFPireKdzjEJV-jIV53_nDX9_x78mHsC6AXIAC2AW1TR9zI1S__NZUJ_I2UmUvxU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedggedvucetufdoteggodetrfdotf
+	fm1; t=1726487163; x=1726573563; bh=iZCyIkM3+cDWiX1gyqpos3rXPi08
+	0AUguuyvKb/GWQA=; b=jhI/Ri7iB2fxIkaZfYs246m6YHFfxRG45ASJAEd/ppqE
+	+ZaZkW+zL/O+3HXwJK9dTDfF/Y/SdaC6545cD0+CWXUAZVE9CjdTsMGHDv5iQUkf
+	TryNV0eXbhfRYDf+xfEV/Z3jjtHjhRpJzHi8+EwSfItgmaQZ32awfSlyyloJ0unA
+	XZRHt6wnKsiMKjbkImFtptmzwX4jJb5MsjUAg31LORWwLRJgsGCC/Io75h41fv2o
+	9cZ6mCqlZXpYI1UTaG2UAZUejC6ZyNV8+wrb2Eik+9wgnaMeTBFFgiDMqLpLyTpK
+	X2LemWyQA9EgkgoW29iqXd77g17MqkawIwHhX16+WA==
+X-ME-Sender: <xms:exroZjzYDXAXwoH3TV09qEoHCqB8Y_TBlnKnaqLa-DEP-rwj7S8rww>
+    <xme:exroZrQVcc191eXtHvVmJMnxnHVzvNg9wpRe_d8kEu-KUXmSdSRL2OAxPm8TYDfgq
+    6exCAb9gtNF8TZgvw>
+X-ME-Received: <xmr:exroZtVN9iMDFAF-aYC_yzCHhOBWuky_yR5GPLYUtYh_P_FJE116Gj24d99Xf13Ca-0ToTXAPRfQUEvjXZ3ctA4h1b1McX9bcmK1OFHRA3Vl0Jmr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedggeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:eBroZpS8AgAPPdAvusMr2uCmM_lvC6XYy99r8Tp2NlS3wQ8e8qW6XQ>
-    <xmx:eBroZlwHS-NJhhX4oYXNJpwCMT_RW-UXpcixkWaqh2els2yYwi7Efg>
-    <xmx:eBroZn5mRUG5rWH0r61q70JqvTJqvfyasrkQFsmDC0sFnubh7N3Zdg>
-    <xmx:eBroZixpZ1eIvCwTe8sz4LlX6t_VateQjlw0wYKJxX11ChutZMFwRg>
-    <xmx:eRroZmpGNfzeXNQX4pcfR7q96LZJcl044tybQCrOrEnUrt6xOS49crgY>
+X-ME-Proxy: <xmx:exroZtjtC1W6ssFXI5RkqneH-kBO1v_LjoJEW-SomTLeTFcSdPOWOQ>
+    <xmx:exroZlAZKL2ZUXR3ccTgqlTdMqqS4LFIoIt7xodnJYaY-aJyvmKFTA>
+    <xmx:exroZmJDd8dqybh3DEXgjxR5fo4Fy9zH3kvqsu6p5-QqiE7r_DXHQg>
+    <xmx:exroZkBOR6GrwgIvdPp1ZIyDBIRzm3XT4ZlD-LUuvgxmKSiVQ1CtQw>
+    <xmx:exroZi7c0QLMPwW6Dr1BKeLkRl3nCZgcKEsCrZwfshdDmHrZ-IIflV1l>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 16 Sep 2024 07:46:00 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 16 Sep 2024 07:46:03 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8b3dee57 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4697787f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 16 Sep 2024 11:45:43 +0000 (UTC)
-Date: Mon, 16 Sep 2024 13:45:59 +0200
+	Mon, 16 Sep 2024 11:45:45 +0000 (UTC)
+Date: Mon, 16 Sep 2024 13:46:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 12/23] parse-options: free previous value of `OPTION_FILENAME`
-Message-ID: <330b6c52a0a99ba8fa18378310250e5b617d40c2.1726484308.git.ps@pks.im>
+Subject: [PATCH 13/23] diffcore-order: fix leaking buffer when parsing
+ orderfiles
+Message-ID: <c975dfe462e321252bd4c83f4ed18bc7757204b7.1726484308.git.ps@pks.im>
 References: <cover.1726484308.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,78 +86,105 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726484308.git.ps@pks.im>
 
-The `OPTION_FILENAME` option always assigns either an allocated string
-or `NULL` to the value. In case it is passed multiple times it does not
-know to free the previous value though, which causes a memory leak.
+In `prepare_order()` we parse an orderfile and assign it to a global
+array. In order to save on some allocations, we replace newlines with
+NUL characters and then assign pointers into the allocated buffer to
+that array. This can cause the buffer to be completely unreferenced
+though in some cases, e.g. because the order file is empty or because we
+had to use `xmemdupz()` to copy the lines instead of NUL-terminating
+them.
 
-Refactor the function to always free the previous value. None of the
-sites where this option is used pass a string constant, so this change
-is safe.
-
-While at it, fix the argument of `fix_filename()` to be a string
-constant. The only reason why it's not is because we use it as an
-in-out-parameter, where the input is a constant and the output is not.
-This is weird and unnecessary, as we can just return the result instead
-of using the parameter for this.
-
-This leak is being hit in t7621, but plugging it alone does not make the
-test suite pass.
+Refactor the code to always `xmemdupz()` the strings. This is a bit
+simpler, and it is rather unlikely that saving a handful of allocations
+really matters. This allows us to release the string buffer and thus
+plug the memory leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- parse-options.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ diffcore-order.c      | 19 +++++++------------
+ t/t4056-diff-order.sh |  1 +
+ t/t4204-patch-id.sh   |  1 +
+ 3 files changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index 30b9e68f8ac..33bfba0ed4a 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -60,12 +60,12 @@ static enum parse_opt_result get_arg(struct parse_opt_ctx_t *p,
- 	return 0;
- }
- 
--static void fix_filename(const char *prefix, char **file)
-+static char *fix_filename(const char *prefix, const char *file)
+diff --git a/diffcore-order.c b/diffcore-order.c
+index e7d20ebd2d1..912513d3e67 100644
+--- a/diffcore-order.c
++++ b/diffcore-order.c
+@@ -14,8 +14,7 @@ static void prepare_order(const char *orderfile)
  {
- 	if (!file || !*file)
--		; /* leave as NULL */
-+		return NULL;
- 	else
--		*file = prefix_filename_except_for_dash(prefix, *file);
-+		return prefix_filename_except_for_dash(prefix, file);
+ 	int cnt, pass;
+ 	struct strbuf sb = STRBUF_INIT;
+-	void *map;
+-	char *cp, *endp;
++	const char *cp, *endp;
+ 	ssize_t sz;
+ 
+ 	if (order)
+@@ -24,14 +23,13 @@ static void prepare_order(const char *orderfile)
+ 	sz = strbuf_read_file(&sb, orderfile, 0);
+ 	if (sz < 0)
+ 		die_errno(_("failed to read orderfile '%s'"), orderfile);
+-	map = strbuf_detach(&sb, NULL);
+-	endp = (char *) map + sz;
++	endp = sb.buf + sz;
+ 
+ 	for (pass = 0; pass < 2; pass++) {
+ 		cnt = 0;
+-		cp = map;
++		cp = sb.buf;
+ 		while (cp < endp) {
+-			char *ep;
++			const char *ep;
+ 			for (ep = cp; ep < endp && *ep != '\n'; ep++)
+ 				;
+ 			/* cp to ep has one line */
+@@ -40,12 +38,7 @@ static void prepare_order(const char *orderfile)
+ 			else if (pass == 0)
+ 				cnt++;
+ 			else {
+-				if (*ep == '\n') {
+-					*ep = 0;
+-					order[cnt] = cp;
+-				} else {
+-					order[cnt] = xmemdupz(cp, ep - cp);
+-				}
++				order[cnt] = xmemdupz(cp, ep - cp);
+ 				cnt++;
+ 			}
+ 			if (ep < endp)
+@@ -57,6 +50,8 @@ static void prepare_order(const char *orderfile)
+ 			ALLOC_ARRAY(order, cnt);
+ 		}
+ 	}
++
++	strbuf_release(&sb);
  }
  
- static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
-@@ -129,18 +129,24 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
- 		return 0;
+ static int match_order(const char *path)
+diff --git a/t/t4056-diff-order.sh b/t/t4056-diff-order.sh
+index aec1d9d1b42..32c5fcb9a27 100755
+--- a/t/t4056-diff-order.sh
++++ b/t/t4056-diff-order.sh
+@@ -5,6 +5,7 @@ test_description='diff order & rotate'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- 	case OPTION_FILENAME:
-+	{
-+		const char *value;
-+
-+		FREE_AND_NULL(*(char **)opt->value);
-+
- 		err = 0;
-+
- 		if (unset)
--			*(const char **)opt->value = NULL;
-+			value = NULL;
- 		else if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
--			*(const char **)opt->value = (const char *)opt->defval;
-+			value = (const char *) opt->defval;
- 		else
--			err = get_arg(p, opt, flags, (const char **)opt->value);
-+			err = get_arg(p, opt, flags, &value);
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
  
- 		if (!err)
--			fix_filename(p->prefix, (char **)opt->value);
-+			*(char **)opt->value = fix_filename(p->prefix, value);
- 		return err;
--
-+	}
- 	case OPTION_CALLBACK:
- 	{
- 		const char *p_arg = NULL;
+ create_files () {
+diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
+index dc8ddb10aff..c0a4a02dcfa 100755
+--- a/t/t4204-patch-id.sh
++++ b/t/t4204-patch-id.sh
+@@ -5,6 +5,7 @@ test_description='git patch-id'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
