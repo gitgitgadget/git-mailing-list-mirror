@@ -1,80 +1,81 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFE9157466
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 12:28:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9411553B7
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 12:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726489738; cv=none; b=ImFnzSBJPE4bo0IKWvGamrM79eUQt9D1QJumOVPseo05WnczgNYcIlxovQi22XiXePhgwSsTVFhv3WKirVsOMeF3w8rGBdbf2pzy2QEa/svbjsJNo/TwUnNvdPpt34WN+upQDYxIOQ64DYABH+Kj5DEGI1y5hblO6Jft+upS8sk=
+	t=1726489742; cv=none; b=jmurH+VNz7uQ5H37CSsOeL0QTduO3mdf5v0XO0qBFrnoXX5b8cqtLFY27CEKBDiyNlq4UyW/kXIp+PH0KxrKR2oY1qwPynDJ8bpQqF6lkqW3xnmtbCWN9C2WhHLhwMuOzaqKtMpuyz7lH2rQ7HeKQfCE1G6yLB4XONgNdmlviT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726489738; c=relaxed/simple;
-	bh=OY9C61FkcHlQQXu4trXRzGI+RySs2Y/YDle9yxxW0YU=;
+	s=arc-20240116; t=1726489742; c=relaxed/simple;
+	bh=2+Bq3FBnqX171CNqTpECpWVS1f+rbB8lKjzw4ZEBpd0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LXyB4A7WXI2ouFfOvmSkYsJV5nS4wTOn//widG6fP7YlsVmBuPaXmy9JAD7ACdUzqvSE08zBN8A7XL1s4KUWcEFFBsj3BL3RPnVelFfN+yJ/kA+qofCGASJF6FNLFvo8Q7v8m+uMgKP8jwVZ3WOXffSKxUtkLfz6cSM2uRp8IdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e0nR6dqm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ohtFHo9R; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=rHbz7BRe7FgVsCeX7SmgJqKql01mFxgVSyPCXiJxhG/AEUqXxNYhLGxgsAqhNcQCJ8wgZuVzA4Ur328qTarhGnw+yrsOkjI8Q7l6krhnn6LGkPOzii/b9jNBP5hIqOaizkecsj7aNRIVV4Ia4WiNPNNhQlM4P3g/KlVWpZxX8wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jFZT9L96; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r5dBcIZ2; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e0nR6dqm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ohtFHo9R"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D90A411401A9;
-	Mon, 16 Sep 2024 08:28:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jFZT9L96";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r5dBcIZ2"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id DE8ED13801DC;
+	Mon, 16 Sep 2024 08:28:59 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 16 Sep 2024 08:28:56 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 16 Sep 2024 08:28:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726489736; x=1726576136; bh=TesJB1AjF+
-	+s+deMbqGkdD1eXm5H0XTm8LbGM/c05+Y=; b=e0nR6dqmRoUapjMHitBG1bRwAf
-	rZrFp+7pmE73BqJghWkldxuEHWSAXvSGFpAhD4cTGRh+935Cmar45pQLgWunYulO
-	hdaZ8Ao7GhMXSek0n2ey1EWD+quefKnLsrfpqN6sbnr429aqAeIcPswlQuC5LNLB
-	a5nKM9W3TMikFkZT9kLL3cZ8aFgvof0yFBMsdmuFUFP4MmyPO1r8fn5ykIL+AMKT
-	kF5IWiwCJVM6bhXEOg7CXz2LH0VtOjo+CTAqvYTcGkSOlCg3lVO8VHVyrFNrvSp6
-	c/ziW+/mk0u73kmjq0e0Bwbt3vBR/RtDcd4V0gy5dN/4TDTfoVX1HueYIgjQ==
+	:subject:to:to; s=fm1; t=1726489739; x=1726576139; bh=LogQC2+zgq
+	2QN3Z1XvrDXhPS4tNisnkunFZv9gfh958=; b=jFZT9L96O82UUy/ymNZGYtt5+Y
+	QZ7cudJ6fupymZBiL/uGFFPVF7POEl8Zh3kV5FkDhLdRNXs/xa1a1l2OlHHZqCNn
+	lCs9cKpC6JsF7s7tnG2OltLtCkLMyfE6Og8nMQMHQCjKHR+klxrc+Oli8WZzvSQb
+	nq/S4jdc31K2UJlJLur6TT8iDFf3tjVDv2cO/8fQmxHK8zKGCH85Uhh9/Jv7A2J9
+	QfiqTiWNlK6VIAMZm56jN79SzvjPiUz2WXQVtLsDfBhx0HWUg5q41dUiNKYzZIGH
+	03rCDxWz2Z/qy11YfXEXXCfYI4NcZ/yrWIj3ZnIppxoBCRZQX4oFepzj85zA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726489736; x=1726576136; bh=TesJB1AjF++s+deMbqGkdD1eXm5H
-	0XTm8LbGM/c05+Y=; b=ohtFHo9RF88H+bv/atqD3bhFltzMYAdXQj6RQv78pbyB
-	5naX2zGAeT54RrO/rNtX9xwQMuiGNjIvPikohtTxa+PV+ppounfuslVvEIRf9YQd
-	JXVQQN9G0Xt5nh8pSeGXFS8TMwMTOFIDiETk93aLmC7Qmsp9opKY512GOBosBzCD
-	JeuaPtCtZIX91A+vZosPkZO+tCOXfMR6qFyDggj2w9bI4z/tUctC2Y5N0gUnQtbW
-	TgK6GlOkliKcFbcB3Sr1T12oRRZvAFmyAC0J9AkHDT9Ws5TrioEIKU6CWDwlmiia
-	bliDmM3VZBE1TyuDGuZUf97PeuSPyiMCKwX8+KakKg==
-X-ME-Sender: <xms:iCToZmU9XwZdHemQgIOsUTxhz_mD_2xwfrQvHvxcsJOQ50cYi03AlA>
-    <xme:iCToZin-x75IWO4AZQ8PMzrXfYntSlE2PYQtM6nyiWr8X39er5sp74QNj3X9S80So
-    USm538CzmOLx7KC3w>
-X-ME-Received: <xmr:iCToZqZlrLyLTQKueUfuPQrIWGJTiBJp_jjuyn_6hRcDuWx1C4gR6Uge_wS0G2HDLtceVYoymfP6VOOFP2AYOQ4nPtfFeh5HqS0m8iYVwc93iDgA>
+	fm1; t=1726489739; x=1726576139; bh=LogQC2+zgq2QN3Z1XvrDXhPS4tNi
+	snkunFZv9gfh958=; b=r5dBcIZ2SWJ+OmipCMchVkzWOlqIW4kmd9WHXlxEH6Wy
+	iqY29P4/aOyoavUBmHWlb8ZgFMOiQJ41JAy9FgUKz8JvbsDN8hkbfB3hI7sxvJHO
+	St0LM64uREE/XpwVni6dd4rY6Qaw9HRrkKt7xIm+dQ3D1GNS1aQk60PIR1n/sEBM
+	4O+jgTqybcYoHpj3d+dgPIia0Ehkoij+FZqSH3T4KDximHVTuMttjJD8D2EidyUd
+	y5PZY2Y90gywm2VXb+T0hRdmcA6wBN2RsESkr6xWnmjk5pnUFH+gzLTeGT+BzSNu
+	N2IawNA0dFC6kIWV2ZPs8MzSzhwi65DxzJ/vhjQP9w==
+X-ME-Sender: <xms:iyToZk1MVFthrJRB3-S8aiMFxD1xre8Teas4FJoj5LVIJ8-nAvUnbw>
+    <xme:iyToZvHGYwRh-jqe0sKwqanbHdzxFX5aSnkKAOTDKqfPP1Pw5EkPCYoFXrcJjEgdY
+    X8X0CivmrDAgeNDPg>
+X-ME-Received: <xmr:iyToZs6SxN7gMEirgzTaNNMFo74dcNej18Lj96hwsjqRG2UxGbFdboEqDeX04zUIemgRxh9LTMrJNNKSmn_5kE_A5gcxBBG51QF4QEqeSv-Vaxv4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomh
-X-ME-Proxy: <xmx:iCToZtXXpSZ5uiqwG8YvRdM7r27T4ANGp9ZVaT8xIsrXfBEMeFpgyA>
-    <xmx:iCToZgkIJl-9P20cwIeagXG2fVA3sNGeltgg_b21sgGs8v-PQiYYQA>
-    <xmx:iCToZicenGUdzVfPyLzP485uo5dQo3fOxD__yvO0vAOAuZYEN0F3dw>
-    <xmx:iCToZiFyIZcl4rNoRabJP7CY3c4oTCOMZEe5B0B92IYIwiQ_SNiM0w>
-    <xmx:iCToZlyt_F_mCZAf8uKWVL-4YEl0gAvrV44Kek36TXef4rGm4MZVjRiH>
+    mhhtphhouhhtpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsoh
+    hnrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:iyToZt0BY7QP6x0MIyQdFCYvd-JC1oAt1hZK-dKt73JmVlXQ5Cn_Qg>
+    <xmx:iyToZnEd1FvoLwmwQNM86eifW4Lm9lu_o0RvWrOEfROd19BoVDg0UQ>
+    <xmx:iyToZm-r1k7xLH0G43Y__pL-un-HUvNfvGtypkX5tf7UCFFb6-DE7w>
+    <xmx:iyToZslJXi7F_9Q4i6LjI428FJ28mET84rjAkkX0GiUTIynTEAWzxQ>
+    <xmx:iyToZsQHwcHiWHu_bVmtFs8-D3UW2H_EXrvqJ5TLuRx9L-eKoOcS9TqK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Sep 2024 08:28:55 -0400 (EDT)
+ 16 Sep 2024 08:28:59 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 61d9c817 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Sep 2024 12:28:38 +0000 (UTC)
-Date: Mon, 16 Sep 2024 14:28:55 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1d3ef8b3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Sep 2024 12:28:41 +0000 (UTC)
+Date: Mon, 16 Sep 2024 14:28:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>
-Subject: [PATCH 13/22] reftable/stack: handle allocation failures on reload
-Message-ID: <6ef25b6c65513e837f9ef8faf1dfa8f4761ff546.1726489647.git.ps@pks.im>
+Subject: [PATCH 14/22] reftable/stack: handle allocation failures in
+ `reftable_new_stack()`
+Message-ID: <f5583cc2300eeebd14dfeb0b5106a6e80418c681.1726489647.git.ps@pks.im>
 References: <cover.1726489647.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,82 +87,77 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726489647.git.ps@pks.im>
 
-Handle allocation failures in `reftable_stack_reload_once()`.
+Handle allocation failures in `reftable_new_stack()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 34 +++++++++++++++++++++++++---------
- 1 file changed, 25 insertions(+), 9 deletions(-)
+ reftable/stack.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
 diff --git a/reftable/stack.c b/reftable/stack.c
-index bb4d2309189..060b2c1b90d 100644
+index 060b2c1b90d..1b77c9d0146 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -214,13 +214,13 @@ void reftable_stack_destroy(struct reftable_stack *st)
- }
- 
- static struct reftable_reader **stack_copy_readers(struct reftable_stack *st,
--						   int cur_len)
-+						   size_t cur_len)
+@@ -56,10 +56,16 @@ static int reftable_fd_flush(void *arg)
+ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
+ 		       const struct reftable_write_options *_opts)
  {
- 	struct reftable_reader **cur = reftable_calloc(cur_len, sizeof(*cur));
--	int i = 0;
--	for (i = 0; i < cur_len; i++) {
-+	if (!cur)
-+		return NULL;
-+	for (size_t i = 0; i < cur_len; i++)
- 		cur[i] = st->readers[i];
+-	struct reftable_stack *p = reftable_calloc(1, sizeof(*p));
+ 	struct strbuf list_file_name = STRBUF_INIT;
+-	struct reftable_write_options opts = {0};
+-	int err = 0;
++	struct reftable_write_options opts = { 0 };
++	struct reftable_stack *p;
++	int err;
++
++	p = reftable_calloc(1, sizeof(*p));
++	if (!p) {
++		err = REFTABLE_OUT_OF_MEMORY_ERROR;
++		goto out;
++	}
+ 
+ 	if (_opts)
+ 		opts = *_opts;
+@@ -74,15 +80,23 @@ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
+ 
+ 	p->list_file = strbuf_detach(&list_file_name, NULL);
+ 	p->list_fd = -1;
+-	p->reftable_dir = xstrdup(dir);
+ 	p->opts = opts;
++	p->reftable_dir = reftable_strdup(dir);
++	if (!p->reftable_dir) {
++		err = REFTABLE_OUT_OF_MEMORY_ERROR;
++		goto out;
++	}
+ 
+ 	err = reftable_stack_reload_maybe_reuse(p, 1);
+-	if (err < 0) {
++	if (err < 0)
++		goto out;
++
++	*dest = p;
++	err = 0;
++
++out:
++	if (err < 0)
+ 		reftable_stack_destroy(p);
+-	} else {
+-		*dest = p;
 -	}
- 	return cur;
+ 	return err;
  }
  
-@@ -229,18 +229,30 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
- 				      int reuse_open)
+@@ -171,6 +185,10 @@ void reftable_stack_destroy(struct reftable_stack *st)
  {
- 	size_t cur_len = !st->merged ? 0 : st->merged->readers_len;
--	struct reftable_reader **cur = stack_copy_readers(st, cur_len);
-+	struct reftable_reader **cur;
- 	struct reftable_reader **reused = NULL;
--	size_t reused_len = 0, reused_alloc = 0;
--	size_t names_len = names_length(names);
--	struct reftable_reader **new_readers =
--		reftable_calloc(names_len, sizeof(*new_readers));
-+	struct reftable_reader **new_readers;
-+	size_t reused_len = 0, reused_alloc = 0, names_len;
- 	size_t new_readers_len = 0;
- 	struct reftable_merged_table *new_merged = NULL;
- 	struct strbuf table_path = STRBUF_INIT;
+ 	char **names = NULL;
  	int err = 0;
- 	size_t i;
- 
-+	cur = stack_copy_readers(st, cur_len);
-+	if (!cur) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
 +
-+	names_len = names_length(names);
++	if (!st)
++		return;
 +
-+	new_readers = reftable_calloc(names_len, sizeof(*new_readers));
-+	if (!new_readers) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
-+
- 	while (*names) {
- 		struct reftable_reader *rd = NULL;
- 		const char *name = *names++;
-@@ -261,6 +273,10 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
- 				 * do by bumping their refcount.
- 				 */
- 				REFTABLE_ALLOC_GROW(reused, reused_len + 1, reused_alloc);
-+				if (!reused) {
-+					err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+					goto done;
-+				}
- 				reused[reused_len++] = rd;
- 				reftable_reader_incref(rd);
- 				break;
+ 	if (st->merged) {
+ 		reftable_merged_table_free(st->merged);
+ 		st->merged = NULL;
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
