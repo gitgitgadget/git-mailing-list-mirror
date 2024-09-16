@@ -1,79 +1,79 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173F6156250
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 11:45:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072ED157469
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 11:46:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726487160; cv=none; b=SeA4OGJcFez8UHjvejU7mPYVGjt2DCe9FA+HikeKAqiENWfEYvJobS2vlotidRQzFL7mtT7IqvZe7w5SsA3ZkIKOCOCSx3e5oLYdJo4X8iAwnh/rYeqOH/hgaXUPuKj9TZc+z90NNKQLt/xq+tMtYB3XV2lJze8X+MYjyGCR2yk=
+	t=1726487163; cv=none; b=broYpvY+vaR7c9AgVn6qg2UuOd/8PFfEPaGeJuLctpQgGwfNNt0v5nnjmpCxPTazVwmmu96YnppnlPsQV4OGWCH+0noxs4H9q/cCN+D0RL590Y46xmJrdSYAD6uZDT0GhJbbJF+4o+dG0IAU99Bu47YhCAWiS4lD3EUEmnu+atU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726487160; c=relaxed/simple;
-	bh=GeSU4ZXtpv1wE7aP0bu80NfK5GtkljPO7rmvLXvo6A4=;
+	s=arc-20240116; t=1726487163; c=relaxed/simple;
+	bh=nfgtXQhLoByL0Kya3WgGCHW1r8a3zL8Ja8SZ+nXoLN0=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U3vjWEz+tokHHFCEPyf2qFDIQCRnq5Q5RGG8yx/pb78YM37L8mx0et9LG4HQOhVxi0ssnqFPJe+vP4JZkrRsvAwdlyA7nCN2Z3JcGitni67SP2cX5fCV2oaClFaHPjK+eelKScyPGThH2n3GmJxXaU22Gc5GOJXoRBTmxB7XKRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RjvX76/f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lM+5ku6f; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=WEZEDrEbnYdJqkfkUurCA6l3U0PFt07twcRGGZ0gk0Wqs0Fi5QLlQ6FR+0mOuk0t1Sdn1EcYi2oLpvec0rWdGyikNRH1LJ4Zo/AlH8bqKLnWpfFe5RJyTmUGES89AAMMYDGnblWtkBU1JsGYA9Gs0kA8PNFEUrhMAb2TmUS7U8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BgiTqZSj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ai2INHjI; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RjvX76/f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lM+5ku6f"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 276471380258
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 07:45:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BgiTqZSj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ai2INHjI"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 12ADE114023E
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 07:46:01 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Mon, 16 Sep 2024 07:45:58 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 16 Sep 2024 07:46:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726487158; x=1726573558; bh=pblU4lesaa
-	WgHNcH9w96hXIDioD0VC5WLspgVWRhBOY=; b=RjvX76/fXrERMW29u8F6hB9TXc
-	ptb8GQdHnw3EuA51j8YwMATO5t4ZHfkxl0Q4ih/9oiYxuEzO1+wPV9c1iwK/U/sb
-	mCE7Z0bzcQMr5m6hYgdH2mS7PfX7KdqjHVst9K0be3ynKzS4iDhx5Y5xiXRLlZbM
-	iZGS97fs/Qymml5DZ3pzjc2Ia/5h9RRy4EmlI0mcWsiEnB5epxAmpXpvNOQlLfs2
-	bgeF8gNTln+/yMBNGaetL7qWSIwaPZTzgnD9wxYjRRzm2s+1bgc4WdcZpYYAx76u
-	FJqqR3XESWqvyN2I6S31jzjmE+7bvMR9l0zYG1p4XDExFd/AbIr5QkKBp4+Q==
+	:subject:to:to; s=fm1; t=1726487161; x=1726573561; bh=zp2kMQQ97T
+	frUpfJ5oYHVkDFmvwcTdJD/YWn185ZEpg=; b=BgiTqZSjQ4//wD+gXZNgaYrXXQ
+	F218eVtIzvSYX7GVL+RLCMStHl/Sut6SaZwStQSQiiKbyf2xF4ko+kwvpq+mNj25
+	NIdgjZfIRLECDLk4ulTHU2AbVjxBYh+nMYhw9bRmSgV5WLHF3l4xi4N8lx6LLv/0
+	cxm/XSdc5KRLrRTKi5xqnC55fHk0VY2yA/NxcysR8AufEidMqhBNSDtSfUZZBrR2
+	5OBPbhBIp/mqTxbNw3Yu3uKdKyCd3ANA4fJp747hIlQX1iBcPfEl97jxtAtHZl83
+	w/RJ9dvdOBLCJMPcXBWbw0UgGlzl9VvBlU/miARSu70zQ6Xnp+D42tjGEZZw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726487158; x=1726573558; bh=pblU4lesaaWgHNcH9w96hXIDioD0
-	VC5WLspgVWRhBOY=; b=lM+5ku6fENGLg8hFok5ICCEFhJUCMJnEX3lhryulnjts
-	P06TpmgUu3s6gXpcuMPwRgEoybiIcLatHBxv+KvgohlDfvIiAhOwpXLFt6hWgp6b
-	63h0xS3yAJFD/N+xieRwpJpIj+HYFicqo+F16Q2hDEj+vUiFRCLb11n7sVQWj/o4
-	bF40wjSnkX8xEYcqEaZcw5GxFQ2gAwoAP0baYOq3CDlbo5s9JeZa/4YL2mcnSF7o
-	BBcbN5Amawz3EbdWRMd6D/QfjrWXQS9pZ6rJWDGl0uutAolUTjn72rZmx7Icia+P
-	mD37+YlBmhqkaUnPPCnuTE3FD6PzIYA7Nav45qxc7A==
-X-ME-Sender: <xms:dhroZthVwJ8yL7rJm-EvRoINP_RSBK66IVI0h3Xeu23tco6w6Ug3pQ>
-    <xme:dhroZiC5Go1SPa5l0gBRiP2MWtHUrI2w_Pe6PQmXmRWxeZiXE1iSY2kOTLPL_UHn0
-    8VW3G4WO1TTs_J9bw>
-X-ME-Received: <xmr:dhroZtHqk3fvt_6NhlGeC0GqibIazLM-B-qdLpjpcvzamvrW1DF9IHYnMYXjwGE-rh-V633YXT-oBtgdwdLZSXalvf3wMMBXrT9_dtoEkfzUhM88>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedggeefucetufdoteggodetrfdotf
+	fm1; t=1726487161; x=1726573561; bh=zp2kMQQ97TfrUpfJ5oYHVkDFmvwc
+	TdJD/YWn185ZEpg=; b=Ai2INHjIl7We6N9w0j5V92euGl6tixwtR5xrswWoLRpc
+	vwyAUiQnvZ2TeB9MWP16sVASjoCZLpeP1AtZtEw8rwflffrVTfUnYZc2eIN+bOFH
+	cb2DEH74wOXcaJPXxNkeBrNisUKHbLVbNYa5VHHIM1yrfsqGzo5SYcTyEBl05r40
+	2PElT5qgznBxAemOnp5PN3OfDd7+WZBbhOs75Edx/swpZCskuoFa4ZJfuXXc8WMK
+	noHfhZuPmpn8sa8AF08WoQIXn8vK/RcCWqFl5By3aFRqf2SgTo2XuJxiYPC81Wcv
+	2DcrFaqiQOMs/73xFweBemy8F7pxB6H7SJ3c3vI8YA==
+X-ME-Sender: <xms:eBroZog9M5bEryUSY-ZboTHHcpmeVuKE8zacHPTgklfZLw9T0kmxFA>
+    <xme:eBroZhB_b-5yZhk506M6xUHXJSYbQ4DTXc1msZnxEEvZwe97JymoxLGYDrd-P5JjB
+    s53gBS073dwhddrPw>
+X-ME-Received: <xmr:eBroZgHSwatb0YheVf0COFlctIZlzhY_eBSFFXGjmDRK9YebZFPireKdzjEJV-jIV53_nDX9_x78mHsC6AXIAC2AW1TR9zI1S__NZUJ_I2UmUvxU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedggedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:dhroZiQtgsqEoP4KO07qlQXHabbjA6stpGkbHj1ITOGnWZQA-hg71A>
-    <xmx:dhroZqxUbz-NvjJ2zO8XyQdnuAs6VPrqzOtOAIi1r5_74yBzPmR6fw>
-    <xmx:dhroZo4x8L-BYMe586gWjMY3mrzYvIzsfEfl9J49CDn8FTzaN6P_EA>
-    <xmx:dhroZvw-UMv2cuTYIo8iDiNOwUF3m3gxYa16BeNo-zuzAkEJ9gEU0w>
-    <xmx:dhroZvo4XPK4E86fjjpzRT3X8n6Sedb-NyIMRYeUp3d1gGCQ87j6aPE->
+X-ME-Proxy: <xmx:eBroZpS8AgAPPdAvusMr2uCmM_lvC6XYy99r8Tp2NlS3wQ8e8qW6XQ>
+    <xmx:eBroZlwHS-NJhhX4oYXNJpwCMT_RW-UXpcixkWaqh2els2yYwi7Efg>
+    <xmx:eBroZn5mRUG5rWH0r61q70JqvTJqvfyasrkQFsmDC0sFnubh7N3Zdg>
+    <xmx:eBroZixpZ1eIvCwTe8sz4LlX6t_VateQjlw0wYKJxX11ChutZMFwRg>
+    <xmx:eRroZmpGNfzeXNQX4pcfR7q96LZJcl044tybQCrOrEnUrt6xOS49crgY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 16 Sep 2024 07:45:57 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 16 Sep 2024 07:46:00 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1902229b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8b3dee57 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 16 Sep 2024 11:45:40 +0000 (UTC)
-Date: Mon, 16 Sep 2024 13:45:54 +0200
+	Mon, 16 Sep 2024 11:45:43 +0000 (UTC)
+Date: Mon, 16 Sep 2024 13:45:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 11/23] diff: fix leaking orderfile option
-Message-ID: <85c0f9e5f598cc65d1c03f6622900bb950a31159.1726484308.git.ps@pks.im>
+Subject: [PATCH 12/23] parse-options: free previous value of `OPTION_FILENAME`
+Message-ID: <330b6c52a0a99ba8fa18378310250e5b617d40c2.1726484308.git.ps@pks.im>
 References: <cover.1726484308.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,85 +85,78 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726484308.git.ps@pks.im>
 
-The `orderfile` diff option is being assigned via `OPT_FILENAME()`,
-which assigns an allocated string to the variable. We never free it
-though, causing a memory leak.
+The `OPTION_FILENAME` option always assigns either an allocated string
+or `NULL` to the value. In case it is passed multiple times it does not
+know to free the previous value though, which causes a memory leak.
 
-Change the type of the string to `char *` and free it to plug the leak.
-This also requires us to use `xstrdup()` to assign the global config to
-it in case it is set.
+Refactor the function to always free the previous value. None of the
+sites where this option is used pass a string constant, so this change
+is safe.
+
+While at it, fix the argument of `fix_filename()` to be a string
+constant. The only reason why it's not is because we use it as an
+in-out-parameter, where the input is a constant and the output is not.
+This is weird and unnecessary, as we can just return the result instead
+of using the parameter for this.
 
 This leak is being hit in t7621, but plugging it alone does not make the
 test suite pass.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- combine-diff.c | 3 +--
- diff.c         | 7 +++++--
- diff.h         | 2 +-
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ parse-options.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/combine-diff.c b/combine-diff.c
-index 829a44e4167..f6b624dc288 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1393,9 +1393,8 @@ static struct combine_diff_path *find_paths_generic(const struct object_id *oid,
+diff --git a/parse-options.c b/parse-options.c
+index 30b9e68f8ac..33bfba0ed4a 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -60,12 +60,12 @@ static enum parse_opt_result get_arg(struct parse_opt_ctx_t *p,
+ 	return 0;
+ }
+ 
+-static void fix_filename(const char *prefix, char **file)
++static char *fix_filename(const char *prefix, const char *file)
  {
- 	struct combine_diff_path *paths = NULL;
- 	int i, num_parent = parents->nr;
+ 	if (!file || !*file)
+-		; /* leave as NULL */
++		return NULL;
+ 	else
+-		*file = prefix_filename_except_for_dash(prefix, *file);
++		return prefix_filename_except_for_dash(prefix, file);
+ }
+ 
+ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
+@@ -129,18 +129,24 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
+ 		return 0;
+ 
+ 	case OPTION_FILENAME:
++	{
++		const char *value;
++
++		FREE_AND_NULL(*(char **)opt->value);
++
+ 		err = 0;
++
+ 		if (unset)
+-			*(const char **)opt->value = NULL;
++			value = NULL;
+ 		else if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
+-			*(const char **)opt->value = (const char *)opt->defval;
++			value = (const char *) opt->defval;
+ 		else
+-			err = get_arg(p, opt, flags, (const char **)opt->value);
++			err = get_arg(p, opt, flags, &value);
+ 
+ 		if (!err)
+-			fix_filename(p->prefix, (char **)opt->value);
++			*(char **)opt->value = fix_filename(p->prefix, value);
+ 		return err;
 -
- 	int output_format = opt->output_format;
--	const char *orderfile = opt->orderfile;
-+	char *orderfile = opt->orderfile;
- 
- 	opt->output_format = DIFF_FORMAT_NO_OUTPUT;
- 	/* tell diff_tree to emit paths in sorted (=tree) order */
-diff --git a/diff.c b/diff.c
-index 472479eb101..6555b8a32c1 100644
---- a/diff.c
-+++ b/diff.c
-@@ -441,8 +441,10 @@ int git_diff_ui_config(const char *var, const char *value,
- 	}
- 	if (!strcmp(var, "diff.wordregex"))
- 		return git_config_string(&diff_word_regex_cfg, var, value);
--	if (!strcmp(var, "diff.orderfile"))
-+	if (!strcmp(var, "diff.orderfile")) {
-+		FREE_AND_NULL(diff_order_file_cfg);
- 		return git_config_pathname(&diff_order_file_cfg, var, value);
 +	}
- 
- 	if (!strcmp(var, "diff.ignoresubmodules")) {
- 		if (!value)
-@@ -4775,7 +4777,7 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
- 	if (diff_indent_heuristic)
- 		DIFF_XDL_SET(options, INDENT_HEURISTIC);
- 
--	options->orderfile = diff_order_file_cfg;
-+	options->orderfile = xstrdup_or_null(diff_order_file_cfg);
- 
- 	if (!options->flags.ignore_submodule_set)
- 		options->flags.ignore_untracked_in_submodules = 1;
-@@ -6727,6 +6729,7 @@ void diff_free(struct diff_options *options)
- 		FREE_AND_NULL(options->objfind);
- 	}
- 
-+	FREE_AND_NULL(options->orderfile);
- 	for (size_t i = 0; i < options->anchors_nr; i++)
- 		free(options->anchors[i]);
- 	FREE_AND_NULL(options->anchors);
-diff --git a/diff.h b/diff.h
-index 9901c8ca8c8..b95d3c1e830 100644
---- a/diff.h
-+++ b/diff.h
-@@ -235,7 +235,7 @@ enum diff_submodule_format {
-  * diffcore library with.
-  */
- struct diff_options {
--	const char *orderfile;
-+	char *orderfile;
- 
- 	/*
- 	 * "--rotate-to=<file>" would start showing at <file> and when
+ 	case OPTION_CALLBACK:
+ 	{
+ 		const char *p_arg = NULL;
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
