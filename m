@@ -1,54 +1,54 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7C31465AB
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 08:50:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41471487E9
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 08:50:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726476610; cv=none; b=KaVONbq0vAANZKaAuAnL5+FY6WIc9t4Y4NNqO/wFcskuqCT5NqXl+X3th68x6AYeCqGWh1eBIxykZ0wwMsBkQLZL/Ulsq9zAp6VCbw4FbSS64E7Y19UqcFHYu1PbdM2KVjtzijWmi5oghB+Sv+XO+XYwvDl60oZTgVMnP0HiM7s=
+	t=1726476613; cv=none; b=lF2er6FRR0fLX3NUxdXP6J79bmltO9qChp97NcOWZdcXKSDd99agGmQfz6JlctqZONK7/5SOpBsauelkJWKOh6F1CXVIdOLJQL/TXl72VP0Whp3fFn0t3iXnF013Jk7OakxW1+0gTREb5NBsqjtmubzZvY70dh/SVLyeB4lG/vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726476610; c=relaxed/simple;
-	bh=2k8tKV6JcxbrciAZu3c9IvG7hqXAI3TJVmM38NRtGGo=;
+	s=arc-20240116; t=1726476613; c=relaxed/simple;
+	bh=/STtET+KUmqG4GjATQWlsDESGU9dQ6HIy94rOw+cBLI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=muMvK9EZQMRzQd3f46Etk5ln2E42XTqAcNet4ruqd2K6QV2gGIvSFVjeAzDCN1vj8TQ1T+dsOeveIbwSsZp2osPCRo6U+cz+OEialYvyIeSNEhgvBAP/W2BfZyQ9E92N3aroKDB4zXQxMsixuK7zBNSuSJQdCYXtjQmQkiONV1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sxEp3n8+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bhzrX3cX; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=bHA/G1hDBW9cYQX9T+LbRNj0hxVbmOnmViY+Jgz/m5kF+PzuWiskznkqNWSYIbQ7Gbypl3pJteHhzjZqA4eJj74uuOqXTg+hJIH2acNxI8BUU6A00RSFhH6qViwEbzHG2nB6CVJQFqJsAZ5GFNxCuj1WGeWaRst8pJNGFBlwS4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dNpNsIti; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lt6TTC0b; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sxEp3n8+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bhzrX3cX"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B6B2C1140230;
-	Mon, 16 Sep 2024 04:50:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dNpNsIti";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lt6TTC0b"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 00EDD1380299;
+	Mon, 16 Sep 2024 04:50:11 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Mon, 16 Sep 2024 04:50:07 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 16 Sep 2024 04:50:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726476607; x=1726563007; bh=cEnGlSHqBf
-	qrDUZ/GGN045m+GI9fkh88X/AnxhEe/20=; b=sxEp3n8+60yCzyzUJ3/HvXCHAD
-	8hOqtrbUurideHIo4kuxSCt4q+eXw25txqSQPZPZGJnhOfJXicVO7oczFvTeVgIH
-	o0THpOjxcHXiHPbxC51WEy230Pjm7o8ufPVL/6POQKiogc4Pl9H9sy5S13IMWj5h
-	mFtcB1/ASCjAUV8zU84mtmIDQIC/CHSlV/uBrSZV/n4Q+/RYX3H3xdQFtRxDt8CG
-	pUDwgjU2imDx/X4IatYP3y7acxc0as+rWHQETrYHboibiGM9nznJQk8ogXyllssM
-	tzmkLEyuppu8ZvvuoJz6Ga29V3aB00YYOjC5m9aYno7DrNrXc3wTCxK7NPhQ==
+	:subject:to:to; s=fm1; t=1726476610; x=1726563010; bh=0W/wlWW8bu
+	/G1k/BYueYGbAG/1sFPUmDbzP1uL3q4bs=; b=dNpNsItiYolXCpu27+tB8laliD
+	4kdrYQVR7x2vq0muEkD3emP5kXpv06xhj2acTSieFXNPLkJgGkFBAcz8yLNh0ErD
+	ln6JSqKMKsnECoszIbiIRouLTkd4k7mnkzf2UxyUD3W0dxz3Vo/QKzyboIW+Dnco
+	QjWOUBX/5rwVJiLty9tXF/3BtSvj2A2yyxTH8U8DlYHUol8sXfFT7MGBRGMTV+jI
+	pKESyNRbybv4mwb5UbCUivGgWBvRPZuETw47hdIJGqKr6VslgZ8A0Z4FA//YLx4q
+	rBPFVT7im4Irt7LM0o8ysjERNKQ2LJNau3M6vPzdMZ1n3qA7bG12cexALXQA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726476607; x=1726563007; bh=cEnGlSHqBfqrDUZ/GGN045m+GI9f
-	kh88X/AnxhEe/20=; b=bhzrX3cXEw2HjV0Z5yfMzm2b+G8rdAIDQtZOEHwHp9aX
-	jhHXyJvVedgGKZ4dGi9W4kTRFmgl4S7B+p31FbTv1XgkHC1iMBbNhi//aZP3FE/X
-	KJyY/J293amAUiHoBVG0NZQyB6OBNz4AhYU1Qf5UmVB3Ej3/OPOBpx9CKPpsCTJf
-	Cw7CFMSjR7NUsZWfc73evy4cgrTPhtIYdPRgloNtQKJ5Gf5W64J5xwlkhazAKWNm
-	pMSELfJh5wMMQLsecMAJhEuv8pJhXzZQ8UVZCQYtimCdUgB2e/+RbVBYPq+6RKrj
-	pPtCLtfNmQVTB810V872ROTwBjFP8ewSyoN/1DlFzA==
-X-ME-Sender: <xms:P_HnZr9DXHyXBmixvuh7xTd9f5MutfT11ahorkbpEJdFAJCo8TtJPQ>
-    <xme:P_HnZnuOMDZJ1QrxFvuh9K8BE5Ols9RBd13Zh6KvsBaWJXLbUpmT8SrmqC9KoRLUN
-    Vrbp7kGrqu-21_kXQ>
-X-ME-Received: <xmr:P_HnZpCEc63H6ksm4ldpDVklfKGAYwH3G8RjhcChXrE_E9IAlurxaUNDxIMuRkhWhiMc9dL58m0RwJoZa0aitzzaPKDPig79BIiuj2esdt2t0Ezv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedgtdejucetufdoteggodetrfdotf
+	fm1; t=1726476610; x=1726563010; bh=0W/wlWW8bu/G1k/BYueYGbAG/1sF
+	PUmDbzP1uL3q4bs=; b=Lt6TTC0bCmj2K6kZ8r4IhapPbTdw9qp/d2cqilgRCeFp
+	YbcCS5CgfqPhHaM/24yNpvL6BugWz3gb5KcLAsrsIJL0wsPXnLXJ5Tkb8Gl7C+93
+	J8xsaIP2SuLfefEP5taH6zi6jK0t4qQEpN0e9wWkVdog47qW1R4VeyVzRqaGnpcg
+	pB7n1D4+Km00QmAE/09qWyMLi8Lpo+IMaKcuDqTNp9SSfBpRyPHWyaRo08ddT0KL
+	zR+8rYBsS+Ylqg03h0AFtyojRBXKj/lzIC1l/b9N4Xs3kviHHNs7n8UBmMVpbY7j
+	h2YO2bLlkC0DiODUxH9/O1g+rRrysBe/LXhIbySV8w==
+X-ME-Sender: <xms:QvHnZmhmua71nPcYG3JPhuOqyEe6p9nwXQIyJujodwPmhUDwpHJTuA>
+    <xme:QvHnZnAmyNahcVvrVjtdhQYKcyzUNW0518ap-Y33Hv9ds6T0yzbsTtHB3XkOXuRVr
+    eEtmsDM-85TJBTlSQ>
+X-ME-Received: <xmr:QvHnZuFVYcxr6c6Fwl8c9yK9x0S5ZOhL6AEyMu0fhsBTzZZ4Wlcx-Way62RbcvJH7tfuiXtvWs9yKXyHYp0jIUdBucpHNIShRIV1Em1ABPXR5rPq>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedgtdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -56,27 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedgtdejucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhi
-    khdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:P_HnZnc97PwCBRVh-CEsPzkdw5AyY_svMIKleXY_K5HJLFvX6oRE9Q>
-    <xmx:P_HnZgPaxge0N7Eemv_fJrhhBjMPbdY_epQPVyJm4pMcXYUjUmDjqw>
-    <xmx:P_HnZpkhNA2SHxeel7HZ4ZpvMblakaVvW_GgthW3nRsFfLhkbSVXkg>
-    <xmx:P_HnZqtVC49VLbrDY1tWGvsZwLbRlrUk8da03RsezfHjF5g2OfmXWA>
-    <xmx:P_HnZlrBW9y1EIUA5cQwJD_4okSrO61bK3G0-_XFnMx9-hXbuta8XVoI>
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    mhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:QvHnZvQi6QYwXkotnsoxWDvHs6vBFD72OANt-d-abQf-DKOKHvAT5Q>
+    <xmx:QvHnZjze3nN3Vuebw1PKkf5GiCNbjcVaULBwHuTUGQHJMV7Y0yGJkw>
+    <xmx:QvHnZt4jxfm5olBj3XxwfQE1vG6SXFi9Sd3sOdjFLEuepNaxS55HOw>
+    <xmx:QvHnZgxLb35rRXbPBYLa8gs1N9YO8SFItKRFX-7_sQ-9oXM38l2e-A>
+    <xmx:QvHnZj_nbpoi9y_Rs3sXc0BeIfuBQAs3Hgsi6fXSc93LErSRwsgnKPWk>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Sep 2024 04:50:06 -0400 (EDT)
+ 16 Sep 2024 04:50:09 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2d8478d7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Sep 2024 08:49:50 +0000 (UTC)
-Date: Mon, 16 Sep 2024 10:50:05 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 89cc8d16 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Sep 2024 08:49:52 +0000 (UTC)
+Date: Mon, 16 Sep 2024 10:50:08 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, karthik nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 2/6] builtin/receive-pack: fix exclude patterns when
- announcing refs
-Message-ID: <3dc6ae936c88d3105bc82daab3edd805c9b5c63b.1726476401.git.ps@pks.im>
+Subject: [PATCH v2 3/6] Makefile: stop listing test library objects twice
+Message-ID: <4ba503520e6d306b7330fc3f3a4b4ee0748abf82.1726476401.git.ps@pks.im>
 References: <cover.1725881266.git.ps@pks.im>
  <cover.1726476401.git.ps@pks.im>
 Precedence: bulk
@@ -89,96 +88,55 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726476401.git.ps@pks.im>
 
-In `write_head_info()` we announce references to the remote client. We
-need to honor "transfer.hideRefs" here so that we do not announce any
-references that the client shouldn't be able to learn about. This is
-done via two separate mechanisms:
+Whenever one adds another test library compilation unit one has to wire
+it up twice in the Makefile: once to append it to `UNIT_TEST_OBJS`, and
+once to append it to the `UNIT_TEST_PROGS` target. Ideally, we'd just
+reuse the `UNIT_TEST_OBJS` variable in the target so that we can avoid
+the duplication. But it also contains all the objects for our test
+programs, each of which contains a `cmd_main()`, and thus we cannot link
+them all into the target executable.
 
-  - We hand over exclude patterns to the reference backend. We can only
-    honor "plain" exclude patterns here that do not have prefixes with
-    special meaning such as "^" or "!". Filtering down the references is
-    handled by `hidden_refs_to_excludes()`.
-
-  - In `show_ref_cb()` we perform a second check against hidden refs.
-    For one this is done such that we can handle those special prefixes.
-    And second, handling exclude patterns in ref backends is optional,
-    so we also have to handle "normal" patterns.
-
-The special-meaning "^" prefix alters whether a hidden ref applies to
-the namespace-stripped reference name or the full name. So while we
-would usually call `refs_for_each_namespaced_ref()` to only get those
-references in the current namespace, we can't because we'd get the
-already-rewritten reference names. Instead, we are forced to use
-`refs_for_each_fullref_in()` and then manually strip away the namespace
-prefix such that we have access to both names.
-
-But this also means that we do not get namespace handling for exclude
-patterns, which `refs_for_each_namespaced_ref()` brings for free. This
-results in a bug because we potentially end up hiding away references
-based on their namespaced name and not on the stripped name as we really
-should be doing.
-
-Fix this by manually rewriting the exclude patterns to their namespaced
-variants.
+Refactor the code such that `UNIT_TEST_OBJS` does not contain the unit
+test program objects anymore, which we can instead manually append to
+the `OBJECTS` variable. Like this, the former variable now only contains
+objects for test libraries and can thus be reused.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/receive-pack.c           | 18 ++++++++++++++++--
- t/t5509-fetch-push-namespaces.sh |  8 ++++++++
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ Makefile | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 3f35140e489..478c62ca836 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -339,12 +339,26 @@ static void show_one_alternate_ref(const struct object_id *oid,
- static void write_head_info(void)
- {
- 	static struct oidset seen = OIDSET_INIT;
-+	struct strvec excludes_vector = STRVEC_INIT;
-+	const char **exclude_patterns;
-+
-+	/*
-+	 * We need access to the reference names both with and without their
-+	 * namespace and thus cannot use `refs_for_each_namespaced_ref()`. We
-+	 * thus have to adapt exclude patterns to carry the namespace prefix
-+	 * ourselves.
-+	 */
-+	exclude_patterns = get_namespaced_exclude_patterns(
-+		hidden_refs_to_excludes(&hidden_refs),
-+		get_git_namespace(), &excludes_vector);
+diff --git a/Makefile b/Makefile
+index bdea061971a..4ed5f1f50a8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1356,7 +1356,6 @@ UNIT_TEST_PROGRAMS += t-strvec
+ UNIT_TEST_PROGRAMS += t-trailer
+ UNIT_TEST_PROGRAMS += t-urlmatch-normalization
+ UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
+-UNIT_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
  
- 	refs_for_each_fullref_in(get_main_ref_store(the_repository), "",
--				 hidden_refs_to_excludes(&hidden_refs),
--				 show_ref_cb, &seen);
-+				 exclude_patterns, show_ref_cb, &seen);
- 	for_each_alternate_ref(show_one_alternate_ref, &seen);
-+
- 	oidset_clear(&seen);
-+	strvec_clear(&excludes_vector);
-+
- 	if (!sent_capabilities)
- 		show_ref("capabilities^{}", null_oid());
+@@ -2715,6 +2714,7 @@ OBJECTS += $(XDIFF_OBJS)
+ OBJECTS += $(FUZZ_OBJS)
+ OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
+ OBJECTS += $(UNIT_TEST_OBJS)
++OBJECTS += $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
  
-diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
-index 98e8352b6cc..f029ae0d286 100755
---- a/t/t5509-fetch-push-namespaces.sh
-+++ b/t/t5509-fetch-push-namespaces.sh
-@@ -124,6 +124,14 @@ test_expect_success 'try to update a ref that is not hidden' '
- 	git -C original push pushee-namespaced main
- '
+ ifndef NO_CURL
+ 	OBJECTS += http.o http-walker.o remote-curl.o
+@@ -3852,9 +3852,7 @@ $(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-LDFLAGS
+ 		-Wl,--allow-multiple-definition \
+ 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
  
-+test_expect_success 'git-receive-pack(1) with transfer.hideRefs does not match unstripped refs during advertisement' '
-+	git -C pushee update-ref refs/namespaces/namespace/refs/heads/foo/1 refs/namespaces/namespace/refs/heads/main &&
-+	git -C pushee pack-refs --all &&
-+	test_config -C pushee transfer.hideRefs refs/namespaces/namespace/refs/heads/foo &&
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C original push pushee-namespaced main &&
-+	test_grep refs/heads/foo/1 trace
-+'
-+
- test_expect_success 'try to update a hidden full ref' '
- 	test_config -C pushee transfer.hideRefs "^refs/namespaces/namespace/refs/heads/main" &&
- 	test_must_fail git -C original push pushee-namespaced main
+-$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o \
+-	$(UNIT_TEST_DIR)/test-lib.o \
+-	$(UNIT_TEST_DIR)/lib-oid.o \
++$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_OBJS) \
+ 	$(GITLIBS) GIT-LDFLAGS
+ 	$(call mkdir_p_parent_template)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
