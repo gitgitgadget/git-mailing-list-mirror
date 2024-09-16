@@ -1,114 +1,192 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F46E2E646
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 17:58:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C33E39FC1
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 18:36:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726509539; cv=none; b=X9DF+mpSXD9ORpVtw+Ln1C+645a+nrY5YCkLBv9nMRBR5699yaTsAS8BC/1XLTCBMOzt7ngrk0RWEiRpzT1Z6ICsKVWu7s2pmCS/lNj0d5iNBKul18uJlAxOQFaWUbyOPGfnQ7n12Fjw1+6C8K/EQisaXqowhzxQkp8S/HRvxeU=
+	t=1726511804; cv=none; b=UGKFzqS4mY3r9OnAKlV+pP1zZgYYxUXzGuDw/vUJtr7CThxodXhFWglf7IrK7DY/XwwCcWsB4FO9SlTk70g6T//XhHhRegRmiGfwxJPTvvbUCdNpsjWJK++1siRyF6KdrENbcqU7sf5FZOvIBZZrq0cwLiD3rf730BB8KXkBRy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726509539; c=relaxed/simple;
-	bh=hCiiw395PF8nBDJzpG4H03nJivRolGkeHHSl1+6m27Y=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Eq1OjwBm979EuR+vxuylB082E54oC25ZBEZYlmxTChOCiAsPSLs0r0j0FtDWkL08ZmXMm8mxQO1eChUqdii5aVdpN22AE8W9GgJ2OmrAnlpZ1VkwpoqJl4Cog5zPxJ3pzGXe6VHGc+lCnnIXiTa/CeMMkjWIlLImXFkhtSqZWS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WLMdGCr6; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726511804; c=relaxed/simple;
+	bh=L5YL2uiviHU3hf4LBtkYPIQClsFsWdyLB1G37tKLSJ0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=puTpjrODFiC2f7z3+n1GLPCpvKmjPsBXAu7sL5ABwMv5bJq9kqq499tNMPW9T0ASuIY/X3mo81I4q683XlDS35fkc07QpFSu9d7Dc0iZcjUxjFIWUjed/LJzqBKg0G5olDMcsQxwHfr8DN89enmhdOMeBw2m6zb7jmz1Gr45uDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oQAoOHcm; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WLMdGCr6"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a8d60e23b33so621410166b.0
-        for <git@vger.kernel.org>; Mon, 16 Sep 2024 10:58:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726509535; x=1727114335; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=jPJWs4LG+q9yyML8YVAYRGMZitzEEE71LP2YOWi4Id4=;
-        b=WLMdGCr6U67+5SnjkDoKahtFAc4XL1CBmtFD8y7MMzVCN9VyNqyZkmQ35MkgNowqSD
-         pY+Oa+t2s13MydPOLwqUm7yNpL8OzBNImkw3cy8GvTs/Fu/1fuiZZXY6Ty7fW18XqTOU
-         4m7WyPNxUXzqbkSd6he2nIVeTdxwZVFfpC1mV43xjVxLME2leOg+cGUI/ZoLhUOsMo8q
-         izShBkImt4k/2fwYdiTNEcRr78BYEq16iu/SGo8G8DtoouLdUKm4oos1gYX0PiilG7M7
-         sCphMn4A7Tg/8I285F+ZoefZwak9NXwlCEHnFZvjXQ+RqTzoaQGpJMkGK2SG9eQ+EuzY
-         JRYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726509535; x=1727114335;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jPJWs4LG+q9yyML8YVAYRGMZitzEEE71LP2YOWi4Id4=;
-        b=OhFFgl98DVBLJIn2e6qKy89wlvqEWBUJQmn0Cz4DshxYzms4xwRtRk9WRw1tL3Pokk
-         l0BoFiyb6goHsDnIN/0IFSHhrfSbRubQ+e0W33kjaU8i88h9eCNjCgwd0cX1ethZjIki
-         l3wv8K4cnyqSHRQrUGwimlq/hZALjXiJ0EYagOq27TbvokN5Yi7Umm3OYymTOOAC9oMT
-         CrSz5+AWJIcDJBNEaKQa6Q4dZamNuozS5B0eILw35bkkFXiaGdsuK1pRm8a4bej+uos4
-         yTWSAeaYMBXMm7u9qQOFITE+Spsb2GcjokZn7MCbyF5umwLZAzboM8+xSQVhGV6jHy6x
-         5BGA==
-X-Gm-Message-State: AOJu0YzjD7OH9FrlZ3PkzFAWUGUWur8rUD/eeahyUqCp/Rxmvis7vS53
-	0tWFDVOjAGQelZ8FJDb4sOEBuO1ESsR5FkpI6W6PCGr7QUDTRiMn11oAiVQYqQS1oKn41PlQR+h
-	EnqbPIjnS4GD1d8Cp6VWWP1mYifyvBu6hCydJyQ==
-X-Google-Smtp-Source: AGHT+IHhUvxby3RYWa7afuRM4pC8LsimtmZ8fC15mNiN5YTkrHSurmwxKyby5N/fieOdEgc3SRovvEixEjTaBRPmCj8=
-X-Received: by 2002:a17:907:f14a:b0:a86:9ba1:639e with SMTP id
- a640c23a62f3a-a9029486e83mr1593941466b.26.1726509535241; Mon, 16 Sep 2024
- 10:58:55 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oQAoOHcm"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 283B1363F9;
+	Mon, 16 Sep 2024 14:36:41 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=L5YL2uiviHU3hf4LBtkYPIQClsFsWdyLB1G37t
+	KLSJ0=; b=oQAoOHcmr5kYbC45dk9k+GgBHD+d5JGYbh7evb04PHtqB8zeCiNGWe
+	40aR/kzju8YhlJcSPbL12TOk+NfPHlZ2lhHtybkxwEQuff6jQhiQEnYv5iF7lZ5K
+	10beceaHFzrIPQNZBwMDEVNDiiLW+hwFN1bRajUuvCTGE5G/lHjwQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E7AA363F8;
+	Mon, 16 Sep 2024 14:36:41 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 86843363F7;
+	Mon, 16 Sep 2024 14:36:40 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,  SZEDER
+ =?utf-8?Q?G=C3=A1bor?=
+ <szeder.dev@gmail.com>,  Patrick Steinhardt <ps@pks.im>, 	Christian
+ Schlack <christian@backhub.co>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] set-head: no update without change and better output
+ for --auto
+In-Reply-To: <20240915221055.904107-1-bence@ferdinandy.com> (Bence
+	Ferdinandy's message of "Mon, 16 Sep 2024 00:09:54 +0200")
+References: <20240915221055.904107-1-bence@ferdinandy.com>
+Date: Mon, 16 Sep 2024 11:36:39 -0700
+Message-ID: <xmqq5xqvo37s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?Q?Pawe=C5=82_Lipski?= <pawel.p.lipski@gmail.com>
-Date: Mon, 16 Sep 2024 19:58:18 +0200
-Message-ID: <CAB+6q+Ks1BVE-PAP0sKDKzjMZ4=Lfcv7LfwGrB9GToRTn24oww@mail.gmail.com>
-Subject: patch-id doesn't recognize 2nd and further commit id since v2.46.1
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9D3D770C-745A-11EF-B230-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Hi,
+The message I am responding to is sent as the first message to start
+a brand-new thread, but for future reference, it makes it easier for
+everybody involved if you sent a new iteration of a patch (or a
+patch series) as a reply/follow-up to the last round.
 
-Let's consider the following patch (=3D=3D=3D=3D=3D=3D=3D are delimiters):
+If it is too cumbersome to do for any reason, as an alternative, you
+can give a reference to previous rounds as URLs to the list archive,
+i.e.
 
-=3D=3D=3D=3D=3D=3D=3D
-commit 8db0161b9bb897d9cbe68bc1ed8ba8f43f39da00
-Author: Tester Test <tester@test.com>
-Date:   Mon Aug 20 20:19:19 2018 +0200
+ (v1) https://lore.kernel.org/git/20240910203129.2251090-1-bence@ferdinandy.com/
+ (v2) https://lore.kernel.org/git/20240910203835.2288291-1-bence@ferdinandy.com/
 
-    another master commit
+> Currently, even if there is no actual change to remote/HEAD calling
+> remote set-head will overwrite the appropriate file and if set to --auto
+> will also print a message saying "remote/HEAD set to branch", which
+> implies something was changed.
+>
+> Change the behaviour of remote set-head so that the reference is only
+> updated if it actually needs to change.
 
-diff --git a/3.txt b/3.txt
-new file mode 100644
-index 0000000..e69de29
+I sense a patch with a racy TOCTOU change coming ;-)
 
-commit 4d5917beba89d2e267ea632b7e78958b3736eabe
-Author: Tester Test <tester@test.com>
-Date:   Mon Aug 20 20:19:19 2018 +0200
+> Change the output of --auto, so the output actually reflects what was
+> done: a) set a previously unset HEAD, b) change HEAD because remote
+> changed or c) no updates. Make the output easily parsable, by using
+> a slightly clunky wording that allows all three outputs to have the same
+> structure and number of words.
 
-    squashed
+This would be useful.
 
-diff --git a/1.txt b/1.txt
-new file mode 100644
-index 0000000..e69de29
-=3D=3D=3D=3D=3D=3D=3D
+>         This patch was originally sent along when I thought set-head was
+>         going to be invoked by fetch, but the discussion on the RFC
+>         concluded that it should be not. This opened the possibility to make
+>         it more explicit.
 
-In `git patch-id` v2.46.0, this gives the output of :
-85da93bf95da4433da1ce20a2b822ec3c72a1b92
-8db0161b9bb897d9cbe68bc1ed8ba8f43f39da00
-3a7470bbbca005289ab50c5297a4d7712cad5a81
-4d5917beba89d2e267ea632b7e78958b3736eabe
+I am not quite sure what the discussion concluded "should be not",
+though.  In a message from you
 
-but in v2.46.1 (apparently after the commit
-a6e9429f728d088999b815c25adbd2f2c115e051 aka `patch-id: tighten code
-to detect the patch header`):
+  https://lore.kernel.org/git/D43G2CGX2N7L.ZRETD4HLIH0E@ferdinandy.com/
 
-85da93bf95da4433da1ce20a2b822ec3c72a1b92
-8db0161b9bb897d9cbe68bc1ed8ba8f43f39da00
-3a7470bbbca005289ab50c5297a4d7712cad5a81
-0000000000000000000000000000000000000000
+what we agreed was that "git fetch" does not need a new option, but
+we also agreed that it would be a good idea for "git fetch" to
+create, refs/remotes/$remote/HEAD when it does not exist without
+being told.
 
-Same for 3+ commits in the input: correct patch id but object id set
-to zeros since 2nd commit.
+I take it that you still want to see such a change to "git fetch"
+eventually happen, but decided to tackle the other half of the
+original two-patch series first with this patch?
 
-I've discovered the issue via the failing tests of
-https://github.com/VirtusLab/git-machete, which relies on `git
-patch-id`.
+>  static int set_head(int argc, const char **argv, const char *prefix)
+>  {
+> -	int i, opt_a = 0, opt_d = 0, result = 0;
+> -	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
+> +	int i, opt_a = 0, opt_d = 0, is_ref_changed = 0, result = 0;
 
-Best,
---=20
-Pawe=C5=82 Lipski
+Shall we simply call it ref_changed instead, so that I do not have
+to wonder which is better between has_ref_changed and is_ref_changed? ;-)
+
+> +	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT, buf3 = STRBUF_INIT;
+>  	char *head_name = NULL;
+>  
+>  	struct option options[] = {
+> @@ -1440,13 +1440,19 @@ static int set_head(int argc, const char **argv, const char *prefix)
+>  
+>  	if (head_name) {
+>  		strbuf_addf(&buf2, "refs/remotes/%s/%s", argv[0], head_name);
+
+> +		refs_read_symbolic_ref(get_main_ref_store(the_repository),buf.buf,&buf3);
+> +		is_ref_changed = strcmp(buf2.buf,buf3.buf);
+>  		/* make sure it's valid */
+>  		if (!refs_ref_exists(get_main_ref_store(the_repository), buf2.buf))
+>  			result |= error(_("Not a valid ref: %s"), buf2.buf);
+> -		else if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote set-head"))
+> +		else if (is_ref_changed && refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote set-head"))
+>  			result |= error(_("Could not setup %s"), buf.buf);
+
+Two and a half small issues:
+
+ - Do not omit " " after "," and avoid overlong lines by folding
+   lines at an appropriate place (usually after an operator at
+   higher point in parse tree, i.e. after "is_ref_changed &&").
+
+ - This is inherently racy, isn't it?  We read the _current_ value.
+   After we do so, but before we write _our_ value, another process
+   may update it, so we'd end up overwriting the value they wrote.
+
+ - To compute is_ref_changed, we look at buf3.buf but what happens
+   if such a ref does not exist, exists but is not a symbolic ref,
+   or is a hierarchy under which other refs hang (e.g., a funny ref
+   "refs/remotes/origin/HEAD/main" exists)?  Does the strcmp()
+   compare a valid buf2.buf and an uninitialized junk in buf3.buf
+   and give a random result?  Shouldn't the code checking the return
+   value from the refs_read_symbolic_ref() call, and if we did so,
+   would we learn enough to tell among the cases where (1) it is a
+   symref, (2) it is a regular ref, (3) no such ref exists, and (4)
+   the refs layer hit an error to prevent us from giving one of the
+   previous 3 answers?
+
+If we really wanted to resolve the raciness, I think we need to
+enhance the set of values that create_symref() can optionally return
+to its callers so that the caller can tell what the old value was.
+
+I am not sure offhand how involved such an update would be, though.
+
+> +		else if (opt_a && !strcmp(buf3.buf,""))
+> +			printf("%s/HEAD was unset: set to %s\n", argv[0], head_name);
+
+I suspect that this does not account for a case where the
+"read_symbolic_ref()" we did earlier failed for a reason other than
+"the ref did not exist".
+
+> +		else if (opt_a && is_ref_changed)
+> +			printf("%s/HEAD was changed: set to %s\n", argv[0], head_name);
+>  		else if (opt_a)
+> -			printf("%s/HEAD set to %s\n", argv[0], head_name);
+> +			printf("%s/HEAD was unchanged: set to %s\n", argv[0], head_name);
+>  		free(head_name);
+>  	}
+
+Quoting the values we obtained from the environment or the user may
+be nicer, e.g.
+
+    'refs/remotes/origin/HEAD' is now set to 'main'.
+    'refs/remotes/origin/HEAD' is unchanged and points at 'main'.
+
+This is a tangent outside the immediate topic of this patch, but I
+wonder if we need "--quiet" mode.
+
+Thanks.
