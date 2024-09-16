@@ -1,120 +1,131 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CD715444E
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 16:03:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD342837A
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 16:25:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726502590; cv=none; b=pNEGoct7StlDS19vMLMfGzDRBW8FL7NKGp3uRnm8t3YyLKf8aE/Xwvyq8fHuYArMXGM4iB7pzX2oDibb/zLJn3j1qX01hlEH90PsqupMkR4lrm67yxX+p5rEI/lUhbcUIFQOhsHSFNyO4YgfMFRhVqfSBgzeekXnkt0DbiVH/Ws=
+	t=1726503934; cv=none; b=feoZ0J6hoqkE0fCuo8FLZNa5uZTeZ15Myam65ABWlM3D70tqm1nLnAGCy9+K+nrGuQt4Qe0FiagilGWhWEkpmhhiFY3z3blao81KJ5K/MGhHJs7G8AUjViT2Y0bTk3m32bjVGsXjJXfR7BNC+OnAXwOPNei1w/Wn8TLYe2cxCcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726502590; c=relaxed/simple;
-	bh=ROrNTSUWsB2v48QFZujKXmZPraqew93hrmok5AUtcLI=;
+	s=arc-20240116; t=1726503934; c=relaxed/simple;
+	bh=8hI7kFhGCddk+QM57vib8vtaKukMh4ObfjwWH67irNI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WGW5SgugfHmcQh5pNKnKvkg/qw5e11tNLdmD5Z8AYaTnIhUFHnAnWuVX8ogCFtM0eUnVQPAPnU4T4nyD7cJF6FN7ex8H0o5VJSkMsYAyfy1RA4rhuS+0zYrlSPjaDRXH47r+33XJtRR/YzyMJBkJx6UkOZvNCPn0gG6ciuBpcok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=h9iGuu9w; arc=none smtp.client-ip=209.85.166.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ct1Qtgmpo1l0N/dkK22EU39TLoz1kICzsJw7O6juGnxVQDa39bQX8MQa+SLh1DAwuKfi5V+I8ptXncv7cyls2Q+jvtIAgkiwEjLg3YkX0gg+v/ahRWAeylFVGht1WhZk/wfFnKqVf8CRwdhKvrf+xJnAiHK6kO1XpeOhJmf5fjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SLLpzxxo; arc=none smtp.client-ip=209.85.160.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="h9iGuu9w"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3a09af86744so6215985ab.1
-        for <git@vger.kernel.org>; Mon, 16 Sep 2024 09:03:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SLLpzxxo"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-2780827dbafso1821661fac.1
+        for <git@vger.kernel.org>; Mon, 16 Sep 2024 09:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726502588; x=1727107388; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1726503930; x=1727108730; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ROrNTSUWsB2v48QFZujKXmZPraqew93hrmok5AUtcLI=;
-        b=h9iGuu9woEe3fMLWrd8YqQtUAGKUlb1nOJrn+lBJo57tmMPMJ2/Vayr6D0ne1sjQk5
-         xDZE2YqRsMNWTlAg1OilbQgMzPxswgXjhr/QU8wmpCTCTmu3Mc0ouNsSe8xcgyv1u4BF
-         DyovCv/mP2VBbHjh/aSQx925pEzDrhr0DSxO0vIThI73sCOe3r9GUl3Cr0C38YXfsWdI
-         jKRhf1/AsrZh9s/e4RLg2OUZ/I6poGJvcdTJtH6No6YcT0wdSHfB/m3J/ACQL3JiABAf
-         4wwRBXOI6WAxUgVBs++4FlL25qqGztIbWoB35u1bOdxv63/kP0X+2iqPX95yYAaoiHnD
-         mEBw==
+        bh=DhqttTPwBZvAIOWRrNCXOiSpXqSJL8mvbdl2ypoopFk=;
+        b=SLLpzxxofeKC8TNcv50m3e8iXjFhxnkM+fq/Yff1Dv8/jdMnbysJqTVFqKjALCftMM
+         +Kk64QJjsKy+FPNxQkW4zsWsD0hyJj+nywnyYNBfzbikF6LLOM0y2+6Sk4oyLNgB+D+/
+         0Zd37boEw9dtMUlG1iv4Rx9xnyUor9qfjQRk2ZCCTcewPryFLP68q1SyZeBoYG9ieL5W
+         PECsnINX3wgAQDN/yC8ndUdv9cjlz6L94vl0RXPcn3dO47R0llf+2IsDCgwFo933QqVD
+         qlcFciW1FCA501y1tfK5K7S5El1ZfjFVG5ZEOGJvFPZiprX0vq02vubTcEKslv4E2IX/
+         /PVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726502588; x=1727107388;
+        d=1e100.net; s=20230601; t=1726503930; x=1727108730;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ROrNTSUWsB2v48QFZujKXmZPraqew93hrmok5AUtcLI=;
-        b=XAhKjFSLUlKEuLdQUYupZg8ltLSN4TXoDLRH+eHp874pIyjmRvTncmp5YcifRpQB2o
-         SQ/Wf6sb+6UUTrqp39CXrvL8FBAxdoNHp0XZ68vmWqPEbMz6jegM6TciqqnG3He+uTRC
-         ZwVlNkPDjVroosj2RDmZvRMQ3ypAQ9bXGJL7S98+Ykpn8NvCMpC00TM3W6HyyBCI2vJc
-         vbiJox1s+xFMQWfFRucpXZbzEDi9GHjNE1uPJ0/WTJLKA2nMmq1m5lUNQCHOmapbfvq4
-         lwl58MMdlJ38lBCEvHGKcww29b+FCUjXhNUtE8KcU0kGHbLbwbFeOijO974PLUCVEOE+
-         BC+g==
-X-Gm-Message-State: AOJu0Yxh1EZdovpeuAOSgJCndvMCqJqjh6GMjesdggLqXrOpDh5XSJia
-	Qvbi4N6myoPI0yKL3f0cjWDBnpqYifDK6BweUR9SQeec3+VYwXE10eDeEsrtaL0=
-X-Google-Smtp-Source: AGHT+IFI/89c3rctMPM2SK6IFtjSGi9nf6I8Fb7+N1tMvMnTFTSa1Cz3t5Z5BhtphaGIWYmjL46PeQ==
-X-Received: by 2002:a05:6e02:1d11:b0:3a0:9c2d:f441 with SMTP id e9e14a558f8ab-3a09c2dfb33mr45110485ab.24.1726502588031;
-        Mon, 16 Sep 2024 09:03:08 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d37ed190c3sm1562720173.120.2024.09.16.09.03.07
+        bh=DhqttTPwBZvAIOWRrNCXOiSpXqSJL8mvbdl2ypoopFk=;
+        b=ettozFLRDYiel6DlhVAIwIpbeedZQxHAoW+lV/lyg9DtY2MC4ErFngBmvxgUsZkZqX
+         h1RqRH4qnUKmC2IFqbXEYYAqMPDF/a3uXPzoTwsI3vAY6WaH3C3uUjaO7QatWtf0+9tG
+         0c2eITrGdhd5pYzSICVlV114ZucFbYxFDx/T4BAvvwbI8teRQFM0JrfSc1XRatruyq2O
+         X5kvn2gGEI9JdRHoqjAUwTzAf66jMJ/ZFgtmEJEdhUk0ySw40mNNc981pPg+GDsEzq1m
+         VMN8EDOj1K169MJvzR/U95E4OC3QxlTmzi8C+XV/tgMtRrr9qMpO1QUm3tZRQ9dkmFUY
+         m/1w==
+X-Gm-Message-State: AOJu0YzbFmgKG1k8ENlfKSKXIdlDNTKI3neWy2WJsLTLQNIPsMU7NQXe
+	iaA/7Akn9PqVR3XhPvhKm+o74jL3+AuUfDNetbCPnZifHadDLffxuQ+9Nw==
+X-Google-Smtp-Source: AGHT+IFPo58k+Ufd70iCUB39gksB9/QWcOFDpzJwDtGWNJrqkumgPN3QMS/6V5oh9aRvN9acCYtLVA==
+X-Received: by 2002:a05:6871:e2c1:b0:260:e4ac:72e5 with SMTP id 586e51a60fabf-27c68a091b7mr6917054fac.25.1726503930408;
+        Mon, 16 Sep 2024 09:25:30 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-27c956f3b33sm1607827fac.33.2024.09.16.09.25.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Sep 2024 09:03:07 -0700 (PDT)
-Date: Mon, 16 Sep 2024 12:03:05 -0400
-From: Taylor Blau <me@ttaylorr.com>
+        Mon, 16 Sep 2024 09:25:29 -0700 (PDT)
+Date: Mon, 16 Sep 2024 11:24:15 -0500
+From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/9] finalize_object_file(): implement collision check
-Message-ID: <ZuhWueGSwouKddgm@nand.local>
-References: <cover.1725206584.git.me@ttaylorr.com>
- <cover.1725651952.git.me@ttaylorr.com>
- <0feee5d1d4fc1e0aa1ca5d98f2f404ecdbb2f6b6.1725651952.git.me@ttaylorr.com>
- <ZugMUv1xbnjYH-el@pks.im>
- <ZuhUprZXvcRvgpp5@nand.local>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/23] builtin/help: fix dangling reference to `html_path`
+Message-ID: <guzjej2ghio2bxxt6epofcnl57nqaoagm65byox4iwhvkim2oy@qcuyzzsw5que>
+References: <cover.1726484308.git.ps@pks.im>
+ <e3bed973afacaec801cff1e77aeea6050cb34f57.1726484308.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZuhUprZXvcRvgpp5@nand.local>
+In-Reply-To: <e3bed973afacaec801cff1e77aeea6050cb34f57.1726484308.git.ps@pks.im>
 
-On Mon, Sep 16, 2024 at 11:54:14AM -0400, Taylor Blau wrote:
-> On Mon, Sep 16, 2024 at 12:45:38PM +0200, Patrick Steinhardt wrote:
-> > This function compares the exact contents, but isn't that wrong? The
-> > contents may differ even though the object is the same because the
-> > object hash is derived from the uncompressed data, whereas we store
-> > compressed data on disk.
-> >
-> > So this might trigger when you have different zlib versions, but also if
-> > you configure core.compression differently.
->
-> Oh, shoot -- you're right for when we call finalize_object_file() on
-> loose objects.
->
-> For packfiles and other spots where we use the hashfile API, the
-> name of the file depends on the checksum'd contents, so we're safe
-> there. But for loose objects the, the name of the file is based on the
-> object hash, which is the hash of the uncompressed contents.
->
-> So I think we would need something like this on top:
+On 24/09/16 01:45PM, Patrick Steinhardt wrote:
+> In `get_html_page_path()` we may end up assigning the return value of
+> `system_path()` to the global `html_path` variable. But as we also
+> assign the returned value to `to_free`, we will deallocate its memory
+> upon returning from the function. Consequently, `html_path` will now
+> point to deallocated memory.
+> 
+> Fix this issue by instead assigning the value to a separate local
+> variable.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/help.c | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+> 
+> diff --git a/builtin/help.c b/builtin/help.c
+> index dc1fbe2b986..282ea5721fa 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -513,23 +513,24 @@ static void show_info_page(const char *page)
+>  static void get_html_page_path(struct strbuf *page_path, const char *page)
+>  {
+>  	struct stat st;
+> +	const char *path = html_path;
+>  	char *to_free = NULL;
+>  
+> -	if (!html_path)
+> -		html_path = to_free = system_path(GIT_HTML_PATH);
+> +	if (!path)
+> +		path = to_free = system_path(GIT_HTML_PATH);
 
-Thinking about this a little more, I think that most cases should
-actually be OK. Of course, this only affects repositories that are
-changing their zlib version, and/or changing their core.compression
-setting regularly, so this is all pretty niche, but still...
+Previously, `html_path` was being assigned the return value of
+`system_path()` and consequently escaping this scope even though the
+value was being freed. There is no reason to modify the global value to
+begin with so we instead assign the value to a local variable. Makes
+sense.
 
-We often guard calls to write_loose_object() with either calling
-freshen_loose_object(), or freshen_packed_object(), which will update
-the mtime of the containing pack or loose object path for a given hash.
-
-So if we already have a loose object with hash X in the object store,
-and we try to write that same object again with a different zlib
-version and/or core.compression setting, we'll simply call
-freshen_loose_object() and optimize out the actual object write.
-
-Of course, that's not always the case. We might e.g., force an object
-loose via loosen_packed_objects() which could encounter a TOCTOU race
-with an incoming object write using a different compression setting. But
-that seems exceedingly rare to me.
-
-I think that we should still take that change in the mail I'm replying
-to, but I would definitely appreciate others' thoughts here.
-
-Thanks,
-Taylor
+>  
+>  	/*
+>  	 * Check that the page we're looking for exists.
+>  	 */
+> -	if (!strstr(html_path, "://")) {
+> -		if (stat(mkpath("%s/%s.html", html_path, page), &st)
+> +	if (!strstr(path, "://")) {
+> +		if (stat(mkpath("%s/%s.html", path, page), &st)
+>  		    || !S_ISREG(st.st_mode))
+>  			die("'%s/%s.html': documentation file not found.",
+> -				html_path, page);
+> +				path, page);
+>  	}
+>  
+>  	strbuf_init(page_path, 0);
+> -	strbuf_addf(page_path, "%s/%s.html", html_path, page);
+> +	strbuf_addf(page_path, "%s/%s.html", path, page);
+>  	free(to_free);
+>  }
+>  
+> -- 
+> 2.46.0.551.gc5ee8f2d1c.dirty
+> 
+> 
