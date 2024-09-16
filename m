@@ -1,83 +1,79 @@
-Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BCB13211F
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 06:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC1D85C47
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 07:10:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726469784; cv=none; b=f/JZqVf+jOwyf34VDFMuVEXtnGlWhg2rJaDU2lc+ZAHV8EIat+KErWjD5haksSNPgYlT29awmccF/e3O/sijV9jGELQhfEQGBQdwiT4WQIQyjSlXTec9uR5UjIJyAiDv6uRuCYiOGzxMLacpk1pPnunMT+XDlHyp4qhoxfHsNq8=
+	t=1726470604; cv=none; b=OwRgDC2OwFVdA1Cc7QoGHgZC21YyBf8lH7N5OW2yNlZkPpThemf1MarsJqE7sCfiSOaBb06yG3EY9iUeTNYoXFmzF7oFnutF3okB581P6+7Y68MiOJq0J+23l9IMg2L/shwkTOfIKLOPn9TleUUBBZMXYTC592bsgaAKGJBakK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726469784; c=relaxed/simple;
-	bh=j/PggJ4A63kmxsCPVQI1k8cQWXCpqY4crrW8KvJ1Y9Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tck4EguDeV2vIsE9CQ7zKri/JAuA0TVb+m+H4ZY5P8Dvvs80X9uiRoRnirUxWaENKQ7Zp/4myQJtMuzOuiIMgRRxyt7SGonQtSeL0r9pZt3hzROe3PB7yeHfaxdtdnYLqMNAd4n6drPe9wNZFfD94yX/hZOBPxRJ+c10c+4tTSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bw358kF6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UoRRz21A; arc=none smtp.client-ip=103.168.172.158
+	s=arc-20240116; t=1726470604; c=relaxed/simple;
+	bh=mp87ps9UFvPv5w+P6hYsXpGM3J/qWW69j2kTa5JCuII=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=n+d4UApj1mX2Bbylr1Js+AwrbjgRRCb8K7TSf/1ciCKxMsz275AJuQQGY096zeAi65Qi9zufOD8d9hTzmD22/TOvy0BLcp6uAs9Rlvka65l9dCSVKOTR2dL9H2LMcUsvqtCxijedFYs99a0jr1qdUz4pYkpfQdaaBk3mBqzmpDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=r8bpkCUF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qbE3M15S; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bw358kF6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UoRRz21A"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 982D111401CE;
-	Mon, 16 Sep 2024 02:56:21 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 16 Sep 2024 02:56:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="r8bpkCUF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qbE3M15S"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 85D4F138026F
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 03:10:01 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Mon, 16 Sep 2024 03:10:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726469781; x=1726556181; bh=NF4VYVzQQx
-	qf0M9J7yp09YVIwbhXBWBaifsQBis7urE=; b=Bw358kF6BhPMWCaV9HzILFznhV
-	6UehxZRqsAOaCCem4NvvG2xe8+6S8zuJVqYeDUEvi4WHeI3DSKW8eU87aOXBGFNs
-	9PVp+ZW1Ar4iuW7XcUEj8vcRFDyelh8CKBohBFtr3NvqW6CXxqmcmkc9aNimbuC9
-	0mF6KZMj/8VHXh+pVAcGFXxtBMXF5M0kED7ynLQiEEUk3NE+4Wx4SWZQnTZ232Xp
-	/goJJ+hVUD3nxKI9CCBT1Hof4m6k4RLUG/jFXo6DYSxJYU+3vHdG2FR/jIDaECN2
-	R/vOKaWvw4/CIpDD22NEGf91Ff1rqD3l51gHu00/LAUYCtfRRRbqXSoCwgOQ==
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1726470601; x=1726557001; bh=mG7MDgXs1l/raRYGq/3yqUAc2cVgNaUx
+	ahKfDyS5teo=; b=r8bpkCUFG48KuGusmkNJR/j4TUcfNc1Dh4xBkgeqXVDeBbdC
+	X9RIRVsrwi+IjfAerph/sgiJePk2WO1LS5FcQva9YXakYnlQ6+wXtjELhLhpWXjp
+	tX/01zKGprI6JFuu0dkgzv3mlWGKC3z1jk5qcP1XRknrMQoglGQFb7XTpzcU0xOS
+	KknDicr+MrIBcluslnIYtFGartiatU1HOrYmdRO1hRGGBYhLlrngX1qPe+Hgi8oy
+	XzUFStHTRFMrtzyjF0mXzdmRRWFn2jtVvQvQML9ooBQbQvHuqqmvrHTOu8xq/4UC
+	emCdJLNKwNuioPxTZSWzg0eubhbCgGxhKaHWEQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726469781; x=1726556181; bh=NF4VYVzQQxqf0M9J7yp09YVIwbhX
-	BWBaifsQBis7urE=; b=UoRRz21A6UlKkstwTh6ezTlkHudHR3EbRf5otToMAoRj
-	hp3b/zaw+qaqdZTF+Pkv3BY9BqUs8Yr3tO3Rq+n5Zd+vUqt7KCo70naoHbUZjR3p
-	twLz5S+uRzM93h0o4tNDqJt7P+nNcVEM4zQAMmmrp+wze58LJ0OSb5XekfmibxcG
-	OzJP4psnW/qiFYdQcq33oApYFHXcc7wOdrH2/9Yz9fYBZx3n4if+Zu//6viHGwF2
-	+fWeX4mnYco9fY4yJYl4SnwQCHk03Egz4kzHIWQzPW7E/QC0EDjMfkNDAx6yubga
-	B7mNtMZ+80FGJqoiTqW3bdtEFeVIZeRMdgv+p3s/mA==
-X-ME-Sender: <xms:ldbnZkB1b9wLuYyG8aJ_lpoOFrX4dKYS2bgK497aRjn7cV002TLWcA>
-    <xme:ldbnZmiIwt3q2uRUK9Wj6v3kqxA9RA5nMJpR5Zb5qEkK3bwp1J4paxbveMx4B-Qqt
-    PvDnvQM9PbDXDG3mQ>
-X-ME-Received: <xmr:ldbnZnncoRm9s8_sP4ig-py2b2l4yJ_ti10bjRph-KH46O1bwrz6TiXME2ZNLEIP-gOUDzo3CyIo-DSE89Gx_Ab0HFcdNiH0S5jFZr0OIFXPtwaP>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekgedguddugecutefuodetggdotefrod
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1726470601; x=1726557001; bh=mG7MDgXs1l/raRYGq/3yqUAc2cVgNaUxahK
+	fDyS5teo=; b=qbE3M15SCib/xWTmPxqIsKr77ubrqaESzg69Y+dJuU5u1IvrYIL
+	wsmJ2hJkxbdTTst0VMhNVzNem7sKkFaGxTo7s85sEz9BwwzAKN1xnfuUVEngyieG
+	uNpa7EXaKH9ho4EOxgmlN5/2wZh6H7sjKwQpoDOPw1v6jdX+K6Vsmz4+uRshTeo8
+	IxRoTpA1zMTJ92PVh+qoAHdAJ74qVlb18YtSjcSC9Ml7XCb33LinZLg52+vRBNMc
+	mPpMfJL7Q+eIZesVOjE6FWUNjC6H7E1TdZEnHlfuuUZvDf/uq6aiktC0e5E3PcaN
+	NTdPAqZe5+5ETf2XOPxqkzoDBw2rI6J4CLg==
+X-ME-Sender: <xms:ydnnZowb-1kz4Unp1OAks453cfybEMof7FwCYexdmPW-r0pF6vXu7A>
+    <xme:ydnnZsSesP9oKdLt8hd8H-NBACUf8_TXHwlNXQ7K2c8D2osf0wOib-pw2iY8Jt_GT
+    hdAqQP5eqPQm-_xYQ>
+X-ME-Received: <xmr:ydnnZqUJ6NjO3DWzeovuHCmef7-ry-M89xZ5Dwv0RCgWA6d-6Vb-Ks_dFCN9HB73ew2VqUf-Rq9IN7GMA5KyXYVUdgFB-nONXzWHXEDOPMwIbfzJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekgedguddukecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdortddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeejtddtgeffkedujeejgeduhefghedtgfdtieduleeu
-    lefgueetheeludegueeuveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehmvgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:ldbnZqwBb8iACkc_6Phr4PPdMFgP7OelGQ_--cjyNfuWFEaXMolEoQ>
-    <xmx:ldbnZpQCmAGSEfpr8et-7Ptmvo2L68pMO1mFtctL557dc1biAfmkPQ>
-    <xmx:ldbnZlatYHmqpdumdDHy7QTEGHgI50z7Iqgf_qyrnbbho3IBEJG8EA>
-    <xmx:ldbnZiSjylu-ekQ0w1dbQ6-qedReX2dH46E31YOwOF01lHlS8Zeo6A>
-    <xmx:ldbnZrcnNQ7ssIhUNvuEZBZMc8FBE8QveVqCEU80XttTo6joXQ9i4wdU>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    fukfggtggusehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
+    rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeljeegveegffduje
+    fhveehhfejgeekvddvleetkedtudffieejudeiudffveelfeenucevlhhushhtvghrufhi
+    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
+    gtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ydnnZmjFdRKlQh0BMXb8JZsUVx_ybW5iN2gT4WNC1_19dvSdfxsN2A>
+    <xmx:ydnnZqBBpBOxhJoccfyc-ZDYSiWUIMhvihnSIFcH28-SHYAw4DClWQ>
+    <xmx:ydnnZnJNTLCpc6SBom9ZOmxAO7f_aY_IPNUg-FOLq0oefIvt5K81sw>
+    <xmx:ydnnZhD3xlH4N2x7sgD46kkYEjGW0D9onug1Et7semgrN-rOPUA1Ew>
+    <xmx:ydnnZr4VKcIwwq-TSf_yO1KaRvaAZBVglSMnYd8BrY3bWtdMtfK0SOdR>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Sep 2024 02:56:20 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 16 Sep 2024 03:10:00 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3b6fe077 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Sep 2024 06:56:04 +0000 (UTC)
-Date: Mon, 16 Sep 2024 08:56:20 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 98076562 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 16 Sep 2024 07:09:42 +0000 (UTC)
+Date: Mon, 16 Sep 2024 09:09:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 0/6] refs/reftable: wire up exclude patterns
-Message-ID: <ZufWlEViXqgNqBLh@pks.im>
-References: <cover.1725881266.git.ps@pks.im>
- <CAOLa=ZS3XBG4_=D5rCkntJuU0tzV7t=rB95rkNvWgm++Q+xukg@mail.gmail.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/6] apply: fix leaking buffer of `struct image`
+Message-ID: <cover.1726470385.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,44 +82,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZS3XBG4_=D5rCkntJuU0tzV7t=rB95rkNvWgm++Q+xukg@mail.gmail.com>
 
-On Fri, Sep 13, 2024 at 07:48:02AM -0500, karthik nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Hi,
-> >
-> > this patch series wires up exclude patterns for the reftable backend.
-> > Exclude patterns allow the backend to skip references internally that
-> > match a specific pattern. This avoids having to read references that the
-> > caller would discard immediately anyway.
-> >
-> > The series is structured as follows:
-> >
-> >   - Patches 1 and 2 fix two separate bugs in how we currently handle
-> >     exclude patterns in combination with namespaces. We didn't happen to
-> >     stumble over these bugs before because exclude patterns are only
-> >     implemented for the "packed" backend. But once you start to pack
-> >     refs we exclude references based on their full name instead of the
-> >     name with the prefixed stripped. For the reftable backend we'd
-> >     always hit those bugs because it always uses exclude patterns when
-> >     passed.
-> >
-> >   - Patches 3 to 5 wire up proper re-seeking of reftable iterators and
-> >     adds some tests to demonstrate that this works as expected. This is
-> >     a prerequisite for handling exclude patterns.
-> >
-> >   - Patch 6 wires up exclude patterns in the reftable backend by
-> >     re-seeking iterators once we hit an excluded reference.
-> >
-> > Thanks!
-> >
-> > Patrick
-> >
-> 
-> This was a bit more intensive so I took my time with the review. Overall
-> I have some questions/comments. But the series looks good. Thanks!
+Hi,
 
-Thanks for your review!
+this patch series addresses memory leaks in "apply.c" revolving around
+`struct image`. I've split the series out of the usual leak fix series
+because I found the code really hard to reason about. So instead of just
+trying to plug the leak with a least-effort patch I refactored it a bit
+to make it more straight-forward. Most importantly, the last patch
+converts the code to use a proper `struct strbuf` to modify the pre- and
+postimages, which is both easier and allows for proper lifecycle
+management of its buffer.
+
+This series builds on top of ed155187b4 (Sync with Git 2.46.1,
+2024-09-13).
+
+Thanks!
 
 Patrick
+
+Patrick Steinhardt (6):
+  apply: reorder functions to move image-related things together
+  apply: rename functions operating on `struct image`
+  apply: introduce macro and function to init images
+  apply: refactor code to drop `line_allocated`
+  apply: rename members that track line count and allocation length
+  apply: refactor `struct image` to use a `struct strbuf`
+
+ apply.c                            | 447 +++++++++++++----------------
+ t/t3436-rebase-more-options.sh     |   1 +
+ t/t4107-apply-ignore-whitespace.sh |   4 +-
+ t/t4124-apply-ws-rule.sh           |   1 +
+ t/t4125-apply-ws-fuzz.sh           |   1 +
+ t/t4138-apply-ws-expansion.sh      |   1 +
+ 6 files changed, 204 insertions(+), 251 deletions(-)
+
+-- 
+2.46.0.551.gc5ee8f2d1c.dirty
+
