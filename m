@@ -1,81 +1,82 @@
 Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E05C158527
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 12:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FB515624D
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 12:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726489715; cv=none; b=rB9XJPr2dhawRC/nk+gejHOLNV+fa+S2QWWdgkkt4vdFGOzQ2JlQVe7IrGWwVCpeIXPuWQxBf3Bf+lrJ2eYHvbVUFjX5D6y4Jj2ldazQxkvB4RdSBl4usLBsL12iHdwnJskEAYNfnXmMCD7wF4BIdI3Vcbukvf3KwY+9fzNiQNc=
+	t=1726489718; cv=none; b=ZNFCb/v3BikXlumz456QmIuOb8/rhC3MvFx4aUnAqqR6opSe0xzDA8BXGCXTiyd8fTh6G1xqlO1QN76qWsHGt70RnIaZffcHtT49DH2L72BKhsGFxEO9rNV2HSyFjuJROdSY5FcmDm+HJJZqCcH5qCN1p3MRowptNDw5WuaHNgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726489715; c=relaxed/simple;
-	bh=Ofr6Tmii79+neGaKQYRCAGmshCISYKm8dtO2vQF5cgg=;
+	s=arc-20240116; t=1726489718; c=relaxed/simple;
+	bh=UXe/jneljxmmgsi8+vRJhgKs6mn4z4+x0S5xFQB6sBM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QMtRNEkA021gLNlkSOdZn3Es3wwveHe2kQXXn60aAzuJT9GUvOIKXco+QKD5MYvSUo602ZrKdykkxBy4ZHrUTLbJgjG08yYMO3j0LYGNC6iDaWlVYG3mby5LaTI91EpIkGnHjWhPvkha/csfVgbJ1JflAx8oktCR0M0KL7QO+dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ud7BSMD2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RHOzPvHe; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=SszcGjXfcTHhypt0+h1KFuxeHbRWnAFLNuxGBBbvYI52ZNJoP3CBnb6Pi8g4MhH17w1BFfbMptGI8/vkBM7iW1v3gYEih655x9+NyXOt218tyXzPXC7WZBZJTEBJn/wWEt+dn5zMEMVVfLzG4UhvOlMx9+amrUYdYzUEcodQe2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L5nvxJEe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nQDHamPD; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ud7BSMD2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RHOzPvHe"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 804A111401C3;
-	Mon, 16 Sep 2024 08:28:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L5nvxJEe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nQDHamPD"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 939B4114023D;
+	Mon, 16 Sep 2024 08:28:35 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 16 Sep 2024 08:28:33 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 16 Sep 2024 08:28:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726489713; x=1726576113; bh=no9ZwsFyx+
-	yOpy5alXBb0jGrhuWxKMEHPi14+erKWqc=; b=Ud7BSMD2GWAejGHHeYBW0dZK+7
-	EbzIuKwncPkVhxlJ3HoGFhhidHoUxd+FmNWSv9AVJMdC22m3pSC1z6TXl/yKg06n
-	qFytLqsTi38XmmljNQOCIsXGCkw8cdQnblWJg5B6Y3rIDZKWW/d6uVMpyGWl/kFk
-	HCTJVahxPYA9OENhJrqOgVZmQvDDHfwF6ZK30IVeF1BLNhBEJTXDJbM6N6+Ump2P
-	lNJ7m3U+bm5zhWW4TDscuoedbYG0Zd14EALNJVrqODX/bdh/85ALDoYeSFEMNQBO
-	dFavPQHLX+FH3WDUHEECJpTMnFr/TCH/9Z4jXLz44bWE37MeL6rHUG0en89A==
+	:subject:to:to; s=fm1; t=1726489715; x=1726576115; bh=orYIaVjKvY
+	rdaHpRk626AtD0G2Qqvo4E/RErPNcSwcQ=; b=L5nvxJEe7k8glVe9eDxe7HGL3A
+	4CYt3CS/hDO8YAbaz6xznrPJ8hrUKbfwqhitsBadLoAYXaGme5n1dCSR8Elr2TFy
+	eUV3WNUnND0ybb1rKXD6ZdxcMlblxK1UhGbGxigNB9QxjvWimtRY+mP8wX+q1vgQ
+	+HoJCFE71nKNXUo5zZQjkUZ/aSWNcSM+rJ0vlVQKiMUyCwpap1vB7HvOUoOSGHhG
+	Jg3Sbni22F66eEjAhOTiXilYRqt0SmvlJ1e+dgPeHKgDZ2nAdNfvS9gh81lPIk1n
+	UH+aetkP4G3X3XJeDThKeUckszrOjqfP8iqgo0EsRUhuV6272WNnZgpIkZaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726489713; x=1726576113; bh=no9ZwsFyx+yOpy5alXBb0jGrhuWx
-	KMEHPi14+erKWqc=; b=RHOzPvHeXpoaWPGMFvBnF6/XNPWDZvXk/OKDDHkuNMOn
-	+eUpW+8lb+BoSdidWvNWzkoAWFZLpi1yijqHg0iUzYLSZ+y695BkWStARb9g2bIA
-	zCvvCXDwoJGdYMyAeb92nLCFHsj5hdW7OXkE45IXX1xtkKSYZ5Q/UHBSnpcTQMjv
-	eblbsItNIDTAXastXTkNr+6oiEY590r/AfmludaTo5Si2NgqG4PywQpZueS/vzjL
-	nENID+4mpEvuriXQwePs9JdQ2hdYjnI0elIWuiw+sQ2Drb4pBexBZFeUr+owQhUQ
-	B411AN6DSVWB0w++GZIHiUClXLyUNI8JRuqN/AiUEA==
-X-ME-Sender: <xms:cSToZsspVwV_I_I21W06WCYuXOfbOd3Fw9801Vb1OqxgIIkMJobdOQ>
-    <xme:cSToZpdJw27Laxp5sKGQ-KrLKRytxNVa-DcSxEIfMPk28DocvmftEoT9A687PJsv6
-    YBLk3n6PtGZn_fAYg>
-X-ME-Received: <xmr:cSToZnxX2F00PAijgn5s_3V33cmQ43psKrxS21PvCY1gTQ2hpHf8NVOdcU75sd0FI-jNBLKBJ5kruVMkM1udouWUxnkUlTe3CeDXfBcssK_nCFXt>
+	fm1; t=1726489715; x=1726576115; bh=orYIaVjKvYrdaHpRk626AtD0G2Qq
+	vo4E/RErPNcSwcQ=; b=nQDHamPDgAVd49PZoFOUsVQ1wN76IJ8kTS6rF69IuagE
+	wIeuZ/6DS2JlVrovnaEgXizljBnKVtntpkCs8RQxxr0FlJSdFCSuMYOghVwOaw9A
+	MqXXi/lIZRFseJgRygJkcUbFGnna/RN2KOClx+adfNI2bcrPmdxjSMdyM2dSc6Bi
+	NM3hBaLewPsLRqac8LHnzWBXr3IsZYgVvVWrhxpOuw9+x+j3jlQNiaBXjnEE94hE
+	Yg2APA7qrZo1HggJBU0Q4MpSkti1SrHm9HGosIAtucjjrR1GAXGdjgW5EeTPw7Kg
+	KxurvtFXNBIk7lZqN0jEnPC8e+3SLhawoZKI+v5TLg==
+X-ME-Sender: <xms:cyToZkgE4RdTfM4DaMlA0m-4KTmN3bd8kJfW7fYkepPDywDPYUsC4w>
+    <xme:cyToZtCe_f5dBTWWut6c9C_grzipHVmkYgM3GkRf_AR-9WTa1-OX4u8okmG-l8LI1
+    G_MBwG92zHS5qPhng>
+X-ME-Received: <xmr:cyToZsHWyy1pqFZVT3SCzrIqDPPfVF3Zu0Txp9BO4KKsQXFFbL_26uwObFx5xUb-qkfHwvDOdWRvgOKTzfqZKvVMlye120sclF2Si7yluGJUH3Ri>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomh
-X-ME-Proxy: <xmx:cSToZvMT6sYBUqB3xcQ58S9YpsVodtQQ-tJGaugYW3WGkNsGMKKziw>
-    <xmx:cSToZs-U3lm0N1u-h-K-H2yf_xjB86U1blD3S1mmwUEuXZWEX_0qtQ>
-    <xmx:cSToZnXyMW_3lstiFc5P_WXSjRtq-6_Tbj3IiI3Pjy-QTmd3QQLecg>
-    <xmx:cSToZlfrkqR2u-thCmBmI-RQqIljrG_IlHg24SyMfDMK8GX31w5zSA>
-    <xmx:cSToZuLM06OZPh0JCbVqCTgRYTqerC-ytmQyfN5LjkY_AMNM6usE2wrl>
+    eqnecuggftrfgrthhtvghrnhepvdehvdegledtvdekkedtieekjeduteekuddvhffgleff
+    gfdtieekgefgffeihfdtnecuffhomhgrihhnpehvrghlvddrthgrrhhgvghtpdhuphgurg
+    htvgdrvghmrghilhdpuhhpuggrthgvrdhnrghmvgdpuhhpuggrthgvrdhnvgifnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    vghthhhomhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:cyToZlRCiz9MkqJyYWHG45A0xWC06FZoyx27w6jprO10_xp03JPHqA>
+    <xmx:cyToZhx6lmWm0lSt27-C1FFUbiQsWPztxqb4Lxn86NnVq_0DOS8IaA>
+    <xmx:cyToZj7Cfc2_NJg9dwTGylzGYPTIRgtJFQXfQLWhvaG9bULml7Ac7Q>
+    <xmx:cyToZuz51MJAunO8_thKgFjmsJGGrGtWACxfXeY4OWpI69GVv6JFsA>
+    <xmx:cyToZs8uFFW3bhlcXQMMmImGIet0ghmlhHn4YcQeRI8AVjNTSTuzqWDx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Sep 2024 08:28:32 -0400 (EDT)
+ 16 Sep 2024 08:28:34 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 90a0d468 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Sep 2024 12:28:15 +0000 (UTC)
-Date: Mon, 16 Sep 2024 14:28:29 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id b6c6e809 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Sep 2024 12:28:18 +0000 (UTC)
+Date: Mon, 16 Sep 2024 14:28:34 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>
-Subject: [PATCH 05/22] reftable/basics: handle allocation failures in
- `parse_names()`
-Message-ID: <1f98abe9812e7fe951a62680e842c592231f2bf3.1726489647.git.ps@pks.im>
+Subject: [PATCH 06/22] reftable/record: handle allocation failures on copy
+Message-ID: <fa32be01e508c1f90096e25fe14708587b649013.1726489647.git.ps@pks.im>
 References: <cover.1726489647.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,138 +88,231 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726489647.git.ps@pks.im>
 
-Handle allocation failures in `parse_names()` by returning `NULL` in
-case any allocation fails. While at it, refactor the function to return
-the array directly instead of assigning it to an out-pointer.
+Handle allocation failures when copying records. While at it, convert
+from `xstrdup()` to `reftable_strdup()`. Adapt callsites to check for
+error codes.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics.c                | 20 ++++++++++++++++----
- reftable/basics.h                |  9 ++++++---
- reftable/stack.c                 |  6 +++++-
- t/unit-tests/t-reftable-basics.c | 11 ++++++-----
- 4 files changed, 33 insertions(+), 13 deletions(-)
+ reftable/record.c | 84 +++++++++++++++++++++++++++++++++--------------
+ reftable/record.h |  6 ++--
+ 2 files changed, 63 insertions(+), 27 deletions(-)
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index b404900b5d9..b9bbf061e9d 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -130,14 +130,14 @@ size_t names_length(const char **names)
- 	return p - names;
+diff --git a/reftable/record.c b/reftable/record.c
+index 6b5a075b921..60fd33c9c94 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -215,13 +215,14 @@ static void reftable_ref_record_key(const void *r, struct strbuf *dest)
+ 	strbuf_addstr(dest, rec->refname);
  }
  
--void parse_names(char *buf, int size, char ***namesp)
-+char **parse_names(char *buf, int size)
+-static void reftable_ref_record_copy_from(void *rec, const void *src_rec,
+-					  int hash_size)
++static int reftable_ref_record_copy_from(void *rec, const void *src_rec,
++					 int hash_size)
  {
- 	char **names = NULL;
- 	size_t names_cap = 0;
- 	size_t names_len = 0;
--
- 	char *p = buf;
- 	char *end = buf + size;
-+
- 	while (p < end) {
- 		char *next = strchr(p, '\n');
- 		if (next && next < end) {
-@@ -147,14 +147,26 @@ void parse_names(char *buf, int size, char ***namesp)
- 		}
- 		if (p < next) {
- 			REFTABLE_ALLOC_GROW(names, names_len + 1, names_cap);
--			names[names_len++] = xstrdup(p);
-+			if (!names)
-+				goto err;
-+
-+			names[names_len] = strdup(p);
-+			if (!names[names_len++])
-+				goto err;
- 		}
- 		p = next + 1;
- 	}
+ 	struct reftable_ref_record *ref = rec;
+ 	const struct reftable_ref_record *src = src_rec;
+ 	char *refname = NULL;
+ 	size_t refname_cap = 0;
++	int err;
  
- 	REFTABLE_REALLOC_ARRAY(names, names_len + 1);
- 	names[names_len] = NULL;
--	*namesp = names;
+ 	assert(hash_size > 0);
+ 
+@@ -236,6 +237,11 @@ static void reftable_ref_record_copy_from(void *rec, const void *src_rec,
+ 
+ 		REFTABLE_ALLOC_GROW(ref->refname, refname_len + 1,
+ 				    ref->refname_cap);
++		if (!ref->refname) {
++			err = REFTABLE_OUT_OF_MEMORY_ERROR;
++			goto out;
++		}
 +
-+	return names;
+ 		memcpy(ref->refname, src->refname, refname_len);
+ 		ref->refname[refname_len] = 0;
+ 	}
+@@ -254,9 +260,17 @@ static void reftable_ref_record_copy_from(void *rec, const void *src_rec,
+ 		       src->value.val2.target_value, hash_size);
+ 		break;
+ 	case REFTABLE_REF_SYMREF:
+-		ref->value.symref = xstrdup(src->value.symref);
++		ref->value.symref = reftable_strdup(src->value.symref);
++		if (!ref->value.symref) {
++			err = REFTABLE_OUT_OF_MEMORY_ERROR;
++			goto out;
++		}
+ 		break;
+ 	}
 +
-+err:
-+	for (size_t i = 0; i < names_len; i++)
-+		free(names[i]);
-+	free(names);
-+	return NULL;
++	err = 0;
++out:
++	return err;
  }
  
- int names_equal(const char **a, const char **b)
-diff --git a/reftable/basics.h b/reftable/basics.h
-index f107e148605..69adeab2e4b 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -38,9 +38,12 @@ size_t binsearch(size_t sz, int (*f)(size_t k, void *args), void *args);
-  */
- void free_names(char **a);
+ static void reftable_ref_record_release_void(void *rec)
+@@ -457,23 +471,28 @@ static void reftable_obj_record_release(void *rec)
+ 	memset(obj, 0, sizeof(struct reftable_obj_record));
+ }
  
--/* parse a newline separated list of names. `size` is the length of the buffer,
-- * without terminating '\0'. Empty names are discarded. */
--void parse_names(char *buf, int size, char ***namesp);
-+/*
-+ * Parse a newline separated list of names. `size` is the length of the buffer,
-+ * without terminating '\0'. Empty names are discarded. Returns a `NULL`
-+ * pointer when allocations fail.
-+ */
-+char **parse_names(char *buf, int size);
+-static void reftable_obj_record_copy_from(void *rec, const void *src_rec,
+-					  int hash_size UNUSED)
++static int reftable_obj_record_copy_from(void *rec, const void *src_rec,
++					 int hash_size UNUSED)
+ {
+ 	struct reftable_obj_record *obj = rec;
+-	const struct reftable_obj_record *src =
+-		(const struct reftable_obj_record *)src_rec;
++	const struct reftable_obj_record *src = src_rec;
  
- /* compares two NULL-terminated arrays of strings. */
- int names_equal(const char **a, const char **b);
-diff --git a/reftable/stack.c b/reftable/stack.c
-index ce0a35216ba..498fae846d7 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -108,7 +108,11 @@ static int fd_read_lines(int fd, char ***namesp)
+ 	reftable_obj_record_release(obj);
+ 
+ 	REFTABLE_ALLOC_ARRAY(obj->hash_prefix, src->hash_prefix_len);
++	if (!obj->hash_prefix)
++		return REFTABLE_OUT_OF_MEMORY_ERROR;
+ 	obj->hash_prefix_len = src->hash_prefix_len;
+ 	if (src->hash_prefix_len)
+ 		memcpy(obj->hash_prefix, src->hash_prefix, obj->hash_prefix_len);
+ 
+ 	REFTABLE_ALLOC_ARRAY(obj->offsets, src->offset_len);
++	if (!obj->offsets)
++		return REFTABLE_OUT_OF_MEMORY_ERROR;
+ 	obj->offset_len = src->offset_len;
+ 	COPY_ARRAY(obj->offsets, src->offsets, src->offset_len);
++
++	return 0;
+ }
+ 
+ static uint8_t reftable_obj_record_val_type(const void *rec)
+@@ -646,33 +665,44 @@ static void reftable_log_record_key(const void *r, struct strbuf *dest)
+ 	strbuf_add(dest, i64, sizeof(i64));
+ }
+ 
+-static void reftable_log_record_copy_from(void *rec, const void *src_rec,
+-					  int hash_size)
++static int reftable_log_record_copy_from(void *rec, const void *src_rec,
++					 int hash_size)
+ {
+ 	struct reftable_log_record *dst = rec;
+ 	const struct reftable_log_record *src =
+ 		(const struct reftable_log_record *)src_rec;
++	int ret;
+ 
+ 	reftable_log_record_release(dst);
+ 	*dst = *src;
++
+ 	if (dst->refname) {
+-		dst->refname = xstrdup(dst->refname);
++		dst->refname = reftable_strdup(dst->refname);
++		if (!dst->refname) {
++			ret = REFTABLE_OUT_OF_MEMORY_ERROR;
++			goto out;
++		}
  	}
- 	buf[size] = 0;
++
+ 	switch (dst->value_type) {
+ 	case REFTABLE_LOG_DELETION:
+ 		break;
+ 	case REFTABLE_LOG_UPDATE:
+-		if (dst->value.update.email) {
++		if (dst->value.update.email)
+ 			dst->value.update.email =
+-				xstrdup(dst->value.update.email);
+-		}
+-		if (dst->value.update.name) {
++				reftable_strdup(dst->value.update.email);
++		if (dst->value.update.name)
+ 			dst->value.update.name =
+-				xstrdup(dst->value.update.name);
+-		}
+-		if (dst->value.update.message) {
++				reftable_strdup(dst->value.update.name);
++		if (dst->value.update.message)
+ 			dst->value.update.message =
+-				xstrdup(dst->value.update.message);
++				reftable_strdup(dst->value.update.message);
++
++		if (!dst->value.update.email ||
++		    !dst->value.update.name ||
++		    !dst->value.update.message) {
++			ret = REFTABLE_OUT_OF_MEMORY_ERROR;
++			goto out;
+ 		}
  
--	parse_names(buf, size, namesp);
-+	*namesp = parse_names(buf, size);
-+	if (!*namesp) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
+ 		memcpy(dst->value.update.new_hash,
+@@ -681,6 +711,10 @@ static void reftable_log_record_copy_from(void *rec, const void *src_rec,
+ 		       src->value.update.old_hash, hash_size);
+ 		break;
+ 	}
++
++	ret = 0;
++out:
++	return ret;
+ }
  
- done:
- 	reftable_free(buf);
-diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-basics.c
-index e5556ebf527..1fa77b6faff 100644
---- a/t/unit-tests/t-reftable-basics.c
-+++ b/t/unit-tests/t-reftable-basics.c
-@@ -72,13 +72,14 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
- 	if_test ("parse_names works for basic input") {
- 		char in1[] = "line\n";
- 		char in2[] = "a\nb\nc";
--		char **out = NULL;
--		parse_names(in1, strlen(in1), &out);
-+		char **out = parse_names(in1, strlen(in1));
-+		check(out != NULL);
- 		check_str(out[0], "line");
- 		check(!out[1]);
- 		free_names(out);
+ static void reftable_log_record_release_void(void *rec)
+@@ -954,8 +988,8 @@ static void reftable_index_record_key(const void *r, struct strbuf *dest)
+ 	strbuf_addbuf(dest, &rec->last_key);
+ }
  
--		parse_names(in2, strlen(in2), &out);
-+		out = parse_names(in2, strlen(in2));
-+		check(out != NULL);
- 		check_str(out[0], "a");
- 		check_str(out[1], "b");
- 		check_str(out[2], "c");
-@@ -88,8 +89,8 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+-static void reftable_index_record_copy_from(void *rec, const void *src_rec,
+-					    int hash_size UNUSED)
++static int reftable_index_record_copy_from(void *rec, const void *src_rec,
++					   int hash_size UNUSED)
+ {
+ 	struct reftable_index_record *dst = rec;
+ 	const struct reftable_index_record *src = src_rec;
+@@ -963,6 +997,8 @@ static void reftable_index_record_copy_from(void *rec, const void *src_rec,
+ 	strbuf_reset(&dst->last_key);
+ 	strbuf_addbuf(&dst->last_key, &src->last_key);
+ 	dst->offset = src->offset;
++
++	return 0;
+ }
  
- 	if_test ("parse_names drops empty string") {
- 		char in[] = "a\n\nb\n";
--		char **out = NULL;
--		parse_names(in, strlen(in), &out);
-+		char **out = parse_names(in, strlen(in));
-+		check(out != NULL);
- 		check_str(out[0], "a");
- 		/* simply '\n' should be dropped as empty string */
- 		check_str(out[1], "b");
+ static void reftable_index_record_release(void *rec)
+@@ -1054,14 +1090,14 @@ int reftable_record_encode(struct reftable_record *rec, struct string_view dest,
+ 						   dest, hash_size);
+ }
+ 
+-void reftable_record_copy_from(struct reftable_record *rec,
++int reftable_record_copy_from(struct reftable_record *rec,
+ 			       struct reftable_record *src, int hash_size)
+ {
+ 	assert(src->type == rec->type);
+ 
+-	reftable_record_vtable(rec)->copy_from(reftable_record_data(rec),
+-					       reftable_record_data(src),
+-					       hash_size);
++	return reftable_record_vtable(rec)->copy_from(reftable_record_data(rec),
++						      reftable_record_data(src),
++						      hash_size);
+ }
+ 
+ uint8_t reftable_record_val_type(struct reftable_record *rec)
+diff --git a/reftable/record.h b/reftable/record.h
+index 5003bacdb0c..0f53ba54434 100644
+--- a/reftable/record.h
++++ b/reftable/record.h
+@@ -44,7 +44,7 @@ struct reftable_record_vtable {
+ 	/* The record type of ('r' for ref). */
+ 	uint8_t type;
+ 
+-	void (*copy_from)(void *dest, const void *src, int hash_size);
++	int (*copy_from)(void *dest, const void *src, int hash_size);
+ 
+ 	/* a value of [0..7], indicating record subvariants (eg. ref vs. symref
+ 	 * vs ref deletion) */
+@@ -137,8 +137,8 @@ void reftable_record_init(struct reftable_record *rec, uint8_t typ);
+ int reftable_record_cmp(struct reftable_record *a, struct reftable_record *b);
+ int reftable_record_equal(struct reftable_record *a, struct reftable_record *b, int hash_size);
+ void reftable_record_key(struct reftable_record *rec, struct strbuf *dest);
+-void reftable_record_copy_from(struct reftable_record *rec,
+-			       struct reftable_record *src, int hash_size);
++int reftable_record_copy_from(struct reftable_record *rec,
++			      struct reftable_record *src, int hash_size);
+ uint8_t reftable_record_val_type(struct reftable_record *rec);
+ int reftable_record_encode(struct reftable_record *rec, struct string_view dest,
+ 			   int hash_size);
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
