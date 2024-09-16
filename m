@@ -1,79 +1,79 @@
 Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B8E156676
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 11:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C96157A67
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 11:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726487178; cv=none; b=qjPBqAPTySJoJOAuzgbBPH5zj+9v7MJakS+IPGnp6ljhMGDm8IHLGAB+XdWrbkC7NQT79cJizNPcOt6Uwo6FVP965y0u8DTOYLA8R/VpYpwoXCKy9tVFMRnmeebHRpMiVTqh6QRHworaSdiOGDqw8KN8TPvEWmUsTmv92W9EcCw=
+	t=1726487181; cv=none; b=Q/bQNsYujoYldW7/ZL0nYYKVFEvLG0rqKp8Kap5iOoq655h0oza6O8sB+gfWBGqVcFZBrp6MlyBA8WceYoU1jDlEa03QlfuuAYIvvlAOCCkdByYSWX8wvHexDWK3IAugoMZxOrgPSXMltLGtwC5eV1CEQeNEA19grkcq2jnNwf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726487178; c=relaxed/simple;
-	bh=hNTk47IQ1+FjjGAkEBcnR96D4OcKRvAZGDxyiMHX/2I=;
+	s=arc-20240116; t=1726487181; c=relaxed/simple;
+	bh=vcFvOCpQkqKmnRp8Zv+VU32U2bXShGpn4xxwP6pSGko=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pfmhu4jUe8Zb/oMnV+H+TrLXaFIE5jWDS6JkkO7Je9nCwbUFh4415crEt94il+ILvMrKROpBgkGBM2BA6OnLhw2QHyvvwxFdke85fyo9b7aIHnLaJRcMTMvpAH7NavUmmwkLP9S27/PogoBUCSMZX+GT2yHs68olwE7JnAT0NGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iZS8WuYJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R1lvOXJD; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=qU+3rmNV1JNAJRzQQOeJfjgxtOBz+mPUlwscs8lr4I4Zd/TH+T/Ra17TcxxQgc95llGzr2Yr4o0S6OBH7E7e6NV253zHSBkT/gyN4WgQHKMvq2izOM2A82R/PZiftTnuqmA7OyrHehHVdvUq+ZUeCTsNSoxY/uolpg7st8AB2wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f7hZS4s3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J3D4Zctg; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iZS8WuYJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R1lvOXJD"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 801B21140239
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 07:46:16 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f7hZS4s3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J3D4Zctg"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 58F5E1140125
+	for <git@vger.kernel.org>; Mon, 16 Sep 2024 07:46:19 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 16 Sep 2024 07:46:16 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 16 Sep 2024 07:46:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726487176; x=1726573576; bh=x3lcHrh9t6
-	AApyJ1NTjddk39qA7Xypg7X5U1oGFqQsA=; b=iZS8WuYJpw7PlrwPdmat+DXOLX
-	VvvkS1PIBhcE1TsDOoYJsUDoVPcm6iDXYTqhrmsCjy2TPlDRA0dNX83+4QdJjn/f
-	fWIUmaQ+0P5AhX8fEGmwwdr7rg+4ozMhz/Gly5uDYu9SMXlrP8u9YDQuVheYH3yO
-	bUmMD+NFGa+K5aOoURQ+v3ub2SsgblDU/AE102lYNlXzUxgji4GvmWz1QRDbVGoR
-	UOquLRmFgeC9aYYCKLsyr3yyK65LaDUUM5aJ5Nf4J7j/jWQdhBteisE7/Z/yx6ZP
-	KIntMvMzv+wfGNyojt5+vsjAL4kt13K84/F9W5IkTrloeGaIRfzQF6KysWUA==
+	:subject:to:to; s=fm1; t=1726487179; x=1726573579; bh=880qX5sU7V
+	13SxS2gP5qfj8Ab5LBsdAq8B4L02JRyLs=; b=f7hZS4s3//YrJ+lVrC34/eGSaP
+	LpuIIOFd0fVp1c0JkOjLUYgvXKTuWo2GKg3JZwBPd1yx0scnvZ0wHoKaF4z7h+LZ
+	AmVr5JuRGOel1d72HZGytD66eWMMawF3tgdzNgENNVnZ//cfw2FmzU5Xklt8MuAz
+	DCfHy6ueFseHGBJn8AXiS65MDaGGODQ9GAnd6yjwjFmEu60vU7E8il11fycQ2zvj
+	3LNnP7UFg+XysYoouAdmVFnVSJWMVNjbi/AwwPeKAro+CA4xnyprmc8RyffXIFAo
+	zt1NnIZjDZ8zfWIw00yukwyzkbCwS2O2w/WmRJ5scb+LdaLo1uHKj1ggRUkQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726487176; x=1726573576; bh=x3lcHrh9t6AApyJ1NTjddk39qA7X
-	ypg7X5U1oGFqQsA=; b=R1lvOXJDCp4TDg+Ih2Fi3CdFerRbKZxBSA+UbRRCyxL0
-	oKCk5a35ETgNqM3nZipwpzSDa/PqF2kGxh6iFbEYgyGSPSwhaV7YB/Jw14FIGtIk
-	/MaC2JtLn+27G2sp3j+TRW4nUDLYPjXMsg7BTrnVAeexJpOjSDs0CAaZL8SwTC5i
-	/qEmeorlp1xCZC4aXRgcw4o68cS1jPy+VwW8Cs6tn6r6ttawxrIFBLcUrRb3vflg
-	/tR2CGX32lCg0Upelf4QgEebjKy7pyCaUF+PqZ7lHieL2FUjGwvo0CALQCIVX/CR
-	Z34tfrU0W9yMagV9kb4Bb9hocoROQkEh2ePErPJiwQ==
-X-ME-Sender: <xms:iBroZvLuc3-obT40ltpBjr9tB6I_IPbaZqnMI3wko73QfCKmpuigrA>
-    <xme:iBroZjJFGNiMxW8PBVvwrS71r2yofXc9R8uQvJjfqHTcGwy3zTx_PNBhURGIjti6e
-    mZ_rHXfSz778TW4eg>
-X-ME-Received: <xmr:iBroZnu6-O1mNOMNACz4nwx6Utg95EsjBZUF2W20lkmhNUFCvPgtD_8vYmj23Sza670PQHH1SZIot366p8DSyniV8uuH2ZhaysLBg2zzL-Dspyuc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedggedvucetufdoteggodetrfdotf
+	fm1; t=1726487179; x=1726573579; bh=880qX5sU7V13SxS2gP5qfj8Ab5LB
+	sdAq8B4L02JRyLs=; b=J3D4ZctgI+ZBuO5h5xmpO4wRT8l5N3deDO995wQQygG2
+	MUoRjy8pOj/56rFZ6McHW8IVhVk9KsouOKlz9q8msjomjw0+U3dyrrOaVuEJxYt/
+	vmrOO+i13GjM4UyMW+OCPek5lpUkzqnsxaoRkIjy+W1A+CE8tsnpfHjDkKvmoO6k
+	JQrRU3A1s0dP9c5eqExf6Bl7QDd+uZF6XCkMJVvh2NuF39BHSau1mVM61yA+E+wj
+	OOpBBAEcossPQLpWXAC8bHz2kxXygKLd1vHZRbigQfWqU9HvXzk6PYOKkJvTzBV0
+	lwnl1VIOyToFtO0vGA9mmbo9FqlMpwjIGoKV3NGs3w==
+X-ME-Sender: <xms:ixroZkKw1O_Q-JpYsf1kMWE88QZqo__VQ33V-1rqbcApZ1RybNvq1w>
+    <xme:ixroZkJ0uDQ54lMbeFUDjgdWGXfBI8K4ohmPYa8TT0rIBV0_TIcIkPEmQn_xoOOPn
+    205v2gh53zsTq6M7g>
+X-ME-Received: <xmr:ixroZkskNYtQcO56WyEJQN2BvX9TJPABXtxwT7c6hzQXt1dSw-ZAADfhJIq-Xpc8K4DDdvOk7IgKH3JWEBgj-KWggAcgBOWianLHgNTof1wclQMN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekhedggeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:iBroZoZUuaIY0Up-K4VYknzXeBTJmIfoO9zCqC5Asg7YRv6jgiU00Q>
-    <xmx:iBroZmYlpSatnyayMSHBK6aWa-f7X3Ns3jBWksXFLQ5mwbkBJDU3tQ>
-    <xmx:iBroZsAs2UIDpQWEqpsNu5dYQMhnbVYVUoluFd17k9o5YxfgoIJ3Rg>
-    <xmx:iBroZkYfSsivxvo61s19FZWnyFVsYJOh2aY9UBSY3NZpgcos-gUc7w>
-    <xmx:iBroZpwqGKJb40RX2VXhFFbR1F5tER3YaGMuNHIm0C76VNpt-ymYYzaI>
+X-ME-Proxy: <xmx:ixroZhZCQ8jq-vyTm1lZtBTJkvLbdhhdDTaeoIzKHcIf8DUdD090VQ>
+    <xmx:ixroZrarju5AWgVZie7J5JCbwMxfuH3Y7pTIOGoLOhHNAPOdJSqpUA>
+    <xmx:ixroZtA8s2GQO6NIQJ7w7ilCvJzHWcZgUs1sylQ3-v1m0yAfujm3vw>
+    <xmx:ixroZhZWUYS2y2uJdf9uWftkT6GyITSOoTJ8QcvmS2qA-U1xe3Tp6A>
+    <xmx:ixroZiw6POkevx1yTaO-v2UL2xE7l-aIb5NwOoS2yD5_I2qL7VfBJLrI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 16 Sep 2024 07:46:15 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 16 Sep 2024 07:46:18 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 60e98897 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7526d72d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 16 Sep 2024 11:45:59 +0000 (UTC)
-Date: Mon, 16 Sep 2024 13:46:13 +0200
+	Mon, 16 Sep 2024 11:46:01 +0000 (UTC)
+Date: Mon, 16 Sep 2024 13:46:18 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 17/23] submodule: fix leaking submodule ODB paths
-Message-ID: <f1cb8122d18746852b31f36d49c6aa760c572545.1726484308.git.ps@pks.im>
+Subject: [PATCH 18/23] grep: fix leaking grep pattern
+Message-ID: <411df7248d2868e906d5ba882f9cd9abf82eaca8.1726484308.git.ps@pks.im>
 References: <cover.1726484308.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,42 +85,36 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726484308.git.ps@pks.im>
 
-In `add_submodule_odb_by_path()` we add a path into a global string
-list. The list is initialized with `NODUP`, which means that we do not
-pass ownership of strings to the list. But we use `xstrdup()` when we
-insert a path, with the consequence that the string will never get
-free'd.
+When creating a pattern via `create_grep_pat()` we allocate the pattern
+member of the structure regardless of the token type. But later, when we
+try to free the structure, we free the pattern member conditionally on
+the token type and thus leak memory.
 
-Plug the leak by marking the list as `DUP`. There is only a single
-callsite where we insert paths anyway, and as explained above that
-callsite was mishandling the allocation.
-
-This leak is exposed by t7814, but plugging it does not make the whole
-test suite pass.
+Plug this leak. The leak is exposed by t7814, but plugging it alone does
+not make the whole test suite pass.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- submodule.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ grep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/submodule.c b/submodule.c
-index 0e67984d770..a07debc227f 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -175,11 +175,11 @@ void stage_updated_gitmodules(struct index_state *istate)
- 		die(_("staging updated .gitmodules failed"));
+diff --git a/grep.c b/grep.c
+index e5761426e4f..701e58de04e 100644
+--- a/grep.c
++++ b/grep.c
+@@ -843,11 +843,11 @@ static void free_grep_pat(struct grep_pat *pattern)
+ 				free_pcre2_pattern(p);
+ 			else
+ 				regfree(&p->regexp);
+-			free(p->pattern);
+ 			break;
+ 		default:
+ 			break;
+ 		}
++		free(p->pattern);
+ 		free(p);
+ 	}
  }
- 
--static struct string_list added_submodule_odb_paths = STRING_LIST_INIT_NODUP;
-+static struct string_list added_submodule_odb_paths = STRING_LIST_INIT_DUP;
- 
- void add_submodule_odb_by_path(const char *path)
- {
--	string_list_insert(&added_submodule_odb_paths, xstrdup(path));
-+	string_list_insert(&added_submodule_odb_paths, path);
- }
- 
- int register_all_submodule_odb_as_alternates(void)
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
