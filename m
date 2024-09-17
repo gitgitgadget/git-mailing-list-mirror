@@ -1,126 +1,112 @@
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B06D15C137
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 09:58:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE69165F18
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 10:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726567095; cv=none; b=JaknjoX+fB455+QO83auqKieIYpUZYSkF2KkDHFmjXliC2FNjxQUeG6IF2tZPQu68SIH3905gBURSD2+oOWZCEk/HKaNFya6SzUjdZYUxz72mj9X5pCxWdHb4coOLqvFXGlW2S7983FEMuuMuGTLjR5A/+uE0YSAUBg+UZZkGkg=
+	t=1726567539; cv=none; b=KR3YmnT4TpuFFIpWSYoptHLPtRgp+H1oDKClgYfHnKl4pdtLCSM8bcMhbGi06m4uK/QRb8kQTLbwoZdp0ejOFbzAdGxYoIN031sSeAou0afznyaNbnCOMjyHcllj+fWFLRDBi4w0+2TUlBev+kKZnqvyENqcM31vy0M78T3FBWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726567095; c=relaxed/simple;
-	bh=R8RrLMDNvMFYjSmwp0t1eK658RHTh4fGwIdnuPcDwqg=;
+	s=arc-20240116; t=1726567539; c=relaxed/simple;
+	bh=17cEx0V44CO9cwhP5FqzoMDL0r1FbyBEoPnZukXz0ZA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mVEoLAD27QMYVSpIY7RvUXNbxQhj5LuVd2mt4U7J0V4ItYvd4EmskD2kil9RVJWseafjLeYtkK3Zd4zlcEbAuFwD4JroV0lo4bDX/PqX/gCcAffCB27t14nvNNxrThRupm757oK9hZR8siV3mjkS4WG0Y0oHOIaPxHaXMOxljx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Js3g6+MY; arc=none smtp.client-ip=209.85.166.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=bOolomRoZfUA2RxJt6rO3MxEa/Fe3Ow4e9Lcug5KEZdwsPVYnH8eyPWQuq+W/X3y59whH/JAjCheV6DS3t6jScmUEqqrwy4NzrMwe9+XUHdzhRYoiyl0NjfBovANluzXOdJRjTSSgqqDxdi2+GbBvhFWjEqpW2DYL2gHTmVDwJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aqBhP7ev; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B43EBg9D; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Js3g6+MY"
-Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-82cec47242eso198795639f.0
-        for <git@vger.kernel.org>; Tue, 17 Sep 2024 02:58:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726567093; x=1727171893; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KK++qilgLmBRUvXlZyA6bBsQFb0RmG2/oykcol2sB2A=;
-        b=Js3g6+MY5ioZFNGXOF08a6zzFI0899WRY7ODDJGoEW96DZM4+BPHFyoeb/zImQ9Mr8
-         WYB7Q8Yd4YGanMnU4nHdmyN5UWIqcdR7/x7jIfJOzDDTjktYDwbKD/TqOffdAdn8B+cP
-         cqQy9k47E5G8h3FpWubdF2IZCUg0tgU1EVQU30S+GwDkzZw9ZQD5m3zUHxqLV6K22Lwt
-         EknM8tKvIArjlOMuW9s4xjXdgdqThdq3B3NV9l2GTlFxuJ+5bmnwdGJHKJuvsZ0iisVR
-         F2mAWEljivF0bXjz8tfCkEAGuprTxePLEmTRyl1JcnHtSrVVn1igDaBFWpRKnZUzrxO6
-         EF5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726567093; x=1727171893;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KK++qilgLmBRUvXlZyA6bBsQFb0RmG2/oykcol2sB2A=;
-        b=UH+BSadp+T5c41qZNaR+PfdMGs9f2VCrQctIHxqCNnN7r8wE/RA9ueU2ch8Ik1qNfJ
-         W+LjCxR/gpdUPHeISJp6WjOg/wsCmSNVG+BPdB2hJkcmt1hnf9eKi6XcCHoaGDxCcDoT
-         uSVI6c32DI7wr7y979sAIYcD1lYq/wlvoC34qdYzUanyCtg350Ttu+aNuHJVHliqSEjg
-         UIH4brrQ017T8I6cEbPYvgiXLvzOrPFaugifFHxLgMUuf9PYY32ssBDeHfytCrRrYiP/
-         Qjf4/q45OA9Qghz/PM1cQf7UZy1lcBpr8S3GER3PdeTIW/vhBPqAYbLw0T8PGFUkJ2Ac
-         skLA==
-X-Forwarded-Encrypted: i=1; AJvYcCXhYegHKdOJWrHCKKbM8gMU5dP07pf8tejnP6RYld1QuWNeYoucxLkKL9h0b6CU0vWXSaw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzL5OF89WSvb6FnPtqey8UnZL4Be9YsfMjoavsmcvaG7/93ytjj
-	DCBzM2L4sMYMO/72AdCN0SJFDZmrZuyy2kCPqyXhPN3SbhQasceh/RQMee1FGhE=
-X-Google-Smtp-Source: AGHT+IGxmODrehqh9ni0VaEP6nUGKNu01ZBQmBH1XdCn86XRqAznrvwIsevBDWIsgR48t8DOwNp9OA==
-X-Received: by 2002:a05:6e02:1a27:b0:39f:558f:dd8b with SMTP id e9e14a558f8ab-3a074c9928bmr181357765ab.12.1726567093503;
-        Tue, 17 Sep 2024 02:58:13 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d37ec206c2sm1959424173.63.2024.09.17.02.58.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2024 02:58:13 -0700 (PDT)
-Date: Tue, 17 Sep 2024 05:58:09 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/5] pack-bitmap: tag bitmapped packs with their
- corresponding MIDX
-Message-ID: <ZulSsfi/XouIlWtq@nand.local>
-References: <cover.1724793201.git.me@ttaylorr.com>
- <1838bbcf7fe6daa58a7db78b81a2d08138fe176e.1724793201.git.me@ttaylorr.com>
- <xmqqplpt5wrt.fsf@gitster.g>
- <ZtDEy/teamtXMAbn@nand.local>
- <20240905090024.GA2556395@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aqBhP7ev";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B43EBg9D"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 81E66138024F;
+	Tue, 17 Sep 2024 06:05:36 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Tue, 17 Sep 2024 06:05:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1726567536; x=1726653936; bh=hN+x0HCUHx
+	e8Fc6Z038flfm3v9r8k5MRBEJWTQ2BFzM=; b=aqBhP7evDusovU/JRGvqmh7g2T
+	mkMR98k2A7OcyMSA8c5j+KAtYA3Xs6Oob4cwPZAKrm85V/g/fmw4ZLcQaBC7rJcM
+	2C5eFOp6plQkzId7qEcfOupOENK1+d2FvpXvDVO0WoleeVMcr0j7D0VLJ+tmY4Qt
+	CbzYB2kmCl0tiTCeB9vwPPE6pAhT1WwGvMAycNcV5N0WOMgfn1pCgNbPHyMV0FOl
+	G1PnpfCJObM86esMtOkEFURUPR97jzspdnHfgUrRsfmDkrNo7CUGWW9m/FhKA4pc
+	c4cT2B72i3hoDkLU4agrwJ70T4lWc8QDYJGMqvdP9ToLs3SCURWtOoxqW+BA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1726567536; x=1726653936; bh=hN+x0HCUHxe8Fc6Z038flfm3v9r8
+	k5MRBEJWTQ2BFzM=; b=B43EBg9DIV4hKvwZchxISEc3sqTTbQ9f+xkYk2W9lUP7
+	Mh8Fx3Ii935BAiEEttbBkz+uOa0TNOIWoBvJB5Kr/PI1/sgETsraB7Ii/uXLHX7V
+	/FCregzcBeFce10e7/LiGbQqcsGiadNzrT8jD09FqgA5gWGn8PpAeElNewBSVxXB
+	yNwg9kAeKXJYox9xZgpFEjY5hzWk+RkDeSitJtOuH6JiBOPyYnt7KJfs4AuyWG1J
+	wH2OMak/XxYv2UVqFBgzqQ/3XJQTRoIrLkBjCwnNEs8Kbk7crMHAKsf7fgsacJ7Q
+	W+Cqvo4dJE1uZR0Xa96ELxkdhAa2ZAD9NmaNd8XszA==
+X-ME-Sender: <xms:cFTpZsUiPEbnLuaQQTd12k4WkU8B4aog9_Hw09vmQtLnCHHmHEvVQg>
+    <xme:cFTpZgnoaRqCLy8kcQQgrNyfNzw5f62W_v9xlmSmwA7b93TLin84JWzlAIw3Kt2zO
+    iGEpflhS2gZZuPIUA>
+X-ME-Received: <xmr:cFTpZgY6PBOqD9_VDbGFaZst9QZ7Nitu9jGtgF4GbfpqxKkQK5LDtGASHDdNPQCasfhpJ7q6laPy9faqvakht-Uwx5w1AJvdNBF6rh8uETiL>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekjedgvdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeejffffveehte
+    dukeegjedtuefhjeeghedtffetgfegfeeljeefhffgueehjefhvdenucffohhmrghinhep
+    phhkshdrihhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphho
+    uhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
+    hmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrgh
+X-ME-Proxy: <xmx:cFTpZrWEMUPtCKoesGvPzTOUiwXJA4SP75sRAOrHnjfJxifWFxqyWg>
+    <xmx:cFTpZmnjb6LZwkAT8Ir6OozJOtOv_t8zbVljL5oxVk_xf4uUBFIt6A>
+    <xmx:cFTpZgfGpuMspXAUV_AvF7KrPvZ9Gwc8nwDtPgWAdNZTEDxUu_3gbg>
+    <xmx:cFTpZoEs_tal0dldlWIFSsPc7AbWibNe2mhbT7xth-cTSFH7CWJtTg>
+    <xmx:cFTpZohFKcs9fDY7F5xyDUpHXKDXtDVRVf62OlG776ZXvY1NdMaShLPA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Sep 2024 06:05:35 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7e99c473 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 17 Sep 2024 10:05:14 +0000 (UTC)
+Date: Tue, 17 Sep 2024 12:05:31 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: What's cooking in git.git (Sep 2024, #06; Mon, 16)
+Message-ID: <ZulUa3PL9zh6AqmR@pks.im>
+References: <xmqqmsk7kpfe.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240905090024.GA2556395@coredump.intra.peff.net>
+In-Reply-To: <xmqqmsk7kpfe.fsf@gitster.g>
 
-On Thu, Sep 05, 2024 at 05:00:24AM -0400, Jeff King wrote:
-> On Thu, Aug 29, 2024 at 02:58:19PM -0400, Taylor Blau wrote:
->
-> > On Tue, Aug 27, 2024 at 05:14:14PM -0700, Junio C Hamano wrote:
-> > > > diff --git a/midx.c b/midx.c
-> > > > index ca98bfd7c6..67e0d64004 100644
-> > > > --- a/midx.c
-> > > > +++ b/midx.c
-> > > > @@ -496,6 +496,7 @@ int nth_bitmapped_pack(struct repository *r, struct multi_pack_index *m,
-> > > >  				 MIDX_CHUNK_BITMAPPED_PACKS_WIDTH * local_pack_int_id +
-> > > >  				 sizeof(uint32_t));
-> > > >  	bp->pack_int_id = pack_int_id;
-> > > > +	bp->from_midx = m;
-> > >
-> > > Do multi_pack_index objects live as long as bitmapped_pack objects
-> > > that point at them live?  If m later goes away without letting the
-> > > bitmapped_pack know about it, the borrowed pointer in from_midx
-> > > would become dangling, which is not what we want to see.
-> > >
-> > > "None of these objects are released or relocated while we are
-> > > running pack-objects, so once the .from_midx member is assigned
-> > > here, it will always be pointing at a valid multi_pack_index object"
-> > > is a satisfactory answer, I guess.
-> >
-> > Good question, and good answer ;-).
-> >
-> > This is only relevant in a read-only path where we're generating a new
-> > pack from existing packs and not altering those pack or rewriting /
-> > deleting the MIDX attached to them. So I think we're OK here and don't
-> > have any lifetime/scope issues.
->
-> Do we ever close/reopen the midx? For example, if a simultaneous process
-> wrote a new one and we triggered reprepare_packed_git()?
->
-> I think the answer is "no"; we might read a new midx, but we never ditch
-> the old one (just like we do for packed_git structs). Which I suspect is
-> needed even before this patch, since various other parts of the bitmap
-> code (and probably others) rely on the struct staying in place across as
-> we read many objects.
+On Mon, Sep 16, 2024 at 07:02:45PM -0700, Junio C Hamano wrote:
+> * ps/reftable-exclude (2024-09-16) 7 commits
+>  - refs/reftable: wire up support for exclude patterns
+>  - reftable/reader: make table iterator reseekable
+>  - t/unit-tests: introduce reftable library
+>  - Makefile: stop listing test library objects twice
+>  - builtin/receive-pack: fix exclude patterns when announcing refs
+>  - refs: properly apply exclude patterns to namespaced refs
+>  - Merge branch 'cp/unit-test-reftable-stack' into ps/reftable-exclude
+>  (this branch is used by ps/reftable-alloc-failures.)
+> 
+>  The reftable backend learned to more efficiently handle exclude
+>  patterns while enumerating the refs.
+> 
+>  Will merge to 'next'?
+>  source: <cover.1726476401.git.ps@pks.im>
 
-I think that we *could* close and reopen the MIDX via a call to
-close_object_store() (which dispatches a call to close_midx(), before
-NULL-ing out o->multi_pack_index) and then calling prepare_packed_git()
-or similar.
+I was waiting for Taylor's review as he has written the original logic
+for the "files" backend. It came in this morning, and after some back
+and forth on the second version he agreed that the current version looks
+good, so this is ready to be merged from my point of view.
 
-But I'm not aware of any such codepaths that deal with pack reuse and
-calling nth_bitmapped_pack that would do such a thing, so I think that
-we're OK here.
-
-Thanks,
-Taylor
+Patrick
