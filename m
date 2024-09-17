@@ -1,337 +1,86 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CCD17ADE3
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 13:43:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E781319B3CB
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 15:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726580614; cv=none; b=DF1/uIPGev8z9hbb9Es0ukT7rwHJL5ToLwkDiRGiogJ222e3QKYmqVC8NTtheLJUgJFMcrvk3jIaALVnmydCh9Eyy+1XPC1T+mRj50wPI2UIScOK3cQTj0bn3ibHM8ZZQrfb1DOB++xz+gleca2XCTNlC1FOSxRASc1WT7SiEt4=
+	t=1726585294; cv=none; b=IgTjWFukNlCmeVtEVPWiauDaBmBLvWGy0C+QS+o1g1/mLZF1xrFOkRcn88+Ijac8Cu4O2CwzwR7xTPRpr0YolzmE7Qcg61LT241/8v+astc1CiEMeE3Wcx8LoVBBP+buk3WcYniHZnJ0g2L54KQ5yaBIFeezTXOsx3QJKRIiXwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726580614; c=relaxed/simple;
-	bh=Toe0Nncee/deQWgdEDeUbcuu4qjG4oAdhay48kS4OFY=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dIiGA1CHoq5onYgXmC7zlKfjSNhJllXJ7466wu5hg9dYsBGR+7lFy8a8LDj4bm8S2kyuPGp78SVVuWzFHwEi0n7/x6/zsiZbQjRlduiD7tOPrq+hdL861XGlqO8JTwa82H6zsUkw3C+oIrsAtwmPbTi3QH3fFCzedsxFdEnbc8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NR6ls8ie; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bG94JPWH; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1726585294; c=relaxed/simple;
+	bh=cdLGMZ1NoQcNb7s4PDYCAfa1nS2E1fn7ZYlfIRRnD5A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Kdtrurlzujaie3H+e88w3Fy8USPpPE5fVOTsWyj0C2sn7bFZQ1TNkBQT+/L1CFfvYJsVgDhwr72JDXhLPMPS0qiwFWw2UBeSeCl0K7X+7jB0+g1kYo5gZeoMhag9Mcla8wyuZfhgQSsH+FbfsIoMg0Lzkuey9Zo6W3qpYTS9PZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RQkpLsRh; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NR6ls8ie";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bG94JPWH"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id C20EC138022D
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 09:43:30 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 17 Sep 2024 09:43:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726580610; x=1726667010; bh=Cyqe4MnGVt
-	UyenYM4cS2UED3kFM+V7hy4ans973Eps4=; b=NR6ls8ie9aHFthAWa3O98E10eN
-	/x0+UdT7zxhChH5gY4WG56/qLq8H9X4MIFmEVRuF7vJQmV4UYOS23LoCVbegWd4H
-	Se5JAqrRbS72FwYy5FmboPPNM2zn6x4C4Jho3sAv5VBFil+4Cz/fQsIksheyxpwD
-	DwZcHp6dOzi1GzPVpre8fiIdSG3KTgZh34Yehn6IJ16A7diH017koHTPRtCIOwN0
-	Yr7unWaqx8OKkZBMM241B3GCqscYbswj+24SIyFGHki2Zg4aRSsS8gx52C3CROVm
-	sjk63gYGqVkOGHKUbiVfgagPUFTIs1/L+uGc6N8aVc4wKn+v0efFjp53JMdA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726580610; x=1726667010; bh=Cyqe4MnGVtUyenYM4cS2UED3kFM+
-	V7hy4ans973Eps4=; b=bG94JPWHz5ZjSf4v4Awj4NwcAm3T2YhJIkVQ/GJ+3L/K
-	773kxjWsdlVb0D5VXYesjtRjBVgbqTtzVJQhLc/xbu3uyMJcVmWxrWwc5zy2Owfe
-	C0Z4i0YUbaU4qAedaoJZ0iJIzAvCN3Uhd6acR1TCLEiKe5kNXaQyQJIzyTEMuk+D
-	6eo7qp7bTJaGBT+Unx72P77xwUIlgxhwLBBOgqWUqWhS3oI7+mtxHiepzgwy1HXa
-	IL3IqGKGdP6z5B0cN4zIrCXsTSRko9bd6DntXPpTayzvEGAzVRPZaWSKcDCddTLN
-	bBNnC6kWax8teGs/qBbFa9NSkz5ViiuaC+GQzE9s1A==
-X-ME-Sender: <xms:gofpZlcnhK0eJAXlfu-Jwq2vfG00OVRYRYsm2G1J06e7ITlEgD-6SQ>
-    <xme:gofpZjMGx5oT77afWvojINPu-k7roI3iGWcnG5XcWORmJv1lDx7kyXApGDtKLPAxd
-    hVhyuB3pQ2ERMpJsA>
-X-ME-Received: <xmr:gofpZujNs55rVpTGs6vgMoxN_UguOZW-y3Mk9z56zFBeUN-ntxYf8iuSWH1KgFIOfDxOMAJwaM6Dj_fAfKPodGXEuAKS8hgA1_modpgJXAyb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekjedgieelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
-    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
-    egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
-    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:gofpZu-HUGT238rEeJ3y86dTXRdwgeipLyFt9lwRT_0e58ZO8ihvxg>
-    <xmx:gofpZhtfAt9tkaj6vCOvaDhAP3bT994RM_IW83a-fKRTuFcxIr32RQ>
-    <xmx:gofpZtFcP619xRBeMLhMhwzx0cSC6fjK70m-WmyCTOzcyXwDjXvM2w>
-    <xmx:gofpZoPcp_ITPDceFfY7_DUSLIjKq1DTSxdHeqA9JQs69h5Pnpo3Kg>
-    <xmx:gofpZiUCsSSlTDGxwxnT03eoe7yNfLE6NiyoBRmwD3gEJM1q-_evm4qs>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 17 Sep 2024 09:43:30 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3a28cff7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Tue, 17 Sep 2024 13:43:04 +0000 (UTC)
-Date: Tue, 17 Sep 2024 15:43:22 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 2/3] reftable/stack: allow locking of outdated stacks
-Message-ID: <cd65e6d57b06fb7f74baf3882da9353fdb8d86bc.1726578382.git.ps@pks.im>
-References: <cover.1726578382.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RQkpLsRh"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 54138234D9;
+	Tue, 17 Sep 2024 11:01:31 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=cdLGMZ1NoQcNb7s4PDYCAfa1nS2E1fn7ZYlfIR
+	RnD5A=; b=RQkpLsRhiO45HFmyso/sHD4CbrD6hMpidwNv38KO0MzLBUL/JLN1u4
+	hA+HXRtbHMfcIsMZuXz+i7QjsB1xKLHef1CdUoN9FHSLn1pmuicDhqQAqvCfdfBA
+	VjCyBgAqMiDyS62gfUmgrMGQnsQW/z4vtvt7k1h4/y3Oi3jt01wuQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 230A0234D8;
+	Tue, 17 Sep 2024 11:01:31 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5B9C0234D7;
+	Tue, 17 Sep 2024 11:01:30 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Jeff King <peff@peff.net>,  Johannes Schindelin via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] ci(linux32): make Javascript Actions work in x86 mode
+In-Reply-To: <d8b15f7e-7847-f6ff-cf8f-02aee254b070@gmx.de> (Johannes
+	Schindelin's message of "Tue, 17 Sep 2024 14:20:41 +0200 (CEST)")
+References: <pull.1790.git.1726274559928.gitgitgadget@gmail.com>
+	<20240914072932.GB1284567@coredump.intra.peff.net>
+	<xmqq34m2tasj.fsf@gitster.g>
+	<20240915110706.GA2017642@coredump.intra.peff.net>
+	<xmqqr09krijc.fsf@gitster.g>
+	<d8b15f7e-7847-f6ff-cf8f-02aee254b070@gmx.de>
+Date: Tue, 17 Sep 2024 08:01:28 -0700
+Message-ID: <xmqqikuul3xz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1726578382.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B896E2BC-7505-11EF-A3DF-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-In `reftable_stack_new_addition()` we first lock the stack and then
-check whether it is still up-to-date. If it is not we return an error to
-the caller indicating that the stack is outdated.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This is overly restrictive in our ref transaction interface though: we
-lock the stack right before we start to verify the transaction, so we do
-not really care whether it is outdated or not. What we really want is
-that the stack is up-to-date after it has been locked so that we can
-verify queued updates against its current state while we know that it is
-locked for concurrent modification.
+> Of course, my favorite solution would be for `actions/runner` to be fixed
+> so that it detects the situation and uses a 32-bit variant in that case
+> [*1*].
 
-Introduce a new flag `REFTABLE_STACK_NEW_ADDITION_RELOAD` that alters
-the behaviour of `reftable_stack_init_addition()` in this case: when we
-notice that it is out-of-date we reload it instead of returning an error
-to the caller.
+Yeah, that would be ideal.
 
-This logic will be wired up in the reftable backend in the next commit.
+> The next best thing, in my mind, is to come up with a solution that is
+> general enough that other projects could follow this example, which is
+> what I did.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- refs/reftable-backend.c         |  4 +-
- reftable/reftable-stack.h       | 13 ++++++-
- reftable/stack.c                | 20 ++++++----
- t/unit-tests/t-reftable-stack.c | 67 ++++++++++++++++++++++++++++++++-
- 4 files changed, 91 insertions(+), 13 deletions(-)
+I guess both patterns can be followed if they discover either, and
+it made me wonder if this isn't a problem already solved by others,
+but at the end of the day, any solution that was good enough and
+unblocks us quickly was needed; the ones that were reviewed earlier
+have been fast tracked down to 'maint' as of last night.  That does
+not mean we won't have to further improve it, of course.  At least
+until 32-bit archs no longer matter, that is ;-).
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index e90ddfb98dd..c500fb820a7 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -766,7 +766,7 @@ static int prepare_transaction_update(struct write_transaction_table_arg **out,
- 		if (ret)
- 			return ret;
- 
--		ret = reftable_stack_new_addition(&addition, stack);
-+		ret = reftable_stack_new_addition(&addition, stack, 0);
- 		if (ret) {
- 			if (ret == REFTABLE_LOCK_ERROR)
- 				strbuf_addstr(err, "cannot lock references");
-@@ -2203,7 +2203,7 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
- 	if (ret < 0)
- 		goto done;
- 
--	ret = reftable_stack_new_addition(&add, stack);
-+	ret = reftable_stack_new_addition(&add, stack, 0);
- 	if (ret < 0)
- 		goto done;
- 
-diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
-index f4f8cabc7fb..67316b215ed 100644
---- a/reftable/reftable-stack.h
-+++ b/reftable/reftable-stack.h
-@@ -37,12 +37,21 @@ uint64_t reftable_stack_next_update_index(struct reftable_stack *st);
- /* holds a transaction to add tables at the top of a stack. */
- struct reftable_addition;
- 
-+enum {
-+	/*
-+	 * Reload the stack when the stack is out-of-date after locking it.
-+	 */
-+	REFTABLE_STACK_NEW_ADDITION_RELOAD = (1 << 0),
-+};
-+
- /*
-  * returns a new transaction to add reftables to the given stack. As a side
-- * effect, the ref database is locked.
-+ * effect, the ref database is locked. Accepts REFTABLE_STACK_NEW_ADDITION_*
-+ * flags.
-  */
- int reftable_stack_new_addition(struct reftable_addition **dest,
--				struct reftable_stack *st);
-+				struct reftable_stack *st,
-+				int flags);
- 
- /* Adds a reftable to transaction. */
- int reftable_addition_add(struct reftable_addition *add,
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 5ccad2cff31..f9c95d5fa62 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -596,7 +596,8 @@ struct reftable_addition {
- #define REFTABLE_ADDITION_INIT {0}
- 
- static int reftable_stack_init_addition(struct reftable_addition *add,
--					struct reftable_stack *st)
-+					struct reftable_stack *st,
-+					int flags)
- {
- 	struct strbuf lock_file_name = STRBUF_INIT;
- 	int err;
-@@ -626,6 +627,11 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
- 	err = stack_uptodate(st);
- 	if (err < 0)
- 		goto done;
-+	if (err > 0 && flags & REFTABLE_STACK_NEW_ADDITION_RELOAD) {
-+		err = reftable_stack_reload_maybe_reuse(add->stack, 1);
-+		if (err)
-+			goto done;
-+	}
- 	if (err > 0) {
- 		err = REFTABLE_OUTDATED_ERROR;
- 		goto done;
-@@ -633,9 +639,8 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
- 
- 	add->next_update_index = reftable_stack_next_update_index(st);
- done:
--	if (err) {
-+	if (err)
- 		reftable_addition_close(add);
--	}
- 	strbuf_release(&lock_file_name);
- 	return err;
- }
-@@ -739,13 +744,14 @@ int reftable_addition_commit(struct reftable_addition *add)
- }
- 
- int reftable_stack_new_addition(struct reftable_addition **dest,
--				struct reftable_stack *st)
-+				struct reftable_stack *st,
-+				int flags)
- {
- 	int err = 0;
- 	struct reftable_addition empty = REFTABLE_ADDITION_INIT;
- 	REFTABLE_CALLOC_ARRAY(*dest, 1);
- 	**dest = empty;
--	err = reftable_stack_init_addition(*dest, st);
-+	err = reftable_stack_init_addition(*dest, st, flags);
- 	if (err) {
- 		reftable_free(*dest);
- 		*dest = NULL;
-@@ -759,7 +765,7 @@ static int stack_try_add(struct reftable_stack *st,
- 			 void *arg)
- {
- 	struct reftable_addition add = REFTABLE_ADDITION_INIT;
--	int err = reftable_stack_init_addition(&add, st);
-+	int err = reftable_stack_init_addition(&add, st, 0);
- 	if (err < 0)
- 		goto done;
- 
-@@ -1608,7 +1614,7 @@ static int reftable_stack_clean_locked(struct reftable_stack *st)
- int reftable_stack_clean(struct reftable_stack *st)
- {
- 	struct reftable_addition *add = NULL;
--	int err = reftable_stack_new_addition(&add, st);
-+	int err = reftable_stack_new_addition(&add, st, 0);
- 	if (err < 0) {
- 		goto done;
- 	}
-diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
-index d62a9c1bed5..a37cc698d87 100644
---- a/t/unit-tests/t-reftable-stack.c
-+++ b/t/unit-tests/t-reftable-stack.c
-@@ -271,7 +271,7 @@ static void t_reftable_stack_transaction_api(void)
- 
- 	reftable_addition_destroy(add);
- 
--	err = reftable_stack_new_addition(&add, st);
-+	err = reftable_stack_new_addition(&add, st, 0);
- 	check(!err);
- 
- 	err = reftable_addition_add(add, write_test_ref, &ref);
-@@ -292,6 +292,68 @@ static void t_reftable_stack_transaction_api(void)
- 	clear_dir(dir);
- }
- 
-+static void t_reftable_stack_transaction_with_reload(void)
-+{
-+	char *dir = get_tmp_dir(__LINE__);
-+	struct reftable_stack *st1 = NULL, *st2 = NULL;
-+	int err;
-+	struct reftable_addition *add = NULL;
-+	struct reftable_ref_record refs[2] = {
-+		{
-+			.refname = (char *) "refs/heads/a",
-+			.update_index = 1,
-+			.value_type = REFTABLE_REF_VAL1,
-+			.value.val1 = { '1' },
-+		},
-+		{
-+			.refname = (char *) "refs/heads/b",
-+			.update_index = 2,
-+			.value_type = REFTABLE_REF_VAL1,
-+			.value.val1 = { '1' },
-+		},
-+	};
-+	struct reftable_ref_record ref = { 0 };
-+
-+	err = reftable_new_stack(&st1, dir, NULL);
-+	check(!err);
-+	err = reftable_new_stack(&st2, dir, NULL);
-+	check(!err);
-+
-+	err = reftable_stack_new_addition(&add, st1, 0);
-+	check(!err);
-+	err = reftable_addition_add(add, write_test_ref, &refs[0]);
-+	check(!err);
-+	err = reftable_addition_commit(add);
-+	check(!err);
-+	reftable_addition_destroy(add);
-+
-+	/*
-+	 * The second stack is now outdated, which we should notice. We do not
-+	 * create the addition and lock the stack by default, but allow the
-+	 * reload to happen when REFTABLE_STACK_NEW_ADDITION_RELOAD is set.
-+	 */
-+	err = reftable_stack_new_addition(&add, st2, 0);
-+	check_int(err, ==, REFTABLE_OUTDATED_ERROR);
-+	err = reftable_stack_new_addition(&add, st2, REFTABLE_STACK_NEW_ADDITION_RELOAD);
-+	check(!err);
-+	err = reftable_addition_add(add, write_test_ref, &refs[1]);
-+	check(!err);
-+	err = reftable_addition_commit(add);
-+	check(!err);
-+	reftable_addition_destroy(add);
-+
-+	for (size_t i = 0; i < ARRAY_SIZE(refs); i++) {
-+		err = reftable_stack_read_ref(st2, refs[i].refname, &ref);
-+		check(!err);
-+		check(reftable_ref_record_equal(&refs[i], &ref, GIT_SHA1_RAWSZ));
-+	}
-+
-+	reftable_ref_record_release(&ref);
-+	reftable_stack_destroy(st1);
-+	reftable_stack_destroy(st2);
-+	clear_dir(dir);
-+}
-+
- static void t_reftable_stack_transaction_api_performs_auto_compaction(void)
- {
- 	char *dir = get_tmp_dir(__LINE__);
-@@ -322,7 +384,7 @@ static void t_reftable_stack_transaction_api_performs_auto_compaction(void)
- 		 */
- 		st->opts.disable_auto_compact = i != n;
- 
--		err = reftable_stack_new_addition(&add, st);
-+		err = reftable_stack_new_addition(&add, st, 0);
- 		check(!err);
- 
- 		err = reftable_addition_add(add, write_test_ref, &ref);
-@@ -1314,6 +1376,7 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
- 	TEST(t_reftable_stack_reload_with_missing_table(), "stack iteration with garbage tables");
- 	TEST(t_reftable_stack_tombstone(), "'tombstone' refs in stack");
- 	TEST(t_reftable_stack_transaction_api(), "update transaction to stack");
-+	TEST(t_reftable_stack_transaction_with_reload(), "transaction with reload");
- 	TEST(t_reftable_stack_transaction_api_performs_auto_compaction(), "update transaction triggers auto-compaction");
- 	TEST(t_reftable_stack_update_index_check(), "update transactions with equal update indices");
- 	TEST(t_reftable_stack_uptodate(), "stack must be reloaded before ref update");
--- 
-2.46.0.551.gc5ee8f2d1c.dirty
+Thanks.
 
