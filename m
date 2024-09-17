@@ -1,65 +1,65 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFC1150990
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 09:12:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46B6158D8F
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 09:16:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726564365; cv=none; b=gcS/mWe3B4qp0PZr7lR97ZyEIadX30vpeHztlzCF2yU4if2MZnLVcRtqYuuJ61aiRD0prfbpOhlkiTEENjbpL3VaZ88I+pwvRksmgXFBr2FjPXMzjjf/rJncUeO+Kxcpr8D6E2R4DzD2KVJRCIeN45K5XYBowal1643H+/vFMxY=
+	t=1726564603; cv=none; b=DAq7szWW98optn/BExivf9wc3POj8tvVcgtslxFzmhatSMSsXULE+wHIzRfHtHrgm3h1r5IYad2pHd1ydSmPC7snPSqqnUD/aw2qLMXlrGHamZOYoXLk69nhlZfexdO2+EXaRRLUUDk8DwFFtoU4bx4wmZZASq2OOit3fZyWiqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726564365; c=relaxed/simple;
-	bh=nleg41Uqpzaj03U/3l71beUQY52xcukMlmAnMz3tDNw=;
+	s=arc-20240116; t=1726564603; c=relaxed/simple;
+	bh=v+rDp0u4hMUi+aJbLhQfq7w2ISgWPfftF9m1dfjqL3o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JRoTYSLB8cInG1KTaruGhDsrvqcE94RyWSaoyVyBmsOBrOS6lyZ0pd+1/VR9Cqg3V1STSO96qzK74hYrCLgcaU7zDJBVbEWxJ4HVhP7gvbEW/0X7Kr12NVYwFqV8ydk5mV9BXh1q8v+6Lzze/gqWIJ3tTY/qAHoIqBlrdkl0Ij4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=bNQZjYYE; arc=none smtp.client-ip=209.85.166.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=t/blPcbqnDvArQifX62WiP9bLyS9+HeoDimU4UyGxrbaSVQDWDRe6+OLdLeKSlLDfBVi/K0Pz2UdzM35bKbOFpskQCZJYMUxBNfdBm4mU+IYweLsbmRmdC345h+lMbjJcz5ifRekkrfM5GpDJNv2bL1oPfL9ydPIJDqF3jp+W+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=0Z2qXiqw; arc=none smtp.client-ip=209.85.166.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="bNQZjYYE"
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-3a08ca8d45aso23248135ab.0
-        for <git@vger.kernel.org>; Tue, 17 Sep 2024 02:12:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="0Z2qXiqw"
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-82cd869453eso126083039f.0
+        for <git@vger.kernel.org>; Tue, 17 Sep 2024 02:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726564363; x=1727169163; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726564601; x=1727169401; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=i1hOxJv6V8fha/DEKpc7T8uV/4WXP33HPD6taa7MdqA=;
-        b=bNQZjYYE316uoSrO7UQQoKRpzE+SMzXQopVx6L0hcHB0FtI9awrfy2sKO/IwLD/7zz
-         P4GVEHxso2rIpHiz1+yVgXkzS1cKLvJv1qTc1aBrmKoG7/5yI6aJZBzyi3w4VKQN4y3D
-         jmX26cL/ZQneRRZh3dXHBWd1l+l1+O97iUThYd6Hc4vFghbkGhbpQSQ7jdf82gaSrDDW
-         WxnHhgNrlnep1+jEuUh0B0rWK7fQXEJHHk5hzJQsZuOMHxojIV2203/7PmkAgAvO4FRH
-         PRu8ZA02g5LRBh5p53ZoKyOKk6elDqImYjxw41swLj8daod8cv/SIwXAFJZvBHkLNNPd
-         Avdg==
+        bh=h3CkDk2aFcOK43qirSIgh2cHYYpQxHWZE5lwudar9NE=;
+        b=0Z2qXiqwyXwSAlyIVXO7kWLYcQTDPppHdt6YrIZJq/h4wfBgI57GLFeIQK6g3eSyYq
+         NnWMJ3XWjSbydc8AZbJFrZsTm/4Wt6DoBlSaJ8aRLUi/dtXWem8dARk2vuOs7tLO821I
+         gMJshp23uzLZv2dibILFOzCJxpyocvv9fElB0jFXnNSaAuozvHS7GAGUyU2BiH2Qd8Sg
+         vKPch7MUMg4h8E+36tXKLHx6FtLGGZCf1NVn7rAOG11gVg/OqroKIMhLgMe8j/LW1U4R
+         TCZq5kpkCTCPa6P1yf47v0zHL+8256jXjNmj54ZrOLde3Wedg1mCXST+W9wV//TBhFEk
+         IwoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726564363; x=1727169163;
+        d=1e100.net; s=20230601; t=1726564601; x=1727169401;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i1hOxJv6V8fha/DEKpc7T8uV/4WXP33HPD6taa7MdqA=;
-        b=srjiDUn7m+93JdjyJpp56IHkBJi6w2eFKhJHQgu/eZVMG+J4G4VHOq07BOUi8vhJIv
-         A1RHvQIp0UfiuGoVGm+/FgYxA0hxrUpM5UX2/D9z/Bz66IrWl0eTlUAF/OEoKAosmP5u
-         01EW3nqWkpAjPkGFT11sMDhOT7Duz7Qo1h3Yq2hog7yFO5f/M9F1YpPWEQ2jicCWGfgR
-         3mfErFeGbHZOuaMuP4XxZIiijMG5gsWStbcYf9oSg+XCechC4EGl6j+fOqH34mqynmUo
-         g+rr7zAaEJOnRAn2tCPdCYn5hgC6eKlSPY3yoNZ4vmCeJI4AP60yPR5DIheYN3/1SI8V
-         PYyQ==
-X-Gm-Message-State: AOJu0Yyr2TJJ5hJz5HzoNaHu7hsVnb/xGhhIUpTZn0KMU9ANBaw3CIJX
-	7gZzSZ/wQODDuj20Rnri0m2M42CHFBiCmkwMe3EiwNswBvJS8fHn9Jbdtj4FfjQ=
-X-Google-Smtp-Source: AGHT+IGaKUFJrFoSPo6S+/Bia+xpJHMAUzT8phdnIkRQ6q6srZiklyoUpQYJ8FRT5Cf2eIe67P7Ptg==
-X-Received: by 2002:a05:6e02:13ae:b0:3a0:b5d4:1fb7 with SMTP id e9e14a558f8ab-3a0b5d426d4mr738275ab.11.1726564363015;
-        Tue, 17 Sep 2024 02:12:43 -0700 (PDT)
+        bh=h3CkDk2aFcOK43qirSIgh2cHYYpQxHWZE5lwudar9NE=;
+        b=hIZSatA8hAH5OkQtyKlJ3XHHpu19mqM0kTzJBErHoIiBdNedGCVZCY/eU9oFqsRPtP
+         AW3jZYhxkm89KGXf+AfqsAtJeSOJtORei+0M04wEHyCg8akzGEO/ADUkH3vC+f1qnQbk
+         /egADjGxWk7hlX0oL/8gpnW3v8Mb1YwDbiSMQHjVOsG3wrY7VeycjRzgTNHBjkb5FFHQ
+         urbsr9mxyac3By21vwo/nFidVZQ5eqr1bOtETiL/t24u/Kj1W7fr66BQnfWtfB/2SLZ4
+         hymw+msEFHxA2uv3b1sLpmWJy1kwbZHsJC4pt1ENntFL5P07rLtqpb4aLn02f+ooTVNG
+         QXVg==
+X-Gm-Message-State: AOJu0YymsJ52J+NFjOpb85pKd+Mt+HgugRUTEern3H8/Ssh4L0qgREkg
+	NU7s3TiMofNSDtAN8ZrHxLlwNy6SC0P2DBEOTssDix8q48dwP71IjupllsrZMxc=
+X-Google-Smtp-Source: AGHT+IFisov4RykV0rDv/x8ZVVBMzMxYHqVowTt3G9VvTCgVuVU+SsEo/jw/SDwboliVPIlp9kZPNg==
+X-Received: by 2002:a05:6e02:156c:b0:3a0:8e92:ecd1 with SMTP id e9e14a558f8ab-3a08e92ee9fmr112370845ab.2.1726564600666;
+        Tue, 17 Sep 2024 02:16:40 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3a092e10605sm21261385ab.32.2024.09.17.02.12.42
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d3a9441105sm400138173.3.2024.09.17.02.16.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2024 02:12:42 -0700 (PDT)
-Date: Tue, 17 Sep 2024 05:12:39 -0400
+        Tue, 17 Sep 2024 02:16:40 -0700 (PDT)
+Date: Tue, 17 Sep 2024 05:16:36 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 1/6] refs: properly apply exclude patterns to
- namespaced refs
-Message-ID: <ZulIB7k18+4CzwZb@nand.local>
+Subject: Re: [PATCH v2 2/6] builtin/receive-pack: fix exclude patterns when
+ announcing refs
+Message-ID: <ZulI9Ha44ZwFPoiC@nand.local>
 References: <cover.1725881266.git.ps@pks.im>
  <cover.1726476401.git.ps@pks.im>
- <7497166422ea702aabdf4159b0d7780f1422ba13.1726476401.git.ps@pks.im>
+ <3dc6ae936c88d3105bc82daab3edd805c9b5c63b.1726476401.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,58 +68,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7497166422ea702aabdf4159b0d7780f1422ba13.1726476401.git.ps@pks.im>
+In-Reply-To: <3dc6ae936c88d3105bc82daab3edd805c9b5c63b.1726476401.git.ps@pks.im>
 
-On Mon, Sep 16, 2024 at 10:50:03AM +0200, Patrick Steinhardt wrote:
-> This only surfaces when:
->
->   - A repository uses reference namespaces.
->
->   - "transfer.hideRefs" is active.
->
->   - The namespaced references are packed into the "packed-refs" file.
->
-> None of our tests exercise this scenario, and thus we haven't ever hit
-> it. While t5509 exercises both (1) and (2), it does not happen to hit
-> (3). It is trivial to demonstrate the bug though by explicitly packing
-> refs in the tests, and then we indeed surface the breakage.
->
-> Fix this bug by prefixing exclude patterns with the namespace in the
-> generic layer. The newly introduced function will be used outside of
-> "refs.c" in the next patch, so we add a declaration to "refs.h".
-
-Thanks for finding and fixing this bug!
-
-> diff --git a/refs.c b/refs.c
-> index ceb72d4bd74..b3a367ea12c 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1517,6 +1517,19 @@ const char **hidden_refs_to_excludes(const struct strvec *hide_refs)
->  	return hide_refs->v;
->  }
->
-> +const char **get_namespaced_exclude_patterns(const char **exclude_patterns,
-> +					     const char *namespace,
-> +					     struct strvec *out)
-> +{
-> +	if (!namespace || !*namespace || !exclude_patterns || !*exclude_patterns)
-> +		return exclude_patterns;
+On Mon, Sep 16, 2024 at 10:50:05AM +0200, Patrick Steinhardt wrote:
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 3f35140e489..478c62ca836 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -339,12 +339,26 @@ static void show_one_alternate_ref(const struct object_id *oid,
+>  static void write_head_info(void)
+>  {
+>  	static struct oidset seen = OIDSET_INIT;
+> +	struct strvec excludes_vector = STRVEC_INIT;
+> +	const char **exclude_patterns;
 > +
-> +	for (size_t i = 0; exclude_patterns[i]; i++)
-> +		strvec_pushf(out, "%s%s", namespace, exclude_patterns[i]);
-> +
-> +	return out->v;
-> +}
-> +
+> +	/*
+> +	 * We need access to the reference names both with and without their
+> +	 * namespace and thus cannot use `refs_for_each_namespaced_ref()`. We
+> +	 * thus have to adapt exclude patterns to carry the namespace prefix
+> +	 * ourselves.
+> +	 */
+> +	exclude_patterns = get_namespaced_exclude_patterns(
+> +		hidden_refs_to_excludes(&hidden_refs),
+> +		get_git_namespace(), &excludes_vector);
 
-Is it safe to concatenate each exclude pattern with the specified
-namespace? If I'm reading this correctly, I think we silently do the
-wrong thing for exclude patterns that start with '^'.
+OK, so here we use the result of calling hidden_refs_to_excludes() as
+the first argument to your new get_namespaced_exclude_patterns().
 
-I guess we reject such patterns in the hidden_refs_to_excludes()
-function, but perhaps we wouldn't have to if this function stripped
-those prefixes for us when the caller does or doesn't specify exclude
-patterns with a '^'?
+But I think that in this case when the caller specifies a pattern with
+'^', we still do not exclude any references in the backend, since
+hidden_refs_to_excludes() will return NULL when there is >1 pattern with
+'^' as the first character.
+
+I don't think that this results in broken behavior, since the callback
+to the refs API will still be expected to filter out references that it
+doesn't want.
+
+>  	refs_for_each_fullref_in(get_main_ref_store(the_repository), "",
+> -				 hidden_refs_to_excludes(&hidden_refs),
+> -				 show_ref_cb, &seen);
+> +				 exclude_patterns, show_ref_cb, &seen);
+>  	for_each_alternate_ref(show_one_alternate_ref, &seen);
 
 Thanks,
 Taylor
