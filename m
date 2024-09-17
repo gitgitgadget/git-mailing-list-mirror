@@ -1,213 +1,667 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2843A13E41D
-	for <git@vger.kernel.org>; Mon, 16 Sep 2024 22:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F9911C92
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 02:02:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726524588; cv=none; b=SBKJsNxdr5DEKX0IsiIsTvH8PEBsiUf1t24oBhgdMBJMUCOIHOa8MWY0/BIW40BmxPFkMTV3HQ0mOcQbD+W9EIjm3r89Kmejisbi1NpBZJ6Nq7Z5jSFugTmEiIgaBVCRQISCRt4fjHJI8XA3A2AdODlTJHEWXZzqKQzqcHpK5pI=
+	t=1726538570; cv=none; b=hpNIYZP++SljOnixOzZcGVJC24cGkgGfccy0ThHtrEFpAjlx+1G219TBoGZaZMEGd8dLqt085ephCegk0UBVCl7p81VaJRWMUW7jFcDb6rWE9PfzkbGDxkdeksRf3Ys+xKOS0mXIY9aZcuOYJbKJOm1P7VYVn8TvJGsHV1Z2hss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726524588; c=relaxed/simple;
-	bh=dvpfFQOmem3MJ0aSvAZ82gR85ll01GVDo8O4jZOzg5E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WIF86LXqhNDWc9rWwiEqxIdF6fFaM7KaLT9eOcgFBOdQ1+zCTkRLyFwyvL05vtE0FuWHncA6CfMNfgXA9mbh6unCBMLRVQpDNH6uCudrYTbTKjcdyEAWSzde/qaWDGI0h2MbLRaFS4bB4baCzFRy44HbW35x/N0+/7uydeF9rnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DgI0jljD; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726538570; c=relaxed/simple;
+	bh=XiVMZsuObPN01E5UcUB3SxJJNSz0+PsVMC/wJLwQYSg=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=d1/tb/cnCKOJKIP3SwhstzY/PLiTKmnhxxG30P3ozSYXR2VdADvZEFLAJsQmgOPXc+XK0iV0BHnJ4WOoAwM+ozHGFbkEaZoMjQg3elSt30kCvDC7MJx+H5Jq4oax3vPRkXgpdZ3WNhZGfTF3fPf7U9tuOcQGTh44V23uLVnCG0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=aXO4EaPA; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DgI0jljD"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42cacabd2e0so42407305e9.3
-        for <git@vger.kernel.org>; Mon, 16 Sep 2024 15:09:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726524584; x=1727129384; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0FyuiGqkEXgPEphH8Vl/Ekwa7x+RwRdMXDktgjA3TLk=;
-        b=DgI0jljDiRx8U2euQ2LT9xZbPKK/f8XFy5FVZ+3HcSmWs4bOAyzMtz9d4w5B6GF+jJ
-         w7KvkuiTWCSQuqVBa6PJhL2TU/m6yzER0Hkkl1Br1T6bcepQN8vbZyXlYDzOTeNTDeNA
-         5c+oJ//Z7zOmPARlWJhF8nC8Z+0kXeytQ0qNXwez9+4vBoERgTvUCRIPXT/Ky/nyptpW
-         G/to2YTUWMXethryroLYmLzBhCHTMaUmijNrBMwZeZ9akxlUQJP69vOZENNhOm2TaZaL
-         QmPwyCt5YRCwobz6hcxMJyfZjWUBmMT6eEsCtrVW0FRHTF5/3zDdX7B1eA6vN6NorcVc
-         RHMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726524584; x=1727129384;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0FyuiGqkEXgPEphH8Vl/Ekwa7x+RwRdMXDktgjA3TLk=;
-        b=FllaJBvhR75SQGSZjTF7aGBGweRP/JDQU4fE/vfBeKJ4vXiNJdCbTo9dUD1EOPAKmh
-         upoOOWJSo5qEiZsZV4M+8i9PvsL84qc97DlNjZ/SIn+whuRORol9NbPpj7L8aYEZRI4F
-         b7urazsIsaj8gZpGPEzXEQn3yTwrVMvS85ipq/rNZBrqShvx27wmw61U7gNPisfl48WL
-         mIDul2jKNwfd3WcmktSlrctPOJ8YtFWtzNQAXDjsqEPf+G9irXQR9hGRO6f3/+98LBBC
-         uI0+JHYGxeG1YSy3XKnGkLRTcF2w3z+2aPW0Po0EyInBBwpOPacrqOCnTD+lV6Y+44Kl
-         DxWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUhFnBkgFOCH9+TCKu0MjFatrWNVUBcXHd5cokbrPiUA9NUR4K0V1Y5BtDfIojbbL/n+ts=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFVwGOtpnuVdg+IKE8AdY2/gwSBCPhRsjA4YvEPLcu99DxpznN
-	FdKms+fczoe3DzLgcMiGK8llU4L7mfJW0wqwm4UovX0cTeSdhJVG
-X-Google-Smtp-Source: AGHT+IFn8UOD8Oow8wPXmamrF7LtgYXQKLAp1KPX9z0hec4W1VGsqwXmatp2Zg690ULsCPAdw2Bq3g==
-X-Received: by 2002:a05:600c:4f03:b0:42c:b3e5:f68c with SMTP id 5b1f17b1804b1-42cdb4e6a86mr109668185e9.4.1726524583971;
-        Mon, 16 Sep 2024 15:09:43 -0700 (PDT)
-Received: from gmail.com (192.red-88-14-200.dynamicip.rima-tde.net. [88.14.200.192])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42da22b8b15sm86895605e9.4.2024.09.16.15.09.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Sep 2024 15:09:43 -0700 (PDT)
-Message-ID: <be0149e3-148b-4e25-9e44-f3f9a3303fcd@gmail.com>
-Date: Tue, 17 Sep 2024 00:09:42 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aXO4EaPA"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 091BB1A603;
+	Mon, 16 Sep 2024 22:02:47 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=X
+	iVMZsuObPN01E5UcUB3SxJJNSz0+PsVMC/wJLwQYSg=; b=aXO4EaPA8GswJ2Q49
+	ad2q6C3Ia0vzGvd9DHZVjUKs7DV2ZrWGqJCbYKggNNfj1t3/kdgrUm/26qYxhMAy
+	coIWgamWr3bkggU+A9SxJitPKgkxjQZjO+gygq2tIRQkXYCIpuDVhyGG7MyGX6K8
+	P06l/zcb1x+pe/thkN9OJM6akY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0077E1A602;
+	Mon, 16 Sep 2024 22:02:47 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4CF4F1A601;
+	Mon, 16 Sep 2024 22:02:46 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Sep 2024, #06; Mon, 16)
+X-master-at: 3969d78396e707c5a900dd5e15c365c54bef0283
+X-next-at: 625da3ddd7012469a8c79a2a1d31aeffc5154afe
+Date: Mon, 16 Sep 2024 19:02:45 -0700
+Message-ID: <xmqqmsk7kpfe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] add-patch: edit the hunk again
-To: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <21ddf64f-10c2-4087-a778-0bd2e82aef42@gmail.com>
- <cba63486-2186-4e8e-aad4-ed7f54606ec7@gmail.com>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <cba63486-2186-4e8e-aad4-ed7f54606ec7@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EEE04E48-7498-11EF-BC6F-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On Mon, Sep 16, 2024 at 02:33:54PM +0100, Phillip Wood wrote:
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-> > The "edit" option allows the user to directly modify the hunk to be
-> > applied.
-> > 
-> > If the modified hunk returned is not an applicable patch, we give the
-> > opportunity to try again.
-> > 
-> > For this new attempt we provide, again, the original hunk;  the user
-> > has to repeat the modification from scratch.
-> 
-> As you say below it looks like we started doing this by accident with
-> 2b8ea7f3c7 (add -p: calculate offset delta for edited patches, 2018-03-05).
-> I think that although the change was accidental it was actually a move in
-> the right direction for several reasons.
-> 
->  - The error message from "git apply" makes it is virtually impossible
->    to tell what is wrong with the edited patch. The line numbers in the
->    error message refer to the complete patch but the user is editing a
->    single hunk so the user has no idea which line of the hunk the error
->    message applies to.
-> 
->  - If the user uses a terminal based editor then they cannot see the
->    error messages while they're re-editing the hunk.
-> 
->  - If the user has deleted a pre-image line then they need to somehow
->    magic it back before the hunk will apply.
-> 
-> > Instead, let's give them the faulty modified patch back, so they can
-> > identify and fix the problem.
-> 
-> The problem is how do they identify the problem? I have some unfinished
-> patches [1] that annotate the edited patch with comments explaining what's
-> wrong. Because we know what the unedited patch looked like and that the
-> pre-image lines should be unchanged it is possible to provide much better
-> error messages than we get from trying to apply the whole patch with "git
-> apply". It also makes it possible to restore deleted pre-image lines.
-> 
-> [1] https://github.com/phillipwood/git/tree/wip/add-p-editing-improvements
->     Note that the later patches do not even compile at the moment. I've
->     been meaning to split out the first eight patches and clean them up
->     as they're mostly functional and just need the commit messages
->     cleaning up.
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-I can imagine that we could give the flawed and annotated patch back to
-the user, if they want to fix it and try again.  Am I misunderstanding
-your envision?
+With maint, master, next, seen, todo:
 
-At any rate, I'm thinking about small fixes and/or avoiding to use a
-backup (":w! /tmp/patch" + ":r /tmp/patch") if I have doubts about
-making a mistake after spending some time thinking about a hunk, so as
-not to lose some work.
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
 
-> 
-> > diff --git a/add-patch.c b/add-patch.c
-> > index 557903310d..125e79a5ae 100644
-> > --- a/add-patch.c
-> > +++ b/add-patch.c
-> > @@ -1146,6 +1147,10 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
-> >   				      "addp-hunk-edit.diff", NULL) < 0)
-> >   		return -1;
-> > +	/* Drop possible previous edits */
-> > +	strbuf_setlen(&s->plain, plain_len);
-> > +	strbuf_setlen(&s->colored, colored_len);
-> > +
-> 
-> At this point hunk->end points past s->plain.len. If the user has deleted
-> all the lines then we return with hunk->end in this invalid state. I think
-> that turns out not to matter as we end up restoring hunk->end from the
-> backup we make at the beginning of edit_hunk_loop() but it is not straight
-> forward to reason about.
+With all the integration branches and topics broken out:
 
-I'm not sure I understand your comment.  We are adjusting "hunk" right
-after that, no?
+	https://github.com/gitster/git/
 
-> 
-> > @@ -1273,10 +1277,6 @@ static int edit_hunk_loop(struct add_p_state *s,
-> >   				return 0;
-> >   		}
-> > -		/* Drop edits (they were appended to s->plain) */
-> > -		strbuf_setlen(&s->plain, plain_len);
-> > -		strbuf_setlen(&s->colored, colored_len);
-> > -		*hunk = backup;
-> 
-> In the old version we always restore the hunk from the backup when we trim
-> the edited patch which maintains the invariant "hunk->end <= s->plain->end"
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-Same here.  Are we losing that invariant?
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-> 
-> > diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> > index 718438ffc7..6af5636221 100755
-> > --- a/t/t3701-add-interactive.sh
-> > +++ b/t/t3701-add-interactive.sh
-> > @@ -165,6 +165,20 @@ test_expect_success 'dummy edit works' '
-> >   	diff_cmp expected diff
-> >   '
-> > +test_expect_success 'setup re-edit editor' '
-> > +	write_script "fake_editor.sh" <<-\EOF &&
-> > +	grep been-here "$1" && echo found >output
-> 
-> 'grep been-here "$1" >output' should be sufficient I think
+Release tarballs are available at:
 
-As I was writing the test, it was clearer to me using "&& echo found"
-here and "grep found" below.
+	https://www.kernel.org/pub/software/scm/git/
 
-> 
-> > +	echo been-here > "$1"
-> > +	EOF
-> > +	test_set_editor "$(pwd)/fake_editor.sh"
-> > +'
-> 
-> I don't think we need to write the fake editor in a separate test. Also it
-> would be better to call test_set_editor in a subshell so that it does not
-> affect later tests.
+--------------------------------------------------
+[Graduated to 'master']
 
-Yes, t3701 deserves an update.  I tried to respect its current style.
-I didn't want to start a mix.
+* ah/apply-3way-ours (2024-09-09) 1 commit
+  (merged to 'next' on 2024-09-10 at 989ba9708b)
+ + apply: support --ours, --theirs, and --union for three-way merges
 
-> 
-> > +test_expect_success 'editing again works' '
-> > +	git reset &&
-> > +	test_write_lines e y | GIT_TRACE=1 git add -p &&
-> 
-> It would be nice to add "n q" to the input to make it complete.
+ "git apply --3way" learned to take "--ours" and other options.
+ 
+ source: <20240909141109.3102-2-alexhenrie24@gmail.com>
 
-I have no objection to that.
 
-> 
-> > +	grep found output
-> 
-> Using test_grep makes it easier to debug test failures.
-> 
-> 
-> Best Wishes
-> 
-> Phillip
+* cp/unit-test-reftable-stack (2024-09-09) 6 commits
+  (merged to 'next' on 2024-09-09 at 0dddbbb60d)
+ + t-reftable-stack: add test for stack iterators
+ + t-reftable-stack: add test for non-default compaction factor
+ + t-reftable-stack: use reftable_ref_record_equal() to compare ref records
+ + t-reftable-stack: use Git's tempfile API instead of mkstemp()
+ + t: harmonize t-reftable-stack.c with coding guidelines
+ + t: move reftable/stack_test.c to the unit testing framework
+ (this branch is used by ps/reftable-alloc-failures and ps/reftable-exclude.)
 
-Thanks for your review.
+ Another reftable test migrated to the unit-test framework.
+ 
+ source: <20240908041632.4948-1-chandrapratap3519@gmail.com>
+
+
+* jc/range-diff-lazy-setup (2024-08-09) 2 commits
+  (merged to 'next' on 2024-09-10 at 2e04a06b22)
+ + remerge-diff: clean up temporary objdir at a central place
+ + remerge-diff: lazily prepare temporary objdir on demand
+
+ Code clean-up.
+ 
+ source: <xmqqr0ax9vlk.fsf@gitster.g>
+
+
+* jk/ref-filter-trailer-fixes (2024-09-10) 10 commits
+  (merged to 'next' on 2024-09-10 at ce7299fe2e)
+ + ref-filter: fix leak with unterminated %(if) atoms
+ + ref-filter: add ref_format_clear() function
+ + ref-filter: fix leak when formatting %(push:remoteref)
+ + ref-filter: fix leak with %(describe) arguments
+ + ref-filter: fix leak of %(trailers) "argbuf"
+ + ref-filter: store ref_trailer_buf data per-atom
+ + ref-filter: drop useless cast in trailers_atom_parser()
+ + ref-filter: strip signature when parsing tag trailers
+ + ref-filter: avoid extra copies of payload/signature
+ + t6300: drop newline from wrapped test title
+
+ Bugfixes and leak plugging in "git for-each-ref --format=..." code
+ paths.
+ 
+ source: <20240909230758.GA921697@coredump.intra.peff.net>
+
+--------------------------------------------------
+[New Topics]
+
+* jk/diag-unexpected-remote-helper-death (2024-09-14) 1 commit
+  (merged to 'next' on 2024-09-16 at f2aa29beac)
+ + print an error when remote helpers die during capabilities
+
+ When a remote-helper dies before Git writes to it, SIGPIPE killed
+ Git silently.  We now explain the situation a bit better to the end
+ user in our error message.
+
+ Will merge to 'master'.
+ source: <20240914064130.GA1284567@coredump.intra.peff.net>
+
+
+* ak/typofixes (2024-09-16) 3 commits
+ - cbtree: fix a typo
+ - bloom: fix a typo
+ - attr: fix a typo
+
+ source: <20240915230522.129253-1-algonell@gmail.com>
+
+
+* jk/jump-quickfix-fixes (2024-09-16) 2 commits
+ - git-jump: ignore deleted files in diff mode
+ - git-jump: always specify column 1 for diff entries
+
+ source: <20240915111119.GA2017770@coredump.intra.peff.net>
+
+
+* jk/t9001-deflake (2024-09-16) 1 commit
+ - t9001: use a more distinct fake BugID
+
+ source: <20240915113115.GA2019070@coredump.intra.peff.net>
+
+
+* ps/apply-leakfix (2024-09-16) 6 commits
+ - apply: refactor `struct image` to use a `struct strbuf`
+ - apply: rename members that track line count and allocation length
+ - apply: refactor code to drop `line_allocated`
+ - apply: introduce macro and function to init images
+ - apply: rename functions operating on `struct image`
+ - apply: reorder functions to move image-related things together
+
+ source: <cover.1726470385.git.ps@pks.im>
+
+
+* ps/leakfixes-part-7 (2024-09-16) 24 commits
+ - diffcore-break: fix leaking filespecs when merging broken pairs
+ - revision: fix leaking parents when simplifying commits
+ - builtin/maintenance: fix leak in `get_schedule_cmd()`
+ - builtin/maintenance: fix leaking config string
+ - promisor-remote: fix leaking partial clone filter
+ - grep: fix leaking grep pattern
+ - submodule: fix leaking submodule ODB paths
+ - trace2: destroy context stored in thread-local storage
+ - builtin/difftool: plug several trivial memory leaks
+ - builtin/repack: fix leaking configuration
+ - diffcore-order: fix leaking buffer when parsing orderfiles
+ - parse-options: free previous value of `OPTION_FILENAME`
+ - diff: fix leaking orderfile option
+ - builtin/pull: fix leaking "ff" option
+ - dir: fix off by one errors for ignored and untracked entries
+ - builtin/submodule--helper: fix leaking remote ref on errors
+ - t/helper: fix leaking subrepo in nested submodule config helper
+ - builtin/submodule--helper: fix leaking error buffer
+ - builtin/submodule--helper: clear child process when not running it
+ - submodule: fix leaking update strategy
+ - git: fix leaking argv when handling builtins
+ - builtin/help: fix leaking `html_path` when reading config multiple times
+ - builtin/help: fix dangling reference to `html_path`
+ - Merge branch 'ps/leakfixes-part-6' into ps/leakfixes-part-7
+ (this branch uses ps/leakfixes-part-6.)
+
+ source: <cover.1726484308.git.ps@pks.im>
+
+
+* ps/reftable-alloc-failures (2024-09-16) 24 commits
+ - reftable: handle trivial allocation failures
+ - reftable/tree: handle allocation failures
+ - reftable/pq: handle allocation failures when adding entries
+ - reftable/block: handle allocation failures
+ - reftable/blocksource: handle allocation failures
+ - reftable/iter: handle allocation failures when creating indexed table iter
+ - reftable/stack: handle allocation failures in auto compaction
+ - reftable/stack: handle allocation failures in `stack_compact_range()`
+ - reftable/stack: handle allocation failures in `reftable_new_stack()`
+ - reftable/stack: handle allocation failures on reload
+ - reftable/reader: handle allocation failures in `reader_init_iter()`
+ - reftable/reader: handle allocation failures for unindexed reader
+ - reftable/merged: handle allocation failures in `merged_table_init_iter()`
+ - reftable/writer: handle allocation failures in `reftable_new_writer()`
+ - reftable/writer: handle allocation failures in `writer_index_hash()`
+ - reftable/record: handle allocation failures when decoding records
+ - reftable/record: handle allocation failures on copy
+ - reftable/basics: handle allocation failures in `parse_names()`
+ - reftable/basics: handle allocation failures in `reftable_calloc()`
+ - reftable: introduce `reftable_strdup()`
+ - reftable/basics: merge "publicbasics" into "basics"
+ - reftable/error: introduce out-of-memory error code
+ - Merge branch 'ps/reftable-exclude' into ps/reftable-alloc-failures
+ - Merge branch 'cp/unit-test-reftable-stack' into ps/reftable-alloc-failures
+ (this branch uses ps/reftable-exclude.)
+
+ The reftable library is now prepared to expect that the memory
+ allocation function given to it may fail to allocate and to deal
+ with such an error.
+
+ source: <cover.1726489647.git.ps@pks.im>
+
+--------------------------------------------------
+[Cooking]
+
+* bb/unicode-width-table-16 (2024-09-12) 1 commit
+  (merged to 'next' on 2024-09-13 at 87dc391469)
+ + unicode: update the width tables to Unicode 16
+
+ Update the character width table for Unicode 16.
+
+ Will merge to 'master'.
+ source: <20240912204047.1020213-1-dev+git@drbeat.li>
+
+
+* jc/strbuf-commented-something (2024-09-12) 2 commits
+ - strbuf: retire strbuf_commented_lines()
+ - strbuf: retire strbuf_commented_addf()
+
+ Update two functions whose callers always pass the same global
+ variable to omit the redundant parameter and use the global in the
+ callee themselves.
+
+ On hold.
+ source: <20240912205301.1809355-1-gitster@pobox.com>
+
+
+* jk/git-pm-bare-repo-fix (2024-09-13) 2 commits
+  (merged to 'next' on 2024-09-13 at 7f9bb8501c)
+ + Git.pm: use "rev-parse --absolute-git-dir" rather than perl code
+ + Git.pm: fix bare repository search with Directory option
+
+ In Git 2.39, Git.pm stopped working in a bare repository, which has
+ been corrected.
+
+ Will merge to 'master'.
+ source: <20240912223413.GA649897@coredump.intra.peff.net>
+
+
+* jc/t5512-sigpipe-fix (2024-09-13) 1 commit
+  (merged to 'next' on 2024-09-16 at 96075b5dd1)
+ + t5512.40 sometimes dies by SIGPIPE
+
+ Test fix.
+
+ Will merge to 'master'.
+ source: <xmqqmskbwe1a.fsf@gitster.g>
+
+
+* jc/ci-upload-artifact-and-linux32 (2024-09-09) 1 commit
+  (merged to 'next' on 2024-09-11 at 62991bef5b)
+ + ci: remove 'Upload failed tests' directories' step from linux32 jobs
+ (this branch is used by jk/ci-linux32-update.)
+
+ CI started failing completely for linux32 jobs, as the step to
+ upload failed test directory uses GitHub actions that is deprecated
+ and is now disabled.  Remove the step so at least we will know if
+ the tests are passing.
+
+ Will merge to 'master'.
+ source: <xmqqy140o2kb.fsf@gitster.g>
+
+
+* jk/ci-linux32-update (2024-09-13) 5 commits
+  (merged to 'next' on 2024-09-13 at e937339388)
+ + ci: add Ubuntu 16.04 job to GitLab CI
+ + ci: use regular action versions for linux32 job
+ + ci: use more recent linux32 image
+ + ci: unify ubuntu and ubuntu32 dependencies
+ + ci: drop run-docker scripts
+ (this branch uses jc/ci-upload-artifact-and-linux32.)
+
+ CI updates
+
+ Will merge to 'master'.
+ source: <20240912094238.GA589050@coredump.intra.peff.net>
+
+
+* jk/interop-test-build-options (2024-09-12) 1 commit
+  (merged to 'next' on 2024-09-13 at 0ab66e77a1)
+ + t/interop: allow per-version make options
+
+ The support to customize build options to adjust for older versions
+ and/or older systems for the interop tests has been improved.
+
+ Will merge to 'master'.
+ source: <20240911061009.GA1538383@coredump.intra.peff.net>
+
+
+* jk/no-openssl-with-openssl-sha1 (2024-09-12) 1 commit
+  (merged to 'next' on 2024-09-13 at 07f5e4856d)
+ + imap-send: handle NO_OPENSSL even when openssl exists
+
+ The "imap-send" now allows to be compiled with NO_OPENSSL and
+ OPENSSL_SHA1 defined together.
+
+ Will merge to 'master'.
+ source: <20240911061257.GA1538490@coredump.intra.peff.net>
+
+
+* ma/test-libcurl-prereq (2024-09-11) 2 commits
+  (merged to 'next' on 2024-09-13 at 6d4ad6b054)
+ + t0211: add missing LIBCURL prereq
+ + t1517: add missing LIBCURL prereq
+
+ Test portability fix.
+
+ Will merge to 'master'.
+ source: <cover.1726049108.git.martin.agren@gmail.com>
+
+
+* cc/promisor-remote-capability (2024-09-10) 4 commits
+ - promisor-remote: check advertised name or URL
+ - Add 'promisor-remote' capability to protocol v2
+ - strbuf: refactor strbuf_trim_trailing_ch()
+ - version: refactor strbuf_sanitize()
+
+ The v2 protocol learned to allow the server to advertise possible
+ promisor remotes, and the client to respond with what promissor
+ remotes it uses, so that the server side can omit objects that the
+ client can lazily obtain from these other promissor remotes.
+
+ Comments?
+ source: <20240910163000.1985723-1-christian.couder@gmail.com>
+
+
+* ds/pack-name-hash-tweak (2024-09-09) 4 commits
+ - p5313: add size comparison test
+ - p5314: add a size test for name-hash collisions
+ - git-repack: update usage to match docs
+ - pack-objects: add --full-name-hash option
+
+ In a repository with too many (more than --window size) similarly
+ named files, "git repack" would not find good delta-base candidate
+ and worse, it may not use a blob from exactly the same path as a
+ good delta-base candidate.  Optionally replace the name hash so
+ that only blobs at the same path and nothing else are used as
+ delta-base candidate.
+
+ Needs review.
+ source: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
+
+
+* ps/reftable-exclude (2024-09-16) 7 commits
+ - refs/reftable: wire up support for exclude patterns
+ - reftable/reader: make table iterator reseekable
+ - t/unit-tests: introduce reftable library
+ - Makefile: stop listing test library objects twice
+ - builtin/receive-pack: fix exclude patterns when announcing refs
+ - refs: properly apply exclude patterns to namespaced refs
+ - Merge branch 'cp/unit-test-reftable-stack' into ps/reftable-exclude
+ (this branch is used by ps/reftable-alloc-failures.)
+
+ The reftable backend learned to more efficiently handle exclude
+ patterns while enumerating the refs.
+
+ Will merge to 'next'?
+ source: <cover.1726476401.git.ps@pks.im>
+
+
+* pw/rebase-autostash-fix (2024-09-03) 1 commit
+  (merged to 'next' on 2024-09-13 at 6b41d66efd)
+ + rebase: apply and cleanup autostash when rebase fails to start
+
+ "git rebase --autostash" failed to resurrect the autostashed
+ changes when the command gets aborted after giving back control
+ asking for hlep in conflict resolution.
+
+ Will merge to 'master'.
+ source: <pull.1772.v2.git.1725289979450.gitgitgadget@gmail.com>
+
+
+* jc/pass-repo-to-builtins (2024-09-13) 4 commits
+ - add: pass in repo variable instead of global the_repository
+ - builtin: remove USE_THE_REPOSITORY for those without the_repository
+ - builtin: remove USE_THE_REPOSITORY_VARIABLE from builtin.h
+ - builtin: add a repository parameter for builtin functions
+
+ The convention to calling into built-in command implementation has
+ been updated to pass the repository, if known, together with the
+ prefix value.
+
+ Will merge to 'next'?
+ source: <pull.1778.v3.git.git.1726262177.gitgitgadget@gmail.com>
+
+
+* tb/weak-sha1-for-tail-sum (2024-09-06) 9 commits
+ - csum-file.c: use fast SHA-1 implementation when available
+ - Makefile: allow specifying a SHA-1 for non-cryptographic uses
+ - hash.h: scaffolding for _fast hashing variants
+ - sha1: do not redefine `platform_SHA_CTX` and friends
+ - i5500-git-daemon.sh: use compile-able version of Git without OpenSSL
+ - pack-objects: use finalize_object_file() to rename pack/idx/etc
+ - finalize_object_file(): implement collision check
+ - finalize_object_file(): refactor unlink_or_warn() placement
+ - finalize_object_file(): check for name collision before renaming
+
+ The checksum at the tail of files are now computed without
+ collision detection protection.
+
+ Expecting a reroll.
+ cf. <ZugMUv1xbnjYH-el@pks.im>
+ source: <cover.1725651952.git.me@ttaylorr.com>
+
+
+* es/chainlint-message-updates (2024-09-10) 3 commits
+  (merged to 'next' on 2024-09-11 at a3fd02a009)
+ + chainlint: reduce annotation noise-factor
+ + chainlint: make error messages self-explanatory
+ + chainlint: don't be fooled by "?!...?!" in test body
+
+ The error messages from the test script checker have been improved.
+
+ Will merge to 'master'.
+ source: <20240910041013.68948-1-ericsunshine@charter.net>
+
+
+* ps/environ-wo-the-repository (2024-09-12) 21 commits
+  (merged to 'next' on 2024-09-16 at c08e3eb6b8)
+ + environment: stop storing "core.notesRef" globally
+ + environment: stop storing "core.warnAmbiguousRefs" globally
+ + environment: stop storing "core.preferSymlinkRefs" globally
+ + environment: stop storing "core.logAllRefUpdates" globally
+ + refs: stop modifying global `log_all_ref_updates` variable
+ + branch: stop modifying `log_all_ref_updates` variable
+ + repo-settings: track defaults close to `struct repo_settings`
+ + repo-settings: split out declarations into a standalone header
+ + environment: guard state depending on a repository
+ + environment: reorder header to split out `the_repository`-free section
+ + environment: move `set_git_dir()` and related into setup layer
+ + environment: make `get_git_namespace()` self-contained
+ + environment: move object database functions into object layer
+ + config: make dependency on repo in `read_early_config()` explicit
+ + config: document `read_early_config()` and `read_very_early_config()`
+ + environment: make `get_git_work_tree()` accept a repository
+ + environment: make `get_graft_file()` accept a repository
+ + environment: make `get_index_file()` accept a repository
+ + environment: make `get_object_directory()` accept a repository
+ + environment: make `get_git_common_dir()` accept a repository
+ + environment: make `get_git_dir()` accept a repository
+
+ Code clean-up.
+
+ Will merge to 'master'.
+ source: <cover.1726139990.git.ps@pks.im>
+
+
+* gt/unit-test-oidset (2024-08-25) 1 commit
+ - unit-tests: add tests for oidset.h
+
+ Another unit-test.
+
+ Expecting a reroll.
+ source: <20240824172028.39419-1-shyamthakkar001@gmail.com>
+
+
+* ps/leakfixes-part-6 (2024-09-05) 22 commits
+  (merged to 'next' on 2024-09-13 at 9be3125b10)
+ + builtin/repack: fix leaking keep-pack list
+ + merge-ort: fix two leaks when handling directory rename modifications
+ + match-trees: fix leaking prefixes in `shift_tree()`
+ + builtin/fmt-merge-msg: fix leaking buffers
+ + builtin/grep: fix leaking object context
+ + builtin/pack-objects: plug leaking list of keep-packs
+ + builtin/repack: fix leaking line buffer when packing promisors
+ + negotiator/skipping: fix leaking commit entries
+ + shallow: fix leaking members of `struct shallow_info`
+ + shallow: free grafts when unregistering them
+ + object: clear grafts when clearing parsed object pool
+ + gpg-interface: fix misdesigned signing key interfaces
+ + send-pack: fix leaking push cert nonce
+ + remote: fix leak in reachability check of a remote-tracking ref
+ + remote: fix leaking tracking refs
+ + builtin/submodule--helper: fix leaking refs on push-check
+ + submodule: fix leaking fetch task data
+ + upload-pack: fix leaking child process data on reachability checks
+ + builtin/push: fix leaking refspec query result
+ + send-pack: fix leaking common object IDs
+ + fetch-pack: fix memory leaks on fetch negotiation
+ + t/test-lib: allow skipping leak checks for passing tests
+ (this branch is used by ps/leakfixes-part-7.)
+
+ More leakfixes.
+
+ Will merge to 'master'.
+ source: <cover.1725530720.git.ps@pks.im>
+
+
+* sj/ref-contents-check (2024-09-13) 5 commits
+ - ref: add symlink ref content check for files backend
+ - ref: add symref content check for files backend
+ - ref: add more strict checks for regular refs
+ - ref: port git-fsck(1) regular refs check for files backend
+ - ref: initialize "fsck_ref_report" with zero
+
+ "git fsck" learned to issue warnings on "curiously formatted" ref
+ contents that have always been taken valid but something Git
+ wouldn't have written itself (e.g., missing terminating end-of-line
+ after the full object name).
+ source: <ZuRzCyjQFilGhj8j@ArchLinux>
+
+
+* tb/incremental-midx-part-2 (2024-08-28) 16 commits
+ - fixup! midx: implement writing incremental MIDX bitmaps
+ - midx: implement writing incremental MIDX bitmaps
+ - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
+ - pack-bitmap.c: keep track of each layer's type bitmaps
+ - ewah: implement `struct ewah_or_iterator`
+ - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
+ - pack-bitmap.c: compute disk-usage with incremental MIDXs
+ - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
+ - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
+ - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
+ - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
+ - pack-bitmap.c: open and store incremental bitmap layers
+ - pack-revindex: prepare for incremental MIDX bitmaps
+ - Documentation: describe incremental MIDX bitmaps
+ - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
+ - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
+
+ Incremental updates of multi-pack index files.
+
+ Needs review.
+ source: <cover.1723760847.git.me@ttaylorr.com>
+
+
+* ps/clar-unit-test (2024-09-10) 15 commits
+  (merged to 'next' on 2024-09-11 at ccc0289490)
+ + Makefile: rename clar-related variables to avoid confusion
+  (merged to 'next' on 2024-09-05 at 87fb0a399a)
+ + clar: add CMake support
+ + t/unit-tests: convert ctype tests to use clar
+ + t/unit-tests: convert strvec tests to use clar
+ + t/unit-tests: implement test driver
+ + Makefile: wire up the clar unit testing framework
+ + Makefile: do not use sparse on third-party sources
+ + Makefile: make hdr-check depend on generated headers
+ + Makefile: fix sparse dependency on GENERATED_H
+ + clar: stop including `shellapi.h` unnecessarily
+ + clar(win32): avoid compile error due to unused `fs_copy()`
+ + clar: avoid compile error with mingw-w64
+ + t/clar: fix compatibility with NonStop
+ + t: import the clar unit testing framework
+ + t: do not pass GIT_TEST_OPTS to unit tests with prove
+
+ Import clar unit tests framework libgit2 folks invented for our
+ use.
+
+ Will merge to 'master'.
+ cf. <d5b1c95b-cbdc-4711-849e-c2cfc67787ee@gmail.com>
+ source: <cover.1725459142.git.ps@pks.im>
+
+
+* js/libgit-rust (2024-09-09) 7 commits
+ . SQUASH???
+ . Makefile: add option to build and test libgit-rs and libgit-rs-sys
+ . libgit: add higher-level libgit crate
+ . config: add git_configset_alloc() and git_configset_clear_and_free()
+ . libgit-sys: add repo initialization and config access
+ . libgit-sys: introduce Rust wrapper for libgit.a
+ . common-main: split init and exit code into new files
+
+ An rust binding to libgit.a functions has been introduced.
+
+ Expecting a reroll.
+ cf. <xmqqv7z8tjd7.fsf@gitster.g>
+ source: <20240906221853.257984-1-calvinwan@google.com>
+
+
+* jc/too-many-arguments (2024-08-06) 4 commits
+ - miscellaneous: avoid "too many arguments"
+ - notes: avoid "too many arguments"
+ - cat-file: avoid "too many arguments"
+ - refs: avoid "too many arguments"
+
+ Error message clarification.
+
+ On hold.
+ source: <20240806003539.3292562-1-gitster@pobox.com>
+
+
+* ja/doc-synopsis-markup (2024-09-05) 3 commits
+  (merged to 'next' on 2024-09-16 at d471154a0b)
+ + doc: apply synopsis simplification on git-clone and git-init
+ + doc: update the guidelines to reflect the current formatting rules
+ + doc: introduce a synopsis typesetting
+
+ The way AsciiDoc is used for SYNOPSIS part of the manual pages has
+ been revamped.  The sources, at least for the simple cases, got
+ vastly pleasant to work with.
+
+ Will merge to 'master'.
+ source: <pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
+
+
+* ew/cat-file-optim (2024-08-25) 10 commits
+ - cat-file: use writev(2) if available
+ - cat-file: batch_write: use size_t for length
+ - cat-file: batch-command uses content_limit
+ - object_info: content_limit only applies to blobs
+ - packfile: packed_object_info avoids packed_to_object_type
+ - cat-file: use delta_base_cache entries directly
+ - packfile: inline cache_or_unpack_entry
+ - packfile: fix off-by-one in content_limit comparison
+ - packfile: allow content-limit for cat-file
+ - packfile: move sizep computation
+
+ "git cat-file --batch" has been optimized.
+
+ Waiting for review responses.
+ source: <20240823224630.1180772-1-e@80x24.org>
