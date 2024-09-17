@@ -1,204 +1,260 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CD37A13A
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 17:31:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D14B189913
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 17:33:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726594291; cv=none; b=YFmPaHng1+0UBQTkYS0mhZ+fYGTFGMmKXM2Q4miE7Vc39NM0eT87kceSPrZYKeVb92gj9VhECwbWL5rR8lfAljQxLtlrIfT6waNjrT3GuaGy5Bl9PCR4hhyMQvu46Q3/Qpq4kXZchQdRMuLqGvD1NgptbN6VtZ/57w/MxPm+BPc=
+	t=1726594424; cv=none; b=NxJQZrDNEoBVjRrRTcEVSBszWx3yCDkdCwyr6KguBbs49c71bQf39H7815UDnHAFmmv2JmVVhsFIoQHqjsoSEn6u469h/C+LEjpZ98bqMFcKi8arc+hD9ZdCvirjXGx96XK2oWgyd6keN1zuQJd3VpcXr07ot9oHqrRfW9C7ouI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726594291; c=relaxed/simple;
-	bh=gVrkHA17wh3rtnkiA+gNevyQmL6ZDv8XloivLOvdB1U=;
+	s=arc-20240116; t=1726594424; c=relaxed/simple;
+	bh=ZByuQoKupY53bhwSPg/QZAURrtWPdqF52WlwhB/jkR8=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jLd2xYzIA3ArYdMQrCAmkDdGOk3f60mjRXHLpx7+///27gahI2eOclEYT7QYDD8rIDtFZLPEjv33VSW5//t3ArUTuAYmj5c2zhkaAhlzi0q+3W/xzjLIUhDJV223KPJmUWyK7QXvJpFU732LjUP1fQmEmjSBxty8dTNIjeDjkok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ftt7/mWq; arc=none smtp.client-ip=209.85.217.44
+	 To:Cc:Content-Type; b=YuDVd6vVkHTpSzmFZA7PRuG085BCMD+3X6TCFVf0aY8Mg6fnFQHfs3eIwD4nnnEKMKTgHYk3zVyMyyeMvmnF+TQtxNTdNkNbqAIgj/3OEfm1febjFbioh84TMSGH9joufi8gy+gzwu2QRO0wqYly4Zp74LMrdSZa89XPg7rZKxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gj3f0saY; arc=none smtp.client-ip=209.85.221.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ftt7/mWq"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-49bc44e51bcso1359468137.2
-        for <git@vger.kernel.org>; Tue, 17 Sep 2024 10:31:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gj3f0saY"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-50108b373d2so1215601e0c.2
+        for <git@vger.kernel.org>; Tue, 17 Sep 2024 10:33:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726594289; x=1727199089; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1726594421; x=1727199221; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vy9swWx0C412mUxwdzSxti0UfGG5Sv5u2XVzZfnip4w=;
-        b=Ftt7/mWqT/cL5oEtxtp2SSjOnFotxVlex3a67V+FkZGO4i6lxLtBDmxmAcvIe0AWl3
-         z09Z0yIDalNmqmo6l3Jmd0nRljLN/3qL8+kbr43TM0I/Lfy0/IKkvcN+RooF/vmbKz6s
-         s4EboJak0k9u7u6vSLEiA91XlRMvoDSkYoyrj7JdcI1FwYS1TfE8QoKadyDJ/r8rkjIG
-         Ylug8MqT+WZipWXeEYqMKcEd8oEK6U6h9bBO/cR8/3nL9COFzoUXL/jD7ysMK7uF9WUb
-         L8vDaUKXvNL8yopnZLYPAxsZODerYDFxY8sNpmuVykmsRhs8z2L7G0hog+Djt/qEOieO
-         oP7Q==
+        bh=joRrSErmqVfPx4T3jpwU4aAhewFGK7S2n2mbBpZ/Oeg=;
+        b=Gj3f0saYnPuJaNle2V2GRQJ5nCUAhaXi6hfaYW/6uVbR/HBuIJjrxpKPIDX4rG80Fw
+         JNmCqc+wQMXw+to/8EZrn3cJyGCL0C8ZiBo2efmuiNsM9+vNgrLrYRi59ejO9a85Ex1l
+         S3SwEH5cX09ZO1CMhMBe3+ORECByt3NII6EwQjAp+USA+S4zN6Wqu8EcN/wNIhc4L0r6
+         vRqlzrDHDcaCbIFQEk8uBtQPchbH9JYTY9dotXFMCwms6IQTM+PF/wW/987zLuzXLCzt
+         aFCjpzm6y0YeFXZQlktoGgnIp8uFrYfxwWrTNjr7+0QYyJFINc8murKqlxdkIbh+hFuR
+         +Lfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726594289; x=1727199089;
+        d=1e100.net; s=20230601; t=1726594421; x=1727199221;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vy9swWx0C412mUxwdzSxti0UfGG5Sv5u2XVzZfnip4w=;
-        b=Os+b7SIqCpk/EwfjPNWcN8NdPnhOYAN8KF8FBGek+tzXlokt+4ArxlueqoKtq32J6V
-         wwrKu1IyIz3jTxWAYvPdJMoH4405VKjtifvyqwRDU5lu3Zqxyp7O0BTpFvb6BQ5C2tCb
-         7vLUo3BoDjRWq9004nwbfmZOwb9LQat2PZfFXvNYF0iFNgKn71MiVWeOH9VnbLirX4DZ
-         7+J5MX7QtIpNy5+rzYeHm7CUebQOgN7y3cc0ETYoyS+BAvFHXR64Fd+g8M7cYw/ChFE9
-         fyIEa/F7n9b94ZhVL0tx1SP1cW8fsJ1i6dW8e16Wj7XLov7yAdVdt5xb0j6HkBO4G81h
-         hh0w==
-X-Gm-Message-State: AOJu0YzYNXIgSuZyqVmZ+tddQwu6pduMad5jsIxWYzL61cAKj5GTJ+wF
-	72VqdmFFxVlTpIaWCNz+L0mSCWrVFJEsFY7Nb3wNXwWUSdz54nqi50HL5up6O1MrICQ8k2fSDxn
-	6WSSIp0gN5B0tJkhaeaFPPPChZ38rfqUXepU=
-X-Google-Smtp-Source: AGHT+IFDqSXYUmvOCQ54cv46gPzLq0bxhfj+OksPDJVZuLxfVFfcwfgdA+ksv/0Jz9wW3iQ3bJua18ely48BWdBUZwM=
-X-Received: by 2002:a05:6102:32c7:b0:492:aaae:835d with SMTP id
- ada2fe7eead31-49d4f462f96mr12912108137.0.1726594289040; Tue, 17 Sep 2024
- 10:31:29 -0700 (PDT)
+        bh=joRrSErmqVfPx4T3jpwU4aAhewFGK7S2n2mbBpZ/Oeg=;
+        b=wk3iocmfL/uHZTfsspLzuYQknbHz3YZUX+0WSQVTXraqylVPKBar4nu9fVpGNrF+pK
+         O6VyWT6Ez33Iyj9GA/0nHY4w3IPZEPs9UqkQcLjp9sITASs7GjFkeBluZPj7S2acWcfM
+         PYYjJABuhEHN4Ur++BeyVvQtny6ibyaIQpv5Grpqo3218pyssl40LdzaHiGiGi5pR3QU
+         xM/E5fUBTqCLyFlTPuaQaLm0K+4XJE5MXOEo2PizqIm4lCLZ8dFz2nOHqt7iCrlvV/Ka
+         O9/0e6O/wABBd0e+2UXWfGpwQgbcTJBTwYgo5JO0bixOHUyZvVPVznOlHRNaiaJ2uRjR
+         ilpg==
+X-Forwarded-Encrypted: i=1; AJvYcCWtl62/0jr5sJXInRHBy3SAUHD/X3q/60iWUT9VCDxa33Qi/Sn4cmyja+Xa1+9C6nwQ0fI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvJyJEG2B8G+kNl6XzCUQmDI4PlwpHOW7Z1WnHlifIRpUIybKc
+	7Hs5Ynwc3+lpqV2w74lGiFD8m9tCothqzRByn3/JrU1/6o4/Q7f1/RFdGtDm/TfknfKiBKB8P+p
+	B2PQ6/f0Jm9SHdZXhpxBdDvuaYI4=
+X-Google-Smtp-Source: AGHT+IEPk0uMCgc6NT+Qqdd9S/ynAm/qVGGbNbJXqQJbxzXrKx98fpQu1lorJgJDIxT69kIGNB1Wn3BaZ2inMeu0q8Q=
+X-Received: by 2002:a05:6122:3b12:b0:4ef:6870:ff5 with SMTP id
+ 71dfb90a1353d-50344b7fffcmr9709720e0c.5.1726594421343; Tue, 17 Sep 2024
+ 10:33:41 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 17 Sep 2024 10:31:27 -0700
+ HTTPREST; Tue, 17 Sep 2024 13:33:40 -0400
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <ZufWkLwn0RQeCCpD@pks.im>
-References: <cover.1725881266.git.ps@pks.im> <f3922b81db69cd3bbdddcfbe02c99613448fd9ed.1725881266.git.ps@pks.im>
- <CAOLa=ZQikyvJCRZ=mCfve+VWZfrvPL1bg55txB1q0Nh3SW_JJQ@mail.gmail.com> <ZufWkLwn0RQeCCpD@pks.im>
+In-Reply-To: <cover.1726476401.git.ps@pks.im>
+References: <cover.1725881266.git.ps@pks.im> <cover.1726476401.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 17 Sep 2024 10:31:27 -0700
-Message-ID: <CAOLa=ZS2dOOGauZa-yBtE7S_Ex8L8kNV=CAh4mQfZdhmjCUnbw@mail.gmail.com>
-Subject: Re: [PATCH 6/6] refs/reftable: wire up support for exclude patterns
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Content-Type: multipart/mixed; boundary="000000000000452d3d0622540f3e"
+Date: Tue, 17 Sep 2024 13:33:40 -0400
+Message-ID: <CAOLa=ZTeZPeAOhSx3JnDGeeRwD9=af071FJZj+gWGqE29d4Adg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] refs/reftable: wire up exclude patterns
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>
+Content-Type: multipart/mixed; boundary="00000000000027e9c2062254179b"
 
---000000000000452d3d0622540f3e
+--00000000000027e9c2062254179b
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Fri, Sep 13, 2024 at 07:47:06AM -0500, karthik nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> > +/*
->> > + * Handle exclude patterns. Returns either `1`, which tells the caller that the
->> > + * current reference shall not be shown. Or `0`, which indicates that it should
->> > + * be shown.
->> > + */
->> > +static int should_exclude_current_ref(struct reftable_ref_iterator *iter)
->> > +{
->> > +	while (iter->exclude_patterns[iter->exclude_patterns_index]) {
->> > +		const char *pattern = iter->exclude_patterns[iter->exclude_patterns_index];
->> > +		char *ref_after_pattern;
->> > +		int cmp;
->> > +
->> > +		/*
->> > +		 * Lazily cache the pattern length so that we don't have to
->> > +		 * recompute it every time this function is called.
->> > +		 */
->> > +		if (!iter->exclude_patterns_strlen)
->> > +			iter->exclude_patterns_strlen = strlen(pattern);
->> > +
->> > +		/*
->> > +		 * When the reference name is lexicographically bigger than the
->> > +		 * current exclude pattern we know that it won't ever match any
->> > +		 * of the following references, either. We thus advance to the
->> > +		 * next pattern and re-check whether it matches.
->>
->> So this means that the exclude patterns were lexicographically sorted.
->> Otherwise this would work.
+Hello,
+
+> Hi,
 >
-> Indeed. Good that you call out my assumption, as I in fact didn't verify
-> that it holds, and in fact it doesn't. It's not a correctness issue if
-> it doesn't hold, because it would simply mean that we don't skip over
-> some references where we really could. But it certainly is a perfomance
-> issue.
+> this is the second version of my patch series that fixes preexisting
+> bugs with exclude patterns and wires them up for the reftable backend.
 >
-> Will fix and add a test for it.
+> Changes compared to v1:
 >
->> > +		 * Note that the seeked-to reference may also be excluded. This
->> > +		 * is not handled here though, but the caller is expected to
->> > +		 * loop and re-verify the next reference for us.
->> > +		 */
->>
->> The seeked-to reference here being the one with 0xff. We could get rid
->> of this by doing something like this:
->>
->>     int last_char_idx = iter->exclude_patterns_strlen - 1
->>     ref_after_pattern = xstrfmt("%s", pattern);
->>     ref_after_pattern[last_char_idx] = ref_after_pattern[last_char_idx] + 1;
->>
->> instead no?
+>   - Some typo fixes in commit messages.
 >
-> Sorry, I don't quite follow what you mean with "get rid of this". What
-> exactly is "this"? Do you mean the re-looping?
+>   - Mention that the newly introduced function in patch 1 will be used
+>     in patch 2, which is why it's declared in "refs.h".
 >
-> If so then the above doesn't fix it, no. We'd have to repeat a whole lot
-> of code here to also retrieve the next entry, store it into `iter->ref`,
-> check whether it is an actual ref starting with "refs/" and so on.
-> Looping once very much feels like the better thing to do.
+>   - Use `check()` instead of `check_int(ret, ==, 0)`.
+>
+>   - Sort exclude patterns lexicographically. This fixes a bug where we
+>     might not correctly skip over some refs when patterns are passed to
+>     the reftable backend in non-lexicographic order. Add a test for
+>     this.
+>
+> Thanks!
+>
+> Patrick
+>
+> Patrick Steinhardt (6):
+>   refs: properly apply exclude patterns to namespaced refs
+>   builtin/receive-pack: fix exclude patterns when announcing refs
+>   Makefile: stop listing test library objects twice
+>   t/unit-tests: introduce reftable library
+>   reftable/reader: make table iterator reseekable
+>   refs/reftable: wire up support for exclude patterns
+>
+>  Makefile                            |   8 +-
+>  builtin/receive-pack.c              |  18 ++-
+>  refs.c                              |  35 +++++-
+>  refs.h                              |   9 ++
+>  refs/reftable-backend.c             | 133 ++++++++++++++++++++++-
+>  reftable/reader.c                   |   1 +
+>  t/t1419-exclude-refs.sh             |  49 +++++++--
+>  t/t5509-fetch-push-namespaces.sh    |   9 ++
+>  t/unit-tests/lib-reftable.c         |  93 ++++++++++++++++
+>  t/unit-tests/lib-reftable.h         |  20 ++++
+>  t/unit-tests/t-reftable-merged.c    | 163 +++++++++++++++-------------
+>  t/unit-tests/t-reftable-reader.c    |  96 ++++++++++++++++
+>  t/unit-tests/t-reftable-readwrite.c | 130 +++++++---------------
+>  t/unit-tests/t-reftable-stack.c     |  25 ++---
+>  trace2.h                            |   1 +
+>  trace2/tr2_ctr.c                    |   5 +
+>  16 files changed, 594 insertions(+), 201 deletions(-)
+>  create mode 100644 t/unit-tests/lib-reftable.c
+>  create mode 100644 t/unit-tests/lib-reftable.h
+>  create mode 100644 t/unit-tests/t-reftable-reader.c
+>
+> Range-diff against v1:
+> 1:  8d347bc5599 ! 1:  7497166422e refs: properly apply exclude patterns to namespaced refs
+>     @@ Commit message
+>          to the non-stripped ones that still have the namespace prefix. In fact,
+>          the "transfer.hideRefs" machinery does the former and applies to the
+>          stripped reference by default, but rules can have "^" prefixed to switch
+>     -    this behaviour to iinstead match against the rull reference name.
+>     +    this behaviour to instead match against the full reference name.
+>
+>          Namespaces are exclusively handled at the generic "refs" layer, the
+>          respective backends have no clue that such a thing even exists. This
+>     @@ Commit message
+>          refs in the tests, and then we indeed surface the breakage.
+>
+>          Fix this bug by prefixing exclude patterns with the namespace in the
+>     -    generic layer.
+>     +    generic layer. The newly introduced function will be used outside of
+>     +    "refs.c" in the next patch, so we add a declaration to "refs.h".
+>
+>          Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>
+> 2:  0317a5a7ede = 2:  3dc6ae936c8 builtin/receive-pack: fix exclude patterns when announcing refs
+> 3:  503c44e6cab = 3:  4ba503520e6 Makefile: stop listing test library objects twice
+> 4:  3df4040dd3c = 4:  6747076420f t/unit-tests: introduce reftable library
+> 5:  a281f936a2b ! 5:  3278cdf92fe reftable/reader: make table iterator reseekable
+>     @@ t/unit-tests/t-reftable-reader.c (new)
+>      +	block_source_from_strbuf(&source, &buf);
+>      +
+>      +	ret = reftable_reader_new(&reader, &source, "name");
+>     -+	check_int(ret, ==, 0);
+>     ++	check(!ret);
+>      +
+>      +	reftable_reader_init_ref_iterator(reader, &it);
+>      +	ret = reftable_iterator_seek_ref(&it, "");
+>     -+	check_int(ret, ==, 0);
+>     ++	check(!ret);
+>      +	ret = reftable_iterator_next_ref(&it, &ref);
+>     -+	check_int(ret, ==, 0);
+>     ++	check(!ret);
+>      +
+>     -+	ret = reftable_ref_record_equal(&ref, &records[0], 20);
+>     ++	ret = reftable_ref_record_equal(&ref, &records[0], GIT_SHA1_RAWSZ);
+>      +	check_int(ret, ==, 1);
+>      +
+>      +	ret = reftable_iterator_next_ref(&it, &ref);
+>     @@ t/unit-tests/t-reftable-reader.c (new)
+>      +	block_source_from_strbuf(&source, &buf);
+>      +
+>      +	ret = reftable_reader_new(&reader, &source, "name");
+>     -+	check_int(ret, ==, 0);
+>     ++	check(!ret);
+>      +
+>      +	reftable_reader_init_ref_iterator(reader, &it);
+>      +
+>      +	for (size_t i = 0; i < 5; i++) {
+>      +		ret = reftable_iterator_seek_ref(&it, "");
+>     -+		check_int(ret, ==, 0);
+>     ++		check(!ret);
+>      +		ret = reftable_iterator_next_ref(&it, &ref);
+>     -+		check_int(ret, ==, 0);
+>     ++		check(!ret);
+>      +
+>      +		ret = reftable_ref_record_equal(&ref, &records[0], GIT_SHA1_RAWSZ);
+>      +		check_int(ret, ==, 1);
+> 6:  f3922b81db6 ! 6:  050f4906393 refs/reftable: wire up support for exclude patterns
+>     @@ refs/reftable-backend.c: static struct ref_iterator_vtable reftable_ref_iterator
+>       	.abort = reftable_ref_iterator_abort
+>       };
+>
+>     ++static int qsort_strcmp(const void *va, const void *vb)
+>     ++{
+>     ++	const char *a = *(const char **)va;
+>     ++	const char *b = *(const char **)vb;
+>     ++	return strcmp(a, b);
+>     ++}
+>     ++
+>      +static char **filter_exclude_patterns(const char **exclude_patterns)
+>      +{
+>      +	size_t filtered_size = 0, filtered_alloc = 0;
+>     @@ refs/reftable-backend.c: static struct ref_iterator_vtable reftable_ref_iterator
+>      +	}
+>      +
+>      +	if (filtered_size) {
+>     ++		QSORT(filtered, filtered_size, qsort_strcmp);
+>      +		ALLOC_GROW(filtered, filtered_size + 1, filtered_alloc);
+>      +		filtered[filtered_size++] = NULL;
+>      +	}
+>     @@ t/t1419-exclude-refs.sh: test_expect_success 'several overlapping excluded regio
+>      +		assert_jumps 3 perf;;
+>      +	*)
+>      +		BUG "unhandled ref format $GIT_DEFAULT_REF_FORMAT";;
+>     ++	esac
+>     ++'
+>     ++
+>     ++test_expect_success 'unordered excludes' '
+>     ++	for_each_ref__exclude refs/heads \
+>     ++		refs/heads/foo refs/heads/baz >actual 2>perf &&
+>     ++	for_each_ref refs/heads/bar refs/heads/quux >expect &&
+>     ++
+>     ++	test_cmp expect actual &&
+>     ++	case "$GIT_DEFAULT_REF_FORMAT" in
+>     ++	files)
+>     ++		assert_jumps 1 perf;;
+>     ++	reftable)
+>     ++		assert_jumps 2 perf;;
+>     ++	*)
+>     ++		BUG "unhandled ref format $GIT_DEFAULT_REF_FORMAT";;
+>      +	esac
+>       '
 >
 
-I definitely responded to the wrong chunk of your comment. I meant to
-respond to
+The range diff here looks good based on my earlier review. Thanks
 
-> * This is done by appending the highest possible character to
-> * the pattern. Consequently, all references that have the
-> * pattern as prefix and whose suffix starts with anything in
-> * the range [0x00, 0xfe] are skipped. And given that 0xff is a
-> * non-printable character that shouldn't ever be in a ref name,
-> * we'd not yield any such record, either.
-
-My point being, we can even skip "pattern + 0xff" by just setting the
-seek to ref to be the next character in the pattern. But since "pattern
-+ 0xff" is anyways not an expected ref. They should behave the same.
-
->> > @@ -580,9 +660,45 @@ static struct ref_iterator_vtable reftable_ref_iterator_vtable = {
->> >  	.abort = reftable_ref_iterator_abort
->> >  };
->> >
->> > +static char **filter_exclude_patterns(const char **exclude_patterns)
->> > +{
->> > +	size_t filtered_size = 0, filtered_alloc = 0;
->> > +	char **filtered = NULL;
->> > +
->> > +	if (!exclude_patterns)
->> > +		return NULL;
->> > +
->> > +	for (size_t i = 0; ; i++) {
->> > +		const char *exclude_pattern = exclude_patterns[i];
->> > +		int has_glob = 0;
->> > +
->> > +		if (!exclude_pattern)
->> > +			break;
->> > +
->> > +		for (const char *p = exclude_pattern; *p; p++) {
->> > +			has_glob = is_glob_special(*p);
->> > +			if (has_glob)
->> > +				break;
->> > +		}
->>
->> Why do we need to filter excludes here? Don't the callee's already do
->> something like this?
->
-> No, it doesn't. The code for exclude patterns is structured in such a
-> way that the responsibility is with the backend to decide what it can
-> and cannot filter. In theory there could be a backend that can exclude
-> refs based on globs efficiently, even though neither the "files" nor the
-> "reftable" backend can.
-
-Thanks for the explanataion.
-
---000000000000452d3d0622540f3e
+--00000000000027e9c2062254179b
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: bcb5a22bf8496ae6_0.1
+X-Attachment-Id: 65e49688bdb8bbe1_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1icHZPd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOW5yQy85cjFWb1hGdmx0K09vQjAxUFFNNktSdEVYeQp6cDNvblhpOHZL
-Q0ZNVFJuTlFRR1V2OXovTWRraXp3Y3ZKUVUxVmo0SUlxL2ljY0Y2cVRsT0hsV2RlbTBIR2NLCmQ0
-VUNUWXhaemZFV1U0aWk1SUx0ZC82ZVpJaldVZTNKQVgrTmZJL0lxNE9CNjF0TG9LRnBnWmx0M002
-MUNYZnUKNWYwdGNuTEh2ZVhNOU5vc0hmT1A2TEVwdXA5M0FKVzhjMU5mZTllOEF1eEtmKzFkcU1I
-L0ZGUVdlT2tCSFlWZgp1WjVMTjh0bDR1SGZyRGdDSnRFYmpNOXRsRFJ0WlJMTTBURXRtYnkzOEYv
-eC9OZEx5WWx0a3Znb1BJTm54Tnh3CkVaMkVBNklTTURzeG9XeXhxb0VFVFJnUndIRmJveUVIUUEw
-eUdMY0FVRTc2TlBBamhEVXJzeHp1RURNUi90MzMKT2hxSGdwZG5EWUxXTVBBM3g2SGdYTjVNdUNK
-ZGpIZUloS3VuRjVTRU14NThDbWZ0aWpjZ2Vid1ZqcHhuYnFJVwpReXc0NXI2M2VuYWJ2ZXFaTkRC
-RlZqSjIwYm1ja0NtclhLeGdIMWZTaVI5UWhqT1NCVndJZkFLRG10cVlDMFNIClN4cUk4dWRtdk5s
-cS9CSnQrK0dHMzM2bnNZeWtPQlRUUFVKa2MyWT0KPUdnSncKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1icHZYTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMDJlQy93S01qNHNZMlBNeS9kRU05WEtPeGNWd0FVSwpmTnpEYSs4anBy
+SU5MdTdHT0dDaWhCQ2l0dXdONy9CV3lwMFNaYSt2UXc4anlkZTJCcGlZbllTQ1RtWFRZV2tvCk92
+bUdUdVBZTGNicHg0d2dCZm9FZktiUk9YTTVqWmlKamRjQ1Q2dWdOV3BhcmFsT1NjejJUaXAyeFA0
+UXc1R0gKMmI3TXJiMmQ4cytSbmdPbDNJbTFrWDRSbjljM0JEYXlCZFFlVmUyeHNhR3JFYUluMitI
+VkZicUY5QWhRejByLwpLUXV3K3g3SkxOR3AxeFZqV3JiTHBxZEREbnQrRElITEdRZEplUHZaTnZB
+eGdSZVY5WUdpL3NSNk1ILytNZW1mCkc5cmVNWTJPT2ZPVWVtNmVPdVplU2hvWWtodS90VTRnSXlk
+SGQ2STZNMWpDN3gzek9NazhvU21mWlpnWjN0alMKOTNGRUVrM3p4ZUt6SGROdTJGV3ZYYkJsQWw2
+NW8xcE5FVnZQTjUxYmpwUWFlQmI0Yit2czlWSXhJbEF1T3FwYQpQWWxMRnBqazlTK29GTmQzVDYw
+ZC9aT29yTWtlMTdxZy8vSG1LT1hWdXpyNElEaDRpdTNVVWw2Sk1sMDhvQTBGCmVGWFRjQktkYkdq
+SVErbGNCL1R1dVAzR3Nld2lNZTVqMVV5dlR6WT0KPXRuRksKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000452d3d0622540f3e--
+--00000000000027e9c2062254179b--
