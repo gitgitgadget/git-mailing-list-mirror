@@ -1,120 +1,92 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51363185B52
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 21:37:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42329F510
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 21:54:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726609061; cv=none; b=d+1x87Qz8uumkMW6jlRvRGwaAgjn6fZLYahXTBFEe9c3e/oszdZZCb/0DDQ/or3oZcPN6+I4IJQtLOpG834BSG05KNBxejaPAWe8ROmX/gxxbTG5+af/cHPoav2H/SRcgS3A2tu9HgL5qec5hySMecxgjBlCeN5Sl4f9kxoakWA=
+	t=1726610071; cv=none; b=doIoGsk3xgDmaB8Qq02A683ieZxsjzztCHYr0VgCiI6EWWZDijBM7k1OvQF8TPVoPPrKLP/4Bx2uVWvjhqO8jy0NbyTR0qrLRK98X203aWbsMZm/R7bQWFejo3Z28aRwdYPco8CoO7RiIY7ChqbR29v2OrLDwk3aZzXrv8LUoec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726609061; c=relaxed/simple;
-	bh=Gr8e0FBLkEsAnYaJrdachtuoUpbhVs/mFN6zf2zsw5U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pUyHOnTrVzwY9D8u2yd9U9Bu3GXiTGoyagGJDyb9nP/4hZhQ8RVjC42zZYiahrgVulYeoD9zJIInuDyXNNfFB/iWL3IWTwFFdn/ZigODtIymvvX8Zv+DptMTyWIeBSK4Uk1e87XIUMQTZaRxmvntfoS7Q+S+LSfY3o7TX4n+vFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pYkxvc4q; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1726610071; c=relaxed/simple;
+	bh=uA7uFPqCjtfrGQT7BjzrukEV1mW/6BGCCKUWmIFmZEI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jLgIJTTowJs5SSK2Wiw4EkgS9PPzkjyAZPVq4hrSSNWmri3iczjtghJR8bgEi39fsyPnjtz59oPh2hgQeIKo+zi37buD+1Xp5H2Whi6yUr7iIjuGR+Le7oJjf5/X2cKXgCBtA5Z+Mq13OCotYoysAJ24JnDloiJ3i5UWT/xc12c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=I0+67poW; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pYkxvc4q"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2077b48cb09so66065ad.0
-        for <git@vger.kernel.org>; Tue, 17 Sep 2024 14:37:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1726609058; x=1727213858; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3MHHR01ohroGZSGBSLoBNtsemdFrkJoSxp91nxePwD0=;
-        b=pYkxvc4qmlLL/MHGAzA7NEW8VHVy7BtV8vB5dxaSz44RVooT243K2L0Zzl1s4/fweG
-         4m6ssAI6d2NWmQrdYOUoff2iGpJKtocioIz2hboF14t8xVvPCc9b0AWWMyJz76huIMSW
-         OIh0Ot/Xv2EQwh3vy19RfhPeSTmAItfC+R1Mc4Xdn1ebFQBx/socFWc50iB+fxFIS5qo
-         KNpvKnXLd/NTpg5fOBbdVFlHoVTfA6GwfVMpPGkQXiu8mrIxkRc7HbUk+UJr8Zj2rJyK
-         4upDiHSPNfWP8i5UbOsMJ94quK8VmU6WEK2ZlZ5lGqme2zOa91TPxLCxbMjgmYRX9c/9
-         KKkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726609058; x=1727213858;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3MHHR01ohroGZSGBSLoBNtsemdFrkJoSxp91nxePwD0=;
-        b=w1oaoShI7bom2UGy/ylOsv4O+bYfzRznJ2A7QOznjQ+N1RC/9rP1+ih4EUcA5hAYj5
-         OFz1bfaJDx/vd+T+/EwEXNoDt+gbCNvzoyDhYJFOlfR2fjWO56XvqoIdZT7RUXiRi/qb
-         v2NFif2W7rXelsOz4w/WfA0Q0E/bQxS76q5HseVmRRZcjhpjUXINVXFDP2Qs39vS5Yfv
-         tD396TOjdCnvOfJBimDoFl4BgPVJGBe9dzJijCzGse75OObxdppqpErwhgCQk2snmg4m
-         VwKZ1irkhpM3YoP8CjCAem29zdmRG7uhSmwjtfmUkmc2KrFMl9oo47HO+rG16ZDSk0Xk
-         a9Kw==
-X-Forwarded-Encrypted: i=1; AJvYcCUvjV+RnhuZx0ja3Zjl38G1FjF5d4lAurEAOQ7MBH1vD7tf762RH3oDqS2FPLGMETIvOMM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOmd+/GN7UnxrFCzxKuwg7cZgslUrx+SYIXcsOCRpf6LHhEDw9
-	cCVtTegMa24EJY4Gvf7ggJvZFKqqv492pVYWqxx1FYvFkLV46dfZaaEhdWyGMQ==
-X-Google-Smtp-Source: AGHT+IHTLxNjT3hkg2XCcrIA6Pg/9WMwt8K2ai/K34c47TKEuDDqoJ51MQH/3Jn5Awi3JjOrrq46qw==
-X-Received: by 2002:a17:903:2447:b0:205:7b04:ddf0 with SMTP id d9443c01a7336-208c3bd7aa1mr269145ad.13.1726609058295;
-        Tue, 17 Sep 2024 14:37:38 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:c551:a3ba:4741:7226])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dbb9c87952sm10047341a91.21.2024.09.17.14.37.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2024 14:37:37 -0700 (PDT)
-Date: Tue, 17 Sep 2024 14:37:32 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Calvin Wan <calvinwan@google.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, mh@glandium.org, sandals@crustytoothpaste.net, Jason@zx2c4.com, 
-	dsimic@manjaro.org
-Subject: Re: [PATCH v3 5/6] libgit: add higher-level libgit crate
-Message-ID: <xlmgclzqydsyubjegobrjwhiqkb5b4fxnxciqz3ys4yyu3a3od@kkc77fobimkm>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Calvin Wan <calvinwan@google.com>, Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, mh@glandium.org, sandals@crustytoothpaste.net, Jason@zx2c4.com, 
-	dsimic@manjaro.org
-References: <20240906221853.257984-1-calvinwan@google.com>
- <20240906222116.270196-5-calvinwan@google.com>
- <xmqqv7z8tjd7.fsf@gitster.g>
- <xmqqcylcpnah.fsf@gitster.g>
- <CAFySSZBECCQafaLEv80WoK6SMovwC97-tf9gh_btPc+8OuP4NA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="I0+67poW"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CA93B28B74;
+	Tue, 17 Sep 2024 17:54:28 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=uA7uFPqCjtfrGQT7BjzrukEV1mW/6BGCCKUWmI
+	FmZEI=; b=I0+67poWRgeO5h3eWUEsw7McxQFHZBHifLnMELDgwrSbJLyWAYw715
+	09zSi8gY7exU/BZY+ONBLKg2J/tdl91V9cg+W2FlUzGBccw1EIGLGB/OrtonmFo7
+	T6gZPwkP2T6z8GrssP3bEGE5CcFUEjf5oJ9ddPQAkyP1IGg58Qv5Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C2B1628B73;
+	Tue, 17 Sep 2024 17:54:28 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 392EC28B72;
+	Tue, 17 Sep 2024 17:54:28 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Beat Bolli <dev+git@drbeat.li>,  git@vger.kernel.org
+Subject: Re: [PATCH] unicode: update the width tables to Unicode 16
+In-Reply-To: <7449ce5b-5308-ce6e-394d-43dec511ef16@gmx.de> (Johannes
+	Schindelin's message of "Tue, 17 Sep 2024 14:37:17 +0200 (CEST)")
+References: <20240912204047.1020213-1-dev+git@drbeat.li>
+	<7449ce5b-5308-ce6e-394d-43dec511ef16@gmx.de>
+Date: Tue, 17 Sep 2024 14:54:26 -0700
+Message-ID: <xmqqy13qhrot.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFySSZBECCQafaLEv80WoK6SMovwC97-tf9gh_btPc+8OuP4NA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 6957C48E-753F-11EF-9BFF-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On 2024.09.10 12:04, Calvin Wan wrote:
-> On Mon, Sep 9, 2024 at 1:47 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> > >> +struct libgit_config_set *libgit_configset_alloc(void)
-> > >> +{
-> > >> +    return git_configset_alloc();
-> > >> +}
-> > >
-> > > git_configset_alloc() returns "struct config_set *" while this thing
-> > > returns an incompatible pointer.
-> > >
-> > > Sent out an outdated version or something?  This wouldn't have
-> > > passed even a compile test, I suspect.
-> >
-> > The "shim" layer should hide the details of interfacing to the git
-> > proper from callers, as well as it should hide the callers' from the
-> > git proper.  So if you really want to hide "struct config_set" from
-> > your library callers, you may need to do something like the
-> > attached, perhaps?  At least this does pass compilation test.
-> 
-> You're correct that this is supposed to be the shim layer, where
-> callers aren't supposed to be able to directly interface with the
-> config_set struct. From Rust's perspective, all pointers that come
-> back from C code are effectively void* so the naming doesn't make a
-> functional difference for our use case (and consequently these
-> warnings did not show up from the build.rs script nor did the tests
-> fail). However, I agree that the public interface should pass the
-> compilation test and your approach does that -- will reroll with those
-> changes and I believe that we should also fix the build.rs so that
-> warnings also show up during cargo build.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Yeah, cargo will complain if DEVELOPER=1 is set. We should probably
-enforce that in build.rs.
+> Hi Beat,
+>
+> On Thu, 12 Sep 2024, Beat Bolli wrote:
+>
+>> Unicode 16 has been announced on 2024-09-10 [0], so update the character
+>> width tables to the new version.
+>>
+>> [0] https://blog.unicode.org/2024/09/announcing-unicode-standard-version-160.html
+>
+> I can confirm that the output is identical to the result of running
+> ./contrib/update-unicode/update_unicode.sh.
+
+Thanks for double checking.  I did the same when I queued the patch
+and it indeed looked good.
+
+> Maybe we should add an automated, scheduled workflow for these updates?
+
+We could, but the consortium aims to issue major updates once a year
+in September, with minor versions and updates "will be avoided", so
+we may need to devise automation that makes better use of resources
+than to scrape http://www.unicode.org/Public/UCD/latest/ucd/ daily.
+
+44dc651132 2024-09-12T22:40:47+02:00 unicode: update the width tables to Unicode 16
+872976c37e 2023-09-25T21:07:04+02:00 unicode: update the width tables to Unicode 15.1
+b10cbdac4c 2023-03-30T21:15:17+02:00 unicode: update the width tables to Unicode 15
+187fc8b8b6 2021-09-17T12:19:20-07:00 unicode: update the width tables to Unicode 14
+65588b0b2e 2020-03-17T16:36:05+01:00 unicode: update the width tables to Unicode 13.0
+5817f9caa3 2019-05-29T22:50:45+02:00 unicode: update the width tables to Unicode 12.1
+584b62c37b 2019-03-21T22:06:17+01:00 unicode: update the width tables to Unicode 12
+570951eea2 2018-07-09T21:44:52+02:00 unicode: update the width tables to Unicode 11
+e233bef43e 2018-04-10T14:26:17-07:00 unicode_width.h: rename to use dash in file name
