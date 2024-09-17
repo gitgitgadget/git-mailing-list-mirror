@@ -1,67 +1,67 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C44613C836
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 10:10:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C26D13C836
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 10:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726567838; cv=none; b=I678m94fJg83uBDY97MZNFuebrrjD2wXsr5yaVCi46HCXhp6kBzI7pdJ2lRSO5XLrPvQDRjEvDncoDF5U5Y8b9u7bvDzeV/bmKY2UCe9+BVvP2v3bNetxRp1KC7m8u2xAHrePOA07op/TQezcd8svrEL2BmdENFHfVpGY2Rxlf8=
+	t=1726567900; cv=none; b=NqQuEg/OWb4wtrWcqXgIVxCyzjsvSfpRMfKsFxao4zc8Ro3wf4V9m4fjWh3ynT0nxqby63kbqLCtuYM9hI/oYGmKV7lZW+WcLX2HanN8J2/W2C+gpT5cCBC/7Pck6syI+B2nus8LlQ5kUmsItRPoacX2EciTppgm9IRkexbh/S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726567838; c=relaxed/simple;
-	bh=FI9gAsuFwyiOgML8mmjZetQoQt5cRhoMZF6F39SPv6I=;
+	s=arc-20240116; t=1726567900; c=relaxed/simple;
+	bh=o1TlbwELwyOEmRPQz6kZGk0YvcBfBrFipkmzYtMwoDE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LGF4IklJjBgzRB6fuqeTkKmwHc4sCbGBRzx3OvABlSkvrm2P/WUXlgBKQl/6WW7F4yQaH7xdV0JVj+XSFxE09E9/wrqkx9zwA9xHosAOFlU07KXdb2YjcZgnsGrwIxZwOBr2GnAlfM4aj8Ry2Mp7k6TsdK11pZaOyFOxTLAY6Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=cV1XFG9V; arc=none smtp.client-ip=209.85.166.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=rQ+HktQcNXTFp34ajpA5LRhwicgfL36KyFXhp5lImVvFOaV/SIzb3nw0cksDGG6uukwFuSGRylIN1ejm3TjahNfjHn/Ki5l+jkbbT/6L9d7r3ldk6zm150dQGY9GkcVUuapkoFnN+3/62H5T1iJSMQN6vOuAkozcCbf5mpT0AW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=pIsv/8Jv; arc=none smtp.client-ip=209.85.166.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="cV1XFG9V"
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-39f54ab8e69so20915265ab.1
-        for <git@vger.kernel.org>; Tue, 17 Sep 2024 03:10:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="pIsv/8Jv"
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-82cd93a6617so175399339f.3
+        for <git@vger.kernel.org>; Tue, 17 Sep 2024 03:11:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726567836; x=1727172636; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726567898; x=1727172698; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yUwg/Uja3CFGlBlLwnQsGExVpBOQ4u83P3tQi3BSfjg=;
-        b=cV1XFG9VK9pGptjMaYCdsq8zpKQpcrW+CbjOXal+TIw/GI10lSv2uVHgzk2hCPuLXO
-         cPnC6UkYkxvn5rUtlxqgw7wsW/whoo8btqE2msDqsCrgfSfJu/RjxJ5hiHbgkzDMvO2A
-         52sUv8xSdKJEMeJsi1/binAUJ4APqtzxbR+uHrDLJI9xCEEMeNtKufmCkR/SczuEBR3B
-         T7nGrmotSG5RfwSHtgJelMKR7nz8FkuMJV5kbFwr0bCxyXUAN3O7Oqw3j25o9xlaWoC/
-         E8rF+uENCNXpQ88kqYcVQCIF0wTqgksvoTW25tr3UFUD0h7hAjMMS8br/78ZJrRq3hOt
-         0JCw==
+        bh=JcgwiuIl35+U/5mAqDw+P458cFPgagzGBjuPcQW0FCA=;
+        b=pIsv/8JvLlTGyoonVx4konJ282Thr+IprlR1B6HtYarb5m5Nr/qLSC83ri6GnrKX8X
+         1qhaU+PxFhB8be28tWSaGIc8BEIZoSEPjUefJm57hPUFpZiz5IIMb/bIlQqKuDgpK8OQ
+         SXf5r/LjYgKkO3fA4qmfAr2qu5Blv6bDUm576FLa4DawNOcDszshM1tTB+PNMBSoyyiA
+         FpVgjywp1jIKpJFmFukUVcdv1wBBMdYyyllinkQOWrwEFgfYgm0/P3zAshE/HcZ7y3L6
+         WQf6Ndq692FaaSsFAo/vToWafYCqJCKEHwz1VJBpPrGQPl1SsY9Wkf0zNstR/s1+5p6W
+         HoqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726567836; x=1727172636;
+        d=1e100.net; s=20230601; t=1726567898; x=1727172698;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yUwg/Uja3CFGlBlLwnQsGExVpBOQ4u83P3tQi3BSfjg=;
-        b=UV1vdc7f11Zt5NpNdyoaJpZPFJ4CBNSiYXaqc1NiKdTgtUHRP4aUrLTmrzXrI+ExbS
-         aWMkvnnaH4ZoANb/7U/XV6WePvBmRdwqWcc2MSlL1IraSZPyZy1rM6KNSPbMk4ZMNKxL
-         HrcdpMUaH+ttzvdCTfd0PEBIBF9NMfFiayIbxCL90uLkEDm34ZK6ujFT+djk6pyjuqzs
-         3jFJCNeM+upRJwCgE9+yYka+5cDtfDPw7Spl/47MZcyi8P6XqDqAQa+sGzA/DTQzbfor
-         VvmAVTW6WcuhJXIEIAAn1w1a1zkUiAWWLCHjLVKHm/JyKYOoy/Z/iLJ8aQez7xMkfP21
-         5+8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVwnY+SDMhUkbQMmgPLl/6uTH95JQcYaVI5C3x6hwaCueRhq3QIckh/anfBGudfuRTHTXA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywi4fkaTFbE602uFuFBtM1/wumMyyj+hgK+wEAV1VB3SjleLKAT
-	6qj8xXqGNzm7Yxvey+XrPj99/YRIqas7lspzAz0ZI8p3qtqOFYF8rVW+ZyfP3eE=
-X-Google-Smtp-Source: AGHT+IENrBaxI+k4puzDfLMJdZaYAwBDxY5TJO2ILMfLCNBR3+OfY6bgD56PPP0ZorNigR8qiLF5wQ==
-X-Received: by 2002:a05:6e02:1d13:b0:39d:4dab:a533 with SMTP id e9e14a558f8ab-3a074bf1abbmr154761585ab.0.1726567836371;
-        Tue, 17 Sep 2024 03:10:36 -0700 (PDT)
+        bh=JcgwiuIl35+U/5mAqDw+P458cFPgagzGBjuPcQW0FCA=;
+        b=bYs4O/6kuBrkbP9Kd+Jc8h5yyrMGR7hkaVt9qJGdXJ7teSInYJJeQBJbz/D+BExMJY
+         WKrxIOTgvej+wRAn/+0Jw7xQvFAL1d8xMRzyrSMT5H2G2qbS9kYQ/PTEncuXq7PcpRsz
+         aHLpco2pJaizD81MRD4MZYsPYPdIIVRbY/5RL7vbDU8XKCpHwxXU9qaybvH3TBagtwcJ
+         ThgbCqaYnm0rA3Qd8ruNQwwxOHg7PA70GSCCqBdLdp/Hr7ZrtqrmSTYx+6PGQRV+MD1G
+         zoaGaHmIifqx1B3vMkOXhBLcuD+aUsX/ACEC0wAS51a4/qFMdJz98Qx2PJcZmKqVbpJa
+         Z7Vg==
+X-Forwarded-Encrypted: i=1; AJvYcCUEqbghiifl+f376yDzXP7UXy95ZbimBPa2P+d+dDz4++YkzwHZwx4mj7mQj/oW2yjAgYk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzHovQ86dzawvt0JBjagl5d4dNqOcac9rOcFAJNKhnQY8cgGrRd
+	gj1NntSZHkrhnUDbYCjsDTZT2VWMLXXMSIluDjPCp6cnRNW+yOdx+aCNZys0/3Q=
+X-Google-Smtp-Source: AGHT+IHZQI+ouMW/XPpkw4nR1pzCqqV1Bx7weaAZRIdMgYCKTTnSjN4AtsHd9IBERj+WTdUnzCt4TA==
+X-Received: by 2002:a05:6602:2ccc:b0:82d:8a8:b9e with SMTP id ca18e2360f4ac-82d1f8a8e04mr2005648639f.3.1726567898048;
+        Tue, 17 Sep 2024 03:11:38 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d37ec3d011sm1899233173.82.2024.09.17.03.10.35
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d37ec1f268sm1882339173.70.2024.09.17.03.11.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2024 03:10:36 -0700 (PDT)
-Date: Tue, 17 Sep 2024 06:10:32 -0400
+        Tue, 17 Sep 2024 03:11:37 -0700 (PDT)
+Date: Tue, 17 Sep 2024 06:11:34 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Eric Wong <e@80x24.org>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 02/10] packfile: allow content-limit for cat-file
-Message-ID: <ZulVmP3pBEEajjr5@nand.local>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Wong <e@80x24.org>, git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 03/10] packfile: fix off-by-one in content_limit
+ comparison
+Message-ID: <ZulV1nSKdvf5MtpA@nand.local>
 References: <20240823224630.1180772-1-e@80x24.org>
- <20240823224630.1180772-3-e@80x24.org>
- <xmqqcylvky69.fsf@gitster.g>
- <20240827202359.M464972@dcvr>
+ <20240823224630.1180772-4-e@80x24.org>
+ <xmqq1q2bmdfy.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,34 +70,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240827202359.M464972@dcvr>
+In-Reply-To: <xmqq1q2bmdfy.fsf@gitster.g>
 
-On Tue, Aug 27, 2024 at 08:23:59PM +0000, Eric Wong wrote:
-> > > diff --git a/object-file.c b/object-file.c
-> > > index 065103be3e..1cc29c3c58 100644
-> > > --- a/object-file.c
-> > > +++ b/object-file.c
-> > > @@ -1492,6 +1492,12 @@ static int loose_object_info(struct repository *r,
-> > >
-> > >  		if (!oi->contentp)
-> > >  			break;
-> > > +		if (oi->content_limit && *oi->sizep > oi->content_limit) {
+On Mon, Aug 26, 2024 at 09:55:13AM -0700, Junio C Hamano wrote:
+> Eric Wong <e@80x24.org> writes:
+>
+> > object-file.c::loose_object_info() accepts objects matching
+> > content_limit exactly, so it follows packfile handling allows
+> > slurping objects which match loose object handling and slurp
+> > objects with size matching the content_limit exactly.
 > >
-> > I cannot convince myself enough to say "content limit" is a great
-> > name.  It invites "limited by what?  text files are allowed but
-> > images are not?".
+> > This change is merely for consistency with the majority of
+> > existing code and there is no user visible change in nearly all
+> > cases.  The only exception being the corner case when the object
+> > size matches content_limit exactly where users will see a
+> > speedup from avoiding an extra lookup.
+> >
+> > Signed-off-by: Eric Wong <e@80x24.org>
+> > ---
 >
-> Hmm... naming is a most difficult problem :<
->
-> ->slurp_max?  It could be ->content_slurp_max, but I think
-> that's too long...
->
-> Would welcome other suggestions...
+> I would have preferred to see this (and also "is oi->content_limit
+> zero?" check I mentioned earlier) as part of the previous step,
+> which added this comparison that is not consistent with the majority
+> of existing code.  It's not like importing from an external project
+> we communicate with only occasionally, in which case we may want to
+> import "pristine" source and fix it up separetly in order to make it
+> easier to re-import updated material.
 
-I don't have a huge problem with "content_limit" as a name, but perhaps
-"content_size_limit", "streaming_limit", or "streaming_threshold" (with
-a vague preference towards the latter) might be more descriptive? I
-dunno.
+Same here. I don't think there is any reason to split this change out
+into a separate patch, but I do not feel strongly about it either way.
 
 Thanks,
 Taylor
