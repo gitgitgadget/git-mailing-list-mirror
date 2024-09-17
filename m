@@ -1,144 +1,130 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazolkn19011076.outbound.protection.outlook.com [52.103.32.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A3D14BFBF
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 07:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726557197; cv=none; b=oQfC89FQbFuqCGmfQ+53rv2lokuzEFYsbvZRpfpaU8b38ri/q+nRPM1SDO6Bo0hXS9ziYzU1cMWHhz7qLcbEhIyz3U9fWoanEaEPF16Yn0Iwv7mxIRP20higbuajaY2+NUN4GNBIXBfw2NLwa9c8+cqyqtV2h975D80rOF/d6ys=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726557197; c=relaxed/simple;
-	bh=GmzZHc4pVuBWFIwlhR4wm6gz1uQMwYIu2BBxer1xr70=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PqRfaKyaVLJ3FdU/nc3WN7OYjNqGCFU+ZbSX93GMzBX8A4f+f7Jin5lunW+PUBRbB6srA2cGa2Uy9wMLrCg8w7fehi0ocgpnUGtnwz0064eVG6tgEkJHwpXH5NjzWxNicPO8oSFlxBr7FUHfpeBH7olasg2gBL/K05AuVZxBn0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lZjLXFUG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GvshQYcR; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39171B85EE
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 07:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.32.76
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1726559566; cv=fail; b=bDGVqRGFZhO3RKAYvFtjhZ/IsAR5fih74Lmux39nfxhm2VrKM1vjePUtTi3nANyCzBRtutvkrqgjQlcoZDinDUMFnwBuk5aUAxPamBHsJUA9gQ4aQvgoD+KBc14+xGN8aCekYuXbCp3qNdPnoj+vH1grOmbPq6GQIrPiAIC9xnk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1726559566; c=relaxed/simple;
+	bh=qB5xUZjFtWqW6qZ2bTZcq7a/6O9tnay7St6Et9F6eBM=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=Oep73gsFlM1Oox/5wvm+iYGyNdYxaBsVSgXf/4TVQteo2NEqadEMmZ2jA7JVsahCyY9O4QFLEj+ymp/vEAv2un4oAIZzWw1zWau+K813OPdizjtDzMblhi3XyROkqTUDdxYnvZpEdE9Psk8MBBydbKrMj8a136DdfvmwHQYkAgA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.it; spf=pass smtp.mailfrom=outlook.it; dkim=pass (2048-bit key) header.d=OUTLOOK.IT header.i=@OUTLOOK.IT header.b=EHXikUfm; arc=fail smtp.client-ip=52.103.32.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lZjLXFUG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GvshQYcR"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4305D13803FB
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 03:13:15 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 17 Sep 2024 03:13:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726557195; x=1726643595; bh=Ok2tkGaO0e
-	9Ye4Y2j9nMG1NIhDDL9FWs9sa4RZ7KrQc=; b=lZjLXFUGRZA1Z5A6vtTt7Lvd29
-	aEzNj1U2F3vDmOvId8JdoR45XTMGetWBdEr+DEoSVjAlWQG6Bl5pt6y3bkAur5uQ
-	M6bTt/j4Y5mX7FcwWF63a+uqQvaYcyFLKq/NtRLPn6o9WIFXeWOo87IPDQFtKn69
-	c06cSyY0KZ33sVRSDnrA6Dd74JjJM5wWP9amVG2VB0lsoJJ69uVLa2nr2lFPcl01
-	28IZCzwaovnOiHpHuJqtKLQRuoM8XhZKovDKcDbJO6gmseCtQQ/hZcveD1UjyWVf
-	ImO3Xs+LEeTL73sMOigqmMYiuSzywYXv+AHLgBXi2sFwqcH33qSwT2D8fvcQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726557195; x=1726643595; bh=Ok2tkGaO0e9Ye4Y2j9nMG1NIhDDL
-	9FWs9sa4RZ7KrQc=; b=GvshQYcRff+WMKrdH2cWB1Mz5wr0v6GO0DX0W73AIGKd
-	xWAAcHVdQegjKuTiAlfCkN6FlPBXgfW2gJAST42HN7xRujZmgFyZoA6elThTLdxQ
-	fXYtf3FZVk9trw9uaZaVcXYTRZK6d5xUFchA95i1iPKVV8lEErqhh1/qvF5EUuuM
-	qPCQUB5iR3K9TJ1ni5cFWCJwKX0YJI+uBhXC1ZhXK8WrhnZZAP2scxHej8MxrTnN
-	MM3ylgSkgBgkSDgnlFHHsdtNLIQROkHVE6Rw15G9IcuywiF0J/jpn/CphZHLql1E
-	cc5Ybo8QSEfNf0XHuVcc/R3bAB+QiiYE5jazzaa/ow==
-X-ME-Sender: <xms:CyzpZq9i7pfua_Usy6m5rSoBENVZ1-I6iYoRCPyp33xuW0Z2DI2UZw>
-    <xme:CyzpZqtac-CzLjRxmBPxnWD7Ydq_5AT7t5Hk0iQJ3ALMB7aaTOoDcY3VkeSNuyQLE
-    quP38gY0Ete5zpWdQ>
-X-ME-Received: <xmr:CyzpZgCVlwtwPWjOQ2snoqyIMkvSOVgL5aPsK4YD-kiY0pYL7Brs9PXzWBIGZoFsoA-rHUGCDifur3jZZ-GvI7oWdnNGNHKeT-6wYJz_5bno>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekiedguddvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeehkeeffeegge
-    dvgedvfeefheettddtffejuefflefggfehfeelffeljedvfeehieenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:CyzpZifdS8BkGjVq9UoO8F97lXPKjuP_bVENH683U9qpVpAcEjPPew>
-    <xmx:CyzpZvP3Nfc1NWR7YTBvaVKlghqMBYT9IXR4aveLO5Rhk0e8lZGXbA>
-    <xmx:CyzpZsmAqY1OJRpSAqjm98eoIBl8_A7GvxtLYxAw2NpP6BurfaTvAQ>
-    <xmx:CyzpZhv9yRSkfuV8lW6tcaU8U0ONqZ--CYG1dMtDcIEAdkz10JUHVg>
-    <xmx:CyzpZl3GHDPEQPfOWuB1PtzQGpkVRuVvTRdZBSe4SFCCL1J16_B02E_H>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 17 Sep 2024 03:13:14 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cb6b34bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Tue, 17 Sep 2024 07:12:55 +0000 (UTC)
-Date: Tue, 17 Sep 2024 09:13:13 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 3/3] unpack-trees: detect mismatching number of
- cache-tree/index entries
-Message-ID: <e2ba015ced1f390966c7bae46969d7725e23fec5.1726556195.git.ps@pks.im>
-References: <cover.1726556195.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=OUTLOOK.IT header.i=@OUTLOOK.IT header.b="EHXikUfm"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NS41wHZ3g46eFznOC9kGaVT1NhYrTWKiF2ltGjrkvpkOSZFXyzFolx3KFFR7RlMm7Nn/y2uTETr6IwDkakZgDf3rp7XxUMukrLzMLbqrmYGuURvHuyCfWRuqdCwNvKlI+MpMIMUsjCptaKLaUTOwO0tFYy3BQWJTo8Lc0ntPCyS9ob3i7sWYuzjjgjd4XZBIt8vzyEpiBJuP0oyOF8NBPKWGxSeK54Y6Osd4EVerodqBiFiyFhkFHKgl4TF4KnU7BrQs3wsEGDs1wJHtSJ/XhZIwGHtg6sOOz55wMsmWxR2zkMf+EH63M5VZpK9kGdKZTFzDJSrC9gXXqz+FsOT0pQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qB5xUZjFtWqW6qZ2bTZcq7a/6O9tnay7St6Et9F6eBM=;
+ b=HfPdcCcBNbudtyra9PeK0vTIg7G5S7U1OtjyarIE1ckL6wTdI70xZOvzmNgUZB7Md//UvKBoWESGBnfl206RzqEnAslCgXshGyo7PafH0eavHxTKtepLmSFydaF5vN0Xl7QlGhkXse3r1R2J6np4lvUkddh4CnChrGwWvXe40mIVXHwdYPICcY440n9PuBCe4fUC67ut0ZyhNn+/T9CBqPguGS+nlcvLPv0tPRWM0+xY7jo9WrlT0etMXikIPLIRaKSHd9E33eqrxBilk1jGQy5wzmQylQ6Ogmgufj5fT6qpBJJ11huhLv8zGGVafTnWIrIfU2w2779brzILGXFKhQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=OUTLOOK.IT;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qB5xUZjFtWqW6qZ2bTZcq7a/6O9tnay7St6Et9F6eBM=;
+ b=EHXikUfm2bxbYsV5L0CQRwUG785cvx0XOWbhLVJpqrJ44Ov6T7Dvoy4JII3xIdH5/Ox7fHK5Vh61+GHjmX2U91zvUSfc+/z8B1CCEO2vlKTiFjGh2IUP6Opz5uczRVxCLmm6sKgF6gOXOHu4Ne3YWrklN515wDadtw7unJeOOh6csEUS9cwZ4Zb/BayfzxGcxci1T3x2jSJPUJhtiqbcrIhEHFqwksx0iSZdfAkDzx4xqpX4wVk0qWoNFxNU186L/zJV4CFuJnZoEFmZfMlNMXw/vcaDbw/b1s7uITpEN/VSdKQwIH0Ec85VCe423AczO4pdpB/TkRgDBo9z71RpLA==
+Received: from PA4PR02MB7040.eurprd02.prod.outlook.com (2603:10a6:102:106::24)
+ by GV2PR02MB8871.eurprd02.prod.outlook.com (2603:10a6:150:b5::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7962.24; Tue, 17 Sep
+ 2024 07:52:41 +0000
+Received: from PA4PR02MB7040.eurprd02.prod.outlook.com
+ ([fe80::d593:39ef:6783:7a10]) by PA4PR02MB7040.eurprd02.prod.outlook.com
+ ([fe80::d593:39ef:6783:7a10%5]) with mapi id 15.20.7962.022; Tue, 17 Sep 2024
+ 07:52:41 +0000
+From: "Mr. Manuel" <mr-manuel@outlook.it>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Push to GitHub HTTP repo fails (>v2.45.2)
+Thread-Topic: Push to GitHub HTTP repo fails (>v2.45.2)
+Thread-Index: AdsI1dEvlCmFSLKcSLu5aHL2whWzoQ==
+Date: Tue, 17 Sep 2024 07:52:41 +0000
+Message-ID:
+ <PA4PR02MB7040A36E17B197AB8DD7BBFC8C612@PA4PR02MB7040.eurprd02.prod.outlook.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PA4PR02MB7040:EE_|GV2PR02MB8871:EE_
+x-ms-office365-filtering-correlation-id: 8fdb12f7-1fa1-4c83-7b76-08dcd6edb555
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|15080799006|7092599003|461199028|19110799003|8060799006|1602099012|102099032|4302099013|440099028|3412199025;
+x-microsoft-antispam-message-info:
+ uxVHTpzrwo0lKwP95wOe4ftQhLF8gT90J9q1CX0XOKX0ksD9rlC9uQ9Edt0oyc9nook/OFD8sICbbStuzw4ZRKVmziM/jz/6cnQV4amRUxEFEGPbXh+LKGFVT9FxPImBrsAJpGrj6OumpWZKGJ5KCakHkZrZyga0r/RcSUh45bb69Y+Ncx6Byuwu2XSdbYCCfto29zWqwHub3r20qXL+I9Am08sOZtb7zp/F6sE2YxkDuGITlKh59cB7rdH+szNuvh7K/MjEcjcn6fXMsfYVxbqSMjJih5qC81a7XyU0kqDUQp5h1MkpviGTpZMYdFnmH4D4zLnLKOsyLBw+GP1qp0dag9C87eOufz+KDpenKy1CdgaslrS06TAoZmlq2RipREdRlOGUJJ11jtTGDb9CdQHcuidnwTV4xHczYOW4RJuxxcU193/O7uELQJeMxCyTtk3u+qaD8jkf23hAPmObnKqYqOUjQZN9eaIYIM35hboijXclCeiSqqhu4or9Tb9H8AcscmaHrPobsoE+Z6keZBB9GZ/De8Zvz6q7RUH4DsblQMVYnGCL5AC8dldEZXwhHdhKuoFa+MlPh0D1xWIDOIRgvRD8p6yqv7uP3UcfVkCLjWsBM7obsvwKmaMuakDbsTVkBM2iUdj4rUJz3fAQJ/DTL39DIV5SD2ANIo4GOpKeI2dD5n5UN0s+cnFfGZZgIjFdS1+eUDXR9mvU3e0skZwQkaAIfxJdTZuMsZXLVP9gthEf4JwkeNgfzeVTWEB+YkZ7rEpN5MhEUwaXUFRtiQSFGM2rR98qEcnAzcsPkcxgCtETtZf9rQx+nh+rYn74lpYLyLNXrdG0yuJKbYcZuw==
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?S0RxVDFqTzRrVk5acGQ4bWNKZENaTE1WR3JoZUVyakkraVhkc2VMZ0tnOHIx?=
+ =?utf-8?B?MWF6NjRWcHZPSm5XSlRFdms5dFZkQ0NRZHpJbDE4TkthdDc2TGFFSVhhOGhh?=
+ =?utf-8?B?ZFlidmxNc1diWTdnZTl3cTNlRlJ5c1EzT0FWaStmVW5LUDVJUGlyZCtZME8w?=
+ =?utf-8?B?cHpzRW9DeWxmMnZQNUUvSTF3Z0dKQjhtQkV1SGNLeHJWcU9qTnZKWlVkK0RY?=
+ =?utf-8?B?T2hiZEhtSjYrQlpDaHU4L2MxeDM1cm9DaDN6Uzl1azB2WVZLTm1sYkVIN2x0?=
+ =?utf-8?B?QVBUTFhNOGo2YlA4VDM5N09rb3ZwM3lVaFNJTHBabnZIWi9CbTR1c3NqYVg5?=
+ =?utf-8?B?OFRDeUxSaWl0ZEV3UzdLTzEzdHI5MDB2UzBmWnhPOFM5a3Z0dFhETGRwQnBF?=
+ =?utf-8?B?eEo0c0hmU2NiWUxZcFYzbkh6M01tNnpwVFIrRUVZRFZiak0xekpFK2RkYWhZ?=
+ =?utf-8?B?MXovcTJ3M2t4WlFVQ29RSTkzT29IWlorakg0WklIeVNlS3VtTURVOFE4eW1R?=
+ =?utf-8?B?bHRlNUJrUUNmOGFJZTlaeHdsUURPZ2xEWndGTnROWFVQYUpsWS9PekdYaGtt?=
+ =?utf-8?B?QVRES1ZEQ1ByUU1IRFFNeVRlejJ3Q3luT0NiOEFYcXYySFhybmRuNkNqZnUy?=
+ =?utf-8?B?eGNWSUJxQ0dEUEJzZHBpODB2UVBvTUpGUWVadGtoVkVzZm9XaTd2TGM0ZG5r?=
+ =?utf-8?B?TVM4TnVpNTY0eVR4dEJRZGdnZGZ6Y0NrNVg5d0xGMnk4cFlQVTE3Y1hDM0lR?=
+ =?utf-8?B?SE1rbTlsRUJ6UGQ2Ly9qU0NvalQ2eXV4SDJKMDVGdUtPT1FtYmllYkdQWlJG?=
+ =?utf-8?B?MEJ4YzVFRkpoQ1FjQzFTSXhOdjhXU25wZ1F0c2FIaEl6TEhXMktRVDJFSzdY?=
+ =?utf-8?B?RzV0WVdTZVBrT2w3a244MVRVS0x2REF3Mzk4QjBYUklEZkVxMzFqRUFyVlRY?=
+ =?utf-8?B?SzNic1AzeGIyamxlb29WNk0yemJEYTRXZGNQZlVFNkhyTzlJdjN0bHh2WGNN?=
+ =?utf-8?B?MGNYM3Z6NVI4NlkweUdwZ2c1UW9Cc3VNcXVSejdBaGViN2drTW1GZlgwU055?=
+ =?utf-8?B?QmphZVNkSHJsVHJwOExXUlRBNjgrKzNieGhGMkxIaWlFbkdZSzdWVWhQazVv?=
+ =?utf-8?B?ZnZmVHZZWFpVYmlWZDYyMGNYUEdKVk5DNDNzN005WFp0cWZySWthQ2d4OXFH?=
+ =?utf-8?B?dFZKMk5RWXM2Zjh4V1RLTVIvc2VDVkdPZGQ2cE40UmRKbkxVcS9NQ2lqNXF0?=
+ =?utf-8?B?a29NWEhIWFExd1VEY0xuYWM3TkpXckV3dzNxQWxEa3c1cHMzK2hhL3oxSGJ6?=
+ =?utf-8?B?QUFYaTlZWURVQktMSHRPdVBRRVN0d1RwRW9ldGk3ckVYa2svZ0V6R2tjR29z?=
+ =?utf-8?B?Uk11VnAwVXlPclRQZGZVZnoyekxBWm5KQ0FUZ3FlWngyVXkwKytjU2VmeXRX?=
+ =?utf-8?B?Z1V2UFRmZGtDbDcxaWpTS05GQkF5OWRmdlQ3cGovb25ycjdLWVR0eVUvUlNK?=
+ =?utf-8?B?SStNUzI1a0h5alhlQ21FZXcwZ0RmWWg3MldtYTZYaG5yekxLOFluMXVrMWp5?=
+ =?utf-8?B?dUwrTnVzMHptU3hoRm1GOCtRZEVZSTJsQlJHUzBsbWlUdzRTUXR4bTlLK0dW?=
+ =?utf-8?Q?ClQuCKDBzP6Gitu0eds8ndD83HZ4uEf0sUzd/Uo4csSA=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1726556195.git.ps@pks.im>
+X-OriginatorOrg: sct-15-20-7828-19-msonline-outlook-12d23.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR02MB7040.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8fdb12f7-1fa1-4c83-7b76-08dcd6edb555
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Sep 2024 07:52:41.7381
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR02MB8871
 
-Same as the preceding commit, we unconditionally dereference the index's
-cache entries depending on the number of cache-tree entries, which can
-lead to a segfault when the cache-tree is corrupted. Fix this bug.
-
-This also makes t4058 pass with the leak sanitizer enabled.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t4058-diff-duplicates.sh | 7 +++++--
- unpack-trees.c             | 2 ++
- 2 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/t/t4058-diff-duplicates.sh b/t/t4058-diff-duplicates.sh
-index 3f602adb055..18e5ac88c31 100755
---- a/t/t4058-diff-duplicates.sh
-+++ b/t/t4058-diff-duplicates.sh
-@@ -10,6 +10,8 @@
- #   that the diff output isn't wildly unreasonable.
- 
- test_description='test tree diff when trees have duplicate entries'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # make_tree_entry <mode> <mode> <sha1>
-@@ -143,11 +145,12 @@ test_expect_success 'reset --hard does not segfault' '
- 	test_grep "error: corrupted cache-tree has entries not present in index" err
- '
- 
--test_expect_failure 'git diff HEAD does not segfault' '
-+test_expect_success 'git diff HEAD does not segfault' '
- 	git checkout base &&
- 	GIT_TEST_CHECK_CACHE_TREE=false &&
- 	git reset --hard &&
--	test_might_fail git diff HEAD
-+	test_must_fail git diff HEAD 2>err &&
-+	test_grep "error: corrupted cache-tree has entries not present in index" err
- '
- 
- test_expect_failure 'can switch to another branch when status is empty' '
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 21cc197d471..e10a9d12091 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -808,6 +808,8 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
- 
- 	if (!o->merge)
- 		BUG("We need cache-tree to do this optimization");
-+	if (nr_entries + pos > o->src_index->cache_nr)
-+		return error(_("corrupted cache-tree has entries not present in index"));
- 
- 	/*
- 	 * Do what unpack_callback() and unpack_single_entry() normally
--- 
-2.46.0.551.gc5ee8f2d1c.dirty
-
+SGVsbG8sDQoNCmFmdGVyIEdpdCB2ZXJzaW9uIDIuNDUuMiBJ4oCZbSBubyBtb3JlIGFibGUgdG8g
+cHVzaCB0byBhIEdpdEh1YiBIVFRQIHJlcG9zaXRvcnkuIFRyaWVkIDIuNDUuMywgMi40Ni4wIGFu
+ZCAyLjQ2LjEuIEkgY2FuIHJlcHJvZHVjZSB0aGlzIG9uIG1hbnkgZGlmZmVyZW50IHN5c3RlbXMu
+IEZvdW5kIGFsc28gYSBlbnRyeSBvbiByZWRkaXQ6IGh0dHBzOi8vd3d3LnJlZGRpdC5jb20vci9n
+aXRodWIvY29tbWVudHMvMWYzeG1ubC9lcnJvcl9yZW1vdGVjdXJsX2Vycm9yX3JlYWRpbmdfY29t
+bWFuZF9zdHJlYW0vDQoNCkhlcmUgc29tZSBtb3JlIGRldGFpbHM6DQoNClBTIEM6XFVzZXJzXFVz
+ZXJcbXktcHJvamVjdF8xPiBnaXQgLS12ZXJzaW9uDQpnaXQgdmVyc2lvbiAyLjQ2LjAud2luZG93
+cy4xDQpQUyBDOlxVc2Vyc1xVc2VyXG15LXByb2plY3RfMT4gZ2l0IHB1c2ggLS1mb3JjZQ0KZXJy
+b3I6IHJlbW90ZS1jdXJsOiBlcnJvciByZWFkaW5nIGNvbW1hbmQgc3RyZWFtIGZyb20gZ2l0DQpl
+cnJvcjogZmFpbGVkIHRvIHB1c2ggc29tZSByZWZzIHRvICdodHRwczovL2dpdGh1Yi5jb20vbXkt
+Z2l0aHViLXVzZXIvbXktcHJvamVjdF8xLmdpdCcNCg0KUFMgQzpcVXNlcnNcVXNlclxteS1wcm9q
+ZWN0XzE+IGdpdCAtLXZlcnNpb24NCmdpdCB2ZXJzaW9uIDIuNDUuMi53aW5kb3dzLjENClBTIEM6
+XFVzZXJzXFVzZXJcbXktcHJvamVjdF8xPiBnaXQgcHVzaCAtLWZvcmNlDQpFbnVtZXJhdGluZyBv
+YmplY3RzOiAyNywgZG9uZS4NCkNvdW50aW5nIG9iamVjdHM6IDEwMCUgKDI3LzI3KSwgZG9uZS4N
+CkRlbHRhIGNvbXByZXNzaW9uIHVzaW5nIHVwIHRvIDggdGhyZWFkcw0KQ29tcHJlc3Npbmcgb2Jq
+ZWN0czogMTAwJSAoMTYvMTYpLCBkb25lLg0KV3JpdGluZyBvYmplY3RzOiAxMDAlICgxOC8xOCks
+IDE0LjUyIE1pQiB8IDIuMDggTWlCL3MsIGRvbmUuDQpUb3RhbCAxOCAoZGVsdGEgNyksIHJldXNl
+ZCAxIChkZWx0YSAwKSwgcGFjay1yZXVzZWQgMCAoZnJvbSAwKQ0KcmVtb3RlOiBSZXNvbHZpbmcg
+ZGVsdGFzOiAxMDAlICg3LzcpLCBjb21wbGV0ZWQgd2l0aCA1IGxvY2FsIG9iamVjdHMuDQpUbyBo
+dHRwczovL2dpdGh1Yi5jb20vbXktZ2l0aHViLXVzZXIvbXktcHJvamVjdF8xLmdpdA0KwqAgwqBj
+N2EwMjQ5Li4zNzkyNDZmIMKgbWFpbiAtPiBtYWluDQoNCg==
