@@ -1,54 +1,54 @@
 Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6122714A4C7
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 07:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A8814F9EA
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 07:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726557193; cv=none; b=Ga0MEdVn7jhjwffaREOY4ywR8aRqeDCEXNvjlkRBAqzRoOZ7b1CdRP575wonxWjlYJlhCVxv3TC5Ms/4nMAx8QdQkrlR5wjUZ0JN8IC4WifCplH2UR4rhmtzMEAciHbuN//0z5m2pX5JlE39QHXTwzlWVKys9Io6/N+6e272qDo=
+	t=1726557195; cv=none; b=OdpMqabBP+nJpD9LT5rTa19bUpPzDFuJPEr8fDdiVSBlExegFc1XPRU9S8uaDbg+Ni6NBpU4RCz4Tkp1fEk1Xkr0NSQivjMB89YmUhxuH89Hm4tE//W3HRThz9itddOxHQ79PBEdf9cCRT0dDGGuJ83ZrkQ1qjC+MDNoi5s9LxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726557193; c=relaxed/simple;
-	bh=3oH2eGObXMn1TaHj0L8hh7t0IfqI1UDySBNt6HrGl0Q=;
+	s=arc-20240116; t=1726557195; c=relaxed/simple;
+	bh=LSIqlUPZUDS1Fl9koj78b4X1FIpsTtCThb00Q6VBxwY=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=md6j0F/ow8jsP7xBrIntD3jGsHmvrcE2QZrk7SqcmXJ20CcPocvrZFYzUMfCxxd9EE0ZgZgppuMay/cdcEA3vAUoM9U41GgKZpPm3Dma5nb2SB8Z4gTClwJQqwPRUYjTb6EBqWDwZTeBFHP4RZbi5xmWR3EeZpNtFTDtJrgY7nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BxG3GMBS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YV7p3OPc; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=qDf7lIRTqBc0oFwSFJ8Jeyzk1/r8WOYH0FGh7aiBHGEUQA+PBBQwBFlXbfGiPwKlssHpul3qTtShqRWEGWnpKWoYkDHoNZslJB39eJ2b0dSQO605F4cBt/2gtytZDy3SLjSUUwm1W00zLPD3YZG0l+bvVHFNGZfxevkVwVltlcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YH7cj74+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q6jO/h9n; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BxG3GMBS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YV7p3OPc"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 79E11138040D
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 03:13:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YH7cj74+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q6jO/h9n"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 62CB313803BA
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 03:13:12 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 17 Sep 2024 03:13:10 -0400
+  by phl-compute-09.internal (MEProxy); Tue, 17 Sep 2024 03:13:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726557190; x=1726643590; bh=31VA38Xhra
-	YguSc5Ad2XZk0WA2n2Gg6nK9xEUHpSVRg=; b=BxG3GMBS+e2czCcEtMcNrLlNNJ
-	8EzemRDoH8uoGZ4Vjo6qu37hLkmYqhv8QWl6GVmsludAK1ThUr8KR1l9Jp3cTF8O
-	OmZwZR7lRmJ1gTlp4nooTIFeRYxJ1PaWhQqRhgy5ZndPjvyWDcsK/fMDOYRPmL+H
-	znG9fAhpalYilVfsKKW1BfyG8O9wN+oYbgtSAqIjbyUPqlQ97WqmZiIOEZ4upK5m
-	ZE5jCdUu+y3BjOKJVTQYW84tMWLEercH2yoqHw8iKy//wg/76jX49GbveFgG4sxl
-	LO+RYbtznNBPbFaY7U9IqzpPBVF+34fnzvIeljrHhXqidOKeYAmwqs2L0F1w==
+	:subject:to:to; s=fm1; t=1726557192; x=1726643592; bh=zIcFGO1k7A
+	GoaECrbDRHuR94awjsluhDl35uU8i1MjA=; b=YH7cj74+UK1JkxVzxLNeDVEcLA
+	vHQbK/pIsmja6TTyxKzn79zXUbYv1D8alzUDd6d3VXmowrK0G/VQcfiH1IsnRW2Q
+	NtYjiW2qA2QO1WO3+Z9U97teYbTZ8WOxG5PVJ+dwMZN9MnGSZmnYJEnCFJQpemDv
+	7z/QTX20ru8CC9e+4YPdBsz83Necqe0GrGs+p/v/qXOqvGcEigJCxwFbRKNfP9Hy
+	Yuu6Cz9IZwmNuDSk3eDqD1C1Tdu9y2eVQ05/PKrd/b0Sd0SB8EHANb1G3JHbvjRs
+	bitB3w7IsQlT07sAOaiG6gMlu0Ihd8UtQdIlyz5hKm5TudsBlpw/UQl79Zjg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726557190; x=1726643590; bh=31VA38XhraYguSc5Ad2XZk0WA2n2
-	Gg6nK9xEUHpSVRg=; b=YV7p3OPcE0l5rX+w5diuQyx0vLAta9f24M8nI2jmx725
-	LS96C9ZE4w6b/PdjA8vV1aO+YoV/TCuALqf3m8DJPzWcHmsLUdI7+906srno8xLl
-	x1dLvmKcAU1eUt3/H+YIqneD2k7TVdCqjCKuaUoS1ikV231SRi3nwtj88qs9IrFm
-	WqQenT05ojayJpJ86G7o4SUT9tcklmctWN0uCrkoii8pIrSt0pNsDKztSxRpgE3A
-	359tNFF+6OxLrocOopSekm0H5uV270YHBMEyOpbFe+mogW2wUZ/Nl1XXV3bwl2gz
-	ArGGt7JqoFa4k55LZZWsrWJYnnb9HKV0cZy4ffEvcw==
-X-ME-Sender: <xms:BizpZuhCM3DldDAWrF95kPS7riyJW9KFWA1BBF8vXjkh2CqCURChMA>
-    <xme:BizpZvAIxvnJtpLqUClDYTY6kSTTrKysWMuOPAPCt84lr2s0Dlb6VLIMj5FAdXMop
-    bqBDRzN3ryNgBFQ7Q>
-X-ME-Received: <xmr:BizpZmHG-ZlQMdVEFp9wcsBZuWoCV1PVqkd1DGLe3_HlCebxo-OEzub1rHRT-0yQmQupQu4RvJrPXzjpiiXZDEqprUY-pjdWi6lU4eYheBzB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekiedguddvtdcutefuodetggdotefrod
+	fm1; t=1726557192; x=1726643592; bh=zIcFGO1k7AGoaECrbDRHuR94awjs
+	luhDl35uU8i1MjA=; b=q6jO/h9nZS5rNeRIGbyZ0yFg8DPyCEe46k7rsXj6pUBj
+	XagV9kHldKMWJRVlmXsXqf5bg1Wrpc9p9wiuSdDUDlFkFQcMmk65hicE3OBjI0NZ
+	bhETOPQn3PgZSJrewBRHO3kK2Pp/5WPyWWIKII8bfoTj0xiz483D53D6gJomvnTV
+	vtqISwUFg40fzkI8Dfbw9lRO1LRHjGdbzNBBCLVXoA3Y1Pxi6KXU5107G+0kheKj
+	M+EZ1zCJ+7u4/lqCtgY2WI9vZf/IxM8h3Ul8a5s2p88Yuur4+nzRBmDnREiaHPiG
+	tqXOpP0PbOYhjAyBvRvsoSzVC+ciuqzVc8rSlsbshg==
+X-ME-Sender: <xms:CCzpZvmQSYjObaBWmD_5dLdKzfFLPuqpfx2ylqjdJJ1WEeH1-ThRbw>
+    <xme:CCzpZi2MFPtpfODQlSjfMBl69QCp9-JTeJ5OoGNYyn3ZyFXEp3CHQz6x_CBQ8NMFM
+    QsWtbKXNimJM_MZtw>
+X-ME-Received: <xmr:CCzpZlp1jJSuyL7sK_4vCOXBT_gBJYBoqEH8ekIfIUgG8zxcjj6TQC9yJSS4wLZpQV2c5ZCCcRnAl0CXNtPm27mSyPtEbGFiiV8UhNjEtCW5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekiedguddvudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
     fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
@@ -57,23 +57,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekiedguddvtdcutefuodetgg
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:BizpZnQJ5DsmdFW_YevC5Q7yyJ-zjH5_l3GVMqhmDa5NmxOeK3WGQQ>
-    <xmx:BizpZrwCyuuOUkQvGrJXAJ6lKvWGanEjn6By8ZC-Vva9Gel2FsgRaA>
-    <xmx:BizpZl6urvF_6upWcOhm_ypTbb-_YJMt95dN0NDKfbVe5pJqgzX5_w>
-    <xmx:BizpZoxDTo2Csn2esP6N4AkwNZT2ifD1QWKVXu71w8c9goGaqdPCKw>
-    <xmx:BizpZkpPX9-xrDMw5Vv3XNqEHFoDGzy0UA0dXFA3ZJa43y8dyt6BdBhl>
+X-ME-Proxy: <xmx:CCzpZnk_GPHXrKs5D6moTearW9rYaeERJVPi9Bsp2ocQWKjTvwVKrQ>
+    <xmx:CCzpZt2AKR6D0pu-HGiZ4aOMdLgdBWiJ9nqPvIXz8a7OU5if_82J8g>
+    <xmx:CCzpZmsIFRTkPcAqZ6gq8UQPLQAlrkLBCrWPrTu7Bze1_9ywMYRe0w>
+    <xmx:CCzpZhVJxnFBrKW8D4axMpFbI9qMBEJRliepi_6ZdyFFum6fvs0W5A>
+    <xmx:CCzpZu9gYJKj_Xse0tpuVlKBXuRuCnHiaw1qRe6MkHiI3vez9bzPLp7q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 17 Sep 2024 03:13:09 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 17 Sep 2024 03:13:11 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 55675f10 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id c3f1c53d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 17 Sep 2024 07:12:50 +0000 (UTC)
-Date: Tue, 17 Sep 2024 09:13:08 +0200
+	Tue, 17 Sep 2024 07:12:53 +0000 (UTC)
+Date: Tue, 17 Sep 2024 09:13:11 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 1/3] cache-tree: refactor verification to return error codes
-Message-ID: <1f13bc0e3259ea9b76f1417303a8ef063f3a7cbe.1726556195.git.ps@pks.im>
+Subject: [PATCH 2/3] cache-tree: detect mismatching number of index entries
+Message-ID: <595693a6420b2571aabd51ed989bedfa0cfa62e2.1726556195.git.ps@pks.im>
 References: <cover.1726556195.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,254 +85,68 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726556195.git.ps@pks.im>
 
-The function `cache_tree_verify()` will `BUG()` whenever it finds that
-the cache-tree extension of the index is corrupt. The function is thus
-inherently untestable because the resulting call to `abort()` will be
-detected by our testing framework and labelled an error. And rightfully
-so: it shouldn't ever be possible to hit bugs, as they should indicate a
-programming error rather than corruption of on-disk state.
+In t4058 we have some tests that exercise git-read-tree(1) when used
+with a tree that contains duplicate entries. While the expectation is
+that we fail, we ideally should fail gracefully without a segfault.
 
-Refactor the function to instead return error codes. This also ensures
-that the function can be used e.g. by git-fsck(1) without the whole
-process dying.
+But that is not the case: we never check that the number of entries in
+the cache-tree is less than or equal to the number of entries in the
+index. This can lead to an out-of-bounds read as we unconditionally
+access `istate->cache[idx]`, where `idx` is controlled by the number of
+cache-tree entries and the current position therein. The result is a
+segfault.
+
+Fix this segfault by adding a sanity check for the number of index
+entries before dereferencing them.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- cache-tree.c   | 97 +++++++++++++++++++++++++++++++++++---------------
- cache-tree.h   |  2 +-
- read-cache.c   |  5 +--
- unpack-trees.c | 10 ++++--
- 4 files changed, 79 insertions(+), 35 deletions(-)
+ cache-tree.c               |  5 +++++
+ t/t4058-diff-duplicates.sh | 12 ++++++------
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/cache-tree.c b/cache-tree.c
-index 50610c3f3cb..4228b6fad48 100644
+index 4228b6fad48..1e625673086 100644
 --- a/cache-tree.c
 +++ b/cache-tree.c
-@@ -2,6 +2,7 @@
- 
- #include "git-compat-util.h"
- #include "environment.h"
-+#include "gettext.h"
- #include "hex.h"
- #include "lockfile.h"
- #include "tree.h"
-@@ -864,15 +865,15 @@ int cache_tree_matches_traversal(struct cache_tree *root,
- 	return 0;
- }
- 
--static void verify_one_sparse(struct index_state *istate,
--			      struct strbuf *path,
--			      int pos)
-+static int verify_one_sparse(struct index_state *istate,
-+			     struct strbuf *path,
-+			     int pos)
- {
- 	struct cache_entry *ce = istate->cache[pos];
--
- 	if (!S_ISSPARSEDIR(ce->ce_mode))
--		BUG("directory '%s' is present in index, but not sparse",
--		    path->buf);
-+		return error(_("directory '%s' is present in index, but not sparse"),
-+			     path->buf);
-+	return 0;
- }
- 
- /*
-@@ -881,6 +882,7 @@ static void verify_one_sparse(struct index_state *istate,
-  *  1 - Restart verification - a call to ensure_full_index() freed the cache
-  *      tree that is being verified and verification needs to be restarted from
-  *      the new toplevel cache tree.
-+ *  -1 - Verification failed.
-  */
- static int verify_one(struct repository *r,
- 		      struct index_state *istate,
-@@ -890,18 +892,23 @@ static int verify_one(struct repository *r,
- 	int i, pos, len = path->len;
- 	struct strbuf tree_buf = STRBUF_INIT;
- 	struct object_id new_oid;
-+	int ret;
- 
- 	for (i = 0; i < it->subtree_nr; i++) {
- 		strbuf_addf(path, "%s/", it->down[i]->name);
--		if (verify_one(r, istate, it->down[i]->cache_tree, path))
--			return 1;
-+		ret = verify_one(r, istate, it->down[i]->cache_tree, path);
-+		if (ret)
-+			goto out;
-+
- 		strbuf_setlen(path, len);
+@@ -933,6 +933,11 @@ static int verify_one(struct repository *r,
+ 		pos = 0;
  	}
  
- 	if (it->entry_count < 0 ||
- 	    /* no verification on tests (t7003) that replace trees */
--	    lookup_replace_object(r, &it->oid) != &it->oid)
--		return 0;
-+	    lookup_replace_object(r, &it->oid) != &it->oid) {
-+		ret = 0;
-+		goto out;
-+	}
- 
- 	if (path->len) {
- 		/*
-@@ -911,12 +918,14 @@ static int verify_one(struct repository *r,
- 		 */
- 		int is_sparse = istate->sparse_index;
- 		pos = index_name_pos(istate, path->buf, path->len);
--		if (is_sparse && !istate->sparse_index)
--			return 1;
-+		if (is_sparse && !istate->sparse_index) {
-+			ret = 1;
-+			goto out;
-+		}
- 
- 		if (pos >= 0) {
--			verify_one_sparse(istate, path, pos);
--			return 0;
-+			ret = verify_one_sparse(istate, path, pos);
-+			goto out;
- 		}
- 
- 		pos = -pos - 1;
-@@ -934,16 +943,23 @@ static int verify_one(struct repository *r,
- 		unsigned mode;
- 		int entlen;
- 
--		if (ce->ce_flags & (CE_STAGEMASK | CE_INTENT_TO_ADD | CE_REMOVE))
--			BUG("%s with flags 0x%x should not be in cache-tree",
--			    ce->name, ce->ce_flags);
-+		if (ce->ce_flags & (CE_STAGEMASK | CE_INTENT_TO_ADD | CE_REMOVE)) {
-+			ret = error(_("%s with flags 0x%x should not be in cache-tree"),
-+				    ce->name, ce->ce_flags);
-+			goto out;
-+		}
-+
- 		name = ce->name + path->len;
- 		slash = strchr(name, '/');
- 		if (slash) {
- 			entlen = slash - name;
-+
- 			sub = find_subtree(it, ce->name + path->len, entlen, 0);
--			if (!sub || sub->cache_tree->entry_count < 0)
--				BUG("bad subtree '%.*s'", entlen, name);
-+			if (!sub || sub->cache_tree->entry_count < 0) {
-+				ret = error(_("bad subtree '%.*s'"), entlen, name);
-+				goto out;
-+			}
-+
- 			oid = &sub->cache_tree->oid;
- 			mode = S_IFDIR;
- 			i += sub->cache_tree->entry_count;
-@@ -956,27 +972,50 @@ static int verify_one(struct repository *r,
- 		strbuf_addf(&tree_buf, "%o %.*s%c", mode, entlen, name, '\0');
- 		strbuf_add(&tree_buf, oid->hash, r->hash_algo->rawsz);
- 	}
-+
- 	hash_object_file(r->hash_algo, tree_buf.buf, tree_buf.len, OBJ_TREE,
- 			 &new_oid);
--	if (!oideq(&new_oid, &it->oid))
--		BUG("cache-tree for path %.*s does not match. "
--		    "Expected %s got %s", len, path->buf,
--		    oid_to_hex(&new_oid), oid_to_hex(&it->oid));
-+
-+	if (!oideq(&new_oid, &it->oid)) {
-+		ret = error(_("cache-tree for path %.*s does not match. "
-+			      "Expected %s got %s"), len, path->buf,
-+			    oid_to_hex(&new_oid), oid_to_hex(&it->oid));
++	if (it->entry_count + pos > istate->cache_nr) {
++		ret = error(_("corrupted cache-tree has entries not present in index"));
 +		goto out;
 +	}
 +
-+	ret = 0;
-+out:
- 	strbuf_setlen(path, len);
- 	strbuf_release(&tree_buf);
--	return 0;
-+	return ret;
- }
+ 	i = 0;
+ 	while (i < it->entry_count) {
+ 		struct cache_entry *ce = istate->cache[pos + i];
+diff --git a/t/t4058-diff-duplicates.sh b/t/t4058-diff-duplicates.sh
+index 2501c89c1c9..3f602adb055 100755
+--- a/t/t4058-diff-duplicates.sh
++++ b/t/t4058-diff-duplicates.sh
+@@ -132,15 +132,15 @@ test_expect_success 'create a few commits' '
+ 	rm commit_id up final
+ '
  
--void cache_tree_verify(struct repository *r, struct index_state *istate)
-+int cache_tree_verify(struct repository *r, struct index_state *istate)
- {
- 	struct strbuf path = STRBUF_INIT;
-+	int ret;
+-test_expect_failure 'git read-tree does not segfault' '
+-	test_when_finished rm .git/index.lock &&
+-	test_might_fail git read-tree --reset base
++test_expect_success 'git read-tree does not segfault' '
++	test_must_fail git read-tree --reset base 2>err &&
++	test_grep "error: corrupted cache-tree has entries not present in index" err
+ '
  
--	if (!istate->cache_tree)
--		return;
--	if (verify_one(r, istate, istate->cache_tree, &path)) {
-+	if (!istate->cache_tree) {
-+		ret = 0;
-+		goto out;
-+	}
-+
-+	ret = verify_one(r, istate, istate->cache_tree, &path);
-+	if (ret < 0)
-+		goto out;
-+	if (ret > 0) {
- 		strbuf_reset(&path);
--		if (verify_one(r, istate, istate->cache_tree, &path))
-+
-+		ret = verify_one(r, istate, istate->cache_tree, &path);
-+		if (ret < 0)
-+			goto out;
-+		if (ret > 0)
- 			BUG("ensure_full_index() called twice while verifying cache tree");
- 	}
-+
-+	ret = 0;
-+
-+out:
- 	strbuf_release(&path);
-+	return ret;
- }
-diff --git a/cache-tree.h b/cache-tree.h
-index faae88be63c..b82c4963e7c 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -33,7 +33,7 @@ struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
+-test_expect_failure 'reset --hard does not segfault' '
+-	test_when_finished rm .git/index.lock &&
++test_expect_success 'reset --hard does not segfault' '
+ 	git checkout base &&
+-	test_might_fail git reset --hard
++	test_must_fail git reset --hard 2>err &&
++	test_grep "error: corrupted cache-tree has entries not present in index" err
+ '
  
- int cache_tree_fully_valid(struct cache_tree *);
- int cache_tree_update(struct index_state *, int);
--void cache_tree_verify(struct repository *, struct index_state *);
-+int cache_tree_verify(struct repository *, struct index_state *);
- 
- /* bitmasks to write_index_as_tree flags */
- #define WRITE_TREE_MISSING_OK 1
-diff --git a/read-cache.c b/read-cache.c
-index 4e67dc182e7..d72a3266b6f 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3331,8 +3331,9 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 	int new_shared_index, ret, test_split_index_env;
- 	struct split_index *si = istate->split_index;
- 
--	if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
--		cache_tree_verify(the_repository, istate);
-+	if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0) &&
-+	    cache_tree_verify(the_repository, istate) < 0)
-+		return -1;
- 
- 	if ((flags & SKIP_IF_UNCHANGED) && !istate->cache_changed) {
- 		if (flags & COMMIT_LOCK)
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 9a55cb62040..21cc197d471 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -2070,9 +2070,13 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	if (o->dst_index) {
- 		move_index_extensions(&o->internal.result, o->src_index);
- 		if (!ret) {
--			if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
--				cache_tree_verify(the_repository,
--						  &o->internal.result);
-+			if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0) &&
-+			    cache_tree_verify(the_repository,
-+					      &o->internal.result) < 0) {
-+				ret = -1;
-+				goto done;
-+			}
-+
- 			if (!o->skip_cache_tree_update &&
- 			    !cache_tree_fully_valid(o->internal.result.cache_tree))
- 				cache_tree_update(&o->internal.result,
+ test_expect_failure 'git diff HEAD does not segfault' '
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
