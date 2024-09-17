@@ -1,54 +1,54 @@
-Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5E4158D8F
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 10:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE1B16A956
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 10:08:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726567681; cv=none; b=NaVwgncHSm7kI/QqI2V13iQZcNPBh6GqpQoeRslqmFPlaBl3oDts3wJ9H8kHmo9bZ2gSYvoJx6aZGQ+EW9n/qnBUm1766C2/0U14VfRcZ2f6tSsf3lI0GudWQDScvp9xW0DaOD+x6urQmfUD1Sy4QsWiOVyS+JtFQorW9wu+WcY=
+	t=1726567684; cv=none; b=A/7hV/FFVzE7vDSFAi377IEc5OeKb9gkL5f2ZJG7pVHoLtGMI6F7OdA3OlcrHg11gmroglxmGF8zQK9VI94Dn3n/yq9a5rg3uKHMPlemh1qW4STmhYExeS04RgTldRnz7WccbEo+dy20hxhuASjvT2HfFjOn740iquflzBZSEJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726567681; c=relaxed/simple;
-	bh=3nI4CqOs+chapfnU4DQv1QfUIWAKuxEfOIDb/xmlOUs=;
+	s=arc-20240116; t=1726567684; c=relaxed/simple;
+	bh=P6/WZzRUpHqVyTmHHVvg/1BNybXtO/jZMJbUeEjp2Bk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uXfYlbhmfRBoFk3ukDvAMs24Z79cuIEFhWcaqUUrhrfGDhjuUjfkX5lstHp2SsK+QzSYk9g0ywYwroHaJ/H6TT4ACgnbP7ubVl95ZG0labvBy3fKbis2WpgF99uZZC5SvlRJzWbF/9UC6we+dhqmJHAcOtQRz08Q6He5EUYPvrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kkfxYvRg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R4ZMElVJ; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pn87Gx1vgbqY0OhZF0kQHvPMJJBBMU4SbG6I7wc1RzDN6gz6uSMR5nSEnb3sZtAkj6lwdqOUJlF9NLqkWTLW2sWfucBF3kMVd1qGsWA+NkPGkwcNTUhqf2JPSZgvK60ZPJIofRN3+wzgQcEhOeeGNEqMDZAVCX7cO/FIluvNtEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B6/Ggmq4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EEb0oHZX; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kkfxYvRg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R4ZMElVJ"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4081911402D6;
-	Tue, 17 Sep 2024 06:07:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B6/Ggmq4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EEb0oHZX"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5ACA9138046D;
+	Tue, 17 Sep 2024 06:08:02 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 17 Sep 2024 06:07:59 -0400
+  by phl-compute-07.internal (MEProxy); Tue, 17 Sep 2024 06:08:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726567679; x=1726654079; bh=s6dqyJk8is
-	OzgfPJnJexXQmW3TTZ2lDfq8B4wJujwlg=; b=kkfxYvRgLqs2Q82qHcXW7zItUR
-	DbaXlgAPEP3XXi6FCcQnb2G5GPnt1YB2zVxtzjz2IDq7KYBV0GY4dqDD7AsOXkLi
-	Da1ScDJghFQADlSXRuoP5sqz0gO+WBSSrEGvhXjl8Pc5ClqKGny+c65n1hi5Et7Q
-	qrr8koaww3ayo+9dC8JYPaa6kgV0agB4ebPUVVtwdivnMJaRr9hG47/QoQyYkazA
-	I7T9XnFZ95sK8bKTppXdr8Ixzj+Q6ZGAboR4rK7do/mB5e71/4oWM4V8FavDBL/F
-	gyOOiqPwOxzO7yrW7F5O2EQtA4wmmrkycBkMCguXukehGp/RNkV74+5A+AiA==
+	:subject:to:to; s=fm1; t=1726567682; x=1726654082; bh=b0vFxtELB+
+	fVXmBOP5X11HJ8ZqiNghtXOmQ3L+xFaxo=; b=B6/Ggmq4yCuX1Wid/qXsreKHY1
+	Gzh6ttsl/qIRW+DT2gUgs6unq2jAVWjPDRPSiGykpGeug2S4I+SwWi2YV2VeCJiV
+	bInNYpBnDpBpJpFnM3hCcqmI57aM3Pp7Ti+2V2JEL+WQFVvFv+9e3G/BecRiftDx
+	T3VfVyw+b4W4LLpn1Zd8c/RIYXNq3Cd9HGqcQU/or7f2V7XXRED5xVcawE5A2Kgf
+	OSWXGTfRQNIsLLZRQKKWlhPRabhpDHZ0ArBL3tM7xQkx8WWDDms6T0hQOR3OZBEy
+	3THI6E5Cj7iqlZ5eJBOF8eupPVf1KwCUx0M6k4YvRnah8CmuN3ZV+cQ+2BqA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726567679; x=1726654079; bh=s6dqyJk8isOzgfPJnJexXQmW3TTZ
-	2lDfq8B4wJujwlg=; b=R4ZMElVJqsO3me7MXn3C6VuXUvZ6ApBTx206X1DOaA06
-	/Tk4Pl2wDLPEr1fyZW1pgwJHaxvMdY9Ej29ACjmlvNrtxBkpBjtq/GyXyN8ojoHq
-	oIHhaEKBmfHA3HcP6tvB5iJreaA4g9cCfXNj3DVBKJJo1yk+61RWKwhVW+TA+rjw
-	cOVO3KA7At3EEfZHHnrnL1ggVuvLQjN80o4XI5aVQ7ShxEJ6+XIbYhG9ANX2I7mk
-	0x/wpx6Y5G4va3Mmv3L/b1r8uHMh+m1jeM+R8itMDQHR18Wy8AHU+SYBMwdcDQQY
-	2XnTyGPx5OZA4ziv5FkYe78rqwd/vkUQMSUF7+BJEQ==
-X-ME-Sender: <xms:_1TpZkVNQ82w810omDC03o0juQmPZLE5YjZjdqXqEUIA6bCN7ywZvQ>
-    <xme:_1TpZokApjYz_eASKofDl5ttY8s_TM2BM2ApdQaIeKi-cwZhL63maySm7A70qzNNi
-    _7HX5XSXQVtm7pKQA>
-X-ME-Received: <xmr:_1TpZoao1axx3Ia4h9_e9NTbdUtmYxYdRkBeulYDPXF2QxbLxlTuCR7bpvBfgOs3AXeuSUoA0rzyySDqomUkWm0DmYu5O09GTX8HH7u3pz4B>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekjedgvdehucetufdoteggodetrfdotf
+	fm1; t=1726567682; x=1726654082; bh=b0vFxtELB+fVXmBOP5X11HJ8ZqiN
+	ghtXOmQ3L+xFaxo=; b=EEb0oHZXQKUmXfrLER90Kt0DIG6jyC19newittgQFFpR
+	UvaPEMabtyOZzDwnqafyGGnpIJ5nAQoR1vk8wjM/bwbdMyKvCN4hXu9CGNR/n00h
+	gj6QDIkoCCtu8jmthyRfb4E9bqGIeRj56lMpBzE926Fd/KvYCWaRACxkYKJvujmR
+	iOAV8t/n+SIsDkF4d0E0hE1wAqJJ/KJFEV2lHShkQ4UUUVX4bYnHZpWwoDOLpJ1w
+	9C7+36sbdG0+0crW8gk4PiqHv6wP0AmRceleT+jmDMPaq4SbCdJYK/UZ8MS2nmSv
+	yHpZu6xpUxCtv3JHdkI3KJ61Mt8gKwYH7aUWM1wgKw==
+X-ME-Sender: <xms:AlXpZvHBgA9an0LNHZwiIzTc1RmUvGb7WOL_m5c9ujEtxKvtyRV9KQ>
+    <xme:AlXpZsU1M1h1yDIPyRFGTao554Bexz-5pJDY0Uzxl5TQUYPz8bwDHyML6PI0MEk7_
+    fHNfBHmVnEgyMDfmA>
+X-ME-Received: <xmr:AlXpZhI7Ge9lF113VQTlg8NRcFHdEgNquazv5LznapI-sSWta7VizaxxZFbfu8e2tX1gEq-fBn0dXz_Kt8P9ZgK9eB5QcLDmtR9aWXDK8o60>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekjedgvdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
     fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
@@ -58,23 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekjedgvdehucetufdoteggod
     gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtg
     homh
-X-ME-Proxy: <xmx:_1TpZjWRzGAfnnV5XPaNcNHi9fFP5d4C0RG6Qg1yAB1OnMVN5WGVDw>
-    <xmx:_1TpZuk1rxBO6tr75ZOfmQtXXDCbQUjDVaPAow_0snMrpCX4R49QXQ>
-    <xmx:_1TpZofmu8bNtPQf1pLnx3J_Z2iFEWt_EeFfZ4SH_N5vTJVwyeWUTg>
-    <xmx:_1TpZgEDMHgD-IWqIq2Apme3SZEZv_hos4VzxfBSW8A8CZVD_xUobQ>
-    <xmx:_1TpZjy3iTeRk08U8DFy1EN_TKMQnK2rOWLqCRfGlni2BjZesRD8odsT>
+X-ME-Proxy: <xmx:AlXpZtG-S87Y56j1XYUJhEo3icy59FKE6EB5VRsTOmPqBFkHGmzHmQ>
+    <xmx:AlXpZlXJn0YcP8wvcHQxMZu_GylAikdewykalkLK8XXf3obZE1X01A>
+    <xmx:AlXpZoOzLXLpeSNAIGqbe57wXbXVn1s4br5Heu5Da2PrxRmI8qbvDA>
+    <xmx:AlXpZk2yHjacewxH6ZikSWdCn-euiX6lu32d3T5mmCXgm1Qy4obBhg>
+    <xmx:AlXpZijMuPnwPbWKZ5JipwJ3zxZgMhmA7XC0qTgq6RjaLPl5poABiy1N>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Sep 2024 06:07:58 -0400 (EDT)
+ 17 Sep 2024 06:08:01 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6d2ca6a5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 17 Sep 2024 10:07:39 +0000 (UTC)
-Date: Tue, 17 Sep 2024 12:07:55 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 217f6c84 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 17 Sep 2024 10:07:42 +0000 (UTC)
+Date: Tue, 17 Sep 2024 12:08:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v2 2/6] apply: rename functions operating on `struct image`
-Message-ID: <be8f98881fb5836d58a7f4819d6fad65415e2c34.1726567217.git.ps@pks.im>
+Subject: [PATCH v2 3/6] apply: introduce macro and function to init images
+Message-ID: <506c787d6828c028b3a4403a9a65468f1bbc030b.1726567217.git.ps@pks.im>
 References: <cover.1726470385.git.ps@pks.im>
  <cover.1726567217.git.ps@pks.im>
 Precedence: bulk
@@ -87,255 +87,90 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1726567217.git.ps@pks.im>
 
-Rename functions operating on `struct image` to have a `image_` prefix
-to match our modern code style.
+We're about to convert the `struct image` to gain a `struct strbuf`
+member, which requires more careful initialization than just memsetting
+it to zeros. Introduce the `IMAGE_INIT` macro and `image_init()`
+function to prepare for this change.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- apply.c | 61 ++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 30 insertions(+), 31 deletions(-)
+ apply.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index 9dd2f4d215..ac21c21297 100644
+index ac21c21297..76f7777d4c 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -285,11 +285,10 @@ struct image {
+@@ -284,11 +284,19 @@ struct image {
+ 	struct line *line_allocated;
  	struct line *line;
  };
++#define IMAGE_INIT { 0 }
++
++static void image_init(struct image *image)
++{
++	struct image empty = IMAGE_INIT;
++	memcpy(image, &empty, sizeof(*image));
++}
  
--static void clear_image(struct image *image)
-+static void image_clear(struct image *image)
+ static void image_clear(struct image *image)
  {
  	free(image->buf);
  	free(image->line_allocated);
--	memset(image, 0, sizeof(*image));
++	image_init(image);
  }
  
  static uint32_t hash_line(const char *cp, size_t len)
-@@ -304,7 +303,7 @@ static uint32_t hash_line(const char *cp, size_t len)
- 	return h;
- }
- 
--static void add_line_info(struct image *img, const char *bol, size_t len, unsigned flag)
-+static void image_add_line(struct image *img, const char *bol, size_t len, unsigned flag)
- {
- 	ALLOC_GROW(img->line_allocated, img->nr + 1, img->alloc);
- 	img->line_allocated[img->nr].len = len;
-@@ -318,7 +317,7 @@ static void add_line_info(struct image *img, const char *bol, size_t len, unsign
-  * attach it to "image" and add line-based index to it.
-  * "image" now owns the "buf".
-  */
--static void prepare_image(struct image *image, char *buf, size_t len,
-+static void image_prepare(struct image *image, char *buf, size_t len,
- 			  int prepare_linetable)
+@@ -322,7 +330,7 @@ static void image_prepare(struct image *image, char *buf, size_t len,
  {
  	const char *cp, *ep;
-@@ -338,13 +337,13 @@ static void prepare_image(struct image *image, char *buf, size_t len,
- 			;
- 		if (next < ep)
- 			next++;
--		add_line_info(image, cp, next - cp, 0);
-+		image_add_line(image, cp, next - cp, 0);
- 		cp = next;
- 	}
- 	image->line = image->line_allocated;
- }
  
--static void remove_first_line(struct image *img)
-+static void image_remove_first_line(struct image *img)
- {
- 	img->buf += img->line[0].len;
- 	img->len -= img->line[0].len;
-@@ -352,7 +351,7 @@ static void remove_first_line(struct image *img)
- 	img->nr--;
- }
- 
--static void remove_last_line(struct image *img)
-+static void image_remove_last_line(struct image *img)
- {
- 	img->len -= img->line[--img->nr].len;
- }
-@@ -2322,7 +2321,7 @@ static void update_pre_post_images(struct image *preimage,
- 	 * are not losing preimage->buf -- apply_one_fragment() will
- 	 * free "oldlines".
- 	 */
--	prepare_image(&fixed_preimage, buf, len, 1);
-+	image_prepare(&fixed_preimage, buf, len, 1);
- 	assert(postlen
- 	       ? fixed_preimage.nr == preimage->nr
- 	       : fixed_preimage.nr <= preimage->nr);
-@@ -2874,7 +2873,7 @@ static void update_image(struct apply_state *state,
- 	nr = img->nr + postimage->nr - preimage_limit;
- 	if (preimage_limit < postimage->nr) {
- 		/*
--		 * NOTE: this knows that we never call remove_first_line()
-+		 * NOTE: this knows that we never call image_remove_first_line()
- 		 * on anything other than pre/post image.
- 		 */
- 		REALLOC_ARRAY(img->line, nr);
-@@ -2957,8 +2956,8 @@ static int apply_one_fragment(struct apply_state *state,
- 				break;
- 			*old++ = '\n';
- 			strbuf_addch(&newlines, '\n');
--			add_line_info(&preimage, "\n", 1, LINE_COMMON);
--			add_line_info(&postimage, "\n", 1, LINE_COMMON);
-+			image_add_line(&preimage, "\n", 1, LINE_COMMON);
-+			image_add_line(&postimage, "\n", 1, LINE_COMMON);
- 			is_blank_context = 1;
- 			break;
- 		case ' ':
-@@ -2968,7 +2967,7 @@ static int apply_one_fragment(struct apply_state *state,
- 			/* fallthrough */
- 		case '-':
- 			memcpy(old, patch + 1, plen);
--			add_line_info(&preimage, old, plen,
-+			image_add_line(&preimage, old, plen,
- 				      (first == ' ' ? LINE_COMMON : 0));
- 			old += plen;
- 			if (first == '-')
-@@ -2988,7 +2987,7 @@ static int apply_one_fragment(struct apply_state *state,
- 			else {
- 				ws_fix_copy(&newlines, patch + 1, plen, ws_rule, &state->applied_after_fixing_ws);
- 			}
--			add_line_info(&postimage, newlines.buf + start, newlines.len - start,
-+			image_add_line(&postimage, newlines.buf + start, newlines.len - start,
- 				      (first == '+' ? 0 : LINE_COMMON));
- 			if (first == '+' &&
- 			    (ws_rule & WS_BLANK_AT_EOF) &&
-@@ -3082,14 +3081,14 @@ static int apply_one_fragment(struct apply_state *state,
- 		 * just reduce the larger context.
- 		 */
- 		if (leading >= trailing) {
--			remove_first_line(&preimage);
--			remove_first_line(&postimage);
-+			image_remove_first_line(&preimage);
-+			image_remove_first_line(&postimage);
- 			pos--;
- 			leading--;
- 		}
- 		if (trailing > leading) {
--			remove_last_line(&preimage);
--			remove_last_line(&postimage);
-+			image_remove_last_line(&preimage);
-+			image_remove_last_line(&postimage);
- 			trailing--;
- 		}
- 	}
-@@ -3103,7 +3102,7 @@ static int apply_one_fragment(struct apply_state *state,
- 					found_new_blank_lines_at_end);
- 			if (state->ws_error_action == correct_ws_error) {
- 				while (new_blank_lines_at_end--)
--					remove_last_line(&postimage);
-+					image_remove_last_line(&postimage);
- 			}
- 			/*
- 			 * We would want to prevent write_out_results()
-@@ -3181,12 +3180,12 @@ static int apply_binary_fragment(struct apply_state *state,
- 				  fragment->size, &len);
- 		if (!dst)
- 			return -1;
--		clear_image(img);
-+		image_clear(img);
- 		img->buf = dst;
- 		img->len = len;
- 		return 0;
- 	case BINARY_LITERAL_DEFLATED:
--		clear_image(img);
-+		image_clear(img);
- 		img->len = fragment->size;
- 		img->buf = xmemdupz(fragment->patch, img->len);
- 		return 0;
-@@ -3241,7 +3240,7 @@ static int apply_binary(struct apply_state *state,
- 
- 	get_oid_hex(patch->new_oid_prefix, &oid);
- 	if (is_null_oid(&oid)) {
--		clear_image(img);
-+		image_clear(img);
- 		return 0; /* deletion patch */
- 	}
- 
-@@ -3257,7 +3256,7 @@ static int apply_binary(struct apply_state *state,
- 			return error(_("the necessary postimage %s for "
- 				       "'%s' cannot be read"),
- 				     patch->new_oid_prefix, name);
--		clear_image(img);
-+		image_clear(img);
- 		img->buf = result;
- 		img->len = size;
- 	} else {
-@@ -3533,7 +3532,7 @@ static int load_preimage(struct apply_state *state,
- 	}
- 
- 	img = strbuf_detach(&buf, &len);
--	prepare_image(image, img, len, !patch->is_binary);
-+	image_prepare(image, img, len, !patch->is_binary);
- 	return 0;
- }
- 
-@@ -3542,7 +3541,7 @@ static int resolve_to(struct image *image, const struct object_id *result_id)
- 	unsigned long size;
- 	enum object_type type;
- 
--	clear_image(image);
+-	memset(image, 0, sizeof(*image));
 +	image_clear(image);
+ 	image->buf = buf;
+ 	image->len = len;
  
- 	image->buf = repo_read_object_file(the_repository, result_id, &type,
- 					   &size);
-@@ -3589,7 +3588,7 @@ static int three_way_merge(struct apply_state *state,
- 		free(result.ptr);
+@@ -2314,7 +2322,7 @@ static void update_pre_post_images(struct image *preimage,
+ {
+ 	int i, ctx, reduced;
+ 	char *new_buf, *old_buf, *fixed;
+-	struct image fixed_preimage;
++	struct image fixed_preimage = IMAGE_INIT;
+ 
+ 	/*
+ 	 * Update the preimage with whitespace fixes.  Note that we
+@@ -2910,11 +2918,9 @@ static int apply_one_fragment(struct apply_state *state,
+ 	int hunk_linenr = frag->linenr;
+ 	unsigned long leading, trailing;
+ 	int pos, applied_pos;
+-	struct image preimage;
+-	struct image postimage;
++	struct image preimage = IMAGE_INIT;
++	struct image postimage = IMAGE_INIT;
+ 
+-	memset(&preimage, 0, sizeof(preimage));
+-	memset(&postimage, 0, sizeof(postimage));
+ 	oldlines = xmalloc(size);
+ 	strbuf_init(&newlines, size);
+ 
+@@ -3650,7 +3656,7 @@ static int try_threeway(struct apply_state *state,
+ 	size_t len;
+ 	int status;
+ 	char *img;
+-	struct image tmp_image;
++	struct image tmp_image = IMAGE_INIT;
+ 
+ 	/* No point falling back to 3-way merge in these cases */
+ 	if (patch->is_delete ||
+@@ -3727,7 +3733,7 @@ static int try_threeway(struct apply_state *state,
+ static int apply_data(struct apply_state *state, struct patch *patch,
+ 		      struct stat *st, const struct cache_entry *ce)
+ {
+-	struct image image;
++	struct image image = IMAGE_INIT;
+ 
+ 	if (load_preimage(state, &image, patch, st, ce) < 0)
  		return -1;
- 	}
--	clear_image(image);
-+	image_clear(image);
- 	image->buf = result.ptr;
- 	image->len = result.size;
- 
-@@ -3636,7 +3635,7 @@ static int load_current(struct apply_state *state,
- 	else if (status)
- 		return -1;
- 	img = strbuf_detach(&buf, &len);
--	prepare_image(image, img, len, !patch->is_binary);
-+	image_prepare(image, img, len, !patch->is_binary);
- 	return 0;
- }
- 
-@@ -3671,15 +3670,15 @@ static int try_threeway(struct apply_state *state,
- 		fprintf(stderr, _("Performing three-way merge...\n"));
- 
- 	img = strbuf_detach(&buf, &len);
--	prepare_image(&tmp_image, img, len, 1);
-+	image_prepare(&tmp_image, img, len, 1);
- 	/* Apply the patch to get the post image */
- 	if (apply_fragments(state, &tmp_image, patch) < 0) {
--		clear_image(&tmp_image);
-+		image_clear(&tmp_image);
- 		return -1;
- 	}
- 	/* post_oid is theirs */
- 	write_object_file(tmp_image.buf, tmp_image.len, OBJ_BLOB, &post_oid);
--	clear_image(&tmp_image);
-+	image_clear(&tmp_image);
- 
- 	/* our_oid is ours */
- 	if (patch->is_new) {
-@@ -3692,7 +3691,7 @@ static int try_threeway(struct apply_state *state,
- 				     patch->old_name);
- 	}
- 	write_object_file(tmp_image.buf, tmp_image.len, OBJ_BLOB, &our_oid);
--	clear_image(&tmp_image);
-+	image_clear(&tmp_image);
- 
- 	/* in-core three-way merge between post and our using pre as base */
- 	status = three_way_merge(state, image, patch->new_name,
-@@ -3740,7 +3739,7 @@ static int apply_data(struct apply_state *state, struct patch *patch,
- 
- 		/* Note: with --reject, apply_fragments() returns 0 */
- 		if (patch->direct_to_threeway || apply_fragments(state, &image, patch) < 0) {
--			clear_image(&image);
-+			image_clear(&image);
- 			return -1;
- 		}
- 	}
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
