@@ -1,109 +1,112 @@
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08FF15C137
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 09:53:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8BD37B
+	for <git@vger.kernel.org>; Tue, 17 Sep 2024 09:55:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726566834; cv=none; b=PJUzbihvK4VnDaATVvZ5eihU+nbD+wtLASYJ3dtwt/R4q2lbLmIFuHlJEW2G+g3UdkmDFfp7EXEur+xmyVOOzgVCLCUWvgsn7JeXHIS127z/yMPdXyGczeAlA0Hdck2QKg2Vc4FRdZ0geC6DGm4ClKTY0AWo+rSSraf7qRUkHoA=
+	t=1726566910; cv=none; b=pDKsgWIKbYmjfk6EgVDMcfgQEhzMNN0i/TgUYbFQ0OqQYZEhq6mxb7cvh4aP0+wXTFBbrjX2quVUWqUy8gK8eI9w+cLdkP3MWSorbYtSRVVpgFLKNeakpI/3gLCGRrtAFZSe5GZWhBvQz/o79mREICI5eCZ7meIIgi2uKpTbu2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726566834; c=relaxed/simple;
-	bh=ofsCzyc6JZcyCOCt6yNfgTVZNEpHqLSiao06fgsfzPQ=;
+	s=arc-20240116; t=1726566910; c=relaxed/simple;
+	bh=6G2w5f4ZMfjcp4SWpU7hUbj7RJVylQ6WorUEWPhuPpI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=knAY2ktQyMPOyCiJScEvpJLIdVAzLMcsOwK1op046XI1/pbDs+P/lgR0XmqP1mM0K3V40rYsuqvqExhdAaZlJKxpPzLxccPlDdvNA3WJvDe+6uAi3f/YhIAQNTF4ogpcoXZPJ8YXK8UbB7lLLHfEcE+pLvgfVOlAzX5detDyLf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=xCG+xt3t; arc=none smtp.client-ip=209.85.166.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=mwa12Sa21vCjuHkrPMMXRtO6gXwcSAtI1OFHOlimOmsBNQIXfw1rdiN1doiQuWXWstGycPakaiXQjd2p0r1wGFYbgqSa1en1ZGD9KErfl8HuWKIu+qc0Zur1iMzrG+6T1a3hH6x9MbBh1/L4cEpif9oAEYDibOzX9EizQaAz3HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=thKQ+KVg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HnyFYsgP; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="xCG+xt3t"
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-82ce603d8daso177805439f.0
-        for <git@vger.kernel.org>; Tue, 17 Sep 2024 02:53:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726566832; x=1727171632; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ofsCzyc6JZcyCOCt6yNfgTVZNEpHqLSiao06fgsfzPQ=;
-        b=xCG+xt3tomnJjgMnevG0ZmxLcrfCRf168id2Sz4QLcTa7JV1uS34vO8rY8T1IQDjA2
-         gdIA4X5+2HF7hhkwnMpbLnHtw/7L+wFQwzPykdxAfwXKCI0O1m7digCuQIT8blIvmGUO
-         mDZDwJAVceATQm8x1LsCT+Dob4h9+7PCZN5njiBounLgrBh+Bv+1hP2oUezvoUSLJ3zh
-         oqEQUt4O+pn5djG7v1jVsVZ/WS3VytBc28wMYYrum1gkCqhtTLMKPTODlQRhCSyfgNXM
-         8RSE7UgwbDRu8aH2OCRQeFs9MU2duCjxWEZdRAuYIrdIeQhO6a2UjXF8D2XZuOUmUUAa
-         SK4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726566832; x=1727171632;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ofsCzyc6JZcyCOCt6yNfgTVZNEpHqLSiao06fgsfzPQ=;
-        b=Shk5yCxDMeR95LJJRKKRU8pWrV1mUxzN/gBNEk7Nxz9KujivmVsDl1TzVx3tL+1irf
-         O1Io6YrA9HltIuhQ7LZAWsyMle4O2p2K1Xqqni89tF1PHKKM3L0Qa38t1wKkcjQnnpgd
-         SUL2arYBw972axuKV8DiI+a6d3zOp9mL00fYQiCWqmoKDR33BcjC2sr+lpD+TFrJn8Fy
-         SsfExRwxsffrwssVmeQAxcIfS4uadRZ7I6QOI9SEu2f5JR04ZA4skgdSpEK7NBRr8ybO
-         ZCQcOOH4WsrDPDX1ckrO1lBiULuOlpaOhz7ah158m/RjwRpmHO51wzqKdM+Qw7vQSvjw
-         4NzA==
-X-Gm-Message-State: AOJu0Yw5j9MwIi+BJGEQrCFhAtYqMaUSq1FFk+8hbD6YEUB5J2uSWBrN
-	vpjQwCBA6qkRkA5ipbXmzpJgBpVgD61Y4DwUhDM7NFBOiZPNAbBybJtpIsCPQNxUhump7EL2XZu
-	laPvw1g==
-X-Google-Smtp-Source: AGHT+IHiprF6QRH021nyKxdPKg2t7qIXrMo1yWCpAeH09XcAF4eREOx5zh3FNsdPZ9yT/qp7sYtxjg==
-X-Received: by 2002:a05:6e02:218c:b0:3a0:9050:702a with SMTP id e9e14a558f8ab-3a090507262mr102957715ab.17.1726566831947;
-        Tue, 17 Sep 2024 02:53:51 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d37ec2bc56sm1908885173.72.2024.09.17.02.53.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2024 02:53:51 -0700 (PDT)
-Date: Tue, 17 Sep 2024 05:53:48 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="thKQ+KVg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HnyFYsgP"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 09D49138047F;
+	Tue, 17 Sep 2024 05:55:08 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Tue, 17 Sep 2024 05:55:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1726566908; x=1726653308; bh=BmD2NQgPoo
+	NwT9b2FwL4OR0AvHAf6ba/4qUzvDgsop4=; b=thKQ+KVgp6tU7TPqJWySAfFw0C
+	tFx22vTe7Yi3TNu7m45VsR8ZFdashKa/3nGoQwXxIedm8bpd1oDkGEi4WTnWEvck
+	gdFr6IWHa22MjbHL15CugHIRLS5i2WDtd6jzLDT2iXZrmPQJYQwPFmbyQKCGI2sM
+	RUdwUkm1jfsqUI0OYa1HNTa0PhTuPwXqY7CQiKHO8p4/LhVDsfrUciVqQz5C7t1+
+	+kQXwXcvrCnr1vHkLE18clT2vU689xhpGv4TF+bMeTWpQh94soqFJ+dlt+sBH+cx
+	4G+wjo6u2kC1A3xk+Y7rmAkwDC+R0/SJFPX3Y0UEsquGVUIxF8vii7hm8ACw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1726566908; x=1726653308; bh=BmD2NQgPooNwT9b2FwL4OR0AvHAf
+	6ba/4qUzvDgsop4=; b=HnyFYsgPL863leHQYBUCbp7mM3sB5DB4TJpvhsML3Sjx
+	u1JC0EoY0D6z9WM7ihNvLOWe84In2IyyCL6qXyncDRuhB16o/biP5XQIZ3dSuACb
+	pi7M/YXyyd5Ejw3NXdUFRIcJlE1ZMv5pmeFF3hg3CxdRARtTwdZouN9AhSio1ooK
+	0GKC38qMVwqLnoMThQv9xDwp96fV3tUYvBuQ4eXwkKm2kJ3eu1VsOLl0ZNJv8ick
+	JRVNozjI+33xZSikp0Vk6wm9IGmHVTSJWMasCEZ+LplX1rqrmfcPtDg/Tu/djbhI
+	Q0SRIriakJNGJRQipzI3b6/LMEghediPZfWOUjmvsQ==
+X-ME-Sender: <xms:-1HpZq1Ys9oHb8a5pJIUTRr03xndAyA1Zk3_aw6zf3MnjjktgMeKHg>
+    <xme:-1HpZtFLek0pCmvvEIX7FU2guOhwcusejsM9V9mRK3r__fd8Auuc7Y-wwm0vO8ljj
+    zYsKD5UV_Pq2zL_Iw>
+X-ME-Received: <xmr:-1HpZi5mPPdQ7K-qzZW3a9AS8EQAtq7TKTAtcKVWLvC7Y1dt22WUOzrz0_yxhfgYD2cUC0ijJ4EeOmMOQ8ihk9apXMIzQAQSfA2UOD-qetDD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekjedgvddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
+    hopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:-1HpZr1B0OM6PB9-NM5Hz5cxfizSu76bDSp4ss26AYLykX4Fi4IaMw>
+    <xmx:-1HpZtGPO9ek-h8OkY2kt2cHSwLjBFp3aAp-pLT-ktDFFRp0rZkB4g>
+    <xmx:-1HpZk-eJHv6PR5WppUTqVHveChn17E8Eu7twdqaz-wRaGa9MAFZng>
+    <xmx:-1HpZinzQzrc84MAwXsg3Lm_a2ZX90jIpbV_B7ESwEAffFQwSUHdiA>
+    <xmx:_FHpZtDeHnZNwz2PBsFym-DsOFawZ7-jT7T8uPqBGOgjUv9lX4U_1d9S>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Sep 2024 05:55:07 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 43b5e496 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 17 Sep 2024 09:54:47 +0000 (UTC)
+Date: Tue, 17 Sep 2024 11:55:04 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 6/6] refs/reftable: wire up support for exclude
- patterns
-Message-ID: <ZulRrH2Pgrv/Cr/X@nand.local>
+Subject: Re: [PATCH v2 1/6] refs: properly apply exclude patterns to
+ namespaced refs
+Message-ID: <ZulR-G5nOpMsepLA@pks.im>
 References: <cover.1725881266.git.ps@pks.im>
  <cover.1726476401.git.ps@pks.im>
- <050f4906393d1f9c58a6b6bc695b004695d219be.1726476401.git.ps@pks.im>
- <ZulLWJWLgU7gL1MK@nand.local>
- <ZulOLLdh1_jrYcN2@pks.im>
+ <7497166422ea702aabdf4159b0d7780f1422ba13.1726476401.git.ps@pks.im>
+ <ZulIB7k18+4CzwZb@nand.local>
+ <ZulM4BU7zSn_NHMl@pks.im>
+ <ZulOK5GAWYbPlYeO@nand.local>
+ <ZulPhat5pavpiuXT@pks.im>
+ <ZulRYg98ehjPLr2c@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZulOLLdh1_jrYcN2@pks.im>
+In-Reply-To: <ZulRYg98ehjPLr2c@nand.local>
 
-On Tue, Sep 17, 2024 at 11:39:04AM +0200, Patrick Steinhardt wrote:
-> > Ugh, I just read the next hunk below, so ignore me here ;-).
->
-> ;)
->
-> I was also wondering whether we'd want to amend the generic parts of the
-> refs interface to filter out globs. But it is entirely feasible that a
-> backend can indeed filter out globs efficiently, even though none of the
-> current ones can. So it kind of makes sense to keep things as-is and let
-> the backends themselves decide what they can use.
+On Tue, Sep 17, 2024 at 05:52:34AM -0400, Taylor Blau wrote:
+> On Tue, Sep 17, 2024 at 11:44:44AM +0200, Patrick Steinhardt wrote:
+> > I think the important thing to realize is that we're talking about two
+> > different things:
+> 
+> Wow, I'm sorry -- I completely misunderstood what was going on in this
+> diff.
+> 
+> I have to say, that is quite embarrassing having written this feature
+> only a little over a year ago. Sorry for the confusion, this patch LGTM.
 
-Yep, agreed.
+No worries! If at all it points out that the patch message could've been
+clearer.
 
-> > One question I had reading this is why we don't filter these out on the
-> > fly in the iterator itself instead of allocating a separate array that
-> > we have to xstrdup() into and free later on.
-> >
-> > We may be at the point of diminishing returns here, but I wonder if
-> > allocating this thing is more expensive than a few redundant strcmp()s
-> > and calls to is_glob_special(). I dunno.
->
-> I think duplicating the array is the right thing to do anyway to not get
-> weird lifetime issues with the exclude patterns. A caller may set up a
-> ref iterator that they may end up using for longer than they keep alive
-> the exlude patterns passed to the iterator. So by duplicating the array
-> we might end up wasting a bit of memory, but we avoid such lifetime
-> problems completely, which I think is a win to make the infrastructure
-> less fragile.
-
-OK, I trust your judgement here over my own as not having nearly the
-familiarity with reftables as you do.
-
-Thanks,
-Taylor
+Patrick
