@@ -1,173 +1,129 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0803012E4A
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 01:41:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48883A2D
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 04:31:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726623681; cv=none; b=WuScIYXp6JymN/rUlTc667r15S/SNXhuquer5dsrfnXLgIZVLdOh6oxtphtwiQO752Clvq3TP0/eyFv9EejE0/SZIfnDvwYPtFRzDGPyanXBCRcu9Fww1Xo7SLe6jE01JnpL0FFtSmYQ2c6THGO3evdJ4M+q8deSCaXN9lWRyQY=
+	t=1726633885; cv=none; b=kQVG8QquskCmyI/2RxRqzJezTatBrfF2ZgrOvMBQZZaWQpSR5M9EpecJvhHW5OpaiMTyWrBsI24DjqPW2kJETGwFrab9X9+n/ErVH+yV8s8ap2qR8g3/d9yNe8hykyT2tulr1Zr+gVThN/RQhFeMmmtyhKViPqnQcVFYZ22jjKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726623681; c=relaxed/simple;
-	bh=EjSWM27AYhIrb0m3xYXGBxVnR+Pxax3meBPmFbsEaWE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=DoKou5Cl7ZWg1Wyw9gpQJSJjFeNplKd2mlrOum0mYPZFpx56cyo8k4KbKL9gW8cJoZF5ye4OnabpM+A0LcJRrIrrHXkTydljjwUJl8WcK49y/7IM/SvNAxC8U1+JqPdqk6FRDl8HnGf7765edxZ3KiaGPJ38AmEPksARCb7bpz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OXNKgyEV; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726633885; c=relaxed/simple;
+	bh=q7KpNI3lsX+O2KmFNJ2iw3MV2avVZprUh+gTowWrYh4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kp2ZfgxGQmxmIFm+vCjQca9sRgqtYW4Q3XyurDNCRFQ7wjE7GgTbIu2Kw24VteFaMM8RfFUEbHSeCED1XKC/TxHf7HT2jDZFJ4AD79lBjRyPyVY/D8mYrPOnUL2k1H3zVlspkNce4yIL9vIucMlIiX/2OHaRwj3gPONUmlYQeQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k/46wtiX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e7oPScVH; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OXNKgyEV"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42bbffe38e6so48864165e9.0
-        for <git@vger.kernel.org>; Tue, 17 Sep 2024 18:41:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726623678; x=1727228478; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:content-language:subject:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rgQlS2isxb0GX6j78joCoY/DHhx0X1mV8AwMz9U4g0E=;
-        b=OXNKgyEV5UIvEHEoKTaLNzu8DkySs6qa31ITz2J3VbwbBlZRl3DlN3ZC/RbmFgLSe+
-         eMFlfPCUuxeaUKpd2TJ1UfEpcccLTG5X+uKKdtBnUCvwyxsNTgDT7IbGPw53fMjMKHOe
-         ncOkgVduTnpm8zk2jZOfiNeWwIVnkuAVZXhRPumduFcxWInRNOy+MDzRfFqXcn0Vtgk5
-         vxSW9oEfuWQrjjKh2hsYNKshXI9QOl82S4fkhxDChCSQ50ZJt4JGb8WalzjVrsOO0i2c
-         X1Nr0DG7nRCmuogP46ESeUKzUrK3l2y+3PuGv0BGsa5fW1jDlw8Rg2qdRaYU0NNGfjtg
-         cLXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726623678; x=1727228478;
-        h=content-transfer-encoding:to:content-language:subject:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rgQlS2isxb0GX6j78joCoY/DHhx0X1mV8AwMz9U4g0E=;
-        b=YnF/h9/Q6V5Efr9KzxMdrYvB4IRXrYYVAEuBHOm05MBozn5aLdvTJ5ST9dW2ZwUxXe
-         JICohqxUGeRU3Vp9IChAJViSVBIQOWVPloi6fB1IUv1+fva0JG9pUoyji11b/80QATj5
-         6jvRMWDf/Pk1oRsa73j8KdZfZCfLovUsUJDB5KV9aefktbUbVQq8XZCYkOhSYaPXu6MR
-         dELaLZbqOe14SXqU4N2yfL0N6W4k4wsKiXwQEZvFya4gE3KoKmkxuFoyOP47JG58ZJ/w
-         iF63pJvq/X7jJRW6zqnu67C27cUdE4LOLLGBZECObFWU5LQSBL0c5kC0+o1wGxyN0s8+
-         L3Cg==
-X-Gm-Message-State: AOJu0Yw+As/Y0z+1w5ROGbtfZ6gyrKQt7WuTFDdGHRg34z6+n93gqz9b
-	hEDMuiYgfiJZ+993AygUZIowhGi0XThsTuaIyempV2Qf7fbfK9a7HBH3wRR+0sjxww==
-X-Google-Smtp-Source: AGHT+IHrBPMKglNbKXUtNcwJ8rBsHoklgOFTXCjeBCxlBV1/4/yfLft4rvbNrNdqiy7SuPdD/lNihA==
-X-Received: by 2002:a05:600c:548e:b0:42c:a802:a8cd with SMTP id 5b1f17b1804b1-42cdb529fbamr137183765e9.11.1726623677179;
-        Tue, 17 Sep 2024 18:41:17 -0700 (PDT)
-Received: from [10.19.11.42] ([191.101.157.169])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e704ec8bfsm2886365e9.17.2024.09.17.18.41.16
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Sep 2024 18:41:16 -0700 (PDT)
-Message-ID: <8f581759-34d2-45e4-bace-45669dbdb875@gmail.com>
-Date: Wed, 18 Sep 2024 03:41:14 +0200
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k/46wtiX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e7oPScVH"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4011D138025E;
+	Wed, 18 Sep 2024 00:31:21 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Wed, 18 Sep 2024 00:31:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1726633881;
+	 x=1726720281; bh=lwLI6dS4TRAxzt2pH67hb2MRDZMOBbvKW55ZN7Gpnso=; b=
+	k/46wtiXTgtJFq2fU0Y+obwnzOUfqZss6bQ39R2m+Ivqn8QSoDfH+dFGuh4czUb0
+	C8YQNhDzvRAUw4x82g7DoSVGwuHC7ws7jk3XNm82u/Fon3MnUpIlZNKzqIKe59Pn
+	m6SAgzlsHsMssrZ9stqkdts2XFshbmNgm6oIYA1ZBTmEbfBrzEviGOkryYuzwmNB
+	am+lHYSRwfyG4QRr1frU4Hu8bm4l2O2JSX/VFc2Rx9u9ngi9dOFR431vs5VImS0+
+	V0XSgOBsiDcD+SJNLF5bn6i3OmzQQGhL+JGBLZ4GxJX+lVVydQF0Kz/iWeV5bY6O
+	iZN3/NQbk2MrQAM3bgxJbw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1726633881; x=
+	1726720281; bh=lwLI6dS4TRAxzt2pH67hb2MRDZMOBbvKW55ZN7Gpnso=; b=e
+	7oPScVHOIjQ4D9/+xVWBSsls+e0QWSMIKoEKQBaOaRpA/gR4s9Ik81p9kp5S3gAO
+	cZv+3CcfYiizpRgmRH8jH8/9ImGjv7WGBvlUbsDO9vHMMLhgFKSCMQ/q2KzJYYXb
+	CxVl3ay5hkmSXYPEtVxSZ1fENj59a5mik1+Vyke0B8LRArV4j7tBtVD3YlyZn4s5
+	nrphsrLtVSOxuVqh0NO+nQb3ggwSw+n6Ad/nXH7xO+pbdKsfuZmH9Bgi9bZwMvO5
+	bMC9AOsnnV0HtLQJKNjkDWOyqW37ZzFHbv7/fREIvKva1WaD/EJgWVOhc33NYUFD
+	HRSVqZW+digG4xglWyrwQ==
+X-ME-Sender: <xms:mFfqZpPsDB6vdj75ohTEWEV5eg3D0xr5EBLmkJqNhtFQiHx5sTuj_g>
+    <xme:mFfqZr_ohkE8juX7b17eLk7kXkh0YuNtXRtCHsSDt2tBUwQnX96EsGbaEIz_HndME
+    kznR6DwweYC4V6WnQ>
+X-ME-Received: <xmr:mFfqZoQLAUVU_HK-FMUFQCdnoFH5E023pWurgjJDFJzw35V3PAbYy_C7kxwEQIm5SAE7vbY3NmyFgne6G9PXhFh5h5XtAya039OLAisaI8Q-mYVc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekkedgkeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
+    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphht
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:mFfqZlvrXaxSMRvtEIiZ0UUB_DUIA-vc3Cd1jaMm9sN3aTUyEBO-ow>
+    <xmx:mFfqZhe8mOMVDwlry5ukrYkRm15trOfy-ZM9vuGLWPjOidpFm8Ye7A>
+    <xmx:mFfqZh1cH_knZQGUt77c0MP2NZtNXmLGMxgtYdG4Xwa_Tk-_xnY1VQ>
+    <xmx:mFfqZt_XdcIgItE5ItUzP6onUwRPffpDzSKsRBRTz71_eroMDXSe3A>
+    <xmx:mVfqZl5IGtCjFInv6TUPqAYfi8dJAOivRrs2fe4cGlZp7hH9TBuZS5Yj>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Sep 2024 00:31:19 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id cd69e550 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 18 Sep 2024 04:30:57 +0000 (UTC)
+Date: Wed, 18 Sep 2024 06:31:17 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: karthik nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] refs/reftable: introduce "reftable.lockTimeout"
+Message-ID: <ZupXlaLP3QcP8SPb@pks.im>
+References: <cover.1726578382.git.ps@pks.im>
+ <ca3eab99f7ef86d1b7a5b4d4bdb8d2b0a55566e1.1726578382.git.ps@pks.im>
+ <CAOLa=ZTja-nFmKZ8iyyp0szuaAWAnPncy0E6rM5=WWgnr=01uA@mail.gmail.com>
+ <CAPig+cQ_+C65V6Rj9uCBKJy-rdymRd93-0S_w-bfSSJj82Zsrw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Andrei Rybak <rybak.a.v@gmail.com>
-Subject: [ANNOUNCE] Button "Copy commit reference" for Git hosting sites
-Content-Language: en-US
-To: git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cQ_+C65V6Rj9uCBKJy-rdymRd93-0S_w-bfSSJj82Zsrw@mail.gmail.com>
 
-I am pleased to announce "Git: copy commit reference" -- a collection of
-userscripts, which make it easy to copy-paste commit references from
-web UIs of the Git hosting providers.  Example of a commit reference:
+On Tue, Sep 17, 2024 at 01:50:27PM -0400, Eric Sunshine wrote:
+> On Tue, Sep 17, 2024 at 1:46 PM karthik nayak <karthik.188@gmail.com> wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > > +test_expect_success 'ref transaction: retry acquiring tables.list lock' '
+> > > +     test_when_finished "rm -rf repo" &&
+> > > +     git init repo &&
+> > > +     (
+> > > +             cd repo &&
+> > > +             test_commit initial &&
+> > > +             LOCK=.git/reftable/tables.list.lock &&
+> > > +             >$LOCK &&
+> > > +             {
+> > > +                     ( sleep 1 && rm -f $LOCK ) &
+> > > +             } &&
+> > > +             git -c reftable.lockTimeout=5000 update-ref refs/heads/branch HEAD
+> > > +     )
+> > > +'
+> >
+> > Nit: This does stall the test for 1s. Which is slightly annoying when
+> > running single tests locally. Couldn't we achieve this by doing `sleep
+> > 0.1`?
+> 
+> `sleep 0.1` is neither POSIX nor portable.
 
-	1f0fc1d (pretty: implement 'reference' format, 2019-11-20)
+The above test also verifies that the timeout can in fact be overridden.
+If we only had `sleep 0.1` we wouldn't be able to reliably verify that,
+as the default is a timeout of 100ms.
 
-Such references are a good way of providing context in commit
-messages.[1]  The main goal of the project is to allow users of Git
-hosting sites to produce better commit messages by giving them an easy,
-one-click way of creating commit references using websites of the
-hosting providers.  Here's a screenshot of how the button looks on
-GitHub, for example:
+We also have essentially the same tests in t0601 for packed-refs, I
+mostly just copied the logic over from there. It's not exactly pretty,
+and I'm not a huge fan of introducing timing sensitive tests, but in the
+end I guess it's okayish.
 
-	https://raw.githubusercontent.com/rybak/copy-commit-reference-userscript/main/Documentation/GitHub.png
-
-
-How to install?
-===============
-
-Try the userscripts out by installing them via Greasy Fork:
-
-	https://greasyfork.org/en/scripts?set=588773
-
-If you are not familiar with userscripts for browsers, they are like
-extensions inside another browser extension, called a user script
-manager.[2]
-
-
-What do the userscripts do?
-===========================
-
-The userscripts add a button "Copy commit reference" to commit pages of
-Git hosting sites.  Clicking the button puts both plain text and HTML
-into the clipboard.  The HTML content has clickable links to the
-website.  This is useful in rich text editors, e.g. in HTML emails,
-Slack, MS Teams, Confluence, visual mode of Jira, etc.
-
-
-Which sites are supported?
-==========================
-
-The following hosting providers are supported at the time of writing:
-
-   - GitHub
-   - GitLab
-   - Bitbucket Cloud and Bitbucket Server
-   - Gitea and Forgejo
-   - Phorge (fork of Phabricator)
-   - Gitiles
-   - Sourcehut
-   - Cgit
-   - GitWeb
-   - Gogs
-
-
-Development notes
-=================
-
-Adding support for following Git hosting providers is planned [3]:
-
-   - RhodeCode
-   - Pagure
-   - GitBucket
-
-If your favorite hosting is missing from the list you can leave feedback
-at the issue trackers.[3]
-
-During development I found that compatibility with a wide range of
-versions of the websites can be tricky.  Examples:
-
-   - The latest version of GitWeb is easily available to anyone with
-     `git instaweb`, but one of the well-known public instances --
-     https://repo.or.cz/ -- runs version 2.11.4 with custom patches.
-     Thankfully, the differences relevant to the userscript don't make
-     it too hard to support both versions.
-
-   - Public instances of Gitea/Forgejo have a very wide range of
-     versions, with slightly different HTML layout, and often with custom
-     patches.
-
-   - As far as I know, there are no public (even read-only) instances of
-     Bitbucket Server.  I did manage to test the userscript on several
-     private instances with versions in the range v7.21.* -- v8.9.*.
-
-If you know publicly available instances of any of the Git hostings
-listed above (especially Bitbucket Server), please let me know.
-
-I originally planned to post this to git-users mailing list, but it's
-gone now. See <https://github.com/git/git-scm.com/pull/1829> for
-details.
-
-
-Footnotes
-=========
-
-[1] 
-https://lore.kernel.org/git/5264c44fab5d64cdfea8ef9fe2c1088af3d41014.1574211027.git.liu.denton@gmail.com/#
-[2] https://greasyfork.org/en/help/installing-user-scripts
-[3] Issues are tracked mostly on GitHub:
-       https://github.com/rybak/copy-commit-reference-userscript/issues
-     but other sites are also available:
-       https://gitlab.com/andrybak/copy-commit-reference-userscript/-/issues
-       https://gitea.com/andrybak/copy-commit-reference-userscript/issues
-       https://codeberg.org/andrybak/copy-commit-reference-userscript/issues
+Patrick
