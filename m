@@ -1,118 +1,75 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32707189B91
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 21:34:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A521CA69A
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 22:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726695248; cv=none; b=rKm9NAbQc1uLzgV/oinl17ywpE4V+UH2aCHsG48tyCCUYx797rUM65KdcGTPKjoAhnUqzKth4c5e8NLw7VRYjyKMqVCyO4o3L6xDqedwOnQSgAdqJZJETpueTs8gLam6UzLs+vLI4Q/AjhgiD8LW54yyQ7vFNbqm7rrrt8PtL6I=
+	t=1726699163; cv=none; b=ISlM3ATFMv5iK2DKzvj9o9b+nZYlvR4qHVwcH3rLBgpIq6lfK5Vr9DczOcPKySF6hLIavJSvqhvCW34K/2EHjYcpxIB73IDNP2jakdcw1LS7GqHLRaruXBqQ3AVp8SQue0BmqKhI2deegDhjWGh8XFy0xUfY4vPTQARmNL+QydI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726695248; c=relaxed/simple;
-	bh=KP6IdJNpc3ardyzebs9dbFvNVXBsnYMdN+ay88JvA1w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sA0dE7Ldl3HLE6zQ49Q3O30w30UwiJJ7qIL3/LEFobcddZfELgCdZPpFq1xrsSgfY/6l79h9LObo4RAurE0rFhi6ew6mAzRuU8uVXiEh9Ri9qCe4SYOtvckHWyffJeepUKm1BMHs2TtBlgFQk6C/MSrf5nkTYwc5t6X96hyGnpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=JlZTbhG7; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1726699163; c=relaxed/simple;
+	bh=N5er7BQ5RGLO6YvbzKky5AnXqglnRqr6VR5+tJhfXU8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=u/yCw8yFOccyaK8yZSi7cPGtL3o1QTGWEv0Fw7uNRzlolmZn05JVjU0prC07xNYW0FD2Bq6bz1LXPkCOLcKyPJf4fFw5l2xPzbmfk+SFIklGhYbvxy5oS7HitRjhs1pJA9LgiE+0NPgG9l4mOsm6jtkNsouk95NGwiBnYixcRps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uXIMHt13; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JlZTbhG7"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-207349fa3d7so249795ad.1
-        for <git@vger.kernel.org>; Wed, 18 Sep 2024 14:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1726695246; x=1727300046; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ulWKmlaY0UR1Ow/Vnl7VVMpOKZaxaUF8wy16ZS/+X6g=;
-        b=JlZTbhG7NJHFzpbCquYaVm/WHUIFKIIB+qpAGYdZy3bFfLYTP7UovCyJL/Z3cSgXwi
-         c4V4afeiOkEqnxl1S9muQyb2e81n8gHieslHAAwOE5SCeslBNQPBZJ9G+1eTcempshpF
-         wYEnohmOpbzFj8lnfqU2j5qJc+L76N+42Tu+3J9I3MU9+ZiFQW0oj0qae/C4W8xnqO5Q
-         JvC/NnUNatKWnHZ/BUfpqQAGvjEodQhLl5ogib8mQmiWo4hgX1L+mWdFbplEcZ+E+XFa
-         T/BETSUhbnn1oipxhN4s5ySOGZqEBqCMkDRlLS0oJUtRP1mWwDoHcFiWTmmsQBqR8gdR
-         yoRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726695246; x=1727300046;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ulWKmlaY0UR1Ow/Vnl7VVMpOKZaxaUF8wy16ZS/+X6g=;
-        b=pBYq7GpLLKxOvteKklz1cey3Oi+l69NXrkPg4KD8pazK85nQflQcCRUe5mQ4XoDD2Z
-         G7TAak0wqRvv2EGszfn2fYYmvFV7QXoGgoDaqjHSADLP3QR5RJUvOFT6KgTg9AEPuQhI
-         oF3nYdgjat/7oX9m3msywdtJSO3+Tte6V1X8c/VO0b9WN2HI5AQOM3HGCeQskMbN5P4m
-         9WBORJxL6Ue/XxTKxgEHPWVYqh+xYhgm1KXla/QkIyZhpdDmB4UvJvZshsvCNJg2g6xj
-         gjfgP7t4G2YXcezET9gcJB54TFz2XKOZyKSqaHvxIToeQ5PhjcUkIxCDRpTpL9onE3eE
-         akQg==
-X-Forwarded-Encrypted: i=1; AJvYcCW4h6O2msGh0fb2TuPnzUTLEl0U/o6VJQGGeBmkIv1kFJyH0WjG1/c0sfbjkZ54T8ACm8U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzAZaecllE5N2/Wd9kt2zwFpsaYVJphyDVvF+qog7WpUwbRnCp5
-	hzZZGKYICKjYJAxKjbR24KbUegHis2YQpfAgJ5fZn3AF6of52Rm8KrCIF8AH1w==
-X-Google-Smtp-Source: AGHT+IHm50y7Oxs38nDsCSKzXyPjE/4XZZvx67h+nPCvgoTqXziBKxJqCkbusXAfFaiChRRO454z7A==
-X-Received: by 2002:a17:903:110f:b0:205:3bdb:5515 with SMTP id d9443c01a7336-208cd56943fmr502945ad.4.1726695245824;
-        Wed, 18 Sep 2024 14:34:05 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:8e56:45c4:ecbf:a6fa])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dd6ef31995sm176425a91.41.2024.09.18.14.34.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Sep 2024 14:34:04 -0700 (PDT)
-Date: Wed, 18 Sep 2024 14:33:59 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, mh@glandium.org, sandals@crustytoothpaste.net, Jason@zx2c4.com, 
-	dsimic@manjaro.org
-Subject: Re: [PATCH v3 3/6] libgit-sys: add repo initialization and config
- access
-Message-ID: <by74rpfxx2wv5nicazhhzel6hivogmajcro6736dj2zzpwadbv@h6rzhjrvd6bq>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, mh@glandium.org, sandals@crustytoothpaste.net, Jason@zx2c4.com, 
-	dsimic@manjaro.org
-References: <20240906221853.257984-1-calvinwan@google.com>
- <20240906222116.270196-3-calvinwan@google.com>
- <xmqq8qw4uz1q.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uXIMHt13"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 490E61ADA9;
+	Wed, 18 Sep 2024 18:39:15 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=N5er7BQ5RGLO6YvbzKky5AnXqglnRqr6VR5+tJ
+	hfXU8=; b=uXIMHt13Yhz2rWWOgWed2gNlo7WBShyB92vKo9OTAc+CSHtwZUBOW/
+	hyuRxFJLaOv95clE+4AEAuod62E+1uTbOiDrIRB2J7dHAiIBv8hIRqnRKjoR1p3P
+	xt8V8KPOvJUTQxPtwhutQ2vpArQ40kGdvhpnpBUsn91WUKOBvi0DE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 40EA51ADA8;
+	Wed, 18 Sep 2024 18:39:15 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A3D081ADA7;
+	Wed, 18 Sep 2024 18:39:14 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Henrik Holst
+ <henrik.holst@outlook.com>,  "git@vger.kernel.org" <git@vger.kernel.org>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: ./configure fails to link test program due to missing dependencies
+In-Reply-To: <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com> (Phillip Wood's
+	message of "Wed, 18 Sep 2024 11:04:54 +0100")
+References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+	<xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
+	<29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com>
+Date: Wed, 18 Sep 2024 15:39:13 -0700
+Message-ID: <xmqqy13oa8oe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8qw4uz1q.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D4FF1CDA-760E-11EF-950A-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-On 2024.09.06 16:45, Junio C Hamano wrote:
-> Calvin Wan <calvinwan@google.com> writes:
-> 
-> > Wrap a few repo setup and config access functions in libgit-sys. These
-> > were selected as proof-of-concept items to show that we can access local
-> > config from Rust.
-> >
-> > Co-authored-by: Josh Steadmon <steadmon@google.com>
-> > Signed-off-by: Calvin Wan <calvinwan@google.com>
-> > Change-Id: I6dd886af8c63e1f0f3251064cd8903aecdf768bb
-> > ---
-> 
-> 
-> Common to all other steps, I suspect that you meant to but forgot to
-> strip out the Change-Id: thing here?
-> 
-> Also there are a few whitespace breakages in this step.
-> 
-> Applying: libgit-sys: add repo initialization and config access
-> .git/rebase-apply/patch:129: trailing whitespace.
->          * for the existence of a key rather than a specific value
-> .git/rebase-apply/patch:138: trailing whitespace.
->         unsafe {
-> .git/rebase-apply/patch:143: trailing whitespace.
->         unsafe {
-> warning: 3 lines add whitespace errors.
-> 
-> 
-> There is another one in a later step.
-> 
-> Applying: libgit: add higher-level libgit crate
-> .git/rebase-apply/patch:325: trailing whitespace.
->         // ConfigSet retrieves correct value
-> warning: 1 line adds whitespace errors.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Fixed the whitespace errors in V4.
+> We seem to get fairly regular bug reports about the configure script,
+> presumably because most contributors are using the Makefile. It would
+> certainly be nice if we could get the CMake support into a state where
+> we could consider dropping the configure script.
+
+While I would agree that two is better than having to support three
+build procedures, I am not sure how improvement of CMake support
+needs to be a prerequisite for removal of autoconf.
+
+
+
