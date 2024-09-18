@@ -1,174 +1,109 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF3017AE0C
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 09:59:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FEAF9E4
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 10:04:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726653580; cv=none; b=nf90eScW71V3T9YFwUDLIZn+scrvENGaQvH6EwBTnhslVJsKv8TV+Lz99BFWCzrzAglCvB4XsQh3QXs9C735v54JGQH6Og58v9MoRUfnTGaGSsRgIY9sYlecQhld5or87J7f/ClnUalGgOU8CN5Eu0OFmce18VYgRG39e4gl8aI=
+	t=1726653899; cv=none; b=EkvA/nQAF/US1I4/Ssz4MBfmlfEM2Hyzs5jkLk5w8T87Ej4HJJcFrlomMli4zDk+E53EK8FfaxtGPoCa477e/Pw1+zeCbfDVww50lxciGwNNu5I763n4tgCBlihL1+nvFUil2rztiDR0HKO0RKU7MO80DCcW6PXDaaEdQEVXrd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726653580; c=relaxed/simple;
-	bh=rX69GNu/VuXRnl2fD04QhRWxMnOE/m98dmtZ8/6xaxU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UGZNKEn8el04vMlHTElNzPPUvhzVnmmFdhNXGdsMt+sKa1XMglkJrE9xt1lXoqGwSX3BP+gBxVkg4uDtS3LPBj8lsLSwvAUuUlRD7Lo+GHwn0zzUG7fgSfB0VEsGx1IBD1kNtqzL6v5VFg8KZjn7MGgsjotWHVJWmE/+MskxDgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tTsrXZAB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AIuA8Dpe; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1726653899; c=relaxed/simple;
+	bh=+bkTV5AHGZZm0i0Pu/o/bjn9g2E60XPfh4J1vZPjvnE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jf2C8vK9T7AX1C1lF49nI91Phdz+1T/9ek7DENODPvRhiA51puG6fewIH9X6lKCHNxzxFMJXhhTrnbhlNtPB6tS6gIj3xbxe6/nUGQUkjAytIxPGe6hEDWPamPRCkBeN0dSyBJXzkfoY4pmixlWJFm6TgPcVECOH0PbBdzAon0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SELjNxy+; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tTsrXZAB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AIuA8Dpe"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E97491140105;
-	Wed, 18 Sep 2024 05:59:37 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Wed, 18 Sep 2024 05:59:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726653577; x=1726739977; bh=Inh0ixxUlX
-	AJDUcsFWk1eb51WK+4Yjh7AnLuc0SH6dw=; b=tTsrXZAB2HW/fZY2gYAKnrcj8i
-	cmFbY+YtIE557aKnj/6XoGPE4mJ7uwsRhT2tHI4vvHxtavneBrt+ouoynTxbA74D
-	9OOQKZgcdai+s2/rV2J55nzBOzNFuHSYbQ52u+M1gtkUF2E39opWD5EZAd38jeP3
-	dJyeJ6mD5csnOzf7GZgK2/cQ8fgOiOfHtNNddzSQon+mJoTEGh/Q7igFUNXzTGYn
-	oC+JjJDKC2Mm0+lJLaDeTDwEls3tmvE7eo17CO11K+yxPzPZDf6C+1krIT7RGpLx
-	ej7MBSlCsc1d1hnGPZxNOGL6cHgyDP2molKbVfVCoP8szkjIDujsTiP1qurg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726653577; x=1726739977; bh=Inh0ixxUlXAJDUcsFWk1eb51WK+4
-	Yjh7AnLuc0SH6dw=; b=AIuA8DpeU/3KLUv/gyn/5LKbwnpHwaOnanS51Ct5NU3e
-	OoB61pvvNROqnihBQpHOW8t5Mxf3UJhovvjMZK+DeyAUyDerjFlHpZYEUdzoYnBM
-	BiRBLQowcZ42EFzF7tMbeS9ijOs0GLHXb2AvvBrYCuytGEhadPfNPSTmqz1EX+uq
-	5KHsOc62x7ZTsBQrfjCO43zDkG7Y8qFvRYi6y+E9VMgga9wNwcaXo5xnzCW3c/at
-	9Qd1r3v5ZWruBIC4xGzxmj8PhKC/ENQv/O8I/TXNURmRuqvMPjby06riXKw7kYgS
-	0g2IIoWj5IhHUV1X8sECyd8XaYdTW1SPFaT7HDpsGA==
-X-ME-Sender: <xms:iaTqZouf3gVCxSg-DfCXDmnL3kYEpaKGWPjP6c8Ujgnj2Nmn8_uMCg>
-    <xme:iaTqZlfsOmnXlYYGE_pYHNz2AnKok34I-TnruTNMaN-hK6GzLJefqAl0PsYM5mQiO
-    h4Kxb8yeeE1PqHN0A>
-X-ME-Received: <xmr:iaTqZjwjAQgQbG_pCGn7aSYuOhy2s0iYHzwLqYhjWGMETMUgKzDYZe9okzqlgT3n5DvjNVeKKoWibnmvIxVn3cR9cdrjBWyMKbCauHtRZMUrfMCd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekledgvdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhht
-    hhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgessh
-    hunhhshhhinhgvtghordgtohhm
-X-ME-Proxy: <xmx:iaTqZrNUVzbxJjc1VpwvMMHgcZ_KhVUNeIES_rv0RCLxvLcTex74bA>
-    <xmx:iaTqZo-mjySMt-HeVdlHvfSYGati8VqlYvoPcW7dVfS3nN-2IR1h2A>
-    <xmx:iaTqZjUBia-GG8x0-GwhFsIHnN4Em7aoaHZNT3rgXr1GhtFmArrqrA>
-    <xmx:iaTqZhez5FkAg_ufoKKH8p9hipzNnLMVRYRtEOz25mqsyFINWWJHBg>
-    <xmx:iaTqZsbt-iFSYsarFToLMzg8-63dCiEpp5mB4wvlj9wAnOb6eA6haaIC>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Sep 2024 05:59:36 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 979992aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 18 Sep 2024 09:59:15 +0000 (UTC)
-Date: Wed, 18 Sep 2024 11:59:35 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: karthik nayak <karthik.188@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	James Liu <james@jamesliu.io>
-Subject: [PATCH v3 3/3] refs/reftable: reload locked stack when preparing
- transaction
-Message-ID: <25d4e513a368a0787b6f78466f85a3155ca3a740.1726653185.git.ps@pks.im>
-References: <cover.1726578382.git.ps@pks.im>
- <cover.1726653185.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SELjNxy+"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-374c1120a32so4485300f8f.1
+        for <git@vger.kernel.org>; Wed, 18 Sep 2024 03:04:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726653896; x=1727258696; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=36Yj0bLnbTCFBAEevTFmg/r/4100ytAfsAye/TzxdBw=;
+        b=SELjNxy+a9ZcnLwBkK5A/TU80ifwFL5NzSe0oeB5H4zN9BkEgoGvJ2mdfiqNor+52y
+         UELItsAOUN9+v7hiB0bUEE1duMApyNurANPYYWD+XD/4u+esr+xj4oqy7ttm4aZWyRKP
+         p6tcSVZhTEzOCA27F6CHIIZrKQh/7sn3jB64vi/EAMSxIfOIzrO2b8cEWA7qcgJuxaC8
+         IU26LOUlrL8MRe0UUS0j9egX6hcF5ObVjYVw14d2Q1BGvaO5SkuACuWV1kIt16MGi6OP
+         DNlQihJaFnIU7Mm77CUUQMu3mXTZTHiAfZHNh+q12XXtM7xyda9JDE72epyhD6bbEL8j
+         qmfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726653896; x=1727258696;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=36Yj0bLnbTCFBAEevTFmg/r/4100ytAfsAye/TzxdBw=;
+        b=RoCIjrUevmrzEELnNoiPso2H8by937FP35c/vi8PDqCUKkic1Z20w/390LkMwBz1HW
+         Ao6N74BjC52vnO3d4F3qY6tRlFuxkxhKLIjyJxV6n04jOpTei4j+xVmZRuQhKTcESUgD
+         FWyPKOAokvMIjmpOwqwHD9xzqR1VK+xiGeQ8WsYorviQJINtznc8B3OsdJy8rLvEUk1u
+         MLkAGoKxrqVSzZmbhJmNpqYU1QLE9q21fPOsialFre8Dr9eegm03ZO9+WtSTtywYnE8j
+         pg4iyHprBO+waJcx5VcQALAKzVUiOV8mHn8WiAQUXbJ7DN/u0zGF/lQtF4rDjOJFuKwZ
+         3DUw==
+X-Forwarded-Encrypted: i=1; AJvYcCW05YSWIC/2/SGwG1L2xlzvBWrGJZzQ0e57EimQLEwnUOXCeQsC81cVRmknbHAZZlgRi0c=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/BQHu5cJEIk9dILQKHIvWy5mYfVXnA1BUkXKxVWmLgrmM+9h8
+	cr5DjOaz7TGMnhzNr3Wmdfdayv+/luufPD4kwyI5jZFZdobmI+MA
+X-Google-Smtp-Source: AGHT+IEImbYNDFwGnPtRVh9fcxiVfZGxlez5n1eroFf8LXvZiixhmnQgjSgB7cmBJcz0wpJw8tdsAg==
+X-Received: by 2002:a5d:6946:0:b0:371:8750:419e with SMTP id ffacd0b85a97d-378c2d4c8ddmr11912720f8f.47.1726653895673;
+        Wed, 18 Sep 2024 03:04:55 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6ba:6501:244f:f1e2:145d:427a? ([2a0a:ef40:6ba:6501:244f:f1e2:145d:427a])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378e78054absm11922907f8f.106.2024.09.18.03.04.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Sep 2024 03:04:55 -0700 (PDT)
+Message-ID: <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com>
+Date: Wed, 18 Sep 2024 11:04:54 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1726653185.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: ./configure fails to link test program due to missing
+ dependencies
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: Henrik Holst <henrik.holst@outlook.com>,
+ "git@vger.kernel.org" <git@vger.kernel.org>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+ <xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <ZufjWR6AJM-DIWPR@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-When starting a reftable transaction we lock all stacks we are about to
-modify. While it may happen that the stack is out-of-date at this point
-in time we don't really care: transactional updates encode the expected
-state of a certain reference, so all that we really want to verify is
-that the _current_ value matches that expected state.
+Hi Patrick
 
-Pass `REFTABLE_STACK_NEW_ADDITION_RELOAD` when locking the stack such
-that an out-of-date stack will be reloaded after having been locked.
-This change is safe because all verifications of the expected state
-happen after this step anyway.
+On 16/09/2024 08:50, Patrick Steinhardt wrote:
+> 
+> I sometimes wonder whether we should move on and discard one of the
+> three build systems we have: plain GNU Make, autoconf and CMake. And
+> from these three I'd rather want to throw the autoconf-based thing away:
+> 
+>    - The Makefile is probably what most people use, so throwing it out is
+>      a no-go right now.
+> 
+>    - CMake is really useful because it has support for IDEs and
+>      alternatives to GNU Make like Ninja, which builds Git way faster
+>      than Makefiles. It also has support for out-of-tree builds, which I
+>      find rather useful.
+> 
+> So is there a path forward to move CMake support out of contrib/, make
+> it an officially supported way to build Git and then throw away the
+> autoconf-based infra? I'm not the biggest fan of CMake myself and very
+> much prefer Meson, but we already have it wired up and thus I'm trying
+> to be at least a bit pragmatic.
 
-Add a testcase that verifies that many writers are now able to write to
-the stack concurrently without failures and with a deterministic end
-result.
+We seem to get fairly regular bug reports about the configure script, 
+presumably because most contributors are using the Makefile. It would 
+certainly be nice if we could get the CMake support into a state where 
+we could consider dropping the configure script.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- refs/reftable-backend.c    |  3 ++-
- t/t0610-reftable-basics.sh | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+), 1 deletion(-)
+Best Wishes
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 6ca00627dd7..efe2b0258ca 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -770,7 +770,8 @@ static int prepare_transaction_update(struct write_transaction_table_arg **out,
- 		if (ret)
- 			return ret;
- 
--		ret = reftable_stack_new_addition(&addition, stack, 0);
-+		ret = reftable_stack_new_addition(&addition, stack,
-+						  REFTABLE_STACK_NEW_ADDITION_RELOAD);
- 		if (ret) {
- 			if (ret == REFTABLE_LOCK_ERROR)
- 				strbuf_addstr(err, "cannot lock references");
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 62da3e37823..2d951c8ceb6 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -450,6 +450,37 @@ test_expect_success 'ref transaction: retry acquiring tables.list lock' '
- 	)
- '
- 
-+test_expect_success 'ref transaction: many concurrent writers' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		# Set a high timeout such that a busy CI machine will not abort
-+		# early. 10 seconds should hopefully be ample of time to make
-+		# this non-flaky.
-+		git config set reftable.lockTimeout 10000 &&
-+		test_commit --no-tag initial &&
-+
-+		head=$(git rev-parse HEAD) &&
-+		for i in $(test_seq 100)
-+		do
-+			printf "%s commit\trefs/heads/branch-%s\n" "$head" "$i" ||
-+			return 1
-+		done >expect &&
-+		printf "%s commit\trefs/heads/main\n" "$head" >>expect &&
-+
-+		for i in $(test_seq 100)
-+		do
-+			{ git update-ref refs/heads/branch-$i HEAD& } ||
-+			return 1
-+		done &&
-+
-+		wait &&
-+		git for-each-ref --sort=v:refname >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'pack-refs: compacts tables' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
--- 
-2.46.0.551.gc5ee8f2d1c.dirty
-
+Phillip
