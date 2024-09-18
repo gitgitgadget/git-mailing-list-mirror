@@ -1,63 +1,63 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2FF1CB301
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 20:46:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F024188A1F
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 20:46:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726692391; cv=none; b=twXGgXF/ktwZbc477r67MKlTObr3yV+kB953ZDlD8P4bQF8wU7squE56st3Bky1AhS4JvndXGwYBCYhSkepv9D7ecO/TOlZZahhDuo9HlQJ6OR1CxDGXDDeLHNLHc5uyBgISZX/zpds4GbCl0H2D55x21I9j2/k72j1KeHofphc=
+	t=1726692393; cv=none; b=K97lSBMu+mN6VeultxKxkLRk/m/4pY/aMuuuxLiqfqoCIWm3rXJFGw0iKh2zeNikNH4mg+K/CHUhU0pDY51RFBD8X7crvTLAIrrc9E2ly7oDUuAG2Zg3AX1mrMCGOcTIQaujUimlzT8506Ql4d5VsbfiEdXuUfRSARVa49hn1n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726692391; c=relaxed/simple;
-	bh=ZTdGffGQw/6yzjEDsa+fFvN7dJNRjvQoaeBIrQ5Uxag=;
+	s=arc-20240116; t=1726692393; c=relaxed/simple;
+	bh=gCzavPZaJ9l4yIGD9mTKRG+Ryx8bw/YKI/q+upxRvys=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=romVk6iU5lkUauwUGcHOX/wQkYwgYT86tdGmXbDfOuC5//mvosCeqlHNGgK887liAuMTMpPmYkbcKjDV0YsdKfsRSVv+6tUiTpkeoFzr+SgUa4xNwGOUvFasEbjqmHe4oqjZbHXrPQMKUbngDoRU/ix6wHVhObFS/6M25fGSwEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yae5328E; arc=none smtp.client-ip=209.85.218.54
+	 MIME-Version:To:Cc; b=kcto9F6NqCklcoKf/VdncH/FiiZTRJj4VhNmozUS6fdQ7WGD/OMqrGfad0JRO4gxLnflt8AVWIrpwfaiOuLJLtWxClxctr4i17OniyTBFu3YXX3cON9K8TJXofS7r8VUm7jXl6WH+pb2G/JCxluoWRnVXUCTuCrTmjlyWmjvPsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cBElTQXO; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yae5328E"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a8a7596b7dfso25051766b.0
-        for <git@vger.kernel.org>; Wed, 18 Sep 2024 13:46:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cBElTQXO"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5c255e3c327so163484a12.1
+        for <git@vger.kernel.org>; Wed, 18 Sep 2024 13:46:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726692388; x=1727297188; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1726692389; x=1727297189; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WzsVBni1hzwxIPcF8nKjotNk3XdDVEZ5QFNKwj56i64=;
-        b=Yae5328EwqBY9vhcSiAojp+mhFuUs2xld0MqboRuHvURjqd1O0UGf+xPaUPmoK5xC1
-         ojJ+fEvU7c8s86Iwla8pPhHprJsfxP4e7jkr/DP/n0Np34qti70p9FBlT98w8eDwDLzi
-         KPRCslpHQ1JYSxh/1SSd7vfHe8qhA103vr/iRUid4CCY6hU5/p1fIQa30hIKB5fSqHHi
-         2bvjNmRZ5oOHGnfNE8F8N7ESNMLtl1uYuye9Lqh4om4iNLQ7K1eQRr7RCH7n888OjJL9
-         7voxg0QF6XiHlJzYfvx5FjNSL7iKQGbC3A4MsSpB44VcO+3hKnHlUwb7Mm2pLHhpGi80
-         I4aQ==
+        bh=3xW46GYV3g89nlQDRZF7D0uD77QkxPK9bmYMQk6lSY0=;
+        b=cBElTQXOoUznFHF31Mf4Q3aLVeoacWxFRcngr/7btq3cmKaEOimocykZZsaCxEz6q4
+         r8AdM1NF1lZl/VSuvOiaCP5Vbjg7WnJ8hjVdiYaJWumTAbF8mRj2t+HHjisLbtUhWOw4
+         u6/JSlBBR0hMe9iZnXaD7RTQVMItRfqB5mt+8kecqPiJ+jPvxQZy3+6EogG7H5Ntlon2
+         R1YHpNKhR6It2nNcTwI69c/1gPudAPoocjPx1dgoJh0a2/yRiW78ht0FgKTHtwpwhRhv
+         vmh5q1lvUGOLBm6aXdeWfiSxDHTVYTlDqp21gtK0fvTSwz9LCwGL0hEWblF/VUgGe/BF
+         I2dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726692388; x=1727297188;
+        d=1e100.net; s=20230601; t=1726692389; x=1727297189;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WzsVBni1hzwxIPcF8nKjotNk3XdDVEZ5QFNKwj56i64=;
-        b=LiGUVXmO0yuWppMM1OY1mzwzrKEBcli5TzQjlU/G+6+16VDl3w+8FfiLM9KqUz8aMr
-         4AcgebTXsNKexNNEauVazDL8cWXMqQj4FKL7qBrW6Ek/T7eWWYCrNw1sH4WxIisswKgq
-         gMepmm/J9lKHMThADXryxQALY2/R1c73uJlEVg+L9CY09oW7Se6UXPIIan98eXxQqLLW
-         sUDvByeEp1Jc4A+zoxTtgixKMLHjyph0JFedPYXTWBLs/hTmko7k/aZK1wZRAUo7fdwV
-         xZWGMStlqwAt0adQkRXGDeeYsoqiTNXdikS410uIK4h6RsD2lFlV+3+xwnL7emdpsztj
-         zVIA==
-X-Gm-Message-State: AOJu0Yyjk9yTKB3U8XJ9effISgdm17MOQ6kwt1/DSoCNN2Zpv0EBpXKO
-	IjDVN8zv6GPAXO70m5uR5hp6x6fHDMiyoosbnV05TJa3mSziskcdHa3vRA==
-X-Google-Smtp-Source: AGHT+IFIBU+ej2UCByIVH1wIDCQdFg8hcpek/0EvKNHOmFyO8iE6Xy5RA4H6Q2y+IQcVCzAFoJmI+A==
-X-Received: by 2002:a17:907:7ea3:b0:a8d:4e69:4030 with SMTP id a640c23a62f3a-a90c1cfb99bmr86988366b.19.1726692387823;
-        Wed, 18 Sep 2024 13:46:27 -0700 (PDT)
+        bh=3xW46GYV3g89nlQDRZF7D0uD77QkxPK9bmYMQk6lSY0=;
+        b=p4HtaPYrJsu3nnX75XiLNZPFPSHtzgRUXQbkZv6S2cXAPkh1sgp2MYxKIGPiD1LzEz
+         sVAPaap9pZQEq1FFHqbXOTpZ6oAWbaIZRmg7hiYjoj0pETZK8bLr9Y/WBUPApBTcSVgg
+         /QZeganFBWB5akpfv9CBYhVhUjjkasuVpiCyxVSFlT+r/p+KWsycbAQyGgLI2Dn3Wcau
+         SPhn51gOtIHCecbVGU//Jtey27rjNAHQ2XB70oBIZmpzfcBH04IxFHC74CJnWlRdBI8h
+         CmoVtVmZgX2a3nQiPqFlY5Z2IfoqeSUr9N4QBrAezqzcVuIHSoLTh92iNf6qZ2pyQ22X
+         8U0A==
+X-Gm-Message-State: AOJu0YwbTCNzil4AbIP/3JiTVUMX82HNlaIbjRR+ouwIL+jLotnFLtVs
+	IkEuX7CKpUFYiV0S4ZTKEirLJX3nDykZcCml8L3gXAXu9qOdJzxvOsx4Jg==
+X-Google-Smtp-Source: AGHT+IGzMdOri4/OgrQ450nChf4lMU2+drz5HmMd9zuD1JtfezGMumxp1FGhpZtTjXht++gNRT0+8w==
+X-Received: by 2002:aa7:c3c9:0:b0:5be:cdaf:1c09 with SMTP id 4fb4d7f45d1cf-5c413e50f05mr17797141a12.28.1726692388944;
+        Wed, 18 Sep 2024 13:46:28 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a906111aa91sm632218666b.97.2024.09.18.13.46.26
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c42bb4964csm5379705a12.2.2024.09.18.13.46.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Sep 2024 13:46:26 -0700 (PDT)
-Message-Id: <c58271261200779918d3329f31e4c4ffe59d6ec8.1726692381.git.gitgitgadget@gmail.com>
+        Wed, 18 Sep 2024 13:46:28 -0700 (PDT)
+Message-Id: <999b1d094241b0ba8d6924ac6976eafc64c7d4a6.1726692382.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1785.v2.git.1726692381.gitgitgadget@gmail.com>
 References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
 	<pull.1785.v2.git.1726692381.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Sep 2024 20:46:19 +0000
-Subject: [PATCH v2 4/6] git-repack: update usage to match docs
+Date: Wed, 18 Sep 2024 20:46:20 +0000
+Subject: [PATCH v2 5/6] p5313: add size comparison test
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,58 +80,132 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-This also adds the '--full-name-hash' option introduced in the previous
-change and adds newlines to the synopsis.
+As custom options are added to 'git pack-objects' and 'git repack' to
+adjust how compression is done, use this new performance test script to
+demonstrate their effectiveness in performance and size.
+
+The recently-added --full-name-hash option swaps the default name-hash
+algorithm with one that attempts to uniformly distribute the hashes
+based on the full path name instead of the last 16 characters.
+
+This has a dramatic effect on full repacks for repositories with many
+versions of most paths. It can have a negative impact on cases such as
+pushing a single change.
+
+This can be seen by running pt5313 on the open source fluentui
+repository [1]. Most commits will have this kind of output for the thin
+and big pack cases, though certain commits (such as [2]) will have
+problematic thin pack size for other reasons.
+
+[1] https://github.com/microsoft/fluentui
+[2] a637a06df05360ce5ff21420803f64608226a875
+
+Checked out at the parent of [2], I see the following statistics:
+
+Test                                           this tree
+------------------------------------------------------------------
+5313.2: thin pack                              0.02(0.01+0.01)
+5313.3: thin pack size                                    1.1K
+5313.4: thin pack with --full-name-hash        0.02(0.01+0.00)
+5313.5: thin pack size with --full-name-hash              3.0K
+5313.6: big pack                               1.65(3.35+0.24)
+5313.7: big pack size                                    58.0M
+5313.8: big pack with --full-name-hash         1.53(2.52+0.18)
+5313.9: big pack size with --full-name-hash              57.6M
+5313.10: repack                                176.52(706.60+3.53)
+5313.11: repack size                                    446.7K
+5313.12: repack with --full-name-hash          37.47(134.18+3.06)
+5313.13: repack size with --full-name-hash              183.1K
+
+Note that this demonstrates a 3x size _increase_ in the case that
+simulates a small "git push". The size change is neutral on the case of
+pushing the difference between HEAD and HEAD~1000.
+
+However, the full repack case is both faster and more efficient.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-repack.txt | 4 +++-
- builtin/repack.c             | 4 +++-
- t/t0450/txt-help-mismatches  | 1 -
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ t/perf/p5313-pack-objects.sh | 71 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
+ create mode 100755 t/perf/p5313-pack-objects.sh
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index c902512a9e8..457a793fa89 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -9,7 +9,9 @@ git-repack - Pack unpacked objects in a repository
- SYNOPSIS
- --------
- [verse]
--'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m] [--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>] [--write-midx]
-+'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
-+	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
-+	[--write-midx] [--full-name-hash]
- 
- DESCRIPTION
- -----------
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 87d0cd4d2f2..4fa2c25246d 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -38,7 +38,9 @@ static int run_update_server_info = 1;
- static char *packdir, *packtmp_name, *packtmp;
- 
- static const char *const git_repack_usage[] = {
--	N_("git repack [<options>]"),
-+	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
-+	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
-+	   "[--write-midx] [--full-name-hash]"),
- 	NULL
- };
- 
-diff --git a/t/t0450/txt-help-mismatches b/t/t0450/txt-help-mismatches
-index 28003f18c92..c4a15fd0cb8 100644
---- a/t/t0450/txt-help-mismatches
-+++ b/t/t0450/txt-help-mismatches
-@@ -45,7 +45,6 @@ rebase
- remote
- remote-ext
- remote-fd
--repack
- reset
- restore
- rev-parse
+diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
+new file mode 100755
+index 00000000000..5dcf52acb0d
+--- /dev/null
++++ b/t/perf/p5313-pack-objects.sh
+@@ -0,0 +1,71 @@
++#!/bin/sh
++
++test_description='Tests pack performance using bitmaps'
++. ./perf-lib.sh
++
++GIT_TEST_PASSING_SANITIZE_LEAK=0
++export GIT_TEST_PASSING_SANITIZE_LEAK
++
++test_perf_large_repo
++
++test_expect_success 'create rev input' '
++	cat >in-thin <<-EOF &&
++	$(git rev-parse HEAD)
++	^$(git rev-parse HEAD~1)
++	EOF
++
++	cat >in-big <<-EOF
++	$(git rev-parse HEAD)
++	^$(git rev-parse HEAD~1000)
++	EOF
++'
++
++test_perf 'thin pack' '
++	git pack-objects --thin --stdout --revs --sparse  <in-thin >out
++'
++
++test_size 'thin pack size' '
++	wc -c <out
++'
++
++test_perf 'thin pack with --full-name-hash' '
++	git pack-objects --thin --stdout --revs --sparse --full-name-hash <in-thin >out
++'
++
++test_size 'thin pack size with --full-name-hash' '
++	wc -c <out
++'
++
++test_perf 'big pack' '
++	git pack-objects --stdout --revs --sparse  <in-big >out
++'
++
++test_size 'big pack size' '
++	wc -c <out
++'
++
++test_perf 'big pack with --full-name-hash' '
++	git pack-objects --stdout --revs --sparse --full-name-hash <in-big >out
++'
++
++test_size 'big pack size with --full-name-hash' '
++	wc -c <out
++'
++
++test_perf 'repack' '
++	git repack -adf
++'
++
++test_size 'repack size' '
++	wc -c <.git/objects/pack/pack-*.pack
++'
++
++test_perf 'repack with --full-name-hash' '
++	git repack -adf --full-name-hash
++'
++
++test_size 'repack size with --full-name-hash' '
++	wc -c <.git/objects/pack/pack-*.pack
++'
++
++test_done
 -- 
 gitgitgadget
 
