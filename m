@@ -1,115 +1,108 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BBB376F1
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 16:30:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C2E1474D8
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 16:34:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726677024; cv=none; b=fxu8JsBYTyT3A7I8uFCBFxCeeGsc8kN68HI/PwUhfO4gusZMCrSPQC4o0DNhihtTn49xJc1Ru2lAeRVO8KB0HP3kacVU8zIRobKivO+GldnYJaIQ8330TJusCjSwdiWY2x8pqMzM9tZkX+JYlCEIQAAnSb4K8AmN1SEE+JEq92c=
+	t=1726677286; cv=none; b=VupBH+ls0fVmordqGX9nPjGJ/qWO3B6ZH8+dJo63ixom7xmbISqkqAsW2HZiHyMjOkNvlEgUBiAZ7NOR4cFsyC68yVv/hLvsbeOgR4aGiv/bCQsn80BJ8n7AQzeNmS+7q5cnx833iyuU2+/7RY0K5cBURveD8g3z0ELleaTxpd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726677024; c=relaxed/simple;
-	bh=piIP3lY9wY7V8D1xIIY5A/up+RwDbgEskKQr4A/Lk3g=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VhUrLqc0pSjO+ccTcLfnCvXZTrfmnahQ+Z6GVnj+R8k+JbQEBriWAYPkUBY1MjgxSUXxQ+FVJMeYqrsI3MRUKeT8p/eBVGU/wqthyYL+UZkaBEwLXsy34JuOXa8kE1Z4Lw0gfzagRIGbv9pvc+WsOVwUEDUL0Ih9EzfyMlmhcyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 48IGUAKo309413
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 18 Sep 2024 16:30:10 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Marcos Del Sol Vives'" <marcos@orca.pet>, "'git'" <git@vger.kernel.org>
-References: <19205ebb4b9.c2a2da5a2387912.3559118454287459572@orca.pet>
-In-Reply-To: <19205ebb4b9.c2a2da5a2387912.3559118454287459572@orca.pet>
-Subject: RE: Permission issue in Git in DrvFs-mounted network drives
-Date: Wed, 18 Sep 2024 12:30:05 -0400
-Organization: Nexbridge Inc.
-Message-ID: <03ed01db09e8$080cf090$1826d1b0$@nexbridge.com>
+	s=arc-20240116; t=1726677286; c=relaxed/simple;
+	bh=dUo/SqQp4gVBlkAFeWHZPdPXEygQuxtw172exNrQDIY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WcWG7K6hsXS3Gr2vCrWnog1g3O3nJBA02yyozXIWzUajd4SEH1bgSwOKmEnuwzNesWatnPBV9xMbv2CfvYQd73hWL5QmJpvJzonk86CGcWYgIFSLMszrbHquBD7Ew1zfRa6H/08ffApKIzYbpqZ2yaK1rE0suIegD1MsTHp/Es0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jXkHlCOs; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jXkHlCOs"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EE6F330171;
+	Wed, 18 Sep 2024 12:34:36 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=dUo/SqQp4gVBlkAFeWHZPdPXEygQuxtw172exN
+	rQDIY=; b=jXkHlCOsoxejmH9b0KEdIqk+P6mE+B2GxXn/0bRohuDad9OHjIWTBG
+	KTFh9Mk/K4bjrjG0WXU2iXm9BMyZCP1wqM0oT3hCq4WogsTnhntMSUPsOmUGGwgO
+	wrfv3s9laBCtOtQB2QC4BaIilbE6rmEPqsdAjhCCywfQ5+a0dHZ5U=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E56FB30170;
+	Wed, 18 Sep 2024 12:34:36 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5DB633016F;
+	Wed, 18 Sep 2024 12:34:36 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: Calvin Wan <calvinwan@google.com>,  git@vger.kernel.org,
+  spectral@google.com,  emilyshaffer@google.com,  emrass@google.com,
+  rsbecker@nexbridge.com,  mh@glandium.org,  sandals@crustytoothpaste.net,
+  Jason@zx2c4.com,  dsimic@manjaro.org,  phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 5/6] libgit: add higher-level libgit crate
+In-Reply-To: <honvpowfa6zze7p56pcefrzokjjawcc43du7vuxbdbjbv2vzlv@eskr2npegzxd>
+	(Josh Steadmon's message of "Tue, 17 Sep 2024 15:29:25 -0700")
+References: <20240906221853.257984-1-calvinwan@google.com>
+	<20240906222116.270196-5-calvinwan@google.com>
+	<xmqqv7z8tjd7.fsf@gitster.g> <xmqqcylcpnah.fsf@gitster.g>
+	<CAFySSZBECCQafaLEv80WoK6SMovwC97-tf9gh_btPc+8OuP4NA@mail.gmail.com>
+	<xmqqttene2ya.fsf@gitster.g>
+	<honvpowfa6zze7p56pcefrzokjjawcc43du7vuxbdbjbv2vzlv@eskr2npegzxd>
+Date: Wed, 18 Sep 2024 09:34:35 -0700
+Message-ID: <xmqqo74kj4ys.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIypJDh3QEUm6MoQJhXxylSxxHhwrGuhicQ
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E485AB20-75DB-11EF-8259-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On September 18, 2024 12:16 PM, Marcos Del Sol Vives wrote:
->Under WSL1 (Windows Subsystem for Linux), when using a network share
->mounted via DrvFs, Git fails to add any files to a new or an existing =
-repository.
->
->The reason is that Git tries to open a temporary file as with RW =
-permissions but
->mode 0444, which causes WSL1 (or Samba, unsure who's here to blame) to =
-create
->first an file empty with the read-only DOS attribute set that prevents =
-any writes,
->and then actually trying to opening it in write mode, which of course =
-fails.
->
->Seems to be a pretty common issue that nobody has yet reported =
-officially, judging
->by the amount of posts on Stackoverflow, impacting not only WSL but =
-also CIFS
->under Linux (hence why sending to this mailing list and not the =
-Windows-specific
->one):
->
-> - =
-https://superuser.com/questions/681196/debugging-git-repo-permissions-on-=
+Josh Steadmon <steadmon@google.com> writes:
 
->samba-share
-> - =
-https://superuser.com/questions/1450094/git-on-wsl-commands-fail-despite-=
-
->permissions-seeming-fine
-> - =
-https://superuser.com/questions/1491499/use-git-on-a-shared-drive-within-=
-
->wsl
+> We want to namespace types as well as functions, as Phillip pointed out
+> in 47b18fa4-f01b-4f42-8d04-9e145515ccc1@gmail.com.
 >
->As a workaround, opening the file with permissions 0600 and then using =
-a fchmod
->with the final desired mode works, which is a very small change that =
-should cause
->no issues under neither real Linux nor WSL:
->
->--- git-2.39.5.orig/wrapper.c
->+++ git-2.39.5/wrapper.c
->@@ -484,9 +484,11 @@ int git_mkstemps_mode(char *pattern, int
-> 			v /=3D num_letters;
-> 		}
->
->-		fd =3D open(pattern, O_CREAT | O_EXCL | O_RDWR, mode);
->-		if (fd >=3D 0)
->+		fd =3D open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
->+		if (fd >=3D 0) {
->+			fchmod(fd, mode);
-> 			return fd;
->+		}
+> Is there a reason why we need the shim struct from your
+> xmqqcylcpnah.fsf@gitster.g and can't just cast directly like so:
+> ...
+>  int libgit_configset_get_string(struct libgit_config_set *cs, const char *key, char **dest)
+>  {
+> -       return git_configset_get_string(cs, key, dest);
+> +       return git_configset_get_string((struct config_set *) cs, key, dest);
+>  }
 
-I am not certain this is either necessary or important to platforms =
-other than Windows.
-The /tmp directory is often, and properly set with the sticky bit +t. =
-This ensures that only
-The creating user has access to the temp file regardless of create =
-ownership or security.
-I would prefer that this be put into a compat layer rather than made =
-general change.
+Not at all.  I just didn't see your intentions in the patch if all
+you wanted to do was merely to flip names, or wanted to leave the
+possibility to allow the wrapped ones to optionally have different
+shape (e.g. for bookkeeping purposes for either the host environment
+or the shim layer).  If it is merely "we do not want to expose these
+names but we want bit-for-bit identical data", then you do not need
+extra logic at all---the casts would be suffficient[*].
 
-> 		/*
-> 		 * Fatal error (EPERM, ENOSPC etc).
-> 		 * It doesn't make sense to loop.
->
->The WSL team at Microsoft has been already informed as well:
->https://github.com/microsoft/WSL/issues/12051
+PS. I am not feeling well today, so please expect delayed and/or
+sparse responses.
+
+
+[Footnote]
+
+* Building objects that go to libgit.a, partially linking them to
+  resolve internal references, and then rewriting the symbol table
+  of the resulting relocatable object file to expose only the entry
+  points and data you want to show to the rust world to whatever
+  names you want, would be a less gross solution, I would imagine.
+  You only then need to write a (fake) public_symbol_export.h file
+  that will never has to be seen on the C side, but to be seen as
+  the header to describe that C library to the rust side (and
+  obviously you do not need public_symbol_export.c file only to keep
+  these casts).
+
+
+
 
