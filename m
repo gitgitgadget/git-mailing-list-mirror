@@ -1,47 +1,47 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4808F1CBE85
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 23:28:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911241CBE98
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 23:28:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726702113; cv=none; b=M/jAeL6W8denayHq/NGcdv2eEVkoG0Xw9+NMtYmzLCI+/OhNPOoVnhT8pC10n4i8QzD7RD/3fmm9BUo14OVYit8a2YBh/w1F6p7mMykyb/ye2QxoaHqQnLpPqfJadVDFAtqK0QXppeNXlC6JjzF8jH/d+LOVLXpGIKoP9xroels=
+	t=1726702115; cv=none; b=Mxe49VZElWCwIXZs41yiY2MhEYN14yBKdelwNmk92RxQH3jV1GydQEJHo5CLbqiZnV3Kgd/OaaGLDQQIJ8mC0dHseOINdVAM5jdGbjGBdVAyO1Bxib4B72g7IBlMccm9KFkgrseo8gGoLSjNyYaukENo+tdLbW/ldxmDCzuJ0fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726702113; c=relaxed/simple;
-	bh=CWpFLgGEwHrbd8pmUYSC/H62S63WCPyizP8eDf3aTe8=;
+	s=arc-20240116; t=1726702115; c=relaxed/simple;
+	bh=IuiQrjuk49fmsLjm6s6HxYX6aIbauH9jdYLW2RCl7sQ=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a2KzDgf2wi5hx+Lt6z0AfYl+/o/G14zMI+y9ntHAW/roSIgPKJczIwIwGKXC/g+Yj4nzH3wcKfG5gi0yAo7N9ziETcCO8bzKVsVfMsoh9bXLMr9SVMMs+DNzp2hjjKxr2hOw22V4UPyT1DttQvvPjARszhsMqhAOstl02s/l5l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nvMBtj9P; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version; b=djlyNpsbxXlE8L/NMlgAW1z3G6uXgFyGZJfeRCVRSMxPg9YblKuePdB+EAwbsRyBNBGoKkL9elX0hI1oaBCKTlMx5Y9cq6Lc8XKzl4DeJGHmuA0WvFUOvg8lTu6KkxbXtRQbpb5UfKR8B40uFpRfznctuXnREAdDYslbdcWPplY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=L37aAjkl; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nvMBtj9P"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2170B3549E;
-	Wed, 18 Sep 2024 19:28:31 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="L37aAjkl"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 631901B717;
+	Wed, 18 Sep 2024 19:28:32 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
 	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=CWpFLgGEwHrbd8pmUYSC/H62S
-	63WCPyizP8eDf3aTe8=; b=nvMBtj9PtX7I/N8mQeh6Kc0LeCIC71oSLEyw9dewU
-	8BUTbg0HLUREDfUKjUTADBrBapUPgxgQuSD+ryxgO7r9Av/p3IASC6L36xkTseSU
-	3PLD1Em4DuXaC4yxHHe7YCNuD/xtDzcxHqtWTX4zrhJxSCRQ9zcnFQ2M9toxYWjy
-	0g=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 177193549D;
-	Wed, 18 Sep 2024 19:28:31 -0400 (EDT)
+	:content-transfer-encoding; s=sasl; bh=IuiQrjuk49fmsLjm6s6HxYX6a
+	IbauH9jdYLW2RCl7sQ=; b=L37aAjkl+YNadclEnImka13CmSla+N2r3LU1BkGWh
+	mSXKXp/jyvUmZlMcYy9guYDImjSgvuCzU5CYZh0N1W6kGZPtPdJ8eaPwxPIjrtor
+	Cb6aZzigTgdRCVgJJfSXQNxFFN1yHSv+OZmev12JeJfkqzf2TYyLw72aZvqcXupJ
+	oY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5BC781B716;
+	Wed, 18 Sep 2024 19:28:32 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 464813549C;
-	Wed, 18 Sep 2024 19:28:30 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C08211B715;
+	Wed, 18 Sep 2024 19:28:31 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 2/4] refs: mostly remove core.preferSymlinkRefs
-Date: Wed, 18 Sep 2024 16:28:23 -0700
-Message-ID: <20240918232825.2627999-3-gitster@pobox.com>
+Subject: [PATCH 3/4] refs: remove NO_SYMLINK_HEAD
+Date: Wed, 18 Sep 2024 16:28:24 -0700
+Message-ID: <20240918232825.2627999-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.46.1-742-g4240f61078
 In-Reply-To: <20240918232825.2627999-1-gitster@pobox.com>
 References: <20240918232825.2627999-1-gitster@pobox.com>
@@ -52,180 +52,111 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Pobox-Relay-ID:
- B6ADEDF4-7615-11EF-8BB8-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ B792D2E8-7615-11EF-AA75-9B0F950A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-This step and the next step are for Git 3.0.
+This step is for Git 3.0.
 
-Now we are preparing for a big Git 3.0 transition after warning
-against use of this configuration variable to create a new symlink
-that represents a symbolic ref for N months, it is time to actually
-remove the support of the configuration variable.
-
-In this patch, we mostly ignore core.preferSymlinkRefs and always
-create a textual symref when we are asked to create a symref, but
-when core.preferSymlinkRefs would have caused us to use a symbolic
-link in an older version of Git, we will issue a warning.  We also
-have in our build infrastructure to selectively set the CPP macro
-NO_SYMLINK_HEAD, but an accompanying patch will remove them.
-
-The final warning is meant to help users who set the configuration
-variable and expected it to create a symlink, but instead got a
-textual symref.  They may not even recognise the configuration after
-they set it long time ago and forgot about it by now, so we keep the
-"git config --help" entry for the variable to help them recall what
-it was about.
-
-After a few releases, we will get rid of this warning and the
-codebase will look as if such a configuration variable never
-existed, but we are not quite there yet.
+Remove the build-time setting NO_SYMLINK_HEAD that is used to
+override the end-user supplied core.preferSymlinkRefs and force
+use of textual symrefs, as core.preferSymlinkRefs is now gone
+and we use textual symrefs only.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config/core.txt |  4 ++--
- refs/files-backend.c          | 29 +++---------------------
- t/t0600-reffiles-backend.sh   | 42 +++++++++++++++++++++++------------
- 3 files changed, 33 insertions(+), 42 deletions(-)
+ Makefile                            | 6 ------
+ config.mak.uname                    | 3 ---
+ configure.ac                        | 3 ---
+ contrib/buildsystems/CMakeLists.txt | 2 +-
+ 4 files changed, 1 insertion(+), 13 deletions(-)
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.tx=
-t
-index f0245f5050..a6f67cab27 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -285,10 +285,10 @@ CIFS/Microsoft Windows.
- +
- False by default.
+diff --git a/Makefile b/Makefile
+index 275a5ee3c9..029a468702 100644
+--- a/Makefile
++++ b/Makefile
+@@ -81,9 +81,6 @@ include shared.mak
+ #
+ # Define NO_SYS_SELECT_H if you don't have sys/select.h.
+ #
+-# Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic li=
+nk.
+-# Enable it on Windows.  By default, symrefs are still used.
+-#
+ # Define NO_SVN_TESTS if you want to skip time-consuming SVN interoperab=
+ility
+ # tests.  These tests take up a significant amount of the total test tim=
+e
+ # but are not needed unless you plan to talk to SVN repos.
+@@ -1767,9 +1764,6 @@ ifdef OPEN_RETURNS_EINTR
+ 	COMPAT_CFLAGS +=3D -DOPEN_RETURNS_EINTR
+ 	COMPAT_OBJS +=3D compat/open.o
+ endif
+-ifdef NO_SYMLINK_HEAD
+-	BASIC_CFLAGS +=3D -DNO_SYMLINK_HEAD
+-endif
+ ifdef NO_GETTEXT
+ 	BASIC_CFLAGS +=3D -DNO_GETTEXT
+ 	USE_GETTEXT_SCHEME ?=3D fallthrough
+diff --git a/config.mak.uname b/config.mak.uname
+index d5112168a4..a38b152312 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -238,7 +238,6 @@ ifeq ($(uname_O),Cygwin)
+ 		NO_D_TYPE_IN_DIRENT =3D YesPlease
+ 		NO_STRCASESTR =3D YesPlease
+ 		NO_MEMMEM =3D YesPlease
+-		NO_SYMLINK_HEAD =3D YesPlease
+ 		NO_IPV6 =3D YesPlease
+ 		OLD_ICONV =3D UnfortunatelyYes
+ 		# There are conflicting reports about this.
+@@ -446,7 +445,6 @@ ifeq ($(uname_S),Windows)
+ 	NEEDS_CRYPTO_WITH_SSL =3D YesPlease
+ 	NO_LIBGEN_H =3D YesPlease
+ 	NO_POLL =3D YesPlease
+-	NO_SYMLINK_HEAD =3D YesPlease
+ 	NO_IPV6 =3D YesPlease
+ 	NO_SETENV =3D YesPlease
+ 	NO_STRCASESTR =3D YesPlease
+@@ -661,7 +659,6 @@ ifeq ($(uname_S),MINGW)
+ 	NEEDS_CRYPTO_WITH_SSL =3D YesPlease
+ 	NO_LIBGEN_H =3D YesPlease
+ 	NO_POLL =3D YesPlease
+-	NO_SYMLINK_HEAD =3D YesPlease
+ 	NO_SETENV =3D YesPlease
+ 	NO_STRCASESTR =3D YesPlease
+ 	NO_STRLCPY =3D YesPlease
+diff --git a/configure.ac b/configure.ac
+index d1a96da14e..307349f323 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1195,9 +1195,6 @@ AC_COMPILE_IFELSE([BSD_SYSCTL_SRC],
+ GIT_CONF_SUBST([HAVE_BSD_SYSCTL])
 =20
--core.preferSymlinkRefs (deprecated)::
-+core.preferSymlinkRefs (removed)::
- 	Instead of the default "symref" format for HEAD and other
- 	symbolic reference files, use symbolic links.  The support
--	for this variable will be dropped in Git 3.0.
-+	for this variable was dropped in Git 3.0.
-=20
- core.alternateRefsCommand::
- 	When advertising tips of available history from an alternate, use the s=
-hell to
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index c40a248b9f..1296272252 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2011,26 +2011,6 @@ static int commit_ref_update(struct files_ref_stor=
-e *refs,
- 	return 0;
- }
-=20
--#ifdef NO_SYMLINK_HEAD
--#define create_ref_symlink(a, b) (-1)
--#else
--static int create_ref_symlink(struct ref_lock *lock, const char *target)
--{
--	int ret =3D -1;
--
--	char *ref_path =3D get_locked_file_path(&lock->lk);
--	unlink(ref_path);
--	ret =3D symlink(target, ref_path);
--	free(ref_path);
--
--	if (ret)
--		fprintf(stderr, "no symlink - falling back to symbolic ref\n");
--	else
--		warning("core.preferSymlinkRefs will be removed in Git 3.0");
--	return ret;
--}
--#endif
--
- static int create_symref_lock(struct ref_lock *lock, const char *target,
- 			      struct strbuf *err)
- {
-@@ -3003,13 +2983,10 @@ static int files_transaction_finish(struct ref_st=
-ore *ref_store,
- 			}
- 		}
-=20
--		/*
--		 * We try creating a symlink, if that succeeds we continue to the
--		 * next update. If not, we try and create a regular symref.
--		 */
-+		/* Warn against core.preferSymlinkRefs set to true */
- 		if (update->new_target && prefer_symlink_refs)
--			if (!create_ref_symlink(lock, update->new_target))
--				continue;
-+			/* we used to, but no longer, create a symlink here */
-+			warning("core.preferSymlinkRefs was removed in Git 3.0");
-=20
- 		if (update->flags & REF_NEEDS_COMMIT) {
- 			clear_loose_ref_cache(refs);
-diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
-index d369330562..4e517cdc13 100755
---- a/t/t0600-reffiles-backend.sh
-+++ b/t/t0600-reffiles-backend.sh
-@@ -468,26 +468,40 @@ test_expect_success POSIXPERM 'git reflog expire ho=
-nors core.sharedRepository' '
- 	esac
- '
-=20
--test_expect_success SYMLINKS 'symref transaction supports symlinks' '
-+test_expect_success SYMLINKS 'symlinks used as symrefs are still support=
-ed' '
- 	test_when_finished "git symbolic-ref -d TEST_SYMREF_HEAD || :" &&
- 	git update-ref refs/heads/new HEAD &&
--	test_config core.prefersymlinkrefs true &&
--	cat >stdin <<-EOF &&
--	start
--	symref-create TEST_SYMREF_HEAD refs/heads/new
--	prepare
--	commit
--	EOF
--	git update-ref --no-deref --stdin <stdin 2>stderr &&
-+	# manually do this, as core.prefersymlinkrefs no longer
-+	# affects how a symref is created (as a textual symref).
-+	ln -f -s refs/heads/new .git/TEST_SYMREF_HEAD &&
- 	test_path_is_symlink .git/TEST_SYMREF_HEAD &&
--	test "$(test_readlink .git/TEST_SYMREF_HEAD)" =3D refs/heads/new &&
--	test_grep "core\.preferSymlinkRefs will be removed" stderr
-+	echo refs/heads/new >expect &&
-+	git symbolic-ref TEST_SYMREF_HEAD >actual &&
-+	test_cmp actual expect
-+'
-+
-+test_expect_success 'core.prefersymlinkrefs gets a warning' '
-+	test_when_finished "git symbolic-ref -d TEST_SYMREF_HEAD || :" &&
-+	git update-ref refs/heads/new HEAD &&
-+
-+	test_config core.prefersymlinkrefs true &&
-+	git symbolic-ref TEST_SYMREF_HEAD refs/heads/new 2>stderr &&
-+	test_grep "core\.preferSymlinkRefs was removed" stderr &&
-+
-+	git symbolic-ref -d TEST_SYMREF_HEAD &&
-+	git config core.prefersymlinkrefs false &&
-+	git symbolic-ref TEST_SYMREF_HEAD refs/heads/new 2>stderr &&
-+	test_grep ! "core\.preferSymlinkRefs was removed" stderr &&
-+
-+	git symbolic-ref -d TEST_SYMREF_HEAD &&
-+	git config --unset core.prefersymlinkrefs &&
-+	git symbolic-ref TEST_SYMREF_HEAD refs/heads/new 2>stderr &&
-+	test_grep ! "core\.preferSymlinkRefs was removed" stderr
- '
-=20
--test_expect_success 'symref transaction supports false symlink config' '
-+test_expect_success 'symref transaction' '
- 	test_when_finished "git symbolic-ref -d TEST_SYMREF_HEAD || :" &&
- 	git update-ref refs/heads/new HEAD &&
--	test_config core.prefersymlinkrefs false &&
- 	cat >stdin <<-EOF &&
- 	start
- 	symref-create TEST_SYMREF_HEAD refs/heads/new
-@@ -499,7 +513,7 @@ test_expect_success 'symref transaction supports fals=
-e symlink config' '
- 	git symbolic-ref TEST_SYMREF_HEAD >actual &&
- 	echo refs/heads/new >expect &&
- 	test_cmp expect actual &&
--	test_grep ! "core\.preferSymlinkRefs will be removed" stderr
-+	test_grep ! "core\.preferSymlinkRefs was removed" stderr
- '
-=20
- test_done
+ ## Other checks.
+-# Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic li=
+nk.
+-# Enable it on Windows.  By default, symrefs are still used.
+-#
+ # Define NO_PTHREADS if we do not have pthreads.
+ #
+ # Define PTHREAD_LIBS to the linker flag used for Pthread support.
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/C=
+MakeLists.txt
+index 832f46b316..d6bce22d34 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -267,7 +267,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 	endif()
+ 	include_directories(${CMAKE_SOURCE_DIR}/compat/win32)
+ 	add_compile_definitions(HAVE_ALLOCA_H NO_POSIX_GOODIES NATIVE_CRLF NO_U=
+NIX_SOCKETS WIN32
+-				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=3D".exe"  NO_SYMLINK_HEAD U=
+NRELIABLE_FSTAT
++				_CONSOLE DETECT_MSYS_TTY STRIP_EXTENSION=3D".exe" UNRELIABLE_FSTAT
+ 				NOGDI OBJECT_CREATION_MODE=3D1 __USE_MINGW_ANSI_STDIO=3D0
+ 				USE_NED_ALLOCATOR OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMA=
+P
+ 				HAVE_WPGMPTR ENSURE_MSYSTEM_IS_SET HAVE_RTLGENRANDOM)
 --=20
 2.46.1-742-g4240f61078
 
