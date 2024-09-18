@@ -1,89 +1,80 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548BB18A6D3
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 13:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC13189F57
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 13:13:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726664891; cv=none; b=N4qtRXE29TPsF8X6HDzUkUwdaO6yRZttS0Y10+buY1sjTLGQ3yfhEqJTDbWqCJ8jw294zgOqhApYgmu0F/NFPppuwONieE4JVA8GEOEOIuUMT3p+E946Le+DfHM5URqZOLEJ/gkemkFVlJbV+uzd0/XyDfvqsCVfoIUFwz0ZHHA=
+	t=1726665194; cv=none; b=oqGU6LA2aoGb32sxYgwvtJPxsamGgy5wYWeC02ETZO660oaOx34IPnpXcySF2F6/sTmPAmhPIvbpjuJfW8FKk45TujZsdgjs3YfMgBFuXguMVVKZsPjV1pqSUIfil4+6UPhafy/IFJOIfO1y8J+jYqt9O8uvPaeOuR0gbKzxu2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726664891; c=relaxed/simple;
-	bh=+yIrzzrzmrEEOqKk6MbdbgWZw1rGKamAbC818WCJORk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i+U+mB6Kpuho8+f/f2hdgr65/6ZJ00U/VkHlXHCuBP4hbSm3yo5VCb5X1iuYS6WpadRaNVdYvcQTkbL2UIdydMQZx4lna3J9oK9LgCfaCTZuzNMAv393+QUjq2RgA8MFyPihqxvHdB/EocSGyxE0Cvq86emQ0hdBoX/Ygob1WpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lIJNyqdg; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726665194; c=relaxed/simple;
+	bh=Ec3b4038BFVNCewEXh2OUBKZuoyMShyYjguzvs9zZq8=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=JwNpqwh6QbFOV15ANN+1Ey3VOk3gQ9/AkDdWj1zmGqZfqA88ytA0sXaYHYn7MCxkdiaLROgceyroRGEaDGmpb4qsEgJOJgNg4TyC0WU5akUF5DhsXJuYujzyHJGD3ikLGJuAgDuoRDD3otYgd7vzHmQLUB85nagRSXVUmrQ8hoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=O3Ye12UF; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lIJNyqdg"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5c44e1cde53so1972442a12.0
-        for <git@vger.kernel.org>; Wed, 18 Sep 2024 06:08:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="O3Ye12UF"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6ddceaaa9f4so25294267b3.2
+        for <git@vger.kernel.org>; Wed, 18 Sep 2024 06:13:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726664887; x=1727269687; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+yIrzzrzmrEEOqKk6MbdbgWZw1rGKamAbC818WCJORk=;
-        b=lIJNyqdggV/Rz5Rq1yMN+nHIoTet2PI9DvIzhyzNVOpo0quWPkTeuJMn5hkVODM8iN
-         yxLuZ7RWi/zUYeSZLonu8ZBO+azQ8rKYP7n6sK40B0kcPl4srlOcCKfq4uY6XenBDFGD
-         6+cxzdJ0/VfOse4b1tI0QkGBs78lKxMPYliH6c1rxWElYe+AW/tOeF0UKhmAsrFMesO3
-         RycWR0qbJEAbZQPZnnQBFe2xCUQdyGynDSFxzdw3j+uVf7qHP6+KHHrqP+yyWfRo4UPq
-         djL1SEzcuLdBITEgj7aWi708zgbOUD80/t8D6nNOisj7HYT0CB4jCin4FfVhQ+zu2Kjj
-         YPFg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726665192; x=1727269992; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lRYWkggd/tK2Qf5UwaSwCzdpLW1/n2yOj/KxGE2Yw6Q=;
+        b=O3Ye12UFYlDOn/hyZWXpiSHnDuuq1/RnuGDcfjmEYzEIONyytlWkxevL1t0k/pD+xl
+         CXFQIR/hv6T+XqW5XotLtwRjiJ+6RyQMeFtIg+5YGqALcYTVIvFM634MZOpcZ1hnWDAl
+         LLhNgtyTOKhtvCWdYmRFNvyE8N7XEr4Y3p1F+COesFLA2GFMcJlLb9uBiOfAH5dx7gCq
+         RdCqoaR3LmY1yNTrXff9w5xdqXwkjfETtapN1OMfgs85zoPaPB8zqMohC5XLWRdxIM1e
+         egjnDZahHWg+9uFyv0+IFMdSQDCuEC6E4PXRWdK69YiE+lS9GjbpndmjWjh9U74EzA28
+         6Rrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726664887; x=1727269687;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+yIrzzrzmrEEOqKk6MbdbgWZw1rGKamAbC818WCJORk=;
-        b=meOmhB08owhSjtVl1t9G3WuxvhtK/Dic2YuA4yA2Ox+p6YcYpaSE59wI2t/3QjRl2+
-         7/7O9gGoaT/XzyXzrYp7uZMCJxFprhkKzkXuupveucyqSSIOCk5uTrxYDA32BhMWiqvG
-         FtDpWkPCUCqwuLdU3qpizfq3DFnvEVH+1wyfRjVxxycH/Hrw2XJM0aJy1AgfYS7YX8ma
-         ZRv70B+YdNsEoFw2WSU8i/bqn7aVJ8pCNM+HPRgLBINHxe6KXaX0UjmPS9TLfehBotnc
-         xml83ICs1Pxn+UpD6qVHKmliXLXKSY/Hos8XLTCrQ8zPd6X2CXE/Dl188NxryPXve2rG
-         Wkdw==
-X-Gm-Message-State: AOJu0YxLYY/1TkN2x8LZb0bYvNH+6pg/N3YfUt1SugBRrHX3xi8R7ssI
-	SP9ai8Hqc5Y6hjlqk+6rQzUgr0CVD+klWcp3vlT/Qqvu668UZ6KKKNKfFDBShhRuMUgdKU9pbE2
-	JT2YM3pcFk80KFxk9+TpoNRoFbls=
-X-Google-Smtp-Source: AGHT+IGVie/q9golsObXVWiZn5ADNy/qe3wiAfxlOEquOOhf/EgbOtR/AZ+GsRlGF8LCr8/tveqk3DKeO8PYDt2IlaI=
-X-Received: by 2002:a17:907:d859:b0:a8d:555f:eeda with SMTP id
- a640c23a62f3a-a90294a9cedmr2156851566b.8.1726664887106; Wed, 18 Sep 2024
- 06:08:07 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1726665192; x=1727269992;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lRYWkggd/tK2Qf5UwaSwCzdpLW1/n2yOj/KxGE2Yw6Q=;
+        b=d4xjBUgGPj4hcp9LB5JsItAQ5z1LslqqR6qy2xaCXThuFehUuxQQ8NDN4prmktEFoW
+         lBnn847z2n9bp6li9o8vI3c9a/nEfl1+V3v2iHlrXhGfXmdTZ0yXGZNiQO561LBVDwaS
+         Zmp/w2Cadb9QCEUxMovxGxUgeW5bmV6oY93OVi5hiXJMVw4pF13MCut+KlaL37Nwb8DW
+         U0XTzKMkNq12S+Ub2sXWA/m2y0T+UitHwPfswtS5L/5J+aFYVrVD3AnOX5qL2EtFVEIx
+         bYf4Oe6FdceuDucbRWZkMTLii7aCPA7YDfhie2jHp+x+mMqpABu8o2Uw/WDoorGMJw67
+         VHTg==
+X-Gm-Message-State: AOJu0Yx6s7zbfkzWzkd4JynBohAtOrMzACJY1/ZvOkBY6UKst6iVak3l
+	88/c5zepFbkITyJ9+F0XmXX01Lkl+ViPCAOwFlWIPf312e2OK588J8oaCMfmkkh6myp2nS/S6k8
+	OixL1SA==
+X-Google-Smtp-Source: AGHT+IHlXPgVwY+pBhUDpyqR2Z1uS5bOxBcHsOTXl8ZjEfEuNRUq91sjMWK9M+PLvy/W7WfVVJ+2ag==
+X-Received: by 2002:a05:690c:6611:b0:65f:d27d:3f6a with SMTP id 00721157ae682-6ddc6919f71mr83781487b3.7.1726665191941;
+        Wed, 18 Sep 2024 06:13:11 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6dbe2ee7c75sm17696997b3.119.2024.09.18.06.13.11
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Sep 2024 06:13:11 -0700 (PDT)
+Date: Wed, 18 Sep 2024 09:13:08 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Subject: Git / Software Freedom Conservancy status report (2024)
+Message-ID: <ZurR5HGfhktqZPa+@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ZurNce+1IZ68WT+/@nand.local>
-In-Reply-To: <ZurNce+1IZ68WT+/@nand.local>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 18 Sep 2024 15:07:54 +0200
-Message-ID: <CAP8UFD3K6BvWs0iriG3RQP_2yY7+bc59wdwdwz9S_VLOkmU7sg@mail.gmail.com>
-Subject: Re: Git / Software Freedom Conservancy status report (2024)
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On Wed, Sep 18, 2024 at 2:54=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
+I wrote up a small update on the Git project's activities at Software
+Freedom Conservancy over the past year, but vger keeps marking it as
+spam-y.
 
-> Last year we spent money ($675.96 USD) sponsoring Christian Couder to
-> attend the Google Summer of Code (GSoC) 2024 Mentor Summit. According to
-> my mails, Karthik Nayak also attended, but I haven't seen their expenses
-> reflected in Conservancy's bookkeeping, so they may have not yet
-> submitted their expenses for reimbursement.
+Instead of spending more time trying to figure that out, here's a link
+to a copy of that report as a public Gist :-).
 
-Karthik didn't attend the GSoC Mentor Summit last year, but will
-attend this year (October 4 to 6). Hariom Verma wanted to attend last
-year but unfortunately he couldn't get a visa.
+    https://gist.github.com/ttaylorr/cc41512caafefab110ad7a0b8a088750
 
-Also please note that the money spent to attend it is more than
-covered by Google, as Google gives $500 for each mentored contributor
-and also gives a generous amount for the mentors to travel to the
-Mentor Summit ($1200 for me last year). It looks like those amounts
-are not in the same accounting bucket though.
+Feel free to respond here with any questions or comments.
 
-Anyway thanks for your great work on this report!
+Thanks,
+Taylor
