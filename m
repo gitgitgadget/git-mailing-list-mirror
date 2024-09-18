@@ -1,83 +1,158 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95644210EC
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 16:49:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888F61C9850
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 17:46:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726678149; cv=none; b=KMrXklStx4GGghuvE3daTyrJUUq5ri0G2p+uabbFq+Um0zJ4oR5i3CZRdamSn5gMV7j8N4yxw6VwB8jqRcdqS69u9E880Q14SLR6numWlQY8EzsLcF3hq/yeR5I7qxn3LBsfT2ejwcbn71CjU0CzsQzr3vwDQO8y4NfwdLbL9nY=
+	t=1726681594; cv=none; b=XKzEwmr0NxP9WSTx+lwu9KX95WwhUmIPkcZbyA6dD85WR7NopFnSpY5p1EgLp8fIxoR5nRzt/M68xiZd+mzn48sXeNOUkSEVV0V9dGmcHth/APMBOIofWkgaZ1TaEVx6BoMZM/wZJcl26b+1b9tBVMqub4kIYIVDmIdojXCOSrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726678149; c=relaxed/simple;
-	bh=93MZZSrUVgJ5/1K26Pa5uhipT8g4kgScjd5mum/29VQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u7PETJyFl41oWZS3FqTd+uFZJCgrZItyVUyOYnzrH2dIKFHqZ8K8assJ9XzKA6iooh4I1lvYcFzO8WiPMnTj+wwB4bf/XBp5WTx0fktq+Njqo3ZJ8WQ8hIfPqEmjjGPnTi/n7RFCS1iFerad0+bB+wIXev0LHF9i6s+lt0qmcyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vq8TFBzB; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1726681594; c=relaxed/simple;
+	bh=7N0cF57WnLiUOsNd/G9ajoPpTMuPGW0l59KrbbcizAU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AxDQ637+yJ78vD9jHbIyQoYHgq/CAJLWnnCNzgJYLKC3ygar6bX3fWID3j7Le40elTDwAyz7M99zDMJOX/kPaMaZxK1s+EdHn8vCh7giELI5e4wYQSg28Ct6Wp4i4MAx4TlH9slOoztxBIsOsKeg7GC8EHj4QtYNKT5/5h7fdx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=li3bus+N; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vq8TFBzB"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 51C1430355;
-	Wed, 18 Sep 2024 12:49:06 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=93MZZSrUVgJ5/1K26Pa5uhipT8g4kgScjd5mum
-	/29VQ=; b=Vq8TFBzBVR2etR4k/nxwUp85a0eyL0+QddnMXbU3vo3+bePyUhpTYC
-	T3p1YxEYOHaFMlTJpOBvrPQh+V3N51s5tonmsyCBrdYIsw/CpSO8ck41pu1CVEhR
-	w8Tgxwn9eY7z/vtjCxGSV8rlWxksYVXbtCfSjZcXLX1AazHvw77Z8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 47FD530354;
-	Wed, 18 Sep 2024 12:49:06 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5CD7230353;
-	Wed, 18 Sep 2024 12:49:04 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 0/5] add ref content check for files backend
-In-Reply-To: <ZuRzCyjQFilGhj8j@ArchLinux> (shejialuo@gmail.com's message of
-	"Sat, 14 Sep 2024 01:14:51 +0800")
-References: <Ztb-mgl50cwGVO8A@ArchLinux> <ZuRzCyjQFilGhj8j@ArchLinux>
-Date: Wed, 18 Sep 2024 09:49:02 -0700
-Message-ID: <xmqqa5g4j4ap.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="li3bus+N"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-374d29ad8a7so4995478f8f.2
+        for <git@vger.kernel.org>; Wed, 18 Sep 2024 10:46:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726681589; x=1727286389; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7mcnaCdojY3brBW5RbLTGJLJ6mYRxXpzVO7DkXMUhh4=;
+        b=li3bus+NR29iXCE/e+eiFZPSmkhOUlq8EYzHLxL7bLUckD75Zy06rTKdWc7Pvd/wGr
+         S1Sx/r5qUfQm/4R6OFLIybqFwBLeqDeCrlU5X9DWbrD+nkeAEgVgzuYIrf5mpWtvnm9h
+         M9FzFYRkYAGwmUyKDgjFxQenunGx8KBToCgZw9BXQnYQLCyHXRlClw03akV5xsAiP3iB
+         /5Id+yHrKq0sIK1mhWJUSUFfX56Ijxf1A/aVoNjgdjagEC3foJ2ytaObQhJqT9aQFMn3
+         QjR3oqFzLUkwwHuj94hI+LUq+uj9xQnBBFSszasyvOqTHh1h74fetgBFeZFCAd77wf3W
+         OjsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726681589; x=1727286389;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7mcnaCdojY3brBW5RbLTGJLJ6mYRxXpzVO7DkXMUhh4=;
+        b=JNo7hdk2DexTXF/MXBXraynPpr8hI0fup3UET4BLvSUsnN8otd7hMKNJCtMDjmPvk/
+         dVNXT8JX5UbbnnOlSDPmbUuJOqCHhVBLSj9yttuFvxVzhe9iAZVgk4hzp816JOOCQaxW
+         4At+Kdu9unh1pBez1kU8vxNha1+/Ddjq94foUTMKP+VwHrOsb0NcSglfTTf+kEtgwLLG
+         Zr0drdIyE+Sqgn//Z1zsdTzASK2A9OKZzLHpiLxfxwDsWUZMPOzOWyouv2x1aSDeEvIk
+         wM1RDiz5dcqBAnSMkJbd7cE2pJnarsOWxBoy0CpcLOxYsat45XKt0/hk49BBI0j5YxWi
+         s7Hw==
+X-Forwarded-Encrypted: i=1; AJvYcCVg+4JenBvLqpd7+IQfpYrCifeAV7SI8lz1OL46cJDK6sqJ/fa4oO0kx2FZOHazM2D85aY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9SdBBuLLIzGgXLzwTfJPXF+Ecdu2eSyG7xj/3lOBI4Sm6+wZh
+	FJwiSC09sb9Rk1D/fGpFj3wQjB5Ifj59o2no/kqwRLwEZBNixGB4
+X-Google-Smtp-Source: AGHT+IEH6soC5D+4XLElnomdrfS9hQldI+PUinbZXGuy5GwVnRjLjcI/y+dCF4Hu5YIB3Zwpy3WnuQ==
+X-Received: by 2002:a05:6000:1b08:b0:36b:b297:1419 with SMTP id ffacd0b85a97d-378c2cfc3bbmr10448800f8f.20.1726681588244;
+        Wed, 18 Sep 2024 10:46:28 -0700 (PDT)
+Received: from gmail.com (67.red-88-14-46.dynamicip.rima-tde.net. [88.14.46.67])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e70459328sm22938375e9.0.2024.09.18.10.46.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Sep 2024 10:46:27 -0700 (PDT)
+Message-ID: <08b29649-eeeb-49e4-82ac-2a3473dd2ad5@gmail.com>
+Date: Wed, 18 Sep 2024 19:46:26 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E9E5A23A-75DD-11EF-98C4-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] add-patch: edit the hunk again
+To: phillip.wood@dunelm.org.uk, Git List <git@vger.kernel.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>
+References: <21ddf64f-10c2-4087-a778-0bd2e82aef42@gmail.com>
+ <cba63486-2186-4e8e-aad4-ed7f54606ec7@gmail.com>
+ <be0149e3-148b-4e25-9e44-f3f9a3303fcd@gmail.com>
+ <d20d030b-7d3e-49c6-a988-ab7fe480dd47@gmail.com>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <d20d030b-7d3e-49c6-a988-ab7fe480dd47@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-shejialuo <shejialuo@gmail.com> writes:
+On Wed, Sep 18, 2024 at 11:06:34AM +0100, phillip.wood123@gmail.com wrote:
+> Hi Rubén
+> 
+> On 16/09/2024 23:09, Rubén Justo wrote:
+> > On Mon, Sep 16, 2024 at 02:33:54PM +0100, Phillip Wood wrote:
+> > 
+> > I can imagine that we could give the flawed and annotated patch back to
+> > the user, if they want to fix it and try again.
+> 
+> Exactly
 
-> Because I add more commits, I provide the "--interdiff" here to make the
-> reviewer's life easier.
+So we agree on where we're going ...
 
-Yeah, for the changes from the previous iteration of this series,
-range-diff comparison is pretty much useless.  Interdiff is indeed
-more usable, but essentially this iteration deserves reviews with
-fresh sets of eyes.
+> 
+> > At any rate, I'm thinking about small fixes and/or avoiding to use a
+> > backup (":w! /tmp/patch" + ":r /tmp/patch") if I have doubts about
+> > making a mistake after spending some time thinking about a hunk, so as
+> > not to lose some work.
+> 
+> The problem is there is no good solution at the moment.
 
-> However, because I have not merged the latest ci fixup, so I cannot
-> verify some jobs in CIs. May need the help from Junio to verify.
+although not in the length of the stride :)
 
-A good way to do so is to fork a temporary branch at the tip of
-these 5 commits, and then either merge or cherry-pick the CI fixup.
-Such a temporary branch should be usable for CI testing, right?
+Maybe in the future we can provide better error descriptions, or even
+add annotations to the faulty patch explaining the faults.
+
+But we're not there yet, and honestly, it's not my intention to work
+on that.
+
+> Either we keep the broken
+> patch and say "this is broken, please figure out what's wrong with it and
+> fix it"
+
+Yes, we should keep the users's work if they say "yes" to:
+
+    Your edited hunk does not apply. Edit again (saying "no" discards!) [y/n]?
+
+> or throw away
+> the user's work if the edited patch does not apply.
+
+Only if the user says "no" (as we say in the message).
+
+After that "no", the user has another opportunity to decide about the
+hunk:
+
+    Your edited hunk does not apply. Edit again (saying "no" discards!) [y/n]? no
+
+    (n/m) Stage this hunk [y,n,q,a,d,e,p,?]
+
+And then, "edit" will allow them to start over and edit the original
+hunk, again.
+
+> As I explained previously fixing a broken patch is not necessarily
+> straight forward especially for new users.
+
+Very true.  But I don't think that should be a reason to stop the user
+from trying.
+
+> A few times when editing patches
+> that are going to be applied in reverse (from "git checkout HEAD -- <path>")
+> I've found it impossible to figure out why a particular edit was being
+> rejected. In that case starting again with the original patch is my only
+> hope.
+
+My experience is usually small last-minute adjustments that aren't
+worth canceling the interactive session for, and I don't want to have
+to remember to make them later.
+
+A small error in a large hunk has been frustrating several times
+because I have to go back and review the whole thing.
+
+> If you want to be able to re-edit a broken hunk perhaps we should add
+> an option for that when we ask the user if they want to try again.
+
+As we commented in a previous message, this is what we are regaining
+with this patch.  The option was introduced in ac083c47ea
+(git-add--interactive: manual hunk editing mode, 2008-07-03) and lost
+in 2b8ea7f3c7 (add -p: calculate offset delta for edited patches,
+2018-03-05).
 
 Thanks.
-
-PS.
-
-I am not feeling well today; please expect delayed and/or sparse
-responses.
-
