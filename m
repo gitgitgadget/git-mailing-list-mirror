@@ -1,53 +1,53 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5613D76
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 04:31:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C699149C70
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 04:31:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726633886; cv=none; b=IbRqfxr8/RxBHKIzMYP0o45bY1jJytg1mBxXwX4tBn05dQ/i7BlxD8QKr8EP4lAgIgdaDxJ4D3Nbm4TEaf6Pj+BtK4DciysT/4DWZ0UcyeYHs9xE+ynBtUU4iZ5sexNU69uTQdEsKKy1t3EQ+/wc3vl3xtuzy3Xx5pE3TeUzq5Y=
+	t=1726633889; cv=none; b=mlEQ4VC2vylL7VqFVrPGt4H19CdVQyczavZh2dDp4pXcUE2knofkN5VmJcwPUwo/pHIJmUDyIVLQL0nkXn1FzuDDohSNd7B5qCgm9A/vZiVAIIaSWUBP9+WLGC1ZvUIgFGTPeBY0K1iY4rney0cDDLvkMI0cxliLxaKmQiuf2b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726633886; c=relaxed/simple;
-	bh=zfR7btalq97rf0noXyET1QOLE1LlsxyZ9QekwkZSVos=;
+	s=arc-20240116; t=1726633889; c=relaxed/simple;
+	bh=vC9HTUlayZUwa0zMuh/QcgvmoQA0pHZmpr4+tefyq4c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JAIwNkocZHua1gVRhsyBxP49AOSBUmv0zD/55aBwT6O3D86xqmbIEmNI3eblXhR0xvHBjuG1U8smB98RaWryd9GXuOVVDcVaznCgVL5v6baYEahnoUcMONNQgWnjn4klgvzTplES30olU56AN5XE7P4G2Bwsv1X+iteQvSpJBX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E0yd8jUw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EZIzo4v5; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=qfv5CzPEHEPrU18K5nuIxAmdtx8V8MJ/w796iBU40uCmJOuS4e+PftxY83ThhPsKvDCji6bjl6pn0sxxPptkViOBGcnYjpIVcoU1/uY269EDBGQ1RaK36I0GJaEYH+kRXRTwo/Q6p5htOoMb+eShFNV3p0moS8oNhLlDX/ap/Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GLq0vn/N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BbyEjzPa; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E0yd8jUw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EZIzo4v5"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 68015138026B;
-	Wed, 18 Sep 2024 00:31:23 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GLq0vn/N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BbyEjzPa"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6446E11402A0;
+	Wed, 18 Sep 2024 00:31:26 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Wed, 18 Sep 2024 00:31:23 -0400
+  by phl-compute-11.internal (MEProxy); Wed, 18 Sep 2024 00:31:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1726633883; x=1726720283; bh=G9/twKsfMn
-	pAKxzOfkNIUI5Zy8yL8mH13CCdpiJts5M=; b=E0yd8jUwkJeN4VseHh3nlFN/Pd
-	z1FbA+Go9EMD6pt8kVSyrvm+OxsFLxNn9fgGH82qJjGOU8ulUCJ/LePAAHs8bEnC
-	1oGXPuRqkYrp7BJPuV/Tffu27yqlAk5giVmNE9ewJzUQXpiACQQVsdfoEP8w8pe2
-	c1xd/drMM7AgzENTo4072Et146xnONLYc8/lw+yDVFRpBeq0muxF+fp1hcB22hpb
-	sUdCzkonVsGcvWvqMVclxTSMy/4UP5nsPO45voB64g9eZfonA1d6e5Ib+zmmS2Ze
-	//BmjbT/c9jjOIGiW7//+A3DJDYA/+9XbS8UBX6dGz8ItesTtwn9/kK+UiaA==
+	:subject:to:to; s=fm1; t=1726633886; x=1726720286; bh=QXuqGRPBfz
+	nk0wOWjWRgwztppS6zMnmkqeApICY8A5w=; b=GLq0vn/NUpup6frOT+XZVSb/+7
+	qAfumkMXWDdrZ4uwAZBJpxgMIZ9zcqWgo24XIxVnD6m1Kkl0vZIXnXX5tftY7VdB
+	OUQaqpn4946H7MN9Z5S6y0AaqHI6TSIMqOwhMsM9YFnSkgoGXPoOKxIRFpczlydL
+	z262+tx7ePywiMiihccsCOJlcT95jFekGAVSydW5ZodLBznGsOGTCvcodvdzJmjT
+	v+MHCJ9C+zXztPA6LC4VhKajdYpZRn95YbI82C709YnDEr1I0+Pb+g0mPxUFaOlC
+	OMltDZD6rcWqcHWKcbLVB9EMtH08TPOj0qsF8PCHtSEwIdkiJA1YGei3wGbg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726633883; x=1726720283; bh=G9/twKsfMnpAKxzOfkNIUI5Zy8yL
-	8mH13CCdpiJts5M=; b=EZIzo4v5EhXd8qr/iUeOLBMxS5jGEU85GZgWZ6P6n90C
-	HhLY75zucrBeL8ykAwPkE7UTGCj5HIpElVLST8ay0cL3mdeVQ3zvq/Aj/PPDtm3i
-	N7sAsSpmRBAwfTSf7+ZukTDkf2FIlNf6CmMXyn3Zz2/iDPicUwmD31RjSN8tEalL
-	GSS9gsiAgvUc7iSCYzg9V5bikoiEu5XZz4wY1qATMlOo/JVV15ULmGWPNvu4zdGb
-	n18xswEaADbWTuqlaOrvV9nRnVzY3g9uLhSdAw7sfDASFPwb8CLGAunoRvaWAbJQ
-	kFwQ6xGEougvTpwelPhgKAXUm3odSfYm6CmgLwfJCA==
-X-ME-Sender: <xms:m1fqZqOhcWUsw5b-rvCyCdqoce7iUW5vcqzPxOPwmvOpkc8F1qC3AA>
-    <xme:m1fqZo9g1OyqPZ55_Lpboj3OWRxwPjcudxxx9SWdQm6hoQvI41a8_18b3FJO_3zm0
-    GL8Oi3ApqWQNoP7rQ>
-X-ME-Received: <xmr:m1fqZhTvYaLgCj8ZB6YNRUAYrcvM2OgNMcDB2oXJ1_EHTPnaDw9TBy2pLMaE12uK1KHVTTSmEesdnlj5a3CvFv4JOHoZVrC9xPD_Qf44nxnMtrl2>
+	fm1; t=1726633886; x=1726720286; bh=QXuqGRPBfznk0wOWjWRgwztppS6z
+	MnmkqeApICY8A5w=; b=BbyEjzPaSQX+30L/yv+Nzv6cwy8nIE7rfYXY1rbC44w1
+	8HcUQKLKrO43Gs2Y0GUSGX65+pPRNTwMvAEeU9BMCF3p0S9vIJLBnqdAa3AJ1nxp
+	ua6H1NBCviNx3JRs/uQfC7kaW2UqoExuP2LWdBuuLz4lggL25F7C/3Re6Ldb3uSp
+	j8Rv6fFltSZrVOFXAVn7HcxMEDADo32i8vR8MYpcLuRz8/qagN4kNP7KwHlWWH3M
+	YpMZs+rUiTnzwz6OdouFHgPwrYlvvmQv083XDIbJah+wTx+qFDaqoy+9S3C5FvBo
+	hkqKdGjT16G0Nx8M/hfDvineB/84Nb/i0iYWMh/ISA==
+X-ME-Sender: <xms:nlfqZkwggwLI0IN8xJ-6Bf_YGEPEagcj1fEYpCNBzZoYbcG5SUiMfQ>
+    <xme:nlfqZoQk39b3m3gqiEsC_0SjJpdFKI-cZgl8sxw1eCHes-MXvsSdRUlUNcdRVAIPt
+    _4e-j1BMQ7_6doWmA>
+X-ME-Received: <xmr:nlfqZmV84RC0INAOgi6wp7V5_LwWZkU5aA6HjZsZZ6Op6qU2hH4eoyhi4QS-TX_Shz3Dy4IIWs_t5X23Y1Cwo2wO77bEXW9Jc5nk_XZfHQSURQRu>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekkedgkeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,28 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekkedgkeehucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:m1fqZqsv0iOLy47z81tiRylZ8K6mliwiIyFdsTMHPy1H7DdvsPVXvw>
-    <xmx:m1fqZieyOY8dCu2uEJOVwZEXeEjuU8D-1YcJ6ZrPlmLnaXhMEvmRIg>
-    <xmx:m1fqZu2AemDxJm8VhnzOJkQD_z9wQwH87qb0_UDxIYtzMePY18Gmpg>
-    <xmx:m1fqZm9kF_e8_xdMw2_hldFKjoBQDyjjWtTUKxtSL2SutATYkNeHKg>
-    <xmx:m1fqZjo9hAGRjGVQ8mQkjM9L_k9_s5MYqha6dEi_dCBHnmFztZYm3nS->
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:nlfqZighxE3Wdb_Msd8a6leLhsSCFZGbOB59zMXcDsv4-uLYe0AijA>
+    <xmx:nlfqZmDSb8-lSeRNSBJRg5rLW8meVgmT6thqLyrtiF8ZlctoFm0-SQ>
+    <xmx:nlfqZjJvBXviV8B3r5gn5fcFVCUpPNtKo7aDnJ1kTnYi4pcFgIuHwA>
+    <xmx:nlfqZtDV7JO_vE12GB-dFx2pzV4O-M_MpS8aTbBakovcdM2_G3kd7g>
+    <xmx:nlfqZpPLvvUHuOztyyR44HAwF-lAnnsR0BD56k5s_0mclUXKgZ_uzst->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Sep 2024 00:31:22 -0400 (EDT)
+ 18 Sep 2024 00:31:25 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8df6ab05 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 18 Sep 2024 04:31:01 +0000 (UTC)
-Date: Wed, 18 Sep 2024 06:31:21 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 89d7c03f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 18 Sep 2024 04:31:05 +0000 (UTC)
+Date: Wed, 18 Sep 2024 06:31:25 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: karthik nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/3] refs/reftable: introduce "reftable.lockTimeout"
-Message-ID: <ZupXmXtFzw6GuGGT@pks.im>
+Subject: Re: [PATCH 0/3] reftable: graceful concurrent writes
+Message-ID: <ZupXncLHidkSW3j8@pks.im>
 References: <cover.1726578382.git.ps@pks.im>
- <ca3eab99f7ef86d1b7a5b4d4bdb8d2b0a55566e1.1726578382.git.ps@pks.im>
- <CAOLa=ZTja-nFmKZ8iyyp0szuaAWAnPncy0E6rM5=WWgnr=01uA@mail.gmail.com>
+ <CAOLa=ZRwLYLba4_mze5cDRZqyG+5+-F+sQmuzf4Lt1LKVo5_CQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,29 +85,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTja-nFmKZ8iyyp0szuaAWAnPncy0E6rM5=WWgnr=01uA@mail.gmail.com>
+In-Reply-To: <CAOLa=ZRwLYLba4_mze5cDRZqyG+5+-F+sQmuzf4Lt1LKVo5_CQ@mail.gmail.com>
 
-On Tue, Sep 17, 2024 at 01:46:39PM -0400, karthik nayak wrote:
+On Tue, Sep 17, 2024 at 11:26:58AM -0700, karthik nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> [snip]
+> > Hi,
+> >
+> > the reftable backend cannot properly handle concurrent writes due to two
+> > reasons:
+> >
+> >   - It will bail out immediately when it sees a locked "tables.list"
+> >     file. This is being addressed by introducing a configurable locking
+> >     timeout, similar to how we have it for both loose and packed refs.
+> >
+> >   - It will bail out when it notices that its stack is out-of-date after
+> >     having locked the "tables.list" file. This is addressed by reloading
+> >     the stack as requested after locking it, which is fine because our
+> >     transactional API would verify queued ref updates against their
+> >     expected state after the lock was acquired anyway.
+> >
+> > So with this patch series we can now spawn concurrent writers and they
+> > are expected to succeed, which is demonstrated by the test added by the
+> > last patch.
+> >
 > 
-> > +reftable.lockTimeout::
-> > +	Whenever the reftable backend appends a new table to the stack, it has
-> > +	to lock the central "tables.list" file before updating it. This config
-> > +	controls how long the process will wait to acquire the lock in case
-> > +	another process has already acquired it. Default is 1000 (i.e., retry
-> > +	for 1 second).
-> 
-> Isn't the default 100ms? As that was what was mentioned in the commit
-> message
+> I only had a comment in the first commit. The rest two look good to me.
+> I do wonder if we really need a flag? But that's just a nit.
 
-Oh, yeah. I ended up changing it. 1 second is the default timeout used
-by packed-refs, 100ms is the default timeout used by loose refs. The
-reason why I ultimately picked 100ms over 1s is that our usecase is
-closer to loose refs, because it is our "normal" code path that we hit
-whenever we write reftables.
+I didn't carefully vet all locations where we could pass that flag, so
+right now we only pass it in a single location. Also, we need to keep in
+mind that this is library code: even if we had converted all callsites
+to pass the new flag I still it's a sensibe thing to wish for to disable
+the automatic refresh and abort instead.
 
-Will fix.
+Thanks for your review!
 
 Patrick
