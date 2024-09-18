@@ -1,112 +1,109 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C79318950C
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 13:23:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7C91BE22B
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 14:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726665815; cv=none; b=hL/F05PPr1Q1R8rMEYqZ0m3EWV1rTMzkxNlQkdFWTTdO6BiRDFMfx3VYZgahCk9jYPmX3a4/AfdLB7CDlJzI78guDER2RlIAXsgq6Oe+NWIfyXXITqTi00qsbiY/jAhDTtzBbQSDNxPvnaXu0pAyH4UecvTlnhhSEKiUD3xS+7c=
+	t=1726670747; cv=none; b=bgddsC6W98k6RJXrbBvqPrvSMzFN+PSiCXgyeCy2G8n/i5liDaUBGVexy3wSWpBq/0TSY1i6v6JXXKCltH4nwavaUjB78k5UWeHkqNEvSgxNIE8KYBX5BWXusKQy/Ychd8F3gds/BNcpKMCoQ1ykOXWY4+1cD/Qe3ZwfoytUNT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726665815; c=relaxed/simple;
-	bh=ig3TK6NcdTgTJP+RNlbyb7fb+Tv9EIXJRlppSJHab20=;
+	s=arc-20240116; t=1726670747; c=relaxed/simple;
+	bh=q4YTpYxmE0AFGLxN7b4y18Nsb3vj7hjzpsKq9FtSxtc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XaU4wLmmO8G0p6Rb9eGWYAxv+YPvrMJcEgjsaxnH8F9an7vnQ3anM2/EPs4dg5xkPUIJs42Zm2nZdbG9yoixIyjafu78KOY7umSdKWVWDZDMoeSSK9GXOLVVfqyGi++Uch4m02jJ13IGmb/LEw4SyiuuvSsoKw5K239X18LgIRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A9OZAS2m; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=ErIGIz5ugYuvNrTbUKgK7XZWPJusFhYFl8bSy3I3BBvhdeaFfzDDJaSPMb4BaJViLVOwiKQEFaJYQJdkYs/SbBEYj58UpjKJSgO1MyrSRU8/JH8cVLt50hGXUAajCtLiRYHBFrFDlrWuGbkIq/YhohKbdkgCXQHDJTtAUNwVy3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=precisioninno.com; spf=pass smtp.mailfrom=precisioninno.com; dkim=pass (2048-bit key) header.d=precisioninno.com header.i=@precisioninno.com header.b=CxOU7nBA; arc=none smtp.client-ip=209.85.160.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=precisioninno.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=precisioninno.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A9OZAS2m"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2f754d4a6e4so74301381fa.3
-        for <git@vger.kernel.org>; Wed, 18 Sep 2024 06:23:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=precisioninno.com header.i=@precisioninno.com header.b="CxOU7nBA"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-277e965305dso2980897fac.2
+        for <git@vger.kernel.org>; Wed, 18 Sep 2024 07:45:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726665811; x=1727270611; darn=vger.kernel.org;
+        d=precisioninno.com; s=google; t=1726670744; x=1727275544; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ig3TK6NcdTgTJP+RNlbyb7fb+Tv9EIXJRlppSJHab20=;
-        b=A9OZAS2mUqr2Iwx/38RWKXmSo+SZ+WDDz9m6wbfHfgPLl9puCjKY/Rjjz++iYiWwWt
-         HTA4iWH2s6xKkdbYMY18cIKybLVLmqqn3ZWqf0kx9bkliTqfSCmSn147GvmjTsoEKej9
-         QfCI693f4vXVnlCPtJ9drEvKq7rrrQ1Ny9Q75XKt9/r4HQKZ9zvl2NTvZGVJXZ1OUk6X
-         zGG7vne2H7mGeUnwUmPGWewmMpHZDkasXz1+lql7lzDf+rWmIVhSpV8SK1nNVhg6O7Vs
-         0TKhLyC8+jgQU0HznyLtBGAXq8Gxd7ZsOewnpZn96qyyj9wi6ZbYaVvwrocnR0ozWC54
-         d74w==
+        bh=7U8htzVkCMHnE5KroEW5bWPN5l5HWCoFzGQ0cadFSCg=;
+        b=CxOU7nBAjBLmj4CY2DsGtZavLiCYshNKXqpqvDk6YY4dkCYo2pCRKAdO+3ZpZoKvM/
+         FwuMdngq8YV0xLsM9tVeKXZXeUodYZBLXpr0UOdAWIoDN1UVMYyEe5er4ir/QSGtFJtf
+         WOIfuH/TM9Nm3pE1z7yd9f8B7IDMxwqsd8tBuQd2LnW3X73zhow3QpJTmBuXIo8J2ynR
+         96I6lcUjT7Sdm9XFgRwZuQf8WjAA5Mgi9VYFliB7w9T4rNzDIGoSgmasRM2wRAIndTta
+         2taymtAbUQhaWFJuf5JqXXWmOSMv8dw4EmY/rvnvzMkIRsf0O/jAWMGhLvEOAfJVmzGA
+         AzEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726665811; x=1727270611;
+        d=1e100.net; s=20230601; t=1726670744; x=1727275544;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ig3TK6NcdTgTJP+RNlbyb7fb+Tv9EIXJRlppSJHab20=;
-        b=KaI/B+qwrsm2NK2HZDMuQrhiBVWdfnsImwhlH7+dvMf1g+t4mVoMd70Vn0ue4e6+sF
-         e9GhQRZ6VgH1xPFI3AKEL1nWod0337m0Le6HjhKza+re01Qp+mYlvSxdMT0GGt0AI+tN
-         /wW1mqXgtEnaHGfvZFc3UYieztuOpxI1wua84VHtneKt0pDEH0Dn09lfCV1alYz+fRRU
-         uaZguD3O07AjIk5DCBOvtM+DIIWtsa3x3LfbAJBqwdwiBgIDlD9RekAga/3MvAyHAx/M
-         6XPyVwFeLCLO7Eyj6mWkLiG7GxYR2eJhzErby0dqnijQ2bb1Ai26ckLrWdIyZIUMWVcG
-         xqZg==
-X-Gm-Message-State: AOJu0Yy2CZkJR1K0dUBQqplwdJsq+QOuKy4OFHTX3Y3j1EO+qcqk6O4W
-	0KJt3xm5ru0jEOPPLYE9KprOk8FqzShzgM1FTXjik9FApvWgaB8hBcb6Pl7VbyBnT1bo5cHzQZZ
-	mD+6XbSEDFijZ7NKt/MimoVpk2mkCZdZ2
-X-Google-Smtp-Source: AGHT+IEnYXDitXm1PSeJbCszh7sl/CzfI4MRFV7voxgfwIACpSjqFuqSM9sLwjsn2xd3cxm9MLECyNz/1c/qmKFRrws=
-X-Received: by 2002:ac2:4bd0:0:b0:530:e323:b1cd with SMTP id
- 2adb3069b0e04-53678fe64f6mr13312785e87.40.1726665810709; Wed, 18 Sep 2024
- 06:23:30 -0700 (PDT)
+        bh=7U8htzVkCMHnE5KroEW5bWPN5l5HWCoFzGQ0cadFSCg=;
+        b=mcTWac4V8FAb5VQNgJNRta4iK7rkj4FnhyP0YSpO6jInNRoCfzCzsj0YTEPXzKzHDB
+         j3K1nHVrjv3NWvP0Z5gld1mOa/mGFYGcegH73TAvHiAeETjj82wvoQm3IDnz8iOz43rE
+         YbeQf/DkLf/vl/j2Xd0DV8Uug7oa72EdUQNVpzw0bojRbIKD4ZrKyWjshiZ4OwbQE7R3
+         U6MEg652U+2NTByV+jscjMRafPc9EFNjfO8NXyc4W0qs95j0lBQVf4jnHV2udO8FwyN/
+         vxafWqWVq2rHMPccvax5HBmak4mkYkdP/0fC/gTOGwb3A+emb4RvyLUI2BBCsnVUkv62
+         wrNA==
+X-Gm-Message-State: AOJu0YwO2VhWD4ran0xuR9s+KWvQkr4+RFxgxFLeRToBIrFadVNdB9hn
+	EtGtzABbbfUFxxC2Z9gCFShD8gnhj+GQ7Q/i5SHOkczkTp+YDTN0kHlpp6tI4mVPRWVBfJNfiMw
+	C3pIh/1bppWAK5nWjkFWpJJP/4d8cr+3nnUShTMJ8PU1lK7o+9JY=
+X-Google-Smtp-Source: AGHT+IEAy8IUosPjW0h4JIqiF7Zea/tPGIX85249nSX2Dsoak9TSjVyNUG3NsjpPWS6WnaQddb+bYXE0JsenZUpr9JU=
+X-Received: by 2002:a05:6870:420c:b0:270:6dfc:b145 with SMTP id
+ 586e51a60fabf-27c3f26c387mr14633082fac.16.1726670744236; Wed, 18 Sep 2024
+ 07:45:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ZurNce+1IZ68WT+/@nand.local> <CAP8UFD3K6BvWs0iriG3RQP_2yY7+bc59wdwdwz9S_VLOkmU7sg@mail.gmail.com>
- <ZurSnxWRByacTUCW@nand.local>
-In-Reply-To: <ZurSnxWRByacTUCW@nand.local>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 18 Sep 2024 15:23:18 +0200
-Message-ID: <CAP8UFD1Aqn33TsRNj94T+iwDsMHPkgH9RyvYhzCR3_YeXkzdHA@mail.gmail.com>
-Subject: Re: Git / Software Freedom Conservancy status report (2024)
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
+References: <CAKDm0rNaHbzoiPg=DeuCoxzooNAsxw2BJfc0wg7fC_-=o9uJ7w@mail.gmail.com>
+ <7b4ce2fc-3763-4881-8459-e0c1f2cbc69d@gmail.com>
+In-Reply-To: <7b4ce2fc-3763-4881-8459-e0c1f2cbc69d@gmail.com>
+From: Matt Liberty <mliberty@precisioninno.com>
+Date: Wed, 18 Sep 2024 07:45:33 -0700
+Message-ID: <CAKDm0rNjAYMu8=h8ApvEHw71fgH2VW0iCjTMqvysQ7YBUnJZyw@mail.gmail.com>
+Subject: Re: fatal from submodule status --recursive when used with grep -q
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 18, 2024 at 3:16=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
+I'm not trying to capture the exit status of git but of grep.  Compare
+it to "yes|grep -q y" which doesn't generate any error even though yes
+generates endless output.
+
+Thanks
+
+Matt
+
+
+On Wed, Sep 18, 2024 at 3:05=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
-> On Wed, Sep 18, 2024 at 03:07:54PM +0200, Christian Couder wrote:
-> > On Wed, Sep 18, 2024 at 2:54=E2=80=AFPM Taylor Blau <me@ttaylorr.com> w=
-rote:
+> Hi Matt
+>
+> On 16/09/2024 16:08, Matt Liberty wrote:
 > >
-> > > Last year we spent money ($675.96 USD) sponsoring Christian Couder to
-> > > attend the Google Summer of Code (GSoC) 2024 Mentor Summit. According=
- to
-> > > my mails, Karthik Nayak also attended, but I haven't seen their expen=
-ses
-> > > reflected in Conservancy's bookkeeping, so they may have not yet
-> > > submitted their expenses for reimbursement.
+> > If I try to grep the output I get a fatal error:
 > >
-> > Karthik didn't attend the GSoC Mentor Summit last year, but will
-> > attend this year (October 4 to 6). Hariom Verma wanted to attend last
-> > year but unfortunately he couldn't get a visa.
+> > % git submodule status --recursive | grep -q "^+"
+> > fatal: failed to recurse into submodule 'tools/OpenROAD'
+> >
+> > I didn't expect any output but did want the return status (0).  I'm
+> > guessing git is unhappy that grep -q exits on the first occurrence of
+> > the pattern.  I don't feel fatal is appropriate here.
 >
-> Got it!
+> I assume git is dying with SIGPIPE. As the only purpose of "git
+> submodule status" is to write the status information to stdout that
+> sounds reasonable. If you want to collect the exit status you need to
+> consume the whole output so that the command runs to completion.
 >
-> > Also please note that the money spent to attend it is more than
-> > covered by Google, as Google gives $500 for each mentored contributor
-> > and also gives a generous amount for the mentors to travel to the
-> > Mentor Summit ($1200 for me last year). It looks like those amounts
-> > are not in the same accounting bucket though.
+> Best Wishes
 >
-> I imagine that they have either not sent that money to us yet or
-> Conservnacy hasn't recorded it quite yet.
-
-You mean that it hasn't been recorded for this year or last year or both?
-
-On Nov 18 last year, the Conservancy told us the following:
-
-"Note that at present we have received a lump-sum ACH from Google for
-all our GSoC projects, and are still awaiting a per-project breakdown
-of the funds from them. Assuming all is in order, the travel funds
-from Google should be $1200 per traveler."
-
-So I don't know when or if Google eventually sent them a per-project
-breakdown of the funds. Maybe we could ask the Conservancy if they
-eventually did send it?
+> Phillip
+>
+> > I can work around this by writing to a tmpfile but would like to see
+> > this addressed.
+> >
+> > Thanks!
+> > Matt
+> >
