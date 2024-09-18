@@ -1,197 +1,146 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20D71CBEA6
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 23:28:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59E219DF51
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 23:30:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726702116; cv=none; b=XOT1EaiJ/yZRAyn9mBLUG2RCsVNuKjcyoZcxl3BfZ1p49LCFkTvEzNX0woxItkqoOxL0SfX8tWM9fkDsVj302d7AWnQSDFtOBSRH56L9efwwqWyPOzXDt2LLs/aGbA9nOdUWrEr4/ov9wma6O+aGSw5qL+BAKd18ZvEEynYgUio=
+	t=1726702246; cv=none; b=HusVUl535uXixRlr5lNJzPsujGmT7HnpFI5fUN/NjKHk+0owOXxAj4+bvDClsxXZNaKR5OcF96q2BBKA3dSASZwc96ul5ifvWgdrvrJJaqabKB94xnXy78tkwdKUNBCn0GIgh3xP8kJvidnbNIKFZjnlpHROmP13MqtqNzjcM34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726702116; c=relaxed/simple;
-	bh=IcWJqzdNCuAVV1ubr0fLfLkONXw37nYvbq7OhPIXWOw=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQL7SR/iqky94651ZFUHQdgJwcfjaPX6pYF1Hzyh7BFHOhWzSkUu/z/puWUjjEiMhJ1dC2KYRAMDBClRb6z02bgIPiX8NpswlVhKF+d31J65OiM7AKbW8vjG+sOcUmIP+Iue7e0BSgxHWUGwWi5cV62W4PAgJwL0LTMAxLrylLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=doGTWpVF; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1726702246; c=relaxed/simple;
+	bh=DP5JccrrKUEWaNuwa819z7YfRm1ZduyfVxGrFI8hZWY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ErW/o7e8gRY5/8B0Enq92AMEXMcaxTwSvAefs7GVvUjrxT2vjna2aC5OA/7wVMYX8F9GRdfQ/opJHKFnbgUyyLDfKtaNQQRuBZr3/SqhEJQ/8KuFRAKDRwB5ld1S4OoNCelxBzAsWussSqJaGx5IEFZslFOlXl5ptijMNYmndB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nTlyRAze; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="doGTWpVF"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D4578354A2;
-	Wed, 18 Sep 2024 19:28:33 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=IcWJqzdNCuAVV1ubr0fLfLkON
-	Xw37nYvbq7OhPIXWOw=; b=doGTWpVFZWZZiPp3Eofed0O3wY/pS5c4s4FWpgugl
-	JcztZrWrLI/k36VVyadQfY6TnKPZClgz4MP/QFIU7GPEgJHug6HQhpibH+89fHra
-	SMPMOD3z3K56EOhgnliO3JiJa23qfh+p41J7gVI4toMk6jWKTDFrCdcvdpHptJ38
-	f8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CC892354A1;
-	Wed, 18 Sep 2024 19:28:33 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 452473549F;
-	Wed, 18 Sep 2024 19:28:33 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH 4/4] refs: remove the last remnants of core.preferSymlinkRefs
-Date: Wed, 18 Sep 2024 16:28:25 -0700
-Message-ID: <20240918232825.2627999-5-gitster@pobox.com>
-X-Mailer: git-send-email 2.46.1-742-g4240f61078
-In-Reply-To: <20240918232825.2627999-1-gitster@pobox.com>
-References: <20240918232825.2627999-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nTlyRAze"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2068a7c9286so3139585ad.1
+        for <git@vger.kernel.org>; Wed, 18 Sep 2024 16:30:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726702244; x=1727307044; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6+hrKzufaVHPPuYWkdhHtjyI/H3aYF0P3M0/Izl4cO4=;
+        b=nTlyRAzeoEXxOck7PULXSG5kGqIDr4rX8d5ZCevtPDwQcVCjoDmXuu6QMwEkvo7iEd
+         oEhYokz2F28R7whLCb17iCnEDBmu3FVin/ke7QG4ioyxoXAzWW3uiFiK09p+7knDEQgg
+         nAsq6oWEk3s0teUAmBVKMwDqhmDwLhxu0G1KpGLaq8K/d1woJIJRLjyM9/tKN89kMLox
+         aRyYeHiSktoaNbV+Ck2qgBHXCXCQGvjSEsTksuDp64SNg2xNzD97AFeLmFepON+36n4P
+         WIpFNusxEIjs57OhufE0IgMjxrxOXIblDPVzOd1EhcnQJCybVUoUvNmAz3tkhqdDMDhA
+         SqLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726702244; x=1727307044;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6+hrKzufaVHPPuYWkdhHtjyI/H3aYF0P3M0/Izl4cO4=;
+        b=GEy7pfa4smMbbMmUwprmg8ov3AmRReLO2f5Ch+TaYkdX1lXGmI/cgAeBcPbUlMdLQy
+         WMaZSjY8qQOiWbhxzFRx6uG7qii48+HvmCrurhjuaxRk03XlcaAdrIWotzZy9JREq9AK
+         Vo1hLsa7qrnEjPA8JM6Z7kG9vcnU5E4oMf6jrTezj+yb9M20ReOpQ0mMetE56dElCmDC
+         k3gUk5VAtCHU8qFoFOLTkJuC+k4O7WkrOtmJDUq6cNM01xJyRouLoi6CIiiSF4tQMrLD
+         BUBuI4rY04RDpTKXCId4+6qP0hNORjhVJIDp42tXGxYCygEP0T4bGrnwkLElnQWlkl9U
+         qRFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW/zZWIal5zWiGti83J1b2MNJ5eD837bLAdYcWLjYygA9SRsB/MD6LIuRYVuJ2U+BJ0D8c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxwMUnif0dv7VpKtNBWixZ3gweq0VV8KeCwqJEBRDEjTaDVAVvL
+	UoZ6WWKkXd+T+vXHOmrO1mqZOmhigTHGtIiryIKhJMefBqhNs8Ry
+X-Google-Smtp-Source: AGHT+IFfLLSOYZjWakFNXJJoDMh3h5iHO+ErYnKAsoGNJ9h/oyRHALkYBWbbDxvqil7mwxHU03bjVQ==
+X-Received: by 2002:a17:902:cf01:b0:202:13b0:f8d2 with SMTP id d9443c01a7336-20782a69ef3mr295116085ad.46.1726702243962;
+        Wed, 18 Sep 2024 16:30:43 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:8559:eaef:b03f:6f5f? ([2600:1700:60ba:9810:8559:eaef:b03f:6f5f])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20794601379sm69821705ad.95.2024.09.18.16.30.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Sep 2024 16:30:43 -0700 (PDT)
+Message-ID: <b2ad8d6f-ad66-4ca4-8b27-8e5450306c99@gmail.com>
+Date: Wed, 18 Sep 2024 19:30:42 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- B876DF2E-7615-11EF-9332-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/6] pack-objects: create new name-hash algorithm
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: gitster@pobox.com, johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im,
+ me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com
+References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
+ <pull.1785.v2.git.1726692381.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.1785.v2.git.1726692381.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This step is for some time after Git 3.0.
+On 9/18/24 4:46 PM, Derrick Stolee via GitGitGadget wrote:
+...
+ > Other things that have happened include investigations into ways to adapt
+ > the full-name hash to improve upon the name-hash. I did some experimenting
+ > with increasing the size of 'struct object_entry' by using a 64-bit hash
+ > value (name-hash, then full-name-hash) for a single-pass compression or two
+ > 32-bit hash values for a two-pass compression process. I include my WIP
+ > branch at [3] to show what I tried, though the single-pass option did not
+ > present any improvements and the two-pass option seems to be broken to the
+ > point that the compression is substantially worse. (I'll try to elaborate on
+ > this in a reply to this cover letter.)
+ >
+ > [3] 
+https://github.com/derrickstolee/git/compare/full-name...derrickstolee:git:full-name-wip
 
-Now it is almost N years since we removed the support for the
-variable at Git 3.0 boundary, it is time to remove the warning about
-this ancient variable and the behaviour change we went through with
-it.
+To break down what I attempted in [3], let me break down a few things.
 
-This concludes the journey to make sure we no longer create a
-symbolic link to represent a symref, while still recognising
-existing ones.
+First, I tried using a 64-bit hash value [1]. This used the standard name-hash
+as the most-significant digits and the full-name-hash as the least-significant
+digits. The goal here was to still have locality from the name-hash but get a
+good partition based on full-name-hash within those collisions.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/core.txt |  5 -----
- config.c                      |  5 -----
- environment.c                 |  1 -
- environment.h                 |  1 -
- refs/files-backend.c          |  5 -----
- t/t0600-reffiles-backend.sh   | 15 ++-------------
- 6 files changed, 2 insertions(+), 30 deletions(-)
+However, when sorting this way, the boundaries of the full-name-hash partitions
+are ineffective at getting good delta bases because the largest object from one
+full-name-hash set is next to the smallest object from the next full-name-hash
+set. Even when a full-name-hash set has size one, it is sorted roughly randomly
+among the other colliding path names instead of grouped nicely with objects of
+a similar size. This makes the results nearly identical to the 32-bit
+full-name-hash implementation.
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.tx=
-t
-index a6f67cab27..1887da78e3 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -285,11 +285,6 @@ CIFS/Microsoft Windows.
- +
- False by default.
-=20
--core.preferSymlinkRefs (removed)::
--	Instead of the default "symref" format for HEAD and other
--	symbolic reference files, use symbolic links.  The support
--	for this variable was dropped in Git 3.0.
--
- core.alternateRefsCommand::
- 	When advertising tips of available history from an alternate, use the s=
-hell to
- 	execute the specified command instead of linkgit:git-for-each-ref[1]. T=
-he
-diff --git a/config.c b/config.c
-index 56b5862e59..8693cd510d 100644
---- a/config.c
-+++ b/config.c
-@@ -1445,11 +1445,6 @@ static int git_default_core_config(const char *var=
-, const char *value,
- 		return 0;
- 	}
-=20
--	if (!strcmp(var, "core.prefersymlinkrefs")) {
--		prefer_symlink_refs =3D git_config_bool(var, value);
--		return 0;
--	}
--
- 	if (!strcmp(var, "core.logallrefupdates")) {
- 		if (value && !strcasecmp(value, "always"))
- 			log_all_ref_updates =3D LOG_REFS_ALWAYS;
-diff --git a/environment.c b/environment.c
-index 1d6c48b52d..2c3a60149b 100644
---- a/environment.c
-+++ b/environment.c
-@@ -40,7 +40,6 @@ int has_symlinks =3D 1;
- int minimum_abbrev =3D 4, default_abbrev =3D -1;
- int ignore_case;
- int assume_unchanged;
--int prefer_symlink_refs;
- int is_bare_repository_cfg =3D -1; /* unspecified */
- int warn_ambiguous_refs =3D 1;
- int warn_on_object_refname_ambiguity =3D 1;
-diff --git a/environment.h b/environment.h
-index 0148738ed6..6b595bd210 100644
---- a/environment.h
-+++ b/environment.h
-@@ -127,7 +127,6 @@ extern int has_symlinks;
- extern int minimum_abbrev, default_abbrev;
- extern int ignore_case;
- extern int assume_unchanged;
--extern int prefer_symlink_refs;
- extern int warn_ambiguous_refs;
- extern int warn_on_object_refname_ambiguity;
- extern char *apply_default_whitespace;
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 1296272252..eef01fee06 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2983,11 +2983,6 @@ static int files_transaction_finish(struct ref_sto=
-re *ref_store,
- 			}
- 		}
-=20
--		/* Warn against core.preferSymlinkRefs set to true */
--		if (update->new_target && prefer_symlink_refs)
--			/* we used to, but no longer, create a symlink here */
--			warning("core.preferSymlinkRefs was removed in Git 3.0");
--
- 		if (update->flags & REF_NEEDS_COMMIT) {
- 			clear_loose_ref_cache(refs);
- 			if (commit_ref(lock)) {
-diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
-index 4e517cdc13..4db86757ac 100755
---- a/t/t0600-reffiles-backend.sh
-+++ b/t/t0600-reffiles-backend.sh
-@@ -480,22 +480,12 @@ test_expect_success SYMLINKS 'symlinks used as symr=
-efs are still supported' '
- 	test_cmp actual expect
- '
-=20
--test_expect_success 'core.prefersymlinkrefs gets a warning' '
-+test_expect_success 'core.prefersymlinkrefs no longer gets a warning' '
- 	test_when_finished "git symbolic-ref -d TEST_SYMREF_HEAD || :" &&
- 	git update-ref refs/heads/new HEAD &&
-=20
- 	test_config core.prefersymlinkrefs true &&
- 	git symbolic-ref TEST_SYMREF_HEAD refs/heads/new 2>stderr &&
--	test_grep "core\.preferSymlinkRefs was removed" stderr &&
--
--	git symbolic-ref -d TEST_SYMREF_HEAD &&
--	git config core.prefersymlinkrefs false &&
--	git symbolic-ref TEST_SYMREF_HEAD refs/heads/new 2>stderr &&
--	test_grep ! "core\.preferSymlinkRefs was removed" stderr &&
--
--	git symbolic-ref -d TEST_SYMREF_HEAD &&
--	git config --unset core.prefersymlinkrefs &&
--	git symbolic-ref TEST_SYMREF_HEAD refs/heads/new 2>stderr &&
- 	test_grep ! "core\.preferSymlinkRefs was removed" stderr
- '
-=20
-@@ -512,8 +502,7 @@ test_expect_success 'symref transaction' '
- 	test_path_is_file .git/TEST_SYMREF_HEAD &&
- 	git symbolic-ref TEST_SYMREF_HEAD >actual &&
- 	echo refs/heads/new >expect &&
--	test_cmp expect actual &&
--	test_grep ! "core\.preferSymlinkRefs was removed" stderr
-+	test_cmp expect actual
- '
-=20
- test_done
---=20
-2.46.1-742-g4240f61078
+[1] 
+https://github.com/derrickstolee/git/commit/aaa6befa3016667ea5eb10fdd6aa2b7fcec3a52e
 
+Second, I tried storing two 32-bit hashes and doing a two-pass delta search [2].
+In theory, this should be very similar to the --path-walk feature from the RFC.
+However, I failed to make it work. Something about this version of a two-pass
+walk was hitting some strange behavior. For example, I had to put in this extra
+condition [4] if a best delta base was not found, or else we could get a
+segfault.
+
+[2] 
+https://github.com/derrickstolee/git/commit/bf71271040ab93a624a8cdf5bc8aaff68e9b1b17
+
+[4] 
+https://github.com/derrickstolee/git/commit/fedc4fc543e50563f4748a5ffc45b51b530023e0
+
+In fact, the results were not just _bad_ but they were _significantly worse_.
+
+It took me a long time to report these details because they just didn't make
+sense and I couldn't figure out what was going wrong. I'd be very grateful to
+anyone who could explore these WIP commits and point out what I'm doing wrong
+so I can learn and maybe we can get a boost to the feature.
+
+Even if we had strong data from these examples, I'm not sure that we'd want
+to add four bytes per object to the packing data, especially in a way that
+impacts users that aren't even using the new feature. We would want to
+explore options that use some kind of hashtable to map objects to their
+64-bit hash values, perhaps. It also affects the .bitmap file format, which
+would need modification even for a new 32-bit hash function (though one of
+the same size could be used by adding an extension saying "I'm using hash
+function v2" and leave the rest of the structure the same).
+
+I would also like to test the performance against the threaded version of the
+--path-walk feature, which I recently got working in my prototype branch [5].
+
+[5] 
+https://github.com/derrickstolee/git/pull/28/commits/a9fc233390ae00e3d4b156be64d6b3974e30d8a1
+
+Thanks,
+-Stolee
