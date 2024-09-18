@@ -1,144 +1,113 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0163C3C
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 06:49:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64432868B
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 09:22:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726642183; cv=none; b=LeotnqVVxCcRfNueufKAkE8mf2xmhL1vuppDBNu12mmvyq3m49UTKeWGnElA5IJAeW4uN4466pUHrspXiroE0e628FNpYws9JCT78oHbKR0XOMt7jiT4uwh1mJdBZqfp6IQYzNsbga8QgNM6ZC9NX4krQOwHuWB79O06EclbQdM=
+	t=1726651357; cv=none; b=FM2hkh4P34sIiyOxpkctoxrvT8qt7336RkvAnXrAFAOlCtPXZjLe7Ofh+QygZOdWbXUvgO+Xi/fcQL304AeLJ93+2KKczinYsjaazXqEeF6BhPdl5gf0OoRzVNtM2w0N7Lzv8xfhApXhlDlu5gGQfouGCWSFFJNVQzbs8pBlBZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726642183; c=relaxed/simple;
-	bh=u0/EdkaJRLHrKIYhSOnM6sMX+2EcU4GwzTO+0PfqIt4=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Iu1OeQH2KhTLeMU9DkCX1iwKK8i1ZJclB69ivZp+W5tzWwaaHg2LHXCb+yXcxEMRjz0Y/62zgLHGoPwVupQoEe7oZfZg2mua1hj6efjZNnfUrUgXAG9p40kkji4LNNktJ4hmFUkMvNZSTAIXNCrI5UxwShimwA2Ai6yVkJHqUGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lzm56MzI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H6NT7fIJ; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1726651357; c=relaxed/simple;
+	bh=qX7OUN7aoaqGPAmNsidWcVIiQV6l+YTwnLglIFEW148=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=EhVh5aom2TJvVFDKO+zFEFpANTiXmhr6EO5yBHz8/oO8M89loNnFhxRw9deZveHxEIb76Q5TZVpvmPkSHX17Cimwx1YdSn41XTNM/ZxT3babn2Pu36ASJcLgLj+ziTHcfdqNnI+7RSc5hRRyjPNkrjsNqUuaYC3AiBU0JEQ6kL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=pDFKWUyJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lPH0ggH3; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lzm56MzI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H6NT7fIJ"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EA28711402D4
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 02:49:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="pDFKWUyJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lPH0ggH3"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id B60121380260;
+	Wed, 18 Sep 2024 05:22:33 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Wed, 18 Sep 2024 02:49:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1726642180; x=1726728580; bh=Q/05N00Oj0OKmzVGj4/W5cEYilHQQ49a
-	4DWgs6BXaxY=; b=lzm56MzIKFDkgfg751KJ8C5Gq+Oqo+uvgd/W8t7ul1HrKjp2
-	J0X5e/k+j2JpkD2SEbSpms6z481CtwnKoP6Gjwkx33nowskT3ZucszCHVNpRkrpp
-	TDJ2+eKUQJVtEjh4XFPyUaVbNKFROb85/UF/CtoAkeK78nH+OeRC6WDiFI7sBuFE
-	sqVbM699CNIe0P7MMeMiykZfjQB2XVH+2Ti7pmmGEeW2PTKcv7fTp8szYaRPphMd
-	JnczT5p3Z8KX532rEdqbnjIeALuyZg9AkZlmX7INsxGOp5s5n7jHGj8OwTgRM5TN
-	yfJel2dox8EBEz4ebw6tOskmBhMMv/3txsiJ8w==
+  by phl-compute-05.internal (MEProxy); Wed, 18 Sep 2024 05:22:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1726651353;
+	 x=1726737753; bh=4nbIHkDYFbQIZ03eMBb9ju6VmSDAmlXbX9GfYnD8uVQ=; b=
+	pDFKWUyJnqtlhbdElrVqLs4WUlCr5mtP3DQ7iRcOSf02SYnjUhhq0c6rEDEEab3i
+	qprNk9ZtgzVoYv3ZyhwZfwMtPJ6dliv/RRBJKZKUziyBwWkZynk2vcFoETh3/xva
+	zKk0tyJY4WALQRqjzJ06LS2hivYY7R58YQ8V1o8O32crbakncC+NBWtRv/Bd1Kb+
+	WHiCzRGVqadFo9Yb6gIa8djw/39EUwpnvzsMHCSY3KSad9FxglTJQbecQyycSsQE
+	RQnzxyJ0cHWNwvoi9XqOj6Du8xYUy12J6XL1KKbyTGYju5emMIpSieuof10+EEKM
+	B0c0qjosp8WeoS7URQKk6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1726642180; x=1726728580; bh=Q/05N00Oj0OKmzVGj4/W5cEYilHQQ49a4DW
-	gs6BXaxY=; b=H6NT7fIJY6LJ5r36iDjTqGDNSzDiWbPx46USQhMwkqr0rnAWtT5
-	vfUBUgc2nomVb7ptsX6Mmg9zqkIyp9hginHSg32aQdVS4UZSMl2zTXGnTHn2FSqo
-	2g359agAJBrOCnyC04i7VfXspQknIPSOiSxzEJ9RN7036FSxy9MmONYBNbU983tJ
-	DhgpxtwOG6ewqhGg9t8qIZrjlJH1hzt1IMTjWE/NxICMIdLxAFQfABWqMaE44VWm
-	eAJoIlOnRGDtEBQKXqBt0ha0dHixiBHFltsAbMSoubGlyJN/jAoqx55Ou12J1TM0
-	QNYY3lu+sGVvv5Ie8735ESi8eMukbTewbwQ==
-X-ME-Sender: <xms:BHjqZufvyj6RxQaZcw6LSAzCbZvJCpZuBLZA-6JVsaaML7hHFLryeg>
-    <xme:BHjqZoPL29I8gAfa57ED9fuGQZyx-dNUuf44v2MrqndJp0-7HQowmw0tAa5yA-NQ_
-    vdsq9rscmOsGjQOsg>
-X-ME-Received: <xmr:BHjqZviwkW7FdwSeeeSQYVSqc0xPtc0UmCFbDgtly7_zzKfUGCKOiyXGMKfKkbQ6AkS5m7eccUKBS8y8fg3EeBg8Pi1-9TE62Ocz0d5u7oaejjEb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekkedguddufecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    fukfggtggusehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
-    rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevhfegtdelfeefve
-    eludefvdeiffeuheffhfdvleefffekvdetudffueehfefhheenucffohhmrghinhepghhi
-    thhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:BHjqZr-VinJ_CXfFpTtf1VLd8QpfUkAk_cdSxaQQFuTTkR5d7vFrUg>
-    <xmx:BHjqZqsg4zHCiZSd5JQCKaM5slc8pW5B4-ouHqFQH66YHbBUdGw0zg>
-    <xmx:BHjqZiEnmTWfPyi4Z7dONwca9U5JJ4_liWzGumHKzd81CBRIuO2CxQ>
-    <xmx:BHjqZpPgZo5QNdmt_t3c4c7fQU1j1NQAZSWWu3o_IQTIz4ychebrhQ>
-    <xmx:BHjqZvX50Dfx5b7l35VY4vta3V904k-TVJPdtdKiLYOnLkm4ZQdhnMns>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 18 Sep 2024 02:49:40 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id df849f2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Wed, 18 Sep 2024 06:49:17 +0000 (UTC)
-Date: Wed, 18 Sep 2024 08:49:37 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH] gitlab-ci: upgrade machine type of Linux runners
-Message-ID: <0dfcb4a7b38ca66ec50775928ecfb31c4bc2008b.1726642142.git.ps@pks.im>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1726651353; x=
+	1726737753; bh=4nbIHkDYFbQIZ03eMBb9ju6VmSDAmlXbX9GfYnD8uVQ=; b=l
+	PH0ggH3PIX/hfSDyP35XfsEKSZJGYBB3ryCNBFSfxG97Xa7D/49+yDYeQmP7b8wT
+	GHO/CKRSnH2Y3cWtXaLamgNRsK6bohXDn21CCBl7gZr/UHG9N/U1D8ksQjycFmC+
+	/JeB4oSXSd9nhp9ZZ7ybaujptk8VK6mglJ4jhd2RjT1Jl4WxqhE9qy5Aspyvyyvy
+	NYhQIz18jmsKgIv1Fpw/AL9UyCCzfVIhD3XfzykdDX75iUVzD6GYnZ+bIFX40Fx5
+	ZrFAT6/dI4mFLhS+n+qMhlrbvnbX6civsooFfW/DPFZnc+cOmQ8CaoP+FUhH/tyl
+	apEuIHhT+5pAIHkW00Deg==
+X-ME-Sender: <xms:2ZvqZixscbxk_DZCqre-K99eTzRRZmKNPRGeZxLH7I-10qwvNPhZFg>
+    <xme:2ZvqZuSyAEzrAb1o9IxMDmlhJ4MtcYijYGcau2Z6Zfj55mfJ0CjNqlIsXIKGjL09k
+    nklG8eN9ZNVJrADXQ>
+X-ME-Received: <xmr:2ZvqZkVblZYPiJ_re7unIk9maenNFdqgKJmPOUwcPveWg8dipVa3-wTAV2a1tT2oW5Aq_vnhSXKWfZUA69oSeJ8JE33M0eInz-ZfwaFr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekledgudegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepggfgtgffkffhvfevuffofhgjsehtqhertdertdej
+    necuhfhrohhmpedflfgrmhgvshcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurd
+    hioheqnecuggftrfgrthhtvghrnhepfeefgfduveegfeduveevveekieffhfetffeukeff
+    fffhgeelueekieffhedtveffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdpnhgspghrtghpthht
+    ohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgr
+    rhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvg
+    esshhunhhshhhinhgvtghordgtohhm
+X-ME-Proxy: <xmx:2ZvqZohGF4yVLkzcR81psGnVnpNj4XOC7RmBleU1sKMOHaaRcGTxZA>
+    <xmx:2ZvqZkD86sAHfRP1q8wunfHUt7S6PCUS8ivYL79McjO_RpbDdO45GA>
+    <xmx:2ZvqZpKDlc48X1v8JQsNYwyz8YKPAgFKNSmbojGWsafCAcGYTsneWg>
+    <xmx:2ZvqZrDCE6MRcTh-f4l3YW7zyWMh07VfKsF2-OlDor8EuMF0uZcXww>
+    <xmx:2ZvqZn_32BN-LawtA2Mj1MIrb5dVU5lyQBvfVfzdm8qtnlLjL-WE1Z0M>
+Feedback-ID: i93f149ec:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Sep 2024 05:22:31 -0400 (EDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 18 Sep 2024 19:22:28 +1000
+Message-Id: <D49ATJ4EIEG0.3A1RCYNFQG0XR@jamesliu.io>
+From: "James Liu" <james@jamesliu.io>
+To: "Patrick Steinhardt" <ps@pks.im>, <git@vger.kernel.org>
+Cc: "karthik nayak" <karthik.188@gmail.com>, "Eric Sunshine"
+ <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/3] refs/reftable: introduce "reftable.lockTimeout"
+X-Mailer: aerc 0.18.2
+References: <cover.1726578382.git.ps@pks.im>
+ <cover.1726633812.git.ps@pks.im>
+ <700a35df125eca6639d08d30720332dbc1ed15a1.1726633812.git.ps@pks.im>
+In-Reply-To: <700a35df125eca6639d08d30720332dbc1ed15a1.1726633812.git.ps@pks.im>
 
-With the recent effort to make the test suite free of memory leaks we
-now run a lot more of test suites with the leak-sanitizer enabled. While
-we were originally only executing around 23000 tests, we're now at 30000
-tests. Naturally, this has a significant impact on the runtime of such a
-test run.
+On Wed Sep 18, 2024 at 2:32 PM AEST, Patrick Steinhardt wrote:
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index 1c4b19e737f..e90ddfb98dd 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -256,6 +256,9 @@ static int reftable_be_config(const char *var, const =
+char *value,
+>  		if (factor > UINT8_MAX)
+>  			die("reftable geometric factor cannot exceed %u", (unsigned)UINT8_MAX=
+);
+>  		opts->auto_compaction_factor =3D factor;
+> +	} else if (!strcmp(var, "reftable.locktimeout")) {
+> +		unsigned long lock_timeout =3D git_config_ulong(var, value, ctx->kvi);
+> +		opts->lock_timeout_ms =3D lock_timeout;
+>  	}
 
-Naturally, this impact can also be felt for our leak-checking CI jobs.
-While macOS used to be the slowest-executing job on GitLab CI with ~15
-minutes of runtime, nowadays it is our leak checks which take around 45
-to 55 minutes.
-
-Our Linux runners for GitLab CI are untagged, which means that they
-default to the "small" machine type with two CPU cores [1]. Upgrade
-these to the "medium" runner, which provide four CPU cores and which
-should thus provide a noticeable speedup.
-
-In theory, we could upgrade to an ever larger machine than that. The
-official mirror [2] has an Ultimate license, so we could get up to 128
-cores. But anybody running a fork of the Git project without such a
-license wouldn't be able to use those beefier machines and thus their
-pipelines would fail.
-
-[1]: https://docs.gitlab.com/ee/ci/runners/hosted_runners/linux.html
-[2]: https://gitlab.com/git-scm/git/
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-
-A test run can be found at [1]. This change decreases the runtime by
-about 20 minutes to 25 - 28 minutes in total. I'd be open to adjust this
-to use "large" runners, but as mentioned in the commit message that
-would cause problems when somebody hosts their own Git repository at
-GitLab. Is this something we care about?
-
-Patrick
-
-[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/215
-
- .gitlab-ci.yml | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 80b1668ebe..4abfbc3e20 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -9,6 +9,8 @@ workflow:
- 
- test:linux:
-   image: $image
-+  tags:
-+    - saas-linux-medium-amd64
-   variables:
-     CUSTOM_PATH: "/custom"
-   before_script:
-
-base-commit: 3fb745257b30a643ee78c9a7c52ab107c82e4745
--- 
-2.46.0.551.gc5ee8f2d1c.dirty
+Do we need to support the `0` and `-1` values that are possible for
+the "core.filesRefLockTimeout" and "core.packedRefsTimeout" timeouts
+here as well?
 
