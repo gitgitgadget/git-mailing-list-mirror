@@ -1,169 +1,173 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D481991BF
-	for <git@vger.kernel.org>; Tue, 17 Sep 2024 22:29:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0803012E4A
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 01:41:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726612174; cv=none; b=VESve3uVJxvWXNXzp9jjemwtQTNoslGLPzOi9ypQc8G9Ogpk6ENSjBaMBPJg5hF5ryb90/DcUYjgUCaCSKy/kqgJBYtX3KAJAsd6VMtV0Yzl8tTBsewTFVRpq/rooQx8z7ULkZji3D/L2aSUG+8gNGXgEOjhz1gDWBDDoO7Mz7A=
+	t=1726623681; cv=none; b=WuScIYXp6JymN/rUlTc667r15S/SNXhuquer5dsrfnXLgIZVLdOh6oxtphtwiQO752Clvq3TP0/eyFv9EejE0/SZIfnDvwYPtFRzDGPyanXBCRcu9Fww1Xo7SLe6jE01JnpL0FFtSmYQ2c6THGO3evdJ4M+q8deSCaXN9lWRyQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726612174; c=relaxed/simple;
-	bh=RDW+JTm5RRxmnnLVd6grMwYxT2GKBeeqLeI3NKjxrUA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z7roW9dzWkT6v1/zhs18Tk1XJmIdNWh8hiWOiO3BAHe142e9+JoVeq18b+D7RMRxP16KKZU39qicz5X46O5/cHD9sWEIlX5DPaahRg9Qd/Dw4AsjkC2R/PNsLIlo5GrObfbz495FjJtuCEUsxDrpLet9WYfnc/i4s7merPBBO3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=amHEqUNy; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1726623681; c=relaxed/simple;
+	bh=EjSWM27AYhIrb0m3xYXGBxVnR+Pxax3meBPmFbsEaWE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=DoKou5Cl7ZWg1Wyw9gpQJSJjFeNplKd2mlrOum0mYPZFpx56cyo8k4KbKL9gW8cJoZF5ye4OnabpM+A0LcJRrIrrHXkTydljjwUJl8WcK49y/7IM/SvNAxC8U1+JqPdqk6FRDl8HnGf7765edxZ3KiaGPJ38AmEPksARCb7bpz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OXNKgyEV; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="amHEqUNy"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2056aa5cefcso75325ad.0
-        for <git@vger.kernel.org>; Tue, 17 Sep 2024 15:29:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OXNKgyEV"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42bbffe38e6so48864165e9.0
+        for <git@vger.kernel.org>; Tue, 17 Sep 2024 18:41:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1726612171; x=1727216971; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VDA8aVwUL9JhgfFbaNRDE4jj/sVHAq6O00stj5AMgnk=;
-        b=amHEqUNyPhFFELEhP6GZkJtyCd56ru7GCyMzZy4nCtXSmMDs8MNXltBsZ9g12dx0fh
-         wtyKCdSmtMgIbKrW/rAe76OFCCLfMeWcjNEgwcUXmAkMxgEItsL+fBlNZgeWsWskMApT
-         2HTuQj9n9jaItHBaUJBZAxJJ0NNFnH3GFCYXUhDddsHk0KPHyhcGcTtRZP+g8GbClqk8
-         QrqoKJIcWJvN0ZkQNz9BHMOUP9kmjpJSz12P05y9M0x+9uldXtAEN0rba1YhbFIHSw6D
-         2AmZlzSJhi+9BKsy5yi1VCD2penLE4LxD4hbHsFcteuqBkL/GJuB13LW0dihPJdv+eK0
-         Tibg==
+        d=gmail.com; s=20230601; t=1726623678; x=1727228478; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:content-language:subject:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rgQlS2isxb0GX6j78joCoY/DHhx0X1mV8AwMz9U4g0E=;
+        b=OXNKgyEV5UIvEHEoKTaLNzu8DkySs6qa31ITz2J3VbwbBlZRl3DlN3ZC/RbmFgLSe+
+         eMFlfPCUuxeaUKpd2TJ1UfEpcccLTG5X+uKKdtBnUCvwyxsNTgDT7IbGPw53fMjMKHOe
+         ncOkgVduTnpm8zk2jZOfiNeWwIVnkuAVZXhRPumduFcxWInRNOy+MDzRfFqXcn0Vtgk5
+         vxSW9oEfuWQrjjKh2hsYNKshXI9QOl82S4fkhxDChCSQ50ZJt4JGb8WalzjVrsOO0i2c
+         X1Nr0DG7nRCmuogP46ESeUKzUrK3l2y+3PuGv0BGsa5fW1jDlw8Rg2qdRaYU0NNGfjtg
+         cLXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726612171; x=1727216971;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VDA8aVwUL9JhgfFbaNRDE4jj/sVHAq6O00stj5AMgnk=;
-        b=TVoKN/piqVXjDSZFPkU20FINGqEF6cDvh1WXIFuiKodGnaJVMgDly2TnEkqbIM8u29
-         +eoGsdxI7tfMZhy9LKmcfUlwN8qo9f0f8O2IkKNs/oHftCD/Woqsd//7cUVof2pUTCtx
-         TovzaGdpWMYeEKqG7wZijlz2ggXpIkfDjFxHzwitOIyNGTfX4VqcN02mTvUoG+ZqDzg7
-         KRWMyNeD0lJAiEuoRjjYgOC9fCdDqpB1Wjg51WvB85+eurGlD2yDGUTEyqAgAfHoidz9
-         /40ELN2L9a1r38fevs7sbQD6kDYidMjzaVGR07xI178mzlC2Qjl71c/YaZTe6KezhzzR
-         w+5g==
-X-Forwarded-Encrypted: i=1; AJvYcCUIfYL4E/yoc9a34dOSwsbjHasNmumsc5bllou+gDnVyTNEggHKF4OX8oQdiOUUoEiHE1A=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyw4sBfNNxFQKWSICASHeotdKXr9Qx6Ujqh23G0ipuCkJSYV/cK
-	8tQhOYKFU2OxV/HR6b5yvJx6Ht8a+UbY1jnV2JDEOnwQNiHbXXdVO4519R4BoQ==
-X-Google-Smtp-Source: AGHT+IFAbDUY0dUNI8aPzClE8LgC+35cbpAP9aw8MD5iF22xx1vSsGy2uBQrv2rZ56GJluzjwe8zwA==
-X-Received: by 2002:a17:903:192:b0:1fb:19fb:a1f0 with SMTP id d9443c01a7336-208c252abf6mr1068585ad.4.1726612170911;
-        Tue, 17 Sep 2024 15:29:30 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:c551:a3ba:4741:7226])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7db498f9e75sm5437439a12.26.2024.09.17.15.29.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2024 15:29:30 -0700 (PDT)
-Date: Tue, 17 Sep 2024 15:29:25 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, mh@glandium.org, sandals@crustytoothpaste.net, Jason@zx2c4.com, 
-	dsimic@manjaro.org, phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 5/6] libgit: add higher-level libgit crate
-Message-ID: <honvpowfa6zze7p56pcefrzokjjawcc43du7vuxbdbjbv2vzlv@eskr2npegzxd>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, mh@glandium.org, sandals@crustytoothpaste.net, Jason@zx2c4.com, 
-	dsimic@manjaro.org, phillip.wood@dunelm.org.uk
-References: <20240906221853.257984-1-calvinwan@google.com>
- <20240906222116.270196-5-calvinwan@google.com>
- <xmqqv7z8tjd7.fsf@gitster.g>
- <xmqqcylcpnah.fsf@gitster.g>
- <CAFySSZBECCQafaLEv80WoK6SMovwC97-tf9gh_btPc+8OuP4NA@mail.gmail.com>
- <xmqqttene2ya.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1726623678; x=1727228478;
+        h=content-transfer-encoding:to:content-language:subject:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rgQlS2isxb0GX6j78joCoY/DHhx0X1mV8AwMz9U4g0E=;
+        b=YnF/h9/Q6V5Efr9KzxMdrYvB4IRXrYYVAEuBHOm05MBozn5aLdvTJ5ST9dW2ZwUxXe
+         JICohqxUGeRU3Vp9IChAJViSVBIQOWVPloi6fB1IUv1+fva0JG9pUoyji11b/80QATj5
+         6jvRMWDf/Pk1oRsa73j8KdZfZCfLovUsUJDB5KV9aefktbUbVQq8XZCYkOhSYaPXu6MR
+         dELaLZbqOe14SXqU4N2yfL0N6W4k4wsKiXwQEZvFya4gE3KoKmkxuFoyOP47JG58ZJ/w
+         iF63pJvq/X7jJRW6zqnu67C27cUdE4LOLLGBZECObFWU5LQSBL0c5kC0+o1wGxyN0s8+
+         L3Cg==
+X-Gm-Message-State: AOJu0Yw+As/Y0z+1w5ROGbtfZ6gyrKQt7WuTFDdGHRg34z6+n93gqz9b
+	hEDMuiYgfiJZ+993AygUZIowhGi0XThsTuaIyempV2Qf7fbfK9a7HBH3wRR+0sjxww==
+X-Google-Smtp-Source: AGHT+IHrBPMKglNbKXUtNcwJ8rBsHoklgOFTXCjeBCxlBV1/4/yfLft4rvbNrNdqiy7SuPdD/lNihA==
+X-Received: by 2002:a05:600c:548e:b0:42c:a802:a8cd with SMTP id 5b1f17b1804b1-42cdb529fbamr137183765e9.11.1726623677179;
+        Tue, 17 Sep 2024 18:41:17 -0700 (PDT)
+Received: from [10.19.11.42] ([191.101.157.169])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e704ec8bfsm2886365e9.17.2024.09.17.18.41.16
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Sep 2024 18:41:16 -0700 (PDT)
+Message-ID: <8f581759-34d2-45e4-bace-45669dbdb875@gmail.com>
+Date: Wed, 18 Sep 2024 03:41:14 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqttene2ya.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+From: Andrei Rybak <rybak.a.v@gmail.com>
+Subject: [ANNOUNCE] Button "Copy commit reference" for Git hosting sites
+Content-Language: en-US
+To: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2024.09.10 12:14, Junio C Hamano wrote:
-> Calvin Wan <calvinwan@google.com> writes:
-> 
-> > However, I agree that the public interface should pass the
-> > compilation test and your approach does that -- will reroll with those
-> > changes and I believe that we should also fix the build.rs so that
-> > warnings also show up during cargo build.
-> 
-> Thanks.  I couldn't quite tell if *.c was supposed to be compilable
-> into *.o directly (if not, then Makefile needs fixing), and I am OK,
-> if the shim layer is only internally used, if the public.h defined
-> all pointers as "void *".
-> 
-> I wasn't happy to cast "struct config_set *" between "struct
-> libgit_config_set *" merely because one embeds the other without
-> adding any other member.  If they have to be bit-for-bit identical,
-> shouldn't we just use the real name of the struct everywhere?
+I am pleased to announce "Git: copy commit reference" -- a collection of
+userscripts, which make it easy to copy-paste commit references from
+web UIs of the Git hosting providers.  Example of a commit reference:
 
-We want to namespace types as well as functions, as Phillip pointed out
-in 47b18fa4-f01b-4f42-8d04-9e145515ccc1@gmail.com.
+	1f0fc1d (pretty: implement 'reference' format, 2019-11-20)
 
-Is there a reason why we need the shim struct from your
-xmqqcylcpnah.fsf@gitster.g and can't just cast directly like so:
+Such references are a good way of providing context in commit
+messages.[1]  The main goal of the project is to allow users of Git
+hosting sites to produce better commit messages by giving them an easy,
+one-click way of creating commit references using websites of the
+hosting providers.  Here's a screenshot of how the button looks on
+GitHub, for example:
 
- contrib/libgit-rs/libgit-sys/public_symbol_export.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+	https://raw.githubusercontent.com/rybak/copy-commit-reference-userscript/main/Documentation/GitHub.png
 
-diff --git a/contrib/libgit-rs/libgit-sys/public_symbol_export.c b/contrib/libgit-rs/libgit-sys/public_symbol_export.c
-index 07d6bfdd84..c96fa15ab6 100644
---- a/contrib/libgit-rs/libgit-sys/public_symbol_export.c
-+++ b/contrib/libgit-rs/libgit-sys/public_symbol_export.c
-@@ -3,12 +3,13 @@
- // avoid conflicts with other libraries such as libgit2.
 
- #include "git-compat-util.h"
--#include "contrib/libgit-rs/libgit-sys/public_symbol_export.h"
- #include "common-init.h"
- #include "config.h"
- #include "setup.h"
- #include "version.h"
+How to install?
+===============
 
-+#include "contrib/libgit-rs/libgit-sys/public_symbol_export.h"
-+
- extern struct repository *the_repository;
+Try the userscripts out by installing them via Greasy Fork:
 
- #pragma GCC visibility push(default)
-@@ -35,32 +36,32 @@ int libgit_parse_maybe_bool(const char *val)
+	https://greasyfork.org/en/scripts?set=588773
 
- struct libgit_config_set *libgit_configset_alloc(void)
- {
--       return git_configset_alloc();
-+       return (struct libgit_config_set *) git_configset_alloc();
- }
+If you are not familiar with userscripts for browsers, they are like
+extensions inside another browser extension, called a user script
+manager.[2]
 
- void libgit_configset_clear_and_free(struct libgit_config_set *cs)
- {
--       git_configset_clear_and_free(cs);
-+       git_configset_clear_and_free((struct config_set *) cs);
- }
 
- void libgit_configset_init(struct libgit_config_set *cs)
- {
--       git_configset_init(cs);
-+       git_configset_init((struct config_set *) cs);
- }
+What do the userscripts do?
+===========================
 
- int libgit_configset_add_file(struct libgit_config_set *cs, const char *filename)
- {
--       return git_configset_add_file(cs, filename);
-+       return git_configset_add_file((struct config_set *) cs, filename);
- }
+The userscripts add a button "Copy commit reference" to commit pages of
+Git hosting sites.  Clicking the button puts both plain text and HTML
+into the clipboard.  The HTML content has clickable links to the
+website.  This is useful in rich text editors, e.g. in HTML emails,
+Slack, MS Teams, Confluence, visual mode of Jira, etc.
 
- int libgit_configset_get_int(struct libgit_config_set *cs, const char *key, int *dest)
- {
--       return git_configset_get_int(cs, key, dest);
-+       return git_configset_get_int((struct config_set *) cs, key, dest);
- }
 
- int libgit_configset_get_string(struct libgit_config_set *cs, const char *key, char **dest)
- {
--       return git_configset_get_string(cs, key, dest);
-+       return git_configset_get_string((struct config_set *) cs, key, dest);
- }
+Which sites are supported?
+==========================
 
- const char *libgit_user_agent(void)
+The following hosting providers are supported at the time of writing:
+
+   - GitHub
+   - GitLab
+   - Bitbucket Cloud and Bitbucket Server
+   - Gitea and Forgejo
+   - Phorge (fork of Phabricator)
+   - Gitiles
+   - Sourcehut
+   - Cgit
+   - GitWeb
+   - Gogs
+
+
+Development notes
+=================
+
+Adding support for following Git hosting providers is planned [3]:
+
+   - RhodeCode
+   - Pagure
+   - GitBucket
+
+If your favorite hosting is missing from the list you can leave feedback
+at the issue trackers.[3]
+
+During development I found that compatibility with a wide range of
+versions of the websites can be tricky.  Examples:
+
+   - The latest version of GitWeb is easily available to anyone with
+     `git instaweb`, but one of the well-known public instances --
+     https://repo.or.cz/ -- runs version 2.11.4 with custom patches.
+     Thankfully, the differences relevant to the userscript don't make
+     it too hard to support both versions.
+
+   - Public instances of Gitea/Forgejo have a very wide range of
+     versions, with slightly different HTML layout, and often with custom
+     patches.
+
+   - As far as I know, there are no public (even read-only) instances of
+     Bitbucket Server.  I did manage to test the userscript on several
+     private instances with versions in the range v7.21.* -- v8.9.*.
+
+If you know publicly available instances of any of the Git hostings
+listed above (especially Bitbucket Server), please let me know.
+
+I originally planned to post this to git-users mailing list, but it's
+gone now. See <https://github.com/git/git-scm.com/pull/1829> for
+details.
+
+
+Footnotes
+=========
+
+[1] 
+https://lore.kernel.org/git/5264c44fab5d64cdfea8ef9fe2c1088af3d41014.1574211027.git.liu.denton@gmail.com/#
+[2] https://greasyfork.org/en/help/installing-user-scripts
+[3] Issues are tracked mostly on GitHub:
+       https://github.com/rybak/copy-commit-reference-userscript/issues
+     but other sites are also available:
+       https://gitlab.com/andrybak/copy-commit-reference-userscript/-/issues
+       https://gitea.com/andrybak/copy-commit-reference-userscript/issues
+       https://codeberg.org/andrybak/copy-commit-reference-userscript/issues
