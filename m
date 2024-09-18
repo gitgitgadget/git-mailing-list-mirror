@@ -1,118 +1,144 @@
-Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194E92E630
-	for <git@vger.kernel.org>; Wed, 18 Sep 2024 05:11:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0163C3C
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 06:49:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726636296; cv=none; b=Fzvq4ssh6Io91RHfB82oJ0D9FnAJVjsGBnqfPWsUUQvkm03mDAC7jLP/+h6/78v7DV0sbuo5BwJSzWu8Fp0rIcMOgJXtgQEzy5wh31d0J1FbwS9Wz88o7oXLpSt23HPy64ActhgDtke/DEz60r3yMPjBPrmXLMetpchOQGtN6Is=
+	t=1726642183; cv=none; b=LeotnqVVxCcRfNueufKAkE8mf2xmhL1vuppDBNu12mmvyq3m49UTKeWGnElA5IJAeW4uN4466pUHrspXiroE0e628FNpYws9JCT78oHbKR0XOMt7jiT4uwh1mJdBZqfp6IQYzNsbga8QgNM6ZC9NX4krQOwHuWB79O06EclbQdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726636296; c=relaxed/simple;
-	bh=a0B8vL8XDBE4fAQGl6FBSFWYSOC007j0l2ZJGKPw4+8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rIty0kKNZ0oDAr0V4UE5ptDwY5mL2gM4Q2UAEJ0c0z9r+yL02xKSfScJx4vyZ/9CHJUbM1HSJz8U+sfvgmy6M4B7gwBVEUKMoFGnULbOouQnOrbBo7342iHp2yZHZzVv20VTr71OwCGU7gQHvIpvcYL+RFRGeTp/p8kGHBOPOpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UIFB3Og8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CwImmzpY; arc=none smtp.client-ip=103.168.172.150
+	s=arc-20240116; t=1726642183; c=relaxed/simple;
+	bh=u0/EdkaJRLHrKIYhSOnM6sMX+2EcU4GwzTO+0PfqIt4=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Iu1OeQH2KhTLeMU9DkCX1iwKK8i1ZJclB69ivZp+W5tzWwaaHg2LHXCb+yXcxEMRjz0Y/62zgLHGoPwVupQoEe7oZfZg2mua1hj6efjZNnfUrUgXAG9p40kkji4LNNktJ4hmFUkMvNZSTAIXNCrI5UxwShimwA2Ai6yVkJHqUGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lzm56MzI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H6NT7fIJ; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UIFB3Og8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CwImmzpY"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 14A7A1380267;
-	Wed, 18 Sep 2024 01:11:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lzm56MzI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H6NT7fIJ"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EA28711402D4
+	for <git@vger.kernel.org>; Wed, 18 Sep 2024 02:49:40 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 18 Sep 2024 01:11:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1726636294;
-	 x=1726722694; bh=+AM11uH+d++veDHcsQsPmFfsX2WMcnJ+yRQMiXMab/8=; b=
-	UIFB3Og8f0wTznUqBNM+7WhExnXIC9z02JEu3DBNKoCudsByCrPMgvsmm7mMD8TE
-	aTkFAKseuwmPOkt65PCFVukwwuVzCil7gG2slUYnlFunl96QIvFnxuu4+8K9V5qs
-	sQ+Yz171Ju0pqX4aaVYseQaZy/pI1JnmDRfE5G7R0IuysPMfLkx9baCUOHVRkwSd
-	cI4pZ/xqBvPCs44a2WUnRz5qPsaQrF78UT2Jz25WLE3BiFZqKx/Uu7M+sjw/p0YH
-	nlTLXoAFCayJ9pDWFNhkuNVv2g6BtDIoU0rOKMhan5raOh1psQeYprHm4s5QzgGA
-	TMZLPVc+t01v86GamXZhDw==
+  by phl-compute-10.internal (MEProxy); Wed, 18 Sep 2024 02:49:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1726642180; x=1726728580; bh=Q/05N00Oj0OKmzVGj4/W5cEYilHQQ49a
+	4DWgs6BXaxY=; b=lzm56MzIKFDkgfg751KJ8C5Gq+Oqo+uvgd/W8t7ul1HrKjp2
+	J0X5e/k+j2JpkD2SEbSpms6z481CtwnKoP6Gjwkx33nowskT3ZucszCHVNpRkrpp
+	TDJ2+eKUQJVtEjh4XFPyUaVbNKFROb85/UF/CtoAkeK78nH+OeRC6WDiFI7sBuFE
+	sqVbM699CNIe0P7MMeMiykZfjQB2XVH+2Ti7pmmGEeW2PTKcv7fTp8szYaRPphMd
+	JnczT5p3Z8KX532rEdqbnjIeALuyZg9AkZlmX7INsxGOp5s5n7jHGj8OwTgRM5TN
+	yfJel2dox8EBEz4ebw6tOskmBhMMv/3txsiJ8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1726636294; x=
-	1726722694; bh=+AM11uH+d++veDHcsQsPmFfsX2WMcnJ+yRQMiXMab/8=; b=C
-	wImmzpYS8KRM6uZGNSbwgKF/M3lUdyqt7P8tnqLco1Lk5MoCel1PkDhqLCo5mF9f
-	XDBobVgUUB423yEyKpxlvcLtqcpZBFUQOzFVj7ZNYyYaQhzas0wY77t4cXzwQRRB
-	+mOclYWlEQAChSo/2rJlbi+s37/kfo4akmYfZM1U/dnPkPMeK8krSE5HcWQ/NM7L
-	4OiBtI04EYUGqwZxeB9hsraKxdMd7fu2xRSpGk/dcB/13C2q4g0JegNKh5VQHYf9
-	FujaIk5Y5RpvVsnoKiHldDxftGi4NQJPYF8b4sDor/qa2D4Uq4dsRVCgzYqbAQ8T
-	e2cWDrjOrYGTPZBLlgdqQ==
-X-ME-Sender: <xms:BWHqZsgqhb-6D5pls8N6puOVG4cBcf7fcqVgicoh6kXtP4gQft-02A>
-    <xme:BWHqZlADeVjBSNbiVfZh4tP7vjqv-wtIGVxLPDMDloU3frL1TZCG_0S3Fyl09r4UK
-    g5qjzW-cuuMCYsNPg>
-X-ME-Received: <xmr:BWHqZkGhoMlHpNbpdbi-QSxfK9Ge3au4N56TI4jM84UBs5kFtg96cV7XRUb8i1aLWo_z7WCiNYii4Ik1q3KDRclmyOGanIYkNTWEaJcf7pjyXHwi>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekkedgleefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
-    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:BWHqZtR6FHUFe2F45FRBzC5MfYhHV4WqhsuNF-l-ZqCVp2t34RxeZQ>
-    <xmx:BWHqZpyIxo-1Ze3G8NbNYfNLLyxzfHfoCaTAaJoqiM6OhQMTQtcelA>
-    <xmx:BWHqZr7u-k5bCII1esB8l7wtGbtl3oFhHUhbrfhcWEJyFxMq1JGPVQ>
-    <xmx:BWHqZmzsG2FqkadrFpwEQTObBkZ5YLIyk6cQKG39qpPncg49p4nZ7Q>
-    <xmx:BmHqZk-NxzaiHuiIZOlCylr51nzKDFlKxHb-hLfvEFZPbjYhVrh3TgUg>
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1726642180; x=1726728580; bh=Q/05N00Oj0OKmzVGj4/W5cEYilHQQ49a4DW
+	gs6BXaxY=; b=H6NT7fIJY6LJ5r36iDjTqGDNSzDiWbPx46USQhMwkqr0rnAWtT5
+	vfUBUgc2nomVb7ptsX6Mmg9zqkIyp9hginHSg32aQdVS4UZSMl2zTXGnTHn2FSqo
+	2g359agAJBrOCnyC04i7VfXspQknIPSOiSxzEJ9RN7036FSxy9MmONYBNbU983tJ
+	DhgpxtwOG6ewqhGg9t8qIZrjlJH1hzt1IMTjWE/NxICMIdLxAFQfABWqMaE44VWm
+	eAJoIlOnRGDtEBQKXqBt0ha0dHixiBHFltsAbMSoubGlyJN/jAoqx55Ou12J1TM0
+	QNYY3lu+sGVvv5Ie8735ESi8eMukbTewbwQ==
+X-ME-Sender: <xms:BHjqZufvyj6RxQaZcw6LSAzCbZvJCpZuBLZA-6JVsaaML7hHFLryeg>
+    <xme:BHjqZoPL29I8gAfa57ED9fuGQZyx-dNUuf44v2MrqndJp0-7HQowmw0tAa5yA-NQ_
+    vdsq9rscmOsGjQOsg>
+X-ME-Received: <xmr:BHjqZviwkW7FdwSeeeSQYVSqc0xPtc0UmCFbDgtly7_zzKfUGCKOiyXGMKfKkbQ6AkS5m7eccUKBS8y8fg3EeBg8Pi1-9TE62Ocz0d5u7oaejjEb>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudekkedguddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    fukfggtggusehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
+    rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevhfegtdelfeefve
+    eludefvdeiffeuheffhfdvleefffekvdetudffueehfefhheenucffohhmrghinhepghhi
+    thhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:BHjqZr-VinJ_CXfFpTtf1VLd8QpfUkAk_cdSxaQQFuTTkR5d7vFrUg>
+    <xmx:BHjqZqsg4zHCiZSd5JQCKaM5slc8pW5B4-ouHqFQH66YHbBUdGw0zg>
+    <xmx:BHjqZiEnmTWfPyi4Z7dONwca9U5JJ4_liWzGumHKzd81CBRIuO2CxQ>
+    <xmx:BHjqZpPgZo5QNdmt_t3c4c7fQU1j1NQAZSWWu3o_IQTIz4ychebrhQ>
+    <xmx:BHjqZvX50Dfx5b7l35VY4vta3V904k-TVJPdtdKiLYOnLkm4ZQdhnMns>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Sep 2024 01:11:33 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 18 Sep 2024 02:49:40 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d264beb6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 18 Sep 2024 05:11:11 +0000 (UTC)
-Date: Wed, 18 Sep 2024 07:11:31 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id df849f2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Wed, 18 Sep 2024 06:49:17 +0000 (UTC)
+Date: Wed, 18 Sep 2024 08:49:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/3] cache-tree: refactor verification to return error
- codes
-Message-ID: <Zupg_VUWOfa_i7kU@pks.im>
-References: <cover.1726556195.git.ps@pks.im>
- <1f13bc0e3259ea9b76f1417303a8ef063f3a7cbe.1726556195.git.ps@pks.im>
- <CAPig+cQ472dzChHKgrL_DNRe4KMNHNVxR1Qh3n6M=OgtBkG1+w@mail.gmail.com>
+To: git@vger.kernel.org
+Subject: [PATCH] gitlab-ci: upgrade machine type of Linux runners
+Message-ID: <0dfcb4a7b38ca66ec50775928ecfb31c4bc2008b.1726642142.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cQ472dzChHKgrL_DNRe4KMNHNVxR1Qh3n6M=OgtBkG1+w@mail.gmail.com>
 
-On Tue, Sep 17, 2024 at 01:05:50PM -0400, Eric Sunshine wrote:
-> On Tue, Sep 17, 2024 at 3:13 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> > diff --git a/cache-tree.c b/cache-tree.c
-> > @@ -890,18 +892,23 @@ static int verify_one(struct repository *r,
-> >         struct strbuf tree_buf = STRBUF_INIT;
-> >         for (i = 0; i < it->subtree_nr; i++) {
-> >                 strbuf_addf(path, "%s/", it->down[i]->name);
-> > -               if (verify_one(r, istate, it->down[i]->cache_tree, path))
-> > -                       return 1;
-> > +               ret = verify_one(r, istate, it->down[i]->cache_tree, path);
-> > +               if (ret)
-> > +                       goto out;
-> 
-> Assuming I am understanding correctly that the original code was
-> leaking the strbuf by returning early, I was surprised that the commit
-> message didn't mention that the patch is also fixing the leak.
-> (Probably not worth a reroll, though.)
+With the recent effort to make the test suite free of memory leaks we
+now run a lot more of test suites with the leak-sanitizer enabled. While
+we were originally only executing around 23000 tests, we're now at 30000
+tests. Naturally, this has a significant impact on the runtime of such a
+test run.
 
-It just wasn't my main motivation here, so I forgot to mention it. Added
-it now though, so it's included in case I'll have to reroll. Thanks!
+Naturally, this impact can also be felt for our leak-checking CI jobs.
+While macOS used to be the slowest-executing job on GitLab CI with ~15
+minutes of runtime, nowadays it is our leak checks which take around 45
+to 55 minutes.
+
+Our Linux runners for GitLab CI are untagged, which means that they
+default to the "small" machine type with two CPU cores [1]. Upgrade
+these to the "medium" runner, which provide four CPU cores and which
+should thus provide a noticeable speedup.
+
+In theory, we could upgrade to an ever larger machine than that. The
+official mirror [2] has an Ultimate license, so we could get up to 128
+cores. But anybody running a fork of the Git project without such a
+license wouldn't be able to use those beefier machines and thus their
+pipelines would fail.
+
+[1]: https://docs.gitlab.com/ee/ci/runners/hosted_runners/linux.html
+[2]: https://gitlab.com/git-scm/git/
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+
+A test run can be found at [1]. This change decreases the runtime by
+about 20 minutes to 25 - 28 minutes in total. I'd be open to adjust this
+to use "large" runners, but as mentioned in the commit message that
+would cause problems when somebody hosts their own Git repository at
+GitLab. Is this something we care about?
 
 Patrick
+
+[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/215
+
+ .gitlab-ci.yml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index 80b1668ebe..4abfbc3e20 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -9,6 +9,8 @@ workflow:
+ 
+ test:linux:
+   image: $image
++  tags:
++    - saas-linux-medium-amd64
+   variables:
+     CUSTOM_PATH: "/custom"
+   before_script:
+
+base-commit: 3fb745257b30a643ee78c9a7c52ab107c82e4745
+-- 
+2.46.0.551.gc5ee8f2d1c.dirty
+
