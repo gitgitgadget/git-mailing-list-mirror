@@ -1,62 +1,62 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722E71BDDB
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 18:34:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CF3210E4
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 18:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726770897; cv=none; b=Y/wLC1YhJxr9B7Fo69FtbKdn37OCT7KoxKV6CtYUIs5vE2k2CB7tVs+9zECvfppX/5KZ4h0YgkqKtLzrj99j13ThBzuP1jsjWiMyCK41r9+5TrHxqzKunqYfVjvoFpXyfrPJz4qv7eMe2Y9ZilyDdko9vhGrOmt4vz8TRAirFGM=
+	t=1726770898; cv=none; b=Zlm37VKt0FVx45uhXoXegejcpoHFZdqFNI7nygv5uY0IesDBmGKPI/OubgumLELiHFx+wCUihN7OkhZJP06KgVUupErbQSYA/U0WOtTk8mmsv0l5UY+l6zn7Eek9SDI6ZAJpigXa/S6v81NWsHp5OoHAcQN1MOWIxDCP7PZeNno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726770897; c=relaxed/simple;
-	bh=IJ5y4KN8AK8EXYwSJqFd3l1X3QZlCJR5CGurpN7nf1k=;
+	s=arc-20240116; t=1726770898; c=relaxed/simple;
+	bh=Ep8u4uAsIkbSVc4zeAZziOsmGnwEWPUlgRyJXOcYPLg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bYFOMubAY6twFRPIfLr/CndjIbU5ZrxgPn0sW7RUGnxM1FmGZPMIwImBmcAOemnFbkkMjnm2StQsLeuzA0gfhxlY82/cg7gMrZb/7PLV0225OygJmavM5jphoq/QLolmUH4Z2SVoc7MfhikOyhRuVfWGu+2vueehH4kgCaWPE4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iHop9Jzo; arc=none smtp.client-ip=209.85.208.48
+	 MIME-Version:To:Cc; b=Gbl4w8LRYT+VIfDreOEb6kg7SYPBhtLC65InyL8wfpcTS/dp+X7jUHcpJSMVg/DhgU3lB8AtBoPiCLq2AqZOL9IH9ab71suHcCiIL17thag/AZtyAaA74m4A4SeIDKROQBVePGTnDax7hFDNerureyIVJdxUflaRw3rchg/rxrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HhKr112R; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iHop9Jzo"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5c27067b81aso1564467a12.0
-        for <git@vger.kernel.org>; Thu, 19 Sep 2024 11:34:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HhKr112R"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5365cc68efaso1292325e87.1
+        for <git@vger.kernel.org>; Thu, 19 Sep 2024 11:34:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726770893; x=1727375693; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1726770894; x=1727375694; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FCeGLH2ZioJbTl6shmLbUkJiRDQ3GKFwSJFKIpDui1k=;
-        b=iHop9JzoQ7nr1wT7dViPGEVwBeVYa/0RmMIz97JQmREdRzh3vWmh8WCYn/6MlcuHz9
-         aponLh22SOdesbNpmzUEaP4AIuDnA2HO2YRX1fvJXwkO7q1D09i1daWdJBVnrXID/Tfc
-         8XNVOZ7lnqxaDZO1fFlKiGsdtch7V7vfscgjbABWgH0jUjQJL8w7Eu34jY+Yrk6WvTpv
-         wwaMoJdfvzr8MAfHqtI5bgyqWcglJ5zowipHHVSUanVagIC8R7jWZajnoSUOSSLpABc/
-         /hCZL+4plBuZy1U9Z53GIM1c0OxrBXpqPftAh/caSqMnwtn73v6ho98RlBhiD4wH4wak
-         Vznw==
+        bh=lzz0fQu2Pji62vgAE6CBoo8OgKQrKXtAnN0kwspedaQ=;
+        b=HhKr112RrpvWD9ex9DvBbMpLqHYBuES0LWHthyptUZEJWO+U1+MGrRN0hkQJ13YP4l
+         Bl/s95kpFqRIgyqEI5aJRpAcOUBMjuyAMXHbxjHoonKGokZk/SJ5mrvBGcZ0wmIQdnG0
+         gukIuQV3/80VJdBY2q4F4bCoKsDq1rraD/8iZ+ETcPq3C1Dpi6r9EG1gz6sdLGw5XzRa
+         N/w6Mf0mNdj03Qh+a4MZ64LotYwKZQWe5wnDyDjXxxBcLw0WtPwWfWZcRv3a2Lul8RXh
+         1BGO1hcNDhZaJUZt15z3blIY4QDGykACTlf30sigb8hj594BITJ2W9uiLh693AHa1l+g
+         PY0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726770893; x=1727375693;
+        d=1e100.net; s=20230601; t=1726770894; x=1727375694;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FCeGLH2ZioJbTl6shmLbUkJiRDQ3GKFwSJFKIpDui1k=;
-        b=K07vr2RtMgQUpAS9eqjiRkFb5pgWvNsa6xRX3FNdzxB3TnCPnGgxB6n/pbHsV/4LUG
-         9VYN/qG3LlXanGM356a+AY2PNfUkeIi6PZ1iM9o78cF8BENLzcYqcjP5k4LNviCvHPr+
-         HGDux75OHNnjaCJCWLTMt3n/2FeOyNyCY+S/JXXXHhSzTCIy7ze4BsAH4gSaaOSrymKz
-         tG06I5QBGc+cHjYL8Pl3UpZBNB3QL8GO0zTCX5jB+Mv3wToGAgm50bn8rnInszOqOb4X
-         Ra0Fg5vTeKs+IdjAF+vQUDispq/n2bSb7xrWfVWtZFNJBWLW38FsZZEy9XAFN+xJdu1j
-         Burw==
-X-Gm-Message-State: AOJu0YwMlLFriauEZiw/N0NtJo4qvB9Nzf1dzi+LyEKm19uis9q7y2jV
-	jr+iLHy5bIPHfPHif1fKRXPXzP+FehYsj5gHtWHcPq1WphrpEjL0X2fAHg==
-X-Google-Smtp-Source: AGHT+IFWOPHI+caYuDAq/fg0NWtCwqG6wY2Q5g4QM1fPYXfq74hcQuuum8JGA9HxqOjDb3hdGjsxTQ==
-X-Received: by 2002:a05:6402:3219:b0:5c4:2fa2:93ed with SMTP id 4fb4d7f45d1cf-5c464a43a9fmr146559a12.16.1726770893210;
+        bh=lzz0fQu2Pji62vgAE6CBoo8OgKQrKXtAnN0kwspedaQ=;
+        b=V5Wgrq/1k59aEp6S20kPvyTqXW5l5oR2mJh5NzTp3Jg1mHu4Ks+4AZ/9bEe42a1aUH
+         lB8ujNa+wlhzQdZNxHtvzQ0vug3OoJDBHdPLmrdt0NBeEccTlI1eE1/mPX5WlJl/xeO4
+         pH168Qz7xsfI1UgxIlPUECbjMnbbXVNbFTLPGu3HE4GbFqUcTjRatze+Qt4Ttsz/kYJ+
+         romM8qKmjyhqZcEwrnv8hG+Mw1nimoQnVGRDUXyjjZXPsX3leh6H8V9JOQ1Gi4PgsuJy
+         xlL1t7bFiHiCuFNlH9yuh3t1xHkzS41atFGeQXfrQFt1tQD/dvT6nUD2kphlU/im+a/c
+         XpwA==
+X-Gm-Message-State: AOJu0YwPo/oqdPAoz7oAD+EXrVnVPmeHMv6viLC0brLxfLdS/jmnVuIZ
+	8S+q38Hg0Rd611ulHomv2eAW14TlClXnCLNgr+HzsJwh4wVF9tC86Cejdg==
+X-Google-Smtp-Source: AGHT+IFfXqOGJbLH/Ebec+zDzCDLH+UGKNRkCnbeipWinus4SA19iWyvlkeqq2xTf0B1zicYYZ4lgA==
+X-Received: by 2002:a05:6512:3b89:b0:530:aea3:4659 with SMTP id 2adb3069b0e04-536ac2cba88mr165323e87.9.1726770893923;
         Thu, 19 Sep 2024 11:34:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c42bb89e2asm6268098a12.73.2024.09.19.11.34.52
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c42bb492a1sm6312204a12.8.2024.09.19.11.34.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Sep 2024 11:34:52 -0700 (PDT)
-Message-Id: <877bbf5c3904c2453b4dfe0eed6695fa3fafe063.1726770881.git.gitgitgadget@gmail.com>
+        Thu, 19 Sep 2024 11:34:53 -0700 (PDT)
+Message-Id: <0fb72f40748f9c236a9d3bfbf7f4e807aa3bf59a.1726770881.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
 References: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
 From: "Andrew Kreimer via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 19 Sep 2024 18:34:30 +0000
-Subject: [PATCH 10/20] object-file: fix a typo
+Date: Thu, 19 Sep 2024 18:34:31 +0000
+Subject: [PATCH 11/20] pretty: fix a typo
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,22 +76,22 @@ Fix a typo in comments.
 
 Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 ---
- object-file.c | 2 +-
+ pretty.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/object-file.c b/object-file.c
-index c5994202ba0..21266429817 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2275,7 +2275,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+diff --git a/pretty.c b/pretty.c
+index 5e5ae452530..6403e268900 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -2205,7 +2205,7 @@ static void strbuf_add_tabexpand(struct strbuf *sb, struct grep_opt *opt,
+ }
  
- 	/*
- 	 * Common steps for write_loose_object and stream_loose_object to
--	 * end writing loose oject:
-+	 * end writing loose object:
- 	 *
- 	 *  - End the compression of zlib stream.
- 	 *  - Get the calculated oid.
+ /*
+- * pp_handle_indent() prints out the intendation, and
++ * pp_handle_indent() prints out the indentation, and
+  * the whole line (without the final newline), after
+  * de-tabifying.
+  */
 -- 
 gitgitgadget
 
