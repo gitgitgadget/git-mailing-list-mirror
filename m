@@ -1,112 +1,77 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from binarylane-bailey.stuart.id.au (binarylane-bailey.stuart.id.au [203.57.50.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9992E1991C8
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 08:58:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EA413B2B1
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 10:16:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.57.50.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726736321; cv=none; b=Du8bIHbxCAT4l6FJphioZ78tyhiPwKX7bb8i2p6a7qpvBcuHSAKP3FDcaRkCX1ERdwrLejijteIJcxfKQdaeNoZd4i/4ANp/Crg8Tc+jKeQyveCbRkmEGM0JeAzG8RgTckAj8IYBmeBNhvOPQRt6RUXXyeH6PDK/nCd5DiKzjO8=
+	t=1726740995; cv=none; b=iyL700tarocPJAY7xIBrzaPwcpiwxQ7H/KUAPaazTKyFKd0QiXWISE5MKMZ1ac2GpZb84WoHUIOHAEmN8X2KIRcLYeXx/zEkKg/NN3W1UPybheJPr5YextnARoiHfC5HqzN9wCuzCNwO4/6aYgn+cmtH+LQzAEO1YYVmF2kPfUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726736321; c=relaxed/simple;
-	bh=krfyhyqklLljKbVs9vfGszRGpdUn/VxnbQ4hgknHdVc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h9GC/jXTy6zSZu5XnvGtdwCLT8PBHFNl4YD+e/YhwBzXKn1r6SwAVSYwb3phMJJ2HSQLLWhDmpwZ6a3Vp/jrvP2HVvwAZSwUUdDtPe/0UmqhkuoXlJzAwcOFAFFYW30A/8s8g9GgQsm9IvhvlgvvE/QHgXdluatXqMAWyKpK+/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-846c6eb4055so21826241.0
-        for <git@vger.kernel.org>; Thu, 19 Sep 2024 01:58:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726736317; x=1727341117;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MgT9xRjQbHBrnUxADFrQakt8lIpcQapMPF96v4dDtwc=;
-        b=a/O8VDDQEgp/e5P0PPrt1hSOKl5ZitVL4RTaJescaGo55aWzKoDsSIGHao5V62fiY/
-         ivHMwwsr8MH5boGOY7+U3ncOwXV3mAA6ZqihArPCeRWQzzhsvWz5D08IIo9VS/4dO8BR
-         UN2xAMxwHfud9648cCAT4hOWT6P8x2kFoY+vpeAobbVY2BBjJUwPKxUeh8U8JifVyZYp
-         L3/59ZYSIHfibeFsyYnxgQ8V1DFEyptuMMM0Z+I5XHJ/pl1dEr3B3+IxWSoz5wFes1P0
-         1fzkffA4ND6gWX5ZpesOCqoK3YmcSnPARDKw3n/vWo5mS0d9XPBUZ+Ct1xWDlH6ou7vI
-         Lj2g==
-X-Gm-Message-State: AOJu0Yw2O9GYnzPeLxLmk8Cmb8zb71irAqEM/gbU9/w1MivbrzcGWdvv
-	9V+q+hNckMHVWab/6230BKYnZyhvmMxsTwXFBXiOuAVPCeoEsDkrXRgKAqf1DeHq9Tf4CFey5Zq
-	iROdr76KIDdBlqxNiZ1csDEYLTsBQOA7O3vs=
-X-Google-Smtp-Source: AGHT+IHSdAKIFflrf9gOdKNhqwR+qBMB4CqcPz+nWubiIP81WCRpaf6/zw8GYBAdJyNx8UkBSGFozsaDE0895gcF+R4=
-X-Received: by 2002:a05:6102:3e84:b0:493:216f:eb7a with SMTP id
- ada2fe7eead31-49d415a8446mr8769216137.5.1726736317398; Thu, 19 Sep 2024
- 01:58:37 -0700 (PDT)
+	s=arc-20240116; t=1726740995; c=relaxed/simple;
+	bh=EmSkErX9rA1x2b/X1faJfUSkE4v88L3EjtsPuNvIKCQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u7XO0KCTL0v37MbdSYeNn7F5tsiSWzF0T1idd0cB/pQZnvmgvNXsdO9MTSP5woAdrjLQXCABCHX12BLgesLqB9E2ygLwsbrT1kyitRYJz/BlBHtcKqPM1Jjoc/cQ3rF29UJpdV3Z+iiz3SsvotG5+XTM0OREWRG8XcuFmfAPcwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stuart.id.au; spf=pass smtp.mailfrom=stuart.id.au; dkim=pass (2048-bit key) header.d=stuart.id.au header.i=@stuart.id.au header.b=co630kgS; arc=none smtp.client-ip=203.57.50.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stuart.id.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stuart.id.au
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=stuart.id.au header.i=@stuart.id.au header.b="co630kgS"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=stuart.id.au; s=dkim; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
+	From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=d5BSiGBeme/pIy5PRFBi8UqwFiwBwEJNIdMODikKQ/M=; b=co630kgS6G/Eib83itcjLihMWg
+	pjPiM1d7THLvb/jEO3x+vwL9btTu+EzQ3eQCKHHBHgU0GoBWn1F4qSJuuAy2BDS/EcYh7gJ/3FNJJ
+	WCiahjP9/slEyRf+rfe/36wKbLzAUI6+4pgK9ntnCSzWE7tWk4ROdh9TBJY6R1oNH4XRkxrNqTisY
+	uCPt1kPzYMoKx8dI6Fmd9f1ZFvxJfE4cxZNSBJtpOCIKkxK/lXe9Z1e8lkRLFj/K7T+ibWzsPPQXY
+	EM5r3xU0skSu5R9xVrtQSZkClWzQER5U0jLLQezEBxn1uNlqBzTt0eU32pymcig/YBSDiFRKF5nMp
+	INXIaywQ==;
+Received: from [1.146.104.215] (helo=[172.27.179.148])
+	by binarylane-bailey.stuart.id.au with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+	(Exim 4.96)
+	(envelope-from <russell+git.vger.kernel.org@stuart.id.au>)
+	id 1srED6-0005VC-12;
+	Thu, 19 Sep 2024 20:16:28 +1000
+Message-ID: <3b579ddd-b386-4daa-ad63-1e75522b7462@stuart.id.au>
+Date: Thu, 19 Sep 2024 20:16:26 +1000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <E1sr5iF-0007zV-2k@binarylane-bailey.stuart.id.au>
-In-Reply-To: <E1sr5iF-0007zV-2k@binarylane-bailey.stuart.id.au>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 19 Sep 2024 04:58:26 -0400
-Message-ID: <CAPig+cQ8=Y6sVvN_dBo_GQ5nLkQ4GJ7AM6mE2kt_2QV7CR0omg@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: "git worktree repair" modifies the wrong repository
-To: Russell Stuart <russell+git.vger.kernel.org@stuart.id.au>
+To: Eric Sunshine <sunshine@sunshineco.com>,
+ Russell Stuart <russell+git.vger.kernel.org@stuart.id.au>
 Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <E1sr5iF-0007zV-2k@binarylane-bailey.stuart.id.au>
+ <CAPig+cQ8=Y6sVvN_dBo_GQ5nLkQ4GJ7AM6mE2kt_2QV7CR0omg@mail.gmail.com>
+Content-Language: en-AU
+From: Russell Stuart <russell+git.vger.kernel.org@stuart.id.au>
+In-Reply-To: <CAPig+cQ8=Y6sVvN_dBo_GQ5nLkQ4GJ7AM6mE2kt_2QV7CR0omg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 18, 2024 at 9:27=E2=80=AFPM Russell Stuart
-<russell+git.vger.kernel.org@stuart.id.au> wrote:
-> What did you do before the bug happened? (Steps to reproduce your issue)
->     /tmp/gb/a$ git init r
->     /tmp/gb/a/r$ git worktree add ../r.foo
+On 19/9/24 18:58, Eric Sunshine wrote:
+> I have a tentative fix implemented which seems to handle this case 
+> correctly. Once I've finished polishing it and formalizing the
+> related test, I'll send out a patch.
 
-Had you run `git worktree list` at this point in /tmp/gb/a/r/, you
-would have seen:
+Fantastic.
 
-    /tmp/gb/a/r      3699610 [main]
-    /tmp/gb/a/r.foo  3699610 [r.foo]
+I noticed repair hadn't changed the directories I thought it had, but
+had said it was changing something.  Pondering what on earth could of
+happened, my first thought "surely not" - and then checked the
+originals.  It caught me totally by surprise.  Everyone I showed it to
+expressed the same surprise.
 
->     /tmp/gb/a/r$ cp -a ../* ../../b/.
->     /tmp/gb/a/r$ cd ../../b/r
+I can't resist pointing out if "git worktree add" had of preserved the
+relative paths I gave it, it would not have happened.
 
-Had you run `git worktree list` at this point in /tmp/gb/b/r/, you
-would have seen:
 
-    /tmp/gb/b/r      3699610 [main]
-    /tmp/gb/a/r.foo  3699610 [r.foo]
-
-from which it can be seen that /tmp/gb/b/r/.git/worktree/r.foo/gitdir
-is pointing at /tmp/gb/a/r.foo, which makes sense since that gitdir
-file is an exact copy of /tmp/gb/a/r/.git/worktree/r.foo/gitdir. So
-/tmp/gb/a/r.foo is being shared by both repositories, /tmp/gb/a/ and
-/tmp/gb/b/, and neither one knows about /tmp/gb/b/r.foo.
-
->     /tmp/gb/b/r$ git worktree repair ../r.foo
->     repair: gitdir incorrect: /tmp/gb/a/r/.git/worktrees/r.foo/gitdir
->     repair: .git file incorrect: /tmp/gb/a/r.foo
->     /tmp/gb/b/r$ cat .git/worktrees/r.foo/gitdir
->     /tmp/gb/a/r.foo/.git
->     /tmp/gb/b/r$ cat ../r.foo/.git
->     gitdir: /tmp/gb/a/r/.git/worktrees/r.foo
->     /tmp/gb/b/r$ cat ../../a/r/.git/worktrees/r.foo/gitdir
->     /tmp/gb/b/r.foo/.git
->     /tmp/gb/b/r$ cat ../../a/r.foo/.git
->     gitdir: /tmp/gb/b/r/.git/worktrees/r.foo
-
-The implementation of `git worktree repair` started out (relatively)
-simple, handling the most common cases, and has been extended to
-handle additional cases when identified and reported. The case of
-merely copying a repository and its worktrees (and leaving the
-originals intact) is not yet implemented, so the above all makes sense
-given the current implementation.
-
-> What did you expect to happen? (Expected behavior)
->     I expected "/tmp/gb/b/r$ git worktree repair ../r.foo" to alter the
->     repositories it was run from, ie those under the directory "/tmp/gb/b=
-".
->
-> What happened instead? (Actual behavior)
->     "/tmp/gb/b/r$ git worktree repair ../r.foo" modified the repositories
->     under the directory "/tmp/gb/a".
-
-I have a tentative fix implemented which seems to handle this case
-correctly. Once I've finished polishing it and formalizing the related
-test, I'll send out a patch.
+-- 
+Regards,
+Russell Stuart
