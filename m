@@ -1,112 +1,185 @@
-Received: from binarylane-bailey.stuart.id.au (binarylane-bailey.stuart.id.au [203.57.50.54])
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279ED1991A1
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 11:40:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.57.50.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA331198E99
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 12:15:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726746037; cv=none; b=YMXlQljPKEf5jqp1CNaNnp+eDKuDcVYH8t3SLoDiP0yPDNluSmFcyA1rPQzZeRx/mFln57vPUnHIdQtEbRAll/rg93fVAd/q5Io/AH6eSuBBr9+lwHAZhDSUVIrwBpRVjEb4GBjna6ZO+ZjR8bRvo8WXytN+zj4K5BUzKuJwcoM=
+	t=1726748147; cv=none; b=AskBQGpfuPXqYr6fPjhMr5pG8zbOSSJXlSoPsfs3rHzARL7bmY6KvsjCoEhbAGv4iPq/2BApd0JjUcYQ3iK7rFVt2qNYrVCgpFap+e0pTBQ26pNnj44B40YIgvg6L3+uEYy7xUx5r6bLdq9qir86Qy1u+4hk06q9pV2wugV7GKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726746037; c=relaxed/simple;
-	bh=5PjoOgr0DXFszmxWFf1dVfkYydMuL9HQSaudJxInEVc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O9IkAt0Gc1JKdMmmxJBI06d1sy5/O5b6YImZugLitkAMtr8e07I5mYHzidaw6wyicCrEvXGbqjWQxjRMLdXY0LGOlWLGBeBh/66OZt5s4N1DpqliT4BweKYdc4cr6xXcuK2TAn9St5i3EBfoV4/HAjws+YBc+hxKfCxWABrWAtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stuart.id.au; spf=pass smtp.mailfrom=stuart.id.au; dkim=pass (2048-bit key) header.d=stuart.id.au header.i=@stuart.id.au header.b=Mh4uqXQt; arc=none smtp.client-ip=203.57.50.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stuart.id.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stuart.id.au
+	s=arc-20240116; t=1726748147; c=relaxed/simple;
+	bh=lpmkYl36M/BhiLKMTnZ35nYtiyeYceuERQptkGzkCLI=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=R4oeQib8jtJP/sXxOVNnb3wk/lpraNFLdjz15r0c24sAGFWgmGE1AM7NUlM713yHsWu6FSFZI8ckKIgYnzD+j36TQXhzb+BBze0n/ZnktiQyywikZ/VeNi/ahe3qOV7QUd3e2px4rnSCBsRBx0vfRuS2jkp6wZ6BmeuYNbu7rgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=gL2ULyA0; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stuart.id.au header.i=@stuart.id.au header.b="Mh4uqXQt"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=stuart.id.au; s=dkim; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
-	From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=po11skpJ6t2Fh7e2SakO11zBu6J6GAO2RxNvTDcmLCU=; b=Mh4uqXQtGB6YSLFr8/9SKm/H8p
-	h14LFc0UXk0B8EWzXjbZhqM/wwnzFpv5Pr4xCR9HBFhgWPMIrE3TxyU7SVNTJlQORsG508pwvGeEA
-	8Bj5HSUSXwUOX9CKUf/NK97uSPYymoFAQmORXWTg1+14B8cHbGBTSml34im13/kNRV3pf9il5/FVq
-	iSAairyAJTygLvKtQlZl6FLoCEKmBXJRuiZxhQSeYlMU1S8GORDPwN+toxdhG7B1/D9Q6/SD6ngjE
-	VSTfm0GVk+AbPa5zJvEv29yCpnbqfo8IiUwXXkb4Hj+tLmlbPBQPyQwzrtr8rh1qNnli+8Ayiu50E
-	u+qF41RQ==;
-Received: from [1.146.104.215] (helo=[172.27.179.148])
-	by binarylane-bailey.stuart.id.au with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
-	(Exim 4.96)
-	(envelope-from <russell+git.vger.kernel.org@stuart.id.au>)
-	id 1srFWQ-0006ML-37;
-	Thu, 19 Sep 2024 21:40:31 +1000
-Message-ID: <4781ff6e-c20a-4340-851b-c9d324d1fac8@stuart.id.au>
-Date: Thu, 19 Sep 2024 21:40:30 +1000
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="gL2ULyA0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=1jztEWprNOLqjnyIyE1SXtLsdgMY9G6H9HHzQzyiI/E=;
+ b=gL2ULyA01AUd20eJsc218wQJ3MiSsuVG56Gmzgb8HNfDIVM3kUGdhcEBdnjRTDfcknUiscos2Int
+   cu8f4hk3RptMDqHGCYHbvlVPQG8l+goDY5sguzQFYOkcOxQGLmVbawJKkRIPhKDQIFXWrYUCNxJB
+   MVqwJ/l3WrigerGXQge4bxr+fLrYajc5bxOHO3mE5KqyYn6bCOXfcokp0qhi0hN5AIjr6rml1UdS
+   +7szRF/hy8BNchX06asVb16y+eKuRZ64749khbZKkf0VdMPDKc8vYSrVgJQJSS9bcsSBI/BzRjTz
+   xfs/K/kkCOkmqaoVIIh21GuXXkorz0iZsaBqSw==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240709 64bit (built Jul  9
+ 2024))
+ with ESMTPS id <0SK200EMD7E29570@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Thu, 19 Sep 2024 12:15:38 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,	Taylor Blau <me@ttaylorr.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH v3 2/2] fetch: set remote/HEAD if it does not exist
+Date: Thu, 19 Sep 2024 14:13:26 +0200
+Message-id: <20240919121335.298856-3-bence@ferdinandy.com>
+In-reply-to: <20240919121335.298856-1-bence@ferdinandy.com>
+References: <D43G2CGX2N7L.ZRETD4HLIH0E@ferdinandy.com>
+ <20240919121335.298856-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: "git worktree repair" modifies the wrong repository
-To: Eric Sunshine <sunshine@sunshineco.com>,
- Russell Stuart <russell+git.vger.kernel.org@stuart.id.au>
-Cc: git@vger.kernel.org
-References: <E1sr5iF-0007zV-2k@binarylane-bailey.stuart.id.au>
- <CAPig+cQ8=Y6sVvN_dBo_GQ5nLkQ4GJ7AM6mE2kt_2QV7CR0omg@mail.gmail.com>
- <3b579ddd-b386-4daa-ad63-1e75522b7462@stuart.id.au>
- <CAPig+cTkpLLoTxTa-8xfycNGFibN_M71+kkHtT-wgp6HRPi-aw@mail.gmail.com>
-Content-Language: en-AU
-From: Russell Stuart <russell+git.vger.kernel.org@stuart.id.au>
-In-Reply-To: <CAPig+cTkpLLoTxTa-8xfycNGFibN_M71+kkHtT-wgp6HRPi-aw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAG9xX/D4s8daHljmGGnp1CSyZk/gLIAnMTOmriCmosDcY56TjqKtj4i+RHVW197
+ KJNxTvsFHA5dJAucBoNDoCNy0kBC6M5vrP0T17a/EVqRZ7/flEhDNNHfSnt1SIkA
+ jEgffzE73N/zWB6SWfQh4rBTlQQ3tDClHUU2vOoJxcfVcPd9UD2EiDOqvXg2tTtU
+ pjP3nsGr9V3TcUb5pPFqYrbhEN+LRUosjiq2Ek19CzED0HijP19weUimd/Wwu4cn
+ xp4ZZq6TiJLvtFvkWyBFnvTkWpSFt3oqcEoGodEnQ491W9pPXMYYEC+WHZXUoeFG
+ ByjGJBII5Uc/8p0FMeEZ3FfkhcooVAOg0356Hi1Zs8CVEbfIRs3ws0qJPTI9BzGw
+ LXtcX9E7TvGspVlRCSB8zRldJOgXzjCB0DCzx6yWVkO9R8RBzKag6eCaa3kK85J7
+ xhfYk5FpTgPu2F2GcgIMfdZ/Mv3ukhoOyBWnvR9O+gtkFiF9HHIT575g
 
-On 19/9/24 20:47, Eric Sunshine wrote:
-> The idea of relative paths has been discussed previously[*] but was 
-> never implemented; although they may help some cases, they break 
-> other cases or at least make the other cases more difficult. For 
-> instance, relative paths only help if the main and linked worktrees 
-> move together in some uniform fashion, but don't help if they move in
-> distinct ways.
+If the user has remote/HEAD set already and it looks like it has changed
+on the server, then print a message, otherwise set it if we can.
 
-If breaking when moved is the criteria, then absolute paths always
-break.  Relative paths break slightly less often.  So it seems to me
-relative paths are an improvement - but not a fix.
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+---
 
-It's always possible to break something by moving the wrong thing.  For
-example moving the .git directory in a normal repository would create a
-mess.  Yet, unlike moving worktrees (most?) people do not attempt to
-move the .git directory in illegal ways.  They always copy/more copy the
-entire repository.  It's intuitively obvious if you keep the .git
-directory in the same relative position, it will work.
+Notes:
+    v3: - does not rely on remote set-head anymore so it only authenticates
+        once
+        - uses the new REF_CREATE_ONLY to atomically check if the ref exists
+          and only write it if it doesn't
+        - in all other cases the maximum it does is print a warning
 
-So my uniformed guess on how to "fix" the problem of people
-moving/copying worktrees is to make equally obvious they must remain in
-the same relative position to the parent.  One way to do that is to use
-the same structure hg uses, which is the child worktrees must all be in
-the one common parent directory, and the parent directory contains the
-.git metadata.  It then becomes self-evident you can only more/copy the
-entire thing - not bits of it.
+ builtin/fetch.c | 71 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
 
-> [*] The previous discussion was in the context of an earlier 
-> implementation of git-worktree, long before there was a "repair" 
-> subcommand. In fact, the very original implementation of linked 
-> worktrees
-
-Thanks.  The starting point of "linked git directories" (I presume to
-save on metadata storage?) explains a how worktrees ended up where they
-have.
-
-Interestingly, people (including me as it happens) start out by trying
-to emulate the hg approach using a single parent directory to hold a
-bare repository, and the child worktree directories.  Then they discover
-bare repositories mangle the remote links, and give up on the idea.  In
-my case I then tried moving/copying the worktrees as a group using "git
-worktree repair" to fix the mess, which eventually lead to this email :)
-
-Others have published of hacks / tricks that try to solve problem in
-other ways, eg: https://github.com/Kristian-Tan/git-worktree-relative
-
-None of them work very well.  Going on what Google throws up, moving
-worktrees remains a commonly felt pain point.
-
-
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 55f97134aa..2746d40bb5 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1577,6 +1577,70 @@ static int backfill_tags(struct display_state *display_state,
+ 	return retcode;
+ }
+ 
++static const char *abbrev_ref(const char *name, const char *prefix)
++{
++	skip_prefix(name, prefix, &name);
++	return name;
++}
++#define abbrev_branch(name) abbrev_ref((name), "refs/heads/")
++
++static inline int set_head(const struct ref *remote_refs)
++{
++	int result, ref_changed = 0;
++	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT, b_local_head = STRBUF_INIT, b_prefix = STRBUF_INIT;
++	const char *remote = gtransport->remote->name;
++	char * head_name = NULL;
++	struct ref *ref, *matches;
++	struct ref *fetch_map = NULL, **fetch_map_tail = &fetch_map;
++	struct refspec_item refspec = {
++		.force = 0,
++		.pattern = 1,
++		.src = (char *) "refs/heads/*",
++		.dst = (char *) "refs/heads/*",
++	};
++	struct string_list heads = STRING_LIST_INIT_DUP;
++
++	get_fetch_map(remote_refs, &refspec, &fetch_map_tail, 0);
++	matches = guess_remote_head(find_ref_by_name(remote_refs, "HEAD"),
++				    fetch_map, 1);
++	for (ref = matches; ref; ref = ref->next)
++		string_list_append(&heads, abbrev_branch(ref->name));
++
++
++	if (!heads.nr)
++		result = 1;
++	else if (heads.nr > 1) {
++		result = 1;
++	} else
++		head_name = xstrdup(heads.items[0].string);
++	if (head_name) {
++		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", remote);
++		strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", remote, head_name);
++		strbuf_addf(&b_prefix, "refs/remotes/%s/", remote);
++		if (!refs_read_symbolic_ref(get_main_ref_store(the_repository),b_head.buf,&b_local_head)) {
++			ref_changed = strcmp(b_remote_head.buf,b_local_head.buf);
++			if (heads.nr == 1 && ref_changed) {
++				printf("The ref \'%s/HEAD\' has changed from the locally recorded "
++					"\'%s\' to \'%s\'.\n",remote, abbrev_ref(b_local_head.buf,b_prefix.buf), head_name);
++				printf("Run \'git remote set-head -a %s\' to set it automatically.\n", remote);
++			}
++		}
++		/* make sure it's valid */
++		if (!refs_ref_exists(get_main_ref_store(the_repository), b_remote_head.buf))
++			result = 1;
++		else if (refs_update_symref(get_main_ref_store(the_repository), b_head.buf,
++						b_remote_head.buf, REF_CREATE_ONLY, "fetch"))
++			result = 1;
++		free(head_name);
++	}
++
++	strbuf_release(&b_head);
++	strbuf_release(&b_local_head);
++	strbuf_release(&b_remote_head);
++	strbuf_release(&b_prefix);
++	return result;
++}
++
+ static int do_fetch(struct transport *transport,
+ 		    struct refspec *rs,
+ 		    const struct fetch_config *config)
+@@ -1646,6 +1710,8 @@ static int do_fetch(struct transport *transport,
+ 				    "refs/tags/");
+ 	}
+ 
++	strvec_push(&transport_ls_refs_options.ref_prefixes,"HEAD");
++
+ 	if (must_list_refs) {
+ 		trace2_region_enter("fetch", "remote_refs", the_repository);
+ 		remote_refs = transport_get_remote_refs(transport,
+@@ -1790,6 +1856,10 @@ static int do_fetch(struct transport *transport,
+ 				  "you need to specify exactly one branch with the --set-upstream option"));
+ 		}
+ 	}
++	if (!set_head(remote_refs))
++		printf("Ran into issues with \'%s/HEAD\',\n"
++			"use \'git remote set-head -a %s\' to investigate",
++			gtransport->remote->name,gtransport->remote->name);
+ 
+ cleanup:
+ 	if (retcode) {
+@@ -2020,6 +2090,7 @@ static int fetch_multiple(struct string_list *list, int max_children,
+ 	return !!result;
+ }
+ 
++
+ /*
+  * Fetching from the promisor remote should use the given filter-spec
+  * or inherit the default filter-spec from the config.
 -- 
-Regards,
-Russell Stuart
+2.46.1.546.gaa0cd55cd3.dirty
+
