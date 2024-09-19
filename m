@@ -1,80 +1,100 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DB5381B8
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 20:57:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0995381B8
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 20:58:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726779474; cv=none; b=E0ZrVIuOJrqZZInVhNmsVgmQtRMJmixkNviM8h3b56bO4Glg9cZp/AvRAJRNrAwNpYKLdJAFGb+lpuX9eezAJXpebgK3voseSfmU98TRUtqmk0Chu+ccp/iFBhNxh02KZIzYH2QTGp9rn46MJkngn+YdLyF90sNwa/IBHXRJAjk=
+	t=1726779539; cv=none; b=tncRooNBJD4qfQ510Kd64MyWyyyyVXDA+kqUqY+K0MozTT6aa6BCX8pudenVQqSvLIT8llEZN9kSA/Pygm8ObO5W5F+iyZgbMnqcg9wOZHigKk6wZPrpCqdsLVRDiWhFPIOIrwjv4Zj1eUr+jr6JW1ewaLmnxpPxPeAnUVtpJUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726779474; c=relaxed/simple;
-	bh=/LNKNqovqgIAarapV2ieM+hwdpMHXSq4Af+Dub/PW1g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pVTeHH0YRwN/2bjdbQ6yMZ32NlPKP6tVu2Ug2DMW6b8hq1l1vtPdBsLr+yGP9QUp81HV5o4+g8bj8IfVryCuRqM5FuFHqapaV7aSvdkBKzzOhNi9+XmvZX39OtSAk5Wo202JkIs722dMZipkAXuM3OGH65hbRJGpzkjOCztP3xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ELFm3wUx; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1726779539; c=relaxed/simple;
+	bh=Ug1wb5JqGv2Bm41oSzgj9UCfzOLYCYHmJbR66QLDm2g=;
+	h=MIME-version:Content-type:Date:Message-id:Cc:To:From:Subject:
+	 References:In-reply-to; b=CFFrL03aEu5q4PZ+ry3DGKwozZkytdR9KD3cDjbetqkO0JBm/0sOL4g4C24YGZYD2ZvGtctjCf8lDxORUyTSNliXudQ4N8fgRVYUGKIBExzuBsv3wwXCMvFeQpsfhvGLB1tRpV5tp8s8ZEKpcYbM3CC98eKsPF3AHFkh2u6MlNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=DQg0mADK; arc=none smtp.client-ip=192.29.178.126
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ELFm3wUx"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3EB3D2C099;
-	Thu, 19 Sep 2024 16:57:52 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/LNKNqovqgIAarapV2ieM+hwdpMHXSq4Af+Dub
-	/PW1g=; b=ELFm3wUxcjcepjBfP7C7YkhzkXl7/720Jh8L/ry3HNvJ5cEgFsWLm/
-	vjIRcPp6wYdtj/hkdEtPiwjqGFJNXsnfdyZ1BRwncjFQaAxDKaZpQy0AbmOjsbO1
-	YqUC+q33J2ivfszGITKAHK6PobWTlT3WVOmTvBbuGyG12b2+QGj/Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 370A62C098;
-	Thu, 19 Sep 2024 16:57:52 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8137A2C097;
-	Thu, 19 Sep 2024 16:57:51 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Josh Soref
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Andrew Kreimer
- <algonell@gmail.com>
-Subject: Re: [PATCH 00/20] Fix typos
-In-Reply-To: <CAPig+cTnB-aHLX8BhYk8sYgRF6S5XgsVmmJAji1oRRac+MLbtQ@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 19 Sep 2024 16:54:48 -0400")
-References: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
-	<ab9213d5-fb1b-482e-854b-4f5d4e82821a@app.fastmail.com>
-	<xmqq34lv74us.fsf@gitster.g>
-	<CAPig+cTnB-aHLX8BhYk8sYgRF6S5XgsVmmJAji1oRRac+MLbtQ@mail.gmail.com>
-Date: Thu, 19 Sep 2024 13:57:50 -0700
-Message-ID: <xmqqy13n5pkh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="DQg0mADK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=dbpg3c8ibMwl/5luSdkYthFsjv3CXe+xKSrSj6WL8Fw=;
+ b=DQg0mADKG6H9HEtQgJkAULHlju7XAmOl58a6LNBeLbCDbO8nc7o/ZBuxn++FM29TbNLgc+O/kuS+
+   pAeW+xJtiIzq6RN/fG/WuXjGM+uFbukLfntZq3AJ/y/9u6jykyq2eDK8j4FDR25oaywi2Fmqe+yG
+   RGh5pHDIe+1IOBlFz3b1Bkk/3G+YLb8AJlJzsapXie7VytHjXvyAJdiAK0q100lfLRwevAa31n/2
+   /vGbs5NqQpPJiDFZLfK1C6EBAOryRuXT4P/7TlxT73ZHQVyt70ECHLIxE9U2FNT5r1dydkhgAkSn
+   fcFaiu0zrmjHUE71JW4KaCVHdI+66E+sQdxsiw==
+Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240709 64bit (built Jul  9
+ 2024))
+ with ESMTPS id <0SK2005G8VDO6230@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Thu, 19 Sep 2024 20:53:48 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- D5934CDC-76C9-11EF-BE28-9B0F950A682E-77302942!pb-smtp2.pobox.com
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Thu, 19 Sep 2024 22:53:05 +0200
+Message-id: <D4AK4USDVP5T.10INJOFE2I8LE@ferdinandy.com>
+Cc: <git@vger.kernel.org>, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
+ =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+ "Patrick Steinhardt" <ps@pks.im>, "Christian Schlack" <christian@backhub.co>,
+ "Jeff King" <peff@peff.net>
+To: "Junio C Hamano" <gitster@pobox.com>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+Subject: Re: [PATCH v3] set-head: no update without change and better output
+ for --auto
+References: <20240915221055.904107-1-bence@ferdinandy.com>
+ <xmqq5xqvo37s.fsf@gitster.g> <D48UGAZA205N.37QFSURUDN3ZS@ferdinandy.com>
+ <xmqq34lyknqy.fsf@gitster.g>
+In-reply-to: <xmqq34lyknqy.fsf@gitster.g>
+Reporting-Meta:
+ AAFJBnzJ6nXx21qQ3kWU/7f8WE5yPmlMW7wARfUUIvdMhLp1rvKIMbgFRioAiutY
+ 3WY7jhBeWgXtHFfd1poXrmSIhpbZ7bjYBNxhUJtRewfyWhwFoTiBaKKAUElL252L
+ e3LFnc0ZUm71epXZ+aX3A9nkikmxO58jkw+DvrOjXkNTXK/+IqkbsRQjsLYJTcNV
+ 6LYw3wwdc4MSWbtcfk8guSwiGlpbXyhfLi75EOE+VfIfjc9ONT49otJUKZD/qj5R
+ nnWW3GLHyKDiL2FhvbxFgClKng71GHhc0L9oNuPy+9w4SC+ZsUnTFYOGvbCgP+6J
+ Z3hWPEAZSws09STj/qHs/2KBjNoV/BWMFljDDILjTwMgiA4zlk3XTiEf+ZQ6/kh3
+ S0XueAIou+6XVAOBxvjeZq3rOQzZkMp8+Y67Mg3MjUpvLO1mzE2In7d2nXF26UAe
+ iZz5xK6yuq6Kcw6dO/NLyK7iRdfqKvIu1IyEbvfXIJEqISnaT9ROvcY=
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> For what it's worth, I found the submission easier to review as
-> separate patches because it allowed me to review a small batch, do
-> something else for a bit, review another batch, do something else,
-> etc., without losing my place since I deleted the ones I had already
-> reviewed, so I knew that those remaining in my Inbox were still
-> pending review.
+On Tue Sep 17, 2024 at 22:51, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> So, as long as we can explain the behaviour to the end-user well, I
+> do not care too deeply.  My impression was that avoiding it by just
+> taking advantage of the atomicity afforded by create_symref() looked
+> like a low hanging fruit, but that can be done by somebody who are
+> curious to see how involved such a change actually is and can be
+> safely left as a #leftoverbit ;-).
+>
+> Thanks.
 
-It is a very good point.
 
-FWIW, all except for one apply cleanly to both v2.46.0 and 'seen',
-and one fixes a typo introduced between v2.46.0 and 'master'.
+Now that I've poked around a bit (cf.
+https://lore.kernel.org/git/20240919121335.298856-2-bence@ferdinandy.com/T/=
+#u)
+that fruit does seem to hang lower :)
 
-Will queue.
-Thanks.
+My idea is the following: Add a new member to the ref_update struct that
+records the value of the ref _before_ the update transaction (in the
+files-backend), that can then be accessed post transaction_commit in
+refs_update_symref. If we want to pass this info up to the caller of
+refs_update_symref then I guess the only option is to pass an extra buf whe=
+re
+we can write this, or if we're fine with update_symref itself doing the
+printing we probably need a bool to turn this on/off.
 
+My PoC seems to work and pass tests, although judging from previous
+interactions I'm probably overlooking a couple of edge cases.=20
+
+Does this seem reasonable?
+
+Best,
+Bence
