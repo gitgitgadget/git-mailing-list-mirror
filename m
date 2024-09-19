@@ -1,62 +1,62 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B1873440
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDB9745E4
 	for <git@vger.kernel.org>; Thu, 19 Sep 2024 18:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726770900; cv=none; b=um25318tvKhrStYsjlWR6KNcX2ehcNfKFd+tdidBOTeqn9n5IkYeh5Oz7W1UzJ4h4sKzC4gjzOjTClT9P4TEFuP3gN+0qbSHqcfGQ3LCwJEJkDEVAQGIdcHPsezXwXOkFo8HnV75E1HQfP1cY4I1p/JeWoSljZe0M3J26iAJZN8=
+	t=1726770900; cv=none; b=LlE3YPg+YMok8y1Dgz24gqW9G4PDSLFksyI2k6uCFKkAyHcQJ94zVqTdMuozOucTAfs/xNEoa9kirK+38poum8d/BZXyxAaOu56MDasTUlw5tQ1GXnJ2iBDjeqQNk+ZGhhf/Fx1vDdRT+UTudh2Cw3WCDCBUW1PvFi9s7ZdprF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1726770900; c=relaxed/simple;
-	bh=mFMARShHwLuoHNvCbZ18HGYXRpXr7t6DbaCTGtM/AUc=;
+	bh=s1vDV6nv4AUY6P6kwaOddf9onm1bIjCCs+95IGizy20=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rysN9rrzbVa3J/GLLXk+/nQmaSoivgktLvgeBfb0C9lUf5oM2qybNo9gbTwHnGZmkiJNnyV0vsGD4V335fbsj5I+DoO9zFZ8QVt0ObgdWCs0YGxLf656WduTKQX+j4VqAHS4xbbZ7Y3ywzHrOclhmvSm4iHkC4OUWEMpyR6+pbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gyCsvLLk; arc=none smtp.client-ip=209.85.218.51
+	 MIME-Version:To:Cc; b=ut+jqrGXJqSEr5JXahqvd1MquJxILuYY3BxQfJx8zsC8G2kdIlaXvKpKYjoke/zLMOZ1C3gJMAj3posMzCbzFn5C4OurEJ40zRh7pSrJplS15qXssB2EYquarPfSZIN8GijKQ01OsqJzOtQAmCk5XvIYG38Unu1Su3rmCsXRtew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C05fyCI4; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gyCsvLLk"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a8d51a7d6f5so157919166b.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C05fyCI4"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-374c3400367so968469f8f.2
         for <git@vger.kernel.org>; Thu, 19 Sep 2024 11:34:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726770896; x=1727375696; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1726770897; x=1727375697; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ATy7//dqT5/D6IaZN24s+weiJrsaceKdCYIu3DP2RV0=;
-        b=gyCsvLLkhoHzY2zHz/4fQzGInCzxhe+OqgIzoVPRE3rU0AnAFSJbnkCHe7fc50aiST
-         rUJLI+IJhOkUDVQ0K80g6FzFi/Dm6B8Qk8KW24IBU20MeZhFpa+gZYosfK14R4L6nFMZ
-         NtZXJNFlR8EzfM73vNdHwp6I+ekJwTD8gfotZGL2cMzMMQHfqtmH5m4lcJze+B9GUihx
-         8EQxxrd6GxgrOMnDpUo2C6zBIrMD61YdNNG3jyCXPjKjUwVRbhBesl86j5Ovs+0ibqIK
-         VdhPnu8tkEcHSNH16M2fBi00L1L6jz9PflDpYlZqct4fZN+HRg+rgoa6o4Yb3s6q5qTL
-         ThTg==
+        bh=d4I0aB/X4p5jWY8D+O3MwvfsXH5Isyclb1xHYzh0EHU=;
+        b=C05fyCI4f4dwPOtlInMmZf7tQMbFOEnATZN1roB0vVVJms4TOj9VaEvF3Lsh0N2o4b
+         GfGNEdaNHScVxISQFvMOcMQ5mjm24qFjqH7wLB2UIqu+Viwvm51eDkK9XDsHMCfUOHO5
+         i6/adthK9KhOGgfl3omu3e4IgPgZSWxrHrnpQAdnAJzaHz8mrbM1/k2K9a292fnaujsS
+         VtahRMVrEo5ndroUzPRq+BWEjYC6EPhA2lu0YefJnyNY+CtPah63r7av4lr+yPDClQ3g
+         8KSm/t7oZQuUwKl87QrTpvlt0QGmyNR3meUljizyUpcpe+QkEugwtsHC50JLYwfXDKph
+         Gsng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726770896; x=1727375696;
+        d=1e100.net; s=20230601; t=1726770897; x=1727375697;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ATy7//dqT5/D6IaZN24s+weiJrsaceKdCYIu3DP2RV0=;
-        b=aff7vR7WvrLxUVUqxcbO9fbRRQfFZ7sFF5YwFXUkqnZwn/zwWCvPjItjwsuJIAW6Hi
-         +vBAv8X3XA5z32780j4JSeJnis3MUs4crp5U1/pmnHwLT7JHmupN3P8q6atssoVGAkje
-         ooLNp1QSOBgYXZBuzEDxlc3LiyLgcnj00KXzAE5tjAlKAkda9LPZqFG2VrL5CCIKt0eA
-         NwThTaCOK2cYqrynhfRLRb2r6St2+sHPuAYbVOLnX24vAdUMJraUiAVusyHl74x7cMZ4
-         17VEkpYIqDohvfVGbaUax6BfBwKDcyWFZd7CJAnJN+jRkezn6JQGKKNfkisToF0BQ0Au
-         rnpA==
-X-Gm-Message-State: AOJu0YzMYGkx2IDwzxUycVsHZEVEN7mFjIV9c5MAVfvQistpundQCyg4
-	osJE7WYe8hvh5REmir/2b5ZSLKD+TweT5CMK4paW2OBThmhgECWrxaQFuA==
-X-Google-Smtp-Source: AGHT+IGmjV70CUd17rfFdoHjo9mXyAngiK+kTdEm/qkejatkIcDswe0HqCTjSBaLgM1DNbrljZa5jA==
-X-Received: by 2002:a17:907:f163:b0:a8d:6329:d8cc with SMTP id a640c23a62f3a-a90d4ffe173mr13576166b.25.1726770895816;
-        Thu, 19 Sep 2024 11:34:55 -0700 (PDT)
+        bh=d4I0aB/X4p5jWY8D+O3MwvfsXH5Isyclb1xHYzh0EHU=;
+        b=o8dXaWjwMsv6ZpTKWFBLLA3pxxAU68EIcmnwFOALFVPzGoaubrBu7xlZAIBiMuDXrB
+         4VD6y7Gj2zQ5bmJTuvlCaqW8M1FfGEBPl2w/KHf0MVtMC9RQXG4Q/SVocCAJHCXYro6p
+         QemEycllsT2xzdYNCDLWyfoiAdk1BX4GzAeUXGbnW9sFeUOcp9UQO+1ZYxKapF0T03CR
+         2JCcMs8lxtXvoWWeHedc2VVCPXL7sHEQs7MR+1x39Wa8ECsIseVTSWzGmRweaCk8pZmi
+         pnFSSYCmfYbBDJv1SLIQ71G5wsxmQfj3koBXfMdPcc7SGBX3d71HbyRHXM6QLiLFjSPW
+         8m2g==
+X-Gm-Message-State: AOJu0Yz4JTkSiwKEwyq+BG9xCOMX1TAM2NIJ18t0s9T+YAZ6a7Z1Kmce
+	s3ArhVLrkOBc/kmdwCuUOVbo/s910XIz/Ceqqw9QBAOt8PMJu41bSH9vLQ==
+X-Google-Smtp-Source: AGHT+IFaHm5IlBjaOlt6JkCccue/yCX0gl6D7D2G+av52LvGrDPTjF2gsWY2skcRyuXOhS9y/D2Ktw==
+X-Received: by 2002:a5d:5447:0:b0:368:3f6a:1dea with SMTP id ffacd0b85a97d-37a42253629mr234562f8f.6.1726770896558;
+        Thu, 19 Sep 2024 11:34:56 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9061331938sm745979466b.222.2024.09.19.11.34.55
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a906109688bsm749923866b.28.2024.09.19.11.34.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Sep 2024 11:34:55 -0700 (PDT)
-Message-Id: <7c8fc79fa8c8daf288cecb068d220ccfa07d7d7f.1726770881.git.gitgitgadget@gmail.com>
+        Thu, 19 Sep 2024 11:34:56 -0700 (PDT)
+Message-Id: <9697dc1c81db33dca7e4a3c093ee83cdc0efea1e.1726770881.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
 References: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
 From: "Andrew Kreimer via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 19 Sep 2024 18:34:33 +0000
-Subject: [PATCH 13/20] rebase: fix a typo
+Date: Thu, 19 Sep 2024 18:34:34 +0000
+Subject: [PATCH 14/20] ref-filter: fix a typo
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,22 +76,22 @@ Fix a typo in comments.
 
 Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 ---
- rebase.c | 2 +-
+ ref-filter.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rebase.c b/rebase.c
-index 69a1822da34..9d1ae95978e 100644
---- a/rebase.c
-+++ b/rebase.c
-@@ -11,7 +11,7 @@
-  * The callers that care if (any) rebase is requested should say
-  *   if (REBASE_TRUE <= rebase_parse_value(string))
-  *
-- * The callers that want to differenciate an unrecognised value and
-+ * The callers that want to differentiate an unrecognised value and
-  * false can do so by treating _INVALID and _FALSE differently.
-  */
- enum rebase_type rebase_parse_value(const char *value)
+diff --git a/ref-filter.c b/ref-filter.c
+index b06e18a569a..308097e740b 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2384,7 +2384,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+ 	CALLOC_ARRAY(ref->value, used_atom_cnt);
+ 
+ 	/**
+-	 * NEEDSWORK: The following code might be unncessary if all codepaths
++	 * NEEDSWORK: The following code might be unnecessary if all codepaths
+ 	 * that call populate_value() populates the symref member of ref_array_item
+ 	 * like in apply_ref_filter(). Currently pretty_print_ref() is the only codepath
+ 	 * that calls populate_value() without first populating symref.
 -- 
 gitgitgadget
 
