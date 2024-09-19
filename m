@@ -1,62 +1,62 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C788F47A7C
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 18:34:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A634D8B0
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 18:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726770894; cv=none; b=DqYlV+GYVOrzrMgusUOocxTpEVjH8kFV0TBjUOjKHJFDo2uy3OEJA550FFmsA7HDH2dn4wExLBtKni/8N6yxpbwKifaQaMFb3ezI0xYW5wNT70kr9au+hQnl9TKc2ici6ZZ9qp1wOBz7gf5dvz6OgQZ4RgMXYVMr9dM+83Vr8lg=
+	t=1726770895; cv=none; b=Q6iwlh1O/UJAZI2KyDKckGajCfJ7Q2I1Hs5fCagg1WRMSLYMdhjsIdqi/m156MjEpR9jh1FQva/RqPpJb4IaIw0REcf5qkyOWApSy+WvdVWOEPNF6aMWgm34dwsqL7cHUT5x/eSAsibTSaaLbBbPr38EiOd+X5b+afzZicB/Spw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726770894; c=relaxed/simple;
-	bh=n4M/47/0+VRylLT7nUlsc6JrNFfTUAKBWOPcwnqmNZY=;
+	s=arc-20240116; t=1726770895; c=relaxed/simple;
+	bh=xeydqswhttx8qrTOS1HU6Dfi6p4RkIKqlC7X18CHQYs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ZqeqADsv44Qdlqb9CUCiC37OhVYco35jCAw1AOYDD2RF79/2/LgXNKPD6PaYGz51s9vg247ZjvjXA9PmenprKMS4C2NScdWCLif/idBY/iBmtgmW93hHjUtbtUBvwzKKSg6ywP1p8+29F+VTdACuL+IYRLR31zie+rtVc21RgYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JS2pMDLv; arc=none smtp.client-ip=209.85.218.41
+	 MIME-Version:To:Cc; b=pWTGzTAro6dbkkiydKeIngUWdOLGE9QU7bgpdjrpFK4XHEErZD6p3YaT9ehozBtrhH5udxFZ/DAIiO62sPPVUXogMCgPR5OO2pH9EmvfiORYD92p5Px2CVqx4OQGx6Pj27BmDpQg5AX6sOHXFQryyBG8Ixu0jfruKQYgAl1FJGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MUQY+O5p; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JS2pMDLv"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a8d2b24b7a8so420144366b.1
-        for <git@vger.kernel.org>; Thu, 19 Sep 2024 11:34:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MUQY+O5p"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5c42bd0386cso1506083a12.2
+        for <git@vger.kernel.org>; Thu, 19 Sep 2024 11:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726770891; x=1727375691; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1726770892; x=1727375692; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qxA3afgKm2Lkrd+JZ/lDP/5lwVfUv2dE6xDzu2BHB7I=;
-        b=JS2pMDLvn8Jcq8/NcVm72LxfJmQuD6gUsseS9A72TgdDVzf2c0n7x7wfAT1yV6hgn9
-         QnYXpW3bePsa3tSnYk9i5uFFeGAPM2eKCI/aahXjV4Ps4IXnXSkMslRy2K3br4dpd3ew
-         7ddkQqNZqKtJL6hqZ0ovILdxReIZjaIqoJDMM8UPsr094iwyIAJBcAohNt1XGbEDBJG3
-         g4h7DWNyiNNdXIk34zuR17JQJD1W6TxQBsx5THz1JLvBK2m6hyKj8gQ2t1c2ZSxx/WHL
-         PrIvVKlEeZB1aiuZTSLztDwpZ32W2SsDtD+rIuZ3oJR3/dHcAa41eJ7A07fsTDvrMvjB
-         PDSA==
+        bh=lGI/o1jWuiIvLVlR9uSstn80JeywKB+u8U6G0acAcTw=;
+        b=MUQY+O5p4qFFOtoRAs7cbwakhTLhaztMEbckG8ZXuJJwgzhxIiPvsVhAB+ExdIfJ48
+         34ngM97ffxNzr+G0mVpxhLQdH18WKF9SNwHNpFzDL5zM1G1mkyZgXIpAaG2gNcR14w78
+         APynMWvwLuiMrRUXOjTOd3SAMkBdoVcXfaEeTD1SufW3uQtpMahTfx9Vo0X3GtNPnf/r
+         r7FBnQ+9bvcpRzhU+OTrJK+25KKlGqhbJsF5uI4v+XTE8l/AkHTzZSh/VKk1Msciq5ut
+         OK8tcIki6k5GvkDVcPiz9eDiXvph0i1gvDyqQ8Ssr0ksTBIKLCXxVlUQkWjLHscw3PpT
+         UIOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726770891; x=1727375691;
+        d=1e100.net; s=20230601; t=1726770892; x=1727375692;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qxA3afgKm2Lkrd+JZ/lDP/5lwVfUv2dE6xDzu2BHB7I=;
-        b=r14lT6kiNXsMywGZOujCh8MmFTNCYUhu6pd11FslxNg3Hb7q+X1OLYEn1EhrOwHZp9
-         wbIFFwefQKOLyrmcXWO0ro0PMBuBIjk4ZL+mag9fo2ZNu4B/3g3pzbsr/7eevEfGzBwc
-         Z4D6cF9aXk42VirOATU5Kb0KstRJw64bKg4POZ4x3E3sgIh7FAxeTdRrOC3wscCc122W
-         Mb1bFciHzcvubfUREdp164+2TDhUVVDt2R/tZBWyAXLmZ44q7dBS0zAmhodk/4B3Qb9W
-         00jprMnxzI4lI4MhVTWJ4ftcOfVC22Rb01FyHDsyLi9Umzj+xC91/l6kuDB+Q4KT050u
-         hWiQ==
-X-Gm-Message-State: AOJu0YwEov15yiSEw38yQ/QwwDNnPvHuhYoxIOPfDyDgnvWELaW2Kl1T
-	cbvrXO03NmJ1M3oAx9FhVUMrMan4Tie/fZxHQveZr5vljlo6ipO3VVGXeA==
-X-Google-Smtp-Source: AGHT+IESDuXmHKuGaO2E0Al0iLBBuP0EcO+R4O+j+JbsQhXdyOTR63AiGnBJDuYAS8Rou0HUKxKqFA==
-X-Received: by 2002:a17:907:983:b0:a8d:3ee9:12fd with SMTP id a640c23a62f3a-a90c19a6d1fmr474925966b.0.1726770890535;
-        Thu, 19 Sep 2024 11:34:50 -0700 (PDT)
+        bh=lGI/o1jWuiIvLVlR9uSstn80JeywKB+u8U6G0acAcTw=;
+        b=GKFihCziqoIgrrGdTOo/TQ8vAOWzGyggBR5nZ+M8VLYS9DWfblc/pRD1RzYnkfq9rN
+         W98fQncKPIgY4/LjfWuZrKQb1YyxszBejcmF5tC6KZYLJJo8OUlWK+RMg50u+sAfuBtt
+         MnR0w/7mKJiKIFdNJBugYOuVrW3EPUw8N0AdQBgUbqMwlTmcuNL2pBfSNPcT4MzW2ZYX
+         8K3qG6UfHVW4kEjWmnhM5J3Mmypl5UmZUD2th4TJdJwvvfMZ59DfhzDneISv29p6ntjA
+         ajgHIyM5Sx3eH7few2vYfQIRQj37BMLPBq/RTCpvyigNI2fjoE/GlG5K75AsctbZ1ZOM
+         6hJA==
+X-Gm-Message-State: AOJu0YyREFAGrvNW4cMCrWU3RdXT7OfuFZ6FGXLL39RCZe2ijltQLN3z
+	3r2byGgFtUDMZn1mVvOoYfPcyxz0iJYF9RxzevExCwT5a5xzTmgTjnD4Fg==
+X-Google-Smtp-Source: AGHT+IFCwUj8f2wzW+7WQlkpLEyYEiJpqpTsD5aI7yNe2S/6Iu1/Z7stZWI2uUHDOwm9pRlmq5A1JQ==
+X-Received: by 2002:a50:cc0c:0:b0:5be:ed72:ce01 with SMTP id 4fb4d7f45d1cf-5c464a606d2mr99631a12.35.1726770891987;
+        Thu, 19 Sep 2024 11:34:51 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9061321568sm745694766b.191.2024.09.19.11.34.49
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c42bb53620sm6339188a12.27.2024.09.19.11.34.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 19 Sep 2024 11:34:50 -0700 (PDT)
-Message-Id: <7c950c793213681cbaa0e9cf25294291edc2fdce.1726770881.git.gitgitgadget@gmail.com>
+Message-Id: <915f395cb9fbed3c5d3de5d31423e2145f533e6e.1726770881.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
 References: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
 From: "Andrew Kreimer via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 19 Sep 2024 18:34:28 +0000
-Subject: [PATCH 08/20] merge-ll: fix a typo
+Date: Thu, 19 Sep 2024 18:34:29 +0000
+Subject: [PATCH 09/20] merge-ort: fix typos
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,26 +72,35 @@ Cc: Andrew Kreimer <algonell@gmail.com>,
 
 From: Andrew Kreimer <algonell@gmail.com>
 
-Fix a typo in comments.
+Fix typos in comments.
 
 Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 ---
- merge-ll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ merge-ort.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/merge-ll.c b/merge-ll.c
-index badb6dea57c..8e63071922b 100644
---- a/merge-ll.c
-+++ b/merge-ll.c
-@@ -334,7 +334,7 @@ static int read_merge_config(const char *var, const char *value,
- 		 *    %X - the revision for our version
- 		 *    %Y - the revision for their version
- 		 *
--		 * If the file is not named indentically in all versions, then each
-+		 * If the file is not named identically in all versions, then each
- 		 * revision is joined with the corresponding path, separated by a colon.
- 		 * The external merge driver should write the results in the
- 		 * file named by %A, and signal that it has done with zero exit
+diff --git a/merge-ort.c b/merge-ort.c
+index 3752c7e595d..3460d14172c 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -1147,7 +1147,7 @@ static void collect_rename_info(struct merge_options *opt,
+ 	 * Update dir_rename_mask (determines ignore-rename-source validity)
+ 	 *
+ 	 * dir_rename_mask helps us keep track of when directory rename
+-	 * detection may be relevant.  Basically, whenver a directory is
++	 * detection may be relevant.  Basically, whenever a directory is
+ 	 * removed on one side of history, and a file is added to that
+ 	 * directory on the other side of history, directory rename
+ 	 * detection is relevant (meaning we have to detect renames for all
+@@ -3835,7 +3835,7 @@ static int write_completed_directory(struct merge_options *opt,
+ 	 *     	   src/moduleB  2
+ 	 *
+ 	 *     which is used to know that xtract.c & token.txt are from the
+-	 *     toplevel dirctory, while umm.c & stuff.h & baz.c are from the
++	 *     toplevel directory, while umm.c & stuff.h & baz.c are from the
+ 	 *     src/moduleB directory.  Again, following the example above,
+ 	 *     once we need to process src/moduleB, then info->offsets is
+ 	 *     updated to
 -- 
 gitgitgadget
 
