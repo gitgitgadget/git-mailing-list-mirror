@@ -1,100 +1,100 @@
-Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0995381B8
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 20:58:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002835FEE6
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 21:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726779539; cv=none; b=tncRooNBJD4qfQ510Kd64MyWyyyyVXDA+kqUqY+K0MozTT6aa6BCX8pudenVQqSvLIT8llEZN9kSA/Pygm8ObO5W5F+iyZgbMnqcg9wOZHigKk6wZPrpCqdsLVRDiWhFPIOIrwjv4Zj1eUr+jr6JW1ewaLmnxpPxPeAnUVtpJUY=
+	t=1726781663; cv=none; b=JI/sLWwNcis+zdtNIQB/Yp2FWa5UYh2Cj+GYeEfd0tXHwWsiL6UMa6lJn3VYLMO/fdxLmMAPoKJmtdfU6IveWg6FKX3yEXHYa6usrhiMSC/TqwvR4fChd9VM6heBX+L4PaBt7E0B7Jkbwz9DEmlHxU/uPOs+a9Qa74jtNtMF02o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726779539; c=relaxed/simple;
-	bh=Ug1wb5JqGv2Bm41oSzgj9UCfzOLYCYHmJbR66QLDm2g=;
-	h=MIME-version:Content-type:Date:Message-id:Cc:To:From:Subject:
-	 References:In-reply-to; b=CFFrL03aEu5q4PZ+ry3DGKwozZkytdR9KD3cDjbetqkO0JBm/0sOL4g4C24YGZYD2ZvGtctjCf8lDxORUyTSNliXudQ4N8fgRVYUGKIBExzuBsv3wwXCMvFeQpsfhvGLB1tRpV5tp8s8ZEKpcYbM3CC98eKsPF3AHFkh2u6MlNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=DQg0mADK; arc=none smtp.client-ip=192.29.178.126
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1726781663; c=relaxed/simple;
+	bh=L2mHKeH2tC9qWn7fpWkMhdnrbIwo+w+RL8Qwoj/WsrU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eHjR2vRStCb9CYzKihinjksojTQp2MThdz6kN1581iDEcbdRAiW+2zmxA28GGYwaX3CPgzEhufq6oxZbcujnPfhMxluI5zM6eVqflEZ916Mj8YCxp64kyiiNj760zywdr2I+Ziqmcn+oIX53DCr6B4W2fqLLWOHdEr7T2Mx/Wkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LrKR2342; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="DQg0mADK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=dbpg3c8ibMwl/5luSdkYthFsjv3CXe+xKSrSj6WL8Fw=;
- b=DQg0mADKG6H9HEtQgJkAULHlju7XAmOl58a6LNBeLbCDbO8nc7o/ZBuxn++FM29TbNLgc+O/kuS+
-   pAeW+xJtiIzq6RN/fG/WuXjGM+uFbukLfntZq3AJ/y/9u6jykyq2eDK8j4FDR25oaywi2Fmqe+yG
-   RGh5pHDIe+1IOBlFz3b1Bkk/3G+YLb8AJlJzsapXie7VytHjXvyAJdiAK0q100lfLRwevAa31n/2
-   /vGbs5NqQpPJiDFZLfK1C6EBAOryRuXT4P/7TlxT73ZHQVyt70ECHLIxE9U2FNT5r1dydkhgAkSn
-   fcFaiu0zrmjHUE71JW4KaCVHdI+66E+sQdxsiw==
-Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240709 64bit (built Jul  9
- 2024))
- with ESMTPS id <0SK2005G8VDO6230@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Thu, 19 Sep 2024 20:53:48 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LrKR2342"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC8EB268F8;
+	Thu, 19 Sep 2024 17:34:15 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=L2mHKeH2tC9qWn7fpWkMhdnrbIwo+w+RL8Qwoj
+	/WsrU=; b=LrKR2342M5p4F0wqzw1R3mCjKnkDsKUX31Rwcn5d4eVRxt6yAAfomZ
+	FyS1khcHNxGUiBhg90DSPveeSXSajMABivFLRQsMwsntFSqNb3YUT/cz5k6b4rtG
+	l48kRrJpD0QGXE66YLVQXfc1+XXJY7oyorhDwHrWz7c5phubFuDww=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A2458268F7;
+	Thu, 19 Sep 2024 17:34:15 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18009268F6;
+	Thu, 19 Sep 2024 17:34:15 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  karthik nayak <karthik.188@gmail.com>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  James Liu <james@jamesliu.io>
+Subject: Re: [PATCH v3 1/3] refs/reftable: introduce "reftable.lockTimeout"
+In-Reply-To: <77cffd3b1eb638e05c031e2949fdc9374d599e05.1726653185.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Wed, 18 Sep 2024 11:59:27 +0200")
+References: <cover.1726578382.git.ps@pks.im> <cover.1726653185.git.ps@pks.im>
+	<77cffd3b1eb638e05c031e2949fdc9374d599e05.1726653185.git.ps@pks.im>
+Date: Thu, 19 Sep 2024 14:34:13 -0700
+Message-ID: <xmqqmsk35nvu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Thu, 19 Sep 2024 22:53:05 +0200
-Message-id: <D4AK4USDVP5T.10INJOFE2I8LE@ferdinandy.com>
-Cc: <git@vger.kernel.org>, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
- =?utf-8?q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
- "Patrick Steinhardt" <ps@pks.im>, "Christian Schlack" <christian@backhub.co>,
- "Jeff King" <peff@peff.net>
-To: "Junio C Hamano" <gitster@pobox.com>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Subject: Re: [PATCH v3] set-head: no update without change and better output
- for --auto
-References: <20240915221055.904107-1-bence@ferdinandy.com>
- <xmqq5xqvo37s.fsf@gitster.g> <D48UGAZA205N.37QFSURUDN3ZS@ferdinandy.com>
- <xmqq34lyknqy.fsf@gitster.g>
-In-reply-to: <xmqq34lyknqy.fsf@gitster.g>
-Reporting-Meta:
- AAFJBnzJ6nXx21qQ3kWU/7f8WE5yPmlMW7wARfUUIvdMhLp1rvKIMbgFRioAiutY
- 3WY7jhBeWgXtHFfd1poXrmSIhpbZ7bjYBNxhUJtRewfyWhwFoTiBaKKAUElL252L
- e3LFnc0ZUm71epXZ+aX3A9nkikmxO58jkw+DvrOjXkNTXK/+IqkbsRQjsLYJTcNV
- 6LYw3wwdc4MSWbtcfk8guSwiGlpbXyhfLi75EOE+VfIfjc9ONT49otJUKZD/qj5R
- nnWW3GLHyKDiL2FhvbxFgClKng71GHhc0L9oNuPy+9w4SC+ZsUnTFYOGvbCgP+6J
- Z3hWPEAZSws09STj/qHs/2KBjNoV/BWMFljDDILjTwMgiA4zlk3XTiEf+ZQ6/kh3
- S0XueAIou+6XVAOBxvjeZq3rOQzZkMp8+Y67Mg3MjUpvLO1mzE2In7d2nXF26UAe
- iZz5xK6yuq6Kcw6dO/NLyK7iRdfqKvIu1IyEbvfXIJEqISnaT9ROvcY=
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EB152BAC-76CE-11EF-AA99-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Tue Sep 17, 2024 at 22:51, Junio C Hamano <gitster@pobox.com> wrote:
->
-> So, as long as we can explain the behaviour to the end-user well, I
-> do not care too deeply.  My impression was that avoiding it by just
-> taking advantage of the atomicity afforded by create_symref() looked
-> like a low hanging fruit, but that can be done by somebody who are
-> curious to see how involved such a change actually is and can be
-> safely left as a #leftoverbit ;-).
->
-> Thanks.
+> +reftable.lockTimeout::
+> +	Whenever the reftable backend appends a new table to the stack, it has
+> +	to lock the central "tables.list" file before updating it. This config
+> +	controls how long the process will wait to acquire the lock in case
+> +	another process has already acquired it. Value 0 means not to retry at
+> +	all; -1 means to try indefinitely. Default is 100 (i.e., retry for
+> +	100ms).
 
+Existing timeout knobs are in a hierarchy that is too wide
+(i.e. core.*timeout) and this fixes the mistake by placing the name
+in a lot more appropriate name (i.e. reftable.*timeout).  If I were
+designing the system from scratch, I would probably place all of
+them in "refs.*timeout", but I do not think it is worth extra
+engineering effort to rename them and pay the transition cost.
 
-Now that I've poked around a bit (cf.
-https://lore.kernel.org/git/20240919121335.298856-2-bence@ferdinandy.com/T/=
-#u)
-that fruit does seem to hang lower :)
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index 1c4b19e737f..ca281e39a29 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -256,6 +256,13 @@ static int reftable_be_config(const char *var, const char *value,
+>  		if (factor > UINT8_MAX)
+>  			die("reftable geometric factor cannot exceed %u", (unsigned)UINT8_MAX);
+>  		opts->auto_compaction_factor = factor;
+> +	} else if (!strcmp(var, "reftable.locktimeout")) {
+> +		int64_t lock_timeout = git_config_int64(var, value, ctx->kvi);
+> +		if (lock_timeout > LONG_MAX)
+> +			die("reftable lock timeout cannot exceed %"PRIdMAX, (intmax_t)LONG_MAX);
+> +		if (lock_timeout < 0 && lock_timeout != -1)
+> +			die("reftable lock timeout does not support negative values other than -1");
+> +		opts->lock_timeout_ms = lock_timeout;
 
-My idea is the following: Add a new member to the ref_update struct that
-records the value of the ref _before_ the update transaction (in the
-files-backend), that can then be accessed post transaction_commit in
-refs_update_symref. If we want to pass this info up to the caller of
-refs_update_symref then I guess the only option is to pass an extra buf whe=
-re
-we can write this, or if we're fine with update_symref itself doing the
-printing we probably need a bool to turn this on/off.
+Existing lock timeouts this models after seems to consider a
+platform native "int" is good enough size to represent the timeout
+value in milliseconds, but the eventual user of this value in the
+lockfile API expects a long, so lock_timeout_ms being long is fine.
 
-My PoC seems to work and pass tests, although judging from previous
-interactions I'm probably overlooking a couple of edge cases.=20
-
-Does this seem reasonable?
-
-Best,
-Bence
+Perhaps #leftoverbits to straighten out the types used for the other
+two timeout configuration variables.
