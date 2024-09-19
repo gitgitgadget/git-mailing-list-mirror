@@ -1,115 +1,112 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FAB1F16B
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 07:11:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9992E1991C8
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 08:58:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726729916; cv=none; b=i2xvrTSjjhUNPFmvXPBvbeappiXeVMhTJYGuqttO34YCKM1c1gtDyPfyi7PA2Tlxr1hIxmyn1i0KIavUZQEE6b13YED3NbcNtZWK17zxpjSbt+3w5i2WUtM2bKg7M/Co7wbvFIisREBLj2lwfIbCjs83VKOPcdEhIg5KvOloLa4=
+	t=1726736321; cv=none; b=Du8bIHbxCAT4l6FJphioZ78tyhiPwKX7bb8i2p6a7qpvBcuHSAKP3FDcaRkCX1ERdwrLejijteIJcxfKQdaeNoZd4i/4ANp/Crg8Tc+jKeQyveCbRkmEGM0JeAzG8RgTckAj8IYBmeBNhvOPQRt6RUXXyeH6PDK/nCd5DiKzjO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726729916; c=relaxed/simple;
-	bh=M4tnrK7iS8UAgXMoR6gsV2kRbc+NaJUjRE6ZW3GMye4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AOdJRMEtDq4oFGyFV7O9oMI+vXbNdW0GfXCWpfW6SuZlanrS6+9B5263mrIaCs4IgqswJ+6nHRKFH7F2hiznGTaqKxrh0Rzip1Hd0tRYXSSdvCfk+/UrOb5dTlCWH6LqPmK+UXnEz2bkdlPZIh1/jqThsJXDde+SgL2p11ZG9Es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 13385 invoked by uid 109); 19 Sep 2024 07:05:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 19 Sep 2024 07:05:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29142 invoked by uid 1000); 19 Sep 2024 07:05:08 -0000
-Date: Thu, 19 Sep 2024 03:05:08 -0400
-From: Jeff King <peff@peff.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Junio C Hamano <gitster@pobox.com>,
-  Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] ci(linux32): make Javascript Actions work in x86 mode
-Message-ID: <20240919070415.GA18979@localhost>
-References: <pull.1790.git.1726274559928.gitgitgadget@gmail.com>
- <20240914072932.GB1284567@coredump.intra.peff.net>
- <xmqq34m2tasj.fsf@gitster.g>
- <20240915110706.GA2017642@coredump.intra.peff.net>
- <xmqqr09krijc.fsf@gitster.g>
- <d8b15f7e-7847-f6ff-cf8f-02aee254b070@gmx.de>
+	s=arc-20240116; t=1726736321; c=relaxed/simple;
+	bh=krfyhyqklLljKbVs9vfGszRGpdUn/VxnbQ4hgknHdVc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=h9GC/jXTy6zSZu5XnvGtdwCLT8PBHFNl4YD+e/YhwBzXKn1r6SwAVSYwb3phMJJ2HSQLLWhDmpwZ6a3Vp/jrvP2HVvwAZSwUUdDtPe/0UmqhkuoXlJzAwcOFAFFYW30A/8s8g9GgQsm9IvhvlgvvE/QHgXdluatXqMAWyKpK+/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-846c6eb4055so21826241.0
+        for <git@vger.kernel.org>; Thu, 19 Sep 2024 01:58:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726736317; x=1727341117;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MgT9xRjQbHBrnUxADFrQakt8lIpcQapMPF96v4dDtwc=;
+        b=a/O8VDDQEgp/e5P0PPrt1hSOKl5ZitVL4RTaJescaGo55aWzKoDsSIGHao5V62fiY/
+         ivHMwwsr8MH5boGOY7+U3ncOwXV3mAA6ZqihArPCeRWQzzhsvWz5D08IIo9VS/4dO8BR
+         UN2xAMxwHfud9648cCAT4hOWT6P8x2kFoY+vpeAobbVY2BBjJUwPKxUeh8U8JifVyZYp
+         L3/59ZYSIHfibeFsyYnxgQ8V1DFEyptuMMM0Z+I5XHJ/pl1dEr3B3+IxWSoz5wFes1P0
+         1fzkffA4ND6gWX5ZpesOCqoK3YmcSnPARDKw3n/vWo5mS0d9XPBUZ+Ct1xWDlH6ou7vI
+         Lj2g==
+X-Gm-Message-State: AOJu0Yw2O9GYnzPeLxLmk8Cmb8zb71irAqEM/gbU9/w1MivbrzcGWdvv
+	9V+q+hNckMHVWab/6230BKYnZyhvmMxsTwXFBXiOuAVPCeoEsDkrXRgKAqf1DeHq9Tf4CFey5Zq
+	iROdr76KIDdBlqxNiZ1csDEYLTsBQOA7O3vs=
+X-Google-Smtp-Source: AGHT+IHSdAKIFflrf9gOdKNhqwR+qBMB4CqcPz+nWubiIP81WCRpaf6/zw8GYBAdJyNx8UkBSGFozsaDE0895gcF+R4=
+X-Received: by 2002:a05:6102:3e84:b0:493:216f:eb7a with SMTP id
+ ada2fe7eead31-49d415a8446mr8769216137.5.1726736317398; Thu, 19 Sep 2024
+ 01:58:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d8b15f7e-7847-f6ff-cf8f-02aee254b070@gmx.de>
+References: <E1sr5iF-0007zV-2k@binarylane-bailey.stuart.id.au>
+In-Reply-To: <E1sr5iF-0007zV-2k@binarylane-bailey.stuart.id.au>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 19 Sep 2024 04:58:26 -0400
+Message-ID: <CAPig+cQ8=Y6sVvN_dBo_GQ5nLkQ4GJ7AM6mE2kt_2QV7CR0omg@mail.gmail.com>
+Subject: Re: "git worktree repair" modifies the wrong repository
+To: Russell Stuart <russell+git.vger.kernel.org@stuart.id.au>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 17, 2024 at 02:20:41PM +0200, Johannes Schindelin wrote:
+On Wed, Sep 18, 2024 at 9:27=E2=80=AFPM Russell Stuart
+<russell+git.vger.kernel.org@stuart.id.au> wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>     /tmp/gb/a$ git init r
+>     /tmp/gb/a/r$ git worktree add ../r.foo
 
-> Installing lib64stdc++ indeed does not rely on the implementation detail
-> that `/__e/node20/` contains the Node version used to execute the Actions
-> in those Docker containers.
-> 
-> Of course, the fact that installing lib64stdc++ (and no other 64-bit
-> library) "fixes" the 64-bit Node version is also an implementation detail.
+Had you run `git worktree list` at this point in /tmp/gb/a/r/, you
+would have seen:
 
-Yes, though "provide a 64-bit c/c++ runtime" does not seem all that
-exotic. I'd be much more worried about the implicit library version
-dependencies that exist, but that is true even on 64-bit systems. As
-shown in the issues I linked earlier, lots of people are hitting a
-similar problem with containers that have an older glibc.
+    /tmp/gb/a/r      3699610 [main]
+    /tmp/gb/a/r.foo  3699610 [r.foo]
 
-The real solution there (IMHO) is a statically linked node in the runner
-images, but I'm not sure of the reasons they haven't pursued that yet.
+>     /tmp/gb/a/r$ cp -a ../* ../../b/.
+>     /tmp/gb/a/r$ cd ../../b/r
 
-In the absence of that, the fact that your solution uses a node build
-which (for reasons I'm still not sure I understand) seems to be OK with
-an older glibc feels like a compelling reason. In fact, I find that much
-more compelling than the risk of 32/64-bit confusion. I think part of
-what I was responding to was the focus on that in your commit message.
+Had you run `git worktree list` at this point in /tmp/gb/b/r/, you
+would have seen:
 
-> In particular given that mapping the "externals" by any other name than
-> `/__e/` risks breaking existing GitHub workflows that might make use of
-> exactly that directory name, I consider the chances for that name change
-> to be negligible. It probably won't change, ever.
+    /tmp/gb/b/r      3699610 [main]
+    /tmp/gb/a/r.foo  3699610 [r.foo]
 
-Fair enough. Going into this whole problem, I was not clear where /__e/
-was coming from. I had thought at first it was something being carried
-along by the Actions themselves (and thus action-specific and likely to
-change). But it looks like it is part of the runner image and just
-mounted into the container volume, so it is a magic keyword that Actions
-and runner images both have to depend on.
+from which it can be seen that /tmp/gb/b/r/.git/worktree/r.foo/gitdir
+is pointing at /tmp/gb/a/r.foo, which makes sense since that gitdir
+file is an exact copy of /tmp/gb/a/r/.git/worktree/r.foo/gitdir. So
+/tmp/gb/a/r.foo is being shared by both repositories, /tmp/gb/a/ and
+/tmp/gb/b/, and neither one knows about /tmp/gb/b/r.foo.
 
-> Of course, my favorite solution would be for `actions/runner` to be fixed
-> so that it detects the situation and uses a 32-bit variant in that case
-> [*1*].
+>     /tmp/gb/b/r$ git worktree repair ../r.foo
+>     repair: gitdir incorrect: /tmp/gb/a/r/.git/worktrees/r.foo/gitdir
+>     repair: .git file incorrect: /tmp/gb/a/r.foo
+>     /tmp/gb/b/r$ cat .git/worktrees/r.foo/gitdir
+>     /tmp/gb/a/r.foo/.git
+>     /tmp/gb/b/r$ cat ../r.foo/.git
+>     gitdir: /tmp/gb/a/r/.git/worktrees/r.foo
+>     /tmp/gb/b/r$ cat ../../a/r/.git/worktrees/r.foo/gitdir
+>     /tmp/gb/b/r.foo/.git
+>     /tmp/gb/b/r$ cat ../../a/r.foo/.git
+>     gitdir: /tmp/gb/b/r/.git/worktrees/r.foo
 
-Yes, me too (and preferably statically linked :) ).
+The implementation of `git worktree repair` started out (relatively)
+simple, handling the most common cases, and has been extended to
+handle additional cases when identified and reported. The case of
+merely copying a repository and its worktrees (and leaving the
+originals intact) is not yet implemented, so the above all makes sense
+given the current implementation.
 
-> And yes, the idea of mixing 32-bit and 64-bit things in a container that
-> was specifically used to only have 32-bit things still does not convince
-> me, it still looks like a much better idea to either stick with a
-> 32-bit-only container, or to just do away with the complexity of a
-> container altogether if the environment does not need to be free of 64-bit
-> anyway (but why did we bother with that in the first place, then?).
+> What did you expect to happen? (Expected behavior)
+>     I expected "/tmp/gb/b/r$ git worktree repair ../r.foo" to alter the
+>     repositories it was run from, ie those under the directory "/tmp/gb/b=
+".
+>
+> What happened instead? (Actual behavior)
+>     "/tmp/gb/b/r$ git worktree repair ../r.foo" modified the repositories
+>     under the directory "/tmp/gb/a".
 
-I think 32-bit builds directly inside a 64-bit runner image is a good
-way to do the thing you were initially worried about: accidentally using
-tools of the wrong type. Doing the whole build and test within the
-32-bit container is something we'd want to keep.
-
-The other alternative, which neither of us shown patches for, but which
-I mentioned (courtesy of Ed) in the original thread is: do the Actions
-outside the 32-bit container, run docker ourselves mounting the repo,
-and then build and test inside the container. That's apparently how
-libgit2 does it. It sidesteps the issue entirely, as the container never
-runs anything external. And it would be applicable to all projects, no
-matter what's in their containers (32-bit, old distros, even qemu of
-alternate architectures).
-
-I'm not sure how much work it would be to do, though.
-
-Anyway, it sounds like Junio has merged my patches down to get things
-moving again. I'm OK if you want to rebase your proposed fix on top of
-that.
-
--Peff
+I have a tentative fix implemented which seems to handle this case
+correctly. Once I've finished polishing it and formalizing the related
+test, I'll send out a patch.
