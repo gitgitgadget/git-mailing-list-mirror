@@ -1,55 +1,55 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEA6145345
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 22:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356924A04
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 22:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726784545; cv=none; b=okujZa2AGxVO4xE6Le2F0HN/YpT8psXjEWsTuoK2J906xT2m96TMQfLjQekRxFzYClBXhQYZMSb60xOV4i4VMoE+cS6YJQTovUsPwQum0mflRsB4we9zDhUwejMCbjQyQmkLF0lAWTust1UjqLc1mIoxJqRI5bi9lSppf+ZJR9Y=
+	t=1726785971; cv=none; b=Taw+xJEvXdTM0q5mUKzd9wi3OO/VrgFNwRZpAmx9xtu+5PhLeMlHZy3rJqXfytg2wlbAGZ7+UDWwR5U2RXdAX7WJFHe89rc0C6eGB6MYhgz3SEHxdJW7vjMCZf92VrusNjYU0WvFM7ubg4qw4n/Y/GYaPLpMXqMhGywG5AZrvuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726784545; c=relaxed/simple;
-	bh=5yHFU0ubb/eNZiLYppAYiB0AO46OWU+/2Us7xlegwvI=;
+	s=arc-20240116; t=1726785971; c=relaxed/simple;
+	bh=O1iSBO1AVUxGZ0VCmbHI75RJJr+bK0yu8D67AqCiFes=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p1eA66oFx9x1PcNYrkw4Iy97FY9NnSeixj6VZvGRWd0xpZoX16BUaN7sBy3W28IRTJJvcuB5XMfNxqz3L2Ta6DA19ZtxqAhg5DI0dv219jfU+PbEPYzT9XQ+JerSxJX+2KzIwOcasVZyFNqfZv0fkyboSZQXe9OIykTCr4z2eGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BPahwE6B; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=FlX93OmBCc/X4Q96PF2mImccAaxoTMbNSCWa62s4ZI6PYhthKq9So/e+cmcsH8G12pTrdmVD6MSLHrYtyV3HebvjWFEK36jiN+CAPewKPe8tmWFv3nUmO5FyYnCGqDwrUkSIDReiPHXVWDxLsstNtBVyJhb3zged8c692cLyGkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vy9WyJFD; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BPahwE6B"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vy9WyJFD"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 931572D39F;
-	Thu, 19 Sep 2024 18:22:22 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B6ACC2D8D4;
+	Thu, 19 Sep 2024 18:46:02 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=5yHFU0ubb/eNZiLYppAYiB0AO46OWU+/2Us7xl
-	egwvI=; b=BPahwE6Bry83LdWPzNgA538hrEfZdJmrn9y7B/uBMGw9CzDXoNSjbj
-	LqyCf81jNBdOv4q4G/BAN4uwHYdwo6p8wzXAPzRLnLQy7WzKwwUubWBhKWLLfM8D
-	WnRcKluv7Pyz9AP19O017l7Uo4oaKHf12xS0Hr1j0DY1qQe4H5BL0=
+	:content-type; s=sasl; bh=O1iSBO1AVUxGZ0VCmbHI75RJJr+bK0yu8D67Aq
+	CiFes=; b=vy9WyJFD/P/S04eMcZUkU3+YZBdbPxOsAM2Z+YIs0hQxftsmiY9oef
+	28lW8s/2sEG9FZNCHjDAekPE0r0oKPyOk33UC74UZgojznSSNC25ct8Rh01P6Vcp
+	iVMU6dSK0bUvhrDa2QMt3bhetYqsESVoJpoSPN8p1QNJbLoRG4gBs=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 889B92D39E;
-	Thu, 19 Sep 2024 18:22:22 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id AD4942D8D3;
+	Thu, 19 Sep 2024 18:46:02 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E61BE2D39D;
-	Thu, 19 Sep 2024 18:22:21 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C280B2D8D2;
+	Thu, 19 Sep 2024 18:46:01 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
-  ps@pks.im,  me@ttaylorr.com,  johncai86@gmail.com,  newren@gmail.com,
-  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 3/6] pack-objects: add GIT_TEST_FULL_NAME_HASH
-In-Reply-To: <48b3876a10247d2ba65a6e5f1ff8ed3a662813f8.1726692381.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Wed, 18 Sep 2024
-	20:46:18 +0000")
-References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
-	<pull.1785.v2.git.1726692381.gitgitgadget@gmail.com>
-	<48b3876a10247d2ba65a6e5f1ff8ed3a662813f8.1726692381.git.gitgitgadget@gmail.com>
-Date: Thu, 19 Sep 2024 15:22:20 -0700
-Message-ID: <xmqq34lv5lnn.fsf@gitster.g>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org, 	Taylor Blau <me@ttaylorr.com>,  Patrick Steinhardt
+ <ps@pks.im>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Johannes
+ Schindelin
+ <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3 1/2] update_symref: add REF_CREATE_ONLY option
+In-Reply-To: <20240919121335.298856-2-bence@ferdinandy.com> (Bence
+	Ferdinandy's message of "Thu, 19 Sep 2024 14:13:25 +0200")
+References: <D43G2CGX2N7L.ZRETD4HLIH0E@ferdinandy.com>
+	<20240919121335.298856-1-bence@ferdinandy.com>
+	<20240919121335.298856-2-bence@ferdinandy.com>
+Date: Thu, 19 Sep 2024 15:46:00 -0700
+Message-ID: <xmqqtteb45zr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,49 +59,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- A3C75908-76D5-11EF-A714-9B0F950A682E-77302942!pb-smtp2.pobox.com
+ F213E966-76D8-11EF-ACE0-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Bence Ferdinandy <bence@ferdinandy.com> writes:
 
-> From: Derrick Stolee <stolee@gmail.com>
->
-> Add a new environment variable to opt-in to the --full-name-hash option
-> in 'git pack-objects'. This allows for extra testing of the feature
-> without repeating all of the test scenarios.
+> Add a new REF_CREATE_ONLY flag for use by the files backend which will
+> only update the symref if it doesn't already exist. Add the possibility
+> to pass extra flags to refs_update_symref so that it can utilize this
+> new flag.
 
-This also allows the programmer on the C implementation side to be a
-bit lazy, as the --full-name-hash option does not have to be plumbed
-through from the end-user facing commands (like "bundle") down to
-the underlying "pack-objects" command ;-).
+If I wanted to create a symref that points at A, there are three cases:
 
-As an end-user facing tweak mechanism, an environment variable is
-the most clunky, followed by a configuration variable (which can be
-used via "git -c" and exhibits the same clunkiness as an environment
-variable), and a command line parameter is the most versatile in
-allowing users to customize the behaviour per-invocation of the
-commands.  So in the longer term, we probably want to plumb through
-the option, like you did for "repack -> pack-objects" call chain,
-for all end-user visible commands that call into pack-objects.
+ (1) the symref does not exist.  
+ (2) the symref exists and points at A.
+ (3) the symref exists and points at B.
 
-But for testing purposes, the solution presented here is of course
-good enough.
+I'll see a symref that points at A at the end in the first two
+cases, and my request is silently ignored in the third case.
 
-> Second, there are two tests in t5616-partial-clone.sh that I believe are
-> actually broken scenarios. While the client is set up to clone the
-> 'promisor-server' repo via a treeless partial clone filter (tree:0),
-> that filter does not translate to the 'server' repo. Thus, fetching from
-> these repos causes the server to think that the client has all reachable
-> trees and blobs from the commits advertised as 'haves'. This leads the
-> server to providing a thin pack assuming those objects as delta bases.
+I'd expect that the caller can tell the failing case apart from the
+successful case with the return value or something.  The caller
+might want to tell between the first two cases for reporting
+purposes, but I do not care as much as I would care about detecting
+true failures.
 
-In short, the tests are based on broken assumption and checking
-bogus outcome?  Somebody familiar with the partial clone area should
-probably take a look into it and fix the tests if that is the case.
+Nobody actually passes the flag yet, so we would not be able to tell
+if any of the added code is buggy from this step alone.  Let's see
+what happens in the next patch ;-).
 
-> -	if (write_bitmap_index && use_full_name_hash)
-> +	if (write_bitmap_index && use_full_name_hash > 0)
->  		die(_("currently, the --full-name-hash option is incompatible with --write-bitmap-index"));
-> +	if (use_full_name_hash < 0)
-> +		use_full_name_hash = git_env_bool("GIT_TEST_FULL_NAME_HASH", 0);
+> diff --git a/refs.c b/refs.c
+> index ceb72d4bd7..7afe46cadc 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2085,8 +2085,9 @@ int peel_iterated_oid(struct repository *r, const struct object_id *base, struct
+>  	return peel_object(r, base, peeled) ? -1 : 0;
+>  }
+>  
+> +
+>  int refs_update_symref(struct ref_store *refs, const char *ref,
+> -		       const char *target, const char *logmsg)
+> +		       const char *target, const unsigned int extra_flags, const char *logmsg)
 
-OK.
+While it is not _wrong_ per-se to mark an "unsigned int" parameter
+as "const", it is a bit unusual in this code base.  The only thing
+it prevents us from doing is to mutate it until this function
+returns, which does not help all that much in making the code safer,
+as opposed to marking a parameter of a pointer type as a const
+pointer.
+
