@@ -1,100 +1,103 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout7-smtp.messagingengine.com (fout7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF133A1AC
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 20:11:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7DF1CD15
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 20:33:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726776666; cv=none; b=ndjn9IMF4XmEQIIN7Kav8cy5dsblpF58Ck11IQbotWOMU6FuIvX4YW8KxiCHQjBDf3MD6P+XudTXuxSfrHTFgOXfCCZ39Q+1Uk5X0GqyrqId7ahzSnuXAa/dysMS2JSeYlUQSNy0rjxcqsxiv6Dh2oD3vjRwp4DM6mUgFGX6WrY=
+	t=1726778023; cv=none; b=tNmlzDXpvuvhh6G5gPJHFcIBMSOGXUzgaokRSzOBbC/LQhWVC9kqJqSWbch9Yxplkfe8yIaJkzRCJeR/YqDDokZL5UHLb0Hkjytzqe6jL3Zq2l6EM9m/ZD+gwZQy8qkLZl8KDdDE/ULLDIOEKFmba6Tul+ZAYY3RiS+DkXjvihM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726776666; c=relaxed/simple;
-	bh=dHMOPMlpPSVvrWwPu5mXMypFD8TiMysNRIYcembj8Hk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Q40AczW391/dZHDZ+rZNodLIVtVUx6LnEYsQa/mX3jO1mQ3eRnjtvF3Z1RNbPhUsf0+RTnmVghIrVrRqYSIyoNjJPoG9bFPRvilmTputYR8mkAotaurnh2a9xU0JW0GG1KSnkp/ayz6d0c2pOyG4P+wUn2IFNj1IIOgPXSEPnXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=precisioninno.com; spf=pass smtp.mailfrom=precisioninno.com; dkim=pass (2048-bit key) header.d=precisioninno.com header.i=@precisioninno.com header.b=g5t4wOl5; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=precisioninno.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=precisioninno.com
+	s=arc-20240116; t=1726778023; c=relaxed/simple;
+	bh=/f7yAJ1Do1Up4lku3s0wnznONRbDJdoRwW3uc0PUff4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=lDFn29izYVqJalm1fZCiwuWfPJXQU/jcsPSncTysrzyIcxOU58WJ5v6zY4jAFhm/K3LcFEzP/OkF/QeevCUYNvWIo2v8mTCzj1ZbvWNpvR0gbafuseuX5Ups3Qzg29i8TmHTTDu3OfW0ZGCjd8hfGX+HC8ddGNct23DOK7Y0q2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ZwLcLDeo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HLj03w9A; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=precisioninno.com header.i=@precisioninno.com header.b="g5t4wOl5"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3e0465e6bd5so661399b6e.2
-        for <git@vger.kernel.org>; Thu, 19 Sep 2024 13:11:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=precisioninno.com; s=google; t=1726776662; x=1727381462; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2a21VwwWI/0bproFnbC+j5kfjJUKLNB4bD437L98OPo=;
-        b=g5t4wOl56ELcgqOY8vhTsDf9l6Hqr/BFR/JIYz4AiTt2lSFrFhM8v7/RxzM+zU7PDI
-         KD6BIbQPrbOgO7kfKuyOKmZP9fXgaHZJkv/oTm/9nC6I2rxnde24ws+IAKj4f2bcfZCC
-         uKoHvOXbcUDLXBYgCQbN8jQOgpgdq5sIzv6UHn6AostgQ9BYlrgn40qsntdIDTX8UBhf
-         vcQKMAOhmq1/OPmU+nMUUIPUJVN1z8JJ9rmU0CFA2zhAq2vyEeKKWjI6yvCJan5Pj64U
-         kz0X0Z2/P5DxAm1SISTJHvh2FKlOtcz0AWqaf2KOsWAUofpABWK2jyzCKxtZV3Ak1CAE
-         v1zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726776662; x=1727381462;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2a21VwwWI/0bproFnbC+j5kfjJUKLNB4bD437L98OPo=;
-        b=hGZEOhiSAGe8VVxuGRg47/f27pN8/rs6RNeCJs9TuTj64ODj0JLZSwK90bp+wi5Mzm
-         oTBTZQBItOXuuuBF2D4Fl8+rwcVo535LD1NIzxIat9hFIYpDqbabbEcBbhAN+30NyZlS
-         qQsyqVQMt/eCjxc/jaaxefxOUoM3uD7aJMD8SdZ06gS+nnHBvxjstlWrU5L9AVioQcpZ
-         y42h0RGyfa58m62S3m1qza3fjkEnxP+IwHtcwlEP/OOx4NQXtkfMbm10XulMn3/1B6yn
-         L7VDSeIjaAzBHkmmzRfvMmQYO+GZ2tCMU63FcWxGb57uq7czThUshtydeBOj72TFkmkk
-         oyIA==
-X-Forwarded-Encrypted: i=1; AJvYcCX7qxpefpXfxODPNLAycV2XHeJR13otohbvYJVdXh9o+Ut7zCs9R7zghsA7vZx37TxxRj0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHl1Sba1i061PxJ0d8EDXGzpD0GWLuvAnzr7uZB1LF9tzkDvnJ
-	HKT4rsUsulKwlJxurAa0WcI2XFlgKsCmHMA9XO7yZQZmih7xscnlrQkai//vt2g8/F/+fqiQ2hn
-	DoEK0icolXfA2aCYfg7+OGOr3bZmLgY1Cq2bLow==
-X-Google-Smtp-Source: AGHT+IEz2St+oougTQ8MqFuKuJUVfWWVyuoxnzbTYWuyapnt5J+bL+U5ZXlo8Is497jWF5UeoMYLMHnxFL5OrtSiHjg=
-X-Received: by 2002:a05:6870:a1a8:b0:277:c027:1960 with SMTP id
- 586e51a60fabf-2803a666717mr419542fac.25.1726776662497; Thu, 19 Sep 2024
- 13:11:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ZwLcLDeo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HLj03w9A"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4450713800BE;
+	Thu, 19 Sep 2024 16:33:40 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Thu, 19 Sep 2024 16:33:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1726778020;
+	 x=1726864420; bh=166igxpN0ZEWjaLNArqArkKr8xUIrcHPpJJm2+voxhY=; b=
+	ZwLcLDeoA7khAvE+mf8ylNcT2UtVDmmEZ2kGlgfkSDksWTylNeDtvBCxcB0eZ/YE
+	v8aUJHje9HQDlxcLfYjdaTC2HnzOiadXQ25ZAtkR+uC0uHcriJBXJrJeDGW8k1qN
+	JZL2VmcSeM11AlldpLd02TU4DBLfVpKZehjFixBnH8f3RoSLZq9EMhqzTwAKMRP8
+	kYTKXowmzpswJtvobU+jy+51thZEZtFkYPLQhPYwrO9c+AQXjW/SLR6CkOrxZUJD
+	j3SdQPqgCNIkDwTfo4F/x7qinSSmLUA7j4hv+sYQHX685C6zkaXia+CJw15I9yRO
+	jxRzZkzqctL9RaBxsJYHlg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1726778020; x=
+	1726864420; bh=166igxpN0ZEWjaLNArqArkKr8xUIrcHPpJJm2+voxhY=; b=H
+	Lj03w9ASmjVQsU2u3sSdgJODhJtLCSgjUoT/01mTasQIVGRc/L8POJMiq2I6TsrQ
+	hl8B9yRNEPtxPqnWy2UeT4PNUmaeMTotb3sIft6s7013G3jTienj/89IqT/8lmU4
+	AiwKQBUVrwwBqL8dStQOXzStQz7+na4PtS3FUzA+nPjr0N0HjIOdrMfv+hrEF6x1
+	rvyGEW5+T2JPzzmIMZ6JK1oVSFkUjrDOEZxXAcN8riLVvWYyW7FjPA7pK1gy5KD5
+	tb4aIUtOk+trOeekwykyQM+Ju4Zmjx5tBYDg/OlVIXKYd/HjKiGVu/g1WTfxRYIP
+	ptrLCdRyj/TvsPC+BVdMg==
+X-ME-Sender: <xms:pIrsZoNFEXmRoEYFW4o_OfREuGKht5n8rGUNBIf9JZWafBtsETVXxNc>
+    <xme:pIrsZu9miAfwd7F0qYUQm6qeDuZOo8i7r5TRbPVLileTZXDpdkfbs563uvSPTnrwk
+    qWXy9HFI6RFbNovgg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudeluddgudehvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
+    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
+    rghtthgvrhhnpeehudfgvefgfefgffdvhfffvdevveegheehudetvdfgueffjeevjeduge
+    evfedvfeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihii
+    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgsh
+    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegrlhhgohhnvghllhesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
+    pehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:pIrsZvTlQt899EjcPw8qDadzZzipvPDQUn8gEywFUnro0LpBZzDeJA>
+    <xmx:pIrsZguN6ANUHxrKdwXEGSyGcM-Obfh80Zlrv3Tb8n2eGuxsBAdgDA>
+    <xmx:pIrsZge0I2X8ekzMX74SmUljlZVSWcoliu5TiqIUokvo8ysvfS59sA>
+    <xmx:pIrsZk2NTK0cvIEho_ev_LEHNU8xTdMCW4JGKsxIWMn-vfXwUSNlFg>
+    <xmx:pIrsZo5vagesiNUAP0u11Js2s0mpnUlw3Q-hw22ah_VQIN8h9A6RMVym>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id F3D6E780067; Thu, 19 Sep 2024 16:33:39 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAKDm0rNaHbzoiPg=DeuCoxzooNAsxw2BJfc0wg7fC_-=o9uJ7w@mail.gmail.com>
- <7b4ce2fc-3763-4881-8459-e0c1f2cbc69d@gmail.com> <CAKDm0rMsXUpFSWRWkW0J0FUpEbot6wQqdzYTT5CLZ=3TGbV-OA@mail.gmail.com>
- <467f6fb4-5f83-416b-bc09-572a82f210ea@gmail.com> <CAKDm0rO6H4RTa5EXMrNvSy2swVegHveasY1koZXF5V7HvZzK0Q@mail.gmail.com>
- <xmqqsetv795s.fsf@gitster.g> <CAPig+cTDFcJiig7=Sf5vxsgzc8_ax5t7Vqy+-_x8OK_U5U6Qnw@mail.gmail.com>
-In-Reply-To: <CAPig+cTDFcJiig7=Sf5vxsgzc8_ax5t7Vqy+-_x8OK_U5U6Qnw@mail.gmail.com>
-From: Matt Liberty <mliberty@precisioninno.com>
-Date: Thu, 19 Sep 2024 13:10:51 -0700
-Message-ID: <CAKDm0rPNLtv48P4JOKNicMcrz=ZZwr9PwE207D_foj1r-pn5UQ@mail.gmail.com>
-Subject: Re: fatal from submodule status --recursive when used with grep -q
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Junio C Hamano <gitster@pobox.com>, phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Date: Thu, 19 Sep 2024 22:33:18 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "Andrew Kreimer" <algonell@gmail.com>,
+ "Eric Sunshine" <sunshine@sunshineco.com>
+Message-Id: <ab9213d5-fb1b-482e-854b-4f5d4e82821a@app.fastmail.com>
+In-Reply-To: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
+References: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 00/20] Fix typos
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-The exit code matters if you do "set -euo pipefail".
+All of these look correct.
 
-Matt
+Maybe all of the commits could be combined into one commit with the
+message =E2=80=9Ctreewide: fix typos=E2=80=9D.  But that wasn=E2=80=99t =
+asked for last time.[1]
+So I dunno.
 
+=F0=9F=94=97 1: https://lore.kernel.org/git/xmqq34lzqyi8.fsf@gitster.g/
 
-On Thu, Sep 19, 2024 at 12:40=E2=80=AFPM Eric Sunshine <sunshine@sunshineco=
-.com> wrote:
->
-> On Thu, Sep 19, 2024 at 3:10=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > Matt Liberty <mliberty@precisioninno.com> writes:
-> > > Yes and also to have a 0 exit code.  No error occurred from my perspe=
-ctive.
-> >
-> > I am sympathetic to the line of reasoning, but I wouldn't go that
-> > far.
-> >
-> > Running "yes | less" and killing it with 'q' saying "ok I've seen
-> > enough", and running "yes" and killing it with '^C' saying "ok I've
-> > seen enough" are pretty much the same from the end-user perspective.
-> > You told the command to go away, and the command complied.  But I
-> > haven't seen anybody complaining if they see a "Killed" message or
-> > "echo $?" immediately after it says 130 for the latter.
->
-> Regarding the exit code, it's not even clear how that factors into
-> this discussion considering that, in the presented example,
-> git-submodule is upstream of a pipe, thus its exit code is lost
-> anyhow.
+--=20
+Kristoffer Haugsbakk
