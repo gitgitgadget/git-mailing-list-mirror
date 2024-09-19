@@ -1,129 +1,142 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAE4111AA
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 15:17:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF3D19CD01
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 15:44:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726759051; cv=none; b=VKShCCCRHeuCpC6k5qsIIFgI/hGt1xz7UyrDIeuOkNxt8E0SeyGL/3b8dNYLZt940IABmuLlDkpvfhddTXhQ/ZAJ/y/GWnni/kaui9eB3Vedgcga07uqxwIj4CRtKSLRzFS6ZTfRQdZYXa3lMStOr6I13c3wo2N9SqVbU/pvlak=
+	t=1726760663; cv=none; b=hU5LW2MRHFXUuKm0NgXiuS1+ZSfIhpScOdD/i15H1vRphGEjRuH/iMtfiyRdXa7ziwD6k/NVvjxIyarn+R8BIjPHmQVVGiL4CWI7Rb5xW3p/pL8YZRUCqHSwnyf/MW0DlyRi/odwoFBqZiwsWsENpJRtH+kQv9M/l9QD7RLDbGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726759051; c=relaxed/simple;
-	bh=5b4uZAR2URmJ1wjH6pfi9GjYE7vdH7Thka8qQ5tmhyk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZyaF8qpmsBE0RMM99lkZw/TazzJkVt9rP1bXDGD0t44qdjE4Z8Fj/tXR+CRnPCidv88uEy9jNcboOD+briKxCOQTvGeVlFjJNPJ3XCBPjVgAeATts8RM74wN+jeYLAvPj3rJqJ/2wZMAAX5a1hRxzCgIbRzp5A3GjGccJdBhkE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=precisioninno.com; spf=pass smtp.mailfrom=precisioninno.com; dkim=pass (2048-bit key) header.d=precisioninno.com header.i=@precisioninno.com header.b=F9J3aCgy; arc=none smtp.client-ip=209.85.160.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=precisioninno.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=precisioninno.com
+	s=arc-20240116; t=1726760663; c=relaxed/simple;
+	bh=BsA5ewbPnm+KJ27or00rNckJMebCwnnDB7MiHRjDpSM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=cFpsfZ2jlKVuB8IGua+Rh6uTLrDMSDwoSs5a/t+E80jRto8GyJqaHHqVh8RtIzj//WZQ+tCjIqPciZwvbU/OWGTocGHlYHU/Ep+jvbfiTxOPA+BeIUcdN/zjm8mU3kxnjQ5NWsnyCHTBGPIFJVEPMVERwZ/PD24TQN6YcB7jd7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=salesforce.com; spf=pass smtp.mailfrom=salesforce.com; dkim=pass (1024-bit key) header.d=salesforce.com header.i=@salesforce.com header.b=I9ZZZfD9; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=salesforce.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=salesforce.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=precisioninno.com header.i=@precisioninno.com header.b="F9J3aCgy"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-27c90f1e968so604954fac.2
-        for <git@vger.kernel.org>; Thu, 19 Sep 2024 08:17:28 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=salesforce.com header.i=@salesforce.com header.b="I9ZZZfD9"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53654dbde59so2148546e87.1
+        for <git@vger.kernel.org>; Thu, 19 Sep 2024 08:44:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=precisioninno.com; s=google; t=1726759048; x=1727363848; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tBhRMX1GMz7s/xXrhYUXMb3UhAVHzFs7mxLXrFd1k7o=;
-        b=F9J3aCgyIRBljZGhV4hcwg7F0hhgB3u/hZggNqS7uE9f0U5Mtp8WHxGn/Q0esyZA+A
-         LWN1Qcd+vdxwckxFZz6MDzcw5/bsQ1ABhbspDssFnUE9OS8sOmYrtWmKmJAtSYYrKNJl
-         mq3DsdZ2WeGjO55biKWvVuE9fcBXJJ9oWfTC5bogm1sJtOdBmEWQRdf2sCS3LRfE933K
-         lB7YiSU9byhBbnau5D0SUUk4zhltKonQR+ezoKbH6l41vdGzg+dJejm2Qt8sOcGpG9Kc
-         IXAD/ANtPwDKuyLwnw1OlYwyKt6NuGHQF+qUQhVFphdAZD4XUigKKSsHk4bTR9NaGTGQ
-         JC7w==
+        d=salesforce.com; s=google; t=1726760659; x=1727365459; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9iM1QBdoASXP1v6BxMO9EiBXe/Ds2i41g3wmsCyguDs=;
+        b=I9ZZZfD9cJlHIUcrk2MGwa/lghiVnQ6lz54oQdVCxm7Wm+vzI+ei+F9pGxnDZ8JIoI
+         FvIbgZ01Cq1OksxqzMDlUNfjxmKSqVB2/QrrfFvQ/c0mxkMngb/+6GaA3PrOkZOdnSjD
+         m0nO36BtfhyfhM/T6cuKFOh0HJ9kfpPZe6muk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726759048; x=1727363848;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tBhRMX1GMz7s/xXrhYUXMb3UhAVHzFs7mxLXrFd1k7o=;
-        b=lLyKWQ2CO2m8gMNwAVLXKAXNKVrgcdlJGHjt1b9YkrhsdNeWpk2JRFNFuo7ZvZjg1E
-         MS215f9HmLfM5lLrzuGuwTqKqAkoSpAGAsVUwSfJz8DJJwjVaxwZhMZ9y2lvZ4prf9Y+
-         9hkDLatrNn7MZocysw6vcqSakVCPR4FNFc4o34A6wptkN0Gtv4IdsRMS/bXfGQeR7GXM
-         aOY5MjMAOYQp7/zRCe2fs0v0ctUM2AXnUrz9ey/1IarY+yosK8T+Q0o6ovTNVjQuotc1
-         hO/cM8QYI2Mz0KHHbfapT4kNGlAFK8mCTtF1oO2Qx6nHM1Ti/+EJTrcPTJXxqQqK+7c9
-         MYNg==
-X-Gm-Message-State: AOJu0Yx9u+cQbV86LtHVKZ8G4XfQXRyp1POMn9tZKZfuRx2YvLn8z6ZJ
-	qJzagSy/G4bQTa7iABcUuAbnE6Z3Ykt0oyazBOEI+CYV0BKSu+V6G4dd3mlrEjtRHtuZePznGdy
-	WJLDI+ggkeKFeo3nTAnxqOUroQv9cu0BO5S+bzA==
-X-Google-Smtp-Source: AGHT+IHNQU+XIvUoU1744dnmSfLCUF/B+DV7qI8+9KOJy1BfXeTHQcbBawuN+Ff9r6sBA8EkICSMDeBfKgRMAj7iR7A=
-X-Received: by 2002:a05:6870:612b:b0:278:5a4:10cc with SMTP id
- 586e51a60fabf-27c3f253a60mr19960060fac.3.1726759048288; Thu, 19 Sep 2024
- 08:17:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1726760659; x=1727365459;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9iM1QBdoASXP1v6BxMO9EiBXe/Ds2i41g3wmsCyguDs=;
+        b=iN6LekuIo4PQ48z4KLQQb18b59/f5v/IwY+7hiIZbBUMJyRJUJTn/WkeO2PBNVINwd
+         n5UgTyTo9w6WGoPWl0S3zsAIVEdtplymi+mif+lJWv5+D3FasGvL1ud4JcCCG6FtnENL
+         BaY6xAbOnzUbm+I0h2qP2/sbpqXQcP5GOBANcdzaF90ZhmTZAysy9Tvbvu51M0Wu6Wyz
+         ZVjizEmuUudpYeWs/jhrbKuOvGYYduyTWBliRCS523twrt+pfZmgmgDEgFDotWMRueuR
+         Bwud3TUdNyLqraAuDgpA9kV2/BqDyWpoj/u5cQsyWuLzrWo5QoDGme/x+TOvG9VW5v5i
+         bN5w==
+X-Gm-Message-State: AOJu0YwdMH6eQk7/1geZ8Zl1fhV+4bYt6AMIGKHdK6mpuZqgNIxzA4RK
+	isRhzPNRASS9Wkab2ab4tswhIU2ij2A89Gdku0AlLjEHVaOWvLai4WCCr84ljfHsLxd8R2NjbRZ
+	wudx+fxhyc8RkVRdtxP0z0V/Bt5NWhLMTkx+ebRVbgv2wMa9JSxo=
+X-Google-Smtp-Source: AGHT+IFg5saqgA0d6PIa02n1rHkZDcoeJNXY7AMFhl2/Nf1Fg2CwDURlwSWZpGcMVmUxEEhMiv0aXRp3olGaL4dB/z8=
+X-Received: by 2002:a05:6512:1386:b0:52c:dc06:d4ad with SMTP id
+ 2adb3069b0e04-536abb1cbdemr16209e87.6.1726760659331; Thu, 19 Sep 2024
+ 08:44:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAKDm0rNaHbzoiPg=DeuCoxzooNAsxw2BJfc0wg7fC_-=o9uJ7w@mail.gmail.com>
- <7b4ce2fc-3763-4881-8459-e0c1f2cbc69d@gmail.com> <CAKDm0rMsXUpFSWRWkW0J0FUpEbot6wQqdzYTT5CLZ=3TGbV-OA@mail.gmail.com>
- <467f6fb4-5f83-416b-bc09-572a82f210ea@gmail.com>
-In-Reply-To: <467f6fb4-5f83-416b-bc09-572a82f210ea@gmail.com>
-From: Matt Liberty <mliberty@precisioninno.com>
-Date: Thu, 19 Sep 2024 08:17:17 -0700
-Message-ID: <CAKDm0rO6H4RTa5EXMrNvSy2swVegHveasY1koZXF5V7HvZzK0Q@mail.gmail.com>
-Subject: Re: fatal from submodule status --recursive when used with grep -q
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+From: Ryan Brainard <rbrainard@salesforce.com>
+Date: Thu, 19 Sep 2024 11:44:02 -0400
+Message-ID: <CAPzz1g+jhP4oXLFn3XtG29fe5XuKwKJ_CQrSVejX+LOBp_-LUw@mail.gmail.com>
+Subject: Bug report: null bytes in pre-receive hook output stream drops lines
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Yes and also to have a 0 exit code.  No error occurred from my perspective.
+I am reporting an issue where if a pre-receive hook sleeps and then
+returns null bytes in the output stream, the git client that is
+pushing will drop those lines intermittently.
 
-Matt
+## What did you do before the bug happened? (Steps to reproduce your issue)
+
+1. Create a local "server" repo with a pre-receive hook that includes
+null bytes in output: mkdir /tmp/server && cd $_ && git init --bare &&
+echo -e '#!/usr/bin/env bash\nfor n in {1..3}; do echo -ne "\\x00" &&
+echo "-----> Log line #${n}..." && sleep 1; done' > hooks/pre-receive
+&& chmod +x hooks/pre-receive
+
+2. Create a local "client" repo: mkdir /tmp/client && cd $_ && git init
+
+3. Push a commit from client to server: git commit -m . --allow-empty
+&& git push file:///tmp/server master
+
+## What did you expect to happen? (Expected behavior)
+
+I would expect to see all the lines output to the client. The null
+bytes should not be printed.
+
+## What happened instead? (Actual behavior)
+
+One or more of the log lines are dropped.  Run Step 3 multiple times
+and it will be a different line(s) each time.
+
+For example:
+
+root@5c7434417f1f:/tmp/client# git commit -m . --allow-empty && git
+push file:///tmp/server master
+[master b4f02d7] .
+Enumerating objects: 1, done.
+Counting objects: 100% (1/1), done.
+Writing objects: 100% (1/1), 175 bytes | 175.00 KiB/s, done.
+Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: -----> Log line #1...
+remote: -----> Log line #3...
+To file:///tmp/server
+   ae04465..b4f02d7  master -> master
+
+## What's different between what you expected and what actually happened?
+
+I would expect all the lines like this:
+
+root@5c7434417f1f:/tmp/client# git commit -m . --allow-empty && git
+push file:///tmp/server master
+[master b4f02d7] .
+Enumerating objects: 1, done.
+Counting objects: 100% (1/1), done.
+Writing objects: 100% (1/1), 175 bytes | 175.00 KiB/s, done.
+Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: -----> Log line #1...
+remote: -----> Log line #2...
+remote: -----> Log line #3...
+To file:///tmp/server
+   ae04465..b4f02d7  master -> master
+
+## Anything else you want to add:
+
+Tried this on multiple versions of git on both macOS and Ubuntu,
+including the latest 2.46.1.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+[System Info]
+git version:
+git version 2.46.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.5.0
+zlib: 1.3
+uname: Linux 6.6.12-linuxkit #1 SMP PREEMPT_DYNAMIC Fri Jan 19
+12:50:23 UTC 2024 x86_64
+compiler info: gnuc: 13.2
+libc info: glibc: 2.39
+$SHELL (typically, interactive shell): <unset>
 
 
-On Thu, Sep 19, 2024 at 7:22=E2=80=AFAM <phillip.wood123@gmail.com> wrote:
->
-> On 18/09/2024 15:28, Matt Liberty wrote:
-> > I'm not trying to capture the exit status of git but of grep.  Compare
-> > it to "yes|grep -q y" which doesn't generate any error even though yes
-> > generates endless output.
->
-> Sorry, I'd misunderstood your original message. So the problem is that
-> you want "git submodule status" to be quiet (i.e. not print an error
-> message) when it dies of SIGPIPE?
->
-> Best Wishes
->
-> Phillip
->
-> > Matt
-> >
-> > On Wed, Sep 18, 2024 at 3:05=E2=80=AFAM Phillip Wood <phillip.wood123@g=
-mail.com
-> > <mailto:phillip.wood123@gmail.com>> wrote:
-> >
-> >     Hi Matt
-> >
-> >     On 16/09/2024 16:08, Matt Liberty wrote:
-> >      >
-> >      > If I try to grep the output I get a fatal error:
-> >      >
-> >      > % git submodule status --recursive | grep -q "^+"
-> >      > fatal: failed to recurse into submodule 'tools/OpenROAD'
-> >      >
-> >      > I didn't expect any output but did want the return status (0).  =
-I'm
-> >      > guessing git is unhappy that grep -q exits on the first occurren=
-ce of
-> >      > the pattern.  I don't feel fatal is appropriate here.
-> >
-> >     I assume git is dying with SIGPIPE. As the only purpose of "git
-> >     submodule status" is to write the status information to stdout that
-> >     sounds reasonable. If you want to collect the exit status you need =
-to
-> >     consume the whole output so that the command runs to completion.
-> >
-> >     Best Wishes
-> >
-> >     PhillipSo
-> >
-> >      > I can work around this by writing to a tmpfile but would like to=
- see
-> >      > this addressed.
-> >      >
-> >      > Thanks!
-> >      > Matt
-> >      >
-> >
+[Enabled Hooks]
