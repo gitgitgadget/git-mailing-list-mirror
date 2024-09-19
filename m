@@ -1,62 +1,62 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C2A839F7
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 18:35:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BB8136320
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 18:35:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726770902; cv=none; b=WFbg5uid2a4OvKfrJejGe2OQ3z8XgTiU0Aere6ApE3xibzLTOZ21qF7ZimC6FRiZ9Tjs0c2pnAvwYP9UI7GlAnxLrVdHV6Ui57ILdSKZ1iGWoHmDhDzXgiQQ6JxYgeoW/VaLmLeJkwOjioYlTE+uQaCaMj9zvFr0FyY+6QWMfEA=
+	t=1726770902; cv=none; b=aZ1FmDxf9iRqECdzXcWRPHQGuNy2kqwy9Jtxx9Szyk0ezf2bTSrxu+AosP0ttFyJ6uizYxcDF333er/mNa9h58fpO9WfbL+T/l6+sWMZkJI5baeXtMDaxeT00+gPSZFnM6Lon8lOskQ21TupGlOfCLLX7rpTFTE/TAcuHoImTrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1726770902; c=relaxed/simple;
-	bh=vLGQRQ/jUwOZIArZpqGYDLFtRW14Jmu/D6T3Zd3lzUI=;
+	bh=22RpsFk/csJ1DtOsU2AjKY/YLqYodDBik+AhGrthers=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hwIM5iQvknQhOVOb0hA5l4VaPRBo4TetEqPz69woWvfS2o5fL1sZOgcVOwdlGynab/+0tHzfFm6WT+GlN/PWrcQmQPZDUBHkyosIMnJBzUUoNxqtzQNKDhyW5yS1Wfk36nrqespaMJg2vQ08IR7hDRW17RtP3P2q7+xFyUSzllM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qd4jbd5w; arc=none smtp.client-ip=209.85.218.42
+	 MIME-Version:To:Cc; b=Q92onHzHm+0QpJaqFkysMHoZNSET8J46HSOVfEqET2zpPH3TlT/li4vmtKJN8qJ8aIhhgcDoYortYiqMG3IFzE6SstddJ6Mne4hi9hoBNaY5qV4inFptJ8NgIrJXw9xuh0DKQLmgYKKOSk3YoF8L6KhUSKqJ4PQOi5pa6qWY5ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Eq8shAFH; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qd4jbd5w"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a8d4093722bso171176666b.0
-        for <git@vger.kernel.org>; Thu, 19 Sep 2024 11:35:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Eq8shAFH"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a8a7cdfdd80so155540266b.0
+        for <git@vger.kernel.org>; Thu, 19 Sep 2024 11:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1726770899; x=1727375699; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f4HA0sdeZbKDescBxM5DwfxJEVp/s585gMw7kbmSrZU=;
-        b=Qd4jbd5wKLEBn8biLNnrr0CIFylQQ9Zv46eTvuBMKMNBwVmKovqvZlFltN5Vn4T3El
-         NnBcCiShk3KStmOmncavIrHIDH/aTGpVJOXJJjEcTL6gJ4H96OATAInx9pPM7b52buQ7
-         li3+YlelDiy7gV/e2tx8xKybl0JG6SwtnLktcuwD5jmhxEVFs4aFSwHwzhXIheULcD4g
-         2+fKmUklpUqkaYrJKLWtGgHYDBKcKiKSDZGOz3JKG1hmrVHobKO5E3/B0Nuv4/8NvlCn
-         ny63EdO9W9NE0CVS8UpdcilIDabejpM73FHHIP1yXl7sr4/TCxEZtiSW80XzPUsqr0QT
-         imRw==
+        bh=rKK/eaKF6seEJRo/6gDP5CwCkL0L/I6RrpnXiL3R1fI=;
+        b=Eq8shAFHIJWlRKXbAw7mYbRh+BQfTS0UmG1sPsR2tuM+cGvppkJ3zZoZgnpA0COfAu
+         Ablia7s3dACthtzf7pSpPIA5KZYYZaNC5f6M+9gylEgYbPoYOiGl3Jvefepxx+ZahR0F
+         0+iph+oU1xeeG+fAQjxIIsduoLOq5cbxq5yMT7eCyTSdYl9aTzWPdPs6i/q3s18qUy+H
+         JZ6v7eyb9EZAsJ3xqRXZdCyFpAS7DHLdbyL3OaRLznAGOnDOjrDZd0KoDSvgxDv3P6Uj
+         oE8CBF6EmxSsyGt6b8+0a4sWqMBrtb7TmDbom1s5VssZPSkORflVb3pvHeWLAQDXT2Ar
+         By+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1726770899; x=1727375699;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=f4HA0sdeZbKDescBxM5DwfxJEVp/s585gMw7kbmSrZU=;
-        b=QfXkVv+M7JrDbtsIT2uahQvDUlJ9TmnsSP9pL3iNExrGxBAD/pxJ3GqASwLlyION4/
-         hrOQCC6YNvokl+qazIy0oJHvX8vfBIq1CGn/8DOLreb+lEm/OkX39wtiVXiRtjbakSXy
-         mPX7MphBNET0PNqMti7kdR0dEGpT8C8A1yss8IaxOvKDuwF2EWfOMnisbtg9eVPDtHYr
-         ijw9cXnAloWEvVoMcvEikErnaLTFWk9IZUUUpMi4uWmbyg4HKDlgMFs03EaHikSMVHJE
-         M/uwFpMFy6cRg4nGEaYGhlHmDdjkjhXXCSzfXWkCUZizHmU2uxY/lpZF4yYBKQ1lQdPx
-         oWIg==
-X-Gm-Message-State: AOJu0Yxxp9mvESTeDrWvfMU8+QEn0KrGEQVgQwvyww18BDqyPpPAKHJ3
-	X/TPsIqytb9dqt3Ap2uufhUGQFZUU9qdNGy9cfUCrFRAzQxm1elBE5ON4Q==
-X-Google-Smtp-Source: AGHT+IHz3C05B+I24tChjB9oVuf86LQ0hzhuVbw9y22O5tRV9tIqJoVYkXgDG1r4eCn9/HLmACvzvg==
-X-Received: by 2002:a17:907:f199:b0:a86:fa3d:e984 with SMTP id a640c23a62f3a-a90d56136f0mr6473666b.20.1726770898619;
-        Thu, 19 Sep 2024 11:34:58 -0700 (PDT)
+        bh=rKK/eaKF6seEJRo/6gDP5CwCkL0L/I6RrpnXiL3R1fI=;
+        b=HUIKlqFaINjYhK1qg1fYJ1QJSLdjS8Af2W2m9MogXs5aexTkibLoutyhMpHG59ffhY
+         9pwrcNmWbO0UWmC6laVM6RHjUyBk7TsXiwlfQcC8BwsTVMYboSkXSgcg8N6RTtMLKmW9
+         fOMOYQ9v7lhv6H21epSttBbzqOPgwCvOyEuy+iWBclyPVKV+qyifxj93tZMAKwLjY/qf
+         FbDILOFoM03/oYYbu2nRSaQFtU0fpzYNti+Fi8sVkyBNgFWFy7bjozRHdnyIILqq25be
+         qFpBOd52N0ytPG9o87x8DYahGpCE0ROV+y+tucfyVr+JYpzDjk2d+tMNdG50jfSbDZ16
+         W75g==
+X-Gm-Message-State: AOJu0Ywc5WPCY0rkDIrlexHDrWiowlWnUPdVjSVVSUnmBoJyysMsthqp
+	1WLAcE+hE947XMVon//0+6bx4Zzl4AIbKTEuPMmLGKizjkzgAsZFzZrM6w==
+X-Google-Smtp-Source: AGHT+IEhvmXFzrUdzDHno68kHdfsnjhU6jpZkIxDQR1+oblr3CPRXMEdSgRfSm/Pv6/NpGn2No2iFw==
+X-Received: by 2002:a17:907:e655:b0:a8d:5472:b56c with SMTP id a640c23a62f3a-a90d4ffdc5dmr13006866b.22.1726770899297;
+        Thu, 19 Sep 2024 11:34:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9061330c73sm744073866b.208.2024.09.19.11.34.58
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a90612b389asm741598866b.122.2024.09.19.11.34.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 19 Sep 2024 11:34:58 -0700 (PDT)
-Message-Id: <1f12c379b8ff1253273f6d0b33a6640ec7125e0d.1726770881.git.gitgitgadget@gmail.com>
+Message-Id: <d341face8530c4db1fbebf83b3eed053d089fca9.1726770881.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
 References: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
 From: "Andrew Kreimer via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 19 Sep 2024 18:34:36 +0000
-Subject: [PATCH 16/20] revision: fix a typo
+Date: Thu, 19 Sep 2024 18:34:37 +0000
+Subject: [PATCH 17/20] run-command: fix a typo
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,22 +76,22 @@ Fix a typo in comments.
 
 Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 ---
- revision.h | 2 +-
+ run-command.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/revision.h b/revision.h
-index 0e470d1df19..71e984c452b 100644
---- a/revision.h
-+++ b/revision.h
-@@ -549,7 +549,7 @@ int rewrite_parents(struct rev_info *revs,
-  * The log machinery saves the original parent list so that
-  * get_saved_parents() can later tell what the real parents of the
-  * commits are, when commit->parents has been modified by history
-- * simpification.
-+ * simplification.
-  *
-  * get_saved_parents() will transparently return commit->parents if
-  * history simplification is off.
+diff --git a/run-command.h b/run-command.h
+index 03e7222d8b5..0df25e445f0 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -535,7 +535,7 @@ enum start_bg_result {
+ 	/* timeout expired waiting for child to become "ready" */
+ 	SBGR_TIMEOUT,
+ 
+-	/* child process exited or was signalled before becomming "ready" */
++	/* child process exited or was signalled before becoming "ready" */
+ 	SBGR_DIED,
+ };
+ 
 -- 
 gitgitgadget
 
