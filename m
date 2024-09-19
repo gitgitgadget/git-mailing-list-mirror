@@ -1,112 +1,63 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140F65661
-	for <git@vger.kernel.org>; Thu, 19 Sep 2024 19:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CE75661
+	for <git@vger.kernel.org>; Thu, 19 Sep 2024 19:35:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726774432; cv=none; b=mq1F9YwtfEkiDpIQbnTF/NCpCtNe3/gIMNTb1ove3XVUSVsxrTqvci1isRC1MATWh1DSBusIanqFHyLXw2Xf+iKIscc2kVbiGkERbya+wku6tStIP9YBta7jLARNVjla0bYGtCRsRn8H3Yn63F/kfESOS6zJQHNsFyZsFteBLv8=
+	t=1726774540; cv=none; b=ME3iuT/PtSqEdmzU78h0SOjqIPa96NV46NpDLWqr7wlzv+wPzRPhmlmZDrSVooG1lHbf0oOgjH5b9wWI2/hoiklTLGav5yP2fSZpTtR594ozkspWRgOIOagpBEzVzzoBK11AFOD7wu+mcF8v8x+vu/g48OkXvxw5PIHrlS5wPXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726774432; c=relaxed/simple;
-	bh=GY1g9JoRz3aNvENFLgclDbOx16gXdL81JRRYRUUjuh0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AhgI/7nwOsxqP9hS7hrCW8FxEkIK6w9pYtxDRXEa+Oty0AY1M1kkhRJa49L4qTKW8b1uvTSo/vvStoLLCaVl6nCPhc0HybuIJ7H9JbOzk9KBUTL+rID9oocqQiueyXTWah3jz+ub4W9nANhs7rzBRQI8v0ZeSnEs5kLruFX/uQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=YXlCmpCV; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YXlCmpCV"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BBD872AEE2;
-	Thu, 19 Sep 2024 15:33:49 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=G
-	Y1g9JoRz3aNvENFLgclDbOx16gXdL81JRRYRUUjuh0=; b=YXlCmpCVmrl7EFuLP
-	OBaCIR+/so/yu/LSmYKmCOy0BPeQ9Bv48ZYCehMBShWRNs9VNFAMlNPcp1Fetr0I
-	9LhkfimwjdepyyiZu9UN8/f1E0SqKIS6O8B3Qpl5z8O2GgsK3cTgokO0m0rxjJb9
-	wxzC5vV37fRF41Jo/tSwFgNsMs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B3C5C2AEE1;
-	Thu, 19 Sep 2024 15:33:49 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 080D32AEE0;
-	Thu, 19 Sep 2024 15:33:48 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH] BreakingChanges: early adopter option
-Date: Thu, 19 Sep 2024 12:33:47 -0700
-Message-ID: <xmqq7cb77810.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1726774540; c=relaxed/simple;
+	bh=T4QKAgXdPgRdLm6gIyMzXI3kP3jyptSMPGWE/eNHK4g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jBWWu+sOPrT4Lf301CDJSCBd3CJyPIA5TCzyd244yTPx1yPZv8ZiarEkNrxiFf7kELRUCQzD0RgsjWAUw0G/C0EVA4+nlhRI5LdF6qtC+gaVTwsIB7jZ7OHWLY+scHszLm2k+Yeu91hsgm30VVwb7E0GnGaroBZmBlALqyGIFzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3e047e96478so138239b6e.0
+        for <git@vger.kernel.org>; Thu, 19 Sep 2024 12:35:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726774537; x=1727379337;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T4QKAgXdPgRdLm6gIyMzXI3kP3jyptSMPGWE/eNHK4g=;
+        b=Xcr/nS6vxZ42Us2jUlY97VWu6hPWEnw0bhm8Wkh/HtHtEzGENzLbSqJ7whVrez246l
+         VUiJTVAvWtoiFRBBdShH4lTAKmQp8P7cm9sojb387/3LUS6QTIdS9nWnBkQtA2h/5ICI
+         mhPUFqccf22nurj1kZwWuACQPY+4kJSjuWKZzvdwGzZhr/+jFui2D6oK8hsaDLRrja/A
+         fXakpsJfPx7pmIv2yNJ11K9Szx+UT6Jc8d5+xWzyvPuE5H2aR31QyfK614T+utbendIg
+         ZY7y/HhkPdB/SjILXBmv1UfhJqIDVqbAdNIHetjnDHHzUeTYbWdVp9F0Gq1SvdGT5jNt
+         MpNQ==
+X-Gm-Message-State: AOJu0YyhuDs+2/2VgGxGNpn/4c1uE2SNFwSs9HxrVi+6P5exQh2hlues
+	gI26PBiTqNJktHCgMP81MopWF0FwD4d+ghgZTbPILPgUgYJ2RavSV9KqZpoP2EY6Cg5/d9FVB3E
+	FXQoasXYQysMeXaVjpA0vYAVwKH0=
+X-Google-Smtp-Source: AGHT+IG6ZxnBE3uqrhqJq/uE9ONThopAmfL5Z8d45U1KVWoQ+3m3EI/rRJEa2UeOkOvyTGKfW7Q789DN+6Hh7fSY+3o=
+X-Received: by 2002:a05:6358:904e:b0:1ac:f436:c8d1 with SMTP id
+ e5c5f4694b2df-1bc975c4dc9mr2755955d.1.1726774536896; Thu, 19 Sep 2024
+ 12:35:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1803D232-76BE-11EF-A07F-9B0F950A682E-77302942!pb-smtp2.pobox.com
+References: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1794.git.1726770880.gitgitgadget@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 19 Sep 2024 15:35:25 -0400
+Message-ID: <CAPig+cRhgf4pLycL7u9Zc13TXdN54ccv6xMQ9p6v8pvfRESTLA@mail.gmail.com>
+Subject: Re: [PATCH 00/20] Fix typos
+To: Andrew Kreimer via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Andrew Kreimer <algonell@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Discussing the desire to make breaking changes, declaring that
-breaking changes are made at a certain version boundary, and
-recording these decisions in this document, are necessary but not
-sufficient.  We need to make sure that we can implement, test, and
-deploy such impactful changes.
+On Thu, Sep 19, 2024 at 2:35=E2=80=AFPM Andrew Kreimer via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Fix typos in documentation, comments, etc.
+>
+> Andrew Kreimer (20):
 
-Formalize the mechanism based on the `feature.*` configuration
-variable to allow early adopters to opt into the breaking change in
-a version of Git before the planned version for the breaking change.
+Thanks. These all look fine.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * Before I forget.  I'll find time to rewrite the "we no longer
-   honor core.preferSymlinkRefs" topic to follow this new guideline
-   when we see a rough concensus that both the procedure outlined
-   here and the idea to remove core.preferSymlinkRefs are good.
-
- Documentation/BreakingChanges.txt | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
-
-diff --git i/Documentation/BreakingChanges.txt w/Documentation/BreakingChanges.txt
-index 2b64665694..9f1e9a0fb8 100644
---- i/Documentation/BreakingChanges.txt
-+++ w/Documentation/BreakingChanges.txt
-@@ -59,10 +59,31 @@ over time. If circumstances change, an earlier decision to deprecate or change
- something may need to be revisited from time to time. So do not take items on
- this list to mean "it is settled, do not waste our time bringing it up again".
- 
-+== Procedure
-+
-+Discussing the desire to make breaking changes, declaring that breaking
-+changes are made at a certain version boundary, and recording these
-+decisions in this document, are necessary but not sufficient.
-+Because such changes are expected to be numerous, and the design and
-+implementation of them are expected to span over time, they have to
-+be deployable trivially at such a version boundary.
-+
-+The breaking changes MUST be guarded with the configuration
-+variable, `feature.git<version>` to help this process.  Each
-+individual breaking change must be implemented in such a way that
-+for a user who has this configuration variable set to true, it goes
-+in effect even before Git <version>.  Note that setting the
-+configuration to `false` MUST have no effect, either before or AFTER
-+Git <version>.  In other words, this is purely an option to recruit
-+early adopters and not a mechanism to keep the old behaviour after
-+the announced version boundary for breaking changes.
-+
-+
- == Git 3.0
- 
- The following subsections document upcoming breaking changes for Git 3.0. There
--is no planned release date for this breaking version yet.
-+is no planned release date for this breaking version yet.  The early
-+adopter configuration used for changes for this release is `feature.git3`.
- 
- Proposed changes and removals only include items which are "ready" to be done.
- In other words, this is not supposed to be a wishlist of features that should
+Out of curiosity, did you use a tool to discover these mistakes?
