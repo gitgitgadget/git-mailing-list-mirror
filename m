@@ -1,90 +1,97 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387FC17555
-	for <git@vger.kernel.org>; Fri, 20 Sep 2024 20:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA841C6BE
+	for <git@vger.kernel.org>; Fri, 20 Sep 2024 20:14:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726863144; cv=none; b=NhfM/tlK7GnJFc96OVNqfL+mc5dQAc6RtC6SpgP77GyYW13+h/ljCXj95636Yot2l2AcGbfxbb1S7ELTOpJh3M6H9i7df3E3ri0toTOG4U4IpzofToSeCfuqVOEWY+O0+6yH3DG75KeWJGWqHrd+P5NxpwFfwYc4UWF6W4ghHho=
+	t=1726863272; cv=none; b=d9oH/UW0JN3huYsFR1sVeHdD4dCJCqiz4sMwLAS0rqtV+sbByvzoSHIdSbKroF+1ua6Zo7758m51qDkpVncE/VY09mpLbtfrsI+bNw5HIjWz5L+QYkUPQmoYUnnElR1YHoNcyL0mNLMZcThIvVuHnyW3/w1Krdn9YRwN6TDWMxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726863144; c=relaxed/simple;
-	bh=no4PDkvd8dqBq1RgseIWFmVOCDIH/GE5EZMs2i0U8hc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OZLBMHfLksss65yUypErITRBYks5uQePnaSFmMsf6FxSIu6u73FTzLaSaQ0t+lDTzSVASK4SbVbfOVDuuKAj+U4A2l91CRTXopVzEvSXAfZ9OPyp7+RtQ3bFknj64iJLUB5KR+uXo7PNLrGYnJELGfJjkdP9I/9h11ReCJyowSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kKlvg1ua; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1726863272; c=relaxed/simple;
+	bh=Z16xg8zgr+nfB6BInDZ8/cjZe/1pMe2s5qX2RkNMRkk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=VUtFVM+ndyv19WIg0uJ88PDAX2KtiLJIOvLLq7SqRKa8dTDbL4jYe9xJ2susyNYKGEmdZ1sV6+v1kK/Ssh3rhjfmvRl434HGeHzIlTOVmXP6z1WOILJrmfbLyc2fm0+uhBoK9Szb+hbM3tt3V5cpM/iZEDjZlwRiAj48+YuP6LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AK/6ThIg; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kKlvg1ua"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1763A18AF0;
-	Fri, 20 Sep 2024 16:12:22 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=no4PDkvd8dqBq1RgseIWFmVOCDIH/GE5EZMs2i
-	0U8hc=; b=kKlvg1uaxCYhBIRnLF3XkQp9EjzPBkHdp0in1rQfYxpH7nIhK8LSZQ
-	G2gNNrlu9BGr2QWpl+XhRgnzIzeCMM4eeAT4hfZbHlqU9GoORLiHxcwbqkdEDyFk
-	kH4L1mMGYNjmPktzU7zzeF1d/TVPiNhtRnudkZVAk4GKYTrTPiVJ0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F6FA18AEE;
-	Fri, 20 Sep 2024 16:12:22 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 70F7718AED;
-	Fri, 20 Sep 2024 16:12:21 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andrew Kreimer <algonell@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/3] Documentation/technical: fix a typo
-In-Reply-To: <20240920082815.8192-1-algonell@gmail.com> (Andrew Kreimer's
-	message of "Fri, 20 Sep 2024 11:28:13 +0300")
-References: <20240920082815.8192-1-algonell@gmail.com>
-Date: Fri, 20 Sep 2024 13:12:20 -0700
-Message-ID: <xmqqbk0if5jv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AK/6ThIg"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-7163489149eso1971738a12.1
+        for <git@vger.kernel.org>; Fri, 20 Sep 2024 13:14:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726863269; x=1727468069; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cRq5j7B5gxet5bKpqav+Dz7/JzI+VLpHeZKcwqi9UTM=;
+        b=AK/6ThIg/P2tGU0To/P4YzMP2eAMcgdMSINuharzOvvF3sXNBtC9+q/PqR8HKDCS2/
+         rZSNOqfwPKi2HDa/6zAEWc2h1OVzzL7tfjg6BcXtO5w2zPrLOuZqHFwKo3xhI5Ly3PYh
+         M63eSVpGbj06evgfpp1MaULdQnYlKQQzamHENcQXwMQJ5frCQbk7WNU3EBRJIJL+7WNs
+         +StIN64is7032+sbHNQY2FltwdFfmaAoX/9fi49pXGwdWmdvuPZcMg1iICuhzE/4IPA8
+         qAaZaTbB6kx3exiMSiMaWX0X2a4RRioKY9tQMJzVnFG2/Sy/CW33MRfVFbOyzqwLfIWy
+         ZQxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726863269; x=1727468069;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cRq5j7B5gxet5bKpqav+Dz7/JzI+VLpHeZKcwqi9UTM=;
+        b=eTkemx42+jNpy8Ei7/CI9MFOQrQrcJIMmqNgN6stMr2DGLRyhkuJucgN703bnv8ubL
+         en8ur+0jK+Ibl0Zg8q4f2OEBdu57ZG8S9ej9InT5sMwp3mHhJIVHZPt5DAlla/ZEhE3j
+         VN+Il+yzxZbv0gaUVZlhu4CJ9wTVCxPhWGbWrtHe7fhhvsAjJhxSKZ8r+64B1xjuV6Ny
+         lafrCznxdwLOX7gd4J0FjmbWXfa0TT8baWmnx2cyjTSGIgADnCdAcXCo/ZmHtq4F2ZqN
+         xJqh4drptHtuDh3zwVvMR24brVKkX5kVqqy84Uds1wHiqJDJ5I2lCcGwxTZxKfY/ZOms
+         LiNw==
+X-Gm-Message-State: AOJu0YwvG63zcbUcMybeQU6sbA9SX5KgEJKs3HSfzBrrq6h27/wgXwMw
+	+RUe0Y6gvDqZU2NeSKmusa07uK/lR8DpJ/327my14LV5FcG5S8m3+fd24w==
+X-Google-Smtp-Source: AGHT+IG8RENMdmkErNvXH65gI1wuAgh0RAIrLDn838SkTsf/XBPUCuhT1A78ewoIEEhb0+exQ+W7ZA==
+X-Received: by 2002:a05:6a21:1698:b0:1d2:e458:4061 with SMTP id adf61e73a8af0-1d30a900c57mr6101449637.15.1726863268686;
+        Fri, 20 Sep 2024 13:14:28 -0700 (PDT)
+Received: from localhost.localdomain ([2601:640:8e80:3680:29f4:7daa:d86f:fa2f])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71944b7b13dsm10524139b3a.97.2024.09.20.13.14.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Sep 2024 13:14:28 -0700 (PDT)
+From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+To: git@vger.kernel.org
+Cc: sunshine@sunshineco.com,
+	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+Subject: [PATCH v2] ci: update FreeBSD image to 13.4
+Date: Fri, 20 Sep 2024 13:14:09 -0700
+Message-Id: <20240920201409.8723-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+Reply-To: 20240920043935.56805-1-carenas@gmail.com
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A4BD4C5C-778C-11EF-8430-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Andrew Kreimer <algonell@gmail.com> writes:
+FreeBSD 13.4 was recently released, and that means the version
+of the image used by this job (13.2) will be out of support soon.
 
-> Fix a typo in documentation.
->
-> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
-> ---
->  Documentation/technical/sparse-checkout.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/technical/sparse-checkout.txt b/Documentation/technical/sparse-checkout.txt
-> index fa0d01cbda..d968659354 100644
-> --- a/Documentation/technical/sparse-checkout.txt
-> +++ b/Documentation/technical/sparse-checkout.txt
-> @@ -287,7 +287,7 @@ everything behaves like a dense checkout with a few exceptions (e.g. branch
->  checkouts and switches write fewer things, knowing the VFS will lazily
->  write the rest on an as-needed basis).
->  
-> -Since there is no publically available VFS-related code for folks to try,
-> +Since there is no publicly available VFS-related code for folks to try,
+Update it before the job starts failing because packages are no
+longer compatible or the image gets retired by the provider since
+it is now EOL.
 
-As a general rule, unless we are doing codewide sweep to use a
-single word in our glossary to refer to the same thing, or
-something, we should honor author's preference, when it is already
-written and it is not blatantly wrong.
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ .cirrus.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  https://www.collinsdictionary.com/us/dictionary/english/publically
+diff --git a/.cirrus.yml b/.cirrus.yml
+index 77346a4929..1fbdc2652b 100644
+--- a/.cirrus.yml
++++ b/.cirrus.yml
+@@ -9,7 +9,7 @@ freebsd_task:
+     DEFAULT_TEST_TARGET: prove
+     DEVELOPER: 1
+   freebsd_instance:
+-    image_family: freebsd-13-2
++    image_family: freebsd-13-4
+     memory: 2G
+   install_script:
+     pkg install -y gettext gmake perl5
+-- 
+2.39.5 (Apple Git-154)
 
-I am inclined to say that we should keep it as written, but I am not
-a native speaker, so please cite a source that tells what is written
-is blatantly wrong to help me accept this patch.
-
-Thanks.
