@@ -1,97 +1,145 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA841C6BE
-	for <git@vger.kernel.org>; Fri, 20 Sep 2024 20:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E07EAD0
+	for <git@vger.kernel.org>; Fri, 20 Sep 2024 20:17:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726863272; cv=none; b=d9oH/UW0JN3huYsFR1sVeHdD4dCJCqiz4sMwLAS0rqtV+sbByvzoSHIdSbKroF+1ua6Zo7758m51qDkpVncE/VY09mpLbtfrsI+bNw5HIjWz5L+QYkUPQmoYUnnElR1YHoNcyL0mNLMZcThIvVuHnyW3/w1Krdn9YRwN6TDWMxM=
+	t=1726863436; cv=none; b=CT5yx1N2m6tf+zloI4ua9mbrMlU/N6Vimw3m1ra7NdbQV0aMUk6mrasQVk01q1UBwZ8j6bT8BvRHeXE2KEl5fhCSHKHiydc71XZAK54etta+0kZuCss9xA7L15oUcj78t1XjFWeumRf0pDBWb3bxrsww5Wc8+Y1nkrZ/LC/NBMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726863272; c=relaxed/simple;
-	bh=Z16xg8zgr+nfB6BInDZ8/cjZe/1pMe2s5qX2RkNMRkk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=VUtFVM+ndyv19WIg0uJ88PDAX2KtiLJIOvLLq7SqRKa8dTDbL4jYe9xJ2susyNYKGEmdZ1sV6+v1kK/Ssh3rhjfmvRl434HGeHzIlTOVmXP6z1WOILJrmfbLyc2fm0+uhBoK9Szb+hbM3tt3V5cpM/iZEDjZlwRiAj48+YuP6LI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AK/6ThIg; arc=none smtp.client-ip=209.85.215.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726863436; c=relaxed/simple;
+	bh=CjWK4hk9Aur3OGRj1nqVKQxvLtroJfsKKFMoHZSk89s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LhzNDlo66l77YbC9hJHJ3S4dPCR/9BoLUs+14MeXQg7Zgg3v7SK1RNrAVqRJnbGMv2NF38dE6addsT/KNC/CKH6eK7Ql2+P/HerAh325PvJjFWoLRith4mrpIF6cqjRQATpn9df2OYLnFb/UaNTUDjQwYAigaCrt2xGfSvrPRok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ARI1h1Wz; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AK/6ThIg"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-7163489149eso1971738a12.1
-        for <git@vger.kernel.org>; Fri, 20 Sep 2024 13:14:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726863269; x=1727468069; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:message-id:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cRq5j7B5gxet5bKpqav+Dz7/JzI+VLpHeZKcwqi9UTM=;
-        b=AK/6ThIg/P2tGU0To/P4YzMP2eAMcgdMSINuharzOvvF3sXNBtC9+q/PqR8HKDCS2/
-         rZSNOqfwPKi2HDa/6zAEWc2h1OVzzL7tfjg6BcXtO5w2zPrLOuZqHFwKo3xhI5Ly3PYh
-         M63eSVpGbj06evgfpp1MaULdQnYlKQQzamHENcQXwMQJ5frCQbk7WNU3EBRJIJL+7WNs
-         +StIN64is7032+sbHNQY2FltwdFfmaAoX/9fi49pXGwdWmdvuPZcMg1iICuhzE/4IPA8
-         qAaZaTbB6kx3exiMSiMaWX0X2a4RRioKY9tQMJzVnFG2/Sy/CW33MRfVFbOyzqwLfIWy
-         ZQxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726863269; x=1727468069;
-        h=content-transfer-encoding:mime-version:reply-to:message-id:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cRq5j7B5gxet5bKpqav+Dz7/JzI+VLpHeZKcwqi9UTM=;
-        b=eTkemx42+jNpy8Ei7/CI9MFOQrQrcJIMmqNgN6stMr2DGLRyhkuJucgN703bnv8ubL
-         en8ur+0jK+Ibl0Zg8q4f2OEBdu57ZG8S9ej9InT5sMwp3mHhJIVHZPt5DAlla/ZEhE3j
-         VN+Il+yzxZbv0gaUVZlhu4CJ9wTVCxPhWGbWrtHe7fhhvsAjJhxSKZ8r+64B1xjuV6Ny
-         lafrCznxdwLOX7gd4J0FjmbWXfa0TT8baWmnx2cyjTSGIgADnCdAcXCo/ZmHtq4F2ZqN
-         xJqh4drptHtuDh3zwVvMR24brVKkX5kVqqy84Uds1wHiqJDJ5I2lCcGwxTZxKfY/ZOms
-         LiNw==
-X-Gm-Message-State: AOJu0YwvG63zcbUcMybeQU6sbA9SX5KgEJKs3HSfzBrrq6h27/wgXwMw
-	+RUe0Y6gvDqZU2NeSKmusa07uK/lR8DpJ/327my14LV5FcG5S8m3+fd24w==
-X-Google-Smtp-Source: AGHT+IG8RENMdmkErNvXH65gI1wuAgh0RAIrLDn838SkTsf/XBPUCuhT1A78ewoIEEhb0+exQ+W7ZA==
-X-Received: by 2002:a05:6a21:1698:b0:1d2:e458:4061 with SMTP id adf61e73a8af0-1d30a900c57mr6101449637.15.1726863268686;
-        Fri, 20 Sep 2024 13:14:28 -0700 (PDT)
-Received: from localhost.localdomain ([2601:640:8e80:3680:29f4:7daa:d86f:fa2f])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71944b7b13dsm10524139b3a.97.2024.09.20.13.14.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Sep 2024 13:14:28 -0700 (PDT)
-From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-To: git@vger.kernel.org
-Cc: sunshine@sunshineco.com,
-	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-Subject: [PATCH v2] ci: update FreeBSD image to 13.4
-Date: Fri, 20 Sep 2024 13:14:09 -0700
-Message-Id: <20240920201409.8723-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-Reply-To: 20240920043935.56805-1-carenas@gmail.com
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ARI1h1Wz"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A865318C40;
+	Fri, 20 Sep 2024 16:17:13 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=CjWK4hk9Aur3OGRj1nqVKQxvLtroJfsKKFMoHZ
+	Sk89s=; b=ARI1h1WzqOcjQX2+n9TeEMOxgIHXu1ADpqV8hQANS74GElntJ702nk
+	4qcYq7lm2a/hTGRvpNxnL6+ed6Avo3DbTrEqE5mb6t7vpzK6JMJo5M8oMTwmAtKo
+	ENYOyh/EqP9JWms+cBXDUkpa3E34aic7N16EkMpNIW/EA6gXOFJtA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A07F618C3E;
+	Fri, 20 Sep 2024 16:17:13 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 10F6718C3C;
+	Fri, 20 Sep 2024 16:17:13 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Andrew Kreimer <algonell@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/3] Documentation: fix typos
+In-Reply-To: <20240920082815.8192-3-algonell@gmail.com> (Andrew Kreimer's
+	message of "Fri, 20 Sep 2024 11:28:15 +0300")
+References: <20240920082815.8192-1-algonell@gmail.com>
+	<20240920082815.8192-3-algonell@gmail.com>
+Date: Fri, 20 Sep 2024 13:17:10 -0700
+Message-ID: <xmqq7cb6f5bt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 528CCF06-778D-11EF-9B4D-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-FreeBSD 13.4 was recently released, and that means the version
-of the image used by this job (13.2) will be out of support soon.
+Andrew Kreimer <algonell@gmail.com> writes:
 
-Update it before the job starts failing because packages are no
-longer compatible or the image gets retired by the provider since
-it is now EOL.
+> Fix typos in documentation.
+>
+> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
+> ---
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- .cirrus.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Some hunks have become irrelevant between 'master' and 'seen', it
+seems.  Please separate them out and resend once these in-flight
+topics are merged to 'master'.
 
-diff --git a/.cirrus.yml b/.cirrus.yml
-index 77346a4929..1fbdc2652b 100644
---- a/.cirrus.yml
-+++ b/.cirrus.yml
-@@ -9,7 +9,7 @@ freebsd_task:
-     DEFAULT_TEST_TARGET: prove
-     DEVELOPER: 1
-   freebsd_instance:
--    image_family: freebsd-13-2
-+    image_family: freebsd-13-4
-     memory: 2G
-   install_script:
-     pkg install -y gettext gmake perl5
--- 
-2.39.5 (Apple Git-154)
+Thanks.
 
+
+>  Documentation/BreakingChanges.txt        | 2 +-
+>  Documentation/CodingGuidelines           | 2 +-
+>  Documentation/DecisionMaking.txt         | 2 +-
+>  Documentation/gitformat-commit-graph.txt | 2 +-
+>  Documentation/gitweb.txt                 | 2 +-
+>  5 files changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/BreakingChanges.txt b/Documentation/BreakingChanges.txt
+> index 2b64665694..112770a9da 100644
+> --- a/Documentation/BreakingChanges.txt
+> +++ b/Documentation/BreakingChanges.txt
+> @@ -117,7 +117,7 @@ Cf. <20140304174806.GA11561@sigill.intra.peff.net>.
+>  
+>  * The git-pack-redundant(1) command can be used to remove redundant pack files.
+>    The subcommand is unusably slow and the reason why nobody reports it as a
+> -  performance bug is suspected to be the absense of users. We have nominated
+> +  performance bug is suspected to be the absence of users. We have nominated
+>    the command for removal and have started to emit a user-visible warning in
+>    c3b58472be (pack-redundant: gauge the usage before proposing its removal,
+>    2020-08-25) whenever the command is executed.
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index 3263245b03..8a5e0b7dad 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -838,7 +838,7 @@ Markup:
+>   When literal and placeholders are mixed, each markup is applied for
+>   each sub-entity. If they are stuck, a special markup, called
+>   unconstrained formatting is required.
+> - Unconstrained formating for placeholders is __<like-this>__
+> + Unconstrained formatting for placeholders is __<like-this>__
+>   Unconstrained formatting for literal formatting is ++like this++
+>     `--jobs` _<n>_
+>     ++--sort=++__<key>__
+> diff --git a/Documentation/DecisionMaking.txt b/Documentation/DecisionMaking.txt
+> index dbb4c1f569..b43c472ae5 100644
+> --- a/Documentation/DecisionMaking.txt
+> +++ b/Documentation/DecisionMaking.txt
+> @@ -54,7 +54,7 @@ implementation, for very large changes).
+>  
+>  For non-technical decisions such as community norms or processes, it is up to
+>  the community as a whole to implement and sustain agreed-upon changes.
+> -The project leadership committe (PLC) may help the implementation of
+> +The project leadership committee (PLC) may help the implementation of
+>  policy decisions.
+>  
+>  
+> diff --git a/Documentation/gitformat-commit-graph.txt b/Documentation/gitformat-commit-graph.txt
+> index 3e906e8030..14d1631234 100644
+> --- a/Documentation/gitformat-commit-graph.txt
+> +++ b/Documentation/gitformat-commit-graph.txt
+> @@ -122,7 +122,7 @@ All multi-byte numbers are in network byte order.
+>        for commits with corrected commit date offsets that cannot be
+>        stored within 31 bits.
+>      * Generation Data Overflow chunk is present only when Generation Data
+> -      chunk is present and atleast one corrected commit date offset cannot
+> +      chunk is present and at least one corrected commit date offset cannot
+>        be stored within 31 bits.
+>  
+>  ==== Extra Edge List (ID: {'E', 'D', 'G', 'E'}) [Optional]
+> diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+> index 56d24a30a3..5e2b491ec2 100644
+> --- a/Documentation/gitweb.txt
+> +++ b/Documentation/gitweb.txt
+> @@ -234,7 +234,7 @@ from the template during repository creation, usually installed in
+>  configuration variable, but the file takes precedence.
+>  
+>  category (or `gitweb.category`)::
+> -	Singe line category of a project, used to group projects if
+> +	Single line category of a project, used to group projects if
+>  	`$projects_list_group_categories` is enabled.  By default (file and
+>  	configuration variable absent), uncategorized projects are put in the
+>  	`$project_list_default_category` category.  You can use the
