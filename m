@@ -1,62 +1,62 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0CE17838C
-	for <git@vger.kernel.org>; Fri, 20 Sep 2024 14:18:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E28D482CD
+	for <git@vger.kernel.org>; Fri, 20 Sep 2024 14:19:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726841910; cv=none; b=NXpe2WCG0yuVKGSHnM4bvWPdxAZNjLhvPD1YpRfHT33Ea3VT/MHOKAKn3lMO94mSFJfJkcDY/jRqMhZSJmpbbyzDrkIDQ118qLh12FbzmsLqgIYRzziPji8LfYkBJswrCrxH0SEi/oPgIgDwH8bbiFcnVxnmWjwcgoMGo63kZZo=
+	t=1726841949; cv=none; b=K9P93E95/1yY6xOXV4LxTcqOJJ7iUvNq/Cu+jKAPL7aHeADlJAUAkdDMhYXWIcESSjaM2c2GK6WhD5dvMF1CHXlwiVI63Rc08fNb5ty75w5vS28wkSaiXi3+GnS8GnsGiSOarL1YS3isqEwJKPDH2HDwKPff4pCZ3P1qgMPIZoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726841910; c=relaxed/simple;
-	bh=eUosnGjdObaj/IRpLwjoJFARBEBR5+XemILsOgKOBE0=;
+	s=arc-20240116; t=1726841949; c=relaxed/simple;
+	bh=bJCt5KuhXXx9qXJHCfPlXwGPWP070+n5IzPuti4SFT0=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L4KMJKQRnRiltlDbj8jI52Dza5J8glQfWJIXo6atL4sPLmlHccl8F4g87yRTmZvj+lRVPWr0nz83x0+nq4QkmnLO4nYFwcJ46QBhtJNyyYI4JwNie5/8K8/F+irlVw1WZCd/D1GfyCAC+B99NxWTIGIpNe9lAYwJQ55MP1ZCAGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=VAIcwIZm; arc=none smtp.client-ip=209.85.166.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=GJm+Mi1RmysMVU7MvfvmNxsKzJIWQ3Rle2Fvx7PdM/WbPSfk/5oxe5vkvsLDKbVpFVaqDYYVC+r6YRe7C+EIiBEA0k/njabAW12vKl/pZHFuCaF0LZRYfVojtmojm5244yuQOdqnnNFEZiaMMiSFYrG9pKTUQ7tS6QAw4+B42BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=K6VyOZ8a; arc=none smtp.client-ip=209.85.166.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="VAIcwIZm"
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-831e62bfa98so110441839f.1
-        for <git@vger.kernel.org>; Fri, 20 Sep 2024 07:18:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="K6VyOZ8a"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-82521c46feaso98769739f.2
+        for <git@vger.kernel.org>; Fri, 20 Sep 2024 07:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726841908; x=1727446708; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726841946; x=1727446746; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VnAmUvSoaWorIEl8ASgzvxWZCEFquC7ESej14YA6blk=;
-        b=VAIcwIZmDQKyu6+WpT61bpPWeicLX6z7lmThOu5h/X+gub3gLfitzTtCzAQVnv0iKB
-         jZ5Hr3Q3pzrhcHFb5jP/Ez23uAvKGv1gFCWiUSwEI+yzTZiOgwmdsY5T+GubBU8zx8cH
-         uIzYHa6X8FkLsQXKvr38nasFeGrBfkcVFBi4BzbpdM8xjiuDbJrxL3mi6+zSFzSIBLBE
-         Y/YYrWl307V1LUuaXlRwMwRpP301BxfJvAZP9m86gpUN08FnKmUODZkcAUJvKqICl4tO
-         84id6rlWdpS8Ik2H90FTGHlymZDYWaYpDvEZk11O7MgkKsZshkEj6UjB1PPuL1E7V2Ri
-         WqbQ==
+        bh=sEnZYSrjrTp2qAIcBmwfstkDmQAyyf3A1dw2u06mSu0=;
+        b=K6VyOZ8abBsqleQHz7h7sxvWTpVD6ZTTHPyjfQY9s2bZxb9BA5fgLzyYRvr8MO5taN
+         V1vdAf9V4N16+KnyiCnj3Rq4aarWlizYGULQcDbXMZ5r0iUkAOVZ0Mizg+0IJVhkzZgU
+         rZHBes70gIcnXMZJa18iAltEHVC8SiWSS36rEr5//6ToxojlkBpIEgJZEL5RnnUjmY0n
+         Jda1zVgtBLhEcgMuFjZiAzfTNTVs9Bo1Y2VWRmdVnxtECLUd++QabRLIERkhrDUNoKSS
+         u5t8gLwOI6xF6rCm9vTIDBGJGgFx6dnEGr8ITTxf2qWVvmQOmQEP3rQepUtRQanMHS8i
+         mQ8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726841908; x=1727446708;
+        d=1e100.net; s=20230601; t=1726841946; x=1727446746;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VnAmUvSoaWorIEl8ASgzvxWZCEFquC7ESej14YA6blk=;
-        b=WT3ocG7hEwarrf+UNLsrkse6MB0codZ/1YGpQye2tkrzg7LSKnvdQ1YFGjap/jhyBi
-         amtkYztlKQhY4EBUCOK1CC9zqi/XIpt4DF8JI0kb+ENtzRSfZLXjjgWKvQo65JOGZzlL
-         02TYa35ojmCJcfdO4+b0QBSfxR1Byw9c6XgTXuJsNRlq662tfjZls4T6DnHfbl8B+8+P
-         7SDIJXPUbmZi3StP3qi4UrI04rGbxhkWll337KmaaK/10C/KrSlY2CR9GOdOSJmrewer
-         us1lc3dhlt4snZRSXLahGUmsCYOBiH5GfaH1PTj+DMDBPq+UC3rWXWQUqguvbj7QZREY
-         pzJQ==
-X-Gm-Message-State: AOJu0Yz5vaHp0gbt8oSuAq8qjyoCpfQ0j4PqFIzCLCsi0DTHXVo2Ic7P
-	D8lmxmRuukpZUEGODRXG+Yyo4k8+cE7dRoW58fZDWSUmlRs9307I2b5vqaSjJDTZCUCqW1k9uv/
-	FcSalsA==
-X-Google-Smtp-Source: AGHT+IG4MrCjfPW/BsXTdUrxSSRFeGSEY9KZrU/GjQX4rOUbTb/k64WQcf71a5nTORjd/GoMAHHwAg==
-X-Received: by 2002:a05:6602:6186:b0:832:123:c470 with SMTP id ca18e2360f4ac-83209e8da51mr236811039f.15.1726841907670;
-        Fri, 20 Sep 2024 07:18:27 -0700 (PDT)
+        bh=sEnZYSrjrTp2qAIcBmwfstkDmQAyyf3A1dw2u06mSu0=;
+        b=jsgBHoPPcZOiY/wPw/XcEgFenWAKrtESBFVPAIHepEG2v2FMTNJzwhmT9sgz7wsceR
+         nE2Ms+wzy/vA328Q5uWK4/1RUDNsQ199AYIfoLVFSzXL2DX0/Sf7Rc+ZGpfrnbJdcxrk
+         eluzb7ACRJLmYMAdDEPj4OdCJFpV+RRd7GB47au7JW2904Nl53Wem4EE036DPaBv+vKt
+         +rKuz7Yu959q0bIaltzRa2oFbTs0VuTvcmNTmUCGTrk1BsVpJV8k3WhN9TETHJB25r3d
+         DylY0r+qVBziXrFnaMXecNB+pztcQjSG4RFfLzIhGIbTrZ0BQbUF78o09I9sTQF7Wk56
+         pmWQ==
+X-Gm-Message-State: AOJu0YznzRVDNMSzkp+GJSkTx3EXkjVxLrYaWVqYwOywFVvKKIvqX1r8
+	LdQT0mGzL/Os7mBS4dwEUGIT+yp0vT6z7JPk79wOHLgpvpjdgeBETJQM3YYJm2sTXzU31TdCGVC
+	FRTY94g==
+X-Google-Smtp-Source: AGHT+IGi5SN0+IOP5ALx1Ih/hwccM0bRRzv2C654LaBRrfqAruZBLm3RiWYgI2195B13l7xOwbY7dQ==
+X-Received: by 2002:a05:6602:6001:b0:82a:a76a:1779 with SMTP id ca18e2360f4ac-83209d2cdb8mr360235939f.8.1726841946288;
+        Fri, 20 Sep 2024 07:19:06 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-831e9697887sm189039139f.1.2024.09.20.07.18.27
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4d37ed19ed6sm3602879173.111.2024.09.20.07.19.05
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Sep 2024 07:18:27 -0700 (PDT)
-Date: Fri, 20 Sep 2024 10:18:24 -0400
+        Fri, 20 Sep 2024 07:19:06 -0700 (PDT)
+Date: Fri, 20 Sep 2024 10:19:02 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
-Subject: [TOPIC 03/11] Structured Error Handling
-Message-ID: <Zu2EMKMmNhugAcbY@nand.local>
+Subject: [TOPIC 04/11] Platform Support Policy
+Message-ID: <Zu2EVvSajL/pUzL7@nand.local>
 References: <Zu2DmS30E0kKug2a@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,74 +68,71 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <Zu2DmS30E0kKug2a@nand.local>
 
-Structured Error Handling
-=========================
+Platform Support Policy
+=======================
 
-(moderator: brian, notetaker: jrnieder)
+(moderator: Emily; notetaker: Calvin)
 
-* brian: idea for structured error handling!
-   * Very little needed - pointer to error string, uint64_t error code,
-     and ??  (third thing I didn't hear). Return it on the stack. Rust
-     does this kind of thing all the time.
-   * Having that structured return value lets a caller decide what to do
-     with it
-     - print a message, decide whether to exit or recover, etc.
-* Patrick: a few requirements
-   * want to attach arbitrary metadata to an error (e.g. "I had a
-     conflict between that file and that file for this revision").
-     Especially useful on the server side.
-   * avoid having to parse error messages. Gitaly runs into this. Can
-     imagine setting an envvar to get json or some other parsable format
-     instead of human-consumable error messages.
-* brian: sounds doable. GitHub also has the same hassle with parsing
-  error messages.
-* Peff: in your proposal, low-level code produces the error struct which
-  is consumed at a higher level. Sometimes, though, you have many errors
-  that are related.
-   * "I couldn't merge these files because I couldn't open this file,
-     because of this errno".
-* One thing we've considered is having a callback to decide what to do
-   * - print the error, collect into a tree of errors, etc.
-   * The point is to keep what's happening in the generators of errors
-     as simple as possible - I have this type of error and maybe some
-     kind of context strings. That context could be owned by the caller,
-     the callee can be responsible for copying it, etc. Inversion of
-     control.
-* Patrick: I like the way Go does things, can wrap errors or append
-  messages, return up the stack until someone handles the error. Why are
-  we afraid of allocations?
-   * Peff: What do you do when the allocation fails?
-   * Patrick: can handle allocation failure by having a special error
-     that has a statically allocated string.
-   * Peff: sounds good, getting rid of die() on alloc failure is okay
-   * brian: Rust panics on out-of-memory anyway
-   * Peff: there are two different cases - small allocations are "you're
-     in trouble anyway", big allocation of user-supplied length is
-     something else
-   * Carlos: Rust has a "try to allocate memory", relatively new
-* Calvin: how do you propagate up the call stack?
-   * Peff: in my proposal, every function would take an error context
-     struct, call the callback when there's an error, and keep the
-     integer function returns. In brian's proposal, we instead return
-     the struct.
-   * Emily: Are we comfortable with the amount of churn that generates
-     in the codebase?
-   * Patrick: my inspiration is Subversion in that respect. It has nice
-     error handling in C, they're a role model for me in how to do a
-     library. It has nice error types that aren't a hassle to use.
-   * J6t: if you compile in C++ and use exceptions, the problem has been
-     solved 25 years ago.
-   * brian: allocating strings for errors and then freeing them is a
-     hassle in C. Versus Rust where that's handled automatically.
-   * Emily: so it sounds like this is temporary pain
-* Jonathan: I like Patrick's description of requirements. One thing that
-  would make me more comfortable with the churn is when we get benefit
-  even from partial conversion
-   * E.g. could say we get structured error messages for the call sites
-     that have been converted and not from others. And when I go on a
-     debugging quest and wish I had a machine-readable structured error
-     message, I can send a patch to convert more call sites
-   * Peff: Refs code uses its own strbuf based error handling which is
-     worse in every way than the options we've been discussing. :) That
-     can be a good playground to try things out.
-   * Patrick: +1, seems like a good place to start.
+* Emily: if you want Git to support your platform, you have to provide
+  your tests (e.g. provide your own CI test runner)
+   * Should we be more explicit about, for example, the version of C
+     that one must support.
+* Brian: less-common architectures (e.g. MIPS) sometimes can catch
+  problems (e.g. unaligned access) that are not a good practice anyway
+   * qemu based CI is so slow
+   * netbsd, openbsd, freebsd, probably solaris are up to date with
+     modern standards, probably supportable
+   * I'm more comfortable with "you have to have threading and POSIX
+     2008" than with "you have to provide a CI runner"
+* Peff: I'm not sure what people have been counting on
+   * Do we have a way to find out what people are using?
+   * "Take a little risk, see who screams" has worked okay in the past
+     but takes a while
+   * Rust is probably a big change
+* Patrick: keep in mind that we're at the core of the whole operating
+  system, part of the bootstrapping path
+   * Emily: yes and no - Git is not just the client, but Git is a
+     standard. You can use older versions of Git and clone things from
+     GitHub. If we still support the same protocols, I don't think
+     needing native git.git CLI support to run on your platform is as
+     compelling as new Git being able to support these older standards.
+   * brian: OpenBSD doesn't like the GPL, has a project for getting
+     trees called "got", it's in C and supportable. It can be a valid
+     bootstrapping tool.
+   * Patrick: The user experience there is a little closer to CVS. But
+     it's still an option.
+* Jrnieder: looking from user perspective, Git is the tool people are
+  used to for day to day development
+   * Emily: There's a difference between using "a git" vs using the
+     latest version.
+   * Jnieder: telling users to use an older version might result in
+     users asking questions on the mailing list about those older
+     versions, it's also not free.
+   * Peff: to be fair, HP Nonstop support hasn't been a matter of
+     "please support me for free" - the maintainer there has been active
+     in helping test and debug things. The question here is not about
+     whether to continue that but rather about whether we're willing to
+     increase the platform dependencies when it breaks such a use case.
+   * Peff: Are we okay with dropping NO_PTHREADS support?
+   * Brian: POSIX 2008 shouldn't be that controversial. Neither C11
+     should be.  We shouldn't take it too far like POSIX 2024, but we
+     have to set "some" standards.
+   * Emily: So next week when we come home we update the "minimum
+     requirements" on the mailing list, and everybody upvotes?
+   * Jonathan: we live in the real world - the spirit of "let's require
+     POSIX 2008" sounds right, but real-world considerations should
+     matter more than the exact text of the standard
+   * Peff: example: Android is missing pthread_setcanceltype, which
+     leads to Git on Android using NO_PTHREADS
+   * brian: it can be enough to pretend to support (compatibility shim)
+* Calvin: is there a threshold % of users for "unimportant enough to
+  break"?
+* Jrnieder: it depends on the platform. Do the requirements that a given
+  platform imposes push us in a good direction in general as a project?
+   * For example, Windows is a very non-POSIXy platform, but it has
+     nudged us toward thinking about subprocesses in a different way,
+     and I think that's been really healthy
+   * brian: As another example, Plan 9 is really difficult to support,
+     it won't pass the test suite
+   * z/OS patches originally came in and were gross. I saw a patch come
+     in recently that was more acceptable.
