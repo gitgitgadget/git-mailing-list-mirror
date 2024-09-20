@@ -1,116 +1,110 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from sender-of-o54.zoho.eu (sender-of-o54.zoho.eu [136.143.169.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91271EA6F
-	for <git@vger.kernel.org>; Fri, 20 Sep 2024 22:07:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726870065; cv=none; b=n/NvxSnyg2satjdVaJr/ZAjI1zIsRhWV04DENFnlCGOJBKZncNAbV1I951brbdMwRRWVPYQ3WfEWZrFAc2thbWyDPLles5LcCFFQyIi5QA1rxpzIAU7zVkZN+nVT6ebH81NgJ9kBfdZfX54LaGCjIVczeb0OulC9YG38iDlW1+A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726870065; c=relaxed/simple;
-	bh=VoJNcxK9uxnorEWoU199BIJWtU1zzTbFUwbWiW+ZSKo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sDnwKkFm7IW3ChxQY8KPHo8gDU260LBnH5seGiO7xikJiTxvMGdHbnzjvkC1m8WZ3FZzCk2o//3YdoS8ZjfNkf+/0hQdoH9KIdQyGU38Vp9NM9g5/ZGUol/+tuUQKFDiG6wf5JOSbOGYGJb8cwfNltj/+QzuawRk4jKK2PtjxxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NYqlzYsB; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AD318D62F
+	for <git@vger.kernel.org>; Fri, 20 Sep 2024 22:40:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1726872023; cv=pass; b=JLeGRz0lV0hShtqpRLxyAJyaeqmRigBv9K0zmUInKWagZT9KLK3rPgeleFyBgxdaFeGkeFqk8+2ZZ+ogDXLcxXr6uFcKwDUDSkA6voGObD9vj05dmyxkTFMn+wbJsJG8UlkfOUxdQCuP0tsrGGyuNScfUjbb9ADq6XuH3BYNXbc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1726872023; c=relaxed/simple;
+	bh=VdP2uaWWXfj6jpd0BidzWLAmr77/UZS7Y1xoJWBD7wo=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=uNeieVFmzarjdyWF+2aFXyp3AqSfwRSDJs4f7iWO84DPN5HhDnveDQPwKgiSs5/EyjrgsakGbypbcEqx9w0hy2H0Y9P88bPnkBdCRrXQuV3m4LEHOQsYKg8dksSYBaoz99Ndg/IX2C3LcR35Mni2M9ejeVXhaZQbLHAwR2nQUHo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orca.pet; spf=pass smtp.mailfrom=orca.pet; dkim=pass (1024-bit key) header.d=orca.pet header.i=marcos@orca.pet header.b=uUPMFP59; arc=pass smtp.client-ip=136.143.169.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orca.pet
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=orca.pet
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NYqlzYsB"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AE00A20263;
-	Fri, 20 Sep 2024 18:07:42 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=VoJNcxK9uxnorEWoU199BIJWtU1zzTbFUwbWiW
-	+ZSKo=; b=NYqlzYsBrOl4w49YgIzSWpJZP/uphUtmSbnpcBzZv0+dzvFx/DL4zu
-	0wAAxtyLkFlplkDEiF1q5bwaSxjcBtXk66GNNp6a00k7thetu8qpBVO+r1a7QHIV
-	rILmEYRLuxSM1zvC8IyqoOax0ovpT5MbtD1ieDdoZPppk0G+t34uQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A5C4820262;
-	Fri, 20 Sep 2024 18:07:42 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 159D920261;
-	Fri, 20 Sep 2024 18:07:42 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  liuzhongbo.gg@gmail.com,
-  Johannes.Schindelin@gmx.de,  Derrick Stolee <stolee@gmail.com>,  Derrick
- Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 1/3] credential: add new interactive config option
-In-Reply-To: <1e9bf2d09c17bc0cdcd0a8f8dbacab007e5c53e7.1726790424.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Fri, 20 Sep 2024
-	00:00:21 +0000")
-References: <pull.1798.git.1726790423.gitgitgadget@gmail.com>
-	<1e9bf2d09c17bc0cdcd0a8f8dbacab007e5c53e7.1726790424.git.gitgitgadget@gmail.com>
-Date: Fri, 20 Sep 2024 15:07:40 -0700
-Message-ID: <xmqq7cb6dln7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=orca.pet header.i=marcos@orca.pet header.b="uUPMFP59"
+ARC-Seal: i=1; a=rsa-sha256; t=1726871994; cv=none; 
+	d=zohomail.eu; s=zohoarc; 
+	b=HvWXEJvb8GyJuC8sWwYWO3gZZasOnWfv83pJhQJppADUD0Fg0lTtC+AEcMkBtLabu796gErM5dj5kkQA+x/EVfXAgMXUX7LZjsCusSik9/4AWzOCEhrT4X3J2exdF9SxPt2HLHNIfqlTXaoyHSyX336h+7LyIHzk8A+Yq/gSxH4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
+	t=1726871994; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=dW4sglH+ULAaHw//f80wMz2pVVLb7vkoj0m5M71PAI8=; 
+	b=hJokmiCK7jdVXLElZhOiukKttzkV9uEHzWgSvjDd9U+dYrjJUhxQcy5YRQrI+dIOQi1bOmYcHLn8Gj4dpX9REfAzQty1mKBHGAZ8U1dU+GiCAhb5l04/ERl38mme99M0wdzYfflZM/njvuCO1YeoigEMHA/9uNdidq/Oig62qlQ=
+ARC-Authentication-Results: i=1; mx.zohomail.eu;
+	dkim=pass  header.i=orca.pet;
+	spf=pass  smtp.mailfrom=marcos@orca.pet;
+	dmarc=pass header.from=<marcos@orca.pet>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1726871994;
+	s=zmail; d=orca.pet; i=marcos@orca.pet;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=dW4sglH+ULAaHw//f80wMz2pVVLb7vkoj0m5M71PAI8=;
+	b=uUPMFP594Ilho7U8+Yv7PtJfKKOyFD1RouVLeVQVRDwTBShNEPMIFFjlOv0GhZfK
+	MFXMNLSq1fG1v6PcvMLZzr9DSKC8I978FKUlj74qKGOoa+2xNNTNmppp3q6W1BlCMnO
+	6vp9J2JNEvNzO/iS6SLGeBZD2HcgmH48v5NmF818=
+Received: from mail.zoho.eu by mx.zoho.eu
+	with SMTP id 1726871991360265.3039634233327; Sat, 21 Sep 2024 00:39:51 +0200 (CEST)
+Date: Sat, 21 Sep 2024 00:39:51 +0200
+From: Marcos Del Sol Vives <marcos@orca.pet>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: "Junio C Hamano" <gitster@pobox.com>, "git" <git@vger.kernel.org>
+Message-ID: <1921197742f.d7b8c9992630384.1644253106538527208@orca.pet>
+In-Reply-To: <Zu3ec1mDj9JD1Bbj@tapette.crustytoothpaste.net>
+References: <19205ebb4b9.c2a2da5a2387912.3559118454287459572@orca.pet>
+ <Zu2aHdaw_oDv_dp7@tapette.crustytoothpaste.net>
+ <xmqqsetugpip.fsf@gitster.g>
+ <19210b887c6.f59622352625372.1022723129771458212@orca.pet> <Zu3ec1mDj9JD1Bbj@tapette.crustytoothpaste.net>
+Subject: Re: Permission issue in Git in DrvFs-mounted network drives
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C1C1A13A-779C-11EF-9604-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+---- El Fri, 20 Sep 2024 22:43:31 +0200,  brian m. carlson  escribi=C3=B3 -=
+---=20
+> Git could, in theory, accept a patch here.  However, you're also going
+> to have lots of other software that breaks in this case, not just Git.
+> So it's less useful to patch Git and hundreds of other packages on Linux
+> distributions that have relied on the POSIX standard and more useful to
+> fix your OS (or maybe switch to WSL2, if that doesn't have the problem).
+> Most Linux distros will generally not be interested in fixing this class
+> of problem, in my experience.
 
-> @@ -501,8 +525,8 @@ void credential_fill(struct credential *c, int all_capabilities)
->  			    c->helpers.items[i].string);
->  	}
->  
-> -	credential_getpass(c);
-> -	if (!c->username && !c->password && !c->credential)
-> +	if (credential_getpass(c) ||
-> +	    (!c->username && !c->password && !c->credential))
->  		die("unable to get password from user");
->  }
+There is not a significant amount of software that opens files for writing
+in read-only mode. Despite using WSL extensively for development, so far
+Git has been the only that failed to work.
 
-This is a fallback mode after credential helpers have failed to fill
-and return.  Unless these helpers pay attention to the "interactive"
-configuration, they may still get stuck.  So it would be #leftoverbits
-to update each credential helpers to do the right thing.
+WSL2 has poor support for accessing local devices (such as serial ports,
+something really useful for embedded development like the Proxmark project
+where I contribute to) or pipes (which I use to sign commits using a
+TPM-backed SSH key), so it's not really an option.
 
-The sample credential-store backend does not have to be updated I
-guess ;-)
+> In addition, chmod doesn't always work under WSL.  I believe it _does_
+> work if the drive is mounted with metadata, but some people don't have
+> that enabled and I don't know if it works for all drives.  For those
+> people, the current code will work, since it doesn't call chmod or
+> fchmod, but it will fail with your patch.
 
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index 7b5ab0eae16..ceb3336a5c4 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -186,6 +186,28 @@ test_expect_success 'clone from password-protected repository' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'credential.interactive=false skips askpass' '
-> +	set_askpass bogus nonsense &&
-> +	(
-> +		GIT_TRACE2_EVENT="$(pwd)/interactive-true" &&
-> +		export GIT_TRACE2_EVENT &&
-> +		test_must_fail git clone --bare "$HTTPD_URL/auth/smart/repo.git" interactive-true-dir &&
-> +		test_region credential interactive interactive-true &&
-> +
-> +		GIT_TRACE2_EVENT="$(pwd)/interactive-false" &&
-> +		export GIT_TRACE2_EVENT &&
-> +		test_must_fail git -c credential.interactive=false \
-> +			clone --bare "$HTTPD_URL/auth/smart/repo.git" interactive-false-dir &&
-> +		test_region ! credential interactive interactive-false &&
-> +
-> +		GIT_TRACE2_EVENT="$(pwd)/interactive-never" &&
-> +		export GIT_TRACE2_EVENT &&
-> +		test_must_fail git -c credential.interactive=never \
-> +			clone --bare "$HTTPD_URL/auth/smart/repo.git" interactive-never-dir &&
-> +		test_region ! credential interactive interactive-never
-> +	)
-> +'
-> +
->  test_expect_success 'clone from auth-only-for-push repository' '
->  	echo two >expect &&
->  	set_askpass wrong &&
+I can guarantee you it'll work under WSL, even without metadata, because
+I've patched Git on my WSL1 Debian machine by doing the aforementioned
+trick and it totally works. Metadata is not even supported on anything but
+local NTFS drives.
+
+WSL1, when mounted without metadata, chmod and fchmod calls will not fail
+but would instead just ignore the call, *except* when setting mode 444,
+400 or any other read-only mode where it will set the FAT/NTFS read-only
+attribute:
+
+marcos@desk:/mnt/nas/marcos$ mount | grep nas
+\\192.168.0.245\marcos on /mnt/nas/marcos type drvfs (rw,relatime,uid=3D100=
+0,gid=3D1000,case=3Doff)
+marcos@desk:/mnt/nas/marcos$ touch readonly
+marcos@desk:/mnt/nas/marcos$ ls -l readonly
+-rwxrwxrwx 1 marcos marcos 0 Sep 21 00:33 readonly
+marcos@desk:/mnt/nas/marcos$ chmod 444 readonly
+marcos@desk:/mnt/nas/marcos$ ls -l readonly
+-r-xr-xr-x 1 marcos marcos 0 Sep 21 00:33 readonly
+
+That is exactly what is causing the issue - two SMB requests are being
+issued: one to create the file in read-only mode, and then another to
+open it.
+
