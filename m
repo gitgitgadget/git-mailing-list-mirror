@@ -1,111 +1,136 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC3E4AEF7
-	for <git@vger.kernel.org>; Fri, 20 Sep 2024 20:43:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB153BBC9
+	for <git@vger.kernel.org>; Fri, 20 Sep 2024 21:33:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726865019; cv=none; b=IcQAJfsDIaUHshTwH0uxWuXgaenfylmfWzmvRnLnC32pkI9gIQp/dHV7v2lheLoskpe83o8fJdzQH5fRg2sZNJtOOpVsAEa6Cck3sCSCkb2S6GgrJMue3ttbOS1a0+0WGN12ciP1YButNJ2br7sWRCdAjOVosPNbNnlYp5h6buA=
+	t=1726868037; cv=none; b=doDT7PzOvTClWavCK4/yygd6Y+cv3bPv5hqAHVCCT3e+xOBL0ZXo6cGdwKYhxxukeYM3W/XyiVLjK2Exz6oErheOElKhTzqJsJVzXoI4doJVcaY4J3xYYcH0LGVlou4RDtl11yLkppa33sznjDiSResHDHbDHaMyRzuYI8VyKbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726865019; c=relaxed/simple;
-	bh=yCg4ACEVOEBnnL8Fn2C2uBP0uyp92jaYgdMkn7L+Mb4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JlwWuv3O2Cn3z1h1N5CqLRT8tcvV4GiLDQTHFQEvoxwg/ZAQFvior6BCITCiWEjF84FCPNu9jy8g4DRVRC28qIzabvIz2k8oysLQ6a6gZR5R/hwWj74X0Un2ujcewvENencKGoTyFKOUH9U6M95MWQXfsQAI1UczoIoMPe3cQ7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MoOungBN; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1726868037; c=relaxed/simple;
+	bh=z+4syCtIOTrmFzk4j+lnztVwqi+rCJhqeZ3g64hhGF4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=T6t3KgRTkEK+EeIMYDQngvaAoeemF59C4wRFQkpUoPLLHlLklO5BrAVqwzI2/s5az2T8v+hEycaZQZbrnK26ttDCJt7HfLJgUtIbXr5edqAEqowWuz2Inn8UbcyXpcse2eqNRT4YhkydPwtEfA9ZAxyeznmu4RhYn5LSazD4Hok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fBPqooRw; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MoOungBN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1726865015;
-	bh=yCg4ACEVOEBnnL8Fn2C2uBP0uyp92jaYgdMkn7L+Mb4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=MoOungBNgXTC6SRLZ3S4U9p44zo1R1Jvw6IGIZZVKqOG0bZ4Brlubkw26VVuj6LTQ
-	 tiA/ed16Oeb8fLijjWr3jdNjp6zhtdDRIEYkWfIJqfkP/Wl/JxfwznhYKYS8LOWMjC
-	 HVqeogZ483omeCFjApIcV76B+JtiwH70mfOZjERuO6GpsPPy5Pa0NteYslbv/HDMAF
-	 1KPiRWyqTBEI2t1vTjMSfuxxDrIqEpeBoqVrjmkOCL/0Q/Htlvwwbr+AhCtzMSpbQT
-	 ZaC7pmfPykPRYhWW/DSsH1k0praMp7uKr8zm8n4bxF3y3ViVeekmfIyqZC6XiwMIhm
-	 3fHAOu5RIhf9AblooYv6Jpx770BEc1nYLBmzS4eL6yCgQPOtBdlcB1jsmozwWmd31M
-	 UHgxqXDP7quPJ7Ze0IsGgygQs8bunh6XaNiWlMdB48gfJCnQb79tRlM2S2y/L/5IQN
-	 U2wZ53Nwo53N24HdA/5XEBN++bwrQh+y8T+vD6jdcNJP0bbkZg2
-Received: from tapette.crustytoothpaste.net (unknown [151.189.190.156])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fBPqooRw"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2130F1FB93;
+	Fri, 20 Sep 2024 17:33:54 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=z+4syCtIOTrmFzk4j+lnztVwqi+rCJhqeZ3g64
+	hhGF4=; b=fBPqooRwaTxVcwW703+bHt7yMm/kzs6aqRV7QgIF6+zszomNvLSrI/
+	YOlrqaIsp4k/5SKZZ5QgpmLohPUwEdISLP/PDxSouqcISwae0/HXUs3poH8ZYYvA
+	GZiyfUpIDRTbZvaEuJUN0mNo07cr26D6tBbKs6re6xkmJkPJRU1kQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 181721FB92;
+	Fri, 20 Sep 2024 17:33:54 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CE5A520067;
-	Fri, 20 Sep 2024 20:43:34 +0000 (UTC)
-Date: Fri, 20 Sep 2024 20:43:31 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Marcos Del Sol Vives <marcos@orca.pet>
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: Permission issue in Git in DrvFs-mounted network drives
-Message-ID: <Zu3ec1mDj9JD1Bbj@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Marcos Del Sol Vives <marcos@orca.pet>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-References: <19205ebb4b9.c2a2da5a2387912.3559118454287459572@orca.pet>
- <Zu2aHdaw_oDv_dp7@tapette.crustytoothpaste.net>
- <xmqqsetugpip.fsf@gitster.g>
- <19210b887c6.f59622352625372.1022723129771458212@orca.pet>
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7711B1FB91;
+	Fri, 20 Sep 2024 17:33:53 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,  Derrick Stolee <stolee@gmail.com>,
+    Jonathan Nieder <jrnieder@gmail.com>,
+    Emily Shaffer <nasamuffin@google.com>
+Subject: Re: [PATCH] BreakingChanges: early adopter option
+In-Reply-To: <xmqq7cb77810.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	19 Sep 2024 12:33:47 -0700")
+References: <xmqq7cb77810.fsf@gitster.g>
+Date: Fri, 20 Sep 2024 14:33:52 -0700
+Message-ID: <xmqqploydn7j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="awUbYKz7xwCQWkST"
-Content-Disposition: inline
-In-Reply-To: <19210b887c6.f59622352625372.1022723129771458212@orca.pet>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 089DEFBE-7798-11EF-ACC0-9B0F950A682E-77302942!pb-smtp2.pobox.com
+
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Discussing the desire to make breaking changes, declaring that
+> breaking changes are made at a certain version boundary, and
+> recording these decisions in this document, are necessary but not
+> sufficient.  We need to make sure that we can implement, test, and
+> deploy such impactful changes.
+>
+> Formalize the mechanism based on the `feature.*` configuration
+> variable to allow early adopters to opt into the breaking change in
+> a version of Git before the planned version for the breaking change.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * Before I forget.  I'll find time to rewrite the "we no longer
+>    honor core.preferSymlinkRefs" topic to follow this new guideline
+>    when we see a rough concensus that both the procedure outlined
+>    here and the idea to remove core.preferSymlinkRefs are good.
+
+So I was looking at my other topic that prepares to deprecate and
+remove core.preferSymlinkRefs configuration (i.e. we would still be
+able to work with a repository whose HEAD is a symbolic link
+pointing at refs/heads/main, but we would never be able to use a
+symbolic link to represent a symref ourselves, so "git checkout
+next" would replace HEAD with a textual symref, a file that has a
+single line "ref: refs/heads/next" in it), to see what it involves
+to allow early adopters to experience Git 3.0 features/removals
+before it actually happens.
+
+Switching behaviour at runtime with feature.git3 should work well,
+and we can also add tests that checks the new behaviour by doing
+"test_config feature.git3 true".
+
+One trouble is what to do with "git $cmd --help" for those who
+choose to be early adopters.
+
+For "git $cmd --help" and "git -c feature.git3=true $cmd --help" to
+show documents describing the behaviour before and after Git 3.0
+version boundary, we'd need to install separate set of documents and
+switch between them at runtime in builtin/help.c:setup_man_path()
+and friends [*].  If we are going to have such a transition often
+(e.g., more frequently than every few years), laying such an
+infrastructure would certainly be worth it, but an obvious
+alternative is to say that, even though the toggling of behaviour
+can be done at runtime to allow the early adopters from going back
+to the current behaviour to make their life less risky, the contents
+of the manual pages are defined at the compile time.
+
+If we are willing to burden early adopters a bit more, we could make
+it a build-time option.  With "make GIT_BUILD_FOR_GIT3=YesPlease",
+binaries will be built for all the then-current Git 3.0 features and
+documentation under development.  It certainly is a simpler-to-build
+option that is easier for us, but I am not sure if that is acceptable
+by those who volunteer to test the upcoming big version.
+
+One thing to note is that depending on the nature of a change, once
+you start using a feature only available in a newer version of Git
+in your repository, the resulting repository may not be understood
+by an older version of Git (imagine you started using index v4---now
+you are locked out of your repository if you want to go back to a
+version of Git before 1.7.11).  So in that sense, it might be a
+disservice to promise that an early adopter can experience the
+future with feature.git3=on and then can safely go back to the
+current world by flipping it off, and we might be better off to
+control this with a single big red build-time switch.
+
+Opinions?
 
 
---awUbYKz7xwCQWkST
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[Footnote]
 
-On 2024-09-20 at 18:36:21, Marcos Del Sol Vives wrote:
-> ---- El Fri, 20 Sep 2024 17:51:57 +0200,  brian m. carlson  escribi=C3=B3=
- ----
-> > Other folks may feel differently about fixing this, but I would suggest
-> > against it.
->=20
-> I understand that it's a workaround required due to non-POSIX compliance,
-> but considering it should have no impact on any other OS and will actually
-> as you said make buggy NFS mount work, IMHO it'd be still nice to have
-> the changes made.
-
-Git could, in theory, accept a patch here.  However, you're also going
-to have lots of other software that breaks in this case, not just Git.
-So it's less useful to patch Git and hundreds of other packages on Linux
-distributions that have relied on the POSIX standard and more useful to
-fix your OS (or maybe switch to WSL2, if that doesn't have the problem).
-Most Linux distros will generally not be interested in fixing this class
-of problem, in my experience.
-
-In addition, chmod doesn't always work under WSL.  I believe it _does_
-work if the drive is mounted with metadata, but some people don't have
-that enabled and I don't know if it works for all drives.  For those
-people, the current code will work, since it doesn't call chmod or
-fchmod, but it will fail with your patch.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---awUbYKz7xwCQWkST
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZu3ecgAKCRB8DEliiIei
-gbleAQDYT/lYcjmQV5Xc+s1/CHXkg5Ecy4asmPEnvCWb/P7LeQD/bFs9K47kXvgG
-YJbf0qENKvcwqaC9geIdJ5YMHQnwDgM=
-=wKXR
------END PGP SIGNATURE-----
-
---awUbYKz7xwCQWkST--
+ * Alternatively we could tweak system_path() to hack the value we
+   return when asked about GIT_INFO_PATH, GIT_MAN_PATH, and
+   GIT_HTML_PATH, but I somehow feel dirty just for mentioning such
+   an implementation possibility X-<.
