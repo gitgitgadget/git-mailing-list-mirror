@@ -1,109 +1,129 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2827F1EF1D
-	for <git@vger.kernel.org>; Fri, 20 Sep 2024 17:28:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481D51BF37
+	for <git@vger.kernel.org>; Fri, 20 Sep 2024 17:31:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726853325; cv=none; b=igy5hYgxK2IY14njFJ7d9XhINpNqrFc5Dp3nDEniq9HRUvAXyIoiyR+xaRlSVg/mzqyWWwGe155mwTmkqL2OP6JPsa4VP08cRNzAeoDhjjzOIw4aOsJxsvCd5Ck+NxB9+Lw1wd6AsMtuDnqHjJ8Gsx+ECwlLyKXnKPmkvezQE7Y=
+	t=1726853495; cv=none; b=JOhwOn5bLa3kxpxBOJW480RpJSOod8QoDYQEDCmsGUlrSmNg8SWW9NpuojZxVUz3hxY72S9XAq5IzEgXJAIDbAvzez8PQT/72k4n3PVWZuutZJFdAiZIn9iraJK5jr7ZdJKQGCPuwVH/FutXMJ6t7U1SdKUD11ywKx+qsXOiPaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726853325; c=relaxed/simple;
-	bh=l3iyjyrtWVuKeVSXu31PPDxFFC5w+WIRLiIKl9NP0mE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oyTdwpdtmXsPqhX44inmp8jc+sUIiEjUtVZg9zg+VlPOQ87TOxNGXeKYQjUBjFJeXHWTONXV9NwIP3y7/8FCFe9qd++Q6vkxgW02zNiNJwK98VWQo/Mrknss7xT71SmvpNKab65xliYCZ1fr/xbptxMqgCF8FEBNE4gegHVFFFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uw5J+dev; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1726853495; c=relaxed/simple;
+	bh=B/slf0QvhkGz1a6I87oMxyR5hSV+1AfOKKoTlh3L1nc=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:Subject:Content-Type; b=pFcsOpx+3zKXnpFfwHPB1ptgIAnlRLFvsZJO84L8VwT43z0vvj+8tbrnHUNLCyOOIpgbiYadsKnov5Aze9MYuYeIU4jIixAhi7Ys0WdGHk1h7w3qgwG1wX+wKHi+kBr14PQ3nVQ9xYNu7LE564DjsByUR6IhK2vfSZl0/U+TBdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=CHOIY2i1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EeBPYAUJ; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uw5J+dev"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id E5E4C1C54D;
-	Fri, 20 Sep 2024 13:28:42 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=l3iyjyrtWVuKeVSXu31PPDxFFC5w+WIRLiIKl9
-	NP0mE=; b=uw5J+devDcTAwMsLt1cctQSE40TBYD8nnd6TxvtpZnjz7DEZBzoP6y
-	hF26eqYwwf9SS9K8IIc7f3AFE5acRT6sEZVtjm29iM4VZENm4VgPYVTgGIZfaqxX
-	rQ9RNFdXy2oqX6FbPyJ07OcYEtwQKktLOIMNC34932ZawaEV2Y2+8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DCA221C54C;
-	Fri, 20 Sep 2024 13:28:42 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4F3001C546;
-	Fri, 20 Sep 2024 13:28:42 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 14/23] builtin/repack: fix leaking configuration
-In-Reply-To: <a5f3931eee1e49c60e1d5be214263aeaf3d5c65f.1726484308.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Mon, 16 Sep 2024 13:46:05 +0200")
-References: <cover.1726484308.git.ps@pks.im>
-	<a5f3931eee1e49c60e1d5be214263aeaf3d5c65f.1726484308.git.ps@pks.im>
-Date: Fri, 20 Sep 2024 10:28:41 -0700
-Message-ID: <xmqqr09e2q0m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="CHOIY2i1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EeBPYAUJ"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4268413801AE;
+	Fri, 20 Sep 2024 13:31:32 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Fri, 20 Sep 2024 13:31:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm2; t=1726853492; x=1726939892; bh=VA
+	sN9CCawi04emSINXU0fRXKWWd1SeZAGWrbGPxvOas=; b=CHOIY2i1bAYFGl7j60
+	ACsbYhl40L9A8lFwLvlSYG17XX0V2QevhLjS8KOjgM9oYkJp40HT3NmkkXp0pTg0
+	UjN2BOVdwPGoSu35Pgfd9hDJacvbJAy5mKWerxLCjWZim+veTxHXDMY864+VjvlH
+	EPP1FdeuXY8nzsOvGAYkqiiLiOJvG/md8MPJHA53tyjm99YQeZ+oc7ZVj+5c6KmF
+	Oedi7FRNQcupB/RRkY4Yk346iz2QQuyMGq50QuTsHCHHNgyPTYILDPzpHgqrSjli
+	kjor74HOzqTSNtQ3HqjPSMCdbI1kpVYfR4NlujBbt//AM3thvvxCYMSdD5pCld/M
+	5wfg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1726853492; x=1726939892; bh=VAsN9CCawi04e
+	mSINXU0fRXKWWd1SeZAGWrbGPxvOas=; b=EeBPYAUJnm7sYeEFa0jDMKLkII929
+	BhJ9C6oFgt6V1d3qaqHb4uWGy41XZx43ByE+k+vlyWzihliu/sNhaY1JbOXgZojZ
+	2pbj4BY1PIu03pNPRxJKlxb+FlvpiEN4Y/fnp4odNwaiSV3tiZeH50CIIN95OhS9
+	c8tGjSoWtFv7bFxm4cO2jkSC9bTL0qZjLLiZDUQVrmFFCchzf5fHWLfs8t1DoZuK
+	2GHO/7QYixw8IYSFee3KnUxM9h1bbR3qtJ0Rg8uCWOK0VShTXQwA1vjRbMCDAl00
+	B1yQkW5teXQwGRefx+JQw3cHfmrfeWgLorWETDLH/r79KXoWLzzFtg4QA==
+X-ME-Sender: <xms:dLHtZjBW128YP1Xw9vCVS92KM8AbDkah3aE8x0EkEdTudHW_g66ofBE>
+    <xme:dLHtZpjuVHKr7PfOGiwJHIQtA6mg9TPyJ1UYqF_Bskq2RsypniyEWnITR4BGIXiS7
+    NwFWoCnoaYptm591g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudelfedgudduhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
+    fhvfevkffutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfj
+    rghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepieduvdfhuddttedtkeeguedtgeej
+    vdfhfedtgeejleeigfekffeljeehheffvdeunecuffhomhgrihhnpehgihhthhhusgdrtg
+    homhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspg
+    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:dLHtZul-Brj56Z9g4xSdbjMDudyfpv53SALgNGZzlGyTmmq5GYxABA>
+    <xmx:dLHtZlzLeIJWIdwDoJmE3Pe_hXA7GZJu5td2PYpKakhoouLEiRtEsA>
+    <xmx:dLHtZoQCN5GEhhvPV_1OOgSp6S_2C7Ay1gALNyqrqTQd76OZFk0QoQ>
+    <xmx:dLHtZoZGRYvehoF0s7WdKd7kj30GuKqtZIRRF314qePL4ZRTGUZiYg>
+    <xmx:dLHtZjdchvjKMQeFexFLoWrtmrSKoM4UGw3JYieEcZhvDPwH7o2HRT_S>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id EFA3A780067; Fri, 20 Sep 2024 13:31:31 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C813CDD2-7775-11EF-B814-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Date: Fri, 20 Sep 2024 19:31:11 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: me@ttaylorr.com, git@vger.kernel.org
+Message-Id: <16dd8441-b828-4526-8d21-76ee834b398c@app.fastmail.com>
+Subject: [GIT PULL] refs/notes/amlog from git/git
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi
 
-> When repacking, we assemble git-pack-objects(1) arguments both for the
-> "normal" pack and for the cruft pack. This configuration gets populated
-> with a bunch of `OPT_PASSTHRU` options that we end up passing to the
-> child process. These options are allocated, but never free'd.
->
-> Create a new `pack_objects_args_release()` function that releases the
-> memory for us and call it for both sets of options.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/repack.c              | 57 ++++++++++++++++++++++++++---------
->  t/t5329-pack-objects-cruft.sh |  2 ++
->  t/t7700-repack.sh             |  1 +
->  3 files changed, 45 insertions(+), 15 deletions(-)
->
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index 3ee8cfa732f..c31d5653f1f 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -85,17 +85,34 @@ static int repack_config(const char *var, const char *value,
->  		run_update_server_info = git_config_bool(var, value);
->  		return 0;
->  	}
-> -	if (!strcmp(var, "repack.cruftwindow"))
-> +	if (!strcmp(var, "repack.cruftwindow")) {
-> +		free(cruft_po_args->window);
->  		return git_config_string(&cruft_po_args->window, var, value);
+I have noticed (a couple of times now) that I=E2=80=99ve used the stale =
+=E2=80=98amlog=E2=80=99
+at the GitHub mirror. Maybe there was a temporary maintainer at the time
+(see the bulk of the commits).
 
-Surely, as git_config_string() gives an allocated string, the
-ownership rules should be that the receiving variable/struct member
-is responsible for properly freeing it, which means that the current
-value must be discarded before the new value is taken.  Looking
-good.
+I merged git/git=E2=80=99s =E2=80=98amlog=E2=80=99 into gitster/git=E2=80=
+=99s =E2=80=98amlog=E2=80=99. That adds 193 new
+notes on commits that are reachable for me (presumably all on =E2=80=98m=
+aster=E2=80=99).
 
-I wonder if any of these targets (like the cruft_po_args->window we
-see here) can be updated by parsing the command line arguments (with
-OPT_STRING)?  It turns out that this worry is not unfounded but you
-already covered it ...
+PS: git/git=E2=80=99s =E2=80=98amlog=E2=80=99 could be deleted after thi=
+s is merged to avoid
+accidental stale fetches.
 
->  		if (!cruft_po_args.window)
-> -			cruft_po_args.window = po_args.window;
-> +			cruft_po_args.window = xstrdup_or_null(po_args.window);
+---
 
-... here, so we are safe.
+The following changes since commit [no common base; unrelated histories
+(squash: cd046fc8b70 (amlog, 2022-10-23))]
 
-Looking good.
+are available in the Git repository at:
 
-Thanks.
+  https://github.com/git/git refs/notes/amlog
+
+for you to fetch changes up to d3d558e9824282479562a721e2a2a1cbbcf7c016:
+
+  Notes added by 'git notes add' (2022-11-18 18:30:49 -0500)
+
+----------------------------------------------------------------
+John Cai (1):
+      Notes added by 'git commit --amend'
+
+Junio C Hamano (31):
+      amlog
+      Notes added by 'git notes add'
+      [=E2=80=A6]
+
+Taylor Blau (588):
+      Notes added by 'git notes add'
+      [=E2=80=A6]
+
+--=20
+Kristoffer Haugsbakk
