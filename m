@@ -1,62 +1,62 @@
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0640017BB1C
-	for <git@vger.kernel.org>; Fri, 20 Sep 2024 14:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0CE17838C
+	for <git@vger.kernel.org>; Fri, 20 Sep 2024 14:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726841885; cv=none; b=JJxIuzqCqwfLu39gxaOEylfwKtDiUL2ruUEb0NT6Pdg5jKMrhViaTEcMNguuJaJFReX8wXq/plEdZrPj69lM9J0IKe3X79ukUphpd7omvJfWV5Acml0gYPOkyR6qaYN1XAx2uJoNvjqjPqGoXR0geBRsEplVCUmQfjfC2a25Ld4=
+	t=1726841910; cv=none; b=NXpe2WCG0yuVKGSHnM4bvWPdxAZNjLhvPD1YpRfHT33Ea3VT/MHOKAKn3lMO94mSFJfJkcDY/jRqMhZSJmpbbyzDrkIDQ118qLh12FbzmsLqgIYRzziPji8LfYkBJswrCrxH0SEi/oPgIgDwH8bbiFcnVxnmWjwcgoMGo63kZZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726841885; c=relaxed/simple;
-	bh=l4FSPvv08YWeA9V8VwJR1RZMz/vPGTDEhlvMX8vvgFo=;
+	s=arc-20240116; t=1726841910; c=relaxed/simple;
+	bh=eUosnGjdObaj/IRpLwjoJFARBEBR5+XemILsOgKOBE0=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ueCjtNoqhRQCY+2BealQl49tFkzQv8nBfgMWJCSivhlWhikqMmPVuOvW9brjzgv7D6S11+NZT5Hc5+O32RZnpA9+iEecg2u2sKe7O8e4cYmYixoQNfCe5Eyfflkg13BOfBTqBvSCkVhBq8k/8pb43C1eEQboEolERtBmt31Tm9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Wt+4ZcWf; arc=none smtp.client-ip=209.85.166.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=L4KMJKQRnRiltlDbj8jI52Dza5J8glQfWJIXo6atL4sPLmlHccl8F4g87yRTmZvj+lRVPWr0nz83x0+nq4QkmnLO4nYFwcJ46QBhtJNyyYI4JwNie5/8K8/F+irlVw1WZCd/D1GfyCAC+B99NxWTIGIpNe9lAYwJQ55MP1ZCAGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=VAIcwIZm; arc=none smtp.client-ip=209.85.166.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Wt+4ZcWf"
-Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-82aa7c3b3dbso113276239f.2
-        for <git@vger.kernel.org>; Fri, 20 Sep 2024 07:18:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="VAIcwIZm"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-831e62bfa98so110441839f.1
+        for <git@vger.kernel.org>; Fri, 20 Sep 2024 07:18:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726841883; x=1727446683; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726841908; x=1727446708; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3rBMydUTmTPATFbYvNMK22F9QNiikPMh4AhgwJiYvxQ=;
-        b=Wt+4ZcWfHamILUjz4e6H3639sfMyyEcOvcXpnvHLdRG7d+J42zKL7mzapznbL84ibS
-         7xBrB2OYDzBNvDEYL/MEfw6jShMC88CfbikHR+TME4DI606jAzDMgx5ksLtHcrYPaNjH
-         1BPzKbo8JzCysCSHgXN1dQVabYPrlRw6Ant7zxMIuaJ1Mz3bTBYuhuuDlCBBeFTY3Xt6
-         qxavwtp6Dp1W+YJI/n0Hb9Sz2T3ff3cgwYcrj7lGadml3oCld2GamFF+v7OWQuPNPmup
-         u9JBl3oSqfY2nTosryKqSDcWQ6dYhrAEAF3d8tq5h2rrAkW127x4AqA0TShHJsPjtKYN
-         yAug==
+        bh=VnAmUvSoaWorIEl8ASgzvxWZCEFquC7ESej14YA6blk=;
+        b=VAIcwIZmDQKyu6+WpT61bpPWeicLX6z7lmThOu5h/X+gub3gLfitzTtCzAQVnv0iKB
+         jZ5Hr3Q3pzrhcHFb5jP/Ez23uAvKGv1gFCWiUSwEI+yzTZiOgwmdsY5T+GubBU8zx8cH
+         uIzYHa6X8FkLsQXKvr38nasFeGrBfkcVFBi4BzbpdM8xjiuDbJrxL3mi6+zSFzSIBLBE
+         Y/YYrWl307V1LUuaXlRwMwRpP301BxfJvAZP9m86gpUN08FnKmUODZkcAUJvKqICl4tO
+         84id6rlWdpS8Ik2H90FTGHlymZDYWaYpDvEZk11O7MgkKsZshkEj6UjB1PPuL1E7V2Ri
+         WqbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726841883; x=1727446683;
+        d=1e100.net; s=20230601; t=1726841908; x=1727446708;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3rBMydUTmTPATFbYvNMK22F9QNiikPMh4AhgwJiYvxQ=;
-        b=XwXkaCLRnGVBl5D8rnPOR193yk4Psbbpf2nxo3eP7OwPNT9B1u4csf40Q+49yNqXH/
-         JD35/dgvQoCQydi+Li9B/v5u1re4HoRS2/Pzz2SoyIWIZ9/WRaRAuI5jfRMdOcaFDta9
-         40swkPdfaUC3FcrRN5+nTX0IZCl7PSF8yvQgdRhkrfcqbblkgl8zdBCu7AuCN7rGaA/S
-         7bac71ttDnMNUqCxpHtqNdpE8HNaS/++L87i37TNfZcQGleFHMfR+mlYM4lifYXlDhmb
-         Pfcf3XXIcrAkApp8gDK3U5rh8KQYOqgIz/oMAK1LspMIAtAiHNTeZgpl+STVPtpUl7gf
-         ARYA==
-X-Gm-Message-State: AOJu0YyA/NTw/9z8QILc63KkIBsGe05aL7Fup+TBWgqC3nuhEm1Jz9ny
-	KdY9eJVrbLKBejO04LQnzNEIdtbyFZuc2i1s/NHaEZZV44Mp70/zj9THrjcJVwc3L7iYciWztkL
-	erx0YEQ==
-X-Google-Smtp-Source: AGHT+IEtlLq7HZbwqDbLJ3V0vSizEOl4OkrybqX7oewmHfuBu9Sdyqol9hCGX75g+IDjIDN1WiwfjA==
-X-Received: by 2002:a05:6602:6b86:b0:82c:d794:4695 with SMTP id ca18e2360f4ac-8320b29648fmr248931539f.7.1726841882739;
-        Fri, 20 Sep 2024 07:18:02 -0700 (PDT)
+        bh=VnAmUvSoaWorIEl8ASgzvxWZCEFquC7ESej14YA6blk=;
+        b=WT3ocG7hEwarrf+UNLsrkse6MB0codZ/1YGpQye2tkrzg7LSKnvdQ1YFGjap/jhyBi
+         amtkYztlKQhY4EBUCOK1CC9zqi/XIpt4DF8JI0kb+ENtzRSfZLXjjgWKvQo65JOGZzlL
+         02TYa35ojmCJcfdO4+b0QBSfxR1Byw9c6XgTXuJsNRlq662tfjZls4T6DnHfbl8B+8+P
+         7SDIJXPUbmZi3StP3qi4UrI04rGbxhkWll337KmaaK/10C/KrSlY2CR9GOdOSJmrewer
+         us1lc3dhlt4snZRSXLahGUmsCYOBiH5GfaH1PTj+DMDBPq+UC3rWXWQUqguvbj7QZREY
+         pzJQ==
+X-Gm-Message-State: AOJu0Yz5vaHp0gbt8oSuAq8qjyoCpfQ0j4PqFIzCLCsi0DTHXVo2Ic7P
+	D8lmxmRuukpZUEGODRXG+Yyo4k8+cE7dRoW58fZDWSUmlRs9307I2b5vqaSjJDTZCUCqW1k9uv/
+	FcSalsA==
+X-Google-Smtp-Source: AGHT+IG4MrCjfPW/BsXTdUrxSSRFeGSEY9KZrU/GjQX4rOUbTb/k64WQcf71a5nTORjd/GoMAHHwAg==
+X-Received: by 2002:a05:6602:6186:b0:832:123:c470 with SMTP id ca18e2360f4ac-83209e8da51mr236811039f.15.1726841907670;
+        Fri, 20 Sep 2024 07:18:27 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-82d49338889sm388850039f.38.2024.09.20.07.18.02
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-831e9697887sm189039139f.1.2024.09.20.07.18.27
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Sep 2024 07:18:02 -0700 (PDT)
-Date: Fri, 20 Sep 2024 10:17:59 -0400
+        Fri, 20 Sep 2024 07:18:27 -0700 (PDT)
+Date: Fri, 20 Sep 2024 10:18:24 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
-Subject: [TOPIC 02/11] Top-level lib/ directory
-Message-ID: <Zu2EF2bELvzC4f9s@nand.local>
+Subject: [TOPIC 03/11] Structured Error Handling
+Message-ID: <Zu2EMKMmNhugAcbY@nand.local>
 References: <Zu2DmS30E0kKug2a@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,33 +68,74 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <Zu2DmS30E0kKug2a@nand.local>
 
-Top-level lib/ directory
-========================
+Structured Error Handling
+=========================
 
-(moderator: Patrick, notetaker: brian)
+(moderator: brian, notetaker: jrnieder)
 
-* Patrick: Difficult to find stuff (README, etc); top-level directory is
-  cluttered
-* J6t: Clarifies that this is the C and H files
-* Emily: Originally the plan was to move libified files into lib once
-  libified
-* Jonathan:
-   * Discussion has been present on the list before (in Git 2.0
-     discussion)
-   * Bikehedding on the list (more difficult to blame)
-   * Differences of opinion about lib and include and naming
-   * Blame problems, but this is an opportunity to fix that
-   * Heart of it: has nonzero costs, needs to have enough benefit to
-     offset it
-* Elijah: git apply doesn't handle directory rename
-* Patrick: Bikeshedding not a problem; can be handled
-* brian: Not really hearing an objection
-* Peff: Not a problem for him, but not a really big objection
-* Kyle: Not sure the value here
-* Jonathan: I really love what Patrick said about "I can handle
-  bikeshedding", I think it's great if you can guide a discussion
-  on-list toward a decision on what we want for source layout, how we
-  structure code, etc. Exciting!
-* Taylor: improves things, makes it more maintainable/discoverable, but
-  takes time away from other things like security/performance bugs.
-  Should be done with a healthy balance.
+* brian: idea for structured error handling!
+   * Very little needed - pointer to error string, uint64_t error code,
+     and ??  (third thing I didn't hear). Return it on the stack. Rust
+     does this kind of thing all the time.
+   * Having that structured return value lets a caller decide what to do
+     with it
+     - print a message, decide whether to exit or recover, etc.
+* Patrick: a few requirements
+   * want to attach arbitrary metadata to an error (e.g. "I had a
+     conflict between that file and that file for this revision").
+     Especially useful on the server side.
+   * avoid having to parse error messages. Gitaly runs into this. Can
+     imagine setting an envvar to get json or some other parsable format
+     instead of human-consumable error messages.
+* brian: sounds doable. GitHub also has the same hassle with parsing
+  error messages.
+* Peff: in your proposal, low-level code produces the error struct which
+  is consumed at a higher level. Sometimes, though, you have many errors
+  that are related.
+   * "I couldn't merge these files because I couldn't open this file,
+     because of this errno".
+* One thing we've considered is having a callback to decide what to do
+   * - print the error, collect into a tree of errors, etc.
+   * The point is to keep what's happening in the generators of errors
+     as simple as possible - I have this type of error and maybe some
+     kind of context strings. That context could be owned by the caller,
+     the callee can be responsible for copying it, etc. Inversion of
+     control.
+* Patrick: I like the way Go does things, can wrap errors or append
+  messages, return up the stack until someone handles the error. Why are
+  we afraid of allocations?
+   * Peff: What do you do when the allocation fails?
+   * Patrick: can handle allocation failure by having a special error
+     that has a statically allocated string.
+   * Peff: sounds good, getting rid of die() on alloc failure is okay
+   * brian: Rust panics on out-of-memory anyway
+   * Peff: there are two different cases - small allocations are "you're
+     in trouble anyway", big allocation of user-supplied length is
+     something else
+   * Carlos: Rust has a "try to allocate memory", relatively new
+* Calvin: how do you propagate up the call stack?
+   * Peff: in my proposal, every function would take an error context
+     struct, call the callback when there's an error, and keep the
+     integer function returns. In brian's proposal, we instead return
+     the struct.
+   * Emily: Are we comfortable with the amount of churn that generates
+     in the codebase?
+   * Patrick: my inspiration is Subversion in that respect. It has nice
+     error handling in C, they're a role model for me in how to do a
+     library. It has nice error types that aren't a hassle to use.
+   * J6t: if you compile in C++ and use exceptions, the problem has been
+     solved 25 years ago.
+   * brian: allocating strings for errors and then freeing them is a
+     hassle in C. Versus Rust where that's handled automatically.
+   * Emily: so it sounds like this is temporary pain
+* Jonathan: I like Patrick's description of requirements. One thing that
+  would make me more comfortable with the churn is when we get benefit
+  even from partial conversion
+   * E.g. could say we get structured error messages for the call sites
+     that have been converted and not from others. And when I go on a
+     debugging quest and wish I had a machine-readable structured error
+     message, I can send a patch to convert more call sites
+   * Peff: Refs code uses its own strbuf based error handling which is
+     worse in every way than the options we've been discussing. :) That
+     can be a good playground to try things out.
+   * Patrick: +1, seems like a good place to start.
