@@ -1,78 +1,138 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350E7C13B
-	for <git@vger.kernel.org>; Fri, 20 Sep 2024 15:16:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED92A17DFFD
+	for <git@vger.kernel.org>; Fri, 20 Sep 2024 15:52:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726845366; cv=none; b=e2NP9fYDD4bPdJ0NTDo4lXrOiPyBES+9P1cNLAH6tCl7+VfLCJK6WvsA1B0sg2Y9q1Gn9PkEQkJRdArzkDupCkofpijK+QdqbQCSL+wQ16w7TDK4TO4wBytpBmndA7Hp32gMTiFhll4MPeCh+M3Hdp7s6GMk3MAcY8VBQPV1YQo=
+	t=1726847531; cv=none; b=Jmnlo4GyAABcrZI1ASCgggCi4jmUFIQYL5HQTfchgUuD8S9FTFIIVhvOt3dnIPqaKvrnYvwAfe4qV3VA/V22S+P8PPv/ta5HJokLfwT6h4yO+9fztsHfEMfuv6WgqUdFbdwnQ4Nh944uXI+0CuCgN2qBgG/c2QEVirByRiCuusI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726845366; c=relaxed/simple;
-	bh=mkSGv8Fl8QyT8V+97xYfmbbpUxvJu///aQA6P+0AMMg=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=U0uSGG+BiKOz637X2eUo7Gdc/rUp8D525p7vqG8xVkYATLHnP6MPFuURCCkF2SlmH9B1CdaY0m0Mn4Ktu8VvDRojJ2IstuE6kd+C04be8QF7wbKOGxUTHGPtUtDkB/4/0YivV+ZHOpsZf8u+mSriW5idr8PtB++GQD18f6m81CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zvh9d/Ra; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726847531; c=relaxed/simple;
+	bh=/Wu9WC8BmsXB417u+MWbDdv6mjiBYj7kHrwagWwcbnA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mI7bELMJzV8mFQXhjaJ0reBWNOSpooWvLum/U5zuR1C4RJCHze6hq5nINHuD84nN0h9PWK+J8TIuWrTAsC0qKhRtMLyHaKUdu98BMxivvl4MBD5UxOq5WpEo96rpNmZri2PvlBBRU6Q16thbILxAdhVQkxIHEef5Bv1jxfjSqUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=f89/+ljO; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zvh9d/Ra"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-205722ba00cso19334155ad.0
-        for <git@vger.kernel.org>; Fri, 20 Sep 2024 08:16:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726845363; x=1727450163; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mkSGv8Fl8QyT8V+97xYfmbbpUxvJu///aQA6P+0AMMg=;
-        b=Zvh9d/RaZ0QBoyoWHMIGHNISu0CsAfZL3ukwmRQiuXJC+4DEpbUHtKcd4TsTmkqY2g
-         ENFImjdY7KcL0/a8ljM6E7genanizQnWL3BRG2NB6vncYodHZr8I9wx/aJ5AdLZIVu7I
-         zp9qDkVsh5SpmbV+Yju87WPCbn/+drCgnPCnwEhARgz24u3g7UxVAfEDEi1k+JGqqV3G
-         mPC2geXd4tQRxrecFXqBo4jcegoe5r7n/MjoWAr6p0tCGekaAZxiN7Cq7bGG2qxI4AHs
-         VuSalPPveSYymhbPqPwysOSWx0bBgb9BJBFBs+H1mVvF0kZTHa42kS0Yjtz8aKO0tp5f
-         6Qgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726845363; x=1727450163;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mkSGv8Fl8QyT8V+97xYfmbbpUxvJu///aQA6P+0AMMg=;
-        b=Wo+lKzMq1j11qfIVoN5xtOCKqrH5snxnK4Mpnve7MN6L457vuYS20FMe4rUUqHdDow
-         PgOMutE0b+wTrquVELtsIu9ulItyEjEwmNlJ2sQylZPd5TW1kYPuznRnVitqrqMpAFLT
-         8HYT6mSMTfGAby9rXwp5yM77kq2cgl/wMZYcDaDVk8Z4Fm3UvE1651xB2YY9wiQWN35c
-         dM6VFm1Yl+fuqqf4G6T3sPBCBtEMC3nZLDXFtrcnZs2WEufNkTmvqexxTD8gfmeei4IX
-         0IQE8virWvdXKq+m5FcA4AsEWobXcyIUedroVm7nFyJHzXBgVJcCqt8Sb0E/F+FmHm8m
-         Ii2Q==
-X-Gm-Message-State: AOJu0Yw8H6b/kXPSfjx397FFWXsm0Ft+apCYWSNQFQCK8r9BQyfIiILx
-	g8SwTwYyVTzUh0gxfKFXl2rFvYE6Sco851gxyMfhEK2Sa+woxWMugMHq7QrNC6yqmY1rd34jjyh
-	tZ1CehesnamdltDHrSJHZgowATh4UKEDZX4I=
-X-Google-Smtp-Source: AGHT+IG7nSLcSL0rMOQ3zuD/aNcmmeORcYtHVHrg+bFK5eaJgaLoAAkGEIDGqmv4q5tJ4Ny7MSasE/qAgOPQT4RlRmY=
-X-Received: by 2002:a17:903:32c8:b0:201:f8b4:3e3c with SMTP id
- d9443c01a7336-208d97f02f9mr38995995ad.12.1726845363307; Fri, 20 Sep 2024
- 08:16:03 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="f89/+ljO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1726847521;
+	bh=/Wu9WC8BmsXB417u+MWbDdv6mjiBYj7kHrwagWwcbnA=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=f89/+ljO063tHaCt/Umxz2LtW6SVqcQ5r2Wp9feoF0R2IKbxDkuXoMuvpHXbZfz7G
+	 rWFdvbxpXZflDgCwe6cBFZdhQEEhpy1QoW6fprypMS1ze1jwuZaZNP6BkFzsNbDCvc
+	 OrYq++UnnZm/WSZGNmLuGzEFMeZpkt44v0Mdqiuns3UzVdraiYb5BfQ0tqcwYdc0ep
+	 Y0MHEhiHuotorxTIniWZjqdW5J4CYulbCdZt/+R/3TyPuSoiCI0QnfvMvExCAshr0o
+	 5/Mbjkyuvj6yWUBCnZBHh7dfBjOiizlYn9RPd5AzaqGRfVpRTd+zoVtebTuN/mPRhp
+	 sut+kqDPT+MRnKSXuxtOI6f+F4rkxkVIC+tGp1hWyko5y82aRBFN2THiN58kAR47rm
+	 oF6itAEZTi0Pptcsyllh6aUPno0rkrTCbT/kH2dM7GGby6JkW5YgfFQK8Oy8IkPH7w
+	 4xjWFneCGh1W86LagbD0eZKaoBQxFfY7nPS8IpTjWdfwGapOyIZ
+Received: from tapette.crustytoothpaste.net (unknown [151.189.190.156])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1708B20067;
+	Fri, 20 Sep 2024 15:52:00 +0000 (UTC)
+Date: Fri, 20 Sep 2024 15:51:57 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Marcos Del Sol Vives <marcos@orca.pet>
+Cc: git <git@vger.kernel.org>
+Subject: Re: Permission issue in Git in DrvFs-mounted network drives
+Message-ID: <Zu2aHdaw_oDv_dp7@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Marcos Del Sol Vives <marcos@orca.pet>, git <git@vger.kernel.org>
+References: <19205ebb4b9.c2a2da5a2387912.3559118454287459572@orca.pet>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Shubham Kanodia <shubham.kanodia10@gmail.com>
-Date: Fri, 20 Sep 2024 19:15:26 +0400
-Message-ID: <CAG=Um+3C1JMKoW+j03nF6uS2DjcJnKD7+0PSaiXGB-td9qyc8Q@mail.gmail.com>
-Subject: Prefetch maintenance might lead to thundering herd issues
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="RzidWhV6kzqFWyaV"
+Content-Disposition: inline
+In-Reply-To: <19205ebb4b9.c2a2da5a2387912.3559118454287459572@orca.pet>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-The current git-maintenance prefetch command allows daily, weekly, and
-hourly schedules.
-However, in repositories with many active developers, timing `fetch`
-to happen at the same wall clock time can lead to a thundering herd
-problem for the backend server.
 
-Ideally, these fetch requests would be spaced out by a small amount,
-so as not to lead to a co-ordinated load on the server.
+--RzidWhV6kzqFWyaV
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I don't see a way to configure this at the moment in a cross-platform
-way at the moment. Perhaps it might be sensible to offset the cron
-schedules slightly for users so as to not cause such an issue?
+On 2024-09-18 at 16:16:26, Marcos Del Sol Vives wrote:
+> Under WSL1 (Windows Subsystem for Linux), when using a network share
+> mounted via DrvFs, Git fails to add any files to a new or an existing
+> repository.
+>=20
+> The reason is that Git tries to open a temporary file as with RW
+> permissions but mode 0444, which causes WSL1 (or Samba, unsure who's here
+> to blame) to create first an file empty with the read-only DOS attribute =
+set
+> that prevents any writes, and then actually trying to opening it in write
+> mode, which of course fails.
+>=20
+> Seems to be a pretty common issue that nobody has yet reported officially,
+> judging by the amount of posts on Stackoverflow, impacting not only WSL
+> but also CIFS under Linux (hence why sending to this mailing list and not
+> the Windows-specific one):
+>=20
+>  - https://superuser.com/questions/681196/debugging-git-repo-permissions-=
+on-samba-share
+>  - https://superuser.com/questions/1450094/git-on-wsl-commands-fail-despi=
+te-permissions-seeming-fine
+>  - https://superuser.com/questions/1491499/use-git-on-a-shared-drive-with=
+in-wsl
+>=20
+> As a workaround, opening the file with permissions 0600 and then using a
+> fchmod with the final desired mode works, which is a very small change th=
+at
+> should cause no issues under neither real Linux nor WSL:
 
-This might come at a small cost of predictability of the run, but that
-should be okay as predictability isn't the primary goal for
-maintenance.
+This behaviour also occurs on some broken NFS mounts.  It is, however,
+explicitly permitted by POSIX to open a file 0444 with O_WRONLY or
+O_RDWR, and we've traditionally not fixed it for that reason.  I would
+say that WSL1 behaviour is incorrect here.  Here's what POSIX says[0]:
+
+  The argument following the oflag argument does not affect whether the
+  file is open for reading, writing, or for both.
+
+That is, POSIX forbids failing to open a file for writing because the
+permissions are 0444, and as such this is not POSIX compliant.  Note
+that the operation must also be atomic; that is, the server can't
+emulate this by setting the permissions to 0600 and then doing an fchmod
+internally unless nobody can ever detect the intermediate state.
+
+I think we also probably have a few other codepaths that are affected in
+the same way and this is maybe just the most noticeable.
+
+Other folks may feel differently about fixing this, but I would suggest
+against it.
+
+> The WSL team at Microsoft has been already informed as well:
+> https://github.com/microsoft/WSL/issues/12051
+
+I've provided some comments in the issue there.
+
+[0] https://pubs.opengroup.org/onlinepubs/9799919799/functions/open.html
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--RzidWhV6kzqFWyaV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZu2aHAAKCRB8DEliiIei
+gY+nAP9jwIs31etaIoSUjHG15CYhwR5XnVpClqUMfrKxFju8IQD/dXw7d60/IoaQ
+r4P8NUQbFuzpYsqd38CoCate72Z0ggk=
+=O6Is
+-----END PGP SIGNATURE-----
+
+--RzidWhV6kzqFWyaV--
