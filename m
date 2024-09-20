@@ -1,62 +1,63 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8201D1E521
-	for <git@vger.kernel.org>; Fri, 20 Sep 2024 14:22:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7161F17B4FE
+	for <git@vger.kernel.org>; Fri, 20 Sep 2024 14:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726842127; cv=none; b=n9bkVW6d0lS8YwMb/90EFD8c7qSRemY7fTTT+XClcb4hTDol3oG9xV8JJooR4KhN5uc6xToJCp0hQxoSKhYtb5YURdH9M41yzdHmmQIHvbaI8O2eZAz9SBfyyAmWHzcjPs6d4PG4UIEm6SFfQUa553wkXIJsZdnJrZnzZ4uqb40=
+	t=1726842168; cv=none; b=S9beLu8+CjIGKK+nBIcB8YL/FtFh/mY7+ZJa32oDih7jO6khgw4a9rM0p94SfGptV5E8zahvMiYh4HV55kiOWDzV8aEpfg8kaRHfhEysT2O7bQYpUwBbal+aAM4xPPemFjHH7otkttc+YcHck8UtgD2xySRvSmnYnm7nECqBqSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726842127; c=relaxed/simple;
-	bh=JkR9atTMAZECaGiuLmHusINrp0LouZjngJ47fU4gMbk=;
+	s=arc-20240116; t=1726842168; c=relaxed/simple;
+	bh=yMQlYh8bQN/rHUZoXJ/k6U8Ltnf7686yGE2xwXcVPZg=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XZn603vbsZJ2OSkkrtJHZeBphZrOKhmlmQUK6YAhLBGGNFs+cWkuZjwrO/GPir3i+syQs5TchVFj7EVP+6UhNMiA11lAtIMdZQcW4GE0NtYuAfymwNL3vzeDuIl+XIjab2k03/lcb9OYe9dot1rEY9UEZMcYZR9+QnIHqo7a4vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=fdT92RRc; arc=none smtp.client-ip=209.85.166.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=AOyGZV0hOBmhWOfpMtiFmPMREIlWSkAaU5ujvTcNqK4BeMT1ELt6bOEoJxamcyVOxNoUfUglah7plYzZdiFBQ7R+BjuET41y8xcOKUMdS0QJ4DgRT51L+gBdz6DrZDz6xh1dwrF5SueOZAzqfBCVUJwLZOJyQBQpddo1lCelZcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=yTUSQtkM; arc=none smtp.client-ip=209.85.166.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="fdT92RRc"
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-82aa7c3b3dbso113526939f.2
-        for <git@vger.kernel.org>; Fri, 20 Sep 2024 07:22:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="yTUSQtkM"
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3a0cbc08b38so2826925ab.0
+        for <git@vger.kernel.org>; Fri, 20 Sep 2024 07:22:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726842124; x=1727446924; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9zy3YzMZNyD+HH2CiMSiFvlr1ZUp6WyU2dgqwMYmG5s=;
-        b=fdT92RRcr+GxVZKNCHLe1JKIL9IRF/rQJ9PCw7k560Ax6FdFgGG147WGAsSOnwOL4N
-         f25Q8VNMtvo2eqmsdGMrxIO94+fJCet61fsI6OE4WV26ZQEDpNGML+5TPawUGgYhCd20
-         LMSgmmOAXw+FApfvRUzxXENLTtlzd+E44DeF1F+THCNiUTyc6KNgTG0CfAbW9leHZlRR
-         OuXSksLWbeLnriU54oM1Jq9I5SjrTZ5uHT0AkI2YMhFJhPHrsZcQ2g4MVjBy+/EHylZI
-         aCESqHMyLWSU6sGLODqS4P5KLGpeoKU4wJM9KT98qwgOImdwA4/hFFNQlMhXKhru/AFm
-         qGdA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1726842165; x=1727446965; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UhWneDaB2kNNIjdyfO3BcIFx3maYR5g2uDZCn1RcWdk=;
+        b=yTUSQtkM0QhDRfMeaM9Jb55FhMYWJ7HETgaR0TpmmwJX0cGtl4nm7aRJTcm3eW2n3W
+         gG+FAbqoMgaEZJlouB5WDEOgd3+Fu8fzGoe5KIk1I/GqwlT7qNc0bC18WHk3jlzh7X4J
+         sq5tI90jndxl6oRa3Pnhrp0zflnCxfWMYcmRrxsJDFnXtbHv+MmwSNNNrz/WlDTHfi34
+         PKrk6JdaVxJA4Pye212XxFeY2P+eiSJNMadQonB090UnLdkqHwA3C9eCbC1yNpb1Av5F
+         I88n5modde/VOMk82wYRFTiLWRSL2XynD7Vb5nkulWg1d9aFa4BccW8I+17GN/QePJ5L
+         1flw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726842124; x=1727446924;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9zy3YzMZNyD+HH2CiMSiFvlr1ZUp6WyU2dgqwMYmG5s=;
-        b=UQQnx8auptctWF2d/Jbc88ovr164zv8jmjSK1pchLENcG+sJPoFbnZ/DwWp5XypQYO
-         95V89VkStZQN9k8RPc7ls/PVZNTJDIRT3orTIQnc4msBxZtf4tU7lc0JhQX/3Ozif92b
-         jiifzMWLKfCIfa581peQwiTIR0ilgny1dj/++pODllKosgmn9c6wJxUpK6ogygOTGlbG
-         RtGM8zA36bSKYvvbvhMBIqSq5nuqmlULGM7Fv+gp90JcxJLkLmDVH9L7WxQ1eW7hKwr3
-         jYYh4GMnQq4rMfp9d+gSPsomPXJXwSnwRs0JDc1NbjkERt7+gggIu4UoNoMYFnOxhyEo
-         1beQ==
-X-Gm-Message-State: AOJu0YyBvL8l7wC6Fvqe22efTXZlpUdeaoBZUmHcjGz6p1CKoCsXSPIQ
-	pGMMyxPRrqzKFTra7BbbPP3U+1jA+vGzV+VuNSY0KnJvJk7Wtg9YmbPlBnakrr6ZWFA5ixRLXc6
-	Gi8g8EQ==
-X-Google-Smtp-Source: AGHT+IHhlUb34bRfJwwb/6EmflEFtzPr8ZjXQ0HYBvacJQTLcnmzRwVEVZM+AuEgc2Jn/fauRXcMEA==
-X-Received: by 2002:a05:6602:628b:b0:82c:edd4:f0a6 with SMTP id ca18e2360f4ac-8320b31a9c4mr248861839f.12.1726842124064;
-        Fri, 20 Sep 2024 07:22:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1726842165; x=1727446965;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UhWneDaB2kNNIjdyfO3BcIFx3maYR5g2uDZCn1RcWdk=;
+        b=Uloys/nWXGsjf6xO1M3fhqgHd/obp6qzQ+UZZe8JcA3+BYYzhJvrWtAXmA3YxJL5Cl
+         aHYOMc6JEqaG+Irrp98/0yrtk5iy/bmcVFO+kKJqhP9plDpu3P2NQ6Oew9oF0IKhP/ah
+         IqzRZEj2f+0R11Ei43OfJz/VJlZjMfH9u4rBcYEmJcF0HwKAvFolFu8wUPdej8u274ub
+         Eo9ZTLFitVD98DYyQFcf9VidDmuSsTxej3t2GQxRYJ9R4oH4Fv9IkN2lmYpsuOHCDMLB
+         WaWc+eJT1PxzTcfULuWNcIJ/GSTyUCwhuc3otuf1Mq88LdxziYJmqK3zHHCYA4YQWCJ7
+         glKA==
+X-Gm-Message-State: AOJu0YzF3aG72/GcNMB366NOfYP96YwLDze3A5pjy47XHuhBbfHnNQZ/
+	3l1JZMw+qYMjVPMIwhirAZ9xvg735/bk2yJsLq4eEEydFzvr7z4NvJKp3kijG83fupuCQofDawi
+	5IrDzTw==
+X-Google-Smtp-Source: AGHT+IHKy5Nh3kCwj4xLVO6l/T1RQsZ90n9++Ttv4nI0KsbtS2gTkbmBfzWNq8rsRVoAKiqqomW0ig==
+X-Received: by 2002:a05:6e02:180f:b0:3a0:98b2:8f3b with SMTP id e9e14a558f8ab-3a0c8ca77d2mr32856585ab.7.1726842165124;
+        Fri, 20 Sep 2024 07:22:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-82d492b34b6sm379610239f.23.2024.09.20.07.22.03
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3a092e7171asm42215235ab.56.2024.09.20.07.22.44
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Sep 2024 07:22:03 -0700 (PDT)
-Date: Fri, 20 Sep 2024 10:22:00 -0400
+        Fri, 20 Sep 2024 07:22:44 -0700 (PDT)
+Date: Fri, 20 Sep 2024 10:22:41 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
-Subject: [TOPIC 09/11] Bundle-URI on fetch / resume-able clone
-Message-ID: <Zu2FCF+BOrshAzxN@nand.local>
+Subject: [TOPIC 10/11] Project Tracking
+Message-ID: <Zu2FMQnLCKQ2skkM@nand.local>
 References: <Zu2DmS30E0kKug2a@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -66,63 +67,129 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <Zu2DmS30E0kKug2a@nand.local>
 
-Bundle-URI on fetch / resume-able clone
-=======================================
+Project Tracking
+================
 
-(moderator: Toon; notetaker: Taylor)
+(moderator: Emily, Patrick; notetaker: Taylor)
 
-* Toon: we have bundle-uris, which allow us to download bundles before
-	cloning. What would it take to do them on fetch, too?
-* Toon: Complex; you might end up downloading a lot of bundles that you
-	don't need.
-* Toon: there was a bundle token that could be used by the client to
-	determine whether or not it needs the bundle. Unfortunately, since you
-	don't know what amount of history you're missing, the bundle in and of
-	itself may not be sufficient.
-* Toon: How do we make bundles more efficient on fetch and aware of what
-	the clients do and don't have.
-* Johannes: In VFS for Git, the set of bundles is "opinionated" and
-	regenerated often (e.g., weekly, daily, hourly, etc.). We don't really
-	care about oversharing, because it's fast enough to download those
-	static files.
-* Toon: That's true for the server, not for a singular client.
-* Johannes: right, but it's to protect the server. If you don't care
-	about having too-big of a bundle, it's OK because you can just fetch
-	the last hour and then see what you still need on top of that.
-* Johannes: there is logic to determine what you need to download based
-	on the time that you last fetched, etc.
-* Elijah: are they thin packs? Yes.
-* Patrick: the heuristics that we have to advertise what kind of bundles
-	are on the server is not sufficient enough to determine which bundles
-	the client may or may not want to download. The client must guess.
-* Jonathan: ISTM that the property list for the bundles as they are
-	today should probably be considered a starting point (as in "part of a
-	feature"). The heuristics need to be extended.
-* Jonathan: at Google we use packfile-URIs, and one of the advantages of
-	how that works is that since the packfiles are advertised after the
-	normal fetch negotiation, you get a curated list. For bundle-uris,
-	need something analogous to the fetch negotiation for the client to be
-	able to make a similar decision of which bundle to download.
-* brian: extending the feature to store timestamps, then you could store
-	the last fetch on the system would inform some better selection of
-	which bundles to clone down during a fetch.
-* brian: Would make a big difference for folks in environments which do
-	not benefit from reliable Internet connections.
-* Toon: Sure... but you have to put a lot of pressure to keep those
-	bundles up-to-date on the server side.
-* Jonathan: one of the advantages of bundles over packs is that they
-	have information about the references. One potential property could be
-	"here's the length of this header" and then having the client download
-	it to examine whether or not it wants such a bundle.
-* Patrick: probably would want to cache those on the client so that
-	we're able to avoid re-downloading these every single time.
-* Toon: resumability
-* Jonathan: protocol supports it, just hasn't been implemented. Someone
-	needs to just get it done. :)
-* Beyond that, the main complication is how you store the state and what
-	the UX is for resuming. But a person implementing it can figure those
-	things out.
-* Brian: broken-proxy situations require some configurability of where
-	your bundles can be downloaded from.
+* Emily: Patrick and I were talking about roadmap-like things sometimes
+  this week. It would be nice if we had a list of projects that the
+  community has agreed are good ideas. For e.g., “generally we are
+  working on getting rid of ‘the_repository’”.
+* Emily: We have agreed that libification is a good thing, so anytime
+  that someone sends a patch in that area it isn’t up for discussion
+  whether or not the patch is fundamentally going in the right
+  direction.
+* Emily: It would be cool to have a list of agreed-upon things. I also
+  think that we should get better at figuring out what we agree on.
+  I.e., the status-quo is argument on the list until quorum, and would
+  like some kind of more structured way to determine when we are in
+  agreement.
+* Jonathan: When you say “predictable process”, what does that actually
+  mean? Python has PEPs, they have a very clear state machine that
+  stringently dictates the process.
+* Emily: probably not something that strict, but would like to generally
+  be able to tell “is it going in the right direction?” And
+  approximately, “Approximately when will we be able to tell when it’s
+  done?”
+* Taylor: how do we quantify that? A lot of what developing consensus
+  looks like is developing patches and then sometimes throwing them away
+  if/when we find a fundamental design bug, etc.
+* Patrick: “Are we going to do it?” is when something like a brief RFC
+  is merged.
+* Taylor: Is the Git 3.0 deprecation doc a good example?
+* Patrick: Yeah.
+* Patrick: We would also want to have a document with a little check
+  mark indicating when we are going to do small things like clean up
+  memory leaks.
+* Jrn: The pain point is being able to know when making a proposal how
+  much support they have.
+* Taylor: Sometimes implementation clarifies one’s thinking.
+* John: We have some tribal knowledge on what is accepted in which
+  areas. Can we codify that?
+* Patrick: The BreakingChanges statement says that we can change things
+  on the document if there is new information. I’d like to see that this
+  statement is echoed elsewhere.
+* Taylor: It feels like it would be more useful to have a discussion
+  based on a WIP or PoC (e.g. UNLEAK() and FREE_AND_NULL()).
+* Peff: I don’t want people to produce patches, say, if we blessed unit
+  tests, and then consider that discussion immutable. That doesn’t give
+  us the opportunity to make changes to the fundamental design. I don’t
+  want to use it as a cudgel to shut further discussion down.
+* Jonathan: “I guess I am going to argue in favor of cudgel.” Taking
+  unit tests as an example, if someone later says “I don’t see any value
+  in unit tests”, that’s not very productive. If they say “I see the
+  value of unit tests, but not at this cost”, it’s a more worthwhile
+  conversation.
+* brian: Maybe we can only use that as an argument for 4-5 weeks. Having
+  some disagreement is fine, just don’t want to make it indefinite.
+* Peff: On PEPs. Often someone will say “I’m going to go in this
+  direction”, and I’ll feel mildly negative about it. That’s very
+  different from voting against something.
+* Emily: Sure, there can be more voting options than just
+  yes/no/abstain.
+* Jonathan: Apache does a nice job with +/- 0, +/- 1
+  (https://www.apache.org/foundation/voting.html#expressing-votes-1-0-1-and-fractions)
+* Emily: we should be better about saying generally how we feel about
+  things at the end of the series).
+* Taylor: Taking a step back for a moment, what are some examples of
+  things that are going wrong that need to be changed? What is wrong
+  with the project here?
+* Emily: things are taking too long.
+* Emily: Goal-posting moving, etc.
+* Johannes: Yes, that can be very frustrating and cause a lot of
+  friction.
+* brian: When you do creative work, you get feedback and sometimes you
+  take it and sometimes you don’t.
+* Taylor: at the risk of repeating what brian said, it’s hard/impossible
+  to please 100% of reviewers on 100% of series. At some point you have
+  to step back and let the maintainer evaluate.
+* Jonathan: I think the point of Patrick’s proposal is “how do you go
+  about navigating this with a 10-series long project?” Then you’re in
+  trouble. The proposal would allow you to check in a bullet point, or a
+  design doc, and go through that process and navigate to the point
+  where you get the maintainer’s blessing and the conclusion is checked
+  in.
+* brian: Maybe a bullet point is too small for some things.
+* Taylor: so it’s a continuum, sometimes you are going to save time by
+  just writing the patches, sometimes you are going to save time by
+  writing out what you are doing (over a multi-series effort) first.
+* Patrick: discoverability!
+* Mark: could we encourage newcomers to email one of a few people for a
+  particular effort (like libification) and have them comment on it?
+* Taylor: you might not want to centralize that much power.
+* Toon: How about structured errors? We agree it’s a good idea, but not
+  on the mechanism of implementation.
+* Patrick: Sure, sometimes that just takes time. We don’t have to
+  document how to fix them (maybe how to find them, but I digress).
+* Patrick: For structured error handling, it should be more involved. It
+  makes sense to have an RFC or design document that documents how it’s
+  supposed to look like.
+* brian: or an initial patch series that comes up with a design.
+* Peff: In our project, the formalism of voting is “is it merged to
+  ‘master’ in Junio’s tree”.
+* Emily: I want to have the process of getting from discussion to merge
+  be less fuzzy.
+* Peff: So in brian’s example, let’s take SHA-256. The process by which
+  the maintainer decides that is inherently fuzzy.
+* Emily: Sure, but I would like to be obvious to someone besides the
+  maintainer.
+* Jonathan: (to Peff) you mentioned sometimes you have a mild negative
+  feeling about something and you’re good about expressing it on-list,
+  but for a lot of contributors that will cause some discomfort and it
+  will cause them to stay away from that thread. If we’re a little more
+  clear about what’s expected, then conversations can get stalled less
+  often - e.g. when a thread needs a comment from a refs expert, getting
+  that comment that supports forward progress.
+* brian: I just gave Taylor feedback on the SHA-1 series that he wrote,
+  saying that I didn’t love it. But others felt OK about it, so we moved
+  forward.
+* Emily: strawman doc:
+  https://github.com/nasamuffin/git/commit/54079ab00002c6dfa7ac1a33d9810792978d2cce
+  - maybe it's bad enough we can poke holes and salvage something we do
+  like
+* Peff: it’s important to leave at the end of your review the way you
+  feel about something instead of just having a few comments.
