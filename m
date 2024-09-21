@@ -1,134 +1,130 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from fout4-smtp.messagingengine.com (fout4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B14829A1
-	for <git@vger.kernel.org>; Sat, 21 Sep 2024 19:37:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC7A126BE0
+	for <git@vger.kernel.org>; Sat, 21 Sep 2024 19:54:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726947451; cv=none; b=Wi9Yw9U4B4bmBJ1fJxBzpNSvQGPKmbF3wVRVgVaFnbjTlVO0Cckr4KmdAICP5zkaZzT2SwxhpV/xgAvNPtLVvNEVPSp9J08Hv1W5vVXntxOAfzrRcKClVTZiYh6oskF9bYeyFH+er0XcUZ8YJZDTbSHQhF/OCjKBnYl/RaOF14w=
+	t=1726948491; cv=none; b=ZVDvluPjKNkwH6iiLsQSW0V2e6t5sFsfXOmodUGP7hMHw+EvBvD+wANYA9K59FqEKjeuoIEKSgCnWS2Yj9DjT3/Of9aPSXv2+Q9JMoWEHvVfGQoD/OYHJotAmFCEozw8Yk5z5juwriJhABiPuIZ/FFO0QRcC1P0d+H9VYkZm22s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726947451; c=relaxed/simple;
-	bh=m27FIMC/H0cUzQ4V3VQmulMorrt+UMXCRJiBpPvdxPM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hIWS933P789Shqxnr7PQkkFM7OfqT4kVYlu5qcfBlTAsAXt2GkVai7J80xwg/UKSIzLDhwrLIkIO4wYFpseFHr1UJ4hoHoNV9v5XV0xAPjL8L9lGi1qLSYFdGVX0gxNeXEE7Ha/W7Q97uylWe17ZnqcUUalkuJzgr9ZKsU84b+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vUC20dQI; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1726948491; c=relaxed/simple;
+	bh=sxogt8oVbic7J5bw2W48rPKei8ntLKIjySf6oWygJL4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=HU96knUiOmx0qq9kSneSiT/kRiHcojql/uO0+nWLMtaIvgMcUK2lq/193wwXOfC4cCVyeGfVvGoNu6ium4HYzV6UPlJB0ZEgrz3n++adg4DTTGXXnQyawLhVfiSea8AVbCH90+kLBVSLki4/+hvWc+ITv5MsiWz0isnXpiQ3fwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MsxmFYOa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mT3BXW8n; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vUC20dQI"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 409E129703;
-	Sat, 21 Sep 2024 15:37:28 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=m27FIMC/H0cUzQ4V3VQmulMorrt+UMXCRJiBpP
-	vdxPM=; b=vUC20dQIbCKF4JxydNyTCV6qpLz5ipoaXBr9f9Y7yDFG9jiiiybBlP
-	hx6h9McxX8c1MOHpQqhhjTvBFMEzJ5ITB2ZjH9VTnBpqFN05DqtdML2iLG5bwW2W
-	8wYMfFTkmDJJFuG+Q6gjC4hEDHSHyQ8PW0hYd5VLN3Pgur9GZjcI4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 36F0729701;
-	Sat, 21 Sep 2024 15:37:28 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9D41229700;
-	Sat, 21 Sep 2024 15:37:27 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: [PATCH 04/22] reftable/basics: handle allocation failures in
- `reftable_calloc()`
-In-Reply-To: <e6ded75f630ea309d5b76126560a0ec3d526bf71.1726489647.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Mon, 16 Sep 2024 14:28:26 +0200")
-References: <cover.1726489647.git.ps@pks.im>
-	<e6ded75f630ea309d5b76126560a0ec3d526bf71.1726489647.git.ps@pks.im>
-Date: Sat, 21 Sep 2024 12:37:26 -0700
-Message-ID: <xmqqed5cajd5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MsxmFYOa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mT3BXW8n"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id C302113801A3;
+	Sat, 21 Sep 2024 15:54:48 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sat, 21 Sep 2024 15:54:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1726948488;
+	 x=1727034888; bh=yQ6y2U7yBC3ZzoU/hyv5UObqpHV9VQ/AoMVfbT5/QIg=; b=
+	MsxmFYOa1fDTb0DTFDf8tsKuhuJEAw6is7STfOVnwRj0pVq82xj3PNCGyLjkykzU
+	0UAS/cntxO2vMDYTDYWVxAc47iwQ2a2dKyMxOeoK9Aae2vlGJwhU7sb3GSMMef1o
+	76TcQl0ymxTzQLZnPNvE52VsQSOzwxD6qM5FjFQ2Lf/3ViEqNX/0ZSyOeP6sba10
+	VUr/XnsrHlPnl+QSjSLSdZjkIV0jmuav1C8wN6zt2p4Sei+2Mhstr70uCFc9cceW
+	6X23Gksp8uIqqObdqSvhC1yxmVjHTz3xMLakzSfZbzK7vy+pTrtHH8KEvsvRckhr
+	bUyNQNfa6FcFOCExTO2KJw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1726948488; x=
+	1727034888; bh=yQ6y2U7yBC3ZzoU/hyv5UObqpHV9VQ/AoMVfbT5/QIg=; b=m
+	T3BXW8n+BizXTKoRE2S7QFOSYdk15QXVKvFEuP8PD3xSqJho3gGxRxpSdP7rhfuf
+	XBFz5o7fi7Gg65GHBjVicDw0sU5OfsmnnxaJTY8o/qLDRQ7OA5+pqxRtkHmPYWoV
+	fb5FhpsseSmUVm3fpUSVak2pBGUVrd+z/OD5z7uUW1eQi/7Hz3ZDdg9nkR4pgiEP
+	nOYgAxrkYbP0HPrXqM42YUYnVTSdy80OAbTT7qB6M+kEJOAfuCJBidJXO+eD7tiA
+	lCO6eN8Xth/deFkXK4AdG/6Ttv2LCug5XrzDlsL/FVsk6NA+WPQ++7PC18JYc+gk
+	7rxc8XUwxmfslccpP/UVg==
+X-ME-Sender: <xms:iCTvZgQx05dVteX7K_FT2LyPuXNtIYahcBUxO3lgu_83HPBapFHAInE>
+    <xme:iCTvZtySm1LaHc14TqkL6U5744_M6voFjb-KRJto-3qbVn0IDi5uuSA0bQgRjhq6d
+    hMPacJi2JtrxsjVpw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudelhedgudeggecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
+    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
+    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
+    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
+    gspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhufhhf
+    rghlohhlrghvohhishhivghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshdqsggvhi
+    gvrhesghhmgidrnhgvthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:iCTvZt2HXxSj-5f6jGq7nHkXanWcPy6EJc07ojr_iR3JbMLUNAMo2g>
+    <xmx:iCTvZkDTXKvG1cCYqcuOSCjr-Y1xmtnAMAgklwyHXhPx1gsgE-xfhA>
+    <xmx:iCTvZpg2ldd_g5yWNStDlrH41INcbLmmuLl92o7GWFuJjH40BwKOIg>
+    <xmx:iCTvZgprm36r3-o6Y9cuKSZuJJRdQ3hSC3VNt9BKyxBGPUsp3xGb1g>
+    <xmx:iCTvZpcAB22lLBabmNHdpGulSdE_HuA8MjNoom7xbcpipX0v4Eyh89Y_>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 717B5780067; Sat, 21 Sep 2024 15:54:48 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- EF2462F2-7850-11EF-9907-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Date: Sat, 21 Sep 2024 21:52:50 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Ruffalo Lavoisier" <ruffalolavoisier@gmail.com>
+Cc: "Stephan Beyer" <s-beyer@gmx.net>, "Junio C Hamano" <gitster@pobox.com>,
+ "Jeff King" <peff@peff.net>, git@vger.kernel.org
+Message-Id: <7601dcef-e256-4e20-bbd4-75955e5a45d5@app.fastmail.com>
+In-Reply-To: <20240921150855.31574-1-RuffaloLavoisier@gmail.com>
+References: <20240921150855.31574-1-RuffaloLavoisier@gmail.com>
+Subject: Re: [PATCH] am: fix condition check on fseek
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> Handle allocation failures in `reftable_calloc()`.
+On Sat, Sep 21, 2024, at 17:08, Ruffalo Lavoisier wrote:
+> if fseek() is success, return value is 0
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: Ruffalo Lavoisier <RuffaloLavoisier@gmail.com>
 > ---
->  reftable/basics.c | 2 ++
->  1 file changed, 2 insertions(+)
+>  builtin/am.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/reftable/basics.c b/reftable/basics.c
-> index 4adc98cf5de..b404900b5d9 100644
-> --- a/reftable/basics.c
-> +++ b/reftable/basics.c
-> @@ -39,6 +39,8 @@ void *reftable_calloc(size_t nelem, size_t elsize)
->  {
->  	size_t sz = st_mult(nelem, elsize);
->  	void *p = reftable_malloc(sz);
-> +	if (!p)
-> +		return NULL;
->  	memset(p, 0, sz);
->  	return p;
->  }
+> diff --git a/builtin/am.c b/builtin/am.c
+> index d8875ad402..a7727fd4ea 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -589,7 +589,7 @@ static int is_mail(FILE *fp)
+>  	regex_t regex;
+>  	int ret =3D 1;
+>
+> -	if (fseek(fp, 0L, SEEK_SET))
+> +	if (!fseek(fp, 0L, SEEK_SET))
+>  		die_errno(_("fseek failed"));
+>
+>  	if (regcomp(&regex, header_regex, REG_NOSUB | REG_EXTENDED))
+> --
+> 2.46.1
 
-Since this series is not about eradicating all avenues in reftable
-library code that can lead to die(), but only about dealing with
-allocation errors from the underlying malloc/realloc routines, I
-think the code posted is perfectly fine as-is as a part of this
-series, but since I noticed something, let me comment before I
-forget.
+I don=E2=80=99t get this change? The function returns false on success. =
+true if
+it fails (not zero). You want the program to die if it returns non-zero.
 
-When st_mult() detects overflow, you'd still die(), wouldn't you?
+It=E2=80=99s hard to wrap my head around=E2=80=A6 =E2=80=9Cfalse must me=
+an =E2=80=9Cno errors=E2=80=9D =E2=80=9D
 
-We'd probably want a variant of st_mult() that lets us notice a
-condition that would yield too large a result, and code the above
-like so,
+If the original code has a bug then I don=E2=80=99t see how git-am(1) co=
+uld work
+considering it presumably always checks =E2=80=98is_mail=E2=80=99.
 
-	size_t sz;
-	void *p;
+--=20
+Kristoffer
 
-	if (st_mult_gently(nelem, elsize, &sz) ||
-            !((p = reftable_malloc(sz))))
-		return NULL;
-	memset(p, 0, sz);
-	return p;
-
-or use the underlying helper ourselves, and say
-
-	size_t sz;
-	void *p;
-
-	if (unsigned_mult_overflows(nelem, elsize)) ||
-            !((sz = nelem * elsize, p = reftable_malloc(sz))))
-		return NULL;
-	memset(p, 0, sz);
-	return p;
-
-which lets us without an extra helper but after writing it myself, I
-find it a bit too wordy.
-
-In a sense, it is on the borderline to handle st_mult() overflow in
-this function for a topic whose theme is about allocation failures.
-
-From the point of view of callers of reftable_calloc(), whether the
-arguments they are feeding the function is too large to be
-multiplied or whether the request is too big for the underlying
-allocator to handle, the end result should be the same: they
-requested too large an allocation.
-
-So I wouldn't complain that it is out of scope, if use of st_mult()
-that computes the allocation size is fixed as part of this series.
-But as I already said, I am also OK if we leave it to a separate
-series to tackle other potential callers of die().
-
-Thanks.
