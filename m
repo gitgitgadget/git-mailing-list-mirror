@@ -1,151 +1,93 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D451E51D
-	for <git@vger.kernel.org>; Sat, 21 Sep 2024 14:59:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008B8170A3E
+	for <git@vger.kernel.org>; Sat, 21 Sep 2024 15:09:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726930746; cv=none; b=csq76J9QQXcZnLL8bpv2JxR+008yOMk+fKsKVt4JbRuArzP2DCuiN3bU07L1E4keo+LdK/9W3QOZSVjY37lCAVdDkWXHfXa5okA0o4AH+l5y1ibiG3LM7tFkJ26tKT7jGp15zBKhwMjhkzsGoYnnrQFQOujLMMtA3LlS62wwbX0=
+	t=1726931347; cv=none; b=LqF+Ei3o3nb5NGHTzCzuc5sp+LlO32jSm0OPAoD3aN+4Uw3lABSLHQ8u6AIMZCAYkl5gQ/X5I41g5kfffIcej7S7PLOE+5SSZPlXc1l33T9uIYs5dqm9m+o/V+ynl6PNVlmoyVNXmc7dXMXF6jnN7lyBAuzeKK5ARXaksz11wvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726930746; c=relaxed/simple;
-	bh=IEhtDAZDPcP0oaPrD8PbIN8XsDs1scYcWPWHWH4FIaM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HJNEkv1vLBbb4IepQeu9oVZ1ZRWkb1p1JFUIIWGpVs6Q2Vv3WJ1TbR/BnMpWflw8QjtrCJ9Hf8w6YZExb8MpLj9pBs6spV1sPzPX4x+cLjZLAFe1eQGYhSkqbRwIXYfD+FqEx9n3DXueGd1EGc3/iNDNNX5TBYKOFU6qilYv9Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cOqbiYYg; arc=none smtp.client-ip=209.85.221.53
+	s=arc-20240116; t=1726931347; c=relaxed/simple;
+	bh=p5V4eot5G0i9me+k7ZDD/KBgsanB3RRbsEAHC0ubjqU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dVSwEbPh/RwYVxW3j/tvWV102mlp+pf6tHm7yICbuus46+mLRaf7VtAAFg6MBnEioKF2aoPDe/DRbHFl4SbC+vTF3yryooidDrui1vHHgs8OhWkPbTL8WQF00Myj7N+EwUMBY+4eot3THo6uEP3XSKk+ciPdBuq5rZJNqBixRLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xp4KK8d2; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cOqbiYYg"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-374bd0da617so2005656f8f.3
-        for <git@vger.kernel.org>; Sat, 21 Sep 2024 07:59:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xp4KK8d2"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2057c6c57b5so18970585ad.1
+        for <git@vger.kernel.org>; Sat, 21 Sep 2024 08:09:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726930743; x=1727535543; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Fr+X3zXcaTnVoULtLol6dXlmTFE8c5a5O3NG4V9jRiU=;
-        b=cOqbiYYgowW0dX4724txHfmAUCHRfjBHDKi/LkCFz3G10h4yumLN4WzP9TwcElCOxm
-         AKbqtx0jbKZxMqNkM7Z0CljotxYT1GhldWoLKvTiA6yP3RkIygIN2BfRPl1fxmEIvhAX
-         ARQ4fwb0M6gEN2PkdtnIlZ0Rbu4jWtR1e0aHs2296DiG/OkpYavk/aKFkSZLpaiZS2OX
-         ib+oK0abtYRAYfk4AuaANQPMRgZmXvKle66u25YB7vzVhywsFhxFiYZMxY3+Gc9G6QOk
-         l1lA3mqWrLFR9a8m1yLqKHAi9i3O+YGyNI/osmI+uVWVx1LS9QOChFjRQ4vo/3Vvcaru
-         VPag==
+        d=gmail.com; s=20230601; t=1726931345; x=1727536145; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Km7Yv6mjcNmpi8UM3NeHHRefFmLftrEytuDa2at/sgA=;
+        b=Xp4KK8d2MEmBcA1dIoLHcfzxpKzsVtNcXjk/LYv/+9qRlR4FWt7eimIIaBT0mlpVQP
+         BCExhMCfe5U7ivJoZK9w5ailj5YqbudEyw6Puhj/PD0BzEigSwYwgwwhZ7QQMwH7ZQd8
+         fBd5iheBNuUZRS23PWDSel+ZiNov0s7ua6oMxj3w2nr+58y3jl3aijPdAfANcKx4m3Nh
+         3y413sTwhOgBZmflddKcxTRZ3qCA1wvK5aRuZfs05CBA42UEg/DmCuNP+jqWK0znjOkG
+         nt/c/YcSOjjms+BvbZTdth40FcX4yGjR4BJ9jULuYlE1OnYKL3OkBMFCn4XGylNdrlUs
+         xe6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726930743; x=1727535543;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Fr+X3zXcaTnVoULtLol6dXlmTFE8c5a5O3NG4V9jRiU=;
-        b=d5UHP70S/Cp5Rq3KxBMwCiMzVcrhPZFlp/YKb6X3biZXdb4aU/mSdkVwOW6ANTbdIb
-         Y1fHgaJ9zw4FHqkMSdK6bUHldYzOJgGmuGM8KXO0yVtXkrM5VPUvzqZc/WIxfLNa109u
-         Y/PSMIivo7OmYq8sUc5+EFWdFyu/Hs+DMMcAkF/F62R7yCqW+9oQpmguZLssD1fSEDFi
-         Cy1a5qdrxTDp3gmzNqG0nRKqhye5SBK01/MJd61JTdAJz9DS6dXsmzb712NseZyduGch
-         q/LDeLGrGx8i0M2KZseYTsRtvfYA64wMk64BS053AgzeLYLRZQtZ48IRbBvGZ7e7bEmL
-         v6Lw==
-X-Gm-Message-State: AOJu0Ywdy/zmpC3pOKGbhg69o1X5ghADePc2YU+W6Tv73+wMFQ4sjvnd
-	ehCI7YE20W8UydpyCo1GrdpL7Y+xwJ4Ff+Hr+BfHS5qZBvGIIbbHDAJFdeP6
-X-Google-Smtp-Source: AGHT+IHmGbFoyAdFf4nVwVuXPpjWT6TplUY9lRAAjYSu87zd041ZWdai58aHYwYbUM1YFWBB7e1ANA==
-X-Received: by 2002:a5d:4f0a:0:b0:371:8f32:557e with SMTP id ffacd0b85a97d-37a4235a22dmr3647387f8f.39.1726930742380;
-        Sat, 21 Sep 2024 07:59:02 -0700 (PDT)
-Received: from Lagertha.triskell.i234.me ([81.56.75.108])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378e73f99ebsm20260617f8f.63.2024.09.21.07.59.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Sep 2024 07:59:02 -0700 (PDT)
-From: Francesco Guastella <guastella.francesco@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	gitgitgadget@gmail.com,
-	guastella.francesco@gmail.com
-Subject: Re: Re: [PATCH] builtin/worktree: support relative paths for worktrees
-Date: Sat, 21 Sep 2024 16:58:57 +0200
-Message-ID: <20240921145858.1987-1-guastella.francesco@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <xmqqikupbxh5.fsf@gitster.g>
-References: <xmqqikupbxh5.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1726931345; x=1727536145;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Km7Yv6mjcNmpi8UM3NeHHRefFmLftrEytuDa2at/sgA=;
+        b=XDJt05Lca+V+sIIzs/p3FoefSVMoat+ee7trQIqIYmqOv0fEu3K1IhAgr3N5UGYY65
+         7U2tyf9H5GWM9+9mHFetCnbFQl4As/wv9gRtdgIhOLC9odybKD+O5NkHk8dyEErxl84b
+         phUiGk69d3Y10CFf4xyVnK9AUjI8GY279bgr6Uda1/DcTj9VJ+8ctp08T2km/7BmWTuL
+         u2lFL3SrIm047q/1Wh0FN48i9R5QPBRFYVE8k++B7p9DZ3ozwM3NKlyOnzdYCQPO/+O6
+         OpteOvwINyyPjzD0Qf2beiSXgc2AAbHinjOzgd4ZsUw59xMoEtCJVxtBQeJVVg0K3aCI
+         g70Q==
+X-Gm-Message-State: AOJu0Yy9Z68hftnIDOGnZ3gnePFRpYTlmuAVNyuoAm85HqRj+OzANgdT
+	YgISQU4rIgUSDUh0QBzBWQlg74SIM+VT+smmv72E9p1Wq+OpXgZrOEdkAQ==
+X-Google-Smtp-Source: AGHT+IHHBkhywAY4IJ6UmV6+592nGS22cY9kssu5O0bm4tG61DDiXOLLzmZGJX4iIgtHhQDBdtuepg==
+X-Received: by 2002:a17:903:22c4:b0:206:b1fa:ccb0 with SMTP id d9443c01a7336-208cb911f8amr135732565ad.25.1726931344882;
+        Sat, 21 Sep 2024 08:09:04 -0700 (PDT)
+Received: from localhost.localdomain ([175.112.156.113])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-207946d169csm109218755ad.138.2024.09.21.08.09.03
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 21 Sep 2024 08:09:04 -0700 (PDT)
+From: Ruffalo Lavoisier <ruffalolavoisier@gmail.com>
+X-Google-Original-From: Ruffalo Lavoisier <RuffaloLavoisier@gmail.com>
+To: git@vger.kernel.org
+Cc: Ruffalo Lavoisier <RuffaloLavoisier@gmail.com>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH] am: fix condition check on fseek
+Date: Sun, 22 Sep 2024 00:08:55 +0900
+Message-ID: <20240921150855.31574-1-RuffaloLavoisier@gmail.com>
+X-Mailer: git-send-email 2.46.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Thank you for your feedback on my patch.
+if fseek() is success, return value is 0
 
-> I may be misremembering things, but wasn't the use of absolute paths
-> a concious design decision?  
-> 
-> When the source repository and an attached worktree know each other
-> with relative location, moving merely one of them would make it
-> impossible to locate the other.
-> 
-> On the other hand, if they know the other peer's absolute location,
-> at least the one that was moved would still be able to locate the
-> one that did not move, which means that it is possible to find from
-> the one that moved the other one that did not move, and teach the
-> latter where the new location of the moved one is.
-> 
-> The only case where it may be an improvement to have them refer to
-> each other with relative locations is when both of them move in
-> unison without breaking their relative location.
+Signed-off-by: Ruffalo Lavoisier <RuffaloLavoisier@gmail.com>
+---
+ builtin/am.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Regarding the design choice between absolute and relative paths,
-I’m not certain whether using absolute paths was an intentional decision.
-Your example highlights a valid advantage of absolute paths;
-however, this approach is not without its limitations.
-In my cover letter, I mentioned just a few issues related to absolute paths,
-and my online research revealed many other problems that could be mitigated
-by supporting relative paths.
+diff --git a/builtin/am.c b/builtin/am.c
+index d8875ad402..a7727fd4ea 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -589,7 +589,7 @@ static int is_mail(FILE *fp)
+ 	regex_t regex;
+ 	int ret = 1;
+ 
+-	if (fseek(fp, 0L, SEEK_SET))
++	if (!fseek(fp, 0L, SEEK_SET))
+ 		die_errno(_("fseek failed"));
+ 
+ 	if (regcomp(&regex, header_regex, REG_NOSUB | REG_EXTENDED))
+-- 
+2.46.1
 
-To support this, many users have requested this functionality or have created
-scripts as workarounds to convert paths in Git-generated files.
-An example from my own experience is that worktrees created on Windows are
-considered prunable by Git because paths starting with, for instance, ‘C:’
-have no meaning in GNU/Linux environments.
-
-To avoid breaking changes and maintain backward compatibility, I chose
-to extend Git by adding support for relative paths rather than replacing
-the original behavior.
-This approach gives users the flexibility to choose what best suits their needs.
-
-In my experience, having the option to use relative paths is essential for
-effective worktree management.
-For instance, not having this option has led me to avoid using worktrees
-altogether (up to now, at least :-P).
-
-If it’s helpful, I would be glad to enhance the documentation to clearly
-outline the pros and cons of using relative paths, including
-the valid example you provided.
-
-> There may be problems other than the design choice I mentioned above
-> in the resulting code after applying this huge patch, but as it
-> stands, the patch does a bit too many things at once to be sensibly
-> reviewable.  I cannot comment much on the implementation (at least
-> in this message) in its current form.
-> 
-> For example, the refactoring of t/t2400 into t/lib-worktree might be
-> an excellent thing to do, but it looks like that the change to the
-> tests alone deserves to be split into at least a few patches (one to
-> refactor the test script without changing any functionality, and one
-> or more patches to add or improve test helpers, and another that
-> comes with code and behaviour change that add tests for the new
-> behaviour when configured, or something like that).
-
-Regarding the extensive changes in the worktree add test suite,
-I understand that this makes the review process challenging.
-I consolidated many tests into a reusable function to ensure that
-Git behaves correctly regardless of whether absolute or relative paths are chosen.
-Each test there now also includes a call to the check_worktree_paths function
-to verify the correctness of the generated paths.
-
-> I might be tempted to come back to it later, but style violations in
-> the t/lib-worktree.sh were annoying enough to discourage me from
-> reviewing it (if it followed Documentation/CodingGuidelines, it
-> wouldn't have repelled my eyes).
-
-Lastly, I sincerely apologize for any coding guideline violations. I reviewed
-the guidelines carefully and made every effort to adhere to them, so I regret any oversights.
-I will make the necessary corrections as soon as I have the opportunity.
-
-Thank you again for your time and consideration of my patch.
