@@ -1,207 +1,124 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881E118EAD
-	for <git@vger.kernel.org>; Sat, 21 Sep 2024 02:46:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD93518EBF
+	for <git@vger.kernel.org>; Sat, 21 Sep 2024 04:26:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726886775; cv=none; b=rLBnR3ZfUfEwl1M+zWiDUpeF+s8W40wWGCUtCUxeWl7X8nj+CPrMv+pXIjKrt9UhCEq+es8Jk0tGXSH/AKNNavWcZKjYEGH9n51zH1Bjeb0tDP+rZwLZAEo0CZb2lJfArseuKcILBIdrg10zh7eAsID6RKJIOg7C1Bz/oHi9gWE=
+	t=1726892802; cv=none; b=XC5wh+DCtzkQq+a2x90bZMta5Iiuzu0sSW6QWsBVWb4L3ucy+zcJHs++1SpPUv3rec9LcqsoZDjNSDxXg/2C0ET/scHxbz3yslHnUxaK8KDLzleoOAaQzrkA8RNewIZTe/7lcb3bO0/n02dAf6LzYRFsN1oNNvEayYWv8AkzssQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726886775; c=relaxed/simple;
-	bh=PNSzVKEuRZc6xkl4r+TZSrEPYBeP+MCEuF1kPAAp7uI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YjxcD3fBhbiSSIF0Ux0QeBDflSKCYD/pJT80BXk1p93j/pOiwASFo3rHLMfiuLK3X6dxgtFa6sBMyFqXuWqeuOOV50R1eoZywLKUmE0JkU+dg9j47XIctJXoWGjcpZUH1SOAHlFyYRfIXybUVe8hYXyOCRWLumFavgBTvUO383c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=users.sf.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BQOM3PDZ; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=users.sf.net
+	s=arc-20240116; t=1726892802; c=relaxed/simple;
+	bh=320CtvGb49yawoBa35TJrmc+nlqRcED0CnBVD7pymDY=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=PcUB0ZwEO2vLxfxB4LbRABL4UCx/LqkFE/BblW1t94GFRUKG9qb6DV9FaUFCe+KHA3WVJ3TPFpUp6rR0PLnVFUG69z2/5tySCtC6ln4WLW6MBbxXOYn13VLoL6pnbUfpKGucLa3ObXcZmb1DDp7uz6hZMhU0k8Xm3rtV1+G66Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A7333+Hu; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BQOM3PDZ"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-45812fdcd0aso33035371cf.0
-        for <git@vger.kernel.org>; Fri, 20 Sep 2024 19:46:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A7333+Hu"
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53661ac5ba1so2865938e87.2
+        for <git@vger.kernel.org>; Fri, 20 Sep 2024 21:26:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726886772; x=1727491572; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SD2dyHht33a0wPVPwu5q3Yp1FvqYwpDuwLCfjxYEGwc=;
-        b=BQOM3PDZ/jvcLgRNUBKuThlq1h4orV4sjLdG7+bcxDoytYxf5g8orvKwlHnCiUC90F
-         pHwDz2HlyoN9LyjhGDlnZeDT7EhELSDNFoM5OgDcHLZJ8c0fv8mLliDLRQcA+EN46OUF
-         w4kHXwo1N/cFWN5WdJo0Gd3lrF4db99fb+yA8PA4O6F887kgwiP1NLDW4BNnrvLrD738
-         DaOtC44pfnwEiRQmwZiXRWL7yHUhtv/Pb8lzHSIJ/ocVUTwKmgTNmU2fq2p2zgL+0x1C
-         KicesuyLzvZP2tgHJ8TU8rPJs0oaSRndogDfgnbclBGKuzX1MdKD/51U9F0lALxbpjRQ
-         0Z+w==
+        d=gmail.com; s=20230601; t=1726892799; x=1727497599; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=e0K5Zac9n50a/+MtWeUqnk2goMw9jJMWH20GQfcqOwo=;
+        b=A7333+Hu+WkVCmnN1K7q1Ozlz8YiWXV5l6kOvv2Hoc8MAofoDfOuHF4JeEF4FJBi8L
+         Y5kOAAxKC/OV39nLrbL7yLWrLyejJ5+3sMISmfGfwE5/nbrbxw5q8M1rqTiTmYevfME4
+         QxnCNXh0lyzxC73g/BNiC+c/5PuRsy0syQvJDEsR4Ccyz+rWt8C86Sv8W0gSJpTYQIdw
+         WgMS5ByrOZbrCDjRapZlDYkzT4EzIINuGw8QZE7/NVXtxnkcNkZw0xaUmPhPb2rUBwdu
+         9Zj4dHeGh63z4iQkWbj/DwDV9JHeiN1jVw5YaXAKlJtNECAW4wsyARcAkfWd22odH4ij
+         8+Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726886772; x=1727491572;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SD2dyHht33a0wPVPwu5q3Yp1FvqYwpDuwLCfjxYEGwc=;
-        b=Mrr5B6KWhoUvEB94w2obW+wH/9v/tZwxPpsK4nSXYZo9AzN0LUVFKedDqoIj9TcvuP
-         lHyfimApLlRiE9lhkPfJZ4sKB7g4Bti4fXlSh1XjiQFc1jGqJXhLR+fVQbs0torWYFob
-         7nAJpIO7Mu1mKkr7iYRS/y/OqZzn9FUZ9mJWPwnRPnyHNOetH29djM1xp/7wmJrtsEIw
-         BIhQcfr08Pdz99Z+MFAD05xpTx6jQzzeQOqNVDURCgRSivRQAdMyQ/eSi2NJzoZqfR0s
-         SJZ/lw+02PSoY7aQHq9Mw47OWmMT8BAoiOpuOPz52k0lXgGYTpUQvJ5P3cW8VYxhiLP2
-         6zhg==
-X-Gm-Message-State: AOJu0Yw0zNZxXzvYvHkAUM+dNAfv7SnLtrA5dpvTPKlIrAQtVqJG8SRf
-	nmJlSrp92qBgwSFTnv8dKLoTpDTQRq0aQKAW+/9xgF4wWd0WoeL7/1a1AQ==
-X-Google-Smtp-Source: AGHT+IEj5QT8N2RmrK1KVRtywleb34QgkTDxc+H6GQs+VvMbKumw39OXytHY47azC5AXj9MDr7tyrQ==
-X-Received: by 2002:a05:622a:1347:b0:459:a824:a1c2 with SMTP id d75a77b69052e-45b2026c99fmr99631161cf.22.1726886771855;
-        Fri, 20 Sep 2024 19:46:11 -0700 (PDT)
-Received: from opti.lan (pool-71-183-241-13.nycmny.fios.verizon.net. [71.183.241.13])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45b17888921sm24700181cf.41.2024.09.20.19.46.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Sep 2024 19:46:11 -0700 (PDT)
-Sender: j j <gonch.dmitry@gmail.com>
-From: dgoncharov@users.sf.net
-To: git@vger.kernel.org
-Cc: newren@gmail.com,
-	Dmitry Goncharov <dgoncharov@users.sf.net>
-Subject: [PATCH] merge-ort: fix a crash in process_renames
-Date: Fri, 20 Sep 2024 22:45:33 -0400
-Message-Id: <20240921024533.15249-2-dgoncharov@users.sf.net>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240921024533.15249-1-dgoncharov@users.sf.net>
-References: <20240921024533.15249-1-dgoncharov@users.sf.net>
-Reply-To: dgoncharov@users.sf.net
+        d=1e100.net; s=20230601; t=1726892799; x=1727497599;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=e0K5Zac9n50a/+MtWeUqnk2goMw9jJMWH20GQfcqOwo=;
+        b=FA4FrAey4kFFzReuswyo70f18RlQl9U4932EQeqzPO5ENksfNh0pUC5Wz4Qc5PgkY3
+         kLfk19rgm0PYCYD++P5tbnpCp1bMtMhQ086z+tr/yL9svJCsyvA0flsVnyVtHDkajyT/
+         zaWTnZtOwUGI4zdSQ0J6XjsJEclMpKBPS39CE8z0sX1AK8/m7/3SUBu/WbraXpBZD8JI
+         chCXb4Cg7kxTvNkBbGlxVvMaU725ifwL6DKWYQcnHGxP9GhDUELnEFu725r0aDS2tAyK
+         K3Iv3PWlI2eLMBbv9/sYPnFzZgAlM8UhOmRo0XZJiEQnZuyc/iAf43xGUWenzD4Mt1E4
+         TORw==
+X-Gm-Message-State: AOJu0YzLhIf6PT8lMROj58u1IS5EH5ucJB1L5ZD2ImBj7Ovw8baVzcbf
+	erWlcfb3LYbeD4RQ29ZGmtCgZwtXrQlew4YbwlqT0HkbtCMQ523okqd8xA6D6bl02n6QcfSj/MF
+	Xi2RshaLJylYQQVes02sekJcapGtj5VjY
+X-Google-Smtp-Source: AGHT+IH6PCax+KjmxUry0a40Gr72IXXHH0Pc/KYn/nh4468LhAioLXTunBa8zNaexkA7uulec7UNvDmrm5qqjWX3H6E=
+X-Received: by 2002:a05:6512:1386:b0:530:ea2b:1a92 with SMTP id
+ 2adb3069b0e04-536ac31efdcmr2652746e87.43.1726892798453; Fri, 20 Sep 2024
+ 21:26:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Kohei Shibata <shiba200712@gmail.com>
+Date: Sat, 21 Sep 2024 13:26:27 +0900
+Message-ID: <CACpkL8WsNqhQ7SP27-XQwp1bzKjyUT6m2idFarZ2Z5rLVYg4pQ@mail.gmail.com>
+Subject: git diff --exit-code returns 0 when binary files differ
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Dmitry Goncharov <dgoncharov@users.sf.net>
+I've encountered an issue with `git diff --exit-code` where it returns
+0 for binary files that have actual changes.
 
-cherry-pick --strategy=ort (the default at the moment) crashes in the following
-scenario
+> What did you do before the bug happened? (Steps to reproduce your issue)
 
-$ ls -a
-.  ..
-$ mkdir tools
-$ git init -q -b side2
-$ echo hello>tools/hello
-$ git add  tools/hello
-$ git commit -q tools/hello -m'Add tools/hello.'
-$ git branch side1
-$ echo world>world
-$ git add world
-$ git commit -q world -m'Add world.'
-$ git mv  world tools/world
-$ git commit -q -m'mv world tools/world.'
-$ git checkout -q side1
-$ git mv tools/hello hello
-$ git commit -q -m'mv tools/hello hello.'
-$ git cherry-pick --strategy=ort side2
-git: merge-ort.c:3006: process_renames: Assertion `source_deleted || oldinfo->filemask & old_sidemask' failed.
-Aborted (core dumped)
+1. Initialize a new git repository:
+```
+git init
+```
 
-While cherry picking the top commit from side2 to side1 collect_renames is
-confused by the preceding move from "tools/hello" to "hello" that took place on
-side1. This move from "tools/hello" to "hello" causes the logic in
-check_for_directory_rename to incorrectly conclude that "tools/world" should be
-renamed to "world".  detect_and_process_renames proceeds with "world" instead
-of "tools/world" and ends up tripping on an assertion in process_renames.
+2. Create a binary file and commit it:
+```
+echo '*.bin binary' > .gitattributes
+dd if=/dev/urandom of=a.bin bs=32 count=1
+git add .
+git commit -m 'commit'
+```
 
-In the same scenario cherry-pick --strategy=recursive detects a merge conflict.
+3. Modify the binary file:
+```
+echo a > a.bin
+git diff --exit-code  # says "Binary files a/a.bin and b/a.bin differ"
+echo $?               # returns 0
+```
 
-$ rm .git/index.lock
-$ git reset -q --hard
-$ git cherry-pick --strategy=recursive side2
-CONFLICT (file location): world renamed to tools/world in fead592 (mv world tools/world.), inside a directory that was renamed in HEAD, suggesting it should perhaps be moved to world.
-CONFLICT (content): Merge conflict in world
-error: cache entry has null sha1: world
-error: cherry-pick: Unable to write new index file
-fatal: cherry-pick failed
+> What did you expect to happen? (Expected behavior)
 
-There really is a merge conflict and the goal of this commit is to have
-cherry-pick --strategy=ort detect the conflict.  This commit modifies
-collect_renames to ignore an implicit directory rename that suggests moving a
-file to itself.
+`git diff --exit-code` should exit with 1
 
-Also, see test t3515-cherry-pick-move.sh.
+> What happened instead? (Actual behavior)
 
-Signed-off-by: Dmitry Goncharov <dgoncharov@users.sf.net>
----
- merge-ort.c                 |  9 +++++++
- t/t3515-cherry-pick-move.sh | 48 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 57 insertions(+)
- create mode 100755 t/t3515-cherry-pick-move.sh
+`git diff --exit-code` returns 0 even when the binary file is modified.
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 691db9050e..e58fb7a7fa 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -3369,6 +3369,15 @@ static int collect_renames(struct merge_options *opt,
- 						      collisions,
- 						      &clean);
- 
-+		if (new_path && !strcmp(new_path, p->one->path)) {
-+			/* Ignore an implicit directory rename that suggests replacing a move
-+			 * from one->path to two->path with a move
-+			 * from one->path to one->path.
-+			 */
-+			free(new_path);
-+			new_path = NULL;
-+		}
-+
- 		possibly_cache_new_pair(renames, p, side_index, new_path);
- 		if (p->status != 'R' && !new_path) {
- 			pool_diff_free_filepair(&opt->priv->pool, p);
-diff --git a/t/t3515-cherry-pick-move.sh b/t/t3515-cherry-pick-move.sh
-new file mode 100755
-index 0000000000..20af478d4e
---- /dev/null
-+++ b/t/t3515-cherry-pick-move.sh
-@@ -0,0 +1,48 @@
-+#!/bin/sh
-+
-+test_description='Test cherry-picking a move commit.'
-+
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=side2
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	mkdir tools &&
-+
-+	echo hello >tools/hello &&
-+
-+	git add tools/hello &&
-+	git commit -m"Add tools/hello." tools/hello &&
-+
-+	git branch side1 &&
-+
-+	# This commit is the base of the fatal cherry-pick merge.
-+	echo world >world &&
-+	git add world &&
-+	git commit -m"Add world." &&
-+
-+	# Cherry picking this commit crashes git.
-+	# This commit is side 2 of the fatal cherry-pick merge.
-+	git mv -v world tools/world &&
-+	git commit -m"mv world tools/world." &&
-+
-+	git checkout side1 &&
-+	# This commit is side 1 of the fatal cherry-pick merge.
-+	git mv -v tools/hello hello &&
-+	git commit -m"mv tools/hello hello"
-+'
-+
-+test_expect_success 'recursive cherry-pick of a move commit' '
-+	test_must_fail git cherry-pick --strategy=recursive side2
-+'
-+
-+test_expect_success 'ort cherry-pick of a move commit' '
-+	rm -f world &&
-+	git reset --hard &&
-+	test_must_fail git cherry-pick --strategy=ort side2
-+'
-+
-+test_done
--- 
-2.34.1
+> Anything else you want to add:
 
+I could not find the exact condition to change exit code. In some
+cases, depending on the content of the file, `git diff --exit-code`
+does return 1 as expected.
+I don't use an external diff tool.
+
+
+[System Info]
+git version:
+git version 2.46.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 7.68.0
+zlib: 1.2.11
+uname: Linux 5.15.153.1-microsoft-standard-WSL2 #1 SMP Fri Mar 29
+23:14:13 UTC 2024 x86_64
+compiler info: gnuc: 9.4
+libc info: glibc: 2.31
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
+
+Best regards,
+Kohei
