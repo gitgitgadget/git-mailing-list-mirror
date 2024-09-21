@@ -1,124 +1,75 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD93518EBF
-	for <git@vger.kernel.org>; Sat, 21 Sep 2024 04:26:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C74A74BF8
+	for <git@vger.kernel.org>; Sat, 21 Sep 2024 06:19:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726892802; cv=none; b=XC5wh+DCtzkQq+a2x90bZMta5Iiuzu0sSW6QWsBVWb4L3ucy+zcJHs++1SpPUv3rec9LcqsoZDjNSDxXg/2C0ET/scHxbz3yslHnUxaK8KDLzleoOAaQzrkA8RNewIZTe/7lcb3bO0/n02dAf6LzYRFsN1oNNvEayYWv8AkzssQ=
+	t=1726899595; cv=none; b=jtl6lDZO0klwBE+N0avu7ruLTuWnkTjCqkmzy97oHx3MJv+4TghArvaAqjyWuMxY6N1t13iFLe8xB0NN9j9PuKVHXdtACSqYWkvMbuAO4XwxWDZ9YDxV0s6222vh3/1X+JdCHVpXSP5vEjQ37XKFUcW+m9KRDOQkYpkis0yh8VA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726892802; c=relaxed/simple;
-	bh=320CtvGb49yawoBa35TJrmc+nlqRcED0CnBVD7pymDY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=PcUB0ZwEO2vLxfxB4LbRABL4UCx/LqkFE/BblW1t94GFRUKG9qb6DV9FaUFCe+KHA3WVJ3TPFpUp6rR0PLnVFUG69z2/5tySCtC6ln4WLW6MBbxXOYn13VLoL6pnbUfpKGucLa3ObXcZmb1DDp7uz6hZMhU0k8Xm3rtV1+G66Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A7333+Hu; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726899595; c=relaxed/simple;
+	bh=elOiOnpKo/XvxOJ2QYY1Wiy6tOp063qidvFTpOUp0Ws=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tcw7llDUrZoF8B8dEmJTRFkvQ1+8sjCvjSXWtD05WCDBv9KaCczW+K0sFjpURpBYRTRVTXLfLQDqHEfHhbdX6IX7Zv3Ol81hbWswM9vSkZ/svXCiVFklePLo/qbFSiQCI8/gv1+q+QzolIQqvsyBmztdO4lSWihiJYBzUzpJLGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cJTMP0xR; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A7333+Hu"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53661ac5ba1so2865938e87.2
-        for <git@vger.kernel.org>; Fri, 20 Sep 2024 21:26:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726892799; x=1727497599; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=e0K5Zac9n50a/+MtWeUqnk2goMw9jJMWH20GQfcqOwo=;
-        b=A7333+Hu+WkVCmnN1K7q1Ozlz8YiWXV5l6kOvv2Hoc8MAofoDfOuHF4JeEF4FJBi8L
-         Y5kOAAxKC/OV39nLrbL7yLWrLyejJ5+3sMISmfGfwE5/nbrbxw5q8M1rqTiTmYevfME4
-         QxnCNXh0lyzxC73g/BNiC+c/5PuRsy0syQvJDEsR4Ccyz+rWt8C86Sv8W0gSJpTYQIdw
-         WgMS5ByrOZbrCDjRapZlDYkzT4EzIINuGw8QZE7/NVXtxnkcNkZw0xaUmPhPb2rUBwdu
-         9Zj4dHeGh63z4iQkWbj/DwDV9JHeiN1jVw5YaXAKlJtNECAW4wsyARcAkfWd22odH4ij
-         8+Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726892799; x=1727497599;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=e0K5Zac9n50a/+MtWeUqnk2goMw9jJMWH20GQfcqOwo=;
-        b=FA4FrAey4kFFzReuswyo70f18RlQl9U4932EQeqzPO5ENksfNh0pUC5Wz4Qc5PgkY3
-         kLfk19rgm0PYCYD++P5tbnpCp1bMtMhQ086z+tr/yL9svJCsyvA0flsVnyVtHDkajyT/
-         zaWTnZtOwUGI4zdSQ0J6XjsJEclMpKBPS39CE8z0sX1AK8/m7/3SUBu/WbraXpBZD8JI
-         chCXb4Cg7kxTvNkBbGlxVvMaU725ifwL6DKWYQcnHGxP9GhDUELnEFu725r0aDS2tAyK
-         K3Iv3PWlI2eLMBbv9/sYPnFzZgAlM8UhOmRo0XZJiEQnZuyc/iAf43xGUWenzD4Mt1E4
-         TORw==
-X-Gm-Message-State: AOJu0YzLhIf6PT8lMROj58u1IS5EH5ucJB1L5ZD2ImBj7Ovw8baVzcbf
-	erWlcfb3LYbeD4RQ29ZGmtCgZwtXrQlew4YbwlqT0HkbtCMQ523okqd8xA6D6bl02n6QcfSj/MF
-	Xi2RshaLJylYQQVes02sekJcapGtj5VjY
-X-Google-Smtp-Source: AGHT+IH6PCax+KjmxUry0a40Gr72IXXHH0Pc/KYn/nh4468LhAioLXTunBa8zNaexkA7uulec7UNvDmrm5qqjWX3H6E=
-X-Received: by 2002:a05:6512:1386:b0:530:ea2b:1a92 with SMTP id
- 2adb3069b0e04-536ac31efdcmr2652746e87.43.1726892798453; Fri, 20 Sep 2024
- 21:26:38 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cJTMP0xR"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2985C2040E;
+	Sat, 21 Sep 2024 02:19:52 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=elOiOnpKo/XvxOJ2QYY1Wiy6tOp063qidvFTpO
+	Up0Ws=; b=cJTMP0xRaqSGB/xdDtWBwNy9HQOJrUkJ6b2VeFYtDYvhX/NVOmDkfq
+	FOXGSQFihXp15BZhoHHocaquo3Xey3smVJnyn6QMcSKSyAQt8zhXtN9qizBbdVIP
+	SL4VKqAz0wSFjTe2zuunGJc/dzOGbdd/iAuhMDVKq8LpCiPCIu+zo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1253A2040D;
+	Sat, 21 Sep 2024 02:19:52 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6A3502040C;
+	Sat, 21 Sep 2024 02:19:51 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget
+ <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,
+  =?utf-8?Q?Jean-No=C3=ABl?=
+ Avila <jn.avila@free.fr>
+Subject: Re: [PATCH v4 0/3] doc: introducing synopsis para
+In-Reply-To: <4ww5v253vz2g4i3z2x3dmgkrot7mcn2qm6ckjcxbyky6yvrozy@mr5hnrsfj6sn>
+	(Josh Steadmon's message of "Fri, 20 Sep 2024 16:14:26 -0700")
+References: <pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
+	<pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
+	<xmqqo74rxvw0.fsf@gitster.g>
+	<4ww5v253vz2g4i3z2x3dmgkrot7mcn2qm6ckjcxbyky6yvrozy@mr5hnrsfj6sn>
+Date: Fri, 20 Sep 2024 23:19:50 -0700
+Message-ID: <xmqq34ltbkah.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Kohei Shibata <shiba200712@gmail.com>
-Date: Sat, 21 Sep 2024 13:26:27 +0900
-Message-ID: <CACpkL8WsNqhQ7SP27-XQwp1bzKjyUT6m2idFarZ2Z5rLVYg4pQ@mail.gmail.com>
-Subject: git diff --exit-code returns 0 when binary files differ
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 829E685E-77E1-11EF-AA45-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-I've encountered an issue with `git diff --exit-code` where it returns
-0 for binary files that have actual changes.
+Josh Steadmon <steadmon@google.com> writes:
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
+> This still breaks on MacOS, as `sed` doesn't understand the '-E' option
+> there.
 
-1. Initialize a new git repository:
-```
-git init
-```
+Can you try to see t6030 also breaks due to lack of ERE in the same
+environment?  It seems it uses "sed -E", so it should fail to find
+what it is trying to.
 
-2. Create a binary file and commit it:
-```
-echo '*.bin binary' > .gitattributes
-dd if=/dev/urandom of=a.bin bs=32 count=1
-git add .
-git commit -m 'commit'
-```
-
-3. Modify the binary file:
-```
-echo a > a.bin
-git diff --exit-code  # says "Binary files a/a.bin and b/a.bin differ"
-echo $?               # returns 0
-```
-
-> What did you expect to happen? (Expected behavior)
-
-`git diff --exit-code` should exit with 1
-
-> What happened instead? (Actual behavior)
-
-`git diff --exit-code` returns 0 even when the binary file is modified.
-
-> Anything else you want to add:
-
-I could not find the exact condition to change exit code. In some
-cases, depending on the content of the file, `git diff --exit-code`
-does return 1 as expected.
-I don't use an external diff tool.
-
-
-[System Info]
-git version:
-git version 2.46.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 7.68.0
-zlib: 1.2.11
-uname: Linux 5.15.153.1-microsoft-standard-WSL2 #1 SMP Fri Mar 29
-23:14:13 UTC 2024 x86_64
-compiler info: gnuc: 9.4
-libc info: glibc: 2.31
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-
-
-Best regards,
-Kohei
+Thanks.
