@@ -1,85 +1,85 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645F7EBE
-	for <git@vger.kernel.org>; Sat, 21 Sep 2024 22:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D797DA6E
+	for <git@vger.kernel.org>; Sat, 21 Sep 2024 22:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726956158; cv=none; b=aInvjdZdPjK/Oy2HbCjAz+1DOAkbTMnbKBaAnULyZYQXSA2GwtS2jwt9q0+oLc3JLvmZONfeU+jSISlIi6CER24JezWuFRqP4oFf7lsFcTF36CIByptNJVxAIdwAIHLP3s4UPYxfmU9+2FElxTn/FIL+V2xUDDU6ejhDa4PMMM8=
+	t=1726957218; cv=none; b=u3onhrXDK2GXjQ/HxLuR2xcRYBGS4+o+D8cRHH6EcaoTNknKYVOsoeMrhga33S+cOBPzKDalMfvbXUo190WhzuZtciL69UQrqvNBZtRihXNpggZhnXWFiweEuc2Lt36yd+JdRLBH1vpBzdNIOYSb/hugIORD3j68lKCnGToYb0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726956158; c=relaxed/simple;
-	bh=al/ZEUUqkUTR8PeBXGzhcqc4pVlcBYrMZ98uQo0e250=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UEUVqHHqjrz0nQHobBj1l2o8YlOGucqyyyi5G7dfeIDaKHkr2hGS3jneh8R660CMrtJbVXqX7fS2229jET6uIIsIA4w0jieIuiv6Y1q5TsmlypNbL/8AjDv9qw0244fzjmp/SRv0j/edB8Xa+StIQmfsSA5Es2U0TeYvg74LtxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=ZYAGBWub; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1726957218; c=relaxed/simple;
+	bh=xmSlPiWSD2HWP7mMW6cNasGo9PkoHsXQ/9vG5fXTXD4=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=WqLX0NNYcd1+h6CG83VVV98PzentmR7e2n7kwCp0gZQgzkeiQPah5sB5L38FQs6zEuTci2cdftoFcs+a9IXTm2u9uZWsjqtcT4GiS8InXSDujpOqGQ3lO27pth9QG3eIxkqeNrvk3DI/JALBNx9Z1+UQOlfLF5MF4fyOUZUS/Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=bjaPS2dA; arc=none smtp.client-ip=192.29.178.126
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="ZYAGBWub"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1726956151; x=1727560951; i=l.s.r@web.de;
-	bh=al/ZEUUqkUTR8PeBXGzhcqc4pVlcBYrMZ98uQo0e250=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=ZYAGBWubP6AM6mpknP/6r2clt136CsT4GKnEKLY/swnt/cZo9RGG479rdoYnjQNe
-	 +ruEAHm8XwZnVQH748FIqse8MzZzRJ6jTT+VeV3Rj3XkYxMMoYTBsx3wqALQk6fIl
-	 FzO76nl+XdbaWJGilXfz8IDHCjg+HUw2tl6G6jWSaNX2iL4iRIt7Hi3sjASboaOJr
-	 60ECAbfi8QHhoSTpCpsQaudgYJh6BVVk8hGJn4xWj177QMqcUcRyZCdNBdsbHLtLz
-	 TL84tH6INHl50+5M0gbM2wIhlmPlwJhskQJkS53poRHUjbpNAjcZcNn+TEhMdaCT6
-	 fqflPPKhLtMQ/+wp+Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.157.77]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Ma0Tu-1sV1FL0rhs-00I2Tt; Sun, 22
- Sep 2024 00:02:31 +0200
-Message-ID: <fa8c473f-8941-4749-8561-3444ce7ce113@web.de>
-Date: Sun, 22 Sep 2024 00:02:30 +0200
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="bjaPS2dA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=xmSlPiWSD2HWP7mMW6cNasGo9PkoHsXQ/9vG5fXTXD4=;
+ b=bjaPS2dAKm5zrlCDXwnsvZdki0ITBdvzzf4bvgBZVjhdfBYAoluIvrEfqCNyf33Ypvf2AYPMppTt
+   RUdpBT0qJ0e0K1OS2smMNSP/s5TuDEzFNCD6QWkFw56R8L3D5IWN5RUZjK3ARMH6ucfACi28fugC
+   VUdK8TZQKUbO82WD7evfjnSOz+gZx32kjRgUC6IHfShRQeZFT7HrH9mGqmBwU35PmWItF3YBYIgv
+   7c1v8LtkMZXoS4KsFPeUnTAuLFTi1LTD9K9JRJV6JnTv5soPigwyLaqU9x7QjYZcR+6kpgzgos0v
+   tQiQ+d98i2eqrK8ZM0PeOwXUMi/VdRS2TAy1PQ==
+Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240709 64bit (built Jul  9
+ 2024))
+ with ESMTPS id <0SK6006Y4OPKJ140@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sat, 21 Sep 2024 22:20:08 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] archive: load index before pathspec checks
-To: Ronan Pigott <ronan@rjp.ie>
-Cc: git@vger.kernel.org
-References: <4ace58897feee2d86839af1a36770e49810e59b8@rjp.ie>
- <66c3e9fa-ecfe-4af2-a970-c1afdbc2b7f2@web.de>
- <f8e0ad836366480e32ec5b40b753cb533dd41cb6@rjp.ie>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <f8e0ad836366480e32ec5b40b753cb533dd41cb6@rjp.ie>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:B0VX+0BH9Ns0vn9A9CLPTv1gOZ48RYOvMRkEe49+RkGoGVL+2nf
- AEoVRHXii+p+ebAvsJdcsCYJ6aPTHnGMLFKycMSFRqjbaYj001ULpw0ajd2j4SUZ08pNUYW
- G+TZWVdozdQ+LDDw6yqdcFLxE5ieOaDiyAYSWjVXgCy9ai41zqfuyR0sw01Gzj6c/d44t/e
- qcfetQ08nAcBUF8EmZ92g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:j+8HZbsspEw=;+QEuh1UZq6377AC4btwINcuU92q
- Q2e6T8uH8XPyxPKnxwtm1MVCoZXXsDnGtWP352NUEE6iJsiAjt7CgMBAvTlA+XpUUGU2gqBnp
- qp2u76SSggMER4RcKAXCEPWeUGrcv2p8OtVNhy5+qOrBDjjzf75KXTBQ0OZjyR80po0RGJk7X
- lc2BAJspVsLmUQUSuqyAB0fauXg3kNrm546bwkBWvKuhYNFpBZaivAZtNfYB8NDJEiDzJccEy
- LsmCipark7NpgiqaIf/J+ciKaC8rxkRT2v0Ux10OM64szxMBrQ5mk1+RpUKlMmsmtdADSkURH
- eRQNo7VpxKk+ksb1+nQMtZT9g1Qa6puMRdU7sTvK8L0Z5ahhPpy5wK3XoPZbrVLKB9iqgh8bO
- jhOR9aDoNwFfNq5Zarl/GCN0LGIlQewDIYZVAQSkKDqczJw1VgyagZJmqecFCUTfQRpqp5VRW
- gkjh3aVQYQ2Y9YtFtPOKfG0qHiULtcQxYH5ddFkGE7gQ7jqxArd9URquUYESyVIog9omJnXqy
- BxR9T3lyib2fDvC4KBIX7oe00aGXj2KqfJPvsI0NFYSOH2FCI6ajkgRTap7T4/c3omyvsk3gA
- okxnzAF88M9eIdKsYOIRXETwhPkYgJCKXOeCepUDbgeAnDNXVa4Ux1vBbE8BI+eTWuCJwElSt
- Jlf8tnOi+wMWr02BDWI2fyJ52MwGB2GLr3MzA02GadAiGeYECmZe6a2qxMSZB98NvmtQ/7pv0
- 90Dfxy4WjpIN0s9A9ELwbnELnmnoKoJD0D2fh++LT0bNk8UCYChQqlOSXeiTjXS49DuuDsoTt
- 5jhqjruFcn7z55mCZz+lGZoA==
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Sun, 22 Sep 2024 00:19:43 +0200
+Message-id: <D4CB89OCTXWW.2A4NL7RQP4IS@ferdinandy.com>
+Subject: Re: [PATCH v3 1/2] update_symref: add REF_CREATE_ONLY option
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Taylor Blau" <me@ttaylorr.com>,
+ "Patrick Steinhardt" <ps@pks.im>,
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <D43G2CGX2N7L.ZRETD4HLIH0E@ferdinandy.com>
+ <20240919121335.298856-1-bence@ferdinandy.com>
+ <20240919121335.298856-2-bence@ferdinandy.com>
+ <7fecc442-8d5e-4542-8ce8-907c35db870d@gmail.com>
+In-reply-to: <7fecc442-8d5e-4542-8ce8-907c35db870d@gmail.com>
+Reporting-Meta:
+ AAGDw/L2ChP+9pIoaX381dk8WADVhHOQg66iB1URQsRJ41k3af1Fa8xHl4OwpCov
+ VM+NzW6qsKnoMQZorWqpeHo9RglvAUAcZAi0lksCH0zdVWxTnRU76sjJ0L+Jdxh6
+ iI7FX6jvIVQxjodziuZxPF4xqFRssxaxjEMgsxLIHGnJp5tjF4c7MN0qt6VjflK/
+ IfPKXF8DL+8cfGSeJv+aXuQBD4gj7zmSomQKDPvCPwTRZwVXXFCT3a+QO1Id3gr+
+ 57/eNQL6HzElD7JS1gDOS9ti3bAJh8T+ehaDNgpemakqqymYwnz8pkfm39x1+3/v
+ Tp2/ImopFfPIbNcVgppzES94HKXmypxrSA4gAdUZqD4dKVzPRk5nq2B9/XYIVhNi
+ zyJ3nqnMBtbdtz0fthDe/Q7d1VMOnAcBlzIwQEZcxrYjVCfFq1QCqs48qG+GdoJe
+ +I5fLLDRyPMqCqBbA7IWJ1nP2M7Zb7+etAKCeJieKHQf89lJyaAClWs1
 
-Hello Ronan,
 
-Am 21.09.24 um 23:23 schrieb Ronan Pigott:
-> Thanks for the patch. I tried it applied to 2.46.1 and it works as expec=
-ted.
+On Sat Sep 21, 2024 at 15:40, Phillip Wood <phillip.wood123@gmail.com> wrot=
+e:
+> On 19/09/2024 13:13, Bence Ferdinandy wrote:
+> > Add a new REF_CREATE_ONLY flag for use by the files backend which will
+> > only update the symref if it doesn't already exist. Add the possibility
+> > to pass extra flags to refs_update_symref so that it can utilize this
+> > new flag.
+>
+> I'm not sure we need a new flag to do this as it is already supported by
+> the ref transaction api.
 
-thank you for testing, and for the original report!
+Thanks, I was not aware of ref_transaction_create. It also seems to return =
+with
+TRANSACTION_NAME_CONFLICT so we should be able to see from the error code i=
+f
+indeed the existence was the problem or something else went wrong.
 
-Ren=C3=A9
-
+Best,
+Bence
