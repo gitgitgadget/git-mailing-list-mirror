@@ -1,152 +1,105 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9645D15383D
-	for <git@vger.kernel.org>; Sat, 21 Sep 2024 11:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DD6F9F8
+	for <git@vger.kernel.org>; Sat, 21 Sep 2024 13:23:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726917655; cv=none; b=GTJcwG4WoKprX6RsanYt3tDVGKGaNT+glZbRo8IfDmPkCwwdPeNeCw26Dfo6S5jUW6ZGR9lrUrR4jYDtGc2nThZS2OMOoPT0/hnQ/Vqp+YS0zMzSTbIlTuLqEUT/gsEdxESqJyYUBJEOIgHIgpmZTXC8hqBsK69/GfGmkterd/I=
+	t=1726925019; cv=none; b=iU1Hno/BHW5h7P2/uxyQXlkUZixVMfLr8zBIGwbRf+kIghipr2ycs8JtvAf+uyaxfSqaKkMIVrgLoGHC1fr9JdVzuyUxkzdeypV0RHKTI7wKiRrwgHsJRGZQB/UiZzAq6qD/2NqjQ3mA92vZuiw9lUavVU8WMUvqom7Z/NvHXF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726917655; c=relaxed/simple;
-	bh=tE7wbWz8SVHgpl+wJrGnO1urNKwDh1mwy9brZP5vEgU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oY+QmDnShbNFABsa1dltQMRsAsChWAiicWGEPw9qGFa5Ed8uEIuKaBZygQtTU50XthymZYnRuQe1NZPIAgeOZSEEA1wy2yGtT/p4iLoEOb4PcVU4wlpPow12S6Vseyfr6KawMTL5oIXLZoiKwe0hpzuvKxRHX1qeQ/HSggFCit0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=bAuSHxaF; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1726925019; c=relaxed/simple;
+	bh=de+NCz2DvCG0QDB/c9vBPbXwsOSF+I7cXCEzk6q/VsA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=fzRRj0qHlwnGH7zF7SZMGMeT8sonoS+DCxBpSvPl4+1f6HEiWKTBOdjgndlg671Z6cH6fHAPOc1EsH/FVVPXUibi2h9GEbdvQ5eOZUxZSu8VF/T7LeWil9yn44k4ahCfcr/6JoO7jPhWAF29fTqznn7TonyAyG0xEFH9ZCbW0/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k3ZL5UOy; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="bAuSHxaF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1726917651;
-	bh=tE7wbWz8SVHgpl+wJrGnO1urNKwDh1mwy9brZP5vEgU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=bAuSHxaFNgcf8Qk4pITsv45pNv/4Iij4F+13bPMEiUPnVa5nd85Qi8COXJjc2JYRG
-	 uxdeOv6m7iaASMou32IhKGTgRFLUwsK6Oh1KS9k7kUoBR+P4m5XRa+yHuP/Fn5VJty
-	 AKaUZtBd1tJaYh5lwuJs5D0A6+MRd2RQkqnzQ2mvTxg6guNFF9wQAHVDhF2H8TZYJI
-	 BaQfn0rMBCmMlqG/EnwwrXsrALXhBG8lkqDmP2guHnqD/0Ha9CJ9VU9UR7XcH+IbYz
-	 xSeVoq8FU5alc5YfIRQ9y9vj+XYlzuUUsABBAcRAGeu5rsY6QqgQKzyidVdn0Mqp/s
-	 J+y+gvHaQ6GbgscAU1tG+YKnk273r5UL/bQt6+rVE6ldj4rvbriVJI7cLPG6y7+XAg
-	 z9VyIff4fKOZKt90RxrNisFeSVMKTBCri8tORDIsVuCkljFaPkIOf634nsWDbVwIW8
-	 0Uyw04gkMJv+PRluDRvBP/HCosBlwoFTaVlZBZzabNlx3RcTB9J
-Received: from tapette.crustytoothpaste.net (i68975BB5.versanet.de [104.151.91.181])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3E4E72006F;
-	Sat, 21 Sep 2024 11:20:50 +0000 (UTC)
-Date: Sat, 21 Sep 2024 11:20:46 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Marcos Del Sol Vives <marcos@orca.pet>
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: Permission issue in Git in DrvFs-mounted network drives
-Message-ID: <Zu6sDlL65s6NNS_o@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Marcos Del Sol Vives <marcos@orca.pet>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-References: <19205ebb4b9.c2a2da5a2387912.3559118454287459572@orca.pet>
- <Zu2aHdaw_oDv_dp7@tapette.crustytoothpaste.net>
- <xmqqsetugpip.fsf@gitster.g>
- <19210b887c6.f59622352625372.1022723129771458212@orca.pet>
- <Zu3ec1mDj9JD1Bbj@tapette.crustytoothpaste.net>
- <1921197742f.d7b8c9992630384.1644253106538527208@orca.pet>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k3ZL5UOy"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42cc43454d5so23120365e9.3
+        for <git@vger.kernel.org>; Sat, 21 Sep 2024 06:23:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726925016; x=1727529816; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=I8pnHWW/0kfVWWQSj8ulbCF5w9XAWh30IYeXm82xtuM=;
+        b=k3ZL5UOydCdGyHDhMo+urMP/WyO8jTp7didMIkysI80I9QRJfyH0LV6b+zc9emZ68u
+         ABeCNkqwUXBZB8Crurqh9/pNQV0BtueE7xnA8x/MdfSbkhwNXYZkkGcCMXclMHr8OaO2
+         aczfZ68Ld4kIk3L5iWe2m5ifLaHj23aUaSk/qSlFqw2h/RPQxJi4lvjHCbZILaggymz+
+         UNRU3p71lX0cCDfQVzPQsyBK9agls/hrotznjPBCA9FLL+H/aOvbIyuxP1eKcTGP8zuh
+         PhEvVOTyXrNVFtZD3vGbYY+zNfip+/w4ihelZJK15wbrmNXerQDR+ncud8O8EufGHtrU
+         YA9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726925016; x=1727529816;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=I8pnHWW/0kfVWWQSj8ulbCF5w9XAWh30IYeXm82xtuM=;
+        b=j9tgM0i04ulcKVzzC3GKrPStOfVmgCd4K8A4Z28C+xjKVuIE5D0nyJCJWiAc2ugYTN
+         Dp4gb/aNrQoh9e81w1/oWGTxD9BVjYOeHi2sopN+VO2C1oPO+5P3B5rbsyNAh3OeYg64
+         xPjYmp4pvKf2yKJJjerOfpPo/TOtt0kq/79qCrpEOwxxpBtZwXO9Wku1K91Y4lNFZlVO
+         rGqtKWzToTM8IuyHFMHjgAMr/jRN2ONXqeIC+6FSd6HxPmbXRtg+ctnq1F7IS8CfWzaY
+         i9OaJQLU3Z+1dQMlHZPgmqpXWeN6zZpWclwjnDIXCPDbyEAzEAz0u5+29P+n9p828Fk8
+         tzLA==
+X-Gm-Message-State: AOJu0YzXYx/1y3SmJhfdqYlYtlahD3ZtnHy8AzmeliawdNRYJm2OC3vK
+	Er9UYdxtKhgT+VCCwt1luRdv/pyYMO4FKf7fgI66FBCG8pCjfSRi
+X-Google-Smtp-Source: AGHT+IE83PUJycTowxGDgu4MZMx6N5XnH4qfF5po9KcfeZ8Xu2gET05CgcSHbnBCCIRKU0/cQquGYQ==
+X-Received: by 2002:a05:600c:4e86:b0:426:6a53:e54f with SMTP id 5b1f17b1804b1-42e7adedcefmr41216225e9.33.1726925015625;
+        Sat, 21 Sep 2024 06:23:35 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6ba:6501:244f:f1e2:145d:427a? ([2a0a:ef40:6ba:6501:244f:f1e2:145d:427a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e7af898fasm50242145e9.15.2024.09.21.06.23.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Sep 2024 06:23:34 -0700 (PDT)
+Message-ID: <ae114c58-2a9b-415a-9f47-312e4d080492@gmail.com>
+Date: Sat, 21 Sep 2024 14:23:34 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8d7ohfn2/qUw7ACX"
-Content-Disposition: inline
-In-Reply-To: <1921197742f.d7b8c9992630384.1644253106538527208@orca.pet>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] submodule status: propagate SIGPIPE
+To: Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
+ Matt Liberty <mliberty@precisioninno.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1799.git.1726837642511.gitgitgadget@gmail.com>
+ <xmqqfrpuf5u7.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqfrpuf5u7.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Junio
 
---8d7ohfn2/qUw7ACX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 20/09/2024 21:06, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>> index a46ffd49b34..a8e497ef3c6 100644
+>> --- a/builtin/submodule--helper.c
+>> +++ b/builtin/submodule--helper.c
+>> @@ -30,6 +30,7 @@
+>>   #include "advice.h"
+>>   #include "branch.h"
+>>   #include "list-objects-filter-options.h"
+>> +#include <signal.h>
+> 
+> Do we really need this?
+> 
+> As with any other Git built-in that relies on git-compat-util.h to
+> handle such system-dependencies, direct inclusion of system headers
+> like this is highly questionable.
 
-On 2024-09-20 at 22:39:51, Marcos Del Sol Vives wrote:
-> ---- El Fri, 20 Sep 2024 22:43:31 +0200,  brian m. carlson  escribi=C3=B3=
- ----=20
-> There is not a significant amount of software that opens files for writing
-> in read-only mode. Despite using WSL extensively for development, so far
-> Git has been the only that failed to work.
+Good point - I really need to figure out how to stop emacs' lsp mode 
+automatically adding includes. I removed its "helpful" addition of 
+<csignal> but forgot to remove <signal.h> as well.
 
-I have been using Debian for many years and have contributed to several
-of the packages.  I assure you that using what Git is doing is not, in
-fact, uncommon.  It may be that you haven't run into it, but it is
-definitely not rare.
+Thanks
 
-For example, I just found an example of doing exactly the same thing in
-zsh, which is a major project that people use across distros.  There's
-apparently another in the elm MUA.  I found yet another one in some m4
-(autoconf) files used in building Emacs.  And there are a lot of other
-examples you can find by searching GitHub's code search for "open
-O_WRONLY 0444".
-
-Perhaps you don't use any of that software, but they're all substantial
-projects that are in common use across Linux distros and Unix systems in
-general.  I am a zsh user, for instance.
-
-> > In addition, chmod doesn't always work under WSL.  I believe it _does_
-> > work if the drive is mounted with metadata, but some people don't have
-> > that enabled and I don't know if it works for all drives.  For those
-> > people, the current code will work, since it doesn't call chmod or
-> > fchmod, but it will fail with your patch.
->=20
-> I can guarantee you it'll work under WSL, even without metadata, because
-> I've patched Git on my WSL1 Debian machine by doing the aforementioned
-> trick and it totally works. Metadata is not even supported on anything but
-> local NTFS drives.
-
-I have actually answered questions about chmod failing to work in some
-cases on WSL, which causes operations to fail.  Here's a different
-question on StackOverflow that demonstrates a particular problem that's
-common where chmod fails to work in Git on certain WSL drives[0].  The
-error looks like this:
-
-  Cloning into '<repo>'...
-  error: chmod on /mnt/c/Users/User/Code/<repo>/.git/config.lock failed: Op=
-eration not permitted
-  fatal: could not set 'core.filemode' to 'false'
-
-If this situation occurs, your patch will actually leave the file
-writable, which we don't want, since the fchmod will silently fail.
-
-It may be that WSL has changed since that was written, but I've seen
-reports of that happening relatively recently, and, in any event, we
-don't want to require that people use the absolute latest WSL to get
-things working.
-
-Again, maybe Junio will accept a patch here, but I don't think the
-current one is going to work correctly, even on WSL.  It may not be
-obvious that it's broken because the patch ignores fchmod's exit status.
-If you want to submit a patch that uses an option to either use the old
-behaviour or one that does an fchmod after the fact, that would probably
-be accepted, as long as you added tests (including the read-only bit)
-for both cases and sufficient documentation.
-
-[0] https://askubuntu.com/questions/1115564/wsl-ubuntu-distro-how-to-solve-=
-operation-not-permitted-on-cloning-repository
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---8d7ohfn2/qUw7ACX
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZu6sDQAKCRB8DEliiIei
-gWeGAP44HeJ9cSskV7iQeptvQvTwUe/3oY4vohhm+feG+9x1lgEAklqMV6CaZzbg
-59H29wU5kUOVFmJLZKtcvVAyIRqBJwo=
-=8mh/
------END PGP SIGNATURE-----
-
---8d7ohfn2/qUw7ACX--
+Phillip
