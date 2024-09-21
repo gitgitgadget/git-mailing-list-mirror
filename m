@@ -1,57 +1,51 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344A3257B
-	for <git@vger.kernel.org>; Sat, 21 Sep 2024 01:38:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D419D36C
+	for <git@vger.kernel.org>; Sat, 21 Sep 2024 01:40:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726882724; cv=none; b=IU7Sx4n5Ewr5ggIHS3wz10GUzaDGgov+4yysjn4vQ7LdVRdYYfTSKQsAgmBRujmTpqC58I9DN86XC6xDxAS6A15H+kFwKa03uxGYqNmpbRXleE75JuUiyat/YDDgnTQvdoto/vfray4QoUDatmFPj79+hSGfUgLLHyWb9/GO/J8=
+	t=1726882859; cv=none; b=Xk0cOB4zh6KblHKj00ygI6Rgc2gbpd6aaFwqDcslXZkBUZUcdrqClTFNiVJNWkiZ0A1nOVtpvfaOAz8ojTdb10D7FmHevUYHOG2n57w5A/eu3V1/EFzsikFxok7FLtIA8wxnRb3Mc/HhI1Z661GQc7b9Wxuz3vHxbUJ9qE5iJYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726882724; c=relaxed/simple;
-	bh=7uVcpEbnTuKRHFs+qcfJk5w9L5EHYGYZExHqqg1avNI=;
+	s=arc-20240116; t=1726882859; c=relaxed/simple;
+	bh=fscIFvIDH/tZw2Mtf5WnkwDMNXmBeupOA9b0iAB7VV8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ENALKcsRK1hM8rJwUTemHZbaRj8h49FEOX0Osqk7d7ORI96KogRrbAn4z3p5IYLB/3/TRKDjATYZ+Jnuxyv82x0VDzhhBaqmcOHYlN9+V8aiBdM43DJ0rjAU3xqukr7eNQVq8phYXOLRFIiNCjwz4gvw84ZedVi1TMfnb9OANj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=G2Yb6DQ3; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=GQ15MfMShjjB4c+nETpkL+LLY0ZZPNe77EdHFwaTUGV7p7WEcuvrL8yUGJ4iV4PBEpqBlCh/rw/YwNIpnPXScUvRLls4/6amqM2qOTCBbSZwWd/eu83c0EBbDMaoOMh0+yn9V3r2LyPSp9r+0K0ovhvWFjwk59OHjLHFPRHIkmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=v1jmTPPE; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="G2Yb6DQ3"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 141CB22E5E;
-	Fri, 20 Sep 2024 21:38:42 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v1jmTPPE"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B34951CF61;
+	Fri, 20 Sep 2024 21:40:56 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7uVcpEbnTuKRHFs+qcfJk5w9L5EHYGYZExHqqg
-	1avNI=; b=G2Yb6DQ3VOLxUIjrq7yG09LGW9sO18SwaoiXm8gx6ES1m9Pr95JGi0
-	U57wVZb1C/s7AGjHTKP93PaczCYQQhGKBdl2KeOBjXL86t621Lb9777qpvobRMEe
-	APyJTNJlsRDZh0IaFS9HQFJmjZkfc0EWGlJFQlGKYtJ93ym7mi3Uo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C84C22E5D;
-	Fri, 20 Sep 2024 21:38:42 -0400 (EDT)
+	:content-type; s=sasl; bh=fscIFvIDH/tZw2Mtf5WnkwDMNXmBeupOA9b0iA
+	B7VV8=; b=v1jmTPPEKb8Nct+Vz0PklJeSG6mMd0X5yx9yJmfwJashI5FM+0lryT
+	ak3ICw+yhbpT3KV6l/qE3KA8OTYOwD7uujuvFTcJciUDsRcfPnNO8+zxaO7/xy5D
+	XoPJZCFWvCJulbcVWFnsfhEq0UQCCCQiq+gb93KF4fVvKOzGh4zlY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AC0331CF60;
+	Fri, 20 Sep 2024 21:40:56 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 72AAC22E22;
-	Fri, 20 Sep 2024 21:38:41 -0400 (EDT)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 25ACA1CF5F;
+	Fri, 20 Sep 2024 21:40:56 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,
-  =?utf-8?Q?Jean-No=C3=ABl?=
- Avila <jn.avila@free.fr>
-Subject: Re: [PATCH v4 0/3] doc: introducing synopsis para
-In-Reply-To: <4ww5v253vz2g4i3z2x3dmgkrot7mcn2qm6ckjcxbyky6yvrozy@mr5hnrsfj6sn>
-	(Josh Steadmon's message of "Fri, 20 Sep 2024 16:14:26 -0700")
-References: <pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
-	<pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
-	<xmqqo74rxvw0.fsf@gitster.g>
-	<4ww5v253vz2g4i3z2x3dmgkrot7mcn2qm6ckjcxbyky6yvrozy@mr5hnrsfj6sn>
-Date: Fri, 20 Sep 2024 18:38:40 -0700
-Message-ID: <xmqqcykxbxb3.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Josh Steadmon <steadmon@google.com>, =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: What's cooking in git.git (Sep 2024, #08; Fri, 20)
+In-Reply-To: <xmqqed5ddexk.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	20 Sep 2024 17:32:39 -0700")
+References: <xmqqed5ddexk.fsf@gitster.g>
+Date: Fri, 20 Sep 2024 18:40:55 -0700
+Message-ID: <xmqq7cb5bx7c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,27 +55,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 3B55F736-77BA-11EF-BBB5-9B0F950A682E-77302942!pb-smtp2.pobox.com
+ 8B9D1BD4-77BA-11EF-A00F-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Josh Steadmon <steadmon@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> So, unless there are objections and people want to discuss it further,
->> I'll mark the topic for 'next' soonish.
->> 
->> Thanks.
->> 
+> * ja/doc-synopsis-markup (2024-09-05) 3 commits
+>   (merged to 'next' on 2024-09-16 at d471154a0b)
+>  + doc: apply synopsis simplification on git-clone and git-init
+>  + doc: update the guidelines to reflect the current formatting rules
+>  + doc: introduce a synopsis typesetting
 >
-> This still breaks on MacOS, as `sed` doesn't understand the '-E' option
-> there.
+>  The way AsciiDoc is used for SYNOPSIS part of the manual pages has
+>  been revamped.  The sources, at least for the simple cases, got
+>  vastly pleasant to work with.
+>
+>  Will merge to 'master'.
+>  source: <pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
 
-Thanks for a report.
+Will have to be held until it gets updated for its use of "sed -E"
+that does not work on macOS (and presumably other userland derived
+from BSD).
 
-What is sad is that we are seeing this after the topic gets very
-close to 'master' (it has been in 'next' already for a few days).
-
-Perhaps nobody builds documentation on macOS, in which case the
-breakage may be totally acceptable?  Is that the message we are
-hearing from mac based developers?
-
-Grumpy...
-
+Thanks, Josh, for reporting.
