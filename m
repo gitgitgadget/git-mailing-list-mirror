@@ -1,130 +1,103 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799DE36C
-	for <git@vger.kernel.org>; Sun, 22 Sep 2024 06:37:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F963D64
+	for <git@vger.kernel.org>; Sun, 22 Sep 2024 06:50:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726987032; cv=none; b=t0/HNsyf9xlXG0SeDqv7RpZ+MlJretMAKi5zIw/4OjvCOWcGgUBIkZ6oI/iVfxUl7Dyek3MV8wSmDF60eNJPkuBPWywSFcPTISwv/U6/zKno4/kJRUPD4oki2lYScseFju/GX7WIGHkz6G0kdzgRVVC6cL4jN80OZTlj2VWfaXQ=
+	t=1726987821; cv=none; b=sj97laLTU1QK36VOmeDo/8aD8AW2+h6tGYCLIpAyJgjCB0e4Cv1DtAi4hvY1Tf11Y/HYUJWinwy/YznMoCVhnUoTdrZCBBkcMIqRm/MNufbogF+W803EJ4DMQ3MMEwmSd+waDvyRkmEQeXNGYUrrXLIwXXUyWmicKCcfMD6lcYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726987032; c=relaxed/simple;
-	bh=R3dsZykQ5MAwcLtpfb6ych4S/UTWbzlW5mjnW9m2M84=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CLNT8JQyfiOMJm00pGKu9gmCPKHgKkMUnxRFlxDnjgQNzDi7jW9067KyY7F2t4WMtjBNDf4LjolcprsLhd9ZxoxCuFMDbVsaSzOvk6UEW2readrhQU+pT7M6m98SI4MbU/cs6mVcMCkT3ZClrDeaNr3pZUJVlIwUfptsYw+2wHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=R9i+UC+x; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1726987821; c=relaxed/simple;
+	bh=LfyW4oxCI/0HV23YfAIi5EfVtfy7/tXHqMY5We8rM6A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AKRWzBE8/lXQOd23TVJkbjr3BdCxU9wBpiWWWSyTfe9DTx37ZXxcKYo5VqVem9rdXODQh1FUkWUQg2+wBIHut0rYPyfiULNWVL97iW6GDzYS4x7PwK2GNmb+/Qfw7XIfba2p7EKxFFfAit1oD1qga7hMYI54YYiu5FlYZVfTlqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ri8k49hx; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R9i+UC+x"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 212F636A94;
-	Sun, 22 Sep 2024 02:37:09 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=R3dsZykQ5MAwcLtpfb6ych4S/UTWbzlW5mjnW9
-	m2M84=; b=R9i+UC+xSrfQaWPo8vTslrEDWDR8T8AaGJwIZYORyVlW8P2Ge22mdD
-	50ckfSi5tKyRr5/ocvAeoYSeEG/GmaDLf4p9ipYtfS2wM/NXIieo2LqWUbA2HBtu
-	N6uEc7PSZ1FJPZRgeaphPana/xqbaQ8Emwh91rnpBmBPryKxRS0Ew=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1389536A93;
-	Sun, 22 Sep 2024 02:37:09 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5E10D36A92;
-	Sun, 22 Sep 2024 02:37:08 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Calvin Wan <calvinwan@google.com>
-Cc: git@vger.kernel.org,  Han Young <hanyang.tony@bytedance.com>,
-  jonathantanmy@google.com,  sokcevic@google.com
-Subject: Re: [PATCH 1/2] packfile: split promisor objects oidset into two
-In-Reply-To: <20240919234741.1317946-2-calvinwan@google.com> (Calvin Wan's
-	message of "Thu, 19 Sep 2024 23:47:40 +0000")
-References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
-	<20240919234741.1317946-2-calvinwan@google.com>
-Date: Sat, 21 Sep 2024 23:37:06 -0700
-Message-ID: <xmqqzfo08a99.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ri8k49hx"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2d88c0f8e79so2737429a91.3
+        for <git@vger.kernel.org>; Sat, 21 Sep 2024 23:50:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726987819; x=1727592619; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=a5etqgKi/IIn6tngE9X1sGwMr57CuSC70esQ3fNZshA=;
+        b=Ri8k49hxn+v9eklKOoARGjzp8lIBjstOs7UDb9vdJOY/ZOuBPMAljJcxZj9N53Ng6x
+         HtvJs5Myn734dM0etNBjIB2mHf47rzCDxOple6Gy7vUdh3AZlUhiTdKqlkz3VpG4gaRE
+         L1ALxSVkjfEvpuGgV9Bbmo5prjGTEm4FHyU/YXl7YUpwpgf3xmHn+m7MHUfQd7bQioKv
+         QDnSyzxhqOT3cPcqir/Et2oJgOslqthoNsNDA8i/YIBWo72DIZBTQ5w4LuXXG7O+c4xx
+         9hHdlEmuR9lVZpI/9N3hVBzbnMrTcAMA3Rezv10jL2GZ3Ba9y6SdXT9rP6zymqlFM+lR
+         kX1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726987819; x=1727592619;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a5etqgKi/IIn6tngE9X1sGwMr57CuSC70esQ3fNZshA=;
+        b=YN90aTc5ciLBjcSEDnZmZ6r+Kw02Gy/ld14YCq18iSYh6PPaSfDFJ+fDCrcrOS6oBw
+         loilmb7FjDuEYLVlFF+BCD/Tkv2kM5OOb3lS6QjWkCNoda8eNiOvv5DAaEUGHjssthyB
+         xYRueXqQ38KTduglJMY+hy6xbSYjhjTQkUM1dRz8mtEHrKNHAtaU6+KHpqV+sFHs5w7y
+         xcub4F6tEF6Vs/9SK0qXxB/PPGwj/pc+47GmdUVJ9IZiCoenk/LvmR82dCibFsuIjD87
+         dJ/qd0RM/KgL1OrbgH65nalZiKYSo6VPPr7qCVBAZFRRpM0oWfHkXY8BY1IHi9M+uVEs
+         QOKg==
+X-Forwarded-Encrypted: i=1; AJvYcCVVyFaUkmtzYrjg9vgEAeoN+u9yRfhbck2kvl/6CGpS0O6XxtQt7PKwT/ep7aOLt/nC4a8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7vBo9c/OJD0QIHh55PcESIbhKshnVqB/4Bx6nsMLZ84PKrzu2
+	BKQzHT3QtxtMLFhjF92op2q1wLKNhXGivofRj3ChiQffB7ZaHG2oU9rCFA==
+X-Google-Smtp-Source: AGHT+IGUvfg79rPmeDrSF4ix9Y40ih/vSTzpnDafWgWw3TNjx0851dmnAWCHCTkzk913EIquIRzZ5g==
+X-Received: by 2002:a17:90a:a391:b0:2d8:bb95:56f6 with SMTP id 98e67ed59e1d1-2dd80c964abmr11315003a91.30.1726987819102;
+        Sat, 21 Sep 2024 23:50:19 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dd6ee98b8dsm7087884a91.16.2024.09.21.23.50.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Sep 2024 23:50:18 -0700 (PDT)
+Date: Sun, 22 Sep 2024 14:51:30 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc: Ronan Pigott <ronan@rjp.ie>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: BUG: refs.c:1933: reference backend is unknown
+Message-ID: <Zu--coU4qv6Z1SmD@ArchLinux>
+References: <1b9fb3f3fde62594b9ac999ffb69e6c4fb9f6fd6@rjp.ie>
+ <Zu7vpPs8fcqlMlNK@ArchLinux>
+ <9fdb9561bb0ad85e55ca3253cc4db9b098641e30@rjp.ie>
+ <9bf5c254-4d87-4f6f-b278-d9df4d7897b5@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 171B1FE2-78AD-11EF-8152-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9bf5c254-4d87-4f6f-b278-d9df4d7897b5@web.de>
 
-Calvin Wan <calvinwan@google.com> writes:
+On Sat, Sep 21, 2024 at 11:22:04PM +0200, René Scharfe wrote:
 
-> From: Han Young <hanyang.tony@bytedance.com>
->
-> split promisor objects oidset into two, one is objects in promisor packfile,
-> and other set is objects referenced in promisor packfile. This enable us to
-> check if an object is in promisor packfile.
+[snip]
 
-OK, so the idea is that we can discard the objects that are _in_ a
-promisor packfile and assume that we can fetch them back?
+> I wonder if the BUG at refs.c:1933 should just be turned into a die().
+> Or should ref_store_init() return NULL (or some other value indicating
+> an error) and all callers need to be changed to deal with that?
+> 
+> Simply checking whether --git-dir points to an actual repo earlier is
+> tempting, but would leave the case of it disappearing after the check
+> unhandled.
 
-Objects that are referenced by objects in the promisor packfile may
-or may not be in the same packfile, and we obviously cannot expect
-that we can refetch those that are not in the promisor packfile from
-the promisor.  So what is the other list for?
+From my perspective, it is not suitable to change the "refs.c". I guess
+the reason why Patrick uses the "BUG()" is that it's an internal
+implementation and we should tell the developer something is wrong.
 
-What I am wondering is what good the existing helper function
-is_promisor_object() is for.  It will say "yes" for objects that we
-may have obtained from the promisor remote (hence we can lazily
-fetch them again even if we lost them) and in promisor packs, but it
-may also say "yes" for any object that an object that is in a
-promisor pack (e.g., a tree object that represents a subdirectory
-that was not modified by a commit in a promisor pack, a parent
-commit of a commit in a promisor pack, etc.).  In other words, are
-the callers getting any useful answer to their question to the
-helper function, or are they all buggy for not asking "is this
-object in a promisor pack" and allowing the helper to say "yes" for
-objects that are merely referenced by an object in promisor packs?
+In this case, because we use "include.onbranch" configuration, the
+"config.c::include_by_branch" will use "refsc::get_main_ref_store" to
+get the refname.
 
-Thanks.
+However, the repo does not exist, so we cannot find any ref backend. The
+main problem is that we never check whether "the_repository->gitdir" is
+a git directory in "config.c::include_by_branch". So, we do not need to
+check the value of the option "--git-dir".
 
-
-> -int is_promisor_object(const struct object_id *oid)
-> +int is_in_promisor_pack(const struct object_id *oid, int referenced)
->  {
-> -	static struct oidset promisor_objects;
-> +	static struct promisor_objects promisor_objects;
->  	static int promisor_objects_prepared;
->  
->  	if (!promisor_objects_prepared) {
-> @@ -2303,5 +2308,6 @@ int is_promisor_object(const struct object_id *oid)
->  		}
->  		promisor_objects_prepared = 1;
->  	}
-> -	return oidset_contains(&promisor_objects, oid);
-> +	return oidset_contains(&promisor_objects.promisor_pack_objects, oid) ||
-> +		(referenced && oidset_contains(&promisor_objects.promisor_pack_referenced_objects, oid));
->  }
-> diff --git a/packfile.h b/packfile.h
-> index 0f78658229..13a349e223 100644
-> --- a/packfile.h
-> +++ b/packfile.h
-> @@ -195,11 +195,16 @@ int has_object_kept_pack(const struct object_id *oid, unsigned flags);
->  
->  int has_pack_index(const unsigned char *sha1);
->  
-> +int is_in_promisor_pack(const struct object_id *oid, int referenced);
-> +
->  /*
->   * Return 1 if an object in a promisor packfile is or refers to the given
->   * object, 0 otherwise.
->   */
-> -int is_promisor_object(const struct object_id *oid);
-> +static inline int is_promisor_object(const struct object_id *oid)
-> +{
-> +	return is_in_promisor_pack(oid, 1);
-> +}
->  
->  /*
->   * Expose a function for fuzz testing.
+Thanks,
+Jialuo
