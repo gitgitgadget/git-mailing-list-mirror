@@ -1,65 +1,65 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D8F2576F
-	for <git@vger.kernel.org>; Sun, 22 Sep 2024 15:05:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5843BDF44
+	for <git@vger.kernel.org>; Sun, 22 Sep 2024 15:52:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727017529; cv=none; b=ZNYq/hP3rgJspeOQ3ga0akyGnOaJ6L/QxM08wbP3YxNk+rHhb4PhYBBHMYlXEJLLUERxGuNUdj9sovTerqF0yFfhP/8dVK1dVloX7DjfeLwgd8v6I8A81win/X1uyf7rPl1zcGFLtm2LI+Oj0JE83ZGZTmZNFBFDknYIkCQzzY0=
+	t=1727020325; cv=none; b=HFY+CZl6mjJU9PpVamjZakrpNu8ReagiG+O0hcXtiriGZy093QPu3ShZKVKuDcOZDgtVoxjBh87M/XO93PNSGNLHEgbKJKyL8AlUHovdeO+eaNvwVrCFG7zXTUREExUW5Gqeo6syIyWlRQSVpcgsL8hwLg193fEcMSxtFRqfVZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727017529; c=relaxed/simple;
-	bh=FszjKBRWUXxaDkIYsovQPN6TZu9e5NN7Apv5AF5T4J0=;
+	s=arc-20240116; t=1727020325; c=relaxed/simple;
+	bh=pXL/3fTGN11sfoq1Sa2R4qz9y6XuJBSEtUWTfsiPxX8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F035u7OSEFnwqOZFLC0TeN/TW8vrbKb48iGGESGTNRgtUZ2fJOOjbQvNHermitE67WknkID1DOHUxv4Nw7xav5yaylBmamqUkX8vStVw+TORArnkt2x8g/PGgnr5bbeIe0K8WSjT1GAWRaUOTJx+6bdhULHrnT3p841qiN453FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CeASjDXd; arc=none smtp.client-ip=209.85.210.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=BQ/HSqWaTKZlwWg6DdkbiJMW0ZJkoL+ZnrD6yFntL0Hu0BjSFddwDxrknOJX2bNUhxSjTuyqmaazI9QyaPX47Rbjv0dJLg4GjRswX0O8IEKwfVrgauUm3NkRJQSJdVUbvtOlNXUFzWfhK2a8P2/QvpozrS7woWZWYNjSly6bAss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LnQZXLh7; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CeASjDXd"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-718d8d6af8fso2559096b3a.3
-        for <git@vger.kernel.org>; Sun, 22 Sep 2024 08:05:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LnQZXLh7"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-718d8d6af8fso2571019b3a.3
+        for <git@vger.kernel.org>; Sun, 22 Sep 2024 08:52:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727017528; x=1727622328; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727020323; x=1727625123; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KCHQuTHv7nwg4vebQh9ace+FIni1ySnd8LUrWoPXHXg=;
-        b=CeASjDXdZkalZgVBab2OAQNiVVmyj85lEBXEqO95hufM9vioEJHNG22Dbx3rcUN4Yw
-         MpJBZZrfDpH4Rawturi/bvjqDOCEgCMhi2n3kmR7zwcn7FJFw7Ibh1jVyI3hy//pQ9xx
-         GcpcjHGY76hJtkiO8+tPrPzJEwKg9Ngcn4cgdklwZCsbCf/fIhyQLO9Bt+N31u7mfYPE
-         2Mv9M3eYndiibXTntXL1jLI/PnTfUSRgwvNdtMIfVNan9xYMeBQKBuQ96l8zNlU0IdwE
-         M5f+dKi+J+MaR+kdofib7wGmIac+wUfYvBK1Qg1GZ/UaYoJhj8HLxQcBYDaIyoycNXpO
-         1c6g==
+        bh=xz2/yWplDssPQEKgKyB2f4YVESawwm0Nt8KZ61nV528=;
+        b=LnQZXLh79iNnAifP/lqjcRidi6vWQqKfWSrwuu1vWbUzjVSvx9JA+oXvR580cQnubN
+         HL+E14+EvoHVJohD7m2CkNGQhf7Ri9hjDyXcwZrgBKs4gTcNMtuF04GdkBkwD3jXxUa2
+         iVwA+mhzHWuK3j3Cik+nlfVjjn9XGml0B126KKH3RWd38tTrogJXxjDTvGFrMzfjjtMy
+         wPRSo0pAeayZMCSqJEHT7TVeqnU6VSXjQwLWu85gqRuom33phXRQWEHWhH+ZkjU1F+Et
+         MI31UmItAx8YHNE+Nm5cUlUtZfKeWILSPYSRKBwtN/j4ZAdxLRtEjzoQLgCWBDd4JSgW
+         Jbvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727017528; x=1727622328;
+        d=1e100.net; s=20230601; t=1727020323; x=1727625123;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KCHQuTHv7nwg4vebQh9ace+FIni1ySnd8LUrWoPXHXg=;
-        b=oChr5zhwHDqFr6Gr3kv3ZZ+ElcZ5kwjEpjsJ+w1U3LiCdYnr/eaOdlY9yfRD1ISoeH
-         RJ0GtdOUxUuYyZiX1+cgE+uTKZ8vq9gjDJc8LzaywmB/NicsAEt1BX1BqnKEC6Z87smh
-         HcVDKA9Ivt7cqPKzTL1G93r0GGqkF8/HU3VBJioJYojiphT68fXXEkpXqsARaSYH4FZI
-         qCZsBYsHMcuyzOXsdAS/IU4GA2SX+kr92mwv1+dIQn3H4r01wDbBRZA3/QSKe9lwWzIF
-         x+6uhwuYO6W44jqk0yPujjLPVa8wvOUB5WeL+GdbZWsC3UrtrCjIN83ZM0w39BDJ84Jo
-         3MrA==
-X-Gm-Message-State: AOJu0YwLZJjrMbmj1nq28HuOTEZXBm8QJzMADliP3KVJ10PqrElpHs+O
-	nElpQd27omvIBnoavf1gy2PsYfDAHLLuauSJdfwwdpVHMKRFa+IE
-X-Google-Smtp-Source: AGHT+IEPNclMf4Uo2J+hGj4S/rnqLYqJWJYrB9eDOB59Djn/wSw6rmTi1oWFAfev9hpzvZuUaSZZKA==
-X-Received: by 2002:a05:6a00:218d:b0:717:839c:6838 with SMTP id d2e1a72fcca58-7199c9c0ca1mr12697660b3a.14.1727017527537;
-        Sun, 22 Sep 2024 08:05:27 -0700 (PDT)
+        bh=xz2/yWplDssPQEKgKyB2f4YVESawwm0Nt8KZ61nV528=;
+        b=Rb7ynU0fmNKBvIUi9XXqxt13b/sDJ/tzAznJC4jJJ7q4d/nMoHmGJM/U1eG176EIQB
+         VUuKP+ZbFDDCdlQ9p4fO5fYkVgpt+D8g1/tESLozm2JYGkWjimBbjOW9xn8jW1QqDjV6
+         hfUJz1fbpFr7YYDrK6lW1vz5jJhqd/hAQwNkELPqfSsgpU8fzfrbKkiVU2shW+uCaldb
+         0UUUnpiEPcvDbQ/WwNBehsYhIEY1fJ1DSe+U9I8REvcRW0gX1NwD3/AVrWpmebGdmSuq
+         3YxfzL3PTDaUSa/AcPEkIF3h65rV7S4F6pVnJbZyuMl4/t33MMne8vckflb6DR9ced2m
+         Nwlw==
+X-Gm-Message-State: AOJu0Yydv6gTlxEj51FAaFpp0dgGU0R/haiShbTGPyqvMR+3nV3z/WcN
+	ExWTMKglaOrM+yLEHYJS5RaUgPsGfLAWUAtZw89HcqdXfIbRWX8Q
+X-Google-Smtp-Source: AGHT+IFoYjPwfFfJJyHm6/d7Fc6mMP0vHs893VR8asFWDfiPd2qxS1QVd3o2XFMlILeVXMQj/nmGLQ==
+X-Received: by 2002:a05:6a00:882:b0:718:e062:bd7e with SMTP id d2e1a72fcca58-7199ca8336amr13525073b3a.24.1727020322432;
+        Sun, 22 Sep 2024 08:52:02 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71944ab535csm12529502b3a.58.2024.09.22.08.05.26
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71944b7b577sm12637076b3a.118.2024.09.22.08.52.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Sep 2024 08:05:27 -0700 (PDT)
-Date: Sun, 22 Sep 2024 23:06:39 +0800
+        Sun, 22 Sep 2024 08:52:01 -0700 (PDT)
+Date: Sun, 22 Sep 2024 23:53:14 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 3/5] ref: add more strict checks for regular refs
-Message-ID: <ZvAyf8Uy6R33mUda@ArchLinux>
+Subject: Re: [PATCH v4 4/5] ref: add symref content check for files backend
+Message-ID: <ZvA9agbGaGnF6nxW@ArchLinux>
 References: <ZuRzCyjQFilGhj8j@ArchLinux>
- <ZuRzxyjAI3tp4uLK@ArchLinux>
- <xmqqr09gbvku.fsf@gitster.g>
+ <ZuRzzwZds8ys-JEN@ArchLinux>
+ <xmqqldzobtq6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,74 +68,319 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqr09gbvku.fsf@gitster.g>
+In-Reply-To: <xmqqldzobtq6.fsf@gitster.g>
 
-On Wed, Sep 18, 2024 at 12:39:13PM -0700, Junio C Hamano wrote:
+On Wed, Sep 18, 2024 at 01:19:13PM -0700, Junio C Hamano wrote:
 > shejialuo <shejialuo@gmail.com> writes:
 > 
-> > +`refMissingNewline`::
-> > +	(INFO) A ref does not end with newline. This will be
-> > +	considered an error in the future.
+> Expect that people do not read the body of the message as completing
+> a paragrpah the title started.  I.e. ...
 > 
-> It is ONLY files backend's loose-ref representation to store the
-> object name that is the value of the ref as hexadecimal text
-> terminated with a newline.  With packed backend, even if the file
-> ends with an incomplete line, it would be confusing to say that such
-> lack of terminating LF is associated with a particular ref.  With
-> reftable backend, the object name may not even be hexadecimal but
-> binary without any terminating LF.
+> > We have already introduced the checks for regular refs. There is no need
+> > to check the consistency of the target which the symref points to.
+> > Instead, we just need to check the content of the symref itself.
 > 
-> At least you should say "A loose ref file that does not end with...",
-> because a ref NEVER ends or contains newline, and what you are
-> expecting to be terminated with LF is not even a ref, but the value
-> of it.
+> ... this needs a bit of preamble, like
+> 
+>     We have code that check regular ref contents, but we do not yet
+>     check contents of symbolic refs.
 > 
 
 Thanks, I will improve this in the next version.
 
-> Also, isn't it too strong to say "will be" without giving any
-> further information, like:
+> > A regular file is accepted as a textual symref if it begins with
+> > "ref:", followed by zero or more whitespaces, followed by the full
+> > refname, followed only by whitespace characters. We always write
+> > a single SP after "ref:" and a single LF after the refname, but
+> > third-party reimplementations of Git may have taken advantage of the
+> > looser syntax. Put it more specific, we accept the following contents
+> > of the symref:
+> >
+> > 1. "ref: refs/heads/master   "
+> > 2. "ref: refs/heads/master   \n  \n"
+> > 3. "ref: refs/heads/master\n\n"
+> >
+> > Thus, we could reuse "refMissingNewline" and "trailingRefContent"
+> > FSCK_INFOs to do the same retroactive tightening as we introduce for
+> > regular references.
+> >
+> > But we do not allow any other trailing garbage. The followings are bad
+> > symref contents which will be reported as fsck error by "git-fsck(1)".
 > 
->     As valid implementations of Git never created such a loose ref
->     file, it may become an error in the future.  Report to the
->     git@vger.kernel.org mailing list if you see this error, as we
->     need to know what tools created such a file.
-> 
-> or something?
+> This description needs to be updated, as it is unclear if you are
+> talking about errors we already detect, or if you are planning to
+> update fsck to notice and report these errors.
 > 
 
-This is nice. I know the intention here.
+Yes, When I was writing this part, I felt a little painful to express my
+words. I have thought how could I express the connection between the
+current patch and the previous one.
 
-> > +		if (!*trailing) {
-> > +			ret = fsck_report_ref(o, &report,
-> > +					      FSCK_MSG_REF_MISSING_NEWLINE,
-> > +					      "missing newline");
-> > +			goto cleanup;
+> > And we will remember the untrimmed length of the "referent" and call
+> > "strbuf_rtrim()" on "referent". Then, we will call "check_refname_format"
+> > to check whether the trimmed referent format is valid. If not, we will
+> > report to the user that the symref points to referent which has invalid
+> > format. If it is valid, we will compare the untrimmed length and trimmed
+> > length, if they are not the same, we need to warn the user there is some
+> > trailing garbage in the symref content.
+> 
+> That is an implementation detail of what you did.  But if the
+> implementation were buggy and did not exactly what you intended to
+> do, the above description gives no information to help others to fix
+> it up so that it works as you intended it to work, because you do
+> not explain it.
+> 
+> So what did you want to achieve in the third step (the first being
+> "limit to refs/ hiararchy", the second being "no incomplete lines
+> allowed")?
+> 
+>     Third, we want to make sure that the contents of a textual
+>     symref MUST have a single LF after the target refname and
+>     NOTHING ELSE.
+> 
+> or something.
+> 
+
+From the above comments, I need to organize the commit message of
+this patch to make things clear here.
+
+> "a directory" -> "an existing directory"?
+> 
+> I am not comfortable to see the word "directory" used in this
+> proposed log message, as some refs could be stored in the packed
+> backend and are referenced by the symbolic ref you are inspecting
+> (this comment also refers to the "refs/ directory" you mentioned
+> earlier as "the first check").
+> 
+>     Lastly, a symbolic ref MUST either point to an existing ref,
+>     or if the referent does not exist, it MUST NOT be a leading
+>     subpath for another existing ref (e.g., when "refs/heads/main"
+>     exists, a symbolic ref that points at "refs/heads" is a no-no).
+> 
+> or something (but again, I am open to a phrasing better than
+> "subpath").
+> 
+> Design question.  What do we want to do when we have no loose refs
+> under the "refs/heads/historical/" hiearchy, (i.e. all of them are
+> in packed-refs file) hence ".git/refs/heads/historical" directory
+> does not exist on the filesystem.  And a symbolic ref points at
+> "refs/heads/historical".  Shouldn't we give the same error whether
+> the .git/refs/heads/historical directory exist or not, as long as
+> the refs/heads/historical/main branch exists (in the packed-refs
+> backend)?
+> 
+
+I guess I need to think carefully here. Actually, my intention is that I
+want to concentrate on the loose refs and then take consideration about
+the packed refs.
+
+However, from what you have said above, it seems I could not do this.
+They are connected. But at current, I am not so familiar with packed
+refs behavior, I could not answer all the questions above.
+
+I decide to understand what packed-ref done. So, this series may be
+stalled sometime until I have a good knowledge and re-think the design
+here.
+
+> > +`escapeReferent`::
+> > +	(ERROR) The referent of a symref is outside the "ref" directory.
+> 
+> I am not sure starting this as ERROR is wise.  Users and third-party
+> tools make creative uses of the system and I cannot offhand think of
+> an argument why it should be forbidden to create a symbolic link to
+> our own HEAD or to some worktree-specific ref in another worktree.
+> 
+
+Do we allow this cross-access (hack)? It might cause some trouble from
+my perspective.
+
+> > +	if (referent->buf[referent->len - 1] != '\n') {
+> 
+> As you initialized "len" to "referent->len-1" earlier, wouldn't it
+> more natural to use it here?  That would match the incrementing of
+> len++ later in this block.
+> 
+
+Yes, exactly.
+
+> > +		ret = fsck_report_ref(o, report,
+> > +				      FSCK_MSG_REF_MISSING_NEWLINE,
+> > +				      "missing newline");
+> > +		len++;
+> > +	}
+> 
+> Having said that, the above should be simplified more like:
+> 
+>  * declare but not initialize "len".  better yet, declare "orig_len"
+>    and leave it uninitialized.
+> 
+>  * do not touch "len++" in the above block (actually, you can
+>    discard the above "if(it does not end with LF)" block, see
+>    below).
+> 
+>  * instead grab "referent->len" in "len" (or "orig_len") immediately
+>    before you first modify referent, i.e. before strbuf_rtrim() call.
+> 
+> 	orig_len = referent->len;
+> 	orig_last_byte = referent->buf[orig_len - 1];
+> 
+
+I agree.
+
+> > +	strbuf_rtrim(referent);
+> > +	if (check_refname_format(referent->buf, 0)) {
+> > +		ret = fsck_report_ref(o, report,
+> > +				      FSCK_MSG_BAD_REFERENT_NAME,
+> > +				      "points to refname with invalid format");
+> 
+> Similar to an earlier step, the message does not give any more
+> information than the enum.  Wouldn't the user who got this error
+> want to learn what referent->buf said and which part of it was bad
+> in the same message, instead of having to look it up on their own
+> after fsck finishes?
+> 
+
+Yes, I agree. I will improve this.
+
+> > +		goto out;
+> > +	}
+> 
+> At this point we know check_refname_format() is happy with what is
+> left after rtrimming the referent.  There are four cases:
+> 
+>  - rtrim() did not trim anything (orig_len == referent->len); the file
+>    lacked the terminating LF.
+> 
+>  - rtrim() trimmed one byte (orig_len - 1 == referent->len) and
+>    the byte was not LF (orig_last_byte != '\n').  The file lacked
+>    the terminating LF.
+> 
+>  - rtrim() trimmed exactly one byte (orig_len - 1 == referent->len)
+>    and the byte was LF (orig_last_byte == '\n').  There is no error.
+> 
+>  - all other cases, i.e., rtrim() trimmed two or more bytes.  The
+>    file had trailing whitespaces after a valid referent that passed
+>    check_refname_format().
+> 
+
+That's so clear. My implementation is not good compared with this.
+
+> So in short,
+> 
+> 	if (referent->len == orig_len ||
+> 	    referent->len == orig_len - 1 && orig_last_byte != '\n') {
+> 		FSCK_MSG_REF_MISSING_NEWLINE;
+> 	} else if (referent->len < orig_len - 1) {
+> 		FSCK_MSG_REF_TRAILING_WHITESPACE;
+> 	}
+> 
+> can replace the next block you wrote, and we can also remove the
+> earlier "it is an error if it does not end with '\n'", I think.
+> 
+> > +	if (len != referent->len) {
+> > +		ret = fsck_report_ref(o, report,
+> > +				      FSCK_MSG_TRAILING_REF_CONTENT,
+> > +				      "trailing garbage in ref");
+> 
+> As check_refname_format() was happy, the difference between orig_len
+> and referent->len are only coming from trailing whitespaces, i.e. it
+> is not that it had arbitrary garbage.  Shouldn't we be more explicit
+> about that?
+> 
+
+Yes, I made a lot of mistakes when calling the "fsck_report_ref". I will
+report the exact garbage content to the user.
+
+> > +	/*
+> > +	 * Dangling symrefs are common and so we don't report them.
+> > +	 */
+> > +	if (lstat(referent_path->buf, &st)) {
+> > +		if (errno != ENOENT) {
+> > +			ret = error_errno(_("unable to stat '%s'"),
+> > +					  referent_path->buf);
 > > +		}
+> > +		goto out;
+> > +	}
 > > +
-> > +		if (*trailing != '\n' || *(trailing + 1)) {
-> > +			ret = fsck_report_ref(o, &report,
-> > +					      FSCK_MSG_TRAILING_REF_CONTENT,
-> > +					      "trailing garbage in ref");
-> > +			goto cleanup;
-> > +		}
+> > +	/*
+> > +	 * We cannot distinguish whether "refs/heads/a" is a directory or not by
+> > +	 * using "check_refname_format(referent->buf, 0)". Instead, we need to
+> > +	 * check the file type of the target.
+> > +	 */
+> > +	if (S_ISDIR(st.st_mode)) {
+> > +		ret = fsck_report_ref(o, report,
+> > +				      FSCK_MSG_BAD_REFERENT_FILETYPE,
+> > +				      "points to the directory");
+> > +		goto out;
+> > +	}
 > 
-> Not limited to this patch, but isn't fsck_report_ref() misdesigned,
-> or is it just they are used poorly in these patches?  In these two
-> callsites, the message string parameter does not give any more
-> information than what the FSCK_MSG_* enum gives.
+> If referent_path->buf refers to "refs/heads/historical/", and all
+> the branches under the hierarchy have been sent to packed-refs,
+> then this check will not trigger.
 > 
-> In fact, MSG_REF_MISSING_NEWLINE at least says that the complaint is
-> about refs, but "missing newline" does not even say from what the
-> newline is missing.  For TRAILING_REF_CONTENT, people may expect to
-> see what garbage follows the expected contents, but that information
-> (i.e. contents of *trailing) is lost here.
 
-I agree with you here, I use way too general words to describe what
-happens. I will improve this. Actually, I feel hard to find words for
-"MSG_REF_MISSING_NEWLINE". I think we should say:
+Yes, because "refs/heads/historical" will not appear in the filesystem.
 
-	LF should be at the end of the file.
+> I wonder if this check is the right thing to enforce in the first
+> place, though.
+> 
+> As far as the end user is concerned, refs/heads/historical/master
+> branch stil exists, and there is no refs/heads/historical branch, so
+> such a symbolic ref, for all intents and purposes, is the same as
+> any other dangling symbolic refs, no?
+> 
+> Of course, "git update-ref SUCH_A_SYMREF HEAD" will complain because
+> there is refs/heads/historical, with something like 
+> 
+>     "refs/heads/historical/master" exists, cannot create "refs/heads/historical"
+> 
+> but that is to be expected.  If you remove the last branch in the
+> refs/heads/historical hierarchy, you should be able to do such an
+> update-ref to instanciate refs/heads/historical as a regular ref.
+> 
+
+I am a little shocked here. I do this in action and find the directory
+will be automatically converted to a regular file in the filesystem. So,
+I agree with you here. We should never check this, because we allow
+symref to point to a directory. As long as there is no loose refs and
+packed refs under this directory, we could use "git update-ref" for this
+symref.
+
+Thanks,
+
+> > @@ -3484,12 +3553,24 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
+> >  					      "trailing garbage in ref");
+> >  			goto cleanup;
+> >  		}
+> > +	} else {
+> > +		strbuf_addf(&referent_path, "%s/%s",
+> > +			    ref_store->gitdir, referent.buf);
+> > +		/*
+> > +		 * the referent may contain the spaces and the newline, need to
+> > +		 * trim for path.
+> > +		 */
+> > +		strbuf_rtrim(&referent_path);
+> 
+> I doubt this is a good design.  We have referent, and the symbolic
+> ref checker knows that the true referent refname may be followed by
+> whitespaces, so instead of inventing referent _path here, it would
+> be a better design to let the files_fsck_symref_target() to decide
+> what file to open and check based on referent, no?  Give it the
+> refstore or refstore's gitdir and have the concatenation with the
+> rtrimmed contents in the referent->buf after it inspected it
+> instead, perhaps?
+> 
+
+Yes, I agree with you here. We should use "files_fsck_symref_target" to
+do this.
+
+
+----
+
+From this review, I think I need to understand more behaviors about
+files backend and packed backend. Thanks for your so dedicated reviews.
+I may spend more time to send the next version. And there may be some
+delay.
 
 Thanks,
 Jialuo
