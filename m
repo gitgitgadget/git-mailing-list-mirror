@@ -1,57 +1,52 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C92632
-	for <git@vger.kernel.org>; Sun, 22 Sep 2024 16:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C7B26AC1
+	for <git@vger.kernel.org>; Sun, 22 Sep 2024 17:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727024184; cv=none; b=ZwZfEPyihwsqrq8BKV2gKx9IbnvwHmv0/0acZa+LnFgAmRo9xzJLrdw5hYX/EL6IPFRrhUq/mWD6n7lLDuP5N6YhDIAYAWPtUUstxbE3XHjK5eHHfJYz335cYEn5E44kcLhDzhOBNmetbgXmN2QPMUb8VvY+oq5Q+ubzQdX05kY=
+	t=1727027517; cv=none; b=WGiemixIgYYE6p7+ENyt77tZYPlImQ4tItd4abYmJq5B7My/IMorPUVHjAgc4IBHt/GT/O6eIqFPiitdUeoQ0wmMLRMPHE83fm9qf4NqJSKzkP+8utrPvL595ewc84/y7i7e/C7I/ZqPJqJ6HghQsd4BZy7rXAJE43S38VKxDkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727024184; c=relaxed/simple;
-	bh=mLad0MENM7/5YzD1GCwPMH0nc5JEF64BmYc6EJ1T6+w=;
+	s=arc-20240116; t=1727027517; c=relaxed/simple;
+	bh=HXi0Ponnilci+VPeoGHeH2Uu5YglEI4EJKPOERosHJA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EFr538A4sxdl9WP+zr9yrVnoX6IvelHQR/2Sul/xcANyYjVeO76hHp8TS+Mr5nHm/sFYIt3FIN/k/plqAmlVPXuNj+2jsPNrHDWrF0LwYanRZxnCmLUh9oBV2EDHzNqHi7hq40v8n2mHgxvcWkLB9kRYkb88xLq2Myq4R32lbkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=aGUznwhn; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=k0PjawBi7dKX44XXXtLMdUkv1qppgE5tVlOvFOKuJJ5Q2zhOVPuLHf+/2esQ4RjBmC2N1sfaDBxMMprlg7X0nyNZyB16+TP0ZlNi4Q73S+NwPWJQmni8WEHWhQhmTlBkmv+6VG3KFJhUSuibcZn0ZMs59l7ydRkXpcZoaC1ej+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=v/hS815R; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aGUznwhn"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v/hS815R"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7176F3D3CC;
-	Sun, 22 Sep 2024 12:56:22 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B47433DF61;
+	Sun, 22 Sep 2024 13:51:54 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=mLad0MENM7/5YzD1GCwPMH0nc5JEF64BmYc6EJ
-	1T6+w=; b=aGUznwhnAeKXpLYkMQWI6wjAkqu1KLFeCHU4w/juvxSF7KrY0a8zop
-	sU91WTMjLNkRNaJjldxDHEnW/DRoUZIudM1O6eA5Dcc7oxVW4edWbSzEXCSBDqPH
-	ZKwdPqY4PYUjUW/HxKT/AYstm9ZFCaY6mcakwBEf+nZFNjRfAuTaI=
+	:content-type; s=sasl; bh=HXi0Ponnilci+VPeoGHeH2Uu5YglEI4EJKPOER
+	osHJA=; b=v/hS815Rf8XUkzuF/SiBwNK6LqFZ1TyIp9O1M1/xQ+nscZwZsEPtCX
+	yJc+Nz8HFPmSVSwuDmxDAFSH0Yg/3D4lmGIgLe6i/Vy2QQ/CVq9Rgi6fNitB999n
+	Hcd0MJG+cTqQcFO9PQnTFenvd7re3BMTDzuizial+70VR3fy5hP6g=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 69AB33D3CB;
-	Sun, 22 Sep 2024 12:56:22 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id AC9DB3DF60;
+	Sun, 22 Sep 2024 13:51:54 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D24D93D3CA;
-	Sun, 22 Sep 2024 12:56:21 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F5A13DF5F;
+	Sun, 22 Sep 2024 13:51:53 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Bence Ferdinandy" <bence@ferdinandy.com>
-Cc: <phillip.wood@dunelm.org.uk>,  <git@vger.kernel.org>,  "Taylor Blau"
- <me@ttaylorr.com>,  "Patrick Steinhardt" <ps@pks.im>,  =?utf-8?Q?Ren?=
- =?utf-8?Q?=C3=A9?= Scharfe
- <l.s.r@web.de>,  "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/2] update_symref: add REF_CREATE_ONLY option
-In-Reply-To: <D4CB89OCTXWW.2A4NL7RQP4IS@ferdinandy.com> (Bence Ferdinandy's
-	message of "Sun, 22 Sep 2024 00:19:43 +0200")
-References: <D43G2CGX2N7L.ZRETD4HLIH0E@ferdinandy.com>
-	<20240919121335.298856-1-bence@ferdinandy.com>
-	<20240919121335.298856-2-bence@ferdinandy.com>
-	<7fecc442-8d5e-4542-8ce8-907c35db870d@gmail.com>
-	<D4CB89OCTXWW.2A4NL7RQP4IS@ferdinandy.com>
-Date: Sun, 22 Sep 2024 09:56:20 -0700
-Message-ID: <xmqq1q1b8w5n.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,  Derrick Stolee <stolee@gmail.com>,
+  Jonathan Nieder <jrnieder@gmail.com>,  Emily Shaffer
+ <nasamuffin@google.com>
+Subject: Re: [PATCH] BreakingChanges: early adopter option
+In-Reply-To: <xmqqploydn7j.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	20 Sep 2024 14:33:52 -0700")
+References: <xmqq7cb77810.fsf@gitster.g> <xmqqploydn7j.fsf@gitster.g>
+Date: Sun, 22 Sep 2024 10:51:52 -0700
+Message-ID: <xmqqtte77f0n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,24 +56,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 984C260A-7903-11EF-8356-9B0F950A682E-77302942!pb-smtp2.pobox.com
+ 5A71CDE6-790B-11EF-8CE5-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-"Bence Ferdinandy" <bence@ferdinandy.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Sat Sep 21, 2024 at 15:40, Phillip Wood <phillip.wood123@gmail.com> wrote:
->> On 19/09/2024 13:13, Bence Ferdinandy wrote:
->> > Add a new REF_CREATE_ONLY flag for use by the files backend which will
->> > only update the symref if it doesn't already exist. Add the possibility
->> > to pass extra flags to refs_update_symref so that it can utilize this
->> > new flag.
->>
->> I'm not sure we need a new flag to do this as it is already supported by
->> the ref transaction api.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Thanks, I was not aware of ref_transaction_create. It also seems to return with
-> TRANSACTION_NAME_CONFLICT so we should be able to see from the error code if
-> indeed the existence was the problem or something else went wrong.
+>> Discussing the desire to make breaking changes, declaring that
+>> breaking changes are made at a certain version boundary, and
+>> recording these decisions in this document, are necessary but not
+>> sufficient.  We need to make sure that we can implement, test, and
+>> deploy such impactful changes.
+>>
+>> Formalize the mechanism based on the `feature.*` configuration
+>> variable to allow early adopters to opt into the breaking change in
+>> a version of Git before the planned version for the breaking change.
+>> ...
+> ... to see what it involves
+> to allow early adopters to experience Git 3.0 features/removals
+> before it actually happens.
 
-Thank you for working on this, and thanks, Phillip, for a useful
-suggestion.
+Sorry for a long monologue on this important topic, while everybody
+is away.  Hopefully we'll see more comments when they get back once
+the week starts ;-)
 
+> Switching behaviour at runtime with feature.git3 should work well,
+> and we can also add tests that checks the new behaviour by doing
+> "test_config feature.git3 true".
+> ...
+> If we are willing to burden early adopters a bit more, we could make
+> it a build-time option.  With "make GIT_BUILD_FOR_GIT3=YesPlease",
+> binaries will be built for all the then-current Git 3.0 features and
+> documentation under development.  It certainly is a simpler-to-build
+> option that is easier for us, but I am not sure if that is acceptable
+> by those who volunteer to test the upcoming big version.
+>
+> One thing to note is that depending on the nature of a change, once
+> you start using a feature only available in a newer version of Git
+> in your repository, the resulting repository may not be understood
+> by an older version of Git...
+
+While I still am with the position that we can do this either at
+runtime or at build time, with the trade-off being that it is more
+costly for developers to do it at runtime and more cumbersome for
+early adopters to do it at build time, I realize that the last point
+above is unrelated.  If one or some of the features behind either
+feature.git3 runtime option or GIT_BUILD_FOR_GIT3 build-time option
+makes a repository inaccessible to versions of Git without these
+features, we have the extension.* mechanism to make sure nothing
+breaks, and testing that such a Git3 feature is properly protected
+by the extension.* mechanism is part of the early adopter testing.
+
+How much more costly to do at runtime is still subject to further
+analysis, I think.  I know that it means we need to build and
+install the docs twice to support "git -c feature.git3=on help", for
+example, but I am not sure what the best way to use CI would be
+(write tests that check features with different behaviour by
+explicitly running them with "git -c feature.git3=on"?  Run the same
+set of tests in a separate job that has "[feature] git3" in its
+$HOME/.gitconfig?).
