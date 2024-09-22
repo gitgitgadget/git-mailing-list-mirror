@@ -1,68 +1,66 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54690322E
-	for <git@vger.kernel.org>; Sun, 22 Sep 2024 14:40:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F99BA50
+	for <git@vger.kernel.org>; Sun, 22 Sep 2024 14:57:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727016025; cv=none; b=FWyA/IuKPLcZrCRAEtIxUyZJkw+kA9y11p3H6/+yc7NRzmqxrFV8MAa7jzx6rVAZjmmUTfCznYpk1P/KBIDGrZckAyq4o06vzLXS24hqK2iKfXYPNViCpZ0vsmU57MM6yibcQrf7CHPlVFn1G95/GFH4IUcl1f+s8lh2AH1gOKU=
+	t=1727017065; cv=none; b=IxG3KQb7P28WdQIvAtEX6zZYz47ZBv2iF0rHt/fSrZfhkvAbGf2ul71Kohc51JxhAuqfcISzD70ojH2OBsCPmif1aIS7LzAxWxygKfH8msw3M0gk4q+dqWoN6USZFO94D6Va7bCXnz82zC7hJQ+PaURjPHiCA7/bJ+2N/cV/NgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727016025; c=relaxed/simple;
-	bh=7cxL5rumA3rzHscdqev+Nrx58cXIPShnrxXsIGbZWx8=;
+	s=arc-20240116; t=1727017065; c=relaxed/simple;
+	bh=W3/eg98AnOAqlRyzHSnbNcscldO9o1H8cKjmzH5Fs/0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qnf+yBwGNUkTxs1r+CTTwWRwMizWgv4vaQintX0Fd5BN19zmaOy00ej+VzSL9dDNYQ8EylG0tmsSNUtKcaO/Z/SoYsnvMbrkheYhIj02G8ZnuzD+udcXJpqak4m4H2lSOL27Kh/cTiTV9PehTJ4MkJnxO3Zg/YAx1UwoxS2+gRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dmSxMIvx; arc=none smtp.client-ip=209.85.210.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=DI/9m7ao/LPvFo7ZI4XO/pxwYS9zxbZNHok0JILzl9dU0VynQ2bqrk2/N2Y+Yn/jrZhZUdja8EWxBbhwLv0lEpwPNBgvZkLRwWth6OHFf9mVUHQ2b1x/tiW4IK59D82Jnj+Cyw8Amhe4SLdyhJHOyGqceH4rh7Ko7K9szX6Mj/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bckAOnhp; arc=none smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dmSxMIvx"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-71798661a52so2647224b3a.0
-        for <git@vger.kernel.org>; Sun, 22 Sep 2024 07:40:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bckAOnhp"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2db928dbd53so2869300a91.2
+        for <git@vger.kernel.org>; Sun, 22 Sep 2024 07:57:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727016024; x=1727620824; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727017064; x=1727621864; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KHlwdCDEqsrbgCB+76IbS300kyB5CM5B6+rmMMERn6M=;
-        b=dmSxMIvxLDb0tfWKwUzArZM6Mn5bGwPMT3qwb1ois3KkW2rRDSokMlRQblLPrvVHAu
-         WVbubinFBXRlsIS48rtHRwi6tjYrybKI00apJ+rphj5Mgzo4Iez4RJXQMgiOnS+uXxnU
-         SwF9uvy1qyKFI2h/QI0MjDZiEieBuo9vZVWhK5ZCJXCaMK+3r6dFib9vjqyndBPeW67a
-         QpUvDraFQ/yHtVTehw6LJQdbt9+qRIgFBOqkT8b1mRk47neK4EgtIVDXSu1Z1twRO7ko
-         H2Cx/UDHbEoG2Otf+KtxcWEdW/TXEATPq5xboS5tUCksnzUP4Xa6IS8au64l6HDIBkzE
-         ADVw==
+        bh=Wx0c0fDwY3HQple902D/Z0hY6Ltu1dQ++Icb08ia1FQ=;
+        b=bckAOnhp3Y/xEsOMvdLhvUIHvgleTe2a4530PdIUR8A2775nPhd9mW4S8bPg4URpAP
+         eGp7G/QtFH25hVCkQd35uGzysjRGDmUgKUdlVSgLqAmox6828hTMPG2xco5BATFfqbLc
+         DTjMgMjDwabLx42G8zR3B268OtbrtWxq6aSkWy57vjAoYV0TIdy7W5MvN8c9BIg4Tty3
+         zy3WwBlEKeKutbM3/kCBy4sN7BMemo/UjXVh3xtyevvMpReX5oYdkWfq5WsEfCbxcmPh
+         A7u7oIRUNaDbsGzjPQvZlk3NRacv89B06scCnC6A9fppIsX8KQMWnzYhTHc8lCapvM+T
+         SeBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727016024; x=1727620824;
+        d=1e100.net; s=20230601; t=1727017064; x=1727621864;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KHlwdCDEqsrbgCB+76IbS300kyB5CM5B6+rmMMERn6M=;
-        b=Ka6CVuiwYMn42T/LaVE7yHfKKsoaqkvXXbLOnRp1Vq3Ajsrkpck5zrq6PRMrPjVHCY
-         8qyXUKWSnPemos+t+XodMV+H9CEv8ln+Gzqk/WnXfUTw+sfrvTk+PMCGO0owo/yf0Xjg
-         HMz2HrQYYSqMblJOk/Cg+uZiZZz/eFLmYLqhkH8CUM/7rrZl1Hx/kdNybXNq/EjIVSzL
-         fIAlabpkiQnmOjNY+hKAmdZ5x8Mm2ptK5TveP4/XCbX+u+ZzCIFIu7FnM7XwnSHjjBTW
-         KaRWtb1hadJ/FdUL9qlLPzmSeaTtQeKsBFEdmk7Z1I2UG7OIPOjgtEPDs+qd6U9xhG7D
-         MeTA==
-X-Forwarded-Encrypted: i=1; AJvYcCVcYuz+4ozVl2q8T2mwOewE/7ibLaxn2Q30xWD54I6cCndV/cjoYe33J92QU+QyBrkOtoc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBNdXll+iT028SexkALzaE5vp9/aG3jBh6qx7vgCwPSCrGRpza
-	pYs1lhKFOhcS6GxDt2Wz4Lu+9E3SoiqKsHj3hF/dTbrG3i/QJKgC0zuTCQ==
-X-Google-Smtp-Source: AGHT+IEVrQ1uSmTpdt1x5xcDedOmVWRxOlIq0fLhVWZuHwXWCVO2e/nHpr8pdNjjsq7mJVOi7ktwtA==
-X-Received: by 2002:aa7:88c4:0:b0:70d:2a1b:422c with SMTP id d2e1a72fcca58-7199b0c3d7amr13870907b3a.7.1727016023586;
-        Sun, 22 Sep 2024 07:40:23 -0700 (PDT)
+        bh=Wx0c0fDwY3HQple902D/Z0hY6Ltu1dQ++Icb08ia1FQ=;
+        b=pNVspsyJtOPXLminNuOaZwd5DTUPquOom22Oh4Zic2MmFyl3j7WhNWtxULj8IbQ7vE
+         EMGyubhabdL2hqO6r7baP/GXYYNBUAVZ9bNfMCp7hZdJjiHdu/rLLcbZMP301w1IAayV
+         1JKwRg9i60qK0GBeMuuKJY+ds4EinUOz2fcnGYAZRwXYKdqAz484ppXMVD1LYdunEOTf
+         98NiCt3vtiVxNz8/1SqgADNTn4ma2n+o+xprM1GfT2Jm31ItsbwlfjMcCWcE28dKPQ4W
+         CI8rwMN5ZxVr6mLE4CfMJPal0QxDkSeKRgyUifJ85XyTtFdhU3jtIaOwyBgh9c1ZgquF
+         PoYA==
+X-Gm-Message-State: AOJu0Yz992JS2O4+Dyuk2n1QJ+0F1sbS46moKBFxT9rpXX292g1zo2l6
+	tEE1wj3KJ8ZjSUucdMxS3gS9hpW/bAmrLrxxK5iQ4apPUS+zu11+
+X-Google-Smtp-Source: AGHT+IFdgWO3kO3R7dEA0raZwf35gqwnYyVDFdwapMCLvgaS4Vlo/6cStFtpPdV0RLWKXL5jKN3WFw==
+X-Received: by 2002:a17:90a:c2c7:b0:2d8:8fe9:b015 with SMTP id 98e67ed59e1d1-2dd7f79e457mr11756021a91.39.1727017063560;
+        Sun, 22 Sep 2024 07:57:43 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7db4999cddasm14042478a12.76.2024.09.22.07.40.22
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dd6ef3ede0sm7661729a91.46.2024.09.22.07.57.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Sep 2024 07:40:23 -0700 (PDT)
-Date: Sun, 22 Sep 2024 22:41:35 +0800
+        Sun, 22 Sep 2024 07:57:42 -0700 (PDT)
+Date: Sun, 22 Sep 2024 22:58:55 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc: Ronan Pigott <ronan@rjp.ie>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: BUG: refs.c:1933: reference backend is unknown
-Message-ID: <ZvAsnyZrVTO-j6XB@ArchLinux>
-References: <1b9fb3f3fde62594b9ac999ffb69e6c4fb9f6fd6@rjp.ie>
- <Zu7vpPs8fcqlMlNK@ArchLinux>
- <9fdb9561bb0ad85e55ca3253cc4db9b098641e30@rjp.ie>
- <9bf5c254-4d87-4f6f-b278-d9df4d7897b5@web.de>
- <Zu--coU4qv6Z1SmD@ArchLinux>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 2/5] ref: port git-fsck(1) regular refs check for
+ files backend
+Message-ID: <ZvAwr6uj2WRD7L7y@ArchLinux>
+References: <ZuRzCyjQFilGhj8j@ArchLinux>
+ <ZuRzwKTFd65RL4HC@ArchLinux>
+ <xmqqh6acdbz2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,73 +69,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zu--coU4qv6Z1SmD@ArchLinux>
+In-Reply-To: <xmqqh6acdbz2.fsf@gitster.g>
 
-On Sun, Sep 22, 2024 at 02:51:34PM +0800, shejialuo wrote:
+On Wed, Sep 18, 2024 at 11:59:45AM -0700, Junio C Hamano wrote:
 
 [snip]
 
-> However, the repo does not exist, so we cannot find any ref backend. The
-> main problem is that we never check whether "the_repository->gitdir" is
-> a git directory in "config.c::include_by_branch". So, we do not need to
-> check the value of the option "--git-dir".
+> The above reads as if you are, in preparation to "port" the checks
+> we have in "fsck" to elsewhere (presumably to "refs verify"), you
+> are removing the checks that _will_ become redundant from "fsck".
+> 
+> But that does not seem to be what is happening.  Let me try to
+> paraphrase, in order to check my understanding of what you wanted to
+> say:
+> 
+>     "git-fsck(1) has some consistency checks for regular refs.  As
+>     we want to align the checks "git refs verify" performs with
+>     them (and eventually call the unified code that checks refs from
+>     both), port the logic "git fsck" has to "git refs verify".
 > 
 
-I have just scanned the recent code here, because Patrick has already
-replaced the "the_repository", there is no problem here when set up the
-configuration in the TOT.
+Thanks, I have re-read my words, I did not explain this thing well.
 
-The code will first check whether the "data->repo" is NULL.
+> > +	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
+> > +		ret = error_errno(_("unable to read ref '%s/%s'"),
+> > +				  refs_check_dir, iter->relative_path);
+> 
+> Is there a reason why we cannot to use report.path aka refname.buf,
+> and instead we have to recompute the same path again?
+> 
 
-However, there is still a problem after setup:
+Thanks for pointing out this, because this part I wrote a long time ago
+and I think it's unrelated to the fsck part. So, I forgot to change.
 
-#5  0x0000555555780442 in ref_store_init (repo=0x555555948b00 <the_repo>,
-    format=<optimized out>, gitdir=<optimized out>, flags=15) at refs.c:1938
-#6  ref_store_init (repo=0x555555948b00 <the_repo>, format=<optimized out>,
-    gitdir=<optimized out>, flags=15) at refs.c:1928
-#7  get_main_ref_store (r=0x555555948b00 <the_repo>) at refs.c:1958
-#8  0x00005555556a332d in include_by_branch (data=0x7fffffffd400,
-    cond=0x555555953d13 "main.path", cond_len=4) at config.c:308
-#9  include_condition_is_true (kvi=0x7fffffffd320, inc=0x7fffffffd400,
-    cond=0x555555953d13 "main.path", cond_len=4) at config.c:408
-#10 git_config_include (var=var@entry=0x555555953d00 "includeif.onbranch:main.path",
-    value=value@entry=0x55555595382f "notexist", ctx=ctx@entry=0x7fffffffd280,
-    data=data@entry=0x7fffffffd400) at config.c:438
-#11 0x000055555569d3a3 in config_parse_pair (key=<optimized out>,
-    value=0x55555595382f "notexist", kvi=kvi@entry=0x7fffffffd320,
-    fn=fn@entry=0x5555556a3060 <git_config_include>, data=data@entry=0x7fffffffd400)
-    at config.c:616
-#12 0x000055555569dafd in parse_config_env_list (
-    env=0x555555953810 "includeIf.onbranch:main.path", kvi=0x7fffffffd320,
-    fn=0x5555556a3060 <git_config_include>, data=0x7fffffffd400) at config.c:699
-#13 git_config_from_parameters (fn=fn@entry=0x5555556a3060 <git_config_include>,
-    data=data@entry=0x7fffffffd400) at config.c:772
-#14 0x000055555569e383 in do_git_config_sequence (opts=0x7fffffffd550,
-    repo=repo@entry=0x555555948b00 <the_repo>,
-    fn=fn@entry=0x5555556a3060 <git_config_include>, data=data@entry=0x7fffffffd400)
-    at config.c:2131
-#15 0x000055555569ed49 in config_with_options (fn=0x5555556a3060 <git_config_include>,
-    data=0x7fffffffd400, config_source=<optimized out>, repo=0x555555948b00 <the_repo>,
-    opts=<optimized out>) at config.c:2174
-#16 0x000055555569eec7 in repo_read_config (repo=0x555555948b00 <the_repo>) at config.c:2544
-#17 git_config_check_init (repo=repo@entry=0x555555948b00 <the_repo>) at config.c:2564
-#18 0x00005555556a0272 in repo_config (repo=0x555555948b00 <the_repo>,
-    fn=fn@entry=0x5555558218a0 <git_tar_config>, data=data@entry=0x0) at config.c:2576
-#19 0x0000555555822651 in git_config (fn=0x5555558218a0 <git_tar_config>, data=0x0)
-    at /home/shejialuo/Projects/git/config.h:704
-#20 init_tar_archiver () at archive-tar.c:544
-#21 0x00005555556700c9 in init_archivers () at archive.c:46
-#22 0x000055555557f8b8 in cmd_archive (argc=2, argv=0x7fffffffdcc8, prefix=0x0)
-    at builtin/archive.c:98
-#23 0x00005555555753c9 in run_builtin (p=0x555555916760 <commands+96>, argc=2,
-    argv=0x7fffffffdcc8) at git.c:483
-#24 handle_builtin (argc=2, argv=0x7fffffffdcc8) at git.c:739
-#25 0x0000555555576335 in run_argv (argcp=argcp@entry=0x7ffff
+> Should this error be propagated back to the caller, not just to the
+> end-user, by a call to fsck_report_ref(), like you do for a ref file
+> that has questionable contents?  If ref iteration (like for-each-ref)
+> claims there is this ref, and you cannot read its value when you try
+> to use it, it is just as bad as having a loose ref file that has
+> unusable contents, isn't it?
+> 
 
-It still uses the old "git_config", so we still have a problem when we
-explicitly specify the "--git-dir". However, once Patrick replaces all
-the "the_repository", this bug should never exist. So, I won't dive into
-this.
+I agree. The initial motivation for this design is that I think this is
+OS-specific issue (It may be read successfully in the next time). So, I
+don't put it into the fsck part. But It make senses that we should
+report this.
 
-Thanks,
-Jialuo
+> It is a separate matter if such a failure mode deserves its own
+> error code (FSCK_MSG_UNREADABLE_REF) or can be rolled into the same
+> FSCK_MSG_BAD_REF_CONTENT.  I can see arguments for both sides and
+> offhand have no strong preference either way.
+> 
+
+We could just use "FSCK_MSG_BAD_REF_CONTENT" and add a message "cannot
+open this file". I guess this should be enough.
+
