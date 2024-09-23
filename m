@@ -1,58 +1,58 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC09010E9
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 01:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63ADD10E9
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 01:39:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727055366; cv=none; b=tb+WB3ggBjKFBSHF4tfkHQKY8YzIYZAsMKV2Z0g9r+3KjXM/pTf0EHIdLPJaxCYMy4z2dv7ZiffZZUV+XINeUyNQVXuzWC4sO+pCMOJo66z+C6w430vmzIaIeV3yl7NxK406Pxo6ZfYEtsbOyDnjmBKpMrrDXYjVivzXzs0lMz0=
+	t=1727055588; cv=none; b=eySehyWxybDmO/9CspH6PD9ltnj6/TMxiKKltNMKhYb2/6o170ZeRWt3u8jmhZGHUOFbOg8+xXreCoM6nNtsZ5cdZ/iu2wL+g4TDUDpdPY21NWJKJZiGlIunj87wY3PDKVFevdD4akS5O9I595mVfv9pgPT5cb2abbaMNZU6HuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727055366; c=relaxed/simple;
-	bh=P99YIJwNxc8E9OJ0U8OG3u9Ruw1n6YewbcY1sHkvoqc=;
+	s=arc-20240116; t=1727055588; c=relaxed/simple;
+	bh=+ozmjlPPOT/CkANC6fKeGNl3bCR13gMiFczBiqq3bMk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hcjWAEq6eI0yActMKu3gib9lvtjjoaaiKEvF7ilwgb10dUXsHc7hAo08Gw6yefJGindsYOft3oGoHuimoVEkKHDoqUujKrO0r8a796VuGtn0a5bN45Q6ghaPuB9nOfc+h1FgQCMFLFWifm0S36wvIghAHGYGM5tJpgIADH0fDxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cGR+vauy; arc=none smtp.client-ip=209.85.215.177
+	 In-Reply-To:Content-Type; b=UOv+q//sayURbkCgVtL+sKBrlQyKVtZelcV5bYELeDvsZqx40as1JN7GvapeduOdHlVLNeat9jkdGC7MXqwyi76hMdo0XDwgh61ls43cHhydIWa6ZVWom1BaKYt8tb2PSi9pqmB4PoB/YROtU8vvgwShoUZPZ7N6iwLkmxl68tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mTT7JgyK; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cGR+vauy"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-7db1f13b14aso3087968a12.1
-        for <git@vger.kernel.org>; Sun, 22 Sep 2024 18:36:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mTT7JgyK"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2d87176316eso3424224a91.0
+        for <git@vger.kernel.org>; Sun, 22 Sep 2024 18:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727055364; x=1727660164; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727055587; x=1727660387; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tfpTKY6MbjoUlHjQ1u6266S8JAsTD6w+NvyzPRih3Q8=;
-        b=cGR+vauyD9p0hw/nMUHrFlI/Zrnd/pGVUTBHWrYekSrScIQLVp37CzdBFFIrgkg21E
-         uDQW83nAE/HR0Vq981h3gp+VFUORm/TQ3F23dVKXokAb/YEgFgsRzWEq03dQ7Nag+G97
-         x0GQUTPwHf+GJbXwsS4dvsocc8c02pD09t+icRJqUE9/upevQMJb9g/ixha/WCou8WTD
-         B6nKZz3QTGVXJ+pqSjN9clthby7RdVWtBQspjBJuSMO39NReVxN1Ydznn2/LZyDTEzYV
-         aEyYkhr38MPRT+PWInGN0HJKwJYVeCh26PChwYsVIvKLotMfYA0LCACOJ6ErNxYG2bZO
-         ag7w==
+        bh=RNgyGq7NCGa69kZ4GiLd2+OJQxnSbtaBIebEcaJ8FJE=;
+        b=mTT7JgyKjO83+fZVBHQmd/kslNzcUFqpnonlQ5dasuLUDmTT/hIwDO5tZ+rahZYXCU
+         YqqJvVeTmiw7+RlsIAQZxLod/bXq+8eSE66Kb9SnHnrEQXjz5iR97OwzPJuPYi/dQ+vI
+         KITHuO2i0tQrEPPatlzJvm+rhzbMZVfn7DUiody+WphA8auJYBJYo2w9TfjnT15Era8I
+         O40gHTTQZgDNL7HIz+KqVaWpBhB4uRScGjFUMhkurMnWrPOEjk8av2733Qg432V1kjzz
+         TcVOoXevtY9WFOUes157XMwcyUACkzFaIXDBYSTpByfYA+ddhCAmSz1FYQKTJeVe3Jdd
+         iNfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727055364; x=1727660164;
+        d=1e100.net; s=20230601; t=1727055587; x=1727660387;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tfpTKY6MbjoUlHjQ1u6266S8JAsTD6w+NvyzPRih3Q8=;
-        b=nCToaAhayu/rhZU7wi0u78zd114ZrGF2Pr8XeFgWf0wRHdxXrFD47/bbcykZ/y+smu
-         jgP1tD/Ekm3m1AOV5fHjZECvUDgyQK4Jz3J90/xsX2hvM/4MOpjXjSpT6LjsSibGJBAR
-         FvFopuhuJ4C6j90G5cx+gUnoguAePfjLPpiv1e9rzuSsNnbJQqc17VyOFeiBWvQ2sqFM
-         e0TJPF2H8fWUxFJTFnrEjLggyyina/mYqYCOZhvznJHsL3yFGcmXLIR/0xISUs8XTnPd
-         RQPaeKHPWiYGdTuVtNhlSk5RsoLXwpjKIvye7+1F1X7pNn78IIAch5xmeXJJL2+ZQ2zl
-         P7Qg==
-X-Gm-Message-State: AOJu0YwLOFF4gHHYWHhNaj1xJLymeQVtQv4+RA1mvixZ5F5KTY5vnOXs
-	1KatLztxZxTG7FzHYf64ThddhYUDf49wfc41t380nSQ0sXeFFOP7
-X-Google-Smtp-Source: AGHT+IEVGUP5n+MMMIph4UrLpFxqRJM4obmlQJXqofY/NgPmFJWFZlV+NfeU1N2XpBvUi+qWG60eXw==
-X-Received: by 2002:a05:6a21:460c:b0:1d2:e807:b65b with SMTP id adf61e73a8af0-1d30cb1cb9cmr14623813637.37.1727055363982;
-        Sun, 22 Sep 2024 18:36:03 -0700 (PDT)
+        bh=RNgyGq7NCGa69kZ4GiLd2+OJQxnSbtaBIebEcaJ8FJE=;
+        b=sEVuxk6+xJXmYlFT6HiRbBPIXelv0nwyo9dbEAFAaimwtBbtDfeHNVRld4iHNDy/tM
+         wSAnN8p4ZF0+nx2kv7SmFRz5F2WR8xs+Q92pEw3oHEBbHV6A5kUOglujc7Wci/dYOmIQ
+         zs6Spn6g35MWMMzR/8TPiHJRMp9SKkNXVOxlxhqxiCI+Ofb9pto6prBKCyKmcDxieObP
+         18pv4MURakwgSedA2qOgYNP2jsJmfAQ7ZU2hBhB1wrzAEY0c+7pJ5I8lvJG5UXqJpMHk
+         JGXhO9XPoUcj5ilpNW+/rZyZJgi1jdcCyscFOonSQ4YQ8e8E4sXZhXH/KiTD7dkw1UlQ
+         FxWw==
+X-Gm-Message-State: AOJu0Yx8imJtHUu0ovCsMfaojXEIXN/hVMkwnBpjpYD/m0PrqQswXkiI
+	S4+9Uv6VJ0ZP2rqGi9DVrHNvQlqnEGb5P1QUzDqVfvTa5ApeiDT3
+X-Google-Smtp-Source: AGHT+IFKC3X0RAlk5VgJJeh+QeWhN2J48v2QMoPMw6qsuljR0bTm4hlNYH1sBHiGMrIRCojBAbKLMw==
+X-Received: by 2002:a17:90a:f3c6:b0:2d8:89ff:db1a with SMTP id 98e67ed59e1d1-2dd7ed060cdmr14825470a91.8.1727055586511;
+        Sun, 22 Sep 2024 18:39:46 -0700 (PDT)
 Received: from ?IPV6:2600:1700:60ba:9810:1803:188e:65b0:6321? ([2600:1700:60ba:9810:1803:188e:65b0:6321])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71944bc7bb5sm12938113b3a.207.2024.09.22.18.36.02
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dd7f871ad7sm6061300a91.26.2024.09.22.18.39.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Sep 2024 18:36:03 -0700 (PDT)
-Message-ID: <5114e7fa-7858-458a-bc5d-5c82ea663a48@gmail.com>
-Date: Sun, 22 Sep 2024 21:36:02 -0400
+        Sun, 22 Sep 2024 18:39:46 -0700 (PDT)
+Message-ID: <9cd3e993-3273-48af-9990-7a18c8bb668b@gmail.com>
+Date: Sun, 22 Sep 2024 21:39:44 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,35 +60,40 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] maintenance: configure credentials to be silent
+Subject: Re: [PATCH v2 3/6] pack-objects: add GIT_TEST_FULL_NAME_HASH
 To: Junio C Hamano <gitster@pobox.com>,
  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, liuzhongbo.gg@gmail.com, Johannes.Schindelin@gmx.de
-References: <pull.1798.git.1726790423.gitgitgadget@gmail.com>
- <xmqqfrpudm51.fsf@gitster.g>
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
+ ps@pks.im, me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com
+References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
+ <pull.1785.v2.git.1726692381.gitgitgadget@gmail.com>
+ <48b3876a10247d2ba65a6e5f1ff8ed3a662813f8.1726692381.git.gitgitgadget@gmail.com>
+ <xmqq34lv5lnn.fsf@gitster.g>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqfrpudm51.fsf@gitster.g>
+In-Reply-To: <xmqq34lv5lnn.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/20/24 5:56 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> Add a new configuration value, 'credential.interactive', to specify to the
->> credential helper that it should not prompt for user interaction. This
->> option has been respected by Git Credential Manager since 2020 [1], so this
->> is now presenting it as an official Git config value.
-> 
-> So, the other helpers are also supposed to check for the variable
-> and fail when it has to go interactive now.
+On 9/19/24 6:22 PM, Junio C Hamano wrote:
+ > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I would hold off from saying "supposed to" but Git is definitely hinting
-towards that behavior.
+ >> Second, there are two tests in t5616-partial-clone.sh that I believe are
+ >> actually broken scenarios. While the client is set up to clone the
+ >> 'promisor-server' repo via a treeless partial clone filter (tree:0),
+ >> that filter does not translate to the 'server' repo. Thus, fetching from
+ >> these repos causes the server to think that the client has all reachable
+ >> trees and blobs from the commits advertised as 'haves'. This leads the
+ >> server to providing a thin pack assuming those objects as delta bases.
+ >
+ > In short, the tests are based on broken assumption and checking
+ > bogus outcome?  Somebody familiar with the partial clone area should
+ > probably take a look into it and fix the tests if that is the case.
 
-Perhaps I'm just hung up on the idea that we are not adding a new wrinkle
-to the "contract" but recommending a good thing that was previously not part
-of the interaction.
+That is my understanding, yes. It is a common issue that I've had when
+using partial clones with multiple remotes and forgetting to modify the
+filter for each, so is also a usability wart that could use mending
+(say, by adding the existing filter when adding a new remote).
 
 Thanks,
 -Stolee
