@@ -1,166 +1,71 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ci74p00im-qukt09090301.me.com (ci74p00im-qukt09090301.me.com [17.57.156.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3395A184
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 02:44:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50B42F44
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 03:28:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.57.156.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727059488; cv=none; b=E5cBISAoxzCCLNDb4e0n2lTTqBr/ofHLl4YEvXx7qQezvXWuTGcQfpPxWDaT+7MmRaMxnNoQ/BFut/Goo3/PzM75PHTSPcHWAUJmjq0jCSn/EKfxDA8r0LlXaTJxN/3yteDXHbpnLk1mY/H/HlROaapRPqU7dVhZojr2G0EYmDA=
+	t=1727062125; cv=none; b=Y1zia4yVf5c88JnKDwpVGDdxUBdV/xZvaJQZDM4VeDisn9fHbdS9C8o3f+7XgVYtoqCTY9LakxuLgTsCLS66SBpspe93cvZmgZCEYSIcpiANXQkOKDunxjxsr941EoHdsR7XGXGr7FcPEc63i3Lud4VDSj/dx5XpJVHInYQbsfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727059488; c=relaxed/simple;
-	bh=Dsep3sdyfE//rDWXo7/4mgb0ysX3p/atMl8pki6u3LU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=AZ+54jAVvJuOMopPRBz7SrjbIerbIPRWZRg3j9R1CdKJxeHjDSe45puacddfbUCIhaVYPaqNtIE7QI6mRciF9pn7bLPymPHMsGbN2DTMG0J5rce7MHqD1CHLktaNqoQlXLacOshU3AD/36xB3eC6H6A3NJAXO9bHnJaAqEvubOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hmCsKzBP; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727062125; c=relaxed/simple;
+	bh=0i6Xp+hefopB/EdRuqXOkFfvh8l1L23kk4b54C7y4w8=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=nx1hifw3uhjz2jtugJbnIlQ5FnXiyD0uTHZOXhTeOw/BnvVOL4LTkERB6uANu6lcFxh4cgMt1LjPY4+TxwCVSl4zp4yz/FZdlf2G0Dre2PqhVHtL3hZ3U9J8RaeyZaQqM2VZM9qAtDHvYaHWV9NyZQkGvbCeGRpY3nY+XmPcuzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mateuszwielgos.com; spf=pass smtp.mailfrom=mateuszwielgos.com; dkim=pass (2048-bit key) header.d=mateuszwielgos.com header.i=@mateuszwielgos.com header.b=u/e1TuLz; arc=none smtp.client-ip=17.57.156.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mateuszwielgos.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mateuszwielgos.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hmCsKzBP"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2055f630934so32996495ad.1
-        for <git@vger.kernel.org>; Sun, 22 Sep 2024 19:44:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727059485; x=1727664285; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cSV0wDNrklGjNyWXj8h9fzvziicgwpbP66LrFjfE8D0=;
-        b=hmCsKzBPaafItCtyoHMlor2RPq2WmwnJutV5FsbMlOy9TaPaH4Z/zkslEwhSPJQhhV
-         NHsUV/oKWEQh+p4kOyQaHbvV5kr7KZ+hUCqHdXcrbW0FUqelqZyZTHlUt4eAXCRfIwtM
-         noOkyg5iKPmw2R0jumd8E+Fx/EMjW6ImbsPQGgohMeIO7gTx3sF+DP5gfGLy3Y59rwyM
-         h6sLp3uSHZwBQ5KSTl86D6u/xvAIkwCJUQpnoPy6y5iP/w3LaDnLVE8iirzsO9w25zGF
-         v3m9C3jK/DQV2NdmgkRb7cPkW2uLvSUK2w+0SXFOL0V5bVG1d/4n/DQiDnGgbt0+mHCb
-         or+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727059485; x=1727664285;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cSV0wDNrklGjNyWXj8h9fzvziicgwpbP66LrFjfE8D0=;
-        b=BKJC+sd5UVt2xUb/FBhETJvQTh8DO2+iYO7AXnQIDS9PrmSLMl/wgfuOj6/A28KqKB
-         BOFcCLwpdssxz9KWPgYjFRX5wB0SDgJ37M6lpwLEYsJaF4FzoU2WK8oca+giiRcvjona
-         TUbWvzgYnKJ6tQSxVwp02glZtEZmO5CGVQxj/Ec58yIlBaG2NE8zoHK8XLBarDeSdv6t
-         8KB+33hgCfyl4YrvA6hu4l/LE79SIbQmiT0UZimFyMpkAJ7f/VsKBWHOO7kKezr4iqdp
-         vRzb3pTnBv0ypeEZQkZM3sHWFtPmWJ1/F9L78u+lCX+pjfzjXvTbKy559mW5jHPOz1pV
-         0bew==
-X-Gm-Message-State: AOJu0Yw0j9l+d0ORfVp3zMZupZN2XoHBbL3b/VmqOHwh66z9F+O/I36G
-	ZCrbI+CiOmlEbXuWwijm+/h338ZE6V17y65U6Vb2VUJ6n26xBT4j1kdQRg==
-X-Google-Smtp-Source: AGHT+IGFTCDOdW0E57fxWXgOVwLevRN6k6pQDf2FsnxxFEeJ5bHSbsjogVsxz5YiLpzdbbcpThfByA==
-X-Received: by 2002:a17:902:da89:b0:206:994b:6d53 with SMTP id d9443c01a7336-208d83abb55mr182571455ad.30.1727059485229;
-        Sun, 22 Sep 2024 19:44:45 -0700 (PDT)
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20794600fddsm124790855ad.82.2024.09.22.19.44.44
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 Sep 2024 19:44:44 -0700 (PDT)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Git List <git@vger.kernel.org>,
-	Git l10n discussion group <git-l10n@googlegroups.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Jordi Mas <jmas@softcatala.org>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Emir SARI <bitigchi@me.com>,
-	Arkadii Yakovets <ark@cho.red>,
-	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
-	Teng Long <dyroneteng@gmail.com>,
-	Yi-Jyun Pan <pan93412@gmail.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff for Git 2.47.0
-Date: Mon, 23 Sep 2024 10:44:42 +0800
-Message-Id: <20240923024442.13621-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
+	dkim=pass (2048-bit key) header.d=mateuszwielgos.com header.i=@mateuszwielgos.com header.b="u/e1TuLz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mateuszwielgos.com;
+	s=sig1; t=1727062122;
+	bh=0i6Xp+hefopB/EdRuqXOkFfvh8l1L23kk4b54C7y4w8=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+	b=u/e1TuLzuw8HisK1cv+m3jibSZKP2YY/Ub4gCxeeln6+A5xvbz7Nx+vpGmeG3Oq0Y
+	 FPTyrEbASkO4vhKU0QlOSbV2jIyAIkwH+3s6YQi3CPeKd6eiV6F5+7ZaQlq0a3e2a3
+	 TJFOmEhca246Ijjp29WnUnsii3xvAvrC+YU3QRaM+r08MBHVYrkqHuCD/BGgCMcmJm
+	 2fKLRzgc2BS+14PJsFLRYsdbHL5ocFtoNA6pqXD5pK94cOrEDUOwnUVpGsBZTxJqVF
+	 5vuUMAHxZSmG9imiDihIy4ACqXTZ+4y85FAMX5Te8DE8vozslc7WiC8JuC3o9Se1AG
+	 umRPU7Q5JBlUQ==
+Received: from smtpclient.apple (ci77p00im-dlb-asmtp-mailmevip.me.com [17.57.156.26])
+	by ci74p00im-qukt09090301.me.com (Postfix) with ESMTPSA id 11F29112027B
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 03:28:40 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Mateusz Wielgos <email@mateuszwielgos.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (1.0)
+Date: Sun, 22 Sep 2024 22:28:26 -0500
+Subject: Using Git as a Database
+Message-Id: <4B2B1EC7-6B08-4B57-A50F-702C031C2792@mateuszwielgos.com>
+To: git@vger.kernel.org
+X-Mailer: iPhone Mail (21G93)
+X-Proofpoint-GUID: swnJrLduZeNzxOzMyXNncLzr9hy8ftBq
+X-Proofpoint-ORIG-GUID: swnJrLduZeNzxOzMyXNncLzr9hy8ftBq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-22_24,2024-09-19_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=767 phishscore=0
+ suspectscore=0 malwarescore=0 mlxscore=0 bulkscore=0 clxscore=1030
+ spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2409230024
 
-Hi,
+Hello,
 
-Before the upcoming release of v2.47.0-rc0 later this week, let's start
-a new round of l10n for Git 2.47.0.  This time there are 48 updated
-messages need to be translated since the last release. Please send your
-pull request to the l10n coordinator's repository below before this
-update window closes on Sun, 06 Oct 2024.
+I would like to use Git as a database of sorts. Let=E2=80=99s say I want to t=
+rack weight of something in a file. When the value changes I can commit the n=
+ew one. I can also figure out all previous values. That=E2=80=99s awesome.
 
-    https://github.com/git-l10n/git-po/
+What I am having trouble with is=E2=80=A6 What if a measurement is taken but=
+ there=E2=80=99s no change? I want to commit a file that hasn=E2=80=99t chan=
+ged.
 
-The following description of our l10n workflow is from the "po/README.md"
-file.
+The only workaround I figured out is to toggle the executable bit.
 
+Is there anything else?
 
-## The "po/git.pot" file is a generated file, no longer in the repository
+Thanks,
+Mateusz
 
-The l10n coordinator does not need to generate the "po/git.pot" file every
-time to start a new l10n workflow, and there is no "po/git.pot" file at all.
-
-Everyone can generate the "po/git.pot" file with the command below:
-
-    make po/git.pot
-
-But we can also forget about it. By updating our corresponding "po/XX.po"
-file, the "po/git.pot" file is automatically generated.
-
-
-## Update the "po/XX.po" file, and start to translate
-
-Before updating the "po/XX.po" file, l10n contributors should pull the latest
-commits from the master branch of "git.git". E.g.:
-
-    git pull --rebase git@github.com:git/git.git master
-
-Then update the cooresponding "po/XX.po" file using the following command:
-
-    make po-update PO_FILE=po/XX.po
-
-Translate the uptodate "po/XX.po" file, and create a new commit.
-
-
-## Refine your commits, send pull requests
-
-In the "po/XX.po" file, there are location lines in comments like below:
-
-    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
-    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
-    #: builtin/rebase.c:1671
-
-These comments with file locations are useful for l10n contributors to locate
-the context easily during translation. But these file locations introduce a
-lot of noise and will consume a lot of repository storage. Therefore, we
-should remove these file locations from the "po/XX.po" file.
-
-To remove file locations in the "po/XX.po" file, you can use one of the
-following two ways, but don't switch back and forth.
-
- * Keep the filenames, only remove locations (need gettext 0.19 and above):
-
-        msgcat --add-location=file po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
- * Remove both filenames and locations:
-
-        msgcat --no-location po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
-After squashing trivial commits and removing file locations in the "po/XX.po"
-file, send pull request to the l10n coordinator's repository below:
-
-    https://github.com/git-l10n/git-po/
-
-
-## Resolve errors found by the l10n CI pipeline for the pull request
-
-A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
-help git l10n coordinator and git l10n contributors to check the conventions
-of git l10n contributions, and it is also used in GitHub actions as l10n CI
-pipeline to validate each pull request in the "git-l10n/git-po" repository.
-Please fix the issues found by the helper program.
-
-
-** Please note: The update window will close on Sun, 06 Oct 2024. **
-
-
---
-Jiang Xin
