@@ -1,147 +1,171 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFB617BCC
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 19:13:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245B11A08A0
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 19:31:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727118828; cv=none; b=M7LwimSlbso4LTu1bDqczmTgxmFRvSw+ubFoLYbrWG2TXd40eg8wPzrrbK919+KlH/1zuWG48iBd2Nfuj8hBoFPpkmSGlrhsaKu9rpDaZOzyTWe73lznXIlW9bURsD0g+KC3SiS0wOXxU+kHOcH188zWxDjxdQug5hJja9Y15dM=
+	t=1727119887; cv=none; b=gHFPRsdT4xlzVw1bYQWTd+DPgQ+pGprr0pgB86+56eITRotM8vw1hR2ya8i0E/5agrJ1YGk4TNyVAoEGOm0MZIZm1LkFZBAEhCc6JVcHDn38sfJ+18/p+aKH4TNwFa+PW2HQNzmHF+NloN+Xw/RkBIDHS91yjYXpgYD6NyirtZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727118828; c=relaxed/simple;
-	bh=xmMREw7zFt70q74qnUc5e439TzRC4OfNG6SPoD6z7K8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=IwEl9frYdiY+aznK6tajoDayQpQp1EJBP43qB5r9lPk+OxkP7NcvGI6ukdggJopg3/uQCoTfeSdiGCFIKlPrRgCxrOZPqw20WWxT0dS1MuFHlzkRL7vXfpijwJMxMLrD/yb8MPMHSWH5DI9NOWh/SR7N6WqG5ES0lWvFvj5yom8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=sKjdBSQw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E/DQehth; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1727119887; c=relaxed/simple;
+	bh=lQpvHEbCXzjX6d/cnP2hcGjKrRZgohelcnVj+rm01gk=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=JfDxmZBo2He510FIhlSxu6d4uNE43jReH1GlCFF2s4D4Jr1xICCVRsxwCDocFCUulBawP7ZhwmAJILU0LqF7mRiw6GALA4d1FZ7mYxC3+qF8EKe8MiXJsfSy5w3KjHRRKYngvboluKpR9Af98rveFo6W77ZgoteIcUUh4lFoEw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZKsdXcFB; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="sKjdBSQw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E/DQehth"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0E5321140259;
-	Mon, 23 Sep 2024 15:13:46 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 23 Sep 2024 15:13:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1727118826;
-	 x=1727205226; bh=eHfRufnlOv/36zPAni1+gyU93DbGxRdXGeoNb4smp0o=; b=
-	sKjdBSQwR8wvFXS9tbR4CZo3fFqF319sFu8r8YKJaRLNQgHXMbV27Qyx1CvEZpID
-	KnNujMGf1SdnSoS5jqXHpVF88sbfO+gS0eZeNtOVaxxegAtd9jksKeBRshILZULs
-	NlQGsbVryAAndEZhkg2bHwx91tnMIRuU/83K9TQhDVNVfN8fr/m+fGZoPGtFv5wB
-	JooAQjwtr6ffo+CyJQQgJfTDGozTHjYlwkRf9aknPTJNG33+5d8rMJsih9VG15JQ
-	fwt4XMbLVEN+WmN9UbOZafGl/f4q3tG6QBZAsVcPlqpf+pPuyigOkyJgmIszKval
-	20iLdWlVW2wky4lrUIBC/g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727118826; x=
-	1727205226; bh=eHfRufnlOv/36zPAni1+gyU93DbGxRdXGeoNb4smp0o=; b=E
-	/DQehth5JwjwlyPLP2FUAaGOzo8xtjtLieSPz9oersg9bjpNSNaeGXCpaxvmi1ku
-	eXGdCQyr1ve5gFBTHaem2zd+Qg3IjkpkkhFdIAi7/KtQ2y8RmZaxpd3bipAyNQZN
-	cMz74FeULP7DrYk8S/KPleQBfh6VRgVmorhd6kKp6kBKp0VKLBc7NYM7ZIQrfvdy
-	cc7A1dOw42Xu8QlwZdn3ONs+9ixgGFi8tp2DQTeKLdCZcOKs9GtRTpNuoiWCnb7c
-	mqY+VBvWmMUptp0FrCW3qR6TTLAKJUR/e5EtWwA2bTdDBHRnHaZSvR800ehJnZ39
-	PeauN6n+MkWfyME8FCJ+Q==
-X-ME-Sender: <xms:6b3xZkwihL0XXYD6YpwiXaXFPeknY4HloLmzfYbbBrOEbrr509TBmXE>
-    <xme:6b3xZoT-GDZaO2blM6Y9pi5Lnx7yuRmPTqITZiEfAZeEfkliASUVNvOQ2DrSsrSLp
-    GIXnDYH1Tq6HbJL7Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudelledgudefjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
-    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
-    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghlghho
-    nhgvlhhlsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnsh
-    hhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhg
-X-ME-Proxy: <xmx:6b3xZmVOX44LRMqXKFFYb0Q2R4gq_P6ZlVBt-DY1Vr-CD_s4KmKMLA>
-    <xmx:6b3xZiiLAl_u_yxdXIWkHrk09DJy2F82501fPtWe1rVNXwncM-FikQ>
-    <xmx:6b3xZmD0PvLBHzjpsknj3dVkDNrbSqjFEbRQ3VqB6bYqyp1VlZXQHw>
-    <xmx:6b3xZjLpwr3230DyzIi6SExT-d5D5ynpRXY67ymAwbAwN690NuW1IA>
-    <xmx:6r3xZpMtkALPZGKXjjK1-KLIuvQaAwetc0lKVxNgbVzD7k4bqFpj6a5Y>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id C9B6D780067; Mon, 23 Sep 2024 15:13:45 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZKsdXcFB"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a8d2b4a5bf1so678994166b.2
+        for <git@vger.kernel.org>; Mon, 23 Sep 2024 12:31:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727119884; x=1727724684; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=jF55GzDFPzozdUK+vBRM0klXDe3EY0fgfnHPxGXnRjs=;
+        b=ZKsdXcFBV+WQHqGDOQ6OdWYM/+ejslm+bJFfINZHsH1vBkcSzGRbu1L3PMk2KPxtol
+         WEdK/mGMiAZzxuTVEei7fs+tK+o2utlroyjO9XOHKVGHKgPqyFGJvJDUDtPftpbwFIT9
+         q8bZIVmXb+eh3+3Yez9sREzar1YwANP8QhWCW3oRK7twOsmhncJ0s6Vpbb+auZs/5cUT
+         FUa1WjTOJjyQ2Gsl23P71S2mL12KyzHPk+p+af5iDvMkSP2CwjlZaaBrhef2gyfJ9Prj
+         XJ/fbycYHtFnKWg1/LJlkVsrGZGqgKVIy2EWoPofNRRX/GYKMR6L/KuDU19pBQrT7qMR
+         Frzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727119884; x=1727724684;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jF55GzDFPzozdUK+vBRM0klXDe3EY0fgfnHPxGXnRjs=;
+        b=AjNLEVS6w1U2zSerZZDX9674FvSdjdjET03O7IMIqGi3XHC4lcKn5EOfLgIZHA03c3
+         Ya6xEkwE9rL4pP98gjYv/ODs1uhyztZS4dWRKV7TPW9vLaVWerWcYOeHBy8hAjueplXR
+         xKR3Ym27rutEe+3jmH4ajUxB5DkJmm+D6UeQd16mWNlYH7Pm+NNkntJ24lMn1ZZ9L9Q3
+         iwDbj69zqLhhbLghtOGtOz1hc8SrobKReZR7nMEzNWjyQIgQaK5ftWacOK3NbVutvLS3
+         Vc+xQVIG15BVnafpGWu1XDQs09mBTHIpMb1sfgx02MTIRJckDQMv6XZw4LgOAJA5CJDb
+         DCrA==
+X-Gm-Message-State: AOJu0Yy9Qw0yLjkxOnPQdtfWdsvq0txHi78VVOpZ10+sJq+jmnXctkZD
+	2Hsccv4wkBEaO8+KRxAEPe+O235GRMgLIv8fm4jDGqpxnzCilixmRz96MA==
+X-Google-Smtp-Source: AGHT+IH6pB7wrKTJuhXXJqF0kkmMEcpIwTyN6fbl8aavFNTgnQnU/GDqoHN+tQr+dT0vIf0trIPjgA==
+X-Received: by 2002:a17:907:efc7:b0:a8d:439d:5c25 with SMTP id a640c23a62f3a-a90d4fdfe99mr1366347966b.4.1727119883952;
+        Mon, 23 Sep 2024 12:31:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9061330ab8sm1254538966b.195.2024.09.23.12.31.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Sep 2024 12:31:23 -0700 (PDT)
+Message-Id: <pull.1800.git.1727119882901.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 23 Sep 2024 19:31:22 +0000
+Subject: [PATCH] sparse-checkout: disable advice in 'disable'
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 23 Sep 2024 21:13:25 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Eric Sunshine" <sunshine@sunshineco.com>
-Cc: "Andrew Kreimer" <algonell@gmail.com>, git@vger.kernel.org
-Message-Id: <7944f06f-33d9-4988-85ab-c1cf563615f3@app.fastmail.com>
-In-Reply-To: 
- <CAPig+cSErj4ZB9bHB8mZfzNkiaN_EpjT6b4b=cfsf_+KMqytiA@mail.gmail.com>
-References: <20240923110343.12388-1-algonell@gmail.com>
- <CAPig+cSZmKCwy_sFKPR-w+DjXeTJJec1BAM6wDXMyEMWhoAY6g@mail.gmail.com>
- <85ed3ec6-fa4e-4ab8-872f-6bd500b2bb66@app.fastmail.com>
- <CAPig+cSErj4ZB9bHB8mZfzNkiaN_EpjT6b4b=cfsf_+KMqytiA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] Documentation/config: fix typos
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    newren@gmail.com,
+    Derrick Stolee <stolee@gmail.com>,
+    Derrick Stolee <stolee@gmail.com>
 
-On Mon, Sep 23, 2024, at 21:05, Eric Sunshine wrote:
-> On Mon, Sep 23, 2024 at 2:44=E2=80=AFPM Kristoffer Haugsbakk
-> <kristofferhaugsbakk@fastmail.com> wrote:
->> On Mon, Sep 23, 2024, at 19:51, Eric Sunshine wrote:
->> > Depending upon how dramatically the patch series changes from one
->> > version to the next, the range-diff may end up being unreadable
->> > gobbledygook, in which case you may instead want to include an
->> > interdiff ("git format-patch --interdiff").
->>
->> What=E2=80=99s the benefit of interdiff in that case? Neither
->> git-format-patch(1) nor git-range-diff(1) seems to discuss what the
->> differences between these two are.
->
-> An interdiff is just a plain diff. If you have branch (or tag) "v1"
-> which is the original version of a patch series, and "v2" which is the
-> reroll of the series, then interdiff is simply:
->
->     git diff v1 v2
->
-> Thus, it shows the difference between the final state of the code at
-> v1 and the state at v2. Interdiffs are easy to read because they are
-> just diffs. However, because they are only showing differences in file
-> content, they don't show changes to commit messages or new or removed
-> or reordered patches in a series.
->
-> A range-diff is a diff-of-diffs. It is very, very roughly similar to t=
-his:
->
->     git format-patch -o v1-patches <common-base>..v1
->     git format-patch -o v2-patches <common-base>..v2
->     some-diff-dir-command v1-patches v2-patches
->
-> It shows the diff of the patches themselves, including changes to
-> commit messages and changes to changes, as well as inserted and
-> removed and reordered patches.
->
-> Range-diffs tend to be a good deal more difficult to read (at least at
-> first) but help show the evolution of the _patch series_ itself
-> between versions, whereas interdiffs show only the evolution of the
-> _code_ between versions. As a reviewer, if you're primarily interested
-> in how the code evolved, then interdiffs are much more easily
-> digested, but most reviewers are also interested in the holistic
-> aspects of a patch series for which range-diffs are more helpful. I
-> periodically include both range-diff and interdiffs in my rerolls.
+From: Derrick Stolee <stolee@gmail.com>
 
-Thanks for that.  I love when a good range-diff falls out of a
-reroll=E2=80=94and I love the tool=E2=80=94but of course that can=E2=80=99=
-t be expected out of
-every reroll.
+When running 'git sparse-checkout disable' with the sparse index
+enabled, Git is expected to expand the index into a full index. However,
+it currently outputs the advice message saying that that is unexpected
+and likely due to an issue with the working directory.
 
---=20
-Kristoffer Haugsbakk
+Disable this advice message when in this code path. Establish a pattern
+for doing a similar removal in the future.
 
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+    sparse-checkout: disable advice in 'disable'
+    
+    I found this while someone was demoing some behavior that included
+    disabling the sparse-checkout feature. Having this message pop up during
+    that interaction was embarassing.
+    
+    Thanks, -Stolee
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1800%2Fderrickstolee%2Fsparse-checkout-unset-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1800/derrickstolee/sparse-checkout-unset-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1800
+
+ builtin/sparse-checkout.c                | 5 +++++
+ sparse-index.c                           | 5 +++--
+ sparse-index.h                           | 7 +++++++
+ t/t1092-sparse-checkout-compatibility.sh | 5 ++++-
+ 4 files changed, 19 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 5ccf6968628..85b4fc06b35 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -924,6 +924,11 @@ static int sparse_checkout_disable(int argc, const char **argv,
+ 			     builtin_sparse_checkout_disable_options,
+ 			     builtin_sparse_checkout_disable_usage, 0);
+ 
++	/*
++	 * Disable the advice message for expanding a sparse index, as we
++	 * are expecting to do that when disabling sparse-checkout.
++	 */
++	give_advice_on_expansion = 0;
+ 	repo_read_index(the_repository);
+ 
+ 	memset(&pl, 0, sizeof(pl));
+diff --git a/sparse-index.c b/sparse-index.c
+index 9958656ded1..0f9fb4df026 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -19,9 +19,10 @@
+  * advice for advice.sparseIndexExpanded when expanding a sparse index to a full
+  * one. However, this is sometimes done on purpose, such as in the sparse-checkout
+  * builtin, even when index.sparse=false. This may be disabled in
+- * convert_to_sparse().
++ * convert_to_sparse() or by commands that know they will lead to a full
++ * expansion, but this message is not actionable.
+  */
+-static int give_advice_on_expansion = 1;
++int give_advice_on_expansion = 1;
+ #define ADVICE_MSG \
+ 	"The sparse index is expanding to a full index, a slow operation.\n"   \
+ 	"Your working directory likely has contents that are outside of\n"     \
+diff --git a/sparse-index.h b/sparse-index.h
+index a16f3e67d75..727034be7ca 100644
+--- a/sparse-index.h
++++ b/sparse-index.h
+@@ -1,6 +1,13 @@
+ #ifndef SPARSE_INDEX_H__
+ #define SPARSE_INDEX_H__
+ 
++/*
++ * If performing an operation where the index is supposed to expand to a
++ * full index, then disable the advice message by setting this global to
++ * zero.
++ */
++extern int give_advice_on_expansion;
++
+ struct index_state;
+ #define SPARSE_INDEX_MEMORY_ONLY (1 << 0)
+ int is_sparse_index_allowed(struct index_state *istate, int flags);
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index eb32da2a7f2..6e230b54876 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -2355,7 +2355,10 @@ test_expect_success 'advice.sparseIndexExpanded' '
+ 	mkdir -p sparse-index/deep/deeper2/deepest &&
+ 	touch sparse-index/deep/deeper2/deepest/bogus &&
+ 	git -C sparse-index status 2>err &&
+-	grep "The sparse index is expanding to a full index" err
++	grep "The sparse index is expanding to a full index" err &&
++
++	git -C sparse-index sparse-checkout disable 2>err &&
++	test_line_count = 0 err
+ '
+ 
+ test_expect_success 'cat-file -p' '
+
+base-commit: 94b60adee30619a05296cf5ed6addb0e6d4e25dc
+-- 
+gitgitgadget
