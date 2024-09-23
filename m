@@ -1,105 +1,96 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37996194137
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 09:15:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE6BEADA
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 10:26:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727082927; cv=none; b=nwJ6uNppKkGFwTnoxDG3PLAuLQJznmJbae8vGEdEXlfEGZ3GIXA18BI+9NYN0OdVO4jLfwJ1a/IlUeP/IQ/4LYoVGSTWLzmobeosOziytZd0blSSuczc0lSbdFcqxmjE6URrEWKGRq/kPwP6EpQR9xRtrqAah7P+LSnW/lanXuk=
+	t=1727087176; cv=none; b=U+t0rw2J87sQtQcQupWgrQl8RaDynzSZWzM2+gRnlJWwY4jhvuwCMq+aPt28Y7deNENXs1Xi132QZYzkVjJnthmFxjaSBehg1LAWQ9bTHZsMo8DQuLU2wzcrcWtZi2w4szo86+jjR3r3w1zx7TdK+7T1kLyBwUHjX+yieNMxcO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727082927; c=relaxed/simple;
-	bh=+iJE0Svd2rbNixtFam8dV6SXgO8DgGlWDrLDzFSyegQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gaXrYnxBIXFWxlzWv7qbs548mDpr2Qska6udQaL0k1M740k2hmC6eQW7CE274lfhwd4rWJuo6fSKArrR3oQzXDdlxKex6BFttPgjSnyvOLqvMIkq49zkt1u73sEoVNR8qrewszNARZ8qESwzjWUrMt0Ed5V/ni7yFIX/xcnTkyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QXtl+SPG; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1727087176; c=relaxed/simple;
+	bh=Z7qPShFdKx39DaPitJyDFCwjaKfhNH3Sbi796GHonSc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ksqlrHLRzEWHtnVAXDcLFSgQaQwnpxclC5k5JoTvwYp8QvGq6WD+KgZMy5prjZw0H9qRM8v5uEosuaGNl6cISajAldwH/jMY40lw3MwU6CpNLPMZDjnOqfbtOvuyrr1HllIVROC11+lo8tFW5785e5v1A/HJQfdktm/lUeHXgRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dDngPfdH; arc=none smtp.client-ip=209.85.160.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QXtl+SPG"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42cb806623eso33882785e9.2
-        for <git@vger.kernel.org>; Mon, 23 Sep 2024 02:15:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dDngPfdH"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-277df202ca9so1914226fac.0
+        for <git@vger.kernel.org>; Mon, 23 Sep 2024 03:26:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727082924; x=1727687724; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=RhUkpeRrQD49GInmDkX3IaLD1YXzKM6tfhPJlD+Y6R0=;
-        b=QXtl+SPGgwFaaI50UEXPYKkdKpp40SEyH9V2E/ZZ9YzBr7pfWLxmiHfUeXjqmoFITQ
-         bw9h3mFgNq+W5/ElHov8KcNPnupd3LO6cwjkUakHaLs4yZbzTySFBgg/47Ggq3RKw7+A
-         y5LZY4F/BB9KLA63wHSOGB3eTHQTNy2MEG5YtSduEGUqnnD+uz8GZJ7mw8KBSRNKo6DB
-         bDBPnfE9crJQ56xoe89exUvahB0aTOddIoZjcSfnW8ufz+aoywEol3KMr7UbPtlGplAm
-         g6J9SIj090OZPU/R8Sg4h9YOBvNMGj38l8okicJNTV+u+jgM8WOMZExP54Q0Ux9narW7
-         k83g==
+        d=gmail.com; s=20230601; t=1727087174; x=1727691974; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Z7qPShFdKx39DaPitJyDFCwjaKfhNH3Sbi796GHonSc=;
+        b=dDngPfdHc3Omyi9DibGSYHBHyZhWr+TA7C6/44eUeaA6oENLJ0r4Jmpi0j4DuYOr3J
+         ZMbI4m63D3AtGX/qNNZMzeTI3wnXSPl2QSHlD3ARAxrG0ypZbErkgFF3MfxD8UpYQZgH
+         8LmqSeSqXnvP3zvLyPHahALzPdGfe5zBPDuYyGMmO5dLFsiwyrTJJylbUT37MvbwGPs3
+         Kk4R7D8go5VTl6k8y+nu54dHktfiUsmUuITTF9qZA4Wc880PC7J33LqRV4rhGWBksfyl
+         D5XnmmS5mWF472ovgb2ovU/2SukZXdt9NWETwwLbETOH/Gv8254Jf5bZNnSJkFhFJva2
+         3vtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727082924; x=1727687724;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RhUkpeRrQD49GInmDkX3IaLD1YXzKM6tfhPJlD+Y6R0=;
-        b=b/n6TdaynERj/gEP3Gk1d1JgIZPbcoRa6/TXTherVt0GKnydPzxhfA75QtgxhmBmdj
-         O8FyJByW1zcsVIfSPjDOfcP8RJmODXij7sCOVm3ns8rKOQvc9MY4Yo5oXl4ntPG3yAty
-         qlh3MBtkS9+ebcCupC4k/lpySlIoB2vsMQ0NL36vhSBXd711Cou2/n2Xe1iF271dRJJF
-         hSIi+TwC9DrwMu7PHKHTCc/07YOO3mNqTxNHoqvK21tMxJBT3Zk1F12O2ttjNPDyJ9Mi
-         LOizOl5X9pnoelDUVguZBWiFJpI6/C1yYZjezEKogQTCnnHjH3a8Vv5zns0gD+jesQGR
-         vjng==
-X-Gm-Message-State: AOJu0YwKeUQ/GqwLXk13UF/i5mNAhMxtZVqlFAfyleqpCTQN1bpOsI6T
-	Vp9HWONy+F8OYf69Q3uCGj+K2kY/+4aN1dMqrtA3ekCO1b0Xe65klmvs+Q==
-X-Google-Smtp-Source: AGHT+IG/e0gu0ZatGYCbG+AtrR7hQYTKzjpNXUG5/l1zGD7/FJMnk/fV+sfPyPEjuCUZCt1fRJUW5w==
-X-Received: by 2002:adf:c788:0:b0:36d:2984:ef6b with SMTP id ffacd0b85a97d-37a4225216amr5574073f8f.11.1727082924343;
-        Mon, 23 Sep 2024 02:15:24 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e754c5c78sm121295455e9.42.2024.09.23.02.15.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Sep 2024 02:15:23 -0700 (PDT)
-Message-ID: <25050ad6-bdf8-4b1f-bbc8-cffe6ca15386@gmail.com>
-Date: Mon, 23 Sep 2024 10:15:23 +0100
+        d=1e100.net; s=20230601; t=1727087174; x=1727691974;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Z7qPShFdKx39DaPitJyDFCwjaKfhNH3Sbi796GHonSc=;
+        b=fveBLQcF1S3adT9Ssmc8yg7BET4z9vuCHZNdrbXNnAy7y4ZSt8gCTydcwpIoL32Ord
+         b3TRDhLturNn+a6zJ6g71/CHZXOMhjlILxWp++KO8am7ZOIxaHXhH25mAajbqX2SlYlW
+         DJX69rA36xRtm22Ff0JHfBCVexSeMcFV4hni5sYxgwVUfWvuDLLe4+p5B8LjjqYSl1NY
+         aBEH3avPsTMy56x/5lwwUY9xllmJAtcVFIZHJKVj+v18TCadVRLu1RqmBadIMKtd2D1X
+         bm7hE0anXvw53mmRi5n5H557gt3SvEQ4Y4nMCqDhoGjmjQWMUZRfJg42P8FBkq48DB1A
+         0wGQ==
+X-Gm-Message-State: AOJu0Yz3rnvTH9kCR1KL1VbXkq3nhoGHsxiLAzbYC2wqNfaXbeFYSN4F
+	U4lPXyYQcOE3a5RtS4WSj65sYfFJZdZ2mveysVQu/YwJ8jTUhO6bkSBtDXNxb3wWqSrP6ykMGlS
+	a36GSkrVPhyFB4i3L/dWpyhc3JhnIqjW2W5Q=
+X-Google-Smtp-Source: AGHT+IGDMRQaVOzgu1ewz1OXplMD9gk7Ar9Ko5aiTy3zQPJAqx/KYiRCuZ1Df6Br5laT7aWNRSjuUp4MGQUrZyAvRpM=
+X-Received: by 2002:a05:6871:7a9:b0:27c:52a1:f311 with SMTP id
+ 586e51a60fabf-2803d18d466mr6580965fac.42.1727087173814; Mon, 23 Sep 2024
+ 03:26:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [TOPIC 10/11] Project Tracking
-To: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
+References: <CAN477tHJnVnOKfUsG5G9QAVdzYvmUuC8A8Vxt8mtHB23fd=hAQ@mail.gmail.com>
+ <cce1d054-911e-407e-bc26-1c0bac4dd8e4@gmail.com>
+In-Reply-To: <cce1d054-911e-407e-bc26-1c0bac4dd8e4@gmail.com>
+From: =?UTF-8?B?5YiY6ZKf5Y2a?= <liuzhongbo.gg@gmail.com>
+Date: Mon, 23 Sep 2024 18:26:02 +0800
+Message-ID: <CAN477tFqDM64NsoXYKww7Xh7rNajMGn0DK062AjxDOmp+_7Lig@mail.gmail.com>
+Subject: Re: The maintenance tasks will never run if maintenance.lock is
+ accidentally not deleted
+To: Derrick Stolee <stolee@gmail.com>
 Cc: git@vger.kernel.org
-References: <Zu2DmS30E0kKug2a@nand.local> <Zu2FMQnLCKQ2skkM@nand.local>
- <xmqqployf6z5.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqployf6z5.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 20/09/2024 20:41, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Thank you for your response.
+On Thu, Sep 19, 2024 at 8:56=E2=80=AFPM Derrick Stolee <stolee@gmail.com> w=
+rote:
+> At least, I haven't been able to find a reason why Git would be
+> failing with something like a segfault which would also cause leftover
+> .lock files.
+Yes, it is not necessarily a problem caused by git failure. I think it
+is a natural
+shortcoming of file existence lock, which cannot guarantee that the lock wi=
+ll be
+released when the process exits abnormally.
 
-Taylor - thanks for posting these discussions
+> I can speak from experience of previously having a lock timeout
+> that this could cause problems where maintenance processes start
+> running on the same repo concurrently.
+> [1] https://github.com/microsoft/git/pull/598
+I read your commit and explored more. Perhaps the file locks provided by th=
+e
+systems are a better choice, such as fcntl() on POSIX and LockFileEx()
+on Windows.
+They can be automatically released when the process exits abnormally.
+If there are
+no objections, I'll give it a try and send a patch in a few days.
 
->> * Jonathan: (to Peff) you mentioned sometimes you have a mild negative
->>    feeling about something and you’re good about expressing it on-list,
->>    but for a lot of contributors that will cause some discomfort and it
->>    will cause them to stay away from that thread. If we’re a little more
->>    clear about what’s expected, then conversations can get stalled less
->>    often - e.g. when a thread needs a comment from a refs expert, getting
->>    that comment that supports forward progress.
-> 
-> Yes, either forward or backward.  Having to keep a series that looks
-> potentially worth doing for weeks on 'seen' without getting any
-> movement is *VERY* painful.  Would it motivate more experienced
-> contributors to review and express either support or refusal if I
-> more frequently, say after 20 days since its latest round got queued
-> on 'seen', a topic that does not seem to get enough support to be
-> merged to 'next' and is not getting rerolled?
-
-I think that sounds reasonable. Sometimes I'm quite slow to review but 
-if I haven't managed to do it within 3 weeks I'm unlikely to get round 
-to it. I'm also sometimes slow to re-roll if I'm ruminating on the best 
-way forward, but even if a patch series gets dropped there is nothing 
-stopping the contributor from re-rolling.
-
-Best Wishes
-
-Phillip
+Thanks
+Liuzhongbo
