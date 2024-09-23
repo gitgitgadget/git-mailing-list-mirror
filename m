@@ -1,122 +1,107 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E558C1A
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 18:09:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22DB1FA5
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 18:44:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727114948; cv=none; b=LvE8hCfBqYU8KbvTj/BRBh2bWFURlzjfpbXgfYDGBEX1kKtcwNj8jlNQezUgWfWNG5QVX3OPVdCRSpzJ88vZ/bW6vIN3/iJFv51BAAdBLujlcZ0Uyc1kjsXxOzXnZbXTbTIlq417jMdXnYfaCrOMtr5jovdC/YzmKjgzy2niBw4=
+	t=1727117044; cv=none; b=t9nPNGMfyh5Ao8kgFEUFNDtqsyfzUs7xqIEshNCz6n6buPx28hCr7Ej6x7+BPPVGm5vrmh8GuwruVCmEPypd6g7scRVuIFDWeVByhUY9s1YNESDoynBectg2+mwMmM/55/ih+Z8JgR/fPAyufH4M01syUDm4vzw1dP+/harLEyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727114948; c=relaxed/simple;
-	bh=+cWagZonKE+GPY0gcAspJ+gIN3cA7yZNsfyY8n/vEcM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Ha54SZwd5aDpI0DFoK83L3H6za6aFobTQCbRnp50ECPdukT//T6bZWgKkaJopbiF1ABADInAPiVbwOQcfN/QuZdPD0bOebtKg7czUpL5GlRhs84kfn81jMwbQ0aGS3mJhjracJzm9QkUZNCWydUCKruM3iuPM3vl7JrbIj+wJ7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=D+Gy24i8; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1727117044; c=relaxed/simple;
+	bh=zUZFZEqjV1slK4CaHQMcJbrpsvG7icwCnVNsBDX4jC4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=JB+Vj67D0nDcJZsFj++Ebja/I5TFGX16UJIoyOvHbrTJXXYp+EdN/TI8ETClUt9QZwyR6dytc1sWZsbBllSqGXr7hhdvRlsTn5krg4K7cVhfev/ntWK2fgWQxRHFd5vn+HdrwEAnDkF5EUEgT2iAoJVQokZwq+0Sg3e9nu1vjOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=T0kcWZoN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j783hv55; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="D+Gy24i8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1727114938; x=1727719738; i=l.s.r@web.de;
-	bh=3s3KU2ZdPQU9OVEMDiqBwKtgR1OOExoOOa78gl+phkY=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=D+Gy24i8saGqczidl7kqFtRIDuwmjDnndOEc+mllvLiQcTOeHWcYTsGPr58JaH7v
-	 fjZZrmeLLRPgkgeKJ24JeH3mIjaX8qYSq7Ud1/o4sHi3nbnQYSOe6cDR2DrCS03VK
-	 SxIm55CibY7n/YBf5hGDWXfHhTvIV3XMw7FZhAVYxvYRijf5SBzM5k8waPGzQN+wU
-	 EoSk+UpG228leDf0sFohQ1dRVu6sONY1wNY0+sCLdGdVHgm+J85w0z9a81Y6WAvAS
-	 92bJKX7bzfFyWDEIjBb2SfDSYbir1oRE5Lq6Pkix/VyndpwNCQKzG4cvo5kmpUEyG
-	 sPnli2YLrD5tAkoUAg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.152.135]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MftBr-1sGzpL2G1h-00hmZW; Mon, 23
- Sep 2024 20:08:58 +0200
-Message-ID: <2c3472d4-ad40-4636-9840-51fa97bca02b@web.de>
-Date: Mon, 23 Sep 2024 20:08:58 +0200
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="T0kcWZoN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j783hv55"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AEC251140258;
+	Mon, 23 Sep 2024 14:44:00 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Sep 2024 14:44:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1727117040;
+	 x=1727203440; bh=zUZFZEqjV1slK4CaHQMcJbrpsvG7icwCnVNsBDX4jC4=; b=
+	T0kcWZoNa+BT8mtgnNDq5S0XTzND3K5c5TGHfn83WV7PFn+cRcNJdnrPaYwAdXhq
+	lQIwUtqBoMxSK0eaygZZndGiwLhDpkD8MahNqunjSDrUk3lq78v71+Snnczw7vxe
+	SoTG7/t0YT5YBQEVWpqVdpGyxdTz53R2c77P53Kvi1tRgrvAQ+vciYNpNB3WvVcF
+	g9RsxERcl6RoSG+IPTV1mx86zI9B7mVClf0tCpChsDhSQ0Bi4QtjPpyWZq2EucNW
+	rryy1+ExYkLyqyXRIyQcZXjQrKikfjUt3PDNovpLVMfP/Ov943IxYuypSkfICH0u
+	ms8KMqmnBCkW2iLRSReBDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727117040; x=
+	1727203440; bh=zUZFZEqjV1slK4CaHQMcJbrpsvG7icwCnVNsBDX4jC4=; b=j
+	783hv55otZEId/3jO/qNfBFfjk41TeoxmMCdFA7nUrHNz1aYeP83o5NyIwd2vmT0
+	sJefDHDKRLiVKe3V0fpP0m2DnhdiiOIeOTxyse1Z/adx+TECIldKEYRlROOgXcHW
+	GJB8OK0SjhLOHTGwNKJeqT3nnqTkgDj0jWVqNMVEQ4sou3Qavc8c+ktn7g3FMDwt
+	2a8I7GDHYxxlYP4FXAnFDylN+u19dpc9mkpWZOEQwdMZghGj/BfYBeLkcK8y942V
+	lehmoeG8F2mVJhYyBXnBACFvGSloNRcr4x7Zrk8Jgef5nLUtufyFSZ4q0AzBETIR
+	1/hFjaWEYYMDV6ym1Ivuw==
+X-ME-Sender: <xms:8LbxZjQSamp1FNIWSzVSg7PhQ7DPAyw4Mh6iwSXQkvpZxY9OkGykHKg>
+    <xme:8LbxZkyUasOJEPLu7qpoG1JJxgrrlw0O0MiBRCDdOZaEU6eZX95ct657uHYOMzr93
+    jTJsb7maPhXt0Kqcg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudelledgudefudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
+    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
+    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
+    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghlghho
+    nhgvlhhlsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnsh
+    hhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhg
+X-ME-Proxy: <xmx:8LbxZo3EDYv2NW2vsqDq7yzommIjaKU2iuJXfDu-YljwGxsVT4BpvA>
+    <xmx:8LbxZjDKUlAsw_Ql2AsppvdCIB_Kp75oRSVnv_j-_Tg1YFkzpY7eEQ>
+    <xmx:8LbxZsj6atWRyxSw6vcjqIPL7G1qXVU1mkwnbQ4S6JDk5Zjcvkg28Q>
+    <xmx:8LbxZnoTIx1Do5OTrDpd0rKt83Scbai5QreGAWQf-Q1k-sZhrK_MiQ>
+    <xmx:8LbxZvuYPyjLFVekgqDk5b3lU3EbbjSAThw5ihI6_2JaflSYW4EgiHx5>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 6DE25780067; Mon, 23 Sep 2024 14:44:00 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Bug report: Undocumented interaction of --exit-code and
- --ignore-space-change for file move
-To: Ian Turner <vectro@vectro.org>, git@vger.kernel.org
-References: <d8512f2b-400f-4daa-a59f-5d10d4fc3840@vectro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <d8512f2b-400f-4daa-a59f-5d10d4fc3840@vectro.org>
-Content-Type: text/plain; charset=UTF-8
+Date: Mon, 23 Sep 2024 20:43:39 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Eric Sunshine" <sunshine@sunshineco.com>,
+ "Andrew Kreimer" <algonell@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <85ed3ec6-fa4e-4ab8-872f-6bd500b2bb66@app.fastmail.com>
+In-Reply-To: 
+ <CAPig+cSZmKCwy_sFKPR-w+DjXeTJJec1BAM6wDXMyEMWhoAY6g@mail.gmail.com>
+References: <20240923110343.12388-1-algonell@gmail.com>
+ <CAPig+cSZmKCwy_sFKPR-w+DjXeTJJec1BAM6wDXMyEMWhoAY6g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] Documentation/config: fix typos
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:QEDlQXwI371VWXf4BlhrEldMrbe0iKWMqt+10jB5cS8dz1690+Y
- tPdmasHitmTxH7wO6KZtGVOGr0eUB+7V0p+HHPFOBGDZ+zEljZlNb7ZOjlgWTHdksH3GPAc
- siWoxibYsGoPfaRcUkGjK7IMHrjv0fyg8s5rgnQhWZeKArpLPUBq6zGhIof3/0W9KeW3Fa1
- TFmMhGBTpvjvL7d4KLZ0A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Y16XjGa8ZZc=;SiVPDtxxy7XZmHLSPdQD7LvYYmI
- 9CnUz0p6Y8GbwwSm/vt9joczlaDmSAV0tK/uq0xCn3/GrRQ7HXIww+NCI82Dgf/vh/h7VcJt0
- SoCE1pvuUw2fI3212jGNfECYl+ahhEz+inIWBc/2j+eURhylCfk2aYHkH6YshlEgMuT58J3FL
- 0RQqP1cNyCB775dnVZgzJNdJkkLywleYf32Wl5V4j+sUmz6GKPanRozZ33sBMS6QgrSfMv25r
- WoJpGfoEzl9rVkAnHolLL9no+W7IkBuoHbjLDpn+pYs0GYacv+6a0g2geYrdSS+iZlUVwxDsl
- Gcxtbx3BJ5s07wVOumTrUZ5Rit/BE6TD9sfUTkf50xUObmeCcqoPRMAfOPfbD6LYVbbYwnY5t
- BaVEjMwfSHsfITmtLsC3KiFFmiqUlpyeW86YpJ+OtHqFn8fwvSRegQhGz3KlEVF0Kk1PrQKI1
- yMkGhx7xmpx0wZgRdCxJL6u/SqoBD6uEsA+8n/jL+j2VwGbS/9nIQj8mDiC5/GAVlhsNevyNb
- FkEBnwyXLz1t7xtpUvt78fikoZE9qUYI5jocYnvM7QlY8Z17zTPdBCjeX1wHvFUrZv1bLu7Df
- QT+3IuslJLztFRQ0hhlqH8X55vkSgff54mbYjwl0y0BEnFAhfaga8QmS4pE818Drr2M1zhoFx
- f2/nsRelp99lEe71jKQRizX1mL/MM6w0ueCvFZMhoO9H5QXpAvTTH9+2LLu7fE6oO/ncAYv1p
- 0mLfoBOPr5Z2tHFrlUb1ehJUbxS5YuUakUKUA54XkPVLLgwWwHWDjRozi99dfbPOlkLBBpdAv
- jZ+JidNa6jIq94do9HAS/q/Q==
 
-Am 23.09.24 um 18:29 schrieb Ian Turner:
-> I noticed that there an undocumented interaction of the --exit-code
-> and --ignore-space-change flags to git diff, when the diff only
-> contains file moves. Specifically, --ignore-space-change will cause
-> git diff to return a zero exit code in this situation.
->
-> I am not sure if the problem is with the command behavior, or with
-> the documentation.
->
-> STEPS TO REPRODUCE:
->
-> git init
-> echo foo > a.txt
-> git add a.txt
-> git commit -m "A"
-> git mv a.txt b.txt
-> git commit -m "B"
-> git diff --exit-code HEAD~1..HEAD # returns exit code 1
-> git diff --exit-code --ignore-space-change HEAD~1..HEAD # returns exit s=
-tatus 0
->
-> EXPECTED BEHAVIOR:
->
-> Both of the last two commands above should return nonzero exit status.
->
-> WORKAROUND:
->
-> As one might expect --no-renames undoes this behavior, although it
-> also changes the diff output if not using --quiet:
->
-> git diff --exit-code --ignore-space-change --no-renames HEAD~1..HEAD # r=
-eturns exit status 1
->
-> OTHER INFO:
->
-> Tested this on git 2.39.2 and git 2.41.0, both on Linux.
+Hi
 
-Thank you for the report!  It's a known bug in the code.
+On Mon, Sep 23, 2024, at 19:51, Eric Sunshine wrote:
+> Depending upon how dramatically the patch series changes from one
+> version to the next, the range-diff may end up being unreadable
+> gobbledygook, in which case you may instead want to include an
+> interdiff ("git format-patch --interdiff").
 
-d7b97b7185 (diff: let external diffs report that changes are
-uninteresting, 2024-06-09) exposed it more widely, unfortunately,
-causing v2.46.0 and up to report the wrong exit code even without
-=2D-ignore-space-change.
+What=E2=80=99s the benefit of interdiff in that case? Neither
+git-format-patch(1) nor git-range-diff(1) seems to discuss what the
+differences between these two are.
 
-87cf96094a (diff: report copies and renames as changes in
-run_diff_cmd(), 2024-09-08) fixes it, but it's not in any release, yet.
-
-Ren=C3=A9
-
+--=20
+Kristoffer Haugsbakk
