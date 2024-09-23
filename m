@@ -1,51 +1,52 @@
-Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.9])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC4F2556F
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 18:52:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.18.0.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA441FA5
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 18:55:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727117543; cv=none; b=J3RPG/t1BBpGv4rUU3763NqNqmnh/hIEUhpn08ByWXbnmq/ZaMmZz5DgTgXc3cowunKVllYKU7AXQZ5fHu1XjHNZx7ZkDJmt7XkQGZLkS4ZQXaD5uqzKRNDmtLQmgPiHfl7LEkVObuoUy78lzA2HadkgwSu5ZJ31+brB2d2+5x0=
+	t=1727117726; cv=none; b=mtGR0pIG1Zm+/D7aAUHBEejhWe/cSf5TdOKlEQQ4sjO7QT+cuDbMqgrasI71MEMS/iRMWuh7ZvMnieRJxakW0bMYnzxatNOdjLpyDVxSK7Xwm/tfx6nsK/a7sUm8uXNwf5lWkLcx2ynGScCoccnCTelTiprbdbEPp9X6QNXizT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727117543; c=relaxed/simple;
-	bh=6Hp2XObymcmBaqCQi+ZhFhE3IAYW+MVDghAQqd83U2M=;
+	s=arc-20240116; t=1727117726; c=relaxed/simple;
+	bh=cdMcKTFqDi5FlPy9AMcsY+ZHgrBEkQbaDxHcSpVBv74=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kAfuftOHm5rie9UIETqeUvip3WQQROYSWw8scJoSY8w4Kn364HkW+be1sBQaw6ipvCUY+6Me1jpe1rrwd+pA2f8/XchXFL7w3aESxazvUdXzliNlaFjNm1qnXO3qJGEVjJVyqpnIrb9KqXgbLchNtLY+Qxx14JqsBfjjrPohSiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=nefkom.net; arc=none smtp.client-ip=212.18.0.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nefkom.net
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 4XCBgn6dydz1qsNn;
-	Mon, 23 Sep 2024 20:42:45 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 4XCBgn66y2z1qqlS;
-	Mon, 23 Sep 2024 20:42:45 +0200 (CEST)
-X-Virus-Scanned: amavis at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
- by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
- with ESMTP id sau6qvkwWaYj; Mon, 23 Sep 2024 20:42:45 +0200 (CEST)
-X-Auth-Info: 5QN1ew/phNYbqu+vb3VR4mbjJXhEFf5zWA43xMI84cknkSNVkyY7uRdckSmP1cid
-Received: from igel.home (aftr-62-216-205-106.dynamic.mnet-online.de [62.216.205.106])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 MIME-Version:Content-Type; b=qoIlgBM2ziwnmewjsCbWQy1jQzyveC6+uRrtOITEHWbUg4BM8lGJY1rzSn7NcB0ShCco9HRupT76yBZhSRqueUl9kIUdXlbEu5kdl9vmtJ4Pd1T14P/TVSwdWB0XyoAIm1l6j/R1K1JeNvmLd2jd8Pqx1XNtnIL0yTda6i+SjcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=izfOKjfg; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="izfOKjfg"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 53D1F2415F;
+	Mon, 23 Sep 2024 14:55:17 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=cdMcKTFqDi5FlPy9AMcsY+ZHgrBEkQbaDxHcSp
+	VBv74=; b=izfOKjfgS5zq2Ypbfy1v7wtyrTT5o7z2bXf9O/BXFHiVQB575yIh4r
+	R6el7M7tnB0tyy4N5GHAKZYmJSPW4arVqZAHF+cqflC/lD2j+q075GXP4wcrkthB
+	1EsqHuMcKpZzthz6YGsosnpEiQbIcwheab0E3AgfAAYWxrlrrZ2zw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B2652415E;
+	Mon, 23 Sep 2024 14:55:17 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.mnet-online.de (Postfix) with ESMTPSA;
-	Mon, 23 Sep 2024 20:42:45 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id E1E4A2C1989; Mon, 23 Sep 2024 20:42:44 +0200 (CEST)
-From: Andreas Schwab <schwab@linux-m68k.org>
-To: email@mateuszwielgos.com
-Cc: =?utf-8?B?6Z+p5Luw?= <hanyang.tony@bytedance.com>,  git@vger.kernel.org
-Subject: Re: [External] Using Git as a Database
-In-Reply-To: <0D0BB87D-9BF0-48BA-8F2D-83F8D326ECEC@mateuszwielgos.com>
-	(email@mateuszwielgos.com's message of "Mon, 23 Sep 2024 07:32:53
-	-0500")
-References: <4B2B1EC7-6B08-4B57-A50F-702C031C2792@mateuszwielgos.com>
-	<CAG1j3zEg47RLYrVfJQi7WubgcdtbK2RWFBtj5rd8NtkPyXU5Rg@mail.gmail.com>
-	<0D0BB87D-9BF0-48BA-8F2D-83F8D326ECEC@mateuszwielgos.com>
-X-Yow: Where's SANDY DUNCAN?
-Date: Mon, 23 Sep 2024 20:42:44 +0200
-Message-ID: <87r09aus7v.fsf@igel.home>
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 953172415D;
+	Mon, 23 Sep 2024 14:55:16 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Andrew Kreimer <algonell@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 1/3] Documentation/technical: fix a typo
+In-Reply-To: <CAPig+cSis+QYgkPM2pFrEpEWOyny3XpMJpgYbGbJu2ZL5SBmow@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 23 Sep 2024 13:32:03 -0400")
+References: <20240920082815.8192-1-algonell@gmail.com>
+	<xmqqbk0if5jv.fsf@gitster.g>
+	<CAPig+cSis+QYgkPM2pFrEpEWOyny3XpMJpgYbGbJu2ZL5SBmow@mail.gmail.com>
+Date: Mon, 23 Sep 2024 11:55:15 -0700
+Message-ID: <xmqq34lq2oa4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -53,18 +54,23 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5F5C4DFE-79DD-11EF-BA89-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Sep 23 2024, email@mateuszwielgos.com wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Thank you for your reply, Han. The problem that I have with ‘—allow-empty’ is that the resulting commit is not associated with any particular file. I tried ‘git commit —allow-empty myfile.txt’ but the file argument is effectively ignored. ‘git log myfile.txt’ does not show the empty commit.
+> The word "publicly" is, of course, so frequently misspelled that it is
+> not surprising that "publically" has been accepted into some
+> dictionaries as a legitimate spelling, but, as one who grew up
+> understanding the correct spelling to be "publicly", the variant
+> spelling still makes my reading hiccup big time, so I found no problem
+> with this patch.
 
-Since the git model is snapshot based, there is no way around that,
-apart from putting the reference in the commit message which you can
-search with git log --grep=myfile.txt.
+Yup, living languages annoy old-timers more than new folks with
+phrases and usages that used to be ungrammatical gaining legitimacy
+with wider use.  I see this all the time in the language I am native
+in, too.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+Thanks for an input.  Let's queue this patch, then.
+
