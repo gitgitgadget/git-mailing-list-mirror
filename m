@@ -1,265 +1,166 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2AB23AD
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 02:25:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3395A184
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 02:44:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727058353; cv=none; b=eR+6VYbhQnhA2W+gt6wgvcBZTfepouUYvQbxNa3lIc3j8nxeg0exkJU3bAtg8yNpIayj86JdJIImfZZ5PVFTKk04ezkYT4x2LXgH2mriIa1A3Fp/ftHZ8uR47pCGLhZ4FiOTfdGW1G6YLcdGdpU4plY6gM26xn991BiOWIeBYTI=
+	t=1727059488; cv=none; b=E5cBISAoxzCCLNDb4e0n2lTTqBr/ofHLl4YEvXx7qQezvXWuTGcQfpPxWDaT+7MmRaMxnNoQ/BFut/Goo3/PzM75PHTSPcHWAUJmjq0jCSn/EKfxDA8r0LlXaTJxN/3yteDXHbpnLk1mY/H/HlROaapRPqU7dVhZojr2G0EYmDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727058353; c=relaxed/simple;
-	bh=O5iegEAIGm7iPuIGdAdLj5MdyT9DuBJ4RGCtcTGyKAw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ci9gIpiDA5br77mZeCDMKiula/AP52WaNjzZBbrWthEQhwXCFB6wYXjj2RMAFrK7hcQuxonX7nodcbb/wTemsxrRZneC6mB8zHl8jPSgPYhr8XlRvS5Z5PqFQzFGRjTlIktqPE01L66cxgAwZGs2pLexlHJ+U/ZFbxZjZrPwQ2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZufnNBc4; arc=none smtp.client-ip=209.85.167.177
+	s=arc-20240116; t=1727059488; c=relaxed/simple;
+	bh=Dsep3sdyfE//rDWXo7/4mgb0ysX3p/atMl8pki6u3LU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=AZ+54jAVvJuOMopPRBz7SrjbIerbIPRWZRg3j9R1CdKJxeHjDSe45puacddfbUCIhaVYPaqNtIE7QI6mRciF9pn7bLPymPHMsGbN2DTMG0J5rce7MHqD1CHLktaNqoQlXLacOshU3AD/36xB3eC6H6A3NJAXO9bHnJaAqEvubOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hmCsKzBP; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZufnNBc4"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3e2886ea751so101421b6e.0
-        for <git@vger.kernel.org>; Sun, 22 Sep 2024 19:25:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hmCsKzBP"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2055f630934so32996495ad.1
+        for <git@vger.kernel.org>; Sun, 22 Sep 2024 19:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727058350; x=1727663150; darn=vger.kernel.org;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GGUe4N/1z1/pdE7mjz2Slpq/P9kuGfzuvbpjQ07T07c=;
-        b=ZufnNBc4zjAaP47KPXFJIdMvaVjQul7blXJ2rtZfdPxlOSkDySr5W8xBuAzBxItyCw
-         jy5BCInJujYosWD2ozszJjY45m0+5X/nrPPilUuDZMJyn5UWCZBVqIssqXKaJAyKljdB
-         qozjTySg/frwBtuH8fFdQxU5LENT4ouNXPX+qIQAGkrd10E5UWC8jkrKu0UYNsSr0vJi
-         KXM5KzgVyJq0RWmvEIH8jLQo+hotNAHDS6sRUcGKCe9LRrLtva8kYPG+WdHRrjSxx7QX
-         Na7Fj0GHjZ+1K9h9+Y13e0ycmABAI0rrKitmyUqNz9lNaRyM7guvdygNnnhPEkqtJJa3
-         WZ0g==
+        d=gmail.com; s=20230601; t=1727059485; x=1727664285; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cSV0wDNrklGjNyWXj8h9fzvziicgwpbP66LrFjfE8D0=;
+        b=hmCsKzBPaafItCtyoHMlor2RPq2WmwnJutV5FsbMlOy9TaPaH4Z/zkslEwhSPJQhhV
+         NHsUV/oKWEQh+p4kOyQaHbvV5kr7KZ+hUCqHdXcrbW0FUqelqZyZTHlUt4eAXCRfIwtM
+         noOkyg5iKPmw2R0jumd8E+Fx/EMjW6ImbsPQGgohMeIO7gTx3sF+DP5gfGLy3Y59rwyM
+         h6sLp3uSHZwBQ5KSTl86D6u/xvAIkwCJUQpnoPy6y5iP/w3LaDnLVE8iirzsO9w25zGF
+         v3m9C3jK/DQV2NdmgkRb7cPkW2uLvSUK2w+0SXFOL0V5bVG1d/4n/DQiDnGgbt0+mHCb
+         or+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727058350; x=1727663150;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GGUe4N/1z1/pdE7mjz2Slpq/P9kuGfzuvbpjQ07T07c=;
-        b=Rh1w5hhzlH1BRcjWFKBU4zja9SNfv0tcQI0vv7vB2PPCPjOxNZ3oltABhDY13BzqLu
-         ipDh4ScY89y/8xSezCArk73o7lYrw1GMOYCm+P3q+6RegLvkN5KG2r0uamnndCdJY0ol
-         nBFWo4ViT4C2P6eKYqRQiP1fanO+pZS3ExLXkt1sYoBzmG4ydrvYZnG/A3ZvL2mBgLsf
-         8sqvuj+lT0q8HErc+i79cdCy8dZKnViP6arl+rTIFKXY0Bf3Yl5on6IsEriVS79eLy2Y
-         FikY6s94wUozYafva2ywYd9+3K+DAyo528gGs6CRRSCz1wJElRUODUB4z0J/w+C+FKmb
-         yrtg==
-X-Forwarded-Encrypted: i=1; AJvYcCUu680MqNsDRq5duuPItzQ+CaGfkFwKi50C/2LxRLiz5HnDjHn7TXT3FZNcgzj5r8LK4S4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YznMSW2dRZhWFhBSRD23Np1mCXnPCnerWo7Pd+bpnXzVBJPbNIc
-	MsMiPaxrJWOt76XVT1yk0yduqNkkW7V66sKy1XpmqySbyhQusOJMjDGikA==
-X-Google-Smtp-Source: AGHT+IE9NdBYJpXHppCLp1LEMVsQcumFEgEz5mN82U4ctC7lhCYSS1afJnJYDY050ol8/npRjhg2ig==
-X-Received: by 2002:a05:6808:1808:b0:3e0:3b81:6b26 with SMTP id 5614622812f47-3e271ba08c8mr5590384b6e.15.1727058349770;
-        Sun, 22 Sep 2024 19:25:49 -0700 (PDT)
-Received: from epic96565.epic.com (syn-075-135-086-025.res.spectrum.com. [75.135.86.25])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3e26b6afd9esm1972844b6e.23.2024.09.22.19.25.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Sep 2024 19:25:49 -0700 (PDT)
-From: Sean Allred <allred.sean@gmail.com>
-To: <rsbecker@nexbridge.com>
-Cc: "'Taylor Blau'" <me@ttaylorr.com>,  <git@vger.kernel.org>
-Subject: Re: [TOPIC 01/11] Rust
-In-Reply-To: <053f01db0b79$0d885b30$28991190$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Fri, 20 Sep 2024 12:20:42 -0400")
-References: <Zu2DmS30E0kKug2a@nand.local> <Zu2D/b1ZJbTlC1ml@nand.local>
-	<053f01db0b79$0d885b30$28991190$@nexbridge.com>
-Date: Sun, 22 Sep 2024 21:25:47 -0500
-Message-ID: <m0v7ynm7h0.fsf@epic96565.epic.com>
+        d=1e100.net; s=20230601; t=1727059485; x=1727664285;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cSV0wDNrklGjNyWXj8h9fzvziicgwpbP66LrFjfE8D0=;
+        b=BKJC+sd5UVt2xUb/FBhETJvQTh8DO2+iYO7AXnQIDS9PrmSLMl/wgfuOj6/A28KqKB
+         BOFcCLwpdssxz9KWPgYjFRX5wB0SDgJ37M6lpwLEYsJaF4FzoU2WK8oca+giiRcvjona
+         TUbWvzgYnKJ6tQSxVwp02glZtEZmO5CGVQxj/Ec58yIlBaG2NE8zoHK8XLBarDeSdv6t
+         8KB+33hgCfyl4YrvA6hu4l/LE79SIbQmiT0UZimFyMpkAJ7f/VsKBWHOO7kKezr4iqdp
+         vRzb3pTnBv0ypeEZQkZM3sHWFtPmWJ1/F9L78u+lCX+pjfzjXvTbKy559mW5jHPOz1pV
+         0bew==
+X-Gm-Message-State: AOJu0Yw0j9l+d0ORfVp3zMZupZN2XoHBbL3b/VmqOHwh66z9F+O/I36G
+	ZCrbI+CiOmlEbXuWwijm+/h338ZE6V17y65U6Vb2VUJ6n26xBT4j1kdQRg==
+X-Google-Smtp-Source: AGHT+IGFTCDOdW0E57fxWXgOVwLevRN6k6pQDf2FsnxxFEeJ5bHSbsjogVsxz5YiLpzdbbcpThfByA==
+X-Received: by 2002:a17:902:da89:b0:206:994b:6d53 with SMTP id d9443c01a7336-208d83abb55mr182571455ad.30.1727059485229;
+        Sun, 22 Sep 2024 19:44:45 -0700 (PDT)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20794600fddsm124790855ad.82.2024.09.22.19.44.44
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 22 Sep 2024 19:44:44 -0700 (PDT)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Git List <git@vger.kernel.org>,
+	Git l10n discussion group <git-l10n@googlegroups.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Jordi Mas <jmas@softcatala.org>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Emir SARI <bitigchi@me.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.47.0
+Date: Mon, 23 Sep 2024 10:44:42 +0800
+Message-Id: <20240923024442.13621-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Hi Randall,
+Hi,
 
-This ended up being pretty long, so I apologize in advance for 'not
-having the time to make it shorter' (if you'll permit a small amount of
-plagiarism there). These are just my thoughts on this topic that have
-been cooking for a long time. I've been following this conversation
-closely, and for the first time, I thought I might have something small
-to add. Unfortunately, it's taken a lot of words to say it!
+Before the upcoming release of v2.47.0-rc0 later this week, let's start
+a new round of l10n for Git 2.47.0.  This time there are 48 updated
+messages need to be translated since the last release. Please send your
+pull request to the l10n coordinator's repository below before this
+update window closes on Sun, 06 Oct 2024.
 
-<rsbecker@nexbridge.com> writes:
-> On September 20, 2024 10:18 AM, Taylor Blau wrote:
->>* Kyle: Rust code in the Git project; do we want it? Why would we want
->>  it?
->>* Elijah: Anybody other than Randall that objects to it?
->
-> To be honest, I do not fundamentally object to Rust.
+    https://github.com/git-l10n/git-po/
 
-I don't think anybody (or at least, I hope nobody) thinks so; this is
-absolutely a conversation we can and should (and I believe do) have in
-good faith :-)
+The following description of our l10n workflow is from the "po/README.md"
+file.
 
-I've not contributed to this conversation much so far -- not out of lack
-of interest, but out of respect:
 
-1. While I've been using Git for many, many years, I'm a pretty new face
-   on this list. I'm still working on making a good first impression :-)
+## The "po/git.pot" file is a generated file, no longer in the repository
 
-2. I know absolutely _nothing_ about NonStop, but I do know what it's
-   like to feel like you're a member of an invisible set of users. There
-   are significant aspects of my $DAYJOB where that is absolutely the
-   case, so I want to leave room for what I know that I don't know. I
-   know your customers are important, and (I think I know) you
-   supporting your customers requires the tools being used to be
-   supported.
+The l10n coordinator does not need to generate the "po/git.pot" file every
+time to start a new l10n workflow, and there is no "po/git.pot" file at all.
 
-3. I don't even know _that_ much about Git's implementation compared to
-   the experts on this list, so I feel ill-equipped to judge personally
-   whether Rust is a good fit for the project to begin with -- thus I
-   don't feel I have much to contribute to that conversation over what
-   the experts have already said.
+Everyone can generate the "po/git.pot" file with the command below:
 
-Putting my own cards on the table -- I'd be in favor of introducing Rust
-into Git's codebase for many of the reasons cited elsewhere. Based on my
-naive understanding of the codebase and the types of bug fixes I've seen
-come in during my time paying attention to this list, it does seem like
-rustc would add the value for which it was designed. I say this not to
-'upvote' the idea of including Rust, but to be transparent about the
-context from which I'm speaking.
+    make po/git.pot
 
-So, in good faith, here goes :-)
+But we can also forget about it. By updating our corresponding "po/XX.po"
+file, the "po/git.pot" file is automatically generated.
 
-> My problem is that the Rust team is not supporting including NonStop
-> as a platform. I would love to be able to do the port, but it is not
-> up to me - it is up to Rust's permission (or lack of in this case) to
-> support NonStop, and I do not see this changing in my life-time.
 
-Is this just regarding the GCC dependency I've seen you reference
-elsewhere[1] or is there something else? I just want to make all the
-cards are on the table here -- particularly I want to make sure you're
-not referencing some licensing incompatibility or project policy that
-could be (even) more challenging than porting GCC to NonStop. An
-uneducated search of rustc's book[2] for 'gcc' didn't yield anything
-immediately interesting, but there are call-outs for not supporting
-platforms that introduce license incompatibilities or 'onerous legal
-terms'.
+## Update the "po/XX.po" file, and start to translate
 
-If not, is this about (what I assume to be the) 'tier 3' platform
-support policy mentioned at [2]? In some respects, it seems like this is
-similar to the status of NonStop as a supported platform in the Git
-project already, though I suppose that's also a main topic of
-conversation for the 'supported platform' thread elsewhere. It does seem
-in line with what you already do, though, which is to provide patches to
-Git when something merges that breaks tests on NonStop. It seems it
-would be similar in a Rust world, though patches would 'just' be sent to
-the Rust maintainers instead. (I say that knowing that it would be an
-entirely foreign codebase and set of concerns for submitting correct
-patches -- so the two are not at all similar in effort, just in
-behavior.)
+Before updating the "po/XX.po" file, l10n contributors should pull the latest
+commits from the master branch of "git.git". E.g.:
 
-> Depending on a piece of technology where control of where it runs is
-> outside of git's control is not responsible, in my view. It restricts
-> where git can run, and excludes platforms that currently use a
-> critical piece of infrastructure (git).
+    git pull --rebase git@github.com:git/git.git master
 
-I think this is going to be true of any platform that the Git project
-chooses to continue to build upon, isn't it? Any platform-specific bugs
-in the various C compilers used are not in this project's control,
-either, nor OpenSSL, cURL, PCRE, gettext, etc., etc. that are already
-essential to Git's main functions when it's being used by a human (i.e.,
-not as part of a larger automated system).
+Then update the cooresponding "po/XX.po" file using the following command:
 
-Any added dependency will run the risk of not being buildable on every
-platform out there -- even if it's included in the standard library,
-potentially -- and I don't believe it's a sustainable practice to never
-add any dependencies.
+    make po-update PO_FILE=po/XX.po
 
-> I have tens of thousands of people in my community who depend on git
-> on a daily basis, and simply kicking them off because of a decision,
-> or lack of decision, that some unrelated dependency controls should be
-> (unfortunately does not appear to be for git) a showstopper.
+Translate the uptodate "po/XX.po" file, and create a new commit.
 
-I'd like to understand this a little better.
 
-First, from the original notes:
->> Emily: old versions aren't going away.
-which I mention only to supply the obvious counterpoint. I believe
-you've said in the past (sorry that I can't find the specific link) that
-you'd like to see Git continue to receive improvements and enhancements
-that you can forward onto your customers. This is great! I understand
-this perfectly. I have the very same desire for my users (which number
-in the 3-4k range). I look forward to every performance improvement and
-revamped workflow with bated breath -- wondering how/when it can be
-incorporated into our system to give our folks the best experience they
-can possibly have as direct users of Git in a heavily automated system.
+## Refine your commits, send pull requests
 
-It stands to reason that your users wouldn't see such improvements if
-incompatible technologies like Rust are adopted into the codebase and
-those features were written using this incompatible technology. This is
-understandably a frustrating prospect! Previously, you would have been
-able to get even more value out of all the open-source effort (and your
-own effort as a maintainer keeping it compatible) -- and now it's not
-really feasible. I do understand this sentiment. (Regardless of how much
-I understand it, if this is not _your_ sentiment, please let me know!)
+In the "po/XX.po" file, there are location lines in comments like below:
 
-Here's where I'm struggling a bit. From what I see, I understand two
-contradictory points:
+    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
+    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
+    #: builtin/rebase.c:1671
 
-1. To continue building Git on every platform where it builds today, the
-   project must either
+These comments with file locations are useful for l10n contributors to locate
+the context easily during translation. But these file locations introduce a
+lot of noise and will consume a lot of repository storage. Therefore, we
+should remove these file locations from the "po/XX.po" file.
 
-   a) not add any new incompatible dependencies or
-   b) put any such dependencies behind a feature flag (e.g. NO_CURL) so
-      that Git may continue to be built without that dependency.
+To remove file locations in the "po/XX.po" file, you can use one of the
+following two ways, but don't switch back and forth.
 
-   Great, no harm -- no foul. But...
+ * Keep the filenames, only remove locations (need gettext 0.19 and above):
 
-2. If you continue building without that dependency, you don't get that
-   feature, so the original purpose of enhancing Git -- to pass that
-   benefit on to users -- is lost.
+        msgcat --add-location=file po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
 
-So it would seem that this leaves us with only option (a) to not add any
-new incompatible dependencies -- which is what I understand you've been
-proposing. Certainly reasonable. But then how do you build cool new
-stuff? Well, build it yourself, I guess.
+ * Remove both filenames and locations:
 
-There's been a _lot_ of cool new stuff lately. This is great! But this
-does seem to be spearheaded by the work (and thus funding) of companies
-like GitLab, Microsoft, and Google (and these are just the ones I
-recognize either by contributor name or by email domain). I'm incredibly
-thankful for the work and expertise these folks add to the project on an
-ongoing basis.
+        msgcat --no-location po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
 
-I worry though that the 'cool new stuff' seems to require such
-investment. It is _hard_ to write correct, safe C. I worry that this
-difficulty will eventually translate to significant, safe contributions
-coming only from those with the resources to create them and not from a
-more diverse pool of contributors. As grateful as I am to large
-companies who fund Git contributions, I don't think those companies,
-given the choice in and of themselves, would think twice about dropping
-support for a platform they don't use -- and that is probably a much
-smaller set than 'does the platform have GCC'. I don't think this is a
-danger today or tomorrow, but it _is_ a danger of not having a diverse
-group of contributors -- and that is the danger posed by not allowing
-yourself to use any of the 'cool new stuff' _other_ people have written.
+After squashing trivial commits and removing file locations in the "po/XX.po"
+file, send pull request to the l10n coordinator's repository below:
+
+    https://github.com/git-l10n/git-po/
+
+
+## Resolve errors found by the l10n CI pipeline for the pull request
+
+A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
+help git l10n coordinator and git l10n contributors to check the conventions
+of git l10n contributions, and it is also used in GitHub actions as l10n CI
+pipeline to validate each pull request in the "git-l10n/git-po" repository.
+Please fix the issues found by the helper program.
+
+
+** Please note: The update window will close on Sun, 06 Oct 2024. **
+
 
 --
-
-I don't have a satisfying response to what to do for NonStop in a world
-where Rust enters the Git codebase. I really don't, and that frustrates
-me for you. I hope that there's a solution out there (maybe from your
-vendors, maybe from the storied halls of GCC maintainers, who knows),
-but I'll echo (more earnestly this time):
->> Emily: old versions aren't going away.
-Nobody has the power to 'kick users off' a project such as Git -- not
-even if everyone somehow miraculously agreed to port the entire thing to
-something hot off the presses at /r/programminglanguages :-) Ultimately,
-your systems will continue to function regardless of what happens
-upstream. Of course I can't speak to support contracts, but I assume
-neither can anyone on this list.
-
-That said, I also don't know how a project can continue to thrive
-without the (occasional, thoughtful, and deliberate) introduction of new
-technologies, new contributors excited and emboldened by those
-technologies, and new ideas from those contributors.
-
-Change is essential to growth. Like I mentioned at the outset, I'll let
-the true experts on this list speak to whether _this_ change is
-essential for growth, but I hope I've at least made some points that
-were worth reading.
-
-[1]: https://lore.kernel.org/git/007c01da4420$10a7b700$31f72500$@nexbridge.com/
-[2]: https://doc.rust-lang.org/rustc/target-tier-policy.html
-
--- 
-Sean Allred
+Jiang Xin
