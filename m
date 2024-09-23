@@ -1,59 +1,59 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FD128684
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 09:07:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37996194137
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 09:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727082433; cv=none; b=p1hrUAecsD8bdRL7N5tyZlBh1OfTWTqXYS7iaUrKDf/4n82ZPayyySgjM4zMJcDRVXPN6Yo1c3IGryn/IlC33qP41oy6pMEQgvNh/c72ylJYxEy4ESM7b/j/AtpDEsE174N81i30KtzlYnMNsyaGkzQkYQCh2n/+0DEYjJp039o=
+	t=1727082927; cv=none; b=nwJ6uNppKkGFwTnoxDG3PLAuLQJznmJbae8vGEdEXlfEGZ3GIXA18BI+9NYN0OdVO4jLfwJ1a/IlUeP/IQ/4LYoVGSTWLzmobeosOziytZd0blSSuczc0lSbdFcqxmjE6URrEWKGRq/kPwP6EpQR9xRtrqAah7P+LSnW/lanXuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727082433; c=relaxed/simple;
-	bh=56jihNcGqgKQ74ZMDfutZ+MEUbfqVCxyAn5ygJ3b+Vw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lqTxzDA6JBHoQycLdqRhhuNdS8TJwS8xwoqNBUOqNqwViZX7z/xAiGKXtvEjkcTeJwO5G3xh+TorWtxxkJDBSdfR6dP4N7b32HQNV1iRdjaawsQnogn9wE1IxLx/UxG3sY9uHESGQybmE+iMoS1TxjYXHMhmWQuEeihbj/RbAv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WyKSnihz; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1727082927; c=relaxed/simple;
+	bh=+iJE0Svd2rbNixtFam8dV6SXgO8DgGlWDrLDzFSyegQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gaXrYnxBIXFWxlzWv7qbs548mDpr2Qska6udQaL0k1M740k2hmC6eQW7CE274lfhwd4rWJuo6fSKArrR3oQzXDdlxKex6BFttPgjSnyvOLqvMIkq49zkt1u73sEoVNR8qrewszNARZ8qESwzjWUrMt0Ed5V/ni7yFIX/xcnTkyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QXtl+SPG; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WyKSnihz"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-42cb806623eso33810495e9.2
-        for <git@vger.kernel.org>; Mon, 23 Sep 2024 02:07:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QXtl+SPG"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42cb806623eso33882785e9.2
+        for <git@vger.kernel.org>; Mon, 23 Sep 2024 02:15:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727082430; x=1727687230; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZENDZoPXcg9bvI1P7B2Qlt/g1S/eCyZyZ6iCmfTtJQY=;
-        b=WyKSnihzuqCG6ETptMKPKBqO0TbFHJGJtTtvy/CVB3/qakOVqbniMTuGlxrmA56Sca
-         nKfAmE9ts8PNtaZlA2hmLFoLmTfcWG+k/0y8STBVUlI+I4xBR1+OWfLEOwuJNZLD9MHE
-         TXPDCqGZDwXizpogBhmCsyhYbn/EWDLm7/Mq+yqr4dY97wfZJVVQojtgxuJX1Zni2XQA
-         aYXJ1YoYQofGOluiXtp1bZl4xL1jf9cGBnDwSwz69vmAZ4G+QEWgiIvFN3sOKlsAUwWm
-         V4rZxuEvCl6F3f9AlUl/zicbbEYfKEe0ZyErtc4sqQcNl8ynmgaHh5E8iKpVhkTThlnr
-         TygA==
+        d=gmail.com; s=20230601; t=1727082924; x=1727687724; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=RhUkpeRrQD49GInmDkX3IaLD1YXzKM6tfhPJlD+Y6R0=;
+        b=QXtl+SPGgwFaaI50UEXPYKkdKpp40SEyH9V2E/ZZ9YzBr7pfWLxmiHfUeXjqmoFITQ
+         bw9h3mFgNq+W5/ElHov8KcNPnupd3LO6cwjkUakHaLs4yZbzTySFBgg/47Ggq3RKw7+A
+         y5LZY4F/BB9KLA63wHSOGB3eTHQTNy2MEG5YtSduEGUqnnD+uz8GZJ7mw8KBSRNKo6DB
+         bDBPnfE9crJQ56xoe89exUvahB0aTOddIoZjcSfnW8ufz+aoywEol3KMr7UbPtlGplAm
+         g6J9SIj090OZPU/R8Sg4h9YOBvNMGj38l8okicJNTV+u+jgM8WOMZExP54Q0Ux9narW7
+         k83g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727082430; x=1727687230;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZENDZoPXcg9bvI1P7B2Qlt/g1S/eCyZyZ6iCmfTtJQY=;
-        b=B9b7ga6OmVGQ/1NzuG8X3rsLrQI3G7nuTRtpUXvJwMGeGGxGIUKVYVhM/TavfS0KJX
-         Rc20zcP4dZjImNTrKZ9eE+cdluHd478AV9sG/SVZw6hS00TrvsSiHrrTxkENkxIJVk9K
-         XPgHnL5i2wU991UNjh9tsK2kdlB2yX6I88j/Wnr3sD0HHM9WRTnno+gG3L1Y2R/QKmis
-         ZiogVdNzPIYKoSZNHuji0bB0XI7vR0QH1j7xSceFgiphgFT53Y1nkeP7VtOIsxLtVe/v
-         VmAkWqD2prkSao/+SMMyouwaavzjNJh8bxqbylod2g7sLpCmv7PRSaqtc/FiiWOGZ0tV
-         pmiw==
-X-Forwarded-Encrypted: i=1; AJvYcCV4pkPM8Eslyrgwis2L5AGvf+BF95XF0GqHyz1oVil0aHn09OvguBTfn7SQekva2ZwR9Rs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzd9t4sD1dCqxEHXWaoDCsGOfvjhEqNPqvOUqKV3o/r/1+dvZ/E
-	X+N35Z7uAUccvJq7hahW5VqNENICg62x9mxqt8iv73WIfTpzRueL
-X-Google-Smtp-Source: AGHT+IEVAbGxBlG3rJbP8OTXeowgh1W92sHfqx1bYWDGUYFGvWO61kLgeGEruZ9OBL5rj24/LN9nAA==
-X-Received: by 2002:a05:600c:4e8f:b0:42c:b2fa:1c0a with SMTP id 5b1f17b1804b1-42e7ad7313emr66338495e9.23.1727082429265;
-        Mon, 23 Sep 2024 02:07:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727082924; x=1727687724;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RhUkpeRrQD49GInmDkX3IaLD1YXzKM6tfhPJlD+Y6R0=;
+        b=b/n6TdaynERj/gEP3Gk1d1JgIZPbcoRa6/TXTherVt0GKnydPzxhfA75QtgxhmBmdj
+         O8FyJByW1zcsVIfSPjDOfcP8RJmODXij7sCOVm3ns8rKOQvc9MY4Yo5oXl4ntPG3yAty
+         qlh3MBtkS9+ebcCupC4k/lpySlIoB2vsMQ0NL36vhSBXd711Cou2/n2Xe1iF271dRJJF
+         hSIi+TwC9DrwMu7PHKHTCc/07YOO3mNqTxNHoqvK21tMxJBT3Zk1F12O2ttjNPDyJ9Mi
+         LOizOl5X9pnoelDUVguZBWiFJpI6/C1yYZjezEKogQTCnnHjH3a8Vv5zns0gD+jesQGR
+         vjng==
+X-Gm-Message-State: AOJu0YwKeUQ/GqwLXk13UF/i5mNAhMxtZVqlFAfyleqpCTQN1bpOsI6T
+	Vp9HWONy+F8OYf69Q3uCGj+K2kY/+4aN1dMqrtA3ekCO1b0Xe65klmvs+Q==
+X-Google-Smtp-Source: AGHT+IG/e0gu0ZatGYCbG+AtrR7hQYTKzjpNXUG5/l1zGD7/FJMnk/fV+sfPyPEjuCUZCt1fRJUW5w==
+X-Received: by 2002:adf:c788:0:b0:36d:2984:ef6b with SMTP id ffacd0b85a97d-37a4225216amr5574073f8f.11.1727082924343;
+        Mon, 23 Sep 2024 02:15:24 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378e73e8364sm23939387f8f.43.2024.09.23.02.07.08
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e754c5c78sm121295455e9.42.2024.09.23.02.15.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Sep 2024 02:07:08 -0700 (PDT)
-Message-ID: <2ad1f7b1-714c-4d6e-89a6-fd65271222b9@gmail.com>
-Date: Mon, 23 Sep 2024 10:07:08 +0100
+        Mon, 23 Sep 2024 02:15:23 -0700 (PDT)
+Message-ID: <25050ad6-bdf8-4b1f-bbc8-cffe6ca15386@gmail.com>
+Date: Mon, 23 Sep 2024 10:15:23 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,210 +61,45 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] add-patch: edit the hunk again
-To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- Git List <git@vger.kernel.org>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
- Junio C Hamano <gitster@pobox.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <21ddf64f-10c2-4087-a778-0bd2e82aef42@gmail.com>
- <4dd5a2c7-26a8-470f-b651-e1fe2d1dbcec@gmail.com>
+Subject: Re: [TOPIC 10/11] Project Tracking
+To: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+References: <Zu2DmS30E0kKug2a@nand.local> <Zu2FMQnLCKQ2skkM@nand.local>
+ <xmqqployf6z5.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <4dd5a2c7-26a8-470f-b651-e1fe2d1dbcec@gmail.com>
+In-Reply-To: <xmqqployf6z5.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Rubén
+On 20/09/2024 20:41, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 
-Thanks for the re-roll. I'm still not convinced that changing this 
-without keeping an easy way to get the current behavior is a good idea.
+Taylor - thanks for posting these discussions
 
-On 18/09/2024 18:51, Rubén Justo wrote:
-> The "edit" option allows the user to directly modify the hunk to be
-> applied.
+>> * Jonathan: (to Peff) you mentioned sometimes you have a mild negative
+>>    feeling about something and you’re good about expressing it on-list,
+>>    but for a lot of contributors that will cause some discomfort and it
+>>    will cause them to stay away from that thread. If we’re a little more
+>>    clear about what’s expected, then conversations can get stalled less
+>>    often - e.g. when a thread needs a comment from a refs expert, getting
+>>    that comment that supports forward progress.
 > 
-> If the modified hunk returned by the user is not an applicable patch,
-> they will be given the opportunity to try again.
-> 
-> For this new attempt we give them the original hunk;  they have to
-> repeat the modification from scratch.
-> 
-> Instead, let's give them the modified patch back, so they can identify
-> and fix the problem.
+> Yes, either forward or backward.  Having to keep a series that looks
+> potentially worth doing for weeks on 'seen' without getting any
+> movement is *VERY* painful.  Would it motivate more experienced
+> contributors to review and express either support or refusal if I
+> more frequently, say after 20 days since its latest round got queued
+> on 'seen', a topic that does not seem to get enough support to be
+> merged to 'next' and is not getting rerolled?
 
-It's still not clear how an inexperienced user is meant to do that.
-
-> If they really want to start over with a fresh patch they still can
-> say "no" to cancel the "edit" and start anew [*].
-
-This is not very obvious to the user, it would be much better to give 
-them the choice when we prompt them about editing the hunk again. We've 
-been giving the user the original hunk for the last six and a half years 
-so I think it's a bit late to unilaterally change that now.
-
-> diff --git a/add-patch.c b/add-patch.c
-> index 557903310d..75b5129281 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -1111,7 +1111,8 @@ static void recolor_hunk(struct add_p_state *s, struct hunk *hunk)
->   	hunk->colored_end = s->colored.len;
->   }
->   
-> -static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
-> +static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk,
-
-I would add
-				const struct hunk *backup,
-
-here
-
-> +			      size_t plain_len, size_t colored_len)
->   {
->   	size_t i;
->   
-> @@ -1146,6 +1147,10 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
->   				      "addp-hunk-edit.diff", NULL) < 0)
->   		return -1;
->   
-> +	/* Drop possible previous edits */
-> +	strbuf_setlen(&s->plain, plain_len);
-> +	strbuf_setlen(&s->colored, colored_len);
-
-then we can restore the back up here with
-
-	*hunk = *backup;
-
-That would make it clear that we're resetting the hunk and would 
-continue to work if we change struct hunk in the future.
-
->   	/* strip out commented lines */
->   	hunk->start = s->plain.len;
->   	for (i = 0; i < s->buf.len; ) {
-> @@ -1157,12 +1162,13 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
->   	}
->   
->   	hunk->end = s->plain.len;
-> +
-> +	recolor_hunk(s, hunk);
-> +
-
-This means we're now forking an external process when there is no hunk 
-to color. It would be better to avoid that by leaving this code where it 
-was and restoring the backup hunk above.
-
->   	if (hunk->end == hunk->start)
->   		/* The user aborted editing by deleting everything */
->   		return 0;
->   
-> -	recolor_hunk(s, hunk);
-> -
- >
->   		/*
->   		 * TRANSLATORS: do not translate [y/n]
-> @@ -1289,8 +1290,14 @@ static int edit_hunk_loop(struct add_p_state *s,
->   					"Edit again (saying \"no\" discards!) "
->   					"[y/n]? "));
-
-I think we should make this a three-way choice so the user can choose to 
-keep their changes or start from a valid hunk.
-
->   		if (res < 1)
-> -			return -1;
-> +			break;
->   	}
-> +
-> +	/* Drop a possible edit */
-> +	strbuf_setlen(&s->plain, plain_len);
-> +	strbuf_setlen(&s->colored, colored_len);
-> +	*hunk = backup;
-> +	return -1;
->   }
->   
->   static int apply_for_checkout(struct add_p_state *s, struct strbuf *diff,
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 718438ffc7..f3206a317b 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -165,6 +165,19 @@ test_expect_success 'dummy edit works' '
->   	diff_cmp expected diff
->   '
->   
-> +test_expect_success 'editing again works' '
-> +	git reset &&
-> +	write_script "fake_editor.sh" <<-\EOF &&
-> +	grep been-here "$1" >output
-> +	echo been-here >"$1"
-> +	EOF
-> +	(
-> +		test_set_editor "$(pwd)/fake_editor.sh" &&
-> +		test_write_lines e y | GIT_TRACE=1 git add -p
-
-This is still missing "n q". Apart from that the test is looking good.
+I think that sounds reasonable. Sometimes I'm quite slow to review but 
+if I haven't managed to do it within 3 weeks I'm unlikely to get round 
+to it. I'm also sometimes slow to re-roll if I'm ruminating on the best 
+way forward, but even if a patch series gets dropped there is nothing 
+stopping the contributor from re-rolling.
 
 Best Wishes
 
 Phillip
-
-> +	) &&
-> +	test_grep been-here output
-> +'
-> +
->   test_expect_success 'setup patch' '
->   	cat >patch <<-\EOF
->   	@@ -1,1 +1,4 @@
-> 
-> Range-diff:
-> 1:  bcf32d0979 ! 1:  2b55a759d5 add-patch: edit the hunk again
->      @@ add-patch.c: static int edit_hunk_manually(struct add_p_state *s, struct hunk *h
->        	/* strip out commented lines */
->        	hunk->start = s->plain.len;
->        	for (i = 0; i < s->buf.len; ) {
->      +@@ add-patch.c: static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
->      + 	}
->      +
->      + 	hunk->end = s->plain.len;
->      ++
->      ++	recolor_hunk(s, hunk);
->      ++
->      + 	if (hunk->end == hunk->start)
->      + 		/* The user aborted editing by deleting everything */
->      + 		return 0;
->      +
->      +-	recolor_hunk(s, hunk);
->      +-
->      + 	/*
->      + 	 * If the hunk header is intact, parse it, otherwise simply use the
->      + 	 * hunk header prior to editing (which will adjust `hunk->start` to
->       @@ add-patch.c: static int edit_hunk_loop(struct add_p_state *s,
->        	backup = *hunk;
->        
->      @@ t/t3701-add-interactive.sh: test_expect_success 'dummy edit works' '
->        	diff_cmp expected diff
->        '
->        
->      -+test_expect_success 'setup re-edit editor' '
->      -+	write_script "fake_editor.sh" <<-\EOF &&
->      -+	grep been-here "$1" && echo found >output
->      -+	echo been-here > "$1"
->      -+	EOF
->      -+	test_set_editor "$(pwd)/fake_editor.sh"
->      -+'
->      -+
->       +test_expect_success 'editing again works' '
->       +	git reset &&
->      -+	test_write_lines e y | GIT_TRACE=1 git add -p &&
->      -+	grep found output
->      ++	write_script "fake_editor.sh" <<-\EOF &&
->      ++	grep been-here "$1" >output
->      ++	echo been-here >"$1"
->      ++	EOF
->      ++	(
->      ++		test_set_editor "$(pwd)/fake_editor.sh" &&
->      ++		test_write_lines e y | GIT_TRACE=1 git add -p
->      ++	) &&
->      ++	test_grep been-here output
->       +'
->       +
->        test_expect_success 'setup patch' '
