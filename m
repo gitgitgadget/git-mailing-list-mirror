@@ -1,76 +1,79 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA441FA5
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 18:55:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0F06BB4B
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 19:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727117726; cv=none; b=mtGR0pIG1Zm+/D7aAUHBEejhWe/cSf5TdOKlEQQ4sjO7QT+cuDbMqgrasI71MEMS/iRMWuh7ZvMnieRJxakW0bMYnzxatNOdjLpyDVxSK7Xwm/tfx6nsK/a7sUm8uXNwf5lWkLcx2ynGScCoccnCTelTiprbdbEPp9X6QNXizT4=
+	t=1727118094; cv=none; b=NTSd5ZcXtuSceEP134ybsEY7HLlEBWA8bKF8S3C9ZYJCi/u/JWssHjpIM/FWbMxXelUcGR79xg9JRJoNV4rPuaYp7duh06Dv1KddBQFzLTYFiBTt6sNVpRQ187JoZv8+n7gex+HJo24FtU0/hGJVEZaD8TY1zWA1mhaTNOFkf24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727117726; c=relaxed/simple;
-	bh=cdMcKTFqDi5FlPy9AMcsY+ZHgrBEkQbaDxHcSpVBv74=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qoIlgBM2ziwnmewjsCbWQy1jQzyveC6+uRrtOITEHWbUg4BM8lGJY1rzSn7NcB0ShCco9HRupT76yBZhSRqueUl9kIUdXlbEu5kdl9vmtJ4Pd1T14P/TVSwdWB0XyoAIm1l6j/R1K1JeNvmLd2jd8Pqx1XNtnIL0yTda6i+SjcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=izfOKjfg; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727118094; c=relaxed/simple;
+	bh=W+nZYuZ/BZnLblmejnjQqZl03m4+O010WHVj0BnFMj4=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=Io8K9BoAbLsNJcyzLWBMG6pjnsRfjx9MaYsEXpDlUgUZ8yu6Hb2cI+s9Hu+NMd9f0eI6zib2sI4oubjPZ5+4ZcOX7FWPqwVmNdNjvqMsvz0zDdp4f8DiIxGDNAtJOLQeEJxI7zSWXTvIhvSXv/Ir+1YAhOI3Z33NbdfDea4G2ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b0t9VJxZ; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="izfOKjfg"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 53D1F2415F;
-	Mon, 23 Sep 2024 14:55:17 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=cdMcKTFqDi5FlPy9AMcsY+ZHgrBEkQbaDxHcSp
-	VBv74=; b=izfOKjfgS5zq2Ypbfy1v7wtyrTT5o7z2bXf9O/BXFHiVQB575yIh4r
-	R6el7M7tnB0tyy4N5GHAKZYmJSPW4arVqZAHF+cqflC/lD2j+q075GXP4wcrkthB
-	1EsqHuMcKpZzthz6YGsosnpEiQbIcwheab0E3AgfAAYWxrlrrZ2zw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B2652415E;
-	Mon, 23 Sep 2024 14:55:17 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 953172415D;
-	Mon, 23 Sep 2024 14:55:16 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Andrew Kreimer <algonell@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/3] Documentation/technical: fix a typo
-In-Reply-To: <CAPig+cSis+QYgkPM2pFrEpEWOyny3XpMJpgYbGbJu2ZL5SBmow@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 23 Sep 2024 13:32:03 -0400")
-References: <20240920082815.8192-1-algonell@gmail.com>
-	<xmqqbk0if5jv.fsf@gitster.g>
-	<CAPig+cSis+QYgkPM2pFrEpEWOyny3XpMJpgYbGbJu2ZL5SBmow@mail.gmail.com>
-Date: Mon, 23 Sep 2024 11:55:15 -0700
-Message-ID: <xmqq34lq2oa4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b0t9VJxZ"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a8d43657255so750293366b.0
+        for <git@vger.kernel.org>; Mon, 23 Sep 2024 12:01:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727118091; x=1727722891; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=W+nZYuZ/BZnLblmejnjQqZl03m4+O010WHVj0BnFMj4=;
+        b=b0t9VJxZwiyjIZtM0BjC5KQbMRxn3y1fY+p470qeoT+JnzjdJaejeZbEKD6kfLL7mL
+         m58O7JTYR6JukhRBEImyGTQAlRIWymvLiPtXRGO+nIbHMf8yY/HpiwUEp0+oEOZcJY3I
+         EfcgZ6q6gndYkH0Njdj4D1QQGruVSPKBXPtm5K9KTesVT21qzTDpZzPjU9Jdf+D0aAaq
+         jnsXwK6GTgaGGayPGhMGdr/S+j6kaF9hxC2o+p4H5Fr2jqqrYb82IKBBeonPxtOF04Pi
+         GAMNtEdfIM0a2m+gCasv9mw8fDqtZkf5TcsTffH2zaoJDyxoSciNTdSegw7+nQkGUA8f
+         JARA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727118091; x=1727722891;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W+nZYuZ/BZnLblmejnjQqZl03m4+O010WHVj0BnFMj4=;
+        b=DchC2Lqfb5BT3344+b73eV6U4HyT0woE2QAhhVHgRYbS6kGGG3h4CVUIqHWIDnrxjZ
+         FfYTTvxWuykcJWA+VsG1AJ+KufjsMLbbW7G4NJ2gUNv8hbzj5wHpU3fA8DrgfRjMGHyY
+         /Cf+ngBeFHvjXOQMuIfnPXmZ2Kv0jhbE9ut04DPvd1E/MPBUyqthCciIEvIXQzcVv/bh
+         pG7qzXYISyLvNglHhvlfI8jBcnsycKDYkB7xuMcxKc7eQ9Mn6ywy2BwedNyoTRLSPg8u
+         BUDgxpSq3TXXPlxpP55gTtDQPFQAlQsJy2hLAbWbirV/zqcmJdAg1+7r7oqgy500dH/1
+         HfHg==
+X-Gm-Message-State: AOJu0YyD4CfHkmThUAU0P/I+hTzJPxonoFDBWrqh+VOOf8hTyz9RdPMb
+	0wNMsm7kuo06PKBoMie8vIbAS+3pEGhurnpd52sv7Y3GUezISSzO89Ijcw==
+X-Google-Smtp-Source: AGHT+IFE4+tLXr4Zr+425NQI5IiE4em6LOGN4C9jhu4JSirF55w3CmiM3HR2CsQGIeGknGrsWrHkuA==
+X-Received: by 2002:a17:907:e65b:b0:a8d:c3b:b16 with SMTP id a640c23a62f3a-a90d4ffaf60mr1077193866b.28.1727118090433;
+        Mon, 23 Sep 2024 12:01:30 -0700 (PDT)
+Received: from smtpclient.apple ([90.196.156.204])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9061096740sm1279771566b.12.2024.09.23.12.01.29
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Sep 2024 12:01:30 -0700 (PDT)
+From: Alistair Cairns <alistairc3@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 5F5C4DFE-79DD-11EF-BA89-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.10\))
+Subject: Username bug
+Message-Id: <4E002778-B3D4-49FA-A514-B2423CE8838E@gmail.com>
+Date: Mon, 23 Sep 2024 20:01:29 +0100
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3696.120.41.1.10)
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi there
 
-> The word "publicly" is, of course, so frequently misspelled that it is
-> not surprising that "publically" has been accepted into some
-> dictionaries as a legitimate spelling, but, as one who grew up
-> understanding the correct spelling to be "publicly", the variant
-> spelling still makes my reading hiccup big time, so I found no problem
-> with this patch.
+I recently changed my username but it resulted in adding the new one to =
+the old one and now I can=E2=80=99t even try changing it again to the =
+name I want because now it says the name already exists! Github =
+Community has it well described in conversation #69890. =E2=80=98Username =
+did not change=E2=80=99. I am unable to expand the window to see what =
+the solution is. Is there anyone who knows?
 
-Yup, living languages annoy old-timers more than new folks with
-phrases and usages that used to be ungrammatical gaining legitimacy
-with wider use.  I see this all the time in the language I am native
-in, too.
+Regards
 
-Thanks for an input.  Let's queue this patch, then.
-
+Cairnsy=
