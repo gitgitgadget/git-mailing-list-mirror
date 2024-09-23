@@ -1,63 +1,64 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B21E194A59
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 12:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B9D194A59
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 12:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727093885; cv=none; b=NHeSXVtFhwam30t7WSDVsyyCEcuMB+tIlfmph9HTDXv4KSxiLj/HTt96R4GnbTgkmaYfGDLCzFlYvuu8ZZZCsPBVrmShhjvBkTqJuoYrfS4EjHyU4EQPhpnllTmbCvtO0MuYKByECoNxIzh7VtDpDUfAhdEtGx7TrFF4T/7c9rk=
+	t=1727093889; cv=none; b=bCMbZsGCwcEblpmJLKbZCnZOLqWp7MMmfsM2yxB7xE9NvCZmydqORZ6rpQNVYZWiNNWJ78SVHPqzggf0vRBkI7xn3tfyrmtzIoKQxev9FoFIdsIwxByGAIWrfrdNh3ewPxxBDSKAvwRPZ6WINWqtb2N4obJlUDMxC3K3SL7Qa7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727093885; c=relaxed/simple;
-	bh=H2y9xCpm6kXs/DLU2SGSgBcwJRugzTOtV78BxJpbzoo=;
+	s=arc-20240116; t=1727093889; c=relaxed/simple;
+	bh=8ws8/W/Pdbw/TfHGX4mNDsTXHAxbEtRFIC/nqanYkX8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=X8IrtX0PQhCkWjao+jrzNnunWZZt9mimNtQQ/0Y/dx5mjIPlzPPaYrj9GPTnBkqimeUZ36Kcb+srUIOMfuk/stmBwfUuYaB0hvPIp03pk9LTOh2GfhiNtMwwQTUCS3aJ9fWEcE7/OIeY1NLUsvkmPXlQaUReRq8/jjeax3w/nCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lZCm3kQa; arc=none smtp.client-ip=209.85.208.43
+	 MIME-Version:To:Cc; b=hzLwZT06o3LiCjLUg20VPpZTfsu3HmHLXPzhqTrx+UZHrtpZDU45Jf2DnRSGv4+74R3pEYQQ44GGchmuJ9eTY871wC+Rsa9quCDlysEPOvbtUQrLRr79MrQ/v5Vt0i2Vwf6vH3Noo1VE6PYVNcMdwkctpPcuqCLcJGVWcmn+K4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hVEtPm3j; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lZCm3kQa"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5c42384c517so5297085a12.3
-        for <git@vger.kernel.org>; Mon, 23 Sep 2024 05:18:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hVEtPm3j"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5c4146c7b28so5444691a12.2
+        for <git@vger.kernel.org>; Mon, 23 Sep 2024 05:18:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727093882; x=1727698682; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727093886; x=1727698686; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9Qn8nYbZ2QacqlbVhzGAFGu+rxPEefZzXGmMy+OvteQ=;
-        b=lZCm3kQa+ttCs0KwbxnLDpkZkqp8yFaDHklEnvIcIwc3QzeRg3m22VWGHHi5hyN1xK
-         wOz787nFjeC7ySg/JUBUP6mUW+YH2Yppxzbg0SSQt5BOHZQ+RN4wg4jowTqcTmpMZXSL
-         2WMWje/RN5ZpNw7oXd3/jQg5fvrrt0BESidkUvh9suHSUgvV5XUPbViU9e80/hrSnDwh
-         tLfMBvcoR8z0/TcH5GOzNOS7dq9jBX1+lm1c3i6yoYRNlqZrnOBXqFVNS6FPt5TuIspn
-         YqWFlfszDZNUXQM9NfJ9bU66Ubfibe//Gnea92ITdb8H1QKDMBt29uO25nh8mSvgmfWL
-         Cc0A==
+        bh=PIoZAbG+hq+TnnHpkMYQ2EjBECAnAfSrr+G8xZRhZss=;
+        b=hVEtPm3jRl6gRhsvfPfeqBGAwO6wELrr8S62DyJfSG89OaurR7Tnu/Puux9lKwI3s8
+         QYw9vbBYs7ZmaRBJlQSsq9DCd7yUVFoajYmOECTJ6iJeTH7WzYrsS7bjqrXdzf3LQBCx
+         rwt3j73g6g5jnRgcVdwmXivwPwG5FAURO7eKJCY6Xn0B1Up2xLGFP9STHdl/QIgI06sA
+         HVfWZXPOis4Z1t8vZucly6euFbCkiG31mYT+jXv6rDSOISa4sn6PRgxcGHKa4f4RYpZB
+         G/dHS5uaPlIMhXUxk3efJHUzKYuCIB9fDWj5EnwcqEb174S2lEk87UD/a/2ayNlMJn+E
+         zIZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727093882; x=1727698682;
+        d=1e100.net; s=20230601; t=1727093886; x=1727698686;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9Qn8nYbZ2QacqlbVhzGAFGu+rxPEefZzXGmMy+OvteQ=;
-        b=OwoWAW0+GOEtji4EJU3smVM9GKqVpGGw9hLEuk0NeBQkkNly7iT1l4SB01CNsxNX9d
-         Sbg1PML6NvI84CUnZNRk09QPk35WBMvo4okFrqh2wZ8xYcx9qms/otX+iAqhAJVjtMxl
-         JhkOHVMDd40IoBHQFaJ11cb1kWwakE3s9gQTAO4U2jP85N7zf1SlUg9xPsriQDB/AjaR
-         +3Ajqc4lKKgp2zfz/QXrXDkHmMlRAZSzbnqUEUbfwq7NkInM17Suctur2qhI3Cwd92sU
-         3wAK2iSsZBYyipcXcRdsaN4BqNSr9DQpdLThUiX5zukln/a2bsNXqk80wQBB5DUVC2Um
-         4ahw==
-X-Gm-Message-State: AOJu0YwuN9BL/oxJOzU8egiyDqySKxKz4kyRsZHmdJWybBP8hfJ1xPPG
-	w3GW/8/OfOMEFaoqUSE3dRw+ZdAzdOJ6AcgZ5o+hpWiuGF3TXuFx/Klx9g==
-X-Google-Smtp-Source: AGHT+IFaVgIdnxyN6tsGQCO5QrfxTdQQkQ3/deIgW4UfBDMlXQI7W+FeVpou1xbZIYR6kz9+Xh+iFw==
-X-Received: by 2002:a05:6402:2695:b0:5c5:b9bb:c3d2 with SMTP id 4fb4d7f45d1cf-5c5b9bbc4c5mr5135102a12.26.1727093881792;
-        Mon, 23 Sep 2024 05:18:01 -0700 (PDT)
+        bh=PIoZAbG+hq+TnnHpkMYQ2EjBECAnAfSrr+G8xZRhZss=;
+        b=weX/lsUWf4uYDlFiShbitK57yUbVNixoizmdnOiAoTYv5eKwCHK3I+2+3JV95oMWUu
+         oUqS2ODFlb/xUvVEyo1EwwoqmU1f3SBxborJ40liqE2TFwEDOP5rkt+6e3sM6SJNvkFG
+         FOlL5/jd1U4PADSPo0xBVBL40pU2JlB495XhBhsleL6t1wuUZQupwPfcdynXKrMWmia2
+         3LwxFfkkuO6+0o/XvT4blNGZeH9CiKYs5vtIv66YnEClyadVurOy3J6Vt1c7p/pQkIZ6
+         et5BKXmv0w6IAI/Ig3mHFOwwHGhfPdCZyYSzMeaf7g2hVbblhmI/ujvaIABXFIb04E5j
+         a2rQ==
+X-Gm-Message-State: AOJu0YwMYyW37+UWV1oqYTAZ92zxyS6+7PPlJ14IpOp4GYcTBkLlrLUz
+	nMznUNF3r4TrPFzRzo30qB7MdUhogFDLbM83pBdQ9hTkQU8I8e7YTijbsA==
+X-Google-Smtp-Source: AGHT+IEsQiMdusKR0AsKKCAPjihmAPlQuAz21k2taLGMJfyx+KzphIIIFNN78UmGNvCkNuk4GHT3xQ==
+X-Received: by 2002:a05:6402:278f:b0:5c2:768d:23e with SMTP id 4fb4d7f45d1cf-5c464df330fmr11500607a12.27.1727093885774;
+        Mon, 23 Sep 2024 05:18:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c42bb5312dsm10186865a12.23.2024.09.23.05.18.00
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c42bc898f3sm10175973a12.82.2024.09.23.05.18.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Sep 2024 05:18:00 -0700 (PDT)
-Message-Id: <c95ed5e0dd58f01db6a390b23c5dcbaaa7a4e43e.1727093878.git.gitgitgadget@gmail.com>
+        Mon, 23 Sep 2024 05:18:05 -0700 (PDT)
+Message-Id: <2474b4c69d68576e901cdd6381aac9410cf21922.1727093878.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1776.v2.git.git.1727093878.gitgitgadget@gmail.com>
 References: <pull.1776.git.git.1725279236.gitgitgadget@gmail.com>
 	<pull.1776.v2.git.git.1727093878.gitgitgadget@gmail.com>
 From: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 23 Sep 2024 12:17:54 +0000
-Subject: [PATCH v2 1/5] transport: introduce parse_transport_option() method
+Date: Mon, 23 Sep 2024 12:17:55 +0000
+Subject: [PATCH v2 2/5] remote: introduce remote.<name>.serverOption
+ configuration
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,74 +77,133 @@ Cc: Brandon Williams <bmwill@google.com>,
 
 From: Xing Xin <xingxin.xx@bytedance.com>
 
-Add the `parse_transport_option()` method to parse the `push.pushOption`
-configuration. This method will also be used in the next commit to
-handle the new `remote.<name>.serverOption` configuration for setting
-server options in Git protocol v2.
+Currently, server options for Git protocol v2 can only be specified via
+the command line option "--server-option" or "-o", which is inconvenient
+when users want to specify a list of default options to send. Therefore,
+we are introducing a new configuration to hold a list of default server
+options, akin to the `push.pushOption` configuration for push options.
 
+Initially, I named the new configuration `fetch.serverOption` to align
+with `push.pushOption`. However, after discussing with Patrick, it was
+renamed to `remote.<name>.serverOption` as suggested, because:
+
+1. Server options are designed to be server-specific, making it more
+   logical to use a per-remote configuration.
+2. Using "fetch." prefixed configurations in git-clone or git-ls-remote
+   seems out of place and inconsistent in design.
+
+The parsing logic for `remote.<name>.serverOption` also relies on
+`transport.c:parse_transport_option`, similar to `push.pushOption`, and
+they follow the same priority design:
+
+1. Server options set in lower-priority configuration files (e.g.,
+   /etc/gitconfig or $HOME/.gitconfig) can be overridden or unset in
+   more specific repository configurations using an empty string.
+2. Command-line specified server options take precedence over those from
+   the configuration.
+
+Server options from configuration are stored to the corresponding
+`remote.h:remote` as a new field `server_options`.  The field will be
+utilized in the subsequent commit to help initialize the
+`server_options` of `transport.h:transport`.
+
+And documentation have been updated accordingly.
+
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Reported-by: Liu Zhongbo <liuzhongbo.6666@bytedance.com>
 Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
 ---
- builtin/push.c |  9 +--------
- transport.c    | 12 ++++++++++++
- transport.h    |  4 ++++
- 3 files changed, 17 insertions(+), 8 deletions(-)
+ Documentation/config/remote.txt | 10 ++++++++++
+ remote.c                        |  7 +++++++
+ remote.h                        |  3 +++
+ 3 files changed, 20 insertions(+)
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 7a67398124f..290a08f6ef2 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -517,14 +517,7 @@ static int git_push_config(const char *k, const char *v,
- 			RECURSE_SUBMODULES_ON_DEMAND : RECURSE_SUBMODULES_OFF;
- 		recurse_submodules = val;
- 	} else if (!strcmp(k, "push.pushoption")) {
--		if (!v)
--			return config_error_nonbool(k);
--		else
--			if (!*v)
--				string_list_clear(&push_options_config, 0);
--			else
--				string_list_append(&push_options_config, v);
--		return 0;
-+		return parse_transport_option(k, v, &push_options_config);
- 	} else if (!strcmp(k, "color.push")) {
- 		push_use_color = git_config_colorbool(k, v);
- 		return 0;
-diff --git a/transport.c b/transport.c
-index bab28965f96..c8947415eec 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1091,6 +1091,18 @@ int is_transport_allowed(const char *type, int from_user)
- 	BUG("invalid protocol_allow_config type");
+diff --git a/Documentation/config/remote.txt b/Documentation/config/remote.txt
+index 8efc53e836d..8ba48573fb6 100644
+--- a/Documentation/config/remote.txt
++++ b/Documentation/config/remote.txt
+@@ -95,3 +95,13 @@ remote.<name>.partialclonefilter::
+ 	Changing or clearing this value will only affect fetches for new commits.
+ 	To fetch associated objects for commits already present in the local object
+ 	database, use the `--refetch` option of linkgit:git-fetch[1].
++
++remote.<name>.serverOption::
++	When no `--server-option=<option>` argument is given from the command
++	line, git will use the values from this configuration as a default list of
++	server options for this remote.
+++
++This is a multi-valued variable, and an empty value can be used in a higher
++priority configuration file (e.g. `.git/config` in a repository) to clear
++the values inherited from a lower priority configuration files (e.g.
++`$HOME/.gitconfig`).
+diff --git a/remote.c b/remote.c
+index 7d5b8f750d8..fe11ead27ad 100644
+--- a/remote.c
++++ b/remote.c
+@@ -24,6 +24,7 @@
+ #include "advice.h"
+ #include "connect.h"
+ #include "parse-options.h"
++#include "transport.h"
+ 
+ enum map_direction { FROM_SRC, FROM_DST };
+ 
+@@ -125,6 +126,7 @@ static struct remote *make_remote(struct remote_state *remote_state,
+ 	struct remote *ret;
+ 	struct remotes_hash_key lookup;
+ 	struct hashmap_entry lookup_entry, *e;
++	struct string_list server_options = STRING_LIST_INIT_DUP;
+ 
+ 	if (!len)
+ 		len = strlen(name);
+@@ -143,6 +145,7 @@ static struct remote *make_remote(struct remote_state *remote_state,
+ 	ret->name = xstrndup(name, len);
+ 	refspec_init(&ret->push, REFSPEC_PUSH);
+ 	refspec_init(&ret->fetch, REFSPEC_FETCH);
++	ret->server_options = server_options;
+ 
+ 	ALLOC_GROW(remote_state->remotes, remote_state->remotes_nr + 1,
+ 		   remote_state->remotes_alloc);
+@@ -166,6 +169,7 @@ static void remote_clear(struct remote *remote)
+ 	free((char *)remote->uploadpack);
+ 	FREE_AND_NULL(remote->http_proxy);
+ 	FREE_AND_NULL(remote->http_proxy_authmethod);
++	string_list_clear(&remote->server_options, 0);
  }
  
-+int parse_transport_option(const char *var, const char *value,
-+			   struct string_list *transport_options)
-+{
-+	if (!value)
-+		return config_error_nonbool(var);
-+	if (!*value)
-+		string_list_clear(transport_options, 0);
-+	else
-+		string_list_append(transport_options, value);
-+	return 0;
-+}
-+
- void transport_check_allowed(const char *type)
- {
- 	if (!is_transport_allowed(type, -1))
-diff --git a/transport.h b/transport.h
-index 6393cd9823c..44100fa9b7f 100644
---- a/transport.h
-+++ b/transport.h
-@@ -342,4 +342,8 @@ void transport_print_push_status(const char *dest, struct ref *refs,
- /* common method used by transport-helper.c and send-pack.c */
- void reject_atomic_push(struct ref *refs, int mirror_mode);
+ static void add_merge(struct branch *branch, const char *name)
+@@ -482,6 +486,9 @@ static int handle_config(const char *key, const char *value,
+ 					 key, value);
+ 	} else if (!strcmp(subkey, "vcs")) {
+ 		return git_config_string(&remote->foreign_vcs, key, value);
++	} else if (!strcmp(subkey, "serveroption")) {
++		return parse_transport_option(key, value,
++					      &remote->server_options);
+ 	}
+ 	return 0;
+ }
+diff --git a/remote.h b/remote.h
+index b901b56746d..d9926a76d23 100644
+--- a/remote.h
++++ b/remote.h
+@@ -4,6 +4,7 @@
+ #include "hash.h"
+ #include "hashmap.h"
+ #include "refspec.h"
++#include "string-list.h"
+ #include "strvec.h"
  
-+/* common method to parse push-option or server-option from config */
-+int parse_transport_option(const char *var, const char *value,
-+			   struct string_list *transport_options);
+ struct option;
+@@ -104,6 +105,8 @@ struct remote {
+ 
+ 	/* The method used for authenticating against `http_proxy`. */
+ 	char *http_proxy_authmethod;
 +
- #endif
++	struct string_list server_options;
+ };
+ 
+ /**
 -- 
 gitgitgadget
 
