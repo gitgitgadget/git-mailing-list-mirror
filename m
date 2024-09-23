@@ -1,83 +1,122 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C089419F42C
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 17:59:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E558C1A
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 18:09:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727114371; cv=none; b=Lp0Q5au4OVbSpusEFu4rTmHVmStcvDtmBIAERXuZhkWShxKinjDXIFHLjMubHWAp7SKMMDxhvTnx1oPQkkJDIWpByJu3XzTNxJWqTx7eKjdweA+ElfxLJIDZpIWh24gU/DbIS/xyvDwBjU65ABM1FBJkR5rAqauAsOivrYjDNiQ=
+	t=1727114948; cv=none; b=LvE8hCfBqYU8KbvTj/BRBh2bWFURlzjfpbXgfYDGBEX1kKtcwNj8jlNQezUgWfWNG5QVX3OPVdCRSpzJ88vZ/bW6vIN3/iJFv51BAAdBLujlcZ0Uyc1kjsXxOzXnZbXTbTIlq417jMdXnYfaCrOMtr5jovdC/YzmKjgzy2niBw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727114371; c=relaxed/simple;
-	bh=S/XkABUSw3IjS7izZzSRw6FqGpQ25yxbBqnHZQBSTJU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a+otlPwEY0cfyIyEnq2iIW+ycP8/ErfZwkJUVJ9aR7LKEhcdX57mP+GRFdtov7HPtLD4L2LW8qUazUrtl5WtGpib7uah+BaQfVZsf6U6Nwt6l9W28+eFIkQRZREjpt2kRZwo9oYPSq3icvRjLcm9GktMirBLeyS0RJe0OoNR6a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.217.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-49d37980aa9so103065137.0
-        for <git@vger.kernel.org>; Mon, 23 Sep 2024 10:59:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727114367; x=1727719167;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OVGGLa6NOWGGb1e2cnRuuHh9ZZTHW0BTkfXMWCCsIow=;
-        b=B+ZNXtqDSqvGY+thFoIuewolfjBplc95dySJupl/TLF5ISWi7srlQNasjK8quyXwo/
-         vLMkfBjh8BAF6Cg3vdsgzZlboQtape9ZZhMAnSgrHCpF1mDPwJK6r4jEXswNvELVdHkX
-         Nr9YMJZV2hKlIDHdLDnlWUyYQZjQvabZCkTWEc/KKD8+vNGvEOjz2m1VnyBrRXvRn+Y5
-         zvUlaz6pcDGE4p2PM5/ipfPxFBHKf4h0dpVibXEjhRjE68sIg9OBMNgTkD/bet38AH9y
-         xwnfO89DD9C/gHT8fp0L7kc9Jc9Nqyb3yfQ+1WrgiQhHFPpGfga9mUHcZt4BaU+JtPmw
-         2VhA==
-X-Gm-Message-State: AOJu0Yz9LHqQsrYb2C4c+N2D2+TOee4msXZw8XoDAyc/WodIuPpFC0RE
-	XvPQiv4a9OyMbecatxWpguDg5r2tlLfmJeaTcm9/1nQQYXT7EeZNQv+ehGB6SVCVNLtRKoc7bHv
-	5JygFxMOp0HY2bBABi1cKr5ul6DA6nU0JVTQ=
-X-Google-Smtp-Source: AGHT+IGHzp990+/9DifsVHAfarGGdalTTiK7jlvqc7HLOZCsBhHgGPzwTOPh3V7dMKgnBRn8X5Zk6oJrZNwQtCsZS1A=
-X-Received: by 2002:a05:6102:508c:b0:49b:ce62:133a with SMTP id
- ada2fe7eead31-49fc7511e2cmr3638054137.1.1727114367528; Mon, 23 Sep 2024
- 10:59:27 -0700 (PDT)
+	s=arc-20240116; t=1727114948; c=relaxed/simple;
+	bh=+cWagZonKE+GPY0gcAspJ+gIN3cA7yZNsfyY8n/vEcM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Ha54SZwd5aDpI0DFoK83L3H6za6aFobTQCbRnp50ECPdukT//T6bZWgKkaJopbiF1ABADInAPiVbwOQcfN/QuZdPD0bOebtKg7czUpL5GlRhs84kfn81jMwbQ0aGS3mJhjracJzm9QkUZNCWydUCKruM3iuPM3vl7JrbIj+wJ7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=D+Gy24i8; arc=none smtp.client-ip=212.227.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="D+Gy24i8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1727114938; x=1727719738; i=l.s.r@web.de;
+	bh=3s3KU2ZdPQU9OVEMDiqBwKtgR1OOExoOOa78gl+phkY=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=D+Gy24i8saGqczidl7kqFtRIDuwmjDnndOEc+mllvLiQcTOeHWcYTsGPr58JaH7v
+	 fjZZrmeLLRPgkgeKJ24JeH3mIjaX8qYSq7Ud1/o4sHi3nbnQYSOe6cDR2DrCS03VK
+	 SxIm55CibY7n/YBf5hGDWXfHhTvIV3XMw7FZhAVYxvYRijf5SBzM5k8waPGzQN+wU
+	 EoSk+UpG228leDf0sFohQ1dRVu6sONY1wNY0+sCLdGdVHgm+J85w0z9a81Y6WAvAS
+	 92bJKX7bzfFyWDEIjBb2SfDSYbir1oRE5Lq6Pkix/VyndpwNCQKzG4cvo5kmpUEyG
+	 sPnli2YLrD5tAkoUAg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.152.135]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MftBr-1sGzpL2G1h-00hmZW; Mon, 23
+ Sep 2024 20:08:58 +0200
+Message-ID: <2c3472d4-ad40-4636-9840-51fa97bca02b@web.de>
+Date: Mon, 23 Sep 2024 20:08:58 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240923110343.12388-1-algonell@gmail.com> <CAPig+cSZmKCwy_sFKPR-w+DjXeTJJec1BAM6wDXMyEMWhoAY6g@mail.gmail.com>
-In-Reply-To: <CAPig+cSZmKCwy_sFKPR-w+DjXeTJJec1BAM6wDXMyEMWhoAY6g@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 23 Sep 2024 13:59:16 -0400
-Message-ID: <CAPig+cR5BdfVRwdXJ7viJbvgkUW7KStG2Y_=qGNzoXWrOgZcJg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] Documentation/config: fix typos
-To: Andrew Kreimer <algonell@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Bug report: Undocumented interaction of --exit-code and
+ --ignore-space-change for file move
+To: Ian Turner <vectro@vectro.org>, git@vger.kernel.org
+References: <d8512f2b-400f-4daa-a59f-5d10d4fc3840@vectro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <d8512f2b-400f-4daa-a59f-5d10d4fc3840@vectro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:QEDlQXwI371VWXf4BlhrEldMrbe0iKWMqt+10jB5cS8dz1690+Y
+ tPdmasHitmTxH7wO6KZtGVOGr0eUB+7V0p+HHPFOBGDZ+zEljZlNb7ZOjlgWTHdksH3GPAc
+ siWoxibYsGoPfaRcUkGjK7IMHrjv0fyg8s5rgnQhWZeKArpLPUBq6zGhIof3/0W9KeW3Fa1
+ TFmMhGBTpvjvL7d4KLZ0A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Y16XjGa8ZZc=;SiVPDtxxy7XZmHLSPdQD7LvYYmI
+ 9CnUz0p6Y8GbwwSm/vt9joczlaDmSAV0tK/uq0xCn3/GrRQ7HXIww+NCI82Dgf/vh/h7VcJt0
+ SoCE1pvuUw2fI3212jGNfECYl+ahhEz+inIWBc/2j+eURhylCfk2aYHkH6YshlEgMuT58J3FL
+ 0RQqP1cNyCB775dnVZgzJNdJkkLywleYf32Wl5V4j+sUmz6GKPanRozZ33sBMS6QgrSfMv25r
+ WoJpGfoEzl9rVkAnHolLL9no+W7IkBuoHbjLDpn+pYs0GYacv+6a0g2geYrdSS+iZlUVwxDsl
+ Gcxtbx3BJ5s07wVOumTrUZ5Rit/BE6TD9sfUTkf50xUObmeCcqoPRMAfOPfbD6LYVbbYwnY5t
+ BaVEjMwfSHsfITmtLsC3KiFFmiqUlpyeW86YpJ+OtHqFn8fwvSRegQhGz3KlEVF0Kk1PrQKI1
+ yMkGhx7xmpx0wZgRdCxJL6u/SqoBD6uEsA+8n/jL+j2VwGbS/9nIQj8mDiC5/GAVlhsNevyNb
+ FkEBnwyXLz1t7xtpUvt78fikoZE9qUYI5jocYnvM7QlY8Z17zTPdBCjeX1wHvFUrZv1bLu7Df
+ QT+3IuslJLztFRQ0hhlqH8X55vkSgff54mbYjwl0y0BEnFAhfaga8QmS4pE818Drr2M1zhoFx
+ f2/nsRelp99lEe71jKQRizX1mL/MM6w0ueCvFZMhoO9H5QXpAvTTH9+2LLu7fE6oO/ncAYv1p
+ 0mLfoBOPr5Z2tHFrlUb1ehJUbxS5YuUakUKUA54XkPVLLgwWwHWDjRozi99dfbPOlkLBBpdAv
+ jZ+JidNa6jIq94do9HAS/q/Q==
 
-On Mon, Sep 23, 2024 at 1:51=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
-> Thanks. The changes in v2 of this series look fine.
+Am 23.09.24 um 18:29 schrieb Ian Turner:
+> I noticed that there an undocumented interaction of the --exit-code
+> and --ignore-space-change flags to git diff, when the diff only
+> contains file moves. Specifically, --ignore-space-change will cause
+> git diff to return a zero exit code in this situation.
 >
-> In the future, to make life easier for reviewers, when rerolling a
-> patch series, please include a cover letter ("git format-patch
-> --cover-letter") and include the following in the cover letter:
+> I am not sure if the problem is with the command behavior, or with
+> the documentation.
 >
-> * explain in your own words how the new version of the series differs
-> from the previous version
+> STEPS TO REPRODUCE:
 >
-> * provide a link to the cover-letter of the previous version (i.e.
-> https://lore.kernel.org/git/20240920082815.8192-1-algonell@gmail.com/)
+> git init
+> echo foo > a.txt
+> git add a.txt
+> git commit -m "A"
+> git mv a.txt b.txt
+> git commit -m "B"
+> git diff --exit-code HEAD~1..HEAD # returns exit code 1
+> git diff --exit-code --ignore-space-change HEAD~1..HEAD # returns exit s=
+tatus 0
 >
-> * include a range-diff ("git format-patch --range-diff=3D") which
-> provides a mechanical representation of the differences between the
-> new version of the series and the previous version
+> EXPECTED BEHAVIOR:
+>
+> Both of the last two commands above should return nonzero exit status.
+>
+> WORKAROUND:
+>
+> As one might expect --no-renames undoes this behavior, although it
+> also changes the diff output if not using --quiet:
+>
+> git diff --exit-code --ignore-space-change --no-renames HEAD~1..HEAD # r=
+eturns exit status 1
+>
+> OTHER INFO:
+>
+> Tested this on git 2.39.2 and git 2.41.0, both on Linux.
 
-I forgot to mention email threading as a way to further help reviewers
-and readers of the mailing list archive...
+Thank you for the report!  It's a known bug in the code.
 
-When sending a reroll of a series, use "git send-email --reply-to=3D" to
-reference the cover letter of the previous version. If your email
-client doesn't provide an easy way to access the ID of the previous
-cover letter, you can grab it from the list archive. For instance,
-consulting the above link:
+d7b97b7185 (diff: let external diffs report that changes are
+uninteresting, 2024-06-09) exposed it more widely, unfortunately,
+causing v2.46.0 and up to report the wrong exit code even without
+=2D-ignore-space-change.
 
-    git send-email --reply-to=3D'20240920082815.8192-1-algonell@gmail.com' =
-...
+87cf96094a (diff: report copies and renames as changes in
+run_diff_cmd(), 2024-09-08) fixes it, but it's not in any release, yet.
+
+Ren=C3=A9
+
