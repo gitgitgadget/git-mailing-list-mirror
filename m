@@ -1,56 +1,54 @@
 Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8A919E98E
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 16:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCBBC8C7
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 16:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727108478; cv=none; b=jtBuemUqo2lyM9h+d4VilrUT6qNdzeU4ovMe9q70S2ibPYhWjy1PKtZR1ANiCqC08ziLFHSnaHZYYHh3rkX80G1Q8wrty5Jfx9MRykUSZ+ckarWvrGYe6MfmPnzS46p1Q9ulsSRuZ7uneo0v9Fwq5/1nBKSb86p7KEwuuLa8r6U=
+	t=1727108685; cv=none; b=hPAGnuMlAkWRLlZXYPgsjRzDUZBJefU/uuuSS+PGr96jgpEO1mJnaPXEdUb8CWUIr+doZO1/bMnROnby+GIj39xy70JoiUPKs/i+LJjTPbQna7K07My2aB2xHrJ5IzsaDVCWkHf1sqbQ+J+cGlmD1KdBlngXoLvAUeQK+0O37B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727108478; c=relaxed/simple;
-	bh=mt74XiivcUHB7EWxzLxU6FXrtciUbobkyp7Fq1rj3zs=;
+	s=arc-20240116; t=1727108685; c=relaxed/simple;
+	bh=TG4N+RfzOdZQJTm9uVmrMkjijws01ZcyHhSAtPDPtZ4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nbR4vDz0TIt3vFhq0w9arbfvP18vfXCAI71FZS+bnodnyX7H5Xd2XuKjs1mAjld0m3XawRZqgSt3nrHZqUeDuYE6mtHqj2vfBh4HjwmyMREMt/8ieHaMM2ASQ2R5Rs9DI3h9PE8lPRG/Syiul2CE0kQGsnGJ/8r3tjmz5yRYwpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cHP/WvUi; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=dRLK6uOsG3zJ6QwJKXHEwnNRXSQPLTCOIaXziCtHFEKJP0m0yxoySv3LDwp0sU5F2pqjqJlMhmd+2lNjVIf9TpO/VRDj29oN3x3QoX5KYPnqrMOzLuCu6NBhxWMLJuJLXV/moPHmVFBHHF+xnFv9EEq+UVCBI3NGFzneYSlrULk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=h5wvzktx; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cHP/WvUi"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h5wvzktx"
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4101726B88;
-	Mon, 23 Sep 2024 12:21:15 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7129426C16;
+	Mon, 23 Sep 2024 12:24:42 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=mt74XiivcUHB
-	7EWxzLxU6FXrtciUbobkyp7Fq1rj3zs=; b=cHP/WvUiUw9qe+nmWxG4E3QaIBzT
-	ZbGTQWVAo9UvrnkQEAs5lYNI8jNr1Ct070ZWa2ukRSgyHbppimkKZPG0ZBUjc+BJ
-	Fj+3NjnZ6pk3jdbvDY7w2OnrXItEFbyqYjsZ564kvw7J3x91ShHKGbsfE8gm03u0
-	Ju46hgWYc9FddRE=
+	:content-type; s=sasl; bh=TG4N+RfzOdZQJTm9uVmrMkjijws01ZcyHhSAtP
+	DPtZ4=; b=h5wvzktxrJXzulC+rLSqO2kFfn7/sY5bFqeOYVTgJ9vq0PiXmNVRtX
+	WfSupqk6BODYywD+8zh7bGX40Q4c3dzRmB/n4d795y9n3Xn2datHWK+ku10zZUG9
+	RA4mquDMn8C+Qzbb/frhror5BACGW4HcflALLjWdYNB/t2axP+HWs=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3866226B87;
-	Mon, 23 Sep 2024 12:21:15 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 68E4C26C15;
+	Mon, 23 Sep 2024 12:24:42 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9DDD026B86;
-	Mon, 23 Sep 2024 12:21:14 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C980826C14;
+	Mon, 23 Sep 2024 12:24:41 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?6Z+p5Luw?= <hanyang.tony@bytedance.com>
-Cc: Calvin Wan <calvinwan@google.com>,  git@vger.kernel.org,
-  jonathantanmy@google.com,  sokcevic@google.com
-Subject: Re: [External] Re: [PATCH 2/2] fetch-pack.c: do not declare local
- commits as "have" in partial repos
-In-Reply-To: <CAG1j3zHJVrpK5JZtUXFwkZgWY1-CxqET+ygpaMqo5aM-KeWaxg@mail.gmail.com>
-	(=?utf-8?B?IumfqeS7sCIncw==?= message of "Mon, 23 Sep 2024 11:44:57 +0800")
-References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
-	<20240919234741.1317946-3-calvinwan@google.com>
-	<xmqqr09c89id.fsf@gitster.g>
-	<CAG1j3zHJVrpK5JZtUXFwkZgWY1-CxqET+ygpaMqo5aM-KeWaxg@mail.gmail.com>
-Date: Mon, 23 Sep 2024 09:21:13 -0700
-Message-ID: <xmqqy13i49za.fsf@gitster.g>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  liuzhongbo.gg@gmail.com,
+  Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH 0/3] maintenance: configure credentials to be silent
+In-Reply-To: <5114e7fa-7858-458a-bc5d-5c82ea663a48@gmail.com> (Derrick
+	Stolee's message of "Sun, 22 Sep 2024 21:36:02 -0400")
+References: <pull.1798.git.1726790423.gitgitgadget@gmail.com>
+	<xmqqfrpudm51.fsf@gitster.g>
+	<5114e7fa-7858-458a-bc5d-5c82ea663a48@gmail.com>
+Date: Mon, 23 Sep 2024 09:24:40 -0700
+Message-ID: <xmqqsetq49tj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,24 +56,35 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- DAB72D40-79C7-11EF-A491-9B0F950A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ 56339896-79C8-11EF-B1FD-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-=E9=9F=A9=E4=BB=B0 <hanyang.tony@bytedance.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> In $JOB, we modified git-repack to pack everything into a giant promiso=
-r
-> pack if the repo is partially cloned.
+> On 9/20/24 5:56 PM, Junio C Hamano wrote:
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> 
+>>> Add a new configuration value, 'credential.interactive', to specify to the
+>>> credential helper that it should not prompt for user interaction. This
+>>> option has been respected by Git Credential Manager since 2020 [1], so this
+>>> is now presenting it as an official Git config value.
+>> So, the other helpers are also supposed to check for the variable
+>> and fail when it has to go interactive now.
+>
+> I would hold off from saying "supposed to" but Git is definitely hinting
+> towards that behavior.
 
-I would imagine that would give you pretty much similar results as
-the posted patch without incurring the cost of transfering the same
-objects from the promisor remote.
+I would too.  I didn't mean "they were behaving correctly, but we
+changed the rules from under them and they need to be fixed".  With
+or without your patch, they would try to go interactive and make the
+process get stuck, until they start to check if they should refrain
+from going interactive.  With your patch, they have a way to do that
+check in a documented way.
 
-> This basically does the same thing as
-> you suggested, but without the cost of constructing the object list and
-> removing the objects in the promisor packs.
-
-Yup, repacking, instead of creating a new pack only to hold the
-objects in the gap, would be much simpler.
+> Perhaps I'm just hung up on the idea that we are not adding a new wrinkle
+> to the "contract" but recommending a good thing that was previously not part
+> of the interaction.
+>
+> Thanks,
+> -Stolee
