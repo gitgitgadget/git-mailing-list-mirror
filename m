@@ -1,59 +1,58 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387D9624
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 01:23:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B114A1E
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 01:26:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727054584; cv=none; b=udMm3uKsKOG7q3YwQQ0lCjLhwhLlo01k2OdbaxVtRCCZRfWv/OUGg0HzgSG6iq4NhuDzfH+AAji4p4h5d506QanvJ3PGsc585EzLMXYgIJjmnHeDT05dOzwjWMJnZoRS56qZZyUOvg3ZKBCgcOLpz7X600H8SkEgXg1KZbJwi+4=
+	t=1727054804; cv=none; b=PGGDGpnTsZMJ2xegHFPQvhgnvdK1fZPbcXGkYlc4kfQ264WnqrsaGwBKDD+1i2PPytzVXV66hSU30aKypuksvQm1+2h//Z/r+KCMgYd++p5SlWZRjmTHFpv8+L+muINKAA8c3C+WEIK0MLXJWs4rEhA9WW/0iwAZIf7de1Wxbe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727054584; c=relaxed/simple;
-	bh=l2aLIQYYvkkRnNLoFa56sP8MqzMUtZOkoegN6YqzUsA=;
+	s=arc-20240116; t=1727054804; c=relaxed/simple;
+	bh=8XlFApG6FPadMKvs9/6z33AE5+MsK/EP6PD6mz7amhk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f+ITyoXtmwb9xPLN3jnWPhFrtNbGWD2B8pU8XBAOHFs0UPfzRvjDT40BVJz+3PVVownbiN/nstPdLjuDXt2osauJ3kwdCrpjba8HXpwlZltdcwtl72lwghRSoexZx8tRTHSIbnK3bqY75uQng/OmfjIK8ieSWwtS7y1YUKU2s40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JDMCWoT2; arc=none smtp.client-ip=209.85.167.180
+	 In-Reply-To:Content-Type; b=gqFJYpsZ2CCg8tPprN/n0mK6fvG9gryDlru8xM2XjIxt6g7TCF3DN60EcTf/D123pQJJMoRsawD/kWhqqcG1I2hXjdxNXXdyK5IMkbvsGIgz00gIQ5YrJ+juBiM43vSc6h19anujyTZ6ym2r1/AKNOa+E8bRXMb45M98+VQFQnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BG32wn08; arc=none smtp.client-ip=209.85.210.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JDMCWoT2"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3e039889ca0so2080129b6e.3
-        for <git@vger.kernel.org>; Sun, 22 Sep 2024 18:23:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BG32wn08"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7124395ca86so1470936a34.0
+        for <git@vger.kernel.org>; Sun, 22 Sep 2024 18:26:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727054582; x=1727659382; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727054802; x=1727659602; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xCYNK+ouVwbvq0fx/ym9z3lCho5QcgM/m3dxnP58rhU=;
-        b=JDMCWoT2yjZvYVVedrDi9ZDvq8dS6enF92+0kE7U4lrGPJoIEukhynzKrwnJQyt0Td
-         SyAx16D77STcyTnpUTEVsn7khbLkyC69QjPQJzMyws8pROKaGNuxmy7aphb9tCBgnkiu
-         u7lll39RUgC/Lm0YwLsF2jI5tQ92zjM+oZE9Nc18XjsV+4cW7+vohAxFuP/H0Q5E71RL
-         wKcGYN7A18Av80Q1mh8ZlqtUxgOOwtvmgCMhgM4RtdDvTMwUJSanz6raLKXewEMiFSCJ
-         jqusf7n1Gd+kNQYgNClsDSOttsFESrZbWbmpyv1v51kQvWShs/Hl1rCk2LfJcPPdfop3
-         Z/5A==
+        bh=M4PgJ9J3iZt3sbxQnDGUQkK7yNo/JBGNON6+5QU6N4s=;
+        b=BG32wn08bJUBjE56SBoIUCiL0vq8PcddMKhmPIrdwwaQmYNdEXkqJJnW154MAXFvPe
+         JGVOCkichhBM9Qj+IP/XYd0mLOJchWT+83OFHbptd5Fz+N3dZFmOLNRaeQIig+cb3gp3
+         Ybm3nNQ0O4xzhWG0pdycj+p52zDrHzy1J5fbFI9K5BSfgjlNAW4i9DHU0OW7Ae84vIDR
+         U10TVQEpE73onTvnsW5/IyrjtggNKdJik3e0uYkqMbfeibel1vhMRgkXdKTDS3PxDnsq
+         7wmqu5C29vLPWuyHIomfmQ6lWwqXKRlWGufJmvhK6M+fmQki2rC3eEAc+I92hRQ4qJbD
+         rWVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727054582; x=1727659382;
+        d=1e100.net; s=20230601; t=1727054802; x=1727659602;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xCYNK+ouVwbvq0fx/ym9z3lCho5QcgM/m3dxnP58rhU=;
-        b=QdfklsahnhDKvRfEjkJ6lEQYMjzce8jBsag4Ab6dNjYTX12TeTUyubjtdcveNCHHrG
-         wqTxZ74TbdHNG2JLsnNIriOwS/acZaE95h97jdPjBC8oZIEAEos/d9D6SmBUoJ6GTQuP
-         S+jqTkcexcS63EqThwk8LUfZKQSwjr2TiRS50Yc/u3UQrJf62/D0e4hwd+0HBQ/MCCol
-         ODYH9RheEsGF8h/9Nl9csSAuoqxkfHVuFMcPLW2sU5KTyBkpMMbj/ah3xfPBW+AQyc8r
-         vJ0LER89b0CW5Xst7jkBJ0PoT9P/LajbGmh10aTbM6DhVi/Ah0xtNW0FmubBMiNUolll
-         BaWA==
-X-Forwarded-Encrypted: i=1; AJvYcCXtifBVZI8AgCy5KsTlIjEMaO3Qs0HsERDYmFiFO9iFOpPzV+773bwcUO+fUoBQn1GywAU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQuzXd/mOjwImrOZQK/IgwN0nI4Ianiy+I32ZPjpaXTbmxZzsb
-	ElpgpBceWI7PvliebrW5U3vPzAa910WkUv0rUEjBImXCv2fKBU7d
-X-Google-Smtp-Source: AGHT+IHkeZ0Vhdf7Ycn+CH4u7/z5EsOwEJUpWqFwUARvcil6oGtUSEFh2XT+a89DUsLxzy1eWtltdQ==
-X-Received: by 2002:a05:6808:199e:b0:3e2:657d:7a4 with SMTP id 5614622812f47-3e271cd5b89mr7776971b6e.47.1727054582136;
-        Sun, 22 Sep 2024 18:23:02 -0700 (PDT)
+        bh=M4PgJ9J3iZt3sbxQnDGUQkK7yNo/JBGNON6+5QU6N4s=;
+        b=QNqVqXMgGicdSXcgPtPsY7/9b+9My/glbReITptPMESFqYoYTukzPawQUA3CcUqV4G
+         N1UTJnVTlN4ddl6L+AJOOw+zjMPIV2ncuD+XyECjIKDMuivzI+kN3VUVpnAxXoYueIug
+         sCzbKbEJNO2K3Bh1f+W8pNkEiKtcJbRLKLSj4B9NM+9UCJLatX4a5hJm3CZKpEgNmSMT
+         7lNchvOwShZNrqol6RBVRxiop8OSpAmCjGQjOEld6n8/dXi0c5mv/i1Mlz+5W8bk6B3r
+         80Wu0jIIxsrfR+mgY87PGcwRu6ulK7s9e2U3x+SmdfAgrb2M9S7FxO135o393gWiY7ZC
+         aSPg==
+X-Gm-Message-State: AOJu0YxJdsNjc3CxyRUWf1PF12Oz1rdHYlWPMGE0qvEQpIHsNpANOqrI
+	g3ZQzN87DV95drl5EuBjyhyjR5GW9yQ7Pbm4eRKUvZLQBOLKWqckfC+pKw==
+X-Google-Smtp-Source: AGHT+IF77L0UcwMpoyIH+zsEwvrPrfl95CodjY6IIynV4C2+xxLIqC7e6yUhGU/XDUbVvnQIUC47Pw==
+X-Received: by 2002:a05:6830:2a14:b0:703:5fbe:e0ca with SMTP id 46e09a7af769-713923abdd1mr7106764a34.4.1727054802509;
+        Sun, 22 Sep 2024 18:26:42 -0700 (PDT)
 Received: from ?IPV6:2600:1700:60ba:9810:1803:188e:65b0:6321? ([2600:1700:60ba:9810:1803:188e:65b0:6321])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3e26b6bbd03sm1961369b6e.25.2024.09.22.18.23.00
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-71389b4a157sm1968651a34.2.2024.09.22.18.26.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Sep 2024 18:23:01 -0700 (PDT)
-Message-ID: <6b672771-4016-49e8-a045-0a48bc8c1522@gmail.com>
-Date: Sun, 22 Sep 2024 21:22:59 -0400
+        Sun, 22 Sep 2024 18:26:41 -0700 (PDT)
+Message-ID: <91bf8c63-b2fc-48ca-a6de-37a576ddc1b1@gmail.com>
+Date: Sun, 22 Sep 2024 21:26:40 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,84 +60,40 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/30] [RFC] Path-walk API and applications
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Christian Couder <christian.couder@gmail.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im,
- me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com
-References: <pull.1786.git.1725935335.gitgitgadget@gmail.com>
- <CAP8UFD0uyVk5WPX12sGhWWXkdQWGpBhG29Q-9EmBxHos1XQ_uQ@mail.gmail.com>
- <53dc17f8-82e5-40fa-81b7-af89f987928b@gmail.com> <xmqqplov7cw8.fsf@gitster.g>
+Subject: Re: Prefetch maintenance might lead to thundering herd issues
+To: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+References: <CAG=Um+3C1JMKoW+j03nF6uS2DjcJnKD7+0PSaiXGB-td9qyc8Q@mail.gmail.com>
+ <b67c7b6b-f11b-4306-b3ba-c440e8cf7cab@gmail.com>
+ <CAG=Um+2g-pn3XmC4MVkA+UAGeWpHw5U6fe=zXR=6-ibu3d0qsg@mail.gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqplov7cw8.fsf@gitster.g>
+In-Reply-To: <CAG=Um+2g-pn3XmC4MVkA+UAGeWpHw5U6fe=zXR=6-ibu3d0qsg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 9/22/24 2:37 PM, Junio C Hamano wrote:
- > Derrick Stolee <stolee@gmail.com> writes:
- >
- >> Combining the two features actually ends up with very similar performance
- >> to what `--full-name-hash` already does. It's actually important that the
- >> `--path-walk` option does a full pass of the objects via the standard
- >> name-hash after its first pass in groups based on the path.
- >> ...
- >> I was not clear about this, but the RFC is 30 patches so it's possible to see
- >> the big picture, but I will be breaking it into at least four series in
- >> sequence for actual review. They match the four sections described above, but
- >> will be in the opposite order:
- >>
- >>   A. `git repack --full-name-hash`
- >>   B. `git pack-objects --path-walk`
- >>   C. `git survey`
- >>   D. `git backfill`
- >>
- >> (It's possible that `git survey` and `git backfill` may be orthogonal enough
- >> that they could be under review at the same time. Alternatively, `git backfill`
- >> may jump the line because it's so simple to implement once the path-walk API
- >> is established.)
- >
- > I actually was hoping to hear something like "since it turns out
- > that --path-walk gives a better performance and it does not regress
- > small incremental transfer like --full-name-hash does, the real
- > series drops --full-name hash", i.e. without part (A).  That reduces
- > things we need to worry about (like having to either keep track of
- > two "hashes" per object, or making small incremental transfer more
- > costly) greatly.
+On 9/22/24 2:40 PM, Shubham Kanodia wrote:
+> On Sat, Sep 21, 2024 at 1:20 AM Derrick Stolee <stolee@gmail.com> wrote:
 
-I believe that the --full-name-hash version still has some benefits, in
-that it could better integrate with reachability bitmaps and delta
-islands:
+>> This is already handled by using a random minute of the hour, as
+>> implemented in 9b43399057 (maintenance: use random minute in cron
+>> scheduler, 2023-08-10), for example. There are similar uses for
+>> systemd, launchctl, and schtasks schedulers (look for uses of
+>> the get_random_minute() method).
 
-  1. The .bitmap file format would need a modification in order to signal
-     which hash function is being used for compatibility reasons, but
-     this does seem within reach without too much work.
+> Ah, thanks for pointing that out. It wasn't really clear from the
+> multiple examples and cron expressions on the git
+> maintenance documentation page (which have examples such as `0 1-23 *
+> * *` for hourly). I should've looked
+> more deeply into the implementation.
+> 
+> Perhaps adding a line to the existing doc might be of help? What do
+> you think about adding a line to the
+> section on scheduling —
 
-  2. The delta islands feature integrates seamlessly with
-     --full-name-hash and seems difficult to integrate with the
-     --path-walk feature. Either we would need to have a second object
-     walk to get the delta island markers, or somehow put the passing of
-     the object markers into the path-walk API itself (similar to how it
-     needs to push the UNINTERESTING bit around during the walk).
-
-I'm not recommending any version that requires tracking two hash values
-per object, as I have not been able to demonstrate any improvement when
-doing so.
-
-But, it would be helpful to know if the --full-name-hash feature should
-not be pursued due to the --path-walk feature being prepared shortly
-after it. I can see an argument for either direction: having a new hash
-algorithm provides a smaller change to get most of the results for the
-full repack case, but gets worse performance in many push scenarios.
-This is the point of an RFC, to get questions like this worked out based
-on the "big picture" view of everything.
-
-Perhaps I should pause the --full-name-hash topic and focus on getting
-the --path-walk topic up and running. I am curious to hear from folks
-who are currently running Git servers about their thoughts on these
-trade-offs and potential uses in their environment. My needs on the
-client side are solved by the --path-walk approach.
+I do think a doc change would help. Please submit it as a patch for
+review!
 
 Thanks,
 -Stolee
+
