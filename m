@@ -1,71 +1,147 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33A117BCC
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 19:09:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFB617BCC
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 19:13:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727118592; cv=none; b=ejd6TWKkIExWLFDRao8YzJIPEEUuOIzFNbw/iObAntVCPxc6M7u8kHnTFBzAu0CAKd0Ei/Lx0cQ1NQ/s3rl6sdB7pLCzPUxCFp23+i8cMYBsBdcz3KyqqGmawF2gAf/bqUWqMKK5Al504pzTGRXHNgDIHjfQ0hPgvz1QJgYmMQQ=
+	t=1727118828; cv=none; b=M7LwimSlbso4LTu1bDqczmTgxmFRvSw+ubFoLYbrWG2TXd40eg8wPzrrbK919+KlH/1zuWG48iBd2Nfuj8hBoFPpkmSGlrhsaKu9rpDaZOzyTWe73lznXIlW9bURsD0g+KC3SiS0wOXxU+kHOcH188zWxDjxdQug5hJja9Y15dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727118592; c=relaxed/simple;
-	bh=zlPrrKfUCn/1k1OpO9MVNvCKYFCTGMQkTp6lOOJNEww=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HmUy4GYOcDxzOiVAn7RIMiZEdbBFXxfU/YRQgrRBwOAwMij05g2ZkUf5k+QVudTfob+cKLp+l24VYCfTzwFcp3AkeEGrZmM0TWTA9pHfda5ACyWvT3vr0qD5DzFhhmeH3n30d05Ueqe0fHls+WzUB9cRPPKnvbGcS4dekCitvTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 48NJ9RMc992815
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 23 Sep 2024 19:09:27 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Andreas Schwab'" <schwab@linux-m68k.org>, <email@mateuszwielgos.com>
-Cc: =?utf-8?B?J+mfqeS7sCc=?= <hanyang.tony@bytedance.com>,
-        <git@vger.kernel.org>
-References: <4B2B1EC7-6B08-4B57-A50F-702C031C2792@mateuszwielgos.com>	<CAG1j3zEg47RLYrVfJQi7WubgcdtbK2RWFBtj5rd8NtkPyXU5Rg@mail.gmail.com>	<0D0BB87D-9BF0-48BA-8F2D-83F8D326ECEC@mateuszwielgos.com> <87r09aus7v.fsf@igel.home>
-In-Reply-To: <87r09aus7v.fsf@igel.home>
-Subject: RE: [External] Using Git as a Database
-Date: Mon, 23 Sep 2024 15:09:22 -0400
-Organization: Nexbridge Inc.
-Message-ID: <00d001db0dec$1c8fa320$55aee960$@nexbridge.com>
+	s=arc-20240116; t=1727118828; c=relaxed/simple;
+	bh=xmMREw7zFt70q74qnUc5e439TzRC4OfNG6SPoD6z7K8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=IwEl9frYdiY+aznK6tajoDayQpQp1EJBP43qB5r9lPk+OxkP7NcvGI6ukdggJopg3/uQCoTfeSdiGCFIKlPrRgCxrOZPqw20WWxT0dS1MuFHlzkRL7vXfpijwJMxMLrD/yb8MPMHSWH5DI9NOWh/SR7N6WqG5ES0lWvFvj5yom8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=sKjdBSQw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E/DQehth; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="sKjdBSQw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E/DQehth"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0E5321140259;
+	Mon, 23 Sep 2024 15:13:46 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Sep 2024 15:13:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1727118826;
+	 x=1727205226; bh=eHfRufnlOv/36zPAni1+gyU93DbGxRdXGeoNb4smp0o=; b=
+	sKjdBSQwR8wvFXS9tbR4CZo3fFqF319sFu8r8YKJaRLNQgHXMbV27Qyx1CvEZpID
+	KnNujMGf1SdnSoS5jqXHpVF88sbfO+gS0eZeNtOVaxxegAtd9jksKeBRshILZULs
+	NlQGsbVryAAndEZhkg2bHwx91tnMIRuU/83K9TQhDVNVfN8fr/m+fGZoPGtFv5wB
+	JooAQjwtr6ffo+CyJQQgJfTDGozTHjYlwkRf9aknPTJNG33+5d8rMJsih9VG15JQ
+	fwt4XMbLVEN+WmN9UbOZafGl/f4q3tG6QBZAsVcPlqpf+pPuyigOkyJgmIszKval
+	20iLdWlVW2wky4lrUIBC/g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727118826; x=
+	1727205226; bh=eHfRufnlOv/36zPAni1+gyU93DbGxRdXGeoNb4smp0o=; b=E
+	/DQehth5JwjwlyPLP2FUAaGOzo8xtjtLieSPz9oersg9bjpNSNaeGXCpaxvmi1ku
+	eXGdCQyr1ve5gFBTHaem2zd+Qg3IjkpkkhFdIAi7/KtQ2y8RmZaxpd3bipAyNQZN
+	cMz74FeULP7DrYk8S/KPleQBfh6VRgVmorhd6kKp6kBKp0VKLBc7NYM7ZIQrfvdy
+	cc7A1dOw42Xu8QlwZdn3ONs+9ixgGFi8tp2DQTeKLdCZcOKs9GtRTpNuoiWCnb7c
+	mqY+VBvWmMUptp0FrCW3qR6TTLAKJUR/e5EtWwA2bTdDBHRnHaZSvR800ehJnZ39
+	PeauN6n+MkWfyME8FCJ+Q==
+X-ME-Sender: <xms:6b3xZkwihL0XXYD6YpwiXaXFPeknY4HloLmzfYbbBrOEbrr509TBmXE>
+    <xme:6b3xZoT-GDZaO2blM6Y9pi5Lnx7yuRmPTqITZiEfAZeEfkliASUVNvOQ2DrSsrSLp
+    GIXnDYH1Tq6HbJL7Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudelledgudefjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
+    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
+    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
+    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghlghho
+    nhgvlhhlsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnsh
+    hhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhg
+X-ME-Proxy: <xmx:6b3xZmVOX44LRMqXKFFYb0Q2R4gq_P6ZlVBt-DY1Vr-CD_s4KmKMLA>
+    <xmx:6b3xZiiLAl_u_yxdXIWkHrk09DJy2F82501fPtWe1rVNXwncM-FikQ>
+    <xmx:6b3xZmD0PvLBHzjpsknj3dVkDNrbSqjFEbRQ3VqB6bYqyp1VlZXQHw>
+    <xmx:6b3xZjLpwr3230DyzIi6SExT-d5D5ynpRXY67ymAwbAwN690NuW1IA>
+    <xmx:6r3xZpMtkALPZGKXjjK1-KLIuvQaAwetc0lKVxNgbVzD7k4bqFpj6a5Y>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id C9B6D780067; Mon, 23 Sep 2024 15:13:45 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+Date: Mon, 23 Sep 2024 21:13:25 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Eric Sunshine" <sunshine@sunshineco.com>
+Cc: "Andrew Kreimer" <algonell@gmail.com>, git@vger.kernel.org
+Message-Id: <7944f06f-33d9-4988-85ab-c1cf563615f3@app.fastmail.com>
+In-Reply-To: 
+ <CAPig+cSErj4ZB9bHB8mZfzNkiaN_EpjT6b4b=cfsf_+KMqytiA@mail.gmail.com>
+References: <20240923110343.12388-1-algonell@gmail.com>
+ <CAPig+cSZmKCwy_sFKPR-w+DjXeTJJec1BAM6wDXMyEMWhoAY6g@mail.gmail.com>
+ <85ed3ec6-fa4e-4ab8-872f-6bd500b2bb66@app.fastmail.com>
+ <CAPig+cSErj4ZB9bHB8mZfzNkiaN_EpjT6b4b=cfsf_+KMqytiA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] Documentation/config: fix typos
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQF96PR6iEXtJ2PpE7SwqUIbuvmrxgDlCwRNAeY3+AEBiIUekbL9Z6PA
 
-On September 23, 2024 2:43 PM, Andreas Schwab wrote:
->On Sep 23 2024, email@mateuszwielgos.com wrote:
+On Mon, Sep 23, 2024, at 21:05, Eric Sunshine wrote:
+> On Mon, Sep 23, 2024 at 2:44=E2=80=AFPM Kristoffer Haugsbakk
+> <kristofferhaugsbakk@fastmail.com> wrote:
+>> On Mon, Sep 23, 2024, at 19:51, Eric Sunshine wrote:
+>> > Depending upon how dramatically the patch series changes from one
+>> > version to the next, the range-diff may end up being unreadable
+>> > gobbledygook, in which case you may instead want to include an
+>> > interdiff ("git format-patch --interdiff").
+>>
+>> What=E2=80=99s the benefit of interdiff in that case? Neither
+>> git-format-patch(1) nor git-range-diff(1) seems to discuss what the
+>> differences between these two are.
 >
->> Thank you for your reply, Han. The problem that I have with =
-=E2=80=98=E2=80=94allow-empty=E2=80=99 is
->that the resulting commit is not associated with any particular file. I =
-tried =E2=80=98git commit
->=E2=80=94allow-empty myfile.txt=E2=80=99 but the file argument is =
-effectively ignored. =E2=80=98git log
->myfile.txt=E2=80=99 does not show the empty commit.
+> An interdiff is just a plain diff. If you have branch (or tag) "v1"
+> which is the original version of a patch series, and "v2" which is the
+> reroll of the series, then interdiff is simply:
 >
->Since the git model is snapshot based, there is no way around that, =
-apart from
->putting the reference in the commit message which you can search with =
-git log --
->grep=3Dmyfile.txt.
+>     git diff v1 v2
+>
+> Thus, it shows the difference between the final state of the code at
+> v1 and the state at v2. Interdiffs are easy to read because they are
+> just diffs. However, because they are only showing differences in file
+> content, they don't show changes to commit messages or new or removed
+> or reordered patches in a series.
+>
+> A range-diff is a diff-of-diffs. It is very, very roughly similar to t=
+his:
+>
+>     git format-patch -o v1-patches <common-base>..v1
+>     git format-patch -o v2-patches <common-base>..v2
+>     some-diff-dir-command v1-patches v2-patches
+>
+> It shows the diff of the patches themselves, including changes to
+> commit messages and changes to changes, as well as inserted and
+> removed and reordered patches.
+>
+> Range-diffs tend to be a good deal more difficult to read (at least at
+> first) but help show the evolution of the _patch series_ itself
+> between versions, whereas interdiffs show only the evolution of the
+> _code_ between versions. As a reviewer, if you're primarily interested
+> in how the code evolved, then interdiffs are much more easily
+> digested, but most reviewers are also interested in the holistic
+> aspects of a patch series for which range-diffs are more helpful. I
+> periodically include both range-diff and interdiffs in my rerolls.
 
-One way around this is to inject a date/timestamp in the file. Be =
-careful about conflicts
-If you every try to merge. This forces a signature change in the =
-internal blob on
-commit.
+Thanks for that.  I love when a good range-diff falls out of a
+reroll=E2=80=94and I love the tool=E2=80=94but of course that can=E2=80=99=
+t be expected out of
+every reroll.
 
-I am not recommending this, just suggesting a way to force the issue.
+--=20
+Kristoffer Haugsbakk
 
