@@ -1,103 +1,116 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A3A17BCC
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 20:01:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38B51A08CE
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 20:27:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727121686; cv=none; b=X1th4jNBrEwKrC5SCJAI8sePfUsnYU/gj3XJxx18Q6FOxyqHnkN27W95t0FZ3dB2qMKoLUClnEhBkW7xA2QjRZ6k64Nj45Z5eBGVbW1Um7lLZC+rQ6rxm2Z2gOdDwCd0DEc9TpoBPOydCIWrmzK8UNb8xdiL6+yK47CfaeCZl00=
+	t=1727123263; cv=none; b=AElEBcd0hCpd3gej6wrXwwLl3RO+7rB0kwbjOlLKMFUxp+Q1pwDIMIdCz4jbltR4vqiTXRkqc6Fdwe7kq339oM0TWu81gnWMFE6jAHkIGGXfsDXepxEelPfnU+s+yQ8pyggaWHfX33Vw2EnTJuUhPOUzSHJKRY4jlrwgbMCOEPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727121686; c=relaxed/simple;
-	bh=yTTtFWpj+WNRY9lYgF3cOurrryBOxC0WOaoPNak+UFQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M+kJAUDWlRgVt6ZeFzLMLxgn/Fe8vB+ovZIA5EFWBokgUfG4MteS7seKILEWO5B2hBfktSc8evmpHARzI4Cj8HCSUgBqxvpdEBvB0O/d9NiZoJ1ldv4trI7EUw5Zy/CvyWnRVaGVyLkt3tt7VE6O3/ZcxexneU7mAOHEDaX4aEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BwanJqba; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727123263; c=relaxed/simple;
+	bh=q3dM6ydI2+SB2YJD5NzZ1O3oIwwaeTU7jSsyieAq1+Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CekIdtxrT4ZGX44/9yNtwq8mkJTNsuch9X9lR4zE0cu8/zrB/Ny6hEPr+fibQQcRb/rTw92Y5QIUvanktiHbqoWgias+PC0g22UFZ2S/O4pJLBSKEQFpv/Y/uMRMayLNRewb5OFDwfrmPPLmqiMby7smBLfJ7MUBUcExxTNVoyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=diZnbd2m; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BwanJqba"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-42cb58d810eso35785785e9.0
-        for <git@vger.kernel.org>; Mon, 23 Sep 2024 13:01:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727121683; x=1727726483; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=oN6t/KTfBJE31hukd1OuNyIH8tkDGEeMGjevtQ+DmyU=;
-        b=BwanJqbam/+9l6Y0UaR6zv5ndKVo+vUbI3VcY7Ia9HFWH++0yAQlA9DSne4i+KuIa0
-         /PGZ/paZuIZo+JhOAJ2r5RItkPAZJBf4oCyewJ7R1zSpv8Gj7J8eJL9h8v5aaQ2Vsw/5
-         Oof2RQRSWXt/UlZE39otsxsJYORpqY1GQqeOabxt6GZkhrOvrlwerrTTwJ2WeUdIDhsv
-         h9AC9TOryVA5J3nG1ovxIUIZiVrwwwLepU1E1XV4hxhZAaa5Xvzit88dc3c6i8oWAS51
-         /jpFo6+AQg0fmIL+3Lx4DAuF1STzXd0nhMusdMXmv6enLdVYQQjmB8SHNI6yHQMUQaIA
-         U5xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727121683; x=1727726483;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oN6t/KTfBJE31hukd1OuNyIH8tkDGEeMGjevtQ+DmyU=;
-        b=BG757R2WiUotDpISg5YoW9o/fzdBku2vKxiTk4T3U/mBhCE1/KTgmZt+G9fNidFlVC
-         oKGeNZQ+eSlmIDxpch8WXzevhureIkwBrRH4N0w5IRYHlRRZc933nCK477C/llW6TAZV
-         ajkgt84qjCDECGvWGYdHb9WDHIOllcfUNEQ+d2w1f+G+yx+DNroM3hVj4n7aLEV419HS
-         ZQsO30ylpLBRAM2muOZgKM9GiEoQS29ZEYHeAzP5Y94T/EYf9xMZgvRAKJ+1tTMBgcYQ
-         kTpyMza6JG103xN+dMRhjM3SaKNCl+F9U8OX9zK9LipidWfgwyV0HF2DC83jSZ93WMAS
-         25pQ==
-X-Gm-Message-State: AOJu0Yw6vJ4LaGYmuqquDaqXRBjHxqrer0PmogVjnikd9ASIkCp3XfoR
-	kVA1E4ymaA5Z2tW4Lu7MY2TzAnhtHT/tStHfCez5IIUrTmr6sAK0M/i4EpjJ
-X-Google-Smtp-Source: AGHT+IHyee3S0fXWr+N4uVCGjvNmSabKgbir8ttCFkfOkfQ3olpzoew49XApyQyPxLhi4+GUY8OkJA==
-X-Received: by 2002:a5d:5484:0:b0:374:adf1:9232 with SMTP id ffacd0b85a97d-37c7ebb6dc8mr526334f8f.19.1727121682437;
-        Mon, 23 Sep 2024 13:01:22 -0700 (PDT)
-Received: from void.void ([141.226.162.113])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378e7805193sm24974900f8f.98.2024.09.23.13.01.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Sep 2024 13:01:22 -0700 (PDT)
-Date: Mon, 23 Sep 2024 23:01:19 +0300
-From: Andrew Kreimer <algonell@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] Documentation/config: fix typos
-Message-ID: <ZvHJD73k_SETqAsu@void.void>
-References: <20240923110343.12388-1-algonell@gmail.com>
- <CAPig+cSZmKCwy_sFKPR-w+DjXeTJJec1BAM6wDXMyEMWhoAY6g@mail.gmail.com>
- <CAPig+cR5BdfVRwdXJ7viJbvgkUW7KStG2Y_=qGNzoXWrOgZcJg@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="diZnbd2m"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 872D3255E3;
+	Mon, 23 Sep 2024 16:27:40 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=q3dM6ydI2+SB2YJD5NzZ1O3oIwwaeTU7jSsyie
+	Aq1+Y=; b=diZnbd2mSJ5B+TLVqWJ7yV9uEei48aTTyIRWsziLE5czm8X5+pYV3n
+	Ljn6FZG1UK6Seh3THKCVLeYfTUwy3jUPW3niqpNBQesE/shWLoj3ByQ7/Y6JScyf
+	TRCHgLb30CRXXIe0YdgeTlipx8H7GvwY3wC7S74d7Xa5Ix8JqVxR8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D9E9255DF;
+	Mon, 23 Sep 2024 16:27:40 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DDA60255D8;
+	Mon, 23 Sep 2024 16:27:39 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  newren@gmail.com,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] sparse-checkout: disable advice in 'disable'
+In-Reply-To: <pull.1800.git.1727119882901.gitgitgadget@gmail.com> (Derrick
+	Stolee via GitGitGadget's message of "Mon, 23 Sep 2024 19:31:22
+	+0000")
+References: <pull.1800.git.1727119882901.gitgitgadget@gmail.com>
+Date: Mon, 23 Sep 2024 13:27:38 -0700
+Message-ID: <xmqqr09ayv2d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cR5BdfVRwdXJ7viJbvgkUW7KStG2Y_=qGNzoXWrOgZcJg@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 476A3474-79EA-11EF-A85B-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Mon, Sep 23, 2024 at 01:59:16PM -0400, Eric Sunshine wrote:
-> On Mon, Sep 23, 2024 at 1:51 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > Thanks. The changes in v2 of this series look fine.
-> >
-> > In the future, to make life easier for reviewers, when rerolling a
-> > patch series, please include a cover letter ("git format-patch
-> > --cover-letter") and include the following in the cover letter:
-> >
-> > * explain in your own words how the new version of the series differs
-> > from the previous version
-> >
-> > * provide a link to the cover-letter of the previous version (i.e.
-> > https://lore.kernel.org/git/20240920082815.8192-1-algonell@gmail.com/)
-> >
-> > * include a range-diff ("git format-patch --range-diff=") which
-> > provides a mechanical representation of the differences between the
-> > new version of the series and the previous version
-> 
-> I forgot to mention email threading as a way to further help reviewers
-> and readers of the mailing list archive...
-> 
-> When sending a reroll of a series, use "git send-email --reply-to=" to
-> reference the cover letter of the previous version. If your email
-> client doesn't provide an easy way to access the ID of the previous
-> cover letter, you can grab it from the list archive. For instance,
-> consulting the above link:
-> 
->     git send-email --reply-to='20240920082815.8192-1-algonell@gmail.com' ...
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-All noted, thank you!
+> From: Derrick Stolee <stolee@gmail.com>
+>
+> When running 'git sparse-checkout disable' with the sparse index
+> enabled, Git is expected to expand the index into a full index. However,
+> it currently outputs the advice message saying that that is unexpected
+> and likely due to an issue with the working directory.
+> ...
+> +	/*
+> +	 * Disable the advice message for expanding a sparse index, as we
+> +	 * are expecting to do that when disabling sparse-checkout.
+> +	 */
+> +	give_advice_on_expansion = 0;
+>  	repo_read_index(the_repository);
+
+Sounds sensible.
+
+> +/*
+> + * If performing an operation where the index is supposed to expand to a
+> + * full index, then disable the advice message by setting this global to
+> + * zero.
+> + */
+> +extern int give_advice_on_expansion;
+> +
+>  struct index_state;
+>  #define SPARSE_INDEX_MEMORY_ONLY (1 << 0)
+>  int is_sparse_index_allowed(struct index_state *istate, int flags);
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index eb32da2a7f2..6e230b54876 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -2355,7 +2355,10 @@ test_expect_success 'advice.sparseIndexExpanded' '
+>  	mkdir -p sparse-index/deep/deeper2/deepest &&
+>  	touch sparse-index/deep/deeper2/deepest/bogus &&
+>  	git -C sparse-index status 2>err &&
+> -	grep "The sparse index is expanding to a full index" err
+> +	grep "The sparse index is expanding to a full index" err &&
+> +
+> +	git -C sparse-index sparse-checkout disable 2>err &&
+> +	test_line_count = 0 err
+
+I am not a huge fun of insisting that other code in the code path in
+which I got rid of an unwanted error message must stay silent.  As
+we are expanding to full, we are presumably rehydrating all the
+directories that was sparsified, so it might be reasonable if we
+want to see a progress output during this operation, for example [*].
+Would it make more sense to look for the lack of specific advice
+message instead?
+
+
+[Footnote]
+
+ * A mere example to illustrate the principle.  "We disable progress
+   during test", or "this is so small that progress won't trigger"
+   may both be a good reaction to the example, but the general point
+   still stands.
