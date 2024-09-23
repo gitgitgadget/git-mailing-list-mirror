@@ -1,98 +1,71 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D9C1A2567
-	for <git@vger.kernel.org>; Mon, 23 Sep 2024 19:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33A117BCC
+	for <git@vger.kernel.org>; Mon, 23 Sep 2024 19:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727118368; cv=none; b=F47/nzcprDRSC5qelsAyT//2AJiWPVjW51FAy54Iwvs9AWXeI03kWh8jsM/AxmITW40JVqYUQMykFyxdrfMeiJj2x+bsCaV7pOWgYVllev5WYTXpdO9b3896Q6Qww1d/GBgWSzjqjuuU71AQKVh9wNA+Ob6wXUuV9wsnyHpvM6Q=
+	t=1727118592; cv=none; b=ejd6TWKkIExWLFDRao8YzJIPEEUuOIzFNbw/iObAntVCPxc6M7u8kHnTFBzAu0CAKd0Ei/Lx0cQ1NQ/s3rl6sdB7pLCzPUxCFp23+i8cMYBsBdcz3KyqqGmawF2gAf/bqUWqMKK5Al504pzTGRXHNgDIHjfQ0hPgvz1QJgYmMQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727118368; c=relaxed/simple;
-	bh=dztV/E3dLodb60uTRU5Ae1WHvLLxV4LTy0FgqJW21Cc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ulwABon0tmQgPu1bN4UkxTwXkB6q7NrKhz5OZbwyO2yKRfyTK9PTgD8lxTrjglTD+AJGnLs3ZHEIH1lnTb+UJyUO3fGD4MBWilX1c5G1QcqWOymLc1ATJhwN0u1IMLfQV/h4WcGGQM7PFg92e/I5mBC7GZKYoz+X4LYo+l4saWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6c354ee1eeeso5617016d6.2
-        for <git@vger.kernel.org>; Mon, 23 Sep 2024 12:06:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727118366; x=1727723166;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=72ovH/vtEzPdzO47JtqKOGYyfF0phZuoduCEZDKPt5U=;
-        b=P0j+L5xjg8BX9/y3SN+NzyFKREfhJA3iXCtIseIAWHtdykehcAzm08hetH/Bu+bQds
-         rAbFUB8GyRNC2aqOFlMVx18u5fY6+9mOdYOnx1NDd7gwCsLQXwfVvK6QXB8diyeIYXyg
-         +zrGsWvyUdQ4weyO4x36dT+/pH3L9iqR5D0irCbHNvDBM0Q7nujFVg8umQUZQA8mro/Z
-         6y/aRcKCDuIgsK+jkueTXS0+fep4+8ab74hVf1GKhgVQQMvbXVRmmNgthucy9j84QlVF
-         vigiaT2xG0AZMe3CW3VkadlXypG6M97NU99TajZSWGOXwTEZTVk1ew1bQsvPLhYTz2Pk
-         LY4A==
-X-Forwarded-Encrypted: i=1; AJvYcCUoc79YpHYdJnc0GMCePm6vHpt7kD8p0Z064gUfc3YYwlYScm3KxdFz7eTtNjm2OnGgQro=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzN2+mtj1Vb4WF/9XJOz86n1OROvpY0z/c0Wf3Q8GKYjc6tviIB
-	ZD/7BZRPjKIFhpUhmEMfGGNVzE5mLnX0vD7eg1o1NCvQCiKPE0H3XrO1CfFCbf5PJZnhjLJHgtA
-	sovO077jm3MZGwfxDh4mVtbq7KzIKItda
-X-Google-Smtp-Source: AGHT+IEcN7w5LF67DhRlkUymMpWLCQu9d6SzO5+CyC6dLBYcl3DINHPmhC1xlVYS8PUabVwuhi4Dv46a+OCiTMwoaI8=
-X-Received: by 2002:a05:6214:d8f:b0:6c5:20da:485d with SMTP id
- 6a1803df08f44-6cb0e7e7ae2mr974226d6.0.1727118365507; Mon, 23 Sep 2024
- 12:06:05 -0700 (PDT)
+	s=arc-20240116; t=1727118592; c=relaxed/simple;
+	bh=zlPrrKfUCn/1k1OpO9MVNvCKYFCTGMQkTp6lOOJNEww=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HmUy4GYOcDxzOiVAn7RIMiZEdbBFXxfU/YRQgrRBwOAwMij05g2ZkUf5k+QVudTfob+cKLp+l24VYCfTzwFcp3AkeEGrZmM0TWTA9pHfda5ACyWvT3vr0qD5DzFhhmeH3n30d05Ueqe0fHls+WzUB9cRPPKnvbGcS4dekCitvTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 48NJ9RMc992815
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 23 Sep 2024 19:09:27 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Andreas Schwab'" <schwab@linux-m68k.org>, <email@mateuszwielgos.com>
+Cc: =?utf-8?B?J+mfqeS7sCc=?= <hanyang.tony@bytedance.com>,
+        <git@vger.kernel.org>
+References: <4B2B1EC7-6B08-4B57-A50F-702C031C2792@mateuszwielgos.com>	<CAG1j3zEg47RLYrVfJQi7WubgcdtbK2RWFBtj5rd8NtkPyXU5Rg@mail.gmail.com>	<0D0BB87D-9BF0-48BA-8F2D-83F8D326ECEC@mateuszwielgos.com> <87r09aus7v.fsf@igel.home>
+In-Reply-To: <87r09aus7v.fsf@igel.home>
+Subject: RE: [External] Using Git as a Database
+Date: Mon, 23 Sep 2024 15:09:22 -0400
+Organization: Nexbridge Inc.
+Message-ID: <00d001db0dec$1c8fa320$55aee960$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240923110343.12388-1-algonell@gmail.com> <CAPig+cSZmKCwy_sFKPR-w+DjXeTJJec1BAM6wDXMyEMWhoAY6g@mail.gmail.com>
- <85ed3ec6-fa4e-4ab8-872f-6bd500b2bb66@app.fastmail.com>
-In-Reply-To: <85ed3ec6-fa4e-4ab8-872f-6bd500b2bb66@app.fastmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 23 Sep 2024 15:05:54 -0400
-Message-ID: <CAPig+cSErj4ZB9bHB8mZfzNkiaN_EpjT6b4b=cfsf_+KMqytiA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] Documentation/config: fix typos
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Andrew Kreimer <algonell@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQF96PR6iEXtJ2PpE7SwqUIbuvmrxgDlCwRNAeY3+AEBiIUekbL9Z6PA
 
-On Mon, Sep 23, 2024 at 2:44=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
-> On Mon, Sep 23, 2024, at 19:51, Eric Sunshine wrote:
-> > Depending upon how dramatically the patch series changes from one
-> > version to the next, the range-diff may end up being unreadable
-> > gobbledygook, in which case you may instead want to include an
-> > interdiff ("git format-patch --interdiff").
+On September 23, 2024 2:43 PM, Andreas Schwab wrote:
+>On Sep 23 2024, email@mateuszwielgos.com wrote:
 >
-> What=E2=80=99s the benefit of interdiff in that case? Neither
-> git-format-patch(1) nor git-range-diff(1) seems to discuss what the
-> differences between these two are.
+>> Thank you for your reply, Han. The problem that I have with =
+=E2=80=98=E2=80=94allow-empty=E2=80=99 is
+>that the resulting commit is not associated with any particular file. I =
+tried =E2=80=98git commit
+>=E2=80=94allow-empty myfile.txt=E2=80=99 but the file argument is =
+effectively ignored. =E2=80=98git log
+>myfile.txt=E2=80=99 does not show the empty commit.
+>
+>Since the git model is snapshot based, there is no way around that, =
+apart from
+>putting the reference in the commit message which you can search with =
+git log --
+>grep=3Dmyfile.txt.
 
-An interdiff is just a plain diff. If you have branch (or tag) "v1"
-which is the original version of a patch series, and "v2" which is the
-reroll of the series, then interdiff is simply:
+One way around this is to inject a date/timestamp in the file. Be =
+careful about conflicts
+If you every try to merge. This forces a signature change in the =
+internal blob on
+commit.
 
-    git diff v1 v2
+I am not recommending this, just suggesting a way to force the issue.
 
-Thus, it shows the difference between the final state of the code at
-v1 and the state at v2. Interdiffs are easy to read because they are
-just diffs. However, because they are only showing differences in file
-content, they don't show changes to commit messages or new or removed
-or reordered patches in a series.
-
-A range-diff is a diff-of-diffs. It is very, very roughly similar to this:
-
-    git format-patch -o v1-patches <common-base>..v1
-    git format-patch -o v2-patches <common-base>..v2
-    some-diff-dir-command v1-patches v2-patches
-
-It shows the diff of the patches themselves, including changes to
-commit messages and changes to changes, as well as inserted and
-removed and reordered patches.
-
-Range-diffs tend to be a good deal more difficult to read (at least at
-first) but help show the evolution of the _patch series_ itself
-between versions, whereas interdiffs show only the evolution of the
-_code_ between versions. As a reviewer, if you're primarily interested
-in how the code evolved, then interdiffs are much more easily
-digested, but most reviewers are also interested in the holistic
-aspects of a patch series for which range-diffs are more helpful. I
-periodically include both range-diff and interdiffs in my rerolls.
