@@ -1,288 +1,102 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88F114901B
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 08:06:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E79B80BFC
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 10:05:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727165200; cv=none; b=Avwq4DG/YusHRSpr4pgeuXaqThiMUEUFqkMMJrOdtVzqNu3aSBnQJ7x1lMwqUNEr3UZxEeLbAvQOmdhJhIojFFNvDLZHWMeT9S9TMdsLL6TV6a9e+dqa9JEfntN/8soAngw2b/qooLdyKROGXv5ltSLLt2JFQMSARsEiUkbEBJ8=
+	t=1727172315; cv=none; b=GTV0Axuo9kIzl9nqIXaaCox2zX1dj4H+zFI4dbWdtThUWsBWy/UeYgTMwtXon2BJ/YyfFnFXIKU3bawK9OSKvtZgq0G7JHx/55ctuvzFFL8EVP7NLS0qSxnYyHG/lGKJPu0/w62+L6ySVAN7UQTrm0zie76v12iAa/PuAgh5fAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727165200; c=relaxed/simple;
-	bh=1fJAGrd2JKvCL4wqbT4VM7M7ptBj0Z6nvLm6h3w3zt8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZXKFTyepKyk3L4a2yKW912yCxCSBkv37VttbJlQlWgmXPrerCGlHqajMkNI6nJ7Tv+OaPEVs75iy+ACJ0OTKWx+6iXo8F6CoWGci8+m02Ev8JXxZwZbISmGg9wMdFIzBFT96y1AAHqaU3C5fWclLpppwUoZ+PnCaQecbnV9ae0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7a99f576d6eso40869585a.1
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 01:06:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727165197; x=1727769997;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3qTC+xjeKVRNxZ1Ye3IgsjHwsNhOy8Rxob13t7b2NwM=;
-        b=ICv5WE4M8q2b67IzfCPhF+6DdGasumhTPTTnh1bTVCefyLeoDE9i/4cjroz3100Yva
-         P3tqu5UfFXhv/2asb9fr7+5+pVymgkZaOSu2SysY7+kjja828qvPtbwHnntt3REIYKa3
-         qgj9evJSX+O3yTgqOtIpdSDyBBO4UWEpXS12fn8nhFOoqsKnT3OFJdJgKjlT10V1JtrQ
-         1gh/eKzIRSaUSiomr0+7fxQ7oqoD3yN84XirPWY5tjFVysfzmX050ocneNmMrlRPyAKB
-         G7f1FLFryI36xZsy4gmxEbWmgLUZO8piVVxjODdUFAV3131iKVHKk2LPGLaelEthBM+7
-         GEUw==
-X-Gm-Message-State: AOJu0Yw6MLU3/utKXTQAIvo0qFH4Ulb3/e3NKx7BMDvWZZ/Ae4b89mj8
-	p9qH4vLDQsQaje1iUgX3KHo1piASr6mHbdz3QQ31O49VTZQ7xdY2eQ54Kqx2kQ2W8PnZ610pw5v
-	uzk22MmFWy/PAW4Ov0fP2xHQ8PXOQpXHL82c=
-X-Google-Smtp-Source: AGHT+IFZZFIKDSegDvVZYUckrnfPz+6+4e3pAmAPF02g0doOe5rIB8ysDlAoQIZ461vH0nCrPJ7sNpxmAwAeAeEx7tU=
-X-Received: by 2002:a05:6214:1305:b0:6c3:69f9:fb5b with SMTP id
- 6a1803df08f44-6c7bc44f0f8mr101416666d6.0.1727165196533; Tue, 24 Sep 2024
- 01:06:36 -0700 (PDT)
+	s=arc-20240116; t=1727172315; c=relaxed/simple;
+	bh=FDGCC3aepNgAIuLXz2Dym6fo2+TXZk4ad5BMWbdzuhs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d47JZphymXmUwKlS5BkpV27eGuThYPW9KK1+3oqebyi705Z9+s4gFTbAnEpG10QVkl0cEeU1f84gcZXArZjJEnoa4X+cX7fg3OA2cXA6SkFmegy3n0Cm0Zt6WUdrXn79nU/e5/BEgfVaNUv4Go0YU3tM7XA4WzaJKOMRsulMlfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G6eljldj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GIuKbZRc; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G6eljldj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GIuKbZRc"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9026F1140306;
+	Tue, 24 Sep 2024 06:05:11 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Tue, 24 Sep 2024 06:05:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1727172311; x=1727258711; bh=ElGH9tOzNK
+	RGvN+apFaKhU6LBB7B43LPQ7sePG3+b/I=; b=G6eljldjptgKyxTTKJF2btyJRd
+	xgDeRQeDCCA0fToRtjEKyBNjgGyrGwcJerDJadUcCYUhSUdUIImftEfUAyGbjmU8
+	eLDqfHSGj12JlyneEJqRQVctEoO3/uPtl//M2k6I3vEkkjvb73c9u0lYUG9PDjkD
+	isRw3VDNUiCH0qtOCTxI+lIwJnl7pNpCHmUbJrkHn1Qu0sCgGD8aUJ5buQAGyZP6
+	ClwIvtX7H7SoHSPJN3hjU8GtdSnd16M4ZvU7w+FlaLAgs4vP2e5EpIvpvw/+wHMk
+	TZ5UOxhrrxFfR7S7OL2MAyb64LZ0uaSCUpq3A8GuD0pmTstRUb6ta9E722vA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727172311; x=1727258711; bh=ElGH9tOzNKRGvN+apFaKhU6LBB7B
+	43LPQ7sePG3+b/I=; b=GIuKbZRcOK2LMKb6sysJic1uwHQiq+7oSdOoapJWMH/M
+	VwD7D0Rt93M9pW4Tlh0qQn+cCKieY2oUiJSyLsqRe6i892DLcCko1Uuq/XWZ7DO7
+	lj8X1ocXjZ6XbTGhUaCm6fPnr+xRDeYQSD7U/FqLctqc2iEdygrwjXqlyi0LzLzC
+	I4uP8YqBkgoM1TLXWLKlvl9nJZDlyZFqM8c9akaFqJD4qWzQs0rBPyK+pNRVliOm
+	5YMMwxnYlRFx+l6Tl3exIjr9e70BsufgwN0ttOJ5n75CbXMpYCn+tWooS3cgixfE
+	qvj7MZthiNROUqxZWnMSMpwZbcrJCG7ReV8vW/2Q+w==
+X-ME-Sender: <xms:147yZseVFfX8NCYoUMf5g92wg0nWr7OS8apk6hAyOgEqgWFzZeumBw>
+    <xme:147yZuOrK6yPaXUYTgePv1Y08CxFr3d8edUjEEaWB8QPKQRMQymk45Ef2GGDjAwxf
+    _1-pcrhFUmIqE2Vnw>
+X-ME-Received: <xmr:147yZth5qtGoMjVnhS-zWYs7WY9Y4yV-yJh8ec5xXJoEi18jKSEWWgoA0f75glG2cpeg7lYbHNzXeRhVGz64hb-325KHfxyMv__EWBmV0tupKQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtvddgvddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgt
+    phhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:147yZh9dEVdr4eIgdGxow0JtIs-g8HFavWqSayB-Cwt2q7vFyLSA7w>
+    <xmx:147yZotE5qIAzl7dInXGJp6b-OcdqydVt3h_mEOrTcafPoRk9XMzbw>
+    <xmx:147yZoGtqngvcT9DDWhl9KBpWqDezCE5_Lkk8AvKgf7TRm-MaWgJXA>
+    <xmx:147yZnNXF_yzw6AxGIoiEtQK9wAbSlySkNxokrx8XEwKLBTcIq9iVA>
+    <xmx:147yZkLiEKji2S1TDKsyIcNp41ToEY0hP1Cy2IDJ5Atyr_PYsJX6HSOx>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Sep 2024 06:05:10 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 59638230 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Sep 2024 10:04:34 +0000 (UTC)
+Date: Tue, 24 Sep 2024 12:05:04 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] cmake: rename clar-related variables to avoid confusion
+Message-ID: <ZvKOyukIHHAzA2IB@pks.im>
+References: <pull.1795.git.1726687276169.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1783.git.git.1726880551891.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1783.git.git.1726880551891.gitgitgadget@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 24 Sep 2024 04:06:25 -0400
-Message-ID: <CAPig+cQXFy=xPVpoSq6Wq0pxMRCjS=WbkgdO+3LySPX=q0nPCw@mail.gmail.com>
-Subject: Re: [PATCH] builtin/worktree: support relative paths for worktrees
-To: Francesco Guastella via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Francesco Guastella <guastella.francesco@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1795.git.1726687276169.gitgitgadget@gmail.com>
 
-On Fri, Sep 20, 2024 at 9:02=E2=80=AFPM Francesco Guastella via GitGitGadge=
-t
-<gitgitgadget@gmail.com> wrote:
->     builtin/worktree: support relative paths for worktrees
->
->     As of now, when creating or managing worktrees, paths are always stor=
-ed
->     in absolute form. While this behavior works well in many scenarios, i=
-t
->     presents significant challenges when worktrees are accessed across
->     different operating systems or when the repository is moved to a
->     different location in the filesystem. Absolute paths hard-coded in th=
-e
->     .git and gitdir files can break these links, causing issues that may
->     require manual intervention to resolve.
->
->     To address this, I have introduced a new configuration option:
->     worktree.useRelativePaths. This option allows users to specify whethe=
-r
->     they prefer Git to store worktree paths in relative form rather than
->     absolute. The new feature enhances Git=E2=80=99s flexibility, particu=
-larly in
->     environments where repositories need to be portable across different
->     systems or where directories are frequently relocated.
->
->     Key Changes: The new worktree.useRelativePaths option can be enabled =
-by
->     the user to store paths in relative form. When enabled, any new
->     worktrees added using the git worktree add command will have their pa=
-ths
->     stored as relative paths in the necessary git files.
->
->     The git worktree move command has been updated to respect the current
->     value of worktree.useRelativePaths. When a worktree is moved, Git wil=
-l
->     now automatically adjust the path format (relative or absolute) to ma=
-tch
->     the user's configuration setting.
->
->     The git worktree repair command has been similarly enhanced. It will =
-now
->     automatically convert paths between relative and absolute forms based=
- on
->     the worktree.useRelativePaths setting, making it easier to maintain
->     consistent links across different environments.
+On Wed, Sep 18, 2024 at 07:21:16PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> In c3de556a841f (Makefile: rename clar-related variables to avoid
+> confusion, 2024-09-10) some `Makefile` variables were renamed that were
+> partially used by the CMake definition. Adapt the latter to the new lay
+> of the land.
 
-Using relative rather than absolute paths has been discussed
-previously[1], and the general feeling was that relative paths would
-probably be beneficial (despite some obvious downsides mentioned by
-Junio in his response[2]). That earlier discussion petered out without
-any changes being made partly because some stated and some implied
-questions lacked answers.
+Ah, thanks for the fixup! I really hope that I can (soonish) make the
+case for CMake being part of our officially supported build systems that
+is also exercised as part of our CI.
 
-A significant concern was whether any such change could be made
-without breaking existing third-party tooling, non-canonical Git
-implementations, and even older versions of Git itself. Your choice of
-controlling the behavior via a configuration option somewhat sidesteps
-the issue by giving the user the choice of tolerating or not
-tolerating such potential breakage.
-
-Sidestepping like that may be the best we can hope for, though it
-would also be nice if the choice could be automated and hidden from
-the user as an implementation detail. One idea which was floated was
-for Git to store both the absolute and relative paths, thus leveraging
-the benefits of both path types. But that, too, has the potential
-downside of breaking existing tooling and other Git implementations,
-so it requires careful consideration. At any rate, it would be good to
-hear your thoughts on the idea since it might somehow fit into the
-overall scheme laid out by your work, or your work may gain additional
-direction by taking that idea into consideration.
-
-Anyhow, below is a set of questions and observations that I jotted
-down as I lightly scanned the patch and played around with "git
-worktree" after applying the patch. Many of the items may seem to
-sound negative, but do not interpret that as rejection of the idea of
-using relative paths; as stated above earlier discussion looked upon
-relative paths as potentially beneficial.
-
-It's possible that the actual code changes in the patch answer some of
-the questions I ask below, but I simply don't have the mental
-bandwidth to digest and reason about a 3,500 line patch in order to
-figure out the answers myself. As such, any answers and responses you
-can provide directly will be appreciated.
-
-Here are my notes...
-
-Since it is likely that third-party tools and non-canonical Git
-implementations (and even older versions of Git itself) will break
-with relative paths, people have created tools which let them switch
-between the two on-demand. This way, they can benefit from relative
-paths but still interoperate (albeit in a painfully manual fashion)
-with those tools or implementations which would otherwise break. Does
-this implementation provide such a tool? At first glance, based upon
-your above commentary, it sounded as if "git worktree repair" would
-serve a similar purpose after a user manually changes the
-worktree.useRelativePaths setting, but that doesn't seem to be the
-case in practice.
-
-That leads to the next question: Should there be a dedicated
-git-worktree subcommand which both changes the
-worktree.useRelativePaths setting and converts all the stored paths to
-reflect the new setting?
-
-Your above commentary says that "git worktree repair" converts between
-absolute and relative, but it's not clear whether it does this for
-*all* worktrees or only worktrees which it fixes. Moreover, does it
-convert both <repo>/worktrees/<id>/gitdir and <worktree>/.git in
-unison or does it only convert the path in a file it actually repairs?
-Based upon testing, I'm guessing it only does the absolute/relative
-conversion *if* it actually repairs a file, and *only* converts the
-repaired file. As such, the links between <repo> and <worktree> can
-end up a mix of absolute and relative.
-
-According to your above commentary, "git worktree repair" converts
-between absolute and relative but the documentation for "repair" in
-Documentation/git-worktree.txt has not been updated to reflect this
-(unlike the documentation for "git worktree move" which now does
-conversion and is documented as doing so).
-
-The new worktree.useRelativePaths configuration should be documented
-in Documentation/config/worktree.txt.
-
-The "worktrees/<id>/gitdir::" entry in
-Documentation/gitrepository-layout.txt says that the contained path is
-absolute. This needs to be updated to mention relative paths and
-worktree.useRelativePaths.
-
-The documentation should discuss and stress the potential dangers of
-using relative paths so that people know what they are getting
-themselves into. In particular, it should mention the possibility of
-relative paths breaking third-party tooling, non-canonical Git
-implementations, and older versions of Git itself.
-
-Sometimes patch authors don't bother documenting newly-added "public"
-API functions (possibly because a lot of existing API functions lack
-documentation), so it was nice to see this patch being thorough about
-documenting new API functions.
-
-In my testing, several "git worktree" subcommands failed or misbehaved
-badly when invoked from within a linked worktree. This surprised me
-since my light scan over the patch seemed to indicate that you had
-taken such cases into consideration, so perhaps I'm doing something
-wrong(?). For my tests, I had set up a repository and worktrees like
-this:
-
-  % git init a
-  % cd a
-  % git config set worktree.useRelativePaths true
-  % echo content >file
-  % git add file
-  % git commit file -m msg
-  % git worktree add ../b
-  % git worktree add c
-
-"git worktree" subcommands are supposed to be agnostic in the sense
-that you should be able to invoke them from within any worktree
-successfully, however, with your patch applied, this seems to no
-longer be the case. For instance:
-
-  % cd c
-  % git worktree lock --reason because ../../b
-  fatal: '../../b' is not a working tree
-
-Similarly, when run from within a linked worktree, "git worktree
-prune" now thinks that *all* worktrees should be pruned:
-
-  # still in "c"
-  % git worktree prune -n -v
-  Removing worktrees/c: gitdir file points to non-existent location
-  Removing worktrees/b: gitdir file points to non-existent location
-
-When run from within a linked worktree, "git worktree list" shows
-paths relative to the main worktree (or bare repository):
-
-  # still in "c"
-  % git worktree list
-  /.../a  935238d [main]
-  ../b  935238d [b] prunable
-  c  935238d [c] prunable
-
-This makes the direct output useless for any sort of navigation and
-especially so in --porcelain mode for scripting purposes. To fix this,
-"list" should either show the absolute paths (even if they are
-maintained as relative internally) or the paths need to be recomputed
-and shown as relative from the *current* worktree, not from the main
-worktree.
-
-Assuming I'm not doing something wrong in my testing, then do the
-above breakages indicate some gaping holes in the test suite? If so,
-then we probably need a bunch of new tests to ensure that the above
-behaviors don't break when relative paths are in use.
-
-You clearly put a lot of work and care into this patch, and (as noted
-above) the idea of using relative paths has previously been considered
-in a reasonably positive light, so it is unlikely that reviewers want
-to lightly dismiss your patch, but at 3,500 lines, the patch is
-unreviewable. No reviewer is going to have the mental bandwidth to be
-able to remember or reason about *every* change made by this
-monolithic patch. As the author of the patch, having developed it
-incrementally over the course of days or weeks, you have a good
-overall understanding of all the changes in the patch and the
-evolution of the code from its present state in the project to the
-state in your fork, but reviewer time is a limited resource on this
-project, and it is almost certainly impossible for any reviewer to be
-able to properly digest this all in a single patch.
-
-As such, aside from answering the above questions, the way to move
-forward is to split these changes out into many small, independent,
-well-isolated pieces, each in its own patch, and to arrange the order
-of patches so that they hand-hold and lead reviewers through the
-evolution from the current implementation to the end-state. Each patch
-should be one step in the journey toward the end-goal, and each patch
-should build upon the previous patch, requiring reviewers to remember
-only one or two important items from the current patch in order to
-understand the subsequent patch. For a topic with so many changes,
-this will likely require quite a few patches; it may even make sense
-to split it up into several series of patches, with each series
-submitted separately after reviewers have had time to digest the
-preceding series.
-
-Organizing a patch series like this places a lot of extra work on your
-shoulders (beyond the work you already invested making the changes to
-the code itself), but providing such hand-holding and baby-steps is
-the only way reviewers will be able to grasp all the changes. A
-well-organized patch series is also important for future readers of
-the project history when they need to understand why the current
-implementation is the way it is.
-
-[1]: The discussion begins at the "Also Eric" paragraph of this email
-and continues in emails following it:
-https://lore.kernel.org/git/CACsJy8CXEKG+WNdSPOWF7JDzPXidSRWZZ5zkdMW3N3Dg8S=
-GW_Q@mail.gmail.com/
-
-[2]: https://lore.kernel.org/git/xmqqikupbxh5.fsf@gitster.g/
+Patrick
