@@ -1,84 +1,84 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC0F7E76D
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 06:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31ED61B85FA
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 06:48:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727159592; cv=none; b=BSsJsxh/RwfUl8jrhxXV4GvdLs1FHRq+LhgIDvSCPN2xFnR0ZgVzYMwuKeSUNFU4LtdUMAa4KWcuSTYAr1KPkpi4LPr8iSa6aidjOwUGuvetSyEM1XVD31JWCmJ9/6LAmfAf+fkKwC2wQv7ajGerHM4+2K8nMNxOuT0Sew1aGdo=
+	t=1727160493; cv=none; b=tVJbO5sFQBHJsxmgNKxoBntip73vzabPtQpfclHZr87W+bqRZXuNx1QnMjj/Y1//JZK0lO/LIshYQM0jMHmJBMQfkH7Ijt3C2+Hx++lQ9LDAe7Q3lULXeoA53EcwZ/opSZuyNICzEzLN94FQUju9/9Rx8VtBY8HTgFD3aWiqeL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727159592; c=relaxed/simple;
-	bh=7AeQaaHsClVpe0KEPoavxjpVBE6YNXUCn4Vj33CEd18=;
+	s=arc-20240116; t=1727160493; c=relaxed/simple;
+	bh=tWIVCerwslylDIcRYbnQp+zl4G8LTDM+tEA4Nrq/ckE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BC5krUyw4FwkNjFWLgM0dIPWyiqG8bpwRW0+SpFSs2r5uTtjkqVkVredejLpxALRcDtJ9voqW2RNeaa/nJw7VFhp/rqn+G+Ip/Hsn4oNUPTWEUyzWigVHL0QuOtpsiIRYkLVjzwHRo38fUSdQRBQ++7SX86xQy9P9GgH0I8puN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N0gZHiiN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CCfGC8JQ; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=YVxwZJD0d5LXSdSU/ql8VGGRnkazLaXy5v8uHmjg+O/vufaASekHMB/0t/XGr/RAW8UdPIdMPIl78Lt5MCLt5o6eCi7OrGnBd3DcEbay0uqC2n/Oadz8XYnn5sqCn6RKNsx5VJBpskZnvCjmgTIWPXf2h6e5Pb+F9ikgWJNRjig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Mf49qFOm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i9BdlwmC; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N0gZHiiN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CCfGC8JQ"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 67F261140262;
-	Tue, 24 Sep 2024 02:33:09 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Tue, 24 Sep 2024 02:33:09 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Mf49qFOm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i9BdlwmC"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2383A13804B9;
+	Tue, 24 Sep 2024 02:48:11 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Tue, 24 Sep 2024 02:48:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727159589; x=1727245989; bh=kqJbu8RSS5
-	FyPOe6noronqgaPdqL6YhdYmocVj/xqhU=; b=N0gZHiiNAQkdQ//Sv8qoJOeXZ+
-	TovMWAlP1HjzN24pLT+gXa5vNRG365b/jv2KsMynWZMAI/WW77kR28RDmhyapBLt
-	u47fTyIoHqQXZSmLpzcgk2IfbuwPwCeoIP0U4lov5+Q9kurSAcbluLkNNQfXG6Se
-	TAUKjjDL4FykXOC26Oxu/ig4KvoXv9nHsfg94n1xjyATM/zLUbCRGUac5FSnNgwG
-	gtbfPA53P2/wi6XSzV/DIHft9XiR27B64UnpXoYMIaNt6P1LjasfxrbKmueDrT/0
-	zKhvUy70hjloqSRniU+sW5oVAQLP+4zHGqH2XAK0wPAv8kH9x3w1pnNi1OJw==
+	:subject:to:to; s=fm2; t=1727160491; x=1727246891; bh=S09GDue9sX
+	5Q9Yl12WP6tXKoPntALocsfKEbNyxaMcU=; b=Mf49qFOmcudqiBF5l3qc9PnNnQ
+	iiYjaDnLVACpU0noPnuzJQidDQakZfhBgC7jC0CP2bQsWqJYvus6KevlcK1laN8y
+	2xOnNghKl4cPklf4p1f91fB5cx8EgaW17rmthxw5hzf2Yd+rnl9vDuSk3RZEVQew
+	dfwVDgXcZEqrhDoamKEUS4v2FT8BCgXJt7XWNttiNqD11ObsFNxzehUN0Yncsr6q
+	Af5Nm49+EbkBucqlRDlXTf6RygfGoVLyZKs0Lk1pURljfpuUEd9mbODHEAcfSosj
+	3Ps+1UQgA6HBc5PsfmR2FEjev2/N7JZ6ez9LDhfgv96Ju2Ct7T3bJn9fuaQA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727159589; x=1727245989; bh=kqJbu8RSS5FyPOe6noronqgaPdqL
-	6YhdYmocVj/xqhU=; b=CCfGC8JQ9SKZDGVai/LaQCFqpXK19ClxMQp6UAXWWD7P
-	85DqOovrCes302F5gKHO7DNgXcfUkNMmzUb3RqF3LQZJfZjOFlqjPKGh1AtBfp4L
-	vDvNdPeGmos2xe3lr8BMD6Xt4UMwTrbnGZf8sviVUh5tukTuv6z8wrqTU5litzTB
-	7kMz1Zf/5bDNrSJTKsFvSb7J2MLCb9l/C2BYSfuS5Jq0eU2dx/YZLALN3b10pI25
-	1pYShhBbDnw7dQc3qFITl+XIxlcJ2vWNF/yB6s0OunWF2sLfXXibq98KnfOmGez1
-	Y9qMCX6WPRVtdcpyQigkO5X8MSjI4VvbhNYQ4L595A==
-X-ME-Sender: <xms:JV3yZlbGfbhm1F1n3UyRVyT3FzPp0Zy8aRYSlLqUBdeSUfgj6fwXEw>
-    <xme:JV3yZsbS_ECevC2mJlY8HdsLvoSM1bCD5NxBy_Gh_r90PJB4xgTSOx3GRkF3PRCFR
-    6LQjhJutJzPOtP2Dw>
-X-ME-Received: <xmr:JV3yZn_668oTDYVJOnuINObZc_42_XdWWxJ9ircMTze1JZCsb7Oc0c-Rbt02-hc6alFMVhi2H-xaKGvvwxQAkw-YMMnjzqNK_SqR4cLAWzYOsw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtuddgjeejucetufdoteggodetrfdotf
+	fm2; t=1727160491; x=1727246891; bh=S09GDue9sX5Q9Yl12WP6tXKoPntA
+	LocsfKEbNyxaMcU=; b=i9BdlwmCNKJDHnRTR5rubVO7hJJspCRFSFriaonLX6yq
+	1yJvseQfRD4GgRawhKV0BmoY+6bPSKAglkK8TKLg3oFXYAjCCpZuphOvBJR/SQFt
+	OvKcuZ5Kv5aFwa6rUMUVTXLIlZC+puQez6F2iFjFVRnXlCzJC3gYvsPgqNVaoDJT
+	EtlXLG/yVaQJ4ZQuhv1OFPkCiFf45/3YsbG8LAYESuvu0le99ByfOaDYFDq+FwVz
+	k44U4nHSMkM/Biq7RYQjjvJQ6YY9NokLUXyIBfHJ5WBC7rhoVM6hyIiDpB8Z+61f
+	Pdv5GuaqdOoYhSFpK4YcRl/1JTKl0N2hUDdE/1XChw==
+X-ME-Sender: <xms:qmDyZmp2kuM34PxB7_iE5v0zT-3vvbfDjlkIYE7sj0A-SdITWDzAIg>
+    <xme:qmDyZkrDbdm0CtBrUG05aJrmCYEIC16O7slb7QPpkWcbQoJRs-BjXHh97oY1XuOsj
+    3g-u28zCQgQh8pbBA>
+X-ME-Received: <xmr:qmDyZrP6yFwxEe-Awhgsi2gSGsPSO6JuSAW59NVKbbe6O7VZ9e4UgjZFyVRAUX_WcD2p39r2-w2GYLtKiS9PDzT4K7XjkF4hFy9Mkz6YPIhOiw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtuddgkedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:JV3yZjouf70JNuFlmUM1Wwai8NYvmHbodDbUfnBbuQMTN0rMuHJSjQ>
-    <xmx:JV3yZgqPahjd79P83mz6JlFAT8gZqeDSEWyaPbQuV3ijf1hl4QNnSA>
-    <xmx:JV3yZpR_ACz7CBEEukSJLYVieNuSXwCfmjCwcpYJZicWDQJNt6_awg>
-    <xmx:JV3yZorb4pW4n_mCYAfXHuOl4AWglVGyV6ed634DtEYvd-PrSuM0Jw>
-    <xmx:JV3yZrXDWT25xq9vphRXnGwj7TatMDwpGq8KdMeet01edHnGbP43AyR9>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
+    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrgh
+X-ME-Proxy: <xmx:q2DyZl78tq4bgGZsoqQJ4nZNXbhVkRi8bdTFxKhUNy9429vcTf72iQ>
+    <xmx:q2DyZl6skTEwLR2izH45Utcu9DGWvAd01pcFBuNWfHp0XE8JR1RFdA>
+    <xmx:q2DyZlh0cec-YNwwzS0lWplPDRbpc0ac2dOygXmPagrH_5JQ7UJZlg>
+    <xmx:q2DyZv4qk30wRqIfWL7iRbMwFp91JUDqVoRa1-n76tAEmeBXANmJMQ>
+    <xmx:q2DyZlGnNubXDaSWioM-xii1EE4MIr7UZ1JF0BfgTLThG-BohoaK8lSt>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Sep 2024 02:33:08 -0400 (EDT)
+ 24 Sep 2024 02:48:10 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9f8e670b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Sep 2024 06:32:35 +0000 (UTC)
-Date: Tue, 24 Sep 2024 08:33:05 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id cc06a9a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Sep 2024 06:47:35 +0000 (UTC)
+Date: Tue, 24 Sep 2024 08:48:04 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Edward Thomson <ethomson@edwardthomson.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 22/22] reftable: handle trivial allocation failures
-Message-ID: <d0fe9993716cb213f695584bf9363382894eb36a.1727158127.git.ps@pks.im>
-References: <cover.1726489647.git.ps@pks.im>
- <cover.1727158127.git.ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] cache-tree: detect mismatching number of index
+ entries
+Message-ID: <ZvJgnqSwANCXmj0G@pks.im>
+References: <cover.1726556195.git.ps@pks.im>
+ <595693a6420b2571aabd51ed989bedfa0cfa62e2.1726556195.git.ps@pks.im>
+ <xmqqttec8ly0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,301 +87,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1727158127.git.ps@pks.im>
+In-Reply-To: <xmqqttec8ly0.fsf@gitster.g>
 
-Handle trivial allocation failures in the reftable library and its unit
-tests.
+On Wed, Sep 18, 2024 at 06:35:35PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > +	if (it->entry_count + pos > istate->cache_nr) {
+> > +		ret = error(_("corrupted cache-tree has entries not present in index"));
+> > +		goto out;
+> > +	}
+> 
+> Is it a safe assumption that the if() condition always indicates an
+> error?  When sparse-index is in effect, istate->cache_nr may be a
+> number that is smaller than the true number of paths in the index
+> (because all paths under a subdirectory we are not interested in are
+> folded into a single tree-ish entry), and I am not sure how it
+> should interact with it->entry_count (i.e. the number of paths under
+> the current directory we are looking at, which obviously cannot be a
+> sparsified entry) and pos (i.e. the index into active_cache[] that
+> represend the first path under the current directory)?
+> 
+> I guess as long as "it" is not folded, it does not matter how other
+> paths from different directories in active_cache[] are sparsified or
+> expanded, as long as "pos" keeps track of the current position
+> correctly.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/merged.c                   |  3 +++
- reftable/reader.c                   | 10 +++++++++-
- reftable/stack.c                    | 20 ++++++++++++++++++++
- reftable/writer.c                   | 13 +++++++++++--
- t/unit-tests/t-reftable-block.c     |  4 ++++
- t/unit-tests/t-reftable-merged.c    |  4 ++++
- t/unit-tests/t-reftable-readwrite.c | 27 ++++++++++++++++-----------
- 7 files changed, 67 insertions(+), 14 deletions(-)
+It seems like we end up calling `ensure_full_index()` for a sparse
+index, which does cause us to signal to the caller that they should
+restart verification. So for all I understand, this function shouldn't
+act on a sparsely-populated index.
 
-diff --git a/reftable/merged.c b/reftable/merged.c
-index 2c20845d624..52bc66c5273 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -203,6 +203,9 @@ int reftable_merged_table_new(struct reftable_merged_table **dest,
- 	}
- 
- 	REFTABLE_CALLOC_ARRAY(m, 1);
-+	if (!m)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
-+
- 	m->readers = readers;
- 	m->readers_len = n;
- 	m->min = first_min;
-diff --git a/reftable/reader.c b/reftable/reader.c
-index 0179e4e73dd..98e7aa26373 100644
---- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -598,6 +598,10 @@ int reftable_reader_new(struct reftable_reader **out,
- 	int err;
- 
- 	REFTABLE_CALLOC_ARRAY(r, 1);
-+	if (!r) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
- 
- 	/*
- 	 * We need one extra byte to read the type of first block. We also
-@@ -627,7 +631,11 @@ int reftable_reader_new(struct reftable_reader **out,
- 
- 	r->size = file_size - footer_size(r->version);
- 	r->source = *source;
--	r->name = xstrdup(name);
-+	r->name = reftable_strdup(name);
-+	if (!r->name) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
- 	r->hash_id = 0;
- 	r->refcount = 1;
- 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 990784d9d2f..7df28ab3438 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -116,6 +116,11 @@ static int fd_read_lines(int fd, char ***namesp)
- 	}
- 
- 	REFTABLE_ALLOC_ARRAY(buf, size + 1);
-+	if (!buf) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
-+
- 	if (read_in_full(fd, buf, size) != size) {
- 		err = REFTABLE_IO_ERROR;
- 		goto done;
-@@ -140,6 +145,8 @@ int read_lines(const char *filename, char ***namesp)
- 	if (fd < 0) {
- 		if (errno == ENOENT) {
- 			REFTABLE_CALLOC_ARRAY(*namesp, 1);
-+			if (!*namesp)
-+				return REFTABLE_OUT_OF_MEMORY_ERROR;
- 			return 0;
- 		}
- 
-@@ -420,6 +427,10 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
- 			}
- 
- 			REFTABLE_CALLOC_ARRAY(names, 1);
-+			if (!names) {
-+				err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+				goto out;
-+			}
- 		} else {
- 			err = fd_read_lines(fd, &names);
- 			if (err < 0)
-@@ -779,7 +790,11 @@ int reftable_stack_new_addition(struct reftable_addition **dest,
- {
- 	int err = 0;
- 	struct reftable_addition empty = REFTABLE_ADDITION_INIT;
-+
- 	REFTABLE_CALLOC_ARRAY(*dest, 1);
-+	if (!*dest)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
-+
- 	**dest = empty;
- 	err = reftable_stack_init_addition(*dest, st);
- 	if (err) {
-@@ -886,7 +901,12 @@ int reftable_addition_add(struct reftable_addition *add,
- 
- 	REFTABLE_ALLOC_GROW(add->new_tables, add->new_tables_len + 1,
- 			    add->new_tables_cap);
-+	if (!add->new_tables) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
- 	add->new_tables[add->new_tables_len++] = strbuf_detach(&next_name, NULL);
-+
- done:
- 	delete_tempfile(&tab_file);
- 	strbuf_release(&temp_tab_file_name);
-diff --git a/reftable/writer.c b/reftable/writer.c
-index 44bed92f467..ad4718edecb 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -49,8 +49,14 @@ static int padded_write(struct reftable_writer *w, uint8_t *data, size_t len,
- {
- 	int n = 0;
- 	if (w->pending_padding > 0) {
--		uint8_t *zeroed = reftable_calloc(w->pending_padding, sizeof(*zeroed));
--		int n = w->write(w->write_arg, zeroed, w->pending_padding);
-+		uint8_t *zeroed;
-+		int n;
-+
-+		zeroed = reftable_calloc(w->pending_padding, sizeof(*zeroed));
-+		if (!zeroed)
-+			return -1;
-+
-+		n = w->write(w->write_arg, zeroed, w->pending_padding);
- 		if (n < 0)
- 			return n;
- 
-@@ -767,6 +773,9 @@ static int writer_flush_nonempty_block(struct reftable_writer *w)
- 	 * case we will end up with a multi-level index.
- 	 */
- 	REFTABLE_ALLOC_GROW(w->index, w->index_len + 1, w->index_cap);
-+	if (!w->index)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
-+
- 	index_record.offset = w->next;
- 	strbuf_reset(&index_record.last_key);
- 	strbuf_addbuf(&index_record.last_key, &w->block_writer->last_key);
-diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
-index e52a612e852..d470060e8be 100644
---- a/t/unit-tests/t-reftable-block.c
-+++ b/t/unit-tests/t-reftable-block.c
-@@ -32,6 +32,7 @@ static void t_ref_block_read_write(void)
- 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
- 
- 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	check(block.data != NULL);
- 	block.len = block_size;
- 	block_source_from_strbuf(&block.source ,&buf);
- 	ret = block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
-@@ -125,6 +126,7 @@ static void t_log_block_read_write(void)
- 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
- 
- 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	check(block.data != NULL);
- 	block.len = block_size;
- 	block_source_from_strbuf(&block.source ,&buf);
- 	ret = block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
-@@ -214,6 +216,7 @@ static void t_obj_block_read_write(void)
- 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
- 
- 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	check(block.data != NULL);
- 	block.len = block_size;
- 	block_source_from_strbuf(&block.source, &buf);
- 	ret = block_writer_init(&bw, BLOCK_TYPE_OBJ, block.data, block_size,
-@@ -297,6 +300,7 @@ static void t_index_block_read_write(void)
- 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
- 
- 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	check(block.data != NULL);
- 	block.len = block_size;
- 	block_source_from_strbuf(&block.source, &buf);
- 	ret = block_writer_init(&bw, BLOCK_TYPE_INDEX, block.data, block_size,
-diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
-index 3d2848632db..3c84363e980 100644
---- a/t/unit-tests/t-reftable-merged.c
-+++ b/t/unit-tests/t-reftable-merged.c
-@@ -29,7 +29,9 @@ merged_table_from_records(struct reftable_ref_record **refs,
- 	int err;
- 
- 	REFTABLE_CALLOC_ARRAY(*readers, n);
-+	check(*readers != NULL);
- 	REFTABLE_CALLOC_ARRAY(*source, n);
-+	check(*source != NULL);
- 
- 	for (size_t i = 0; i < n; i++) {
- 		t_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0, &opts);
-@@ -285,7 +287,9 @@ merged_table_from_log_records(struct reftable_log_record **logs,
- 	int err;
- 
- 	REFTABLE_CALLOC_ARRAY(*readers, n);
-+	check(*readers != NULL);
- 	REFTABLE_CALLOC_ARRAY(*source, n);
-+	check(*source != NULL);
- 
- 	for (size_t i = 0; i < n; i++) {
- 		t_reftable_write_to_buf(&buf[i], NULL, 0, logs[i], sizes[i], &opts);
-diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
-index acca927a2cf..bfa069caff7 100644
---- a/t/unit-tests/t-reftable-readwrite.c
-+++ b/t/unit-tests/t-reftable-readwrite.c
-@@ -52,8 +52,11 @@ static void write_table(char ***names, struct strbuf *buf, int N,
- 	int i;
- 
- 	REFTABLE_CALLOC_ARRAY(*names, N + 1);
-+	check(*names != NULL);
- 	REFTABLE_CALLOC_ARRAY(refs, N);
-+	check(refs != NULL);
- 	REFTABLE_CALLOC_ARRAY(logs, N);
-+	check(logs != NULL);
- 
- 	for (i = 0; i < N; i++) {
- 		refs[i].refname = (*names)[i] = xstrfmt("refs/heads/branch%02d", i);
-@@ -150,23 +153,25 @@ static void t_log_overflow(void)
- 
- static void t_log_write_read(void)
- {
--	int N = 2;
--	char **names = reftable_calloc(N + 1, sizeof(*names));
--	int err;
- 	struct reftable_write_options opts = {
- 		.block_size = 256,
- 	};
- 	struct reftable_ref_record ref = { 0 };
--	int i = 0;
- 	struct reftable_log_record log = { 0 };
--	int n;
- 	struct reftable_iterator it = { 0 };
- 	struct reftable_reader *reader;
- 	struct reftable_block_source source = { 0 };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w = t_reftable_strbuf_writer(&buf, &opts);
- 	const struct reftable_stats *stats = NULL;
-+	int N = 2, err, i, n;
-+	char **names;
-+
-+	names = reftable_calloc(N + 1, sizeof(*names));
-+	check(names != NULL);
-+
- 	reftable_writer_set_limits(w, 0, N);
-+
- 	for (i = 0; i < N; i++) {
- 		char name[256];
- 		struct reftable_ref_record ref = { 0 };
-@@ -178,6 +183,7 @@ static void t_log_write_read(void)
- 		err = reftable_writer_add_ref(w, &ref);
- 		check(!err);
- 	}
-+
- 	for (i = 0; i < N; i++) {
- 		struct reftable_log_record log = { 0 };
- 
-@@ -476,8 +482,7 @@ static void t_table_read_write_seek_index(void)
- 
- static void t_table_refs_for(int indexed)
- {
--	int N = 50;
--	char **want_names = reftable_calloc(N + 1, sizeof(*want_names));
-+	char **want_names;
- 	int want_names_len = 0;
- 	uint8_t want_hash[GIT_SHA1_RAWSZ];
- 
-@@ -485,15 +490,15 @@ static void t_table_refs_for(int indexed)
- 		.block_size = 256,
- 	};
- 	struct reftable_ref_record ref = { 0 };
--	int i = 0;
--	int n;
--	int err;
- 	struct reftable_reader *reader;
- 	struct reftable_block_source source = { 0 };
- 	struct strbuf buf = STRBUF_INIT;
- 	struct reftable_writer *w = t_reftable_strbuf_writer(&buf, &opts);
- 	struct reftable_iterator it = { 0 };
--	int j;
-+	int N = 50, n, j, err, i;
-+
-+	want_names = reftable_calloc(N + 1, sizeof(*want_names));
-+	check(want_names != NULL);
- 
- 	t_reftable_set_hash(want_hash, 4, GIT_SHA1_FORMAT_ID);
- 
--- 
-2.46.0.551.gc5ee8f2d1c.dirty
+But I cannot see how it could lead to anything sensible when the added
+condition is violated because the first thing we do in the loop is this:
 
+	struct cache_entry *ce = istate->cache[pos + i];
+
+And before we do anything else, we dereference that pointer. So if the
+condition doesn't hold we _will_ get an out-of-bounds read of the cache
+array and act on the garbage data. And that causes the observed segfault
+on my machine and in the test.
+
+So I think that ensuring this property is always the right thing to do.
+But I wouldn't be surprised if overall this code could require more love
+to make it behave sanely in all scenarios. It certainly feels somewhat
+fragile to me.
+
+Patrick
