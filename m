@@ -1,68 +1,58 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614841AC424
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 17:32:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C371AC423
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 17:39:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727199160; cv=none; b=f1p6JZiq+xAGU5ay6Fi8QQc2ZyNugdO4tgwFGJbjBj6N9AbUqL8ut0GSmMZKwBiYrcrDmhrkRo6EUeNGfA9IZML7i2NdT4wt8GN92UgBx45MQuUoB/Eah+uKjyHtuTw+RCql1jVsKt07289r2xQMYsHyb+zBRXTmAh0/c0sA5Mw=
+	t=1727199559; cv=none; b=niMz5bqt5BHDS9prw/E8E8z7OadiqHXGomsaA/obZwYadzDmYp9/8UQdqOtg/yb5hKIqGzhHP7pJljABxHeUbrCdiY+fDJgph/CEscmGQ4w1EM28bysGfiytTTGjzlehfggm1Zq4redaz9CTa+H0ZWpvCwA1WJ6OhH1InxmWayY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727199160; c=relaxed/simple;
-	bh=NTLuwDjSEVo2enM6qrGpPVedmwmZAHc9WQo6iK9j2mc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yxf3E1AJpb3Ax/Z5mf3XgecJHcyjrrTJdlfKbyyWKaq5kTVJVkNHdclx2HPRAjX/Yfz0cGV50WfUEakS3xlVnkjVIMVqvVNkMiZ39PwhoTm9jSlPhnLdF2jdjSUXG4yJgx8d3igHSQBGzyZ4vPVrgTYs0eSPhV5n2ee8xfh2Nbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=MVB9r6VL; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1727199559; c=relaxed/simple;
+	bh=Ly8wiJVOtbU/ALYxyDSMD1Yrwfq9ymaR/TuTxm+eufs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=clnDTocUa2SAGodYJ3ymJZk+tzPf76IRNdISwJy17qfphw/bDmZS0D0rRw7RDpbmBP/TdaD2E/BD0V+JqUrKdnyp8EVOEhhBYix+f07aYxa68RRxw0yY6KzqKP2v3qd/+RZIGAbF1QahT8KHMiehxdgJR4oVRUehLkbYZfM9rbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JeP/gspn; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="MVB9r6VL"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6e1f48e7c18so21152747b3.3
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 10:32:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727199157; x=1727803957; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=c0lIMfZ9NfUkQbUEE/VkzFEp0wafK+H/olc9cy1kxFY=;
-        b=MVB9r6VLOtgvC/sayM9Gi9G2q3/yQh8yujCYXqDevPg7DdIA7f6tHtMJCxrhUBdSYY
-         SSsNKhRgD0sNqqqIjRBNQIc52gpps4muCyjlA14rND52rMgR671/zyn185iIIF1LUU7o
-         yhh9KSPxuFFtmH5tfzMM8lIRbK2sw2SeCsUt2Jg6sifA7OIFJrAAmRvqd0HLc4A2kxHX
-         jZrEkucn9pbGzhN5uew7fsNRLJddbqgrK3BcHSQWGaNIF0Ayq96vlU2eGKbf7uY3oKoM
-         IHauvYAl+VaTiXlhD3JacbMlNgV1tjF9oIOzeC+/zjNcxsVHZHue2OO1kSdKEZ2VuYtG
-         /wsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727199157; x=1727803957;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c0lIMfZ9NfUkQbUEE/VkzFEp0wafK+H/olc9cy1kxFY=;
-        b=O4HW6kftZz1noOV4+9pV+tHn9nlu1gY5eDDEHi/jZ3fK8LOKMuGdaRTQycDAgFW9b1
-         xPgwd9rmvy8W4kkqbInhquyr/BQcXNX7jUB7wfMVBzKF46JcHWfwSEhJ3rODM+FdLAXA
-         wuIY8GpGZHrLYH1ZFqzdJbajVR47n8Hz85KxC/48KYXirUU21wFclFopwCS0mu260D7C
-         M6Uf2zGfihlrziiPENbHXRLS5ZK0c1P8RpkZDFyaN+/YfZrXck1e3I3xdwJ63TxPEZE1
-         1kOsNHZg5CVb0q2adR746FAAKNfYIYS3ETQgR1ObQyWaFQHDU6csTsoMNRPl9dnsAIZq
-         SVWQ==
-X-Gm-Message-State: AOJu0Yy3k+Pgn5HD9pRWT6rrBEfbOIlR00FJPaTS4EsVc0WyvJtKlsd+
-	2Dv8GnB1V1wrPf3cPYBj4mxn4wD+ZzjZ1Xxij1UfrHnCRH6hGkkc37sARCzWJe0hKAVQEt29X8a
-	Qqc4=
-X-Google-Smtp-Source: AGHT+IGDuvAhgzuMc+kXitqrQUQTd7YYGD1xLPy8155O8D++1cmVh8TJiTF4JfJt0a0LGmERdLdbOg==
-X-Received: by 2002:a05:690c:4a90:b0:6db:e2a3:4158 with SMTP id 00721157ae682-6e21db97daamr1007027b3.46.1727199156849;
-        Tue, 24 Sep 2024 10:32:36 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e20d03d4e6sm3160707b3.31.2024.09.24.10.32.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 10:32:36 -0700 (PDT)
-Date: Tue, 24 Sep 2024 13:32:35 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 8/8] csum-file.c: use unsafe SHA-1 implementation when
- available
-Message-ID: <4b83dd05e9fe55e1ebd07f4b60831e1ddd404c0a.1727199118.git.me@ttaylorr.com>
-References: <cover.1725206584.git.me@ttaylorr.com>
- <cover.1727199118.git.me@ttaylorr.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JeP/gspn"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B403436BF6;
+	Tue, 24 Sep 2024 13:39:16 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Ly8wiJVOtbU/
+	ALYxyDSMD1Yrwfq9ymaR/TuTxm+eufs=; b=JeP/gspn631kpS2YYoBmNwmIRqR6
+	Dfv6sFMq3iNS8pMZuLBsmluwYIzJchY20472inSYBTOzvpA0oO6Ws204ZoNoVKjW
+	EmGpxS+QwZZqiK2ekSBWy2Z5IKZRB4QFdAOuukmXsCNxwzRlKMkenu9DNsY/Y0TV
+	0dKlB05jqodYUN4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AB72836BF5;
+	Tue, 24 Sep 2024 13:39:16 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 16C5836BF4;
+	Tue, 24 Sep 2024 13:39:16 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Henrik Holst
+ <henrik.holst@outlook.com>,  "git@vger.kernel.org" <git@vger.kernel.org>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Eli Schwartz
+ <eschwartz@gentoo.org>,  Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: ./configure fails to link test program due to missing dependencies
+In-Reply-To: <ZvKsH1Ct-YwBPA_f@pks.im> (Patrick Steinhardt's message of "Tue,
+	24 Sep 2024 14:10:14 +0200")
+References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+	<xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
+	<29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com>
+	<xmqqy13oa8oe.fsf@gitster.g> <ZvKsH1Ct-YwBPA_f@pks.im>
+Date: Tue, 24 Sep 2024 10:39:14 -0700
+Message-ID: <xmqqwmj1t0hp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,122 +60,68 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1727199118.git.me@ttaylorr.com>
+X-Pobox-Relay-ID:
+ EB7CCF20-7A9B-11EF-B346-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Update hashwrite() and friends to use the unsafe_-variants of hashing
-functions, calling for e.g., "the_hash_algo->unsafe_update_fn()" instead
-of "the_hash_algo->update_fn()".
+Patrick Steinhardt <ps@pks.im> writes:
 
-These callers only use the_hash_algo to produce a checksum, which we
-depend on for data integrity, but not for cryptographic purposes, so
-these callers are safe to use the unsafe (and potentially non-collision
-detecting) SHA-1 implementation.
+> I'm not really sure whether distros _do_ actually use autoconf. Checkin=
+g
+> a few distros:
+>
+>   - Arch doesn't.
+>   - Cygwin uses autoconf.
+>   - Debian doesn't.
+>   - FreeBSD uses autoconf.
+>   - Gentoo doesn't.
+>   - NixOS uses autoconf.
+>   - OpenBSD uses autoconf.
+>   - Ubuntu doesn't.
+>
+> So basically, we'd be making the life harder of anybody who doesn't
+> conform to the "standard" way of doing things in Linux, which I think i=
+s
+> not exactly a nice thing to do.
 
-To time this, I took a freshly packed copy of linux.git, and ran the
-following with and without the OPENSSL_SHA1_UNSAFE=1 build-knob. Both
-versions were compiled with -O3:
+If we stopped shipping configure (in our tarballs) and configure.in
+(in the sources), would distros in the above list that do currently
+use autoconf be able to build purely by having reasonable setting in
+config.mak.uname already?
 
-    $ git for-each-ref --format='%(objectname)' refs/heads refs/tags >in
-    $ valgrind --tool=callgrind ~/src/git/git-pack-objects \
-        --revs --stdout --all-progress --use-bitmap-index <in >/dev/null
+> And that's why I think we should have an alternative way to configure
+> and build Git that can act as a replacement for autoconf, with my vote
+> going to either CMake or Meson.
 
-Without OPENSSL_SHA1_UNSAFE=1 (that is, using the collision-detecting
-SHA-1 implementation for both cryptographic and non-cryptographic
-purposes), we spend a significant amount of our instruction count in
-hashwrite():
+I guess the above question from me is a semi- tongue-in-cheek vote
+for config.mak.uname as that alternative way.
 
-    $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
-    159,998,868,413 (79.42%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
+> They are a proper replacement for autoconf that makes the
+> downstream maintainer's jobs easier while also bringing additional
+> features to the table that we don't currently have.
+>
+> Eli makes a couple of good remarks in [1] about things that both CMake
+> and Meson bring to the table in addition to that, while also mentioning
+> some of the benefits of Meson over CMake.
+>
+> I would be okay to make Git work with such a build system myself. The
+> current CMake build instructions can be used to _build_ Git, but AFAIU
+> they cannot yet run the Git test suite. Dscho pointed me to a couple of
+> patches from =C3=86var that work into this direction, and I'd be happy =
+to
+> revive them. I'd also be okay with picking Meson over CMake if that is
+> what people want. But my ultimate goal would then be that we have at
+> least one CI job build and test against such a build system and give it
+> the "official blessing" as an alternative way to build Git.
 
-, and the resulting "clone" takes 19.219 seconds of wall clock time,
-18.94 seconds of user time and 0.28 seconds of system time.
+I already said that having to support two is better than having to
+support three in another thread ;-).  If adding the fourth would
+allow us to drop all other three eventually, that would be nice.
 
-Compiling with OPENSSL_SHA1_UNSAFE=1, we spend ~60% fewer instructions
-in hashwrite():
+Our dependance of heavy use of GNU-ism in our Makefiles makes an
+argument that make is the common denominator a fairly weak one, so
+the single one that eventually we use does not have to be "make",
+but it has to be something available widely and easy to learn.
 
-    $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
-     59,164,001,176 (58.79%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
+Thanks.
 
-, and generate the resulting "clone" much unsafeer, in only 11.597 seconds
-of wall time, 11.37 seconds of user time, and 0.23 seconds of system
-time, for a ~40% speed-up.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- csum-file.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/csum-file.c b/csum-file.c
-index bf82ad8f9f5..c203ebf11b3 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -50,7 +50,7 @@ void hashflush(struct hashfile *f)
- 
- 	if (offset) {
- 		if (!f->skip_hash)
--			the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
-+			the_hash_algo->unsafe_update_fn(&f->ctx, f->buffer, offset);
- 		flush(f, f->buffer, offset);
- 		f->offset = 0;
- 	}
-@@ -73,7 +73,7 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
- 	if (f->skip_hash)
- 		hashclr(f->buffer, the_repository->hash_algo);
- 	else
--		the_hash_algo->final_fn(f->buffer, &f->ctx);
-+		the_hash_algo->unsafe_final_fn(f->buffer, &f->ctx);
- 
- 	if (result)
- 		hashcpy(result, f->buffer, the_repository->hash_algo);
-@@ -128,7 +128,7 @@ void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
- 			 * f->offset is necessarily zero.
- 			 */
- 			if (!f->skip_hash)
--				the_hash_algo->update_fn(&f->ctx, buf, nr);
-+				the_hash_algo->unsafe_update_fn(&f->ctx, buf, nr);
- 			flush(f, buf, nr);
- 		} else {
- 			/*
-@@ -174,7 +174,7 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
- 	f->name = name;
- 	f->do_crc = 0;
- 	f->skip_hash = 0;
--	the_hash_algo->init_fn(&f->ctx);
-+	the_hash_algo->unsafe_init_fn(&f->ctx);
- 
- 	f->buffer_len = buffer_len;
- 	f->buffer = xmalloc(buffer_len);
-@@ -208,7 +208,7 @@ void hashfile_checkpoint(struct hashfile *f, struct hashfile_checkpoint *checkpo
- {
- 	hashflush(f);
- 	checkpoint->offset = f->total;
--	the_hash_algo->clone_fn(&checkpoint->ctx, &f->ctx);
-+	the_hash_algo->unsafe_clone_fn(&checkpoint->ctx, &f->ctx);
- }
- 
- int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint)
-@@ -219,7 +219,7 @@ int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint
- 	    lseek(f->fd, offset, SEEK_SET) != offset)
- 		return -1;
- 	f->total = offset;
--	the_hash_algo->clone_fn(&f->ctx, &checkpoint->ctx);
-+	the_hash_algo->unsafe_clone_fn(&f->ctx, &checkpoint->ctx);
- 	f->offset = 0; /* hashflush() was called in checkpoint */
- 	return 0;
- }
-@@ -245,9 +245,9 @@ int hashfile_checksum_valid(const unsigned char *data, size_t total_len)
- 	if (total_len < the_hash_algo->rawsz)
- 		return 0; /* say "too short"? */
- 
--	the_hash_algo->init_fn(&ctx);
--	the_hash_algo->update_fn(&ctx, data, data_len);
--	the_hash_algo->final_fn(got, &ctx);
-+	the_hash_algo->unsafe_init_fn(&ctx);
-+	the_hash_algo->unsafe_update_fn(&ctx, data, data_len);
-+	the_hash_algo->unsafe_final_fn(got, &ctx);
- 
- 	return hasheq(got, data + data_len, the_repository->hash_algo);
- }
--- 
-2.46.2.636.g4b83dd05e9f
