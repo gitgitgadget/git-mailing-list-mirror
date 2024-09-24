@@ -1,66 +1,66 @@
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1BD38DD1
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 17:32:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EFA38DD1
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 17:32:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727199135; cv=none; b=Y7HVL8gL+6trC6gayd5wLVNGIda92qbDJSXULJR4rTu23EVPAUa/ss1/mP3d6ocb9NJq6LaLlzauPaLvVWg3hWDG3XQc8tn3B1xGwMkFlJ0V3pVU1uFxbbW6IDS1hZhC5YD+yaf4lCM9KtBNStZwh58i94PyXwNKpzTBMMnG8Hk=
+	t=1727199139; cv=none; b=QNrxPVYKhGfYDY+pi+K4fu/rnrNs93AN6SJg0I/yETzufVggFYna9l01tzSkqFelZuiEfR610qP0lbXGvCR3LCJxHogYVwKbFM/TbN50JDNRXTLjlbpuucZRAZ24RF7tpFr9HnSm5gOP34giiYssHMdmTUDMp377to9hoQC78gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727199135; c=relaxed/simple;
-	bh=lyuGCn/y2ugP24lDv9u8fU/SQ4YYm60gWGmNJ3OBrsA=;
+	s=arc-20240116; t=1727199139; c=relaxed/simple;
+	bh=HeBrCo+ZVTeY0GRFVCQNUBnHo9dG4ey5LSlkb7wKNQk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zmp2mIQQ35TYoOVJhh9pJ50s4TVQQJxygNkHjKMSieLPDRdVt4PcM2gPDYmmde9UDVNiOlzhrXH5FP98sXtqIydlWBGysh2eASrR4KBdykoVcfrYKnMARjejV0hK0uEL2owfl60GfNYnckLI2vgfIYjcab2EaiYuSNS2jZSl3lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=h0d9WREN; arc=none smtp.client-ip=209.85.219.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=GntFs1dEWaIthDGBqg14i25oBOxvjxZj8iMarTFZR/w8wjvXgej2yyDFZnyb4lXlQTU7AjzN7Z+D9txxpI0+13O0Vfg8Kq17GTHMYovL/A8ywkw3A5Elv2LxA+rupj6sStevokOIQpiRCNeX2LI77Iw8dNwoTaW9636SUMnoOos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=QjMtRqrC; arc=none smtp.client-ip=209.85.128.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="h0d9WREN"
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e1a74ee4c0cso5147605276.2
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 10:32:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="QjMtRqrC"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6e20a8141c7so10820927b3.0
+        for <git@vger.kernel.org>; Tue, 24 Sep 2024 10:32:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727199133; x=1727803933; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727199136; x=1727803936; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NLFXXCQeg2YweClnyjFgATxeHCWdKZtflN4MsinISps=;
-        b=h0d9WRENlrNAR0lr+sIOE+D6GC/ThE7KdTC387K5WJedTflo86O/MlQIMkVBD+LA6t
-         UXeEkKxhTs5vYHTZMy1uYmPELPX9ZorAGuiaVu3lT6jC8ncdgXe3kFtpp2ZjZOc/1uW/
-         tJpAJJOfmIhSKKoGPEX83WYyUYjoaSyJYHGsVLnpjXMHxsqNhLV3rnOP7JHhbX61S8Jy
-         +DsuQdI0LdKN1iiQVh0lpRp1YKEnWb1J2RHQnPKHba5gJlDUcHuuud96inmGSnvJrQrk
-         +/11vkzW7/tiS0fr8chK+dMlM9XKM9QnQ/8Q/p46JoCDD6+PtH3rT4jIs3ZtYB0gb+hb
-         wSGg==
+        bh=cX8phJkeB+hnyG0RojMlo+hq6/5rVRNGKooNkDOKJnQ=;
+        b=QjMtRqrCcKsJk6+9gHlsWQIfobHK/sNFrlwktbNFwxdyJryDezvcDxjX7Ey4qCTyqk
+         FGgRGkj/hGxsJgZgF/dH/lF/x0Opv9w9VkSOK8azUR8pAlpwlFVKIH39W/w7gAE8hbL5
+         IZ1m3ahOYJxjrfTTNvRJhvoIZvAjmd1cVtGL7eh0y2F2B58unXjRdhCyDTM7bOreG8c0
+         SSdJb53sPT70rSa1HvWptOw0Ia3ytqtYs7wMFwozTBke1UPlE+NfpGztq2e5MLa3/yc0
+         AQYMnwSOlDfWrf6jXssFxh/UaRU3xg7CUKE/y3/aXJPFg2ViBG7ajGsEKQ02m6hGgeQy
+         CVsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727199133; x=1727803933;
+        d=1e100.net; s=20230601; t=1727199136; x=1727803936;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NLFXXCQeg2YweClnyjFgATxeHCWdKZtflN4MsinISps=;
-        b=a8lBt2oSt3LxA9Ni30HtoGrCiu6DFehHuILxl0HvrL3yzazjLzbKsy29X4abA7UHM5
-         gEXOUZQ9NIuXExK/xW2dN065XCtePfy9R7sU4v8lLEmDuDaaRdIDtiBbBCKEyyRfZkq+
-         sBb8EwqJhvGZW8WEQ+a6YfkIUmRGbU79PyantD0fvK3izkSDnOZxNglOPqcmrItt6ReB
-         Ep+u7A1oMu4PgFtI3IeIVkthENtunp4t979jQLFqaenlUw06fiJLzytsfnNkgeugYB/c
-         XdXROJa7qsqY+WHNOsnD7E+Cw3XreZb/NZzptlHnLkSJWC+cn6CYnwCT96o49YdHd0s3
-         xKDA==
-X-Gm-Message-State: AOJu0Yy5YZBo8bEtXK2dr6gdJZdUoJ8mP8nFxxYuTlETaLOfIrzlOkLB
-	BGvtv0sl5gbf/qmUy3PYt5F37VGKU555USiOfyebotjBR/8lL4r63ZlhbONrDxS+QociB9XOHAO
-	snXU=
-X-Google-Smtp-Source: AGHT+IHw4DkIUM70qBsyTvgrPm4Z9JTaRt0yT9BlkXGmRQcARQZ9KzLMIntZ+g8/g5SkE2n2xUUGbQ==
-X-Received: by 2002:a05:690c:4246:b0:6af:fd49:67e0 with SMTP id 00721157ae682-6e21da1e9eamr1102417b3.46.1727199132820;
-        Tue, 24 Sep 2024 10:32:12 -0700 (PDT)
+        bh=cX8phJkeB+hnyG0RojMlo+hq6/5rVRNGKooNkDOKJnQ=;
+        b=meZQ0sspzsZo+p97Luc4A+QHEo1sndaynPA3DwOzei9+JLHDWnGxQW63dC9lfCJdZ0
+         fhG9JM5PufPijqrmYvyDAaJW9Ci7THwCKaoaaKJ7g0yUQlTdMvw1zruNISEZByi/R2OQ
+         KaCikPTLRSzcoC+Psbq+TvSxxa4D6/bFg72VKfX6b/oENhUtF9yn8vagYd+BOoCTq1wK
+         b1ExoUQSnF8YquQYO5OPYg5sv3xxisah5gZtRt4C6f68YOlr21/MGjHgngnUcydVA4TC
+         0bDN3/uDTARgQzXp83jfxiMo8zi5nXGFaFVvtiFUlMr+mLHNV73drfymyVTRVGp33neq
+         p08w==
+X-Gm-Message-State: AOJu0Ywnw3slU3jozfz5+5rnDeKdf4ntar5kqSAHGV7QKdnCBzWIYqeA
+	dp7xTdgEcIgw0zyIIdzS7oB5725nQ7x+MzdBITk2Sr+hQy38/HlcKlUSHkCNJcFutnznD5pG8rT
+	N+0U=
+X-Google-Smtp-Source: AGHT+IFFOufsCpakZz3jIf+0CKMH1HXxQvgkpw/pKNdWbaR3jLSwqZMtaqlkC9+oADF6/m1dSQVdWA==
+X-Received: by 2002:a05:690c:660f:b0:6de:b23:f2c3 with SMTP id 00721157ae682-6e21d6ec709mr2186657b3.7.1727199136170;
+        Tue, 24 Sep 2024 10:32:16 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e20d04a335sm3103407b3.47.2024.09.24.10.32.12
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e20d06ea39sm3101547b3.68.2024.09.24.10.32.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 10:32:12 -0700 (PDT)
-Date: Tue, 24 Sep 2024 13:32:10 -0400
+        Tue, 24 Sep 2024 10:32:15 -0700 (PDT)
+Date: Tue, 24 Sep 2024 13:32:14 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 1/8] finalize_object_file(): check for name collision
- before renaming
-Message-ID: <6f1ee91fff315678fef39a54220eae91632d2df9.1727199118.git.me@ttaylorr.com>
+Subject: [PATCH v4 2/8] finalize_object_file(): refactor unlink_or_warn()
+ placement
+Message-ID: <133047ca8c9aed3e297483b60ca3fdb02eb532a5.1727199118.git.me@ttaylorr.com>
 References: <cover.1725206584.git.me@ttaylorr.com>
  <cover.1727199118.git.me@ttaylorr.com>
 Precedence: bulk
@@ -73,54 +73,65 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1727199118.git.me@ttaylorr.com>
 
-We prefer link()/unlink() to rename() for object files, with the idea
-that we should prefer the data that is already on disk to what is
-incoming. But we may fall back to rename() if the user has configured us
-to do so, or if the filesystem seems not to support cross-directory
-links. This loses the "prefer what is on disk" property.
+As soon as we've tried to link() a temporary object into place, we then
+unlink() the tempfile immediately, whether we were successful or not.
 
-We can mitigate this somewhat by trying to stat() the destination
-filename before doing the rename. This is racy, since the object could
-be created between the stat() and rename() calls. But in practice it is
-expanding the definition of "what is already on disk" to be the point
-that the function is called. That is enough to deal with any potential
-attacks where an attacker is trying to collide hashes with what's
-already in the repository.
+For the success case, this is because we no longer need the old file
+(it's now linked into place).
+
+For the error case, there are two outcomes. Either we got EEXIST, in
+which case we consider the collision to be a noop. Or we got a system
+error, in which we case we are just cleaning up after ourselves.
+
+Using a single line for all of these cases has some problems:
+
+  - in the error case, our unlink() may clobber errno, which we use in
+    the error message
+
+  - for the collision case, there's a FIXME that indicates we should do
+    a collision check. In preparation for implementing that, we'll need
+    to actually hold on to the file.
+
+Split these three cases into their own calls to unlink_or_warn(). This
+is more verbose, but lets us do the right thing in each case.
 
 Co-authored-by: Jeff King <peff@peff.net>
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- object-file.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ object-file.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/object-file.c b/object-file.c
-index 968da27cd41..38407f468a9 100644
+index 38407f468a9..5a1da577115 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1937,6 +1937,7 @@ static void write_object_file_prepare_literally(const struct git_hash_algo *algo
-  */
- int finalize_object_file(const char *tmpfile, const char *filename)
- {
-+	struct stat st;
- 	int ret = 0;
+@@ -1944,6 +1944,8 @@ int finalize_object_file(const char *tmpfile, const char *filename)
+ 		goto try_rename;
+ 	else if (link(tmpfile, filename))
+ 		ret = errno;
++	else
++		unlink_or_warn(tmpfile);
  
- 	if (object_creation_mode == OBJECT_CREATION_USES_RENAMES)
-@@ -1957,9 +1958,12 @@ int finalize_object_file(const char *tmpfile, const char *filename)
- 	 */
- 	if (ret && ret != EEXIST) {
- 	try_rename:
--		if (!rename(tmpfile, filename))
-+		if (!stat(filename, &st))
-+			ret = EEXIST;
-+		else if (!rename(tmpfile, filename))
- 			goto out;
--		ret = errno;
-+		else
-+			ret = errno;
+ 	/*
+ 	 * Coda hack - coda doesn't like cross-directory links,
+@@ -1965,12 +1967,15 @@ int finalize_object_file(const char *tmpfile, const char *filename)
+ 		else
+ 			ret = errno;
  	}
- 	unlink_or_warn(tmpfile);
+-	unlink_or_warn(tmpfile);
  	if (ret) {
+ 		if (ret != EEXIST) {
++			int saved_errno = errno;
++			unlink_or_warn(tmpfile);
++			errno = saved_errno;
+ 			return error_errno(_("unable to write file %s"), filename);
+ 		}
+ 		/* FIXME!!! Collision check here ? */
++		unlink_or_warn(tmpfile);
+ 	}
+ 
+ out:
 -- 
 2.46.2.636.g4b83dd05e9f
 
