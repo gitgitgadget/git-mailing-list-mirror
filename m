@@ -1,67 +1,81 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C86D13D8A3
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 22:03:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C24146A87
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 22:03:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727215420; cv=none; b=ozvA8O8eo4ZRe4CIn6SJUOzYRWbiieA4rqqSL0yIMjAdolBA5uJAdF4Wm5XTegEYol3fhF9RTYFvDSfJNGikINZ8rJqDk+UWTryD2dejjsgCZDwfWxVecNM8L0ILuMDp5HmNBUOvWJgx+a0tChn5zhClvfamcqepPpF0TyIcHAQ=
+	t=1727215424; cv=none; b=CvVPdWl8riEgOXi7rgKFX0phoisd3OhaGRYVKUEpIB7Rj0Job3zs1+TAWi8qUYzngCb0+JyJ+jmmlEMVeu1LRrztzBiVmWWx0PVbROaeJR1fcKF7+MYm3wSPcDBQbnlJ9h6hNrpq+Cp+5Siq+kIeB24IqKHVxZMhuvayYhFtx6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727215420; c=relaxed/simple;
-	bh=dLkQTsmABzZhssm9F2ww4IFsPnYn1KAJzCrW49mZpkw=;
+	s=arc-20240116; t=1727215424; c=relaxed/simple;
+	bh=RMndvhznzi/zLUYY9N8TeOX6jYPNJepLKcnCYAot0cc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=it/C7WkEAvQcyr1qVTkc69Az6B21FOnKE7o7JKlAbQegwfhnYqA3e3z0X0drA+rz1Fo8rSP2XNqd+cSwXQOw0QhRf6lyKl6s605QbcJN40Nod0IR5dl14tOyRyk0+r+QsZPONc6f7fLdtroet+MqSvshzRUXxb+b7zTJhF314FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=dceDmVRV; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=uPlSJadHVVR4wBCBRQC/xSLjjnlC75bxzDsVcXhscAvPmQoEmbj4nxIv/ZpErJnL/MJru7PgrzuObs6un37e8EnmAo2n+/AhNv6iYcjM1hOTyTcRCLMc1OPiLLncBUxkh36LoI47lmcVbyuHmWyLRsmOre07+86f/c/71RDciH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DLcIiLry; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="dceDmVRV"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6db67400db4so56422317b3.1
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 15:03:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DLcIiLry"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-20546b8e754so29105ad.1
+        for <git@vger.kernel.org>; Tue, 24 Sep 2024 15:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727215417; x=1727820217; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=X8Iviz4T96drXtVlynP/ZagFpK1j9bRWZOqxKBj6SiQ=;
-        b=dceDmVRVy44xLE67xumJS5QJ/WNtYk/E7iuHRFsukzhESfrj+PS0dhQ5yRHdKaNr7X
-         Q9plkUT4S1WlsAigrT9pfXtE4XcCXedHvcN3MRF7Oh/wUcgPxDPHvt39+9Sc/c644CQW
-         /LiJj6kBIg7xzWqkgpX+JV8YReor6IC9LacZcTNolPApEkuegwnj1qsIg0yUs2hPNmVn
-         HdxbyypcurqcRVbsousGVDHAdE9toaZLGr1mVxhgDJSZc98fw9D2maDYKsCpKWraByju
-         qcOku6aTHBLn/LkxM4GjPbvNv/EiSlXhkaRwTJcGAEDObP8Lu4F6C5pKl5mP574fYvBs
-         ebUA==
+        d=google.com; s=20230601; t=1727215422; x=1727820222; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GWEz2Q6HK20fU0C8/DOFplDoFVZNx4V+x5pkLTOwyjE=;
+        b=DLcIiLryOpv+mC/jgOhdH8XFhJI/kfETeMVCDuSf98Ud/YDPueWtEJmG2MIkh/SdF+
+         GTgmc+PzQAhSuzyWF7PrOie1b+vEl4LZb5B1bciLu16STYkQxb5xITiavIuDrmmh5Htf
+         maymMATuINbkPG8VKnY4TsjjW69Hfv1iInnKJujXg+HBYiO0qh4xRVXQ7dzyDTTiUIEM
+         btRn55Pm2dwDtVYqcnx4Maqe2XmoWAZ2I6dOjQC+fSAT6bZEZJVDmIV/fJ7pavYmhIH0
+         gBEdQ+rpLULFr24p7gOKXoeuVTDIjKv4Idu8lBj2WeDRvPY/jx9jr40KGe9cgQ6SgtAG
+         R9Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727215417; x=1727820217;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X8Iviz4T96drXtVlynP/ZagFpK1j9bRWZOqxKBj6SiQ=;
-        b=DoMqikqZIkIGCwbcCGpDwlq+3zQG159pk/0wcHaJkpjbamuP0M5p/Eze3KI+otVfer
-         GmHfoPHHNHHhwdSAmJRsp1mQlYWfNBx+Y6kaSrEcJRRHlKVP2cDNuqS0FqYSN7BPpajh
-         c1sYVoou64zR44TUp5+8M5G0jqUswVyNZbj3uA6A0jL9qYehc51rHiIX+MRgnD7g/5DD
-         riehmXLRdDTgIBI2BzjRdy4ak/JapaKOVVyFWALNW6eUPMp1+zz2RNY45sfIyr9zqWZe
-         N57lqIFkUEpOpfCVqilA7bbSmJ5ebZDXAMqU1Jn6fQ4Qyw4hkUnzZTQg3dyr/7e3nqlQ
-         TUAg==
-X-Forwarded-Encrypted: i=1; AJvYcCVcglDCets4LMXfx50WMw8PCtdR6yz6sWv4CMVpRs8g0stKYkQmDcCbTfX8KeFLIsgq2ww=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwOTNYrHV7J7iUAz2/zz67m8xzMCgsboFfeWRIKBd+X8N5PpCSp
-	vfrEfDpwkXsKV2iZLA/0IJda809GkNPDLSB1qEUBX/5fw5wZWaa0/HXfOo/cnzs=
-X-Google-Smtp-Source: AGHT+IFRJMWKAu2F7S1mZXDkPBBk0VlD8ke2QiCBvF7ZW+fBjboedOypBLZ86m9VRlRT44pGPkhFfg==
-X-Received: by 2002:a05:690c:4910:b0:6e2:1062:9b90 with SMTP id 00721157ae682-6e21da19637mr10397797b3.44.1727215417219;
-        Tue, 24 Sep 2024 15:03:37 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e20d16fc34sm3950757b3.92.2024.09.24.15.03.36
+        d=1e100.net; s=20230601; t=1727215422; x=1727820222;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GWEz2Q6HK20fU0C8/DOFplDoFVZNx4V+x5pkLTOwyjE=;
+        b=p1B+BBPqReI1xEuetkPkj3uPbw67GS+b8IuEtCedj7ueSGV04yTOD4GlFdUPbVlo+g
+         wDfoHEJ13L1+/7Br7IJrv4NDNFg2IM+1xaCbcZDQ/5FEb+GUWYe/noj+BPRTXmcaRlLh
+         5VU/LmWaW2gWebS7W4fVdZjvW3k8jFVxVDM8XPD184LqcshnZrsBVtPQDOmPjBSUJLYI
+         VHe0QkBWj1S3MlvvyE4GmZIUXb6CCsGEXnSuI4fdfX2VIraabQhxbssz9u0/GkA54NdF
+         egbMhyPv+b4hWeU7W0hMtKMMSoViVdCU2OIUuAZxtEo61JDroU12upGiC5Au4TIk54H3
+         ZzVw==
+X-Forwarded-Encrypted: i=1; AJvYcCX1itmd1W6Xh/xTVT1q5ogVYE6SdsVF1VpmDNozcTGtUD4JKs5DdypKFeYMm6PbDvFfmu8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzbi0uremOb8QfiCSFx6QLG1UrROCyWpiMlpPNgBU2YN6LjJ3Jk
+	gMicQGhw/Zo7MVZPr8iotDRihkgqSu1Bw+PEj/tv3T2087aPe0LmHkxlwK2Y6A==
+X-Google-Smtp-Source: AGHT+IGIpZ3XlKcoqleQe+SBIjmWL2uBsCc6rk8kWh2Gnmd45hgdlWB7MaFaywdF2otwuw9e9ftVfA==
+X-Received: by 2002:a17:902:b182:b0:206:bf6e:6001 with SMTP id d9443c01a7336-20afdb9adbfmr239835ad.17.1727215421683;
+        Tue, 24 Sep 2024 15:03:41 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:88c1:de40:ff42:2e59])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e06e2d7a48sm24478a91.35.2024.09.24.15.03.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 15:03:36 -0700 (PDT)
-Date: Tue, 24 Sep 2024 18:03:35 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] git-jump: ignore deleted files in diff mode
-Message-ID: <ZvM3N3+JJNlkpZSa@nand.local>
-References: <20240915111119.GA2017770@coredump.intra.peff.net>
- <20240915112024.GB2017851@coredump.intra.peff.net>
- <ZulEwjnNQet6th8w@nand.local>
- <xmqqed5il3ui.fsf@gitster.g>
- <20240924205558.GC586150@coredump.intra.peff.net>
+        Tue, 24 Sep 2024 15:03:26 -0700 (PDT)
+Date: Tue, 24 Sep 2024 15:03:21 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Chris Torek <chris.torek@gmail.com>, 
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH v4 0/3] doc: introducing synopsis para
+Message-ID: <gfwncnuvogwawlvp7mr64xrar3xv7fmevy3n3puro25wubi6mq@qdt6qmqi3o5n>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>, 
+	Chris Torek <chris.torek@gmail.com>, 
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+References: <pull.1766.v3.git.1723389612.gitgitgadget@gmail.com>
+ <pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
+ <xmqqo74rxvw0.fsf@gitster.g>
+ <4ww5v253vz2g4i3z2x3dmgkrot7mcn2qm6ckjcxbyky6yvrozy@mr5hnrsfj6sn>
+ <xmqq34ltbkah.fsf@gitster.g>
+ <xmqqy13la5jb.fsf@gitster.g>
+ <CAPx1GvdfE+v-wV=gbTZJi6GvwGhw8NZcZHnEwj0K+YSTfMs4Kw@mail.gmail.com>
+ <xmqqh6a6496d.fsf@gitster.g>
+ <CAPig+cQgw8xf5bQaUEW=qvKQpnxrkiTrMsqa+VW9d_GX0au1sA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,47 +84,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240924205558.GC586150@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cQgw8xf5bQaUEW=qvKQpnxrkiTrMsqa+VW9d_GX0au1sA@mail.gmail.com>
 
-On Tue, Sep 24, 2024 at 04:55:58PM -0400, Jeff King wrote:
-> On Tue, Sep 17, 2024 at 08:03:33AM -0700, Junio C Hamano wrote:
->
-> > Taylor Blau <me@ttaylorr.com> writes:
-> >
-> > > On Sun, Sep 15, 2024 at 07:20:24AM -0400, Jeff King wrote:
-> > >> diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-> > >> index 78e7394406..3f69675961 100755
-> > >> --- a/contrib/git-jump/git-jump
-> > >> +++ b/contrib/git-jump/git-jump
-> > >> @@ -44,7 +44,7 @@ open_editor() {
-> > >>  mode_diff() {
-> > >>  	git diff --no-prefix --relative "$@" |
-> > >>  	perl -ne '
-> > >> -	if (m{^\+\+\+ (.*)}) { $file = $1; next }
-> > >> +	if (m{^\+\+\+ (.*)}) { $file = $1 eq "/dev/null" ? undef : $1; next }
+On 2024.09.23 14:14, Eric Sunshine wrote:
+> On Mon, Sep 23, 2024 at 12:38 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > Chris Torek <chris.torek@gmail.com> writes:
+> > > On Fri, Sep 20, 2024 at 11:24 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > >> The reason why I am curious is because https://ss64.com/mac/sed.html
+> > >> claims that -E works.
 > > >
-> > > I was surprised to not see you use `--diff-filter` here, but I think
-> > > that that makes sense. You only would want to exclude deletions, since
-> > > that would be the only time the post-image is /dev/null AFAICT.
+> > > It does for me, on my Mac, which is deliberately behind current: I am
+> > > still on Big Sur.
 > >
-> > So "--diff-filter=d" (lowercase)?
->
-> Hmm, yeah, I think that probably would work. In my mind, we are
-> accepting arbitrary diffs from the user because of the "$@". But anybody
-> who overrides us with
->
->   git jump diff --diff-filter=D
->
-> maybe gets what they want/deserve. I think it's mostly academic, and as
-> the original has already graduated, I'm inclined to leave it unless
-> somebody comes back with some use case.
+> > Josh, the topic has been cooking in 'next' long enough to graduate
+> > to 'master' without anybody else complaining.  Could you
+> > double-check and if possible see what is different in your
+> > environment from others?
+> >
+> > I can hold the topic in 'next' longer but not forever without
+> > progress.  Help from macOS folks (if it is macOS specific issue)
+> > is greatly appreciated.
+> 
+> I checked my High Sierra installation (macOS 10.13) which is even
+> older than Big Sur (macOS 11), and High Sierra's "sed" also
+> understands -E.
 
-Yeah, this is definitely all academic. I do not at all mind the
-implementation that you went with here.
-
-> (Sorry for the slow reply, I am quite behind due to travel last week).
-
-Hopefully your travel back went smoothly. Welcome back :-).
-
-Thanks,
-Taylor
+Hi folks, sorry for the false alarm and the delayed response. For some
+reason our build environment has a >decade old version of sed. I'm still
+tracking down why that is, but please do not hold back this topic any
+longer due to our out-of-date-ness. Sorry again!
