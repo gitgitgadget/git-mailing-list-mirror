@@ -1,65 +1,65 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75DE1AC89B
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 17:32:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6141AC424
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 17:32:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727199149; cv=none; b=e7EtjCOsIwFLRtzsBescQO1zF4KHG9hHs0dElEP1RdqD3Ob6ZyOWawUHCVY7oSNLHKTVyS0Bc8bAiJHo1yL1CAmKtsd2NH57ncTxcWMpk9jhsozPh/n/69T7YPRYoO0HAeGRB5INTm1dhnLtxQcM6gXCuqb0E1W+UAaYGb8jAS0=
+	t=1727199152; cv=none; b=LZSZ5pkBSA2Ijb4AG3dOLN4IXtQc8S+jpW+VTo5Zs+eogKUqzadCOhZPAcITjKyfNwMXYNoiqY9clH5ImcY2PBivO9rgBlGkSjSX02LMUF4nDOucEnW2jgP43d++rOBkY7zpsRUElXSpkubz1873Zo43a/mHXbhm/ccqsZq9ucg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727199149; c=relaxed/simple;
-	bh=PPR0KUGWoQXvQ9N5oCgYRCD4y+oNPgM+laGsMSi7wHU=;
+	s=arc-20240116; t=1727199152; c=relaxed/simple;
+	bh=b63aMYZVWbypZvi/m4XzJBZmH5tJUPBB/lQITUpb0yE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jlp2GGqmNgvOG5dgG6D689fDXUexwGUK7e0KvW2y2akDcY++Ltq4FuAMjPbXtpCKOQR88tbY8hc4qtmMWUvZlnsTh04Lwg5Thd8Cj3LG0W1fgSK3z00O6lEkAgl6AvbY8j5syHR2QDwHrKk5JZyJjwZmNc4aKD0eT157SW7BOC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=szwEM6bj; arc=none smtp.client-ip=209.85.219.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=poQhmTq/RZ/TF2mhDpiQekD60Fx+VJuRU72AHsgdNG6MfZkqw7lAdWKCvs056UKiv6ols/wxv10xPPZZ/kOZT7ekdOjXRbirXzfs84fXl9c65a2DKLhjcnYvqTCkIlkthwGxRkJlK2shPAjLTd333xHOORBgRjLoPsybUuA15LQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ChX7hMWW; arc=none smtp.client-ip=209.85.219.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="szwEM6bj"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e1a9dc3efc1so5800706276.2
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 10:32:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ChX7hMWW"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e1a989bd17aso5045324276.1
+        for <git@vger.kernel.org>; Tue, 24 Sep 2024 10:32:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727199146; x=1727803946; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727199149; x=1727803949; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BJjrakAcqMqCV9bvTcFxUPZIYP5wM6235OvJkaiITCQ=;
-        b=szwEM6bjOQH7sLTNnZboplVZzXTgbQ7MzH4SiCS43FYjkC+Qbaj6HN3hu8uHEuL9Tq
-         py9opeA1N9ZMoO9MnhmxSDvAO7isU848YiIrQCUNREnt4G0UZ3expIF/krBDhwOueAKe
-         lZoC2x1LNae3krXI2MIaLwXEs1eS04jdB1mzL+5zE4e00Kfp45rOBGH3NZhoTEKZRrV4
-         1nsnFCQ37/QsbTY/30frW401YthNUGGduBbsPjcOnsnvuqqqXyn6j4VDW4MbtiV4xQ/b
-         tBCeqOprp/r1r++TlvhJgrwuDCIh4HVFzRJ2OO+JwMUE2b/S3P/8BngLxq53NjpJ1QMO
-         MN2A==
+        bh=OAJw+96cLZL7uSh3byPCWym4U1G0sQPREeuewVhiFZQ=;
+        b=ChX7hMWW4Xr3RjjAoNmaRN6KWlaunORs/d8m7oq4VH34zM+Z949r9p/BN+1OKo2xjL
+         yV+G+dT1rqQwO+/TM/obKU3lCzUt9W1UU5lSF0g2rzcMEfyt/XJpOxCw2nLlpbD8sJlj
+         zy2/xQwXctrDKk7n0WbGOEHaNJaoSVnSq9QkT0A8Gy9utLPKFSVh37NEWHTMpEYWgnKS
+         Mw8yypWK5z7wRX+6eThp7p++uOzvlc3fuCip5wjnwFBNl+FhXf3j8riCyIIaR3W7jxjL
+         T7rDeaHnIWkF1XXhcJBqxrhjASzzaCnMbpJoSxpk97sHj7dFKo66PfDiElcPP6pO95Ud
+         L0kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727199146; x=1727803946;
+        d=1e100.net; s=20230601; t=1727199149; x=1727803949;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BJjrakAcqMqCV9bvTcFxUPZIYP5wM6235OvJkaiITCQ=;
-        b=eEYonFzBF1Q+em45iIWz6ysE9kN4+o8brNmmPufaoV8dIZ8+GpQTC6A+DrgoBQgTkv
-         q3k2fbfbTK0hqmqkFCqMy2vsSVSUzQGnLq1BuEIQsa9liYT57mJNNJLJX19IGW5pSZ5u
-         NyoOjpyXLKJsxtLU7ssrh4YaZ9uF4quFa+efNypa4AYSorrnx/dq0XY8Xo2K+ek9X+Y4
-         yZTXpKNYyEyEXTjNZJ1L12ExFLjgOxC0C1IbJuqll89747YzxyyDCM9BhVCE2t8oJXMN
-         tRkSmY7pCakfXGyZ4ZYqUJitYDql37F8Dfn/MMyAf7UiI1iBL/EDTFe8vNYFDiikbR+U
-         wK8A==
-X-Gm-Message-State: AOJu0YyL+oB5ocSTLtZpKxD67kwSonVxzXEIJR8MSDyR5B1DEjib9j9b
-	N9Qyx/t8VoxGX5L1a0OPF2qvNy0HCR4hYDLw0FIsJr4IBJiUts15H/v7/UClIB5p/zCwvbxqQaf
-	LtgE=
-X-Google-Smtp-Source: AGHT+IFp+hEFl10gUG9His5SMUdhGmNdKva2fU7PZsSoeICPVCU6+lSdH13KJKRdtKl+W2t+okGWcA==
-X-Received: by 2002:a05:690c:d83:b0:6e2:11e4:2f58 with SMTP id 00721157ae682-6e21d6ec5e2mr2138627b3.7.1727199146487;
-        Tue, 24 Sep 2024 10:32:26 -0700 (PDT)
+        bh=OAJw+96cLZL7uSh3byPCWym4U1G0sQPREeuewVhiFZQ=;
+        b=i7Z6hLcA1ivOfJJR3aX1Aeuvc9wq6g0MBwqFrOCH/uEgGsaKcnA0Oz+VQXyR0b111S
+         1aws89sFdOOG7vZcPsMKVz7YrKC46YdsbUcCeJMbR6UcS4BKxeFiKuZsocALTL2TeHGf
+         Exg26pXQuFMI+Z58jBgp4btx8MpWnPFBzYCCEK8M0+z1cgEh60FXgozVnYp8p8tZlWHv
+         T8fOYKskOoiY16C5wV7V53e9WkHgPgtJCgjoDmO0+hfIzaj5NH87k8BJccPtp8BYtMOZ
+         SX3QO/+xzKNidEVCIs9RSOYcF45quPHv1m1KcEZztRbrG9NWZEvNr0K1xvHUzmfiSlrJ
+         X4gQ==
+X-Gm-Message-State: AOJu0YzhRbe8PE7yzIXqMoyS/NeoktCbnLAi6HT53rw+6S8MVA+k8BXj
+	FooZqkB6O9k7kfaRdOsdD2//+2JbL1GBUd4STfYhhfxAx32iOxuS20TUEZcg60IOQmyGn4cpjXR
+	P5MA=
+X-Google-Smtp-Source: AGHT+IG8fhsGrrswbdUdYosu/Ge5BNoDAuEQmWrlKgAVJdK5096wL/JJ5z7jOg3c8MQEhyOVr5Ui4g==
+X-Received: by 2002:a05:6902:250a:b0:e1f:eb2b:5502 with SMTP id 3f1490d57ef6-e2250c3b434mr11405535276.13.1727199149664;
+        Tue, 24 Sep 2024 10:32:29 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e20cffe0f6sm3142427b3.25.2024.09.24.10.32.26
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2499c63d11sm317292276.42.2024.09.24.10.32.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 10:32:26 -0700 (PDT)
-Date: Tue, 24 Sep 2024 13:32:24 -0400
+        Tue, 24 Sep 2024 10:32:29 -0700 (PDT)
+Date: Tue, 24 Sep 2024 13:32:28 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 5/8] sha1: do not redefine `platform_SHA_CTX` and friends
-Message-ID: <8f8ac0f5b0e6ddc774b9108049d7f9c3310735f3.1727199118.git.me@ttaylorr.com>
+Subject: [PATCH v4 6/8] hash.h: scaffolding for _unsafe hashing variants
+Message-ID: <d300e9c68879faf837c65455e39b4aa07c1e1b03.1727199118.git.me@ttaylorr.com>
 References: <cover.1725206584.git.me@ttaylorr.com>
  <cover.1727199118.git.me@ttaylorr.com>
 Precedence: bulk
@@ -72,75 +72,193 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1727199118.git.me@ttaylorr.com>
 
-Our in-tree SHA-1 wrappers all define platform_SHA_CTX and related
-macros to point at the opaque "context" type, init, update, and similar
-functions for each specific implementation.
+Git's default SHA-1 implementation is collision-detecting, which hardens
+us against known SHA-1 attacks against Git objects. This makes Git
+object writes safer at the expense of some speed when hashing through
+the collision-detecting implementation, which is slower than
+non-collision detecting alternatives.
 
-In hash.h, we use these platform_ variables to set up the function
-pointers for, e.g., the_hash_algo->init_fn(), etc.
+Prepare for loading a separate "unsafe" SHA-1 implementation that can be
+used for non-cryptographic purposes, like computing the checksum of
+files that use the hashwrite() API.
 
-But while these header files have a header-specific macro that prevents
-them declaring their structs / functions multiple times, they
-unconditionally define the platform variables, making it impossible to
-load multiple SHA-1 implementations at once.
+This commit does not actually introduce any new compile-time knobs to
+control which implementation is used as the unsafe SHA-1 variant, but
+does add scaffolding so that the "git_hash_algo" structure has five new
+function pointers which are "unsafe" variants of the five existing
+hashing-related function pointers:
 
-As a prerequisite for loading a separate SHA-1 implementation for
-non-cryptographic uses, only define the platform_ variables if they have
-not already been defined.
+  - git_hash_init_fn unsafe_init_fn
+  - git_hash_clone_fn unsafe_clone_fn
+  - git_hash_update_fn unsafe_update_fn
+  - git_hash_final_fn unsafe_final_fn
+  - git_hash_final_oid_fn unsafe_final_oid_fn
+
+The following commit will introduce compile-time knobs to specify which
+SHA-1 implementation is used for non-cryptographic uses.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- block-sha1/sha1.h | 2 ++
- sha1/openssl.h    | 2 ++
- sha1dc_git.h      | 3 +++
- 3 files changed, 7 insertions(+)
+ hash.h        | 42 ++++++++++++++++++++++++++++++++++++++++++
+ object-file.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 84 insertions(+)
 
-diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
-index 9fb0441b988..47bb9166368 100644
---- a/block-sha1/sha1.h
-+++ b/block-sha1/sha1.h
-@@ -16,7 +16,9 @@ void blk_SHA1_Init(blk_SHA_CTX *ctx);
- void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *dataIn, size_t len);
- void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx);
+diff --git a/hash.h b/hash.h
+index 72ffbc862e5..96458b129f9 100644
+--- a/hash.h
++++ b/hash.h
+@@ -44,14 +44,32 @@
+ #define platform_SHA1_Final    	SHA1_Final
+ #endif
  
-+#ifndef platform_SHA_CTX
- #define platform_SHA_CTX	blk_SHA_CTX
- #define platform_SHA1_Init	blk_SHA1_Init
- #define platform_SHA1_Update	blk_SHA1_Update
- #define platform_SHA1_Final	blk_SHA1_Final
++#ifndef platform_SHA_CTX_unsafe
++#  define platform_SHA_CTX_unsafe      platform_SHA_CTX
++#  define platform_SHA1_Init_unsafe    platform_SHA1_Init
++#  define platform_SHA1_Update_unsafe  platform_SHA1_Update
++#  define platform_SHA1_Final_unsafe   platform_SHA1_Final
++#  ifdef platform_SHA1_Clone
++#    define platform_SHA1_Clone_unsafe platform_SHA1_Clone
++#  endif
 +#endif
-diff --git a/sha1/openssl.h b/sha1/openssl.h
-index 006c1f4ba54..1038af47daf 100644
---- a/sha1/openssl.h
-+++ b/sha1/openssl.h
-@@ -40,10 +40,12 @@ static inline void openssl_SHA1_Clone(struct openssl_SHA1_CTX *dst,
- 	EVP_MD_CTX_copy_ex(dst->ectx, src->ectx);
++
+ #define git_SHA_CTX		platform_SHA_CTX
+ #define git_SHA1_Init		platform_SHA1_Init
+ #define git_SHA1_Update		platform_SHA1_Update
+ #define git_SHA1_Final		platform_SHA1_Final
+ 
++#define git_SHA_CTX_unsafe	platform_SHA_CTX_unsafe
++#define git_SHA1_Init_unsafe	platform_SHA1_Init_unsafe
++#define git_SHA1_Update_unsafe	platform_SHA1_Update_unsafe
++#define git_SHA1_Final_unsafe	platform_SHA1_Final_unsafe
++
+ #ifdef platform_SHA1_Clone
+ #define git_SHA1_Clone	platform_SHA1_Clone
+ #endif
++#ifdef platform_SHA1_Clone_unsafe
++#  define git_SHA1_Clone_unsafe platform_SHA1_Clone_unsafe
++#endif
+ 
+ #ifndef platform_SHA256_CTX
+ #define platform_SHA256_CTX	SHA256_CTX
+@@ -81,6 +99,13 @@ static inline void git_SHA1_Clone(git_SHA_CTX *dst, const git_SHA_CTX *src)
+ 	memcpy(dst, src, sizeof(*dst));
+ }
+ #endif
++#ifndef SHA1_NEEDS_CLONE_HELPER_UNSAFE
++static inline void git_SHA1_Clone_unsafe(git_SHA_CTX_unsafe *dst,
++				       const git_SHA_CTX_unsafe *src)
++{
++	memcpy(dst, src, sizeof(*dst));
++}
++#endif
+ 
+ #ifndef SHA256_NEEDS_CLONE_HELPER
+ static inline void git_SHA256_Clone(git_SHA256_CTX *dst, const git_SHA256_CTX *src)
+@@ -178,6 +203,8 @@ enum get_oid_result {
+ /* A suitably aligned type for stack allocations of hash contexts. */
+ union git_hash_ctx {
+ 	git_SHA_CTX sha1;
++	git_SHA_CTX_unsafe sha1_unsafe;
++
+ 	git_SHA256_CTX sha256;
+ };
+ typedef union git_hash_ctx git_hash_ctx;
+@@ -222,6 +249,21 @@ struct git_hash_algo {
+ 	/* The hash finalization function for object IDs. */
+ 	git_hash_final_oid_fn final_oid_fn;
+ 
++	/* The non-cryptographic hash initialization function. */
++	git_hash_init_fn unsafe_init_fn;
++
++	/* The non-cryptographic hash context cloning function. */
++	git_hash_clone_fn unsafe_clone_fn;
++
++	/* The non-cryptographic hash update function. */
++	git_hash_update_fn unsafe_update_fn;
++
++	/* The non-cryptographic hash finalization function. */
++	git_hash_final_fn unsafe_final_fn;
++
++	/* The non-cryptographic hash finalization function. */
++	git_hash_final_oid_fn unsafe_final_oid_fn;
++
+ 	/* The OID of the empty tree. */
+ 	const struct object_id *empty_tree;
+ 
+diff --git a/object-file.c b/object-file.c
+index b9a3a1f62db..196c9e2df8b 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -115,6 +115,33 @@ static void git_hash_sha1_final_oid(struct object_id *oid, git_hash_ctx *ctx)
+ 	oid->algo = GIT_HASH_SHA1;
  }
  
-+#ifndef platform_SHA_CTX
- #define platform_SHA_CTX openssl_SHA1_CTX
- #define platform_SHA1_Init openssl_SHA1_Init
- #define platform_SHA1_Clone openssl_SHA1_Clone
- #define platform_SHA1_Update openssl_SHA1_Update
- #define platform_SHA1_Final openssl_SHA1_Final
-+#endif
- 
- #endif /* SHA1_OPENSSL_H */
-diff --git a/sha1dc_git.h b/sha1dc_git.h
-index 60e3ce84395..f6f880cabea 100644
---- a/sha1dc_git.h
-+++ b/sha1dc_git.h
-@@ -18,7 +18,10 @@ void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
- void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
- 
- #define platform_SHA_IS_SHA1DC /* used by "test-tool sha1-is-sha1dc" */
++static void git_hash_sha1_init_unsafe(git_hash_ctx *ctx)
++{
++	git_SHA1_Init_unsafe(&ctx->sha1_unsafe);
++}
 +
-+#ifndef platform_SHA_CTX
- #define platform_SHA_CTX SHA1_CTX
- #define platform_SHA1_Init git_SHA1DCInit
- #define platform_SHA1_Update git_SHA1DCUpdate
- #define platform_SHA1_Final git_SHA1DCFinal
-+#endif
++static void git_hash_sha1_clone_unsafe(git_hash_ctx *dst, const git_hash_ctx *src)
++{
++	git_SHA1_Clone_unsafe(&dst->sha1_unsafe, &src->sha1_unsafe);
++}
++
++static void git_hash_sha1_update_unsafe(git_hash_ctx *ctx, const void *data,
++				      size_t len)
++{
++	git_SHA1_Update_unsafe(&ctx->sha1_unsafe, data, len);
++}
++
++static void git_hash_sha1_final_unsafe(unsigned char *hash, git_hash_ctx *ctx)
++{
++	git_SHA1_Final_unsafe(hash, &ctx->sha1_unsafe);
++}
++
++static void git_hash_sha1_final_oid_unsafe(struct object_id *oid, git_hash_ctx *ctx)
++{
++	git_SHA1_Final_unsafe(oid->hash, &ctx->sha1_unsafe);
++	memset(oid->hash + GIT_SHA1_RAWSZ, 0, GIT_MAX_RAWSZ - GIT_SHA1_RAWSZ);
++	oid->algo = GIT_HASH_SHA1;
++}
+ 
+ static void git_hash_sha256_init(git_hash_ctx *ctx)
+ {
+@@ -189,6 +216,11 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 		.update_fn = git_hash_unknown_update,
+ 		.final_fn = git_hash_unknown_final,
+ 		.final_oid_fn = git_hash_unknown_final_oid,
++		.unsafe_init_fn = git_hash_unknown_init,
++		.unsafe_clone_fn = git_hash_unknown_clone,
++		.unsafe_update_fn = git_hash_unknown_update,
++		.unsafe_final_fn = git_hash_unknown_final,
++		.unsafe_final_oid_fn = git_hash_unknown_final_oid,
+ 		.empty_tree = NULL,
+ 		.empty_blob = NULL,
+ 		.null_oid = NULL,
+@@ -204,6 +236,11 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 		.update_fn = git_hash_sha1_update,
+ 		.final_fn = git_hash_sha1_final,
+ 		.final_oid_fn = git_hash_sha1_final_oid,
++		.unsafe_init_fn = git_hash_sha1_init_unsafe,
++		.unsafe_clone_fn = git_hash_sha1_clone_unsafe,
++		.unsafe_update_fn = git_hash_sha1_update_unsafe,
++		.unsafe_final_fn = git_hash_sha1_final_unsafe,
++		.unsafe_final_oid_fn = git_hash_sha1_final_oid_unsafe,
+ 		.empty_tree = &empty_tree_oid,
+ 		.empty_blob = &empty_blob_oid,
+ 		.null_oid = &null_oid_sha1,
+@@ -219,6 +256,11 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 		.update_fn = git_hash_sha256_update,
+ 		.final_fn = git_hash_sha256_final,
+ 		.final_oid_fn = git_hash_sha256_final_oid,
++		.unsafe_init_fn = git_hash_sha256_init,
++		.unsafe_clone_fn = git_hash_sha256_clone,
++		.unsafe_update_fn = git_hash_sha256_update,
++		.unsafe_final_fn = git_hash_sha256_final,
++		.unsafe_final_oid_fn = git_hash_sha256_final_oid,
+ 		.empty_tree = &empty_tree_oid_sha256,
+ 		.empty_blob = &empty_blob_oid_sha256,
+ 		.null_oid = &null_oid_sha256,
 -- 
 2.46.2.636.g4b83dd05e9f
 
