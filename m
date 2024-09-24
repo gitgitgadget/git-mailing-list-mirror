@@ -1,162 +1,110 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5ADA1AB6E6
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 15:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F251ABEA8
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 16:06:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727191808; cv=none; b=X6jQpAvbGChOwAOQchZiEeLz/F0WH2HJp6cbvTh0p/BEcCpkJXaTxwClFk9bIwETXs+/jCLZTeYITHGb+Y6mZSIXJheigo82hI4cRF5aC4NMwUviu+UdU4vyiINjHmCrtLrKf9j5JEuHCvo27EuBlqOvuxuf3WrkrH4v+JGaiyA=
+	t=1727193965; cv=none; b=Gdkk0bk0RIGUPTe4tmFlDSjDspTKp48UI7b7PFTbZ/5TqBY15LLqThJ71bWy1cstGOxpAU/0d56xUaRrGNPRU4cwV6iTmkctUOVWhfyf5HXatyeTFzGl76DPVFgIfiI4dI2CidKW84+irNrs0cEnobeYD9wWWIWlQfTZimCdkzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727191808; c=relaxed/simple;
-	bh=Q+Ge1Y8yT5a9yTrSVyznMzAS/W7bduflkY969fxnL1Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ccl9OItH4Cx5albYv+gOFw7JvREjNEiCasN5yIUSQcdmqB7/WpTx18i3E9+L2lcjBaZCBovf0BpPypG5yZ3E1EvYMUhJUnegnkeL0GWazU5JnCP+0w7XUqqPRqSM/k2IlFtMhGe6r40o4Z9qezuM33DlX1SeRiOZ26YEkfrhQM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QDISETj/; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727193965; c=relaxed/simple;
+	bh=Vs7mSIKCma409vEgPtrXxf1/GC8xtVN13g5Uz7EhSJw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZeDixIiSCJZCCOU57KoPNrVaNrack5eCCiBgT7lK9W+dHbGbOnqrhh0HwR+OizREivyfQn8Pksq2Khb7FtqhipaDOq8hI5KC98M5D9rwO3sKqDxYct92ge+Aw6mG0nArQzGSj/bfEbk1BAcNpXPe76UiPb/qHsesk1Elg51GEZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=j6OSX+RL; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QDISETj/"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5c275491c61so7530814a12.0
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 08:30:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727191805; x=1727796605; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GJmAbRVs4lW9AU/gaqdk25CYKGOa2LxCaZLWxynjMug=;
-        b=QDISETj/pMTT1Kg1Zdm88sjT4/lv77g8eyrOzI4i3DpdgvpCzVl6oWH9+LC2h6+ASR
-         46Q4q8CjB1cZaM3oVzDh1FhyoGFggs5lmDlBWaGhlzqsz7UbOZGSFu52nklKsLpkulQu
-         uK62Z4ncRz56PcewZ26UmYjuVd2d7gfgXkUkpRizkiYZMUhqikAHDNoS0MVJa4M0jpWJ
-         t6fGN6lbZa+fhyI6LjRhFEtzxSZFRzPNw6f8WyiAyfXn/y3AUuq/2EuEgMKu9pmje3kT
-         D3T+IHJfQR1WiXhYrNsHQxxzRyCcRUBdpm+9/Qkhio2hDUPHJK8BawAhPbr3TjgM8NyH
-         Vy9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727191805; x=1727796605;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GJmAbRVs4lW9AU/gaqdk25CYKGOa2LxCaZLWxynjMug=;
-        b=gPXbt4Ah+akq3TO2Cj33q+5fXdqJxfKoBr6odfK57XSxrMk7Apog/HLdu3i5HI7j8l
-         Nk5i/9s3YC64BUtzOg5PCTx54hEoun66CWtXqZLtlfpH5t0iuafgjMNPLSEWi56RxxAC
-         G5FrqcXXMbsJAdJp/M1gIHfkMqciozhs6a9qjFtnMU3oJF1+UIB5dXh/VfhzZ9GFCdmS
-         FOqux/ud0z2PQeawmZ9rvpskrbS+SdCSH91RPlGQhAgVxr6DirTI2+evsEG62d2zI97O
-         D3PrRdJYXYW2cgeF5pIUtT+JJbEnSeLwhoXylUC+zRvqrq9jtsQgx8MqxNO9jpNcCDyn
-         l1xQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXtcEkmSHPDjAXBdZ3jl6cbs6RrCihYfYIuevx7L0CpPkdxMDYENhbvSHO8Twn7OxNlMmY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKqQ6byLxbHRc4/QVacUlrFu02777JrbsfdV4O9WCNPqd6iiLZ
-	LF+mXhBDIha/6x2OHvav43RZn2YnEC16Q2iE80ahO8KEZO6qLrZ5XMJO+Q==
-X-Google-Smtp-Source: AGHT+IFuC1cPpzRoEE8YBEQKvqcG0lr7hwaHccYNfJCOoQLYX1LxtjILYpVVVV2Spz5B7GT19vydlA==
-X-Received: by 2002:a17:907:d2e3:b0:a90:41a5:bb58 with SMTP id a640c23a62f3a-a90d5611798mr1396348266b.16.1727191804601;
-        Tue, 24 Sep 2024 08:30:04 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93930f0b23sm97297166b.144.2024.09.24.08.30.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Sep 2024 08:30:04 -0700 (PDT)
-Message-ID: <18d732da-ad34-4a45-b59f-cf2cb3c7238b@gmail.com>
-Date: Tue, 24 Sep 2024 16:30:03 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="j6OSX+RL"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 79DE7194EF;
+	Tue, 24 Sep 2024 12:05:58 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Vs7mSIKCma409vEgPtrXxf1/GC8xtVN13g5Uz7
+	EhSJw=; b=j6OSX+RLZLX5TpETtlfAsPVtsZ9kuYwbPeZHx0YJyD4mfSduh0iTuA
+	L1UyyK/B8GB2D9xh8QVBeb4M33P85ML91FHvWP56tWm971MOgeDOomWgpNV6+jqD
+	h0kz0QZ619YRDYLX0jxZKzfW2ifXReaoR7hmnehznkv+p+ky84xf0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6895C194EE;
+	Tue, 24 Sep 2024 12:05:58 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A6C27194ED;
+	Tue, 24 Sep 2024 12:05:57 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Ronan Pigott <ronan@rjp.ie>,  shejialuo
+ <shejialuo@gmail.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 1/2] t1305: exercise edge cases of "onbranch" includes
+In-Reply-To: <615df98339e9451bc237decea087716ca15d157d.1727171197.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Tue, 24 Sep 2024 12:05:42 +0200")
+References: <1b9fb3f3fde62594b9ac999ffb69e6c4fb9f6fd6@rjp.ie>
+	<cover.1727171197.git.ps@pks.im>
+	<615df98339e9451bc237decea087716ca15d157d.1727171197.git.ps@pks.im>
+Date: Tue, 24 Sep 2024 09:05:56 -0700
+Message-ID: <xmqqed59vxy3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [TOPIC 01/11] Rust
-To: rsbecker@nexbridge.com, 'Sean Allred' <allred.sean@gmail.com>
-Cc: 'Taylor Blau' <me@ttaylorr.com>, git@vger.kernel.org
-References: <Zu2DmS30E0kKug2a@nand.local> <Zu2D/b1ZJbTlC1ml@nand.local>
- <053f01db0b79$0d885b30$28991190$@nexbridge.com>
- <m0v7ynm7h0.fsf@epic96565.epic.com>
- <00a501db0db2$94d505d0$be7f1170$@nexbridge.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <00a501db0db2$94d505d0$be7f1170$@nexbridge.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E2934716-7A8E-11EF-9E47-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Hi Randall
+Patrick Steinhardt <ps@pks.im> writes:
 
-On 23/09/2024 13:17, rsbecker@nexbridge.com wrote:
-> On September 22, 2024 10:26 PM, Sean Allred wrote:
-> 
-> The GCC dependency, which does not currently exist in git, is independent of
-> Rust. > Rust has its own rules and runtime. The issue here is that the Rust team
-> gets to
-> decide what platforms can participate, NOT the platform maintainers. No
-> matter
-> what my intent, or resources, I cannot get the Rust team to "Allow" a port.
-> In
-> many ways, this is egregious and is a policy issue entirely on Rust, not us.
-> We
-> want to do a Rust port but are simply not allowed/approved. It is their
-> policy.
+> +test_expect_success 'onbranch without repository' '
+> +	test_when_finished "rm -f .gitconfig config.inc" &&
+> +	git config set -f .gitconfig "includeIf.onbranch:**.path" config.inc &&
+> +	git config set -f config.inc foo.bar baz &&
 
-I'm hearing that there is a fundamental incompatibility between some 
-aspect of the NonStop platform and rust's requirements for supported 
-platforms. Does that mean it is likely that rust will never be available 
-on NonStop?
+This assumes that the $(pwd) is the $HOME; so .gitconfig is the
+per-user configuration that ought to apply everywhere; since
+includeIf.<condition>.path that is relative is relative to the
+including file, config.inc would be in cluded when the condition
+holds in $HOME/.gitconfig.  OK.
 
-> I agree that it is not a good policy to never add new dependencies. However,
-> Dependencies must be reasonable and give the platforms a chance, at least,
-> to adapt. We cannot in the case of Rust. The problem is not actually that we
-> can
-> do without new features that are in Rust but not C. The problem is when
-> there
-> are CVEs. Suppose a severe CVE happens that is fixed in a Rust component but
-> referenced by a C component or somehow intertwined. The fix to the CVE
-> becomes unavailable and git gets thrown off the platform. That is the
-> reality
-> of how insidious CVEs are when it meets corporate policy. I am primarily
-> trying
-> to protect from that.
+> +	git config get foo.bar &&
 
-In that scenario there is nothing preventing a different fix being 
-implemented for an older version of git running on a platform that does 
-not support rust. It's likely that such a fix would need to come from 
-the community using that platform rather than upstream which would 
-represent an additional cost for users that have previously been relying 
-on the upstream to provide security updates.
+This assumes that the $(pwd) that is $HOME is a valid repository,
+and checks if includeIf.onbranch works from within a repository.
+OK.
 
-> Telling 10-20000 users that their core bit of infrastructure is insecure and
-> not fixable
-> is not a tenable position. However, it is hard to defend the community when
-> the git
-> team is hell-bent on this particular decision. What do you need to
-> understand here?
-> It is a small community with a large number of users in key financial
-> institutions that
-> have a very conservative adoption policy and an even more conservative
-> hardware
-> vendors.
+> +	test_must_fail nongit git config get foo.bar
+> +'
 
-I'm struggling to understand why such a conservative community needs 
-access to the latest version of git. I'd have thought that key financial 
-institutions should be able to fund someone to backport security updates 
-to their critical systems.
+> +test_expect_failure 'onbranch without repository but explicit nonexistent Git directory' '
+> +	test_when_finished "rm -f .gitconfig config.inc" &&
+> +	git config set -f .gitconfig "includeIf.onbranch:**.path" config.inc &&
+> +	git config set -f config.inc foo.bar baz &&
 
-> Again, it is not the gcc dependency. We have been coping with c99 and will
-> have c11
-> shortly. It is Rust itself that is exclusionary. It might be easier to write
-> new
-> functionality in Rust - it is easier in Java, Perl, and Python too. Why
-> Rust? Because
-> someone wants it, not because you cannot implement the functionality.
+The same set-up.
 
-It may be true in theory that anything one can write in rust could be 
-written in C instead but in I'm not sure it is true in practice. In 
-previous discussions multi-threading has been mentioned as an example of 
-something that is sufficiently difficult to get right in C that 
-contributors are not willing to implement whereas they would be happy to 
-do so in rust.
+> +	git config get foo.bar &&
+> +	test_must_fail nongit git --git-dir=nonexistent config get foo.bar
 
-I believe that those advocating for using rust are doing so because they 
-believe it will benefit both contributors and users. The problem we have 
-to wrestle with is whether those benefits outweigh the cost to the 
-relatively small proportion of users who do not have access to rust on 
-their platform.
+It has to work when $(pwd) is outside a repository, but is "nongit"
+strictly necessary?  IOW, even when we _could_ discover the top
+level of a git-controlled working tree, wouldn't presence of --git-dir
+that points at elsewhere make $(pwd) and the repository there irrelevant
+to the operation?
 
-Best Wishes
+I am not suggesting to just drop "nongit" from this test.  I am
+wondering if this is better split into two tests, with and without
+"nongit" to test different situations.
 
-Phillip
+> +'
+> +
+>  test_done
+
+Other than that, looks like good additions to the test coverage.
+
+Thanks.
