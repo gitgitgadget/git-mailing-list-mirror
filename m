@@ -1,205 +1,102 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fallback22.i.mail.ru (fallback22.i.mail.ru [79.137.243.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E673FE55
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 14:31:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5722023DE
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 15:07:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727188274; cv=none; b=ArQhxUXiFg1jZr66VxF1p4Os4/+FXkH/8We7uMevOuogm9T+r28GRSzI+vbdXYUQ9XDEcwofMD/83y4bwUNZw1HuHgHilprpooFbTLtPUqkFFQy8ysr9+5yhMkVmIIruHF63gpcOI+mnr2B0AYj8oNR9zbjpctVO+Wi5CYLkaQ4=
+	t=1727190445; cv=none; b=MV95NjNofXFydzduSfc95uyWQFc0ozAGfew244h2kR65U3cdeBzjk3aeWadlR584iGq/nvkLdJIC10QW0WqpYnkhooLFMs7dvABpyTBow4i2ycQmDO7ewlrwZQm0BWSvcv0zs0R9f5t12u2tCbBSm1ISFPEjrX6gva2N4P5fHC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727188274; c=relaxed/simple;
-	bh=vnyhYNSYlfyXlRYSXSQqAsRU01Qdzy0qb9IWCJVJrqQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YZffLTLVp5J4NXidrvEh2bSZFLsMb/bvNNyn+MPu1twisCb6e+p++4qPVVmlhYn5s26WF9RgECp8fqR8dBkAwVVC71DIpqx5jwpM1GrcKwCoNb8YDDu+Wt6Q4YR8ZnOf/Wc0Rz7W3kH8r2b5t5dsr4gUn5sby/v3mdH6gKJQDZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bwRuixHA; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727190445; c=relaxed/simple;
+	bh=UpchHWYyAMVZcW8/GpgCPSqISKi584luTeoSXz4vu4E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NLDG8C/GJ0jcqyh9O+WFGOzujtkOWJU14YvPqy0+JZol7ah8bg4EWVDww8Iyo8OMJ/KDCTiY22PgotoJeWu5Mk+yZBapI7Oqsl3EeGthsylvcub0eQS6Z+9zF1RhxY6VmD0itAdhnGJrKZcvmk7KtpE9qRw1l93wGR6Cfbao8O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru; spf=pass smtp.mailfrom=bswap.ru; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=r33FpkKM; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=db6BJstr; arc=none smtp.client-ip=79.137.243.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bswap.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bwRuixHA"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7ac83a98e5eso468286685a.0
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 07:31:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727188271; x=1727793071; darn=vger.kernel.org;
-        h=in-reply-to:autocrypt:from:content-language:references:cc:to
-         :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=vnyhYNSYlfyXlRYSXSQqAsRU01Qdzy0qb9IWCJVJrqQ=;
-        b=bwRuixHAjr5m9/0XmpJ40r0mf/i6HwR8mG4x8IGji7UusYiUyRHdLE31YQ1OELIMLi
-         oKGeMFoSKLbRytau6BtEXy7JUtgBcZdk7HN/iUZtB+8rHn7dH+xu2CV0lHYxB6UADjdy
-         x+hCHWUMrCCDnpvOj8wClWSY0tl6GaUOCXbeIFDJaVtvEyzS5htu/WlK1zimgT7pCckt
-         V7i3yUmrKgKkg1/6m9kFdym4PtFByo9E91QtuPOHvPpzf9WV4+Ti4Sev3jlafIfQiNB+
-         O7Zm/MvircrCfa+jdMl6f2voxQz6H8Q8CrhrC6W9riiXjTp1l/Fb1fHeKlt8x1DGYE0t
-         FOdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727188271; x=1727793071;
-        h=in-reply-to:autocrypt:from:content-language:references:cc:to
-         :subject:user-agent:mime-version:date:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vnyhYNSYlfyXlRYSXSQqAsRU01Qdzy0qb9IWCJVJrqQ=;
-        b=syDCpnKBm9QSrUl3YRBuB/vaX9pI89rZii/G0yMK6nbvTojizKAt4JMKLkrbTm177G
-         oK+e0+6xgPhgX0pHQyXBlsYD8Q470bmrjDpXH8bpMSO5zcN5ZlrpEjBysYOzR1imeM7W
-         hY+dvIQalcaEhbpz4mvjKYZPjj/OhZHGxisoymHRFn4My7lWdlnloYtwTPgPUMPga5FS
-         y+Rj6+mtlzbSTpECbmn92j9OTE2XVT3BSjWN9vlHR3zgY7FotV45dA7Z+rJTw865sPW7
-         HwZ92vr4PpLfq00X8U1NWLnTYknYZ/jzBsnZntTsT+n+ozr/JGQ4ce+UJHk/80MrSElj
-         /T1g==
-X-Gm-Message-State: AOJu0YzZlATofEKIzvpXBfFoagK6aIZqh/KePFO63Op+GRQz8J3SA24m
-	9K/wfB5EEsExzxwavoAqV+aLksPwJ85ftJSn4pVUXSHEUz05JneD
-X-Google-Smtp-Source: AGHT+IHtWmyCdmNatzl39fPxBgs4m4aK6JU69JDt/TNFEKlMisjqxGp7roxsT5+ziHtR17E7pjNhQQ==
-X-Received: by 2002:a05:620a:2904:b0:7a9:b250:d587 with SMTP id af79cd13be357-7acdcd5c2c6mr536931585a.7.1727188271214;
-        Tue, 24 Sep 2024 07:31:11 -0700 (PDT)
-Received: from ?IPV6:2603:6011:3f0:6f00::12ac? ([2603:6011:3f0:6f00::12ac])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7acde5cdc70sm73191885a.90.2024.09.24.07.31.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Sep 2024 07:31:09 -0700 (PDT)
-Message-ID: <b28b1256-01bc-46a3-8338-e47f2301eccf@gmail.com>
-Date: Tue, 24 Sep 2024 10:31:08 -0400
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="r33FpkKM";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="db6BJstr"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=/vox540iM2T1Nc10TakddXjVb7nkpYxQm0yPBkULKtA=;
+	t=1727190440;x=1727280440; 
+	b=r33FpkKM6xxJhbSnhJmiolOfz7baKRRK0qOW89zYoirSV1dxf+Hlz35xd1GV92KIy0JYOlaE8WjDATvrf7JRiBchrqsUt3T6s887KwhEksS9sxWzcF+Scm7wHBD29xxm9w71RZorqaT3ww/BGFDfXv7wedUTCxDN7wFd4EoD82c=;
+Received: from [10.12.4.5] (port=33828 helo=smtp31.i.mail.ru)
+	by fallback22.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
+	id 1st6PP-00FnIE-RU
+	for git@vger.kernel.org; Tue, 24 Sep 2024 17:20:56 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:From:Sender:Reply-To:To:Cc:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=/vox540iM2T1Nc10TakddXjVb7nkpYxQm0yPBkULKtA=; t=1727187655; x=1727277655; 
+	b=db6BJstrsG3vl8zzX1/t/GE/SmRSDzR1MFG9gx4quObDNR45IdTpZiJus/0EFe2Uk5lXz3we/ou
+	YK8fPPQDPMPvlWeXb69phNhCbj2hkW41v5IWvgus3whDUmiN9yJ5n9uXA2liIxKBUUHc9w+hJNO2M
+	ngc04SnMgGzcXpXna48=;
+Received: by smtp31.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+	id 1st6PG-00000002SOs-490J; Tue, 24 Sep 2024 17:20:47 +0300
+Date: Tue, 24 Sep 2024 17:20:46 +0300
+From: Konstantin Khomoutov <kostix@bswap.ru>
+To: Krishna Vivek Vitta <kvitta@microsoft.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Git clone failure
+Message-ID: <20240924142046.6wkhwnfd5vp5wh3y@carbon>
+Mail-Followup-To: Krishna Vivek Vitta <kvitta@microsoft.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <SI2P153MB071833367C62DD94C96CF1F7D46F2@SI2P153MB0718.APCP153.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: ./configure fails to link test program due to missing
- dependencies
-To: Junio C Hamano <gitster@pobox.com>,
- Henrik Holst <henrik.holst@outlook.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
- <xmqqldzsrhyp.fsf@gitster.g>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz93@gmail.com>
-Autocrypt: addr=eschwartz93@gmail.com; keydata=
- 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
-In-Reply-To: <xmqqldzsrhyp.fsf@gitster.g>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------ko3jYA7h6adox686MSyPr0es"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SI2P153MB071833367C62DD94C96CF1F7D46F2@SI2P153MB0718.APCP153.PROD.OUTLOOK.COM>
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD968D81A599CAF0ABB4BC9CF30C36938C9DD6F5139EAB5B156182A05F53808504094DBCF2826EFF87DF378A8CA21F699D63484AC5D780DD367ECBEE71F5DB76FAC3E51E86926A75756
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE70043D879A87EF1BCEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637B3D52627AD81B52CEA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38B043BF0FB74779F36895AF38002A46AE6C28259034C20D6122D7E5507C79EDA9AA471835C12D1D9774AD6D5ED66289B5259CC434672EE6371117882F4460429724CE54428C33FAD30A8DF7F3B2552694AC26CFBAC0749D213D2E47CDBA5A9658378DA827A17800CE77A825AB47F0FC8649FA2833FD35BB23DF004C90652538430302FCEF25BFAB3454AD6D5ED66289B5278DA827A17800CE76F7D1A8C7E90C721D32BA5DBAC0009BE395957E7521B51C2330BD67F2E7D9AF1090A508E0FED6299176DF2183F8FC7C0207D9C0C136568F0CD04E86FAF290E2DB606B96278B59C421DD303D21008E29813377AFFFEAFD269176DF2183F8FC7C0C70DDB8F70474A6A68655334FD4449CB33AC447995A7AD185E1C53F199C2BB95D5E8D9A59859A8B6B0CB1F27BAEB05A8089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
+X-C1DE0DAB: 0D63561A33F958A5532E2ACB60FD56085002B1117B3ED696E214045DD0AA262472305013E4AE841E823CB91A9FED034534781492E4B8EEAD21D4E6D365FE45D1BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D349BD6FB698A487E7E6FE43A200311B4B5F4A1701320799859EF9253E483804D579115287C6773B5BB1D7E09C32AA3244CFE8A9FA9FF6100D086B83C6DB07BF3AEC73F8B4A05B22A1EEA455F16B58544A2E30DDF7C44BCB90D3871D1C702CBDB0A9665A0FD7AD89E8F722DFA761B3F797A
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojamSMdo1tbG8iWDceqmG7Sw==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138A99CE53F7366D3AE91CF6C6A8F7D6EF6181E637B5C3901D806F365114516B2B62F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
+X-Mras: Ok
+X-7564579A: B8F34718100C35BD
+X-77F55803: 6242723A09DB00B414E2BB1FC3DCCE2F9FB006BFDF93B86C99711E96F15ACF5F049FFFDB7839CE9EF2D76237B8270AB355C1B631C30B6A42BE35011AFE73FAC9FF1223046EA3BD0B
+X-7FA49CB5: 0D63561A33F958A57D9458A89BA2BC58EB61F73854EA227312E1ED363887C6C08941B15DA834481FA18204E546F3947CF8BD4E506CFA3D88F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F79006379BABF3D50D9A3D87389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C3AE03C408E24EC37035872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojamSMdo1tbG9IxGWvxmUgFQ==
+X-Mailru-MI: 8000000000000800
+X-Mras: Ok
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------ko3jYA7h6adox686MSyPr0es
-Content-Type: multipart/mixed; boundary="------------oFgsZSLyeSuM14N2WRVnjWjx";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz93@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
- Henrik Holst <henrik.holst@outlook.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <b28b1256-01bc-46a3-8338-e47f2301eccf@gmail.com>
-Subject: Re: ./configure fails to link test program due to missing
- dependencies
-References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
- <xmqqldzsrhyp.fsf@gitster.g>
-In-Reply-To: <xmqqldzsrhyp.fsf@gitster.g>
+On Mon, Sep 23, 2024 at 10:47:08AM +0000, Krishna Vivek Vitta wrote:
 
---------------oFgsZSLyeSuM14N2WRVnjWjx
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> We've seen multiple reports of git repositories failing to clone / getting
+> corrupted in p9 file system. The mount points under this file system are
+> marked for FANOTIFY to intercept file system events
+> 
+> When we remove the marking on these mount points, git clone succeeds.
+> 
+> Following is the error message:
+[...]
+> fatal: unknown error occurred while reading the configuration files
+> 
+> Any reason why it is failing?
+[...]
 
-On 9/15/24 12:37 PM, Junio C Hamano wrote:
-> Looking at configure.ac, pkg-config is not used for any package.
-> Specifically for curl, it seems that "curl-config --libs" is used.
->=20
-> Presumably the reason behind the current behaviour is combination of
-> (1) ./configure is an after-thought in the build infrastructure for
-> this project, (2) pkg-config was not ubiquitous back when autoconf
-> support was written for this project, and (3) nobody considered
-> "upgrading" our use of "curl-config" and our manual detection of
-> dependency detection for other libraries to just use "pkg-config".
->=20
-> Patches welcome ;-)
+Are you able to build Git from the source?
 
+As you can see in config.c, the error is reported in repo_read_config in the
+case the function config_with_options, it calls, fails. Since it's not
+expected to fail - except for some weird reasons, - you're probably dealing
+with such a reason, and so you'd probably need to debug it yourself because I
+hardly beleive it's easily possible for someone else to recreate your specific
+setup. The debugging might be a simple "printf-style" one - that is, navigate
+the call chain of these configuration-reading functions, stick calls to
+printf() in places where some nested function returns a value indicating an
+error exit, build, run, and see which of these printf() calls pinpoints the
+failure. You will probably trace this to call to some C-library I/O function.
 
-As an aside: I am skeptical of this explanation.
-
-pkg-config's first git commit in 2005 is an import of a 2001 commit from
-another version control system (probably GNU Arch -- author "Arch
-Librarian"). The changelog it includes starts a year earlier, in 2000.
-Wikipedia agrees, claiming the initial release of pkg-config was in 2000
-and citing gtk-devel mailing list discussions from June of that year.
-
-git added a configure.ac script 6 years later. Curl itself had installed
-a .pc file for 7 months at that time, and OpenSSL had installed one for
-nearly 4 years.
-
-But git's configure script looked -- and still looks -- for -lcurl only
-to set NO_CURL for the Makefile. In 2018, ./configure started using
-curl-config, in order to set CURL_LDFLAGS.
-
-I suppose it was copied by rote from the Makefile, which has less
-flexibility to try pkg-config and fall back to curl-config.
-
-Part 1 of the explanation is valid: ./configure was an after-thought. :)
-
-
---=20
-Eli Schwartz
-Gentoo Developer and Meson Build maintainer
-
---------------oFgsZSLyeSuM14N2WRVnjWjx--
-
---------------ko3jYA7h6adox686MSyPr0es
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAEBCgB9FiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmbyzSxfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDYw
-NDExMzA0QzA5RDM2NjI4MzQwRUVGRkNFQjE2N0VGQjU3MjJCRDYACgkQzrFn77Vy
-K9atihAAiXXLfgMOa0za2PmcsNmlQK6nmr8UENsXGpqs8q1AYptNnMWMwRanhfiS
-JBdNxAJiA0jKcDXxrgd4OcgjGGer6rK5Vkpn250pBSdMI1paG29hxGRGfcWE7Buk
-pTcmPAI3DkY1fZ3oKQxAsAEbkTRLCJTxKoom3ep5gNo/DPPiAyhKkFqs9acQIFja
-rpjHxMEuhIYcvfl8d1+aQ2Hi0jqdbAXy1aPSPaRCkvh59amaF/JvTsxdJjLScDT9
-C6wjYGMR8gIhF9PgaBB4XKWBSM/l3LxHPRP1J6FuXEz0EdzEs0lBVtoz1Z+hfh1K
-L0KB6DPJL9jyhtCGxXV+XmOAyeO4Y7Cri5Vr1luya2cXTUoj7/n/jRcMY6uQ80W4
-4/pEk2U7nJUFjmNqQq8RMQ4JttmXNY8nduf/Xgs5sOujiFkatWy3+oam4zfgzlbv
-EldS5jpFLNk6lySFvNe78JbnR2HCzLwTHYwqslwujNkxzIN0y6w3A9mtySHvsipD
-QxLoc4XZqXoveiMwEpCKTFPsdRztvnufwgZ5jQ5i5v+k7x6pwjfp8qqsAveFxihO
-Rl1aaQJRMDdCAc6X9xPXDqk8OVHRePx/clwpW9ky4o9lPZKRxmgtUs6p6Rvj3SA3
-BSt0wlrDB1FuVW+bpOc8Ufkw6qXZWNwT6b339vykN46inkAoMfo=
-=tLRL
------END PGP SIGNATURE-----
-
---------------ko3jYA7h6adox686MSyPr0es--
