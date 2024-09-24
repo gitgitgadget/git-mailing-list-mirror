@@ -1,85 +1,86 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AD51FB4
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 05:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CDF6EB4A
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 06:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727156952; cv=none; b=GP6sMfJYZe8WGxCPIAiQnLLC1mu0IRzRH5t2TIawBskWx8ds4UX7NHSSyuKyTQItZd0+4bPHbSZbYdPlNf2oGbVGLIchE9ZekZP1cXDRHpow+igHZNMDMvsmOUESR8sE+CvIiFw6GbbLvH+/KtgpIVg6BuiXPcqpEmwWw5Ri0F4=
+	t=1727157780; cv=none; b=N2L/gtxwu0Vg9+dH9lTbiD+gmqczztSmYF2Id6QL9Qc5rBtN/7sJR5pVNkvReb26CB0mvr1AEhLhYbytzK4MzVVDgQLuJymuNaoSu13PoU85YTDd9zPuzXqTUw3vGdIjNxfFrZOq0LXG+Akk6pAiSkajzzmi1QACve3hDWyCmII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727156952; c=relaxed/simple;
-	bh=uqEky2NzHM4rzAJ004k13R1R5NGP2K18X+TYMQFMHKY=;
+	s=arc-20240116; t=1727157780; c=relaxed/simple;
+	bh=GYG+BUwlsfyjfw8gJkhxptJwsX0EAFb/a59GcwcNmt4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K8BRntj6gU3FxV+qzlAE8RDP6Ae9W6MXedvcm6CV2lzs05Zh0GJ3cVWnBqulOKICfKbNrnkowUw/5x54t9os5wfzsnJNkMWxXfKYbYkOonQ5mggW36rQ+HJs58udXz7yRJZ+xAzEidBI5568hWQtwVqwLmK0nbSEM9Tecyhl7+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PEUZj0kY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dVlSz5Q9; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=kOe1jrbdKIf0Igd0u9ojDMbglPgpn7mBAXdyJA2j/ybi7ZhweS3rV+m0Tf7gheKyqXfagj7BCNVO8J3HVUfwdNHIwDaHUmW7F5V6J28F0ecYn6zhf3QpF1GZjodbCDIyhw+QauY7rvVhzzXGGhxsrHq8BkEwF5mE4COLqQbl5HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nUlDBFS0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CWHykwuC; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PEUZj0kY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dVlSz5Q9"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7E9351380437;
-	Tue, 24 Sep 2024 01:49:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nUlDBFS0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CWHykwuC"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0292D13802C1;
+	Tue, 24 Sep 2024 02:02:58 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 24 Sep 2024 01:49:09 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 24 Sep 2024 02:02:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727156949; x=1727243349; bh=xzAzVqLraP
-	FW2krqihZd8CZM1xRDMThGa7xGPnBPBec=; b=PEUZj0kYzsCVSwR/Ak0l3w8I46
-	4a2XvS+lZeB/N6Yx2F7DmQLKI/tnB44C83z0mvAaDG6wGZyFtbQtD+U8GFtn0sRj
-	ttgMMZrOnPiUhOZgF/nijd0CmELx5nRNto2ujSVH0O/3s7Sd+RNY1gvVGJsQAq29
-	4tp/oeplVHYtJvNAzxdWDtup7O/syIIxl0/oHI+zbm/1abEdKwnPMUiEI/GAeiv4
-	gxtcJAxEtnW0nrlNWNjFDYMT91QfLkiIHB2GIEJeCklYLcY/iRYD6W6d90J14Wxr
-	t3jLi09JLzvtXbl4OMLsHCg6cvMiggncVcy1DmmJUtWhFa48BRQQMdU5XJQw==
+	:subject:to:to; s=fm2; t=1727157777; x=1727244177; bh=KDIDKmuKu1
+	6yPLkesBnjZ6zSG8g8I61JKIM4+vUSQWM=; b=nUlDBFS0YR+5ypUSUFAYFL6V6L
+	xOFKDfCF5HAiHelIo0bmhesWe7jpF26eC6s1abDEfsfxQPTd07OSQGORVLYtWs+1
+	Quxz2G37XP3N8rjKHJA3Pfn86+WnRdvi4Lfux/B49sH7MFejhlc+OMd1ki8L68AD
+	i/TrWO5pgpKwtCPRD0sb9iZPHIO2JzY/43AAyWQDRGf1Ag9gVFt5MyLtSxFe27mj
+	DKqBbFQN4gyrx08OXdDnby88BazY8uXYqhOztoSOnsnYv92CKrUfZ/zRUKsSrYLq
+	KUXueYVb8w3XKWaA0Q4k0qzJ5LHrN8wlJwRFvgu7+taZ4TaBe15Sf6MxgKJA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727156949; x=1727243349; bh=xzAzVqLraPFW2krqihZd8CZM1xRD
-	MThGa7xGPnBPBec=; b=dVlSz5Q9DcOugso91neIOiBTTfXSOuJ1C/JZkKtQLDwM
-	ia1ocDQJS0wXugArPGWQc/BGeS7sFJuGX1rm6wBC+aMbzLUw0xC4AFkZas3helNS
-	PeznJYGCH3qqpYdQpxBAbGC/7bkKd4Da/p1sH39A+Z6CH8BzN6MMXT+8S9muhSdF
-	OHNSLzpF108FxHV2wWVWBgaqFtIvtxUjJV0UAbVgVQ3N1wlF3APdvARf9H1YQXhJ
-	ZQUTQUb1Z0N7t/tIEI3+xrYdsBGsGT+tIvcswPGvF3nZF+GmTWiG4tbdUcO7doYS
-	fuoOuRpISAuaY1A5ib4OekSMA4/CeW8Y/GKEx+iS5A==
-X-ME-Sender: <xms:1VLyZvRXjUFb7qHu4OFb0XtRwsydoC8aNXxxJLQDZAwDPPZunGwBxQ>
-    <xme:1VLyZgzHGdsmDYSilwFIR7ViqL-PS6yBdOUyZqcF5msGBAPi2jf2HcrR5DCxqELDU
-    HMXiyXcbQtnKWYAfw>
-X-ME-Received: <xmr:1VLyZk3gPlHxeplrsPeX0VCqnNzhnGIjm72hYUSEsx-2hLRR8EId7EgzD3WO0GNynnKspbhahWpgFHWDl20wTMBOr_orF6kSvKTRpSatkC0ufQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtuddgieekucetufdoteggodetrfdotf
+	fm2; t=1727157777; x=1727244177; bh=KDIDKmuKu16yPLkesBnjZ6zSG8g8
+	I61JKIM4+vUSQWM=; b=CWHykwuCe1jb5/cWKqBRskw7FCwy3vQh4p0/sH69ITky
+	ORmxZaVdvzFKlqDrvGMjvm6oVjLROnYb445bRDz+zMf9erloseibnhkPJUZyWDz4
+	iHvvKzhgS0SstozwXrgPDgug7cZp1xELnlABu2QvnuluVfMkiyka3by23dw+aSlr
+	7rUraQuSWld1ypP0T2uqRy8pNxjjsw2E4LVI8/l6wsBfJVWSZ0lR92ZWUGU4YvTs
+	NAh7Pp8A//WHsLQzOMmqNmpKYqqevoToe7XnPoRS6+YNijOYpgxcLtQbTu5dCcDJ
+	87M9VmWzDttZuBUsaDhJo2FglTo5CRhiS2bfNWmeSQ==
+X-ME-Sender: <xms:EVbyZtOIOZhmEG51wMRqIvdLHLCLdcJ09NdjQh4JpfqQ-J1zabxOhw>
+    <xme:EVbyZv_v5uW2N9da8fpp9Wvx4KboqA-hEPeZ15WDu2EjafK7eg_5DRcxqxzosyJyR
+    9r10n0gFlEAPetR-A>
+X-ME-Received: <xmr:EVbyZsShZ7ctJNJdyjSGULU3gXOjdTdXpEzFh8aR52aDUA82wpk06VCnmTNpvPTZ0wjvYZQwDPI1urIGLXhl51I1dH57hdOVt-srxAIOY3XsUQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtuddgjedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtrodttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    eqnecuggftrfgrthhtvghrnhepjedttdegffekudejjeegudehgfehtdfgtdeiudelueel
+    gfeuteehledugeeuueevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:1VLyZvAaKufZEraOHQ6-NCVCHn5X3-e5T-QRT4dDKQQRbZbaZgGF8g>
-    <xmx:1VLyZojcpHISDY7rarh0146zh9P_ieCcXsuurUcOaduo-OqapyZqqA>
-    <xmx:1VLyZjqymqwZjHc5gOU9j6WhBih0ImFWzHB-OJWABhkGuk5CAkXHXw>
-    <xmx:1VLyZjiQE4bxdkbnf8GSOnE5mYg2q_aHjWzIutBy_2ASzT53Pbc8tw>
-    <xmx:1VLyZhtlrQI0IvmB6NJw8HsT0YuqzgnEZcuaKgwlnC5APMys4l02JIT5>
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghthhho
+    mhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhm
+X-ME-Proxy: <xmx:EVbyZptkCZCJJjEmPjD9_qoWwZjPQOeCAW2MjgAPe1fP0NMc_xPVCg>
+    <xmx:EVbyZlfciin8a4_bmXemQg9JS-12m-UluG4R2WtZU0CFUZTDokhHYA>
+    <xmx:EVbyZl2XMIXGOhdMolCJTvKz69kTXL2KIs6nK9zr3oesnefz8uTipw>
+    <xmx:EVbyZh-SBwCJVqL6f1ophGxIYOC8_1tGCceRYjbxKRGjs2YsxQ8Cqw>
+    <xmx:EVbyZp6rX-JuxcpNQlrqzz-hpL0-IWdynLDBD68Eefm9rNIpBGxOdvXZ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Sep 2024 01:49:08 -0400 (EDT)
+ 24 Sep 2024 02:02:56 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f77e2368 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Sep 2024 05:48:35 +0000 (UTC)
-Date: Tue, 24 Sep 2024 07:49:04 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id e5f536b7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Sep 2024 06:02:22 +0000 (UTC)
+Date: Tue, 24 Sep 2024 08:02:49 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: [PATCH 17/22] reftable/iter: handle allocation failures when
- creating indexed table iter
-Message-ID: <ZvJS0Nt-1_Bbq5fB@pks.im>
+Subject: Re: [PATCH 04/22] reftable/basics: handle allocation failures in
+ `reftable_calloc()`
+Message-ID: <ZvJWCauoFpjYcpKs@pks.im>
 References: <cover.1726489647.git.ps@pks.im>
- <32fead57de989335b17d16f63c1cd144460495a1.1726489647.git.ps@pks.im>
- <xmqq7cb49pby.fsf@gitster.g>
+ <e6ded75f630ea309d5b76126560a0ec3d526bf71.1726489647.git.ps@pks.im>
+ <xmqqed5cajd5.fsf@gitster.g>
+ <ZvJSyT8OsUVLln4A@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,69 +89,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq7cb49pby.fsf@gitster.g>
+In-Reply-To: <ZvJSyT8OsUVLln4A@pks.im>
 
-On Sat, Sep 21, 2024 at 11:26:09PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Sep 24, 2024 at 07:48:57AM +0200, Patrick Steinhardt wrote:
+> On Sat, Sep 21, 2024 at 12:37:26PM -0700, Junio C Hamano wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > In a sense, it is on the borderline to handle st_mult() overflow in
+> > this function for a topic whose theme is about allocation failures.
+> > 
+> > From the point of view of callers of reftable_calloc(), whether the
+> > arguments they are feeding the function is too large to be
+> > multiplied or whether the request is too big for the underlying
+> > allocator to handle, the end result should be the same: they
+> > requested too large an allocation.
+> > 
+> > So I wouldn't complain that it is out of scope, if use of st_mult()
+> > that computes the allocation size is fixed as part of this series.
+> > But as I already said, I am also OK if we leave it to a separate
+> > series to tackle other potential callers of die().
 > 
-> > -int new_indexed_table_ref_iter(struct indexed_table_ref_iter **dest,
-> > +int indexed_table_ref_iter_new(struct indexed_table_ref_iter **dest,
-> >  			       struct reftable_reader *r, uint8_t *oid,
-> >  			       int oid_len, uint64_t *offsets, int offset_len)
-> >  {
-> >  	struct indexed_table_ref_iter empty = INDEXED_TABLE_REF_ITER_INIT;
-> > -	struct indexed_table_ref_iter *itr = reftable_calloc(1, sizeof(*itr));
-> > +	struct indexed_table_ref_iter *itr;
-> >  	int err = 0;
-> >  
-> > +	itr = reftable_calloc(1, sizeof(*itr));
-> > +	if (!itr) {
-> > +		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-> > +		goto out;
-> > +	}
-> > +
-> >  	*itr = empty;
-> >  	itr->r = r;
-> >  	strbuf_add(&itr->oid, oid, oid_len);
-> > @@ -197,11 +203,15 @@ int new_indexed_table_ref_iter(struct indexed_table_ref_iter **dest,
-> >  	itr->offset_len = offset_len;
-> >  
-> >  	err = indexed_table_ref_iter_next_block(itr);
-> > -	if (err < 0) {
-> > +	if (err < 0)
-> > +		goto out;
-> > +
-> > +	*dest = itr;
-> > +	err = 0;
-> > +
-> > +out:
-> > +	if (err < 0)
-> >  		reftable_free(itr);
-> > -	} else {
-> > -		*dest = itr;
-> > -	}
-> >  	return err;
-> >  }
-> 
-> Unless the service the helper function offers is to upgrade an
-> existing resource (e.g., realloc() taking a pointer and give an
-> enlarged piece of memory), it may be a safer calling convention to
-> promise that *dest is cleared to NULL when the function fails,
-> instead of promising that *dest is left intact.  The caller, when it
-> needs to evantually release the resource acquired here, has to
-> remember what the returned value (i.e., err) was, in order to decide
-> if it needs to call the release helper on *dest it obtained from us.
-> 
-> The only caller seems to initialize *dest to NULL itself, so it does
-> not matter in the current code, though.
+> I'd leave it as-is for now, but I do have it on my agenda to address
+> this, as well. I already have it as part of my third patch series in
+> this context where I completely detangle the reftable library from the
+> rest of Git to make it a reusable library for libgit2 and the likes.
 
-I don't really see it as much of a problem here, mostly because this
-function is internal to the reftable library anyway. Also, callers
-essentially have to NULL-initialize the variable anyway once there are
-multiple error paths and if they want to free it, because otherwise they
-could end up freeing a uninitialized pointer.
-
-On the other hand it doesn't hurt much to assign `NULL` on the error
-path either, so I'll just do that.
+Well, you know. I reroll the series anyway, so I'll just make the change
+now.
 
 Patrick
