@@ -1,59 +1,38 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3502412F5A5
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 20:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322211386C6
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 20:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727210041; cv=none; b=hhsXJpQycxs/WdDS2XubFpfuu9i8sFfKq50h92FdTryiQTszZERdZwHlDgZsRuqyOhc/bt9Or0RcYfKfK7YM61Nhe/GHepnObqvDaP17tBn8Sn4gjaXI2VnwyEdaTFt9lN1eS21isQsb+Yn0jC2YC20BbNCYsAO2AbY233hRBwg=
+	t=1727210250; cv=none; b=Wkl6XBe7fkE1QBkjZqPRbG6Totu/l0gOPJ1AnUnrhsIx6AJDAy20fx6IdA6fZHS4cueKVNnh452RxgB4lwCiIe87OAEH/B2v9Di9A4f/O4QiaFhuKs/7mSSZFvllr3fjup70AI/alzKbLFW9i+O7gDNGfe0XuoAIjntveRgjeeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727210041; c=relaxed/simple;
-	bh=6X9MM0gWfFip6PV4DuwNm7DAWFJfqtZEWXDoKA0FWwo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WFsEkY0P4u7z7ILwGxkTkiZAB6650JMqqfujgi2fKGZT9DI66Csv0HMAs/m8Ltb5SPgYutlmXvL9ovwbFoMNXTLaouHhYGZv7icLY/JfXL2bmIyopXgJuFIwofU4exlu7Oa8X1N3/gSHbnG+XHFaOpqZ5ksKjgcVC8W+Qea80iQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uVvUcvuK; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uVvUcvuK"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D5211D3E3;
-	Tue, 24 Sep 2024 16:33:57 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6X9MM0gWfFip
-	6PV4DuwNm7DAWFJfqtZEWXDoKA0FWwo=; b=uVvUcvuKk6sefGhCVSdq+l8qvjLV
-	R4LkMkxp1CmN8hpPIGujB9Xuomi5sT+STw97VI640zIPctAfOOCL0IFQbM0vojUo
-	Mf7ioStXJu5/Tvyzw4yMoFSVcVVcvfpaPLucuPI90TbDdH5miufIVY6LdY0OvXRQ
-	vOPtM1g8EoI/Ng4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 035331D3E2;
-	Tue, 24 Sep 2024 16:33:57 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5E6221D3E1;
-	Tue, 24 Sep 2024 16:33:56 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc: Josh Steadmon <steadmon@google.com>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
- via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Eric Sunshine
- <sunshine@sunshineco.com>,  Chris Torek <chris.torek@gmail.com>,
-  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH v5 0/3] doc: introducing synopsis para
-In-Reply-To: <20240924193004.GA20138@tb-raspi4> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?=
-	message of "Tue, 24 Sep 2024 21:30:04 +0200")
-References: <pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
-	<pull.1766.v5.git.1727161730.gitgitgadget@gmail.com>
-	<xmqq5xqlug4l.fsf@gitster.g> <20240924193004.GA20138@tb-raspi4>
-Date: Tue, 24 Sep 2024 13:33:54 -0700
-Message-ID: <xmqqbk0cssel.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1727210250; c=relaxed/simple;
+	bh=yxXkd0AWIIEYxyHSQPPeSzyMYCm0Luy3EnHhrP76RZE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y4UUEscpuxDa8qs0UTS4Sx8aWGQlX8R5ceUx8K7PwE75uFBLBLZoKjA4Hkd6a/y7+j075W9fKYiKtjXXDXGd2r7KqILoXE8Ox4F0A6kbHo+be72xru/bgj0p8l4ueodl/KNie4MDLUuyPFy+S3BYuDQkmOIpazfbS6gsD83oO0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 14470 invoked by uid 109); 24 Sep 2024 20:37:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Sep 2024 20:37:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17165 invoked by uid 111); 24 Sep 2024 20:37:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Sep 2024 16:37:19 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 24 Sep 2024 16:37:18 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 3/8] finalize_object_file(): implement collision check
+Message-ID: <20240924203718.GA586150@coredump.intra.peff.net>
+References: <cover.1725206584.git.me@ttaylorr.com>
+ <cover.1727199118.git.me@ttaylorr.com>
+ <ed9eeef8513e08935c59defafde99956eb62d49a.1727199118.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,59 +40,227 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 523B4EE0-7AB4-11EF-A9A4-9B0F950A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <ed9eeef8513e08935c59defafde99956eb62d49a.1727199118.git.me@ttaylorr.com>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On Tue, Sep 24, 2024 at 01:32:17PM -0400, Taylor Blau wrote:
 
-> On Tue, Sep 24, 2024 at 10:16:10AM -0700, Junio C Hamano wrote:
->> "Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> write=
-s:
->>
->> > Changes since V4:
->> >
->> >  * used BRE in sed filter
->> >  * rework the processing of three dots
->> ...
->> Josh (or whoever is taking over this week from him at Google), can
->> you see if the breakage you saw that stopped us merging the topic
->> before it causes us trouble on 'master' reproduces with this version
->> (either by running "make doc" on the topic branch by itself, or on
->> 'seen' that merges the topic) in your environment that had trouble
->> with the previous round?
->>
->> It would also be highly appreciated if other macOS users try "make
->> doc" and see the resulting git-init and git-clone documentation
->> pages are reasonable, both for the previous round that has been
->> cooking in 'next' and for this latest round.  Inputs from folks on
->> more mainstream platforms with modern asciidoc/asciidoctor toolchain
->> would also help.  The more people we have who look at how the new
->> way the synopsis section is written and how the resulting documents
->> get rendered, the more fairly we can assess the value of this topic.
->>
-> Here a report from a MacOs user,
-> asciidoc --version
-> asciidoc 10.2.0
->
-> installed via macports.
->
-> No problems seen in the seen branch.
->
-> I diffed git-init.html from seen of today against both master and next,
-> some (minor) improvements (like GIT_OBJECT_DIRECTORY vs $GIT_OBJECT_DIR=
-ECTORY)
-> All in all it looks all sensible.
-> (and yes, `sed` understands -E)
+> Loose objects are exempt from this check, and the collision check may be
+> skipped by calling the _flags variant of this function with the
+> FOF_SKIP_COLLISION_CHECK bit set. This is done for a couple of reasons:
+> 
+>   - We don't treat the hash of the loose object file's contents as a
+>     checksum, since the same loose object can be stored using different
+>     bytes on disk (e.g., when adjusting core.compression, using a
+>     different version of zlib, etc.).
+> 
+>     This is fundamentally different from cases where
+>     finalize_object_file() is operating over a file which uses the hash
+>     value as a checksum of the contents. In other words, a pair of
+>     identical loose objects can be stored using different bytes on disk,
+>     and that should not be treated as a collision.
 
-Since I haven't pushed out the 'seen' branch with latest iteration,
-your sucess report is about the previous iteration that Josh said
-"still breaks on MacOS" [*].  The plot thickens...
+OK, this explains why a byte-for-byte hash-check would be the wrong
+thing (it would cause false positives)...
 
-Thanks.
+>   - We already use the path of the loose object as its hash value /
+>     object name, so checking for collisions at the content level doesn't
+>     add anything.
+> 
+>     This is why we do not bother to check the inflated object contents
+>     for collisions either, since either (a) the object contents have the
+>     fingerprint of a SHA-1 collision, in which case the collision
+>     detecting SHA-1 implementation used to hash the contents to give us
+>     a path would have already rejected it, or (b) the contents are part
+>     of a colliding pair which does not bear the same fingerprints of
+>     known collision attacks, in which case we would not have caught it
+>     anyway.
+> 
+>     So skipping the collision check here does not change for better or
+>     worse the hardness of loose object writes.
 
+...and this is the argument for why it is not necessary to do a
+content-level check. As you say, we're not making anything worse here,
+as we've never implemented this collision check. But I think the "FIXME"
+in the code was really there under the notion that it was a backstop to
+SHA-1 being broken (belt-and-suspenders, if you will). And your argument
+above assumes that SHA-1 (using the DC variant) is safe.
 
-[Reference]
+But I think we can expand the argument a bit. I don't think this is a
+very good place for such a collision check, because race conditions
+aside, we'll already have bailed long before! When we do a write via
+write_object_file(), for example, we'll hit the freshen paths that
+assume the contents are identical, and skip the write (and thus this
+finalize) entirely.
 
- * https://lore.kernel.org/git/4ww5v253vz2g4i3z2x3dmgkrot7mcn2qm6ckjcxbyk=
-y6yvrozy@mr5hnrsfj6sn/
+So if you want a collision check, we have to do it at a much higher
+level. And indeed we do: index-pack already implements such a check
+(through the confusingly named "check_collison" function). I don't think
+unpack-objects does so (it looks like it just feeds the result to
+write_object_file(), which does the freshening thing).
+
+So the argument I'd make here is more like: this is the wrong place to
+do it.
+
+  Side thoughts on collision checks:
+
+    I think index-pack is safe in the sense that it will always prefer
+    on-disk copies and will complain if it sees a collision.
+    unpack-objects is not, nor are regular in-repo writes (which
+    normally cannot be triggered by remote, but on forges that do
+    merges, etc, that's not always true). Both of the latter are also
+    subject to races, where a simultaneous collision might let the
+    attacker win.
+
+    That race is kind of moot in a world where anybody can push to a
+    fork of a repo that ends up in the same shared location (so they can
+    actually win and become the "on disk" copy), and we're relying on
+    sha1dc for protection there. That's specific to certain forges, but
+    they do represent a lot of Git use.
+
+    In general, the use of unpack-objects versus index-pack is up to the
+    attacker (based on pack size). So I think it would be nice if
+    unpack-objects did the collision check. Even if the attacker beats
+    you to writing the object, it would be nice to see "holy crap, there
+    was a collision" instead of just silently throwing your pushed
+    object away.
+
+    I know that GitHub only ever runs index-pack, which may give some
+    amount of protection here. In general, I think we should consider
+    deprecating unpack-objects in favor of teaching index-pack to
+    unpack. It has many enhancements (this one, but also threading) that
+    unpack-objects does not. I have an old patch series for this (sorry,
+    only from 2017, I'm slipping). IIRC the sticking point was that
+    unpack-objects is better about memory use in some cases (streaming
+    large blobs?) and I hadn't figured out a way around that.
+
+Phew. Sorry, that was a long digression for "I think you're right, but I
+might have argued it a little differently". I think the direction of the
+patch (skipping checks entirely for loose objects) is the right thing.
+
+> As a small note related to the latter bullet point above, we must teach
+> the tmp-objdir routines to similarly skip the content-level collision
+> checks when calling migrate_one() on a loose object file, which we do by
+> setting the FOF_SKIP_COLLISION_CHECK bit when we are inside of a loose
+> object shard.
+
+OK, this is the part I was wondering how you were going to deal with. :)
+Let's look at the implementation...
+
+> @@ -239,11 +247,15 @@ static int migrate_paths(struct strbuf *src, struct strbuf *dst)
+>  
+>  	for (i = 0; i < paths.nr; i++) {
+>  		const char *name = paths.items[i].string;
+> +		enum finalize_object_file_flags flags_copy = flags;
+>  
+>  		strbuf_addf(src, "/%s", name);
+>  		strbuf_addf(dst, "/%s", name);
+>  
+> -		ret |= migrate_one(src, dst);
+> +		if (is_loose_object_shard(name))
+> +			flags_copy |= FOF_SKIP_COLLISION_CHECK;
+> +
+> +		ret |= migrate_one(src, dst, flags_copy);
+>  
+>  		strbuf_setlen(src, src_len);
+>  		strbuf_setlen(dst, dst_len);
+
+This looks pretty reasonable overall, though I'd note that
+migrate_paths() is called recursively. So if I had:
+
+  tmp-objdir-XXXXXX/pack/ab/foo.pack
+
+we'd skip the collision check. I'm not sure how much we want to worry
+about that. I don't think we'd ever create such a path, and the general
+form of the paths is all under local control, so an attacker can't
+convince us to do so. And I find it pretty unlikely that we'd change the
+on-disk layout to accidentally trigger this.
+
+So even though there are security implications if we have a false
+positive from is_loose_object_shard(), I don't know that it's worth
+caring about.
+
+If we did want to, I think a more robust check is to make sure the shard
+comes at the start of the path. Which is tricky, of course, because
+we're building a path on top of an arbitrary root (tmp-objdir for
+the src, and the repo object dir for the dst).
+
+So you'd have to save that base_len and use it as a root, like the patch
+below. I'm OK if you want to write all of this off as over-engineering,
+though.
+
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index 9da0071cba..27ba9f4f57 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -207,10 +207,18 @@ static int read_dir_paths(struct string_list *out, const char *path)
+ }
+ 
+ static int migrate_paths(struct strbuf *src, struct strbuf *dst,
+-			 enum finalize_object_file_flags flags);
++			 size_t base_len);
++
++static int is_loose_path(const char *name)
++{
++	return *name++ == '/' &&
++	       isxdigit(*name++) &&
++	       isxdigit(*name++) &&
++	       *name++ == '/';
++}
+ 
+ static int migrate_one(struct strbuf *src, struct strbuf *dst,
+-		       enum finalize_object_file_flags flags)
++		       size_t base_len)
+ {
+ 	struct stat st;
+ 
+@@ -222,18 +230,16 @@ static int migrate_one(struct strbuf *src, struct strbuf *dst,
+ 				return -1;
+ 		} else if (errno != EEXIST)
+ 			return -1;
+-		return migrate_paths(src, dst, flags);
++		return migrate_paths(src, dst, base_len);
+ 	}
+-	return finalize_object_file_flags(src->buf, dst->buf, flags);
++	return finalize_object_file_flags(src->buf, dst->buf,
++					  is_loose_path(src->buf + base_len) ?
++					  FOF_SKIP_COLLISION_CHECK : 0);
+ }
+ 
+-static int is_loose_object_shard(const char *name)
+-{
+-	return strlen(name) == 2 && isxdigit(name[0]) && isxdigit(name[1]);
+-}
+ 
+ static int migrate_paths(struct strbuf *src, struct strbuf *dst,
+-			 enum finalize_object_file_flags flags)
++			 size_t base_len)
+ {
+ 	size_t src_len = src->len, dst_len = dst->len;
+ 	struct string_list paths = STRING_LIST_INIT_DUP;
+@@ -247,15 +253,11 @@ static int migrate_paths(struct strbuf *src, struct strbuf *dst,
+ 
+ 	for (i = 0; i < paths.nr; i++) {
+ 		const char *name = paths.items[i].string;
+-		enum finalize_object_file_flags flags_copy = flags;
+ 
+ 		strbuf_addf(src, "/%s", name);
+ 		strbuf_addf(dst, "/%s", name);
+ 
+-		if (is_loose_object_shard(name))
+-			flags_copy |= FOF_SKIP_COLLISION_CHECK;
+-
+-		ret |= migrate_one(src, dst, flags_copy);
++		ret |= migrate_one(src, dst, base_len);
+ 
+ 		strbuf_setlen(src, src_len);
+ 		strbuf_setlen(dst, dst_len);
+@@ -283,7 +285,7 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
+ 	strbuf_addbuf(&src, &t->path);
+ 	strbuf_addstr(&dst, repo_get_object_directory(the_repository));
+ 
+-	ret = migrate_paths(&src, &dst, 0);
++	ret = migrate_paths(&src, &dst, src.len);
+ 
+ 	strbuf_release(&src);
+ 	strbuf_release(&dst);
