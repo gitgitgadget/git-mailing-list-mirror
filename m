@@ -1,184 +1,114 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5399A1741D4
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 10:05:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE293F9D5
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 11:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727172353; cv=none; b=ivpzSajXcnRDUUM0fV1LlRpq9oTwUQ87Iy4RYviDMcu0+F9LFWZwpOp3+TelGtCUPPPBYy8/LYQM9yZJyMxhA0QWFxjydlHYLOzX4IRQI0EgvwVZ9JDE5s1RM24A3zokLJGNa0E+YWXMB4zqwiAI0X4pUJXR/JKQQsmezcQTJtM=
+	t=1727178347; cv=none; b=T5yabSJadG8/T0NjcrR23vwCaVF9Xm846iEmVnAATzRDJAlXD0SwWWgsU6zWjqY7SowmZX3pl2GJgNiZNd6V8pumhS06juTfJD9ZQLF39TnjnJF0XVz+8u2yXunIR9meiHQx72L22pTYFG9VjBNKNs5Z2NQ0AhObjvwSkseIEp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727172353; c=relaxed/simple;
-	bh=2YcoQbV7u2fq1QyH5zbcMe+8M8EwD6twXYEtqrNpc/s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q/LRvIWVIcXQAXa2a8mDZz8C0PWECG9SFcOknPuhtlzaJUGC7MYFwUp4K4DmvsyvMZXTsfZv/mPKBTSOkDPZqS5g5qxDSTVjR1Zd3U48fgBrPuuKnRS2J1uQqPlEoxaAL6rIH4a3YBtMJvN6I8gpJZfZOYnex56OyyNzhsCEUbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IepudqW4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eTlP2mrb; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1727178347; c=relaxed/simple;
+	bh=ozbCYS3uwZgH/OGYIC8vzCuG7uwxAJ5hz2xCOn21sco=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JNAPfvrBBN3LngLXNYWSt7O7TZs6qsmXHuXj63dxuq7USM0Rd5TxjX8KRHwafSm1XwvKDgDg2xn4Goby32lG0Z9pN9I2z2tRtD1puZJ9aF49WDQM8YFB4Yu7rvnjo2WfSJ2DZLThwFdkq96F3Ji+0whe6dW84c8733o+6pSstYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O4ZVskQR; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IepudqW4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eTlP2mrb"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5A24F1380438;
-	Tue, 24 Sep 2024 06:05:50 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Sep 2024 06:05:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727172350; x=1727258750; bh=6RhcABmOBB
-	c/TlGTWqihYDEz+PNLqIqusq+DBWULCG4=; b=IepudqW42A9X8jI2vZ6WNytqRP
-	S91RIq9k4e2HV75nUuZyf5/GkhDPZpbyLFk5vkDq3zN8y1kym8wXJ4MoLufUPhep
-	WBpg8ChxOR9AdR6T3e7OxitTtFJvbuRnA2IYV1bKQCFdbo9BSfRmoYeZ4fMhdTRk
-	jetDKR6XpLPV22B+baIf8Mi4g3P3FFkFVV8Pk1IUqwrrQMjw54l3ETFZAwXP/q/V
-	UgGOrPLpZgALnxWOVAoklHI7F/BBtbh5LWi2DCEhjc66RsjEhWTUqTHwUloshw26
-	U/rfJ+Nu1Xkc9WCc/f4WZW5ijwAY88sS/sV0/NQHoMxFhJu4QP9Zu2vDUXwA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727172350; x=1727258750; bh=6RhcABmOBBc/TlGTWqihYDEz+PNL
-	qIqusq+DBWULCG4=; b=eTlP2mrbaq9vFm5+BCnQS77rMaaqmeOvFlRvSqYSkyHm
-	mg6RoASIR7zDv5VjKgAgLEBU08qJccMyyw+/+4CPLvdV00ODQykjK+/+p4hg79Ry
-	rOJGFLEcdjSeQOjpBdMCKFyfab0yxlXhZepQgie6cQeQO16A/X75eUoUV0FQlY5/
-	9epfRCEVm4/nloh75e0sDttj5Zb38mqluV+gWu3QfzXYZzs8VYHEjLQnRLzFbupD
-	y+eGuv4ko9kxs8P4tsKtHQBNtR1uPG/ZvoYziK3UkdNEnauGDYIzAfFO840GCjpm
-	4+ZcLcGRhof79uaQWEVvhWob+3Yg5HOrYALIbw3XVQ==
-X-ME-Sender: <xms:_o7yZsTuoECm3eFzL47YYwYZHSICbEk_lWqNdEUc0pmntSeq2dlW7Q>
-    <xme:_o7yZpzdr3fqEHr8sm89_5xZ-ou030KIU83YWXpGM_1zNXKPN_wpHr-YhDL6rVdim
-    7pPqTlhUAIyeuBz0g>
-X-ME-Received: <xmr:_o7yZp3bK4J2CFmGobXRsRyG6tRJVxOucAsL4sCVvS6mIMlg4nXAvstrQyq0GfgOn8dct-1JXA0pWjeHDeZZIZj-Ciz1hUq0wTDW3oDs50YIEQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtvddgvdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehshhgvjhhirghluhho
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhhonhgrnhesrhhjphdrihgv
-X-ME-Proxy: <xmx:_o7yZgD8mrOEmva3c5CbKTbhYvr1mxQf96u6jNsyZy1cfbXFTwBHrQ>
-    <xmx:_o7yZlgQqUPbl1_y9myJVVN9kopyesw4_Jw6O90s1kWs4yjmwvHUeA>
-    <xmx:_o7yZsqhsZVqi5mM0Cye9Aino8Xm6EyfUrYnfrnkbCAATlUnJyA9nw>
-    <xmx:_o7yZojw0hjdqAi-T09ZP46gn1U7KAimwAfuoEgkRlMfXwO1WXOP0A>
-    <xmx:_o7yZlcIL8fA3aapQW8Zz3L_wZ3zzpZiEBRvgGnI_RTyybxAx0gWajdz>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Sep 2024 06:05:49 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 10b36b3a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Sep 2024 10:05:15 +0000 (UTC)
-Date: Tue, 24 Sep 2024 12:05:46 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Ronan Pigott <ronan@rjp.ie>, shejialuo <shejialuo@gmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH 2/2] config: fix evaluating "onbranch" with nonexistent git
- dir
-Message-ID: <535d0d07506e8248e47f90c1a7581679fc297b3d.1727171197.git.ps@pks.im>
-References: <1b9fb3f3fde62594b9ac999ffb69e6c4fb9f6fd6@rjp.ie>
- <cover.1727171197.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O4ZVskQR"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5c42f406e29so7797158a12.2
+        for <git@vger.kernel.org>; Tue, 24 Sep 2024 04:45:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727178344; x=1727783144; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bhc8J/7kJHGXUQoQv3tpSjCCdgExoTXA9qi7sGJSpy4=;
+        b=O4ZVskQRB8y/qcmP+WfLBjvfzeuSR9AQMqc347zBjjzMDliAIJjgbafhDvjJkVWbxX
+         NpEbdKQgO5eklk3hUVEgJ6UpM5FDq8g2IUozt3Xo8ZC6WYLoq9CnTGavFtClrwGB+AOd
+         JP/FLGZXkHfIT94MgZWLlg+U+SHFaHCXmTf5uB1Z3YlUl6PDkFv13+zCDR5YSm3eE6rH
+         UlLh74EUgqROdsopCZk0RKDGJoJSF7ADfODCWGCuAeUBTm155qK4ZNEHzeuqq7T9EwMn
+         3IdBjTeY0BPTdplSXSY+VIHXK+tDXQdy+4Tj9/5Mbml87RtMgujtgAUas7Stv8hGKEnr
+         QWHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727178344; x=1727783144;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bhc8J/7kJHGXUQoQv3tpSjCCdgExoTXA9qi7sGJSpy4=;
+        b=vuiyYvaWuWXShOCnJmJ6l94UN2qqQZOz0jJZo5sS5/GfsmF3ebYjSDOf9NaUhTnssD
+         y3dPjEJ0eqvy40Z4I/VrYXI/cTV6nk30zN8KVH52UV3lvG9ajQ2QLV2pEKq0gnP7yFCa
+         UmwlVKkVtTAza+eCI4iayXNkKbAJy7RgEPAD5Sa544rhAlcb1kcUQYZx+EDxaiBRASwX
+         c79iw8eOIl03VqO+9LO5GR/wRSPI3vf7U+Jfs7AsNyTevLeNkIP9u61/5y1ZA1j0yYyg
+         ufp4x5KvQwwES+vrqFbmy0fDWNO516/+NXpNn7mtsjFW8JE0fZCLLPK614CPNPq+B64g
+         U8MQ==
+X-Gm-Message-State: AOJu0YxaPk+qMEuvkCRw8ZD5rNyATD6sGntbI7zqlZZ0/Iu0jg6+qePi
+	ROy0fr3E9zWJGKmNkvVdsCpVpBfzAIMoiGw7Jay+gVMSD7DvQb/os6WwSMSMuoSCdR92EfE5HUI
+	83gRAsQojmZl1h4WoIiLnms7fX/0=
+X-Google-Smtp-Source: AGHT+IHKIHSJbC7mxCF0hA+PleOptUpUJov6GKdg/VVQ2+Te9ewYt1uXnKLVgR6l5ZyngH84SIPXZdVjT4OpaS2O6Ys=
+X-Received: by 2002:a17:907:3f9f:b0:a8d:4631:83a9 with SMTP id
+ a640c23a62f3a-a90d4fdf292mr1666732366b.3.1727178344187; Tue, 24 Sep 2024
+ 04:45:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1727171197.git.ps@pks.im>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20240720034337.57125-1-eric.peijian@gmail.com> <20240720034337.57125-2-eric.peijian@gmail.com>
+In-Reply-To: <20240720034337.57125-2-eric.peijian@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 24 Sep 2024 13:45:31 +0200
+Message-ID: <CAP8UFD1J4JdR-QP9em=_0q8CQZLf9nE7PLE2=kkvxY218fa-ig@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] fetch-pack: refactor packet writing
+To: Eric Ju <eric.peijian@gmail.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
+	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
+	jltobler@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The `include_by_branch()` function is responsible for evaluating whether
-or not a specific include should be pulled in based on the currently
-checked out branch. Naturally, his condition can only be evaluated when
-we have a properly initialized repository with a ref store in the first
-place. This is why the function guards against the case when either
-`data->repo` or `data->repo->gitdir` are `NULL` pointers.
+On Sat, Jul 20, 2024 at 5:43=E2=80=AFAM Eric Ju <eric.peijian@gmail.com> wr=
+ote:
+>
+> From: Calvin Wan <calvinwan@google.com>
+>
+> A subsequent patch needs to write capabilities for another command.
+> Refactor write_fetch_command_and_capabilities() to be a more general
+> purpose function write_command_and_capabilities(), so that it can be
+> used by both fetch and future command.
+>
+> Here "command" means the "operations" supported by Git=E2=80=99s wire pro=
+tocol
+> https://git-scm.com/docs/protocol-v2. An example would be a
+> git's subcommand, such as git-fetch(1); or an operation supported by
+> the server side such as "object-info" implemented in "a2ba162cda
+> (object-info: support for retrieving object info, 2021-04-20)".
 
-But the second check is insufficient: the `gitdir` may be set even
-though the repository has not been initialized. Quoting "setup.c":
+I agree that reusing or refactoring the new
+write_command_and_capabilities() function for more commands can be
+done in a separate series that could perhaps also move the new
+function to connect.c. Maybe this could be added to the commit message
+though.
 
-  NEEDSWORK: currently we allow bogus GIT_DIR values to be set in some
-  code paths so we also need to explicitly setup the environment if the
-  user has set GIT_DIR.  It may be beneficial to disallow bogus GIT_DIR
-  values at some point in the future.
+[...]
 
-So when either the GIT_DIR environment variable or the `--git-dir`
-global option are set by the user then `the_repository` may end up with
-an initialized `gitdir` variable. And this happens even when the dir is
-invalid, like for example when it doesn't exist. It follows that only
-checking for whether or not `gitdir` is `NULL` is not sufficient for us
-to determine whether the repository has been properly initialized.
+> -static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
+> -                                                const struct string_list=
+ *server_options)
+> +static void write_command_and_capabilities(struct strbuf *req_buf,
+> +                                                const struct string_list=
+ *server_options, const char* command)
 
-This issue can lead to us triggering a BUG: when using a config with an
-"includeIf.onbranch:" condition outside of a repository while using the
-`--git-dir` option pointing to an invalid Git directory we may end up
-trying to evaluate the condition even though the ref storage format has
-not been set up.
+In https://lore.kernel.org/git/xmqqfsn0qsi4.fsf@gitster.g/ Junio
+suggested swaping the "command" and "server_options" arguments as well
+as sticking the "*" to "command" instead of "char", so:
 
-This bisects to 173761e21b (setup: start tracking ref storage format,
-2023-12-29), but that commit really only starts to surface the issue
-that has already existed beforehand. The code to check for `gitdir` was
-introduced via 85fe0e800c (config: work around bug with
-includeif:onbranch and early config, 2019-07-31), which tried to fix
-similar issues when we didn't yet have a repository set up. But the fix
-was incomplete as it missed the described scenario.
+static void write_command_and_capabilities(struct strbuf *req_buf,
 
-As the quoted comment mentions, we'd ideally refactor the code to not
-set up `gitdir` with an invalid value in the first place, but that may
-be a bigger undertaking. Instead, refactor the code to use the ref
-storage format as an indicator of whether or not the ref store has been
-set up to fix the bug.
+const char *command,
 
-Reported-by: Ronan Pigott <ronan@rjp.ie>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- config.c                  | 15 +++++++++------
- t/t1305-config-include.sh |  2 +-
- 2 files changed, 10 insertions(+), 7 deletions(-)
+const struct string_list *server_options)
 
-diff --git a/config.c b/config.c
-index 1266eab0860..a11bb85da30 100644
---- a/config.c
-+++ b/config.c
-@@ -306,13 +306,16 @@ static int include_by_branch(struct config_include_data *data,
- 	int flags;
- 	int ret;
- 	struct strbuf pattern = STRBUF_INIT;
--	const char *refname = (!data->repo || !data->repo->gitdir) ?
--		NULL : refs_resolve_ref_unsafe(get_main_ref_store(data->repo),
--					       "HEAD", 0, NULL, &flags);
--	const char *shortname;
-+	const char *refname, *shortname;
- 
--	if (!refname || !(flags & REF_ISSYMREF)	||
--			!skip_prefix(refname, "refs/heads/", &shortname))
-+	if (!data->repo || data->repo->ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
-+		return 0;
-+
-+	refname = refs_resolve_ref_unsafe(get_main_ref_store(data->repo),
-+					  "HEAD", 0, NULL, &flags);
-+	if (!refname ||
-+	    !(flags & REF_ISSYMREF) ||
-+	    !skip_prefix(refname, "refs/heads/", &shortname))
- 		return 0;
- 
- 	strbuf_add(&pattern, cond, cond_len);
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index ad08db72308..517d6c86937 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -389,7 +389,7 @@ test_expect_success 'onbranch without repository' '
- 	test_must_fail nongit git config get foo.bar
- '
- 
--test_expect_failure 'onbranch without repository but explicit nonexistent Git directory' '
-+test_expect_success 'onbranch without repository but explicit nonexistent Git directory' '
- 	test_when_finished "rm -f .gitconfig config.inc" &&
- 	git config set -f .gitconfig "includeIf.onbranch:**.path" config.inc &&
- 	git config set -f config.inc foo.bar baz &&
--- 
-2.46.0.551.gc5ee8f2d1c.dirty
-
+The rest of the patch looks good.
