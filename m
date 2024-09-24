@@ -1,62 +1,62 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A271A3AA6
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 13:42:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0981A76DE
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 13:42:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727185370; cv=none; b=ukm+WHvzJ6aiq+XoJho1CT8kqAl5W7zmWB6tZ7+aO5kQsKPv2pAxJZPclJMucPUqSqMChaCsaaOdYNe97EbY05kDGlNGb3cpD9qNN9oISjxa5ewWUUXpBTTAlqVlwQCyUQJrHmKayNoCuZ20exh1fO1ggAmNWBaHR8CafvXi0E0=
+	t=1727185372; cv=none; b=Lq7R7L8gImNRGheo1SJ0utzuoXuB8KE55B3tWQr1FgAU4okDYmIzz/CcFGQ4erckxRhZVJNWtpkOlnUOdo1g6vZCZXtkWLg6x2UGKLAEifuXdrT4pOWzRLUOFkMVP0HgBiynB0zEp586zrtxzOp5DshxTd8Bjlfj+W1IhVw21n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727185370; c=relaxed/simple;
-	bh=WDNtl9Uc4luOTJVYrzOZ6qJ9Wyqp5VTsrALyoiodHoA=;
+	s=arc-20240116; t=1727185372; c=relaxed/simple;
+	bh=RwSw2n0VGxAinrFutu8sBIvZqSbF0hYODfcduSUKH/E=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=uMN7w/fuVVzCsLMQMW0+JHsk4OKLFvbw7C7B3zxY/1uM0Om5wqTibNDKf4WWHtwLfwJM1nptGFpKP9Ye8hryEA4hvJF1R24Oc3vvqFiUNkqgI8o47JVFurO55K5oaA4boh4kzRRXWKjrS372jROdTtQ99FCQ+kCkiLgoZXouRMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N2dbE4L6; arc=none smtp.client-ip=209.85.218.43
+	 MIME-Version:To:Cc; b=ORWJZ/E3JgSMJgSDGmF7To5TVDNZJQuEKwP0gNZ3TZtnUigyMW/rsxMybvomychPJqTVgCmmisrsrVbwUh3x9T0glVrREXBCTqdqyoiEyYHS1cTeedeOImmkNZRtof8Isa+oWa++UjX6EANCpLO9bJHb6NYy9xX7yXBYdmC+bpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N4fMNbM3; arc=none smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N2dbE4L6"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a8d2daa2262so721294066b.1
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 06:42:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N4fMNbM3"
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2f761cfa5e6so59115701fa.0
+        for <git@vger.kernel.org>; Tue, 24 Sep 2024 06:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727185367; x=1727790167; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727185368; x=1727790168; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=B/uME0+c3yoQSeYNdrGoWOQQALteKo5322Un6DrNnXg=;
-        b=N2dbE4L6KkNJpAHtUmmm+hSoIvnBpeh6FHwbV2MsanNfJHlBkIMyAA1lVsDCQv7FqZ
-         YOYY+FgRYWU1K3YIK/lXSRfcGQdBy7DBBax7d1Ij3wtq8QWYjZL1/5QcoH4/snn3sk40
-         Hd9oMOvAv/LeOyQFjFYd7TvSEGfGCep110LDLFuFg5cOGYgMLd9rDseYy2lhi2MRG+wd
-         uEL7TUx2RDqLQ32ve0vMj1ha6PL3y9Zh1BNLAoq886CKfGhWhJTlmn7vMyHVCUq/tQaC
-         tUQehbw+0hpKRHOzA4vJOYta2T+yh7EShLQgU4DNeOhVzNQX3YhmXdvmPKT/LG2216Zk
-         KgjQ==
+        bh=CvXWV3eIL+YO9QwpdbtM7lr2gqNwX9dCeM2yR1rvk+Y=;
+        b=N4fMNbM3x6/nc0kTT0KNbm6+vHSZc5jUVM5fkWO8rER4u5Jyc6fRNz1Zf0hTaD3JzI
+         /FadJdxceYmGskKHFO5PqXwknJnnWwRF1AMiXpjbafbpgA1SpHGRKIYkkqSS3RqVgMIU
+         nS3Gf8mBCy6OyJOZI255x7io08nf5BhfRFIBRIqrmAj6G+umh08ZhyLmBA+bhUaRwvi9
+         K7XNow4mrHicl17BAA3FwTuxUALBbgK4EO+AbWMRv+NeDZIS/b78aKcz5Tr4DmjWhpuY
+         lLDLrLqf4R8CfTWXrWzLgEk339DynFeKzD2BNZUqVD2qSjMliGAdPNQ4VINhJb5Um/9W
+         cu6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727185367; x=1727790167;
+        d=1e100.net; s=20230601; t=1727185368; x=1727790168;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=B/uME0+c3yoQSeYNdrGoWOQQALteKo5322Un6DrNnXg=;
-        b=DPRUtXkWbdKPRjLI5jvjPFOpv2Gdhecch1rmpdt0PEPAEP5W9nOjqFOQ5Qe2AOcQmw
-         fxcx+v+PiaYbHDhwCI4HsNbKnr9Ypj2GW2mge2ZLQc4VljPuK/YQOu0rpSuXF90gJoQ7
-         4ZYnPf6bkKd41H84o+4vBvel3eEIu2BKBr2T39j2uhkY3TggEyY91T6rdfpyoqqOsqW1
-         +XqHhs0IpH7DdJ4dnsHraTOaVRCN6oZznsCrUTQLg6LVX8NYqjN6Lt5xu6Qz6dfmsE4P
-         8oAVbtPLdem5x2vHrKLmlpBX0KGKUU5yvzVhMFGPTSMRO2MJzD73SkO2IiSSEUP76e2F
-         HDEg==
-X-Gm-Message-State: AOJu0YzOIXljiysXGueoQPb0Wn8aOKLDBzdgat2V+j0oL0+ExWlXPIBK
-	ajbTyFnPoja36+zLpedWzNjtdZ3yxGYmSARN/Gn3jk/9CP7LeUspIWrc7w==
-X-Google-Smtp-Source: AGHT+IEFYtbDLFO8WC9b0EwMyc74/Fwzw8gKlQUMi+aNSh8AxfV4nDL+96dod3EhXW4apj/c2IiQSQ==
-X-Received: by 2002:a17:907:1b10:b0:a8d:439d:5c3c with SMTP id a640c23a62f3a-a90d4fdf247mr1829218266b.8.1727185366603;
-        Tue, 24 Sep 2024 06:42:46 -0700 (PDT)
+        bh=CvXWV3eIL+YO9QwpdbtM7lr2gqNwX9dCeM2yR1rvk+Y=;
+        b=pGBMFDaXsQu4rq0jTmmqhARglumEurk9Fx9ku3AhzGi1QpzLLxy+ifgyzIFUpuI5rW
+         SfA9eG4G6mGlYa7C+qYbNZ70bfkMq/5a+dWVXSx3jYgp8giKNh0YgnEKfCqcJogOKPDm
+         9BscOEf6/J8x6dPEQZ6yTYo06ahpTf3NziYtEV05W0Nscolk/lnL7e3b55sD7voWBao8
+         S+bCYd/JFOxQMvD6JUqOC92PzTMmm+nFUBeXG3MPQ9ULIr6p40hRiCJtnoJxtUf3vHUA
+         t4kZFofZ2rzSWko6fQPYL46gpxIeusl/LaugIHdq4ZNvCj/Z1wj2qBPathVnUhcuaGwS
+         wqjA==
+X-Gm-Message-State: AOJu0Yyb26nZY+7nKx9aJ8DJ9eARS74+2Zs4mF+IWdokXQ5FYI9feiy4
+	1io6SOKTPe4XDgFTGv//uDNJLrC7jVTuRsYZFDV1jYr17hBhWsqaUBLp3Q==
+X-Google-Smtp-Source: AGHT+IFgv1fCL7XiHzEMhSYQ3xxM449+sb4AuRfI2H3il/79GsTb88gepcn7tRRM4hQ8YgTslKqGyw==
+X-Received: by 2002:a2e:74f:0:b0:2f6:4f17:aead with SMTP id 38308e7fff4ca-2f7cb2f9851mr66855701fa.21.1727185367863;
+        Tue, 24 Sep 2024 06:42:47 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9392f5475asm86544666b.79.2024.09.24.06.42.46
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c5cf4968f4sm763566a12.27.2024.09.24.06.42.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 24 Sep 2024 06:42:46 -0700 (PDT)
-Message-Id: <eceb2d835be7168081d6eeffbce57bba89b5f423.1727185364.git.gitgitgadget@gmail.com>
+Message-Id: <1bf2b017dd3f9fd3d91687307fd519b24fc0f965.1727185364.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
 References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
 From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 24 Sep 2024 13:42:41 +0000
-Subject: [PATCH 1/4] git: pass in repo for RUN_SETUP_GENTLY
+Date: Tue, 24 Sep 2024 13:42:42 +0000
+Subject: [PATCH 2/4] annotate: remove usage of the_repository global
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,31 +72,42 @@ Cc: John Cai <johncai86@gmail.com>,
 
 From: John Cai <johncai86@gmail.com>
 
-commands that have RUN_SETUP_GENTLY potentially need a repository.
-Modify the logic in run_builtin() to pass the repository to the builtin
-if a builtin has the RUN_SETUP_GENTLY property.
+Remove the the_repository with the repository argument that gets passed
+down through the builtin function.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- git.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ builtin/annotate.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/git.c b/git.c
-index 2fbea24ec92..e31b52dcc50 100644
---- a/git.c
-+++ b/git.c
-@@ -480,7 +480,10 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
- 	trace2_cmd_name(p->cmd);
+diff --git a/builtin/annotate.c b/builtin/annotate.c
+index a99179fe4dd..ce3dfaafb28 100644
+--- a/builtin/annotate.c
++++ b/builtin/annotate.c
+@@ -4,7 +4,6 @@
+  * Copyright (C) 2006 Ryan Anderson
+  */
  
- 	validate_cache_entries(repo->index);
--	status = p->fn(argc, argv, prefix, (p->option & RUN_SETUP)? repo : NULL);
-+	status = p->fn(argc,
-+		       argv,
-+		       prefix,
-+		       ((p->option & RUN_SETUP) || (p->option & RUN_SETUP_GENTLY))? repo : NULL);
- 	validate_cache_entries(repo->index);
+-#define USE_THE_REPOSITORY_VARIABLE
+ #include "git-compat-util.h"
+ #include "builtin.h"
+ #include "strvec.h"
+@@ -12,7 +11,7 @@
+ int cmd_annotate(int argc,
+ 		 const char **argv,
+ 		 const char *prefix,
+-		 struct repository *repo UNUSED)
++		 struct repository *repo)
+ {
+ 	struct strvec args = STRVEC_INIT;
+ 	int i;
+@@ -23,5 +22,5 @@ int cmd_annotate(int argc,
+ 		strvec_push(&args, argv[i]);
+ 	}
  
- 	if (status)
+-	return cmd_blame(args.nr, args.v, prefix, the_repository);
++	return cmd_blame(args.nr, args.v, prefix, repo);
+ }
 -- 
 gitgitgadget
 
