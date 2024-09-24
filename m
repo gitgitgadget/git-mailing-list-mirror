@@ -1,244 +1,237 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE99F1A7248
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 12:13:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7EE1A7065
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 12:13:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727179996; cv=none; b=rtrzwyPjsm6Rjfx6OZjAOonIe9312u2l8dQKnw7/a0NSO7G0UCVj9dv48Dag3g4i9il6RKVSnXOqJPxySdfkstqftIASFCFSR03Z/ErvFCqebPJJIqLZXUZKc9HFwjC1UR5lTD9mzvnJpuE8nXitBvuh7k2qkZ9/3B43C4cXYIY=
+	t=1727180009; cv=none; b=diJeEj3vfZGXMbbxJ+klJebvZXAD3Vo4PlR8iPFVfZ4xEZEGakWgaLMa2tsQGTXMIq/tF8RJ+nSv1OxZ0lvDaNaW3aW7w3dg0a+6rkb+xpauzXS8qXGYxAG5wp0AnJ6colbZ8GSp5r+Ea4fil0+7R6Hw1Ck+AWdhUITYW+VVVBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727179996; c=relaxed/simple;
-	bh=7Dm5NDFghZIuWBmv3xTPGR8eFKcLf6Z7cvA+hrTiPMM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e88JeyNHMhxRRIgkybzbPFqQijhuHVdxcGVyluw2+L9IGVwBS17yYIHsxqpzQzX8GrImJGzbebyQfCZ8C8Sju94Wn5BZ6zXrTVuaX0mftER04KJFFHscgJ8fGSYmqmxIDJ+8+Nvy0js8PxHe2x7Ay/8RH6ufSVj2vxgdIrBFxq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HxDJyeu1; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727180009; c=relaxed/simple;
+	bh=TPPrCXB0vglREvN4cZ+OEyo5LU9qR4zCTiNeJ44rPn8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KOg29vaoWySlGbAhoV7HGbCZl95D9UyaDqSazgsRHb0WQV03a0ZL5CIDf/BAEc477gBp2lhshIhZUtU8JUDGp3XD0rinpiuQUw0WqV1ZLrotdHEsepyOi5uappcunlrr79022iLzmPIccLHhZBKUAU8FZUTFAmy46J2GzQ7KDBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h+SSYiB8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AWo0FWcI; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HxDJyeu1"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3770320574aso3622025f8f.2
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 05:13:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727179993; x=1727784793; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sY0NDAuFEkif7z5DIKprhrNXtWDjJ99IVnt9V5PdT6Q=;
-        b=HxDJyeu1G1v8UQY7EFsyT0jMpm3wrGoHSL89yIjdv3+WFvxKG2MnwZZC71Hp3GOFmr
-         beHY0nirKfM1L8t1sq8MMdmEVQKEFzuJGmUNFUgi9//YqyT3Z8b+j7Q8zOTBzJodJMam
-         2blz6NoUj4tDENjE6xg2A7shNiJsI6s8auVU7YUINytVHZ9pIJYbodT9O1RMH5QIksRd
-         GJ1v006gv0YOiiNAvfFguXvQGKZSA3KnE4MoGfvFrluA1ELf47djsFfk0oNDemx8rcav
-         1dWFQi2Sj2unuF9uAYO/dla1kVd5YbWwMZL7EuJ7CiO9fy2YSRfbSwpKaLNEMmLyjMzR
-         L4Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727179993; x=1727784793;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sY0NDAuFEkif7z5DIKprhrNXtWDjJ99IVnt9V5PdT6Q=;
-        b=oMARXxhKFYRw2tXNZuarECGx9dDh2IYDH601GvxwzSA1tUwXkc93i4xKUf3JtXdMlH
-         p2zHFIhHrKygtK+gPnFtl53MmaW0U4pyKZTzIKT4aoswRMgXaOdu0silK6vMexf7EY2H
-         Y30AN9YOLaiXEbqc4LY1hGROF0RLzCLM+VjaGe9lrH8Wonl9BZh+fq3Mrc8gJld1wePk
-         C50YEo9Q5DQB2MvzNMvLkRmgZALqnQGUyJqPpPh1BOUBHwhWP8iJu5UTEnjrW14pHhYA
-         5aEQKK7J0VqvkAHHnWT4+066gQ4KxCwcBhCloCV9ZgQrT5di/NRqGt1nCK/ENB7Dg8kj
-         PKSw==
-X-Gm-Message-State: AOJu0YxAtb/FJ2X6HD2avQ0Az+aLAzwC1nre/rG11Z80Ns1eOiIzrYc8
-	hTlbtD50E9P2GDKwcDntRDAjX6NM/JK/ucL5RpYvMercnGXAUg7LPTOefNpxdg5e9X0nLptNYCT
-	Kg7SABy6u3qL+s4Efsyy4wgPudjw=
-X-Google-Smtp-Source: AGHT+IFUzDWApZKa8DPHHYOL5hU0EeX/3PW+iAo85vJetEy4951HhfVowQZTDYtdq1dDbEpPgd46ODz937bCHpGYRd8=
-X-Received: by 2002:adf:f951:0:b0:374:d157:c019 with SMTP id
- ffacd0b85a97d-37a43147a81mr9436864f8f.12.1727179992807; Tue, 24 Sep 2024
- 05:13:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h+SSYiB8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AWo0FWcI"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 853AE11401DD;
+	Tue, 24 Sep 2024 08:13:25 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Tue, 24 Sep 2024 08:13:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1727180005; x=1727266405; bh=SsSLZlK1L0
+	9y4ayCPz20BjxEjy9VZwn8P4gNgZgZ/p4=; b=h+SSYiB8z2bu2CEtcNrZ1sS8ea
+	aTqM9GohJO6qVHw/BTD7YE+BxR5V0NqGJ7kzsQjTdUthggrw3Pm+vzZ3ltDPxgMJ
+	/YAzVxnIgQg2A+rf4jZfLG49I2wWTtAWIVjOZgkmYUsmvxWzSb7I2bBXVfgyc408
+	hI7i8ivwtfBjBqdReJUI1U/3WiuQd6t+njrZIg/mdrIlf4PJLWbfJOMG7VgbgGLg
+	XUxskWSSP3D1EpjKEe8VznGpw9st6SlerBo6y4wqraDcHesc6rJUtVIGuXYKWgYw
+	GaffJUcv2amnuF7PF9orvesrEnphFMmmYh+Cv1aytFDNyvWh26Qldd1kFPcg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727180005; x=1727266405; bh=SsSLZlK1L09y4ayCPz20BjxEjy9V
+	Zwn8P4gNgZgZ/p4=; b=AWo0FWcIggktrn5ZpMYX4cG3JqxVD64+or8KJmmTZ5Va
+	+L3yVgXCBBWcn5vaATapIbl/QhHGZnCqpggjqRFXcwJTb7YilanGRO3524htd7NW
+	XTx4gF4riC7vuY6EIG+Wmx8VkTYfIJ03P7G9A0r1gSuU/i37wSmZkPGCFgT7edhs
+	EGeIePw40did3Zs3xwnq0bySuYLCqWhawgPDnUGhVCSUqIrIaEQWPt00CiZUVfgW
+	dqZQS1+I6lGTMP3t3CmRTdycacpPVOszHRREzJy7QlQvhZ85Zl1o9V8k6XSvtoQA
+	tanqA89WKB06wbd0oubZ4CM9yHL9TBE+S5igghx+gA==
+X-ME-Sender: <xms:5azyZiLyAuUKdx9lYghAX5F7vPSj1l40oWXbtxI5T8ccT0D7SiAzdg>
+    <xme:5azyZqLAGSPQtDpMg_kIUN-LN6xF0CxqFj8xNgvzy9F6EWBnOKJjrT-knRMzyLVdz
+    -HMKyDVZ7o38riCVQ>
+X-ME-Received: <xmr:5azyZivpwB2xXYFbPN_vpeHbVF2vy-Qpob6FbY7ExKtRWimViWWKLVi2LZzqOEQZF-Dyb9eZ25XvbnMTFMFEWvs_2phabd-Ub4nDv7EahfQ5iw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtvddggeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghstghhfigr
+    rhhtiiesghgvnhhtohhordhorhhg
+X-ME-Proxy: <xmx:5azyZnZVJ39x5CtcCW8U3sqsFL3e_ORS5GI039caHYhjOCxgzpsnrg>
+    <xmx:5azyZpYrk9MVywojg4Z_wtlRGhziZQjLQHi6wD9Fl1YkC-NFCYCx6g>
+    <xmx:5azyZjDvABK-DWXKDoKKCCs7ihr3wQIO5D-xRK-jI9UaJQbRAjmb-g>
+    <xmx:5azyZvaIKBS0QbgQEZFx1smmotL8696anPxllFOFIN6v79MzRBHhRg>
+    <xmx:5azyZtEKRi40I9YYzWuyqNVGcnCHVKXhLhatGjkXXgV7sw4W98xO9bZS>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Sep 2024 08:13:24 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id b6326e05 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Sep 2024 12:12:50 +0000 (UTC)
+Date: Tue, 24 Sep 2024 14:13:28 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Eli Schwartz <eschwartz@gentoo.org>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [TOPIC 08/11] Modern Build Systems
+Message-ID: <ZvKs6BrX-Ht7sFJN@pks.im>
+References: <Zu2DmS30E0kKug2a@nand.local>
+ <Zu2E3vIcTzywWOx3@nand.local>
+ <0864bd25-d5c4-45ac-a59e-e6f7d24002de@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20240720034337.57125-1-eric.peijian@gmail.com> <20240720034337.57125-7-eric.peijian@gmail.com>
-In-Reply-To: <20240720034337.57125-7-eric.peijian@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 24 Sep 2024 14:13:00 +0200
-Message-ID: <CAP8UFD0DWWi19HesaBEHtWXrcqj0184xKRAehwKCUJ-bhR5saQ@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] cat-file: add remote-object-info to batch-command
-To: Eric Ju <eric.peijian@gmail.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
-	jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0864bd25-d5c4-45ac-a59e-e6f7d24002de@gentoo.org>
 
-On Sat, Jul 20, 2024 at 5:44=E2=80=AFAM Eric Ju <eric.peijian@gmail.com> wr=
-ote:
+On Sun, Sep 22, 2024 at 10:01:32PM -0400, Eli Schwartz wrote:
+> On 9/20/24 10:21 AM, Taylor Blau wrote:
+> > Modern Build System
+> > ===================
+> > 
+> > (moderator: Patrick; notetaker: brian)
+> > 
+> > * Patrick: three different build system; should get rid of at least one
+> >   of them
+> >   * Should delete autoconf because it's not really maintained
+> >   * Think about a proper build system
+> >   * Obvious choice: cmake
+> > * Taylor: What's the problem with Makefiles
+> > * Patrick: Non-standard
+> >   * Meson is nicer than cmake as an alternative
+> 
+> 
+> I suppose I'm pretty biased but yes, I do feel we (meson) have managed
+> to make some great workflow improvements here. :)
+> 
+> Please do feel free to ask me questions about it.
+> 
+> 
+> > * Jonathan: xz compromise shows autoconf is a risk
+> > * Autoconf isn't a problem for distro
+> > * Taylor: distro builds that can't handle "make" without configure are a
+> >   distro problem
+> 
+> 
+> Anyone can handle "make" without configure without breaking a sweat,
+> that isn't even remotely challenging, and every distro already does it.
+> The problem is that "make" is stateless, which is another way of saying
+> it has amnesia. By that token, everyone cobbles together their own state
+> system on top of "make".
+> 
+> Admittedly, once set up it doesn't require much maintenance from version
+> bump to version bump.
+> 
+> 
+> > * Jonathan: Modern build system can reflect the structure of how your
+> >   code is set up
+> >   * Declared dependencies
+> > * Brian: Rust will make the decision for us: cargo
+> 
+> 
+> I would just like to note that this is not really true. There is one
+> other build system that supports rust and its name is... meson. :)
+> 
+> Meson supports rust as a language for creating libraries (cdylib or
+> rlib) and executables. You can import a crate from crates.io and meson
+> will synthesize the build system from the existing Cargo.toml to expose
+> it as an rlib dependency.
+> 
+> You still get full build script option parsing, system probing, control
+> flow etc using the meson.build DSL, you can freely mix libraries or
+> executables in any of meson's supported languages (C, C++, Cython, C#,
+> D, Fortran, java, ObjC, Rust, swift, Vala...), process custom commands
+> for data files, run gettext on translations, and more. Meson is designed
+> to be a polyglot build system in ways that cargo will probably never be.
+> 
+> Cargo is probably best thought of as a compiler wrapper: it can spit out
+> an executable if you run it on *.rs sources, but it doesn't replace most
+> of the interesting parts of a build system and it doesn't even provide
+> an "install" rule. No, `cargo install` does not count unfortunately as
+> it has a nasty habit of recompiling the binaries you already compiled,
+> but now with the wrong options.
+> 
+> You really want something that provides a project lifecycle workflow for
+> building, testing, installing, and making dist tarballs with integrated
+> distcheck. The current Makefiles mostly kind of work, given sufficient
+> care, but cargo provides exactly zero of anything so you're back to
+> cobbling together your entire workflow using Makefiles wrapped around
+> cargo. I would call that the very furthest opposite from "make the
+> decision for us".
+> 
+> 
+> >   * BSDs use Make (granted, not GNU make) for building
+> > * Patrick: Is anyone else in favour of a proper build system
+> >   * Ninja is way faster than make to build the projects
+> 
+> 
+> It is! Yes. Mostly because it does very, very little other than execute
+> a precalculated build graph, whereas the current Makefile runs a bunch
+> of stateless external commands each time in order to calculate top-level
+> Make variables.
+> 
+> 
+> > * Taylor: Feels odd to build with a fancy tool that might have a
+> >   dependency on Git
+> > * Dscho: --help is a autoconf feature and removed features are detected
+> > * Patrick: Isn't that an argument for cmake over autoconf? Dscho: yes
+> 
+> 
+> cmake does not have an equivalent of ./configure --help. The best you
+> can get is to try to somehow successfully configure cmake once, and then
+> run a cmake command that prints every internal control flow variable
+> used by cmake, then hope that the ones you care about include descriptions.
+> 
+> (Say what you will about GNU autotools but they knew very well how to
+> write good interaction standards, as evidenced by all the Makefile
+> variables git.git already uses from the GNU Coding Standards docs on how
+> to architect a release process.) It is fundamental to the UX design of
+> ./configure that a user may query the build system to find out what
+> choices they can / are expected to make, before committing to those choices.
+> 
+> cmake is actively a severe regression compared to autoconf for these
+> purposes.
+> 
+> 
+> > * Kyle: Editor integration is useful
+> > * brian: standard structure is helpful for LSPs
+> 
+> 
+> These tend to mostly be solved by compile_commands.json, which most
+> modern build systems can produce. In particular, anything that creates a
+> ninja file essentially gets you this for free, because ninja can create
+> one for you.
+> 
+> Plain Makefiles, and GNU automake, don't do very well at this at all,
+> since Make has too irregular a build graph to reliably compute any such
+> thing. Same reason why there isn't much in the way of dedicated editor
+> integration (both cmake and meson have introspection APIs which editor
+> plugins can use to directly query info from the build system, to provide
+> finer-grained control than what compile_commands.json can do).
+> 
+> 
+> > * Emily: libification has shown that makefile is cumbersome
+> > * Jonathan: Should we do a comparison of build systems in terms of what
+> >   we need from them on the list? Similar to
+> >   Documentation/technical/unit-tests.txt
+> >   * Patrick: I can write such a thing.
+> > * Patrick: Are their any features we need to consider?
+> > * Johannes Sixt: Consider supported platforms
+> > * Patrick: Want to verify that cmake is up to the task by testing in CI?
+> >   * Will volunteer to post something to the list
 
-> +remote-object-info <remote> <object>...::
-> +       Print object info for object references `<object>` at specified <=
-remote> without
-> +       downloading objects from remote. If the object-info capability is=
- not
-> +       supported by the server, the objects will be downloaded instead.
-> +       Error when no object references is provided.
+Thanks for your input, Eli, I highly appreciate it to get feedback from
+a distro maintainer's point of view! I'm not going to answer here,
+because there already is an ongoing thread at [1].
 
-Maybe s/is provided/are provided/
+So I'd propose to consolidate it into that thread. I've put you into Cc
+there.
 
-> +       This command may be combined with `--buffer`.
+Patrick
 
->  `deltabase`::
->         If the object is stored as a delta on-disk, this expands to the
->         full hex representation of the delta base object name.
->         Otherwise, expands to the null OID (all zeroes). See `CAVEATS`
-> -       below.
-> +       below. Not supported by `remote-object-info`.
->
->  `rest`::
->         If this atom is used in the output string, input lines are split
-> @@ -314,7 +323,9 @@ newline. The available atoms are:
->         line) are output in place of the `%(rest)` atom.
->
->  If no format is specified, the default format is `%(objectname)
-> -%(objecttype) %(objectsize)`.
-> +%(objecttype) %(objectsize)`, except remote-object-info command who uses
-
-s/except remote-object-info command who uses/except for
-`remote-object-info` commands which use/
-
-> +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not sup=
-ported yet.
-> +When "%(objecttype)" is supported, default format should be unified.
->
->  If `--batch` is specified, or if `--batch-command` is used with the `con=
-tents`
->  command, the object information is followed by the object contents (cons=
-isting
-> @@ -396,6 +407,10 @@ scripting purposes.
->  CAVEATS
->  -------
->
-> +Note that since objecttype, objectsize:disk and deltabase are currently =
-not supported by the
-
-s/objecttype, objectsize:disk and deltabase/%(objecttype),
-%(objectsize:disk) and %(deltabase)/
-
-> +remote-object-info, git will error and exit when they are in the format =
-string.
-
-s//remote-object-info, git /`remote-object-info` command, we/
-
-> +
-> +
-
-Maybe a single blank line is enough.
-
->  Note that the sizes of objects on disk are reported accurately, but care
->  should be taken in drawing conclusions about which refs or objects are
->  responsible for disk usage. The size of a packed non-delta object may be
-
-[...]
-
-> +       gtransport =3D transport_get(remote, NULL);
-> +       if (gtransport->smart_options) {
-> +               CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
-> +               gtransport->smart_options->object_info =3D 1;
-> +               gtransport->smart_options->object_info_oids =3D &object_i=
-nfo_oids;
-> +               /*
-> +                * 'size' is the only option currently supported.
-> +                * Other options that are passed in the format will exit =
-with error.
-> +                */
-> +               if (strstr(opt->format, "%(objectsize)")) {
-> +                       string_list_append(&object_info_options, "size");
-> +               } else {
-> +                       die(_("%s is currently not supported with remote-=
-object-info"), opt->format);
-> +               }
-
-Something like the following might be a bit shorter and simpler:
-
-  /* 'objectsize' is the only option currently supported */
-  if (!strstr(opt->format, "%(objectsize)"))
-          die(_("%s is currently not supported with
-remote-object-info"), opt->format);
-
-  string_list_append(&object_info_options, "size");
-
-> +               if (object_info_options.nr > 0) {
-> +                       gtransport->smart_options->object_info_options =
-=3D &object_info_options;
-> +                       gtransport->smart_options->object_info_data =3D r=
-emote_object_info;
-> +                       retval =3D transport_fetch_refs(gtransport, NULL)=
-;
-> +               }
-> +       } else {
-> +               retval =3D -1;
-> +       }
-
-[...]
-
-> +       opt->use_remote_info =3D 1;
-> +       data->skip_object_info =3D 1;
-> +       for (size_t i =3D 0; i < object_info_oids.nr; i++) {
-> +
-> +               data->oid =3D object_info_oids.oid[i];
-> +
-> +               if (remote_object_info[i].sizep) {
-> +                       data->size =3D *remote_object_info[i].sizep;
-> +               } else {
-> +                       /*
-> +                        * When reaching here, it means remote-object-inf=
-o can't retrive
-
-s/retrive/retrieve/
-
-> +                        * infomation from server withoug downloading the=
-m, and the objects
-
-s/infomation from server withoug/information from server without/
-
-> +                        * have been fetched to client already.
-> +                        * Print the infomation using the logic for local=
- objects.
-
-s/infomation/information/
-
-> +                        */
-> +                       data->skip_object_info =3D 0;
-> +               }
-> +
-> +               opt->batch_mode =3D BATCH_MODE_INFO;
-> +               batch_object_write(argv[i+1], output, opt, data, NULL, 0)=
-;
-> +
-> +       }
-> +       opt->use_remote_info =3D 0;
-> +       data->skip_object_info =3D 0;
-> +
-> +cleanup:
-> +       for (size_t i =3D 0; i < object_info_oids.nr; i++)
-> +               free_object_info_contents(&remote_object_info[i]);
-> +       free(line_to_split);
-> +       free(argv);
-> +       free(remote_object_info);
-> +}
-> +
->  static void dispatch_calls(struct batch_options *opt,
->                 struct strbuf *output,
->                 struct expand_data *data,
-> @@ -696,9 +803,10 @@ static const struct parse_cmd {
->         parse_cmd_fn_t fn;
->         unsigned takes_args;
->  } commands[] =3D {
-> -       { "contents", parse_cmd_contents, 1},
-> -       { "info", parse_cmd_info, 1},
-> -       { "flush", NULL, 0},
-> +       { "contents", parse_cmd_contents, 1 },
-> +       { "info", parse_cmd_info, 1 },
-> +       { "remote-object-info", parse_cmd_remote_object_info, 1 },
-> +       { "flush", NULL, 0 },
-
-I am not sure it's a good thing to add a space before "}".
-
->  };
+[1]: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
