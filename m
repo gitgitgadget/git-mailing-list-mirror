@@ -1,227 +1,261 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A631DFED
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 13:59:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4681B85D5
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 14:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727186398; cv=none; b=iH/FwGDeq86Qv7VENQBmSZE/HECbAnudbDHO466/vPa1eYNE7dtjRwzc7UpbsIIGAnFV2WNFH+hUW/2DtzLQ3aGuGbHh+oCMAqtUtaEXkIRVRy4JhmTInGIPAfXPkAcbxUMkWl82JxANrVzAEXZim5CB7iyc/eG37jXbFtCoSSU=
+	t=1727187031; cv=none; b=Xc5UgK9dvqQip0H55/xxGHUCXh2ZeuBBsidc2oHcDVMkeTXR7ZDp+INZ4hV1JMOutRVWjgSo9h1m5hzrclwFdJ0LbF5ZXF7JokOpXQoJ3Tg0+44w6q0/oN23udkDeGiEuUbMoOqt3vMmHecw1adiClGGNWsugjxxE4V2hQchGwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727186398; c=relaxed/simple;
-	bh=ivN9a0jFqSxH+csYI3lB9hfvUdlZ6/URfaUC/mO0dk0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uSf65KWkNpowzQ1Ek25GbVyJsYpEDlUoqHizpJ5LURBNV0MijcL6TtkzgWr/Z4JkdtH7DAmi2VA4OCfYiRmfnLrM6oBBdlM3sQX479FioaJFT+inb4dS7jHbH4c48tWXcCCUZaO4BrKslITtMpAj6+dudoP2v3gic76iw26O1iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Message-ID: <b6b131cb-683c-4140-9769-290b622721e1@gentoo.org>
-Date: Tue, 24 Sep 2024 09:59:52 -0400
+	s=arc-20240116; t=1727187031; c=relaxed/simple;
+	bh=P/7zBHSTZIkq3HtdoUb+AFJDPKz5WMNyXKRZ1+7YoTI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BIFv0OIDpV0rnVpX7lW0t3lxjUkSsz6QcUl4SilieFfj3Dpql2mHmlo8xRE2hKfHTG3j2T9IDSMvvKnFpldwSMKeQUvJ4S8CL5qUGjC0VZPS1jrtm7wDQ0hroPweKTb8Zu6UTaH9hQFnReQ9cNnhvxpTycnD42a7HbbCjjOB4Sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OLP1C6z4; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OLP1C6z4"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-208e0a021cfso29344705ad.0
+        for <git@vger.kernel.org>; Tue, 24 Sep 2024 07:10:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727187029; x=1727791829; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JrxESpDug7HfmC4rIqO8wWeSsHQrt8/7FUpoI6nP9+s=;
+        b=OLP1C6z4+370RAGDAFcPsoFNcR2nT8eDkv+8Fp+fNJ5DoXkODvBsbbzzEEyCQh5Zyg
+         7+soDt+pYQ4u30gJwPGa8KpM3nlVaAKE/J7iMEPEFsaqHwMYNTacQzvVxeEGXVOfdOGq
+         vbs6BL595j3sppyHrCXtlAYTMKQF7L6ZSIIXM+j2sxkrpSqRjAeCrc16KLXf//ntgpdT
+         jpZmM+cz+fx7QgdkMK3I2WrN25ufzWGRJeqGc+WJLEcpNMZdipKDXw1GwteCneNPhnCJ
+         OnZlGfJ8nB+O8vkEVTCaLOj4KuSYt7wX+MDvVGurIdR+qbrjkOgozb+HN4J8RSDwYlgo
+         SdPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727187029; x=1727791829;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JrxESpDug7HfmC4rIqO8wWeSsHQrt8/7FUpoI6nP9+s=;
+        b=ULqeaLR7o6Er/Qboogn+DE52qHzwpil6gw9VnPs5NKnhRaI1Bz0Oww+DpTbQ5/nnWU
+         yZdlhgtKWNh5W9D3tsatiRDf//0WVbfXJWgByPAIdfLpAaUjlKIJuKKTmDOdIX74Iw7m
+         vq+hnr1DA1qn+wGTLnpsS226ou1+e96rZDJvxFFzvWOmivFp9En+wee3CxLIfsseoDFW
+         bbhSxlG2CkVxsylfTsSeHZTNXOg8rcbhbYbAwLraAmOALiz726GJnFDu9HO/ESpU/yHI
+         YH1aGTIz6/sTrx/Ml//aDScZGjIHHqwkWHRjl0o/5ZNr7Ra4owkfvZdLD45Bbls04pBp
+         vuWQ==
+X-Gm-Message-State: AOJu0Yz6R5A+oyrc6byQ5GtxJATcfoi9NBubbbg53ATfdaORCbgVD3RJ
+	Y1lwuUhzbWBrPP12GancGoP879+ufVDX0IN8iEOlXv6rDclui8gZ
+X-Google-Smtp-Source: AGHT+IHD1Rng7ujPeEODh6eXQpAjY2BIJ9jffBxe+/6QcEqNAfaC+cVVwFnsmt2ZMThCWWrNIGRERg==
+X-Received: by 2002:a17:902:ccd1:b0:208:d893:5707 with SMTP id d9443c01a7336-208d8935c47mr197669945ad.1.1727187029127;
+        Tue, 24 Sep 2024 07:10:29 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20af16e6bf2sm10782295ad.30.2024.09.24.07.10.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Sep 2024 07:10:28 -0700 (PDT)
+Date: Tue, 24 Sep 2024 22:11:42 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Ronan Pigott <ronan@rjp.ie>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] config: fix evaluating "onbranch" with nonexistent
+ git dir
+Message-ID: <ZvLInrIQRj8xpSgF@ArchLinux>
+References: <1b9fb3f3fde62594b9ac999ffb69e6c4fb9f6fd6@rjp.ie>
+ <cover.1727171197.git.ps@pks.im>
+ <535d0d07506e8248e47f90c1a7581679fc297b3d.1727171197.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: ./configure fails to link test program due to missing
- dependencies
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
- Henrik Holst <henrik.holst@outlook.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Jonathan Nieder <jrnieder@gmail.com>
-References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
- <xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
- <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com> <xmqqy13oa8oe.fsf@gitster.g>
- <ZvKsH1Ct-YwBPA_f@pks.im>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <ZvKsH1Ct-YwBPA_f@pks.im>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------d1q0qSpkAIA8dyu0D0jXGiyN"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <535d0d07506e8248e47f90c1a7581679fc297b3d.1727171197.git.ps@pks.im>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------d1q0qSpkAIA8dyu0D0jXGiyN
-Content-Type: multipart/mixed; boundary="------------xnI8c6q08VefNfw0x9O4c0bQ";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
- Henrik Holst <henrik.holst@outlook.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Jonathan Nieder <jrnieder@gmail.com>
-Message-ID: <b6b131cb-683c-4140-9769-290b622721e1@gentoo.org>
-Subject: Re: ./configure fails to link test program due to missing
- dependencies
-References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
- <xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
- <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com> <xmqqy13oa8oe.fsf@gitster.g>
- <ZvKsH1Ct-YwBPA_f@pks.im>
-In-Reply-To: <ZvKsH1Ct-YwBPA_f@pks.im>
+On Tue, Sep 24, 2024 at 12:05:46PM +0200, Patrick Steinhardt wrote:
+> The `include_by_branch()` function is responsible for evaluating whether
+> or not a specific include should be pulled in based on the currently
+> checked out branch. Naturally, his condition can only be evaluated when
+> we have a properly initialized repository with a ref store in the first
+> place. This is why the function guards against the case when either
+> `data->repo` or `data->repo->gitdir` are `NULL` pointers.
+> 
+> But the second check is insufficient: the `gitdir` may be set even
+> though the repository has not been initialized. Quoting "setup.c":
+> 
+>   NEEDSWORK: currently we allow bogus GIT_DIR values to be set in some
+>   code paths so we also need to explicitly setup the environment if the
+>   user has set GIT_DIR.  It may be beneficial to disallow bogus GIT_DIR
+>   values at some point in the future.
+> 
+> So when either the GIT_DIR environment variable or the `--git-dir`
+> global option are set by the user then `the_repository` may end up with
+> an initialized `gitdir` variable. And this happens even when the dir is
+> invalid, like for example when it doesn't exist. It follows that only
+> checking for whether or not `gitdir` is `NULL` is not sufficient for us
+> to determine whether the repository has been properly initialized.
+> 
 
---------------xnI8c6q08VefNfw0x9O4c0bQ
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+When I dive into this bug report, I feel so wired about this behavior. I
+don't mind whether the code sets "gitdir" field. This is not important.
+In "setup.c::setup_git_directory_gently", it will set the
+"the_repository->gitdir" by checking the environment variable
+"GIT_DIR_ENVIRONMENT". And by using `--git-dir` option, the code will
+set this environment variable, so these two ways will set the "gitdir"
+field in the global variable "the_repository".
 
-On 9/24/24 8:10 AM, Patrick Steinhardt wrote:
+We actually check the validation of "--gir-dir" option before we set
+this value. Let me give you an example here:
 
-Thanks for the CC to this interesting thread. :)
+  $ git --git-dir=notexist -c includeIf.onbranch:main.path=any fsck
+  fatal: not a git repository: 'notexist'
 
+I am curious here. And I notice the following difference in
+"setup.c::setup_explicit_git_dir" function:
 
-> On Wed, Sep 18, 2024 at 03:39:13PM -0700, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->>
->>> We seem to get fairly regular bug reports about the configure script,=
+    if (!is_git_directory(gitdirenv)) {
+        if (nongit_ok) {
+            *nongit_ok = 1;
+            ...
+            return NULL;
+        }
+        die(_("not a git repository: '%s'"), gitdirenv);
+    }
 
->>> presumably because most contributors are using the Makefile. It would=
+Apparently, the above example will execute the "die". For
+"git-archive(1)", it will simply return NULL. This is because we allow
+some commands to run outside of the git repo. And we distinguish them by
+using the ".option" filed:
 
->>> certainly be nice if we could get the CMake support into a state wher=
-e
->>> we could consider dropping the configure script.
->>
->> While I would agree that two is better than having to support three
->> build procedures, I am not sure how improvement of CMake support
->> needs to be a prerequisite for removal of autoconf.
->=20
-> I'm mostly coming from the angle that autoconf is likely used by system=
-s
-> that are not perfectly supported by our current, static configuration. =
-I
-> don't want to make the life of such system integrators harder by having=
+    { "apply", cmd_apply, RUN_SETUP_GENTLY },
+    { "fsck", cmd_fsck, RUN_SETUP },
 
-> to figure out what kind of arcane functions they have to set manually
-> now to make things build on their platform again.
->=20
-> I'm not really sure whether distros _do_ actually use autoconf. Checkin=
-g
-> a few distros:
->=20
->   - Arch doesn't.
->   - Cygwin uses autoconf.
->   - Debian doesn't.
->   - FreeBSD uses autoconf.
->   - Gentoo doesn't.
->   - NixOS uses autoconf.
->   - OpenBSD uses autoconf.
->   - Ubuntu doesn't.
->=20
-> So basically, we'd be making the life harder of anybody who doesn't
-> conform to the "standard" way of doing things in Linux, which I think i=
-s
-> not exactly a nice thing to do.
+As we can see, the code will check whether the "gitdir" (although it is
+not set into "the_repository" structure yet) is a valid git repository.
+We already have this information.
 
+In f7d61c4135 (config: don't depend on `the_repository` with branch
+conditions, 2024-08-13). "config.c::include_by_branch" drops the global
+variable "the_repository". This solves the problem reported by Ronan.
+Because it happens in the set up process, the "data->repo" will be NULL.
 
-I think we'd probably like to use the configure script rather than the
-raw Makefile, if the configure script was supported.
+    config_with_options(cb, data, NULL, NULL, &opts);
 
-It would fix things like git failing to cross-compile because
-curl-config doesn't work for that, assuming that --
+    int config_with_options(config_fn_t fn, void *data,
+                            const struct git_config_source *config_source,
+                            struct repository *repo,
+                            const struct config_options *opts)
+    {
+        struct config_include_data inc = CONFIG_INCLUDE_INIT;
 
-Oh yeah, the configure script isn't maintained well and doesn't use
-pkg-config. :)
+        ...
 
-See e.g. https://bugs.gentoo.org/738218 which mentions pkg-config, even.
+        inc.repo = repo;
+    }
 
+But the problem still exists for "git-archive(1)", in "cmd_archive"
+function, we will initialize the configurations by using "repo_config".
+But we are not inside the repo.
 
-> And that's why I think we should have an alternative way to configure
-> and build Git that can act as a replacement for autoconf, with my vote
-> going to either CMake or Meson. They are a proper replacement for
-> autoconf that makes the downstream maintainer's jobs easier while also
-> bringing additional features to the table that we don't currently have.=
+I wonder how we use the global variable "the_repository". I think the
+main problem here is that we use "the_repository" structure outside of
+the repo where we have already broken the semantics of the
+"the_repository" variable.
 
+> This issue can lead to us triggering a BUG: when using a config with an
+> "includeIf.onbranch:" condition outside of a repository while using the
+> `--git-dir` option pointing to an invalid Git directory we may end up
+> trying to evaluate the condition even though the ref storage format has
+> not been set up.
+> 
+> This bisects to 173761e21b (setup: start tracking ref storage format,
+> 2023-12-29), but that commit really only starts to surface the issue
+> that has already existed beforehand. The code to check for `gitdir` was
+> introduced via 85fe0e800c (config: work around bug with
+> includeif:onbranch and early config, 2019-07-31), which tried to fix
+> similar issues when we didn't yet have a repository set up. But the fix
+> was incomplete as it missed the described scenario.
+> 
 
+Yes, exactly. Because before 173761e21b, the code will always find the
+files backend, it does care about whether we are in the git repo or not.
 
-Let's say, rather, that they are an alternative for autoconf. And one of
-the good qualities of them as an alternative for autoconf is that you
-can actually build on Windows, without needing a mingw toolchain to run
-a shell script.
+    unsigned int format = REF_STORAGE_FORMAT_FILES;
+    const struct ref_storage_be *be = find_ref_storage_backend(format);
 
-An actually maintained autoconf script makes the downstream maintainer's
-job easier in all cases...
+So, it won't complain.
 
-=2E.. and also makes the upstream maintainer's job easier in some ways an=
-d
-harder in other ways, because autoconf is hard/annoying to get right as
-a maintainer. This is due to the complexities of m4 and mixing that
-inline into "m4sh" -- which was a logical tradeoff in the past, when
-Windows wasn't as relevant and the GNU project wanted to design a build
-system that maximized the benefits for end users, including "do not need
-to install any software to run ./configure", even if that sometimes
-meant making maintainers' jobs harder. I've never seen a project with a
-*well-maintained, correctly written* autotools build system where the
-*unix* end users had complaints about the use of autotools. The
-complaint is inevitably that autotools wasn't correctly used
+> As the quoted comment mentions, we'd ideally refactor the code to not
+> set up `gitdir` with an invalid value in the first place, but that may
+> be a bigger undertaking. Instead, refactor the code to use the ref
+> storage format as an indicator of whether or not the ref store has been
+> set up to fix the bug.
+> 
 
-Still I would prefer meson over autotools any day of the week. I'd also
-prefer autotools over cmake, mind you.
+Should we? From my above comments, it does no matter whether we set the
+"gitdir" in the "the_repository". Because we already check this and we
+have this information. I think the main problem is that we use
+"the_repository" badly.
 
+We could run git commands inside the repo or outside the repo. If we run
+git commands outside the repo, should we use the "the_repository"
+variable? I guess we should not.
 
-> Eli makes a couple of good remarks in [1] about things that both CMake
-> and Meson bring to the table in addition to that, while also mentioning=
+Because "git_config", "repo_config" and so on use the global variable
+"the_repository", so we will encounter the trouble. But if we could use
+something like "data->repo". We will make everything OK:
 
-> some of the benefits of Meson over CMake.
->=20
-> I would be okay to make Git work with such a build system myself. The
-> current CMake build instructions can be used to _build_ Git, but AFAIU
-> they cannot yet run the Git test suite. Dscho pointed me to a couple of=
+1. When running commands inside the git repo, we set "data->repo" to be
+"the_repository".
+2. When ruing commands outside the git repo, we set "data->repo" to be
+NULL.
 
-> patches from =C3=86var that work into this direction, and I'd be happy =
-to
-> revive them. I'd also be okay with picking Meson over CMake if that is
-> what people want. But my ultimate goal would then be that we have at
-> least one CI job build and test against such a build system and give it=
-
-> the "official blessing" as an alternative way to build Git.
-
-
-Like, erm, many people :D I spend vast portions of my day inside git. I
-am not very good at C, though -- and the likelihood of git being
-completely rewritten in python is quite low -- so I generally do not try
-very hard to repay that by getting involved in git development (I have
-some humble patches consisting of a single patch series, which I do feel
-pretty proud of since it enabled a very useful workflow, but still:
-ultimately amounts to a one-off event).
-
-I do know build systems pretty well though! :) And I'd be happy to
-collaborate on Meson and help maintain the build system support in the
-long term, assuming the consensus is that people think it would be a
-neat idea to add meson support (regardless of whether it serves as a
-primary or secondary build system).
-
-
-Although I'm uninterested in personally working on cmake, as you
-probably predicted.
-
-
---=20
-Eli Schwartz
-Gentoo Developer and Meson Build maintainer
-
---------------xnI8c6q08VefNfw0x9O4c0bQ--
-
---------------d1q0qSpkAIA8dyu0D0jXGiyN
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZvLF2AUDAAAAAAAKCRCEp9ErcA0vV8N8
-AQD6hCR64TqjDocK+oGe5eFYljuM//ESuBCTCDHSwXauFAD/ZxN0tHv//h+cqkk++R4Cw1GLUXFR
-1RmZDQqpIOWFWg0=
-=OVJ7
------END PGP SIGNATURE-----
-
---------------d1q0qSpkAIA8dyu0D0jXGiyN--
+> Reported-by: Ronan Pigott <ronan@rjp.ie>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  config.c                  | 15 +++++++++------
+>  t/t1305-config-include.sh |  2 +-
+>  2 files changed, 10 insertions(+), 7 deletions(-)
+> 
+> diff --git a/config.c b/config.c
+> index 1266eab0860..a11bb85da30 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -306,13 +306,16 @@ static int include_by_branch(struct config_include_data *data,
+>  	int flags;
+>  	int ret;
+>  	struct strbuf pattern = STRBUF_INIT;
+> -	const char *refname = (!data->repo || !data->repo->gitdir) ?
+> -		NULL : refs_resolve_ref_unsafe(get_main_ref_store(data->repo),
+> -					       "HEAD", 0, NULL, &flags);
+> -	const char *shortname;
+> +	const char *refname, *shortname;
+>  
+> -	if (!refname || !(flags & REF_ISSYMREF)	||
+> -			!skip_prefix(refname, "refs/heads/", &shortname))
+> +	if (!data->repo || data->repo->ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+> +		return 0;
+> +
+> +	refname = refs_resolve_ref_unsafe(get_main_ref_store(data->repo),
+> +					  "HEAD", 0, NULL, &flags);
+> +	if (!refname ||
+> +	    !(flags & REF_ISSYMREF) ||
+> +	    !skip_prefix(refname, "refs/heads/", &shortname))
+>  		return 0;
+>  
+>  	strbuf_add(&pattern, cond, cond_len);
+> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+> index ad08db72308..517d6c86937 100755
+> --- a/t/t1305-config-include.sh
+> +++ b/t/t1305-config-include.sh
+> @@ -389,7 +389,7 @@ test_expect_success 'onbranch without repository' '
+>  	test_must_fail nongit git config get foo.bar
+>  '
+>  
+> -test_expect_failure 'onbranch without repository but explicit nonexistent Git directory' '
+> +test_expect_success 'onbranch without repository but explicit nonexistent Git directory' '
+>  	test_when_finished "rm -f .gitconfig config.inc" &&
+>  	git config set -f .gitconfig "includeIf.onbranch:**.path" config.inc &&
+>  	git config set -f config.inc foo.bar baz &&
+> -- 
+> 2.46.0.551.gc5ee8f2d1c.dirty
