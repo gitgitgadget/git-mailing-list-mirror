@@ -1,53 +1,53 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9A513AD22
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 06:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC0F7E76D
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 06:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727159588; cv=none; b=LR+717x8tdS252NbHJOnOWRP1But4B5fvbcgy5WIHDQdYEedj+TEde8ntF2JIQF6714w6hXs2Gb5tl23zGCkkTweCN1Hv0E5SJJ91kX+uIDeZkKGqBXSzM0LZL6Uj/Z0CZuVwjlga9lW9nYG45PQYgcpAlvhOB+RWMUALCP1ew4=
+	t=1727159592; cv=none; b=BSsJsxh/RwfUl8jrhxXV4GvdLs1FHRq+LhgIDvSCPN2xFnR0ZgVzYMwuKeSUNFU4LtdUMAa4KWcuSTYAr1KPkpi4LPr8iSa6aidjOwUGuvetSyEM1XVD31JWCmJ9/6LAmfAf+fkKwC2wQv7ajGerHM4+2K8nMNxOuT0Sew1aGdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727159588; c=relaxed/simple;
-	bh=mH8SZI/PsDZY+vWiycZ9iDbiEUl7i1XFUqdV3PCjPd8=;
+	s=arc-20240116; t=1727159592; c=relaxed/simple;
+	bh=7AeQaaHsClVpe0KEPoavxjpVBE6YNXUCn4Vj33CEd18=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YzjkCfwJEY8ZG4HEE6bUb/p2CitmGAe4A9cRcS2Ww/XuqQqzH2SdJVcVRkcCk951qkn+7/gtiu1DI7C219fcPIm+ctu83/g6WCVihcXvIALy16lr6shOavVbizAEiMMZYrdJh25ZP9VXLHhm1I0XRh81qBc0H/VXHsLumUpjbqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gJb2WALV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VCXvrk5w; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=BC5krUyw4FwkNjFWLgM0dIPWyiqG8bpwRW0+SpFSs2r5uTtjkqVkVredejLpxALRcDtJ9voqW2RNeaa/nJw7VFhp/rqn+G+Ip/Hsn4oNUPTWEUyzWigVHL0QuOtpsiIRYkLVjzwHRo38fUSdQRBQ++7SX86xQy9P9GgH0I8puN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N0gZHiiN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CCfGC8JQ; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gJb2WALV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VCXvrk5w"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N0gZHiiN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CCfGC8JQ"
 Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 320E61140262;
-	Tue, 24 Sep 2024 02:33:06 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 67F261140262;
+	Tue, 24 Sep 2024 02:33:09 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Tue, 24 Sep 2024 02:33:06 -0400
+  by phl-compute-10.internal (MEProxy); Tue, 24 Sep 2024 02:33:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727159586; x=1727245986; bh=jrq+YinpYa
-	yN57PdMeGJ2dcQDFK6yzlCH+EpmagUSeA=; b=gJb2WALVJ37Wa+S8mY4PpKvzkM
-	/8Fsp5KfCeMz00zu31iWcen0Ll70POnVXJVq0/hsTw2RpyILREzKK7SM0zoAZffZ
-	XjE+QkaIih3nu4VAgJ3OQInv48rAwv5UGbvcnnr/aDHHHpZ1SG6Qo8zhPTFJk93R
-	Trq+mK2t8fDtYjR4fk2+ZhJNb8r4WL8JA6XebbuhVSb6VaIyWe4YWfD161BI56ne
-	shq9YxEEgUDf7gef669z0oBixzPGqHPTAYcyRR7JX+yZv14eR/V0WQDNlxmcLw+R
-	s8f3Oiqh0Nyv3Y7yg11ub4QJCT9rzMu/Jbtn+9oIQqi/vi7rYsde/ZE3hOsw==
+	:subject:to:to; s=fm2; t=1727159589; x=1727245989; bh=kqJbu8RSS5
+	FyPOe6noronqgaPdqL6YhdYmocVj/xqhU=; b=N0gZHiiNAQkdQ//Sv8qoJOeXZ+
+	TovMWAlP1HjzN24pLT+gXa5vNRG365b/jv2KsMynWZMAI/WW77kR28RDmhyapBLt
+	u47fTyIoHqQXZSmLpzcgk2IfbuwPwCeoIP0U4lov5+Q9kurSAcbluLkNNQfXG6Se
+	TAUKjjDL4FykXOC26Oxu/ig4KvoXv9nHsfg94n1xjyATM/zLUbCRGUac5FSnNgwG
+	gtbfPA53P2/wi6XSzV/DIHft9XiR27B64UnpXoYMIaNt6P1LjasfxrbKmueDrT/0
+	zKhvUy70hjloqSRniU+sW5oVAQLP+4zHGqH2XAK0wPAv8kH9x3w1pnNi1OJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727159586; x=1727245986; bh=jrq+YinpYayN57PdMeGJ2dcQDFK6
-	yzlCH+EpmagUSeA=; b=VCXvrk5w9Osz+amkzm9U37Vlr5h9jvafhERNyfjeSSFN
-	vic0U4DQF5Xu8tYu5m/cCDL0PRt185Ix338OOTqKYm6Ct6LZNfn7vrL0T5hD/64+
-	QuriUqArD2j5qtmf6CcyXNysDsC8DXJ3jQO030xAv5aK5XgbeWXSGLU0STwQgqFk
-	g0wklhSv8gMOYWFA5pQxCV+oCp4fRnkjNIe8lLtrDI+SwGcTdq39tRA/DOwamM3l
-	6OYUkEZYJzheMn0U3r+hGmBizVFVia2JqVaeilQrYqxocQOGpVRmzR9RSwJXYMZP
-	X12K/VS6YWDVwqBvHRE41E2FQcj4KBT1TkmSaIh9eg==
-X-ME-Sender: <xms:Il3yZsbkpXWAjJ_ikdL6KqQZZLmm1oSCOQV77ZqYCDdt5b5n1XJ5KA>
-    <xme:Il3yZnZoqgWJHK4zpQKsLCQ6qyoVwltZl-YR0OVd_GlYoVUireq7Xo8NbBNjBLWaC
-    Ya-AsTq8qLa2Z7BrQ>
-X-ME-Received: <xmr:Il3yZm_WkBuICLs6xrs5-OBoNkp0bs5E7_oCsqwQuXE4d4vhy23fzR7TkaIRIJSm6QwXfbavQGfg2tbMBuOMNILsuwtzFMmgU4yCI2XQXbrGRg>
+	fm2; t=1727159589; x=1727245989; bh=kqJbu8RSS5FyPOe6noronqgaPdqL
+	6YhdYmocVj/xqhU=; b=CCfGC8JQ9SKZDGVai/LaQCFqpXK19ClxMQp6UAXWWD7P
+	85DqOovrCes302F5gKHO7DNgXcfUkNMmzUb3RqF3LQZJfZjOFlqjPKGh1AtBfp4L
+	vDvNdPeGmos2xe3lr8BMD6Xt4UMwTrbnGZf8sviVUh5tukTuv6z8wrqTU5litzTB
+	7kMz1Zf/5bDNrSJTKsFvSb7J2MLCb9l/C2BYSfuS5Jq0eU2dx/YZLALN3b10pI25
+	1pYShhBbDnw7dQc3qFITl+XIxlcJ2vWNF/yB6s0OunWF2sLfXXibq98KnfOmGez1
+	Y9qMCX6WPRVtdcpyQigkO5X8MSjI4VvbhNYQ4L595A==
+X-ME-Sender: <xms:JV3yZlbGfbhm1F1n3UyRVyT3FzPp0Zy8aRYSlLqUBdeSUfgj6fwXEw>
+    <xme:JV3yZsbS_ECevC2mJlY8HdsLvoSM1bCD5NxBy_Gh_r90PJB4xgTSOx3GRkF3PRCFR
+    6LQjhJutJzPOtP2Dw>
+X-ME-Received: <xmr:JV3yZn_668oTDYVJOnuINObZc_42_XdWWxJ9ircMTze1JZCsb7Oc0c-Rbt02-hc6alFMVhi2H-xaKGvvwxQAkw-YMMnjzqNK_SqR4cLAWzYOsw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtuddgjeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -59,24 +59,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtuddgjeejucetufdoteggod
     mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
     htthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphht
     thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Il3yZmpzihLztNTZ2xUv1FnXTejm78neA89eDcRQe96hQLIaCKKesw>
-    <xmx:Il3yZnokoNbODQTKQL_2v-LS4X0cKIKPtk-L9JhiOXyFMkEN_f7qHA>
-    <xmx:Il3yZkTAUzCvkRzOB7o36UIk_HCr9a0VadG7XvLJY4DKo1YKus0_0g>
-    <xmx:Il3yZnqGs3sqSWP1BiCaq0NrOaRId5Vib-Oh3tEDfYDTt7jd5voHpg>
-    <xmx:Il3yZmVqsipz24GkktJ_tRxUDLSuspqiOUD8CmC6sTZnUnob4CL30jLp>
+X-ME-Proxy: <xmx:JV3yZjouf70JNuFlmUM1Wwai8NYvmHbodDbUfnBbuQMTN0rMuHJSjQ>
+    <xmx:JV3yZgqPahjd79P83mz6JlFAT8gZqeDSEWyaPbQuV3ijf1hl4QNnSA>
+    <xmx:JV3yZpR_ACz7CBEEukSJLYVieNuSXwCfmjCwcpYJZicWDQJNt6_awg>
+    <xmx:JV3yZorb4pW4n_mCYAfXHuOl4AWglVGyV6ed634DtEYvd-PrSuM0Jw>
+    <xmx:JV3yZrXDWT25xq9vphRXnGwj7TatMDwpGq8KdMeet01edHnGbP43AyR9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Sep 2024 02:33:05 -0400 (EDT)
+ 24 Sep 2024 02:33:08 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 34c096c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Sep 2024 06:32:31 +0000 (UTC)
-Date: Tue, 24 Sep 2024 08:33:01 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9f8e670b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Sep 2024 06:32:35 +0000 (UTC)
+Date: Tue, 24 Sep 2024 08:33:05 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 21/22] reftable/tree: handle allocation failures
-Message-ID: <c31f9e53f529055bbc1eb5022befb497c1682d19.1727158127.git.ps@pks.im>
+Subject: [PATCH v2 22/22] reftable: handle trivial allocation failures
+Message-ID: <d0fe9993716cb213f695584bf9363382894eb36a.1727158127.git.ps@pks.im>
 References: <cover.1726489647.git.ps@pks.im>
  <cover.1727158127.git.ps@pks.im>
 Precedence: bulk
@@ -89,181 +89,299 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727158127.git.ps@pks.im>
 
-The tree interfaces of the reftable library handle both insertion and
-searching of tree nodes with a single function, where the behaviour is
-altered between the two via an `insert` bit. This makes it quit awkward
-to handle allocation failures because on inserting we'd have to check
-for `NULL` pointers and return an error, whereas on searching entries we
-don't have to handle it as an allocation error.
-
-Split up concerns of this function into two separate functions, one for
-inserting entries and one for searching entries. This makes it easy for
-us to check for allocation errors as `tree_insert()` should never return
-a `NULL` pointer now. Adapt callers accordingly.
+Handle trivial allocation failures in the reftable library and its unit
+tests.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/tree.c                | 42 +++++++++++++++++++++++-----------
- reftable/tree.h                | 21 +++++++++++++----
- reftable/writer.c              |  7 +++---
- t/unit-tests/t-reftable-tree.c | 10 ++++----
- 4 files changed, 54 insertions(+), 26 deletions(-)
+ reftable/merged.c                   |  3 +++
+ reftable/reader.c                   | 10 +++++++++-
+ reftable/stack.c                    | 20 ++++++++++++++++++++
+ reftable/writer.c                   | 13 +++++++++++--
+ t/unit-tests/t-reftable-block.c     |  4 ++++
+ t/unit-tests/t-reftable-merged.c    |  4 ++++
+ t/unit-tests/t-reftable-readwrite.c | 27 ++++++++++++++++-----------
+ 7 files changed, 67 insertions(+), 14 deletions(-)
 
-diff --git a/reftable/tree.c b/reftable/tree.c
-index 5ffb2e0d690..f4dbe720901 100644
---- a/reftable/tree.c
-+++ b/reftable/tree.c
-@@ -11,28 +11,44 @@ license that can be found in the LICENSE file or at
- 
- #include "basics.h"
- 
--struct tree_node *tree_search(void *key, struct tree_node **rootp,
--			      int (*compare)(const void *, const void *),
--			      int insert)
-+struct tree_node *tree_search(struct tree_node *tree,
-+			      void *key,
-+			      int (*compare)(const void *, const void *))
- {
- 	int res;
-+	if (!tree)
-+		return NULL;
-+	res = compare(key, tree->key);
-+	if (res < 0)
-+		return tree_search(tree->left, key, compare);
-+	else if (res > 0)
-+		return tree_search(tree->right, key, compare);
-+	return tree;
-+}
-+
-+struct tree_node *tree_insert(struct tree_node **rootp,
-+			      void *key,
-+			      int (*compare)(const void *, const void *))
-+{
-+	int res;
-+
- 	if (!*rootp) {
--		if (!insert) {
-+		struct tree_node *n;
-+
-+		REFTABLE_CALLOC_ARRAY(n, 1);
-+		if (!n)
- 			return NULL;
--		} else {
--			struct tree_node *n;
--			REFTABLE_CALLOC_ARRAY(n, 1);
--			n->key = key;
--			*rootp = n;
--			return *rootp;
--		}
-+
-+		n->key = key;
-+		*rootp = n;
-+		return *rootp;
+diff --git a/reftable/merged.c b/reftable/merged.c
+index 2c20845d624..52bc66c5273 100644
+--- a/reftable/merged.c
++++ b/reftable/merged.c
+@@ -203,6 +203,9 @@ int reftable_merged_table_new(struct reftable_merged_table **dest,
  	}
  
- 	res = compare(key, (*rootp)->key);
- 	if (res < 0)
--		return tree_search(key, &(*rootp)->left, compare, insert);
-+		return tree_insert(&(*rootp)->left, key, compare);
- 	else if (res > 0)
--		return tree_search(key, &(*rootp)->right, compare, insert);
-+		return tree_insert(&(*rootp)->right, key, compare);
- 	return *rootp;
- }
- 
-diff --git a/reftable/tree.h b/reftable/tree.h
-index fbdd002e23a..9604453b6d5 100644
---- a/reftable/tree.h
-+++ b/reftable/tree.h
-@@ -15,12 +15,23 @@ struct tree_node {
- 	struct tree_node *left, *right;
- };
- 
--/* looks for `key` in `rootp` using `compare` as comparison function. If insert
-- * is set, insert the key if it's not found. Else, return NULL.
-+/*
-+ * Search the tree for the node matching the given key using `compare` as
-+ * comparison function. Returns the node whose key matches or `NULL` in case
-+ * the key does not exist in the tree.
-+ */
-+struct tree_node *tree_search(struct tree_node *tree,
-+			      void *key,
-+			      int (*compare)(const void *, const void *));
+ 	REFTABLE_CALLOC_ARRAY(m, 1);
++	if (!m)
++		return REFTABLE_OUT_OF_MEMORY_ERROR;
 +
-+/*
-+ * Insert a node into the tree. Returns the newly inserted node if the key does
-+ * not yet exist. Otherwise it returns the preexisting node. Returns `NULL`
-+ * when allocating the new node fails.
-  */
--struct tree_node *tree_search(void *key, struct tree_node **rootp,
--			      int (*compare)(const void *, const void *),
--			      int insert);
-+struct tree_node *tree_insert(struct tree_node **rootp,
-+			      void *key,
-+			      int (*compare)(const void *, const void *));
+ 	m->readers = readers;
+ 	m->readers_len = n;
+ 	m->min = first_min;
+diff --git a/reftable/reader.c b/reftable/reader.c
+index 0179e4e73dd..98e7aa26373 100644
+--- a/reftable/reader.c
++++ b/reftable/reader.c
+@@ -598,6 +598,10 @@ int reftable_reader_new(struct reftable_reader **out,
+ 	int err;
  
- /* performs an infix walk of the tree. */
- void infix_walk(struct tree_node *t, void (*action)(void *arg, void *key),
+ 	REFTABLE_CALLOC_ARRAY(r, 1);
++	if (!r) {
++		err = REFTABLE_OUT_OF_MEMORY_ERROR;
++		goto done;
++	}
+ 
+ 	/*
+ 	 * We need one extra byte to read the type of first block. We also
+@@ -627,7 +631,11 @@ int reftable_reader_new(struct reftable_reader **out,
+ 
+ 	r->size = file_size - footer_size(r->version);
+ 	r->source = *source;
+-	r->name = xstrdup(name);
++	r->name = reftable_strdup(name);
++	if (!r->name) {
++		err = REFTABLE_OUT_OF_MEMORY_ERROR;
++		goto done;
++	}
+ 	r->hash_id = 0;
+ 	r->refcount = 1;
+ 
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 990784d9d2f..7df28ab3438 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -116,6 +116,11 @@ static int fd_read_lines(int fd, char ***namesp)
+ 	}
+ 
+ 	REFTABLE_ALLOC_ARRAY(buf, size + 1);
++	if (!buf) {
++		err = REFTABLE_OUT_OF_MEMORY_ERROR;
++		goto done;
++	}
++
+ 	if (read_in_full(fd, buf, size) != size) {
+ 		err = REFTABLE_IO_ERROR;
+ 		goto done;
+@@ -140,6 +145,8 @@ int read_lines(const char *filename, char ***namesp)
+ 	if (fd < 0) {
+ 		if (errno == ENOENT) {
+ 			REFTABLE_CALLOC_ARRAY(*namesp, 1);
++			if (!*namesp)
++				return REFTABLE_OUT_OF_MEMORY_ERROR;
+ 			return 0;
+ 		}
+ 
+@@ -420,6 +427,10 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
+ 			}
+ 
+ 			REFTABLE_CALLOC_ARRAY(names, 1);
++			if (!names) {
++				err = REFTABLE_OUT_OF_MEMORY_ERROR;
++				goto out;
++			}
+ 		} else {
+ 			err = fd_read_lines(fd, &names);
+ 			if (err < 0)
+@@ -779,7 +790,11 @@ int reftable_stack_new_addition(struct reftable_addition **dest,
+ {
+ 	int err = 0;
+ 	struct reftable_addition empty = REFTABLE_ADDITION_INIT;
++
+ 	REFTABLE_CALLOC_ARRAY(*dest, 1);
++	if (!*dest)
++		return REFTABLE_OUT_OF_MEMORY_ERROR;
++
+ 	**dest = empty;
+ 	err = reftable_stack_init_addition(*dest, st);
+ 	if (err) {
+@@ -886,7 +901,12 @@ int reftable_addition_add(struct reftable_addition *add,
+ 
+ 	REFTABLE_ALLOC_GROW(add->new_tables, add->new_tables_len + 1,
+ 			    add->new_tables_cap);
++	if (!add->new_tables) {
++		err = REFTABLE_OUT_OF_MEMORY_ERROR;
++		goto done;
++	}
+ 	add->new_tables[add->new_tables_len++] = strbuf_detach(&next_name, NULL);
++
+ done:
+ 	delete_tempfile(&tab_file);
+ 	strbuf_release(&temp_tab_file_name);
 diff --git a/reftable/writer.c b/reftable/writer.c
-index 712a84791b2..44bed92f467 100644
+index 44bed92f467..ad4718edecb 100644
 --- a/reftable/writer.c
 +++ b/reftable/writer.c
-@@ -208,8 +208,7 @@ static int writer_index_hash(struct reftable_writer *w, struct strbuf *hash)
- 	struct obj_index_tree_node *key;
- 	struct tree_node *node;
+@@ -49,8 +49,14 @@ static int padded_write(struct reftable_writer *w, uint8_t *data, size_t len,
+ {
+ 	int n = 0;
+ 	if (w->pending_padding > 0) {
+-		uint8_t *zeroed = reftable_calloc(w->pending_padding, sizeof(*zeroed));
+-		int n = w->write(w->write_arg, zeroed, w->pending_padding);
++		uint8_t *zeroed;
++		int n;
++
++		zeroed = reftable_calloc(w->pending_padding, sizeof(*zeroed));
++		if (!zeroed)
++			return -1;
++
++		n = w->write(w->write_arg, zeroed, w->pending_padding);
+ 		if (n < 0)
+ 			return n;
  
--	node = tree_search(&want, &w->obj_index_tree,
--			   &obj_index_tree_node_compare, 0);
-+	node = tree_search(w->obj_index_tree, &want, &obj_index_tree_node_compare);
- 	if (!node) {
- 		struct obj_index_tree_node empty = OBJ_INDEX_TREE_NODE_INIT;
- 
-@@ -221,8 +220,8 @@ static int writer_index_hash(struct reftable_writer *w, struct strbuf *hash)
- 
- 		strbuf_reset(&key->hash);
- 		strbuf_addbuf(&key->hash, hash);
--		tree_search((void *)key, &w->obj_index_tree,
--			    &obj_index_tree_node_compare, 1);
-+		tree_insert(&w->obj_index_tree, key,
-+			    &obj_index_tree_node_compare);
- 	} else {
- 		key = node->key;
- 	}
-diff --git a/t/unit-tests/t-reftable-tree.c b/t/unit-tests/t-reftable-tree.c
-index 700479d34b1..79b175a45a7 100644
---- a/t/unit-tests/t-reftable-tree.c
-+++ b/t/unit-tests/t-reftable-tree.c
-@@ -37,16 +37,17 @@ static void t_tree_search(void)
- 	 * values[1] and values[10] (inclusive) in the tree.
+@@ -767,6 +773,9 @@ static int writer_flush_nonempty_block(struct reftable_writer *w)
+ 	 * case we will end up with a multi-level index.
  	 */
- 	do {
--		nodes[i] = tree_search(&values[i], &root, &t_compare, 1);
-+		nodes[i] = tree_insert(&root, &values[i], &t_compare);
-+		check(nodes[i] != NULL);
- 		i = (i * 7) % 11;
- 	} while (i != 1);
+ 	REFTABLE_ALLOC_GROW(w->index, w->index_len + 1, w->index_cap);
++	if (!w->index)
++		return REFTABLE_OUT_OF_MEMORY_ERROR;
++
+ 	index_record.offset = w->next;
+ 	strbuf_reset(&index_record.last_key);
+ 	strbuf_addbuf(&index_record.last_key, &w->block_writer->last_key);
+diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
+index e52a612e852..d470060e8be 100644
+--- a/t/unit-tests/t-reftable-block.c
++++ b/t/unit-tests/t-reftable-block.c
+@@ -32,6 +32,7 @@ static void t_ref_block_read_write(void)
+ 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
  
- 	for (i = 1; i < ARRAY_SIZE(nodes); i++) {
- 		check_pointer_eq(&values[i], nodes[i]->key);
--		check_pointer_eq(nodes[i], tree_search(&values[i], &root, &t_compare, 0));
-+		check_pointer_eq(nodes[i], tree_search(root, &values[i], &t_compare));
+ 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
++	check(block.data != NULL);
+ 	block.len = block_size;
+ 	block_source_from_strbuf(&block.source ,&buf);
+ 	ret = block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
+@@ -125,6 +126,7 @@ static void t_log_block_read_write(void)
+ 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
+ 
+ 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
++	check(block.data != NULL);
+ 	block.len = block_size;
+ 	block_source_from_strbuf(&block.source ,&buf);
+ 	ret = block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
+@@ -214,6 +216,7 @@ static void t_obj_block_read_write(void)
+ 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
+ 
+ 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
++	check(block.data != NULL);
+ 	block.len = block_size;
+ 	block_source_from_strbuf(&block.source, &buf);
+ 	ret = block_writer_init(&bw, BLOCK_TYPE_OBJ, block.data, block_size,
+@@ -297,6 +300,7 @@ static void t_index_block_read_write(void)
+ 	struct strbuf want = STRBUF_INIT, buf = STRBUF_INIT;
+ 
+ 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
++	check(block.data != NULL);
+ 	block.len = block_size;
+ 	block_source_from_strbuf(&block.source, &buf);
+ 	ret = block_writer_init(&bw, BLOCK_TYPE_INDEX, block.data, block_size,
+diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
+index 3d2848632db..3c84363e980 100644
+--- a/t/unit-tests/t-reftable-merged.c
++++ b/t/unit-tests/t-reftable-merged.c
+@@ -29,7 +29,9 @@ merged_table_from_records(struct reftable_ref_record **refs,
+ 	int err;
+ 
+ 	REFTABLE_CALLOC_ARRAY(*readers, n);
++	check(*readers != NULL);
+ 	REFTABLE_CALLOC_ARRAY(*source, n);
++	check(*source != NULL);
+ 
+ 	for (size_t i = 0; i < n; i++) {
+ 		t_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0, &opts);
+@@ -285,7 +287,9 @@ merged_table_from_log_records(struct reftable_log_record **logs,
+ 	int err;
+ 
+ 	REFTABLE_CALLOC_ARRAY(*readers, n);
++	check(*readers != NULL);
+ 	REFTABLE_CALLOC_ARRAY(*source, n);
++	check(*source != NULL);
+ 
+ 	for (size_t i = 0; i < n; i++) {
+ 		t_reftable_write_to_buf(&buf[i], NULL, 0, logs[i], sizes[i], &opts);
+diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
+index acca927a2cf..bfa069caff7 100644
+--- a/t/unit-tests/t-reftable-readwrite.c
++++ b/t/unit-tests/t-reftable-readwrite.c
+@@ -52,8 +52,11 @@ static void write_table(char ***names, struct strbuf *buf, int N,
+ 	int i;
+ 
+ 	REFTABLE_CALLOC_ARRAY(*names, N + 1);
++	check(*names != NULL);
+ 	REFTABLE_CALLOC_ARRAY(refs, N);
++	check(refs != NULL);
+ 	REFTABLE_CALLOC_ARRAY(logs, N);
++	check(logs != NULL);
+ 
+ 	for (i = 0; i < N; i++) {
+ 		refs[i].refname = (*names)[i] = xstrfmt("refs/heads/branch%02d", i);
+@@ -150,23 +153,25 @@ static void t_log_overflow(void)
+ 
+ static void t_log_write_read(void)
+ {
+-	int N = 2;
+-	char **names = reftable_calloc(N + 1, sizeof(*names));
+-	int err;
+ 	struct reftable_write_options opts = {
+ 		.block_size = 256,
+ 	};
+ 	struct reftable_ref_record ref = { 0 };
+-	int i = 0;
+ 	struct reftable_log_record log = { 0 };
+-	int n;
+ 	struct reftable_iterator it = { 0 };
+ 	struct reftable_reader *reader;
+ 	struct reftable_block_source source = { 0 };
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct reftable_writer *w = t_reftable_strbuf_writer(&buf, &opts);
+ 	const struct reftable_stats *stats = NULL;
++	int N = 2, err, i, n;
++	char **names;
++
++	names = reftable_calloc(N + 1, sizeof(*names));
++	check(names != NULL);
++
+ 	reftable_writer_set_limits(w, 0, N);
++
+ 	for (i = 0; i < N; i++) {
+ 		char name[256];
+ 		struct reftable_ref_record ref = { 0 };
+@@ -178,6 +183,7 @@ static void t_log_write_read(void)
+ 		err = reftable_writer_add_ref(w, &ref);
+ 		check(!err);
  	}
++
+ 	for (i = 0; i < N; i++) {
+ 		struct reftable_log_record log = { 0 };
  
--	check(!tree_search(values, &root, t_compare, 0));
-+	check(!tree_search(root, values, t_compare));
- 	tree_free(root);
- }
+@@ -476,8 +482,7 @@ static void t_table_read_write_seek_index(void)
  
-@@ -62,7 +63,8 @@ static void t_infix_walk(void)
- 	size_t count = 0;
+ static void t_table_refs_for(int indexed)
+ {
+-	int N = 50;
+-	char **want_names = reftable_calloc(N + 1, sizeof(*want_names));
++	char **want_names;
+ 	int want_names_len = 0;
+ 	uint8_t want_hash[GIT_SHA1_RAWSZ];
  
- 	do {
--		tree_search(&values[i], &root, t_compare, 1);
-+		struct tree_node *node = tree_insert(&root, &values[i], t_compare);
-+		check(node != NULL);
- 		i = (i * 7) % 11;
- 		count++;
- 	} while (i != 1);
+@@ -485,15 +490,15 @@ static void t_table_refs_for(int indexed)
+ 		.block_size = 256,
+ 	};
+ 	struct reftable_ref_record ref = { 0 };
+-	int i = 0;
+-	int n;
+-	int err;
+ 	struct reftable_reader *reader;
+ 	struct reftable_block_source source = { 0 };
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct reftable_writer *w = t_reftable_strbuf_writer(&buf, &opts);
+ 	struct reftable_iterator it = { 0 };
+-	int j;
++	int N = 50, n, j, err, i;
++
++	want_names = reftable_calloc(N + 1, sizeof(*want_names));
++	check(want_names != NULL);
+ 
+ 	t_reftable_set_hash(want_hash, 4, GIT_SHA1_FORMAT_ID);
+ 
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
