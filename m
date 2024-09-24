@@ -1,64 +1,64 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4AD12C544
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 07:08:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBA712DD95
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 07:08:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727161738; cv=none; b=sNdUPBrLQ/Xz7+tGi9OWDwTCjV58/7vtQzsVWjCD73Vu4VVpW/Dk5Hltq6SZ31fzRnzsebVJrKJnzIg6dF+GrCM85NxIh6pswGhMM6LAxM6dwSO8nFkiWzXpo1aqUVUbJlRLfgq8D0dTpxp9JoCihDcKBKKYhZFhi7qr0JR6qoU=
+	t=1727161740; cv=none; b=ms3jh4jKUEboC0hp08a7qq8UKdpKtsiTDdS1WqvNJj4qUfVSvwEzZtty+ZxqJaxG3T9SKUdSMFPL54h7XM3oAA751HHvv6BVGTH9bWDULuysVdpM5Mnh9q0ZVSRo0POFi62bXIF4vW1dYkM8gIAl500BpOR0v/3swqvcVz7sR/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727161738; c=relaxed/simple;
-	bh=Sw5Zoox1wS11AVda86kU7lPpxL1cDrsRx5Lzxf0anNQ=;
+	s=arc-20240116; t=1727161740; c=relaxed/simple;
+	bh=Eaqgis0uSVGgXcr2Jmt79yrqrhPXTWxp+V+pT+l53MY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=R2lNpwrbDWfY0CJAX1agemNrGCKf+CyGQUBVgmPd2GDdRGpTotwpprUBhAIb7m0d/7e1u2LW+uFSbEWds4zNbn+dFDHkouP3zoL1QWw3X1hXA42V24c2OVb+FzBGoJ9CvrYgNj1lLodNZi9DUdXVSYy6P0L0AkzQbvOqCQ4VSUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EVPVsWoK; arc=none smtp.client-ip=209.85.218.51
+	 Content-Type:To:Cc; b=qviLO9d91R/gZvx0WI4rCihGT0oQXbLHMfsGhS90veEIBGnH4BUjeN+UN80kgC7wXp9iXG6/QCHFIrx+ULcfE7hPBZ0gWrrzvESEb9UCUg+nLcpOYCgHdt4oPtInihasVZ03h+zVad3heUcKYTgYucfCw85cLAuXDSXsisQdQ9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EbEEACg5; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EVPVsWoK"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a8a789c4fc5so161014366b.0
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 00:08:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EbEEACg5"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5365aa568ceso6015433e87.0
+        for <git@vger.kernel.org>; Tue, 24 Sep 2024 00:08:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727161735; x=1727766535; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727161736; x=1727766536; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BD/05PhIVrHN/74im8C/+sMenNig6tZVrRnSWf10004=;
-        b=EVPVsWoKTz3WAzY51aU3D50wJHXjTv7/cbMZ547Lkph1UzyS6peWf+CB9+goGrqIaf
-         XwesJ12Q2r371dacMnmXkbvO6PxYUjk17h1R1sgWu60SC3RqXDK89UlCTeviBU+sNtqP
-         XS02cSe5uEGQIAvMchtJvxq2Baj7bQDxc/p7bqUd9YSno/BCgeX7L8XqiGYc2864U9Qx
-         jA53JDr9EVKMNeGlYDqxbIjvZQTDnDZa2LfNKXstOcrd5xVndWy7CLWTqOwVs6wiAZe/
-         Zk7Wm5q7NKOD2Zq9gSEIiq7vHheb7n1ZaO9f48JE+/SfbQrNclxjU05Z0FQ5t40J+xvF
-         p6Vw==
+        bh=/qrMXREWBZ2YGOF2rrmabikA8Un0b7umLT0leYeINvA=;
+        b=EbEEACg5PZZRtB+GIzoSX3UcIjo6VTv+gQI44Y5j45DNePSOBMcaOYphqZrKmtEohG
+         Da+k/fSq64T4evfb5kUJF/p04BaHKI1KNETN/lfKZB8AzvzFi06NwpfGRYUYepxmHWxU
+         QXXgHlckDL9e1XOjwxIFxPMcvbmG/Y9DZ51giZFRthxAY4TW+EkoV2ZiI/t7ICi1YQRl
+         d4+7TqFUyngJv/ktp6bCY3BgGOPIVmfsaQXAYHSCvtflkdg0wdMkCy3lxtmZRG3dCfXR
+         D2umxCrTj2NrogTLv2bVtE89PZ1Ed+AJD1vn/VHQOnAwIhGVFNkWUSbPRG+3LTlEkqQW
+         AxPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727161735; x=1727766535;
+        d=1e100.net; s=20230601; t=1727161736; x=1727766536;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BD/05PhIVrHN/74im8C/+sMenNig6tZVrRnSWf10004=;
-        b=hpmilV/s9YCQFfl8vUBBK/tJjuqtWh4j5jJtHVqzO7wyOjLXdI3A6GeEqNY5CHCqz1
-         iJVDvuBIMfUL59xOrb1LqlCEZv3UTgrSO2U+9yUebGxSzSpxjWpmdtFKtV2ahtxQzSeC
-         Ir1I2wwl10JCoMMmtLRjFFnjNdsFk4x1JxBqBfgIDu0ti5ZcxZ0xvrKAB8PFu62Y9Fuy
-         sjKCsmWmfq/AA5uun36YQxGy3Kv2QvIwSfcdn6Mb12hpP6n/Ei+sJCZCfypS/l7pFZe/
-         N2bkMZ4VSh5HApsrVizxKHYy+MU8aUtL6gL206E3S9sb7mxF23OqznsNT2ToxmrwJUz8
-         eH9Q==
-X-Gm-Message-State: AOJu0YxrWwTEQGCf/l5l7c1jIK2TVqRjc11lSMvZvDWMdUz1PWh14WDY
-	YnqK8tgFp8ZGFZtuq+Z2v707NS0r7M0kx2m5yG0eqgJ8kQiMfIH7nT0dSA==
-X-Google-Smtp-Source: AGHT+IGrX2oP1eUN2AZVU/l7EcqagIWOrZnFUM1tKseOThrWAYJOCg7qUFJgf+JoGLrPid/Ll7pPMw==
-X-Received: by 2002:a17:907:7da6:b0:a91:1592:f5c5 with SMTP id a640c23a62f3a-a92c4810e00mr235762066b.10.1727161734436;
-        Tue, 24 Sep 2024 00:08:54 -0700 (PDT)
+        bh=/qrMXREWBZ2YGOF2rrmabikA8Un0b7umLT0leYeINvA=;
+        b=XMEQDzLRolErv4R8B1klzduoTUxKwerTFbilMcBuUhqOXSrX/TmznFcUp31KwIbmhF
+         jsp5taSrlPQRWFZ4/Vt+Kqrve2BR+so9S5oIsg5y8eutKpg/sDINZ1F0V5mlmywT2Uuh
+         Y6I3pyNjJPRMNuuYlIrOae9Lpfl9D2Q4ycNNg5D++rVO8EC0ykqsAfNy5l9rMrrhyd4Q
+         OIMvynsK1zECcVAIy9CyJEhMxno3Wa+m0oCa4hWc4AvoGlOcvA+8px95DUaj91puaWDV
+         W5vJoGB8ZomZhHLn38yFS2P/tUE6AZv37JS8fQnM3KacnBP4DWFQi1HEMdORckPH1rEm
+         bqmA==
+X-Gm-Message-State: AOJu0YwZK1VN00DVTYgaYdjXLnruuglw8nuP9PeFkmAyNzHzLXhDY+NQ
+	Z6neXYliN/EusUIpa+HmV/+fr9HptCVUlUKuVU8fj/WHsCvV+QNJ26xBvA==
+X-Google-Smtp-Source: AGHT+IE6eH49HiziPIy2bqHqIm3A6e5NDPLE1dEpbuA6Q/TukwLtNsTU2qnUrQM1H1pM8lTC57gLOw==
+X-Received: by 2002:a05:6512:6d1:b0:52c:d628:c77c with SMTP id 2adb3069b0e04-536ac32f044mr9626223e87.43.1727161735249;
+        Tue, 24 Sep 2024 00:08:55 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93930caf50sm47906166b.106.2024.09.24.00.08.53
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9392f4f8b1sm48187166b.53.2024.09.24.00.08.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 00:08:53 -0700 (PDT)
-Message-Id: <06b8fff6a57642aa0f6853528c00b8c30896842d.1727161730.git.gitgitgadget@gmail.com>
+        Tue, 24 Sep 2024 00:08:54 -0700 (PDT)
+Message-Id: <a76998d6443a5fd3de97e296223ec845413bbb29.1727161730.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1766.v5.git.1727161730.gitgitgadget@gmail.com>
 References: <pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
 	<pull.1766.v5.git.1727161730.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 24 Sep 2024 07:08:49 +0000
-Subject: [PATCH v5 2/3] doc: update the guidelines to reflect the current
- formatting rules
+Date: Tue, 24 Sep 2024 07:08:50 +0000
+Subject: [PATCH v5 3/3] doc: apply synopsis simplification on git-clone and
+ git-init
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,124 +77,391 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
+With the new synopsis formatting backend, no special asciidoc markup
+is needed.
+
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/CodingGuidelines | 58 ++++++++++++++++++----------------
- 1 file changed, 30 insertions(+), 28 deletions(-)
+ Documentation/git-clone.txt | 78 ++++++++++++++++++-------------------
+ Documentation/git-init.txt  | 35 +++++++----------
+ Documentation/urls.txt      | 26 ++++++-------
+ 3 files changed, 67 insertions(+), 72 deletions(-)
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index ccaea39752c..13cbcf1d7a5 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -820,78 +820,80 @@ Markup:
-    _<new-branch-name>_
-    _<template-directory>_
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 8e925db7e9c..9c13f847da3 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -8,16 +8,16 @@ git-clone - Clone a repository into a new directory
  
-- A placeholder is not enclosed in backticks, as it is not a literal.
+ SYNOPSIS
+ --------
+-[verse]
+-`git clone` [++--template=++__<template-directory>__]
+-	  [`-l`] [`-s`] [`--no-hardlinks`] [`-q`] [`-n`] [`--bare`] [`--mirror`]
+-	  [`-o` _<name>_] [`-b` _<name>_] [`-u` _<upload-pack>_] [`--reference` _<repository>_]
+-	  [`--dissociate`] [`--separate-git-dir` _<git-dir>_]
+-	  [`--depth` _<depth>_] [`--`[`no-`]{empty}`single-branch`] [`--no-tags`]
+-	  [++--recurse-submodules++[++=++__<pathspec>__]] [++--++[++no-++]{empty}++shallow-submodules++]
+-	  [`--`[`no-`]{empty}`remote-submodules`] [`--jobs` _<n>_] [`--sparse`] [`--`[`no-`]{empty}`reject-shallow`]
+-	  [++--filter=++__<filter-spec>__] [`--also-filter-submodules`]] [`--`] _<repository>_
+-	  [_<directory>_]
++[synopsis]
++git clone [--template=<template-directory>]
++	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
++	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
++	  [--dissociate] [--separate-git-dir <git-dir>]
++	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
++	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
++	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reject-shallow]
++	  [--filter=<filter-spec>] [--also-filter-submodules]] [--] <repository>
++	  [<directory>]
+ 
+ DESCRIPTION
+ -----------
+@@ -52,7 +52,7 @@ OPTIONS
+ 	to save space when possible.
+ +
+ If the repository is specified as a local path (e.g., `/path/to/repo`),
+-this is the default, and --local is essentially a no-op.  If the
++this is the default, and `--local` is essentially a no-op.  If the
+ repository is specified as a URL, then this flag is ignored (and we
+ never use the local optimizations).  Specifying `--no-local` will
+ override the default when `/path/to/repo` is given, using the regular
+@@ -64,8 +64,8 @@ prevent the unintentional copying of files by dereferencing the symbolic
+ links.
+ +
+ *NOTE*: this operation can race with concurrent modification to the
+-source repository, similar to running `cp -r src dst` while modifying
+-`src`.
++source repository, similar to running `cp -r <src> <dst>` while modifying
++_<src>_.
+ 
+ `--no-hardlinks`::
+ 	Force the cloning process from a repository on a local
+@@ -101,7 +101,7 @@ If you want to break the dependency of a repository cloned with `--shared` on
+ its source repository, you can simply run `git repack -a` to copy all
+ objects from the source repository into a pack in the cloned repository.
+ 
+-`--reference`[`-if-able`] _<repository>_::
++`--reference[-if-able] <repository>`::
+ 	If the reference _<repository>_ is on the local machine,
+ 	automatically setup `.git/objects/info/alternates` to
+ 	obtain objects from the reference _<repository>_.  Using
+@@ -142,17 +142,17 @@ objects from the source repository into a pack in the cloned repository.
+ 	is specified. This flag forces progress status even if the
+ 	standard error stream is not directed to a terminal.
+ 
+-++--server-option=++__<option>__::
++`--server-option=<option>`::
+ 	Transmit the given string to the server when communicating using
+ 	protocol version 2.  The given string must not contain a NUL or LF
+ 	character.  The server's handling of server options, including
+ 	unknown ones, is server-specific.
+-	When multiple ++--server-option=++__<option>__ are given, they are all
++	When multiple `--server-option=<option>` are given, they are all
+ 	sent to the other side in the order listed on the command line.
+ 
+ `-n`::
+ `--no-checkout`::
+-	No checkout of HEAD is performed after the clone is complete.
++	No checkout of `HEAD` is performed after the clone is complete.
+ 
+ `--`[`no-`]`reject-shallow`::
+ 	Fail if the source repository is a shallow repository.
+@@ -162,7 +162,7 @@ objects from the source repository into a pack in the cloned repository.
+ `--bare`::
+ 	Make a 'bare' Git repository.  That is, instead of
+ 	creating _<directory>_ and placing the administrative
+-	files in _<directory>_`/.git`, make the _<directory>_
++	files in `<directory>/.git`, make the _<directory>_
+ 	itself the `$GIT_DIR`. This obviously implies the `--no-checkout`
+ 	because there is nowhere to check out the working tree.
+ 	Also the branch heads at the remote are copied directly
+@@ -177,13 +177,13 @@ objects from the source repository into a pack in the cloned repository.
+ 	linkgit:git-sparse-checkout[1] command can be used to grow the
+ 	working directory as needed.
+ 
+-++--filter=++__<filter-spec>__::
++`--filter=<filter-spec>`::
+ 	Use the partial clone feature and request that the server sends
+ 	a subset of reachable objects according to a given object filter.
+ 	When using `--filter`, the supplied _<filter-spec>_ is used for
+ 	the partial clone filter. For example, `--filter=blob:none` will
+ 	filter out all blobs (file contents) until needed by Git. Also,
+-	++--filter=blob:limit=++__<size>__ will filter out all blobs of size
++	`--filter=blob:limit=<size>` will filter out all blobs of size
+ 	at least _<size>_. For more details on filter specifications, see
+ 	the `--filter` option in linkgit:git-rev-list[1].
+ 
+@@ -208,11 +208,11 @@ objects from the source repository into a pack in the cloned repository.
+ 
+ `-b` _<name>_::
+ `--branch` _<name>_::
+-	Instead of pointing the newly created HEAD to the branch pointed
+-	to by the cloned repository's HEAD, point to _<name>_ branch
++	Instead of pointing the newly created `HEAD` to the branch pointed
++	to by the cloned repository's `HEAD`, point to _<name>_ branch
+ 	instead. In a non-bare repository, this is the branch that will
+ 	be checked out.
+-	`--branch` can also take tags and detaches the HEAD at that commit
++	`--branch` can also take tags and detaches the `HEAD` at that commit
+ 	in the resulting repository.
+ 
+ `-u` _<upload-pack>_::
+@@ -221,12 +221,12 @@ objects from the source repository into a pack in the cloned repository.
+ 	via ssh, this specifies a non-default path for the command
+ 	run on the other end.
+ 
+-++--template=++__<template-directory>__::
++`--template=<template-directory>`::
+ 	Specify the directory from which templates will be used;
+ 	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
+ 
+-`-c` __<key>__++=++__<value>__::
+-`--config` __<key>__++=++__<value>__::
++`-c` `<key>=<value>`::
++`--config` `<key>=<value>`::
+ 	Set a configuration variable in the newly-created repository;
+ 	this takes effect immediately after the repository is
+ 	initialized, but before the remote history is fetched or any
+@@ -239,25 +239,25 @@ objects from the source repository into a pack in the cloned repository.
+ Due to limitations of the current implementation, some configuration
+ variables do not take effect until after the initial fetch and checkout.
+ Configuration variables known to not take effect are:
+-++remote.++__<name>__++.mirror++ and ++remote.++__<name>__++.tagOpt++.  Use the
++`remote.<name>.mirror` and `remote.<name>.tagOpt`.  Use the
+ corresponding `--mirror` and `--no-tags` options instead.
+ 
+-`--depth` _<depth>_::
++`--depth <depth>`::
+ 	Create a 'shallow' clone with a history truncated to the
+ 	specified number of commits. Implies `--single-branch` unless
+ 	`--no-single-branch` is given to fetch the histories near the
+ 	tips of all branches. If you want to clone submodules shallowly,
+ 	also pass `--shallow-submodules`.
+ 
+-++--shallow-since=++__<date>__::
++`--shallow-since=<date>`::
+ 	Create a shallow clone with a history after the specified time.
+ 
+-++--shallow-exclude=++__<revision>__::
++`--shallow-exclude=<revision>`::
+ 	Create a shallow clone with a history, excluding commits
+ 	reachable from a specified remote branch or tag.  This option
+ 	can be specified multiple times.
+ 
+-`--`[`no-`]`single-branch`::
++`--[no-]single-branch`::
+ 	Clone only the history leading to the tip of a single branch,
+ 	either specified by the `--branch` option or the primary
+ 	branch remote's `HEAD` points at.
+@@ -279,13 +279,13 @@ maintain a branch with no references other than a single cloned
+ branch. This is useful e.g. to maintain minimal clones of the default
+ branch of some repository for search indexing.
+ 
+-`--recurse-submodules`[`=`{empty}__<pathspec>__]::
++`--recurse-submodules[=<pathspec>]`::
+ 	After the clone is created, initialize and clone submodules
+-	within based on the provided _<pathspec>_.  If no _=<pathspec>_ is
++	within based on the provided _<pathspec>_.  If no `=<pathspec>` is
+ 	provided, all submodules are initialized and cloned.
+ 	This option can be given multiple times for pathspecs consisting
+ 	of multiple entries.  The resulting clone has `submodule.active` set to
+-	the provided pathspec, or "." (meaning all submodules) if no
++	the provided pathspec, or "`.`" (meaning all submodules) if no
+ 	pathspec is provided.
+ +
+ Submodules are initialized and cloned using their default settings. This is
+@@ -295,23 +295,23 @@ the clone is finished. This option is ignored if the cloned repository does
+ not have a worktree/checkout (i.e. if any of `--no-checkout`/`-n`, `--bare`,
+ or `--mirror` is given)
+ 
+-`--`[`no-`]`shallow-submodules`::
++`--[no-]shallow-submodules`::
+ 	All submodules which are cloned will be shallow with a depth of 1.
+ 
+-`--`[`no-`]`remote-submodules`::
++`--[no-]remote-submodules`::
+ 	All submodules which are cloned will use the status of the submodule's
+ 	remote-tracking branch to update the submodule, rather than the
+ 	superproject's recorded SHA-1. Equivalent to passing `--remote` to
+ 	`git submodule update`.
+ 
+-`--separate-git-dir=`{empty}__<git-dir>__::
++`--separate-git-dir=<git-dir>`::
+ 	Instead of placing the cloned repository where it is supposed
+ 	to be, place the cloned repository at the specified directory,
+ 	then make a filesystem-agnostic Git symbolic link to there.
+ 	The result is Git repository can be separated from working
+ 	tree.
+ 
+-`--ref-format=`{empty}__<ref-format>__::
++`--ref-format=<ref-format>`::
+ 
+ Specify the given ref storage format for the repository. The valid values are:
+ +
+@@ -334,7 +334,7 @@ _<directory>_::
+ 	for `host.xz:foo/.git`).  Cloning into an existing directory
+ 	is only allowed if the directory is empty.
+ 
+-`--bundle-uri=`{empty}__<uri>__::
++`--bundle-uri=<uri>`::
+ 	Before fetching from the remote, fetch a bundle from the given
+ 	_<uri>_ and unbundle the data into the local repository. The refs
+ 	in the bundle will be stored under the hidden `refs/bundle/*`
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index daff93bd164..315f7f7530c 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -8,12 +8,12 @@ git-init - Create an empty Git repository or reinitialize an existing one
+ 
+ SYNOPSIS
+ --------
+-[verse]
+-`git init` [`-q` | `--quiet`] [`--bare`] [++--template=++__<template-directory>__]
+-	  [`--separate-git-dir` _<git-dir>_] [++--object-format=++__<format>__]
+-	  [++--ref-format=++__<format>__]
+-	  [`-b` _<branch-name>_ | ++--initial-branch=++__<branch-name>__]
+-	  [++--shared++[++=++__<permissions>__]] [_<directory>_]
++[synopsis]
++git init [-q | --quiet] [--bare] [--template=<template-directory>]
++	 [--separate-git-dir <git-dir>] [--object-format=<format>]
++	 [--ref-format=<format>]
++	 [-b <branch-name> | --initial-branch=<branch-name>]
++	 [--shared[=<permissions>]] [<directory>]
+ 
+ 
+ DESCRIPTION
+@@ -25,11 +25,11 @@ directory with subdirectories for `objects`, `refs/heads`,
+ commits will be created (see the `--initial-branch` option below
+ for its name).
+ 
+-If the `$GIT_DIR` environment variable is set then it specifies a path
++If the `GIT_DIR` environment variable is set then it specifies a path
+ to use instead of `./.git` for the base of the repository.
+ 
+ If the object storage directory is specified via the
+-`$GIT_OBJECT_DIRECTORY` environment variable then the sha1 directories
++`GIT_OBJECT_DIRECTORY` environment variable then the sha1 directories
+ are created underneath; otherwise, the default `$GIT_DIR/objects`
+ directory is used.
+ 
+@@ -51,26 +51,22 @@ Only print error and warning messages; all other output will be suppressed.
+ Create a bare repository. If `GIT_DIR` environment is not set, it is set to the
+ current working directory.
+ 
+-++--object-format=++__<format>__::
 -
-  When needed, use a distinctive identifier for placeholders, usually
-  made of a qualification and a type:
-    _<git-dir>_
-    _<key-id>_
++`--object-format=<format>`::
+ Specify the given object _<format>_ (hash algorithm) for the repository.  The valid
+ values are `sha1` and (if enabled) `sha256`.  `sha1` is the default.
+ +
+ include::object-format-disclaimer.txt[]
  
-- When literal and placeholders are mixed, each markup is applied for
-- each sub-entity. If they are stuck, a special markup, called
-- unconstrained formatting is required.
-- Unconstrained formating for placeholders is __<like-this>__
-- Unconstrained formatting for literal formatting is ++like this++
--   `--jobs` _<n>_
--   ++--sort=++__<key>__
--   __<directory>__++/.git++
--   ++remote.++__<name>__++.mirror++
-+ Git's Asciidoc processor has been tailored to treat backticked text
-+ as complex synopsis. When literal and placeholders are mixed, you can
-+ use the backtick notation which will take care of correctly typesetting
-+ the content.
-+   `--jobs <n>`
-+   `--sort=<key>`
-+   `<directory>/.git`
-+   `remote.<name>.mirror`
-+   `ssh://[<user>@]<host>[:<port>]/<path-to-git-repo>`
+-++--ref-format=++__<format>__::
+-
++`--ref-format=<format>`::
+ Specify the given ref storage _<format>_ for the repository. The valid values are:
+ +
+ include::ref-storage-format.txt[]
  
-- caveat: ++ unconstrained format is not verbatim and may expand
-- content. Use Asciidoc escapes inside them.
-+As a side effect, backquoted placeholders are correctly typeset, but
-+this style is not recommended.
+-++--template=++__<template-directory>__::
+-
++`--template=<template-directory>`::
+ Specify the directory from which templates will be used.  (See the "TEMPLATE
+ DIRECTORY" section below.)
  
- Synopsis Syntax
+-++--separate-git-dir=++__<git-dir>__::
+-
++`--separate-git-dir=<git-dir>`::
+ Instead of initializing the repository as a directory to either `$GIT_DIR` or
+ `./.git/`, create a text file there containing the path to the actual
+ repository.  This file acts as a filesystem-agnostic Git symbolic link to the
+@@ -78,15 +74,14 @@ repository.
+ +
+ If this is a reinitialization, the repository will be moved to the specified path.
  
-- Syntax grammar is formatted neither as literal nor as placeholder.
-+ The synopsis (a paragraph with [synopsis] attribute) is automatically
-+ formatted by the toolchain and does not need typesetting.
+-`-b` _<branch-name>_::
+-++--initial-branch=++__<branch-name>__::
+-
++`-b <branch-name>`::
++`--initial-branch=<branch-name>`::
+ Use _<branch-name>_ for the initial branch in the newly created
+ repository.  If not specified, fall back to the default name (currently
+ `master`, but this is subject to change in the future; the name can be
+ customized via the `init.defaultBranch` configuration variable).
  
-  A few commented examples follow to provide reference when writing or
-  modifying command usage strings and synopsis sections in the manual
-  pages:
+-++--shared++[++=++(`false`|`true`|`umask`|`group`|`all`|`world`|`everybody`|_<perm>_)]::
++`--shared[=(false|true|umask|group|all|world|everybody|<perm>)]`::
  
-  Possibility of multiple occurrences is indicated by three dots:
--   _<file>_...
-+   <file>...
-    (One or more of <file>.)
+ Specify that the Git repository is to be shared amongst several users.  This
+ allows users belonging to the same group to push into that
+diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+index 7cec85aef17..9c871e716a1 100644
+--- a/Documentation/urls.txt
++++ b/Documentation/urls.txt
+@@ -10,19 +10,19 @@ Git supports ssh, git, http, and https protocols (in addition, ftp
+ and ftps can be used for fetching, but this is inefficient and
+ deprecated; do not use them).
  
-  Optional parts are enclosed in square brackets:
--   [_<file>_...]
-+   [<file>...]
-    (Zero or more of <file>.)
+-The native transport (i.e. git:// URL) does no authentication and
++The native transport (i.e. `git://` URL) does no authentication and
+ should be used with caution on unsecured networks.
  
--   ++--exec-path++[++=++__<path>__]
-+ An optional parameter needs to be typeset with unconstrained pairs
-+   [<repository>]
-+
-+   --exec-path[=<path>]
-    (Option with an optional argument.  Note that the "=" is inside the
-    brackets.)
+ The following syntaxes may be used with them:
  
--   [_<patch>_...]
-+   [<patch>...]
-    (Zero or more of <patch>.  Note that the dots are inside, not
-    outside the brackets.)
+-- ++ssh://++{startsb}__<user>__++@++{endsb}__<host>__{startsb}++:++__<port>__{endsb}++/++__<path-to-git-repo>__
+-- ++git://++__<host>__{startsb}:__<port>__{endsb}++/++__<path-to-git-repo>__
+-- ++http++{startsb}++s++{endsb}++://++__<host>__{startsb}++:++__<port>__{endsb}++/++__<path-to-git-repo>__
+-- ++ftp++{startsb}++s++{endsb}++://++__<host>__{startsb}++:++__<port>__{endsb}++/++__<path-to-git-repo>__
++- `ssh://[<user>@]<host>[:<port>]/<path-to-git-repo>`
++- `git://<host>[:<port>]/<path-to-git-repo>`
++- `http[s]://<host>[:<port>]/<path-to-git-repo>`
++- `ftp[s]://<host>[:<port>]/<path-to-git-repo>`
  
-  Multiple alternatives are indicated with vertical bars:
--   [`-q` | `--quiet`]
--   [`--utf8` | `--no-utf8`]
-+   [-q | --quiet]
-+   [--utf8 | --no-utf8]
+ An alternative scp-like syntax may also be used with the ssh protocol:
  
-  Use spacing around "|" token(s), but not immediately after opening or
-  before closing a [] or () pair:
--   Do: [`-q` | `--quiet`]
--   Don't: [`-q`|`--quiet`]
-+   Do: [-q | --quiet]
-+   Don't: [-q|--quiet]
+-- {startsb}__<user>__++@++{endsb}__<host>__++:/++__<path-to-git-repo>__
++- `[<user>@]<host>:/<path-to-git-repo>`
  
-  Don't use spacing around "|" tokens when they're used to separate the
-  alternate arguments of an option:
--    Do: ++--track++[++=++(`direct`|`inherit`)]`
--    Don't: ++--track++[++=++(`direct` | `inherit`)]
-+    Do: --track[=(direct|inherit)]
-+    Don't: --track[=(direct | inherit)]
+ This syntax is only recognized if there are no slashes before the
+ first colon. This helps differentiate a local path that contains a
+@@ -30,17 +30,17 @@ colon. For example the local path `foo:bar` could be specified as an
+ absolute path or `./foo:bar` to avoid being misinterpreted as an ssh
+ url.
  
-  Parentheses are used for grouping:
--   [(_<rev>_ | _<range>_)...]
-+   [(<rev>|<range>)...]
-    (Any number of either <rev> or <range>.  Parens are needed to make
-    it clear that "..." pertains to both <rev> and <range>.)
+-The ssh and git protocols additionally support ++~++__<username>__ expansion:
++The ssh and git protocols additionally support `~<username>` expansion:
  
--   [(`-p` _<parent>_)...]
-+   [(-p <parent>)...]
-    (Any number of option -p, each with one <parent> argument.)
+-- ++ssh://++{startsb}__<user>__++@++{endsb}__<host>__{startsb}++:++__<port>__{endsb}++/~++__<user>__++/++__<path-to-git-repo>__
+-- ++git://++__<host>__{startsb}++:++__<port>__{endsb}++/~++__<user>__++/++__<path-to-git-repo>__
+-- {startsb}__<user>__++@++{endsb}__<host>__++:~++__<user>__++/++__<path-to-git-repo>__
++- `ssh://[<user>@]<host>[:<port>]/~<user>/<path-to-git-repo>`
++- `git://<host>[:<port>]/~<user>/<path-to-git-repo>`
++- `[<user>@]<host>:~<user>/<path-to-git-repo>`
  
--   `git remote set-head` _<name>_ (`-a` | `-d` | _<branch>_)
-+   git remote set-head <name> (-a|-d|<branch>)
-    (One and only one of "-a", "-d" or "<branch>" _must_ (no square
-    brackets) be provided.)
+ For local repositories, also supported by Git natively, the following
+ syntaxes may be used:
  
-  And a somewhat more contrived example:
--   `--diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]`
-+   --diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]
-    Here "=" is outside the brackets, because "--diff-filter=" is a
-    valid usage.  "*" has its own pair of brackets, because it can
-    (optionally) be specified only when one or more of the letters is
+ - `/path/to/repo.git/`
+-- ++file:///path/to/repo.git/++
++- `file:///path/to/repo.git/`
+ 
+ ifndef::git-clone[]
+ These two syntaxes are mostly equivalent, except when cloning, when
+@@ -57,11 +57,11 @@ endif::git-clone[]
+ accept a suitable bundle file. See linkgit:git-bundle[1].
+ 
+ When Git doesn't know how to handle a certain transport protocol, it
+-attempts to use the `remote-`{empty}__<transport>__ remote helper, if one
++attempts to use the `remote-<transport>` remote helper, if one
+ exists. To explicitly request a remote helper, the following syntax
+ may be used:
+ 
+-- _<transport>_::__<address>__
++- `<transport>::<address>`
+ 
+ where _<address>_ may be a path, a server and path, or an arbitrary
+ URL-like string recognized by the specific remote helper being
 -- 
 gitgitgadget
-
