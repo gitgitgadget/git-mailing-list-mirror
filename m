@@ -1,103 +1,131 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6127A1B85DD
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 13:02:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBE11DFE3
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 13:09:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727182934; cv=none; b=kMYvgCm6KDnzEgXDIYB6r9KD9Akd8SfscfxxKDw89ERi+Qi3+jBb/bUcyp9gn5wvFtkdiLLSiG4AvdQpZU53FKywj6tdw8vb5yveXhcWbmRpySTsC76f5oB+jNZdg8x+GDsPL+2V8kwm9LuHG/wZ5dJNgxaN1uFBhs2mdpwwbtc=
+	t=1727183355; cv=none; b=N2poFNdfBmV4OOXgGMS8r9BZbRkOpc8VSZvcOjn0SjgN9aMCSqjABioRUE9zFz2Ov/ANkwBc4sjbGURDwAnF224PzeHXOxmYKOccmIebu6Cpj2ZLFAYIPqvXdMBOQM4EN5DK3SftJw0Khj1sPSTtSXSPOYV2RwSXdcojPbdgEo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727182934; c=relaxed/simple;
-	bh=RjDYpzysGNpK9x5ySOK9L1HxcFC+VLSTTK/fQf5yJDQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=IxO6AyQeOwh0ky2VdgqZ5v87bIJNPeqRF0aCrMa/5EMnaBd9xcv4+S/Qu+EsAWivl1NiQJhv5W7IoUMdGHpHvkM74DLgxH71v+BzozoJnGrjz2XVKaoTVT0grTPAXCtKTB3Out63WTK5W1E495Bntb3pF1KLJvoBrnA2kBzUxl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=oCZIT99U; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1727183355; c=relaxed/simple;
+	bh=xbdWzH6NzhcNDu7uPdgs5I9UU71FaaC54uZybJMdxuw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ZMNAiubZsOBV+6Oe3GgdLEiavABarPgr6NPbtssj5Bzx015pBTfcV6eE/akzGV392x+mnGDRW6yszWC5lU4zT0iSLxoJ8oGtHFJMcLekJ1I746WTVn0f3ms828c0k5hZKhlnantE1gVzS2BTeEEEkM1Qav9bYoJ+xFXKlAu4RyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l4E5YV+/; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="oCZIT99U"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1727182929; x=1727787729;
-	i=johannes.schindelin@gmx.de;
-	bh=2UMDA9H30Jzyw+zVtO/F8ZCwmqSnWghIwRAGUn7IGZc=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
-	 Content-Type:MIME-Version:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=oCZIT99UrLl0tnXcg8pgaMzD3lsQs3Mi36jND3eJ+Tvzr6sngeQ2SyN2GLaVDPVk
-	 QHUkGCPtPnS2BsPH78+hP87lhLFXRXiZXrPOgKNJg5NWeKHBa5UvN/zz6Wj6gCTfg
-	 NZyKlvmrG8K9U1q6FgIpqn0KvxiCmJlZWdzLthYBQqHqcsfY3gaHXAi4dDfdhuA5z
-	 obT310KA6GVBuGcq9L11KPZQ566CLsm+ALgkIsFaXg46EzxYG/YbKzSQWt0L8xH1J
-	 xurh7R9m+4BqW88iW+W6Pdvw4x8maDv1bJ8Pfyx8tox+xo3lySDnn4EJCMgZ96Bk2
-	 ZRzw+TQot6HNys50/w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az1437-693.avgarbrzbkkufof5kjitkfpntd.dx.internal.cloudapp.net
- ([52.234.40.29]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MSbx3-1sVBaC03I1-00Iv7b; Tue, 24 Sep 2024 15:02:09 +0200
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com,
-	git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.46.2
-Date: Tue, 24 Sep 2024 13:02:05 +0000
-Message-ID: <20240924130205.3298-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.46.1
-Content-Type: text/plain; charset=UTF-8
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l4E5YV+/"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42cb6f3a5bcso70850915e9.2
+        for <git@vger.kernel.org>; Tue, 24 Sep 2024 06:09:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727183352; x=1727788152; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OJWMpEzQ7j+WlghGgTWAZxs7uwmf/XwviKdrEoOoPNs=;
+        b=l4E5YV+/iC3qpYEePXTzULppnutnTzP2+/yPuv12xsAzHaxuF0kr+4MUPOGZxjwIKK
+         Q/8Q6G1utfKl3o85banK3Mj4dhv77/FHGfpRChg+BICwjtdhNET5wYLLRpH5Iv+5Hpl4
+         cpop1hOmqiDuUEGLI6ja5SlfQPGm0E4i4rN24UiM9fya654FTguZ2eja8Y4pnu2tJ9AI
+         2c7PLkTAsfGbWhx+dcu3CfY3hY9CzY1WOSiYDDr4j+oabr4p0Iix+8UDac+3uQbdt3x6
+         UUz61eJNvbrdlu3VGUsLanIgHsPZ7e2LtnjEaj4Fwkm+jgSUhitppzenPRo1ILLTnZGu
+         fsdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727183352; x=1727788152;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OJWMpEzQ7j+WlghGgTWAZxs7uwmf/XwviKdrEoOoPNs=;
+        b=R/O6YHObR2EA/MEOOXkdGY4hweQkbEAwJttzRedFH3yvMBYsQGA8pkOPNnxkgLKJQX
+         9SCVMorG8aIHqWEfdPrHshuUd9up2qhtKWcYE/pkx2w9GJpnKCg5x6pKz0zTWge28Wmb
+         iOdMcEGdcjnedt/VVd0XEqn5ROWuZSKUQH6y/InKgtNTZrBgEI3HQQkdSeLZBSq0O9wf
+         q0V+iVdCd4XOBRb2LgWiyjlJwPYLyjvEzN8oxyeTQKgvqgtHuy6aB/0Do2tQqc0vFJLn
+         IXZHs5zKpoTi7KI1pBlWNsAglqagYcQBeihD5/SJmiMX9qYyBgd2mKsPh2WAQKhGCL1Q
+         HwKw==
+X-Gm-Message-State: AOJu0YzLwHOExNtsDhjGFD7wuBs1HhkIzvGriIwCiiWVToZtoe9E622o
+	P+Uo4LkJEuw65jQLqexb2PNypeeJE16/vmiPIaznh3a266WMjkA52ShiJMHC
+X-Google-Smtp-Source: AGHT+IElKcQOQDR4viW3YT6MBs+AY+dDW+9Hu6nSKRHya5CUVwCLpsTkzCYQpMPkf2O4Jm9AGyKc/g==
+X-Received: by 2002:a05:600c:1987:b0:42c:bae0:f05f with SMTP id 5b1f17b1804b1-42e7ac2f2a5mr158417595e9.13.1727183351251;
+        Tue, 24 Sep 2024 06:09:11 -0700 (PDT)
+Received: from void.void ([141.226.8.164])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e754c5c92sm158728495e9.41.2024.09.24.06.09.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Sep 2024 06:09:11 -0700 (PDT)
+From: Andrew Kreimer <algonell@gmail.com>
+To: git@vger.kernel.org
+Cc: Andrew Kreimer <algonell@gmail.com>
+Subject: [PATCH] builtin: fix typos
+Date: Tue, 24 Sep 2024 16:09:06 +0300
+Message-Id: <20240924130906.21392-1-algonell@gmail.com>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Fcc: Sent
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:IwZIxlJMBq5oKudowreSAEUdvnr0Kl+Buu+yo0wjatU1OexfMDk
- iA8SM2+Xb5mWQvyTt1DJe1LQmTnsLcSq/aOfAJqUuTSyNWTIQ591jMaRYvAJRRmNDJ941Vy
- p4TTIROuPH0rZInG9UrOsVioYudLFk/okL2ZhHe4NI6cEJBMvBGj4yY6z9DRgaHHfW5cFPY
- i+MPCSfs134uhdaUSV/ZA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:3bDiSoPEqk8=;3dzmbbnVDkWTt7Zhef5DRFhLVs5
- MKPvOswRzpzj84SpyZcYgRfQZYheOUHMnkGWR2rWFY6B5oqV0UGd+sFx4X4C0tY7YSI020gHW
- 0MFKDUdU3/rT4qXEvKfDlqazmJTf6ScYLM5mzc8XAXfK+f/yV4QW+l84thNCMY/JnthooZMmx
- G2gWDimCaZvQ2ysvggjfpnFXcIQiNEpc2Dacs63inEassHJFf4y5u7A29yDOeNYxxmRnFiJKN
- kJdPO+WL2Ajr0Mn4tl8v3Lepl27Et6AwtNFerjyFWoHCTpwoHEufx1J5fmDCHRTD5nJR/mGZr
- Tj8CQLty/2rLZRvgnwi64YaSb0sB2edKfE6umkD3/lP5cqjGY73siFbN5UT+4MuUpBngBnJ2q
- PrprpBJrX8INtCXE8i3ZocFLJUuhyh8oBJsH+7hBV62oqnpchFCwMqVz0nIleQdfIgwe5x511
- TLVeaINNHUi821sm+KZIR2BKTHJbe2rldw6/CjK9XAttTtFs2VWb6NhLhS2qGs0beM5m/tIGH
- JjZQM8qI6y8O9hVG4eo9RjHAwmB9XDWM7L2ZPY8iL2Gr8lQW5aJPiCVxyMchbnOZYBxyq/S89
- ZKt36yyXJaxGgDMPOzmLGtdidePqUxbVxxWr/7Ld14uLpTP7acHlJfqLPVRP5N1ut4VaNDAKM
- uZ3UGtbTx9+hwdhEDDqBDrfhucCA1TuFNQuy/ILRFuzWSCwjITr36cbDqNOYzebAY/nBtFHCa
- jq8R6vbQHfJJWn+zDPc9Nek9JLQP+ccU+JRNhVLmFfTSDU+KSPfgCfB7B9RBuXi431W3teVK3
- diuuDHVZ0nw86rqJLWeyFSig==
 
-Dear Git users,
+Fix typos in comments.
 
-I hereby announce that Git for Windows 2.46.2 is available from:
+Signed-off-by: Andrew Kreimer <algonell@gmail.com>
+---
+ builtin/help.c         | 2 +-
+ builtin/ls-files.c     | 2 +-
+ builtin/name-rev.c     | 2 +-
+ builtin/receive-pack.c | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-    https://gitforwindows.org/
+diff --git a/builtin/help.c b/builtin/help.c
+index 9c4cfe11d9..a509241a80 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -542,7 +542,7 @@ static void open_html(const char *path)
+ 
+ static void show_html_page(const char *page)
+ {
+-	struct strbuf page_path; /* it leaks but we exec bellow */
++	struct strbuf page_path; /* it leaks but we exec below */
+ 
+ 	get_html_page_path(&page_path, page);
+ 
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 6aaba08e30..e016b0415d 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -507,7 +507,7 @@ static int get_common_prefix_len(const char *common_prefix)
+ 	common_prefix_len = strlen(common_prefix);
+ 
+ 	/*
+-	 * If the prefix has a trailing slash, strip it so that submodules wont
++	 * If the prefix has a trailing slash, strip it so that submodules won't
+ 	 * be pruned from the index.
+ 	 */
+ 	if (common_prefix[common_prefix_len - 1] == '/')
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 7f08c38629..765eb20a93 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -65,7 +65,7 @@ static void set_commit_cutoff(struct commit *commit)
+ static void adjust_cutoff_timestamp_for_slop(void)
+ {
+ 	if (cutoff) {
+-		/* check for undeflow */
++		/* check for underflow */
+ 		if (cutoff > TIME_MIN + CUTOFF_DATE_SLOP)
+ 			cutoff = cutoff - CUTOFF_DATE_SLOP;
+ 		else
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index c4b766c613..5bbbebbd8b 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1325,7 +1325,7 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+ }
+ 
+ /*
+- * NEEDSWORK: we should consolidate various implementions of "are we
++ * NEEDSWORK: we should consolidate various implementations of "are we
+  * on an unborn branch?" test into one, and make the unified one more
+  * robust. !get_sha1() based check used here and elsewhere would not
+  * allow us to tell an unborn branch from corrupt ref, for example.
+-- 
+2.39.5
 
-Changes since Git for Windows v2.46.1 (September 18th 2024)
-
-New Features
-
-  * Comes with Git v2.46.2.
-  * Comes with OpenSSH v9.9.P1.
-  * Comes with MinTTY v3.7.6.
-  * Comes with Bash v5.2.37.
-  * Comes with the new, experimental --full-name-hash option for git
-    repack that helps packing monorepos more tightly.
-
-Git-2.46.2-64-bit.exe | eac009616605ec7207fbe1990627f453b826a1f23a33d54d9b0be8f4b0cb2094
-Git-2.46.2-32-bit.exe | 6ca9019abb3aa963d81414d46fc054707efdf36d68b946ffdde6af8a6a374e46
-PortableGit-2.46.2-64-bit.7z.exe | 58ae5c1a27d3f9ce8518c1a187860973cfa4dd604f518350e84f7baf418fc9fa
-PortableGit-2.46.2-32-bit.7z.exe | 7351e28f498010f0aa2fd63abbd704698db38cf6f881e2417fb3d73e5a7e6f87
-MinGit-2.46.2-64-bit.zip | 0dca60869825ceb8b6108be69f0c536174fbca45e11300f2c14c34632d8238ed
-MinGit-2.46.2-32-bit.zip | 21a85dde40b3cb162ca6d0f6eda4007c3fac7243e2c63c34de979fc8cc4b9134
-MinGit-2.46.2-busybox-64-bit.zip | a5c3ef14d4011324fc8b66e6e8943d8470b6d0606778be4d1f73f03ff9973c71
-MinGit-2.46.2-busybox-32-bit.zip | d12e006af9c4d4f520a86a6c3cf03a1426433a19281574fc8f7b6d9d49f636ab
-Git-2.46.2-64-bit.tar.bz2 | f05cf325a8bfaad6da2411e03065b5a4f2a1a69b9d1f9a258db1404524613610
-Git-2.46.2-32-bit.tar.bz2 | 6fe9c7faf1e088b4be37945fa81bbc5252a8a7cb38c617925d5cc6c269cbc3dd
-
-Ciao,
-Johannes
