@@ -1,67 +1,34 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D4D13B7BC
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 21:59:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C29142A8F
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 22:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727215159; cv=none; b=QGElkZdJAr642B9Dpi/rPmEWQp+SJll4+YVcQswe8BlHmB/M8h+wzIvtcuXJyM4kxIK+0KgLb1mcdEkcls5XAA1gKr/Ok4bAomy1wmfG8IzkVdLxjgj5/itiWUr9DVtG8DW2v0T4Y64m+wEdY6SSAyD8CLuPWCaWgbJ+s4mC2qk=
+	t=1727215273; cv=none; b=ZDTcRtEZLIybJfkUfYIleY+qgZNfY9uGGqdPxb1hjJqpsL/UbJNYtBHZsbOBztYqvS21HyqhtVEuJR8qc+zRRieE/LVkpVQirg/w2T6QsY4tz46wp5yEVV5HQYXF0C65YZ8q22BFgOcH85eXH2OEvqyjrBkxf3+7/id/uYv8xWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727215159; c=relaxed/simple;
-	bh=mJC5DQI0hEqFUHoiRKT+Ey78W+3P/DLwymIzi4c/O8Q=;
+	s=arc-20240116; t=1727215273; c=relaxed/simple;
+	bh=0vEa0m7VoJnlHdwofMDX++IpiaG83CEMI3ZspuG3htE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e5yyixipeag90qKYiVRlB/UgZvuWmGCayULZg/Indk6EJbgXUKqIBF/0BHQasfCwNyIpBUB7VF+DQcQE90vfN4MNI0B71J3O4fvM2uHWC4NUhcrGe4a/6vSGaLURIBIdW2a26QYXrnWlULgfE7S89QqW6yhHId6YSvwox+FAQnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=oDMQz37G; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="oDMQz37G"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e2226b9f246so4933560276.0
-        for <git@vger.kernel.org>; Tue, 24 Sep 2024 14:59:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727215156; x=1727819956; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hBu0qD3yNx2iv5ViqfWIqtiNTzGbK1iH1b5P6ok1O8Y=;
-        b=oDMQz37GdvzsVMpNJt/CtVPyT9EZ5LF2yKy0wpT8W2lTrx7Aob1kTliy2abSv4W9co
-         Y9HeIlSv5IFk+H5OGQQJAHLQ6r9OFm/xOnCwoy3nR4L5pLp6275yDp+KZ6FUZXnB0WFj
-         zFSpoEccnSbllZgOoi5TMAxWK+zoRCjW7jpMIgrWHqLDBKjW98zB9WOP+Ur1ho2gza/U
-         lrEvpOJQyicG+DPp3EcpLk6l800Gzje9t8dn+lZ0hiZAdbT3dOHQs08sYeGKC0NZraQC
-         MdhwpDjMRJZQp0dx2bC+Wn/zBj0iX9EmPM00fgBUxHCtd2+A/ufzL+vI9TjL9SK/LR4T
-         Lq0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727215156; x=1727819956;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hBu0qD3yNx2iv5ViqfWIqtiNTzGbK1iH1b5P6ok1O8Y=;
-        b=DbZxRaIiNsQ/ot8hi32ue8dZrx7FsnPpCItKTqZfdwZFyQ90AnI893DdsRtLvwQXl9
-         NRYH/TEegJcW2/aIZF7+y1FRTJ3NrZU3f6BlR0wun7ucYsEOo39PyBHCX0xu0KhtSFAR
-         S29DKTLaCiZjwY6AVhdZTIvOX5opdLzibuFz9nQVgW6VfbtRMFXSfIEav+NUtdzXOZXy
-         6r02CzCd1EvC/G3GspDPVVlGyVo9zCVT0UbaiwTlvh8oN+j2GEWcY3NInFaKVnqFpCUi
-         4lb9h6qkOlAdm18lpB5RwcYCCR2hZK9z+LpH8zKCOJJfMGRJA00jXLtsW4uFkL89pjgu
-         IyZA==
-X-Gm-Message-State: AOJu0YxnWXn70lIULI2qlwcCYjaRitMHahUs1zrT+ZUuqbejgm52+Ype
-	uM9ojWKiDUZNFOnN0w8JWp9hqBa5RdN3HHwPycUErPsFcPHigvs/Wy9lXpFq8dk=
-X-Google-Smtp-Source: AGHT+IFZYy17zm9AhrTFDSZaQeMpkpqQzOfFEq0ylJfN6uNSB6wy//WPrPo8QRS/izXaotS7L9MbDw==
-X-Received: by 2002:a05:6902:2483:b0:e13:eb67:6a62 with SMTP id 3f1490d57ef6-e24d85abbcfmr635597276.26.1727215155874;
-        Tue, 24 Sep 2024 14:59:15 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2499c6203csm398609276.49.2024.09.24.14.59.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 14:59:15 -0700 (PDT)
-Date: Tue, 24 Sep 2024 17:59:10 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/8] finalize_object_file(): implement collision check
-Message-ID: <ZvM2Lkb0/LPrqizO@nand.local>
-References: <cover.1725206584.git.me@ttaylorr.com>
- <cover.1727199118.git.me@ttaylorr.com>
- <ed9eeef8513e08935c59defafde99956eb62d49a.1727199118.git.me@ttaylorr.com>
- <20240924203718.GA586150@coredump.intra.peff.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=qLHx+nMgnBX49+nB6nzr9m2Bb00Hq0Y2GOHDEJbBQX9g4kqsDnEf9eOXApgK1iWzCx1z0IHIEUwOkxJaUnuaTABpPCwgeC0zITsxBuYbQY5W8j1krxXLiBz2q8Ul6jaiVu8HwdueFmeta58jNnYTGjbxabkZok96My5zbyNtcAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 15525 invoked by uid 109); 24 Sep 2024 22:01:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Sep 2024 22:01:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18696 invoked by uid 111); 24 Sep 2024 22:01:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Sep 2024 18:01:10 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 24 Sep 2024 18:01:09 -0400
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 14/28] http: fix leak of http_object_request struct
+Message-ID: <20240924220109.GN1143820@coredump.intra.peff.net>
+References: <20240924214930.GA1143523@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,124 +37,181 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240924203718.GA586150@coredump.intra.peff.net>
+In-Reply-To: <20240924214930.GA1143523@coredump.intra.peff.net>
 
-On Tue, Sep 24, 2024 at 04:37:18PM -0400, Jeff King wrote:
-> But I think we can expand the argument a bit. I don't think this is a
-> very good place for such a collision check, because race conditions
-> aside, we'll already have bailed long before! When we do a write via
-> write_object_file(), for example, we'll hit the freshen paths that
-> assume the contents are identical, and skip the write (and thus this
-> finalize) entirely.
->
-> So if you want a collision check, we have to do it at a much higher
-> level. And indeed we do: index-pack already implements such a check
-> (through the confusingly named "check_collison" function). I don't think
-> unpack-objects does so (it looks like it just feeds the result to
-> write_object_file(), which does the freshening thing).
->
-> So the argument I'd make here is more like: this is the wrong place to
-> do it.
+The new_http_object_request() function allocates a struct on the heap,
+along with some fields inside the struct. But the matching function to
+clean it up, release_http_object_request(), only frees the interior
+fields without freeing the struct itself, causing a leak.
 
-I think that is reasonable, and I agree with your reasoning here. I'm
-happy to reword the commit message if you think doing so would be
-useful, or drop the paragraph entirely if you think it's just confusing.
+The related http_pack_request new/release pair gets this right, and at
+first glance we should be able to do the same thing and just add a
+single free() call. But there's a catch.
 
-Let me know what you think, I'm happy to do whatever here, reroll or not
-:-).
+These http_object_request structs are typically embedded in the
+object_request struct of http-walker.c. And when we clean up that parent
+struct, it sanity-checks the embedded struct to make sure we are not
+leaking descriptors. Which means a use-after-free if we simply free()
+the embedded struct.
 
->   Side thoughts on collision checks:
->
->     I think index-pack is safe in the sense that it will always prefer
->     on-disk copies and will complain if it sees a collision.
->     unpack-objects is not, nor are regular in-repo writes (which
->     normally cannot be triggered by remote, but on forges that do
->     merges, etc, that's not always true). Both of the latter are also
->     subject to races, where a simultaneous collision might let the
->     attacker win.
+I have no idea how valuable that sanity-check is, or whether it can
+simply be deleted. This all goes back to 5424bc557f (http*: add helper
+methods for fetching objects (loose), 2009-06-06). But the obvious way
+to make it all work is to be sure we set the pointer to NULL after
+freeing it (and our freeing process closes the descriptor, so we know
+there is no leak).
 
-Yup.
+To make sure we do that consistently, we'll switch the pointer we take
+in release_http_object_request() to a pointer-to-pointer, and we'll set
+it to NULL ourselves. And then the compiler can help us find each caller
+which needs to be updated.
 
->     That race is kind of moot in a world where anybody can push to a
->     fork of a repo that ends up in the same shared location (so they can
->     actually win and become the "on disk" copy), and we're relying on
->     sha1dc for protection there. That's specific to certain forges, but
->     they do represent a lot of Git use.
->
->     In general, the use of unpack-objects versus index-pack is up to the
->     attacker (based on pack size). So I think it would be nice if
->     unpack-objects did the collision check. Even if the attacker beats
->     you to writing the object, it would be nice to see "holy crap, there
->     was a collision" instead of just silently throwing your pushed
->     object away.
+Most cases will just pass "&obj_req->req", which will obviously do the
+right thing. In a few cases, like http-push's finish_request(), we are
+working with a copy of the pointer, so we don't NULL the original. But
+it's OK because the next step is to free the struct containing the
+original pointer anyway.
 
-Right, I agree that unpack-objects definitely should do the collision
-check here. And indeed, that is the case, since that code (which all is
-directly implemented in the builtin) uses the regular
-collision-detecting SHA-1 implementation.
+This lets us mark t5551 as leak-free. Ironically this is the "smart"
+http test, and the leak here only affects dumb http. But there's a
+single dumb-http invocation in there. The full dumb tests are in t5550,
+which still has some more leaks.
 
->     I know that GitHub only ever runs index-pack, which may give some
->     amount of protection here. In general, I think we should consider
->     deprecating unpack-objects in favor of teaching index-pack to
->     unpack. It has many enhancements (this one, but also threading) that
->     unpack-objects does not. I have an old patch series for this (sorry,
->     only from 2017, I'm slipping). IIRC the sticking point was that
->     unpack-objects is better about memory use in some cases (streaming
->     large blobs?) and I hadn't figured out a way around that.
+This also makes t5559 leak-free, as it's just an HTTP/2 variant of
+t5551. But we don't need to mark it as such, since it inherits the flag
+from t5551.
 
-Only seven years old? Sheesh, you really are slipping ;-).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ http-push.c                 |  4 ++--
+ http-walker.c               |  8 ++++----
+ http.c                      | 11 ++++++++---
+ http.h                      |  4 ++--
+ t/t5551-http-fetch-smart.sh |  1 +
+ 5 files changed, 17 insertions(+), 11 deletions(-)
 
-> Phew. Sorry, that was a long digression for "I think you're right, but I
-> might have argued it a little differently". I think the direction of the
-> patch (skipping checks entirely for loose objects) is the right thing.
->
-> > As a small note related to the latter bullet point above, we must teach
-> > the tmp-objdir routines to similarly skip the content-level collision
-> > checks when calling migrate_one() on a loose object file, which we do by
-> > setting the FOF_SKIP_COLLISION_CHECK bit when we are inside of a loose
-> > object shard.
->
-> OK, this is the part I was wondering how you were going to deal with. :)
-> Let's look at the implementation...
->
-> > @@ -239,11 +247,15 @@ static int migrate_paths(struct strbuf *src, struct strbuf *dst)
-> >
-> >  	for (i = 0; i < paths.nr; i++) {
-> >  		const char *name = paths.items[i].string;
-> > +		enum finalize_object_file_flags flags_copy = flags;
-> >
-> >  		strbuf_addf(src, "/%s", name);
-> >  		strbuf_addf(dst, "/%s", name);
-> >
-> > -		ret |= migrate_one(src, dst);
-> > +		if (is_loose_object_shard(name))
-> > +			flags_copy |= FOF_SKIP_COLLISION_CHECK;
-> > +
-> > +		ret |= migrate_one(src, dst, flags_copy);
-> >
-> >  		strbuf_setlen(src, src_len);
-> >  		strbuf_setlen(dst, dst_len);
->
-> This looks pretty reasonable overall, though I'd note that
-> migrate_paths() is called recursively. So if I had:
->
->   tmp-objdir-XXXXXX/pack/ab/foo.pack
->
-> we'd skip the collision check. I'm not sure how much we want to worry
-> about that. I don't think we'd ever create such a path, and the general
-> form of the paths is all under local control, so an attacker can't
-> convince us to do so. And I find it pretty unlikely that we'd change the
-> on-disk layout to accidentally trigger this.
+diff --git a/http-push.c b/http-push.c
+index 7315a694aa..7196ffa525 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -275,7 +275,7 @@ static void start_fetch_loose(struct transfer_request *request)
+ 	if (!start_active_slot(slot)) {
+ 		fprintf(stderr, "Unable to start GET request\n");
+ 		repo->can_update_info_refs = 0;
+-		release_http_object_request(obj_req);
++		release_http_object_request(&obj_req);
+ 		release_request(request);
+ 	}
+ }
+@@ -580,7 +580,7 @@ static void finish_request(struct transfer_request *request)
+ 
+ 		/* Try fetching packed if necessary */
+ 		if (request->obj->flags & LOCAL) {
+-			release_http_object_request(obj_req);
++			release_http_object_request(&obj_req);
+ 			release_request(request);
+ 		} else
+ 			start_fetch_packed(request);
+diff --git a/http-walker.c b/http-walker.c
+index e417a7f51c..9c1e5c37e6 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -74,7 +74,7 @@ static void start_object_request(struct object_request *obj_req)
+ 	obj_req->state = ACTIVE;
+ 	if (!start_active_slot(slot)) {
+ 		obj_req->state = ABORTED;
+-		release_http_object_request(req);
++		release_http_object_request(&req);
+ 		return;
+ 	}
+ }
+@@ -110,7 +110,7 @@ static void process_object_response(void *callback_data)
+ 		if (obj_req->repo->next) {
+ 			obj_req->repo =
+ 				obj_req->repo->next;
+-			release_http_object_request(obj_req->req);
++			release_http_object_request(&obj_req->req);
+ 			start_object_request(obj_req);
+ 			return;
+ 		}
+@@ -495,7 +495,7 @@ static int fetch_object(struct walker *walker, unsigned char *hash)
+ 
+ 	if (repo_has_object_file(the_repository, &obj_req->oid)) {
+ 		if (obj_req->req)
+-			abort_http_object_request(obj_req->req);
++			abort_http_object_request(&obj_req->req);
+ 		abort_object_request(obj_req);
+ 		return 0;
+ 	}
+@@ -543,7 +543,7 @@ static int fetch_object(struct walker *walker, unsigned char *hash)
+ 		strbuf_release(&buf);
+ 	}
+ 
+-	release_http_object_request(req);
++	release_http_object_request(&obj_req->req);
+ 	release_object_request(obj_req);
+ 	return ret;
+ }
+diff --git a/http.c b/http.c
+index cc136408c0..d0242ffb50 100644
+--- a/http.c
++++ b/http.c
+@@ -2816,15 +2816,17 @@ int finish_http_object_request(struct http_object_request *freq)
+ 	return freq->rename;
+ }
+ 
+-void abort_http_object_request(struct http_object_request *freq)
++void abort_http_object_request(struct http_object_request **freq_p)
+ {
++	struct http_object_request *freq = *freq_p;
+ 	unlink_or_warn(freq->tmpfile.buf);
+ 
+-	release_http_object_request(freq);
++	release_http_object_request(freq_p);
+ }
+ 
+-void release_http_object_request(struct http_object_request *freq)
++void release_http_object_request(struct http_object_request **freq_p)
+ {
++	struct http_object_request *freq = *freq_p;
+ 	if (freq->localfile != -1) {
+ 		close(freq->localfile);
+ 		freq->localfile = -1;
+@@ -2838,4 +2840,7 @@ void release_http_object_request(struct http_object_request *freq)
+ 	}
+ 	curl_slist_free_all(freq->headers);
+ 	strbuf_release(&freq->tmpfile);
++
++	free(freq);
++	*freq_p = NULL;
+ }
+diff --git a/http.h b/http.h
+index a516ca4a9a..46e334c2c2 100644
+--- a/http.h
++++ b/http.h
+@@ -240,8 +240,8 @@ struct http_object_request *new_http_object_request(
+ 	const char *base_url, const struct object_id *oid);
+ void process_http_object_request(struct http_object_request *freq);
+ int finish_http_object_request(struct http_object_request *freq);
+-void abort_http_object_request(struct http_object_request *freq);
+-void release_http_object_request(struct http_object_request *freq);
++void abort_http_object_request(struct http_object_request **freq);
++void release_http_object_request(struct http_object_request **freq);
+ 
+ /*
+  * Instead of using environment variables to determine if curl tracing happens,
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index 7b5ab0eae1..e36dfde17e 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -5,6 +5,7 @@ test_description="test smart fetching over http via http-backend ($HTTP_PROTO)"
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ test "$HTTP_PROTO" = "HTTP/2" && enable_http2
+-- 
+2.46.2.1011.gf1f9323e02
 
-I thought about this when writing it, and came to the conclusion that
-the checks we have for "are we in something that looks like a loose
-object shard?" are sane. That's only because we won't bother reading a
-pack in $GIT_DIR/objects/pack/xx/yy.pack, since we do not read packs
-recursively from the pack sub-directory.
-
-So I think that the diff you posted below isn't hurting anything, and
-the implementation looks correct to me, but I also don't think it's
-helping anything either as a consequence of the above.
-
-Thanks,
-Taylor
