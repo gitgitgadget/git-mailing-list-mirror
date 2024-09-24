@@ -1,34 +1,63 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B11713CFA5
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 22:12:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E00147C79
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 22:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727215962; cv=none; b=BGHgrHO1VMe6tT3ACjgSr4R2abvx9A+HVH+MbsfYnvnRW6qf5XOmggBB6Sr7ulmuMo3inbRWsR54rP25suSN2pirKPIytu1gHzXvZzS8lplOBSKJ7eQsd5KWB3MKfaPIisyjYKbMuXW9BLjEBfkWEQORXhPZCqj2l3ZNa3Ixxkg=
+	t=1727216361; cv=none; b=o/gw04jGzDyKX427fk7DlQgSeineAiHVhHsODz8L+rPv0db11d2cwUk/APNcBDdrienAhVvnshoNVGbJ49uYOKSUk4EqkTgU5WilhnK/Oc4StpRXC9oi2UxR1OLpG06vVDSwO0dMyWU4nUAumNPWlLw71AgedSII+Rd/086AMG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727215962; c=relaxed/simple;
-	bh=BJ2VvkRTSWAULhWXOP2d/ZtEQ/tzI8NtRvnRHG537F0=;
+	s=arc-20240116; t=1727216361; c=relaxed/simple;
+	bh=qS88rI2UwJ/RkGCzYb1HiN7T0/J/zEi8w7Ou5EW17tU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dk+HgeRj+oZuwz28bGa5cyCVOuNoa+jaibtX0NdL0/HrtgU0Z6/S5oyg6tbRf6IALeIefyXqqAq0ztuxly9nV8Esex36h4tgRO0HbQp7ZNVOvvvo63/AW7b2KwDtw2q2fekzz6YJIr9tB36KEJSBvfDFT9/4l0hbHBOthkGXlR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 15637 invoked by uid 109); 24 Sep 2024 22:12:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Sep 2024 22:12:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18919 invoked by uid 111); 24 Sep 2024 22:12:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Sep 2024 18:12:40 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 24 Sep 2024 18:12:39 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 28/28] http-push: clean up local_refs at exit
-Message-ID: <20240924221239.GB1143820@coredump.intra.peff.net>
-References: <20240924214930.GA1143523@coredump.intra.peff.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=mOhllP4Dtob6iTLGkURqgL40S6vQSK/78fY65aubn324wcyHtkcaGdPdogw8YHAZhChzFLRx/rV1ZfYBaBxA2rveVMtFCfQpY7fZGZw+1V5NhNhkbmdTKoZedwlvNvEdVFpijCVklXzjXNemUkXTzUbKj7lEOBicnFHkJxUyp/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=uD2XNqwv; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="uD2XNqwv"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e0b7efa1c1bso5852148276.3
+        for <git@vger.kernel.org>; Tue, 24 Sep 2024 15:19:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727216358; x=1727821158; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lfA+jtog0xd+acArAMaZrMaZ4Ao6Z37JBk+vxnjkNws=;
+        b=uD2XNqwvxEL7nbVVedl5KJ0X5Zh9nK18Pe0cpzH0phizBeRX357LHHp4h95l9x8GFE
+         s+WzNU384tug7prINYQ2LBqlavJEKd+xfFhvhq00vFFSs8CJH0NwI4ZFaeZO4Zj2alRp
+         c9aAFG4oZfegSl08IPBcMtO+EJoC7n8phop5JxVBKyTeZyCYnkE5PrDTSg03VtROBgR9
+         5f1LOZGBE8NIUyMMfZcWEaN6Ko+dGg0nHE+aAF/XvKM0UoaaMArPJiucj6pa1AKjK7Cf
+         9GMRkWGOysJZmaUgOVpQBtXqElZnf/w7icMzxKG2MyLd4LCX/k67KhO9ZpA+bXco1XDC
+         uq/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727216358; x=1727821158;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lfA+jtog0xd+acArAMaZrMaZ4Ao6Z37JBk+vxnjkNws=;
+        b=Wqu7ZO+KJqhecG7K/cvbWfDXo56ZP+YKjRh1gAUvwu9pmmY8hanIhpMK07Cdd+s2h6
+         Hc/Kyl7Vq8h/mm/TX+p7eL4GfcTKZLJ0DI5HVcJqQRneBo4LUSpwCTja0Qfb7TgOhi/v
+         uYNGuxGVzf3jYSZcfEgB+0NSscwos5O7RkoWCf+azvyqTWFOVFxqdUt+w3ZGV6AqcMUl
+         yYJUfrAUHMYWXXG8AQlaCv5T10E6jjc4wNGDBVJrd/ztyJgIG0w9D1bebyukNldoLmrj
+         GawSavYBT1eu+/f20Q+3KrTuQ5cx7m0niSvhx1doioiEpktR/pFksbyZD9RrRN3+lENW
+         QzNw==
+X-Gm-Message-State: AOJu0Yzfs7S3u3Qw47rFGZtusgFv0b3tiNwVn4jo/q9zePh+dbjPr1D3
+	ZyIIDb5LKlgcw4tjmNQ+v0BVpzliY+34vnYSEPILCkbHzDvw+znoURwaBJFJSJOgGsDOM95gOdc
+	fPFM=
+X-Google-Smtp-Source: AGHT+IGFiFYWwpongEvQqKSUvjBTQQoRo346h5ca8sqHFwItuZ9a0m6GzJhy5snX0Gwg65LeS+47Uw==
+X-Received: by 2002:a05:6902:2004:b0:e0b:efa8:18b6 with SMTP id 3f1490d57ef6-e24d98f828fmr687095276.45.1727216358215;
+        Tue, 24 Sep 2024 15:19:18 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2499c732d0sm399038276.55.2024.09.24.15.19.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Sep 2024 15:19:17 -0700 (PDT)
+Date: Tue, 24 Sep 2024 18:19:16 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org
+Subject: Re: git-scm.com is now a static website
+Message-ID: <ZvM65LqtFW8f9uqC@nand.local>
+References: <c3e372f6-3035-9e6b-f464-f1feceacaa4b@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -37,64 +66,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240924214930.GA1143523@coredump.intra.peff.net>
+In-Reply-To: <c3e372f6-3035-9e6b-f464-f1feceacaa4b@gmx.de>
 
-We allocate a list of ref structs from get_local_heads() but never clean
-it up. We should do so before exiting to avoid complaints from the
-leak-checker. Note that we have to initialize it to NULL, because
-there's one code path that can jump to the cleanup label before we
-assign to it.
+On Wed, Sep 25, 2024 at 12:07:05AM +0200, Johannes Schindelin wrote:
+> Hi all,
+>
+> almost 400 weeks after Matt Burke started the process with
+> https://github.com/spraints/git-scm.com/commit/60af4ed3bc60 of migrating
+> Git's home page away from being a Rails app to being a static website that
+> is hosted on GitHub pages instead, today marks the day when Git's home
+> page at https://git-scm.com/ has finally moved. Or actually: yesterday
+> (because I took so long writing this email that I ended up sending it
+> after midnight).
+>
+> This was truly a team effort, and I would like to celebrate everyone who
+> contributed:
 
-Fixing this lets us mark t5540 as leak-free.
+I'm really excited to see this change (or really, lack of change,
+because the conversion was so seamless and faithful to the original
+design).
 
-Curiously building with SANITIZE=leak and gcc does not seem to find this
-problem, but switching to clang does. It seems like a fairly obvious
-leak, though.
+Thank you for sticking with this for all these years and seeing it
+through to the finish line. Congratulations to yourself and those below
+for all of the hard work that went into this!
 
-I was curious that the matching remote_refs did not have the same leak.
-But that is because we store the list in a global variable, so it's
-still reachable after we exit. Arguably we could treat it the same as
-future-proofing, but I didn't bother (now that the script is marked
-leak-free, anybody moving it to a stack variable will notice).
+> - Taylor Blau and Jeff King for endorsing the work enthusiastically and
+>   suggesting to switch over already at the end of the Git Contributor
+>   Summit that took place at GitMerge '24.
+>
+> - Taylor Blau for assisting in the switch, taking care of the DNS
+>   adjustments, and in particular for taking care of the rollback when the
+>   first attempt at switching failed (due to caching issues) allowing me to
+>   catch my train.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- http-push.c                 | 3 ++-
- t/t5540-http-push-webdav.sh | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+I just clicked a few buttons ;-).
 
-diff --git a/http-push.c b/http-push.c
-index b36b1f9e35..aad89f2eab 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1719,7 +1719,7 @@ int cmd_main(int argc, const char **argv)
- 	int rc = 0;
- 	int i;
- 	int new_refs;
--	struct ref *ref, *local_refs;
-+	struct ref *ref, *local_refs = NULL;
- 
- 	CALLOC_ARRAY(repo, 1);
- 
-@@ -1997,6 +1997,7 @@ int cmd_main(int argc, const char **argv)
- 	}
- 
- 	refspec_clear(&rs);
-+	free_refs(local_refs);
- 
- 	return rc;
- }
-diff --git a/t/t5540-http-push-webdav.sh b/t/t5540-http-push-webdav.sh
-index 37db3dec0c..27389b0908 100755
---- a/t/t5540-http-push-webdav.sh
-+++ b/t/t5540-http-push-webdav.sh
-@@ -10,6 +10,7 @@ This test runs various sanity checks on http-push.'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- if git http-push > /dev/null 2>&1 || [ $? -eq 128 ]
--- 
-2.46.2.1011.gf1f9323e02
+As an aside, I am really glad to be able to spin down our Heroku account
+and for the opportunity to save the project some money. We're spending
+about ~$60/mo USD on Heroku, and I'm glad to be able to put that money
+to other uses that will benefit the project.
+
+I haven't yet spun down the dynos on Heroku, on the off-chance that we
+need to quickly get back to the non-static version of the site. But the
+rollout has gone so smoothly that I doubt doing so will be necessary. In
+a couple of days I'll go ahead and spin them down, assuming nothing has
+changed.
+
+> You will note that the site looks pretty similar to the version before,
+> and this is of course intentional.
+>
+> There are subtle differences, though. For example, the site search is now
+> language-dependent. Searching for "commit" when on a Spanish version of a
+> manual page will find only matching Spanish pages:
+>
+> https://git-scm.com/search/results?search=commit&language=es
+
+Sounds like an improvement to me ;-). Thanks again for all of your hard
+work, Johannes.
+
+Thanks,
+Taylor
