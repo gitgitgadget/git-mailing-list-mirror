@@ -1,83 +1,82 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84DC7604F
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 06:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9A513AD22
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 06:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727159585; cv=none; b=rgwHFksDJnmP+U3vty5z5XZQ5eMhwgyPPXjkvt3PqqZKc5Y+HLuu62nv5gEFWq+INOviVSwnACnFSHNuUJ6L9eQ2U5SEeOSXXpabxSmSy562xH4Yc9zRGVc5hUZF2utnz884uEwZh6+cxiqFlS/ArOoTFuJ0jylRRdMrHg+kZBU=
+	t=1727159588; cv=none; b=LR+717x8tdS252NbHJOnOWRP1But4B5fvbcgy5WIHDQdYEedj+TEde8ntF2JIQF6714w6hXs2Gb5tl23zGCkkTweCN1Hv0E5SJJ91kX+uIDeZkKGqBXSzM0LZL6Uj/Z0CZuVwjlga9lW9nYG45PQYgcpAlvhOB+RWMUALCP1ew4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727159585; c=relaxed/simple;
-	bh=iiei/XYewOEuB6UqcZJPhGhEil7VsuSUTckifB/BgrY=;
+	s=arc-20240116; t=1727159588; c=relaxed/simple;
+	bh=mH8SZI/PsDZY+vWiycZ9iDbiEUl7i1XFUqdV3PCjPd8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t8BGBWlI5DNpE6kAFLfN756NL2p3CuSBtnqcY9fFWOjAmmKxyrVJGxOal6hbdw1sIXFtjZqMvkHxdvMgWD5Phc8IAULv2mtFTg+2xvXNcKUgVgVjm9ASPvX38NNEUuYTNM+BQkYF1i5u87Z1TWQubjcLkqh3XP5F1ZaziUTVAhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E1VswPZC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QuW5sB0F; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=YzjkCfwJEY8ZG4HEE6bUb/p2CitmGAe4A9cRcS2Ww/XuqQqzH2SdJVcVRkcCk951qkn+7/gtiu1DI7C219fcPIm+ctu83/g6WCVihcXvIALy16lr6shOavVbizAEiMMZYrdJh25ZP9VXLHhm1I0XRh81qBc0H/VXHsLumUpjbqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gJb2WALV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VCXvrk5w; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E1VswPZC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QuW5sB0F"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gJb2WALV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VCXvrk5w"
 Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 10C041140317;
-	Tue, 24 Sep 2024 02:33:03 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 320E61140262;
+	Tue, 24 Sep 2024 02:33:06 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Tue, 24 Sep 2024 02:33:03 -0400
+  by phl-compute-10.internal (MEProxy); Tue, 24 Sep 2024 02:33:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727159583; x=1727245983; bh=6QGbLLApFc
-	3EWXwVj6NlyTxyhsPEYyPuZ3jUs2aFrmA=; b=E1VswPZCT60Oz7ZInHGqY0II8J
-	lLZC6WDSsvQg3+RpQIzf9Q02/GitERTJIH0jvIQbvyUFH4CuxqDOLEexoASMCke0
-	a7GXCtdWWPU7pXzZNxmvBVNRcQDJ4hO96XU01+sZhSAiAFWwRsjkYH1xX1d+iwDA
-	zHLn25hlUJPirQ5ZEnjjcVeLBBNZHC3Jf3JAvVFjU46iTEJOSnUhhp+TJZy2BgXZ
-	e/OUnbr6IlMvkCBqiCbhxSN+iaP4WJ2M2SWViRM2FlWx+1U9klm+RSel/q+VzK8g
-	Mg6H+CFqBlG44Q7BlI+YFsDIniHMhG3NHoxsLkRGQdwg7XbCFkuDjkj4qe7Q==
+	:subject:to:to; s=fm2; t=1727159586; x=1727245986; bh=jrq+YinpYa
+	yN57PdMeGJ2dcQDFK6yzlCH+EpmagUSeA=; b=gJb2WALVJ37Wa+S8mY4PpKvzkM
+	/8Fsp5KfCeMz00zu31iWcen0Ll70POnVXJVq0/hsTw2RpyILREzKK7SM0zoAZffZ
+	XjE+QkaIih3nu4VAgJ3OQInv48rAwv5UGbvcnnr/aDHHHpZ1SG6Qo8zhPTFJk93R
+	Trq+mK2t8fDtYjR4fk2+ZhJNb8r4WL8JA6XebbuhVSb6VaIyWe4YWfD161BI56ne
+	shq9YxEEgUDf7gef669z0oBixzPGqHPTAYcyRR7JX+yZv14eR/V0WQDNlxmcLw+R
+	s8f3Oiqh0Nyv3Y7yg11ub4QJCT9rzMu/Jbtn+9oIQqi/vi7rYsde/ZE3hOsw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727159583; x=1727245983; bh=6QGbLLApFc3EWXwVj6NlyTxyhsPE
-	YyPuZ3jUs2aFrmA=; b=QuW5sB0FAVrMITBJBRWnFu1cFX9/52iB6yUg1TLfRLFC
-	tQCZyUNBB+0jGS1l+hpF8B4wR5qdYi4+Z5hnhNOw+6jsWP+ePor7i4ddCVrJDRbQ
-	VqLdyzRgeoQT/GiGJXgEI3b+A5LfRUGnB5NWYzDhYQ/rlKItQbG4rxemQASGrNBj
-	lNYpldB0CezFaCt0LLIfWfGXrq4XQE1G26R5u1J53LnBzTA/s3RfoCcsm0sZ2B/U
-	G+pcbc7qeYBUK/CnrVphbfQN1/QvEAs86EmsWrZBPG2k0NBgkSBblUefL6V7e4YN
-	GkTwDY7P1WK7mA/Y/z4E9V96zeNIzfcJ3UlipQyRig==
-X-ME-Sender: <xms:Hl3yZpupHLIF-VDZ5tV-8C9EvKhUU9ZA4G6kW7oQKaIWQy4t6FYj1A>
-    <xme:Hl3yZieVb6NuFNGZl97Ef2fAqBOzQBpcrkUyZ2IgkV_lh57ywV3FQCWKR1RsHJUdE
-    fVhscfg01LCOpXggA>
-X-ME-Received: <xmr:Hl3yZszj1x9UoF0pJ14JiD8SunuZgYx6zmY57vv_Xi43FX-8B4y-r7EKfc56YuJPfgxHqu3SdPnp89eBOnvxGelOG_W1uCdTDBNwFEva6VJAmw>
+	fm2; t=1727159586; x=1727245986; bh=jrq+YinpYayN57PdMeGJ2dcQDFK6
+	yzlCH+EpmagUSeA=; b=VCXvrk5w9Osz+amkzm9U37Vlr5h9jvafhERNyfjeSSFN
+	vic0U4DQF5Xu8tYu5m/cCDL0PRt185Ix338OOTqKYm6Ct6LZNfn7vrL0T5hD/64+
+	QuriUqArD2j5qtmf6CcyXNysDsC8DXJ3jQO030xAv5aK5XgbeWXSGLU0STwQgqFk
+	g0wklhSv8gMOYWFA5pQxCV+oCp4fRnkjNIe8lLtrDI+SwGcTdq39tRA/DOwamM3l
+	6OYUkEZYJzheMn0U3r+hGmBizVFVia2JqVaeilQrYqxocQOGpVRmzR9RSwJXYMZP
+	X12K/VS6YWDVwqBvHRE41E2FQcj4KBT1TkmSaIh9eg==
+X-ME-Sender: <xms:Il3yZsbkpXWAjJ_ikdL6KqQZZLmm1oSCOQV77ZqYCDdt5b5n1XJ5KA>
+    <xme:Il3yZnZoqgWJHK4zpQKsLCQ6qyoVwltZl-YR0OVd_GlYoVUireq7Xo8NbBNjBLWaC
+    Ya-AsTq8qLa2Z7BrQ>
+X-ME-Received: <xmr:Il3yZm_WkBuICLs6xrs5-OBoNkp0bs5E7_oCsqwQuXE4d4vhy23fzR7TkaIRIJSm6QwXfbavQGfg2tbMBuOMNILsuwtzFMmgU4yCI2XQXbrGRg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtuddgjeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghthhho
-    mhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhm
-X-ME-Proxy: <xmx:Hl3yZgOyiLLXrjPDaTh5XM9Pm4cKyzVStjDR9TN5t8cdg-pdlpnpuw>
-    <xmx:Hl3yZp9BKsW0x2Sxos1F0RFEJ4UBDsvJsosVcIcKY4Cyi4FwQG2oaw>
-    <xmx:Hl3yZgVnbcv-DO8DAm1VQ2zPgMifGjbrX8m1n9Ca3KzfwzkTcIrVtw>
-    <xmx:Hl3yZqfsXKmbrH0RE8807dCFyq2sTsna4YvTFAE9oOaQfBIvBCoU0g>
-    <xmx:H13yZkbIdxBaAbl5qrjwI4sOIpPtbx40xxYs9SCcHOufmDzNU2V9Galt>
+    htthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Il3yZmpzihLztNTZ2xUv1FnXTejm78neA89eDcRQe96hQLIaCKKesw>
+    <xmx:Il3yZnokoNbODQTKQL_2v-LS4X0cKIKPtk-L9JhiOXyFMkEN_f7qHA>
+    <xmx:Il3yZkTAUzCvkRzOB7o36UIk_HCr9a0VadG7XvLJY4DKo1YKus0_0g>
+    <xmx:Il3yZnqGs3sqSWP1BiCaq0NrOaRId5Vib-Oh3tEDfYDTt7jd5voHpg>
+    <xmx:Il3yZmVqsipz24GkktJ_tRxUDLSuspqiOUD8CmC6sTZnUnob4CL30jLp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Sep 2024 02:33:01 -0400 (EDT)
+ 24 Sep 2024 02:33:05 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 08ecb1f1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 24 Sep 2024 06:32:29 +0000 (UTC)
-Date: Tue, 24 Sep 2024 08:32:56 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 34c096c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 24 Sep 2024 06:32:31 +0000 (UTC)
+Date: Tue, 24 Sep 2024 08:33:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 20/22] reftable/pq: handle allocation failures when adding
- entries
-Message-ID: <445daf9464dbc6c7d6c4de31944c6a6b733a1a8b.1727158127.git.ps@pks.im>
+Subject: [PATCH v2 21/22] reftable/tree: handle allocation failures
+Message-ID: <c31f9e53f529055bbc1eb5022befb497c1682d19.1727158127.git.ps@pks.im>
 References: <cover.1726489647.git.ps@pks.im>
  <cover.1727158127.git.ps@pks.im>
 Precedence: bulk
@@ -90,81 +89,181 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727158127.git.ps@pks.im>
 
-Handle allocation failures when adding entries to the pqueue. Adapt its
-only caller accordingly.
+The tree interfaces of the reftable library handle both insertion and
+searching of tree nodes with a single function, where the behaviour is
+altered between the two via an `insert` bit. This makes it quit awkward
+to handle allocation failures because on inserting we'd have to check
+for `NULL` pointers and return an error, whereas on searching entries we
+don't have to handle it as an allocation error.
+
+Split up concerns of this function into two separate functions, one for
+inserting entries and one for searching entries. This makes it easy for
+us to check for allocation errors as `tree_insert()` should never return
+a `NULL` pointer now. Adapt callers accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/merged.c | 5 ++++-
- reftable/pq.c     | 7 ++++++-
- reftable/pq.h     | 2 +-
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ reftable/tree.c                | 42 +++++++++++++++++++++++-----------
+ reftable/tree.h                | 21 +++++++++++++----
+ reftable/writer.c              |  7 +++---
+ t/unit-tests/t-reftable-tree.c | 10 ++++----
+ 4 files changed, 54 insertions(+), 26 deletions(-)
 
-diff --git a/reftable/merged.c b/reftable/merged.c
-index 741f62ea638..2c20845d624 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -54,7 +54,10 @@ static int merged_iter_advance_subiter(struct merged_iter *mi, size_t idx)
- 	if (err)
- 		return err;
+diff --git a/reftable/tree.c b/reftable/tree.c
+index 5ffb2e0d690..f4dbe720901 100644
+--- a/reftable/tree.c
++++ b/reftable/tree.c
+@@ -11,28 +11,44 @@ license that can be found in the LICENSE file or at
  
--	merged_iter_pqueue_add(&mi->pq, &e);
-+	err = merged_iter_pqueue_add(&mi->pq, &e);
-+	if (err)
-+		return err;
-+
- 	return 0;
- }
- 
-diff --git a/reftable/pq.c b/reftable/pq.c
-index 2b5b7d1c0e2..03b99122829 100644
---- a/reftable/pq.c
-+++ b/reftable/pq.c
-@@ -8,6 +8,7 @@ license that can be found in the LICENSE file or at
- 
- #include "pq.h"
- 
-+#include "reftable-error.h"
- #include "reftable-record.h"
- #include "system.h"
  #include "basics.h"
-@@ -44,11 +45,13 @@ struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq)
- 	return e;
- }
  
--void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e)
-+int merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e)
+-struct tree_node *tree_search(void *key, struct tree_node **rootp,
+-			      int (*compare)(const void *, const void *),
+-			      int insert)
++struct tree_node *tree_search(struct tree_node *tree,
++			      void *key,
++			      int (*compare)(const void *, const void *))
  {
- 	size_t i = 0;
- 
- 	REFTABLE_ALLOC_GROW(pq->heap, pq->len + 1, pq->cap);
-+	if (!pq->heap)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
- 	pq->heap[pq->len++] = *e;
- 
- 	i = pq->len - 1;
-@@ -59,6 +62,8 @@ void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry
- 		SWAP(pq->heap[j], pq->heap[i]);
- 		i = j;
- 	}
+ 	int res;
++	if (!tree)
++		return NULL;
++	res = compare(key, tree->key);
++	if (res < 0)
++		return tree_search(tree->left, key, compare);
++	else if (res > 0)
++		return tree_search(tree->right, key, compare);
++	return tree;
++}
 +
-+	return 0;
++struct tree_node *tree_insert(struct tree_node **rootp,
++			      void *key,
++			      int (*compare)(const void *, const void *))
++{
++	int res;
++
+ 	if (!*rootp) {
+-		if (!insert) {
++		struct tree_node *n;
++
++		REFTABLE_CALLOC_ARRAY(n, 1);
++		if (!n)
+ 			return NULL;
+-		} else {
+-			struct tree_node *n;
+-			REFTABLE_CALLOC_ARRAY(n, 1);
+-			n->key = key;
+-			*rootp = n;
+-			return *rootp;
+-		}
++
++		n->key = key;
++		*rootp = n;
++		return *rootp;
+ 	}
+ 
+ 	res = compare(key, (*rootp)->key);
+ 	if (res < 0)
+-		return tree_search(key, &(*rootp)->left, compare, insert);
++		return tree_insert(&(*rootp)->left, key, compare);
+ 	else if (res > 0)
+-		return tree_search(key, &(*rootp)->right, compare, insert);
++		return tree_insert(&(*rootp)->right, key, compare);
+ 	return *rootp;
  }
  
- void merged_iter_pqueue_release(struct merged_iter_pqueue *pq)
-diff --git a/reftable/pq.h b/reftable/pq.h
-index 707bd26767b..83c062eecac 100644
---- a/reftable/pq.h
-+++ b/reftable/pq.h
-@@ -23,7 +23,7 @@ struct merged_iter_pqueue {
+diff --git a/reftable/tree.h b/reftable/tree.h
+index fbdd002e23a..9604453b6d5 100644
+--- a/reftable/tree.h
++++ b/reftable/tree.h
+@@ -15,12 +15,23 @@ struct tree_node {
+ 	struct tree_node *left, *right;
  };
  
- struct pq_entry merged_iter_pqueue_remove(struct merged_iter_pqueue *pq);
--void merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e);
-+int merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry *e);
- void merged_iter_pqueue_release(struct merged_iter_pqueue *pq);
- int pq_less(struct pq_entry *a, struct pq_entry *b);
+-/* looks for `key` in `rootp` using `compare` as comparison function. If insert
+- * is set, insert the key if it's not found. Else, return NULL.
++/*
++ * Search the tree for the node matching the given key using `compare` as
++ * comparison function. Returns the node whose key matches or `NULL` in case
++ * the key does not exist in the tree.
++ */
++struct tree_node *tree_search(struct tree_node *tree,
++			      void *key,
++			      int (*compare)(const void *, const void *));
++
++/*
++ * Insert a node into the tree. Returns the newly inserted node if the key does
++ * not yet exist. Otherwise it returns the preexisting node. Returns `NULL`
++ * when allocating the new node fails.
+  */
+-struct tree_node *tree_search(void *key, struct tree_node **rootp,
+-			      int (*compare)(const void *, const void *),
+-			      int insert);
++struct tree_node *tree_insert(struct tree_node **rootp,
++			      void *key,
++			      int (*compare)(const void *, const void *));
  
+ /* performs an infix walk of the tree. */
+ void infix_walk(struct tree_node *t, void (*action)(void *arg, void *key),
+diff --git a/reftable/writer.c b/reftable/writer.c
+index 712a84791b2..44bed92f467 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -208,8 +208,7 @@ static int writer_index_hash(struct reftable_writer *w, struct strbuf *hash)
+ 	struct obj_index_tree_node *key;
+ 	struct tree_node *node;
+ 
+-	node = tree_search(&want, &w->obj_index_tree,
+-			   &obj_index_tree_node_compare, 0);
++	node = tree_search(w->obj_index_tree, &want, &obj_index_tree_node_compare);
+ 	if (!node) {
+ 		struct obj_index_tree_node empty = OBJ_INDEX_TREE_NODE_INIT;
+ 
+@@ -221,8 +220,8 @@ static int writer_index_hash(struct reftable_writer *w, struct strbuf *hash)
+ 
+ 		strbuf_reset(&key->hash);
+ 		strbuf_addbuf(&key->hash, hash);
+-		tree_search((void *)key, &w->obj_index_tree,
+-			    &obj_index_tree_node_compare, 1);
++		tree_insert(&w->obj_index_tree, key,
++			    &obj_index_tree_node_compare);
+ 	} else {
+ 		key = node->key;
+ 	}
+diff --git a/t/unit-tests/t-reftable-tree.c b/t/unit-tests/t-reftable-tree.c
+index 700479d34b1..79b175a45a7 100644
+--- a/t/unit-tests/t-reftable-tree.c
++++ b/t/unit-tests/t-reftable-tree.c
+@@ -37,16 +37,17 @@ static void t_tree_search(void)
+ 	 * values[1] and values[10] (inclusive) in the tree.
+ 	 */
+ 	do {
+-		nodes[i] = tree_search(&values[i], &root, &t_compare, 1);
++		nodes[i] = tree_insert(&root, &values[i], &t_compare);
++		check(nodes[i] != NULL);
+ 		i = (i * 7) % 11;
+ 	} while (i != 1);
+ 
+ 	for (i = 1; i < ARRAY_SIZE(nodes); i++) {
+ 		check_pointer_eq(&values[i], nodes[i]->key);
+-		check_pointer_eq(nodes[i], tree_search(&values[i], &root, &t_compare, 0));
++		check_pointer_eq(nodes[i], tree_search(root, &values[i], &t_compare));
+ 	}
+ 
+-	check(!tree_search(values, &root, t_compare, 0));
++	check(!tree_search(root, values, t_compare));
+ 	tree_free(root);
+ }
+ 
+@@ -62,7 +63,8 @@ static void t_infix_walk(void)
+ 	size_t count = 0;
+ 
+ 	do {
+-		tree_search(&values[i], &root, t_compare, 1);
++		struct tree_node *node = tree_insert(&root, &values[i], t_compare);
++		check(node != NULL);
+ 		i = (i * 7) % 11;
+ 		count++;
+ 	} while (i != 1);
 -- 
 2.46.0.551.gc5ee8f2d1c.dirty
 
