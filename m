@@ -1,33 +1,33 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE7083CD5
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 21:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D259217557
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 21:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727213744; cv=none; b=FCx2XTHwY5Z/VjvjN3gmbRyXuJ1hc9Yj4+/HiuePkXi5CVWwc0s8JMMyKzDMma/kYwk7FchnKK+AVtc7BQD1EnuOPWf2W/d/2rQqkLbae4wZKdfAEaXYcnfDVFv5sx4u6tUkka0yiYBJazZZRF0qxbnmU2u0xu4+MEPe303THO8=
+	t=1727213799; cv=none; b=n3LOAXLlrSvVe7fnQVrpcuiqSw19qfiDuV45cCJTs7Y5Lw+LDed8xBUhgYdT1EUFB1yTSuItYVN88Sv7M6pAT9ip6EELIk93l5Otcjie6S2EqHZxVVO/EMpk25cd3B04lL29T02EpbA6gDGjBMM2igNeFPKykwvIkOGfZynDjXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727213744; c=relaxed/simple;
-	bh=BPM5l7ACFOzPEhPloL6UTuc1u+AVciS7cAvjU1qMg1w=;
+	s=arc-20240116; t=1727213799; c=relaxed/simple;
+	bh=YhNBcBmLYZMGmpVNrCH4G2AHZVj8CZlvURZBBBWEJNc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WqTvna0s1UbZvt26f1lIrTBNTB7qBM5qbTMaHsYk9a6TirXRW2LR4f1o6uygmLYhTYnSYUr5jJ30d8kntHZUoNUSGtR9WCiMaw9lrqEKmm/rGc1L6VAek8+30WUH2lGAjeI4Tt2N4jJBWmfowW1kQaD08ymKm4u6FjNA2FaTSgg=
+	 Content-Type:Content-Disposition:In-Reply-To; b=CV7U69r/kFz2IL5rQKrR0vInJrOg9g0SEcYWipRbrbX0gttubJVE8OoAfzuQ0zh9+YkJcZ2Vqc4sQ4+GwGkZZxcWaqbQzAQ+l4TwAPP5Zp7HOwdcxSVs/oKaPf2AHO67j692a9yxmlMzmILyZm91AldOvfyjmG2WmCjI8LecrNQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 14854 invoked by uid 109); 24 Sep 2024 21:35:42 -0000
+Received: (qmail 14864 invoked by uid 109); 24 Sep 2024 21:36:37 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Sep 2024 21:35:42 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Sep 2024 21:36:37 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17743 invoked by uid 111); 24 Sep 2024 21:35:41 -0000
+Received: (qmail 17752 invoked by uid 111); 24 Sep 2024 21:36:36 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Sep 2024 17:35:41 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Sep 2024 17:36:36 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 24 Sep 2024 17:35:40 -0400
+Date: Tue, 24 Sep 2024 17:36:36 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 1/3] test-lib: stop showing old leak logs
-Message-ID: <20240924213540.GA1142403@coredump.intra.peff.net>
+Subject: [PATCH 2/3] test-lib: show leak-sanitizer logs on --immediate failure
+Message-ID: <20240924213636.GB1142403@coredump.intra.peff.net>
 References: <20240924213404.GA1142219@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,111 +39,46 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240924213404.GA1142219@coredump.intra.peff.net>
 
-We ask LSan to record the logs of all leaks in test-results/, which is
-useful for finding leaks that didn't trigger a test failure.
+When we've compiled with SANITIZE=leak, at the end of the test script
+we'll dump any collected logs to stdout. These logs have two uses:
 
-We don't clean out the leak/ directory for each test before running it,
-though. Instead, we count the number of files it has, and complain only
-if we ended up with more when the script finishes. So we shouldn't
-trigger any output if you've made a script leak free. But if you simply
-_reduced_ the number of leaks, then there is an annoying outcome: we do
-not record which logs were from this run and which were from previous
-ones. So when we dump them to stdout, you get a mess of
-possibly-outdated leaks. This is very confusing when you are in an
-edit-compile-test cycle trying to fix leaks.
+  1. Leaks don't always cause a test snippet to fail (e.g., if they
+     happen in a sub-process that we expect to return non-zero).
+     Checking the logs catches these cases that we'd otherwise miss
+     entirely.
 
-The instructions do note that you should "rm -rf test-results/" if you
-want to avoid this. But I'm having trouble seeing how this cumulative
-count could ever be useful. It is not even counting the number of leaks,
-but rather the number of processes with at least one leak!
+  2. LSan will dump the leak info to stderr, but that is sometimes
+     hidden (e.g., because it's redirected by the test, or because it's
+     in a sub-process whose stderr goes elsewhere). Dumping the logs is
+     the easiest way for the developer to see them.
 
-So let's just blow away the per-test leak/ directory before running. We
-already overwrite the ".out" file in test-results/ in the same way, so
-this is following that pattern.
+One downside is that the set of logs for an entire script may be very
+long, especially when you're trying to fix existing test scripts. You
+can run with --immediate to stop at the first failing test, which means
+we'll have accrued fewer logs. But we don't show the logs in that case!
 
-Running "make test" isn't affected by this, since it blows away all of
-test-results/ already. This only comes up when you are iterating on a
-single script that you're running manually.
+Let's start doing so. This can only help case (2), of course (since it
+depends on test failure). And it's somewhat weakened by the fact that
+any cases of (1) will pollute the logs. But we can improve things
+further in the next patch.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/test-lib.sh | 35 ++---------------------------------
- 1 file changed, 2 insertions(+), 33 deletions(-)
+ t/test-lib.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index e718efe4c6..7d4471fbc5 100644
+index 7d4471fbc5..d624ee186c 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -322,7 +322,6 @@ TEST_RESULTS_SAN_FILE_PFX=trace
- TEST_RESULTS_SAN_DIR_SFX=leak
- TEST_RESULTS_SAN_FILE=
- TEST_RESULTS_SAN_DIR="$TEST_RESULTS_DIR/$TEST_NAME.$TEST_RESULTS_SAN_DIR_SFX"
--TEST_RESULTS_SAN_DIR_NR_LEAKS_STARTUP=
- TRASH_DIRECTORY="trash directory.$TEST_NAME$TEST_STRESS_JOB_SFX"
- test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
- case "$TRASH_DIRECTORY" in
-@@ -1215,42 +1214,15 @@ test_atexit_handler () {
- 	teardown_malloc_check
- }
- 
--sanitize_leak_log_message_ () {
--	local new="$1" &&
--	local old="$2" &&
--	local file="$3" &&
--
--	printf "With SANITIZE=leak at exit we have %d leak logs, but started with %d
--
--This means that we have a blindspot where git is leaking but we're
--losing the exit code somewhere, or not propagating it appropriately
--upwards!
--
--See the logs at \"%s.*\";
--those logs are reproduced below." \
--	       "$new" "$old" "$file"
--}
--
- check_test_results_san_file_ () {
- 	if test -z "$TEST_RESULTS_SAN_FILE"
- 	then
- 		return
- 	fi &&
--	local old="$TEST_RESULTS_SAN_DIR_NR_LEAKS_STARTUP" &&
--	local new="$(nr_san_dir_leaks_)" &&
--
--	if test $new -le $old
-+	if test "$(nr_san_dir_leaks_)" = 0
- 	then
- 		return
- 	fi &&
--	local out="$(sanitize_leak_log_message_ "$new" "$old" "$TEST_RESULTS_SAN_FILE")" &&
--	say_color error "$out" &&
--	if test "$old" != 0
--	then
--		echo &&
--		say_color error "The logs include output from past runs to avoid" &&
--		say_color error "that remove 'test-results' between runs."
--	fi &&
- 	say_color error "$(cat "$TEST_RESULTS_SAN_FILE".*)" &&
- 
- 	if test -n "$passes_sanitize_leak" && test "$test_failure" = 0
-@@ -1586,16 +1558,13 @@ then
- 		test_done
+@@ -847,6 +847,7 @@ test_failure_ () {
+ 			GIT_EXIT_OK=t
+ 			exit 0
+ 		fi
++		check_test_results_san_file_ "$test_failure"
+ 		_error_exit
  	fi
- 
-+	rm -rf "$TEST_RESULTS_SAN_DIR"
- 	if ! mkdir -p "$TEST_RESULTS_SAN_DIR"
- 	then
- 		BAIL_OUT "cannot create $TEST_RESULTS_SAN_DIR"
- 	fi &&
- 	TEST_RESULTS_SAN_FILE="$TEST_RESULTS_SAN_DIR/$TEST_RESULTS_SAN_FILE_PFX"
- 
--	# In case "test-results" is left over from a previous
--	# run: Only report if new leaks show up.
--	TEST_RESULTS_SAN_DIR_NR_LEAKS_STARTUP=$(nr_san_dir_leaks_)
--
- 	# Don't litter *.leak dirs if there was nothing to report
- 	test_atexit "rmdir \"$TEST_RESULTS_SAN_DIR\" 2>/dev/null || :"
- 
+ 	finalize_test_case_output failure "$failure_label" "$@"
 -- 
 2.46.2.1011.gf1f9323e02
 
