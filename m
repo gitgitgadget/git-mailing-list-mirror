@@ -1,66 +1,95 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E238617557
-	for <git@vger.kernel.org>; Tue, 24 Sep 2024 21:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A302083CD5
+	for <git@vger.kernel.org>; Tue, 24 Sep 2024 21:34:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727213647; cv=none; b=WdUfMc6xZa91dEkesLu8CbbMKg77izC2nZMMUckJQ6Y0AdEoAYxS2M9NcPDhMtwPAdlLTTuPesPw7sTFWr4ecsZRO9JazUMDkjeke2vIV0oRZjFBpoW3vXF/YS7iewI0S6HsckHiCblh8bfdoEAOdApJwl2Gql8dY8EDmHs5IuM=
+	t=1727213682; cv=none; b=HbU65xt27DsPQa0NIWKszToHvO3gx2H9ePIPaHua0XDFCdaVQFHowyBMUuEZDh1+UdB259SdCm8ZrKYDBJybqbnnUYftTtPgKOLsoJ+aO8RAzYuAbvwkMTVWuYisB+yYjfj7U7Z73goS8o39GIiT5tbzK6OKwKx5zwlETGeJM2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727213647; c=relaxed/simple;
-	bh=xr22eu4oxCEE95uez2h80Gs29+//RqG39j57CgPQwQo=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=AbzIlR8uFkngQUTN61esrMuaAxpA/pA3/9mXPU835ZXYVLJWY0OpkNgLLlNGZecmAspBttDqHcUcTLF5AIsNLDEEndjarfKypDPLAWDnmNty483wdiwtnLFU50EJp+qwPDO6FmjfrR5httAGqLPIXIUcge+9Obj1irMENGRuUM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 14841 invoked by uid 109); 24 Sep 2024 21:34:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Sep 2024 21:34:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17686 invoked by uid 111); 24 Sep 2024 21:34:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Sep 2024 17:34:04 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 24 Sep 2024 17:34:04 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/3] LSan quality of life improvements
-Message-ID: <20240924213404.GA1142219@coredump.intra.peff.net>
+	s=arc-20240116; t=1727213682; c=relaxed/simple;
+	bh=hWUPUbVUgNPZuebqMzPc/by4cM5xQwUugJ5GsrOFjwM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PiQQQ+5sC/P83Kh8oy4MD55OaXBDrBXBW2qJlZocJKzGE3+yrj5lt/jxv3emHOjYeBymdnWgjP8T6NnvdNawC+xw/BO/T2a5tCsRSnbRfisAZOIxqY5tSCjW+7+CfgQMiHofZ+vs2flSiY+0rKYH4TccKsULGYDXVjyd8NgiSaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CBaGb/cd; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CBaGb/cd"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FD491A51D;
+	Tue, 24 Sep 2024 17:34:39 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=hWUPUbVUgNPZuebqMzPc/by4cM5xQwUugJ5Gsr
+	OFjwM=; b=CBaGb/cdzapDz5wq8YbH1unqWaVIJ6s7sBwmJfESlSsKZ6IY7diGJV
+	ax/JNvX/w9H5yDnNJ1aKuvtpX5jFXxkfO1JWjtzM64+86PscKVKIp/2vIMdqScUW
+	0+rTS+PP+KG//UBTCgx1gAgbzWRKBfJ0qd9YJKgF0FvfOdujCFTpY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 779F01A51C;
+	Tue, 24 Sep 2024 17:34:39 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD3361A51A;
+	Tue, 24 Sep 2024 17:34:38 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Elijah Newren <newren@gmail.com>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 4/8] pack-objects: use finalize_object_file() to
+ rename pack/idx/etc
+In-Reply-To: <3cc7f7b1f67fe823834c36f3be20be8ee56e16a4.1727199118.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Tue, 24 Sep 2024 13:32:21 -0400")
+References: <cover.1725206584.git.me@ttaylorr.com>
+	<cover.1727199118.git.me@ttaylorr.com>
+	<3cc7f7b1f67fe823834c36f3be20be8ee56e16a4.1727199118.git.me@ttaylorr.com>
+Date: Tue, 24 Sep 2024 14:34:37 -0700
+Message-ID: <xmqqv7ykrb0y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ CD57F206-7ABC-11EF-8125-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
 
-I was fixing some leaks the other day and came up with a few changes
-that made the process a bit less painful, especially when the leaks are
-hidden in sub-processes (which is most of them when you are digging into
-http push/fetch, as I was).
+Taylor Blau <me@ttaylorr.com> writes:
 
-I hope we're not too far off from a world where leaks are something that
-pop up in your newly written code, and you're not slogging through
-existing test scripts. But until then, I hope these might help others.
+> This has some test and real-world fallout, as seen in the adjustment to
+> t5303 below. That test script assumes that we can "fix" corruption by
+> repacking into a good state, including when the pack generated by that
+> repack operation collides with a (corrupted) pack with the same hash.
+> This violates our assumption from the previous adjustments to
+> finalize_object_file() that if we're moving a new file over an existing
+> one, that since their checksums match, so too must their contents.
+>
+> This makes "fixing" corruption like this a more explicit operation,
+> since the test (and users, who may fix real-life corruption using a
+> similar technique) must first move the broken contents out of the way.
 
-If you want to see the before/after, try:
+Nicely described.
 
-  cd t
-  ./t5550-http-fetch-dumb.sh -i
+> @@ -528,9 +529,9 @@ static void rename_tmp_packfile(struct strbuf *name_prefix, const char *source,
+>  	size_t name_prefix_len = name_prefix->len;
+>  
+>  	strbuf_addstr(name_prefix, ext);
+> -	if (rename(source, name_prefix->buf))
+> -		die_errno("unable to rename temporary file to '%s'",
+> -			  name_prefix->buf);
+> +	if (finalize_object_file(source, name_prefix->buf))
+> +		die("unable to rename temporary file to '%s'",
+> +		    name_prefix->buf);
+>  	strbuf_setlen(name_prefix, name_prefix_len);
+>  }
 
-before and after this series. Before you get no leaks reported to stdout
-with "-i", and way too many without it. After, you get the leaks for the
-first test that generates them.
+Looking good.
 
-  [1/3]: test-lib: stop showing old leak logs
-  [2/3]: test-lib: show leak-sanitizer logs on --immediate failure
-  [3/3]: test-lib: check for leak logs after every test
-
- t/test-lib-functions.sh |  3 ++-
- t/test-lib.sh           | 41 ++++++-----------------------------------
- 2 files changed, 8 insertions(+), 36 deletions(-)
-
--Peff
+Thanks.
