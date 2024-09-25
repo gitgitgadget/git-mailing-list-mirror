@@ -1,95 +1,127 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1096614600F
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 20:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AC51BC2A
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 20:43:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727295983; cv=none; b=kF/X1Rzc1qgL29AlnY3zRxlvyY/oirUMf4kk7kTiQ2CDs7sTK63etBpWu60iAYQKE0rUfMmxH3FT7vaGL6VlfTafjh8DBNc9+yMOL05o5KoHvBO00sYi4IEpasNrMorMkefYeMw2H8v3CljrVf4+0fhmZgx6exm9ZQ/YFYEbM3M=
+	t=1727296990; cv=none; b=dz5or32Y38BvOegDzGUTQlp1VMY8E4PWHAAkBS/wM/m9k9/BxrVRJGfPD6tEz1QO+2YyZlJQCX2/NqWPSp3g5dfKeFsJvxhu5MxPMoEazmcUqHo6jOqMFgCcUpBbs6y4nyLsdwlvEorVZi0s38gY3AkRff6/X60IXK5zvN/kWfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727295983; c=relaxed/simple;
-	bh=tDyXJNU9KOvXH0ihtNv74VAzJOzlXHFxa3FnhBok6gg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CqLGWtyk38fXu9BfJGU48K0sdCQbejWiMd1bUtT+jgpnuMtUSiBIz7N0nACWQw+rX3YMMu+bnHBhrtJ/w7p+wkW1Q+tYVq8XgcYYs07qeoo67cmxvzxVQO+AEL7j8fWabyfw9o4wHH+/o5ddBZXptFcwGQys72ouvAAhb28DwMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rsMlkE2P; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727296990; c=relaxed/simple;
+	bh=pGQZ+g7J6ADlc3OrewvhI8j/2FY5pPFjGvxkOSyYeg8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rv9Z6EZHk5jUldmVMkuOWNnz9Q9D+tqaxYlaZiR6KOFMXo7A0axwPS7UlLZRBjazuF5+FeYuGSswsb1aFd0KU45c2r6LxvEshl+CAIyguLfw3u6ySZrbwoHG3tUoW/s+H6Pcw9qKr8fHUw0jKGhBJIi2JABjQQNt2JeNEFbLemY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LweWiZle; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rsMlkE2P"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D4DB22CFD6;
-	Wed, 25 Sep 2024 16:26:19 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=tDyXJNU9KOvXH0ihtNv74VAzJOzlXHFxa3FnhB
-	ok6gg=; b=rsMlkE2PGbVdbBDCc7Te+4NkyUK29obVkcyqMaKaVzxrOFB5Ck7IZ8
-	q+TOwzkcFjWolPRqRdhQB8LtYu5yytepjRdE4s6T/kYETnw7CZ0wGEo58+uHE6Ma
-	YlzOu11iYZ/QrnmDkh+auZT28ePf7anydrZsFH7rmyXrKXI8zk6DM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id CBDFA2CFD5;
-	Wed, 25 Sep 2024 16:26:19 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 376D42CFD4;
-	Wed, 25 Sep 2024 16:26:19 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 08/23] builtin/submodule--helper: fix leaking remote ref
- on errors
-In-Reply-To: <ZulXjXSozNrXgMUM@pks.im> (Patrick Steinhardt's message of "Tue,
-	17 Sep 2024 12:19:05 +0200")
-References: <cover.1726484308.git.ps@pks.im>
-	<d088703d317a8598e1cc4eb068234c105cdeffe6.1726484308.git.ps@pks.im>
-	<l5aljv4zlvkfpjsizofsypgfaxdzkihwghd3voxin5oxibuixz@fesroo5tihzi>
-	<ZulXjXSozNrXgMUM@pks.im>
-Date: Wed, 25 Sep 2024 13:26:17 -0700
-Message-ID: <xmqqbk0bo4ye.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LweWiZle"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e1a74ee4c75so284454276.3
+        for <git@vger.kernel.org>; Wed, 25 Sep 2024 13:43:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727296988; x=1727901788; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gw3L+z7sMIYQYYJCmjO/0qKfKgsqmd5ctBB6QXb5kcA=;
+        b=LweWiZles3uArgY4YkF3NWcT6ZZMH7AMi5By1gkD2ANytuJbja5zkDvlwf7Q7+SHQB
+         zHUN4vcjgqPZUIhG78BQXGDOhVHX2zaZfeKCMyLEaJw8PgZLiZgPbtmfhUJROjCW+e0e
+         T/UZgO/QWbaLGCSEgZwSd4evVq3odkqDrb1rhrPY99nyop2QQ9yYSJpXJ2lMisWG0l+U
+         ld3I9mWSTyp1hf939TfJnNkMGfieMMPQObk6A08u6swR4hkB4iKu+OVk4k0loaIa8B/n
+         OtmmqPzjncR1Bw5AZ7vTY+XoYjiX+yq2linoJyG+H5OoDbRaqTaRN2VHYyfXffmdT2Yu
+         p8Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727296988; x=1727901788;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gw3L+z7sMIYQYYJCmjO/0qKfKgsqmd5ctBB6QXb5kcA=;
+        b=C6GJOmRKhoYCJdpuh1ZJONrTT35jt/jrBbhBxoYojIfiZRyp/uW6u6uKsENinZi+1a
+         CqkMfWF7enGTy2HYTpCa3plPT7FTRQ/FTOp7lSXsC4iX9Bwo50L3hEZ+QjepTvBBUkjc
+         OC9DHE6esDjma/SF8Mbw+sT3OQ2R/5xsRr/iOhWoY57edgYwBydPYtL8MapEhGKuMkKM
+         YTMQPXQZb9Wh4omW2dVhKczw0I6pXkjimX8NGRPr+IBu08Ea9RIq9tW+1pfvJ9Mf0UEt
+         adQM+z1KjcDnBWVrkiNCKXuFPoVqkNK7obRd3ObJz2cv7Ehkdd3mfjsaDoEDqIEIlFko
+         C7fw==
+X-Forwarded-Encrypted: i=1; AJvYcCWCPxK8C7AvtlNuDfBA9h2VhG28U94kZpiYWVS14tyr0NE06urTt09Rr3WTXDX05NkOoHw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YymQaUfBaN9wHTFG7ZbpFEZQvr1Z0NlkJrEvSOI3jQL+wVQ3LWL
+	9u2BZxBRdvnDXJRWBWp+KaqzCdgQXSnigUzl3kNCH6VIz+lBqwVy9o/y0azcefkCenMMGI8mBV9
+	TGiTSyV/ShqOKVOkqnKui8hgjuX4=
+X-Google-Smtp-Source: AGHT+IGDj2F3HgFHMnREnFLTPLBASs02Hnj3E/C4x+cf6jUdAW6d+7WkaDP0wYCji9gb03dt5Z8YBE2P0kdxjewscfw=
+X-Received: by 2002:a05:6902:c12:b0:e16:1ebf:293d with SMTP id
+ 3f1490d57ef6-e24d7ee7ec6mr3137105276.20.1727296988098; Wed, 25 Sep 2024
+ 13:43:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6C27255E-7B7C-11EF-B03C-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20240720034337.57125-1-eric.peijian@gmail.com> <20240720034337.57125-2-eric.peijian@gmail.com>
+ <CAP8UFD1J4JdR-QP9em=_0q8CQZLf9nE7PLE2=kkvxY218fa-ig@mail.gmail.com>
+In-Reply-To: <CAP8UFD1J4JdR-QP9em=_0q8CQZLf9nE7PLE2=kkvxY218fa-ig@mail.gmail.com>
+From: Peijian Ju <eric.peijian@gmail.com>
+Date: Wed, 25 Sep 2024 16:42:57 -0400
+Message-ID: <CAN2LT1DvrXwAZsjwgEh1waBAVgTNf3UHztsKgY0aGz6Lt3Dfhw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] fetch-pack: refactor packet writing
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc: calvinwan@google.com, jonathantanmy@google.com, chriscool@tuxfamily.org, 
+	karthik.188@gmail.com, toon@iotcl.com, jltobler@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Mon, Sep 16, 2024 at 01:51:21PM -0500, Justin Tobler wrote:
->> On 24/09/16 01:45PM, Patrick Steinhardt wrote:
->> > When `update_submodule()` fails we return with `die_message()`.
->> > Curiously enough, this causes a memory leak because we use the
->> > `run_process_parallel()` interfaces here, which swap out the die
->> > routine.
->> 
->> Naive question, is `update_submodule()` itself being run in parallel
->> here? Is that why the die routine gets swapped out so a child process
->> dying is handled differently? Also is it correct to say leaks are not
->> considered when we "die" normally? 
+On Tue, Sep 24, 2024 at 7:45=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> Hm. Revisiting this patch: my analysis was wrong. It's not the parallel
-> subsystem that swaps out `die()`, but it's the fact that we call
-> `die_message()`, which actually doesn't die. It really only prints the
-> message you would see when we call `die()`, nothing more.
+> On Sat, Jul 20, 2024 at 5:43=E2=80=AFAM Eric Ju <eric.peijian@gmail.com> =
+wrote:
+> >
+> > From: Calvin Wan <calvinwan@google.com>
+> >
+> > A subsequent patch needs to write capabilities for another command.
+> > Refactor write_fetch_command_and_capabilities() to be a more general
+> > purpose function write_command_and_capabilities(), so that it can be
+> > used by both fetch and future command.
+> >
+> > Here "command" means the "operations" supported by Git=E2=80=99s wire p=
+rotocol
+> > https://git-scm.com/docs/protocol-v2. An example would be a
+> > git's subcommand, such as git-fetch(1); or an operation supported by
+> > the server side such as "object-info" implemented in "a2ba162cda
+> > (object-info: support for retrieving object info, 2021-04-20)".
 >
-> I'll amend the commit message and send out the amended version once
-> there is more feedback to address.
+> I agree that reusing or refactoring the new
+> write_command_and_capabilities() function for more commands can be
+> done in a separate series that could perhaps also move the new
+> function to  Maybe this could be added to the commit message
+> though.
+>
 
-So it has been a week and half since the series was posted and it
-seems that this is the only thing you might want to touch up.
+Thank you, I am adding this to the commit message,
+"In a future separate series, we can move
+write_command_and_capabilities() to a higher-level file, such as
+connect.c, so that it becomes accessible to other commands."
 
-What's next?  Just have an updated patch [08/23] and nothing else
-and be done with it?  A v2 round of 23-patch series hopefully will
-see somebody other than Justin and I lend an extra set of eyes to
-double check before we merge it to 'next'?
+> [...]
+>
+> > -static void write_fetch_command_and_capabilities(struct strbuf *req_bu=
+f,
+> > -                                                const struct string_li=
+st *server_options)
+> > +static void write_command_and_capabilities(struct strbuf *req_buf,
+> > +                                                const struct string_li=
+st *server_options, const char* command)
+>
+> In https://lore.kernel.org/git/xmqqfsn0qsi4.fsf@gitster.g/ Junio
+> suggested swaping the "command" and "server_options" arguments as well
+> as sticking the "*" to "command" instead of "char", so:
+>
+> static void write_command_and_capabilities(struct strbuf *req_buf,
+>
+> const char *command,
+>
+> const struct string_list *server_options)
+>
+> The rest of the patch looks good.
 
-Thanks.
-
-
+Thank you. The format is changed in V3.
