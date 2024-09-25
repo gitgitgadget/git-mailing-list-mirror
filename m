@@ -1,94 +1,115 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.134])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AA11552E0
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 22:30:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B61A18E760
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 23:11:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727303434; cv=none; b=G3c8Zj5i0VWqnL/HU6VaFzG9e34Eh8xA7/PqVR1keMLWhhi5TcKXstpIedKwVmZm8p4YxOR9FpJQYF3VPUPU/ezi5VjROcb6KvXRp21W9Pi3Zudf4jbjp+PxbNMYxGtItTHDOjggOJ1VZQSxEsda6uknZfa2ZYYlqoupkrgay4A=
+	t=1727305897; cv=none; b=lZYCil63G8oFvi8ZkZwJ9CdSj/QgnRzN9uwbg3ClrYPACAPSUyp71wGDT1PdMIfqXkvCBJLbHATHr+aKCukzoKBLhZbxsq5zt+Uitq47oh1rjGVAgaBzJvGXOdppgYuCguH0dPR/yK8S7JQ8VArsyShSTh3vnnzow3ie9JLqN6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727303434; c=relaxed/simple;
-	bh=KtZ5MchffcK1QWaJoMMarkgT8fk6KKxSLuonrxWzEfE=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=MwlNaxIe80UR2Cii///R4O9NBL2rPqncN0rSkwPvsyznKuU3y+8j7k8/lP5RMlHrEJjaMVRTw+OfkM8N4tAIBKvPqxfHjHMXldJaOGCUKHGrBfUcd+cNCFwCuFRgMLLT7PmvmjfVQVO+UHZkd7gmcMp6TeEHHn8Sh0niUi5MSvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com; spf=pass smtp.mailfrom=anselmschueler.com; arc=none smtp.client-ip=212.227.126.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=anselmschueler.com
-Received: from [192.168.93.96] ([176.0.7.240]) by mrelayeu.kundenserver.de
- (mreue012 [213.165.67.97]) with ESMTPSA (Nemesis) id 1MJWgK-1seFPw3baK-00McDR
- for <git@vger.kernel.org>; Thu, 26 Sep 2024 00:25:16 +0200
-Message-ID: <ce9f0440-e724-4116-b63a-0e62c46c170d@anselmschueler.com>
-Date: Thu, 26 Sep 2024 00:25:16 +0200
+	s=arc-20240116; t=1727305897; c=relaxed/simple;
+	bh=uJQVre48aMtkwzjrDXPBFmHHtnBCd6yvd/ob/XGfEy8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mI0WMDmMplEbL25WQY8ZiLGvVe9uLYgb9soT5wzuHAVgUskL1jsmVq07DNXr2VTA6eE+ZnCv8DXA/XQ79jh0s1X59xuIBwElp0FbV+L0HYjOS+Bym+6HpQDfoAApbTNp3xPTYW1Yx7tbO7W4C+kVJSItZx2oj3SlPIrZTnOodm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=p+b+5NqF; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="p+b+5NqF"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C87F2FA99;
+	Wed, 25 Sep 2024 19:11:28 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=uJQVre48aMtk
+	wzjrDXPBFmHHtnBCd6yvd/ob/XGfEy8=; b=p+b+5NqF5gRBX4TV4ZtoBL1am49M
+	yQv3+zLKYRlnKXa4RKxGjSP7k4l5uuniTUW7sBQIv8OUxMsJ3tdAJS8ujJU29ywp
+	G+yTstQJT+TfRuf9oXP+cBN14iN14IUB33cl6QqYGukpkaFcQOwnLL3fvfN8jXrr
+	JN1CuxWIxrMTISc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 34FD42FA98;
+	Wed, 25 Sep 2024 19:11:28 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7884F2FA94;
+	Wed, 25 Sep 2024 19:11:26 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Anselm =?utf-8?Q?Sch=C3=BCler?= <mail@anselmschueler.com>
+Cc: git@vger.kernel.org
+Subject: Re: Confusing error message for git switch -d
+In-Reply-To: <ce9f0440-e724-4116-b63a-0e62c46c170d@anselmschueler.com>
+	("Anselm =?utf-8?Q?Sch=C3=BCler=22's?= message of "Thu, 26 Sep 2024
+ 00:25:16 +0200")
+References: <ce9f0440-e724-4116-b63a-0e62c46c170d@anselmschueler.com>
+Date: Wed, 25 Sep 2024 16:11:25 -0700
+Message-ID: <xmqqr097miqq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, de-DE
-To: git@vger.kernel.org
-From: =?UTF-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>
-Subject: Confusing error message for git switch -d
-Autocrypt: addr=mail@anselmschueler.com; keydata=
- xjMEZMK/6hYJKwYBBAHaRw8BAQdANvIiy7BrQ5bJ2txC1J4PpfkLnOrEhmG9DzItTcFrd2XN
- KUFuc2VsbSBTY2jDvGxlciA8bWFpbEBhbnNlbG1zY2h1ZWxlci5jb20+wo4EExYKADYWIQTN
- v+yoNv7jQBzrWP+6NO4aujoJVQUCZMK/6gIbAwQLCQgHBBUKCQgFFgIDAQACHgUCF4AACgkQ
- ujTuGro6CVWjHwEAugikc3PIHCDCaZPrdSiXqV3mSabICGPMje+Kp73oxkoBAJYeHUdoZcyw
- BkmGIh1mWY738FN+SPHwSWIS9jtJ2+4CzjgEZMK/6hIKKwYBBAGXVQEFAQEHQE6vKA4qvkMc
- 6kslzFWzHQ+h9Qk89ggfrexKhse5F6NjAwEIB8J4BBgWCgAgFiEEzb/sqDb+40Ac61j/ujTu
- Gro6CVUFAmTCv+oCGwwACgkQujTuGro6CVUKawD/SDvfSz7vUSUkNiJJsK59U+D7rBkdRHoq
- sNsLc3EVYiEA/3kNw77KZvEG2Jb3ktvv5qoWKnW+xrEHh0FZLFzb50sM
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:KXCyAD525pV02Unsb46wjcNqgVyLvLLNK0FNUZaIAXzMU7ZHr9x
- ggnBgXa3YkN7eoy0iaW/OBmuAaXThAss9vcvx+dBkq22jrel/hiRVUl+3KKLLNgCU1H0zp6
- R62sLw7YXnUbFHqzqI4VAJ1ugJ5I78fNTw4vP1KgWAIjXDw/JbSNPHEjrQDJxCUhTCWcXtv
- zdmsvc7rJPxVClHNfrFYQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:q/7N6Atz9I0=;HQM6L/ykD5CAaMikJGEFMhY63ZI
- bn4XkH8ppRDLMF4Vv9yA7ETpWekR5crXqRRP5Y1AWvqSRKwLK4yEE6OrHl1UQ4Hd2+3TmSHZQ
- JDSQ9BPM06DC+oveQZWqdUMwTqPONigeiE0cZAwRoROckDTKs3GXG5wCmNVbJ00J9K5W1jwO0
- xZMGMTTfX95gDzKQtHPelVQxVgjX3mt5DtN3tHpuSbwZ+Eu2n3AE6VpUknzI/1HZw5E9BSTBq
- TTyTERJ1RS3G29uAag84GdFmU4uyxoQ51zrlD0PlYj/UNIFkKjOTbXgj09qT8ONdoPfsMFBHl
- nvmKt1bWgBwntpyY18QDs6pBwkvyN1fBMRW45nY1kg1PlPtoS7kE6giXuyPqCckNtycGKfBvP
- XDNEgxSKfJpNimDbs4CQchT7TWxwMc2W+aErgzhHt7DTgeA6wL7dYLPNBVpXFALHjLo0oaBmW
- BM1LjFGMhY6JMxUXpPA1TPgjju7B0B6+DeSNo+GWpcqlkzEi6SKvThq7lnmTNWYTZv12vlJOu
- qgzAIuL9NGeGViVXVJpa7ZmFysL8xv18oSi/DMym11HXOl/aK2pgzHQhhVTN+Jakvc69f4S+I
- 7bPer118X1gZAFMXVsUGX3mipL6YlAO6MdbErX4j2rRW4RmHfGlWu/WGNgIPVx1oJ4hXrVYtx
- WmZ6wMTL7Uy+iyma1BQM1OzH290Ygx52c3mRSR1mkLlXYGtAVZ7SE0OIUn/LP3kviT9xrAu59
- Fe/N9nYsVhJ2jT4WyxQEmCfDdoVjMfLDw==
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 7D578BD6-7B93-11EF-B34B-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Anselm Sch=C3=BCler <mail@anselmschueler.com> writes:
 
-I just ran into a confusing error message when using git switch -d, 
-specifically in a clone of the CPython code repository.
+> I wanted to get the code for CPython 3.12, so I tried running git
+> switch -d 3.12, expecting 3.12 to be a tag (which it wasn=E2=80=99t, an=
+d it
+> was a remote branch).
+>
+> Git produced this error message:
+>
+> fatal: '--detach' cannot be used with '-b/-B/--orphan'
+>
+> This is confusing since I didn=E2=80=99t pass any of these options.
 
-I wanted to get the code for CPython 3.12, so I tried running git switch 
--d 3.12, expecting 3.12 to be a tag (which it wasn’t, and it was a 
-remote branch).
+True.  FWIW, this is shared between "checkout" and "switch', and I
+agree that there is a huge room for improvement.
 
-Git produced this error message:
+With (arguably overly aggressive for its own worth) the "--guess"
+option being default, giving the name of a unique remote-tracking
+branch (that is, "3.12" appears as a remote-tracking branch of only
+one remote, among possibly multiple remotes you have defined for the
+repository) would behave as if what you said, which is "3.12", is
+equivalent to "-b 3.12 --track origin/3.12" (where the "origin"
+thing is the "only one" remote for which 3.12 exists as a
+remote-tracking branch).  So
 
-fatal: '--detach' cannot be used with '-b/-B/--orphan'
+    $ git switch --detach 3.12
 
-This is confusing since I didn’t pass any of these options.
+behaves as if you said
 
-I believe I have determined that this error message occurs when using 
-git switch -d to switch to a remote branch that hasn’t yet had a local 
-branch that tracks it created for it.
+    $ git switch --detach -b 3.12 --track origin/3.12
 
-Why is Git producing this error specifically?
-It also seems that, whatever the reason, a user probably doesn’t know, 
-so a better error message might be a good idea.
+and the error message is given.
 
-To clarify, if I’d known that my assumption of it being a tag was wrong, 
-I’d’ve still expected Git to act differently, specifically, it could’ve 
-switched to the commit the branch is pointing to in detached HEAD mode 
-(as it does when using -d with other branches).
+I am merely saying that the mechanism from which this error message
+is given can be _explained_.  I do not think it is well designed, as
+it does not give a great end-user experience.
 
-Thanks
-Anselm
+Disabling checkout.guess configuration would force you into the
+habit of being a bit more explicit.  Even with checkout.guess
+configured to false, you can still say
 
-PS: Are there no mailing list servers that support HTML messages? Why 
-are they not allowed, even with plaintext fallback?
+    $ git switch --detach origin/3.12
+
+and because this does not blindly translate to -b/--track, you would
+not see such an error.
+
+A more appropriate design for "--guess" would be to notice the
+presence of "--detach" and act differently, i.e. not rewriting
+blindly 3.12 to "-b 3.12 -t origin/3.12" unconditionally, instead
+rewrite "--detacu 3.12" to "--detach origin/3.12" if "--detach" is
+there.
+
+Patches welcome ;-)
 
