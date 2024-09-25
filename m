@@ -1,132 +1,92 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A0B1D5AA8
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 16:44:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411CD81AB4
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 16:47:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727282665; cv=none; b=qloVTDmNwopfnhyUhkblMh9BANH6PkflNe5CAlEYnsnuUBWOM37P+0Dy0QerFsl8aPdg2fZlPRmN6xdqQNKtgBvfNdugSwydcRgZhefwt4XxnjNotKCdcyHaTBFuad/Te9sLiiF7hTXWs7fW/iSGW4DkE/UQWte6p9cKr+5fNm4=
+	t=1727282876; cv=none; b=PradEp31KPrpPNkll1hOwFdKO1aaJEV+tx7iI6hl/7J5rBCuy300pNZKgDHbtoXJ+7EH5VvZU6r6U9Mgp5JbS1lXBQmq+ypXuMQMjCM6hbLZUp6dZgCVcAhT0bAaueio73ZhoduBPZ6orwBsS+D3XVmc+3xYJGuF0U6A3oO4oMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727282665; c=relaxed/simple;
-	bh=dSACRMuiOf+tpUiniXPb5pc0VHTPIRV/e/MjJvHvosc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cGR4tMRxpqh2/1R+ddec3a5g3zihgs40dCziV6UO13no9ArYzO1af0ZzgRYVfLQoTIT1bAHAcWf1eS4S4PS9Ye3zGzgmywaz/5r/BPe8B6jU36wU8+P1oKjjAYUdsK7jHX0xMEPyRP+R1JwBv1MOG2BOKd3mOLqIIr0ZfmZxgDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=k8hVCQE/; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727282876; c=relaxed/simple;
+	bh=mRX9jER8fbTZz38cxMJFZjPqPO3xRfjbBpBEj3Cb03I=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=lU7WGgQ0XohbKMpmWq/ovqq++Gzhk/BbryXmmDh1XDBawhXid8ABStoP0qprCkL35tYXzbOHbT7SJEYUbAnpyCmdbQJCaefJNr4ZzEn3mpLSa1vplT2egbUl5vzMYd3TmRLSkL9dsYse4p0XQ3XwbEiOQQfsOyuLtpdDSAGv5gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kU1wesOP; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="k8hVCQE/"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D6052CCAA;
-	Wed, 25 Sep 2024 12:44:16 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=dSACRMuiOf+tpUiniXPb5pc0VHTPIRV/e/MjJv
-	Hvosc=; b=k8hVCQE/7Kx+WQkCPoeN2M22I9y6R4i2MkZnhwLAbvZxaiKoGcHzqY
-	DgA4Uh1NkLFRAUlheL41vQxjd5l3zZq4no3nUnE+JGnqUGuibDtZXqa5Bcr2wN71
-	j1kCij2rdIHMNFC7grBC2McL2jClTFEA9CORgLIT+9VTQAzEW2mf8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 12BAC2CCA9;
-	Wed, 25 Sep 2024 12:44:16 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.108.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6ECC32CCA6;
-	Wed, 25 Sep 2024 12:44:15 -0400 (EDT)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  newren@gmail.com
-Subject: Re: [PATCH] sparse-checkout: disable advice in 'disable'
-In-Reply-To: <5f4290f6-7c9b-47ee-b867-c9904ce0ccab@gmail.com> (Derrick
-	Stolee's message of "Wed, 25 Sep 2024 09:48:16 -0400")
-References: <pull.1800.git.1727119882901.gitgitgadget@gmail.com>
-	<xmqqr09ayv2d.fsf@gitster.g>
-	<5f4290f6-7c9b-47ee-b867-c9904ce0ccab@gmail.com>
-Date: Wed, 25 Sep 2024 09:44:13 -0700
-Message-ID: <xmqqmsjvptsy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kU1wesOP"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42cb806623eso60896905e9.2
+        for <git@vger.kernel.org>; Wed, 25 Sep 2024 09:47:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727282873; x=1727887673; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mRX9jER8fbTZz38cxMJFZjPqPO3xRfjbBpBEj3Cb03I=;
+        b=kU1wesOPgf15oW6IejHgafs+CYf7mjmD9Pvwy4mG7yW00rZQYeWesGWzszvHRsTIfz
+         h/Vazdn6GVPofmVEpc5G+mbL27Hc/pWQCT8CbDR0mwRcWjsGo+y4Rvu3enOaz3NfzSVU
+         PW1wv/RCAw0C2feKTMJgFSJ4/drX/lnBPcm+5wh2CacUXLawDIhRV75H/GpwHnUeZtT0
+         GrF450dEpwJ99HpGYfN3E/fsEExyqkZky5y/LYTK15KJFZy6ve5xzKYJvfUSc976+g3y
+         3oeWYM2n7ms4x0XeUoMzlWdOuSaclDMVbSyLj/qfxGxviYl4rBSaJaASBO8covJeTojb
+         vF2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727282873; x=1727887673;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mRX9jER8fbTZz38cxMJFZjPqPO3xRfjbBpBEj3Cb03I=;
+        b=HnxQHnT/1RdrJn6Q+dBVrBUIyngYeT11yM3eWSDDJ6XC/kUvvNwFwbf6WTYb46BJQ7
+         Eh2PRfomCnmEy9REMviiBw31tCHk16yXRBnTgyBUUw8mQ2A4kUHb+NAQ3f1ZCZ0Tsim7
+         XK1PDplFYZo3MCn7DZkr6geclYu6o1YL94NenG+3jNY602wnSqbND8sr8+r4AmTOMP+J
+         5jreQo9wGCefHYCs1FJ35NhTDmyXNQJU8/8o1S6kwFD4nzGggsrNnUa+AuiN+O+dM1Tu
+         SIwD+tOsdoe/H9LXljET5TE9comlm2R5zn479iAaHrZGaHecJLljPdcoIkhGZyptN227
+         EUBw==
+X-Gm-Message-State: AOJu0Yy4sPj82lpD4JhtyaByZFCk98pImlsn0qhDmXDW8OVxcPQTXofl
+	gq/JnCgmn0HcwctsBDXtm+Wjt/5LDq+9Lv8Q4LcsYPMwhj/pL2pdR1qctKOVyUk=
+X-Google-Smtp-Source: AGHT+IFbnXF1nu6on8MsJ3wHqZuBgD8hvpvp6XJHmxbzj0Ja0P1ZwhNQbVsUSfppZF+WEdLJke2UgA==
+X-Received: by 2002:a05:600c:1d98:b0:42c:b4f1:f2ad with SMTP id 5b1f17b1804b1-42e962451ebmr25074925e9.33.1727282873169;
+        Wed, 25 Sep 2024 09:47:53 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e96a36287sm23597555e9.29.2024.09.25.09.47.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Sep 2024 09:47:52 -0700 (PDT)
+From: Sergey Organov <sorganov@gmail.com>
+To: Mateusz Wielgos <email@mateuszwielgos.com>
+Cc: git@vger.kernel.org
+Subject: Re: Using Git as a Database
+References: <4B2B1EC7-6B08-4B57-A50F-702C031C2792@mateuszwielgos.com>
+Date: Wed, 25 Sep 2024 19:47:50 +0300
+In-Reply-To: <4B2B1EC7-6B08-4B57-A50F-702C031C2792@mateuszwielgos.com>
+	(Mateusz Wielgos's message of "Sun, 22 Sep 2024 22:28:26 -0500")
+Message-ID: <87jzezhe89.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6690718C-7B5D-11EF-A57D-9B0F950A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Derrick Stolee <stolee@gmail.com> writes:
+Mateusz Wielgos <email@mateuszwielgos.com> writes:
 
->>> +	grep "The sparse index is expanding to a full index" err &&
->>> +
->>> +	git -C sparse-index sparse-checkout disable 2>err &&
->>> +	test_line_count = 0 err
->>
->> I am not a huge fun of insisting that other code in the code path in
->> which I got rid of an unwanted error message must stay silent.
-> ...
-> I would say that there are generally two reasons why I chose to check
-> that 'err' was empty here:
+> Hello,
 >
->  1. Using "! grep" feels flaky to me. If we changed the error message,
->     then we could accidentally cause the test to pass because we don't
->     see the old message. This is somewhat mitigated by having the same
->     test check for the existence of the message, so careful use of a
->     common variable might avoid this potential future.
+> I would like to use Git as a database of sorts. Let’s say I want to
+> track weight of something in a file. When the value changes I can
+> commit the new one. I can also figure out all previous values. That’s
+> awesome.
+>
+> What I am having trouble with is… What if a measurement is taken but
+> there’s no change? I want to commit a file that hasn’t changed.
+>
+> The only workaround I figured out is to toggle the executable bit.
 
-Yup.  Duplicating is probably OK in practice as the eyes of the
-developer who changed the message will be pulled to this test when
-they notice the failure from the positive "grep" to notice the
-negated version you use to replace "The err file must be absolutely
-empty", but I agree that a common variable would be even safer.
+As you are tracking weight or something like that over time, it's likely
+useless without date, so just put time-stamp into the file as well:
 
-> +  msg="The sparse index is expanding to a full index" &&
-> -	grep "The sparse index is expanding to a full index" err
-> +	grep "$msg" err &&
-> +
-> +	git -C sparse-index sparse-checkout disable 2>err &&
-> +	! grep "$msg" err
+85kg 2024-09-25 19:45:14
 
-Excellent.  "test_grep" and "test_grep !" are better choices, though.
-
->  2. If the output is currently empty, then testing that it stays empty
->     will be a more rigid test. It will help us notice a change of
->     behavior here, even if it is an intentional change.
-
-Such a stricter position cuts both ways.
-
-If we assume infinite engineering resource availablility on ongoing
-basis, yes, it may lead to a good discipline.  But having millions
-of such tests that will _notice_ changes that are irrelevant to the
-thing the test is about (e.g., this thing is about sparse index
-expansion advice), we'd be setting ourselves to adjust numerous
-tests whose primary purpose has nothing to do with what we are
-changing.
-
-The choice also largely depends more on preference and taste that do
-not have one absolute and universal answer.  I would personally
-prefer avoiding overly specific tests, but I also find it attractive
-if we can afford to be more specific in tests at times.
-
-> For the progress motivation, I'm not too worried because the progress
-> indicators depend on isatty(2)[*], so would not appear here even if the
-> command was slow or somehow GIT_PROGRESS_DELAY=0 was set.
-
-I already said that "progress" was a mere example, didn't I?
-
-Even if we expect we will not ever see unwanted progress indicators
-in this code, the general point still stands (iow, progress and
-"unsparsifying warning" are not the only things that output to the
-standard error stream).
-
-> [*] #leftoverbits: 'git sparse-checkout' commands do not have --progress
-> options, but could. The 'unpack_trees_options' structs have a member
-> called 'show_progress' that could be populated based on a user option.
-
-Nice.
-
-Thanks.
+-- Sergey
