@@ -1,55 +1,53 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3471D5AC8
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 17:02:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBD53D0A9
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 17:03:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727283772; cv=none; b=T7rIbTXTYhVyP2uUXASOt+t6SZqJ7a2tJSW3ZvHgq7Luu+7n+D9yynhZGjCUDzs7EO6le+HRqpDRjJQ49XcRIHPG4rqtfzlB7dyB1wPenJ9mDVRGv62nzbGV7BMeiLv9d6pq/yDttIgF2AggRmppVbh6U+A1lhq2HjQvaM5EAIs=
+	t=1727283805; cv=none; b=b7prs5A1qEDyDsg+DUJicynTTjvdFHmMTdRjNlwRfVzkYv9wb8vYLg3+CMdc+buYasDCJ3FNhGHDPYJqxZLekhFp+NkhQMtDzkuRgpYMrCjHZ0Bb3kBkFsm3/yE8iTNj9fVjQwbek5UrFdfisGROWosLhNjYuGKEW0GSCOwSNfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727283772; c=relaxed/simple;
-	bh=JyXRr7DSv+taIf7R83wHYEu/kZAwMWA+hmDUwWsCydI=;
+	s=arc-20240116; t=1727283805; c=relaxed/simple;
+	bh=4c8+1Dc5gJJSB62l1c8REbaJtp2D11gnjY1WVBkWIOM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TXNJrPL72aHhk16ed4vEsgyY2Le2nU1slkiLENew54o1BNVnIFV1xvDngzwleqD8ZWSRGY6vXDKLZpVz3TLdqWn7jeo2b98qtBvqOWDSJUPBWf0/dufxumACO7PnF0tj/LGRseHMdsfag90oEyI0tCpfJVafswVczSVAvHeluxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OlYwGgUz; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=QfzUDVX4309V1N+Ci/bQNkuv48OupwapQIAMXh/UNnEyPxvdG37WqJRsgMwUiLqrXBIWfKYlMo/BCnmBraLiYnMiORLk9oe1q0M0cZqTsz+baHO5zoAqazRbeB0ggoUjqioLVdbaFDG4NOZszCdruNQsxy+n6jnUumMH8P4PmVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=R0DJ0CTb; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OlYwGgUz"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 402DC2A113;
-	Wed, 25 Sep 2024 13:02:49 -0400 (EDT)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R0DJ0CTb"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 184F82D197;
+	Wed, 25 Sep 2024 13:03:23 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=JyXRr7DSv+taIf7R83wHYEu/kZAwMWA+hmDUwW
-	sCydI=; b=OlYwGgUzkTpsTkjFWiqjPqBaeCCUUU3fpj5FXWm5V8Zq2pgq/dQvG2
-	L3ylC4LhRPndRcvOvcpwgcAkTEefNWJzD2X8/77LO+6vLGflTCL7HCZep0VCL2Vn
-	VUJ6Zhxeq+WiQHGn3IriafYyVm5xrImzpnVS3EKkt8uKb+NDdHR6A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 380802A112;
-	Wed, 25 Sep 2024 13:02:49 -0400 (EDT)
+	:content-type; s=sasl; bh=4c8+1Dc5gJJSB62l1c8REbaJtp2D11gnjY1WVB
+	kWIOM=; b=R0DJ0CTbZFJR6sac5EgRKnjRpbLzwLa4F/Dei1bo0h8eNUMqQkAR3L
+	3egv2zEfXh3g2oXZV8W8uxvwhxKXQJWOMK2IjZ9ltX9tgweENQZKkKW27/l8874j
+	AN5wuEaJVysw6cjWuGtu7YLqUdUU3V/nNqJicEwabvEkg+xrL++eY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D0D82D196;
+	Wed, 25 Sep 2024 13:03:23 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.108.217])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 821B52A10F;
-	Wed, 25 Sep 2024 13:02:48 -0400 (EDT)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 518742D195;
+	Wed, 25 Sep 2024 13:03:22 -0400 (EDT)
 	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Elijah Newren <newren@gmail.com>,
-  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 1/8] finalize_object_file(): check for name collision
- before renaming
-In-Reply-To: <6f1ee91fff315678fef39a54220eae91632d2df9.1727199118.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Tue, 24 Sep 2024 13:32:10 -0400")
-References: <cover.1725206584.git.me@ttaylorr.com>
-	<cover.1727199118.git.me@ttaylorr.com>
-	<6f1ee91fff315678fef39a54220eae91632d2df9.1727199118.git.me@ttaylorr.com>
-Date: Wed, 25 Sep 2024 10:02:47 -0700
-Message-ID: <xmqq4j63psy0.fsf@gitster.g>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: git@vger.kernel.org,  calvinwan@google.com,  jonathantanmy@google.com,
+  sokcevic@google.com
+Subject: Re: [PATCH 0/2] repack: pack everything into promisor packfile in
+ partial repos
+In-Reply-To: <20240925072021.77078-1-hanyang.tony@bytedance.com> (Han Young's
+	message of "Wed, 25 Sep 2024 15:20:19 +0800")
+References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
+	<20240925072021.77078-1-hanyang.tony@bytedance.com>
+Date: Wed, 25 Sep 2024 10:03:19 -0700
+Message-ID: <xmqqwmizoeco.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,52 +57,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- FE036FA4-7B5F-11EF-9C04-2BAEEB2EC81B-77302942!pb-smtp1.pobox.com
+ 12294648-7B60-11EF-9F4E-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Taylor Blau <me@ttaylorr.com> writes:
+Han Young <hanyang.tony@bytedance.com> writes:
 
-> ... But in practice it is
-> expanding the definition of "what is already on disk" to be the point
-> that the function is called.
+> By using 'repack everything', repacking requires less work and we are not
+> using more bandwidth. The only downside is normal objects packing does not
+> benefiting from the history and path based delta calculation. Majority of
+> objects in a partial repo is promisor objects, so the impact of worse normal
+> objects repacking is negligible.
 
-Yeah, it is a reasonable argument for this additional protection.
-It does not make things worse.  All it takes is for the attacker to
-come a bit earlier to defeat the link/unlink dance, so doing it "the
-right way" does not make it fundamentally safer.
+There is an important assumption that any objects in promisor packs
+*and* any objects that are (directly or indirectly) referenced by
+these objects in promisor packs can safely be expunged from the
+local object store because they can be later fetched again from the
+promisor remote.  In that (in)famous failure case topology of the
+history:
 
-I hope all TOCTOU races can be explained away this way ;-).
+    commit  tree  blob
+     C3 ---- T3 -- B3 (fetched from remote, in promisor pack)
+     |
+     C2 ---- T2 -- B2 (created locally, in non-promisor pack)
+     |
+     C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
 
-> Co-authored-by: Jeff King <peff@peff.net>
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  object-file.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/object-file.c b/object-file.c
-> index 968da27cd41..38407f468a9 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1937,6 +1937,7 @@ static void write_object_file_prepare_literally(const struct git_hash_algo *algo
->   */
->  int finalize_object_file(const char *tmpfile, const char *filename)
->  {
-> +	struct stat st;
->  	int ret = 0;
->  
->  	if (object_creation_mode == OBJECT_CREATION_USES_RENAMES)
-> @@ -1957,9 +1958,12 @@ int finalize_object_file(const char *tmpfile, const char *filename)
->  	 */
->  	if (ret && ret != EEXIST) {
->  	try_rename:
-> -		if (!rename(tmpfile, filename))
-> +		if (!stat(filename, &st))
-> +			ret = EEXIST;
-> +		else if (!rename(tmpfile, filename))
->  			goto out;
-> -		ret = errno;
-> +		else
-> +			ret = errno;
->  	}
->  	unlink_or_warn(tmpfile);
->  	if (ret) {
+even though the objects associated with the commit C2 are created
+locally, the fact that C3 in promisor pack references it alone is
+sufficient for us to also assume that these "locally created" are
+now refetchable from the promisor remote that gave us C3, hence it
+is safe to repack the history leading to C3 and all objects involved
+in the history and mark the resulting pack(s) promisor packs.
+
+OK. That sounds workable, but aren't there downsides?
+
+Thanks for working on this topic.
+
