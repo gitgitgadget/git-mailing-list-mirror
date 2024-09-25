@@ -1,137 +1,118 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4115FD520
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 18:06:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82FC1757D
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 18:06:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727287569; cv=none; b=G5WfsS9r4ohNf+hcWRe/oSxSueoJ1bKfheQAilU55iDZSIY3bGJsD1mhciQMRHhciz5nV0CzAwzhV8Qeovxn4TH12QtmXMmxLymfXg0A8yyWNd6vmLdFV3rP4YXKHpyYbmnGKgdkBm04wiF0M0/Xn2phFihNSxiusq7fqt91piw=
+	t=1727287598; cv=none; b=KN6b0DfrpUjvo/Hnd/uUysx7CZf5ZfT1foyza2ZZ3fFkLefTRzYAAA87z/NNr5C7F6P0Hp6yeUvsGEPtvyN87a0eVzP5W3Q8Va4ofhw5Pz0yPYHP+xDwOaEv5gk8dm+RAY6nztlwEgmQ1bAk2snYsW6jwIUE8eEZxaPonqPRsSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727287569; c=relaxed/simple;
-	bh=QdKmrc5QatdWelI6+/JXyr9aUyutIyn5l/4zwtggUd0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iXZ7Ol1BQ9SpamnoiFOtY+ryINZ3a5GhWFz7wD7XD+ABxWNlaw5QcehCaSVVvpD+QvZNaEF/qRThvugZSAmAhdQbtusvtpUomf40EN5EYq0JTrG7ZtteDhpSavwyfpt9NqQ2zsnXZK39Y821Ow27DRS+Os1LE6wMdXVZMSvrqYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=v0pp8LWv; arc=none smtp.client-ip=209.85.219.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1727287598; c=relaxed/simple;
+	bh=9FuMESPEsdDBFyCR6x9yIMULEi2JcCvrWo48bC83Fns=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kR6TxkuX2+z6ynkyQizHPO5FqlYZ1vkgnzxYGt4EeUFaXXu2XDWC/oSRWyTbBtczGh+qG1VSQFpw7UBoolXz/KGqIqBETmz8WJskoItCoVUW27ELpYhafpvrQVJrwS4mXzVxOAXhupFEFiTp7rZ2mfGIudLKVTeW41lBcGARvkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=tQZ1qYSF; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="v0pp8LWv"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e1d2cf4cbf1so135499276.1
-        for <git@vger.kernel.org>; Wed, 25 Sep 2024 11:06:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727287564; x=1727892364; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wtK9exLvRHVfnAA/TIJXxMBP818P4KWg6aWPIboxMSw=;
-        b=v0pp8LWv6nTKEWOeXjWJm0BUgfLtFquzAZT92b7SmmwAn555hvMiuxgZHb6agtSKzu
-         7MBiFhCsqbeSuFl7xCYUr2yo78kpsZTtkm26godkVCusFGFkyDZpNSU1axyHAJPMP9GW
-         2Wl0qUYocOzvU2NiJ8C+tUUuKa65ECQzwNwBJytBJs7J7lOeWcLZyna5bPHkazWZYE6h
-         fEUuS/QYmOw15w5ziTi9Hti/rWpfN8eSq1X/neNOFGT8/PF6qsVhuE4amerhMtOlLkTg
-         8h11gIlLfxcpia0wOucpTycC3mUj6UB6QFVlTdVpjBkZBoV/W6UH08hfU7mkQPYlgEVx
-         sEvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727287564; x=1727892364;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wtK9exLvRHVfnAA/TIJXxMBP818P4KWg6aWPIboxMSw=;
-        b=aID1Rjbzaf3RKWxQdt9mJuSlZgfbCHBmi3PrALXVJbWdlIz2XfNGGbgOgJ0astIxEe
-         9F5q93Nhpm/yFJkaiNOVK2oyyadmU53dJXxd2gkeB2aVQBu2EtDp26yIz707WiCMyRMu
-         JCowEPQ2S9qQUttorA4DpjsyJi0ADNZ4dEJzPSdbeJcKfgCg653m/mUeC+vJWKiC59uX
-         SofDJto6vdsg3jcrvmJ5tcVjfXhsT2fEMbHmLzQwzangYbXsnh+GYKg8Spu0IcpLNtDF
-         72J0G9QIn2ZjEk280WmLUhEAnrdsU5EaoOybhYAdxqv35VVscHGlEeHnZCm+Yp4Soe5s
-         irfw==
-X-Gm-Message-State: AOJu0Yx7n+cnRbWRajcru6A1t/Tza+n7/rFTtv38WdHYBHLrYMfRjuXB
-	o4Ja1o6mp40ME1J/HNYbETzdvQheg3Aq4azfVV/IgSH8cHcLDO0k+Cc6O9g+aep9SfBIb/dSMqw
-	31y0=
-X-Google-Smtp-Source: AGHT+IEKRrQO398pm3LXB7ejYegayy9UNYmLFhbG9Fn4OXgU1vmC7zB1i3S0HdiTHAYoeAL28mttZg==
-X-Received: by 2002:a05:6902:2b85:b0:e1d:c07b:a680 with SMTP id 3f1490d57ef6-e24d7fdf576mr2759379276.22.1727287563988;
-        Wed, 25 Sep 2024 11:06:03 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2499ae6812sm656193276.2.2024.09.25.11.06.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Sep 2024 11:06:03 -0700 (PDT)
-Date: Wed, 25 Sep 2024 14:06:01 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/8] finalize_object_file(): implement collision check
-Message-ID: <ZvRRCb0+82p/IeI3@nand.local>
-References: <cover.1725206584.git.me@ttaylorr.com>
- <cover.1727199118.git.me@ttaylorr.com>
- <ed9eeef8513e08935c59defafde99956eb62d49a.1727199118.git.me@ttaylorr.com>
- <20240924203718.GA586150@coredump.intra.peff.net>
- <ZvM2Lkb0/LPrqizO@nand.local>
- <20240924222039.GB1148242@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="tQZ1qYSF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1727287591; x=1727892391; i=l.s.r@web.de;
+	bh=bq7iFhM1Wf4dqxB7gmeqcOjkKLJmc5Ydf95iKxM0r1I=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=tQZ1qYSFL/cq0KDLhcoJKCW3pjjLshZgplwwVGDz5jH6GjU3PfpHtqCnQCDSwr3y
+	 cp8ewSiPxAKt8R7Nmz3c0XnCI8N/QRxihNOPyhYrlUGCdp9Z95Sg98+Du8ZWqC7ae
+	 34n8Umth2pUWREgyjpa2emtji4YDhIbyampqgLcW6I9ILufMUJgndQFepVCWS0R8S
+	 FSqD4myDzNXvYA0bqUrGVvgMf/PcJDJMVNjZUtnkWddVAUutYmItSxif5GDiy1zlI
+	 FXhVLHdji37/jF1DG3yV+YD9WEqhPl2b1RJAaQejfosd1ay42vOW07FY0x+qt/Hud
+	 Lv/xRliuP5bmw1eQDQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.152.135]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M2Phi-1svBdI3W2g-008a7x; Wed, 25
+ Sep 2024 20:06:30 +0200
+Message-ID: <161b4e83-0aa5-4b98-a1c7-b6e1070629d1@web.de>
+Date: Wed, 25 Sep 2024 20:06:30 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240924222039.GB1148242@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: git diff --exit-code misbehaving in 2.46.x
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jan Wendland <jwend1703@gmail.com>, git@vger.kernel.org
+References: <CAB0mhhz9LHZ1AWSu_0oM=c89+z0w=XemnQwFAm45wp8zSmQ1Sw@mail.gmail.com>
+ <e3da5c9b-c208-4937-a2b4-e1028f3e6841@web.de> <xmqqbk0bpt5e.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqbk0bpt5e.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:FRHKI9CXXHbt+mz2nOoBOKD23vYtFmnOam+gBhFgI5L+D5PENK7
+ uukytCv0hb9FczjeMy1ycoDGfovqAYXcPryx7iwalhrXKaJ0aJnDj/FdmPGqDNfGJv4SEbQ
+ PYBedJtiwe2AJGuXcG1nIhBO3PlFeCl/TUs0g4OWfnk3XY84VJzmPw+RS3m65t0uH9fgYt2
+ ANLkUpt/9+uEuwUaqiXbg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:F3hoe7J50cA=;BTuSjwp72YaAztWz/Iil1cRC+CW
+ /FhuKRX4HnYVLN6YauYcuiLBccpsVTcGiVXydPZFEgI1W7WOOxoZvdjFQPuMmKfF9r0W9YxjH
+ Gy0V91lZCK6Wqa+00emsVvooRoGkyGK1Moiyf+eUr4HHbWEpATzGXMbuoljpPAOj0/S4Ra0+v
+ a+5YE1G6U7TA8hpXx+sX9nM8n2phIVEGANTo6YE5MoOKk+XpNiEr9Jreq2tCSlF3IpWtDDSM+
+ ga6OFJ6sRcil5uQAo6qcwz5vfcpaM8EJjA2jkTzLPxuWyWC9yjfUmL1iSBgjkyq1rw0HcdNoV
+ gC4x4Weln98nq1r/webE1ggFOgCEbLxqrT/u/dF5oN86fL2aDNIZupeQpU25nbETqIuSJEXtO
+ rz7mw9nLs2fqJl4NbpreehZ/WeALU4ShQx+LoCQxW6Dpv0zVMhtiHbRweauJTfnyOub3bp5RK
+ S1RYtUcXxFWSoDz2no3jL8JC8irSSnkOJyBou7yL3B8a/J92Ma7qvQrC9vQx03FGNftMHIJZn
+ KDZsCSgn9keSCby40TXssf6AFSNf6lkAnSAQlOcvmQHppkFms6TiKDkFX7+WEHnLkQiuNdfex
+ /7XlFO+G0yoGIzp1apdEuPi6RMSwbuQRFs213rSfkHv20cd1UEwrLOSz0g5NrCSQxa+Zf42f9
+ zZcDPV8/ZbfK+dFpGeSF4gQlyjGFKpdc9d2uIw6It8dnNn/ep1kMkJsTe/M3E5NyLcKY70VYB
+ eohviHqtqsdiMn6SLRS3i6bb2UOuAO/teE/VNdcNrwgh5a0Y8BozZvzD68thgNz9zbO0HUhQr
+ TALHyzC6B2VbjOyiLtcjJ7ag==
 
-On Tue, Sep 24, 2024 at 06:20:39PM -0400, Jeff King wrote:
-> On Tue, Sep 24, 2024 at 05:59:10PM -0400, Taylor Blau wrote:
+Am 25.09.24 um 18:58 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
-> > > So the argument I'd make here is more like: this is the wrong place to
-> > > do it.
-> >
-> > I think that is reasonable, and I agree with your reasoning here. I'm
-> > happy to reword the commit message if you think doing so would be
-> > useful, or drop the paragraph entirely if you think it's just confusing.
-> >
-> > Let me know what you think, I'm happy to do whatever here, reroll or not
-> > :-).
+>> Am 25.09.24 um 16:27 schrieb Jan Wendland:
+>>>
+>>> git diff --exit-code in 2.46.x is unexpectedly returning a zero exit
+>>> code for files marked as binary in .gitattributes where 2.45.x would
+>>> correctly produce a non-zero exit code.
+>>> ...
+>> Thanks for the report!  This is a known bug.  The "next" branch contain=
+s
+>> a fix, 9a41735af6 (diff: report modified binary files as changes in
+>> builtin_diff(), 2024-09-21).
 >
-> I'm content to let this live in the list archive, but it sounds like
-> Junio had the same reaction, so it may be worth trying to rework the
-> commit message a bit.
+> I just noticed something curious.
+>
+> 9a41735a (diff: report modified binary files as changes in
+> builtin_diff(), 2024-09-21) explains that since 1aaf69e6 (diff:
+> shortcut for diff'ing two binary SHA-1 objects, 2014-08-16) added
+> binary comparison, the code path always used a quick hash-only
+> comparison.  But the above report claims it is a behaviour change
+> between 2.45 and 2.46.
+>
+> It does seem to say things are different with 2.45 when binary
+> changes were checked with --quiet/--exit-code from my manual
+> testing, though.
 
-Here's the relevant portion of my range-diff that has the new wording
-(which is more or less equivalent to your "this isn't the right place to
-do it, and we're not fundamentally changing anything from a security
-perspective here" argument). Let me know what you think:
+There are levels: If the flag diff_from_contents is disabled, diff just
+compares hashes (and other meta data).  If diff_from_contents is
+enabled, it compares file contents as well.  But not for binary files,
+since 1aaf69e6 (diff: shortcut for diff'ing two binary SHA-1 objects,
+2014-08-16).
 
---- 8< ---
-3:  ed9eeef851 ! 3:  41d38352a4 finalize_object_file(): implement collision check
-    @@ Commit message
-             object name, so checking for collisions at the content level doesn't
-             add anything.
+The shortcut exempts binary files from diff_from_contents.  But it
+forgot to report changes for exit code calculation.  So git diff with
+an option that turns on diff_from_contents (e.g. "git diff -b -q")
+has not been reporting a modified binary file since then.
 
-    -        This is why we do not bother to check the inflated object contents
-    -        for collisions either, since either (a) the object contents have the
-    -        fingerprint of a SHA-1 collision, in which case the collision
-    -        detecting SHA-1 implementation used to hash the contents to give us
-    -        a path would have already rejected it, or (b) the contents are part
-    -        of a colliding pair which does not bear the same fingerprints of
-    -        known collision attacks, in which case we would not have caught it
-    -        anyway.
-    +        Adding a content-level collision check would have to happen at a
-    +        higher level than in finalize_object_file(), since (avoiding race
-    +        conditions) writing an object loose which already exists in the
-    +        repository will prevent us from even reaching finalize_object_file()
-    +        via the object freshening code.
-    +
-    +        There is a collision check in index-pack via its `check_collision()`
-    +        function, but there isn't an analogous function in unpack-objects,
-    +        which just feeds the result to write_object_file().
+d7b97b7185 (diff: let external diffs report that changes are
+uninteresting, 2024-06-09) enabled diff_from_contents by default,
+exposing the bug much more widely in 2.46.0.
 
-             So skipping the collision check here does not change for better or
-             worse the hardness of loose object writes.
-    @@ Commit message
+Ren=C3=A9
 
-         Co-authored-by: Jeff King <peff@peff.net>
-         Signed-off-by: Jeff King <peff@peff.net>
-    +    Helped-by: Elijah Newren <newren@gmail.com>
-         Signed-off-by: Taylor Blau <me@ttaylorr.com>
-
-      ## object-file.c ##
---- >8 ---
-
-Thanks,
-Taylor
