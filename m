@@ -1,108 +1,133 @@
-Received: from binarylane-bailey.stuart.id.au (binarylane-bailey.stuart.id.au [203.57.50.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5557415B54E
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 09:31:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.57.50.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32133137775
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 11:34:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727256711; cv=none; b=DGqC1U7VqlwYnfF/Wmxinyz1HGmHBlJyKM9aLtxP+6yUpqsyvrUWalg3YM+NWl49m08BR2RslFzjpuPyagMBHEejlAvJyfqlUDZklOrFwRYYQ/hgJZwg/W5MYm+zyqaqsMlEcAfk7Gaqb/PHMiGyzE5xE5W/qcOywBP/zEPHn9A=
+	t=1727264068; cv=none; b=fo+PesTTfRXwVorhQyARc2wLhxJ7yMs/ubahkgGKzyadOtm0yvDNXJueEhuq3p8o/BsJ5t4VvN+biJxABnYcot5oMSbEcMrNpnLQhTsrCNYLQfdidxArsWYtj0HLCKWUfdU6UiFF6jYj+p2Muj3LYtxLvwyFjL8CEARTbcujljg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727256711; c=relaxed/simple;
-	bh=DcSLvlzv4t9Dybj96wZQiZ37hrfvUun5BwHa9EQJwpM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RMmUQ5v2p/qD2Cfi29InDYsTVcQaoXtqvleubEwZ4DwHsWmbli7CS6EgMQVdrHrPA7PSwv3X747lBko7wKxFHeAHMxPzZlGRXaAkd4xzTiaDU5K93CZgegtqxEE7GP1Ctc7n/uXxdmwjd1lvhujoFIgQoYJ0Tsx9M8uDfzoLmiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stuart.id.au; spf=pass smtp.mailfrom=stuart.id.au; dkim=pass (2048-bit key) header.d=stuart.id.au header.i=@stuart.id.au header.b=vXKn0ZhZ; arc=none smtp.client-ip=203.57.50.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stuart.id.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=stuart.id.au
+	s=arc-20240116; t=1727264068; c=relaxed/simple;
+	bh=15OQIIH56U9tlY7ZWccXOiUrsYxB0hpkvMDTRj1/FMU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R5YbRcxbBjII8Lvl2exr2JJX+jwEO2nJglm+kZT3LRNICJCQeQLQsZLNJT8ELzMlIIz3sVKjqybz42hSQu53WIicHgQxr2zBCqfR1p0bDFWF7WV/wrHAdPjynA/KFiGLExYSvtbwLmNbi7cg63i+ub3OXT07iiuUGToan3+JV/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=c1N0m6Il; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=1roIVYAX; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=c1N0m6Il; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=1roIVYAX; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stuart.id.au header.i=@stuart.id.au header.b="vXKn0ZhZ"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=stuart.id.au; s=dkim; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
-	From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=+NhZdTfyfkXrBNbDI63/Cjg5ZW2fINM/2ICBtorrU+k=; b=vXKn0ZhZ2nvXgU1pdfaZb/7UDP
-	igIijCDDwnLpTAPpwTmFBkV5chI0d2OkknTClX5HMvo8n2YByMS4ACh2J+8rE5mhBJIoUL22xbJpA
-	aaauyLWul3AJdsXYnowhJM/vRkB5hAvS242axcy6VgCzkf256Za7RZ9WxnO4X/DRS9ZI0+2uYwMth
-	4Via9llaaaQjM6FR4qePvxaTV4kXkvcDJorSNaHuN6PKACDJqBubWb32MdqjyqXv8w6/9yIio9pfi
-	rYply1GJZxU6Sk/+jFMDrYedyqVoRl7ZLwQoY2UCdlYSD9BKixtMvlahsymhZhatNyfZHhr4kk4WJ
-	fGbWAd/A==;
-Received: from [1.146.104.215] (helo=[172.27.179.148])
-	by binarylane-bailey.stuart.id.au with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
-	(Exim 4.96)
-	(envelope-from <russell@stuart.id.au>)
-	id 1stON1-0007XI-1E;
-	Wed, 25 Sep 2024 19:31:40 +1000
-Message-ID: <b9f55058-354d-4a61-ac3b-92ea56026693@stuart.id.au>
-Date: Wed, 25 Sep 2024 19:31:39 +1000
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="c1N0m6Il";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="1roIVYAX";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="c1N0m6Il";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="1roIVYAX"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 444DE1F450;
+	Wed, 25 Sep 2024 11:34:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1727264064; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VlX/V8GOvI3Er5DCutITbuuJNqhfOGnnvBnRUGb9ynM=;
+	b=c1N0m6Ili+JXvhv7yTirIZNHMOU1BVWzv1XZjtS/vMBzvvQ71dQdaCV4+0pcZaL5mKIE4H
+	mRI1Jp9RZWTmGJUnJfuCVVY71Jb1uIOmPapfIb3uM4dAEHdH2CwT+gFXQ19qbG+dALlbHS
+	6Wf8upMcmRqRNVzLxnrZ3c80HJ70gGI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1727264064;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VlX/V8GOvI3Er5DCutITbuuJNqhfOGnnvBnRUGb9ynM=;
+	b=1roIVYAXwPtX9vGghNXrxu5oDAwL3oKwpPuJ5NQ6iqsibxl9txSKO3NmWnYrSbZ1RbxW8B
+	FdzaIyV6X1cWqUCA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1727264064; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VlX/V8GOvI3Er5DCutITbuuJNqhfOGnnvBnRUGb9ynM=;
+	b=c1N0m6Ili+JXvhv7yTirIZNHMOU1BVWzv1XZjtS/vMBzvvQ71dQdaCV4+0pcZaL5mKIE4H
+	mRI1Jp9RZWTmGJUnJfuCVVY71Jb1uIOmPapfIb3uM4dAEHdH2CwT+gFXQ19qbG+dALlbHS
+	6Wf8upMcmRqRNVzLxnrZ3c80HJ70gGI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1727264064;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VlX/V8GOvI3Er5DCutITbuuJNqhfOGnnvBnRUGb9ynM=;
+	b=1roIVYAXwPtX9vGghNXrxu5oDAwL3oKwpPuJ5NQ6iqsibxl9txSKO3NmWnYrSbZ1RbxW8B
+	FdzaIyV6X1cWqUCA==
+Date: Wed, 25 Sep 2024 13:34:23 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"David C. Rankin" <drankinatty@gmail.com>, git@vger.kernel.org
+Subject: Re: Local git server can't serve https until repos owned by http,
+ can't serve ssh unless repos owned by user after 2.45.1
+Message-ID: <ZvP1P31xSvKaAhjN@kitsune.suse.cz>
+References: <d9a83e5b-5075-47c6-85c8-e0b550cf859b@gmail.com>
+ <xmqq8qz376fb.fsf@gitster.g>
+ <20240617211513.GM19642@kitsune.suse.cz>
+ <20240625072419.GU19642@kitsune.suse.cz>
+ <xmqqr0cl6lxl.fsf@gitster.g>
+ <20240625183411.GW19642@kitsune.suse.cz>
+ <834862fd-b579-438a-b9b3-5246bf27ce8a@gmail.com>
+ <xmqq34oz1shc.fsf@gitster.g>
+ <aa94be27-60a5-42d9-adcc-f25f9a8d6ae5@gmail.com>
+ <xmqq4j9fzge5.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: "git worktree repair" modifies the wrong repository
-To: Eric Sunshine <sunshine@sunshineco.com>,
- Russell Stuart <russell+git.vger.kernel.org@stuart.id.au>
-Cc: git@vger.kernel.org
-References: <E1sr5iF-0007zV-2k@binarylane-bailey.stuart.id.au>
- <CAPig+cQ8=Y6sVvN_dBo_GQ5nLkQ4GJ7AM6mE2kt_2QV7CR0omg@mail.gmail.com>
- <3b579ddd-b386-4daa-ad63-1e75522b7462@stuart.id.au>
- <CAPig+cTkpLLoTxTa-8xfycNGFibN_M71+kkHtT-wgp6HRPi-aw@mail.gmail.com>
- <4781ff6e-c20a-4340-851b-c9d324d1fac8@stuart.id.au>
- <CAPig+cTop=2+k0XbqYbsCTbJVo77evY+_a+FqDV_ziKf2q+Dzw@mail.gmail.com>
-Content-Language: en-AU
-From: Russell Stuart <russell@stuart.id.au>
-In-Reply-To: <CAPig+cTop=2+k0XbqYbsCTbJVo77evY+_a+FqDV_ziKf2q+Dzw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4j9fzge5.fsf@gitster.g>
+X-Spam-Level: 
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
+	FREEMAIL_CC(0.00)[gmail.com,gmx.de,vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	RCVD_COUNT_ZERO(0.00)[0];
+	RCPT_COUNT_FIVE(0.00)[5]
+X-Spam-Score: -2.80
+X-Spam-Flag: NO
 
-Sorry, I missed this reply.
-
-On 24/9/24 04:52, Eric Sunshine wrote:
-> [1]: The discussion begins at the "Also Eric" paragraph of this email
-> and continues in emails following it:
-> https://lore.kernel.org/git/CACsJy8CXEKG+WNdSPOWF7JDzPXidSRWZZ5zkdMW3N3Dg8SGW_Q@mail.gmail.com/
-
-Yes, Duh's comments pretty much sums it up.
-
-> This intuition perhaps arises from your background with "hg", but I
-> have not formed any such intuition.
-
-Not only from hg.  You can freely move the parent directory of all CVS 
-systems I'm aware of - hg, svn, cvs, rcs, sccs and yes git too.  It only 
-breaks when you add worktrees to git.
-
-> That's a very restrictive and limiting organization. As I understand
-> it, one of the design goals of Git's linked worktrees was to allow
-> worktrees to be placed anywhere, including on removable media or
-> not-always-mounted network drives. (Yes, you may be able to do
-> something similar with "hg" and symbolic links, but that doesn't play
-> well with Windows users, at least not in the era when Git's worktree
-> support was implemented.)
-
-Yes, it is far more restrictive than git worktrees are now.  It 
-simplifies the users the mental model of what is going on, but that 
-simplification comes at a cost.  I only mentioned it because relative 
-paths in worktrees would allow you to pretend it works that way.
-
-> Can you provide more details about this "mangling"? Although the
-> use-case you describe was not directly considered in the initial
-> design, worktrees hanging off a bare repository became an
-> explicitly-supported use-case not long after worktrees were
-> introduced. So, it should work properly and we know that people use
-> worktrees this way, but we haven't had any reports of mangling in this
-> scenario.
-
-Phillip's reply was spot on: 
-https://lore.kernel.org/git/87afa860-52f4-414a-82da-09e7eeac1301@gmail.com/
-
-> By the way, have you seen the patch recently posted[3] to explicitly
-> support relative paths for worktrees?
+On Wed, Jun 26, 2024 at 11:51:46AM -0700, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> [3]: https://lore.kernel.org/git/pull.1783.git.git.1726880551891.gitgitgadget@gmail.com/
+> > Sorry if I wasn't clear. "." is considered safe with "safe.directory =
+> > *" but I was looking at why it was not considered safe when using
+> > repository paths in safe.directory.
+> 
+> Ahh, OK.  We tell them /home/wood/repo/git is a good repository to
+> visit, but daemon's call to ensure_valid_ownership() asks "I am in
+> the '.' directory; does that match /home/wood/repo/git?"  
+> 
+> That sucks.  I agree with your idea that we'd need to canonicalize
+> both before comparing.
 
-Ahh, now I see why using both is attractive
+And it's addressed with 0ed3dde067a5dc5141e3a31d950972f00a08b35d at
+least since 2.46.1
 
+Thanks
+
+Michal
