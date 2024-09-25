@@ -1,92 +1,79 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411CD81AB4
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 16:47:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7203482EB
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 16:48:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727282876; cv=none; b=PradEp31KPrpPNkll1hOwFdKO1aaJEV+tx7iI6hl/7J5rBCuy300pNZKgDHbtoXJ+7EH5VvZU6r6U9Mgp5JbS1lXBQmq+ypXuMQMjCM6hbLZUp6dZgCVcAhT0bAaueio73ZhoduBPZ6orwBsS+D3XVmc+3xYJGuF0U6A3oO4oMA=
+	t=1727282939; cv=none; b=tc2xcSrEu+QA5xQvEecVC4cEbwLX5UfcNsnkVUbk6DAhjcPF51ILoT6jc7rUTHVP2OlCaCClhAw3ABedL3gyBxqHjaPpFyuklSUXWX/xwjA255ZdfnrP0gqUnU28ZnNS1mB+cCtumQusqRVqJ1ptVrkBBXY7ftas6cgnVZPN8ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727282876; c=relaxed/simple;
-	bh=mRX9jER8fbTZz38cxMJFZjPqPO3xRfjbBpBEj3Cb03I=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=lU7WGgQ0XohbKMpmWq/ovqq++Gzhk/BbryXmmDh1XDBawhXid8ABStoP0qprCkL35tYXzbOHbT7SJEYUbAnpyCmdbQJCaefJNr4ZzEn3mpLSa1vplT2egbUl5vzMYd3TmRLSkL9dsYse4p0XQ3XwbEiOQQfsOyuLtpdDSAGv5gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kU1wesOP; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727282939; c=relaxed/simple;
+	bh=e7lZ7H6h34RSUVAVToc17ZJuqBWQWCqEKVTNnlIvFCg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bAMyQq9TMjYuCItkRh9LU7IqoiHYycFY2xN0+yRIdg7xK+Ku6DW2FMSZBlnW86cc+Ri+22u73IsfNEw2O/SQe8M1QxxWRWaslbd2c4rJk06vrkZpN5UkIzEmu7Gtu5na7U5+ErlZ063TE8/W/gF1Oli8svwrGdT5sdeEG0kslw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fwK06u1q; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kU1wesOP"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42cb806623eso60896905e9.2
-        for <git@vger.kernel.org>; Wed, 25 Sep 2024 09:47:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727282873; x=1727887673; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mRX9jER8fbTZz38cxMJFZjPqPO3xRfjbBpBEj3Cb03I=;
-        b=kU1wesOPgf15oW6IejHgafs+CYf7mjmD9Pvwy4mG7yW00rZQYeWesGWzszvHRsTIfz
-         h/Vazdn6GVPofmVEpc5G+mbL27Hc/pWQCT8CbDR0mwRcWjsGo+y4Rvu3enOaz3NfzSVU
-         PW1wv/RCAw0C2feKTMJgFSJ4/drX/lnBPcm+5wh2CacUXLawDIhRV75H/GpwHnUeZtT0
-         GrF450dEpwJ99HpGYfN3E/fsEExyqkZky5y/LYTK15KJFZy6ve5xzKYJvfUSc976+g3y
-         3oeWYM2n7ms4x0XeUoMzlWdOuSaclDMVbSyLj/qfxGxviYl4rBSaJaASBO8covJeTojb
-         vF2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727282873; x=1727887673;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mRX9jER8fbTZz38cxMJFZjPqPO3xRfjbBpBEj3Cb03I=;
-        b=HnxQHnT/1RdrJn6Q+dBVrBUIyngYeT11yM3eWSDDJ6XC/kUvvNwFwbf6WTYb46BJQ7
-         Eh2PRfomCnmEy9REMviiBw31tCHk16yXRBnTgyBUUw8mQ2A4kUHb+NAQ3f1ZCZ0Tsim7
-         XK1PDplFYZo3MCn7DZkr6geclYu6o1YL94NenG+3jNY602wnSqbND8sr8+r4AmTOMP+J
-         5jreQo9wGCefHYCs1FJ35NhTDmyXNQJU8/8o1S6kwFD4nzGggsrNnUa+AuiN+O+dM1Tu
-         SIwD+tOsdoe/H9LXljET5TE9comlm2R5zn479iAaHrZGaHecJLljPdcoIkhGZyptN227
-         EUBw==
-X-Gm-Message-State: AOJu0Yy4sPj82lpD4JhtyaByZFCk98pImlsn0qhDmXDW8OVxcPQTXofl
-	gq/JnCgmn0HcwctsBDXtm+Wjt/5LDq+9Lv8Q4LcsYPMwhj/pL2pdR1qctKOVyUk=
-X-Google-Smtp-Source: AGHT+IFbnXF1nu6on8MsJ3wHqZuBgD8hvpvp6XJHmxbzj0Ja0P1ZwhNQbVsUSfppZF+WEdLJke2UgA==
-X-Received: by 2002:a05:600c:1d98:b0:42c:b4f1:f2ad with SMTP id 5b1f17b1804b1-42e962451ebmr25074925e9.33.1727282873169;
-        Wed, 25 Sep 2024 09:47:53 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e96a36287sm23597555e9.29.2024.09.25.09.47.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Sep 2024 09:47:52 -0700 (PDT)
-From: Sergey Organov <sorganov@gmail.com>
-To: Mateusz Wielgos <email@mateuszwielgos.com>
-Cc: git@vger.kernel.org
-Subject: Re: Using Git as a Database
-References: <4B2B1EC7-6B08-4B57-A50F-702C031C2792@mateuszwielgos.com>
-Date: Wed, 25 Sep 2024 19:47:50 +0300
-In-Reply-To: <4B2B1EC7-6B08-4B57-A50F-702C031C2792@mateuszwielgos.com>
-	(Mateusz Wielgos's message of "Sun, 22 Sep 2024 22:28:26 -0500")
-Message-ID: <87jzezhe89.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fwK06u1q"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 99E632CDB8;
+	Wed, 25 Sep 2024 12:48:56 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=e7lZ7H6h34RSUVAVToc17ZJuqBWQWCqEKVTNnl
+	IvFCg=; b=fwK06u1qSjYE1s889lxajt633L8EGJMTC7Q2n6Hb/nITrpHCK1LtdD
+	f6Mdi9FAnMQP26B00krF1m49C6dBXTILcUvfoPoxlGxPPn5FavnTJgKs07grkss0
+	xZZP+U/1EUnK8824g0TxrzYBRhfP1qZprXu0gfmeFEDKkCdmOAqpY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F9BE2CDB7;
+	Wed, 25 Sep 2024 12:48:56 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.108.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E34A92CDB6;
+	Wed, 25 Sep 2024 12:48:55 -0400 (EDT)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Han Young <hanyang.tony@bytedance.com>,  git@vger.kernel.org,
+  calvinwan@google.com,  jonathantanmy@google.com,  sokcevic@google.com
+Subject: Re: [PATCH 0/2] repack: pack everything into promisor packfile in
+ partial repos
+In-Reply-To: <a5e3322d-4e63-4b8c-84af-6578fe257cad@gmail.com> (Phillip Wood's
+	message of "Wed, 25 Sep 2024 16:20:55 +0100")
+References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
+	<20240925072021.77078-1-hanyang.tony@bytedance.com>
+	<a5e3322d-4e63-4b8c-84af-6578fe257cad@gmail.com>
+Date: Wed, 25 Sep 2024 09:48:54 -0700
+Message-ID: <xmqqfrpnptl5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0DBDFF56-7B5E-11EF-889F-9B0F950A682E-77302942!pb-smtp2.pobox.com
 
-Mateusz Wielgos <email@mateuszwielgos.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Hello,
->
-> I would like to use Git as a database of sorts. Let’s say I want to
-> track weight of something in a file. When the value changes I can
-> commit the new one. I can also figure out all previous values. That’s
-> awesome.
->
-> What I am having trouble with is… What if a measurement is taken but
-> there’s no change? I want to commit a file that hasn’t changed.
->
-> The only workaround I figured out is to toggle the executable bit.
+> I was wondering if it would be possible to cache the tip commits in
+> promisor packs when repacking so that a subsequent repack only has to
+> walk the commits added since the last repack when it is trying to
+> figure out if a local object should be moved into a promisor pack.
 
-As you are tracking weight or something like that over time, it's likely
-useless without date, so just put time-stamp into the file as well:
+I was wondering the same thing.  If packfiles (and bundles) record
+the entry points and the exit points of the DAG, it would help quite
+a bit.
 
-85kg 2024-09-25 19:45:14
+> It would be helpful if the cover letter or commit messages discussed
+> the tradeoffs of these changes and updated that document accordingly.
 
--- Sergey
+I like the suggestion very much.
+
+Thanks for a review.
