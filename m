@@ -1,127 +1,120 @@
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AC51BC2A
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 20:43:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A9C13E02E
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 21:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727296990; cv=none; b=dz5or32Y38BvOegDzGUTQlp1VMY8E4PWHAAkBS/wM/m9k9/BxrVRJGfPD6tEz1QO+2YyZlJQCX2/NqWPSp3g5dfKeFsJvxhu5MxPMoEazmcUqHo6jOqMFgCcUpBbs6y4nyLsdwlvEorVZi0s38gY3AkRff6/X60IXK5zvN/kWfc=
+	t=1727298045; cv=none; b=q1BmSYUzQ5BQ8Abdlf3sALa9OPCc31z4b+yeJvSbAhJR9AAv4KyuL1FsnYlflxDKiLsNyHO8LgeoZvAnRmZClyykm0ZjzvsVts1lniMb+icvwPSDreY7d1FzYmHtIMXXP4tWK1Y2gfE1FCB3qDTW5WVyH4tqtouYpxLoCvzjprQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727296990; c=relaxed/simple;
-	bh=pGQZ+g7J6ADlc3OrewvhI8j/2FY5pPFjGvxkOSyYeg8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rv9Z6EZHk5jUldmVMkuOWNnz9Q9D+tqaxYlaZiR6KOFMXo7A0axwPS7UlLZRBjazuF5+FeYuGSswsb1aFd0KU45c2r6LxvEshl+CAIyguLfw3u6ySZrbwoHG3tUoW/s+H6Pcw9qKr8fHUw0jKGhBJIi2JABjQQNt2JeNEFbLemY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LweWiZle; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727298045; c=relaxed/simple;
+	bh=YIUrBbYnQBAGXeRitPPQyAk2rFeo528BfDP6jtTHsEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QSzkfkrYTzaAADd2KB/hELK8BJklTtwDHduewnmLTpM+gF6rCC1PPw7rYbLCjMME8oUx5hJRgyZ8WeZhOYoCBIBwWRJf/0yd8D1qu6RhYXsnKMK+WYPxph0fX74v8p6RA9t0mSDiw56zNxu71XkUhn5zY3DSOjoJK++mjZt5jps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=GDJyHfiR; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LweWiZle"
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e1a74ee4c75so284454276.3
-        for <git@vger.kernel.org>; Wed, 25 Sep 2024 13:43:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727296988; x=1727901788; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gw3L+z7sMIYQYYJCmjO/0qKfKgsqmd5ctBB6QXb5kcA=;
-        b=LweWiZles3uArgY4YkF3NWcT6ZZMH7AMi5By1gkD2ANytuJbja5zkDvlwf7Q7+SHQB
-         zHUN4vcjgqPZUIhG78BQXGDOhVHX2zaZfeKCMyLEaJw8PgZLiZgPbtmfhUJROjCW+e0e
-         T/UZgO/QWbaLGCSEgZwSd4evVq3odkqDrb1rhrPY99nyop2QQ9yYSJpXJ2lMisWG0l+U
-         ld3I9mWSTyp1hf939TfJnNkMGfieMMPQObk6A08u6swR4hkB4iKu+OVk4k0loaIa8B/n
-         OtmmqPzjncR1Bw5AZ7vTY+XoYjiX+yq2linoJyG+H5OoDbRaqTaRN2VHYyfXffmdT2Yu
-         p8Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727296988; x=1727901788;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gw3L+z7sMIYQYYJCmjO/0qKfKgsqmd5ctBB6QXb5kcA=;
-        b=C6GJOmRKhoYCJdpuh1ZJONrTT35jt/jrBbhBxoYojIfiZRyp/uW6u6uKsENinZi+1a
-         CqkMfWF7enGTy2HYTpCa3plPT7FTRQ/FTOp7lSXsC4iX9Bwo50L3hEZ+QjepTvBBUkjc
-         OC9DHE6esDjma/SF8Mbw+sT3OQ2R/5xsRr/iOhWoY57edgYwBydPYtL8MapEhGKuMkKM
-         YTMQPXQZb9Wh4omW2dVhKczw0I6pXkjimX8NGRPr+IBu08Ea9RIq9tW+1pfvJ9Mf0UEt
-         adQM+z1KjcDnBWVrkiNCKXuFPoVqkNK7obRd3ObJz2cv7Ehkdd3mfjsaDoEDqIEIlFko
-         C7fw==
-X-Forwarded-Encrypted: i=1; AJvYcCWCPxK8C7AvtlNuDfBA9h2VhG28U94kZpiYWVS14tyr0NE06urTt09Rr3WTXDX05NkOoHw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YymQaUfBaN9wHTFG7ZbpFEZQvr1Z0NlkJrEvSOI3jQL+wVQ3LWL
-	9u2BZxBRdvnDXJRWBWp+KaqzCdgQXSnigUzl3kNCH6VIz+lBqwVy9o/y0azcefkCenMMGI8mBV9
-	TGiTSyV/ShqOKVOkqnKui8hgjuX4=
-X-Google-Smtp-Source: AGHT+IGDj2F3HgFHMnREnFLTPLBASs02Hnj3E/C4x+cf6jUdAW6d+7WkaDP0wYCji9gb03dt5Z8YBE2P0kdxjewscfw=
-X-Received: by 2002:a05:6902:c12:b0:e16:1ebf:293d with SMTP id
- 3f1490d57ef6-e24d7ee7ec6mr3137105276.20.1727296988098; Wed, 25 Sep 2024
- 13:43:08 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="GDJyHfiR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1727298039;
+	bh=YIUrBbYnQBAGXeRitPPQyAk2rFeo528BfDP6jtTHsEs=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=GDJyHfiRYaQ6nIGWCWLq+o378oFUyzpR4bDkoNLre/8acHCUNrInSxqrFmy/2XzSh
+	 BfKTRHQc/6460RUrFPc8wRVEbOO4rCy6FoZOSc649UTLQgWdrW0D92XclX4Lafxtim
+	 3+bpgWgmw8gVKzNbCx1TGU89Gg8tRa6jmP/6SyNGsS7sXNUUL8GtJDTTAuoW0TLBys
+	 5gYTBxcRK/61THlVbwqexnTFxuVjOm4Rc9hwgstJCo5PDNM4qj+9Yi5gVOobwE6btz
+	 jkAuS+OEuIvnUlHxt3cJXR5Qr1XyepfYg56+fdGZaaHSXMwAvDyy6hDosx3QCMfsD9
+	 JCukW5PeBYlMEEiF6DIDNAPuddKAiW4FOkVNDfvBC77zMRsmm7Ohf39TOUNjDflGRk
+	 V3WEGR9ISnaISGaxbre2Rux8oFwe/qhtLCN/pxN3rsvkIvtmeNu7rPZEBsb5TXBzcl
+	 Hw+K1i/2eUGNgDTgT7/9OrIZJta298nn5R2MrTXDSALTImlcTEH
+Received: from tapette.crustytoothpaste.net (bras-base-toroon0240w-grc-52-65-94-52-227.dsl.bell.ca [65.94.52.227])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CEA7820073;
+	Wed, 25 Sep 2024 21:00:39 +0000 (UTC)
+Date: Wed, 25 Sep 2024 21:00:34 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Krishna Vivek Vitta <kvitta@microsoft.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [EXTERNAL] Re: Git clone failure
+Message-ID: <ZvR58tnLEMBZC4fa@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Krishna Vivek Vitta <kvitta@microsoft.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <SI2P153MB071833367C62DD94C96CF1F7D46F2@SI2P153MB0718.APCP153.PROD.OUTLOOK.COM>
+ <ZvMy_gAL96v8ahfz@tapette.crustytoothpaste.net>
+ <SI2P153MB07185B9AED66870BBAD3C78AD4692@SI2P153MB0718.APCP153.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20240720034337.57125-1-eric.peijian@gmail.com> <20240720034337.57125-2-eric.peijian@gmail.com>
- <CAP8UFD1J4JdR-QP9em=_0q8CQZLf9nE7PLE2=kkvxY218fa-ig@mail.gmail.com>
-In-Reply-To: <CAP8UFD1J4JdR-QP9em=_0q8CQZLf9nE7PLE2=kkvxY218fa-ig@mail.gmail.com>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Wed, 25 Sep 2024 16:42:57 -0400
-Message-ID: <CAN2LT1DvrXwAZsjwgEh1waBAVgTNf3UHztsKgY0aGz6Lt3Dfhw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] fetch-pack: refactor packet writing
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc: calvinwan@google.com, jonathantanmy@google.com, chriscool@tuxfamily.org, 
-	karthik.188@gmail.com, toon@iotcl.com, jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="nIo12MNZpbr13s98"
+Content-Disposition: inline
+In-Reply-To: <SI2P153MB07185B9AED66870BBAD3C78AD4692@SI2P153MB0718.APCP153.PROD.OUTLOOK.COM>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--nIo12MNZpbr13s98
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 24, 2024 at 7:45=E2=80=AFAM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> On Sat, Jul 20, 2024 at 5:43=E2=80=AFAM Eric Ju <eric.peijian@gmail.com> =
-wrote:
-> >
-> > From: Calvin Wan <calvinwan@google.com>
-> >
-> > A subsequent patch needs to write capabilities for another command.
-> > Refactor write_fetch_command_and_capabilities() to be a more general
-> > purpose function write_command_and_capabilities(), so that it can be
-> > used by both fetch and future command.
-> >
-> > Here "command" means the "operations" supported by Git=E2=80=99s wire p=
-rotocol
-> > https://git-scm.com/docs/protocol-v2. An example would be a
-> > git's subcommand, such as git-fetch(1); or an operation supported by
-> > the server side such as "object-info" implemented in "a2ba162cda
-> > (object-info: support for retrieving object info, 2021-04-20)".
->
-> I agree that reusing or refactoring the new
-> write_command_and_capabilities() function for more commands can be
-> done in a separate series that could perhaps also move the new
-> function to  Maybe this could be added to the commit message
-> though.
->
+On 2024-09-25 at 08:49:11, Krishna Vivek Vitta wrote:
+>=20
+> Hi Brian
+>=20
+> Thanks for the response.
+>=20
+> It is a WSL2 environment with kernel version: 5.15.153. We have used a ke=
+rnel version 6.6.36.3 as well. Scenario fails there as well.
+>=20
+> root@DESKTOP-OOHD5UG:/sys/kernel/debug/tracing# uname -a Linux DESKTOP-OO=
+HD5UG 5.15.153.1-microsoft-standard-WSL2 #1 SMP Fri Mar 29 23:14:13 UTC 202=
+4 x86_64 x86_64 x86_64 GNU/Linux
+>=20
+> Mount point information:
+> C:\ on /mnt/c type 9p (rw,noatime,dirsync,aname=3Ddrvfs;path=3DC:\;uid=3D=
+1000;gid=3D1000;symlinkroot=3D/mnt/,mmap,access=3Dclient,msize=3D65536,tran=
+s=3Dfd,rfd=3D5,wfd=3D5)
+>=20
+> We aren't using any sort of file syncing service.
+>=20
+> We have installed a defender software which is marking mount points for F=
+ANOTIFY to intercept filesystem events. On removing the marking, git clone =
+succeeds.
 
-Thank you, I am adding this to the commit message,
-"In a future separate series, we can move
-write_command_and_capabilities() to a higher-level file, such as
-connect.c, so that it becomes accessible to other commands."
+My guess is that whatever software you're using to intercept file system
+events is causing the "unknown error occurred while reading the
+configuration files" message and you should remove that software and
+reboot to see if the problem goes away, even though fanotify is enabled.
 
-> [...]
->
-> > -static void write_fetch_command_and_capabilities(struct strbuf *req_bu=
-f,
-> > -                                                const struct string_li=
-st *server_options)
-> > +static void write_command_and_capabilities(struct strbuf *req_buf,
-> > +                                                const struct string_li=
-st *server_options, const char* command)
->
-> In https://lore.kernel.org/git/xmqqfsn0qsi4.fsf@gitster.g/ Junio
-> suggested swaping the "command" and "server_options" arguments as well
-> as sticking the "*" to "command" instead of "char", so:
->
-> static void write_command_and_capabilities(struct strbuf *req_buf,
->
-> const char *command,
->
-> const struct string_list *server_options)
->
-> The rest of the patch looks good.
+It's very common that the kind of "defender software" you're using
+breaks a variety of software, including Git and Git LFS, and in general,
+the recommendation we give in the Git FAQ is that you use only the
+system default antivirus (and on Linux or WSL, none, since there is no
+default).
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-Thank you. The format is changed in V3.
+--nIo12MNZpbr13s98
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZvR58QAKCRB8DEliiIei
+gblqAQDbCFg31lICwkY1j74alWRGjhRsdRMsm1i+FiTFKyS9KwD/aJXdMChomYrT
+RTW9ugUl6WV4JZsqQPfdZAjjGhehFAY=
+=B09h
+-----END PGP SIGNATURE-----
+
+--nIo12MNZpbr13s98--
