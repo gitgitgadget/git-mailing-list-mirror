@@ -1,99 +1,139 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92641D5AB1
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 15:27:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF94381AD2
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 15:29:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727278034; cv=none; b=SanhwIYrL8zYik7BRKNs2QUj/vfctT7QwZwWlFQWLv7UmEruK55ZeylcG7xX1XzSNHtrZ7vyxER5ZSAzOazX+osrQ6HPJFm5dtIfvSGfCqhojWApcxKlIhJaTSwdVotD2otejzWJhgl33ni4hXFy55qq4dpOqh99raPZ59AQPPk=
+	t=1727278193; cv=none; b=QZfFlhS7g+e4QnWmNH4h50AfLcFFwUCl2geWQbDnblF2XdE88jx99SRMIO9W8YnUFnCBwGKYDaOGRq3K5IUXKjxMfezdCTSiljITlc62lsUTZV3Y6DO/mI9r5YGAMoItGsuqCEm2VusQrNOsnWu3sePya4j20qQnxcEC4N6sKWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727278034; c=relaxed/simple;
-	bh=g1D/AjvroHXuBmIf+4JOsbvfVyIEBAAJIw6VxNDshJs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=qYHwcAmQ69PVEkKlbydEtl/cuvDW22U3oidam1di8kO7iVGOsE3JA1qYCFQyOkTxVRsc7/vdxlfut4srHhoVmPiuEa/UJXp3V5njDX8Rp99DO61Y4/gqYnGEN2Wbfz6/aHm6qefMiCnwZhfsHjMWXveM3bd+2T/AOw1J62FpIfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=D9W1DCzY; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1727278193; c=relaxed/simple;
+	bh=lCyjYvPuiHwdtByw3v/8xjbA5Cyr9lrYIMJrqlB6fGg=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=DW0J1T7YX9Nb5eosg7QJSqSuVAFe59wGTGdx0vtHrcwNZ6YxgrFg078n4LOpp0DNbIKXe4E/K05oItmBAXGNalsaQn4OnmcP31JteoMdjSV4B+HarYw/+mWVhfCchiAfkgRoueN3a3x5N0U6LHbCvdQixsNS6ahDcvezzZcK9eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=tYoBWeOn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nbsWJTOl; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="D9W1DCzY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1727278019; x=1727882819; i=l.s.r@web.de;
-	bh=7Z/uyB3FnMxWP0skW71HpQkvy8O/tzvi9t+7XkOxszU=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=D9W1DCzYpnf1K9InwAYu02EKMgWgDm0Y4nWDLXlvtGK7xiQoa92jQQNOJw2RIi8A
-	 +laMD3kUGGn3OZXb1yJs9U5Gri6Pc8oeiyXrjFu5cYTbbXGxDoP386w/neosI+5lP
-	 exQq0v0ACdP0k+LOzGARvarnbYdQiy6YC1yDWll60FuttjEvaeeG+fhc5C9FtWQQd
-	 vny1MG+BAx8mG/vrDrUlDLVGcfRPqv16OzJqRvEgU0p3xuYA8egtwtAjxUQkxbRPg
-	 uYMkZT4q0Obvk6U/9FcibavbH/cYFJzlQnR4bnUD/uGbWj5Zzjd4/1NLJo+6CbbtE
-	 kAGrA/BfJVKobA5IJw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.152.135]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N3Xnj-1rusWO22vT-0118Rk; Wed, 25
- Sep 2024 17:26:59 +0200
-Message-ID: <e3da5c9b-c208-4937-a2b4-e1028f3e6841@web.de>
-Date: Wed, 25 Sep 2024 17:26:59 +0200
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="tYoBWeOn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nbsWJTOl"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A88FE1140259;
+	Wed, 25 Sep 2024 11:29:50 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 25 Sep 2024 11:29:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1727278190;
+	 x=1727364590; bh=h2jpAKnZ2J424lX0SHSv9oiwRPBKnZAjAv6c8wdfqAQ=; b=
+	tYoBWeOnsjSRSTcbCqkVjptW4EZ1lmg+QoEDpskZIqs2vIZgVBbDOiIgN9Z2Kc0l
+	N3GJbwk4Sfsl5G4Gg4Qputm46EuTnNpditr2VLurk2+UyO/v7wyFIv7ehsOmKPDc
+	qrkbgou6P4CTlbxhj011ZhtCfxPNNx/yqDWHx+GeHeiprTNqVPhVU76/7Q+N32mH
+	leqfrSFN39AaTvdiB27di1T5q3g60Me4XCPaM7Z/2ZANeXuv8pZM7Krn0+Y74Msq
+	LvUjUegnvzc4ba10+V+XvKhiKIIvIjfEI6Plt+5tfuVA4VQVn3y5meloK3xEOunq
+	vF+X/8s48R0hDQuVtS9WuQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727278190; x=
+	1727364590; bh=h2jpAKnZ2J424lX0SHSv9oiwRPBKnZAjAv6c8wdfqAQ=; b=n
+	bsWJTOla46tHSDczILq/BCbBLZ4+CzaKAg6syPa+VDtCfV828y7ubrhRQGUvF005
+	krIX1nU4vP5hfC0xAVUVmeCPhx1PCHshg5HIOWUd38gkoegEka1RG139qGXXLmdD
+	EYQVxa5aecKDASEaIo+/OmGwwh9oN9P7U6aNrBLMhKsWIvvGrHxdMbZE0uGmjJlp
+	x74Zx0tnU7e248kPIGV6zZvHrYIC4q3eCyzeQWrMCaGtQvexIYVqWnWaKS5MKA7M
+	Ik19Mf7BlTEx6naBi36pGiO4Er92bMQvl5aoI+2UE0jsndMdScSQej5V//f87aVt
+	IJvJUJlyaMgUudeFGD8Jg==
+X-ME-Sender: <xms:biz0ZrYf4OZLCZ9ySQwrnOV2W2eA3ZzYTOiql52gAnylgptXFm3ZIQg>
+    <xme:biz0ZqYgqQH33BJdhUDCyTE6k6i911GDHigenCILOiLYMkZFFDDhrfkeLqg-rJJHl
+    7NdPd7fo7t6k7GdUQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddthedgkeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
+    fvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcu
+    jfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    htmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeejhfehuedvgeej
+    keelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
+    sehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepihhshhgthhhishdvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:biz0Zt9iwKyEDDnnhgJJbP7CSw66-sjMbA98NGMr6mi__xtAduoxgw>
+    <xmx:biz0ZhrfNTNzlmW9KjLYfxqepNj583mP7_HL8ol8X1kBawg40K9WFw>
+    <xmx:biz0ZmoenagQIdnZKRNzlNIWvxVigOEKASfd6hBfni-kamgTljtwIg>
+    <xmx:biz0ZnTL12ramrL8D7PJQc0eMraVWOoCjMngNN7FMCZsZJZoyrlHbA>
+    <xmx:biz0ZrDzm4_0k19yhd8cBaTG1x8Yxipn-jp6yqtLTPWLSOzYFU6ZnLpT>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 66DCD780068; Wed, 25 Sep 2024 11:29:50 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: git diff --exit-code misbehaving in 2.46.x
-To: Jan Wendland <jwend1703@gmail.com>, git@vger.kernel.org
-References: <CAB0mhhz9LHZ1AWSu_0oM=c89+z0w=XemnQwFAm45wp8zSmQ1Sw@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CAB0mhhz9LHZ1AWSu_0oM=c89+z0w=XemnQwFAm45wp8zSmQ1Sw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Date: Wed, 25 Sep 2024 17:29:30 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Stephen P. Smith" <ishchis2@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <6b69af87-9002-46a7-a5f3-3fa1fb7ba9df@app.fastmail.com>
+In-Reply-To: <20240925122515.14015-1-ishchis2@gmail.com>
+References: <20240925122515.14015-1-ishchis2@gmail.com>
+Subject: Re: Can a note be pushed to origin?
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:kMrSfkdew2dTnPy/ejg9yZMor3Rft/bDc8yicp7/MNJqO4Z2Y+o
- Pl48PIr/sYCCUOOFqSY9Hb2Nwc7+rC3hIxSH+aMZGT3Kuzc5MbNhBesyTI07B49Nctn1znj
- vgtqMnYOmS13WPXR5MxvqEPHGfVugawFSy0MTpEqd178CjYqo7B+i9oTxSEkQcE8/q/twLx
- sqB6e8ua8cQPmMoh+hLGg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:hqnw/KbcidQ=;CCW7m2jl2COfhjeOkBxw7aByHR8
- 41lj2pbYOsh8zhTZgqy1MOXzwl/hPVAA3AAHNQotrNeQIx+SZneZaU5mXSovQAnhOBh9n4ZsU
- EbVSoROVQ5unSU8+DQXosteBOWrjgN2p1d565eJLamyACTKHKIxBNm4bZjiYR6EQGlMHD8zxF
- cd34Uw6D3FUMgzme3QPmbG4Z0Buzm5/cFSgQUe55SE7quNU8XBPfZZf4VD4N7qbckFgr78+fx
- eKmmRD4U4/dGiK/Re+ABqpTsSNafXRj+Lvc/rbQD5Nr0njNh38UEBKS1J+SRMu8m9e3XerEEV
- /vqxBeJMDayF/amZlozjfYW/zjz+2kLflUuI2QbbXULO1AVoK5d1xfjZoDotuz48kUSgLHe7H
- F+5rGXstSQr71HFIhqyRWCCQ8gXGeMSQPT6GWmqST56oEkboujPHvv/ESsT+R8OnxLD7maluD
- sEucMuww2mIChmqCYLdTYXQLy/0T8mUqk4yW+ADYoMy+jqoTueDYe0bTGmn5xLHBiFEiDryhy
- GXE6ZBT5f8YtFkuZDYrxyaJJp4KwRXY3+8KcXFVLMXSfEvBmovh6L5PivLG3GbWjHEzzfmOUa
- k8PL5hKy7/XhoLeC6AHoi8osQK8uXzFH/0uM2EZnDCyedGDPn+eZ3ZIfSqcBVTwweeOi2fhID
- Z+/pP9xKS5RACXgE8QI48/zGGkC5iZqMDHzA4va8hNQb4T8KX8jXTs4PZN30/m81TbN36PxJE
- Wf90alVk8OcH/EH0rHwRNHOEh2lkmxnfAwo9d0P1KmsSu827vgifJ4sylozZ2teZjop1LenCR
- q6/4eoR2hd3RxZWN3LLYEyJg==
 
-Am 25.09.24 um 16:27 schrieb Jan Wendland:
-> Hey team,
->
-> git diff --exit-code in 2.46.x is unexpectedly returning a zero exit
-> code for files marked as binary in .gitattributes where 2.45.x would
-> correctly produce a non-zero exit code.
->
-> To reproduce:
-> mkdir -p git-exit-code/dist
-> cd git-exit-code
-> git init
-> echo "hi" > dist/main.js
-> echo "dist/** binary" > .gitattributes
-> git add --all
-> git commit -m "Initial commit"
-> echo "some change" >> dist/main.js
-> git diff --exit-code
-> echo $? # actual is 0, expected to be 1
->
-> Is this intended?
+Hi
 
-Thanks for the report!  This is a known bug.  The "next" branch contains
-a fix, 9a41735af6 (diff: report modified binary files as changes in
-builtin_diff(), 2024-09-21).
+On Wed, Sep 25, 2024, at 14:25, Stephen P. Smith wrote:
+> In a project that I am working on, some metadata is currently embedded=
+ in some
+> source files.  The question was asked yesterday if there is a way to m=
+ove that
+> metadata a git specific file and link it to the source file or commit.
+>
+> I remembered that git has notes which can be used to add such data to a
+> commit, but I don't believe that such metadata gets pushed to origin n=
+or
+> fetched from origin but another user.
+>
+> Is there a currently implemented way to do something like this?
 
-Ren=C3=A9
+You have to do it manually.
+
+In `.git/config`:
+
+```
+[remote "origin"]
+	url =3D <url>
+        [=E2=80=A6]
+	fetch =3D refs/notes/commits:refs/notes/commits
+```
+
+That fetches the default Notes ref on `git fetch origin`.
+
+That will refuse to update if your own notes ever diverge from the
+remote.  If you want to always overwrite your local notes with the
+remote ones:
+
+```
+[remote "origin"]
+	url =3D <url>
+        [=E2=80=A6]
+	fetch =3D +refs/notes/commits:refs/notes/commits
+```
+
+But then you should also enable reflog updates for all refs:
+
+```
+git config set --global core.logAllRefUpdates always
+```
+
+In case you do a fetch that you want to undo.
+
+--=20
+Kristoffer Haugsbakk
 
