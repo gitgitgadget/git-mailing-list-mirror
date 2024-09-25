@@ -1,120 +1,103 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de [80.237.132.163])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A9C13E02E
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 21:00:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9B4175D5A
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 21:46:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.132.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727298045; cv=none; b=q1BmSYUzQ5BQ8Abdlf3sALa9OPCc31z4b+yeJvSbAhJR9AAv4KyuL1FsnYlflxDKiLsNyHO8LgeoZvAnRmZClyykm0ZjzvsVts1lniMb+icvwPSDreY7d1FzYmHtIMXXP4tWK1Y2gfE1FCB3qDTW5WVyH4tqtouYpxLoCvzjprQ=
+	t=1727300809; cv=none; b=kmwM78uO66XN3H0JIccH1M2jz9Xb5sN1z9zMRfJPpAMtdDoqMgavtkD+oKPn9m7BsZwpTldKEfu38fJHELSmVE0Oq7dp4Q1fitQDJH/Ga0VIytRFU6+/Ov6H4QHTtzQMddHw2ajBwHt1nxQwloNNk+6PHI1khVY/kUlXvqPcNfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727298045; c=relaxed/simple;
-	bh=YIUrBbYnQBAGXeRitPPQyAk2rFeo528BfDP6jtTHsEs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QSzkfkrYTzaAADd2KB/hELK8BJklTtwDHduewnmLTpM+gF6rCC1PPw7rYbLCjMME8oUx5hJRgyZ8WeZhOYoCBIBwWRJf/0yd8D1qu6RhYXsnKMK+WYPxph0fX74v8p6RA9t0mSDiw56zNxu71XkUhn5zY3DSOjoJK++mjZt5jps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=GDJyHfiR; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1727300809; c=relaxed/simple;
+	bh=LqbMVQOexLNnSvMfSxlSbeVEz6ZU2R7yMOC4lEtk+Qk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=f7LwcmOrPoDexFx4oAaVPN/3vreQg47UuCDV9ADiYsQ59aMouHtQvGjCXk+MCkL8ZcuGn8GnOFZylcGZuzQ3FC4o7qb9ByLxJKtHEAMaGLu/h6IUqgAHyiCU9fM25waspOROVA1HryEsPWctbg5CPs/FHec1803fDXbtvy8tb5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=virtuell-zuhause.de; spf=pass smtp.mailfrom=virtuell-zuhause.de; dkim=pass (2048-bit key) header.d=virtuell-zuhause.de header.i=@virtuell-zuhause.de header.b=kG5zzNn8; arc=none smtp.client-ip=80.237.132.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=virtuell-zuhause.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=virtuell-zuhause.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="GDJyHfiR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1727298039;
-	bh=YIUrBbYnQBAGXeRitPPQyAk2rFeo528BfDP6jtTHsEs=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=GDJyHfiRYaQ6nIGWCWLq+o378oFUyzpR4bDkoNLre/8acHCUNrInSxqrFmy/2XzSh
-	 BfKTRHQc/6460RUrFPc8wRVEbOO4rCy6FoZOSc649UTLQgWdrW0D92XclX4Lafxtim
-	 3+bpgWgmw8gVKzNbCx1TGU89Gg8tRa6jmP/6SyNGsS7sXNUUL8GtJDTTAuoW0TLBys
-	 5gYTBxcRK/61THlVbwqexnTFxuVjOm4Rc9hwgstJCo5PDNM4qj+9Yi5gVOobwE6btz
-	 jkAuS+OEuIvnUlHxt3cJXR5Qr1XyepfYg56+fdGZaaHSXMwAvDyy6hDosx3QCMfsD9
-	 JCukW5PeBYlMEEiF6DIDNAPuddKAiW4FOkVNDfvBC77zMRsmm7Ohf39TOUNjDflGRk
-	 V3WEGR9ISnaISGaxbre2Rux8oFwe/qhtLCN/pxN3rsvkIvtmeNu7rPZEBsb5TXBzcl
-	 Hw+K1i/2eUGNgDTgT7/9OrIZJta298nn5R2MrTXDSALTImlcTEH
-Received: from tapette.crustytoothpaste.net (bras-base-toroon0240w-grc-52-65-94-52-227.dsl.bell.ca [65.94.52.227])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CEA7820073;
-	Wed, 25 Sep 2024 21:00:39 +0000 (UTC)
-Date: Wed, 25 Sep 2024 21:00:34 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Krishna Vivek Vitta <kvitta@microsoft.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [EXTERNAL] Re: Git clone failure
-Message-ID: <ZvR58tnLEMBZC4fa@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Krishna Vivek Vitta <kvitta@microsoft.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <SI2P153MB071833367C62DD94C96CF1F7D46F2@SI2P153MB0718.APCP153.PROD.OUTLOOK.COM>
- <ZvMy_gAL96v8ahfz@tapette.crustytoothpaste.net>
- <SI2P153MB07185B9AED66870BBAD3C78AD4692@SI2P153MB0718.APCP153.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=virtuell-zuhause.de header.i=@virtuell-zuhause.de header.b="kG5zzNn8"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=virtuell-zuhause.de; s=he130322; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:To:Subject:MIME-Version:Date:Message-ID:From:
+	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References; bh=ZYhNkAnwq7rwWMVGBbbAF0RND+Ig92xaTVrtNgp5ibw=; t=1727300807;
+	x=1727732807; b=kG5zzNn8+XdWHviPM898t+1YQf7nXnMkf8HM/CjYbijdovZnCHMwOIYp0b6fR
+	GfuKVbxzDlEH8bGugiY0fySe2vh7YedBERuJyRKBBv7LM7WFXTI0UWuH/A2iDpg/SfF5IqOJRQ1b5
+	Ap0mhSr9KXOExnUAvvWHSpptSRJ9SKKxr4DTGQMCYfkiI8RvBiSRRwz6lMBDHcaYsWHbTPYbVfEpM
+	arY5CB4Qj6GzczF063NCt3cDe7ZJTxL1/UoDYqq1HDAeWWQYKFsrG4d+DerdYx87sXnORyeS2PVVa
+	GFty8n2F0cjNE2qPkhF6w4IsZ05zg+7sLoH8XA0sJ9Tr7reBMA==;
+Received: from [2003:a:77f:9249:d148:21c7:a41f:ed14]; authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	id 1stZUh-0000ts-SR; Wed, 25 Sep 2024 23:24:19 +0200
+Message-ID: <3192d8f4-4c7f-4b32-b564-7e075132c41c@virtuell-zuhause.de>
+Date: Wed, 25 Sep 2024 23:24:18 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nIo12MNZpbr13s98"
-Content-Disposition: inline
-In-Reply-To: <SI2P153MB07185B9AED66870BBAD3C78AD4692@SI2P153MB0718.APCP153.PROD.OUTLOOK.COM>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] diff: report modified binary files as changes in
+ builtin_diff()
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ Kohei Shibata <shiba200712@gmail.com>, git@vger.kernel.org
+References: <CACpkL8WsNqhQ7SP27-XQwp1bzKjyUT6m2idFarZ2Z5rLVYg4pQ@mail.gmail.com>
+ <500a8e0a-9fbd-4b7b-b2f2-026a4293bc9f@web.de>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+In-Reply-To: <500a8e0a-9fbd-4b7b-b2f2-026a4293bc9f@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1727300807;35407143;
+X-HE-SMSGID: 1stZUh-0000ts-SR
 
+Am 21.09.2024 um 17:09 schrieb René Scharfe:
 
---nIo12MNZpbr13s98
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi René,
 
-On 2024-09-25 at 08:49:11, Krishna Vivek Vitta wrote:
->=20
-> Hi Brian
->=20
-> Thanks for the response.
->=20
-> It is a WSL2 environment with kernel version: 5.15.153. We have used a ke=
-rnel version 6.6.36.3 as well. Scenario fails there as well.
->=20
-> root@DESKTOP-OOHD5UG:/sys/kernel/debug/tracing# uname -a Linux DESKTOP-OO=
-HD5UG 5.15.153.1-microsoft-standard-WSL2 #1 SMP Fri Mar 29 23:14:13 UTC 202=
-4 x86_64 x86_64 x86_64 GNU/Linux
->=20
-> Mount point information:
-> C:\ on /mnt/c type 9p (rw,noatime,dirsync,aname=3Ddrvfs;path=3DC:\;uid=3D=
-1000;gid=3D1000;symlinkroot=3D/mnt/,mmap,access=3Dclient,msize=3D65536,tran=
-s=3Dfd,rfd=3D5,wfd=3D5)
->=20
-> We aren't using any sort of file syncing service.
->=20
-> We have installed a defender software which is marking mount points for F=
-ANOTIFY to intercept filesystem events. On removing the marking, git clone =
-succeeds.
+> diff --git a/diff.c b/diff.c
+> index 3be927b073..84a6bb0868 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3675,6 +3675,7 @@ static void builtin_diff(const char *name_a,
+>   			emit_diff_symbol(o, DIFF_SYMBOL_BINARY_FILES,
+>   					 sb.buf, sb.len, 0);
+>   			strbuf_release(&sb);
+> +			o->found_changes = 1;
+>   			goto free_ab_and_return;
+>   		}
+>   		if (fill_mmfile(o->repo, &mf1, one) < 0 ||
 
-My guess is that whatever software you're using to intercept file system
-events is causing the "unknown error occurred while reading the
-configuration files" message and you should remove that software and
-reboot to see if the problem goes away, even though fanotify is enabled.
+I poked at the same issue in parallel and had the same fix, but ...
 
-It's very common that the kind of "defender software" you're using
-breaks a variety of software, including Git and Git LFS, and in general,
-the recommendation we give in the Git FAQ is that you use only the
-system default antivirus (and on Linux or WSL, none, since there is no
-default).
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+> diff --git a/t/t4017-diff-retval.sh b/t/t4017-diff-retval.sh
+> index d644310e22..1cea73ef5a 100755
+> --- a/t/t4017-diff-retval.sh
+> +++ b/t/t4017-diff-retval.sh
+> @@ -145,6 +145,14 @@ test_expect_success 'option errors are not confused by --exit-code' '
+> 
+>   for option in --exit-code --quiet
+>   do
+> +	test_expect_success "git diff $option returns 1 for changed binary file" "
+> +		test_when_finished 'rm -f .gitattributes' &&
+> +		git reset --hard &&
+> +		echo a binary >.gitattributes &&
+> +		echo 2 >>a &&
+> +		test_expect_code 1 git diff $option
+> +	"
+> +
+>   	test_expect_success "git diff $option returns 1 for copied file" "
+>   		git reset --hard &&
+>   		cp a copy &&
 
---nIo12MNZpbr13s98
-Content-Type: application/pgp-signature; name="signature.asc"
+your test is nicer.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+The patch works here locally.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZvR58QAKCRB8DEliiIei
-gblqAQDbCFg31lICwkY1j74alWRGjhRsdRMsm1i+FiTFKyS9KwD/aJXdMChomYrT
-RTW9ugUl6WV4JZsqQPfdZAjjGhehFAY=
-=B09h
------END PGP SIGNATURE-----
+For what it's worth:
 
---nIo12MNZpbr13s98--
+Reviewed-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+
+Thomas
+
