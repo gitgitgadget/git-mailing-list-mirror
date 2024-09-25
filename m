@@ -1,76 +1,102 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA6D16DEB3
-	for <git@vger.kernel.org>; Wed, 25 Sep 2024 12:29:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3B41662F7
+	for <git@vger.kernel.org>; Wed, 25 Sep 2024 13:35:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727267361; cv=none; b=KTFXcYfPJTtwKg2MARaM6OOVwwxGtdQmu900wTCFuDim2G2BOuwSxaJPkcYYSumdBlb6TBQkZuD0JzBFJlOaTzY89RQ5p3FnALjWW9b1XvTZdiPyRq8YWjxnnwoU/KP89L1xEKPyjQl58VinFsY0EYELncBDV/eM0pmReRDZHj8=
+	t=1727271330; cv=none; b=rrYacJbRf1DTiDRmFi/CbZNJ/dp0igANubnsB7u8R8ckpo6cWpM/Y2THVBn+4ga8hOX8v9sybbIv/fN6udvZhetIt7xcWDAcRX6ax+WkrAebboTNsBe9qLT63vq1ML66gR/8ZhFQfv3ToD/JWRtRbJk95JjgsuT5YN1L2zYAZl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727267361; c=relaxed/simple;
-	bh=Z9z5Di9MD8eAwpdgRhMHoxELHVfXsjDpGmveAkbDaSY=;
-	h=To:Subject:MIME-Version:Content-Type:Message-Id:Date:From; b=OJTWOB9jQh60EX+NkinZJaXwvwknH43KBPHsPU2WnW1/kOkOJGyuA6S6QPUQT2pvIBvQKHmNrw+i30US0NemIpAyiT6D+XFucP4TCi+x4N57ISAuBlCFYZzsCX1foXwOOPJKfMjdQXC/tDqG67qRZRXOT7vTz0Myt4dSMdVyZrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KqTpkiqZ; arc=none smtp.client-ip=209.85.216.41
+	s=arc-20240116; t=1727271330; c=relaxed/simple;
+	bh=SC983wluAsdiOWhUikPyuq4WxLZ59dNsXDJjf9HyJcQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Fm8bbDmMBNaDBjLrvJbJpKZDUhibIFqFPNX0d16PqjXhBB2Ss6hwtCMAXrzP8GWYyD+TcEOg9qsPyx4QajBh4VVI1jm+siB86bMkSblrgNkpBjaURFHu1TxH+iXEL8RE32DTphfxVyLjFsBHhZpb0IWUqthY5ELiOLBc43zjec4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IqhmW0Up; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KqTpkiqZ"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2e077a4b8c0so340923a91.1
-        for <git@vger.kernel.org>; Wed, 25 Sep 2024 05:29:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IqhmW0Up"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7193010d386so5453026b3a.1
+        for <git@vger.kernel.org>; Wed, 25 Sep 2024 06:35:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727267359; x=1727872159; darn=vger.kernel.org;
-        h=from:date:message-id:content-transfer-encoding:mime-version:subject
-         :to:from:to:cc:subject:date:message-id:reply-to;
-        bh=UpHDd+iX/PoL6vw4gwqTcjtwFvunx5XxhOCNDO9stbc=;
-        b=KqTpkiqZJLaKmzJGADNv+TMHDkUtjgHvbt/X4a+1Uz+bpki1JvHqrcbF5fBLh2L3se
-         LmskdmgggsYSAjjFmZYUPu3i5bfDqhLtt96LzDRAuMV7sakOGx74C+O+AGg58UWRTnTU
-         6hbD8DVz6GGCn5o5hGHrJfJLB7d+INhGN6J5Fnro/8bayKRVC3O+eYK+GnDhQz6Rm3Vf
-         jD2Y9zpHDybxFpg7JIQvc95UlJyKg9hNVM0g/RW7UgmBWOvrFtgr/8DJf/bmE6lc/lBT
-         EN4g3A0wI1mWmkCWqOuWVEihpOL410CJL/Y+Fb96MqtC6ZfK6hompov5ca7YgIddI3Mg
-         j4JA==
+        d=gmail.com; s=20230601; t=1727271329; x=1727876129; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rh2SIpkfbgEnAV/dUld1vy3T9efR2zeTlY2wnF5WtuY=;
+        b=IqhmW0UpGOHtP+zStNpyXEwxURnd0RjJvpiSkg9RTsZx41unqvH0Z1MBUE2AgUCz4g
+         znKCUvrsQBfMsR1qTtyd18bLm4ApthXF94Q9pGj60McqzDlYJV0waeqg4fN8xzidblzp
+         0F/c01C+czzvONy5+JcwM4V5vCoKwDQG2glHhwEijTZyTWwxShsZILedOWGRjAa/XhjQ
+         NmjgP7RAYatnzZIKEIcJSgo26xOV9VQPv3UEzSikj+PjJyMx5e0Pus6trDZfQF3iOJGt
+         2wFO8/J6dbgqJeIt7av4kcXrIbzoPG3ObXTcFHcmKZq+6C92xMsXOtIVuxT/UGUEOrIW
+         dWvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727267359; x=1727872159;
-        h=from:date:message-id:content-transfer-encoding:mime-version:subject
-         :to:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UpHDd+iX/PoL6vw4gwqTcjtwFvunx5XxhOCNDO9stbc=;
-        b=RDe7Nd35RTCSN95cfK4kYUTgWphFh3kK1LW1gfyd0cNh4LgHcaUo0y0o6qS/skHTg5
-         32r/PLpDZjoRXwHsY7M0m5Ma8tMb0VCMA1j/DshH0EwWIm5t3B1Kt4B1HGeypxlZvuP7
-         jVCzzp94DTDDTtJKgbDV7nlFrRkugooXqrp6V8lhw5HDdYQDY77Ar2EWeYR2j3v+6pSc
-         N9MipvX6z26GbsYVdBojI+KkjU74sb88gMLFr87GcMZr+oRzlm6T9rZQpTguhfUguYMM
-         jYsIQRttTtlhHLE4CYFI/BOHt4GJOIzi7h/CFuQPH/PxhpPKUfFycMjgCk6CkF6HkwqH
-         y/2g==
-X-Gm-Message-State: AOJu0YzD5moZgh9f3V37ZGy2TizYoEQdHutUbqiB3tWWCAv8PtWd4vT7
-	OsMNj0LVBLw3GYDOFxgEI5z4+d+89A8eMs9JYSWAVI4xicm7cDVju+i9NQ==
-X-Google-Smtp-Source: AGHT+IG22EzxPJNKcxr6mlN/raULdz+6Fnxb8eSTl36DY9oVcHZ/jBi55+LonZAoSxyjqoXFtsaaGw==
-X-Received: by 2002:a17:90a:eb0f:b0:2d8:9fbe:6727 with SMTP id 98e67ed59e1d1-2e06aa9f061mr3806571a91.4.1727267359172;
-        Wed, 25 Sep 2024 05:29:19 -0700 (PDT)
-Received: from thunderbird.smith.home (ip70-162-122-51.ph.ph.cox.net. [70.162.122.51])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e06e2cebefsm1405536a91.55.2024.09.25.05.29.18
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Sep 2024 05:29:18 -0700 (PDT)
-Received: by thunderbird.smith.home (Postfix, from userid 1000)
-	id 1719619615FF; Wed, 25 Sep 2024 05:29:18 -0700 (MST)
-To: git@vger.kernel.org
-Subject: Can a note be pushed to origin?
+        d=1e100.net; s=20230601; t=1727271329; x=1727876129;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rh2SIpkfbgEnAV/dUld1vy3T9efR2zeTlY2wnF5WtuY=;
+        b=iy16FfK5Yvu+908qYj7w6kb90QEReUDzRwQY2p4QutKdN4jF/HqK4Jn9yfp3SbZ99H
+         DleR6DKVo6Lf0Gsx9JLTgWmX5G5iHwuEr9pZG+GKb2XXTVg7Wjp0OkJPJqV2IYrazoQf
+         cGQxdYUUXr7j4tBghIEjbBLsdC7Dh2gwcCjwirXsl3Xog5oaGvA8eUtXS6b23GB2gbEo
+         0Z9UFAT0n0LGWW1StaHyBfO8tFsOXvvdS8YABA5V8xrkd//hL5KdN+vcCp71Kp3aeuMd
+         /Fa6T45P4hgKcT7l3kkOBf7MP0KpWD9ExqU1oPksfyFOtCzkdIXzP2oY+y8Pt2oBxrTz
+         Eizg==
+X-Gm-Message-State: AOJu0Yxf6U91bqshLv8M72EuLSf/BKcRmf4cZpn55Ih1v2zd3EHz5ZNL
+	Z/TUxMMWs0OdyrOyfob5bW7/9My18azu/Xk/wsUwgLPtJVFb1teu83Dl5w==
+X-Google-Smtp-Source: AGHT+IFhu0sXMFo4Q52TJf0FpvN7tNnnYV3KbInRVVIK1oIixChyibXLoXOWlKT9BtbFdh5pGhe4dQ==
+X-Received: by 2002:a05:6a20:c503:b0:1d2:e793:b35 with SMTP id adf61e73a8af0-1d4e0bb3abamr3786479637.47.1727271328619;
+        Wed, 25 Sep 2024 06:35:28 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:1a:6e9e:b1cf:6f9a? ([2600:1700:60ba:9810:1a:6e9e:b1cf:6f9a])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71afc9390f4sm2759659b3a.130.2024.09.25.06.35.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Sep 2024 06:35:28 -0700 (PDT)
+Message-ID: <5bc7ba07-da0f-4a41-8979-e75221a747a7@gmail.com>
+Date: Wed, 25 Sep 2024 09:35:25 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240925122918.1719619615FF@thunderbird.smith.home>
-Date: Wed, 25 Sep 2024 05:29:18 -0700 (MST)
-From: Stephen Steves Linda Smith <ishchis2@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] test-tool: add helper for name-hash values
+To: Patrick Steinhardt <ps@pks.im>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+ peff@peff.net, me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com
+References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
+ <pull.1785.v2.git.1726692381.gitgitgadget@gmail.com>
+ <7e47fc8cb53647ad92c86801204c3089a5dfe8e6.1726692382.git.gitgitgadget@gmail.com>
+ <ZvJj7PeB52m_1mG9@pks.im>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <ZvJj7PeB52m_1mG9@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-In a project that I am working on, some metadata is currently embedded in some 
-source files.  The question was asked yesterday if there is a way to move that 
-metadata a git specific file and link it to the source file or commit.
+On 9/24/24 3:02 AM, Patrick Steinhardt wrote:
 
-I remembered that git has notes which can be used to add such data to a 
-commit, but I don't believe that such metadata gets pushed to origin nor 
-fetched from origin but another user.  
+> This patch breaks t5310 with the leak sanitizer enabled due to the
+> leaking `struct strbuf line`. It needs the following diff on top:
+> 
+> diff --git a/t/helper/test-name-hash.c b/t/helper/test-name-hash.c
+> index 15fb8f853c..e4ecd159b7 100644
+> --- a/t/helper/test-name-hash.c
+> +++ b/t/helper/test-name-hash.c
+> @@ -19,5 +19,6 @@ int cmd__name_hash(int argc UNUSED, const char **argv UNUSED)
+>   		printf("%10"PRIu32"\t%10"PRIu32"\t%s\n", name_hash, full_hash, line.buf);
+>   	}
+>   
+> +	strbuf_release(&line);
+>   	return 0;
+>   }
 
-Is there a currently implemented way to do something like this?
+Thanks! I'll make sure this gets in the next version.
+
+> I also plan to eventually have a deeper look at your patch series, but
+> didn't yet find the time to do so until now :(
+Thanks for taking the time, when you have it.
+
+-Stolee
+
