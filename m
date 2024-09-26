@@ -1,97 +1,116 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E9C15B12A
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 16:41:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B9914A4E0
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 16:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727368901; cv=none; b=bHe0r0Bb/yyNKWx5IcwryQKFFqhvUkTNwnsGBHV6gSayiR2c5QeHUR3GteVam3KgFEF45+ouZR3cZHrw+lRvQomVtExZqvUpRChD9pLa9RqGcnBczVtDb6fq2rNZFXyr1rmA8T22a28+6XejCjlZOoRrxEoxtE2ROAApX566ITU=
+	t=1727369069; cv=none; b=pHG94qLvQiEG8TvXxeULM/4J8i9QQNLos+rl2ErN0gx9oKhv7Ayyiit0HbwQ3dam5CQ0ZcJnqOAqM1YrEZBoeYwOShTgcqbdetaxQ1LYBjiTDwz80tESld6JT1Av9LWhdOqN2NuEBXjXT/13kT7mJe/475Ie4Dj/riCbr2XEi/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727368901; c=relaxed/simple;
-	bh=ZyG6SxETxSomXPZ762f98OJZmimti0hd160eg3fejCc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FaPOxvsjEaUSjXye2nu/IrJSXvC3AdkLby7GuJVzlAz0mjHXB8n+UjxVX54vgjdAh+Y5w3wxemWTdu4rrGghMzsjUC8wwZfbDgeFBfoz1IlSMQdUrOIY358YQckKCc04TIOsEieRnStdvA/Zxe3gAfhsDR4HRt2C3PgGkjvxWR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fYNRkpGc; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+	s=arc-20240116; t=1727369069; c=relaxed/simple;
+	bh=kUa4sqPp+pArN+3ei0yODdFQ3IuIyX64C62f8Ax1cvU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=JAXMLC+z/OnC4Kn5i5iUrbihmisGb6ClbQTMB9iCuxqt3SJbLcNR0vYj+SIEkRMAfwhFPkEPM/+JzVv6Lnq2elTgaK0CWb4VnF85ixVuvFoD3Sw+QMrhM1s/f/mZY+xE68PTEB0TGBfEhU2ZIjC8uvfXDFlMRhVgCdQumLJsGfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PqS/kUvg; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fYNRkpGc"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-7193010d386so1045773b3a.1
-        for <git@vger.kernel.org>; Thu, 26 Sep 2024 09:41:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PqS/kUvg"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-7e6bb2aa758so532239a12.2
+        for <git@vger.kernel.org>; Thu, 26 Sep 2024 09:44:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727368899; x=1727973699; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C80DBZLCshpdQBYdfey6FdU3ugBjyIbYTn5KMSkSoqA=;
-        b=fYNRkpGcsaJrQMoO/LJp02TjNgN+fjmf0KUN3m4qfJMaRI7M+OtkmwVpN4gRy40ZD3
-         vLLgNsQIKhNdoZxYqYvlcMz/rTCKUkfgxGAtM7uEzsBVX6rFaA7/FSy82kDxSKUR0hyQ
-         ob/zABlASsOMDv1LVXTeKtcWKOF83ynbxZMPUvuuDjrFaBZS/UjOgZwoEvn9gEu0tvIH
-         Z1kLHejMaI+kxEbOOYmhELZaP1Jg5Ck55XU0kyBKsMVsNZ4em5fqybUXLLBV5OQnLJz4
-         5QQruRFnonmfBuYgxCvaw3pmXKkDt/jMSanMrBES8ur9e1hB6oOUcRUZc5SuA8h/dscm
-         gE5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727368899; x=1727973699;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+        d=gmail.com; s=20230601; t=1727369067; x=1727973867; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=C80DBZLCshpdQBYdfey6FdU3ugBjyIbYTn5KMSkSoqA=;
-        b=CpNv45S6fVvp80pJiz4d7B4Jwb8abw61QK1efw/whmmXYFdYibke+6my3zSFA6rOYB
-         Mn/gedqtqWRLtXlnLfKM97eVWi7w7vqYoxbm077glUZT3M6h8MXZv04zIQM8KkSxhpQI
-         GMxjAsdcK3ndlBJ60CpiyEA90nkvvukZ6ldjslWxUqk0N2PuJ5+rvQws3HcYh5AgcBNg
-         LyvtC2WkLyaONVEhmFgBg7yEGgrbJBEAU2qmNeAK9KVni0Df0osCkPOghEyvDhced8vP
-         QCcLh0c71xRsusG+1NptR/eYiOtCbeBw6qH1YnXqZHZ+kuM0OH1U2Zn6kcetM/NjGwK8
-         8EsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVU8Su54MnsAx6+rdaLhFA9c6GmIqyVTufxS+amNIPe7iJJS2lew4v/y8fJnCAsgqlQlYs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2LA+xAV2sEnzUKxi4RgZXC86sHv18tyEAY0Kv4bC6UE4VYS+7
-	p/2irHNH8NLsBg3RCYtoZynlJZci804mxf+57Mj+Op/3qsJ6koHv
-X-Google-Smtp-Source: AGHT+IG1u75PdXMMIKXifBsGlN3PnDG4nj1JvKIyz3WHXNcRvCCtkq4aYB2i8YLNLTXdUKP9pBn41A==
-X-Received: by 2002:a05:6a20:9e47:b0:1d3:e4e:ff55 with SMTP id adf61e73a8af0-1d4fa60e5c9mr441880637.7.1727368899241;
-        Thu, 26 Sep 2024 09:41:39 -0700 (PDT)
-Received: from localhost (217.108.125.34.bc.googleusercontent.com. [34.125.108.217])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71b264bc1a3sm106683b3a.75.2024.09.26.09.41.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 09:41:38 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 1/4] git: pass in repo for RUN_SETUP_GENTLY
-In-Reply-To: <ZvVumLAFu1LGzXWP@pks.im> (Patrick Steinhardt's message of "Thu,
-	26 Sep 2024 16:24:24 +0200")
-References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
-	<eceb2d835be7168081d6eeffbce57bba89b5f423.1727185364.git.gitgitgadget@gmail.com>
-	<ZvVumLAFu1LGzXWP@pks.im>
-Date: Thu, 26 Sep 2024 09:41:38 -0700
-Message-ID: <xmqq1q16l64d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        bh=kUa4sqPp+pArN+3ei0yODdFQ3IuIyX64C62f8Ax1cvU=;
+        b=PqS/kUvgp299qFk/14Ja2DOkf+fLZGNNL0fU5cTw8zcD+qwnb9RCySVGsqhNYG7Bfh
+         6keUrHC2AJ0U+X8OV3x5+aXk6m3umqN3w8G90sI8Wf2CS1GrAQ3g2SkgSo1NtfxkMW+J
+         SeNrKMcFJcly1F9zxAUPm/JwBgrnXn5BMQehIwF3zZfLx9Odr9GIXkE7BNata2gyIfUy
+         TLVdhNKJBhxhal0EqJP2uTH+4kfN2ebqXemY2+g67Dcdlvi+NNJjNCO8DXRXMFh3vz6K
+         IaXNFEi4P71Y1+MAjz7RHdmUpRqiPAFIkcgnfeV7QwGF69kbPwwai/9XX1eSKW5Nfg4l
+         SsSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727369067; x=1727973867;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kUa4sqPp+pArN+3ei0yODdFQ3IuIyX64C62f8Ax1cvU=;
+        b=Hd80PJraxdqU2gZ1/tMEp57Yb3dcmJ1E5TGLZq1qS1nh9nIoBvbqQ5OLGff69j3pyr
+         s7GdAVURL6WcMDYJec8/9F/HD1mlKLvklhE2GfqB0oUE4DC0F0Ksk0OueTrS4rd8s8Os
+         RDRtP+iYjmSHXEvVurgfHNBoo04hMUz0xrKWU30oeyl4YYaUqEp3v9LM1flCldunLYwT
+         IVAt+jaYeyl5aafsh0liqyMOQKL3k9ntKYxTGEHueHjMgovxbLb8PIya5H7GtPTCmB0+
+         C1BWQBHY+JR+x9nK1Xb/f9VAY2p5NIAS6Un76l7DmLLPFMgdr3ofzKssw2g24iQ5wdbL
+         rB/Q==
+X-Gm-Message-State: AOJu0YyISSy2x0NbOFjO018IVwHrL5dpnY6KC3lW9FPPXRh0koiLfdKY
+	b41sI4huM7L/St6q8Hnn2EudPgNPdNmszOva+03MfsOm5V+GAc2BAtehb2hLy0gG+vVUsRhm2wt
+	tufmVQZXINl0tKAjVXsZCfqKDSHX0mtga
+X-Google-Smtp-Source: AGHT+IF5xVRFo8MvlPc6AP4sdwiycfCVzSPunEBlYSZl8uzS+uhPjyDhSCsO5fYlLIuNFa/udT0DTr5AXs21VBNqKao=
+X-Received: by 2002:a17:90a:ee90:b0:2e0:876c:8cba with SMTP id
+ 98e67ed59e1d1-2e0b8b1dd54mr409962a91.20.1727369066739; Thu, 26 Sep 2024
+ 09:44:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Piotr Siupa <piotrsiupa@gmail.com>
+Date: Thu, 26 Sep 2024 18:44:10 +0200
+Message-ID: <CAPM0=yD3SevBKhCOqOzjpEqX=4Z7BLJU2hKRFb2KtOgFEco8cw@mail.gmail.com>
+Subject: "git stash push" doesn't respect pathspec regarding files added to index
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
->> -	status = p->fn(argc, argv, prefix, (p->option & RUN_SETUP)? repo : NULL);
->> +	status = p->fn(argc,
->> +		       argv,
->> +		       prefix,
->> +		       ((p->option & RUN_SETUP) || (p->option & RUN_SETUP_GENTLY))? repo : NULL);
->>  	validate_cache_entries(repo->index);
->
-> Should we really pass `repo` unconditionally when `RUN_SETUP_GENTLY` was
-> requested? I'd think that we should rather pass `NULL` if we didn't find
-> a repository in that case. So this condition should likely be made
-> conditional, shouldn't it?
+What did you do before the bug happened? (Steps to reproduce your issue)
+# Create repository with two files
+git init
+echo 'old contents in foo' >foo
+echo 'old contents in bar' >bar
+git add foo bar
+git commit -m 'init'
+# Modify both files and add them to index
+echo 'new contents in foo' >foo
+echo 'new contents in bar' >bar
+git add foo bar
+# Push stash with only "foo" in the pathspec
+git stash push foo
+# Reset and pop the stash
+git reset --hard
+git stash pop
 
-Yeah, that is much much more preferrable than my earlier suggestion
-to pass yet another Boolean parameter to p->fn().
+What did you expect to happen? (Expected behavior)
+Only the file "foo" should be restored from the stash.
 
-> There's also a missing space between the closing brace and the ternary
-> questionmark.
+What happened instead? (Actual behavior)
+The stash entry stores and consequently restores changes in both files.
 
-True, too.
+What's different between what you expected and what actually happened?
+The changes in the file "bar" should not be included in the created stash entry.
+
+Anything else you want to add:
+This happens only if the files are added to the index.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.34.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.8.0-45-generic #45~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC
+Wed Sep 11 15:25:05 UTC 2 x86_64
+compiler info: gnuc: 11.4
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
+Regards
+Piotr Siupa
