@@ -1,72 +1,78 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D5F15A85B
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 16:13:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FCEF510
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 16:22:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727367206; cv=none; b=TiN9vM77mjWbwjSK+O6ZKbGjtOfLIgwKAmH2FR8+N1gFLczV7nqPkJ4iKQcrJ8+GbFLuwewVSieXdOgkDZLF2EqKTon6zTCdVvo9+NnHAsCwdfiVKVfzdAckzVV9r0WaGgbeJ5gi/YsP7Ir4Hj4kvr7RARs/CysPF+IarpsifU0=
+	t=1727367749; cv=none; b=n1e9vKtBlkbI5IzjulKfLqNlU3U262+7lm/jEsDq5IWt9yL3A3fW6R0WXZRJhecyH00WJiH6Am6jB6ltVNYRorWy6pwaesNEIosLWjJPWLYzn6YrfbIqZ2e9QT/4ThB0mf466zYxFq8VAs344/H6X1TfAbEeO88BjKFZFUxG8Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727367206; c=relaxed/simple;
-	bh=6RmF8PgKERtm4KWK1CoMj/7cQ2uqWymXSBR+I52Uc38=;
+	s=arc-20240116; t=1727367749; c=relaxed/simple;
+	bh=ASM3mfqPLhej0dCEudcpw2CHlBO5KxmFh+u91y0ORjI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aoppxwgRP3WNf+DbRuxPSyjwKhLggft4Q1VunYB16Q8bbVOf794DLlnl77EHUPT87a66qmi8Ga+Any9K6d+k+sDv6EA+GFgHdskMEBBwKOXcTfWkAYoIAuYDLaprVvAjlrrwMwSilcWvUdQH5o5dbSHs5vhyfvKOTlXMzeBex08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YPcAKwap; arc=none smtp.client-ip=209.85.210.173
+	 MIME-Version:Content-Type; b=W0zj0q12ULERaeAd2hScDBRDfbQzgvunK1dyupuCENGJ9QA2J4yiAlkCGmYAaJToJ1VufRSZOzOlY+H6X/mWhvkdsX0UCN8wbjB1/Yy+JL4vt0NWm5yGeBTg5J1rTp+pG5WRiHuOQQbZbtPc58YHmH6BzJOPrfGojQgP2z/YeEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KuBJvX+t; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YPcAKwap"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-71b0d1c74bbso897920b3a.0
-        for <git@vger.kernel.org>; Thu, 26 Sep 2024 09:13:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KuBJvX+t"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2068acc8a4fso10580635ad.1
+        for <git@vger.kernel.org>; Thu, 26 Sep 2024 09:22:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727367205; x=1727972005; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727367747; x=1727972547; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EnLwGCL1fWS30boHLiioFYC144zslebvIPY0b6mqyV8=;
-        b=YPcAKwapFx9UkB0FG8uRUQpJWaVqW52c7SeuZyERfa0xT61KicKQWrTSIlYrGgwX27
-         UdYfD3DBm50BQS08q0shnuBvxuvYu6TzHaZpVWIcVKMhaa9RRX7PPXUsK7KlWaqCDuPx
-         ffLqXIb+xN65yOrsprdZqDWCpFTXodtnQVfdlgNmEhvfLSYMOt1tom1/bCgRsMLmNZHP
-         KnbZBjqn9ZQBin384OT1qH8E84dQi4Ve4PA6jtPzd5Ry3R6wkt3eNOlXXa0yN3HlMKsL
-         OmI7MtxOBj2hmArk6Xoafo+aqKdIk7joTbmuTktNkN1/h3or7VMKi0RJxHcjsjuBkKG0
-         kXsw==
+        bh=ASM3mfqPLhej0dCEudcpw2CHlBO5KxmFh+u91y0ORjI=;
+        b=KuBJvX+t1MibF7hFbSV1KgijZRwHINsm544VYLn+x2uYfWWQcBSCR8lHwvgePZx3se
+         vABfveErg58t8q82H6qn1nYhoXi29BURKRfyq41ECRJ+SM2VaHHwI7Nm4p2EqN4yF9uy
+         7wQPd5SsFrPdsgVusMLySGA0F/CgHe4v3bhkgOLNRB9ZaXeN+7aF6VQlyTiGE08Q9f8L
+         KbRWfkJrruhs7f9uYBeFAFeR3ORX7EM14oSiJYzcl1OxOU3bK59DFyvssLhBEBe6NFAk
+         BisjRdDMgYqxKo0N/M25HbBukTi2bBPOPv3gNZPaHaHTCbPhUtfr1V1Ql6OvoNsPcTkM
+         VEFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727367205; x=1727972005;
+        d=1e100.net; s=20230601; t=1727367747; x=1727972547;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=EnLwGCL1fWS30boHLiioFYC144zslebvIPY0b6mqyV8=;
-        b=Z60DB6e+WUYYxLmAsP4F8AvpGJ1SwhHf2D33uQJioW2xRJW/hFf3acwjTA9l0Z6qrg
-         n1CjZ0wATMRs6KJAPzUSooKr26Ezm/Eljei0hUDF+xosCjMINaxRUDTXwrMuqNjv8cV4
-         7hLG/+LBNmN+GIJsGiEjWsOp5vIiLbQJF53hxd7aT/B7iaxSaGgkcJRaqT20xrbcgiBs
-         FjmQk9/+zxulfAwOLKxNg/TbPJDqvIDHOFkni6JQ/PoWlXGMog4vfcmkeZISFCeEk+Cr
-         pp1RW5HvZHoWn0sERoFIt/9w3hjxcAzGJtdH8kmOknieR/xh2PDkznAqw7OyJRmaqc8h
-         OY0A==
-X-Gm-Message-State: AOJu0Yxhyh+t5RslnwV9kY7BXltnRrmN7GmNL48TlTvN1WOdl0jJyWbq
-	5I4CNL/kz5SphfKa2jGN3qITKSdZwrw8QHLovl5vTlPvrOHP8Nta
-X-Google-Smtp-Source: AGHT+IHa0e1rCgly9Pp+biBfKHt1q7tPHkbCCGD3XsReluuqco7cAMfj9Prbvw0rYKkbHlx04+klPw==
-X-Received: by 2002:a05:6a21:501:b0:1d3:2929:447d with SMTP id adf61e73a8af0-1d4fa6cfcbfmr348321637.29.1727367204506;
-        Thu, 26 Sep 2024 09:13:24 -0700 (PDT)
+        bh=ASM3mfqPLhej0dCEudcpw2CHlBO5KxmFh+u91y0ORjI=;
+        b=d6p+4JfJJAPL4/2M53o6vnLhSbi4CCKHhQLLiovp5PA7zRJe/UjqOCG6qElOZSVcg8
+         zbTur0SVLA3Q4YBJA/c4/lRN5ELcmshfyHFHclfwFXyLy+j0J0LhAuxCjFcrZ4+Um0OV
+         6N6rPKTEH4/mKJ5wHkKS7h16XZC4sd0d6yMhliX05JX1QXfz7F0d3jUoZ3B30x8TNBV5
+         pYCs8V61r/mmFlZC6n9+cGbWLMMnyC3emHq4UYJvD0o6aKBuml2GCFbeIIJgNL5JFMwk
+         +nxUWjXoCCxASrJjFtitJvOjDCrLwCQqwRzcPNzTb+WqNpIaD5R3D0KcRKoniBTzUllq
+         IQKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUwSnj8rSFovz4RQIi9oiMJaQ8NfPkDrqu+4N0nj2aZXairLdwmSSpFj4kczv1/zPcVYgo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzeW8eXJRVwSeRJeDMCUariPCV+wpi74knZZj3NWnsVJ7JgPj83
+	neaRZNvo16kwE0zP1g4Ifl5RKErMIadt2/TdszaJN3h0cq6PT+bC
+X-Google-Smtp-Source: AGHT+IFoA2aRGU8vOX2wKMkDhYO2QFxrU2juF5tUsRcwEstrTkns68UD8QvU5jN0mRTxtW669tysxQ==
+X-Received: by 2002:a17:902:f693:b0:20b:c8c:6639 with SMTP id d9443c01a7336-20b367d01d8mr3761025ad.4.1727367747523;
+        Thu, 26 Sep 2024 09:22:27 -0700 (PDT)
 Received: from localhost (217.108.125.34.bc.googleusercontent.com. [34.125.108.217])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71b2651604asm70514b3a.115.2024.09.26.09.13.23
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37d9147fsm461215ad.80.2024.09.26.09.22.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 09:13:24 -0700 (PDT)
+        Thu, 26 Sep 2024 09:22:27 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Edward Thomson <ethomson@edwardthomson.com>,
-    Josh Steadmon <steadmon@google.com>,
-    Calvin Wan <calvinwan@google.com>,
-    Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH v2 04/22] reftable/basics: handle allocation failures in
- `reftable_calloc()`
-In-Reply-To: <ZvVPiIzzLTTb75b8@pks.im> (Patrick Steinhardt's message of "Thu,
-	26 Sep 2024 14:11:52 +0200")
-References: <cover.1726489647.git.ps@pks.im> <cover.1727158127.git.ps@pks.im>
-	<f6ad92ffd01c442dacd3ac6aa448891028636636.1727158127.git.ps@pks.im>
-	<xmqqikulugwj.fsf@gitster.g> <ZvVPiIzzLTTb75b8@pks.im>
-Date: Thu, 26 Sep 2024 09:13:23 -0700
-Message-ID: <xmqqzfnul7fg.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Eli Schwartz <eschwartz@gentoo.org>,
+  Henrik Holst <henrik.holst@outlook.com>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: ./configure fails to link test program due to missing dependencies
+In-Reply-To: <3a303c6e-35b0-4428-9d23-799b33194330@gmail.com> (Phillip Wood's
+	message of "Thu, 26 Sep 2024 14:55:52 +0100")
+References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+	<xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
+	<29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com>
+	<xmqqy13oa8oe.fsf@gitster.g> <ZvKsH1Ct-YwBPA_f@pks.im>
+	<b6b131cb-683c-4140-9769-290b622721e1@gentoo.org>
+	<ZvOTL0cG8qRY8OXe@pks.im>
+	<1f002f86-9212-4639-8804-898bc62726e5@gentoo.org>
+	<ZvOn_wChzEgXtpMd@pks.im>
+	<3a303c6e-35b0-4428-9d23-799b33194330@gmail.com>
+Date: Thu, 26 Sep 2024 09:22:26 -0700
+Message-ID: <xmqqv7yil70d.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -76,62 +82,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> But it illustrates why open coding is not necessarily an excellent
->> idea in the longer term, doesn't it?  When unsigned_mult_overflows()
->> is updated to avoid such a false positive, how would we remember
->> that we need to update this copy we?
+> Hi Patrick
 >
-> I agree in general, but with the reftable library I'm stuck between a
-> rock and a hard place. My goal is to make it fully reusable by other
-> projects without first having to do surgery on their side. While having
-> something like `st_mult()` is simple enough to port over, the biggest
-> problem I have is that over time we sneak in more and more code from the
-> Git codebase. The result is death by a thousand cuts.
-
-> Now if we had a single header that exposes a small set of functions
-> without _anything_ else it could work alright. But I rather doubt that
-> we really want to have a standalone header for `st_mult()` that we can
-> include. But without such a standalone header it is simply too easy to
-> start building on top of Git features by accident.
+> On 25/09/2024 07:04, Patrick Steinhardt wrote:
+>> On Wed, Sep 25, 2024 at 02:02:34AM -0400, Eli Schwartz wrote:
+>>
+>>> I'm probably biased, but some of these failure modes are *weird*. And
+>>> they basically never require the CMakeLists.txt to do something
+>>> considered non-idiomatic in order to trigger the issue.
+>> All of this is very valuable data to make my case for Meson instead
+>> of
+>> CMake. Appreciated, thanks!
 >
-> So I'm instead aiming to go a different way and fully cut the reftable
-> code loose from Git. So even if we e.g. eventually want `struct strbuf`
-> return errors on failure, it would only address one part of my problem.
+> One thing to bear in mind is why our CMakeLists.txt was introduced in
+> the first place [1]. Visual Studio's CMake integration means that so
+> long as git-for-windows is installed building git is simply a case of
+> clicking on a button, there is no need to install extra software or
+> plugins. I'm not sure the same is true for meson and I don't think we
+> want to end up supporting both.
 
-The dependency to "strbuf" (just as an example) was added initially
-fairly early.  Soon after 27f7ed2a (reftable: add LICENSE,
-2021-10-07) added the reftable/ hierarchy, e303bf22 (reftable:
-(de)serialization for the polymorphic record type., 2021-10-07).  I
-somehow had an impression that reftable "library" started without
-any Git dependency and then use of our helper functions seemed
-through from the shim layer, but it was pretty much part of the
-library from day one, it seems.
+Is CMake the _only_ thing that is integrated into Visual Studio?
+Are there other possible candidates that could also be used to build
+for non-Windows and is usable by this project?
 
-> A couple months ago I said that I'll try to write something like shims
-> that wrap our types in reftable types such that other projects can
-> provide implementations for such shims themselves. I tried to make that
-> work, but the result was an unholy mess that really didn't make any
-> sense whatsoever. Most of the features that I need from the Git codebase
-> can be provided in a couple of lines of code (`struct strbuf` is roughly
-> 50 lines for example), plus maybe a callback function that can be
-> provided to wire things up on the user side (`register_tempfiles()` for
-> example). So once I saw that those wrappers are harder to use and result
-> in roughly the same lines of code I decided to scrap that approach and
-> instead try to convert it fully.
+
+
+> Best Wishes
 >
-> So yeah, overall we shouldn't open-code things like this. But I don't
-> really see another way to do this for the reftable library.
-
-But isn't all of the above what Libification ought to be about?  I
-was hoping that the reftable polishing would not have to be done by
-you alone, and you would recruit those who are into libification of
-other parts of Git codebase to help cleaning up these fringe (from
-the point of view of reftable) interfaces.
-
-What do the libification folks feel about this (folks involved in
-libgit-sys CC'ed; of course all others who are interested in the
-libification topic are welcome to comment)?
-
-Thanks.
+> Phillip
+>
+> [1]
+> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet/
