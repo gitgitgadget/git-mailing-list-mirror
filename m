@@ -1,82 +1,82 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DAD17C9E7
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:47:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8160217C9E7
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:47:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727351232; cv=none; b=DcK66juJXjFLE5cWxAShZaLsbEAqm9rDyV0GCYHwlqtkvRcMtRqkQyH+ZCP5zm0S2JthB7uUJlMnNiAJ7KbCEk5spDMK2ecVUWMeiWRsi+yQ3TR8TfO0s7wPsMavEWbPJOLAxd1R2wXAs6qD3NZhO/vTOBxJlAOmJjrAof2B30w=
+	t=1727351236; cv=none; b=a26tcKBKT62jbSSSEAIz8qZhqMQPbVso7cf+pbLPLyqOSAHCyvrVAjrTBMAM8aut6OisBleEw1T6paDbRN2cZLpSkYxajfl/IZphv4yKDQtt1AiEhWvspyDSYDoHysYl0w2tAOHoZ61svE2iXAHmerwVToA9RzdqBbjnNdDt8TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727351232; c=relaxed/simple;
-	bh=LfoLiZVw0Lhpzdg0odGVf4R5LPqGjjneVSxRlOEFXhs=;
+	s=arc-20240116; t=1727351236; c=relaxed/simple;
+	bh=bSULJlxtVNqnJX8mpHGotBpuObbIv6k8aPobOOTv0JA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bouxIMQ0cia2yrh2CJYKS26g4oJd8UxnIIhH9rkTidwy4rDgI2AcyHCpzwa+B6wr1PTMHqUMTB11mrIXY+H/3yX+3pC20lTQeeDVoj21ZgtMU9vOoaEOlRp7vJz26ALdz3QBoy6+CaOr/LQ9rmEVuoplj/glXcdtXk+EH2+F/DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HAykDAmz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AS0aPRtT; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=dD9aa5KaJieu5RqfccfIXpU6sQP5Qb1STppOq5gMfb55unvo374d1oOr77KQFFleEP3W6/xdyJRUAURzc2ndMEeNyaGi/GyOskKBaU8nCK58/fP1ebstv6Qm1F+ZrzZxBqu8rYyMzICsS3VygmxeMZRwlZZbnGD78AQmv2uQ4+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W3F/0Tsq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LbNoh4Ho; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HAykDAmz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AS0aPRtT"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W3F/0Tsq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LbNoh4Ho"
 Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 95E231140249;
-	Thu, 26 Sep 2024 07:47:09 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id C6F1C1380438;
+	Thu, 26 Sep 2024 07:47:13 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Thu, 26 Sep 2024 07:47:09 -0400
+  by phl-compute-10.internal (MEProxy); Thu, 26 Sep 2024 07:47:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727351229; x=1727437629; bh=0LfSDKdkrg
-	ZDMOPYEbctadthjKt6uEGXCQQ2Ua7B3Qg=; b=HAykDAmz7OdNvpMQRYmei6CPTI
-	0QfGru85VfWUyiyz7bHu2eNOr9vffiyqCFwrAmNu+LYzE12pig5fuBaDySaJyXJ1
-	Y4EBEXuSqg0J3jSyKhK9csSQLGLzlK3+MBFhJFNJ3EwDjiMWse89YaqGw3oYt1tJ
-	Y2mw3qIa56ipMgEJjaalUIkXou+bqVZNVL75XqIcu9i4jMZ+zeZN+MNaOyovsngO
-	HDKFwyvLzNqz7mQGq3j74wBDUAp9yJg7fH7KMi3fZ+y0y3kIyYOK0jmMXoHYTzPw
-	HVuz2srt927HrhTrF9SU6Ws/Kz77U/DyezcyiHb2AIpUXccHmvzTp2KP84GQ==
+	:subject:to:to; s=fm2; t=1727351233; x=1727437633; bh=GQw7GlHGqU
+	1RpVgcbMcB2CRzIDPh2g4DVK4wZI0fpFA=; b=W3F/0Tsqil/W1fVb5Z7ktZtYel
+	yu+ND+qCjN5A0L+PeNz8VkkVrFHJ40vG0OrhVDXRq9l0tC5pfekvMuC53pPf7ytj
+	Z9BUg55RQcK+isYq7NiVJDAkurFkKiLcE5eFurnQV7HAS1VZucsMS9Nmb4hAVg/u
+	EmqY78qf7ra+BAPutyXCXyGPovt8Ra8+7jWRRYJK0/366GmbM6fp4XANxR6JnI8y
+	mM39G6s/gsWvQxWCiwm1uR1B3h7d+TLq68aC/HuNfDtrBNqGzUzNigLqlWsulNxQ
+	Vxu+8lLT39V1EYNbtlQSnGPHogSXNfR4JxyTRYzM7RmNi28VBzwB8PP9BSlg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727351229; x=1727437629; bh=0LfSDKdkrgZDMOPYEbctadthjKt6
-	uEGXCQQ2Ua7B3Qg=; b=AS0aPRtTpyP2FsyxatbOmad+QAoA/v3dYpUXHLoWz0P7
-	4TaQ+675qWdN5KN1oX7P3NruQpwQt6nUIY1eHnnequWBdNml6TGDJQK+/VRIRrBl
-	jThKxwVZtXKat94axKHYgbn8v7G7ugGx9d/M65aa+Tmnes+gXSrAI0j37geJ9ZbK
-	0kpqstFJzVCFf9zh6ihrsBsQn2D0Z50er3LMa1XRhY8dL4P0IvFwiz6MuhZYKDyI
-	M6ElQNF+0uW0pWl14nEpOdRFD64o1pdc8zv7WlWelOnWz3R11Y8de1DjU8we3Tj9
-	wo+VT184gmOokh29CL2OPO7ZBmZngRA0BZwTvy55Dw==
-X-ME-Sender: <xms:vUn1ZoUhGPIxPazq3FErPx7zILryIuIr_uuFdvv9qswxkg2ViejupA>
-    <xme:vUn1Zsnf9UYA5QaAD_Jun7GvLAFTqHMzPjY-t4KH95krjzG3WafyLYelkKc0Hgypk
-    mKQvYmBnVcWcXNKfQ>
-X-ME-Received: <xmr:vUn1ZsY2a7CSatvg6qMDhJTIBBruSM-oHWW0WV3N4q1WHap-TCrCvJWuBicmYVoaWj_4rq4iq7foQTFcy1dnbPmyLe-q9DJLqRxNdpYK3SgoRA>
+	fm2; t=1727351233; x=1727437633; bh=GQw7GlHGqU1RpVgcbMcB2CRzIDPh
+	2g4DVK4wZI0fpFA=; b=LbNoh4Ho/FgqokGSAZp0IjEjfslTzVArPxax4CFsP2ae
+	2BYtqxVbaWtvPydih5xE1ulHZkdQEIxx5HjXEqvi5WBA1A/nBVsCRBZh0nx50PSu
+	kqlhVT3EtAP1An2fehIsN9OIq6bCTPGD7btlXcW9rPErAg/rK/hlX5zXNtWDn3Pm
+	4DqHG4jp10GFMc5x1MxP+IWvLWisLjzJSRhmKPCMczbKKmGXjW8j6TcpSZb3IdBF
+	O4SX9d3+tprJIimFeoLfkiYSc/TrBMhzTxW9YBTChPqYlKaqLI2vWv12lHESPIwT
+	2hqHQx/FRbvzcL4RrJd7ssHmvDYf9yhtOxnPit8kQw==
+X-ME-Sender: <xms:wUn1ZsTYQSv4YIOtWptYUlUZyDFve-ba-zDXrTpay0EyoycWjVS6kw>
+    <xme:wUn1Zpx_b6gzUGYfqWByIv0l-6Y7KvohmopvHs_b6Ck6joK8qm87S5_JdsMalbPxE
+    jK4bERgyKt4gj5e6A>
+X-ME-Received: <xmr:wUn1Zp3VT8ebRl4F5_-btfbmW1MpRSOnwqdk2gj0Cd9CGKUheq-1bKsOHfmbzdHY4psjOdzYAH6gx5UTbuTzWcOeG9l36HGQdCgsGwi2tTgQlw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthho
-    sghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:vUn1ZnWiR-ibpEOXwBqNWZo8TFCqSTiRPC9kkORVuwBk9Itjav9xwA>
-    <xmx:vUn1ZikOlbhVJ8Gg5KKApGiC8gH06mqCGSY2VIe2NaTXBXvLytzKVA>
-    <xmx:vUn1Zsd54p4vnwFcyPz5LhAX-6lAzMpBm7XZg1MeKvuJGB9SSdDIuw>
-    <xmx:vUn1ZkE16Ge5g7YdRs88LWS2ip4rZPZHGakqVy0tKVgrDhWJ0M6TQQ>
-    <xmx:vUn1ZkixPz2VdUIcfDDbkSB-B1RlwOlt-wI38A4PToyt7mY2tVrVuAw5>
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wUn1ZgBuiO5ZMtfWUncMr1fFlDTHW8rNUlVVaskZIDs13bsXozlvLQ>
+    <xmx:wUn1ZliaLsc_MsBH1NpWOlJs1WSsJwSazSq4JKsUxAzRUWRqo_jnGQ>
+    <xmx:wUn1ZspjiceByfIK0F9n5Th7ORNncjgapZ1yIdOSN5NFNawBSOl_ag>
+    <xmx:wUn1ZoiK_AEG35a8KVdXqJiaZ3yz64oLz_vSnQqfzbMYWerh1-Gm2w>
+    <xmx:wUn1Zqu4itWYZmf5XTXDuwDmaqfQip13Ha1HfLUNs4-AFUKWa1sqTbrz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Sep 2024 07:47:08 -0400 (EDT)
+ 26 Sep 2024 07:47:12 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e66ab40d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Sep 2024 11:46:30 +0000 (UTC)
-Date: Thu, 26 Sep 2024 13:47:05 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3d577f95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Sep 2024 11:46:35 +0000 (UTC)
+Date: Thu, 26 Sep 2024 13:47:08 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 22/23] revision: fix leaking parents when simplifying
- commits
-Message-ID: <8e7ea54863f9fde80bc99d654140146cbb1247f7.1727351062.git.ps@pks.im>
+Subject: [PATCH v2 23/23] diffcore-break: fix leaking filespecs when merging
+ broken pairs
+Message-ID: <8cbc41425f1100928c64c02602e62e1070998ec6.1727351062.git.ps@pks.im>
 References: <cover.1726484308.git.ps@pks.im>
  <cover.1727351062.git.ps@pks.im>
 Precedence: bulk
@@ -89,118 +89,101 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727351062.git.ps@pks.im>
 
-When simplifying commits, e.g. because they are treesame with their
-parents, we unset the commit's parent pointers but never free them. Plug
-the resulting memory leaks.
+When merging file pairs after they have been broken up we queue a new
+file pair and discard the broken-up ones. The newly-queued file pair
+reuses one filespec of the broken up pairs each, where the respective
+other filespec gets discarded. But we only end up freeing the filespec's
+data, not the filespec itself, and thus leak memory.
+
+Fix these leaks by using `free_filespec()` instead.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- revision.c                        | 5 +++++
- t/t1414-reflog-walk.sh            | 1 +
- t/t5310-pack-bitmaps.sh           | 1 +
- t/t5326-multi-pack-bitmaps.sh     | 2 ++
- t/t6004-rev-list-path-optim.sh    | 1 +
- t/t6019-rev-list-ancestry-path.sh | 1 +
- t/t6111-rev-list-treesame.sh      | 1 +
- 7 files changed, 12 insertions(+)
+ diffcore-break.c                  | 4 ++--
+ t/t4008-diff-break-rewrite.sh     | 2 ++
+ t/t4022-diff-rewrite.sh           | 1 +
+ t/t4023-diff-rename-typechange.sh | 1 +
+ t/t4031-diff-rewrite-binary.sh    | 1 +
+ t/t7524-commit-summary.sh         | 2 ++
+ 6 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index 2d7ad2bddf..e79f39e555 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1071,7 +1071,11 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- 					ts->treesame[nth_parent] = 1;
- 				continue;
- 			}
+diff --git a/diffcore-break.c b/diffcore-break.c
+index 831b66b5c3..02735f80c6 100644
+--- a/diffcore-break.c
++++ b/diffcore-break.c
+@@ -266,8 +266,8 @@ static void merge_broken(struct diff_filepair *p,
+ 	 * in the resulting tree.
+ 	 */
+ 	d->one->rename_used++;
+-	diff_free_filespec_data(d->two);
+-	diff_free_filespec_data(c->one);
++	free_filespec(d->two);
++	free_filespec(c->one);
+ 	free(d);
+ 	free(c);
+ }
+diff --git a/t/t4008-diff-break-rewrite.sh b/t/t4008-diff-break-rewrite.sh
+index 562aaf3a2a..b0ef0026e0 100755
+--- a/t/t4008-diff-break-rewrite.sh
++++ b/t/t4008-diff-break-rewrite.sh
+@@ -21,6 +21,8 @@ With -B, this should be detected as two complete rewrites.
+ 
+ Further, with -B and -M together, these should turn into two renames.
+ '
 +
-+			free_commit_list(parent->next);
- 			parent->next = NULL;
-+			while (commit->parents != parent)
-+				pop_commit(&commit->parents);
- 			commit->parents = parent;
- 
- 			/*
-@@ -1103,6 +1107,7 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- 					die("cannot simplify commit %s (invalid %s)",
- 					    oid_to_hex(&commit->object.oid),
- 					    oid_to_hex(&p->object.oid));
-+				free_commit_list(p->parents);
- 				p->parents = NULL;
- 			}
- 		/* fallthrough */
-diff --git a/t/t1414-reflog-walk.sh b/t/t1414-reflog-walk.sh
-index be6c3f472c..49d28166da 100755
---- a/t/t1414-reflog-walk.sh
-+++ b/t/t1414-reflog-walk.sh
-@@ -4,6 +4,7 @@ test_description='various tests of reflog walk (log -g) behavior'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh ;# test-lib chdir's into trash
  
- test_expect_success 'set up some reflog entries' '
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index a6de7c5764..7044c7d7c6 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
+diff --git a/t/t4022-diff-rewrite.sh b/t/t4022-diff-rewrite.sh
+index 6fed993ea0..77bc36d5d8 100755
+--- a/t/t4022-diff-rewrite.sh
++++ b/t/t4022-diff-rewrite.sh
 @@ -2,6 +2,7 @@
  
- test_description='exercise basic bitmap functionality'
+ test_description='rewrite diff'
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-bitmap.sh
+ . "$TEST_DIRECTORY"/lib-diff-data.sh
  
-diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
-index 832b92619c..6eaa692f33 100755
---- a/t/t5326-multi-pack-bitmaps.sh
-+++ b/t/t5326-multi-pack-bitmaps.sh
+diff --git a/t/t4023-diff-rename-typechange.sh b/t/t4023-diff-rename-typechange.sh
+index 787605ce3f..e6f4fe441e 100755
+--- a/t/t4023-diff-rename-typechange.sh
++++ b/t/t4023-diff-rename-typechange.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='typechange rename detection'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh
+ 
+diff --git a/t/t4031-diff-rewrite-binary.sh b/t/t4031-diff-rewrite-binary.sh
+index c4394a27b5..1b8cd3e4c9 100755
+--- a/t/t4031-diff-rewrite-binary.sh
++++ b/t/t4031-diff-rewrite-binary.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='rewrite diff on binary file'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # We must be large enough to meet the MINIMUM_BREAK_SIZE
+diff --git a/t/t7524-commit-summary.sh b/t/t7524-commit-summary.sh
+index 47b2f1dc22..a8fceb6a47 100755
+--- a/t/t7524-commit-summary.sh
++++ b/t/t7524-commit-summary.sh
 @@ -1,6 +1,8 @@
  #!/bin/sh
  
- test_description='exercise basic multi-pack bitmap functionality'
+ test_description='git commit summary'
 +
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
- . "${TEST_DIRECTORY}/lib-bitmap.sh"
  
-diff --git a/t/t6004-rev-list-path-optim.sh b/t/t6004-rev-list-path-optim.sh
-index cd4f420e2a..5416241ede 100755
---- a/t/t6004-rev-list-path-optim.sh
-+++ b/t/t6004-rev-list-path-optim.sh
-@@ -16,6 +16,7 @@ test_description='git rev-list trivial path optimization test
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t6019-rev-list-ancestry-path.sh b/t/t6019-rev-list-ancestry-path.sh
-index 738da23628..1aabab6956 100755
---- a/t/t6019-rev-list-ancestry-path.sh
-+++ b/t/t6019-rev-list-ancestry-path.sh
-@@ -29,6 +29,7 @@ test_description='--ancestry-path'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_merge () {
-diff --git a/t/t6111-rev-list-treesame.sh b/t/t6111-rev-list-treesame.sh
-index 90ff141640..f63bc8d3da 100755
---- a/t/t6111-rev-list-treesame.sh
-+++ b/t/t6111-rev-list-treesame.sh
-@@ -16,6 +16,7 @@ test_description='TREESAME and limiting'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- note () {
+ test_expect_success 'setup' '
 -- 
 2.46.2.852.g229c0bf0e5.dirty
 
