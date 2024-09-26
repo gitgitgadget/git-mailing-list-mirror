@@ -1,178 +1,111 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CECB14AD17
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 22:47:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD63157A41
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 23:19:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727390874; cv=none; b=I0nFrM5I6ViGfHEg0G+yn8aOQlHOWKK3DuK8s6R96q3rX6mGRqthhJ3nWhdkIEzdDn5/IqfAsJyQhLTQZdQaNgodhh1p4lrm8UHR94miadl5QWyZR4mlZuuaBAlae+GWfMMhKVtz+yUdUZ8Wh8AwFneFY8GBxHvlDXi3oyUTnRQ=
+	t=1727392786; cv=none; b=ozY+JH0QHGCpM3OiwtCnFGSk3G+LfA5Sr0KaVR2dAIP9DyQkLc/UWUyf+s8xoPp68qPvbjbMeBw4D4TOGNxcESNd5Ft47oAHiuYJYFnlmf8Sa/Uqa2/LDp8kCwJt+3UzZ4ktR6wncvVc0KkXFFaM5nFvdY5l4o7wgou/xInyhIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727390874; c=relaxed/simple;
-	bh=QjvOVzPiRIFddk+Ua90o+TyHjVfbqViKX9gJ3g7GVio=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dCtd9jsVnXIXI1cBt4tbhIxcBMiqhf8KaSIGthCitr+Yah62G0ibobUUjTx0+qR3iz5AbnfiXEMuc0xDoSMdeXNibmKyKNnc7NpSLpmfP6/DTy3d5x5/OraYs0jRPDPczTpJRjhSasNg30kzTgvbArzrDCwWJF0W9SxBSaxhBRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g8lMyhh+; arc=none smtp.client-ip=209.85.166.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727392786; c=relaxed/simple;
+	bh=hT+E8MiAlJsvQCLMtRdl17Pkk+EidervMFpY4nvZ9ig=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=EEyz3dncQIc8B/uSH6wxCS5yw8py9Cdcd1IVnilqfHpQTP1Eyc2kQO0Ta1JKYKCCwy81RuWobm4e7mXVKjcBEobXEAs+RNLI9CejQi4y3YBEO96lp8CDOcbHUH7suBYlZ8Q6iTNvj8YtirE0ixFGgN8RrGY3lqQGE94R+ugs4IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=GRyLZwZf; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g8lMyhh+"
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-8349389f9b8so14254539f.0
-        for <git@vger.kernel.org>; Thu, 26 Sep 2024 15:47:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727390872; x=1727995672; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GuvQVa+5Ab10A8NtCxHEy7L/579qLZAT/ea5KUgv9Xs=;
-        b=g8lMyhh+2BBhW9P7UQWmhZz5DiMb2tems+w8HJpYoME0ZqUXY9pXfQKacXU5gSSADo
-         XcxXKFQFK9EUYOFec+++SlWvqobFVO3DbkIuHWvggqiFb1iJTL6iOuPA8AMycT4w7XMm
-         JEvqY1TazWYdD3waNCmogIjp75wuSE5ngsT0nf0ggu0eHUAqlrslPIoDq0WNWQyOSH/n
-         kRnJySnFEnAHakb/ZwvKXbLQVlQIzjtGoIydaoqkR4WdVsmkZ9QQi9d3T5wJBLbcrubd
-         xGwqrzcXIJuUxw9AAABrQQHfXPgXEYaGZJTdeQF7UDR6QxZRr7ozDetJUXwgY9rV7TnC
-         TCKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727390872; x=1727995672;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GuvQVa+5Ab10A8NtCxHEy7L/579qLZAT/ea5KUgv9Xs=;
-        b=A/ZrtwXpz7c18XnG8f2a8bz62DkksD+KOeSm3GU6mYtJ1QL5PLGticArpb83vp52EH
-         s+NZXx7PlnoSgHKu7V1bwzpSsvQSXF6+hHfTO+gdKsjnIkU/blthtqxPDyfLQlGPohjv
-         hI5dkVWyEw6fJxlMWSyDCH8pqCFFk60FMRigB2MULEX0yfMYl5DXJpM8h1u/wTclkhKT
-         m9FUrOtfKpZw/hYYqvCLTdVpVymq+hBKhedb4in8WJQtKt8kRtrQYi+1/csLEtnwGq5+
-         n2XV396vAemvQia9ci+3JH0OM1yPJjSCM2KRFu2aeCQQOEmsO7MxXkSREBq/uzwz6uIL
-         71EQ==
-X-Gm-Message-State: AOJu0YyWjNCEmoBsCqk56gzNI3MomIYMtnS4xhMotfrnCx5HghEyNC/w
-	0zMjOU8cG2dAdQ0vCEgiXBd4Dwi1MbacedTzqbyLtjik3FQmmkTUp7ai1bXCdSvhvdcRFWUjQGD
-	y4a/7MyGqJUO7rHCnWj8iNvj9dEI=
-X-Google-Smtp-Source: AGHT+IH4ZVepR29q+BVNtD9rLVuDHRUbpJ6DD9xzXH6EloFjUT2INYZXoIq52GI91AXaaeFvNIlCDW3r8YV14+xE7PI=
-X-Received: by 2002:a05:6602:15c5:b0:82d:38d:1362 with SMTP id
- ca18e2360f4ac-834930db098mr145018839f.0.1727390871937; Thu, 26 Sep 2024
- 15:47:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="GRyLZwZf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1727392780; x=1727997580;
+	i=johannes.schindelin@gmx.de;
+	bh=5JuUfsoO97ZoVj5VsATNQB8UsNgws0gXhmzwhyoiYOE=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
+	 Content-Type:MIME-Version:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=GRyLZwZfYXeawjs8zMyctVf1h7PM+PBkq4fbJamiRIsmifblt+fQoK4t0T0v/g5u
+	 g9a+fdoxLxCkoBPrXD8T2DhwbU9Z9LcxXUclgu2Qyk2UtQ1x7CHe/sUuV6kvVTPqm
+	 hbeGVmg5aJZdaW+0+gXnFbSMeQB3XcndLW5P6Epvxv30F7W5Dt/4G2r43j+VvL6Y4
+	 wgxbMTap01sBqRaXngxk1EsC1KYOTpShDc2SPLYJYkt9NEI7qieFD83mAJ1Y77znX
+	 oUw2bLhHh8LKCneNCvoUQS24F8EJgsBU1cL3DUynQr2PknmmqAcUU7fADFLrh/VsT
+	 IR2WAzr2yICEfsrBLQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from
+ fv-az1118-824.jboa14ee0bjuvjv5ua334yvpdd.cx.internal.cloudapp.net
+ ([40.67.133.159]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MMGRK-1sbkAE1eRa-00MHHB; Fri, 27 Sep 2024 01:19:40 +0200
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git-for-windows@googlegroups.com,
+	git@vger.kernel.org,
+	git-packagers@googlegroups.com
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.47.0-rc0
+Date: Thu, 26 Sep 2024 23:19:38 +0000
+Message-ID: <20240926231938.3362-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.46.2
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1725206584.git.me@ttaylorr.com> <cover.1727364141.git.me@ttaylorr.com>
-In-Reply-To: <cover.1727364141.git.me@ttaylorr.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 26 Sep 2024 15:47:40 -0700
-Message-ID: <CABPp-BH3y96DjapzLPJ+vCoChQiD_wR9uLc3QPsXqzSUr4AFvQ@mail.gmail.com>
-Subject: Re: [PATCH v5 0/8] hash.h: support choosing a separate SHA-1 for
- non-cryptographic uses
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, Patrick Steinhardt <ps@pks.im>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Fcc: Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:jnBgP1HW0SYcWxc+aAXAN2DGXyujVRMDQGGzgb2P7JKu4iIautA
+ gBkn5X31wtIFIzBACyBVDEV6nN4reDSD5bW3PY83AtZiW4G/l3Hw0vqbI1go73g/JAFXmaO
+ 0IiBuAe1fINKF04FNTUyd7m9Cwv1yOh0tUrvPZ5uvMYjMxo+0LqQ1YrWCoFf3aFvHnbR0M/
+ wbLPrDaTdeDicEjid3+Vg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:kFBEl034pKc=;0mvFMGlJwW27GoNCS/srvSxmJSZ
+ U2uoYrZGFy3bRGt4mZZzKAPYQOFYE4GM6q5cHUZ/mcOtu0Ad5hUhJGF4so8xyDZ58tXECjbUg
+ VovUdFUfU96oMktYqG36BP99esVgcscqAkYaw/ihP9WO38W+ngn9XvPNzSS8F2hNh5Hi741eG
+ +544vY8ESNwxU2vyRKwPt520uyrAKIYYKEfr878vAEBMYiXU073hn9oV01UDNOBF8DiKsRV3L
+ M15YrsBLaBoUOiwayaaCJpMIoDkIr//6hUget335CsGIAcVAZuH/CRA0ptv6rjhP1Y8cLAbzE
+ XchpVywVMo+1vqoORriN+SR3z9uL+7PFBiYSRlloiL9imUnWmj6+U6qcKrssqICdyGkPCG+eo
+ ArPJDAZU3ZlAtpROZl9iCcvRWblBLstZh1Y2dZZpBAYCR7ZWpJ5HChcqYqbl+72ldgX8aH9Yn
+ jyWnno3h2clJRxTeTy8JNDCF6QKoealIKwu0HKrJ0NzigElPwAs/+jBXdbo4yJX0sXJZOGb/w
+ flznCZi/oh011bfD6nrUtp3HKZWghhptnRutSHRxsTe8xMZC5ZUuLcEJ97xTEJMkZxWCdddD6
+ PirFaB6GpUAP28uAys/cTHB+tCegpreAdGCNGJGVDybIHEWI5hy4PeaXkqf42MOgJqBzOd45+
+ SvPfRq/ayMi1QiMPFl18UZy7LxrIJF+jCNSKGTZNXnFqKuMtZ8UwzxqnfucqAPOgZIpa6r56S
+ 7XG5Njy6sQZa6Rxv79La6q8fZwUviZNy4O8n4NxkJE8m1equ63432xBqfPYDSQHNnn60Yse+8
+ wd4XZpNQBSjuOy73qOrZmPag==
 
-Hi...
+Dear Git users,
 
-On Thu, Sep 26, 2024 at 8:22=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote=
-:
-...
-> I think most of the review dust has settled up to this point, so I'm
-> imagining that this is the final version of this series for now, or at
-> least very close to it. But if something new comes up, please let me
-> know!
->
-...
-> Range-diff against v4:
-> -:  ---------- > 1:  6f1ee91fff finalize_object_file(): check for name co=
-llision before renaming
-> -:  ---------- > 2:  133047ca8c finalize_object_file(): refactor unlink_o=
-r_warn() placement
-> 1:  ed9eeef851 ! 3:  41d38352a4 finalize_object_file(): implement collisi=
-on check
->     @@ Commit message
->              object name, so checking for collisions at the content level=
- doesn't
->              add anything.
->
->     -        This is why we do not bother to check the inflated object co=
-ntents
->     -        for collisions either, since either (a) the object contents =
-have the
->     -        fingerprint of a SHA-1 collision, in which case the collisio=
-n
->     -        detecting SHA-1 implementation used to hash the contents to =
-give us
->     -        a path would have already rejected it, or (b) the contents a=
-re part
->     -        of a colliding pair which does not bear the same fingerprint=
-s of
->     -        known collision attacks, in which case we would not have cau=
-ght it
->     -        anyway.
->     +        Adding a content-level collision check would have to happen =
-at a
->     +        higher level than in finalize_object_file(), since (avoiding=
- race
->     +        conditions) writing an object loose which already exists in =
-the
->     +        repository will prevent us from even reaching finalize_objec=
-t_file()
->     +        via the object freshening code.
->     +
->     +        There is a collision check in index-pack via its `check_coll=
-ision()`
->     +        function, but there isn't an analogous function in unpack-ob=
-jects,
->     +        which just feeds the result to write_object_file().
->
->              So skipping the collision check here does not change for bet=
-ter or
->              worse the hardness of loose object writes.
->     @@ Commit message
->
->          Co-authored-by: Jeff King <peff@peff.net>
->          Signed-off-by: Jeff King <peff@peff.net>
->     +    Helped-by: Elijah Newren <newren@gmail.com>
->          Signed-off-by: Taylor Blau <me@ttaylorr.com>
->
->       ## object-file.c ##
-> 2:  3cc7f7b1f6 =3D 4:  611475d83e pack-objects: use finalize_object_file(=
-) to rename pack/idx/etc
-> 3:  8f8ac0f5b0 =3D 5:  9913a5d971 sha1: do not redefine `platform_SHA_CTX=
-` and friends
-> 4:  d300e9c688 =3D 6:  65de6d724d hash.h: scaffolding for _unsafe hashing=
- variants
-> 5:  af8fd9aa4e =3D 7:  3884cd0e3a Makefile: allow specifying a SHA-1 for =
-non-cryptographic uses
-> 6:  4b83dd05e9 ! 8:  62abddf73d csum-file.c: use unsafe SHA-1 implementat=
-ion when available
->     @@ Commit message
->
->          These callers only use the_hash_algo to produce a checksum, whic=
-h we
->          depend on for data integrity, but not for cryptographic purposes=
-, so
->     -    these callers are safe to use the unsafe (and potentially non-co=
-llision
->     -    detecting) SHA-1 implementation.
->     +    these callers are safe to use the unsafe (non-collision detectin=
-g) SHA-1
->     +    implementation.
->
->          To time this, I took a freshly packed copy of linux.git, and ran=
- the
->          following with and without the OPENSSL_SHA1_UNSAFE=3D1 build-kno=
-b. Both
->     @@ Commit message
->              $ callgrind_annotate --inclusive=3Dyes | grep hashwrite | he=
-ad -n1
->               59,164,001,176 (58.79%)  /home/ttaylorr/src/git/csum-file.c=
-:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
->
->     -    , and generate the resulting "clone" much unsafeer, in only 11.5=
-97 seconds
->     +    , and generate the resulting "clone" much faster, in only 11.597=
- seconds
->          of wall time, 11.37 seconds of user time, and 0.23 seconds of sy=
-stem
->          time, for a ~40% speed-up.
+I hereby announce that Git for Windows 2.47.0-rc0 is available from:
 
-This round looks good to me.
+    https://github.com/git-for-windows/git/releases/tag/v2.47.0-rc0.windows.1
+
+Changes since Git for Windows v2.46.2 (September 24th 2024)
+
+Git for Windows for Windows v2.47 drops support for Windows 7 and for
+Windows 8, as announced previously.
+
+Please also note that the 32-bit variant of Git for Windows is
+deprecated; Its last official release is planned for 2025.
+
+New Features
+
+  * Comes with Git v2.47.0-rc0.
+  * Comes with the MSYS2 runtime (Git for Windows flavor) based on
+    Cygwin v3.5.4, which drops Windows 7 and Windows 8 support.
+  * The new, experimental git backfill command was added: It helps
+    fetching relevant Git objects smartly in a partial, sparse clone.
+  * The new, experimental git survey command was added. This command is
+    designed to help identify less-than-ideal data shape in monorepos,
+    and it will likely see highly active development. Stay tuned!
+
+Git-2.47.0-rc0-64-bit.exe | dc04b25551e16450b69510609e13cb547a8034044de3946b1b8af20989d61160
+Git-2.47.0-rc0-32-bit.exe | 0812c66262aa06e89989c4470ead52e1bc3e2dd7bd0f56bf0aff280a508831cb
+PortableGit-2.47.0-rc0-64-bit.7z.exe | 4d3f7132f527ce771915c3ad5013cc44b6579d0044a7e1163135f99c101e7b4a
+PortableGit-2.47.0-rc0-32-bit.7z.exe | 24f4ae7f1ba5c290427036bce10dc252f256f7feb18246cd87d0472db78298c5
+MinGit-2.47.0-rc0-64-bit.zip | 5575923763af15840d36f954c25cfb898529393ccb8cf887df5ddbd74b49784d
+MinGit-2.47.0-rc0-32-bit.zip | c49519473d62d89f0e5f5aeff380ee229ea34de961d1ce7de67c2d2ce325f4b4
+MinGit-2.47.0-rc0-busybox-64-bit.zip | 5615718f83e1e2934d580a9b077512a59fe2c8d67a4e89b35fcfed627145a7c2
+MinGit-2.47.0-rc0-busybox-32-bit.zip | e5f0ebf186eeb88fc8993076f05ad611e8b5af6ad39bcaf21611535439b0b4e2
+Git-2.47.0-rc0-64-bit.tar.bz2 | 1fb8a8d375fc4908f60542854196fe0fd9fa2451d4be0a49ba005290fb7e7e2b
+Git-2.47.0-rc0-32-bit.tar.bz2 | bce4b324df0ba20a15a14540dea84a50ba5d81f82dff21745b958c1d12f90e2c
+
+Ciao,
+Johannes
