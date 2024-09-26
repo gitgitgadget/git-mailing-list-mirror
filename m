@@ -1,129 +1,125 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF92374EA
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 14:16:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D3113C836
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 14:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727360174; cv=none; b=JBk+AV4emKYS7s+cgIMYsXoxC5AqmACIVMBuufSVnNwU14Ps1kmtD1oRKI1SVRbgjwDp61Z4m6R99RuZivfXMdaCWvgE5KdQNSEPlz+FfnPbFjck1HmajjQGIKqgro2YBk6+M2KmW/WmJAHAryM8lTXW1tTVsDIdWd+5APcD93A=
+	t=1727360366; cv=none; b=ez3L0PxuAMr9zhS203qdt17dFWNw9Iypp3pglpIGmngOXQp61ufA+Cr17kdXEXVxKi3bQWiNGpFWkYT71eNx+FE1k7ISWdmvD00o4JCLJv/XxRNGaNCk6M3wycxCeG9f/ZI4rNBOR2gOEzakaePZ2S73agZhavtBhDjwZFKezbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727360174; c=relaxed/simple;
-	bh=zQ3UEGXZXo84iklqzti33txJITaTaOmB0JD39h+QXCg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CMLyeENBFFIs5rzCwiA8yBRfy02ZVSk0wnvq4HUfgCjhajjPpnpC6dTUxrY8B+Otr5KwBtE85XMOoh+5yY4Okou7XWXaqlCiKwUj5wY3jcUdftjdH9dTnl4a+uwWFKG7Co92eFE7MDIovmaPqDn0hkr6lXV6wymtBGouVDHOJJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jkH18WHb; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727360366; c=relaxed/simple;
+	bh=X6TTsN0EPeKUayN7dTospwAKFZiwoOigmJqEHHUL2MM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YiP5U5+OeXWkEYyYuSi9jcdLrixbZuunJnMtrjAAVhdj1z7uvnEjkX38bKv5aRyAAopf0PJuaeOFIqcYj+yy1ff5oSOHMwEBW/9RTLgmtDpH1G8IXtlCho9e17Gb/fsAV97z/hrBTIPkVv16+GKwxz8ITde33toSjAklUS85IHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iRsPmILM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bInqs3p4; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jkH18WHb"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-53654e2ed93so1379384e87.0
-        for <git@vger.kernel.org>; Thu, 26 Sep 2024 07:16:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727360171; x=1727964971; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=aDqrT6h//DbpztpMJcVD4amnMfbje0NlEpU9Yzw6Lj8=;
-        b=jkH18WHbfOgX62DgWsx7xiBptW3W8d9yVVMiudT/kMnNE1iCxDtiVPpilsYkYeEiLe
-         Vhp1nzLuV8u3phZJsafs1HKAeJ3DT4erI88eSElF36xNuMveubQnR+oAwo18rbF2F/7M
-         DzNHFCkrUxp0/61LyfHlofr3mGUEwe3d9LGEIwCJjahbq2aRaLY6LHE/XUztgOd+TYza
-         FkrnGDwwjLRIOQL4BcQ0EQzNGZYYKkH7xyl4zXO3qfOTylwDVozOXzpmOd8FqfkOXKdT
-         ORplc6GVwcnK+q8HYvPzVY9mkIp+810XVkBj7NaysrEb8M7obaNwOHisNLNcGSK62/qR
-         dL+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727360171; x=1727964971;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aDqrT6h//DbpztpMJcVD4amnMfbje0NlEpU9Yzw6Lj8=;
-        b=WDKS601hdd961sFwizcKna4i0joKQeHGYHkX0aA2hl67hef+rrZs2EBgUukl8q1kXE
-         0eOuO9XWlj1QexWVnMPI6hPfFKj4I0yWlCKt9ZeuN1JB32y9if8tdEsYstMHj/G28MXw
-         oP8wQgAZvQevDeqw6lChnlNdxiAyUxtaG0tNqYJ5b2RHNwPKHdU7+QHVodxYFUCHfKrm
-         4i7/biBKcQ+Qb5qvlkw2c68/5lokIgL6PGsRDcq7PhoK+xt7sC+fogGH0etW9Sv0CTr/
-         OuhIbyV6Wq8OfI8FG8JaT/76Fes8iGqG4k9yMV1o68SRG5r2ciqJOPEbzktgKiV0JsYJ
-         M/Yg==
-X-Gm-Message-State: AOJu0YzF542MYI8dYeLYRnQgMRP82syySBgl9otM/dVFyuHbiEjj6zTK
-	/JNX1R+hF4xDyUtM0+xqk4vBoQyDrqWfqD4JaLPun0ZCZc0Rp0rBl1MtnQ==
-X-Google-Smtp-Source: AGHT+IHw/v2+0lp4IvMDYZVrJR7wCrqJIPIKEYFJCjM+5vrer2Wq2lULXSc+B++7z/ZT0U2GKh3TOw==
-X-Received: by 2002:a05:6512:3e1b:b0:536:52c4:d7d3 with SMTP id 2adb3069b0e04-5387048abcemr3509743e87.9.1727360171066;
-        Thu, 26 Sep 2024 07:16:11 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c2997d41sm1902166b.194.2024.09.26.07.16.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Sep 2024 07:16:10 -0700 (PDT)
-Message-ID: <02d7b805-f006-43ca-906e-fe9398b8ec35@gmail.com>
-Date: Thu, 26 Sep 2024 15:16:09 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iRsPmILM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bInqs3p4"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7E34A138043D;
+	Thu, 26 Sep 2024 10:19:24 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 26 Sep 2024 10:19:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1727360364; x=1727446764; bh=Tukne/X0CP
+	exv1W4XPqi9LoKv86gBp/BoxkH7xEjG3U=; b=iRsPmILM93Yo3mGfrUUjFjAgbh
+	DOGUxOqmXNwCXXAysVFDxLzNybksZPabKs34+ccX14rw15E0/VfetOTTQROfVkSE
+	H7NSFQhb94XEW0L5inAI/qlg5XVrKU2tRE4Yb+hu29j30GBC4vQEglIYLby+Rc2O
+	PXsbQ2ifo2E/bP7mCMeaOMEvbo8oBILRmJWVbeAeL2phqNVzaNI5wlASiGTeX9uL
+	XRNjPWjM7Kyc7Za3ovUAMHCdiHZbRKm+2NLmeaRGpPQR+tVRDLhi2Y5J3VKJeaDl
+	hmSWSzX6loyDAX1Q0CcIx62+ddvoif5xdgcuni2DwmdV+Gm6k+Q+W0Xqr91A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727360364; x=1727446764; bh=Tukne/X0CPexv1W4XPqi9LoKv86g
+	Bp/BoxkH7xEjG3U=; b=bInqs3p4QKZEztPpgq0FjVGPxpDGTIfA+ZyRN9Q/dRTx
+	HgqBC7aV7zNKfkK82LaHop/2GM7OZEAmOStx27dlop5N88E88ZCQtjEogoxZ9HWf
+	Jx+2DLXlVyFecxKw6JQjxwg3gYjui3Iuk+HsEj6oJYYvfYpdr53+AyfP/vrRgR0T
+	dRsLq7/OkseKZnmFBsQ+tBAeuTc6S/PI/TrwjsXdn4+S3MpPEDbp8SqJTcyXOlt7
+	qAZDEO/S7Gm+HHICsow4CKjUzzid61lfTbrXSe9u+xbwF4K9qPZXIGL5ebS8gUez
+	bz7AL+G/CCC95tM2XO8ej2DTW50akaI/NcR9pxJQnQ==
+X-ME-Sender: <xms:bG31ZkjC92HL0SkTqkKZNIwTgIsYy5yEV0RvmhaY2MEyTW8pKAbURg>
+    <xme:bG31ZtCEYCFqGPZhO22wPKdBGgFLWJ2zHEqJHrPkKA9a3yDX888RGjQxq7mUpfmuE
+    FeIQlew58qqj4xOEw>
+X-ME-Received: <xmr:bG31ZsHEi7QQJss6SXDYKRd87YLU3ohCj5Nc_CylGCDoIUoX4CjL_PafiBeF8jy43VsgBBPT_usDSG17ouitlTLqbi2nrj-IeUIUuTjN5ALI3g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedgjeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeejtddtgeffke
+    dujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
+    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:bG31ZlSYF3e-i0aCTa4jUrp2B7Q2LkWToDchDQIoCpfib64OZDq5fw>
+    <xmx:bG31ZhwYm2m4_ZxnM7aD2Y9XCAnkN9Z06d5GBIKluomRQTslcSDOXA>
+    <xmx:bG31Zj4IaVGiJgz_TJsTel1pGeNN5awkOPTHQ-ZICWv19XAC9FidZw>
+    <xmx:bG31ZuzH5daGFiiiviPTLx0jXS0pAFdLz_gKgxHSvzm54R0CWZYu-A>
+    <xmx:bG31Zs-Mzo06Tys5ibfS5GUBYkYW2cQN3t7GeNub4I-0HD2AylBiSybB>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Sep 2024 10:19:23 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6429f5cb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Sep 2024 14:18:43 +0000 (UTC)
+Date: Thu, 26 Sep 2024 16:19:16 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/3] test-lib: stop showing old leak logs
+Message-ID: <ZvVtZDrUwkdeRbje@pks.im>
+References: <20240924213404.GA1142219@coredump.intra.peff.net>
+ <20240924213540.GA1142403@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] BreakingChanges: early adopter option
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
- Jonathan Nieder <jrnieder@gmail.com>, Emily Shaffer <nasamuffin@google.com>
-References: <xmqq7cb77810.fsf@gitster.g> <xmqqploydn7j.fsf@gitster.g>
- <xmqqtte77f0n.fsf@gitster.g> <ZvVMNMiyjd4xfHzY@pks.im>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <ZvVMNMiyjd4xfHzY@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240924213540.GA1142403@coredump.intra.peff.net>
 
-On 26/09/2024 12:57, Patrick Steinhardt wrote:
-> On Sun, Sep 22, 2024 at 10:51:52AM -0700, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>> Junio C Hamano <gitster@pobox.com> writes:
->> How much more costly to do at runtime is still subject to further
->> analysis, I think.  I know that it means we need to build and
->> install the docs twice to support "git -c feature.git3=on help", for
->> example, but I am not sure what the best way to use CI would be
->> (write tests that check features with different behaviour by
->> explicitly running them with "git -c feature.git3=on"?  Run the same
->> set of tests in a separate job that has "[feature] git3" in its
->> $HOME/.gitconfig?).
+On Tue, Sep 24, 2024 at 05:35:40PM -0400, Jeff King wrote:
+> We ask LSan to record the logs of all leaks in test-results/, which is
+> useful for finding leaks that didn't trigger a test failure.
 > 
-> One problem with runtime toggles are commands that go away entirely. We
-> can of course hide them away in various different places and make it
-> impossible to call them. But one of the downsides is that it is not
-> "true" to the actual removal, as for example the dashed builtins may
-> still exist.
+> We don't clean out the leak/ directory for each test before running it,
+> though. Instead, we count the number of files it has, and complain only
+> if we ended up with more when the script finishes. So we shouldn't
+> trigger any output if you've made a script leak free. But if you simply
+> _reduced_ the number of leaks, then there is an annoying outcome: we do
+> not record which logs were from this run and which were from previous
+> ones. So when we dump them to stdout, you get a mess of
+> possibly-outdated leaks. This is very confusing when you are in an
+> edit-compile-test cycle trying to fix leaks.
+> 
+> The instructions do note that you should "rm -rf test-results/" if you
+> want to avoid this. But I'm having trouble seeing how this cumulative
+> count could ever be useful. It is not even counting the number of leaks,
+> but rather the number of processes with at least one leak!
+> 
+> So let's just blow away the per-test leak/ directory before running. We
+> already overwrite the ".out" file in test-results/ in the same way, so
+> this is following that pattern.
+> 
+> Running "make test" isn't affected by this, since it blows away all of
+> test-results/ already. This only comes up when you are iterating on a
+> single script that you're running manually.
 
-We should be able to make sure those dashed builtins fail though, while 
-that isn't exactly the same as the command not existing it would signal 
-that the command does not work in git3.
+I'm very much in favor of this change. I frequently re-ran tests with
+leak checking enabled only to realize that, oops, I forgot to "rm -rf"
+the leak directory first. So eventually I ended up with the following
+command:
 
-> That makes me personally lean into the direction fo making this a build
-> time knob.
+    $ rm -rf /tmp/git-tests/ && make -C .. -j20 SANITIZE=leak && ./t5310-pack-bitmaps.sh -ix
 
-That's certainly easier to implement.
+Every time I didn't use it I soon came to regret it.
 
-> The big downside of course is that we'll have less exposure
-> as almost nobody ever would build their Git in such a way.
-
-Yes, it's hard to see many people doing that, though if we're lucky some 
-companies that build their own git will test the git3 build. It's also 
-hard to judge how many people would turn on the config option - if we go 
-with that route we could be doing (a lot?) of extra work for not much 
-benefit.
-
-I remember the 1.0 to 2.0 transition as a user. I recall seeing advice 
-massages describing the upcoming changes to "git add -u" and 
-push.default before the 2.0 release. We should check if any of the 
-proposed changes for 3.0 would benefit from something similar.
-
-> But the big
-> upside is that we end up executing the code exactly as it would look
-> like if it were removed, so the coverage we get e.g. both from Git devs
-> and from our CI would be much more telling.
-
-Indeed
-
-Best Wishes
-
-Phillip
-
+Patrick
