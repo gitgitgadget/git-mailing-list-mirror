@@ -1,108 +1,142 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D2E522A
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 19:17:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE32E522A
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 19:44:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.35
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727378261; cv=none; b=jJQ1uVJCsEAC8jFr1YTT/PvNLrGtVKOLb8iwTtUiExzlQqx/SKIQ8hiyiOu5/gAwyzhmSv3sJKNHr01KvxCSltuvSyx1A4UEtRKWTAX7JgJuf4885h14+EKowoBuJQow61aYR4yOXwPdPecx8pvv2l4tj1N8cwtbIU77Nd/4+40=
+	t=1727379846; cv=none; b=ZuaWgNil4mRKmhkrqyRAO9iZiywqqMJdjsI2v5ZIdBlk8ehrxbOUx8riJVu3TP2VjQ3tg39OUpE37W5HDqtCI/ufrKqNhkzouOqLXdYQnCoy2VEtIhvVbJSTNrxQDxzG0xjJz0hBsn/IJTaSbBpnk9cXit5eF2UygbuDNuZxa9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727378261; c=relaxed/simple;
-	bh=5qGyAeniwGyA7Ed/vTotkh2TsUl/fgdpAXVeZtRDTt4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RMZtdNzOhkrz81dAeGYF/RjZIFxo6IxvWgc8XauVofme3RRInX/mkytpdfgix2hkEdyEVl45PqKBFLthVKfUw5INaLWpYF163ulwaTr5RgIAlmps5JVxw06caye2acMQAa0CJk0yHcxbsCmTMEH72CNwqYUv93Sf17+FmtxgIyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KxIeywBe; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727379846; c=relaxed/simple;
+	bh=HLONUmF58GyLN9BI1bnViDll7IxeiCde24pWewWct60=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=KXPgF7FsXQWrjJqQr9Y3scUdxzpzLJBrjIZxHEuFo7O9OVg5Qf0I7IBeYpK86J3zy3mZN8SrK6DdIRbBKk6MN2ugx1y4NhAUn95mfz1b7FJm6zH85S3QdtyLrpc7iwGl3w4sogZEP0nDZprMdooGwzJCJqUdaAbtvs3IFtBvrP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mad-scientist.net; spf=pass smtp.mailfrom=mad-scientist.net; dkim=policy (768-bit key) header.d=mad-scientist.us header.i=@mad-scientist.us header.b=VArtwLR1 reason="signing key too small"; arc=none smtp.client-ip=44.202.169.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mad-scientist.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mad-scientist.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KxIeywBe"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-20b0b2528d8so14528375ad.2
-        for <git@vger.kernel.org>; Thu, 26 Sep 2024 12:17:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727378259; x=1727983059; darn=vger.kernel.org;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=omK9diXKIL1kfXWwaan5R1SNnPvAkoF6mezRoulLzbw=;
-        b=KxIeywBe89ihgr3oFZN7zvDciYj2YkHSssiL6k2niIir59BU8TraIYiBsDRDpcKT6f
-         eRHgC50I3dis9ZA+aWjM3vUIYhbO5+vhUlcT3r9Fd1j/GP4GK3AZOsqSchG+AnSvfVfd
-         NfwSjr1obZT++B+p4BQCW0r5iAZM7ocPoxCtReiN5GtKiOMjuLlr6pSU35Tz8WIaoPXL
-         PmtODJyP/TxoYvpzPdEUsgAcbyKemACT1KBDCebp7jILKKdHNTvt2gbovwoJGjKNLtUX
-         zvWUkJ+US2puPpzBkjS0sd1eFpTd2COO1TZyx1pzrAasWtHjCW9S5FbvC3Iqk0elAuPR
-         /i1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727378259; x=1727983059;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=omK9diXKIL1kfXWwaan5R1SNnPvAkoF6mezRoulLzbw=;
-        b=QpwKfifoJbHCQSG6BTTh+QkSmbJB4uevuPbuN4OgNS2zD90LWJwPrM2g9Vb7CC2/yq
-         /sCikJTp/obKbV84h9fLJP0Zx83pDdyVXTvKQey3cpYULATAbDb0PPv8Mw/VfuunHEwx
-         FZMqUl5DLAsJNwG75pFJJrqrSuiSjBUo5X6TwArczPz2A0PNrDk+H4N/BJ1sIf1VFKZx
-         A5H0z/bRve6aV4dwjAVQhJ6jFYbYu0OnebPDseZLTWWcKhnpSxjxyiysgvfABixCXwz2
-         PIsEZWWHpITs+FiBaOcU+m8Tok2qOolC5YuT1rh+cu2mgisUWWzJi8ikQF375TmJNcGb
-         VOdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUOcOc+YdLGCN2+8imkD6BnJOINKp+Tb6/tQ5f7HLgZhp4Ozf9VVLjKcICjQJD9nmOu/Jg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3VFrVuQpA5n5+LzTispD+PBbjCRHB9IZQ5y5udK38LRUNH9FU
-	dSDSqtYQrXZP3uYJyf0H+kY+9KBv0xIIg0WCCTcjltIT+yWQO/eb
-X-Google-Smtp-Source: AGHT+IGs8kJmpLY1uXIedJ4BO7j5QSZMvs3VwqYqfUkhmjkvssfEGUxhNgCoNYAYm4p+pGygYPI2eg==
-X-Received: by 2002:a17:903:41ca:b0:206:9ab3:2ebc with SMTP id d9443c01a7336-20b37b7c063mr8809675ad.47.1727378258890;
-        Thu, 26 Sep 2024 12:17:38 -0700 (PDT)
-Received: from localhost (217.108.125.34.bc.googleusercontent.com. [34.125.108.217])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37d61da3sm1884925ad.61.2024.09.26.12.17.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 12:17:38 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: John Cai <johncai86@gmail.com>
-Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 3/4] apply: remove the_repository global variable
-In-Reply-To: <CAOCgCU+hv07+FCupr2Ok9LJm6HYT6n6t+ZpifAhwrRnMzOnnWA@mail.gmail.com>
-	(John Cai's message of "Thu, 26 Sep 2024 14:59:50 -0400")
-References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
-	<4ce463defa807fb99eef6ce7abcd758fc2065c13.1727185364.git.gitgitgadget@gmail.com>
-	<xmqq7cb0ucm0.fsf@gitster.g>
-	<CAOCgCU+hv07+FCupr2Ok9LJm6HYT6n6t+ZpifAhwrRnMzOnnWA@mail.gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Thu, 26 Sep 2024 12:17:37 -0700
-Message-ID: <xmqqa5fui5ri.fsf@gitster.g>
+	dkim=policy reason="signing key too small" (768-bit key) header.d=mad-scientist.us header.i=@mad-scientist.us header.b="VArtwLR1"
+Received: from eig-obgw-6004a.ext.cloudfilter.net ([10.0.30.197])
+	by cmsmtp with ESMTPS
+	id tgyLstHB4iA19tuNesEY0E; Thu, 26 Sep 2024 19:42:26 +0000
+Received: from box5922.bluehost.com ([162.241.30.80])
+	by cmsmtp with ESMTPS
+	id tuNdstgzZWdNZtuNdskphz; Thu, 26 Sep 2024 19:42:25 +0000
+X-Authority-Analysis: v=2.4 cv=FtTO/Hrq c=1 sm=1 tr=0 ts=66f5b921
+ a=u+82WREdhvUKZ7QTvcqjvQ==:117 a=u+82WREdhvUKZ7QTvcqjvQ==:17
+ a=IkcTkHD0fZMA:10 a=EaEq8P2WXUwA:10 a=e_eVUG9BRDgA:10
+ a=IyqtRJjmI1ZsupcrM6sA:9 a=QEXdDO2ut3YA:10 a=9XL2PSxQjqKr3s6xf5LH:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=mad-scientist.us; s=default; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
+	Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=aiIWqm9tHavgLGkJ2+J+QNyO03yeBHA4WRSQb+Y0mzY=; b=VArtwLR1MXBYnj2QZOyqQWGI34
+	1oOWXeldAj/IU+V+JC8eRHVrSU0X4WBBy3AhzRheibO18swDsRVoMDE6dV9216AoqVCoixbunbZ4u
+	k81jjkFA7WhKATQ2CV09noIc2;
+Received: from [160.231.220.149] (port=46811 helo=llin-psh13-dsa.dsone.3ds.com)
+	by box5922.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <paul@mad-scientist.net>)
+	id 1stuNd-002W4i-0Y
+	for git@vger.kernel.org;
+	Thu, 26 Sep 2024 13:42:25 -0600
+Message-ID: <10debb75cf7d29bc7fb907feae544769f2f2e3be.camel@mad-scientist.net>
+Subject: Re: ./configure fails to link test program due to missing
+ dependencies
+From: Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Date: Thu, 26 Sep 2024 15:42:24 -0400
+In-Reply-To: <6e3ac135-8357-4d2d-a49b-de7f1ab4da95@gmail.com>
+References: 
+	<GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+	 <xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
+	 <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com>
+	 <xmqqy13oa8oe.fsf@gitster.g> <ZvKsH1Ct-YwBPA_f@pks.im>
+	 <xmqqwmj1t0hp.fsf@gitster.g>
+	 <5bd2f41c92a00f7799bc543e229b16fa7a473760.camel@mad-scientist.net>
+	 <6e3ac135-8357-4d2d-a49b-de7f1ab4da95@gmail.com>
+Organization: Please remain calm--I may be mad but I am a professional!
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (by Flathub.org) 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5922.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 160.231.220.149
+X-Source-L: No
+X-Exim-ID: 1stuNd-002W4i-0Y
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (llin-psh13-dsa.dsone.3ds.com) [160.231.220.149]:46811
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfBoACT8kCrowkNUDayJlcNGzHi7hUmDBgky76hpirmC0bOPtENB1dsweTNnWqhT7kkRwwuUEF5g3YgxH1Iw9eibgf1+Fg553L1U8Yt2NqPHQPvgfNAT9
+ Kjl4/3ktjq7Ak+n/1opon4c8AB7rkUysfJ5Ev7MLggfLmCfuyuGg3xpP44ghh0K/Bdj3LTLvMmC8EC2d2CZWLml+THAHnt4VShI=
 
-John Cai <johncai86@gmail.com> writes:
+On Wed, 2024-09-25 at 21:35 -0400, Eli Schwartz wrote:
+> On 9/25/24 11:33 AM, Paul Smith wrote:
+> > On Tue, 2024-09-24 at 10:39 -0700, Junio C Hamano wrote:
+> > > Our dependance of heavy use of GNU-ism in our Makefiles makes an
+> > > argument that make is the common denominator a fairly weak one,
+> > > so
+> > > the single one that eventually we use does not have to be "make",
+> > > but it has to be something available widely and easy to learn.
+> >=20
+> > Regardless of what one might imagine :), I am not advocating GNU
+> > Make as the perfect solution: it certainly has downsides and
+> > disadvantages.
+>=20
+> :)
+>=20
+> I've read your article about why people should use autoconf!
+>=20
+> (By the way: I had a bit of a... chuckle, when I read in your
+> previous email that as the GNU maintainer of Make, you build lots of
+> projects with Make or CMake, but not with GNU autoconf / automake. I
+> assume that was just bad wording?)
 
->> > -     if (init_apply_state(&state, the_repository, prefix))
->> > +     if (init_apply_state(&state, repo, prefix))
->> >               exit(128);
->>
->> Hmph, the reason why we do not segfault with this patch is because
->> repo will _always_ be the_repository due to the previous change.
->>
->> I am not sure if [1/4] is an improvement, though.  We used to be
->> able to tell if we were running in a repository, or we were running
->> in "nongit" mode, by looking at the NULL-ness of repo (which was
->> UNUSED because we weren't taking advantage of that).
->>
->> With [1/4], it no longer is possible.  From the point of view of API
->> to call into builtin implementations, it smells like a regression.
->
-> I see your point here. However, I was wondering about this because
-> we are passing in the_repository through run_builtin() as repo--so wouldn't
-> this be equivalent to using the_repository and hence the
-> same API contract can remain that looks at the NULL-ness of repo?
->
-> But I could be missing something here.
+This is actually part of my $DAYJOB, not as the maintainer of GNU Make.
+It's not even part of my job there, but I like to have modern tools and
+I hate to mandate certain distributions and distro releases for
+everyone, so I build a complete toolchain including its own sysroot
+that everyone checks out from a Git repo to build our product.
 
-As run_builtin() discards the value of nongit, we will always see
-repo == the_repository passed to this function, whether _gently()
-found that we are in or not in a repository.  I think Patrick also
-noticed it and suggested to pass repo or NULL conditionally in a
-separate message, and if that is done, then I am fine.  I do not
-think your [1/4] as-is did that.
+At my $DAYJOB we use CMake, actually, so I'm also very familiar with
+it.
 
-Thanks.
+But when I said "make" previously I meant to encompass autoconf
+projects.  You're right, it's not really precise to compare make to
+cmake since cmake build makefiles as well.  It's more accurate to
+compare it to autoconf.
+
+So, I should have said "autoconf and cmake" :)
+
+However there are also projects that use raw makefiles and no build
+generator tools.
+
+
+I certainly didn't mean to imply that requiring Python is a show-
+stopper for Git.  There are lots of options depending on needs.  But it
+can't be argued that it's not more work for the builder than using GNU
+Make.
+
+Maybe this is will be deemed not worth worrying about given the
+alternatives, and I wouldn't argue with that.  I just raise it so it
+can be given consideration before a decision is made to (for example)
+drop support for makefiles.
