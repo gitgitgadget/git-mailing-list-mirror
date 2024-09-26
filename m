@@ -1,118 +1,109 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11BD53368
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 13:54:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B905C13777E
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 13:55:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727358845; cv=none; b=iCh7MV/LK4DzQhk5PlfqPn2eL2L4M3cqXQVD2xqK8JJMaFAb75nNfO1nLyczuiBRU2KfRt8f1uhtbmB4s77pPUR7KjZwDNTWHdzXeinvZ1wC/P8aDXNYkw/Z9nGCoWo6aXzzJBhzXSFwvsdKxlp6NEONp4ImA5zdtblha4AmM1E=
+	t=1727358957; cv=none; b=rWk3V8JJwuxVrA09bBgseS1g5odRnDG5Zk/gplwk9Al36BHfAi2ydoOQR2zweItW2BWFw/epbydLlv686gVkhPpP48gyDVwDTUZD4wid4ybYKUBOYU51B/pKLeEEDO/ORNVPzBDsmapIEVi4EuoIACeeBT/JDgBfzJbze3vYYBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727358845; c=relaxed/simple;
-	bh=9ZcDSZ+Wy+xNn7LOS9BUvXIXuiS46uw+6dycY0Jdy2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pkdok2XuC7kA9/ecTb8UOPUDzlsATujLVRgO5+KyUvJlYe69imXvYX/rvP2n5nICfWoxYxr6pWFqyCcwpFS7cK5YID3OoqYCCoP5Qy5d7M4TREtMs+NRoEbBDL8Oi7B85DgRCXOs3gn1SGEKsc1VpzQHeahduj9PwUNtyR0BUAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UJOfzF17; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M6pdFN3z; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1727358957; c=relaxed/simple;
+	bh=o+4Bz6x+vGwAjly8nccwCF1LJj0ykar9GEPn0/6hEwo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=EPzfaqQcz2z7GgY2m9D4sAqCBKt8fqSqUuuy8NybZx8k9LN8ISosOEDr71esggPaxm9tWT1jY604t2V1dEnJFLEhKnLAq1uvDkwTd0C5BwTVJhpWx+hyGLPdYS350WWsUo57zO+CSAQzAM7FCLol3KVxevGz0RAB6RWlZos7Lr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RZUMMqUx; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UJOfzF17";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M6pdFN3z"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CDF5B11400B4;
-	Thu, 26 Sep 2024 09:54:02 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Thu, 26 Sep 2024 09:54:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727358842; x=1727445242; bh=Ah4Z+TosU4
-	3N6lxCu522IRlDXOEylQqw5TGqJs52XKQ=; b=UJOfzF17iHaKom/cekHiWSHpMe
-	jwvFSZasQaRHhZ0o/QJbVTOc5qTaQhhNNx48o7MkcdKi+va/DEJwl/RlgrvLQCRb
-	VRgYd5f1zEf0jJlI43ULiV1uQC+ZDe8fzKgqbmM1lvr0tD3JibjSSHmKKSNHe7xI
-	4vaf8e8AuMllGnvkIP2yyoJwoy/fC+MZhUepd+IDGkF5c6sUPhDKgIHBJP030lvE
-	cRfGnKEp3m49SyUbuKL4i7tKr68ZRD/4BRGLlxJPuBXuBm3IhB7U3MgXVEZbVRkW
-	nY+Z9gRD+vT6Twu1jof6RQvrQYBjiwBHzfYSPtps+gnwyJ8q1HKHUTGo0L0Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727358842; x=1727445242; bh=Ah4Z+TosU43N6lxCu522IRlDXOEy
-	lQqw5TGqJs52XKQ=; b=M6pdFN3zMzaHrjat0hlq4d4PxgEqmQEbZuq9x5onG61o
-	PYP9p0+ZTdYFa74TvaavVqX+1JST92KbB2O0e5L4CdWG5cpJQ+TguvMCTTIOREFG
-	a8wjFnuHxc7Yfme26Fj7zU/Acs+/zYGyBFvHFonAl0xGYDMlifE8/Q046cgvEmiw
-	q03ApBs1r9my7JTpPef+CypphaOOuIW5NlIhcOe0otplnZukmW/ryWfbipjaQToG
-	JmcSH73DDQ3/trK+WKFoyzsuKHGyDt126OvKlQyTFuv+IEk2rviYsFFPdqujifu9
-	2GuZY+q2iWPZPtJRqX6+bCyyJHj3Uc5mOBCWUrapng==
-X-ME-Sender: <xms:emf1ZtnxZqkI0TF1cavw9XIOF8XKxinXnvl-x5hWrnFIazIyMFqljA>
-    <xme:emf1Zo0LIAhk3k52CNSi1inDRyTrz6aydAm9DES3kHJGXA80fHoeTziZ9T5u6M6h_
-    11WuecVFj-2lMFcyg>
-X-ME-Received: <xmr:emf1ZjrxYSPf7sxYDlgEJlM1VzdeESfGdaYwil4b6ornQ9p_H62BKMbqSnIyQnoOCGHIz97uyioIXmmvaJ4qCGMq_T_TRG-96bWOYEQYA3IPmw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedgjeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepudevgeehheehleevvedvheekkeehteekledtgeeiveel
-    geeifeegfffhheekvddvnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpghhithdqsh
-    gtmhdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
-    ohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepshhprhgrihhnthhssehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepkhgrrghrthhitgdrshhivhgrrhgrrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epjheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
-    epvhguhigvsehgihhthhhusgdrtghomhdprhgtphhtthhopehtmhiisehpohgsohigrdgt
-    ohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidrug
-    gvpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
-X-ME-Proxy: <xmx:emf1Ztk9yQHVaqWdCV0bX-x7vRW0NsvFAYINAAfP5negHuZ780Rbfg>
-    <xmx:emf1Zr0PkP6N8bKRFJsJ61RsNpAgiQGsuPE5JpL4M18iRteJPZy4Dg>
-    <xmx:emf1ZssdnbqUEoPWn0Ann-EGEApSDPQqyV6D8sP9YwNc9msV2Iwfxw>
-    <xmx:emf1ZvWia5GTShDxwCmcPgqrSSmrKYfbtEcxqA7taJ6fmnirhr0QZA>
-    <xmx:emf1ZksLvlQ_m_O0z52YkwV9P2AbiIQTl5aiGqSowCYGuutu3Zk2A3Ho>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Sep 2024 09:54:00 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b683e0e8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Sep 2024 13:53:21 +0000 (UTC)
-Date: Thu, 26 Sep 2024 15:53:54 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org, Matt Burke <spraints@gmail.com>,
-	Victoria Dye <vdye@github.com>,
-	Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-	Todd Zullinger <tmz@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	Toon Claes <toon@iotcl.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: git-scm.com is now a static website
-Message-ID: <ZvVncnF8A-zZLJ-q@pks.im>
-References: <c3e372f6-3035-9e6b-f464-f1feceacaa4b@gmx.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RZUMMqUx"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a8d51a7d6f5so133739266b.2
+        for <git@vger.kernel.org>; Thu, 26 Sep 2024 06:55:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727358954; x=1727963754; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=S/MrMzAsY5w4oOzYnOGdR/ijIj061s9g3JfQ2GKRFkM=;
+        b=RZUMMqUx6H7elgD+qA2WG620U5Sa2poRClnAss98r1eNnucS61M5LXLlXkpR9qqXOy
+         PSr/YF5t3zpxnrGEuUr5++Hhvzl0ct46n55wW2GGwEjqEnD2Hnfnx/lENZghGiLD+WTd
+         olmEx2F8oVq+1PApyYOAP/osLpOXWdJDOuj4m+hakOloDoGty6hcsxqlXfeTAt1yIa7E
+         T6yRl4rOFGIFKbLqbkBB8kepHBTcfbrfCcE89GptXF88KTcroh3oZr3rw5n/GIur/4OX
+         7cj33hZv+06fqgfzM2aYHGDZlg3XGZdnwQKLQlF2iWuRk5yblP3/BPw36QW1tIfc6cfC
+         UvbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727358954; x=1727963754;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=S/MrMzAsY5w4oOzYnOGdR/ijIj061s9g3JfQ2GKRFkM=;
+        b=EbRj28Bk1wKf7y1iiSletBDEDvgceW4NMKL65vvh6eXqOI7mRFcMshnwjm/1SJKGOH
+         GcW9PZCU1To84d1RlcCeQxnw3TKfYR2x0AtYB5Rc/J8sd1mXMC4xeCX7v5bPCGs7juMI
+         sXQeyHKE4VBcNrHOzy+x+Ha16SQShidrIw35au0Tx2U4hCwRI+7yyDz37/8XEnPtHsz4
+         F7yyy+no1ZAM7jqJVWMFlavybEkPW2XqOgoTtBqyJxEx4zlLqM4/JLFyCbqXq15q9frQ
+         KWNVT56dCrGUO5c8UEWuXKZDlZooIed4ycmSZbz0NGOE+8zyo25FwOenoQD7m1OS85Rn
+         ZSMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU+wFUK77FICTzIS3leByDSyY8aM0KglLZp3OOi5ftWozkLDBld52rtRmdHOdN+dHTV4sE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3O+vbvI1IMglo5bXlR5aSre0Y1viJj3l0O/4bp9UWs+wwV5Iq
+	9cXcS5RzI/JBttZIhBZpCHEZPo9rPUJExRl2XVIQtyL+nFtwXBzV
+X-Google-Smtp-Source: AGHT+IGj7dzfoovTLIHDA6ADfV1mb6zTpsXlzEihHiQDEQ/8mzD1YA5VUaNpoHrFwl3nnzUlOv/0Dg==
+X-Received: by 2002:a17:907:d2d1:b0:a90:4199:2a73 with SMTP id a640c23a62f3a-a93a03269fdmr540827366b.5.1727358953740;
+        Thu, 26 Sep 2024 06:55:53 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c27c5dfbsm624466b.60.2024.09.26.06.55.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Sep 2024 06:55:53 -0700 (PDT)
+Message-ID: <3a303c6e-35b0-4428-9d23-799b33194330@gmail.com>
+Date: Thu, 26 Sep 2024 14:55:52 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c3e372f6-3035-9e6b-f464-f1feceacaa4b@gmx.de>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: ./configure fails to link test program due to missing
+ dependencies
+To: Patrick Steinhardt <ps@pks.im>, Eli Schwartz <eschwartz@gentoo.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Henrik Holst <henrik.holst@outlook.com>,
+ "git@vger.kernel.org" <git@vger.kernel.org>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Jonathan Nieder <jrnieder@gmail.com>
+References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+ <xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
+ <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com> <xmqqy13oa8oe.fsf@gitster.g>
+ <ZvKsH1Ct-YwBPA_f@pks.im> <b6b131cb-683c-4140-9769-290b622721e1@gentoo.org>
+ <ZvOTL0cG8qRY8OXe@pks.im> <1f002f86-9212-4639-8804-898bc62726e5@gentoo.org>
+ <ZvOn_wChzEgXtpMd@pks.im>
+Content-Language: en-US
+In-Reply-To: <ZvOn_wChzEgXtpMd@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 25, 2024 at 12:07:05AM +0200, Johannes Schindelin wrote:
-> Hi all,
+Hi Patrick
+
+On 25/09/2024 07:04, Patrick Steinhardt wrote:
+> On Wed, Sep 25, 2024 at 02:02:34AM -0400, Eli Schwartz wrote:
+>
+>> I'm probably biased, but some of these failure modes are *weird*. And
+>> they basically never require the CMakeLists.txt to do something
+>> considered non-idiomatic in order to trigger the issue.
 > 
-> almost 400 weeks after Matt Burke started the process with
-> https://github.com/spraints/git-scm.com/commit/60af4ed3bc60 of migrating
-> Git's home page away from being a Rails app to being a static website that
-> is hosted on GitHub pages instead, today marks the day when Git's home
-> page at https://git-scm.com/ has finally moved. Or actually: yesterday
-> (because I took so long writing this email that I ended up sending it
-> after midnight).
-> 
-> This was truly a team effort, and I would like to celebrate everyone who
-> contributed:
+> All of this is very valuable data to make my case for Meson instead of
+> CMake. Appreciated, thanks!
 
-Thanks to all of you, and you specifically, Johannes! The new website
-certainly feels pleasingly fast. And other than that I wouldn't really
-be able to tell that anything changed -- awesome job!
+One thing to bear in mind is why our CMakeLists.txt was introduced in 
+the first place [1]. Visual Studio's CMake integration means that so 
+long as git-for-windows is installed building git is simply a case of 
+clicking on a button, there is no need to install extra software or 
+plugins. I'm not sure the same is true for meson and I don't think we 
+want to end up supporting both.
 
-Patrick
+Best Wishes
+
+Phillip
+
+[1] 
+https://lore.kernel.org/git/nycvar.QRO.7.76.6.2004251354390.18039@tvgsbejvaqbjf.bet/
