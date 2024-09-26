@@ -1,81 +1,81 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D29B184101
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315E21741E8
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727351194; cv=none; b=gdbNBdaLl4qElqOUxyBM7x74MvClcCpyvHE9eJbnBpwWeeuSE9ftvDhvf6nu4lXTfoJyzsJyoRKajA1GnKcCEG9Hp5Kb64SxyhkCEFeeTHymiGyTA5qb/BdeTWLlCIqRAEnAUVhQrOOq28cfdJ3Jsbdqp/7WESQ98Sz4g2E1T04=
+	t=1727351195; cv=none; b=pAp8ipznabtEhaaU/wjJ/hCbQwoiUFZQO4uvY5vqeEXxhmvH/hcwRRAWsI13fBQMj3Eo1V4pwdL2UT6qrKnn9+ikPlVLOsZdFaRG67SbhPCCb3t2KOLF4yt4aptqFiyH6ZfUAVoUAwcXUrMPi+Vpv3uDzFKPJ6YgJC3sY/MBxNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727351194; c=relaxed/simple;
-	bh=HDjqDwizK+SjvKJjEDDf2VPW/GeJMb6TCurWfoPtIYw=;
+	s=arc-20240116; t=1727351195; c=relaxed/simple;
+	bh=dSMRU7mg7mOQOJTQF32YVILsvWJIJ6V5NcWh/f89+bI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tWXx6na+70lmxzAqsa52pdaHwgYL8Tt7/u2LqNzdkmCDtFs6vGP2xUnnmBGwcUcwPFYn0vhbQ+57nLWKQqi2ABhqRyxQWQBhmd1Y0URDu9WtBjInfnmbhjir32/TzdllcyGSbCWh1IRhGrGXdYsV333zEY48+Rp4a1E4bP7D3gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sJ/CjrL+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qIPitmDO; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=md5MaLlXCIse2t+7T/1CMcUbbIDqQwCneP3D3BdCQtsX2Evi57ByLYLHhRqN1Hh1pRPZKacYYdpCQOY8eTw89HPL6NFnllz2LN7vGtYayIkt/NQtHU0feti+pDVm1+NcDJLY8/q+e2vhofH/+RNOXKKGA1x3KEF5Px1rrCpdhPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UhgXhE4s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TY0MbfBN; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sJ/CjrL+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qIPitmDO"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3BD37114024B;
-	Thu, 26 Sep 2024 07:46:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UhgXhE4s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TY0MbfBN"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7B0661140252;
+	Thu, 26 Sep 2024 07:46:33 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 26 Sep 2024 07:46:31 -0400
+  by phl-compute-09.internal (MEProxy); Thu, 26 Sep 2024 07:46:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727351191; x=1727437591; bh=ygYBHGbj1B
-	YAY7PiiH9PleYauqmsPzrfI10wWmvES1M=; b=sJ/CjrL+TVEg70+iU7PSilLGSE
-	25EKAP6VpNZ1gAwfMiv4sYJwvagpjCy8P4FeKzX2J1v1fSbUrV5T3Y8EkXAOTUy9
-	hOUwSAKBD9huNiBodpRMsf7jSuhWeqo5ImM8dWwCRVMHfyavQrD8nL1Po/pZAYRI
-	Q3ofj9JD34FY0QO192NqkjdfzasNCZ4GCct0jIklqgdha4FN56LU2ZyKznW5A6w3
-	D1CwWvTIKFpWKeSTMlpMAr4zvq2S+r79vVDhE/YYeksOv2jEcWSmVDakkGY9AYBg
-	NfCh7bcONzr2OtURTDUtamvs/gvTffD2LZJTj6M3Wj+7ICCGwDUbrOJiJDTw==
+	:subject:to:to; s=fm2; t=1727351193; x=1727437593; bh=ytSLfI7Dzm
+	dkNM7KV/93JBuGuC1mitUXoqti3Q24uRw=; b=UhgXhE4sdSNGfOaXwv21DQpf6H
+	I3UjOBbiyGmgBEjlOJjWJQGeAdYR/98ao8nkYIPIAmpqqNU1sTOchvaF4t/t+4kN
+	1UMxkQZiDfoLaJNMN+sFmd4WNqmmdzMol6TMes7YvkIgX8RwEz2loEMz7sx+AjzD
+	ECXjmIwuEFhPYYzfTAdaUUPGWDNX49JK5/4+jxNeYuPM8IdBxCRuAppdKCL7bHyB
+	t3+nMuO9PZA870hL4dXSlZIs6CK9KVToZjDkMRnsDJjlho7dfKD2TUGDpYX9ZVfz
+	bPG+Jqs/D40C/YdKgQUR/VaS8zu4Jsh8Vl7QHwMvALzCMMl920Lc4j4up4OA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727351191; x=1727437591; bh=ygYBHGbj1BYAY7PiiH9PleYauqms
-	PzrfI10wWmvES1M=; b=qIPitmDO0iyBj1w/UwjHOFv4LHbBN2/yQN/QePCOlI0K
-	SHj/i/03p4LLU1YGu4shtO/kALEjlcL5ZHuHn7yvMzVvbLsuR9K1JkZYg12FxxqY
-	c3/8QMO0KXc1J17t348Z8+UmaNeAz/u2+08UbHnp1bq8E3y3qOj2N2MwQZ8vw0UF
-	Citq+hILz8PmSX0iEkbgYVY69ElLqbMihnRLCUrQ2BOcR9OgvCaP1NfjEiRc6QEA
-	7wGMwTjM674R1sIsDd6tufDnkGoSQ7YnUVcLFqf6PJhQluetmiDxgKDlyaDRV/sv
-	OCPta95hPcg3NOuF8ZTaFSbGu+hL3dnqIqb9db206A==
-X-ME-Sender: <xms:l0n1ZtRssbf761gfdxQ5kMB65GMxX3sBz9tr-sh86LXpbBJr_TA7OQ>
-    <xme:l0n1ZmzqtxEUe96OjHO4376po_MFr5XIu8IkI1rdeeW2Hjb_cHK2Ndun7hgH4VlG2
-    9G8N47R6ZIh4ycH3A>
-X-ME-Received: <xmr:l0n1Zi0w3ILOWo33VeVf4fe99WH8oZ50HOOw-_0jZN0vufEqU3n3S3VD8GRYcCvZTCj_isnzHTefnFbZfz0IbFjrtDHLGPhIjKVk5k9QlE6zQw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedggeehucetufdoteggodetrfdotf
+	fm2; t=1727351193; x=1727437593; bh=ytSLfI7DzmdkNM7KV/93JBuGuC1m
+	itUXoqti3Q24uRw=; b=TY0MbfBNZkh5L4X5uwL1l39AqW/QaRGJVBAWmdDsRF4a
+	6hIxIh1qspIcS1zORDxe+5aiOH+V14n8KIS+H/k/71xsXqGZ8ETL18JXm1yfgzW9
+	dzRVEPPBo/VCOjQLqndbLdNSPddl5Pl+nfD+Pj6SLuRT8IOSXvdrNHYYwr6+6Y1y
+	6iVVQqGmZypV/nHJTxfJQk1taQpxlSeHGppnHBplocsxweyF3iRRPDh2UlyjwV0c
+	yqNstzvgBeLCNNXgQUJp+oVlew2IqfCI2lBmWu5DmPG11OnhP3peYoDRR/u95lMv
+	fmyO4lsASFGe383MyENWq8iXYaMLOcEfiTck7ZVsLg==
+X-ME-Sender: <xms:mUn1ZnMU_5Cyw3Wf1Gbe2rfjxGsfAydDiU7Y0Plpm_FqmdZFZ08kag>
+    <xme:mUn1Zh8j9cRcjPc7ksj1wzHaJwSDVc_0ePFYUIs64s72b68bOO5_dr3auJ7ld63ap
+    eOkeOrsbv2aX2iduA>
+X-ME-Received: <xmr:mUn1ZmQm4lOjBsMEiUVfz9CC1P-_PX4k6cnfrEG6aQfJsqo5YzQSS-GmE8BGmHKY30EoKHJexPfdCMBWUg8QnT3z08DYt16kXZA9m1i4mfZrgw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedggeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
     shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:l0n1ZlBdaD_RYUAJ1EAVD0kb7xABmWhN1gV7H0DCs0NiOyNMPHwxaA>
-    <xmx:l0n1ZmhfSWX8f0G6rEMLUa1x7DO-1BjC4d7sLMUALNqpbjJTuz9ylQ>
-    <xmx:l0n1Zpqru7DfOPBB-tOPCaFuytQLBcwajfShfo3JHq3CyuFZZkj0sw>
-    <xmx:l0n1Zhj-qQwXFC4Fy1cQeC5rN8IcuyDO-kmLEB0YYzB_ZfHKWABbhQ>
-    <xmx:l0n1ZnsqsLAw6ZYzgskxclSLpbesdMGn8DKeQcOIRYoi5MHrpI2hyNbn>
+X-ME-Proxy: <xmx:mUn1Zruc20YzhWNPv_ya0gsGDe85hoa-jnu3RdUeW_SPq_AUfPchVQ>
+    <xmx:mUn1ZveB-VwoLUkDIEweeZoyICdP0zkhVDRz8rBC8Tn24PWZ0XM78g>
+    <xmx:mUn1Zn3cmkOH-NFq8eXSbDtNuU7FRHVTd_AHQavw-Jjg7bEIzgtXxA>
+    <xmx:mUn1Zr_A4QZ2AT8r3AoNEMJE61WuX8lqVdGUW1ftxaJUwwvKBbCdWg>
+    <xmx:mUn1Zr50oUw8li3vaxhA4kCdfZ-bfIK5I6b06nh5XKhiiBgALJENvoLG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Sep 2024 07:46:30 -0400 (EDT)
+ 26 Sep 2024 07:46:32 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fa7c2e17 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Sep 2024 11:45:52 +0000 (UTC)
-Date: Thu, 26 Sep 2024 13:46:26 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 64c58d06 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Sep 2024 11:45:55 +0000 (UTC)
+Date: Thu, 26 Sep 2024 13:46:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 10/23] builtin/pull: fix leaking "ff" option
-Message-ID: <2338b5e2a81b4036bf3740265126afddd2fbe6a1.1727351062.git.ps@pks.im>
+Subject: [PATCH v2 11/23] diff: fix leaking orderfile option
+Message-ID: <cb08db4d3766e1bbe96d10798be6792f8f9ee19c.1727351062.git.ps@pks.im>
 References: <cover.1726484308.git.ps@pks.im>
  <cover.1727351062.git.ps@pks.im>
 Precedence: bulk
@@ -88,69 +88,85 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727351062.git.ps@pks.im>
 
-The `opt_ff` field gets populated either via `OPT_PASSTHRU` via
-`config_get_ff()` or when `--rebase` is passed. So we sometimes end up
-overriding the value in `opt_ff` with another value, but we do not free
-the old value, causing a memory leak.
+The `orderfile` diff option is being assigned via `OPT_FILENAME()`,
+which assigns an allocated string to the variable. We never free it
+though, causing a memory leak.
 
-Adapt the type of the variable to be `char *` and consistently assign
-allocated strings to it such that we can easily free it when it is being
-overridden.
+Change the type of the string to `char *` and free it to plug the leak.
+This also requires us to use `xstrdup()` to assign the global config to
+it in case it is set.
+
+This leak is being hit in t7621, but plugging it alone does not make the
+test suite pass.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/pull.c               | 11 +++++++----
- t/t7601-merge-pull-config.sh |  1 +
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ combine-diff.c | 3 +--
+ diff.c         | 7 +++++--
+ diff.h         | 2 +-
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 4c54d8196f..5d9d9e467e 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -84,7 +84,7 @@ static const char *opt_squash;
- static const char *opt_commit;
- static const char *opt_edit;
- static const char *cleanup_arg;
--static const char *opt_ff;
-+static char *opt_ff;
- static const char *opt_verify_signatures;
- static const char *opt_verify;
- static int opt_autostash = -1;
-@@ -1024,8 +1024,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		 * "--rebase" can override a config setting of
- 		 * pull.ff=only.
- 		 */
--		if (opt_rebase >= 0 && opt_ff && !strcmp(opt_ff, "--ff-only"))
--			opt_ff = "--ff";
-+		if (opt_rebase >= 0 && opt_ff && !strcmp(opt_ff, "--ff-only")) {
-+			free(opt_ff);
-+			opt_ff = xstrdup("--ff");
-+		}
+diff --git a/combine-diff.c b/combine-diff.c
+index 829a44e416..f6b624dc28 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1393,9 +1393,8 @@ static struct combine_diff_path *find_paths_generic(const struct object_id *oid,
+ {
+ 	struct combine_diff_path *paths = NULL;
+ 	int i, num_parent = parents->nr;
+-
+ 	int output_format = opt->output_format;
+-	const char *orderfile = opt->orderfile;
++	char *orderfile = opt->orderfile;
+ 
+ 	opt->output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	/* tell diff_tree to emit paths in sorted (=tree) order */
+diff --git a/diff.c b/diff.c
+index 472479eb10..6555b8a32c 100644
+--- a/diff.c
++++ b/diff.c
+@@ -441,8 +441,10 @@ int git_diff_ui_config(const char *var, const char *value,
+ 	}
+ 	if (!strcmp(var, "diff.wordregex"))
+ 		return git_config_string(&diff_word_regex_cfg, var, value);
+-	if (!strcmp(var, "diff.orderfile"))
++	if (!strcmp(var, "diff.orderfile")) {
++		FREE_AND_NULL(diff_order_file_cfg);
+ 		return git_config_pathname(&diff_order_file_cfg, var, value);
++	}
+ 
+ 	if (!strcmp(var, "diff.ignoresubmodules")) {
+ 		if (!value)
+@@ -4775,7 +4777,7 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
+ 	if (diff_indent_heuristic)
+ 		DIFF_XDL_SET(options, INDENT_HEURISTIC);
+ 
+-	options->orderfile = diff_order_file_cfg;
++	options->orderfile = xstrdup_or_null(diff_order_file_cfg);
+ 
+ 	if (!options->flags.ignore_submodule_set)
+ 		options->flags.ignore_untracked_in_submodules = 1;
+@@ -6727,6 +6729,7 @@ void diff_free(struct diff_options *options)
+ 		FREE_AND_NULL(options->objfind);
  	}
  
- 	if (opt_rebase < 0)
-@@ -1135,7 +1137,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
++	FREE_AND_NULL(options->orderfile);
+ 	for (size_t i = 0; i < options->anchors_nr; i++)
+ 		free(options->anchors[i]);
+ 	FREE_AND_NULL(options->anchors);
+diff --git a/diff.h b/diff.h
+index 9901c8ca8c..b95d3c1e83 100644
+--- a/diff.h
++++ b/diff.h
+@@ -235,7 +235,7 @@ enum diff_submodule_format {
+  * diffcore library with.
+  */
+ struct diff_options {
+-	const char *orderfile;
++	char *orderfile;
  
- 		if (can_ff) {
- 			/* we can fast-forward this without invoking rebase */
--			opt_ff = "--ff-only";
-+			free(opt_ff);
-+			opt_ff = xstrdup("--ff-only");
- 			ret = run_merge();
- 		} else {
- 			ret = run_rebase(&newbase, &upstream);
-diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-index a94387a75f..7fd8c086af 100755
---- a/t/t7601-merge-pull-config.sh
-+++ b/t/t7601-merge-pull-config.sh
-@@ -4,6 +4,7 @@ test_description='git merge
- 
- Testing pull.* configuration parsing and other things.'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
+ 	/*
+ 	 * "--rotate-to=<file>" would start showing at <file> and when
 -- 
 2.46.2.852.g229c0bf0e5.dirty
 
