@@ -1,66 +1,65 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9E214BFBF
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 15:22:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5746D15383A
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 15:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727364165; cv=none; b=XTfNaKZBs6OaqukQ9AN+uPKmoCt0CEYSftGFKHbOod4TqerhtYz3Wiax9YwRa40+Jukne1q4XkmvrmXNWMTB8uq8HgPSm7MutZmXrioxJ2nelPgT2tp3lEgFe6w/0Rgof9pfbFNt5Z7f3UBYQYTSxNZUqgWzidz+Bdo6/OAVzrI=
+	t=1727364168; cv=none; b=X9QHEaK7nDs/RlHAmouxeh+Tp/pvj0ALed4e8hIH7BGKWHjbvWXyr01fvnQ3Qo6Qm8rXsJyjbH8n5tuQVfSdzQMdgLtCTxnEjywkCkmTXFWwoLrCCTF3fPzlcWPm5oNTInPIQ/KH+5B2QR8SmaCwgE+d2GQN0wvz1Sk0yiBw0sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727364165; c=relaxed/simple;
-	bh=38km5qfmVKzvuvNxohccD4IGEExqYO6kwI5Az3NQtxM=;
+	s=arc-20240116; t=1727364168; c=relaxed/simple;
+	bh=5Ekba7RMtLZKry+MkFEbD8tTQwNJQyfPwsnOJ+IRVI8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d2HWxCA9nJqVZDmjLzJzSQtpE4Zrtv1JYEv9PT8wVeborhA2RcoM21JFwXRweHKN4x7sCMhJwof+wrI6e0Tt8zd9XINAbNJtGt523AeAOvFQq6RtO30RnygXjgct4prB3P1VZGCn5W3KJuZudCHGGiSaUAotGp3i8X3KxHZsJBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=GpjUfscA; arc=none smtp.client-ip=209.85.128.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=p3+g6Ntvfifjk4IPBoUCG4nqg5SCCI62AXqsrPp9hz5BN3sKiLAyY8qc1gYlvMIN1NCw8+sG3A13KcRTH9bjJR1V5UQjHLImGc8vqZtutkP8GYwOIdfaxjOBTJaYt4EEYBxiFBOTLreeyA/MnUs0aItFSUCM5LkoGOxDiF7z9io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=F9TI+taw; arc=none smtp.client-ip=209.85.219.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="GpjUfscA"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6d6891012d5so10626267b3.2
-        for <git@vger.kernel.org>; Thu, 26 Sep 2024 08:22:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="F9TI+taw"
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e25cbc50d7fso955802276.1
+        for <git@vger.kernel.org>; Thu, 26 Sep 2024 08:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727364163; x=1727968963; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727364166; x=1727968966; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=A/rI6LFPvKIn/KM6bPhkm4cF+Wnrb0QdVwN/LX0uztw=;
-        b=GpjUfscA+/vqOWUlsss7wp3H8mM4o8ZFFqj7Zc6/jOFWM7q5YZB2zyHzPmBwtrvvbC
-         NXukl5hjg9eTUj5gZHt1hEAXXZ79Om7xcogpAbYEcLsLoyr1nOols5QKHkn/SK8OvSdc
-         sGd3nS5ETn/o6X2/3Nsd5TpbTmXH548w+EEe8di55ZLcU4Uv77KWb3SbbhS3DtaDg+Ez
-         IFa78pIcYUpiyu2s1NrolvQ+d3Rq21U/LIzZNduG1VOxlgWoqP7o90gXEN6n5zJzRJ7o
-         QedsubLU5EXKX3ntB3GwFxuocJwLNMnGCmfiVgeD6CLr6VitpwqT3J4neYF8b6KZjlfq
-         oODA==
+        bh=QMv3K2AHM700CA19tjbjvf8DVwj5IC/uRDnyMgTY88s=;
+        b=F9TI+tawCQBbTypcRgtb71vwyiwYM+tCAAvbjrX5n+SaQpntwB26Nd98/sLXWAxuZ6
+         eNg2aPYRKgZddw0AyadZop2p1wP1rjuUQ7BJTuzXfEG5RSeqs7ua0la06Xw56PmyW6Hs
+         yFi7uTE5KF4+33VkMBgQ7V8aSvnIjFsLwEn10osA+2kt9Znu6aiKLu5yaOQIK+jR+96k
+         mucJysdZ3kmmPtjkdJczbT06WYvtmzz1SCL4sqWwMsOqKyE+Ftxby4ZQr5lyu+CYeDRU
+         h+TOVd6kjjohdC1YSccn46StKJMFloSVaOeDoYkIiRpGXJjkgHrYqHIFmfpaDjDM+QZe
+         qP1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727364163; x=1727968963;
+        d=1e100.net; s=20230601; t=1727364166; x=1727968966;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A/rI6LFPvKIn/KM6bPhkm4cF+Wnrb0QdVwN/LX0uztw=;
-        b=JZS1KONwEcDiifybCgD5spMGC7RdFpRWGbXOwxxzgsTzzVtmoQRsuN98gVxFxJNYRu
-         DQqjn1oc1rfCsVdobnrGFDoqCA2Y1zJvQSZS34PslHMsJrXETH/OAZbxyl9Cnsa4crpQ
-         e5EKZfIg943fbNIPKr55CXGmDDgAEzoNE/zu+jHOtS7KYAak3vFG2b6xCYmq5jJy5fp4
-         ymEXQIjyxDecCm7Mcclk7/Qyy73dKRoUkUlhVqYRc4vdrSwiykGKvg2zYIJW1pQcOatX
-         dXLoijLMsxdmexM/Gc5ORtpUAzWsX4zfR2DAkIUbAN0vipA+/HHT06A73dN5Ve3v0dtS
-         0/sg==
-X-Gm-Message-State: AOJu0YwyCab5nvDgE7sqM6TxgmUuNgUnU8oN08QYa+2tHZ0pg/HYX8ap
-	qQRqpb8ImBVQUAP7DICySxaj/9KX28shsEMLNfydniM8brD7Y+tgZBViOJGLepTwB7IgIkAdVkN
-	gmfw=
-X-Google-Smtp-Source: AGHT+IG+KgBP6ilsHuD2JDJ8UwHQ8ahEiEDQ1rIdc5WzQlmTxT5ZabfwFYGKLisC7LDs48xnR6W8nA==
-X-Received: by 2002:a05:690c:10d:b0:6de:b23:f2a1 with SMTP id 00721157ae682-6e21d70a70fmr57482417b3.15.1727364162807;
-        Thu, 26 Sep 2024 08:22:42 -0700 (PDT)
+        bh=QMv3K2AHM700CA19tjbjvf8DVwj5IC/uRDnyMgTY88s=;
+        b=fCyvp6HQG5zL0/MZS2wKI69XQ6efVob4yf2fPjO5jscCEpEI9v4HoZXdAaQ4FKLcK5
+         lAwhAv799tE5kSzQZZEDQwagTrMW5/I/6CDunDYXygCoW4ATuSUtKRfNe4rWKB1pNoEt
+         zvE5nTUT2cClDwQQdiWh8WCym00shIRuez/alRqTkaPtrj39+8y5gLUPJUm+LzPoDyWC
+         GBUrJ1MgJBYCjUfcI5PXmDwxEem9Fy+6u6otRlEg2iUoLKSvBxL97XiT+xxNT1+Yq3HZ
+         6RDpWHTYCz7SfTwhtZuKI5ip9GYm0tGMEFt3EtU6Ts/lKJSO45UgDarETOsq7NbdYWm/
+         E1dA==
+X-Gm-Message-State: AOJu0YyUyaUEMXOEPf3Iqo+R7ScF5gK5qc8Nrl5cad4ZIm30mDjkuCfR
+	2E5aWIjfe2BhTmh2FRIGd606OYXG5HTbihPibqe3uDb16aX/a3IDO7ljbOBpjgvJLYfOWkAxuTR
+	tskg=
+X-Google-Smtp-Source: AGHT+IGX/W+UsU7PWn6/Dte43NHjW16lvw/3hzlpDXCia50jajF990snbArflMd86MC+nZ8D1uecfQ==
+X-Received: by 2002:a05:6902:d41:b0:e25:c5ec:5797 with SMTP id 3f1490d57ef6-e25c5ec58bemr2904178276.18.1727364165951;
+        Thu, 26 Sep 2024 08:22:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e24538aff0sm142317b3.126.2024.09.26.08.22.42
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e25e3efab1dsm23678276.6.2024.09.26.08.22.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 08:22:42 -0700 (PDT)
-Date: Thu, 26 Sep 2024 11:22:41 -0400
+        Thu, 26 Sep 2024 08:22:45 -0700 (PDT)
+Date: Thu, 26 Sep 2024 11:22:44 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 4/8] pack-objects: use finalize_object_file() to rename
- pack/idx/etc
-Message-ID: <611475d83e261c1b1ddd29d5e711a7e2d75e0341.1727364141.git.me@ttaylorr.com>
+Subject: [PATCH v5 5/8] sha1: do not redefine `platform_SHA_CTX` and friends
+Message-ID: <9913a5d971389e7e657ea151eaedc94bf025f3fc.1727364141.git.me@ttaylorr.com>
 References: <cover.1725206584.git.me@ttaylorr.com>
  <cover.1727364141.git.me@ttaylorr.com>
 Precedence: bulk
@@ -73,91 +72,75 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1727364141.git.me@ttaylorr.com>
 
-In most places that write files to the object database (even packfiles
-via index-pack or fast-import), we use finalize_object_file(). This
-prefers link()/unlink() over rename(), because it means we will prefer
-data that is already in the repository to data that we are newly
-writing.
+Our in-tree SHA-1 wrappers all define platform_SHA_CTX and related
+macros to point at the opaque "context" type, init, update, and similar
+functions for each specific implementation.
 
-We should do the same thing in pack-objects. Even though we don't think
-of it as accepting outside data (and thus not being susceptible to
-collision attacks), in theory a determined attacker could present just
-the right set of objects to cause an incremental repack to generate
-a pack with their desired hash.
+In hash.h, we use these platform_ variables to set up the function
+pointers for, e.g., the_hash_algo->init_fn(), etc.
 
-This has some test and real-world fallout, as seen in the adjustment to
-t5303 below. That test script assumes that we can "fix" corruption by
-repacking into a good state, including when the pack generated by that
-repack operation collides with a (corrupted) pack with the same hash.
-This violates our assumption from the previous adjustments to
-finalize_object_file() that if we're moving a new file over an existing
-one, that since their checksums match, so too must their contents.
+But while these header files have a header-specific macro that prevents
+them declaring their structs / functions multiple times, they
+unconditionally define the platform variables, making it impossible to
+load multiple SHA-1 implementations at once.
 
-This makes "fixing" corruption like this a more explicit operation,
-since the test (and users, who may fix real-life corruption using a
-similar technique) must first move the broken contents out of the way.
+As a prerequisite for loading a separate SHA-1 implementation for
+non-cryptographic uses, only define the platform_ variables if they have
+not already been defined.
 
-Note also that we now call adjust_shared_perm() twice. We already call
-adjust_shared_perm() in stage_tmp_packfiles(), and now call it again in
-finalize_object_file(). This is somewhat wasteful, but cleaning up the
-existing calls to adjust_shared_perm() is tricky (because sometimes
-we're writing to a tmpfile, and sometimes we're writing directly into
-the final destination), so let's tolerate some minor waste until we can
-more carefully clean up the now-redundant calls.
-
-Co-authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-write.c                          | 7 ++++---
- t/t5303-pack-corruption-resilience.sh | 7 ++++++-
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ block-sha1/sha1.h | 2 ++
+ sha1/openssl.h    | 2 ++
+ sha1dc_git.h      | 3 +++
+ 3 files changed, 7 insertions(+)
 
-diff --git a/pack-write.c b/pack-write.c
-index 27965672f1..f415604c15 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -8,6 +8,7 @@
- #include "csum-file.h"
- #include "remote.h"
- #include "chunk-format.h"
-+#include "object-file.h"
- #include "pack-mtimes.h"
- #include "pack-objects.h"
- #include "pack-revindex.h"
-@@ -528,9 +529,9 @@ static void rename_tmp_packfile(struct strbuf *name_prefix, const char *source,
- 	size_t name_prefix_len = name_prefix->len;
+diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
+index 9fb0441b98..47bb916636 100644
+--- a/block-sha1/sha1.h
++++ b/block-sha1/sha1.h
+@@ -16,7 +16,9 @@ void blk_SHA1_Init(blk_SHA_CTX *ctx);
+ void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *dataIn, size_t len);
+ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx);
  
- 	strbuf_addstr(name_prefix, ext);
--	if (rename(source, name_prefix->buf))
--		die_errno("unable to rename temporary file to '%s'",
--			  name_prefix->buf);
-+	if (finalize_object_file(source, name_prefix->buf))
-+		die("unable to rename temporary file to '%s'",
-+		    name_prefix->buf);
- 	strbuf_setlen(name_prefix, name_prefix_len);
++#ifndef platform_SHA_CTX
+ #define platform_SHA_CTX	blk_SHA_CTX
+ #define platform_SHA1_Init	blk_SHA1_Init
+ #define platform_SHA1_Update	blk_SHA1_Update
+ #define platform_SHA1_Final	blk_SHA1_Final
++#endif
+diff --git a/sha1/openssl.h b/sha1/openssl.h
+index 006c1f4ba5..1038af47da 100644
+--- a/sha1/openssl.h
++++ b/sha1/openssl.h
+@@ -40,10 +40,12 @@ static inline void openssl_SHA1_Clone(struct openssl_SHA1_CTX *dst,
+ 	EVP_MD_CTX_copy_ex(dst->ectx, src->ectx);
  }
  
-diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
-index 61469ef4a6..e6a43ec9ae 100755
---- a/t/t5303-pack-corruption-resilience.sh
-+++ b/t/t5303-pack-corruption-resilience.sh
-@@ -44,9 +44,14 @@ create_new_pack() {
- }
++#ifndef platform_SHA_CTX
+ #define platform_SHA_CTX openssl_SHA1_CTX
+ #define platform_SHA1_Init openssl_SHA1_Init
+ #define platform_SHA1_Clone openssl_SHA1_Clone
+ #define platform_SHA1_Update openssl_SHA1_Update
+ #define platform_SHA1_Final openssl_SHA1_Final
++#endif
  
- do_repack() {
-+    for f in $pack.*
-+    do
-+	    mv $f "$(echo $f | sed -e 's/pack-/pack-corrupt-/')" || return 1
-+    done &&
-     pack=$(printf "$blob_1\n$blob_2\n$blob_3\n" |
-           git pack-objects $@ .git/objects/pack/pack) &&
--    pack=".git/objects/pack/pack-${pack}"
-+    pack=".git/objects/pack/pack-${pack}" &&
-+    rm -f .git/objects/pack/pack-corrupt-*
- }
+ #endif /* SHA1_OPENSSL_H */
+diff --git a/sha1dc_git.h b/sha1dc_git.h
+index 60e3ce8439..f6f880cabe 100644
+--- a/sha1dc_git.h
++++ b/sha1dc_git.h
+@@ -18,7 +18,10 @@ void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
+ void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
  
- do_corrupt_object() {
+ #define platform_SHA_IS_SHA1DC /* used by "test-tool sha1-is-sha1dc" */
++
++#ifndef platform_SHA_CTX
+ #define platform_SHA_CTX SHA1_CTX
+ #define platform_SHA1_Init git_SHA1DCInit
+ #define platform_SHA1_Update git_SHA1DCUpdate
+ #define platform_SHA1_Final git_SHA1DCFinal
++#endif
 -- 
 2.46.1.507.gffd0c9a15b2.dirty
 
