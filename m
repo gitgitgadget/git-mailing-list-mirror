@@ -1,81 +1,83 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FDE7BB15
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 14:19:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4166F136347
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 14:24:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727360375; cv=none; b=QTUYTVHPTS4iDFYe/UErMM7Ar2pATH1V7oq2mhOfe7Oa4l3b1/MiQABEzSxPuIRCzX3a7a/czcoy0QcHOAZxnPlbUy+O5lcEd/LBN3K6O2gqpSj3H5n9/Au0nnvlusymXGXIjnU6gZb/DHJpWTUMFy1GHb5wZheS9s+W3jC0QmE=
+	t=1727360675; cv=none; b=q3+gBIYyS8WW9SaJsoG7xNXVWaJil0aXBxfMo298CwW9Avz73LrXLEXTrPg1XKJsdm5yN1JtT+tf8mEK64nvqFcqX+MpAp+W4Ybk5gzpOmYfOkLnEPhswmqmcjgl6tdgNzWl6/JbuNkpln53KsjERCRLmetRmDn/JwusDYOczuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727360375; c=relaxed/simple;
-	bh=gSVlMkTcJKPN2aPqyQx9qXQ4YcxG8v5LliD6Jj8RV5o=;
+	s=arc-20240116; t=1727360675; c=relaxed/simple;
+	bh=4HpDR+xhrmqGOnAZL8z9etLdSNhZoFSvOAs9xluVVcY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SLZtOjf9PRI2k22S7BEdFWRBCznU1htqQyTPm6Zjp9FxE1J8D+VgDt+bHGIWYn7byHzCe4Xw2P0SJ6cT7Fb4TeLG3TK7UDBCiq1VM7czZUIcUsFMZHcEiE91wE24TD//ehOfSQ4Q9DDsL3T48Cp06rBUcx38kmVqd4knN+qB+gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RUc3KzTB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ty6HfEnP; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=oFZBxMnSRpRTLqxJ3LBlUiDQtPYTlM2aF6iHzGxS3f6y5KXOZAdFI4rPP5uxdF7qdXZJjA6kxWXfcbC4cYsU7x9FE4yZzY9Tuw3I/puRrhemAFYcNL/g4lbHLgSNc4YLtXENr4YhbJZOVcyx90VK26bR7Rz3+LVWN1bKnkgmhpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BXMIHn6l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gGLa9jvI; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RUc3KzTB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ty6HfEnP"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BXMIHn6l";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gGLa9jvI"
 Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 97EE41140223;
-	Thu, 26 Sep 2024 10:19:32 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A2171140152;
+	Thu, 26 Sep 2024 10:24:32 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 26 Sep 2024 10:19:32 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 26 Sep 2024 10:24:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727360372; x=1727446772; bh=nA3iGzo/SQ
-	IyamMeoDEJmwHiNFodp+wiz5wIuWWnobY=; b=RUc3KzTBeTVHk2DlHF4oTRHurY
-	3XO9yYEbPbdxiSazi0Vg9auNzAdFKxHCzn5rZZxLa4iPUNd3E3c4QLQRjNHp7p3K
-	xBYhozuqIS0sxKJ1Spq9ZOVtbqlkOseYUToV6kls4diQ3PblyqCRchPlYgetgTCq
-	mn60kieHA/mXTfjJsPCUGmUY5dEPjWPD+osjbtqxue3YwbEFVbgHpyrqs5Yz0uy/
-	b+UYpdHutghpsq9pUBIpOpCnZZFgHxCHlbPJvQcwqyFMr5gS35k0Tq7Ritcc7guo
-	Bp0smOurrZS/zBd+w6Hy+tTcOHp128xoUG6D0660m4XmH8Ka+zQxwrQojoYA==
+	:subject:to:to; s=fm2; t=1727360672; x=1727447072; bh=Pb/YL+brkt
+	EXvZ9bPO9dOex1J7K4bVxXB2ah5mJRKBg=; b=BXMIHn6l1vm3ijLTR3j7oExFsm
+	74lq7QJBNGWCyJqlyhv/ls+PcoIr9fFAJn1wSx2cMyzoNvwb4ZvN7fDuIfhwFJZe
+	xFJ/CFRoJ+a3ARjNIhRZSbkiUZpAcKJBNJ74SK2ecpIV4P357ztMJ+/xxUS89Llt
+	9FRwH2VL98umzWmm62MMs0DhE0/NVjEJDwGt3uP1tqOINCbTnJtJ0wX5D3+kvxMg
+	Zv69v89WkIIjfCrudtgODPcqCRcJcbMenOeoKfpMI/WdmjYJ8mfd0st0c1z7ST5N
+	ouGTqBrW0IlV9dtnX7GyimOnsHpcYKknhIc/qlPz4M48+WrkPuUNJKukhHEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727360372; x=1727446772; bh=nA3iGzo/SQIyamMeoDEJmwHiNFod
-	p+wiz5wIuWWnobY=; b=Ty6HfEnPwXq2EEwcySKs33pws82hMmfPVarAlnyYDgc4
-	lgzi8o2CCyhKNAUX3PuXg1f425xjEOZlxiZ87u7sbDjm5Osv3OkpnnxmKV2T79kS
-	SfNIMdBXeqZjdQID3qlhwMzgiU058V7MvFrfW/i42X2X+gcuH5UnHL/iLSNnO4jN
-	hXB4WAEQiraJPch5yUvZyxIUx2YN/7UO0hobKcO1+o0tq7nJIsygXYMhLnaE7dMa
-	hDRsCiSjtWPJYGLr2vcvQdJXfnw8/CQUzGn2g0aygPLWYbxqgSZBUhfI20cGcISn
-	S3PKbF/rn3Q5EzIogiKhTCGqbw/SGOrvJs6OQ5EbVg==
-X-ME-Sender: <xms:dG31Zt6HJlviZfHgsRX-J3c4yIaVI4IU-jVPBRN1nr8pCMwfijD-mQ>
-    <xme:dG31Zq5pF3qdlNt7lD9_I0nKLeaKxKbW2Pqb03tP0dkSE2egutX8MaU1LOtlTwZ4u
-    mbDivMKNt1oa1kW8g>
-X-ME-Received: <xmr:dG31Zkerskwuu9TIaDvfN1sTACo_o8icFXz4AL01uTEGSEyIb8LYO9Uab_VzGpjb7Y2HiANFm8kP6zU1k8WFBfxJQW_0Lr98YuBV8M4nUONpVA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedgjeehucetufdoteggodetrfdotf
+	fm2; t=1727360672; x=1727447072; bh=Pb/YL+brktEXvZ9bPO9dOex1J7K4
+	bVxXB2ah5mJRKBg=; b=gGLa9jvI4GmTOG+ebhMtsvwWAMvCnWlGoxRd9zFANcpD
+	/WnI4EROEQhE6ZptiQxuo7OfwQJknielzVxhLNXDQ/Xhdav+aia9mM43Ji1xSdDA
+	9COM9/YIo9NjLh9Gd+aYNoFnQ0M/TGbaofDRUa2dgKUVlqPtXUTlfE/9L+VOOlbI
+	dxPgs7pVIioxoIQ8ATP8d8razjz1yRBIPNk4frAqCR2uSyvMcJRj/nh+00GXSgvZ
+	WD95bokegx7j4GKzute+Eu5uT1Z/yEhps5A0XOmMz/MPXdu4rwBgvSuU7aL1A2Ut
+	DQJulZySsH38IcxmrMe+7DUzA0/0P5Ra/5w44QgyCA==
+X-ME-Sender: <xms:oG71ZiPemiHuZW_MrCgxW9y8Ky48vXwI2nMYdGmOS0WYjYWEi96r8Q>
+    <xme:oG71Zg8jvtxElfILpiO_-5XMaElg_aXe628cDE9WStHKSO_BbJd1T_IZLbHwn6Xzb
+    qR99nGMCA-WxCiZng>
+X-ME-Received: <xmr:oG71ZpS_qBvEX-kmBI67DuB67jsrRoDgDQhmjtNPUXDg7m9repPUeNHa-RGZirDj3VaJw1W2zc8EB-7dPwg6zPNe9O6ZUP0J6X6Qruqa78PCYQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedgjeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeejueekgffhvd
-    euueduvedtvdekvefhheehheevheeuuedvkeejhfeiveffgeelffenucffohhmrghinhep
-    hhhtthhpqdhfvghttghhqdguuhhmsgdrshhhnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohep
-    vddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:dG31ZmIjTOpHR7NmuQipAjkxdOUcDPv0l2ZhPFO51fx30VdrEs6BVQ>
-    <xmx:dG31ZhLh0ACGl7wjobRUzBJQZ3uS4Sul31SlbHt-u76jC4sm0yIBaw>
-    <xmx:dG31ZvycpJzL4LJnX2SpTxoFcL996HDmugSPzcQqBc69m-l_1xo_BQ>
-    <xmx:dG31ZtLQDkr_f2gf8YSI91H1GZN2W_flrGCLkz5pgpQOUxfCaeVMAA>
-    <xmx:dG31ZoU-HEkoJL7nNsXjYiQj8-MNTB1TUrEVkdpW3xvf0Jtkm_xMbYol>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:oG71Ziv2S5ygFbT4wzbcDmMIqJoOL4ib_A5RHYeglS775RZvPPnavw>
+    <xmx:oG71Zqc2akEf-hz50E0NUUnXbrKGyRmIpgwVLaxciEj4PjoNev4d2A>
+    <xmx:oG71Zm3rLfwqoW6Rk9wl4VIiVWhTVQTSkYXWzvX9KtfCxcrNoIw_QQ>
+    <xmx:oG71Zu-8KqIXmnRSUfzTLUtwCr9WyCejL3zs7iUmQ_ZizwbJ1HxGKA>
+    <xmx:oG71Zq5xjaZvdPfa4qHhRYJT57mdBZfsYmyFNLHwymr_n2C04mPjMYkn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Sep 2024 10:19:31 -0400 (EDT)
+ 26 Sep 2024 10:24:31 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ac73607e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Sep 2024 14:18:53 +0000 (UTC)
-Date: Thu, 26 Sep 2024 16:19:28 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4a25d594 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Sep 2024 14:23:52 +0000 (UTC)
+Date: Thu, 26 Sep 2024 16:24:24 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/3] LSan quality of life improvements
-Message-ID: <ZvVtcJOsbbrnWukB@pks.im>
-References: <20240924213404.GA1142219@coredump.intra.peff.net>
+To: John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 1/4] git: pass in repo for RUN_SETUP_GENTLY
+Message-ID: <ZvVumLAFu1LGzXWP@pks.im>
+References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
+ <eceb2d835be7168081d6eeffbce57bba89b5f423.1727185364.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,33 +86,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240924213404.GA1142219@coredump.intra.peff.net>
+In-Reply-To: <eceb2d835be7168081d6eeffbce57bba89b5f423.1727185364.git.gitgitgadget@gmail.com>
 
-On Tue, Sep 24, 2024 at 05:34:04PM -0400, Jeff King wrote:
-> I was fixing some leaks the other day and came up with a few changes
-> that made the process a bit less painful, especially when the leaks are
-> hidden in sub-processes (which is most of them when you are digging into
-> http push/fetch, as I was).
+On Tue, Sep 24, 2024 at 01:42:41PM +0000, John Cai via GitGitGadget wrote:
+> From: John Cai <johncai86@gmail.com>
 > 
-> I hope we're not too far off from a world where leaks are something that
-> pop up in your newly written code, and you're not slogging through
-> existing test scripts. But until then, I hope these might help others.
+> commands that have RUN_SETUP_GENTLY potentially need a repository.
+> Modify the logic in run_builtin() to pass the repository to the builtin
+> if a builtin has the RUN_SETUP_GENTLY property.
 > 
-> If you want to see the before/after, try:
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>  git.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
->   cd t
->   ./t5550-http-fetch-dumb.sh -i
-> 
-> before and after this series. Before you get no leaks reported to stdout
-> with "-i", and way too many without it. After, you get the leaks for the
-> first test that generates them.
-> 
->   [1/3]: test-lib: stop showing old leak logs
->   [2/3]: test-lib: show leak-sanitizer logs on --immediate failure
->   [3/3]: test-lib: check for leak logs after every test
+> diff --git a/git.c b/git.c
+> index 2fbea24ec92..e31b52dcc50 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -480,7 +480,10 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
+>  	trace2_cmd_name(p->cmd);
+>  
+>  	validate_cache_entries(repo->index);
+> -	status = p->fn(argc, argv, prefix, (p->option & RUN_SETUP)? repo : NULL);
+> +	status = p->fn(argc,
+> +		       argv,
+> +		       prefix,
+> +		       ((p->option & RUN_SETUP) || (p->option & RUN_SETUP_GENTLY))? repo : NULL);
+>  	validate_cache_entries(repo->index);
 
-Thanks, all of these look like strict improvements to me! Now I wish
-that I had all of these changes earlier, as that would have made my
-leak-fixing sessions way more enjoyable.
+Should we really pass `repo` unconditionally when `RUN_SETUP_GENTLY` was
+requested? I'd think that we should rather pass `NULL` if we didn't find
+a repository in that case. So this condition should likely be made
+conditional, shouldn't it?
+
+There's also a missing space between the closing brace and the ternary
+questionmark.
 
 Patrick
