@@ -1,118 +1,178 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013F028371
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 21:04:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CECB14AD17
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 22:47:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727384653; cv=none; b=MUNtYIuUPCulTO+lyhMahaznqWjRHtVAaokJgpSNS81SYhGN7BwUCUaVH+8hEuYsTj2jsWw0SHXa+SqMhBa/kD1ByFlf0LkP+1KY1sV3kEaTxKXpe92QMsBCQHXave3WUG5QgWNh2daSTSJCPjL8bNDRIXee+aOQvm+irNi/qGw=
+	t=1727390874; cv=none; b=I0nFrM5I6ViGfHEg0G+yn8aOQlHOWKK3DuK8s6R96q3rX6mGRqthhJ3nWhdkIEzdDn5/IqfAsJyQhLTQZdQaNgodhh1p4lrm8UHR94miadl5QWyZR4mlZuuaBAlae+GWfMMhKVtz+yUdUZ8Wh8AwFneFY8GBxHvlDXi3oyUTnRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727384653; c=relaxed/simple;
-	bh=rQxGgO6Yzzo6RMVTGsBnmcgSAVdy4srbu35sUMpMqfs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=baqtfp8oDUwyCSflY/VjQli7z5w9nsk1cizqUB1edS48eGiQYFOZEB/pB6pJDbdYhqJvXk1/5YztTxXgikAN0HCBX4Sn4CL7VgAEtfwwxoKRqwAUlpoyUB9MjG72YhIh9xVslsT27N67jriIGaNcKB923ebZtxE/cVGFYu4OVDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=sYYc1fqk; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1727390874; c=relaxed/simple;
+	bh=QjvOVzPiRIFddk+Ua90o+TyHjVfbqViKX9gJ3g7GVio=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dCtd9jsVnXIXI1cBt4tbhIxcBMiqhf8KaSIGthCitr+Yah62G0ibobUUjTx0+qR3iz5AbnfiXEMuc0xDoSMdeXNibmKyKNnc7NpSLpmfP6/DTy3d5x5/OraYs0jRPDPczTpJRjhSasNg30kzTgvbArzrDCwWJF0W9SxBSaxhBRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g8lMyhh+; arc=none smtp.client-ip=209.85.166.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sYYc1fqk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1727384649;
-	bh=rQxGgO6Yzzo6RMVTGsBnmcgSAVdy4srbu35sUMpMqfs=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=sYYc1fqkFWXYDwnlmPXIQG4zsawzJbzTWbiZhncTBkeW2Q9JL7oV0l6UN/wP5s43j
-	 xDqq3aQ6f+8OqtGhv529O2xQ4hUGssT7D1/BsbUFBGw+EadSm2lIdgDCHySbQjS0PW
-	 bl+r4tXaSXnQmaT6MyaldsKHILBxNPFcmnsmTqB767lYhidaLCbNkQaXtcZXWbaQIV
-	 cTvZVggH33g4pdJlbGg/1U92OeaRUKYXy6RGYosX90PpNWPh1eqOwIQJ7uOg/retyG
-	 aWM/qXx7AL/Ze6lAWe39XtWmLPez63u33bxKCWZ168MFC1UwM+FGuzvP+CMSzMOgmp
-	 8TKqRrah1Udb6q/25hoLS1saF702X2ONDE9vTCR/ojLVnZrvW0Bf9qieABsNgjS5EI
-	 kUaxtrmm3H2e8358qGej1tRxtWUnJPppu0xEA8JMDG2yjZbRfIS6uBG0HtSe6q6Lz1
-	 9J+Qcxt25lHaTdsoy/0JOSHNpPvGkq39cb8FouUtFAje4KeDLRk
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 921B420073;
-	Thu, 26 Sep 2024 21:04:09 +0000 (UTC)
-Date: Thu, 26 Sep 2024 21:04:08 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Sean Allred <allred.sean@gmail.com>
-Cc: Ron Ziroby Romero <ziroby@gmail.com>, git@vger.kernel.org
-Subject: Re: Pretty output in JSON format
-Message-ID: <ZvXMSKaUWWA-MG9J@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Sean Allred <allred.sean@gmail.com>,
-	Ron Ziroby Romero <ziroby@gmail.com>, git@vger.kernel.org
-References: <CAGW8g7=21pPAgCixjpayEvmw_ns-hcB4e59NP476TKtCRXHPXQ@mail.gmail.com>
- <ZvM39VNFptcfwMGk@tapette.crustytoothpaste.net>
- <m0r097mv19.fsf@epic96565.epic.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g8lMyhh+"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-8349389f9b8so14254539f.0
+        for <git@vger.kernel.org>; Thu, 26 Sep 2024 15:47:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727390872; x=1727995672; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GuvQVa+5Ab10A8NtCxHEy7L/579qLZAT/ea5KUgv9Xs=;
+        b=g8lMyhh+2BBhW9P7UQWmhZz5DiMb2tems+w8HJpYoME0ZqUXY9pXfQKacXU5gSSADo
+         XcxXKFQFK9EUYOFec+++SlWvqobFVO3DbkIuHWvggqiFb1iJTL6iOuPA8AMycT4w7XMm
+         JEvqY1TazWYdD3waNCmogIjp75wuSE5ngsT0nf0ggu0eHUAqlrslPIoDq0WNWQyOSH/n
+         kRnJySnFEnAHakb/ZwvKXbLQVlQIzjtGoIydaoqkR4WdVsmkZ9QQi9d3T5wJBLbcrubd
+         xGwqrzcXIJuUxw9AAABrQQHfXPgXEYaGZJTdeQF7UDR6QxZRr7ozDetJUXwgY9rV7TnC
+         TCKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727390872; x=1727995672;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GuvQVa+5Ab10A8NtCxHEy7L/579qLZAT/ea5KUgv9Xs=;
+        b=A/ZrtwXpz7c18XnG8f2a8bz62DkksD+KOeSm3GU6mYtJ1QL5PLGticArpb83vp52EH
+         s+NZXx7PlnoSgHKu7V1bwzpSsvQSXF6+hHfTO+gdKsjnIkU/blthtqxPDyfLQlGPohjv
+         hI5dkVWyEw6fJxlMWSyDCH8pqCFFk60FMRigB2MULEX0yfMYl5DXJpM8h1u/wTclkhKT
+         m9FUrOtfKpZw/hYYqvCLTdVpVymq+hBKhedb4in8WJQtKt8kRtrQYi+1/csLEtnwGq5+
+         n2XV396vAemvQia9ci+3JH0OM1yPJjSCM2KRFu2aeCQQOEmsO7MxXkSREBq/uzwz6uIL
+         71EQ==
+X-Gm-Message-State: AOJu0YyWjNCEmoBsCqk56gzNI3MomIYMtnS4xhMotfrnCx5HghEyNC/w
+	0zMjOU8cG2dAdQ0vCEgiXBd4Dwi1MbacedTzqbyLtjik3FQmmkTUp7ai1bXCdSvhvdcRFWUjQGD
+	y4a/7MyGqJUO7rHCnWj8iNvj9dEI=
+X-Google-Smtp-Source: AGHT+IH4ZVepR29q+BVNtD9rLVuDHRUbpJ6DD9xzXH6EloFjUT2INYZXoIq52GI91AXaaeFvNIlCDW3r8YV14+xE7PI=
+X-Received: by 2002:a05:6602:15c5:b0:82d:38d:1362 with SMTP id
+ ca18e2360f4ac-834930db098mr145018839f.0.1727390871937; Thu, 26 Sep 2024
+ 15:47:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0OUEqjPJz4TWHLnK"
-Content-Disposition: inline
-In-Reply-To: <m0r097mv19.fsf@epic96565.epic.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---0OUEqjPJz4TWHLnK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <cover.1725206584.git.me@ttaylorr.com> <cover.1727364141.git.me@ttaylorr.com>
+In-Reply-To: <cover.1727364141.git.me@ttaylorr.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 26 Sep 2024 15:47:40 -0700
+Message-ID: <CABPp-BH3y96DjapzLPJ+vCoChQiD_wR9uLc3QPsXqzSUr4AFvQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/8] hash.h: support choosing a separate SHA-1 for
+ non-cryptographic uses
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Patrick Steinhardt <ps@pks.im>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-09-25 at 18:45:54, Sean Allred wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > On 2024-09-24 at 21:52:35, Ron Ziroby Romero wrote:
-> >> What do y'all think?
-> >
-> > I think this is ultimately a bad idea.  JSON requires that the output be
-> > UTF-8, but Git processes a large amount of data, including file names,
-> > ref names, commit messages, author and committer identities, diff
-> > output, and other file contents, that are not restricted to UTF-8.
->=20
-> This strikes me with a little bit of 'perfect as the enemy of good'
-> here. I'm sure there are ways to signal an encoding failure. I would,
-> however, caution against trying to provide diff output in JSON. That
-> just seems... odd. Maybe base64 it first? (I don't know -- I just
-> struggle to see the use-case here.)
+Hi...
 
-I understand JSON output would be useful, but it's also not useful to
-randomly fail to do git for-each-ref (for example) because someone has a
-non-UTF-8 ref, or to fail to do a git log because of encoding problems
-(which absolutely is a problem in the Linux kernel tree).  "It works
-most of the time, but seemingly randomly fails" is not a good user
-experience, and I'm opposed to adding serialization formats that do
-that.  (For that reason, just-send-bytes that produces invalid JSON on
-occasion is also unacceptable.)
+On Thu, Sep 26, 2024 at 8:22=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote=
+:
+...
+> I think most of the review dust has settled up to this point, so I'm
+> imagining that this is the final version of this series for now, or at
+> least very close to it. But if something new comes up, please let me
+> know!
+>
+...
+> Range-diff against v4:
+> -:  ---------- > 1:  6f1ee91fff finalize_object_file(): check for name co=
+llision before renaming
+> -:  ---------- > 2:  133047ca8c finalize_object_file(): refactor unlink_o=
+r_warn() placement
+> 1:  ed9eeef851 ! 3:  41d38352a4 finalize_object_file(): implement collisi=
+on check
+>     @@ Commit message
+>              object name, so checking for collisions at the content level=
+ doesn't
+>              add anything.
+>
+>     -        This is why we do not bother to check the inflated object co=
+ntents
+>     -        for collisions either, since either (a) the object contents =
+have the
+>     -        fingerprint of a SHA-1 collision, in which case the collisio=
+n
+>     -        detecting SHA-1 implementation used to hash the contents to =
+give us
+>     -        a path would have already rejected it, or (b) the contents a=
+re part
+>     -        of a colliding pair which does not bear the same fingerprint=
+s of
+>     -        known collision attacks, in which case we would not have cau=
+ght it
+>     -        anyway.
+>     +        Adding a content-level collision check would have to happen =
+at a
+>     +        higher level than in finalize_object_file(), since (avoiding=
+ race
+>     +        conditions) writing an object loose which already exists in =
+the
+>     +        repository will prevent us from even reaching finalize_objec=
+t_file()
+>     +        via the object freshening code.
+>     +
+>     +        There is a collision check in index-pack via its `check_coll=
+ision()`
+>     +        function, but there isn't an analogous function in unpack-ob=
+jects,
+>     +        which just feeds the result to write_object_file().
+>
+>              So skipping the collision check here does not change for bet=
+ter or
+>              worse the hardness of loose object writes.
+>     @@ Commit message
+>
+>          Co-authored-by: Jeff King <peff@peff.net>
+>          Signed-off-by: Jeff King <peff@peff.net>
+>     +    Helped-by: Elijah Newren <newren@gmail.com>
+>          Signed-off-by: Taylor Blau <me@ttaylorr.com>
+>
+>       ## object-file.c ##
+> 2:  3cc7f7b1f6 =3D 4:  611475d83e pack-objects: use finalize_object_file(=
+) to rename pack/idx/etc
+> 3:  8f8ac0f5b0 =3D 5:  9913a5d971 sha1: do not redefine `platform_SHA_CTX=
+` and friends
+> 4:  d300e9c688 =3D 6:  65de6d724d hash.h: scaffolding for _unsafe hashing=
+ variants
+> 5:  af8fd9aa4e =3D 7:  3884cd0e3a Makefile: allow specifying a SHA-1 for =
+non-cryptographic uses
+> 6:  4b83dd05e9 ! 8:  62abddf73d csum-file.c: use unsafe SHA-1 implementat=
+ion when available
+>     @@ Commit message
+>
+>          These callers only use the_hash_algo to produce a checksum, whic=
+h we
+>          depend on for data integrity, but not for cryptographic purposes=
+, so
+>     -    these callers are safe to use the unsafe (and potentially non-co=
+llision
+>     -    detecting) SHA-1 implementation.
+>     +    these callers are safe to use the unsafe (non-collision detectin=
+g) SHA-1
+>     +    implementation.
+>
+>          To time this, I took a freshly packed copy of linux.git, and ran=
+ the
+>          following with and without the OPENSSL_SHA1_UNSAFE=3D1 build-kno=
+b. Both
+>     @@ Commit message
+>              $ callgrind_annotate --inclusive=3Dyes | grep hashwrite | he=
+ad -n1
+>               59,164,001,176 (58.79%)  /home/ttaylorr/src/git/csum-file.c=
+:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
+>
+>     -    , and generate the resulting "clone" much unsafeer, in only 11.5=
+97 seconds
+>     +    , and generate the resulting "clone" much faster, in only 11.597=
+ seconds
+>          of wall time, 11.37 seconds of user time, and 0.23 seconds of sy=
+stem
+>          time, for a ~40% speed-up.
 
-If we always base64-encoded or percent-encoded the things that aren't
-guaranteed to be UTF-8, then we could well create JSON.  However, that
-makes working with the data structure in most scripting languages a pain
-since there's no automatic decoding of this data.  In strongly typed
-languages like Rust, it's possible to do this decoding with no problem,
-but I expect that's not most users who'd want this feature.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---0OUEqjPJz4TWHLnK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZvXMRwAKCRB8DEliiIei
-gSewAQDf/0B8CcTtfyVWzGNwJagIuFlW0pCxacpq2AXhDbazjAEAt9PNql80LGBN
-GeWOJ9taT+lWvVpeXkX9J9VBomDhPwU=
-=54G1
------END PGP SIGNATURE-----
-
---0OUEqjPJz4TWHLnK--
+This round looks good to me.
