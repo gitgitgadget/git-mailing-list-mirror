@@ -1,142 +1,118 @@
-Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE32E522A
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 19:44:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013F028371
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 21:04:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727379846; cv=none; b=ZuaWgNil4mRKmhkrqyRAO9iZiywqqMJdjsI2v5ZIdBlk8ehrxbOUx8riJVu3TP2VjQ3tg39OUpE37W5HDqtCI/ufrKqNhkzouOqLXdYQnCoy2VEtIhvVbJSTNrxQDxzG0xjJz0hBsn/IJTaSbBpnk9cXit5eF2UygbuDNuZxa9Y=
+	t=1727384653; cv=none; b=MUNtYIuUPCulTO+lyhMahaznqWjRHtVAaokJgpSNS81SYhGN7BwUCUaVH+8hEuYsTj2jsWw0SHXa+SqMhBa/kD1ByFlf0LkP+1KY1sV3kEaTxKXpe92QMsBCQHXave3WUG5QgWNh2daSTSJCPjL8bNDRIXee+aOQvm+irNi/qGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727379846; c=relaxed/simple;
-	bh=HLONUmF58GyLN9BI1bnViDll7IxeiCde24pWewWct60=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=KXPgF7FsXQWrjJqQr9Y3scUdxzpzLJBrjIZxHEuFo7O9OVg5Qf0I7IBeYpK86J3zy3mZN8SrK6DdIRbBKk6MN2ugx1y4NhAUn95mfz1b7FJm6zH85S3QdtyLrpc7iwGl3w4sogZEP0nDZprMdooGwzJCJqUdaAbtvs3IFtBvrP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mad-scientist.net; spf=pass smtp.mailfrom=mad-scientist.net; dkim=policy (768-bit key) header.d=mad-scientist.us header.i=@mad-scientist.us header.b=VArtwLR1 reason="signing key too small"; arc=none smtp.client-ip=44.202.169.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mad-scientist.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mad-scientist.net
+	s=arc-20240116; t=1727384653; c=relaxed/simple;
+	bh=rQxGgO6Yzzo6RMVTGsBnmcgSAVdy4srbu35sUMpMqfs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=baqtfp8oDUwyCSflY/VjQli7z5w9nsk1cizqUB1edS48eGiQYFOZEB/pB6pJDbdYhqJvXk1/5YztTxXgikAN0HCBX4Sn4CL7VgAEtfwwxoKRqwAUlpoyUB9MjG72YhIh9xVslsT27N67jriIGaNcKB923ebZtxE/cVGFYu4OVDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=sYYc1fqk; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=policy reason="signing key too small" (768-bit key) header.d=mad-scientist.us header.i=@mad-scientist.us header.b="VArtwLR1"
-Received: from eig-obgw-6004a.ext.cloudfilter.net ([10.0.30.197])
-	by cmsmtp with ESMTPS
-	id tgyLstHB4iA19tuNesEY0E; Thu, 26 Sep 2024 19:42:26 +0000
-Received: from box5922.bluehost.com ([162.241.30.80])
-	by cmsmtp with ESMTPS
-	id tuNdstgzZWdNZtuNdskphz; Thu, 26 Sep 2024 19:42:25 +0000
-X-Authority-Analysis: v=2.4 cv=FtTO/Hrq c=1 sm=1 tr=0 ts=66f5b921
- a=u+82WREdhvUKZ7QTvcqjvQ==:117 a=u+82WREdhvUKZ7QTvcqjvQ==:17
- a=IkcTkHD0fZMA:10 a=EaEq8P2WXUwA:10 a=e_eVUG9BRDgA:10
- a=IyqtRJjmI1ZsupcrM6sA:9 a=QEXdDO2ut3YA:10 a=9XL2PSxQjqKr3s6xf5LH:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=mad-scientist.us; s=default; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
-	Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=aiIWqm9tHavgLGkJ2+J+QNyO03yeBHA4WRSQb+Y0mzY=; b=VArtwLR1MXBYnj2QZOyqQWGI34
-	1oOWXeldAj/IU+V+JC8eRHVrSU0X4WBBy3AhzRheibO18swDsRVoMDE6dV9216AoqVCoixbunbZ4u
-	k81jjkFA7WhKATQ2CV09noIc2;
-Received: from [160.231.220.149] (port=46811 helo=llin-psh13-dsa.dsone.3ds.com)
-	by box5922.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <paul@mad-scientist.net>)
-	id 1stuNd-002W4i-0Y
-	for git@vger.kernel.org;
-	Thu, 26 Sep 2024 13:42:25 -0600
-Message-ID: <10debb75cf7d29bc7fb907feae544769f2f2e3be.camel@mad-scientist.net>
-Subject: Re: ./configure fails to link test program due to missing
- dependencies
-From: Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Date: Thu, 26 Sep 2024 15:42:24 -0400
-In-Reply-To: <6e3ac135-8357-4d2d-a49b-de7f1ab4da95@gmail.com>
-References: 
-	<GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
-	 <xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
-	 <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com>
-	 <xmqqy13oa8oe.fsf@gitster.g> <ZvKsH1Ct-YwBPA_f@pks.im>
-	 <xmqqwmj1t0hp.fsf@gitster.g>
-	 <5bd2f41c92a00f7799bc543e229b16fa7a473760.camel@mad-scientist.net>
-	 <6e3ac135-8357-4d2d-a49b-de7f1ab4da95@gmail.com>
-Organization: Please remain calm--I may be mad but I am a professional!
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (by Flathub.org) 
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sYYc1fqk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1727384649;
+	bh=rQxGgO6Yzzo6RMVTGsBnmcgSAVdy4srbu35sUMpMqfs=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=sYYc1fqkFWXYDwnlmPXIQG4zsawzJbzTWbiZhncTBkeW2Q9JL7oV0l6UN/wP5s43j
+	 xDqq3aQ6f+8OqtGhv529O2xQ4hUGssT7D1/BsbUFBGw+EadSm2lIdgDCHySbQjS0PW
+	 bl+r4tXaSXnQmaT6MyaldsKHILBxNPFcmnsmTqB767lYhidaLCbNkQaXtcZXWbaQIV
+	 cTvZVggH33g4pdJlbGg/1U92OeaRUKYXy6RGYosX90PpNWPh1eqOwIQJ7uOg/retyG
+	 aWM/qXx7AL/Ze6lAWe39XtWmLPez63u33bxKCWZ168MFC1UwM+FGuzvP+CMSzMOgmp
+	 8TKqRrah1Udb6q/25hoLS1saF702X2ONDE9vTCR/ojLVnZrvW0Bf9qieABsNgjS5EI
+	 kUaxtrmm3H2e8358qGej1tRxtWUnJPppu0xEA8JMDG2yjZbRfIS6uBG0HtSe6q6Lz1
+	 9J+Qcxt25lHaTdsoy/0JOSHNpPvGkq39cb8FouUtFAje4KeDLRk
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 921B420073;
+	Thu, 26 Sep 2024 21:04:09 +0000 (UTC)
+Date: Thu, 26 Sep 2024 21:04:08 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Sean Allred <allred.sean@gmail.com>
+Cc: Ron Ziroby Romero <ziroby@gmail.com>, git@vger.kernel.org
+Subject: Re: Pretty output in JSON format
+Message-ID: <ZvXMSKaUWWA-MG9J@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Sean Allred <allred.sean@gmail.com>,
+	Ron Ziroby Romero <ziroby@gmail.com>, git@vger.kernel.org
+References: <CAGW8g7=21pPAgCixjpayEvmw_ns-hcB4e59NP476TKtCRXHPXQ@mail.gmail.com>
+ <ZvM39VNFptcfwMGk@tapette.crustytoothpaste.net>
+ <m0r097mv19.fsf@epic96565.epic.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5922.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 160.231.220.149
-X-Source-L: No
-X-Exim-ID: 1stuNd-002W4i-0Y
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (llin-psh13-dsa.dsone.3ds.com) [160.231.220.149]:46811
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfBoACT8kCrowkNUDayJlcNGzHi7hUmDBgky76hpirmC0bOPtENB1dsweTNnWqhT7kkRwwuUEF5g3YgxH1Iw9eibgf1+Fg553L1U8Yt2NqPHQPvgfNAT9
- Kjl4/3ktjq7Ak+n/1opon4c8AB7rkUysfJ5Ev7MLggfLmCfuyuGg3xpP44ghh0K/Bdj3LTLvMmC8EC2d2CZWLml+THAHnt4VShI=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0OUEqjPJz4TWHLnK"
+Content-Disposition: inline
+In-Reply-To: <m0r097mv19.fsf@epic96565.epic.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Wed, 2024-09-25 at 21:35 -0400, Eli Schwartz wrote:
-> On 9/25/24 11:33 AM, Paul Smith wrote:
-> > On Tue, 2024-09-24 at 10:39 -0700, Junio C Hamano wrote:
-> > > Our dependance of heavy use of GNU-ism in our Makefiles makes an
-> > > argument that make is the common denominator a fairly weak one,
-> > > so
-> > > the single one that eventually we use does not have to be "make",
-> > > but it has to be something available widely and easy to learn.
-> >=20
-> > Regardless of what one might imagine :), I am not advocating GNU
-> > Make as the perfect solution: it certainly has downsides and
-> > disadvantages.
+
+--0OUEqjPJz4TWHLnK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2024-09-25 at 18:45:54, Sean Allred wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 >=20
-> :)
+> > On 2024-09-24 at 21:52:35, Ron Ziroby Romero wrote:
+> >> What do y'all think?
+> >
+> > I think this is ultimately a bad idea.  JSON requires that the output be
+> > UTF-8, but Git processes a large amount of data, including file names,
+> > ref names, commit messages, author and committer identities, diff
+> > output, and other file contents, that are not restricted to UTF-8.
 >=20
-> I've read your article about why people should use autoconf!
->=20
-> (By the way: I had a bit of a... chuckle, when I read in your
-> previous email that as the GNU maintainer of Make, you build lots of
-> projects with Make or CMake, but not with GNU autoconf / automake. I
-> assume that was just bad wording?)
+> This strikes me with a little bit of 'perfect as the enemy of good'
+> here. I'm sure there are ways to signal an encoding failure. I would,
+> however, caution against trying to provide diff output in JSON. That
+> just seems... odd. Maybe base64 it first? (I don't know -- I just
+> struggle to see the use-case here.)
 
-This is actually part of my $DAYJOB, not as the maintainer of GNU Make.
-It's not even part of my job there, but I like to have modern tools and
-I hate to mandate certain distributions and distro releases for
-everyone, so I build a complete toolchain including its own sysroot
-that everyone checks out from a Git repo to build our product.
+I understand JSON output would be useful, but it's also not useful to
+randomly fail to do git for-each-ref (for example) because someone has a
+non-UTF-8 ref, or to fail to do a git log because of encoding problems
+(which absolutely is a problem in the Linux kernel tree).  "It works
+most of the time, but seemingly randomly fails" is not a good user
+experience, and I'm opposed to adding serialization formats that do
+that.  (For that reason, just-send-bytes that produces invalid JSON on
+occasion is also unacceptable.)
 
-At my $DAYJOB we use CMake, actually, so I'm also very familiar with
-it.
+If we always base64-encoded or percent-encoded the things that aren't
+guaranteed to be UTF-8, then we could well create JSON.  However, that
+makes working with the data structure in most scripting languages a pain
+since there's no automatic decoding of this data.  In strongly typed
+languages like Rust, it's possible to do this decoding with no problem,
+but I expect that's not most users who'd want this feature.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-But when I said "make" previously I meant to encompass autoconf
-projects.  You're right, it's not really precise to compare make to
-cmake since cmake build makefiles as well.  It's more accurate to
-compare it to autoconf.
+--0OUEqjPJz4TWHLnK
+Content-Type: application/pgp-signature; name="signature.asc"
 
-So, I should have said "autoconf and cmake" :)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
-However there are also projects that use raw makefiles and no build
-generator tools.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZvXMRwAKCRB8DEliiIei
+gSewAQDf/0B8CcTtfyVWzGNwJagIuFlW0pCxacpq2AXhDbazjAEAt9PNql80LGBN
+GeWOJ9taT+lWvVpeXkX9J9VBomDhPwU=
+=54G1
+-----END PGP SIGNATURE-----
 
-
-I certainly didn't mean to imply that requiring Python is a show-
-stopper for Git.  There are lots of options depending on needs.  But it
-can't be argued that it's not more work for the builder than using GNU
-Make.
-
-Maybe this is will be deemed not worth worrying about given the
-alternatives, and I wouldn't argue with that.  I just raise it so it
-can be given consideration before a decision is made to (for example)
-drop support for makefiles.
+--0OUEqjPJz4TWHLnK--
