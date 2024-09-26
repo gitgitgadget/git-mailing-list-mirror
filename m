@@ -1,105 +1,148 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDE114B086
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 15:57:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E9753368
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 16:04:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727366252; cv=none; b=ZMc3RG/ckig7WvkOqgxt/4A0KRx1Y8QwIPgYiuHLE56FFk+bYtOYU0lfT8s7KDyS6hzwYP24JSYm3tjNYvnUHTBMnSa7J3AVhPaTRhc0PBOfBV8r0YzXXvOhqTlX2QWcs6Ug3mz6Kdajy49M93gbDzHb6W1StZLOEHZ2JBZLKaU=
+	t=1727366674; cv=none; b=kupJr5p/ns72J/O5sQqxaxr7qgGdNpkgKEiNpSkwf/LXri8sdaDgKmGyqOuYeLzEjU0Kbey12dyvyxtWFVHAn7f76ALpEtCXi0l0UR0DO7TMU9qZLXEzVbJa9ubHGBk6xrppF6OnUaluJVMfk3mnEw2L2wetLvY0wvoe9TdBB1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727366252; c=relaxed/simple;
-	bh=FsotBioymwZ31JhU5dqgI40nAr+KcM8WP6Fx5942z+4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=itJ/yB0e3JDxORBcPMVwBJ5wsOV6W9qKyPkI6d8UQvYRBnl/lulqZ2zHRh/RJzHSD0LzkEv29ERjmcPHQdA6x4f52jpy5gGE3SXCsTj+fxXiLizDGlvtvzds1aCmG7has4mOEfKj5bi3WzfO2//DyRz3M62xwvD2LKxzOr49APM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eMxaoLUi; arc=none smtp.client-ip=209.85.215.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eMxaoLUi"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-7e6ba3f93fdso680895a12.1
-        for <git@vger.kernel.org>; Thu, 26 Sep 2024 08:57:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727366250; x=1727971050; darn=vger.kernel.org;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ITqZBg/xfBnezo7sWGPjThK3oRq4ZgmS7hH4DNKkJz4=;
-        b=eMxaoLUiN9bxib0Q+kuySh5Xw+kkgJTYzeVTRVDvfd4JE5CZtCn3f98OH6IBpt3lPI
-         f6bJEfeQhaHEyjjHc1Py0LFu4m7i51XjBC20ctQv47IXz4gV+6iTtfZJpf8sBn3VI18P
-         jYS0nLKGvIhvytuixsmkGtZ4Pmtyw9gEg8m0kllMr4D4/gxZmtyb+J7/HMId5SVr/GXC
-         WfdaxhIz0ZYnbXS53gpRQRmMR1y+jJAw1Vt76fZc6H7SRjbARSqGcK/CInO2nAM9yW4x
-         SI+esoFAsoUNfggWN+ofcfqBhISHCuqO3xdwhz2DduZh+K7X4rZucNhNhuOJslryJbGo
-         o8Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727366250; x=1727971050;
-        h=mime-version:message-id:date:user-agent:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ITqZBg/xfBnezo7sWGPjThK3oRq4ZgmS7hH4DNKkJz4=;
-        b=aJcvZX+8yQBFVTA0sKu5jc+Hy/CxEap8dgEWXi+IuamBHSFnyzMiAVJb9ytpju4nHR
-         NNbChQqKJLfszVcQ+MbRfWD+vRdJh84JO/pJF96Qwlv2Km9UiX2VxeT2ZFUtCfLYieAs
-         TUAP4iuSt3okhjge0yvE9CmrIOdRRyjytJ5wzQbMPo2lWa6FFp15L2TaMGY+TYn8b9/Q
-         0kTM+P4A+X5jxP8DSdwJRByTBYPvdF6q0d0A4yvNbSIxfYu4s7ZbgAUSo7Rk/OF9DAFN
-         CP2eyPNg43fohN/Pg2dGDGiOe6syJaWB7qaEckDTdDY63/7YUJYuXUcFvXuUkgywPyIH
-         U+Uw==
-X-Gm-Message-State: AOJu0YzrBa2O1ULWRnw4S4FXzzMTTVnyByDSMM4fRN7SkutVjrACh3RE
-	ROMo7suwFewD4CjPcOtBxLcP8Wlypxx/4lWcmNDWcoaY65WB1Eh25zhA3Q==
-X-Google-Smtp-Source: AGHT+IGWlPaLcPy4HV71uo4hPUGHHxAtblxDiBPN9UXD6cj5XDikd06ApjyoXt2EKfi5jVhOEaRz2w==
-X-Received: by 2002:a05:6a21:1709:b0:1d0:3a28:d2a7 with SMTP id adf61e73a8af0-1d4fa806e8bmr217763637.41.1727366249929;
-        Thu, 26 Sep 2024 08:57:29 -0700 (PDT)
-Received: from localhost (217.108.125.34.bc.googleusercontent.com. [34.125.108.217])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71b2652bb5esm51425b3a.175.2024.09.26.08.57.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 08:57:29 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Jonathan
- Nieder <jrnieder@gmail.com>,  Emily Shaffer <nasamuffin@google.com>
-Subject: Re: [PATCH] BreakingChanges: early adopter option
-In-Reply-To: <ZvVMNMiyjd4xfHzY@pks.im> (Patrick Steinhardt's message of "Thu,
-	26 Sep 2024 13:57:52 +0200")
-References: <xmqq7cb77810.fsf@gitster.g> <xmqqploydn7j.fsf@gitster.g>
-	<xmqqtte77f0n.fsf@gitster.g> <ZvVMNMiyjd4xfHzY@pks.im>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Thu, 26 Sep 2024 08:57:28 -0700
-Message-ID: <xmqqed56mmqf.fsf@gitster.g>
+	s=arc-20240116; t=1727366674; c=relaxed/simple;
+	bh=9xOodYjTy4mygRGcu/yWTO1zKZR8X8Kc75+pWhjeVGU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gWzaj+iKkV+OuZPayvpaA0um5PFIAvBAtr8Q4SELXZSfblj6GeF/BBJwNSRJlS2QMxfGi/ZuonlHYkcptWmyMF1+DlTn5rJFF1OkI134uQ74ttzA8dsxnRbGatP2HNJ6w2oiI3MTQnObxGxlBZ+EnFde3powTk20/wzHm/Ul9fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Message-ID: <71ed5967-0302-42bc-97c7-81886408d688@gentoo.org>
+Date: Thu, 26 Sep 2024 12:04:27 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: ./configure fails to link test program due to missing
+ dependencies
+To: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Henrik Holst <henrik.holst@outlook.com>,
+ "git@vger.kernel.org" <git@vger.kernel.org>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Jonathan Nieder <jrnieder@gmail.com>
+References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+ <xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
+ <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com> <xmqqy13oa8oe.fsf@gitster.g>
+ <ZvKsH1Ct-YwBPA_f@pks.im> <b6b131cb-683c-4140-9769-290b622721e1@gentoo.org>
+ <ZvOTL0cG8qRY8OXe@pks.im> <1f002f86-9212-4639-8804-898bc62726e5@gentoo.org>
+ <ZvOn_wChzEgXtpMd@pks.im> <3a303c6e-35b0-4428-9d23-799b33194330@gmail.com>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <3a303c6e-35b0-4428-9d23-799b33194330@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------pdpDbdNblJNM4O3A0OUDw9Km"
 
-Patrick Steinhardt <ps@pks.im> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------pdpDbdNblJNM4O3A0OUDw9Km
+Content-Type: multipart/mixed; boundary="------------2sF0XIklnyzcrWySN9eK70eU";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Henrik Holst <henrik.holst@outlook.com>,
+ "git@vger.kernel.org" <git@vger.kernel.org>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Jonathan Nieder <jrnieder@gmail.com>
+Message-ID: <71ed5967-0302-42bc-97c7-81886408d688@gentoo.org>
+Subject: Re: ./configure fails to link test program due to missing
+ dependencies
+References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+ <xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
+ <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com> <xmqqy13oa8oe.fsf@gitster.g>
+ <ZvKsH1Ct-YwBPA_f@pks.im> <b6b131cb-683c-4140-9769-290b622721e1@gentoo.org>
+ <ZvOTL0cG8qRY8OXe@pks.im> <1f002f86-9212-4639-8804-898bc62726e5@gentoo.org>
+ <ZvOn_wChzEgXtpMd@pks.im> <3a303c6e-35b0-4428-9d23-799b33194330@gmail.com>
+In-Reply-To: <3a303c6e-35b0-4428-9d23-799b33194330@gmail.com>
 
->> How much more costly to do at runtime is still subject to further
->> analysis, I think.  I know that it means we need to build and
->> install the docs twice to support "git -c feature.git3=on help", for
->> example, but I am not sure what the best way to use CI would be
->> (write tests that check features with different behaviour by
->> explicitly running them with "git -c feature.git3=on"?  Run the same
->> set of tests in a separate job that has "[feature] git3" in its
->> $HOME/.gitconfig?).
->
-> One problem with runtime toggles are commands that go away entirely. We
-> can of course hide them away in various different places and make it
-> impossible to call them. But one of the downsides is that it is not
-> "true" to the actual removal, as for example the dashed builtins may
-> still exist.
+--------------2sF0XIklnyzcrWySN9eK70eU
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Yes, as I said, such a change to various infrastructure that are not
-specific to Git 3.0 boundary (e.g. run_builtin() dispatch needs to
-tell which new commands are from the future and hide them unless
-configured) is costly but reusable once written.  A new or removed
-command that is not a built-in is even harder to manage at runtime.
+On 9/26/24 9:55 AM, Phillip Wood wrote:
+> One thing to bear in mind is why our CMakeLists.txt was introduced in
+> the first place [1]. Visual Studio's CMake integration means that so
+> long as git-for-windows is installed building git is simply a case of
+> clicking on a button, there is no need to install extra software or
+> plugins. I'm not sure the same is true for meson and I don't think we
+> want to end up supporting both.
 
-> That makes me personally lean into the direction fo making this a build
-> time knob. The big downside of course is that we'll have less exposure
-> as almost nobody ever would build their Git in such a way. But the big
-> upside is that we end up executing the code exactly as it would look
-> like if it were removed, so the coverage we get e.g. both from Git devs
-> and from our CI would be much more telling.
 
-Sad but I tend to agree.
+I can't really offer suggestions on what may or may not come
+preinstalled in Visual Studio. That thread does suggest the major
+problem cmake was trying to solve is:
+
+- having to install the git-for-windows sdk at all (is it still
+  necessary? I guess so, because POSIX shell and perl and mingw
+  runtimes. Unsure how either meson or cmake could solve this.)
+
+- people who are *unfamiliar with the command line and want a GUI*
+
+
+Meson has a trivially installable VS Code plugin that is supposed to
+handle setting up the project for you. You can generate either ninja
+projects or Visual Studio solutions. "One may need to install a plugin"
+is hopefully not as big a barrier to entry as "install a bunch of stuff
+then go to a shell and run make vcxproj". Is the criteria truly "must be
+one button click"?
+
+I'm aware that Visual Studio and VS Code are different IDEs but I know
+nothing really about the former, SEO for distinguishing between the two
+is *atrocious*, they use the same exact plugins marketplace, and I
+figure using VS Code ought to be easy enough for such users if
+necessary, anyway.
+
+I think that discussion between Meson / CMake / GNU Make / etc. should
+be based on technical merit with attention paid to ease of use without
+coalescing down to "unfortunately, our choice has been made for us. We
+must support a *specific* Windows IDE and use whichever build system is
+preinstalled inside that IDE, because it must be a one-button solution
+with no dependencies".
+
+Stuff like "how painful is it for a Windows contributor to set up an SDK
+and then also go mess around with Makefile targets and then load the
+result into their IDE" is an interesting discussion to have but not
+quite the same as saying "go to the marketplace and install such and
+such plugin" is an obstacle.
+
+
+--=20
+Eli Schwartz
+
+
+--------------2sF0XIklnyzcrWySN9eK70eU--
+
+--------------pdpDbdNblJNM4O3A0OUDw9Km
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZvWGCwUDAAAAAAAKCRCEp9ErcA0vV22r
+AQDiMNq0It93RURNRZq4hKmulAjX2ltat+6peG+q7T55qAEA1Rkvy+vk4VILTbM9mC+bhdLrJxaC
+Hew2Msw5xMbEMQk=
+=zsfl
+-----END PGP SIGNATURE-----
+
+--------------pdpDbdNblJNM4O3A0OUDw9Km--
