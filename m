@@ -1,124 +1,148 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818AC33C9
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 18:28:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF828176AD8
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 19:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727375318; cv=none; b=iB5H0VB7bDQ6HDwJHQmnQbJ5CN+1cJdoOuX0aYGtiU6q0kO+7hnzI5PKGXIo1VjaudTghq9rsKTxU8BOcZfVE7WBta1dI5Og79MNb/Jfu0WAmUjykbcjwjm30sBSHRCmLmwLu+jSUUgS3wCh0mDPhsczv8UzUbporVIf69/CJCw=
+	t=1727377206; cv=none; b=uP2592W7CRL5039vMtqzGCyX1UGcn9DtrogAJ5y4CpKPzyo6p7m+8KFtYRZj/L5alj+2dqJ71nl0KRcpwmdGUZSsYh5vzi1ANcDsSbvSmoP5Jj7gXwEsy0bcYt7Kcymlnm6tcCTQfIpdr5fZisNO8Ij6oBGAvbGU4Mg9/pW5n3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727375318; c=relaxed/simple;
-	bh=9/EkrAnKFwHAzj5S+DISraXXBiOMCKR2XdBrxXDUNAE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eoIBEEMPZCLODk4UEmmDJAEdMkU5vYJCS64/zGpoBMz/aRwWORasFPXNVsizUlwcM3iBpWvz2OEZCCR9Q9mAKsiBKuBmj9EJVm5buBo3SOJaeM+zxyBEEX7QBl/3XJqIyqG0Zwatczi5mOdoHSCJ1DrOb22JBhB0uWrpkLzMiPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KOsxoAGe; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+	s=arc-20240116; t=1727377206; c=relaxed/simple;
+	bh=IzjYbVUJcdbB03ruB1NLIGXD9+sqTwte8e2xn84O2hE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nIwgvtzqdKhE/Gt/D+0oUEwyIeE1OR5IeKec3TJteHAjP73er4gpYZJsEL2QyH6r7ihiKMwRImLVaWWaAXSZD8LCnO2QcnRoTbBUHWO8DOUgC3/smL1Gi+mGxW+Itkl18s3z23PULyRisSyXENbGwUlmPED/rk3O/BmdWjrq1Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MoOzMf2+; arc=none smtp.client-ip=209.85.219.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KOsxoAGe"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2053616fa36so15731205ad.0
-        for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:28:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MoOzMf2+"
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e04196b7603so1337995276.0
+        for <git@vger.kernel.org>; Thu, 26 Sep 2024 12:00:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727375316; x=1727980116; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4gKSAj/QA9zIXIhnBOpqtsIt8zz8EB13v/jrOULriZY=;
-        b=KOsxoAGeoKxTtPDZae9G5+KNrnAJRFtNE+wAAK/ym7x1tnsEbIUxh0uP87J3Xt9oC7
-         71y6xHfk8WZ4j7nikRajBOV21Zse2+sFuGlrHtycYM06b365PVdTsPnSKcOdz//0yPSW
-         HmemE+G6DLSn/lHhTNlvMlrePUOZjLWIyBNYzVcUbpJq3ZhuGMwTXCSYdnUZrHlW9iY+
-         LPnm/utdMBgI0zWoWFZlllmsYtUULOTlr2ItqRzgzmYR2fjpUjqLNcModthlbpJChMIX
-         tLq/cirjkQdy5wwZlcZF04c4lHpdSxZhjMyxKen4Wjf1LLD/xxwkfcDQ6CBkw2la4aUf
-         K7Pg==
+        d=gmail.com; s=20230601; t=1727377204; x=1727982004; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LSwwsWIGd/aBmR149a89zv8butdGLq8KT2D2+7ZJyoY=;
+        b=MoOzMf2++56DvShW77WEWGHz4nmDu0xSGmgcLQfIoyPSPSE9UMStQKDBEFTDyUygDK
+         R5gjwXgwxgt4TsPXvVKr7fwvduVHyDC2BDa1dWKnxL25Dk5dyNARuWT/s7RaLS0DgguQ
+         mbLxkpI5q65DjDgnKagaM68Hqo4p1ojt7XZxbvEnXvG9IQGkNqSX9VBb96Y6VsNfcDCP
+         GT3stE6sg0iyTopM66iP7KiMlYGSRrn0gckyxHEdsh3VsYj448C0pEjGbefO5e8CLSRq
+         Uxqgmo5RRcBHQTx4DyMcg/djVNjGWxvm3sHQGy5KhlFUp3GVapTORkRarQZ8hZEv0IbI
+         NnKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727375316; x=1727980116;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4gKSAj/QA9zIXIhnBOpqtsIt8zz8EB13v/jrOULriZY=;
-        b=eUbByQ0fSuyXWxQJvCAYt+H4+XsbnpGXQfu32tDEx5LEIMitH+aYEKjD2olpvOKqXj
-         gDPwHF1lJQbJW77Kv2/dXHS8mzqi2AjDeRpUw3uKsbc1bC3BarcxgMwLVVxbk+yMqcVV
-         ul7C8zkmGuFf1wy6Q/ip8B9elQv4cJp00qQvi/Nt9LeikjKx/GuIwP7lW7DsFAqVMqRq
-         94Z16aVK5S+BrmROPwFnKWL3U6jRju+AlphcTkOJx0+CAPx0TU+G6ajqBhGwVua7jB5U
-         ibEqSDsczvZCEvCfuWYzP3MxhqEDoSIpJlm7HeZKvU3tBGHgI/t3m0fiSbOojdi2eoTU
-         MDdA==
-X-Forwarded-Encrypted: i=1; AJvYcCWL3in4YzXUbKthXWmQlSG//Pb5YHbF0OT9QDpk3TfX/p4y1AJJEZdpM3W7mcqHTjsbILE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxnoX65cneXIygx9CU8a/9C7GiXsFAmJmRU18FJmn5N9a2wh6SL
-	C88HUJyXx9Cw2zOh6yGiwCIk2JsGs5C78RgRIi91rDYYFRSUd8fN
-X-Google-Smtp-Source: AGHT+IHmCLq02g49WtiGVG2EWyNEMy1rkUmPM/tglvAFtPmjHj6RI7BlNFTsuh0dHv+/09SOIGGSfA==
-X-Received: by 2002:a17:902:ec8b:b0:206:ac4b:8157 with SMTP id d9443c01a7336-20b3776db50mr9214925ad.31.1727375315616;
-        Thu, 26 Sep 2024 11:28:35 -0700 (PDT)
-Received: from localhost (217.108.125.34.bc.googleusercontent.com. [34.125.108.217])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37da8971sm1510185ad.103.2024.09.26.11.28.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 11:28:35 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,  git@vger.kernel.org,
-  Christian Couder <chriscool@tuxfamily.org>,  Kaartic Sivaraam
- <kaartic.sivaraam@gmail.com>
-Subject: Re: [GSoC][PATCH] unit-tests: add tests for oidset.h
-In-Reply-To: <CAP8UFD2yTMNmx0n1jhOu7dz_4XeOyTy1iLmRWYmuf9QJf75hsQ@mail.gmail.com>
-	(Christian Couder's message of "Mon, 26 Aug 2024 11:31:22 +0200")
-References: <20240824172028.39419-1-shyamthakkar001@gmail.com>
-	<CAP8UFD2yTMNmx0n1jhOu7dz_4XeOyTy1iLmRWYmuf9QJf75hsQ@mail.gmail.com>
-Date: Thu, 26 Sep 2024 11:28:34 -0700
-Message-ID: <xmqqy13ei819.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        d=1e100.net; s=20230601; t=1727377204; x=1727982004;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LSwwsWIGd/aBmR149a89zv8butdGLq8KT2D2+7ZJyoY=;
+        b=VdRrjZ+K6io+5rrBD4kGRHxKnB/FVg3adzhgRjeEtWyxDfevwjGBMmtLxEdf4eJJQ/
+         CR1qb3H7ecn/tpkh4c09wOJlWEL8dYDR0XEFgLD1HYA4KsZaPr2YpbHOd1/QIvyFRHDa
+         eKuYCr6rGMWTY9Cym8b83lYx0l42075CYOgCXgt1V19Rmy8bwxba4t7Dvmo+oF52UTvv
+         EKvheqYpFTnyh5bZcGY+1eEmwTeAPxAsuiEEx9gE6GdimSB/dpIsJwwZLsD4WGd/EXpV
+         9sa0AbL+DBCfGTKJKuR35afEk3+mC8Z8Y00KuO8QPcW9WyE/1wIsKm4b67KhIlRb65SZ
+         rTXA==
+X-Forwarded-Encrypted: i=1; AJvYcCWNYPohJ5l9UKQVuR/bqadtDxvEjfz9NoM3nX6pmEQAevSpBcrPgCv5inIVW+GCrREzteQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyjU8c0Mom05BVeLOtLOGGYF1KcaP5NVwuTw1Xa3qmMTeh+5psN
+	XL3G192zZbnpZwwMZJsKjgrp3g3iIh0D5kyfZ/VPJ+kxKFjTPw3lxll8+LaiYC1+2h55m5RbRNp
+	MratjQSzabH76EsB0usEBgvCjFG39YzqI
+X-Google-Smtp-Source: AGHT+IEbEBGOHlXUUmM9gWgZrM2S2slJ9AGgIku/cLIfgCzUTnsJ4i7+f2jWVtg4mpHmNR1kmVCUBJzxCjdGKxSsnvU=
+X-Received: by 2002:a05:6902:a91:b0:e22:3ae6:fd04 with SMTP id
+ 3f1490d57ef6-e2604b48967mr474279276.32.1727377203397; Thu, 26 Sep 2024
+ 12:00:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
+ <4ce463defa807fb99eef6ce7abcd758fc2065c13.1727185364.git.gitgitgadget@gmail.com>
+ <xmqq7cb0ucm0.fsf@gitster.g>
+In-Reply-To: <xmqq7cb0ucm0.fsf@gitster.g>
+From: John Cai <johncai86@gmail.com>
+Date: Thu, 26 Sep 2024 14:59:50 -0400
+Message-ID: <CAOCgCU+hv07+FCupr2Ok9LJm6HYT6n6t+ZpifAhwrRnMzOnnWA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] apply: remove the_repository global variable
+To: Junio C Hamano <gitster@pobox.com>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi Junio,
 
-> On Sat, Aug 24, 2024 at 7:20 PM Ghanshyam Thakkar
-> <shyamthakkar001@gmail.com> wrote:
->>
->> Add tests for oidset.h library, which were not previously present using
->> the unit testing framework.
+On Tue, Sep 24, 2024 at 2:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> It might be interesting to also say if there are tests for oidset in
-> the end-to-end tests, not just in the unit test framework. Also I
-> think oidset.h is more an API than a library.
-> ...
-> If initializing the hash algo fails here, it is likely because it
-> already failed when get_oid_arbitrary_hex() (which initializes it) was
-> called in the tests before this one. So I think it might be even
-> better to move the above hash algo initialization code to setup() and
-> make setup() error out in case the initialization fails. Then setup()
-> could pass 'hash_algo' to all the functions it calls, even if some of
-> them don't use it.
-> ...
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Thanks.
+> > From: John Cai <johncai86@gmail.com>
+> >
+> > Remove the_repository global variable in favor of the repository
+> > argument that gets passed in through the builtin function.
+> >
+> > Signed-off-by: John Cai <johncai86@gmail.com>
+> > ---
+> >  builtin/apply.c | 9 ++++-----
+> >  1 file changed, 4 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/builtin/apply.c b/builtin/apply.c
+> > index 84f1863d3ac..d0bafbec7e4 100644
+> > --- a/builtin/apply.c
+> > +++ b/builtin/apply.c
+> > @@ -1,4 +1,3 @@
+> > -#define USE_THE_REPOSITORY_VARIABLE
+> >  #include "builtin.h"
+> >  #include "gettext.h"
+> >  #include "hash.h"
+> > @@ -12,14 +11,14 @@ static const char * const apply_usage[] =3D {
+> >  int cmd_apply(int argc,
+> >             const char **argv,
+> >             const char *prefix,
+> > -           struct repository *repo UNUSED)
+> > +           struct repository *repo)
+> >  {
+> >       int force_apply =3D 0;
+> >       int options =3D 0;
+> >       int ret;
+> >       struct apply_state state;
+> >
+> > -     if (init_apply_state(&state, the_repository, prefix))
+> > +     if (init_apply_state(&state, repo, prefix))
+> >               exit(128);
+>
+> Hmph, the reason why we do not segfault with this patch is because
+> repo will _always_ be the_repository due to the previous change.
+>
+> I am not sure if [1/4] is an improvement, though.  We used to be
+> able to tell if we were running in a repository, or we were running
+> in "nongit" mode, by looking at the NULL-ness of repo (which was
+> UNUSED because we weren't taking advantage of that).
+>
+> With [1/4], it no longer is possible.  From the point of view of API
+> to call into builtin implementations, it smells like a regression.
 
-While reviewing the "What's cooking" list of topics after tagging
--rc0 of this development cycle, I noticed that this topic from late
-August has been expecting but not yet seeing an update.
+I see your point here. However, I was wondering about this because
+we are passing in the_repository through run_builtin() as repo--so wouldn't
+this be equivalent to using the_repository and hence the
+same API contract can remain that looks at the NULL-ness of repo?
 
-As discussed elsewhere on the "Project Tracking" thread, I am in
-favor of formally adopting a policy to discard a topic from 'seen'
-after being inactive for 3 weeks, without having seen a clear
-consensus that it is good enough to be moved to 'next'.  Interested
-parties are still free to revive the topic even after such a discard
-event.
+But I could be missing something here.
 
-    Side note: The definition of being "inactive" for the purpose of
-    the policy is that nobody has discussed the topic, no new
-    iteration of the topic was posted, and no responses to the
-    review comments were given.
+thanks!
+John
 
-I'll discard this one by the end of this week unless the topic sees
-any activity.  It looks to me that the project decided that a longer
-term direction to adopt "clar" as the unit-tests framework, so this
-patch would need to be written even if it were perfect in the old
-world order anyway.
-
-Thanks.
-
+>
+> A more honest change for this hunk would rather be something like:
+>
+>         -       if (init_apply_state(&state, the_repository, prefix))
+>         +       if (!repo)
+>         +               repo =3D the_repository;
+>         +       if (init_apply_state(&state, repo, prefix))
+>
+> without [1/4].  This change does not address "apply still depends on
+> having access to the_repository even when it is being used as a better
+> GNU patch" issue at all.
+>
+> So, no, while I earlier said I was happy with [1/4], I no longer am
+> enthused by the change.
