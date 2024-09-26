@@ -1,87 +1,87 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1836B1798F
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:57:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1721798F
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:59:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727351881; cv=none; b=j4VNqMxIIRMynRhhy4ePJdjne5yAzgB6n04MCcxg7PnHtHRmOPvgNRBwnq4g+2W3E9Jh+VYIlKENdSABYgcxe640QFpbAOADbcdomMjCg6Hnb+JzQs8Qksqw3+3I3A7eohFEKvC0uE7o1QQZsSx7rh68eM92i/Bmy4mSu7aPdXo=
+	t=1727351948; cv=none; b=WDZmsAW4d0ZY24KQvJ1jjsegvChORI+Fw7Vwy/51EnTpqrrjcgH1UWNdGbvaJO42reN0GPp+gP7+/ChWCWJVzXccdLyASdt7qBns0zem8Wxo7aW8pTNAhc9XOBRfKlAlrDmUl4/+8SIMk7UoKwIXEXtApl9PMSGJt65ZJEH6TYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727351881; c=relaxed/simple;
-	bh=UAUBF4Q1e31oGxDEeCHtRMicz7SzA32ar0yJyJe80OQ=;
+	s=arc-20240116; t=1727351948; c=relaxed/simple;
+	bh=A/jUOYeidjpOD7wRXKsRHDgSJpocR7mOBOZl3AicEuQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lQOOF5hZS0fSWBR78ssoowosE8w740fvnq/occex7LEyXNfppLvfXqYafm/zRgbFt9ZfbwuWtWrBDue7FeG5QxfzNvIMT9jPbiMNdMFkQ8Bmn8iGMH8NNUR4Ajnq/bfjSRIVHdxoNWQp+0q/d7mZ4Z3DVbZnJrJeWk/Q2dF15P0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OC+N9lfC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U7tNGeWQ; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=qdk2Io6Eb1svQm7OtFzQVHFEInnjBInPSfrTK/LJsSNv+ZFnMRvk2QcDkiTSEi1CX6ldCaAXoC0UN2wJE2lfCRWjX2yLdNZuKv2Ww4CPzhSijYF0ngwT2IU1MXTntx60UOdm8kYHpLm+Iv9Fr6S1oyvokYZTxkjCchZvLSooGig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JI8EDN2Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=puKmxHkD; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OC+N9lfC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U7tNGeWQ"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JI8EDN2Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="puKmxHkD"
 Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 149791140287;
-	Thu, 26 Sep 2024 07:57:59 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id C054213803AB;
+	Thu, 26 Sep 2024 07:59:05 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 26 Sep 2024 07:57:59 -0400
+  by phl-compute-11.internal (MEProxy); Thu, 26 Sep 2024 07:59:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727351879; x=1727438279; bh=ht98mdNByu
-	miTjQ0Kmtrnrd5W1dSKdAMm3oNh29Xu6Q=; b=OC+N9lfCYLH9TP3k6W8B54d3kP
-	fL44f66VM/esPq20OlcMsceZ0rsGTxVjrVT8WAmjm5t5UMRO1Ki5TWoo9pS4mDyo
-	SOgWEk7WvFCDzBgAcljcCbfMl3lHI52c/m/KuxUcyKTUqChcNe+CV1svTEeaice6
-	3L94G4lwSLcq6UB9WqYCxysei00sk1BGBqjI4xSeufO3chYk+LxNgFha7BwczaV4
-	Rr399Vv5LR2w30qDjfZ0ukQZQgRz10Q4nZfNY7bDm8UxAe03Q5Mx+/Nypq2VB9uz
-	ehEf/pbQQxi27SENEgqYuSBHh5bbw2mfIR3rvjLZM/+0TqfIXbyJIO4FlRZg==
+	:subject:to:to; s=fm2; t=1727351945; x=1727438345; bh=SRB0OpjWf2
+	7WRXS7hXAAyyjtwcHx3c5kElwRiZQwlds=; b=JI8EDN2YF/mTu44m866kA0j2Rv
+	4V7yWcVz5vjVUAGkhGzihN3t35DL38tz/SZFoaVlQSTRe1mckJAd/9niTNfWhBGB
+	JNUea1kUrWy9u7WxiCq7iYHtoNSR8ziqlIf7P862osYxkbRL1YsrgChR6uLVmlyy
+	V2jwyoWqyvufv47SXqOaWPFmbMZJJfDz2ol03B0ummw3ezKLhH+a7+UqtZjtfxDa
+	gvCbJ0tUrz03bhdscUHZrNufn28tpPORzIPPtv8lMnha0Nxa3X6AWEEKK8yStioK
+	Amly11Sx/WgEd2NB7VJp2eIq/EzKukHe5ZcymdlRK5rr8uuiZDbyO8M9qDag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727351879; x=1727438279; bh=ht98mdNByumiTjQ0Kmtrnrd5W1dS
-	KdAMm3oNh29Xu6Q=; b=U7tNGeWQH65s0pYbvuUrevGgWAPDkZfiPz1HOXs8s/ne
-	rHxxLMBY03pnltwJ22qMZ00lUYrBjp3IF8EX73OCqTOVD/DEEmEd1g2UyNGfpugC
-	pCZOqyS+yvtPianA4mzA9/FFGTV3ZBk2fzbuf6PqAXrL8yg1/I35yTnHIs9HlueH
-	bMNipn6FCcqtlPDMIoU6K5tWysWLsnfJttnudR9JJ7N/qrgUzWmCA0PRHimwlpQO
-	qi9RPTPQrmiK/Y73oHqXHjby6YPEdVEtAJsR7FmhX1VQIPqg+LXnfaeaGn0eUzDP
-	7uu83EU87EV10WiDqJGJ5m6haLxtOvTyLK73vsIWZw==
-X-ME-Sender: <xms:Rkz1ZhdC7LHarKEMiqBfTcN7-vLIO5Xaue1JP-QIhtqIN5KsELrbsA>
-    <xme:Rkz1ZvPpIiwVvWnyflJbOKxzxZTqBfwROsFZwjaBMWpW7cPl_LSa_6sVUL7mwPiDS
-    HW4iSi2_g6X-_M9kg>
-X-ME-Received: <xmr:Rkz1ZqhGcoZRIOU4G9EmwpUTb20ELesvkGQxwirCiydjpBSznQ-VjfIOsnTKm3H4V1EkN9YmCXGxbSyFfmDBbTTOdx-UqizjMExAwouiyyXgZQ>
+	fm2; t=1727351945; x=1727438345; bh=SRB0OpjWf27WRXS7hXAAyyjtwcHx
+	3c5kElwRiZQwlds=; b=puKmxHkDyVkHBuMMvNCoaPo+lFwN8DkMcY3WvIcxb1N7
+	3xh904qRzjAD94lkM8iOflK1xvL7LNBSIdknwffPNxYscccXAi/GbeLkH/keBRxQ
+	cHvX0A+QqKOOcjaTRCDg5sTIDpRMIYrwnCjKx8gvRhzme1waYQ0rkHPsNh6BhBKh
+	ZHI4bs5PFTGs5BFDFta2fTpSmfd8MxYpl4XPJZ7jbaZBc6vuHfclnPL9qvO78K7v
+	BPvCnSlNXeIVA2IBGz0bs6XkGOx7f/9/zxZAiNSuzDOeo7rFVoBX+I0mlkhE+oOp
+	6QCYE7vVO5NuWUEy47uOHljxNtrMVDs29q8rQ56miA==
+X-ME-Sender: <xms:iUz1ZlWnmp6_F6lHzu5v-N-_3TaZLd20fq2dEtARwPVxWKr1ZKCw-Q>
+    <xme:iUz1Zlm5gbrAWhQzSnZSFjx15iU_01yyTMM9ZfVMbK3vRGQ8Ee5dxeUv-VWvlTPTT
+    TMYBrDWVEBHlKpPeg>
+X-ME-Received: <xmr:iUz1ZhY5LvmuWjQWaZZ14N9uAMPfZiSDtLwTPEms4g4QbIDNmbNkk9f--n1rFl167XJC3hReXvX5nMoNFkXLRIxFPhiTFJTAKg8Q6rAY65mMkA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedggeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhrnhhivgguvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Rkz1Zq9x5gHO05hEf9a281GvzFt3WR-mpTBSQbZs6Ndz5WtHvfTXkQ>
-    <xmx:Rkz1Zttl2aT_F3_i9RJ35kOb-UgBBoR83_30kaGXs_DKwgQaJ7j0XQ>
-    <xmx:Rkz1ZpG83dJRPhc62eGlvi4Kr9or7I81zi-a1qvZ1-NbZrN1tubW_g>
-    <xmx:Rkz1ZkMhHQa20VtLYowUyHeqKfGwfExCSU-zTSNLpwJR9tJ8WPO2zg>
-    <xmx:R0z1ZrVjWbnHX-22rEYCnP-ufQa94JOiY6eNGGEv_RuR_97GRPOPnphx>
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthho
+    sghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:iUz1ZoV-I5kzmrIHEyV_h7AucLXhWD_YNKuX6AFNvYMWU5MsHTYNqA>
+    <xmx:iUz1ZvkgqEw8NbzA5fsf1UUcQtImekVAKw9VSRwoo-KbXN5xNvo5dA>
+    <xmx:iUz1ZldcqIUKt69zsfUDPJ38s43KBmDYmTtgHZjAiZgIFCCXR2xOSA>
+    <xmx:iUz1ZpEMdzCMkStgbb5IzQO9k9FLJl-sRY2JlOWSM1uWQ11gi9iX_w>
+    <xmx:iUz1ZthVSRPJOuX92vixImYkX9sdPReyx3poCRH7z8FJsrbawitaYptD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Sep 2024 07:57:57 -0400 (EDT)
+ 26 Sep 2024 07:59:04 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bcdae53d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Sep 2024 11:57:18 +0000 (UTC)
-Date: Thu, 26 Sep 2024 13:57:52 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3d93d1e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Sep 2024 11:58:26 +0000 (UTC)
+Date: Thu, 26 Sep 2024 13:58:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Emily Shaffer <nasamuffin@google.com>
-Subject: Re: [PATCH] BreakingChanges: early adopter option
-Message-ID: <ZvVMNMiyjd4xfHzY@pks.im>
-References: <xmqq7cb77810.fsf@gitster.g>
- <xmqqploydn7j.fsf@gitster.g>
- <xmqqtte77f0n.fsf@gitster.g>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 08/23] builtin/submodule--helper: fix leaking remote ref
+ on errors
+Message-ID: <ZvVMg2kJR97JuVyG@pks.im>
+References: <cover.1726484308.git.ps@pks.im>
+ <d088703d317a8598e1cc4eb068234c105cdeffe6.1726484308.git.ps@pks.im>
+ <l5aljv4zlvkfpjsizofsypgfaxdzkihwghd3voxin5oxibuixz@fesroo5tihzi>
+ <ZulXjXSozNrXgMUM@pks.im>
+ <xmqqbk0bo4ye.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,81 +90,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqtte77f0n.fsf@gitster.g>
+In-Reply-To: <xmqqbk0bo4ye.fsf@gitster.g>
 
-On Sun, Sep 22, 2024 at 10:51:52AM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> > Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Sep 25, 2024 at 01:26:17PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > On Mon, Sep 16, 2024 at 01:51:21PM -0500, Justin Tobler wrote:
+> >> On 24/09/16 01:45PM, Patrick Steinhardt wrote:
+> >> > When `update_submodule()` fails we return with `die_message()`.
+> >> > Curiously enough, this causes a memory leak because we use the
+> >> > `run_process_parallel()` interfaces here, which swap out the die
+> >> > routine.
+> >> 
+> >> Naive question, is `update_submodule()` itself being run in parallel
+> >> here? Is that why the die routine gets swapped out so a child process
+> >> dying is handled differently? Also is it correct to say leaks are not
+> >> considered when we "die" normally? 
 > >
-> >> Discussing the desire to make breaking changes, declaring that
-> >> breaking changes are made at a certain version boundary, and
-> >> recording these decisions in this document, are necessary but not
-> >> sufficient.  We need to make sure that we can implement, test, and
-> >> deploy such impactful changes.
-> >>
-> >> Formalize the mechanism based on the `feature.*` configuration
-> >> variable to allow early adopters to opt into the breaking change in
-> >> a version of Git before the planned version for the breaking change.
-> >> ...
-> > ... to see what it involves
-> > to allow early adopters to experience Git 3.0 features/removals
-> > before it actually happens.
-
-Thanks for putting together this document! We also had this discussion
-during the contributor's summit, and I certainly agree that having such
-a toggle makes a ton of sense.
-
-> Sorry for a long monologue on this important topic, while everybody
-> is away.  Hopefully we'll see more comments when they get back once
-> the week starts ;-)
-> 
-> > Switching behaviour at runtime with feature.git3 should work well,
-> > and we can also add tests that checks the new behaviour by doing
-> > "test_config feature.git3 true".
-> > ...
-> > If we are willing to burden early adopters a bit more, we could make
-> > it a build-time option.  With "make GIT_BUILD_FOR_GIT3=YesPlease",
-> > binaries will be built for all the then-current Git 3.0 features and
-> > documentation under development.  It certainly is a simpler-to-build
-> > option that is easier for us, but I am not sure if that is acceptable
-> > by those who volunteer to test the upcoming big version.
+> > Hm. Revisiting this patch: my analysis was wrong. It's not the parallel
+> > subsystem that swaps out `die()`, but it's the fact that we call
+> > `die_message()`, which actually doesn't die. It really only prints the
+> > message you would see when we call `die()`, nothing more.
 > >
-> > One thing to note is that depending on the nature of a change, once
-> > you start using a feature only available in a newer version of Git
-> > in your repository, the resulting repository may not be understood
-> > by an older version of Git...
+> > I'll amend the commit message and send out the amended version once
+> > there is more feedback to address.
 > 
-> While I still am with the position that we can do this either at
-> runtime or at build time, with the trade-off being that it is more
-> costly for developers to do it at runtime and more cumbersome for
-> early adopters to do it at build time, I realize that the last point
-> above is unrelated.  If one or some of the features behind either
-> feature.git3 runtime option or GIT_BUILD_FOR_GIT3 build-time option
-> makes a repository inaccessible to versions of Git without these
-> features, we have the extension.* mechanism to make sure nothing
-> breaks, and testing that such a Git3 feature is properly protected
-> by the extension.* mechanism is part of the early adopter testing.
+> So it has been a week and half since the series was posted and it
+> seems that this is the only thing you might want to touch up.
 > 
-> How much more costly to do at runtime is still subject to further
-> analysis, I think.  I know that it means we need to build and
-> install the docs twice to support "git -c feature.git3=on help", for
-> example, but I am not sure what the best way to use CI would be
-> (write tests that check features with different behaviour by
-> explicitly running them with "git -c feature.git3=on"?  Run the same
-> set of tests in a separate job that has "[feature] git3" in its
-> $HOME/.gitconfig?).
+> What's next?  Just have an updated patch [08/23] and nothing else
+> and be done with it?  A v2 round of 23-patch series hopefully will
+> see somebody other than Justin and I lend an extra set of eyes to
+> double check before we merge it to 'next'?
 
-One problem with runtime toggles are commands that go away entirely. We
-can of course hide them away in various different places and make it
-impossible to call them. But one of the downsides is that it is not
-"true" to the actual removal, as for example the dashed builtins may
-still exist.
-
-That makes me personally lean into the direction fo making this a build
-time knob. The big downside of course is that we'll have less exposure
-as almost nobody ever would build their Git in such a way. But the big
-upside is that we end up executing the code exactly as it would look
-like if it were removed, so the coverage we get e.g. both from Git devs
-and from our CI would be much more telling.
+Makes sense, let's do it this way! I've sent a v2 a couple minutes ago.
 
 Patrick
