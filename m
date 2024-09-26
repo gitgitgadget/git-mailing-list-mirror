@@ -1,66 +1,65 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEE31509BF
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 15:22:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48A214B959
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 15:22:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727364159; cv=none; b=Rg1ddr5RjLfhFEQvHJa/INO+jVr0rY4QlF2F8OTB1n3U6jXm8mzuqSKLnaZJ7NQdGVTiyjsL5AHgsgvqBxzNX+D5oaRCzWLUKouxQJieaFCipYGwgmi5gQ8qtZox4ODFG/V3TRruFfORKb2q9aD+ARwm8+ngNsDpeUeSoTt0qZc=
+	t=1727364163; cv=none; b=mQPwviK7aIrStaZXqVoLR6I2Tk4WHMK4SHNoUcrjTuE7wOIyLT3xBK1nAB2SKPfYZwejJ5pCoH8Jmp1EKTUrDMVdqU8omat2v8HLMAutdVqXeWLzNNu6ntTIpNV+qV345T3B3SE4btdfVrh4hTAaL/HZyn/juk7hipatTiWn72w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727364159; c=relaxed/simple;
-	bh=1oqJeg/ApvJGgWVk+L4bWE8NkNkI6oCBbDBrzS1BWOY=;
+	s=arc-20240116; t=1727364163; c=relaxed/simple;
+	bh=AI6pY6VsJ3uCbkzNgtJ2GT0EEY7aEOoU0Dybp4mMkrA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GRAeW0k1YDqS0J5wN2ZfQKhpUNn15MwTc1Abz3uzbRxSXdhJicDoeqrt06PfMrZ+s3jGkORar1g5iOmtvRoaLE8UP5kwTpfbBig+U1wp2F8GqDnpfZXpt2HysEVJ8KVOIG8qzujwON1D0lIst1QWgvR4CVKmcWwovBJBENjchQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=YM0tOhTL; arc=none smtp.client-ip=209.85.219.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=o5JVvPzqkwheREd6NsUkTPLDOs4PEDUlTPlGaQh22wyxZ9DhG9D78zr+f6ym7me3zn3JsH8BlNHtFPZlwIFyZoJy7SVxCnB1AN0zJ/ZVyebkzNjWOtYciZz1zEMv44SMQBO1uAPOZ0ggmaDRN9a+V01/dtx7H3H+4J51Ne9oqDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=kArNJx2p; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="YM0tOhTL"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e04196b7603so1071287276.0
-        for <git@vger.kernel.org>; Thu, 26 Sep 2024 08:22:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kArNJx2p"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e25cc9c93a9so963832276.2
+        for <git@vger.kernel.org>; Thu, 26 Sep 2024 08:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727364156; x=1727968956; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727364160; x=1727968960; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z2Ef2vIQsuHHfBp7Av64sbPmnMivM7QcEaEOawEJggo=;
-        b=YM0tOhTLPQRFQ77xCi6H3PPlgPySvYeqv9BN7iAjD8YNrRKbtINP/n7uCha/NiTcmB
-         xfXarBvmzfLcApu5kPZNxRccEEkup4EXs8Qv8ZGhSfgIdMlKexPS031N/rmStjvKX9/3
-         1s4VMNiBzJpMI8Lbw+lzvTUPhdAziSObgFHTc+SSU5Gq5aaJfcZOACPiGQUkNFzuV75s
-         KR6An8UTKls8kMyffOBTSNzSpueVeQXxtEkXEPEQBqr/kfShabw3l8hVS38IYZXKM/Hb
-         UAF8o4sDd/zPC5CAKk/m06HvBvKMityLEIPUIV88pO7H0pbixvsGus3XiitutXvUalB5
-         IxNA==
+        bh=2BLYq9SIuzeL4a/pdDAaU0cM1edyzPuMBS8r4CoWOYE=;
+        b=kArNJx2pKuf8P9onZmpp6IL81c7/rFudx+3LkNkY306uunQ3IJJwZoHW2Je1/kJZ5b
+         Ek6F7r19XlIiUjPko6DZ/rrGy6qKQJMqNpgkghWfLIrwz2ZGHLGkRWBt1itI5ZJB+XRZ
+         /tIs++doU20P7U/4luPE/EMDTyhtQRvfkOgqjcsroShXU/SzxmLW/XFGJ4IuRUwunIhd
+         oVF0+7bUopulRFelfrzXEDQPayy+ptRF00OySFZGwATR/MLv0V5Lfcof2JGK0M7QOtFz
+         PTX9O2++TjNgcUlrYsuiFcBGveJWOsZNyBDiQcXfjY4sZu4Ffz0SK1bH5WGwOezWr+IM
+         S/EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727364156; x=1727968956;
+        d=1e100.net; s=20230601; t=1727364160; x=1727968960;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Z2Ef2vIQsuHHfBp7Av64sbPmnMivM7QcEaEOawEJggo=;
-        b=Uf1aLgzRcj7CPbuymuGh7Kv5Zr8w8L0T4/mEkjZG/EQIG/cXNoh5kH2V27ZAH7H6n3
-         96m0e1bb5Gfg7+ZtOPxQzfQRvOoy+Nizxz8T6oKAsa+KE5rjEoglJGMoWqvi85O/sJ8c
-         g5Q2muOyrYJRWSc7B7lL/BEf4BWISbOsZ1EiPmzxsds0MfwkAokDj9RRThkdaJ3fZY24
-         3FXQjEjSYZfBPfy4nsi833zxOcX9k8M22oYiQJD6WyjBOO0W1ENLdVo4swgRUOxYgeVL
-         Iqfm4b8GdXnK8KgLQvsCFYlE7BkWwyBkvL2L/QM4z58VpBxph+12kwJSMHBFguxSUZR5
-         KFsg==
-X-Gm-Message-State: AOJu0YzheTuws1UDO6j+qGAzJ4Bfzh8p7FJAQqTW+S471VB14U71S0Wg
-	4bu88EeUqOxd/j6K/zQryHaohEU5Eaj7u7BG7xW17U2K+1Rsh/A01l/ES42LbLerKgXZh2XbNb1
-	HQ1o=
-X-Google-Smtp-Source: AGHT+IFIPgSe1BnZt8s8vHdQu3MvfvLZmTJRiXyoUifp8/k626wNn74aJiPn4RYTnyP+vrbT1PxBeQ==
-X-Received: by 2002:a05:6902:dca:b0:e25:b49f:c8b7 with SMTP id 3f1490d57ef6-e25b49fcaf8mr4011369276.50.1727364156626;
-        Thu, 26 Sep 2024 08:22:36 -0700 (PDT)
+        bh=2BLYq9SIuzeL4a/pdDAaU0cM1edyzPuMBS8r4CoWOYE=;
+        b=xF1AM8slvEE5gBrd+Uk1B9m8uOz/Oeldb/CGt/H8VmGxGeHpxPUy3SpQNLi8MzNr28
+         MI6xMPB/G6/AePsy59QsPzM5wjaQuJa5WH6FP3S9XgvPt0DcQ2Qj/J37YjRkiMdiDC8E
+         eKKaVHI1R9wLYalUzoQIYItF4fZTQ4zcygcrNhdBg1VitWafj2dNnI0EyDUGhLx0gR2C
+         NQGY68dIs/qI6K1kNCFBlBZflttBHmxyDykaNqKs2q55wbWVYZIRI/7Vkai7STEExHGY
+         ZypRyvWQfW0ieGBEZDchSqtPI6N4Jqx4yBkJiy7Ym9MjKGtuxrrsb7QFNDhvdPHPcztB
+         MKIA==
+X-Gm-Message-State: AOJu0YzLAxJpdnmVVEKyunqoB7bmI48kKdvvkU3k3MvHSqrhlHXKV3PS
+	S0m65LpykR2/Z4owLabuIVpL7KCVvM/i1CBg7auOngx8RVoZefUc7mDMH9XF6dEKsbnmSbxsmVB
+	V3AE=
+X-Google-Smtp-Source: AGHT+IHTADL/agC2owMSFR/rTD4kjmdoIGI5gxWM5uvp2eqDpf91f42fmGyUBFezCPEiwa17sYxK+Q==
+X-Received: by 2002:a05:6902:906:b0:e25:d6e3:d129 with SMTP id 3f1490d57ef6-e25d6e3d223mr690367276.13.1727364159778;
+        Thu, 26 Sep 2024 08:22:39 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e25e3ef9b70sm23616276.3.2024.09.26.08.22.36
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e25e4015fe9sm22980276.26.2024.09.26.08.22.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 08:22:36 -0700 (PDT)
-Date: Thu, 26 Sep 2024 11:22:35 -0400
+        Thu, 26 Sep 2024 08:22:39 -0700 (PDT)
+Date: Thu, 26 Sep 2024 11:22:38 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 2/8] finalize_object_file(): refactor unlink_or_warn()
- placement
-Message-ID: <133047ca8c9aed3e297483b60ca3fdb02eb532a5.1727364141.git.me@ttaylorr.com>
+Subject: [PATCH v5 3/8] finalize_object_file(): implement collision check
+Message-ID: <41d38352a49f2955e21e993cd89524615d80a168.1727364141.git.me@ttaylorr.com>
 References: <cover.1725206584.git.me@ttaylorr.com>
  <cover.1727364141.git.me@ttaylorr.com>
 Precedence: bulk
@@ -73,65 +72,266 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1727364141.git.me@ttaylorr.com>
 
-As soon as we've tried to link() a temporary object into place, we then
-unlink() the tempfile immediately, whether we were successful or not.
+We've had "FIXME!!! Collision check here ?" in finalize_object_file()
+since aac1794132 (Improve sha1 object file writing., 2005-05-03). That
+is, when we try to write a file with the same name, we assume the
+on-disk contents are the same and blindly throw away the new copy.
 
-For the success case, this is because we no longer need the old file
-(it's now linked into place).
+One of the reasons we never implemented this is because the files it
+moves are all named after the cryptographic hash of their contents
+(either loose objects, or packs which have their hash in the name these
+days). So we are unlikely to see such a collision by accident. And even
+though there are weaknesses in sha1, we assume they are mitigated by our
+use of sha1dc.
 
-For the error case, there are two outcomes. Either we got EEXIST, in
-which case we consider the collision to be a noop. Or we got a system
-error, in which we case we are just cleaning up after ourselves.
+So while it's a theoretical concern now, it hasn't been a priority.
+However, if we start using weaker hashes for pack checksums and names,
+this will become a practical concern. So in preparation, let's actually
+implement a byte-for-byte collision check.
 
-Using a single line for all of these cases has some problems:
+The new check will cause the write of new differing content to be a
+failure, rather than a silent noop, and we'll retain the temporary file
+on disk. If there's no collision present, we'll clean up the temporary
+file as usual after either rename()-ing or link()-ing it into place.
 
-  - in the error case, our unlink() may clobber errno, which we use in
-    the error message
+Note that this may cause some extra computation when the files are in
+fact identical, but this should happen rarely.
 
-  - for the collision case, there's a FIXME that indicates we should do
-    a collision check. In preparation for implementing that, we'll need
-    to actually hold on to the file.
+Loose objects are exempt from this check, and the collision check may be
+skipped by calling the _flags variant of this function with the
+FOF_SKIP_COLLISION_CHECK bit set. This is done for a couple of reasons:
 
-Split these three cases into their own calls to unlink_or_warn(). This
-is more verbose, but lets us do the right thing in each case.
+  - We don't treat the hash of the loose object file's contents as a
+    checksum, since the same loose object can be stored using different
+    bytes on disk (e.g., when adjusting core.compression, using a
+    different version of zlib, etc.).
+
+    This is fundamentally different from cases where
+    finalize_object_file() is operating over a file which uses the hash
+    value as a checksum of the contents. In other words, a pair of
+    identical loose objects can be stored using different bytes on disk,
+    and that should not be treated as a collision.
+
+  - We already use the path of the loose object as its hash value /
+    object name, so checking for collisions at the content level doesn't
+    add anything.
+
+    Adding a content-level collision check would have to happen at a
+    higher level than in finalize_object_file(), since (avoiding race
+    conditions) writing an object loose which already exists in the
+    repository will prevent us from even reaching finalize_object_file()
+    via the object freshening code.
+
+    There is a collision check in index-pack via its `check_collision()`
+    function, but there isn't an analogous function in unpack-objects,
+    which just feeds the result to write_object_file().
+
+    So skipping the collision check here does not change for better or
+    worse the hardness of loose object writes.
+
+As a small note related to the latter bullet point above, we must teach
+the tmp-objdir routines to similarly skip the content-level collision
+checks when calling migrate_one() on a loose object file, which we do by
+setting the FOF_SKIP_COLLISION_CHECK bit when we are inside of a loose
+object shard.
 
 Co-authored-by: Jeff King <peff@peff.net>
 Signed-off-by: Jeff King <peff@peff.net>
+Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- object-file.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ object-file.c | 67 ++++++++++++++++++++++++++++++++++++++++++++++++---
+ object-file.h |  6 +++++
+ tmp-objdir.c  | 26 ++++++++++++++------
+ 3 files changed, 89 insertions(+), 10 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index 38407f468a..5a1da57711 100644
+index 5a1da57711..b9a3a1f62d 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1944,6 +1944,8 @@ int finalize_object_file(const char *tmpfile, const char *filename)
- 		goto try_rename;
- 	else if (link(tmpfile, filename))
- 		ret = errno;
-+	else
-+		unlink_or_warn(tmpfile);
+@@ -1932,10 +1932,67 @@ static void write_object_file_prepare_literally(const struct git_hash_algo *algo
+ 	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
+ }
  
- 	/*
- 	 * Coda hack - coda doesn't like cross-directory links,
-@@ -1965,12 +1967,15 @@ int finalize_object_file(const char *tmpfile, const char *filename)
- 		else
- 			ret = errno;
- 	}
--	unlink_or_warn(tmpfile);
- 	if (ret) {
- 		if (ret != EEXIST) {
-+			int saved_errno = errno;
-+			unlink_or_warn(tmpfile);
-+			errno = saved_errno;
++static int check_collision(const char *filename_a, const char *filename_b)
++{
++	char buf_a[4096], buf_b[4096];
++	int fd_a = -1, fd_b = -1;
++	int ret = 0;
++
++	fd_a = open(filename_a, O_RDONLY);
++	if (fd_a < 0) {
++		ret = error_errno(_("unable to open %s"), filename_a);
++		goto out;
++	}
++
++	fd_b = open(filename_b, O_RDONLY);
++	if (fd_b < 0) {
++		ret = error_errno(_("unable to open %s"), filename_b);
++		goto out;
++	}
++
++	while (1) {
++		ssize_t sz_a, sz_b;
++
++		sz_a = read_in_full(fd_a, buf_a, sizeof(buf_a));
++		if (sz_a < 0) {
++			ret = error_errno(_("unable to read %s"), filename_a);
++			goto out;
++		}
++
++		sz_b = read_in_full(fd_b, buf_b, sizeof(buf_b));
++		if (sz_b < 0) {
++			ret = error_errno(_("unable to read %s"), filename_b);
++			goto out;
++		}
++
++		if (sz_a != sz_b || memcmp(buf_a, buf_b, sz_a)) {
++			ret = error(_("files '%s' and '%s' differ in contents"),
++				    filename_a, filename_b);
++			goto out;
++		}
++
++		if (sz_a < sizeof(buf_a))
++			break;
++	}
++
++out:
++	if (fd_a > -1)
++		close(fd_a);
++	if (fd_b > -1)
++		close(fd_b);
++	return ret;
++}
++
+ /*
+  * Move the just written object into its final resting place.
+  */
+ int finalize_object_file(const char *tmpfile, const char *filename)
++{
++	return finalize_object_file_flags(tmpfile, filename, 0);
++}
++
++int finalize_object_file_flags(const char *tmpfile, const char *filename,
++			       enum finalize_object_file_flags flags)
+ {
+ 	struct stat st;
+ 	int ret = 0;
+@@ -1974,7 +2031,9 @@ int finalize_object_file(const char *tmpfile, const char *filename)
+ 			errno = saved_errno;
  			return error_errno(_("unable to write file %s"), filename);
  		}
- 		/* FIXME!!! Collision check here ? */
-+		unlink_or_warn(tmpfile);
+-		/* FIXME!!! Collision check here ? */
++		if (!(flags & FOF_SKIP_COLLISION_CHECK) &&
++		    check_collision(tmpfile, filename))
++				return -1;
+ 		unlink_or_warn(tmpfile);
  	}
  
- out:
+@@ -2228,7 +2287,8 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 			warning_errno(_("failed utime() on %s"), tmp_file.buf);
+ 	}
+ 
+-	return finalize_object_file(tmp_file.buf, filename.buf);
++	return finalize_object_file_flags(tmp_file.buf, filename.buf,
++					  FOF_SKIP_COLLISION_CHECK);
+ }
+ 
+ static int freshen_loose_object(const struct object_id *oid)
+@@ -2350,7 +2410,8 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+ 		strbuf_release(&dir);
+ 	}
+ 
+-	err = finalize_object_file(tmp_file.buf, filename.buf);
++	err = finalize_object_file_flags(tmp_file.buf, filename.buf,
++					 FOF_SKIP_COLLISION_CHECK);
+ 	if (!err && compat)
+ 		err = repo_add_loose_object_map(the_repository, oid, &compat_oid);
+ cleanup:
+diff --git a/object-file.h b/object-file.h
+index d6414610f8..81b30d269c 100644
+--- a/object-file.h
++++ b/object-file.h
+@@ -117,7 +117,13 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
+  */
+ int stream_object_signature(struct repository *r, const struct object_id *oid);
+ 
++enum finalize_object_file_flags {
++	FOF_SKIP_COLLISION_CHECK = 1,
++};
++
+ int finalize_object_file(const char *tmpfile, const char *filename);
++int finalize_object_file_flags(const char *tmpfile, const char *filename,
++			       enum finalize_object_file_flags flags);
+ 
+ /* Helper to check and "touch" a file */
+ int check_and_freshen_file(const char *fn, int freshen);
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index c2fb9f9193..9da0071cba 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -206,9 +206,11 @@ static int read_dir_paths(struct string_list *out, const char *path)
+ 	return 0;
+ }
+ 
+-static int migrate_paths(struct strbuf *src, struct strbuf *dst);
++static int migrate_paths(struct strbuf *src, struct strbuf *dst,
++			 enum finalize_object_file_flags flags);
+ 
+-static int migrate_one(struct strbuf *src, struct strbuf *dst)
++static int migrate_one(struct strbuf *src, struct strbuf *dst,
++		       enum finalize_object_file_flags flags)
+ {
+ 	struct stat st;
+ 
+@@ -220,12 +222,18 @@ static int migrate_one(struct strbuf *src, struct strbuf *dst)
+ 				return -1;
+ 		} else if (errno != EEXIST)
+ 			return -1;
+-		return migrate_paths(src, dst);
++		return migrate_paths(src, dst, flags);
+ 	}
+-	return finalize_object_file(src->buf, dst->buf);
++	return finalize_object_file_flags(src->buf, dst->buf, flags);
+ }
+ 
+-static int migrate_paths(struct strbuf *src, struct strbuf *dst)
++static int is_loose_object_shard(const char *name)
++{
++	return strlen(name) == 2 && isxdigit(name[0]) && isxdigit(name[1]);
++}
++
++static int migrate_paths(struct strbuf *src, struct strbuf *dst,
++			 enum finalize_object_file_flags flags)
+ {
+ 	size_t src_len = src->len, dst_len = dst->len;
+ 	struct string_list paths = STRING_LIST_INIT_DUP;
+@@ -239,11 +247,15 @@ static int migrate_paths(struct strbuf *src, struct strbuf *dst)
+ 
+ 	for (i = 0; i < paths.nr; i++) {
+ 		const char *name = paths.items[i].string;
++		enum finalize_object_file_flags flags_copy = flags;
+ 
+ 		strbuf_addf(src, "/%s", name);
+ 		strbuf_addf(dst, "/%s", name);
+ 
+-		ret |= migrate_one(src, dst);
++		if (is_loose_object_shard(name))
++			flags_copy |= FOF_SKIP_COLLISION_CHECK;
++
++		ret |= migrate_one(src, dst, flags_copy);
+ 
+ 		strbuf_setlen(src, src_len);
+ 		strbuf_setlen(dst, dst_len);
+@@ -271,7 +283,7 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
+ 	strbuf_addbuf(&src, &t->path);
+ 	strbuf_addstr(&dst, repo_get_object_directory(the_repository));
+ 
+-	ret = migrate_paths(&src, &dst);
++	ret = migrate_paths(&src, &dst, 0);
+ 
+ 	strbuf_release(&src);
+ 	strbuf_release(&dst);
 -- 
 2.46.1.507.gffd0c9a15b2.dirty
 
