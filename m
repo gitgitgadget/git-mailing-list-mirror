@@ -1,54 +1,54 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7E618455A
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3081849E7
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727351209; cv=none; b=tgyex3lByoncMNYek1yU/tqzUigIkpaKu08kR7XQ4trbkqcgHOyzyF5+co0b3chkYRft8zxa5dQJEjzDm3qiTo7Z7of6t5Je3gg9ooYkRmLZbfRaQohkm3kzGc+9jF+yLMGZ0RjAT08ymRON0sEFX8k5jWZ+aTREewxNx8ikq/s=
+	t=1727351211; cv=none; b=obIpMpoEQopKWmPxdkUubOETThjMGJpy1jBoqDAOYm85fMflHpZmpUsWzHRrTFNIhDpvphnHh8kUVtmUtYaHArlB+VtBYT02sstjUWI1Swtc8HnqNORKHoIgihGKOcYYSC+QzvrazFgy9WBsPaJSQVwSiAOXn58ce/eks/fsXBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727351209; c=relaxed/simple;
-	bh=5Mh1mIUhXHetIiTZ/5fvD+hShueJ4jGUCqHaXdQAf9E=;
+	s=arc-20240116; t=1727351211; c=relaxed/simple;
+	bh=pDD7D9CcnXwaAmsKfNBN7kj5HNBRCMFffkZkL6ywj2g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jxSEDG9N/zBmQJUQGOsZrxZ4OhG9QDXt844g7cXqKAUdOE3xsApI1j1iUzTZfdps0RO6uFonalHGaOzi8MYMAZQeAS4R0NIKuYokdN232GJkl3xgByHND9CD1gyKuHPBiEYaqgNSPzLAn9S4B4FxRskzT0edj1BN0+uSxClJd7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ITAdLW6k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xnuod9nx; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=paChOqtvWivP84PNOWOl9thA+yqTOygDYH96tqE2MDGLtBR8c9z9OCU5+IUnDq9Sxsr1txgLIZgkUMR/GXDGXk2AECaDbAnhZHs+RhV9GQ8E54RhmUkatm2umD15/FGzlXtxSaTUDIBaxByjKmjXhd5125i0NNeBnFS1HJMUvUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lrpn1K6A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZWf2mEvB; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ITAdLW6k";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xnuod9nx"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 47043138061D;
-	Thu, 26 Sep 2024 07:46:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lrpn1K6A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZWf2mEvB"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 77ADC1140242;
+	Thu, 26 Sep 2024 07:46:49 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Thu, 26 Sep 2024 07:46:47 -0400
+  by phl-compute-02.internal (MEProxy); Thu, 26 Sep 2024 07:46:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727351207; x=1727437607; bh=49vc06f8wK
-	DN1kYNnfIUHtDNWH6X+tIRbH+IG7ZjFvk=; b=ITAdLW6k7iRLcW2WV5kPl8nLRx
-	nwrCiTziiejbvGmKxOBKXkluzQaeWFFZc4t1/bRlzUfdh+omigs3mCkFKA8GAeqe
-	GuNdc5lFoJxZ9G6PDbeWZ570pkM4Jnrqs4S56YLPXlDjGpKTwGzy1Spe/i/1Y+FS
-	bXbeB83k9oWcE+TCHG9Ceh5IRvzRiYovglQOqLMt+Ad8jk5FYq3QZtbsyK6rru/U
-	qMeHrZ2ecufkMfqFAUPEVSjSnPpGqFtcUv/VIXW2fglxXHpMkFOTujfeFrXQ3yT7
-	AhXqYG+nuIcxfSRVCLau2BWRdN0VlvJ2sY9U0RSmCG/WFmu2xuMSS/heVrRg==
+	:subject:to:to; s=fm2; t=1727351209; x=1727437609; bh=CWtWbvbwts
+	iDKJRrls3/nQgEIvJpKLpMvoBzqJ1jt20=; b=lrpn1K6ACNKJdXpprc6lajWA4U
+	PQrI8PpxvzwgBW/UIGcfyRBrekPVpfYCzUTaOJdqCDmSgSuwtqxBXtc6irEG66iL
+	ww+aiGWQq7oYykhBHHMQTd6VfXKWv8gH2OICuBDAzjS+QlinLAa9L5UYpMDFltIa
+	/tHfx/Dn3H8O+x2Y7bAgCJB2K3IIMZPCdWD9lu2HyXZQNZFgi6udgk4yTgClkySk
+	MHx+gEHAuua/QB+g87fzbxPza6vd6JKKofqfyY4Tcns5frzGBE74OrYdxOFZzuX8
+	AM7ao/MGmY9Bj5++hGOS6KtSXohG8UMwmJYmeAj6ZwtYVG7UWkyS5s3Eao8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727351207; x=1727437607; bh=49vc06f8wKDN1kYNnfIUHtDNWH6X
-	+tIRbH+IG7ZjFvk=; b=Xnuod9nx8i86Nqo62Yz9TEV5o8irrpT/r+XHCl5SsGWn
-	x9WRMa8DuQOUQp9icPJjvajdfpJN5dClV3GUR8nSHoInGB5iJbuUJlyEUrZfvyUN
-	4JQ3qV2xtTyh06VU4wCHSx5+CiXryJhTSTzwm/HieiyfOSgEYDI1IWhoZ0tstu67
-	6zj+FeGz78ExGyywhwlOGTipYonM1J0v5yuAKSQi7uqgauSVml+4iq+T/yyBdNwq
-	spqfor7D1RjwfSdn+a6NajxnxeO4FXhMK6x1MKcs+pc4+9mQ4qhK5KdwPHtEJXeN
-	JBZH+D/u2jkk0YkkEmuyUQvh2ZvjVdJCcDk7AOEqJw==
-X-ME-Sender: <xms:p0n1ZndNgbWx2sWpmsy9f4JGunbvV_sVHQbaOauiQImx1w2HTtBRmg>
-    <xme:p0n1ZtMBUVdCR3ulDCNNiJ67EpeLP2a-1sRtnq5TufThA9jtHsFOUM7drmpyITv9X
-    o_3dxdVM00eSbT8aQ>
-X-ME-Received: <xmr:p0n1ZgixBZW-YAHMxaaecXMOEMXDPBNDtwLOsmo2JYbmdh3_W_kWo_J83Ws4K1Ec5wgTkMYwguhQ4WLI3q8g73zZ9s2RIBC9IJn0Pj8MsvOvOg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedggeegucetufdoteggodetrfdotf
+	fm2; t=1727351209; x=1727437609; bh=CWtWbvbwtsiDKJRrls3/nQgEIvJp
+	KLpMvoBzqJ1jt20=; b=ZWf2mEvBvC7J90Ma5M8/UtLX6mc5V7BUb2gg+51Ng9oY
+	E4lgGscyDa8iXBuSeIpT3IKu06u+5PvayBJBr6Q5bAgl+F8TRyGr7gtKoE+8fEoM
+	CpgFHD5ZM4RLfGU0yYlCZoSd74QPAJlvOq6y5pA21J7v7OLwDaqYSZUGJa9+pssP
+	uj2vI7NDBvnnlQWALSEeRcjruKBhMzPkdvDxtG9dsssyXt+HiTvo1wr1QCnvAx15
+	mnq70wf/IZWY9bBZC4uR4+sXvK7MWtKR4sl3fw7nVrdF/Lb9Mi5plGt6BP4kZs9p
+	s27hRPV1lts6t+/Pg2NBqndhv/I62cCWG5dRcLX+tQ==
+X-ME-Sender: <xms:qUn1Zkeb-kmVw0AAzOqgZrpjx4Og_ZpsVAeRsYXtBuuN11c1iN9jGw>
+    <xme:qUn1ZmMDoKarUsASIEuoUxRUH6JbL-c7FKaW1F1FibFkQIcV60_NpP1W_mduSdEAj
+    qh-MBow-Ylr4r4aaQ>
+X-ME-Received: <xmr:qUn1Zli70KXnLzRPbmHTxpTkkt3NJa-D7mruFoyYkxiLQeS-n4appWDLszwUvmXj9FLWKEb_AbiCBXD8PpngZC61EaC36z0w6_7cKrX_KYlaYw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -56,26 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedggeegucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:p0n1Zo_8vPgFMNbexzwAQgWl-18oNgQ9EqFtVU4z2UAP3C-er0-FZw>
-    <xmx:p0n1ZjvHd8V-zoplq6CHG1-YsptiT3Z_xshtExOTpwv97N2go4BXIA>
-    <xmx:p0n1ZnFySQbVa5IqThdPhYKl_3Z2hlCI-P97WBgFDH9SuaqKI5_08A>
-    <xmx:p0n1ZqPR4JqbBs61nb0YZVvRsUJA1-txkf1I_5U2X8UvjKNUgL8JEw>
-    <xmx:p0n1ZjJViQxirYMTZ19R8JEVPWubtTc3EC90GLzYfNg8VHFtBLFZQjyx>
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:qUn1Zp9ANGyd04JFoId6efcI-atcABVAkzs9PmS0Anvu9kbG0I2pZw>
+    <xmx:qUn1ZgsiJrVDWLGjyAksXaLZrcl6s7a2hz5z8N54bipBpQDPBaCuAQ>
+    <xmx:qUn1ZgH93NAkfnOuwEejYc_WkmYQYZ0v_Km79nsiEGAr7L7NFpJZWA>
+    <xmx:qUn1ZvMw8AaOzIh05C9pLM2QQn6dtYOUxfM1nF8k5PqOhgfxkkRfJA>
+    <xmx:qUn1ZsKhbUMPJ_5XFbDPJSr2oRgRf96oxXOrjg3BGMpWnBaV-WYRPBXD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Sep 2024 07:46:46 -0400 (EDT)
+ 26 Sep 2024 07:46:48 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c7ce0ee6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Sep 2024 11:46:08 +0000 (UTC)
-Date: Thu, 26 Sep 2024 13:46:43 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 61d89448 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Sep 2024 11:46:11 +0000 (UTC)
+Date: Thu, 26 Sep 2024 13:46:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 15/23] builtin/difftool: plug several trivial memory leaks
-Message-ID: <7bb07ec2f07dbbfac06af039d1f192558150f4f9.1727351062.git.ps@pks.im>
+Subject: [PATCH v2 16/23] trace2: destroy context stored in thread-local
+ storage
+Message-ID: <30928eb8f9ce4c2e6a82f566ff740c31604b0d5e.1727351062.git.ps@pks.im>
 References: <cover.1726484308.git.ps@pks.im>
  <cover.1727351062.git.ps@pks.im>
 Precedence: bulk
@@ -88,43 +89,43 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727351062.git.ps@pks.im>
 
-There are several leaking data structures in git-difftool(1). Plug them.
+Each thread may have a specific context in the trace2 subsystem that we
+set up via thread-local storage. We do not set up a destructor for this
+data though, which means that the context data will leak.
+
+Plug this leak by installing a destructor. This leak is exposed by
+t7814, but plugging it alone does not make the whole test suite pass.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/difftool.c  | 6 ++++++
- t/t7800-difftool.sh | 1 +
- 2 files changed, 7 insertions(+)
+ trace2/tr2_tls.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index dcc68e190c..1a68ab6699 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -660,6 +660,12 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 	if (fp)
- 		fclose(fp);
+diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
+index 4f75392952..7b023c1bfc 100644
+--- a/trace2/tr2_tls.c
++++ b/trace2/tr2_tls.c
+@@ -152,11 +152,19 @@ uint64_t tr2tls_absolute_elapsed(uint64_t us)
+ 	return us - tr2tls_us_start_process;
+ }
  
-+	hashmap_clear_and_free(&working_tree_dups, struct working_tree_entry, entry);
-+	hashmap_clear_and_free(&wt_modified, struct path_entry, entry);
-+	hashmap_clear_and_free(&tmp_modified, struct path_entry, entry);
-+	hashmap_clear_and_free(&submodules, struct pair_entry, entry);
-+	hashmap_clear_and_free(&symlinks2, struct pair_entry, entry);
-+	release_index(&wtindex);
- 	free(lbase_dir);
- 	free(rbase_dir);
- 	strbuf_release(&info);
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index cc917b257e..f67b9345b8 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -11,6 +11,7 @@ Testing basic diff tool invocation
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++static void tr2tls_key_destructor(void *payload)
++{
++	struct tr2tls_thread_ctx *ctx = payload;
++	free((char *)ctx->thread_name);
++	free(ctx->array_us_start);
++	free(ctx);
++}
++
+ void tr2tls_init(void)
+ {
+ 	tr2tls_start_process_clock();
  
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+-	pthread_key_create(&tr2tls_key, NULL);
++	pthread_key_create(&tr2tls_key, tr2tls_key_destructor);
+ 	init_recursive_mutex(&tr2tls_mutex);
  
- difftool_test_setup ()
+ 	tr2tls_thread_main =
 -- 
 2.46.2.852.g229c0bf0e5.dirty
 
