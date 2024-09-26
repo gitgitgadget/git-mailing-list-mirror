@@ -1,56 +1,56 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEE1173355
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 01:39:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93EC173357
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 01:39:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727314763; cv=none; b=JY2vz3+LiogBd/+hv8hMqQHHC9ROF97sFaOFqe9/ZHuPvRbmzR1AINbbL2BUF5p8BnEpFK1DlL5VV4GiyKk8GsrqjsV29G7N8zdmz0ykCPNUZ9cdriu5C4fcW0/rc+P1fuW5je28Di+9LY6fF8E9vy6j8RibinDGVP49qbF7zTg=
+	t=1727314764; cv=none; b=HZvUXXlX7UhtjronNrXsovzJLJ+QhjhSqwO+RG9Da3DZz/uYuVdix0vbKgL3HsWjtSY7/rJiesDINX9ujj4+ldCrvKu+dCj8V9uqAwxOBBuVXhzcFA/ICYgK1xIvg1XfIgNb0hSHdmPHxVAjrVnY1LT5471bcJ7r7+4dYX2tVWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727314763; c=relaxed/simple;
-	bh=7PZ5N26twyh6vA846zqPQNmGJetZcCgwWkqpIK46jec=;
+	s=arc-20240116; t=1727314764; c=relaxed/simple;
+	bh=roJnz3/INk+HZyKj9E77jJo6PShL3RtE+vAwUiFE+jE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M3ZQgg/KFp6YFMQ8bUmYGt/GFwBcUobWHYhTyFtbdZqLkp/CThb3qA7mmEOLzu7DowtXjc1cehBbmsb88FLuTfhhsPRM8dfqGJo02GAJDAlpYhjYcGbEMxJv6brddwGBZxQ83k1ZKqss5s+pHaQdn6x7t4GliJVzgdX9BkV6e1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VjPR2aFn; arc=none smtp.client-ip=209.85.222.179
+	 MIME-Version; b=MBj01+QU9lk1EuuTwBdcX6nLLcOehfzqz39OGB+Fg+xTPCwX/KHkS+SZGLwNONOnWmnosNEQiDhCBGPrCLejd+hhaLz8wfY01GKV+vvPfPp6dl/Pwz047b26mtdf6jcaqWg8dvG2QICT5N5G7r5nOby6J/S3VcWsZV0P2TiZ1Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VxUeF7YW; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VjPR2aFn"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7a99de9beb2so31700785a.3
-        for <git@vger.kernel.org>; Wed, 25 Sep 2024 18:39:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VxUeF7YW"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7a99de9beb2so31701285a.3
+        for <git@vger.kernel.org>; Wed, 25 Sep 2024 18:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727314760; x=1727919560; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727314761; x=1727919561; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=U/06S4Feu/JCmXq6V9VqYC/BB0H6cFIJE6S61QBtt9E=;
-        b=VjPR2aFnAV/jW/PUMWJ8ZNlK8JvY5iKVybh0ROjwbgx07UCVNLBMpzc1rkgy6VngYG
-         9Qf6nk9Emz9aCmrY2tDNt5CYljNNhJqBDSW+C1z93A8VN1Z0qXbtKM4LyBu7gseAtqbW
-         X5jApUGF3Jbrfv6aDeVyr9IRTMXanDwjRMAOLSTUlLn0BvaUSsfsre78y0zgo1NPZw01
-         iqjMScv2wZjKkYGGnh6+2cm/HhjYD0lAkiqHeX/bh/sFgryThFeKPafx0TIgy8R4pTeL
-         mtdY9SMGUP8T18hUKabNTnVOEtrLaKyN0sv8uOVLINBUXZS4Oso27tuNHHSvx/1bLonb
-         QNsw==
+        bh=nEF983QoTeqLkFSOWELrllUkyyi8a+7N5tL4bv30djU=;
+        b=VxUeF7YWmQ+8vBRtHCTmS5bGUOYfLp0WMoxg+DW7CpLfTofCwX+KdYLDK03Rv1GCFK
+         Scrk+7m0m4ZZj1HVnmOxSW7LThYS3O2ile/XN2kzidPU114vqWNrKybT8Pr16Kbd+rEA
+         tKah6Brkft1h7XbJZIA4+5RfKZA66wS18AE1E1stkSkOwZBocEiYTI69kA9royDKOzNE
+         4i5J947s9y8p0AFTlqQ+w4sj2Y/KCNXRVbHw/N4Jj9vjQqxMddFH/2I9FHuLewdW/JPG
+         lrDsU7stHpfIlYH8A6vbLppBfCMxH1RGv++Mfg40YxFz6LQduSxrZt9Pr/tFjCPNpyVy
+         ViyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727314760; x=1727919560;
+        d=1e100.net; s=20230601; t=1727314761; x=1727919561;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=U/06S4Feu/JCmXq6V9VqYC/BB0H6cFIJE6S61QBtt9E=;
-        b=Nxn71HcCrlBcIsTpfRmZFldMWKZtHi3jVoeAEcSAYlBo++6bplvNC9ngpRum/ppROo
-         ABoRZKiQntQY6M9IiBVILA9UXXFgrdD0T6HkLERg3YLK8EQgHlzxp+WdzRhxvVHyHjZ7
-         h+NZn5fkXtciM9Bq6dwTTzqhwv9OzakMAV13wa/Cpt+cBcUmg4cyElvcmtdwtnnwK1RX
-         xYLY5vSpgXdwlADqOVlgHBu36HFyZAy08fw+TTPCpP8tEFhALf98Oscjzb4fe2hMyETg
-         t+usw7YtgtbTzmi59yULsmOjytqk+JgAHSZ+rpAZjJTvwZ7KyAePCp202tjTeLvnf9fN
-         7Lkw==
-X-Gm-Message-State: AOJu0Yw/0qW1lRgk1TUuUiFJQvxeaKJc9iAFHyF+9xQ/aMIg3IOMNdgq
-	3mc9boUfCRdaGUim4yVat+1MxGf5ZmQHiSnf5ml7DpOWrnG4Qg6AuEjbE92l
-X-Google-Smtp-Source: AGHT+IGbWhOB9pYsEu0MkUpav/uI4HOPPtW/vR+lEFQJeWPArFjFLPIrmJS9MqlWymHhOiureS+zYQ==
-X-Received: by 2002:a05:620a:284b:b0:7ac:b0e7:d735 with SMTP id af79cd13be357-7ace73e4328mr862309785a.8.1727314759910;
-        Wed, 25 Sep 2024 18:39:19 -0700 (PDT)
+        bh=nEF983QoTeqLkFSOWELrllUkyyi8a+7N5tL4bv30djU=;
+        b=rbczhHjUdMdEiJXQhmDbmVF3DegVJjKobgXu2EactJwUfcRwgyQ0Dyy8NKszwjimsH
+         VjGH42Vp8plxr9/gVwhnCgr4yHH4W1YkQEaXfwtixoLN3udzaiOf5eKToWRDu15mUX0M
+         hIY5naLZ730tVNf1OAPDlPZX4FDHtaQya+RUgW5b47hgJ7HB9MFEgJVooTue61aBYFc9
+         TPOj8ZJqFK4644o/GXIW66K2xr5e0b7dTYGwJFvBzUv1RTUnVzcIzd4Le5soBTYy3QlQ
+         VoWP76i2PfsNhnSxWoYfJQiZYB3iVdU8FWCGDM3e4Wx2Bskaw6OM20BYG0EtsAKb7QFR
+         46nQ==
+X-Gm-Message-State: AOJu0YxVHMZsDDcP3QdwsBwrSkPoUlxReLSf+7BVoQQU7/CG+ouZ9KKU
+	aLNuop8IFRiXEbcsfbcM8TI6gGRoNNfT9zGXZRnxnknaKx3nxLwlPCsBGjJc
+X-Google-Smtp-Source: AGHT+IH6kQkauDoZBlJ6K8A7LIeUy3ZFtiZEjDXQnCEi8zR1kTilQ4oaL2ZIhtDPRUotyi5/faT9/Q==
+X-Received: by 2002:a05:620a:28d5:b0:7a9:d115:90eb with SMTP id af79cd13be357-7ace744e427mr642452085a.52.1727314761214;
+        Wed, 25 Sep 2024 18:39:21 -0700 (PDT)
 Received: from localhost.localdomain ([142.188.15.86])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7acde49acebsm227789985a.0.2024.09.25.18.39.18
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7acde49acebsm227789985a.0.2024.09.25.18.39.20
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 25 Sep 2024 18:39:19 -0700 (PDT)
+        Wed, 25 Sep 2024 18:39:20 -0700 (PDT)
 From: Eric Ju <eric.peijian@gmail.com>
 To: git@vger.kernel.org
 Cc: calvinwan@google.com,
@@ -60,9 +60,9 @@ Cc: calvinwan@google.com,
 	karthik.188@gmail.com,
 	toon@iotcl.com,
 	jltobler@gmail.com
-Subject: [PATCH v3 2/6] fetch-pack: move fetch initialization
-Date: Wed, 25 Sep 2024 21:38:52 -0400
-Message-ID: <20240926013856.35527-3-eric.peijian@gmail.com>
+Subject: [PATCH v3 3/6] serve: advertise object-info feature
+Date: Wed, 25 Sep 2024 21:38:53 -0400
+Message-ID: <20240926013856.35527-4-eric.peijian@gmail.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240926013856.35527-1-eric.peijian@gmail.com>
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
@@ -77,57 +77,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Calvin Wan <calvinwan@google.com>
 
-There are some variables initialized at the start of the
-do_fetch_pack_v2() state machine. Currently, they are initialized
-in FETCH_CHECK_LOCAL, which is the initial state set at the beginning
-of the function.
-
-However, a subsequent patch will allow for another initial state,
-while still requiring these initialized variables.
-Move the initialization to be before the state machine,
-so that they are set regardless of the initial state.
-
-Note that there is no change in behavior, because we're moving code
-from the beginning of the first state to just before the execution of
-the state machine.
+In order for a client to know what object-info components a server can
+provide, advertise supported object-info features. This will allow a
+client to decide whether to query the server for object-info or fetch
+as a fallback.
 
 Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Helped-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
 ---
- fetch-pack.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ serve.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 756fb83f89..800505f25f 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1700,18 +1700,18 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 		reader.me = "fetch-pack";
+diff --git a/serve.c b/serve.c
+index d674764a25..c3d8098642 100644
+--- a/serve.c
++++ b/serve.c
+@@ -70,7 +70,7 @@ static void session_id_receive(struct repository *r UNUSED,
+ 	trace2_data_string("transfer", NULL, "client-sid", client_sid);
+ }
+ 
+-static int object_info_advertise(struct repository *r, struct strbuf *value UNUSED)
++static int object_info_advertise(struct repository *r, struct strbuf *value)
+ {
+ 	if (advertise_object_info == -1 &&
+ 	    repo_config_get_bool(r, "transfer.advertiseobjectinfo",
+@@ -78,6 +78,8 @@ static int object_info_advertise(struct repository *r, struct strbuf *value UNUS
+ 		/* disabled by default */
+ 		advertise_object_info = 0;
  	}
++	if (value && advertise_object_info)
++		strbuf_addstr(value, "size");
+ 	return advertise_object_info;
+ }
  
-+	/* v2 supports these by default */
-+	allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
-+	use_sideband = 2;
-+	if (args->depth > 0 || args->deepen_since || args->deepen_not)
-+		args->deepen = 1;
-+
- 	while (state != FETCH_DONE) {
- 		switch (state) {
- 		case FETCH_CHECK_LOCAL:
- 			sort_ref_list(&ref, ref_compare_name);
- 			QSORT(sought, nr_sought, cmp_ref_by_name);
- 
--			/* v2 supports these by default */
--			allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
--			use_sideband = 2;
--			if (args->depth > 0 || args->deepen_since || args->deepen_not)
--				args->deepen = 1;
--
- 			/* Filter 'ref' by 'sought' and those that aren't local */
- 			mark_complete_and_common_ref(negotiator, args, &ref);
- 			filter_refs(args, &ref, sought, nr_sought);
 -- 
 2.46.0
 
