@@ -1,126 +1,183 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4166F136347
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 14:24:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC5B5672
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 15:22:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727360675; cv=none; b=q3+gBIYyS8WW9SaJsoG7xNXVWaJil0aXBxfMo298CwW9Avz73LrXLEXTrPg1XKJsdm5yN1JtT+tf8mEK64nvqFcqX+MpAp+W4Ybk5gzpOmYfOkLnEPhswmqmcjgl6tdgNzWl6/JbuNkpln53KsjERCRLmetRmDn/JwusDYOczuU=
+	t=1727364152; cv=none; b=c4Z1c2k9zZP4cgoY8a//j43zgOJYeA/mBhoswctwLt0bbGvWEScVBasVJD9zqr7C1JlNhZXSo8UWkQ2lBulq7xtJbin1i8Uud4wbIEZt236XLLKOXKlSIkRFNwRAcuhPh8zu6WBPBKz7dcO3FQaRiiAY0Jv1T//X6PfLyQM9DtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727360675; c=relaxed/simple;
-	bh=4HpDR+xhrmqGOnAZL8z9etLdSNhZoFSvOAs9xluVVcY=;
+	s=arc-20240116; t=1727364152; c=relaxed/simple;
+	bh=xc7C9xO/oAAhBQd5t3u6QRsqBp/VfNSTgKKaH2a8G7w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oFZBxMnSRpRTLqxJ3LBlUiDQtPYTlM2aF6iHzGxS3f6y5KXOZAdFI4rPP5uxdF7qdXZJjA6kxWXfcbC4cYsU7x9FE4yZzY9Tuw3I/puRrhemAFYcNL/g4lbHLgSNc4YLtXENr4YhbJZOVcyx90VK26bR7Rz3+LVWN1bKnkgmhpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BXMIHn6l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gGLa9jvI; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=LbJTw/RTavVbj4hi+gDpyDjcjwI5N8vTirAyj6dQTwsYk4pKLv1GAFUHIaH1zUescy+CfgwNVS16hFUcAgT7SNVbhW5JgCTFJELQnzxXYirS+MScEp4SgmyIyt/muPot4hwV5BzPGRJpGOhXhSfkO40pK3Pe+wMqq+ovCGoXff0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=vdiN5WlI; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BXMIHn6l";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gGLa9jvI"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A2171140152;
-	Thu, 26 Sep 2024 10:24:32 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 26 Sep 2024 10:24:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727360672; x=1727447072; bh=Pb/YL+brkt
-	EXvZ9bPO9dOex1J7K4bVxXB2ah5mJRKBg=; b=BXMIHn6l1vm3ijLTR3j7oExFsm
-	74lq7QJBNGWCyJqlyhv/ls+PcoIr9fFAJn1wSx2cMyzoNvwb4ZvN7fDuIfhwFJZe
-	xFJ/CFRoJ+a3ARjNIhRZSbkiUZpAcKJBNJ74SK2ecpIV4P357ztMJ+/xxUS89Llt
-	9FRwH2VL98umzWmm62MMs0DhE0/NVjEJDwGt3uP1tqOINCbTnJtJ0wX5D3+kvxMg
-	Zv69v89WkIIjfCrudtgODPcqCRcJcbMenOeoKfpMI/WdmjYJ8mfd0st0c1z7ST5N
-	ouGTqBrW0IlV9dtnX7GyimOnsHpcYKknhIc/qlPz4M48+WrkPuUNJKukhHEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727360672; x=1727447072; bh=Pb/YL+brktEXvZ9bPO9dOex1J7K4
-	bVxXB2ah5mJRKBg=; b=gGLa9jvI4GmTOG+ebhMtsvwWAMvCnWlGoxRd9zFANcpD
-	/WnI4EROEQhE6ZptiQxuo7OfwQJknielzVxhLNXDQ/Xhdav+aia9mM43Ji1xSdDA
-	9COM9/YIo9NjLh9Gd+aYNoFnQ0M/TGbaofDRUa2dgKUVlqPtXUTlfE/9L+VOOlbI
-	dxPgs7pVIioxoIQ8ATP8d8razjz1yRBIPNk4frAqCR2uSyvMcJRj/nh+00GXSgvZ
-	WD95bokegx7j4GKzute+Eu5uT1Z/yEhps5A0XOmMz/MPXdu4rwBgvSuU7aL1A2Ut
-	DQJulZySsH38IcxmrMe+7DUzA0/0P5Ra/5w44QgyCA==
-X-ME-Sender: <xms:oG71ZiPemiHuZW_MrCgxW9y8Ky48vXwI2nMYdGmOS0WYjYWEi96r8Q>
-    <xme:oG71Zg8jvtxElfILpiO_-5XMaElg_aXe628cDE9WStHKSO_BbJd1T_IZLbHwn6Xzb
-    qR99nGMCA-WxCiZng>
-X-ME-Received: <xmr:oG71ZpS_qBvEX-kmBI67DuB67jsrRoDgDQhmjtNPUXDg7m9repPUeNHa-RGZirDj3VaJw1W2zc8EB-7dPwg6zPNe9O6ZUP0J6X6Qruqa78PCYQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedgjeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:oG71Ziv2S5ygFbT4wzbcDmMIqJoOL4ib_A5RHYeglS775RZvPPnavw>
-    <xmx:oG71Zqc2akEf-hz50E0NUUnXbrKGyRmIpgwVLaxciEj4PjoNev4d2A>
-    <xmx:oG71Zm3rLfwqoW6Rk9wl4VIiVWhTVQTSkYXWzvX9KtfCxcrNoIw_QQ>
-    <xmx:oG71Zu-8KqIXmnRSUfzTLUtwCr9WyCejL3zs7iUmQ_ZizwbJ1HxGKA>
-    <xmx:oG71Zq5xjaZvdPfa4qHhRYJT57mdBZfsYmyFNLHwymr_n2C04mPjMYkn>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Sep 2024 10:24:31 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4a25d594 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Sep 2024 14:23:52 +0000 (UTC)
-Date: Thu, 26 Sep 2024 16:24:24 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 1/4] git: pass in repo for RUN_SETUP_GENTLY
-Message-ID: <ZvVumLAFu1LGzXWP@pks.im>
-References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
- <eceb2d835be7168081d6eeffbce57bba89b5f423.1727185364.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="vdiN5WlI"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6e22cb0b19aso10410567b3.1
+        for <git@vger.kernel.org>; Thu, 26 Sep 2024 08:22:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727364149; x=1727968949; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=c3YJFs0N/VAzKPwDonhfVMmQmqZtS4sm0/drwtyI7h8=;
+        b=vdiN5WlIysZZ61z9xb5og80KOPWF+l6XU9l0Kh44RHfvD6mtFem0j5I6CS+v7C24QS
+         6DDhdjZjt061oP4hkjpaV2JGM27PmGIshUTT6iz1XnGt8GoioZrz8ZzkH2mBisxSxbSg
+         TidFMLZaWrFhyHIAJgr56ln5dq5FCulP9VvBOSBl/Xskm5NMY04ybWrpVNGk2wlug205
+         wamDsgRV9Pmf0zJ7BpxrSV9Of6K3q5o19E+lDMHyGgj/Ah9S2v6esYuJKbuCsHBU5zhv
+         JSAR3Ppt1zHRdqoC6BIPqfsBAQpuLA+Z1MlcFP+XoIXk0U043rTnbfqdyMGzhblNcOEN
+         WAzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727364149; x=1727968949;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c3YJFs0N/VAzKPwDonhfVMmQmqZtS4sm0/drwtyI7h8=;
+        b=TfqpXjd6lRTIwtn+S+C1QQBCnEUN0gmz/HsmqwAfcvocMakxk1WcyxhWa8hvXzrdVt
+         D8cFj0v0znF6VaEs6BC65m/N1Jmcu2Jaf0bupLIQasCRNS0KneIykQqxeKe5FNA5hMxQ
+         8NQV19OUG1isca6wQxHGMQXwAJelml5pRbjNLtPyLecuzhJIXBs6z24UsHxds/TiemBD
+         eubfhqSvTrNq62ce8UxoEDJOIRjojQfxWDvL0+ZGsZjj3cHGZMzOV8b08kFeD4VOYGj4
+         ZDopj5Ux7ABfCPSUrJm/6irYJFZ2WZJynbgyuOSIdZdKRcdOu6jAt3findYUzG7F2vH+
+         fkNQ==
+X-Gm-Message-State: AOJu0YwNvZP4ObeBs+6yfqCv3ZnGJsOycXJK9R1Fc7t5VGM+F8WfUIlw
+	MVs7Ge+hCgOR2YYTqkgizzCkB/9ogR30gtEDfovyCFeLM4gZTp0ypMCfsdImwpI1MixlYaQvt+T
+	uBeA=
+X-Google-Smtp-Source: AGHT+IG1DN2wMpDw9+CxTnMBkcHAU5/fxB7NltREE26csd1Aq1T0xRBf64w66ZQufpzHxK2hgVXTjQ==
+X-Received: by 2002:a05:690c:15:b0:65f:cd49:48e0 with SMTP id 00721157ae682-6e21d9baf76mr63838377b3.31.1727364148632;
+        Thu, 26 Sep 2024 08:22:28 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e245386789sm158997b3.104.2024.09.26.08.22.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Sep 2024 08:22:28 -0700 (PDT)
+Date: Thu, 26 Sep 2024 11:22:27 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v5 0/8] hash.h: support choosing a separate SHA-1 for
+ non-cryptographic uses
+Message-ID: <cover.1727364141.git.me@ttaylorr.com>
+References: <cover.1725206584.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <eceb2d835be7168081d6eeffbce57bba89b5f423.1727185364.git.gitgitgadget@gmail.com>
+In-Reply-To: <cover.1725206584.git.me@ttaylorr.com>
 
-On Tue, Sep 24, 2024 at 01:42:41PM +0000, John Cai via GitGitGadget wrote:
-> From: John Cai <johncai86@gmail.com>
-> 
-> commands that have RUN_SETUP_GENTLY potentially need a repository.
-> Modify the logic in run_builtin() to pass the repository to the builtin
-> if a builtin has the RUN_SETUP_GENTLY property.
-> 
-> Signed-off-by: John Cai <johncai86@gmail.com>
-> ---
->  git.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/git.c b/git.c
-> index 2fbea24ec92..e31b52dcc50 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -480,7 +480,10 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
->  	trace2_cmd_name(p->cmd);
->  
->  	validate_cache_entries(repo->index);
-> -	status = p->fn(argc, argv, prefix, (p->option & RUN_SETUP)? repo : NULL);
-> +	status = p->fn(argc,
-> +		       argv,
-> +		       prefix,
-> +		       ((p->option & RUN_SETUP) || (p->option & RUN_SETUP_GENTLY))? repo : NULL);
->  	validate_cache_entries(repo->index);
+Here is a minor reroll of mine and Peff's series to add a build-time
+knob to allow selecting an alternative SHA-1 implementation for
+non-cryptographic hashing within Git, starting with the `hashwrite()`
+family of functions.
 
-Should we really pass `repo` unconditionally when `RUN_SETUP_GENTLY` was
-requested? I'd think that we should rather pass `NULL` if we didn't find
-a repository in that case. So this condition should likely be made
-conditional, shouldn't it?
+This version has changes which are limited to the commit messages only,
+and amount to:
 
-There's also a missing space between the closing brace and the ternary
-questionmark.
+  - Updated rationale for skipping the collision check from within
+    finalize_object_file() when handling loose objects.
 
-Patrick
+  - Updated commit message with some over-eager s/fast/unsafe/
+    conversions in the final patch.
+
+I think most of the review dust has settled up to this point, so I'm
+imagining that this is the final version of this series for now, or at
+least very close to it. But if something new comes up, please let me
+know!
+
+Thanks in advance for your review!
+
+Taylor Blau (8):
+  finalize_object_file(): check for name collision before renaming
+  finalize_object_file(): refactor unlink_or_warn() placement
+  finalize_object_file(): implement collision check
+  pack-objects: use finalize_object_file() to rename pack/idx/etc
+  sha1: do not redefine `platform_SHA_CTX` and friends
+  hash.h: scaffolding for _unsafe hashing variants
+  Makefile: allow specifying a SHA-1 for non-cryptographic uses
+  csum-file.c: use unsafe SHA-1 implementation when available
+
+ Makefile                              |  25 ++++++
+ block-sha1/sha1.h                     |   2 +
+ csum-file.c                           |  18 ++--
+ hash.h                                |  72 +++++++++++++++
+ object-file.c                         | 124 ++++++++++++++++++++++++--
+ object-file.h                         |   6 ++
+ pack-write.c                          |   7 +-
+ sha1/openssl.h                        |   2 +
+ sha1dc_git.h                          |   3 +
+ t/t5303-pack-corruption-resilience.sh |   7 +-
+ tmp-objdir.c                          |  26 ++++--
+ 11 files changed, 266 insertions(+), 26 deletions(-)
+
+Range-diff against v4:
+-:  ---------- > 1:  6f1ee91fff finalize_object_file(): check for name collision before renaming
+-:  ---------- > 2:  133047ca8c finalize_object_file(): refactor unlink_or_warn() placement
+1:  ed9eeef851 ! 3:  41d38352a4 finalize_object_file(): implement collision check
+    @@ Commit message
+             object name, so checking for collisions at the content level doesn't
+             add anything.
+     
+    -        This is why we do not bother to check the inflated object contents
+    -        for collisions either, since either (a) the object contents have the
+    -        fingerprint of a SHA-1 collision, in which case the collision
+    -        detecting SHA-1 implementation used to hash the contents to give us
+    -        a path would have already rejected it, or (b) the contents are part
+    -        of a colliding pair which does not bear the same fingerprints of
+    -        known collision attacks, in which case we would not have caught it
+    -        anyway.
+    +        Adding a content-level collision check would have to happen at a
+    +        higher level than in finalize_object_file(), since (avoiding race
+    +        conditions) writing an object loose which already exists in the
+    +        repository will prevent us from even reaching finalize_object_file()
+    +        via the object freshening code.
+    +
+    +        There is a collision check in index-pack via its `check_collision()`
+    +        function, but there isn't an analogous function in unpack-objects,
+    +        which just feeds the result to write_object_file().
+     
+             So skipping the collision check here does not change for better or
+             worse the hardness of loose object writes.
+    @@ Commit message
+     
+         Co-authored-by: Jeff King <peff@peff.net>
+         Signed-off-by: Jeff King <peff@peff.net>
+    +    Helped-by: Elijah Newren <newren@gmail.com>
+         Signed-off-by: Taylor Blau <me@ttaylorr.com>
+     
+      ## object-file.c ##
+2:  3cc7f7b1f6 = 4:  611475d83e pack-objects: use finalize_object_file() to rename pack/idx/etc
+3:  8f8ac0f5b0 = 5:  9913a5d971 sha1: do not redefine `platform_SHA_CTX` and friends
+4:  d300e9c688 = 6:  65de6d724d hash.h: scaffolding for _unsafe hashing variants
+5:  af8fd9aa4e = 7:  3884cd0e3a Makefile: allow specifying a SHA-1 for non-cryptographic uses
+6:  4b83dd05e9 ! 8:  62abddf73d csum-file.c: use unsafe SHA-1 implementation when available
+    @@ Commit message
+     
+         These callers only use the_hash_algo to produce a checksum, which we
+         depend on for data integrity, but not for cryptographic purposes, so
+    -    these callers are safe to use the unsafe (and potentially non-collision
+    -    detecting) SHA-1 implementation.
+    +    these callers are safe to use the unsafe (non-collision detecting) SHA-1
+    +    implementation.
+     
+         To time this, I took a freshly packed copy of linux.git, and ran the
+         following with and without the OPENSSL_SHA1_UNSAFE=1 build-knob. Both
+    @@ Commit message
+             $ callgrind_annotate --inclusive=yes | grep hashwrite | head -n1
+              59,164,001,176 (58.79%)  /home/ttaylorr/src/git/csum-file.c:hashwrite [/home/ttaylorr/src/git/git-pack-objects]
+     
+    -    , and generate the resulting "clone" much unsafeer, in only 11.597 seconds
+    +    , and generate the resulting "clone" much faster, in only 11.597 seconds
+         of wall time, 11.37 seconds of user time, and 0.23 seconds of system
+         time, for a ~40% speed-up.
+     
+
+base-commit: 6258f68c3c1092c901337895c864073dcdea9213
+-- 
+2.46.1.507.gffd0c9a15b2.dirty
