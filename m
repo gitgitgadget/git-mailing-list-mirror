@@ -1,81 +1,82 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE3976410
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 13:50:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F9D143722
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 13:50:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727358623; cv=none; b=oT3PUew+TMJMMLPDH/q4CrdfPWsYusyXb/4TU7MBMKAfWgF8wga8ad73IDPZAZPhXbQx8MWemj5rD1i0w/L3G1OS/LaJqti5YM9e6NMmbJY2S3OURMePHyet6saZwn6gs+hF0DMiFhwp3WPsTz/rLPNrYqcdz2HxjJizPIsYImQ=
+	t=1727358627; cv=none; b=TmuW6xbLGpTM0OE59x553v7DfrL4TbI0bEWrCvqrLSTdGKqVSuKe0Z6qlvgZa8HdwwnvFsmLGH72n6nfKa3DIrOBcHuYF1GkFHxo2B4QopmY32GGMwicwRYFabS7xt+kJ7jm3pdXpI54EvVxmLv9uqkiU2gPBNz7Ldb5KS/6Rb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727358623; c=relaxed/simple;
-	bh=XaiZKeVDP8kasXiGkOLC6Smu2SvqhjqwpJnqM6jezw4=;
+	s=arc-20240116; t=1727358627; c=relaxed/simple;
+	bh=1QpwJmm4WgtoHiKALicG4sv03E57uzG6HJh21k92e7s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TDwZWhTvkp9Z2F7yD3n6FfmN1AnX9dHe80yzU3Z+cYBszZjqrzWn6p0QblWnhC0irmaByZbaz4OSMpmPQvUCcUBgahYykQr/n13+mXSv59Z24sg54xOEwGvaDwwaYzDI8i1hOZrGRpmqG88J70o+HUDazYSlv3yy6j8q9z/qnW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SyjPopPv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b55i2f/H; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=uJ6SaWdPQgWvrWVOeF/NLphmPc+9ru6nOPSr0ctknSCdHSD8MYcAhaSwMjUiQJoz+IjHRRyMOnkCkT7Jyhr0QYG8S46QiIQIQHmPYALipKDa98L6+B1+Mv1KYSRnqv+HkZVe+hqf/C1HgnDP3+Y0u9VXGSfRaaf//Ab+pXHWFfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NuJNccKV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EEQFYfVZ; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SyjPopPv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b55i2f/H"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id ACD091380176;
-	Thu, 26 Sep 2024 09:50:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NuJNccKV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EEQFYfVZ"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BB3C6114020E;
+	Thu, 26 Sep 2024 09:50:24 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 26 Sep 2024 09:50:21 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 26 Sep 2024 09:50:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727358621; x=1727445021; bh=YkXuUHr6Ps
-	i2YSWgwscva+Oeo+VQRsPg3Gb71TpJlvE=; b=SyjPopPv9yPi4LN8u3xNLJYuqz
-	DxM4XL6iXwpQp7P1+7CsfxFKnkKAfDgEXR0vx8gjai3Ve+OL++7BaUTPaVx6afaz
-	CIxyNCl97kHSBGvqniRGZJaYewSP3ySs2z/wcvW9bdWQ4rOXDpqhGpNQexsa+d1r
-	qKbqlQZm1FgifSmKtTG+uCW0gnWxjTAM8sNiMWG1lYtFBGgaDAZkkXoObg+Nqg3i
-	+I9C4eujWmDGt6RCl/gDPOpzfDzypYnn9QNgU9Kf03yy6I0SNMlR+4G1zQQKeZ7V
-	i/te45giUTM/Q4Ouzx3pt4n6ONLY0ZG8AsHG6JVt/zforEd9vDMli0tQ9QVA==
+	:subject:to:to; s=fm2; t=1727358624; x=1727445024; bh=zCEjLb7TGL
+	BoEy3qxdmQMoeet7XmV4W38x6F7Uuf85w=; b=NuJNccKVd/d1ZYTTuZ2e24Zedr
+	Pyjv08yx4940s/xU7KJHMzfvoCmOn6ROo5vjtu+uzj1Cwnl6OTrpcEIU7UHueyIM
+	ht7o9U5XfYhUlnEh1ungiJERUxZnUBjQmRN5tUetx8iMa/g3x31SPgU/L78Qqg0q
+	/MDGSMzJ8bXl8vjiPZHqlJruItyQF8LK1eqom8HBfqPgP3fXhjK5h3C06zMR4sZQ
+	FmLoAQfPXqz3UMtPabhAMj5d2wE07xgqLVx0DuopgTnMQtFILbiH/uaJojcZ6dFW
+	ZtntT+CzfbMzK73sHu16AvRemq7ooZ+mYSp28UseGVD+1gjyf2nxWvN0vhCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727358621; x=1727445021; bh=YkXuUHr6Psi2YSWgwscva+Oeo+VQ
-	RsPg3Gb71TpJlvE=; b=b55i2f/H1BT6o7IYtsc7rkLwrPpOJzDzz6q+RLDvyibJ
-	UuG3nIj4WDB0r7Du8n53TiM8SfWrbrKI37A3rKwdRbRDEvyNk2ylN/mJcRpJ5auY
-	fI8jnInqtsfmcje20WvdpbAsYerCw/zd9mY0FA0giog8KN5OWNrz2pNQWkmnZYo6
-	PEbCKZpO2Iqxgz7Cg/mg3Zhk5YSztM4CmotrtZPLm2WfX3xTo08bqcNTwY9gd1sP
-	7YwKPMXE4WFCp6hydAYFamkFgf8+9k+jwurcLWST8SOhWh4q4K9Uzdu8X4CWtdTJ
-	MUgTkcu9g84eFNOZAoEVC/pqElHNTmupQB8KbwJSsg==
-X-ME-Sender: <xms:nWb1ZnT1SZKd3RYllTwhzp3JQez1NFE6tOuSS-q0waaVnSf-D54vzw>
-    <xme:nWb1ZozW6eJFrT2AFBvRIpqUYEcfyDbmVaDq0pabkxxQldUga1C4YrLrJZczPDpEN
-    jai4DGQt3n00VTPhw>
-X-ME-Received: <xmr:nWb1Zs15wtzhD7MoXk2In2n9HAy7tNk2tjg_nwTwgM0PcsSNA7g2XBxIa2OKLpvGSH7TnDXy46FITVt7SW3dVhnLG9od6Q_0ct9spfGzai32gg>
+	fm2; t=1727358624; x=1727445024; bh=zCEjLb7TGLBoEy3qxdmQMoeet7Xm
+	V4W38x6F7Uuf85w=; b=EEQFYfVZdHcxzfI49oSDdQhmq+dwLxkEEeTtY56ppdXs
+	QUB4bDwTfoqXul9tfCTYFyikJ8tuRW6OI/XbukF2OS7zGXsI8eQQkAlqqH4xjq0V
+	ROhhw/aySedieVgALdScx4ns27n3hLjq9Bw+3P2Vk15GdsDgse0sXr7TLDCxDhku
+	LSid/ey6UzsNPGxhjaxPiklcKYzCTfw9vYur3OE1O0JpI1GY4A17AavsKiz3/whT
+	Pmv9NmEsNtavDgv84f3Foa0KVjspypApcE8efSRMPr/IQQkcLkIUdgGqv1hD27+/
+	Fv+FNR1z5fhSuABT7qjyP5krT81ghPmutmtNtstprw==
+X-ME-Sender: <xms:oGb1ZvF3XrIGB0aUpu1sKJ-W9XmAg6SQ-6LUK0c4HKStWAh_cALE5g>
+    <xme:oGb1ZsWzHaofz-a_FbdaJLTov6P6S48NtsVAfdMVyf214oc7wBOLZFHLqfj0Vq01x
+    PowLYWsYHktQkKYsA>
+X-ME-Received: <xmr:oGb1ZhLhJKWUyhjAZrLTYu3ozNODeTCM5sWQVhsqw6jVEXJ0w_H4M_7tcL-K2aNUgUDqq2gX_ja3Px_4p8Gxlktp6RwFfLWY9_-B3CKyfEXlug>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedgjedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
     fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
     hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
     dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
     phgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:nWb1ZnB2GwyzhcSiAgpaz8tZ-xW-KOzv0SJgHKq2C-C0B1VdNOe-mw>
-    <xmx:nWb1ZgjSnV9uB1Ol-9OHqpCiwVUlodgfmM2RGapDSA1gvp6EWcXhzg>
-    <xmx:nWb1Zro5LJEYfPu95Zwi9zWEJ_cu2uJxqIrsPy__vVD8mAc2-vnzOA>
-    <xmx:nWb1ZrhBx4E6FJYJuSbqYIwO5E_UMAUlypYio01ucdlHIgoehEdlRw>
-    <xmx:nWb1ZjsYvmg0bE_UK_sk16R-As7x-v6LMlcqk_xl42HKvZgXyYDNp8w->
+X-ME-Proxy: <xmx:oGb1ZtFsZdDWFGskh-gwF61BvAfypKzTXiC0XjxX7I2TG4EQ6QbkxQ>
+    <xmx:oGb1ZlXf4qXWtYcyd58yxVYbVAv3MHpszw2hFFPqR4zo0kzeoDESCg>
+    <xmx:oGb1ZoMRgo_binrbHNLw8_PahQ2JMUfM-H-w7Eeqczc53rAZFeVK8g>
+    <xmx:oGb1Zk24fieHFFG38jbZHnGujndEXFLMJG7_n4OrJtCPWBQZwLaVTA>
+    <xmx:oGb1ZiiiCBq5rZGAVMEys7Jww4OhOhCCLtZwGUe1EGsjSqn_03OdOkee>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Sep 2024 09:50:20 -0400 (EDT)
+ 26 Sep 2024 09:50:23 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 52caa3e4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Sep 2024 13:49:43 +0000 (UTC)
-Date: Thu, 26 Sep 2024 15:50:17 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f6f86987 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Sep 2024 13:49:46 +0000 (UTC)
+Date: Thu, 26 Sep 2024 15:50:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 14/28] http: fix leak of http_object_request struct
-Message-ID: <ZvVmmV0nYq_cEnj3@pks.im>
+Subject: Re: [PATCH 15/28] http: call git_inflate_end() when releasing
+ http_object_request
+Message-ID: <ZvVmnCJNRY_V0a8a@pks.im>
 References: <20240924214930.GA1143523@coredump.intra.peff.net>
- <20240924220109.GN1143820@coredump.intra.peff.net>
+ <20240924220213.GO1143820@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,52 +85,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240924220109.GN1143820@coredump.intra.peff.net>
+In-Reply-To: <20240924220213.GO1143820@coredump.intra.peff.net>
 
-On Tue, Sep 24, 2024 at 06:01:09PM -0400, Jeff King wrote:
-> The new_http_object_request() function allocates a struct on the heap,
-> along with some fields inside the struct. But the matching function to
-> clean it up, release_http_object_request(), only frees the interior
-> fields without freeing the struct itself, causing a leak.
+On Tue, Sep 24, 2024 at 06:02:13PM -0400, Jeff King wrote:
+> In new_http_object_request(), we initialize the zlib stream with
+> git_inflate_init(). We must have a matching git_inflate_end() to avoid
+> leaking any memory allocated by zlib.
+> 
+> In most cases this happens in finish_http_object_request(), but we don't
+> always get there. If we abort a request mid-stream, then we may clean it
+> up without hitting that function.
+> 
+> We can't just add a git_inflate_end() call to the release function,
+> though. That would double-free the cases that did actually finish.
+> Instead, we'll move the call from the finish function to the release
+> function. This does delay it for the cases that do finish, but I don't
+> think it matters. We should have already reached Z_STREAM_END (and
+> complain if we didn't), and we do not record any status code from
+> git_inflate_end().
 
-Oh yeah, I remember staring at this code and being completely confused
-as to how this all works.
+I had to read this paragraph multiple times to understand it, as I
+wondered why you did end up adding it to `release_http_object_request()`
+even though the paragraph claims that you cannot. But what you say is
+that you must _move_ the call, not add it, and that's what the patch
+does.
 
-> diff --git a/http.c b/http.c
-> index cc136408c0..d0242ffb50 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -2816,15 +2816,17 @@ int finish_http_object_request(struct http_object_request *freq)
->  	return freq->rename;
->  }
->  
-> -void abort_http_object_request(struct http_object_request *freq)
-> +void abort_http_object_request(struct http_object_request **freq_p)
->  {
-> +	struct http_object_request *freq = *freq_p;
->  	unlink_or_warn(freq->tmpfile.buf);
->  
-> -	release_http_object_request(freq);
-> +	release_http_object_request(freq_p);
->  }
->  
-> -void release_http_object_request(struct http_object_request *freq)
-> +void release_http_object_request(struct http_object_request **freq_p)
->  {
-> +	struct http_object_request *freq = *freq_p;
->  	if (freq->localfile != -1) {
->  		close(freq->localfile);
->  		freq->localfile = -1;
-> @@ -2838,4 +2840,7 @@ void release_http_object_request(struct http_object_request *freq)
->  	}
->  	curl_slist_free_all(freq->headers);
->  	strbuf_release(&freq->tmpfile);
-> +
-> +	free(freq);
-> +	*freq_p = NULL;
->  }
-
-Okay, looks simple enough. But I found the whole code in "http.c" to be
-quite... elusive, so I had a hard time finding my way.
+So yeah, that does make sense.
 
 Patrick
