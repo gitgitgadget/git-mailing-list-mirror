@@ -1,82 +1,81 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AAC1714C4
-	for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:46:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D29B184101
+	for <git@vger.kernel.org>; Thu, 26 Sep 2024 11:46:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727351190; cv=none; b=kOxtIPRLVwbQSNgQhGz7sQ5ad7Q05GNgxHi6/dWuFQP/wmGOVl0qa9OHGDdLAup9qDY73lYYu1GcR5SmbtLeAlNNvutNt22IdCOg0fx9ZY5e+CVvKsDdk2CDY869WC5cPm2kt4KzbjyWnLZolR4bUz73BnAduWDvSP8xMF4Ehek=
+	t=1727351194; cv=none; b=gdbNBdaLl4qElqOUxyBM7x74MvClcCpyvHE9eJbnBpwWeeuSE9ftvDhvf6nu4lXTfoJyzsJyoRKajA1GnKcCEG9Hp5Kb64SxyhkCEFeeTHymiGyTA5qb/BdeTWLlCIqRAEnAUVhQrOOq28cfdJ3Jsbdqp/7WESQ98Sz4g2E1T04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727351190; c=relaxed/simple;
-	bh=CTTt5zg58ibnysdgV5vTdz0h56+m7eXqCbK7qVfCidg=;
+	s=arc-20240116; t=1727351194; c=relaxed/simple;
+	bh=HDjqDwizK+SjvKJjEDDf2VPW/GeJMb6TCurWfoPtIYw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pnaNI7QXfAvmUVl8IzwzNiFiIkD63JWfkiEHj+bVzIdvFGBoUOTOHtFHG0l7T+qB+s1NVHnUGiOlhMXKP4EXYET+533btXnXygJ6r/Vk2QqQBx8uTUqq3TCqYljycFRNZW4B2EQbCJwN3kbOUDxdMm4CqhBUGSoJYrVKUJUiGEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l9UdUrFw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a/wyqPuD; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=tWXx6na+70lmxzAqsa52pdaHwgYL8Tt7/u2LqNzdkmCDtFs6vGP2xUnnmBGwcUcwPFYn0vhbQ+57nLWKQqi2ABhqRyxQWQBhmd1Y0URDu9WtBjInfnmbhjir32/TzdllcyGSbCWh1IRhGrGXdYsV333zEY48+Rp4a1E4bP7D3gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sJ/CjrL+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qIPitmDO; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l9UdUrFw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a/wyqPuD"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 10778138067E;
-	Thu, 26 Sep 2024 07:46:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sJ/CjrL+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qIPitmDO"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3BD37114024B;
+	Thu, 26 Sep 2024 07:46:31 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Thu, 26 Sep 2024 07:46:28 -0400
+  by phl-compute-11.internal (MEProxy); Thu, 26 Sep 2024 07:46:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727351188; x=1727437588; bh=5krodC0Rw6
-	0VZvL9vJz1gZVB9qzxcNXAJGu/JcwQGvg=; b=l9UdUrFwt/mo2NMzFmWSo2hHIh
-	9hKFiNm1H3YSA5TVccXUTsNY7ZSe07zhl6VGHcnqTvd5vDcu87ao73i8vFJKwO6e
-	NY3EF4vBhtCDXqt6Kq1niG/J4b9d+nHl6oyQ5lRObCOf0jGiCvN6YMqLHOfMhWRb
-	0piMi2ApN4jVoTpUICFEJQB6mfMGdm1vLtfMcNheU0B7ac2GD7f4pKCv8mJbN1Bx
-	IJkpK6P3iGuOeLfPBRMfwpRHzDi3xyX5MSW4ja4IQMWpi8Fx+dgIyvnr5q/bqcSA
-	8yg+4uXQsNnOulG4aY0sBZBvDM+OL90HSclX+xEt8O3XzYPOPA3OqbsAxCkg==
+	:subject:to:to; s=fm2; t=1727351191; x=1727437591; bh=ygYBHGbj1B
+	YAY7PiiH9PleYauqmsPzrfI10wWmvES1M=; b=sJ/CjrL+TVEg70+iU7PSilLGSE
+	25EKAP6VpNZ1gAwfMiv4sYJwvagpjCy8P4FeKzX2J1v1fSbUrV5T3Y8EkXAOTUy9
+	hOUwSAKBD9huNiBodpRMsf7jSuhWeqo5ImM8dWwCRVMHfyavQrD8nL1Po/pZAYRI
+	Q3ofj9JD34FY0QO192NqkjdfzasNCZ4GCct0jIklqgdha4FN56LU2ZyKznW5A6w3
+	D1CwWvTIKFpWKeSTMlpMAr4zvq2S+r79vVDhE/YYeksOv2jEcWSmVDakkGY9AYBg
+	NfCh7bcONzr2OtURTDUtamvs/gvTffD2LZJTj6M3Wj+7ICCGwDUbrOJiJDTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727351188; x=1727437588; bh=5krodC0Rw60VZvL9vJz1gZVB9qzx
-	cNXAJGu/JcwQGvg=; b=a/wyqPuDuQkqVH/mrYue+TGKi31YjHl35hH76LQbJ8cg
-	6Rgpa6UQfmRoOBgRA0jdYqDrokP2mkj2Hetk/jeQ3aQwcEex7X7jdFoHtbrwZLYA
-	KMhMFvsNo1+EX0G827G5+EsberNAAvyAOCUFM7lvL0VqXWelV28M6UHve5EyWVZs
-	vEzOdBjCRbscpbKpNEcBt831hRXQonCCNeAFFm3lUqBW9HchBxDZ8kplmgVsFYTL
-	59cR90ewH4XNQEGmU2ihmnHpclxS4CwlctrvBYQEc5F4p1HYDLZhaX5HGlvNwhEg
-	OGj2vdNHGqk2qXyDKaN1k6oEYAY51bqLGBiUEOmfbA==
-X-ME-Sender: <xms:k0n1ZrOoF5bSPQ5zgdSkQcEd-u_U1fH7W6naQj_5VA1P_GIUZM7i6w>
-    <xme:k0n1Zl_CnTD5FT7-Je6ohL5EkSe9yvTfuoad7qnWy44mOC8hvq8uK8RtotNMFaERM
-    NI5lFxFmURBTLUOug>
-X-ME-Received: <xmr:k0n1ZqR0wfhXbBcJWmzcVe5uNhY4Yxwbr6JP_TZ90kVzCTJpcIhOrhAEYjsj3pNY_1fXcBUSFLqRfGjcUoUfwlCH1FanDsc9Prf3nI2diSxLiQ>
+	fm2; t=1727351191; x=1727437591; bh=ygYBHGbj1BYAY7PiiH9PleYauqms
+	PzrfI10wWmvES1M=; b=qIPitmDO0iyBj1w/UwjHOFv4LHbBN2/yQN/QePCOlI0K
+	SHj/i/03p4LLU1YGu4shtO/kALEjlcL5ZHuHn7yvMzVvbLsuR9K1JkZYg12FxxqY
+	c3/8QMO0KXc1J17t348Z8+UmaNeAz/u2+08UbHnp1bq8E3y3qOj2N2MwQZ8vw0UF
+	Citq+hILz8PmSX0iEkbgYVY69ElLqbMihnRLCUrQ2BOcR9OgvCaP1NfjEiRc6QEA
+	7wGMwTjM674R1sIsDd6tufDnkGoSQ7YnUVcLFqf6PJhQluetmiDxgKDlyaDRV/sv
+	OCPta95hPcg3NOuF8ZTaFSbGu+hL3dnqIqb9db206A==
+X-ME-Sender: <xms:l0n1ZtRssbf761gfdxQ5kMB65GMxX3sBz9tr-sh86LXpbBJr_TA7OQ>
+    <xme:l0n1ZmzqtxEUe96OjHO4376po_MFr5XIu8IkI1rdeeW2Hjb_cHK2Ndun7hgH4VlG2
+    9G8N47R6ZIh4ycH3A>
+X-ME-Received: <xmr:l0n1Zi0w3ILOWo33VeVf4fe99WH8oZ50HOOw-_0jZN0vufEqU3n3S3VD8GRYcCvZTCj_isnzHTefnFbZfz0IbFjrtDHLGPhIjKVk5k9QlE6zQw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtjedggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:k0n1ZvttPb1qcrTEAzxBqh1LR_8TxySl2lOiAmh1D2kP5-f7lclFQg>
-    <xmx:k0n1Zjcanw2Tp3TNyOGNFFcog2ASqvHgZq2YMtjFOvx6TL-ynx1Gug>
-    <xmx:k0n1Zr0v5hsolhja4NOXOMu2mXn053ioWGVEvsOg8DnX39TIeTVVjg>
-    <xmx:k0n1Zv-yvwrA9eAtgzO45RSw_DY0kSaHZox_KUYFa7DmXpo0uzX2DQ>
-    <xmx:lEn1Zv7vS7_rB4wxs7DGzgTeiSlWun-vRbhmr5k61V7L655YBzhJOjYF>
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:l0n1ZlBdaD_RYUAJ1EAVD0kb7xABmWhN1gV7H0DCs0NiOyNMPHwxaA>
+    <xmx:l0n1ZmhfSWX8f0G6rEMLUa1x7DO-1BjC4d7sLMUALNqpbjJTuz9ylQ>
+    <xmx:l0n1Zpqru7DfOPBB-tOPCaFuytQLBcwajfShfo3JHq3CyuFZZkj0sw>
+    <xmx:l0n1Zhj-qQwXFC4Fy1cQeC5rN8IcuyDO-kmLEB0YYzB_ZfHKWABbhQ>
+    <xmx:l0n1ZnsqsLAw6ZYzgskxclSLpbesdMGn8DKeQcOIRYoi5MHrpI2hyNbn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Sep 2024 07:46:27 -0400 (EDT)
+ 26 Sep 2024 07:46:30 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3d35125e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 26 Sep 2024 11:45:49 +0000 (UTC)
-Date: Thu, 26 Sep 2024 13:46:24 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id fa7c2e17 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 26 Sep 2024 11:45:52 +0000 (UTC)
+Date: Thu, 26 Sep 2024 13:46:26 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 09/23] dir: fix off by one errors for ignored and
- untracked entries
-Message-ID: <fca161d389125692a9a8f0f5acb218f94f2b0062.1727351062.git.ps@pks.im>
+Subject: [PATCH v2 10/23] builtin/pull: fix leaking "ff" option
+Message-ID: <2338b5e2a81b4036bf3740265126afddd2fbe6a1.1727351062.git.ps@pks.im>
 References: <cover.1726484308.git.ps@pks.im>
  <cover.1727351062.git.ps@pks.im>
 Precedence: bulk
@@ -89,86 +88,69 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727351062.git.ps@pks.im>
 
-In `treat_directory()` we perform some logic to handle ignored and
-untracked entries. When populating a directory with entries we first
-save the current number of ignored/untracked entries and then populate
-new entries at the end of our arrays that keep track of those entries.
-When we figure out that all entries have been ignored/are untracked we
-then remove this tail of entries from those vectors again. But there is
-an off by one error in both paths that causes us to not free the first
-ignored and untracked entries, respectively.
+The `opt_ff` field gets populated either via `OPT_PASSTHRU` via
+`config_get_ff()` or when `--rebase` is passed. So we sometimes end up
+overriding the value in `opt_ff` with another value, but we do not free
+the old value, causing a memory leak.
 
-Fix these off-by-one errors to plug the resulting leak. While at it,
-massage the code a bit to match our modern code style.
+Adapt the type of the variable to be `char *` and consistently assign
+allocated strings to it such that we can easily free it when it is being
+overridden.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- dir.c                                              | 6 ++----
- t/t3011-common-prefixes-and-directory-traversal.sh | 1 +
- t/t7061-wtstatus-ignore.sh                         | 1 +
- t/t7521-ignored-mode.sh                            | 1 +
- 4 files changed, 5 insertions(+), 4 deletions(-)
+ builtin/pull.c               | 11 +++++++----
+ t/t7601-merge-pull-config.sh |  1 +
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 5a23376bda..787bcb7a1a 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2135,8 +2135,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 			 */
- 			state = path_none;
- 		} else {
--			int i;
--			for (i = old_ignored_nr + 1; i<dir->ignored_nr; ++i)
-+			for (int i = old_ignored_nr; i < dir->ignored_nr; i++)
- 				FREE_AND_NULL(dir->ignored[i]);
- 			dir->ignored_nr = old_ignored_nr;
- 		}
-@@ -2148,8 +2147,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 	 */
- 	if ((dir->flags & DIR_SHOW_IGNORED_TOO) &&
- 	    !(dir->flags & DIR_KEEP_UNTRACKED_CONTENTS)) {
--		int i;
--		for (i = old_untracked_nr + 1; i<dir->nr; ++i)
-+		for (int i = old_untracked_nr; i < dir->nr; i++)
- 			FREE_AND_NULL(dir->entries[i]);
- 		dir->nr = old_untracked_nr;
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 4c54d8196f..5d9d9e467e 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -84,7 +84,7 @@ static const char *opt_squash;
+ static const char *opt_commit;
+ static const char *opt_edit;
+ static const char *cleanup_arg;
+-static const char *opt_ff;
++static char *opt_ff;
+ static const char *opt_verify_signatures;
+ static const char *opt_verify;
+ static int opt_autostash = -1;
+@@ -1024,8 +1024,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		 * "--rebase" can override a config setting of
+ 		 * pull.ff=only.
+ 		 */
+-		if (opt_rebase >= 0 && opt_ff && !strcmp(opt_ff, "--ff-only"))
+-			opt_ff = "--ff";
++		if (opt_rebase >= 0 && opt_ff && !strcmp(opt_ff, "--ff-only")) {
++			free(opt_ff);
++			opt_ff = xstrdup("--ff");
++		}
  	}
-diff --git a/t/t3011-common-prefixes-and-directory-traversal.sh b/t/t3011-common-prefixes-and-directory-traversal.sh
-index 3da5b2b6e7..69e44c387f 100755
---- a/t/t3011-common-prefixes-and-directory-traversal.sh
-+++ b/t/t3011-common-prefixes-and-directory-traversal.sh
-@@ -2,6 +2,7 @@
  
- test_description='directory traversal handling, especially with common prefixes'
+ 	if (opt_rebase < 0)
+@@ -1135,7 +1137,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 
+ 		if (can_ff) {
+ 			/* we can fast-forward this without invoking rebase */
+-			opt_ff = "--ff-only";
++			free(opt_ff);
++			opt_ff = xstrdup("--ff-only");
+ 			ret = run_merge();
+ 		} else {
+ 			ret = run_rebase(&newbase, &upstream);
+diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+index a94387a75f..7fd8c086af 100755
+--- a/t/t7601-merge-pull-config.sh
++++ b/t/t7601-merge-pull-config.sh
+@@ -4,6 +4,7 @@ test_description='git merge
+ 
+ Testing pull.* configuration parsing and other things.'
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
  test_expect_success 'setup' '
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index 2f9bea9793..64145a05b1 100755
---- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -2,6 +2,7 @@
- 
- test_description='git-status ignored files'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- cat >expected <<\EOF
-diff --git a/t/t7521-ignored-mode.sh b/t/t7521-ignored-mode.sh
-index a88b02b06e..edce10f998 100755
---- a/t/t7521-ignored-mode.sh
-+++ b/t/t7521-ignored-mode.sh
-@@ -2,6 +2,7 @@
- 
- test_description='git status ignored modes'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup initial commit and ignore file' '
 -- 
 2.46.2.852.g229c0bf0e5.dirty
 
