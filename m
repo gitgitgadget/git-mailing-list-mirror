@@ -1,124 +1,115 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E10D14EC5E
-	for <git@vger.kernel.org>; Fri, 27 Sep 2024 19:29:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39E915CD7A
+	for <git@vger.kernel.org>; Fri, 27 Sep 2024 20:05:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727465393; cv=none; b=qAJbB8iBdxXh/rj+HEUomGKsWNnTDZJb5dH3p27JEqZwe8B9gPvmn3YFqbNdcdqfmVV4Mzf39u8GQrjqb8BF5OmXyRYdm7JyuYLhqkkfNoTWRYGlxV8ruN7ulo0hfFlO/W60Ixm/4UQj4i4fpwsb9xEfA9SKymPyaicTHzemQa4=
+	t=1727467534; cv=none; b=G9StzS2++bW+0U4ynaPHChsKdDJNuCahub9qJBN4YBAaV56tRXc0tkMpXIFMO7l4tlpSxaYsxi84fY7UHcfbYpszk+7CM6yYi/9Meh1m00pWtnoDraM7Ed0KSdC6nPm018Uvd2UB/F0uEUCbEHx6HVL1H6ECA7L6PQTHV32Wisk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727465393; c=relaxed/simple;
-	bh=Q6OIcV3tzPdpAiOw7Z4an4rqd8GqV72BNP7NHdGTLrg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nIjQW58vg/bD8Mp/L993WU83/Ynuit600QeiA8rMPSYLI0Qvf50tAkPh54CH/Fzvf8276c6qnkP8S2EObpdXlhwm8R6sFwaeN3DhBQseoCupe/SGtMPXc/7R3cpNVcb45+Tq4PFCja9jRxz/9zzqhcyz1btCkkrJVMN6JpUkGIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kCyHF/Pf; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1727467534; c=relaxed/simple;
+	bh=Ik+eFreaiD9I9gg6Dcwm+msNtH18Lb/7bpzxES8ZwrI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TF5E3lrjzxJydGlTgftCcgqjZelkHTXeRIV6tKtksoBNiy6L2fUjq+guJegIN2DTgLRrUzZkEqJxWSAmmAcxnNHV9Ds53fiq+koMSR9/pz2PqnnHB7GN+pSbtIe0NCcMR+KyJ6rWoVoGYEJj2Hj9ukDgEFFw+7ZvaaQfVTvue8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VrgwTvgq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HoXqrn5E; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kCyHF/Pf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1727465382;
-	bh=Q6OIcV3tzPdpAiOw7Z4an4rqd8GqV72BNP7NHdGTLrg=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=kCyHF/Pff8Y0R70wq8Y+GZgC9oIRMHnLyQ8/xGJZTBdQW3XKVCvqPQHseBtKu+jAG
-	 74Exn+ZG5uQ1wvvl6N5RwGsvFOSmMkO4rg8cKZ6En/CzJoFZi9YFEZfgHn4aL93LTc
-	 78fexIWMRm8X50ZCdzzS8F7xBcbyGwtlKyZu2fc4BIp++K5+ck1UexgrMrPhKgLy6u
-	 30vaIKV0CtFS2l+YiNIaz0PD4RJvjNNjQ8V3fQ4VWmPncExaiGftT8CzYz/IKlVOeU
-	 yLxbibLXh5nSisToX1EqPM/VBRD0ExVkam1SMuLpOkWGujjW/+DPnqch3lhx6ox3eu
-	 rCQ6YeHVQIzis6r77YerXwtQTlcjetmVTADUNhKpd0WpwB238jbw7vx+CR9iRdkQQ6
-	 XFAyZWtffgbWrqOgVIzdrdF1tYZt0tInV8hAzewNBkuPKYXQAhMrE0bEXMT9Jfzc+E
-	 7e4MaGgYC9iz2cGv+5i8EOBS6jdK1COP5Vd+XwdOwR/yc9+QZQG
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9DC822007F;
-	Fri, 27 Sep 2024 19:29:42 +0000 (UTC)
-Date: Fri, 27 Sep 2024 19:29:41 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VrgwTvgq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HoXqrn5E"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A4202114010A;
+	Fri, 27 Sep 2024 16:05:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 27 Sep 2024 16:05:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1727467530; x=1727553930; bh=g5YMEHGlmZ
+	uM7kaiexwZAGnGl+ME9A0LymV1YW2AOnk=; b=VrgwTvgqNVvLuDl4QODXY8n/Po
+	33b6oeID4pkAi9FOn4LnxXZpekj5Z1ADhb/JQ4qhyest46BwRoPqbhMlpmsr+uCb
+	QF5+reyIIloS0mfu83ku7oiLtwl8LFr6eRjR7Bn0IwRW1jR/NNWANa72sIvA+KHK
+	oZWCql3yX+/Rik+ciz9UL0LRMIq/B+hkuHF33pHrx3ckbV3vvTS7WdqjEVj/94d2
+	PPTMCEY7ufSwQF7eOOBosxSym3xETDr5JMSsFXxe5HkYe1BBs1u2BpOm+AgNHovn
+	3DZvfBBZzoJddvByUSa70ou8Ia1kiSMp3nxavBw2ZitsqL8kNZobmKH4owvA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727467530; x=1727553930; bh=g5YMEHGlmZuM7kaiexwZAGnGl+ME
+	9A0LymV1YW2AOnk=; b=HoXqrn5EUWj5NCzcN6sjGQF5dZZtu/E7q8gKSk9d6EEI
+	1mUNMWGiPHAxibmD3pdUch0aOZKasTgkxaXxVVvfnxCISwuY9pikfhij5sVkqJTc
+	bOSJIlJFjba3l6RlxA2kIJyb7jl127FI9a3eBkJ8yy6Oq/99I39ImvYVwyZCdd+c
+	KuxRREYmNMIEB/ZXszPuxYIkh7v5qMF51DHach6fexKxZ9R4IiYX+wF6PCqlcWxn
+	3Yok2ONKq1gevEYd1LqW1itfDB1qHYuyvSWAozVT94D/ofXlHeaEdAOJOl1s16Ag
+	xeHAR3n4yPjNgeCNzQgfeSgJwq0gcHYVHbj9yZKiKA==
+X-ME-Sender: <xms:ChD3ZncXhaSs32FHkFuxLD6FuRNkEvKyk7VIJYjCf9Pk6LagtbYQCQ>
+    <xme:ChD3ZtMDaruUgg-Ecyzw999m6JTKKswF58bgK62WS6h8yLchBTTcg7PtsD7AUA_8O
+    FlOFsvTAelSVgrnBg>
+X-ME-Received: <xmr:ChD3ZgiLd4NTbvbpq1BTUBn7yrmJR0ZYG7H2abkEdhi36nYUhZVPpvMNNc4t2mPLmpUb7Wj-j0kHS3GDU4BKM622F7XWO6u6kUQV-lc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtledgudeggecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhsse
+    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehtohhonhesihho
+    thgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ChD3Zo_OEsG1Vf8YJMcAFefGXPgcnUUJh9sJhw6XoW_HwF4VNlXfQw>
+    <xmx:ChD3ZjsxrsQVmJP8mS2P9o46pqow4CxWRxdjG6wCRK6v9S15ap-CUg>
+    <xmx:ChD3ZnGUsEvd_9sW78kOzlq_w6ctaBv8_SguXPvHKzYgWAnrSZBJuw>
+    <xmx:ChD3ZqNLViiuW_8LFu8EbU0K_rhwAoCxX4KAUAnfsogDBSJ5fPs4Tg>
+    <xmx:ChD3ZtKLmkyJZqv_Oi1MfpMPOEz81co14mkAm6BjZBHQEITqdy8zuWBT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Sep 2024 16:05:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org
 Subject: Re: [PATCH] builtin/clone: teach git-clone(1) the --ref= argument
-Message-ID: <ZvcHpd26te8TPacz@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>,
-	git@vger.kernel.org
+In-Reply-To: <ZvcHpd26te8TPacz@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Fri, 27 Sep 2024 19:29:41 +0000")
 References: <20240927085438.1010431-1-toon@iotcl.com>
- <xmqqikuggaz5.fsf@gitster.g>
+	<xmqqikuggaz5.fsf@gitster.g>
+	<ZvcHpd26te8TPacz@tapette.crustytoothpaste.net>
+Date: Fri, 27 Sep 2024 13:05:28 -0700
+Message-ID: <xmqq8qvcg8vr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zVCsVdk5s0ZkM16F"
-Content-Disposition: inline
-In-Reply-To: <xmqqikuggaz5.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---zVCsVdk5s0ZkM16F
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I can't speak for what Toon intended here, but GitHub uses some
+> references under `refs/pull` that are used for tracking pull requests.
 
-On 2024-09-27 at 19:20:14, Junio C Hamano wrote:
-> Toon Claes <toon@iotcl.com> writes:
->=20
-> > It's pretty similar to --branch and
-> > while --branch takes a branch name or tag name, it doesn't take a fully
-> > qualified reference. This allows the user to clone a reference that
-> > doesn't start with refs/heads or refs/tags. This can be useful when the
-> > server uses custom references.
->=20
-> "when the server uses custom references" is a rather weak
-> explanation.
->=20
-> The answer to "Doctor, it hurts when I turn my elbow in this
-> unnatural direction" is usually "Well, do not do it then".  The
-> answer to "Doctor, I cannot use the --branch option because I use
-> non branches to keep track of some histories" should be the same.
-> Why do you want to turn your elbow in an unnatural angle in the
-> first place?
+Ah, that is an excellent example that can be used to strengthen the
+motivation part of this commit.
 
-I can't speak for what Toon intended here, but GitHub uses some
-references under `refs/pull` that are used for tracking pull requests.
-We even have some in the Git repository on GitHub:
+    A user may want to clone only "refs/pull/$n/head" to take a
+    peek, but unlike refs/heads/ and refs/tags/, for which the
+    "--branch" option can be used, there is no good simple way to do
+    so with "git clone".
 
-  % git ls-remote upstream refs/pull/* | head -n 5
-  f0d0fd3a5985d5e588da1e1d11c85fba0ae132f8        refs/pull/10/head
-  c8198f6c2c9fc529b25988dfaf5865bae5320cb5        refs/pull/10/merge
-  d604669e32e847c2ba5010c89895dd707ba45f55        refs/pull/100/head
-  55ab0c9399879683b4cc6e1baea5dc41484ca52f        refs/pull/100/merge
-  08d39e0bb5b9dbd16e9e4c2250e75848718c453b        refs/pull/1000/head
+would make a good intro paragraph for a proposed log message.
 
-These are not kept under `refs/heads` because `refs/heads` belongs to
-the user, but it is generally useful to check them out in case of very
-large changes or changes with complex binary files which don't render
-well in the web interface (among other reasons) that might need to be
-inspected for code review.  So I think this is a generally useful
-feature, although I agree that perhaps the commit message might explain
-the benefits in a more concrete way for those who don't already
-understand the utility of the feature (such as our illustrious
-maintainer).
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+> So I think this is a generally useful feature, although I agree
+> that perhaps the commit message might explain the benefits in a
+> more concrete way for those who don't already understand the
+> utility of the feature (such as our illustrious maintainer).
 
---zVCsVdk5s0ZkM16F
-Content-Type: application/pgp-signature; name="signature.asc"
+Yes, not seeing refs/pull/ without being told was slight lack of
+imagination on my part, but it is a good idea to spell out the
+motivation in concrete terms when we can.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZvcHpAAKCRB8DEliiIei
-gbcmAP9AhOF2+06/hSRn1e15dn3BjnJRTyN9WYVQOmbIngVM8AD+JlSo5/SnPKRN
-Ob1QfEIs9mvWL0HsAhLLFuT5qCIviAY=
-=MEIy
------END PGP SIGNATURE-----
-
---zVCsVdk5s0ZkM16F--
+Thanks.
