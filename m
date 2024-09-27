@@ -1,89 +1,138 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90DE16B75C
-	for <git@vger.kernel.org>; Fri, 27 Sep 2024 09:37:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45F41BB686
+	for <git@vger.kernel.org>; Fri, 27 Sep 2024 10:00:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727429861; cv=none; b=QwBfotEt+WQ7RY/RsB5L8k/dNcnjHjIrEnI+/c740XLYCT0x69ldWAjQ/uMR1FbmOdlOYBrGCAhbNa07WQy7IwtNijEuaElAswk6RFPyiVgdbtgOejhKmQWi7CcfpTDdjLLVdKfMkirQhW7xyxodpew2XuUJdW2pyAwdQN3rGjA=
+	t=1727431248; cv=none; b=OTFGjQyTG0T6WNiOTTrD/p5CiWWzz1wE48hcwS8hWGQPz66Hx/pny2VpQkc/ss0vsOBtqpcuP/1bzkgpOh+U+qtIxj/Y1HxugfSLwepLNwuRFY74wdWJbJbuMRtFhL3gd4L7qdsSm1FaBXp0ghhaS3sDGUhSS7MLpzhsfP2KG98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727429861; c=relaxed/simple;
-	bh=ZDL3TkuTxBgF+o9z7EVSPvF2EPQq1rodkLXuhjOxxA8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uNwrne5Z5vg0+QGitJeZPNHwZeUjlEBfKD/xnRke8BYRVEZwFxaoaHw3AZ0LwLfmcOsyzKRXxXdVt0yGsCy3SSyk+Qa9IbNFftpNkpyIvveohgdS8KtYqhTi5iSJZYMC+i97/Dm1Bu8hXp1r9E8zHA5+D/9vXU5A4T44+EKnHCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aTLy5Wmp; arc=none smtp.client-ip=209.85.128.181
+	s=arc-20240116; t=1727431248; c=relaxed/simple;
+	bh=87pHJ3uiqPEKvG0ntS3B+VWJtt1f9oflmLBD+NDBiHc=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=KzYL2whErvDN7DcfFaWzuRMfZR4pzuvG7TYYBX2S/HwKhH6aLQo0b+25iVAA8AjtuEX0RCMjJ6Gu6GAbsfcZsDECzHzkg8zCNAC8jNhvEBk9DYwPqdplmEGT6k/LNrEV2BcFKWch80xTisGNg5pCEYiWTjpVKarypshfMq8EN1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CCVcVVsC; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aTLy5Wmp"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6db67400db4so21265487b3.1
-        for <git@vger.kernel.org>; Fri, 27 Sep 2024 02:37:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CCVcVVsC"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5c4146c7d5dso2132610a12.3
+        for <git@vger.kernel.org>; Fri, 27 Sep 2024 03:00:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727429858; x=1728034658; darn=vger.kernel.org;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uliE9uvvlO6Vms3iyYoDBnMJaOodsqgpdanKKZDgVGg=;
-        b=aTLy5WmpjHaEh4XT97Qqx4j3fZXpV3Rktg6cVAsXmV7H1BV/YNAzVgu7pv8KXRlmPj
-         rO3CzAzdnHYdjX8m636JGm3Xzf/wxewEotCcwfcvu/1X84VoaOb9i/VjFZEccO1b9Cmy
-         nVUQb51e7f7ImU4pjv/XA7e46XYxJeVTG+4oc9lQnBpcodgICw/bcySDQWkm6/G4HH3v
-         HIt2LGTky+CNedkxIDUl6TiZWejXaOUCcl9ioepd8qelbtGNYGShyhiWJ3347wCNheFM
-         0RJI/ei9PJ/Cinp81RH/NZJBgXvUZjkB1d5VQic+XGcdswhBMNbSv5xjLV+ofcDyhz6c
-         HA4g==
+        d=gmail.com; s=20230601; t=1727431244; x=1728036044; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yUNZ1ZX8av4dkMoCwLaCGLmtsPKVlZaDEKtpfld3pjE=;
+        b=CCVcVVsCwS6yeY7gB0ey/svhL4Q11nWO5l/TCnh/I2Up2FnzBZlAanRLbontuZdvme
+         zz3Us3xdLKS+M5jCHPPjX7A+AVyq+BM8Jh7AQMZkwY6sUpT75Fo4MjGULF7wZUzh8IWl
+         gwRX4WIWCiwwrjVXSjRilxy/jQL0jVeNzU1y2fq7lWX08ccn0Knd5tdOByjwwOp/ZgMW
+         kjfYdd09lIFIWJoqwjvQjE3ugvrubmGbmXFmCj6yXsky1uJ3mRCLh1jPbJmjRvusRqBO
+         T4wSsregj4kEHDibU0GT27t5Bb/vnjm3jftEpUUsRBhgNn+RBXchuiBjv6Cd1k5jxvlt
+         LkIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727429858; x=1728034658;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uliE9uvvlO6Vms3iyYoDBnMJaOodsqgpdanKKZDgVGg=;
-        b=TOYl9trAvIT9G1oJxi6kUcb7BdPYBmILPjzti4c8DwGyoWzLk1hGSqtivy8ZCv3jLQ
-         kgj0NVkNNsr83PXm+eexjRqI9AZKg41REcEDD2nfEbDOeWLjO2C9h8qEUVf5fw+73LhF
-         gInTF5+s2F9SgvqQ3p5MXWm6rSfXyfJNu3FBRgg+6Y6My0u40Ycf/3oSBaTPFKt1zvbD
-         hd1jzOjdVpadfNJLue5Uh4dKSVHjLZqnKidYERN5szXTbyUcomykH1ie3oB0ved2bYOz
-         0jk0d+iKzyouEJGl4+93ck9JCjQsGlLrF8+5ayLBqpEapUhtKXMVUD3sh6P3yWDhqBFm
-         rLmw==
-X-Forwarded-Encrypted: i=1; AJvYcCVKQJ8Ih/tbO2uz18YwRVswWyzf5yF6lik4ElptsBUYGGGcAS3mkpg3w4HCDBoCqepf0ZY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzxuJ23sIHdRVMGfXdhBA8Rg3JH7e/vKnS6FmzoxhKO6yabsDM+
-	9QKnv97tr/Wp3mz64SIvLTq0ZRwsyt82UiB5S52QUPQ9LXrPCLp0Okr2hQ==
-X-Google-Smtp-Source: AGHT+IHYJdmob/IQNKVQZEs/YeL6WdM9n7+mLcKKEmyRlnkOo0tllLcKKeT9My6t6raWOfmnCGSw8g==
-X-Received: by 2002:a05:690c:2848:b0:6db:d5e8:d612 with SMTP id 00721157ae682-6e247585df5mr15784167b3.23.1727429858263;
-        Fri, 27 Sep 2024 02:37:38 -0700 (PDT)
-Received: from epic96565.epic.com ([2620:72:0:6480::71])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e24531d538sm2523657b3.68.2024.09.27.02.37.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Sep 2024 02:37:36 -0700 (PDT)
-From: Sean Allred <allred.sean@gmail.com>
-To: <rsbecker@nexbridge.com>
-Cc: <phillip.wood@dunelm.org.uk>,  "'Taylor Blau'" <me@ttaylorr.com>,
-  <git@vger.kernel.org>
-Subject: Re: [TOPIC 01/11] Rust
-In-Reply-To: <018401db0ed3$667bcf80$33736e80$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Tue, 24 Sep 2024 18:44:59 -0400")
-References: <Zu2DmS30E0kKug2a@nand.local> <Zu2D/b1ZJbTlC1ml@nand.local>
-	<053f01db0b79$0d885b30$28991190$@nexbridge.com>
-	<m0v7ynm7h0.fsf@epic96565.epic.com>
-	<00a501db0db2$94d505d0$be7f1170$@nexbridge.com>
-	<18d732da-ad34-4a45-b59f-cf2cb3c7238b@gmail.com>
-	<018401db0ed3$667bcf80$33736e80$@nexbridge.com>
-Date: Fri, 27 Sep 2024 04:37:34 -0500
-Message-ID: <m0msjtmo81.fsf@epic96565.epic.com>
+        d=1e100.net; s=20230601; t=1727431244; x=1728036044;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yUNZ1ZX8av4dkMoCwLaCGLmtsPKVlZaDEKtpfld3pjE=;
+        b=ZU+kmXA3heo4o6bS/dtGakGHyudeIEyax3M9iDqbh0a7/N30QiJJoNpl61XagSvR4A
+         1DKIufO2RRF2mlQ7vwBZeBnOri5+57uBp9PPDLcgsl/Hf5sILCPt5dYPBoOHr3oX9Rfb
+         xmqnjPM4okQBnkOVD/io2oeXEDHQqHxxiAzATZnJUxw+hl3VmfYnw7zh5PYsxOcTh9br
+         lqJgvGycgdKBLmbFQ/yicr0k2ixkhQq/bUzFY6UxcAGsLnQxawJ35c/zLW/FVJr4ufcQ
+         UkEhbn3ftaEUl9LU7KBf/OTiAACBQqP4Svzucp/nua+3UJX2WJDtkZAwRPo3mCRV+9Wr
+         jzoA==
+X-Forwarded-Encrypted: i=1; AJvYcCVlg9AXH/v7kPWmdOrqW71vmyzvKcOub8Yw/0wYjrydSCnlEflYcGpguZdPi+YitGBQorQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpcJ4BAW9z+2CRR6UmevPhGnjqVcUAGBYsZwYO5KEaNEh+STd4
+	1qjguN0+41PUb9tb4Y2yvImQEkDJXwDb9C56KdmZtwC90wB/hEeP
+X-Google-Smtp-Source: AGHT+IHzYQUqOMpDcaHp5l9r/hB5osVG72xNLivNR9LZ7hD27C/PjWr9Bjl0rHs3DQFvlYmwzMWumw==
+X-Received: by 2002:a05:6402:2318:b0:5c5:c060:420d with SMTP id 4fb4d7f45d1cf-5c882603693mr1771532a12.25.1727431243733;
+        Fri, 27 Sep 2024 03:00:43 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c88245e9efsm955819a12.58.2024.09.27.03.00.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Sep 2024 03:00:43 -0700 (PDT)
+Message-ID: <b33076f2-ca01-4286-807c-f4b45a00d944@gmail.com>
+Date: Fri, 27 Sep 2024 11:00:39 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: ./configure fails to link test program due to missing
+ dependencies
+To: Eli Schwartz <eschwartz@gentoo.org>, phillip.wood@dunelm.org.uk,
+ Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>,
+ Henrik Holst <henrik.holst@outlook.com>,
+ "git@vger.kernel.org" <git@vger.kernel.org>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Jonathan Nieder <jrnieder@gmail.com>
+References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+ <xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
+ <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com> <xmqqy13oa8oe.fsf@gitster.g>
+ <ZvKsH1Ct-YwBPA_f@pks.im> <b6b131cb-683c-4140-9769-290b622721e1@gentoo.org>
+ <ZvOTL0cG8qRY8OXe@pks.im> <1f002f86-9212-4639-8804-898bc62726e5@gentoo.org>
+ <ZvOn_wChzEgXtpMd@pks.im> <3a303c6e-35b0-4428-9d23-799b33194330@gmail.com>
+ <71ed5967-0302-42bc-97c7-81886408d688@gentoo.org>
+Content-Language: en-US
+In-Reply-To: <71ed5967-0302-42bc-97c7-81886408d688@gentoo.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-<rsbecker@nexbridge.com> writes:
-> I do not know whether Rust will never be available. The policy is that the Rust
-> maintainers must sanction and approve any ports. I have tried to get approval
-> and have not been able to do so. It is not for a lack of trying.
+Hi Eli
 
-I do not see a proposal for "NonStop" in a pull request filed against
-rust-lang/rust[2] per the process laid out by [1]; can you point me to
-where you submitted this request?
+Thanks for this, it's useful to know how meson works with Visual Studio
 
-[1]: https://doc.rust-lang.org/rustc/target-tier-policy.html
-[2]: https://github.com/rust-lang/rust/pulls?q=is%3Apr+nonstop
+On 26/09/2024 17:04, Eli Schwartz wrote:
+> On 9/26/24 9:55 AM, Phillip Wood wrote:
+>> One thing to bear in mind is why our CMakeLists.txt was introduced in
+>> the first place [1]. Visual Studio's CMake integration means that so
+>> long as git-for-windows is installed building git is simply a case of
+>> clicking on a button, there is no need to install extra software or
+>> plugins. I'm not sure the same is true for meson and I don't think we
+>> want to end up supporting both.
+> 
+> 
+> I can't really offer suggestions on what may or may not come
+> preinstalled in Visual Studio. That thread does suggest the major
+> problem cmake was trying to solve is:
+> 
+> - having to install the git-for-windows sdk at all (is it still
+>    necessary? I guess so, because POSIX shell and perl and mingw
+>    runtimes. Unsure how either meson or cmake could solve this.)
 
--- 
-Sean Allred
+If you've got git-for-windows installed then it has the POSIX and perl 
+bits that are required to run git and the CMake build uses those and 
+downloads any libraries it needs with vcpkg so you don't need the sdk.
+
+> - people who are *unfamiliar with the command line and want a GUI*
+> 
+> 
+> Meson has a trivially installable VS Code plugin that is supposed to
+> handle setting up the project for you. You can generate either ninja
+> projects or Visual Studio solutions. "One may need to install a plugin"
+> is hopefully not as big a barrier to entry as "install a bunch of stuff
+> then go to a shell and run make vcxproj". Is the criteria truly "must be
+> one button click"?
+
+Personally I think so long as there is a simple way to build git without 
+resorting to the command line that should be fine. It sounds like that's 
+the case with meson.
+
+> [...]
+> Stuff like "how painful is it for a Windows contributor to set up an SDK
+> and then also go mess around with Makefile targets and then load the
+> result into their IDE" is an interesting discussion to have but not
+> quite the same as saying "go to the marketplace and install such and
+> such plugin" is an obstacle.
+
+Agreed
+
+Best Wishes
+
+Phillip
