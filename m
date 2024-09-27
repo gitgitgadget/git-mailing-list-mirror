@@ -1,62 +1,106 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0841779BD
-	for <git@vger.kernel.org>; Fri, 27 Sep 2024 12:23:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825781C172A
+	for <git@vger.kernel.org>; Fri, 27 Sep 2024 15:22:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727439825; cv=none; b=M7+O7p9NGR0UjmQLr6zXTJcrvRTM55sCcNZCjSxcPJ18USv3tkjEG+omAVt7rQy+c4whaGT79PVknX+byRJWyC7qesZXtVc72EtkYL3YZ15Elzdrnr9Ilk1GX80ra12Xncqz32jc+ei2mHE0UumEqAfKQWZMgpe7AVqTDMzY0EU=
+	t=1727450524; cv=none; b=d/Q6gDxjXR1vU1zGI8c+7vyEY+HV+VKDuLt2woEQOIhlClxhXNjf3m4+bZ570wDQLAgxJzVgtTQv6rvJvDh7Ci4T0FRFMi5WA7k4q0JpyRszTmDbfWfHlG/VywnNpapeVfW4m2Fnx/FULjLVJ2KXfT0pG07hULSz07C20Ytaro0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727439825; c=relaxed/simple;
-	bh=/HrEFdz8pcv8NOalZnnvnyR0/AWIvUL9LiwKsBSsZec=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EePdw/ZobP3JUAVOKyUplXMKxP4NiNK4RzqCYLrF2BbbuAlwF/LOSoN1hMDHXx/vP+7zyI/HeHIoXBnIR1nUdj0Pxg58OvRAfNxVf20LpE3Wzp6rQOAsL1hCISrAGTnOXneS/Uqd5txOPLScRflRq2UF2y6MyZ7iN0Z3jrbzaKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 48RCNaEB1890185
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Sep 2024 12:23:36 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Sean Allred'" <allred.sean@gmail.com>
-Cc: <phillip.wood@dunelm.org.uk>, "'Taylor Blau'" <me@ttaylorr.com>,
-        <git@vger.kernel.org>
-References: <Zu2DmS30E0kKug2a@nand.local> <Zu2D/b1ZJbTlC1ml@nand.local>	<053f01db0b79$0d885b30$28991190$@nexbridge.com>	<m0v7ynm7h0.fsf@epic96565.epic.com>	<00a501db0db2$94d505d0$be7f1170$@nexbridge.com>	<18d732da-ad34-4a45-b59f-cf2cb3c7238b@gmail.com>	<018401db0ed3$667bcf80$33736e80$@nexbridge.com> <m0msjtmo81.fsf@epic96565.epic.com>
-In-Reply-To: <m0msjtmo81.fsf@epic96565.epic.com>
-Subject: RE: [TOPIC 01/11] Rust
-Date: Fri, 27 Sep 2024 08:23:31 -0400
-Organization: Nexbridge Inc.
-Message-ID: <032401db10d8$141962f0$3c4c28d0$@nexbridge.com>
+	s=arc-20240116; t=1727450524; c=relaxed/simple;
+	bh=R7Ui/CnQUyRZtvaNS5dVFzcw2hA7kFvwS3mu38k5/dc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CKD7f89vGzE4nMpfzIoIs+pi8eyxAZXt/Cns1TQXc7OYtWLwF8y6BiwHKRxdFaxK3JvwXigmuCRvkiTrO1X29GKxJajkPs3eRbxy+BE0SCww6t6pR8+RbIMSrVVt0dpwIu3Y+vwXgbbG8mzUIDNCpkSVbPlZ37aYTOK/ahmx+1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lSWubqDJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hqItufPK; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lSWubqDJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hqItufPK"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9303C114012C;
+	Fri, 27 Sep 2024 11:22:01 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 27 Sep 2024 11:22:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1727450521; x=1727536921; bh=A+oGYarzpy
+	EW+vMitGROVXakkV4mDxI1HGroVdnVAL8=; b=lSWubqDJ4Kop98qxZK86H4JWKl
+	GJUln0EJoB0NsLrHPCiAuRHxU1GTrYwnrUNM3UXZbBaaJ6qil1ONawZL2FOi17X+
+	MvX58NwV5pxupSoCOztt+j6b8s7dxvYUeh7IZaC1Ob2wRZNLQEG4lwSznQruWQVR
+	Q3E1TwVPO23NXyWgXmcwsUvfZu06oAKHQs+G/K+rUFjJcw2lD8UHSVDxawnkrzPu
+	snFBYfmWe7a/9iRvPYAmw07FILWRj3M35B8anlNWTZ1Ve7dNJd8len+xRjPkJvTi
+	yKSyFLVJDC5waemEwJarO1vKJxIzPIiLI7uPEU2OCOaLlkIQyP3yJ0Xq9g9g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727450521; x=1727536921; bh=A+oGYarzpyEW+vMitGROVXakkV4m
+	DxI1HGroVdnVAL8=; b=hqItufPKSIZXIK8LWP0P7Rj0yXGyoJFc2uuJF+5Hxrar
+	lxPPuRRd2qfEUS077KeEACQ86Vog0lKS/J6Q9VkO3l9NaEgNMqTsAQ9yj4m/Z7xl
+	PRBzAf13p/8h0gQUJBOEqLKJ+4J4Z5l3bYLa6NNUnUEcsKeNMzhrCUBvKaTQoBYW
+	thRUTJizQnC6rEIRJYr8B2Zzc6VSXltdNghTx2n1LbcPydiR8poqVwLIreiEhsCh
+	eYGlrSvqCancs/tjKyuBEoEkP8Aez8BHDwpPtwJssruT08XRe0tlJ1lO2MZ0yinp
+	Q8ySAvBi9C9Ky+9eJI1t9mGPbuSb3NRo5riDpLJaVg==
+X-ME-Sender: <xms:mc32ZuVDFN86jPh3PAK6LBXyOBlWBjUewPW1uhwQf5VGHEZvPyJALg>
+    <xme:mc32ZqnCsqWLDTD-3MEefCbL1lv2nfsjS2tfjuUDvmQx0W2hC1W5lf4EZ2nHlbk17
+    0bwe76ccYiV0UQSxw>
+X-ME-Received: <xmr:mc32ZiYQLSGh99l1JEQxnQx5iUPsqSkmrv_khAg5Uvt1r1hnCCNerjg5bHZE5pWRSN1DjQh6ZbtVlqgi4hhFB3Pr_0aPEnxZxF0xeTY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtledgkeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephhgrnhifvghnnhesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvthhhohhmshhonhesvg
+    gufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehsthgvrggumhhonhesghho
+    ohhglhgvrdgtohhmpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtoh
+    hmpdhrtghpthhtohepshhpvggtthhrrghlsehgohhoghhlvgdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:mc32ZlVwnbhR_wEcgHjP-Zyb-O15mXyh9skj1GEuKYo4F0D-J6LtwA>
+    <xmx:mc32Zon2lI76RjXnNEkHCjXYcgPrJXtCzeqhstz2FcI6HAFDuP9ZYQ>
+    <xmx:mc32ZqeqHiCNESEpYdsn1JGMf0Sjh0GaVX0FHy8ePS4G5P2gBnB_pA>
+    <xmx:mc32ZqFE8tAD7NuwIfpI7Q6nFSZYQ5OI9QHlWFIT6U25TFGzJPDL5w>
+    <xmx:mc32Zi5OeI_tiDUywIfuUhBwtENoznlSns3lUIN8ttlebH52aMrStLC8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Sep 2024 11:22:00 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Han-Wen Nienhuys <hanwenn@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Edward Thomson
+ <ethomson@edwardthomson.com>,  Josh Steadmon <steadmon@google.com>,
+  Calvin Wan <calvinwan@google.com>,  Kyle Lippincott <spectral@google.com>
+Subject: Re: [PATCH v2 04/22] reftable/basics: handle allocation failures in
+ `reftable_calloc()`
+In-Reply-To: <CAOw_e7YZNUa_Fu58C73kyc85f+_1Z1ew3p9=AekQGiqmXeQK5w@mail.gmail.com>
+	(Han-Wen Nienhuys's message of "Fri, 27 Sep 2024 14:21:27 +0200")
+References: <cover.1726489647.git.ps@pks.im> <cover.1727158127.git.ps@pks.im>
+	<f6ad92ffd01c442dacd3ac6aa448891028636636.1727158127.git.ps@pks.im>
+	<xmqqikulugwj.fsf@gitster.g> <ZvVPiIzzLTTb75b8@pks.im>
+	<xmqqzfnul7fg.fsf@gitster.g> <ZvZCdcpifMpmKajx@pks.im>
+	<CAOw_e7YZNUa_Fu58C73kyc85f+_1Z1ew3p9=AekQGiqmXeQK5w@mail.gmail.com>
+Date: Fri, 27 Sep 2024 08:21:59 -0700
+Message-ID: <xmqqplopgm08.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQF24rJ2Q0W9JcDOH4N3ZxazDM0CYQHP+YxMAoJn3JIBrepyAwFv0IQDAQwByIYCD0om0QJxxC41sswBCxA=
+Content-Type: text/plain
 
-On September 27, 2024 5:38 AM, Sean Allred wrote:
-><rsbecker@nexbridge.com> writes:
->> I do not know whether Rust will never be available. The policy is that
->> the Rust maintainers must sanction and approve any ports. I have tried
->> to get approval and have not been able to do so. It is not for a lack of
-trying.
->
->I do not see a proposal for "NonStop" in a pull request filed against rust-
->lang/rust[2] per the process laid out by [1]; can you point me to where you
->submitted this request?
->
->[1]: https://doc.rust-lang.org/rustc/target-tier-policy.html
->[2]: https://github.com/rust-lang/rust/pulls?q=is%3Apr+nonstop
+Han-Wen Nienhuys <hanwenn@gmail.com> writes:
 
-I will investigate where this went.
+> I think Patrick's plan is sound. The amount of code to make reftable
+> work both standalone and in Git is small. It just needs some
+> discipline on both the Git and libgit2 side to not add additional
+> dependencies.
 
+Thanks for a sanity check.  Very much appreciated.
