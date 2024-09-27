@@ -1,150 +1,134 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0462246B8
-	for <git@vger.kernel.org>; Fri, 27 Sep 2024 20:10:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4331B5EB0
+	for <git@vger.kernel.org>; Fri, 27 Sep 2024 22:48:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727467852; cv=none; b=nsMuqws+q3tNDlODT7p6QL9D873yT16lsrYiojkkZEEObbDvuOvKNjNa1pwWGO0jDRHZ1nXIlpbVOXqeABEVHCHS5J1Jc0z1Pz79T87mvy87vLHdoNfA2xuNMHVBSgG0ef/fnMIS6KpXNYKhhN8FFW6wQu1xrIH04m8vNkHNgUA=
+	t=1727477297; cv=none; b=guQLOlb+9qdKbN1CqifRIv2dFdxXbS5s6Dx2mqbNsmDFVh7AdUKzP304T2E6qaYzt6RZZtDc7Z6wAjSlx5r1PNGlbhgj+Cme/o4D4sqFTOAFWqF0TRc8drFMZArVfYK8rlQZ/z8jyqz8ymhOhudC0II6ExlNqUFNwXonghRG8X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727467852; c=relaxed/simple;
-	bh=zyiDtsIuDCB4VYtbLt4AxYn5TkMdqLK1icb2kEyGHos=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=O0XiYuScjAo/zRbb7MSlBh6rH+KEHM4lqTWJ/NeiPtkItViTO7IQxp2baJJFe6q/r0eXakj62LEZzUReOfeTHT5geRuTwFXi9C2tHAcaO7h/Vo3Jpi7kJ6xTGbRZ6O/Eu/1KGrl0acoFBF5u/AFrcGsdb9HL1x1J0aQzE0F+bvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=BiNVEYsH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MHJDqxS5; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1727477297; c=relaxed/simple;
+	bh=XfQi2fLNvlizHdmzPTudRa9G0tMNE3dByvGG3wiqR4M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=r5T4lRK+leoCoo3oii+w8vxpQhZnz3Q5IXeIQWH63rRTFpjzbEV0AOG8TO0zFi8Fdbbx6K+j7azazABV5FUpmttcdkxtBuxsrcAzElmrDxXzULj1Nuh8zeoldpZfNgVlWyOPe7TG8bDIK9gaw2ACMWFvAu68CmYdnTtnSZs1Pzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MkW/06fJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YQTBCwvl; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="BiNVEYsH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MHJDqxS5"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 33E921140141;
-	Fri, 27 Sep 2024 16:10:49 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Fri, 27 Sep 2024 16:10:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1727467849;
-	 x=1727554249; bh=+8HkQKDavPS7q4vFqFyo2fI6TLJqz/5yS4F5YYeu140=; b=
-	BiNVEYsHi6t9treXvcRI10w7sKwfqCX6EiGCfmtlL7MjrVPiVbItBHuQyJXnTjgx
-	ODirNy9nqldDYuT9rw7SQYgmAFZrAf7+4UwVHVO0JJPejf11YkFOK17BkOsgz9U0
-	OjQe8Zg0sKq/NbeYnXZREDyCiwy+wcol+1OHtfn+wIU7nQzqVQc548fzbTzfrvnm
-	MqDSm41mXGv+0tDttW+RfUb416aN/eQmkHu0tGtrC/yMhsCaK1ghoaGERruHp+3b
-	+2+RZZA0Vaqug6IBH3Tap8E0GS576C8wa2XkuBQdcquYMqOBWK7eghGUjp3r8qkS
-	X3oU7SLJiZeiOF+CKhgmUA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MkW/06fJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YQTBCwvl"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 892C4114012F;
+	Fri, 27 Sep 2024 18:48:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 27 Sep 2024 18:48:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1727477293; x=1727563693; bh=dNU5eGnsby
+	/gNeqYnWsDpe9y++MM5pnyUiKXsUsZg9U=; b=MkW/06fJJPeGKQNy+FJKUxCkLD
+	l3tU6YbUsMd9PL7hTBj4PR81oyybnnljC5WHLn5GFVZnn9XRztz3JBvrlDVFKA0E
+	Sd35/ZEB2a5wNXnT7bKVJPE7FzYTgNa+PWAY440hGByJCyNfKlmYrKsrN93F8Kq7
+	38wowE95z0rfoLfMWT2E5zTZL8e/G63er6wU0UhTAgqJmsWmL2Nhw1qoCSsaFgFM
+	f8FQ6IMSCGSiPb879yjA6D6GSoMRu7eGti34g4V4EuwAihp3rPHx1ceeW0CICOii
+	AqWYkr3RwOFOKJWfxIRystc/Y9I0D9+MG1/dl6bP9yQHvZxhI+fcqmeCzjfw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727467849; x=
-	1727554249; bh=+8HkQKDavPS7q4vFqFyo2fI6TLJqz/5yS4F5YYeu140=; b=M
-	HJDqxS5QcPUwiKrMLJg3PDnmOOj7gjn9QM1zJSLAJ8e/CeupX3T7f+OiOAP04w/m
-	hvVfFRURnpOTnHQmzzmDhpS4Nk6sNTk8rUBv3D4VAv4+P0XkTrVgG8Q/VV/94sr5
-	58JrgaB6nXpIOlWBMRmAWGiW4Kc6sEYjCj8m6xBTkKkiP45cPM4uCtvksWqMv6EF
-	G1qgjMXS1XNla67cZ6PI9ODCe0tt8IJqIVKJFaH3kypGtpKOeH1VpMK5/2caDGIH
-	rQxppF0yrb5Jv3UlH6m5zviq49TcM2nZQ4+zLhwR24SthOXDwVSZEjgmHLAvktFJ
-	W1zPkei2SUJIdtholqKig==
-X-ME-Sender: <xms:SBH3ZhXONIP-MkxOwJfCYmCrdENfBeTPbu3NUT_sMi9fWjD4i9zQRpw>
-    <xme:SBH3Zhm59MdUd3sy59s0Lq_sKCtDM2yFV6bBhgZvxZHu1WEMaAZx2RCtMNI8nfiEz
-    6beGiyOW5X_mwAeNA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtledgudegiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
-    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
-    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgu
-    rghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepthhooh
-    hnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:SBH3Ztad60l5cDPabwFZ_Zs1rDh9zj4QqYrc88CpKjSMNndXuW2shQ>
-    <xmx:SBH3ZkXkS4MXZQ_1_VdnTKaEEEaOAASjzyFFkFf5Vhilz2U17yOAsw>
-    <xmx:SBH3ZrnzRZjcWEhXgIWpyzkqGcsqQHmh3au9wsIJdUzhitfA0_ucHA>
-    <xmx:SBH3ZheYM0xctnG_3wLvzV4-KTTfQpwl5pdd2gwr8vYNkjqqNxEbTw>
-    <xmx:SRH3ZphJGAigLvcS8gDfVebdgrklc4buE_qrlnCeRomdm5WavJ29hkrF>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 9ED7C780068; Fri, 27 Sep 2024 16:10:48 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727477293; x=1727563693; bh=dNU5eGnsby/gNeqYnWsDpe9y++MM
+	5pnyUiKXsUsZg9U=; b=YQTBCwvl+4DijGh6OqNBeYybnv/a7S9sJfR5XJYA6Rmw
+	wsKwaJmlrb1CpeUDQpK6fN0NgODPV/QeoBMm4e6+ufosIlgJR55aaup3ErUyjRNQ
+	XJk4xtMYwvRhmLLv1UVPgBv/dy6Bj2m9JFlfz4GamD+1uJRakfSMf39PonKrDWGb
+	zegQw60b1Ayi0CpxByvQ+70u9Qc20JNH+1lJPw1Ig7ZlUHOU1E9siU4EMcX48Ck/
+	XknWGs6EhB4D1W/2/4+aJ1OBaXqYSgN4YMw71Jn+gc3BYJ3AQAwc48qPyt0GqT/c
+	nSL4MiX81boyzNhwujbH21jMaLFu5A8tW/Lc6ndHVQ==
+X-ME-Sender: <xms:LTb3ZkdfEALuTFomb3SghmCzTMISENuOXBZF9ORtJayn8sIJ6Edf4A>
+    <xme:LTb3ZmN3_EViZcstte_5Sr43fCZOEDHwDrD85jEMAo5enMn8a0Wb8pG_h2lNR3guj
+    tXuPjqGj4Nkvt8-fg>
+X-ME-Received: <xmr:LTb3ZlgfZoDJqrHeChNOfJ8wB0hsgDxhi920NqrPqJAYWuSsuHV2OcNCSNtA7Feq-daHgjpGIk9XlkA22wJ1SgjBrc7Hx627TROQRcU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddutddgudehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepveeludejledtkeejueffudekheetlefgiedu
+    heefhffggffhteefieeguedvvdfhnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpgh
+    hithdqlhhfshdrmhgunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepke
+    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhgu
+    vghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
+    hmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgt
+    phhtthhopehmhhgrghhgvghrsegrlhhumhdrmhhithdrvgguuhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:LTb3Zp_Up-V_riUIe3VpE9ZOYSuxvXxDuRXzHfk0Go9bLtL0hyTmkA>
+    <xmx:LTb3ZgsmVLIy9wUswwQONc2qyXTfaly3sBebKVsLoh1BJkrgA7queA>
+    <xmx:LTb3ZgGxDKVoOOGfSPHPvzpHraWpYry412eDuOzKzu1GVEFXu9b_Pw>
+    <xmx:LTb3ZvPU9ypkXjT50xiFW4oJmyNeXCIUHwqZP4SlNEZ-zHYRUG_1Ng>
+    <xmx:LTb3ZuCNu9GDzyuPmxlZJ5ayAlm1atisXsrAEJwvH88gZh0OzHVqTFOy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Sep 2024 18:48:12 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 0/4] Introduce a "promisor-remote" capability
+In-Reply-To: <CAP8UFD34YJ23WSjaP3m8Ao6iZja_NJWfQ0BNEsaNU_F_X3qA_Q@mail.gmail.com>
+	(Christian Couder's message of "Fri, 27 Sep 2024 11:15:01 +0200")
+References: <20240731134014.2299361-1-christian.couder@gmail.com>
+	<20240910163000.1985723-1-christian.couder@gmail.com>
+	<xmqqikuijni0.fsf@gitster.g>
+	<CAP8UFD34YJ23WSjaP3m8Ao6iZja_NJWfQ0BNEsaNU_F_X3qA_Q@mail.gmail.com>
+Date: Fri, 27 Sep 2024 15:48:11 -0700
+Message-ID: <xmqq34lkg1ck.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 27 Sep 2024 22:10:28 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- "Junio C Hamano" <gitster@pobox.com>
-Cc: "Toon Claes" <toon@iotcl.com>, git@vger.kernel.org
-Message-Id: <555169c4-beea-40cf-a542-f8a75bcb44e8@app.fastmail.com>
-In-Reply-To: <ZvcHpd26te8TPacz@tapette.crustytoothpaste.net>
-References: <20240927085438.1010431-1-toon@iotcl.com>
- <xmqqikuggaz5.fsf@gitster.g> <ZvcHpd26te8TPacz@tapette.crustytoothpaste.net>
-Subject: Re: [PATCH] builtin/clone: teach git-clone(1) the --ref= argument
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Sep 27, 2024, at 21:29, brian m. carlson wrote:
-> On 2024-09-27 at 19:20:14, Junio C Hamano wrote:
->> Toon Claes <toon@iotcl.com> writes:
->>
->> > It's pretty similar to --branch and
->> > while --branch takes a branch name or tag name, it doesn't take a f=
-ully
->> > qualified reference. This allows the user to clone a reference that
->> > doesn't start with refs/heads or refs/tags. This can be useful when=
- the
->> > server uses custom references.
->>
->> "when the server uses custom references" is a rather weak
->> explanation.
->>
->> The answer to "Doctor, it hurts when I turn my elbow in this
->> unnatural direction" is usually "Well, do not do it then".  The
->> answer to "Doctor, I cannot use the --branch option because I use
->> non branches to keep track of some histories" should be the same.
->> Why do you want to turn your elbow in an unnatural angle in the
->> first place?
+Christian Couder <christian.couder@gmail.com> writes:
+
+> By the way there was an unconference breakout session on day 2 of the
+> Git Merge called "Git LFS Can we do better?" where this was discussed
+> with a number of people. Scott Chacon took some notes:
 >
-> I can't speak for what Toon intended here, but GitHub uses some
-> references under `refs/pull` that are used for tracking pull requests.
-> We even have some in the Git repository on GitHub:
->
->   % git ls-remote upstream refs/pull/* | head -n 5
->   f0d0fd3a5985d5e588da1e1d11c85fba0ae132f8        refs/pull/10/head
->   c8198f6c2c9fc529b25988dfaf5865bae5320cb5        refs/pull/10/merge
->   d604669e32e847c2ba5010c89895dd707ba45f55        refs/pull/100/head
->   55ab0c9399879683b4cc6e1baea5dc41484ca52f        refs/pull/100/merge
->   08d39e0bb5b9dbd16e9e4c2250e75848718c453b        refs/pull/1000/head
->
-> These are not kept under `refs/heads` because `refs/heads` belongs to
-> the user, but it is generally useful to check them out in case of very
-> large changes or changes with complex binary files which don't render
-> well in the web interface (among other reasons) that might need to be
-> inspected for code review.  So I think this is a generally useful
-> feature, although I agree that perhaps the commit message might explain
-> the benefits in a more concrete way for those who don't already
-> understand the utility of the feature (such as our illustrious
-> maintainer).
+> https://github.com/git/git-merge/blob/main/breakouts/git-lfs.md
 
-I=E2=80=99ve seen a few times that a change is proposed with a commit me=
-ssage
-that says that it allows you to do X. And plenty of motivation is
-provided in a narrow (technical) sense of how X makes things nicer.
-But without explaining why you=E2=80=99d want to do X. Then someone need=
-s to
-ask the the submitter why. Then they say that they need it at
-<organization> to do something specific.
+Thanks for a link.
 
-It=E2=80=99s certainly nice to have all that information in the commit m=
-essage.
+> It was in parallel with the Contributor Summit, so few contributors
+> participated in this session (maybe only Michael Haggerty, John Cai
+> and me). But the impression of GitLab people there, including me, was
+> that folks in general would be happy to have an alternative to Git LFS
+> based on this.
 
---=20
-Kristoffer Haugsbakk
+I am not sure what "based on this" is really about, though.
 
+This series adds a feature to redirect requests to one server to
+another, but does it really have much to solve the problem LFS wants
+to solve?  I would imagine that you would want to be able to manage
+larger objects separately to avoid affecting the performance and
+convenience when handling smaller objects, and to serve these larger
+objects from a dedicated server.  You certainly can filter the
+larger blobs away with blob size filter, but when you really need
+these larger blobs, it is unclear how the new capability helps, as
+you cannot really tell what the criteria the serving side that gave
+you the "promisor-remote" capability wants you to use to sift your
+requests between the original server and the new promisor.  Wouldn't
+your requests _all_ be redirected to a single place, the promisor
+remote you learned via the capability?
+
+Coming up with a better alternative to LFS is certainly good, and it
+is worthwhile addtion to the system.  I just do not see how the
+topic of this series helps further that goal.
+
+Thanks.
