@@ -1,119 +1,124 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92FB139D1B
-	for <git@vger.kernel.org>; Fri, 27 Sep 2024 19:22:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E10D14EC5E
+	for <git@vger.kernel.org>; Fri, 27 Sep 2024 19:29:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727464978; cv=none; b=qHhoHDSHY2vo0ALBYlD7C3zoSzaEC1fmeLtcpL7NHELMhxfAOu7n6UFvL+ZawPx9sm0nXDHZfXQWlbCWxuKS15KNmDXxHMMySsXqZ0f22x2esWW1sdhzWWBqksdAvsfdObMO5oEq6CyenUR1NGBfH5bGPMllQ6AYgT+kqf8O/JQ=
+	t=1727465393; cv=none; b=qAJbB8iBdxXh/rj+HEUomGKsWNnTDZJb5dH3p27JEqZwe8B9gPvmn3YFqbNdcdqfmVV4Mzf39u8GQrjqb8BF5OmXyRYdm7JyuYLhqkkfNoTWRYGlxV8ruN7ulo0hfFlO/W60Ixm/4UQj4i4fpwsb9xEfA9SKymPyaicTHzemQa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727464978; c=relaxed/simple;
-	bh=CqdnzkXLy6qhK5wzpPTQUwBnN6ojBzu2aDUl6plkJPQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NtifXviExcy4XhO4iFh/UW/VHm0vaVe0DvI3IUk05iw3ADLHUJxmrl7gwgKswW5NMYByqKGm3N7p8tOCeaA5Cyg84BZkKlTWX4E0HnIvTYuCqpVqT6BA67ZBhDv8OEm77frz/oHn49+xYc7TAZA4JbGiShLsaVZskBNWPZtjFLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sskf1kQY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DgSE2sNE; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727465393; c=relaxed/simple;
+	bh=Q6OIcV3tzPdpAiOw7Z4an4rqd8GqV72BNP7NHdGTLrg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nIjQW58vg/bD8Mp/L993WU83/Ynuit600QeiA8rMPSYLI0Qvf50tAkPh54CH/Fzvf8276c6qnkP8S2EObpdXlhwm8R6sFwaeN3DhBQseoCupe/SGtMPXc/7R3cpNVcb45+Tq4PFCja9jRxz/9zzqhcyz1btCkkrJVMN6JpUkGIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kCyHF/Pf; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sskf1kQY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DgSE2sNE"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BB530114017B;
-	Fri, 27 Sep 2024 15:22:55 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 27 Sep 2024 15:22:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727464975; x=1727551375; bh=my+RUL2LIS
-	SwiqmnHGIwEXMCH42NSbBigqagHgGHcj8=; b=sskf1kQYSj43raAoo0c3k3AGUW
-	lBETZ1MZFWcHifKrtqpxjOiEV9NCjc8uwm3SZfcnOW2sYtRozh36WEgC+8zvv26z
-	Y8pENN+AjnE84u0i6ulSlp/0b+/I86DDCL84DZR0BHIAdh9WLPDd4YxgdbYPcCQ7
-	ROSSv2kn3aaV3dHhKS1Stiek1TqRgJQf5rvRsnukfofrAqQgkBUbus2vDrfteId2
-	oiC+TLX7tAICa6dtcwCQtguSBzBIqhXpOJx5ztWOVX5gWutThAuC3n+dVfv6+R3e
-	qAqNpe5JRR4K04SB5eu3zk4lEeovPJ/aTtCVmE6QgkC58uKFOJ7jeFs3U05g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727464975; x=1727551375; bh=my+RUL2LISSwiqmnHGIwEXMCH42N
-	SbBigqagHgGHcj8=; b=DgSE2sNEzUSE0vhO4Q+u0CdsonragH1vOaIlox8iw0TY
-	unvoCWrjs8EAuDFGNCi1hckrL5zSk42VoktrF04Cl3HkOMFJXPbdbBN9/PSQuWxP
-	r+bbyrxUW16eNilNeOum+g9yTHit0O57G+l4RoilI6y7EK6V7ByEwqUCJr/tv3Aw
-	VKODoGi2xeVqH9N/JzLhzRqlYi1RQ4u6I2FRidkj3Dk9Mt3q2MmK7PlZ7rb6rtnc
-	Whf8JCakGO67+HQHFyH6eF2qVgNcUN85b3AI7fwS5K0g3lDjiMFsExTQjeBB9pg8
-	FF778MJq8+XEezvre3qnEZuBOms8+43AuACy6DE1Ng==
-X-ME-Sender: <xms:Dwb3ZgVbxlcDTHPO_5mSi4Of232Mv5mLNlUZHngocfqcVj2oT_QnwA>
-    <xme:Dwb3ZklbzRtwJMJi05Q5C7GfvWzAns9X309zrB2qJoUhd6355vJpUcVF6y9b-n-pL
-    LP2MVSOEDkumaqEjA>
-X-ME-Received: <xmr:Dwb3ZkbMH8MJ9ViCNkdptufds7d3ZYC5mwSk8GexO0draixvm_OnaVAF5ZDXL2ldYIToyQH4N8HmjcRuRAH77O2jHnZXa_iSqXnePKs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtledgudefiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhonhhsthgrnhhtihhn
-    sehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohepfhhivhgvvdefud
-    dttdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Dwb3ZvVJfO-ml5yF9DE_MHI_zqjuUszEtRIpm3RL0iQraX4Tp5NXMw>
-    <xmx:Dwb3ZqlffYIO1iYwKNFdIVpEXpqy7RtI9LTuE8aO2lAvBJlyXa2LFA>
-    <xmx:Dwb3ZkctBnLmCmNinpqsC16nz2Cp82ExcxCFnKGwK3xp6VCiE4fmGw>
-    <xmx:Dwb3ZsGiYNtP_qlG_GVauiWCL6T5dltH3O9rQwpQWldUz5B1xzOJmQ>
-    <xmx:Dwb3ZoaLxJ83LTzIlrzHvRgV4EGmm8TWGMX6YEDkTRtQRQcQtm-fO3J_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Sep 2024 15:22:54 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,  Kousik
- Sanagavarapu <five231003@gmail.com>,  Taylor Blau <me@ttaylorr.com>,
-  git@vger.kernel.org
-Subject: Re: [TOPIC 07/11] New Contributors and Discord
-In-Reply-To: <4e2b5740-6863-4ab6-8483-2e933b4c427c@gmail.com> (Phillip Wood's
-	message of "Fri, 27 Sep 2024 11:08:19 +0100")
-References: <Zu78E+0Uk5fMSeQv@five231003> <xmqqsetr5wl1.fsf@gitster.g>
-	<20240923-spirited-lime-lyrebird-fe90d5@lemur>
-	<xmqqbk0exdk4.fsf@gitster.g>
-	<4e2b5740-6863-4ab6-8483-2e933b4c427c@gmail.com>
-Date: Fri, 27 Sep 2024 12:22:53 -0700
-Message-ID: <xmqqed54gauq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kCyHF/Pf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1727465382;
+	bh=Q6OIcV3tzPdpAiOw7Z4an4rqd8GqV72BNP7NHdGTLrg=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=kCyHF/Pff8Y0R70wq8Y+GZgC9oIRMHnLyQ8/xGJZTBdQW3XKVCvqPQHseBtKu+jAG
+	 74Exn+ZG5uQ1wvvl6N5RwGsvFOSmMkO4rg8cKZ6En/CzJoFZi9YFEZfgHn4aL93LTc
+	 78fexIWMRm8X50ZCdzzS8F7xBcbyGwtlKyZu2fc4BIp++K5+ck1UexgrMrPhKgLy6u
+	 30vaIKV0CtFS2l+YiNIaz0PD4RJvjNNjQ8V3fQ4VWmPncExaiGftT8CzYz/IKlVOeU
+	 yLxbibLXh5nSisToX1EqPM/VBRD0ExVkam1SMuLpOkWGujjW/+DPnqch3lhx6ox3eu
+	 rCQ6YeHVQIzis6r77YerXwtQTlcjetmVTADUNhKpd0WpwB238jbw7vx+CR9iRdkQQ6
+	 XFAyZWtffgbWrqOgVIzdrdF1tYZt0tInV8hAzewNBkuPKYXQAhMrE0bEXMT9Jfzc+E
+	 7e4MaGgYC9iz2cGv+5i8EOBS6jdK1COP5Vd+XwdOwR/yc9+QZQG
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9DC822007F;
+	Fri, 27 Sep 2024 19:29:42 +0000 (UTC)
+Date: Fri, 27 Sep 2024 19:29:41 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
+Subject: Re: [PATCH] builtin/clone: teach git-clone(1) the --ref= argument
+Message-ID: <ZvcHpd26te8TPacz@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>,
+	git@vger.kernel.org
+References: <20240927085438.1010431-1-toon@iotcl.com>
+ <xmqqikuggaz5.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zVCsVdk5s0ZkM16F"
+Content-Disposition: inline
+In-Reply-To: <xmqqikuggaz5.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On 23/09/2024 22:31, Junio C Hamano wrote:
->> Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
->> 
->>> I can chime up and offer bugspray bot integration for the list. This is a new
->>> tool I've been developing for integrating the mailing list with bugzilla. I've
->>> been using it on the tools mailing list over the past year with reasonable
->>> success.
->> Intriguing.  Everybody loves to hate bugzilla, but would bugzilla
->> become less smelly with bugspray enough to make it palatable to all
->> of us?
->
-> If it's easy to set up it might be worth a try. My memories of using
-> bugzilla in the past are that it wasn't too bad for issue
-> tracking. Most of the pain came from trying to use it to review
-> patches which we wouldn't be doing.
+--zVCsVdk5s0ZkM16F
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The biggest pain point I remember with bugzilla was to find bugs
-that are still relevant to make sure they are assigned to somebody.
-IOW, curating the collection to make sure false alarms are marked as
-such quickly enough.
+On 2024-09-27 at 19:20:14, Junio C Hamano wrote:
+> Toon Claes <toon@iotcl.com> writes:
+>=20
+> > It's pretty similar to --branch and
+> > while --branch takes a branch name or tag name, it doesn't take a fully
+> > qualified reference. This allows the user to clone a reference that
+> > doesn't start with refs/heads or refs/tags. This can be useful when the
+> > server uses custom references.
+>=20
+> "when the server uses custom references" is a rather weak
+> explanation.
+>=20
+> The answer to "Doctor, it hurts when I turn my elbow in this
+> unnatural direction" is usually "Well, do not do it then".  The
+> answer to "Doctor, I cannot use the --branch option because I use
+> non branches to keep track of some histories" should be the same.
+> Why do you want to turn your elbow in an unnatural angle in the
+> first place?
 
-Thanks.
+I can't speak for what Toon intended here, but GitHub uses some
+references under `refs/pull` that are used for tracking pull requests.
+We even have some in the Git repository on GitHub:
+
+  % git ls-remote upstream refs/pull/* | head -n 5
+  f0d0fd3a5985d5e588da1e1d11c85fba0ae132f8        refs/pull/10/head
+  c8198f6c2c9fc529b25988dfaf5865bae5320cb5        refs/pull/10/merge
+  d604669e32e847c2ba5010c89895dd707ba45f55        refs/pull/100/head
+  55ab0c9399879683b4cc6e1baea5dc41484ca52f        refs/pull/100/merge
+  08d39e0bb5b9dbd16e9e4c2250e75848718c453b        refs/pull/1000/head
+
+These are not kept under `refs/heads` because `refs/heads` belongs to
+the user, but it is generally useful to check them out in case of very
+large changes or changes with complex binary files which don't render
+well in the web interface (among other reasons) that might need to be
+inspected for code review.  So I think this is a generally useful
+feature, although I agree that perhaps the commit message might explain
+the benefits in a more concrete way for those who don't already
+understand the utility of the feature (such as our illustrious
+maintainer).
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--zVCsVdk5s0ZkM16F
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZvcHpAAKCRB8DEliiIei
+gbcmAP9AhOF2+06/hSRn1e15dn3BjnJRTyN9WYVQOmbIngVM8AD+JlSo5/SnPKRN
+Ob1QfEIs9mvWL0HsAhLLFuT5qCIviAY=
+=MEIy
+-----END PGP SIGNATURE-----
+
+--zVCsVdk5s0ZkM16F--
