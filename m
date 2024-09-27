@@ -1,36 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B902223B0
-	for <git@vger.kernel.org>; Fri, 27 Sep 2024 03:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB27D23B0
+	for <git@vger.kernel.org>; Fri, 27 Sep 2024 03:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727408828; cv=none; b=Cas5eDSofhL4NCuDQEdH3R5CS9cMiobCVzkSNV7FjpvG6zuONC4CCMUYht7WhZiauYejehO6dyL0Uu/PYfrAbXx1wPRjd3GF1Eiq/o/I0YEhcN554XFc8xYSSBmyhR5IYa+BAEnlhFOKbLeO/L1C9mh6myeDiiLOWBLfU4CR3I4=
+	t=1727408992; cv=none; b=MRkNy8Lhy5DVZ5qz7yprsBq++i+ds9+lLao6WhYeDI0kji6Ir4SXEo+MG4SSbF2GmlLL5/qdAyfarpEk//VPZ0B+JOegoKkIB49i+G5+26iTP1DsYWXTJbzpWZRrM9cLfgZ//Sd3YzO36PwJvMNZgdJlYtG5dS+vFh7oQq0oIH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727408828; c=relaxed/simple;
-	bh=aFeQ07/jVY0GZbfbdq3ETFhk5ZZ4BX8aFS7qWOgOmkc=;
+	s=arc-20240116; t=1727408992; c=relaxed/simple;
+	bh=WpvAhzHcDNItEuwMwKdvEY4Xph8qlhN7aHEIAZvvxuA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=spKY2bo6zjy64v7qH1Hk+9neqvhUb5GjFOkxB3N4R8S7XZGfljBHvTmtnfi9U6BUuAH2BwuE/EvLDeI2BZwFkVb58Gn1qMED29EeANxx+CspLcy/srhK85RPI2nF0CeMxSwjBj+2Y3n1/mynuBFZd0H5N4P1/jnCYd9J/s9YudE=
+	 Content-Type:Content-Disposition:In-Reply-To; b=kMd/+0Qn+ZV5Z5ItvqtJBy6Wv1aDa+KEhx3vhwVwKrxQ0muwXpKrmjq7cOXQnaMg6BSjeRd5aPZwCfsi2IKOkRAOtRIVF9E0M78UqFFsO57KU8aJCeTTPfb8uoIuoA5KF7jgrGfGJjqMT7wPpBMmCRN1MOyX+PuLy8vQcpHw6bw=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 4828 invoked by uid 109); 27 Sep 2024 03:47:06 -0000
+Received: (qmail 4849 invoked by uid 109); 27 Sep 2024 03:49:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 27 Sep 2024 03:47:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 27 Sep 2024 03:49:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8989 invoked by uid 111); 27 Sep 2024 03:47:05 -0000
+Received: (qmail 8998 invoked by uid 111); 27 Sep 2024 03:49:49 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Sep 2024 23:47:05 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Sep 2024 23:49:49 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 26 Sep 2024 23:47:04 -0400
+Date: Thu, 26 Sep 2024 23:49:48 -0400
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 08/28] send-pack: free cas options before exit
-Message-ID: <20240927034704.GB567395@coredump.intra.peff.net>
+Subject: Re: [PATCH 09/28] transport-helper: fix strbuf leak in
+ push_refs_with_push()
+Message-ID: <20240927034948.GC567395@coredump.intra.peff.net>
 References: <20240924214930.GA1143523@coredump.intra.peff.net>
- <20240924215539.GH1143820@coredump.intra.peff.net>
- <ZvVmkXDIyCqpYKZm@pks.im>
+ <20240924215634.GI1143820@coredump.intra.peff.net>
+ <ZvVmllrUvOC3pGJy@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,43 +40,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZvVmkXDIyCqpYKZm@pks.im>
+In-Reply-To: <ZvVmllrUvOC3pGJy@pks.im>
 
-On Thu, Sep 26, 2024 at 03:50:09PM +0200, Patrick Steinhardt wrote:
+On Thu, Sep 26, 2024 at 03:50:14PM +0200, Patrick Steinhardt wrote:
 
-> On Tue, Sep 24, 2024 at 05:55:39PM -0400, Jeff King wrote:
-> > diff --git a/remote.c b/remote.c
-> > index 390a03c264..e291e8ff5c 100644
-> > --- a/remote.c
-> > +++ b/remote.c
-> > @@ -2544,7 +2544,7 @@ struct ref *get_stale_heads(struct refspec *rs, struct ref *fetch_map)
-> >  /*
-> >   * Compare-and-swap
-> >   */
-> > -static void clear_cas_option(struct push_cas_option *cas)
-> > +void clear_cas_option(struct push_cas_option *cas)
-> >  {
-> >  	int i;
-> >  
-> > diff --git a/remote.h b/remote.h
-> > index a58713f20a..ad4513f639 100644
-> > --- a/remote.h
-> > +++ b/remote.h
-> > @@ -409,6 +409,7 @@ struct push_cas_option {
-> >  };
-> >  
-> >  int parseopt_push_cas_option(const struct option *, const char *arg, int unset);
-> > +void clear_cas_option(struct push_cas_option *);
+> On Tue, Sep 24, 2024 at 05:56:34PM -0400, Jeff King wrote:
+> > diff --git a/transport-helper.c b/transport-helper.c
+> > index c688967b8c..9c8abd8eca 100644
+> > --- a/transport-helper.c
+> > +++ b/transport-helper.c
+> > @@ -1023,6 +1023,7 @@ static int push_refs_with_push(struct transport *transport,
+> >  			if (atomic) {
+> >  				reject_atomic_push(remote_refs, mirror);
+> >  				string_list_clear(&cas_options, 0);
+> > +				strbuf_release(&buf);
+> >  				return 0;
+> >  			} else
+> >  				continue;
 > 
-> Nit: I was wondering whether we'd also want to fix up this functions
-> name to conform to our style guide, which says this should be called
-> `push_cas_option_clear()` instead. But I don't mind it much, so please
-> feel free to ignore this nit.
+> What's not visible here is that a few lines further down we have another
+> early return where we don't clear `buf`. But that exit is conditioned on
+> `buf.len == 0`, and given that we never `strbuf_reset()` the buffer we
+> know that `buf.len == 0` only when it hasn't ever be allocated.
 
-I'd prefer to punt on that for now, as the whole suite of "methods" for
-this struct would need to be renamed to match that style. If we were
-making a too-short name into a public symbol, I'd be worried about
-addressing that now, but I think this is purely about style and can
-wait.
+Yeah, I noticed that, too, and came to the same conclusion. As you note,
+it's _possible_ to have an allocated but zero-length strbuf, but I don't
+think it happens here. So it's OK in practice.
+
+If we were going to refactor, I think it would make sense to do it with
+a cleanup label to cover both of these early returns, plus the cleanup
+at the end. I was mostly just going for minimal changes where possible.
 
 -Peff
