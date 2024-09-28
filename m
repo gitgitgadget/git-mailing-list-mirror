@@ -1,122 +1,130 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F5E14F119
-	for <git@vger.kernel.org>; Sat, 28 Sep 2024 09:49:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B1919F42A
+	for <git@vger.kernel.org>; Sat, 28 Sep 2024 09:53:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727516966; cv=none; b=hdt1eU91UuYVOzXdGaTR6rzbr49h9dAysdlvYjdregtw5BNThvkaRNVQOt5HCnOUfqjPQMiiNQmtwv/Bsn049kKSl0xjoRsH8XmirjleOzQiQARjxPimeZSl0z5qQ15jZ1xeWsYDwXj5utwKgjjX7eLkdRJORujY/OG46pwfOks=
+	t=1727517188; cv=none; b=szU7h6EmjcKInE0AcTAcU1cp5E212bn/SKTKN7HL6lYcmzkc2wTF+BNyrDQueknFD6/6o4X7NGWBCejQymRogIl6lyPUvifcyN5O8QIUWfoiwB6/xM5UXYJdMW/yl8IQg5Rjk0h4n5YVQAb25nYaPY4yLcLY6WGM5pdKzArMbnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727516966; c=relaxed/simple;
-	bh=qHoB5J7a5zkbFymwer/HdbbJKijAt1K/XG+YR55qz/U=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=CF9HOzrENwBuyNa2GdTHdwoSzLsA55xTzhraf0EwNeE60P2gTsItOtKUOl1u2QpiXzbxQ3ckbumq4xAg2EepsvMiVs/ceGAi1xc6EFPB5s72Ki5400MyCghTXexWWUlP1zULRFcJyKzw695czWA4+0Gjm0QUxvshIPfR6SMc4KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R/5Ufp/S; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727517188; c=relaxed/simple;
+	bh=tqVTv2b8+EnIDuwK/GBdp+T4d8bxfE79svyspT+Axx4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=iTiittC5ZFGRLhKHZsrOc8WpnidwCc0DnG7TbJmSosVrA3vA0IHGNeIcZ68ysbSCdCo6bZAvqe8GQ4tko/Z6s8S0YHFkIJKtMMSzwkOqtQtGHyiHoQeBf4Q9+j4azTYxAY39Smf1o/J4y+ZBRur+hZJJuPxXgspZ+R5ZSBRzilo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dk0fCS+k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d7jbqF0r; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R/5Ufp/S"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42cb6f3a5bcso35330305e9.2
-        for <git@vger.kernel.org>; Sat, 28 Sep 2024 02:49:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727516963; x=1728121763; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3a4DjZgybpIIfZ5fxrwxDbCYvQtWoSZQ/Iiqrxxu+NI=;
-        b=R/5Ufp/SzJu5s/iTzmu0NyjQoC/9SUgAoypw3JaKOiH9IvnPjmWV1BQxpw06BkQ+jp
-         rKw/IBgTY8wWRMCFdbasRQzyEv40F4+AEzaW1o61LSUuI7cFiwPL7LcL12AZuML2QGR5
-         O4WGyEGjzNjsX3cdVXAdobXEq9XvP45W3wbL4RVtwz4u3X5UfB0LbL059hOcXaUejfRi
-         4tcN+a+KaF2Z3v/Rw2aeDeZ6Y5mb0RWhIMldvXuh337DR5vZA8d3bN/5KFY6HY2PS3f3
-         2Y04xjv0ueYOGx2iKFXqbmYMhjeDwZ8JgbG8z37nPiRL9Knmg4GNWtYd5cg/2yQSPQgc
-         mQ9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727516963; x=1728121763;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3a4DjZgybpIIfZ5fxrwxDbCYvQtWoSZQ/Iiqrxxu+NI=;
-        b=L93gADmHHVKommfmggqkaWlLDavfB9Ech1xKMI7mlnUN8n7t8Mf37kqUHorHS/95Y+
-         WAIuXfqZEw4SrDUOHWgRNQdpKd3TU92tSRQ+JXAK/8unhKC4FzwhQDzt5D9F9VKoTC1O
-         97lbtVHIVSQD0NYWxaGZC3hQMM1UBS3i66HvNGo3IWK4hczPkpXrKwha8E8qFkkOaAFt
-         W4vB5e6IE1OOhUfNE+uFz0k/Ysk7PigmbzWfWbhhgLx2k6Qj2V01jobP6ByYlff11ZdS
-         ScMlAKsP2h4+eUqKxE09SJ8i23wx77DNphtbLUVa6btGwUngVQsX+qdSvOdilwTvPjmk
-         Do/g==
-X-Forwarded-Encrypted: i=1; AJvYcCX6Ttq0Jt6f0xN+j3qAD9iInddCxLL746ObL0Wu0rfIy81OuyMOrsH7YfXWGuQy+wN/23c=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcXV1AZ3tcxJOxwLqxHJ222/77uwf6IIjq1xYWIfNfN+uCIzyQ
-	G+43oMUSznIJzZdXVZTiRzL4CLNKocejmkdgy1sgcIVSNtagJkCM5lKA5g==
-X-Google-Smtp-Source: AGHT+IH79Hpt38HNebs4w5YEbSmC9dtn0WF8pfIb/b6kWs9ENNI/5fN4kJrw7lWQC2YQbZUqCeyw9A==
-X-Received: by 2002:a05:600c:46c5:b0:42c:b62c:9f0d with SMTP id 5b1f17b1804b1-42f5844c0acmr60079765e9.17.1727516963124;
-        Sat, 28 Sep 2024 02:49:23 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c27da39bsm231648866b.90.2024.09.28.02.49.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 28 Sep 2024 02:49:22 -0700 (PDT)
-Message-ID: <aa981bb7-dd3b-4e63-9769-0fc2559983e6@gmail.com>
-Date: Sat, 28 Sep 2024 10:49:17 +0100
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dk0fCS+k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d7jbqF0r"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id AC464138069E;
+	Sat, 28 Sep 2024 05:53:05 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sat, 28 Sep 2024 05:53:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1727517185;
+	 x=1727603585; bh=QvaNuaq/wNhFau3/IWO0vb7wQDmu23jIHUKwH51p06U=; b=
+	dk0fCS+kXl1sR3GZbtArKF7Atx3lz/ZBwBDgwsLiTTukcNu06riW5qkQCeg0saqx
+	mvgomQl9g2m9uQ6+JnIQcg2Cvx7AQGSLDj8ddjOBGmLPODNt33CeZBEjMJLbGuBz
+	00nhlim7iR9KMFGja2LWPL+QlLPzbd9O6PiUyRgNC8f753sOV2IgVBlvEsN32AFE
+	pNehUAuDgWcy2aDzkf/lRJjeZUi1ofRV5InpgnryoUy8aBq68Nf/w2z0v2ZddKDy
+	iUmSkDAXRrl+WUYLOt/hHeb8Fp6+5P2q7XUAbBZRA1FJ2iEZ3PXYZhVZGp6cqzdG
+	+vF2R7S0Le85sqv+TOQW1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727517185; x=
+	1727603585; bh=QvaNuaq/wNhFau3/IWO0vb7wQDmu23jIHUKwH51p06U=; b=d
+	7jbqF0rbBIVREAQ91qlzRmsZLhRG+7QQIxAoAhn/9gD4b2En6ACWNJXbQXSdfXhH
+	5VZbaVcP6eCZaq+zlWrcpW/mMmUCrmn44CZFcJtlhFWz5BgN5PjIUnpQNYHw8qeW
+	RI2bpS0/rE7wltXU+7v8/eFFocH4XFAN7nOulT7CKH3nULO75PTG7bCMNxSa62jq
+	HDxZEy7f4GHWZEwRrMU+C+dRmiGR3dDeOBMKDVSCsKlzkD18oDVhpLcaGIzlFeK7
+	eagkzMWX2P9685lROZNzSv5afA9Gf5A0XEKB+sxR0AfFG1QDhkAKxZKBX/rFiy3o
+	zPpVXFzM5COHOLB8jkYtg==
+X-ME-Sender: <xms:AdL3ZiKp34gVT9v7HCfKhUGFuz2UCkGLOG1jJ9OUDf9o_1nt7hfvQXM>
+    <xme:AdL3ZqKrfehATDy9qIXexnect2j9aen2_EooQOc-XKdYIiD3-MKpTJCwu3dcBpECt
+    xPzzDyp-Qi6VRu3qA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddutddgudehvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
+    fhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghr
+    ucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
+    hsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdeg
+    jeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghk
+    khesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehishhhtghhihhsvdesghhmrghilhdrtghomhdprhgtphht
+    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:AdL3Ziv4bZJIoByxaYmMi32jZ0kGHwyexEkfPlYsTe6H2f3WYYVeuA>
+    <xmx:AdL3Zna4UHx17oq5Ox19jZY4Z4qApErJ34nZw1qqrznTTgdYi8Mj6Q>
+    <xmx:AdL3ZpZSJBGIwyJWGbGIP4H0Gu-cxfkd7Pw3oeku6578gb_i2N0fpg>
+    <xmx:AdL3ZjCK2KUOu7zrAsSvUlgEVcWXgHDitkYdqo7L2UFXoelYg8JY4g>
+    <xmx:AdL3ZonccpsuefSsVGbcdHLKCu9f8DhoW8bM6tBwjulvr1zVNdrJjGvd>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 672E0780068; Sat, 28 Sep 2024 05:53:05 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: How dangerous is --committer-date-is-author-date these days?
-To: Johannes Sixt <j6t@kdbg.org>, Git Mailing List <git@vger.kernel.org>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <6af09726-e3bf-4903-87ae-9524ad334678@kdbg.org>
-Content-Language: en-US
-In-Reply-To: <6af09726-e3bf-4903-87ae-9524ad334678@kdbg.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Sat, 28 Sep 2024 11:52:45 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Jeff King" <peff@peff.net>
+Cc: "Stephen P. Smith" <ishchis2@gmail.com>, git@vger.kernel.org
+Message-Id: <ca632f1a-c41f-42b3-8f8d-4ef32fe18e33@app.fastmail.com>
+In-Reply-To: <20240927041516.GA568026@coredump.intra.peff.net>
+References: <20240925122515.14015-1-ishchis2@gmail.com>
+ <6b69af87-9002-46a7-a5f3-3fa1fb7ba9df@app.fastmail.com>
+ <20240927041516.GA568026@coredump.intra.peff.net>
+Subject: Re: Can a note be pushed to origin?
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Johannes
+On Fri, Sep 27, 2024, at 06:15, Jeff King wrote:
+> On Wed, Sep 25, 2024 at 05:29:30PM +0200, Kristoffer Haugsbakk wrote:
+>
+>> That will refuse to update if your own notes ever diverge from the
+>> remote.  If you want to always overwrite your local notes with the
+>> remote ones:
+>
+> There are some specialized strategies for merging notes (e.g., taking
+> the union of lines). See the "merge" subcommand in git-notes(1).
+>
+> I don't recall ever really using it myself, and I don't think there's
+> really any porcelain support, so you're on your own to invoke the merg=
+e.
+> But I guess the use case would be something like:
+>
+>   # fetch their notes into a holding spot
+>   git config remote.origin.fetch refs/notes/commits:refs/notes/origin/=
+commits
+>
+>   # and then after every fetch, you merge if necessary. By default we'=
+re
+>   # merging into our own "refs/notes/commits". And it should be OK to
+>   # use the short "origin/commits" here, since notes-refs have their o=
+wn
+>   # special lookup rules. Though using the fully qualified refname is
+>   # probably reasonable, too.
+>   git fetch
+>   git notes merge -s union origin/commits
 
-On 28/09/2024 07:59, Johannes Sixt wrote:
-> The option --committer-date-is-author-date of git-rebase rewrites the
-> committer dates like its name suggests. It is not uncommon that commits
-> are rearranged and cherry-picked. Then, as a consequence, author dates
-> are not decreasing when walking back in history. Now, if such a history
-> with a non-monotonic author date is rebased one final time with
-> --committer-date-is-author-date, this creates a history with
-> non-monotonic committer dates. I recall that this is not a good thing to
-> have since it can confuse our history walker.
-> 
-> - Why do we have --committer-date-is-author-date in a porcelain command?
+git-notes(1) feels like the most =E2=80=9Cplumbing=E2=80=9D command out =
+of the =E2=80=9Cmain
+porcelain commands=E2=80=9D. :) (of those that I use)
 
-Support was added to the sequencer to reduce the differences between the 
-two rebase backends in the hope that one day we'll be able to remove the 
-apply based backend. Support was added to the shell based rebase in 
-570ccad33e (rebase: add options passed to git-am, 2009-03-18), there is 
-not much discussion in the commit message or mailing list thread [1] 
-about the motivation for adding this support.
+For my needs though it is high level enough since I mostly add notes to
+my own commits. Certainly porcelain in that sense. I use it all the time
+to add testing/general comments to my commits.
 
-[1] 
-https://lore.kernel.org/git/1237409629-4289-1-git-send-email-barra_cuda@katamail.com/
-
-> - Should we remove it?
-
-It is only a problem when re-arranging commits - even then I think the 
-commit walk machinery has some tolerance to commit dates that do not 
-increase monotonically in order accommodate clocks that are out of sync. 
-It is perfectly fine for non-interactive rebases (or just squashing 
-fixups) so removing it seems like throwing out the baby with the bathwater.
-
-> - Should we require an explicit --force instead of implying it?
-
-I think we'd want a convincing reason to change the behavior - the other 
-options that require the history to be rewritten all imply "--force" 
-rather than requiring the user to pass it separately.
-
-> - Should we issue a big warning about the consequences?
-
-It would certainly be worth adding a warning to the documentation. To 
-issue a warning at run-time would require us to check that the commits 
-are actually being re-arranged as there are plenty of reasons to use 
-"--interactive" without changing the order of commits.
-
-Best Wishes
-
-Phillip
+--=20
+Kristoffer Haugsbakk
