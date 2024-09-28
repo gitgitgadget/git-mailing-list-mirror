@@ -1,89 +1,125 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B591219F42E
-	for <git@vger.kernel.org>; Sat, 28 Sep 2024 10:04:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE85381C7
+	for <git@vger.kernel.org>; Sat, 28 Sep 2024 10:57:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727517852; cv=none; b=MuDI5q61Ntf04vWbL1cKwJ6ubGhSlvvinhBIlvn1vBB/mbK5ttyqSXOydC20fac2kSy3yEquuqUkeu6Wgq8QaGm2Bdwinm0cByVakDjIXp3ZFhIFqcabeKSPHqlIBt3bmhpBb6bbT7b1s6NmlFalNkICaqGqewbbBFRluqxZY60=
+	t=1727521055; cv=none; b=stGbu6xHoGkg18T68XQ7N/Irj0fFf4HfDN9IuzrM1155RNWVQipYat6HR35Nq7Q5Y8AQmYLI3vNBCVmvR/nLwmhd0Vp9xJXJMq95SVPri1diFJZySrOaaPkLlI+b506VosS9G8Wo/d4fUncuJc5fx0UqMtQ+0t3KFU9kHx6KgN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727517852; c=relaxed/simple;
-	bh=SCRwTs37XdQ1uB5N2YR0BjWZ+U3oIhWr1srFruFYXWo=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Twva7NUXnly4eCZ3QZTNux54jYoMxwNy7b4tdGrvtsWeidoPbK6jYZ0ZMTIE0uLXj3TxeuEuJFxnInfSUSyd5+T9BSWWxDWMz/h2tORRHhvo1tmdqDR9B2DQfUon0MxcMJe90gbiYJfQfKEPGm1A73w2dO6DgEmoL40mc71vPUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CCg4lzlc; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727521055; c=relaxed/simple;
+	bh=1aWqzKBhT4uL/R7AYIQ3f1ZspqKJ9/ZNzzUUWS3mofk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=P/HTYkrE8iy0LCT3RF1UZDmxC3gvwQ5yOdrf8FQ0zLv+ooB9u6HoKcu/I6qxnVWkXWgyKwVzysLEzDpqiZ9RB0FTkmBcCnlFtSsp7jQ4ZOXSHxGMumTROYDbIPKlaR5eWSXyS3014fxoYLwrifpgUfdzAALdZdyI2yHAOizUbfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=WB2+L69Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B8YfSNbj; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CCg4lzlc"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5c42f406fa5so1897266a12.0
-        for <git@vger.kernel.org>; Sat, 28 Sep 2024 03:04:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727517849; x=1728122649; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hWMgwO2sxfoRQdPeqdZRjxLGCR4MCdd7M4Uc9abCuQc=;
-        b=CCg4lzlc2GQTLSakVVssojWBn0dsVkOamNREDCU2/PFd9txQBliJD9pnBqXRbe1ZIF
-         bX0c+KGfEzd7YweVtbaNwIKmF2irTWQ9CCMxx1ePWfsm6GJU08XYMBHbF9Ky5+MHqmCO
-         GYnAVRDLE+4xyaN/eVcc1rhzgdAU3HowLomvGtPmT64sb6mEJXbzuG+F0rGsCgizc07v
-         qvBqufeDXjARk8IVElwocOdXhELfLlGrogF9jY1PtXUqgz4XLj4OvQ7AFh5v9CqLm6IV
-         bSAKXIPIsLGwhFhHy54lN7vB0gkhvDGhiu2uZc6ZGux8kwPWqcDZevOBa7QLg2DM3hWI
-         6FWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727517849; x=1728122649;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hWMgwO2sxfoRQdPeqdZRjxLGCR4MCdd7M4Uc9abCuQc=;
-        b=de9mnzqacEjIxOi+O7vGZMqy9mOhfTt2BiEMIWXRJGrFGvaE5d7kes1SBMkHhGMdbs
-         XJs/9YfTl9362JPQ2EcjuRYUsVj9aTL+Mz1FL1bRIyOj0V1u0kJWtQkBj182D2s5RJCO
-         hwXxniMU1CcgOpmLkgQXcokgPFARmD1YO4UED+wBANPaPgmefOKuWPzCRHk2NEgw9r1Z
-         DFDdmmZOd/lwc6rn2xWhh7KvZqHjKFi0TSiRr0JBqFDr6GOMTGhsYH6B9Mn2lhvbR0XD
-         kZw73/VP9afhG8qBduIPfJ3KJIr7iCzijfaF5GKFphl9ibu4NVw/VwIj7DPfynYuEUUi
-         pJFA==
-X-Forwarded-Encrypted: i=1; AJvYcCXypRre7gZMQ25/rvyp6GJTFvHUMw8Lytdbm7yUnZkGRoEbIP8xPtD+pqe2jFhnsKVjRig=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIvbnKkuZ4sK/+bafeBIY73Obe42B876YI9z5sPP3JWa6uHPBa
-	nieTyrhkqkzYw1m/c4zhTjaEeKbuiHl0JguHxjuE8gptfgJbtJfUKQcXaw==
-X-Google-Smtp-Source: AGHT+IEdU+UcnpqshKZPMma2S2ZTGj9bu3RYCKDBkA3COv2ursjdVZ+jlHQbJDuxpDwgq/mAFbgPSQ==
-X-Received: by 2002:a05:6402:280d:b0:5c8:850d:ad4a with SMTP id 4fb4d7f45d1cf-5c8850daf0emr5020884a12.11.1727517848770;
-        Sat, 28 Sep 2024 03:04:08 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c88d7f3282sm214259a12.30.2024.09.28.03.04.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 28 Sep 2024 03:04:07 -0700 (PDT)
-Message-ID: <6d6b2ff0-b4e4-4442-a3be-9b31742db280@gmail.com>
-Date: Sat, 28 Sep 2024 11:04:01 +0100
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="WB2+L69Z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B8YfSNbj"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 426FF114023C;
+	Sat, 28 Sep 2024 06:57:32 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sat, 28 Sep 2024 06:57:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1727521052;
+	 x=1727607452; bh=1aWqzKBhT4uL/R7AYIQ3f1ZspqKJ9/ZNzzUUWS3mofk=; b=
+	WB2+L69ZA7ehLpLOh3Zotn12HgWuej29HOcjgP1NzCaV8jZ3v1tHd4Ltoa+VJZ8j
+	fZk9UoOVI5mg8oe434m7Lk28L7uFkjZDr6awQd6ieOoQId7tCTU0q9LnDb0Rmzly
+	7fQeo9KlYKnkJ762ZmD7f2gvEVHZ4HrVpSlqUBPgNS2ayVBMgExZC9nxsxKtzCpv
+	sspJipUFoJmGyTNcNWxj4kGuz89JOwxiTg6CsQ/CZ6ggfeckJ2ubdqZtoMNg3Mk3
+	M5sgd3+W2jAdLBvK2aewkmoukTTj5QSLsO626sNYomV3V1hR7IQ1QXfY/1Ex3m1L
+	u1srAjG2STgLES+3I6RxkA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727521052; x=
+	1727607452; bh=1aWqzKBhT4uL/R7AYIQ3f1ZspqKJ9/ZNzzUUWS3mofk=; b=B
+	8YfSNbjrwECQZ4YcWDAZgvjOTtIo4CZfbjqR7+xb2krj/vrlbQTy4thmiZXxT2cV
+	EmY1V8KXgDJTkCBwViJFLx2b26RvjZ8QVUqKBauDju9gqQASZXCgkyfWv36qB+oH
+	6MpGzbKbXIXUpY5X2e4b14Iytmcf0wEqpgUg3DimcO8Bv4jL7Mk6vbkw296+R23M
+	e2M00s5fxYD4FG93f834LNKPvrs/Ex42iWLFWTWcBxbf38DXmZGb/flfgPqwx6y4
+	FsXpg8ACk+UFJKwp/LqhI9FovkrpBukTSUgv2DEZ48W1lRbj4bTRn1/g9CBoS9zD
+	6Nt9jZZCULxUn+3D30Opw==
+X-ME-Sender: <xms:G-H3Zl6xQUus_ACIq-fAJJK2jLu7qMGjPaf-53pLkLnrMX2yMVyUIls>
+    <xme:G-H3Zi4V8V6_BZO49K2AbTdUt1jTpJNkZj-TBSV8nDHWvcr2Lg6umtG_-F49yc5tD
+    1bxYIZZ_p7wVQCTIQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduuddguddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnheptdehhfetffeftdeigfdtlefggffgkeffjeeivddvhfffffekledtteekke
+    efuefgnecuffhomhgrihhnpegsrhgrnhgthhgrsghlvgdrtghomhenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrg
+    hughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepledpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepmhhhrghgghgvrhesrghluhhmrdhmihhtrd
+    gvughupdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtth
+    hopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehpshes
+    phhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohep
+    mhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhg
+X-ME-Proxy: <xmx:G-H3ZsewdWfpU6_6d63cZ_YJR0UQs9IcyL_1or5rhZSu-0d2ppjnfQ>
+    <xmx:G-H3ZuJ6Rphs31y0piAg_MXNye09Dkzd4DKgwaTFqOJGBZYWGkMlyQ>
+    <xmx:G-H3ZpIiBakNPNhZjNCvfgmg8kocgAKzQIHmCSBz-kNk7_kAtaQYMg>
+    <xmx:G-H3ZnyAvY_3DMeQfkjP9N-ZEFXSyKO0ZEdt4lv0R8WtRMef0Nr2qw>
+    <xmx:HOH3Zg9ZHiI69Sd7Eb6PGHuAoYcOjMw37d6VIgRNHHoDRbZRE3kYtf4p>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 6C516780068; Sat, 28 Sep 2024 06:57:31 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: How dangerous is --committer-date-is-author-date these days?
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>, Git Mailing List <git@vger.kernel.org>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <6af09726-e3bf-4903-87ae-9524ad334678@kdbg.org>
- <aa981bb7-dd3b-4e63-9769-0fc2559983e6@gmail.com>
-Content-Language: en-US
-In-Reply-To: <aa981bb7-dd3b-4e63-9769-0fc2559983e6@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Sat, 28 Sep 2024 12:56:54 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: rsbecker <rsbecker@nexbridge.com>, "Junio C Hamano" <gitster@pobox.com>,
+ "Christian Couder" <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, "John Cai" <johncai86@gmail.com>,
+ "Patrick Steinhardt" <ps@pks.im>, "Taylor Blau" <me@ttaylorr.com>,
+ "Eric Sunshine" <sunshine@sunshineco.com>,
+ "'Michael Haggerty'" <mhagger@alum.mit.edu>
+Message-Id: <5a8f8c96-0981-497d-af46-a689811a0b77@app.fastmail.com>
+In-Reply-To: <036901db1135$7024a430$506dec90$@nexbridge.com>
+References: <20240731134014.2299361-1-christian.couder@gmail.com>
+ <20240910163000.1985723-1-christian.couder@gmail.com>
+ <xmqqikuijni0.fsf@gitster.g>
+ <CAP8UFD34YJ23WSjaP3m8Ao6iZja_NJWfQ0BNEsaNU_F_X3qA_Q@mail.gmail.com>
+ <xmqq34lkg1ck.fsf@gitster.g> <036901db1135$7024a430$506dec90$@nexbridge.com>
+Subject: Re: [PATCH v2 0/4] Introduce a "promisor-remote" capability
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 28/09/2024 10:49, Phillip Wood wrote:
->> - Should we remove it?
-> 
-> It is only a problem when re-arranging commits 
+On Sat, Sep 28, 2024, at 01:31, rsbecker@nexbridge.com wrote:
+> I am one of those who really would like to see an improvement in this =
+area. My
+> community needs large binaries, and the GitHub LFS support limits size=
+s to the
+> point of being pretty much not enough. I would be happy to participate=
+ in
+> requirements gathering for this effort (even if it goes to Rust =F0=9F=
+=98=89 )
 
-Of course it's also a problem if one is rebasing onto a commit that is 
-newer than the commits that are being rebased. That makes it more of a 
-concern, though the option has existed since 2009 and I don't recall 
-anyone complaining about the effects of using it. We should certainly 
-spell out the potential problems in the documentation.
+git-annex is an alternative to Git LFS which doesn=E2=80=99t have any si=
+ze
+limits since you can use any (multiple) remotes for the =E2=80=9Cbig fil=
+es=E2=80=9D
+storage. Like an external drive.
 
-Best Wishes
+(written in Haskell)
 
-Phillip
+https://git-annex.branchable.com/
+
+--=20
+Kristoffer Haugsbakk
