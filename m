@@ -1,130 +1,89 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B1919F42A
-	for <git@vger.kernel.org>; Sat, 28 Sep 2024 09:53:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B591219F42E
+	for <git@vger.kernel.org>; Sat, 28 Sep 2024 10:04:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727517188; cv=none; b=szU7h6EmjcKInE0AcTAcU1cp5E212bn/SKTKN7HL6lYcmzkc2wTF+BNyrDQueknFD6/6o4X7NGWBCejQymRogIl6lyPUvifcyN5O8QIUWfoiwB6/xM5UXYJdMW/yl8IQg5Rjk0h4n5YVQAb25nYaPY4yLcLY6WGM5pdKzArMbnk=
+	t=1727517852; cv=none; b=MuDI5q61Ntf04vWbL1cKwJ6ubGhSlvvinhBIlvn1vBB/mbK5ttyqSXOydC20fac2kSy3yEquuqUkeu6Wgq8QaGm2Bdwinm0cByVakDjIXp3ZFhIFqcabeKSPHqlIBt3bmhpBb6bbT7b1s6NmlFalNkICaqGqewbbBFRluqxZY60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727517188; c=relaxed/simple;
-	bh=tqVTv2b8+EnIDuwK/GBdp+T4d8bxfE79svyspT+Axx4=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=iTiittC5ZFGRLhKHZsrOc8WpnidwCc0DnG7TbJmSosVrA3vA0IHGNeIcZ68ysbSCdCo6bZAvqe8GQ4tko/Z6s8S0YHFkIJKtMMSzwkOqtQtGHyiHoQeBf4Q9+j4azTYxAY39Smf1o/J4y+ZBRur+hZJJuPxXgspZ+R5ZSBRzilo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dk0fCS+k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d7jbqF0r; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1727517852; c=relaxed/simple;
+	bh=SCRwTs37XdQ1uB5N2YR0BjWZ+U3oIhWr1srFruFYXWo=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Twva7NUXnly4eCZ3QZTNux54jYoMxwNy7b4tdGrvtsWeidoPbK6jYZ0ZMTIE0uLXj3TxeuEuJFxnInfSUSyd5+T9BSWWxDWMz/h2tORRHhvo1tmdqDR9B2DQfUon0MxcMJe90gbiYJfQfKEPGm1A73w2dO6DgEmoL40mc71vPUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CCg4lzlc; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dk0fCS+k";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d7jbqF0r"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id AC464138069E;
-	Sat, 28 Sep 2024 05:53:05 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Sat, 28 Sep 2024 05:53:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1727517185;
-	 x=1727603585; bh=QvaNuaq/wNhFau3/IWO0vb7wQDmu23jIHUKwH51p06U=; b=
-	dk0fCS+kXl1sR3GZbtArKF7Atx3lz/ZBwBDgwsLiTTukcNu06riW5qkQCeg0saqx
-	mvgomQl9g2m9uQ6+JnIQcg2Cvx7AQGSLDj8ddjOBGmLPODNt33CeZBEjMJLbGuBz
-	00nhlim7iR9KMFGja2LWPL+QlLPzbd9O6PiUyRgNC8f753sOV2IgVBlvEsN32AFE
-	pNehUAuDgWcy2aDzkf/lRJjeZUi1ofRV5InpgnryoUy8aBq68Nf/w2z0v2ZddKDy
-	iUmSkDAXRrl+WUYLOt/hHeb8Fp6+5P2q7XUAbBZRA1FJ2iEZ3PXYZhVZGp6cqzdG
-	+vF2R7S0Le85sqv+TOQW1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727517185; x=
-	1727603585; bh=QvaNuaq/wNhFau3/IWO0vb7wQDmu23jIHUKwH51p06U=; b=d
-	7jbqF0rbBIVREAQ91qlzRmsZLhRG+7QQIxAoAhn/9gD4b2En6ACWNJXbQXSdfXhH
-	5VZbaVcP6eCZaq+zlWrcpW/mMmUCrmn44CZFcJtlhFWz5BgN5PjIUnpQNYHw8qeW
-	RI2bpS0/rE7wltXU+7v8/eFFocH4XFAN7nOulT7CKH3nULO75PTG7bCMNxSa62jq
-	HDxZEy7f4GHWZEwRrMU+C+dRmiGR3dDeOBMKDVSCsKlzkD18oDVhpLcaGIzlFeK7
-	eagkzMWX2P9685lROZNzSv5afA9Gf5A0XEKB+sxR0AfFG1QDhkAKxZKBX/rFiy3o
-	zPpVXFzM5COHOLB8jkYtg==
-X-ME-Sender: <xms:AdL3ZiKp34gVT9v7HCfKhUGFuz2UCkGLOG1jJ9OUDf9o_1nt7hfvQXM>
-    <xme:AdL3ZqKrfehATDy9qIXexnect2j9aen2_EooQOc-XKdYIiD3-MKpTJCwu3dcBpECt
-    xPzzDyp-Qi6VRu3qA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddutddgudehvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
-    fhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghr
-    ucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdeg
-    jeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghk
-    khesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehishhhtghhihhsvdesghhmrghilhdrtghomhdprhgtphht
-    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:AdL3Ziv4bZJIoByxaYmMi32jZ0kGHwyexEkfPlYsTe6H2f3WYYVeuA>
-    <xmx:AdL3Zna4UHx17oq5Ox19jZY4Z4qApErJ34nZw1qqrznTTgdYi8Mj6Q>
-    <xmx:AdL3ZpZSJBGIwyJWGbGIP4H0Gu-cxfkd7Pw3oeku6578gb_i2N0fpg>
-    <xmx:AdL3ZjCK2KUOu7zrAsSvUlgEVcWXgHDitkYdqo7L2UFXoelYg8JY4g>
-    <xmx:AdL3ZonccpsuefSsVGbcdHLKCu9f8DhoW8bM6tBwjulvr1zVNdrJjGvd>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 672E0780068; Sat, 28 Sep 2024 05:53:05 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CCg4lzlc"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5c42f406fa5so1897266a12.0
+        for <git@vger.kernel.org>; Sat, 28 Sep 2024 03:04:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727517849; x=1728122649; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hWMgwO2sxfoRQdPeqdZRjxLGCR4MCdd7M4Uc9abCuQc=;
+        b=CCg4lzlc2GQTLSakVVssojWBn0dsVkOamNREDCU2/PFd9txQBliJD9pnBqXRbe1ZIF
+         bX0c+KGfEzd7YweVtbaNwIKmF2irTWQ9CCMxx1ePWfsm6GJU08XYMBHbF9Ky5+MHqmCO
+         GYnAVRDLE+4xyaN/eVcc1rhzgdAU3HowLomvGtPmT64sb6mEJXbzuG+F0rGsCgizc07v
+         qvBqufeDXjARk8IVElwocOdXhELfLlGrogF9jY1PtXUqgz4XLj4OvQ7AFh5v9CqLm6IV
+         bSAKXIPIsLGwhFhHy54lN7vB0gkhvDGhiu2uZc6ZGux8kwPWqcDZevOBa7QLg2DM3hWI
+         6FWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727517849; x=1728122649;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hWMgwO2sxfoRQdPeqdZRjxLGCR4MCdd7M4Uc9abCuQc=;
+        b=de9mnzqacEjIxOi+O7vGZMqy9mOhfTt2BiEMIWXRJGrFGvaE5d7kes1SBMkHhGMdbs
+         XJs/9YfTl9362JPQ2EcjuRYUsVj9aTL+Mz1FL1bRIyOj0V1u0kJWtQkBj182D2s5RJCO
+         hwXxniMU1CcgOpmLkgQXcokgPFARmD1YO4UED+wBANPaPgmefOKuWPzCRHk2NEgw9r1Z
+         DFDdmmZOd/lwc6rn2xWhh7KvZqHjKFi0TSiRr0JBqFDr6GOMTGhsYH6B9Mn2lhvbR0XD
+         kZw73/VP9afhG8qBduIPfJ3KJIr7iCzijfaF5GKFphl9ibu4NVw/VwIj7DPfynYuEUUi
+         pJFA==
+X-Forwarded-Encrypted: i=1; AJvYcCXypRre7gZMQ25/rvyp6GJTFvHUMw8Lytdbm7yUnZkGRoEbIP8xPtD+pqe2jFhnsKVjRig=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIvbnKkuZ4sK/+bafeBIY73Obe42B876YI9z5sPP3JWa6uHPBa
+	nieTyrhkqkzYw1m/c4zhTjaEeKbuiHl0JguHxjuE8gptfgJbtJfUKQcXaw==
+X-Google-Smtp-Source: AGHT+IEdU+UcnpqshKZPMma2S2ZTGj9bu3RYCKDBkA3COv2ursjdVZ+jlHQbJDuxpDwgq/mAFbgPSQ==
+X-Received: by 2002:a05:6402:280d:b0:5c8:850d:ad4a with SMTP id 4fb4d7f45d1cf-5c8850daf0emr5020884a12.11.1727517848770;
+        Sat, 28 Sep 2024 03:04:08 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c88d7f3282sm214259a12.30.2024.09.28.03.04.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 28 Sep 2024 03:04:07 -0700 (PDT)
+Message-ID: <6d6b2ff0-b4e4-4442-a3be-9b31742db280@gmail.com>
+Date: Sat, 28 Sep 2024 11:04:01 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 28 Sep 2024 11:52:45 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Jeff King" <peff@peff.net>
-Cc: "Stephen P. Smith" <ishchis2@gmail.com>, git@vger.kernel.org
-Message-Id: <ca632f1a-c41f-42b3-8f8d-4ef32fe18e33@app.fastmail.com>
-In-Reply-To: <20240927041516.GA568026@coredump.intra.peff.net>
-References: <20240925122515.14015-1-ishchis2@gmail.com>
- <6b69af87-9002-46a7-a5f3-3fa1fb7ba9df@app.fastmail.com>
- <20240927041516.GA568026@coredump.intra.peff.net>
-Subject: Re: Can a note be pushed to origin?
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: How dangerous is --committer-date-is-author-date these days?
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>, Git Mailing List <git@vger.kernel.org>
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <6af09726-e3bf-4903-87ae-9524ad334678@kdbg.org>
+ <aa981bb7-dd3b-4e63-9769-0fc2559983e6@gmail.com>
+Content-Language: en-US
+In-Reply-To: <aa981bb7-dd3b-4e63-9769-0fc2559983e6@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Sep 27, 2024, at 06:15, Jeff King wrote:
-> On Wed, Sep 25, 2024 at 05:29:30PM +0200, Kristoffer Haugsbakk wrote:
->
->> That will refuse to update if your own notes ever diverge from the
->> remote.  If you want to always overwrite your local notes with the
->> remote ones:
->
-> There are some specialized strategies for merging notes (e.g., taking
-> the union of lines). See the "merge" subcommand in git-notes(1).
->
-> I don't recall ever really using it myself, and I don't think there's
-> really any porcelain support, so you're on your own to invoke the merg=
-e.
-> But I guess the use case would be something like:
->
->   # fetch their notes into a holding spot
->   git config remote.origin.fetch refs/notes/commits:refs/notes/origin/=
-commits
->
->   # and then after every fetch, you merge if necessary. By default we'=
-re
->   # merging into our own "refs/notes/commits". And it should be OK to
->   # use the short "origin/commits" here, since notes-refs have their o=
-wn
->   # special lookup rules. Though using the fully qualified refname is
->   # probably reasonable, too.
->   git fetch
->   git notes merge -s union origin/commits
+On 28/09/2024 10:49, Phillip Wood wrote:
+>> - Should we remove it?
+> 
+> It is only a problem when re-arranging commits 
 
-git-notes(1) feels like the most =E2=80=9Cplumbing=E2=80=9D command out =
-of the =E2=80=9Cmain
-porcelain commands=E2=80=9D. :) (of those that I use)
+Of course it's also a problem if one is rebasing onto a commit that is 
+newer than the commits that are being rebased. That makes it more of a 
+concern, though the option has existed since 2009 and I don't recall 
+anyone complaining about the effects of using it. We should certainly 
+spell out the potential problems in the documentation.
 
-For my needs though it is high level enough since I mostly add notes to
-my own commits. Certainly porcelain in that sense. I use it all the time
-to add testing/general comments to my commits.
+Best Wishes
 
---=20
-Kristoffer Haugsbakk
+Phillip
