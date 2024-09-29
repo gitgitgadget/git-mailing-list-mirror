@@ -1,132 +1,175 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B043222611
-	for <git@vger.kernel.org>; Sun, 29 Sep 2024 18:14:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BD033987
+	for <git@vger.kernel.org>; Sun, 29 Sep 2024 18:35:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727633699; cv=none; b=SCo5Uw3Ati1/8IcIay8s8gEh12auI/4Lt95Y6/bB9geSLcuHAT0cx0kZarLultmETXs6bXzNziRisg5K52r1H6QallYAW9JVXTYTVurKztuM7k8mriBwDJ64SC0SvSzhAGEGNtmQhvAkUCio5JdpiENRvC9qkve0WxkvwTLXsi8=
+	t=1727634943; cv=none; b=Xq+vk4Mn2/AOZtEfayQaycFbKP+E0taqk2o7uoL1T5g/XWE5nF2ME3IVX3VqdsSLhDw+eZdt1YuvN/8hGt6bH7t0srBnWRpC4ihp02uQzZm2rZ1zsxJZ4424R+BYUY+vhqS+s1GEUMAC0aAV+z3tQlwoIOdMpPeoCRpzT2KL2e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727633699; c=relaxed/simple;
-	bh=9yVaiPfUAaPmFA0TP+lyCaIekshLTEX+WofQbxzzz3c=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=i2xnCFy0t8izZtw5T1NcElTQx/sQEE9bR0OqJWp4TNav0w6lOTLVTcCqB/mQw14zGi5fcUK0dmVOjn1SFPFSZBb8tAojHiKIhz/GF6vGyiuMlW9x9d53q6QPkcwpXbkNQWKhuy5v1w44FKwUB4N3cO5qK+K+KMkcPjS3xkwnfsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=NiWUNHN+; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1727634943; c=relaxed/simple;
+	bh=omCtb1U/rjcu31/jN1uZme7MVP+DTsJVPIWvHQOsbG8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
+	 In-Reply-To:Content-Type; b=jyU5MiV+6Hbh3tmjqzarZtC9MM3FliIc0iRf8SX63h4HbBRdX+X3NbGVSlhMHAtxVr4MKklxPZzOwqP3twT2xrwPQnFOKdRdHGuKFyZSgtnNgKylsn/DK6pGlJG33N6WLDJgIdnc7vO3QUSycbn0YXel1xer59kKx7/U+wUmfYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RZK6w4Xj; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="NiWUNHN+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1727633692; x=1728238492;
-	i=johannes.schindelin@gmx.de;
-	bh=bsHyV2K09suVj8qTZU+8uKOUpa+uWww+yqBKECQ5Mjc=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=NiWUNHN+/0vwhRRvfbr8S4h8k+CC9kILjihRPMqxxbdVJ2huzgABGtUtk0xztcot
-	 kUBgGsCRNw9uX21vB4mn5o1/Yf5gXoCa87Tv6sYm7Hk/UVgTckhKvRwz2oNH1i6uV
-	 EOu7qUkgr1ERQ1VH/fQ60TfrJiW6LRWbHtbF0Fz8s1XglBZ+p5t7vm8sTVSztPBTn
-	 DN7goOWFyx/09xiB9nn9Af/DC0zGev45EPdg/Aq8aMO5QDQsptVziarbWeYnA7RCR
-	 14s1peENwj6YxEzAdSnUTbfaY4K686qr4DxA1xfsN8ez5lxk+fQP7IwbzbA8zrwm7
-	 ve8Q6WW8z7H81hDu9A==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.169]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M4b1y-1swd8U0qLW-004kKO; Sun, 29
- Sep 2024 20:14:52 +0200
-Date: Sun, 29 Sep 2024 20:14:51 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "Mr. Manuel" <mr-manuel@outlook.it>
-cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Push to GitHub HTTP repo fails (>v2.45.2)
-In-Reply-To: <PA4PR02MB7040A36E17B197AB8DD7BBFC8C612@PA4PR02MB7040.eurprd02.prod.outlook.com>
-Message-ID: <a6dd718c-807a-c19b-b915-e6cc455256af@gmx.de>
-References: <PA4PR02MB7040A36E17B197AB8DD7BBFC8C612@PA4PR02MB7040.eurprd02.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RZK6w4Xj"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42cc43454d5so26613805e9.3
+        for <git@vger.kernel.org>; Sun, 29 Sep 2024 11:35:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727634940; x=1728239740; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ig3N4uAxiu0mORCDRfGLLwW4vScmO2RZ/nMFD+vZtiY=;
+        b=RZK6w4Xjt4W+53LPHc8twG1oSRdttPqgR9koI9Qu/rGw2LXH3Fyd/Teoi0Q+KuVpj4
+         R+OtfXG6hBf87Pvo8twiEjxtkHttCIz79zzIPd9cau0JsvADIYtiHxiDc1ZfzUDk++6N
+         nM8r75vllRgA2MywESBss7sDM1t7wju9UMMC2MgZ8Rb4DJdb07/cR71FWAEI5G9izbLV
+         /bp4+tp+8FYhESaFin/Ed4AvjxGFGSsvSO7rr8o4VMl2yDcg8u5EXzJtZVuzwywARsL4
+         Afhg+c/RZBVkphGbwo7VnP6hFXNsMJX3/GnSRIZ80qfO4pwoG27N3aXyJ64BXMUYTj1Y
+         fCBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727634940; x=1728239740;
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Ig3N4uAxiu0mORCDRfGLLwW4vScmO2RZ/nMFD+vZtiY=;
+        b=avu2JbKJdFTfuV5PRfj3vOfEZas2qPcOpWUOcbukmDyznrmqG58PhDtuzMQcQ28iKz
+         p8PZGqkL60YfMbMweN97uVO0O5GtYdsqbabfv6ia0+rnXNz75M4e08VxDw7VvZ7Fu7Ci
+         ZVqIYiZsQCpfkZO2yLZjUxwo15DXrM4lUAIwG9eLtDrRWmswk7SGrSJEMD740LCKPmTm
+         lPFVe4v3TBXuSbMppz9VmuC7VVjCIZyW1TCaZA/V5PXXuFhqQ2Hxrnkudo1AGssDlRD8
+         p7XfL5eyJxVVWKwGqfWZOvI95J61lV/VcbKrnel4TnCgwvQe8tN6AMM9E1iQQ1WDyq77
+         Wbww==
+X-Gm-Message-State: AOJu0YxmzEN0aDYFP8OLZP3EYazfPLtk3AB/zTLfo4yYZCXEtkhxJCPh
+	qi6nHWW1gDLoMA67609QzjYv2ZOcDg1brQdwf+WshTGjpbGkDvZV
+X-Google-Smtp-Source: AGHT+IFPVKNFujpGRDbIXl9yG6wQQyF5nYMICJlDFe6bIjATnSoiDm7dLBBAf3lnkj1NFJwIHxCs+Q==
+X-Received: by 2002:a05:600c:1c9e:b0:42e:8d0d:bca5 with SMTP id 5b1f17b1804b1-42f58409f31mr70599035e9.2.1727634939613;
+        Sun, 29 Sep 2024 11:35:39 -0700 (PDT)
+Received: from [192.168.1.21] (p57b1438f.dip0.t-ipconnect.de. [87.177.67.143])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e96a55336sm131210355e9.47.2024.09.29.11.35.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 29 Sep 2024 11:35:39 -0700 (PDT)
+Message-ID: <f72b003b-a3fa-4750-82f2-96402053f56e@gmail.com>
+Date: Sun, 29 Sep 2024 20:35:18 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1824243515-1727633692=:116"
-X-Provags-ID: V03:K1:BEy7yKIyir4BQpNPDfLLCGrRAWhciNGv2SjfzVBQ1ewQGOsaEzI
- x4r2/BgnSv3gkEOwWvc/X6VfcFCG+q3EB3Tp5MewhLgKSsdFpR10vlbvYaSRQQhUoF4jcca
- I5otERh1IQ1/V+vcMwGqWIN+aiJPa+sEFySfnYZtVnwCAn4/yazMPZaxyTxc7K/Sj21iM0f
- VUYaq2eX5bN+o6IxyBzSw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:6t/Ka5IOLrA=;4UzhQYfEQDRcinO5FVTJRVL8zmq
- wFbYivZN+DfZV7JLbg8/qNdgkFMt4nf6wo7QbsRksPhRFXjUBePXDMw74Slh15OVZGGXhpXVM
- mBlZJKqWryo1boYZbCCfJInR+ACCPu4iV0M1BnWGKzWqLtkbES8/Wee0J8dXjvUeCaSb7Ks2+
- 7cXsC5I/O+XXBXlgKnhWZEY3mc4zqp97kCftATb1BXHpy/SUOKhtaaTJF2s4SB2qh3t/Uqqh/
- uhzCOCxSO9KwAcyyK0mOtWFQh7oKR4YggTc9lYgY6Il0+aLQyUtppgnr61B+iJGAyjL3AWASN
- 4ivByZ8nKRhncxJm1m0+djKYfNbi8iGxIiJgZYslh3SJMkl9ncyVkHe4kIfa7a78/sdLM8wOg
- ei7EaxIZAHsv19EzR6yRtFYv5DzkIIyc303KRP0bupmyb3xF9iXhNJSdacOGBmu+/I1aWWBNa
- maaxcrY/eTw1LCkyJOeS8VgHj+30QQrZMkpvjCq/CltGuUE0cJ8gfaU0D9ozo9EpPxmkAs9jj
- QCZCFFOx7F7sKSuze9SieIZQpAP2pk03PHmd+ri7/IJ9hcnxGLKqNPnTGWjPgJMMqEtNQmXLg
- YlNeFeft+m7s5I57LEL0xed0E7GORXNR89YNCwZt9vnlMeicVumjH887HuiraU66TlZBUOV2w
- 9JMN4HaLBggoOGFBD/N37hxtKWO3fG50KvK7KizDrNFcwmAkAFnWRelR0QHuI8Nj5EWuTX5uu
- LSquq+TkX+ym2FSnwL8uGPCyg5nB6CeZmGFM+IhL/AeN1Hvheb6IeeLzoFkzL+zkOpN5ss36K
- 81VAgrSlrn+7DPNXeUmcn6LA==
+User-Agent: Mozilla Thunderbird
+Subject: Re: Bug in git-gui
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <69e3564e-3314-4a6e-b489-11a96022e08c@gmail.com>
+ <67cf0658-f0ee-f141-534c-3081b818545a@gmx.de>
+ <d0c95c24-232f-196c-bf19-5f8ee89e246c@gmx.de>
+Cc: git@vger.kernel.org
+From: Clemens Haffner <c.f.haffner@gmail.com>
+In-Reply-To: <d0c95c24-232f-196c-bf19-5f8ee89e246c@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Johannes,
 
---8323328-1824243515-1727633692=:116
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+you were on the right track:
 
-Hi Mr. Manuel,
+- if I set the env variable (as a normal Windows Enviroinment variable) to
 
-On Tue, 17 Sep 2024, Mr. Manuel wrote:
+c:/Program Files/Git/mingw64/bin/git-askpass.exe
 
-> after Git version 2.45.2 I=E2=80=99m no more able to push to a GitHub HT=
-TP
-> repository. Tried 2.45.3, 2.46.0 and 2.46.1. I can reproduce this on
-> many different systems. Found also a entry on reddit:
-> https://www.reddit.com/r/github/comments/1f3xmnl/error_remotecurl_error_=
-reading_command_stream/
+the GUI does indeed (almost) work as intended.
+Almost, because while git-askpass is running, a console window is open 
+in the background. ssh works though.
+
+- however, with the variable set to this, git bash does not work anymore 
+(waits infinitely on commands like "git push").
+It doesnt even work when set to mingw-style
+
+/c/Program Files/Git/mingw64/bin/git-askpass.exe
+
+- If I start git-gui from within the mingw bash, it does even work 
+without the variable set. (The console window still appears though).
+
+So, to fix this git-gui needs to be aware of the enviroinment variable 
+when launched through the start menu.
+
+I'm not familiar with the source code, but I guess
+
+git-gui/windows/git-gui.sh
+
+would be the file that is responsible for that.
+
+Greetings,
+
+Clemens
+
+Am 29.09.2024 um 19:44 schrieb Johannes Schindelin:
+> Hi Clements,
 >
-> Here some more details:
+> On Sun, 29 Sep 2024, Johannes Schindelin wrote:
 >
-> PS C:\Users\User\my-project_1> git --version
-> git version 2.46.0.windows.1
-> PS C:\Users\User\my-project_1> git push --force
-> error: remote-curl: error reading command stream from git
-> error: failed to push some refs to 'https://github.com/my-github-user/my=
--project_1.git'
-
-This looks like it might be due to an update in the libcurl library;
-Git for Windows v2.46.0 came with libcurl v8.9.0 while Git for Windows
-v2.45.2 came with libcurl v8.8.0.
-
-Could you first go ahead and try with
-https://github.com/git-for-windows/git/releases/tag/v2.47.0-rc0.windows.1?
-Otherwise I would need to direct you to bisect through the more
-fine-grained snapshot versions at
-https://wingit.blob.core.windows.net/files/index.html (where v2.45.2 was
-added on Mon, 3 Jun 2024 09:24:47 +0200 and v2.46.0 on Mon, 29 Jul 2024
-10:56:11 -0700).
-
-Also, since there haven't been any reports about this issue at
-https://github.com/git-for-windows/git/issues, I suspect that you have
-somewhat of a special setup, maybe a proxy or something similar?
-
-Ciao,
-Johannes
-
-> PS C:\Users\User\my-project_1> git --version
-> git version 2.45.2.windows.1
-> PS C:\Users\User\my-project_1> git push --force
-> Enumerating objects: 27, done.
-> Counting objects: 100% (27/27), done.
-> Delta compression using up to 8 threads
-> Compressing objects: 100% (16/16), done.
-> Writing objects: 100% (18/18), 14.52 MiB | 2.08 MiB/s, done.
-> Total 18 (delta 7), reused 1 (delta 0), pack-reused 0 (from 0)
-> remote: Resolving deltas: 100% (7/7), completed with 5 local objects.
-> To https://github.com/my-github-user/my-project_1.git
-> =C2=A0 =C2=A0c7a0249..379246f =C2=A0main -> main
+>> On Sun, 29 Sep 2024, Clemens Haffner wrote:
+>>
+>>> I think I found a bug in git-gui on Windows (Windows 10 64 bit)
+>>>
+>>> git-gui Version 0.21.GITGUI
+>>> git Version: 2.44.0.windows.1
+>>>
+>>> To reproduce: (I have not tested it with rsa keys)
+>>>
+>>> - Create an ed25519 key with a passphrase (--> .ssh/id_ed25519). Help->Show
+>>> ssh key detects that key perfectly and shows the Public key to copy
+>>> - Push something to a repository:
+>>> --> it will fail.
+>>>
+>>>>    Pushing to xxx.xxx:clemens/test_repo.git
+>>>>    CreateProcessW failed error:193
+>>>>    ssh_askpass: posix_spawnp: Unknown error
+>>>>    git@git.xxx.xxx: Permission denied (publickey).
+>> This might be due to the `SSH_ASKPASS` environment variable pointing to a
+>> Unix-style path, but your SSH not being Unix-path-aware.
+>>
+>> Can you verify that your `SSH_ASKPASS` environment variable is set to
+>> `/mingw64/bin/git-askpass.exe`? If so, can you set it to `/c/Program
+>> Files/Git/mingw64/bin/git-askpass.exe` instead and try again?
+> Oh, make that `c:/Program Files/Git/mingw64/bin/git-askpass.exe`, i.e. a
+> Windows-style path but with forward slashes as directory separators.
 >
+> Ciao,
+> Johannes
 >
-
---8323328-1824243515-1727633692=:116--
+>>>>    fatal: Could not read from remote repository.
+>>>>
+>>>>    Please make sure you have the correct access rights
+>>>>    and the repository exists.
+>>> - When using a key without a passphrase, it works perfectly well.
+>>> - When using ssh-agent with a key that uses a passphrase, it also works well.
+>>>
+>>>>    Pushing to git.xxx.xxx:clemens/test_repo.git
+>>>>    To git.xxx.xxx:clemens/test_repo.git
+>>>>     = [up to date]      rev1 -> rev1
+>>>>    updating local tracking ref 'refs/remotes/origin/rev1'
+>>>>    Everything up-to-date
+>>> this bug must be in git gui, as it works perfectly fine via git bash.
+>>>
+>>> "git push" spawns a new window, which asks for the passphrase. After entering
+>>> the phrase git works as intended.
+>>>
+>>> It seems to me that the git gui cant spawn that window where it asks for the
+>>> key.
+>>>
+>>> If that helps:
+>>> I'm using Microsofts OpenSSH implementation:
+>>>
+>>>>    $ ssh -V
+>>>>    OpenSSH_for_Windows_8.1p1, LibreSSL 3.0.2
+>>> Greetings,
+>>> Clemens Haffner
+>>>
+>>>
+>>>
+>>>
+>>>
+>>>
