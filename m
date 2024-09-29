@@ -1,62 +1,62 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33AE2B9BB
-	for <git@vger.kernel.org>; Sun, 29 Sep 2024 07:17:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871F841A80
+	for <git@vger.kernel.org>; Sun, 29 Sep 2024 07:17:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727594225; cv=none; b=d//2T8i3IP5DLy0NA1vsgUhMmxoQwZpVIOjtXXqQagJAcfBKDDkK0Rujum/PalcXbRFZtsxkFpaJeCcTUP3sgr9r+M0lQ+JSTX/8mZXA2JKW3XjEGVNJdWVPLSWIgC9pXUBujyfC5KJuhPeMoisy52bnTSIMrzH+70P+IHtBelM=
+	t=1727594242; cv=none; b=cOtnR4d3OuvvekzMzM3hdDGMFWPktPqtfrxwWNT2VXNI26U1j2zBp18fkH0iMPBFqaRdwo6/TpvevpENOGdhkOdVzSYkkhNqLVwuymktbr6UuEXNWTkaJaa8FQIHiVTSfPRQ4+OJ312NiOAz5mIowRTw/ZTBYlMd2QGXPsZ+5W0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727594225; c=relaxed/simple;
-	bh=f5cCi/MWnCZNhzkbRN4ADpPfkkkFsHvOd2cEbON0c1g=;
+	s=arc-20240116; t=1727594242; c=relaxed/simple;
+	bh=ooiR5gK4TTbqyFkShGRd5x1jM3o3sZmcWH6YybD51dc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rWUKUkCRSW87lmgkAiCwbbQ815UbsSjnkRRb3QyxSVjF39RPp74riirR+S+kY/wn4aA6DiKfXpCd3IT5qruvA30jX7ZlQ/V3e4gAUgyOFzAu8raLu7lgiXt4WCGBojpNhIM2gMS2UQl4pu8Gt/cGkyjLhaUrQ6oV+NyP3LdyeLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SpFkN+7o; arc=none smtp.client-ip=209.85.214.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=LpfD2TRd/8dVp8PJxV2UlOd9+fzDNfi2me5A0ccRza73mFT27evihyHG1yEtKwpgQ5oKdBswgKq2/LFQWg1z6PNAVM5NnX908zQfsQtTTmoceOLxoGH0Czy/mVsb+lfKNVGgd4d3arsUDIFNKA5F50b/CoqPN1yZtr+8L/XUVP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DF9eUnc7; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SpFkN+7o"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-20aff65aa37so28167395ad.1
-        for <git@vger.kernel.org>; Sun, 29 Sep 2024 00:17:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DF9eUnc7"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-205722ba00cso31023635ad.0
+        for <git@vger.kernel.org>; Sun, 29 Sep 2024 00:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727594222; x=1728199022; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727594240; x=1728199040; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=k4FKk7fMGVLekQs1kc9jbFG/WsuMnmm1pp+fm9kPZ8M=;
-        b=SpFkN+7oces5FC7WtYmKITGyo/Oaysu1FYoVfhDXOkt1h5OR3LsZsAk6RnAPlMmu6H
-         p4zHyqofO6jS6GIgDXEOh1AHgi3roz35JZPeIYomIZQMGvXmUVl53wsJUXPwFW8v2oc8
-         TQBfuiKVNuqucCO/r1nxxC592rrTTWOw97yKLjwrMJQKgdnCcSRiusHHhLuU8dpacw+Z
-         tQupEqNqW0LFdfiSqu1De65nzT/8Ve90cIUbdjeVHImIPf7+GOwuWEzps0H47UNzHcT0
-         N7KU8egk8LZrNz04Rgt7NT02HYISGPD3nMNQ8iQWo7OX9njM4lAD61eawPVXcEzQ8JHJ
-         TXRA==
+        bh=7z19YvUHUUyJtN2aTo7tINeCHtO/uAVDcxKH49xO8ps=;
+        b=DF9eUnc7GRwcdGZW0IylIy6K2kuH9WN3tJ2DJkHndPH2RngFcEShDpUq+lM9gwSmCG
+         ocbP0s5GEWlQyUdEs76Px+sqI+EeyiZSBxnN0ncHIEEbU8dsDXKIdxy2LTTnpAl+Gs2x
+         X5iDD1292IFj0bkjdw6qE0/OFlywuGNiRvoNAxjN0A+eo7Nguq3Zu8RbuQD/LrVeXNBc
+         amLe3VoylcGTCdJMn2zFisRfU70B9tjw8r+YGYURD7lGPYxgpotKwfsmW3Tq/LOhJSXP
+         EqQ6CQ2szCAzKJM2TAhYV53884+pq8P0QQ7od2bSBQeKbjAX6oz4PVFXPOfpgcNO23pM
+         Mvww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727594222; x=1728199022;
+        d=1e100.net; s=20230601; t=1727594240; x=1728199040;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=k4FKk7fMGVLekQs1kc9jbFG/WsuMnmm1pp+fm9kPZ8M=;
-        b=G8zvNbvt6/mtrcfbzAFhyKyoumajG6hQ75cRCEx9oqHfVTLu5tzfm+jXJFoUgdURIh
-         Es/pina7Xo1dcB+unwAfETdLb7E7T3YpFwFlmWJQJI5c5ySc2W/crMx2FJjbOyQxjX3s
-         3PZ1Hw/1yv4Lg1oTz+NtAmfC6XgFYsSVA8eBc1/hcIMimeCwqNyxwMwFNjRcWoz+IG1g
-         WZ650A117QdpWWRt8WBML5CeI0uH2Iowd9lf9IvvP2tNbxcLqkbCnzSShhK18Tj5L53x
-         a8DVxeo4SPX85hZAzax3vTbDwEkxp+shduIGbU8f6pa35MpzeZiHJSfu7lAOntlJCz3N
-         UBeQ==
-X-Gm-Message-State: AOJu0YyDNjGnzpXRuixiQ2Q30Rt3wiZYSycIPMwqa3f0B7gfOudDfM/D
-	s9EvSCuufgE9cZamZxGrV0vxicbUfRDhQeD3s+j44YesU6NPSelrPehZiw==
-X-Google-Smtp-Source: AGHT+IFNt1oeL1qUv3pdrpJLgXoUduGG0S8CB3fe37+cnhPgBT9aa48qLBlc7eL/lnPtZzoHBGIu/g==
-X-Received: by 2002:a17:902:e844:b0:20b:65a8:917c with SMTP id d9443c01a7336-20b65a923c0mr40236945ad.10.1727594222543;
-        Sun, 29 Sep 2024 00:17:02 -0700 (PDT)
+        bh=7z19YvUHUUyJtN2aTo7tINeCHtO/uAVDcxKH49xO8ps=;
+        b=I4VXkgIWxRJ3AVnJYpXAD/9yEHqZyLRwpyW1X5z4aXKTPaa47YOKDSTSIbyKWq+NmJ
+         aDdGeTlgRkUJUqu3ua+xSQid7AGF3PDBpBtDhqMEP70eWkqwSGillLLf/8scbtMpN4XY
+         mOXAgR9iwr1TlIX6+bSsneM/9ivHT1o39/JoIiZ4FeX8qWY150GamI1Olcf5ctWcahSZ
+         QR8cC4KGHsMCymqVLlAfmAWWDthWAqjhEKuHccp7+cPjYHJr8jsPt96gH07sTSQrpfWU
+         RF1c6F2jTIs0nbyZR8jg5dMJ50Sa0/nAtB+EdaWtl2pvrm9SzUZ/iFf07thUTSRvq7ev
+         1OSw==
+X-Gm-Message-State: AOJu0Yx5pRh7McseQ1jtwZnOjWDAA7r01+7WvqmR2QbeVGf5UkzJJdNb
+	MCBoUdHfuBlkuz6tq/0Pvmzj4UAYxfrpM6IZpneK1NsKGI1IYTi7/OcgWA==
+X-Google-Smtp-Source: AGHT+IGpuxTAIhyOA3ev7OZVbSMd9TfSzUQLLCrYEFG1rPHBhlBquROyXzqH382KkWd22/EGmXiOZg==
+X-Received: by 2002:a17:902:d506:b0:20b:61c0:43ed with SMTP id d9443c01a7336-20b61c0457fmr53139375ad.30.1727594239550;
+        Sun, 29 Sep 2024 00:17:19 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b54c6d95fsm20981115ad.222.2024.09.29.00.17.01
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37d5ef7fsm35821755ad.22.2024.09.29.00.17.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Sep 2024 00:17:02 -0700 (PDT)
-Date: Sun, 29 Sep 2024 15:17:01 +0800
+        Sun, 29 Sep 2024 00:17:19 -0700 (PDT)
+Date: Sun, 29 Sep 2024 15:17:18 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 7/9] ref: enhance escape situation for worktrees
-Message-ID: <Zvj-7Rx8ZT_27UpE@ArchLinux>
+Subject: [PATCH v5 8/9] t0602: add ref content checks for worktrees
+Message-ID: <Zvj-_tO_Qtp6EDBy@ArchLinux>
 References: <Zvj-DgHqtC30KjJe@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,57 +68,26 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <Zvj-DgHqtC30KjJe@ArchLinux>
 
-We do allow users to use "git symbolic-ref" to create symrefs which
-point to one of the linked worktrees from the primary worktree or one of
-the linked worktrees.
-
-We should not info the user about the escape for above situation. So,
-enhance "files_fsck_symref_target" function to check whether the "referent"
-starts with the "worktrees/" to make sure that we won't warn the user
-when symrefs point to "referent" in the linked worktrees.
+We have already added content tests, but we don't have tests when there
+are worktrees in the repository. Add a new test to test all the
+functionalities we have added for worktrees.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- refs/files-backend.c     |  5 +++--
- t/t0602-reffiles-fsck.sh | 34 +++++++++++++++++++++++++++++++++-
- 2 files changed, 36 insertions(+), 3 deletions(-)
+ t/t0602-reffiles-fsck.sh | 66 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index bd215c8d08..1182bca108 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3520,10 +3520,11 @@ static int files_fsck_symref_target(struct fsck_options *o,
- 	orig_last_byte = referent->buf[orig_len - 1];
- 	strbuf_rtrim(referent);
- 
--	if (!starts_with(referent->buf, "refs/")) {
-+	if (!starts_with(referent->buf, "refs/") &&
-+	    !starts_with(referent->buf, "worktrees/")) {
- 		ret = fsck_report_ref(o, report,
- 				      FSCK_MSG_ESCAPE_REFERENT,
--				      "referent '%s' is outside of refs/",
-+				      "referent '%s' is outside of refs/ or worktrees/",
- 				      referent->buf);
- 	}
- 
 diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index 585f562245..936448f780 100755
+index 936448f780..97bbcd3f13 100755
 --- a/t/t0602-reffiles-fsck.sh
 +++ b/t/t0602-reffiles-fsck.sh
-@@ -382,10 +382,42 @@ test_expect_success 'textual symref should be checked whether it is escaped' '
- 	printf "ref: refs-back/heads/main\n" >$branch_dir_prefix/branch-bad-1 &&
- 	git refs verify 2>err &&
- 	cat >expect <<-EOF &&
--	warning: refs/heads/branch-bad-1: escapeReferent: referent '\''refs-back/heads/main'\'' is outside of refs/
-+	warning: refs/heads/branch-bad-1: escapeReferent: referent '\''refs-back/heads/main'\'' is outside of refs/ or worktrees/
- 	EOF
- 	rm $branch_dir_prefix/branch-bad-1 &&
- 	test_cmp expect err
+@@ -420,4 +420,70 @@ test_expect_success 'textual symref escape check should work with worktrees' '
+ 	test_must_be_empty err
  '
  
-+test_expect_success 'textual symref escape check should work with worktrees' '
++test_expect_success 'all textual symref checks should work with worktrees' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	cd repo &&
@@ -128,26 +97,60 @@ index 585f562245..936448f780 100755
 +	git branch branch-3 &&
 +	git worktree add ./worktree-1 branch-2 &&
 +	git worktree add ./worktree-2 branch-3 &&
++	worktree1_refdir_prefix=.git/worktrees/worktree-1/refs/worktree &&
++	worktree2_refdir_prefix=.git/worktrees/worktree-2/refs/worktree &&
 +
 +	(
 +		cd worktree-1 &&
-+		git branch refs/worktree/w1-branch &&
-+		git symbolic-ref refs/worktree/branch-4 refs/heads/branch-1 &&
-+		git symbolic-ref refs/worktree/branch-5 worktrees/worktree-2/refs/worktree/w2-branch
++		git update-ref refs/worktree/branch-4 refs/heads/branch-1
 +	) &&
 +	(
 +		cd worktree-2 &&
-+		git branch refs/worktree/w2-branch &&
-+		git symbolic-ref refs/worktree/branch-4 refs/heads/branch-1 &&
-+		git symbolic-ref refs/worktree/branch-5 worktrees/worktree-1/refs/worktree/w1-branch
++		git update-ref refs/worktree/branch-4 refs/heads/branch-1
 +	) &&
 +
++	bad_content_1=$(git rev-parse HEAD)x &&
++	bad_content_2=xfsazqfxcadas &&
++	bad_content_3=Xfsazqfxcadas &&
 +
-+	git symbolic-ref refs/heads/branch-5 worktrees/worktree-1/refs/worktree/w1-branch &&
-+	git symbolic-ref refs/heads/branch-6 worktrees/worktree-2/refs/worktree/w2-branch &&
++	printf "%s" $bad_content_1 >$worktree1_refdir_prefix/bad-branch-1 &&
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	error: refs/worktree/bad-branch-1: badRefContent: $bad_content_1
++	EOF
++	rm $worktree1_refdir_prefix/bad-branch-1 &&
++	test_cmp expect err &&
 +
++	printf "%s" $bad_content_2 >$worktree2_refdir_prefix/bad-branch-2 &&
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	error: refs/worktree/bad-branch-2: badRefContent: $bad_content_2
++	EOF
++	rm $worktree2_refdir_prefix/bad-branch-2 &&
++	test_cmp expect err &&
++
++	printf "%s" $bad_content_3 >$worktree1_refdir_prefix/bad-branch-3 &&
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	error: refs/worktree/bad-branch-3: badRefContent: $bad_content_3
++	EOF
++	rm $worktree1_refdir_prefix/bad-branch-3 &&
++	test_cmp expect err &&
++
++	printf "%s" "$(git rev-parse HEAD)" >$worktree1_refdir_prefix/branch-no-newline &&
 +	git refs verify 2>err &&
-+	test_must_be_empty err
++	cat >expect <<-EOF &&
++	warning: refs/worktree/branch-no-newline: unofficialFormattedRef: misses LF at the end
++	EOF
++	rm $worktree1_refdir_prefix/branch-no-newline &&
++	test_cmp expect err &&
++
++	printf "%s garbage" "$(git rev-parse HEAD)" >$worktree2_refdir_prefix/branch-garbage &&
++	git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: refs/worktree/branch-garbage: unofficialFormattedRef: has trailing garbage: '\'' garbage'\''
++	EOF
++	rm $worktree2_refdir_prefix/branch-garbage
 +'
 +
  test_done
