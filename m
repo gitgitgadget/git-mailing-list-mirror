@@ -1,175 +1,176 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BD033987
-	for <git@vger.kernel.org>; Sun, 29 Sep 2024 18:35:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916EC3A1B5
+	for <git@vger.kernel.org>; Sun, 29 Sep 2024 18:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727634943; cv=none; b=Xq+vk4Mn2/AOZtEfayQaycFbKP+E0taqk2o7uoL1T5g/XWE5nF2ME3IVX3VqdsSLhDw+eZdt1YuvN/8hGt6bH7t0srBnWRpC4ihp02uQzZm2rZ1zsxJZ4424R+BYUY+vhqS+s1GEUMAC0aAV+z3tQlwoIOdMpPeoCRpzT2KL2e8=
+	t=1727636338; cv=none; b=dtk9pOy3CVp//1GblguCdcTZIMsTUr4fdwDUy9h04rly/5aB1WnQr32Tw4IdWeNSNeEQYgZfZMbBh8kqM4pCzcl5q6XwRY0ZsjgkABGJAUGpREa7DxDpkFfTGUSjPAM0TD7bt0F9RTBGvazg6z1LeP1XgIl8ulGUPIr2EUbpwYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727634943; c=relaxed/simple;
-	bh=omCtb1U/rjcu31/jN1uZme7MVP+DTsJVPIWvHQOsbG8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-	 In-Reply-To:Content-Type; b=jyU5MiV+6Hbh3tmjqzarZtC9MM3FliIc0iRf8SX63h4HbBRdX+X3NbGVSlhMHAtxVr4MKklxPZzOwqP3twT2xrwPQnFOKdRdHGuKFyZSgtnNgKylsn/DK6pGlJG33N6WLDJgIdnc7vO3QUSycbn0YXel1xer59kKx7/U+wUmfYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RZK6w4Xj; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727636338; c=relaxed/simple;
+	bh=unpGAy0ZCMe+P8k9v16l1gbywjj+7DOMXUasBXA/yJA=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=KfcB274ZCMVSGfeLiOwg9HJgcCWrJ7kEgbeQKlsw8xu4ynuQ+rV6pS5iLverwKSGqSvjJ4OCve+805Vd3vP/CaLgxg7LlgBLXqfmZP9SRKEcVGyEcgQr4twBMbdd+zr1AZ1YsGA1OPnK+lrxvOsAIIww5VR2s1inC5EHqFzMovU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=IkKgc6mG; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RZK6w4Xj"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42cc43454d5so26613805e9.3
-        for <git@vger.kernel.org>; Sun, 29 Sep 2024 11:35:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727634940; x=1728239740; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:cc:references:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ig3N4uAxiu0mORCDRfGLLwW4vScmO2RZ/nMFD+vZtiY=;
-        b=RZK6w4Xjt4W+53LPHc8twG1oSRdttPqgR9koI9Qu/rGw2LXH3Fyd/Teoi0Q+KuVpj4
-         R+OtfXG6hBf87Pvo8twiEjxtkHttCIz79zzIPd9cau0JsvADIYtiHxiDc1ZfzUDk++6N
-         nM8r75vllRgA2MywESBss7sDM1t7wju9UMMC2MgZ8Rb4DJdb07/cR71FWAEI5G9izbLV
-         /bp4+tp+8FYhESaFin/Ed4AvjxGFGSsvSO7rr8o4VMl2yDcg8u5EXzJtZVuzwywARsL4
-         Afhg+c/RZBVkphGbwo7VnP6hFXNsMJX3/GnSRIZ80qfO4pwoG27N3aXyJ64BXMUYTj1Y
-         fCBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727634940; x=1728239740;
-        h=content-transfer-encoding:in-reply-to:from:cc:references:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Ig3N4uAxiu0mORCDRfGLLwW4vScmO2RZ/nMFD+vZtiY=;
-        b=avu2JbKJdFTfuV5PRfj3vOfEZas2qPcOpWUOcbukmDyznrmqG58PhDtuzMQcQ28iKz
-         p8PZGqkL60YfMbMweN97uVO0O5GtYdsqbabfv6ia0+rnXNz75M4e08VxDw7VvZ7Fu7Ci
-         ZVqIYiZsQCpfkZO2yLZjUxwo15DXrM4lUAIwG9eLtDrRWmswk7SGrSJEMD740LCKPmTm
-         lPFVe4v3TBXuSbMppz9VmuC7VVjCIZyW1TCaZA/V5PXXuFhqQ2Hxrnkudo1AGssDlRD8
-         p7XfL5eyJxVVWKwGqfWZOvI95J61lV/VcbKrnel4TnCgwvQe8tN6AMM9E1iQQ1WDyq77
-         Wbww==
-X-Gm-Message-State: AOJu0YxmzEN0aDYFP8OLZP3EYazfPLtk3AB/zTLfo4yYZCXEtkhxJCPh
-	qi6nHWW1gDLoMA67609QzjYv2ZOcDg1brQdwf+WshTGjpbGkDvZV
-X-Google-Smtp-Source: AGHT+IFPVKNFujpGRDbIXl9yG6wQQyF5nYMICJlDFe6bIjATnSoiDm7dLBBAf3lnkj1NFJwIHxCs+Q==
-X-Received: by 2002:a05:600c:1c9e:b0:42e:8d0d:bca5 with SMTP id 5b1f17b1804b1-42f58409f31mr70599035e9.2.1727634939613;
-        Sun, 29 Sep 2024 11:35:39 -0700 (PDT)
-Received: from [192.168.1.21] (p57b1438f.dip0.t-ipconnect.de. [87.177.67.143])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e96a55336sm131210355e9.47.2024.09.29.11.35.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 29 Sep 2024 11:35:39 -0700 (PDT)
-Message-ID: <f72b003b-a3fa-4750-82f2-96402053f56e@gmail.com>
-Date: Sun, 29 Sep 2024 20:35:18 +0200
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="IkKgc6mG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1727636326; x=1728241126;
+	i=johannes.schindelin@gmx.de;
+	bh=EYN47yyLTOWZ7q0rnp14smUqBYcnEsdJOzNkIy9hPdU=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=IkKgc6mGrOU2+WlOTVhg2IzKPB++HZ6tcVwBs0b/pR5HFWZrBs/5jpwoHnBqpRlb
+	 oU9+ud5RAg4LboQPfrtu6g4ogabiktVaDT7fMKZcqtXWZYtgrdytYvEPMCDppgQ7f
+	 wxCrFe0ETDjykVTCoBUjtBRLW37zP5vrzUYXWWyTH03LqNYgH85qbRMpFNLUzQt72
+	 hEL3oDNAvZShXHHBO/lxqHq7/UIeYSn5H77XJVcT/TXTZngDSAInB4vveB+q5GUZG
+	 Pn100RgWJcwr5ii/Qi/V4Rx95zdIuxj6JVj82t38YVzm0EHC0HdL8oRCY/jdXvOq0
+	 Xtb+fjcNNPCwLL9L9g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.213.169]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvbFs-1s5luy0SQA-00wPgD; Sun, 29
+ Sep 2024 20:58:46 +0200
+Date: Sun, 29 Sep 2024 20:58:45 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Beat Bolli <dev+git@drbeat.li>, git@vger.kernel.org
+Subject: Re: [PATCH] unicode: update the width tables to Unicode 16
+In-Reply-To: <xmqqy13qhrot.fsf@gitster.g>
+Message-ID: <43570a02-3c99-1d07-4403-3e95c6e6720a@gmx.de>
+References: <20240912204047.1020213-1-dev+git@drbeat.li> <7449ce5b-5308-ce6e-394d-43dec511ef16@gmx.de> <xmqqy13qhrot.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Bug in git-gui
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <69e3564e-3314-4a6e-b489-11a96022e08c@gmail.com>
- <67cf0658-f0ee-f141-534c-3081b818545a@gmx.de>
- <d0c95c24-232f-196c-bf19-5f8ee89e246c@gmx.de>
-Cc: git@vger.kernel.org
-From: Clemens Haffner <c.f.haffner@gmail.com>
-In-Reply-To: <d0c95c24-232f-196c-bf19-5f8ee89e246c@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:PLCMPBYpMBIatZIJqBh3UlwUTttMY2noqqztslL8pP+9Yo7u19i
+ 1z0P8YAfzJWVPlH6gZ+Wv0MQ9WMcl8gQKuFHmGbk4kBm/EZtLzC7kmAyD/sN1T8i2tuPPGR
+ NrrvYonCZZExWSMoEVyLXdyjh/lgySEs0rL21+kg2sCni3UQjh44y4oDcfBCBrKmDLPDj7H
+ iiYw/fV2Twwrjm+ShX0zA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:IJPtnMaOk9Q=;hEYtYe7AHjdhhUYG86/eCiMjmFb
+ xowRJ2McURenmAFR/q5idzHhZxtKrlP658q+iK5H02sGXngyc864MEx3cgbBKjHEueFrmDSiw
+ AAySo0d6Wi2mHPExGRCxlZq/GhKEi/1Hn4dnqgYW1ScNO1lKaEIUPJhnzIHNY8qlKQeRCeVQ9
+ byebdTC7c7mWIdeRV9av8C76T5MA3JcqYxNYhljHa79YoxyK+1ohJNMnYYO49CBQcOKn6THYd
+ KDfmF2eBOrzOl5UbwQP1j7dwIzZ/ep+HUbPeMuzuVBIt3lKNxbsdnCWKXTO1/c8BFyG/xMG7g
+ NCc85wDT0/bAgILJ5sa7IyXki3uWN7ydyUcnfM1ZivSiB7Mabywoy2j9dtkPG68fGSx1kY4hN
+ R8lZOzLFvk8uZntaCMWxgqMgvjqdxUjlzGIGsYc+VDKrH5j41gMiBqrq4RyVAqkKoII5JO6/M
+ pffVDCtfoJRrkeSyXJD5dZz4Fr+ttjntDxq/URHFsMdl0txqz7Ywd1LLrcHw6IKI40BxC5ssB
+ /mO4WLp2VGn/8r7w5XXbT19AKpesCq0QxfyS9J/lFkXdSgL7TCuFCaon+T+s3fFLa37ICYIeF
+ /d+n2dfkArmlpXUzRqS09A+/UUw317eqcGmpR8zktw4IkbcsoZwpEUb2uDcu+CRMamqsIzvW0
+ UlyYxsezKj3tfPAM4zv/+xNzfkZgq4tnTWMuV51UtPcX3rhYc7+3E1NO+umCZjkP9+a9H5CD5
+ FHeK2s0lIvJeXEMwbqwQskJXxttYGPPGiwA/TYAYeZw+41eWA7SKxq93t89zhpUXEx+6n+NI2
+ UTrYu9vCbt3Xw1rOSRGR9syG15y6pFm/VDd7D8kPulCfs=
+Content-Transfer-Encoding: quoted-printable
 
-Hi Johannes,
+Hi Junio,
 
-you were on the right track:
+On Tue, 17 Sep 2024, Junio C Hamano wrote:
 
-- if I set the env variable (as a normal Windows Enviroinment variable) to
-
-c:/Program Files/Git/mingw64/bin/git-askpass.exe
-
-the GUI does indeed (almost) work as intended.
-Almost, because while git-askpass is running, a console window is open 
-in the background. ssh works though.
-
-- however, with the variable set to this, git bash does not work anymore 
-(waits infinitely on commands like "git push").
-It doesnt even work when set to mingw-style
-
-/c/Program Files/Git/mingw64/bin/git-askpass.exe
-
-- If I start git-gui from within the mingw bash, it does even work 
-without the variable set. (The console window still appears though).
-
-So, to fix this git-gui needs to be aware of the enviroinment variable 
-when launched through the start menu.
-
-I'm not familiar with the source code, but I guess
-
-git-gui/windows/git-gui.sh
-
-would be the file that is responsible for that.
-
-Greetings,
-
-Clemens
-
-Am 29.09.2024 um 19:44 schrieb Johannes Schindelin:
-> Hi Clements,
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> On Sun, 29 Sep 2024, Johannes Schindelin wrote:
+> > On Thu, 12 Sep 2024, Beat Bolli wrote:
+> >
+> >> Unicode 16 has been announced on 2024-09-10 [0], so update the charac=
+ter
+> >> width tables to the new version.
+> >>
+> >> [0] https://blog.unicode.org/2024/09/announcing-unicode-standard-vers=
+ion-160.html
+> >
+> > I can confirm that the output is identical to the result of running
+> > ./contrib/update-unicode/update_unicode.sh.
 >
->> On Sun, 29 Sep 2024, Clemens Haffner wrote:
->>
->>> I think I found a bug in git-gui on Windows (Windows 10 64 bit)
->>>
->>> git-gui Version 0.21.GITGUI
->>> git Version: 2.44.0.windows.1
->>>
->>> To reproduce: (I have not tested it with rsa keys)
->>>
->>> - Create an ed25519 key with a passphrase (--> .ssh/id_ed25519). Help->Show
->>> ssh key detects that key perfectly and shows the Public key to copy
->>> - Push something to a repository:
->>> --> it will fail.
->>>
->>>>    Pushing to xxx.xxx:clemens/test_repo.git
->>>>    CreateProcessW failed error:193
->>>>    ssh_askpass: posix_spawnp: Unknown error
->>>>    git@git.xxx.xxx: Permission denied (publickey).
->> This might be due to the `SSH_ASKPASS` environment variable pointing to a
->> Unix-style path, but your SSH not being Unix-path-aware.
->>
->> Can you verify that your `SSH_ASKPASS` environment variable is set to
->> `/mingw64/bin/git-askpass.exe`? If so, can you set it to `/c/Program
->> Files/Git/mingw64/bin/git-askpass.exe` instead and try again?
-> Oh, make that `c:/Program Files/Git/mingw64/bin/git-askpass.exe`, i.e. a
-> Windows-style path but with forward slashes as directory separators.
+> Thanks for double checking.  I did the same when I queued the patch
+> and it indeed looked good.
 >
-> Ciao,
-> Johannes
+> > Maybe we should add an automated, scheduled workflow for these updates=
+?
 >
->>>>    fatal: Could not read from remote repository.
->>>>
->>>>    Please make sure you have the correct access rights
->>>>    and the repository exists.
->>> - When using a key without a passphrase, it works perfectly well.
->>> - When using ssh-agent with a key that uses a passphrase, it also works well.
->>>
->>>>    Pushing to git.xxx.xxx:clemens/test_repo.git
->>>>    To git.xxx.xxx:clemens/test_repo.git
->>>>     = [up to date]      rev1 -> rev1
->>>>    updating local tracking ref 'refs/remotes/origin/rev1'
->>>>    Everything up-to-date
->>> this bug must be in git gui, as it works perfectly fine via git bash.
->>>
->>> "git push" spawns a new window, which asks for the passphrase. After entering
->>> the phrase git works as intended.
->>>
->>> It seems to me that the git gui cant spawn that window where it asks for the
->>> key.
->>>
->>> If that helps:
->>> I'm using Microsofts OpenSSH implementation:
->>>
->>>>    $ ssh -V
->>>>    OpenSSH_for_Windows_8.1p1, LibreSSL 3.0.2
->>> Greetings,
->>> Clemens Haffner
->>>
->>>
->>>
->>>
->>>
->>>
+> We could, but the consortium aims to issue major updates once a year
+> in September, with minor versions and updates "will be avoided", so
+> we may need to devise automation that makes better use of resources
+> than to scrape http://www.unicode.org/Public/UCD/latest/ucd/ daily.
+
+Oh, but I obviously was not suggesting as crude a thing as to scrape it
+unconditionally, and certainly not daily. No, I was thinking about
+something checking the `Last-Modified:` header and only acting upon
+updated Unicode definitions, and checking for updates only on a weekly
+basis. Something along these lines:
+
+	```yml
+	name: update Unicode definitions
+
+	on:
+	  schedule:
+	    - cron: '1 15 * * 4' # 3:01pm on Wednesdays
+	  workflow_dispatch:
+
+	jobs:
+	  update-repo-variable:
+	    if: vars.UNICODE_LAST_MODIFIED !=3D ''
+	    runs-on: ubuntu-latest
+	    steps:
+	      - id: check
+		run: |
+		  set -x
+		  latest_update=3D"$(curl -I https://www.unicode.org/Public/UCD/latest/u=
+cd/UCD.zip |
+		    sed -n 's/^Last-Modified: //p')" &&
+		  if test '${{ vars.UNICODE_LAST_MODIFIED }}' =3D "$latest_update"
+		  then
+		    echo "result=3Dskip" >>$GITHUB_OUTPUT
+		    exit 0
+		  fi
+		  echo "result=3D$latest_update" >>$GITHUB_OUTPUT
+	      - if: steps.check.outputs.result !=3D 'skip'
+		run: echo ::notice::_Now_ we scrape and do stuff
+	      - if: steps.check.outputs.result !=3D 'skip'
+		env:
+		  GH_TOKEN: ${{ secrets.UNICODE_LAST_MODIFIED_PAT }}
+		run: |
+		  gh api -X PATCH \
+		    repos/$GITHUB_REPOSITORY/actions/variables/UNICODE_LAST_MODIFIED \
+		    -f value=3D'${{ steps.check.outputs.result }}'
+
+This would use the repository variable `UNICODE_LAST_MODIFIED` to store
+the `Last-Modified:` value that was last seen (and implicitly act as the
+knob to prevent running in forks: if the variable is not yet set, the job
+will be skipped).
+
+Sadly, to update the repository variable, we cannot use `permissions:`
+because the workflow syntax does not offer the `variables` scope.
+Therefore a Personal Access Token would need to be stored as a repository
+secret. I used a fine-grained token in my tests whose sope was
+Repository > Variables: read-write.
+
+Ciao,
+Johannes
+
+>
+> 44dc651132 2024-09-12T22:40:47+02:00 unicode: update the width tables to=
+ Unicode 16
+> 872976c37e 2023-09-25T21:07:04+02:00 unicode: update the width tables to=
+ Unicode 15.1
+> b10cbdac4c 2023-03-30T21:15:17+02:00 unicode: update the width tables to=
+ Unicode 15
+> 187fc8b8b6 2021-09-17T12:19:20-07:00 unicode: update the width tables to=
+ Unicode 14
+> 65588b0b2e 2020-03-17T16:36:05+01:00 unicode: update the width tables to=
+ Unicode 13.0
+> 5817f9caa3 2019-05-29T22:50:45+02:00 unicode: update the width tables to=
+ Unicode 12.1
+> 584b62c37b 2019-03-21T22:06:17+01:00 unicode: update the width tables to=
+ Unicode 12
+> 570951eea2 2018-07-09T21:44:52+02:00 unicode: update the width tables to=
+ Unicode 11
+> e233bef43e 2018-04-10T14:26:17-07:00 unicode_width.h: rename to use dash=
+ in file name
+>
+>
