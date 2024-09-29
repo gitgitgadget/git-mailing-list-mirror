@@ -1,98 +1,103 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC02A3C00
-	for <git@vger.kernel.org>; Sun, 29 Sep 2024 10:36:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447F617C
+	for <git@vger.kernel.org>; Sun, 29 Sep 2024 15:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727606184; cv=none; b=GR2WmV0fpHyoFE1BLn3mALCF+946SMa9FSob4+OYZzX/y98eoaLG8DxJ4Kyj0PT+EL3y39eE21DxoLRfTa/t8BYMG+y52FXYYta3QGWvQ6oX8H2jEK0td1tYEGqzI30DL1w7B81gpFNXfHlGdeRpk9LDJ5NJgdlA3z+bXeBkOOs=
+	t=1727623032; cv=none; b=SdFn8lm4rdV7GDSQtDF2D9Rn5ZqTbrGNE9TysiYtwSHOr0K8G8yve/07NwB2BJ7GFU2J5jSOjXd1ccI/CBcqJ7M6xzZIlQUYzW7S2dwzqr3/LtcqLc9hqwGLYVnKtuj4yi9r3wsNKIQ730q+z+mx0hjOZyGbvkM5s4sgVr5bpcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727606184; c=relaxed/simple;
-	bh=tcz7C6SDtZ/JWslRTdsBeBQlzAOtzwtRoQFtJf20Df4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=GNNlU5ZPxkTVG3uSDQ/OZsfVocsySj7pp4ZkEFVHz6Q9m4KUbgpVEMDsXToCaeQl21lc5HRL4FFpz73BiQRTtYDPgNwTXYfUXd6NCS6uVHmdaiCqTM4Znf/nq9tKntDV09IKPYsyL6UONevjghzVyP/8m/DYD0REQhS2z30EHak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kv4ya1Z2; arc=none smtp.client-ip=209.85.218.46
+	s=arc-20240116; t=1727623032; c=relaxed/simple;
+	bh=pBEqUdna26FNG/QvtS/6uIIKXCDyM+gbY75F9/vDlEs=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Tj8kekjSGONsE7kno8oSc9EIKoXE77O2UQQvhFeAntwbCaf7ipbzyIEhvB9F7LrQxz82y7j2cvTt2EvWAByB2OLmr5dhmqTajcYgBc7RVZ8mrJsy7uzGf5Wnr8c8UFC3O2FlO+QEvi7XA7G7e27f8OBVOqQ2GcnbIo8zcWTrVio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=miGdnkEl; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kv4ya1Z2"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a8d6ac24a3bso635482166b.1
-        for <git@vger.kernel.org>; Sun, 29 Sep 2024 03:36:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="miGdnkEl"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a8a7596b7dfso421503766b.0
+        for <git@vger.kernel.org>; Sun, 29 Sep 2024 08:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727606180; x=1728210980; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=qlI8fwrFjb/53ufMSr6dk6UUCzBY70DQAJg9C9r9lg8=;
-        b=Kv4ya1Z2UgUtr+5r9344CuV0yTjT5aCXstXOLK+Fy3KlHuePmF0utajh7LiS7iaCXf
-         gEwpx7p5e8I+iyTkkKGtUzPF2N4aItoFSI1ZwL7g/TevdZCFj7PT3Jl+PoavbmO7vemI
-         zpwoF68Ieh9TfjvS2BG2EKeYZ2jalGwmQTrxNRCC1vjhoKSbkSks35vM8UuQClvKVhbJ
-         VRgAwfAFNqV+05frB6qT67rvT+ZNpMVb6xf4IKw5wpJeFzlfzJf7zOkaBvqsGWCe6mYj
-         zqCAVwfvmqjnRTicEzkWUcgO5d5GAO4/a+NlN6v19awn1PVfoFGS3PlPkq/vt8Eiq38M
-         XSKA==
+        d=gmail.com; s=20230601; t=1727623028; x=1728227828; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=UF/lE/JWSgYp7vWJThQrcW+dhMAoVRgUb+6fYcQFkKk=;
+        b=miGdnkEl+3V1N3fRqAQsSQEupd0EPx0ScUlDMOqQYFjAMzLw2zRmhezgy+Ijt0et3G
+         do7k8XNCtcvLufXdpww+dTfcVURIAebv6h1oj2L32NFg4JGe3dHwcJXaE6SL8Vb+6Zf5
+         7uquGFZ8DTitAT4CQz1+YfSfxPB6NjFnH3hNfTe1J4V24U76CIUMek9wtXnkuHMbVlP1
+         0W89mjIaQyOICxFCT2WxmToK7gaDZckORFkdYgc3p9lz6+u/RVZLh9Imbm0Fe1BRjy8d
+         ft0TW1YCTz0MBqV47Va9ScMc8/XRjSWjuosIL8YwiMZSb0tj8gt9JXbqSJM2qpvWd6D5
+         mn6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727606180; x=1728210980;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qlI8fwrFjb/53ufMSr6dk6UUCzBY70DQAJg9C9r9lg8=;
-        b=UVP/AJHvcInuQ6F70vguxHbFvfAQB0qsYsK50zvDB2/Zn2W9sbGTefBhqdPPsOwTVu
-         M8UbBIamJ/YvpF8aJV+u55+GZdfmtOCt03CEmoiD0K8qoy9tOk8HxRLtJiTj+ljFbeS6
-         qtEBRtnDZ0JrOg/owiDBu2zfZTDpubTXbzO/P19QX8PCBwdEaVmW1akisY29QYWaG8CA
-         UrXGRpuIUEVyMC0JcLPTmW2sxmcAIpq4OAy89YEM0kURX3uSuqfD99JDCKT4/WbEFDg2
-         uu3J9vchLn0d/syytjRjpg0pPTclhH76lpaGWgUDo37dubvusuuht/2C1gxiw4nuJlan
-         RfiA==
-X-Gm-Message-State: AOJu0YzosKOlqjjkNByXZ6Eb4b1csirWl6m1lFlk/FB8THKABSFarfjG
-	QQ6VNR4GVyrNifW+7ugRPrYJVmCgTyPmHKyUbe5yp0b0WGPCVxayvcuaLzu1eoaFizSkdVnMJsJ
-	S84gsIlEOFPfAoOhyIdDnIbDnGcP6OW0I
-X-Google-Smtp-Source: AGHT+IF1QvwnvCokhoCFuiMszoHVIpWQ1H1+LCdTMa8Igh2mcU2YLju+KEr9Y+yC4nmKdqbZIfL28tuHwf8C93IAMZA=
-X-Received: by 2002:a17:907:d18:b0:a77:ca3b:996c with SMTP id
- a640c23a62f3a-a93c30f0cd7mr941810166b.16.1727606180255; Sun, 29 Sep 2024
- 03:36:20 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727623028; x=1728227828;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UF/lE/JWSgYp7vWJThQrcW+dhMAoVRgUb+6fYcQFkKk=;
+        b=mhB8nBImyNHNp0FTpx/QgyTD378eMHZCvtYVpJnIcbCXfNxKNVmMC/MRrlPm+Aa4X7
+         vC4vyB2NnE67RFHHCUp0evEdMPDsZUOugy21CyCHF2hR14hrsXzjrfbNs+ArBb2y+jfL
+         DbqirwI4nOLXFJGap5uDAIx34837Ul7czYRKCUXQaOk10C5fQ7W/XDxNgVAbgNOKCShS
+         AIjkfcq0oe75LV6/5XYBxKuVsxoZvMAeloFSnvN5g7D3apUIAIyTbVzQ/b7DyezNSlYJ
+         sLzPNilaNLLkNM9ut7Vw0cBijmcuey+XHsLoRoiOLcs6Mzwq5wqX5OVz5ISo9DNndQRh
+         nCgw==
+X-Gm-Message-State: AOJu0Yyh/8ddZevdmgjRQwL+nb4bOBVmBn7KUWGSVIy81Oj7UNWvhu2U
+	vs43UuVvphEJ3u7jGXLEs8iNcAeEIYI3yRj6aP2spia5gfB760ylhcMekA==
+X-Google-Smtp-Source: AGHT+IH0mFQyruc80nWLXbDqtLUrbHBqBR8l/UekHEiB/ej0bO1LgPYP6XBDRkfwVqMK2SZGZ0O1ig==
+X-Received: by 2002:a17:907:7d8c:b0:a91:15ba:7c4d with SMTP id a640c23a62f3a-a93c3211997mr1075907566b.33.1727623028142;
+        Sun, 29 Sep 2024 08:17:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93e9f9aed3sm126071266b.31.2024.09.29.08.17.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Sep 2024 08:17:07 -0700 (PDT)
+Message-Id: <pull.1803.git.1727623027242.gitgitgadget@gmail.com>
+From: "Monika =?UTF-8?Q?Kairaityt=C4=97?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 29 Sep 2024 15:17:07 +0000
+Subject: [PATCH] documentation: add missing word "ref"
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sun, 29 Sep 2024 12:36:08 +0200
-Message-ID: <CAP8UFD350-iO7o0xAw9qg5f5uX8tN86so2TYf6AvD5Y1C=WyEA@mail.gmail.com>
-Subject: Draft of Git Rev News edition 115
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, karthik nayak <karthik.188@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Jialuo She <shejialuo@gmail.com>, 
-	Jeff King <peff@peff.net>, =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>, 
-	Scott Chacon <schacon@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>, 
-	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Monika =?UTF-8?Q?Kairaityt=C4=97?= <monika@kibit.lt>,
+    Monika Kairaityte <monika@kibit.lt>
 
-Hi everyone,
+From: Monika Kairaityte <monika@kibit.lt>
 
-A draft of a new Git Rev News edition is available here:
+In the git-fetch documentation, description of <refspec> syntax is not
+entirely clear. When explaining about "the destination ref <dst>", word
+"ref" is included. Logically, it should be the same in the explanation
+of "the source <src>".
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-115.md
+Signed-off-by: Monika Kairaityte <monika@kibit.lt>
+---
+    documentation: add missing word "ref"
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1803%2Fmokibit%2Fdocs-add-missing-ref-word-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1803/mokibit/docs-add-missing-ref-word-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1803
 
-  https://github.com/git/git.github.io/issues/726
+ Documentation/pull-fetch-param.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-You can also reply to this email.
+diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
+index c718f7946f0..066a35af9cd 100644
+--- a/Documentation/pull-fetch-param.txt
++++ b/Documentation/pull-fetch-param.txt
+@@ -24,7 +24,7 @@ ifdef::git-pull[]
+ endif::git-pull[]
+ +
+ The format of a <refspec> parameter is an optional plus
+-`+`, followed by the source <src>, followed
++`+`, followed by the source ref <src>, followed
+ by a colon `:`, followed by the destination ref <dst>.
+ The colon can be omitted when <dst> is empty.  <src> is
+ typically a ref, but it can also be a fully spelled hex object
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
-
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Kaartic and I plan to publish this edition on
-Tuesday October 1st, 2024.
-
-Thanks,
-Christian.
+base-commit: 3857aae53f3633b7de63ad640737c657387ae0c6
+-- 
+gitgitgadget
