@@ -1,93 +1,90 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AA415099C
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 06:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0D423BE
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 06:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727678422; cv=none; b=GzaH30kn2fvHpbfDaJ4k6Fu1hJkVsDBUbefWc/uJKg40LBOjLMcx9nVUMNK+S1a8oWT2dWo497ekxnss8XNXyFzI/0oMwmv0Z9WB/S2yY12WFyngU4bf3uIpr/ZXTpLh0ebDL50wha6ffL4fQBgW/n1gRc4a/JUlqarI/OKdcvI=
+	t=1727678988; cv=none; b=CjaMawgPypGqElu39tB8OjyMnXZ8P6vMQ3qcqW6k/611Eb3IlRBLrgwPTo5+03awn39D00zmT0hHvqDdy3AyzjcFKIC4GXFzMdo9ZI5lB5SlYL5fCVLlCklVLYyuXD5F53VWAFeatukK56QvuwSPohJiLTphJzHVoA/FBABBanM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727678422; c=relaxed/simple;
-	bh=TiJEyjqN3ZU2ACeCa0X9yBIa0jo0i8N0RBIEkzqr9co=;
+	s=arc-20240116; t=1727678988; c=relaxed/simple;
+	bh=hvue6unCpmli7OtNd0wYBkMarXhs0sphqg2B6coXXHE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eNowZU9IgIUyKjZiqldJmlHfYI3zxMjM+GGWwkDdTaqAIUnRlyAzYY4dCfABc/0hXpXVqw5g3hbk/1exlWWlqb1exg+1fr8qq/BZdlepViEcjUa//WfXaipP9krqbVtEecAbQFRoQLZfV5wN6eY6czvSzONfhUhYATQEGBx6/sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PkFcNXig; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i9McjN+W; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=k7H9X7r3EnQIzVTQZ2m+k5ilPogG0ImUUBbb+TwAPNeb820yeRxo9At2/OWJgoDJt6QS9RRyIvrFYk+vcSFxRm3d2CwdwMLNmm7cv4qQ0I/sp7zcutEGJdVOTpezGHZ1zsAh+pZoRKcIfhKsqGYhOMU9hNdBy+oOJTeq3jIAbtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iaDJVcHi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZWckM/FY; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PkFcNXig";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i9McjN+W"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CB4D411401E0;
-	Mon, 30 Sep 2024 02:40:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iaDJVcHi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZWckM/FY"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E00E911401F9;
+	Mon, 30 Sep 2024 02:49:45 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 30 Sep 2024 02:40:18 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 30 Sep 2024 02:49:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727678418; x=1727764818; bh=eKtTStIKbx
-	0wo98qEwadoH3lulyM4473BnD+2BsiZfo=; b=PkFcNXigLwTBAEp/5bQYbqyp71
-	AARNSsr0wzckD0wLeu7PZVvmWhxm4IbJ+Wm/Fey8fUU26j3Ur5BLZ2aH7aBileJ/
-	Mf0SFZ5TVARaMwe71/+YJl0idu6U+91vjDj/edBNnDiOypTpLJlzMGrF2fK2JSub
-	gsAqold9EQWHBP4sEhy0dHGGAnWwFJHwGVkPpuiXlIpZ7jBj3/OEkNInvCMlc22o
-	5I/CTFcvyiPeqgyIzTL/Qq1/7GJx4UzegcTa2RZNyG4ZZwYeTsGJXZxGfB9TkWrl
-	czm07svvpbbSi6lYG53dKKjOLrGCAe4Uk/AfuCns7y3mVCnGT4pRZLyRXHSQ==
+	:subject:to:to; s=fm2; t=1727678985; x=1727765385; bh=kjmC7TvMvG
+	zbuULhqaEQN9HdYj3oN1HRcLUP/tkMreA=; b=iaDJVcHiQDNcGmWP92sweEjVQO
+	aDsCZBM1HW0un36DtFfwguM8bctlKydnmG7cPTc2mgvraANTA9ZPyixublvf1+Q6
+	fjzKPvHR/JgdCx3ii4jayPduJaBH0mFc6ysH922nlrHds2PzwwaXfMDdy3i4UW6H
+	fWxRzDqrp95SP0OS7TDwsNhv0/lrj8ORdbC7iK41kl6LGBkgSs3TUO7qu0x9DSa4
+	J3Cagepz4TAOrWQIpjaGpRMfkBDlhLo5eG4mpwViTId1iORX0O73bjNhMZZs4hcS
+	Ci9r6vRfX4G+T4JNwR2+OuLzomM3hCTzLn91I11taDsfmdfdssKPGyvlOcyg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727678418; x=1727764818; bh=eKtTStIKbx0wo98qEwadoH3lulyM
-	4473BnD+2BsiZfo=; b=i9McjN+WRXIFdUzDkwkCLMAlMfGJXcr8smmHWGT8G5Qg
-	WuUM8VWxH16qzeWyKoMqymEGoTHo0ghZdmNs+D67nFKIhPT2zBr7/bw124vMqc2y
-	Lpf5MYNvN30JNi8h57WVKnxdnWlNyBDic3O8kyqms310sb7sIuVRKeXrU45M45yg
-	9BcKohS5Q1WAeqIwaXHl7lTArqYhaOxwA7bEsub5azUjhr1PY+mEs6rwKZGk1iu4
-	TAZqt80b3PqAefiD3aML1GfmaXudHoIEdYyB0dMKFobe4/ghgka4yRT7FeEGJBBU
-	o3D/3hjIbyp1t/gb3y+/nr/GhgZ93Bve4m+WXpKQyw==
-X-ME-Sender: <xms:0Uf6ZrP9QeakDgiJQMVoPuy-77PaKMx26MC_SwVnl9ksiINpGW_HtA>
-    <xme:0Uf6Zl_zAbc9RZlGVu1n806nM-4cEk5NzmPIVElptil8TYll6pktfJbRCp6iMzmeu
-    l8RfMokjr0s2yry0g>
-X-ME-Received: <xmr:0Uf6ZqRRcGGwHpHZbot4QUuNfFTpn7dqG0O7C0DIjFEf4Yk0lMMRPcwfORXLymr2dQRnXFdvLe2fO2dp73cD6lLcwf7FFJEAZLM_QbLDb4USSDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddugedguddutdcutefuodetggdotefrod
+	fm2; t=1727678985; x=1727765385; bh=kjmC7TvMvGzbuULhqaEQN9HdYj3o
+	N1HRcLUP/tkMreA=; b=ZWckM/FYohh23MgWXybV5K2phF7ZWVOAzNQFLM2jkXHB
+	crXwOC017D9qwmrEP9CrpgwpRYpGN7QwHSaI0QMFBsm0qyqNmSms3SxSlWMo5dxP
+	mrnK0K+WCN6kTIGECauMozUCle4v61aM0qHt1LdEN20HhdM/L26yroIx95OkHbl7
+	/oFGv7Cob9N8z/VyGCPKxzgmpl0c+Egx1pXB1Oc+XqpSF0hxpbQRv+tJNseJJ7lD
+	CbWgFtDaLM/eJrDd9T+3vmGHFOXq62ag6ynioRCNvYrrVePeIMcqqR+Qg4sgTyvJ
+	zeK5EjBJRLFW413QRuCJTD9cRFt30XvcmSVF5/QLTQ==
+X-ME-Sender: <xms:CUr6Zmgl-buErZiPxxayguOG93cU7Mp6jyu0B6ORsDnAMrNjynuY1A>
+    <xme:CUr6ZnB5htRWQsLQ58RDBH7zl0U3UpeGZPVfNee8gQ3uGNFqfzYFGp9i9kxno1sn8
+    cJdXELdShNvFC9-Wg>
+X-ME-Received: <xmr:CUr6ZuGs_Fjt_z1Cns2TWdg3dt0qp3QYDAkV6Sa3_Gl4XG3YfIa_jPz2r_s33NVtVOUYLSHgRRp8L8YQ2QsGdYhvAMfLHprmecwoqRHqWEnEqEI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddugedgudduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
-    htohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnh
-    gvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehlrdhsrdhrseif
-    vggsrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
-    htohepsggvnhgtvgesfhgvrhguihhnrghnugihrdgtohhm
-X-ME-Proxy: <xmx:0kf6ZvuGPybtySVbvaCDrObiu4oyInB79Cw5z-RAKS7fzSJElJGnVw>
-    <xmx:0kf6Zje_-bHExATlsXEutjCq9jDdO9LM6BqAwXGdKD4ZgeNv_Lw1PQ>
-    <xmx:0kf6Zr1wvKJ8GCwGcgLJbjgbkRsb6zvwPXHL-NPV0GeJSERfR17_vg>
-    <xmx:0kf6Zv9fX96pUMU49JWgHmrZ6sJPyC2k6iphIfECyKVUkrBASGz86Q>
-    <xmx:0kf6ZlsT21S__K0bpT7T05dMtmKGaDZCKHyg6WgYDr4tfxfAMT3ksC_C>
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehjrghmvghssehjrghmvghslhhiuhdrihhopdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtgho
+    rdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:CUr6ZvQtN6nCJNM84LUCXFjN5X66jZMvlt8XO6-gu8EylQ-kM3BBUg>
+    <xmx:CUr6ZjyN-9Cvu5lJk8c6UJSmcbZGfL4a7eTagd6SnFBzqD0MIjGy2A>
+    <xmx:CUr6Zt6mNbhOZFtJ7yZWWL-gyuEfp5BZqnYA-RPrhdvCL3o0GU-rrg>
+    <xmx:CUr6ZgwSCW7enCy1qaKhw6AXQCnOcCul-ardxTl4QJndXUFcOfne-w>
+    <xmx:CUr6Zqm0GkvXT7LO0FtJJT91whVCaOMMUi6KWXg4oV1PDhdHWUo8e5Oy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Sep 2024 02:40:16 -0400 (EDT)
+ 30 Sep 2024 02:49:44 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5040f2e8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 30 Sep 2024 06:39:28 +0000 (UTC)
-Date: Mon, 30 Sep 2024 08:40:11 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 49adf0b4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 30 Sep 2024 06:48:57 +0000 (UTC)
+Date: Mon, 30 Sep 2024 08:49:40 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/2] update_symref: add REF_CREATE_ONLY option
-Message-ID: <ZvpHxsPc8IABtIDo@pks.im>
-References: <D43G2CGX2N7L.ZRETD4HLIH0E@ferdinandy.com>
- <20240919121335.298856-1-bence@ferdinandy.com>
- <20240919121335.298856-2-bence@ferdinandy.com>
- <7fecc442-8d5e-4542-8ce8-907c35db870d@gmail.com>
- <D4CB89OCTXWW.2A4NL7RQP4IS@ferdinandy.com>
- <D4J51ZYZXBTV.60W3NPNVL78L@ferdinandy.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	James Liu <james@jamesliu.io>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 3/3] refs/reftable: reload locked stack when preparing
+ transaction
+Message-ID: <ZvpJ_zpAcpezXB89@pks.im>
+References: <cover.1726578382.git.ps@pks.im>
+ <cover.1727155858.git.ps@pks.im>
+ <9ce2d18dff2a655365b609dd86ea484a489c717a.1727155858.git.ps@pks.im>
+ <20240927040752.GA567671@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -96,60 +93,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <D4J51ZYZXBTV.60W3NPNVL78L@ferdinandy.com>
+In-Reply-To: <20240927040752.GA567671@coredump.intra.peff.net>
 
-On Mon, Sep 30, 2024 at 12:58:05AM +0200, Bence Ferdinandy wrote:
+On Fri, Sep 27, 2024 at 12:07:52AM -0400, Jeff King wrote:
+> On Tue, Sep 24, 2024 at 07:33:08AM +0200, Patrick Steinhardt wrote:
 > 
-> On Sun Sep 22, 2024 at 00:19, Bence Ferdinandy <bence@ferdinandy.com> wrote:
-> >
-> > On Sat Sep 21, 2024 at 15:40, Phillip Wood <phillip.wood123@gmail.com> wrote:
-> >> On 19/09/2024 13:13, Bence Ferdinandy wrote:
-> >> > Add a new REF_CREATE_ONLY flag for use by the files backend which will
-> >> > only update the symref if it doesn't already exist. Add the possibility
-> >> > to pass extra flags to refs_update_symref so that it can utilize this
-> >> > new flag.
-> >>
-> >> I'm not sure we need a new flag to do this as it is already supported by
-> >> the ref transaction api.
-> >
-> > Thanks, I was not aware of ref_transaction_create. It also seems to return with
-> > TRANSACTION_NAME_CONFLICT so we should be able to see from the error code if
-> > indeed the existence was the problem or something else went wrong.
+> > +test_expect_success 'ref transaction: many concurrent writers' '
+> > +	test_when_finished "rm -rf repo" &&
+> > +	git init repo &&
+> > +	(
+> > +		cd repo &&
+> > +		# Set a high timeout such that a busy CI machine will not abort
+> > +		# early. 10 seconds should hopefully be ample of time to make
+> > +		# this non-flaky.
+> > +		git config set reftable.lockTimeout 10000 &&
 > 
-> Unfortunately, it seems that my reading of the code did not pass practice. When
-> using ref_transaction_create ref_transaction_commit will return with -2 if the
-> reference already exists, but it also returns with -2 for various other issues,
-> like if the lock file already exists. I could parse the error message to see
-> what was the cause, but that doesn't feel like a robust solution. Since fetch
-> should _not_ error out on this, I think the REF_CREATE_ONLY flag is warranted.
-> As it stands, it would serve a different purpose than ref_transaction_create,
-> i.e. a "silent" create-only. 
+> I saw this test racily fail in the Windows CI build. The failure is as
+> you might imagine, a few of the background update-ref invocations
+> failed:
 > 
-> I'll send a v4 tomorrow hopefully.
+>   fatal: update_ref failed for ref 'refs/heads/branch-21': reftable: transaction failure: I/O error
+> 
+> but of course we don't notice because they're backgrounded. And then the
+> expected output is missing the branch-21 entry (and in my case,
+> branch-64 suffered a similar fate).
+> 
+> At first I thought we probably needed to bump the timeout (and EIO was
+> just our way of passing that up the stack). But looking at the
+> timestamps in the Actions log, the whole loop took less than 10ms to
+> run.
+> 
+> So could this be indicative of a real contention issue specific to
+> Windows? I'm wondering if something like the old "you can't delete a
+> file somebody else has open" restriction is biting us somehow.
 
-I don't think that is a good reason to introduce this new flag though.
-If we need to have a proper way to identify this specific failure case
-we should rather update the already-existing mechanism to give us useful
-signals, shouldn't we?
+Thanks for letting me know!
 
-The problem with this flag is that it basically duplicates functionality
-that already exists, and it needs to be wired up by every ref backend
-that we have and that we're adding in the future. Your patch for example
-only implements the functionality for the "files" backend, but it must
-also be wired up for the "reftable" backend or otherwise it would be
-broken.
+I very much expect that this is the scenario that you mention, where we
+try to delete a file that is still held open by another process. We're
+trying to be mindful about this restriction is the reftable library by
+not failing when a call to unlink(3P) fails for any of the tables, and
+we do have logic in place to unlink them at a later point in time when
+not referenced by the "tables.list" file. So none of the calls to unlink
+are error-checked at all.
 
-Another issue is that it gives you more ways to create nonsensical ref
-updates. With it you could for example create requests with a non-zero
-old object ID, and if it has `REF_CREATE_ONLY` set it would never be
-possible to fulfill the request. There's probably other cases where you
-can create nonsensical ref updates already, but we shouldn't add more
-ways of doing that.
+But there's one file that we _have_ to rewrite, and that is of course
+the "tables.list" file itself. We never unlink the file though but only
+rename the new instance into place. I think I recently discovered that
+we have some problems here, because Windows seemed to allow this in some
+scenarios but not in others.
 
-Mind you, if we go the way I propose and improve the error reporting
-we'd also have to adapt both backends to do so. But that would be
-plugging a gap for which we have no proper solution right now instead of
-circumventing the current design by duplicating the functionality that
-we already have in a way that makes us able to handle this.
+In any case, I've already set up a Windows VM last week, so I'll
+investigate the issue later this week.
 
 Patrick
