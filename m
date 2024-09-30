@@ -1,53 +1,53 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AD318873D
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:13:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089A918892F
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:13:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727687632; cv=none; b=abj6pCEHr155i7JZ28e9aSKCiYPG3qZDditwVQSzNHktgJOvou/xFReo8hm4bDd3C8nczu/UkJEfyxQ3daqfgsEL9ftRmfrNStlH/Ovj6fWpz01cPxV243eaZXO837PZueLCJdRa5HW+eUbEBR/cfyY1ij+97VtIhZEzvRrtvvU=
+	t=1727687634; cv=none; b=PNUtJoKnzpJEfkaNwoWluYA19G3Zm5ynSQOLNFGaiZBWp0xwp1+xHbr1jZ4UcbUWk5i1dYBi10tbj26ZA8Zd1BCnOc5M9D1LppZIU2pcVwfG7rQ1/ZdNZjIhQyCuekK8LQVCOJ3tH7tFSQzGTjT76FJUstT4V3ZVL8RaKaZme88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727687632; c=relaxed/simple;
-	bh=xFLAuXOQ7tEISg+ooFnAA9mSSVyfW5FXp3wxDKnyTlw=;
+	s=arc-20240116; t=1727687634; c=relaxed/simple;
+	bh=tIjyd92U/zjhAzxQ174Uh0LVYzjb7xvYHNpcZrVj9Yc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zy/CX/j6q1ZOVL5EFOFXEvUcg/rH37wbk+LAdesZLnCbXVqmp5y1IzARKCyDZrbINAvtZqAeUF2P1QQ/EnOxOPjRMIiKn0IqwtsuRzGs6IfwF+ZjfIM2QXtBV8E1mqAsBNtsTIWVViYw1goy/87BJX1g7itd2Nz3mCDSFtFMRjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KBYsFMAQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gr01JBeV; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=KY6KnbMVLbbblX9lU/j+p8c62Ur7pFCck8lN48iiU/zjDFnFHdI4j/OfbxUPs8QLcQySuoSjg2Wr9vTLVwpaCe/mZ/gw0VHAXMGpBDApFaqpMuVoAl64wHFnc9tCioS9vhTmOzDLySzVRWDs/cdHPWN3vLfE49vwFVM4HCwD27U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=njunO4vm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iGoulgdG; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KBYsFMAQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gr01JBeV"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="njunO4vm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iGoulgdG"
 Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 69E7B114026A
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:49 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 44B8213803A6
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:52 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 30 Sep 2024 05:13:49 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 30 Sep 2024 05:13:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727687629; x=1727774029; bh=hsQ8jnMUZu
-	W7rwYaT0StV6Kb9gNFFAzQ2lbG1n2g0fU=; b=KBYsFMAQYdH+/hSrK/2Gb40T0H
-	sODhcA6w5+r/d/okUT4Vj/7inyNtI62qZn+B8NwPWQ9dkTaFAZaIpmE6CcstQAIN
-	0w5XXBpC2ERFG68/GwB4zsqp0Xlsx+fikg4jzGW2jRu3J3eAETZDmt/bAoiyURZu
-	9T4onAgMn5+1zC0OlIAv/rjY2RH7PXoI704HmpIC79kfiQ2LIN7OQLFmnejVpSQj
-	dJ+88wFan82E1kdj7D3KbWVCHSRH5Cd375lYEkIcXI4C/cz/pf+CGBEOYOPJtjM+
-	eolvqk6xzHh3egY/yEbtT1gnpN68v/EI4F0rlUVJ6YFTF8o20c1F/JHG9oYQ==
+	:subject:to:to; s=fm2; t=1727687632; x=1727774032; bh=lSu7ojzHzx
+	w0l63Gw41WQmmw9/lZt3eXDeVkUcX2bms=; b=njunO4vm01TabnOUSNizWmiFhS
+	cyowdxZSplq4GApLtlobTdpc6pGuQ2d88gK4pxnpW3D+x2O0I8dOz+PbVNFJcZgN
+	ehQ7Nr9hUBcDNLk58KHVuzq6HO1njPER9FPhTq3zTnxiez7nt8LDTmedHOv9WS94
+	Y66w968vY+wI3n3okYVMaF3opQYEokuGw/v36PQeCl5kM+j6gGJPcOU5YVqA9PyD
+	6aE2WSAPMLHU/KJe2snFrZIvzQNAsWfC37Mo9iBJI98l8Kn1Vax7Yw4p37KXpn0B
+	DWKagw1WvvYr7/a/odCZWRzE+qCiL7UeGCa8uq7yDaNVx8whOagw9R4rQCyg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727687629; x=1727774029; bh=hsQ8jnMUZuW7rwYaT0StV6Kb9gNF
-	FAzQ2lbG1n2g0fU=; b=Gr01JBeVe3uzcZVYuvm8GEoqwMplhWppYUswl8YF2U/5
-	aQQQgo244nuOZPiwwaKoeHzctvZP7JK9NGumK4E/8AhcZ6J3f4YYPnvsVFzhvxBl
-	bkjO0PtHhCKjCjG29dTBz80Ep6KGTsVD9Ucust6qGgtoUfwtwboWCMINF439gsxs
-	f/WAzwlV4mBN0po6SfOQ+HQrFMSbjk+G+N/gimq+c+qkWXbQ55BtDQBVwdG1kfnz
-	O2qdKd80d8YN/S68qW8UOeUKK0zrsT60DR6kWmXNAIWJ9ExWeuCOfOem9wUmB4VH
-	5zCCF8DJgImpYiCiZqQVczaocYa7wRen2W+I3xAmHg==
-X-ME-Sender: <xms:zWv6Zj49TnS_iBm3-kPfC10dgJZRS3mG_KtWiuQzGGyDXvr4vkzDAg>
-    <xme:zWv6Zo7jc1HF5a9TLz0rxmEcR4eQs34LNGdCoVl2lhgpilVIK8_X1z8J-Efak35e-
-    FWMdnp1RbRdkEL9vQ>
-X-ME-Received: <xmr:zWv6ZqfPEa8m7r99S1aCAaOaewy1TpwazCN-Iuy7vIrfUzA2ILJKi_2Tz6RvHlaDxWtzIMI3gdgyDbWW_Xk_h3Wvv-ECxlodjAJLOKKajfMuWyI>
+	fm2; t=1727687632; x=1727774032; bh=lSu7ojzHzxw0l63Gw41WQmmw9/lZ
+	t3eXDeVkUcX2bms=; b=iGoulgdGFcYpSNapH6dIhJGcAbDmbYDKUAJ/pUsN93mJ
+	3c5OlyZIQayl3dyLW99uwMP4hqOFEYrpwkqBrcXQWRiWlADDEFt6U9u3YMbfmttY
+	6wYXNaDzF1JF6sqr/H8SuKo6toZl8dBZ9PhqWZZl/3aPcUMg/uBj7vw/iSMUiBvL
+	quZYcUgJw4xdoM3pmhtm6gnDifZ80nWnYWgWNmTSuZzlB5vbtsnSj5tIvDSTuJ1+
+	HnRehxFbzyrvO+cOnxq8LKPPWcRQeWdCLQIQOYCWq52FMIqSeva34/ErSGeECkp4
+	4TYO5/3Kn1Beoo6xWc/T+gFODUBg9WHSm4M/BaAPSQ==
+X-ME-Sender: <xms:0Gv6Zirb7aVeNCZ5rJOar-Uz460dWkmCwv8G8y7G9joZFmu_UDPdJQ>
+    <xme:0Gv6Zgop3Bd1clvfzxwR0_NQyhYXdvODcWOs6hvjSBY0Mt98djo2Va4k83Rk3kfPe
+    H8cD61OwLVTewiIKg>
+X-ME-Received: <xmr:0Gv6ZnPNNG7A2jgvDyrX3W7vuzjatVcNAwdGP95GCrEq4GMu5pFDt_A3V8XsaShI1ZY79-0im4V-RZX-Fo2qpjbj6oy8tzMpAXbxrXwOBr2lgow>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
@@ -57,23 +57,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedguddvucetufdoteggod
     ihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:zWv6ZkLg_A_peH84vl4BuksS8X0NfmeKt_Zct-xtNzP3XdJzRfARgw>
-    <xmx:zWv6ZnKMQjXyD4FGOxsVJXq5WNsro8NxsUN2eDPBSyYuV67jxoruog>
-    <xmx:zWv6ZtzUgk3dlugRAT0o0uBHHWwgDOWXbM8SWCCz6mh4Gur_CEZ_lg>
-    <xmx:zWv6ZjLbXwG8dnQOx-cKlZ418ZiRY9qQxo0g8jourX4Haq_4RQgajA>
-    <xmx:zWv6ZtjxwqEtZnjS48jVeiCQ_Z0oU95FSV7OyYSXG3fA2999Fp8grzCO>
+X-ME-Proxy: <xmx:0Gv6Zh44-MFNXxYVUPApqE_AzV74FjxoDmjVUkadW2LR_tmKPl-cnA>
+    <xmx:0Gv6Zh6dBpWd0bEHR8H5lX3t4pqyG9884GyyO4krFlesd5u4T2lPdg>
+    <xmx:0Gv6Zhh2iMGUa-aY5AxG3pt-0WqffE0icmKU_2EVebmsufbvibGhOw>
+    <xmx:0Gv6Zr5p8SEjC5c_yxLOLmIdBcx7DScO_u5aF4aRkOYqXjFZMZxjSg>
+    <xmx:0Gv6ZjTphgX8wwRKs2G-FsFXD89axHqJN6Cc6ncc3U3tWqxpMV4CJ9TN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:48 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:51 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1a850a1c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3ed19c60 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 30 Sep 2024 09:13:02 +0000 (UTC)
-Date: Mon, 30 Sep 2024 11:13:45 +0200
+	Mon, 30 Sep 2024 09:13:05 +0000 (UTC)
+Date: Mon, 30 Sep 2024 11:13:48 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 12/23] diff: improve lifecycle management of diff queues
-Message-ID: <a475d974cc1d060fdae26da31fea834c04b059c5.1727687410.git.ps@pks.im>
+Subject: [PATCH 13/23] line-log: fix several memory leaks
+Message-ID: <d3121c2522cc723ab4df71979fd9194260a6a57e.1727687410.git.ps@pks.im>
 References: <cover.1727687410.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,349 +85,170 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727687410.git.ps@pks.im>
 
-The lifecycle management of diff queues is somewhat confusing:
+As described in "line-log.c" itself, the code is "leaking like a sieve".
+These leaks are all of rather trivial nature, so this commit plugs them
+without going too much into details for each of those leaks.
 
-  - For most of the part this can be attributed to `DIFF_QUEUE_CLEAR()`,
-    which does not release any memory but rather initializes the queue,
-    only. This is in contrast to our common naming schema, where
-    "clearing" means that we release underlying memory and then
-    re-initialize the data structure such that it is ready to use.
-
-  - A second offender is `diff_free_queue()`, which does not free the
-    queue structure itself. It is rather a release-style function.
-
-Refactor the code to make things less confusing. `DIFF_QUEUE_CLEAR()` is
-replaced by `DIFF_QUEUE_INIT` and `diff_queue_init()`, while
-`diff_free_queue()` is replaced by `diff_queue_release()`. While on it,
-adapt callsites where we call `DIFF_QUEUE_CLEAR()` with the intent to
-release underlying memory to instead call `diff_queue_clear()` to fix
-memory leaks.
-
-This memory leak is exposed by t4211, but plugging it alone does not
-make the whole test suite pass.
+The leaks are hit by t4211, but plugging them alone does not make the
+full test suite pass. The remaining leaks are unrelated to the line-log
+subsystem.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bloom.c            |  8 +-------
- diff.c             | 22 ++++++++++++----------
- diffcore-break.c   |  8 ++------
- diffcore-pickaxe.c |  4 +---
- diffcore-rename.c  |  3 +--
- diffcore-rotate.c  |  3 +--
- diffcore.h         | 10 ++++------
- line-log.c         | 15 +++++++--------
- log-tree.c         |  4 ++--
- merge-ort.c        |  2 +-
- 10 files changed, 32 insertions(+), 47 deletions(-)
+ line-log.c | 54 +++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 35 insertions(+), 19 deletions(-)
 
-diff --git a/bloom.c b/bloom.c
-index c915f8b1ba..c428634105 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -476,8 +476,6 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 				*last_slash = '\0';
- 
- 			} while (*path);
--
--			diff_free_filepair(diff_queued_diff.queue[i]);
- 		}
- 
- 		if (hashmap_get_size(&pathmap) > settings->max_changed_paths) {
-@@ -508,8 +506,6 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 	cleanup:
- 		hashmap_clear_and_free(&pathmap, struct pathmap_hash_entry, entry);
- 	} else {
--		for (i = 0; i < diff_queued_diff.nr; i++)
--			diff_free_filepair(diff_queued_diff.queue[i]);
- 		init_truncated_large_filter(filter, settings->hash_version);
- 
- 		if (computed)
-@@ -519,9 +515,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 	if (computed)
- 		*computed |= BLOOM_COMPUTED;
- 
--	free(diff_queued_diff.queue);
--	DIFF_QUEUE_CLEAR(&diff_queued_diff);
--
-+	diff_queue_clear(&diff_queued_diff);
- 	return filter;
- }
- 
-diff --git a/diff.c b/diff.c
-index 173cbe2bed..3e9137ffed 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5983,11 +5983,18 @@ void diff_free_filepair(struct diff_filepair *p)
- 	free(p);
- }
- 
--void diff_free_queue(struct diff_queue_struct *q)
-+void diff_queue_init(struct diff_queue_struct *q)
-+{
-+	struct diff_queue_struct blank = DIFF_QUEUE_INIT;
-+	memcpy(q, &blank, sizeof(*q));
-+}
-+
-+void diff_queue_clear(struct diff_queue_struct *q)
- {
- 	for (int i = 0; i < q->nr; i++)
- 		diff_free_filepair(q->queue[i]);
- 	free(q->queue);
-+	diff_queue_init(q);
- }
- 
- const char *diff_aligned_abbrev(const struct object_id *oid, int len)
-@@ -6551,8 +6558,7 @@ int diff_flush_patch_id(struct diff_options *options, struct object_id *oid, int
- 	struct diff_queue_struct *q = &diff_queued_diff;
- 	int result = diff_get_patch_id(options, oid, diff_header_only);
- 
--	diff_free_queue(q);
--	DIFF_QUEUE_CLEAR(q);
-+	diff_queue_clear(q);
- 
- 	return result;
- }
-@@ -6835,8 +6841,7 @@ void diff_flush(struct diff_options *options)
- 	}
- 
- free_queue:
--	diff_free_queue(q);
--	DIFF_QUEUE_CLEAR(q);
-+	diff_queue_clear(q);
- 	diff_free(options);
- 
- 	/*
-@@ -6867,9 +6872,7 @@ static void diffcore_apply_filter(struct diff_options *options)
- {
- 	int i;
- 	struct diff_queue_struct *q = &diff_queued_diff;
--	struct diff_queue_struct outq;
--
--	DIFF_QUEUE_CLEAR(&outq);
-+	struct diff_queue_struct outq = DIFF_QUEUE_INIT;
- 
- 	if (!options->filter)
- 		return;
-@@ -6962,8 +6965,7 @@ static void diffcore_skip_stat_unmatch(struct diff_options *diffopt)
- {
- 	int i;
- 	struct diff_queue_struct *q = &diff_queued_diff;
--	struct diff_queue_struct outq;
--	DIFF_QUEUE_CLEAR(&outq);
-+	struct diff_queue_struct outq = DIFF_QUEUE_INIT;
- 
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
-diff --git a/diffcore-break.c b/diffcore-break.c
-index 02735f80c6..c4c2173f30 100644
---- a/diffcore-break.c
-+++ b/diffcore-break.c
-@@ -131,7 +131,7 @@ static int should_break(struct repository *r,
- void diffcore_break(struct repository *r, int break_score)
- {
- 	struct diff_queue_struct *q = &diff_queued_diff;
--	struct diff_queue_struct outq;
-+	struct diff_queue_struct outq = DIFF_QUEUE_INIT;
- 
- 	/* When the filepair has this much edit (insert and delete),
- 	 * it is first considered to be a rewrite and broken into a
-@@ -178,8 +178,6 @@ void diffcore_break(struct repository *r, int break_score)
- 	if (!merge_score)
- 		merge_score = DEFAULT_MERGE_SCORE;
- 
--	DIFF_QUEUE_CLEAR(&outq);
--
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
- 		int score;
-@@ -275,11 +273,9 @@ static void merge_broken(struct diff_filepair *p,
- void diffcore_merge_broken(void)
- {
- 	struct diff_queue_struct *q = &diff_queued_diff;
--	struct diff_queue_struct outq;
-+	struct diff_queue_struct outq = DIFF_QUEUE_INIT;
- 	int i, j;
- 
--	DIFF_QUEUE_CLEAR(&outq);
--
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
- 		if (!p)
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index b195fa4eb3..43fef8e8ba 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -182,9 +182,7 @@ static void pickaxe(struct diff_queue_struct *q, struct diff_options *o,
- 		    regex_t *regexp, kwset_t kws, pickaxe_fn fn)
- {
- 	int i;
--	struct diff_queue_struct outq;
--
--	DIFF_QUEUE_CLEAR(&outq);
-+	struct diff_queue_struct outq = DIFF_QUEUE_INIT;
- 
- 	if (o->pickaxe_opts & DIFF_PICKAXE_ALL) {
- 		/* Showing the whole changeset if needle exists */
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 3d6826baa3..1b1c1a6a1f 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -1388,7 +1388,7 @@ void diffcore_rename_extended(struct diff_options *options,
- 	int detect_rename = options->detect_rename;
- 	int minimum_score = options->rename_score;
- 	struct diff_queue_struct *q = &diff_queued_diff;
--	struct diff_queue_struct outq;
-+	struct diff_queue_struct outq = DIFF_QUEUE_INIT;
- 	struct diff_score *mx;
- 	int i, j, rename_count, skip_unmodified = 0;
- 	int num_destinations, dst_cnt;
-@@ -1638,7 +1638,6 @@ void diffcore_rename_extended(struct diff_options *options,
- 	 * are recorded in rename_dst.  The original list is still in *q.
- 	 */
- 	trace2_region_enter("diff", "write back to queue", options->repo);
--	DIFF_QUEUE_CLEAR(&outq);
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
- 		struct diff_filepair *pair_to_free = NULL;
-diff --git a/diffcore-rotate.c b/diffcore-rotate.c
-index 533986cf63..73ca20b331 100644
---- a/diffcore-rotate.c
-+++ b/diffcore-rotate.c
-@@ -10,7 +10,7 @@
- void diffcore_rotate(struct diff_options *opt)
- {
- 	struct diff_queue_struct *q = &diff_queued_diff;
--	struct diff_queue_struct outq;
-+	struct diff_queue_struct outq = DIFF_QUEUE_INIT;
- 	int rotate_to, i;
- 
- 	if (!q->nr)
-@@ -31,7 +31,6 @@ void diffcore_rotate(struct diff_options *opt)
- 		return;
- 	}
- 
--	DIFF_QUEUE_CLEAR(&outq);
- 	rotate_to = i;
- 
- 	for (i = rotate_to; i < q->nr; i++)
-diff --git a/diffcore.h b/diffcore.h
-index 1701ed50b9..2feb325031 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -153,18 +153,16 @@ struct diff_queue_struct {
- 	int nr;
- };
- 
--#define DIFF_QUEUE_CLEAR(q) \
--	do { \
--		(q)->queue = NULL; \
--		(q)->nr = (q)->alloc = 0; \
--	} while (0)
-+#define DIFF_QUEUE_INIT { 0 }
-+
-+void diff_queue_init(struct diff_queue_struct *q);
-+void diff_queue_clear(struct diff_queue_struct *q);
- 
- extern struct diff_queue_struct diff_queued_diff;
- struct diff_filepair *diff_queue(struct diff_queue_struct *,
- 				 struct diff_filespec *,
- 				 struct diff_filespec *);
- void diff_q(struct diff_queue_struct *, struct diff_filepair *);
--void diff_free_queue(struct diff_queue_struct *q);
- 
- /* dir_rename_relevance: the reason we want rename information for a dir */
- enum dir_rename_relevance {
 diff --git a/line-log.c b/line-log.c
-index 67c80b39a0..89e0ea4562 100644
+index 89e0ea4562..ee48988c66 100644
 --- a/line-log.c
 +++ b/line-log.c
-@@ -787,15 +787,14 @@ static void move_diff_queue(struct diff_queue_struct *dst,
- 			    struct diff_queue_struct *src)
+@@ -248,8 +248,10 @@ static void line_log_data_init(struct line_log_data *r)
+ static void line_log_data_clear(struct line_log_data *r)
  {
- 	assert(src != dst);
--	memcpy(dst, src, sizeof(struct diff_queue_struct));
--	DIFF_QUEUE_CLEAR(src);
-+	memcpy(dst, src, sizeof(*dst));
-+	diff_queue_init(src);
+ 	range_set_release(&r->ranges);
++	free(r->path);
+ 	if (r->pair)
+ 		diff_free_filepair(r->pair);
++	diff_ranges_release(&r->diff);
  }
  
- static void filter_diffs_for_paths(struct line_log_data *range, int keep_deletions)
- {
- 	int i;
--	struct diff_queue_struct outq;
--	DIFF_QUEUE_CLEAR(&outq);
-+	struct diff_queue_struct outq = DIFF_QUEUE_INIT;
+ static void free_line_log_data(struct line_log_data *r)
+@@ -571,7 +573,8 @@ parse_lines(struct repository *r, struct commit *commit,
+ 	struct line_log_data *p;
  
- 	for (i = 0; i < diff_queued_diff.nr; i++) {
- 		struct diff_filepair *p = diff_queued_diff.queue[i];
-@@ -850,12 +849,12 @@ static void queue_diffs(struct line_log_data *range,
- 		clear_pathspec(&opt->pathspec);
- 		parse_pathspec_from_ranges(&opt->pathspec, range);
+ 	for_each_string_list_item(item, args) {
+-		const char *name_part, *range_part;
++		const char *name_part;
++		char *range_part;
+ 		char *full_name;
+ 		struct diff_filespec *spec;
+ 		long begin = 0, end = 0;
+@@ -615,6 +618,7 @@ parse_lines(struct repository *r, struct commit *commit,
+ 
+ 		free_filespec(spec);
+ 		FREE_AND_NULL(ends);
++		free(range_part);
  	}
--	DIFF_QUEUE_CLEAR(&diff_queued_diff);
-+	diff_queue_clear(&diff_queued_diff);
- 	diff_tree_oid(parent_tree_oid, tree_oid, "", opt);
- 	if (opt->detect_rename && diff_might_be_rename()) {
- 		/* must look at the full tree diff to detect renames */
- 		clear_pathspec(&opt->pathspec);
--		DIFF_QUEUE_CLEAR(&diff_queued_diff);
-+		diff_queue_clear(&diff_queued_diff);
  
- 		diff_tree_oid(parent_tree_oid, tree_oid, "", opt);
- 
-@@ -1097,7 +1096,7 @@ static struct diff_filepair *diff_filepair_dup(struct diff_filepair *pair)
- static void free_diffqueues(int n, struct diff_queue_struct *dq)
+ 	for (p = ranges; p; p = p->next)
+@@ -760,15 +764,13 @@ static void parse_pathspec_from_ranges(struct pathspec *pathspec,
  {
- 	for (int i = 0; i < n; i++)
--		diff_free_queue(&dq[i]);
-+		diff_queue_clear(&dq[i]);
- 	free(dq);
+ 	struct line_log_data *r;
+ 	struct strvec array = STRVEC_INIT;
+-	const char **paths;
+ 
+ 	for (r = range; r; r = r->next)
+ 		strvec_push(&array, r->path);
+-	paths = strvec_detach(&array);
+ 
+-	parse_pathspec(pathspec, 0, PATHSPEC_PREFER_FULL, "", paths);
+-	/* strings are now owned by pathspec */
+-	free(paths);
++	parse_pathspec(pathspec, 0, PATHSPEC_PREFER_FULL, "", array.v);
++
++	strvec_clear(&array);
  }
  
-@@ -1200,7 +1199,7 @@ static int process_ranges_ordinary_commit(struct rev_info *rev, struct commit *c
- 	if (parent)
- 		add_line_range(rev, parent, parent_range);
- 	free_line_log_data(parent_range);
--	diff_free_queue(&queue);
-+	diff_queue_clear(&queue);
+ void line_log_init(struct rev_info *rev, const char *prefix, struct string_list *args)
+@@ -781,6 +783,8 @@ void line_log_init(struct rev_info *rev, const char *prefix, struct string_list
+ 	add_line_range(rev, commit, range);
+ 
+ 	parse_pathspec_from_ranges(&rev->diffopt.pathspec, range);
++
++	free_line_log_data(range);
+ }
+ 
+ static void move_diff_queue(struct diff_queue_struct *dst,
+@@ -1131,10 +1135,18 @@ static int process_all_files(struct line_log_data **range_out,
+ 			while (rg && strcmp(rg->path, pair->two->path))
+ 				rg = rg->next;
+ 			assert(rg);
++			if (rg->pair)
++				diff_free_filepair(rg->pair);
+ 			rg->pair = diff_filepair_dup(queue->queue[i]);
++			diff_ranges_release(&rg->diff);
+ 			memcpy(&rg->diff, pairdiff, sizeof(struct diff_ranges));
++			FREE_AND_NULL(pairdiff);
++		}
++
++		if (pairdiff) {
++			diff_ranges_release(pairdiff);
++			free(pairdiff);
+ 		}
+-		free(pairdiff);
+ 	}
+ 
  	return changed;
+@@ -1212,12 +1224,13 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
+ 	struct commit_list *p;
+ 	int i;
+ 	int nparents = commit_list_count(commit->parents);
++	int ret;
+ 
+ 	if (nparents > 1 && rev->first_parent_only)
+ 		nparents = 1;
+ 
+ 	ALLOC_ARRAY(diffqueues, nparents);
+-	ALLOC_ARRAY(cand, nparents);
++	CALLOC_ARRAY(cand, nparents);
+ 	ALLOC_ARRAY(parents, nparents);
+ 
+ 	p = commit->parents;
+@@ -1229,7 +1242,6 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
+ 
+ 	for (i = 0; i < nparents; i++) {
+ 		int changed;
+-		cand[i] = NULL;
+ 		changed = process_all_files(&cand[i], rev, &diffqueues[i], range);
+ 		if (!changed) {
+ 			/*
+@@ -1237,13 +1249,10 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
+ 			 * don't follow any other path in history
+ 			 */
+ 			add_line_range(rev, parents[i], cand[i]);
+-			clear_commit_line_range(rev, commit);
+ 			commit_list_append(parents[i], &commit->parents);
+-			free(parents);
+-			free(cand);
+-			free_diffqueues(nparents, diffqueues);
+-			/* NEEDSWORK leaking like a sieve */
+-			return 0;
++
++			ret = 0;
++			goto out;
+ 		}
+ 	}
+ 
+@@ -1251,18 +1260,25 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
+ 	 * No single parent took the blame.  We add the candidates
+ 	 * from the above loop to the parents.
+ 	 */
+-	for (i = 0; i < nparents; i++) {
++	for (i = 0; i < nparents; i++)
+ 		add_line_range(rev, parents[i], cand[i]);
+-	}
+ 
++	ret = 1;
++
++out:
+ 	clear_commit_line_range(rev, commit);
+ 	free(parents);
++	for (i = 0; i < nparents; i++) {
++		if (!cand[i])
++			continue;
++		line_log_data_clear(cand[i]);
++		free(cand[i]);
++	}
+ 	free(cand);
+ 	free_diffqueues(nparents, diffqueues);
+-	return 1;
++	return ret;
+ 
+ 	/* NEEDSWORK evil merge detection stuff */
+-	/* NEEDSWORK leaking like a sieve */
  }
  
-diff --git a/log-tree.c b/log-tree.c
-index 3758e0d3b8..60774c16b3 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -675,7 +675,7 @@ static void show_diff_of_diff(struct rev_info *opt)
- 		struct diff_queue_struct dq;
- 
- 		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
--		DIFF_QUEUE_CLEAR(&diff_queued_diff);
-+		diff_queue_init(&diff_queued_diff);
- 
- 		fprintf_ln(opt->diffopt.file, "\n%s", opt->idiff_title);
- 		show_interdiff(opt->idiff_oid1, opt->idiff_oid2, 2,
-@@ -694,7 +694,7 @@ static void show_diff_of_diff(struct rev_info *opt)
- 		};
- 
- 		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
--		DIFF_QUEUE_CLEAR(&diff_queued_diff);
-+		diff_queue_init(&diff_queued_diff);
- 
- 		fprintf_ln(opt->diffopt.file, "\n%s", opt->rdiff_title);
- 		/*
-diff --git a/merge-ort.c b/merge-ort.c
-index 8b81153e8f..11029c10be 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -3536,7 +3536,7 @@ static int detect_and_process_renames(struct merge_options *opt)
- 	/* Free memory for renames->pairs[] and combined */
- 	for (s = MERGE_SIDE1; s <= MERGE_SIDE2; s++) {
- 		free(renames->pairs[s].queue);
--		DIFF_QUEUE_CLEAR(&renames->pairs[s]);
-+		diff_queue_init(&renames->pairs[s]);
- 	}
- 	for (i = 0; i < combined.nr; i++)
- 		pool_diff_free_filepair(&opt->priv->pool, combined.queue[i]);
+ int line_log_process_ranges_arbitrary_commit(struct rev_info *rev, struct commit *commit)
 -- 
 2.46.2.852.g229c0bf0e5.dirty
 
