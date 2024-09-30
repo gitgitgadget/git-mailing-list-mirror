@@ -1,89 +1,164 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF931E507
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 16:21:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A91A1E507
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 16:21:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727713288; cv=none; b=fewr71NznnHMKDo/sRPNYFF8hlMkEW70b81me/KKgqTMN/ZXUM1s9653GklwM1UmT58TRts4ZNEYTe74ZmX2zuCuc9w5gZD+D/hjx3157Mgz9xiWmsC9mLjkluh+1vYih7+dspMrmWAPSZ3TRIcI+sm3/oSczzW3Bitk6Cua8y0=
+	t=1727713291; cv=none; b=E37OFFdEjliGLfMTTk3tEWDIgfzslNPs5TmywI6orLcLzkiiYO9XP1bfY7nWHfmN2s4yHhbuf3izsZZXDK5zqkEMsDxw4intqJmrQ8GnJsr+nh7JY/UFCR9tpqmENTS/H4uYbDDIwMFqZy1Tu7HiuLNNBNqai98fgzLaJ9JrN8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727713288; c=relaxed/simple;
-	bh=hE/vh6uUGFbpjb6Q6cuot9ji9Yrs+sTz3GpzwG4rsBM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XxUtiYtVUuXuRrDbR+jfWaaPWzIf8HXPLdcn+ZQWl/paFD5gsCIKw60br26s7CMUAkY/EHKvNusKAsQ/oAS5zo3ydBBIhWUxMFCA0QVHgGYKfnrBbPfVOZ+pzGslv677JT9560c3KTg3TXI5vNu7nx/07+6MD9u8KL1zDEnFfaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=B+q9URpN; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1727713291; c=relaxed/simple;
+	bh=cJOXwJkSVCUJODny7YYXOAvSQTbyLpBChY7bULcMc4Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AEzpLbXPLHXHqe38nZV5XuQa1WoiELrCEmoCGFz+vPeApSVqpNi9Ny8IZ+AOhX3t+JqjMepPOpEzSkoNDow0JwiTl/L2R7YF1l9agy5m3JRTKnxNjzbm3bG5LVARfb9pnSNKkiLIeznOx4Mp1DdOHspc6EJMaUOjOHMi44Nk1rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=aydF58b/; arc=none smtp.client-ip=209.85.219.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="B+q9URpN"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4582fa01090so551031cf.0
-        for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:21:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="aydF58b/"
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e25d405f238so3802723276.3
+        for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:21:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1727713285; x=1728318085; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=hE/vh6uUGFbpjb6Q6cuot9ji9Yrs+sTz3GpzwG4rsBM=;
-        b=B+q9URpNMXZZROIBpPeQ9AaDuq4SOBaJY3sJ/F+qQhVb7WkNVkFOjl1u/eM1VQQhRw
-         phq0iUX/JsTob9dJ+Uhy7SkG3dfZxC9qJxlYh2gI78m1b1eVRZb+supevhzDw69lBt62
-         H15qN+ngwHO82c7qhjgud3Oy91wHA0cECmUy6WsUOKoDFTL1AmY46cm2zjejPAbJ3uKY
-         TlVHvwd1/FjwPoFIdzMAyPmsSvXPEWqW3y/ozRUWg5LB0OoNLkT4O3IPBiRjUeogkQFF
-         3Su19Spbp5uJIcFcXBOSsGcaKRN3pystRIk+uEsjNcs6C3G81ioOemJAHPoRzwKdZoXb
-         p3fA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727713289; x=1728318089; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=n0SznXcz2GwJvGzYevks3KlUykIzStEpvL8NnPoY/xQ=;
+        b=aydF58b/xA5z5jhqfGPY2LkRiSsH9XquyWXrfdN/YzxfBLN6ZcxcVLg+4vydohW4kQ
+         Gae1qFk11d303uQWAMHPoZrO5/ALcl/5ts2yoyODgAtUPCGZNODrcfKVD2OVnAH5B5X4
+         iuYTsuLJrWg+ROFeh4HFQDLGmOqcuIxY1gOWZmnIakAwYKWX3yBwSRwfCb/NG3BGM+az
+         zMRklCh2fzzAyAo/aB61VRSpc6o6R3vIXAqu71jpNX7Ob+1kFLV3vjwqEYDLtOrTHcNW
+         Qrfa5PBmg44/ffPDx+VqOsbiLOvE+Y8ptYAieW8oTbRPkzPAmaS+vSxnZdNWfnLmJizh
+         NFuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727713285; x=1728318085;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hE/vh6uUGFbpjb6Q6cuot9ji9Yrs+sTz3GpzwG4rsBM=;
-        b=HFduSgFzumN4FkKzRQuLAdU9D1Ug8oqIoITW5ltzkncWn5CKxmjyEG2d89Di9O1bNN
-         3NH2FdYOwaTeN7zlBwPp1+R6jKfN5qvvEDDHRS+evhq3Ez6m8doUAOz4Vu7dKRqG1duR
-         yJl1BLxb1ije/p/gXJiIFr2zP4aePuXnqyM1jAPxRTPXB9PeuvDywY79rUPabc2SeQ8Q
-         nmVCEKXGwwwa6tNv3i9F05pYnn2zRvrTGWtHxhXB4I8zPfZPVaiSmL9Ii0baBJhZL1e+
-         9SYOdM4Kd+fbS3L3jd7Lz6VkiI/qYcunDtfyFewWobXGBGGqIlaB5ATgnSWo2x+P3ly6
-         iLMQ==
-X-Gm-Message-State: AOJu0Yyeh5RnsFQU2KFOwnXskIu88tWT3/UoMSX/B9IxXoSpxsvsrlxY
-	DcLD5/I0bQewTtXW/Wt4DgwrDVO4nOs4di7Q7gLLRDxCwbI+epeWSkpueWodBO3nJXuf5gumDi2
-	GRbPEzHsMBAFzFcfTLT+XR6rN4z4kxyHeFaaS3bHXZ6cZ6DE3rw==
-X-Google-Smtp-Source: AGHT+IHtMsKY8eC+qW5mhp4zPniVkAaYlsiFt3r0CyzF8KkaavSqqaT5nQrmDutvyg+PRE21Ef5IikRKKo0iYmSk4cY=
-X-Received: by 2002:a05:622a:790a:b0:45c:9c6e:6dba with SMTP id
- d75a77b69052e-45d730083cfmr541041cf.27.1727713285183; Mon, 30 Sep 2024
- 09:21:25 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727713289; x=1728318089;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n0SznXcz2GwJvGzYevks3KlUykIzStEpvL8NnPoY/xQ=;
+        b=N+zFoEkO7ERQmHgmu8++5GReYV8FgSpVicvayMUcUZBy5TLw3d7firCLebbsu7Rr1d
+         QbCQrMm5uiZ6eZNSll4CfYUXcCBwKrzUthIb9skm3+7L688swA7Qc7hvBcMD6ZUvBQL5
+         bklqqUSztg5egLijjBtuoa0wUHX2wYIEBIIKejIGCsDKz8JKwd2tfCEw7MlESXTM6YW+
+         mCEeFOk+SxbA0sufOQff3HpV4+RWyQ3qSt4JogbXZBdqUwEfyO49kY0NtP6RJ/ACjkQh
+         fLzXSEP3QR0n+A7Wlub8cGna3gfvRjcHu/I5CXZX85Mhwprg6QACgSENJ7GxtTpFhwIn
+         A5qw==
+X-Gm-Message-State: AOJu0Yzyav3OIsS5rOnmWoHsHJgDVpr+AtoHL+Pm2BHiClI91sHPxx22
+	xt0/3m1A4vLWK/ZWXna2c51ZzWeBlG9yiiroEW/7gIup0V6g21CC+aJ0+DnxABJEMZ7RUDgCcDP
+	My2E=
+X-Google-Smtp-Source: AGHT+IFs7/ah+nMn1sTmM5pia6uFVfX6V7LReUZ2+TP2LuP/8C0jsFaPZooM9v/QOmHPGjaQ+n6BXA==
+X-Received: by 2002:a05:6902:2089:b0:e22:6a94:f22f with SMTP id 3f1490d57ef6-e2604b47f8dmr10009996276.28.1727713289196;
+        Mon, 30 Sep 2024 09:21:29 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e25e3efab1dsm2425936276.6.2024.09.30.09.21.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Sep 2024 09:21:28 -0700 (PDT)
+Date: Mon, 30 Sep 2024 12:21:27 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 14/23] pseudo-merge: fix various memory leaks
+Message-ID: <ZvrQByUPoHhlDMiF@nand.local>
+References: <cover.1727687410.git.ps@pks.im>
+ <6e7a272c29577536ba992cc73d736d8f66397607.1727687410.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Mon, 30 Sep 2024 09:21:11 -0700
-Message-ID: <CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com>
-Subject: Linking topic merges to mailing list threads
-To: Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6e7a272c29577536ba992cc73d736d8f66397607.1727687410.git.ps@pks.im>
 
-Hi all,
+On Mon, Sep 30, 2024 at 11:13:51AM +0200, Patrick Steinhardt wrote:
+> diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+> index 4dc0fe8e40..6413dd1731 100644
+> --- a/pack-bitmap-write.c
+> +++ b/pack-bitmap-write.c
+> @@ -64,6 +64,12 @@ static void free_pseudo_merge_commit_idx(struct pseudo_merge_commit_idx *idx)
+>  	free(idx);
+>  }
+>
+> +static void pseudo_merge_group_release_cb(void *payload, const char *name UNUSED)
+> +{
+> +	pseudo_merge_group_release(payload);
+> +	free(payload);
+> +}
+> +
+>  void bitmap_writer_free(struct bitmap_writer *writer)
+>  {
+>  	uint32_t i;
+> @@ -82,6 +88,8 @@ void bitmap_writer_free(struct bitmap_writer *writer)
+>  	kh_foreach_value(writer->pseudo_merge_commits, idx,
+>  			 free_pseudo_merge_commit_idx(idx));
+>  	kh_destroy_oid_map(writer->pseudo_merge_commits);
+> +	string_list_clear_func(&writer->pseudo_merge_groups,
+> +			       pseudo_merge_group_release_cb);
 
-We've been wanting to gather metrics on Git's code review process -
-how long it takes from first contact on list to merge, how many
-iterations are needed, time between iterations, etc. One missing link
-is the actual merge time in `next` and `master` - a human can infer
-the link between the patch and the mailing list thread, but it's more
-challenging for a script to do it.
+Looking good, and this is the right spot to free the pseudo-merge
+groups. Note for other readers: pseudo-merge "groups" are a utility
+structure that is only used while writing pseudo-merge bitmaps, so we
+don't expect to see any corresponding pseudo_merge_group_release() calls
+sprinkled throughout, e.g., pack-bitmap.c.
 
-Would it be possible to modify the maintainer workflow to include a
-link to the cover letter as merged in the merge commit message (or the
-link to the latest iteration of the patch if it's a single-patch
-change)? What issues could come up with that workflow?
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 9d9b8c4bfb..32b222a7af 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -1390,8 +1390,8 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+>  		}
+>
+>  		base = bitmap_new();
+> -		if (!cascade_pseudo_merges_1(bitmap_git, base, roots_bitmap))
+> -			bitmap_free(roots_bitmap);
+> +		cascade_pseudo_merges_1(bitmap_git, base, roots_bitmap);
+> +		bitmap_free(roots_bitmap);
 
-I guess one is that we could move from lore.kernel.org to something
-else, like we saw the migration from public-inbox.org some years ago.
-But the Message-ID was preserved between the two archives, so maybe
-it's enough to include the Message-ID in the merge commit? Another is,
-of course, the added burden on the maintainer. But maybe there is some
-script that is already used that we can modify to make the extra load
-negligible?
+I probably would have pulled this leakfix into its own separate patch,
+since it's not immediately obvious how it's related to other changes in
+the same patch.
 
-(Or, even better, if anybody else is already successfully measuring
-these kinds of metrics without such a reference, could you let me know
-how you're doing it? :) )
+But the change here is definitely correct. We initialize the
+roots_bitmap field to just the tips of our traversal. I wrote some
+details about why in 11d45a6e6a (pack-bitmap.c: use pseudo-merges during
+traversal, 2024-05-23), but the gist is as follows: We want to avoid
+accidentally thinking that roots which aren't part of some satisfied
+pseudo-merge or existing bitmap are part of the reachability closure,
+leaving those bits as dangling and leading to incorrect results.
+
+In any event, we definitely do not need the roots_bitmap outside of that
+block (regardless of whether or not we successfully cascaded any
+pseudo-merges), so free-ing it here is the right thing to do.
+
+> diff --git a/pseudo-merge.c b/pseudo-merge.c
+> index 10ebd9a4e9..28782a31c6 100644
+> --- a/pseudo-merge.c
+> +++ b/pseudo-merge.c
+> @@ -97,6 +97,25 @@ static void pseudo_merge_group_init(struct pseudo_merge_group *group)
+>  	group->stable_size = DEFAULT_PSEUDO_MERGE_STABLE_SIZE;
+>  }
+>
+> +void pseudo_merge_group_release(struct pseudo_merge_group *group)
+> +{
+> +	struct hashmap_iter iter;
+> +	struct strmap_entry *e;
+> +
+> +	regfree(group->pattern);
+> +	free(group->pattern);
+> +
+> +	strmap_for_each_entry(&group->matches, &iter, e) {
+> +		struct pseudo_merge_matches *matches = e->value;
+> +		free(matches->stable);
+> +		free(matches->unstable);
+> +		free(matches);
+> +	}
+> +	strmap_clear(&group->matches, 0);
+> +
+> +	free(group->merges);
+> +}
+> +
+
+All looks good here, I didn't see any fields that were missed or
+over-eagerly free'd here.
 
 Thanks,
- - Emily
+Taylor
