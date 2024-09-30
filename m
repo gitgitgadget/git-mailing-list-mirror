@@ -1,114 +1,138 @@
-Received: from mail.ekdawn.com (mail.ekdawn.com [159.69.120.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DE31A2547
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 21:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.120.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240CB17BED0
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 21:22:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727730501; cv=none; b=WuZC3fvsi1qQUbCvgUOWWszOIx+BEZtzUecA+l3keAm46oNdLTWnEfhYUAkzJHLwC/t+WHcRRPdyGPGVSGC+gO+8ZrJeeBWAwlaVKpvhuvbCLP7uw/7XVS2moayp+xIUtvdUPiRZWcYLwhS26BiYBx1uQebc/LgGb8DEA6i1nkQ=
+	t=1727731353; cv=none; b=qSxSl9hPiU8Blu7teJdd6j8D2juPRqCYRd4NzC9qmPBmoiGztzBhsAexNFcHcGh9nYd+YRyEK3ouLJPER9rilVoK35FLBUJ4MoGQ4nn9PLiu4nHjNquSUfUWkjfFJmkJsWKP3tXQJrc0J3GmPsp9kx7RYqhZks4LjYi/bCrpis4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727730501; c=relaxed/simple;
-	bh=2oYSDpXrLiWmWUXhYD5s6siJWm52JaP4pYk6TgZVn/U=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=mLL1wMtsHQyz5eZFxACw8lQTDWSEh1PLQHG6BaBD0xPnF0JKJNpTKHMV7eFAgEfC4MC9Oy4UFWMPg6jtoUbHjggjnRMHeeKwbGul5m5mEAiFQcoBrE2FmKZ8XMosOdZ2cLUqyUTAQIfT1ubt2d1avXlAGO8YRiFjt72VTSUnHNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org; spf=pass smtp.mailfrom=mail.ekdawn.com; arc=none smtp.client-ip=159.69.120.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=horse64.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ekdawn.com
-Received: from [10.42.0.106] (dynamic-176-003-143-253.176.3.pool.telefonica.de [176.3.143.253])
-	by mail.ekdawn.com (Postfix) with ESMTPSA id 6B5B0188C6D
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 21:01:53 +0000 (UTC)
-Message-ID: <55e7ddb5-327a-49f2-9f7c-e285ead69fb2@horse64.org>
-Date: Mon, 30 Sep 2024 23:01:53 +0200
+	s=arc-20240116; t=1727731353; c=relaxed/simple;
+	bh=U2MjY8862YxdE6eeHDH5P1N8mn4/x28JTdSsKJY3Hg8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rrVNc+onsnyNbgzXuEvOj/foqW35BhjSUFkJYNem1Z1bOaC46orKcEhFLnEee6RzGgr0JkmFjbBh1lU0G6tJ6y+34Ebo7z7BBXH/wZ9AXa/UjUrgVKsPZdNAy0IpInDRjHd3jymblCF9QFhcA8ckUbOMDidIXOcjokiAgL/u/Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ebaumX/3; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ebaumX/3"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e25cb262769so4282849276.0
+        for <git@vger.kernel.org>; Mon, 30 Sep 2024 14:22:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727731350; x=1728336150; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ELcRQBQ45taR40fTeTn4csLIww/l0L1N5oWkgnSY6Rs=;
+        b=ebaumX/3Rd9aSisXG+fNs9loMI8Ain1GmMaUTBOKizSn9g3z7VDKF5Uk9bvNt3Exv5
+         gfRHUSRp58aRdgnkscYjLk9MMJ+UjwZ4rAxKvBuSij6v8sueFsZLy6MJef7dalP0tx9V
+         JYUkVneKNRPgjGOY6CbSj+yV0r+uPrLTvlW4DkDO0905LpLStwsV4lDGctkBBMcUGCNe
+         aJxOo+Xfa9rDmyR6uInzBDRXf+HCqPZyOJQUITbcJSsu6MxYBVbFarFSLRnLqnMHQOjA
+         GPX+OARym4SQbN9NanX99bXvevb94OKIJjRWkCXYCWLvVs0tsR9rhg7S0fItxaqte1V5
+         z3Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727731350; x=1728336150;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ELcRQBQ45taR40fTeTn4csLIww/l0L1N5oWkgnSY6Rs=;
+        b=l2qZgYLSp8U5XXJJccuabeV+w7Kby3jSNOwQpnHSGrxje8H2EUX2JAZktkXx+Qq818
+         xdEltJGiEuOs1oVx03nRp/jPVhDAouD4SbJehY9xERMsXaXQKiR3BDAUd8MgizDZr0NC
+         keNLDoUp8WlgWRdZGhwuXGOFyf6C9h1NyS8UYzuxWee+h6BpA1czeaxg+/TFjUU2LiVQ
+         qWQKCu1InqbXnnDPHKlg5/N04rsQBCbyfnOeAgJ1TqIFvGtNHE/Lwt92tqC6loiCbxMp
+         n4hE7gpM/OZuyTUA0wwH69pzxDGLixc1J5w0a89NcgHwOmErupne5AtZZZjUEHzSA932
+         1dxw==
+X-Gm-Message-State: AOJu0YxXEU90MlAitkbbP2BhPis2q5ZPzXE15gPRjbu0/ZmcrkQ7CiUN
+	TDC7Cca0PjGgUgsaYF3/Rs4vDh8o30kzJe/H6UmSn/jR+ds18tHqxf/IZIIQ5yMrFgabfHspC+z
+	bfow=
+X-Google-Smtp-Source: AGHT+IHscAUXhQyOyb9Ttea1A9fSfwZOFApDlG9T6Yop/jrYEinmCqNWiC6ad2uW4MArblZEqgwWXA==
+X-Received: by 2002:a05:6902:1501:b0:e16:6aba:f3d with SMTP id 3f1490d57ef6-e2604b14f8fmr11755338276.8.1727731349986;
+        Mon, 30 Sep 2024 14:22:29 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e25e638be8csm2593948276.41.2024.09.30.14.22.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Sep 2024 14:22:29 -0700 (PDT)
+Date: Mon, 30 Sep 2024 17:22:28 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 15/23] pseudo-merge: fix leaking strmap keys
+Message-ID: <ZvsWlNPGxt5AOQcK@nand.local>
+References: <cover.1727687410.git.ps@pks.im>
+ <9e1161d55f96253bfeb5cddd1bbd381e2dad8a71.1727687410.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: With big repos and slower connections, git clone can be hard to
- work with
-From: Ellie <el@horse64.org>
-To: git@vger.kernel.org
-References: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
-Content-Language: en-US
-In-Reply-To: <fec6ebc7-efd7-4c86-9dcc-2b006bd82e47@horse64.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9e1161d55f96253bfeb5cddd1bbd381e2dad8a71.1727687410.git.ps@pks.im>
 
-My apologies for bringing this up again, but for what it's worth, this 
-git repository I can't even clone at depth 1:
+On Mon, Sep 30, 2024 at 11:13:53AM +0200, Patrick Steinhardt wrote:
+> When creating a new pseudo-merge group we collect a set of matchnig
 
-$ git clone --depth 1 https://github.com/alf632/terrain3dglitch
-Cloning into 'terrain3dglitch'...
-remote: Enumerating objects: 697, done.
-remote: Counting objects: 100% (697/697), done.
-remote: Compressing objects: 100% (439/439), done.
-error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly: 
-CANCEL (err 8)
-error: 1754 bytes of body are still expected
-fetch-pack: unexpected disconnect while reading sideband packet
-fatal: early EOF
-fatal: fetch-pack: invalid index-pack output
+s/matchnig/matching/
 
-The problem seems to be possibly amplified by a timeout config issue 
-from github's side, but also made worse by depth 1 already being 100MB+. 
-Downloading that amount without resume isn't feasible for everyone. I'm 
-assuming if I need all files and sub dirs, there's no workaround here?
+> commits and put them into a string map. This strmap is initialized such
+> that it does not allocate its keys, and instead we try to pass ownership
+> of the keys to it via `strmap_put()`. This isn't how it works though:
+> the strmap will never try to release these keys, and consequently they
+> end up leaking.
+>
+> Fix this leak by initializing the strmap as duplicating its keys and not
+> trying to hand over ownership.
 
-I don't want to waste anybody's time, I'm just hoping to provide some 
-further data points that in some edge cases, this can be impactful.
+Hmm. I think I am probably splitting hairs, since a few xstrdup() calls
+between friends is unlikely to matter here, but... ;-)
 
-(And sorry if I did something silly while cloning and didn't realize.)
+It does seem wasteful if we can avoid it. We already allocated heap
+space for the matches via the underlying strbuf, and we really do want
+to hand ownership over if we can.
 
-Regards,
+Would doing something like this on top of your previous patch do the
+trick?
 
-Ellie
+--- >8 ---
+diff --git a/pseudo-merge.c b/pseudo-merge.c
+index 28782a31c6..6b6605d3dc 100644
+--- a/pseudo-merge.c
++++ b/pseudo-merge.c
+@@ -110,6 +110,7 @@ void pseudo_merge_group_release(struct pseudo_merge_group *group)
+ 		free(matches->stable);
+ 		free(matches->unstable);
+ 		free(matches);
++		free((char*)e->key);
+ 	}
+ 	strmap_clear(&group->matches, 0);
+--- 8< ---
 
-On 6/8/24 1:28 AM, ellie wrote:
-> Dear git team,
-> 
-> I'm terribly sorry if this is the wrong place, but I'd like to suggest a 
-> potential issue with "git clone".
-> 
-> The problem is that any sort of interruption or connection issue, no 
-> matter how brief, causes the clone to stop and leave nothing behind:
-> 
-> $ git clone https://github.com/Nheko-Reborn/nheko
-> Cloning into 'nheko'...
-> remote: Enumerating objects: 43991, done.
-> remote: Counting objects: 100% (6535/6535), done.
-> remote: Compressing objects: 100% (1449/1449), done.
-> error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly: 
-> CANCEL (err 8)
-> error: 2771 bytes of body are still expected
-> fetch-pack: unexpected disconnect while reading sideband packet
-> fatal: early EOF
-> fatal: fetch-pack: invalid index-pack output
-> $ cd nheko
-> bash: cd: nheko: No such file or director
-> 
-> In my experience, this can be really impactful with 1. big repositories 
-> and 2. unreliable internet - which I would argue isn't unheard of! E.g. 
-> a developer may work via mobile connection on a business trip. The 
-> result can even be that a repository is uncloneable for some users!
-> 
-> This has left me in the absurd situation where I was able to download a 
-> tarball via HTTPS from the git hoster just fine, even way larger binary 
-> release items, thanks to the browser's HTTPS resume. And yet a simple 
-> git clone of the same project failed repeatedly.
-> 
-> My deepest apologies if I missed an option to fix or address this. But 
-> summed up, please consider making git clone recover from hiccups.
-> 
-> Regards,
-> 
-> Ellie
-> 
-> PS: I've seen git hosters have apparent proxy bugs, like timing out 
-> slower git clone connections from the server side even if the transfer 
-> is ongoing. A git auto-resume would reduce the impact of that, too.
-> 
-> 
-> 
+That introduces an ugly const-cast, but I think it's tolerable (and may
+be moreso with a comment explaining why it's safe).
 
+> diff --git a/pseudo-merge.c b/pseudo-merge.c
+> index 28782a31c6..bb59965ed2 100644
+> --- a/pseudo-merge.c
+> +++ b/pseudo-merge.c
+> @@ -87,7 +87,7 @@ static void pseudo_merge_group_init(struct pseudo_merge_group *group)
+>  {
+>  	memset(group, 0, sizeof(struct pseudo_merge_group));
+>
+> -	strmap_init_with_options(&group->matches, NULL, 0);
+> +	strmap_init_with_options(&group->matches, NULL, 1);
+>
+>  	group->decay = DEFAULT_PSEUDO_MERGE_DECAY;
+>  	group->max_merges = DEFAULT_PSEUDO_MERGE_MAX_MERGES;
+> @@ -275,7 +275,7 @@ static int find_pseudo_merge_group_for_ref(const char *refname,
+>  		matches = strmap_get(&group->matches, group_name.buf);
+>  		if (!matches) {
+>  			matches = xcalloc(1, sizeof(*matches));
+> -			strmap_put(&group->matches, strbuf_detach(&group_name, NULL),
+> +			strmap_put(&group->matches, group_name.buf,
+>  				   matches);
+>  		}
+
+Otherwise, I think what's written here looks good to me.
+
+Thanks,
+Taylor
