@@ -1,108 +1,123 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2426319F10E
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 20:13:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6247199FAF
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 20:42:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727727207; cv=none; b=KSEygf0Za/uCr8uCmv/2hB8MLwkkC/YVKy4WoR34v6gtcmT6IQcrYcs17cuCZOAH3fbnhtAQ7PbKk/6lhJYRqkstM8TDVFm49d6TxY/PDt4+hR16QAituEY4mN3bsUPONYcut1FWFNSOs4t3csYiTwnzqoOANkMDW/P5jb/rFi8=
+	t=1727728977; cv=none; b=gLq3qZjrqtdAmg7xzKMC2brl9l5OPqP0UftgxbRRVZ24Sx4+eH+mFAterlHIIjDBsH3MtOav9ujh0j2mp//1dmaXZl7IjjFRN3O+GYJG8cJ8ZfsNjrEtbOtPM13lD7ssvnt7cNyIBlOZP2QlHesoddeaDUTJmV26kKeCb0VVvoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727727207; c=relaxed/simple;
-	bh=6yyeBD+iy9MaItQ5BQQrm/uYMbl3r+nyNW83voqrEyc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nehHsdjXQ45zQoKAmSfD6iPvX1iMglg/WhMx4hMIcHj3bw2xSUvwsRFZSUvI561DAlc7Bd1syMuwhpwy1d6TNrH2ism+TxnaYWaF47WEo+GZYM37TTVB7Tq2JLtcnmaLyThAmqPwnozf7TK1nvjPeUW3vNWP6Cc6LaR3+ttkS5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sOLz9pZJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HDaQGYo+; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727728977; c=relaxed/simple;
+	bh=duBeMWlyVEt4nuvqfIn8CUPFqHxQ/agLot5wv973lqA=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=k6VdIH97V7Egv5QXrj6m8WRaEWyesV3FBp8dwbruWMESnEsNjU3nbJamg50U2BvIYFSLE3Vw0WweQKemKPTnxFraRDB+uZphuY2BEA8wRimUWmtQu8VfYNTNpRcnWwQbDrmQmxRJeY9aoxgio8dpej9dZrkEYScFc2jMUd2/FOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=qVaV8Lk0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kwW2Rui8; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sOLz9pZJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HDaQGYo+"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 44F701380787;
-	Mon, 30 Sep 2024 16:13:24 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Mon, 30 Sep 2024 16:13:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727727204; x=1727813604; bh=nWCLRQYIKe
-	OAPcPm+efXBC3lK3kp+AbVkRZ5riMXko4=; b=sOLz9pZJ6Zfyfd5JnpYANVFpNW
-	udBhUujfwZMLgMmIXZr367I66M9NCfzaPKjHtY726lf5Ugjr9IiKicYj0hl7MWZE
-	3xCiN+x9h1pQWGYn8SaO24JHxc3nIpUqZtHUYjkFOfeHKoxrX56grL8hsa0DaPpE
-	4osbApZjmsKo34+ed9JEGaqfMoVcFFvb5ltvwuF5mn8TtgFxXCxy6ywkSaDIMKYt
-	AuvwXMStutZS8jYXXOKDCYnBMHUKLa2356Tc0oKcnpHjvQFPM48TgerASEPkDZjh
-	4MN9fq2MeflvMwA5eJKTYGqlvoHUw+w+X5Am3OEkxsz0raTGb3ZL2pAU/xAw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="qVaV8Lk0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kwW2Rui8"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E09C4114043E;
+	Mon, 30 Sep 2024 16:42:54 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Mon, 30 Sep 2024 16:42:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1727728974;
+	 x=1727815374; bh=cT0qTeMiD1RlVZXxfTyzxpgdP98WHuZd1NzsTW81Prg=; b=
+	qVaV8Lk0dilMaqLScZBsOhadrNCcEjWTuhrzcCn0cLPX8HXB0oiT1AuTUNb2jpu/
+	k9lhnr2H3n20XxYw1xjkJNBz8MQx4BZGGnDMz7Gy5lHwP81BI5Nd4qWYIuRi5kbX
+	RW2q9QNUB8mJo9gkMGoZVQBuft9zrbZGCTiEMUJo98eKJK9EWFVB/4T0BfUnIRYq
+	5V01iEnPSLLUibvjkG7A7Z/C6pAaWloEhwimbgdmTdegNfJb+hWehHP3mbofzTnM
+	6oXcV6xySmv88Z87zNJXVDC/tgKxDIdL0QMXUHAL3bf2q1KN1OFxAbeJu98y+YSH
+	t80UBCnSsO7Q5jezMmVdKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727727204; x=1727813604; bh=nWCLRQYIKeOAPcPm+efXBC3lK3kp
-	+AbVkRZ5riMXko4=; b=HDaQGYo++5e4w4lGpQZACc7s2UY1jXY/YjtL6i3l8Of5
-	udc/r2zTsa14mW9KbQeGnn/JXkOO4XSH1EYMqcArcemUWUz7CN/xHNr1Rns3bC05
-	q7MIzH7XEHLqs4XzraxT6KNu8p2l21bAtBRQoHb3V8eUYUsqBXhXY8bQtjHNbkXV
-	ycTJe8eEKUpxBfDifnB/4z8BT/+0yuLb4GuEBhsL/cgg4qEDzE7uATNPgZfkG0Es
-	sSaUFMJa/3hXEP9Fn1AEBiiXJ534OHzCHRuu32DC9zvVpMe6T3PIw/33b5LeCFak
-	jdNOjk/KCp/nBRc+09KVvprSyrBvEXn7b2u9/Cl3tQ==
-X-ME-Sender: <xms:ZAb7Zu80eBdbZjyVg7_ueflUx5VLJC5cHvSxPVY8fj6BqOXXzix2pg>
-    <xme:ZAb7ZutfB1QDTt_oyu3cMM26k-KH_NX3laJrdf3S9G9ZKYSi9bGrugpQB2WhQK9tk
-    ojzXQ_yQxExllVEtA>
-X-ME-Received: <xmr:ZAb7ZkBRVZWMBJtkn85ICd53_hvXYDt7WBy_tCgshMyDuwb2taV0JQBpsT8IBlXyLOo6qdQiM-0Oq_ZKrr6SrVDFYUQqcZ_YttIDxmk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedgudegjecutefuodetggdotefrod
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727728974; x=
+	1727815374; bh=cT0qTeMiD1RlVZXxfTyzxpgdP98WHuZd1NzsTW81Prg=; b=k
+	wW2Rui8QvHdgSg0/9G3S4ipGuHNI/Ha4+h01lQjmtn7z5J4xwRBVOI+8yUNqTn66
+	U+cbzhW+37FoDqQckRXE6tSzx0gK0vlkGhnoLk2/LPg+wR+iCuzio2O5DMVjFUA7
+	tumVFu+IdlKV+RpGOxOe0aO68DFCwqz+LW2fs/+exgFMMjPrvbLvoN+n1H57lz1z
+	A+wBx9uIrtNkQjt/Oasok8a6Jcyb07Tm5CAYvigi/wamrpV7n/MqAcKjXaxoWTp1
+	ATMqGXJ/AxjnAODY4BZiIzvMHQD3771auAEIsdvFw2odfuigVIjKWbT2sicLd5Wd
+	/eITOas+tMezv6DkPfGeQ==
+X-ME-Sender: <xms:Tg37ZlRyVlR5wmvMiE9j_8oPjXsh9HhDarR7kIIG0823MFCWJ2FgeRI>
+    <xme:Tg37ZuxB7BgwlOGE1dzYs1NRe9Iqiw-XSJ1vcDCDZ7IP9f6Q0kr6VrVIGOCJkYQ3r
+    1LG8S6bkd7Zy--ubg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedgudehfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepte
-    dttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdejledunecuffho
-    mhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ZAb7ZmeENujwmvfaLf_Glornz7FVqR6mAAPda7X6fLoGt14KOhFz-A>
-    <xmx:ZAb7ZjOuYndBkBCJMi_PI93v43NmrpTY5yBd-ANqVGnGYFYRM2V04g>
-    <xmx:ZAb7ZgmacM-wuRjNf9nNfI_DK05y4TLdGke7ON_OaWeF8A838aNNLA>
-    <xmx:ZAb7Zls9P74T0dH6rlhgaEaxikTyNQ5zAkIln8YQppL-LYD08760wA>
-    <xmx:ZAb7ZsrXJG3KVriilQ8eFOMvpkJCV0ICnbDH14Zg4Cht4vQvmCGfbiq3>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Sep 2024 16:13:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/4] refs: mostly remove core.preferSymlinkRefs
-In-Reply-To: <20240930192826.GA1803946@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 30 Sep 2024 15:28:26 -0400")
-References: <20240918232825.2627999-1-gitster@pobox.com>
-	<20240918232825.2627999-3-gitster@pobox.com>
-	<20240930192826.GA1803946@coredump.intra.peff.net>
-Date: Mon, 30 Sep 2024 13:13:22 -0700
-Message-ID: <xmqqttdw528t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
+    fhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcu
+    jfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    htmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeefjefghedvtedttdetgfejudfh
+    vdeluefftdeileejteelveffgedtieevjeeljeenucffohhmrghinhepphhkshdrihhmpd
+    hgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Tg37Zq1xwkQ_TUCBga2Ah53HcBN9JhRDyNMpWFJbhXRYdddkf24ahw>
+    <xmx:Tg37ZtBASw8mWY67nLeoJBYFVR3KPCU9dcliZZD0R52hL5XUG_EzDQ>
+    <xmx:Tg37Zug8SXtDH3J2XN9UCxX0ECYc7e-9H55wMGihHbN_NOIGnP3qWg>
+    <xmx:Tg37Zhr7rSEYYFcyTNOMXQCqTVmFK_o1zz69FhKMXISglhVGa79lVw>
+    <xmx:Tg37ZiaWW181eULVbKblR1no9eiz4Wq4qCnCJYO5UoL88qn59VRGufda>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A86A6780068; Mon, 30 Sep 2024 16:42:54 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Mon, 30 Sep 2024 22:41:59 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Emily Shaffer" <nasamuffin@google.com>, "Git List" <git@vger.kernel.org>
+Message-Id: <f4d26c91-6fb6-4c9a-b629-d75b572c39d2@app.fastmail.com>
+In-Reply-To: 
+ <CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com>
+References: 
+ <CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com>
+Subject: Re: Linking topic merges to mailing list threads
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+Like Junio explained refs/notes/amlog is a hidden gem for patch
+provenance.
 
-> I noticed these because I had a similar proposal long ago, which never
-> got merged (I don't think because anybody particularly disagreed, but it
-> fell through the cracks and never got picked up again):
+> Hi all,
 >
->   https://lore.kernel.org/git/20151230065343.GA26964@sigill.intra.peff.net/
->
-> What you have here is (modulo the two hunks above) more complete than
-> what I have, so I don't think there's anything else to try to salvage
-> from it. A little bit of the history in the linked commit message is
-> interesting as to how we ended up here, but ultimately not really that
-> important.
+> We've been wanting to gather metrics on Git's code review process -
+> how long it takes from first contact on list to merge, how many
+> iterations are needed, time between iterations, etc. One missing link
+> is the actual merge time in `next` and `master` - a human can infer
+> the link between the patch and the mailing list thread, but it's more
+> challenging for a script to do it.
 
-It was useful to find out another reason (which I failed to mention
-in this series) why symbolic links will be misleading: when it points
-at a ref that is in packed-refs.
+Is the starting point the email?  I think you could fish out the
+Message-ID and do a grep inside the notes tree
 
-Thanks.
+    git grep --fixed-string --name-only \
+        '00a9fe6b7d77c16c9fd6dfe746aacf9068a76942.1726206484.git.ps@pks.=
+im' \
+        refs/notes/amlog --
+
+(the resulting hash will need to be cleaned: fanned directory layout[1])
+
+Then try one commit at a time (because there might be unreachable
+commits from rewrite operations) using git-when-merged(1):[2]
+
+    git when-merged --log 7cd8f1cc6e17af54fb78768c259a615b1ccc0205 next
+    git when-merged --log 7cd8f1cc6e17af54fb78768c259a615b1ccc0205 master
+
+=E2=80=A0 1: e.g. 7c/d8/f1cc6e17af54fb78768c259a615b1ccc0205
+=F0=9F=94=97 2: https://github.com/mhagger/git-when-merged
+
+--=20
+Kristoffer Haugsbakk
