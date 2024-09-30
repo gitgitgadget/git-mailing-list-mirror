@@ -1,126 +1,119 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh123.zrh1.oracleemaildelivery.com (aib29agh123.zrh1.oracleemaildelivery.com [192.29.178.123])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9FC29429
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 22:19:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE83415E97
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 22:22:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727734753; cv=none; b=QXVwKwjL22jZ3CynBuRjCSOlaHQLwiRf8zbDELgv/VZd4sYSpHNrt/pz0D9Fg50pUhT1IkSHlReJVtXJVhEvY89cIUbWAx8YSmtBFL4Vbd2McP2is1Q5Nyf4DLxy3kzh1YGY8/3XjOxfTKvUEc4wqXC6W0c/RH1LgHW1xVb0G1I=
+	t=1727734930; cv=none; b=CHp9/M/+6uaE4NfVBzBEP93gpe0n/FRnzQEc5PJkC2j9HvM/7pxOXxQM3iabz1Th2uminI+2gmcp6CNq03SZI++0JzEVow4lWpYWf1Sg5ewEBZw0EkBw2RYXlu0sUDl2dWP/dzT5LZeVNN4qlsdIRt6oIimNpN7nDjOCfqfI8Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727734753; c=relaxed/simple;
-	bh=881GUx5bXYyVUewsH3hQrNJks4QQjLXH44vTfze1Guc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cAO/cb+KdAsLEQzSL2AlaHLU2dqgStprpOI3URzhzExYB88XhQXijWsqVsZ3zRdp4M1/BTAnLyOqCxQsLm+ezpvsYqpNR0QmI/Cpd4N1+aeW6vn7GP389HBlRttYhV1WnPILh6Mfc1sd4AQcRzA23iDas9q0rIpJqDvnHN6Tvgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VvyyvcjZ; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1727734930; c=relaxed/simple;
+	bh=03K5x4mAF4v7/TsrNOn8f0KgziXMCV24r23BVQX8nzA=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=QOXlzw3j/r1d8UCPBp4U6egO/ukikv3bM1AFDm9aTPcmy5o+F9/f9xr3QynW5lqfCvJsHW6SlE4RHfFEZOD1Hn+aYmhKx70g/2f9J1UNoCuAk33+YJceFO4GPsQ0cEwkieIc9pVioKJlb8VLKz3rC3K2vdQ2COodnrNFnw3NjGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=ErwrB1hD; arc=none smtp.client-ip=192.29.178.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VvyyvcjZ"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-20b3d1a77bbso69395ad.0
-        for <git@vger.kernel.org>; Mon, 30 Sep 2024 15:19:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1727734751; x=1728339551; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ti4u1V9PaA43f82j0bSTELoOw6xNXqV83ARopcwNaCU=;
-        b=VvyyvcjZgo6IfFXULMxtMjlz3aTGB8gXVEna1An2cbUpDOtmk2rvLiOc049hY8GdgB
-         dORjtUHQRU0jmUsPisopsirq5uBw01pSyyMVgQp49eyDi4pN7UsYNnuzqtYL621JZQD4
-         SneIkNMeVabwMjJIzrc9JoI2K7fSMrjCAN/nKb+ZXj2mLltJeGGyAzKoBbX+4k9pn4vL
-         81/bBLn52eZYpocFtS0WKchWsPjttxLTpvyEtbCl6094ACsLNIK6d3SIO7oz4t6b0YdE
-         jRNuQg/i9lHUvMK9syy/Ac/WGruxfAT+kNx5BJjEdlHD8nwZX0nvXseLLWfpp4Iy03xZ
-         1x6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727734751; x=1728339551;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ti4u1V9PaA43f82j0bSTELoOw6xNXqV83ARopcwNaCU=;
-        b=UHPdbo3g8DmxWoYbJjYZ1S9LGWuPCs5UyVF7Q/0BerSDL+50WfVGbsgNhLntboZ+b1
-         Av9J3izU8PEylYBrpSnbrEHCTTllM62e5jwWEu7oVUWD6YlDrn873BpQ9954+d8geXfa
-         XKCJBG5opajwqBmzg7d2H/jSSRfiNvbHW2+ii/6JLEDaUJYnae2+nB9huEdBhTyo/pGQ
-         ZhunSQnVhS3YKZXswVe3ClrulNP1pl+yQm6hECL83HXWsR37VuHrORmpqpeM1VLe/hzE
-         3c4fGLnwY1LjmXvJVqrg9zgehZyTGauyExj6dOLaAw/DewA5+gHXikRKw+TTCn/P85+k
-         mYYA==
-X-Forwarded-Encrypted: i=1; AJvYcCWd1R13w1s5odtKkPBdJOVKlnGJf7ziyjlWA1ay4UPtec+IsoPLZLXqQobQA9Tejf/Hs/k=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy15ABJG1yO3qpCv1p1N3XmPlxN/K7uySd+lwENEFdq0lLaoQFy
-	9UUCq8XKNw0TX6KEjOnBWvVSk3h8bT6yZcq4savNanekHHhzNY1rAlCNL8aB7g==
-X-Google-Smtp-Source: AGHT+IHEtS8HjV1RiQ9mWi6QrjYMGblCy9czsS2R5jPZ+ZZxr/R74EFBxIh1k8ICBfYfaE2YnoeFNw==
-X-Received: by 2002:a17:902:f7d2:b0:207:3ddf:34bb with SMTP id d9443c01a7336-20bb07eb04fmr394175ad.9.1727734750511;
-        Mon, 30 Sep 2024 15:19:10 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:832e:d9a7:2067:3bf3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37e33147sm58713425ad.195.2024.09.30.15.19.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Sep 2024 15:19:09 -0700 (PDT)
-Date: Mon, 30 Sep 2024 15:19:04 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	karthik nayak <karthik.188@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	James Liu <james@jamesliu.io>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/3] refs/reftable: reload locked stack when preparing
- transaction
-Message-ID: <c4lz3begoplgde5iimvk4k7cufiyryntccqo46u3fy5qvqauv3@tta5wfg2ik5t>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	karthik nayak <karthik.188@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	James Liu <james@jamesliu.io>, Junio C Hamano <gitster@pobox.com>
-References: <cover.1726578382.git.ps@pks.im>
- <cover.1727155858.git.ps@pks.im>
- <9ce2d18dff2a655365b609dd86ea484a489c717a.1727155858.git.ps@pks.im>
- <20240927040752.GA567671@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="ErwrB1hD"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=qhdGE0c9rfb6A7EcDrnYHYMuaG7eTCeHBL/aOFzRXbI=;
+ b=ErwrB1hDW7G7iO34RoVVvAn3UoE55q++aFgN7asdJQoQ66Bnaj3s+SGWuhMYJOn5e9euFtPShAGd
+   QWNA2dZZqOvul+3sPd0HBmUyULYDPGMBDrZRK+q2WAzkmWy3TftdotO/EMK68iVBNbHsgatG+V45
+   KZgS5eJt9nzO7bTAfAv1BZe3CAh76zaGKu7mXx8jnnytpGXOUFO2QWjra6CBMgTt+NtICLbMxcw+
+   PUe9CaTwWnpK1+L9tAQVHZUPlsDOnJCcMYed6XqdqhE/cHoBEp68ojZTdjhasXa91Cn/1f0w8zxv
+   9Zm4FG9i6sahWP89aIuV10LkWD7jqB3SsoQNdw==
+Received: by omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SKN00BGTCSUSK80@omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Mon, 30 Sep 2024 22:22:06 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: phillip.wood@dunelm.org.uk,	Junio C Hamano <gitster@pobox.com>,
+	Taylor Blau <me@ttaylorr.com>,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH v4 0/5] improve handling of remote/HEAD
+Date: Tue,  1 Oct 2024 00:19:50 +0200
+Message-id: <20240930222025.2349008-1-bence@ferdinandy.com>
+In-reply-to: <D4JIG4VS5WVN.2F0PNU5514UEL@ferdinandy.com>
+References: <D4JIG4VS5WVN.2F0PNU5514UEL@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240927040752.GA567671@coredump.intra.peff.net>
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAHBeTTX65QiYNPSQkgTn7Et42EPM9Go/ewbK+FD34ddffDqZzPdm2exlkAZAK2m
+ Bg9rcf7lbb8TEqCwhMHicPkJB/CJtcIB05tAOAXpjLHq0Vo9iEbGRCtKYeRGE/R/
+ 3zZDYI2xwWRd5cdhdrNyWars/62AOuKl4lMXWMwUipcEanKwigDHjT/JqFfwZgNt
+ TU3fOQdvIaWHnf2ZmY/Og8yGcZn8ftqvpjvz8XTt3+WD4s6J3XzbQOeHf4uyRrIb
+ ivvLpiLv+Sa3xqqfvH4UW3Q30yRPKSMextNAWdN7X7+EtZP7TyQZWgIJexV/3oEC
+ /mmwjR8vaCAmR+sWT6GfbXUKMFXaVBzivaer39HDUjtpXMwiEklWNYqRs1+4ZSP6
+ ECdt1B8QUZLhSU/6XcaYsA2E3CVaNkO2ME8z3Cr86gNMQTp+C/uPTyaKOcLx0S8J
+ pIg4h8v7N0HEcjNEXEXgXmKMixGfbhVCYlR9YoLtj8vkc3NRF6yBODPA
 
-On 2024.09.27 00:07, Jeff King wrote:
-> On Tue, Sep 24, 2024 at 07:33:08AM +0200, Patrick Steinhardt wrote:
-> 
-> > +test_expect_success 'ref transaction: many concurrent writers' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	(
-> > +		cd repo &&
-> > +		# Set a high timeout such that a busy CI machine will not abort
-> > +		# early. 10 seconds should hopefully be ample of time to make
-> > +		# this non-flaky.
-> > +		git config set reftable.lockTimeout 10000 &&
-> 
-> I saw this test racily fail in the Windows CI build. The failure is as
-> you might imagine, a few of the background update-ref invocations
-> failed:
-> 
->   fatal: update_ref failed for ref 'refs/heads/branch-21': reftable: transaction failure: I/O error
-> 
-> but of course we don't notice because they're backgrounded. And then the
-> expected output is missing the branch-21 entry (and in my case,
-> branch-64 suffered a similar fate).
-> 
-> At first I thought we probably needed to bump the timeout (and EIO was
-> just our way of passing that up the stack). But looking at the
-> timestamps in the Actions log, the whole loop took less than 10ms to
-> run.
-> 
-> So could this be indicative of a real contention issue specific to
-> Windows? I'm wondering if something like the old "you can't delete a
-> file somebody else has open" restriction is biting us somehow.
-> 
-> -Peff
+This version has dropped some previous patches in favour of new ones.
+These solve the problem of atomically deciding what the head was before
+we updated it and also not reinventing the wheel for having an "create
+this ref, but if it already exists, fail silently" call.
 
-We're seeing repeated failures from this test case with ASan enabled.
-Unfortunately, we've only been able to reproduce this on our
-$DAYJOB-specific build system. I haven't been able to get it to fail
-using just the upstream Makefile so far. I'll keep trying to find a way
-to reproduce this.
+Since now both changes to remote set-head and fetch utilize some common
+preceding patches I have again included in this series my changes to
+remote set-head. Sorry for the mess tangent there.
 
-FWIW, we're not getting I/O errors, we see the following:
-fatal: update_ref failed for ref 'refs/heads/branch-20': cannot lock references
+All tests (that run on my system) pass for the patches up to the
+last patch, which changes fetch. For the last patch I updated some of
+the test where it was trivial (lot of remote/HEAD -> something appeared
+as expected), but there is still work to be done there (i.e. figure out
+which tests need updating and which are actual bugs in the patch).
 
-We tried increasing the timeout in the test to 2 minutes (up from 10s),
-but it didn't fix the failures.
+One specific thing I wanted to mention here. Junio asked earlier what
+happens on fetch, when we have a config like this:
+
+> If I am only fetching refs (or HEAD) in FETCH_HEAD for immediate
+> consumtion by doing "git pull bence HEAD" with something like
+>
+>     [remote "bence"]
+>          URL = http://github.com/bence/git
+
+In this case setting head will error out with the generic error message
+I put at the end.
+
+Bence Ferdinandy (5):
+  refs_update_symref: atomically record overwritten ref
+  set-head: better output for --auto
+  transaction: add TRANSACTION_CREATE_EXISTS error
+  refs_update_symref: add create_only option
+  fetch: set remote/HEAD if it does not exist
+
+ builtin/branch.c          |  2 +-
+ builtin/checkout.c        |  5 ++-
+ builtin/clone.c           |  8 ++--
+ builtin/fetch.c           | 83 +++++++++++++++++++++++++++++++++++++++
+ builtin/notes.c           |  3 +-
+ builtin/remote.c          | 43 ++++++++++++++++----
+ builtin/symbolic-ref.c    |  2 +-
+ builtin/worktree.c        |  2 +-
+ refs.c                    | 35 ++++++++++++-----
+ refs.h                    |  7 +++-
+ refs/files-backend.c      | 29 ++++++++++----
+ refs/refs-internal.h      |  8 ++++
+ refs/reftable-backend.c   |  6 ++-
+ reset.c                   |  2 +-
+ sequencer.c               |  3 +-
+ setup.c                   |  3 +-
+ t/helper/test-ref-store.c |  2 +-
+ t/t5505-remote.sh         | 13 +++++-
+ t/t5514-fetch-multiple.sh |  9 +++++
+ 19 files changed, 222 insertions(+), 43 deletions(-)
+
+-- 
+2.47.0.rc0.5.gf1cffeb8df.dirty
+
