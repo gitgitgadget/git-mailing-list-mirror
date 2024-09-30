@@ -1,213 +1,245 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D03E16EBE9
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 07:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69930161320
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 07:57:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727682434; cv=none; b=ckCV0q1LzYZT3xUEKLXaze+UohJ+Pengv97L42S5i7tAM4b8yObrL5yzZf4y9IYjbZ/SWqI0MY+ty5vXmx62HJ6r+dcFgRvGeBz5v81M3bUgu/S2FgDAxFy0lyvmL2ihhQuthLGh5Lyxpn8UgYx3AmtSwWLmYOqc+vwKugXKICA=
+	t=1727683031; cv=none; b=J5BqlZ/U1gJumcGjVAcaCuiC+bcb5OUIARQ8BMght7Dv/XkD0mydc9fOTm+uKij10KgjY/sbAtYHsSO9shpLNtBcyM6RGTaTChaMoHgLqV2bg2mqNH36kBWvM6q54A2lPbix34dkCtwLb/ZMhRKGv7VLhdkcop9chRR1FoGVwMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727682434; c=relaxed/simple;
-	bh=LCFpdrxTXf0cxfc+gXcZ2QLF32j2VuAgoliti5IUxJ0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CRmBZgKA8vOmpNbt5m1sVuezfDaCuypFTEhczrw/OO29JRt0L37i8kp5QNnsAWEJi/w3bx9LIJsQUnxUvPlL4wsyU0fM0veBZIftRvgVr27J8LlaMll9z3NXClyYoyWBxhwl+ItyCpDmO6jAz/YSbQ5XzYy4jzmVxtSbdVexds0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aodOCco9; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727683031; c=relaxed/simple;
+	bh=Hnt2GVXyH8sDwJnyGiTdVl55Gi8mY1f4tadVcdsrZXY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FFXq1j78ZKPSTArhqfQmO2PVtqxyCoZFhONYbjRB/hxvKm22K9QqMS/+01FT5se+aJ01D1eilQ1JNeADVi8PpPmHs4y1PjCkksn4BTtEq3N0Of+s6DFG3ZUtK4eJU5JXnURSflKLRvT3kNAGql85vcJ6vrbP8zYHhcZ4Aa+RSXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Yya/3ZEc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FuhbcOho; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aodOCco9"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-539973829e7so346465e87.0
-        for <git@vger.kernel.org>; Mon, 30 Sep 2024 00:47:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727682430; x=1728287230; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LCFpdrxTXf0cxfc+gXcZ2QLF32j2VuAgoliti5IUxJ0=;
-        b=aodOCco9vwcAp9C4YqFjFX4JJxJeflBOAxSVpiGarreQ+qdgB2WV3WzD/lw5c4wP0f
-         yAVpyUgxftTxlZqNZdGagSPhToX1QHo5Kt/goNizfTv0aQ7ig5Uj340B9kZP52iChQzR
-         yALHrBIds2k67RcMwoUvLjOMW5y0lnyAuWhql4HMcKfYcSCcgRME0fS7W4w89lWo46Mw
-         4BiN2VPUH+6clnecqqrOrSMRXzdBoEyBGWmPwlC2HUwtc2202ybzH8jpeT66b+e9S68+
-         v4lKBVJbldXZTWgvuj63G1pN8si0iZB9k7nTR0c/rkDHdTcEq0tM9PZoXlprK7PyZImF
-         it2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727682430; x=1728287230;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LCFpdrxTXf0cxfc+gXcZ2QLF32j2VuAgoliti5IUxJ0=;
-        b=Y7euF9kI55wOpnjw+zQ/M88Fst8hDjqbDYuS48IF4PSaVoOmanBdBIy5XfdbH2Z+vp
-         W3FF51V6FM58axS4L7psV8VrFcCHFkJOryGTcHyEhv+X78OIjW2lAUO6MAxWuI/3sjDz
-         jTKNSH5UzmHDQE3JLAYdHKNymOu48yRjrU2VucRD4gqmao3IF8wVArrhUdmoB4k8kG6N
-         UhzO7JvHqi67UEcPnOXNsPX+FqtcCjzXfWGdCxrmThI/RIcWUQ5gZNvoGmbUaegGyQ06
-         dx6W2/e1TrIVvmEA85D+5D/5Vls2kIG5sv5/g5UIDBmDRYHUS5DHRpZrtBrkfTbBGGiD
-         Qjaw==
-X-Gm-Message-State: AOJu0YzwNCFHYkkBoNsAjPMkN4fAb6dmPg8hgMWzHmatEDl1aR3/bb2Y
-	JhYYzx15SZ23pQG9NzUa4+NKarP0zTeQPrAMfF2L/H0ke8pfWT80ERsaWhtp5oMtbynCuYbHB6J
-	0Aw/43334wbzzwnImE3pj5JPbhvU=
-X-Google-Smtp-Source: AGHT+IENs5grXkO7JxVtK3/4c2KOmNOPZJBI4cAX6AL3RvddaR5eXSoSUkvuvC/5+c5wZx3p+yqCI4PcFcOxyVKIhNo=
-X-Received: by 2002:a05:6512:23a7:b0:539:92b6:6d30 with SMTP id
- 2adb3069b0e04-53992b66e56mr1684318e87.29.1727682429728; Mon, 30 Sep 2024
- 00:47:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Yya/3ZEc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FuhbcOho"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8D51013802F6;
+	Mon, 30 Sep 2024 03:57:08 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Mon, 30 Sep 2024 03:57:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1727683028; x=1727769428; bh=2ZKSA2Dmap
+	2pEUZq8aOmsreWW4LDkOAROPrdte2vN58=; b=Yya/3ZEcY0C1oBtn26gc++ZdCw
+	5b++S9/1dPQsLAS8iMegDafQi6N6T79LGhjDVVVTllRrnqsInlDj2rXe2Ap67h/X
+	zlxPnL7+ZlZEEx7QmRtn0AguSwAS+60pxh08rgUZPAoK/IJ9Bti09zy/5oIGqt1l
+	P40qM1pTyDdbjRw35TpnTsdXeDBedYKmZhS/QCSlcbWWgT9BftQlBtJkGZyMXFP8
+	Vz628KpJCqgj6Z1BdZvo4ZmVf+xFaW1J59MJk6K2OaXTPANmknDxbgpQfkrFjrHL
+	fRaJNYqNfFnxO4hN6mK9YqwL+ge2Ymf5Ebnz9IHLcjAn8EMeuTJ+Cu60qkqQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727683028; x=1727769428; bh=2ZKSA2Dmap2pEUZq8aOmsreWW4LD
+	kOAROPrdte2vN58=; b=FuhbcOhow4KedwkwMXWZYKhLi6AgUV/GmTDn4rsyHwN8
+	zAiYZQEhRVSfrWPvy4+/APAA9MrNeieV3IsgIR8kU7v4g7X4OE9sWitFFU3YH+Mz
+	JlQ1wmAr4lDqum4WTExqmm5UvA7iyPAsplJueB8PEoivtpGHxNHVliszUk44xEDb
+	a3EOW6L2WC8g9/qBnUGZSgtciUvF6+QR9D3u2GfFJI8YGtbC9GZvDGJ43VNqAUU6
+	FdHycpcu7YqpBANCOt+Ig3dax86wXovrDicjyVEM+CDeDi5jM/tQYZjaBBhJ4CJn
+	2agZ9adbDC9cPrt2T80V6lndJt3u8rs/nW+GGtYYkw==
+X-ME-Sender: <xms:01n6ZnODNcMMeATiCslPHWft_bwxKpV7ZFkR-_df9qJQAnLv3zZ-7A>
+    <xme:01n6Zh9m3GEzULzAO_sxhg5ZBgaWdiGk5uldBCuYoqAzgz6Jhcj_KnePD6SV0c_Mh
+    03VCV8FXq3DdOpXYA>
+X-ME-Received: <xmr:01n6ZmSti6zQIpUtRrrxmqUHykbeSHkirq6YmkeRchH2Id5PhvaySqS1eIopjqGTdzNAFowVLZXk42VFjOIWuXWobGEgfp-6AqTQ8tglEYtGxQA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddugedguddvhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdho
+    rhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihl
+    ohhrrhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
+    gtohhmpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:01n6ZrsXVMq-R00Z9zq7OERQ0ihudlRbB-tX4gTRT3v2yi31xbEspA>
+    <xmx:01n6Zvfgx_mWBoteXtRsHiFFXyoR5NiQyTJjvUWWbWV84jlAmC0wcg>
+    <xmx:01n6Zn1P0wRj_2RidMWiLCORYYKJGSHiVgy8FPngodwYuzU9CDIP4w>
+    <xmx:01n6Zr-3PAeofID4fcn1Vz8yUVEzzpYIT2eyuJYpRsSDwhNHke2ZPA>
+    <xmx:1Fn6Zhu2N2r8FpRqyx7D1OaF-BSBzQnOHo0xK1Tjr0lf3uToMipgt_mg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Sep 2024 03:57:06 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id c0781410 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 30 Sep 2024 07:56:18 +0000 (UTC)
+Date: Mon, 30 Sep 2024 09:56:59 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	John Cai <johncai86@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 3/4] Add 'promisor-remote' capability to protocol v2
+Message-ID: <ZvpZy9XMpLI0DQQg@pks.im>
+References: <20240731134014.2299361-1-christian.couder@gmail.com>
+ <20240910163000.1985723-1-christian.couder@gmail.com>
+ <20240910163000.1985723-4-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <c3e372f6-3035-9e6b-f464-f1feceacaa4b@gmx.de> <CAP2yMa+PtRADLB2ZL4U3S8X+87Ddz4UZQNMmtEvV5p9nyoq5SA@mail.gmail.com>
-In-Reply-To: <CAP2yMa+PtRADLB2ZL4U3S8X+87Ddz4UZQNMmtEvV5p9nyoq5SA@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 30 Sep 2024 09:46:57 +0200
-Message-ID: <CAP8UFD0uUJ3Ztwy+GDQe_tjf5KnHLyqW-2eDLf+qErF2dFgs-Q@mail.gmail.com>
-Subject: Re: git-scm.com is now a static website
-To: Scott Chacon <schacon@gmail.com>, Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc: git@vger.kernel.org, Matt Burke <spraints@gmail.com>, Victoria Dye <vdye@github.com>, 
-	=?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>, 
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Todd Zullinger <tmz@pobox.com>, Johannes Sixt <j6t@kdbg.org>, 
-	Toon Claes <toon@iotcl.com>, Taylor Blau <me@ttaylorr.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, =?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240910163000.1985723-4-christian.couder@gmail.com>
 
-Hi,
+On Tue, Sep 10, 2024 at 06:29:59PM +0200, Christian Couder wrote:
+> diff --git a/Documentation/config/promisor.txt b/Documentation/config/promisor.txt
+> index 98c5cb2ec2..9cbfe3e59e 100644
+> --- a/Documentation/config/promisor.txt
+> +++ b/Documentation/config/promisor.txt
+> @@ -1,3 +1,20 @@
+>  promisor.quiet::
+>  	If set to "true" assume `--quiet` when fetching additional
+>  	objects for a partial clone.
+> +
+> +promisor.advertise::
+> +	If set to "true", a server will use the "promisor-remote"
+> +	capability, see linkgit:gitprotocol-v2[5], to advertise the
+> +	promisor remotes it is using, if it uses some. Default is
+> +	"false", which means the "promisor-remote" capability is not
+> +	advertised.
+> +
+> +promisor.acceptFromServer::
+> +	If set to "all", a client will accept all the promisor remotes
+> +	a server might advertise using the "promisor-remote"
+> +	capability. Default is "none", which means no promisor remote
+> +	advertised by a server will be accepted. By accepting a
+> +	promisor remote, the client agrees that the server might omit
+> +	objects that are lazily fetchable from this promisor remote
+> +	from its responses to "fetch" and "clone" requests from the
+> +	client. See linkgit:gitprotocol-v2[5].
 
-On Sun, Sep 29, 2024 at 10:42=E2=80=AFAM Scott Chacon <schacon@gmail.com> w=
-rote:
-> On Wed, Sep 25, 2024 at 12:07=E2=80=AFAM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+I wonder a bit about whether making this an option is all that sensible,
+because that would of course apply globally to every server that you
+might want to clone from. Wouldn't it be more sensible to make this
+configurabe per server?
 
-> > almost 400 weeks after Matt Burke started the process with
-> > https://github.com/spraints/git-scm.com/commit/60af4ed3bc60 of migratin=
-g
-> > Git's home page away from being a Rails app to being a static website t=
-hat
-> > is hosted on GitHub pages instead, today marks the day when Git's home
-> > page at https://git-scm.com/ has finally moved. Or actually: yesterday
-> > (because I took so long writing this email that I ended up sending it
-> > after midnight).
+Another question: servers may advertise bogus addresses to us, and as
+far as I can see there are currently no precautions in place against
+malicious cases. The server might for example use this to redirect us to
+a remote that uses no encryption, the Git protocol or even the "file://"
+protocol. I guess the sane thing here would be to default to allow
+clones via "https://" only, but make the set of accepted protocols
+configurable.
 
-Congrats and thanks for making it happen!
+> diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotocol-v2.txt
+> index 414bc625d5..65d5256baf 100644
+> --- a/Documentation/gitprotocol-v2.txt
+> +++ b/Documentation/gitprotocol-v2.txt
+> @@ -781,6 +781,60 @@ retrieving the header from a bundle at the indicated URI, and thus
+>  save themselves and the server(s) the request(s) needed to inspect the
+>  headers of that bundle or bundles.
+>  
+> +promisor-remote=<pr-infos>
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +The server may advertise some promisor remotes it is using or knows
+> +about to a client which may want to use them as its promisor remotes,
+> +instead of this repository. In this case <pr-infos> should be of the
+> +form:
+> +
+> +	pr-infos = pr-info | pr-infos ";" pr-info
 
-> The simple thing would be to solve issues like this by just removing
-> this specific content, but we could also work on a perhaps more
-> valuable project to rethink the website content entirely. Why are
-> people coming to git-scm.com? What information are they looking for?
-> How could we answer those questions most efficiently?
->
-> This is essentially what my first version of git-scm.com was trying to
-> do when I registered the domain and launched the first version 16
-> years ago as an alternative to git.or.cz:
->
-> https://lore.kernel.org/git/d411cc4a0807251035i7aed2ec9wef7e8f1b3ae4c585@=
-mail.gmail.com/
->
-> But as I said, the answers to these questions are very different today
-> than they were 16 years ago.
->
-> The version I helped launch 12 years ago (essentially the exact same
-> site that exists there today) was trying to do the same thing -
-> determine what people are coming to the site for and give them that
-> information as quickly and easily as possible:
->
-> https://lore.kernel.org/git/CAP2yMaJy=3D1c3b4F72h6jL_454+0ydEQNXYiC6E-ZeQ=
-QgE0PcVA@mail.gmail.com/
+Wouldn't it be preferable to make this multiple lines so that we cannot
+ever burst through the pktline limits?
 
-Thanks for your previous work on the website and for this background
-information!
+> +	pr-info = "name=" pr-name | "name=" pr-name "," "url=" pr-url
+> +
+> +where `pr-name` is the urlencoded name of a promisor remote, and
+> +`pr-url` the urlencoded URL of that promisor remote.
+> +In this case, if the client decides to use one or more promisor
+> +remotes the server advertised, it can reply with
+> +"promisor-remote=<pr-names>" where <pr-names> should be of the form:
 
-> I would love to take another crack at this, I'm happy to put some
-> design resources and further engineering (built off the great work
-> Johannes has done here) into the project. It would be great to get
-> some feedback from this group as to what they think would be most
-> valuable for people today.
+One of the things that LFS provides is custom transfer types. It is for
+example possible to use NFS or some other arbitrary protocol to fetch or
+upload data. It should be possible to provide similar functionality on
+the Git side via custom transport helpers, too, and if we make the
+accepted set of helpers configurable as proposed further up this could
+be made safe, too.
 
-Glad that you are willing to put more effort on the website!
+But one thing I'm missing here is any documentation around how the
+client would know which promisor-remote to pick when the remote
+advertises multiple of them. The easiest schema would of course be to
+pick the first one whose transport helper the client understands and
+considers to be safe. But given that we're talking about offloading of
+large blobs, would we have usecases for advertising e.g. region-scoped
+remotes that require more information on the client-side?
 
-> For example, I think the book contents and the man-page hosting has
-> been incredibly valuable. I still use those resources today from
-> Google searches. I feel like perhaps the Guides section could be
-> structured and presented better - there is some great documentation
-> there. I have been talking to Apress on and off about a third edition,
-> perhaps a revamp of that content is also overdue - the last edition of
-> that was published in 2014.
->
-> I think the entire "About" section should be totally rethought.
->
-> Perhaps adding something about different use cases - large files for
-> game development, etc. There is no mention of LFS or partial cloning
-> or anything here.
+Also, are the promisor remotes promising to each contain all objects? Or
+would the client have to ask each promisor remote until it finds a
+desired object?
 
-I agree that having content about those topics could help. It would
-perhaps avoid companies and projects around Git duplicating such kind
-of content on their respective websites.
+> +	pr-names = pr-name | pr-names ";" pr-name
+> +
+> +where `pr-name` is the urlencoded name of a promisor remote the server
+> +advertised and the client accepts.
+> +
+> +Note that, everywhere in this document, `pr-name` MUST be a valid
+> +remote name, and the ';' and ',' characters MUST be encoded if they
+> +appear in `pr-name` or `pr-url`.
 
-> There is no information currently on any forge or hosting options,
-> which seems silly. I think at the time I was trying to avoid
-> "advertising" for GitHub, but it would be nice for people to know all
-> the options for hosting their code, just as we have a client section.
-> Even more CLI clients and tools, rather than just GUIs - things like
-> git-absorb, stacked git, etc.
+So I assume the intent here is to let the client add that promisor
+remote with that exact, server-provided name? That makes me wonder about
+two different scenarios:
 
-I think it would be a good idea to improve on this too, but care
-should be taken to keep a level playing field for all tools, solutions
-and companies.
+  - We must keep the remote from announcing "origin".
 
-> Perhaps more videos - there is so much great content on YouTube we
-> could link to. Right now it's like Linus's talk, my old Google talk
-> and 4 Matt McCullough tutorials.
->
-> I would love to pull in Git Rev News as a blog on git-scm.com, and/or
-> link to Taylor's regular posts about what's new in the new versions.
-> It's such great content and would be nice to have more visible.
+  - What if we eventually decide to allow users to provide their own
+    names for remotes during git-clone(1)?
 
-About Taylor's regular posts on GitHub's website, GitLab decided some
-time ago to also have their own news about new Git versions:
+Overall, I don't think that it's a good idea to let the remote dictate
+which name a client's remotes have.
 
-https://about.gitlab.com/blog/2024/07/29/whats-new-in-git-2-46-0/
-https://about.gitlab.com/blog/2024/04/30/whats-new-in-git-2-45-0/
-https://about.gitlab.com/blog/2024/02/26/gitlabs-contributions-to-git-2-44-=
-0/
-https://about.gitlab.com/blog/2024/01/11/the-contributions-we-made-to-the-g=
-it-2-43-release/
+> +If the server doesn't know any promisor remote that could be good for
+> +a client to use, or prefers a client not to use any promisor remote it
+> +uses or knows about, it shouldn't advertise the "promisor-remote"
+> +capability at all.
+> +
+> +In this case, or if the client doesn't want to use any promisor remote
+> +the server advertised, the client shouldn't advertise the
+> +"promisor-remote" capability at all in its reply.
+> +
+> +The "promisor.advertise" and "promisor.acceptFromServer" configuration
+> +options can be used on the server and client side respectively to
+> +control what they advertise or accept respectively. See the
+> +documentation of these configuration options for more information.
+> +
+> +Note that in the future it would be nice if the "promisor-remote"
+> +protocol capability could be used by the server, when responding to
+> +`git fetch` or `git clone`, to advertise better-connected remotes that
+> +the client can use as promisor remotes, instead of this repository, so
+> +that the client can lazily fetch objects from these other
+> +better-connected remotes. This would require the server to omit in its
+> +response the objects available on the better-connected remotes that
+> +the client has accepted. This hasn't been implemented yet though. So
+> +for now this "promisor-remote" capability is useful only when the
+> +server advertises some promisor remotes it already uses to borrow
+> +objects from.
 
-That's because when writing for one company's blog, people tend to
-overemphasize what that company contributed, and to emphasize less
-what other companies (especially competitors) contributed. I think
-this is normal and not specific to GitHub by the way.
+In the cover letter you mention that the server may not even have some
+objects at all in the future. I wonder how that is supposed to interact
+with clients that do not know about the "promisor-remote" capability at
+all though.
 
-Anyway if only GitHub's version of what happened would be shown by the
-Git project, it would seem like the Git project would endorse it in
-some ways which would not be fair.
+From my point of view the server should be able tot handle that just
+fine and provide a full packfile to the client. That would of course
+require the server to fetch missing objects from its own promisor
+remotes. Do we want to state explicitly that this is a MUST for servers
+so that we don't end up in a future where clients wouldn't be able to
+fetch from some forges anymore?
 
-> Honestly, this whole website would be nice to incorporate:
-> https://git.github.io/rev_news/
-
-I would have hoped it would be the whole https://git.github.io/ (Git
-Developer Pages) site instead of just the Git Rev News part of it.
-There are basically 3 parts to the Git Developer Pages: Git Rev News
-related pages, the Hacking Git page and the mentoring program pages,
-and I think it would not make much sense to move only parts of them to
-git-scm.com as they are all related to trying to encourage people to
-participate in Git's development. We could either move them all to
-subsections of https://git-scm.com/community or perhaps create a high
-level https://git-scm.com/developer or
-https://git-scm.com/development. One big advantage in deprecating the
-whole Git Developer Pages site would be to avoid issues with style
-sheets, with layouts on mobile phones, etc on 2 different websites
-instead of just one. We would need to keep the Git Developer Pages
-site on for some time and add redirects for most pages of it though.
-
-I have created the following issue to discuss this:
-
-https://github.com/git/git.github.io/issues/729
-
-but I am Ok with discussing it here if people prefer.
-
-> In the end, I'm happy to put some work into this, or perhaps work with
-> Johannes and Taylor and Matt and whomever else is maintaining the site
-> now.
-
-Thanks,
-Christian.
+Patrick
