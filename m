@@ -1,192 +1,142 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A4719D082
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 19:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7243BB21
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 20:01:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727725568; cv=none; b=NG4zOMia4nr/C9nDkjxRUO39mmDXWJniB79eUIOofILrwPLxuvdshM9yaOt1A7TN0G2Y2peNpGcBQ5fAs2WG49/Lu9S8hVRCgC2h1yXWwPVLDZ6cOmv/NuPISRsDBcbuFl9jrB0sG+pY2KDbc+mhLBkBD45reXhhJD9nMw9l9bQ=
+	t=1727726483; cv=none; b=okTGut9F5FN0FTNfMHjfmqxjjYKV2h40wnbz2/gai5An0kQU/YD5xJoqJYBo09Ssqw1PFuEh8ZpeUSoUIiTwYpYaKC11wWL204NxOCp0yL9eZ5FBQO563vfal1zo8DsApDdDHwTxdsCv+U4AX/ixskEb+rYIzdg8BZZkEMWCYoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727725568; c=relaxed/simple;
-	bh=3Dmc0j0XmJw88vmOR1/wASvXAMG9g3h0DankyWMFjfY=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=LNy5LMaXNdevB1A+yaivApIlMDX1JGMSGzJeO7L4xfp8SbgiP/Llrv+oTtAyeFFZfQ1NCUhktudZX8k08mXhx4DRgXFUXYBumj/F7D/nAkY3SOix+zc3bcxgJpmlbcWW7rtgKwL0Uq7bwofJy9JSxugW7ixZkwieOQGCfjCCrfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Aq5Xce1r; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1727726483; c=relaxed/simple;
+	bh=yEMn5UF2FWK7nkty5aECwm3IUPPxnQppEtLEgSyX6co=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=k+6cjb4zirQEcTzFJNZE4Lxkk2ao2S3CHIj4BNcz51xZQEDXvN/Yvife5e+r3GrGU4uGGE4ylQK+NxfZhqO2ddQyaF9uHZAfzXByHzTYSN8URumLVCluxn/BsJIVpPpyYPVY3Mtvc59p/TG1e9U6us+iZPQtyac6ODafTdbjWCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WZQnDs6R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V+HRwBAj; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Aq5Xce1r"
-Received: (qmail 6857 invoked by uid 109); 30 Sep 2024 19:46:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=3Dmc0j0XmJw88vmOR1/wASvXAMG9g3h0DankyWMFjfY=; b=Aq5Xce1rU2RNuJKVghcY18K2t0PgdbOebchOLgbDVZiiV1HSAwAv6LKquZSFgxX/TVrwlJP3dT24jzVquk8VvMUMgakvl3c3lNKrPd6oYV4BRs3SAbed/PHjcl04e5amWEVikWFP9DmAj752DLb6QcJT6Ket6sKDEPQpgjH0GIWUf+Gd/tZeYv/3F/NwZCwnFfLy2/UETzZyljBi138qg4/8mCuoMmNSv80NBDLT5V1I3Kmycn0mxyanErGxqVzK59TnrwE7T5mDwERQ8o1xmobuwNh2Za3nvNtNXrmKeWtft0Ub7Z8RGtwYW9NcGp6xpGIorVs35jSB7oko+dGyOQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Sep 2024 19:46:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17457 invoked by uid 111); 30 Sep 2024 19:46:01 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Sep 2024 15:46:01 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 30 Sep 2024 15:46:00 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: fsmonitor deadlock / macOS CI hangs
-Message-ID: <20240930194600.GA1805534@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WZQnDs6R";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V+HRwBAj"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id D287A13801D9;
+	Mon, 30 Sep 2024 16:01:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Mon, 30 Sep 2024 16:01:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1727726480; x=1727812880; bh=kRz14oDImh
+	uAifaUWPlxef8gqfX73gm1h38JhuSL6Ro=; b=WZQnDs6R2+Lh4Jm+dHfHgSyNF7
+	gpw90//mplPpp8tom9iZcEpKVeveW9e4wC54i7rowEXlpKDYHtRmNEAk3fDNEDxR
+	/IikgduIBJ6zuB5VrQeG17KPmcqCWm8XupC9faDKLeFLcLoxbch71wCJsY39VmbB
+	JjW0oqm97xdFiN1Yr0fXoSp5cfE1c+aBVKAX2JWBzHDwgMhJ2WrkOexpPLg+bKQW
+	BFNKC/yzUWLwIi4NyeH+BU8HrbnpsQe2WTCU4CqPgDCKn1MNSyxVRkDT8norYr8u
+	W1upEG29LU7Jd+EtMg/CMWTFzXgln1Nrdo6XEGQzUqqnxnP3WwYr9sqvPe8g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727726480; x=1727812880; bh=kRz14oDImhuAifaUWPlxef8gqfX7
+	3gm1h38JhuSL6Ro=; b=V+HRwBAj80cHdNk7L0+aj8cJjDt8mLC/a1tjFUQpOioF
+	H2+Nj1Q7pPtKyAjUXQ0QUxfF1GyYs3PxSSlBJoz3MDuY+toWQftETn3E1Ye6klhn
+	puu+RQQTOiZur98sZ2yl0svocpHZN0WeKMFIh+pczCyZyvYz+eSMMwh8fHvfel2x
+	HxyjKroFMuh134MVhlndVNgVWkPJWoOuwATRAzRdyJrOmKeLRgUFnrwlIBrVX0m2
+	hdFAfd6PVYgfs9m0/6ZTZWZtb0DaciW4FQE2CdVYiPPrjKrNNTT65GDQb4f3e6dc
+	FiFQRSVEdhZ1Vvm5HnSJf7iB3NJGwmghxeMpvbd0iA==
+X-ME-Sender: <xms:kAP7Zn6vOK2DKiLdUPGWAmSeidzVyJMNpWEFRl2Og2nHOzOXjuJZ8w>
+    <xme:kAP7Zs4I7AI4BGsq3RxXiRvG2fJ2oGtXwwMJw3221hODXcbB5zy0IpKajiDHE5dBN
+    pG8Z2AkHaFMbRDDew>
+X-ME-Received: <xmr:kAP7ZucrsQek-8o-NldRmXA3Q6PDEPxL-3HfI-FHZ8gvtXGWp9_2KgjrM7qQK6DlwFizTmp7ndTU93shoCVii2yciJPEFEfyki39DSk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedgudeghecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
+    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprh
+    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhohhhntggrihekieesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:kAP7ZoKnuIMwO_IGf3X2RnNrRZLlWImpfuXjRfJ__vpAeqGnfUNGsQ>
+    <xmx:kAP7ZrLiOWDWXWb9Skrg_yEOXM6hQxnXjRqFfllwVowAV1yHPOn86w>
+    <xmx:kAP7ZhwOUNNxpUBJUy3LBn7b56Vi_AjbrbUW38cktaDmXJrXgkCVXg>
+    <xmx:kAP7ZnK7MKJ_2P2-iBoOAxccQM9gH682Mv1C3X_CsQAu3wn5CnxzMw>
+    <xmx:kAP7Zj_wSN3hzjxTKDOAP6goZmYsdy_6lhvrcTr8CPeDNKvkxpQmQJse>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Sep 2024 16:01:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  shejialuo <shejialuo@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 4/4] archive: remove the_repository global variable
+In-Reply-To: <857291d7f7dffdd1a63ce9268c8ac91a82f2bdb5.1727718031.git.gitgitgadget@gmail.com>
+	(John Cai via GitGitGadget's message of "Mon, 30 Sep 2024 17:40:30
+	+0000")
+References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
+	<pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
+	<857291d7f7dffdd1a63ce9268c8ac91a82f2bdb5.1727718031.git.gitgitgadget@gmail.com>
+Date: Mon, 30 Sep 2024 13:01:18 -0700
+Message-ID: <xmqq1q106hdd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
 
-I did some more digging on the hangs we sometimes see when running the
-test suite on macOS. I'm cc-ing Patrick as somebody who dug into this
-before, and Johannes as the only still-active person mentioned in the
-relevant code.
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-For those just joining, you can reproduce the issue by running t9211
-with --stress on macOS. Some earlier notes are here:
+> -#define USE_THE_REPOSITORY_VARIABLE
+>  #include "builtin.h"
+>  #include "archive.h"
+>  #include "gettext.h"
+> @@ -79,7 +78,7 @@ static int run_remote_archiver(int argc, const char **argv,
+>  int cmd_archive(int argc,
+>  		const char **argv,
+>  		const char *prefix,
+> -		struct repository *repo UNUSED)
+> +		struct repository *repo)
+>  {
+>  	const char *exec = "git-upload-archive";
+>  	char *output = NULL;
+> @@ -110,7 +109,7 @@ int cmd_archive(int argc,
+>  
+>  	setvbuf(stderr, NULL, _IOLBF, BUFSIZ);
+>  
+> -	ret = write_archive(argc, argv, prefix, the_repository, output, 0);
+> +	ret = write_archive(argc, argv, prefix, repo, output, 0);
 
-  https://lore.kernel.org/git/20240517081132.GA1517321@coredump.intra.peff.net/
+This looks OK, but unlike the original, write_archive() now needs to
+be prepared to see NULL in the repo parameter.  Is that reasonable?
 
-but the gist of it is that we end up with Git processes waiting to read
-from fsmonitor, but fsmonitor hanging.
+Perdon me to think aloud for a bit.
 
-Since then, I swapped out gdb for lldb, which let me see a bit more of
-who is doing what.
+The context before this hunk handles "git archive --remote" which
+can be run outside a repository (and that is the whole reason why we
+ask SETUP_GENTLY), but this part has to happen in a repository,
+doesn't it?  Or is there some mode of operation of "git archive" I
+am forgetting that can be done without a repository?
 
-The test is waiting on a "scalar" process to exit. But that's just in
-wait_or_whine() waiting for git-fetch to exit. That git-fetch is in turn
-waiting to read() from fsmonitor after sending a command. Here's the
-backtrace:
+	... goes and looks ...
 
-    * frame #0: 0x00007ff81afdbf7e libsystem_kernel.dylib`read + 10
-      frame #1: 0x000000010a4fa6ae git`xread(fd=8, buf=0x00007ff7b5d82188, len=4) at wrapper.c:231:8
-      frame #2: 0x000000010a4fa8de git`read_in_full(fd=8, buf=0x00007ff7b5d82188, count=4) at wrapper.c:289:20
-      frame #3: 0x000000010a417684 git`get_packet_data(fd=8, src_buf=0x0000000000000000, src_size=0x0000000000000000, dst=0x00007ff7b5d82188, size=4, options=9) at pkt-line.c:355:9
-      frame #4: 0x000000010a417173 git`packet_read_with_status(fd=8, src_buffer=0x0000000000000000, src_len=0x0000000000000000, buffer="", size=65517, pktlen=0x00007ff7b5d821e4, options=9) at pkt-line.c:421:6
-      frame #5: 0x000000010a4178bb git`packet_read(fd=8, buffer="", size=65517, options=9) at pkt-line.c:519:2
-      frame #6: 0x000000010a417a07 git`read_packetized_to_strbuf(fd_in=8, sb_out=0x00007ff7b5d82380, options=9) at pkt-line.c:554:16
-      frame #7: 0x000000010a508779 git`ipc_client_send_command_to_connection(connection=0x0000600001718000, message="1727469801286015000", message_len=19, answer=0x00007ff7b5d82380) at ipc-unix-socket.c:210:6
-      frame #8: 0x000000010a377553 git`fsmonitor_ipc__send_query(since_token="1727469801286015000", answer=0x00007ff7b5d82380) at fsmonitor-ipc.c:94:9
-      frame #9: 0x000000010a376149 git`refresh_fsmonitor(istate=0x0000600002910300) at fsmonitor.c:536:20
-      frame #10: 0x000000010a376be7 git`add_fsmonitor(istate=0x0000600002910300) at fsmonitor.c:778:3
-      frame #11: 0x000000010a376e19 git`tweak_fsmonitor(istate=0x0000600002910300) at fsmonitor.c:818:3
-      frame #12: 0x000000010a430840 git`post_read_index_from(istate=0x0000600002910300) at read-cache.c:1968:2
+OK, write_archive() has its own setup_git_directory() call when
+startup_info->have_repository is false, so this happens to be OK,
+until the beginning part of archive.c:write_archive() will not
+changed to start dereferencing "repo" pointer.
 
-In fsmonitor we have a bunch of threads. The main thread is waiting on
-worker threads, which I think is expected:
+That sounds brittle, but probalby outside the scope of what this
+patch series wants to address.  It also makes git_config() calls
+even before it realizes there is no repository and dies, which
+smells fishy without actually doing any harm.
 
-  * thread #1, queue = 'com.apple.main-thread', stop reason = signal SIGSTOP
-      frame #0: 0x00007ff81afdccce libsystem_kernel.dylib`__ulock_wait + 10
-      frame #1: 0x00007ff81b01b9b9 libsystem_pthread.dylib`_pthread_join + 348
-    * frame #2: 0x000000010e5ec2b1 git`ipc_server_await(server_data=0x0000600002790000) at ipc-unix-socket.c:971:2
-      frame #3: 0x000000010e2d3a3f git`fsmonitor_run_daemon_1(state=0x00007ff7b1ca0420) at fsmonitor--daemon.c:1251:2
-      frame #4: 0x000000010e2d35c5 git`fsmonitor_run_daemon at fsmonitor--daemon.c:1399:8
+So, after all, I think this step is probably OK.
 
-Most of the other threads are just waiting for clients:
+Thanks.
 
-  * thread #2
-    * frame #0: 0x00007ff81afe2242 libsystem_kernel.dylib`poll + 10
-      frame #1: 0x000000010e5ec664 git`accept_thread__wait_for_connection(accept_thread_data=0x000060000129c000) at ipc-unix-socket.c:653:12
-      frame #2: 0x000000010e5ebf2a git`accept_thread_proc(_accept_thread_data=0x000060000129c000) at ipc-unix-socket.c:728:19
-      frame #3: 0x00007ff81b01a1d3 libsystem_pthread.dylib`_pthread_start + 125
-      frame #4: 0x00007ff81b015bd3 libsystem_pthread.dylib`thread_start + 15
-
-which I think is again expected. But not this one, which should be
-serving our command:
-
-  * thread #3
-    * frame #0: 0x00007ff81afde08e libsystem_kernel.dylib`__psynch_cvwait + 10
-      frame #1: 0x00007ff81b01a758 libsystem_pthread.dylib`_pthread_cond_wait + 1242
-      frame #2: 0x000000010e2d4a90 git`with_lock__wait_for_cookie(state=0x00007ff7b1ca0420) at fsmonitor--daemon.c:209:3
-      frame #3: 0x000000010e2d40f2 git`do_handle_client(state=0x00007ff7b1ca0420, command="1727469801286015000", reply=(git`do_io_reply_callback at ipc-unix-socket.c:431), reply_data=0x0000700007d3af38) at fsmonitor--daemon.c:764:19
-      frame #4: 0x000000010e2d3c60 git`handle_client(data=0x00007ff7b1ca0420, command="1727469801286015000", command_len=19, reply=(git`do_io_reply_callback at ipc-unix-socket.c:431), reply_data=0x0000700007d3af38) at fsmonitor--daemon.c:984:11
-      frame #5: 0x000000010e5ecaa7 git`worker_thread__do_io(worker_thread_data=0x0000600001c9c000, fd=23) at ipc-unix-socket.c:531:9
-      frame #6: 0x000000010e5ec056 git`worker_thread_proc(_worker_thread_data=0x0000600001c9c000) at ipc-unix-socket.c:605:9
-      frame #7: 0x00007ff81b01a1d3 libsystem_pthread.dylib`_pthread_start + 125
-
-We got that same command from git-fetch, but we're hanging on a pthread
-operation. It's this one, and note the suspicious comment:
-
-          /*
-           * Technically, this is an infinite wait (well, unless another
-           * thread sends us an abort).  I'd like to change this to
-           * use `pthread_cond_timedwait()` and return an error/timeout
-           * and let the caller do the trivial response thing, but we
-           * don't have that routine in our thread-utils.
-           *
-           * After extensive beta testing I'm not really worried about
-           * this.  Also note that the above open() and unlink() calls
-           * will cause at least two FS events on that path, so the odds
-           * of getting stuck are pretty slim.
-           */
-          while (cookie->result == FCIR_INIT)
-                  pthread_cond_wait(&state->cookies_cond,
-                                    &state->main_lock);
-
-So we're waiting for somebody to trigger the cookies_cond. Who's
-supposed to do that? It's done in fsmonitor_publish(), which is
-triggered when we actually see filesystem events. The main listening
-loop is also waiting on a pthread cond:
-
-  * thread #11
-    * frame #0: 0x00007ff81afde08e libsystem_kernel.dylib`__psynch_cvwait + 10
-      frame #1: 0x00007ff81b01a758 libsystem_pthread.dylib`_pthread_cond_wait + 1242
-      frame #2: 0x000000010e5fab6c git`fsm_listen__loop(state=0x00007ff7b1ca0420) at fsm-listen-darwin.c:520:2
-      frame #3: 0x000000010e2d3d76 git`fsm_listen__thread_proc(_state=0x00007ff7b1ca0420) at fsmonitor--daemon.c:1176:2
-      frame #4: 0x00007ff81b01a1d3 libsystem_pthread.dylib`_pthread_start + 125
-      frame #5: 0x00007ff81b015bd3 libsystem_pthread.dylib`thread_start + 15
-
-which is in this code:
-
-        FSEventStreamSetDispatchQueue(data->stream, data->dq);
-        data->stream_scheduled = 1;
-
-        if (!FSEventStreamStart(data->stream)) {
-                error(_("Failed to start the FSEventStream"));
-                goto force_error_stop_without_loop;
-        }
-        data->stream_started = 1;
-
-        pthread_mutex_lock(&data->dq_lock);
-        pthread_cond_wait(&data->dq_finished, &data->dq_lock);
-	pthread_mutex_unlock(&data->dq_lock);
-
-So if I understand fsmonitor correctly, this is expected: we're waiting
-for anybody to single dq_finished to tell us it's time to shut down. And
-the real work is happening via that FSEventStreamStart(), which will
-asynchronously trigger our callback when something happens in the
-working tree.
-
-In which case I don't see any particular deadlock. It's just that
-somehow establishing our cookie-wait in the thread servicing the client
-raced with there being an actual event to report.
-
-I _think_ I un-stuck things at one point by just touching files in the
-working tree, but I'm not 100% sure (I was doing a lot of things, and
-it's hard to see when things got unstuck). But that would give evidence
-to that line of thinking.
-
-I notice there's a similar hang and fix here:
-
-  https://lore.kernel.org/git/pull.1802.git.1727577690390.gitgitgadget@gmail.com/
-
-but I don't think it's quite the same thing. In our repo there are no
-submodules (in fact there are no working tree files at all!).
-
-So I'm not sure where to go from here. It seems like a race, but if so
-it happened before I attached the debugger. And I'm not at all familiar
-with this code, let alone its timing assumptions. I tried turning on
-trace2 logging and re-running (since there are some trace2 event calls
-in the code that might help us see it more in action), but doing so
-seems to make the race go away. :(
-
-The hanging wait comes from b05880d357 (fsmonitor--daemon: use a cookie
-file to sync with file system, 2022-03-25). My understanding is that the
-author has retired, but Johannes is listed as a co-author. So any
-insight is appreciated. :)
-
--Peff
