@@ -1,79 +1,79 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1913C18858D
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D00185B76
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727687610; cv=none; b=ceF4YOmAtCBos2RkSQd9InVAqTscn+YcqHa5vyL5h76fQo6mgXPoHQL/+9+dY5asxjO/bRZDmK11zcjgl3lJr2Yoj7gMCtvMW0R05xubSlW14qWIq1EtutJtcOodukFw+JYEToeqBJGTcEkEdMN0cgwaFG+8kEnDzWMYgaQ5vgE=
+	t=1727687614; cv=none; b=om0K1QK5Nx1USOKy9cgNuBLpMPhVIgdhvUaxLZ/VaA4hjDEe61KC+66CZ6DwxoEaHnSOg3+x41hMCIMDjnRYsy68V9JrbTXy9fLykhhpAWzQbaSKONCDzoFdTappdAE1qCcfQOWBUU5cJe9/VtFP3EYwtVZv8qWaesX5RMMLJGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727687610; c=relaxed/simple;
-	bh=iQPwM65CoBe3fymROaL6km5B2te5VTVja2vT5AKFdLw=;
+	s=arc-20240116; t=1727687614; c=relaxed/simple;
+	bh=ioHGAxCfNZwc2w2Kk2FZRE8YlBScfUxhRBJqJ6C4/W8=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=brQuhGwjRIUVmIPMZ2Tetqz5Y9o+XFBDcXBYsrYvp9PnNfvTtDYhmixyJULhbZXjbgoDP/I7k2C/O9/XMR3i72ohPCJ2HM6jlPB+Z1W5LzS9yZEsZtRrH5MTJl3HKBRc5tDi/JYpquP40T3oSnSLl/Av7PqOOeTivWYasmPB3Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IVdwgDt2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pYgHv9sg; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=DsX03iS+vEglqJm4IEEtSeJWRUQ303f92743Ja3WiFDtqtDRrSG8PmXco9lUEhh9uw9GdATDZcDHUUcL+ZCZzg4FhJO8FiSwVw9q/S2xM3EDuoKX1b4JlgBZlT1jb0C2wKyY4ZfQqWFjIbxR+28oq4B5Cg+yfE4b4WLeJF3URz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bS9L+3m5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LP3hmKwP; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IVdwgDt2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pYgHv9sg"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5700C11400B7
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:28 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bS9L+3m5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LP3hmKwP"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 35E0A1380459
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:31 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 30 Sep 2024 05:13:28 -0400
+  by phl-compute-11.internal (MEProxy); Mon, 30 Sep 2024 05:13:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727687608; x=1727774008; bh=mvjPC5KKjQ
-	UnuK7GCn8/Jr/zeybuo/nbGbajliZmT4Y=; b=IVdwgDt2rxaYVNqByUJ3kOZ9X+
-	8nRJywkG9c57QVnDoRVaUWl7r5di+Jo99N4/RfEsdoaJv8Mb+ts67/64vGhp827E
-	1mtSdKL0LzeKsBV7Y1O4eysne/KNQaXtvVxYdMdHmbi3IFp3+9YpKFSeKsKohyiw
-	4qwH1iYN4YSZIlrwdFDJ6FqNnL4e4+XkKhVwjBxh5S/rEYqqAtTyL2gXrLXhOXFL
-	aJ+vi8BhxnQbg3npBwy0t48Dj/wypnKSxor1dbMFe92j3pyJIwe2odcsnfwoHcTa
-	XX2WouydV/z18yzm9OkuCipiUcZ5UC7Xo99hDw99Sv6BrLaeUM4+X2v7Mv3g==
+	:subject:to:to; s=fm2; t=1727687611; x=1727774011; bh=QAGQG/pVp4
+	OPTpBYnfwNgwaQjCmH/Je2DlDtoTCQ/So=; b=bS9L+3m50MrWT7kQ05nwnOf78v
+	eESytOvNLHVIFCT9g9CQPDKWogp8UQQqz7rLSl9rTQXkSww5G2Z84iiS1Br+2ZxW
+	9oZIVfQqIyGGP4GOljkWia2ZgIDdVDPX0pYVfL6UU/wDp/lcgT+OdqYrE5nIZq14
+	bfH/F8k545DfuSqJC/eO2eDUFvWeH33B81PeBVr1vh8hX+N7jpJ5OqyCWvg0b8O3
+	VzMEwrRmUwhUf1p/36pIx1YU30VKW+fSAiIur9FPuzV1JejVzeNQYsDTnqXp1cYz
+	gIv3bUKk5nDjd9IyVM6OTXJXSTQDfoa9m3BgHnmCMSGxMUUzW3E2fagEoKuA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727687608; x=1727774008; bh=mvjPC5KKjQUnuK7GCn8/Jr/zeybu
-	o/nbGbajliZmT4Y=; b=pYgHv9sguCzuDVjaDT0KB23ivHC822ay1LoXzGIK68NI
-	dJL8E2S6yBNKXKLws2JB7bAzMypXHnlorajbGAX1tbjyjtnafTyytpN0NmP1AsbE
-	qC4NuRlq4Czw7u5C0AnS1tGsln0nTcps0CQoCdyHdZnGtH4Q+gopgzwFYm96TfoO
-	DATROG5bYLHDWlYeTU8yrHhQICeE+Cd+UiRxPK7eT92CbDGgB60fJgCg6ztOOdKf
-	7NAuVnCTshxj+RMPSNmDClAVLNZUN0itIfXjq7DZABE5DvaMI5JGh6FbxuhvUNDR
-	OCsZV0lTZVQIn3fbQc7DPOuZ/Q3v679Eqp0YIEh8ew==
-X-ME-Sender: <xms:uGv6ZnRd3J_2_GSCES_iTeBi4ihlwn1shmQmLcsDaDocfpqVB0GlpQ>
-    <xme:uGv6ZowesBPbVcV62w2v9w3KXjG0eoy-MdZLMVhEueglSh9c9yGe9iebBgxuwrl4Z
-    zRVqX1AiVpZztZQKg>
-X-ME-Received: <xmr:uGv6Zs0h3yUs5b-3FlgM7ls3iA-fD7XSb7ciFEFicn8H_csMwi3AgOm0roizm1XYRIEvGa2dgr2V8J1wm_klEJhb_9L3nlHiwR_9Pma7BZOumgA>
+	fm2; t=1727687611; x=1727774011; bh=QAGQG/pVp4OPTpBYnfwNgwaQjCmH
+	/Je2DlDtoTCQ/So=; b=LP3hmKwPERBsMphM/o8w4GfC00BZsdGwy7nhqZeaZ3yy
+	opEazU0Iuj1iNX92HssePPFEHHduxS6R+FJIVQVHgNFMZ5ZDSPEITtGnknZuTLiq
+	9O6tFZ7uZOnsXe85OEFJydwpVyji0/DKDPEvDtIKf8XU+Cr5b6eYUYu4KfpdhSFF
+	9sICLmLVPWSij6ksMeUTWptgbIwmOwDVPjT+aBTrdoXvmktnHAJ1Cn9SAE4wdP0u
+	F4D8XBcrwAqyPNxYdut/zAOSf1fe+lIEbrmQjrvlOVgor1S6dRzYrc7+ZkyxWzip
+	e+cMpMDuOaKy3DUUFngBFQuX8f/duDYoPrkSqscxNg==
+X-ME-Sender: <xms:u2v6ZmDyf_9QujCFhPGcN0x8L-1oVm7qPcFKUeSQSGCncDjqLjghwg>
+    <xme:u2v6ZgiPsrWWa3nl0rKrLmBpJggYTwA9pMgD_p7ruKLmKpaVBgYV2wvyFm9uh7PwZ
+    EKmFqg4MsAwkfkXGA>
+X-ME-Received: <xmr:u2v6ZpluSIxIkuKOn8c9z2nVhDY4P2hrVm7Wkduf9ZfN5ng_K6yLnOhcq88ohwJFihqGGofVGQ1soAWOKpvDgYnltdblNmiIG9gmK4GVhIeuwdQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:uGv6ZnD-PsygxKALR3PkX63BAlu5XJql8KLZ0QXn89rnBHB6vosdzg>
-    <xmx:uGv6Zgi67npNjOPkvLkVi7dmVcBqI-T7zc8k-wsLMoqSaIz0yqlspg>
-    <xmx:uGv6ZroBD8NxLQQK2thAkMV6HOm1S0-OeWSrBQ4w613eJFr0wKXYLg>
-    <xmx:uGv6ZrhpBt9tAm4I_RuujqoclfjGOxPCfBnHgtRJsODJq61Gcti6Gg>
-    <xmx:uGv6ZsZnreUr-guTqTmq6_EZPVMbMPawi6EYxA5SBtMdhxLl0eEX1ULu>
+X-ME-Proxy: <xmx:u2v6Zkz5I7Zvt5Y3hCneubWV4t0FIdm7gLPNncpDgHm_FLZ-VjlCDA>
+    <xmx:u2v6ZrQxn9UCFg9yWatxVKYX5Bo4-JNM-ImEentA1kdRHcHLbYCBqQ>
+    <xmx:u2v6ZvZ9RmbNZd1NNZcBcvyPVvxa-jLOTpBse15dvLzFWS8s_JYsTA>
+    <xmx:u2v6ZkQ3lMYq1c_1A6_J9L9DbD1IojJQl-Vigl2KaAribc_psjiZ_Q>
+    <xmx:u2v6ZiJizCkH4Z_a-uxhhrziB2H2_WbORoCuzBh9rWBPCfGowpf_qdzf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:27 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:30 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 907e9062 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3f14d376 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 30 Sep 2024 09:12:41 +0000 (UTC)
-Date: Mon, 30 Sep 2024 11:13:24 +0200
+	Mon, 30 Sep 2024 09:12:44 +0000 (UTC)
+Date: Mon, 30 Sep 2024 11:13:27 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 05/23] wt-status: fix leaking buffer with sparse directories
-Message-ID: <4196fea159a98ff9a25ca0f65a9c669f45155a7b.1727687410.git.ps@pks.im>
+Subject: [PATCH 06/23] submodule: fix leaking submodule entry list
+Message-ID: <7781d7644e9f76a6638cabc0412d583ad703905d.1727687410.git.ps@pks.im>
 References: <cover.1727687410.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,72 +85,119 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727687410.git.ps@pks.im>
 
-When hitting a sparse directory in `wt_status_collect_changes_initial()`
-we use a `struct strbuf` to assemble the directory's name. We never free
-that buffer though, causing a memory leak.
+The submodule entry list returned by `submodules_of_tree()` is never
+completely free'd by its only caller. Introduce a new function that
+free's the list for us and call it.
 
-Fix the leak by releasing the buffer. While at it, move the buffer
-outside of the loop and reset it to save on some wasteful allocations.
+While at it, also fix the leaking `branch_point` string.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 1 +
- wt-status.c                              | 6 +++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ branch.c                    |  8 ++++++--
+ submodule-config.c          | 15 ++++++++++++++-
+ submodule-config.h          |  3 +++
+ t/t3207-branch-submodule.sh |  1 +
+ 4 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index eb32da2a7f..55efafe4e0 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -5,6 +5,7 @@ test_description='compare full workdir to sparse workdir'
- GIT_TEST_SPLIT_INDEX=0
- GIT_TEST_SPARSE_INDEX=
+diff --git a/branch.c b/branch.c
+index 08fa4094d2..44977ad0aa 100644
+--- a/branch.c
++++ b/branch.c
+@@ -738,6 +738,7 @@ static int submodule_create_branch(struct repository *r,
+ 
+ 	strbuf_release(&child_err);
+ 	strbuf_release(&out_buf);
++	free(out_prefix);
+ 	return ret;
+ }
+ 
+@@ -794,7 +795,7 @@ void create_branches_recursively(struct repository *r, const char *name,
+ 	create_branch(r, name, start_committish, force, 0, reflog, quiet,
+ 		      BRANCH_TRACK_NEVER, dry_run);
+ 	if (dry_run)
+-		return;
++		goto out;
+ 	/*
+ 	 * NEEDSWORK If tracking was set up in the superproject but not the
+ 	 * submodule, users might expect "git branch --recurse-submodules" to
+@@ -815,8 +816,11 @@ void create_branches_recursively(struct repository *r, const char *name,
+ 			die(_("submodule '%s': cannot create branch '%s'"),
+ 			    submodule_entry_list.entries[i].submodule->name,
+ 			    name);
+-		repo_clear(submodule_entry_list.entries[i].repo);
+ 	}
++
++out:
++	submodule_entry_list_release(&submodule_entry_list);
++	free(branch_point);
+ }
+ 
+ void remove_merge_branch_state(struct repository *r)
+diff --git a/submodule-config.c b/submodule-config.c
+index 471637a725..9c8c37b259 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -901,8 +901,9 @@ static void traverse_tree_submodules(struct repository *r,
+ 	struct submodule_tree_entry *st_entry;
+ 	struct name_entry name_entry;
+ 	char *tree_path = NULL;
++	char *tree_buf;
+ 
+-	fill_tree_descriptor(r, &tree, treeish_name);
++	tree_buf = fill_tree_descriptor(r, &tree, treeish_name);
+ 	while (tree_entry(&tree, &name_entry)) {
+ 		if (prefix)
+ 			tree_path =
+@@ -930,6 +931,8 @@ static void traverse_tree_submodules(struct repository *r,
+ 						 &name_entry.oid, out);
+ 		free(tree_path);
+ 	}
++
++	free(tree_buf);
+ }
+ 
+ void submodules_of_tree(struct repository *r,
+@@ -943,6 +946,16 @@ void submodules_of_tree(struct repository *r,
+ 	traverse_tree_submodules(r, treeish_name, NULL, treeish_name, out);
+ }
+ 
++void submodule_entry_list_release(struct submodule_entry_list *list)
++{
++	for (size_t i = 0; i < list->entry_nr; i++) {
++		free(list->entries[i].name_entry);
++		repo_clear(list->entries[i].repo);
++		free(list->entries[i].repo);
++	}
++	free(list->entries);
++}
++
+ void submodule_free(struct repository *r)
+ {
+ 	if (r->submodule_cache)
+diff --git a/submodule-config.h b/submodule-config.h
+index b6133af71b..f55d4e3b61 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -136,4 +136,7 @@ struct submodule_entry_list {
+ void submodules_of_tree(struct repository *r,
+ 			const struct object_id *treeish_name,
+ 			struct submodule_entry_list *ret);
++
++void submodule_entry_list_release(struct submodule_entry_list *list);
++
+ #endif /* SUBMODULE_CONFIG_H */
+diff --git a/t/t3207-branch-submodule.sh b/t/t3207-branch-submodule.sh
+index fe72b24716..904eea7df5 100755
+--- a/t/t3207-branch-submodule.sh
++++ b/t/t3207-branch-submodule.sh
+@@ -5,6 +5,7 @@ test_description='git branch submodule tests'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-rebase.sh
  
- test_expect_success 'setup' '
-diff --git a/wt-status.c b/wt-status.c
-index 6a6397ca8f..6a8c05d1cf 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -717,6 +717,7 @@ static int add_file_to_list(const struct object_id *oid,
- static void wt_status_collect_changes_initial(struct wt_status *s)
- {
- 	struct index_state *istate = s->repo->index;
-+	struct strbuf base = STRBUF_INIT;
- 	int i;
- 
- 	for (i = 0; i < istate->cache_nr; i++) {
-@@ -735,7 +736,6 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
- 			 * expanding the trees to find the elements that are new in this
- 			 * tree and marking them with DIFF_STATUS_ADDED.
- 			 */
--			struct strbuf base = STRBUF_INIT;
- 			struct pathspec ps = { 0 };
- 			struct tree *tree = lookup_tree(istate->repo, &ce->oid);
- 
-@@ -743,9 +743,11 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
- 			ps.has_wildcard = 1;
- 			ps.max_depth = -1;
- 
-+			strbuf_reset(&base);
- 			strbuf_add(&base, ce->name, ce->ce_namelen);
- 			read_tree_at(istate->repo, tree, &base, 0, &ps,
- 				     add_file_to_list, s);
-+
- 			continue;
- 		}
- 
-@@ -772,6 +774,8 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
- 			s->committable = 1;
- 		}
- 	}
-+
-+	strbuf_release(&base);
- }
- 
- static void wt_status_collect_untracked(struct wt_status *s)
 -- 
 2.46.2.852.g229c0bf0e5.dirty
 
