@@ -1,263 +1,118 @@
-Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F447185B74
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 22:24:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C05E188904
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 22:27:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727735047; cv=none; b=dgGM6KtCG42drYEF0GlyA8l+phTHAToBIvda/vpNsOhM/kkZc8TsAbQuMmGCqZrvg3GqxAxudqpaH4mNmrlasr1etuBliSQtuJc3/mkhWAn2XqDn1+AXdWB+a9zwBu+/w0fdd85UVDpVJo9k6PA7HupWJkA6coAvIcqFiVBtA0w=
+	t=1727735239; cv=none; b=HXX+Je3qxakDt0T7mYSaRwN5IyP22q0F5NgOZP7rJrXb5eRVruZsRd/jByCaG4nribzHLtZlquoLZmUawyKs/pUOUNE0Ot0Eaa2DlJkhE7q2YGEUe8f542PR00UL2Hsk1GHTwczWvtOv7srsdi94OTSJzgVvYaABPAntk+ytvFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727735047; c=relaxed/simple;
-	bh=wHzc577Rhf0HaNdAF+tZkN2qqaTzVqgo+VadjMDfxnU=;
-	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
-	 MIME-version; b=nu5FYyRHPsOUM029JBZc+M+65Ovp/CGpESLjZ3pq/acdf9H+WRT/IlQ0jSGconxMCvWlA1VFrg4Up9hFvVgriWOyjOLxK3ug9oFJBtprzovNmX/b8SdomalmnyQT2Ge3Sqle6JTvkFzt8rM8h4pAz4Nly3ohrz90zmj8vbW8Uic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=V+wrGhGT; arc=none smtp.client-ip=192.29.178.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1727735239; c=relaxed/simple;
+	bh=MoGzMZkV6/NArMipQnzY0fquTZ07ArEwnpkWtSYHTC0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OBQOmlYCEJnVV+ZS9OKAtEHWCLmY7QmebqyMlvvsFQF1xalprjU/nBBagr35h2TNa4Pfitilya7ae8uRmZVsmRyyLrM6AE8sWek6WJUgBxSWc6o14zK4ZvD5rIEWJMmqz+UVl7MjaaW/jWVJP6o1Hds1GLl7cWG5cu0ILhcfetM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e2smEujF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QU3LhyJ3; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="V+wrGhGT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=DMl/MXN+52ljcRsXWcpgZZ1JRwXdwgm/eWpEyvA7YP0=;
- b=V+wrGhGTTqLQKZESSEhuBO/77eMJRLDgO4BDqwum0JoCTpgeRsHVbzR1gthMZ4yW2qlm3QXIVVFW
-   yDrNrfzMrYbgUjQDnhzhtd27M2gqlaVeGv0S12qGETXL8roMUYcydh0FHQRPXBWEmhLBOpw+G2FK
-   vB5mulbcsjxtFLxc3PoQKs6Rg84zKX+DK6EAMsY0zVbplJKJOkEF6+3NvCLbyDAu/npubAjXifRr
-   zwvUcI92jXjF1EW6SVBG1DOicVx7fwJ0pKb9jl9eDTppMG6WZVIaZ/bDQ4CkBy/g5FFHkBbDXbuP
-   Pf9fsrC16V1GazYFuHz7eYkNBndGG6sP0oCFfw==
-Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SKN003EOCW3CN50@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Mon, 30 Sep 2024 22:24:03 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-From: Bence Ferdinandy <bence@ferdinandy.com>
-To: git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk,	Junio C Hamano <gitster@pobox.com>,
-	Taylor Blau <me@ttaylorr.com>,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH v4 5/5] fetch: set remote/HEAD if it does not exist
-Date: Tue,  1 Oct 2024 00:19:55 +0200
-Message-id: <20240930222025.2349008-6-bence@ferdinandy.com>
-In-reply-to: <20240930222025.2349008-1-bence@ferdinandy.com>
-References: <D4JIG4VS5WVN.2F0PNU5514UEL@ferdinandy.com>
- <20240930222025.2349008-1-bence@ferdinandy.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e2smEujF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QU3LhyJ3"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4DE661140565;
+	Mon, 30 Sep 2024 18:27:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Mon, 30 Sep 2024 18:27:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1727735236; x=1727821636; bh=85hYB+pHE7
+	leaamOMPslf5fSApegYJ5Gj2EdN1aSuCE=; b=e2smEujFyrUmf56RLU4xn1Fn8V
+	5qPw1okXsVDx+WsZgp35pSvY1OLoN2ymTlCZeNAzn/Jm4GYaTaVEhYGTJk0bhYth
+	jnKn+a4v7MSyGW35DrWSGafA++22+HqVxRi42G6UL9mS/f3xm2OI5CbLXeC26kr1
+	+k6Zry4PpKB7COc4BraNIruomuW0espomeQEExlcOeAtMNgrZkNCM2zaCYDOul0L
+	7JprvHiIDAz5ziHD8NKVIxgHYmh32ZAzP/5hcYaTt5wXox8FpKHosxe/2m1B9giF
+	xNcAs/GjBsZaBvs94sFEbIbb5e9FRoL39heoTfmTTLdzUPftpaCs2XUtfydg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727735236; x=1727821636; bh=85hYB+pHE7leaamOMPslf5fSApeg
+	YJ5Gj2EdN1aSuCE=; b=QU3LhyJ3sdqx3mxBASSYkg+fbQqiCClDglxk2krgZh5r
+	P9bT9d1Tve+y6Xdqk7E2inwkwx0z1VSSzeFnMGiQPRKAKMoUuwJJToSlGJuZ9GHG
+	4EDVDXwurUXDGvDvMye2l4erVGf24jc2d8p2LDMmE2ckOnrYccEJ2oNHbmJXZp/g
+	yKA8mi4cyk150EGS2ru5D+z71W2pP33NsmP5ssZdNcixYmfRH8soM0+C85P9BHeS
+	uVURN4ukjETPQJUzRgcHRght8NrsXrdbcCnN3Wx+ew1/m014+UWZ7PlXgi/Jpcdm
+	iyaASiMvVuCwSqaGpvDG7tpYl0Kpm0DUzs2IXC0lig==
+X-ME-Sender: <xms:wyX7Zs2xH88Ax14NgS-vg05CDwmPg2al7hXLGtgzShhRLitkyHiX2w>
+    <xme:wyX7ZnH-LqE1Lo63uXNLDZtC5Y52IKW1ZVNXDa_WV6b04ok-fDkHGwL14b63yHy90
+    NMZu8iX-fHRgLDV4Q>
+X-ME-Received: <xmr:wyX7Zk40KF9maBlJTCPUT9KjEXHFZbFTUoC6YQk8-QHxvqsmBIPESEVk1qhUl8yS8sTqY8_LnmQyLGfoGYnkZr64MRZbVHxg2SUQ9ow>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduiedguddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestg
+    hruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    jhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlh
+    horhhrrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdr
+    tghomhdprhgtphhtthhopehmhhgrghhgvghrsegrlhhumhdrmhhithdrvgguuhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wyX7Zl3F58OV0F8xpu6HiIyneicjrWLPQqrtreg3zEJ8AKyfpUe0MA>
+    <xmx:wyX7ZvFaAHmwotmMdHHBMB37vCG7hZOdZscjUcZQW_M4SyWdfGKm9Q>
+    <xmx:wyX7Zu_a7Sur-HXY3nuYk2hsNx6IIjU04S9UH_BwZamki8YDID0z6Q>
+    <xmx:wyX7ZkmD6u9U4VENfwZXgBB9vRl-YlzXxTxWS0uO2RoKca25dJbJBQ>
+    <xmx:xCX7ZmD3nPgmpVI_Jerk_fj6vk9YxzQiqATr3SSCcnzdez6hUh3f0yab>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Sep 2024 18:27:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  Christian Couder
+ <christian.couder@gmail.com>,  git@vger.kernel.org,  John Cai
+ <johncai86@gmail.com>,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 0/4] Introduce a "promisor-remote" capability
+In-Reply-To: <ZvsXlq7-28mdxNc_@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Mon, 30 Sep 2024 21:26:46 +0000")
+References: <20240731134014.2299361-1-christian.couder@gmail.com>
+	<20240910163000.1985723-1-christian.couder@gmail.com>
+	<xmqqikuijni0.fsf@gitster.g>
+	<CAP8UFD34YJ23WSjaP3m8Ao6iZja_NJWfQ0BNEsaNU_F_X3qA_Q@mail.gmail.com>
+	<xmqq34lkg1ck.fsf@gitster.g> <ZvpZv_fed_su4w2-@pks.im>
+	<ZvsXlq7-28mdxNc_@tapette.crustytoothpaste.net>
+Date: Mon, 30 Sep 2024 15:27:14 -0700
+Message-ID: <xmqq4j5w4w1p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: 8bit
-Reporting-Meta:
- AAHyeI1GC1WEq4rT6PdihqO8P/mfN0dkRFH643wIUILRJE9M1SidZS4CDd3XE2nQ
- kt2nhmTIBMHS8zWb9GOqjObAD0bgyHTbzQ64cJ4He+VWVge9fsMzeX+Y+64vm3y2
- WptheT54L/rb7Py5Bv2TqSuD0TMVbhWqf4WQHEHLPsOKgTpsFkbSLql5JmfEwwxQ
- xf+u9Qfv7rQjSCTDAMhUNfqs3vUhIM5Wm/FwdbLX14EkxOoqt+e2fyXftVgxx2E9
- W1lUNkC8So8xo+5MhtleOlCKtkDcMx+y+t1FEpgV1Fj9gm5XhydY236/i3TGVF9E
- YAjcnq7f7XUgQs6ZRU9kbtJHs0KukEVShbvHOuZFKcwGpDDEENCeSppwJA99GGy4
- e2KXnY7iG9DWE11TUzJNjZjNxKR6s5HPXxA7bhvn9hisRykbi1X7EOtWrvAtef35
- ReqYXn7BGYUvo1ZHgcum+CUymoXmnw19p1UFWDWhEd2J3+Kz9U44VHE3
+MIME-Version: 1.0
+Content-Type: text/plain
 
-If the user has remote/HEAD set already and it looks like it has changed
-on the server, then print a message, otherwise set it if we can.
-Silently pass if the user already has the same remote/HEAD set as
-reported by the server.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
----
+> One idea I had about this was pluggable storage backends, which might be
+> a nice feature to add via a dynamically loaded shared library.  In
+> addition, this seems like the kind of feature that one might like to use
+> Rust for, since it probably will involve HTTP code, and generally people
+> like doing that less in C (I do, at least).
 
-Notes:
-    v3: - does not rely on remote set-head anymore so it only authenticates
-        once
-        - uses the new REF_CREATE_ONLY to atomically check if the ref exists
-          and only write it if it doesn't
-        - in all other cases the maximum it does is print a warning
-    
-    v4: - instead of the discarded REF_CREATE_ONLY, it uses the existing,
-          but updated transaction api to request a silent create only
-        - it now uses the atomic before_target to determine reporting
-        - refactored for legibility
+Yes, yes, and yes.
 
- builtin/fetch.c           | 83 +++++++++++++++++++++++++++++++++++++++
- t/t5514-fetch-multiple.sh |  9 +++++
- 2 files changed, 92 insertions(+)
+>> Also Cc'ing brian, who likely has a thing or two to say about this :)
+>
+> I certainly have thought about this a lot.  I will say that I've stepped
+> down from being one of the Git LFS maintainers (endless supply of work,
+> not nearly enough time), but I am still familiar with the architecture
+> of the project.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c900f57721..f10a9d5371 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1577,6 +1577,82 @@ static int backfill_tags(struct display_state *display_state,
- 	return retcode;
- }
- 
-+static void report_set_head(const char *remote, const char *head_name,
-+			struct strbuf *buf_prev) {
-+	struct strbuf buf_prefix = STRBUF_INIT;
-+	const char *prev_head;
-+
-+	strbuf_addf(&buf_prefix, "refs/remotes/%s/", remote);
-+	skip_prefix(buf_prev->buf, buf_prefix.buf, &prev_head);
-+
-+	if (prev_head && !strcmp(prev_head, head_name))
-+		;
-+	else if (prev_head) {
-+		printf("'HEAD' at '%s' has changed from '%s' to '%s'\n",
-+			remote, prev_head, head_name);
-+		printf("Run 'git remote set-head %s %s' to follow the change.\n",
-+			remote, head_name);
-+	}
-+}
-+
-+static const char *strip_refshead(const char *name){
-+	skip_prefix(name, "refs/heads/", &name);
-+	return name;
-+}
-+
-+static int set_head(const struct ref *remote_refs)
-+{
-+	int result = 0;
-+	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT,
-+		b_local_head = STRBUF_INIT;
-+	const char *remote = gtransport->remote->name;
-+	char *head_name = NULL;
-+	struct ref *ref, *matches;
-+	struct ref *fetch_map = NULL, **fetch_map_tail = &fetch_map;
-+	struct refspec_item refspec = {
-+		.force = 0,
-+		.pattern = 1,
-+		.src = (char *) "refs/heads/*",
-+		.dst = (char *) "refs/heads/*",
-+	};
-+	struct string_list heads = STRING_LIST_INIT_DUP;
-+	struct ref_store *refs = get_main_ref_store(the_repository);
-+
-+	get_fetch_map(remote_refs, &refspec, &fetch_map_tail, 0);
-+	matches = guess_remote_head(find_ref_by_name(remote_refs, "HEAD"),
-+				    fetch_map, 1);
-+	for (ref = matches; ref; ref = ref->next) {
-+		string_list_append(&heads, strip_refshead(ref->name));
-+	}
-+
-+
-+	if (!heads.nr)
-+		result = 1;
-+	else if (heads.nr > 1) {
-+		result = 1;
-+	} else
-+		head_name = xstrdup(heads.items[0].string);
-+	if (head_name) {
-+		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", remote);
-+		strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", remote, head_name);
-+		/* make sure it's valid */
-+		if (!refs_ref_exists(refs, b_remote_head.buf))
-+			result |= error(_("Not a valid ref: %s"), b_remote_head.buf);
-+		else if (refs_update_symref(refs, b_head.buf, b_remote_head.buf,
-+					"remote set-head", &b_local_head, true))
-+			result |= error(_("Could not setup %s"), b_head.buf);
-+		else {
-+			report_set_head(remote, head_name, &b_local_head);
-+		}
-+		free(head_name);
-+	}
-+
-+	strbuf_release(&b_head);
-+	strbuf_release(&b_local_head);
-+	strbuf_release(&b_remote_head);
-+	return result;
-+}
-+
- static int do_fetch(struct transport *transport,
- 		    struct refspec *rs,
- 		    const struct fetch_config *config)
-@@ -1646,6 +1722,8 @@ static int do_fetch(struct transport *transport,
- 				    "refs/tags/");
- 	}
- 
-+	strvec_push(&transport_ls_refs_options.ref_prefixes,"HEAD");
-+
- 	if (must_list_refs) {
- 		trace2_region_enter("fetch", "remote_refs", the_repository);
- 		remote_refs = transport_get_remote_refs(transport,
-@@ -1790,6 +1868,10 @@ static int do_fetch(struct transport *transport,
- 				  "you need to specify exactly one branch with the --set-upstream option"));
- 		}
- 	}
-+	if (set_head(remote_refs))
-+		printf("Ran into issues with creating \'%s/HEAD\',\n"
-+			"use \'git remote set-head -a %s\' to investigate.\n",
-+			gtransport->remote->name,gtransport->remote->name);
- 
- cleanup:
- 	if (retcode) {
-@@ -2020,6 +2102,7 @@ static int fetch_multiple(struct string_list *list, int max_children,
- 	return !!result;
- }
- 
-+
- /*
-  * Fetching from the promisor remote should use the given filter-spec
-  * or inherit the default filter-spec from the config.
-diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
-index 579872c258..ef5874b7b3 100755
---- a/t/t5514-fetch-multiple.sh
-+++ b/t/t5514-fetch-multiple.sh
-@@ -45,14 +45,17 @@ test_expect_success setup '
- '
- 
- cat > test/expect << EOF
-+  one/HEAD -> one/main
-   one/main
-   one/side
-   origin/HEAD -> origin/main
-   origin/main
-   origin/side
-+  three/HEAD -> three/main
-   three/another
-   three/main
-   three/side
-+  two/HEAD -> two/main
-   two/another
-   two/main
-   two/side
-@@ -97,6 +100,7 @@ cat > expect << EOF
-   origin/HEAD -> origin/main
-   origin/main
-   origin/side
-+  three/HEAD -> three/main
-   three/another
-   three/main
-   three/side
-@@ -112,8 +116,10 @@ test_expect_success 'git fetch --multiple (but only one remote)' '
- '
- 
- cat > expect << EOF
-+  one/HEAD -> one/main
-   one/main
-   one/side
-+  two/HEAD -> two/main
-   two/another
-   two/main
-   two/side
-@@ -221,14 +227,17 @@ test_expect_success 'git fetch --multiple --jobs=0 picks a default' '
- 
- create_fetch_all_expect () {
- 	cat >expect <<-\EOF
-+	  one/HEAD -> one/main
- 	  one/main
- 	  one/side
- 	  origin/HEAD -> origin/main
- 	  origin/main
- 	  origin/side
-+	  three/HEAD -> three/main
- 	  three/another
- 	  three/main
- 	  three/side
-+	  two/HEAD -> two/main
- 	  two/another
- 	  two/main
- 	  two/side
--- 
-2.47.0.rc0.5.gf1cffeb8df.dirty
-
+Thanks.
