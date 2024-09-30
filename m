@@ -1,135 +1,181 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7902118C03D
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:14:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D8B188010
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:18:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727687669; cv=none; b=Ukg8j+blOyrSWFZwJcSaaLrZL0Ee/OdyFjFc4/y5SCo8Vyo+68L1uT3z4xAvZ2Tu3SPFTBoScK9XeX7fvgXRcYXnj8BuNSpKHPHdLKQU4ERbxNsax41/u/Z8ngJw2QAZAmos8zGOi/AM3+kZQyafnW4qGFt/E1Rab6Jill7b72k=
+	t=1727687884; cv=none; b=pIZEVjYW9QkWy0SJG6PpL0DgyzDkqJKrjPh+vBu14COeo/qX4mZv05bLJ+1MNV/r/kBdHXcWeHL7OCQx1HIYCUfMLylpdMcxC4QdbYdu2dWIhG1EqJSd5VPE6N+EM8wVfXIm6FOps2nAJaGbB+jeleCqOOAqXYD0COPr9nYEBjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727687669; c=relaxed/simple;
-	bh=r84pHqvqnnZLhcGYAgxp8mPZFUsUT+uJjLnQhCqzmoA=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TrioRvcx1tUYvdy0o5dMhWwk+7wdxb1B57tmr4xsvfOBYZHZfcDmdUqL+d2H/o/U/JEQ+zufBPhHOeg4+E85zfVfdSoaYOcZTJrjgVV3h+lgFJgimUjM57nWcChY2hDvxi64QzOUS+GOURg21P6RDpTSIYXxhPaCq+iBm2Pj1S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=If4VVvQ9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rm2NXwHb; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1727687884; c=relaxed/simple;
+	bh=oDa/aKRXH/yDdcKJ0mIRBo0Ui27AHpAS8dd0Q/9D7VA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DUsh0/EjGaN+eu3V/NtdKRVx41pCoKkoMa7e5eVbR+LN+niyA+c+KjffZGCvkf/aElGJXes3uk0tsT80J8yGZS0GyHBU4cNtGP7Rr6w0kSMRsUfGjDT7wpeg6TXQvqpctQU4xSvUepR4ico/3qhLj6SXmyPqP+Urog2xUlqmE5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UQyFL+zZ; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="If4VVvQ9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rm2NXwHb"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CF2E8114026F
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 05:14:27 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 30 Sep 2024 05:14:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727687667; x=1727774067; bh=p71VE69Wh/
-	AN4ZcIi14bccifRUnxznCxhnPgwrZgpd0=; b=If4VVvQ9SjG5Znt7X7dO2A1lUk
-	/QRFBuYnPPAV3IhFzDVakfg+CrYBGzA8+js/w16YXQjdOdZ0m6VsjzoVejyoJIqF
-	9jpNSTD58mI87QB3gWLoqqOdWGFJxxpeIinxOCfdVhsoxkDWNA7mRHQWDP59S/i0
-	Z3bPG/6m6ePORyeh/M8u+LgiDw/bsS/06ls1F7MH9bj7MGBH1S7E8uGyOCoH2T1r
-	bpWLqzckZ4gz3TW1aw1bRxI94PBvtwVHxrSF/VNCyTr9Pm4F6H+9sTTh8Z6AiZdF
-	LqDrLwRd/9+ZcImHemZfnaNZNHhb3FugTlSmt+QQy0BdmMifAC+nn3KHrU8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727687667; x=1727774067; bh=p71VE69Wh/AN4ZcIi14bccifRUnx
-	znCxhnPgwrZgpd0=; b=Rm2NXwHbjBh07SfwA/6Ehj11XQ5ALsGgsYlJVMPyt3uT
-	G/1k1AQK5fU5VW8Qgm1IrOpZREJn+a629fFsKsGVlvU+T2rHOgIu1avJHpVSH8hl
-	QZ9snbg4BxVNtV+d8UPdWemfIYabK6Cb4CpH1Z1qjow8N/Ocd8UVeQulzLHZrFvP
-	txkOdXgSbrqXDQmrNuexR/6Qawaq4oFMJhm4GZ8Sd/Hib4uWljvqBJCe1SXbLNxG
-	kT/7izsymKNFFxX3UYgNDSdSoa7FkjaWckkMPLbf8y5EvYAiplZEjMOi+gL4s6tA
-	sBGtzMeGRSTtXNre0ZE3UrCB8ER/+glr8EnN+F9ykw==
-X-ME-Sender: <xms:82v6Zgvrc2RCrEgvopGdB84-4j4zU2SYJo83MO6ZvBcSWWOcTk3ljQ>
-    <xme:82v6ZtcRoWpumgVZfWV1NCbo58brZCpZhctfzzjS-a_ynPbimLD4PVRtI8NvhrIvg
-    TqIrqAOue2ZnrKJWQ>
-X-ME-Received: <xmr:82v6ZrwaMPj6kocUpcuqUkF54o7IHYVrDRbi55BKaNLyCk2aB1CpJfHYmI49DH-qa5K8Yw5cL66nmUAj2HRaf-Lea3iUlAHxib9dSpEJBuWDq00>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedguddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
-    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
-    egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepieenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
-    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:82v6ZjO2s9bnaCfDstVWrKzh8vSK22AY6cMPWrBj1WyLvImJjN1jWw>
-    <xmx:82v6Zg8qfk2utDaS_k9XVZN_Xh_WqR9EdRti7ISu5tFvH9BSeYGm0w>
-    <xmx:82v6ZrX-O6EWznBY19lTRrIDPc48oHlUfAlr5YrDxIx7gT7UZ9HoYQ>
-    <xmx:82v6Zpei28TnLopJY2b7hxKiQa9SY_hFY3WR-UZa7ishpoYJbESRmQ>
-    <xmx:82v6Zuk0CmlxLgHjRm9lAxHt9upVG-Wc8OK3QpTFQ01NXggddRvS5yOt>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 30 Sep 2024 05:14:27 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d847716b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 30 Sep 2024 09:13:41 +0000 (UTC)
-Date: Mon, 30 Sep 2024 11:14:24 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 23/23] builtin/send-pack: fix leaking list of push options
-Message-ID: <312de7828b646101145975466574434d2dae048e.1727687410.git.ps@pks.im>
-References: <cover.1727687410.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UQyFL+zZ"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5c5b9d2195eso5490988a12.1
+        for <git@vger.kernel.org>; Mon, 30 Sep 2024 02:18:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727687881; x=1728292681; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oOIX00GkzYl1hX2e6e+W9PFxF2WJv3OXVIEg+BQjZOo=;
+        b=UQyFL+zZjEnycxGpaiC9gdVwJOiwtCcaBrVEm8lpmDVUzryOu1ch0+mVTi6Bu9Lql7
+         ybJ6Q8AuDofgGu8xYzWor9jSK+ypLb2dpFXKRuKV3ZFMlr2+ayElpe5dcrhhRbHYjLKd
+         WISnSKS/l3QG8+O+V4kzL2Ikm7QzIxAEk+k9yRyzlYwGWm68tu0sLavfD4mN9HVCJHug
+         7/ugYCYrzZSmNTQQI6+6ZF7DHNEeUEPHN/OvxR48GcneZCgsW/KKVZ9RA/kLFMebLEAF
+         Cc/Yl6onI5ApcTVn2S+ryG6zyDu+TnhqixWAiLCJSHNvuo4fyYnqNZ7CRdi0/JdABRUb
+         znAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727687881; x=1728292681;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oOIX00GkzYl1hX2e6e+W9PFxF2WJv3OXVIEg+BQjZOo=;
+        b=cSW0bADQ9fD95GLE225VFN/bRdCDcrDbFMwjiN8pVcIwk2u1scYjvCFE+3qXaTh58m
+         NTvfru0ewbSx3mFFQqzFoHRDFxTrVAOYQZBlSrOI393liU1aR35rv4hFxMsVSvU64tyk
+         pcEJE9BJcbFvjs5cfnZ3Rib//MR0bzt0ARJsPQIqpMiRR53QjWYzArvdMqTdNRLYtlh8
+         g20nwrFjRURwR8dTWbbxSJT747LlFFg2pt4oRd/Ucs3lkFc5WJY6xia07TejK442MF4W
+         /Af29RYl9rPuFhsiLosbexJccq9oJSkMth/D3sy5dgABMPY/45T56qQKCjYWR3unOSPi
+         E2LQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUadqrnEvkV7yTfvIk5PXOMiM0RgC8+d+j4uBRCBjeQ7nHlqWG7cUbs5zmpJODmO5nySrY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyuZ3dWYeFnwM7mDpvVXjapcOYie6LuSRA5ojjlIFaknmYqGqoQ
+	ckYELsgKS4bf6BVE6i4lZfIlDSU6bnwFjOfzbxSAv225vFf51m2sD3AJnQHzCW7xaESBHESz+/n
+	7dzEM0MqmP0WDkqSekny7vjF/1gjdQSJX
+X-Google-Smtp-Source: AGHT+IEYG/uGxyK18lMtpD5huN00tpAOFPHOQAYC+FhGpW2yp3kHuLWnWu5uaQrfNR/saqo9JljSJ4/VwKDnSBgJ3ZQ=
+X-Received: by 2002:a50:cc03:0:b0:5c8:79fa:2e4f with SMTP id
+ 4fb4d7f45d1cf-5c8826084cfmr9400017a12.32.1727687880556; Mon, 30 Sep 2024
+ 02:18:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1727687410.git.ps@pks.im>
+References: <20240731134014.2299361-1-christian.couder@gmail.com>
+ <20240910163000.1985723-1-christian.couder@gmail.com> <xmqqikuijni0.fsf@gitster.g>
+ <CAP8UFD34YJ23WSjaP3m8Ao6iZja_NJWfQ0BNEsaNU_F_X3qA_Q@mail.gmail.com>
+ <xmqq34lkg1ck.fsf@gitster.g> <ZvpZv_fed_su4w2-@pks.im>
+In-Reply-To: <ZvpZv_fed_su4w2-@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 30 Sep 2024 11:17:48 +0200
+Message-ID: <CAP8UFD1yK0vwHYh+jVNUEV0mRnbjyDTOrRjuwjOwSCn-fngVzw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] Introduce a "promisor-remote" capability
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, John Cai <johncai86@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Michael Haggerty <mhagger@alum.mit.edu>, "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The list of push options is leaking. Plug the leak.
+On Mon, Sep 30, 2024 at 9:57=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Fri, Sep 27, 2024 at 03:48:11PM -0700, Junio C Hamano wrote:
+> > Christian Couder <christian.couder@gmail.com> writes:
+> >
+> > > By the way there was an unconference breakout session on day 2 of the
+> > > Git Merge called "Git LFS Can we do better?" where this was discussed
+> > > with a number of people. Scott Chacon took some notes:
+> > >
+> > > https://github.com/git/git-merge/blob/main/breakouts/git-lfs.md
+> >
+> > Thanks for a link.
+> >
+> > > It was in parallel with the Contributor Summit, so few contributors
+> > > participated in this session (maybe only Michael Haggerty, John Cai
+> > > and me). But the impression of GitLab people there, including me, was
+> > > that folks in general would be happy to have an alternative to Git LF=
+S
+> > > based on this.
+> >
+> > I am not sure what "based on this" is really about, though.
+> >
+> > This series adds a feature to redirect requests to one server to
+> > another, but does it really have much to solve the problem LFS wants
+> > to solve?  I would imagine that you would want to be able to manage
+> > larger objects separately to avoid affecting the performance and
+> > convenience when handling smaller objects, and to serve these larger
+> > objects from a dedicated server.  You certainly can filter the
+> > larger blobs away with blob size filter, but when you really need
+> > these larger blobs, it is unclear how the new capability helps, as
+> > you cannot really tell what the criteria the serving side that gave
+> > you the "promisor-remote" capability wants you to use to sift your
+> > requests between the original server and the new promisor.  Wouldn't
+> > your requests _all_ be redirected to a single place, the promisor
+> > remote you learned via the capability?
+> >
+> > Coming up with a better alternative to LFS is certainly good, and it
+> > is worthwhile addtion to the system.  I just do not see how the
+> > topic of this series helps further that goal.
+>
+> I guess it helps to address part of the problem. I'm not sure whether my
+> understanding is aligned with Chris' intention, but I could certainly
+> see that at some point in time we start to advertise promisor remote
+> URLs that use different transport helpers to fetch objects. This would
+> allow hosting providers to offload objects to e.g. blob storage or
+> somesuch thing and the client would know how to fetch them.
+>
+> But there are still a couple of pieces missing in the bigger puzzle:
+>
+>   - How would a client know to omit certain objects? Right now it only
+>     knows that there are promisor remotes, but it doesn't know that it
+>     e.g. should omit every blob larger than X megabytes. The answer
+>     could of course be that the client should just know to do a partial
+>     clone by themselves.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/send-pack.c          | 1 +
- t/t5411-proc-receive-hook.sh | 1 +
- t/t5545-push-options.sh      | 1 +
- 3 files changed, 3 insertions(+)
+If we add a "filter" field to the "promisor-remote" capability in a
+future patch series, then the server could pass information like a
+filter-spec that the client could use to omit some large blobs.
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 8b1d46e79a..59b626aae8 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -340,6 +340,7 @@ int cmd_send_pack(int argc,
- 		/* stable plumbing output; do not modify or localize */
- 		fprintf(stderr, "Everything up-to-date\n");
- 
-+	string_list_clear(&push_options, 0);
- 	free_refs(remote_refs);
- 	free_refs(local_refs);
- 	refspec_clear(&rs);
-diff --git a/t/t5411-proc-receive-hook.sh b/t/t5411-proc-receive-hook.sh
-index 92cf52c6d4..13d2d310a9 100755
---- a/t/t5411-proc-receive-hook.sh
-+++ b/t/t5411-proc-receive-hook.sh
-@@ -8,6 +8,7 @@ test_description='Test proc-receive hook'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- . "$TEST_DIRECTORY"/t5411/common-functions.sh
-diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
-index fb13549da7..64ce56d3aa 100755
---- a/t/t5545-push-options.sh
-+++ b/t/t5545-push-options.sh
-@@ -8,6 +8,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB=1
- export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- mk_repo_pair () {
--- 
-2.46.2.852.g229c0bf0e5.dirty
+Patch 3/4 has the following in its commit message about it: "In the
+future, it might be possible to pass other information like a
+filter-spec that the client should use when cloning from S".
 
+>   - Storing those large objects locally is still expensive. We had
+>     discussions in the past where such objects could be stored
+>     uncompressed to stop wasting compute here.
+
+Yeah, I think a new "verbatim" object representation in the object
+database as discussed in
+https://lore.kernel.org/git/xmqqbkdometi.fsf@gitster.g/ is the most
+likely and easiest in the short term.
+
+> At GitLab, we're thinking
+>     about the ability to use rolling hash functions to chunk such big
+>     objects into smaller parts to also allow for somewhat efficient
+>     deduplication. We're also thinking about how to make the overall ODB
+>     pluggable such that we can eventually make it more scalable in this
+>     context. But that's of course thinking into the future quite a bit.
+
+Yeah, there are different options for this. For example HuggingFace
+(https://huggingface.co/) recently acquired the XetHub company (see
+https://huggingface.co/blog/xethub-joins-hf), and said they might open
+source XetHub software that does chunking and deduplicates chunks, so
+that could be an option too.
+
+>   - Local repositories would likely want to prune large objects that
+>     have not been accessed for a while to eventually regain some storage
+>     space.
+
+`git repack --filter` and such might already help a bit in this area.
+I agree that more work is needed though.
+
+> I think chipping away the problems one by one is fine. But it would be
+> nice to draw something like a "big picture" of where we eventually want
+> to end up at and how all the parts connect with each other to form a
+> viable native replacement for Git LFS.
+
+I have tried to discuss this at the Git Merge 2022 and 2024 and
+perhaps even before that. But as you know it's difficult to make
+people agree on big projects that are not backed by patches and that
+might span over several years (especially when very few people
+actually work on them and when they might have other things to work on
+too).
+
+Thanks,
+Christian.
