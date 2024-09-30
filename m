@@ -1,135 +1,143 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24034199E9B
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 19:28:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB624206E
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 19:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727724517; cv=none; b=k1TTKViW76zDBzxmiaXaEzdwPbLe/dnaGoxwdzFtD0liTP9WuoUdrwPEN6pSfsU47T3WqQUsDN1C0ERzxis72uOm+ln6gRLYMgUlW7Vc7hZONJ0HFA7KJDa2n5m4IE8ONNZHaPmOfvGQNCMUWHyxPQY6OaBPDg8dn25b0q9ECd0=
+	t=1727724625; cv=none; b=M+cXhx62gTbQ7DVCMAKqqLj+KNWn4hyVy/e2Sy3oR230E1Gdxsk57yvfCOWAxsi5n9ajPo56VH480g+x9tj7uwPAAu+uR/xiograsxpWY8XGpbtFSGtKL2vs+6En+4w4fUF7cHovWcyKbTu85P///mZxQoCcb71HjYzjr66s5WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727724517; c=relaxed/simple;
-	bh=oWtYlSDzS6XJVR2EE7ZoZIbR4WwBZTn50chqkYfSMDU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XyZZRxkO5x2cWVP8lthXPCxvz6e3p4dT3grAYgoLBJ36rNhjAQ3ZX2HuFlCTTwFi0WkcT/zT5rJXmmHkJ3xzTnASvzJc6zWiBHYHHz8TLQ3JsZlxhSEUtosyF0lG/85/R8DCxD+n5CpMcvbRi+kWhKIQHf3TU0vIu3HNRjUjI/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=F9FDqjeZ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1727724625; c=relaxed/simple;
+	bh=2K6+mdqyU9mdJxyNyGH/GGYSDgcSkvtaaiCr8ZVB/YI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bTW90Cui3CVRSuZ22Zw7Al4gw2PUvhvYhkQyVw96TImKiFEVoljpsHj6z7gt/+PTX2NG6hoFVaWO5zY1tnr/+8ROynnySXn2GWZmXNlspaucphkCKZq9AxOv+NRaAUmIzaX2gHHsGL7uDi8l1D/RbmALrjgi6TA6MM3Pvo+o2dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D+7P0ZGI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zh278nuI; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="F9FDqjeZ"
-Received: (qmail 6679 invoked by uid 109); 30 Sep 2024 19:28:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=oWtYlSDzS6XJVR2EE7ZoZIbR4WwBZTn50chqkYfSMDU=; b=F9FDqjeZFmMyW9saQE2UEdcis4nT83c21lmEKONiZLJ495XoObxjFZgbpcZQ8TzIueyEv/KDy8N/dgBJ0Xvwct8hE5jkWylPvsyxkLzGJrSU1xtQVTQDi8APXp8sB7ubg5qkrbiRry9wxihz51cnGofoKk24m3+cb0c797YWJYfLRfP8IgiusUj+KRrw5lRVfZA18b0C1aUaCsOT0QPq7XgMupt0qqtfLlYLHhu/YX55hIHRABhzG4MhkcP7i/7ajxImMNOa8Aocd5z2WUDuO4pXoKjktPE//hxA7N0bVavQp4b1ppa4EIRkkT+Wclz490tM3CH5VOiUnhTPTkTtDA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Sep 2024 19:28:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17300 invoked by uid 111); 30 Sep 2024 19:28:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Sep 2024 15:28:26 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 30 Sep 2024 15:28:26 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/4] refs: mostly remove core.preferSymlinkRefs
-Message-ID: <20240930192826.GA1803946@coredump.intra.peff.net>
-References: <20240918232825.2627999-1-gitster@pobox.com>
- <20240918232825.2627999-3-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D+7P0ZGI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zh278nuI"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id BFD8F1380868;
+	Mon, 30 Sep 2024 15:30:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Mon, 30 Sep 2024 15:30:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1727724622; x=1727811022; bh=w7B6PaImDc
+	nh33qN5wfZ3obFWnPNBpGN5hRAshqw+c8=; b=D+7P0ZGI9l8oW4buus6JsRWnKd
+	/wHJl1uz9s5sOqzvGT/32uG5oDEXmc7TAiPDMHKXKhKKzllYuafXkxwyZO+50++I
+	dGHS1F4MrL3lD5qZUVqwiZmVXjCqW6w0NrWPqM2Mpaaqo9BgCNc0HpWQo/h6+pA9
+	KboSzjzRog3dw0P9tzA0K3T8XlUFLr61QuQwKUY18SG1z/mymjg7L/S+3flx5Rlk
+	5sWL22l5TXrx/O93NvOnWv+YT2xcjHJcRkl7GYpVghimB0Xbxoug+h0KwBNgBz0F
+	I+zTyNQwz7/3CYPv7PeXM1kx1KXbRCUubF6j3/JP/IjrGtynFUAl+a+bf9Cg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727724622; x=1727811022; bh=w7B6PaImDcnh33qN5wfZ3obFWnPN
+	BpGN5hRAshqw+c8=; b=Zh278nuIbtAfNbAmp6IArsHB0cxaNSEKPa27aW6Q8WLq
+	K9z0QXxHUIEWDXZWNXSKbWXFknK1g9jtKBWX6cXE6WskpRjZZmOsd068eaE+m+kM
+	5IFfnEUu5XzrNCaOchxzJ39zz/wwFJo5vUJwI6NQhba3a9dh79IKWVVq0Eee358+
+	ClC/GWrrE/40TX09o+TE7efP5+IvnlSfIrm6ufOVLp6PP7fOEbGTMqXkli4DuOCk
+	RycdPFvmaPV+LxAbfB+q62QK5dohBMZqYgoXg9vhPOgryposUZ+VF1yR5dOQsqtx
+	M3EiZ5kG546lhtJYRYfoXb5Z7+Bx7s6NtPBFVvq89Q==
+X-ME-Sender: <xms:Tvz6Zqc7x-k-Fm2-XgkK7XhOD0jVyhy3F9YVv6q9MIn782vqCXUpqQ>
+    <xme:Tvz6ZkOMVqFcxtIlTf58Bspz5p-hZzCVFYonMKs_bhcf3jh-zeq0cLXEJCG0NMDzl
+    EapE_JPSnlOunuJMg>
+X-ME-Received: <xmr:Tvz6ZrhCAtPBcG-8fOzgGiDoMKWlnMGy8nWLlExboIF-Aav2r6C1cvxcbuWW0bK8rWPON3hpS1v_W4pHmP36LnaMrtP72JQiOEWYz6k>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedgudefjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
+    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
+    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Tvz6Zn8kazaOKoAWpH_DOVdfffnrtb1cQ5hHY0o5OfdDe9D3z1rziA>
+    <xmx:Tvz6ZmtowHFuhMCvwanwwTjD2QAYfHsdCHn-XreIbk_78mLo46ocoA>
+    <xmx:Tvz6ZuEzR9qZ3soUwmugsxG5hFjlnQHZ2JW7mmVlXa3ghJWY1Oc8BA>
+    <xmx:Tvz6ZlPO9kwlxKfHF7UWYr-nGtkXq1C48mhArKajLUusoPAqd20qMA>
+    <xmx:Tvz6ZqLUk4AgjGHD4IxVsVbPIUfg3P8jcIx1KRQ783ESe3rncziZ5Kwq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Sep 2024 15:30:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Emily Shaffer <nasamuffin@google.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: Linking topic merges to mailing list threads
+In-Reply-To: <CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com>
+	(Emily Shaffer's message of "Mon, 30 Sep 2024 09:21:11 -0700")
+References: <CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com>
+Date: Mon, 30 Sep 2024 12:30:21 -0700
+Message-ID: <xmqqv7yd548i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240918232825.2627999-3-gitster@pobox.com>
+Content-Type: text/plain
 
-On Wed, Sep 18, 2024 at 04:28:23PM -0700, Junio C Hamano wrote:
+Emily Shaffer <nasamuffin@google.com> writes:
 
-> diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
-> index d369330562..4e517cdc13 100755
-> --- a/t/t0600-reffiles-backend.sh
-> +++ b/t/t0600-reffiles-backend.sh
-> [...]
-> @@ -468,26 +468,40 @@ test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
->  	esac
->  '
->  
-> -test_expect_success SYMLINKS 'symref transaction supports symlinks' '
-> +test_expect_success SYMLINKS 'symlinks used as symrefs are still supported' '
->  	test_when_finished "git symbolic-ref -d TEST_SYMREF_HEAD || :" &&
->  	git update-ref refs/heads/new HEAD &&
-> -	test_config core.prefersymlinkrefs true &&
-> -	cat >stdin <<-EOF &&
-> -	start
-> -	symref-create TEST_SYMREF_HEAD refs/heads/new
-> -	prepare
-> -	commit
-> -	EOF
-> -	git update-ref --no-deref --stdin <stdin 2>stderr &&
-> +	# manually do this, as core.prefersymlinkrefs no longer
-> +	# affects how a symref is created (as a textual symref).
-> +	ln -f -s refs/heads/new .git/TEST_SYMREF_HEAD &&
+> We've been wanting to gather metrics on Git's code review process -
+> how long it takes from first contact on list to merge, how many
+> iterations are needed, time between iterations, etc. One missing link
+> is the actual merge time in `next` and `master` - a human can infer
+> the link between the patch and the mailing list thread, but it's more
+> challenging for a script to do it.
+>
+> Would it be possible to modify the maintainer workflow ...
 
-There are two other tests that probably should get the same treatment.
-In the patch below I've just deleted them, but I think since they are
-really about the reading side, they'd probably want a similar manual
-setup.
+I suspect that there is no need for any workflow change, as all the
+necessary information should be available from public sources.
 
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 2d984eb4c6..72eb5f62e7 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -407,18 +407,6 @@ test_expect_success 'checkout w/--track from tag fails' '
- 	test "z$(git rev-parse main^0)" = "z$(git rev-parse HEAD)"
- '
- 
--test_expect_success 'detach a symbolic link HEAD' '
--	git checkout main &&
--	git config --bool core.prefersymlinkrefs yes &&
--	git checkout side &&
--	git checkout main &&
--	it=$(git symbolic-ref HEAD) &&
--	test "z$it" = zrefs/heads/main &&
--	here=$(git rev-parse --verify refs/heads/main) &&
--	git checkout side^ &&
--	test "z$(git rev-parse --verify refs/heads/main)" = "z$here"
--'
--
- test_expect_success 'checkout with --track fakes a sensible -b <name>' '
- 	git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" &&
- 	git update-ref refs/remotes/origin/koala/bear renamer &&
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 95e9955bca..b4d7206bea 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -50,15 +50,6 @@ test_expect_success 'prompt - branch name' '
- 	test_cmp expected "$actual"
- '
- 
--test_expect_success SYMLINKS 'prompt - branch name - symlink symref' '
--	printf " (main)" >expected &&
--	test_when_finished "git checkout main" &&
--	test_config core.preferSymlinkRefs true &&
--	git checkout main &&
--	__git_ps1 >"$actual" &&
--	test_cmp expected "$actual"
--'
--
- test_expect_success 'prompt - unborn branch' '
- 	printf " (unborn)" >expected &&
- 	git checkout --orphan unborn &&
+The first-parent chain from 'next' (or 'master' for that matter)
+already record when they got merged.  From there, C^1..C^2 are
+the commit objects that were merged.  notes/amlog knows where
+they came from (i.e. their Message-Id).  From lore/public-inbox
+you can find out how the iterations of topics went, as long as
+the topics are threaded properly (and if not, that would not be
+fixable with any maintainer workflow changes), just like how b4 can
+figure all of that out.
 
+Ahh, nothing officially documents amlog and that is what you are
+missing.  It would be very nice if somebody, preferrably somebody
+other than I, after trying the "maintainer workflow" by pretending
+to be a maintainer for a day or two with the new info revealed here,
+updates the Documentation/howto/maintain-git.txt file with the
+information below.
 
-I noticed these because I had a similar proposal long ago, which never
-got merged (I don't think because anybody particularly disagreed, but it
-fell through the cracks and never got picked up again):
+The script post-appplypatch found in the todo branch is made
+available as .git/hooks/post-applypatch so that "git am" knows to
+run it after creating a commit out of an e-mailed patch.  It
+populates a mapping from commit object name to "Message-Id" of
+individual patch.
 
-  https://lore.kernel.org/git/20151230065343.GA26964@sigill.intra.peff.net/
+"git rebase" knows how to propagate this across rebases because
+I have
 
-What you have here is (modulo the two hunks above) more complete than
-what I have, so I don't think there's anything else to try to salvage
-from it. A little bit of the history in the linked commit message is
-interesting as to how we ended up here, but ultimately not really that
-important.
+    [notes] rewriteref = refs/notes/amlog
 
--Peff
+in the .git/config (which means I have to use rebase not cherry-pick
+even when I am touching a single patch, as cherry-pick does not
+preserve notes by design).
+
+Now I think you should have everything, together with what is
+already in Documentation/howto/maintain-git.txt, piece them together
+to illustrate the life of a patch series.
+
+As I do not publish reflog for 'seen', you cannot do "when was the
+topic got picked up to 'seen'?", but as far as I am concerned, it is
+by design.  Being in 'seen' does not mean anything other than I
+happened to have seen it, or saw that somebody indicate interest in
+it.
+
+Thanks.
