@@ -1,164 +1,135 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A91A1E507
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 16:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3613201
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 16:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727713291; cv=none; b=E37OFFdEjliGLfMTTk3tEWDIgfzslNPs5TmywI6orLcLzkiiYO9XP1bfY7nWHfmN2s4yHhbuf3izsZZXDK5zqkEMsDxw4intqJmrQ8GnJsr+nh7JY/UFCR9tpqmENTS/H4uYbDDIwMFqZy1Tu7HiuLNNBNqai98fgzLaJ9JrN8w=
+	t=1727713868; cv=none; b=mk//npPsfDrP8p7PLDha54yUDQ1g7CHOP1p3akcG9z5uOcI05bPcySrCadoQuRxWnombgkMs2b/nJTIr/vQBXvKiT9cM0+BoJTWl+uEBxkXCBt8VD+Y8OZpG7HZQ2r/p5JQyvS979G+fnX7BWL34Psecec3mortbzbr2xn/x6jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727713291; c=relaxed/simple;
-	bh=cJOXwJkSVCUJODny7YYXOAvSQTbyLpBChY7bULcMc4Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AEzpLbXPLHXHqe38nZV5XuQa1WoiELrCEmoCGFz+vPeApSVqpNi9Ny8IZ+AOhX3t+JqjMepPOpEzSkoNDow0JwiTl/L2R7YF1l9agy5m3JRTKnxNjzbm3bG5LVARfb9pnSNKkiLIeznOx4Mp1DdOHspc6EJMaUOjOHMi44Nk1rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=aydF58b/; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1727713868; c=relaxed/simple;
+	bh=J4tifzzK9VLsi1uer0TIQQgIk1/WBXGWxVQFwErbbKY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eqSeQ9C2IsdqQ/nGt5+xyGByqNn65KwyZcrdqPFqu04+L30W8xqJuLn+NY7BbYfiHlNeW1ramNlJ+PTbRfc9j4UOS3X9uLuHc8PSI30fNCcvnpmsQ5LP+0xKSGIhnZGT80uYzzN71HJb4ELcHTPRhakIkBQKgccD5y3J1EsWDB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dyXM6QtW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ImdU2s48; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="aydF58b/"
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e25d405f238so3802723276.3
-        for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:21:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727713289; x=1728318089; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=n0SznXcz2GwJvGzYevks3KlUykIzStEpvL8NnPoY/xQ=;
-        b=aydF58b/xA5z5jhqfGPY2LkRiSsH9XquyWXrfdN/YzxfBLN6ZcxcVLg+4vydohW4kQ
-         Gae1qFk11d303uQWAMHPoZrO5/ALcl/5ts2yoyODgAtUPCGZNODrcfKVD2OVnAH5B5X4
-         iuYTsuLJrWg+ROFeh4HFQDLGmOqcuIxY1gOWZmnIakAwYKWX3yBwSRwfCb/NG3BGM+az
-         zMRklCh2fzzAyAo/aB61VRSpc6o6R3vIXAqu71jpNX7Ob+1kFLV3vjwqEYDLtOrTHcNW
-         Qrfa5PBmg44/ffPDx+VqOsbiLOvE+Y8ptYAieW8oTbRPkzPAmaS+vSxnZdNWfnLmJizh
-         NFuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727713289; x=1728318089;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n0SznXcz2GwJvGzYevks3KlUykIzStEpvL8NnPoY/xQ=;
-        b=N+zFoEkO7ERQmHgmu8++5GReYV8FgSpVicvayMUcUZBy5TLw3d7firCLebbsu7Rr1d
-         QbCQrMm5uiZ6eZNSll4CfYUXcCBwKrzUthIb9skm3+7L688swA7Qc7hvBcMD6ZUvBQL5
-         bklqqUSztg5egLijjBtuoa0wUHX2wYIEBIIKejIGCsDKz8JKwd2tfCEw7MlESXTM6YW+
-         mCEeFOk+SxbA0sufOQff3HpV4+RWyQ3qSt4JogbXZBdqUwEfyO49kY0NtP6RJ/ACjkQh
-         fLzXSEP3QR0n+A7Wlub8cGna3gfvRjcHu/I5CXZX85Mhwprg6QACgSENJ7GxtTpFhwIn
-         A5qw==
-X-Gm-Message-State: AOJu0Yzyav3OIsS5rOnmWoHsHJgDVpr+AtoHL+Pm2BHiClI91sHPxx22
-	xt0/3m1A4vLWK/ZWXna2c51ZzWeBlG9yiiroEW/7gIup0V6g21CC+aJ0+DnxABJEMZ7RUDgCcDP
-	My2E=
-X-Google-Smtp-Source: AGHT+IFs7/ah+nMn1sTmM5pia6uFVfX6V7LReUZ2+TP2LuP/8C0jsFaPZooM9v/QOmHPGjaQ+n6BXA==
-X-Received: by 2002:a05:6902:2089:b0:e22:6a94:f22f with SMTP id 3f1490d57ef6-e2604b47f8dmr10009996276.28.1727713289196;
-        Mon, 30 Sep 2024 09:21:29 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e25e3efab1dsm2425936276.6.2024.09.30.09.21.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Sep 2024 09:21:28 -0700 (PDT)
-Date: Mon, 30 Sep 2024 12:21:27 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 14/23] pseudo-merge: fix various memory leaks
-Message-ID: <ZvrQByUPoHhlDMiF@nand.local>
-References: <cover.1727687410.git.ps@pks.im>
- <6e7a272c29577536ba992cc73d736d8f66397607.1727687410.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dyXM6QtW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ImdU2s48"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8EB4B138088B;
+	Mon, 30 Sep 2024 12:31:05 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 30 Sep 2024 12:31:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1727713865; x=1727800265; bh=gaSuq8n7Ua
+	q+gd0GfQeuJY3Ujdzzbl1wzfIh4FNh6mM=; b=dyXM6QtWsf2DP85sZmYkAx7Qbg
+	fmIP4FC52YqzRHBWLypxD6Asj1JKjZ/4QZoDjma9pydY3mjso5RSi1iIlxoFNnes
+	AFkCnsXH3l0FUiposvIRe+bIZ9L87+vE6P5W8ZrTI+FNovwUaCZ2btC+tslD6yfb
+	Y+BY3gyMU2VyowtEfpVh17EpdreXBL9hXz7ViJ4v0ZwtnxvwHsNF2wfZhfVWlbb4
+	FLgHH+ByFL8pl0GkiUqD4sxlTgUH//GmgCydfE8HZzje2BNp2ZQGAZNmEvJZNP+F
+	GypVmfa+8S230rxrMMLW/7aTiFL7HgXybcJz61w6mc8uVlNwMC/tpE8VlRyQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727713865; x=1727800265; bh=gaSuq8n7Uaq+gd0GfQeuJY3Ujdzz
+	bl1wzfIh4FNh6mM=; b=ImdU2s48yWleNXlnjHRlAyQwMl0wuFwZfsOd24WIFjca
+	jk0fohlZECR6cKmKVR5i6WBF9kJo5TPa/Pdm0qHa+Af/HuKRumUmdfXgz3+tZAEb
+	CCuoLpSFT4MzMwLjGqcjYx7BG6hgPx4mVHqc39eUAbQVMiz841EWSLhiiFRIzfid
+	wrP8gx+OBH+Ev4bIR8dTbK7TjXd0APFB92fJ88GeGl5srXdQcceEoGxrbelTs+bi
+	YO1yqf87wgIpYwhPk3MgVFVaDDY8nDkrOCECPY5217kKZ0pG9ZIZPVAoEyBiWrwJ
+	Qhe69K+QKbOBL3sZTT0unITdKcuA+lhLZ5UreUJlQQ==
+X-ME-Sender: <xms:SNL6ZtMxE-5quT1Z6pQKKQ4DriO1pHl3GyvCjGGCpYowmDBE33Okdw>
+    <xme:SNL6Zv_kac3It_zaWOeoSHwmOe61oTFDoCnJ22EOmbObMl-_V3a92-zJEJm0IPjge
+    DOkIxg5iqmjbEhv5Q>
+X-ME-Received: <xmr:SNL6ZsTyR85QF8a44BuVGFXRB76fD9_isH9by2uJiwGOETMGUq13EwfYP2oYV-7TUXuH1GXGwrMmg0oFxxOsBAYT_1eQPKRXtxcMJis>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedguddtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegvshgthhifrghrth
+    iisehgvghnthhoohdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughu
+    nhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvg
+    hlihhnsehgmhigrdguvgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
+    hhgvnhhrihhkrdhhohhlshhtsehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrhhnihgvuggvrhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:SNL6ZpvhUYLTpC7s_kiH1C5wzWDC5SP8wVvtAK3pP7gVaP4hAX8zfg>
+    <xmx:SNL6ZlcVtq5oBQDZkPDmKVQ-9_ZEMkCpVw6bnmFlURbXE7RGbB5Y7g>
+    <xmx:SNL6Zl3czZkFqV2WIasBfVUA8xf5NIBVLwLWyv69zmsi87wWEJ8p8g>
+    <xmx:SNL6Zh_z-64dUIQ39x0q1boY2j8tTO_kean8Ek_fmzrmpe_aAawzCw>
+    <xmx:SdL6ZkwUqah3pZ4vynFl4UCg_Cihi6dblYplMBmfzeR15sepe3iJJD_3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Sep 2024 12:31:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eli Schwartz <eschwartz@gentoo.org>
+Cc: phillip.wood@dunelm.org.uk,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Patrick Steinhardt <ps@pks.im>,  Henrik
+ Holst <henrik.holst@outlook.com>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>,  Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: ./configure fails to link test program due to missing dependencies
+In-Reply-To: <157253c6-36f8-43ab-ad17-c6c8811bd5a9@gentoo.org> (Eli Schwartz's
+	message of "Mon, 30 Sep 2024 09:57:25 -0400")
+References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
+	<xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
+	<29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com>
+	<xmqqy13oa8oe.fsf@gitster.g> <ZvKsH1Ct-YwBPA_f@pks.im>
+	<b6b131cb-683c-4140-9769-290b622721e1@gentoo.org>
+	<ZvOTL0cG8qRY8OXe@pks.im>
+	<1f002f86-9212-4639-8804-898bc62726e5@gentoo.org>
+	<ZvOn_wChzEgXtpMd@pks.im>
+	<3a303c6e-35b0-4428-9d23-799b33194330@gmail.com>
+	<xmqqv7yil70d.fsf@gitster.g>
+	<39508a38-d98f-3883-3887-971385a3805a@gmx.de>
+	<d3900cc3-8a0a-4da1-829b-5bcdd7ebca28@gentoo.org>
+	<a43fa510-9a96-4b92-8107-0c00209d5161@gmail.com>
+	<157253c6-36f8-43ab-ad17-c6c8811bd5a9@gentoo.org>
+Date: Mon, 30 Sep 2024 09:31:02 -0700
+Message-ID: <xmqqr0919k8p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6e7a272c29577536ba992cc73d736d8f66397607.1727687410.git.ps@pks.im>
+Content-Type: text/plain
 
-On Mon, Sep 30, 2024 at 11:13:51AM +0200, Patrick Steinhardt wrote:
-> diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-> index 4dc0fe8e40..6413dd1731 100644
-> --- a/pack-bitmap-write.c
-> +++ b/pack-bitmap-write.c
-> @@ -64,6 +64,12 @@ static void free_pseudo_merge_commit_idx(struct pseudo_merge_commit_idx *idx)
->  	free(idx);
->  }
+Eli Schwartz <eschwartz@gentoo.org> writes:
+
+> Sure. And I'm happy to (help) improve the documentation. I've already
+> pushed a fix to the page Johannes linked, since it was many years out of
+> date (???) and didn't reflect the fact that meson will automatically
+> detect the Visual Studio toolset for you.
 >
-> +static void pseudo_merge_group_release_cb(void *payload, const char *name UNUSED)
-> +{
-> +	pseudo_merge_group_release(payload);
-> +	free(payload);
-> +}
-> +
->  void bitmap_writer_free(struct bitmap_writer *writer)
->  {
->  	uint32_t i;
-> @@ -82,6 +88,8 @@ void bitmap_writer_free(struct bitmap_writer *writer)
->  	kh_foreach_value(writer->pseudo_merge_commits, idx,
->  			 free_pseudo_merge_commit_idx(idx));
->  	kh_destroy_oid_map(writer->pseudo_merge_commits);
-> +	string_list_clear_func(&writer->pseudo_merge_groups,
-> +			       pseudo_merge_group_release_cb);
-
-Looking good, and this is the right spot to free the pseudo-merge
-groups. Note for other readers: pseudo-merge "groups" are a utility
-structure that is only used while writing pseudo-merge bitmaps, so we
-don't expect to see any corresponding pseudo_merge_group_release() calls
-sprinkled throughout, e.g., pack-bitmap.c.
-
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 9d9b8c4bfb..32b222a7af 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -1390,8 +1390,8 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
->  		}
+> (Note that since meson will "automatically do the right thing" here,
+> that means it is practical for a plugin to run meson under the hood for
+> you... much like how cmake plugins handle things.)
 >
->  		base = bitmap_new();
-> -		if (!cascade_pseudo_merges_1(bitmap_git, base, roots_bitmap))
-> -			bitmap_free(roots_bitmap);
-> +		cascade_pseudo_merges_1(bitmap_git, base, roots_bitmap);
-> +		bitmap_free(roots_bitmap);
-
-I probably would have pulled this leakfix into its own separate patch,
-since it's not immediately obvious how it's related to other changes in
-the same patch.
-
-But the change here is definitely correct. We initialize the
-roots_bitmap field to just the tips of our traversal. I wrote some
-details about why in 11d45a6e6a (pack-bitmap.c: use pseudo-merges during
-traversal, 2024-05-23), but the gist is as follows: We want to avoid
-accidentally thinking that roots which aren't part of some satisfied
-pseudo-merge or existing bitmap are part of the reachability closure,
-leaving those bits as dangling and leading to incorrect results.
-
-In any event, we definitely do not need the roots_bitmap outside of that
-block (regardless of whether or not we successfully cascaded any
-pseudo-merges), so free-ing it here is the right thing to do.
-
-> diff --git a/pseudo-merge.c b/pseudo-merge.c
-> index 10ebd9a4e9..28782a31c6 100644
-> --- a/pseudo-merge.c
-> +++ b/pseudo-merge.c
-> @@ -97,6 +97,25 @@ static void pseudo_merge_group_init(struct pseudo_merge_group *group)
->  	group->stable_size = DEFAULT_PSEUDO_MERGE_STABLE_SIZE;
->  }
 >
-> +void pseudo_merge_group_release(struct pseudo_merge_group *group)
-> +{
-> +	struct hashmap_iter iter;
-> +	struct strmap_entry *e;
-> +
-> +	regfree(group->pattern);
-> +	free(group->pattern);
-> +
-> +	strmap_for_each_entry(&group->matches, &iter, e) {
-> +		struct pseudo_merge_matches *matches = e->value;
-> +		free(matches->stable);
-> +		free(matches->unstable);
-> +		free(matches);
-> +	}
-> +	strmap_clear(&group->matches, 0);
-> +
-> +	free(group->merges);
-> +}
-> +
+> As far as reading this thread goes, though, I assume that in such a
+> future, people who want to build git using meson in Visual Studio would
+> be optimally served by a slight reorganization to ./INSTALL to provide
+> guidance on where to find meson and what plugin to use, which provides
+> an additional entrypoint for clarification. :)
 
-All looks good here, I didn't see any fields that were missed or
-over-eagerly free'd here.
+Yup, whenever a procedure changes, documentation to guide folks
+along the procedure need to change.  Otherwise they will be lost.
 
-Thanks,
-Taylor
+And it is very good that we see people are improving the candidates
+being offered that way, not just enumerating how it is superior to
+the status quo (in their opinion) once adopted, but making sure it
+would not inconvenience or alienate existing users who are used to
+the way proposed for deprecation.
+
+
