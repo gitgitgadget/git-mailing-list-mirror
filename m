@@ -1,79 +1,80 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE811885A1
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773F418787A
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727687618; cv=none; b=irnIk+rnfNkL3IId8/kv8iW+dNy8f/NcPplzHtXGm+TobpAEXdKVTiblJnjnejYvmS5GqJmx5adze9tAW2KM2iykUvy/4knvkzzvJeV2YLOK4nV531WbyKw/Dq5GLFMzhroOv8IH5cIWohtX1D2X0eef16SuZjke5zQqGS/eCAA=
+	t=1727687623; cv=none; b=Z1qzpcmhic/omzHH4v1hRMFQV7hI7O75GpFJuhNXOfDhYChzT9dkhtPw1Cso0h6yu38/ntjORjIbYYppUhlX6QunGx0uXOlk0gusa5mGmUeJ0LVLKhdC7VHfOk6yB293aHcfqcoaovtezlMYQfDqGGETvbRQdl9KqApNVnp8iSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727687618; c=relaxed/simple;
-	bh=TK+u8+yPb8EYWHEpNbrAS4ap8pVP21kSGZE97EtiiEA=;
+	s=arc-20240116; t=1727687623; c=relaxed/simple;
+	bh=IqaXnWst05klv64ylyjVaGZuxy1dAD373uK9UJLPWbY=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TgUSsOlOpkQSzhP2UPQFAsmjsQ2sQenD3dzDK7iX/GwHGk1QtXL7O+ZLKK4IUm3LFgmp9dUGiQeUeiIhNv4r96JFdSwi7uYq1hxL1V0cMRWbA6p3vYLVeSObl5JBsMvLV3eSAnMU+e+g9I8Z6MrbE7tLH+ypnX0F8rCk57QBDco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rfUinpnw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WLsWB8zI; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=NlIeppFszhJm7jPMcE8vLsAO51d4qDkfQ6pv8VmmvrBeugimMWiLrOe30bLdxmpQsQEfNxYymoFIy2R7WSwqio9H46xwV8ypsqLhwDuFJGVph15wizURt5aTI8mLWvF2HpyXITb2mAnJpN+k3cXXS23D6a6NlTvyfME+JX7RXps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BLYuukrD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eyA3B2QU; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rfUinpnw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WLsWB8zI"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BLYuukrD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eyA3B2QU"
 Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E24C31140266
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:35 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C3AD8114026E
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:40 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 30 Sep 2024 05:13:35 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 30 Sep 2024 05:13:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727687615; x=1727774015; bh=sHrK6Hq13Y
-	wSAUEgUEHNJkxWC4KdFXF9bEh6SfEDwOc=; b=rfUinpnwzwd1gibl5cCsjTU6iZ
-	W2HRtKzuuj3lwv1l4JC/y3RgDcEp7VrmGlmkI1+5fwn9oj6jm166pzJaUj/3gzGs
-	c2g/G3kbA9vEeBefMXfrZQ7ds2aDGBQSrBgiQpMZrHbj/MGLwi/ciB/h1xBC/se7
-	0QpYjU2eAFk4aPTqron9ffYDkeqiC9f9+i7Pl+oYtrVOIav5ChHixmfR2bdsV7dG
-	+eT7Je3X16zKL60c9VeSh2VQuJVsLkFk5T+ApFWlOD3bY+Jx15FS2Y9mgZwdVnAn
-	T+FtgeTc0Qe/Rcx1xHTSQ7u9SszJd/B37y1eitibYLXUs+BNsx0sXnWAiofQ==
+	:subject:to:to; s=fm2; t=1727687620; x=1727774020; bh=T7fZ6k1wSx
+	J/Q+xdB+D/cxc88FRkZrFYLqAaP7U6l34=; b=BLYuukrD8TUj8sXwKHcxGOrGrU
+	TEHIFUQ2+o928Y6+9mMytswMI/1ZRNsYd8izlqHCPnYifL7omY8/AW/D48aNYeKg
+	qTnimNjtz6Ycqt2m2hmxrF/vsn87tjAudjYlWmclK04Sr67YBHPJtWVM1ewUXjBv
+	F5jPeLYbuApKYciTuWvyK5zb7QUpUew16/Xonurvud+Os+Cqyl20fFnuBH+o2q1Q
+	2ba23aaR5gfPl/EuickXcmOlHuHD4eeh9hFo6Omz5Dm3RBvn4magZEpbbWtTncoF
+	nJhYQS49ZUvp/4er0fylkiqdMeyMRvncc5rF1BKqGRrpqmmYAxsnmLDCFYWA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727687615; x=1727774015; bh=sHrK6Hq13YwSAUEgUEHNJkxWC4Kd
-	FXF9bEh6SfEDwOc=; b=WLsWB8zIe8heiaR0287UpMYN43SYhKIq/mAbxtwS1sOs
-	VepeW7XGs3WXlq54Zjq5nPORMiIiSdRn8NPG0hqE+kkh/Noz4JI7lNPkkH7fXlAJ
-	qimREzvh9AWJSquYmbVddO8uEDX0X2vCDhC2OtohNUavCP/EcQ3hkHiIH2x7FYD1
-	0NUzNk58hm47mZxc057eyCC1fag5pvKJ2bCyTlL0aVrb+lQ9jG225cDzg3PK85h+
-	HwnNCsSJ9NfpjbQFJr+PQiFyhMGo1mcfrxWz/JeSAQwuy3iTUBEZ5bf71A6npozk
-	pRXyQFKhmyAETz1jJkLLZjW7ldkZnaOQVCn3xbvp/w==
-X-ME-Sender: <xms:v2v6ZnM0fdBGPNTRxKIyxzvffcPt1oKZu31RKVFCNv_33EgiI1DKUQ>
-    <xme:v2v6Zh_DaJ6E7Auyg4A6R9HizlIjgkAQq5oc2VKTshYhy__MnKlL8_kn8OMv4kgW5
-    fNj2q0FI29s1_OYzQ>
-X-ME-Received: <xmr:v2v6ZmRG3UvPdO_NCVqQzkpFpV-sN1i2CMbe_rg26JRQa-HCvLjDsML1O2z-kz4XnAqfGg479X52aN_6YY3wjcmUsgWyJMnvtxtKtWg0R8BQ0Ms>
+	fm2; t=1727687620; x=1727774020; bh=T7fZ6k1wSxJ/Q+xdB+D/cxc88FRk
+	ZrFYLqAaP7U6l34=; b=eyA3B2QUjDO+cubNvLv0eNIKiFqnQgPSTUPxMjhp82RU
+	G5tcUs68/Z4ivL3TakW1J5VKxC8sZDa+MJyz0+fCgIW72JGELW06R1Vpew5Z+SWT
+	k/TxhJpZ+z7eyEGLgx2RADlX+U20/jXWTuW0GLiIBdj+NfKKyovlWyOvCkqPXxVj
+	6MoTRy2SRWxKykyLvATeoDyKM8z3Xap+gwXEKDCjwkJqO0uJ92E2fMoTScTRPqJP
+	Xj0mKtAYwhZIb6H9nm1+iJ2p/8f9yzMUpkNE7UJbrJWbgUTj8INSbql+4KuLsfU2
+	/GS7E0cQmLK37ACt0yPJiFNgCRtmB6WCLiPNXSaCwA==
+X-ME-Sender: <xms:xGv6ZuTktawCmKyLA0Z8Yc2HLM_rqH4atZI6wm2A-TmeB_2UtDc-6w>
+    <xme:xGv6ZjxpPfdzuWnDSgpUTALSujkcc0NeTcX9qyLwt4nxbgPuiJrP18EdMPU1N_18d
+    ZaLewRaR6Hb4pX_Ww>
+X-ME-Received: <xmr:xGv6Zr0OYnSdTsO6GDefulrNwDK9xLac2rtnKH8bmLdf0udh9dbHXoq1pb0Z26GgINONG9xaDXGVnEV2uhua5twMDv-sGmsXuzicSNqAafXCDE4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
-    egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
-    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:v2v6Zrs8iPve7pLqI--K7NIyhzr8QnNapoAD7PcxEcC1kEnlg8boig>
-    <xmx:v2v6ZvehOeJEE2DgJXKmqbyYTymm5kefNw2z0-zkjTfZRy81IoAKRQ>
-    <xmx:v2v6Zn18qBygVyhjPJyH3wu56C6kMkeqZ-RDIhLCUpu97-idLR-8cA>
-    <xmx:v2v6Zr_gbi92IuJg80CTIdbtdKXfJEuWu4-1HsDkoP2byVVPFbUKvg>
-    <xmx:v2v6ZnEEphFqrpKUhFRuIfIMLW8mba-Ia8e376NKyfGcx47aibD2tCS1>
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepfffgkeetffeule
+    eivdeltefgfffhleevkedttefhledtleffiedvgfduheegfeefnecuffhomhgrihhnpehh
+    thhtphdrshhhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphho
+    uhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:xGv6ZqCAHWg4Tgl_21VFlWyhc_BdcFl3VNcCqvMbJRoy2LN30AxfSw>
+    <xmx:xGv6ZnhI42X4_RljYJdZqTEB2VC7N-Rt-AEeladuc7ChpN3lbLKK-A>
+    <xmx:xGv6ZmpHaPSSX-tte-xCxsjNSXpd4hPC7bULA3PwYE6Dtm4Qnj6sJw>
+    <xmx:xGv6Zqg15fRnbBWaOy82qGW_RM9epgFq7JLO4DIRSbHB-GN1B7_FNw>
+    <xmx:xGv6Zvb_J9EB1ZvgXYnSdbBcFtIJDysSzys1oNGRimvvj7cgFo8EZN_R>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:35 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:40 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 531ca629 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 586af1c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 30 Sep 2024 09:12:49 +0000 (UTC)
-Date: Mon, 30 Sep 2024 11:13:32 +0200
+	Mon, 30 Sep 2024 09:12:54 +0000 (UTC)
+Date: Mon, 30 Sep 2024 11:13:35 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 08/23] builtin/pack-redundant: fix various memory leaks
-Message-ID: <31480f336a151e1b7dd984368a5cd54ced40b4ac.1727687410.git.ps@pks.im>
+Subject: [PATCH 09/23] builtin/clone: fix leaking repo state when cloning
+ with bundle URIs
+Message-ID: <2fa76a00fc0469d0c64c66e81b96d622844b8f0d.1727687410.git.ps@pks.im>
 References: <cover.1727687410.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,129 +86,120 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727687410.git.ps@pks.im>
 
-There are various different memory leaks in git-pack-redundant(1),
-mostly caused by not even trying to free allocated memory. Fix them.
+When cloning with bundle URIs we re-initialize `the_repository` after
+having fetched the bundle. This causes a bunch of memory leaks though
+because we do not release its previous state.
+
+These leaks can be plugged by calling `repo_clear()` before we call
+`repo_init()`. But this causes another issue because the remote that we
+used is tied to the lifetime of the repository's remote state, which
+would also get released. We thus have to make sure that it does not get
+free'd under our feet.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/pack-redundant.c  | 40 +++++++++++++++++++++++++++++++++------
- t/t5323-pack-redundant.sh |  1 +
- 2 files changed, 35 insertions(+), 6 deletions(-)
+ builtin/clone.c                        | 27 ++++++++++++++++++++++++++
+ t/t5730-protocol-v2-bundle-uri-file.sh |  1 +
+ t/t5731-protocol-v2-bundle-uri-git.sh  |  1 +
+ t/t5732-protocol-v2-bundle-uri-http.sh |  1 +
+ 4 files changed, 30 insertions(+)
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 81f4494d46..5809613002 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -69,6 +69,15 @@ static inline void llist_init(struct llist **list)
- 	(*list)->size = 0;
- }
+diff --git a/builtin/clone.c b/builtin/clone.c
+index e77339c847..59fcb317a6 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1403,8 +1403,17 @@ int cmd_clone(int argc,
+ 	 * data from the --bundle-uri option.
+ 	 */
+ 	if (bundle_uri) {
++		struct remote_state *state;
+ 		int has_heuristic = 0;
  
-+static void llist_free(struct llist *list)
-+{
-+	for (struct llist_item *i = list->front, *next; i; i = next) {
-+		next = i->next;
-+		llist_item_put(i);
-+	}
-+	free(list);
-+}
++		/*
++		 * We need to save the remote state as our remote's lifetime is
++		 * tied to it.
++		 */
++		state = the_repository->remote_state;
++		the_repository->remote_state = NULL;
++		repo_clear(the_repository);
 +
- static struct llist * llist_copy(struct llist *list)
- {
- 	struct llist *ret;
-@@ -206,6 +215,14 @@ static inline struct pack_list * pack_list_insert(struct pack_list **pl,
- 	return p;
- }
- 
-+static void pack_list_free(struct pack_list *pl)
-+{
-+	for (struct pack_list *next; pl; pl = next) {
-+		next = pl->next;
-+		free(pl);
-+	}
-+}
+ 		/* At this point, we need the_repository to match the cloned repo. */
+ 		if (repo_init(the_repository, git_dir, work_tree))
+ 			warning(_("failed to initialize the repo, skipping bundle URI"));
+@@ -1413,6 +1422,10 @@ int cmd_clone(int argc,
+ 				bundle_uri);
+ 		else if (has_heuristic)
+ 			git_config_set_gently("fetch.bundleuri", bundle_uri);
 +
- static inline size_t pack_list_size(struct pack_list *pl)
- {
- 	size_t ret = 0;
-@@ -419,7 +436,8 @@ static void minimize(struct pack_list **min)
++		remote_state_clear(the_repository->remote_state);
++		free(the_repository->remote_state);
++		the_repository->remote_state = state;
+ 	} else {
+ 		/*
+ 		* Populate transport->got_remote_bundle_uri and
+@@ -1422,12 +1435,26 @@ int cmd_clone(int argc,
  
- 	/* return if there are no objects missing from the unique set */
- 	if (missing->size == 0) {
--		free(missing);
-+		llist_free(missing);
-+		pack_list_free(non_unique);
- 		return;
- 	}
- 
-@@ -434,6 +452,8 @@ static void minimize(struct pack_list **min)
- 	}
- 
- 	while (non_unique) {
-+		struct pack_list *next;
+ 		if (transport->bundles &&
+ 		    hashmap_get_size(&transport->bundles->bundles)) {
++			struct remote_state *state;
 +
- 		/* sort the non_unique packs, greater size of remaining_objects first */
- 		sort_pack_list(&non_unique);
- 		if (non_unique->remaining_objects->size == 0)
-@@ -444,8 +464,14 @@ static void minimize(struct pack_list **min)
- 		for (pl = non_unique->next; pl && pl->remaining_objects->size > 0;  pl = pl->next)
- 			llist_sorted_difference_inplace(pl->remaining_objects, non_unique->remaining_objects);
- 
--		non_unique = non_unique->next;
-+		next = non_unique->next;
-+		free(non_unique);
-+		non_unique = next;
- 	}
++			/*
++			 * We need to save the remote state as our remote's
++			 * lifetime is tied to it.
++			 */
++			state = the_repository->remote_state;
++			the_repository->remote_state = NULL;
++			repo_clear(the_repository);
 +
-+	pack_list_free(non_unique);
-+	llist_free(unique_pack_objects);
-+	llist_free(missing);
- }
- 
- static void load_all_objects(void)
-@@ -565,7 +591,6 @@ static void load_all(void)
- int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, struct repository *repo UNUSED) {
- 	int i; int i_still_use_this = 0; struct pack_list *min = NULL, *red, *pl;
- 	struct llist *ignore;
--	struct object_id *oid;
- 	char buf[GIT_MAX_HEXSZ + 2]; /* hex hash + \n + \0 */
- 
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
-@@ -625,11 +650,11 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
- 	/* ignore objects given on stdin */
- 	llist_init(&ignore);
- 	if (!isatty(0)) {
-+		struct object_id oid;
- 		while (fgets(buf, sizeof(buf), stdin)) {
--			oid = xmalloc(sizeof(*oid));
--			if (get_oid_hex(buf, oid))
-+			if (get_oid_hex(buf, &oid))
- 				die("Bad object ID on stdin: %s", buf);
--			llist_insert_sorted_unique(ignore, oid, NULL);
-+			llist_insert_sorted_unique(ignore, &oid, NULL);
- 		}
- 	}
- 	llist_sorted_difference_inplace(all_objects, ignore);
-@@ -671,5 +696,8 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
- 		fprintf(stderr, "%luMB of redundant packs in total.\n",
- 			(unsigned long)pack_set_bytecount(red)/(1024*1024));
- 
-+	pack_list_free(red);
-+	pack_list_free(min);
-+	llist_free(ignore);
- 	return 0;
- }
-diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
-index 8dbbcc5e51..4e18f5490a 100755
---- a/t/t5323-pack-redundant.sh
-+++ b/t/t5323-pack-redundant.sh
-@@ -34,6 +34,7 @@ relationship between packs and objects is as follows:
-     Px2 |         s s s                           x x x
- '
+ 			/* At this point, we need the_repository to match the cloned repo. */
+ 			if (repo_init(the_repository, git_dir, work_tree))
+ 				warning(_("failed to initialize the repo, skipping bundle URI"));
+ 			else if (fetch_bundle_list(the_repository,
+ 						   transport->bundles))
+ 				warning(_("failed to fetch advertised bundles"));
++
++			remote_state_clear(the_repository->remote_state);
++			free(the_repository->remote_state);
++			the_repository->remote_state = state;
+ 		} else {
+ 			clear_bundle_list(transport->bundles);
+ 			FREE_AND_NULL(transport->bundles);
+diff --git a/t/t5730-protocol-v2-bundle-uri-file.sh b/t/t5730-protocol-v2-bundle-uri-file.sh
+index 37bdb725bc..38396df95b 100755
+--- a/t/t5730-protocol-v2-bundle-uri-file.sh
++++ b/t/t5730-protocol-v2-bundle-uri-file.sh
+@@ -7,6 +7,7 @@ TEST_NO_CREATE_REPO=1
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- main_repo=main.git
+ # Test protocol v2 with 'file://' transport
+diff --git a/t/t5731-protocol-v2-bundle-uri-git.sh b/t/t5731-protocol-v2-bundle-uri-git.sh
+index 8add1b37ab..c199e955fe 100755
+--- a/t/t5731-protocol-v2-bundle-uri-git.sh
++++ b/t/t5731-protocol-v2-bundle-uri-git.sh
+@@ -7,6 +7,7 @@ TEST_NO_CREATE_REPO=1
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # Test protocol v2 with 'git://' transport
+diff --git a/t/t5732-protocol-v2-bundle-uri-http.sh b/t/t5732-protocol-v2-bundle-uri-http.sh
+index 129daa0226..a9403e94c6 100755
+--- a/t/t5732-protocol-v2-bundle-uri-http.sh
++++ b/t/t5732-protocol-v2-bundle-uri-http.sh
+@@ -7,6 +7,7 @@ TEST_NO_CREATE_REPO=1
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # Test protocol v2 with 'http://' transport
 -- 
 2.46.2.852.g229c0bf0e5.dirty
 
