@@ -1,86 +1,85 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E071367
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 12:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B007DA6F
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 12:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727699539; cv=none; b=RAnl+eocJ//U6C7gyInB/ylZiF5EMjHg5XnbPMKbeEstHJSdf1qNhSDJwpf3roj0+tgKThGM7mEl6EkdI+p5I+kIV4UcJgI6+VzeTvBb/TMX9L9tEyLgmajNGQw1+EPFTv7oE3eGzF1iN81KDuqZ1GnPdBFgKiQr3R6dkl61wEY=
+	t=1727699541; cv=none; b=g7UkSsmkSMWnFioAeQMZ8lzzALeVTSTHOeVc9DAuVUytqVaBNEuVaaBL2j6dGXahuH9bR1sJ3u519HWBKPLlMlpC3EW2iPN0ye0JAterUkgArSaoRWNX/tUratSesXvzaT5IBiyZVUPBzSTQ5IhGptO/M9I59f4EbHMImPv5jUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727699539; c=relaxed/simple;
-	bh=Ky0WzFVuw3E2qlBFAsO4G1q6Rv4nNNIcysII96MGYKc=;
+	s=arc-20240116; t=1727699541; c=relaxed/simple;
+	bh=INn/5Skz/D4vlqy+Ic2OtAF7pljMwsiArkYv7Xnt5h8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LvJm534aVATWq1Vjttu23s8Co9/0bXzjv+dXVsXZMoqbq26Kv48B6bM2QrcG5Tjq7S6calMYWIUiHNwTgZ3r+PwS2jRSB7KCmc+f0gQCjE+9udlWGrgLqT5GTNwYaGAYjCeHVBUpOeVwGcmjcxh1OyF3k2bSbok6YgEoxE/1JSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qLfJcG/p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l4mMZrxP; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=BgLD7iqmD5TFV4KvGsK4c4RZY22xfT/w63iL0FBIZuQ+U+z1kiAHt99Gj9YrNAI3W1S5tvvkIP6Z3cdbWq7JbgDj+q9v1cS0dX04enEyrcmB2WDaS+IAawOrVLpMYt1iFmx5Jl26BDcDhoU/XvkSHgDOkO8ikwJtyPRopsFN7H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sH6y1jnG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UxU1G/En; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qLfJcG/p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l4mMZrxP"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 893FC1140194;
-	Mon, 30 Sep 2024 08:32:16 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 30 Sep 2024 08:32:16 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sH6y1jnG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UxU1G/En"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B562811401C2;
+	Mon, 30 Sep 2024 08:32:17 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Mon, 30 Sep 2024 08:32:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727699536; x=1727785936; bh=EPgyoPIfbG
-	hTUJI3YaSu+Dl9dop2Tum2EIulVdOyYl4=; b=qLfJcG/pgX/ch172Zdv/pm0oqk
-	REHJE7CmqSfykxQarev4b3ejdYOe88hVtdy0xvAJONLfs1D2/w2NUW4AIWGiIYGu
-	g5hk0MuF+Yy3a96vg7xwFzW6wnxiisogBvq9E1D1GvP5JLJN0J9j05W9aV8Ib8Bg
-	YWcawODg7qcNLbF+kOn2oVExMbtlD9vmaaHPrjq659AEXHDsczBPgYKgvJ6UtLlk
-	4pbckoO0XUT71DV7iL/8+dKF2wOageDto4B8ATyXQCxGi3bztSU41nxul2+e6Mhd
-	h0tixxbHIJSW+xUpaZs+BMwqzUZTryqkoe3ngFf04mFnD05P6yQa9CZFQYJA==
+	:subject:to:to; s=fm2; t=1727699537; x=1727785937; bh=n+xpdvawky
+	CT0JzEBTkqkmsKFbjdYSIINM/dECDTRiA=; b=sH6y1jnGI5Z7YMwwCVZU0Fcdcz
+	IbX7KBnR2TCy+rg045uGy7FRIaCqznyEtED+o2LddYwLYujH1jQnCH5YihRkMq1v
+	QAOPiBO3eSIo4eihiQiCF1HzcYkYK9YMZ/N3/WSOaqTD6UxUmFTSEpQNhcUlh5uV
+	FXP77L6YNXDwL1aZTdclbiE9nF1sBlYOMBOigTqPs+pFxpF/k3Pco2NUlU3tnuFd
+	cTsWYgdyGWhBgSXHGxQfqRGmyPm1mbk0SpbWwi0DwQd0QvGVh+h6BgKfj0d4e0pH
+	aUYTUPh7MQwpwvIPvYESEWm1O2qnmi7nSy1eIg8Q+GEZQo0gawFJlYFI3fzw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727699536; x=1727785936; bh=EPgyoPIfbGhTUJI3YaSu+Dl9dop2
-	Tum2EIulVdOyYl4=; b=l4mMZrxPrA2kgX0WBz1IiHMhD36eH20HaKsDReVNKAt5
-	Ujtu1LIcp4RxvxIUtTB9qrF9FKja7dboQ8wwMwxNC7qQqAUejvFf318uriCQk5NK
-	GGZtM9ZRaV4hneKAKcPp5wor9UvXhQHqXPejKuS0s3qY/S9k7lFueGNZjLpZafey
-	0TC3ZJr37SOQq1e2ZFkgz37grU0BqJ5i8tmx+1VHvXbn8J4KIxxW+EwPk47pYvhF
-	Z2xMQka6ZOs3Pjy9Pam2l+lkMuqviShlpl1CY/L5PhixRQD4Fh0NyJu5cylHhDC7
-	DrukRIoSUfYzHocWiRjWNbARBwKCiqUhFKmpfAl0qw==
-X-ME-Sender: <xms:UJr6Zj2ZrmthRhV6FJGEW4KQityK2UD6Zs5zPdwqaLSlmnhOoomhcQ>
-    <xme:UJr6ZiEpNimz7aX3Fkiugw2qLca3fuxgpQDafhT6g4IVdrs1zfY0C-7gutPUPVLJZ
-    PZDUiJddMC6w0MQAg>
-X-ME-Received: <xmr:UJr6Zj6Bz7QdhlBnf2uhA8sbwNzPTImrnQag2H3YcP7SLIz979aOUqM4qE1FJp_Xs-VyW2X2DtdzQzuASzJXfU61bPRw20izD7nKdNEaoPBuEiw>
+	fm2; t=1727699537; x=1727785937; bh=n+xpdvawkyCT0JzEBTkqkmsKFbjd
+	YSIINM/dECDTRiA=; b=UxU1G/EnyfASx/mcCBRCReYrYpPPhbcGOGvnZJDaA3/j
+	yEUa7yO4r9Nxp5fPoT3R3C4PzmyFuohGdb5Sm87UbbR8f4qjav0mGuUGabWFP1Hg
+	eQvPVD+dbCamwQaP9phjnUVHcfpmQlgZMzfEIu6SjgNcrAQtRey5t1yR+aUJX5ZS
+	MJs29hve7ZvqPOlBesv4ZfNSNnNlvdcjVcfM0ECnDD6xWNXyo2nbIEPJMfDGeyu6
+	0kQ1m2Qe/tge3pNTOCsGqVRG9fubASH2tQs+8ORcsS2I8AAwdLlAN7FTOH971vfA
+	j3kkBiiGIzbDML/byidSFLInBvOZX90e9NqtfZevQQ==
+X-ME-Sender: <xms:UZr6Zu6LvOxjnixZv3Puw3BaBrUEvnVPrBKpsXKgmZYHQyAFDHFoqQ>
+    <xme:UZr6Zn6EXd1eQtXXmY74duprdiLnwpSRzFOSlCiPKP4k-vP3H_dzyFz804EFY3PkA
+    zvxOfr__t-KZrpP_g>
+X-ME-Received: <xmr:UZr6Ztf1YqV9PN53y9FxkPl6dgBy_nj-CwCmLUT9cih0_2ciaGpC3-V0idvr2SfvpnYscTBId3X7q6oVtzkX3mLkv0t223r38NyBlq6untJU97k>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedgheefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepjeevudeggfffffeigeethffgieekveeffeehvedvgeei
-    teegueejleeihfeitdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsth
-    holhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
-    vghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:UJr6Zo0ng5jc8AU7GoXqIxk2SDjQ7PmIArBo-i9wU5uqFXZuv3snhw>
-    <xmx:UJr6ZmFJoL2ZRRG2o5i8_M0H6AolIWVi3KQLRSzVjDjyiNumkSWvqw>
-    <xmx:UJr6Zp8AfwMW6_EGknAgwup1K1QuTQkoxjNc_P_c94XCiRCw8rAa_g>
-    <xmx:UJr6Zjmv035M8oMg3YilCuSpC0bGjvRYtLO627ydRYesjzzQ6UxtWQ>
-    <xmx:UJr6ZjOTrDm0HUSUtQ5a6l8ll_hJ9H2RlRYI4yZEeT6mCJKbZJXkpYtU>
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrd
+    hnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:UZr6ZrJCGa0IuVFIxbRKsT4Pvx5g5ezIKipD9zVYPhbKfdJeIAf8dg>
+    <xmx:UZr6ZiIWCXpg4OByUqnbBnFw_uUkiIu4qSKBnkftKTTHw_AHBN45OA>
+    <xmx:UZr6ZsyU_4NvMz2vYbfperpt-5vuYnLYBLyCfevnDeiZI_zQFFMK0Q>
+    <xmx:UZr6ZmI0L1rU3qnhgpl9tWqhJ5v3XbEKv1VGGRI0Etj4Pg4LS1hXtQ>
+    <xmx:UZr6ZkjVjShyGyNFpQv6NEtFdTuSRafn3frk0Qbtvc9hSZBCYly8OYnp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Sep 2024 08:32:15 -0400 (EDT)
+ 30 Sep 2024 08:32:16 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fd546580 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 30 Sep 2024 12:31:27 +0000 (UTC)
-Date: Mon, 30 Sep 2024 14:32:10 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3e8ff9ee (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 30 Sep 2024 12:31:30 +0000 (UTC)
+Date: Mon, 30 Sep 2024 14:32:14 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
 	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 2/2] read-cache: free hash context in do_write_index()
-Message-ID: <ZvqaRIY1OzOIh1bc@pks.im>
+Subject: Re: [PATCH 1/2] read-cache: free threaded memory pool
+Message-ID: <ZvqaTqegJxow1x-b@pks.im>
 References: <pull.1801.git.1727696424.gitgitgadget@gmail.com>
- <b6fe5b3ef7e5f4ac8cc339685d92e3ac39fcb456.1727696424.git.gitgitgadget@gmail.com>
+ <9a45b15ea4b9864cd3cff066ecd9281c4539d5f7.1727696424.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,13 +88,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b6fe5b3ef7e5f4ac8cc339685d92e3ac39fcb456.1727696424.git.gitgitgadget@gmail.com>
+In-Reply-To: <9a45b15ea4b9864cd3cff066ecd9281c4539d5f7.1727696424.git.gitgitgadget@gmail.com>
 
-On Mon, Sep 30, 2024 at 11:40:24AM +0000, Derrick Stolee via GitGitGadget wrote:
+On Mon, Sep 30, 2024 at 11:40:23AM +0000, Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <stolee@gmail.com>
 > 
-> While writing an index, a 'git_hash_ctx' is allocated for hashing the
-> file contents. This should be freed as the method exits.
+> In load_cache_entries_threaded(), each thread is allocated its own
+
+s/allocated/allocating/
+
+> memory pool. This pool needs to be cleaned up while closing the threads
+> down, or it will be leaked.
 > 
 > Signed-off-by: Derrick Stolee <stolee@gmail.com>
 > ---
@@ -103,20 +106,21 @@ On Mon, Sep 30, 2024 at 11:40:24AM +0000, Derrick Stolee via GitGitGadget wrote:
 >  1 file changed, 1 insertion(+)
 > 
 > diff --git a/read-cache.c b/read-cache.c
-> index 3c078afadbc..51845c2e611 100644
+> index 764fdfec465..3c078afadbc 100644
 > --- a/read-cache.c
 > +++ b/read-cache.c
-> @@ -3126,6 +3126,7 @@ out:
->  		free_hashfile(f);
->  	strbuf_release(&sb);
->  	free(ieot);
-> +	free(eoie_c);
->  	return ret;
->  }
+> @@ -2188,6 +2188,7 @@ static unsigned long load_cache_entries_threaded(struct index_state *istate, con
+>  		if (err)
+>  			die(_("unable to join load_cache_entries thread: %s"), strerror(err));
+>  		mem_pool_combine(istate->ce_mem_pool, p->ce_mem_pool);
+> +		free(p->ce_mem_pool);
+>  		consumed += p->consumed;
+>  	}
 
-Yup, this one looks correct. I've sent out an equivalent patch via [1] a
-couple hours ago.
+Okay. We move over the contents of the pool, but forgot to free the pool
+itself. As far as I can see the pool is always allocated and only used
+in two functions, both of which assume that it is allocated. So I wonder
+why it is allocated in the first place instead of making it a direct
+member of `struct load_cache_entries_thread_data`.
 
 Patrick
-
-[1]: https://lore.kernel.org/git/c51f40c5bd0c56967e348363e784222de7884b79.1727687410.git.ps@pks.im/
