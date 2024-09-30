@@ -1,232 +1,122 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B58A198E61
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 17:40:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3F0198E92
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 17:41:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727718062; cv=none; b=dENGFMYTbsKhq9NLHpO+fFv7mqD2mbiJ+7TuLC0XWZky0C3NeIFqHaSMMTreUhYD+uD2UG2u6BWybnruYkiF4+S73ZdqO29qIAtrExmqCacDvddJferb+eCtNcoWxzO4D5PYvZ5kQGOCTnXnknVoAWG4Jkn8KfdY/NA8PFkdYCI=
+	t=1727718066; cv=none; b=U8N7S0bALWYVurvwvAsHKOhdicWK0l71xWftS7jWf16gCLF+5IyoOKKKx2QOJfLdVE29VOuH84pxAV21BheCs30w6DXE5TT4dAMcQ3CSw9v1/SjS/z3ZowthE5n8Ky5a+5ZGtFobME0He3D+WiGAQoMsAO8shBFkWhwKM1Jx0UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727718062; c=relaxed/simple;
-	bh=5O8nfJYqVqNGF/gmg+0oMW8OgDQERENkgVR+qRlkMfg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YWupYVZESPthjN37A1HHH0J4jOwEeryNC7rwpc502u22N+UfoVZV9Mt8mNxr7HOIxNtrFrpw0rk8XxbywX1x4fkRN3j83GGfrcTPPs19OIRbbE9w/rnqPTNTUhm/DjwN4S7T0VaYHUy8wlWAaSq57TYUffapr9CmA05Q3/a9ni8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m+d7Vt08; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nVswksiZ; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727718066; c=relaxed/simple;
+	bh=cATAyVPcAYoV/j1ZUTljnB+1UzILrpBREEXTlvs6vvs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CvPwf2+qpP6KuCdM46f8wRbqpdYmm5VfgVxt72DEo01BGkAxFlnBEaDDqcfVhLvt02o0ikZbJ4CICq+UtER7/g0rdlvBRA5Uo1rKhkiPnCk8Eoqu+U24oENMvp+fxNFrZd8J+sV2bY6gBw40eFFO5TIE8xs23Y0H4GuWfTDVVgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=Y7JopSgx; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m+d7Vt08";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nVswksiZ"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0B4C01140592;
-	Mon, 30 Sep 2024 13:40:59 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 30 Sep 2024 13:40:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727718059; x=1727804459; bh=fvH5CnkiTV
-	1kJ1lbaQF4UZoXgllspnJkdtwD8Rf+8Ls=; b=m+d7Vt08TmugKMnr6L6Lqlea87
-	W5uI/3ib4rUfWF+EMCCGHXdX+9Zai3bFZPvKtAR9zlJ5/gdx2F2aGdkkANTy+Red
-	02bK8XRNtCMNaCQzYGitOQpU9DAIL4Wc2s50aBmLx79dnC6lkI8AUVNtXhcvoS5I
-	mKwzE0gpkwktlvSfq/a21hAEq5i2P8nGrDYVAMFCLsM8e1K/VFjHyR/9Bt8CDdcV
-	q6qduN/3tyH9LvIHsAe6MrVcchc68zbX/8VS5Lw1UI2Z+UHBQeXCvkdshDe9LvUs
-	eRY/vMal6oVT7TnHYabgyTSZD5blcId7nxm8WJWd4h6lncZHRuP9B1/0MK0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727718059; x=1727804459; bh=fvH5CnkiTV1kJ1lbaQF4UZoXglls
-	pnJkdtwD8Rf+8Ls=; b=nVswksiZZ378X8+JjhAsNPVVVbq1R4lv1q5ziFQEJG0h
-	pJ8ckWMe/AjKf3Q248iMdph3/D2g9rVnZaojHrItMtBnOohIO3NxeIQfBaam95QF
-	skvIsaLdqqdV3LxP+gvK6bxiG8vVmwVJGrSEO4rRuMZk5gopGfKhNldTp3lrxAf2
-	0Gj5DAzGhfBKOjMKkupPpT/s9S3xxlFNLstl5uDKZIzB9fkA+Iort2nTLkKYpG3k
-	WXPU8ta2YYeUhRdyaOo/NH0/oiwv9xJVq/mac2SwwUQtX3qIy3waaOi8uYoDk2D7
-	PxXeMECdIOr7749TMrwS4MFDslG8S1wSu7Y4uB97YQ==
-X-ME-Sender: <xms:quL6ZgZANVAwFe4rVpSrUX-iFfYhZn3M7TDfRC7zNDSR8azk43t5fA>
-    <xme:quL6ZrbCr393FgKQwT0A5cz1TDDvWpvDssofBdBSWD4eXFSkQJEol-KPf0sOYZPIL
-    g4Dk6Qs4MvDCwCz0g>
-X-ME-Received: <xmr:quL6Zq_D7ZHhcYGgUffM2-Kb1GlyNO6zSfqKr9ltWRF_lviupfF3XlNVhEyeeNuN_gleOH3DZpu1rWZ0RhxAQ0ATdIPD45e6oZLivnU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedgudduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepkhhojhhirdhnrghkrghmrghruhesghhrvggvrdhnvg
-    htpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:quL6Zqr3Qix0x7jOxYgLuaMoVPlvx8kQnrdRLCfdYVxoMVN9nBw-wA>
-    <xmx:quL6ZrrzAfzu9cRiwIPJ6NV8fT7k8H909hRFu4jKQKOOE-b6RS6muA>
-    <xmx:quL6ZoR-LIqQ-vA5r21K8UmvLrgBzFNXVEOZ54GZbfA-I3iQsM48RQ>
-    <xmx:quL6ZroH6lpYMXreLlTQnQN21PBIbQsg4HjHj5lrW0UsiVaHANjX1Q>
-    <xmx:q-L6ZskTywvFSnuELWUhUZfyDHWUVt_v2FAVP57i8kbOQIoTLPX_GOpO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Sep 2024 13:40:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH] fsmonitor OSX: fix hangs for submodules
-In-Reply-To: <pull.1802.git.1727577690390.gitgitgadget@gmail.com> (Koji
-	Nakamaru via GitGitGadget's message of "Sun, 29 Sep 2024 02:41:30
-	+0000")
-References: <pull.1802.git.1727577690390.gitgitgadget@gmail.com>
-Date: Mon, 30 Sep 2024 10:40:56 -0700
-Message-ID: <xmqqcykl82fr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Y7JopSgx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1727718049; x=1728322849; i=l.s.r@web.de;
+	bh=Zc3y352IgDgC8udLydYaw2wuTPqqssbm19COHXrxyCE=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=Y7JopSgxT8/kKWXzl48kyFnhPaEV09+StVq0IbiPmz+qqdCgAWXpp3r8RBR52QQ1
+	 xMzW6JT/v4aaq/C18rzMzDid+YKF+8GFjqAKR06oqTTibuBACJ3s4QpZ4C8G4k222
+	 ZQPuQj/1le078NBN5YKBxpPtjtSneGDoUALNZkS8/qX9vamZqcfyr5EGWH8DiP2uD
+	 kiFc9bY6CVKxMnHvJXmO9mVUIXdxhf+2LAYq0LtTfEUj60DOsdl2AXEYo1sQO062b
+	 fox4Usfn5ytK/hGYXjfwkd9usSZRMC7glMJnr2mlaM5H+qw1jZEt0P5ttGnipQ/Za
+	 JcNGoDA1vbELGOEV9g==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.21.148]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MqZMQ-1s8m9Z0tBg-00qP0k; Mon, 30
+ Sep 2024 19:40:49 +0200
+Message-ID: <64253c71-915d-4862-8fa2-555ca2fc63cc@web.de>
+Date: Mon, 30 Sep 2024 19:40:48 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/22] reftable/writer: handle allocation failures in
+ `reftable_new_writer()`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Edward Thomson <ethomson@edwardthomson.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <cover.1726489647.git.ps@pks.im> <cover.1727680272.git.ps@pks.im>
+ <9edd1d84cdbd53d966ff5cfe9b75281dd5966b07.1727680272.git.ps@pks.im>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <9edd1d84cdbd53d966ff5cfe9b75281dd5966b07.1727680272.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:5SDpq9E5vJLOFKe1y0zaQN3/+p2dNg/HLCmOAELCY/CjiqzQ4pT
+ QZLaQCi4QnO4IscO4CEMeKmS/L7mCM2JMmnp6Tw+1r6YxcbGT4ARaNFTrDKjwzqicabhD0m
+ JxOwbaZkb42br2RuFZZTAc4eKpuZFBInzqdliaUqc+lzmTND01EoJ9D9Bee7Ce86WDJ+KKp
+ 88eAHc+066uB2g5RsNt0A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:PFRksLMKM1Q=;GYHHk59LqPQHTcBz1xvCEpTNrfJ
+ oFPUoS6iloCGURRFpioPvGiSlN+dRJ6Vk4xFeNjNF435k6cD5xbtfEzP2nSk0p6WUAzTo1U7w
+ iuzBT3rl/z5g1Q/bm0Z5l+W6fDY86iHep+8d5TVYXIdnwzZCqhre9jEHFES9fX+2kZsZFDKeZ
+ tWpaLYcefCxIQHKAidqNxcVAu6MtIysW2TTPCkT28uNQUDwnWLBgk5fBmnMaYbfi2+KutyFh7
+ tJW14OGHqsioMj3wW51kivWVN8QkOjm6gPV+5wsmHUYMiYR3Jon2y1+zi+xBgnt0BdUJLbHiQ
+ x7RosRM8DaM7ZUSaAHqK2ISfOk6Omxk6+N0jnZQm8fuLvvHc211c33bqvB9kLrTMOt1A4flOv
+ HPtjkhfJa11oS89r18/2/uIZXLq8os6tHHc15I4fhZb/lv8pi1XOpLNtQuqd4l5cqZC4ZASU4
+ Y4OrBsxQ2Dqo77uPcyL7SGbvi7Ik7esDqcsfTT560wAJcYSN7bvN9FcUrIZmlIVdgG4mbhFJi
+ tInO19zfl5aGlmL5jhnkUM1dQME4VogsEVwL3oeDP/uz/tBLl1OPFhBHXgAl/dXfTgezgk0Xo
+ eNHUHqxChkgItgF/UgoZcX7EEYq+wdBEgqwoET0gXHFlnKuH7ESfY7Nwf3jGuz4Xr5PQwZPWq
+ /z6yiWswXS9LMGy5OrDajGxkHMiBjhGODT9YlkZQ2001IFpV7BPUPM/Gwdtiec9LkUdT8GnNe
+ ePiW5GdB3DBnhMHliDdvaRh4PjTvi1p2T/+f9ewnjag192NFUiFenY1EgfAVHdjUTmG8+YRyu
+ VG+y5EDzg0uTbtiFnmEOyW+g==
 
-"Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Koji Nakamaru <koji.nakamaru@gree.net>
->
-> fsmonitor_classify_path_absolute() expects state->path_gitdir_watch.buf
-> has no trailing '/' or '.' For a submodule, fsmonitor_run_daemon() sets
-> the value with trailing "/." (as repo_get_git_dir(the_repository) on
-> Darwin returns ".") so that fsmonitor_classify_path_absolute() returns
-> IS_OUTSIDE_CONE.
->
-> In this case, fsevent_callback() doesn't update cookie_list so that
-> fsmonitor_publish() does nothing and with_lock__mark_cookies_seen() is
-> not invoked.
->
-> As with_lock__wait_for_cookie() infinitely waits for state->cookies_cond
-> that with_lock__mark_cookies_seen() should unlock, the whole daemon
-> hangs.
-
-The above very nicely describes the cause, the mechansim that leads
-to the end-user observable effect, and the (bad) effect the bug has.
-
-I wish everybody wrote their proposed commit messages like this ;-)
-
-> Remove trailing "/." from state->path_gitdir_watch.buf for submodules
-> and add a corresponding test in t7527-builtin-fsmonitor.sh.
->
-> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
-> ---
->     fsmonitor/darwin: fix hangs for submodules
-
-> diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-> index 730f3c7f810..7acd074a97f 100755
-> --- a/t/t7527-builtin-fsmonitor.sh
-> +++ b/t/t7527-builtin-fsmonitor.sh
-> @@ -82,6 +82,28 @@ have_t2_data_event () {
->  	grep -e '"event":"data".*"category":"'"$c"'".*"key":"'"$k"'"'
+Am 30.09.24 um 10:08 schrieb Patrick Steinhardt:
+> diff --git a/reftable/writer.c b/reftable/writer.c
+> index ed61aaf59c..54ec822e1c 100644
+> --- a/reftable/writer.c
+> +++ b/reftable/writer.c
+> @@ -117,13 +117,17 @@ static void writer_reinit_block_writer(struct reft=
+able_writer *w, uint8_t typ)
+>  	w->block_writer->restart_interval =3D w->opts.restart_interval;
 >  }
->  
-> +start_git_in_background () {
-> +	git "$@" &
-> +	git_pid=$!
-> +	nr_tries_left=10
-> +	while true
-> +	do
-> +		if test $nr_tries_left -eq 0
-> +		then
-> +			kill $git_pid
-> +			exit 1
-> +		fi
-> +		sleep 1
-> +		nr_tries_left=$(($nr_tries_left - 1))
-> +	done > /dev/null 2>&1 &
-
-So, the command is allowed to run for 10 seconds and then a signal
-is sent to the process (by the way, we do not write the SP between
-">" and "/dev/null").
-
-> +	watchdog_pid=$!
-> +	wait $git_pid
-
-And the process to ensure the command gets killed in 10 seconds is
-called the "watchdog".  We let the command run for completion (and
-we'd be happy if it did without watchdog needing to forcibly kill
-it).
-
-Which means that even after the test finishes normally (e.g., the
-command completes without getting killed by the watchdog, because it
-is on a fast box and finishes in 0.5 second), we have leftover
-watchdog process hanging around for 10 seconds, which might interfere
-with the removal of the $TRASH_DIRECTORY at the end of the test.
-
-There is a helper function to kill both (below), which probably is
-used to avoid it.  Let's keep reading.
-
-> +}
-> +
-> +stop_git_and_watchdog () {
-> +	kill $git_pid $watchdog_pid
-> +}
-
-This sends a signal and let the process die.  Without waiting to
-make sure they indeed died, at which point we can safely remove the
-$TRASH_DIRECTORY on filesystems that refuse to remove a directory
-when a process still has it as its current working directory.
-
-Shouldn't it loop, like
-
-	for pid in $git_pid $watchdog_pid
-	do
-                until kill -0 $pid
-                do
-                        kill $pid
-                done
-	done
-
-or something?  Or is there a mechanism already to ensure that we
-return after they get killed that I am failing to find?
-
->  test_expect_success 'explicit daemon start and stop' '
->  	test_when_finished "stop_daemon_delete_repo test_explicit" &&
->  
-> @@ -907,6 +929,23 @@ test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
->  	test_subcommand git fsmonitor--daemon start <super-sub.trace
->  '
->  
-> +test_expect_success "submodule implicitly starts daemon by pull" '
-> +	test_atexit "stop_git_and_watchdog" &&
-
-Hmph, this is _atexit and not _when_finished because...?
-
-> +	test_when_finished "rm -rf cloned; \
-> +			    rm -rf super; \
-> +			    rm -rf sub" &&
-
-Makes me wonder why it is not written like so:
-
-	test_when_finished "rm -rf cloned super sub" &&
-
-which is short enough to still fit on a line.  Is there something I
-am missing that these directories must be removed separately and in
-this order?
-
-> +	create_super super &&
-> +	create_sub sub &&
-> +
-> +	git -C super submodule add ../sub ./dir_1/dir_2/sub &&
-> +	git -C super commit -m "add sub" &&
-> +	git clone --recurse-submodules super cloned &&
-> +
-> +	git -C cloned/dir_1/dir_2/sub config core.fsmonitor true &&
-> +	start_git_in_background -C cloned pull --recurse-submodules
-> +'
-
-Other than that, very nicely done.
-
-Thanks.
-
->  # On a case-insensitive file system, confirm that the daemon
->  # notices when the .git directory is moved/renamed/deleted
->  # regardless of how it is spelled in the FS event.
 >
-> base-commit: 3857aae53f3633b7de63ad640737c657387ae0c6
+> -struct reftable_writer *
+> -reftable_new_writer(ssize_t (*writer_func)(void *, const void *, size_t=
+),
+> -		    int (*flush_func)(void *),
+> -		    void *writer_arg, const struct reftable_write_options *_opts)
+> +int reftable_writer_new(struct reftable_writer **out,
+> +			ssize_t (*writer_func)(void *, const void *, size_t),
+> +			int (*flush_func)(void *),
+> +			void *writer_arg, const struct reftable_write_options *_opts)
+>  {
+> -	struct reftable_writer *wp =3D reftable_calloc(1, sizeof(*wp));
+>  	struct reftable_write_options opts =3D {0};
+> +	struct reftable_writer *wp;
+> +
+> +	wp =3D reftable_calloc(1, sizeof(*wp));
+> +	if (!wp)
+> +		return REFTABLE_OUT_OF_MEMORY_ERROR;
+>
+>  	if (_opts)
+>  		opts =3D *_opts;
+> @@ -134,13 +138,19 @@ reftable_new_writer(ssize_t (*writer_func)(void *,=
+ const void *, size_t),
+>  	strbuf_init(&wp->block_writer_data.last_key, 0);
+>  	strbuf_init(&wp->last_key, 0);
+>  	REFTABLE_CALLOC_ARRAY(wp->block, opts.block_size);
+> +	if (!wp->block) {
+> +		free(wp);
+
+Better use reftable_free() to free it, since you use reftable_calloc()
+to allocate it above.
+
+Perhaps ban free(3), strdup(3) etc. at the end of reftable/basics.h,
+banned.h style?
+
+Ren=C3=A9
+
