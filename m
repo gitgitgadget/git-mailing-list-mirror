@@ -1,81 +1,87 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB624206E
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 19:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C273E15E97
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 19:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727724625; cv=none; b=M+cXhx62gTbQ7DVCMAKqqLj+KNWn4hyVy/e2Sy3oR230E1Gdxsk57yvfCOWAxsi5n9ajPo56VH480g+x9tj7uwPAAu+uR/xiograsxpWY8XGpbtFSGtKL2vs+6En+4w4fUF7cHovWcyKbTu85P///mZxQoCcb71HjYzjr66s5WI=
+	t=1727725265; cv=none; b=PZoRWp40nFUWM9BVUlLBFh3dP+UHux/y1jI8YXiZg/PffUirrNcmnazN1SW804m6YSObF10ru+mIYKs0gbooBjbOcr3tutuWh6fGV8oVI3WcFVUdVp+WfuRQs3OsMebhxn/rXevj+doXFSqe2J7EZVC+lXvI6ht3YbgBN6hppPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727724625; c=relaxed/simple;
-	bh=2K6+mdqyU9mdJxyNyGH/GGYSDgcSkvtaaiCr8ZVB/YI=;
+	s=arc-20240116; t=1727725265; c=relaxed/simple;
+	bh=pujvdbEg4zLtnjVrs8JiGinxhaD6v4OqLgON54oYtEU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bTW90Cui3CVRSuZ22Zw7Al4gw2PUvhvYhkQyVw96TImKiFEVoljpsHj6z7gt/+PTX2NG6hoFVaWO5zY1tnr/+8ROynnySXn2GWZmXNlspaucphkCKZq9AxOv+NRaAUmIzaX2gHHsGL7uDi8l1D/RbmALrjgi6TA6MM3Pvo+o2dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D+7P0ZGI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zh278nuI; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=tFE9dsQkjXVh4NuO/HNdqgKcn6eCz0+UJDe4t11T66JdTkNDlsWiF2gxOsN/ZJkpgqt+wxVUsiViwYdJWDgnnZh9O39KWnD1I0mn5rsaDLzV7NqGEmRxR+6wqUKmDNDpIsCZXoVhhKnoRLYrwCQQ+VbvPXYCP5lmo8oUdrjm+Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lN/rvkOS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WOZEAUuE; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D+7P0ZGI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zh278nuI"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id BFD8F1380868;
-	Mon, 30 Sep 2024 15:30:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lN/rvkOS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WOZEAUuE"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id D793213808B0;
+	Mon, 30 Sep 2024 15:40:59 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 30 Sep 2024 15:30:22 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 30 Sep 2024 15:40:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727724622; x=1727811022; bh=w7B6PaImDc
-	nh33qN5wfZ3obFWnPNBpGN5hRAshqw+c8=; b=D+7P0ZGI9l8oW4buus6JsRWnKd
-	/wHJl1uz9s5sOqzvGT/32uG5oDEXmc7TAiPDMHKXKhKKzllYuafXkxwyZO+50++I
-	dGHS1F4MrL3lD5qZUVqwiZmVXjCqW6w0NrWPqM2Mpaaqo9BgCNc0HpWQo/h6+pA9
-	KboSzjzRog3dw0P9tzA0K3T8XlUFLr61QuQwKUY18SG1z/mymjg7L/S+3flx5Rlk
-	5sWL22l5TXrx/O93NvOnWv+YT2xcjHJcRkl7GYpVghimB0Xbxoug+h0KwBNgBz0F
-	I+zTyNQwz7/3CYPv7PeXM1kx1KXbRCUubF6j3/JP/IjrGtynFUAl+a+bf9Cg==
+	:subject:to:to; s=fm1; t=1727725259; x=1727811659; bh=SFF6O3Tbyv
+	3kAQ02gOlCozVEmt8N9HGVxcI96lvDxn0=; b=lN/rvkOSvtRpgdVduYy7BH7bMm
+	qgE/3KzJHNgfa06ILJs/13cHkJ1c1N+MVeStPcECE6a6BlZRZt3C5ZQRu//pFHfk
+	UYqGDlZ5npgGW/1GqbgFzHSGcR539JJSY2NDFOwUr/WAO0zcR+xPRNxUR3DH5ldT
+	u/Id/Q2wdKX2sPmuWj6zv2UiHo3LCbCGHBGZo6lzvhXvxknszBYnrBx/v3rBxDy1
+	FTuGocFPTCYufcZW+drsFE6KdSh3AQ0wW+/XcoFAAPRm7eUOqCRa6etAIrxhduwc
+	VJEKUFEEjGuXw3TmBIjy25AYO5z11WgrZwiHjsHoYypmeti/h8iVRGhXBpaw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727724622; x=1727811022; bh=w7B6PaImDcnh33qN5wfZ3obFWnPN
-	BpGN5hRAshqw+c8=; b=Zh278nuIbtAfNbAmp6IArsHB0cxaNSEKPa27aW6Q8WLq
-	K9z0QXxHUIEWDXZWNXSKbWXFknK1g9jtKBWX6cXE6WskpRjZZmOsd068eaE+m+kM
-	5IFfnEUu5XzrNCaOchxzJ39zz/wwFJo5vUJwI6NQhba3a9dh79IKWVVq0Eee358+
-	ClC/GWrrE/40TX09o+TE7efP5+IvnlSfIrm6ufOVLp6PP7fOEbGTMqXkli4DuOCk
-	RycdPFvmaPV+LxAbfB+q62QK5dohBMZqYgoXg9vhPOgryposUZ+VF1yR5dOQsqtx
-	M3EiZ5kG546lhtJYRYfoXb5Z7+Bx7s6NtPBFVvq89Q==
-X-ME-Sender: <xms:Tvz6Zqc7x-k-Fm2-XgkK7XhOD0jVyhy3F9YVv6q9MIn782vqCXUpqQ>
-    <xme:Tvz6ZkOMVqFcxtIlTf58Bspz5p-hZzCVFYonMKs_bhcf3jh-zeq0cLXEJCG0NMDzl
-    EapE_JPSnlOunuJMg>
-X-ME-Received: <xmr:Tvz6ZrhCAtPBcG-8fOzgGiDoMKWlnMGy8nWLlExboIF-Aav2r6C1cvxcbuWW0bK8rWPON3hpS1v_W4pHmP36LnaMrtP72JQiOEWYz6k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedgudefjecutefuodetggdotefrod
+	fm2; t=1727725259; x=1727811659; bh=SFF6O3Tbyv3kAQ02gOlCozVEmt8N
+	9HGVxcI96lvDxn0=; b=WOZEAUuEIkrAgV+k2HNep/vdSOgcGfWDvMzVIOQ9+a0K
+	+sNOM414GK+dVx0uGu1C7QRq/f+EavqhdNMj6JEsDckTIsyctBkXW3kMeDG1OZoU
+	Qb3HW3+EWIaYEMqOTwLKJyGtpd0xLSNK9cYwVKR/uBRkaNDauoYugVB3CQ7EOyH3
+	Zk9mqQTlzW4nNWROIlJOVcP4Jf1f8dQgcsGfX5wAGJ59BOb3/X6yb5uEPhKzjzSa
+	811deVzrFCGtTx2X+k6uibu7ZIi9tl3h7/1suKShnvRBHdAJs3788kdw5AGrTbGW
+	vkVfcgSF8iG9nqfxRcjfX2jtCbt0Nt/y0c2HnQC0vQ==
+X-ME-Sender: <xms:y_76ZpfUCJ5nSJGoKPS2gQPVyEiIi9l1nJAfWqe29iWAUhd_3Q8GFQ>
+    <xme:y_76ZnNK7G1qVE62SPVrKQGzYjXb_2B2daW7UgifvHQYL2re59r0ADklD_MsjE9SV
+    Oni6HdcC-Di-aIDVw>
+X-ME-Received: <xmr:y_76Zihd42uhgTkCNi5AOJ_FxIui2UPOOVP3ukLKJduP6TwYFk4KBA5jHmFsja0dvP1JOqCzmb2DBJuC9Xf2bMGzW0z5WmYWFY7_A9s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedgudegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
-    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Tvz6Zn8kazaOKoAWpH_DOVdfffnrtb1cQ5hHY0o5OfdDe9D3z1rziA>
-    <xmx:Tvz6ZmtowHFuhMCvwanwwTjD2QAYfHsdCHn-XreIbk_78mLo46ocoA>
-    <xmx:Tvz6ZuEzR9qZ3soUwmugsxG5hFjlnQHZ2JW7mmVlXa3ghJWY1Oc8BA>
-    <xmx:Tvz6ZlPO9kwlxKfHF7UWYr-nGtkXq1C48mhArKajLUusoPAqd20qMA>
-    <xmx:Tvz6ZqLUk4AgjGHD4IxVsVbPIUfg3P8jcIx1KRQ783ESe3rncziZ5Kwq>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
+    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprh
+    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhohhhntggrihekieesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:y_76Zi8GRAs500FaVLTtQPLYLrsuslN58R4lxUmyeQjW8P_WEv8cTQ>
+    <xmx:y_76ZlugHJteOMWrnfFkqUUn2NpUm8A7ja-4PWji5uqlDk9h_qZybg>
+    <xmx:y_76ZhGlDAJy0DIsss2Dm_yTE3nAkMyRNDhhuecSBxnQNnNlvWZLTA>
+    <xmx:y_76ZsMf-ZfHS6ZCZ1OPDiCQEdomGjszHQY3XEgvbtD6YV2mFhablA>
+    <xmx:y_76ZpiNwNFi3LU-Cl4NCzNDrymXER5qsgG--N6JQrL0B5Jw50Un8V51>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Sep 2024 15:30:22 -0400 (EDT)
+ 30 Sep 2024 15:40:59 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Emily Shaffer <nasamuffin@google.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: Linking topic merges to mailing list threads
-In-Reply-To: <CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com>
-	(Emily Shaffer's message of "Mon, 30 Sep 2024 09:21:11 -0700")
-References: <CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com>
-Date: Mon, 30 Sep 2024 12:30:21 -0700
-Message-ID: <xmqqv7yd548i.fsf@gitster.g>
+To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  shejialuo <shejialuo@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 1/4] git: pass in repo for RUN_SETUP_GENTLY
+In-Reply-To: <5d72c31c6f3b97b7f5f7d3b4fa9a8b1587597670.1727718030.git.gitgitgadget@gmail.com>
+	(John Cai via GitGitGadget's message of "Mon, 30 Sep 2024 17:40:27
+	+0000")
+References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
+	<pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
+	<5d72c31c6f3b97b7f5f7d3b4fa9a8b1587597670.1727718030.git.gitgitgadget@gmail.com>
+Date: Mon, 30 Sep 2024 12:40:58 -0700
+Message-ID: <xmqqldz953qt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,59 +91,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Emily Shaffer <nasamuffin@google.com> writes:
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> We've been wanting to gather metrics on Git's code review process -
-> how long it takes from first contact on list to merge, how many
-> iterations are needed, time between iterations, etc. One missing link
-> is the actual merge time in `next` and `master` - a human can infer
-> the link between the patch and the mailing list thread, but it's more
-> challenging for a script to do it.
+> From: John Cai <johncai86@gmail.com>
 >
-> Would it be possible to modify the maintainer workflow ...
+> commands that have RUN_SETUP_GENTLY potentially need a repository.
+> Modify the logic in run_builtin() to pass the repository to the builtin
+> if a builtin has the RUN_SETUP_GENTLY property.
+>
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>  git.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+>
+> diff --git a/git.c b/git.c
+> index 2fbea24ec92..f58f169f3c7 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -443,7 +443,7 @@ static int handle_alias(int *argcp, const char ***argv)
+>  
+>  static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct repository *repo)
+>  {
+> -	int status, help;
+> +	int status, help, repo_exists;
+>  	struct stat st;
+>  	const char *prefix;
+>  	int run_setup = (p->option & (RUN_SETUP | RUN_SETUP_GENTLY));
+> @@ -455,9 +455,13 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
+>  
+>  	if (run_setup & RUN_SETUP) {
+>  		prefix = setup_git_directory();
+> +		repo_exists = 1;
+>  	} else if (run_setup & RUN_SETUP_GENTLY) {
+>  		int nongit_ok;
+>  		prefix = setup_git_directory_gently(&nongit_ok);
+> +
+> +		if (!nongit_ok)
+> +			repo_exists = 1;
 
-I suspect that there is no need for any workflow change, as all the
-necessary information should be available from public sources.
+Why not use the new variable and pass it directly to nongit_ok?  The
+polarity of the new variable needs to be swapped, of course, but I
+think it makes reading the code to call p->fn() easier to grok
 
-The first-parent chain from 'next' (or 'master' for that matter)
-already record when they got merged.  From there, C^1..C^2 are
-the commit objects that were merged.  notes/amlog knows where
-they came from (i.e. their Message-Id).  From lore/public-inbox
-you can find out how the iterations of topics went, as long as
-the topics are threaded properly (and if not, that would not be
-fixable with any maintainer workflow changes), just like how b4 can
-figure all of that out.
+i.e., 
 
-Ahh, nothing officially documents amlog and that is what you are
-missing.  It would be very nice if somebody, preferrably somebody
-other than I, after trying the "maintainer workflow" by pretending
-to be a maintainer for a day or two with the new info revealed here,
-updates the Documentation/howto/maintain-git.txt file with the
-information below.
+ - rename repo_exists to "no_repo", and initialize it to non-zero.
+ - remove "int nongit_ok"; pass &no_repo instead.
+ - update the calling of p->fn() to
 
-The script post-appplypatch found in the todo branch is made
-available as .git/hooks/post-applypatch so that "git am" knows to
-run it after creating a commit out of an e-mailed patch.  It
-populates a mapping from commit object name to "Message-Id" of
-individual patch.
+	p->fn(argc, argv, prefix, no_repo ? NULL : repo);
 
-"git rebase" knows how to propagate this across rebases because
-I have
+>  	} else {
+>  		prefix = NULL;
+>  	}
+> @@ -480,7 +484,10 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
+>  	trace2_cmd_name(p->cmd);
+>  
+>  	validate_cache_entries(repo->index);
+> -	status = p->fn(argc, argv, prefix, (p->option & RUN_SETUP)? repo : NULL);
+> +	status = p->fn(argc,
+> +		       argv,
+> +		       prefix,
+> +		       repo_exists ? repo : NULL);
 
-    [notes] rewriteref = refs/notes/amlog
+Keeping the call to a single line would be much better than spreding
+it across four lines.
 
-in the .git/config (which means I have to use rebase not cherry-pick
-even when I am touching a single patch, as cherry-pick does not
-preserve notes by design).
+Thanks
 
-Now I think you should have everything, together with what is
-already in Documentation/howto/maintain-git.txt, piece them together
-to illustrate the life of a patch series.
-
-As I do not publish reflog for 'seen', you cannot do "when was the
-topic got picked up to 'seen'?", but as far as I am concerned, it is
-by design.  Being in 'seen' does not mean anything other than I
-happened to have seen it, or saw that somebody indicate interest in
-it.
-
-Thanks.
+>  	validate_cache_entries(repo->index);
+>  
+>  	if (status)
