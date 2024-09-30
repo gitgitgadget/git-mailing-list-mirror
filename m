@@ -1,119 +1,149 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71327126C07
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 08:50:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E8417A5A4
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:13:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727686249; cv=none; b=pSRVSmWnV/T0+C2ep57K1Ds1jyBFK/wpOWUnPWgKNGLnm4WD0ZGvajT/01Da1mEYmkL5v5e9rP19GvDn7qiqXinlbF1uyPcDqq8N4xdc7YimQrZJh3m3RfgJRV9lOr+ZaIdwUCaxK1DlfwSgdgyGAzcZRhfyRfJZ6nlYkCKdhWY=
+	t=1727687596; cv=none; b=jomzpk459AYbTsYWzx3tlCga3lGGV7UuvPRKOffD4zomqJLA+nMIx1LkkQkJ0DFuNqvpLPz62qLlJINIoQAEGc4rawLITqEvOZQD2cNnln8n7CCK+Mv42GAFWjfPKNhVe98922b08CCXbU4za8WKIC1r6wvrGCi40513/A9kYzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727686249; c=relaxed/simple;
-	bh=1iQwy/K4PLwDdq00bkrgZXJGjomIqejSpa5ptPP5PT4=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=L4ucveyEPgMZ/oyCmcDBZhFniqziAw1Jja7476QjYwyAJQvnhl/3568WE/tue/5yM+EmUnX4j/nYo3QZ9RrFXTQnjgz8F5VBGjwuvzialOFwMJiZeLw2DmHyhY7DOHjIJ0gE2TEqkqc4JJOc62Y+MNJI2UkMoiXrulWvY+vSqUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXTWoTuG; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727687596; c=relaxed/simple;
+	bh=NAuKVxJVIqwyH9FbAQoE2sJvXDVgn9OTPaRjSYRaYKs=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=utIjyz45EovF7opHSJgXkAbyrHJO8hjIU2EOYJVFX/Y7V+xq122F0LcLl4Kk/Unp8q77WftFaNYbFYadVIb+adc13prkYGAUnhGm7fZ4sq8Ta6PZ9QS9spewlREhI2DHGca3G+dc+olkJqFBciWI+/qlrqXRr+iPD8G3gewT6xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=q3Jb6qIE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K8p15ENa; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXTWoTuG"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5c883459b19so3326575a12.2
-        for <git@vger.kernel.org>; Mon, 30 Sep 2024 01:50:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727686245; x=1728291045; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5KnGDpOE0bhdnq9jkykRbUOnFjEUmHYROGupLZoI3t0=;
-        b=nXTWoTuG2yTl+8TiE1LJCu7IbUswIELNEHSealb4IdnQUM1oeeE0ms5MUOSF8Se2oK
-         1RCbdWqedBS8JeDAU6XJAxSErWa9fV/JJnne4Y6ORC+tU1e77KTvrcetdKKGocFOHdYH
-         tZFoSwAIyo7xiinjWjcig7gxM4w08RoKkkUFTbPnAnrEnl1OOspGUSO4bWf3y+cnBdXz
-         rQRrof4eA5NgqiJSOQIffVpQmGLT95TgBDnvxOzO7L9p1SysIkBdEq9wlWdSjuCB5Y8I
-         R1jj+CjFIv3RXH5EMrWipvFRJyfYHqCDtcDHOX4B1FPF1DK2nrX42y9Q5Rz11xvYOhXc
-         d5CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727686245; x=1728291045;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5KnGDpOE0bhdnq9jkykRbUOnFjEUmHYROGupLZoI3t0=;
-        b=I3Mpv0qt0O2nJJFTV13aJDDIZPVH18F4Wx35wD1EML9IcL3//caqy7jyc0gaqmeUly
-         OAOqPcCxRmclM8mn8nLdNu9lJ1m0SuZsCW7gXntwsEb81U5mJDAR4Ae1C+4qSsLW4Wzo
-         DLmD4K8FJKW5j0TZVp+BvnHA03c+3DrfERrsfbudfyQeca7turx0adJFHJyDjx+ujDan
-         SWxSHWlNXY1teFufaoIot6ERJOYYF9sB6wNOKgaOewZ8smrzGI/t+5VSMdqYq9GIW8a8
-         d6ENFJq4C9m7r7aBP+UtOnXHKE8UuiNzR6NvErJ8S4fdQNcbCO7JJZoUrnlsFkqtlxQk
-         IPGg==
-X-Forwarded-Encrypted: i=1; AJvYcCVlMifkJ1Kj4KVaOR4fMRQMTb2MX1UEE7HOhgpFmwTruLkU6GOkmzJG5nVTZeS4dRCcCaQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzjALUdPLYWP8D+l2ljEAWAehwEu5VDfNGkdT1xc9fZw9/jUs32
-	X1s0+PQ0XBw48ewyfw1NAFkcZf10+EigwHTKlzFvG300QRceynWd
-X-Google-Smtp-Source: AGHT+IHjgFFdRVlc2Uvs37EFsj0TSGuutDN8U2wgB+oBVdgDaLc8p0SY2tOQsafWl4N5voO10ihKkg==
-X-Received: by 2002:a17:907:3e21:b0:a8d:7b7d:8c39 with SMTP id a640c23a62f3a-a93c4ac9362mr1392402766b.43.1727686244401;
-        Mon, 30 Sep 2024 01:50:44 -0700 (PDT)
-Received: from [192.168.1.212] ([84.69.151.181])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c27c7130sm493647566b.67.2024.09.30.01.50.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Sep 2024 01:50:43 -0700 (PDT)
-Message-ID: <a43fa510-9a96-4b92-8107-0c00209d5161@gmail.com>
-Date: Mon, 30 Sep 2024 09:50:35 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="q3Jb6qIE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K8p15ENa"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BA1AE11401C0
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:13 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Mon, 30 Sep 2024 05:13:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1727687593; x=1727773993; bh=/+iEFVksHw
+	3ckGIFAJFBIeZD3j5d4/LzbVzZaO3IbPg=; b=q3Jb6qIE5O3YuIZ5PhfGUMqRMN
+	BN30A9Pyh5t2TiZalVGUgBvR6HiAVhBAiY2btrlHfO2oGJbzKUODySqwI7cop28v
+	07OOPs4JbV45VJ/j4uGdYMcjZV8qB3+K3M2qalCFBJ5G8SMy6MDcovRdQGpCA/BQ
+	/PotaDK2W0RYKd+tnQ1E95PO+fcZOUY/xmwZarEU29PnUocn8yntWRSmGeQXOjou
+	6saBAyI7CQmK7RlSWHOZJEH+emd3spxxmy0MitFae30uA1BqA4Bsjdc7uljjHygL
+	ENPfUwKS+wyEz4ZNN+bUw7gBRErAa5+Ivi6StJIGjQ0xPe/Ma/Rb2nyvyR4Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727687593; x=1727773993; bh=/+iEFVksHw3ckGIFAJFBIeZD3j5d
+	4/LzbVzZaO3IbPg=; b=K8p15ENaQjxW7Yr/tM1neQcShi1lvdqiYk20BLm8QRxm
+	1710srIC1QjsAhuQWLcZNWXIVb/29RnN7Gl9ngJZuFucs4Asf8Dr43q91ikbCvAg
+	u+FpbrYv0RTi5opLZam1yxPu8zsx2XTStT3dugwxzD9Naru3zQBJKjsn0brc7Kz/
+	0lOqEnfdyCfWXoXtGh80hJKAJa28Wf5BhjqKTPAgD1mNbAq+M5W4bt3g1pqvE2Oc
+	iwRiBmu3wCFBF/HJ6iZhhioFdNKWKxNvM41CqnUzDVO48CSQb0QPuVfZHNVXGXYS
+	E9PGylZySsFqdMdVuzksFKZ2QSbIDEbV6wau6dQQPw==
+X-ME-Sender: <xms:qWv6ZlW6d2-j9aqaGWgubov_qVTXwGwpVutoyr3-hN-ggmBJhPCIbg>
+    <xme:qWv6ZlnQtMs955dgSaXy8BiMY6x6ubPKcBG2fhOkPGT_76GuBQvHtzwkOdZcced39
+    CWqXH6IN6LJqxmxNA>
+X-ME-Received: <xmr:qWv6ZhYEmWbCVSFLfpX3-iynMVtVhvc0IiW0MeMJqE-NFVWuCRl8zX6au8J9UUzmDru59fHUCN8MBmb8Cl1C2Ud94gY0e_woxuWFT8dKzGN3Bq8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedguddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
+    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
+    egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:qWv6ZoXt_UWGP_Xr8tkTXIty_082KXZ2BRI3cxVDxfpNrLX-Hcbpkg>
+    <xmx:qWv6ZvljY3m5f4G88rQnbLqsoL7YRHv1PxlWkG7tjGJt3lAi-nNWVw>
+    <xmx:qWv6ZlfjlZONa1QZFljiI--8vYDdQm6uGVuq8J1RSeIRo2LHiNXEjA>
+    <xmx:qWv6ZpGH4_kG6-0X0gS-VJPEeG5NKLdcrtIIFxkL0in4KdTdB_PRfw>
+    <xmx:qWv6ZntE0cZniyZbQTepKFh_8CFOnOQIfUL0Z_LLx5OLBn92JSAPWK5H>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:13 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 986ab7de (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 30 Sep 2024 09:12:27 +0000 (UTC)
+Date: Mon, 30 Sep 2024 11:13:10 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Subject: [PATCH 01/23] builtin/annotate: fix leaking args vector
+Message-ID: <0a2a2085159e3817100fb639f2c9908fa7ee2f8b.1727687410.git.ps@pks.im>
+References: <cover.1727687410.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: ./configure fails to link test program due to missing
- dependencies
-To: Eli Schwartz <eschwartz@gentoo.org>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Henrik Holst <henrik.holst@outlook.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>,
- Jonathan Nieder <jrnieder@gmail.com>
-References: <GV1PR02MB848925A79A9DD733848182D58D662@GV1PR02MB8489.eurprd02.prod.outlook.com>
- <xmqqldzsrhyp.fsf@gitster.g> <ZufjWR6AJM-DIWPR@pks.im>
- <29c5c9c0-aa61-415a-9cfa-d64a6b946a48@gmail.com> <xmqqy13oa8oe.fsf@gitster.g>
- <ZvKsH1Ct-YwBPA_f@pks.im> <b6b131cb-683c-4140-9769-290b622721e1@gentoo.org>
- <ZvOTL0cG8qRY8OXe@pks.im> <1f002f86-9212-4639-8804-898bc62726e5@gentoo.org>
- <ZvOn_wChzEgXtpMd@pks.im> <3a303c6e-35b0-4428-9d23-799b33194330@gmail.com>
- <xmqqv7yil70d.fsf@gitster.g> <39508a38-d98f-3883-3887-971385a3805a@gmx.de>
- <d3900cc3-8a0a-4da1-829b-5bcdd7ebca28@gentoo.org>
-Content-Language: en-US
-In-Reply-To: <d3900cc3-8a0a-4da1-829b-5bcdd7ebca28@gentoo.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1727687410.git.ps@pks.im>
 
-On 29/09/2024 19:10, Eli Schwartz wrote:
-> On 9/29/24 1:56 PM, Johannes Schindelin wrote:
->> Meson came up as an alternative, so the obvious question is whether it
->> could be used conveniently from within Visual Studio. It takes but one
->> look at https://mesonbuild.com/Using-with-Visual-Studio.html to see that
->> no, the instructions ask the developed to use a command-line interface,
->> which is the opposite of integrating well with an IDE.
->>
->> In short: If we're serious that we want to stop treating Windows-based
->> developers as if they were unwanted here, we'll need to stick to CMake.
-> 
-> Hi,
-> 
-> I guess you didn't read the previous comments in this thread? Maybe you
-> should take more than one look. :)
+We're leaking the args vector in git-annotate(1) because we never clear
+it. Fixing it isn't as easy as calling `strvec_clear()` though because
+calling `cmd_blame()` will cause the underlying array to be modified.
+Instead, we also need to pass a shallow copy of the argv array to the
+function.
 
-We cannot expect everyone who wants to build git using meson in Visual 
-Studio to read this thread and find the message that mentions installing 
-a plugin. It is much more likely that they, like Johannes, will find the 
-documentation on the meson website and conclude they need to run some 
-commands on the commandline. That's a problem with the documentation, 
-not the person reading it. Even if they do find the plugin [1] it is not 
-clear that it helps - no where does it say "this enables you to build 
-software with meson", instead it talks about syntax highlighting, code 
-snippets and linting for meson files.
+Do so to plug the memory leaks.
 
-Best Wishes
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/annotate.c  | 20 +++++++++++++++-----
+ t/t8001-annotate.sh |  1 +
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-Phillip
-
-[1] 
-https://marketplace.visualstudio.com/items?itemName=mesonbuild.mesonbuild
+diff --git a/builtin/annotate.c b/builtin/annotate.c
+index a99179fe4d..03413c7df8 100644
+--- a/builtin/annotate.c
++++ b/builtin/annotate.c
+@@ -15,13 +15,23 @@ int cmd_annotate(int argc,
+ 		 struct repository *repo UNUSED)
+ {
+ 	struct strvec args = STRVEC_INIT;
+-	int i;
++	const char **args_copy;
++	int ret;
+ 
+ 	strvec_pushl(&args, "annotate", "-c", NULL);
+-
+-	for (i = 1; i < argc; i++) {
++	for (int i = 1; i < argc; i++)
+ 		strvec_push(&args, argv[i]);
+-	}
+ 
+-	return cmd_blame(args.nr, args.v, prefix, the_repository);
++	/*
++	 * `cmd_blame()` ends up modifying the array, which causes memory leaks
++	 * if we didn't copy the array here.
++	 */
++	CALLOC_ARRAY(args_copy, args.nr + 1);
++	COPY_ARRAY(args_copy, args.v, args.nr);
++
++	ret = cmd_blame(args.nr, args_copy, prefix, the_repository);
++
++	strvec_clear(&args);
++	free(args_copy);
++	return ret;
+ }
+diff --git a/t/t8001-annotate.sh b/t/t8001-annotate.sh
+index d7167f5539..d434698919 100755
+--- a/t/t8001-annotate.sh
++++ b/t/t8001-annotate.sh
+@@ -5,6 +5,7 @@ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ TEST_CREATE_REPO_NO_TEMPLATE=1
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ PROG='git annotate'
+-- 
+2.46.2.852.g229c0bf0e5.dirty
 
