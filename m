@@ -1,79 +1,79 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D00185B76
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:13:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC921865F1
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 09:13:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727687614; cv=none; b=om0K1QK5Nx1USOKy9cgNuBLpMPhVIgdhvUaxLZ/VaA4hjDEe61KC+66CZ6DwxoEaHnSOg3+x41hMCIMDjnRYsy68V9JrbTXy9fLykhhpAWzQbaSKONCDzoFdTappdAE1qCcfQOWBUU5cJe9/VtFP3EYwtVZv8qWaesX5RMMLJGY=
+	t=1727687616; cv=none; b=gJ5Io2ZWjjCXNsoq/Jy9YFXbvJH4Zxq3ewMbhlD+Ze4+AQiD6DXdaQmJ1WcG7mJaBZDhanJDdDlt2tZSAQC0sWR5ZnZo3a2W/fM7cCmMSQklv7/VNfQRjTmHbwsVbmnXrbzAZU819grU4cI7/k48otYXgtFlfHbvc+60JvlxqrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727687614; c=relaxed/simple;
-	bh=ioHGAxCfNZwc2w2Kk2FZRE8YlBScfUxhRBJqJ6C4/W8=;
+	s=arc-20240116; t=1727687616; c=relaxed/simple;
+	bh=pUtyUXSwBO/O9xKZFTcC9U9FtfsVV96uRzsdmVBSNaE=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DsX03iS+vEglqJm4IEEtSeJWRUQ303f92743Ja3WiFDtqtDRrSG8PmXco9lUEhh9uw9GdATDZcDHUUcL+ZCZzg4FhJO8FiSwVw9q/S2xM3EDuoKX1b4JlgBZlT1jb0C2wKyY4ZfQqWFjIbxR+28oq4B5Cg+yfE4b4WLeJF3URz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bS9L+3m5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LP3hmKwP; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=uN7N0yt0oUJu5Ytl2JMetYWBYo2QqnxDk+u0SsSdj4dVRbDbuW5QQ95HSvP+SBbP6fXIY5xkJ8mzJccRDAMcsbqdjndmMcUQgWvze320xDnHxfhnM55Knr7gkiMYX8nSkRjDPxzdhCWVhi+hUn++gvb6D/R9MEFzTtgMk6y0mBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bvatDJp3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dj0s7swj; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bS9L+3m5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LP3hmKwP"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 35E0A1380459
-	for <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bvatDJp3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dj0s7swj"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 13EAF1140259
+	for <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:34 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 30 Sep 2024 05:13:31 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 30 Sep 2024 05:13:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727687611; x=1727774011; bh=QAGQG/pVp4
-	OPTpBYnfwNgwaQjCmH/Je2DlDtoTCQ/So=; b=bS9L+3m50MrWT7kQ05nwnOf78v
-	eESytOvNLHVIFCT9g9CQPDKWogp8UQQqz7rLSl9rTQXkSww5G2Z84iiS1Br+2ZxW
-	9oZIVfQqIyGGP4GOljkWia2ZgIDdVDPX0pYVfL6UU/wDp/lcgT+OdqYrE5nIZq14
-	bfH/F8k545DfuSqJC/eO2eDUFvWeH33B81PeBVr1vh8hX+N7jpJ5OqyCWvg0b8O3
-	VzMEwrRmUwhUf1p/36pIx1YU30VKW+fSAiIur9FPuzV1JejVzeNQYsDTnqXp1cYz
-	gIv3bUKk5nDjd9IyVM6OTXJXSTQDfoa9m3BgHnmCMSGxMUUzW3E2fagEoKuA==
+	:subject:to:to; s=fm2; t=1727687614; x=1727774014; bh=eAcIhZ9wuj
+	UMulSpKeP2qqrvOCmSHsmPVmyMgipp9Dw=; b=bvatDJp3haeYOGoXo299ri/fIl
+	cEh3CMm3XIlU+TmeHMhDGInLu+SeKvsU9gxRVtc+Z5XhDEL1z78gvHnRh+iXrSwH
+	0DBBBOI7HvwXJreWTV00uPvet5zQfsg0pmaDK/biFY9m85+UimqVPrsi3Ry/rIcO
+	Z0h+T04vbce5QXxqEyFziD7xWrZ6uI4QyQlwhoeKs6nPsysCt1Aeyqz7VY8/nolg
+	iQtUwYQNcojQiOABiz6gSuDMgiu16fEOfvKEJPk2sjqxKIffdcpKvg5KLVpRLxDJ
+	5z2BrgYhr67s8TV+KGFZ+bkSUyS0yxa9Xy5ocZFv70kXTEI/A8XMMBxNK7xw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727687611; x=1727774011; bh=QAGQG/pVp4OPTpBYnfwNgwaQjCmH
-	/Je2DlDtoTCQ/So=; b=LP3hmKwPERBsMphM/o8w4GfC00BZsdGwy7nhqZeaZ3yy
-	opEazU0Iuj1iNX92HssePPFEHHduxS6R+FJIVQVHgNFMZ5ZDSPEITtGnknZuTLiq
-	9O6tFZ7uZOnsXe85OEFJydwpVyji0/DKDPEvDtIKf8XU+Cr5b6eYUYu4KfpdhSFF
-	9sICLmLVPWSij6ksMeUTWptgbIwmOwDVPjT+aBTrdoXvmktnHAJ1Cn9SAE4wdP0u
-	F4D8XBcrwAqyPNxYdut/zAOSf1fe+lIEbrmQjrvlOVgor1S6dRzYrc7+ZkyxWzip
-	e+cMpMDuOaKy3DUUFngBFQuX8f/duDYoPrkSqscxNg==
-X-ME-Sender: <xms:u2v6ZmDyf_9QujCFhPGcN0x8L-1oVm7qPcFKUeSQSGCncDjqLjghwg>
-    <xme:u2v6ZgiPsrWWa3nl0rKrLmBpJggYTwA9pMgD_p7ruKLmKpaVBgYV2wvyFm9uh7PwZ
-    EKmFqg4MsAwkfkXGA>
-X-ME-Received: <xmr:u2v6ZpluSIxIkuKOn8c9z2nVhDY4P2hrVm7Wkduf9ZfN5ng_K6yLnOhcq88ohwJFihqGGofVGQ1soAWOKpvDgYnltdblNmiIG9gmK4GVhIeuwdQ>
+	fm2; t=1727687614; x=1727774014; bh=eAcIhZ9wujUMulSpKeP2qqrvOCmS
+	HsmPVmyMgipp9Dw=; b=dj0s7swjbdL/cy6EC6CdVySROOGtBfJ1SkdP4tT+iuKa
+	zrs5XvmaIQULdrUME1niX62p7YizlaNzYN3dFkoMgUNEDOKB3qab+R1bWjqarEFQ
+	5TJF/DFmc3Dme9COL1zos+XqhJcDdcC+WhfzOZxG80Evrhv4zjb2R/wluOSt1pNs
+	Dd9a3BVtDzDHMyGUcVCP1iSL0FVqfMoQ+t43vIYeciqGy5JOZbJAv9qzl6nlVd2k
+	CMZ2xB9MRp1OkrZIXjCgt4UQrgproatf+HrfQaL1rAXTqigO60Fm9SErJyJWN/gQ
+	axIqISZSLXZT2PU2vyP50UBgaZU37bX1EQr28CFozA==
+X-ME-Sender: <xms:vWv6Zt5hrRm86Nat_SbDT0YMF6pvSpKvCt-7vYauYVIAUFJJKyLWDg>
+    <xme:vWv6Zq47XrkzS9yF9ikmWYmC-TQ-I0JmIXRchncUGkB4ck8Jq60Jd5c-HvZJKUchy
+    fJkGHNbwVbkWVTmBA>
+X-ME-Received: <xmr:vWv6ZkcVhnZ_ZuL0G6G48RQSmXzzQUpU86Pi2Ba0HbQQlZeYN9PEUFCBC0oEg13R4cRFEqtg0wtH2au-1eyq8u6p9201HwPDU6wpChoMLNePfuM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduhedguddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:u2v6Zkz5I7Zvt5Y3hCneubWV4t0FIdm7gLPNncpDgHm_FLZ-VjlCDA>
-    <xmx:u2v6ZrQxn9UCFg9yWatxVKYX5Bo4-JNM-ImEentA1kdRHcHLbYCBqQ>
-    <xmx:u2v6ZvZ9RmbNZd1NNZcBcvyPVvxa-jLOTpBse15dvLzFWS8s_JYsTA>
-    <xmx:u2v6ZkQ3lMYq1c_1A6_J9L9DbD1IojJQl-Vigl2KaAribc_psjiZ_Q>
-    <xmx:u2v6ZiJizCkH4Z_a-uxhhrziB2H2_WbORoCuzBh9rWBPCfGowpf_qdzf>
+X-ME-Proxy: <xmx:vWv6ZmJFjGI-tZqa_evhXViDpbDodThgUqHNiSjnB2Z48s28q87juA>
+    <xmx:vWv6ZhJbqypu4u_ztNB_9mAMXiDB2Go_a6u91HdyXvPBeSUTskhFhA>
+    <xmx:vWv6ZvyORjCMpEZyk8A4R8OIgLHU0Wu06gzMQ2_qwZNEnLmTKonx8Q>
+    <xmx:vWv6ZtLabr15QR9C0neUmISFuxvHM6K6MDu-JQZZ6wuBEfgJZ8XueQ>
+    <xmx:vmv6ZvjardNRhLZsYr0o7pJ1QX5kHUQkr3iQyfp0bOst0-rX6HfQQvx9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:30 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 30 Sep 2024 05:13:33 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3f14d376 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id da82c674 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 30 Sep 2024 09:12:44 +0000 (UTC)
-Date: Mon, 30 Sep 2024 11:13:27 +0200
+	Mon, 30 Sep 2024 09:12:47 +0000 (UTC)
+Date: Mon, 30 Sep 2024 11:13:30 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 06/23] submodule: fix leaking submodule entry list
-Message-ID: <7781d7644e9f76a6638cabc0412d583ad703905d.1727687410.git.ps@pks.im>
+Subject: [PATCH 07/23] builtin/stash: fix leaking `pathspec_from_file`
+Message-ID: <38b58f5b7470d3fb07396d62cecda3799d0b944c.1727687410.git.ps@pks.im>
 References: <cover.1727687410.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,119 +85,51 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727687410.git.ps@pks.im>
 
-The submodule entry list returned by `submodules_of_tree()` is never
-completely free'd by its only caller. Introduce a new function that
-free's the list for us and call it.
-
-While at it, also fix the leaking `branch_point` string.
+The `OPT_PATHSPEC_FROM_FILE()` option maps to `OPT_FILENAME()`, which we
+know will always allocate memory when passed. We never free the memory
+though, causing a memory leak. Plug it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- branch.c                    |  8 ++++++--
- submodule-config.c          | 15 ++++++++++++++-
- submodule-config.h          |  3 +++
- t/t3207-branch-submodule.sh |  1 +
- 4 files changed, 24 insertions(+), 3 deletions(-)
+ builtin/stash.c                | 4 +++-
+ t/t3909-stash-pathspec-file.sh | 1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/branch.c b/branch.c
-index 08fa4094d2..44977ad0aa 100644
---- a/branch.c
-+++ b/branch.c
-@@ -738,6 +738,7 @@ static int submodule_create_branch(struct repository *r,
+diff --git a/builtin/stash.c b/builtin/stash.c
+index f1acc918d0..1399a1bbe2 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1759,7 +1759,7 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 	int quiet = 0;
+ 	int pathspec_file_nul = 0;
+ 	const char *stash_msg = NULL;
+-	const char *pathspec_from_file = NULL;
++	char *pathspec_from_file = NULL;
+ 	struct pathspec ps;
+ 	struct option options[] = {
+ 		OPT_BOOL('k', "keep-index", &keep_index,
+@@ -1821,7 +1821,9 @@ static int push_stash(int argc, const char **argv, const char *prefix,
  
- 	strbuf_release(&child_err);
- 	strbuf_release(&out_buf);
-+	free(out_prefix);
+ 	ret = do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
+ 			    include_untracked, only_staged);
++
+ 	clear_pathspec(&ps);
++	free(pathspec_from_file);
  	return ret;
  }
  
-@@ -794,7 +795,7 @@ void create_branches_recursively(struct repository *r, const char *name,
- 	create_branch(r, name, start_committish, force, 0, reflog, quiet,
- 		      BRANCH_TRACK_NEVER, dry_run);
- 	if (dry_run)
--		return;
-+		goto out;
- 	/*
- 	 * NEEDSWORK If tracking was set up in the superproject but not the
- 	 * submodule, users might expect "git branch --recurse-submodules" to
-@@ -815,8 +816,11 @@ void create_branches_recursively(struct repository *r, const char *name,
- 			die(_("submodule '%s': cannot create branch '%s'"),
- 			    submodule_entry_list.entries[i].submodule->name,
- 			    name);
--		repo_clear(submodule_entry_list.entries[i].repo);
- 	}
-+
-+out:
-+	submodule_entry_list_release(&submodule_entry_list);
-+	free(branch_point);
- }
+diff --git a/t/t3909-stash-pathspec-file.sh b/t/t3909-stash-pathspec-file.sh
+index 73f2dbdeb0..83269d0eb4 100755
+--- a/t/t3909-stash-pathspec-file.sh
++++ b/t/t3909-stash-pathspec-file.sh
+@@ -2,6 +2,7 @@
  
- void remove_merge_branch_state(struct repository *r)
-diff --git a/submodule-config.c b/submodule-config.c
-index 471637a725..9c8c37b259 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -901,8 +901,9 @@ static void traverse_tree_submodules(struct repository *r,
- 	struct submodule_tree_entry *st_entry;
- 	struct name_entry name_entry;
- 	char *tree_path = NULL;
-+	char *tree_buf;
- 
--	fill_tree_descriptor(r, &tree, treeish_name);
-+	tree_buf = fill_tree_descriptor(r, &tree, treeish_name);
- 	while (tree_entry(&tree, &name_entry)) {
- 		if (prefix)
- 			tree_path =
-@@ -930,6 +931,8 @@ static void traverse_tree_submodules(struct repository *r,
- 						 &name_entry.oid, out);
- 		free(tree_path);
- 	}
-+
-+	free(tree_buf);
- }
- 
- void submodules_of_tree(struct repository *r,
-@@ -943,6 +946,16 @@ void submodules_of_tree(struct repository *r,
- 	traverse_tree_submodules(r, treeish_name, NULL, treeish_name, out);
- }
- 
-+void submodule_entry_list_release(struct submodule_entry_list *list)
-+{
-+	for (size_t i = 0; i < list->entry_nr; i++) {
-+		free(list->entries[i].name_entry);
-+		repo_clear(list->entries[i].repo);
-+		free(list->entries[i].repo);
-+	}
-+	free(list->entries);
-+}
-+
- void submodule_free(struct repository *r)
- {
- 	if (r->submodule_cache)
-diff --git a/submodule-config.h b/submodule-config.h
-index b6133af71b..f55d4e3b61 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -136,4 +136,7 @@ struct submodule_entry_list {
- void submodules_of_tree(struct repository *r,
- 			const struct object_id *treeish_name,
- 			struct submodule_entry_list *ret);
-+
-+void submodule_entry_list_release(struct submodule_entry_list *list);
-+
- #endif /* SUBMODULE_CONFIG_H */
-diff --git a/t/t3207-branch-submodule.sh b/t/t3207-branch-submodule.sh
-index fe72b24716..904eea7df5 100755
---- a/t/t3207-branch-submodule.sh
-+++ b/t/t3207-branch-submodule.sh
-@@ -5,6 +5,7 @@ test_description='git branch submodule tests'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ test_description='stash --pathspec-from-file'
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-rebase.sh
  
+ test_tick
 -- 
 2.46.2.852.g229c0bf0e5.dirty
 
