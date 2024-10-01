@@ -1,85 +1,90 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE771C463D
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 17:52:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471241CB534
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 17:58:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727805179; cv=none; b=V46DgMqz0Z/+QZhvy4RE/UTM+i8J9VLGXmFw7sDbuShZ91CN7/q1nlGLMeM8kdVJW/CnIY0ui2vHDvKoCIcrF0wW8BL5B0VF4W+VFonUo9ngxfzMsHtSqQ/4P9kqOqWE0PX7Nbiu9WNSnIDmmoRkzj+SlesdF2VI75u9/wekCKE=
+	t=1727805500; cv=none; b=V9m0ny874ls9ckuobqHVyaTTL3ireOcH3kzp7Yw889s6ZnMlOBhyfiaTbI9sgBt5zW44twK2HG2QQuMoR7ict4nHr+HxCUE6Po3B02dmSx5M9RzCEHSMXAq5bh5OS2gUa+IGQsKwVqE+ovAK9FCSWj055V1Wd4CeZxVkQNt6AIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727805179; c=relaxed/simple;
-	bh=PGo6hZC+wtNP6xQPouMeZM7h6dJTnjWMHxNgWFzQTPs=;
+	s=arc-20240116; t=1727805500; c=relaxed/simple;
+	bh=it6/+t0jXKYx2AorojXOdTkF4OZwKTPK1oXi2kQU9kM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lFQWMqpGuCw/MqC6ykZsSLZ/xy48SqAHAsUCp1eBOBlZMr6eMiwy/dYOgzYW/tSzrkc8MnHCl4t/BE8VtKWR5T18WERLY7vjMNnshvQrsf5SxSlXOy3L5V3w0/7CRz/+kWmIC1ZhrOlLaVKOSWzZ/KdLvK8rJT6AZZOZqcBIegU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y7JMhcF8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MmMx6nNu; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=Xtq/3feLsC5nUNYYxSQTEXELIA6ytemPWD95OrzF5k20wWswE9EcxIa94A1uvLqQ53LbDZ909zp7UEAmkjQTc3BlbvCCiE33ZBvxY8R5A3TuY1AhJs+AY3MLOmp2jXs3/7KCkIVA28md+hNkjoggUnBo8d3UJCsHuzBXfbEkXSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RBiJgv2H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BOVpWh/o; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y7JMhcF8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MmMx6nNu"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5C40513813D6;
-	Tue,  1 Oct 2024 13:52:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RBiJgv2H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BOVpWh/o"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 43BBF1140F64;
+	Tue,  1 Oct 2024 13:58:17 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 01 Oct 2024 13:52:56 -0400
+  by phl-compute-10.internal (MEProxy); Tue, 01 Oct 2024 13:58:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727805176; x=1727891576; bh=lSsrn1Y9b+
-	8+M0PQlnzh8N49/1443jfzJ8XxcCW2cbI=; b=Y7JMhcF8V0ge09527+QCplPO/+
-	fn0Ta/secjMzLG1urdVfnICTbFUAYKHI/Krxt7QkNBAUNcbhR9bTYEekyvzOnkq9
-	DYrDDXQS7ifz7ft+BaSxfATIb2TiT7TiQxIUqwhY7iJBTqJP9DS9ZSlIxrb+E3nV
-	wKxMn/IskT5uSl9qDmST9V1t45MRzNOGmgV002U+tiZsP17+YtcbwCl/sKXAjB0+
-	zT0ptH1vk48OO3AK8paP84YKYy7Fz5cQ+gxY7tSy8BLG7YZYWhMIV0+/7PgNo/f2
-	OKInxHs3w7km1NWLKevRVVHjTk1MHNDOLwvW1RNPCp2RTke1+6FR2O1/OZTQ==
+	:subject:to:to; s=fm1; t=1727805497; x=1727891897; bh=xVBKFMgmn6
+	DwPGz7xFbjRsnvqdv9Zgf59zXgyedombI=; b=RBiJgv2HXkZreLYH/bk6qg4Rnx
+	WIYBUBt0M1K9oLxXLTBvnt+DsDySw1ycafXJ6gEDgYpyW30DslUDDXgFaDXR42O4
+	3YkFatsKiDzVwD5+Omp3+tEHSC8ypcR8dsWpLR2/2dB8RqHztzXjVEdu33se7lx1
+	3nJSpUz48A+EQzhLZec40ZySwb7JAEJY/f2JrgkN+7FYCXw1muQY+1YjbCdW/1Sd
+	pJ9KXDrUkqKQooH3xOBAIORFRGsO00ODgzpIuJ0U10oDQbQ+tdBWKvuhc1aSqvVC
+	r3FovPtC7xI/qvPi9UBlNnkvrLAC8VQ9LmvSK2DQEqamCf2+csW4H1oC5YWA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727805176; x=1727891576; bh=lSsrn1Y9b+8+M0PQlnzh8N49/144
-	3jfzJ8XxcCW2cbI=; b=MmMx6nNut1D1N/1NOSOegbdg7Vv/wYapxSSXikOtoUbW
-	8l1hAANYr/jmlJH5Of5DaEaxlzVvwD2Bs2s1Q8OBqjaagbuMR21lZpU785q+F48U
-	Y6eVaEDMkB2ANl+aEAhilqrdWZmhyrOYClAZIK4LmuI/0elrBVCGnCoi7Xmxv0k9
-	VDQq7wTqgTR8dWl7sp1eodzeoMnJM3fSlcOCQO7enagQ3nGRWALepMxTpmih0iJI
-	BDVDuBDL2jLgTsX2uc3bDdw80Gok46YuEnslHIMpxLLRpchm0d6FABVYpAOWsG8R
-	rDGtrcWqMD5cLYJ7rG5qZ40PN3btIdjbnEjlwhwb+A==
-X-ME-Sender: <xms:9zb8ZlzoOnWxWiX1Td_2aL60kuf50q1igCFaaANaeaQwWbVPFJtNNw>
-    <xme:9zb8ZlSznRvPtKk5jKctUIKWPe0fFBaEgBSHHYHS-WOk8HW6rZLDUple5fTkzOcKi
-    xGiVUxga01VdZIDpg>
-X-ME-Received: <xmr:9zb8ZvUqE5LmCyCXC7ua3QBxXNKu0QQqV-bIKBtSEJoN3GSqMvsGMkDNchkhQCgiE1ObRAHwIvp5mxtL64UmRNlI-nFPOF0GRxppWUs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgudduiecutefuodetggdotefrod
+	fm2; t=1727805497; x=1727891897; bh=xVBKFMgmn6DwPGz7xFbjRsnvqdv9
+	Zgf59zXgyedombI=; b=BOVpWh/oBoShyN1RXULOUT7vr561aUowiLb6BdST6sXq
+	gSvOQaZuC43ATVsYTnA7U36Veg1oqcUdbQSHUGnvivaHI4Z9mFDuIM4lYiQycM3Q
+	CM+IrNuqU5Ae6D/6mgSxr5mJgGHFfO0foFwteWQtkFGaUSwdB6zfAsL4ia+i0yb0
+	dGQs8EJGKq195+IWyjyzwnrWJJ3Tua7cH++9y51GEmc+gr/mhpB9U/pqcVRY5P9z
+	4w13zceuYZOEWsd1holF6HfwDJnk7Kk3WPZiBXafvplk78aRPdS+3P3QP6U4yf7q
+	/rb2iv6qIAlgPQa9j9eTrs8IaThkUpNMhHMmDyf5qA==
+X-ME-Sender: <xms:ODj8Zr7FngdqqXh5ctb-n0g_rP6vC-jFIPBGyvR8JcOCtiGVrKz-Lw>
+    <xme:ODj8Zg4CYTshiIEPbR9gm4mXx4zKg4llkjf_vY8dieDhMOH4NIJaTuAYYWmtfrWPL
+    02X2vOLGmv7Womzng>
+X-ME-Received: <xmr:ODj8ZifMbnD3GgK_he5l7TUF-dywHqqtbKU8Tgp31OQSMpb8P0WMfvJF40LLdNBek9dA7BNTr-fvmC-SQ1Ty4FZbgeS_0ZvYYwaCuV8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedguddujecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
     necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
-    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhope
-    hlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:9zb8ZnjUgL9kSGcM6TwlsWMEeW2gBRTHybJqr51HJM-X_0JwrZUFuA>
-    <xmx:9zb8ZnALonOH3D7GwqLYP5jUvQJlsLyfba1ZG9fTKkSTZ8Z57ds5yA>
-    <xmx:9zb8ZgIbbP4rYJUKd2Hbdq69HW59ctl5SKNDq17zC5wjBYjbSvCaNA>
-    <xmx:9zb8ZmDdwIiWsH3E9kNjHaTbaUhNVcn-0QN11Mgk9QgHH1XEKGrCaA>
-    <xmx:-Db8Zi6cIQjWV720HK2lszF0LrXUDscCYU5eyowJG4LZik4l3QcTwhKm>
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprd
+    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhhjuhhsthhosehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
+    phhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ODj8ZsJib7VOFaiUyoYht7C0IKp-b9RMU-DIvlgvNmvsvwc31IhnUg>
+    <xmx:ODj8ZvIcQ9atfakNeDBBfhAh6IKiA-srhb061jQzWMlEaSUeYJF10g>
+    <xmx:ODj8Zlxbk5LGk3E0VPvPm7_yjo7POD9rFpzxICdmFCj0LDafClQgTg>
+    <xmx:ODj8ZrIfQEDuWfc-KqI2KbnYRLsbg_xeGnRYXliXzkX9GKXxi5uhbQ>
+    <xmx:OTj8ZsorZ_b4gWIsUO41iVrEwQUHDED40351Aa0sVQWmu52R1z-WsXr1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 13:52:55 -0400 (EDT)
+ 1 Oct 2024 13:58:16 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Edward Thomson <ethomson@edwardthomson.com>,
-  =?utf-8?Q?Ren=C3=A9?=
- Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v4 00/25] reftable: handle allocation errors
-In-Reply-To: <cover.1727774935.git.ps@pks.im> (Patrick Steinhardt's message of
-	"Tue, 1 Oct 2024 11:41:42 +0200")
-References: <cover.1726489647.git.ps@pks.im> <cover.1727774935.git.ps@pks.im>
-Date: Tue, 01 Oct 2024 10:52:53 -0700
-Message-ID: <xmqqzfnnyakq.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>,
+  Phillip Wood <phillip.wood@dunelm.org.uk>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] add-patch: edit the hunk again
+In-Reply-To: <9c7af640-ee3a-4a17-84f6-f56fee7efe37@gmail.com> (Phillip Wood's
+	message of "Tue, 1 Oct 2024 11:03:10 +0100")
+References: <21ddf64f-10c2-4087-a778-0bd2e82aef42@gmail.com>
+	<4dd5a2c7-26a8-470f-b651-e1fe2d1dbcec@gmail.com>
+	<74289d8b-7211-452a-ac76-f733e89112e6@gmail.com>
+	<9c7af640-ee3a-4a17-84f6-f56fee7efe37@gmail.com>
+Date: Tue, 01 Oct 2024 10:58:15 -0700
+Message-ID: <xmqqv7ybyabs.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,37 +94,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> this is the fourth version of this patch series that converts the
-> reftable library to start handling allocation errors. This is done such
-> that the reftable library can truly behave like a library and let its
-> callers handle such conditions.
+> I hoped that change would be in edit_hunk_manually() but it isn't.
 >
-> Changes compared to v3:
+> I'm afraid I still don't think that changing the default is a good
+> idea as it is often very difficult to correct a badly edited hunk. Can
+> we offer the user a choice of
 >
->   - Fix some additional sites where we use strdup(3P)/free(3P) by
->     accident.
+>     (e) edit the original hunk again
+>     (f) fix the edited hunk
+>     (d) discard the edit
 >
->   - Convert preexisting callsites of free(3P) to use reftable_free().
->
->   - Introduce a REFTABLE_FREE_AND_NULL() macro and use it.
->
->   - Ban standard allocators in reftable code "banned.h"-style.
+> In [1] you say you discarded that idea because the wording was too
+> verbose but something along like the above should be succinct enough.
 
-With this patch, there is only one hit from
+I too disagree with the change of the default, but I would not
+complain if we offered the feature to re-edit as long as it is
+clearly marked as a new optional choice.
 
-    $ git grep '[^_]free(' reftable/
-
-and no hits from
-
-    $ git grep '[^_]FREE_AND_NULL(' reftable/
-
-which is just as expected.  Nicely done.
-
-Shouldn't we add FREE_AND_NULL() to the banned list as well in the
-last step?
-
-Thanks.
-
+Phillip, thanks for being firm yet still constructive.
 
