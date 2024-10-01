@@ -1,143 +1,105 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEC21A08C6
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 09:43:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA23B67D
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 10:01:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727775789; cv=none; b=ncNpyminkxRZQ5QKgNejBfgpJmZApxcj5pLTjtI/StDSDQ1hVSMMCqiKqRwKKhsJxNQnV5UUiaKqiLHyirJm7WDAadPGafLd2p+2LRzkagzCMbGHPvRTxCkR4fa2eYAUCuiXTluQHcEJQMDX2Huc0IVKOQsfgxXtB3CIWWeBzgU=
+	t=1727776872; cv=none; b=s/jh/UIBm2sw/yVAra34XbMUdQuR1p1wOaOViG6BpYn1b/ucXlhnNyUph4B2Hr+uX5DqJq/q9YHd4lLP85J8x/AATtmeNZjORAVh+vS+qbSoh/RX8Ox3GvXe9PH0R5poaf4ApxB0+uYXNLAazY9OS1pQLT3U5wXujTQH0ao8K5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727775789; c=relaxed/simple;
-	bh=Rva1EG/gdVAIHBBrGwPtuCy3OOvBL8r6Te5yCI5nL1k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n42ku7h9UyYc8Q8yTUrj/6ASoTBx4s26b0YRvu3dzs8NqX9sAkwOu8En99Tplkk9fXus2c8zhDDWpwfLcXm2ff0UeA3qk9hCZtIL7YwR5UdwGgeKG/0WXMtZFnx6QCLinSDTvMucezZaOTvNTZLeFRdANYQHzZ0Su02znhO+SE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dH2RY8Ec; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SFCIhulE; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1727776872; c=relaxed/simple;
+	bh=+8nht/RTl8Zn+wKiVlZfTyzz1uDz3hs/dzNjQU2xE2E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UIRgxe7khGCsRrMjwzqRQSf9Cn/Hn8fBKN/VFWuhGJFFUv0jymDH/HxMg0TQERmFqGW8ZdB7UzXlilFHgXTOayDD/CNrRSNQ7I2tBJDuTsg3xlO9+4Xy4qbPhyc1QW33emujbI+mh9i1PqfBBMRYi0Y21BokWQ/MlMxr6NAlkKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LVx2RBo3; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dH2RY8Ec";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SFCIhulE"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8C111138187F;
-	Tue,  1 Oct 2024 05:43:07 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Tue, 01 Oct 2024 05:43:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727775787; x=1727862187; bh=fpfhfi84Tu
-	5yPA4RiM6WsPGT/mOeFTB0HX14lJWCGPM=; b=dH2RY8EcwmrQtExhoHzoDYKaIX
-	6qCEVApYviTqCXZ1JyyygZyJZQJja+Ah5jaS3F8aOEAjoof5lA+SFOYgqeBtL8qQ
-	L5qSrsL3Q8cB1+sytArP9Af2S9Drds6iOBZvp4+PJzW6edOpGqRvqh/4m6m1n/Oo
-	dVXAOTnf/G2GvAlVaPkBSQwPAXTmW9/0u2lIqnLIgmRPeaZxfZ0gnWW5TFdMRsvh
-	/VxVGccJ6W1AA+dVp0Z8mIxkdM7LOBcWgZqeafTUTB1Cf+0UzwSsphjUDzP6jUXa
-	EWb9WrrBgPD00ycHha4iFY8rK0slt/W18z+lOhfOkiQKhk+XkqKRsqHd/7CQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727775787; x=1727862187; bh=fpfhfi84Tu5yPA4RiM6WsPGT/mOe
-	FTB0HX14lJWCGPM=; b=SFCIhulEJUJW1YcQsAHDZRH25A4ZkXFuOPLYflTgjjjv
-	8m7WSWQz/8c1LINttMSgq/DheuA++2fsyVVZRKrNURfaoyJZa6GMUAb77g+3amLo
-	oHoKx52Jm5FrWpnDtlnaQKY5j28MRNGLUqG/SzZN/f9HQ7Tu0XduhpFrH3RuIg4o
-	x0YNNimaxAxV8elRVYFiremvGMZbqQaG+D+Bya/QIRd1Ai1DmkKtyKhFTP16ir+C
-	WVrmzFixgPTkXpUZOiMLdXQp4z1le/5Al0cEB7womQa7lQX0IRLcTk/dBuYEmj2r
-	+8ae2eBC/1RUuX3oxGbo7qbFzjuPgsDHKyRLsENuPw==
-X-ME-Sender: <xms:K8T7ZgjLtfPAq85BZAOaAwhwm0QvMzl6dbT6IjZHX-dGee8CcpZ92w>
-    <xme:K8T7ZpC-Jny2lDgECdilRMrLLwEGz7nqY_eoBvZP5twz_PNciVOhAsKE9jvmzIrvq
-    lUkJlyq4FQ2PSCXCg>
-X-ME-Received: <xmr:K8T7ZoHb1C8MHPMXCZVEfE6OKfMRTfPhCJpTw0xsl9MH7nxj_Z5zluK1TAniNYhZnFLHlvk9BkTJ2oYSy4zL31a4dGEfuxaP-jB9na8m-_yMaQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgudekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepueeiueduhfevhfekiefgkefggeeljedtffetheehtefh
-    hfdvledukeekfffhffdvnecuffhomhgrihhnpehgohhoghhlvgdrtghomhenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegvth
-    hhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvg
-X-ME-Proxy: <xmx:K8T7ZhTIphh3BieHmo75TTYG2bHyWEmSj0d_leGJkk2hi8Z0reGcrw>
-    <xmx:K8T7ZtzseF3WBu1TPHTSnlwPcC6WOb0VsS9DpCADftLwKnYx-LC2Ug>
-    <xmx:K8T7Zv4dARX0liTbBttAixJYIDhySkOOLxycVaFA8ToKE6zg1ApEoA>
-    <xmx:K8T7ZqyKMU_5eCgaj9l0zJNtXhAq8G81Gg29HXaSs6M3fBNAaTGrTg>
-    <xmx:K8T7ZvtCUS53H-PNf0q2MzahSYdzMw89ldpBUlT5aOKOj4HgeTvfug67>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 05:43:06 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a259ba69 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 1 Oct 2024 09:42:18 +0000 (UTC)
-Date: Tue, 1 Oct 2024 11:43:03 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Edward Thomson <ethomson@edwardthomson.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v4 25/25] reftable/basics: ban standard allocator functions
-Message-ID: <764961e6f02b8e5788bce75830559b70c2e6f231.1727774935.git.ps@pks.im>
-References: <cover.1726489647.git.ps@pks.im>
- <cover.1727774935.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LVx2RBo3"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20b49ee353cso36487995ad.2
+        for <git@vger.kernel.org>; Tue, 01 Oct 2024 03:01:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727776870; x=1728381670; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MAxpaJ4YovIgpkKXmJTyrAD2N0Jt9jagu/9oRCw4hpY=;
+        b=LVx2RBo3TB5tYdMXEBqXGRyCJ2DBC7/mNLbjHgkEMdMbm7AWBE74s14fOBdUiHUoRa
+         ZggubKpOzD+k+Bg0VP6U4rxTegmOfZ14KGrk/JzUcwTjOsF/4aUcLFFAB0E65mXRs3eq
+         U+xHwpSSiXoAk+xo7Tv+wHURGmqdyU9Qaq6VadGWtDJLKzOT7ER+lN+OH8AYGfE8ga8W
+         rI19jpm7SlWXQ7LQ0IGfb3OFfiN620JGigKQD8qtUi74ZxCxRjkUdBqpDnBsN4Bin9we
+         NOzVapl21Dw0oogftCGF3UpcuG3GEwWwPh3k5j2DnZlIrT3m4FCfD4sw85jIBMorv4tM
+         5JbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727776870; x=1728381670;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MAxpaJ4YovIgpkKXmJTyrAD2N0Jt9jagu/9oRCw4hpY=;
+        b=wbrBHXRjP0ZXta7I9CLr4PiY1fmewWK3+J3BcOkDW2oBJGEc7SAHMf4MajtFkeP0Gk
+         17huXR/8zqmcHOSG5Y2tnyRZwI3aj8L2wO8qNKBYHLJIr1yyFtY8dCZfHjeE7HZbjFxF
+         fzoYqL7c2QNVpukJm03ZAmfF8TfN61EoDc/0lGZdEBozapPSkS8kM8Qp0S3DrSUutWKG
+         EXLzZfcZ3BZIIN5xG8qPQz8uTrVvjotMJlKUF10BOC+tGhI2BBHMtEodmffPhUBbXdet
+         jPKd1h5Wucr+FLSD71I6itxgKkCxa/2Bm4Amh4rhvKYxHgzSrMNBesfbGtdjaB44ldbN
+         blXA==
+X-Gm-Message-State: AOJu0YyIqZkXEFdasZVdvdsELGDDFkM2Ks+BR3hjAWbxfYITjL4SiQ2q
+	rx1KY/IwyUQYpP2xXlonRcYl9FcBwMZymcpaMBOhFTgHKi9sIuTN
+X-Google-Smtp-Source: AGHT+IH488Bhkf1+iOp6Z+QhB0x3AQDC012iit8P14Gg9l8CS1/fVuj+roRJm/sXGWqsA9H9G3wiww==
+X-Received: by 2002:a17:902:d490:b0:20b:8f04:b076 with SMTP id d9443c01a7336-20b8f04c764mr90967835ad.13.1727776868827;
+        Tue, 01 Oct 2024 03:01:08 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:f0c7:be19:c0b9:ffdb? ([2600:1700:60ba:9810:f0c7:be19:c0b9:ffdb])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37dabc6esm66617325ad.101.2024.10.01.03.01.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Oct 2024 03:01:08 -0700 (PDT)
+Message-ID: <0f257003-5a8d-4eca-987d-517d9754f1fd@gmail.com>
+Date: Tue, 1 Oct 2024 06:01:06 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1727774935.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] read-cache: free hash context in do_write_index()
+To: Patrick Steinhardt <ps@pks.im>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+References: <pull.1801.git.1727696424.gitgitgadget@gmail.com>
+ <b6fe5b3ef7e5f4ac8cc339685d92e3ac39fcb456.1727696424.git.gitgitgadget@gmail.com>
+ <ZvqaRIY1OzOIh1bc@pks.im>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <ZvqaRIY1OzOIh1bc@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The reftable library uses pluggable allocators, which means that we
-shouldn't ever use the standard allocator functions. But it is an easy
-mistake to make to accidentally use e.g. free(3P) instead of the
-reftable-specific `reftable_free()` function, and we do not have any
-mechanism to detect this misuse right now.
+On 9/30/24 8:32 AM, Patrick Steinhardt wrote:
+> On Mon, Sep 30, 2024 at 11:40:24AM +0000, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <stolee@gmail.com>
 
-Introduce a couple of macros that ban the standard allocators, similar
-to how we do it in "banned.h".
+>> diff --git a/read-cache.c b/read-cache.c
+>> index 3c078afadbc..51845c2e611 100644
+>> --- a/read-cache.c
+>> +++ b/read-cache.c
+>> @@ -3126,6 +3126,7 @@ out:
+>>   		free_hashfile(f);
+>>   	strbuf_release(&sb);
+>>   	free(ieot);
+>> +	free(eoie_c);
+>>   	return ret;
+>>   }
+> 
+> Yup, this one looks correct. I've sent out an equivalent patch via [1] a
+> couple hours ago.
+> 
+> Patrick
+> 
+> [1]: https://lore.kernel.org/git/c51f40c5bd0c56967e348363e784222de7884b79.1727687410.git.ps@pks.im/
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/basics.c | 1 +
- reftable/basics.h | 9 +++++++++
- 2 files changed, 10 insertions(+)
+Sorry for the collision. I had checked when prepping the GGG PR on
+Friday but forgot to check again before submitting. Your patch is
+better in substance and context.
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index ea53cf102a..c8396dc525 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -6,6 +6,7 @@ license that can be found in the LICENSE file or at
- https://developers.google.com/open-source/licenses/bsd
- */
- 
-+#define REFTABLE_ALLOW_BANNED_ALLOCATORS
- #include "basics.h"
- #include "reftable-basics.h"
- 
-diff --git a/reftable/basics.h b/reftable/basics.h
-index 7f0f20e50c..428e8d1e57 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -73,6 +73,15 @@ char *reftable_strdup(const char *str);
- 	} while (0)
- #define REFTABLE_FREE_AND_NULL(p) do { reftable_free(p); (p) = NULL; } while (0)
- 
-+#ifndef REFTABLE_ALLOW_BANNED_ALLOCATORS
-+# define REFTABLE_BANNED(func) use_reftable_##func##_instead
-+# define malloc(sz) REFTABLE_BANNED(malloc)
-+# define realloc(ptr, sz) REFTABLE_BANNED(realloc)
-+# define free(ptr) REFTABLE_BANNED(free)
-+# define calloc(nelem, elsize) REFTABLE_BANNED(calloc)
-+# define strdup(str) REFTABLE_BANNED(strdup)
-+#endif
-+
- /* Find the longest shared prefix size of `a` and `b` */
- struct strbuf;
- int common_prefix_size(struct strbuf *a, struct strbuf *b);
--- 
-2.47.0.rc0.dirty
+Thanks,
+-Stolee
 
