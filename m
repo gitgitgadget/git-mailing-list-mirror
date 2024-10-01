@@ -1,110 +1,197 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D621CC88A
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 19:25:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D0A19FA9D
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 19:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727810707; cv=none; b=d095+XmWSjRvvfKiGOPjNmKDJpDZ6nt/R9Hf+AQlXZcabz1gqIPGsaKoP7WWDJltrMF8Qoj0q7xWFiRcqdzVVE/Jbq4RkqbAupy9WMT1UmbJElLiHgDNLJkCkFuUitvPIPGJuf4q56hb7C7tNB/Tk5v+MKabgrKfWbRo66E6hjA=
+	t=1727810969; cv=none; b=RgMmQKB8R1c0XmY0c8DZfMmTA2h6H8CtQCjjk9sda63YYB6enKMDjGSZWYYp3hJtHhw/pPJy11q5bEjPbXqXitMSvuZOBkp5adAi1yLp29tfIjsHRcORtYJbkA7+IS0JfqKn7vk249+uZ3dv6Ru+jLAYLTObsAVAm1JB7iziFH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727810707; c=relaxed/simple;
-	bh=BQIKL9hfsFQRzqcYRnOF24eHuH+EyGyfvZedKjN+eMA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IXmzdMrwDqpDKQDqs4h8wEJ9PSr4jnUP4cPzOsgFN2guVJMwjLh2PMMwzVED7RHMEWMDk2QnBgHuuxAJ3NaFMCT3S8WmWUlyErKZN8Z6xuiGuUiYNH7FOZxwqiuPoA4dHX7JHqFFbhV5zJO4sgoZp/8DIxQe6LPKywG8iKlBOqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uiVOFG4x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PGpF2Qbl; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727810969; c=relaxed/simple;
+	bh=b6XPbunz/NlGKEAShDDCwgz8l6JyO9kLp5UKNqSUih0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=U7Bcky24US4wXo/9lrjGNvwbW2sylyPMMTnwul6r7heHWzjEwMH9xUCg/ETfQLVCIch+yI+rHNa6f8WWob/wJuTQZeNoqnejWS0II7Halh05Qu022fLoaF2acuLqEYiUKodsKUpp9AL9FaVEpbBHJuTa7/ztbuuLzwNYl8M1G3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BcwdRNvr; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uiVOFG4x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PGpF2Qbl"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B83D91140DC5;
-	Tue,  1 Oct 2024 15:25:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 01 Oct 2024 15:25:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1727810704;
-	 x=1727897104; bh=1EMs8EVs6gHG7lAbXGGYArbL5JuplIM3Nr6s/hPg0GU=; b=
-	uiVOFG4xne3w/SELMRJnrwMGkuyfmdbKxJxKApA61U51C/U9/UH58k1AiuvQbP6i
-	LInsJU9V/mmY70E1Yqr4PzCK2VUD0QxkTnGIsv8rLxn6+z1COq3cFSVQGV++KQ5g
-	7YB8nhvFeNvQcAnLwUi5oNRhytYIr9XXqhm5YESFuxdX/I8rJ+ZApLcArP5MgbcD
-	5EXMOYTsJCJMj3hyNGomTNA7yGOFdWcgFQi572HCxyGpcbet98ROnrWO6meWtSuj
-	aUCsbU7lZ0WReew3KZlnH/UUIIB4aYVd2y7Hp56j2OOz84rrdEOtbbioOVSKc7wO
-	VNqDBKLRK/zQbE9Vb3Ilnw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727810704; x=
-	1727897104; bh=1EMs8EVs6gHG7lAbXGGYArbL5JuplIM3Nr6s/hPg0GU=; b=P
-	GpF2QblvRtEKzha95OOl5fmz76SVbw19rb3eGRiFoa49an2RlOn/BVVbEbS9sKlw
-	ZjX0xtBmFBZjudfaYOwTkhQKDGa9H0tI9x4npPm+gZBCWYZkYgENcJ6AlL/LV5n8
-	j9oJJlcS8ZTMvAE4MSbAR9DLkYoZ0LujCC7WIwJsTgauTZE2FRivwcSdO0jZ+4us
-	nMCRbZN82C67HPpRSgHuEX0JWqzK9bg5B7aW1tFA/2rlgrxKKMuGsESPS1uUBRsz
-	w5EI5udBeBvHvs3Rs1ywAZOJRr++YxctIPunmLWclldwr3/T4vGIYC5ZXydAxw0+
-	Zp+kdo21s2/RvKS8COqMw==
-X-ME-Sender: <xms:kEz8ZvZP66SWtNZrq_Yb5Ttmr3uTCHkQVP-zMJsKnjJnGhK96kp1zQ>
-    <xme:kEz8ZuYrxvRFh4U12UIK0kylDrK6JL4Vq5WUXHWCDVf6rZDOC_C9XkDyyLhoXG1kH
-    1cmMdrQSmZhN80GSw>
-X-ME-Received: <xmr:kEz8Zh-tOSeUPuX1ddL0V1aaNliTL_4tWWt8omhIEZIpbh6ZU3knAdxjIYjnh7QivIftFXUcop7qQk4LTsk6eRzoaQeqbUq0bb8BdC8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgudefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfi
-    gvsgdruggvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrg
-    hrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:kEz8Zlr8j0T0TJ4QdegDfGKPqP-7MuKklRtpY78eY_bjB54CkT3MFw>
-    <xmx:kEz8ZqoSQ3mU7OdPgBhd02L79XxsGEZNnWiuh6yquX5mD-YptQBmJA>
-    <xmx:kEz8ZrRK8gXupx_RxYi57KxoVpV9y0hRa574w7ufato1lfeh6FiE2g>
-    <xmx:kEz8ZioY1Z-TOfm7SLDliWRSSqRW8twr3nSv3odOaOBT_jTxjt32UQ>
-    <xmx:kEz8ZnDe3_lHAu8pBDgB-IEBjZ6kPFDdfhAvNrQNERJGgL-K1kcu_0CA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 15:25:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Edward Thomson
- <ethomson@edwardthomson.com>
-Subject: Re: [PATCH v4 00/25] reftable: handle allocation errors
-In-Reply-To: <7740463b-84b4-4a69-961c-278ce2901f0d@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Tue, 1 Oct 2024 20:30:23 +0200")
-References: <cover.1726489647.git.ps@pks.im> <cover.1727774935.git.ps@pks.im>
-	<xmqqzfnnyakq.fsf@gitster.g>
-	<7740463b-84b4-4a69-961c-278ce2901f0d@web.de>
-Date: Tue, 01 Oct 2024 12:25:02 -0700
-Message-ID: <xmqqjzervd69.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BcwdRNvr"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a90188ae58eso752703666b.1
+        for <git@vger.kernel.org>; Tue, 01 Oct 2024 12:29:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727810966; x=1728415766; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I1V7heIKw8TBp/Mcrw29rlca5fA6c6rJEfD3i6wPXiI=;
+        b=BcwdRNvrKNhV+KNelAOL2fN46ZuT83hnDPg9FissZh00Sahx7fePo16+G/+JfIdzlP
+         gy5udsWsbTAjf7rFpU1zhGKR9Mh8ONs8VyfpKO5/lY8mRDa+imG9S8NVqhmJ46DFhzNO
+         69TgzEdCi24u4vhPT70iGuTb5Brd1pBfaGDBJe3hhcXs6K63hT4xQsonMW5e4WO/USon
+         0XTUo/0+mKEQeaYdQmFV49Rbxl7xQgkUHO9jpxUnRWXGLcUuI+yyM62WB5M3f7T/gi77
+         ZbqX/LvfGe+0fck9qpWwL1QJh6kEGc4KciVQvEfuAE7rvED5VqeYLpZ+tNB9pRJmIncR
+         B8PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727810966; x=1728415766;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=I1V7heIKw8TBp/Mcrw29rlca5fA6c6rJEfD3i6wPXiI=;
+        b=gEiGRlYkG/zy4cNjSz2U6e9Ljxaz6NJLT9vqFms0c0PSj15M66KKy9pBfsM7pg0U52
+         pFllwBBjWMN4OOFXb07bNhWCa80S3iBmpqN7a3+rCB+Un9n46lYy6OodgsY+0FM6xNWQ
+         QiW12t7HJ9ni0wLSRgM53KCVpSlpHnQu3WBTyAMkSER6q67Z3dGNkxN9Ij7Fl+0OmlDm
+         he9bjyiUyNCZISKnySiHPGpc45EJhl4aYPlafLEq+1NZuUEgrBVHRe8I8X84sfYNKOR0
+         HpOpPVtH6LT/+MY9zo1De7mYfFyAk+IiPBkrsl6LGGOoJYT9UcTPOv95w/kZFECVKmiX
+         0wiQ==
+X-Gm-Message-State: AOJu0Yy65L5PRk28XLfidrlREZ9VnuoewZtbls7WR6Q7GUUAumoRwxAA
+	m8eFuvI9y5WglR1jEKZYFxXrDGLNXUIgFVQF08UohAvm24ieItGmXGmAnQ==
+X-Google-Smtp-Source: AGHT+IH1YhkLE+yZOiXVyr45g02g7ZeS4w2Q20lQ2hRrEL334WWGRb1FMkau6ElCrnt+YlGOH+baag==
+X-Received: by 2002:a17:907:2da4:b0:a8d:3338:a492 with SMTP id a640c23a62f3a-a98f82008ffmr59355166b.7.1727810965739;
+        Tue, 01 Oct 2024 12:29:25 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c27ecd10sm751877466b.96.2024.10.01.12.29.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Oct 2024 12:29:25 -0700 (PDT)
+Message-Id: <pull.1802.v3.git.1727810964571.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1802.v2.git.1727759371110.gitgitgadget@gmail.com>
+References: <pull.1802.v2.git.1727759371110.gitgitgadget@gmail.com>
+From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 01 Oct 2024 19:29:24 +0000
+Subject: [PATCH v3] fsmonitor OSX: fix hangs for submodules
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Koji Nakamaru <koji.nakamaru@gree.net>,
+    Koji Nakamaru <koji.nakamaru@gree.net>
 
-René Scharfe <l.s.r@web.de> writes:
+From: Koji Nakamaru <koji.nakamaru@gree.net>
 
-> Am 01.10.24 um 19:52 schrieb Junio C Hamano:
->> Shouldn't we add FREE_AND_NULL() to the banned list as well in the
->> last step?
->
-> And perhaps the wrapper.h functions like xmalloc()?  At least as long as
-> git-compat-util.h is included by reftable/system.h.  Can be done later,
-> of course, no need to reroll just for that.
+fsmonitor_classify_path_absolute() expects state->path_gitdir_watch.buf
+has no trailing '/' or '.' For a submodule, fsmonitor_run_daemon() sets
+the value with trailing "/." (as repo_get_git_dir(the_repository) on
+Darwin returns ".") so that fsmonitor_classify_path_absolute() returns
+IS_OUTSIDE_CONE.
 
-Yeah, and I agree FREE_AND_NULL() falls into the same bucket as xmalloc()
-and friends, so no need to reroll just for that, either.
+In this case, fsevent_callback() doesn't update cookie_list so that
+fsmonitor_publish() does nothing and with_lock__mark_cookies_seen() is
+not invoked.
 
-Thanks.
+As with_lock__wait_for_cookie() infinitely waits for state->cookies_cond
+that with_lock__mark_cookies_seen() should unlock, the whole daemon
+hangs.
+
+Remove trailing "/." from state->path_gitdir_watch.buf for submodules
+and add a corresponding test in t7527-builtin-fsmonitor.sh.
+
+Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
+---
+    fsmonitor/darwin: fix hangs for submodules
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1802%2FKojiNakamaru%2Ffix%2Ffsmonitor-darwin-hangs-for-submodules-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1802/KojiNakamaru/fix/fsmonitor-darwin-hangs-for-submodules-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1802
+
+Range-diff vs v2:
+
+ 1:  decf68499f7 ! 1:  aabc1c2f6ee fsmonitor OSX: fix hangs for submodules
+     @@ t/t7527-builtin-fsmonitor.sh: test_expect_success "submodule absorbgitdirs impli
+      +
+      +test_expect_success "submodule implicitly starts daemon by pull" '
+      +	test_atexit "stop_watchdog" &&
+     -+	test_when_finished "stop_git && rm -rf cloned super sub" &&
+     ++	test_when_finished "stop_git; rm -rf cloned super sub" &&
+      +
+      +	create_super super &&
+      +	create_sub sub &&
+
+
+ builtin/fsmonitor--daemon.c  |  1 +
+ t/t7527-builtin-fsmonitor.sh | 51 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+)
+
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index dce8a3b2482..e1e6b96d09e 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -1314,6 +1314,7 @@ static int fsmonitor_run_daemon(void)
+ 		strbuf_reset(&state.path_gitdir_watch);
+ 		strbuf_addstr(&state.path_gitdir_watch,
+ 			      absolute_path(repo_get_git_dir(the_repository)));
++		strbuf_strip_suffix(&state.path_gitdir_watch, "/.");
+ 		state.nr_paths_watching = 2;
+ 	}
+ 
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 730f3c7f810..e6ddc7048c0 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -907,6 +907,57 @@ test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
+ 	test_subcommand git fsmonitor--daemon start <super-sub.trace
+ '
+ 
++start_git_in_background () {
++	git "$@" &
++	git_pid=$!
++	git_pgid=$(ps -o pgid= -p $git_pid)
++	nr_tries_left=10
++	while true
++	do
++		if test $nr_tries_left -eq 0
++		then
++			kill -- -$git_pgid
++			exit 1
++		fi
++		sleep 1
++		nr_tries_left=$(($nr_tries_left - 1))
++	done >/dev/null 2>&1 &
++	watchdog_pid=$!
++	wait $git_pid
++}
++
++stop_git () {
++	while kill -0 -- -$git_pgid
++	do
++		kill -- -$git_pgid
++		sleep 1
++	done
++}
++
++stop_watchdog () {
++	while kill -0 $watchdog_pid
++	do
++		kill $watchdog_pid
++		sleep 1
++	done
++}
++
++test_expect_success "submodule implicitly starts daemon by pull" '
++	test_atexit "stop_watchdog" &&
++	test_when_finished "stop_git; rm -rf cloned super sub" &&
++
++	create_super super &&
++	create_sub sub &&
++
++	git -C super submodule add ../sub ./dir_1/dir_2/sub &&
++	git -C super commit -m "add sub" &&
++	git clone --recurse-submodules super cloned &&
++
++	git -C cloned/dir_1/dir_2/sub config core.fsmonitor true &&
++	set -m &&
++	start_git_in_background -C cloned pull --recurse-submodules
++'
++
+ # On a case-insensitive file system, confirm that the daemon
+ # notices when the .git directory is moved/renamed/deleted
+ # regardless of how it is spelled in the FS event.
+
+base-commit: 3857aae53f3633b7de63ad640737c657387ae0c6
+-- 
+gitgitgadget
