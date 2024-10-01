@@ -1,115 +1,273 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4F41BAEF8
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 04:58:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590C7192D74
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 05:09:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727758711; cv=none; b=cmUiOQjMkJCh90LLfbja4Y/4Vv1ilt5Npq1Q8U/Fy9I3gsn1ul5B8gI9DwoJYk/hUogaMIWCiiAH/+oSi3aU/HyLzw0KmtDDW9Oy/3Xk72ZSB/ArgTCAWgh34W1Aj6g9KavQGkXPMcR7HdoLOfm6fVR+jX71Nxab4H7RYn+mP1Y=
+	t=1727759377; cv=none; b=W+vUyZHbF8VgZopzlI4RZXXffJwOxc15Ft5vk15fm93jp1/fF+KxQ7MsAJ7Piq956OC2qNQ8j/ZaqLDRjrq+7QE1Gj5OjDB3v1ykn9KmNNtVSGSYtHTrC0jy/4NzBD7dhIGwO27qGzCJphU2QxP5cZUrN7EkJLfp1aIOHkWBB0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727758711; c=relaxed/simple;
-	bh=iAo79yj5KPJxcjCdPGc2HCusU7xwWUeaFJSAyeYRlyQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iv1OmHqQQCzCk8S5jJ8A0hkIn6Z2YENOBGAR2qXji55fRBUGl3rOlcRWYXymcAQ/qkoiL1T3jEF1EUoro/vu3N3a3G4+W5sgn9Uw/sBjsc2gZduSaT+ZK8s1c/wuHhnqOjBgGXK1xnz+E2DBNuBkbqnBTAPjekpzvoaGA+byZTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C/eec3SI; arc=none smtp.client-ip=209.85.215.179
+	s=arc-20240116; t=1727759377; c=relaxed/simple;
+	bh=uDPoSgd4JmywQWDw4V2mraak3f4M1ugSehWQT6UNAms=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=eZrmkWx1mqE7JH9dUMcT5q59nebD+PJHTOM8RZdzzRZuY602OwpJgpGvrMWCyqEf8/xgfpOBQRzWR9dEcSEf/yJh4vV3mS5IQs6GTDuM+J1JxJDz32fY8g9dHi3RpcgG+VVUSPKxEaRGNMVfwzTZYLUCIEAzQ/B8Tf82iyVGZ7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A1sXx38S; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C/eec3SI"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-7db54269325so3860881a12.2
-        for <git@vger.kernel.org>; Mon, 30 Sep 2024 21:58:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A1sXx38S"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a93a1cda54dso728531066b.2
+        for <git@vger.kernel.org>; Mon, 30 Sep 2024 22:09:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727758709; x=1728363509; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/PqChDf0lV9l6Ory90w8OBCtXErr2rFQXCL7fjKDaak=;
-        b=C/eec3SIwBg0Y6UUQrpPI6H5kq1+rjiWouRcFhMJ4iD2mPJFYUSQeuf9/70hZQObiL
-         PonU4Rjj7sjvDZnYPY6dNNGpgHv619qDM3Y3QFOxGI0brfIhbsmvVUYLd10ewrF/Sscg
-         WG9ApHOV69G+5CXQr0arAakwiGi31hWpc+BgUgMSyQMn7HM1iHTodwjRAh6x7xUO05op
-         fClP4EnWfichYhSRwNHgiGVlxP+DpUp/59YNzu+cDziccU50aB+y9i8hPxBRzmtuYB3v
-         CwzsjyTSgKeQpQfwkLlX8LDFnra9dRgYODQR8gk+vK+HGjUL3clPr4v2NNE5DfOs157i
-         DEZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727758709; x=1728363509;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1727759373; x=1728364173; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/PqChDf0lV9l6Ory90w8OBCtXErr2rFQXCL7fjKDaak=;
-        b=U18nr1AXzH/aHrb+G3xhFCEKr/asK3g3uT7+V3i05kJoD2l/WLHsbeDH9tCayAMuJJ
-         9HZX+1h0Dx9s56rtf/vKXxvsQKixRx1sSO7uOTXx/Y25BIDgdtZP9G4htVS2NTdCh+5D
-         5oh/XATivBJgk6w6gKbHMV2DA/H3QZkK0xpQKRXF7VRWvyduVxiI0K2cBvO1Zi+S4wxo
-         w6D3KAIspPqHQroXfl5WvgMPoZwgiPNjLLxLQcv1AGY5hMU91DjarzGluVGgZdZjGeS+
-         cIh57xZvBA0H/DtJvDWKflRNOUQE/LTFJnNM4xZ2DP1neLDIOfmvcUd6RYeSoLMxi6V6
-         Amcw==
-X-Forwarded-Encrypted: i=1; AJvYcCU0/63uedL3jSVngqNcQwxuCmkfzE/g9fPejgkEAdWMDBfNmDuP4XEi+nOOGmNyLBiYB2A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwuKR9eYbP0/NdOuCqUpGbRVTK+4qT0BLsvmrmABpzBOB7gtteT
-	zSSULg4T5ErLwa7vL5spmbSuxdT4VahZYXyo6/wqVJGtDNcehFy/
-X-Google-Smtp-Source: AGHT+IFYv8t9+lgezje+vyiBObNJGAGnjrsFSkstZ5K0NOE8+vkqRd+G1/aoCh+ts4erAlXFylrr4Q==
-X-Received: by 2002:a05:6a20:438e:b0:1d5:119b:3b2 with SMTP id adf61e73a8af0-1d5119b0b82mr11526430637.33.1727758709330;
-        Mon, 30 Sep 2024 21:58:29 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7e6db2963dasm7427584a12.2.2024.09.30.21.58.28
+        bh=rNV2KaQLnrUzlAp20xlT2TlqGFGFcp8rY7QIsR149XA=;
+        b=A1sXx38SXh4Tuuyy1L74CjyH5oTspsU8P417ha/f8Uf+ww7ay2X8KNlcVzGIH+PaRb
+         1TdlIC7LsJP3HGLDrZZYfa7sjHfvFljjgs3QMsOFAlu8OL6E3AJavDJiTnFOosEcXXfO
+         9EBOtOzTox0ZMes3GMCOmRYvzpF5+gpF4QuKFvuRi9zee2NGnD90Q5B/II/mowkCWwnR
+         swOQ81J4Urswdfnn5gQrL5VWNml03ixl7DJRDxEXhdRHkERLINLDhJFw4voZLjxJqO+0
+         DG3KgLgpfR5PC3IAbU8lcYxsY8PmhzjW/2vvaYpWLBiG4Or1vSbH2HoiQofDk2ESaZaQ
+         OIOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727759373; x=1728364173;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rNV2KaQLnrUzlAp20xlT2TlqGFGFcp8rY7QIsR149XA=;
+        b=BzwkrmRW/BFYjSSO8amnPXuK1KsjLR0ixIk6/FSOyXCiJt8+bZgV+1pi3WfoZPFHrl
+         Lfl3Mu0Uo4C+AbI5z+RcOuVcC3zEc8Qr5y6mEcEQZdTc3FMsI+uummyn5VNP3W82CzZK
+         C6NjaFgM94itYsVO/sA0zOXPYe0d7cQ9GL/QpXVsGMejCmNDPQlcWSMw2PeIzz3buDe5
+         mdfXFPIKZPnZfwWdIKAK0TW2MGFUUZbNXc5ZElirMo9tBWkVdpd3S91glxnYuadkRlQw
+         e4pyBwG0FJnEVG6b+nRMBqFmZR9a24g4LAJvcDMYhvJQd0WXOyaFQVAcHAQtlpLPJP1c
+         QwRw==
+X-Gm-Message-State: AOJu0YzD+2t8VU0BeVfmAPg74CzpsrsFPWpq5QC9VLOqm3qYsKa7WaSS
+	kSZKqkizq55HAQO8ZSeL3qs31fxa3koSB61p3A8TtC1isfjUkFsft67eew==
+X-Google-Smtp-Source: AGHT+IHAH6Fa69Q5OsBa6ZAjeHNwEfnG6nVtRxUPhzZjWNr9YP5GQgX2VK4+U7FUG+ipzn1/BvCo7A==
+X-Received: by 2002:a17:907:7283:b0:a8d:2faf:d33d with SMTP id a640c23a62f3a-a93c48f1d0dmr1290375966b.9.1727759372440;
+        Mon, 30 Sep 2024 22:09:32 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c2997d4csm633035366b.188.2024.09.30.22.09.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Sep 2024 21:58:28 -0700 (PDT)
-Date: Tue, 1 Oct 2024 12:58:30 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 3/4] apply: remove the_repository global variable
-Message-ID: <ZvuBduVg9TJeULpl@ArchLinux>
-References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
- <pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
- <d64955a2e277da138146020f6a0cf96f4636a162.1727718031.git.gitgitgadget@gmail.com>
- <xmqqy13852jk.fsf@gitster.g>
+        Mon, 30 Sep 2024 22:09:32 -0700 (PDT)
+Message-Id: <pull.1802.v2.git.1727759371110.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1802.git.1727577690390.gitgitgadget@gmail.com>
+References: <pull.1802.git.1727577690390.gitgitgadget@gmail.com>
+From: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 01 Oct 2024 05:09:30 +0000
+Subject: [PATCH v2] fsmonitor OSX: fix hangs for submodules
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy13852jk.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Koji Nakamaru <koji.nakamaru@gree.net>,
+    Koji Nakamaru <koji.nakamaru@gree.net>
 
-On Mon, Sep 30, 2024 at 01:06:55PM -0700, Junio C Hamano wrote:
-> >  	/*
-> > @@ -28,8 +27,8 @@ int cmd_apply(int argc,
-> >  	 * is worth the effort.
-> >  	 * cf. https://lore.kernel.org/git/xmqqcypfcmn4.fsf@gitster.g/
-> >  	 */
-> > -	if (!the_hash_algo)
-> > -		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> > +	if (!repo->hash_algo)
-> > +		repo_set_hash_algo(repo, GIT_HASH_SHA1);
-> 
-> ... is this use of "repo" still valid?  We now pass NULL, not
-> the_repository, when a command with SETUP_GENTLY is asked to run
-> outside a repository, no?  Shouldn't it detecting the case, and
-> passing the pointer to a fallback object (perhaps the_repository)
-> instead of repo?
-> 
+From: Koji Nakamaru <koji.nakamaru@gree.net>
 
-This is a bad usage. Although the "t1517: apply a patch outside
-repository" should check the code, the uninitialized variable
-"repo_exists" will cause "repo_exists ? repo : NULL" to always be
-"repo" which hides the wrong usage of the "repo_exists".
+fsmonitor_classify_path_absolute() expects state->path_gitdir_watch.buf
+has no trailing '/' or '.' For a submodule, fsmonitor_run_daemon() sets
+the value with trailing "/." (as repo_get_git_dir(the_repository) on
+Darwin returns ".") so that fsmonitor_classify_path_absolute() returns
+IS_OUTSIDE_CONE.
 
-By fetching the tree, I initialize the "repo_exists = 0" for the [PATCH
-v2 1/4]. And there are many tests failed. Many builtins with
-"RUN_SETUP_GENTLY" property or which could be converted to
-"RUN_SETUP_GENTLY" property by ONLY "-h" parameter will fail
-(segmentation fault). It's obvious that we use NULL pointer for "repo".
+In this case, fsevent_callback() doesn't update cookie_list so that
+fsmonitor_publish() does nothing and with_lock__mark_cookies_seen() is
+not invoked.
 
-In my opinion, we should first think about how we handle the situation
-where we run builtins outside of the repository. The most easiest way is
-to pass the fallback object (aka "the_repository").
+As with_lock__wait_for_cookie() infinitely waits for state->cookies_cond
+that with_lock__mark_cookies_seen() should unlock, the whole daemon
+hangs.
 
-However, this seems a little strange. We are truly outside of the
-repository but we really rely on the "struct repository *" to do many
-operations. It's unrealistic to change so many interfaces which use the
-"struct repository *". So, we should just use the fallback idea at
-current.
+Remove trailing "/." from state->path_gitdir_watch.buf for submodules
+and add a corresponding test in t7527-builtin-fsmonitor.sh.
 
-Thanks,
-Jialuo
+Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
+---
+    fsmonitor/darwin: fix hangs for submodules
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1802%2FKojiNakamaru%2Ffix%2Ffsmonitor-darwin-hangs-for-submodules-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1802/KojiNakamaru/fix/fsmonitor-darwin-hangs-for-submodules-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1802
+
+Range-diff vs v1:
+
+ 1:  1889cbb193d ! 1:  decf68499f7 fsmonitor OSX: fix hangs for submodules
+     @@ Commit message
+          Remove trailing "/." from state->path_gitdir_watch.buf for submodules
+          and add a corresponding test in t7527-builtin-fsmonitor.sh.
+      
+     -    Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+     +    Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+     +    Suggested-by: Junio C Hamano <gitster@pobox.com>
+          Signed-off-by: Koji Nakamaru <koji.nakamaru@gree.net>
+      
+       ## builtin/fsmonitor--daemon.c ##
+     @@ builtin/fsmonitor--daemon.c: static int fsmonitor_run_daemon(void)
+       
+      
+       ## t/t7527-builtin-fsmonitor.sh ##
+     -@@ t/t7527-builtin-fsmonitor.sh: have_t2_data_event () {
+     - 	grep -e '"event":"data".*"category":"'"$c"'".*"key":"'"$k"'"'
+     - }
+     +@@ t/t7527-builtin-fsmonitor.sh: test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
+     + 	test_subcommand git fsmonitor--daemon start <super-sub.trace
+     + '
+       
+      +start_git_in_background () {
+      +	git "$@" &
+      +	git_pid=$!
+     ++	git_pgid=$(ps -o pgid= -p $git_pid)
+      +	nr_tries_left=10
+      +	while true
+      +	do
+      +		if test $nr_tries_left -eq 0
+      +		then
+     -+			kill $git_pid
+     ++			kill -- -$git_pgid
+      +			exit 1
+      +		fi
+      +		sleep 1
+      +		nr_tries_left=$(($nr_tries_left - 1))
+     -+	done > /dev/null 2>&1 &
+     ++	done >/dev/null 2>&1 &
+      +	watchdog_pid=$!
+      +	wait $git_pid
+      +}
+      +
+     -+stop_git_and_watchdog () {
+     -+	kill $git_pid $watchdog_pid
+     ++stop_git () {
+     ++	while kill -0 -- -$git_pgid
+     ++	do
+     ++		kill -- -$git_pgid
+     ++		sleep 1
+     ++	done
+     ++}
+     ++
+     ++stop_watchdog () {
+     ++	while kill -0 $watchdog_pid
+     ++	do
+     ++		kill $watchdog_pid
+     ++		sleep 1
+     ++	done
+      +}
+      +
+     - test_expect_success 'explicit daemon start and stop' '
+     - 	test_when_finished "stop_daemon_delete_repo test_explicit" &&
+     - 
+     -@@ t/t7527-builtin-fsmonitor.sh: test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
+     - 	test_subcommand git fsmonitor--daemon start <super-sub.trace
+     - '
+     - 
+      +test_expect_success "submodule implicitly starts daemon by pull" '
+     -+	test_atexit "stop_git_and_watchdog" &&
+     -+	test_when_finished "rm -rf cloned; \
+     -+			    rm -rf super; \
+     -+			    rm -rf sub" &&
+     ++	test_atexit "stop_watchdog" &&
+     ++	test_when_finished "stop_git && rm -rf cloned super sub" &&
+      +
+      +	create_super super &&
+      +	create_sub sub &&
+     @@ t/t7527-builtin-fsmonitor.sh: test_expect_success "submodule absorbgitdirs impli
+      +	git clone --recurse-submodules super cloned &&
+      +
+      +	git -C cloned/dir_1/dir_2/sub config core.fsmonitor true &&
+     ++	set -m &&
+      +	start_git_in_background -C cloned pull --recurse-submodules
+      +'
+      +
+
+
+ builtin/fsmonitor--daemon.c  |  1 +
+ t/t7527-builtin-fsmonitor.sh | 51 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+)
+
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index dce8a3b2482..e1e6b96d09e 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -1314,6 +1314,7 @@ static int fsmonitor_run_daemon(void)
+ 		strbuf_reset(&state.path_gitdir_watch);
+ 		strbuf_addstr(&state.path_gitdir_watch,
+ 			      absolute_path(repo_get_git_dir(the_repository)));
++		strbuf_strip_suffix(&state.path_gitdir_watch, "/.");
+ 		state.nr_paths_watching = 2;
+ 	}
+ 
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 730f3c7f810..2dd1ca1a7b7 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -907,6 +907,57 @@ test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
+ 	test_subcommand git fsmonitor--daemon start <super-sub.trace
+ '
+ 
++start_git_in_background () {
++	git "$@" &
++	git_pid=$!
++	git_pgid=$(ps -o pgid= -p $git_pid)
++	nr_tries_left=10
++	while true
++	do
++		if test $nr_tries_left -eq 0
++		then
++			kill -- -$git_pgid
++			exit 1
++		fi
++		sleep 1
++		nr_tries_left=$(($nr_tries_left - 1))
++	done >/dev/null 2>&1 &
++	watchdog_pid=$!
++	wait $git_pid
++}
++
++stop_git () {
++	while kill -0 -- -$git_pgid
++	do
++		kill -- -$git_pgid
++		sleep 1
++	done
++}
++
++stop_watchdog () {
++	while kill -0 $watchdog_pid
++	do
++		kill $watchdog_pid
++		sleep 1
++	done
++}
++
++test_expect_success "submodule implicitly starts daemon by pull" '
++	test_atexit "stop_watchdog" &&
++	test_when_finished "stop_git && rm -rf cloned super sub" &&
++
++	create_super super &&
++	create_sub sub &&
++
++	git -C super submodule add ../sub ./dir_1/dir_2/sub &&
++	git -C super commit -m "add sub" &&
++	git clone --recurse-submodules super cloned &&
++
++	git -C cloned/dir_1/dir_2/sub config core.fsmonitor true &&
++	set -m &&
++	start_git_in_background -C cloned pull --recurse-submodules
++'
++
+ # On a case-insensitive file system, confirm that the daemon
+ # notices when the .git directory is moved/renamed/deleted
+ # regardless of how it is spelled in the FS event.
+
+base-commit: 3857aae53f3633b7de63ad640737c657387ae0c6
+-- 
+gitgitgadget
