@@ -1,299 +1,133 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7814215099B
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 10:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB2519DFB5
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 10:14:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727776995; cv=none; b=bwQy27K3JcolteK8Id/aPmjtK5dEHNnK/9ix5RKPUfAYRJ1O8GkqfAuqOXZnLwfdLbQH62Hzt6nB8uO4IBDogY8iQX41Yjo5oltW/qgsdPWBmX4AEbsEcu77gOoutH8FIEcAi8b30gENWX0PmEc5a5da1/4pNsCju+ZEa2RJzp0=
+	t=1727777649; cv=none; b=XYKuEP3zppAbtaKMe73H+PmHMgGPh9NU4BobdnJdX8bDhAx45YjmLFhuxvDKEfqF9CzRwughoHItv3A7ddD7FkLl3VFmFv4YiJHTzIyriG4S0o0SkoRxWpVxInY9ohFQzf3wnFYcu2qQuTL/VbRkTkPIRFSzhTNQtYIZjyHUq6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727776995; c=relaxed/simple;
-	bh=FB8dq13/ZTkEpyo76p+jHsfInywJGJ79jTsRvPGolpA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LgYR0xA/MZwEBTZ3whn41nyA1hxZHE0UaWn3U1pZPgrVGaV69ZN/+6gpdsmdrwC7pxwQLFb2GFJFNxz/7taAkDhi6ftPYi6dmY0sL9q7Qk8f/ur0hzJwgJSl2578mGJGr4eAbGJb9JV5ADL+JBaQk1ntD4RoDOFhFyhyU2ItlQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N45d9n6F; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727777649; c=relaxed/simple;
+	bh=1XFADsvfC5T1vkewKUfXpTk1I/WfwdwlZpQldI5jqg8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hQz0D/z7qZHBWAyv99HJAgIc3b3ZznL/rnrbhhMZU+jNZq41PX37a7is8UobhQJ7z2qZSWfUWU012ICC6CfN9at3EnFgaFYxvaEuoO2RDvDtl8ydSsh2Cs9zlLw5Ip7ztpJYNShAbmltz8ib/paw7hvizo1P95pvbp0AyOTg0ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lqC0dja1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d01VPq7D; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N45d9n6F"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a8d100e9ce0so530652066b.2
-        for <git@vger.kernel.org>; Tue, 01 Oct 2024 03:03:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727776992; x=1728381792; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=I9yWzGj8jcrlXC0/t1itmm0t1YjG0WQaG+sBrN6XWHA=;
-        b=N45d9n6FkB9pa+xfoXU8NyH77n6eMR6nmp74LmYqxw2TVSZT58ILRigXe6quXD+W1c
-         uP1zWDSMp+6ARC8ikgcQ3eiQjv7n9mTZ9vsgNJuM+3Tj92H3hQcQtC4lTSvbkUInIrAb
-         5I3d7nM5W/h4Trp6YlWDJuKpqK06fa9yJl1h5+dUpJ/qj4uVXjuUh16aFEO9PyITQI+k
-         haLZMs+3+wjsQ9Xyo92R9E/y1S3YeE4TCf7d5JFfFKDbf4FOKukd0TFrClF9eLaQCsiC
-         CSE7a2LmPsL9d3mKZgKA0HUyb0oXSWA6ChiZsoS8es6J+FvC+9ND1+ibZpkROmo6CHL0
-         hUjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727776992; x=1728381792;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I9yWzGj8jcrlXC0/t1itmm0t1YjG0WQaG+sBrN6XWHA=;
-        b=TaASg+qnwPkQ7Ji2DjFAxcyjl5PPFQhuaC/W4j5ZdXqfnIdEA20GLnlexgpUqcP2AT
-         tDYAZXRp91kr9pk226Wm3GpMssaHbEV4mUXNhRJPzvhVz3zB1Vombz65Ay1OBPlUHAiU
-         0VEU7MnWC3d7gS00u/TQhLIDYh1qdXUqrmwZdVKuKUsk3IkNyrz9kDpky+Mj4E/5uAQs
-         gjUh/madrF/BgXojcpOQvlQj8PzI2C4L3m+QsRZU3U46A76UYvmKjOzwTUCcTc8ZuKq6
-         R56EqTYLvhWC41KDOB/vqOCp4ze1M6GAqb5g/hLdUTPGTp9c2c5GI23GHKVAvp0bFdDN
-         yEYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVDcyRJXmxVetjEcROxVOsoqeTUUYjL/HuITGs7pkTlvAkYM8xXDddoURcU1P/MoWpXBnI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjMMyzMGFzUo0640KdoY1nIGOU9hfH0fQP0/whubE8kty4juvH
-	4VDH59DIaJpp6aCQn6KK3QOECn3XVSJk5ZC5YM/WC2KM11xlry6L
-X-Google-Smtp-Source: AGHT+IFcycbU/zIvJsbQ9yv4RTx9fYEAxczNdjfDZcZGjmdJfcs/LZQhHs6HNF3wf6fBsIPI4vsVXg==
-X-Received: by 2002:a17:907:6e92:b0:a90:383:5c0c with SMTP id a640c23a62f3a-a93c491f3eemr1639482266b.24.1727776991491;
-        Tue, 01 Oct 2024 03:03:11 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c2997d4csm678498766b.188.2024.10.01.03.03.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Oct 2024 03:03:11 -0700 (PDT)
-Message-ID: <9c7af640-ee3a-4a17-84f6-f56fee7efe37@gmail.com>
-Date: Tue, 1 Oct 2024 11:03:10 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lqC0dja1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d01VPq7D"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id E59591381D65;
+	Tue,  1 Oct 2024 06:14:06 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 01 Oct 2024 06:14:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1727777646; x=1727864046; bh=2QTD52ADpa
+	L3RV19kUKGx/7b8YYydR4rp13C7w1UkVs=; b=lqC0dja1d0TsJyek+rzuU9d9EI
+	aeD/QhwRWCK6GchNG5C96sCEtqiAEpJ8F3o4Jk3XF9RRHz+6MRiOBn1/o3bvZ0H+
+	fp6BMPuyB1DtlvNM3eI0hta3MxP3jvpmUF1Ckow04eAofe4vWong9aDrt3NTYc5P
+	H1GxvLHZN0Bd22iRJdgbsfC0SwgleTSIPMmjcYgjV7rtJGXihQn6Icjhwdq7N2Jv
+	stFg07sxu2RWeDsHHyXNWmW+dY8Iny8+KtXpwh9OkePlfISgNpxqkdILPP/udtJi
+	p9tAsPwWHEwc9jd+gx4X47851ZhLPNioAKTfI/XazS0IsgJtacUPF33V/Zqw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727777646; x=1727864046; bh=2QTD52ADpaL3RV19kUKGx/7b8YYy
+	dR4rp13C7w1UkVs=; b=d01VPq7DCvk5P2riUfeyUQ3HmPixDfXco6S/PJ89YeIt
+	l0iBcEUUp9ugPg6P+TFGtcljVUgkA1UXsGKItSlVBYyi5IHSVWwwgwDD/TdyTGht
+	yhCZtcLsnV54Lw7hge7QJl1B5HBBF7XjCLH4dsYx/srfkV64TRcLMPqSmvc8faHk
+	Jpxy/xYjv4saTK3NJHv63WjmUFY5ZEdDTG/GvJgHioMzspcCl50dYMGUjBWN5BwA
+	WheIB4NjjZOyrWBGFteCcKn9P6S6vn5S2KLC6Eo26PJgTitMobriCK48ztd2I1OQ
+	nVXNC4L/f8yDWgHp+HuGvb37zRm5z7nCjHLpboJ8qQ==
+X-ME-Sender: <xms:bsv7ZhHTCHCkUGYh5S6zvOFxNWeD0tiE88Ytm51M19wUj5A1X7gaCQ>
+    <xme:bsv7ZmVABTvMc2EaACwKpKMrmzt5VGsrKRP-xXEndijlWlLFjnc2vP4Ap8PZ2YHEY
+    WHPB52uwJgWZMqEiQ>
+X-ME-Received: <xmr:bsv7ZjKBk8Pg60DjXc6IJXhohYlMZvrdNP9Tozj1wU9auY3GD0qCjRKCSiA9DV199pgtrC0FstSzIM7ANTD_OR95HdadR9z3n1C9-CYFZMeYBA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgvdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
+    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhunhhshhhinh
+    gvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepmhhhrghgghgvrhesrghluhhmrdhmihhtrdgvug
+    hupdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:bsv7ZnFa3IacD-iDGpwCD4ekR5kMpMC3ORXtOBCJrqoQJK-mKoYa8w>
+    <xmx:bsv7ZnXMg_-NQ2iNFTFfNAS1ZXNzgJtEzkRNvFIww6wXTtXnjLXTzg>
+    <xmx:bsv7ZiPIkaesNSp9r8U3V0YKW8uk5Hw5L2yixOq2CaHPnkKzeHQC1w>
+    <xmx:bsv7Zm06w59RCktZNnFTokaYqXLXTzAANUTuMcsNtxEK49Xodgd7BQ>
+    <xmx:bsv7ZjoazVFWBVFIGv2n2A57gn1ZOdB30zDunwKJNeqG4Fgn0keUub5i>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Oct 2024 06:14:04 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 264b31bf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 1 Oct 2024 10:13:15 +0000 (UTC)
+Date: Tue, 1 Oct 2024 12:13:58 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+	John Cai <johncai86@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 0/4] Introduce a "promisor-remote" capability
+Message-ID: <ZvvLZrAiPBQKwjx1@pks.im>
+References: <20240731134014.2299361-1-christian.couder@gmail.com>
+ <20240910163000.1985723-1-christian.couder@gmail.com>
+ <xmqqikuijni0.fsf@gitster.g>
+ <CAP8UFD34YJ23WSjaP3m8Ao6iZja_NJWfQ0BNEsaNU_F_X3qA_Q@mail.gmail.com>
+ <xmqq34lkg1ck.fsf@gitster.g>
+ <ZvpZv_fed_su4w2-@pks.im>
+ <ZvsXlq7-28mdxNc_@tapette.crustytoothpaste.net>
+ <xmqq4j5w4w1p.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] add-patch: edit the hunk again
-To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
- Git List <git@vger.kernel.org>
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
- Junio C Hamano <gitster@pobox.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <21ddf64f-10c2-4087-a778-0bd2e82aef42@gmail.com>
- <4dd5a2c7-26a8-470f-b651-e1fe2d1dbcec@gmail.com>
- <74289d8b-7211-452a-ac76-f733e89112e6@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <74289d8b-7211-452a-ac76-f733e89112e6@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4j5w4w1p.fsf@gitster.g>
 
-Hi Rubén
+On Mon, Sep 30, 2024 at 03:27:14PM -0700, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> 
+> > One idea I had about this was pluggable storage backends, which might be
+> > a nice feature to add via a dynamically loaded shared library.  In
+> > addition, this seems like the kind of feature that one might like to use
+> > Rust for, since it probably will involve HTTP code, and generally people
+> > like doing that less in C (I do, at least).
+> 
+> Yes, yes, and yes.
 
-On 28/09/2024 15:30, Rubén Justo wrote:
-> The "edit" option allows the user to directly modify the hunk to be
-> applied.
-> 
-> If the modified hunk returned by the user is not an applicable patch,
-> they will be given the opportunity to try again.
-> 
-> For this new attempt we give them the original hunk;  they have to
-> repeat the modification from scratch.
-> 
-> Instead, let's give them the modified patch back, so they can identify
-> and fix the problem.
-> 
-> If they really want to start over with a fresh patch they still can
-> say 'no', to cancel the "edit" and start anew [*].
-> 
->      * In the old script-based version of "add -p", this "no" meant
->        discarding the hunk and moving on to the next one.
-> 
->        This changed, probably unintentionally, during its conversion to
->        C in bcdd297b78 (built-in add -p: implement hunk editing,
->        2019-12-13).
-> 
->        It now makes more sense not to move to the next block when the
->        user requests to discard their edits.
-> 
-> Signed-off-by: Rubén Justo <rjusto@gmail.com>
-> ---
-> 
-> In this iteration, I'm modifying the message 'saying no discards' to
-> make its meaning more explicit, perhaps also gaining some clarity
-> along the way for the user who wants to restart editing from the
-> original patch.
-> 
-> In the test, I'm adding "n q" to the script as suggested by Phillip.
-> 
-> And, just a bit of mental peace by restoring the hunk from the backup
-> before trimming the two strbuf.
+Indeed, I strongly agree with this. In fact, pluggable ODBs are the next
+big topic I'll be working on now that the refdb is pluggable. Naturally
+this is a huge undertaking that will likely take more on the order of
+years to realize, but one has to start somewhen, I guess.
 
-I hoped that change would be in edit_hunk_manually() but it isn't.
+I'm also aligned with the idea of having something like dlopen-style
+implementations of the backends. While the reftable-library is nice and
+fixes some of the issues that we have at GitLab, the more important win
+is that this demonstrates that the abstractions that we have hold. Which
+also means that adding a new backend has gotten a ton easier now.
 
-I'm afraid I still don't think that changing the default is a good idea 
-as it is often very difficult to correct a badly edited hunk. Can we 
-offer the user a choice of
+And yes, being able to implement self-contained features like a refdb
+implementation or an ODB implementation in Rust would be a sensible
+first step for adopting it. It doesn't interact with anything else and
+initially we could continue to support platforms that do not have Rust
+by simply not compiling such a backend.
 
-     (e) edit the original hunk again
-     (f) fix the edited hunk
-     (d) discard the edit
-
-In [1] you say you discarded that idea because the wording was too 
-verbose but something along like the above should be succinct enough.
-
-Best Wishes
-
-Phillip
-
-[1] 
-https://lore.kernel.org/git/6f392446-10b4-4074-a993-97ac444275f8@gmail.com
-
-> Thanks.
-> 
->   add-patch.c                | 33 ++++++++++++++++++++-------------
->   t/t3701-add-interactive.sh | 13 +++++++++++++
->   2 files changed, 33 insertions(+), 13 deletions(-)
-> 
-> diff --git a/add-patch.c b/add-patch.c
-> index 557903310d..c847b4a59d 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -1111,7 +1111,8 @@ static void recolor_hunk(struct add_p_state *s, struct hunk *hunk)
->   	hunk->colored_end = s->colored.len;
->   }
->   
-> -static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
-> +static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk,
-> +			      size_t plain_len, size_t colored_len)
->   {
->   	size_t i;
->   
-> @@ -1146,6 +1147,10 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
->   				      "addp-hunk-edit.diff", NULL) < 0)
->   		return -1;
->   
-> +	/* Drop possible previous edits */
-> +	strbuf_setlen(&s->plain, plain_len);
-> +	strbuf_setlen(&s->colored, colored_len);
-> +
->   	/* strip out commented lines */
->   	hunk->start = s->plain.len;
->   	for (i = 0; i < s->buf.len; ) {
-> @@ -1157,12 +1162,13 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
->   	}
->   
->   	hunk->end = s->plain.len;
-> +
-> +	recolor_hunk(s, hunk);
-> +
->   	if (hunk->end == hunk->start)
->   		/* The user aborted editing by deleting everything */
->   		return 0;
->   
-> -	recolor_hunk(s, hunk);
-> -
->   	/*
->   	 * If the hunk header is intact, parse it, otherwise simply use the
->   	 * hunk header prior to editing (which will adjust `hunk->start` to
-> @@ -1257,15 +1263,14 @@ static int edit_hunk_loop(struct add_p_state *s,
->   	backup = *hunk;
->   
->   	for (;;) {
-> -		int res = edit_hunk_manually(s, hunk);
-> +		int res = edit_hunk_manually(s, hunk, plain_len, colored_len);
->   		if (res == 0) {
->   			/* abandoned */
-> -			*hunk = backup;
-> -			return -1;
-> +			break;
->   		}
->   
->   		if (res > 0) {
-> -			hunk->delta +=
-> +			hunk->delta = backup.delta +
->   				recount_edited_hunk(s, hunk,
->   						    backup.header.old_count,
->   						    backup.header.new_count);
-> @@ -1273,10 +1278,6 @@ static int edit_hunk_loop(struct add_p_state *s,
->   				return 0;
->   		}
->   
-> -		/* Drop edits (they were appended to s->plain) */
-> -		strbuf_setlen(&s->plain, plain_len);
-> -		strbuf_setlen(&s->colored, colored_len);
-> -		*hunk = backup;
->   
->   		/*
->   		 * TRANSLATORS: do not translate [y/n]
-> @@ -1286,11 +1287,17 @@ static int edit_hunk_loop(struct add_p_state *s,
->   		 * of the word "no" does not start with n.
->   		 */
->   		res = prompt_yesno(s, _("Your edited hunk does not apply. "
-> -					"Edit again (saying \"no\" discards!) "
-> +					"Edit again (saying \"no\" discards your edits!) "
->   					"[y/n]? "));
->   		if (res < 1)
-> -			return -1;
-> +			break;
->   	}
-> +
-> +	/* Drop a possible edit */
-> +	*hunk = backup;
-> +	strbuf_setlen(&s->plain, plain_len);
-> +	strbuf_setlen(&s->colored, colored_len);
-> +	return -1;
->   }
->   
->   static int apply_for_checkout(struct add_p_state *s, struct strbuf *diff,
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 718438ffc7..1ceefd96e6 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -165,6 +165,19 @@ test_expect_success 'dummy edit works' '
->   	diff_cmp expected diff
->   '
->   
-> +test_expect_success 'editing again works' '
-> +	git reset &&
-> +	write_script "fake_editor.sh" <<-\EOF &&
-> +	grep been-here "$1" >output
-> +	echo been-here >"$1"
-> +	EOF
-> +	(
-> +		test_set_editor "$(pwd)/fake_editor.sh" &&
-> +		test_write_lines e y n q | GIT_TRACE=1 git add -p
-> +	) &&
-> +	test_grep been-here output
-> +'
-> +
->   test_expect_success 'setup patch' '
->   	cat >patch <<-\EOF
->   	@@ -1,1 +1,4 @@
-> 
-> Range-diff against v2:
-> 1:  2b55a759d5 ! 1:  7e76606751 add-patch: edit the hunk again
->      @@ add-patch.c: static int edit_hunk_loop(struct add_p_state *s,
->        		/*
->        		 * TRANSLATORS: do not translate [y/n]
->       @@ add-patch.c: static int edit_hunk_loop(struct add_p_state *s,
->      - 					"Edit again (saying \"no\" discards!) "
->      + 		 * of the word "no" does not start with n.
->      + 		 */
->      + 		res = prompt_yesno(s, _("Your edited hunk does not apply. "
->      +-					"Edit again (saying \"no\" discards!) "
->      ++					"Edit again (saying \"no\" discards your edits!) "
->        					"[y/n]? "));
->        		if (res < 1)
->       -			return -1;
->      @@ add-patch.c: static int edit_hunk_loop(struct add_p_state *s,
->        	}
->       +
->       +	/* Drop a possible edit */
->      ++	*hunk = backup;
->       +	strbuf_setlen(&s->plain, plain_len);
->       +	strbuf_setlen(&s->colored, colored_len);
->      -+	*hunk = backup;
->       +	return -1;
->        }
->        
->      @@ t/t3701-add-interactive.sh: test_expect_success 'dummy edit works' '
->       +	EOF
->       +	(
->       +		test_set_editor "$(pwd)/fake_editor.sh" &&
->      -+		test_write_lines e y | GIT_TRACE=1 git add -p
->      ++		test_write_lines e y n q | GIT_TRACE=1 git add -p
->       +	) &&
->       +	test_grep been-here output
->       +'
-
+Patrick
