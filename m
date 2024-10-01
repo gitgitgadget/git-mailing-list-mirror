@@ -1,204 +1,309 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF811BCA19
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 19:10:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4921CBE9F
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 19:18:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727809842; cv=none; b=dzUIvaYEoLAHz8GAwgskIsgtxxxFIgtuk6gV6MMsQKWZfjTKhsAWbIQkHMt5VxPnDHXk3yZ4ld/w98109M1b9yGCuTbNkAs9qmZiBXWJYjgYnT/g3cuYoBR1ggofnmV0q2JbWxssN1q51ye60ZppcE2id4cMArgW1YbGYtx1qqI=
+	t=1727810307; cv=none; b=hU76G0Uj/ztu0UPC16ndpznei/2G8I0co7Tf5tyDGyYaML2gS10NaSj/80hKFs40dvgBhpcIs76UhQyDe+FscOTFUS4Z40x7hszC/gawxmDp/87N3gsyeJi8SWwUjNoWPCKD80Mn1HZLe8Zdf+aG3da1eUwgWpb3SFrOURJUPjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727809842; c=relaxed/simple;
-	bh=eQnhxEqufbGgwnzCS4vy1jRUUKyOp4FFq5ziZVrvjc0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PYmJ73djc8pPn9oaXPgORCOrxgpmgqqvLtsFsNvnHuX3jk/QHMX7LK8xYEtARS6sPyoCldQf6+UMLH44G+gMPJzDaUB2tOwR0SGXyU5gOxIrjlzrNcOH6ioEtZYl3kgLxGBC9bWTAirkvgqGxF5qU8gBh4a+f2r/Tq0JAtx4plE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bo2H7K3e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lT2cN2bl; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727810307; c=relaxed/simple;
+	bh=4Gnt0FxEw0Gsm1biJLwuDZpgZL0ZH3grydG42LdpgMI=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=HoxxD9D3g5mi03/cvYvrS0k9i8DXtCJcdF0o4pGJURHYHb7ixSAcMdq5sxTaSxbYpoq/Rsl3lVbpPjuaESughHTKqbz+pUnEM1VpDD4ogfYQA4sHOLWgGq8SIxfZnMiCLIBiemEgOB7qqYryKZcUWrQG5Mea0CTonhjq5vRpXOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TWfZQKiJ; arc=none smtp.client-ip=209.85.215.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bo2H7K3e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lT2cN2bl"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C7F591140D6C;
-	Tue,  1 Oct 2024 15:10:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Tue, 01 Oct 2024 15:10:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727809838; x=1727896238; bh=21YU4mVJL0
-	wvOdLY7syuNRvxgA8VbTNy25G+/fe8Puc=; b=bo2H7K3e4nXgbucFn67dydrNIL
-	pUAzKLi2Awcj+eO9LXwFKq7eMNl9Lh8R+RmWee1np7EIP9Pkcpa+6Pp8qdZzhP2t
-	xxFoah/ZpJtBrg1cXREaPGhjn5Iq04KyAbbheGpfZuv8ESYc2GrerBEC37reY7Fx
-	FAzvsXxK9PB1jRKG8l3+rqbBFVGjpqptwY74t6cjxCaG4zPspA/ZagBeGehMGOZk
-	cKoNGoGF491zDAYzboT39XWauRhEbd6TVB0b71ev3PmnZHWcIbDZaT8qLeBslrpJ
-	7ywdDKX8AfC8KO85P4XbVM5rE9o4DN1kQdk2lNIkMZpDZRAl91UbJilPij5Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727809838; x=1727896238; bh=21YU4mVJL0wvOdLY7syuNRvxgA8V
-	bTNy25G+/fe8Puc=; b=lT2cN2blcjAyKwYFTZvhYhdLXB1jKWSY+1bs4VDH5U5y
-	7BUuwfhinaIS8P0v2z4K1LjCqyC1376P4dyC2PBw1jGI9MqN3VKgrAZH0iiTxeOT
-	NfFVrbUUMhiXX+3zg1P8+j8sNo56joCnp8iq5gtAj7NVIdBm634ue+uDrrVTzSwd
-	l7znDbYJaiyWkI/ZSg8xCOENkjFZ5/zLN19ULhWK4Al2SLS/hF2RwyrMVuRMpRo8
-	Ub2NMAKV+6VQXteeQ1KDg5f3cWdvW8Xzxc0zNEcSzHY22G8nUaY7uiyODIWM/X+M
-	2SAffv1UYbK84X9lTYRd5RLa0g3YGyQIENH3FXgrXw==
-X-ME-Sender: <xms:LUn8Zn3mfJB7kiwegTiGXJ7im0QYjYFfG8ZqV_WvlEf79ldeF2jExA>
-    <xme:LUn8ZmGNdOVXCEnlrelADaQ3fSPSFYMsXxfRH14kqebYmzKn5iXYjS_i03ndpfVTn
-    TbpbRp2WpbfJ6Wqtw>
-X-ME-Received: <xmr:LUn8Zn6wcdTogO7VtHmo4F2Pv3_ADNky2zLx_y6HjjH-MB_jJFe3YvkMv51YgPkKpcv6TVmXAgdJbpjlTXbpDGhQSI_GNZg0rTGA3ho>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgudefudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghntggvsehfvg
-    hrughinhgrnhguhidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrgh
-    druhhkpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehl
-    rdhsrdhrseifvggsrdguvgdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvg
-    hlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:LUn8Zs3FBNaMdtLbqYaIBMWnA5x5EIXobQ83UWnN7Bc_clLbhpR9Ag>
-    <xmx:LUn8ZqEq_sT1N0f3E8j4M7Waa0uSWM0SblygvXxBJRPOqI9cJG0sbw>
-    <xmx:LUn8Zt9o16VmdNXnMi-0K-yhVpGtuCV116aJyJD3W5f7743RW4bXug>
-    <xmx:LUn8ZnmSIadPpmLDfdjVJ_A2eE6uMCTPWKzA5RJER-0MNGvuGxTgpQ>
-    <xmx:Lkn8Zt0xEI5k7wF86YGh2hSpYjOlEyGoDPhMtWuXrpkdxwW-Tt8wX4fU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 15:10:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: git@vger.kernel.org,  phillip.wood@dunelm.org.uk,  Taylor Blau
- <me@ttaylorr.com>, 	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Johannes
- Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 1/5] refs_update_symref: atomically record
- overwritten ref
-In-Reply-To: <20240930222025.2349008-2-bence@ferdinandy.com> (Bence
-	Ferdinandy's message of "Tue, 1 Oct 2024 00:19:51 +0200")
-References: <D4JIG4VS5WVN.2F0PNU5514UEL@ferdinandy.com>
-	<20240930222025.2349008-1-bence@ferdinandy.com>
-	<20240930222025.2349008-2-bence@ferdinandy.com>
-Date: Tue, 01 Oct 2024 12:10:36 -0700
-Message-ID: <xmqq7carwser.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TWfZQKiJ"
+Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-7d4fc1a2bb7so5142722a12.1
+        for <git@vger.kernel.org>; Tue, 01 Oct 2024 12:18:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1727810305; x=1728415105; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RYWMUEsoLUQJl66nR3y7WJ/TSypqlpNISnaaFTAxPQ4=;
+        b=TWfZQKiJ4gLx96368Gl7q8v7bnablL2giOFtXwpzDpBsQorBk2RFnIKMckTALFaER2
+         1DY0JmdYzYf3MPdbuiWOeHK2hD2qzgdeLqmYQAhBlPKMNSJ7MaVXlnx+9g1kZmf168xR
+         af8IF37yU7DQGAKkIXAg/fcCVO6FhIgTAn+COdigMjrl5qaXBq3V9KjgrdCi63jynUCZ
+         EnopUaLTPmoCtGbZ6srvNokIfDEAOUSnu1VV3C6+dmF06Z55qRzK7HJNLS5rDfps4S7V
+         DKdBtr1vKQyownEcM1uaQYErfcmEuO/RkHM9rEzA14x0a3OkjVYAmg4VhghNHKj+ByOG
+         tkhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727810305; x=1728415105;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=RYWMUEsoLUQJl66nR3y7WJ/TSypqlpNISnaaFTAxPQ4=;
+        b=k9xGUB1aT0YQFZ0ulJTmk7BHXRO/CyiuISkWLM6Kc8I9oaoAaUC0WcLjtfQ2dHdVn4
+         IftH6S/JasWrkg2xeB/MvHu3T66t/kqXDdOwQb4Xt9y4cTyYkee5ABFU42VfLFYV2lf1
+         WCAydxTc464Ym7gJRv+xT5sdgUUWvJyUKvHM7R5oZ++2Q8rFPnbWlIJ5b8V+JWQX4Dwy
+         yd53WPn/0Y0g3mpbna3vslUX+6J6881hVt3CJPe+jR6L00Vrz8r0VYtUR+0I99TBJ3Iu
+         y2yTUgZNbvGqf1EIRMvI85N+H+cnIRAW6GtWbZUPhQbhaOc97Um23bQkpc9P9fs7dAyW
+         JJRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX/lVmauqzGJ92d+tPIrAESd03GD/WbVMy49djmQBn6fKswLCIGbHrvLBwwB7wcmlhvBZI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzntf/uh4b7YUeTBR+2dc9zYehXCaR+NUKPuQwWv97f26OxD7kK
+	I3etQXIq2CSdYHnxcEu+dJHz5aWn/speodZneiJrhavutpJweJzwpxRv4aRvtH9wJF11F26O4Rx
+	gFEu5XsJR04cXMA==
+X-Google-Smtp-Source: AGHT+IGfr+E9tNc3oT4xqRi3yMcMedBq/u9Ne/q/+DCZjiDrYfC92z3vOAyytYgnQqceSGAUGGQQBi5338DLlkg=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a63:3d0b:0:b0:785:e3e:38db with SMTP id
+ 41be03b00d2f7-7e9affa2f63mr406a12.8.1727810304547; Tue, 01 Oct 2024 12:18:24
+ -0700 (PDT)
+Date: Tue,  1 Oct 2024 19:17:51 +0000
+In-Reply-To: <20240802073143.56731-1-hanyang.tony@bytedance.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.46.1.824.gd892dcdcdd-goog
+Message-ID: <20241001191811.1934900-1-calvinwan@google.com>
+Subject: Missing Promisor Objects in Partial Repo Design Doc
+From: Calvin Wan <calvinwan@google.com>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
+	Jonathan Tan <jonathantanmy@google.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Enrico Mrass <emrass@google.com>, sokcevic@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Bence Ferdinandy <bence@ferdinandy.com> writes:
+It seems that we're at a standstill for the various possible designs
+that can solve this problem, so I decided to write up a design document
+to discuss the ideas we've come up with so far and new ones. Hopefully
+this will get us closer to a viable implementation we can agree on.
 
-> diff --git a/refs.c b/refs.c
-> index 5f729ed412..301db0dcdc 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2114,7 +2114,8 @@ int peel_iterated_oid(struct repository *r, const struct object_id *base, struct
->  }
->  
->  int refs_update_symref(struct ref_store *refs, const char *ref,
-> -		       const char *target, const char *logmsg)
-> +		       const char *target, const char *logmsg,
-> +		       struct strbuf *before_target)
->  {
->  	struct ref_transaction *transaction;
->  	struct strbuf err = STRBUF_INIT;
-> @@ -2130,6 +2131,10 @@ int refs_update_symref(struct ref_store *refs, const char *ref,
+Missing Promisor Objects in Partial Repo Design Doc
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
 
-Let's extend the precontext of this hunk a bit.  The function begins
-like this:
+Basic Reproduction Steps
+------------------------
 
-	transaction = ref_store_transaction_begin(refs, &err);
-	if (!transaction ||
-	    ref_transaction_update(transaction, ref, NULL, NULL,
-				   target, NULL, REF_NO_DEREF,
-				   logmsg, &err) ||
-	    ref_transaction_commit(transaction, &err)) {
-		ret = error("%s", err.buf);
->  	}
->  	strbuf_release(&err);
+ - Partial clone repository
+ - Create local commit and push
+ - Fetch new changes
+ - Garbage collection
 
-We begin a transaction, update ref to point to target in the
-transaction, and commit the transaction.  An error at any stage of
-this three-step process will bypass the rest and we give an error
-message.
+State After Reproduction
+------------------------
 
-> +
-> +	if (before_target && transaction->updates[0]->before_target)
-> +		strbuf_addstr(before_target, transaction->updates[0]->before_target);
+commit  tree  blob
+  C3 ---- T3 -- B3 (fetched from remote, in promisor pack)
+  |
+  C2b ---- T2b -- B2b (created locally, in non-promisor pack)
+  |
+  C2a ---- T2a -- B2a (created locally, in non-promisor pack)
+  |
+  C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
 
-What if ref_store_transaction_begin() failed?
+Explanation of the Problem
+--------------------------
 
-If we want to say "we append the before_target recorded in the
-transaction to the caller-supplied strbuf only when we manage to do
-the update, and we leave before_target intact otherwise" We'd at
-least need
+In a partial clone repository, non-promisor commits are locally
+committed as children of promisor commits and then pushed up to the
+server. Fetches of new history can result in promisor commits that have
+non-promisor commits as ancestors. During garbage collection, objects
+are repacked in 2 steps. In the first step, if there is more than one
+promisor packfile, all objects in promisor packfiles are repacked into a
+single promisor packfile. In the second step, a revision walk is made
+from all refs (and some other things like HEAD and reflog entries) that
+stops whenever it encounters a promisor object. In the example above, if
+a ref pointed directly to C2a, it would be returned by the walk (as an
+object to be packed). But if we only had a ref pointing to C3, the
+revision walk immediately sees that it is a promisor object, does not
+return it, and does not iterate through its parents.
 
-	if (transaction && before_target &&
-            transaction->updates[0]->before_target)
+(C2b is a bit of a special case. Despite not being in a promisor pack,
+it is still considered to be a promisor object since C3 directly
+references it.)
 
-wouldn't it?  Like the code that frees it (below), this new call
-should be prepared to see !transaction.
+If we think this is a bad state, we should propagate the =E2=80=9Cpromisor-=
+ness=E2=80=9D
+of C3 to its ancestors. Git commands should either prevent this state
+from occurring or tolerate it and fix it when we can. If we did run into
+this state unexpectedly, then it would be considered a BUG.
 
->  	if (transaction)
->  		ref_transaction_free(transaction);
+If we think it is a valid state, we should NOT propagate the
+=E2=80=9Cpromisor-ness=E2=80=9D of C3 to its ancestors. Git commands should=
+ respect that
+this is a possible state and be able to work around it. Therefore, this
+bug would then be strictly caused by garbage collection
 
-> @@ -2948,4 +2953,3 @@ int ref_update_expects_existing_old_ref(struct ref_update *update)
->  	return (update->flags & REF_HAVE_OLD) &&
->  		(!is_null_oid(&update->old_oid) || update->old_target);
->  }
-> -
 
-Good (even though it is unrelated to the topic of this series).
+Bad State Solutions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-> diff --git a/refs.h b/refs.h
-> index 108dfc93b3..f38616db84 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -571,7 +571,8 @@ int refs_copy_existing_ref(struct ref_store *refs, const char *oldref,
->  		    const char *newref, const char *logmsg);
->  
->  int refs_update_symref(struct ref_store *refs, const char *refname,
-> -		       const char *target, const char *logmsg);
-> +		       const char *target, const char *logmsg,
-> +		       struct strbuf *before_target);
->  
->  enum action_on_err {
->  	UPDATE_REFS_MSG_ON_ERR,
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 0824c0b8a9..8415f2d020 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2577,6 +2577,7 @@ static int lock_ref_for_update(struct files_ref_store *refs,
->  	}
->  
->  	update->backend_data = lock;
-> +	update->before_target = xstrdup_or_null(referent.buf);
+Fetch negotiation
+-----------------
+Implemented at
+https://lore.kernel.org/git/20240919234741.1317946-1-calvinwan@google.com/
 
-OK, so this comes from the backends, as they are the only thing that
-knows what the current value is (the caller can only indirectly infer
-if it has old_target, in which case the backend checks if the attempt
-is stale).
+During fetch negotiation, if a commit is not in a promisor pack and
+therefore local, do not declare it as "have" so they can be fetched into
+a promisor pack.
 
-Do we need a corresponding change for the other, reftable, backend?
+Cost:
+- Creation of set of promisor pack objects (by iterating through every
+  .idx of promisor packs)
+- Refetch number of local commits
 
-> diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-> index 65346dee55..a911302bea 100644
-> --- a/t/helper/test-ref-store.c
-> +++ b/t/helper/test-ref-store.c
-> @@ -120,7 +120,7 @@ static int cmd_create_symref(struct ref_store *refs, const char **argv)
->  	const char *target = notnull(*argv++, "target");
->  	const char *logmsg = *argv++;
->  
-> -	return refs_update_symref(refs, refname, target, logmsg);
-> +	return refs_update_symref(refs, refname, target, logmsg, NULL);
->  }
->  
->  static struct flag_definition transaction_flags[] = {
+Pros: Implementation is simple, client doesn=E2=80=99t have to repack, prev=
+ents
+state from ever occurring in the repository.
+
+Cons: Network cost of refetching could be high if many local commits
+need to be refetched.
+
+commit  tree  blob
+  C3 ---- T3 -- B3 (fetched from remote, in promisor pack)
+  |
+  C2 ---- T2 -- B2 (created locally, refetched into promisor pack)
+  |
+  C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
+
+Fetch repack
+------------
+Not yet implemented.
+
+Enumerate the objects in the freshly fetched promisor packs, checking
+every outgoing link to see if they reference a non-promisor object that
+we have, to get a list of tips where local objects are parents of
+promisor objects ("bad history"). After collecting these "tips of bad
+history", you then start another traversal from them until you hit an
+object in a promisor pack and stop traversal there. You have
+successfully enumerated the local objects to be repacked into a promisor
+pack.
+
+Cost:
+- Traversal through newly fetched promisor trees and commits
+- Creation of set of promisor pack objects (for tips of bad history
+  traversal to stop at a promisor object)
+- Traversal through all local commits and check existence in promisor
+  pack set
+- Repack all pushed local commits
+
+Pros: Prevents state from ever occurring in the repository, no network
+cost.
+
+Cons: Additional cost of repacking is incurred during fetch, more
+complex implementation.
+
+commit  tree  blob
+  C3 ---- T3 -- B3 (fetched from remote, in promisor pack)
+  |
+  C2 ---- T2 -- B2 (created locally, packed into promisor pack)
+  |
+  C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
+
+Garbage Collection repack
+-------------------------
+Not yet implemented.
+
+Same concept at =E2=80=9Cfetch repack=E2=80=9D, but happens during garbage =
+collection
+instead. The traversal is more expensive since we no longer have access
+to what was recently fetched so we have to traverse through all promisor
+packs to collect tips of =E2=80=9Cbad=E2=80=9D history.
+
+Cost:
+- Creation of set of promisor pack objects
+- Traversal through all promisor commits
+- Traversal through all local commits and check existence in promisor
+  object set
+- Repack all pushed local commits
+
+Pros: Can be run in the background as part of maintenance, no network
+cost.
+
+Cons: More expensive than =E2=80=9Cfetch repack=E2=80=9D, state isn=E2=80=
+=99t fixed until
+garbage collection, more complex implementation
+
+commit  tree  blob
+  C3 ---- T3 -- B3 (fetched from remote, in promisor pack)
+  |
+  C2 ---- T2 -- B2 (created locally, packed into promisor pack)
+  |
+  C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
+
+Garbage Collection repack all
+-----------------------------
+Implemented at
+https://lore.kernel.org/git/20240925072021.77078-1-hanyang.tony@bytedance.c=
+om/=20
+
+Repack all local commits into promisor packs during garbage collection.
+
+Both valid scenarios
+commit  tree  blob
+  C3 ---- T3 -- B3 (fetched from remote, in promisor pack)
+  |
+  C2 ---- T2 -- B2 (created locally, packed into promisor pack)
+  |
+  C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
+
+commit  tree  blob
+  C3 ---- T3 -- B3 (created locally, packed into promisor pack)
+  |
+  C2 ---- T2 -- B2 (created locally, packed into promisor pack)
+  |
+  C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
+
+Cost:
+Repack all local commits
+
+Pros: Can be run in the background as part of maintenance, no network
+cost, less complex implementation, and less expensive than =E2=80=9Cgarbage
+collection repack=E2=80=9D.
+
+Cons: Packing local objects into promisor packs means that it is no
+longer possible to detect if an object is missing due to repository
+corruption or because we need to fetch it from a promisor remote.
+Packing local objects into promisor packs means that garbage collection
+will no longer remove unreachable local objects.
+
+Valid State Solutions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Garbage Collection check
+------------------------
+Not yet implemented.
+
+Currently during the garbage collection rev walk, whenever a promisor
+commit is reached, it is marked UNINTERESTING, and then subsequently all
+ancestors of the promisor commit are traversed and also marked
+UNINTERESTING. Therefore, add a check for whether a commit is local or
+not during promisor commit ancestor traversal and do not mark local
+commits as UNINTERESTING.
+
+commit  tree  blob
+  C3 ---- T3 -- B3 (fetched from remote, in promisor pack)
+  |
+  C2 ---- T2 -- B2 (created locally, in non-promisor pack, gc does not dele=
+te)
+  |
+  C1 ---- T1 -- B1 (fetched from remote, in promisor pack)
+
+Cost:
+- Adds an additional check to every ancestor of a promisor commit.
+
+This is practically the only solution if the state is valid. Fsck would
+also have to start checking for validity of ancestors of promisor
+commits instead of ignoring them as it currently does.
+
+Optimizations
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+The =E2=80=9Ccreation of set of promisor pack objects=E2=80=9D can be repla=
+ced with
+=E2=80=9Ccreation of set of non-promisor objects=E2=80=9D since the latter =
+is almost
+always cheaper and we can check for non-existence rather than existence.
+This does not work for =E2=80=9Cfetch negotiation=E2=80=9D since if we have=
+ a commit
+that's in both a promisor pack and a non-promisor pack, the algorithm's
+correctness relies on the fact that we report it as a promisor object
+(because we really need the server to re-send it).
