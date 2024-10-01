@@ -1,54 +1,54 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C2F1C6899
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 14:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4681C6F55
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 14:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727791775; cv=none; b=lCalz1xJt41fus1ndgRA9f7STN94LKCH4WEHqmLH2sMOsBN75qfRMwAvADUcTR7FSPk/GQKnCu6UhA/AOIPhm6hki2uGxyTVDlNLy5rDEggr61tnGktPBZJ4151NemVnOFk3Iqwk2TbOBktQxx+Zym62pdZpolPTM6CynTvobR0=
+	t=1727791900; cv=none; b=hoUo4c1KwuJ9QJDlhuBWLDYSDtbW7qNwch6kbiFaZoYVw1F78hyJbXG1tTw6q1SS9K1r8AHH1O16ZqLhrJ6FhZyBy6bV8YILZQLocCzqjXD1DwRuCwhZpU1UndIe8GVeZLIINu7WPLi3LcXBiO+gsvr3kKlzb4emu3NoOq2i1dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727791775; c=relaxed/simple;
-	bh=tKMPKGzG4A0dlq86pje2q+M/Q1MyEzo5AF7cR1ZLeeI=;
+	s=arc-20240116; t=1727791900; c=relaxed/simple;
+	bh=d1PgexJs7Oj4RClOkGvFajoA7FI6bML5jqde4i44nsI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NxBzjWBIqWD5t5NHLYTsCVxdTgG3ULGSh6JdGRIkBt8/Hpe0WQapZwma93p5NGNFp/5ksITZyGHfLvb/7cyisXrPHZe8M2llrScgoTwURGCLEzF/MIBFA0pc6NUTMvk7gbSvssJwRzrNUsQbJU4o+p7SzvhY5TmNGMQe28yKONI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dTcm3j//; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VCdRcTkf; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y3gBY+RO3eAIfPHZGebBgbsXVME1oyS37aj2h50/KFFk/TafOmnB5fjLNjqGIFGfWdF/tNtjjKMlmoVGF3zWPm7nz7HEC8MLMtWvsfgTubZ96DZJCNgSUHc2WqmkuHpjkbNOreQnQy67rAQhCNpbEjnvu/vTAyHeAB0Abiu8oSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IyF8jrEX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LfbifIid; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dTcm3j//";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VCdRcTkf"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 79EBF1381950;
-	Tue,  1 Oct 2024 10:09:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IyF8jrEX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LfbifIid"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id BBA8E13819E4;
+	Tue,  1 Oct 2024 10:11:37 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Tue, 01 Oct 2024 10:09:31 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 01 Oct 2024 10:11:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727791771; x=1727878171; bh=P/832HISi+
-	ILtMEAkuh6Addia/shjCaGl5MxdQY1SpY=; b=dTcm3j//RxQGnNCgQ0BE0690/s
-	LO9i4s52Ofgb7IobpbfGDs5iR1vYiJtaVctoSHLhxaLeLMAKs5Xn5vJ9UbVkrDiv
-	l2J2Wec0eGVJtWpkLZSyL3nXi4lkL9BterAiRNpmgK+xsyxXuSJn3CjRp4IrMy3e
-	iZT/Z52faJh8w9FWaRLAOUL+BcBP9/0Sa9siCX8ig13ixHl/hvxMejhOwrfVjgLR
-	LV9XL6SDKbcqpTCzgoGDFk3CB/mNYHJ+O2uGEfoG1rgtZtIOLL7rCUtqdkMkfQQN
-	P0+ZswReVztH42RquEV1/xKnFytPkwBWgWIVIITtLyj+5FufQp37llBMy01g==
+	:subject:to:to; s=fm2; t=1727791897; x=1727878297; bh=wQZAZUbToF
+	dBzzk59yUQ061+nl69jEL3yUAVkkYkgtY=; b=IyF8jrEXJ1db5FeF5lvdem5AsH
+	WaCpLg7goUaHNXl/7RwFyp0Xz/U7IGT6lZslZNAulqNRcshK0xiBot6BuwrJ+iWK
+	Mjonrm/1ZmqqdXzsD92T0zz7piloob3yuDbP8tuv7A5srGnFu7Vbx8KQ5oB4oH+D
+	LxiAVRz3i2HpVuIUeyaHWFekoqrapwtrG5XSlO8wYUDd7zweV68J2+sLW+NkH1PL
+	TJlGNDAmSeUWNj+XIOxocQMvV9HXBjvPNn5fLfWUMQf/elJ4SiTzEqf3qf7Rv55R
+	tahLvYBv9lLim7w1q24lF/CgjfV56qTyQ/pZoE4QgiIQI7N0n7yvK0GlesqQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727791771; x=1727878171; bh=P/832HISi+ILtMEAkuh6Addia/sh
-	jCaGl5MxdQY1SpY=; b=VCdRcTkfAvs/bM2tlXZY/n4SodgJn4AAQs6fPMR2iaQn
-	JhEavxAHtRjJjXjrkfV9IIxHOSyLpNj6H5MHxsU5XKY4fQ/YQgE6AXSaBlT6/rZZ
-	7RfdxXZTQp3b2Rewu0uUjaGCLviU89oPQTY4M4UHh+i1PoHX4UFxqGwi0yqBDvQp
-	l546GXeJyaoXAzYjYaLRuz2SZvm2Igh4jgRkzawNumX4QMwAuFlQxE1IfWQPCXkI
-	M7FGLT/u7uR3dUo2g4h6Y/01e86o9k4PIUdTq+BlTGr08u4Adg9Vpgc8carN5Ww0
-	bu07LupQjNHxKAuTjaRnUQ8YKZPFVQr4RZ/3W37vPg==
-X-ME-Sender: <xms:mwL8ZgR2T6FcijOzd_hgilofyI7NH-FEP6PmFRg1Jyb91t6oEG5e_g>
-    <xme:mwL8Ztzzgp5zK3iIg6TdPzqEuDKfwZU9PIShgb-4hBvWe6Xrjyj4a6U5AESle6nye
-    YJlvmOTemStiwsnjw>
-X-ME-Received: <xmr:mwL8Zt3UCbMLgFrv9AChXgFjSe4xK04KiZiyoc2EQ9nfnBuVYgGD_UPEdlUEzQtBspRvnrSHxKrZvpbTzy7zB_rwhFRIyqClA-LHl9jgApCFnw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgjeduucetufdoteggodetrfdotf
+	fm2; t=1727791897; x=1727878297; bh=wQZAZUbToFdBzzk59yUQ061+nl69
+	jEL3yUAVkkYkgtY=; b=LfbifIid9dvg2nu1tZ4iH7NVjsrZnLbiJG6ON/6iu5xo
+	sB+6rv1fbpLVaNnYOi3qxmgtL9eZVIKbm3KFmeAFPQ2X7IVzBPYqNeUxov9ja6VY
+	DXDEqNXgbL4rI78lsibvvNTwwNjnCayFHwVX+bBTAR+y7xK9zZ7fGKoAkBw/r0P/
+	tiNEzJ3MNJ1kvLtZ/7fSJ6P993tCBkXMjx9NT86TYJwLtCzswihPhDtkb7ZaUt70
+	xponiYF9jdiHPbVKhhiaHYs4lmp6eMXnd8MeDdA1tGPULEDNNT0wHrpgsZyJRr5y
+	cBF+upsqfSlak+YEvaLnjuld+zgC66PFILkw0hfCWA==
+X-ME-Sender: <xms:GQP8ZmYbKqQLugjFBHPzwCkfjEQF3JV9wivpDpFRc8fNqhDjiamkZg>
+    <xme:GQP8ZpZqibgliaRUva5O4t0DaCrKhxiYqvebdNcDpGiRX4JxUJnwjLY6Tnco_qnbZ
+    su2te09fmPLxRq5aw>
+X-ME-Received: <xmr:GQP8Zg9-7VXcLJ0wAnzaW6VbDs2WZPCDIMpjSPhtvdlPBdIAnve88n3fDpTy7G6_WtKEA_sXqT9SqeMOg8BxjrJ3KjxyFLpgZR7mRQ5C0dnzwQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgjedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -56,37 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgjeduucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgt
-    ohhm
-X-ME-Proxy: <xmx:mwL8ZkCcDTdsbU2InpUcc__aKY0Ry_Wv4_aMzDV_vxSI0hcjTqFX5A>
-    <xmx:mwL8ZpjLcHJTllpGPrVGh9nu5Qb7piatDeG_cj-2iRl33b2bBcHvuw>
-    <xmx:mwL8Zgrc9xFOvU_7XzUJZjzrGgmDNrgelN25pltk3Cnjwkmt2Ok0wA>
-    <xmx:mwL8Zsg9D05QSCwQhQEd7fgMJASke30O3WEQCtkW76X4Q62ec9Ddpg>
-    <xmx:mwL8ZnZZJsCtu-Ie4K5eolkbfGtSb0JQ89wpZ7MDsugAhOSNv76Z0Mdf>
+    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgv
+    fhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:GQP8ZoqSF3KwoHOgXnUMsvp_LakajLXUiqiqWcnaQA4BXXjhvQDpxw>
+    <xmx:GQP8ZholLcEOYDzmwFc6AIeTqc867N6cC4friOyCb4bjgFZeEjLm6g>
+    <xmx:GQP8ZmTEbBA3Q13j084qyKbObJS-QFOVU2Z5qDcPmwAUXvJWGMYVvA>
+    <xmx:GQP8ZhoIj-3hBDYoXEY-1w5D69FSUZ3VksRUgul8XLpHGMk-oigaMA>
+    <xmx:GQP8ZqCdWjWqU1QvTGjz4Dq0Lq6czkzfHaCvmFMhmKYBZoWxKur__cPR>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 10:09:30 -0400 (EDT)
+ 1 Oct 2024 10:11:36 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id af0152f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 1 Oct 2024 14:08:39 +0000 (UTC)
-Date: Tue, 1 Oct 2024 16:09:25 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0f700379 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 1 Oct 2024 14:10:47 +0000 (UTC)
+Date: Tue, 1 Oct 2024 16:11:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 3/4] apply: remove the_repository global variable
-Message-ID: <ZvwCj4J_HRiSF_S0@pks.im>
-References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
- <pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
- <d64955a2e277da138146020f6a0cf96f4636a162.1727718031.git.gitgitgadget@gmail.com>
- <xmqqy13852jk.fsf@gitster.g>
- <ZvuBduVg9TJeULpl@ArchLinux>
- <Zvvr1_9syRh1McVA@pks.im>
- <Zvv723-OwvEr0qMV@ArchLinux>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+Subject: Re: [PATCH 1/2] read-cache: free threaded memory pool
+Message-ID: <ZvwDEyhe-3DyQp75@pks.im>
+References: <pull.1801.git.1727696424.gitgitgadget@gmail.com>
+ <9a45b15ea4b9864cd3cff066ecd9281c4539d5f7.1727696424.git.gitgitgadget@gmail.com>
+ <ZvqaTqegJxow1x-b@pks.im>
+ <8ebebcd5-4ddb-4c1e-9bf8-4e9a79944e2b@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,52 +90,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zvv723-OwvEr0qMV@ArchLinux>
+In-Reply-To: <8ebebcd5-4ddb-4c1e-9bf8-4e9a79944e2b@gmail.com>
 
-On Tue, Oct 01, 2024 at 09:40:43PM +0800, shejialuo wrote:
-> On Tue, Oct 01, 2024 at 02:32:30PM +0200, Patrick Steinhardt wrote:
-> > On Tue, Oct 01, 2024 at 12:58:30PM +0800, shejialuo wrote:
-> > > On Mon, Sep 30, 2024 at 01:06:55PM -0700, Junio C Hamano wrote:
-> > > In my opinion, we should first think about how we handle the situation
-> > > where we run builtins outside of the repository. The most easiest way is
-> > > to pass the fallback object (aka "the_repository").
+On Tue, Oct 01, 2024 at 09:20:01AM -0400, Derrick Stolee wrote:
+> On 9/30/24 8:32 AM, Patrick Steinhardt wrote:
+> > On Mon, Sep 30, 2024 at 11:40:23AM +0000, Derrick Stolee via GitGitGadget wrote:
+> > > From: Derrick Stolee <stolee@gmail.com>
 > > > 
-> > > However, this seems a little strange. We are truly outside of the
-> > > repository but we really rely on the "struct repository *" to do many
-> > > operations. It's unrealistic to change so many interfaces which use the
-> > > "struct repository *". So, we should just use the fallback idea at
-> > > current.
+> > > In load_cache_entries_threaded(), each thread is allocated its own
 > > 
-> > I disagree with this statement. If code isn't prepare to not handle a
-> > `NULL` repository we shouldn't fall back to `the_repository`, but we
-> > should instead prepare the code to handle this case. This of course
-> > requires us to do a ton of refactorings, but that is the idea of this
-> > whole exercise to get rid of `the_repository`.
-> > 
+> > s/allocated/allocating/
 > 
-> Actually, I also insist that we should refactor here. But I worry about
-> the burden this would bring to John due to we may do a lot of work here.
-> So, I expressed my meaning in a compromising way.
+> You're right that the wording is awkward but I'm not thrilled with the
+> suggested alternative.
 > 
-> But we should face the problem directly :).
+> Perhaps "each thread allocates its own"
 
-True, all of this is a long-term effort that is probably going to take
-us many months, likely even years. So people working on it should take
-things slow and refactor chunks that are mostly ready to be converted to
-get rid of `the_repository`.
+Sure, works for me :)
 
-That will sometimes mean that you have to scrap the conversion you're
-currently working on because you discover that it inherently relies on
-`the_repository` deep down in the stack, and refactoring it would be a
-huge undertaking. That definitely happened to me multiple times while
-introducing `USE_THE_REPOSITORY_VARIABLE`. And every time I did discover
-that, I went one level deeper to try and fix the underpinnings first.
+> > > memory pool. This pool needs to be cleaned up while closing the threads
+> > > down, or it will be leaked.
+> 
+> > Okay. We move over the contents of the pool, but forgot to free the pool
+> > itself. As far as I can see the pool is always allocated and only used
+> > in two functions, both of which assume that it is allocated. So I wonder
+> > why it is allocated in the first place instead of making it a direct
+> > member of `struct load_cache_entries_thread_data`.
+> 
+> I took a look at what it would take to replace the pointer with an inline
+> struct but found complications with situations such as the find_mem_pool()
+> method. While we could replace some of the logic to recognize the new
+> type, the existing logic seems to depend on using the NULL pointer as an
+> indicator that the pool should be lazily initialized.
+> 
+> If we were to pull the struct inline, we would either need another boolean
+> to indicate initialization or lose lazy initialization.
+> 
+> I'm leaning towards the simpler leak fix over the disruption of that
+> change.
 
-I mostly don't want us to blur the lines by silently falling back to
-`the_repository` in situations where we don't intend to. So I'd rather
-go a bit slower overall and design the code such that it doesn't fall
-back anymore as a way to prove that something is indeed not relying on
-`the_repository` anymore. Otherwise we're going to make everyones life
-harder.
+Fair enough, no complaint from my side. I thought it would've been easy,
+but didn't dive deep. So if you say it is harder than I made it out to
+be with my shallow understanding I'm going to trust your judgement.
+After all, the leak fix is a strict improvement by itself.
 
 Patrick
