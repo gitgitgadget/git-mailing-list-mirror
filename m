@@ -1,85 +1,85 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA16119F43D
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 09:42:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE35D19F499
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 09:42:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727775722; cv=none; b=TeZ+kmPXbVtvp/DnoDPEoXo+qI8UdLaIkKdcFx8lVkxqL2yaP9QYEGY2Vj5ZPwgLXS1MvGCskwDjymQoz60wvFFwhAbZNf0+Hc45D/OEkqUTPQM+L3AzGMN1vfFK9MIfDpDdWjtDsPVT8+qepaAyIf3hGKcdtCZZQpoEXj7JAz4=
+	t=1727775725; cv=none; b=FSwNTzllr25wfE4fBwKjqvxwvyLbTl3YT8VJWvcuoTlzyYmiPilQO6yxT1AlmOndtlbZnMVv1Wy4TUVZplNyfrpvBMA/8H3YeN/NRihnavFODDyQ+9pNxkm6H2wMaT6aeVtPk27FgLKFizum271iOLgTs5PHcsv4/JjmQbxvBmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727775722; c=relaxed/simple;
-	bh=DdozzQ67/6CahAwn1lWGRpV7LYsH0IYwH8QW8YJUXcg=;
+	s=arc-20240116; t=1727775725; c=relaxed/simple;
+	bh=HAZn7FKJtYx9iNL7XcynSsh5SddqPpNN/am2RaaFCOE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mQgnIFh/4AmbdN1XOxC/oWZnHgELMl3CujzuyEN7D9UVpGIpQsGucQsCfutTLmSK++VrL6PZKLVMX2md8nPTxcxgd8/57/MGVWVSedmIN4jfungxfnlgO2EqhjPgXbRdIgcS4+DaOGCZZWOImbUI9sj6SsMDwLVcVBZA0xtdMnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WoQNcOUV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VJEp6KHr; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ugwa+SoI0XGuxkoFfMncaAttYGm/garo6UXDIUy19/qMseQPjd0h2PByZxC8FnQYURjbYD10jaaXpdHAFj1sDJCvVH1LM4K1b/RSr+a3k/fgGi9GPqQJlwmVRlpR0Nfx0kz3+5uOmiBr+UXJUyF8JgHNDHhZbGF2nP2PCXlPchU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Q7SBgAgb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eLJOSehF; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WoQNcOUV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VJEp6KHr"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id D52C2138105C;
-	Tue,  1 Oct 2024 05:41:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Q7SBgAgb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eLJOSehF"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 302FC1140B86;
+	Tue,  1 Oct 2024 05:42:03 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 01 Oct 2024 05:41:59 -0400
+  by phl-compute-10.internal (MEProxy); Tue, 01 Oct 2024 05:42:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727775719; x=1727862119; bh=4wnjwnoBmB
-	Fx7OgfS04fXzrxXw2NZlfv92BUkTkLdGI=; b=WoQNcOUVRrgapBWlowuFYgYTvt
-	GE1nRUbwLPfo7ZL31s6rCFF2cPyjbMKhvmbdzateVfhscCoZTUHGIqkBpZCEqDCU
-	CnYBBHoNi0/1WyuNOd0OEvtC0M9v5j1CmfPoqa+rVoepToPZLfbHy89gWLT/yzbx
-	5ILDKij/pSOZkPwUkjUfm6v8Aq46U4ztnlCKGFNvQuht8xp86FI4+fvYziXFR4Iu
-	sJdwqf9s8Jv46Xv4Hi+pcbAOYT+VGLxqxaJZ1cX99ybqUuu/w2WOeimrdlalnbCH
-	Oq+z8V6oszd1FOLQVz9MSo4Q58/tXsfWIQ5Rq9kti/We1SjfO4Bjfg7Rt5EQ==
+	:subject:to:to; s=fm2; t=1727775723; x=1727862123; bh=G4xisZdc3k
+	gCBCaRMJypxCwjzpimxxwWG9OL8OEph+A=; b=Q7SBgAgbOAy7x8PKzV6UZMY7dX
+	0wlMB8hrbS9KivPgQ0+w9cbroAJvK1UHVsr2aOd9EBY7vehv5U28MauwfJo2mMjm
+	PFrVAgP4S1mIlSc88Itl55eRb5jfzweisU+QkFSADtkLOisCMnSuyTOGdZ7YeRax
+	nXnyeI6FBpK06XnRQkWvCyof4SayYesg0Elsy2SkfXWvWNeu2ao8g8NnmGRbnPm/
+	OGcx9K6Z3coy1ddXJEIjHbptfR432vxzbaMAK01zqIj9RKFt524WjFhFAG4M5ay1
+	TXHCLhpOOpj4V80q9dfJVoB7SMe30cfzZhlJ0kRCbErMjZnK0P7alLBPZCig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727775719; x=1727862119; bh=4wnjwnoBmBFx7OgfS04fXzrxXw2N
-	Zlfv92BUkTkLdGI=; b=VJEp6KHrpR5p5e/+6AXGC4ni7rQqyjQi0BjACL7kpJHx
-	7+ByNP0bzi9vyaQrxR9ltm6hwOUGIZXkCezNksD1TRbLgbsm36dfD99P1Bxgg2xn
-	zPpG8YHxClP3Nx8BzRDRgl1bJxia20lapzCAehFzxJ7+9TqmAs63DmqwVoxB6GQS
-	D4EVr0P3yaUp1QwitaOviEfjLtNN4imydBUhSHJsBDDvp7ig1WPq4dMpTrj3qFf4
-	XLRimF1L9VmK/LKBa62z4NZvLzySPeZS0pgYsufamxbRPy6KYyRtRTQgIjUpms9+
-	EXDpeaXGKwZY42Gmkz/aLjHVLkbqK9TYWooKhU7btA==
-X-ME-Sender: <xms:58P7Zq6g0er2Pprrd7cqkSfTcFTZkim53UmxP-fc-xVqhSqMjP0TgQ>
-    <xme:58P7Zj7a-519U4KkcFKtvoErplECDT2BLFBYozEM17DIfIJqxKI-PKmDUBtJlMKmG
-    MtW2arLrZkbZR05bQ>
-X-ME-Received: <xmr:58P7Zpf413ZgVCQK0nxvu5ylx9SwgSmyGe7k5quOHs1sBjM3UVOw-u-oi3ZqJtlGYg7BQv2jdb2yiw8lxZlK-x3f7upfdm6BkmTUd1GqcsbH7A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgudejucetufdoteggodetrfdotf
+	fm2; t=1727775723; x=1727862123; bh=G4xisZdc3kgCBCaRMJypxCwjzpim
+	xxwWG9OL8OEph+A=; b=eLJOSehFzrg0+DW1+IcSAeNfvYUvtf9sFKRLAxqH2Wue
+	5DYMF4Mb2hzHUqgMSsWmBVgXfZP4VbpZd6BMC89dZM6eZDyAvhyknIRmNll4KXYH
+	lDvkcAvgBSMkVFsvwVubCCOqINMblOYNHIR8Q3SPyZgjZUTWyaSDjesSoVzIRLk/
+	lGvW15fadNwEx09udbLXHJPD2AgS6TtwFh//YMBx1+s2TN0Df3umLAEHkckaZdem
+	wZAV4PDg6qltzpdpGEmsDtbLhBAsaW+vnOWy9E78Nutn9Ivn+p4AOwr0q7oeG5rW
+	9myOlpyuYHhDsgl73B+WI501ltrsZURIcwEAYDAw6g==
+X-ME-Sender: <xms:68P7ZuX28_KuTOvcKOG9AoTm2KvkxAJgIVlRXYR5cY9F3ntglpTLQw>
+    <xme:68P7Zqn5wxqTSzg3GKXlSweSdCh6ykBWWTrdrp9JAZiBJlOL15WlJ68Joo6Jj9iAH
+    qFgk3EebU2o_8wg9g>
+X-ME-Received: <xmr:68P7ZiZ76ySEZ90Xzbddja4BxtH6BK7-8XRVDZZMwFwunh4VQ6ah9i4xIEcBE1rItwjyArqG-YgY0StC3-4Y4XMpDm5YRWeQc67qInd0yr5yNQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhdrshdr
-    rhesfigvsgdruggvpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomh
-    hsohhnrdgtohhm
-X-ME-Proxy: <xmx:58P7ZnLuYwXsLMz7lK6Qr-oS7lIzRuglf2_pb1XsnuL4SGySs-8Q0g>
-    <xmx:58P7ZuK2Iv3NGeODN5pruMxfTX_90AOMz_7KBIqd5wj46mt_6RqHTA>
-    <xmx:58P7ZoyGVQ13e2EYLa3oDto-7bCoyZJvgCKDKxANUKlTJtSrXEiJ-g>
-    <xmx:58P7ZiKj-WcS-xJQcbE8JcZq5uhYFcH7LEgsSAWRlo-Ag0wfVwyPDw>
-    <xmx:58P7ZjG0W3qLKomHTyvBEMxBhIXkfDOGaunAdO4WhjpYszDNkU3oV5oQ>
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopegvthhhohhmshhonhes
+    vggufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:68P7ZlX_0ghcK-YK_6Ry3_jenkDdvYlq0if686BOl9bj__LZsjuf_Q>
+    <xmx:68P7ZonZ3KeVTCCa4vY_Y0lOoixi7LeEx8lcXPGVYjoun8od7CyWGA>
+    <xmx:68P7ZqdRrL1PJWctGLGzgb21fI_CAoDBOVctiQkpyCJ337vzSsqEhQ>
+    <xmx:68P7ZqFfTB7TQQTfkMPTWjF8n3SLhEilyknyig_tbRBHa_jwWkginQ>
+    <xmx:68P7ZpDhc315jquEjQ47k3DEchbN8NC2PKxwNI-61UUiANuWARz6zYDd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 05:41:58 -0400 (EDT)
+ 1 Oct 2024 05:42:02 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5dcad7ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 1 Oct 2024 09:41:11 +0000 (UTC)
-Date: Tue, 1 Oct 2024 11:41:53 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5046e345 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 1 Oct 2024 09:41:13 +0000 (UTC)
+Date: Tue, 1 Oct 2024 11:41:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v4 04/25] reftable/basics: handle allocation failures in
- `reftable_calloc()`
-Message-ID: <fd9141e985bd83d8374ec339dbdce7a2350aa31d.1727774935.git.ps@pks.im>
+Subject: [PATCH v4 05/25] reftable/basics: handle allocation failures in
+ `parse_names()`
+Message-ID: <bdfddbebce9f77959fd9544cd5ba3496d5b9dccf.1727774935.git.ps@pks.im>
 References: <cover.1726489647.git.ps@pks.im>
  <cover.1727774935.git.ps@pks.im>
 Precedence: bulk
@@ -92,49 +92,138 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727774935.git.ps@pks.im>
 
-Handle allocation failures in `reftable_calloc()`.
-
-While at it, remove our use of `st_mult()` that would cause us to die on
-an overflow. From the caller's point of view there is not much of a
-difference between arguments that are too large to be multiplied and a
-request that is too big to handle by the allocator: in both cases the
-allocation cannot be fulfilled. And in neither of these cases do we want
-the reftable library to die.
-
-While we could use `unsigned_mult_overflows()` to handle the overflow
-gracefully, we instead open-code it to further our goal of converting
-the reftable codebase to become a standalone library that can be reused
-by external projects.
+Handle allocation failures in `parse_names()` by returning `NULL` in
+case any allocation fails. While at it, refactor the function to return
+the array directly instead of assigning it to an out-pointer.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ reftable/basics.c                | 20 ++++++++++++++++----
+ reftable/basics.h                |  9 ++++++---
+ reftable/stack.c                 |  6 +++++-
+ t/unit-tests/t-reftable-basics.c | 11 ++++++-----
+ 4 files changed, 33 insertions(+), 13 deletions(-)
 
 diff --git a/reftable/basics.c b/reftable/basics.c
-index 4adc98cf5d..3350bbffa2 100644
+index 3350bbffa2..ea53cf102a 100644
 --- a/reftable/basics.c
 +++ b/reftable/basics.c
-@@ -37,9 +37,16 @@ void reftable_free(void *p)
- 
- void *reftable_calloc(size_t nelem, size_t elsize)
- {
--	size_t sz = st_mult(nelem, elsize);
--	void *p = reftable_malloc(sz);
--	memset(p, 0, sz);
-+	void *p;
-+
-+	if (nelem && elsize > SIZE_MAX / nelem)
-+		return NULL;
-+
-+	p = reftable_malloc(nelem * elsize);
-+	if (!p)
-+		return NULL;
-+
-+	memset(p, 0, nelem * elsize);
- 	return p;
+@@ -135,14 +135,14 @@ size_t names_length(const char **names)
+ 	return p - names;
  }
  
+-void parse_names(char *buf, int size, char ***namesp)
++char **parse_names(char *buf, int size)
+ {
+ 	char **names = NULL;
+ 	size_t names_cap = 0;
+ 	size_t names_len = 0;
+-
+ 	char *p = buf;
+ 	char *end = buf + size;
++
+ 	while (p < end) {
+ 		char *next = strchr(p, '\n');
+ 		if (next && next < end) {
+@@ -152,14 +152,26 @@ void parse_names(char *buf, int size, char ***namesp)
+ 		}
+ 		if (p < next) {
+ 			REFTABLE_ALLOC_GROW(names, names_len + 1, names_cap);
+-			names[names_len++] = xstrdup(p);
++			if (!names)
++				goto err;
++
++			names[names_len] = reftable_strdup(p);
++			if (!names[names_len++])
++				goto err;
+ 		}
+ 		p = next + 1;
+ 	}
+ 
+ 	REFTABLE_REALLOC_ARRAY(names, names_len + 1);
+ 	names[names_len] = NULL;
+-	*namesp = names;
++
++	return names;
++
++err:
++	for (size_t i = 0; i < names_len; i++)
++		reftable_free(names[i]);
++	reftable_free(names);
++	return NULL;
+ }
+ 
+ int names_equal(const char **a, const char **b)
+diff --git a/reftable/basics.h b/reftable/basics.h
+index f107e14860..69adeab2e4 100644
+--- a/reftable/basics.h
++++ b/reftable/basics.h
+@@ -38,9 +38,12 @@ size_t binsearch(size_t sz, int (*f)(size_t k, void *args), void *args);
+  */
+ void free_names(char **a);
+ 
+-/* parse a newline separated list of names. `size` is the length of the buffer,
+- * without terminating '\0'. Empty names are discarded. */
+-void parse_names(char *buf, int size, char ***namesp);
++/*
++ * Parse a newline separated list of names. `size` is the length of the buffer,
++ * without terminating '\0'. Empty names are discarded. Returns a `NULL`
++ * pointer when allocations fail.
++ */
++char **parse_names(char *buf, int size);
+ 
+ /* compares two NULL-terminated arrays of strings. */
+ int names_equal(const char **a, const char **b);
+diff --git a/reftable/stack.c b/reftable/stack.c
+index ce0a35216b..498fae846d 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -108,7 +108,11 @@ static int fd_read_lines(int fd, char ***namesp)
+ 	}
+ 	buf[size] = 0;
+ 
+-	parse_names(buf, size, namesp);
++	*namesp = parse_names(buf, size);
++	if (!*namesp) {
++		err = REFTABLE_OUT_OF_MEMORY_ERROR;
++		goto done;
++	}
+ 
+ done:
+ 	reftable_free(buf);
+diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-basics.c
+index e5556ebf52..1fa77b6faf 100644
+--- a/t/unit-tests/t-reftable-basics.c
++++ b/t/unit-tests/t-reftable-basics.c
+@@ -72,13 +72,14 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+ 	if_test ("parse_names works for basic input") {
+ 		char in1[] = "line\n";
+ 		char in2[] = "a\nb\nc";
+-		char **out = NULL;
+-		parse_names(in1, strlen(in1), &out);
++		char **out = parse_names(in1, strlen(in1));
++		check(out != NULL);
+ 		check_str(out[0], "line");
+ 		check(!out[1]);
+ 		free_names(out);
+ 
+-		parse_names(in2, strlen(in2), &out);
++		out = parse_names(in2, strlen(in2));
++		check(out != NULL);
+ 		check_str(out[0], "a");
+ 		check_str(out[1], "b");
+ 		check_str(out[2], "c");
+@@ -88,8 +89,8 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+ 
+ 	if_test ("parse_names drops empty string") {
+ 		char in[] = "a\n\nb\n";
+-		char **out = NULL;
+-		parse_names(in, strlen(in), &out);
++		char **out = parse_names(in, strlen(in));
++		check(out != NULL);
+ 		check_str(out[0], "a");
+ 		/* simply '\n' should be dropped as empty string */
+ 		check_str(out[1], "b");
 -- 
 2.47.0.rc0.dirty
 
