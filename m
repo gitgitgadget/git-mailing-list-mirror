@@ -1,192 +1,120 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242521C1ACE
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 11:57:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9109156C6A
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 12:32:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727783826; cv=none; b=E0xQV57uJOmaxlVl1MlqcpoZY41b6Vcxtm/yRk1fAAKXF69I2UO0s2EJEaaCRt7+AyuSwHJGw3Q+mn43INuQEq8zbpiW2+9Udf23c787XVSy4kPfkHv4RsIPXb0KtYD6U4WyCDUbbYjknlWBGdHSDksxpEkN3BOpcp+LGpItB5U=
+	t=1727785959; cv=none; b=jZKA/Wi5NRO4Ilo7Kw2T6ihGgqQwu5XxPlEAqzZYFoqbnXdyuDOZjeoqozK+RuT1bD2b/N0pd+x+zZU6kKDFoRhVfvGMrqbSOO65+AEkVFezUEu6wtZjttU778uEukxV9zKkcc7kUzwnVqP4bvFxDq9aIQWQvmN0wXaOH2fjwfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727783826; c=relaxed/simple;
-	bh=4OK5hSQMHQeH2cL1Ci01xGXhr1po1wh7qSnpYMFS7yY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FA2STVGjFYOxZ6oWPHD1xUm1kU7uTcC2getqrueEVfqfR1jOlAh9gRC43Ks9diyq1dmlpAO3t9CF5ke80Ai3bKpcqgD9/Z0gg9Ir9i0mQUgsze3w2rSVX4v5JEGjyPg7JutTmtlLMVBfXmy+Vn0axsk6gkX4EBgZPXXJq/BapmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wN0xFXXc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dmO1fHna; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727785959; c=relaxed/simple;
+	bh=80wGdwBBmmixOwySRR991jcmcDJE0kFPMz4U4DxW03U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BFCfgyeRraUAoPWSRVqw7aC+b56HhXq3yBoubtIlIMWdumIFfoApQJQsvmk9zdGz/WzTxjvmrBjs3PjAGCNr64fS1heun2HOx5fmqvBz3ha0UXeRFlIgajPTueKiWcNDyb3My9zYo8pFeP/5oDGSLtUjFd6LiUMce9Cm0LVzcDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nnDCGKqR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D/imZ1d1; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wN0xFXXc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dmO1fHna"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 173161381B6E;
-	Tue,  1 Oct 2024 07:57:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 01 Oct 2024 07:57:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nnDCGKqR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D/imZ1d1"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C9B9D1140E3A;
+	Tue,  1 Oct 2024 08:32:36 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Tue, 01 Oct 2024 08:32:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727783823; x=1727870223; bh=cMtBXOl65E
-	gJkD2pu190lcdIpLVPI+jv0e3mDpmiN/8=; b=wN0xFXXcvxq0+4RYNox0yz8oDo
-	KoTSrDmYvbqMpQXzPs0BSkDJHOZiRqQzB/kfsHXqc+QbXqQIbdWWDp4+aRw4dAFt
-	hpRkdeJplhbiYHXS5RAZ1g0cqcr37V7H+CaypZJWh3tqG13BbC7mnx/c4/xuyhqc
-	q7deoeXHxpwwEBVQdKVZPsS7jyNriSXPLNqW8YKg8YeB/7JNsKogVtzgWjIsOrz+
-	X0ciEmr/Bt1n795l/YrAdtOjd9rUtxnnJKf7Xa5DU3XWDutYvcK9XhOm4x/MDgg7
-	u4zhLNiwwufKjBmK42BwiXxtxENdNS4U6MaupHrotU60Qt1ladHMgD5DLfrg==
+	:subject:to:to; s=fm2; t=1727785956; x=1727872356; bh=R1ndvtCEAC
+	b6aBoZjbEydyH8A8zin/PMD+REPc3tO1s=; b=nnDCGKqRNlUqu+cZmMNNexCynR
+	puv+evMUWeqDCQO4XB0TFOJekfGYmH4nnQRJEK/bMekSHQTAUcAUbtUZ8S9+SrFL
+	g77hlBJVppJ//16LkYS3hZukDnbimovJOhLdXU/JNuiyKRGhjkOW87v3TA+sf5zE
+	KVjZa7tvjM0O5xvGwNWDvG8r4LHg7i5aa9/Ap009u51jELmA46Xv6sSPja7+hhOx
+	tVC1ZJBYJdBnAlsyFQ7jHWwTgrKs7QfXNvdme61hUmVr9BKF4QgBnFIfKAvNHHIZ
+	mzjzbJe+eUZtH473HaLlQhQzTke8kdUa7a6482qqYxG7tsgU3RMltaO5u19A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727783823; x=1727870223; bh=cMtBXOl65EgJkD2pu190lcdIpLVP
-	I+jv0e3mDpmiN/8=; b=dmO1fHnaSDJmKQ1nBoD7eigbUZkPXg9KJB30bszErWFY
-	yiWmLlBH75pObfU5OY+e0gE6Z4o5JbIvpsL3o4alxUC3OOgKRIoRFWJBuYypTgBp
-	byYCORJzZHZW21NlelOZbo1iLa9OxUASWmknATsKGGg+TCEMsQgUGU+Y2h+v5nrZ
-	Ly4Yn3OTMN8+eUWvm9ivMLvJuwELBuhfvTqAL0ATFuJXsttVPw2JvDkespmcR0GP
-	uVN6M0h2YxRCjix2So8WEM8NQqiF17V/cAi86SE0PvaQ3X9Oxfn6aO6qgcX7ZGuU
-	c7yy0vIKlCVKvzbIu9xV004HIC6Lt+lPBbmXeMKgQQ==
-X-ME-Sender: <xms:juP7ZuFzF1bCNDzXiamMC6fw5KlUKvMxeNtrtfZHsVRQ3yuVZ0bMgg>
-    <xme:juP7ZvWYevNlDPl22nJJsJqvuNbJETYiHB-Hv2As-7OMt_mIzrrBof52_yCWUqJUU
-    zQmUa79Jr7cZK3dPw>
-X-ME-Received: <xmr:juP7ZoKW2z8knn7Z7TH2qaqF1kdPFJlOeiroQYvygYacK2BSqSIHCLUtgQH5F0UO6qqViwEvj1dkJiLB6yIWnDAuL9tgeJL8VvSG9hI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedggeehucetufdoteggodetrfdotf
+	fm2; t=1727785956; x=1727872356; bh=R1ndvtCEACb6aBoZjbEydyH8A8zi
+	n/PMD+REPc3tO1s=; b=D/imZ1d1jifbH3fcQ62RfkSoAqEdvZUVygoaKVKw8qcG
+	t0uocHM1joEcMSq2mAXwRDgAucWtm+B2LY1FXm5hae/ikregXXwO6HkX9h6pdo9h
+	/MqS6qzsRjnRqHDvmQSZnRhjTI4wkM8ded2KMd1P/Yoa8qO4k7yVHtRQXHrHFFAH
+	cKXzH40ggQThBOe2Q4bbJTIwjn+X+CF9e8bGid9KHZddfoPxK7hn3wjcDBiHxwzq
+	XifZpshOrjwrIkwEorJLbuG9vVIFRrVM3vLwxI1vraajPdrlqzjSrtyXs4ThHV6h
+	0VpCmWYJeAGwlBOr8g2SRUCA7qJftVtbPIGNj3GwiA==
+X-ME-Sender: <xms:5Ov7ZqYu2gAUt-WPG0KBvKe0NWo0gGad3JFwSHe5sGhLsVtxJD5R7Q>
+    <xme:5Ov7ZtYczZ9x_w4bW-MJU9p6B_q3n0JVwG8fQAzFdaE_YaaUNRw2HsQL3AxS_u22r
+    yDCr9If3Hj7M9Uf_w>
+X-ME-Received: <xmr:5Ov7Zk_j5XIbzCcJX76i7gLRHFd9H1fqb4_8rdi4998Ww7pktFvHugUOD_S_-uX1XMbczFU01ByEGZB8BrgG3I9f97C5HLiuB_gkVVZQiNQumw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedghedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
-    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehkohhjihdrnhgrkhgrmhgrrhhusehgrhgvvgdrnhgvth
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:juP7ZoFNczqF2rJnliu0XaURq0zxc9z05faVD6LTspfBYeate5V-1Q>
-    <xmx:juP7ZkWq6QcgEkBOrFdavgEdH0XNhFkh9Fwu3I7ZyZuvNenuHwlovg>
-    <xmx:juP7ZrMZ-pvDK1DyNj-3HfIznJx80ZkPoHPyM2tJaCszrjYDGngRZA>
-    <xmx:juP7Zr1UNXr2Gm2gAMe3w-yqd-k2YP3GiGYVWehTKllefv98PPD54Q>
-    <xmx:j-P7Zizew9dPkJZI50HWsg-S9rG0UeJOJZ2012Qhx4otSamNysXOY-im>
-Feedback-ID: if26b431b:Fastmail
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprh
+    gtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhg
+X-ME-Proxy: <xmx:5Ov7Zsou0skBy2aF8yyyJtvzeYku5f-F7qvEUj4LuTdieS7K7It8_w>
+    <xmx:5Ov7ZlosA08iyahYmD_1ed4LENFZgxAKL1mSqrzuNXwfjHiIqsl6Ug>
+    <xmx:5Ov7ZqRaEe7ypmhTcmOb0JuJ2jOp2AZW1gW3hxezC-4Z7ZMJrRHsnA>
+    <xmx:5Ov7ZlqBoC50YHfq24jelvnZOds58EQU964m6bvwB2hotbhT5nearQ>
+    <xmx:5Ov7ZuCFBs2ymHctuwcq9Lqer_TCnaVwNpKhpGEybG-t-UgeJ2ym-cju>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 07:57:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH v2] fsmonitor OSX: fix hangs for submodules
-In-Reply-To: <pull.1802.v2.git.1727759371110.gitgitgadget@gmail.com> (Koji
-	Nakamaru via GitGitGadget's message of "Tue, 01 Oct 2024 05:09:30
-	+0000")
-References: <pull.1802.git.1727577690390.gitgitgadget@gmail.com>
-	<pull.1802.v2.git.1727759371110.gitgitgadget@gmail.com>
-Date: Tue, 01 Oct 2024 04:57:00 -0700
-Message-ID: <xmqqwmis11f7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 1 Oct 2024 08:32:35 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id bb77358d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 1 Oct 2024 12:31:44 +0000 (UTC)
+Date: Tue, 1 Oct 2024 14:32:30 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: shejialuo <shejialuo@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 3/4] apply: remove the_repository global variable
+Message-ID: <Zvvr1_9syRh1McVA@pks.im>
+References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
+ <pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
+ <d64955a2e277da138146020f6a0cf96f4636a162.1727718031.git.gitgitgadget@gmail.com>
+ <xmqqy13852jk.fsf@gitster.g>
+ <ZvuBduVg9TJeULpl@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZvuBduVg9TJeULpl@ArchLinux>
 
-"Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Oct 01, 2024 at 12:58:30PM +0800, shejialuo wrote:
+> On Mon, Sep 30, 2024 at 01:06:55PM -0700, Junio C Hamano wrote:
+> In my opinion, we should first think about how we handle the situation
+> where we run builtins outside of the repository. The most easiest way is
+> to pass the fallback object (aka "the_repository").
+> 
+> However, this seems a little strange. We are truly outside of the
+> repository but we really rely on the "struct repository *" to do many
+> operations. It's unrealistic to change so many interfaces which use the
+> "struct repository *". So, we should just use the fallback idea at
+> current.
 
-> From: Koji Nakamaru <koji.nakamaru@gree.net>
->
-> fsmonitor_classify_path_absolute() expects state->path_gitdir_watch.buf
-> has no trailing '/' or '.' For a submodule, fsmonitor_run_daemon() sets
-> the value with trailing "/." (as repo_get_git_dir(the_repository) on
-> Darwin returns ".") so that fsmonitor_classify_path_absolute() returns
-> IS_OUTSIDE_CONE.
->
-> In this case, fsevent_callback() doesn't update cookie_list so that
-> fsmonitor_publish() does nothing and with_lock__mark_cookies_seen() is
-> not invoked.
->
-> As with_lock__wait_for_cookie() infinitely waits for state->cookies_cond
-> that with_lock__mark_cookies_seen() should unlock, the whole daemon
-> hangs.
->
-> Remove trailing "/." from state->path_gitdir_watch.buf for submodules
-> and add a corresponding test in t7527-builtin-fsmonitor.sh.
->
-> Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
+I disagree with this statement. If code isn't prepare to not handle a
+`NULL` repository we shouldn't fall back to `the_repository`, but we
+should instead prepare the code to handle this case. This of course
+requires us to do a ton of refactorings, but that is the idea of this
+whole exercise to get rid of `the_repository`.
 
-In none of the changes described above, I have any input to deserve
-such credit, though.
+If a command cannot be converted to stop using `the_repository` right
+now we should skip it and revisit once all prerequisites have been
+adapted accordingly.
 
-> +start_git_in_background () {
-> +	git "$@" &
-> +	git_pid=$!
-> +	git_pgid=$(ps -o pgid= -p $git_pid)
-> +	nr_tries_left=10
-> +	while true
-> +	do
-> +		if test $nr_tries_left -eq 0
-> +		then
-> +			kill -- -$git_pgid
-> +			exit 1
-> +		fi
-> +		sleep 1
-> +		nr_tries_left=$(($nr_tries_left - 1))
-> +	done >/dev/null 2>&1 &
-> +	watchdog_pid=$!
-> +	wait $git_pid
-> +}
-> +
-> +stop_git () {
-> +	while kill -0 -- -$git_pgid
-> +	do
-> +		kill -- -$git_pgid
-> +		sleep 1
-> +	done
-> +}
-
-On the "git" side you use process group because you expect that
-"git" would spawn subprocesses and you want to catch all of them,
-...
-
-> +stop_watchdog () {
-> +	while kill -0 $watchdog_pid
-> +	do
-> +		kill $watchdog_pid
-> +		sleep 1
-> +	done
-> +}
-
-... but "watchdog" you know is a single process, so you'd only need
-a single process id, is that the idea?
-
-What is the motivation behind the change in this iteration to use
-process group?  Was it observed that leftover processes hang around
-if we killed only the $git_pid, or something?
-
-> +test_expect_success "submodule implicitly starts daemon by pull" '
-> +	test_atexit "stop_watchdog" &&
-> +	test_when_finished "stop_git && rm -rf cloned super sub" &&
-
-If stop_git ever returns with non-zero status, "rm -rf" will be
-skipped, which I am not sure is a good idea.
-
-The whole test_when_finished would fail in such a case, so you would
-notice the problem right away, which is a plus, though.
-
-> +	create_super super &&
-> +	create_sub sub &&
-> +
-> +	git -C super submodule add ../sub ./dir_1/dir_2/sub &&
-> +	git -C super commit -m "add sub" &&
-> +	git clone --recurse-submodules super cloned &&
-> +
-> +	git -C cloned/dir_1/dir_2/sub config core.fsmonitor true &&
-> +	set -m &&
-
-I have to wonder how portable (and necessary) this is.
-
-POSIX says it shall be supported if the implementation supports the
-User Portability Utilities option.  It also says that it was added
-to apply only to the UPE because it applies primarily to interactive
-use, not shell script applications.  And our test scripts are of
-course not interactive.
-
-Thanks.
+Patrick
