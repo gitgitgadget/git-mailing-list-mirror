@@ -1,84 +1,84 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E65A2B9B0
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 09:41:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB0D19D899
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 09:41:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727775713; cv=none; b=CZSwXp8Jm3t9jWxmM4tkIPdFVkIoKy+h+AGIIqR5eWg11XOxDqQPZKD/AOTwv+n1dWJBPPVrAJ1C7So0Qwb4IeECTUgvB5+LMNmBa5tTAvWVjM2f8BVSw0YtkxvgDQv8siPBa9BI/LxQFbO2kKmBmF89Ay2WVnsBnb5W1fWzfoQ=
+	t=1727775714; cv=none; b=UK7550I2HDmAaFhq2nTdWu+3IAx/SMNqz750MJtYn1E1kgIf5CSOvduCucWOhNaTixW2mzMvaByV16e4updDXPK+So+CW8r9ZeqIbybOUZTKcWYi7EF5u7zWa+hjvIYaLsr1C3kQ8qX1ogK9cSYqldaoRgcuoyZEVkYtTRpXWn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727775713; c=relaxed/simple;
-	bh=r/wNwOqsurCUQapI5uCBonlpAYPKOJda2FJDht6aSDg=;
+	s=arc-20240116; t=1727775714; c=relaxed/simple;
+	bh=FLTImrbvvvFgAkSveQ7xVh//0HjBGYKPh1lsSNOHEow=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bQxKTeIZKlu0S5CXCIltECVeNlFtAq5ab5H4GLZsW/X8KTh0ebM5PlCcre+2qDNZ259ct+w1IwynMk+xlKFyNO6qSdc0/si1KYuSLBxTCQ/SQsdj/eNqfFFcUbcmUIXk+IePifQS5P60JHNvkxR6VVfQmDUgICHBgRHcLaR4qE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gG8d+jLo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dVUy78/B; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=bBsh2ebjHa8sbTH2sAv2FwvCtxcexKWkVR9RfWxmHVel0m+sxsW3hztMXzcZw9jNNFRu49wDGVbjvbeo9XXWD59ONXQCHn+jiux1WhM2F4SX5+yWk2S5ipHTuuIrXy7oHZC21uOr2C12W5r/EnRRvU1OhKeGD8JvX00ii7G5wrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SyZ01/HO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wmh+ii+M; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gG8d+jLo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dVUy78/B"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id EDE171380F24;
-	Tue,  1 Oct 2024 05:41:49 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SyZ01/HO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wmh+ii+M"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5A01F114099F;
+	Tue,  1 Oct 2024 05:41:51 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Tue, 01 Oct 2024 05:41:49 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 01 Oct 2024 05:41:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727775709; x=1727862109; bh=KfSspmcjDG
-	ZrR6/wFCt+5RT2Kk+oo/sOeOkgThDD4pI=; b=gG8d+jLooPzvFpfvPE3XPgph40
-	zPgU+GeFA4pKdl4vY7RPm3O0I0oIrLk6q/HbOWbLMWnD8znTMTIUa/G5eHignwhw
-	OIb71o0ro/j7L2eg7RWm4qQ431GftCwYqM4gaxIM1SzVYrD2lPhJaFnOR5goi8Ed
-	NymjGldEWeqDKapit6ugl8k/gdo9CkeoDAgGtpujci0/QE4edgqDF8Q4bmYS1GEZ
-	1rPstITVV0jLpsz3mn6Abx/VsVTsQbK1L6TExe1c8XqgGqsKx69fYgY1Iz7hWVAh
-	G5t3Lum/b2N+Fynalw4HIpnxbTPcR88q0ZWkiQJwJLsSO7clJTOYr1FhC2rw==
+	:subject:to:to; s=fm2; t=1727775711; x=1727862111; bh=dV4fHV40tW
+	wTaQ2ycbPOM+RJxkvB0dTi+16vDpN+s1c=; b=SyZ01/HOFt8oyV++7Lq7qwtkI1
+	E2cg1JKLl1RbTphS0O7sbL97dIQquhoXX0S5V1vg87BVxy44xsxWOf1Z/KWWcnv0
+	lbAdViaPbDloxEBhodPeqKbS976QABifBONJTTnAt5KwmxPp5nXlXxqCQcswI3z1
+	PCymXW8u50mLYnh6Cmr7OijoTqzuvZSrXPS/ztSMo0uiUcA0fgHkw134+AsSryay
+	tkWtzQzQGZ1y1wrNP/gac3gDiF+i/s/C8ob//MEG3qDCJ7BE2i0HRV2C+WPVTq1d
+	pkNZoQk6/446m3rJsDQGMWTz8I8bhsdMKGivO/yhBJtALtb40BlZ4+wIpojg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727775709; x=1727862109; bh=KfSspmcjDGZrR6/wFCt+5RT2Kk+o
-	o/sOeOkgThDD4pI=; b=dVUy78/BDTq4/hvNcPnZPDYRG+nQ8FUBkgMdjuoDBCOG
-	p9N06Hey8qVbomSw6D6jKbi5KM8e/03PVGe+xSh23mHfuOc4D0jqKrpfEV0CGJ/q
-	tWrA0JGWE++i0Jdr/XxrWWNoYbh1py8CSlPb/CNp4UOPJu+AWu1VPVDpIqcrrJsH
-	2yInOYyxW8zMTxCV/O5BHg0aVCGu1TXGL/RLP2KhTU52WxUlMOx0zw4TTcyN4ndY
-	cf8EZQ1G4fgS7djgXglyPitlhHGVih9hjkQMOKFLkDmyy7wBNA+GICDSnuLgrgcl
-	m+8uKc5RJowlhAfk2BGd/LqaN860FRtdxIHrwVqqYA==
-X-ME-Sender: <xms:3cP7ZsTmScikONYDbcHLn8YSDpnJgVOQmLaM-AnntmEJV2mTmx_hEg>
-    <xme:3cP7Zpx1cala-bdxaGz1G67gl9WKI7omqfCQ-PgDHxXNwQ6FiVuPYSPTURY5qc3bC
-    Y4GoEjHpcPOPkXamg>
-X-ME-Received: <xmr:3cP7Zp2TKcCFFKHqTihIyFbl3XyWJ4JH45YO9H4TYDJVyLrw7BrZGR1-qLvnWWKN1KXgq5ECIFI-LjrRgh8chVuOsEXUOA1iMR4drZWfBLXw_w>
+	fm2; t=1727775711; x=1727862111; bh=dV4fHV40tWwTaQ2ycbPOM+RJxkvB
+	0dTi+16vDpN+s1c=; b=Wmh+ii+MsMQO9C94OR9Z5rig7f0Vym0EKGYhhfDsry2R
+	/d0hWDR/gnU3xgT5iU206UW0sgIJFyht+8TXspOkbdhdu0AkwYs1njzbvD5XHqLJ
+	V2cIgKuOREh6OxwmNRnOR38Ua0uzvNZmPc+EEULEavwet8cP8FlQa8FsnGztIvui
+	lIXuGLv6qWqpm7/DjLQBUCb+7cjb4HLN1yr3MGBa3jk+CYnOFX6dmqG/yHvuz8ao
+	smzGqqOB7u2Ovr4CTScMtVLZBH8kLzNQr3zS9vysUguryKt29TZDFXa7dUOa46uO
+	wVy46HiW0gGNyHySVzJ89hbpPE46AXWDxsgPLNouNw==
+X-ME-Sender: <xms:38P7ZiWG82xpp2Vqln_FvrMxc7QVsFbHMlCdyLf2QB4oLDUHCcVDvQ>
+    <xme:38P7Zul3RzYvjcr4ntVAzBZcZIGK7rSDcgzcuNh-hLydX11-ctuI1_VBLyoPwGOdX
+    iY_30mKtzFAxBIFzg>
+X-ME-Received: <xmr:38P7Zma8VeKygjLeJ3eyFTeN0yIePJzdERiIC2sN4LzqlE3SStaaEJhoRBvgTScZojFcDsB7h4tBQQASNT1wZaH1ECV02YmAJ4_Kb51wJ-b5dg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheplhdrshdrrh
-    esfigvsgdruggv
-X-ME-Proxy: <xmx:3cP7ZgBU8quFA0Y3H5EqDJqZ95Z0j5W-2GItw0asQ20_2UKyTE6kRA>
-    <xmx:3cP7ZliI6ZkHdW6TXdPdcP4ccB864UYPkC0yT9ej0U7BL7DhFF8cvg>
-    <xmx:3cP7Zsq59NqJFgR8pwR3FuhhF1L-ICGOBlncmotT2x0kW7DRi-Sjfw>
-    <xmx:3cP7Zogo9P2aWct3sCH3O3GN2VRToq6FBy0ZVsn90VAl8j7XzSLHDg>
-    <xmx:3cP7ZldAPwo4tZXY9pfN0iUhyYiu77efChC97NdxQmN7w4bOcGXgqi89>
+    eqnecuggftrfgrthhtvghrnhepueeiueduhfevhfekiefgkefggeeljedtffetheehtefh
+    hfdvledukeekfffhffdvnecuffhomhgrihhnpehgohhoghhlvgdrtghomhenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomhdprhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmsh
+    honhdrtghomhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvg
+X-ME-Proxy: <xmx:38P7ZpVHsMwTPPS1QGljhXY8EfK76LAz92aYD5wsmaudzwyFo86d1A>
+    <xmx:38P7Zskc_vbknnUCArRkd8G6jIhwnKMNiIDZ0ekGBTQVTS0C9js8_w>
+    <xmx:38P7ZudzQdCgUm38VyC3fb1jMk_lfWH5lXqGtPHlbG9AmxC7wkZ_Uw>
+    <xmx:38P7ZuF0kReEecgPlTH67jb6M6abyD-YU5E81srOh40JOSWlgR0t-w>
+    <xmx:38P7ZtBezlkBYIu8cmZpOQ1yEMs-1lcW-g1YgkyOowu0tYzVwnQO0iSV>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 05:41:48 -0400 (EDT)
+ 1 Oct 2024 05:41:50 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4caa2296 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 1 Oct 2024 09:41:00 +0000 (UTC)
-Date: Tue, 1 Oct 2024 11:41:45 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 54725d2f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 1 Oct 2024 09:41:02 +0000 (UTC)
+Date: Tue, 1 Oct 2024 11:41:47 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v4 01/25] reftable/error: introduce out-of-memory error code
-Message-ID: <94eaef3ae5ee008b5140272e4ce572c041f9c5a2.1727774935.git.ps@pks.im>
+Subject: [PATCH v4 02/25] reftable/basics: merge "publicbasics" into "basics"
+Message-ID: <fe55051cb79015960729d7a06f21f43138585177.1727774935.git.ps@pks.im>
 References: <cover.1726489647.git.ps@pks.im>
  <cover.1727774935.git.ps@pks.im>
 Precedence: bulk
@@ -91,69 +91,254 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727774935.git.ps@pks.im>
 
-The reftable library does not use the same memory allocation functions
-as the rest of the Git codebase. Instead, as the reftable library is
-supposed to be usable as a standalone library without Git, it provides a
-set of pluggable memory allocators.
+The split between "basics" and "publicbasics" is somewhat arbitrary and
+not in line with how we typically structure code in the reftable
+library. While we do indeed split up headers into a public and internal
+part, we don't do that for the compilation unit itself. Furthermore, the
+declarations for "publicbasics.c" are in "reftable-malloc.h", which
+isn't in line with our naming schema, either.
 
-Compared to `xmalloc()` and friends these allocators are _not_ expected
-to die when an allocation fails. This design choice is concious, as a
-library should leave it to its caller to handle any kind of error. While
-it is very likely that the caller cannot really do much in the case of
-an out-of-memory situation anyway, we are not the ones to make that
-decision.
+Fix these inconsistencies by:
 
-Curiously though, we never handle allocation errors even though memory
-allocation functions are allowed to fail. And as we do not plug in Git's
-memory allocator via `reftable_set_alloc()` either the consequence is
-that we'd instead segfault as soon as we run out of memory.
+  - Merging "publicbasics.c" into "basics.c".
 
-While the easy fix would be to wire up `xmalloc()` and friends, it
-would only fix the usage of the reftable library in Git itself. Other
-users like libgit2, which is about to revive its efforts to land a
-backend for reftables, wouldn't be able to benefit from this solution.
-
-Instead, we are about to do it the hard way: adapt all allocation sites
-to perform error checking. Introduce a new error code for out-of-memory
-errors that we will wire up in subsequent steps.
-
-This commit also serves as the motivator for all the remaining steps in
-this series such that we do not have to repeat the same arguments in
-every single subsequent commit.
+  - Renaming "reftable-malloc.h" to "reftable-basics.h" as the public
+    header.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/error.c          | 2 ++
- reftable/reftable-error.h | 3 +++
- 2 files changed, 5 insertions(+)
+ Makefile                   |  1 -
+ reftable/basics.c          | 55 +++++++++++++++++++++++++++++++
+ reftable/basics.h          |  3 ++
+ reftable/publicbasics.c    | 66 --------------------------------------
+ reftable/reftable-basics.h | 18 +++++++++++
+ reftable/reftable-malloc.h | 18 -----------
+ 6 files changed, 76 insertions(+), 85 deletions(-)
+ delete mode 100644 reftable/publicbasics.c
+ create mode 100644 reftable/reftable-basics.h
+ delete mode 100644 reftable/reftable-malloc.h
 
-diff --git a/reftable/error.c b/reftable/error.c
-index a25f28a43e..660d029617 100644
---- a/reftable/error.c
-+++ b/reftable/error.c
-@@ -35,6 +35,8 @@ const char *reftable_error_str(int err)
- 		return "entry too large";
- 	case REFTABLE_OUTDATED_ERROR:
- 		return "data concurrently modified";
-+	case REFTABLE_OUT_OF_MEMORY_ERROR:
-+		return "out of memory";
- 	case -1:
- 		return "general error";
- 	default:
-diff --git a/reftable/reftable-error.h b/reftable/reftable-error.h
-index 6368cd9ed9..f404826562 100644
---- a/reftable/reftable-error.h
-+++ b/reftable/reftable-error.h
-@@ -57,6 +57,9 @@ enum reftable_error {
+diff --git a/Makefile b/Makefile
+index e3abf0ba83..39b10923d4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2683,7 +2683,6 @@ REFTABLE_OBJS += reftable/error.o
+ REFTABLE_OBJS += reftable/block.o
+ REFTABLE_OBJS += reftable/blocksource.o
+ REFTABLE_OBJS += reftable/iter.o
+-REFTABLE_OBJS += reftable/publicbasics.o
+ REFTABLE_OBJS += reftable/merged.o
+ REFTABLE_OBJS += reftable/pq.o
+ REFTABLE_OBJS += reftable/reader.o
+diff --git a/reftable/basics.c b/reftable/basics.c
+index 0058619ca6..cf072935c8 100644
+--- a/reftable/basics.c
++++ b/reftable/basics.c
+@@ -7,6 +7,49 @@ license that can be found in the LICENSE file or at
+ */
  
- 	/* Trying to write out-of-date data. */
- 	REFTABLE_OUTDATED_ERROR = -12,
+ #include "basics.h"
++#include "reftable-basics.h"
 +
-+	/* An allocation has failed due to an out-of-memory situation. */
-+	REFTABLE_OUT_OF_MEMORY_ERROR = -13,
- };
++static void *(*reftable_malloc_ptr)(size_t sz);
++static void *(*reftable_realloc_ptr)(void *, size_t);
++static void (*reftable_free_ptr)(void *);
++
++void *reftable_malloc(size_t sz)
++{
++	if (reftable_malloc_ptr)
++		return (*reftable_malloc_ptr)(sz);
++	return malloc(sz);
++}
++
++void *reftable_realloc(void *p, size_t sz)
++{
++	if (reftable_realloc_ptr)
++		return (*reftable_realloc_ptr)(p, sz);
++	return realloc(p, sz);
++}
++
++void reftable_free(void *p)
++{
++	if (reftable_free_ptr)
++		reftable_free_ptr(p);
++	else
++		free(p);
++}
++
++void *reftable_calloc(size_t nelem, size_t elsize)
++{
++	size_t sz = st_mult(nelem, elsize);
++	void *p = reftable_malloc(sz);
++	memset(p, 0, sz);
++	return p;
++}
++
++void reftable_set_alloc(void *(*malloc)(size_t),
++			void *(*realloc)(void *, size_t), void (*free)(void *))
++{
++	reftable_malloc_ptr = malloc;
++	reftable_realloc_ptr = realloc;
++	reftable_free_ptr = free;
++}
  
- /* convert the numeric error code to a string. The string should not be
+ void put_be24(uint8_t *out, uint32_t i)
+ {
+@@ -121,3 +164,15 @@ int common_prefix_size(struct strbuf *a, struct strbuf *b)
+ 
+ 	return p;
+ }
++
++int hash_size(uint32_t id)
++{
++	switch (id) {
++	case 0:
++	case GIT_SHA1_FORMAT_ID:
++		return GIT_SHA1_RAWSZ;
++	case GIT_SHA256_FORMAT_ID:
++		return GIT_SHA256_RAWSZ;
++	}
++	abort();
++}
+diff --git a/reftable/basics.h b/reftable/basics.h
+index c8fec68d4e..4e2e76014a 100644
+--- a/reftable/basics.h
++++ b/reftable/basics.h
+@@ -14,6 +14,7 @@ license that can be found in the LICENSE file or at
+  */
+ 
+ #include "system.h"
++#include "reftable-basics.h"
+ 
+ /* Bigendian en/decoding of integers */
+ 
+@@ -71,4 +72,6 @@ void *reftable_calloc(size_t nelem, size_t elsize);
+ struct strbuf;
+ int common_prefix_size(struct strbuf *a, struct strbuf *b);
+ 
++int hash_size(uint32_t id);
++
+ #endif
+diff --git a/reftable/publicbasics.c b/reftable/publicbasics.c
+deleted file mode 100644
+index 44b84a125e..0000000000
+--- a/reftable/publicbasics.c
++++ /dev/null
+@@ -1,66 +0,0 @@
+-/*
+-Copyright 2020 Google LLC
+-
+-Use of this source code is governed by a BSD-style
+-license that can be found in the LICENSE file or at
+-https://developers.google.com/open-source/licenses/bsd
+-*/
+-
+-#include "system.h"
+-#include "reftable-malloc.h"
+-
+-#include "basics.h"
+-
+-static void *(*reftable_malloc_ptr)(size_t sz);
+-static void *(*reftable_realloc_ptr)(void *, size_t);
+-static void (*reftable_free_ptr)(void *);
+-
+-void *reftable_malloc(size_t sz)
+-{
+-	if (reftable_malloc_ptr)
+-		return (*reftable_malloc_ptr)(sz);
+-	return malloc(sz);
+-}
+-
+-void *reftable_realloc(void *p, size_t sz)
+-{
+-	if (reftable_realloc_ptr)
+-		return (*reftable_realloc_ptr)(p, sz);
+-	return realloc(p, sz);
+-}
+-
+-void reftable_free(void *p)
+-{
+-	if (reftable_free_ptr)
+-		reftable_free_ptr(p);
+-	else
+-		free(p);
+-}
+-
+-void *reftable_calloc(size_t nelem, size_t elsize)
+-{
+-	size_t sz = st_mult(nelem, elsize);
+-	void *p = reftable_malloc(sz);
+-	memset(p, 0, sz);
+-	return p;
+-}
+-
+-void reftable_set_alloc(void *(*malloc)(size_t),
+-			void *(*realloc)(void *, size_t), void (*free)(void *))
+-{
+-	reftable_malloc_ptr = malloc;
+-	reftable_realloc_ptr = realloc;
+-	reftable_free_ptr = free;
+-}
+-
+-int hash_size(uint32_t id)
+-{
+-	switch (id) {
+-	case 0:
+-	case GIT_SHA1_FORMAT_ID:
+-		return GIT_SHA1_RAWSZ;
+-	case GIT_SHA256_FORMAT_ID:
+-		return GIT_SHA256_RAWSZ;
+-	}
+-	abort();
+-}
+diff --git a/reftable/reftable-basics.h b/reftable/reftable-basics.h
+new file mode 100644
+index 0000000000..6e8e636b71
+--- /dev/null
++++ b/reftable/reftable-basics.h
+@@ -0,0 +1,18 @@
++/*
++ * Copyright 2020 Google LLC
++ *
++ * Use of this source code is governed by a BSD-style
++ * license that can be found in the LICENSE file or at
++ * https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef REFTABLE_BASICS_H
++#define REFTABLE_BASICS_H
++
++#include <stddef.h>
++
++/* Overrides the functions to use for memory management. */
++void reftable_set_alloc(void *(*malloc)(size_t),
++			void *(*realloc)(void *, size_t), void (*free)(void *));
++
++#endif
+diff --git a/reftable/reftable-malloc.h b/reftable/reftable-malloc.h
+deleted file mode 100644
+index 5f2185f1f3..0000000000
+--- a/reftable/reftable-malloc.h
++++ /dev/null
+@@ -1,18 +0,0 @@
+-/*
+-Copyright 2020 Google LLC
+-
+-Use of this source code is governed by a BSD-style
+-license that can be found in the LICENSE file or at
+-https://developers.google.com/open-source/licenses/bsd
+-*/
+-
+-#ifndef REFTABLE_H
+-#define REFTABLE_H
+-
+-#include <stddef.h>
+-
+-/* Overrides the functions to use for memory management. */
+-void reftable_set_alloc(void *(*malloc)(size_t),
+-			void *(*realloc)(void *, size_t), void (*free)(void *));
+-
+-#endif
 -- 
 2.47.0.rc0.dirty
 
