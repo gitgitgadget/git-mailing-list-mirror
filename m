@@ -1,102 +1,141 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF111CCB39
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 17:34:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAA9191F81
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 17:37:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727804085; cv=none; b=MB98yGMLSE/vy9tczhh0RBYPblfOwHj8dmfMQAXRmo1ttBMs0OUT5VWH6o83DURPsIX7irlL8ai0uWMI+vRrHrslbJrLHMi8XHKhpzOopuS35bPgSwGMoFbSqqdp39YVxgE7BnK6bKEwJgMRLk4TtWjYpufFKruw0VfqioeWHzk=
+	t=1727804270; cv=none; b=Qul234whZquDe7+EyxKNYQ9iidebM1zrHE5D+5QWSYScxtMePSbMrcw0Y9XNhjL5i9R8IC6mWSjvnRKrXAmQbcWTW/LxV84f6DR7gJUF9ya/Nrt2nJOmQsYctrOF6w15bKt2arpc2c4es++2XF8/7yjrO0yb0WouoHCV2glUKWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727804085; c=relaxed/simple;
-	bh=BZEZ4cSM934CCveLiCcUOwokIkvmrapkTg3E5tWUG9E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BLQSDy4yTj9KHL9lxLa0fqPGq07M+1sRKttY6yseY4bkLHEuj2qsCHfWqbuFC8rr1KWSVGGjGNbBG3eTu6sMFBuV03ZI/b9VlDjDJEboSz+hpS192Iouuf1G3SZzyGcNvf0txNE9SP/JtussTv0S1QKyJcP31xdqa9cJo8OTJUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i6Yn73tU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A79yQ2VJ; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727804270; c=relaxed/simple;
+	bh=wWpIezsGcT/WUFX8UA7XDX9Q1fwFWAgPPsqjRR8U0Vk=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=KhvsANrFGkwMjgm5F8SFuneFEkgvFYIAZ3auO22iOtv3xA07Tp1Oqqb+uSpJhW+zhmrWDn9VyWb9UQ75YzeYbvXi6CYy0sC89lz81i2m1hTVlez0Eky2dX8MouBRNv99EHd4gKogrdpTgpxqV89/y2HeQ73XTw3fW4vpirdcz+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WA99qgHT; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i6Yn73tU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A79yQ2VJ"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 610951140C00;
-	Tue,  1 Oct 2024 13:34:43 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 01 Oct 2024 13:34:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727804083; x=1727890483; bh=nRcArctblu
-	yQm1GpBqr/f7TAWSeE9hEL6EoV2XU4/0E=; b=i6Yn73tU98wEHeLICMb1HOulQv
-	wf5chQIsCaOXC6UOGbQNZL/w7JPiacwjS6iugKTH+bAIczoiXGbaPKgK+DNbsqp4
-	Ic7XiOXAqbGvnc3Xmz60gZ+O4OBwI7ItcZi31DJQp3S97rigq2kJoKfz+f2s+7B8
-	0IH7Rfk8M+Tx3VmylWXVmOjfcP1F3Khn07u9cfzQK/NlhFhIMaaj/1sGYTzm/ciA
-	SJ7d9FKrdfLyufCoUNUcIUs64MPZSrO5SZr+8101Axb3m012rpyByJhOvA5rXIdH
-	Y6GhJ+qgixFZi3W9rnG3RMLOiNM1UwRzKONitMJFp5+HlbXdR7dTsbml7cAg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727804083; x=1727890483; bh=nRcArctbluyQm1GpBqr/f7TAWSeE
-	9hEL6EoV2XU4/0E=; b=A79yQ2VJv0ff+PdGiFaSLIAZYjWjskJfKEL7YPkzzkdk
-	YuBbQONp8DDC5WjT/+HWvKfLzIFQ7d76BRRoq6y/cLR2Z8nDMBumIJuzbSrd0MUn
-	KGln3LosidMwoin0FBG+RG2tKJ1WBq5Z3ZTWFVp/N/ONyg67nUYWQlFJvziD2iPE
-	R1gesxq04a/14N6oZOn/jMpEZ+gcsWGeC3fxojqGjhSntcsME8baXem/QCisvCs2
-	ifZJCoyCu6n6GNBEqW0Dmjm1jqP9Af6YuuC0GLkfUbCy6JX5lWIv7tP0C4/6XuH7
-	CAuz55FcLVPQgBZnBDwJ+X5Ln2eRJcJuRw1AD3jSFw==
-X-ME-Sender: <xms:szL8Zr6NxG1cbs46AvnZ44N4H4SSKMpXG4Q67YT2VVkbSbcqrjLPjg>
-    <xme:szL8Zg4qJwvRlWLlBUMrVEVPMLHtE06qKmdOfcNK1xK3GjUKHSPsZVaA5vtljx0vG
-    8lBmYTlDexz1-LItg>
-X-ME-Received: <xmr:szL8ZifUvc_2qjN_2JJZsN9dK1nvd_YIpHFoTe7A80cmBOPKGnUxNqOej_Ka9mu4u9DuBZhUbRYzQqx3VaKRVjjEB1ewbQYxMinHjpc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgudduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegurghnihgvlhesmh
-    grrhhirggusgdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:szL8ZsLKRauGsFKqUg2dViqVV14lH9M4GG1AeSctTicS_09U6i2NWQ>
-    <xmx:szL8ZvJk_QMmn8GvsnaDb7Jo8lSnjElJO4Aa3i9xBdq19lXxXe6Ykg>
-    <xmx:szL8ZlwDlMcgOJHVDYoFZdXz6_6M1byq7j03Ltn7nshjoB29v2sTBA>
-    <xmx:szL8ZrKnd0hZewGUyWURK4j9hq9TinXNgCpMIBnwfdaNWJdX1g__Nw>
-    <xmx:szL8Zn34Hi7uwLjdxoSaJoQdSuoOPGZan4Qk9EIm6PJair6S3HXRzxCb>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 13:34:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Daniel Black <daniel@mariadb.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] submodule: correct remote name with fetch
-In-Reply-To: <xmqqed4zzqbg.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	01 Oct 2024 10:27:31 -0700")
-References: <ZJQr0_aC-NlLXDgj@pweza>
-	<20241001072423.1165932-1-daniel@mariadb.org>
-	<xmqqed4zzqbg.fsf@gitster.g>
-Date: Tue, 01 Oct 2024 10:34:41 -0700
-Message-ID: <xmqq7carzpzi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WA99qgHT"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a8a789c4fc5so8545666b.0
+        for <git@vger.kernel.org>; Tue, 01 Oct 2024 10:37:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727804267; x=1728409067; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bWBAVfPkB9x3Oagx3K7gqidcrLLvjYnoMT+jiAh1+lU=;
+        b=WA99qgHTHcXiQo/qdvMLgYFkOc1kbcSrL7z7LnjJCaLGoaeNDXTdydv4Wu25aidBaU
+         ucei1d+A5o4Y0fiBoM607W1PBirgKTRMcrONku6mOjvkXegckBiOBeszpasWlAtmWJpu
+         NUqLWq8VJ6nI5FpR6fTZJqJiRVrZzkOd9U+KYsALBDfg2LYydrhyJCgMQMaMVm4Ts2C8
+         amZTuwfuDiUVcvdC/S51gVwwAbPA7lXxM2wjAY7C7o9XvgG7h7h+MH95EqZzk59feXgz
+         eRd/NoMb3k+b9mw5iFXrOqhq0RJgRvCR0K+pn7cxo0pv8Rn81ewUNq3/8SYSmlv1BWix
+         KFvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727804267; x=1728409067;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bWBAVfPkB9x3Oagx3K7gqidcrLLvjYnoMT+jiAh1+lU=;
+        b=HeKOlC6GXbsHecXQlFSpVIfsjZ+b3c1AerQdPmymC1a42LeYEyzi1mGzlCQnnd4ydJ
+         BOG7HURSZa3JjJ64sezYBmJnHGA7xZO+NmliN36EiRyPgxeLWCrl7kUL2V22NTaGYrQG
+         +XyR1hT9M31YMsY/unJD+wbe4ejuXsoEjBeh4sm6Av0vIhqT9d4llVNF8MnmWTxe3L5x
+         rWYSgClqFZPhOwP7yiA53iz3f1szx1Ven02WIHJ40xOXP2KfsChSwYVYKS2Z4arfSKIh
+         zZlNfl+TPoMMeoHWUW6rSKtJC2q7fUNJMN12MmtcCPoUimce8xT/OiAK/17zoRIbUXVa
+         aWVw==
+X-Gm-Message-State: AOJu0YwQGeoOXuRJAyh/4K9W906ZEPXhxceT+RUwLM3fqY70jrgBxqov
+	RGpGP7PeJUl4sx9hwTEBP+gYFfgjstmFpX3j8gd+/gXDhYq70sMNM21inw==
+X-Google-Smtp-Source: AGHT+IE4AB4BcQyIDU4EsQcwQ7antztw6X9ra8KyitpvPqS3Oy2TDe1LDKtCsaMuaQkKoHMOCKgwbQ==
+X-Received: by 2002:a17:907:6e8c:b0:a8d:4c83:d85d with SMTP id a640c23a62f3a-a967bee906fmr471966366b.12.1727804266374;
+        Tue, 01 Oct 2024 10:37:46 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c29a0f83sm741801966b.210.2024.10.01.10.37.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Oct 2024 10:37:45 -0700 (PDT)
+Message-Id: <pull.1801.v2.git.1727804265033.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1801.git.1727696424.gitgitgadget@gmail.com>
+References: <pull.1801.git.1727696424.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 01 Oct 2024 17:37:44 +0000
+Subject: [PATCH v2] read-cache: free threaded memory pool
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    peff@peff.net,
+    ps@pks.im,
+    Derrick Stolee <stolee@gmail.com>,
+    Derrick Stolee <stolee@gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Derrick Stolee <stolee@gmail.com>
 
-Sorry, forgot to say one more thing before pressing [SEND].
+In load_cache_entries_threaded(), each thread allocates its own memory
+pool. This pool needs to be cleaned up while closing the threads down,
+or it will be leaked.
 
->>  builtin/submodule--helper.c | 7 ++++++-
->>  1 file changed, 6 insertions(+), 1 deletion(-)
+This ce_mem_pool pointer could theoretically be converted to an inline
+copy of the struct, but the use of a pointer helps with existing lazy-
+initialization logic. Adjusting that behavior only to avoid this pointer
+would be a much bigger change.
 
-Please add a test or two, that fail without this change (to
-demonstrate the existing bug) and succeed with this change (to make
-sure if somebody breaks the code you fixed again in the future, such
-a breakage is caught).
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+    read-cache: two small leak fixes
+    
+    This v2 removes the duplicate patch and updates the commit message.
+    
+    Thanks, -Stolee
 
-Thanks.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1801%2Fderrickstolee%2Fleaks-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1801/derrickstolee/leaks-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1801
+
+Range-diff vs v1:
+
+ 1:  9a45b15ea4b ! 1:  220a098c93c read-cache: free threaded memory pool
+     @@ Metadata
+       ## Commit message ##
+          read-cache: free threaded memory pool
+      
+     -    In load_cache_entries_threaded(), each thread is allocated its own
+     -    memory pool. This pool needs to be cleaned up while closing the threads
+     -    down, or it will be leaked.
+     +    In load_cache_entries_threaded(), each thread allocates its own memory
+     +    pool. This pool needs to be cleaned up while closing the threads down,
+     +    or it will be leaked.
+     +
+     +    This ce_mem_pool pointer could theoretically be converted to an inline
+     +    copy of the struct, but the use of a pointer helps with existing lazy-
+     +    initialization logic. Adjusting that behavior only to avoid this pointer
+     +    would be a much bigger change.
+      
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+ 2:  b6fe5b3ef7e < -:  ----------- read-cache: free hash context in do_write_index()
+
+
+ read-cache.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/read-cache.c b/read-cache.c
+index 764fdfec465..3c078afadbc 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2188,6 +2188,7 @@ static unsigned long load_cache_entries_threaded(struct index_state *istate, con
+ 		if (err)
+ 			die(_("unable to join load_cache_entries thread: %s"), strerror(err));
+ 		mem_pool_combine(istate->ce_mem_pool, p->ce_mem_pool);
++		free(p->ce_mem_pool);
+ 		consumed += p->consumed;
+ 	}
+ 
+
+base-commit: 6258f68c3c1092c901337895c864073dcdea9213
+-- 
+gitgitgadget
