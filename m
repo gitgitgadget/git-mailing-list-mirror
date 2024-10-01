@@ -1,112 +1,105 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CD163B9
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 13:20:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E8819F110
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 13:40:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727788805; cv=none; b=cvvwPyYgfY1WWRE0ZTevT/OExOwTlfXjUNaf4eODK+xXegOS+XNV5X4f7qkSJCY07QbMVotzwAk71MTVzqeGrHc5AHoX9+syS/Z115Uie0W1+fiJnj9iphELbOPowmtIiIGU/soZAqA1u4QaEIVXyWxuFlQa5s7eDv581g16YFk=
+	t=1727790044; cv=none; b=qJQIn0Q1GtVh81QJbRe3XRTiXtleKEwxIO74VD3cmJjKYeXtUuzEyt5yv5m93YKxW+6P65/9eMBGGESy5j49K0iBLOVl3DQTAotoRTMNq0N9IL/jqA8WqbEZ+bW/r1rNd8o47ZEqrjLSpSbr+RdlfRtSRURwsWsqvH8dk60ysMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727788805; c=relaxed/simple;
-	bh=PfaBAnGBKrWJ7megSO78w8ncTWPdS8NrQ1nGjh6EZSw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LJ9jy0xyGeHaGIVpfp32eikA3yKLnrzm7rhqD6ruSl9fKtZ8RRpzEvDsF2VcBs6HqdQsaKMgShrApP8Slk+ODwe6L2AdXzDGlc8c4AFArxbn0qf5NGkeUf7uro8fTeEm9JQY5l3cWXYQSxKPryG1JiKqDRKGox5MEPBoxxnYEl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SwK7e1S/; arc=none smtp.client-ip=209.85.216.52
+	s=arc-20240116; t=1727790044; c=relaxed/simple;
+	bh=PC/D9pxvomX1VYkq5GEtUSNQn1qCroejAydIjvLQudU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cCE8zJFLxIuGP8lb3h0FmbFpC6k33a18TOqZwuwrNRRIWOY5KwrwP20Qlr1kiAqnkv19z4sIA0W1RrsljC4t83lakZ+t0os/Oi9wRCjhVTW9OxgcfWY8IEtrF5hK9qJj0b/yVGUA5xGwtMZd2jkn3HNIYz9vB8jfeMgM4jQjCic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=egEcH/4R; arc=none smtp.client-ip=209.85.166.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SwK7e1S/"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2e078d28fe9so4008636a91.2
-        for <git@vger.kernel.org>; Tue, 01 Oct 2024 06:20:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="egEcH/4R"
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3a345142c25so16313495ab.3
+        for <git@vger.kernel.org>; Tue, 01 Oct 2024 06:40:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727788803; x=1728393603; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pOiH25WBWzatYmPgI3CMa5beVMDFoA9FljLyMHvrGnc=;
-        b=SwK7e1S/K62JXwudSmtoLP1If1LnD+g2SMsP+qijqAMBQA5xVvgb551OaoewSAV0Y+
-         T9W94cNA50gSL1TXEKXkSJEvFTkqZizrqzeh2U7605/uE6aazRFZg3CpI6De+HhK7UL8
-         60NL3WwYBE3pqNVZPCPc4hYJzGRb9HkiE4pV16hhOzXKIxkT17o9SL4oYb50tFangGcS
-         VAKZEApuhxK35x1rxj9+zclBJgrjJN5fLooY6iObq0wByCRrCNyUysC11CFzC+sLHoQd
-         B2gTTt2N2rMEKPppBw/DbURb5PGiwTmQz4+ngR10XOU4BrHOtLQ2iNQJ5By8QRk1Nh2g
-         uDQg==
+        d=gmail.com; s=20230601; t=1727790042; x=1728394842; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VpjKNsZ70R4KuQtmQtBBm8hWFniRHJhJY6z4knFOUxo=;
+        b=egEcH/4RPfOXKInBuna7tQfL1yTj54GyXxwxUgVFW1kF8pEkcenDBq63lWOmLEVlPW
+         tuJzKwQGTSIycVsE9XTbo8SfufO7n+W+EEMXAwFfbW3ajWXSZqYoR6MbugpCNBXxy8Se
+         EUlWjdBPKSYV5SF7nuu33HErqtUvLPT2THKvqG27PcjnNBQZfgwozNHAK0787PZy1p0s
+         ULxNtnu+2GLCtgaoEstQmhFBrgKaMW6Uq60rPxlj6guSVVEmss5zaiBNGbcQaKsFIji/
+         P0oL4CCQcdeGiwUx8blbcueaydAVVQDIPsJWXuZ3J3+D7ccGTn0Fc87yENRlmqsw/hOD
+         +bLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727788803; x=1728393603;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pOiH25WBWzatYmPgI3CMa5beVMDFoA9FljLyMHvrGnc=;
-        b=jkNeQsB+fRv2J7s15RGAnleWHtxS0mNuV1ybcp0dBy3ebERAPQBi8LwWIHoCkV4nT1
-         p2DWILka0t1Cu8sfKbtnRG5JvIsjcxayoV0x0OQ9VRpx6YSGqYLePRTJ1iLz+aLF104U
-         V9JhPcAO5AEO3WwHf6PUt+718gIYhFEzhDrq0jTwizi0/RlE1MYwE9Z9RyONvbukKiIO
-         fSYdefn67JyQ1OP4LiO2dwP1J74zZIKDO8xubk2rF+dDCCP1mAsYfrbC1CYxXcNm5MB/
-         VyBAUJXak/PVHRhH+jGGmaHorwMvbgCDy0F5yVMFxqaKJUjZwV9zsCpoKI9NVoBNBb9u
-         0UWw==
-X-Gm-Message-State: AOJu0YzdiOJ3ZfmwJ0TVgJw96luwZyHAbNGULlxTFRwC7ODBEuQaB9PV
-	YFFyRnum3ZAjDMUEbD/Rfd7IUI9VHoJMAiewF4n/N347QqjyqcKz67nfYA==
-X-Google-Smtp-Source: AGHT+IGL8FTQ+SYvd1GLeyhtKJK6v41zXOd4YU6hm/JGKf3mox3JkkuFVcdPqsGucnnm17cPNF7a0w==
-X-Received: by 2002:a17:90b:3607:b0:2e0:899d:c8a0 with SMTP id 98e67ed59e1d1-2e0b899cc5dmr16683439a91.8.1727788803026;
-        Tue, 01 Oct 2024 06:20:03 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:f0c7:be19:c0b9:ffdb? ([2600:1700:60ba:9810:f0c7:be19:c0b9:ffdb])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e0b6e22cc7sm10089848a91.50.2024.10.01.06.20.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Oct 2024 06:20:02 -0700 (PDT)
-Message-ID: <8ebebcd5-4ddb-4c1e-9bf8-4e9a79944e2b@gmail.com>
-Date: Tue, 1 Oct 2024 09:20:01 -0400
+        d=1e100.net; s=20230601; t=1727790042; x=1728394842;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VpjKNsZ70R4KuQtmQtBBm8hWFniRHJhJY6z4knFOUxo=;
+        b=LUnYyXCeL3T64M7Pr25oV4bDsP/nKcpbA1dRQtw1h5c9sewGMf/2iIAzti7Be7bK+Q
+         MRgC5K/ZtmeaLc7zS/eWIPrFC3VQneiJ8lWjywaIMZxvB19XvPwSinMx7KlFVPJDpHDr
+         GqkWmlhfmFmVW+rwSj3FrGzDqhWwR4mZKYSsfL+4tNFWYATSb5wlzYtEGIi4hc9EkpSV
+         3vDzl8vmldkOVOcvqIYTIFi0DNeyljQvRQEPRbj0JMwzXbSTa1iB0RCBiDpPv/WND4kw
+         9RaFTimybk0N7Z/45LncJDoRY6nvCzJJQPLiUvHMk5udZg7xO4d4ZBXZZfc/f2Z3d8dW
+         yGcw==
+X-Forwarded-Encrypted: i=1; AJvYcCXhS26YuECgi1vcVkfJDkFqj/mbN1v2Zcsr/mIdGaLzHxWKU4K2kwC6TKm1lWYtEw1DJ74=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlEyPidrmTPpMoGRvm3WABnj3iCIMBQIVNeuhawQkTlpN5vasA
+	k6NTOrgYoJyiHIYBjxQGI8sCmlMq+B0GvLHzIsVhhLnZysAn+gw/
+X-Google-Smtp-Source: AGHT+IEoICwdFFQGJS+d3F9UwD1RTWhhyeZvQzo/N2o7iEA+AppKXBRBOUVjEWSd273BpV8P4cKOjg==
+X-Received: by 2002:a05:6e02:1c08:b0:3a0:a80a:997c with SMTP id e9e14a558f8ab-3a3451b0cf1mr114753865ab.19.1727790042173;
+        Tue, 01 Oct 2024 06:40:42 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7e6db2c8704sm8363813a12.52.2024.10.01.06.40.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Oct 2024 06:40:41 -0700 (PDT)
+Date: Tue, 1 Oct 2024 21:40:43 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 3/4] apply: remove the_repository global variable
+Message-ID: <Zvv723-OwvEr0qMV@ArchLinux>
+References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
+ <pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
+ <d64955a2e277da138146020f6a0cf96f4636a162.1727718031.git.gitgitgadget@gmail.com>
+ <xmqqy13852jk.fsf@gitster.g>
+ <ZvuBduVg9TJeULpl@ArchLinux>
+ <Zvvr1_9syRh1McVA@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] read-cache: free threaded memory pool
-To: Patrick Steinhardt <ps@pks.im>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-References: <pull.1801.git.1727696424.gitgitgadget@gmail.com>
- <9a45b15ea4b9864cd3cff066ecd9281c4539d5f7.1727696424.git.gitgitgadget@gmail.com>
- <ZvqaTqegJxow1x-b@pks.im>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <ZvqaTqegJxow1x-b@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zvvr1_9syRh1McVA@pks.im>
 
-On 9/30/24 8:32 AM, Patrick Steinhardt wrote:
-> On Mon, Sep 30, 2024 at 11:40:23AM +0000, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <stolee@gmail.com>
->>
->> In load_cache_entries_threaded(), each thread is allocated its own
+On Tue, Oct 01, 2024 at 02:32:30PM +0200, Patrick Steinhardt wrote:
+> On Tue, Oct 01, 2024 at 12:58:30PM +0800, shejialuo wrote:
+> > On Mon, Sep 30, 2024 at 01:06:55PM -0700, Junio C Hamano wrote:
+> > In my opinion, we should first think about how we handle the situation
+> > where we run builtins outside of the repository. The most easiest way is
+> > to pass the fallback object (aka "the_repository").
+> > 
+> > However, this seems a little strange. We are truly outside of the
+> > repository but we really rely on the "struct repository *" to do many
+> > operations. It's unrealistic to change so many interfaces which use the
+> > "struct repository *". So, we should just use the fallback idea at
+> > current.
 > 
-> s/allocated/allocating/
+> I disagree with this statement. If code isn't prepare to not handle a
+> `NULL` repository we shouldn't fall back to `the_repository`, but we
+> should instead prepare the code to handle this case. This of course
+> requires us to do a ton of refactorings, but that is the idea of this
+> whole exercise to get rid of `the_repository`.
+> 
 
-You're right that the wording is awkward but I'm not thrilled with the
-suggested alternative.
+Actually, I also insist that we should refactor here. But I worry about
+the burden this would bring to John due to we may do a lot of work here.
+So, I expressed my meaning in a compromising way.
 
-Perhaps "each thread allocates its own"
-
->> memory pool. This pool needs to be cleaned up while closing the threads
->> down, or it will be leaked.
-
-> Okay. We move over the contents of the pool, but forgot to free the pool
-> itself. As far as I can see the pool is always allocated and only used
-> in two functions, both of which assume that it is allocated. So I wonder
-> why it is allocated in the first place instead of making it a direct
-> member of `struct load_cache_entries_thread_data`.
-
-I took a look at what it would take to replace the pointer with an inline
-struct but found complications with situations such as the find_mem_pool()
-method. While we could replace some of the logic to recognize the new
-type, the existing logic seems to depend on using the NULL pointer as an
-indicator that the pool should be lazily initialized.
-
-If we were to pull the struct inline, we would either need another boolean
-to indicate initialization or lose lazy initialization.
-
-I'm leaning towards the simpler leak fix over the disruption of that
-change.
+But we should face the problem directly :).
 
 Thanks,
--Stolee
-
+Jialuo
