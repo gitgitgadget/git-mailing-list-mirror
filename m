@@ -1,65 +1,92 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513051B0119
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 04:21:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312581B580A
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 04:27:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727756493; cv=none; b=ZDudpbNQb4UZYAkr6dRGA5pkyX6A6QYT9sRHuujMNrLxu+LMfY7aahIDp1E3zLITaqe/6OMroKlfCnxOR4WgWzjr93S4nzDMzxCuPPE0U9QGbbDarGu14qtVbkeXXQ78NRva7VmDMgiydVcXj/M6JZ6YgVxaWAnFC4tALvGGbAQ=
+	t=1727756866; cv=none; b=kGSpQ7FPUYHAQvts9STgpc/CEww+0agU5y6C2febhpUVU4bO+uTeZiXLa8QIPq46OI7ju6YJ5sabFqkMyjkPyKxi/BJDPlbqPWoEK6bmKBVBtxsmzYKKZGcYbsG5SpTsB3ae6zm/n+CPpZlvgdssmRoJKiDLloTxDvAyAmVUMEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727756493; c=relaxed/simple;
-	bh=l1vUO5t08pKVz2W7G9Zklv6kHMOrItMLv7dVyY3ViB8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=onP1Jbog5I+Y6QB1z7e86uBdBA+N9FkkaKNwsr0EH+6mRejd2MIwVVIb7YMTIWAMhl+BjhlNH5ShrRRxQu54q6Hp0f+OAX9cA9pO06bYfvJQ5/JjFmhAX3rcqyeNm5Fs/PCF8z6JDfBkKlmEJZ1/uuMoLylazaGptxr36fa0rA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KGO3gbnN; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727756866; c=relaxed/simple;
+	bh=PZa3pQriKxTq0v9PiKVPhvQuMwR4bivglRoxodfxRF4=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VgNrqkKrD7kkf0yU5Sc4vvP8L5fl6xREgQp0a4Gl1Z44hsS12uxBuVFpqHs61QgGhPg9G19nRYWWi++gCalpt7yOUGCCqIr8spi5iYTuLu/lHQaRNo7ppX+XgqnOcCxNDD/6Kq/3ACQR/hILWxI/IUQq2tjzm9Lre2KgZCRCqOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jG3WuYcU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O7bwN6C4; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KGO3gbnN"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-20b0b2528d8so56040145ad.2
-        for <git@vger.kernel.org>; Mon, 30 Sep 2024 21:21:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727756491; x=1728361291; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=d7SxXFE1UMESVJZb5j9rQthuDBTMqEMX/ZLRDo1qhxs=;
-        b=KGO3gbnNdniJmnR9zPWUJy+F+hBAjHDqEq2G38Z9lNc2tu/u/k2chGhHg4hvr9q64M
-         QP1dDjcd4HTOPL7DR55mK1xyBFCiRZ46x8cJwOUemUXGvrGHqw/XWX5wEbVjPVjbm+Z1
-         brKfwo1wy0Av/3d0Q0g2oYtedD0on07seTr1A9/pAF//S6hsT6YOgh/Ou8lD0FggpE7G
-         ZDXNkA42/95+imH2EcgBqsD4A8n6wSVqGaonfUkntd9Y2Bo6E/sCMYSv+GC9v4jLrCKe
-         N4rRWcT+1MLUPlemu0PAm/mLGZWgKeRu0zQPMJMTj1Ii0WxJY2jzehfJizPggPGBAui7
-         6FyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727756491; x=1728361291;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d7SxXFE1UMESVJZb5j9rQthuDBTMqEMX/ZLRDo1qhxs=;
-        b=pLA4g3KpSHBfcSa4cAIA7RmGQ7v3grZN2aT7PNIpp1yDlr+mnc/skSZBzzZ7AlsHd7
-         Mjwg1MTuXPz3AWbZqaNpoCdZFqiDQOZJSNNYG7N9QDTE2lxZEHRKDEypNOdTbkjhbuw/
-         Y6Lj1d1eChV24SroSem99PsDVxzyjhuNfaRf49+007nIc2Oo2J9svxwTVx9VUhqDjBoe
-         MYNq447F3R5EwHZFX1W/3GduqikuNMA78MyJiekV0penRElXz0BV2zbRMtYdnlYrBwri
-         D1CtsUMeHzywkIvpLQ9WM71Y31Ve8nCOMElZH7ThiC7ZqcmRCF3/6E+S34QKXBfHErpz
-         TwXQ==
-X-Gm-Message-State: AOJu0YxCCIumE06sGZd5HwI8NVfrF7u8ytOgMWOZyrNGtJhnNKVe3RoI
-	G0EezfcjqGZeFHgYp75Hb9vdBHs4iFnSKZqvP1Ihv/xud/TcrBYE
-X-Google-Smtp-Source: AGHT+IEQwSqCwWJy3ZSNShpe3fq4vZF3dMFlJqkcCda9rZtryBh6V4oI5uvUp+RwFTOgKkFSN1d1jw==
-X-Received: by 2002:a17:902:ea02:b0:20b:b26e:c143 with SMTP id d9443c01a7336-20bb26ece59mr9665795ad.57.1727756491418;
-        Mon, 30 Sep 2024 21:21:31 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37d60e4fsm61835445ad.42.2024.09.30.21.21.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Sep 2024 21:21:30 -0700 (PDT)
-Date: Tue, 1 Oct 2024 12:21:32 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 1/4] git: pass in repo for RUN_SETUP_GENTLY
-Message-ID: <Zvt4zILqF5Ujorn6@ArchLinux>
-References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
- <pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
- <5d72c31c6f3b97b7f5f7d3b4fa9a8b1587597670.1727718030.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jG3WuYcU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O7bwN6C4"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 12EF31381EA8;
+	Tue,  1 Oct 2024 00:27:42 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Tue, 01 Oct 2024 00:27:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1727756862; x=1727843262; bh=+8b5/kQzK6
+	BAYy7xrHQ6T1UESohBH79pjvwQNoFCltM=; b=jG3WuYcU+qDd42nYQy1Yq83wq0
+	ZQIOH8p2U69MIlyYbch1Szs68JdLwnWBYjD55CHEAsslNMtceznJccb+mTQTz6vF
+	Tj0+9u0ca/SH+eBFR+tH78P+SO3o7FLkHsCSi9AsAC7UuDBV4uRHWb5O3PNgq+1H
+	vijZQ8Mq811DzceuPvlBqhUNMZtE+/toJ9TuOPd1kGFr3kra2fziEqnRIgSlYzfk
+	59paDgqg8uCJ/fMagjuV/EDKn7xZN0VuW064iaGh6cvpBX7pfvLSdle/9oKwRebQ
+	QuWpDP43ej9SH3/nqWOesfiEXyjJq2i0mbX17vEDK4YnyItkn79zxhgZchuA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727756862; x=1727843262; bh=+8b5/kQzK6BAYy7xrHQ6T1UESohB
+	H79pjvwQNoFCltM=; b=O7bwN6C4docZwPLIsAc2YaMvkWscimQ6KQE55fsDsYNj
+	VG8NCledwEOrLyPiIzodRKHifi8r5nmYtNTPknaXCY2pK/YPIqhwBVR9+3B9qDde
+	AxaK5FPR+0CqqKTbTLnF8TSJcrE4WSL0ZBK4SfbANV37jBwDApIwsRKzs19DjGv4
+	9//g/JIXX+cgX4eb3NCjuVtGiUQvCGRlUAqaTd6waTiEovwqntKNacamnVuZvkTt
+	nhCiu30K6+mIfRrqUgpTwfdURp0diGl1X/pXn+x9ecnw6QJS9lhQzm9lvfXyOold
+	cPprIMeLKyZWFze4Ei5lzjyblMPioQ1tFfOBKIpCmQ==
+X-ME-Sender: <xms:PXr7ZoR-W1srEqo2-7wKTWfcInlWndCutV-chKydLrjhJgW-Rp_X_w>
+    <xme:PXr7ZlySRXtnnC153ntENIB1ZnRdLi_u8CeV2HHY_zxsMjyyQ7JjIEh16KCrww50W
+    zOYyKh8rYic-LCXMQ>
+X-ME-Received: <xmr:PXr7Zl1RTqpgQX93hvVSU6tbtSFEtJRfBx693njnLAQdpUZD3JvTQCX5i_hJVS_ya1MWkSwFHPxVkatwTPbBye-EQ6dASqasVkKwWLUxWyRKWA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduiedgkeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeehkeeffeeggedvgedvfeefheettddtffejuefflefggfeh
+    feelffeljedvfeehieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhn
+    shhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepkhgrrhhthhhikh
+    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjrg
+    hmvghssehjrghmvghslhhiuhdrihho
+X-ME-Proxy: <xmx:PXr7ZsCeEc3XkSk9FTAQN-cdHTE1pmxbvFMJfQlzeY-YLbK1nw2sog>
+    <xmx:PXr7ZhjcZDoqlFXUeQ8yLWgQFgyz6llVS3JytxI5dB618277DTBnng>
+    <xmx:PXr7ZoritbEbekrXkrXgCPePsTWWilPBD-d8aIAXNJwX8gaTjAWfCw>
+    <xmx:PXr7ZkgCzwnn_ZZtyDj0j-4BkMA3HtMxMfpgRsgy-YBof8dLE9O1mA>
+    <xmx:Pnr7Zphr6Jv8Itlmj53E-L4IjMhH3LOwAfFWp9fPoP8ssBiv7QiNx4Zr>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Oct 2024 00:27:40 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 18d79b8a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 1 Oct 2024 04:26:50 +0000 (UTC)
+Date: Tue, 1 Oct 2024 06:27:33 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Josh Steadmon <steadmon@google.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	James Liu <james@jamesliu.io>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 3/3] refs/reftable: reload locked stack when preparing
+ transaction
+Message-ID: <Zvt6LxWm8gtJGw9S@pks.im>
+References: <cover.1726578382.git.ps@pks.im>
+ <cover.1727155858.git.ps@pks.im>
+ <9ce2d18dff2a655365b609dd86ea484a489c717a.1727155858.git.ps@pks.im>
+ <20240927040752.GA567671@coredump.intra.peff.net>
+ <c4lz3begoplgde5iimvk4k7cufiyryntccqo46u3fy5qvqauv3@tta5wfg2ik5t>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,47 +95,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5d72c31c6f3b97b7f5f7d3b4fa9a8b1587597670.1727718030.git.gitgitgadget@gmail.com>
+In-Reply-To: <c4lz3begoplgde5iimvk4k7cufiyryntccqo46u3fy5qvqauv3@tta5wfg2ik5t>
 
-On Mon, Sep 30, 2024 at 05:40:27PM +0000, John Cai via GitGitGadget wrote:
-> From: John Cai <johncai86@gmail.com>
+On Mon, Sep 30, 2024 at 03:19:04PM -0700, Josh Steadmon wrote:
+> On 2024.09.27 00:07, Jeff King wrote:
+> > On Tue, Sep 24, 2024 at 07:33:08AM +0200, Patrick Steinhardt wrote:
+> > 
+> > > +test_expect_success 'ref transaction: many concurrent writers' '
+> > > +	test_when_finished "rm -rf repo" &&
+> > > +	git init repo &&
+> > > +	(
+> > > +		cd repo &&
+> > > +		# Set a high timeout such that a busy CI machine will not abort
+> > > +		# early. 10 seconds should hopefully be ample of time to make
+> > > +		# this non-flaky.
+> > > +		git config set reftable.lockTimeout 10000 &&
+> > 
+> > I saw this test racily fail in the Windows CI build. The failure is as
+> > you might imagine, a few of the background update-ref invocations
+> > failed:
+> > 
+> >   fatal: update_ref failed for ref 'refs/heads/branch-21': reftable: transaction failure: I/O error
+> > 
+> > but of course we don't notice because they're backgrounded. And then the
+> > expected output is missing the branch-21 entry (and in my case,
+> > branch-64 suffered a similar fate).
+> > 
+> > At first I thought we probably needed to bump the timeout (and EIO was
+> > just our way of passing that up the stack). But looking at the
+> > timestamps in the Actions log, the whole loop took less than 10ms to
+> > run.
+> > 
+> > So could this be indicative of a real contention issue specific to
+> > Windows? I'm wondering if something like the old "you can't delete a
+> > file somebody else has open" restriction is biting us somehow.
+> > 
+> > -Peff
 > 
-> commands that have RUN_SETUP_GENTLY potentially need a repository.
-> Modify the logic in run_builtin() to pass the repository to the builtin
-> if a builtin has the RUN_SETUP_GENTLY property.
+> We're seeing repeated failures from this test case with ASan enabled.
+> Unfortunately, we've only been able to reproduce this on our
+> $DAYJOB-specific build system. I haven't been able to get it to fail
+> using just the upstream Makefile so far. I'll keep trying to find a way
+> to reproduce this.
 > 
-
-We will parse the "repo" to the "run_builtin()" for "RUN_SETUP_GENTLY"
-property only when we know we run the command in the repository. If we
-run the command outside of the repository, we should pass the NULL.
-
-However, the above commit message is not accurate. If a builtin has the
-"RUN_SETUP_GENTLY" property. We may pass or not.
-
-> Signed-off-by: John Cai <johncai86@gmail.com>
-> ---
->  git.c | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
+> FWIW, we're not getting I/O errors, we see the following:
+> fatal: update_ref failed for ref 'refs/heads/branch-20': cannot lock references
 > 
-> diff --git a/git.c b/git.c
-> index 2fbea24ec92..f58f169f3c7 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -443,7 +443,7 @@ static int handle_alias(int *argcp, const char ***argv)
->  
->  static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct repository *repo)
->  {
-> -	int status, help;
-> +	int status, help, repo_exists;
+> We tried increasing the timeout in the test to 2 minutes (up from 10s),
+> but it didn't fix the failures.
 
-This is wrong. We should initialize the "repo_exists" variable here.
-Because we never set this variable to 0 in the later code path. It will
-always be true for the following code:
+If this is causing problems for folks I'd say we can do the below change
+for now. It's of course only a stop-gap solution until I find the time
+to debug this, which should be later this week or early next week.
 
-    repo_exists ? repo : NULL
+Patrick
 
-It will always evaluate to the "repo". This may could answer the
-question raised by Junio in [PATCH v2 3/4].
-
-Thanks,
-Jialuo
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index 2d951c8ceb..ad7bb39b79 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -450,7 +450,7 @@ test_expect_success 'ref transaction: retry acquiring tables.list lock' '
+ 	)
+ '
+ 
+-test_expect_success 'ref transaction: many concurrent writers' '
++test_expect_success !WINDOWS 'ref transaction: many concurrent writers' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+ 	(
