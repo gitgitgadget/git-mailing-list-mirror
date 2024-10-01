@@ -1,177 +1,127 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DA41CB321
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 18:36:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9608194083
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 18:42:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727807818; cv=none; b=Vn2ZORAxznD6hKA+6/kid0Q8qGzzPmH2i+kEgQYs13R2GGAG2m8rtsbOiVnO9/Y6rnRTTAoBqtpwuYgo8jsE1FJ9FTbtJhzQD9GqLAEEn/pgmqtHuHiaW69S3fzKzP/QdowI9sxiS0T3BbnO+jrffVKleeyrAcxmk0oXXxcEB2k=
+	t=1727808141; cv=none; b=d2znkKmliZTJqrjZUbzK4OmZuQ33yc8dbzMUQfdQGyRdzjzLksNgb63UNXKL+oa2AX54kO4hVf7GvSiljOu/BYUYf9ReZK38pICAYTBd5D4xrTpjnqYewFI/7P9v99fOGe9IpyuqU00vH8BIQ1DR4paluhqMa+Q8JFerf8abFsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727807818; c=relaxed/simple;
-	bh=hnjFEU8pjMEVYQNhGo1AMScQJHS4NOYkep1BCOV8Oy0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X/HaYfoBd6S6CEvw2Y2IL0dXUBG9it/1efE4T0pA9PkMle/Eynus+5mnIl9LmIgwu8GSlXol0FKXZhJWWlD36cpFyy+t7x2xiT3Lgl9z4aRQDvwcyOCYmoPd6+j6hfxMyQdeC+hBty6xmUijnwFEkumGSqCbWSWztQ9tJe7H1dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q3yej293; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F89hbic9; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727808141; c=relaxed/simple;
+	bh=HZqMDqDnCzMPz+UdrO+EwYDXbZto/ijccCJztEkGd6s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JCgR4Y64gDpg9CKfDPRbAMzdWpBEWDs+9ZkI+XvyMklmp+PQd8S3Dd++RIsOqo7fDj4gNph9Ft7aJkgwTQcIDotvmITogLv8SHOis/eBPV7NNqVUzUPtYWj5jn/vi/dEbIJBjbfuEK7oBHxQnloieEFqHgZ4nhHGgyN6ndn4FAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=EcwO0BBQ; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q3yej293";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F89hbic9"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D077C1140BB9;
-	Tue,  1 Oct 2024 14:36:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 01 Oct 2024 14:36:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1727807814;
-	 x=1727894214; bh=WkvF6AJQiNaG39Gnd5xydUoR9coRd4PAjKUrNx3ol/Q=; b=
-	Q3yej293WXaAbPAexFyuLUfUVCEOhqMgUy3H0x8eAvrcpWpbsIlKyeO9F3r0JBTL
-	0cNCtCx6y+iDp6eOACFmHr7HJcn3ZLhB3vc6lCpHWlpF69Paq6/L3x8ySgZr6iAN
-	hnLvSFj7gk0LFRkldbhlyrgze+9bDod7xtgWWvB2J2VMzqJiGZMVgyBQWH2MIcHX
-	khQ3Z02xEU1JAVcEOGJFPBrBLtFN01vRftWd8ynLD6aXpKHBA7PVruMzT4SX8+q2
-	pL4/GPBciBA3YHXYCrP5Vol2B9+Fz9a48QwtyQB1H7VGiabd09ce6cgs5lWyOfY6
-	9n9EuDafAM4cKHYst/PUXQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1727807814; x=
-	1727894214; bh=WkvF6AJQiNaG39Gnd5xydUoR9coRd4PAjKUrNx3ol/Q=; b=F
-	89hbic98Nr6eGhngWGD0qE4D596vuQ75GTdGn/sL/UocBWaa2TQxjXkS+PDeNKRx
-	1fVOS210ig0JHizu/MyBniSHFtz4Pq6qFdxuVsmUg/flNL/or3PfDqWXgyr1ud+T
-	jRWU8HNets/JGe5FeSOXIPTr5bAPtaf98F4uGzKLTsiDwBhqCnJjlE+DGn45MrOH
-	9YQmnNkdIH5mGbQadgOSVBAViXOE3+jSAj8/D/1hxYc7xixAlBMP/jNkWXhgg0CS
-	JL3Z04okr7g1gdo0zxxhQENOfIi97pb1R5tnFMcwaOC7PL5dSKyJa8EbYimvZAJA
-	tR5597vOXhO5GtIharFEw==
-X-ME-Sender: <xms:RkH8ZiAo-tt7297OU955OJ3KRf-Jx9pJ5akzZ5CDlE2BYoyLvw4mtA>
-    <xme:RkH8ZsjxBW_C2Hdr9KjA1U7XhsFagGHYvHLYPrlhqp8yDDpjPCbwt59c9YbjGsn1G
-    OcS3aU-94CmcaBuYA>
-X-ME-Received: <xmr:RkH8Zln6gejKIQPhMTd6c59_6_pic34HCAZGh669dwXSrI5_peGUSc54WRQ0noCG1LsYWXhec4ZxQIlhhRosNPzrpVKHggA2pnM4K0I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedguddvhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehmohhnihhkrgeskhhisghithdrlhhtpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:RkH8Zgz6MgMv3Ir3Ug6-on-4u06tpyofK5knSROK6kHQVuMUgIh5ow>
-    <xmx:RkH8ZnQDr1AU1yK6dl2w8_Y4z7wK4RWr6MkRLgW3EGoQygADICMqSA>
-    <xmx:RkH8ZrZMdd_2Dc8oELOTc8pfkqizxRqIKZP9cKcKuSYelRX3KB3Wnw>
-    <xmx:RkH8ZgS_QoZTXBzw0YV6E6SdWvdBl8gNL0RPLRHbwMYqVe9TuAEaVA>
-    <xmx:RkH8ZlOqwy_ojenyh3MHvWQW9w-w2LulpmBceOr4ATNzODcXPOSjlyMO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 14:36:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Monika_Kairaityt=C4=97_via_GitGitGadget?=
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Monika =?utf-8?Q?Kairaityt=C4=97?=
- <monika@kibit.lt>
-Subject: Re: [PATCH] documentation: add missing word "ref"
-In-Reply-To: <pull.1803.git.1727623027242.gitgitgadget@gmail.com> ("Monika
-	=?utf-8?Q?Kairaityt=C4=97?= via GitGitGadget"'s message of "Sun, 29 Sep
- 2024 15:17:07
-	+0000")
-References: <pull.1803.git.1727623027242.gitgitgadget@gmail.com>
-Date: Tue, 01 Oct 2024 11:36:52 -0700
-Message-ID: <xmqqy137wtyz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="EcwO0BBQ"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6d9f65f9e3eso50741207b3.3
+        for <git@vger.kernel.org>; Tue, 01 Oct 2024 11:42:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1727808138; x=1728412938; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PgfkYdAGesAMGPP3oQhapolYUGYu7w6TBEYFzsyozxc=;
+        b=EcwO0BBQLAkIEM0O9P8EsxoX07PJIdIUV/SI2f9H5iaSUrQHO2XlhsbywkaTJ1DJfT
+         AevsN0PZ68oft+U1Mzz+xjmq1rvUTTdXTXS0EiQS0c5YrFQapB5sGitng5R0M3C6T2cM
+         w+fi4DuxEwWKi6yUNlAhPZ6X+Ps8ZPPHS9qRMsWRHzf+Boc7OJ4LHYvcKqxMr3dXyriS
+         FO+eeh8dUTOiTB2mPA0WIfgXK7BXO7zByllf7lnCN4CBohY8+bZr5qdzqqPRWRhvIyUA
+         XnUG9mL631btKeBd90vsZxddPLvqoACk8ES4gTcJkxrgM00NdI0xo8XsfEcutwMhWddf
+         iAVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727808138; x=1728412938;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PgfkYdAGesAMGPP3oQhapolYUGYu7w6TBEYFzsyozxc=;
+        b=P2Fh41blCHdDa5oCui+aL5LjQrDaGkgk0YkPNwEaSkqmp9+RWSkYfN9n1pcZU4Gz5v
+         7qTaUkMeh9RIPwFb5/YGiOIMIXkWzJA1Rj6HaX0qfQG6chnCq96yfZ9Rb1fqzo2xLmrs
+         CrGMQJCebW0iY06yGwyYoa9GgHzjTCRCkaC1Kjgj67IutsqkG9CgYHxctcVLDIVOW2ua
+         vW0yLTJz3F9IgV9Arfv2AMsCL8+nKdMmuTljd8y7Aiae7/9kcL6XPLNypaXz9kyk8XHy
+         vkzatXVCDp5TKS3V6mR8RkOyOjz4hSk7jCBHGykY47OFV8Nfpbny3cM917X/dtiUwqge
+         pvWA==
+X-Forwarded-Encrypted: i=1; AJvYcCXyfSBBQ7NlMu4U7nRsvmXlhQkX5vYa3eRtjROLb6StGOE6YaGQ7HJGAzWs2/+ywQaFrWY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy05Zd89PBREsRM5q+owx7GWhkgqArNk7kZ5HLJgk9ASe4yEgbb
+	7TR23ytQIZEKn3rJUK4Kp2IqnSVEmYEZfvhMMUYC+1bCEtUQgGWqVtMsNONlfJ4ZlNqB0RHvaNF
+	PYSMb1E4BRZ8fbpkeBK182H7X0DmiR7Ohy8ECnapX4/wUGj8RhPgVN1p/BASNl4hlh/FNYEHL7X
+	awYwo85W8vnpRNCpZcOpPI+mky/emLqo/eyP6KfPXSBDGsBRrpFvO3izNKml2L8/KG9wvpDxH2Q
+	j1Oud7EQza2aTdLAHTeKOmmjIlEKt9ZKaVMk+34Gvk5+VtUf/VZ+rxRGG8aCutA3701OBwYY30M
+	jWzau8fHoKSlHo2JxZIPiMkW
+X-Google-Smtp-Source: AGHT+IHbMptnNtRtbxtBEiPhzBUZRn9fYNw8QC5BkV7X/3ta9PEr+Jsij4CvAxlNd/30u3PGIqynQ+pYyLuvbMOnS1E=
+X-Received: by 2002:a05:690c:660f:b0:6d3:d842:5733 with SMTP id
+ 00721157ae682-6e2a306e268mr7355737b3.35.1727808138315; Tue, 01 Oct 2024
+ 11:42:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1802.git.1727577690390.gitgitgadget@gmail.com>
+ <pull.1802.v2.git.1727759371110.gitgitgadget@gmail.com> <xmqqwmis11f7.fsf@gitster.g>
+ <CAOTNsDyg2SB-wd+a7vrctXck46jyfqV4uME6nf4YQZEafWbxMw@mail.gmail.com> <xmqqmsjnya1c.fsf@gitster.g>
+In-Reply-To: <xmqqmsjnya1c.fsf@gitster.g>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Wed, 2 Oct 2024 03:42:07 +0900
+Message-ID: <CAOTNsDz=gV1TQ=N+8V+CdhWkPSogNM-42B+vzhDNWdM-Wz9CfQ@mail.gmail.com>
+Subject: Re: [PATCH v2] fsmonitor OSX: fix hangs for submodules
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Monika Kairaitytė via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, Oct 2, 2024 at 3:04=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>>> > +test_expect_success "submodule implicitly starts daemon by pull" '
+>>> > + test_atexit "stop_watchdog" &&
+>>> > + test_when_finished "stop_git && rm -rf cloned super sub" &&
+>>>
+>>> If stop_git ever returns with non-zero status, "rm -rf" will be
+>>> skipped, which I am not sure is a good idea.
+>>>
+>>> The whole test_when_finished would fail in such a case, so you would
+>>> notice the problem right away, which is a plus, though.
+>>
+>> t/README discusses that test_when_finished and test_atexit differ about
+>> the "--immediate" option. As git and its subprocesses are the test
+>> target, I moved stop_git to the current place. This might be however
+>> confusing when someone later reads this test. Should we simply put
+>> stop_git and stop_watchdong in test_atexit?
+>
+> That is not what I meant.
+>
+> I was merely questioning the &&-chaining that stops "rm -fr" from
+> running if stop_git ever fails (and your earlier iteration you had
+> multiple "rm -fr" ;-chained, not &&-chained---not using && is often
+> more appropriate in a when_finished handler).
 
-> When explaining about "the destination ref <dst>", word
-> "ref" is included. Logically, it should be the same in the explanation
-> of "the source <src>".
+I see. I'll fix this part.
 
-"Logically", if <src> and <dst> followed the same rules, but
-otherwise, it is not a logical conclusion.
+>>> > + set -m &&
+>>>
+>>> I have to wonder how portable (and necessary) this is.
+>>>
+>>> POSIX says it shall be supported if the implementation supports the
+>>> User Portability Utilities option.  It also says that it was added
+>>> to apply only to the UPE because it applies primarily to interactive
+>>> use, not shell script applications.  And our test scripts are of
+>>> course not interactive.
+>>
+>> How about the following modification? It still utilizes $git_pgid to
+>> filter processes, but avoids "set -m".
+>
+> Nah, your original reads much better, and the code is grabbing and
+> using the process group information anyway (and my question about
+> "-m" was more about "should we be relying on process group features
+> in this test to kill them all?").
+>
+> I am OK with the idea that we can assume, at least among the
+> platforms that support fsmonitor, that sending a signal to a process
+> group would cause the signal delivered to the member processes just
+> as we expect.
 
-What makes me hesitate with this change is the following.
+Thank you for the clarification and the support.
 
- - In "+refs/heads/*:refs/remotes/origin/*", <src> is "refs/heads/*"
-   and <dst> is "refs/tags/*".  Neither is a ref.  So it could be
-   argued that saying "ref" before <dst> is what is wrong in the
-   current text, and adding "ref" before <src> makes it doubly
-   wrong.
-
- - In addition, <src> can be a fully spelled object name, to fetch
-   just a single object.  In such a case, it does not even remotely
-   resemble a ref.
-
-How about this text instead?  Would it solve the problem, i.e. 
-
-> In the git-fetch documentation, description of <refspec> syntax is not
-> entirely clear.
-
-Thanks.
-
-------- >8 -------
-Subject: doc: clarify <src> in refspec syntax
-
-We explicitly avoid saying "ref <src>" when introducing the source
-side of a refspec, because it can be a fully-spelled hexadecimal
-object name, and it also can be a pattern that is not quite a "ref".
-
-But we are loose when we introduce <dst> and say "ref <dst>", even
-though it can also be a pattern.  Let's omit "ref" also from the
-destination side.
-
-Clarify that <src> can be a ref, a (limited glob) pattern, or an
-object name.
-
-Even though the very original design of refspec expected that '*'
-was used only at the end (e.g., "refs/heads/*" was expected, but not
-"refs/heads/*-wip"), the code and its use evolved to handle a single
-'*' anywhere in the pattern.  Update the text to remove the mention
-of "the same prefix".  Anything that matches the pattern are named
-by such a (limited glob) pattern in <src>.
-
-Also put a bit more stress on the fact that we accept only one '*'
-in the pattern by saying "one and only one `*`".
-
-Helped-by: Monika Kairaitytė <monika@kibit.lt>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/pull-fetch-param.txt | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git c/Documentation/pull-fetch-param.txt w/Documentation/pull-fetch-param.txt
-index c718f7946f..d79d2f6065 100644
---- c/Documentation/pull-fetch-param.txt
-+++ w/Documentation/pull-fetch-param.txt
-@@ -25,14 +25,15 @@ endif::git-pull[]
- +
- The format of a <refspec> parameter is an optional plus
- `+`, followed by the source <src>, followed
--by a colon `:`, followed by the destination ref <dst>.
-+by a colon `:`, followed by the destination <dst>.
- The colon can be omitted when <dst> is empty.  <src> is
--typically a ref, but it can also be a fully spelled hex object
-+typically a ref, or a glob pattern with a single `*` that is used
-+to match a set of refs, but it can also be a fully spelled hex object
- name.
- +
- A <refspec> may contain a `*` in its <src> to indicate a simple pattern
- match. Such a refspec functions like a glob that matches any ref with the
--same prefix. A pattern <refspec> must have a `*` in both the <src> and
-+pattern. A pattern <refspec> must have one and only one `*` in both the <src> and
- <dst>. It will map refs to the destination by replacing the `*` with the
- contents matched from the source.
- +
+Koji Nakamaru
