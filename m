@@ -1,89 +1,83 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41761BDABD
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 22:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3BD1BD034
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 22:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727823296; cv=none; b=fpbHlnHYj3wTXklXcJfeDdb3LivJ0/vlbMemr02NJ7rlIBFOsfdili9s/BEM9cpIR7ikGgQlY8dIIQhy8MKAFYl3rm/mrNkkQvMVcG/SefOBoO6QtgNwRWDt5faDbIe98UNHJztuRYioD2Rwbd5OR8Z/KcYmTINMD71aoyzY36I=
+	t=1727823508; cv=none; b=JASI3hIQ76in7UOX+B83I1DlkDQ1CR5mpK+RT3YkRcgaYGY84CEA1MPT4pdeLK/af6Fo3bGh7ryfmZpBBYrsXtr9KYhHd3nSytfvYwKMZYw22ubpoBVKy8wjl8cN9gHkIqdIu2kdisjJ2eFzwxMOay2f1QzqnxaU/CZR7lrube4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727823296; c=relaxed/simple;
-	bh=0uaPRYMLRObDPggXU8IBeTgbyaOoMkccV3WrXHmI37Q=;
+	s=arc-20240116; t=1727823508; c=relaxed/simple;
+	bh=KoE9/A1MiWNIIDmmPS1rcZgngSsha9ggD42gQdOtyc0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=daUnWmY/IfQ5IOIllYyxLwufG664M9peIfffS+wWS0oTrLmmNc+lalsJ5Nt42UvRVc+rC9BNrcpUqwJH58jVVbQz2ZtXiMnn3Z4VrlgBkvGXJNE3f2GpPhn+FmKXILA0o1nJKVCd1Gz8uS+gcf6e9Fg/ZQfBkRC/AgfbtOg80kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D7Iv2Fjs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NEnzblRZ; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=WZGP4C49o53jD2JGWblfWJ/31E1cgrE1kA6gtEF3nrXaHS0S/pHPw8R6gijJnDuiBnM/axiWwFbbf6VXLIrdP4wwKmhMy1CnkhFgQ4W8bKFzxwN3N1oUjr6+WaKvPsNWDUMkpa+0ANFPvmLphYFAZBfjZQlmzl4BMOtbvElpg6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ipsCXQlp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZmaNSvNw; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D7Iv2Fjs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NEnzblRZ"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 093F2114077D;
-	Tue,  1 Oct 2024 18:54:53 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 01 Oct 2024 18:54:53 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ipsCXQlp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZmaNSvNw"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E073D11407B5;
+	Tue,  1 Oct 2024 18:58:25 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 01 Oct 2024 18:58:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727823293; x=1727909693; bh=TGz1PzkMbc
-	dM60ZVFY4YTGxKsiu8R6K5X9+ctGKBz/Q=; b=D7Iv2Fjs4toU1winodMrIArkZF
-	n6O+HuyNoIelyd4RSsBSr8fFzhOFhxisGyVz/J2BYWgTzzhN3MX8UiH5VJzImwhd
-	awIE7T97tS9PaH8kYBiSc9G/44iaDaVIHGMj4onNuu0To4O+pV2wDaO4juPV2pCO
-	ArxOw3mnHovTyuKNiK6j7CASm6w2kPRUlcOqi3Mxu0yPtOIEXlvjjWXRm76ewHrr
-	ZV+HHRWhBJN1+L0/W57sIZpnZwAWC9WX85ZhBMcUNAWhc7wfwfA2FSeQg+dZayf8
-	0IUvjuGeqcAkJC7HIAyUJ/XyzXmjZYSRBE98Jw5Ex8nav8aayXpbaFJbVXoA==
+	:subject:to:to; s=fm1; t=1727823505; x=1727909905; bh=03Er9kXxWR
+	VIylzlORN6+BnxoN6QwiiBu25WaOPWHL8=; b=ipsCXQlp9CUexHkx/A+EaT4uSn
+	sKbsJbnPZS79GK7Nogbba22w8MaIsINsmKrfOqNImsjksBV3vrJpnSFyP/hdJjct
+	QlQIliPPyooJCLU4OKdLjgwf3v7AGewuzn0UB+bmUX0JhaNNtiEurAXWAHVHcmlx
+	/aRfrxMBQQOJT/nSBq74V5lihvvJ2zgvBE9tLmqlJIOVb9R/90AlvXc2Ur/gqskh
+	doj/r1M3esoj0ZJztKjxrd+fIHFun4GTR73RtB70Qq0ZpIS41tU5tPK/L90xDVHl
+	5L4Kail9e9DL6SInEI0HwnWANEDN0fYLpCh7u2UM4VJnsQ+HRxHU3ABw67Fw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727823293; x=1727909693; bh=TGz1PzkMbcdM60ZVFY4YTGxKsiu8
-	R6K5X9+ctGKBz/Q=; b=NEnzblRZoFa0EBLg6Cv1qX0VUK/XEaK/WFAXA7ICm9FY
-	YZH4OHuBrbrQZwwDGLunUcG+5DJuv0Kf083SVfdw4ylKzarG7+GZOXZLPDRZ4xVe
-	29ywxMvZg/LWGoZDJ6Z9S778rkp2DZm4YpIhTGuQ40F8ciF/x3xicUl3jDBJh0CN
-	eiRRTd/K/068ep1a5FFForev8VUgnM3YS9oxF+7IrFX3gGse/B0d/spyl0Q5f8B/
-	ivZF0Y8czdyLdAZofFhKu0+A+Qzq2u2zLwlClXVmkyW28ePY2KAWxlSB/bAfujTf
-	1UxlcYFVUDjGm0uW318wsdSUFwfQ2dEe0qppYDazjQ==
-X-ME-Sender: <xms:u338ZjU0kRQZlqdexbJZga3mfooCybyuig1myv2RbivGaxfh0Lu2dw>
-    <xme:u338Zrn0jJWz3BjVgHQWQ0823kvMf2QR8ac8F_6pxEfrKrNAgkLJq78nUVieSMdA6
-    lW24nGTHgFbggS2UA>
-X-ME-Received: <xmr:u338ZvbAzlD1DtBS7hWD1-2dQ96cLKTOyLsOSvfADbcys3LzDKDfhgZVWylKDotlYOollnfHiu1MmG8C9b1xDpZqSS6mFjEei4xxJDw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddukedgudeiucetufdoteggodetrfdotf
+	fm2; t=1727823505; x=1727909905; bh=03Er9kXxWRVIylzlORN6+BnxoN6Q
+	wiiBu25WaOPWHL8=; b=ZmaNSvNw2yP79RHFJcY5r2Y7Xiqif3VpIH6JA6dyU18b
+	/q9oT4oMEnIwEZrvEk6gdbDf+Td++e40L5YklE4dxNGN7nV+BeG3cVWu1Qv59xwe
+	reEElgi6skLDj7dsJ8n05FwBiES8UC9VGthFOUtFgLxMbbhDDlzvfURsS8ToQVha
+	IsXnMc/TJr+jr79F+jvcchutyvQeLxbTq/ll8NzAro4jHklIft2HBzmJpZZ7Gded
+	d5YplQrCTV9DKpkuiZxsI9cc+lgPaCFc+pDWk8R8CTMrUgvGLHbqEsxiG449lC0F
+	LbV3mOiKTHG67Sg2pFdmpyiHuxOs009orftjjebflQ==
+X-ME-Sender: <xms:kX78ZipsekNUs0IULNOa-DRmW-KPBbvNHGvlh-xf86LXz3ch3rUpuQ>
+    <xme:kX78Zgrm-yLC-LZuiwswpKS3S1wTEOeZoF5k9cqFRVCQ6WAhUnFePgQtjr5lrXcv0
+    aMxqYiZuHDbUCePGg>
+X-ME-Received: <xmr:kX78ZnNGhupjENcb_RJ6VFGih0aP0WfcCG94hctuFzajx1TxtWArHjClGxB6dNZsX07VdWGK5W961wGatzZfLuBhCTj5ojr_blxsBA0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddukedgudejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
     ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhgtvgesfhgvrh
-    guihhnrghnugihrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrd
-    hukhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoheplhdr
-    shdrrhesfigvsgdruggvpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlh
-    hinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:u338ZuWYEKW0SXbfPhJAPG6jLQ7jP1sIN9SqEVzlBs9WeOHHMFLWBQ>
-    <xmx:u338ZtmbzvZh6JYKFWhjrHDL7feyWifLkmCVJsgWljLKi8Ntwc4Ekw>
-    <xmx:u338Zrft7xCgQmgeTwi0mzcYAP0_RgfTueTWsrtRv92FTQR8P7zopg>
-    <xmx:u338ZnEyDA9KW2FtnTP64uta0Y8awtFhookBIJMiQpO9QUjqgrq8vA>
-    <xmx:vX38ZjUf8Uh2OLhepV_TVJJC7_0EK2x1Fs9FO36U5T78BF2BX440_q1p>
+    drtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeekveet
+    veevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:kX78Zh69Xm9dV8kptGTA3ojMpRv-KPo-_nVEInMXv1fZdzWpFPiK4w>
+    <xmx:kX78Zh4-KyEhQ0CuzfGvMEvsB9FN3y4vqeskgYJSxACYxmYcODNVRQ>
+    <xmx:kX78ZhgDx8Hj-CslOekVP86isMVkpkT_lekpdwd7rJyi-4euGmPQGA>
+    <xmx:kX78Zr5yQWsODBIcP_nfRr4cThbO94zOFRj8d4dHclrvbCDHHz6scw>
+    <xmx:kX78Zk1bG2anYOKcV-MUWtosiFQvm7VUzzg6YzTuV9NlnIxozvUkXXAR>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 18:54:51 -0400 (EDT)
+ 1 Oct 2024 18:58:25 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: git@vger.kernel.org,  phillip.wood@dunelm.org.uk,  Taylor Blau
- <me@ttaylorr.com>, 	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Johannes
- Schindelin
- <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 2/5] set-head: better output for --auto
-In-Reply-To: <20240930222025.2349008-3-bence@ferdinandy.com> (Bence
-	Ferdinandy's message of "Tue, 1 Oct 2024 00:19:52 +0200")
-References: <D4JIG4VS5WVN.2F0PNU5514UEL@ferdinandy.com>
-	<20240930222025.2349008-1-bence@ferdinandy.com>
-	<20240930222025.2349008-3-bence@ferdinandy.com>
-Date: Tue, 01 Oct 2024 15:54:50 -0700
-Message-ID: <xmqqbk03sabp.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2024, #01; Tue, 1)
+In-Reply-To: <20241001225113.GA2317071@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 1 Oct 2024 18:51:13 -0400")
+References: <xmqqr08z254d.fsf@gitster.g>
+	<20241001225113.GA2317071@coredump.intra.peff.net>
+Date: Tue, 01 Oct 2024 15:58:24 -0700
+Message-ID: <xmqq7carsa5r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,80 +87,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Bence Ferdinandy <bence@ferdinandy.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> +static void report_auto(const char *remote, const char *head_name,
-> +			struct strbuf *buf_prev) {
-> +	struct strbuf buf_prefix = STRBUF_INIT;
-> +	const char *prev_head;
-> +
-> +	strbuf_addf(&buf_prefix, "refs/remotes/%s/", remote);
-> +	skip_prefix(buf_prev->buf, buf_prefix.buf, &prev_head);
-> +
-> +	if (prev_head && !strcmp(prev_head, head_name))
-> +		printf("'%s/HEAD' is unchanged and points to '%s'\n",
-> +			remote, head_name);
-> +	else if (prev_head)
-> +		printf("'%s/HEAD' has changed from '%s' and now points to '%s'\n",
-> +			remote, prev_head, head_name);
-> +	else
-> +		printf("'%s/HEAD' is now created and points to '%s'\n",
-> +			remote, head_name);
-> +}
+> On Tue, Oct 01, 2024 at 08:51:46AM -0700, Junio C Hamano wrote:
+>
+>> * jk/test-lsan-improvements (2024-09-25) 3 commits
+>>  - test-lib: check for leak logs after every test
+>>  - test-lib: show leak-sanitizer logs on --immediate failure
+>>  - test-lib: stop showing old leak logs
+>> 
+>>  Usability improvements for running tests in leak-checking mode.
+>> 
+>>  Needs review.
+>>  source: <20240924213404.GA1142219@coredump.intra.peff.net>
+>
+> I think these got a favorable review from Patrick:
+>
+>   https://lore.kernel.org/git/ZvVtcJOsbbrnWukB@pks.im/
 
-OK.
+Indded.  Will mark for 'next'.  Thanks.
 
->  static int set_head(int argc, const char **argv, const char *prefix)
->  {
->  	int i, opt_a = 0, opt_d = 0, result = 0;
-> -	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
-> +	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT,
-> +		buf_prev = STRBUF_INIT;
->  	char *head_name = NULL;
->  
-> +	struct ref_store *refs = get_main_ref_store(the_repository);
-> +
-
-What does the blank line between "head_name" and "refs" declaration
-indicate?  Is "refs" so special that it must stand separately from
-all others?
-
-The primary purpose of this step is to pass a strbuf to
-refs_update_symref() so that we can learn what the original value of
-the HEAD was, so that report_auto() can give a more intelligent
-message.  The introduction of "refs" to avoid repetitive calls to
-get_main_ref_store() is orthogonal to that.  It is a good change,
-but it should stand on its own, as a separate "preparatory clean-up"
-patch.
-
-> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-> index 532035933f..711d6e5598 100755
-> --- a/t/t5505-remote.sh
-> +++ b/t/t5505-remote.sh
-> @@ -434,7 +434,7 @@ test_expect_success 'set-head --auto has no problem w/multiple HEADs' '
->  		cd test &&
->  		git fetch two "refs/heads/*:refs/remotes/two/*" &&
->  		git remote set-head --auto two >output 2>&1 &&
-> -		echo "two/HEAD set to main" >expect &&
-> +		echo "'\''two/HEAD'\'' is now created and points to '\''main'\''" >expect &&
->  		test_cmp expect output
->  	)
->  '
-> @@ -453,6 +453,17 @@ test_expect_success 'set-head explicit' '
->  	)
->  '
->  
-> +
-> +test_expect_success 'set-head --auto reports change' '
-> +	(
-> +		cd test &&
-> +		git remote set-head origin side2 &&
-> +		git remote set-head --auto origin >output 2>&1 &&
-> +		echo "'\''origin/HEAD'\'' has changed from '\''side2'\'' and now points to '\''main'\''" >expect &&
-> +		test_cmp expect output
-> +	)
-> +'
-> +
->  cat >test/expect <<EOF
->  Pruning origin
->  URL: $(pwd)/one
+>
+> Obviously they're not urgent, but it's nice for people working on
+> leak-fixes to have them as a base to work off of.
