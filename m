@@ -1,89 +1,84 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608321C6F7B
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 17:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC141CB53A
+	for <git@vger.kernel.org>; Tue,  1 Oct 2024 17:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727802662; cv=none; b=nGEdTAWHLdP0nrVdw3rQbBmhlA4LMJCeUOwwllSiwXgyIrs3iQsJ1sI82664Ozed4slxQyGGZcuDy/IekODoMjZy7hHILvEgq82E68gI+p0eHLMlFklLaGz1QCmkvPNy/Xihjqin3WsFQ/odIFIVqBGzKVWaSt3slFR9pcpgGHQ=
+	t=1727803656; cv=none; b=u8tA/XKBwicn6cYqb23XOzAbPB7csdYEXN4C41VfXVZvdUQs7GQWqhTn+IqZEJTkowrT2OtKUj3aYB/kh9/iI89yUciBVt3JEQh2oqH2WuFhndOrR9LzYwQ+sB0jecArYbgsmas9U3XpwfXQeSRKmpDlveg4j0NJafFsJdB3YKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727802662; c=relaxed/simple;
-	bh=eygtzHBb+5J8AR/dJOxjEnDW0N+kjChtQM+QEviumDo=;
+	s=arc-20240116; t=1727803656; c=relaxed/simple;
+	bh=Ascln2gDMn7Sri1q3sdWR9TL+eqwCoXowsjCmytz2p0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZPqyLy6hE9fquvlX9jDDON2VCpFqxdr2TjEmU5/oWvITEQ+VzHQo71/9mFf8NMxt1scnVnoFywXD/1jFGUYwydXXGQX/XJbOGALgTZLDAUw+st3o6+jG58J+RpdvOlbQju3NJ4e4EBN40bQnFNrO/ZE63oTkYvt6BWiiVl70wEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W3gn5hji; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QB5OHS5S; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=YLjzwRoPP8XxAO5oU5ky+W92eKHyAlruQD0Q3BEflhamTQLpdHlfwKiujNQjT9bR6FQzqjbWX6cvjWUKuT5PsrVvUbYYeQGBZywM+YFZ1yzcOCOx15d8VG9tJpX/xeHeLptuCxDQmsHMlrQCF9TrJAlQ5uWeKR/+F6tVUqpZ6jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gq2vOcmV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JlPWdYX5; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W3gn5hji";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QB5OHS5S"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6E67413815F5;
-	Tue,  1 Oct 2024 13:10:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gq2vOcmV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JlPWdYX5"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 78B9413815D2;
+	Tue,  1 Oct 2024 13:27:33 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 01 Oct 2024 13:10:59 -0400
+  by phl-compute-09.internal (MEProxy); Tue, 01 Oct 2024 13:27:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727802659; x=1727889059; bh=Ry20APd9WO
-	VDxKwyVpRMntUCXHka7pnc0tkrq4fbxyQ=; b=W3gn5hjiJHlI2jibFaRjCvSvEH
-	Xau9kYMjgnnhUthTBmvZJh664GaNCOfMvNTHZ9wncv0gKIa+wf2rs5Tsm/LRIvtI
-	PrXqvJyc7PN2WdsuxAfKXtf7tcat+Jya8jlJXP9gi54BkF+e9KRr4S+yKyofHq84
-	zOzL/GCeeOsDkbvAfF46IzMzeiVCBUyR0QsWyZN7ZXhgLvxrDxn14uXbWo2LPlNM
-	W5XHr2n6IWjjLgCu53ebU77jfNSMPqzY+qFu9Dfd6M+R0ZS0tP7gZ33WWjWBNOyK
-	GCOsd2IOdhD2TaKd4HZtqnZza/5vc8me7GUMSyAjn/6NSgSc6Sssvl5GYUrQ==
+	:subject:to:to; s=fm1; t=1727803653; x=1727890053; bh=pmGOBTaw/A
+	ZCWhjnj5iJ4nMHSjP8BORN2SI/lpqFqvo=; b=gq2vOcmVIGNyQrciXxdnqOZZ5T
+	YQuOC4nGJw7uKjNWUMQZaxh1sul6q+Us2uFuBqtmHPz41aDU3CzE9/y49zokqXwM
+	4h7AXRfa7Lx1tSox7rQyJQLWu94fO+a6Y8VwgUS+RIm7dXxPaxJLjEB+56an1lOo
+	Jei0FHncxc3KR77DzCEhvsYc/nqpz1kCk4YeFEFXpxsBV3GYDDsU1q4eyvvb8DYo
+	UQOfgRGvReieqlGGA5aBKd2DcIaL5dTcBfalRmBJ3lFDCcAZKLFtwGxBnpr3+zAK
+	0kUEDSF2oWfs4nyQ+SKoI/GvbS2bQk+wTNDlmufAgIuJ1Ey2f02RF8jNi73A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727802659; x=1727889059; bh=Ry20APd9WOVDxKwyVpRMntUCXHka
-	7pnc0tkrq4fbxyQ=; b=QB5OHS5SdSX/y7wGq/BHaM/FcfsgAgz07hd3OIMPxZ5Z
-	Saxiw9XWStkMWvY0LEt7wSun8YVaG/mHcsN4Cz7VPCnoah4fh41MsXexfx3PgfuY
-	+c8T00ochTvj/NqPMWoxACRgLL6PbJWspyH5FftvSp2TKVvVXupdDbKfqcxubB8a
-	ich1KBcZinbhxLtefUoUPJSjIGLKlHG+a3EsYPop172pwfzsgAaUWEX0WC4P0rXc
-	CHXimCa9+ti8jVVPWEuZ2XScVVDZwbp8JTS1vmF3b/Bm6KSqESGZk0aDN4S3wt+1
-	HJhoJc7vv+hqCSil94WtNEOfkAYOjADemRgfkcyC6Q==
-X-ME-Sender: <xms:Iy38ZiMQMmH8GHAQoz1JaJ2zReFqC4s3NdzE7HU3g1EVQq8GxhHcDg>
-    <xme:Iy38Zg9tCt-bN77RnGUQfEHZQK6jSwpAyJiKVywnFjnG8cb19Keyz5vjVKjbTcewA
-    uAq86ZfQJZGqKXzLQ>
-X-ME-Received: <xmr:Iy38ZpRBoNg2onBoY0QMejOOU_E1zLy-Fg6lF3uVWT4fE3JfTY38RhLRhShHaQqgGYvF9r9gHNDYC8AdkftcK5Qu6rTu6NqxtPJgG2I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedguddtjecutefuodetggdotefrod
+	fm2; t=1727803653; x=1727890053; bh=pmGOBTaw/AZCWhjnj5iJ4nMHSjP8
+	BORN2SI/lpqFqvo=; b=JlPWdYX5ev9Kg4Fj84VfUFZ4NSltqlEhVSOqlSMN3COe
+	/YFH6LSi68NF44d8+NE/EpPdn6tuTdnTMWIbzbk+Eaq/7W9Zf3r5ja3OFQQ8RpL+
+	4tat2u/smYPPcBF+69j6ftceETihDf8MjcKWuioJ9XlQoUN1/X92mF3ZpiQ1+odM
+	eNEaZKmmy2+fas0b2qGsK5juoykNLMbPjsc2/n6tYyTF78Ha/kxyyrxwjF+QhWD3
+	H/jrrq6OAHlYjT9L7COOstNY0YHF8oF+xxBEHIQaXNe2ImwzJOslcUreoEHXrHuD
+	6DvV70r8e10rgR7mem6Iox9z6iDtq/KwTRqE3n715g==
+X-ME-Sender: <xms:BTH8ZpZ8ICyCIcxzoLlhTeCWg-2qkECQm_nZ6Xz0Z-DCnMQBkg7VFw>
+    <xme:BTH8ZgbsATDM8t7pMa69ENBz1S0oGCpVql9e59IjW26XsV-8gVUfAH8TsAxCoLGgi
+    Aeow-Gi43nWYijAoA>
+X-ME-Received: <xmr:BTH8Zr86x-sNxFQKk0Ja8hsdy7q0hAVgJOmlgLoFhK3za7jvSSpG2dhxNQKEEwcuXuYUMdMjMG7kL-ekhlNq520L6tF1uJ_xZrL0XaQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgudduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
     necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhhntggrihekieesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Iy38ZitQekiKIGV2-rw2I0ikxDAcqvkUipOu7WezF4vmpNLApA0n3g>
-    <xmx:Iy38ZqeIAi7U3ojcYrHkZUmwus4qQHXT6wCYh1y_GldNMqrV8zyjrw>
-    <xmx:Iy38Zm3VtCome12EDWZ_OiFFrfSmBZQglfFQpPpHSQ8Jkl5U-ZI--A>
-    <xmx:Iy38Zu9e2F_LFnggQmV37lqD1AKdSCCgFeKHPi5Qy44D5jfe21Lc4A>
-    <xmx:Iy38ZiTEHy0kE2jvfjFbruZaKOhpEe4szMrPvsEz7dJISkZ5kD_4qFre>
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeekueetledugeeffeeftdegvddvvdejjeeh
+    vddtfeelieeffeejvddtveduvdetleenucffohhmrghinhepshhpihhnihgtshdrnhgvth
+    dpkhgvrhhnvghlrdhorhhgpdhpuhgslhhitgdqihhnsghogidrohhrghenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopegurghnihgvlhesmhgrrhhirggusgdrohhrghdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:BTH8ZnoJk3E08Asfez76RNx1KokcB0WIMe1OyoaJfPXL4we1OTSrQA>
+    <xmx:BTH8Zkpp2jpm_wzLN-t4wUhXGsrJ0ogCoySil7Ia1KoO8USMn00Jaw>
+    <xmx:BTH8ZtTstQbtsiIAYk0pUfXoCPs1EnRzbh8oHN3Z74JgpE7yNE8ZrQ>
+    <xmx:BTH8ZsrfSey0sZq_vaZgQeB59aS9I7PiKh8TZdrhNabA6ba1eM8QVA>
+    <xmx:BTH8ZvWY16c7AVVmVGVwY1FOouSGzx09fUCWWPDnr8avZYLL_LNR-Iz4>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 13:10:58 -0400 (EDT)
+ 1 Oct 2024 13:27:32 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: shejialuo <shejialuo@gmail.com>,  John Cai via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  John Cai
- <johncai86@gmail.com>
-Subject: Re: [PATCH v2 3/4] apply: remove the_repository global variable
-In-Reply-To: <Zvvr1_9syRh1McVA@pks.im> (Patrick Steinhardt's message of "Tue,
-	1 Oct 2024 14:32:30 +0200")
-References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
-	<pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
-	<d64955a2e277da138146020f6a0cf96f4636a162.1727718031.git.gitgitgadget@gmail.com>
-	<xmqqy13852jk.fsf@gitster.g> <ZvuBduVg9TJeULpl@ArchLinux>
-	<Zvvr1_9syRh1McVA@pks.im>
-Date: Tue, 01 Oct 2024 10:10:57 -0700
-Message-ID: <xmqqwmirzr32.fsf@gitster.g>
+To: Daniel Black <daniel@mariadb.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] submodule: correct remote name with fetch
+In-Reply-To: <20241001072423.1165932-1-daniel@mariadb.org> (Daniel Black's
+	message of "Tue, 1 Oct 2024 17:24:23 +1000")
+References: <ZJQr0_aC-NlLXDgj@pweza>
+	<20241001072423.1165932-1-daniel@mariadb.org>
+Date: Tue, 01 Oct 2024 10:27:31 -0700
+Message-ID: <xmqqed4zzqbg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,21 +88,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Daniel Black <daniel@mariadb.org> writes:
 
-> I disagree with this statement. If code isn't prepare to not handle a
-> `NULL` repository we shouldn't fall back to `the_repository`, but we
-> should instead prepare the code to handle this case. This of course
-> requires us to do a ton of refactorings, but that is the idea of this
-> whole exercise to get rid of `the_repository`.
+> The fetching of submodules erroniously used
+> the main repository remote name instead of the
+> submodule remote name[1].
 
-I agree.  To me, the patch was screaming that the author was not
-prepared to go the whole nine yards, though.  Adding back the
-explicit reference to "the_repository" as a fallback is the next
-best thing to do, pushing the "problem" closer to where it is.
+Please write the problem description in the present tense, i.e. "the
+code does this, which is incorrect in this way".
 
-> If a command cannot be converted to stop using `the_repository` right
-> now we should skip it and revisit once all prerequisites have been
-> adapted accordingly.
+> Correct this by using the correct function
+> to reteive the remote name.
 
-That is also a viable approach.
+That's gives the same as "fix it" ;-).
+
+Can we phrase it in end-user observable terms, for example, "instead
+of grabbing the default remote of the superproject repository, ask
+the default remote of the submodule we are going to run 'git fetch'
+in".  It is a mere implementation detail of doing so, to call
+get_default_remote_submodule() instead of get_default_remote().
+
+> 1. https://www.spinics.net/lists/git/msg462320.html
+
+Please use the URL that shows the Message-Id when referring to a
+message in the list archive.  E.g.,
+
+    https://lore.kernel.org/git/ZJR5SPDj4Wt_gmRO@pweza/
+    https://public-inbox.org/git/ZJR5SPDj4Wt_gmRO@pweza/
+
+> Signed-off-by: Daniel Black <daniel@mariadb.org>
+> ---
+>  builtin/submodule--helper.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index a1ada86952..210ae2570a 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2322,7 +2322,12 @@ static int fetch_in_submodule(const char *module_path, int depth, int quiet,
+>  		strvec_pushf(&cp.args, "--depth=%d", depth);
+>  	if (oid) {
+>  		char *hex = oid_to_hex(oid);
+> -		char *remote = get_default_remote();
+> +		char *remote;
+> +		int code;
+> +
+> +		code = get_default_remote_submodule(module_path, &remote);
+> +		if (code)
+> +			return code;
+
+We never failed in this function to return without calling
+run_command().  Now we do.
+
+Shouldn't we clean up the child_process structure we allocated and
+prepared before returning like this?  It would just be the matter of
+calling child_process_clear(&cp), perhaps?
+
+>  		strvec_pushl(&cp.args, remote, hex, NULL);
+>  		free(remote);
+
+Thanks.
