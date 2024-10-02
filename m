@@ -1,102 +1,68 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-ed1-f66.google.com (mail-ed1-f66.google.com [209.85.208.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222D01D0B8B
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 15:35:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3822123CE
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 15:37:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727883356; cv=none; b=I2wn5Iu+V8DB2j+pX1nwbM/o+VKlhGAXeRrNxePIWcZQccH+paaejVjHMnpzKMh+SiEqoLcFa7ibvlcQUxscdfxXI2Q0EAQbBvIEg08g+U5TqzcVRFc2Y2mX32RqQ8pPl82rSLkVW61uak+4H+HApwDAZl580SBT9smgg9eE278=
+	t=1727883474; cv=none; b=VQfpDCequEAXhZM8N79T04NyRZ24xiAhbPiYmHXy8etT0qTNYuyfeQFSlnJC/Sm+ynejppTTRL2KQvIPjsHFjTCpn0MlHGKCYRGqdkRfpBp9oGXYqqDeoejgkcHdzj0Iw4nBhaNKaEX0+nVySgv4Wh6kU1xLQrPONAneTDaJ3YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727883356; c=relaxed/simple;
-	bh=kfLeAo8DgYi6fxUeCLzdePN5vTae0xoyzebwEK4I4K0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=swYjZPIwgDjjylnWD7kCjOyBYy307nk/qkO7u9BMuTXq6mTOzPYDbxIs/QcdwXb+DvwWD4TphO87xo5/9eZp11uvpDr6ke4HtLtsUmIw7+6MtU/rdBxuS3b0PNEsttCzAGFrKiZQsmQAQlXDnA9p0Myx1H5YDNKJAgzz32FtRvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U4LexI02; arc=none smtp.client-ip=209.85.166.172
+	s=arc-20240116; t=1727883474; c=relaxed/simple;
+	bh=9O+XL07UUqHWGIVRmN58XHBeLlQzOLDGEAYTsYER3d0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=iJBvLlp562IqbSERjwEReDGPYxmHFASypZwZNtEATvGIPys0LC69GVW4VannZ38qCVPxp1GOuKI9JpDi/cK3vkl7PB9B4LMofuY7NyVwMyS6zQB7SIIvTrHfu9xv3sEULFAS4gmqBwpEpAo0zlMb1RDhr64ksyOQQJsC/JXgwWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cuydgpEQ; arc=none smtp.client-ip=209.85.208.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U4LexI02"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3a345142c25so20927145ab.3
-        for <git@vger.kernel.org>; Wed, 02 Oct 2024 08:35:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cuydgpEQ"
+Received: by mail-ed1-f66.google.com with SMTP id 4fb4d7f45d1cf-5c721803a89so8802227a12.1
+        for <git@vger.kernel.org>; Wed, 02 Oct 2024 08:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727883354; x=1728488154; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kfLeAo8DgYi6fxUeCLzdePN5vTae0xoyzebwEK4I4K0=;
-        b=U4LexI02E5pJlxwKxzz7uyE+UzKJL2536gtp0JeASy01DRBTHr4jmCLDWP9ZdouSe7
-         uJBbHalh6Cj5uz16mz9Wee+OjemrBPrryMGuEEQ/2YF+0E4i1yggth9vevi8yGy8VL/M
-         aaDauzhCEPX0d+qCD9T/0IBCwXxHubNR/ETWYNKd12EignQNeyUZmsBjGXY1CkdTGuGl
-         5CJXXMzN7xLdqdXfKLnbfCIkOZiUkyIt3S9mOSk63LUs45Mejm6YfUl1trpkwAXvCTyS
-         1bSB0w7uFe3SyFSXff7As5azfr+DR14iFkFJ7Y+BFJsAqhZGSpuyFhBzlRPrpiWaVWCQ
-         UgDw==
+        d=gmail.com; s=20230601; t=1727883471; x=1728488271; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9O+XL07UUqHWGIVRmN58XHBeLlQzOLDGEAYTsYER3d0=;
+        b=cuydgpEQl8zL5MeX5vYfTpSIrtZUCtbrYDMY5bzSUBpJKou5I4c7HRxUeSKlLJ8+jZ
+         35aEdSkPNN+1wHK0WFgkJHgPYJT+oUBFG7f1FAm5CGLnT/Qqkt2DCfThyrr/TxNolOxJ
+         3Xfs/PHbFbgw5FkrjBjUiLbMDANKulkNwz7Gtgt/h30sqCB0A0yUW4+Nry7M7ySSzaI1
+         xHSmGP3kaKqgDjfnEJIDselzljeVtd3vXcxn+NV27NmqSy0ziPAOMgiZgGzeX/0yt2b6
+         P+Hh0Qwn7HYensb5oey+TmkHZwDIsWa2UTLoU7fATDw2+pejfISSC+8PAGKaZuiU9Pmx
+         vUTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727883354; x=1728488154;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kfLeAo8DgYi6fxUeCLzdePN5vTae0xoyzebwEK4I4K0=;
-        b=MqteXO6lTwkc3Nzsk4kc2HpNPOnbFFx6rDH6YntwbZXXMI9T4qi5jzL4zcyfG8yHnW
-         4xQn3duAShjJO6mNGo9ez2jRL99oywnvaKqlb2eGP/omDS6NvGKY122UoVKoVvHN+hhy
-         2mQhCGUqcGxzGSLiAyDybebL3zLk8v52no9NJgCGuPxED0qI3DytZVDCiPEeDYtIwpaA
-         tNDiH7u6E/eqkt6zgsYKXjZy54Axi3fbnsV2v3kWY2SG2Wimmo7RBNhabocfnhxl7KS0
-         GmktaDDD/ieyjQyQgh4hPGyEg0bJE2xcczphp/78gC8dGKBtRjoHKOcEUGUzVPip03xu
-         utNw==
-X-Gm-Message-State: AOJu0Yw+Sq5HaEG5PfxBBBfuzfCG/ksJ+VjLWeXDZPxSmi1Fq5/F/7UA
-	PslAJvA/5TjldsgAuKt01HLfA9fxC86+i9rhOs0IuL/p8Hp1uSbxLB3sm2qFGE6Wmycu392MVLr
-	+QY0vlSl7FR+0ehGFRGhqSXH2rlM=
-X-Google-Smtp-Source: AGHT+IEsNXpt2mnS8xAWecDsfdj7JMzTHTGqpGo8IWhiSJLjk6Ak6f5wukvT0b72sDCMYPbI8KESe9vrkBVBfnPKZxs=
-X-Received: by 2002:a05:6e02:184a:b0:3a0:9f71:c6e with SMTP id
- e9e14a558f8ab-3a36594ac7amr34959965ab.22.1727883353995; Wed, 02 Oct 2024
- 08:35:53 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727883471; x=1728488271;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9O+XL07UUqHWGIVRmN58XHBeLlQzOLDGEAYTsYER3d0=;
+        b=p9IOdonAWk1dppaW8zJ+MmmD9AAk9qcI1zV1j7LzfXCEWArqwLsH37Cag3fCrZpfXL
+         uco5/my71sgvxfUqiFoPSUPTLsdUEyN4FFLw6kBcwIjcKDuVPJL+hVuaeaUrBsLFgkfo
+         hq6g6So9EEM571BUhm7VT3rsnMXKXwwwUqoYyX1Gsy+M91J0wRx9NOnzUBzwQcXN/dSX
+         ZKlbWH92LP1e+DGI5QWveJjALPZgitdL9bchJtoNaz9/rncgMfHxIbgvLl3HZQOb8vZd
+         xCatUp7VRqtZajhn/FtC0bbSqQwa7zij/mbDG72pdU8yqkZhjf5JlFaxg8cZ0lFPTrrZ
+         f2/w==
+X-Gm-Message-State: AOJu0YzSvBqFs/mQ3K6H/j+zOY4dOgtyNCYUrsoUeZ0lQ+TX6+5mA1bo
+	dyWO3g6+V0pj1O6QJ4TmbdAyScsaxkybI6izfYAUYeklrlWmXjMg7cLYA+wPI7BoVijNM8rRVnC
+	j4ot1ahz6tjPgTdgHBKiIr8UEuOjvKU8hALBMkSQw
+X-Google-Smtp-Source: AGHT+IFbQrOjA/1TCFiDQ/9/KIAq4xI2kbzWS7jZy885AV0JR/U+rG3Tq8LCGfUmfjP9c4Q6Bn2NkHkjYpXj1QJ+Ur4=
+X-Received: by 2002:a05:6402:524f:b0:5c8:79fa:2e3e with SMTP id
+ 4fb4d7f45d1cf-5c8b1b6fdf4mr3269322a12.28.1727883470493; Wed, 02 Oct 2024
+ 08:37:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAECe19JKjsASasm4bxvsYxezj0L5_z=H=3VJ9CXzwdBCezRc+w@mail.gmail.com>
- <Zv0_FJVhnkkUKCS8@pks.im>
-In-Reply-To: <Zv0_FJVhnkkUKCS8@pks.im>
-From: N Alain Jr <njokomalain@gmail.com>
-Date: Wed, 2 Oct 2024 16:35:42 +0100
-Message-ID: <CAECe19LzdnSOtbgGNv+zrxkYrKCCr+EOQvewLrpL0-mR5xU49Q@mail.gmail.com>
-Subject: Re: [Outreachy]
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
+From: Ekikereabasi Nkereuwem <ekikereabasimachine@gmail.com>
+Date: Wed, 2 Oct 2024 16:37:40 +0100
+Message-ID: <CAK83d8qQOHdXGpWnSLLVe8cOZ+VT2PTJsYKV1sP1jGAbgEDUZw@mail.gmail.com>
+Subject: [Outreachy] Intern Applicant - Proceeding to My Task
+To: git@vger.kernel.org
+Cc: phillip.wood123@gmail.com, ps@pks.im
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Patrick.
-My apologies for not specifying earlier.
-I would like to contribute to project [2]...
+Hello,
 
-Finish adding a 'os-version' capability to Git protocol v2
-
-Cheers.
-
-On Wed, Oct 2, 2024 at 1:39=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> On Tue, Oct 01, 2024 at 10:54:44PM +0100, N Alain Jr wrote:
-> > Hello.
-> > I'm Alain, an outreachy Intern. I am very excited about the prospect
-> > of contributing to this project for Outreach 2024
->
-> Hi Alain,
->
-> happy to hear that you are interested in contributing to Git as part of
-> the Outreachy projet. To help us mentors, could you please clarify which
-> of the two approved projects you are interested in?
->
-> Other than that I would strongly recommend reading through [1] and [2],
-> if you haven't already done so. They should give you some ideas for how
-> the Outreachy application process is designed to work in the Git project
-> and lays out the expectation of us mentors.
->
-> Let me know in case you have any additional questions!
->
-> Patrick
->
-> [1]: https://git.github.io/Mentoring-Program-Guide/
-> [2]: https://git.github.io/General-Microproject-Information/
+I would like to confirm my interest in contributing to the project [2]
+'Finish adding a 'os-version' capability to Git protocol v2.' I have
+reviewed the project details, and I'm ready to proceed with my first
+task
