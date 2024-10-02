@@ -1,113 +1,67 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6229A84A36
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:50:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBCDDDD2
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:58:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727909405; cv=none; b=XoGXE/GNc64f15rHfXYbqwB7mwWcUJcuD4HmQEa47j1ELP5MBD4ojmuJpZXI6cunHB26tt9TgymC4EZimKpD2CQRBDiuHQdzyTWEEl9+qkbdCvIsiU+0UkpR83awIIP8ppeFKnDhN6dc+XQG4JtHvuwRsQI5y7IURZdPQyUL1ZE=
+	t=1727909940; cv=none; b=VgS2NJH5sAidOEv40dIUbARkxmWpmizfWhBlIXLRPw9ziFfEV6rwDavL0TXq2Ul0GUagbc/y3yQhmV5qtl7wWRUQIgi/6mmntmY3+Y90ukMfwtcajaiPIJYWuAtLjU/Wd+b8zSyVgHwE2mHpElgBg/O69NmdaB4h6ONBchMI6Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727909405; c=relaxed/simple;
-	bh=h/hthzGeGqnEZQIC95xVLE2eqzTfwBCZki1cYG8w+3w=;
+	s=arc-20240116; t=1727909940; c=relaxed/simple;
+	bh=Mu+3QvaJqaXxtbVq9jF0ox8SiclPHM0NGPfUDZ7u/4U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nMs+ZF957viyd6EPabfys5KvlqtEtEZywzI5pH5elAT4rPTQTbT2jgkGuQ43FF+imndNQn+SSSJh4yTFy+gdy/7zk+o/hV0SjoYES7Dywale4qFjF/0Dj8MwqrkkfJUHnftS5ByVndvaDjVYFqo4Zi6cKOQM9nzaI53sFRAw/s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AyCyguGt; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=ttF+GdteS+Dg6yf6lNwpybrCyEmDkDrqzp1K8Sm5zfI3aCHCxeTIgbe6j6qV4YrU5zD8o48BmaJM1ETcB6sbnH21ZcOmoJXuhF8Y0cf9jBiIwkZuAzjcBOZjpDdjVpZsNYRyhecr6ytHowqWNeWdJYyDzGIJZ2+VxWVffTul0pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=wNH6868q; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AyCyguGt"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-20b061b7299so41275ad.1
-        for <git@vger.kernel.org>; Wed, 02 Oct 2024 15:50:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1727909403; x=1728514203; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=77r9/3F0goC4wHoJpHdatzpGLRXfM4FIIMZjGWPIEEQ=;
-        b=AyCyguGtb/w8alGyVwswaShWbgXfKg8Krmgck9oRJDH9F4FgR2z9YAjQL+mx92xkWX
-         84a/154htAwOWSGha81tsOZSvV9fngRrxohHgcMNq+kGDTmogGcst8vZ0VPWlbvb/1od
-         Wmt1Q9sOs5+8e6od/zDNXzQLyufcQnkxOCiW6+/+HGvi0oPDZNm8KhZ/fU45AswuU77A
-         3PnL/yvbZ8+/qAdtfd+UebnC5+KMkAmJynedm0VhT4LFwz4KfGH1smglwDEGi1n6wcm6
-         ZJeFt4MUAlP0F2Sj3cjf74PcjHjxIlTqgXFnQjE9IlkXt6bqhx/qVfjxx375v/1j2QPs
-         Ri9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727909403; x=1728514203;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=77r9/3F0goC4wHoJpHdatzpGLRXfM4FIIMZjGWPIEEQ=;
-        b=k4xTxjh7FkVeNbCSdVLzm0Y+sjSwv/MQUlNyV8sUwzWgMiBXeLP/jboC1n61s63I+f
-         BzCrxiNl8Uqn2ryJD0OV1c50Qy5qsWqtvXLDnH8E82gvoHUsr1ITBEuf6uRp/jyV9aYI
-         8givx2buisoNyGrRw2JF+Esutyl+2roNDXJyAApXPMxwVsLf4CkDUFgouVFMexMa04W1
-         6yWFlq2g026GAgHveSycjw++lM6E1RTykHBeRbNNKqFsEBA3GEzODSAIyU4cydxw6B8T
-         VI1kBEWYAEmSWZ1k6PQ7+QQwItDocUJtO5Vj8kohQ1lWOJiRqSAYrPiAzHuABNRBhUZv
-         Ai0g==
-X-Forwarded-Encrypted: i=1; AJvYcCVYm8DWD9IPCpanFMtjSuiM849FDyQC5ELyjesOUIzKZhKB+YdDH7hJDeZYyuH0Q7Ob1Ro=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLNS0L+oLZ619TqdB2jQlanCLU859kShPPSpgevxvm5NK970hj
-	WT+frFNOs2CFKFf2KxsJF8YKYy52GezHX+9/+QKHP8hf7gQPqAPajtzE9VP2jw==
-X-Google-Smtp-Source: AGHT+IGf5QCgjK5vqa+p/qZGXf6j6SXZIbZ+yr1lTjv2SNU6sgDCGKMoVHAE131yLY+px9AtvHqZ8Q==
-X-Received: by 2002:a17:902:d501:b0:20b:bc5e:d753 with SMTP id d9443c01a7336-20be762937dmr446635ad.9.1727909403386;
-        Wed, 02 Oct 2024 15:50:03 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:2dd:9410:f675:e07f])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e18fa04fe6sm2188541a91.45.2024.10.02.15.50.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Oct 2024 15:50:02 -0700 (PDT)
-Date: Wed, 2 Oct 2024 15:49:57 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Sean Allred <allred.sean@gmail.com>
-Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
-	Jason@zx2c4.com, dsimic@manjaro.org
-Subject: Re: [PATCH v3 6/6] Makefile: add option to build and test libgit-rs
- and libgit-rs-sys
-Message-ID: <ccfkvquzswf62gymxcbq3iubkac7y4ttmlekw3xx5rjcho24bo@423w2fb5ogzw>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Sean Allred <allred.sean@gmail.com>, Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
-	Jason@zx2c4.com, dsimic@manjaro.org
-References: <20240906221853.257984-1-calvinwan@google.com>
- <20240906222116.270196-6-calvinwan@google.com>
- <m0seubo5q7.fsf@epic96565.epic.com>
+	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="wNH6868q"
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id F14F61F5CB;
+	Wed,  2 Oct 2024 22:50:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+	s=selector1; t=1727909458;
+	bh=Mu+3QvaJqaXxtbVq9jF0ox8SiclPHM0NGPfUDZ7u/4U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=wNH6868qym4w3sG+l1MaC1aK6VRclDNB0zVz6eDjoJU2QUTgr2+4y2P3GVSU3AsCb
+	 IpA2wo6a4aYTf99HHP+L+EGYRv1dSi2Ah0ApxzF9lIJt9G9hbKcKRfZhDS/mw6U0Vm
+	 qFtbNUFtNYH9smnk6myWucHSvgJtsTTv1l3GyJhE=
+Date: Wed, 2 Oct 2024 22:50:57 +0000
+From: Eric Wong <e@80x24.org>
+To: Emily Shaffer <nasamuffin@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: Linking topic merges to mailing list threads
+Message-ID: <20241002225057.M796260@dcvr>
+References: <CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <m0seubo5q7.fsf@epic96565.epic.com>
+In-Reply-To: <CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com>
 
-On 2024.09.07 10:15, Sean Allred wrote:
-> Calvin Wan <calvinwan@google.com> writes:
-> > Add libgitrs, libgitrs-sys, libgitrs-test, and libgitrs-sys-test targets
-> > to their respective Makefiles so they can be built and tested without
-> > having to run cargo build/test.
+Emily Shaffer <nasamuffin@google.com> wrote:
+> Hi all,
 > 
-> I feel like clippy should be run as part of these somehow, but I'm not
-> sure where.
-> 
-> > +libgitrs-sys:
-> > +	$(QUIET)(\
-> > +		cd contrib/libgit-rs/libgit-sys && \
-> > +		cargo build \
-> > +	)
-> > +.PHONY: libgitrs
-> > +libgitrs:
-> > +	$(QUIET)(\
-> > +		cd contrib/libgit-rs && \
-> > +		cargo build \
-> > +	)
-> 
-> We should definitely be setting `RUSTFLAGS=-Dwarnings` as an analog to
-> `-Wall` in the C world, no? These crates should build without warnings.
-> 
-> Very excited to see this work; thank you for putting the time into it
-> :-)
-> 
-> -- 
-> Sean Allred
+> We've been wanting to gather metrics on Git's code review process -
+> how long it takes from first contact on list to merge, how many
+> iterations are needed, time between iterations, etc. One missing link
+> is the actual merge time in `next` and `master` - a human can infer
+> the link between the patch and the mailing list thread, but it's more
+> challenging for a script to do it.
 
-Done in V4, thanks for the suggestion.
+Searching by commit titles as a phrase against email subject (`s:')
+can probably make it easy w/o having to look up amlog or explicitly
+keep track of human-unmemorizable metadata such as Message-IDs.
+
+Example:
+https://80x24.org/lore/pub/scm/git/git.git/365529e1ea19b44a7a253b780f3ae3a1cb2f081f/s/#merged
+
+...In the "find merged patch emails" textarea.  Yeah it's part of a
+100% JS-free alternative to cgit, gitweb, etc...
+
+(https://public-inbox.org/meta/20241002223902.4139389-4-e@80x24.org/
+ implements the query generation)
