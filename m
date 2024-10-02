@@ -1,62 +1,62 @@
 Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085F384A36
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A94198E63
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727908708; cv=none; b=ashpLPFzxSfcTlJ/i4vmkdEEtplviszaYV0n756DZwGPxS5zRjvxd2LloW7tgJ1FpKmvOoC4zIzNqHSCny0cdnHifEMqYN2iHzCcOgikf2C9SjloTU2BVhreuRRdB/2zHt+AwlLRGNvacEOK2tTa77nYa7sCORpyjQgdmPr3Pi4=
+	t=1727908708; cv=none; b=kHH9cVS4i4HybEohugLKTAZSdcvideDe8ieBSlzk59MYLCqdzBHoHLAVI+Rzz/ZiY9SXe8/uAlA2mhkTI5HefVrU68UxDDHla2zXYXof1aHX8DZWktOnpkfoMW3fVrpNb6bGgLXD9vdzJyOFWtSJET6MBGFnfFhwD6acMLwLqYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1727908708; c=relaxed/simple;
-	bh=5kRCL4V729b8quYnJKI0+Df+kwq80J92hg+LTtDYv3U=;
+	bh=zoWJaSRe96OXLoGPg0P7JAIOG1J2Fz3Ag5ttYVmGW3o=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=sNaHQdBzEE06Y5eLob7YKR7CaIyAjrhkkAT1CnCaObcTHCtTIhGlfQPak0+Uajd94Z/aiIaNCNJkHQkUApyWHXJo6v+qdV6VINhyXrGZpQ2s91Ci5DfVerSHHzr9wBdEM1NXBqxS5lzuS5GdZp2o+X7F9CgwJLKGse13ZplJ77Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LFXmMEBC; arc=none smtp.client-ip=209.85.128.53
+	 MIME-Version; b=pRQcaPW7zKwcS7TraZUGJTpgC2+CKYUqSPOtmHNBPelMokM/TdHgGUhfCr9WcqWtu6uIzYZUmkr6HSjbGj4xnZAqo2CoKZOEibwbi+AHhZBi+B+S0/gSWVNc/G0nLMxc6suzi471rENHTdPGUFM+kqu91WRb6dFNkEp7NeHkrlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R46UKGDg; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LFXmMEBC"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42cb1758e41so1848775e9.1
-        for <git@vger.kernel.org>; Wed, 02 Oct 2024 15:38:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R46UKGDg"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42e82f7f36aso2122535e9.0
+        for <git@vger.kernel.org>; Wed, 02 Oct 2024 15:38:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1727908705; x=1728513505; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gus9vfMsihlP6iFjKOCpqVgpv9OdoHGGDwa3WhiFK2U=;
-        b=LFXmMEBCTQ8ZmjdiSQSN+Xsm5qEE0JPo+3d31+H6WK9ircOcnSTNjPKFWwRVXvSda2
-         zmLMUq1IyHsFCsnt6/9UvdgANNOXKWWPbNhb5HPkKnemjJl1mnMWjwx3G+CoJ9Q26Di3
-         IfJE0K4kyOIfJCmlKEWjWg1kRzO5/9xa9epeMuZ84OPFpjjVcNfgKtWehUKHTcldrLLa
-         gvmiBmMhqAF5Fz51Y+YAZFo12ue91AfnUYtf/aJrYYBT5GtTMA6arymfe9DYelH1SaPq
-         a3oKrpXJnUsSyzEIhy9YOFiJWxsMUSfM7AcLUlWcZiJRV8sss2VaMN0gHBle8FB4Q354
-         kgrA==
+        bh=FOmb5iznCNW/u8v4cxIzpprRDY+indVcQH2aXHDGm70=;
+        b=R46UKGDgldykZgDUuy4uYg4a7enEsRUNdlhK8H7KDPU2gT2iGCOeNSz5ufUy421jrz
+         +FznuO9gT+diyNRTJr+pheiKQDlikbTs5g8smzUjhPGxz9klqo+iy8KnfQ73CqETnNSG
+         dWMD7rdpwHvrsSY0yrT2NYxNdSknoK/dH/qlZR9D4W9j1qRkaF21f4dNa9dUuJo1rv9V
+         h7/IfINGgwNiizx4LypW6Mc4jIuzCgp3oTXjR0IaA4DNIqqjNz90ydL6jL1fWHDFxmah
+         EoiHIX67LTs+0k5/M2OJuyr8bzZW9HodEZN8++htDYycb38xLNMA7qIvnd82w1v+Hhzw
+         TqTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1727908705; x=1728513505;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gus9vfMsihlP6iFjKOCpqVgpv9OdoHGGDwa3WhiFK2U=;
-        b=A8rZFnawkutWsrbHMFPf3TPaqp4T3q55gRzwgiutmepYzbYNkBoRauIF9Vch1s1ZYo
-         CJko0BfJjO6XS0sbcRHORXalgaMehRaF80by4mFMxBFQQphA1JXcyfRqjoDDuSG/gPLD
-         s8InbzAoRmhYLjgGaaPV0c4FNEEZjsAtX4gGo+qFJajDbCmQ3Oo1VNAXRfBN6N/TdqH8
-         8JACxZRg4QNghzCKoz6hOWo4L2Y8S36MoyBcXkgn5kqtEndphaWuq9D9B0KCaTVa0o1D
-         x03YSRLSdd1VsKQIGB8Bw1ET18wXVu3dej/+VcVP/+Grqpj8aJ4Gu2xwP8HtGxQ7jSb7
-         fTxA==
-X-Gm-Message-State: AOJu0YzYK/A5LVLl0D+RCySwC6U7/DZdo9LAgLvy6KUQqUb9f040JIEi
-	odXFxwcjEEdssPhlSxb4zGTJFVskYNUHob4OCtLQk7sWw09qYxpcvFBaG5y2
-X-Google-Smtp-Source: AGHT+IGllTLyWqQpFcr/AQzW95AH+ui9ElKA2uDZrj6GU9MHuXjz5x6JZ6fUPs/b+8bsXTs8cRkCmg==
-X-Received: by 2002:a05:600c:1ca2:b0:429:e6bb:a436 with SMTP id 5b1f17b1804b1-42f777beb49mr32212675e9.9.1727908704476;
-        Wed, 02 Oct 2024 15:38:24 -0700 (PDT)
+        bh=FOmb5iznCNW/u8v4cxIzpprRDY+indVcQH2aXHDGm70=;
+        b=ARW1K1SnCUuDfpfvp+MNPR+LuKwoC4weqWv5PWkZzQp/cwddIey5bSnhqbqgachK7u
+         GrKgF1AqL835wgQnkiN8W88ObZJ/z315LO1GHL+syPhNRanaQaCyht7o6QfxHTXWOC6t
+         bYFzenx9njsqxDFNepgGMox7mitep8eIEkOgpAMfmclLVvGLY0GLhZf4eNYhZ4WRY5kf
+         v6XrixZRehsux8NPA1j7OkV2HxWSgKucQpK/vZ8IBMR5lxEWclhzCJI1g3RSnrMbvXtK
+         lPDw9T7YP0ao5EGp0985A4tfj/6wAD0ht7mTgzTTkF+ELNILzBH+YyAr76csnC4JYo/l
+         yk1w==
+X-Gm-Message-State: AOJu0YzgWAxe2QBZVyX27gRr0+La0AAfhHQBu3YF6+JMfbijHeHQFxf6
+	6aMal0UmDAFAN3qOr2xAnMkd6bWoLT9XddP1yTEZUdBnXp1VFizn0vHa0Yaq
+X-Google-Smtp-Source: AGHT+IFsqdoRS/FHjo42Zaha7b4W3xHUZpEQG4MI++bT3LYLEOwwTRS3n9qwkLuJH4XCdvMZiWr1bw==
+X-Received: by 2002:adf:ee4e:0:b0:37c:c5d6:b2d2 with SMTP id ffacd0b85a97d-37cfb817f45mr2813748f8f.0.1727908705236;
+        Wed, 02 Oct 2024 15:38:25 -0700 (PDT)
 Received: from void.void ([141.226.9.42])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42f79eacba2sm29753095e9.14.2024.10.02.15.38.23
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42f79eacba2sm29753095e9.14.2024.10.02.15.38.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Oct 2024 15:38:24 -0700 (PDT)
+        Wed, 02 Oct 2024 15:38:25 -0700 (PDT)
 From: Andrew Kreimer <algonell@gmail.com>
 To: git@vger.kernel.org
 Cc: Andrew Kreimer <algonell@gmail.com>
-Subject: [PATCH 1/5] trace2: fix typos
-Date: Thu,  3 Oct 2024 01:38:12 +0300
-Message-Id: <20241002223816.14858-2-algonell@gmail.com>
+Subject: [PATCH 2/5] reftable: fix a typo
+Date: Thu,  3 Oct 2024 01:38:13 +0300
+Message-Id: <20241002223816.14858-3-algonell@gmail.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241002223816.14858-1-algonell@gmail.com>
 References: <20241002223816.14858-1-algonell@gmail.com>
@@ -68,39 +68,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Fix typos in comments.
+Fix a typo in comments.
 
 Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 ---
- trace2/tr2_ctr.c | 2 +-
- trace2/tr2_tls.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ reftable/reader.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/trace2/tr2_ctr.c b/trace2/tr2_ctr.c
-index 036b643578..ee17bfa86b 100644
---- a/trace2/tr2_ctr.c
-+++ b/trace2/tr2_ctr.c
-@@ -4,7 +4,7 @@
- #include "trace2/tr2_ctr.h"
+diff --git a/reftable/reader.h b/reftable/reader.h
+index 3710ee09b4..91377b9ce5 100644
+--- a/reftable/reader.h
++++ b/reftable/reader.h
+@@ -30,7 +30,7 @@ struct reftable_reader_offsets {
  
- /*
-- * A global counter block to aggregrate values from the partial sums
-+ * A global counter block to aggregate values from the partial sums
-  * from each thread.
-  */
- static struct tr2_counter_block final_counter_block; /* access under tr2tls_mutex */
-diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
-index 3dfe6557fc..3bdbf4d275 100644
---- a/trace2/tr2_tls.h
-+++ b/trace2/tr2_tls.h
-@@ -11,7 +11,7 @@
-  */
- 
- /*
-- * Arbitry limit for thread names for column alignment.
-+ * Arbitrary limit for thread names for column alignment.
-  */
- #define TR2_MAX_THREAD_NAME (24)
+ /* The state for reading a reftable file. */
+ struct reftable_reader {
+-	/* for convience, associate a name with the instance. */
++	/* for convenience, associate a name with the instance. */
+ 	char *name;
+ 	struct reftable_block_source source;
  
 -- 
 2.39.5
