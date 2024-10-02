@@ -1,135 +1,119 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935A3158218
-	for <git@vger.kernel.org>; Tue,  1 Oct 2024 23:24:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0F37FD
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 01:37:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727825095; cv=none; b=a74WZKO7pP+W/pIVtdzfHrXM5sLlRqqF9gNtGz5FWZPqjB9gJYGGSXNkITQ/voIEp/QW9q7czNT3Klj5yJcpxk2Q/BD+u22YodR1i66KYgHAO4eRq3pMdznUWlr0jJCZ61m71rtCkYQYqTSbam8lPePSCM640lRjdfXpLGqS1t8=
+	t=1727833031; cv=none; b=XgH1No/bvO634d+1eBWY4NARwGq4ZhdMwytMoqG9m3sTeDigOLIumJEH5SYX4rOVKnhzEl+0CRv7ALe9Crg4jkfhYwx3ARgzbI3H/H6D+gIGAohymz3aoblcni+cO0ZmAmCrU+D61Dd49yCcwKqnU6zSoc5rQRpRn+lDeQqP4wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727825095; c=relaxed/simple;
-	bh=QSeTEd3IprbmPT3wcOqGumFlHaSXjbLG/fxu26vvqFw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jq/xjyuyDAvbHdrs6gAHO0M7NWEVws9mEwosPX51D5DZu3mv2JBTE7wUpaJsou4oWvUUm2XLnIlRy2gWC9vDtzF2Jv4quKdwoKI3pHJMpJTIdHk/WCx+eIVffcKztMK3YeC3cT0LaENq7fKOrSZObEvDl2Bhl0JtgGUb2t1bFxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vFIWIX5d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VCAgfIBf; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727833031; c=relaxed/simple;
+	bh=SmxeSEDtZZ7mdCKvBvfK87uXFGb03ssPseI+gr6SwVM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=TUOuCR+3z4Ys4+b008u0Q2yAnkV6B9AlcHhCSpN24rWB4aYTWrvSHDXIlqiEilnaoNdHGuYbzSCkqvq9CBm6jCaa6ehWndDrdYC3jsMwBU/uoIuOHHsu9cH1S96WoYmZVJwOkXPNxZ8h1PeEx3OwzYOErdDCylwM4NGloMoS6B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b=hE4jaN4O; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vFIWIX5d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VCAgfIBf"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 975CA1140617;
-	Tue,  1 Oct 2024 19:24:52 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 01 Oct 2024 19:24:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727825092; x=1727911492; bh=RHKAd4cGu3
-	8hOOdlGe5hHEr79MHqV6musWKKvnUNL4M=; b=vFIWIX5dm2PtIdXjuTgwzBg2ON
-	IEljyCzzPD9b9ZOffptN4WX9rzC9m0zyYC7Hwz9yIjsHa5iy7ZXgWk74XDqrk3Kd
-	HIs3pMFiBUw9e1gG/Xef+qrG6z4gSIUYt6C7tidPSMs2qEEcZRJhzc4XaG8PHeDd
-	DLJesj8i6ExNwVbvu6hH0OLRq69IA1tCp55CGuSM+3DYzQhJ7LUU+7hYEnkr3CfR
-	HiDC7RRNE3L/7W4B+3x34bLNZqSn+dseM9WKIQoo7EEOhTaZdYzpKKxwTuKJCbgb
-	eu8h1d7aVpwuHGpOKIWre1JQPOUg+Qh5EgtR6+Mj7T59aNAJ5gbMLznq2SJw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727825092; x=1727911492; bh=RHKAd4cGu38hOOdlGe5hHEr79MHq
-	V6musWKKvnUNL4M=; b=VCAgfIBfgBCw2YL2+XH03fypF9T5Wom17H4se1oo+yzn
-	xvhjMPvGTsrLFwDr7Bmvb1GC54d3dVPbWBfwbotPJVooEpyKYf8rIZU5ti+atdAR
-	phL2JIlGXuMi826rIViNf2PVqsdOPOFcfeFnFlfqyFpMRNUYFMu7mUQzRfpTysL+
-	lNNTPKPhmXwPYRb5h4+OjKLdLoIDYHalQvdFkjWHFfMEotiqeL52mPFqXt7uvrc3
-	2Fk8Y7qOQa1OSdT2Mb+Z8O8l5jM9YRnl46aoyueG166Q/uuOWVNNkbu2RNVr6pTU
-	F87TeWC/YZHL3JaQHbXdpWSwMEeSgX2xZjfuVcf2JQ==
-X-ME-Sender: <xms:xIT8ZkugbOcy3-IZtQ-549eA4ok481w2h5G19s8vPOEzpPFT5ctY1Q>
-    <xme:xIT8Zhe-XTjv8EefRcvAYXvWv-S1sE6k3fTkoXjmDPog6wpOMPliA-6PjqKH6IDVi
-    ZOe1iffNEWp3pr3hg>
-X-ME-Received: <xmr:xIT8ZvzxRl9LskQV71EVVPytAusVyl6wM5spqTJsfIqHXkv0AZ-CzobFWM39pe24r-UqBTa0xLi-GB6UYZUte0KOwoEgVj4_C2fyYQM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddukedgvddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhtvggrughm
-    ohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpth
-    htohepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:xIT8ZnPc0C8tC5KrOKgGWwVahRSjTzVcisI9w7WdbWBvstlZRAllEA>
-    <xmx:xIT8Zk_zRDLZeZAU9qgQAIon58ln53ws2sSYEZ8BJ7aTsHP5tZMQzg>
-    <xmx:xIT8ZvUur6kqzvmtFSwI3AdPAoE2A4tylosNQgf3glZLHZLAMFINDQ>
-    <xmx:xIT8ZtetQNYhd_R_Tq8_S_55HqR96ElhZK4Ba2ScHyVcNHofJL56eA>
-    <xmx:xIT8ZoRRxhzn-89vXbzS7EkhjgRVbegewMNmQmM9xTAuZIt2ydb1WOka>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Oct 2024 19:24:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  Josh Steadmon <steadmon@google.com>,
-  git@vger.kernel.org,  karthik nayak <karthik.188@gmail.com>,  Eric
- Sunshine <sunshine@sunshineco.com>,  James Liu <james@jamesliu.io>
-Subject: Re: [PATCH v4 3/3] refs/reftable: reload locked stack when
- preparing transaction
-In-Reply-To: <20241001225425.GB2317071@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 1 Oct 2024 18:54:25 -0400")
-References: <cover.1726578382.git.ps@pks.im> <cover.1727155858.git.ps@pks.im>
-	<9ce2d18dff2a655365b609dd86ea484a489c717a.1727155858.git.ps@pks.im>
-	<20240927040752.GA567671@coredump.intra.peff.net>
-	<c4lz3begoplgde5iimvk4k7cufiyryntccqo46u3fy5qvqauv3@tta5wfg2ik5t>
-	<Zvt6LxWm8gtJGw9S@pks.im>
-	<20241001225425.GB2317071@coredump.intra.peff.net>
-Date: Tue, 01 Oct 2024 16:24:50 -0700
-Message-ID: <xmqqttdvqud9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b="hE4jaN4O"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
+	s=s31663417; t=1727833025; x=1728437825; i=hamlin.carlisle@gmx.com;
+	bh=fS/oieP5FlI5TLbV+3h7Cy17d5tpf+8ZxZ4CK9FG5mA=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=hE4jaN4Oh8y9AX0RccEwRVhm2ON6s9ZCJ1PjbIfMSV2VSF9D2imnHO7JayUV2MF5
+	 eqSNuZt+eSs6NheKE2KbJiiamZbafWGD2qOcfg7ylQo/Yk9tZ0lGUsDVO8F8uwDSe
+	 SMvPBinXaSPKtCgIgGtFWD9bBjH2BB2baXJTGto/87MkpA0gOxp5HDTZv450N5Slh
+	 Au6zyKERyPPwPjoiEtbTGPIgSVBNznJN40x9KpOHAHOrGEBLpVXjRk61CJNPDN79+
+	 +4E2LP+/xDcKaWxsBve5t1R+29oiu1H4dZbFicRgoC/ineNZQQFDLKdQRvfHhL4Ui
+	 3LJMyjyC076O7kG7MQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.1.65] ([69.62.178.28]) by mail.gmx.net (mrgmx104
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 1MIdif-1shlx72XRt-00Ac5Z; Wed, 02
+ Oct 2024 03:37:05 +0200
+Message-ID: <98470a2b-9a5c-4a22-a913-5098185afb65@gmx.com>
+Date: Tue, 1 Oct 2024 18:37:01 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: Can a note be pushed to origin?
+To: Stephen Steves Linda Smith <ishchis2@gmail.com>, git@vger.kernel.org
+References: <20240925122918.1719619615FF@thunderbird.smith.home>
+Content-Language: en-US
+From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
+Autocrypt: addr=hamlin.carlisle@gmx.com; keydata=
+ xsAiBEfLBpcRAgD8qfOOlcAEezHtcm6xrrZbwjKLXlIfKXUf/YiTeuaLk7TkfnvTVU5fwUam
+ iewb7AN+t3mzKxcgwxViDnFQ8spDAKDtjKSLxKSCTYDVT8WR5w0NwOI3dwH9GetPPjCjJvnk
+ JOr7yJOcyF0+T0bwR/cEUJ6nuQfbh2eVSNyWSiixsr14dQWphJf7CwGsTfIfv7vsZ+fIwP39
+ rgIA+g8d2waPxl76gDjIygL6TrF6hhTt7KUb2yNgSng9IldkMfcdBYlg3dWOpZNNcZrTGOyd
+ 6xvhvmMuojRRx8r54c0oQ2FybCBULiBIYW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbXguY29t
+ PsJjBBMRAgAjBQJYh9SnAhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQyLm4ydrA
+ Bve9TgCdGob4qLVTBIOjrTrY+/PmPPGby4AAn21LQfE5TXjJP298WdZNVCmAzXarzsFNBEfL
+ B4oBEADbRPe1kVPw4r1YTMTRjRGKz1zF1juy+w7rgYmbwGE7g59jyb2jQYkiuUykupPom63I
+ UAiHsTm7rt+GrHqJ2WjgBfDC7rUM0tWst5pKkt9Ma27l/O9J0T4YDr0kRDGhEUJPHI27V2D2
+ NX52bDFgKiPl5WyRxtgAtTZC9KOdCPJ4t9c8waUIWlFn/YeWYerC2b15Sf3AB6bKVhP+2v91
+ j/vOsTEFIlfg57fbQpEknGsLRIbO1V5Gx5FhFgycNh50zk86LiTz7pzZ19E6UnYuUEgaozru
+ UjTQubdqPYOdgCnReTgcwo4ylon12sXjWHBScODgIYooPEUjAyn8H/m5i7jaSV5l2eZOUPvF
+ 8NPuuGUUWgMmQ+pCah3DnO3ccdaOOjW2z02Skx1XGep7Zyyn4hzV3cZpIhnOP5udwE1D3Pxr
+ ljwVKs4uroPo28Eeh1KiYf95kP5KfzYafOpVx3QyykkiqQ4MEd1k61Y1ZoQ4pz+XskOym1DD
+ 9w6JdoAimsb7YGAqMQbSrtNSVpDMcYIDpXboDDussRmRD+Xoko/mhhQ2ZpUUyeqnlPHHmzSJ
+ va0+hvBhw3QEv0QV7or3V1tN9r72o0KGp1un1n9IZv7JA4CKvs2oWPlR593d+pmHzZswK01Y
+ ozFV+96kRXULHziVesdtlJCa+/341vc/p9teqKEJSQARAQABwkkEGBECAAkFAkfLB4oCGwwA
+ CgkQyLm4ydrABvf1ogCfcujflHLQUSahVKgWtF/qDpK10+gAmwQ6EVxuZ3Z1GO6EbFxyRtm3 kOwI
+In-Reply-To: <20240925122918.1719619615FF@thunderbird.smith.home>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:wVE/b3zOGq/EK2BBjciSij4A2tfpK+2BkN6YV0XmKGjT6v/FCHz
+ Y4PACemxgInuXptOS4tOZHCAFpEuzbsIU72UFZ0cPVHbM5BZAsFmaTGgJFjF2QvMBqSlAcx
+ 82GyObdfpzpEbBFD2lFMV5qfCyN6ZaXj7I+cRVEROWR5hzUQpc/D6pEOrw29A6yaqDvG3PY
+ J9NkG9V1YZyMoalO85CFA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Ff4rO2iWkoQ=;6xIqVLxq/77KLURo9p4N5Dykj2r
+ QZRdjb4k+SLaxoHjpqlsen+dN6dOB02vRv1RKZA1fGdRtF0xUuTDhFfPzJ2mPF7MClqgbxUB7
+ 8erqhLy5GIXx1Lw3blW3mYmujgZAKwRp2dbRFC5zjr9GC273cKVTzxED1wFBl3SaX5go3Qbkf
+ 6fT9GTdGbLiPAQ7fTDiL0+nMNyPuhCEzXvOX9p/sgJ2BD/UqQQrkWlvM3/8CaGfy7QsWR6BOS
+ 6S3BZaS0VXvtYk7kXHFNs9ljBqTN5mFPIjANB5OWKpcAJfLyA+JnKccoK3v1+/w9efS4QWZ8O
+ 2jOiHkT58EnRABgEyMhkog2RZnxIWtOTM8vUWLT4nyxDDiQT5qAUOflqpEK5R+Btk49rhxWTj
+ x5593ZdUh7uzK1NMOQkdiLc65cHdhr/GBA0RpfiJscEyGndL8luzeO3/c3aHjrMfUZ1LJ4Dt3
+ GasfmL6A5BP+1OtiOlYdGLbsqx+Il2C6ytUuqB+ZW8msGlx2gUC8gBPaQDYVH9KoqNjPO01yB
+ xjoAbIFV5xFwj3ShhDUlN4kJGFhnqNZ88XlXWETaTLY71rEqa7OTnacmfFgfR2Urqt3k/XQ5k
+ fUuA7Zgzfb/+j+swcyoY90J5XGXvx3Jnc4iXxpDj6zbbBItojI2heDXOCAiACbx5HLSzN7YId
+ KN1PwYDRdByB3Hj/t/d1IlWOH+CzkVCEfxRQ9PHA9Q8Se50yXMLfHr+ZBkiDSFBBgIny+PK9v
+ f1Xr/J+CIDRSzhzAUdkguM1VdGGCpIO0lhtRJk4TFDaEL2WxS3eGE0bkS7zk2OVkbVodBEUi/
+ ihD1B3ICrNG74qRM/p0MQNBw==
 
-Jeff King <peff@peff.net> writes:
+You betcha.
 
-> On Tue, Oct 01, 2024 at 06:27:33AM +0200, Patrick Steinhardt wrote:
+Add to the 'origin' entry in the config file specific to your local
+repository:
+
+fetch =3D +refs/notes/*:refs/notes/*
+push =3D *refs/notes/*:refs/notes/*
+
+Just be aware that other developers will remain blissfully unaware of
+your notes unless they either expressly fetch notes for themselves, or
+replicate your config setup as regards notes.
+
+Good luck!
+
+On 9/25/24 05:29, Stephen Steves Linda Smith wrote:
+> In a project that I am working on, some metadata is currently embedded i=
+n some
+> source files.  The question was asked yesterday if there is a way to mov=
+e that
+> metadata a git specific file and link it to the source file or commit.
 >
->> If this is causing problems for folks I'd say we can do the below change
->> for now. It's of course only a stop-gap solution until I find the time
->> to debug this, which should be later this week or early next week.
->> 
->> Patrick
->> 
->> diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
->> index 2d951c8ceb..ad7bb39b79 100755
->> --- a/t/t0610-reftable-basics.sh
->> +++ b/t/t0610-reftable-basics.sh
->> @@ -450,7 +450,7 @@ test_expect_success 'ref transaction: retry acquiring tables.list lock' '
->>  	)
->>  '
->>  
->> -test_expect_success 'ref transaction: many concurrent writers' '
->> +test_expect_success !WINDOWS 'ref transaction: many concurrent writers' '
->>  	test_when_finished "rm -rf repo" &&
->>  	git init repo &&
->>  	(
+> I remembered that git has notes which can be used to add such data to a
+> commit, but I don't believe that such metadata gets pushed to origin nor
+> fetched from origin but another user.
 >
-> IMHO we can live with a flaky test for a little while. It's not like
-> it's the only one. ;) And hopefully your digging turns up a real
-> solution.
+> Is there a currently implemented way to do something like this?
 >
-> It also sounds from subsequent discussion that Josh's issue was on
-> Linux, so it wouldn't help there.
-
-That's true.  WINDOWS prereq would not help there, even though it
-would hide the breakage from CI.
-
-
 
