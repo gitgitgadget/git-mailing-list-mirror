@@ -1,62 +1,62 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5692F198E63
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:38:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A28D19CCFB
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:38:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727908711; cv=none; b=Mrf0lX829ezuS6ItXHyh9uPSyutdwUNDyQSXytJNXrQo8FjBYkXuaZYd/BememVuQFf2mJzh4nsOkzgLAhvChCq+KaVwGL4zNBvcrlk8eerqsWRb9uo5g1K06BVxjTCFNdAyJNknROzAJ4hDgy5F7qeC+WQ0ciubVlDBy2v6r+4=
+	t=1727908713; cv=none; b=evQfsmIMd0Vt6MsclbE948UVdFKgJrPIzR97VKxOjzcoBVKKiZp1LKfarIx+OvGVpJLZs5SovePdP9bkhi7KLuMMN+KM+3GftW8WsJKfyYqjhOvDv7HBLwb2bKJca66UcvSoaKhhNp0CpeIIlsYs7csCAjvPOr/sYqrVayUiN5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727908711; c=relaxed/simple;
-	bh=PQtK9SInZgg5FVuy68YAlzlaBJyYYv/o9gGa574VBB8=;
+	s=arc-20240116; t=1727908713; c=relaxed/simple;
+	bh=0lflxQPFqfShlqC6v/hrBsCFVROLzKokdRfkdeKEmj8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=e5Uo9ALzRGRRGzweqx3z4RYIsScTwbeJOW2F/2Egkn6heJZ2r9cLrb2l/ZSE7EZhHnn76mF1ju0jEYsNaZYjVj87rJE1qMNKP0IEJ+kpGqzJYzfdBTky07+sMY+a/SqqCvlLTAGf63lYVYu7ZCL9+uks1am6I9bU9TjMut5UJVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MXRJpiq6; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version; b=dIWhy8+7bWiP+2DCgLixahQmk1r66UeaUE6JO2cXjEZjMqr/jJ+7TeI+sqmiz5H9d4ysCj15dTTjWEUHBOk346qJVjBAuSy9+rW+DB7FPysTAxg7rQLzL09ZRLMICxg3tOlSJMNmM0PCY2k3yyIg+nd2j6i5teV4CHzCsTphK6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YubxuDQq; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXRJpiq6"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42e5e758093so2027965e9.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YubxuDQq"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-37cd1ccaf71so821579f8f.0
         for <git@vger.kernel.org>; Wed, 02 Oct 2024 15:38:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727908708; x=1728513508; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727908709; x=1728513509; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=E7q4XCYNGu6fjW6sQ/QitPDoHVRA0GMJX+LsvdhudjU=;
-        b=MXRJpiq6pTAoxj7n/JKbnkazEEU8R9aCzgQHW8vf736DsfQVim57sGFOHB/KFO8hC8
-         I9q6uwhNd9zsukX2TAv/b7yBj9gxSqv3rfHt/xNsw6r/AKq7bNMihK7Bvx8ZyV5MVymw
-         8AI+9rmnu/OTFpWuHGX9IIlktWnyLugDRTJ+8PUlZH1BZAmoucDguKKYFHuF5tbHp9JF
-         vNztFD8LuHag3OabEuJ6GT+v/jiJ8NDV/yHrb2TYedLKtw04dwCM3SGBDn1v3ssiufM3
-         YDc6RlJSMCZgneZYFDmnYQcB+lHlJl2CGP2s0NwdbITFBqMmZt7kvp+6yeRZqfRNm5TR
-         Et/A==
+        bh=Zue9PetSSp3HCLMJmDhGHHmRnodAGBtpGV1/dS/Tark=;
+        b=YubxuDQqwj4036Q87NjDbFsZkMYQhu63GFSQcoUQrcTaPTDUfcXhMTaKNDYWK9lhf4
+         /y54nPTCGTJ3sJiZLnHGcG2Wj8xHUvkWFLl/+JMTcCFzsJ9trdb4962QMsSblTrhkQux
+         LH5Sh8B+L1cXpVtbyFSiKcd1hTox2H8Iemifa2jiRipoDZdzh6SNnXKStDMjKs+yBXIX
+         aRG/Hucf0MqUB+4L1gqf0zCx31klCQE+FDVkCuEkXswqi2Ln7o0X80+M82QNYfyhoPL0
+         m8UmEPeKdjNEbhQd56dSLOWjLB0cvidTo/xuxYR0RX2y8pvaVnJbzkqGxKPe1O/iEpzc
+         nRhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727908708; x=1728513508;
+        d=1e100.net; s=20230601; t=1727908709; x=1728513509;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=E7q4XCYNGu6fjW6sQ/QitPDoHVRA0GMJX+LsvdhudjU=;
-        b=NN5XBXc2mklkzY21KMqCsk4AbHmErUNFu4mfcYcnszhzpestBWaeYM0FIZ4Q09p1V5
-         PxzSXaDyMOcWLYMHe/Kr9xuXpg4EaKtkmg/FOqY1Zy4my5sFtGTOCHDtOjMhzWSPgOX9
-         +Gq2io+iPbrB55rjRpuY+179QL0jb3VBJ5lxfTvoyvsWNXhb85tXiCJ5NlURX/e7Zdhi
-         eDP2tI8vARyXtcIOo1oiw0W1j3MzvIyErznwxAMFD1kHmj9sagxaMakUmEgXRSMHPEZ+
-         oY0dLFjWNY42gHEYUiAxo/ayYKVC6cM6fzGgN60xJQCuevTugh63HKSOYXz0GXRP7a4e
-         OLxA==
-X-Gm-Message-State: AOJu0YwPAYjVRnYWAPiccpBwQXAWMOAX7gR+3FCWijBJXmBii0k6suc+
-	XbYw6rb6MoE9HIGYU+w7GLOkU10s13uPI+0pqnoJKH9gbuabfsT3QBwLHfAd
-X-Google-Smtp-Source: AGHT+IEJEVN53iMC3OT2IPjA1Z3426sIVkAhov2sYOaDFBFOXRq0fiuxeKwKDpm6aUiepUmCSQAL8A==
-X-Received: by 2002:a05:600c:1d81:b0:42c:c37b:4d53 with SMTP id 5b1f17b1804b1-42f7776371amr30797945e9.0.1727908707792;
-        Wed, 02 Oct 2024 15:38:27 -0700 (PDT)
+        bh=Zue9PetSSp3HCLMJmDhGHHmRnodAGBtpGV1/dS/Tark=;
+        b=pzRo41Fg7B4reVHf/QPwJ9drP8/pyzWQn5yB1/oN6j3mvI/NYX4TNhQlXU23FDPXEj
+         26+CORCkBi18cxdfl6ydcITAktnsknWVUtXfLkZQEo0PU9G9vJcPjauS2dbYsaJ7XdaW
+         XkF64doAlpdc9LXXVB7UPoIUEQlgDMGkkKHVagytxAYT0yQlUe4eStrenVcGtVXhsylC
+         2v5BV2f34gBWGAXI/fl8Xpf9TPMKcMoghcanBQa5NAuqwFXvWJJqgd5ZwaL/lXLFIRNR
+         4uxMxtwU7bljN7SyugLtUBj6DxJbm78G5tdsSGVPi/DzcfZeFsh0JE64/CK+kj1JKukz
+         Xy/g==
+X-Gm-Message-State: AOJu0YyZL2sE3ZYUr665ZRSi/AnGkFz2z6ORWNfczA+qJZX/clLRrL8u
+	dQEhI65LeUW/4icgtAyZQP7WF4cCYsVODWKvW/52blIdGzaA0TufuVL+BNjP
+X-Google-Smtp-Source: AGHT+IF2k2ufxWkA30sKWSIYePXiHdvK0rGOCEX/3VGUJYIJ3JlRkNTB7mfXICbrXl4XHVX7xcpEsA==
+X-Received: by 2002:a5d:538d:0:b0:378:c6d5:e2b3 with SMTP id ffacd0b85a97d-37d04a57a45mr591492f8f.23.1727908709266;
+        Wed, 02 Oct 2024 15:38:29 -0700 (PDT)
 Received: from void.void ([141.226.9.42])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42f79eacba2sm29753095e9.14.2024.10.02.15.38.26
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42f79eacba2sm29753095e9.14.2024.10.02.15.38.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Oct 2024 15:38:26 -0700 (PDT)
+        Wed, 02 Oct 2024 15:38:28 -0700 (PDT)
 From: Andrew Kreimer <algonell@gmail.com>
 To: git@vger.kernel.org
 Cc: Andrew Kreimer <algonell@gmail.com>
-Subject: [PATCH 4/5] gitk: fix a typo
-Date: Thu,  3 Oct 2024 01:38:15 +0300
-Message-Id: <20241002223816.14858-5-algonell@gmail.com>
+Subject: [PATCH 5/5] perl: fix a typo
+Date: Thu,  3 Oct 2024 01:38:16 +0300
+Message-Id: <20241002223816.14858-6-algonell@gmail.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241002223816.14858-1-algonell@gmail.com>
 References: <20241002223816.14858-1-algonell@gmail.com>
@@ -72,22 +72,22 @@ Fix a typo in comments.
 
 Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 ---
- gitk-git/gitk | 2 +-
+ perl/Git/I18N.pm | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 7a087f123d..f85c421c5f 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -3687,7 +3687,7 @@ proc external_diff {} {
-         set diffidto [lindex $diffids 1]
-     }
+diff --git a/perl/Git/I18N.pm b/perl/Git/I18N.pm
+index 5454c3a6d2..475e90a6df 100644
+--- a/perl/Git/I18N.pm
++++ b/perl/Git/I18N.pm
+@@ -111,7 +111,7 @@ =head2 __n($$$)
+ =head2 N__($)
  
--    # make sure that several diffs wont collide
-+    # make sure that several diffs won't collide
-     set diffdir [gitknewtmpdir]
-     if {$diffdir eq {}} return
+ No-operation that only returns its argument. Use this if you want xgettext to
+-extract the text to the pot template but do not want to trigger retrival of the
++extract the text to the pot template but do not want to trigger retrieval of the
+ translation at run time.
  
+ =head1 AUTHOR
 -- 
 2.39.5
 
