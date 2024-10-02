@@ -1,102 +1,168 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF1A1CF7DD
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 15:55:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4F633D1
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 16:07:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727884554; cv=none; b=TZU2Pw16wptsNDtlps7uyiAg4b0c3R5P21kmhZn2y7rcDa2EZF5BWMweMDYQSxfSejZDQokBOS6f0xb1I13w0t3g+P/EJHPuiSZ4MSCAJPnbk2EX1ecbvUjmV6NMW8KVIavyFb+AQoLvV5bdGpzhn4/j2JjetsWs9/vSi2eGdVo=
+	t=1727885231; cv=none; b=WQCpiFhe56hge2klaiyFm3ivYsaxAhTAe7zXhmm1rMPqnadR/Fag9YDWDu5Rra8FnZN9vOTmmxlWMJVpfWt3kQJ8Kfu1S7HFWDDo8cZgzAPK+NnYFMxk8nGmkQ7r0LlTfKsrXygwbyOcBDr0lKpF4gRJx62rVRi1EfG3E4RUmT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727884554; c=relaxed/simple;
-	bh=qF0qW+e63HZXKI+MMkPifdtEM6ljsx3yBd0CzjTZ0jw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hjhM3BjOVnwQWumCwbHiRUZqdagGfo/caCW6LmO4w4ub9sdG06ABwvmMpgfm4/RwQ2BfD8N6PXaxEpzScEB6bySNrQ10VBUgzSWy6boNo4fl3H9YSFwDTNiJXTPLoUmv+pDEGncwAcOrX3XTRE+jYVSAsN7EBBxvA/9g5VB6DOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UfeciPhY; arc=none smtp.client-ip=209.85.218.49
+	s=arc-20240116; t=1727885231; c=relaxed/simple;
+	bh=a4AX1C9Hw5xmGhpSzQZDL84n4LcfDp4HsaFBsFwBFO4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=EzpWqLJNN2bSJ+2isLyBEqVdfm7d2owRD5vFr/8S6HcnMtyc68lF0ayDn3qP25sUuRsyWGKpHqcPgNY4ZZ1piR791JipVmlqVVDBRGaeODRReIeY/roBfDWDayM7rrJnEV7TpXz89HhA5RF8JXkewwT7wVSO3TJPN9aiThTOyGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tsa67ZcJ; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UfeciPhY"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a7a843bef98so990446666b.2
-        for <git@vger.kernel.org>; Wed, 02 Oct 2024 08:55:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tsa67ZcJ"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a8d100e9ce0so696198666b.2
+        for <git@vger.kernel.org>; Wed, 02 Oct 2024 09:07:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727884551; x=1728489351; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1727885227; x=1728490027; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=oKzspXuVgEidghcHIiyKXibd/vTzkHwibZoZrVtC9jc=;
-        b=UfeciPhYj5tUKvj55+k67vAJACiUZnlImZnusoitjx5QsRzucyfdTmSlHtcYi3oDqi
-         G+wLEUX5dW3H+2KoSFLRaOnYiSC1soz66fAZegAQ8ddH06OFv/NUpbaWZ10a4IrTMUjY
-         cO3ctF4LDnwXZuLV398BQihHdbdiBADqW1HzbkaEpk2aXTVG+wX8zYsHxDcIC1e69TBF
-         iQsVgGoHRTAD94KPJs0NByhk/PsMsX6DK5pahDoQ2If3RW2YkvKIjgYIqc0hDVb0b+Wt
-         UBRpZaD84o4vDHv06HdTfra+xekPAqI+Z7JSv3NtL89lMacOcGkTneWyeO8UJr5PL9KI
-         10bw==
+        bh=TyiFgJ2zBolllOxpH+/b3UICPFn1ZeiEixBl+ui6CL4=;
+        b=Tsa67ZcJgp9Pn6vMdvGICYxrzqBzy0ui/Z0pBbyJpAmYl6x8pYJ1Ue6J3RcHNOk+qu
+         60RkBim6W1ROPeEkYM7ouJ6V1WUhDk1fTz/ccp5nDoUME5jnMk2VhPvS3rPxOoY7C9d7
+         No042DH1nubr9PzUv/wRbiMEr+dCc1XyKSGCACJcGXTXDOSQwg5jwHGQGmnyQuU1Q/5i
+         A3HVStZU+fJycjEEZG5J2bJFpk9KCiVK62Hc0KhHRZjIWTAp+jEyNfLDFSl1FUJWtlBU
+         DqL6yrQoViBqBVoPHu46a+5xPLJJABBpza8GXZwkxc/mO/udsnPpXs/nqPXwx2MltKE9
+         Nqqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727884551; x=1728489351;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1727885227; x=1728490027;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oKzspXuVgEidghcHIiyKXibd/vTzkHwibZoZrVtC9jc=;
-        b=MdBi/LVeM2rYUWENhpr2JvtM5+puYmeAGU8ebydKiFSutRDSRoeh9zw3vFQxtxLpoT
-         eS30DhyDAgHptYSxUJFvf5OJkKNJMhyOKCsSNoC+3JR7Km8byxLyVK6XpsO4FJ6Y20Hs
-         XEl/X5npbz2o5ylUlMOTQ9qU8KXNqxiopqVm+VXcbDX6fWAkYdOhpZe3fswYlpcmWWC0
-         /uMq8Tj5SKgc94Und/FFbnk/TrD5KKoprkJzX0FbgGpLRRaLFtkyPtw39ltWKd6NfxMn
-         7U3jawf+ZqN5CROj43jMaqG/XkDlpeIrcf5rlDtmuct/IHa1Hs6huxy3adXK609cR7v7
-         JHJw==
-X-Forwarded-Encrypted: i=1; AJvYcCWhJ6zAWvicVhVixTgD/6HEH58bEgmSyjHAxpG84HAPidEqGrLSdTM8hiHNRRY4PUdSpxg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRCPUVDp+OUvB3AIAV3YTzDqL94vLky+4aaTAjN5Ed9g4RLyA8
-	OeAaQr0jQRZ211SsydIi3/4qDpnLwDB9X/eBxKXe89OiWeRh4XVC
-X-Google-Smtp-Source: AGHT+IGdUnzugo6kbn4XMJ99YIyVfseZikfq8UkyVSCuQmORJc9LPAbRg8aCSPd25CnAMxHT4KfApQ==
-X-Received: by 2002:a17:907:94c3:b0:a86:94e2:2a47 with SMTP id a640c23a62f3a-a98f824db54mr346367466b.15.1727884549767;
-        Wed, 02 Oct 2024 08:55:49 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c277726asm897796966b.10.2024.10.02.08.55.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Oct 2024 08:55:49 -0700 (PDT)
-Message-ID: <0d66e444-b971-456b-8838-e24638b2e824@gmail.com>
-Date: Wed, 2 Oct 2024 16:55:48 +0100
+        bh=TyiFgJ2zBolllOxpH+/b3UICPFn1ZeiEixBl+ui6CL4=;
+        b=c4jLz/WosT51OPb61SnDs66JbxpatqENBcdWyZmkp69zpdj9XuPr1QrfgYNtEboWAA
+         QVaJ7HV+M90OuVB7yZfqop+9el39L1izTzA8kSEMInAUiRQSALDQNrXvnNWgsCEllITO
+         GJ+3ZVmg+dcVlw3WAczHanYiHopny0jhmyywms6sxGMq4RQfcHZf2PQ84zRYSvcZkVbf
+         B0YvQSQXYaV+EvP4+8izOx5zOQ7RRTAkc1kjNkZLjmS9C8hOZTBjfygxwOtNUDhSb5vK
+         +j3AXjJj0/Aoj8NzMMZI8gu1zqYkokfuoz+J6kz9RqGYBl3mkSjjt8aV/3IzfAMq/Jtz
+         HV9Q==
+X-Gm-Message-State: AOJu0YwlwmRe+LfjmU9Yie5uvF6UqLpJAmQJzca8R2mLfKK50EPxqNnc
+	91wrbiFHOLxqIv0L/d+g6vlk3TdIEzpQfx+pQEotdrIOQbjhiFO7IWRa0g==
+X-Google-Smtp-Source: AGHT+IFGAoMaHkLrlKaKECVFkO+dPUqlCg4ixMHsMHq3wrYzxtBGOSLMNQs4JcX6k7j39hX1BhaNJQ==
+X-Received: by 2002:a17:907:25c6:b0:a7a:8c8d:40ac with SMTP id a640c23a62f3a-a98f820a7f0mr378616066b.4.1727885226855;
+        Wed, 02 Oct 2024 09:07:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c27d42e3sm886445366b.82.2024.10.02.09.07.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Oct 2024 09:07:06 -0700 (PDT)
+Message-Id: <pull.1806.git.1727885224966.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 02 Oct 2024 16:07:04 +0000
+Subject: [PATCH] line-log: protect inner strbuf from free
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [Outreachy] Intern Applicant - Proceeding to My Task
-To: Ekikereabasi Nkereuwem <ekikereabasimachine@gmail.com>,
- git@vger.kernel.org
-Cc: ps@pks.im
-References: <CAK83d8qQOHdXGpWnSLLVe8cOZ+VT2PTJsYKV1sP1jGAbgEDUZw@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAK83d8qQOHdXGpWnSLLVe8cOZ+VT2PTJsYKV1sP1jGAbgEDUZw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    ps@pks.im,
+    Derrick Stolee <stolee@gmail.com>,
+    Derrick Stolee <stolee@gmail.com>
 
-Hi Ekikereabasi
+From: Derrick Stolee <stolee@gmail.com>
 
-On 02/10/2024 16:37, Ekikereabasi Nkereuwem wrote:
-> Hello,
-> 
-> I would like to confirm my interest in contributing to the project [2]
-> 'Finish adding a 'os-version' capability to Git protocol v2.' I have
-> reviewed the project details, and I'm ready to proceed with my first
-> task
+The output_prefix() method in line-log.c may call a function pointer via
+the diff_options struct. This function pointer returns a strbuf struct
+and then its buffer is passed back. However, that implies that the
+consumer is responsible to free the string. This is especially true
+because the default behavior is to duplicate the empty string.
 
-Welcome to the mailing list and thank you for your interest. You can 
-find details of the micro projects at [1]. If you haven't done so 
-already I'd recommend reading through [2] as well. That should give you 
-some ideas for how the Outreachy application process is designed to work 
-in the Git project and lays out the expectation of us mentors.
+The existing functions used in the output_prefix pointer include:
 
-Do please let us know via the mailing list if you have any additional 
-questions
+ 1. idiff_prefix_cb() in diff-lib.c. This returns the data pointer, so
+    the value exists across multiple calls.
 
-Best Wishes
+ 2. diff_output_prefix_callback() in graph.c. This uses a static strbuf
+    struct, so it reuses buffers across calls. These should not be
+    freed.
 
-Phillip
+ 3. output_prefix_cb() in range-diff.c. This is similar to the
+    diff-lib.c case.
 
-[1]: https://git.github.io/General-Microproject-Information/
-[2]: https://git.github.io/Mentoring-Program-Guide/
+In each case, we should not be freeing this buffer. We can convert the
+output_prefix() function to return a const char pointer and stop freeing
+the result.
 
+This choice is essentially the opposite of what was done in 394affd46d
+(line-log: always allocate the output prefix, 2024-06-07).
+
+This was discovered via 'valgrind' while investigating a public report
+of a bug in 'git log --graph -L' [1].
+
+[1] https://github.com/git-for-windows/git/issues/5185
+
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+    line-log: protect inner strbuf from free
+    
+    This fixes a regression introduced in 2.46.0.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1806%2Fderrickstolee%2Fline-log-use-after-free-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1806/derrickstolee/line-log-use-after-free-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1806
+
+ line-log.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/line-log.c b/line-log.c
+index 67c80b39a0d..29cf66bdd10 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -897,13 +897,13 @@ static void print_line(const char *prefix, char first,
+ 		fputs("\\ No newline at end of file\n", file);
+ }
+ 
+-static char *output_prefix(struct diff_options *opt)
++static const char *output_prefix(struct diff_options *opt)
+ {
+ 	if (opt->output_prefix) {
+ 		struct strbuf *sb = opt->output_prefix(opt, opt->output_prefix_data);
+ 		return sb->buf;
+ 	} else {
+-		return xstrdup("");
++		return "";
+ 	}
+ }
+ 
+@@ -916,7 +916,7 @@ static void dump_diff_hacky_one(struct rev_info *rev, struct line_log_data *rang
+ 	struct diff_ranges *diff = &range->diff;
+ 
+ 	struct diff_options *opt = &rev->diffopt;
+-	char *prefix = output_prefix(opt);
++	const char *prefix = output_prefix(opt);
+ 	const char *c_reset = diff_get_color(opt->use_color, DIFF_RESET);
+ 	const char *c_frag = diff_get_color(opt->use_color, DIFF_FRAGINFO);
+ 	const char *c_meta = diff_get_color(opt->use_color, DIFF_METAINFO);
+@@ -1003,7 +1003,6 @@ static void dump_diff_hacky_one(struct rev_info *rev, struct line_log_data *rang
+ out:
+ 	free(p_ends);
+ 	free(t_ends);
+-	free(prefix);
+ }
+ 
+ /*
+@@ -1012,10 +1011,9 @@ out:
+  */
+ static void dump_diff_hacky(struct rev_info *rev, struct line_log_data *range)
+ {
+-	char *prefix = output_prefix(&rev->diffopt);
++	const char *prefix = output_prefix(&rev->diffopt);
+ 
+ 	fprintf(rev->diffopt.file, "%s\n", prefix);
+-	free(prefix);
+ 
+ 	while (range) {
+ 		dump_diff_hacky_one(rev, range);
+
+base-commit: e9356ba3ea2a6754281ff7697b3e5a1697b21e24
+-- 
+gitgitgadget
