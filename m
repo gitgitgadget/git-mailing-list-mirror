@@ -1,80 +1,80 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C927C1D0DFE
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 15:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA171D0DFE
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 15:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727882192; cv=none; b=hHkkA4qok+5WXtsYvyXuGdziopxzZg7Nd6VqGuB+w4jUPLUqyetWmRT5BJigqi2ZExVu7JQEdntmfRccOvRKJbXt7riF3IsEsci7OrQY5e+tiPc9QlPoSN4vR488C2ETWQxJ9NvOZVnKGIuK2g7sIAhz9UckRh+ToeQQNqdB2L8=
+	t=1727882197; cv=none; b=F0uiGlu/Kkp0k7K7lPjWDbSrQFFchS696LYc1ElgfRIqHZ0Krxq9cZZfeiw0BXxgvKBC7XxqhSgfmN2ARFsk2RIS1mN38C2VqvZAaQniSKYU2sSjbE+xtHs8JZwZOTD223JZ5mkF0CE0rbKWiKc+Ha3cgvlXEy97fnIXqqg59Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727882192; c=relaxed/simple;
-	bh=FLAOOctICLznyGG1XS95Hf2Mxd8jY0egsLxQR4coKW4=;
+	s=arc-20240116; t=1727882197; c=relaxed/simple;
+	bh=AYj/GsYyhdYE35iXmXAQ7OEyaBKjTVeXn++XSDkLzCY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FenfSv1cOqR/gRMm3xOGBrWOztNbAkp7sa0//Np2vwaFHKc8kB1NsRdBfhhJthlqvd+QB/Y0wSoiu5QQK/0uhSTGs8lgFO3eogZ4MYusy6IWl1N2Dl6BXt6l/uruxXVb/RI+XB78zgxboegpm5UbQUBN1FWeiPTu2nzDHCw+CTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C/jjh9ST; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HkEel7/l; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=A+9nKC2/WTl65GbJ7wUI6P4JpoRIuNjNUIEyhL9Yo3lis35pQM4FMm88GSoRMleX70HkLFz2VI9H3E8wuPUfi8uFLGT5Q4G2q15CzMjaVNL+IdRg6gHHrH7IGjd+uvn4/r/j43N3nvshrF8Q0nUj9BrnDRxRzNBb8Bs0U/eB9As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y1QaGQOd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WoewAkOQ; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C/jjh9ST";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HkEel7/l"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 002661140185;
-	Wed,  2 Oct 2024 11:16:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y1QaGQOd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WoewAkOQ"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 102171140170;
+	Wed,  2 Oct 2024 11:16:35 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 02 Oct 2024 11:16:29 -0400
+  by phl-compute-10.internal (MEProxy); Wed, 02 Oct 2024 11:16:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727882189; x=1727968589; bh=hsctdS/VZS
-	Q0w7fagrRSqyAwAfhk/NfFpVuADGGvIjA=; b=C/jjh9STGn2mrmvPMyJku0PQZi
-	Ip788LqN3UPiFK9jZnw17hzLf7sLz77v4liUh55N0TKTPSssbrjBcdOQIh3bmbmJ
-	hlC5mDfU6bpbOFetIWYdVV+uCFDpNv/QuuUeXGRyUz3cnjyBgBPDu++VYypFlHtl
-	fwuXvWjcnLwoJOI1g68/f00d11QadXytX7z7Ev1RQysSs8XE0dcPBcV50i14b1d0
-	iLvSmuFMC3lyKoXQJ95x8fv6JlqTbUDp8tP7MYKl9s0qTM1g/1FwxEIB3ewFVtMy
-	ACM7Pu8tEUSq/95NCtwFMAcieKhtvQeMsFawXZEdivAUkc0NCq6NfGkNIEEQ==
+	:subject:to:to; s=fm2; t=1727882195; x=1727968595; bh=/6GNTsZj0k
+	pfb9WqHKlhNc+6YrtA9GHlv92e9zwRTZE=; b=Y1QaGQOdWtTb28FCDLGcM/U1Zp
+	GziLSxitFNYy7iu/Twrx43oj2HjUZVGEj3OjmDtYI4nayw8TMamqIgFsDIWNjcwf
+	fr5iFD72nrJIpg60deQNVIPRT+ay/wkqlLkWb89CXv4yNUz2z9sERGO6yIxfxhv/
+	/ePV564edz5LTz1yrky181H+D7714kxFqMHuyXOx2J+QKL1uTHruB7bQqzbJktYk
+	A6sIa4Y8QSLGyW36Xu5+mSOPHLfm+uVYN6laSoRiKUN7xXfFAZqtxClK3srPyJdX
+	D/NoX8CDoSyaDp448L6wp8GEVMKnSvwT8LIQC00YC/hH47EfIehLIHJJ/gAg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727882189; x=1727968589; bh=hsctdS/VZSQ0w7fagrRSqyAwAfhk
-	/NfFpVuADGGvIjA=; b=HkEel7/lnCX7m4uo8oR+oXkVhR5EEyBylo0Mt6HlcmqS
-	1iwRLS2vaYWqFdCFwU2zBsCzbIBb2GlBan+Ni3DJd4pL35G44ePN5QkEKI9b6b/7
-	MJdWoqRMXBAW1qGAhDxHP1NdOMBD8IHd0T+qRaiUDK1QmLiH5EUfqhQYoaqqS0U/
-	amNkK6htNtM1HAFA0XczTDag7T4QIXGswp2P5m/mUAfD4JMO6oyeGiiRhmFDR4WG
-	epXyIJTOXmyMnTTf+X0SfGKq0ppJcOnG2tkaJCC31dEPxXLE0EIjXX9lNJUB1NzS
-	HEYx5v6z1o1yB30fz7gQfpoDxChtHWeon7iSI/y1wg==
-X-ME-Sender: <xms:zWP9ZoxsFfIMoDwg7dStP1sn6MU87TyLEn_RomPltKckcQ6j2rkEYQ>
-    <xme:zWP9ZsQbqxMpO_TYepQqaBwMqmXASn__4pA897KozvhnitIQoCxlHQgFhUgkxjtHL
-    sj_WV2xftU3O-Gp9Q>
-X-ME-Received: <xmr:zWP9ZqVC3aJcVh0hWayRhHPSCw8mNRcgGoXdTPXtwSCwBQInJd-nWLf5lSwA6koFMsHqshzwgKQhsXA6RE8VJ3pYBnsW1iLVLqFrywwX98LxzCVz>
+	fm2; t=1727882195; x=1727968595; bh=/6GNTsZj0kpfb9WqHKlhNc+6YrtA
+	9GHlv92e9zwRTZE=; b=WoewAkOQcc9BwcSXHFuzjiVYP19/vIeHOIkToFocR2n9
+	IMhhmm40ramBaWyYC4HaacfSO5QhzcevnHopu3utuhHOY4LObXTeqHrnD9TMmECq
+	P+qP+nPiNNu7RWHmhXu160wrqbf6zdqvNKHtFE4tjPbipPbOqr2de04Tyn4WgWN6
+	xgExNtusLHhsbpX0kksumKp7jbEbnv148ES6HRK98iQu8aFbydtqspW7x2hs8JAZ
+	5+Cl0tBXBnQmbxMGWgw6adjwBagfN5BPmEZauylAL0bpV6FWW9i/79CVkJcPFyh9
+	UFP8Cyhgcop+BmkypLULtX1BgXNCLIALGXAYcXR78g==
+X-ME-Sender: <xms:0mP9ZmNvJtl1H9fgY1GsQ_cljpIxRzcj1BwfUyheMwg4dQoVFOrHsA>
+    <xme:0mP9Zk97qs71j2p-t0jAP5NWu7LYwYeAYeBW_UVwPwr2yA6Tgtrig3s68v4Ph7ptb
+    5Of6J_Pk5XU1fYP0Q>
+X-ME-Received: <xmr:0mP9ZtTSk0_nT0krHz73mHl_bXVHEFWt_3idc6MS-5IoDMtHkh8bCEaSwwgwPYLwvZQixTPm9Ami9GLGs_ZK6k1_ErBMtpVYSDqFusq6mnPxnZ2U>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduledgkeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
     gtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrgh
-X-ME-Proxy: <xmx:zWP9ZmgKFe3UbXo15aQgpWNuRzR8BIGOjTByktdXDI_B2iNbnjsylw>
-    <xmx:zWP9ZqCict0UGSRcSkvowFyswd0nlU6PznRW8HhjwGfrr1EtndbkdQ>
-    <xmx:zWP9ZnKaUXRVNkbjRvjIPSrpCty1OpnymRdgomQSZ5u8K5iowveDgA>
-    <xmx:zWP9ZhDANoev4anv5c-yHKSjpaNUC998oz0gqg7z_qPrANo41Naw6w>
-    <xmx:zWP9ZtNjs1z0t523dFN18iRdz2tb9IdHwExlUDxv9yJ1erReS-MP7Bpb>
+X-ME-Proxy: <xmx:0mP9Zmuoriky4cmLGj23uWB8ElJaJpr6KalZUK7V0hyU07vOcY1njg>
+    <xmx:0mP9ZueblfO-7iTp2xPTZ9A6Nlt1TdXZFvWUj4CSbJkeOtOnApOALA>
+    <xmx:0mP9Zq2Hn6wVwhZ4JkZbgcdw71J8TuvZWCg5c4U9WDPfpOeZliSe9w>
+    <xmx:0mP9Zi_E61_aaxLzsSavR7Tm3HG0l_d9Ph9F2OnHgo5OrLZAu4YT4Q>
+    <xmx:02P9ZvqeSxCLCakwF6UP9oBrsuQnnObEM_TGUbzEYUOZWvqKm1ifMKCQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Oct 2024 11:16:29 -0400 (EDT)
+ 2 Oct 2024 11:16:34 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 60f51472 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Oct 2024 15:15:38 +0000 (UTC)
-Date: Wed, 2 Oct 2024 17:16:26 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7abad843 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Oct 2024 15:15:43 +0000 (UTC)
+Date: Wed, 2 Oct 2024 17:16:28 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eli Schwartz <eschwartz@gentoo.org>
-Subject: [RFC PATCH 16/21] Makefile: consistently use PERL_PATH
-Message-ID: <73417f39a5ecaebd53092f34e0ec4cc1f757959e.1727881164.git.ps@pks.im>
+Subject: [RFC PATCH 17/21] Makefile: allow "bin-wrappers/" directory to exist
+Message-ID: <4b356c0b6341741c8100cdf11e1634caa56eddc1.1727881164.git.ps@pks.im>
 References: <cover.1727881164.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,80 +86,126 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727881164.git.ps@pks.im>
 
-When injecting the Perl path into our scripts we sometimes use '@PERL@'
-while we othertimes use '@PERL_PATH@'. Refactor the code use the latter
-consistently, which makes it easier to reuse the same logic for multiple
-scripts.
+The "bin-wrappers/" directory gets created by our build system and is
+populated with one script for each of our binaries. There isn't anything
+inherently wrong with the current layout, but it is somewhat hard to
+adapt for out-of-tree build systems.
+
+Adapt the layout such that our "bin-wrappers/" directory always exists
+and contains our "wrap-for-bin.sh" script to make things a little bit
+easier for subsequent steps.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile                            | 2 +-
- contrib/buildsystems/CMakeLists.txt | 2 +-
- git-instaweb.sh                     | 4 ++--
- git-request-pull.sh                 | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ .gitignore                                      | 1 -
+ Documentation/CodingGuidelines                  | 2 +-
+ Makefile                                        | 6 +++---
+ bin-wrappers/.gitignore                         | 9 +++++++++
+ wrap-for-bin.sh => bin-wrappers/wrap-for-bin.sh | 0
+ contrib/buildsystems/CMakeLists.txt             | 6 +++---
+ 6 files changed, 16 insertions(+), 8 deletions(-)
+ create mode 100644 bin-wrappers/.gitignore
+ rename wrap-for-bin.sh => bin-wrappers/wrap-for-bin.sh (100%)
+ mode change 100644 => 100755
 
+diff --git a/.gitignore b/.gitignore
+index 6687bd6db4..349673c55c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -12,7 +12,6 @@
+ /GIT-TEST-SUITES
+ /GIT-USER-AGENT
+ /GIT-VERSION-FILE
+-/bin-wrappers/
+ /git
+ /git-add
+ /git-am
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 3263245b03..ad83156744 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -583,7 +583,7 @@ For C programs:
+    Run `GIT_DEBUGGER=1 ./bin-wrappers/git foo` to simply use gdb as is, or
+    run `GIT_DEBUGGER="<debugger> <debugger-args>" ./bin-wrappers/git foo` to
+    use your own debugger and arguments. Example: `GIT_DEBUGGER="ddd --gdb"
+-   ./bin-wrappers/git log` (See `wrap-for-bin.sh`.)
++   ./bin-wrappers/git log` (See `bin-wrappers/wrap-for-bin.sh`.)
+ 
+  - The primary data structure that a subsystem 'S' deals with is called
+    `struct S`. Functions that operate on `struct S` are named
 diff --git a/Makefile b/Makefile
-index 91e64c1222..380b6a3dbc 100644
+index 380b6a3dbc..b0c21c4c0d 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2529,7 +2529,7 @@ sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-     -e 's/@USE_GETTEXT_SCHEME@/$(USE_GETTEXT_SCHEME)/g' \
-     -e $(BROKEN_PATH_FIX) \
-     -e 's|@GITWEBDIR@|$(gitwebdir_SQ)|g' \
--    -e 's|@PERL@|$(PERL_PATH_SQ)|g' \
-+    -e 's|@PERL_PATH@|$(PERL_PATH_SQ)|g' \
-     -e 's|@PAGER_ENV@|$(PAGER_ENV_SQ)|g' \
-     $@.sh >$@+
- endef
+@@ -3189,8 +3189,7 @@ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(
+ 
+ all:: $(TEST_PROGRAMS) $(test_bindir_programs) $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG)
+ 
+-bin-wrappers/%: wrap-for-bin.sh
+-	$(call mkdir_p_parent_template)
++bin-wrappers/%: bin-wrappers/wrap-for-bin.sh
+ 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+ 	     -e 's|@BUILD_DIR@|$(shell pwd)|' \
+ 	     -e 's|@PROG@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
+@@ -3686,7 +3685,8 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(FUZZ_PROGRAMS)
+ 	$(RM) $(SP_OBJ)
+ 	$(RM) $(HCC)
+-	$(RM) -r bin-wrappers $(dep_dirs) $(compdb_dir) compile_commands.json
++	$(RM) -r $(dep_dirs) $(compdb_dir) compile_commands.json
++	$(RM) $(test_bindir_programs)
+ 	$(RM) -r po/build/
+ 	$(RM) *.pyc *.pyo */*.pyc */*.pyo $(GENERATED_H) $(ETAGS_TARGET) tags cscope*
+ 	$(RM) -r .dist-tmp-dir .doc-tmp-dir
+diff --git a/bin-wrappers/.gitignore b/bin-wrappers/.gitignore
+new file mode 100644
+index 0000000000..1c6c90458b
+--- /dev/null
++++ b/bin-wrappers/.gitignore
+@@ -0,0 +1,9 @@
++/git
++/git-cvsserver
++/git-receive-pack
++/git-shell
++/git-upload-archive
++/git-upload-pack
++/scalar
++/test-fake-ssh
++/test-tool
+diff --git a/wrap-for-bin.sh b/bin-wrappers/wrap-for-bin.sh
+old mode 100644
+new mode 100755
+similarity index 100%
+rename from wrap-for-bin.sh
+rename to bin-wrappers/wrap-for-bin.sh
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index bf029b9428..5884fa73b1 100644
+index 5884fa73b1..700f4e5160 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -839,7 +839,7 @@ foreach(script ${git_shell_scripts})
- 	string(REPLACE "@NO_CURL@" "" content "${content}")
- 	string(REPLACE "@USE_GETTEXT_SCHEME@" "" content "${content}")
- 	string(REPLACE "# @BROKEN_PATH_FIX@" "" content "${content}")
--	string(REPLACE "@PERL@" "${PERL_PATH}" content "${content}")
-+	string(REPLACE "@PERL_PATH@" "${PERL_PATH}" content "${content}")
- 	string(REPLACE "@PAGER_ENV@" "LESS=FRX LV=-c" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
+@@ -1078,20 +1078,20 @@ set(wrapper_test_scripts
+ 
+ 
+ foreach(script ${wrapper_scripts})
+-	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++	file(STRINGS ${CMAKE_SOURCE_DIR}/bin-wrappers/wrap-for-bin.sh content NEWLINE_CONSUME)
+ 	string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
+ 	string(REPLACE "@PROG@" "${script}${EXE_EXTENSION}" content "${content}")
+ 	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
  endforeach()
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index c8efb1205a..5ad50160bb 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2006 Eric Wong
- #
  
--PERL='@PERL@'
-+PERL='@PERL_PATH@'
- OPTIONS_KEEPDASHDASH=
- OPTIONS_STUCKLONG=
- OPTIONS_SPEC="\
-@@ -716,7 +716,7 @@ EOF
+ foreach(script ${wrapper_test_scripts})
+-	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++	file(STRINGS ${CMAKE_SOURCE_DIR}/bin-wrappers/wrap-for-bin.sh content NEWLINE_CONSUME)
+ 	string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
+ 	string(REPLACE "@PROG@" "t/helper/${script}${EXE_EXTENSION}" content "${content}")
+ 	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
+ endforeach()
  
- gitweb_conf() {
- 	cat > "$fqgitdir/gitweb/gitweb_config.perl" <<EOF
--#!@PERL@
-+#!@PERL_PATH@
- our \$projectroot = "$(dirname "$fqgitdir")";
- our \$git_temp = "$fqgitdir/gitweb/tmp";
- our \$projects_list = \$projectroot;
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index 10c88639e2..775ba8ea11 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -112,7 +112,7 @@ find_matching_ref='
- 	}
- '
- 
--set fnord $(git ls-remote "$url" | @PERL@ -e "$find_matching_ref" "${remote:-HEAD}" "$headrev")
-+set fnord $(git ls-remote "$url" | @PERL_PATH@ -e "$find_matching_ref" "${remote:-HEAD}" "$headrev")
- remote_sha1=$2
- ref=$3
- 
+-file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++file(STRINGS ${CMAKE_SOURCE_DIR}/bin-wrappers/wrap-for-bin.sh content NEWLINE_CONSUME)
+ string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
+ string(REPLACE "@PROG@" "git-cvsserver" content "${content}")
+ file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/git-cvsserver ${content})
 -- 
 2.47.0.rc0.dirty
 
