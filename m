@@ -1,86 +1,85 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE492200117
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 10:55:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE14200121
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 10:55:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727866549; cv=none; b=O/kl8buITC/WwTDAenoPIQ5vc+6BJSoDVPzVlX3XA4+nTvKMXZiC9SBYSBaE6KqxjEZAXHQqI8zzpjKgQ3bCBEkbctvUEexxheT68nhugMvTsPZ1qdPOq785RcaO6k8Ehjdz9cRETAKx5sOpNKoaMUwQuaDuy1wTf469D3o81Js=
+	t=1727866551; cv=none; b=AsXzdDq337cwv6xXEhQIVx/lq3aGwXoQZNyNyvnpEILahRwrxxc2gizUpEty4pAJMEZRortSFbZ/s3Da506Iq6C+wWHq9aC1MhqvSK/0Qft3YPfsayb7LnEHKivjamT4jiBsU1wmy6jQX2PRME5KLuJQswk34aLCQGxYk5EzK3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727866549; c=relaxed/simple;
-	bh=ot6B0w+28e/TupIx92ZkFojzo9W9HHxyu8OY/qL+g6w=;
+	s=arc-20240116; t=1727866551; c=relaxed/simple;
+	bh=nfHg5NPZ610+3Gjkno3QKoUz8ezohvaUdZWAMu/Srrg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ADtaFZAlqNTbbhVHZSLpAv9V2AW8lmkNU8liXJBffokeF8oc/5Um56n5wwhCV9K7gPjtzivahBsTl1Sutpa4mR7CXyq9tqvqqrgDgoGFRIK/WRTRgKG7Aab+nTIQUxybOEf181Plakfw82iGPMMiritE03Qnek9KOfRcVE5I78Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pStvdjog; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A9CVjgzU; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=nt5LMbkmJSnjbqRlss58pdxVoQCOUPxEfUdxVqpyLpup7iVjnpkikIqkIhguUJUTiTclDNLMzDNVXjvnsJo5ZwiAmQQQw8bw0E7U4r/EUPyUaNTQGDScuBa0pO/VXpehge8Ilfl2HPfCSk9HT6Dz9Q1CEmGuW8/oJdDxd5L2jiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RDxssU4H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XxV2rYSG; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pStvdjog";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A9CVjgzU"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EA7421140239;
-	Wed,  2 Oct 2024 06:55:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RDxssU4H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XxV2rYSG"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6143E1380601;
+	Wed,  2 Oct 2024 06:55:49 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Wed, 02 Oct 2024 06:55:46 -0400
+  by phl-compute-10.internal (MEProxy); Wed, 02 Oct 2024 06:55:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727866546; x=1727952946; bh=KxA1xL6cHw
-	NNyBOTShE8qLiR46Dx8bSgoiF1YRu9mb4=; b=pStvdjogGZK9CNMGwKDB713N2r
-	Vhjf5kXv5KMuB9NEf8FN5XDDivPCtIs+tDEnBMAB9SVHXZeq6MkuJoab+m0YUtQ4
-	/JiLsSB5uZdDCxwr4o9iEbxGR2ZpG2jWN6H1lNPofuagWKOx+MFb+i33cY04v6Gq
-	0va8pFAbCkq/oYNVQhQXT7zUW6SOGyXAUOkF7PfvbduS/s+osEobFkOdK0BEbCkl
-	oIWs9oHrnkye1FAzAmNBbav+jzEPouvyZqR51K2Kpv31pYMfdN0gm0qp03MKmHl+
-	G4s5JlI72W8GtjP8G9qPprzUHd43TPiwtRaVdua3PdUIZvQSCbKR+MyM9WgA==
+	:subject:to:to; s=fm2; t=1727866549; x=1727952949; bh=ZTNepBofGS
+	V4l6zStTlqqGSM4JHp2/ODcUBG5HhB9cA=; b=RDxssU4HFF2daMdlhidBbWX1o3
+	cPcUc/mOzTOuH4iwdwJYE7ADqKULpwuHv9fbKNUYvL8i4mPQWo4vifpghk6dJq+M
+	cSytYQHK2CGQ2x3lB3UaVqEnPPopzF3K/8H2Ppp60Hx5J690AYKR914DVQide9Wc
+	8YcyCrVd78XZGh+7bqnz6jEHR/Td/bIJ5YNooysBvAdtaSTtIl1QfwBaQRXI4nTq
+	dTCcOX0dfQ1HqwKu5jREKB/HhGGcuXFVivUkeyzK5M06A77qfQyZqw+psB9a7ADo
+	xfBc6jk4//FDp1DIIIiwn8MC1ig86vFpZRMnGuX7hA6vQqwYMIHVx+Btu3ZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727866546; x=1727952946; bh=KxA1xL6cHwNNyBOTShE8qLiR46Dx
-	8bSgoiF1YRu9mb4=; b=A9CVjgzUBojRDqLz3E3yBYoiZZbQR2/i1aSoaa7AaaTW
-	SwMFgWYG91Y1EikqGQkIOO8kS5rx93vNte7iNjwh1Mf8TBo+lJUvGAsY/p696Bgl
-	kgcz2X0+HD0Hodj/dNaFXgNktdCG0clcaSkBNKVvvh7xnF5vwOJIaocVSovUNB8G
-	hI4FbFzk9IeSv2vXBmg2Ret3oaR3l+niuPRB6XO/7R94ENq5d/hvU26lVyv7qlti
-	coK51saSsF/Z0I0rGbLOH6IvNM7C9ctOl5XXaLszKUZzP2gRRNiJt+gNMHQAfjUx
-	ifrCxFqw0KqAjm38wZAU2VyIvKs6HM2xn2q/Os5Yhg==
-X-ME-Sender: <xms:sib9Zv0GhuP1lLZRCB1Qg-4k6pucSQ-_kMs_jpLeLZo6gycwLRB_yQ>
-    <xme:sib9ZuFjimmc164Z-msWFMnnxjMwqlEmxr-e_zaydl-tH0nd_SwZtWeApF_FmkA0V
-    3iKAgsNo-X5LSDeOw>
-X-ME-Received: <xmr:sib9Zv4EdW5ifEdaQs7CUu-9GhWOPxzV1HW2UX5x8_LCRK0Gi_paEUeCSEL1CsHWDJrHJio4BQ3aoLGHdbN7DUDJWZ_tjxVyHgO0qmd5rakirST0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduledgfedtucetufdoteggodetrfdotf
+	fm2; t=1727866549; x=1727952949; bh=ZTNepBofGSV4l6zStTlqqGSM4JHp
+	2/ODcUBG5HhB9cA=; b=XxV2rYSG2YiLiamGLf7mUxvFjZ5q/GaONfrd3Ug3h8yR
+	X6/8AhkEQsRsb81qWTwWsPyIsqS7yWkON+YSEnHlldPZvct4Ur9XmkZbu+/yqeof
+	U48FRExz+WRnuEzs9xVHafLO9+iqLu5KX2AFSIs4zttl+mnNIyqvnVNswwsN3l6j
+	pSzr0Ilxiu9gVBuj98b+8+Wlik7+vLGnelhwM9EullW8bnW72F6wnz8LI7jSyYhF
+	htZJP6/77cCvr6Mys2UUdj12FYcvJtxq048N3Sjknq014NA2KzWrkyoOGcL7rMe1
+	Dhxx5lCvFNSLO501q4HJlcak0jeWy5RixTCad00xLQ==
+X-ME-Sender: <xms:tSb9ZlT8DDMV00KUT2CXa8SSTnW-3hhU9h3YLskLvQN8GvshpDfNfw>
+    <xme:tSb9ZuwDoSR_veAX8wlVKWlO9zYbTjTKmpN4CBzpplsrfYYNP9n_ZbCcB1LAzijHz
+    K0BprNgOGAtVvI7Wg>
+X-ME-Received: <xmr:tSb9Zq0LBX9iO8H39jQS1-fz2-LFXU0XnzbfOrCwRZMBBqEy6mgBv6rO12PSHgJlr7JZhcdWtNUEOmqX8PSb0wTxPOHe1WbjEB5thYxhlgtRsKN->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduledgfeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveffudeuuddugfehuedutedtjeefgffhtefguddtieeh
-    ieetkefffedvteduhfeknecuffhomhgrihhnpehuphgurghtvgdrnhgvfidpuhhpuggrth
-    gvrdhnrghmvgdpuhhpuggrthgvrdgvmhgrihhlpdhuphgurghtvgdrthiinecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-    dpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvthhhohhmshhonhesvg
-    gufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggv
-X-ME-Proxy: <xmx:sib9Zk3AWk22I7KcAXMKiB-lVuzAJpbg60eZ1VNIQqfIEF-Ih4wl-w>
-    <xmx:sib9ZiHTqMECzDA7WRUhdW379msOKK40hyun_lHP3wxm_SFv1MiH7w>
-    <xmx:sib9Zl8n5OMbbfoFFBnfST1oDVRzKhCamTUWsZS2LXz11h0SDYL96g>
-    <xmx:sib9ZvmutSNluJtNSTo1Eu2LCMeG_XeKaaDyN_Ry6qwcHzdY2N_zCA>
-    <xmx:sib9ZujDBrjGzSPaT1fkwdMf0t2pg4cmmXB5KUE9K0rhMxSYozc33n_u>
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepvg
+    hthhhomhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhg
+X-ME-Proxy: <xmx:tSb9ZtDSAqyPtci4RXWeVrgSIBf0KtRsowy3v0T2-lqXNOvBCdcpDA>
+    <xmx:tSb9ZuhmnrqCi9daJTVVpf6HP_CnGUlKRcN56uu27REubx47NYrUFA>
+    <xmx:tSb9ZhrdrFRNDCU26Sdk41i-LWXLhEyTaZxPPAUNFP2CJ2ii3ZcDNg>
+    <xmx:tSb9ZpgR1S7CGjWHbh-SO7AKKHY3_WpK2Pm-O4XB2031_H0eW-KY1A>
+    <xmx:tSb9Zmc7TqeXMVOfigrfvps7-7o128Aidj3JRmg9Sh6mabxBiuxoEFqK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Oct 2024 06:55:45 -0400 (EDT)
+ 2 Oct 2024 06:55:48 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f3158ba9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Oct 2024 10:54:55 +0000 (UTC)
-Date: Wed, 2 Oct 2024 12:55:43 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id d6ea1aa1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Oct 2024 10:54:58 +0000 (UTC)
+Date: Wed, 2 Oct 2024 12:55:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v5 07/25] reftable/record: handle allocation failures when
- decoding records
-Message-ID: <ca64971e7b892524e553d20e6726c95dd1865787.1727866394.git.ps@pks.im>
+Subject: [PATCH v5 08/25] reftable/writer: handle allocation failures in
+ `writer_index_hash()`
+Message-ID: <fc2f113cba3542fa8d37fc20d7825b70022f55aa.1727866394.git.ps@pks.im>
 References: <cover.1726489647.git.ps@pks.im>
  <cover.1727866394.git.ps@pks.im>
 Precedence: bulk
@@ -93,225 +92,125 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727866394.git.ps@pks.im>
 
-Handle allocation failures when decoding records. While at it, fix some
-error codes to be `REFTABLE_FORMAT_ERROR`.
+Handle allocation errors in `writer_index_hash()`. Adjust its only
+caller in `reftable_writer_add_ref()` accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/record.c | 80 +++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 63 insertions(+), 17 deletions(-)
+ reftable/writer.c | 61 +++++++++++++++++++++++++++++------------------
+ 1 file changed, 38 insertions(+), 23 deletions(-)
 
-diff --git a/reftable/record.c b/reftable/record.c
-index 60fd33c9c9..787e134c9a 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -359,7 +359,7 @@ static int reftable_ref_record_decode(void *rec, struct strbuf key,
- 	uint64_t update_index = 0;
- 	const char *refname = NULL;
- 	size_t refname_cap = 0;
--	int n;
-+	int n, err;
+diff --git a/reftable/writer.c b/reftable/writer.c
+index 9d5e6072bc..ed61aaf59c 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -186,18 +186,22 @@ static int obj_index_tree_node_compare(const void *a, const void *b)
+ 			  &((const struct obj_index_tree_node *)b)->hash);
+ }
  
- 	assert(hash_size > 0);
+-static void writer_index_hash(struct reftable_writer *w, struct strbuf *hash)
++static int writer_index_hash(struct reftable_writer *w, struct strbuf *hash)
+ {
+ 	uint64_t off = w->next;
+-
+ 	struct obj_index_tree_node want = { .hash = *hash };
++	struct obj_index_tree_node *key;
++	struct tree_node *node;
  
-@@ -375,6 +375,10 @@ static int reftable_ref_record_decode(void *rec, struct strbuf key,
- 	SWAP(r->refname_cap, refname_cap);
+-	struct tree_node *node = tree_search(&want, &w->obj_index_tree,
+-					     &obj_index_tree_node_compare, 0);
+-	struct obj_index_tree_node *key = NULL;
++	node = tree_search(&want, &w->obj_index_tree,
++			   &obj_index_tree_node_compare, 0);
+ 	if (!node) {
+ 		struct obj_index_tree_node empty = OBJ_INDEX_TREE_NODE_INIT;
+-		key = reftable_malloc(sizeof(struct obj_index_tree_node));
++
++		key = reftable_malloc(sizeof(*key));
++		if (!key)
++			return REFTABLE_OUT_OF_MEMORY_ERROR;
++
+ 		*key = empty;
  
- 	REFTABLE_ALLOC_GROW(r->refname, key.len + 1, r->refname_cap);
-+	if (!r->refname) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
- 	memcpy(r->refname, key.buf, key.len);
- 	r->refname[key.len] = 0;
- 
-@@ -383,7 +387,8 @@ static int reftable_ref_record_decode(void *rec, struct strbuf key,
- 	switch (val_type) {
- 	case REFTABLE_REF_VAL1:
- 		if (in.len < hash_size) {
--			return -1;
-+			err = REFTABLE_FORMAT_ERROR;
-+			goto done;
- 		}
- 
- 		memcpy(r->value.val1, in.buf, hash_size);
-@@ -392,7 +397,8 @@ static int reftable_ref_record_decode(void *rec, struct strbuf key,
- 
- 	case REFTABLE_REF_VAL2:
- 		if (in.len < 2 * hash_size) {
--			return -1;
-+			err = REFTABLE_FORMAT_ERROR;
-+			goto done;
- 		}
- 
- 		memcpy(r->value.val2.value, in.buf, hash_size);
-@@ -405,7 +411,8 @@ static int reftable_ref_record_decode(void *rec, struct strbuf key,
- 	case REFTABLE_REF_SYMREF: {
- 		int n = decode_string(scratch, in);
- 		if (n < 0) {
--			return -1;
-+			err = REFTABLE_FORMAT_ERROR;
-+			goto done;
- 		}
- 		string_view_consume(&in, n);
- 		r->value.symref = strbuf_detach(scratch, NULL);
-@@ -419,6 +426,9 @@ static int reftable_ref_record_decode(void *rec, struct strbuf key,
+ 		strbuf_reset(&key->hash);
+@@ -208,12 +212,15 @@ static void writer_index_hash(struct reftable_writer *w, struct strbuf *hash)
+ 		key = node->key;
  	}
  
- 	return start.len - in.len;
+-	if (key->offset_len > 0 && key->offsets[key->offset_len - 1] == off) {
+-		return;
+-	}
++	if (key->offset_len > 0 && key->offsets[key->offset_len - 1] == off)
++		return 0;
+ 
+ 	REFTABLE_ALLOC_GROW(key->offsets, key->offset_len + 1, key->offset_cap);
++	if (!key->offsets)
++		return REFTABLE_OUT_OF_MEMORY_ERROR;
+ 	key->offsets[key->offset_len++] = off;
 +
-+done:
++	return 0;
+ }
+ 
+ static int writer_add_record(struct reftable_writer *w,
+@@ -284,11 +291,11 @@ int reftable_writer_add_ref(struct reftable_writer *w,
+ 			.ref = *ref
+ 		},
+ 	};
+-	int err = 0;
++	struct strbuf buf = STRBUF_INIT;
++	int err;
+ 
+-	if (!ref->refname)
+-		return REFTABLE_API_ERROR;
+-	if (ref->update_index < w->min_update_index ||
++	if (!ref->refname ||
++	    ref->update_index < w->min_update_index ||
+ 	    ref->update_index > w->max_update_index)
+ 		return REFTABLE_API_ERROR;
+ 
+@@ -296,24 +303,32 @@ int reftable_writer_add_ref(struct reftable_writer *w,
+ 
+ 	err = writer_add_record(w, &rec);
+ 	if (err < 0)
+-		return err;
++		goto out;
+ 
+ 	if (!w->opts.skip_index_objects && reftable_ref_record_val1(ref)) {
+-		struct strbuf h = STRBUF_INIT;
+-		strbuf_add(&h, (char *)reftable_ref_record_val1(ref),
++		strbuf_add(&buf, (char *)reftable_ref_record_val1(ref),
+ 			   hash_size(w->opts.hash_id));
+-		writer_index_hash(w, &h);
+-		strbuf_release(&h);
++
++		err = writer_index_hash(w, &buf);
++		if (err < 0)
++			goto out;
+ 	}
+ 
+ 	if (!w->opts.skip_index_objects && reftable_ref_record_val2(ref)) {
+-		struct strbuf h = STRBUF_INIT;
+-		strbuf_add(&h, reftable_ref_record_val2(ref),
++		strbuf_reset(&buf);
++		strbuf_add(&buf, reftable_ref_record_val2(ref),
+ 			   hash_size(w->opts.hash_id));
+-		writer_index_hash(w, &h);
+-		strbuf_release(&h);
++
++		err = writer_index_hash(w, &buf);
++		if (err < 0)
++			goto out;
+ 	}
+-	return 0;
++
++	err = 0;
++
++out:
++	strbuf_release(&buf);
 +	return err;
  }
  
- static int reftable_ref_record_is_deletion_void(const void *p)
-@@ -552,6 +562,8 @@ static int reftable_obj_record_decode(void *rec, struct strbuf key,
- 	reftable_obj_record_release(r);
- 
- 	REFTABLE_ALLOC_ARRAY(r->hash_prefix, key.len);
-+	if (!r->hash_prefix)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
- 	memcpy(r->hash_prefix, key.buf, key.len);
- 	r->hash_prefix_len = key.len;
- 
-@@ -570,6 +582,8 @@ static int reftable_obj_record_decode(void *rec, struct strbuf key,
- 		return start.len - in.len;
- 
- 	REFTABLE_ALLOC_ARRAY(r->offsets, count);
-+	if (!r->offsets)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
- 	r->offset_len = count;
- 
- 	n = get_var_int(&r->offsets[0], &in);
-@@ -801,12 +815,17 @@ static int reftable_log_record_decode(void *rec, struct strbuf key,
- 	struct reftable_log_record *r = rec;
- 	uint64_t max = 0;
- 	uint64_t ts = 0;
--	int n;
-+	int err, n;
- 
- 	if (key.len <= 9 || key.buf[key.len - 9] != 0)
- 		return REFTABLE_FORMAT_ERROR;
- 
- 	REFTABLE_ALLOC_GROW(r->refname, key.len - 8, r->refname_cap);
-+	if (!r->refname) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
-+
- 	memcpy(r->refname, key.buf, key.len - 8);
- 	ts = get_be64(key.buf + key.len - 8);
- 
-@@ -829,8 +848,10 @@ static int reftable_log_record_decode(void *rec, struct strbuf key,
- 	if (val_type == REFTABLE_LOG_DELETION)
- 		return 0;
- 
--	if (in.len < 2 * hash_size)
--		return REFTABLE_FORMAT_ERROR;
-+	if (in.len < 2 * hash_size) {
-+		err = REFTABLE_FORMAT_ERROR;
-+		goto done;
-+	}
- 
- 	memcpy(r->value.update.old_hash, in.buf, hash_size);
- 	memcpy(r->value.update.new_hash, in.buf + hash_size, hash_size);
-@@ -838,8 +859,10 @@ static int reftable_log_record_decode(void *rec, struct strbuf key,
- 	string_view_consume(&in, 2 * hash_size);
- 
- 	n = decode_string(scratch, in);
--	if (n < 0)
-+	if (n < 0) {
-+		err = REFTABLE_FORMAT_ERROR;
- 		goto done;
-+	}
- 	string_view_consume(&in, n);
- 
- 	/*
-@@ -850,52 +873,75 @@ static int reftable_log_record_decode(void *rec, struct strbuf key,
- 	 */
- 	if (!r->value.update.name ||
- 	    strcmp(r->value.update.name, scratch->buf)) {
--		r->value.update.name =
--			reftable_realloc(r->value.update.name, scratch->len + 1);
-+		char *name = reftable_realloc(r->value.update.name, scratch->len + 1);
-+		if (!name) {
-+			err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+			goto done;
-+		}
-+
-+		r->value.update.name = name;
- 		memcpy(r->value.update.name, scratch->buf, scratch->len);
- 		r->value.update.name[scratch->len] = 0;
- 	}
- 
- 	n = decode_string(scratch, in);
--	if (n < 0)
-+	if (n < 0) {
-+		err = REFTABLE_FORMAT_ERROR;
- 		goto done;
-+	}
- 	string_view_consume(&in, n);
- 
- 	/* Same as above, but for the reflog email. */
- 	if (!r->value.update.email ||
- 	    strcmp(r->value.update.email, scratch->buf)) {
--		r->value.update.email =
--			reftable_realloc(r->value.update.email, scratch->len + 1);
-+		char *email = reftable_realloc(r->value.update.email, scratch->len + 1);
-+		if (!email) {
-+			err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+			goto done;
-+		}
-+
-+		r->value.update.email = email;
- 		memcpy(r->value.update.email, scratch->buf, scratch->len);
- 		r->value.update.email[scratch->len] = 0;
- 	}
- 
- 	ts = 0;
- 	n = get_var_int(&ts, &in);
--	if (n < 0)
-+	if (n < 0) {
-+		err = REFTABLE_FORMAT_ERROR;
- 		goto done;
-+	}
- 	string_view_consume(&in, n);
- 	r->value.update.time = ts;
--	if (in.len < 2)
-+	if (in.len < 2) {
-+		err = REFTABLE_FORMAT_ERROR;
- 		goto done;
-+	}
- 
- 	r->value.update.tz_offset = get_be16(in.buf);
- 	string_view_consume(&in, 2);
- 
- 	n = decode_string(scratch, in);
--	if (n < 0)
-+	if (n < 0) {
-+		err = REFTABLE_FORMAT_ERROR;
- 		goto done;
-+	}
- 	string_view_consume(&in, n);
- 
- 	REFTABLE_ALLOC_GROW(r->value.update.message, scratch->len + 1,
- 			    r->value.update.message_cap);
-+	if (!r->value.update.message) {
-+		err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+		goto done;
-+	}
-+
- 	memcpy(r->value.update.message, scratch->buf, scratch->len);
- 	r->value.update.message[scratch->len] = 0;
- 
- 	return start.len - in.len;
- 
- done:
--	return REFTABLE_FORMAT_ERROR;
-+	return err;
- }
- 
- static int null_streq(const char *a, const char *b)
+ int reftable_writer_add_refs(struct reftable_writer *w,
 -- 
 2.47.0.rc0.dirty
 
