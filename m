@@ -1,102 +1,111 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169302F22
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:16:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8943A2F22
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:18:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727907374; cv=none; b=U/cd6Eg5MsvDLCNKnl+pOLVy+tGG/Yr2QXbN/HYoq3uyN582sjyrpX0UZ47wSd6Gvghi6c6eOGJc+tz/D/yNYMRTqEA2Y7MTFwre8qHWRs3sYu/wB+nhCe3L4XVH94SK136QGWX85gad31lauZvbyuS7vaDtFgFBr1IimGJVnCw=
+	t=1727907487; cv=none; b=dfkBiIMkX368oDcxdMmwRa7+LlNjjzo2S6kiafBf2pHKFS7Ir1Euey+Gn8+NCANnKBxSYDTMECU950L6lHoLEdRd786Lh4zbwRqaZw8xCsVmRYSIrkvhu8AIfVEK/YMEo2WxyPnYl1wAW3kEG8lKwF2hg6WEuE8/m8lDZVIrXsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727907374; c=relaxed/simple;
-	bh=9FDELH92FNkJwar7XM5V1FFlebll7NGgilGK2WCkH0s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=rQLQecF/KDBqeHe2mocAf+/AC8Lq5u7oWZkbUeK3CkurawK2ZdlP4nLK/lip95yKpznew2ONHy2i+vf/jnjP4dyyENRcq1pLm3AbubGP6sTk5dzkV68LqKS10JH97OLmiWTyTf66UGVlCDfIn3uUkzuzbOPeUIIPn1VnSJjhOhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6cb33996b79so393446d6.0
-        for <git@vger.kernel.org>; Wed, 02 Oct 2024 15:16:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727907371; x=1728512171;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+	s=arc-20240116; t=1727907487; c=relaxed/simple;
+	bh=bmk6c6JBM9S9WQ5xk3ibK5h39cV8W7FiiR0L1l/2XaE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=si2q9p1ytux8NJFwxL3r03u76tfeRfI2IHd0gIH9nDoyyHZh9bMSRqHpKAqDsy/zm36ONR90Mm1G7osMigpnWxY7TV3qyMQzdT0JsKXE+Han9WyWiUauw/4Tr7G2vpUfHzEfDK5wfSwIOPB7MK4bo4mWxA63blhB5Dxpis+CNUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CGS0+6su; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CGS0+6su"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-20b40c7fd8eso77905ad.0
+        for <git@vger.kernel.org>; Wed, 02 Oct 2024 15:18:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1727907486; x=1728512286; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/wRP1fjf2NvYZwVj4+kIY48wXuGMT+IFr2yG+sMzolY=;
-        b=Y3FexxHgTV1VsRYwheClNpzaz9tDJqzbe1TZxdtm+e37mi8FAJRTxiNe3swgdsPkax
-         IifG5UDFKZ2i1ahhUvZ52yunus4sadUQHP2WjZYTGzjNjoluYK0YEj1i/4Ll7qDfivmT
-         cHV4YqAdVuylWvPLf66xSFBnToDafNEcJqKyVsv55in+LpqWVUh3ShxpYOKsUwjADkYm
-         OS2hvBXoJC1NqdZbc2BwsPgjQeQDPbwi1T8rd//q7XYvU+LDnA8WdrWISa1MM2YCpmTe
-         Ap7bykCU5qixz2LJY5m5gNc11O07L0lADRqenOkBDKSjriSI/zUMHadyPC3cxwIh/8gy
-         SaFA==
-X-Forwarded-Encrypted: i=1; AJvYcCUKz9pM1wjH/6xBweXYvEfdGMbRX/KyO6ZZfSAqUWD9Xf3H8A7yMyHCDGWihtIUBYNFqqE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzH444gQDWpZ0qnfdvs85j5B09bZNBKKDDlcVzQAWYYddlx4PeJ
-	31UC15sv90MijzHtsXBQMybDP4LlWfcSajCjfNQpmUsw6PDFSyS5O1oMetQ2sy3884eYuKch3cZ
-	IT3srOB3BDpIZy+ZXWIJCOIYfbo4=
-X-Google-Smtp-Source: AGHT+IFpL/AaHSYxuQaYG3U3ORwBGmrhwxGgaooASxEix1CJ62iyL0TA8ArYLEpEU+VstksbpXXbYI4Cxcp5+dF8tEg=
-X-Received: by 2002:a05:6214:2022:b0:6cb:5d84:d482 with SMTP id
- 6a1803df08f44-6cb81a90f80mr31794846d6.9.1727907370873; Wed, 02 Oct 2024
- 15:16:10 -0700 (PDT)
+        bh=YSWlC+CxPYFz8lDR796YvJxIGCQpF3I3i87s2DJ8VYA=;
+        b=CGS0+6suplGZ3wkLFC8jzCARyg7K36uw3a/nYJbT/3djvKFlp4I7Pj6HNDqLoWOxZh
+         gkYISyaHo7fQLIAyiE+fLjoSL840Wh/qBG8NTL9adQLW1G30edaObW1wuIOYXHTLQusC
+         +nqqDjB26yHaMhct9aen2sTBJ9tyqirByEVmucYZrVk4zeB3uxeLXxMIhTendPGfVLD7
+         wpdlyU1WdgcedKDQR5qP7Ehn+GGyfiW8xJjWwG8CoiQSrrOWhcAe/uyr1flNlhCT+MWF
+         oDINzAK2JpRVdeu8Z7Fhq4FC85qCVEA7rXNPbONIp0lsHiHohZiiYbFQchi5fiYoafDx
+         UR5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727907486; x=1728512286;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YSWlC+CxPYFz8lDR796YvJxIGCQpF3I3i87s2DJ8VYA=;
+        b=D3eyH+EKPUUrYHyBjmSeamvRdIKfFr+mzVyfv/Ytn/y8SjfLdqkgRqAO9Ar30RNFLB
+         LXwPJkKxTeQ3CtFl0wjF3D3Gh8XZL4ZTjGBEw0CMV959HZV4OiM42+WcXojIisKDtyOD
+         2bGGigM6y/XUIpWkP7+LpdXSmAgDnTr81tdeTbFrx8PKvJvDduBhbmgO5bNuQEhLnkCI
+         L/Fq7W0w9dv1w2azsFbjVM+o6xB1awK+t7+KMO1lva1xdsu5puPaoo3AsfBIDS366sCh
+         RMX+8OJYYUcw03bT0JwgTw/CjSQOP5NZ+F11m/RtxdonsmQ9MFMWJr5QqLMOYGbQGpSp
+         xSJA==
+X-Forwarded-Encrypted: i=1; AJvYcCUSDKxyQKdd+SGFASqdgvvOXadZ6s1LWjEBwNNzxTuGwwpVvLvUYCpWSEg5ZPpAJR8+77g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQntRH8KTgMvz29tWN7se/oOGFmWPgfD/MwbXMXz+BAJlBs/40
+	vg6F3AFlWzdpUCEGeHpOCtG3vjhV4MdqGfJfjpF0CDozWO7mXEOgmwRZuaDwynQRMFZWYQFFGLI
+	0olIL
+X-Google-Smtp-Source: AGHT+IHE6+rZwCx7y3EFGfov1Vk9wdHuYL7rS1S5HxZH+dzlAhLvHFM53UnIbN5E1jIs+JnzxDMbMw==
+X-Received: by 2002:a17:902:d487:b0:20b:8109:2c8b with SMTP id d9443c01a7336-20be4e0875cmr1065745ad.16.1727907485574;
+        Wed, 02 Oct 2024 15:18:05 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:2dd:9410:f675:e07f])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71b2649c775sm10384658b3a.29.2024.10.02.15.18.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Oct 2024 15:18:04 -0700 (PDT)
+Date: Wed, 2 Oct 2024 15:17:59 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, calvinwan@google.com, 
+	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
+	Jason@zx2c4.com, dsimic@manjaro.org
+Subject: Re: [PATCH v2 4/5] config: add git_configset_alloc() and
+ git_configset_clear_and_free()
+Message-ID: <ypu7w5bptyiporstbffps5xsdc4qusum3vlcmysqznegfr67gr@sqm2mi2xx572>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
+	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
+	Jason@zx2c4.com, dsimic@manjaro.org
+References: <cover.1723054623.git.steadmon@google.com>
+ <cover.1723242556.git.steadmon@google.com>
+ <908ad0b82fa084fc4e56d7f6dff49e4f255af6ec.1723242556.git.steadmon@google.com>
+ <47b18fa4-f01b-4f42-8d04-9e145515ccc1@gmail.com>
+ <Zr827Bd5jrQwhIEp@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240930220352.2461975-1-sandals@crustytoothpaste.net>
- <20240930220352.2461975-2-sandals@crustytoothpaste.net> <2d2f14ea-cfdc-4b52-948f-b42c8f6e41de@gmail.com>
- <Zv3DehUxEN6SJI1M@tapette.crustytoothpaste.net>
-In-Reply-To: <Zv3DehUxEN6SJI1M@tapette.crustytoothpaste.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 2 Oct 2024 18:16:00 -0400
-Message-ID: <CAPig+cRkA58wr_Pn-uhVM0zFA7B0hnArXDeumrjnWrgBbG64Yw@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] Add a type for errors
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, phillip.wood@dunelm.org.uk, 
-	git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zr827Bd5jrQwhIEp@tanuki>
 
-On Wed, Oct 2, 2024 at 6:04=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On 2024-10-02 at 09:54:52, Phillip Wood wrote:
-> > Part of the reason it works well in rust is that it supports discrimina=
-ted
-> > unions with pattern matching and has the "?" macro for early returns. I=
-n C
-> > the code ends up being quite verbose compared to taking a pointer to er=
-ror
-> > struct as a function parameter and returning a boolean success/fail fla=
-g.
-> >
-> >     struct git_error e;
-> >     struct object_id oid;
-> >
-> >     e =3D repo_get_oid(r, "HEAD", &oid);
-> >     if (!GIT_ERROR_SUCCESS(e))
-> >         return e;
-> >
-> > With a boolean return we can have
-> >
-> >     struct object_id oid;
-> >
-> >     if (repo_get_oid(r, "HEAD", &oid, e))
-> >         return -1;
-> >
-> > where "e" is a "struct git_error*" passed into the function.
->
-> However, Go still uses this kind of error handling, and many people use
-> it every day with this limitation, so I don't think it's too awful for
-> what we're getting.  I won't say that Go is my favourite language and I
-> do prefer the less verbose error handling in Rust, but the fact that
-> this design is widely used means that it's at least a defensible
-> decision.
+On 2024.08.16 13:24, Patrick Steinhardt wrote:
+> On Mon, Aug 12, 2024 at 10:10:48AM +0100, Phillip Wood wrote:
+> > Hi Josh
+> > 
+> > On 09/08/2024 23:41, Josh Steadmon wrote:
+> > > Add git_configset_alloc() and git_configset_clear_and_free() functions
+> > > so that callers can manage config_set structs on the heap. This also
+> > > allows non-C external consumers to treat config_sets as opaque structs.
+> > 
+> > Do we really need to add this code to config.c rather than handling it in
+> > the wrapper layer in the next patch?
+> > 
+> > Looking ahead I wonder how useful it is to users of the library to separate
+> > out allocation from initialization. A function that allocates and
+> > initializes a configset would be more convenient and harder to misuse.
+> > Calling release functions *_free() rather than *_clear_and_free() would be
+> > more convenient as well. I also noticed that the data types are not
+> > namespaced when they are exported. So perhaps we could drop this patch and
+> > add the following to the next patch.
+> 
+> Agreed. This is also part of our coding guidelines as of 10f0723c8d
+> (Documentation: document idiomatic function names, 2024-07-30).
+> 
+> Patrick
 
-I'm not sure I understand your response to Phillip's observation.
-Idiomatic error handling in Go:
-
-    if oid, err :=3D repo_get_oid(r, "HEAD"); err !=3D nil {
-        return err;
-    }
-
-seems much closer to Phillip's more succinct example than to the more
-verbose example using GIT_ERROR_SUCCESS().
+Fixed in V4.
