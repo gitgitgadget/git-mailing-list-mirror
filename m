@@ -1,79 +1,107 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560762030A
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 07:12:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8D518E373
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 07:58:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727853170; cv=none; b=UU+wsxO+rJzxX5yjj3RJAf5qM9tMFezUQxRYbPS2rjCIQNBCxNDf2qLuftKE8EWwf/uCxiaSUkVIgvraTKy085BhhLyyILhD2y0lQsgjm1nq3gAl1Eh6UJ8FULPMQgA8J1RmlDvvuBs/jLxqW8MKo+jzw3Ub6WHyNLEquEDbf7g=
+	t=1727855892; cv=none; b=uFMKawrc4a9AQ9Z2NE//1f5bR5R7YC5YHP8j59zbwKDUAjGlw+/IluuVB2yHY5IAg0F7/fDtdzQO6FN3iklFOMy5ChGslP5GvGjHx59K1gtwKOcrk/Y++tVbM4oLhMbKOTtmYtu123A3JP1cjKqihHyzuSNttYw+x4BswFhKfx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727853170; c=relaxed/simple;
-	bh=OFS2tWmSvMze76wF6tqPKwPs2AdTZWbb4m2r9qDf2H0=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Oic1mU4RdQpKxcv6nqqFS6J6yHUdMYnslIR61GWGqwizdDqBRIsswgfkoNStND3v/wt57MA4t3N6pnysZCxKSPd+7+2BS0HLwEnEpLdpLQFMGyQwBIGI3hKSwSx9K/SkRihyrhlWHB8xB83CCx4HEoZhDQlgbs6Fafh0fgI4xkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fL697amD; arc=none smtp.client-ip=209.85.222.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727855892; c=relaxed/simple;
+	bh=DIcBzaAWh0BLYpQBD5ybln15I/tZxDEfqMPpB317UnI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CxQjyugh4/cshIshANPck8RXLX9N+Z7k7gTUa7jxGO37wbNRLnam4892D1pNEBb8Xp0y0DNy41Fh8Lx5zzrtx8+Nf8e0Cyi9NGV94NhGhgvazL0t0SFJN9fUGQHhJSv/COxNdFN5ktK7saPLr7sKH6vtnBybFTSIN1STVH8dp8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=bOZ0TwEP; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fL697amD"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-84e857bc0feso329287241.0
-        for <git@vger.kernel.org>; Wed, 02 Oct 2024 00:12:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="bOZ0TwEP"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-7cd8803fe0aso4451569a12.0
+        for <git@vger.kernel.org>; Wed, 02 Oct 2024 00:58:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727853168; x=1728457968; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=OFS2tWmSvMze76wF6tqPKwPs2AdTZWbb4m2r9qDf2H0=;
-        b=fL697amDxUXgZyUZOMnb2PHAWBJGkyvUrRBLmkKKtIoi20h9Njn6LE6Tc/MMrv5hWj
-         QI6dVYudGlBiQLZADutUTxqmMQEE3T/j0KzCaNZXSpMkiCKAn3FXLFrOjcLaAOzYRP8q
-         HO9W/Iy1sYmPXMtlngsjBPnG0FtPeV1Jj5b/UkmfzCfNSFss8OOqBMYg/R+kBb1rixqh
-         1ZkeYhseWFdfMh+py3HeP+mtu+Kh1B5yrBpFMZZbCoUyxsEGUiiZ83/cnvNxb590uhHm
-         szGf1FSazVQixi9K7LEA6uH992eWcSavavYGG1cmOcDxQ61gk/XzXokLDK0p2jS8bJem
-         RGWg==
+        d=bytedance.com; s=google; t=1727855889; x=1728460689; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a246ffZCY/Zj/ilL2qMQ3nborFeRGU6mn0bNcEXKEl8=;
+        b=bOZ0TwEPWR/EJoY4vrWN9156RKwRt2NkiVqTRzRMxFaEC5kNRRNN8a2HPJVVNe8YaQ
+         QGm5Htj9XeZE++tbWw3BeMj+YvGKg0Hnp3JZd6FcZ2xz4NYMN0BBVgq4WoEZEbDORqHD
+         r5T1o38TjlP7FA7d+xKtejGcqWMiDZSJN3HaFBtjWxiuzuvAbZOVPx/UmxqQbY+fTTyt
+         Pufar/ZL/91vXlBhQMSg1KyjVYt0sntQADVosKFKQE/z6WyGUwecZlG0q1Efin+DdC52
+         KqRqrk89qr86m098EDEnbMIQ9lt8AXAUJbxHU7xZOAJ1uCQTl2EnyICnmH6N+kpuyfIo
+         FdDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727853168; x=1728457968;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OFS2tWmSvMze76wF6tqPKwPs2AdTZWbb4m2r9qDf2H0=;
-        b=G7Q3OQ9DRslAjwdsRTALTuTidKZAqXQrkRKp2xEtmmFjENwUHgLVBHH2YNb+C+Hmz0
-         xxorIcFlgRG2GkbRmzcR2hpPFFS2/7Stm7oKZHg92GjhzZbc3IeP2jWTFUa7SoCoXyAO
-         Q+TdlbROxoIFxzdg0XC/VonWHAQzNbOTpQ16X+lt3s3sZL2vyCDm4BYh2Tq8QKzgXwlT
-         UM2s+cnunuCe3OJMiJOh3nz0OJxXTPoVNsl+jaCmCssYCd1+CfD5wMSLJywSxhC9ofE/
-         P9lytBJWm8bQOYrrVDQicgdedfDIZiyeGLzzUzDSZYAUuemvWNhBilYDEy0IM1QMANSp
-         dzpg==
-X-Gm-Message-State: AOJu0Yxpgpw5/p7e10YB/M9yzhT90r1X4SqeQor6A0LEjIoSwzkek3Z9
-	e+ZuM7OaaY3TYtpMbon8waNv+c1OeHxEX4+zqN5ZjcZjist4K5krxkH2LGCJWkcH+1pzSlZPcIq
-	b+acYEW8kiFpkbyVU4eDjnCyr2rq8gZ2D6G99Sg==
-X-Google-Smtp-Source: AGHT+IHTMjAVD4pwFnWoVIgt29O5QHsi/Hnk5/m20IM2+6jclF8L6CBUVh2hmmen4V1cslO91MDAuN6IMVG2r4kCHl4=
-X-Received: by 2002:a05:6102:4414:b0:4a3:a2d9:eef1 with SMTP id
- ada2fe7eead31-4a3e64d7353mr1736580137.9.1727853167960; Wed, 02 Oct 2024
- 00:12:47 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727855889; x=1728460689;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a246ffZCY/Zj/ilL2qMQ3nborFeRGU6mn0bNcEXKEl8=;
+        b=AMq9k24m/Np7Fx/bExzc4F4islECbS2RWKPxz+THqppSlis9Y/b/Jmi2abmlwczB3N
+         rNW6x5Gaj3p+iPZAWkg2mJgjj2udrTvaZFp5N7W0mSX/GoSEcPV+xak6okpIwK0hFRpk
+         xIhL9DRXCSG60yIaB3JVBwXX6WXW/0rc/ssKB8g7H6xj6pM37xpkPU4u6wIybPEvxfBc
+         ziIOCmFsKBe6z6zty1MPsJ+KVkW6gi3fHwWs8j35Zvm/3y1ZptQFfcJoGdUDXd1qrK4V
+         fai7gYj9rD9ZkiYwjNdWfr+DphUan1cMz59XxFn3GnfEuZOrHmAlINym+3d0Ung+vXIs
+         pZ3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUxx88wkOjrB+G+SO9NEAHnz8hXDOOIS8qzeF4sLaMa8V+3lYD/q3Z4dQfjpjJgygLVTrg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaZcJMjsJEj9gw5TvOIFEnbUMYsgV8MOPW6fPYZVb2aQMl8f+7
+	WLPWrwhI9ONp01i8YCgT2PaCU09+8+Vb+g2CRAtgQrw5sMWZhcQUnMN/GCNnMcRfbQRZEleN0bJ
+	zPKkcRJHXfN7g4LV5gYnrq5TpxgCdHzEs52Shpg==
+X-Google-Smtp-Source: AGHT+IGyCuUPH+yETT7uEDbl7GLbYLAFkR4sRgOjoIiCc/YdUBjJM877LwI0rxlu1ouMYXkn0/JdCQb6HpkHVtZy140=
+X-Received: by 2002:a05:6a20:9d90:b0:1d2:e839:11b9 with SMTP id
+ adf61e73a8af0-1d5db136cd8mr3576754637.14.1727855889347; Wed, 02 Oct 2024
+ 00:58:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 2 Oct 2024 07:12:37 +0000
-Message-ID: <CAPSxiM-+4VFsHkBW8Y3ncY-kjxvAXSOdSom=zBQzTNd-JK+HxA@mail.gmail.com>
-Subject: [Outreachy] Potential intern.
-To: git@vger.kernel.org
+References: <20241001191811.1934900-1-calvinwan@google.com> <xmqqo743qkn9.fsf@gitster.g>
+In-Reply-To: <xmqqo743qkn9.fsf@gitster.g>
+From: Han Young <hanyang.tony@bytedance.com>
+Date: Wed, 2 Oct 2024 15:57:57 +0800
+Message-ID: <CAG1j3zFUGPev2voyEocv=G8=NSUDqH2Bbr5_dpfuS9ua8tTs6Q@mail.gmail.com>
+Subject: Re: [External] Re: Missing Promisor Objects in Partial Repo Design Doc
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Calvin Wan <calvinwan@google.com>, Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org, 
+	Jonathan Tan <jonathantanmy@google.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	Enrico Mrass <emrass@google.com>, sokcevic@google.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello, I am Usman Akinyemi from the Outreachy program, I just got
-selected for the second round contribution stage, I got interested in
-the git project as it is one of the most important OpenSource
-projects. Also, my skills are aligned with the required skill for the
-projects and it is related with what I did at systemd where I created
-a new unit test framework which is now the primary framework used
-across the project. This development has significantly enhanced
-testing efficiency by improving error reporting and debugging,
-streamlining development processes, and increasing the reliability of
-the software.
+On Wed, Oct 2, 2024 at 10:55=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 
-I hope to learn and contribute meaningful contributions to git.
+> Stepping back a bit, why is the loss of C2a/C2b/C2 a problem after
+> "git gc"?  Wouldn't these "missing" objects be lazily fetchable, now
+> C3 is known to the remote and the remote promises everything
+> reachable from what they offer are (re)fetchable from them?  IOW, is
+> this a correctness issue, or only performance issue (of having to
+> re-fetch what we once locally had)?
+>
+> Is this true?  Can we tell, when trying to access C2a/C2b/C2 after
+> the current version of "git gc" removes them from the local object
+> store, that they are missing due to repository corruption?  After
+> all, C3 can reach them so wouldn't it be possible for us to fetch
+> them from the promisor remote?
+>
+> After a lazy clone that omits a lot of objects acquires many objects
+> over time by fetching missing objects on demand, wouldn't we want to
+> have an option to "slim" the local repository by discarding some of
+> these objects (the ones that are least frequently used), relying on
+> the promise by the promisor remote that even if we did so, they can
+> be fetched again?  Can we treat loss of C2a/C2b/C2 as if such a
+> feature prematurely kicked in?  Or are we failing to refetch them
+> for some reason?
 
-Also, if there is anything I need to learn about, kindly let me know.
-I really appreciate it.
+In a blobless clone, we expect commits and trees to be present in repo.
+If C2/T2 is missing, commands like "git merge" will complain
+"cannot merge unrelated history" and fail. Or commands like "git log" will
+try to lazily fetch the commit, but without 'have' negotiation, end up
+pulling all the trees and blobs reachable from that commit.
 
-Thanks.
-Usman Akinyemi.
+It's possible to minimize the impact of missing commits by adding negotiati=
+on
+to lazy fetching, but we probably need to adapt code in many places where
+we don't do lazy fetching. "git log", "git merge" commit graph etc. it's
+no trivia amount of work.
