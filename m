@@ -1,84 +1,85 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7426E1EC00A
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 10:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54A71EC010
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 10:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727866539; cv=none; b=UKpOQixd0rP3HuHlrT/r6CWTo0QP2qyN/jp/f9XJ96tiHEMm3NpOThs3kPt9xiG2JS8YcgmnLOZberwaSjt6kiCBtgdPybN4vUhJJTBFEkxq2O6xQz6Wwszh81kzknVp1a2C5AROGpLRjrw87k5Godg0nQ8JHdDni4rIdwsKZRQ=
+	t=1727866541; cv=none; b=nCCur2s+lrGyPliJ8QFHbUhEmJbDFbIyORrJ74wdQnCw2fIAAvC/QTI05ETZSvECjmhSjp+2aCprNm9EKqlF75XHxDHtauSqNeOExRQJSw1ZweAEc8tU4oK3W93Cd1FBQLEGGuBlw4Ui8Vf88lHTxJn0OBnULO+gIQ212pP8ES4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727866539; c=relaxed/simple;
-	bh=b2gm5e6VuNcFw4M9Tw2VQu8j+T/hUd4g9wcPToddLhg=;
+	s=arc-20240116; t=1727866541; c=relaxed/simple;
+	bh=DdozzQ67/6CahAwn1lWGRpV7LYsH0IYwH8QW8YJUXcg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fo/WpbZdU0vYzBJMKt5LfCfAiA9AeDzNG7wvJSXEFgKg9j6PkRf0x/rcriJpq5uvWKKEqLaQQZIegx8J08GeyknyWyKXSa/Wz6JAihRduEVwUrmVLcNq08obdbzqszOBScNTdwweYIyuZzpaxwieyWeN0YmT2Xq+m8vMA1+RQn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Lu+DjZjk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hDisJIi3; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=pdspvuaYj5amJRUKFcqZXRQzG8f8dArxu5E8D3Jh5paNKni/u2R2JpU8W6u6I+j00a7ZuEC7IrAyrif8z85vrmS8PK5LixN3ZcgpvkbYp6phMJ8GaV5Fr2KpK2uqvG/FDGmewwNeE39Ny8zH5DJ7iHZ7FLwNs79mci0Yaeh6JeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TGMdHXqe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hgvP4AKi; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Lu+DjZjk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hDisJIi3"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 874171140236;
-	Wed,  2 Oct 2024 06:55:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TGMdHXqe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hgvP4AKi"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2ACD71380601;
+	Wed,  2 Oct 2024 06:55:39 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 02 Oct 2024 06:55:36 -0400
+  by phl-compute-10.internal (MEProxy); Wed, 02 Oct 2024 06:55:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727866536; x=1727952936; bh=kaL379fZ/R
-	biuQABPX9C936DoOsFwVDWSc6IHeiN1qE=; b=Lu+DjZjkVCfTaTTdG1mH8H0ihF
-	AuUcrQy54syp+rkgxJS3rjAWIm84buAEXMpqfQweziy8xOWVIR56tkji0nPz1g4j
-	pa0zn5BzBj9rplUPnBQURxVqtXJ+Na7C0067Wl2ASCTP/Fgg7AAsmSkv6ibpG0uZ
-	DAEx2+hDGLdGx0JdqH0q+M5NkPhaaW+GM6T9L7ESaDe+PMnbru3pHoN+XITn7PwK
-	1l7lOLL7YF6+Z1SJwSLv75ai0w637ApPw0aDcLX4SHqPQJMbj4/I+gOO5wCgDtcq
-	DwP6QGhwTiM6hFE/3XJF/cxJLx/VVouM6s6VilSSfNEggmT3gr03GCL1zPeQ==
+	:subject:to:to; s=fm2; t=1727866539; x=1727952939; bh=4wnjwnoBmB
+	Fx7OgfS04fXzrxXw2NZlfv92BUkTkLdGI=; b=TGMdHXqeVEq3xDIyX1A/s52+/6
+	kkI6JjfrUAyO+RP5mcz4u5cScozZxqZkO90kxckRWtOuSdGTCKWB5/yqlAu1b5NE
+	Fa3p3JIQWpPwOZT3866bPv9wZpx1P1ex8kTdmuk7Qqe3qI1T1HzkWxAZFHS9OM63
+	j4SwihwgdhdSkvFIOja7F9otCyhOX81vS/eXjGoNM4RlT3bqL44t0SLf2I7EXMiN
+	EiVcmmxUy0nrT64GcwzVC9jchjF0acvP7HUkMuaVjD4rbAbojbtLcDSE1PaOJB8U
+	2vAnQTxVSlNxiouQHP+KoE1dFijgQXAUK4rB9cQbkZ72NJnjLKzXphqpeHHw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727866536; x=1727952936; bh=kaL379fZ/RbiuQABPX9C936DoOsF
-	wVDWSc6IHeiN1qE=; b=hDisJIi3uMWRcI40IPXLMWACpO/6P7J0neLG5b0LDnFX
-	k5fF1Yxl2tjhXa4r2FHvVCJLJvsHQ0Ck3VtjV3ua1+I1R5CpJ/EFaWJGc9u88kFS
-	L8y5BkL7zNnKQqLVav9XgMZAxCb6KbVtkeDV5vQ4OAH3AO2Za95Q9orYWYeNmj7Q
-	2Q0towD8cc3tmVoXDYc1/6yufnYCcUuPJfWdkWCHBR8XUZawzPy3/odM+KpleY/S
-	aNbXlAwrwNEbjGaesZrunN1PyMko77IhKE8/c7l1jb3WZqpmdP7YYT8MH5teY2/W
-	yqdQD/bZHnm/TwGes99bCv7KWkB51qfWkrJKcSJT7Q==
-X-ME-Sender: <xms:qCb9ZmyADAleaqHB07akppMUECRBbtd5J4CXjjZ8FJtbvIxabKmTeg>
-    <xme:qCb9ZiTSOWkewpxfVGNJLIuQTOf90qeH8Sae93Aoit4-SGzdAdHl6rJiLmS1nRec8
-    zsLDhfq2Mte57-3Kg>
-X-ME-Received: <xmr:qCb9ZoUp-6jZAwcaqr7Wzhc0K0V9aRapxDvwBhx6_cGDdmned9KbV9MCOqDhchjJtQljoQZMxQZWcpQqg775YDNSL87P0gopAd5NG3VtxAJYMl70>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduledgfedtucetufdoteggodetrfdotf
+	fm2; t=1727866539; x=1727952939; bh=4wnjwnoBmBFx7OgfS04fXzrxXw2N
+	Zlfv92BUkTkLdGI=; b=hgvP4AKiX2Cl0Hg2HB/y+XYm1HBo5LTJOBSUb8x7MoBK
+	Tyv82EUjZsvWxmh4nO1ic8n/PInAjSDMjlYyJ7esJ77Q4Aww9cA01yW4VcRl8MSX
+	vGcvrHNTNg0gsP1a22nl8hGmi7YpHhDPCfmkgC48US1IpXeGcbbyZuINX52z4GFR
+	lPCuoJ+N1DPCk3jZj3TDbN3a9EHmFfzDUvUwIefjAQiO64s9kGxNbcY0h/NTpBNo
+	pXte6w+dt++C5x17sN/iIh/gFCE2Ed+m2txzqytUrGd6sIGWAQkEsvOrhZ2noqVl
+	nK84gofvvFoLmM7EoH1YQcsogbeCcpkTTGQWVBuRfg==
+X-ME-Sender: <xms:qib9ZhLLgbVAzeg_RYQ2iXJWr-2HTKna9P1mCPry_DBLstFhkbOWNA>
+    <xme:qib9ZtK-Q_0CkuwnG-dZoSRA2PIMo8SXR-ABMH27SMdmnAVPTxQGUSbpjAbHX30PM
+    EmtD6UuPK7rR57SwQ>
+X-ME-Received: <xmr:qib9ZptDQbAVkOoxAIMkSys_f3bRAq63e6p6G8IcFgyjWI7InI0w8CJG0zuI-NkZg9oJPGCFbvfB-OfpHsdd7sDqvcuKMBL_ZPM-oM85HXpSn1Tf>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduledgfeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsoh
-    hnrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
-    thhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhg
-X-ME-Proxy: <xmx:qCb9ZsiXvXv_5UTJ7ulFf8qlN-4Ht6KzYePHneV5B4VlFxpmB1dmUA>
-    <xmx:qCb9ZoAUu55z4vx3m-eT1cJK0VDeoxuASZqrz9TucuqQAbnSQA_cnQ>
-    <xmx:qCb9ZtJW-RAvIy1e4igzL1F2kc1MhGLm82W7MyVr2r67BxSEf0NaDg>
-    <xmx:qCb9ZvA0YNajbtie4Wbo5f3Ac5PeM9ic5BdodECVzav9cTeD-X0_iA>
-    <xmx:qCb9Zr9x6W4Xoh9M3eIhtO67beX4LX9_e5uTzaog1KCzXYJO2dREiqpx>
+    mhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomh
+    hsohhnrdgtohhm
+X-ME-Proxy: <xmx:qib9ZiZ3TrAhJ7GF5Yj-QAK_mTwcBwy548N8igZ8y-ntWX-af0P4TQ>
+    <xmx:qib9ZoajwJcUx_xgCnQcxfnnp2EsiZmZFPTO_3cPfSoc8ktCNSmOIw>
+    <xmx:qib9ZmCgXiTo2B1oAAMdHGRWp2EGLK6l4wTpYPv0dbS1jeM16e2dIQ>
+    <xmx:qib9ZmYafguXlLk-HE4FBp0TmvUnXgqPn2DO6ucUUkyw2StfpgIdQg>
+    <xmx:qyb9ZvVPVk35Xj6II15XXkBKhqxmTas_XMU92b_os8zaYyIsliuej9Xs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Oct 2024 06:55:35 -0400 (EDT)
+ 2 Oct 2024 06:55:37 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3e1b3e3f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Oct 2024 10:54:45 +0000 (UTC)
-Date: Wed, 2 Oct 2024 12:55:30 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id e5c375ab (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Oct 2024 10:54:48 +0000 (UTC)
+Date: Wed, 2 Oct 2024 12:55:35 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v5 03/25] reftable: introduce `reftable_strdup()`
-Message-ID: <b1a10d41d3798c98c53b251df9077fcc5eaef560.1727866394.git.ps@pks.im>
+Subject: [PATCH v5 04/25] reftable/basics: handle allocation failures in
+ `reftable_calloc()`
+Message-ID: <fd9141e985bd83d8374ec339dbdce7a2350aa31d.1727866394.git.ps@pks.im>
 References: <cover.1726489647.git.ps@pks.im>
  <cover.1727866394.git.ps@pks.im>
 Precedence: bulk
@@ -91,52 +92,49 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727866394.git.ps@pks.im>
 
-The reftable library provides the ability to swap out allocators. There
-is a gap here though, because we continue to use `xstrdup()` even in the
-case where all the other allocators have been swapped out.
+Handle allocation failures in `reftable_calloc()`.
 
-Introduce `reftable_strdup()` that uses `reftable_malloc()` to do the
-allocation.
+While at it, remove our use of `st_mult()` that would cause us to die on
+an overflow. From the caller's point of view there is not much of a
+difference between arguments that are too large to be multiplied and a
+request that is too big to handle by the allocator: in both cases the
+allocation cannot be fulfilled. And in neither of these cases do we want
+the reftable library to die.
+
+While we could use `unsigned_mult_overflows()` to handle the overflow
+gracefully, we instead open-code it to further our goal of converting
+the reftable codebase to become a standalone library that can be reused
+by external projects.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics.c | 10 ++++++++++
- reftable/basics.h |  1 +
- 2 files changed, 11 insertions(+)
+ reftable/basics.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/reftable/basics.c b/reftable/basics.c
-index cf072935c8..4adc98cf5d 100644
+index 4adc98cf5d..3350bbffa2 100644
 --- a/reftable/basics.c
 +++ b/reftable/basics.c
-@@ -43,6 +43,16 @@ void *reftable_calloc(size_t nelem, size_t elsize)
+@@ -37,9 +37,16 @@ void reftable_free(void *p)
+ 
+ void *reftable_calloc(size_t nelem, size_t elsize)
+ {
+-	size_t sz = st_mult(nelem, elsize);
+-	void *p = reftable_malloc(sz);
+-	memset(p, 0, sz);
++	void *p;
++
++	if (nelem && elsize > SIZE_MAX / nelem)
++		return NULL;
++
++	p = reftable_malloc(nelem * elsize);
++	if (!p)
++		return NULL;
++
++	memset(p, 0, nelem * elsize);
  	return p;
  }
  
-+char *reftable_strdup(const char *str)
-+{
-+	size_t len = strlen(str);
-+	char *result = reftable_malloc(len + 1);
-+	if (!result)
-+		return NULL;
-+	memcpy(result, str, len + 1);
-+	return result;
-+}
-+
- void reftable_set_alloc(void *(*malloc)(size_t),
- 			void *(*realloc)(void *, size_t), void (*free)(void *))
- {
-diff --git a/reftable/basics.h b/reftable/basics.h
-index 4e2e76014a..f107e14860 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -54,6 +54,7 @@ void *reftable_malloc(size_t sz);
- void *reftable_realloc(void *p, size_t sz);
- void reftable_free(void *p);
- void *reftable_calloc(size_t nelem, size_t elsize);
-+char *reftable_strdup(const char *str);
- 
- #define REFTABLE_ALLOC_ARRAY(x, alloc) (x) = reftable_malloc(st_mult(sizeof(*(x)), (alloc)))
- #define REFTABLE_CALLOC_ARRAY(x, alloc) (x) = reftable_calloc((alloc), sizeof(*(x)))
 -- 
 2.47.0.rc0.dirty
 
