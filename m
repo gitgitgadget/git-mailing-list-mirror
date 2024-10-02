@@ -1,107 +1,112 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2FD12B63
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:43:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A310B197545
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:45:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727908993; cv=none; b=k1Ct1uzp/4iAP0EoRZGa7M1uFc37wx06/CqHcXU5t1kWE0eYHTIiAF3FkO3D8ia3iEGa5KLnBGIiyFKGRAcZXn+GjYv0XROPy4O06xnbh2zGllpV8DRJo1T5Tu3IJH/GxFs2W26UvDgsPdMh0fYMagFz5Dhp+pbiAT3EcLYDGDg=
+	t=1727909138; cv=none; b=r71hvHfEufSKi/ghrkrj8QW0NOL+h5W+7amE0jkZP+LKW+L8/BmJcPsCxPm0HcfZuvyUonNQJ/NRwMA4WCS5FzBXO4csQalE9lVsyCN720sxg5rx0YzkMDmzyc+JEM+SA43HjzFPNNWNTfKr9HeFUrW7m3hJh1VONol2YKXM/hU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727908993; c=relaxed/simple;
-	bh=cC9t+nIqSl0E101qBM14DllVDasdiuFBmqEEIylR2ls=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZMkiPMotubc21zj/f6xz502IroB1o8Idq5PcByu3kcVd/jivl8ao7Tk937SOxobvawXu1X1dxhXMN2ZwbTKX9AP82YPvXVf72Zw7PyYy+I7Hl8MufEyRc0GRUoF5U44iwA4fWzgiqWFvBD1Bp5A7eqVlw+8hm5nuLfe/xWTOFAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E3BkJ85i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UM8zfb0t; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727909138; c=relaxed/simple;
+	bh=FtnC2K//obPUQqrSxh3vgE91eLeg9nhY77Ot8oRS1bo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IuCYMIwSt8YySc0Yym2I8Vg3PWHH8DWX2/IpzgjznZMpRMAqJ3Tvcaj9C54sFYUNVi5Sr4hIWEkncJZDoMmmt0eXQCH2FUpbDYj5bnLpMlcLmAjLYgUmdtq3kRbD5NDK0XN/NkjSLlqbQf/pGIwwY/a1MYtPXUeqU6dFMX5ZQPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kQSEWHiX; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E3BkJ85i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UM8zfb0t"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 190B41140159;
-	Wed,  2 Oct 2024 18:43:07 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 02 Oct 2024 18:43:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727908987; x=1727995387; bh=cC9t+nIqSl
-	0E101qBM14DllVDasdiuFBmqEEIylR2ls=; b=E3BkJ85iCl0+72ImqGaBec8wrG
-	NoqAMxbYdCp2ToV07pES0TdL+04ZiINgb+3oywshXxuxNA8rBW7W01482aYkJv1p
-	noHUKxiAqpe/SvwX865pewhFHfHiY6SWWOX8px6eUlTdvrJBOoehuGflxJA/tb0+
-	RwwnG0FZpuHyJzRZhCb/Nriyg9pkAPpLg4cDVszaSXIJacBMUgiDZTYoKtxDIHN5
-	nsLFbew2ZG3oBCzkVz4xYY16W9UsTjisYSrzmkEsprzsDt9WOaNz4+R/NmQCM0G/
-	qnKBcq4wtcMB2dEGikC0a74BTavFHeU1eIiGqXPOOcXQ6aNT7irNul5fqtQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727908987; x=1727995387; bh=cC9t+nIqSl0E101qBM14DllVDasd
-	iuFBmqEEIylR2ls=; b=UM8zfb0tasQN/xDp1wiae+X3a7hdfYQoLERNnw3xQbAw
-	BgmJlEoD9fxTr0rH5sf9coNKv0l5nHkvOoqD4cxZlCAsMzRvbE9hJj5/CbwUsTh0
-	tObQlFzxF/87FxE3JviTELyCY+3+Qei49TgRJiEmi1BdCHormLqlGmtoGNf/MNMz
-	FXGrwS/g7yMcVRh2jeetJN6cI8Jl0h12JhATwsqpVR8if9hiIuo7ah3nYdhuZkRT
-	7RXJevmdfkTCE6tOzjQtCRc7DHsWKCl/g47e/dH37C6ceQTSmYIjaZd4ens/TztA
-	/C+ZLIaKX/FZeuCQRgDhGnUtBlYVBXdQ9COUG3Wo7A==
-X-ME-Sender: <xms:esz9ZoXDkIfXL7wS2QaPZ0oRiGs9cpxk041Hn1qnzd9VUfnTRAdpoA>
-    <xme:esz9ZsnZ3qRy6ehe0kJQTXznu4MZiqCifmkip3bj7P09cae-VAq9RSvgGUuSvOvx1
-    gr00BpB_duvGpGlow>
-X-ME-Received: <xmr:esz9ZsaoOXUIJsasjwqJ5V8YnQ_S_w7OXw1ecXX5laJjsA9EHibvuqTN9Hokwx5LxpAZguvhM85UXfCDXodBUnfBVIGpMu0sOvUKBos>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvtddgudegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtvggrughmohhnse
-    hgohhoghhlvgdrtghomhdprhgtphhtthhopehtsghovghgihesfigvsgdruggvpdhrtghp
-    thhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvges
-    shhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoheptghhrhhishdrthhorhgvkhesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:esz9ZnUsmkY62RoywS4yxK9n-Bpeqx1fGULhjva1P0iPn1W6WPiBRw>
-    <xmx:esz9ZinQtUHDmwfNOrIollV4MA5xIWk0ewJ1Bk7BSBR_hoTyiu2ong>
-    <xmx:esz9ZscTIUjP79HdA9_zykI1p6tlwiS1kZJd44JLhnGfr_7AcZLOqQ>
-    <xmx:esz9ZkHH663yhjeEYmCVAQgiX5YEbqbyiwXFMbtVe26U9Sls8FTkuQ>
-    <xmx:e8z9Zs5OXCjs4d9nw7BSRCrzSTthEOazLs9V4rHoSQ_l8EBzwfGYguXg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Oct 2024 18:43:06 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,  =?utf-8?Q?Jean?=
- =?utf-8?Q?-No=C3=ABl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Eric Sunshine
- <sunshine@sunshineco.com>,  Chris Torek <chris.torek@gmail.com>,
-  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH v5 0/3] doc: introducing synopsis para
-In-Reply-To: <wuxy3oit7bculbpct3xnmpzxrfnsgaeoh2gvp5fsaaszchktoy@5ygjwbkdvozh>
-	(Josh Steadmon's message of "Wed, 2 Oct 2024 14:41:58 -0700")
-References: <pull.1766.v4.git.1725573126.gitgitgadget@gmail.com>
-	<pull.1766.v5.git.1727161730.gitgitgadget@gmail.com>
-	<xmqq5xqlug4l.fsf@gitster.g> <20240924193004.GA20138@tb-raspi4>
-	<xmqqbk0cssel.fsf@gitster.g>
-	<wuxy3oit7bculbpct3xnmpzxrfnsgaeoh2gvp5fsaaszchktoy@5ygjwbkdvozh>
-Date: Wed, 02 Oct 2024 15:43:05 -0700
-Message-ID: <xmqqzfnmjfd2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kQSEWHiX"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-20b3d1a77bbso70215ad.0
+        for <git@vger.kernel.org>; Wed, 02 Oct 2024 15:45:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1727909136; x=1728513936; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZOXV1VjaSUuR1CJLMzBW90ClmOtlns3t9vtOpyedhRA=;
+        b=kQSEWHiXC0FaRPAeHFeSheM0VoPJ8xCxrBt0g0y0xhepUYHXmzghG3QDgUKZW+cu5z
+         BUGy8om14WaLJlk6USO9+ACqUEE8afcDO7x8TYtqnvRcLMiplwT5NwN50pYzZ2oMqeHr
+         3LvOy9VB1IaMxbF6GM8DmjaDDmkz0CEYPPCe+nxM9Xp0/WVVsOqnBtyTxmQYMeETb/WA
+         Tfq6iJgFt0gzV2KnL5sWXfZQcj3c8jiFYJaHg1FPqlECamp+TnkAL8CQ35SldFj7PRNo
+         l2tFEnTN83kV0PDLicB7BpL/Vg3tAJMy4ide+zu8JQjG2AEQb4qHIKqTDGv7G9Wf57rB
+         ysUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727909136; x=1728513936;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZOXV1VjaSUuR1CJLMzBW90ClmOtlns3t9vtOpyedhRA=;
+        b=Cqvss/4ds0tvWvuMH6O9hohSDywzBaacD8gUggIccABk4MpsUIdbdvCFroy1kRrbL1
+         0kx1OX2iJEPdKmVwGGtymvNTMj0oRG5ylXkouXnIoit5hYVgvD+5U4ekWlho9mv4gCdj
+         mQ0lzMQgfG/uv6q9tK1H/nwMPpebloUEUrxbO7am5EJcGT8Up9UldsJsmRBYjcRgWMRR
+         Vo59HLFxzZC+g15PAluyAdO/pUaPjJtohgO49tLW+Kw0nO87YFT1Iiv+cU93bi4vTktJ
+         r7PVLXo7EdHw/71ZmCfTHp5/IrlMvtlwNIcaOFTqsbBoL87+Qjh5q0o1qJK39PgK8NoY
+         3g0A==
+X-Forwarded-Encrypted: i=1; AJvYcCXehUaG5UlyD45Y//uqDfXnMLtrS15UzsTz7RXY4fybrBkzl0P1iy3TnbjlIVOCLUAg19w=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzNj6Tg6ZosliqKTrmJKBz8eUjRhj0dS01uqGFJ6L3QHHL8h+ZO
+	JgXdvo6hte28iIXMkG/Az9cIhvblHcqu0sCyKLKg8qbSfkAa8mHMjQtoyfiS4A==
+X-Google-Smtp-Source: AGHT+IEufBy5+TqGHA3jby31kiZfbqPxF1Nm7Lv9E9LLef5d3LCNIOkM1t9sz81UqhPphUrhXnbA0w==
+X-Received: by 2002:a17:902:ec8a:b0:206:9e8f:7cb with SMTP id d9443c01a7336-20be4cbe88cmr1113205ad.2.1727909135230;
+        Wed, 02 Oct 2024 15:45:35 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:2dd:9410:f675:e07f])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20bcceba623sm14327925ad.133.2024.10.02.15.45.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Oct 2024 15:45:34 -0700 (PDT)
+Date: Wed, 2 Oct 2024 15:45:29 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
+	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
+	Jason@zx2c4.com, dsimic@manjaro.org
+Subject: Re: [PATCH v3 4/6] config: add git_configset_alloc() and
+ git_configset_clear_and_free()
+Message-ID: <g5h3agfmrsves4lazgohzihkqmao47obr2deh2t3nxlauwxj4s@p5fqzqwfcvpo>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
+	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
+	Jason@zx2c4.com, dsimic@manjaro.org
+References: <20240906221853.257984-1-calvinwan@google.com>
+ <20240906222116.270196-4-calvinwan@google.com>
+ <CAPig+cRKbvWT3Bx65-ULAYRSrrKTCL0C7r6xpNSdN5JjLBPjCQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cRKbvWT3Bx65-ULAYRSrrKTCL0C7r6xpNSdN5JjLBPjCQ@mail.gmail.com>
 
-Josh Steadmon <steadmon@google.com> writes:
+On 2024.09.06 19:24, Eric Sunshine wrote:
+> On Fri, Sep 6, 2024 at 6:21 PM Calvin Wan <calvinwan@google.com> wrote:
+> > From: Josh Steadmon <steadmon@google.com>
+> >
+> > Add git_configset_alloc() and git_configset_clear_and_free() functions
+> > so that callers can manage config_set structs on the heap. This also
+> > allows non-C external consumers to treat config_sets as opaque structs.
+> >
+> > Co-authored-by: Calvin Wan <calvinwan@google.com>
+> > Signed-off-by: Calvin Wan <calvinwan@google.com>
+> 
+> Almost all these patches suffer from some sort of missing Josh
+> trailer, so I'll stop mentioning it now.
+> 
+> > diff --git a/config.h b/config.h
+> > @@ -472,6 +472,11 @@ struct config_set {
+> > +/**
+> > + * Alloc a config_set
+> > + */
+> > +struct config_set *git_configset_alloc(void);
+> 
+> Should this documentation string mention that git_configset_alloc()
+> does _not_ initialize the configset? Alternatively, should this
+> function also initialize it as a convenience (and mention so in the
+> documentation)?
 
-> I finally got the chance to test this version on $DAYJOB's build
-> infrastructure, and I verified that it works (I also got a much more
-> recent version of sed installed).
-
-Thanks for a follow-up.
-
+Yes, in V4 this will both alloc and init the configset (and the function
+has been moved to the shim library).
