@@ -1,80 +1,80 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E523E1D151A
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 15:16:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C02C1D1720
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 15:16:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727882200; cv=none; b=J1oXEtalox8bgkrfIVBEeIWpmxKVW0MuupaLTwZRK2JIGUEuUZn0GRjnT9oHWEDQzF3IOD7Xj6S4o7XuJp11RD9PiDqFBm/Tf8Jr1oesuYqq5pvotLgXI3uPRBd5VROQjaSdS4KGgfc8+GZ05XrTP8osHPJryC2VlwUeKsTMGxc=
+	t=1727882203; cv=none; b=klkOoHdgibWvHJfcWlqMsY2BhywXVXO0s5izpdtXHeiBpBLJZQDgwJFw6ucZr7AlJoOgvf9cBZfObvrcqTzVSHod4+Tvp3SEGMEcMk9mkG8PCv1Vp99NmIjIXqfeF7fAKZtrpEPjVPHS7nZjayFiEi2jyf6KYBRI0SFGvnpcYNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727882200; c=relaxed/simple;
-	bh=ONQ8lFX03EzOwdU8+f/YPkOCHstuetxp71QNYkx+I44=;
+	s=arc-20240116; t=1727882203; c=relaxed/simple;
+	bh=IDVwhURqWS2jkTw/PKwwi5Cqd3qJgNJf6uLLDcsEbWs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uQdJbCAzu8fRxiLJ89en3wDNBfKsXz+vC5nn+/mXVxL9051cno9mQpJ0PClX3XwUtsOsTrv9TkE8Xa68YoCr1zPoyzS1ButeKkUttHeHG8ZZZNE3xFn1ZqtLlC14jb3T0hYHo8hpZwlUTqdbrXvMvnoOmhDoudds1hQ23oEnDj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rDUmc3mO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RsnMIfhw; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=eOXEHR2RwMcpjtRECgRCn0i25JeMNLbWmvjUbCYWACLm3La7MJACCDckqpMxINwDIWqz6Sxoq2COXiof3VKUZdxeWb8G8xa2XV/OxZKwdHBRklAe3mISluZxzMkBLk1VhVllWpwzXiQSJJQmWqGQAlkiRENyzLc9zQ0drCQ2r70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Huyan8rq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dQfRi8wR; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rDUmc3mO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RsnMIfhw"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 148E4114011E;
-	Wed,  2 Oct 2024 11:16:38 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Huyan8rq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dQfRi8wR"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 37DA113801D9;
+	Wed,  2 Oct 2024 11:16:41 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 02 Oct 2024 11:16:38 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 02 Oct 2024 11:16:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1727882198; x=1727968598; bh=Od8AOmZ7gz
-	FTA2yb+TIXDB6ec2lc5v3YXMSVcddm5yc=; b=rDUmc3mO54Y7MX1Y8sVBKuW9im
-	PvCR6DDVJWQbqR4pDd2E2Xatpa6UF5NmzY2LUTFdZD5hxIOWxK+okQpeJPdanyiq
-	8CZmEiMDFeVc83xbIyxZhOIWETf6eWPKeODSpCHgD9T0xuo261mKghMGA4gklsgZ
-	XDSePWRYvq5BtCVZP2pTvXodLtjDbSiG/3q9hbm5Q59KZfaITmUmteFLSaVxWFN3
-	+MfNmgprPbPO/k6/KUldMjAdz8NJ6Xwaei15PfP6r9/laKngco37J22N2EPxsBdc
-	rLSn95V0ANj+MrXJjMmD+ZtWGYAvCneVgPalvxCAWCHXq+l3XeFC0MIbzSqw==
+	:subject:to:to; s=fm2; t=1727882201; x=1727968601; bh=ZGPsE/82zv
+	wmi3zkjCXYTNz4sKF2+iiyahv0DtwwWZw=; b=Huyan8rqKrSozBFBKiB6F3Vp47
+	p+8XhH+rKm037aouKC0EnM7Eum8+6aieH4gie8KEm5IxHfy/p0uwt2TqCHmz5r84
+	a5FaGdp5nwH0Ck71kEhOM7/+RnL6K5jQgaiQ5Z+Bq5JXHj5tPaRw9vnfJmqe4vaf
+	FmOim1c5QG/90tmkaiXEphAmU7UGBLRvErRTfjvLNXeuDUVR+4DOWgmjFyV5a+fH
+	1aSgP1PsaEh16rHEPZ1tsIPpzs5GN6hRSNzBPftk/OYvdoyiM0gsbrqD6rr0KWKi
+	U/qYHOavuLkh7EaqkhK7G65TkL+7srgkJ2JG7hOcBxEM/aKjQ24GPZ2yGAtA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727882198; x=1727968598; bh=Od8AOmZ7gzFTA2yb+TIXDB6ec2lc
-	5v3YXMSVcddm5yc=; b=RsnMIfhw9NMrb28WUYqITFVd/O2osMASNzHmUlwcFaJ3
-	oi8eVxMspMn4EH5yTm8S5FMs8RHJwDwdEyLP0fbJZNhnFY0n2X5TtIsYeuIeb8UE
-	e581Uo3qgsqb01ElVmUq9nMQtXNgJiAfCvBNLcimTB9tADa5PFldCX9TyfUQSODv
-	C7IxWIZGkVgZjJz7lfeYZSZne7nPRx/ZVTx3nv7KfXXZNQJSifJ6Tdi54HhPoHxD
-	eGiIj3bt8Vk730qr/Nd02YBuqm2vs/OagsMUNoB67cvhTOFZTg5fzU1BLlVNrTHt
-	d6jW16cmxfB9/9f8tkPyYKYpav4dIlAKTCUPf19WeA==
-X-ME-Sender: <xms:1WP9Zs1jmJhI_qqdHyz-lBJFhowBAM8TGHONIGIPmXI0Cyr2ziORcQ>
-    <xme:1WP9ZnHIfvHC7qs6h1XbNypL5oNY4RNKuZg1gBBnpolOYl_TzISAmW0fz7o9QuVB2
-    b49r2PG8jDk68vv3g>
-X-ME-Received: <xmr:1WP9Zk42nXhRimGg_90VAWHHRM06sq61MIuQVLy7rrFeqgIcOmBNqP_3rftSjbEbXlfEw4n_S7mpgvg21Ej7U33_zcNvo4Vat8f4lko9ZFn-wAMg>
+	fm2; t=1727882201; x=1727968601; bh=ZGPsE/82zvwmi3zkjCXYTNz4sKF2
+	+iiyahv0DtwwWZw=; b=dQfRi8wRehC79OSlNqOUuwC902S3BtAVfdv47PgqhbQ4
+	4Y6N9kt4NquCmoSzSPeNzzUr5CCdiwqnfGvCvd/z46wIZ6mDUMYCj2DN2g55AwqP
+	SuSN5dyJTYwaBflKr6E6kjSSRmm8VWwv/AHGHGQk5dIrJtF7RTHednjdtLgz8lJU
+	QsaLPf6yqZAEVqAc4CadIafG01nZQiK/AUVxyYxZ+LKruIyWHe17NWfKGW6aDGPL
+	ukH7pMTv6P516wD2c59L6DsPm0JmczoJIHCknjYPhbiqadIIWuVMSR0dMsDcFYCx
+	IJkwx+xHBmllTMVHXoCYZNXE1QEniJ5YofFO01fGSA==
+X-ME-Sender: <xms:2GP9ZsHK7yEdXhaXa-ht5JkM2DSfoCt5lMnEl3k43wdWW4PBSCE4BA>
+    <xme:2GP9ZlXWJHNlWt8uG2hfe_zuLY8SDxYfUhiSGrtsShbKBRTZ3MEdtx_VywgTRoDMn
+    OZKyHJI-Mcq6NGAuQ>
+X-ME-Received: <xmr:2GP9ZmL4-2JdrPd5Ztas2EffRKoOWhlD36GG_tPWYGRXExXoaj1IEv6HZWPLuZHxdjEwLGzeOeNDFQBxV2vIYwp2TGOilwcyRNgZi3HG1rTP-SdW>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduledgkeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
     gtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrgh
-X-ME-Proxy: <xmx:1WP9Zl2fhZLzgXoVFZU_bCColF2bF4q5LZV7CMgV6YaAXl8ePxMP9g>
-    <xmx:1WP9ZvEsEjzyJ6GXkHEcGWwKYD0g2tofVEnKppa59WsGt8x56hIYBw>
-    <xmx:1WP9Zu9EMNV5nWByCmehcEkv2Us76C3c7nUBZ5FNtEL1iSJdP8nSDQ>
-    <xmx:1WP9ZkmlbWQLdr2uzjJZ4pfWSIBTXpTJ6tx3tPKNtDBmuZ4EQnaNmA>
-    <xmx:1mP9ZkSH4fLqqZOAo6gVpb71f_r5nFSrTMoiZBQm7hOc3R_X9-qbZ7hM>
+X-ME-Proxy: <xmx:2WP9ZuE5rMHFLnZFARww30AB2sMiBIny804wK6IaRHSa35blpXGHsg>
+    <xmx:2WP9ZiWPBOjHwQBznnDxoYE19KSAhHjFG07QhvnSzZeMJKYEYFW9Qg>
+    <xmx:2WP9ZhPNjm9wMM3sF18dLnA1fUC1fqLUkAioGx6-77Nd7im31ZqaBw>
+    <xmx:2WP9Zp30LcbFfZadUQzweN-nhc5IMb_081IrHNfD6Ddh42U_r2L5hw>
+    <xmx:2WP9Zvh7oiVF76K7H1Q3U_ncEGEi8WWd38MUGHnzbR9YfmLAr2Zv1cD4>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Oct 2024 11:16:37 -0400 (EDT)
+ 2 Oct 2024 11:16:40 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5158230f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 2 Oct 2024 15:15:46 +0000 (UTC)
-Date: Wed, 2 Oct 2024 17:16:34 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id dfdb323a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 2 Oct 2024 15:15:49 +0000 (UTC)
+Date: Wed, 2 Oct 2024 17:16:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eli Schwartz <eschwartz@gentoo.org>
-Subject: [RFC PATCH 18/21] Makefile: simplify building of templates
-Message-ID: <bf55d0c226d4fa64b3c368429c63b3f558969101.1727881164.git.ps@pks.im>
+Subject: [RFC PATCH 19/21] t: better support for out-of-tree builds
+Message-ID: <7a0a6b996c3dea5fd8061dd3714047bee59e566c.1727881164.git.ps@pks.im>
 References: <cover.1727881164.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,228 +86,187 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1727881164.git.ps@pks.im>
 
-When we install Git we also install a set of default templates that both
-git-init(1) and git-clone(1) populate into our build directories. The
-way the pristine templates are layed out in our source directory is
-somewhat weird though: instead of reconstructing the actual directory
-hierarchy in "templates/", we represent directory separators with "--".
+Our in-tree builds used by the Makefile use various different build
+directories scattered around different locations. The paths to those
+build directories have to be propagated to our tests such that they can
+find the contained files. This is done via a mixture of hardcoded paths
+in our test library and injected variables in our bin-wrappers or
+"GIT-BUILD-OPTIONS".
 
-The only reason I could come up with for why we have this is the
-"branches/" directory, which is supposed to be empty when installing it.
-And as Git famously doesn't store empty directories at all we have to
-work around this limitation.
+The latter two mechanisms are preferable over using hardcoded paths. For
+one, we have all paths which are subject to change stored in a small set
+of central files instead of having the knowledge of build paths in many
+files. And second, it allows build systems which build files elsewhere
+to adapt those paths based on their own needs. This is especially nice
+in the context of build systems that use out-of-tree builds like CMake
+or Meson.
 
-Now the thing is that the "branches/" directory is a leftover to how
-branches used to be stored in the dark ages. gitrepository-layout(5)
-lists this directory as "slightly deprecated", which I would claim is a
-strong understatement. I have never encountered anybody using it today
-and would be surprised if it even works as expected. So having the "--"
-hack in place for an item that is basically unused, unmaintained and
-deprecated doesn't only feel unreasonable, but installing that entry by
-default may also cause confusion for users that do not know what this is
-supposed to be in the first place.
-
-Remove this directory from our templates and, now that we do not require
-the workaround anymore, restructure the templates to form a proper
-hierarchy. This makes it way easier for build systems to install these
-templates into place.
-
-We should likely think about removing support for "branch/" altogether,
-but that is outside of the scope of this patch series.
+Remove hardcoded knowledge of build paths from our test library and move
+it into our bin-wrappers and "GIT-BUILD-OPTIONS".
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/buildsystems/CMakeLists.txt           |  8 +---
- templates/Makefile                            | 38 ++++++++++++-------
- templates/branches--                          |  1 -
- templates/{this--description => description}  |  0
- .../applypatch-msg.sample}                    |  0
- .../commit-msg.sample}                        |  0
- .../fsmonitor-watchman.sample}                |  0
- .../post-update.sample}                       |  0
- .../pre-applypatch.sample}                    |  0
- .../pre-commit.sample}                        |  0
- .../pre-merge-commit.sample}                  |  0
- .../pre-push.sample}                          |  0
- .../pre-rebase.sample}                        |  0
- .../pre-receive.sample}                       |  0
- .../prepare-commit-msg.sample}                |  0
- .../push-to-checkout.sample}                  |  0
- .../sendemail-validate.sample}                |  0
- .../update.sample}                            |  0
- templates/{info--exclude => info/exclude}     |  0
- 19 files changed, 25 insertions(+), 22 deletions(-)
- delete mode 100644 templates/branches--
- rename templates/{this--description => description} (100%)
- rename templates/{hooks--applypatch-msg.sample => hooks/applypatch-msg.sample} (100%)
- rename templates/{hooks--commit-msg.sample => hooks/commit-msg.sample} (100%)
- rename templates/{hooks--fsmonitor-watchman.sample => hooks/fsmonitor-watchman.sample} (100%)
- rename templates/{hooks--post-update.sample => hooks/post-update.sample} (100%)
- rename templates/{hooks--pre-applypatch.sample => hooks/pre-applypatch.sample} (100%)
- rename templates/{hooks--pre-commit.sample => hooks/pre-commit.sample} (100%)
- rename templates/{hooks--pre-merge-commit.sample => hooks/pre-merge-commit.sample} (100%)
- rename templates/{hooks--pre-push.sample => hooks/pre-push.sample} (100%)
- rename templates/{hooks--pre-rebase.sample => hooks/pre-rebase.sample} (100%)
- rename templates/{hooks--pre-receive.sample => hooks/pre-receive.sample} (100%)
- rename templates/{hooks--prepare-commit-msg.sample => hooks/prepare-commit-msg.sample} (100%)
- rename templates/{hooks--push-to-checkout.sample => hooks/push-to-checkout.sample} (100%)
- rename templates/{hooks--sendemail-validate.sample => hooks/sendemail-validate.sample} (100%)
- rename templates/{hooks--update.sample => hooks/update.sample} (100%)
- rename templates/{info--exclude => info/exclude} (100%)
+ GIT-BUILD-OPTIONS.in                |  5 +++++
+ Makefile                            |  9 +++++++++
+ bin-wrappers/wrap-for-bin.sh        | 11 ++++++-----
+ contrib/buildsystems/CMakeLists.txt |  8 ++++++++
+ t/lib-gettext.sh                    |  4 ++--
+ t/t7609-mergetool--lib.sh           |  2 +-
+ t/test-lib.sh                       |  6 +++---
+ 7 files changed, 34 insertions(+), 11 deletions(-)
 
+diff --git a/GIT-BUILD-OPTIONS.in b/GIT-BUILD-OPTIONS.in
+index e73cd5fa1a..2b3f5ef2d6 100644
+--- a/GIT-BUILD-OPTIONS.in
++++ b/GIT-BUILD-OPTIONS.in
+@@ -32,4 +32,9 @@ GIT_PERF_MAKE_COMMAND=@GIT_PERF_MAKE_COMMAND@
+ GIT_INTEROP_MAKE_OPTS=@GIT_INTEROP_MAKE_OPTS@
+ GIT_TEST_INDEX_VERSION=@GIT_TEST_INDEX_VERSION@
+ GIT_TEST_PERL_FATAL_WARNINGS=@GIT_TEST_PERL_FATAL_WARNINGS@
++GIT_TEST_TEXTDOMAINDIR=@GIT_TEST_TEXTDOMAINDIR@
++GIT_TEST_POPATH=@GIT_TEST_POPATH@
++GIT_TEST_TEMPLATE_DIR=@GIT_TEST_TEMPLATE_DIR@
++GIT_TEST_GITPERLLIB=@GIT_TEST_GITPERLLIB@
++GIT_TEST_MERGE_TOOLS_DIR=@GIT_TEST_MERGE_TOOLS_DIR@
+ RUNTIME_PREFIX=@RUNTIME_PREFIX@
+diff --git a/Makefile b/Makefile
+index b0c21c4c0d..e6b75b6e3e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3168,6 +3168,11 @@ GIT-BUILD-OPTIONS: FORCE
+ 		-e "s|@GIT_INTEROP_MAKE_OPTS@|\'$(GIT_INTEROP_MAKE_OPTS)\'|" \
+ 		-e "s|@GIT_TEST_INDEX_VERSION@|\'$(GIT_TEST_INDEX_VERSION)\'|" \
+ 		-e "s|@GIT_TEST_PERL_FATAL_WARNINGS@|\'$(GIT_TEST_PERL_FATAL_WARNINGS)\'|" \
++		-e "s|@GIT_TEST_TEXTDOMAINDIR@|\'$(shell pwd)/po/build/locale\'|" \
++		-e "s|@GIT_TEST_POPATH@|\'$(shell pwd)/po\'|" \
++		-e "s|@GIT_TEST_TEMPLATE_DIR@|\'$(shell pwd)/templates/blt\'|" \
++		-e "s|@GIT_TEST_GITPERLLIB@|\'$(shell pwd)/perl/build/lib\'|" \
++		-e "s|@GIT_TEST_MERGE_TOOLS_DIR@|\'$(shell pwd)/mergetools\'|" \
+ 		-e "s|@RUNTIME_PREFIX@|\'$(RUNTIME_PREFIX)\'|" \
+ 		GIT-BUILD-OPTIONS.in >$@+
+ 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+@@ -3192,6 +3197,10 @@ all:: $(TEST_PROGRAMS) $(test_bindir_programs) $(UNIT_TEST_PROGS) $(CLAR_TEST_PR
+ bin-wrappers/%: bin-wrappers/wrap-for-bin.sh
+ 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+ 	     -e 's|@BUILD_DIR@|$(shell pwd)|' \
++	     -e 's|@GIT_TEXTDOMAINDIR@|$(shell pwd)/po/build/locale|' \
++	     -e 's|@GITPERLLIB@|$(shell pwd)/perl/build/lib|' \
++	     -e 's|@MERGE_TOOLS_DIR@|$(shell pwd)/mergetools|' \
++	     -e 's|@TEMPLATE_DIR@|$(shell pwd)/templates/blt|' \
+ 	     -e 's|@PROG@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
+ 	chmod +x $@
+ 
+diff --git a/bin-wrappers/wrap-for-bin.sh b/bin-wrappers/wrap-for-bin.sh
+index 7898a1c238..1d3a59a008 100755
+--- a/bin-wrappers/wrap-for-bin.sh
++++ b/bin-wrappers/wrap-for-bin.sh
+@@ -4,21 +4,22 @@
+ # to run test suite against sandbox, but with only bindir-installed
+ # executables in PATH.  The Makefile copies this into various
+ # files in bin-wrappers, substituting
+-# @BUILD_DIR@ and @PROG@.
++# @BUILD_DIR@, @TEMPLATE_DIR@ and @PROG@.
+ 
+ GIT_EXEC_PATH='@BUILD_DIR@'
+ if test -n "$NO_SET_GIT_TEMPLATE_DIR"
+ then
+ 	unset GIT_TEMPLATE_DIR
+ else
+-	GIT_TEMPLATE_DIR='@BUILD_DIR@/templates/blt'
++	GIT_TEMPLATE_DIR='@TEMPLATE_DIR@'
+ 	export GIT_TEMPLATE_DIR
+ fi
+-GITPERLLIB='@BUILD_DIR@/perl/build/lib'"${GITPERLLIB:+:$GITPERLLIB}"
+-GIT_TEXTDOMAINDIR='@BUILD_DIR@/po/build/locale'
++MERGE_TOOLS_DIR='@MERGE_TOOLS_DIR@'
++GITPERLLIB='@GITPERLLIB@'"${GITPERLLIB:+:$GITPERLLIB}"
++GIT_TEXTDOMAINDIR='@GIT_TEXTDOMAINDIR@'
+ PATH='@BUILD_DIR@/bin-wrappers:'"$PATH"
+ 
+-export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
++export MERGE_TOOLS_DIR GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
+ 
+ case "$GIT_DEBUGGER" in
+ '')
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 700f4e5160..23c2fb91ce 100644
+index 23c2fb91ce..4048d3c367 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -878,23 +878,17 @@ endforeach()
+@@ -1087,6 +1087,9 @@ endforeach()
  
+ file(STRINGS ${CMAKE_SOURCE_DIR}/bin-wrappers/wrap-for-bin.sh content NEWLINE_CONSUME)
+ string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
++string(REPLACE "@GIT_TEXTDOMAINDIR@" "${CMAKE_BINARY_DIR}/po/build/locale" content "${content}")
++string(REPLACE "@GITPERLLIB@" "${CMAKE_BINARY_DIR}/perl/build/lib" content "${content}")
++string(REPLACE "@MERGE_TOOLS_DIR@" "${CMAKE_SOURCE_DIR}/mergetools" content "${content}")
+ string(REPLACE "@PROG@" "git-cvsserver" content "${content}")
+ file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/git-cvsserver ${content})
  
- #templates
--file(GLOB templates "${CMAKE_SOURCE_DIR}/templates/*")
-+file(GLOB templates "${CMAKE_SOURCE_DIR}/templates/**")
- list(TRANSFORM templates REPLACE "${CMAKE_SOURCE_DIR}/templates/" "")
- list(REMOVE_ITEM templates ".gitignore")
- list(REMOVE_ITEM templates "Makefile")
- list(REMOVE_ITEM templates "blt")# Prevents an error when reconfiguring for in source builds
+@@ -1165,6 +1168,11 @@ string(REPLACE "@GIT_INTEROP_MAKE_OPTS@" "" git_build_options "${git_build_optio
+ string(REPLACE "@GIT_TEST_INDEX_VERSION@" "" git_build_options "${git_build_options}")
+ string(REPLACE "@GIT_TEST_PERL_FATAL_WARNINGS@" "" git_build_options "${git_build_options}")
+ string(REPLACE "@RUNTIME_PREFIX@" "${RUNTIME_PREFIX}" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_TEXTDOMAINDIR@" "${CMAKE_BINARY_DIR}/po/build/locale" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_POPATH@" "${CMAKE_BINARY_DIR}/po" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_TEMPLATE_DIR@" "${CMAKE_BINARY_DIR}/templates/blt" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_GITPERLLIB@" "${CMAKE_BINARY_DIR}/perl/build/lib" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_MERGE_TOOLS_DIR@" "${RUNTIME_PREFIX}" git_build_options "${git_build_options}")
+ if(USE_VCPKG)
+ 	string(APPEND git_build_options "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
+ endif()
+diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
+index cc6bb2cdea..7a734c6973 100644
+--- a/t/lib-gettext.sh
++++ b/t/lib-gettext.sh
+@@ -6,8 +6,8 @@
  
--list(REMOVE_ITEM templates "branches--")
--file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/templates/blt/branches) #create branches
--
- #templates have @.*@ replacement so use configure_file instead
- foreach(tm ${templates})
--	string(REPLACE "--" "/" blt_tm ${tm})
--	string(REPLACE "this" "" blt_tm ${blt_tm})# for this--
- 	configure_file(${CMAKE_SOURCE_DIR}/templates/${tm} ${CMAKE_BINARY_DIR}/templates/blt/${blt_tm} @ONLY)
- endforeach()
+ . ./test-lib.sh
  
--
- #translations
- if(MSGFMT_EXE)
- 	file(GLOB po_files "${CMAKE_SOURCE_DIR}/po/*.po")
-diff --git a/templates/Makefile b/templates/Makefile
-index 367ad00c24..0b91d18925 100644
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -29,24 +29,34 @@ all: boilerplates.made custom
- # in a file direc--tory--file in the source.  They will be
- # just copied to the destination.
+-GIT_TEXTDOMAINDIR="$GIT_BUILD_DIR/po/build/locale"
+-GIT_PO_PATH="$GIT_BUILD_DIR/po"
++GIT_TEXTDOMAINDIR="$GIT_TEST_TEXTDOMAINDIR"
++GIT_PO_PATH="$GIT_TEST_POPATH"
+ export GIT_TEXTDOMAINDIR GIT_PO_PATH
  
--bpsrc = $(filter-out %~,$(wildcard *--*))
--boilerplates.made : $(bpsrc)
--	$(QUIET)umask 022 && ls *--* 2>/dev/null | \
--	while read boilerplate; \
-+TEMPLATES  = description
-+TEMPLATES += hooks/applypatch-msg.sample
-+TEMPLATES += hooks/commit-msg.sample
-+TEMPLATES += hooks/fsmonitor-watchman.sample
-+TEMPLATES += hooks/post-update.sample
-+TEMPLATES += hooks/pre-applypatch.sample
-+TEMPLATES += hooks/pre-commit.sample
-+TEMPLATES += hooks/pre-merge-commit.sample
-+TEMPLATES += hooks/prepare-commit-msg.sample
-+TEMPLATES += hooks/pre-push.sample
-+TEMPLATES += hooks/pre-rebase.sample
-+TEMPLATES += hooks/pre-receive.sample
-+TEMPLATES += hooks/push-to-checkout.sample
-+TEMPLATES += hooks/sendemail-validate.sample
-+TEMPLATES += hooks/update.sample
-+TEMPLATES += info/exclude
-+
-+boilerplates.made: $(TEMPLATES)
-+	$(QUIET)umask 022 && for template in $(TEMPLATES); \
- 	do \
--		case "$$boilerplate" in *~) continue ;; esac && \
--		dst=`echo "$$boilerplate" | sed -e 's|^this|.|;s|--|/|g'` && \
--		dir=`expr "$$dst" : '\(.*\)/'` && \
-+		dir=$$(dirname "$$template") && \
- 		mkdir -p blt/$$dir && \
--		case "$$boilerplate" in \
--		*--) continue;; \
--		esac && \
- 		sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
- 		    -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
--		    -e 's|@PERL_PATH@|$(PERL_PATH_SQ)|g' $$boilerplate > \
--			blt/$$dst && \
--		if test -x "$$boilerplate"; then rx=rx; else rx=r; fi && \
--		chmod a+$$rx "blt/$$dst" || exit; \
-+		    -e 's|@PERL_PATH@|$(PERL_PATH_SQ)|g' $$template > \
-+			blt/$$template && \
-+		if test -x "$$template"; then rx=rx; else rx=r; fi && \
-+		chmod a+$$rx "blt/$$template" || exit; \
- 	done && \
- 	date >$@
+ if test -n "$GIT_TEST_INSTALLED"
+diff --git a/t/t7609-mergetool--lib.sh b/t/t7609-mergetool--lib.sh
+index 8b1c3bd39f..a9273ba58d 100755
+--- a/t/t7609-mergetool--lib.sh
++++ b/t/t7609-mergetool--lib.sh
+@@ -8,7 +8,7 @@ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
  
-diff --git a/templates/branches-- b/templates/branches--
-deleted file mode 100644
-index fae88709a6..0000000000
---- a/templates/branches--
-+++ /dev/null
-@@ -1 +0,0 @@
--: this is just to ensure the directory exists.
-diff --git a/templates/this--description b/templates/description
-similarity index 100%
-rename from templates/this--description
-rename to templates/description
-diff --git a/templates/hooks--applypatch-msg.sample b/templates/hooks/applypatch-msg.sample
-similarity index 100%
-rename from templates/hooks--applypatch-msg.sample
-rename to templates/hooks/applypatch-msg.sample
-diff --git a/templates/hooks--commit-msg.sample b/templates/hooks/commit-msg.sample
-similarity index 100%
-rename from templates/hooks--commit-msg.sample
-rename to templates/hooks/commit-msg.sample
-diff --git a/templates/hooks--fsmonitor-watchman.sample b/templates/hooks/fsmonitor-watchman.sample
-similarity index 100%
-rename from templates/hooks--fsmonitor-watchman.sample
-rename to templates/hooks/fsmonitor-watchman.sample
-diff --git a/templates/hooks--post-update.sample b/templates/hooks/post-update.sample
-similarity index 100%
-rename from templates/hooks--post-update.sample
-rename to templates/hooks/post-update.sample
-diff --git a/templates/hooks--pre-applypatch.sample b/templates/hooks/pre-applypatch.sample
-similarity index 100%
-rename from templates/hooks--pre-applypatch.sample
-rename to templates/hooks/pre-applypatch.sample
-diff --git a/templates/hooks--pre-commit.sample b/templates/hooks/pre-commit.sample
-similarity index 100%
-rename from templates/hooks--pre-commit.sample
-rename to templates/hooks/pre-commit.sample
-diff --git a/templates/hooks--pre-merge-commit.sample b/templates/hooks/pre-merge-commit.sample
-similarity index 100%
-rename from templates/hooks--pre-merge-commit.sample
-rename to templates/hooks/pre-merge-commit.sample
-diff --git a/templates/hooks--pre-push.sample b/templates/hooks/pre-push.sample
-similarity index 100%
-rename from templates/hooks--pre-push.sample
-rename to templates/hooks/pre-push.sample
-diff --git a/templates/hooks--pre-rebase.sample b/templates/hooks/pre-rebase.sample
-similarity index 100%
-rename from templates/hooks--pre-rebase.sample
-rename to templates/hooks/pre-rebase.sample
-diff --git a/templates/hooks--pre-receive.sample b/templates/hooks/pre-receive.sample
-similarity index 100%
-rename from templates/hooks--pre-receive.sample
-rename to templates/hooks/pre-receive.sample
-diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks/prepare-commit-msg.sample
-similarity index 100%
-rename from templates/hooks--prepare-commit-msg.sample
-rename to templates/hooks/prepare-commit-msg.sample
-diff --git a/templates/hooks--push-to-checkout.sample b/templates/hooks/push-to-checkout.sample
-similarity index 100%
-rename from templates/hooks--push-to-checkout.sample
-rename to templates/hooks/push-to-checkout.sample
-diff --git a/templates/hooks--sendemail-validate.sample b/templates/hooks/sendemail-validate.sample
-similarity index 100%
-rename from templates/hooks--sendemail-validate.sample
-rename to templates/hooks/sendemail-validate.sample
-diff --git a/templates/hooks--update.sample b/templates/hooks/update.sample
-similarity index 100%
-rename from templates/hooks--update.sample
-rename to templates/hooks/update.sample
-diff --git a/templates/info--exclude b/templates/info/exclude
-similarity index 100%
-rename from templates/info--exclude
-rename to templates/info/exclude
+ test_expect_success 'mergetool --tool=vimdiff creates the expected layout' '
+-	. "$GIT_BUILD_DIR"/mergetools/vimdiff &&
++	. "$GIT_TEST_MERGE_TOOLS_DIR"/vimdiff &&
+ 	run_unit_tests
+ '
+ 
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 3fab470f3b..e36a21ddf7 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1504,7 +1504,7 @@ else # normal case, use ../bin-wrappers only unless $with_dashes:
+ 		PATH="$GIT_BUILD_DIR:$GIT_BUILD_DIR/t/helper:$PATH"
+ 	fi
+ fi
+-GIT_TEMPLATE_DIR="$GIT_BUILD_DIR"/templates/blt
++GIT_TEMPLATE_DIR="$GIT_TEST_TEMPLATE_DIR"
+ GIT_CONFIG_NOSYSTEM=1
+ GIT_ATTR_NOSYSTEM=1
+ GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/.."
+@@ -1520,9 +1520,9 @@ then
+ 	fi
+ fi
+ 
+-GITPERLLIB="$GIT_BUILD_DIR"/perl/build/lib
++GITPERLLIB="$GIT_TEST_GITPERLLIB"
+ export GITPERLLIB
+-test -d "$GIT_BUILD_DIR"/templates/blt || {
++test -d "$GIT_TEMPLATE_DIR" || {
+ 	BAIL_OUT "You haven't built things yet, have you?"
+ }
+ 
 -- 
 2.47.0.rc0.dirty
 
