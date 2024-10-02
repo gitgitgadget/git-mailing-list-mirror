@@ -1,117 +1,141 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05CC195B1A
-	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:24:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFE3194ACF
+	for <git@vger.kernel.org>; Wed,  2 Oct 2024 22:31:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727907874; cv=none; b=URXqhZGh1PnPNfkrgoVwXw2x9DoyxFlQ2B2V+MuoNNTOUkJbqhyL9uahrVBypYlkHRIaz2+HMeFJ0xZe5KCOQBxC7yLDkK4Ib75b0Vsf+Yo+Sov/yBkO0dI2XsXrY4VSNtxCZuTzI05o4i8yGEDgOoXsPWOR49Z7G2rmmfOH8O4=
+	t=1727908301; cv=none; b=mr2aaZ1LVtiQ8onzyenZ6/2PRADXQtkDWMPJ+mho1W0E+VDlf0yNjPdxU2VnFBBpj0/cXmhcw4h6lgSdtFAwcoLHRNNx6nBysbQoy7s73EuIP7EBhfYvdKbiV2NW2uhLxbGGmG6x6QIn5sN+vJ4ynDI8H8EOKPdHAPmKo8cyYNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727907874; c=relaxed/simple;
-	bh=3Gj7nfQY94Y9oVX8uHyYLr/9bcmSVIvlH6tSrNXNx0s=;
+	s=arc-20240116; t=1727908301; c=relaxed/simple;
+	bh=iiaxPmHC8ULz0b1qVfyMtGPua0zdj6JSTBu4jbDlstw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QcIqF6OzblBplfLbzWs0u6M6tH2CPKz8hkl9t1Ohu/kZwrwn0fsMLC9Ekr2dk0g223rFq+UjdqqTeO5ObMIXx2OXOu0mW49wWdKaehI68y5Kw9MjehgRFeUzvtmD6/MGDeOhHrLZRfvhbNqRNRLu+T2ywjHa3NE/47pYymSf4ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=wll0iLm1; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=m0Fnjs/Cmnn6zWzc0VP8/+tnqnx+jFp4/ylUw2Z2VBQLEcxeefF2ANdURCGFJzHqLxuQUvSqolej1afHGyUmTw6HRxPk4Lzbe4chkUv6R4uLgnTEDg6358Mzzj4GOsJLONlbzBB5wMutZMPZ7IgXkc1QVtyX4S3tQanhUjsSd5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=wyaEiouj; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="wll0iLm1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1727907870;
-	bh=3Gj7nfQY94Y9oVX8uHyYLr/9bcmSVIvlH6tSrNXNx0s=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=wll0iLm1epL2nb3JO/OkoUDCwXa2USHFFxRlhe7nyCOaHF7vcEvHpvvzs9qfsulEN
-	 +6JGaRM6sI4PcSM7BdssQiR8NcgJVEB+Q+EivzBm0RyqHNa13nHmpF2yNssBzPvSDo
-	 eCe8mRwCvf7uviiwgBWtQBdl4QIzJN6TvYjthrI/NrI5mSuYHHPozgAHCjBZ+H0kbA
-	 2s7mjs888IVTSDCtWgLF/Sc6VCUfkh3aZz0kLxF4tK2HX5nOKP1x5ndw462abCTwGU
-	 13quG22iBc34mZUk/DphDhwTvGcBdROfveMdVHqudDHkJCRH3WuH5LjkUgHSD0r6RE
-	 wapISQKXzWXBCpXnzsLzbh/hi3RS7YIoUcCNpysU9NauIVLPp6ACuQCyecT28eKZ5L
-	 Ivbm1Qhg1KfXAvcBAceH72ZN1UB2XTCQdXiVzle9B9ZxWBTXNEBdS0rFao0dYDJelO
-	 vWsHK8i5O/impTtKknXAIKCbEXfr/OXxzUJ6ZnbRhMyiVF7krvC
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5E5CB20075;
-	Wed,  2 Oct 2024 22:24:30 +0000 (UTC)
-Date: Wed, 2 Oct 2024 22:24:29 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org,
-	Emily Shaffer <nasamuffin@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: Re: [RFC PATCH 1/1] Add a type for errors
-Message-ID: <Zv3IHd0c4_0NPjOK@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eric Sunshine <sunshine@sunshineco.com>, phillip.wood@dunelm.org.uk,
-	git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-References: <20240930220352.2461975-1-sandals@crustytoothpaste.net>
- <20240930220352.2461975-2-sandals@crustytoothpaste.net>
- <2d2f14ea-cfdc-4b52-948f-b42c8f6e41de@gmail.com>
- <Zv3DehUxEN6SJI1M@tapette.crustytoothpaste.net>
- <CAPig+cRkA58wr_Pn-uhVM0zFA7B0hnArXDeumrjnWrgBbG64Yw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="wyaEiouj"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-20b4a090f3eso36985ad.1
+        for <git@vger.kernel.org>; Wed, 02 Oct 2024 15:31:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1727908299; x=1728513099; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LK/+BZrWsn8MrbbgQGXNGGnpovw/WMDKvpNYKKiD5+4=;
+        b=wyaEioujxnOQVK0XU0f6FgWCPQv87Hd2VJ1+TzdwJzfIiIN2tbxpWuxGKXI7kTVSeQ
+         qPQ/73CoRdDA5E0KbUZFgdWzgl+MyW40wv4SJxx1qsg+qaAoJjnwSRqM5HWScgDYt4BV
+         DNEUpKczEnaxhwGd/uWJ6otlp+flUmTN7wxU/GyM5JUTpLWyN2Mu1zeg2KMlap2Rvt12
+         e5UmC/qmENMniFvCiVU59DAMk1ReWWF573UglJzsBcsRV9PSc4ccB63V/aAtfCSeWj0b
+         AASrlQvvJY4k8uR6WBnRBPbDbHZw/3DtnewJt92kSo3Cwo/TMp/aLRwla/8CoFENNWMu
+         3s4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727908299; x=1728513099;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LK/+BZrWsn8MrbbgQGXNGGnpovw/WMDKvpNYKKiD5+4=;
+        b=YNuAMmtPkar6T4qp0R0IN3Sew3IGf5DhW7GM5GnwdWo9tZkFqZe/w4mgr/ebERTkj/
+         zbhPeTGUowbDkQ9Cnkn58eQ0i47ggfFITRuOb3PKN20b3QWBUq6xDnSZ8qoyk5hnBlb3
+         IqJyJ9pM7IPFP6KMMK9XUr1N7gSf7Jt1Ia3MrUGF45Gj7WyGla2xokzaKOXmwQIAxvB8
+         JlqwAyAhushSQZi+o3fJMQ+yglsGtOqfGBHUhVROcrdv/Gx0E6yLIH0dtG/IUT33ffL1
+         +w6thGuJHXYtd3lfMtbMSzQwhWHg7XojHlw5t7exSFY/VP5Da2VzxCT67C53t3M1nEHL
+         +R/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUztk1bEfMuDo5oepl8ZrpJBYP7hy65TNopJFrQibG1XttnNKjNYwXb9tyPX5GZrtBx4Mw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBiuDqp5LmkA1tZJWuZXu9e9PWJkMFgoPYyHtoUcPncK5jHiF0
+	SRnkM5NpZBIQcP728SaJfQCbxILu92rwJ7JZDZK/IjihF8wYnb2DFFI/CZT52w==
+X-Google-Smtp-Source: AGHT+IFuYHapxh3bvc4NdFDLbwZVKriJjgyG5oNtr+tseDLV12DQNTasSXtP8MpCKqknsl5+FYqr2w==
+X-Received: by 2002:a17:902:f948:b0:20b:5e34:1850 with SMTP id d9443c01a7336-20be767be0bmr430245ad.23.1727908299052;
+        Wed, 02 Oct 2024 15:31:39 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:2dd:9410:f675:e07f])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37e61c4csm88920155ad.274.2024.10.02.15.31.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Oct 2024 15:31:38 -0700 (PDT)
+Date: Wed, 2 Oct 2024 15:31:33 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: phillip.wood@dunelm.org.uk
+Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
+	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
+	Jason@zx2c4.com, dsimic@manjaro.org
+Subject: Re: [PATCH v2 5/5] cgit: add higher-level cgit crate
+Message-ID: <sh6cwo4uzgp5bvlctmdkhwhjum2zc36cpe74ygy725nr3invxe@z6ee2shr4cf3>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	phillip.wood@dunelm.org.uk, Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
+	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
+	Jason@zx2c4.com, dsimic@manjaro.org
+References: <20240821184605.341205-1-calvinwan@google.com>
+ <9c6d8fea-997e-49d5-9195-e1721a750a36@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JEPah1aYJ5L922Ai"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAPig+cRkA58wr_Pn-uhVM0zFA7B0hnArXDeumrjnWrgBbG64Yw@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <9c6d8fea-997e-49d5-9195-e1721a750a36@gmail.com>
 
-
---JEPah1aYJ5L922Ai
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2024-10-02 at 22:16:00, Eric Sunshine wrote:
-> I'm not sure I understand your response to Phillip's observation.
-> Idiomatic error handling in Go:
->=20
->     if oid, err :=3D repo_get_oid(r, "HEAD"); err !=3D nil {
->         return err;
+On 2024.08.22 10:12, Phillip Wood wrote:
+> Hi Calvin
+> 
+> On 21/08/2024 19:46, Calvin Wan wrote:
+> > Phillip Wood <phillip.wood123@gmail.com> writes:
+> >
+> > > before the function declarations. As I said in my comments on the last
+> > > patch I think we'd be better to namespace our types as well as our
+> > > functions in this library layer so this can be resued by other language
+> > > bindings.
+> > 
+> > Are you suggesting something like "#define libgit_config_set
+> > config_set"? I wouldn't be comfortable renaming config_set in git.git
+> > just yet until config/config_set can be a standalone library by itself.
+> 
+> I was suggesting[1] adding
+> 
+>     struct libgit_configset {
+> 	    struct config_set set;
+>     };
+> 
+> to public_symbol_export.c and rewriting the wrappers in that file to use
+> this struct e.g.
+> 
+>     int libgit_configset_get_int(struct libgit_configset *cs,
+> 				 const char *key, int *dest)
+>     {
+> 	    return git_configset_get_int(&cs.set, key, dest);
 >     }
->=20
-> seems much closer to Phillip's more succinct example than to the more
-> verbose example using GIT_ERROR_SUCCESS().
+> 
+> In public_symbol_export.h we'd then have
+> 
+>     struct libgit_configset;
+> 
+>     int libgit_configset_get_int(struct libgit_configset *,
+> 				 const char *, int *);
+> 
+> If we want the symbol exports to be useful outside of the rust bindings I
+> think we need to namespace our types as well as our functions.
+> 
+> [1]
+> https://lore.kernel.org/git/5720d5b9-a850-4024-a1fd-54acc6b15a74@gmail.com
+> 
+> > > > +    pub fn get_str(&mut self, key: &str) -> Option<CString> {
+> > > 
+> > > If we're adding an ergonomic api then having return CString isn't ideal.
+> > > I think the equivalent function in libgit2-rs has variants that return a
+> > > String which is convinent if the caller is expecting utf8 values or
+> > > Vec<u8> for non-utf8 values.
+> > 
+> > Having both get_cstr() and get_str() makes sense to me.
+> 
+> Just to be clear get_cstr() would return Vec<u8>? I'm far from a rust expert
+> but my understanding was that crates that wrap C libraries generally avoid
+> using CString in their API.
+> 
+> Best Wishes
+> 
+> Phillip
 
-I don't think that approach works if you want to use `oid`, since it
-scopes just to the `if` statement (and any relevant `else`).  If `oid`
-were already defined, then you would need to omit the colon in `:=3D`, or
-the compiler would complain about "no new variables".
-
-That's why I usually see this:
-
-  oid, err :=3D repo_get_oid(r, "HEAD")
-  if err !=3D nil {
-      return err
-  }
-
-which is much more like what Phillip's more verbose example shows.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---JEPah1aYJ5L922Ai
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZv3IHAAKCRB8DEliiIei
-ge6qAQD66pSh2NSS+hntGXKOeBdkz6eZgdxBPaXgba856KJPjgEAo4Y5yfDyKaQE
-/44z4okH4fq4bd/lNBfDuvz4GqesEgs=
-=WoF/
------END PGP SIGNATURE-----
-
---JEPah1aYJ5L922Ai--
+Yeah let's just go with "get_string()" and return an Option<String>.
