@@ -1,54 +1,54 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04E51C5792
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 23:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA5C1ABEAB
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 23:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727997552; cv=none; b=CSF2Hx91ZNMORIzvFlggcLRdZ5KU1kS9Xn6pRkQbUc/3VDEcRNeny0+8nfO2ypWPXk5/md2/oLj7iMs3XDHbPXLndHhPc3iUN+Uq78yCMkiSt/+ITN29pgx2mTRnN7ZHErp3sJMcOb3kNRcGOpRnsOwikeb5zqhynXIm7yP6j8k=
+	t=1727999024; cv=none; b=qCRPN1RRT8/5+EHRplFeKEMda6qWQu0mRuiqv5IlgoWvuhq9Wwkak6Kxb0AVnWyOIM2OpGFCqTlMPKallYreCjXj7eLOkLEH+WbUkUwwo5TOIZmFjECQ7pkagAc52FNvds/CyRha3yd4CX2oLLwhLX0XmBJYEgAun2VyYHRUjLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727997552; c=relaxed/simple;
-	bh=XYxGNat3HmlGxq665ZTZRCxz+4GuPMGbGJyh9eNDg/0=;
+	s=arc-20240116; t=1727999024; c=relaxed/simple;
+	bh=396t263n732zGIR76GhOReDOFYucLj3Zz7YohhBPkDA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BqWqo7r6YoW4jhzXpV+DTw7TY1orQ/SIW8trELhuoK8FYOlTfrxrf+Z93DQEkQ8vSMyEHtQDKRp094QDM3rn012zSaL2huNJ4GdInLQlX/RQRtLVVeNUyeGUVQnu/I91cebWEqaD058uTpvZNVVuSJvHiFVomDhpkViTdEEWfk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cIdPLPy4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cTlyczJb; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=bjlXvHgE2ut9hP+9QZa4FvF/RDyC5TD7czhQCpW+7bdxZySTf9T10bBd97CylJ1Mjp+BemJpolyVWRNcSmwooqd5NDRKc80OvoXsKNFIiGZ5iY7YIDmIRNsnV08yRga8p1IqgU486peo3xxNLNnezpgIudi1x8koNvxt2AAnIX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tFG+1jrp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aP37dToN; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cIdPLPy4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cTlyczJb"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A69C21140146;
-	Thu,  3 Oct 2024 19:19:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tFG+1jrp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aP37dToN"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DAD30114018E;
+	Thu,  3 Oct 2024 19:43:41 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 03 Oct 2024 19:19:09 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 03 Oct 2024 19:43:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727997549; x=1728083949; bh=0EiSCYmX3f
-	IQ1GWo9HrVQcF6lZRKdDBpinqNcDUkv2Q=; b=cIdPLPy4E2OsaUeVIcc3bx8Zx9
-	xPEjx11AI0Ga8nVsDJSx++D/f5Na4gPffANBxT//XXzBdywVMOXlV9ZWYkpdjvRr
-	D4NE4EACUdAqkXxwpjcMkavRioxHBqZBlW2rLW9Fl/F5YSZE7vFTShdjhcahzNHQ
-	Jf5Do/h6lFR/GZ16X5yX6q1jNExUNqjX4VQXF6Crb6WJmt/KGavqaruaB45KMKc2
-	jkcggOl+f8p0XqCgCHsOQ6ikwb/jWTDbD4EnFcKW+DH4aiha0qlmp2wsgQHtdmbD
-	roq98NyZAHLTf7ZGpoaEDP+9R8eXuoXqNx6MXA+gRsh/Vil3NStn3QFm0+Zg==
+	:subject:to:to; s=fm1; t=1727999021; x=1728085421; bh=PWAbjf97kv
+	lIKfGfQl3wiDipJsZtPtG1xOJ0mt73DSY=; b=tFG+1jrpufHrbiwrcvsSsQ1KDP
+	XoeEEWwrMiXkgCp1njINYVWoPCYwtkMI1z20c5x0TrOFutVilZboAeW7CpnOrxtu
+	Q9PxzzxGyiBCyUH50/2Zgm3aisk34OhvWIaFvvaXK3jF0dampVTLnVZVGikI/RKO
+	nGduPaInAqgRnme4lwxZMxbQvYC3AZEj9O/qk6hpscMr6C50zyYggnjKkJH4Ss96
+	cbZUG3r6/O91FmG+Cw1HOpD1Z4GWxrtWIGdGROu2eacWQJo2627VXokrDWnOdBvy
+	l3LWa883/eXsb03XIk5OjTDSegL9cKx3sxD54dpO4p7Yxy9JJ+CnoJh6RhYg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727997549; x=1728083949; bh=0EiSCYmX3fIQ1GWo9HrVQcF6lZRK
-	dDBpinqNcDUkv2Q=; b=cTlyczJbXAiOoj/W7tu/h1e1UuKkvQnl1QGo+iop3bxx
-	9AAGwyyy3HQvKIl670aT+oYqoQvLsK9jtBzc0F07BXeAlyz+Y3Eh09ykWJ4sIIaW
-	rw66DZcgunfe/tX/1IuwlRkdv3agcgm794QGjt9Y7COH7LY79vyrSQjTuekzPNm3
-	h1BlBwOfuTBJhJDYihMShRL8LWVi//NnS1BRxmYJLLYMaXVY1lWc/3jcV6sht2SA
-	qP4f0W/amZkm+x6cuFWYTZEMcSCvGu30XQOHXi8TptdALCrVjvzJEMdCz2NgpO/E
-	cVinuefsfNO4RjbTz/HkzH0OkUuYnJmvW9IWELgPtQ==
-X-ME-Sender: <xms:bCb_ZkyRiCQJAGJrdrZ2N8RuLC5zdZgnnoT2jaN_QAZgY5SW-bttlA>
-    <xme:bCb_ZoRBtmJG9BuzgUQFE1U7SlfgQFJbWWN_nBxwv6nLW7DYr8hNoeTK_ZBbPuXi6
-    m7yuOzIP0Pbr9JLqQ>
-X-ME-Received: <xmr:bCb_ZmXVhpsrPUPsSIK2y-Lvs_HxvgWABtp_KDm_sF6qbcOABqebyl4sj00tBVz2Uj_NwNBihP-HIIUr5ronanSQ1ROeo18dlruMNyo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvvddgvdduucetufdoteggodetrfdotf
+	fm2; t=1727999021; x=1728085421; bh=PWAbjf97kvlIKfGfQl3wiDipJsZt
+	PtG1xOJ0mt73DSY=; b=aP37dToNK0rZAi2wbaHg4tUUFwoKk3S7buvyb61rsi+k
+	QwjldCaNPJltWZ7pIrXW/Z0WbLXO2gG7DGKwE77fc9dqoL8XjjRLql7Ndmq0Msc8
+	N6AESoKKOZK/FvNCxgIt0S8dUo0iT7TPofq4pc8b9YxsOXlWh7BcP+kUz2kNBSkt
+	8Y2GX3OGOboA8j8mxKpGevVzfpa2+zvy03dFtOIzo/BDaWmmQGLECV0ji1ceZyRt
+	6crBnXbE9bFY9x9eup17ey/bnRxqPzB27VSBg6M5xnhlORslT2g3N8ui2R58yvoJ
+	hmoTDsnE8BhdLBfV2naRsLx2WAJqhmKps6Xy3m//cw==
+X-ME-Sender: <xms:LSz_ZmcNy311-kwp5uua3Dp4tOUYpfzmEhDsnvUS17u2XxAtVpwt3g>
+    <xme:LSz_ZgNbafIiVB13HKe8HTmmH7YEjzPt6gtwKfL5PA9MBeuHsb8FB9wV6B-ryustI
+    EIUqQCTvsNzM1dizg>
+X-ME-Received: <xmr:LSz_ZnjKxFZR1pkQWSDr-dy6o0tF25BleWFjA605ufjUYwhy0AX_v5i5wvfz-UE7_ffYohofs7ejCRso2cvSqbKJSQNcFSXpUFYtEEc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvvddgvdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -56,35 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvvddgvdduucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvse
-    hsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhouges
-    ughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhif
-    rghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:bCb_ZigGIfD2muvhhzsaRtURpVFDWZg1wmiSK8YxfDFNHrR5f7gwbQ>
-    <xmx:bCb_ZmBTu4KuVeLdaQVzslA_J0OCAX5XRVei6Bs3y2ZrhLS6r8tt4Q>
-    <xmx:bCb_ZjJcEZRXKGK2V8qiubz1cNBIAM5Bo9ccqkWDw86tIATDH15zgw>
-    <xmx:bCb_ZtC-7nAl8bWSn4plP-oWDP2VqYCfETYaXa24wmD3srv5mtYa-w>
-    <xmx:bSb_Zo3hrFm7Jv4B3Gp8e89YXk5DLaHi2_XxZQTtfX4O5905m-VhiXXg>
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
+    drnhgvthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:LSz_Zj9xNburH7pPC6KgFKBWtZ5kUmmk2r_7Dy2cUpLEwxgo58ezYA>
+    <xmx:LSz_ZiuW1_12RHBQBhF9Tj3MeOW_ZnUSZaUWCBDIkO3U_oO5poLSPA>
+    <xmx:LSz_ZqEuQABDCf22HbtNbyFPEyo5yAfwIcNaXeI2lSfkvtv9EOnpow>
+    <xmx:LSz_ZhMSQtJIfHUMY6PjKpERDNW6fyHsuT5bdLa7C5T84l01YPNnwg>
+    <xmx:LSz_ZkVOncjWfnnzuGvL54j5aRkW4lLwHPKsnAFeHXIlvv4p8mokCYny>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Oct 2024 19:19:08 -0400 (EDT)
+ 3 Oct 2024 19:43:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: phillip.wood@dunelm.org.uk,  Patrick Steinhardt <ps@pks.im>,
-  git@vger.kernel.org,  Eli Schwartz <eschwartz@gentoo.org>
-Subject: Re: [RFC PATCH 05/21] t3404: work around platform-specific
- behaviour on macOS 10.15
-In-Reply-To: <CAPig+cSuXojVPeVE_0HFwrQQqYn-SwCvHQ9yG+c8H1dgaH00pA@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 3 Oct 2024 18:22:00 -0400")
-References: <cover.1727881164.git.ps@pks.im>
-	<00fd829833cae1d192d6c42237aa13427156e3ea.1727881164.git.ps@pks.im>
-	<CAPig+cSqeKJX99jbxouJZHdGZuyAgNz-wOgt+0C5OPvW3MHgLw@mail.gmail.com>
-	<cf2ad192-928d-4bc6-974f-da5b217fba30@gmail.com>
-	<CAPig+cSuXojVPeVE_0HFwrQQqYn-SwCvHQ9yG+c8H1dgaH00pA@mail.gmail.com>
-Date: Thu, 03 Oct 2024 16:19:07 -0700
-Message-ID: <xmqqcykghj10.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Derrick Stolee <stolee@gmail.com>,  git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH 5/5] diff: store graph prefix buf in git_graph struct
+In-Reply-To: <20241003211317.GE11328@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 3 Oct 2024 17:13:17 -0400")
+References: <20241003210548.GB11180@coredump.intra.peff.net>
+	<20241003211317.GE11328@coredump.intra.peff.net>
+Date: Thu, 03 Oct 2024 16:43:40 -0700
+Message-ID: <xmqq7caohhw3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,30 +87,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> I suspect that the problem is that we use "\t" which is non-standard
->> rather than a literal tab character in the sed expression.
+> Since we only need the strbuf when we are formatting graph padding, we
+> can give ownership of the strbuf to the git_graph struct, letting us
+> free it when that struct is no longer in use.
 >
-> Ah yes. The `sed` on macOS 10.15 would have been of an older
-> BSD-lineage than the more modern macOS versions, so that makes sense.
-> It wouldn't be a bad idea for the commit message to mention something
-> along those lines.
->
-> (I always use literal TAB with `sed` for this precise reason, which
-> may explain why my eyes skipped right over the non-standard use of
-> "\t" or I just wasn't paying close enough attention, which is equally
-> likely.)
+>  static const char *diff_output_prefix_callback(struct diff_options *opt, void *data)
+>  {
+>  	struct git_graph *graph = data;
+> -	static struct strbuf msgbuf = STRBUF_INIT;
+>  
+>  	assert(opt);
+>  
+>  	if (!graph)
+>  		return opt->line_prefix;
+>  
+> -	strbuf_reset(&msgbuf);
 
-I also learned sed with old BSD behaviour to be portable (I somehow
-thought it is not just "old BSD" but outside POSIX if you used "\t"
-and friends).  Checking with
+Oooh, I love this change.  The fewer file scope statics (or global
+states in general) we have, the better ;-).
 
-$ git grep 'sed.*\\t' t/\*.sh
-
-shows that t3305 also has this problem.  The ones in t3404 are from
-4611884e (sequencer: notify user of --update-refs activity,
-2022-07-19), while the other one is from e1c52539 (t3305: check
-notes fanout more carefully and robustly, 2020-02-03), both are
-relatively old.  If people are not reporting issues, it may be an
-indication that sed implementations of BSD origin may have died off.
