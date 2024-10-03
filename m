@@ -1,103 +1,107 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFFB629
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 00:13:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06C4CA64
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 00:19:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727914433; cv=none; b=uUAugW7kWpahcYDATa8yGdKK5kVtBdJnTGuIW/L68lu/72qSN9QMR27r7FUAn8EGEUMHXz8N3X/ZDwviE5vDI0XmIhsGf67EkYXufpB9Gt+4PDC9PqPHF+aq3SNAxtsK8DUyzqWcJRNKBqCtevhQiZ8AEqBkhjfBykT6VTDTzK4=
+	t=1727914789; cv=none; b=GryyLYnyF0y6cKidtICKA2RBVnJ73Tym32BYUDMprGIfc/tyFf+OsT364Yofusd8gooZ6sACGP5vo9u2WpaZuxChm+D6GAWZBjMHCflxuqlxQfGjJ2IoWfnaOUTnb/Ph4YdIT6aUoVgYnUsR00a4TSHYrXrG6QNekjFgC0moiVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727914433; c=relaxed/simple;
-	bh=dY8NXck9lghhVmhB0I0yDj6Z7xM3nBCE6OzBxiBJ5zs=;
+	s=arc-20240116; t=1727914789; c=relaxed/simple;
+	bh=uzuLHoygHrR9+xUyN+aO3zVWEzjB+x0o7FkHCTU18J0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZKBXjxItt9swrg7USw8zeGe9D8GtDMxWUWVr2X47ioCv4Squcmy3MWuydnLpmU2KwqwRGes+Ovq9RRxMUmzP7N0NLUTzEWAldtHSBBLlzupqqEaVuBWkjKWz4sXPAlx1kj877WgkDir6qLMayA4hH3wuc6hzie9csioUdsK9Nl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=fT2b6rqo; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=mgSmtRIEEfg3OQV01uuLMUjZOPsAmvXfB+A7slSkxs+2qbA6eeYzJv2Bh3O2FqG54xHPD3t2707SAX6zd8eZY++/07CSNU1qPXFHr+sPv1siu4MYCQa8XxD1Aa2Jt188RJvr1RbPJ6HJpwQWHtSpClNIB4L1xNhkHo/uxfPAsdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=QWKZZxUo; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="fT2b6rqo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1727914429;
-	bh=dY8NXck9lghhVmhB0I0yDj6Z7xM3nBCE6OzBxiBJ5zs=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=fT2b6rqoTw1iXpBttdTuT21EtZVsDx7gzCFYyyQ3PjxsnktS3CZQzWnZWaWjYCUGU
-	 d3/3+h/KfCSBT9r2LFYTIY9NKn6jCv0sDN8tnqRUK+BpfdfCtGlqAjb8HMgfZaFic4
-	 Qdam7XydGrkOvgdDeaqD+eiGGyB3yDa+aeCqUw+nG51g7eAo0SnWbuRQqzyT+hWLJg
-	 UiAn/cPd87V53Q+t7HZ3jE7zzmba3cL+O8c15Kq5uajoBzeyli8yeuA6G3N4/Qk4yX
-	 w5VtPh3cn+J2s4nAo4SkpWDjCAYFwXfl6utn0mWY36OSskmV3RgwmT1Oz6oKyJPyNw
-	 gjjV4v9JZfZZYKytkTzrYaFdvxKYgnlCjnaB3cqS+brk4F6CcZy8eQS3XwTLfCor9P
-	 pUzf1J8MNz6IIVHKzU3huN6JDHdw+zaxVbfeYEAX4d2xCoDouCV2w0y5twll1aIdLY
-	 MOpGjY8a2XMr8JbRYAzQ6v0gbAGvQB7R3SAUfIBzgJcAd4hmRQf
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1C7082007A;
-	Thu,  3 Oct 2024 00:13:49 +0000 (UTC)
-Date: Thu, 3 Oct 2024 00:13:47 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH (v2.47 regression)] hash.h: set NEEDS_CLONE_HELPER_UNSAFE
- in fallback mode
-Message-ID: <Zv3huwCNuqi5C8Wm@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-References: <20241002232618.GA3442753@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="QWKZZxUo"
+Received: (qmail 10880 invoked by uid 109); 3 Oct 2024 00:19:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uzuLHoygHrR9+xUyN+aO3zVWEzjB+x0o7FkHCTU18J0=; b=QWKZZxUoYm4kN2cJ5yv2aOIghk3P7m9+M+9RlN8zPd4ZFiOvaw2meko4cU00WACI0pfGI8WIejytsR7vylTVdP0B6yVCmZkisVvgDbkV+dQszmpsekLXYKq7q5VnW5ALfiJZ+jnuCLzmN0j1zVnL5HGyRnt8qZ8lQhyUd6BihasjS3PfKxgg1n8G5iWh0WEiKbZ386dOu9O7eaf+4HzR2mNRWcwfZe8RWx/E92GYuT1kaN1nooD1ZTrTHfpW5waZkDSabcMoHb59wJwhpxGcfOoHDSE/9g7o4/4RVmlP+CxjyE9UQab+lT6VCnI+Qxr5ie1GggdZEAhZp1NrGjkc6g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 03 Oct 2024 00:19:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11252 invoked by uid 111); 3 Oct 2024 00:19:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Oct 2024 20:19:46 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 2 Oct 2024 20:19:45 -0400
+From: Jeff King <peff@peff.net>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] line-log: protect inner strbuf from free
+Message-ID: <20241003001945.GA3486271@coredump.intra.peff.net>
+References: <pull.1806.git.1727885224966.gitgitgadget@gmail.com>
+ <20241002235639.GB3455554@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ztW+xSd96b+2bAAc"
-Content-Disposition: inline
-In-Reply-To: <20241002232618.GA3442753@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---ztW+xSd96b+2bAAc
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20241002235639.GB3455554@coredump.intra.peff.net>
 
-On 2024-10-02 at 23:26:18, Jeff King wrote:
-> This is a regression in v2.47.0-rc0. As mentioned above, I kind of doubt
-> anybody will hit it in practice (I only did because I was trying to do
-> some timing tests between the fast and dc variants). And it is almost
-> tempting to leave it as a wake-up call for anybody who is still not
-> using a collision-detecting sha1. ;)
+On Wed, Oct 02, 2024 at 07:56:39PM -0400, Jeff King wrote:
 
-I think this is a fine fix for 2.47.  I have a branch on my remote
-(sha1-dc-only), which I'll send out after it passes CI (probably later
-this week), that removes support for the everything but SHA-1-DC (except
-for the unsafe code).
+> Good catch. Your analysis looks correct, though I had two questions I
+> managed to answer myself:
+> 
+>   1. This seems like an obvious use-after-free problem. Why didn't we
+>      catch it sooner? I think the answer is that most uses of the
+>      output_prefix callback happen via diff_line_prefix(), which was not
+>      broken by 394affd46d. It's only line-log that was affected.
+> 
+>      Building with ASan and running:
+> 
+>        ./git log --graph -L :diff_line_prefix:diff.c
+> 
+>      shows the problem immediately (and that your patch fixes it).
+>      Should we include a new test in this patch?
 
-I don't think there's a reasonable configuration where people can use
-Git with other SHA-1 code except in extremely limited circumstances we
-shouldn't have to maintain code for.  The code is open source, so people
-who really must have maximum performance with all of the vulnerabilities
-can patch it back in themselves.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+I think this would do it if you'd like to squash it in. Note that
+showing the actual patch is necessary to trigger the problem (since
+that's where we free the prefix buf). Unfortunately it makes the
+expected output a lot uglier. :(
 
---ztW+xSd96b+2bAAc
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index 02d76dca28..950451cf6a 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -337,4 +337,32 @@ test_expect_success 'zero-width regex .* matches any function name' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'show line-log with graph' '
++	qz_to_tab_space >expect <<-EOF &&
++	* $head_oid Modify func2() in file.c
++	|Z
++	| diff --git a/file.c b/file.c
++	| --- a/file.c
++	| +++ b/file.c
++	| @@ -6,4 +6,4 @@
++	|  int func2()
++	|  {
++	| -    return F2;
++	| +    return F2 + 2;
++	|  }
++	* $root_oid Add func1() and func2() in file.c
++	ZZ
++	  diff --git a/file.c b/file.c
++	  --- /dev/null
++	  +++ b/file.c
++	  @@ -0,0 +6,4 @@
++	  +int func2()
++	  +{
++	  +    return F2;
++	  +}
++	EOF
++	git log --graph --oneline -L:func2:file.c >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZv3huwAKCRB8DEliiIei
-gaCTAP926U118VHqznLqFvFLsPf0aB38vgNvFx2ziyc1XiM0cgEApLIuxBw005ZB
-fivzqd1IGLZSAOGCwGMMta9+GAam2ww=
-=plfB
------END PGP SIGNATURE-----
-
---ztW+xSd96b+2bAAc--
+-Peff
