@@ -1,111 +1,110 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFFE8BF0
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 18:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858D178B60
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 18:28:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727979624; cv=none; b=NWluTTaETqZ3jAdv41em6xKnQmO+hSb0NP+ds5Bl2fi7FxBkSMlVSvljKOr513zJp1/Od5z8Bte/x3maOTfC2pgKoyPiHfSJ4VwhNCXFD6VmckJzx4HnYOTNCNij8o3ymVpHnf9IO859YHJGu7Ay7RD+9WzjDedkvxGmK2WKCXg=
+	t=1727980109; cv=none; b=IzE/Qmn2lqeHqH72g2zKtgddkDVPAUC57K1uemEZUPoyF0tjGQBRSZC7ae7qgBMWwQ+msPhg7QYnbkPabUvx3erzeAtVIVIyF1UUX+8bw4LmKp6Xh4uauJvpjrwhlzPUstQtxK1wcrjOVB7Mpa9gTwrbYTeeVEVEO6yWVO6BBTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727979624; c=relaxed/simple;
-	bh=JbQdmH1/SUduuIjV795OjevrCOmT1Gw01QX8Pi3n58s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=s6IzW5B5J6u0PAn7HVRGVE98TGDRiAO8SUJqv9TtzHHPrwJUG55ySmSxusrv5raycLXdIcWYMA1ye3XKfc1827X+zsa2KIkqbkIw3j9uhAheWvvnPpTvZ0cXPYC3nxeE9VGhCl4Iz4f3j7Z6we/YXa59gHCkxBQXs4mmiF3nIYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VvgW18U6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LY3NCc4V; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1727980109; c=relaxed/simple;
+	bh=esKlNdmDyo1bEhe8Yl+FJWeJ6cU3IypdLMPq/N2LDmE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ryh1zrcwzc1oL0YtUOg6JELEelVjl5NYaekXgo36ef+Zs3r/ZkKpn6Lln+gZ0wIjJyEjJlLeDL3Ewv2tt6orkJ12lLiAj+Ek4etUg/JUd5A46ePJoNQ6zeBAZtlEDGQBWsCpVoAv8t4QG8drMfwmlh8UrtfeMN0ap+fiqpxUkcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nVDgp4j2; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VvgW18U6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LY3NCc4V"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 80A9611401E5;
-	Thu,  3 Oct 2024 14:20:21 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 03 Oct 2024 14:20:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727979621; x=1728066021; bh=8P/qDdIMYN
-	rpCUiJA6NGFyvIgU7/sSu5sLLoApLqEyQ=; b=VvgW18U6hvtxWH0/tzOkPYxbQa
-	WlqTy83r9iwZeN3BkVtwwq6l7msON/0LbL1mFukG8F28TC5mJ0cdr9Zndd32cT1v
-	/YZLL1xHPLqVf5/YjBm/oUOV7CZjKxX3RZrHiC9kCGjvbvTaJ6tIUeX6dTKdByUG
-	f5ER7CeB7cOjeLzgnrJpwfezg8LO0UxHfbzb7JAlXsqdIj5YQBzEZvQw9Vs0gItJ
-	Qr0EgtLSlHdcvEAa8cL+ErPrd70Ql+kzRwKVJ2Z4kZpvD932VMEuDQhlqKla6VrD
-	J81TIOd/41N3MmLa2j/2/1YFTLBuO/sUfQ2j+YD5Pg9CCi7F2jRHUYvge7dw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727979621; x=1728066021; bh=8P/qDdIMYNrpCUiJA6NGFyvIgU7/
-	sSu5sLLoApLqEyQ=; b=LY3NCc4V6cF82b5sMjMdOItCGidWKPHmaysi9/elMjlX
-	IP7xtw8yszZK6ePnyOSaPbzU9BMZOxGwPvVPjwQg685XlJV0MZLn1HkOPt33BtbE
-	NMdtVtbh7P3rKLoTkjRlMBRd8VO9FcuRBuga8R59RgMWCJJhsRYllYJOK+xSJdyM
-	GZtY1p7nrk0Wej+OgyT++EUGyEP93ROXqxUEFo9pSJ7K8plFn82mr8RQMmqkGUew
-	64cEKJ5y2Xrs7FmepgG9xbbklEXhub14TcYEOhc4dVTWTHB4mRkhswEIWq1iaLob
-	MxeVmSQNpcldZsChc0FcH89fCoEkrRyO3YqjQ6y8AQ==
-X-ME-Sender: <xms:ZeD-ZuY_O0trxX_HZsrwlLWAAw8xcH9iqr4G_mCY8FuFrY7f0vl0ww>
-    <xme:ZeD-Zhb1oOceK4PSFKnQki4B3dyJ4KeGgNdHp0slYWN20d0fIjyLP-qN24HE49bsb
-    60GlB4zkd1-WdGRHA>
-X-ME-Received: <xmr:ZeD-Zo92YjfLrfycgSGXo50vK3ghx39C7M69ec27CEFL7uqBlDRpsrxKq0w1KZV5gl_Azh_QqaQGM7ktkyafGw2w8YkW90fVF7JvyV8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvuddguddvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
-    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ZeD-ZgphKJ4W63O1yvqKuuM9y5TQg4ZfWH8tOFsz_Ap7-Y3-izdvrg>
-    <xmx:ZeD-ZpoR3PtoBdlpIEJdkgYP_8Np-swHlzzLM5enZv7k58TbuwxohQ>
-    <xmx:ZeD-ZuR2YjvIAMjBdve6LfukJxpWCJf4bbIxPJrCNxpljBYFBUn2bQ>
-    <xmx:ZeD-ZpoIi4SLWbj-8EWLnZZcccOTWxwoHIByniRGD0KcPS_Wd5I_Bg>
-    <xmx:ZeD-ZqlQd6myF7FVC9alEY1mL2WlNsMojyC95y38GRqwmq6nG5iWZ4Ye>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Oct 2024 14:20:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
-Subject: Re: [PATCH (v2.47 regression)] hash.h: set
- NEEDS_CLONE_HELPER_UNSAFE in fallback mode
-In-Reply-To: <Zv3r9FBd+Nog3wb7@nand.local> (Taylor Blau's message of "Wed, 2
-	Oct 2024 20:57:24 -0400")
-References: <20241002232618.GA3442753@coredump.intra.peff.net>
-	<Zv3r9FBd+Nog3wb7@nand.local>
-Date: Thu, 03 Oct 2024 11:20:19 -0700
-Message-ID: <xmqq8qv5hwv0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nVDgp4j2"
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e25cc9c93a9so1250918276.2
+        for <git@vger.kernel.org>; Thu, 03 Oct 2024 11:28:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727980106; x=1728584906; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZE7Ab+NrKF9Rar/eQWNHkly53/7hnppwPnfIWJ/91Sg=;
+        b=nVDgp4j2WM1t65Ou7ismb3X5DUTxr+GjR+dUPQMOHSFLTWh4mbmFTgInobMhxL3b9Q
+         eiojFHNegaD4JVyrK/a4Ro6ObSrjbH369KM42zUXIfJhcrRwNyiOJfrtY8KM2oHE9aPg
+         sqSIxqrgtUKRHbXza4dgyi4oyeafMntTXtdRTaHyoL41KeMptHTANgj15Hf+QdPUMzCA
+         +RXCneeMlD25+vOJpUgABS/gWNoNSlt8xr2eQLadyWOPZ7X4g3+ln4dyHM0ZzgeHmklw
+         20ntoJ6fy92oyFduAMjKNL1iBIksSgeC/zahsTn8UguUL91g2LZ0pcny2M95id4LZHr8
+         JUsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727980106; x=1728584906;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZE7Ab+NrKF9Rar/eQWNHkly53/7hnppwPnfIWJ/91Sg=;
+        b=dpKZbUmUxn5HRTfmWtUGryUQ0d8Z+j22NSs7dU6jXorbXUGUh09EAG+h81SO3/SA4f
+         IdR2vodd7dD8lyrV2qQmm1LwAEGaVYEBrmqFRzBU5mFTfEl39yYbWZN1WfD4x/Vx2l13
+         TNkj05pv0h53QxyJsymz8+VnJm6WDpks3PIkHh4nKVsXjQ3pxNVZbEuHPZ/fqrj/jDNS
+         Q8lTcLOAJrLGK65N6p0ROLwdQ4BbDh9O4cFXMJOx3ck/BrpADZpY9H/M4PSUdIht5DGZ
+         R0qYn+pmOX+hL+V5yUzzfat/NzRr+QvYJqXqzHT7+HpJqyvZbnMis5sFFOcUgZbQq2q3
+         49ew==
+X-Forwarded-Encrypted: i=1; AJvYcCVYZoHTtllFSBX3YEOaWE2h3mQNGQwUkBc7fn7H0WVh+IKopEQb6s0GsbJXOklx+pYgYy8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhhGjK68tFuuFsvnqzDsMMnoxCk5vxuI4Nw+23PbaKvOEhXe71
+	S/ADKiw57/tW1VF++d0+1b2CRvqZhVyKOmB2g9dqO9YrLsFIhVbZ
+X-Google-Smtp-Source: AGHT+IHmcK79XsgNPh6+dyGbcrxf7hAjE6tPX1qNwoHef0Um8s/OhdN18UByx0UOp6ZikR9EKEjNIQ==
+X-Received: by 2002:a05:6902:18cf:b0:e26:ab6:e49b with SMTP id 3f1490d57ef6-e26383d8008mr7548978276.28.1727980106495;
+        Thu, 03 Oct 2024 11:28:26 -0700 (PDT)
+Received: from [10.37.129.2] (pool-173-70-63-30.nwrknj.fios.verizon.net. [173.70.63.30])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cb937d3068sm8590246d6.102.2024.10.03.11.28.25
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 03 Oct 2024 11:28:25 -0700 (PDT)
+From: johncai86@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, shejialuo <shejialuo@gmail.com>,
+ John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] apply: remove the_repository global variable
+Date: Thu, 03 Oct 2024 14:28:13 -0400
+X-Mailer: MailMate (1.14r5937)
+Message-ID: <DCEF5258-BFF7-4667-A538-0BEED2CB70AA@gmail.com>
+In-Reply-To: <xmqqwmirzr32.fsf@gitster.g>
+References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
+ <pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
+ <d64955a2e277da138146020f6a0cf96f4636a162.1727718031.git.gitgitgadget@gmail.com>
+ <xmqqy13852jk.fsf@gitster.g> <ZvuBduVg9TJeULpl@ArchLinux>
+ <Zvvr1_9syRh1McVA@pks.im> <xmqqwmirzr32.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Taylor Blau <me@ttaylorr.com> writes:
+Hi Junio,
 
-> On Wed, Oct 02, 2024 at 07:26:18PM -0400, Jeff King wrote:
->> diff --git a/hash.h b/hash.h
->> index f97f858307..756166ce5e 100644
->> --- a/hash.h
->> +++ b/hash.h
->> @@ -82,6 +82,9 @@
->>  #  ifdef platform_SHA1_Clone
->>  #    define platform_SHA1_Clone_unsafe platform_SHA1_Clone
->>  #  endif
->> +#  ifdef SHA1_NEEDS_CLONE_HELPER
->> +#    define SHA1_NEEDS_CLONE_HELPER_UNSAFE
->> +#  endif
->>  #endif
+On 1 Oct 2024, at 13:10, Junio C Hamano wrote:
+
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> Gah. I could have sworn I wrote something like this myself, but I must
-> have dropped it or hallucinated writing it in the first place.
+>> I disagree with this statement. If code isn't prepare to not handle a
+>> `NULL` repository we shouldn't fall back to `the_repository`, but we
+>> should instead prepare the code to handle this case. This of course
+>> requires us to do a ton of refactorings, but that is the idea of this
+>> whole exercise to get rid of `the_repository`.
 >
-> Thanks for finding and fixing.
+> I agree.  To me, the patch was screaming that the author was not
+> prepared to go the whole nine yards, though.  Adding back the
+> explicit reference to "the_repository" as a fallback is the next
+> best thing to do, pushing the "problem" closer to where it is.
+>
 
-Yeah, thanks, all.
+Indeed, I did not do my due diligence here instead of assuming all layers
+that look at the repo argument do the right thing.
+
+>> If a command cannot be converted to stop using `the_repository` right
+>> now we should skip it and revisit once all prerequisites have been
+>> adapted accordingly.
+
+Looks like it’d be preferable if I just drop this patch from the series as
+it will require a larger refactor.
+
+Thanks
+John
+
+>
+> That is also a viable approach.
