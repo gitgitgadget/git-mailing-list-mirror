@@ -1,225 +1,132 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250841A705A
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 16:17:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D8416C453
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 16:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727972249; cv=none; b=IoV6zPfKqjLP32Sx3velABwfpN/7cOAhXKF7UI68rBy865H0uOWSRBuEK7RvebXmA9s2FWUd1Oq/cQaMjdVGHM0GWuh8AI9Rn/OoXYo8MXdikbMjnNkn2TkIYwFMIwaE+oylCWP5VGR/MkxKBLDUeCK2x8ajJmd0W1P61U3dIUg=
+	t=1727972788; cv=none; b=YXa0kcdCX11dnCVaDkG9zKyCiUUVcIyJ8M5H0p3loiFDdtXp7O1EuzkhFSRlPSmAboPQ0n/uuz4UBIBPXX6mKHTG2WmYfkowZXx9YIRa06x37me5OfvBVWnsr4Uzcig20Xn1YiTyLI2ZeTD3B6FZS14VUAM3Ae1Swh0Kq4S8yQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727972249; c=relaxed/simple;
-	bh=yMzttiWqCl0JFyY7xl4CLDu4vAuxr3WBSJtK2D28ktU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ApmGa7+j8SEBSILKJbmm0Fh0pgJLKOsYmDTLBaYrFibvbLspSdeIKNGPMY/zpCoFm5OxCZ2sOJyeA5cne5xZVkKU+fzrMhwhhZ5fmeLFu2AY2myAQkF9AO9oUXzAe5ai/DiJms2Rn8V1DQhW8xpA8/2t7/NxntQ6iMtc34Rb2UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ws6fAqtp; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1727972788; c=relaxed/simple;
+	bh=80VZPXgaNC/FdwWTHcdYhP0ttCXWP0pL03SASvoxRXA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BOMB7HBsGQzBhwXpdemBA1ksmjUWI0YlvBQr/T5IOJqMjpWU7ybjA912d8/c7ZsZuAJ8jKv7hLUXUkq4zxkaH8/+RiKV8c+b+BiuoK4MLf64HvgEu5YrWDlClVbx2DATZzbDeT3QpSz9LgH7be4nry0yBVQV7G1gazeHsx8GPT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mk+nSL8V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mJcmpm9Y; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ws6fAqtp"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4582fa01090so306041cf.0
-        for <git@vger.kernel.org>; Thu, 03 Oct 2024 09:17:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1727972247; x=1728577047; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Am1ywZ0uccj+67VoCF+RBPR+ms6fvda7Ag+t2E+DIAk=;
-        b=ws6fAqtpa/Sj7bsHzrKqDmJ2ZbjSDjmUtHov1rV4CliJe2EcqR2qCfmNFPKwUHMFFT
-         hPHXgvlmuxJRefduUw+p4jwCXIyRvM6VgNc4yQqASRgxFyVr7E00xI8i/BIy2ZP9oMNo
-         HvniTOna7i+OYgHnPyZHa4f7tGs7Lbc+0qhmgVytVTM9oUZdfuK5TRsIiVCiOdFb1cmt
-         Wyx7fSI/RLQ0D0GvuCVn1RGcmN5P+0v8nmUxzJ4/Hn58sHgdfmLv7wIXq/6g76umWtKw
-         3wqV5kPxWjEzy8bGOzKvJlayY9eP1lOcLMLls8N2kPtbaOWUk7obhgaTe+hiTl+Z5kZr
-         Xebw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727972247; x=1728577047;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Am1ywZ0uccj+67VoCF+RBPR+ms6fvda7Ag+t2E+DIAk=;
-        b=vnd+u0Ec2QVUpor+Etxrzgo9nM+1Af1psFD73TL8YctJQvGxp8I79EJ7qsbCpgmCWs
-         2dpiITHlh04t7YwVzzOxSrRHQsZ01xe9Wi3RO7WYCB+CHMNazclaH5vBX0M2mrwmwmQd
-         Ud5TzdFfSifnUS5p4x7z4rtAyCwmCWm0PxBrg//v5heinamCo1im3MF82NdVbLBkd2Wf
-         BbdAC3Ahj5RoukyPlDodQxmXSaU28I0OeLEZT3GJOnDJHkI9+2+OY1GiOZN21yGffh8y
-         iPTfPu9U/uMKlhGkNjefH65Oe9IGaY7yWTIOytUvPgTCGD0OyBsGVM2RTBkOmNAuLR6L
-         nohQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUsuOKl/9iDATSmqynqIjZigIGk4/BzSABMEGvCICapFwp/k4QK50j8bQhTEeET6O9QP+I=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKtM0LulXVWKpIK4mvgpIr8Uw5xvE+53t+3AXZhYUbVApY+4Z5
-	A6LTowb9MSQ/7ksenJWDPQaZB7sjR/FEI7aH8LymRcquwPvPhiHiJTBEyek2StduKIn/+RiSKK9
-	S57tKUoqESJejqEdSbY8DMw0PSx9iDuYS6xN0
-X-Google-Smtp-Source: AGHT+IEDvGf/c9LFppg2dJk5H4PH2Nbbu6VgT6LsD4uPrp0xgGPEX3CsMEMJrgA9Dg/8xrnRazG+5/lEZRmVWgdb8JQ=
-X-Received: by 2002:a05:622a:7d92:b0:447:dbac:facd with SMTP id
- d75a77b69052e-45d8e2a3b10mr3849491cf.24.1727972246484; Thu, 03 Oct 2024
- 09:17:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mk+nSL8V";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mJcmpm9Y"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 61F2613801B0;
+	Thu,  3 Oct 2024 12:26:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 03 Oct 2024 12:26:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1727972785; x=1728059185; bh=N9UVYWYPzN
+	ys8drHJ3fChMgmmVL9Eketp6OnUkxSvFk=; b=mk+nSL8VtzCW1iZ71snvbi92jI
+	PvA0JW8N4unGqoWze48HlsF9odoOcdhqoC9UKj791AH2eynKDWEh2GJC2BXumZHg
+	+oiJV1Q0OZE2+wj4U989qgqroOzq5pDUMirDwCxFuic3ZDRvG45yQg9HcgqUI/Pd
+	rfZ3NdsBSjpR4xsIuTmVdQ65mBprnW+k+F/mNKNQ72cLCkHu0SibpUBMwiK+dDJJ
+	8OHv3YDUqjnrzZ9nH92kcljguYDD9T161e5CV6rodEwb4YfepC5CKF9lFny77Ce2
+	b/38ZJsO8cnSAhGEG1/vPQ+0axulUm1Y9PWk5QrTvf3wjqjngHh6St0WJVHw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727972785; x=1728059185; bh=N9UVYWYPzNys8drHJ3fChMgmmVL9
+	Eketp6OnUkxSvFk=; b=mJcmpm9Yaur4sdPpCP8XNeOdl4dfzPSPcxy9VKW8FzKD
+	A6e6V+699cMEPquL6ogBaSyjzU/uN3zouMYEbVXNFRJiv+rjN0//Me14pqXny4Fd
+	mu0PMsGtA5e03G9/H0vT8cFQtHKwX5ym72C6zea54wHCyzSkguGcEAzsq3o32aok
+	VdswiKNv0iLtVOxA798mc4N/8OP+dLR3EUBuQ6Rf82EmGq+VpEu1uJss1UUCBVfg
+	xKcdVCHqRoD0nYVMkAvmMJIySBZIx0hZhL4rHRBQZPI7AGnWNLtgLZzdSGrxjGrZ
+	bO7n0fhDo37W11m6canrTqEy35bTKGOBeBFIy/dQIg==
+X-ME-Sender: <xms:scX-ZutFOGwqsHq2xxnojl_ytvAP4RVoD80ITxyxxS94mezBbkcsUg>
+    <xme:scX-ZjcDYSm9MNTgsoZt7ZFf-PSFio-d02-1TBwQ-XgTK9MCrqyQMqUnxfDP9t5db
+    4xAH-sTNpEsKYx89w>
+X-ME-Received: <xmr:scX-ZpwgRmdhjfc7LsOkxf79At5HOunMabGbqTTWA9qFB8Ilgy-_bELaWDPE0Td8M5Ny05JyaX0eRImjcYOKQ_xSLBVgECN0KITHr5w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvuddguddttdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
+    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvghtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:scX-ZpN225bOGC45qhjlW0n1jqhpPrWeHvj6uDmhVENeMsEcpw_W-w>
+    <xmx:scX-Zu9SwW1lopFOmbGnTCcwi1ZlGb70GG3lStxV-vSDe3akCPvBNA>
+    <xmx:scX-ZhWmDaPnZIVmdk-dHyX_gnwtsaBdEzVn2lsAxIZaTG8pwK2JaQ>
+    <xmx:scX-ZncmAHQokbQBjXQXb92LtzKD1p7MIXo8AeN9xpn0YjAC8JaB6Q>
+    <xmx:scX-Zuz7vmShgpZ-K6jqFYH8D8c2IsmrCrPIL-VDtHuMgAmiXoQdfJNs>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 3 Oct 2024 12:26:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Jeff King via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  Jeff King <peff@peff.net>,  Derrick
+ Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 3/3] diff: modify output_prefix function pointer
+In-Reply-To: <e1d825ad212d91505eee9d911abbd3ba6bc170b1.1727956724.git.gitgitgadget@gmail.com>
+	(Jeff King via GitGitGadget's message of "Thu, 03 Oct 2024 11:58:44
+	+0000")
+References: <pull.1806.git.1727885224966.gitgitgadget@gmail.com>
+	<pull.1806.v2.git.1727956724.gitgitgadget@gmail.com>
+	<e1d825ad212d91505eee9d911abbd3ba6bc170b1.1727956724.git.gitgitgadget@gmail.com>
+Date: Thu, 03 Oct 2024 09:26:23 -0700
+Message-ID: <xmqqsetdi24w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240930220352.2461975-1-sandals@crustytoothpaste.net>
- <20240930220352.2461975-2-sandals@crustytoothpaste.net> <2d2f14ea-cfdc-4b52-948f-b42c8f6e41de@gmail.com>
-In-Reply-To: <2d2f14ea-cfdc-4b52-948f-b42c8f6e41de@gmail.com>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Thu, 3 Oct 2024 09:17:12 -0700
-Message-ID: <CAJoAoZnhY0Z7XdNqt8A598jptiNVDJC=4kT5n_n1FCGN5GkXRg@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] Add a type for errors
-To: phillip.wood@dunelm.org.uk
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Oct 2, 2024 at 2:54=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
-com> wrote:
->
-> Hi brian
->
-> Thanks for working on this.
->
-> On 30/09/2024 23:03, brian m. carlson wrote:
-> > There is work underway to move some of the Git code out into a reusable
-> > library.  In such a case, it's not very desirable to have the library
-> > code write random errors to standard error, since this is an antipatter=
-n
-> > which annoys terminal users.
-> >
-> > Instead, we will expect callers of our library function to return
-> > errors.
->
-> Isn't it the callers that will expect the function to return an error?
->
-> > The reusability of our library will be substantially improved
-> > if we return typed errors so that users can easily determine what kind
-> > of error might have occurred and react differently based on different
-> > contexts.  For example, if we are looking up an object in a partial
-> > clone and it's not found, we might decide to download it, but we might
-> > return an error to the user if the problem is instead that the revision
-> > specified is not syntactically valid.
-> >
-> > To help the libification process and make our code more generally
-> > maintainable, add an error type.  This consists of on 64-bit integer,
-> > which contains bit flags and a 32-bit code, and a pointer, which depend=
-s
-> > on the code.  It is designed to be passed and returned by value, not
-> > pointer, and it is possible to do so in two registers on 64-bit systems=
-.
-> > Similar functionality works well for error types in Rust and for the
-> > standard library's lldiv_t, so this should not pose a problem.
->
-> Part of the reason it works well in rust is that it supports
-> discriminated unions with pattern matching and has the "?" macro for
-> early returns. In C the code ends up being quite verbose compared to
-> taking a pointer to error struct as a function parameter and returning a
-> boolean success/fail flag.
->
->      struct git_error e;
->      struct object_id oid;
->
->      e =3D repo_get_oid(r, "HEAD", &oid);
->      if (!GIT_ERROR_SUCCESS(e))
->          return e;
->
-> With a boolean return we can have
->
->      struct object_id oid;
->
->      if (repo_get_oid(r, "HEAD", &oid, e))
->          return -1;
->
-> where "e" is a "struct git_error*" passed into the function.
+"Jeff King via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I actually don't find this complaint all that compelling; it's not
-hard to write a shorter macro that can be used inline, so we can do
-things like:
+> From: Jeff King <peff@peff.net>
+>
+> The uses of the output_prefix function pointer in the diff_options
+> struct is currently difficult to work with by returning a pointer to a
+> strbuf. There is only one use that cares about the length of the string,
+> which appears to be the only justification of the return type.
+>
+> We already noticed confusing memory issues around this return type, so
+> use a const char * return type to make it clear that the caller does not
+> own this string buffer.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+>  diff-lib.c   | 4 ++--
+>  diff.c       | 8 +++-----
+>  diff.h       | 2 +-
+>  graph.c      | 4 ++--
+>  log-tree.c   | 4 ++--
+>  range-diff.c | 4 ++--
+>  6 files changed, 12 insertions(+), 14 deletions(-)
 
-    ERR_VAR(e);
-    if(ERR(e, repo_get_oid(...))
-      return e;
+Very nice.
 
-or even a macro to do the return if desired:
+>  			if (opt->diffopt.output_prefix) {
+> -				struct strbuf *msg = NULL;
+> +				const char *msg;
+>  				msg = opt->diffopt.output_prefix(&opt->diffopt,
+>  					opt->diffopt.output_prefix_data);
+> -				fwrite(msg->buf, msg->len, 1, opt->diffopt.file);
+> +				fwrite(msg, strlen(msg), 1, opt->diffopt.file);
+>  			}
 
-    ERR_VAR(e); // or, i guess we can be not SO lazy and just write
-struct git_error e here, whatever :) )
-    RETURN_IF_ERR(e, repo_get_oid(...));
+OK.  We are not relying on the strbuf being able to have embedded
+NUL in the buffer, and this looks very sensible.
 
-For better or worse, you can do a lot of things in a macro, so I don't
-see verboseness as much of an issue because I think we can hide a lot
-of it this way.
-
->
-> > Provide the ability to specify either an errno value or a git error cod=
-e
-> > as the code.  This allows us to use this type generically when handling
-> > errno values such as processing files, as well as express a rich set of
-> > possible error codes specific to Git.  We pick an unsigned 32-bit code
-> > because Windows can use the full set of 32 bits in its error values,
-> > even though most Unix systems use only a small set of codes which
-> > traditionally start at 1.  32 bits for Git errors also allows us plenty
-> > of space to expand as we see fit.
->
-> I think the design of the struct is fine. It does mean we need a global
-> list of error values. GError [1] avoids this by having a "domain" field
-> that is an interned string so that error codes only need to be unique
-> within a given domain. I think that for a self-contained project like
-> git a global list is probably fine - svn does this for example [2].
->
-> [1] https://docs.gtk.org/glib/error-reporting.html
-> [2]
-> https://github.com/apache/subversion/blob/be229fd54f5860b3140831671efbfd3=
-f7f6fbb0b/subversion/include/svn_error_codes.h
->
-> > Allow multiple errors to be provided and wrapped in a single object,
-> > which is useful in many situations, and add helpers to determine if any
-> > error in the set matches a particular code.
->
-> The api appears to require the caller know up front how many errors
-> there will be which seems unlikely to be true in practice. I think a
-> more realistic design would allow callers to push errors as they occur
-> and grow the array accordingly. For example ref_transaction_prepare()
-> would want to return a list of errors, one for each ref that it was
-> unable to lock or which did not match the expected value but it would
-> not know up-front how many errors there were going to be.
->
-> It would be useful to be able to add context to an error as the stack is
-> unwound. For example if unpack_trees() detects that it would overwrite
-> untracked files it prints a error listing those files. The exact
-> formatting of that message depends on the command being run. That is
-> currently handled by calling setup_unpack_trees_porcelain() with the
-> name of the command before calling unpack_trees(). In a world where
-> unpack_trees() returns a error containing the list of files we would
-> want to customize the message by adding some context before converting
-> it to a string.
->
-> > Additionally, provide error formatting functions that produce a suitabl=
-e
-> > localized string for ease of use.
->
-> I share Emily's concern that this function has to know the details of
-> how to format every error. We could mitigate that somewhat using a
-> switch that calls external helper functions that do the actual formatting
->
->      switch (e.code) {
->      case GIT_ERR_OBJECT_NOT_FOUND:
->          format_object_not_found(buf, e); /* lives in another file */
->          break;
->      ...
->
-> I know this is an RFC but I couldn't resist one code comment
->
-> > +#define GIT_ERROR_SUCCESS(e) (((e).code =3D=3D GIT_ERROR_BIT_INIT))
-> > +#define GIT_ERROR_SUCCESS_CONSUME(e) ((git_error_free(&(e)).code =3D=
-=3D GIT_ERROR_BIT_INIT)
->
-> git_error_free() returns the code as in integer so we don't need ".code"
-> here. Also our coding guidelines would suggest git_error_clear() for the
-> name of that function.
->
->
-> In conclusion I like the general idea but have concerns about the
-> verbosity of returning an error struct. It would be helpful to see some
-> examples of this being used to see how it works in practice.
->
-> Best Wishes
->
-> Phillip
->
+Thanks.
