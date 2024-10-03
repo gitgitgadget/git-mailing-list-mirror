@@ -1,164 +1,106 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADD217579
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 06:11:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8790577111
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 06:29:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727935902; cv=none; b=tNbULYjXYaqfBX83esVtF9OQIc/roWv1jDV0L6XQ0gZ2VmIFCqpoGX3mR/QKMOKjzs2owMgEJKPERbKrS59KQ8VRrs4uT1KlMbML4LUX8ZnrjvKmbUO12hWVqrJkmTV2PLY+LzMlOmODY7PaG/yDERoQ4YT5oLmJoBdksPhWW70=
+	t=1727936952; cv=none; b=F1XRa0IpA0mgeD3ZMrCa6IxkH1ecZFnm5MWx6/VxY7FZiCAo2ZtKt+Tmuu03cOh9L6mxTtOCIbUejQGY1t3oJdEj7osYsG1bitLlBAc11M1RKQZy58lIElr+0CP60LKdHfABpn/YYj3dU+ZQFwv0ZWAMRjn1pveFR2juoFb+EEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727935902; c=relaxed/simple;
-	bh=6tGDOwLeqLC/F1b0s6wG3EoTG0X+jdwmIrMCdPP1sKQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J0BJBklaqZ9GXOrjDU+OS0ee1IWVyRVvM4fy5ix5vPuAVmiOMxKONV4dVOLpWwXpTZYvnKt0/fr1eDyo6jjqItrrkDTuxnoag4ObaRBELZaZr6J93zBDedy0ATlyrStQ5jI+VxJXJYHDbz4mzlPYlAebqvc4Pk0OUM00WzVR+ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=hV1J5XcH; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="hV1J5XcH"
-Received: (qmail 12128 invoked by uid 109); 3 Oct 2024 06:11:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6tGDOwLeqLC/F1b0s6wG3EoTG0X+jdwmIrMCdPP1sKQ=; b=hV1J5XcHI7pL1gAEWnWTcns6hF/s7R+s2a5XFFcAR1U5a0cSv4CmLutx6gXFtH15oyBHbY7WDNCx8I7nHr3lOwIU3/yCei/jWdWfLwjPajHQZKFpt7Q5YL2OC4kjaX5Nl1ycOu5Dtf5GXdUKkHejdv8RKTgj1CSInjeEff+LB03PWYM8rtnJlGNszJsuf/fMShAf80RwqsMS8XODULbWV4JNIzS9DaiL4sD6B2o02ROBAnhQXD+9b668KMZSOME+fUAvODO5PkDOgxyxLmcBWf1oC7g0Je07JL4aqZGV5VY48oXXJdqpe2uzbtkygPUfDPAH2kcgOg1TDLAdoLeK4g==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 03 Oct 2024 06:11:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14155 invoked by uid 111); 3 Oct 2024 06:11:37 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 03 Oct 2024 02:11:37 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 3 Oct 2024 02:11:36 -0400
-From: Jeff King <peff@peff.net>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com, ps@pks.im
-Subject: Re: [PATCH] line-log: protect inner strbuf from free
-Message-ID: <20241003061136.GA351404@coredump.intra.peff.net>
-References: <pull.1806.git.1727885224966.gitgitgadget@gmail.com>
- <20241002235639.GB3455554@coredump.intra.peff.net>
- <1fc0d162-9814-4d94-ac67-2ea8e40495f4@gmail.com>
+	s=arc-20240116; t=1727936952; c=relaxed/simple;
+	bh=mw/GwniZHCRdbCXRR2zJud0EpvZAGwGSg5P/Rz6FXYk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YIaAIAmXr9HLLyo/TStWeZ3fMB8SfVlLtnqG61u4dboyqUMYH5x9GQ96Dr4MGUoGPNEiAvOh1F3ju5ekC2qz5de9Y0zVlwwLTxfLg/oxYAt6SwxtVrHxr7Lbf4GMbZ24AF0u8T5vrWQR+uS3qrdJJCoQ9eC00AulIVAPvMnUW0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-458150a2593so1038871cf.1
+        for <git@vger.kernel.org>; Wed, 02 Oct 2024 23:29:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727936949; x=1728541749;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q32dwCNTlmMAhoe0pAnxjivpAInhB6IDEigVIbtx64E=;
+        b=KT8ybvSQXlzRKZmBhSevnrnhnTAuXZjYachtvSKMqmbHCbnmP6CnkOv3vK/UxUGfKZ
+         tnKtM1z7qs0erYZOaEPB0DiWwOM1FqJWLGa9llIdZRuaMb2BO9CIWzIA37Jp7/d5mp9Z
+         xSql95gEZiv0Cxl6WdSyqo7HCn4wKx9vv4RtZOUV/KwM40G8jkua0a+6EbyUz4BSmI7h
+         QtxRIl0gvCNpf88LVIsCFc2lyZBUGjlylQdV9OKqAtJzrrMZDEJqL0S8gOXTpyUCQy++
+         hdLI5iZ3WW8mu+VGoXMmNCGrrkYmeAVuCqsMBWTrHxYDQkLVSf+FgpHbhGity3kW22gF
+         afdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWoXQHpp0D5KkkP6n0zG2X0QCfDJ6XAfB04znqAwH8tbDBGB6y0jU7OsL0NrCuiO9JehkY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMFl+nTMKpqHJZVucUvSHocG8EIUbQ6wCJknSwrT5dCdrlUM4F
+	A/XUeF81hJGmxOsQL3RlYWoQTOZ/RJF547GjORisT2FCX0ZcdMJPvWP4BiVnnvK67rI1LpAo/xg
+	Y42ROHRHL1gCGChBDeK4Q60c+Q+B/q/yv
+X-Google-Smtp-Source: AGHT+IHRZ/lkFrgr6C04mYj4Nu7p+uCKkkGbsYOSgwBMvjztGtWF0e4gA6VdNtE3EsB4bB7Aayc7ewj/RSKpdhxUovM=
+X-Received: by 2002:a05:6214:ca1:b0:6cb:6e29:bad4 with SMTP id
+ 6a1803df08f44-6cb81ddb743mr37015856d6.11.1727936949294; Wed, 02 Oct 2024
+ 23:29:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1fc0d162-9814-4d94-ac67-2ea8e40495f4@gmail.com>
+References: <E1sr5iF-0007zV-2k@binarylane-bailey.stuart.id.au>
+ <CAPig+cQ8=Y6sVvN_dBo_GQ5nLkQ4GJ7AM6mE2kt_2QV7CR0omg@mail.gmail.com>
+ <3b579ddd-b386-4daa-ad63-1e75522b7462@stuart.id.au> <CAPig+cTkpLLoTxTa-8xfycNGFibN_M71+kkHtT-wgp6HRPi-aw@mail.gmail.com>
+ <4781ff6e-c20a-4340-851b-c9d324d1fac8@stuart.id.au> <CAPig+cTop=2+k0XbqYbsCTbJVo77evY+_a+FqDV_ziKf2q+Dzw@mail.gmail.com>
+ <87afa860-52f4-414a-82da-09e7eeac1301@gmail.com>
+In-Reply-To: <87afa860-52f4-414a-82da-09e7eeac1301@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 3 Oct 2024 02:28:57 -0400
+Message-ID: <CAPig+cSSDnq_kh9ERuYZmUCNrVvWmGFF8OSfBCy8bHrkx6fz3g@mail.gmail.com>
+Subject: Re: "git worktree repair" modifies the wrong repository
+To: phillip.wood@dunelm.org.uk
+Cc: Russell Stuart <russell+git.vger.kernel.org@stuart.id.au>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 02, 2024 at 10:36:33PM -0400, Derrick Stolee wrote:
+On Tue, Sep 24, 2024 at 9:53=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+> On 23/09/2024 19:52, Eric Sunshine wrote:
+> > On Thu, Sep 19, 2024 at 7:40=E2=80=AFAM Russell Stuart
+> > <russell+git.vger.kernel.org@stuart.id.au> wrote:
+> >> Interestingly, people (including me as it happens) start out by trying
+> >> to emulate the hg approach using a single parent directory to hold a
+> >> bare repository, and the child worktree directories.  Then they discov=
+er
+> >> bare repositories mangle the remote links, and give up on the idea.
+> >
+> > Can you provide more details about this "mangling"? Although the
+> > use-case you describe was not directly considered in the initial
+> > design, worktrees hanging off a bare repository became an
+> > explicitly-supported use-case not long after worktrees were
+> > introduced. So, it should work properly and we know that people use
+> > worktrees this way, but we haven't had any reports of mangling in this
+> > scenario.
+>
+> I can't speak for Russell but a while ago when I added a worktree to an
+> existing bare repository I had to update remote.origin.fetch and
+> remote.origin.mirror because "git clone --bare" implies "--mirror". I
+> also needed to enable extensions.worktreeConfig and ensure core.bare was
+> set appropriately.
 
-> >       It does make me wonder what leak Patrick saw that caused him to
-> >       write 394affd46d, and whether we're now leaking in some case that
-> >       I'm missing.
-> 
-> Looking at the change, I can only guess that it was the previous use of
-> 
-> 	char *prefix = "";
-> 
-> that signaled that an unfreeable string was being assigned to a non-const
-> pointer. This signals that _something_ is wrong with the function, but
-> the way that the buffer is returned by the function pointer is suspicious,
-> too.
+Thanks, Phillip. This is interesting information, but I'm not sure I
+understand what the actual problems are that you encountered. When you
+say that --bare implies --mirror, do you mean the other way around?
+The documentation states the opposite; that --mirror implies --bare,
+and my own testing seems to confirm that.
 
-Ah, of course. I saw Patrick's name and just assumed it was part of
-leak-checking fixes. But of course he also fixed -Wwrite-strings issues.
+That aside, I played around a bit again with bare and mirror
+repositories with worktrees hanging off them, but didn't encounter any
+anomalous behavior, which (almost certainly) indicates that I'm not
+exercising it thoroughly enough. Thus, can you provide more detail
+about the actual problems you encountered which required the manual
+adjustments you made to the configuration? (Does this also imply that
+Documentation/git-worktree.txt could use an update to discuss how to
+use them with a bare repository?)
 
-> > I do think this would have been a harder mistake to make if the callback
-> > simply returned a "const char *" pointer. We'd lose the ability to show
-> > prefixes with embedded NULs, but I'm not sure that's a big deal. It
-> > would also help for line-log to use the existing helper rather than
-> > inventing its own. So together on top something like this (which I'd
-> > probably turn into two patches if this seems to others like it's
-> > valuable and not just churn):
-> 
-> I do agree that changing the return type will make this easier to prevent
-> and the code should be easier to read as well.
-> 
-> Your diffed patch looks pretty good. I made an attempt at guessing where
-> you would have split them (first remove the duplicate method, then change
-> the method prototype and callers).
-
-Yep, exactly. I actually ended up with a third patch which is a nearby
-cleanup. I'll hold them back for now, though. Your patch is a regression
-fix which we should prioritize (though it sounds like it is in 2.46, not
-the upcoming 2.47?). I'll post my on top as a separate series.
-
-> I even took some time to attempt to remove the static strbuf from
-> diff_output_prefix_callback() in favor of using the 'data' member of the
-> diff_options struct, but it was not incredibly obvious how to communicate
-> ownership of the struct which would need to store both the graph struct
-> and the strbuf. Perhaps this would be good for #leftoverbits.
-
-Yeah, I think probably "struct git_graph" would need to own the buffer,
-initialize it in graph_init(), and then discard it in graph_clear().
-But that gets weird because apparently you can set the callback without
-a git_graph? Looks like that is triggered by "--line-prefix" without
-"--graph". Yuck.
-
-But in that case we are just showing the line_prefix string, so we could
-return that directly. Something like the patch below.
-
-The whole thing feels a bit over-engineered with the callback. The graph
-code is the only one that needs anything beyond a static string. And the
-way --line-prefix interacts with it is odd, since some callers override
-the callback (e.g., "range-diff --line-prefix=foo" is accepted, but
-doesn't do anything). I don't think there's a bug anybody cares about,
-but, well...it's not how I would have written it. ;)
-
-diff --git a/graph.c b/graph.c
-index c046f6285d..bf000fdbe1 100644
---- a/graph.c
-+++ b/graph.c
-@@ -309,21 +309,28 @@ struct git_graph {
- 	 * stored as an index into the array column_colors.
- 	 */
- 	unsigned short default_column_color;
-+
-+	/*
-+	 * Scratch buffer for generating prefixes to be used with
-+	 * diff_output_prefix_callback().
-+	 */
-+	struct strbuf prefix_buf;
- };
- 
- static const char *diff_output_prefix_callback(struct diff_options *opt, void *data)
- {
- 	struct git_graph *graph = data;
--	static struct strbuf msgbuf = STRBUF_INIT;
- 
- 	assert(opt);
- 
--	strbuf_reset(&msgbuf);
-+	if (!graph)
-+		return opt->line_prefix;
-+
-+	strbuf_reset(&graph->prefix_buf);
- 	if (opt->line_prefix)
--		strbuf_addstr(&msgbuf, opt->line_prefix);
--	if (graph)
--		graph_padding_line(graph, &msgbuf);
--	return msgbuf.buf;
-+		strbuf_addstr(&graph->prefix_buf, opt->line_prefix);
-+	graph_padding_line(graph, &graph->prefix_buf);
-+	return graph->prefix_buf.buf;
- }
- 
- static const struct diff_options *default_diffopt;
-@@ -393,6 +400,7 @@ struct git_graph *graph_init(struct rev_info *opt)
- 	 * The diff output prefix callback, with this we can make
- 	 * all the diff output to align with the graph lines.
- 	 */
-+	strbuf_init(&graph->prefix_buf, 0);
- 	opt->diffopt.output_prefix = diff_output_prefix_callback;
- 	opt->diffopt.output_prefix_data = graph;
- 
-@@ -408,6 +416,7 @@ void graph_clear(struct git_graph *graph)
- 	free(graph->new_columns);
- 	free(graph->mapping);
- 	free(graph->old_mapping);
-+	strbuf_release(&graph->prefix_buf);
- 	free(graph);
- }
- 
-
--Peff
+Regarding core.bare: That's one of the settings which is special-cased
+(hard-coded) to work "properly" when extensions.worktreeConfig is not
+enabled, so it's not clear what problem you were experiencing in that
+regard. In my testing, `git rev-parse --is-bare-repository` correctly
+reported "true" in the bare repository, and "false" in a worktree
+hanging off the bare repository even when extensions.worktreeConfig
+was not enabled.
