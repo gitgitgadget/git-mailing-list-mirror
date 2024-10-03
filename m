@@ -1,110 +1,86 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B801C6F72
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 21:55:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207491CC8A5
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 22:22:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727992534; cv=none; b=G7G4fLoINWSoJEiZZM3Q865KMGVMAN7EPDauu91vYD6pH/rmf53Cl9Tkl6cQXfyMv2EAa6E3fZZr3jZI6CpG5N9+W5/2UOjE5ThSwYie4aYYMypDqJy8utqiuzL5Bk9u6CTF4TRQecV/e2l8/rfNkjA/5fRQmAYVnlMJ5u3E4w8=
+	t=1727994135; cv=none; b=FX1kX02hpW1M93sSOggjdyHB4FWml5YTmmHpuyD2wepqh5bTrnku7YXFw+eR+NCRXlH/wm2BccW9XtNAkeWlInpzPy894DBDHngeNHhhAZonOnwz6QJAl86pw12tSdxotA/akJQwK8hre4Tn4EYFj52gVqutmrpnuB5fdI46ifA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727992534; c=relaxed/simple;
-	bh=+Ij8FdL348/D5c4aUaeWKV+4FjA7AhD5U4TsoyhLsm8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ijIlig9f04p5qwjENEqolzuhrMX1mu7hhsTt38zR3E7iM5JZdu3IpEp37ER6ZILQSZD75MYnI/4ZBZ+38rH5TSRDQaH6ahdBrSqftKb4UOTXwuQRxcbEc6F8ILg4zN+IcYxgZaQycCT8rt1ruTDaC5FCOkmc94S9kx5RLz9vWDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aOOuhdaa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZUe9lY09; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aOOuhdaa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZUe9lY09"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6E65C11400F7;
-	Thu,  3 Oct 2024 17:55:31 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 03 Oct 2024 17:55:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727992531; x=1728078931; bh=8oKZsORKZb
-	y8tCuB0jSyJQu3vzk725fNqxsdWAYXR4I=; b=aOOuhdaa21elwrU5kaFTVdXTi3
-	4YaNVcY50s7LgvuDSgTS4fEeHYFrOGawjZSJTpLkJaTBwir1KKTjr5JLik/Jl4sa
-	V5zcT10gUrclRumb2h+74CUGjLa2cVHSDoWZNmi7/3ZdMJaGVFzxHUhyibE09379
-	hjbHejP7OCdKrdppy4XPjinVfhiDfSlTQiLqZyUT33qZt8wjz8dxGOxjToBqbUEw
-	ggPzsXguXIcHXFfLkeECV3NvlfaWIiCS/QXYKOk7n+BqVqaFGYihm4JrcOTmDg+G
-	AuFl8aD7Oel3bY+wIhMC0ZzsGZ8zaXNHPIWxDqUtl7+KFaxBs+Ca9oXFTysw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727992531; x=1728078931; bh=8oKZsORKZby8tCuB0jSyJQu3vzk7
-	25fNqxsdWAYXR4I=; b=ZUe9lY09+51iwiLvRbDpMS/FuE8aXrC73iogkS264cMU
-	AKfUgj/pnUSGxnSFGtVyXpBTvXwiftriNuHc3YTj/NWtSK2n1HLxc48GDULlRrNu
-	byuHRgTt3qFjb7iqsc97nm5PedJrl+TUJ2FUpQNX39s1NwTLDIiL0asUl4Ot4zEo
-	XpITx2oVChkkxtHSdT1v9c77hqhCFERJxEIwvH00+7xofREGXdNLDy8JulHHjoKU
-	2yNm0r9GDzrksQJ1joaghllva/HPvdcthymS803Ok/jRxGiiwyi0aIil08MWc3P8
-	hjtQ/0KYWRaxkDBlt5fyees+vYBpMfjx+/UymlTPhw==
-X-ME-Sender: <xms:0xL_Zr6scd5MkG8qDqRxIrJ7bUO5YaHWBQgwwfKUalyrhPCoXE4Sfg>
-    <xme:0xL_Zg5dtyKe4_LlXeIS2yv2ttmNnSKKBFHs_K4N8EWp14ZJkWjxj4sgfFrs-9RC7
-    TWMBXk-nWltOd4O1w>
-X-ME-Received: <xmr:0xL_ZieL9WlMA4GbWIa8fSc3aVi7cJpafVvN6nh7ybIYniAQT39AJdfynzzVsY4WuGNR6gpqkx4gjmSvfWLK8tFBzh-fZ6An19DBv88>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvvddgtdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
-    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhprghrrhdtse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohht
-    hhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:0xL_ZsK1aBdXdN_3erJgj2DkPJ3c7-ExSoK4aICJatMavXDjlKq60Q>
-    <xmx:0xL_ZvJz_RE04OulB7wCm468Y4megncYy-AcLMZn_Cks0Zj4mTp-6w>
-    <xmx:0xL_ZlxmFJ_Yr2It2FJqxvAolMTkOXZnJPdWOd5EEL7H-ljluq_oOw>
-    <xmx:0xL_ZrLOE6fnsesHRwY3xu9THzkr0QJcIGarvuXKxTzsumFhMzZk_A>
-    <xmx:0xL_Zljbv7rny7s5NYhOt8Q0iVN51bq-UNncGetKaiYofl4jlvW1gjIN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Oct 2024 17:55:30 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Sparr <sparr0@gmail.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  git@vger.kernel.org
-Subject: Re: Lack of system-level excludesFile
-In-Reply-To: <20241003212451.GA12763@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 3 Oct 2024 17:24:51 -0400")
-References: <CANp3UNBGd=jiSZyFSAdPjayvgHbP5SF4Dm-uCNwna_H16bRgRA@mail.gmail.com>
-	<CANp3UNCXqLJmAj2Vc7jB+i9qRjfKzrri_Mr9VvG4J5tUR-1HeQ@mail.gmail.com>
-	<Zv5SpewqUmlvhOl-@tapette.crustytoothpaste.net>
-	<xmqq34ldjiup.fsf@gitster.g>
-	<CANp3UNB_4_mcK4CV3WF7p3AWaLTK6qb13tS3imDBGU5XBOzG0A@mail.gmail.com>
-	<20241003212451.GA12763@coredump.intra.peff.net>
-Date: Thu, 03 Oct 2024 14:55:29 -0700
-Message-ID: <xmqqh69shmwe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1727994135; c=relaxed/simple;
+	bh=lAFai0jn7hGB4Fn8Y+S5vnX5xLqKrqrO9dKU10yB0eA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aOZUNCKslX8KG8uOxgn1i266kDoccS7d3TXziW8plgwK0sXXghnjfrxhY4lC7cb1Ac5w7SnS7a8lxNLqSUJuAghd1tg2c2LLTTBV6cVWpVjnD3B9UtG0VULl3efHcTBNiq9Ze2JfoENZfO6y4b/ATu3HCEjm4Mn6Ob/l/NutNb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6cb36237f28so1497976d6.3
+        for <git@vger.kernel.org>; Thu, 03 Oct 2024 15:22:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727994132; x=1728598932;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lAFai0jn7hGB4Fn8Y+S5vnX5xLqKrqrO9dKU10yB0eA=;
+        b=CT92A3kzc3yeGlAxD2Fm3lt3yfHfSb3Ifi+mKuPzDwamYY2c+wzVHixcg7Iwml2feE
+         VDXon7HgFeff+yhhVuxww27wghXJ3VXQfDdHGheA8yUa5DuYgyHhp+7eOX49fIA2D26C
+         +xmEYD7iPK8oK2xBrij423LtKMfcKi1Z6dSjbDquXadYXZGllWhhZYHD8hXeUs/LlutQ
+         Jbi6eLSGGrofaX2pps1orP9H1WenzB5D2Lg7/P+daJ9ql7ZpK+NuR6Okb0MfMwIi+2to
+         CYrnmQ5q/xFsN2+yJjz6uzp6KPoptV/dBZZMDagb87+TcJ1GS82zG4adqQhFZVKSYPty
+         z9BA==
+X-Forwarded-Encrypted: i=1; AJvYcCWSH+/GFTZLudnprxrt6uBgrIId33e+HkdL5eOSJ9Ng/8hihRpeW5uJYff7YnSVGCH1Nf0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzC/WbGMcDVsSOXSglhBdKDJUtkRYtGU3Y2u5p+UojIVcmQ3LOz
+	++5uQtlxRrySbr4QeGK3+nKxK56ZC8gdqOfZTrXtFiu/T40iNNCPjN0Or9MqD5E0Vf261uN1cUA
+	3I04aPNvc1f5yMmhOInG3ifCgXWY=
+X-Google-Smtp-Source: AGHT+IGbnXYaiNG1Qi5aHQ+Zs/gy9GeytcOXlWnNjrySuSxzTLAlhuKQ274v6af9t2SsLQt+/c/gqtpWagVM13dlosQ=
+X-Received: by 2002:a05:6214:2481:b0:6c3:67a8:dd48 with SMTP id
+ 6a1803df08f44-6cb9a456115mr7224966d6.6.1727994132022; Thu, 03 Oct 2024
+ 15:22:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1727881164.git.ps@pks.im> <00fd829833cae1d192d6c42237aa13427156e3ea.1727881164.git.ps@pks.im>
+ <CAPig+cSqeKJX99jbxouJZHdGZuyAgNz-wOgt+0C5OPvW3MHgLw@mail.gmail.com> <cf2ad192-928d-4bc6-974f-da5b217fba30@gmail.com>
+In-Reply-To: <cf2ad192-928d-4bc6-974f-da5b217fba30@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 3 Oct 2024 18:22:00 -0400
+Message-ID: <CAPig+cSuXojVPeVE_0HFwrQQqYn-SwCvHQ9yG+c8H1dgaH00pA@mail.gmail.com>
+Subject: Re: [RFC PATCH 05/21] t3404: work around platform-specific behaviour
+ on macOS 10.15
+To: phillip.wood@dunelm.org.uk
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+On Thu, Oct 3, 2024 at 11:16=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+> On 02/10/2024 22:43, Eric Sunshine wrote:
+> > On Wed, Oct 2, 2024 at 11:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
+wrote:
+> >> Two of our tests in t3404 use indented HERE docs where leading tabs on
+> >> some of the lines are actually relevant. The tabs do get removed thoug=
+h,
+> >> and we try to fix this up by using sed(1) to replace leading tabs in t=
+he
+> >> actual output, as well. But on macOS 10.15 this doesn't work as expect=
+ed
+> >> and we somehow keep the tabs around in the actual output.
+> >
+> > I presume this nebulous explanation is due to the fact that the reason
+> > why macOS 10.15 exhibits this anomalous behavior is not yet known?
+>
+> I suspect that the problem is that we use "\t" which is non-standard
+> rather than a literal tab character in the sed expression.
 
-> PS If you want to get really wild, consider this: the exclude/ignore
->    feature is really just a proper subset of the attributes system that
->    came later. If we were designing today, we could ditch .gitignore
->    entirely in favor of a special "ignored" attribute,
+Ah yes. The `sed` on macOS 10.15 would have been of an older
+BSD-lineage than the more modern macOS versions, so that makes sense.
+It wouldn't be a bad idea for the commit message to mention something
+along those lines.
 
-Yes, this was brought up in the past a few times.
-
-Both the exclude stack (in dir.c) and attr stack (in attr.c) use a
-similar approach to optimize the accesses to the data for callers
-that traverse the paths in-order and ask if something is ignored (or
-has this attribute) for each of the paths they encounter, so their
-performance characteristics might be similar.  It certainly is a
-tempting thought and indeed is a big project, especially if you want
-to keep some sort of backward compatibility ;-)
+(I always use literal TAB with `sed` for this precise reason, which
+may explain why my eyes skipped right over the non-standard use of
+"\t" or I just wasn't paying close enough attention, which is equally
+likely.)
