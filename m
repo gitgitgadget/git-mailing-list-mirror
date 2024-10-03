@@ -1,59 +1,59 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3976E170A15
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 12:23:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937762747B
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 15:15:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727958206; cv=none; b=SXzWY5NPPT/W9aOoqITIzdcf6DidtnR+SOmExr7LbPQ9ycBU0kNmJ9SBFVYCkog22zyNQ7Ozzgi5fxRdUfVfzEUAEGpgDBCiaiwfmG6GXaSM7iPagW6cmPXtxheYTV+eNqMwjgaRy5YKZIPf7C3VSUzQBTaCjGmhyGPHLH4Nlqc=
+	t=1727968555; cv=none; b=PBT6gEjv5wiMJqIrHylhTY9EeF4rkDMXWjVXyy2i/ZXsTu4HttroP13g0O0m34SyUiJSBzJXCfKafofEgBPnO5qmTzM0Xz/fXhTdX7d/t9Pk3osb+WlbzrR0T4U95uhsyS08CNPoiQFQvgoTkEgBrcLSsjU2SYI9qVtumR9xv8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727958206; c=relaxed/simple;
-	bh=IcWUBhlXGqWpXDibDPvLgT2ByRZgiNXjRWAQG6A0iao=;
+	s=arc-20240116; t=1727968555; c=relaxed/simple;
+	bh=c5b/Qk0bF2sWdyTjassLEs15XsEUI2bWixrOlucGm6k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H9eOp3js3dJ/GQ04N2MX1+YEhE7ygR0smHs7Vq+8HwZ9noQZW8zcUCP/PlZjBZPPPl/XJfOj+/TOVSlaqD75mxRFk81T+NjDJMFCCMUD9uiWkwoHyy4U3403vR3fPhMP4UHwvsw9gQK8ZSHesPAscfP04h3PPb4Qvy0o/Bq6Zjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P354WLwI; arc=none smtp.client-ip=209.85.210.46
+	 In-Reply-To:Content-Type; b=EaLQC1qCIA3AWWf4tLxqzP4jbVl7x6SOczsdtJT41/MuXdJ127u+nLXJbQ7LW4ZNqu/rf4z7+MEzW/jlCJTayeVMV4LA+hMeFc+7s3ASPX8eWIigo0VGR6wVyhTWUeEDPNIyDDhG26+L8wlit5tE+hWCzE8WBLMb8Mco4FR/U0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kiJTq/mY; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P354WLwI"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-71100987d1cso547336a34.2
-        for <git@vger.kernel.org>; Thu, 03 Oct 2024 05:23:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kiJTq/mY"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a8d3cde1103so142513466b.2
+        for <git@vger.kernel.org>; Thu, 03 Oct 2024 08:15:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727958204; x=1728563004; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZinnOSAWnOchZ0m9lmYFJFwowMdInejS7F8hwxjOssw=;
-        b=P354WLwI9Zmxg2Y2B7Kv6k6N/g6YCkUMQW2XHTVHIVaOYjjfVQPyAlv2zbbtLv/PPh
-         L9JLu3N3E+0ecj5ALK2wA472NGyxoFBUG0++gXz6Tpnn+r/ORqugSh6nLc2vOjf+f8/Q
-         eTPzj8K3eyqMuafKJZnylump6SsA6mpcYx75ZX1ZspIGGfo/QctlfdTCB6eNdQ+W8gh6
-         A01hPKrHksJ+AmmtBhGfIf8C8CrCQ4l1osvGVw7i1bAtN12+ggN6rDu2Y4D9j1hqOEaT
-         ht1nqbemLIW9c+Z6yqPJ/xvGFCQZ662zSyPZF9amn5xX0d8BFqwH+Q5i6sbO9jmhbAcZ
-         SqHA==
+        d=gmail.com; s=20230601; t=1727968552; x=1728573352; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=bd+r2AMiaqzWVXruEnMMgj2aiAKe/snmUFNsxclfQDk=;
+        b=kiJTq/mYrC5Ota1nv/Xm135o7nPogGJ/f4sg/5mCrfyshbS8D2OCz7iHiPIUgP3bl/
+         5lNedmcjIWabgSUQDV95F0eB/lUaxvfhdDkwdTLnhb54JGOw95R1UxwTJYlXsRE+vQCR
+         8miIcKCgVwxBWCynFNXdGVCTFLfD+1mvFnxWPfSfABE6uvyq5XJFXnkJcxxt1A9kauoC
+         j2KMV3W2/4ov3BJEJnv+KuJDk0sx2SCHz1Pf6QIjUUaGUb/AsZYOPa+9gXbpXbIdwWc4
+         e8FVNjpz1V50tfdsn8MmUEnIioCV+jQA6f9n5HZg7Ur/PHKukPJHl1NcupAnPS6V8DRK
+         U8rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727958204; x=1728563004;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZinnOSAWnOchZ0m9lmYFJFwowMdInejS7F8hwxjOssw=;
-        b=XZt0GCLuY3RyifkEUDjDfVgZ+WJteR8Uk+ikiLFwRM9hmnQQRTTb5uRJEjWXqsiq1o
-         7JVdhcsIb3kCBVomCsVkFxWFfsacMqnatnbuquIrcE1oFK7lXLhD1HsxUyz08Oh2lbBi
-         gWdzFklA5xVhAFwDmWiSRHBUwwBf8knESPvkV4EIyErbeqfu+gz3XDy/ywdt+GkS36dr
-         bAAE4qRn38c1Awt9lTYBkqglxPpCh/ybwPtuWyFPqkHLJq9xr3CB21KH9jsC8m3qRu4N
-         xi6vXkK1Osgzo3CvOqmYEqLDuv5zgV/dHPHojRpQOWoNUDuQFIhUuHhJ5tvXtydNnfxT
-         Wv7g==
-X-Forwarded-Encrypted: i=1; AJvYcCWVr+JIyxEPuw41jfFaneIgyRRidIbiYE85CCsDRB4nJUlqWWSWkx8MvuooZSOoB1GMu78=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwII6v3Py7q5FY+5rEQP/e4soPMSwvgjbPPRfcp3rMOzjELqg00
-	ETWEkNeTd/qwKx5iOfhc1+9TuXJuu1Y4DpprrAjUl/nI7VfLlbZM
-X-Google-Smtp-Source: AGHT+IGM/G5lnTx1/PFNQb076xmeMMa0D4u4vif7PrF6DN05OwrleW+x6K+M1OU5j2qGvx9uQYiXhg==
-X-Received: by 2002:a05:6830:6306:b0:713:6f24:39b8 with SMTP id 46e09a7af769-7153cd9c285mr5074743a34.19.1727958204313;
-        Thu, 03 Oct 2024 05:23:24 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:b038:cb50:a5ce:b021? ([2600:1700:60ba:9810:b038:cb50:a5ce:b021])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-71547f07d1bsm308267a34.10.2024.10.03.05.23.22
+        d=1e100.net; s=20230601; t=1727968552; x=1728573352;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bd+r2AMiaqzWVXruEnMMgj2aiAKe/snmUFNsxclfQDk=;
+        b=OC1Cps/9okcUlPfv84NuTN99Tvq8U1Z3ntf80j1pu/+ndOnPhzJqAORlCHPFBB6cIX
+         Ns/N1vWay0AxFvKCfWPMLIP04pNMY20woF7ijRUDIM1VTFnNb6Nb8a95ec+xQtuOkzAP
+         NmqKG3vWIxccIZf6iu5R2xnVWizHRZQjXY6t89C3SAAGoQgvfE/kZbCTrHtBoaiwAlgu
+         i0GsKaGKlLb9pyID70EOurW0PfnHPbeITD9S935gONOzUi0RnWqj8w8f8T8rYn570lIB
+         ELInITc1snuCpr5In537kzdptRgTdJ6Z/rHDpqQoWA7qmnbIWYVo0Rnrxzi9fQbqfws6
+         fIlg==
+X-Gm-Message-State: AOJu0YzablCH7veZedPhiU2dV7mNOw+41+PQWUFFhfJD/phgOHF+5HN6
+	AfK7z6yz0+eRNcaSTy6rRYfxBCotGdCFipv1vpUbHN4ojhJOsnLE
+X-Google-Smtp-Source: AGHT+IHEuM5E6Hp1aP6PspjiWxoXorpH1ob+OJwlDIF9uDA2lnZ0aMX/tzs5uut4LM7JxAkRapFRGw==
+X-Received: by 2002:a17:906:f591:b0:a8a:837c:ebd4 with SMTP id a640c23a62f3a-a98f82600famr752150866b.27.1727968551587;
+        Thu, 03 Oct 2024 08:15:51 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99104c6785sm96074266b.204.2024.10.03.08.15.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Oct 2024 05:23:23 -0700 (PDT)
-Message-ID: <cf5fea7a-c711-4d35-9c6e-fe96778a3f85@gmail.com>
-Date: Thu, 3 Oct 2024 08:23:22 -0400
+        Thu, 03 Oct 2024 08:15:50 -0700 (PDT)
+Message-ID: <cf2ad192-928d-4bc6-974f-da5b217fba30@gmail.com>
+Date: Thu, 3 Oct 2024 16:15:50 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,83 +61,54 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] line-log: protect inner strbuf from free
-To: Jeff King <peff@peff.net>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, gitster@pobox.com, ps@pks.im
-References: <pull.1806.git.1727885224966.gitgitgadget@gmail.com>
- <20241002235639.GB3455554@coredump.intra.peff.net>
- <1fc0d162-9814-4d94-ac67-2ea8e40495f4@gmail.com>
- <20241003061136.GA351404@coredump.intra.peff.net>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH 05/21] t3404: work around platform-specific behaviour
+ on macOS 10.15
+To: Eric Sunshine <sunshine@sunshineco.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>
+References: <cover.1727881164.git.ps@pks.im>
+ <00fd829833cae1d192d6c42237aa13427156e3ea.1727881164.git.ps@pks.im>
+ <CAPig+cSqeKJX99jbxouJZHdGZuyAgNz-wOgt+0C5OPvW3MHgLw@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20241003061136.GA351404@coredump.intra.peff.net>
+In-Reply-To: <CAPig+cSqeKJX99jbxouJZHdGZuyAgNz-wOgt+0C5OPvW3MHgLw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 10/3/24 2:11 AM, Jeff King wrote:
-> On Wed, Oct 02, 2024 at 10:36:33PM -0400, Derrick Stolee wrote:
-
->>> I do think this would have been a harder mistake to make if the callback
->>> simply returned a "const char *" pointer. We'd lose the ability to show
->>> prefixes with embedded NULs, but I'm not sure that's a big deal. It
->>> would also help for line-log to use the existing helper rather than
->>> inventing its own. So together on top something like this (which I'd
->>> probably turn into two patches if this seems to others like it's
->>> valuable and not just churn):
->>
->> I do agree that changing the return type will make this easier to prevent
->> and the code should be easier to read as well.
->>
->> Your diffed patch looks pretty good. I made an attempt at guessing where
->> you would have split them (first remove the duplicate method, then change
->> the method prototype and callers).
+On 02/10/2024 22:43, Eric Sunshine wrote:
+> On Wed, Oct 2, 2024 at 11:17 AM Patrick Steinhardt <ps@pks.im> wrote:
+>> Two of our tests in t3404 use indented HERE docs where leading tabs on
+>> some of the lines are actually relevant. The tabs do get removed though,
+>> and we try to fix this up by using sed(1) to replace leading tabs in the
+>> actual output, as well. But on macOS 10.15 this doesn't work as expected
+>> and we somehow keep the tabs around in the actual output.
 > 
-> Yep, exactly. I actually ended up with a third patch which is a nearby
-> cleanup. I'll hold them back for now, though. Your patch is a regression
-> fix which we should prioritize (though it sounds like it is in 2.46, not
-> the upcoming 2.47?). I'll post my on top as a separate series.
+> I presume this nebulous explanation is due to the fact that the reason
+> why macOS 10.15 exhibits this anomalous behavior is not yet known?
+
+I suspect that the problem is that we use "\t" which is non-standard 
+rather than a literal tab character in the sed expression.
+
+> Although this works, the problem with this change (and its sibling
+> later in the patch) is that someday someone is going to come along
+> (say, for instance, a GSoC applicant doing a microproject) who submits
+> a patch to (re-)"modernize" this test by using `<<-` to (re-)indent
+> the heredoc body. A better approach would probably be to retain `<<-`
+> and use q_to_tab():
 > 
->> I even took some time to attempt to remove the static strbuf from
->> diff_output_prefix_callback() in favor of using the 'data' member of the
->> diff_options struct, but it was not incredibly obvious how to communicate
->> ownership of the struct which would need to store both the graph struct
->> and the strbuf. Perhaps this would be good for #leftoverbits.
-> 
-> Yeah, I think probably "struct git_graph" would need to own the buffer,
-> initialize it in graph_init(), and then discard it in graph_clear().
-> But that gets weird because apparently you can set the callback without
-> a git_graph? Looks like that is triggered by "--line-prefix" without
-> "--graph". Yuck.
-> 
-> But in that case we are just showing the line_prefix string, so we could
-> return that directly. Something like the patch below.
-> 
-> The whole thing feels a bit over-engineered with the callback. The graph
-> code is the only one that needs anything beyond a static string. And the
-> way --line-prefix interacts with it is odd, since some callers override
-> the callback (e.g., "range-diff --line-prefix=foo" is accepted, but
-> doesn't do anything). I don't think there's a bug anybody cares about,
-> but, well...it's not how I would have written it. ;)
+>      q_to_tab >expect <<-\EOF &&
+>      Qrefs/heads/first
+>      Q...
+>      Qrefs/heads/third
+>      EOF
 
-Thanks for exploring this with the diff you sent. It's subtle, but you
-did a good job of recognizing that when the callback is used without
-a 'graph' value, it returns opt->line_prefix.
+I agree that using q_to_tab is a better approach here.
 
-> +	if (!graph)
-> +		return opt->line_prefix;
+These first few patches all look like useful fixes in their own right. I 
+might be worth splitting them out into a separate series so they can 
+progress independently of the build system changes.
 
-I was wondering why there was no need to edit graph_setup_line_prefix()
-in your diff, and this explains why. Your change is simple enough to
-handle that change while being robust to a future assignment of the
-callback data.
+Best Wishes
 
-For what it's worth, I attempted creating a custom callback with a
-BUG() statement in it and the only test failure was t4013-diff-various.sh.
-That test is very non-standard, and it did not recognize the process
-failure, only the output difference. #leftoverbits could make that test
-fail on process failure.
-
-Thanks,
--Stolee
+Phillip
 
