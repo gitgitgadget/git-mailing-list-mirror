@@ -1,115 +1,164 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991B31EEF9
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 05:14:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADD217579
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 06:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727932467; cv=none; b=RmYqGo2CB6PFnwc62Vw+iNpfCvmFyYdav2O7YOiR6Of2zjgK62khGnypGYwBAyY/TE6c0uzxqsdNL5Uao9LXCa0q4i46XEFO2cRrXRr++KwvmYPYDhiPvgC8JCNjwoMud9RnJll1C9B0SWHr7GH0X8U7V+BKMqp063+zGHVVFPg=
+	t=1727935902; cv=none; b=tNbULYjXYaqfBX83esVtF9OQIc/roWv1jDV0L6XQ0gZ2VmIFCqpoGX3mR/QKMOKjzs2owMgEJKPERbKrS59KQ8VRrs4uT1KlMbML4LUX8ZnrjvKmbUO12hWVqrJkmTV2PLY+LzMlOmODY7PaG/yDERoQ4YT5oLmJoBdksPhWW70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727932467; c=relaxed/simple;
-	bh=dGYC30xmAGJKRhnwIxcoa60yUe5qUnFxVDkUFTHt7gU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=YMRwRsKbQBwuV9eCl5BHlcDM6V3TrvxN3zkFkEJR1W0Op3zR7kwiSLYNZ40H1mwWlXk9jnS76280EVOtMexNcM8AASuYkhkxeOGmd8n/cTzlhRgbZOVCYX8YrqE/Cgac1WM9CiblAYZsaSwrdAxNRajZIh7V3E/ZTmXlkdoHULA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6cb22ac1a11so573086d6.1
-        for <git@vger.kernel.org>; Wed, 02 Oct 2024 22:14:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727932464; x=1728537264;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8+o+4tAuSutL1l1WY/usSPpE97/UC7MMFpUihYCPwes=;
-        b=NC5winJEXaEJOnt9cDqk4Ewq1EGq/mS25cB0s+JwZKXhNP6vFZHTG9k1t5OahuwtZL
-         I2hKfebUIhpDiC5A7ipruHjj9bXo7aHWJrJQ4BbG31MmhskhGDItRG/RhxaHfh5WQRF3
-         uPiy12I26xTok1urRghrIV4RBFM94GxzSKzbIbxXAGs+k6RDKbtB1lMTK1DRpkQmMSvZ
-         kuaBhzgVXMkwhIeRs8L72nKFGGetEOyKdwfkwfKeIJqSO+F3uX8bKfv/D/Gq0YHF9t1a
-         dO0O8YByr6ueKpQ6+Q/6C1X4AXldO6bsZmQST+LL2i3IxGdCesrskD6FvA2ebPDIb0dQ
-         xNTg==
-X-Forwarded-Encrypted: i=1; AJvYcCXMstKVP/bmglkQrogkJYcwGaH8xsUJhhK77U+fyNfUSedpDANGjaEmxFPuifFItIzD02M=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0P5xk+YPEROIA0NxwKv1nmqZzOXWplKF2ViZWIRRGCyjeX5ip
-	ReOuK8U+NTX02oohUkEIXyEFU1OI19SoJyHKj5qNEG0dNtXsRWxBsrbMNxAT3SMsF1P+yZM46mL
-	5KuEPFOby4/ZZzupDxs6DMY99ZURvQl6n
-X-Google-Smtp-Source: AGHT+IHscr16KRhdNf4Ncl3PnNLpdc8rNerUOMRBYYYQpsBi2OAuRjz+uevCY2rtnYq7dv5u5EHkcjZt0pcPj7JvQxk=
-X-Received: by 2002:a05:6214:29cc:b0:6c5:3338:2502 with SMTP id
- 6a1803df08f44-6cb81bb30f3mr32848126d6.10.1727932464429; Wed, 02 Oct 2024
- 22:14:24 -0700 (PDT)
+	s=arc-20240116; t=1727935902; c=relaxed/simple;
+	bh=6tGDOwLeqLC/F1b0s6wG3EoTG0X+jdwmIrMCdPP1sKQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J0BJBklaqZ9GXOrjDU+OS0ee1IWVyRVvM4fy5ix5vPuAVmiOMxKONV4dVOLpWwXpTZYvnKt0/fr1eDyo6jjqItrrkDTuxnoag4ObaRBELZaZr6J93zBDedy0ATlyrStQ5jI+VxJXJYHDbz4mzlPYlAebqvc4Pk0OUM00WzVR+ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=hV1J5XcH; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="hV1J5XcH"
+Received: (qmail 12128 invoked by uid 109); 3 Oct 2024 06:11:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6tGDOwLeqLC/F1b0s6wG3EoTG0X+jdwmIrMCdPP1sKQ=; b=hV1J5XcHI7pL1gAEWnWTcns6hF/s7R+s2a5XFFcAR1U5a0cSv4CmLutx6gXFtH15oyBHbY7WDNCx8I7nHr3lOwIU3/yCei/jWdWfLwjPajHQZKFpt7Q5YL2OC4kjaX5Nl1ycOu5Dtf5GXdUKkHejdv8RKTgj1CSInjeEff+LB03PWYM8rtnJlGNszJsuf/fMShAf80RwqsMS8XODULbWV4JNIzS9DaiL4sD6B2o02ROBAnhQXD+9b668KMZSOME+fUAvODO5PkDOgxyxLmcBWf1oC7g0Je07JL4aqZGV5VY48oXXJdqpe2uzbtkygPUfDPAH2kcgOg1TDLAdoLeK4g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 03 Oct 2024 06:11:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14155 invoked by uid 111); 3 Oct 2024 06:11:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 03 Oct 2024 02:11:37 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 3 Oct 2024 02:11:36 -0400
+From: Jeff King <peff@peff.net>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com, ps@pks.im
+Subject: Re: [PATCH] line-log: protect inner strbuf from free
+Message-ID: <20241003061136.GA351404@coredump.intra.peff.net>
+References: <pull.1806.git.1727885224966.gitgitgadget@gmail.com>
+ <20241002235639.GB3455554@coredump.intra.peff.net>
+ <1fc0d162-9814-4d94-ac67-2ea8e40495f4@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240930220352.2461975-1-sandals@crustytoothpaste.net>
- <20240930220352.2461975-2-sandals@crustytoothpaste.net> <2d2f14ea-cfdc-4b52-948f-b42c8f6e41de@gmail.com>
- <Zv3DehUxEN6SJI1M@tapette.crustytoothpaste.net> <CAPig+cRkA58wr_Pn-uhVM0zFA7B0hnArXDeumrjnWrgBbG64Yw@mail.gmail.com>
- <Zv3IHd0c4_0NPjOK@tapette.crustytoothpaste.net>
-In-Reply-To: <Zv3IHd0c4_0NPjOK@tapette.crustytoothpaste.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 3 Oct 2024 01:14:11 -0400
-Message-ID: <CAPig+cQjk5_VJ-LNc9Hx3Q4n6H5bgg5cAztWhFpuweG8wFTjMw@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/1] Add a type for errors
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Eric Sunshine <sunshine@sunshineco.com>, 
-	phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
-	Emily Shaffer <nasamuffin@google.com>, Junio C Hamano <gitster@pobox.com>, 
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1fc0d162-9814-4d94-ac67-2ea8e40495f4@gmail.com>
 
-On Wed, Oct 2, 2024 at 6:24=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On 2024-10-02 at 22:16:00, Eric Sunshine wrote:
-> > I'm not sure I understand your response to Phillip's observation.
-> > Idiomatic error handling in Go:
-> >
-> >     if oid, err :=3D repo_get_oid(r, "HEAD"); err !=3D nil {
-> >         return err;
-> >     }
-> >
-> > seems much closer to Phillip's more succinct example than to the more
-> > verbose example using GIT_ERROR_SUCCESS().
->
-> I don't think that approach works if you want to use `oid`, since it
-> scopes just to the `if` statement (and any relevant `else`).  If `oid`
-> were already defined, then you would need to omit the colon in `:=3D`, or
-> the compiler would complain about "no new variables".
->
-> That's why I usually see this:
->
->   oid, err :=3D repo_get_oid(r, "HEAD")
->   if err !=3D nil {
->       return err
->   }
->
-> which is much more like what Phillip's more verbose example shows.
+On Wed, Oct 02, 2024 at 10:36:33PM -0400, Derrick Stolee wrote:
 
-Yes, you often see that in Go, as well as:
+> >       It does make me wonder what leak Patrick saw that caused him to
+> >       write 394affd46d, and whether we're now leaking in some case that
+> >       I'm missing.
+> 
+> Looking at the change, I can only guess that it was the previous use of
+> 
+> 	char *prefix = "";
+> 
+> that signaled that an unfreeable string was being assigned to a non-const
+> pointer. This signals that _something_ is wrong with the function, but
+> the way that the buffer is returned by the function pointer is suspicious,
+> too.
 
-    var oid oid_type
-    var err error
-    if oid, err =3D repo_get_oid(r, "HEAD"); err !=3D nil {
-        return err;
-    }
+Ah, of course. I saw Patrick's name and just assumed it was part of
+leak-checking fixes. But of course he also fixed -Wwrite-strings issues.
 
-which is very much in line with Phillip's succinct C example. But
-isn't this all beside the point?
+> > I do think this would have been a harder mistake to make if the callback
+> > simply returned a "const char *" pointer. We'd lose the ability to show
+> > prefixes with embedded NULs, but I'm not sure that's a big deal. It
+> > would also help for line-log to use the existing helper rather than
+> > inventing its own. So together on top something like this (which I'd
+> > probably turn into two patches if this seems to others like it's
+> > valuable and not just churn):
+> 
+> I do agree that changing the return type will make this easier to prevent
+> and the code should be easier to read as well.
+> 
+> Your diffed patch looks pretty good. I made an attempt at guessing where
+> you would have split them (first remove the duplicate method, then change
+> the method prototype and callers).
 
-Your proposal uses Rust as a model to justify the API choice in this
-RFC, but Phillip's point was that -- despite being perfectly suitable
-in Rust -- it is _not_ ergonomic in C. Rather than explaining how the
-proposed non-ergonomic API is superior to the ergonomic API in
-Phillip's example, you instead responded by saying that people in some
-other programming language (Go, in this case) have to deal with
-non-ergonomic error handling on a daily basis, therefore, a
-non-ergonomic API is good enough for Git's C programmers. But that is
-not a very convincing argument for choosing a non-ergonomic API for
-*this* project which is written in C, especially considering that a
-more ergonomic API has been presented (and is already in use in parts
-of the codebase).
+Yep, exactly. I actually ended up with a third patch which is a nearby
+cleanup. I'll hold them back for now, though. Your patch is a regression
+fix which we should prioritize (though it sounds like it is in 2.46, not
+the upcoming 2.47?). I'll post my on top as a separate series.
 
-That's why I said in my original response that I didn't understand
-your response to Phillip. You seem to be using a non-justification
-("other programmers suffer, so Git programmers can suffer too") as a
-justification for a non-ergonomic design.
+> I even took some time to attempt to remove the static strbuf from
+> diff_output_prefix_callback() in favor of using the 'data' member of the
+> diff_options struct, but it was not incredibly obvious how to communicate
+> ownership of the struct which would need to store both the graph struct
+> and the strbuf. Perhaps this would be good for #leftoverbits.
+
+Yeah, I think probably "struct git_graph" would need to own the buffer,
+initialize it in graph_init(), and then discard it in graph_clear().
+But that gets weird because apparently you can set the callback without
+a git_graph? Looks like that is triggered by "--line-prefix" without
+"--graph". Yuck.
+
+But in that case we are just showing the line_prefix string, so we could
+return that directly. Something like the patch below.
+
+The whole thing feels a bit over-engineered with the callback. The graph
+code is the only one that needs anything beyond a static string. And the
+way --line-prefix interacts with it is odd, since some callers override
+the callback (e.g., "range-diff --line-prefix=foo" is accepted, but
+doesn't do anything). I don't think there's a bug anybody cares about,
+but, well...it's not how I would have written it. ;)
+
+diff --git a/graph.c b/graph.c
+index c046f6285d..bf000fdbe1 100644
+--- a/graph.c
++++ b/graph.c
+@@ -309,21 +309,28 @@ struct git_graph {
+ 	 * stored as an index into the array column_colors.
+ 	 */
+ 	unsigned short default_column_color;
++
++	/*
++	 * Scratch buffer for generating prefixes to be used with
++	 * diff_output_prefix_callback().
++	 */
++	struct strbuf prefix_buf;
+ };
+ 
+ static const char *diff_output_prefix_callback(struct diff_options *opt, void *data)
+ {
+ 	struct git_graph *graph = data;
+-	static struct strbuf msgbuf = STRBUF_INIT;
+ 
+ 	assert(opt);
+ 
+-	strbuf_reset(&msgbuf);
++	if (!graph)
++		return opt->line_prefix;
++
++	strbuf_reset(&graph->prefix_buf);
+ 	if (opt->line_prefix)
+-		strbuf_addstr(&msgbuf, opt->line_prefix);
+-	if (graph)
+-		graph_padding_line(graph, &msgbuf);
+-	return msgbuf.buf;
++		strbuf_addstr(&graph->prefix_buf, opt->line_prefix);
++	graph_padding_line(graph, &graph->prefix_buf);
++	return graph->prefix_buf.buf;
+ }
+ 
+ static const struct diff_options *default_diffopt;
+@@ -393,6 +400,7 @@ struct git_graph *graph_init(struct rev_info *opt)
+ 	 * The diff output prefix callback, with this we can make
+ 	 * all the diff output to align with the graph lines.
+ 	 */
++	strbuf_init(&graph->prefix_buf, 0);
+ 	opt->diffopt.output_prefix = diff_output_prefix_callback;
+ 	opt->diffopt.output_prefix_data = graph;
+ 
+@@ -408,6 +416,7 @@ void graph_clear(struct git_graph *graph)
+ 	free(graph->new_columns);
+ 	free(graph->mapping);
+ 	free(graph->old_mapping);
++	strbuf_release(&graph->prefix_buf);
+ 	free(graph);
+ }
+ 
+
+-Peff
