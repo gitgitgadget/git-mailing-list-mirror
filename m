@@ -1,221 +1,98 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF24514F90
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 01:09:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACA6171CD
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 02:14:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727917800; cv=none; b=YKCyP0+Rix/IMpK4OpgHU1Jla7wknLln8Im1j1HYBLRwN2i+1Wmf6yHJ77lz/NWpj9390mDKPlGrl2EIKjOehaCzy6avJoeyp3tmkutJyk3ok3O9ZVk9c67KApsrnSVbiTEEU2c02hwSVHnGSublgwj3+jry3hgV1lnVfD0Vn48=
+	t=1727921661; cv=none; b=DQvZaaaS5Zjdr07YdrB9RyVPdj8TVvbgkdhLDkkREm/mc5LjtS3hOY/poPlgMb7v8VzZSoqb5LqxkSC7rAcOXbPHmr5Nbd8KFjBDV0lut8WunNa/KWEZZvv6qbln8MHgaF/oTbCN4Ks3Gm+tQ2TNAdXfapw/6HIkZNlk3zkxSwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727917800; c=relaxed/simple;
-	bh=LDaTYDJfscQOu6QT0Y2ajazbUbvKtsojKQibfWlAx2E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AylpzZ1yom64uvAGNTm4PlKJmSiwa4FrttnjeEm99e79ZS6Svcfxi+dlWdOf+yOXHzieWJhQNX4p7iRqEREofe9IZrNr2ngQKfvCjlndVW1TK6XnUeo8WKm+/mIudPLPKyeUyEvUwOuskkBPgzw8YZsqfM4W8vmhorEVz1zYSfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=2sg8l85X; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1727921661; c=relaxed/simple;
+	bh=ScdRZ5ziCSobHv5f4+DtHNk4XbYz+KePFHXCTxY+Avo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GI9+GfxozA6Q299qbhagNb5B+Z7ErIs5xmEw2KNEhvijXAlSlvWYAUuuHcqkeh7cgcRVqwpy2m2y98lrcxjrMjYUA8e1pOr5HDL+ns2gMj9wm69VZKgSMpSdCx9JuQue/m6RoGjZw9aUB6kWQ7C95mAJGg7++CsceifEYUHc8zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ns6H5Jen; arc=none smtp.client-ip=209.85.221.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="2sg8l85X"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e28833f1c31so121368276.1
-        for <git@vger.kernel.org>; Wed, 02 Oct 2024 18:09:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ns6H5Jen"
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-5078fa7e974so14511e0c.1
+        for <git@vger.kernel.org>; Wed, 02 Oct 2024 19:14:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1727917797; x=1728522597; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/gjNaeGR7DuR3SH/0gLHuECHD9YSb2Gqcq5uIsWUH4Q=;
-        b=2sg8l85XFhyV/yaPZIt8BqTL//2vEwfXbGBaGyK3fLb65qzzafH7WtdK5ScBEgCz0Q
-         r9WdoAtCsx0hLlRjmhUq7Ahf22Rt4DH5EHS0u5bqp7VcCCXubBgSnYTZeMc/6E6XYhw9
-         duh6BSJ9oDzu0L2zBkTer1KUKylL3eh8HaNuul+DD96/ZOhMlwhefX3OmPveeqCI7xo3
-         d3Lwz83IFiz+cVkWGP5PdHdNEdpG6+hnPFs8l+kaB9uKezgxNzQStj2dOgaQHGvIAXm8
-         4SC9AW86FLgNxisWxjZukuhn6t1AUpeszsM9YS/Gx4zZimCj8WizmfP0kxu0ow9Hco+O
-         1yKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727917797; x=1728522597;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1727921659; x=1728526459; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/gjNaeGR7DuR3SH/0gLHuECHD9YSb2Gqcq5uIsWUH4Q=;
-        b=CDLhntNajMWJcBDcWObltgRk6hCE6LmMKQTFyi4dD0jiZiaBrIHyuFuAysDVgdp7Tr
-         QBOd3peji01ZiYjWPc6M6JWkp14o7QdEJuXt7i5U+koNA6/NRJtOQR3oxKsAYCQe6A7y
-         ztz369m/ChO1Cs9EeXWeaZoVJl3I0kJbow5NcTvSJLvxp6AAGzI5+Ur1zI+WgIMy3Ggp
-         v3DfxOuvN2J/D/5UozaSldiYqfpoSXS6rrsMUFUv8OsMEFAGuoCsV0D7wUpHFOYfhNK6
-         xkSnahNm3g8sbxqz25X896JVYNADXet5vXx3jHafxqomI3oDkepdg6L5mwoZQmrC9o2e
-         5VTA==
-X-Gm-Message-State: AOJu0YxwKNnAY5F+M68WhkJfi9MqUMV9OgaAvXcEH3gVw2R6b/7XK52p
-	tnpx50hPhVAmriC/kIi7leHik1Imw4WN/+bkxvFfEWcop3f1OcJ7DlMFOnc8RZJEGeOaUVMVWiJ
-	UhGA=
-X-Google-Smtp-Source: AGHT+IGKqwQD/qw/PO3m+TmmyYnMTO1+HHKmgGuqeCy2ckca/IpV9z8V7yv5/5cTZNIOCO5sNYBdSg==
-X-Received: by 2002:a05:6902:1b13:b0:e25:c640:bc3d with SMTP id 3f1490d57ef6-e286f818bd1mr1360087276.13.1727917797590;
-        Wed, 02 Oct 2024 18:09:57 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2885eb23e3sm51267276.44.2024.10.02.18.09.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Oct 2024 18:09:57 -0700 (PDT)
-Date: Wed, 2 Oct 2024 21:09:56 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Emily Shaffer <nasamuffin@google.com>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: [PATCH v3] Documentation: mention the amlog in howto/maintain-git.txt
-Message-ID: <88a13b9f2b6e7fbed517a7e268e4e371d84a9a10.1727917792.git.me@ttaylorr.com>
-References: <a4b1da93e16d88323181f8f8444f01d96e09ef45.1727729100.git.me@ttaylorr.com>
+        bh=ScdRZ5ziCSobHv5f4+DtHNk4XbYz+KePFHXCTxY+Avo=;
+        b=ns6H5Jen4i1ULKOZAfDEsUYVw8AiUquUIN0QFm5bILGKHJoAfwCsdLkFXVJn3b3Isr
+         xtIiBW8KItA9+KCnsnFxYwa6mSTla/Sb298lMLsXCmO/wvCl+WivQqOaKH4LQPVKs7RL
+         CgIvjJvFWIOUaLLXp+q3uKRxMRzynbFrAYUuBC1zETgEZsfH6kqh3eO33jaExIAaCKsm
+         HmuPQRHNz45c3Nt7QEDGn0kWkw2cjzUN8YZMDChl6d9U/DUj1zJBYZjxSRq+JMLjVO8S
+         aE6sUfEPUMQb+IhV7B1Q+4pzbP8Qw9vQwbPx99OVyfQpOrBMftO3BTkxd8IYoIPX+Z8C
+         779A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727921659; x=1728526459;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ScdRZ5ziCSobHv5f4+DtHNk4XbYz+KePFHXCTxY+Avo=;
+        b=TFRb2+wX97ZlUDvnT/rdxYRkxIaaAPD39FQ+VznIHcqah8fGVRIJ4GirXuGCzEkEhB
+         RDwk8cLz9y4bXAdD1MfB2x43aZNcVuESnzeyFVtQAZQvVfF8qkCqLfTqBqrVqKsnYYlo
+         3YWDkTZeNeanNTQvvB6y5VUSHYgJCHHv4K+5XqcR3mU3oxdDicvv2hnRIw7mro2QaCOS
+         8R7P+22zFa0KCAzdIeSvmpcFYXxYzANet5GM/7hEC27DaqY/ERhjYKqcbkCoeuZrqrRr
+         d992D7al6a7NQUt2Yn0k7SZqzbLbMesqS2mI/ZCWH/9ByCmRc6+6+Tfvz35EJmvvQuO8
+         3XEg==
+X-Gm-Message-State: AOJu0Ywx4rosaOas1lMSpRaKUnhMDrwXpuK6IzEaT6GppSCUjCsZ9cHw
+	JiZxTylFeti8po5DYNpGk/veoFVe5fwiZbuYNwS3lAnLawzvxsHBQMZosiy6eJ4NR1wwGwS+RhM
+	ADoNNRPRnfidKJ0lGUsd5JsUAX4oeDlpk1B3zoA==
+X-Google-Smtp-Source: AGHT+IHfWs3P9lPVPfbeBzHCRvWrX+48O636u2VlqbKi/+2JJw17eUxDiHTt2PbfOfA0+q2RCHOiJv0KAJKmvKfsLKg=
+X-Received: by 2002:a05:6122:250e:b0:507:8a46:b60a with SMTP id
+ 71dfb90a1353d-50c58218690mr1578468e0c.2.1727921658745; Wed, 02 Oct 2024
+ 19:14:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a4b1da93e16d88323181f8f8444f01d96e09ef45.1727729100.git.me@ttaylorr.com>
+References: <CAO1n884e13_9FZDBtcFrwU8oCyv+0_WUT-c16qN0W9c+D6k2PQ@mail.gmail.com>
+ <834250ef-46ec-4667-8e41-e427472fd623@gmail.com>
+In-Reply-To: <834250ef-46ec-4667-8e41-e427472fd623@gmail.com>
+From: Abraham Samuel <sammymore50@gmail.com>
+Date: Thu, 3 Oct 2024 03:14:08 +0100
+Message-ID: <CAO1n887uu5qUcqLcdKfh8FBKJAQUCGqVOnAzX7WWiFEnuuMF3A@mail.gmail.com>
+Subject: Re: [Outreachy]
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Part of the maintainer's job is to keep up-to-date and publish the
-'amlog' which stores a mapping between a patch's 'Message-Id' e-mail
-header and the commit generated by applying said patch.
+Hello Philip, thanks for your prompt response. As regards your
+request, I want to work on the project description 'Convert unit tests
+to use the clar testing framework'.
 
-But our Documentation/howto/maintain-git.txt does not mention the amlog,
-or the scripts which exist to help the maintainer keep the amlog
-up-to-date.
-
-(This bit me during the first integration round I did as interim
-maintainer[1] involved a lot of manual clean-up. More recently it has
-come up as part of a research effort to better understand a patch's
-lifecycle on the list[2].)
-
-Address this gap by briefly documenting the existence and purpose of the
-'post-applypatch' hook in maintaining the amlog entries.
-
-[1]: https://lore.kernel.org/git/Y19dnb2M+yObnftj@nand.local/
-[2]: https://lore.kernel.org/git/CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com/
-
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/howto/maintain-git.txt | 44 ++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
-
-diff --git a/Documentation/howto/maintain-git.txt b/Documentation/howto/maintain-git.txt
-index da31332f113..f52f32eda93 100644
---- a/Documentation/howto/maintain-git.txt
-+++ b/Documentation/howto/maintain-git.txt
-@@ -122,6 +122,13 @@ Note that before v1.9.0 release, the version numbers used to be
- structured slightly differently.  vX.Y.Z were feature releases while
- vX.Y.Z.W were maintenance releases for vX.Y.Z.
- 
-+Because most of the lines of code in Git are written by individual
-+contributors, and contributions come in the form of e-mailed patches
-+published on the mailing list, the project maintains a mapping from
-+individual commits to the Message-Id of the e-mail that resulted in
-+the commit, to help tracking the origin of the changes. The notes
-+in "refs/notes/amlog" are used for this purpose, and are published
-+along with the broken-out branches to the maintainer's repository.
- 
- A Typical Git Day
- -----------------
-@@ -165,6 +172,43 @@ by doing the following:
-    In practice, almost no patch directly goes to 'master' or
-    'maint'.
- 
-+   Applying the e-mailed patches using "git am" automatically records
-+   the mappings from 'Message-Id' to the applied commit in the "amlog"
-+   notes. Periodically check that this is working with "git show -s
-+   --notes=amlog $commit".
-+
-+   This mapping is maintained with the aid of the "post-applypatch"
-+   hook found in the 'todo' branch. That hook should be installed
-+   before applying patches. It is also helpful to carry forward any
-+   relevant amlog entries when rebasing, so the following config may
-+   be useful:
-+
-+      [notes]
-+        rewriteRef = refs/notes/amlog
-+
-+   Avoid "cherry-pick", as it does not propagate notes by design. Use
-+   either "git commit --amend" or "git rebase" to make corrections to
-+   an existing commit, even for a single-patch topic.
-+
-+   Make sure that a push refspec for 'refs/notes/amlog' is in the
-+   remote configuration for publishing repositories. A few sample
-+   configurations look like the following:
-+
-+      [remote "github"]
-+        url = https://github.com/gitster/git
-+        pushurl = github.com:gitster/git.git
-+        mirror
-+
-+      [remote "github2"]
-+        url = https://github.com/git/git
-+        fetch = +refs/heads/*:refs/remotes/github2/*
-+        pushurl = github.com:git/git.git
-+        push = refs/heads/maint:refs/heads/maint
-+        push = refs/heads/master:refs/heads/master
-+        push = refs/notes/next:refs/notes/next
-+        push = +refs/heads/seen:refs/heads/seen
-+        push = +refs/notes/amlog
-+
-  - Review the last issue of "What's cooking" message, review the
-    topics ready for merging (topic->master and topic->maint).  Use
-    "Meta/cook -w" script (where Meta/ contains a checkout of the
-
-Range-diff against v2:
-1:  5cc8e2bcb88 ! 1:  88a13b9f2b6 Documentation: mention the amlog in howto/maintain-git.txt
-    @@ Documentation/howto/maintain-git.txt: by doing the following:
-         In practice, almost no patch directly goes to 'master' or
-         'maint'.
-      
-    -+   The maintainer is expected to update refs/notes/amlog with a
-    -+   mapping between the applied commit and the 'Message-Id'
-    -+   corresponding to the e-mail which carried the patch.
-    ++   Applying the e-mailed patches using "git am" automatically records
-    ++   the mappings from 'Message-Id' to the applied commit in the "amlog"
-    ++   notes. Periodically check that this is working with "git show -s
-    ++   --notes=amlog $commit".
-     +
-    -+   This mapping is created with the aid of the "post-applypatch" hook
-    -+   found in the 'todo' branch. That hook should be installed before
-    -+   applying patches. It is also helpful to carry forward any relevant
-    -+   amlog entries when rebasing, so the following config may be useful:
-    ++   This mapping is maintained with the aid of the "post-applypatch"
-    ++   hook found in the 'todo' branch. That hook should be installed
-    ++   before applying patches. It is also helpful to carry forward any
-    ++   relevant amlog entries when rebasing, so the following config may
-    ++   be useful:
-     +
-     +      [notes]
-     +        rewriteRef = refs/notes/amlog
-     +
-    -+   (note that this configuration is not read by 'cherry-pick').
-    ++   Avoid "cherry-pick", as it does not propagate notes by design. Use
-    ++   either "git commit --amend" or "git rebase" to make corrections to
-    ++   an existing commit, even for a single-patch topic.
-     +
-    -+   Finally, take care that the amlog entries are pushed out during
-    -+   integration cycles since external tools and contributors (in
-    -+   addition to internal scripts) may rely on them.
-    ++   Make sure that a push refspec for 'refs/notes/amlog' is in the
-    ++   remote configuration for publishing repositories. A few sample
-    ++   configurations look like the following:
-    ++
-    ++      [remote "github"]
-    ++        url = https://github.com/gitster/git
-    ++        pushurl = github.com:gitster/git.git
-    ++        mirror
-    ++
-    ++      [remote "github2"]
-    ++        url = https://github.com/git/git
-    ++        fetch = +refs/heads/*:refs/remotes/github2/*
-    ++        pushurl = github.com:git/git.git
-    ++        push = refs/heads/maint:refs/heads/maint
-    ++        push = refs/heads/master:refs/heads/master
-    ++        push = refs/notes/next:refs/notes/next
-    ++        push = +refs/heads/seen:refs/heads/seen
-    ++        push = +refs/notes/amlog
-     +
-       - Review the last issue of "What's cooking" message, review the
-         topics ready for merging (topic->master and topic->maint).  Use
-
-base-commit: 3857aae53f3633b7de63ad640737c657387ae0c6
--- 
-2.47.0.rc0.8.g9a975e77790
+On Wed, Oct 2, 2024 at 3:04=E2=80=AFPM Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
+>
+> Hi Abraham
+>
+> On 02/10/2024 04:04, Abraham Samuel wrote:
+> > Hello, I'm Adekunle an Outreachy 2024 intern. I am most excited and
+> > eager to start making valuable contributions to this project. Thanks
+>
+> Happy to hear that you are interested in contributing to Git as part of
+> the Outreachy projet. To help us mentors, could you please clarify which
+> of the two approved projects you are interested in?
+>
+> Other than that I would strongly recommend reading through [1] and [2],
+> if you haven't already done so. They should give you some ideas for how
+> the Outreachy application process is designed to work in the Git project
+> and lays out the expectation of us mentors.
+>
+> Let me know in case you have any additional questions.
+>
+> Phillip
+>
+> [1]: https://git.github.io/Mentoring-Program-Guide/
+> [2]: https://git.github.io/General-Microproject-Information/
+>
