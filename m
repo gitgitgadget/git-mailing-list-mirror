@@ -1,110 +1,163 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858D178B60
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 18:28:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1487CBA41
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 18:35:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727980109; cv=none; b=IzE/Qmn2lqeHqH72g2zKtgddkDVPAUC57K1uemEZUPoyF0tjGQBRSZC7ae7qgBMWwQ+msPhg7QYnbkPabUvx3erzeAtVIVIyF1UUX+8bw4LmKp6Xh4uauJvpjrwhlzPUstQtxK1wcrjOVB7Mpa9gTwrbYTeeVEVEO6yWVO6BBTU=
+	t=1727980521; cv=none; b=pdeYE4UYfvBPsYcYMpH8D8NJJOUbH1zlMsnJTxb+0TPM/1PjLexd3PValArnnBeRl0Ka0jlGhPJ6tyLzdhXyPcF4APhIcLkoGyXt5bOMOOGcMenC0YZW+W232uYGBWFuVjNOQTKwNh4qsfXg/d47U0ua7/x2IYz04e+qyGpg4D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727980109; c=relaxed/simple;
-	bh=esKlNdmDyo1bEhe8Yl+FJWeJ6cU3IypdLMPq/N2LDmE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ryh1zrcwzc1oL0YtUOg6JELEelVjl5NYaekXgo36ef+Zs3r/ZkKpn6Lln+gZ0wIjJyEjJlLeDL3Ewv2tt6orkJ12lLiAj+Ek4etUg/JUd5A46ePJoNQ6zeBAZtlEDGQBWsCpVoAv8t4QG8drMfwmlh8UrtfeMN0ap+fiqpxUkcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nVDgp4j2; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727980521; c=relaxed/simple;
+	bh=KUEZwbNbm7026F3TXHRV5cOjuiWY+ZgJtB+BnRm0Who=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Jdgbk4aNwKp/gY2YIRWMQJAN6L/RSd0dIcWjc6LXB/LMy8aWsLEcMfqb0jmsSzj5TG7m5DK4zLNXqSmdqJf5W3DGQqh2CXwEXFSMAaNJcsnX6vGmRZTDou0muulR1K+GbUT4ejhMvZfOnBnJFNExOcmhrKiDta6j6CTsvysCBoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=V2wHQyTR; arc=none smtp.client-ip=84.93.230.244
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nVDgp4j2"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e25cc9c93a9so1250918276.2
-        for <git@vger.kernel.org>; Thu, 03 Oct 2024 11:28:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727980106; x=1728584906; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZE7Ab+NrKF9Rar/eQWNHkly53/7hnppwPnfIWJ/91Sg=;
-        b=nVDgp4j2WM1t65Ou7ismb3X5DUTxr+GjR+dUPQMOHSFLTWh4mbmFTgInobMhxL3b9Q
-         eiojFHNegaD4JVyrK/a4Ro6ObSrjbH369KM42zUXIfJhcrRwNyiOJfrtY8KM2oHE9aPg
-         sqSIxqrgtUKRHbXza4dgyi4oyeafMntTXtdRTaHyoL41KeMptHTANgj15Hf+QdPUMzCA
-         +RXCneeMlD25+vOJpUgABS/gWNoNSlt8xr2eQLadyWOPZ7X4g3+ln4dyHM0ZzgeHmklw
-         20ntoJ6fy92oyFduAMjKNL1iBIksSgeC/zahsTn8UguUL91g2LZ0pcny2M95id4LZHr8
-         JUsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727980106; x=1728584906;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZE7Ab+NrKF9Rar/eQWNHkly53/7hnppwPnfIWJ/91Sg=;
-        b=dpKZbUmUxn5HRTfmWtUGryUQ0d8Z+j22NSs7dU6jXorbXUGUh09EAG+h81SO3/SA4f
-         IdR2vodd7dD8lyrV2qQmm1LwAEGaVYEBrmqFRzBU5mFTfEl39yYbWZN1WfD4x/Vx2l13
-         TNkj05pv0h53QxyJsymz8+VnJm6WDpks3PIkHh4nKVsXjQ3pxNVZbEuHPZ/fqrj/jDNS
-         Q8lTcLOAJrLGK65N6p0ROLwdQ4BbDh9O4cFXMJOx3ck/BrpADZpY9H/M4PSUdIht5DGZ
-         R0qYn+pmOX+hL+V5yUzzfat/NzRr+QvYJqXqzHT7+HpJqyvZbnMis5sFFOcUgZbQq2q3
-         49ew==
-X-Forwarded-Encrypted: i=1; AJvYcCVYZoHTtllFSBX3YEOaWE2h3mQNGQwUkBc7fn7H0WVh+IKopEQb6s0GsbJXOklx+pYgYy8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyhhGjK68tFuuFsvnqzDsMMnoxCk5vxuI4Nw+23PbaKvOEhXe71
-	S/ADKiw57/tW1VF++d0+1b2CRvqZhVyKOmB2g9dqO9YrLsFIhVbZ
-X-Google-Smtp-Source: AGHT+IHmcK79XsgNPh6+dyGbcrxf7hAjE6tPX1qNwoHef0Um8s/OhdN18UByx0UOp6ZikR9EKEjNIQ==
-X-Received: by 2002:a05:6902:18cf:b0:e26:ab6:e49b with SMTP id 3f1490d57ef6-e26383d8008mr7548978276.28.1727980106495;
-        Thu, 03 Oct 2024 11:28:26 -0700 (PDT)
-Received: from [10.37.129.2] (pool-173-70-63-30.nwrknj.fios.verizon.net. [173.70.63.30])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cb937d3068sm8590246d6.102.2024.10.03.11.28.25
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 03 Oct 2024 11:28:25 -0700 (PDT)
-From: johncai86@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, shejialuo <shejialuo@gmail.com>,
- John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] apply: remove the_repository global variable
-Date: Thu, 03 Oct 2024 14:28:13 -0400
-X-Mailer: MailMate (1.14r5937)
-Message-ID: <DCEF5258-BFF7-4667-A538-0BEED2CB70AA@gmail.com>
-In-Reply-To: <xmqqwmirzr32.fsf@gitster.g>
-References: <pull.1788.git.git.1727185364.gitgitgadget@gmail.com>
- <pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
- <d64955a2e277da138146020f6a0cf96f4636a162.1727718031.git.gitgitgadget@gmail.com>
- <xmqqy13852jk.fsf@gitster.g> <ZvuBduVg9TJeULpl@ArchLinux>
- <Zvvr1_9syRh1McVA@pks.im> <xmqqwmirzr32.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="V2wHQyTR"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id wQcPsRBa928tEwQcRs40VN; Thu, 03 Oct 2024 19:32:09 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1727980329; bh=+6znJfTaZa/tO3Q0VXrhjvWfoP2vFWDCKGdfanxAIDw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=V2wHQyTRPRR83u0BPgKrHV+tVNOJajEsJ0fMp6W9SYi1zHqGRRRMvNwkGg1TQNWJy
+	 +BgV+OZxQaPbcfQvrNLZS8uvVBqQTUWinw9yxaRbkGQwI42G6esxmUvdckUpnkkh6C
+	 e7rbaqvRPtx49/YBNlpxoVrC7TWIO5l2GLeGww+gzKWY0GcDHutAUkwvXBN+RukUKL
+	 DQW+ax9hzDwRuyesm6U1LWwkaWfQf/ueOpCULvhmSG8Ma5aFX444tEHnIQ+VgsxAr0
+	 wIym3H0kYCwM1NNYiOUMmbdnQSMza5Wi/DUPUolTlHGUDlEh42vtv52Wew9OjVV4LO
+	 X2gCBZxiVHVcA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=Hda3TTE8 c=1 sm=1 tr=0 ts=66fee329
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8
+ a=3nsOOYR-AAAA:8 a=NEAV23lmAAAA:8 a=xDqzcpVgauGaHVoon2QA:9 a=QEXdDO2ut3YA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=X8_4EP2Luv2hi8NvPz5g:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <14497a9c-8683-440e-b179-2b10b4516d9c@ramsayjones.plus.com>
+Date: Thu, 3 Oct 2024 19:32:04 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] Documentation: mention the amlog in
+ howto/maintain-git.txt
+To: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Emily Shaffer
+ <nasamuffin@google.com>,
+ Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+References: <a4b1da93e16d88323181f8f8444f01d96e09ef45.1727729100.git.me@ttaylorr.com>
+ <88a13b9f2b6e7fbed517a7e268e4e371d84a9a10.1727917792.git.me@ttaylorr.com>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <88a13b9f2b6e7fbed517a7e268e4e371d84a9a10.1727917792.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfHQhittbZ/LpmBq+MCOxlovJoMfCRiKpdFg/29LL7yGHd/RcSLcDZoxYx8rFnhhuKgevAiGvGky6DCX/Bf0eoZIkdEclQ9DVJ9AkzgTnPG4LNtruEgCZ
+ oleKdf1e1BnOnBYqxGacyjmdifcuzbRNh2soERxLP8l3q3YBwh2saUwqd++y3zj0X/bMPvC26p2piXozNYZ3+esMZqR+2mnePIo=
 
-Hi Junio,
 
-On 1 Oct 2024, at 13:10, Junio C Hamano wrote:
 
-> Patrick Steinhardt <ps@pks.im> writes:
->
->> I disagree with this statement. If code isn't prepare to not handle a
->> `NULL` repository we shouldn't fall back to `the_repository`, but we
->> should instead prepare the code to handle this case. This of course
->> requires us to do a ton of refactorings, but that is the idea of this
->> whole exercise to get rid of `the_repository`.
->
-> I agree.  To me, the patch was screaming that the author was not
-> prepared to go the whole nine yards, though.  Adding back the
-> explicit reference to "the_repository" as a fallback is the next
-> best thing to do, pushing the "problem" closer to where it is.
->
+On 03/10/2024 02:09, Taylor Blau wrote:
+> Part of the maintainer's job is to keep up-to-date and publish the
+> 'amlog' which stores a mapping between a patch's 'Message-Id' e-mail
+> header and the commit generated by applying said patch.
+> 
+> But our Documentation/howto/maintain-git.txt does not mention the amlog,
+> or the scripts which exist to help the maintainer keep the amlog
+> up-to-date.
+> 
+> (This bit me during the first integration round I did as interim
+> maintainer[1] involved a lot of manual clean-up. More recently it has
+> come up as part of a research effort to better understand a patch's
+> lifecycle on the list[2].)
+> 
+> Address this gap by briefly documenting the existence and purpose of the
+> 'post-applypatch' hook in maintaining the amlog entries.
+> 
+> [1]: https://lore.kernel.org/git/Y19dnb2M+yObnftj@nand.local/
+> [2]: https://lore.kernel.org/git/CAJoAoZ=4ARuH3aHGe5yC_Xcnou_c396q_ZienYPY7YnEzZcyEg@mail.gmail.com/
+> 
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  Documentation/howto/maintain-git.txt | 44 ++++++++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
+> 
+> diff --git a/Documentation/howto/maintain-git.txt b/Documentation/howto/maintain-git.txt
+> index da31332f113..f52f32eda93 100644
+> --- a/Documentation/howto/maintain-git.txt
+> +++ b/Documentation/howto/maintain-git.txt
+> @@ -122,6 +122,13 @@ Note that before v1.9.0 release, the version numbers used to be
+>  structured slightly differently.  vX.Y.Z were feature releases while
+>  vX.Y.Z.W were maintenance releases for vX.Y.Z.
+>  
+> +Because most of the lines of code in Git are written by individual
+> +contributors, and contributions come in the form of e-mailed patches
+> +published on the mailing list, the project maintains a mapping from
+> +individual commits to the Message-Id of the e-mail that resulted in
+> +the commit, to help tracking the origin of the changes. The notes
+> +in "refs/notes/amlog" are used for this purpose, and are published
+> +along with the broken-out branches to the maintainer's repository.
+>  
+>  A Typical Git Day
+>  -----------------
+> @@ -165,6 +172,43 @@ by doing the following:
+>     In practice, almost no patch directly goes to 'master' or
+>     'maint'.
+>  
+> +   Applying the e-mailed patches using "git am" automatically records
+> +   the mappings from 'Message-Id' to the applied commit in the "amlog"
+> +   notes. Periodically check that this is working with "git show -s
+> +   --notes=amlog $commit".
+> +
+> +   This mapping is maintained with the aid of the "post-applypatch"
+> +   hook found in the 'todo' branch. That hook should be installed
+> +   before applying patches. It is also helpful to carry forward any
+> +   relevant amlog entries when rebasing, so the following config may
+> +   be useful:
+> +
+> +      [notes]
+> +        rewriteRef = refs/notes/amlog
+> +
+> +   Avoid "cherry-pick", as it does not propagate notes by design. Use
+> +   either "git commit --amend" or "git rebase" to make corrections to
+> +   an existing commit, even for a single-patch topic.
+> +
+> +   Make sure that a push refspec for 'refs/notes/amlog' is in the
+> +   remote configuration for publishing repositories. A few sample
+> +   configurations look like the following:
+> +
+> +      [remote "github"]
+> +        url = https://github.com/gitster/git
+> +        pushurl = github.com:gitster/git.git
+> +        mirror
+> +
+> +      [remote "github2"]
+> +        url = https://github.com/git/git
+> +        fetch = +refs/heads/*:refs/remotes/github2/*
+> +        pushurl = github.com:git/git.git
+> +        push = refs/heads/maint:refs/heads/maint
+> +        push = refs/heads/master:refs/heads/master
+> +        push = refs/notes/next:refs/notes/next
 
-Indeed, I did not do my due diligence here instead of assuming all layers
-that look at the repo argument do the right thing.
+Hmm, s/notes/heads/g perhaps?
 
->> If a command cannot be converted to stop using `the_repository` right
->> now we should skip it and revisit once all prerequisites have been
->> adapted accordingly.
+> +        push = +refs/heads/seen:refs/heads/seen
+> +        push = +refs/notes/amlog
+> +
+>   - Review the last issue of "What's cooking" message, review the
+>     topics ready for merging (topic->master and topic->maint).  Use
+>     "Meta/cook -w" script (where Meta/ contains a checkout of the
+> 
 
-Looks like it’d be preferable if I just drop this patch from the series as
-it will require a larger refactor.
+ATB,
+Ramsay Jones
 
-Thanks
-John
 
->
-> That is also a viable approach.
