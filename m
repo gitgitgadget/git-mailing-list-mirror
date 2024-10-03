@@ -1,105 +1,88 @@
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1C91AC423
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 21:10:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1519F1DFFC
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 21:11:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727989839; cv=none; b=kgOIxhUcLMXLXTIAkLlquekGyxSiwAWbL0QfjohZhJiGgB4CmFcZHWC7xLT2fMggGOFiU7fmesyiWwNimcJBsiGRYIIzUJNYPYim1ixyXCKWUyxxRCvNp0DMfGDCoLdxL27DCXoOxMVWSP7gaevYdvECcI8/ljR+S4uD2uKaqks=
+	t=1727989894; cv=none; b=nb98EAwgc0DzQ7n/y72Hx7XDsJc3Ee5gVNpGVu2EsNoh5nIUNtg8ic9AvXgJX5uEI4cAGbfldHVgqr8ItAOnURsQbyAh2Y2DtuC77AMrgfWngVosVAa3NX/TYDIi5RxB/IoCqD9lJDmWk4BaNUARw5NCtol6Ji0rR5Rpv2iNR/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727989839; c=relaxed/simple;
-	bh=xnlul/ffdtbCf/6mBj6fQAJ9PUIzOaR2GilSGHlU6Og=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u5TnjfvwF4eVNkXTMDzwwRQzD8rx3+O2WQGEggYYKOebMXFR7ztR8LfTQNMm4XwT+bZvezV2j/PHhMa65XndwcTOPvRS6199PL6NlrqL0MPg0aGy4lRpPHodBHBo7hL9Z/rZwa+kBB0CH89jdA8cVCFOGrtyaNRQUJWPzIhhEO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XBhRUo7U; arc=none smtp.client-ip=209.85.161.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727989894; c=relaxed/simple;
+	bh=6y7U4n4G/286rRqLaMCZJF3x5vhICq0YgRlwE7WzHQo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B996HXZNZgNhTFFoTcg7u7jmh0mlHTDQ0PU5Qve6HL1fpV4faJlMkFDmPUmFruQvpwiypdydybBYgxP5qOvpddEQvWERTuQP95VMuNuzecLreTgAQ0t7R66OCIPuK/3vFkm1FJzIHZgCeXY6f29xfGYtaNBWIMSYTa1r187STWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XcqKwUPZ; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XBhRUo7U"
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5e1c63c9822so815111eaf.0
-        for <git@vger.kernel.org>; Thu, 03 Oct 2024 14:10:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727989837; x=1728594637; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xnlul/ffdtbCf/6mBj6fQAJ9PUIzOaR2GilSGHlU6Og=;
-        b=XBhRUo7Uwv42Z5WiW7LLkyHszXe2flIlFD6vGOKCC+B70KyETCzlpx3qkuq8juhv81
-         HM7b4SIwKpw4ETm4ySTQ5ZQ1b1/G7cwIWEQDySUi6DUMZffPVhJPsWTJ1CbeDwLXh5+H
-         7Fo97Xmz5aZKEcvwr+pnSG4PrIX5PkZ4kjlYvvrieW3nHtAWfLt4zxFqgfDDjdiol0E4
-         2w3UgI7B7VRQJ2YxNvvUq4XS2ps1s5KBcP0U5Ppa/8wYuq7YMn0FjNhq9V7kgUvqFGXP
-         JG/+7uASlprObakvxfqj8MKG0zLbF7SACRGf8LbGQScT7i07Rt8xLOzP4+PsudZkETn+
-         TNVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727989837; x=1728594637;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xnlul/ffdtbCf/6mBj6fQAJ9PUIzOaR2GilSGHlU6Og=;
-        b=CTrpkbnkQpN7DVhwRIosZtEHbmT6XpI0QxMPj+WMStNqwNoi5JyY72ZsCEpL2rWouw
-         GT07i9lc8dJixRq/xk0QdncmMpy+s0TJOf6YcBm4N5yv5b2r43ogEyrih+rbAOFnveTS
-         avXj0tieiQsrzNoHaqdvM7Rl0gB7fRnJIL1YHWamfP/3+ROXEf5MVWdROn2ms6RngYa0
-         G8gjdGRrl29CbQGmpk44Bupbmd3brpC5Ojn3TDnma63WnRvIW1iGnRh3OxDrREiPfOus
-         4eayg2HntCqrf6DKorTAQ+Yg3EO0E9y31UC2fTyEHdzLIg2oQHYYXkKkCW7inJFpTb3i
-         7+Kw==
-X-Gm-Message-State: AOJu0Yztj2eu6sZEs7CIpmg6ccrT2AmLmz8wzLJtDy94cQZJRmyf1IrL
-	BP1kRiBJ2TlGrXcM9NQEEfQ++kLE9pLbADVIS5Enjyt5vmWqwGODpuhJqFif9wcQdmiIpS6RBR9
-	8V6MzGLzKN4cg95b1fnnLgtR1xYA=
-X-Google-Smtp-Source: AGHT+IGUg8ISvLLFezrgMG6j/apqQaxuHxlvMqnF0EppqJeS/KlWjrqDugkcpn/xQqKNWx3Sfjo/ncrpyJ168jQLdgE=
-X-Received: by 2002:a05:6820:2283:b0:5ba:ec8b:44b5 with SMTP id
- 006d021491bc7-5e7cc05e00amr319536eaf.3.1727989837279; Thu, 03 Oct 2024
- 14:10:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XcqKwUPZ"
+Received: (qmail 19368 invoked by uid 109); 3 Oct 2024 21:11:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6y7U4n4G/286rRqLaMCZJF3x5vhICq0YgRlwE7WzHQo=; b=XcqKwUPZYf1wXC8zyC96F/8hbJzS8nT+xaMJW1SOaBgOD4COVFU88V2nnl0pVvkOtJe9pCNPViaLLO43tEjzMM78KmwxKJI0B2CdxnvpHRp0ldic1X6bng7ph1xh27ARHtCwRidbE0VgqDCfvbLkOzj3UbaC+snxp0Z5+w8BRHnmiJv6cxLpu6deHkRV52AetHDuEqhiIfN949s4ibVLbvd8zi7yWuwJHHkSbVhkbu7eD0kX6Kwd9kBNSKpstgPXKWa4VdKeSDm8wyr7aUayE63/S8uVFHFIwwsby8ich44Hxmgync+60alpKARqjEenb7pv07dETUIhT53+ZrSCEQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 03 Oct 2024 21:11:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21827 invoked by uid 111); 3 Oct 2024 21:11:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 03 Oct 2024 17:11:31 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 3 Oct 2024 17:11:31 -0400
+From: Jeff King <peff@peff.net>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im
+Subject: [PATCH 4/5] diff: return line_prefix directly when possible
+Message-ID: <20241003211131.GD11328@coredump.intra.peff.net>
+References: <20241003210548.GB11180@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAD9n_qgBPDQKF=ZEQ6SWvDCmcUXZvz33zSoHFQSwHmQPWS4z_Q@mail.gmail.com>
- <f2ae51a2-95e9-43d4-beba-774d05bfc3e9@app.fastmail.com>
-In-Reply-To: <f2ae51a2-95e9-43d4-beba-774d05bfc3e9@app.fastmail.com>
-From: Alireza <rezaxm@gmail.com>
-Date: Fri, 4 Oct 2024 00:40:12 +0330
-Message-ID: <CAD9n_qieu_DNqu-X-gTGua+K-vQysYRoDGzEBgwOhH-w4YU1Bg@mail.gmail.com>
-Subject: Re: Request for adding a "one-shot" rebase strategy where conflicts
- are only resolved once
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241003210548.GB11180@coredump.intra.peff.net>
 
-As far as I know, rerere remembera an exact resolution, but with
-rebase you may have to deal with different conflicts for each commit
-This makes that completely irrelevant, to elaborate there's basically
-two possibility:
-(1) a clean merge is possible but individual commits may conflict
-(2) a clean merge is not possible which means there may be conflicts
-at some point onward
+We may point our output_prefix callback to diff_output_prefix_callback()
+in any of these cases:
 
-This only creates one conflict off of the latest revision (same as git
-merge) or skip if a clean merge is possible
-Then each commit is reconstructed based on that resolution so there's
-no back and forth.
+  1. we have a user-provided line_prefix
 
-Hope this helps.
+  2. we have a graph prefix to show
 
-Thanks,
+  3. both (1) and (2)
 
-On Thu, Oct 3, 2024 at 11:45=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
->
-> On Thu, Oct 3, 2024, at 21:06, Alireza wrote:
-> > Sometimes a clean merge is possible but with a rebase, in-between
-> > commits may raise conflicts in which case a conflict must be resolved
-> > for each commit individually, which is not quite productive and at the
-> > end wouldn't add so much in how the resulting history looks like.
-> >
-> > With a "one-shot" rebase, a conflict (if any) is made based on the
-> > latest revision, then in-between commits approximated based on that
-> > resolution. This way the history can be roughly preserved with the
-> > same amount of effort while still using a rebase rather than merge.
->
-> How would this compare to using git-rerere(1)?
->
-> --
-> Kristoffer Haugsbakk
+The function combines the available elements into a strbuf and returns
+its pointer.
+
+In the case that we just have the line_prefix, though, there is no need
+for the strbuf. We can return the string directly.
+
+This is a minor optimization by itself, but also will allow us to clean
+up some memory ownership issues on top.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The old code did handle a case "0" where neither is set. But in that
+case we would never set up the callback in the first place. So I didn't
+think it was worth being defensive there.
+
+ graph.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/graph.c b/graph.c
+index c046f6285d..0d200ca77f 100644
+--- a/graph.c
++++ b/graph.c
+@@ -318,6 +318,9 @@ static const char *diff_output_prefix_callback(struct diff_options *opt, void *d
+ 
+ 	assert(opt);
+ 
++	if (!graph)
++		return opt->line_prefix;
++
+ 	strbuf_reset(&msgbuf);
+ 	if (opt->line_prefix)
+ 		strbuf_addstr(&msgbuf, opt->line_prefix);
+-- 
+2.47.0.rc1.384.g9f398d04fd
+
