@@ -1,124 +1,110 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F996A33F
-	for <git@vger.kernel.org>; Thu,  3 Oct 2024 21:30:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B801C6F72
+	for <git@vger.kernel.org>; Thu,  3 Oct 2024 21:55:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727991056; cv=none; b=VPp1YHt3xW05OT1m2aDQ6Gjvb/yd6yF1BiMeJSYdFrE/h9JefqnsE9RmM5Vbxjxo07D8VeJQUOsv+i35gdXiRugV2VsIFL2JIVbhxegbLzQijc+OaeHMWVQ1iGP6aX1mjjAlNUDS/G4Murud/yIrjZGhSTHhacmtI4R9qXXJu+w=
+	t=1727992534; cv=none; b=G7G4fLoINWSoJEiZZM3Q865KMGVMAN7EPDauu91vYD6pH/rmf53Cl9Tkl6cQXfyMv2EAa6E3fZZr3jZI6CpG5N9+W5/2UOjE5ThSwYie4aYYMypDqJy8utqiuzL5Bk9u6CTF4TRQecV/e2l8/rfNkjA/5fRQmAYVnlMJ5u3E4w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727991056; c=relaxed/simple;
-	bh=iwyCkk6pBy45ek02pX4N71wtByX6/t0vPk+v/1YvDjc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qak4U/tm80SXZFqlPLCjvKl2+Z+WRs0siYR4W4WcgOgKr0K3izKAGu9fJehKXVcawNEAqm/S/otQKJeDC1tNn4CXq6zbnaw4E3O5qgvHsiCvJAflLf6/HM3RMmMb3xt8wtYF4t2LRADDNX1uKKp3d+Gh3W+sABJWMKt5ArzZmmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZtXT1dvw; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1727992534; c=relaxed/simple;
+	bh=+Ij8FdL348/D5c4aUaeWKV+4FjA7AhD5U4TsoyhLsm8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ijIlig9f04p5qwjENEqolzuhrMX1mu7hhsTt38zR3E7iM5JZdu3IpEp37ER6ZILQSZD75MYnI/4ZBZ+38rH5TSRDQaH6ahdBrSqftKb4UOTXwuQRxcbEc6F8ILg4zN+IcYxgZaQycCT8rt1ruTDaC5FCOkmc94S9kx5RLz9vWDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aOOuhdaa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZUe9lY09; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZtXT1dvw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1727991052;
-	bh=iwyCkk6pBy45ek02pX4N71wtByX6/t0vPk+v/1YvDjc=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ZtXT1dvwA1Ld9KcqVnKXq/4VeU4npNUp0rTHhCoddDsYWGeqbjJuBxlp2GP8KCDra
-	 62o2xa+SpBuw32wOTQ+Bvj/LcWEB+YU6fjdkqSo/Zy7LhPMyKl6ASpQgKDsRUCUKad
-	 xTJaeUU18MdYr64OaozZvO7MZj0r8vMrYkFPntCyL97pBP0H47+vlATn6tNYZCHPbh
-	 dUiUZoyEEKjhpJ84fqP/vP+F9hGWN1KHOkNxWRrW+7DyyHKAKfajN0/9IaYJSZpX2s
-	 VlNHSqFf3lZGsti9RYQO/Cor7k4suq4W0XEwaYTw72/Wz95tw4AV48hQmKo0PXygp4
-	 xq0pDu04a5IzB8HF5Xdg6grXl6uzobP80lWRkjqxBU51d62JfYmAf6eHQ+sZvzXCmb
-	 gAueTdqduwWVBH0u89ZFfD8Po2yvlwyPybCzGUHSfyoJhazGM00nffJ1+D8gngvOSi
-	 bEQTCQN8tc78l3PtycBefOyZZVh6a1EkWFKwn/8DejuxIymyehz
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 96BDD2007C;
-	Thu,  3 Oct 2024 21:30:52 +0000 (UTC)
-Date: Thu, 3 Oct 2024 21:30:51 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Alireza <rezaxm@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Request for adding a "one-shot" rebase strategy where conflicts
- are only resolved once
-Message-ID: <Zv8NCxzrYJ6Gi6Yu@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Alireza <rezaxm@gmail.com>, git@vger.kernel.org
-References: <CAD9n_qgBPDQKF=ZEQ6SWvDCmcUXZvz33zSoHFQSwHmQPWS4z_Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aOOuhdaa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZUe9lY09"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6E65C11400F7;
+	Thu,  3 Oct 2024 17:55:31 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Thu, 03 Oct 2024 17:55:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1727992531; x=1728078931; bh=8oKZsORKZb
+	y8tCuB0jSyJQu3vzk725fNqxsdWAYXR4I=; b=aOOuhdaa21elwrU5kaFTVdXTi3
+	4YaNVcY50s7LgvuDSgTS4fEeHYFrOGawjZSJTpLkJaTBwir1KKTjr5JLik/Jl4sa
+	V5zcT10gUrclRumb2h+74CUGjLa2cVHSDoWZNmi7/3ZdMJaGVFzxHUhyibE09379
+	hjbHejP7OCdKrdppy4XPjinVfhiDfSlTQiLqZyUT33qZt8wjz8dxGOxjToBqbUEw
+	ggPzsXguXIcHXFfLkeECV3NvlfaWIiCS/QXYKOk7n+BqVqaFGYihm4JrcOTmDg+G
+	AuFl8aD7Oel3bY+wIhMC0ZzsGZ8zaXNHPIWxDqUtl7+KFaxBs+Ca9oXFTysw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1727992531; x=1728078931; bh=8oKZsORKZby8tCuB0jSyJQu3vzk7
+	25fNqxsdWAYXR4I=; b=ZUe9lY09+51iwiLvRbDpMS/FuE8aXrC73iogkS264cMU
+	AKfUgj/pnUSGxnSFGtVyXpBTvXwiftriNuHc3YTj/NWtSK2n1HLxc48GDULlRrNu
+	byuHRgTt3qFjb7iqsc97nm5PedJrl+TUJ2FUpQNX39s1NwTLDIiL0asUl4Ot4zEo
+	XpITx2oVChkkxtHSdT1v9c77hqhCFERJxEIwvH00+7xofREGXdNLDy8JulHHjoKU
+	2yNm0r9GDzrksQJ1joaghllva/HPvdcthymS803Ok/jRxGiiwyi0aIil08MWc3P8
+	hjtQ/0KYWRaxkDBlt5fyees+vYBpMfjx+/UymlTPhw==
+X-ME-Sender: <xms:0xL_Zr6scd5MkG8qDqRxIrJ7bUO5YaHWBQgwwfKUalyrhPCoXE4Sfg>
+    <xme:0xL_Zg5dtyKe4_LlXeIS2yv2ttmNnSKKBFHs_K4N8EWp14ZJkWjxj4sgfFrs-9RC7
+    TWMBXk-nWltOd4O1w>
+X-ME-Received: <xmr:0xL_ZieL9WlMA4GbWIa8fSc3aVi7cJpafVvN6nh7ybIYniAQT39AJdfynzzVsY4WuGNR6gpqkx4gjmSvfWLK8tFBzh-fZ6An19DBv88>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvvddgtdehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
+    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhprghrrhdtse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohht
+    hhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:0xL_ZsK1aBdXdN_3erJgj2DkPJ3c7-ExSoK4aICJatMavXDjlKq60Q>
+    <xmx:0xL_ZvJz_RE04OulB7wCm468Y4megncYy-AcLMZn_Cks0Zj4mTp-6w>
+    <xmx:0xL_ZlxmFJ_Yr2It2FJqxvAolMTkOXZnJPdWOd5EEL7H-ljluq_oOw>
+    <xmx:0xL_ZrLOE6fnsesHRwY3xu9THzkr0QJcIGarvuXKxTzsumFhMzZk_A>
+    <xmx:0xL_Zljbv7rny7s5NYhOt8Q0iVN51bq-UNncGetKaiYofl4jlvW1gjIN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 3 Oct 2024 17:55:30 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Sparr <sparr0@gmail.com>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  git@vger.kernel.org
+Subject: Re: Lack of system-level excludesFile
+In-Reply-To: <20241003212451.GA12763@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 3 Oct 2024 17:24:51 -0400")
+References: <CANp3UNBGd=jiSZyFSAdPjayvgHbP5SF4Dm-uCNwna_H16bRgRA@mail.gmail.com>
+	<CANp3UNCXqLJmAj2Vc7jB+i9qRjfKzrri_Mr9VvG4J5tUR-1HeQ@mail.gmail.com>
+	<Zv5SpewqUmlvhOl-@tapette.crustytoothpaste.net>
+	<xmqq34ldjiup.fsf@gitster.g>
+	<CANp3UNB_4_mcK4CV3WF7p3AWaLTK6qb13tS3imDBGU5XBOzG0A@mail.gmail.com>
+	<20241003212451.GA12763@coredump.intra.peff.net>
+Date: Thu, 03 Oct 2024 14:55:29 -0700
+Message-ID: <xmqqh69shmwe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oQ2TftnGNjZAeiSi"
-Content-Disposition: inline
-In-Reply-To: <CAD9n_qgBPDQKF=ZEQ6SWvDCmcUXZvz33zSoHFQSwHmQPWS4z_Q@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Jeff King <peff@peff.net> writes:
 
---oQ2TftnGNjZAeiSi
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> PS If you want to get really wild, consider this: the exclude/ignore
+>    feature is really just a proper subset of the attributes system that
+>    came later. If we were designing today, we could ditch .gitignore
+>    entirely in favor of a special "ignored" attribute,
 
-On 2024-10-03 at 19:06:28, Alireza wrote:
-> Sometimes a clean merge is possible but with a rebase, in-between
-> commits may raise conflicts in which case a conflict must be resolved
-> for each commit individually, which is not quite productive and at the
-> end wouldn't add so much in how the resulting history looks like.
->=20
-> With a "one-shot" rebase, a conflict (if any) is made based on the
-> latest revision, then in-between commits approximated based on that
-> resolution. This way the history can be roughly preserved with the
-> same amount of effort while still using a rebase rather than merge.
+Yes, this was brought up in the past a few times.
 
-People actually use rebase in some cases because they want conflicts
-that they won't get with a merge.  For example, for a merge between
-`feature` and `main`, if `main` adds a change A, and `feature` adds a
-change B that would conflict with A and and removes B, then with a
-merge, the merge is clean and only A is included.  However, with a
-rebase, there's a conflict, and for some people that is absolutely
-desired.  We've gotten complaints on the list that merges don't have
-that behaviour (merges consider only the two heads and the merge base).
-
-I would also point out that your proposed one-shot rebase will make
-reviewing commit by commit much harder since it won't contain the exact
-changes that the author intended in each commit.  I frequently write
-series at work and on the Git list that have multiple commits, each of
-which is independent and logically bisectable, so that reviewers can
-have more confidence in my changes and understand them better.  This
-feature would be confusing to the reviewers, and it might break
-bisectability since the code might not build and pass all the tests at
-each point.
-
-I am also somewhat doubtful that we can come up with a good
-approximation algorithm for resolving conflicts in this way.  I'm
-thinking of some rather tricky conflicts I've had to solve in the past
-and how pretty much any approximation I can imagine would have ended up
-making things worse.
-
-Perhaps if you can propose an algorithm for doing this, people can
-provide you more concrete feedback on your approach and its advantages
-and disadvantages, outside of the more philosophical objections I've
-mentioned above.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---oQ2TftnGNjZAeiSi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZv8NCgAKCRB8DEliiIei
-gemsAQCiI/e3UOJ1FEaKVWxKRn+zR2Ct8p+O7ckKvEpGVMhEBAD/S8ZSDQdBtxKH
-+pU1LwDVsmtLD827u38X7f4U7eOiQgw=
-=tbvQ
------END PGP SIGNATURE-----
-
---oQ2TftnGNjZAeiSi--
+Both the exclude stack (in dir.c) and attr stack (in attr.c) use a
+similar approach to optimize the accesses to the data for callers
+that traverse the paths in-order and ask if something is ignored (or
+has this attribute) for each of the paths they encounter, so their
+performance characteristics might be similar.  It certainly is a
+tempting thought and indeed is a big project, especially if you want
+to keep some sort of backward compatibility ;-)
