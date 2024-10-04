@@ -1,82 +1,88 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA07F1D9A65
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 15:22:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA951D9A50
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 15:26:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728055356; cv=none; b=RtMk/I6A1trWznA1yNfPQ05SZCIQEt9nQ/o8FStBKqXQPnScgEKicu4+ULjA9Ro02fUN+Ji4NG9qO5/S8UTHUF2y3klpg9kOVXCXMNs0cvBI1WbmJ9c+iP5+htpW7tdI7X/mjeGTQwbQh+M1BzXJlpj8s5NVopqrObqXbj7OpeY=
+	t=1728055593; cv=none; b=S90wO02QeoXXJjNgjGkn80YVs+47QZL7l17s46YHjwYBW+fO8IAJli708kWCKxhryhI+8ZtD7EM2L7amcZ/undxkhpLph/Gz9yall6Q/KYi6Vm3GRjgZvP0EqZM5wk2cE7mVN9g6qdWtEtZYGNi9LfHZGn4YcbzkSZ3jlqHXnUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728055356; c=relaxed/simple;
-	bh=aClx3xIk5jUdnCpkYsR8IaHfwKq+kN4Pl8G2sc1Z4hQ=;
+	s=arc-20240116; t=1728055593; c=relaxed/simple;
+	bh=Mt+iACTk4RRd3aplyAD0IY9Rd28fJW2QGPl+0JUygiM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iiBTn1gJl1ldMLssQjq0nqwoFcXQd4ofJ1vKRMKt51YcjBDZdd9NiIU8j50BIBYLgZvU4vdYk4SmnQ2PMrrDDEFsBxFYmNWb08AwBBjk7bO/om4/n69FptJylsNy+/if6oQhLYUa1SorUEgoYpdIzoynFNHERPqg6oo4DRcf2GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=crY9J8Id; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dp8y6uBn; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=KDPYsHSTIZnHj2UBJKMZT5I8Q0tD1i6gj10xJNZcSDLKmK/F4QnG1o+CPiIwGJGS+9INIXy5paNej+9L6HcjqfuA8wJrf/rWmMv5d4MwwX9fgMmc+I+0NsVoDHa7LhT6vmIsjXgx0aLQNrRxOfADbGhJkU2fj0Fy74ZsWkgCRuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pv7ux4wd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cqSWx8Rb; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="crY9J8Id";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dp8y6uBn"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AA3F311400F8;
-	Fri,  4 Oct 2024 11:22:33 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pv7ux4wd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cqSWx8Rb"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 551AD1380236;
+	Fri,  4 Oct 2024 11:26:31 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 04 Oct 2024 11:22:33 -0400
+  by phl-compute-09.internal (MEProxy); Fri, 04 Oct 2024 11:26:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728055353; x=1728141753; bh=YdnmEtee1Q
-	cgazjg0S834zximSOhy4iKFqqKZPVsoUI=; b=crY9J8Id/+68PZRaX2EkMNvR0f
-	eHlMIG3b5mdAGXqeBjU0rgZA9bzWCZsxE8hRHiAp9la+bTnmvqmc3+1EP59ahQjF
-	7+DzMek4nBvL4OV9XG0WiTyj2dnDlmVeb8c4hit9Zn3bX7t6k2GJmH+RtGF7Qsda
-	JIluTsbSyxf0BPwZkSQg31BD+jwtpYEukhvZoG+t+DcSni7fqeTyEKhgbovBUY4f
-	mGRCqD/YSaAvmz9HDTRQPdj7gLrGbiPoHMFPIRASfQTfAJLvOMXpQlsLn6mUqVjH
-	818Jp33shJKUFGiBoa/LmN1KW/vxwiJBSC4bo1lzat3XyN4U1rSGZO6rv3Ug==
+	:subject:to:to; s=fm2; t=1728055591; x=1728141991; bh=Bl0gkhoWpb
+	kzf+Ho/8JyV9BboHtsCEFbtSxg0Evi6tQ=; b=pv7ux4wdfKRfS24BwOBLnU0tTZ
+	1CQNf3NNz89/Ilvl6rhyhfK/Ngtx5kvXcU2JzFwaBHBNmvJNs+QiG0J3uZCjCKhF
+	daGgEq3A0suO7QaMWuTqqJ4Rets1rSvZtoxnK2EJK2GgW2MPhBSsO1Ni8by1wKJD
+	I1jZZ6R+/AgQvQB3A5lodnqiXUk7ggSToKNhAUzefBZeHfDopZxuKgoBZlKoKn9N
+	qt55MEaeF/F2WekDQMiuvrptS23x61taSplqtAYEeY63XD10zQ/V/4r43v116X0Q
+	tHLkzcInySBIbEZbIhYdWIU9gJtW2LyruivcVRdXuZDI4edhW7u+ITFnI6Bg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728055353; x=1728141753; bh=YdnmEtee1Qcgazjg0S834zximSOh
-	y4iKFqqKZPVsoUI=; b=Dp8y6uBnzsclL5ftNAcF0kLgrkkXqXT87KhlHKSs9dxE
-	y7uk5H4z1xOFAvA7u1izy9BMf88Bthw6BP9snr8rN5CRE7oreivt+jZBApXN/d42
-	VDhSycAdCp4zg3T8LeWpsXvoBsulJ7SaaH6LJQPISo2jB100ELPPuSBzxuwoKisy
-	29BcAceEoxC+OWWjPONH9gOV0czAERqbbeBEz+Z2FwnQcg+J30ut149eKBYq6IhP
-	cgHwQJRf5rXy7VDiYQ0hbLLPFMLlmaTfUjAIsX3IFwr2m4C+5IB4wzq4J8yJWH2C
-	oaOTwtz/mPiEZC52h+KMx51BM7P+kdBCx4/DLuBEnQ==
-X-ME-Sender: <xms:OQgAZ4epS1so3VPR9Rm5IK2nQAdV3FO47-esMWvFpxnPmadBwfyjYA>
-    <xme:OQgAZ6OU8Hsi0ocYkA3G7X8xZDBdHjn4WHOBRm-2sz8nM-EBCbbAzt7zCZrQv6MEX
-    uJfT4pr8Pv4NG1Hog>
-X-ME-Received: <xmr:OQgAZ5gTnkIjVGPAOJII6a1_kljEDN6A7WDXBSiZ8fdZGcBiVM-MiZukKDdv4_VlAlRAWVJ5W4RltmicPAcMpVcntY-jgkpoVIJNlLwYaIjU1fDL>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedgkeejucetufdoteggodetrfdotf
+	fm2; t=1728055591; x=1728141991; bh=Bl0gkhoWpbkzf+Ho/8JyV9BboHts
+	CEFbtSxg0Evi6tQ=; b=cqSWx8RbX0PJ9n5W0n81mSyCXCjtzf1EE/1Pi3t60Gx4
+	fbhNzrpyM47kinaNHdYWYQR0cGH4V6LsZOFVFVX+UsA45ZpDHKU6qB0cDy4U0+Jf
+	ehCv2lLIewO8Tx6ZISeYA0p88MjDCAtwSL4qkuK98pVeR7ha231zli7S/to6CwYm
+	b98a+m5n/688YMLaLBGQlltIkr0Ntl6ekPlD73KCkE7xcEeVwgB3i+pPrWJ7IW+3
+	v77R1KlGvubjV+w29ka1aAMEvDYxCg4dmxzBcOLcH+MhgVG64eClvOBGnh4Kd1xj
+	wRhtZDizL/Xus2QGyTOyTpg/3C2iOb71qtwBGuN4OA==
+X-ME-Sender: <xms:JgkAZzswhNWXrT53q2WNZZP8E12Cw3LNniUOjHDSQSR5tNg-qRRlYg>
+    <xme:JgkAZ0en95TyJ9ALUK0POuRy2ByM0hqiA6_EGyuuUjM27BmqUDnmF_P4UDPIq6CSV
+    jUzDbVDI69FfR7ypw>
+X-ME-Received: <xmr:JgkAZ2xbkKw-4Muc3DZ4i33y4TwICHdX5Nbl3edT0cfzc6noFrjT_24YS1sBrI7sr_ogIvttVZjzuDiOVcmoDSQJE-vxQcfyEopDS-9QMXjSPwsp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedgkeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:OQgAZ99T7Ieb06_0c5ZlMWR6Nu1U9rekkCBKU5Czsrh4AlrgHHTqHw>
-    <xmx:OQgAZ0vU0SJJiiuatplBcucn8UO7HAx5lwdzhVArTz37tEDselpBkA>
-    <xmx:OQgAZ0FiHZjn5jyTrOdsG-qJvVAGuKICHRdWwzmgvhG0DzYM7pgwQQ>
-    <xmx:OQgAZzPNUo98yOLdR8CpjSBsxaXJJdiJI0PSVjlWkrtOfAScpQbZzw>
-    <xmx:OQgAZwJv3VPoaOgGRO0uWH0NicDOxVfDzqukFdy9TOykQX8Q1n6dO889>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphht
+    thhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpth
+    htohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsthgvrggumhhonhesghho
+    ohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:JgkAZyNhDWBSnBdTw0lDFlvC8zmsNASxt0yHhag4dnFzUEkUy3nSNQ>
+    <xmx:JgkAZz-Sfw2ojwN-zCm55Apl_y_cL5Ok1yiJChMY_GUvsqzIdFh9aw>
+    <xmx:JgkAZyV7sFE3j3CJRNJVC4I7KAcYxiJt3QfcF5y4ntz4_TIeSbVd_g>
+    <xmx:JgkAZ0c-gWXntFz0svu4uEd-z-KdV2VY1mqwJdcaKAj6wAhDNPPPhA>
+    <xmx:JwkAZzwaGuUt2g8j0amnIsYpEjV1Ue8yfKCUn_gewywJ4_a5wu2oKPW8>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Oct 2024 11:22:32 -0400 (EDT)
+ 4 Oct 2024 11:26:29 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c556ba1c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Oct 2024 15:21:36 +0000 (UTC)
-Date: Fri, 4 Oct 2024 17:22:27 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id d24915bf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 4 Oct 2024 15:25:36 +0000 (UTC)
+Date: Fri, 4 Oct 2024 17:26:25 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: the latter half of october, the maintainer goes offline
-Message-ID: <ZwAIM6GO3VtoG3ZM@pks.im>
-References: <xmqqh69thzd0.fsf@gitster.g>
- <Zv7aLRXwt9cfqW58@nand.local>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH] t0610: work around flaky test with concurrent writers
+Message-ID: <ZwAJIRPUrxu5ox3w@pks.im>
+References: <b1b5fb40-f6c2-4621-b58c-9b7c8c64cc01@ramsayjones.plus.com>
+ <f83e23f1e76454a80e3e53cd02b3bb5bba6b8da1.1728044178.git.ps@pks.im>
+ <277c243f-7179-4946-99c8-b19ad5c85412@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,77 +91,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zv7aLRXwt9cfqW58@nand.local>
+In-Reply-To: <277c243f-7179-4946-99c8-b19ad5c85412@ramsayjones.plus.com>
 
-On Thu, Oct 03, 2024 at 01:53:49PM -0400, Taylor Blau wrote:
-> On Thu, Oct 03, 2024 at 10:26:19AM -0700, Junio C Hamano wrote:
-> > It can be somebody stepping up and say "ok, I'll self nominate and
-> > run the project as the interim maintainer, just like it was done in
-> > the past years", or "let's do something differently, how about
-> > everybody throws a merge request to this mob repository, use this
-> > (possibly different) review procedure, and give back the tip of
-> > 'master' when Junio returns", or "OK, we'll discuss and exchange
-> > patches for these two weeks among ourselves and we can cope without
-> > a central meeting place".
-> >
-> > IOW, I am interested to see if the community comes up with a
-> > day-to-day project structure that may be better for the contributors
-> > than what I have dictated in the past during my vacation time.
+On Fri, Oct 04, 2024 at 03:47:01PM +0100, Ramsay Jones wrote:
+> On 04/10/2024 13:16, Patrick Steinhardt wrote:
+> [snip]
 > 
-> Interesting. If list participants would prefer to use the same structure
-> as when you're not on vacation, I'm happy to shuffle the patches and
-> send regular "What's cooking" reports for those couple of weeks.
+> > Now the two reports are somewhat different from one another:
+> > 
+> >   - On Cygwin we hit timeouts because we fail to lock the "tables.list"
+> >     file within 10 seconds. The renames themselves succeed even when the
+> >     target file is open because Cygwin provides extensive compatibility
+> >     logic to make them work even when the target file is open already.
 > 
-> I guess that amounts to the "I'll self nominate and run the project as
-> interim maintainer" option you mentioned above :-).
+> Hmm, not so much for me! :(
+> 
+> > 
+> >   - On MinGW we hit I/O errors on rename. While we do have some retry
+> >     logic in place to make the rename work in some cases, this is
+> >     seemingly not sufficient when there is this much contention around
+> >     the files.
+> 
+> I am seeing I/O errors.
 
-First things first: I wouldn't mind you doing it again.
+Interesting! I wonder why I don't see them. Maybe it's boiling down to
+timing again.
 
-But I'd also like to take this opportunity to think a bit about the
-bigger picture: what do we all do when Junio stops working on Git at
-some point in time? Right now we don't really have a plan for that at
-all, to the best of my knowledge. I know this is going a bit further
-than what Junio has hinted at with this "fire drill", but thinking about
-such a potential future is certainly important. And if we can come up
-with good ideas, then we might as well try them out and experiment a bit
-while Junio is out.
+[snip]
+> Can you think of anything else to try?
 
-First, let's talk about the requirements that come to my mind for any
-replacement:
+Not really, no. I'd be curious whether Windows 11 has the same failure
+mode for Cygwin, but cannot test it myself.
 
-  - Doing Junio's work certainly is a full-time job, whether that
-    full-time job is handled by a single person or split up across a
-    team.
+> I would strongly suggest skipping this test on cygwin as well as MINGW.
 
-  - As far as I can see, doing the maintainer job doesn't allow for a
-    ton of hacking. So whoever is taking over likely wouldn't be able to
-    land much code anymore.
-
-  - Junio is doing a great job of being independent from any kind of
-    company agenda as far as I can tell. A replacement would have to be
-    just that, either because that person is being independently funded
-    or because it is a team set up similar to the PLC.
-
-  - It goes without saying that the person would need to have deep
-    knowledge of Git and the codebase such that they can make informed
-    decisions.
-
-There are two maintainership models I can think of: either a single
-individual or a group of people would take over.
-
-  - A single individual needs funding. The ideal situation would be if
-    that funding came independent of any of the large forges. Or
-    alternatively, the big players in this context come together to all
-    pay into the same pot to fund that person. In theory, the role could
-    be elected and serve for a limited amount of time so that overall,
-    the community is in control.
-
-  - A group of individuals could take over, sharing the responsibility.
-    There would be a ton of different questions in this context: how to
-    form the group, how to balance its interests, how to distribute the
-    work across its members, how to resolve disputes, etc.
-
-So... that's just me dumping a bunch of thoughts. I'd be quite curious
-to learn about everyone else's thoughts.
+Yup, I definitely agree. I was operating under the assumption that
+Cygwin works alright. Now that we know that it doesn't we should adapt
+the condition from "!MINGW" to "!WINDOWS".
 
 Patrick
