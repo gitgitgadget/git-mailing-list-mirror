@@ -1,148 +1,92 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD63D126C04
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 09:15:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B0B13A257
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 10:07:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728033360; cv=none; b=ix7HIj6fAFz6KBq3DgpHWnn8boWQv9L0RtYv3SFlZjf1dyTXsymOzWVfZk6pFbm1qBKiwhx1GB9+KMGDAtOnR7Sl2X2I2Vd/UNYLtKvpkm3MxqtPnRDwStwpzZ/l5QFkgFmrOsgLH1KJRJIPbHgoSe6VhjijHdIExppWS0UuJYk=
+	t=1728036472; cv=none; b=k1dmJIl5IjaIYWEydBStg5rwne9yAatfFfbFtuVFaJYFAcVG0+IzQ4ej1CV8VZ8T9PfZMnl1OXzK5fSoPXqm7TSghR28EzmwZ04t/uvSL1wRQcWM3v8B5qJhyPWYCwSwOY0V7CS68BCGlmtrRSTKrGhinkg2EAnYniHkzzIZPPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728033360; c=relaxed/simple;
-	bh=L8wVKyxncZb7ac2ch9/MzyozVYxLPcDZL32hWyFSwOc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=jUnYOnzZV1urVOT48CrDXA8G7RPwPp5dwNPltS/T1ZUFZ+L+IF6gPQluOz3vgPZedW+wKImzrmFj2FLVci+q3ql0N9v3BM25F4Jk2Q9YXw1NpUpE5KQ0oAGuEZ7U4xiD0yNj9L1w5rwiwF9Iwj+JtiurV1VT5/8B6TEZ7CsRF9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W9AWPn+0; arc=none smtp.client-ip=209.85.218.44
+	s=arc-20240116; t=1728036472; c=relaxed/simple;
+	bh=XH3r3GBYKDFOvS1NeQN7BKLnidIAVY8SE8bDUGG2biA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=s3GYPKG/NPbDtH+O0QI0An/vOJtRreQzYULo8BkA/DdoE6apZTVTqVAlSnGKp2TWk2KO1nj5NwSBIkG32Cr1TBT3abjINF6S3HDyYqQ3gAFLIO+naT2Sy5cw6FLV3BCb/7PlvwGCDRU03ZKs8/SsL9yGhaHmV2TS4DBUg29r3Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PVERiG0q; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W9AWPn+0"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a8ce5db8668so302255466b.1
-        for <git@vger.kernel.org>; Fri, 04 Oct 2024 02:15:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PVERiG0q"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-37cd8972738so1424937f8f.3
+        for <git@vger.kernel.org>; Fri, 04 Oct 2024 03:07:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728033357; x=1728638157; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=B2kqU9G4HeAcAvSMz01xQPVjhVkRDi+KLC2sgH6w3qM=;
-        b=W9AWPn+0yB+0uGZ30mhmoeKrR3Fdck1sZzNArUIsBC8RiEMQqRh5BI3HJUnt/dS57P
-         XfF+Doh4gIrdEwyI/yAlQrPOl41cCSq2tWZYR5NZDCME1A6oe6Nurqfi/SPm+TGROEvL
-         pFz837jvaL5mWFjRW0XCrJU2TvAN+aL9kPjMRK/Fm5oJ0dbEw/3DOjf0pMeJ6KV509Jv
-         D2o/mjIRt4k8ZNHuFKawiqUZW944Jg+WNGamTyxR4cMwspgwwWuyP4eCTyQdGI/JEzvI
-         EYfyeALPXbxL8xjcBkUp0r3NW8lUp3igDl7cyQZTKauje/HYn0aqzdXx7HxeA3CfARft
-         J4ZQ==
+        d=gmail.com; s=20230601; t=1728036469; x=1728641269; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kMUrJ4qpTVLC8i6gTamPxTl9KOLYjkQu1p3ofmqQHnA=;
+        b=PVERiG0qEOX7kDKY6O/wMvyNfRGARYJykyLo9cnFXIkgeqR5BI/sd955Q6bQomQv1+
+         1s1SbwYlt9ec8C04N1nA7WGe765jyqmInVtVNdqV6pK1WhEQTQr3tjSis2wX0528UQy7
+         nGJkt7LoSgvGPPTRR+kQwDvI+SSpq1IiB14ITC0iEixYg36Mbi+nMu2zx14EZEEOqHs+
+         lNAbJsBmNRJlR/WXzKnvm8JZZSoKh3aa6btKwNq7kXXny22vdBr9hJoUh58P9o+tK7cy
+         7Xc5MnPkb2YpvExtHivNnCwYk41I4YkPf4A3/fyPFFyTDc1+ASQLt2vnJiprJSd/cNM9
+         KUqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728033357; x=1728638157;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B2kqU9G4HeAcAvSMz01xQPVjhVkRDi+KLC2sgH6w3qM=;
-        b=aBzb/f2RMxI1/6gr27hQ2AdEaloJRFglo66B6ALPMMEvwi3OptD0n/hdf/RPrptSnI
-         oJ5QVw5b/7u6kg/9BW8PoqF5Yct+IkQflAuz4GU+hKrg1WT5ucAuzSjetXeu89p3Hw32
-         xBfyBGslhLydzQvWUZvLBew6MbQoyDrMDm+mezqMzGfC82DyykgrlVgbzwqP89Wyvr66
-         TNFtC1rSrJoTnzaT7mUOgCuyWrYG1nbsVx9wQiX/2dNBHuiJWfYE9W+DwvuAl8mjPFHB
-         MpK5ffrklpj3WlKPBVcdcBSDEUhZAWiypWMswrG05Tij54GnTdkko40MkhoaYI+qWHGB
-         Tu2A==
-X-Forwarded-Encrypted: i=1; AJvYcCV1ubd47gpXkiocUYQ1I6mk2YKoItemDIXEiQc5c4jrSNA72zUMRAwZzURoO3YQ9d7Ekgg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxll4FV7iBWPyHlneEPwg0fwe7oZnf6B9vfa+K0i+MP+cLdf0Cr
-	7NJuIf/xjUxKhWHEpbTqYH5h6kE+jNn9UczsAyp1567J43ixfbrrhe/sdQ==
-X-Google-Smtp-Source: AGHT+IHjMayIRhJAsYiHPOg9X60TuXkkwLFmThAj/Z1AP+JbwuWeB+2md7D6pXLdjmJRv0XW7X/j7w==
-X-Received: by 2002:a17:907:3f8a:b0:a8a:53fb:d571 with SMTP id a640c23a62f3a-a991bd04ec2mr233966166b.11.1728033356653;
-        Fri, 04 Oct 2024 02:15:56 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99100a3533sm200120066b.2.2024.10.04.02.15.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Oct 2024 02:15:56 -0700 (PDT)
-Message-ID: <6c0b8681-95ca-4224-ba89-7582fd731565@gmail.com>
-Date: Fri, 4 Oct 2024 10:15:55 +0100
+        d=1e100.net; s=20230601; t=1728036469; x=1728641269;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kMUrJ4qpTVLC8i6gTamPxTl9KOLYjkQu1p3ofmqQHnA=;
+        b=QIzzEO5UjRd/cdH+CjsddeUTqBPoJyh5zG443VSgbc+T6MoX0c8HQopvIpr2Fwobyi
+         KTSl6JhfhUBBzqiOv0OxRbq1pa604tQ/Wts8CstCEwttLxmgWgK9/MdpJUjZ+S8VKMdN
+         P7ywmpYjUApjwI433mLp5FdTsUJFlu/0yIDCebl/3cbi1qX5LF3lN4KJrqrnpMO3T6n5
+         P7JZvuoA5yXhQ5/sq9S+yAWEUkk7FTltAE5SKu4oRvQzcw9kVae6QTzpPlP8b9TRm2uj
+         7iW7Gba6D6SQQkO4DriYaGvBDdH8/cs702mrV/S7M9uYcOkd0xVcFpQfFgvNrSsIZ9Y4
+         JLRA==
+X-Gm-Message-State: AOJu0YzqAiKUqmypE1aqfu253wtA4tYvkr79dIg31h+57MaoDo04KuPI
+	ckMBeLCTiO5kRuf+I+w+Th5CNCE+fM6g0fPtYe7avJpMvu3pz0CB3qa1Rt8x9eAERvoyePtYxUc
+	73fUWyXaRgfgqGOk7S84zvbQjk5s=
+X-Google-Smtp-Source: AGHT+IFzgu94u8SVaFn0gcoswAA3gvvZdYPXSgCghc4HDTcXxAcy5TynNdiXpODyd435TcKCtkX8YHV/iePKhraxguk=
+X-Received: by 2002:a05:6000:1046:b0:37c:d4a4:3c2 with SMTP id
+ ffacd0b85a97d-37d0eb0be52mr1138641f8f.49.1728036468332; Fri, 04 Oct 2024
+ 03:07:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: "git worktree repair" modifies the wrong repository
-To: Eric Sunshine <sunshine@sunshineco.com>, phillip.wood@dunelm.org.uk
-Cc: Russell Stuart <russell+git.vger.kernel.org@stuart.id.au>,
- git@vger.kernel.org
-References: <E1sr5iF-0007zV-2k@binarylane-bailey.stuart.id.au>
- <CAPig+cQ8=Y6sVvN_dBo_GQ5nLkQ4GJ7AM6mE2kt_2QV7CR0omg@mail.gmail.com>
- <3b579ddd-b386-4daa-ad63-1e75522b7462@stuart.id.au>
- <CAPig+cTkpLLoTxTa-8xfycNGFibN_M71+kkHtT-wgp6HRPi-aw@mail.gmail.com>
- <4781ff6e-c20a-4340-851b-c9d324d1fac8@stuart.id.au>
- <CAPig+cTop=2+k0XbqYbsCTbJVo77evY+_a+FqDV_ziKf2q+Dzw@mail.gmail.com>
- <87afa860-52f4-414a-82da-09e7eeac1301@gmail.com>
- <CAPig+cSSDnq_kh9ERuYZmUCNrVvWmGFF8OSfBCy8bHrkx6fz3g@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAPig+cSSDnq_kh9ERuYZmUCNrVvWmGFF8OSfBCy8bHrkx6fz3g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <faed1d0e-86a8-4dcd-a27f-19dcd9f89f37@web.de>
+In-Reply-To: <faed1d0e-86a8-4dcd-a27f-19dcd9f89f37@web.de>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Fri, 4 Oct 2024 12:07:35 +0200
+Message-ID: <CAN0heSoN-iEdzj1BTw6eRDvRzLkK_oXdSwaG=hxeZUQiYvWZUg@mail.gmail.com>
+Subject: Re: [PATCH] archive: fix misleading error message
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Eric
+On Thu, 3 Oct 2024 at 17:51, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>
+> The error message added by 296743a7ca (archive: load index before
+> pathspec checks, 2024-09-21) is misleading: unpack_trees() is not
+> touching the working tree at all here, but just loading a tree into
+> the index.  Correct it.
 
-On 03/10/2024 07:28, Eric Sunshine wrote:
-> On Tue, Sep 24, 2024 at 9:53 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->> On 23/09/2024 19:52, Eric Sunshine wrote:
->>> On Thu, Sep 19, 2024 at 7:40 AM Russell Stuart
->>> <russell+git.vger.kernel.org@stuart.id.au> wrote:
->>>> Interestingly, people (including me as it happens) start out by trying
->>>> to emulate the hg approach using a single parent directory to hold a
->>>> bare repository, and the child worktree directories.  Then they discover
->>>> bare repositories mangle the remote links, and give up on the idea.
->>>
->>> Can you provide more details about this "mangling"? Although the
->>> use-case you describe was not directly considered in the initial
->>> design, worktrees hanging off a bare repository became an
->>> explicitly-supported use-case not long after worktrees were
->>> introduced. So, it should work properly and we know that people use
->>> worktrees this way, but we haven't had any reports of mangling in this
->>> scenario.
->>
->> I can't speak for Russell but a while ago when I added a worktree to an
->> existing bare repository I had to update remote.origin.fetch and
->> remote.origin.mirror because "git clone --bare" implies "--mirror". I
->> also needed to enable extensions.worktreeConfig and ensure core.bare was
->> set appropriately.
-> 
-> Thanks, Phillip. This is interesting information, but I'm not sure I
-> understand what the actual problems are that you encountered. When you
-> say that --bare implies --mirror, do you mean the other way around?
-> The documentation states the opposite; that --mirror implies --bare,
-> and my own testing seems to confirm that.
+>                 init_tree_desc(&t, &tree->object.oid, tree->buffer, tree-=
+>size);
+>                 if (unpack_trees(1, &t, &opts))
+> -                       die(_("unable to checkout working tree"));
+> +                       die(_("failed to unpack tree object %s"),
+> +                           oid_to_hex(&tree->object.oid));
 
-Sorry I must have mis-remembered - it was quite a while ago. In my case 
-the bare repository was set up with --mirror.
+The existing instance of this message isn't translated, so it'll still
+be a new string to translate. Anyway, it's good to use the same wording
+here as elsewhere.
 
-> That aside, I played around a bit again with bare and mirror
-> repositories with worktrees hanging off them, but didn't encounter any
-> anomalous behavior, which (almost certainly) indicates that I'm not
-> exercising it thoroughly enough. Thus, can you provide more detail
-> about the actual problems you encountered which required the manual
-> adjustments you made to the configuration? (Does this also imply that
-> Documentation/git-worktree.txt could use an update to discuss how to
-> use them with a bare repository?)
+There's also a "failed to unpack trees", but here, we're indeed
+unpacking *one* tree.
 
-"git clone --mirror" sets up a fetch refspec that forcibly update 
-"refs/heads/*" when fetching. This means fetching overwrites your local 
-branches and I think the fetch fails if you have a branch checked out 
-that it wants to update. "git clone --bare" does not set up any fetch 
-refspec. In both cases there are no remote tracking branches to base 
-your local work on.
+Good catch!
 
-> Regarding core.bare: That's one of the settings which is special-cased
-> (hard-coded) to work "properly" when extensions.worktreeConfig is not
-> enabled, so it's not clear what problem you were experiencing in that
-> regard. In my testing, `git rev-parse --is-bare-repository` correctly
-> reported "true" in the bare repository, and "false" in a worktree
-> hanging off the bare repository even when extensions.worktreeConfig
-> was not enabled.
-
-I've a feeling I thought I needed to set it because I didn't realize 
-that core.bare was special cased rather than doing so in response to a 
-particular problem but I can't remember for sure.
-
-Best Wishes
-
-Phillip
+Martin
