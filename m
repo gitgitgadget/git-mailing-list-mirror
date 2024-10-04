@@ -1,201 +1,165 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1311E3DD1
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 15:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C44F1C302B
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 15:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728055950; cv=none; b=gHlFCqVWQM1Bw3ijGy0ayUQrcuO9HC8LtiLx1AfFf3HkiHLARPlVmML6/lv/jeRLTpsF5JLtoldM4SzNkounEqLBYn3EBJOzE3JMks+0nbbhBxrAU39nXIKbqV5EISp53Pgmlwl10eJ4cFI7Twj4fjpBC0ha+q2TKkICqitwKrI=
+	t=1728057030; cv=none; b=SSDB1kHwHZnK8zKxkYfS2kA/G8QlHJtIwZQGB5D6SUpuFx3QgO6RL2wDZlrdtUe6M2d9Unb3dLZVzc+8sUYZ1S4s2OHJFekfjUO7p8LuBuJNzBpS+i49r8+kVsMS9kW9G8AMOVBl1h5M6alRYQq1IDNTzXdYjZvdw1xI9FglRDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728055950; c=relaxed/simple;
-	bh=b2TYwpgjA9b6S02IRfPDDV+nV55gnctoBbMZL9xjlgs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oIAstCOTbJxTUh+TZtutqHgZLsZY2D4eFp8lwuZiqsygITuHVCjea8qN8FaeJcVRi9Op4e+IsMcJnuoYswBTkqDSDakef0DXIlo21oWhWuaY/TPO9jgUqhP7frBsxqgaBaEcgORDRw2CyTnqQiy1sDbEcn8ipWA6y7BTvNlsSzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CWXnp51s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bCGv45t9; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728057030; c=relaxed/simple;
+	bh=fly3VhnxwMrScMD+Ez5GSDIqy4+/pl13k0Ce2TpEcEE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WxXWgpRl+oxXZzfoVI7JqnoZXp2jx7/KkPde3wuOJ11Ozf4csKY7/RjuMppXf+qrDJhop15zLGxHArKeWVKYELdm5jiNo3WstxBV3HjJ0/5toVlTR/8DzAKHKP/UZYyJQjpkiXSY4NZLiqovofs9vbqiXFzOksUv79NNTG1KFV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jH3RgKV9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VKw5NC99; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CWXnp51s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bCGv45t9"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7E0B41380151;
-	Fri,  4 Oct 2024 11:32:27 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 04 Oct 2024 11:32:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jH3RgKV9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VKw5NC99"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4DB7813802B2;
+	Fri,  4 Oct 2024 11:50:28 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Fri, 04 Oct 2024 11:50:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728055947; x=1728142347; bh=qDFCLKdPrT
-	4o2M7ntTYpMYtX9CPcJKTOHW9z6UqQ8ZE=; b=CWXnp51sTnkVJdz1mae+1F5N/3
-	Lde1Bg+Mi2w4VG/nWSL7GIKb3ltBX/yGsVpRH2gK/+rwslTK3kpCkk6Z9Fwr8LmI
-	H15oT4fkuEOD5ddo6Tux5NNIozFN4ucKSDdrWOq1GDi/nYDqHUspRkzJXVrpMdQu
-	eV/+4md8kQygyMTDM+IqUjYZDDHhMPhmyOfapGihQGEfNJe8DJ0tHan/I1fqS+fr
-	8A19OJKTggjVQ8b+yOQZMGlez/WpZXfZz+0kgA2AvlDBQDOgl3QCtgY0lvNAMYMy
-	Bim/iGA5AZGDnoKB89ZuVFmo+z/iXAE1Fpm3iRJcpxkrKoWBLsRu/2gAR6uw==
+	:subject:to:to; s=fm1; t=1728057028; x=1728143428; bh=viIj+TVY7Q
+	IIdgMscWLOjYg7uRO7Lf6+PSk5aDYLIsY=; b=jH3RgKV9GfXBRAzK/VvVFsRvJ/
+	netzQEQlbwwDETNh6ewKm1oR2qn4BQhj+cbxmFP2TCLPVcp6BkkOTtTzE5wglc6q
+	1bwZ8Au879bcFE+VOH2ex8TsJs2k/GpmvKokJUe1pYmApeL91d9i6iGtxIa1Lew2
+	9uT8hz/EyTFZwlha/h3FGyewPIjeLbXZBd38R2VcmgPvTZ1sUI9Wh0wLCBlpDpZn
+	833QzleXBysfYp2YW63TYxml2WK3oaki1ZPY6TOi5pQvKjBSgBWRDsmGGyKBiR4z
+	aUiUar3/YxM4TRle7utyBujN1zsBLnRmuO6flYKLUT29Bu1DPmOqoa4dgXGw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728055947; x=1728142347; bh=qDFCLKdPrT4o2M7ntTYpMYtX9CPc
-	JKTOHW9z6UqQ8ZE=; b=bCGv45t9JjdjidOo1dpjmKeSUw6Y12vemlUDHQfERg0j
-	U8KS6BPmZONQO017H2XMD6W2OqwCncwVO1QmhhDQWsBj5In39tSXuxOIBqEMgzHG
-	5spwUzHA25uQOKFZY7Mb9A0OUd3uPlmm8wXKecOuwgbocGOlip09YBQe8Y4DIn+l
-	pMAio6GNImD1JLnWarTCK3Fx1czXO9V5tUaSCk7WOc+CKouEkSYnAhywPxdRkpWy
-	yxV0xJE14q7OBnPId5nSAigG4ApMdRdSYb0RM1tXyxx+ys15h88Qu94AL4LEouuI
-	zu5fUU5z7rEs1Os8cvmSmqgmu9S0eB7rGynqxYbQag==
-X-ME-Sender: <xms:igoAZ6Y7n96DfXblNWzWg-K6j37yGk6C5kbylGWdwh_6KOwmy4Uh6Q>
-    <xme:igoAZ9alYRKchJCOrXcvM4_yfhFsy4SK8L3Sb4s__1mFzhpBChqvJ2lFCRhAjhmRS
-    uODUrfmiiQvKPWNkA>
-X-ME-Received: <xmr:igoAZ084Ovvbq-s5YS5rS0V7OVTvJOH2HhSf6Q6kkEvmaLPC33VNqv1jiy4hB-nk9SvXeWG9wtyWUJifPSqb6MVDq5fNZM01cwuLwZBGMKoFditP>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedgkeelucetufdoteggodetrfdotf
+	fm2; t=1728057028; x=1728143428; bh=viIj+TVY7QIIdgMscWLOjYg7uRO7
+	Lf6+PSk5aDYLIsY=; b=VKw5NC99I0kAor9MN/kepbsaU7iJGmrA1yWcP8PWYhWl
+	/Ijjkft11oYv4ANfBYAhaipHh15QnBu032dtHrryG+vmUrJ7zYloTC9j3iYY4GVv
+	hAdo+JgmRMUfOL4AXuUysK6FqRk2hx/UCYbIlbVLkKDefC5hcnqqGIVWO45qMbry
+	Gz+PWgZiP9Rabn3HRlmzznCONtuVIOyEzzDbL91eDR71qJFGYXHY4shaCIoCxAfi
+	gj4XVg3qt6Mn76VSD7k7JNohnYsKi8K7RagHsvKbAPHNhiheb0xTGIJ6czYv6Mwa
+	/jco9MH51YkskAO6HoIgfF1ij8F8fBZd6uJmzLiwuQ==
+X-ME-Sender: <xms:ww4AZ8lz00RrRPy-AM1SgR1XxWF6wgHHIqvjEwkAYXcihVXmnGKwTw>
+    <xme:ww4AZ73-UJsQV8BCSVIM_PTqTmOhQBCtzC4_hBmNLrX0Lw0qUNlraOiXv1WniK2E8
+    HxLrn0mhh_hhn_-4A>
+X-ME-Received: <xmr:ww4AZ6qc9pnMw7BxjAbFkiSIqx7yaHU8WGz0Q9Ppw0HTGZ7-lRo3pZ7vtI4BC3kvg4AeUBKl69UFGgUB1ecAcSHEY0WGnZnQWWFVxKc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedgledvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghs
-    rdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheprhgrmhhsrgihsehrrg
-    hmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:igoAZ8pfGPZXq-uc7Kpx0FqSWeTKML2b__pgmfK1TNZU5YHM9U1maA>
-    <xmx:igoAZ1oJ7GRuo4xguFfLJm2UZh0vu5vp6cM0r76dnFu0ng7jBB2YSQ>
-    <xmx:igoAZ6RzxTSDAiJgcX8yyVMWGCT0I6CqFA01PBT4EX0OUU0AybNg0w>
-    <xmx:igoAZ1omxSMdqai69ytG8wVlnXlHYHc0u-qevZiMwDktND5I6i_xTQ>
-    <xmx:iwoAZ2fWirezkQF7pvaQ5dmhOppyv9iBnGXlbzPO0Hfy9i93ulCAVjyk>
-Feedback-ID: i197146af:Fastmail
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfi
+    hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhu
+    nhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuh
+    hnvghlmhdrohhrghdruhhkpdhrtghpthhtoheprhhushhsvghllhdoghhithdrvhhgvghr
+    rdhkvghrnhgvlhdrohhrghesshhtuhgrrhhtrdhiugdrrghupdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:ww4AZ4ncXDzgvPyrgBvDdYIEiku6cbCWi7tw2nXRZzHtUDHVThR56w>
+    <xmx:ww4AZ63APHpqJjP8vIsXIvX7IIqFu_VbSDYHDDNYNT83AUOCxD3CXQ>
+    <xmx:ww4AZ_sTXMdEKvFiZnwlig54AGPrffXmG26cHPl90FLFCS5N3gx61Q>
+    <xmx:ww4AZ2WVKSSZcjAnN3bPL1j2lQNoWe1yeQDJaSE0KSgdiZ135vNzmg>
+    <xmx:xA4AZ0pdGaODwiokdDM1PDBEbIuTKayADcAwNvngw3nui8ucv-beaYKn>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Oct 2024 11:32:25 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4d4468b2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Oct 2024 15:31:31 +0000 (UTC)
-Date: Fri, 4 Oct 2024 17:32:16 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Josh Steadmon <steadmon@google.com>
-Subject: [PATCH v2] t0610: work around flaky test with concurrent writers
-Message-ID: <f3874c7e923846e453499e89f00dd4f8862e4c40.1728055880.git.ps@pks.im>
-References: <b1b5fb40-f6c2-4621-b58c-9b7c8c64cc01@ramsayjones.plus.com>
+ 4 Oct 2024 11:50:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: phillip.wood123@gmail.com
+Cc: Eric Sunshine <sunshine@sunshineco.com>,  phillip.wood@dunelm.org.uk,
+  Russell Stuart <russell+git.vger.kernel.org@stuart.id.au>,
+  git@vger.kernel.org
+Subject: Re: "git worktree repair" modifies the wrong repository
+In-Reply-To: <6c0b8681-95ca-4224-ba89-7582fd731565@gmail.com> (phillip's
+	message of "Fri, 4 Oct 2024 10:15:55 +0100")
+References: <E1sr5iF-0007zV-2k@binarylane-bailey.stuart.id.au>
+	<CAPig+cQ8=Y6sVvN_dBo_GQ5nLkQ4GJ7AM6mE2kt_2QV7CR0omg@mail.gmail.com>
+	<3b579ddd-b386-4daa-ad63-1e75522b7462@stuart.id.au>
+	<CAPig+cTkpLLoTxTa-8xfycNGFibN_M71+kkHtT-wgp6HRPi-aw@mail.gmail.com>
+	<4781ff6e-c20a-4340-851b-c9d324d1fac8@stuart.id.au>
+	<CAPig+cTop=2+k0XbqYbsCTbJVo77evY+_a+FqDV_ziKf2q+Dzw@mail.gmail.com>
+	<87afa860-52f4-414a-82da-09e7eeac1301@gmail.com>
+	<CAPig+cSSDnq_kh9ERuYZmUCNrVvWmGFF8OSfBCy8bHrkx6fz3g@mail.gmail.com>
+	<6c0b8681-95ca-4224-ba89-7582fd731565@gmail.com>
+Date: Fri, 04 Oct 2024 08:50:26 -0700
+Message-ID: <xmqqo73zg94t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b1b5fb40-f6c2-4621-b58c-9b7c8c64cc01@ramsayjones.plus.com>
+Content-Type: text/plain
 
-In 6241ce2170 (refs/reftable: reload locked stack when preparing
-transaction, 2024-09-24) we have introduced a new test that exercises
-how the reftable backend behaves with many concurrent writers all racing
-with each other. This test was introduced after a couple of fixes in
-this context that should make concurrent writes behave gracefully. As it
-turns out though, Windows systems do not yet handle concurrent writes
-properly, as we've got two reports for Cygwin and MinGW failing in this
-newly added test.
+phillip.wood123@gmail.com writes:
 
-The root cause of this is how we update the "tables.list" file: when
-writing a new stack of tables we first write the data into a lockfile
-and then rename that file into place. But Windows forbids us from doing
-that rename when the target path is open for reading by another process.
-And as the test races both readers and writers with each other we are
-quite likely to hit this edge case.
+> "git clone --mirror" sets up a fetch refspec that forcibly update
+> "refs/heads/*" when fetching. This means fetching overwrites your
+> local branches and I think the fetch fails if you have a branch
+> checked out that it wants to update. "git clone --bare" does not set
+> up any fetch refspec. In both cases there are no remote tracking
+> branches to base your local work on.
+>
+>> Regarding core.bare: That's one of the settings which is special-cased
+>> (hard-coded) to work "properly" when extensions.worktreeConfig is not
+>> enabled, so it's not clear what problem you were experiencing in that
+>> regard. In my testing, `git rev-parse --is-bare-repository` correctly
+>> reported "true" in the bare repository, and "false" in a worktree
+>> hanging off the bare repository even when extensions.worktreeConfig
+>> was not enabled.
+>
+> I've a feeling I thought I needed to set it because I didn't realize
+> that core.bare was special cased rather than doing so in response to a
+> particular problem but I can't remember for sure.
 
-This is not a regression: the logic didn't work before the mentioned
-commit, and after the commit it performs well on Linux and macOS, and
-the situation on Windows should have at least improved a bit. But the
-test shows that we need to put more thought into how to make this work
-properly there.
+I recently encountered a funny behaviour in a worktree linked to a
+bare repository.
 
-Work around the issue by disabling the test on Windows for now. While at
-it, increase the locking timeout to address reported timeouts when using
-either the address or memory sanitizer, which also tend to significantly
-extend the runtime of this test.
+    $ git clone --bare file://$(pwd)/git.git victim-00.git
+    $ git -C victim-00.git worktree add ../victim-01
+    $ cd victim-01
+    $ git grep -i -e subscribe
+    fatal: this operation must be run in a work tree
 
-This should be revisited after Git v2.47 is out.
+Of course, "git grep -i subscribe HEAD" works (as it does not
+require a working tree and works on a proper bare repository).
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t0610-reftable-basics.sh | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+What is curious is that this also works:
 
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 2d951c8ceb..babec7993e 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -450,15 +450,22 @@ test_expect_success 'ref transaction: retry acquiring tables.list lock' '
- 	)
- '
- 
--test_expect_success 'ref transaction: many concurrent writers' '
-+# This test fails most of the time on Windows systems. The root cause is
-+# that Windows does not allow us to rename the "tables.list.lock" file into
-+# place when "tables.list" is open for reading by a concurrent process.
-+test_expect_success !WINDOWS 'ref transaction: many concurrent writers' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
- 	(
- 		cd repo &&
--		# Set a high timeout such that a busy CI machine will not abort
--		# early. 10 seconds should hopefully be ample of time to make
--		# this non-flaky.
--		git config set reftable.lockTimeout 10000 &&
-+		# Set a high timeout. While a couple of seconds should be
-+		# plenty, using the address sanitizer will significantly slow
-+		# us down here. So we are aiming way higher than you would ever
-+		# think is necessary just to keep us from flaking. We could
-+		# also lock indefinitely by passing -1, but that could
-+		# potentially block CI jobs indefinitely if there was a bug
-+		# here.
-+		git config set reftable.lockTimeout 300000 &&
- 		test_commit --no-tag initial &&
- 
- 		head=$(git rev-parse HEAD) &&
+    $ git grep -i -e subscribe --cached
 
-Interdiff against v1:
-  diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-  index 86a746aff0..babec7993e 100755
-  --- a/t/t0610-reftable-basics.sh
-  +++ b/t/t0610-reftable-basics.sh
-  @@ -453,23 +453,18 @@ test_expect_success 'ref transaction: retry acquiring tables.list lock' '
-   # This test fails most of the time on Windows systems. The root cause is
-   # that Windows does not allow us to rename the "tables.list.lock" file into
-   # place when "tables.list" is open for reading by a concurrent process.
-  -#
-  -# The same issue does not happen on Cygwin because its implementation of
-  -# rename(3P) is emulating POSIX-style renames, including renames over files
-  -# that are open.
-  -test_expect_success !MINGW 'ref transaction: many concurrent writers' '
-  +test_expect_success !WINDOWS 'ref transaction: many concurrent writers' '
-   	test_when_finished "rm -rf repo" &&
-   	git init repo &&
-   	(
-   		cd repo &&
-   		# Set a high timeout. While a couple of seconds should be
-   		# plenty, using the address sanitizer will significantly slow
-  -		# us down here. Furthermore, Cygwin is also way slower due to
-  -		# the POSIX-style rename emulation. So we are aiming way higher
-  -		# than you would ever think is necessary just to keep us from
-  -		# flaking. We could also lock indefinitely by passing -1, but
-  -		# that could potentially block CI jobs indefinitely if there
-  -		# was a bug here.
-  +		# us down here. So we are aiming way higher than you would ever
-  +		# think is necessary just to keep us from flaking. We could
-  +		# also lock indefinitely by passing -1, but that could
-  +		# potentially block CI jobs indefinitely if there was a bug
-  +		# here.
-   		git config set reftable.lockTimeout 300000 &&
-   		test_commit --no-tag initial &&
-   
+That mode of operation can work only when the index exists,
+which means it needs a working tree.  Perhaps the working tree
+version is written in a more strict way to avoid unexpected
+behaviour (and gets the implementation of strictness wrong), while
+the index version has no such protection?  Running the index version
+in the bare repository
 
-base-commit: 111e864d69c84284441b083966c2065c2e9a4e78
--- 
-2.47.0.rc0.dirty
+    $ git -C ../victim-00.git -i -e subscribe --cached; echo $?
+    1
+
+seems to confirm.  The command does not fail, but in a bare
+repository, the in-core the_index has 0 elements, so it thinks it
+successfully looked for the needle in the haystack and found
+nothing, without complaining "hey, there is no haystack".
+
+With the extensions.worktreeConfig things work as expected in the
+worktree linked to the bare repository, like so:
+
+    $ cd ../victim-01
+    $ git config set extensions.worktreeConfig true
+    $ git config set core.bare false
+    $ git grep -i -e subscribe
+
+So, I dunno.  Is core.bare really "special cased"?  It seems to me
+that any halfway special case harms users more than helps.
+
 
