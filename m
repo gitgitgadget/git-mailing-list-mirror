@@ -1,90 +1,87 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DCA1459E0
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 11:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E2E946F
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 12:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728041530; cv=none; b=t/wJHRQVG15wx2tCn7wCR8CCaOduTe9dAa8RMFx4CbzdHosbjB1Hk2XRVSIWw0GUydE3fIXZ3FJiWxw5300i9D1OfZfE5j/O3FsdCUsExXlhscbr8k/T8nTaW03laQhjuDGl469OaitunS5Md1XjA5XGy2H9wWRTFO+1HGUJKJY=
+	t=1728044215; cv=none; b=BrLJXhZc0Y933U/UsIAKHubQpKIX7jd8++7GMBsw/NiBf2dEe+wmLSh0vHS2K8W9bNgwc5UINfYx7467vIGemXdbD07DidYbVZ9OXHkTStdEfe/E+KNpgcZhpvHk6riF1ZsmC2hMzkvfjBcQUn5+uLZQsRvVOjshvyiM12Z+meM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728041530; c=relaxed/simple;
-	bh=TAy5RhmiWsrS+GVtQMI4em5HGeiVCVy7yQ+J3UoD480=;
+	s=arc-20240116; t=1728044215; c=relaxed/simple;
+	bh=ViOfaaILeYfTf9Dby6qGXpP1+BfhNOFOhBl5uFOhOfI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YRqooHCehRWObTTPOZ2JZJx//uM5Xa2qa9FgE6NVJIOOXdfEdoBJpkha33qKvS3+FClyqpAPfWpbH3bUKqQIlO6lpiT+c0GbuO6brdV0EVUTkl+bLgXznqqJMAu+zuxE6X0eHknVOb3cgd9y/hRp3A8bOuCJBGULPMWtq6scJqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gxnqGjkE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TZ7TycJj; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=FEJFdZWpbbPx2qzfI5mGw6fcR+QGmTEQJekK3btEcmi4iNgXFni4eCw/xQ1TuFDsfj7lvA5qjnPsjgJGobrB5Bqd+JdA02/YmeKh0QNYGiRFJ9cp4GjgQnmkcCztpa3No3yWuKmWFMT5/gpwJDKzCvdv9KIBpwZenPp1dUPCzWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NMo5v/Hw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=la5iy8yv; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gxnqGjkE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TZ7TycJj"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8D50F138028D;
-	Fri,  4 Oct 2024 07:32:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NMo5v/Hw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="la5iy8yv"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id BDA5913806C1;
+	Fri,  4 Oct 2024 08:16:52 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 04 Oct 2024 07:32:06 -0400
+  by phl-compute-12.internal (MEProxy); Fri, 04 Oct 2024 08:16:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728041526; x=1728127926; bh=ofBkp63Q8W
-	VnJM15s8B8tEXSwvSSuEcRopkFJIXKMG0=; b=gxnqGjkE0RyRQf7JhqITALOhPP
-	CGKJxiN88rWOvKPxG7EqQrzGDqfesqsYovi00d4TTtIVvZIJQ685mXTu1O4Xao2A
-	xIByUbQn0kYly+3Qg7eERGrjwAW9HKEMsTAypKZ40T5rGEWaJxQu1zqGpm1Ikh7e
-	S7lKZD2sb54EGPT7dUeQ4d38afU+Y58YqTx6j21AVEp+M+G4AdchPvsANFyFEBBK
-	M5aVoJ4l5D4lceKT01Xv3IP/A3A43M9QFovfAGPNn/3jq/47zTRJFrRXIIC4rOrD
-	AZWBNPllnohslCoZ+o/ti/UqsgVOWO4qNhh2ac4wJlue+9xm9Khz03cvujIA==
+	:subject:to:to; s=fm2; t=1728044212; x=1728130612; bh=RgnoZF8chv
+	ZVNtUDjXAWmwTQ+Xf5wWdrDecBr+p2kto=; b=NMo5v/Hw91TEvnWqFi6zRWngDd
+	PwIIsIv8nnzxKYwHwaYVqcbZmi0Ai560/2o3YjPzv9mUnhP0mawSeXsEyQP4R11t
+	zBXaJxcBnD/CwHCoiioV02i6ItVFL8uxukS+2FaQ0N72YknV5TACK9gXFW5H7UiN
+	+jXlKdQ0queKJbN3jGHhObbOs9fwHq3ezWGzeu/nK/xC0JB1Z+kFwKl81uigG46l
+	vNQ23NU5sQiqTHEGhLGiUSGXSMu4ofASRj+pddsexgxM0nHQTRQCmqUS6cVs/AUn
+	CQCRi1lYZMz8B5f8TiBiZ8q/z0VajDWDeTMtch3vOFSq5sljsjoD6iVHcNNQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728041526; x=1728127926; bh=ofBkp63Q8WVnJM15s8B8tEXSwvSS
-	uEcRopkFJIXKMG0=; b=TZ7TycJjZtcBF6HCvlJu0UgJ+B5JJ9NttcqXhHs4EySX
-	HT1lseVkR1evN/SEBNed7PCe6zA1ndodAzEN9nb/iSNBEhFLcrhnNJgbPhUZi6Tp
-	YDeDKuKDXcGIi+0lAD96h+HLBrV2jIGjEB1fMkF6DqareaLz29TRh9Od7XdhYVil
-	OTYMz0B1yNOj/9Yy0LM4lMm7h9dcYTVC+ZRHF512VOzu8yra24aisKPGNxVi5i3K
-	amJdsJ/4jluwcyi38q0fvYR28UREednq3azPnsaCSnricFVXZlTsLh/XKM8x+QQq
-	HNxArgidEc+VBLuriaQvolSll3dLycq1lgP/7Co1Sg==
-X-ME-Sender: <xms:NtL_ZvXZ3AZSEqjZKzl7kU0eegoXvY8lmtHOyrT03qPJ08gKL3EemA>
-    <xme:NtL_ZnkHrQOSBeeQ_hU5t7VVC-DRJBmiVvFds9EmFsNg2iqfNaBNiCF3nH9GHhEr8
-    eSuxuEuXp3FPOG9kA>
-X-ME-Received: <xmr:NtL_ZrY8T853PufwuBVrxglwxqp4G9WLLbBJfwYcXx5cZ-6MvkTjyxFxq9vaDDu4AqOB_uaOYXki8J_REyFiWIyKVGntRnWi43BiKEkPrX48NSOi>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedggeduucetufdoteggodetrfdotf
+	fm2; t=1728044212; x=1728130612; bh=RgnoZF8chvZVNtUDjXAWmwTQ+Xf5
+	wWdrDecBr+p2kto=; b=la5iy8yvNbC0NEFJpQ+ceI3WZ2SDJxfmaQPsQp0uzMwY
+	1Rw8Q1c4jUGc9aB4+nsCHhBwwIt8Tb6SfzprxCUi4bDp96ltmyV5OYNes8Eu2mf4
+	A09TQkP1Lmmc6yLK6SMCAcSg/fORmYpUtd0ND6Xn16vRWDLBMgKxAhCilPiV9f6J
+	UprsJYLMrsij/4T/VthCxgO3Eq0H5YiS1f7Qzva4awBKPmM+cczHhurcwn8YoxQ0
+	U2YZS1hri02U8UU7MwvbqAYpnGZjELEqOY9aWRAaN+2+y7BmRT2/1/DMAYazQ/nP
+	V3QYahLk06ldyFvHVKKGXvTYZXtkTfRBonwPJ/36BQ==
+X-ME-Sender: <xms:tNz_ZrVhBD03xIONixS_udXAqnPgJGrxmwKOmNgEfqbAmeuhPdEqSA>
+    <xme:tNz_ZjlUeDt2hUnGztTk_cRSTF4ewc_-kvM6KujTXujMQwIwvgnI7JuRYfhMU8XF5
+    3mBKiDjCHVENh9whA>
+X-ME-Received: <xmr:tNz_ZnZq03ew9x1OJTtKJ_7fA0-PhOeEQUkvhj2E9aTwL7_4tw5CkMWvcZkKwI2r074T4ijLoBIRYAEkWngR1CmHr4PgdF4hW12SiouOVfjK1FLb>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedghedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrg
-    hnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:NtL_ZqXJ8xicXXnzizNDIM6In7aVc2NTIUpDUeGiLEQE1TMqViihJw>
-    <xmx:NtL_ZpndVt3JOiphckRyiKQLaczajiVnOxNTamu_ejXwkjzVul1N7g>
-    <xmx:NtL_ZndsBsGDfV2S-zLE1PzMu6D_QaRF4cRHU6BH0EchV1OLqZmP7Q>
-    <xmx:NtL_ZjGqgJdAHWI6lCcfVVqOHyOjMVx-JKd5AlENH6i-ReJYjm3FgA>
-    <xmx:NtL_ZiDuUM7LPHN5miC_vEpsw3y7ksFNAUF96eo5fjXpF_b-UeLuI8au>
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhho
+    hhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+    pdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomh
+X-ME-Proxy: <xmx:tNz_ZmXEVbTV7rtBS0gmXXEf-ZyNlUMyiKBg-2ghwa0_884wZ48u1Q>
+    <xmx:tNz_ZlkhV7ZuWsnVoJ1oXKMC_NyZdJrgXSnv1XzMapk2pqm45bqbIw>
+    <xmx:tNz_ZjfFAVgu_Irmln-ZEeQ01SzaEnf5Zw17XFMASo06oCdu05yhjA>
+    <xmx:tNz_ZvHzQQOpaez8sstTpl5r8K_MYs1LfVcuEwL_thiyYWMh9cyfaw>
+    <xmx:tNz_ZjaeUVh2S_OgKXqAR0HV1I367NpQaNytm8ppcbA2yOg6GcUn07ty>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Oct 2024 07:32:04 -0400 (EDT)
+ 4 Oct 2024 08:16:50 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7470c712 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Oct 2024 11:31:11 +0000 (UTC)
-Date: Fri, 4 Oct 2024 13:32:01 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6c6d121e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 4 Oct 2024 12:15:56 +0000 (UTC)
+Date: Fri, 4 Oct 2024 14:16:45 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
 Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: v2.47.0-rc1 test failure on cygwin
-Message-ID: <Zv_SKtehwx2dsflo@pks.im>
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Josh Steadmon <steadmon@google.com>
+Subject: [PATCH] t0610: work around flaky test with concurrent writers
+Message-ID: <f83e23f1e76454a80e3e53cd02b3bb5bba6b8da1.1728044178.git.ps@pks.im>
 References: <b1b5fb40-f6c2-4621-b58c-9b7c8c64cc01@ramsayjones.plus.com>
- <Zv9oIrKveu-JAGQM@pks.im>
- <Zv-HbT8qrM6IYKb4@pks.im>
- <8718c5c4-1d0a-104b-eb39-6338ae9c5dbf@gmx.de>
- <Zv--68J5qv60IuQz@pks.im>
- <f29241a7-aadd-e824-97f3-a95ac6619951@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,111 +90,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f29241a7-aadd-e824-97f3-a95ac6619951@gmx.de>
+In-Reply-To: <b1b5fb40-f6c2-4621-b58c-9b7c8c64cc01@ramsayjones.plus.com>
 
-On Fri, Oct 04, 2024 at 01:11:15PM +0200, Johannes Schindelin wrote:
-> Hi Patrick,
-> > > > The issue on Win32 is different: we cannot commit the "tables.list" lock
-> > > > via rename(3P) because the target file may be open for reading by a
-> > > > concurrent process. I guess that Cygwin has proper POSIX semantics for
-> > > > rename(3P) and thus doesn't hit the same issue.
-> > >
-> > > Indeed, this is where the symptom lies. I worked around it in Git for
-> > > Windows v2.47.0-rc1 via this patch:
-> > >
-> > > -- snipsnap --
-> > > diff --git a/compat/mingw.c b/compat/mingw.c
-> > > index c1030e40f227..56db193d1360 100644
-> > > --- a/compat/mingw.c
-> > > +++ b/compat/mingw.c
-> > > @@ -784,6 +784,7 @@ int mingw_open (const char *filename, int oflags, ...)
-> > >  	int fd, create = (oflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL);
-> > >  	wchar_t wfilename[MAX_LONG_PATH];
-> > >  	open_fn_t open_fn;
-> > > +	int tries = 0;
-> > >
-> > >  	va_start(args, oflags);
-> > >  	mode = va_arg(args, int);
-> > > @@ -813,7 +814,11 @@ int mingw_open (const char *filename, int oflags, ...)
-> > >  	else if (xutftowcs_long_path(wfilename, filename) < 0)
-> > >  		return -1;
-> > >
-> > > -	fd = open_fn(wfilename, oflags, mode);
-> > > +	do {
-> > > +		fd = open_fn(wfilename, oflags, mode);
-> > > +	} while (fd < 0 && GetLastError() == ERROR_SHARING_VIOLATION &&
-> > > +		 retry_ask_yes_no(&tries, "Opening '%s' failed because another "
-> > > +			"application accessed it. Try again?", filename));
-> > >
-> > >  	if ((oflags & O_CREAT) && fd >= 0 && are_wsl_compatible_mode_bits_enabled()) {
-> > >  		_mode_t wsl_mode = S_IFREG | (mode&0777);
-> >
-> > Wait, this is surprising to me as I saw the error happening when calling
-> > rename, not open. So why would retries in `open()` fix the symptom? I'm
-> > probably missing something.
-> 
-> I am sorry, I did not really read the bug report in detail, I only meant
-> to unblock Git for Windows v2.47.0-rc1 and thought I had a fix in hand. It
-> certainly fixed the failures on my local machine, but it unfortunately did
-> not fix the problems in CI.
+In 6241ce2170 (refs/reftable: reload locked stack when preparing
+transaction, 2024-09-24) we have introduced a new test that exercises
+how the reftable backend behaves with many concurrent writers all racing
+with each other. This test was introduced after a couple of fixes in
+this context that should make concurrent writes behave gracefully. As it
+turns out though, Windows systems do not yet handle concurrent writes
+properly, as we've got two reports for Cygwin and MinGW failing in this
+newly added test.
 
-Nothing to be sorry about. Quite on the contrary, thanks for chiming in
-here, I was hoping for your input.
+The root cause of this is how we update the "tables.list" file: when
+writing a new stack of tables we first write the data into a lockfile
+and then rename that file into place. But Windows forbids us from doing
+that rename when the target path is open for reading by another process.
+And as the test races both readers and writers with each other we are
+quite likely to hit this edge case.
 
-> I tried to debug in CI a bit, but it is a gnarly bug to investigate, what
-> with plenty of processes the intentionally block each other, and no `gdb`
-> to help.
+Now the two reports are somewhat different from one another:
 
-Yup, indeed it is.
+  - On Cygwin we hit timeouts because we fail to lock the "tables.list"
+    file within 10 seconds. The renames themselves succeed even when the
+    target file is open because Cygwin provides extensive compatibility
+    logic to make them work even when the target file is open already.
 
-> > In any case I also tried something like the below patch (sorry,
-> > whitespace-broken).
-> 
-> Oh, you reminded me that the `mingw_rename()` function looks
-> _substantially_ different in Git for Windows than in Git. I did not have
-> the time (or the strength of mind, more like) to upstream those changes
-> yet.
-> 
-> > But unfortunately this still caused permission errors when the new path
-> > was held open by another process.
-> 
-> Yes, this will _always_ be a problem, I think. The
-> `FILE_RENAME_POSIX_SEMANTICS` as per its documentation should help, but if
-> it does not in your tests it might actually not quite work as advertised
-> (wouldn't be the first time I encounter such an issue).
+  - On MinGW we hit I/O errors on rename. While we do have some retry
+    logic in place to make the rename work in some cases, this is
+    seemingly not sufficient when there is this much contention around
+    the files.
 
-It could of course be that the code I wrote is just plain wrong. I had
-to stub out the struct as well as the constants because those are not
-available on my Windows system, due to whatever reason. Not even when
-bumping _WIN32_WINNT to 0x0A00 (W10+). Maybe this is because I'm using
-Windows 10, but I thought that thish should have been available starting
-with Windows 10 RC1.
+Neither of these cases is a regression: the logic didn't work before the
+mentioned commit, and after the commit it performs well on Linux, macOS
+and in Cygwin, and at least a bit better with MinGW. But the tests show
+that we need to put more thought into how to make this work properly on
+MinGW systems.
 
-> I tried to read through the code (it's a lot!) to figure out whether there
-> is potentially any situation when the `tables.list` file is opened but not
-> closed immediately, but couldn't find any. Do you know off-hand of any
-> such scenario?
+The fact that Cygwin can work around this issue with better emulation of
+POSIX-style atomic renames shows that we can in theory make MinGW work
+better, as well. But doing so likely requires quite some fiddling with
+Windows internals, and Git v2.47 is about to be released in a couple
+days. This makes any potential fix quite risky as it would have to
+happen deep down in our rename(3P) implementation in "compat/mingw.c".
 
-We indeed do keep the `tables.list` file descriptor open as part of our
-stat cache. But that only happens on non-Windows system. This all
-happens in `reftable_stack_reload_maybe_reuse()` and is documented quite
-extensively in there.
+Let's instead work around both issues by disabling the test on MinGW
+and by significantly increasing the locking timeout for Cygwin. This
+bumped timeout also helps when running with e.g. the address and memory
+sanitizers, which also tend to significantly extend the runtime of this
+test.
 
-> > I think for now I'd still lean into the direction of adding the !WINDOWS
-> > prerequisite to the test and increasing timeouts such that I can
-> > continue to investigate without time pressure.
-> 
-> Let me bang my head against this problem for a little while longer. You
-> might be right, though, that this is a thing we cannot fix in time for
-> v2.47.0, which would be sad.
+This should be revisited after Git v2.47 is out.
 
-A bit sad, yes, but as I mentioned this is at least not a regression.
-The test just demonstrates that the improvements I did in this area are
-not yet sufficient for all platforms and that I need to spend some more
-time on it. Or that the central "tables.list" mechanism is not a good
-fit for Windows, which would be a shame.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
 
-I'll send the patch as a reply to this thread so that it can be picked
-up as required.
+This fix can be applied to remove some of the stress with the Git v2.47
+release pending. If would of course be preferable to find an alternate
+fix that makes MinGW work as required, but if you take the 500 lines of
+code that is the rename(3P) implemenation of Cygwin as a hint you
+quickly figure out that this is a rather complex problem.
 
 Patrick
+
+ t/t0610-reftable-basics.sh | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
+index 2d951c8ceb..86a746aff0 100755
+--- a/t/t0610-reftable-basics.sh
++++ b/t/t0610-reftable-basics.sh
+@@ -450,15 +450,27 @@ test_expect_success 'ref transaction: retry acquiring tables.list lock' '
+ 	)
+ '
+ 
+-test_expect_success 'ref transaction: many concurrent writers' '
++# This test fails most of the time on Windows systems. The root cause is
++# that Windows does not allow us to rename the "tables.list.lock" file into
++# place when "tables.list" is open for reading by a concurrent process.
++#
++# The same issue does not happen on Cygwin because its implementation of
++# rename(3P) is emulating POSIX-style renames, including renames over files
++# that are open.
++test_expect_success !MINGW 'ref transaction: many concurrent writers' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+ 	(
+ 		cd repo &&
+-		# Set a high timeout such that a busy CI machine will not abort
+-		# early. 10 seconds should hopefully be ample of time to make
+-		# this non-flaky.
+-		git config set reftable.lockTimeout 10000 &&
++		# Set a high timeout. While a couple of seconds should be
++		# plenty, using the address sanitizer will significantly slow
++		# us down here. Furthermore, Cygwin is also way slower due to
++		# the POSIX-style rename emulation. So we are aiming way higher
++		# than you would ever think is necessary just to keep us from
++		# flaking. We could also lock indefinitely by passing -1, but
++		# that could potentially block CI jobs indefinitely if there
++		# was a bug here.
++		git config set reftable.lockTimeout 300000 &&
+ 		test_commit --no-tag initial &&
+ 
+ 		head=$(git rev-parse HEAD) &&
+
+base-commit: 111e864d69c84284441b083966c2065c2e9a4e78
+-- 
+2.47.0.rc0.dirty
+
