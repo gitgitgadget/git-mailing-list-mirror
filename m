@@ -1,78 +1,105 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014801E378B
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 16:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4087B1C7275
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 16:22:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728058713; cv=none; b=nihJvpp28qyNKGmK8rFpqAkYO7eNDI9sUgRJiN3a1FP6qEh6b910EKNL2cXAoxe8cd6EaFuPmsmozaETyxWR2mvCIu/vvhhujaTUCWY9EiA4BHDqAd/71VWlT8vbuWmwdbb3JLpOqM8CGlWTPtkiG00SpLf+/+gvBXf2S6B/Jd8=
+	t=1728058939; cv=none; b=rEMfmVrGmaRBNukTC0wb/YIJwDFXzedPO6cEXHGGKHlO00KC8Q7kZVL4M0yYWKyQg0uOJ+we/vRkt98DUCPXXTrl2TxQ+VjLjz2/xL/KqBryAN0hRBd8Y0pGaOwSBEmB6iNeOf9mnD3IkffYhq10VyBwHW+onwg0LO2mAsiPIUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728058713; c=relaxed/simple;
-	bh=QqGDCYQeY40mMJTzZFSSQo0AXn+81c6garIwE9+umZo=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=qBZgsrv/rDTVsyFx73m3QD0wHTJdD7N77LN5ntNm7Rb/wJWqdjoTSboalKekjRIbbRsnvsWqAC/iC1mFevcFRboy9Ig1z/vekPWT3ZCL6V0dXNL13u3jnrfE43vjmKHQn5rYw1ORUlFKLZw/sRi8edGm7Pt6c5a9VLctomkITfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IGN3PEAH; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728058939; c=relaxed/simple;
+	bh=xyjuqnJgBLzgbG05RAPBvaVHVIWCLQu3zo8cVKjF/wg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t+kpCLZprUFberiL2zZZBjlYqIm/iWOWaZrmH27hMKX38VHWzKuRDU78uhkQilgp2sVxXTlrRno3KIUf0xL97EwjVgx8cGk9mLQ3SSmg3bduLesw2VqBj2Du2pBkYF7XjwVMQRXdwbOoK3IXGOpk4LpvcbpqT4tnWF8tWczFHN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oycFADhL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SG0CPcKh; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IGN3PEAH"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42cba6cdf32so23465925e9.1
-        for <git@vger.kernel.org>; Fri, 04 Oct 2024 09:18:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728058709; x=1728663509; darn=vger.kernel.org;
-        h=to:message-id:subject:date:mime-version:from
-         :content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QqGDCYQeY40mMJTzZFSSQo0AXn+81c6garIwE9+umZo=;
-        b=IGN3PEAH6V8Xt8HVCHIDLvi0OUL+VHeE+LSjn44d5rG969aiTEycp/JFtfB/v/Pxs5
-         QBeqsJu9ZpWnpEoYJgaDCztDsXsBphZ9Nz1GUy98SlG3w1OGHoE3nNgkPE0OxCABWQ/7
-         AhHB4McdFj5O4/6eagqSoIXQz7je6Blv12jlQw/tRK8IjG3LrQjOKRcli2bfwCqDKvyQ
-         xRxi0djQvup2FmT0nZy/Tq1cV8D4oZdy4IEDl8BiE6wxsn6ZUpSARo1ENrkx+P+36luI
-         pbZYRv48QVLUsUuSUzl4R582a2bn3FvM6UGhemUVSkxWhayNJ0Y1j5M8VgGAL+B8e0/z
-         cFdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728058709; x=1728663509;
-        h=to:message-id:subject:date:mime-version:from
-         :content-transfer-encoding:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QqGDCYQeY40mMJTzZFSSQo0AXn+81c6garIwE9+umZo=;
-        b=fxQ9+tY/3A2O677lUX7ISZO1InTCh5DwS6aQFL15od58BhxYreZUFJRV9Zpst7kMsH
-         A5j/KFw0dJWrIzg7x5SB9hwoEZlevM9uXTUYmZ7Ig9gYuxxkZ9dNyIY8eCvt9SMPKZTO
-         T0Ocbod5gXkhDLlpRWXhlM2S3Ke5L07PL8jbSgxuv+pXRf6CvH/PKBXpFPB8csHUhahu
-         4kTPbw+ST6vFssm9l3SzvDx5mJQSTSynC+LWXIOCwTPEu+HDuB8RGihFCoDFF5UoXqmw
-         pADDKa1PD+YXPCeTAMFIsgWdZE9h87k+EKjeUVH2RyZYYU7ZGIOcUmYtQznQ5drR+4xT
-         BWHA==
-X-Gm-Message-State: AOJu0YzkUZlewcS2D1U5XefmTLtOXZ3fO+NbydA5F93zBnmDqurRIG3K
-	G0q6wEI/sQY8Dsoz6sSE6QI+NF4ZO/23nqmd1I1Ei0xWObsB3QbLxoU1mJy/wdc=
-X-Google-Smtp-Source: AGHT+IGiljCFr0SW/x466O9tJojbonSRFkWo6x0/MSRYjUOU96kaleeG64wbd7GvM1yusx8aefnilg==
-X-Received: by 2002:adf:cd06:0:b0:37c:cfee:10b6 with SMTP id ffacd0b85a97d-37d0e74c53emr2423940f8f.20.1728058708835;
-        Fri, 04 Oct 2024 09:18:28 -0700 (PDT)
-Received: from smtpclient.apple ([129.205.124.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d1695e8b6sm1880f8f.71.2024.10.04.09.18.27
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Oct 2024 09:18:28 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-From: Fashina Segun <fashina.segun25@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oycFADhL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SG0CPcKh"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 72EA4138029C;
+	Fri,  4 Oct 2024 12:22:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 04 Oct 2024 12:22:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728058936; x=1728145336; bh=xyjuqnJgBL
+	zgbG05RAPBvaVHVIWCLQu3zo8cVKjF/wg=; b=oycFADhLJ+00t2clNwX1C3v3Nf
+	r6Rwe3r9LENRl6dZgLtt57rBsxZ+HACmB2gQuSU6ri3d4LH7h2tfcQTdzbQs9vXd
+	LH5JbiDS/5dwot4jlJozjvAnKiu+/YK18h6DPod2wOUETB0lYRxD5iUj0upSk4yD
+	qIwSFwtJN+2A41XoP4fGXFwQN71Eda5FHvGlYj7cbZuBvu0Ep0EEXHtVCNt119aP
+	zxAqh0cjj4ZpAJF3Vh9r60h5iuVvabaqW55VX53xUUGqzPnng47izSrpD3u+kUkd
+	ljk/NLhUtHKYS1PjaxOWAVc9/saaJYugx1ZKfzLv5SDRANnLd08bBXGO9RTQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728058936; x=1728145336; bh=xyjuqnJgBLzgbG05RAPBvaVHVIWC
+	LQu3zo8cVKjF/wg=; b=SG0CPcKh07N/2OE4DU3dTc+ydN38v7qlKXWS78QOrNKe
+	uV3J34/H/4SrWV1EEgdCy06UFm3CRTfMgfzNyu0IZO6hSfgQu/t5yfUI230I/QrO
+	aS9XaFyRZvt2cgbfLO5yCIrV6MvnAKlIcP12Wh6EE40nIAInhz4PF3Hh1VwhWL00
+	e1dcDfO+LmhkNcQTnSeegQde2wWUGoJbK3yghCn3lMHWgClQwx/hOmEA20q6ksJm
+	Pu/dh4pKsIZtEnrMGjtVNQyy8jxCTf7+JHvqumgdXgn9EJ4vLoXQQL78tOuo5zsV
+	hWlh6U4uixoJ2esoMsw/YY3DJNK2ga7/1DQOWUXhWQ==
+X-ME-Sender: <xms:NxYAZwezmLuTzq72Jc3wLENoqRseU7XTyW2Itm5_FcHDxduMMutEUQ>
+    <xme:NxYAZyOgRnVVRNzbPkr58an_4NFClUx0AbOgWu9JdiNcR_CBhFhsY89BconqcpLyd
+    C3sfz1ZlqQDwfoMTg>
+X-ME-Received: <xmr:NxYAZxj5lVRsDUg594_I6Unxt0oWMby1XdhYihRUKKv1n6OByaYB2s-bpvVRokc0bhxv-cenbFfRqwVEmDZ3MrBcI8klTTpyAM2wgh8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedgleelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    rhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhope
+    hjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehp
+    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvg
+    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:NxYAZ18Lqng5CSJZjZR3RgUpjRJgVNFMd-d9iryAhGqPqLiD6bOfsw>
+    <xmx:NxYAZ8v1dUD50xwC6D0DBQwc_vCA5p-Jkjr8iOtTkru_6eJBQgZrXg>
+    <xmx:NxYAZ8GlGI-GA5sEkHMq_AgjGi8nsJg5yG1bressu3GUXyxdpoYiRw>
+    <xmx:NxYAZ7OK87AveL500Y9fFyzqL8fAh6UdBlv6cxug3yf2qN3N7ULHvg>
+    <xmx:OBYAZx95dPYn5yDnNNGSwGtuXjs4Bv87NZN7oHVOaJ5M1AkNQ2BsBFnk>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 4 Oct 2024 12:22:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Ramsay Jones <ramsay@ramsayjones.plus.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Jeff King
+ <peff@peff.net>,  Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH] t0610: work around flaky test with concurrent writers
+In-Reply-To: <f83e23f1e76454a80e3e53cd02b3bb5bba6b8da1.1728044178.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Fri, 4 Oct 2024 14:16:45 +0200")
+References: <b1b5fb40-f6c2-4621-b58c-9b7c8c64cc01@ramsayjones.plus.com>
+	<f83e23f1e76454a80e3e53cd02b3bb5bba6b8da1.1728044178.git.ps@pks.im>
+Date: Fri, 04 Oct 2024 09:22:13 -0700
+Message-ID: <xmqq7cang7nu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Date: Fri, 4 Oct 2024 17:18:16 +0100
-Subject: Outreachy
-Message-Id: <BF74FF00-C553-44E8-AFF8-F83D28422A7C@gmail.com>
-To: git@vger.kernel.org
-X-Mailer: iPhone Mail (20A380)
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Hello team,
+Patrick Steinhardt <ps@pks.im> writes:
 
-I'm Fashina Segun Kazeem. I'm thrilled to be working on migrating our unit t=
-ests to the Clar testing framework. Currently, I'm dedicating time to thorou=
-ghly understand the requirements and familiarize myself with the necessary r=
-esources.
+> This fix can be applied to remove some of the stress with the Git v2.47
+> release pending. If would of course be preferable to find an alternate
+> fix that makes MinGW work as required, but if you take the 500 lines of
+> code that is the rename(3P) implemenation of Cygwin as a hint you
+> quickly figure out that this is a rather complex problem.
 
+Yup, this is good for 2.47 and I agree it is sensible to punt the
+real solution after the upcoming release.
 
-Best regards,
-Fashina Segun Kazeem.=20=
+Thanks.
