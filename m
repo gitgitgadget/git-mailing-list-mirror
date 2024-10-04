@@ -1,150 +1,110 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B281E377D
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 17:14:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6D61DAC94
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 17:44:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728062063; cv=none; b=S+Bs9n3WRocIeVC9FqpmABAnsweACReS2++k3X/vRZuGpC9cBPyryBY2uai6NUKGRSrAbPjisN2rF9zi6/zxsRbWodoQh0tqbLQVa7fhkW7falZ+R8fY0I8tjLETwd3Xr0gZt5dx6lcxUHNAi8JLgTNzSAKuHHCBmnyimP9Pa1U=
+	t=1728063877; cv=none; b=ZVn5/tq7huag891sepNUnowHGlMgCAlV2qfF41A6Z1ZUjOCXq4VSL+45QBAgn1Ec+K3AcDRRwraZgX7ExHvLgMN/AwQ4DTVfaqxLmxsbMrdAItTFQypkcrnl4PQHVzEdz9IqxnFH7jR5SQxORIW8TcYrCo0sNWMYyPgMxy0xqN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728062063; c=relaxed/simple;
-	bh=STapKtzjVmcyv0G3iGqNeXfZIWTSqILeOxpgGlkwIkY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PHDJvz+BYqyRTngoptnISlfiCwewW2poIxJIflUZ0DWspGFtO1oHupvXN+yWEwwKEDsPxDVFjawc0AxcKly0X36FwD1/yQE2zLiH7NDkgwFLYVY69KxK5bx98IOjJktQilxt2w8YBHSqBQ3+oCqzCwZw37t5LeMpedxmPGw/syM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MLqqGFL2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XQ6HpgTq; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728063877; c=relaxed/simple;
+	bh=BMZ8YioR67avLjHgnIj3KBAxrK1tJBOERIWtp8bEd9g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lJmBTlKAVrJ8VJWewP2FudxmkypWJHsoZSNnjoZV3dmZlwaa9FxUzubT8v8Xcbe1cVk1nzl8DEfVUM4QHDxJB/ml7ubfHhCRQJ1RykvR5mn9dWRDRrlT/QCsfcfAh6Nnes23txxz4NWZoYtY0RNhKFvDWXcgBroNngV0r4ePxtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=O7H+/56z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MK+fb08K; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MLqqGFL2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XQ6HpgTq"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id D1BD2138020F;
-	Fri,  4 Oct 2024 13:14:19 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Fri, 04 Oct 2024 13:14:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="O7H+/56z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MK+fb08K"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 08208114018C;
+	Fri,  4 Oct 2024 13:44:35 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 04 Oct 2024 13:44:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728062059; x=1728148459; bh=7cgtzt1BAI
-	oA81iX9doXMPURKMMM3fyp8i99arSYWUg=; b=MLqqGFL2kds0NrlVani1bPkOUl
-	iWiGCdAct/2YFp57jdQ+VTDt2SLTluUudRIk6ecfA43PcET5aeBfTyZwngphLYbO
-	ojO6LH7EgWdpm9hwvvVpG9ffuD+aIAmisYbS1okrn5EcbRs6JpPg82CVyxshQLLf
-	rR4K/+7I1mHLAaSP1ba9m4gktMTTuXVr4yrx0aQyGUKOlukEV9cQNNKpfm0wENJD
-	0s/r5sg6mOe4JX4RtyigeW4q6l9E8Xzb40CopLgoqxjUaQLGbmamAMDZowFoaSDW
-	2MRpkPCbuMG18BVMOjS3QmGkC98IvtHgxhj31JXGsixLMYVbAkOyJn9j5W0A==
+	:subject:to:to; s=fm1; t=1728063875; x=1728150275; bh=Vfz0IyXxtd
+	7Hni4Casu0Syizr1PyPOPDYTsIRcNvXY4=; b=O7H+/56z3YNGmy+wk0muscFAgX
+	Zz+z2XLLMy/7bXkybEhHWroFO1XRpx7x7Fxgh1iqOU8qYkGw6Sbx4Lg/lCAyZA86
+	HIx8QTC5vwwDEsD8XDZJ3vPdiIoVH0DDpgSrfwKbPUotRzoss/hCHJuqHP8EOAFE
+	CvpMAPmJRWCZYnQdaYrGjwXzKVEa6A85ND74DMDUKFTZUcCNEK02RMO61vPLNzlD
+	pzCjtVjstRc+HJokr4gyuUUh8EAMioY+hm7Vr8G/3YrEKz7fhXrQc6FvF+JxQ+Ln
+	sGh4mxx3X696/atr1SVtwwmoxhaBSnu22RA11H6isIz1Ccifamvh1sCvtw9Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728062059; x=1728148459; bh=7cgtzt1BAIoA81iX9doXMPURKMMM
-	3fyp8i99arSYWUg=; b=XQ6HpgTqXkO527ae/IbxYlSfkc7sfEIVp0kuttKpes0n
-	lQjKWJOahQi33prdUWg0wfFMrmNQ3i9IFnhtFmQfbdDfzxsXuYnHPnpwfanwPHz6
-	HihnuOhWpPATPDF6PPAzui7Jjd3KucgaSeDHyL1n2lYF6kr+PA9X0WWBstjxCkVZ
-	ZUOBmF5DHZStQjK0dMPGvmtRQBZJTbgqNGm6I9V7NHY96GDdhOgCT+DxqoNAQs3r
-	nQZq/Fr5Hk7NcrYPctv0nujnDbwRRxsd78EOBJhg76Ni+Y6+3ALwZACo4byoszu/
-	RMhMLouYkbXD4Xsvm03rgLIIk6No2XA/SafX5K9Gkw==
-X-ME-Sender: <xms:ayIAZ82rBBztLvZ0vtJ9hQg8dlCEEUMYl92RkqNXBD--bG89hm-wcg>
-    <xme:ayIAZ3FwSY-jBqMGnMroGJBJxjRhwK6b_GexqeD9BIslOxHUJOjDRaJL02HDI5idI
-    RE5C6Bg9nKVKEFdyA>
-X-ME-Received: <xmr:ayIAZ06-1prntppj39MD9VqZrz-oGVhGRZdlON3aRF-fkMqKHjDOM8OHWEvbZqbR93a3P_R_puJAeIJMUjP3rE0NVAMOn0-kR96jDn0EUlKDa9pg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedguddtlecutefuodetggdotefrod
+	fm2; t=1728063875; x=1728150275; bh=Vfz0IyXxtd7Hni4Casu0Syizr1Py
+	POPDYTsIRcNvXY4=; b=MK+fb08KsPx9WmUYqtpneT78r2gmWAhdOM+wF7oX8Zoz
+	yesvGczPrtc5it7K4BDQrCBYnNdsqH6w+Cj/ej0KEtLRE/gIMZyJn+wgfpWXX/Go
+	JgiymdaMC/F2VJBJZeMjd65uKyImw86GIL7zIXkLHCrkp9Wgm/PplpF7cBu9n3zW
+	lcfEVv8QcbrochiMY6gpFGj4hWzw+aHRrE7Egv2f0xkFUg4Kihxq2tw2yJYh31AA
+	UD856nQ44Gae39NcMU3NdXcJ12tV07ffPSGq11c3Q1CYZ7VeMqOSZH+5ijfCJr2n
+	sOWwORsRdcLY+yM3KDeW7+tvvIe039Vi541lL1AUpg==
+X-ME-Sender: <xms:gSkAZ7YZ8ZJq585nyuiU9YNdmtEEQ6HIyDHuQ23MMa0yGPcxmOGwjQ>
+    <xme:gSkAZ6aSf_25PDXv9VcB3DFaXG2CgwpqUgYy3bb62A3Yv0GH2bHR7bk5J03hvKe9W
+    gpXTqJaLcc593tJ5g>
+X-ME-Received: <xmr:gSkAZ9_seqk1wFkRosrKiUEd_dpMadjc8-0b4oi2juCoWJdbah4afvyN5fDibuzoHnebncQsZj5mqaYxVY341KTADp1bfi8dT-VXN1U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedgudduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
-    hgmhigrdguvgdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhl
-    uhhsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:ayIAZ12HNDXRdqb6yZ8cNIHlxouTNP1RJ8EnDiwS4hemQCw46NKcIw>
-    <xmx:ayIAZ_H0-oTyA3tibSDtJGpSyTfVkIuC9v1tPTzO9LXplBqzlj4LwA>
-    <xmx:ayIAZ-9s_WOrW8afiZiHi8L9VR5Yb450vc5B_bike7lq0q3-fLpJiQ>
-    <xmx:ayIAZ0mtt2OXWWQUEs2sEJ_XP0r7hKVU-FLXx3pBNpAo-qIJzUk_Lg>
-    <xmx:ayIAZzg8zKZVjfelZmADZUooski4rZr-_YcxSV-XtbDc1ka6gVPmvK_K>
-Feedback-ID: i197146af:Fastmail
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
+    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepkhhojhhirdhnrghkrghmrghruhesghhrvggvrdhnvg
+    htpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtgho
+    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gikAZxqhnp60xWQEcNwXB-FnVc31P8VwRH54I7HHKFzllAUa4Ozf8w>
+    <xmx:gikAZ2q4g1q3x_EwXskzGYyXWIMGVLlWsactpE3C9qyMQgW69vyTHA>
+    <xmx:gikAZ3RdY1AES1iCvdxxSNTcxWXYGjIJ1BmiVNG02FXsJsCe_iD7_Q>
+    <xmx:gikAZ-qT0rFxWYvYUvxVEktefrpt8zPuQYSAHKk2G85pz-lkPFMEqA>
+    <xmx:gykAZzBniSYY_waYZU1R0Cn3nMueqIUL0KK21RFPkGmDXFiaoqff5U8R>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Oct 2024 13:14:18 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 128890ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Oct 2024 17:13:23 +0000 (UTC)
-Date: Fri, 4 Oct 2024 19:14:14 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: v2.47.0-rc1 test failure on cygwin
-Message-ID: <ZwAiXuNPK_SdnfEz@pks.im>
-References: <b1b5fb40-f6c2-4621-b58c-9b7c8c64cc01@ramsayjones.plus.com>
- <Zv9oIrKveu-JAGQM@pks.im>
- <Zv-HbT8qrM6IYKb4@pks.im>
- <8718c5c4-1d0a-104b-eb39-6338ae9c5dbf@gmx.de>
- <Zv--68J5qv60IuQz@pks.im>
- <f29241a7-aadd-e824-97f3-a95ac6619951@gmx.de>
- <xmqqbjzzg89u.fsf@gitster.g>
+ 4 Oct 2024 13:44:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Koji Nakamaru <koji.nakamaru@gree.net>,
+    Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v4] fsmonitor OSX: fix hangs for submodules
+In-Reply-To: <pull.1802.v4.git.1728000433326.gitgitgadget@gmail.com> (Koji
+	Nakamaru via GitGitGadget's message of "Fri, 04 Oct 2024 00:07:13
+	+0000")
+References: <pull.1802.v3.git.1727810964571.gitgitgadget@gmail.com>
+	<pull.1802.v4.git.1728000433326.gitgitgadget@gmail.com>
+Date: Fri, 04 Oct 2024 10:44:32 -0700
+Message-ID: <xmqqiku7epa7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbjzzg89u.fsf@gitster.g>
+Content-Type: text/plain
 
-On Fri, Oct 04, 2024 at 09:09:01AM -0700, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> But unfortunately this still caused permission errors when the new path
-> >> was held open by another process.
-> >
-> > Yes, this will _always_ be a problem, I think. The
-> > `FILE_RENAME_POSIX_SEMANTICS` as per its documentation should help, but if
-> > it does not in your tests it might actually not quite work as advertised
-> > (wouldn't be the first time I encounter such an issue).
-> >
-> > I tried to read through the code (it's a lot!) to figure out whether there
-> > is potentially any situation when the `tables.list` file is opened but not
-> > closed immediately, but couldn't find any. Do you know off-hand of any
-> > such scenario?
-> >
-> >> I think for now I'd still lean into the direction of adding the !WINDOWS
-> >> prerequisite to the test and increasing timeouts such that I can
-> >> continue to investigate without time pressure.
-> >
-> > Let me bang my head against this problem for a little while longer. You
-> > might be right, though, that this is a thing we cannot fix in time for
-> > v2.47.0, which would be sad.
-> 
-> If you folks think it would help stabilizing the tentative fix, I am
-> open to the idea of delaying the 2.47 by a few days.  Currently the
-> 2.47-final is scheduled on the 7th (Monday), but we can do 2.47-rc2
-> on that day instead, and move the final to 10th (Thu) or 11th (Fri)
-> [*].
-> 
-> Thanks, all, for working together.
-> 
-> 
-> [Footnote]
-> 
->  * All dates are US/Pacific, 10:00 am
+"Koji Nakamaru via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Right now I don't yet have a good idea for how to fix the issue. I've
-been trying a bunch of different things that, according to Windows docs,
-should've made the renames work. But they didn't, and I don't really
-have an alternative right now. So I'll need to keep on thinking about
-this, and maybe get some more help from people familiar with Windows.
+> ... The test is
+> disabled for MINGW because hangs treated with this patch occur only for
+> Darwin and there is no simple way to terminate the win32 fsmonitor
+> daemon that hangs.
+> ...
+>      @@ t/t7527-builtin-fsmonitor.sh: test_expect_success "submodule absorbgitdirs impli
+>       +	done
+>       +}
+>       +
+>      -+test_expect_success "submodule implicitly starts daemon by pull" '
+>      ++test_expect_success !MINGW "submodule implicitly starts daemon by pull" '
+>       +	test_atexit "stop_watchdog" &&
+>       +	test_when_finished "stop_git; rm -rf cloned super sub" &&
+>       +
 
-So deferring Git 2.47 because of it probably does not make much sense
-unless somebody can up with a solution. Also, as noted already, this is
-not a regression, the behaviour actually improved even on Windows. Not
-to the degree I was hoping for, but at least a bit. So that's another
-reason why I don't think it is worth deferring over this.
-
-Thanks!
-
-Patrick
+Let me update !MINGW to !WINDOWS while queuing.
