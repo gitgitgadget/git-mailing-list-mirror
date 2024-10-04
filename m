@@ -1,93 +1,67 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E55BA4D
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 02:42:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298C925634
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 03:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728009756; cv=none; b=tdmO2vkTDHoAqCO5h2jpgy2TJr4U+BAuK/QCTTnn7VqVtAvdPkf0MwWuEedfgeHU7WFbL0h7yVKaREQYV9CI4xwTE+D7vZL10eZTAehU5HAt4BT6RP23+tUxAJHOh0F3apOP3Qy09xpwobWUaj7n94/MdpKTJiV4f3JVTIYUopM=
+	t=1728013239; cv=none; b=CzBpsGRTZvz04jtSeOSvFKV1rulPv0OznI6brrBru8iUYXJhvrZNFho9QG2v2pBqdwpwgrbKRd+XjCeIckTZS2ZMltjdmUSmNwqibAhEgw4ZPLAE1/Ng8i4eSWxJnOitdNeMg0VVk5QYWBu4KcA1xndzlMZEtNeuET7cnnmrdxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728009756; c=relaxed/simple;
-	bh=BmVyE0e8PiFIKDIjzKL1ToS0DfULfpTgLgJYPej02hY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SALQL9ZRVQlROKTgJ2yKtFw+jRzazRGLAC0CDn7CYDk9UwSV4C9HH8G9Z1/bKJbEgak1iPpwHTA4Zj9CGq2FWJ/rn1y/gmnNbZnjf4CE4MpxeewX0EY5/vr9rr269Aqc8DLLsg58JXs3QlH1W4KqHbcor8xIDuZCj6vmg+2DZDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=IzJL6sns; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
+	s=arc-20240116; t=1728013239; c=relaxed/simple;
+	bh=1+QzvuCNg399uWRWuHUlD+L5PxDyw2fLEOQ5okGmai8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Eabwfv5baE5Y4NEggEQXUOsmzYKqBf8weNhBUDP4g5LnGpSn1EhsmSoOWNtCwjlU8pUzuW2wLrdZb9bwegbXdC/RZXDiPmfNl966f+13/gNrANke4Gf3QIM3ONzDIKleAkCgLyXWUltMm76IJrxTstK7Fp03EkyKPycaVlwV5bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DmGk5VkW; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="IzJL6sns"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e25f3748e0so17943557b3.0
-        for <git@vger.kernel.org>; Thu, 03 Oct 2024 19:42:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DmGk5VkW"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6cb2f344dbbso13462586d6.3
+        for <git@vger.kernel.org>; Thu, 03 Oct 2024 20:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1728009752; x=1728614552; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I+rnwAqi2OanUSYv/8eWZxDSTQv875qvmBoqUMNHqnw=;
-        b=IzJL6snskC720j04rQWcquvP7K8pT2j6jXjZShVwzV7INeJ9lmuK+n4Nf8tngzEGMP
-         IoviTDIIQ9Whj0NbHaT2OGOD+KTkIw/L/4YoqXPAxrl/PKvvbhFFOxpDS8GpxAi+nMkj
-         SsDpo1jqF8HgTMqoYIZaTnEwKDhin+AQAWkni0NPutKhaZ+zUVFgo4vBDF81fPbsOglJ
-         Jc6OomRth7ruY6b9ZdWzidEQ3v1BDpyKsi24oyktzBXzvfWJtbh9qxvYs/zmoXObp89y
-         5cBHApLLeEmJZrVx7ie3lzaROlD2yi/n8Bmj8c9ZU2uLNUwEJyKx++AgvcKHP8XuYJEU
-         ADpg==
+        d=gmail.com; s=20230601; t=1728013237; x=1728618037; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=1+QzvuCNg399uWRWuHUlD+L5PxDyw2fLEOQ5okGmai8=;
+        b=DmGk5VkWEyzMs4TdAhumgyacCRrkzd5kwzgEh+3UqjpzfJjbWpuoJb3/9sZo1Penr7
+         8cJ2LiXjc0Uph07Vxa/hl1PGddrTPwGnhjy6NSC+z+cIofv8pLYOs9/C4S65R8c4RsXw
+         IJwWvuAu4L7/WQXQEJza4LkocanEwLh4ZKvV6OOzHj1uOKPACBW/GJZGCmgwwISydw98
+         8SXzW+btmKTHBN9YTQKsPTK3MmS00Hms0Js40euvPlsFt0/E3XOQ65sfdFyRkKtTjiV7
+         9MNNMZFQ6STly9ZGAK2hyc+yL3NH+22t+tON7j8ZkKmZ77LB23AnNt777H7uJjF7CLWU
+         rA9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728009752; x=1728614552;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I+rnwAqi2OanUSYv/8eWZxDSTQv875qvmBoqUMNHqnw=;
-        b=ZCbhUgsv3M/RkHk0LIXv7E+oB/Y2BNDR6BSvkfZ19oyXrj0nD1qS63Wd4sn6L8+W+t
-         oZVPNYkIT2xsHqR5ZiNbJcn8gx5mG7X1CKI6AigTkfawLHUtGXYVql1LPt+xngILDCB9
-         oJBRCSkwZF2owSG6UqKwcgxZGpumbk7/h2q/KfNiwIkuvXlHNrP5rweXlAkFHgYd9lJF
-         MPAVyCyuzHTkaAqggSL7jJ/0Omv/imG1avDNTTRllK1iATFlZdCA1+yaImjXRnfmnM5M
-         tXE+jIMZBjuRSH13SLc7ZORfVQklGzo6VGw0Il1BquNNkZNZvbvgizMrZq/c72sMUBsg
-         tL2w==
-X-Forwarded-Encrypted: i=1; AJvYcCVMbJC3HByE0Z5MLOSGPhaT4dLudm0LL8leT7eRiZRw9bvw9Rh/dHYmsb5/Iz2PZZFsitE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwOl8CiYeYOfovHo4JJP5NBctcGyBhESLynZkRuaobuXR8jnv1X
-	crHOfuKGMqE2pYzCxBctO7u4M7j4WucXfgvdSjtE+SR8RTkc++GOpKxGTtAJ2iwRaysz7sEScMF
-	lLZZU7zKBzGjaEulUwD23S2WjMlmIZ31lsTjlwp9unM+Q7/Vx4i0YdhjW59wxUfWu7MjRdtmq9G
-	urHDO8OHg5Tnq/kFgmpCilgY4Sz8ThsjYYrTvc9q3RPdCpBp0kKxuunPlDcbYm8YO0AnSR7zZNN
-	OvlXDNGrP0PpC3OnZMZujZuJ4Urygzss8YuX4BHUdb2ZGxvqj2ZR97UJNf8YE5nrGYi5d7dq2zN
-	FdnicO+c0P0l3uYljXuBbpie
-X-Google-Smtp-Source: AGHT+IFpn34ojq4ezGPHWGgX6Gmj5K2OPuXRweLksYBuz9voDTHsjsVLc8GdjuyS+zX4aeGDJPKoguSJARAk+lG6bBI=
-X-Received: by 2002:a05:690c:2f05:b0:6db:db51:1a6f with SMTP id
- 00721157ae682-6e2c703c243mr11208237b3.26.1728009752612; Thu, 03 Oct 2024
- 19:42:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728013237; x=1728618037;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1+QzvuCNg399uWRWuHUlD+L5PxDyw2fLEOQ5okGmai8=;
+        b=Mqbr1e1SdpjHshHTof5flJooRVQnFjbjJIVoD1i74kKlAYUuohQcr/vXhVwZ8+FrR3
+         CLqC9MbXRZXWk8N95HwyOsLYbUfSPkcZyKnicif3U4H7wz38vLyXOJNZfuQI+4rxN/5v
+         zi9Bs/OsYSALVBCb3nCHo7QhCe3KtpK0AWF0FTTFMeHcniLrWFkYCn5BVfKGnkvaBWMI
+         53WZXEjIvfe0f+LBMvazBObHFuC44Z6uw5rej5B6WZTCNiPg2ZUIXmZHfHfjCo1haRtM
+         LD1zuLPEbgLucwe3CncYu0hOJl7A5qZZwv4ttKwDcSURr/ta/HacTg4BHtcGeF3f82Uq
+         /mhg==
+X-Gm-Message-State: AOJu0YxS+4U9vOZcuEV5NR6vvgRuhvsHKHZjSN+lxTzPqrba4Vcn4YTa
+	k0F9QlwQ7FXKRRrAund9tB8GkJz6sZNYYqZ/YboPZ1HZKJMfHFXxDrJeNT83A2i1N40Mi6J7npJ
+	RZ3xWDvgSa8+S8XEXLv+4wh+HB3k=
+X-Google-Smtp-Source: AGHT+IFc2JRRN/evLfclzcT2eJZbmCsxLwnI+aGMDCl+eS/3oIu2AZngGSrFOq/lDHZCpmYz/yluNptnXaiYZoq6QYw=
+X-Received: by 2002:a05:6214:3f83:b0:6cb:99db:bdbf with SMTP id
+ 6a1803df08f44-6cb9a4e7955mr23691416d6.43.1728013237033; Thu, 03 Oct 2024
+ 20:40:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1802.git.1727577690390.gitgitgadget@gmail.com>
- <pull.1802.v2.git.1727759371110.gitgitgadget@gmail.com> <xmqqwmis11f7.fsf@gitster.g>
- <CAOTNsDyg2SB-wd+a7vrctXck46jyfqV4uME6nf4YQZEafWbxMw@mail.gmail.com>
- <xmqqmsjnya1c.fsf@gitster.g> <CAOTNsDz=gV1TQ=N+8V+CdhWkPSogNM-42B+vzhDNWdM-Wz9CfQ@mail.gmail.com>
- <CAOTNsDygwBkNdFX4K_ixL5kP-AvDxWWVXkvfkmV4Kh04ozdYkA@mail.gmail.com>
- <xmqqploimkx1.fsf@gitster.g> <CAOTNsDwSTO_iXqG7-ez0O0Y-xbDbEBa6-EiAL-DL=PR1nbM6Zw@mail.gmail.com>
- <xmqqcykhhyj3.fsf@gitster.g>
-In-Reply-To: <xmqqcykhhyj3.fsf@gitster.g>
-From: Koji Nakamaru <koji.nakamaru@gree.net>
-Date: Fri, 4 Oct 2024 11:42:20 +0900
-Message-ID: <CAOTNsDzOscsO2iv63J-hXzz0NHhuZNZqLiz+QBy5WAbjzr+ipQ@mail.gmail.com>
-Subject: Re: [PATCH v2] fsmonitor OSX: fix hangs for submodules
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+From: abdulwasiu maryam <abdulwasiumaryam@gmail.com>
+Date: Fri, 4 Oct 2024 04:40:24 +0100
+Message-ID: <CACUwfm6S3Qm=VHvG2a0Yqh6FdOhk9S3BzELr7p6HAL8qmrgGyw@mail.gmail.com>
+Subject: Outreachy
+To: phillip.wood@dunelm.org.uk, ps@pks.im
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 4, 2024 at 2:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> > Because it's getting complicated, how about the following:
-> >
-> > * specify MINGW
-> > * note in the commit log:
-> >   The test is disabled for MINGW because hangs treated with this patch
-> >   occur only for Darwin and there is no simple way to terminate the
-> >   win32 fsmonitor daemon that hangs.
->
-> Sounds good to me.
-
-Thank you. I've submitted [PATCH v4].
-
-Koji Nakamaru
+Hello,
+I am Abduwasiu Maryam, An Outreachy applicant, (Dec 2024).
+I would be glad to work with the git project #1 "Convert unit tests to
+use the clar testing framework"
+I would be glad to intern and learn under your mentorship.
