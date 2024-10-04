@@ -1,164 +1,208 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B9C1FAA
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 06:13:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBA014600F
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 09:00:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728022395; cv=none; b=ioEEvRCwQqLiw4YhL0r7oMW/ktlm1J/SXoQF1PkSaCs1Em/sY8dqprqQizkpDU+mvDaWPi4vHr5cXz/eqr9ubfBtGNAS/1MOG8k3Wr+YzNPN4iYWs/0/wsCG/f+y5LOAwzVHql93Fa2koA1eGMDLQQKRORwTtKyfWu2HIbG6P7I=
+	t=1728032430; cv=none; b=SRsx4+pFveyYFL8jXD/PJ0qkTmRzeKe052hmUzcfhTJ4aqrLFv2nBzEk1Jf5jyOsQYMo3kwqlaiGIxIw6+0Db12pcFjR7h+ulwnvNOP5haIBVE3qaLg2MnCFMNy0qaXvj29K2XMw7RYT5xw8tesusmuo3R+kHtMXbl+BuSv8G/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728022395; c=relaxed/simple;
-	bh=2oFwZlDxEDvf+QoDSEXWx5pe4FaNk03JUqMbvCAY/jE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P2ScERHd26S+L/JN3E3TFbduHWkf3s0WQKsgPhNErw5IIQsNapsd7912gVsQNxZRzGGsgiUvYBVx485YE1w+ZImLwiQaxDO+l7JugUwnRBhf1p8LQGld4+yXvv/fHoKphOPNh9ge+0Xet/g5ZfFlYDo2fMfMUDGHKneW/XyhV2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hPhX8i92; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kkJbNHT5; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728032430; c=relaxed/simple;
+	bh=KCkx/F5KBIZzqZD8ZxAOW6YlBZ61SPbj0XyLTZl+n18=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=NVRnVoChhoayypmF1LkY7NjmUrXMrYurE6JsOwjFDHKBcYJXEpp6zkaF0dZcLqMP5n5WqMD8ljICsBk/EV48po9He1vLl7SQgmNQ08MDQhb6uOky1ktPXe1VcDzNjtmXeST8qtCnkgI1iN4mQlkgEWSSy3oFUwRUOCIOcS9G1To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BkPsWqPS; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hPhX8i92";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kkJbNHT5"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1CDC7114025A;
-	Fri,  4 Oct 2024 02:13:12 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 04 Oct 2024 02:13:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728022392; x=1728108792; bh=ye5OQ4zS6E
-	JAsS14N3AbUGxV1V3FINE5vvNlDA2ikZk=; b=hPhX8i92oPJVVoiZBMAWNKGCHX
-	rGY0T+ucrFlRsIMWT7TfQVHaddQJHW95m6SWY0/TJqkrmquHBSJUUN+To6BQH7It
-	GJFwXyMDNAU1xvI8QLghkkXMn8UiMyJtQITjnqOtCtJq8v63FsOcgCZShpCQlJuK
-	P/gXIHxeOUq/A7IL7Kl2sivFgdN1bwGk1dVpmfdVG4afEiSYwCGTHq67BNc81lpI
-	xmt8hWUd0DyBMv84iwVza1dUalW4jx1UcTduMigr0/Ib7xci2eyPa5eWU5wNNaIr
-	DvspoVUopsu640RNlxr5hscQoA2EBIf0oohuZ8WdrdlY0XKq4hv7gZtsvCXg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728022392; x=1728108792; bh=ye5OQ4zS6EJAsS14N3AbUGxV1V3F
-	INE5vvNlDA2ikZk=; b=kkJbNHT5AXI1maBKV5rLMSoVtzKocbon2K5IXb9pgJQ4
-	2fy+5BdGqY1i024XQQj6MBEpnksmfdd18fZLmXdYKzWXMfeEFRJWMh2QynmE/dK+
-	gWha0KKh7zX/O2hT7hcMRwjL2PBmLyzoNPTWcHL9NTWveCPooR7n0VKJPt5+eJoD
-	mDPIjfInYyHYcVpKWIYjEEuC1UYLmwiYKk0rxt2NWeF9d6EATmTLgoO8l2xXinm/
-	BsUVKQAPTjLysTpQkF3qLElywaGZnf+yF76TIpL3h8ZhEZ7pcJ8WwZCCmwNpvfwP
-	gmzAyxjrvLAGYXweSuSRemFBfAjQyIP8nvPNjXl9wQ==
-X-ME-Sender: <xms:d4f_ZgR6OL2k8rM5dKwkM3iiLgjahEVU0jBf1PARS_BNeWnBONocKw>
-    <xme:d4f_ZtynUYpZcmFVkAsj6vDd990Iuohu5o5QJfhLPGCGETgLQ5Jaso8gIm6XOdiov
-    mQ-mHIczPGX1k3x9w>
-X-ME-Received: <xmr:d4f_Zt14xL_yLhaV21Tpne-lMAu1baND2yeicdU_HPqzn-xr-Vmh_7vCeMYlOMXksc5p4NFyzKNZ8N4KkHwqsvVmNoEWYPQ_GiNHqxWjaU4M0Oid>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvvddguddtiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehrrghm
-    shgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhm
-X-ME-Proxy: <xmx:d4f_ZkBw3YEDmOcMuvtdVyW7-bZh7K4nfnGePI9TFOajVh-msaT8uw>
-    <xmx:d4f_ZpgPZnU7Qa5me6nLac9R6ur41fTn3z5gYPd_IIrcsdcWdpBO_w>
-    <xmx:d4f_ZgrQfV-182-AZxcrafYLWQEmzI6IIrNTh8o5-RcTzAW8OlnKVQ>
-    <xmx:d4f_ZsghUJmNrGVxCb4GGpaXovfRuKR6bb97ZdhAl0_xXd-xF-hrgA>
-    <xmx:eIf_ZutsiKBjJ_WCJmcf1NilA0linAus6XAP351lP3_eIrB5rEWxVIdi>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Oct 2024 02:13:10 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6200794c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 4 Oct 2024 06:12:16 +0000 (UTC)
-Date: Fri, 4 Oct 2024 08:13:05 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: v2.47.0-rc1 test failure on cygwin
-Message-ID: <Zv-HbT8qrM6IYKb4@pks.im>
-References: <b1b5fb40-f6c2-4621-b58c-9b7c8c64cc01@ramsayjones.plus.com>
- <Zv9oIrKveu-JAGQM@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkPsWqPS"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5389e24a4d1so2209232e87.3
+        for <git@vger.kernel.org>; Fri, 04 Oct 2024 02:00:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728032426; x=1728637226; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mn6qMVvL9kXUHG/+8wpBsvckiV8b9ytFiF+ryWxXBmk=;
+        b=BkPsWqPSsSdI11qIDVwbmi5uVtqZGD1Uk9sMDfBvBH2jVX1dC0DD+z0dMrpf013lgf
+         zDq0JGiKfE3+9VqvNF/URlftH1WNqIp9fhEQ3T18H+zWUD378jIthNhFzBZP4fjDRuAi
+         tULOuOJsHV3nyuQcde3HdXS+fF6saxq0S0PTmM+GQ6oI17WV/BBiN0rkeM9U5g6BM/SR
+         lOsGKJ1H+XsZ9+n3mm9MGkERhwbO9bSp674mTn8+V9r+XYggpJMOhlZ1ETZG7YOK07K2
+         EmvA/n7uSEmVPEX+NEaiXAiJIjKuFwrf2RM3iQiRxfyiCVbnlCDVzKV0NLFu5LRfnmda
+         7MPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728032426; x=1728637226;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mn6qMVvL9kXUHG/+8wpBsvckiV8b9ytFiF+ryWxXBmk=;
+        b=N/wOc79xjr0IfGffMeps52mmIDdhFSzN0/2jULyfdk2GyR81RHey5kPutscty8jlLI
+         LVajLld/6t9h4faa+JD5bW3Dp5pAGcTPhVhd6e9ntANKsHwpL+Umwifb0S1jh0c5EaoL
+         LUXPyCJ1IFCUXJkTY/BrZBri9gWHfQgnzKoEG20+OUGLpRoWa/7NAXwRDF0uzs4upawk
+         R4+YDo/Bzyck0ZRv1gk2QCxjvf3dIsxyoQQCuRP1eXVbJLKneujmteFNOuIn8+2/hUca
+         dZLOJ7GseztUXGcUQdKSjatG1cdpx5ye9vk2QQ4XkOtfwhciOENdFv7kctUbsRcHkjTt
+         n7NA==
+X-Forwarded-Encrypted: i=1; AJvYcCXaHsUBA9GyOnAdJH2YWTViQJIXqwkuhfgHL70M19a8QDB7/jHRpQ6psuH1xdtfBDHMYhA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/stLnMQXyh/72Sn9yyOpkaayYcKWtAp96TOLuRySGVNL4pZkv
+	D93AEk0Qb5ws/ZRmrezKlna97Vb7z6sF3EwvcpWB1MvZBzGtCL1B
+X-Google-Smtp-Source: AGHT+IEhK2HNheRwjbCONP38xm8xJsbX3ALsmXKwRs/44YOys+CJ36sNnEFhFEWcU9y/y7l56Aio4Q==
+X-Received: by 2002:a05:6512:3c8c:b0:537:a745:3e with SMTP id 2adb3069b0e04-539ab8add14mr1031221e87.45.1728032426118;
+        Fri, 04 Oct 2024 02:00:26 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99102ab1b5sm196708866b.97.2024.10.04.02.00.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Oct 2024 02:00:25 -0700 (PDT)
+Message-ID: <9731c23c-4383-42c4-83f6-1cf6b25f89d8@gmail.com>
+Date: Fri, 4 Oct 2024 10:00:24 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zv9oIrKveu-JAGQM@pks.im>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH 1/1] Add a type for errors
+To: Emily Shaffer <nasamuffin@google.com>, phillip.wood@dunelm.org.uk
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>,
+ Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+References: <20240930220352.2461975-1-sandals@crustytoothpaste.net>
+ <20240930220352.2461975-2-sandals@crustytoothpaste.net>
+ <2d2f14ea-cfdc-4b52-948f-b42c8f6e41de@gmail.com>
+ <CAJoAoZnhY0Z7XdNqt8A598jptiNVDJC=4kT5n_n1FCGN5GkXRg@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAJoAoZnhY0Z7XdNqt8A598jptiNVDJC=4kT5n_n1FCGN5GkXRg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 04, 2024 at 05:59:30AM +0200, Patrick Steinhardt wrote:
-> On Fri, Oct 04, 2024 at 02:02:44AM +0100, Ramsay Jones wrote:
-> > Hi Patrick,
-> > 
-> > Just a quick heads up: t0610-reftable-basics.sh test 47 (ref transaction: many
-> > concurrent writers) fails on cygwin. The tail end of the debug output for this
-> > test looks like:
-> > 
-> [snip]
-> > 
-> > t0610-reftable-basics.sh passed on 'rc0', but this test (and the timeout facility)
-> > is new in 'rc1'. I tried simply increasing the timeout (10 fold), but that didn't
-> > change the result. (I didn't really expect it to - the 'reftable: transaction
-> > prepare: I/O error' does not look timing related!).
-> > 
-> > Again, just a heads up. (I can't look at it until tomorrow now; any ideas?)
+Hi Emily
+
+On 03/10/2024 17:17, Emily Shaffer wrote:
+> On Wed, Oct 2, 2024 at 2:54 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> Part of the reason it works well in rust is that it supports
+>> discriminated unions with pattern matching and has the "?" macro for
+>> early returns. In C the code ends up being quite verbose compared to
+>> taking a pointer to error struct as a function parameter and returning a
+>> boolean success/fail flag.
+>>
+>>       struct git_error e;
+>>       struct object_id oid;
+>>
+>>       e = repo_get_oid(r, "HEAD", &oid);
+>>       if (!GIT_ERROR_SUCCESS(e))
+>>           return e;
+>>
+>> With a boolean return we can have
+>>
+>>       struct object_id oid;
+>>
+>>       if (repo_get_oid(r, "HEAD", &oid, e))
+>>           return -1;
+>>
+>> where "e" is a "struct git_error*" passed into the function.
 > 
-> This failure is kind of known and discussed in [1]. Just to make it
-> explicit: this test failure doesn't really surface a regression, the
-> reftable code already failed for concurrent writes before. I fixed that
-> and added the test that is now flaky, as the fix itself is seemingly
-> only sufficient on Linux and macOS.
+> I actually don't find this complaint all that compelling; it's not
+> hard to write a shorter macro that can be used inline, so we can do
+> things like:
 > 
-> I didn't yet have the time to look at whether I can fix it, but should
-> finally find the time to do so today.
+>      ERR_VAR(e);
+>      if(ERR(e, repo_get_oid(...))
+>        return e;
 
-Hm, interestingly enough I cannot reproduce the issue on Cygwin myself,
-but I can reproduce the issue with MinGW. And in fact, the logs you have
-sent all indicate that we cannot acquire the lock, there is no sign of
-I/O errors here. So I guess you're running into timeout issues. Does the
-following patch fix this for you?
+Right, but what's the advantage over passing the error struct as a 
+function parameter? It feels like we're adding extra complexity and 
+hiding the assignment to "e" to work around the inconvenience of 
+returning a struct rather than a flag. Is there some other advantage to 
+returning a struct that makes this worthwhile?
 
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 2d951c8ceb..b5cad805d4 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -455,10 +455,7 @@ test_expect_success 'ref transaction: many concurrent writers' '
- 	git init repo &&
- 	(
- 		cd repo &&
--		# Set a high timeout such that a busy CI machine will not abort
--		# early. 10 seconds should hopefully be ample of time to make
--		# this non-flaky.
--		git config set reftable.lockTimeout 10000 &&
-+		git config set reftable.lockTimeout -1 &&
- 		test_commit --no-tag initial &&
- 
- 		head=$(git rev-parse HEAD) &&
+Best Wishes
 
-The issue on Win32 is different: we cannot commit the "tables.list" lock
-via rename(3P) because the target file may be open for reading by a
-concurrent process. I guess that Cygwin has proper POSIX semantics for
-rename(3P) and thus doesn't hit the same issue.
+Phillip
 
-We already try to emulate POSIX semantics somewhat in `mingw_rename()`
-by using a retry-loop when we hit `ERROR_ACCESS_DENIED`, which is what
-we get when the target file is open in another process. But that
-seemingly isn't enough when there is a lot of contention around a file.
-So I'm currently investigating whether we can adopt something similar to
-what Cygwin is doing for Win32, as well. I assume that they use
-`FILE_RENAME_INFORMATION_EX` with `FILE_RENAME_POSIX_SEMANTICS`, which
-should give us what we're looking for.
+> or even a macro to do the return if desired:
+> 
+>      ERR_VAR(e); // or, i guess we can be not SO lazy and just write
+> struct git_error e here, whatever :) )
+>      RETURN_IF_ERR(e, repo_get_oid(...));
+> 
+> For better or worse, you can do a lot of things in a macro, so I don't
+> see verboseness as much of an issue because I think we can hide a lot
+> of it this way.
+> 
+>>
+>>> Provide the ability to specify either an errno value or a git error code
+>>> as the code.  This allows us to use this type generically when handling
+>>> errno values such as processing files, as well as express a rich set of
+>>> possible error codes specific to Git.  We pick an unsigned 32-bit code
+>>> because Windows can use the full set of 32 bits in its error values,
+>>> even though most Unix systems use only a small set of codes which
+>>> traditionally start at 1.  32 bits for Git errors also allows us plenty
+>>> of space to expand as we see fit.
+>>
+>> I think the design of the struct is fine. It does mean we need a global
+>> list of error values. GError [1] avoids this by having a "domain" field
+>> that is an interned string so that error codes only need to be unique
+>> within a given domain. I think that for a self-contained project like
+>> git a global list is probably fine - svn does this for example [2].
+>>
+>> [1] https://docs.gtk.org/glib/error-reporting.html
+>> [2]
+>> https://github.com/apache/subversion/blob/be229fd54f5860b3140831671efbfd3f7f6fbb0b/subversion/include/svn_error_codes.h
+>>
+>>> Allow multiple errors to be provided and wrapped in a single object,
+>>> which is useful in many situations, and add helpers to determine if any
+>>> error in the set matches a particular code.
+>>
+>> The api appears to require the caller know up front how many errors
+>> there will be which seems unlikely to be true in practice. I think a
+>> more realistic design would allow callers to push errors as they occur
+>> and grow the array accordingly. For example ref_transaction_prepare()
+>> would want to return a list of errors, one for each ref that it was
+>> unable to lock or which did not match the expected value but it would
+>> not know up-front how many errors there were going to be.
+>>
+>> It would be useful to be able to add context to an error as the stack is
+>> unwound. For example if unpack_trees() detects that it would overwrite
+>> untracked files it prints a error listing those files. The exact
+>> formatting of that message depends on the command being run. That is
+>> currently handled by calling setup_unpack_trees_porcelain() with the
+>> name of the command before calling unpack_trees(). In a world where
+>> unpack_trees() returns a error containing the list of files we would
+>> want to customize the message by adding some context before converting
+>> it to a string.
+>>
+>>> Additionally, provide error formatting functions that produce a suitable
+>>> localized string for ease of use.
+>>
+>> I share Emily's concern that this function has to know the details of
+>> how to format every error. We could mitigate that somewhat using a
+>> switch that calls external helper functions that do the actual formatting
+>>
+>>       switch (e.code) {
+>>       case GIT_ERR_OBJECT_NOT_FOUND:
+>>           format_object_not_found(buf, e); /* lives in another file */
+>>           break;
+>>       ...
+>>
+>> I know this is an RFC but I couldn't resist one code comment
+>>
+>>> +#define GIT_ERROR_SUCCESS(e) (((e).code == GIT_ERROR_BIT_INIT))
+>>> +#define GIT_ERROR_SUCCESS_CONSUME(e) ((git_error_free(&(e)).code == GIT_ERROR_BIT_INIT)
+>>
+>> git_error_free() returns the code as in integer so we don't need ".code"
+>> here. Also our coding guidelines would suggest git_error_clear() for the
+>> name of that function.
+>>
+>>
+>> In conclusion I like the general idea but have concerns about the
+>> verbosity of returning an error struct. It would be helpful to see some
+>> examples of this being used to see how it works in practice.
+>>
+>> Best Wishes
+>>
+>> Phillip
+>>
 
-gh, well. Turns out the implementation of rename(3P) in Cygwin is 500
-lines long. I guess this is a non-trivial problem :) But they of course
-have to handle a whole lot more cases than we have to. But my guess was
-correct: they do use `FILE_RENAME_POSIX_SEMANTICS`. The catch is that
-this flag only exists in Windows 10 and newer. But that should be a fine
-compromise.
-
-I'll try to wrap my head around how all of this works.
-
-Patrick
