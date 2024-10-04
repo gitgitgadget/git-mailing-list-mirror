@@ -1,41 +1,65 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EE21474B9
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 22:41:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEA513A416
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 22:47:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728081669; cv=none; b=ZVtDIVf+Bm/d7yJ2q1hsOvVn+B7RzVlgOVyfQO1bGoDSOdveABjOz1w2LlzThYmJ0RHwMa6luvGrXFqMTH9LLeYwLNbq12+4JCnYgZanZ+FI4FTHLzm4O0UU0UPSM0bcDFf1WrfBdQ3bI6e2LyOrgxZ6mr2PE/GbZHE4f0MHFMQ=
+	t=1728082036; cv=none; b=Hzy2M6pxxxDXP9ws+yyGIU9LAmCOp91SMj7LlttOmrqEqrNGb8jnj4dB9+jCBeJlmDBzQlG+nM4XxJ+rAlMljo01+0NogS1BbDu3wkbdS8bSQqerDj2BtlQLiXVdi9fgeKRbIZ5+j0PI5VeNn6iJn6xYqxuHepGh0eGpuryerdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728081669; c=relaxed/simple;
-	bh=e5PXWmoKxwCwGoW4CqlRSqESxO6YwCPxx10d8b46x7g=;
+	s=arc-20240116; t=1728082036; c=relaxed/simple;
+	bh=c+2LOuo/wpei/dVK1+PkdrRmlVnB32CyrteQ5AJRQxs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s2KDKP2tbGO1O2b2A70l9JIf/iNLq3o2zIJJWp1qf942EQYSGn/Sn9OplkW3pRy8jrqSlMVWNJlupH8UQc+3kVS490f5tYqoUWb7Q5h4KAm/o//voP2Dy148A6TOccYsXpMSBbc6D8Bxj7l5ZK9r2RWEgmjh7+VLpi/6RAEMbrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eWJJy8FW; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=N0ikv1juifv67+Ee+LKr1dkI2EWaFxgoX56YxTKTkdfv4n6CIYX/yCcDOYX8OAFGuz3rgpkPZiOVQTbQXloYkBpU5W3i0RhJdEfitjjfdEj8zONj5Nrt92W3/gcKS6UpQKZbW7I30YdisZzO2B77EH7IQgW5XS9EcqO1gg7gtUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Bt2LWUAN; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eWJJy8FW"
-Received: (qmail 9975 invoked by uid 109); 4 Oct 2024 22:41:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=e5PXWmoKxwCwGoW4CqlRSqESxO6YwCPxx10d8b46x7g=; b=eWJJy8FW0TV4bS20q+fFTFZCuffX+HIJZPrwEznYPlHg/YggidVCBb9xI1j0/PgJmF3C4gPMS5P0eybCq45mI3CNclu6XFrdvRg3KL7PFebmxSpQDv0sxlZYq1h8ps+Yj2F2zg7ArM6NqlNr7DFLEO4x7UInTX5N07/ofXE0shJtyOeeLuOLLCbPcw0bbXLtDFzEyf5NjBnmOX0xekQmnnIUOcBML0LWgWwuayuPlRyWKYZG48xHVQVIdbTRbHuEy5aQNtKTxtxTHLyjYhaQ/MEAJmzgmfIGmvMhLNBSL5GFnPQJcrxY9NX3F6GBk6m+uOkhtinnYXVSaDJLLTnG6Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Oct 2024 22:41:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14551 invoked by uid 111); 4 Oct 2024 22:41:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Oct 2024 18:41:05 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 4 Oct 2024 18:41:05 -0400
-From: Jeff King <peff@peff.net>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Bt2LWUAN"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6d6891012d5so22945877b3.2
+        for <git@vger.kernel.org>; Fri, 04 Oct 2024 15:47:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728082034; x=1728686834; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=XrJxCXU6f3bKw8jhT7fgBGn8qqYPYXprIWi4F7CspRE=;
+        b=Bt2LWUAN4YXlq/ngKi5ildXdTgFHiYy18lXRoeXjqDImF55tyTllLS6yCOOcNYvKtn
+         40IBDqSCmyfU5XvbWyq5DyJ9ZKuH49uU3eGV/gRLe9JYBW4w4t1Q67JJ9Sr7/oCx4Qnj
+         eudf7dP8eHg5im3eKgdGaPlbxmVGxzRKu5ALhftEIMzVd197TG1IjKpo/Du8KsqnBDEK
+         pqXZyF2WewslJ8CdDyxVX4klpk3DCfCMG/9X8d5J+B0wRopi7vWZ9L2ve20dXYbOFAFL
+         GHDWDvlQJjp1UOJb1f1c8TamBjcr5k/Snuzmw5HDz5EjME+TVn5P4OCJeMN9bgSUvt7U
+         kG6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728082034; x=1728686834;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XrJxCXU6f3bKw8jhT7fgBGn8qqYPYXprIWi4F7CspRE=;
+        b=eajl1pAZG0nVRps6wSGG5/hYB3oneQukAOwiG/RwGYTa6NBz8VfFpyBYgsGq537opz
+         EzzsAhp93USBZXNZFTg1v8cDh+lBQy92R8A7pjNWXE/jwL3Smh3yBvVpC9T9dmvVkzDS
+         ZUQRm3qA7GvNmDaSLSIq8Xei9YqPoEKiiugQJgpZQ+UUqzunQ+gJy4EBjCo2yNpADvTS
+         vntNdFsmb65N2X34dhqRp7yfDa6JoxLSlhqbD8F787xVod2hTrClqqEu9R7hvPdeWk5m
+         k3JXmvVclM8AKeF6EpQup/1BGf6ds82k1ENYT6iUQuS+Ai/YLCJPg/6dwDKYNar8hB+T
+         6DMw==
+X-Forwarded-Encrypted: i=1; AJvYcCVOwcb5Jwq0YWsVE5ZtsjGJJ86DrvM/drQRu/5z2y/M1SaHvBXYNVpl3x33wty12SHuRWM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYZC+SC2N9zlEPVKH7dDklqjwmXRJ7y/8tF0pgPvVvg0qqdZPR
+	XRQf3yffbNVJErQtPRCfvoPZse9v7MOorrjtrl51Haeo0Wb47DVsKc7YETiQMSw=
+X-Google-Smtp-Source: AGHT+IFvG0bONhRsUxwwS4j5HDISTS4hfKaY0ogHA4YNXIKOVjOFYCjdgiCrySgOlqYqAXpWV5jOsQ==
+X-Received: by 2002:a05:690c:4281:b0:65f:cd49:48e0 with SMTP id 00721157ae682-6e2c7296936mr35315407b3.31.1728082034412;
+        Fri, 04 Oct 2024 15:47:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e2d93e5ee4sm1175687b3.126.2024.10.04.15.47.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Oct 2024 15:47:14 -0700 (PDT)
+Date: Fri, 4 Oct 2024 18:47:12 -0400
+From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH v2] t0610: work around flaky test with concurrent writers
-Message-ID: <20241004224105.GB580885@coredump.intra.peff.net>
-References: <b1b5fb40-f6c2-4621-b58c-9b7c8c64cc01@ramsayjones.plus.com>
- <f3874c7e923846e453499e89f00dd4f8862e4c40.1728055880.git.ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: the latter half of october, the maintainer goes offline
+Message-ID: <ZwBwcOK2/sazF17B@nand.local>
+References: <xmqqh69thzd0.fsf@gitster.g>
+ <Zv7aLRXwt9cfqW58@nand.local>
+ <ZwAIM6GO3VtoG3ZM@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,29 +68,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f3874c7e923846e453499e89f00dd4f8862e4c40.1728055880.git.ps@pks.im>
+In-Reply-To: <ZwAIM6GO3VtoG3ZM@pks.im>
 
-On Fri, Oct 04, 2024 at 05:32:16PM +0200, Patrick Steinhardt wrote:
+On Fri, Oct 04, 2024 at 05:22:27PM +0200, Patrick Steinhardt wrote:
+> There are two maintainership models I can think of: either a single
+> individual or a group of people would take over.
+>
+>   - A single individual needs funding. The ideal situation would be if
+>     that funding came independent of any of the large forges. Or
+>     alternatively, the big players in this context come together to all
+>     pay into the same pot to fund that person. In theory, the role could
+>     be elected and serve for a limited amount of time so that overall,
+>     the community is in control.
+>
+>   - A group of individuals could take over, sharing the responsibility.
+>     There would be a ton of different questions in this context: how to
+>     form the group, how to balance its interests, how to distribute the
+>     work across its members, how to resolve disputes, etc.
 
-> Work around the issue by disabling the test on Windows for now. While at
-> it, increase the locking timeout to address reported timeouts when using
-> either the address or memory sanitizer, which also tend to significantly
-> extend the runtime of this test.
-> 
-> This should be revisited after Git v2.47 is out.
+I do think there is a need to have a single individual who is ultimately
+responsible for ensuring that the patches are reviewed and merged in a
+timely fashion, that releases are cut on time and are high-quality, etc.
 
-This sounds OK to me.
+But I also think that the project benefits from having trusted
+individuals who are knowledgeable about specific areas of the codebase.
+The maintainer can lean and rely on those individuals to get a sanity
+check of whether or not some patches are good or not. For instance, I
+would imagine that Junio relies on you to help review patches in the
+reftable implementation.
 
-In general, I worry about papering over bugs with a "we'll revisit it
-later" note. We may forget about things or never prioritize them. And
-the worst-case scenario here is that we might later decide to promote
-reftable to the default format, forgetting that concurrency has problems
-on Windows.
+I think that's more or less the status-quo, and IMHO it works well from
+a contributor's perspective. I would be curious if the maintainer feels
+the same or not ;-).
 
-But given that it's an area you've been actively working in, there's
-already been some discussion towards the real fix, and we still consider
-reftables somewhat experimental, I feel OK bumping it for now.
+I know that we have discussed in the past a more formalized version of
+the above where individual sub-systems maintainers are listed in a
+MAINTAINERS file with specific roles and responsibilities. I don't think
+the project is large enough or has enough active participants to warrant
+that formal of a process, but perhaps I am in the minority here.
 
-Thanks for all the digging on this (from you and from other folks).
-
--Peff
+Thanks,
+Taylor
