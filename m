@@ -1,112 +1,96 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABC71DAC81
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 19:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5EF1DE3D5
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 19:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728070319; cv=none; b=hLOBWGFtWPQi1lJdjiBeydBTp1mtS0zdLZ9vbk/40E8OorSyQkgXDSUOa0Jl1AdTYFRMeAM9UFUdLOA5G8/SGSWIetaQb2XIdjnjDMk/qMAEe12nQh+K8HusQKIsdjL1SNMST+a0fpGjB+BsGpsxNAK/UzQ9lBQEpmGQBVtL/kw=
+	t=1728070404; cv=none; b=dwpORpfVkpeKCVmQN0n613SfN4emgrStDcaoXMtfLjcGUVG4DXHWSF6TC9QgKekXe3W7g+YWoJ5+aObbN+v9ACdIi1GmiwW+D/tPeCfnNutIDZpbEHqWXB046ParSmb+NZRtByJa5w+HR6AdbxFxGJvmPCjNl8d7LdSs72dkIEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728070319; c=relaxed/simple;
-	bh=UJHKJ2WeKVCWrW/JTYnlTK2L6Z8oq9UwS1Vp8Y1p19M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eq27j7WkdyFPaBflGdsdFg8shPZhd1Lq4CLaBUqW5gDSLWbzshzxoYbrFdauw8myT8bqbdAF/ursJ9K4F5ho/Nc2xSta1+Jo0Qj5q4y6iVwS6QfSpdF6O3HLkweoYRwBmtMpWXK1bO+6febtSljvo5TFqrD8gkvFE6cQb03aCYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iLdhBj0h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oFCpYjOn; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728070404; c=relaxed/simple;
+	bh=HCDOhvxukCju9C0qI3zoeBhiMdpofs/s3xP1YcfIbgw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gBA8x2bpO0n6CCkd12s/+OezYZ8JtGdmr1T5qc0jufQNIF6uQvUjuoSshMzXabLYNgRA5eCGEmxZpihrMSxOkXiDJfKIP36mkhNpENLoplLBN+bidT/hSKF3VFq0jYIN6PhuZq+iaOas4oOwyk5vn5JSWpF8h5N99PTASUbsexM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eGh3E5ky; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iLdhBj0h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oFCpYjOn"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C94D811401B1;
-	Fri,  4 Oct 2024 15:31:56 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 04 Oct 2024 15:31:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728070316; x=1728156716; bh=U7Gv3+5R8Z
-	1UcD+Mpk/9Lh8tspnsQX8tUA1Ija6jGOQ=; b=iLdhBj0hHZL8kKy9pxKikqTtVE
-	LJHtgxSh6M3iGPVkFILbLpnFc/JMX+7Q19m4sElsy/DIjtrehvW9vvPvNXPVpN0X
-	XLyu/sv625QWdK/glNVIK7/lHey960jRtnGmjn7G0KExGDNy4yLPInzxfjSKMgGS
-	Bqyh0KarR57MZF9ncYIJ00Lqf9bKgRxySQnB5pC5xVjUvr9rAkpfgifdG1woDdrb
-	m9NTQ7dCFbviKSImtQ1T6+ezPmjAkqEO4Q3/pMkKyiNrbZtN+sva9vhe6TmA027j
-	j87hFNls6/DSPoV1umf4r491WdK/yfc5MSZJCxhDKXEHWYtjURV6G2LVG7lQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728070316; x=1728156716; bh=U7Gv3+5R8Z1UcD+Mpk/9Lh8tspns
-	QX8tUA1Ija6jGOQ=; b=oFCpYjOn1gNMTFwG/AOIaKkaSF9S39H7q5+r7zLaNTM4
-	4OELxTg4AizyJn1QXv/nXyTeFpzknCboD0vuHB9UxUfn/TGZ5Gq25lSsLgRVCNwx
-	5XXP5I1BBhz4r75BI9Rg9L4s5kBJlIvfiHtZwSyYBWQGs7JgyEAxK8V5g5jJDh92
-	Ec8W2Qr1MMlcgt9ylUBzCeGxTlx/C1izLDbrUA5/lLwDSm0OX7W+KYy9X5Av5dOO
-	I5yFq1+z0H8j6n4FFobuwD4g+F1K8fS+mYEfOd/N0vouMyyHbRivLRAktKa1XTF8
-	1/RUlUFmpVMdD6+ETC2C0QvwhiR043/PXtF23ozUmA==
-X-ME-Sender: <xms:rEIAZ4YYhl7iAMgypj7Kf9-qcUm9mHG1Tal4ZGsSVIipQTbI-6Vwmw>
-    <xme:rEIAZzbxntBCINdt5BlvbULEOVFASvgd8hzay5a-necjOmiCEf9KTBrL5xjM_0QFe
-    KbqV7k5ypZdY6_y_Q>
-X-ME-Received: <xmr:rEIAZy-Qi8kn99GTC3x4Z8EoHf4tELab1XEoZ-ttzR2UWIXboQdnbh8vTBc2yvhUusdW-7cwQX11_a9zO5vxPOEs_Jo5IJmetZcOCRU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedgudefjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhksh
-    drihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:rEIAZyoKLibHaD4hEx4bnPUnQnn3boKj7oBM5vvpRhPdJia9yVYFeA>
-    <xmx:rEIAZzrUt6XpTNGf8NftW1-OluM74BHLYEG6vZEOz17qLH8dW4htyg>
-    <xmx:rEIAZwQVUCoQ_2mhZksLbbfVGqu-KRB1emp3shnGy-OJvYR3CLhCLg>
-    <xmx:rEIAZzocSEHsbeXP1sZEXkulfQlCk5x86e1-ZrbHjWCSoovLid737w>
-    <xmx:rEIAZ0CD2RnRvTb3sebnYyPVTwnyORafugn_kDSucGiziOqSJsJ7psx4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Oct 2024 15:31:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH 0/5] diff output_prefix cleanups
-In-Reply-To: <e38449d8-190a-49af-85b6-a628e14379d6@gmail.com> (Derrick
-	Stolee's message of "Fri, 4 Oct 2024 15:27:14 -0400")
-References: <pull.1806.git.1727885224966.gitgitgadget@gmail.com>
-	<pull.1806.v2.git.1727956724.gitgitgadget@gmail.com>
-	<20241003210548.GB11180@coredump.intra.peff.net>
-	<e38449d8-190a-49af-85b6-a628e14379d6@gmail.com>
-Date: Fri, 04 Oct 2024 12:31:55 -0700
-Message-ID: <xmqq5xq7ekb8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eGh3E5ky"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e25cf3c7278so2350305276.3
+        for <git@vger.kernel.org>; Fri, 04 Oct 2024 12:33:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728070402; x=1728675202; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cLQzab649n1OnBeeuDgBmpxGC1FeSDUi/XRcX4oiKbc=;
+        b=eGh3E5kyN4wL5YN5yxrTQowrB9bWplI1xa887XyAuUbdePddOGwaQMJDCd/cFjf07c
+         mS3kRFKRwBFKJ9E+/Nr8eDGfWSjFxyKLOtBfTHAgknnHAklGKNQ8jiG9216iwZttXbim
+         MJg5Z+JpV16ETz8nHI8J61i5pMUbObymvPJYbMwJB2yLq91s11DmQ4gcUlBLZDGvpMU6
+         Y5ud18C5GUbQ0o6Wc6bqNd8SFEjli/TG35d4yAAVzUUH2DLL6HJmErv5DcNfKlm07B6c
+         rbAgPQ/H4P23ccO1Fexbo/eYVJzHxS8+6//Cdhtv75Cqp070sSLwo8xEcIA55naE23f8
+         R34w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728070402; x=1728675202;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cLQzab649n1OnBeeuDgBmpxGC1FeSDUi/XRcX4oiKbc=;
+        b=DSih55Z3ixhjBjxH3WUQJsIgQ6jinnfJC1YZ41IaVd1DAHmTxjYGPinr+kWriVJN5t
+         PGqfUt5IqyOBh+dAczWKf1VUfex3Bh6Co5MP+ZVTBYsGGn4G3G8x2GlGQ/HuwKTuH8ic
+         BOWXFBU3FJ3yW6hbfSqHk9bTaP5Xqg0OmYR8i5KBnalZHdsDb0c01+KA+HPZW+B9JkXQ
+         lFDaWj8jk1nDsdSLl+oAJwbBj2s0MilSE/UI+R9CiLoxaSqDCHIdBQGpm9CYkhctshQu
+         T1m2KM8jXVvcPCT9g+edZyvQq61D9N9hb5DkUHi5LiYgACHvzgAVK2X0ORmwBeA4VYn8
+         MjBA==
+X-Gm-Message-State: AOJu0YwfU0XA/ykM70VSeBCfpMQVQhL6ie7B7QTrQBSmvLYIhvhQJjHf
+	W8Sx7LFc5zfWx1otwQIYnMYT2bg7VdqZtjt4e4OL8BqITjuRZOTA
+X-Google-Smtp-Source: AGHT+IH08tVK0CSVViCHSPFhLM3kTkbDZMOJ1/8HkhTrCCidZidRCAA1qGmIF/3n33Eyq3sVlBf/uw==
+X-Received: by 2002:a05:6902:2b8f:b0:e20:16b9:ad68 with SMTP id 3f1490d57ef6-e2893951b87mr3113163276.45.1728070402127;
+        Fri, 04 Oct 2024 12:33:22 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:2979:6e53:aebc:1a02? ([2600:1700:60ba:9810:2979:6e53:aebc:1a02])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e28a593b196sm59284276.4.2024.10.04.12.33.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Oct 2024 12:33:21 -0700 (PDT)
+Message-ID: <039920ed-57a8-4c49-8914-5f071a548eca@gmail.com>
+Date: Fri, 4 Oct 2024 15:33:20 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] diff output_prefix cleanups
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im
+References: <pull.1806.git.1727885224966.gitgitgadget@gmail.com>
+ <pull.1806.v2.git.1727956724.gitgitgadget@gmail.com>
+ <20241003210548.GB11180@coredump.intra.peff.net>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20241003210548.GB11180@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Derrick Stolee <stolee@gmail.com> writes:
+On 10/3/24 5:05 PM, Jeff King wrote:
+ > Here's what I would> put on top (but I would suggest making it a separate 
+branch, since yours
+> is a fairly urgent fix and mine is all cleanup).
+> 
+>    [1/5]: line-log: use diff_line_prefix() instead of custom helper
+>    [2/5]: diff: drop line_prefix_length field
+>    [3/5]: diff: return const char from output_prefix callback
+>    [4/5]: diff: return line_prefix directly when possible
+>    [5/5]: diff: store graph prefix buf in git_graph struct
 
-> On 10/3/24 5:05 PM, Jeff King wrote:
->> On Thu, Oct 03, 2024 at 11:58:41AM +0000, Derrick Stolee via GitGitGadget wrote:
->
->>> Note to the maintainer: feel free to take only the first patch, as Peff
->>> replied that he may work on the remaining cleanup independently (but I had
->>> already prepared patches 2 & 3).
->> Oh, I wasn't expecting you to go to that trouble, and had already
->> polished them up myself. :)
->
-> It's perfectly fine that we were attempting to save each other work.
->
->> So certainly your patch 1 looks good to me now. Here's what I would
->> put on top (but I would suggest making it a separate branch, since yours
->> is a fairly urgent fix and mine is all cleanup).
->
-> I approve of this plan. Please only consider my first patch and drop
-> the others.
+I've reviewed these patches and they look good to me. Thanks for
+taking the time to split them up carefully to help review go so
+smoothly.
 
-Yup.  Thanks, both.  The result looked very sensible.
+>   7 files changed, 28 insertions(+), 43 deletions(-)
+
+Excellent to see the line reduction, too.
+
+Thanks,
+-Stolee
+
