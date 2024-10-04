@@ -1,128 +1,157 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A341B335A5
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 21:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F6413FD86
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 22:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728076655; cv=none; b=agNBpT1kZ3rffArked5/lrByThtEn6Ssq1/6zcwU+xMTp1aAtkNI8PCr/lIP1svXyXjeN7VBy1BCUAluMnn9hIg0rMaA/wUu3/K1cPYDZnkJbGnYgd5l3d2ZGZLqcX7qSQOwM2myPoRUosX4/e+gr0DNgYJuKMetQD3IdCd+9YQ=
+	t=1728081010; cv=none; b=IyuT4ArVToGSfR4buMUd/Ak+eLw+CmAE1z7J4hdtWuSOl2M2IfZTGdtmZgiiejZM3m+nSR/wG87k2iJ5bx4Zhq9livlQx6BrhGakc4LqHQz+tEywEcGVRmQlfSDnt6Ndpv2VpIu71FGziyufI2h1eDQ6MTf921svBMoNUEdOUoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728076655; c=relaxed/simple;
-	bh=VQGrwOdvl3j1mHJTk48/3T3huMILrwYdAJ05Um3J2KE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YqwmFQKQSXby+qQkyc6Hg8RgOzDkpg+CVKn6RSNG6rfJ022/qkep493rqgFEqMsEwIv2ixXcTAymXKsGTz+Vdy6Ys9YQpaIeLv268v61aiOkEGlW8NYNK1Jfz0HZaMxYMFMNxJcoVTZAIS5ms8zxleBkaOygmSKjPOj+pFWZFzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RLK3wrjs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fTFp9x49; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728081010; c=relaxed/simple;
+	bh=D77HsV/yAkNGfHAVH05A7STgkQN59byQXT1+4jXwpMc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hjSUlORnjHMSeTrUpBUovX6S0il2I0lels5oRoQbsSxZlYEhHo/r01IJx6yV1pmFBqp6SdAl3nuMivIf8OkeSl/HxrrvsqgL4jPGktGE/+fF5BPP5haCfQ/fEmVC/eZ2c0xyeqlazqc/ZxaYMuJkMpkMQo67ckseYOKO0G7fPrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=unXywxkU; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RLK3wrjs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fTFp9x49"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9E13A13802C5;
-	Fri,  4 Oct 2024 17:17:32 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 04 Oct 2024 17:17:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728076652; x=1728163052; bh=Z5syOKA/f9
-	ItA8IxffIKWBKkhYbg9cw2yOKNbLmCGgA=; b=RLK3wrjsvCrHqBVt+r9H1vzfGT
-	ZLmZCCll6bD7oUJq5ksWfR+ND08d31X9m34YrZpH/+WLkJdC369arhTMEeSI96aE
-	gaQlJfryy/JLh+TtVqYBA8byLvZOJRL4aLC/E7/ViBd7rWUEyL8D+v688hwxjMMi
-	E6ONhERHcDDbvkSt9J1qk7djPaQ/eYNZOU1RVQD/7duX6Wn6jiBfVhiT4y4SfPxy
-	I4i5DulhB9SDd73ae9MElAZXf6+SbQno89/ivZTr5CvZLQE3eQvcFSC5QwXvvuWz
-	DhzCcJxCtYbHUUJCkF5qs8vedAH6KvM61euOqgiIr6MaZt//xdY99MSr9tdg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728076652; x=1728163052; bh=Z5syOKA/f9ItA8IxffIKWBKkhYbg
-	9cw2yOKNbLmCGgA=; b=fTFp9x49IgdjdgSDCgvIg0GGZl6fJpzAQqfHTcEjGgLl
-	NTshKiy1Gbw23uKZRmRJCFc7c/qj7pU3eKocVP8xt7ztRY6C6Zmgg2S6AG+PXyO1
-	aIphhDRcdZFwfRMYa5Hb77qXnH2Iv+ksz76CHfaSpjmTEXSIgpETLePAYu7+dEdc
-	pEJrcXGABuTMMnwQ2BEGxcgNSgsaXSv28CtpanhI6Ns0vHkEdssmiwGcEoDvO0Sz
-	R/LPXiLkwKjVMijCehxWhE3azJ0crIIk/vUTgMyXSCe+AyRys0ZfONQMlM0+w/mu
-	BxeFFhBhMRJ8sIg6nv6wJCFX60XoXUaaCsDBxP+k1w==
-X-ME-Sender: <xms:bFsAZ7rFYC7PTIdUxAxqU-vXwVEydMrve40-3wLlCtyCC9SLpQ-uCg>
-    <xme:bFsAZ1poR4xreer4hJK2P8Dx811mh3uxpw2xSRGDH70nmCoqDDAAByv6ci1DPXat3
-    54Zlb0wQVWlBUtpYw>
-X-ME-Received: <xmr:bFsAZ4OigBgZP9zzH9r9Chev5L7urSvp-6lkkepozeCGiVM6RlLwYKekdc-CywIxf9Lj8pyMYD1mKnT1aYcza2B0dacnKZIy41LllBI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedgudehlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeffieetueejveefheduvdejudffieejgeef
-    hfdtvdekfeejjeehtdegfefgieejtdenucffohhmrghinhepghhithhhuhgsrdgtohhmne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
-    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjh
-    hohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepphgv
-    fhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
-    epmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:bFsAZ-5PbrA0lfqhbRu16Cq1ftlllhWxSEgQuILc0aBKV7D3gBuIEQ>
-    <xmx:bFsAZ66gc4qGxPm7mOMecXJ91gxgJZiXIznXGwW39YX2aIqqAa1iVw>
-    <xmx:bFsAZ2ha5loy5DfJGvdNAqd-EweKn0PGAd7-8MdpIjSAUhPx3hDlSQ>
-    <xmx:bFsAZ85_y6NUcrafguxWj9OOh6utnYM4HGJYBLhQgj8AYxDkO_0qcA>
-    <xmx:bFsAZ3y6262-wonSBKO0Ucb1uOF6qmq1S9nnuWVwdikclC8pNpuWm6iO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Oct 2024 17:17:31 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
-  ps@pks.im,  me@ttaylorr.com,  johncai86@gmail.com,  newren@gmail.com,
-  Derrick Stolee <stolee@gmail.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="unXywxkU"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e25d405f238so2344964276.3
+        for <git@vger.kernel.org>; Fri, 04 Oct 2024 15:30:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728081008; x=1728685808; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=URpcKoIQgMKcgBkrTSaa9ISlnix3NMNwy0w5X2fltVk=;
+        b=unXywxkUhHDzPXDPVhLKs9Nmu+hDLyeqpdJi7RFSE9kPS+F3vtgbR+c7JsmEh3auCv
+         57gxrauWjuiAS91lHzH/g/R+CYfCIS9Vhzp+WttZ8/CFuIJA/kbu/OaOR9zyy5AKydQP
+         5SWkoVrBmIOVECgTTxPHYAutw71AoroW245OsWNqYwppwZ8DAm66vX1Ac86VUpTBhn5h
+         pc6RdK6W13PjZ0tRUCYaNNDVbzuOJVqMNWyPJO1Z4/Lod3KXzAM0zOMlywClyewT4lH+
+         FKAwYpfMcIbgZPlm7L+G7L2gThNHFQTIg1U0CU6DuGJeXj3T/5jYCPOV6rNfzEz999dg
+         MZTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728081008; x=1728685808;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=URpcKoIQgMKcgBkrTSaa9ISlnix3NMNwy0w5X2fltVk=;
+        b=ROIV4kmT6ix1a3rNsQ1EoDmM/zYpBh6h6bFB+Pc+I25JbY5PrG7fqBCUGG3X3g5O1V
+         iDP0MoW8nGU+G/1JIrHMZpecMI/lB7QmUJXSN9c+egzA5Qt63Qt91Vbs36Fw/IUq3Vo4
+         bZQBcErno3wnUpc7OFSMQsQKGo/zA/onSrb6bc+rwc6xYMv9VHBw77rPP+nzoJkYZEb3
+         oe2hpV0dyFltuPPwW5mH6zdvTyGp3o8aAg3wCybvuTUYYsiv7FTd9hLupatxbRFl8Bz6
+         qf3woVhxn9IgA7RRZq4XjAaFIwaePurPlxY4+vSLyhaoTvp+iUAbz3Jrn0pstkS0lQ+W
+         KC8A==
+X-Forwarded-Encrypted: i=1; AJvYcCX8QPx+2pjMBAI/5rasSJaSSpLRpd/2/EsP/B+UONBy6F701ZAH3Duo/vJGb8lM52ks5RQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBjk6Gn1Yu4iBAbIS+PpdKWRF+xwxgROeBsbIwMn9Mo98M5kyE
+	361N8dLydbTc3xGHm27MsKAZcYExShsxnw57Sz0reMqRQgKsE7wqaXH9II9aJvM=
+X-Google-Smtp-Source: AGHT+IHi7IxjWONXgjMtMpB+Z9STfS6fxRb4h7ZNxhi+2Y6xeBNI9Ja3dAb16IcQjRkr/XBGUOCUXQ==
+X-Received: by 2002:a05:6902:2b05:b0:e22:5da1:b328 with SMTP id 3f1490d57ef6-e28937efc0emr3539974276.33.1728081007690;
+        Fri, 04 Oct 2024 15:30:07 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e28a5ca8d90sm105926276.51.2024.10.04.15.30.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Oct 2024 15:30:06 -0700 (PDT)
+Date: Fri, 4 Oct 2024 18:30:05 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
+	ps@pks.im, johncai86@gmail.com, newren@gmail.com,
+	Derrick Stolee <stolee@gmail.com>
 Subject: Re: [PATCH v2 0/6] pack-objects: create new name-hash algorithm
-In-Reply-To: <pull.1785.v2.git.1726692381.gitgitgadget@gmail.com> (Derrick
-	Stolee via GitGitGadget's message of "Wed, 18 Sep 2024 20:46:15
-	+0000")
+Message-ID: <ZwBsbW5jsFw0mxKk@nand.local>
 References: <pull.1785.git.1725890210.gitgitgadget@gmail.com>
-	<pull.1785.v2.git.1726692381.gitgitgadget@gmail.com>
-Date: Fri, 04 Oct 2024 14:17:30 -0700
-Message-ID: <xmqqiku7d0ut.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <pull.1785.v2.git.1726692381.gitgitgadget@gmail.com>
+ <xmqqiku7d0ut.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqiku7d0ut.fsf@gitster.g>
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Fri, Oct 04, 2024 at 02:17:30PM -0700, Junio C Hamano wrote:
+> t5334 still fails 8/16 subtests just like the above run, exonerating
+> this topic for its breakage.
+>
+>   https://github.com/git/git/actions/runs/11186737635/job/31102378478#step:4:1880
 
-> I've been focused recently on understanding and mitigating the growth of a
-> few internal repositories. Some of these are growing much larger than
-> expected for the number of contributors, and there are multiple aspects to
-> why this growth is so large.
-> ...
-> Derrick Stolee (6):
->   pack-objects: add --full-name-hash option
->   repack: test --full-name-hash option
->   pack-objects: add GIT_TEST_FULL_NAME_HASH
->   git-repack: update usage to match docs
->   p5313: add size comparison test
->   test-tool: add helper for name-hash values
+This is not all too surprising, since part two of the incremental MIDX
+topic introduces some new leaks which were not seen by Patrick's recent
+leakfixes. So I expect that this broke with 9d4855eef3 (midx-write: fix
+leaking buffer, 2024-09-30), which marked t5534 as leak-free.
 
-Recent CI jobs on 'seen' has been failing the leak-check jobs, e.g.
+And that's true, without the patches from tb/incremental-midx-part-2.
+The leak stems from the fact that the 'bitmap_index' struct now has a
+new optional "base" pointer, which points to another 'bitmap_index'
+corresponding to the previous MIDX layer.
 
-  https://github.com/git/git/actions/runs/11184876759/job/31096601111#step:4:1886
+The fix is fairly straightforward, and should be limited to:
 
-shows that t5310 and t5334 are having problems.
+--- 8< ---
+Subject: [PATCH] fixup! pack-bitmap.c: open and store incremental bitmap
+ layers
 
-I randomly picked this topic and ejected it out of 'seen', and the
-result is fairing a bit better. t5310 that failed 228/228 subtests
-in the above run is now passing.  I didn't run this topic alone
-under the leak checker, so it is entirely possible that there are
-some unfortunate interactions with other topics in flight.
+The incremental MIDX bitmap work was done prior to 9d4855eef3
+(midx-write: fix leaking buffer, 2024-09-30), and causes test failures
+in t5334 in a post-9d4855eef3 world.
 
-t5334 still fails 8/16 subtests just like the above run, exonerating
-this topic for its breakage.
+The leak looks like:
 
-  https://github.com/git/git/actions/runs/11186737635/job/31102378478#step:4:1880
+    Direct leak of 264 byte(s) in 1 object(s) allocated from:
+        #0 0x7f6bcd87eaca in calloc ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:90
+        #1 0x55ad1428e8a4 in xcalloc wrapper.c:151
+        #2 0x55ad14199e16 in prepare_midx_bitmap_git pack-bitmap.c:742
+        #3 0x55ad14199447 in open_midx_bitmap_1 pack-bitmap.c:507
+        #4 0x55ad14199cca in open_midx_bitmap pack-bitmap.c:704
+        #5 0x55ad14199d44 in open_bitmap pack-bitmap.c:717
+        #6 0x55ad14199dc2 in prepare_bitmap_git pack-bitmap.c:733
+        #7 0x55ad1419e496 in test_bitmap_walk pack-bitmap.c:2698
+        #8 0x55ad14047b0b in cmd_rev_list builtin/rev-list.c:629
+        #9 0x55ad13f71cd6 in run_builtin git.c:487
+        #10 0x55ad13f72132 in handle_builtin git.c:756
+        #11 0x55ad13f72380 in run_argv git.c:826
+        #12 0x55ad13f728f4 in cmd_main git.c:961
+        #13 0x55ad1407d3ae in main common-main.c:64
+        #14 0x7f6bcd5f0c89 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+        #15 0x7f6bcd5f0d44 in __libc_start_main_impl ../csu/libc-start.c:360
+        #16 0x55ad13f6ff90 in _start (git+0x1ef90) (BuildId: 3e63cdd415f1d185b21da3035cb48332510dddce)
 
+, and is a result of us not freeing the resources corresponding to the
+bitmap's base layer, if one was present.
+
+Rectify that leak by calling the newly-introduced free_bitmap_index()
+function on the base layer to ensure that its resources are also freed.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ pack-bitmap.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 2b4c3972e5..fe0df2b6c3 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -3045,6 +3045,7 @@ void free_bitmap_index(struct bitmap_index *b)
+ 		close_midx_revindex(b->midx);
+ 	}
+ 	free_pseudo_merge_map(&b->pseudo_merges);
++	free_bitmap_index(b->base);
+ 	free(b);
+ }
+
+--
+2.47.0.rc1.154.ge6e38f19f35.dirty
+--- >8 ---
+
+That should apply on top of 'seen' easily, and will at least fix the
+leak failures you pointed out here.
+
+When the integration branches are rewound after 2.47.0 is tagged, I'll
+send a new version of this topic based on Patrick's work here.
+
+Thanks,
+Taylor
