@@ -1,120 +1,150 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9231E376B
-	for <git@vger.kernel.org>; Fri,  4 Oct 2024 16:58:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B281E377D
+	for <git@vger.kernel.org>; Fri,  4 Oct 2024 17:14:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728061137; cv=none; b=gFPRyU9kKS3nMGtzDkvEGzA7lY4kl56waO66Rso5vefA7NuPrZ4ZrwnIl6Bk+C5oU5OtD6sVdb85pL9VyNX9vGSbJs1lwIX2TYdZ4pk0x6AD8uJEedVEn3Rfw0lvl12sMJT74N25hiCWxnxDjXC8waVysrEE7g+wvzHvS2elh3E=
+	t=1728062063; cv=none; b=S+Bs9n3WRocIeVC9FqpmABAnsweACReS2++k3X/vRZuGpC9cBPyryBY2uai6NUKGRSrAbPjisN2rF9zi6/zxsRbWodoQh0tqbLQVa7fhkW7falZ+R8fY0I8tjLETwd3Xr0gZt5dx6lcxUHNAi8JLgTNzSAKuHHCBmnyimP9Pa1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728061137; c=relaxed/simple;
-	bh=nnYPH1qBR2BemX5pDGTdQxS4PHV39Ua5ki90LbW0qLo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=isBOcjT3qjmsjE3/v8q7isxw9yQ+69gUtYGgIdkcIzSiPDFQzuguP4QemcTc5BMM03YWedyIOYU6VZzKb04vjmhACq1I5jZsOH+vpjdM2AD1zHPgNwhfqbnZ+ZjKf4yBXUKnpdwI383VeqQZG+L+wiJVRJlrTiDBWP1MBWc/l8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sd0NkuzZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eAXeIkJX; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728062063; c=relaxed/simple;
+	bh=STapKtzjVmcyv0G3iGqNeXfZIWTSqILeOxpgGlkwIkY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PHDJvz+BYqyRTngoptnISlfiCwewW2poIxJIflUZ0DWspGFtO1oHupvXN+yWEwwKEDsPxDVFjawc0AxcKly0X36FwD1/yQE2zLiH7NDkgwFLYVY69KxK5bx98IOjJktQilxt2w8YBHSqBQ3+oCqzCwZw37t5LeMpedxmPGw/syM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MLqqGFL2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XQ6HpgTq; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sd0NkuzZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eAXeIkJX"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6CC1B1140149;
-	Fri,  4 Oct 2024 12:58:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 04 Oct 2024 12:58:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MLqqGFL2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XQ6HpgTq"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id D1BD2138020F;
+	Fri,  4 Oct 2024 13:14:19 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Fri, 04 Oct 2024 13:14:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728061134; x=1728147534; bh=zrJ4fm+dLU
-	fNVFcnCibWFqU3Va5B1eNV3RvIbDUSYXI=; b=sd0NkuzZ8ymTLW7KZzYTp95KGq
-	7eyqjwJVDZcflX2nFfchGCBgCcTlrSlpeK+SZBqiome2wJXVJaFTJw5UxvTNJJYO
-	KVGiObYV8YGkxL+VR7wKh9+1Sp8kxKNoZIpULkjuTRRYrj12xP00n8mZuIDa+iCs
-	cIMqDy2STWR9m/Ig+2a3zhuhPbl8lBpK5cZS1nmmIynV9wUflSSKXfOl5ecsDwWA
-	5rpsf27WF+hTu2EVU0ICbWqIgKlYcAuTSyL6rCPzRdOGBuriLLpBBIkO6ft/JEuQ
-	izK+jDMAbGxjIOhHVnNU4/PsukWdZaX+3TVoHwNleLoV18ftt5AaGqIaPfRw==
+	:subject:to:to; s=fm2; t=1728062059; x=1728148459; bh=7cgtzt1BAI
+	oA81iX9doXMPURKMMM3fyp8i99arSYWUg=; b=MLqqGFL2kds0NrlVani1bPkOUl
+	iWiGCdAct/2YFp57jdQ+VTDt2SLTluUudRIk6ecfA43PcET5aeBfTyZwngphLYbO
+	ojO6LH7EgWdpm9hwvvVpG9ffuD+aIAmisYbS1okrn5EcbRs6JpPg82CVyxshQLLf
+	rR4K/+7I1mHLAaSP1ba9m4gktMTTuXVr4yrx0aQyGUKOlukEV9cQNNKpfm0wENJD
+	0s/r5sg6mOe4JX4RtyigeW4q6l9E8Xzb40CopLgoqxjUaQLGbmamAMDZowFoaSDW
+	2MRpkPCbuMG18BVMOjS3QmGkC98IvtHgxhj31JXGsixLMYVbAkOyJn9j5W0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728061134; x=1728147534; bh=zrJ4fm+dLUfNVFcnCibWFqU3Va5B
-	1eNV3RvIbDUSYXI=; b=eAXeIkJXZm2xw24pLQkuDqchslXtM04MAtlhfU/+LDQ+
-	b5joXbS5ZGKK+xg+rCzw7bTvWpsNWz+TR+6ByY0whueUCHYonfw5uEEHXKfnO7bY
-	txi0mC0AW1ac73/LZgS+zo1HUVFJpQjPYaGZ8M8GFr/pTbPp8SwxMMKv+69/joD4
-	0CDHN1iWSZnaWop8ENVTO+HZCGNkdJR/LVB4xLz/5FfcC95rkpb2y7CGoIbAsf1Z
-	RbZxihZ23UVpvAx9MrjTfEeHFQh1qZ1mRWMpFDganllDldgGa18VKO5AL8+IMXLD
-	/iYq04FJ/QWNt50DF+TbvE00ZRyNOqDxqqh6on4tSA==
-X-ME-Sender: <xms:zh4AZ5492WM7qjSQ_RZYjA92ZpzPq2vwalyO79gQn7YHBxXGvod1-Q>
-    <xme:zh4AZ25MecrPDLPCgzJwDAtb_TMPiX3TZpIV-EdQc5esu5mFTPwCBTTJGwxYuD3AV
-    rV8eVoTacD9TaUABw>
-X-ME-Received: <xmr:zh4AZwe3GAH-oakR_RpOC0WoR0xVhUZ9HEDhrfQ26LV8R1wOaEu8emlBXWnLXHvXnQLXsxdTGuP0Yg9DhBhZ47TwXjkbj2vXSUX9BnE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedguddtiecutefuodetggdotefrod
+	fm2; t=1728062059; x=1728148459; bh=7cgtzt1BAIoA81iX9doXMPURKMMM
+	3fyp8i99arSYWUg=; b=XQ6HpgTqXkO527ae/IbxYlSfkc7sfEIVp0kuttKpes0n
+	lQjKWJOahQi33prdUWg0wfFMrmNQ3i9IFnhtFmQfbdDfzxsXuYnHPnpwfanwPHz6
+	HihnuOhWpPATPDF6PPAzui7Jjd3KucgaSeDHyL1n2lYF6kr+PA9X0WWBstjxCkVZ
+	ZUOBmF5DHZStQjK0dMPGvmtRQBZJTbgqNGm6I9V7NHY96GDdhOgCT+DxqoNAQs3r
+	nQZq/Fr5Hk7NcrYPctv0nujnDbwRRxsd78EOBJhg76Ni+Y6+3ALwZACo4byoszu/
+	RMhMLouYkbXD4Xsvm03rgLIIk6No2XA/SafX5K9Gkw==
+X-ME-Sender: <xms:ayIAZ82rBBztLvZ0vtJ9hQg8dlCEEUMYl92RkqNXBD--bG89hm-wcg>
+    <xme:ayIAZ3FwSY-jBqMGnMroGJBJxjRhwK6b_GexqeD9BIslOxHUJOjDRaJL02HDI5idI
+    RE5C6Bg9nKVKEFdyA>
+X-ME-Received: <xmr:ayIAZ06-1prntppj39MD9VqZrz-oGVhGRZdlON3aRF-fkMqKHjDOM8OHWEvbZqbR93a3P_R_puJAeIJMUjP3rE0NVAMOn0-kR96jDn0EUlKDa9pg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvfedguddtlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
-    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhirghluh
-    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
-    pehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zh4AZyKkTb0vgQiJweXNtVnOlAcxABEnmNuEnre0YSmW3-RPOpzRUQ>
-    <xmx:zh4AZ9IyIWMueitu5tVf9gzOC0FhM-wK3ktHxla1lfAq6WhO2ewshA>
-    <xmx:zh4AZ7zrSX8gNsMKFJRrO0L_8pIbw3wA_lmMcdCFpm7wnsagJ5ozog>
-    <xmx:zh4AZ5LYMWidNATUJQ4NVRkbWExakKe0n_SnejFFrgQifOixPfGPRA>
-    <xmx:zh4AZ7h7P6LHj46a2jarlJaxf62JhOAg4-Wa-8gks0r4vjb-QC-XVWQH>
-Feedback-ID: if26b431b:Fastmail
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
+    hgmhigrdguvgdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhl
+    uhhsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ayIAZ12HNDXRdqb6yZ8cNIHlxouTNP1RJ8EnDiwS4hemQCw46NKcIw>
+    <xmx:ayIAZ_H0-oTyA3tibSDtJGpSyTfVkIuC9v1tPTzO9LXplBqzlj4LwA>
+    <xmx:ayIAZ-9s_WOrW8afiZiHi8L9VR5Yb450vc5B_bike7lq0q3-fLpJiQ>
+    <xmx:ayIAZ0mtt2OXWWQUEs2sEJ_XP0r7hKVU-FLXx3pBNpAo-qIJzUk_Lg>
+    <xmx:ayIAZzg8zKZVjfelZmADZUooski4rZr-_YcxSV-XtbDc1ka6gVPmvK_K>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Oct 2024 12:58:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,
-  git@vger.kernel.org
-Subject: Re: the latter half of october, the maintainer goes offline
-In-Reply-To: <ZwAYccsboGIhGVIx@ArchLinux> (shejialuo@gmail.com's message of
-	"Sat, 5 Oct 2024 00:31:45 +0800")
-References: <xmqqh69thzd0.fsf@gitster.g> <Zv7aLRXwt9cfqW58@nand.local>
-	<ZwAIM6GO3VtoG3ZM@pks.im> <ZwAYccsboGIhGVIx@ArchLinux>
-Date: Fri, 04 Oct 2024 09:58:52 -0700
-Message-ID: <xmqqmsjjereb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 4 Oct 2024 13:14:18 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 128890ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 4 Oct 2024 17:13:23 +0000 (UTC)
+Date: Fri, 4 Oct 2024 19:14:14 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: v2.47.0-rc1 test failure on cygwin
+Message-ID: <ZwAiXuNPK_SdnfEz@pks.im>
+References: <b1b5fb40-f6c2-4621-b58c-9b7c8c64cc01@ramsayjones.plus.com>
+ <Zv9oIrKveu-JAGQM@pks.im>
+ <Zv-HbT8qrM6IYKb4@pks.im>
+ <8718c5c4-1d0a-104b-eb39-6338ae9c5dbf@gmx.de>
+ <Zv--68J5qv60IuQz@pks.im>
+ <f29241a7-aadd-e824-97f3-a95ac6619951@gmx.de>
+ <xmqqbjzzg89u.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqbjzzg89u.fsf@gitster.g>
 
-shejialuo <shejialuo@gmail.com> writes:
+On Fri, Oct 04, 2024 at 09:09:01AM -0700, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> But unfortunately this still caused permission errors when the new path
+> >> was held open by another process.
+> >
+> > Yes, this will _always_ be a problem, I think. The
+> > `FILE_RENAME_POSIX_SEMANTICS` as per its documentation should help, but if
+> > it does not in your tests it might actually not quite work as advertised
+> > (wouldn't be the first time I encounter such an issue).
+> >
+> > I tried to read through the code (it's a lot!) to figure out whether there
+> > is potentially any situation when the `tables.list` file is opened but not
+> > closed immediately, but couldn't find any. Do you know off-hand of any
+> > such scenario?
+> >
+> >> I think for now I'd still lean into the direction of adding the !WINDOWS
+> >> prerequisite to the test and increasing timeouts such that I can
+> >> continue to investigate without time pressure.
+> >
+> > Let me bang my head against this problem for a little while longer. You
+> > might be right, though, that this is a thing we cannot fix in time for
+> > v2.47.0, which would be sad.
+> 
+> If you folks think it would help stabilizing the tentative fix, I am
+> open to the idea of delaying the 2.47 by a few days.  Currently the
+> 2.47-final is scheduled on the 7th (Monday), but we can do 2.47-rc2
+> on that day instead, and move the final to 10th (Thu) or 11th (Fri)
+> [*].
+> 
+> Thanks, all, for working together.
+> 
+> 
+> [Footnote]
+> 
+>  * All dates are US/Pacific, 10:00 am
 
-> On Fri, Oct 04, 2024 at 05:22:27PM +0200, Patrick Steinhardt wrote:
->
-> [snip]
->
->> There are two maintainership models I can think of: either a single
->> individual or a group of people would take over.
->> 
->>   - A single individual needs funding. The ideal situation would be if
->>     that funding came independent of any of the large forges. Or
->>     alternatively, the big players in this context come together to all
->>     pay into the same pot to fund that person. In theory, the role could
->>     be elected and serve for a limited amount of time so that overall,
->>     the community is in control.
->
-> Well, I think we cannot easily fund a single individual. It it is a
-> full-time job, we have to also pay for the insurances. I don't know
-> how to hire an individual in an open source project. But intuitively I
-> think there would be a lot of trouble here due to the laws.
+Right now I don't yet have a good idea for how to fix the issue. I've
+been trying a bunch of different things that, according to Windows docs,
+should've made the renames work. But they didn't, and I don't really
+have an alternative right now. So I'll need to keep on thinking about
+this, and maybe get some more help from people familiar with Windows.
 
-I think the model Patrick has in mind for the above is like how
-Linux Foundation hires Linus Torvalds to work full time on Linux,
-while the Foundation is funded by large industry players.
+So deferring Git 2.47 because of it probably does not make much sense
+unless somebody can up with a solution. Also, as noted already, this is
+not a regression, the behaviour actually improved even on Windows. Not
+to the degree I was hoping for, but at least a bit. So that's another
+reason why I don't think it is worth deferring over this.
 
-Git has become important enough that such a model may be workable,
-and that may make it easier to maintain appearance of impartiality
-by whoever is being funded.
+Thanks!
 
-
+Patrick
