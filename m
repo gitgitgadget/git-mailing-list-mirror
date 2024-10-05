@@ -1,64 +1,63 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AAE1BC2A
-	for <git@vger.kernel.org>; Sat,  5 Oct 2024 03:30:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D2F1BF24
+	for <git@vger.kernel.org>; Sat,  5 Oct 2024 03:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728099049; cv=none; b=BYe8SJS5TOnHA52/pZ2QG0ELpXm+qcQIvSDTSCLOoFUQZ8hyt3gtt1YomkzJ8UgMgelUJx+Eu/AcNYKF9w4Xy/OX9+xrAtqWAs15nqXuMPwSD4HFDc44LS3ge4RGfT9ZaHyIAzalGIDqtfj8pG7y2HGuar6vWbsH8CKhuvIrQsE=
+	t=1728099050; cv=none; b=OOv164Bu/NnLsCylZY9q1xHqKaZ9IEPnXOsOqkDln2vkVoyOJvzcu/d1wJHcQeAATvP4hFHYYpJWZJrGF59Kyh2zyYUAUxutf3hbGbKcHW9FHarsNOfoVD7iMQ/pw2Jo2qBYc6yzTQ0rGan5CBGt+W5tlVd38C5z7pvb5Uvxzuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728099049; c=relaxed/simple;
-	bh=Vcvb0nR92lOFed98s8bI4oiZkqRzSbPwumLQW+uwlwU=;
+	s=arc-20240116; t=1728099050; c=relaxed/simple;
+	bh=RwSw2n0VGxAinrFutu8sBIvZqSbF0hYODfcduSUKH/E=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lDkU/sFSb6pRSQplIYeV54xRlANZbCoihj9FuRYKU4+5njbL6jYKUsJPI4i9mNmrGB1JgDW9ZXCd1He4sU09bii6CsFcb5Sz7VgszLYxgy4wT0SeV/yDoHSU70a4/qF3ZUaq94bZWF044je3S94lHuT2hMa/6cXUEtuNjayW7Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e+0eYHpV; arc=none smtp.client-ip=209.85.208.54
+	 MIME-Version:To:Cc; b=RBD/+8vVRTzCcjHAHIxazHszcYZVPyLjLE5PStj01HnOPmyn9DMv77xbpHbLE4IGxrC1nBq6HPRlU6gN3mldN9i77kqFjhYsdbRpWRtyoQylibfXPMjoCArLaXqhJfDAphzmgKUInWcgmzXNgxNYi66ojgPxwRnYqZtmZ4izWZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XVUlNSg4; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+0eYHpV"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5c883459b19so3166388a12.2
-        for <git@vger.kernel.org>; Fri, 04 Oct 2024 20:30:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVUlNSg4"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a8d0d0aea3cso358635466b.3
+        for <git@vger.kernel.org>; Fri, 04 Oct 2024 20:30:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728099046; x=1728703846; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728099047; x=1728703847; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/NldXoQFsMKP5XRjZG3Zqfga+bbRSOVsK8atZ/eWris=;
-        b=e+0eYHpVulkFf4qbZ9lQbyzRVavyEPL97ngRwxNhr2oQnhb5aq63hRzDTvaN6IrUgp
-         qtDZ3xJfyINX+Y37Hg6hZyuD3o2Sjt1EWeAS/8wANpvBRQ8r4fdnVKSPv/D+dfCHZl97
-         7vcAd9VybaHy/5TSv2i3ZpMOTN7jjygLVR5cwmtMzUwZL3sfCcRQz1Y2s9pHsTY7mYSw
-         6WerirPvwoawv2qFe51YDYBusZ9W2/VRInyhwKBu2o26deVpWwQ6OcX2Vd8+EJwQPVeB
-         0biq87+6ten89D5PDwvMS1901H2Jf5bI+eZjxq36C0HZjS+sHK88b8HuGh/6jI7qY7NL
-         HKBA==
+        bh=CvXWV3eIL+YO9QwpdbtM7lr2gqNwX9dCeM2yR1rvk+Y=;
+        b=XVUlNSg4sfvfZzzVyXAML5oFHrQn57xvevy6hwUDJAWn8qQbRMe5mq6FsfUsbQprUk
+         IEvQ5FSfABy4c6YqT1QogO9gVTw828pujFqFIhkrfry8M+NwuqGS1+bZwue9vHHWu1lK
+         kAfmOk1mjfwDcIpM8QgAZcXHXqQirKVLpXlA5nFxe2Vitv5wqhDMAojS2z3uK5rWs09A
+         4WEe9Ld6Uny4vRcJYm21FXK5Oog8NSHT1Vkud+gqjhBN1NYp/p0XOzls3tkIm45M/yln
+         ARAiwU7aZd/9pUAGoYBJ/C2qpQcOyBPh/SezZq1Hj3oOrngm+ukIECquXH1sUaus3xgf
+         Z7eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728099046; x=1728703846;
+        d=1e100.net; s=20230601; t=1728099047; x=1728703847;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/NldXoQFsMKP5XRjZG3Zqfga+bbRSOVsK8atZ/eWris=;
-        b=w//HLGmlww2ZBaCLcEIfrAIs9dyYo1dofI/tHueKgSJ/sLvE8vL9Q2SI1yr55PNj9E
-         Kt6l0i0d2KI6l6ckxh/Ca1STUgZ8YNtMaermAyklkk41BINQV0R4tHUwoeN6zejioygz
-         kMB9+UN0sTRZRTtQEIYuD7ZY0u+0bF0hOgRSOXbMLwhOBVn7P+uX+M0XJds8V8JQckkF
-         S4HMpswnroBk4G+Y7qgBy70Gp6SWuFAnUyiH1AgUFx1r5aGmJpSx7VDnQYUlAwqlBYLN
-         Z8BmXHJ+H5M67+opNdf1X1H4PvYaZ2oc7R2JZ71dPOrXvUJBrJlDlflEghUkKy4LALKu
-         l0aQ==
-X-Gm-Message-State: AOJu0YwxrRlwNDqW4XUuTHLtivIOehwepwwhVT6ZPLK/DbDagp41qV8H
-	g6cYwg5ADaGbN8v/rFI7/taa8dlz96DGEmEYzX75D7Z4KZgcmOQbswLFng==
-X-Google-Smtp-Source: AGHT+IF5dcjmTON+fQP5Mel5fkrYYroRNnNP7azBEz6m/lVEktH8kHJ8KKl6GqQ1u1Q/S1Vw1LTclA==
-X-Received: by 2002:a17:906:fe4d:b0:a90:1300:e613 with SMTP id a640c23a62f3a-a991c077ddbmr460408066b.55.1728099045725;
-        Fri, 04 Oct 2024 20:30:45 -0700 (PDT)
+        bh=CvXWV3eIL+YO9QwpdbtM7lr2gqNwX9dCeM2yR1rvk+Y=;
+        b=hxHf4qhvAb2Au/AxQJuTqoIZv7cqhBxkeKWONkpDiL3I3D9dskzOjUa2IYLqieOF0/
+         HFyOtVkUC2z7gcUjVDaZX4Yr0puY+iOheaUFlJAgX6PU5W/EBzTooiVCQuRQS/16+MHz
+         xzEp9IBtQ3gOee0rORhmkHHRvdrQiH06MZEfbwGN2rnEFC9qouwNxWe4xcLctn/ld5vJ
+         Gx+7X01+dvCOmT7DoVmScBDlC7DKVWLirQqA+WqSPHWnbGa6/CTNxJYKbJmLphxBrJVS
+         rvMaAgu5CP4pAQ9DzRZMsjN9z3qa/IW45Ax38IcfO40O2KmtNA+XFMaluEZSvf0heZ1l
+         ZOMA==
+X-Gm-Message-State: AOJu0YyKlreHERebZK/xU4JtyoGnpB/nYhqNzdgde4FBb7fYk8ZhMFk0
+	AB13FTGCesQEjkU/e9WP3fihvP2SEKvJ4d1XMGyGpse9pMC5f48Rnj8XZg==
+X-Google-Smtp-Source: AGHT+IGUq4YQttDcOC09hWyh/EYNFk1ueadLbf8Dkbd099aBTjYh3PkbashpjHj2sT4dtPHwxekCXQ==
+X-Received: by 2002:a17:906:bc14:b0:a86:6d39:cbfd with SMTP id a640c23a62f3a-a991bed85f5mr393210966b.57.1728099046379;
+        Fri, 04 Oct 2024 20:30:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a992e784666sm75187166b.100.2024.10.04.20.30.45
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a992e7e1900sm74096666b.201.2024.10.04.20.30.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Oct 2024 20:30:45 -0700 (PDT)
-Message-Id: <8009fdb38b0b4c3880588119b99ac5387d398540.1728099043.git.gitgitgadget@gmail.com>
+        Fri, 04 Oct 2024 20:30:46 -0700 (PDT)
+Message-Id: <1b82b5dc6782e21eebf019585d2aac704ec9e8f0.1728099043.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1788.v3.git.git.1728099043.gitgitgadget@gmail.com>
 References: <pull.1788.v2.git.git.1727718030.gitgitgadget@gmail.com>
 	<pull.1788.v3.git.git.1728099043.gitgitgadget@gmail.com>
 From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 05 Oct 2024 03:30:41 +0000
-Subject: [PATCH v3 1/3] git: pass in repo to builtin based on
- setup_git_directory_gently
+Date: Sat, 05 Oct 2024 03:30:42 +0000
+Subject: [PATCH v3 2/3] annotate: remove usage of the_repository global
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,75 +75,42 @@ Cc: shejialuo <shejialuo@gmail.com>,
 
 From: John Cai <johncai86@gmail.com>
 
-The current code in run_builtin() passes in a repository to the builtin
-based on whether cmd_struct's option flag has RUN_SETUP.
-
-This is incorrect, however, since some builtins that only have
-RUN_SETUP_GENTLY can potentially take a repository.
-setup_git_directory_gently() tells us whether or not a command is being
-run inside of a repository.
-
-Use the output of setup_git_directory_gently() to help determine whether
-or not there is a repository to pass to the builtin. If not, then we
-just pass NULL.
-
-As part of this patch, we need to modify add to check for a NULL repo
-before calling repo_git_config(), since add -h can be run outside of a
-repository.
+Remove the the_repository with the repository argument that gets passed
+down through the builtin function.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- builtin/add.c | 3 ++-
- git.c         | 7 ++++---
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ builtin/annotate.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 773b7224a49..7d353077921 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -385,7 +385,8 @@ int cmd_add(int argc,
- 	char *ps_matched = NULL;
- 	struct lock_file lock_file = LOCK_INIT;
+diff --git a/builtin/annotate.c b/builtin/annotate.c
+index a99179fe4dd..ce3dfaafb28 100644
+--- a/builtin/annotate.c
++++ b/builtin/annotate.c
+@@ -4,7 +4,6 @@
+  * Copyright (C) 2006 Ryan Anderson
+  */
  
--	repo_config(repo, add_config, NULL);
-+	if (repo)
-+		repo_config(repo, add_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix, builtin_add_options,
- 			  builtin_add_usage, PARSE_OPT_KEEP_ARGV0);
-diff --git a/git.c b/git.c
-index 2fbea24ec92..47741be3e4c 100644
---- a/git.c
-+++ b/git.c
-@@ -444,6 +444,7 @@ static int handle_alias(int *argcp, const char ***argv)
- static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct repository *repo)
+-#define USE_THE_REPOSITORY_VARIABLE
+ #include "git-compat-util.h"
+ #include "builtin.h"
+ #include "strvec.h"
+@@ -12,7 +11,7 @@
+ int cmd_annotate(int argc,
+ 		 const char **argv,
+ 		 const char *prefix,
+-		 struct repository *repo UNUSED)
++		 struct repository *repo)
  {
- 	int status, help;
-+	int no_repo = 1;
- 	struct stat st;
- 	const char *prefix;
- 	int run_setup = (p->option & (RUN_SETUP | RUN_SETUP_GENTLY));
-@@ -455,9 +456,9 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
- 
- 	if (run_setup & RUN_SETUP) {
- 		prefix = setup_git_directory();
-+		no_repo = 0;
- 	} else if (run_setup & RUN_SETUP_GENTLY) {
--		int nongit_ok;
--		prefix = setup_git_directory_gently(&nongit_ok);
-+		prefix = setup_git_directory_gently(&no_repo);
- 	} else {
- 		prefix = NULL;
+ 	struct strvec args = STRVEC_INIT;
+ 	int i;
+@@ -23,5 +22,5 @@ int cmd_annotate(int argc,
+ 		strvec_push(&args, argv[i]);
  	}
-@@ -480,7 +481,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
- 	trace2_cmd_name(p->cmd);
  
- 	validate_cache_entries(repo->index);
--	status = p->fn(argc, argv, prefix, (p->option & RUN_SETUP)? repo : NULL);
-+	status = p->fn(argc, argv, prefix, no_repo ? NULL : repo);
- 	validate_cache_entries(repo->index);
- 
- 	if (status)
+-	return cmd_blame(args.nr, args.v, prefix, the_repository);
++	return cmd_blame(args.nr, args.v, prefix, repo);
+ }
 -- 
 gitgitgadget
 
