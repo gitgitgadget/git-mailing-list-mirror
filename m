@@ -1,94 +1,202 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271CB139578
-	for <git@vger.kernel.org>; Sat,  5 Oct 2024 13:19:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6D0158553
+	for <git@vger.kernel.org>; Sat,  5 Oct 2024 16:41:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728134389; cv=none; b=VN0iYei1eclHlgV8QB0zLMb27TqrqO10CGWEBJVZCGDwhknZnteXbHaRbkLRGVw1oQVe9kRGjatev1dNnYNrDofqYAQCyNkb2QziAzysit0wcp/3MPiMOepbaK5Fps2lpwWCuTUOnA/DTe24mrAVXpi/tbnzJziGbGNqXa5Llkg=
+	t=1728146504; cv=none; b=itYCG8QI58yzYr9Y5h96tEovxOzf9BvYUF9SdIvlAdT7aWEfGlnnnoJkUGYvulLKxjgGpvQh/fcHS7K9FRxsLSJJ0WQgpnfN7InrX6qFyKUYnyUlLLPmTFKMKmnL79S8ymnU/Uz8WSM718+QWwEDxZpyFvQpK8TQ4o3QyqJcY08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728134389; c=relaxed/simple;
-	bh=ira0rpLaSHli+86PEs0DrUV1GuKyVFywaoNGEpEOyj8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=JBEfDIcOzqqgaMTXkvMqUjfwk7W4A7mW22Ppw+V6ON/eEXK7XH6B5PuCdp8RGs+Cn2D9q+uiEWqeXYZwXdf//qM+ABkzEKCxRiNsIovrSGzbWYhvQxcSYwIz749pDUztEpIQ98yOU7hJz9/NMyfj0LMneiAnaWdGTf5PipofyCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WDTU/WJY; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1728146504; c=relaxed/simple;
+	bh=/xt9+VekCXvGhF2bvqD2Lpar66ylsyfBDaGnyxwXhxk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fNReTJbwEvj7Uo5a2UpWOYaaQ3EJIkQvYdChCsy1Gf99Clz16m2Rwqk223quqJ+0TVFbUUImHcG2+r2wc0NhnaRP8f6kLOdx1xa8OFVnczvJapz/uHyq6/JJ+XCXyKzfo+N0mOc4HlSMcQ831BAVNHfyhaHCVOOVUnmLYIFJQL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C0qBjBJz; arc=none smtp.client-ip=209.85.221.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WDTU/WJY"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42cb57f8b41so38580315e9.0
-        for <git@vger.kernel.org>; Sat, 05 Oct 2024 06:19:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C0qBjBJz"
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5090e09438aso997041e0c.0
+        for <git@vger.kernel.org>; Sat, 05 Oct 2024 09:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728134386; x=1728739186; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dAsy1gC3A6cRcwT6zjwDSlR1PzGJUdizHwyGyWgq0vM=;
-        b=WDTU/WJY/qqyx7Kgyb7EnXtlixtdoZSFcGJVEevhVI63N1NCEiYa387MtiRd1MNy91
-         f1qYKiKXYhIbqoLbNAg/cXN2wLJBskWeyUxGaDjiwRjdqDEV31DhQ7CFvgtffDll7zdC
-         rMgwFMlcJACX4WTxTql7rTTYTLtRp1zhV3RpRpoM1DjW4P9QTQY0ddzIa6vPyZ6cJ0IS
-         hrc6CiYBv+wTmZcnIMpMoNV7m5t+PD85Zl22ijIJAb1g+E0fxYqbZWrXrGyJ97v+crpS
-         ISSRUZeDr8ECvdU9wvnfky08h6QWnw1KK9Qj+4HpznMfXkApkCS3Ff5/341WN6J8fi4O
-         9BZw==
+        d=gmail.com; s=20230601; t=1728146502; x=1728751302; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/xt9+VekCXvGhF2bvqD2Lpar66ylsyfBDaGnyxwXhxk=;
+        b=C0qBjBJz7c0gQoyHgnrJljdYuGS1acgc4mNSoe5vvR4BXzHQw/YQ1ZmbLUE4lRd/Kr
+         42ePQlCfS8OaHXn1oRQ+2Nyhmq/FgYrDysqvKhoePxzuXRfXh158LTgjwI6Y/fyh3gW/
+         wZ0LivskNx40da1MTTEexOzd4nlaHHb1V+FPwfw/7uJNhHWgT6h1HDswyKJA2UVgckZ+
+         880R2UcD1HOu+wNrat8UYp/Ph68WdsK4sLUZGdJq5vYwImBybD+OL/AzUiLt7bdZ6iI9
+         AhpImRkxGfwxmnGJKv5Qkq5h6bM2PB7zJLgPDoOTUWZPSRu5I3g28h7YRbhZ5pKjq3LO
+         GYBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728134386; x=1728739186;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dAsy1gC3A6cRcwT6zjwDSlR1PzGJUdizHwyGyWgq0vM=;
-        b=od5aECoRw+OKPO+LA22LEqpY82MmnzoJwjnYw+ip4flFGtzYBZ91R6soo3NozLRG8v
-         G7HEvRSkVWf86QMoBHazduCXPIG31x1ayhi0adMHXOwdKbi7kuoRiFGf2JoA3BhBF8QP
-         uYa2HfHfdxPyZBowEtvZzKUJWnK06QiDYr+Y3U1q6EBOZLx/08lu7TH95NaIYA1JrXmV
-         mCY8tVn5c11Je6fU9ZmbBfBUCClPeJd2GX7O7bsOR+UqgxdgCqw7+VC92xMiFPHZ+VTK
-         vL1xyX7eNoFvaBL5vlTIqgAyzX61aRh7Gztgv+C/hFTsdsKgUsxWS4tFW4NvIaEbM+/O
-         uPlA==
-X-Forwarded-Encrypted: i=1; AJvYcCXAF7sXkB/7/mxd99ldMxhb76DUGFh//YTM049fuUxq/zzl/JV7PHgbMyCrhEbp0rGPcWw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YydD2bs3f0Dp8bfEQqJW23ltfZyyIsPyySNrcv+0X5yC0LnNrcv
-	L2FKSLZuloZ/bddwUv89oivo5YSsaAYBpGVatn92p4AnM2M22JnSnsSKhg==
-X-Google-Smtp-Source: AGHT+IGQIU1Fg69fWttNWeCZ6q66sG2z0bHJEfUAY20pP5cSc8Am/bdD95Bb7KZYDUH14PrQI49k1Q==
-X-Received: by 2002:adf:8bd4:0:b0:37c:d53a:612e with SMTP id ffacd0b85a97d-37d0e8f13b8mr5253836f8f.51.1728134386109;
-        Sat, 05 Oct 2024 06:19:46 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a992e7b3305sm132215066b.169.2024.10.05.06.19.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 05 Oct 2024 06:19:45 -0700 (PDT)
-Message-ID: <1caf0bdf-6235-4cc8-a4ba-d7d92e6dae26@gmail.com>
-Date: Sat, 5 Oct 2024 14:19:44 +0100
+        d=1e100.net; s=20230601; t=1728146502; x=1728751302;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/xt9+VekCXvGhF2bvqD2Lpar66ylsyfBDaGnyxwXhxk=;
+        b=KwtVpuI2U0TV0hjaR/H9H0c+EOKgUAu1rjB2x7wc32MYMhNeFbBvpFuF5qMu4gxO9N
+         mG7UcYJAcdjl6gSKw9ySHqZxuy7WTpRgxgDJfb1EQ/5yX+cAPRKca90fHHuysTJkprYp
+         8cr34TYUUvIoxeQZD/k50WhNzWStLPfpWP1eFftRzUY77VtThYS69HbUI/h2nkiTQCAk
+         8wisbELkla4/W+EyBAqjrThPjhg9tFxdFTTiYVSDSKyXQBQwepB/fYNG4JOwMJToqjdZ
+         OmxAnuGiA8m1yCrml6+E3hKG8RoF2pnqdQtWZAhQu9SA8NPvtWJ73l0lwGi+jgfKUPx+
+         9SLw==
+X-Gm-Message-State: AOJu0YxeJOHNd+9Uw5NWWSQ9ph19c8MIbJ0y1MeLAJCDps6B7K4c1+T3
+	AHvnwD2M/yp/XYH6OaR9BULAgzrkOQiDQFeLJIxhq5muZi1+nzmALn7XgBDvO2ZvZn3VjQhNmQt
+	wqC80Qg9YP8oudns07XVzt0MEQ/CzJQdXtvE=
+X-Google-Smtp-Source: AGHT+IFk8uEgi7YUvoJcOo1spd8/xZ3AGUQfJCO6Oe1nDezkgjqSsDRGbIc8aV/VgzLIqmCY7GT8x555lzE9i5DqbXk=
+X-Received: by 2002:a05:6122:16a2:b0:4fc:da8f:c8a8 with SMTP id
+ 71dfb90a1353d-50c8543953amr4475983e0c.1.1728146501913; Sat, 05 Oct 2024
+ 09:41:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Outreachy
-To: Fashina Segun <fashina.segun25@gmail.com>, git@vger.kernel.org
-References: <BF74FF00-C553-44E8-AFF8-F83D28422A7C@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <BF74FF00-C553-44E8-AFF8-F83D28422A7C@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAPSxiM-+4VFsHkBW8Y3ncY-kjxvAXSOdSom=zBQzTNd-JK+HxA@mail.gmail.com>
+ <Zv0-Wv03hSea_Tje@pks.im>
+In-Reply-To: <Zv0-Wv03hSea_Tje@pks.im>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Sat, 5 Oct 2024 16:41:30 +0000
+Message-ID: <CAPSxiM_fTMCzXg3OrcbJrn=UskyCaR3D=xgR4d6PrnnAdoYcCQ@mail.gmail.com>
+Subject: Re: [Outreachy] Potential intern.
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Fashina
+Hi Patrick,
 
-On 04/10/2024 17:18, Fashina Segun wrote:
-> Hello team,
-> 
-> I'm Fashina Segun Kazeem. I'm thrilled to be working on migrating our unit tests to the Clar testing framework. Currently, I'm dedicating time to thoroughly understand the requirements and familiarize myself with the necessary resources.
+Following this, I have gone through [1], [2] and some other resources.
 
-Welcome to the list and thank you for your interest in this project. If 
-you haven't already done so I'd recommend reading  [1] and [2], if you 
-haven't already done so. They should give you some ideas for how the 
-Outreachy application process is designed to work in the Git project and 
-lays out the expectation of us mentors.
+I was able to get potential three interesting MiniProject which I can
+work on. I have also checked through the mailing list to ensure no one
+is working on any of the particular file. As advised, I am sending
+this just to be sure if it=E2=80=99s worth doing and if it=E2=80=99s approp=
+riate for a
+miniproject. I am sending three MiniProjects so I can have one to work
+with in case any of them is not appropriate.
 
-Do let me know in case you have any additional questions
+1. Use test_path_is_* functions in test scripts
+An approved sample -
+https://lore.kernel.org/git/20240304095436.56399-2-shejialuo@gmail.com/
 
-Phillip
+Two email threads of discussion and feedback from maintainers.
 
-[1]: https://git.github.io/Mentoring-Program-Guide/
-[2]: https://git.github.io/General-Microproject-Information/
+https://lore.kernel.org/git/CAPig+cR2-6qONkosu7=3DqEQSJa_fvYuVQ0to47D5qx904=
+zW08Eg@mail.gmail.com/
+https://public-inbox.org/git/CAPig+cRfO8t1tdCL6MB4b9XopF3HkZ=3D=3DhU83AFZ38=
+b-2zsXDjQ@mail.gmail.com/
 
+Two potential test files which I saw that I can work one.
+
+t/t7003-filter-branch.sh
+
+
+test_expect_success 'test that the file was renamed' '
+test D =3D "$(git show HEAD:doh --)" &&
+! test -f D.t &&
+test -f doh &&
+test D =3D "$(cat doh)"
+'
+
+t/t2003-checkout-cache-mkdir.sh
+
+test_expect_success 'use --prefix=3Dpath2/' '
+rm -fr path0 path1 path2 &&
+mkdir path2 &&
+git checkout-index --prefix=3Dpath2/ -f -a &&
+test -f path2/path0 &&
+test -f path2/path1/file1 &&
+test ! -f path0 &&
+test ! -f path1/file1
+'
+These two are asserting that if a file exists, it can be changed to
+test_file_exist
+
+2. Avoid suppressing git=E2=80=99s exit code in test scripts
+
+Sample email thread about the same issue.
+https://public-inbox.org/git/pull.885.v2.git.git.1603032125151.gitgitgadget=
+@gmail.com/
+
+First file - t/t6050-replace.sh
+code sample
+test_expect_success 'replace the author' '
+git cat-file commit $HASH2 | grep "author A U Thor" &&
+R=3D$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object
+-t commit --stdin -w) &&
+git cat-file commit $R | grep "author O Thor" &&
+git update-ref refs/replace/$HASH2 $R &&
+git show HEAD~5 | grep "O Thor" &&
+git show $HASH2 | grep "O Thor"
+'
+Second File - t/t3404-rebase-interactive.sh
+code sample that needs improvement
+
+test_expect_success 'retain authorship' '
+echo A > file7 &&
+git add file7 &&
+test_tick &&
+GIT_AUTHOR_NAME=3D"Twerp Snog" git commit -m "different author" &&
+git tag twerp &&
+git rebase -i --onto primary HEAD^ &&
+git show HEAD | grep "^Author: Twerp Snog"
+'
+
+3. Modernise test.
+Description
+https://lore.kernel.org/git/CAPig+cQpUu2UO-+jWn1nTaDykWnxwuEitzVB7PnW2SS_b7=
+V8Hg@mail.gmail.com/
+Sample code t/t7611-merge-abort.sh test_expect_success 'Reset index
+(but preserve worktree changes)' '
+git reset "$pre_merge_head" &&
+git diff > actual &&
+test_cmp expect actual
+'
+Thank you as I await your feedback.
+
+On Wed, Oct 2, 2024 at 12:36=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> Hi again :)
+>
+> I've already replied to this email when it reached Phillip and me in
+> private and redirected it to the mailing list. So I'll repeat what I've
+> said in my reply mail just so that others are aware that I've responded
+> to it.
+>
+> On Wed, Oct 02, 2024 at 07:12:37AM +0000, Usman Akinyemi wrote:
+> > Hello, I am Usman Akinyemi from the Outreachy program, I just got
+> > selected for the second round contribution stage, I got interested in
+> > the git project as it is one of the most important OpenSource
+> > projects.
+>
+> Great, thanks for reaching out to us and thank you for your interest in
+> the Git community!
+>
+> > Also, my skills are aligned with the required skill for the
+> > projects and it is related with what I did at systemd where I created
+> > a new unit test framework which is now the primary framework used
+> > across the project. This development has significantly enhanced
+> > testing efficiency by improving error reporting and debugging,
+> > streamlining development processes, and increasing the reliability of
+> > the software.
+> >
+> > I hope to learn and contribute meaningful contributions to git.
+> >
+> > Also, if there is anything I need to learn about, kindly let me know.
+> > I really appreciate it.
+>
+> I would strongly recommend reading through [1] and [2]. They should give
+> you some ideas for how the Outreachy application process is designed to
+> work in the Git project and lays out the expectation of us mentors.
+>
+> Let me know in case you have any additional questions!
+>
+> Patrick
+>
+> [1]: https://git.github.io/Mentoring-Program-Guide/
+> [2]: https://git.github.io/General-Microproject-Information/
