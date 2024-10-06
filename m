@@ -1,83 +1,132 @@
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F9A101F2
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 17:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC916C125
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 18:16:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728236441; cv=none; b=iiWVJuyyXtiq4eQigfkBVxzKddLGCcL5ab77ZekNznKLNRnmFQ9Mx15Tzdog1klG81Apiw/p4HWGMGDaT2OVosM9rfnLarpX4g5NWqQcD0zBMd3JvC6ffXUWXfHdIKHTaian1tz+LQP5G3mIzoSuJI91LzdJ30Xa2NQ06iFKI/Y=
+	t=1728238597; cv=none; b=pPbAbEbevgSPvmlXaedgUVm0G8+zl+1uZVoN6PHMvsaCdWGPQ44JgRnIUdYWeJG1c6uj2vJCXv/rz063c7eEJY3W51Uz/264WTEjSc1t2kFCaBgD5d4mi11gjuRLdASDjfBZAg0nsQykPoNdFwof2Bg7xlq9HlOPQSeiZrAunM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728236441; c=relaxed/simple;
-	bh=qI6qKXCeQDynyG/ituy4+OiHd7p1Mgym5BXA77HNygI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QeUrmESlQN0+tJUW5PvvFjZx/JAM8C4lVXBdKnZJ+tbcykxpY/X61FhY8gDKM0gmz5g7eiPcBzlddUKWIZD131gjx4g2jauIKTQQwdQLlEsEtYjUkPIAXDPEEDsNXhKJSJhbPdhsoHQbIP5mmMXS4j4jKyq5qy7OeoAmQCLLxyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b=hjzjT18L; arc=none smtp.client-ip=173.255.242.215
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=80x24.org header.i=@80x24.org header.b="hjzjT18L"
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30B0A1F4B8;
-	Sun,  6 Oct 2024 17:40:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-	s=selector1; t=1728236433;
-	bh=qI6qKXCeQDynyG/ituy4+OiHd7p1Mgym5BXA77HNygI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hjzjT18LOfh4y7dU3zJLbGbCw2dfUwNhAvnFoadq8ddVKexRCnZO/PDgjPGH6nOnw
-	 u2EMju0eiNAab56Sp6rFZkUw8bcdls9vVyMIFZxSk0IHIvnKU+zkkCkd50ON2Fk+91
-	 5CD721pwfNbmgJRSv0xpwuLHAqWefPU27wY6wUjY=
-Date: Sun, 6 Oct 2024 17:40:33 +0000
-From: Eric Wong <e@80x24.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 04/10] packfile: inline cache_or_unpack_entry
-Message-ID: <20241006174033.M85696@dcvr>
-References: <20240823224630.1180772-1-e@80x24.org>
- <20240823224630.1180772-5-e@80x24.org>
- <xmqqjzg3ky77.fsf@gitster.g>
+	s=arc-20240116; t=1728238597; c=relaxed/simple;
+	bh=SgAfO6BWUC8N6P3+EeT/DFgAGWzLUmLHaEDZwBPO8W4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=C5JQFD15L1QKtR7eElcMqfa+w/w/09GZWPF7s1ieEgRymz5mt5ClAYVEeARu1YLqqwJ6HRkcMIiXtVmcJHVb60j1RafO6F3JB1I5Y9yqhjpvINpgaHW1t6X/6xwrz0Fqs7XlBQ4k3k0K6GQuSMGz9gUsNq+tH/7RIMtf4HnJzxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6cb21f041c8so3882726d6.3
+        for <git@vger.kernel.org>; Sun, 06 Oct 2024 11:16:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728238593; x=1728843393;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LwwOumIKaEDUMhRdJC2uL9aZnumRYF1b/7sKuPonGds=;
+        b=Pv0gISJy7OaT3UDbvxEOjDODgrI0UteDTDDy5rF+ShMMWZRJ4Pj5UAE+fO2OlYEKLD
+         ViWrn7vaWlMmOwwZlXfGe+Lt4zR2xrSPHJVVOjxKiyx5hhvqQxXG2eUqWMfVjEYpDvQK
+         P7tYNVcScJuJqxbSankOhgGJ9pUn8VoDJ4L/tuMXQ9bb3srek/ZV2zhP/AAtppcWxPO2
+         60RbKLrqGBp+rGDp2foaomyIrQkUIxTzX6q+USLWv2gzmg/VYjhdyHqeIQcDZsWa0uCa
+         CJ/8Bvo/GWOUYm6IaeAB2W9F8ofKFexE5Rl/ZIaRn4VH42u675X5mbbhMFP6d9ehw1Xz
+         Gvug==
+X-Gm-Message-State: AOJu0Yyhgkqr4/cj/mBS/fEp4paqkNqCsTGy8DgyBU3AInn6lIsPXEcG
+	Wna8uBG25XKCoZWSCRfIEiM4m5k5fZkN4vO9Y5DRbIqEa6hWIL/76uO8dJprcrSXSKLaOVP7IPi
+	R1vGkp8njzSa2IaKLYkOtmPHRfWM=
+X-Google-Smtp-Source: AGHT+IEW43fhSrEVZsve9q6WP20rlwwppyrQ0bzUr50BjMFWuHiHYMU2hm1trzd8fJ9aLK/amwjj3yFQLWprdbLU4hs=
+X-Received: by 2002:a05:6214:1c48:b0:6cb:6140:f490 with SMTP id
+ 6a1803df08f44-6cb9a45437cmr65911186d6.8.1728238593519; Sun, 06 Oct 2024
+ 11:16:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqjzg3ky77.fsf@gitster.g>
+References: <20241006060017.171788-1-cdwhite3@pm.me> <20241006060017.171788-2-cdwhite3@pm.me>
+In-Reply-To: <20241006060017.171788-2-cdwhite3@pm.me>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 6 Oct 2024 14:16:22 -0400
+Message-ID: <CAPig+cSe0ykN=Mmb8Nwp112ROOCuhzzP0jofvL91PsVi8W4dHg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] worktree: refactor infer_backlink() to use *strbuf
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <e@80x24.org> writes:
-> 
-> > We need to check delta_base_cache anyways to fill in the
-> > `whence' field in `struct object_info'.  Inlining (and getting
-> > rid of) cache_or_unpack_entry() makes it easier to only do the
-> > hashmap lookup once and avoid a redundant lookup later on.
-> >
-> > This code reorganization will also make an optimization to
-> > use the cache entry directly easier to implement in the next
-> > commit.
-> 
-> "cache entry" -> "cached entry"; we tend to use "cache entry"
-> exclusively to mean an entry in the in-core index structure,
-> and not the cached objects held in the object layer.
+On Sun, Oct 6, 2024 at 2:01=E2=80=AFAM Caleb White <cdwhite3@pm.me> wrote:
+> This refactors the `infer_backlink` function to return an integer
+> result and use a pre-allocated `strbuf` for the inferred backlink
+> path, replacing the previous `char*` return type.
+>
+> This lays the groundwork for the next patch, which needs the
+> resultant backlink as a `strbuf`. There was no need to go from
+> `strbuf -> char* -> strbuf` again. This change also aligns the
+> function's signature with other `strbuf`-based functions.
 
-OK, will do for v3 (apologies for the delay, Real Life is awful :<).
+Regarding aligning the signature with other strbuf-based functions...
 
-> > +		type = ent->type;
-> > +		if (oi->sizep)
-> > +			*oi->sizep = ent->size;
-> > +		if (oi->contentp) {
-> > +			if (!oi->content_limit ||
-> > +					ent->size <= oi->content_limit)
-> > +				*oi->contentp = xmemdupz(ent->data, ent->size);
-> > +			else
-> > +				*oi->contentp = NULL; /* caller must stream */
-> 
-> This assignment of NULL is more explicit than the original; is it
-> because the original assumed that *(oi->contentp) is initialized to
-> NULL if oi->contentp asks us to give the contents?
+> Signed-off-by: Caleb White <cdwhite3@pm.me>
+> ---
+> diff --git a/worktree.c b/worktree.c
+> @@ -642,10 +642,9 @@ static int is_main_worktree_path(const char *path)
+> -static char *infer_backlink(const char *gitfile)
+> +static int infer_backlink(struct strbuf *inferred, const char *gitfile)
 
-The original code unconditionally assigned cache_or_unpack_entry() result
-to *oi->contentp, and there's a bunch of non-cat-file callers which pass
-a non-NULL *oi->contentp and expect packed_object_info() to NULL it.
+... it's subjective, but I find that placing the strbuf as the first
+argument makes the purpose of the function less clear. The direct
+purpose of all (or the majority of) functions in strbuf.h is to
+operate on strbufs, thus it makes sense for the strbuf to be the first
+argument (just like `this` is the invisible first argument of instance
+methods in C++ which operate on an instance of the class). However,
+infer_backlink()'s purpose isn't to operate on a strbuf; the fact that
+the original signature neither accepted nor returned a strbuf bears
+that out. The really important input to this function is `gitfile`,
+thus it makes sense for this argument to come first. The strbuf which
+this patch makes it use is a mere implementation detail (a
+micro-optimization) which doesn't otherwise change the function's
+original purpose, thus it belongs in a less prominent position in the
+argument list.
+
+> @@ -658,17 +657,16 @@ static char *infer_backlink(const char *gitfile)
+> -       strbuf_git_common_path(&inferred, the_repository, "worktrees/%s",=
+ id);
+> -       if (!is_directory(inferred.buf))
+> +       strbuf_git_common_path(inferred, the_repository, "worktrees/%s", =
+id);
+> +       if (!is_directory(inferred->buf))
+>                 goto error;
+>         strbuf_release(&actual);
+> -       return strbuf_detach(&inferred, NULL);
+> +       return 0;
+
+On success, we now return zero...
+
+>  error:
+>         strbuf_release(&actual);
+> -       strbuf_release(&inferred);
+> -       return NULL;
+> +       return 1;
+
+... and on failure we return 1. To avoid confusing readers who are
+familiar with project idioms, it would probably be better to instead
+follow the convention used in most of the rest of the project (and in
+Unix system calls in general) of returning -1.
+
+However...
+
+> @@ -698,21 +697,23 @@ void repair_worktree_at_path(const char *path,
+> -               if (!(backlink =3D infer_backlink(realdotgit.buf))) {
+> +               if (infer_backlink(&backlink, realdotgit.buf)) {
+>                         fn(1, realdotgit.buf, _("unable to locate reposit=
+ory; .git file does not reference a repository"), cb_data);
+>                         goto done;
+>                 }
+
+... this code now becomes more than a little confusing to read. It
+says "if infer_backlink then signal error", which sounds rather
+backward and leaves the reader scratching his or her head. ("Why
+signal error if the function succeeded?"). Hence, infer_backlink()
+should probably return 1 on success and 0 on failure, which will make
+this code read more idiomatically:
+
+    if (!infer_backlink(realdotgit.buf, &backlink)) {
+        ...signal error...
