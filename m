@@ -1,87 +1,90 @@
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D71152165
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 22:10:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD87B173320
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 22:19:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728252614; cv=none; b=qArawrSQxIOTkVSOeQNtvfHE8On+Asqsgk1LlCHM9izIJHoaJEIk2+nmF7+offdx9nspyT6a7px87G+OC9UT5ZMkTl03JmTM3Fntp1jJohkGFn16iNfBNlVvnfypNJSqKdxPLRnsbHoUOTB0P0bfq0eoySbV/YpkAjmqOXttuyc=
+	t=1728253188; cv=none; b=c4MybYLDKLA2sGEzsTbTGtyRkZO2lPOyNmiyPQQrned/q/AFB2Kd1vCCNzabBT8fBW69+elxk4qXWD4/47jCYOElQH8bQabYolCUB0JCLHYTPml29W9DLnel+DDRtzCJWqm9urHhVSMItNjBAbcbejMoFXFnWmmk1iYaCG9CR70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728252614; c=relaxed/simple;
-	bh=Dx/voKq0ZSq+w49bxYhZkWwCoAja7v0Cuz4VjVOAQuc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UKu9hkJpHc66PyReXsLwi9xArIdQ2Qqx5M3ey37hsuW34oKTkJJqhOkXkOBJ6zGIWuaFKY22a97M35/PejKAgc7w+fDt9eDWGt0931ohgfllPrE7HdBpOTi+waUWr45DsdII+qewdu02Cqb08fU9WbFxtlOb0v6u4YXmhaMP7K4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=JQ3yxJ2g; arc=none smtp.client-ip=185.70.40.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="JQ3yxJ2g"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728252610; x=1728511810;
-	bh=Dx/voKq0ZSq+w49bxYhZkWwCoAja7v0Cuz4VjVOAQuc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=JQ3yxJ2gN8Ez7LbIBDHROUCxExHPrXKS5Q3RZLp/JKQyC38Ub0lQP19kWtGgIpjdn
-	 VBRxRtkvnl8u3cjm2MZgd2075HLT0easJGxXpYo1huUQ+TmQPxjvITKahBpzMEaKEq
-	 n0eNsXrp5f0obNbLUPlJ2T7aVwcniq0inJUb2D9R8ay77OxA+aK6WGq0arW4wyFGqz
-	 m3+1laksQFqreftBC7SOzX1dZsEWd8ESnUggQuAOuQq0HTefMVvg1mEU0K50kZcnxp
-	 VxEeUWnh46wADCphipR6mdxwkGviPLzDnLaCYNtPUEDd6BjPw+RexGRCwQ/EeHPyMo
-	 756Y4MdkcVgNQ==
-Date: Sun, 06 Oct 2024 22:10:05 +0000
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-From: Caleb White <cdwhite3@pm.me>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 0/4] Link worktrees with relative paths
-Message-ID: <HQHFMbnFwMCxJ6lusWsy7qEnWtEwYovUv7x59Jh0BmuSjJyKiM7IbPOivNmLvA_9mm_YqxDfVfzqf2rUeixky-XApO2FdVeo48YR8O1_8WI=@pm.me>
-In-Reply-To: <4bbe8ceb-2e72-463a-81a0-138815a1cf8c@app.fastmail.com>
-References: <20241006045847.159937-1-cdwhite3@pm.me> <CAPig+cTE0gaD=7dwSqY4S+7AqRoU9yOrS4sdBoybj0Pfyk9vxA@mail.gmail.com> <K1lpl_AWj4xpiHLG9AloFDP7hkJ7Ysf-LA5H-OeP6suaBcES3WS6NTYZGX96oQuNQ3x36eEOxGdqlj3fG3ybrn5y3LRPfCNqC7yqTyvqVrk=@pm.me> <CAPig+cQE0RNLhktuja-BbF8WwZmKC3cox_GUC-o4w87PadDpgw@mail.gmail.com> <gX8RNUg1e1FCYFS1vP-uT4rbMpg21Ax07CZm5Ha7Dsk93EN6CTuXiLr3boTaoNEi71O1rDoUxhTs6KQt7Cvfz7B3KlbpZzis5b05KW7ARls=@pm.me> <CAPig+cR4FXsGDE9Uu04EjK+vOo-Pi_VwOub8+Dy3r9t7z8GdkQ@mail.gmail.com> <AtSpzKynOkmMPZ3bR4qx-eA93Xo-1miPCIQSxIKP534tD-qpDU1AI74vqB78RsukQ0XP5eKdvzHcwy_lf8lpL9wAoHoom-koo5GKcbrcuX0=@pm.me> <CAPig+cQZmEdx1Th9VAHbEkJ=zm73TP7Wuda_G5CzFw7j9HTFQQ@mail.gmail.com> <4bbe8ceb-2e72-463a-81a0-138815a1cf8c@app.fastmail.com>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 4a1d60522fbf250ddddeb9a15e028508cb8a3298
+	s=arc-20240116; t=1728253188; c=relaxed/simple;
+	bh=ASNd66yu9kclyrJ8TKX6qD9f/uCGu7omi1G0QuXZZkU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X8nuhr3ZI1JPovGxPj/QYahirJlzz1sETLDp1yvETsBybm49PahBxg0FMe8O+goKonoM2Vv4BiIrIo/xKfCyduYxbmDE7D95Qdug3xCYKfl2h620GiG+3NYggcAW9C8Yu8PmQlzAemykkViVvWiKQOeIFKgs1myDXv57K2h3ia8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6cb3d95ce6eso2846366d6.1
+        for <git@vger.kernel.org>; Sun, 06 Oct 2024 15:19:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728253185; x=1728857985;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ASNd66yu9kclyrJ8TKX6qD9f/uCGu7omi1G0QuXZZkU=;
+        b=Iqlxkw16/iZDlRUwUSAo2k1AlsNTkuwCDuYnILrJkBJG7ONhxOobBlmETW47FCViL+
+         /yneJLYkKoJw0Hdq8QJ29CoBwWLbrUghHPqNIu4GMCPvxb0l9kM8lStLGTy1Letko2jm
+         xePB1C4B5/PJSDWaIgyHUR8qD8CX9y5A+qVEwMobGuf/PSs/lCt3cFa3FqNV8ARtV4G+
+         K0id12EmH2ie1Omb4sEU2XSKLrBOue/jWYHuXjc3TIVPMBIehsTlxY8O+eQqfctcjaxl
+         13jqi5BbFdwmbv9WdSfijHp2mX0L83FHgWwL+UYRFJIkJYsaMrgat8Qv3IyzB7yYKSPQ
+         e1nw==
+X-Gm-Message-State: AOJu0YyluvmG4b4KE9IMcglibYfiIupYgOOhCr5qT18PPH5OsB98F1kw
+	+xvjb4onQHS7VHsUs/cRBH+deCXmQRw61lxNS1FBP4NI/ajTTNnuNSAvqrwEfFSpcHSSNFRaIsr
+	Zdq5+xoAD4o594pwYbEvL4OCG5GU=
+X-Google-Smtp-Source: AGHT+IEElDi5ao0WZ7Gd7hTBid8CgZ+nWJZ4bVn9frIhLQN/q732+CI8Z8Bo3UoeNw0+E4po306MRBsiHPnPXt4hPRU=
+X-Received: by 2002:a05:6214:20cf:b0:6bf:6d90:c084 with SMTP id
+ 6a1803df08f44-6cb9a2f28acmr71342156d6.3.1728253185537; Sun, 06 Oct 2024
+ 15:19:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------1a00ae0567235e785c92e072001dc69db18c74d05a6ea7e5b1cefd53d35c62ed"; charset=utf-8
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------1a00ae0567235e785c92e072001dc69db18c74d05a6ea7e5b1cefd53d35c62ed
-Content-Type: multipart/mixed;boundary=---------------------87e27aa3776e23837e82406cdc1f9c01
-
------------------------87e27aa3776e23837e82406cdc1f9c01
+References: <20241006045847.159937-1-cdwhite3@pm.me> <CAPig+cTB-sA-g4cdhfEjWwY1mnbWJ41e=bOCNwp=Y8JKvpmpRg@mail.gmail.com>
+ <CAPig+cTVbXVffSeyNAV3c0zuSUozY7giWtMw3GpHs+xVEpaNvA@mail.gmail.com> <gZ9_OcXpHKqABP0c_FH7EVpjzCD92RASyYoDkrhhrxzrbKvx5duIaXIrVOK45bmglyrLHrQ6SR4YVtMwU6BGqw1_TWs7rHk_lNderVONljY=@pm.me>
+In-Reply-To: <gZ9_OcXpHKqABP0c_FH7EVpjzCD92RASyYoDkrhhrxzrbKvx5duIaXIrVOK45bmglyrLHrQ6SR4YVtMwU6BGqw1_TWs7rHk_lNderVONljY=@pm.me>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 6 Oct 2024 18:19:34 -0400
+Message-ID: <CAPig+cS06E1xjM6asqF9-5KSSgGaVQgF2_QdYSziSPJ-5mRSBg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Link worktrees with relative paths
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
 
-On Sunday, October 6th, 2024 at 04:00, Kristoffer Haugsbakk <kristofferhau=
-gsbakk@fastmail.com> wrote:
+On Sun, Oct 6, 2024 at 6:01=E2=80=AFPM Caleb White <cdwhite3@pm.me> wrote:
+> On Sunday, October 6th, 2024 at 00:11, Eric Sunshine <sunshine@sunshineco=
+.com> wrote:
+> > Also, since you're touching infer_backlink(), see [1] which makes some
+> > changes nearby.
+> > [1]: https://lore.kernel.org/git/20240923075416.54289-1-ericsunshine@ch=
+arter.net/
+>
+> Thanks for the heads up, what is the best way to move forward on this?
+> Should I base my patch series on that topic branch or bring in that
+> particular patch?
 
-> If Caleb gives us a clone link then I could try to send.
+If that particular patch impacts your patch series in a way which
+would require Junio (or any reviewer who wants to test your series) to
+make non-trivial changes to resolve merge conflicts, then it would
+probably be best to base your series atop that one (rather than
+bringing that patch into your series). When composing the cover
+material for your series, be sure to mention that you have based your
+series atop that patch.
 
-Here it is!
+> > And you might be interested in [2] which may indicate that there are
+> > some holes in the tests around worktrees which might need filling.
+> > (Since your patches are whitespace-damaged, I haven't checked whether
+> > your series succeeds or fails in the way the series to which [2] is a
+> > response fails.)
+> > [2]: https://lore.kernel.org/git/CAPig+cQXFy=3DxPVpoSq6Wq0pxMRCjS=3DWbk=
+gdO+3LySPX=3Dq0nPCw@mail.gmail.com/
+>
+> I just ran through the scenarios you described and everything works as
+> you would expect. This is because internally the code handles both
+> absolute and relative paths, and the worktree.path has been updated to
+> always be the absolute path. I will make this clear when I rewrite that
+> patch's commit message.
 
-[1]: https://github.com/gitgitgadget/git/pull/1808
------------------------87e27aa3776e23837e82406cdc1f9c01--
-
---------1a00ae0567235e785c92e072001dc69db18c74d05a6ea7e5b1cefd53d35c62ed
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsBzBAEBCAAnBYJnAwquCZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
-28viAADoTAf/Vi0AVlolnaSel7lb/xcioNuLxUe6HeHwhNEmzzsTLjIbT5ck
-Z5sfzJjWEGUydKRvnO5SUKv/sLIm8kmWtcr4dbB1jyXuuRXaNjp+DMeVRn1I
-L92GbIPsui9DeIKO+0GJcyCbo8wR+MPWEGcirdLQQ+zrypWZSUTGqQ3ZFHIu
-NeOJB2ZCWo7jjIjYDRCu8Bz+2iXIRNn9ialnTmKS0trf0Jo7tCpipxc4zQyP
-MtrRDuY1fQ+gHT8nQLf2zEtF9nffRZs6QHoQJ9bM6chYdJgcrRTWBCDXFu94
-AHjqmeSV7pTnfoCruJlhHGfYt8zctldwvyWhEaX8LtqRGlZ6AvnRcQ==
-=ydzI
------END PGP SIGNATURE-----
-
-
---------1a00ae0567235e785c92e072001dc69db18c74d05a6ea7e5b1cefd53d35c62ed--
-
+Thanks.
