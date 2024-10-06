@@ -1,143 +1,114 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BD015699D
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 05:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651B418E2A
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 05:41:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728192821; cv=none; b=S9DY7umZhNulHgqX8xiy6wUs79hKNmHau40RtDNpEjGKXm5dJPgOG43/+wwSq+jtLwF34yeyww8N6n4NbhEsDV1yveqZoNJXLgpjv/c5F+sxj7yIaR0jFtjJtITuyqkMM+e8/8VyT6KMovo6ARoowD9xXC39/wQDqulopv5Kf9Y=
+	t=1728193297; cv=none; b=SujB8vymxFScmebYaPU58uIRfwCbPxhyD2t1uZGw685SX49Xpxv+wN4YT7brGYl1IH3ffNQAx03jS4byEpuf8/i50ERYD8C4DZMdAC3rsSCSD7y2eRPM00yOFhuzeQdRTCaheL4Y31jlsbAPJ4nKLwx9vYoVi0rkftkmYTQvEb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728192821; c=relaxed/simple;
-	bh=owFjzM6Zz+SyJMZqfVQc30yJHNdk0ERaHy/Q0RIfi1k=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=WIvxfmmy4kpq1iMelvehXTf+4tLb9htnAZ8H1yMQUmZurpQaMaVPPAMECFnByJRcQ/0CoHnLpEuGsV4Yw3RiXjLIlFpxVSjsChaHrKNTZQWQX5Vq7KWyjkpWx5Zt99neeh1Azlg75bx09TB7jSscV4rPx7qU3lSsoSewYQ4l+N8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FdYLtGdM; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728193297; c=relaxed/simple;
+	bh=m1Ry7vs8onwXpArBnMieNZPAs3ByrEZJdzqMIAgAes4=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=cNLkNCHDDM1nNsZP0GiNFAQO9c2FSFKXm4XghVqIKza7HnAdMBty+Ju6UCfh4ZDLkHVMlzoU83CVcBoFKyoo/dwYr+6eLc6U6oR5AbroRGQnG7dAGLZgsIzBjo9upEFK2Gf+pAj8Trqw/7/CLuHe2B0mL6S9yX2zEQ8ACOXb7GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=UDwL8sJr; arc=none smtp.client-ip=185.70.40.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FdYLtGdM"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a8d6d0fe021so581575566b.1
-        for <git@vger.kernel.org>; Sat, 05 Oct 2024 22:33:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728192817; x=1728797617; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J4p2QSui+vyEyJ0gzbiiM5suTNuak3CdBBaZFCxSNac=;
-        b=FdYLtGdMYsKiM3CYNHydmuR85QB4/5mHBOMsZ+rCRo1+UTdDDqFyPgd39hijN74Kf8
-         w00NRjymOTMMpYc5XqwX/mO6FgULAOFH0/fON5QQmsIYpszma+ukn+yOVRv8gWFm0XP2
-         qT6x+KYDFLOckqlIesRPJe6l3Vqe13puDT3AvghhCvy7/zLGBu18fVfAOPExzJjGaF+M
-         cfM8cXjNpzwl3ndst6TbJamqxRICpB8NMfVAoMtxyvju+DOU5LyU1Ha45ULcxd+pOwke
-         WVgKEuYNYCCsK3A3h9JgxkoApb8HQTUsqJ/IjYgkXuwTBj7OdTSGf0zdM/4NnE6gE1CL
-         MkAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728192817; x=1728797617;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J4p2QSui+vyEyJ0gzbiiM5suTNuak3CdBBaZFCxSNac=;
-        b=c/S0B6qnxeWO7MBnxZ7bZoxwnM+SRkpOZ4LHLw7k9v7MuP5WHgSaFzvnOFCicnqnjm
-         /IoPQ6OeDn3r+ca31KefH1gu6cc914TTM3q/b0joQyVdlLGqu9O7xsHPLM5ijmvp5k7Y
-         QNICu8UqwmbB4qc7MYJZaMjy9ykCtO1J/eimldZR4eV553f30k9qwkXGx+W6FtDtf9c+
-         aAqxjOtAXwKfveo3k7iOPPviW+mN/M68UosE7QwUewkjI0GVcrU2Xvko5tZ9AruP2YGw
-         ITIwrBeoX7o0AWx38Ka4hlfiEztMbn5qVv2827YNHtu4WR1deQtzq5E6onxXvGo5MNj1
-         D+zA==
-X-Gm-Message-State: AOJu0Yzl3pcanrcxuT4AHFEKjtRoOzYvHbkUnnM5kjHMPOxk4xaI6VKP
-	JT8k7di4Ggs1ofvwdD7TXRSp8cn0J8BF/iXgnCA+GpML2CSphmzw2YAjrA==
-X-Google-Smtp-Source: AGHT+IGAUshsUmL1565h4Txm87IrUMNfJDd9jO+JYgpXgAbjyIKV9tg0z/Pgx5WLhNcIJCK81qKa6w==
-X-Received: by 2002:a17:907:2d91:b0:a99:ec6:a820 with SMTP id a640c23a62f3a-a991bce3ffcmr699107366b.2.1728192817161;
-        Sat, 05 Oct 2024 22:33:37 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a992e62392csm216813366b.52.2024.10.05.22.33.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Oct 2024 22:33:36 -0700 (PDT)
-Message-Id: <4199434bd6ef2142192d1c720ccd877b1a80536b.1728192815.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1805.git.git.1728192814.gitgitgadget@gmail.com>
-References: <pull.1805.git.git.1728192814.gitgitgadget@gmail.com>
-From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 06 Oct 2024 05:33:34 +0000
-Subject: [PATCH 2/2] [Outreachy][Patch v2] t3404: avoid losing exit status to
- pipes
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="UDwL8sJr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1728193288; x=1728452488;
+	bh=m1Ry7vs8onwXpArBnMieNZPAs3ByrEZJdzqMIAgAes4=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=UDwL8sJrJM7ljj49/f1HW+r+z8F3bMxR/8MBIELraPPTw7if7IOMv/vlM9EHaCVun
+	 1IoTQoTlm56IePuReGcL0fs0GsfMpz2Y1op2micyynEmjSHcOw8YI4hkj87GLyI1rb
+	 roi3shD9Y4Id7v9gUvh567L8HVmyKMN10Fb6Q/9BzZtSv9FaM8cdJVdtD+qWEzp2Ro
+	 w/M4+vsLUE1o8dmy+Xw4ADH/bKCM9fFrkAFzbfTpgeATC8A/62NsfRETBuKsx+f17D
+	 ICGBqFAETojm+Vaj0k29O+Eft+FlCVVFuHTRiGcdwNuNGb7Lu362zJ6qbmhQWPaNpm
+	 ViE08gPF6jsLw==
+Date: Sun, 06 Oct 2024 05:41:25 +0000
+To: Eric Sunshine <sunshine@sunshineco.com>, "git@vger.kernel.org" <git@vger.kernel.org>
+From: Caleb White <cdwhite3@pm.me>
+Subject: Re: [PATCH 0/4] Link worktrees with relative paths
+Message-ID: <K1lpl_AWj4xpiHLG9AloFDP7hkJ7Ysf-LA5H-OeP6suaBcES3WS6NTYZGX96oQuNQ3x36eEOxGdqlj3fG3ybrn5y3LRPfCNqC7yqTyvqVrk=@pm.me>
+In-Reply-To: <CAPig+cTE0gaD=7dwSqY4S+7AqRoU9yOrS4sdBoybj0Pfyk9vxA@mail.gmail.com>
+References: <20241006045847.159937-1-cdwhite3@pm.me> <CAPig+cTB-sA-g4cdhfEjWwY1mnbWJ41e=bOCNwp=Y8JKvpmpRg@mail.gmail.com> <zKUnWY8u1SJNeS4oLK85znjacgYJJeN8HefenwaJ9B9Q1YrQAumpAxWos4svaawkTfQZ_HaS3yp6WrOQQI7yt3ZO0UMCfkM0lJDDnMD-Lno=@pm.me> <CAPig+cT6LALKjEappB7QkB7oc88NyMcr40T_qJGL2mPA77K7XQ@mail.gmail.com> <CAPig+cT7CEnb6cQmAOMbD82wxkg=7T0MMW=QNUSPU62a0rEGLA@mail.gmail.com> <TEfKiit-RYyr0ZuiQszaKaM64iSonfaQwWRqExOgXyPR1tVWyAzR3kVKmCd3aREZwDGuS5VXcHjCvneY-gCg2OuZyv2N2EkfARlZu4AVSsU=@pm.me> <CAPig+cTE0gaD=7dwSqY4S+7AqRoU9yOrS4sdBoybj0Pfyk9vxA@mail.gmail.com>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: e191a0ff50dac22a4c12d25b851f1169e8028a14
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------29c10ff60f9fbd45d2c12723918ce304c4912ebee04004698a2d01c11338851c"; charset=utf-8
 
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------29c10ff60f9fbd45d2c12723918ce304c4912ebee04004698a2d01c11338851c
+Content-Type: multipart/mixed;boundary=---------------------46b37dda95e6a5fc015655ac6bafa7b4
 
-Changes since v1:
-- Added "tr -d '[:space:]'" to handle whitespace on macOS
+-----------------------46b37dda95e6a5fc015655ac6bafa7b4
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- t/t3404-rebase-interactive.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+On Sunday, October 6th, 2024 at 00:32, Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 33ea1f05e2c..3d8de69d6ee 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -401,7 +401,7 @@ test_expect_success 'multi-squash only fires up editor once' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
-+	count=$(grep ONCE output | wc -l | tr -d '[:space:]') &&
- 	test 1 = "$count"
- '
- 
-@@ -416,7 +416,7 @@ test_expect_success 'multi-fixup does not fire up editor' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep NEVER output | wc -l) &&
-+	count=$(grep NEVER output | wc -l | tr -d '[:space:]') &&
- 	test 0 = "$count" &&
- 	git checkout @{-1} &&
- 	git branch -D multi-fixup
-@@ -436,7 +436,7 @@ test_expect_success 'commit message used after conflict' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
-+	count=$(grep ONCE output | wc -l | tr -d '[:space:]') &&
- 	test 1 = "$count" &&
- 	git checkout @{-1} &&
- 	git branch -D conflict-fixup
-@@ -456,7 +456,7 @@ test_expect_success 'commit message retained after conflict' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep TWICE output | wc -l) &&
-+	count=$(grep TWICE output | wc -l | tr -d '[:space:]') &&
- 	test 2 = "$count" &&
- 	git checkout @{-1} &&
- 	git branch -D conflict-squash
-@@ -501,7 +501,7 @@ test_expect_success 'squash ignores comments' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
-+	count=$(grep ONCE output | wc -l | tr -d '[:space:]') &&
- 	test 1 = "$count" &&
- 	git checkout @{-1} &&
- 	git branch -D skip-comments
-@@ -519,7 +519,7 @@ test_expect_success 'squash ignores blank lines' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
-+	count=$(grep ONCE output | wc -l | tr -d '[:space:]') &&
- 	test 1 = "$count" &&
- 	git checkout @{-1} &&
- 	git branch -D skip-blank-lines
--- 
-gitgitgadget
+> On Sun, Oct 6, 2024 at 1:21=E2=80=AFAM Caleb White cdwhite3@pm.me wrote:
+> =
+
+
+> > On Sunday, October 6th, 2024 at 00:16, Eric Sunshine sunshine@sunshine=
+co.com wrote:
+> > =
+
+
+> > > > + struct strbuf backlink =3D STRBUF_INIT;
+> > > > struct strbuf gitd
+> > > > ir =3D STRBUF_INIT;
+> > =
+
+
+> > That's strange, the code came through just fine on my end:
+> =
+
+
+> =
+
+
+> It's broken in the Git mailing list archive, as well. If you search
+> for "mbox.gz" at [], you can download this email thread. The patches
+> in that mbox file have the same damage as I'm seeing.
+> =
+
+
+> [] https://lore.kernel.org/git/CAPig+cTVbXVffSeyNAV3c0zuSUozY7giWtMw3GpH=
+s+xVEpaNvA@mail.gmail.com/T/
+
+That's interesting...what's the best way to try and resubmit? As
+a new thread or as a v2?
+-----------------------46b37dda95e6a5fc015655ac6bafa7b4--
+
+--------29c10ff60f9fbd45d2c12723918ce304c4912ebee04004698a2d01c11338851c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wsBzBAEBCAAnBYJnAiL3CZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
+28viAADihwgApz7UoActOtLHyzt93/8Yf8e3p8QLYiBsSsUkER6jvY0ma3Oy
+xrYpUaeSfERl/CsiOS1WpsgV5FYsnMNX8qeZEsLSZ1Kf82cUgh1ERaL+RmES
+kmo6jo5sMW0QBoctSVx2P7uWQn6PQzPEjrglSiNWA8PWGpZ8in/KwP6Kk8ha
+8zD8vL9hoI8X9BoDJ1/8T9mkt2Lr5z5cCRIDuDNT0atkaRjqk0oDFUSWDpVI
+JuNbOCDkjhu9I96KUv9ARG3VOaVDB7CR0MjGJikA4H0NkuTco0K3ZAdniEF4
+re3EMaKH89rtBLNsiQdsHZENUrHfFF4WAIuy36OuVQNCHonaN2qrSA==
+=c43+
+-----END PGP SIGNATURE-----
+
+
+--------29c10ff60f9fbd45d2c12723918ce304c4912ebee04004698a2d01c11338851c--
+
