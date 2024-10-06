@@ -1,213 +1,137 @@
-Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D22156228
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 04:34:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D142F2E
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 04:59:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728189265; cv=none; b=gs6RF2xK0onF+qPWogbN7sA6R+GPTCD3+8gKT7Cbozw1YZ6DV9nxsN0T7fICxO/sWuULeMK4SbcnduHn6AACizzNUOUHCRU9vlBanQD9n17z7Krvuu/RspkJfc9IksLebygQimbS9c/Z09aD1dhqp4+1scU9oS74UiWXY0PRHiQ=
+	t=1728190757; cv=none; b=Cse+mcqbGeHFTMTD9tx2RsAcTV1CW+v2WvCHMqdDMu9uZ05D84dyhGGJi/eB44O2v+EvbKjY9lp7BvM04FDzpyC8xRVSMmWBSmDWh7E+wSuXrq0jc7J7/Jiv3esKEnQvb2UO0mPDTsx3NL8LqsxvTLK+mXCqDXRmdpWeZeYz+2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728189265; c=relaxed/simple;
-	bh=ohuYL9eai46yWmTF1SJHkzSx3FaqGjO3i/oANK+btWw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HHGbIZvR/8CxsKPBoao9z+WBHGWayQHt9Z+d8ZnmgIoe+PEr43+dY3fgAczkgbpmtU2bHRnQwexUy+X33T8JPQ3NBMV+R0BnOO5hfjpp6Lh1SFgbFGKgueBiEllSLRGDh7KTdcf3dcj3faflVexA5GTi88iZ0AXu7vFLqjnJ3FA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H0Ihjr5Y; arc=none smtp.client-ip=209.85.217.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728190757; c=relaxed/simple;
+	bh=dcAJ1CiM/BKYEYfnXnlGlt5TslztNbj//SjKkVip+kw=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=WhwVSirP/IeXgwm9aiGvuOlOsPmxAjf6YGB87QSWyLynuAln6bnfCN1CVYk+EOsE+9fdwDcv+9vsaqM121rk82lYNiFl3NQfnxG+wtO827nk/CknBMwzCvQ6NcYCjv1MaVmXMpZG0YGrCPUqfvm+PIh4V3N7lau4ldILYZ3LlBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=A4pM7LhW; arc=none smtp.client-ip=185.70.43.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H0Ihjr5Y"
-Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4a3baeb9f3fso1110431137.0
-        for <git@vger.kernel.org>; Sat, 05 Oct 2024 21:34:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728189259; x=1728794059; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ohuYL9eai46yWmTF1SJHkzSx3FaqGjO3i/oANK+btWw=;
-        b=H0Ihjr5YV6TPQHel4hD8+tc0aTx6fj8znyFn91eI6WGVN870q7ODXTMGG5NYezXSZ0
-         MFEobrW7OAvpZw6Plh07KfwnUNSAAEZ79Bvykn9QdKOQHwpeOOVB2z7c6IbN8ICbAIs2
-         DvjB1vX5d796lYf3tOUVZM6GUnPi7ABJ94Mt99VTUXiUCRpiNLpfNZWepQ0SMwlEhehc
-         BS5wXKtzgutatwPtbVjjGF/TrVP6uA0R8DVEOXadnCH7GJ828C/8BLH1RSwc/cDC07TK
-         QETndcz6Up6iE+6P+Qx1x0/MyJdgwBeSF2fCnat7sNKCLQqwGoqrAL+qciP+2oK+hq0V
-         EM4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728189259; x=1728794059;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ohuYL9eai46yWmTF1SJHkzSx3FaqGjO3i/oANK+btWw=;
-        b=e0Yy2pnvHIfOJR5Q90TDThlw5DyMpEugj2B0LcYT0f/9+6s8SOX/5gGEWMtF4i/JWF
-         9cyGZI6DiB4MBW5JpdN9Qtr20RRbpBDE1n94/vZxx6LHCCyw6hfDD3u1G+pIF0Iw9Sn7
-         ITNn/9Fbc3Hwmca5b9cTPwT1PJZ2OweNnwrQhnaR3LnUrjtaswjeiSiZwkO8C98TbQ9L
-         4XCLVZAgOJWVBvGWcenhnVaKjgLAF+A4MHt3Req4mO+6AYIqvdRac6auDOO9hXNN9CzK
-         FV472nOFAhIabSx+1vK4EyAO7EtJb36W/LiB6GsQatrybM8wth9b+5iMSMoE3VaUpPRg
-         6QTw==
-X-Forwarded-Encrypted: i=1; AJvYcCV4K9VmtDs4UZFDZ2xHilq2KhwQeVoE3rn/ay+l4abJ3sAKN/5Wmf+lDe7aMK+JIvHXgyY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMbMH6FQ7cFep3IX+pF+Yr0X7+6a/+GvvlsktFAo6KGgD5UyY8
-	GdjU24CHbycCTmN2kKhI2YVbukBSfkYqm3Juz50Y6xDzJ0AaDep8orG5Bsv5TAYczjJytUgQ5V1
-	iDDqAUY8EuQ++of7zxsLb846rTPA=
-X-Google-Smtp-Source: AGHT+IH3UqYsumt1n/fxpBKzrIRajLMb5XdR1oheBtbM2OtTsn6XODo4NDtJqPl7YOinNprwg9FpkTDAlzvbd0BnTik=
-X-Received: by 2002:a05:6102:290c:b0:4a3:f9e8:2fb9 with SMTP id
- ada2fe7eead31-4a4058f48f3mr4350258137.24.1728189258756; Sat, 05 Oct 2024
- 21:34:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="A4pM7LhW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1728190747; x=1728449947;
+	bh=5tMoLiuK3qyle62hAfsDjVPB0Rir6/SEz4pimkKdDKA=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=A4pM7LhWDTAFZ28uVKv/0oyAEMkPjsRZ4my8mVXvg8r3HV2AZS9K+su+k+qqzOqmU
+	 8d4Y/X4oOgMdz3PsGDS3psA4n07WtG6X8BD1PF0wIk5/4Vp5itQFogkh2vFZ5zg3w0
+	 gBOMcp3Q/shXjI+MWts8yAOKNQGU8kkmFY8YjlJzcDBt5LbL+bdPLZaZX/eHDH2wdZ
+	 cyLthI7+WtesvpgewF0Xf5uPKxjLwFNFwlMVXjQVQcqOQWHHfcHyu5Mgb1uj+S2JFF
+	 fXf1eLaXcBo1ks74/ej8s4zApd0Dleci5FHvlw4KkPHY9lnqoPLe3hHvDjwfEYg0/Z
+	 CBgm0WaHADBvQ==
+Date: Sun, 06 Oct 2024 04:59:02 +0000
+To: git@vger.kernel.org
+From: Caleb White <cdwhite3@pm.me>
+Cc: Caleb White <cdwhite3@pm.me>
+Subject: [PATCH 0/4] Link worktrees with relative paths
+Message-ID: <20241006045847.159937-1-cdwhite3@pm.me>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: d6ccc94b73e1d7e977aa8fd3cd27029a06ca52bc
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPSxiM-+4VFsHkBW8Y3ncY-kjxvAXSOdSom=zBQzTNd-JK+HxA@mail.gmail.com>
- <Zv0-Wv03hSea_Tje@pks.im> <CAPSxiM_fTMCzXg3OrcbJrn=UskyCaR3D=xgR4d6PrnnAdoYcCQ@mail.gmail.com>
- <CAP8UFD2QN59LVAJgqwj5V6dJ9sTCHjdDG=XtuWcFkgANmfvnrQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD2QN59LVAJgqwj5V6dJ9sTCHjdDG=XtuWcFkgANmfvnrQ@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Sun, 6 Oct 2024 04:34:07 +0000
-Message-ID: <CAPSxiM8jTxFXZB5ek6nNFy8arKan7GfoiRmaj4jQ81Xfhcf7eQ@mail.gmail.com>
-Subject: Re: [Outreachy] Potential intern.
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------d5d14ea48598cb8d4e391ca1bc0281914d53b3e1512aab584a29e402766adaed"; charset=utf-8
 
-Hi,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------d5d14ea48598cb8d4e391ca1bc0281914d53b3e1512aab584a29e402766adaed
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+From: Caleb White <cdwhite3@pm.me>
+To: git@vger.kernel.org
+Cc: Caleb White <cdwhite3@pm.me>
+Subject: [PATCH 0/4] Link worktrees with relative paths
+Date: Sat,  5 Oct 2024 23:58:38 -0500
+Message-ID: <20241006045847.159937-1-cdwhite3@pm.me>
+X-Mailer: git-send-email 2.46.2
+MIME-Version: 1.0
 
-Thanks for your reply.
+Hello,
 
-I make changes but, I need someone to allow me to be able to send my
-patch using gitgitgadget.
+This patch series modifies Git's handling of worktree linking to use
+relative paths instead of absolute paths. The motivation behind this
+change is to enhance the robustness of worktree links when the main
+repository is moved, or when used in environments like containerized
+development where absolute paths differ across systems.
 
-I had two links as the first was failing some test which I solved.
+Currently, Git stores absolute paths to both the main repository and
+the linked worktrees. This causes issues when the repository is moved
+because the hardcoded paths become invalid, leading to broken worktree
+links. Developers are then required to manually repair the links by
+running `git worktree repair`, which can be cumbersome.
 
-Below is the github link.
+By switching to relative paths for worktrees, this patch improves the
+resilience of worktree links. For self-contained repositories (e.g.,
+bare repositories with worktrees), the links will continue to function
+properly when the repository is moved or mapped inside a containerized
+environment. While relativ
+e paths do not completely eliminate the need
+for repairs (as links external to the repository can still break), the
+likelihood is reduced, and Git continues to provide mechanisms to repair
+broken links when needed.
 
-https://github.com/git/git/pull/1805 - updated patch.
-https://github.com/git/git/pull/1803
+I have included tests to verify that:
+- worktree links are created with relative paths.
+- moving the repository does not break worktree links.
 
-Also, I will be glad for any review of my approach on using gitgitgadget.
+Note that absolute paths are still supported, and the code handles both
+types of paths. There should be no breaking changes introduced with this
+patch. I considered adding a configuration option
+(e.g., `worktree.useRelativePaths`) to control path type, but decided to
+keep it simple. However, if there is interest, I can add this feature.
 
-Thank you.
+This series is based on top of 111e864d69.
 
-On Sat, Oct 5, 2024 at 6:22=E2=80=AFPM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi Usman,
->
-> On Sat, Oct 5, 2024 at 6:42=E2=80=AFPM Usman Akinyemi
-> <usmanakinyemi202@gmail.com> wrote:
-> >
-> > Hi Patrick,
-> >
-> > Following this, I have gone through [1], [2] and some other resources.
-> >
-> > I was able to get potential three interesting MiniProject which I can
-> > work on. I have also checked through the mailing list to ensure no one
-> > is working on any of the particular file. As advised, I am sending
-> > this just to be sure if it=E2=80=99s worth doing and if it=E2=80=99s ap=
-propriate for a
-> > miniproject. I am sending three MiniProjects so I can have one to work
-> > with in case any of them is not appropriate.
->
-> Great, thanks for your interest in working on Git!
->
-> > 1. Use test_path_is_* functions in test scripts
-> > An approved sample -
-> > https://lore.kernel.org/git/20240304095436.56399-2-shejialuo@gmail.com/
-> >
-> > Two email threads of discussion and feedback from maintainers.
-> >
-> > https://lore.kernel.org/git/CAPig+cR2-6qONkosu7=3DqEQSJa_fvYuVQ0to47D5q=
-x904zW08Eg@mail.gmail.com/
-> > https://public-inbox.org/git/CAPig+cRfO8t1tdCL6MB4b9XopF3HkZ=3D=3DhU83A=
-FZ38b-2zsXDjQ@mail.gmail.com/
-> >
-> > Two potential test files which I saw that I can work one.
-> >
-> > t/t7003-filter-branch.sh
-> >
-> >
-> > test_expect_success 'test that the file was renamed' '
-> > test D =3D "$(git show HEAD:doh --)" &&
-> > ! test -f D.t &&
-> > test -f doh &&
-> > test D =3D "$(cat doh)"
-> > '
->
-> Yeah, this looks like a good instance where test_path_is_* functions
-> could be used.
->
-> > t/t2003-checkout-cache-mkdir.sh
-> >
-> > test_expect_success 'use --prefix=3Dpath2/' '
-> > rm -fr path0 path1 path2 &&
-> > mkdir path2 &&
-> > git checkout-index --prefix=3Dpath2/ -f -a &&
-> > test -f path2/path0 &&
-> > test -f path2/path1/file1 &&
-> > test ! -f path0 &&
-> > test ! -f path1/file1
-> > '
->
-> This looks like another good instance.
->
-> > These two are asserting that if a file exists, it can be changed to
-> > test_file_exist
->
-> There is no test_file_exist() function in our test framework as far as
-> I can see. I think you should use test_path_is_file() or
-> test_path_is_missing() to replace `test -f ...` and ` test ! -f ...`
-> respectively.
->
-> > 2. Avoid suppressing git=E2=80=99s exit code in test scripts
-> >
-> > Sample email thread about the same issue.
-> > https://public-inbox.org/git/pull.885.v2.git.git.1603032125151.gitgitga=
-dget@gmail.com/
-> >
-> > First file - t/t6050-replace.sh
-> > code sample
-> > test_expect_success 'replace the author' '
-> > git cat-file commit $HASH2 | grep "author A U Thor" &&
-> > R=3D$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object
-> > -t commit --stdin -w) &&
-> > git cat-file commit $R | grep "author O Thor" &&
-> > git update-ref refs/replace/$HASH2 $R &&
-> > git show HEAD~5 | grep "O Thor" &&
-> > git show $HASH2 | grep "O Thor"
-> > '
->
-> Yeah, I think it would be a good change to remove the pipes after git
-> commands in that code.
->
-> > Second File - t/t3404-rebase-interactive.sh
-> > code sample that needs improvement
-> >
-> > test_expect_success 'retain authorship' '
-> > echo A > file7 &&
-> > git add file7 &&
-> > test_tick &&
-> > GIT_AUTHOR_NAME=3D"Twerp Snog" git commit -m "different author" &&
-> > git tag twerp &&
-> > git rebase -i --onto primary HEAD^ &&
-> > git show HEAD | grep "^Author: Twerp Snog"
-> > '
->
-> Yeah, here too, I think it would be a good change to remove the pipes
-> in that code.
->
-> > 3. Modernise test.
-> > Description
-> > https://lore.kernel.org/git/CAPig+cQpUu2UO-+jWn1nTaDykWnxwuEitzVB7PnW2S=
-S_b7V8Hg@mail.gmail.com/
-> > Sample code t/t7611-merge-abort.sh test_expect_success 'Reset index
-> > (but preserve worktree changes)' '
-> > git reset "$pre_merge_head" &&
-> > git diff > actual &&
-> > test_cmp expect actual
-> > '
->
-> From the sample, it's not clear that the code would benefit a lot from
-> being modernized, so I would recommend focusing on improving one of
-> the other code you mention above.
->
-> Thanks,
-> Christian.
+Thanks!
+
+Caleb
+
+Caleb White (4):
+  worktree: refactor infer_backlink() to use *strbuf
+  worktree: link worktrees with relative paths
+  worktree: sync worktree paths after gitdir move
+  worktree: prevent null pointer dereference
+
+
+ builtin/worktree.c           |  17 +--
+ setup.c                      |   2 +-
+ t/t2408-worktree-relative.sh |  39 ++++++
+ worktree.c                   | 235 +++++++++++++++++++++++++++--------
+ worktree.h                   |  10 ++
+ 5 files changed, 240 insertions(+), 63 deletions(-)
+ create mode 100755 t/t2408-worktree-relative.sh
+
+-- 
+2.46.2
+
+
+--------d5d14ea48598cb8d4e391ca1bc0281914d53b3e1512aab584a29e402766adaed
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wsBzBAEBCAAnBQJnAhkVCRAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
+28viAACCCggAuUEoAk4bHQ2dTBZEd7u60+McpQt9//6EFdargVtHhfpRD7k9
+c/y9zE/sxZj+W2nZmOktkgrx0woL210l/rDSCZZ8YO9vXR9G1sxlOoPjiUIt
+heyHhZjNn9BIpZyPoj0EuER/v1nnQlK8IuoKDwt+a2ZtwQd/HvrilFv4ROkn
+mM0V974EyS6Xg+XCIyfOT5/AGJlJT9RPrJj4pCkaBIuPhI26ZMQ4N5pVY5dt
+iBN4Jbqzbh08Nzhzwa/0HOiGl5Jfhxc/h6atYQpZlnXSAgYAFqCOdKGt8Rjt
+9YCfqXVFzfIhK4bw2BFzfdYDFbLkOHwLC71L6rBCZ5fXKQuqHEYQ8A==
+=xPo9
+-----END PGP SIGNATURE-----
+
+
+--------d5d14ea48598cb8d4e391ca1bc0281914d53b3e1512aab584a29e402766adaed--
+
