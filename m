@@ -1,81 +1,134 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2361A716
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 23:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1145338D
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 23:47:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728257288; cv=none; b=k6wvvhEjy4dK7sPRkw2TOemC9hICWAWzLI/X8DCvMa1OIVWyXWrkEIhnlpQu9r3bk2u0kPweoPn/9hc2rZgWiWcyVaQs6n6h14O4K9yDDXsJ0pF0j33bP+zxJ+rsPALhHGE0ZoYymwYPkalbix9NYoaEK+t525GGL0cO0iNHdnk=
+	t=1728258459; cv=none; b=uW8Ed0F4aql2BKR1vm1n6ndyyBfefHb/2mNyUYpT+R7J5Lel/MNDECeGYmYXE56fAAqz73qB4pCZzCVyHWUXy12k/6BONgzWiXhnDfxK/mPKrKlr3PLsYY5vpkPtg9wIQZ6MH0Y4Um4ertPsygNLrvpIdnpbJV6+N/qd9xx9OK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728257288; c=relaxed/simple;
-	bh=Wgp3oT6ibiorfZkMQgnWx0j8FDDM8fNpZKySpBRn/B4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=O0q9SVZpl4FRP6Hk6WM6556Dkx9MHlmok3pb6iU58PJpkkLdSsGWCFY0/5CefaQfmUPNnobU+BlFBM2IQdndHvU+CrahAV911HZnlQCxo1eJRCBuXGRGl9qLS0TZaZmlsUkiwyBt1TSmi1s3QxJEOmtHYREz7ITAPylLPrS3Isc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6cb316db199so5814556d6.2
-        for <git@vger.kernel.org>; Sun, 06 Oct 2024 16:28:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728257285; x=1728862085;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Wgp3oT6ibiorfZkMQgnWx0j8FDDM8fNpZKySpBRn/B4=;
-        b=qO77d5he0uSSgo0YZrxkLZiftq9nEKz+3eWIa6jJGo5xR6cHZeNOlQ5Qn/w/HeVDvr
-         yS7Oia6xXG0mdZpb5V0V6fa1/xsbQn4b229mGh1EdMMwEh9k4AfAOTDrklpJvEjSLwlb
-         mgnUj9ShAoMpzRVqGxGZE/hsk1UZCM3rzHEHSX3V3Xadn8FAcq6+gcnhiw/jgDWJjVk+
-         t2jM1lYEr71Sjmt/WnrCCw4LVfZkbgxjdH8Q0CMvfCWV6gtAuiPYIbPk40KXzjc+17Eu
-         +zHozftuNqCPoR+J2hHSo/cMvanDXsEZ4LLRJOa7FlXGcjcM8DTvbGRl2z1SMWbFPXbS
-         4k4A==
-X-Gm-Message-State: AOJu0YzC4S4Vva0JTml6FPcNFjqXqyDcYhWT4wooBkeCk/fB8dHS/ER0
-	THdHzOTedwVdcIA+i7fDeM/H9SE3OhnWJIurn/7iwhgnWcl14BTA9DR170q8mQj0kKWbmYGXFJB
-	cJhM7szPGFi8LE3ywIk/hAjn6eOY=
-X-Google-Smtp-Source: AGHT+IF8Lrvq0BNzti922oOLYTR1cPv6x4KQEO0JwI/ZlzGLDP3mAFBmqhd07XwjwHI9R+KUlu7RPir4tu253Nynbxg=
-X-Received: by 2002:a05:6214:501e:b0:6c5:1022:6a86 with SMTP id
- 6a1803df08f44-6cb9a4661e5mr74503806d6.8.1728257285257; Sun, 06 Oct 2024
- 16:28:05 -0700 (PDT)
+	s=arc-20240116; t=1728258459; c=relaxed/simple;
+	bh=3fH9e4KNYxqAh5DZDh/noFxHJ6AIJenX8rEV8RYxyuY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nnScOPcpiYO3yzqm/a0u+4eb9hbv/Izsvn8haBwyjULkkG8xpNugnnk3cJu0odb5lpygNRFzl+swhdqJLh1m/ObXtpujRh3kzdo/EL4MIRWgzKQIzP8qi/kBE2abRMn5WLxrr2FNMoMogbrzT8KgQfD49mcGkjWkefDOyESoOvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=rB8yzHqT; arc=none smtp.client-ip=185.70.40.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="rB8yzHqT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1728258454; x=1728517654;
+	bh=3fH9e4KNYxqAh5DZDh/noFxHJ6AIJenX8rEV8RYxyuY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=rB8yzHqTOwmK3EQYsJDcDqrV0r78YTE1aI0jwBRTiN08YghYVqBsrFZHvj4YYbsIV
+	 kxYDy771Pzpwcd4I+mvc6jwOgm4PSsJ1OEwk0Kzwkgzex92/7XGpBM4UQ/3Pq/Nzds
+	 nqPc+13M9T+BDSWV8E7+wNjjcenug1/6cmUc55xJJssNJRkq3eBcCMHPJuoWLOTMyU
+	 D9LeB7GSahIRWCTUa9WOcb2/lbcnd4oIkfMiFHVn1RPMfy5V0I/jDx74OKfEjZnUOi
+	 yFmS85pYD4WIJaGQ3seKy5G5L/CR+34cUmtD60+l4+aqplCDH1xi/pSTLZcDcwLjjf
+	 uNTR936jNS0UQ==
+Date: Sun, 06 Oct 2024 23:47:31 +0000
+To: shejialuo <shejialuo@gmail.com>
+From: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] worktree: refactor infer_backlink() to use *strbuf
+Message-ID: <Exjb4s8fML6YqFE6Nkf7SQoyvOJxinkwuk-V_TRJvjl5yRxDrrn3rRsPHsnmXqfuu2zFasuP26eO1A8MfNo7shKbIlj_YsPx-mzvelinkPw=@pm.me>
+In-Reply-To: <ZwKoNg-HYGaohvCd@ArchLinux>
+References: <20241006060017.171788-1-cdwhite3@pm.me> <20241006060017.171788-2-cdwhite3@pm.me> <ZwKoNg-HYGaohvCd@ArchLinux>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: 9b07d110ad87831e975ce05a2c88b77a2366bef3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241006060017.171788-1-cdwhite3@pm.me> <20241006060017.171788-4-cdwhite3@pm.me>
- <CAPig+cQApvzpuCBfViPD_hJjqe_poFO8uB1GapeVpCd2EWvEug@mail.gmail.com>
- <YYay6Jp5c84h3Tx-LViX4teN5KSBX5PL3_WcOFRzUooFrpJpcBD2SRWf1EQjvrMZsI6zkKyPd7JbWt3Ed3OIxCdkg17fY2qvmT4-B6a0RAE=@pm.me>
- <CAPig+cTKjebbpuy-SCLWd0QMKfHhRyJ81oESNjsUoPDLLNpNWQ@mail.gmail.com> <Gs20QHTpaeb8S4LJC8MapFaP1PN9dJQFgv2XxFKSMDqJV6NvYQ_2aD79u-Yls5ddXmLECCbljzYUdzpPr10QbGKUu_BdP2ui7xo7m-UY8HM=@pm.me>
-In-Reply-To: <Gs20QHTpaeb8S4LJC8MapFaP1PN9dJQFgv2XxFKSMDqJV6NvYQ_2aD79u-Yls5ddXmLECCbljzYUdzpPr10QbGKUu_BdP2ui7xo7m-UY8HM=@pm.me>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 6 Oct 2024 19:27:54 -0400
-Message-ID: <CAPig+cTvi18WmEM=wGNfoB6nHDh3zSpoSXWxQLBYwWvrOF3N+w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] worktree: sync worktree paths after gitdir move
-To: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------3c7e4fbdbc27a0787df30cc74f41d9cdd3d9d59c0abaf38f1240a14f13d1070e"; charset=utf-8
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------3c7e4fbdbc27a0787df30cc74f41d9cdd3d9d59c0abaf38f1240a14f13d1070e
+Content-Type: multipart/mixed;boundary=---------------------6ecf977b0dc516c66fc99f60931af003
+
+-----------------------6ecf977b0dc516c66fc99f60931af003
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-On Sun, Oct 6, 2024 at 7:13=E2=80=AFPM Caleb White <cdwhite3@pm.me> wrote:
-> On Sunday, October 6th, 2024 at 17:48, Eric Sunshine <sunshine@sunshineco=
-.com> wrote:
-> > I haven't yet pored over the code in-depth, so I don't know if it is
-> > even possible, but it's typically very much preferred by reviewers if
-> > you can present a series as smaller, simpler, easier-to-digest patches
-> > than large monolithic ones. So, it would be ideal if you could figure
-> > out some good split points (especially since patch [2/4] is already
-> > uncomfortably large for a reviewer). But sometimes it's just not
-> > possible to find good splits, so a large patch may be the only choice.
->
-> There's really not any other good split points because it's
-> an all or nothing kind of thing. All of these changes need to be in place
-> at the same time or there's some edge cases that are going to fail.
->
-> I suppose I could try to split the *reading* of the absolute/relative pat=
-hs
-> separate from the *writing* of the relative paths. However, I'm not
-> sure if this would be worth the trouble as most places that read from
-> the files also write to the files.
+On Sunday, October 6th, 2024 at 10:09, shejialuo <shejialuo@gmail.com> wro=
+te:
+> I think we should first say why we need to add the change in the commit
+> message which means we should express our motivation in the first. It's
+> wired to say "I have done something" and then talk about the motivation
+> why we do this.
 
-If that's the case, then it probably wouldn't help to split it up in
-that fashion. Artificial splits like the one you describe are very
-likely to be more confusing for reviewers than helpful.
+I can reword this commit message.
+
+> Because we leave the life cycle of the "inferred" to be outside of this
+> function, we should not use "strbuf_release" to release the memory here.
+> Make sense.
+
+Yes, however, I just realized that I should likely reset the strbuf when i=
+t
+enters the function (or before it is written to) which is similar to what
+the relative_path() function does.
+
+> So, we create a new variable "git_contents" here. I suspect this is a
+> poor design. In the original logic, we will do the following things for
+> "backlink".
+>
+> 1. Call the "read_gitfile_gently" function. If it encounters error, it
+> will return NULL and the "err" variable will be set to NON-zero.
+> 2. If the value of "err" is 0, we would simply execute the
+> "strbuf_addstr(&gitdir, "%s/gitdir", backlink)".
+> 3. If not, and the "err" is "READ_GITFILE_ERR_NOT_A_REPO". We will
+> call "infer_backlink" to set the "backlink".
+>
+> Because now "backlink" is "struct strbuf", we cannot just assign it by
+> using "xstrdup_or_null(read_gitfile_gently(...))". So, we create a new
+> variable "git_contents" here.
+>
+> And we will check whether "git_contents" is NULL to set the value for
+> the "backlink".
+>
+> Why not simply do the following things here (I don't think
+> "git_contents" is a good name, however I am not familiar with the
+> worktree, I cannot give some advice here).
+>
+> const char *git_contents;
+> git_contents =3D read_gitfile_gently(...);
+> if (git_contents)
+> strbuf_addstr(&backlink, git_contents);
+>
+> Even more, we could enhance the logic here. If "git_contents" is not
+> NULL, there is no need for us to check the "err" variable.
+
+I was trying to not make huge changes to the logic flow, but I suppose I
+could revisit this if desired. I can likely move the `if(git_contents)`
+to the start instead of being at the end. I was not aware that if an err
+occurred that the function returned NULL, I thought that perhaps there was
+the possibility of git_contents being filled with something and an err sti=
+ll
+occurring.
+-----------------------6ecf977b0dc516c66fc99f60931af003--
+
+--------3c7e4fbdbc27a0787df30cc74f41d9cdd3d9d59c0abaf38f1240a14f13d1070e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wsBzBAEBCAAnBYJnAyGFCZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
+28viAADOSAf7BkfXHbAsVQiiGoISaM2E9GBjYajLW3k0dhZnZRelEoxm/pVK
+Uusc3bwmrSKQP5+kloudBzF/KdAIRI6OJXrmzXM5tsKCXxxQREWMZieEa9nL
+yGhnPOi9DMnpm84HXRclJXrq4e1f4XXwtXcpHL/N9d+GIwTYQJmZGojDqn+h
+qhBMNNg5g5xHMTIRLxYBfAJ7EdgYAkU0MTkte61DItyopAtanPXTfhaH9deV
+ntspHK6QbFE8aypUurhfHRtRkOSXc7SaUWdu9cuxvvJFewxwsUDldvaphz3t
+kl4He9SMUzmGpvAzscXBgPy3+bFKOfr5YANpOuBhvjW1LjVgK1XZ2g==
+=ydWE
+-----END PGP SIGNATURE-----
+
+
+--------3c7e4fbdbc27a0787df30cc74f41d9cdd3d9d59c0abaf38f1240a14f13d1070e--
+
