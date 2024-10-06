@@ -1,88 +1,91 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6A1171E5F
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 11:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571C2A29
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 11:24:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728213166; cv=none; b=dLw3H1Jl2Eq5YOMRSP0Krn6itC1ZV4tYddk8atkC+rTA8WO+cgr0rKF98TPc6IJNiuphXr8KbccJDVy4pn5iqumZw7t1UF2T2FjpEhdAhU2ZwqE9Oprw2syZWC/Qa3/CCwa8VupbFvKVL16Ga+NGHap2ReY+C8Cu6v5R00ZYhmg=
+	t=1728213899; cv=none; b=CFgaAJ+knIyWbybbfyCuxTn/n5CcMFX6DyPVb5PSVEqg2l6Vi11S3Rzj0sCPHcyNnq+g/lz3UwARCWLo7wfLEeTxPLVLq5qgVQvNNm+o3zhZQy+MpGzU26RNTlY4goZ2vEn0tcDD90Y7IWlNyz4wy5udp4O72CPBoKmRz3sR5Dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728213166; c=relaxed/simple;
-	bh=TKJHOtsTurIoJ/PAMKcfwmhXd6taLdIvkL/6dGAI3SM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tIXL0WjjHCHjWoDKW5Y2nnuWsBuCY4KWQEUPwuDe8TdwylvFULTYh6eu5nyZV6JW2h2lGoNsRXWtgb3LbZ/Mw19U1/3DjxLZp5OPzE1pQNOxKnnc7WzAf9uckmct+78Db3FloVd+tY2Y94N8yCr1jWy1j0WbaFATFVuftL+A6T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rh0gqhdx; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1728213899; c=relaxed/simple;
+	bh=NXQZm1gG31/XvsGNOjhXt0cYwHkhx3PC1svWWUO2VU8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=soUwT6VOvO2UNflu1kIczwXfDkJr4SfhBV/DWugJHW2vpMiR+23ll+G56vXE1bxEUNv8owpQ0oeiezwyM9DcL4ps5bnyUBgUaq3FKFQ3Xc9sKnQH6Unqf6CC7onJuqV5nvEvBcYzqxf5rmNTY+iMfabsCi/ZKl0+j4jU3Kr+XBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rh0gqhdx"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-20b64584fd4so33642305ad.1
-        for <git@vger.kernel.org>; Sun, 06 Oct 2024 04:12:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728213164; x=1728817964; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TKJHOtsTurIoJ/PAMKcfwmhXd6taLdIvkL/6dGAI3SM=;
-        b=Rh0gqhdxAfh0Qfn8mVCWaXYEdGASj3hdnX/3ovOVFrfqaph5ruAZkl9/leh6/Jr2q9
-         OK5j0R4wyq4exWWfAzhvd3x915yPg/5zKUIxLYeOBFkQT2asWWKC1ob53/vqgf1O7d0R
-         uxzuP1yTYzcN5eivobYWNMa6qDOlWNTajxdwMAGHkHjYyFTloAtYA8RmAwt4Dbde+M6F
-         5VxOlvLCMsMaJrSfvZNK/1E+mQ7wmIwHYUfxd7tnZavC0ysLWkblXY++rQUueAZdbdT2
-         yzxaYUd1eUU5FJWuwZjkG//VfWSv/JY7WbalkM0iudLrdwY2UpO+oNAvRrYFtKfu51KP
-         3CVA==
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6cb36237f28so5008456d6.3
+        for <git@vger.kernel.org>; Sun, 06 Oct 2024 04:24:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728213164; x=1728817964;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TKJHOtsTurIoJ/PAMKcfwmhXd6taLdIvkL/6dGAI3SM=;
-        b=jthQ6DRgZn0ftKTZBetBDm0B/0wPXHlGT8URighwSa9ZiW/iwJxsVS1yTdYUs4MPVl
-         1Ije9FjwGDsppkv+K1e/OIs9H3GWMgWE4xnRfIdplqNeiCv6S1WQxW9ehmysrYsnXtCN
-         y44oxC0H2tdY7FeCzxZBndSTTuOF2kgPulmljHMr0vAOB2JK6AniNYHGEIMqEjYTqIRC
-         0LK+FCt+A6XI03HBkNV0C5e95jGuW1vTV94WauL+lhLNFX7TyQd4buxNJD6Z3iDfgNYy
-         +Gph+ch8iG6abw/CTeB3kWEUaTcIB6idnaidwHvKLzmOyx1vQXo2zEtqT0ZMTl4KcscX
-         KZAA==
-X-Forwarded-Encrypted: i=1; AJvYcCUmKt7Sk7qzi5DDFEyxeuQYqKyNt54xVQNFCSEKDj9U20rkUZy1hreSZJQhaHxf+UAsSrI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/crtQYnmNEsAMNWr/nOgFr1PAdPF8P76HysGEUY8SePBhNTGQ
-	iSEryDwaOXCxq+pFQShvqNFcd+qhCHgnukeqjHsSdSVd/GkrfBXE3vWWRQ==
-X-Google-Smtp-Source: AGHT+IH2mVij6GwRm22cmh9aCXdIGAXyGEuR8CB9j9Nt/+26HQJcywoLNJnRe2Jj/EbRT50qWhYYZg==
-X-Received: by 2002:a17:902:e851:b0:207:1708:734c with SMTP id d9443c01a7336-20bfe022d08mr122088405ad.11.1728213164338;
-        Sun, 06 Oct 2024 04:12:44 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c13930fecsm24196835ad.165.2024.10.06.04.12.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 04:12:43 -0700 (PDT)
-Date: Sun, 6 Oct 2024 19:12:50 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Subject: Re: [PATCH v2] [Outreachy][Patch v1] t3404: avoid losing exit status
- to pipes
-Message-ID: <ZwJwsuf5ZOKiWbS1@ArchLinux>
-References: <pull.1805.git.git.1728192814.gitgitgadget@gmail.com>
- <pull.1805.v2.git.git.1728203495287.gitgitgadget@gmail.com>
- <CAPig+cRePbX6OyE6WhFp1GEZenZyC7HFeA3188F_nErt7Gin6A@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1728213896; x=1728818696;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wSAw49fsPB0cWq2EQQepdMuqFxUIsOCVHyKCtgBmKKU=;
+        b=QnaXTsTtggxONNILhiheb4dwskEFzNl7Ih/0vRZhBiDSwB0dHeKHPPFv5+ZZsjbEYc
+         jD5ibtCfPD77kfkqVzzMAZb5nhfM4JxujbLP4WXQtUbWvk5Dvh18rcKKCAOtc3pveRst
+         9JCaSF5DuqwPCN/JC7MvuUXT/iNKTmXu8mbbidY2dQLw3XFlRWjcOum0jLVNtE/c1DsN
+         Hsy74cpSE7cE9RZqPMc/j4lYG3zrRdRRvrv5qoBKeqPVMY2FPOlalqT7HC0+RbYAnfK0
+         sMn2fgcm098yzdCc17o7KsEzJ5w30gp9PPIpTTJiln7OlYh6WsptwWIvu9LbYUQcvZZV
+         zhfA==
+X-Gm-Message-State: AOJu0YwxfsKJZAclvdBMW9y2PEdvMFcobRG8HGZPh+/pPWCCQAXgHuTi
+	vO45W2ybTg387A0MwQj4z4Drjyz9U+TuaTxwd9RslK9ukXR3/glFPnRWSDVqJrFp4ZQVqAQv2O0
+	+EOJ1r/fK4nVsYbb+4v8MnTIBem2r3qbT
+X-Google-Smtp-Source: AGHT+IEHMo1gv6QEf8KNGYZfJ6Fpln9qGhApeUsAkZ36ANq5mfF6+Spw0LLJl8lv/2PI5gjTRqUeF8Vtrkq5L76I08Q=
+X-Received: by 2002:ad4:5bc8:0:b0:6cb:6782:6a8c with SMTP id
+ 6a1803df08f44-6cb9a54e244mr55926526d6.12.1728213896145; Sun, 06 Oct 2024
+ 04:24:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cRePbX6OyE6WhFp1GEZenZyC7HFeA3188F_nErt7Gin6A@mail.gmail.com>
+References: <20241006060017.171788-1-cdwhite3@pm.me> <20241006060017.171788-5-cdwhite3@pm.me>
+In-Reply-To: <20241006060017.171788-5-cdwhite3@pm.me>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 6 Oct 2024 07:24:43 -0400
+Message-ID: <CAPig+cSdVVy4huueVQpiO_Gvn4SAXAiQj-uVnuScgfOOFJ6h0g@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] worktree: prevent null pointer dereference
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 06, 2024 at 05:19:13AM -0400, Eric Sunshine wrote:
+On Sun, Oct 6, 2024 at 2:01=E2=80=AFAM Caleb White <cdwhite3@pm.me> wrote:
+> If worktrees is NULL, free_worktrees() should return immediately to
+> prevent a null pointer dereference.
+>
+> Signed-off-by: Caleb White <cdwhite3@pm.me>
 
-[snip]
+Critical questions: It is not clear why this patch is needed,
+especially coming at the end of the series. Is there some code in a
+patch earlier in the series which might call free_worktrees() with
+NULL? If so, then this patch should come before that patch. If not,
+then why do we need this patch at all?
 
-> It probably would have been helpful to reviewers if the patch's
-> commit message mentioned that it only converts some of the
-> instances, but it's not worth rerolling the patch just for that.
+Devil's advocate question: Why is it the responsibility of
+free_worktrees() to check this condition as opposed to being the
+caller's responsibility?
 
-Except that, the commit title should not either include
-"[Outreachy][Patch v1]" here. From these two reasons, I think we should
-reroll the patch.
+The commit message should explain the need for this patch and answer
+these questions, not just say what change is being made.
 
-Thanks,
-Jialuo
+> diff --git a/worktree.c b/worktree.c
+> @@ -28,8 +28,9 @@ void free_worktree(struct worktree *worktree)
+>  void free_worktrees(struct worktree **worktrees)
+>  {
+> -       int i =3D 0;
+> -       for (i =3D 0; worktrees[i]; i++)
+> +       if  (!worktrees)
+> +               return;
+> +       for (int i =3D 0; worktrees[i]; i++)
+>                 free_worktree(worktrees[i]);
+
+Although it's true that this project has recently started allowing
+declaration of the variable in the `for` statement, that change is
+unrelated to the stated purpose in the commit message. True, it's a
+minor thing in this case, but it causes a hiccup for reviewers when
+unrelated changes are piggybacked like this with the "real" change
+since it adds noise which obscures what the reviewer should really be
+focusing on.
