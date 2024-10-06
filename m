@@ -1,98 +1,113 @@
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1938F172777
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 23:13:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546D4136E3F
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 23:24:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728256432; cv=none; b=gxd6eYxGJ+dS19MtPpxk0LibphuRFXCcfoEcTrlqgBLKESB0UcL/gUYXZq9ZR3XrBJ66mw731K7reV2kllzGGVppPPVRNf3/yaqjQMqu5g8TNKXqfv4Bne3UzajYDdQZ1bF7NaCicOmhV0NxDFQ4GJn+EcM7rM+mxp2eDK7EHZI=
+	t=1728257075; cv=none; b=O4kEbQ/dfJtTNdh4wdWimsflI6tYYE3IRNc07mFoIPYO59N4a6dwq9A8T48qdwd6VTP9pRskNTc4CPN32hjvZlpFLZE+XojtHsHS+68cVntO11GJZDeSTS8N0bBrYRWxk/iJqg/RXEEBvWwdZpSMIP4I8O7S22AV43mRO9o9HDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728256432; c=relaxed/simple;
-	bh=+5BfBwq2RkSNSz5T51nn+QNjlUEFu48Pg3FK+RrDT+0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kcZyi4FXZyb7cUAhynfncgasq8Uw5w5v51EQYywckRuiJVzMNeb8Ng3YfqqYKnQFiSJqq7Iarx9a46BtgjRUrCJPfEqstTkntvKREfhq+qgV813YOvz2rwrtwPwxgCEd1eGCjp9M6JRNEUN7SOZpqwjwZtkZ028SB77wCza+2t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=EhYavDrj; arc=none smtp.client-ip=185.70.43.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="EhYavDrj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728256428; x=1728515628;
-	bh=+5BfBwq2RkSNSz5T51nn+QNjlUEFu48Pg3FK+RrDT+0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=EhYavDrjyHpgEpXJX9N30xmaiVJZCdXIft5hiaRzeO0wyOwkZfLDftxRBZ248lWqf
-	 irATb+xjASOqyR0g72yTHsHTkmQk+pJx1HWEBlb+Y8AcG6D5/XFOVd/LlJs16CrEGR
-	 DVO5FzpGXCWfKJLGEAcP0eSO6HSbLlZDCTOeniS/3m3KyGZpFL3y3AzgvuXmqqDhZb
-	 15DJJ8N0ytatTpY3mRdby4qMYMks6A6ZbrxorlCsKKNhgtb6tIUuf2OW53dHDxt854
-	 TinNCyrdTIuOGF/GUb/uE8krI6xp3mTGLAgANZjky5YGhFRNBU69TTHJiE72wslVLk
-	 P0aRfuUVSH4iw==
-Date: Sun, 06 Oct 2024 23:13:44 +0000
-To: Eric Sunshine <sunshine@sunshineco.com>
-From: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] worktree: sync worktree paths after gitdir move
-Message-ID: <Gs20QHTpaeb8S4LJC8MapFaP1PN9dJQFgv2XxFKSMDqJV6NvYQ_2aD79u-Yls5ddXmLECCbljzYUdzpPr10QbGKUu_BdP2ui7xo7m-UY8HM=@pm.me>
-In-Reply-To: <CAPig+cTKjebbpuy-SCLWd0QMKfHhRyJ81oESNjsUoPDLLNpNWQ@mail.gmail.com>
-References: <20241006060017.171788-1-cdwhite3@pm.me> <20241006060017.171788-4-cdwhite3@pm.me> <CAPig+cQApvzpuCBfViPD_hJjqe_poFO8uB1GapeVpCd2EWvEug@mail.gmail.com> <YYay6Jp5c84h3Tx-LViX4teN5KSBX5PL3_WcOFRzUooFrpJpcBD2SRWf1EQjvrMZsI6zkKyPd7JbWt3Ed3OIxCdkg17fY2qvmT4-B6a0RAE=@pm.me> <CAPig+cTKjebbpuy-SCLWd0QMKfHhRyJ81oESNjsUoPDLLNpNWQ@mail.gmail.com>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 462a625cbcb582c0bfb987f1c329f71b514869d7
+	s=arc-20240116; t=1728257075; c=relaxed/simple;
+	bh=wK8o46TpmdGn20y4NBCChTCAAGelkORwEfxw1VRtU0Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Eso26n3EOaNyU5WIhxpoxzWv9Aur6VauOupwFQVkcabOazwnAjhuiSi1agK7d0gVqjhjRD7YU8k6ozSAAhJxJtkx9Zwi/1YNvZePi7ngtQXGnpP2Pgj1vS/MPj5LklufeLH4MYTaEI7KtlNxLW5OJFbfshtVvZ4guo97S+BUTfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6cb3cd42eedso6543306d6.2
+        for <git@vger.kernel.org>; Sun, 06 Oct 2024 16:24:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728257068; x=1728861868;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wK8o46TpmdGn20y4NBCChTCAAGelkORwEfxw1VRtU0Q=;
+        b=F/5ESf14fGutp1Vydy04Fyv8YkN9xqvre/UxkFh2h6kdnaACAoRtyAK6ZWKIoZrF7g
+         o1vcBhG0VtPdAzb684bofHsEd8rkUfnV2kLruSSFTmwqVeyn44RLJjBWg6Qp9CJYheaO
+         XDzxf+kXaW+adrB25nmFkhIdxYj3VbNvlsejcV16ZzPGGJLZf2xLN0PK7rlt5HyUY7xq
+         GuFU0w59dP27BDy47TYDkh0pWBfv6ITCxxiu5BLUtP6cUMt4XwoTfbcOnkW59bWufkTI
+         /nfGvZHyO7Pm22DYvmidVfat69tTXFEEMAMDu8KBmxuaFnDh8x3qVdFxm8rtjRsfkix8
+         7NhA==
+X-Gm-Message-State: AOJu0Yz8UXPV4kmb21Hm+kxHrY6pjvbfzci3iH+h1t+t/g9XcWnyi8YO
+	crzBdnxSPU/MJtmtu0vJmYkEm0o9mMQZnvT6Keio7VcqTBi7ka/btiS2WzmA2TO5n7ntXIZDbTz
+	cBtFyQ0on4G1ag50TojzXkXZUTHYkSfTy
+X-Google-Smtp-Source: AGHT+IEchEQsyv+DLJBJEPnK5hHZ/ek7GIL+TvVRlVi+fI4jr3NGm+7dll7z2ewWf5FCp+q+7T+STEgvRIrO3zew8yc=
+X-Received: by 2002:a05:6214:240a:b0:6c3:6d25:2578 with SMTP id
+ 6a1803df08f44-6cb9a4eff93mr74737736d6.8.1728257068141; Sun, 06 Oct 2024
+ 16:24:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------32c147b4fb1536631d4823fafe61c75ff78f21d7eb494a057e2b8ed995274280"; charset=utf-8
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------32c147b4fb1536631d4823fafe61c75ff78f21d7eb494a057e2b8ed995274280
-Content-Type: multipart/mixed;boundary=---------------------9287c573bf09e8b261a142345af6504e
-
------------------------9287c573bf09e8b261a142345af6504e
+References: <20241006060017.171788-1-cdwhite3@pm.me> <20241006060017.171788-5-cdwhite3@pm.me>
+ <CAPig+cSdVVy4huueVQpiO_Gvn4SAXAiQj-uVnuScgfOOFJ6h0g@mail.gmail.com> <VKrLGkXtD_CWHlQJRx_JqPn9sFsjKL88fRnGvA2UcV_gvQxyv8kmIx9M6BkPRfAx9paB7KrjkL9XAE8P2P2EPJnciBN4F6LAAc176NzLh6U=@pm.me>
+In-Reply-To: <VKrLGkXtD_CWHlQJRx_JqPn9sFsjKL88fRnGvA2UcV_gvQxyv8kmIx9M6BkPRfAx9paB7KrjkL9XAE8P2P2EPJnciBN4F6LAAc176NzLh6U=@pm.me>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 6 Oct 2024 19:24:17 -0400
+Message-ID: <CAPig+cSqWomvpgAGUCCaxHG9UTy+JecRndM9ynwdBgUoLYAXTw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] worktree: prevent null pointer dereference
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
 
-On Sunday, October 6th, 2024 at 17:48, Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
-> I haven't yet pored over the code in-depth, so I don't know if it is
-> even possible, but it's typically very much preferred by reviewers if
-> you can present a series as smaller, simpler, easier-to-digest patches
-> than large monolithic ones. So, it would be ideal if you could figure
-> out some good split points (especially since patch [2/4] is already
-> uncomfortably large for a reviewer). But sometimes it's just not
-> possible to find good splits, so a large patch may be the only choice.
+On Sun, Oct 6, 2024 at 7:03=E2=80=AFPM Caleb White <cdwhite3@pm.me> wrote:
+> On Sunday, October 6th, 2024 at 06:24, Eric Sunshine <sunshine@sunshineco=
+.com> wrote:
+> > Critical questions: It is not clear why this patch is needed,
+> > especially coming at the end of the series. Is there some code in a
+> > patch earlier in the series which might call free_worktrees() with
+> > NULL? If so, then this patch should come before that patch. If not,
+> > then why do we need this patch at all?
+>
+> When I was working through different solution for the 3rd patch, I
+> encountered this issue and this was the fix for that (granted, I
+> could've handled this on the caller side). It turned out that I had
+> to go a different direction and this was no longer needed, but I
+> figured it wouldn't hurt to leave this in which is why it's the
+> last patch. However, I can just drop this if you want.
 
-There's really not any other good split points because it's
-an all or nothing kind of thing. All of these changes need to be in place
-at the same time or there's some edge cases that are going to fail.
+Reviewers are a limited resource on this project[1], so it's ideal if
+submissions can be as reviewer-friendly as possible. Extraneous
+patches, unnecessary or unrelated changes to surrounding code, etc.
+all make a patch series more onerous to review, thus are best avoided.
+(This concern prompted all the review comments I left on this patch.)
+So, let's drop this patch since it adds no value to either this series
+or to the existing codebase. If someone needs such a change later on,
+they can resurrect the change.
 
-I suppose I could try to split the *reading* of the absolute/relative path=
-s
-separate from the *writing* of the relative paths. However, I'm not
-sure if this would be worth the trouble as most places that read from
-the files also write to the files.
------------------------9287c573bf09e8b261a142345af6504e--
+[1] There are far more people submitting patches to the project than
+reviewing them. For instance, according to Junio's latest "What's
+Cooking" report[2], the patch I submitted[3] a couple weeks ago to fix
+"git worktree repair" to handle manual copy operations is still
+awaiting review. (Since you've now been living in the worktree code a
+bit and have had to digest the "repair" logic, perhaps you'd be
+interested in reviewing that patch?)
 
---------32c147b4fb1536631d4823fafe61c75ff78f21d7eb494a057e2b8ed995274280
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+[2]: see the "es/worktree-repair-copied" entry at
+https://lore.kernel.org/git/xmqq7cancmoj.fsf@gitster.g/
 
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
+[3]: https://lore.kernel.org/git/20240923075416.54289-1-ericsunshine@charte=
+r.net/
 
-wsBzBAEBCAAnBYJnAxmaCZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
-28viAACEygf/boBajn1rV9GDS52OFvSXLpkUMp+MuXV3OC4aCq5BxPTOsER9
-3Bh7XLQeu1uoliZR78MM6y/a34/wMeK8Ero7RR1JsiH8vlB9gOxJEAePHjES
-BsGprYq5moQj1tL/4oPITSZZWsX5xAvMPBN95CC9TkeaeGhS91STur9ltfOB
-phAIzROXeF7wZxSSrk/rPXTSQt1SqmsvxWWl8+4W4aS8R/4t0JOaoH4g5plO
-APUjDiR3rZyLcnViqXGRAcxGT7ry/M9YqL+/991ih3anOAyF10mtq612Yq/t
-E5QjrR3TNY3E/r3pUH5M7LCRd+cGJkQYzKyfmQlo6OgSIUo6rIc8dQ==
-=LkjN
------END PGP SIGNATURE-----
+> > Although it's true that this project has recently started allowing
+> > declaration of the variable in the `for` statement, that change is
+> > unrelated to the stated purpose in the commit message. True, it's a
+> > minor thing in this case, but it causes a hiccup for reviewers when
+> > unrelated changes are piggybacked like this with the "real" change
+> > since it adds noise which obscures what the reviewer should really be
+> > focusing on.
+>
+> I didn't change this originally, but then the build process threw errors
+> that I had code before declarations (because I placed the if condition at
+> the start of the function). I could've moved the if condition past the
+> declaration, but it seemed weird to need to declare a variable if the
+> function is just going to immediately return due to a NULL pointer.
 
-
---------32c147b4fb1536631d4823fafe61c75ff78f21d7eb494a057e2b8ed995274280--
-
+Since this project is still following older style rules about
+declaring all variables up-front, it's not unusual to declare
+variables which don't necessarily get used in some code path (even
+though it might feel weird for someone who habitually declares
+variables only as and where needed).
