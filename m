@@ -1,90 +1,91 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD87B173320
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 22:19:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419EA3611B
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 22:25:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728253188; cv=none; b=c4MybYLDKLA2sGEzsTbTGtyRkZO2lPOyNmiyPQQrned/q/AFB2Kd1vCCNzabBT8fBW69+elxk4qXWD4/47jCYOElQH8bQabYolCUB0JCLHYTPml29W9DLnel+DDRtzCJWqm9urHhVSMItNjBAbcbejMoFXFnWmmk1iYaCG9CR70=
+	t=1728253510; cv=none; b=Z3hcU4r7MFVO7VSi73ElbG7Zukqh8XR4jO+dy0UiRXxHLauEBZjCdbqBiNGmVZcVUHmM98N8BAA40wiRtXu95H2MMY/cWqlrmzXl0xwgjBGdq4WbLSr4RaVyQjSWHS+ugevcsFsiMj5V2FjyMvkjjT9ISPDbsV+N3pimZQSSxQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728253188; c=relaxed/simple;
-	bh=ASNd66yu9kclyrJ8TKX6qD9f/uCGu7omi1G0QuXZZkU=;
+	s=arc-20240116; t=1728253510; c=relaxed/simple;
+	bh=JM1CO7ckCyOZtQ1ddnCPiQZ0c4SkqPG+5O3h6mwvuh8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X8nuhr3ZI1JPovGxPj/QYahirJlzz1sETLDp1yvETsBybm49PahBxg0FMe8O+goKonoM2Vv4BiIrIo/xKfCyduYxbmDE7D95Qdug3xCYKfl2h620GiG+3NYggcAW9C8Yu8PmQlzAemykkViVvWiKQOeIFKgs1myDXv57K2h3ia8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
+	 To:Cc:Content-Type; b=lJ0eoSmR20Vkxk0Q/LA4BeXy+e8ZIzmOe3czxUlqRwQydtWmKa13WYWHgeY9+jKGDzXMX0lPJDcAwEPZimJl0kCqPcWBdEFcI08cR4p9OlkDRuAAg6yRjQi3NHT4yydhGMoN1tFsedH7QsMEY/yKdazE3F3Xd/+FiadEr3cTBhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6cb3d95ce6eso2846366d6.1
-        for <git@vger.kernel.org>; Sun, 06 Oct 2024 15:19:46 -0700 (PDT)
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-45831fed060so6346101cf.2
+        for <git@vger.kernel.org>; Sun, 06 Oct 2024 15:25:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728253185; x=1728857985;
+        d=1e100.net; s=20230601; t=1728253507; x=1728858307;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ASNd66yu9kclyrJ8TKX6qD9f/uCGu7omi1G0QuXZZkU=;
-        b=Iqlxkw16/iZDlRUwUSAo2k1AlsNTkuwCDuYnILrJkBJG7ONhxOobBlmETW47FCViL+
-         /yneJLYkKoJw0Hdq8QJ29CoBwWLbrUghHPqNIu4GMCPvxb0l9kM8lStLGTy1Letko2jm
-         xePB1C4B5/PJSDWaIgyHUR8qD8CX9y5A+qVEwMobGuf/PSs/lCt3cFa3FqNV8ARtV4G+
-         K0id12EmH2ie1Omb4sEU2XSKLrBOue/jWYHuXjc3TIVPMBIehsTlxY8O+eQqfctcjaxl
-         13jqi5BbFdwmbv9WdSfijHp2mX0L83FHgWwL+UYRFJIkJYsaMrgat8Qv3IyzB7yYKSPQ
-         e1nw==
-X-Gm-Message-State: AOJu0YyluvmG4b4KE9IMcglibYfiIupYgOOhCr5qT18PPH5OsB98F1kw
-	+xvjb4onQHS7VHsUs/cRBH+deCXmQRw61lxNS1FBP4NI/ajTTNnuNSAvqrwEfFSpcHSSNFRaIsr
-	Zdq5+xoAD4o594pwYbEvL4OCG5GU=
-X-Google-Smtp-Source: AGHT+IEElDi5ao0WZ7Gd7hTBid8CgZ+nWJZ4bVn9frIhLQN/q732+CI8Z8Bo3UoeNw0+E4po306MRBsiHPnPXt4hPRU=
-X-Received: by 2002:a05:6214:20cf:b0:6bf:6d90:c084 with SMTP id
- 6a1803df08f44-6cb9a2f28acmr71342156d6.3.1728253185537; Sun, 06 Oct 2024
- 15:19:45 -0700 (PDT)
+        bh=JM1CO7ckCyOZtQ1ddnCPiQZ0c4SkqPG+5O3h6mwvuh8=;
+        b=sYcs2Z8kV75wsOOjRWodp5WuveS+w67BqqQRqD7Q7dbr/inf/GHZ0W9tI2vJ3ZnIPR
+         tj6cDAslChedNr2UZopbEkIS+7NcJ4X0swe/hYbDwqXqOEUef3xns60kXjaFYrwiZRLe
+         G/gjHt/C5jN8YU9oUv6FKFZyL15HgLR6AX7SG2gQS+KeBT8xHreWCOIcokW/+lVQpEHa
+         P93JCdI8q8VcR4EZqs5ZrErydS+SfuBym0dY1OGRCWaPb3x7Isju2+DBw9vtxZqDrOg0
+         jTFOvct5jsYPtK7t7sjJdY2/zt+a3DRd2w4G687uhfxvPGZIjgI0kHQDbwgBKsPoC9sX
+         yLCg==
+X-Gm-Message-State: AOJu0Yx0YJztcBtxkMa6JSU/p31wVqJkk0d3avTr2qihWHwP3RKtk6TE
+	1JHZWayXPCSWJAmxABBJTZbcluuoAit4cVfhqdceS15Lyb07RWL6ZotfzIoW91xjlYnmQ0NZATV
+	MCxu4CAnWyZ+kbPvVG5ASSW6bln4XEQ==
+X-Google-Smtp-Source: AGHT+IEg72CNr3f8vpUHzlEr+KCfAInHRtTiNgGde6yUKDTKWSBzc/LfLW9bVVqCt5aNAWCl/j1LzARUp3L3+7cv7+k=
+X-Received: by 2002:a05:6214:414:b0:6cb:2299:812f with SMTP id
+ 6a1803df08f44-6cb9a4ae541mr70241006d6.10.1728253507118; Sun, 06 Oct 2024
+ 15:25:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241006045847.159937-1-cdwhite3@pm.me> <CAPig+cTB-sA-g4cdhfEjWwY1mnbWJ41e=bOCNwp=Y8JKvpmpRg@mail.gmail.com>
- <CAPig+cTVbXVffSeyNAV3c0zuSUozY7giWtMw3GpHs+xVEpaNvA@mail.gmail.com> <gZ9_OcXpHKqABP0c_FH7EVpjzCD92RASyYoDkrhhrxzrbKvx5duIaXIrVOK45bmglyrLHrQ6SR4YVtMwU6BGqw1_TWs7rHk_lNderVONljY=@pm.me>
-In-Reply-To: <gZ9_OcXpHKqABP0c_FH7EVpjzCD92RASyYoDkrhhrxzrbKvx5duIaXIrVOK45bmglyrLHrQ6SR4YVtMwU6BGqw1_TWs7rHk_lNderVONljY=@pm.me>
+References: <20241006045847.159937-1-cdwhite3@pm.me> <TEfKiit-RYyr0ZuiQszaKaM64iSonfaQwWRqExOgXyPR1tVWyAzR3kVKmCd3aREZwDGuS5VXcHjCvneY-gCg2OuZyv2N2EkfARlZu4AVSsU=@pm.me>
+ <CAPig+cTE0gaD=7dwSqY4S+7AqRoU9yOrS4sdBoybj0Pfyk9vxA@mail.gmail.com>
+ <K1lpl_AWj4xpiHLG9AloFDP7hkJ7Ysf-LA5H-OeP6suaBcES3WS6NTYZGX96oQuNQ3x36eEOxGdqlj3fG3ybrn5y3LRPfCNqC7yqTyvqVrk=@pm.me>
+ <CAPig+cQE0RNLhktuja-BbF8WwZmKC3cox_GUC-o4w87PadDpgw@mail.gmail.com>
+ <gX8RNUg1e1FCYFS1vP-uT4rbMpg21Ax07CZm5Ha7Dsk93EN6CTuXiLr3boTaoNEi71O1rDoUxhTs6KQt7Cvfz7B3KlbpZzis5b05KW7ARls=@pm.me>
+ <CAPig+cR4FXsGDE9Uu04EjK+vOo-Pi_VwOub8+Dy3r9t7z8GdkQ@mail.gmail.com>
+ <AtSpzKynOkmMPZ3bR4qx-eA93Xo-1miPCIQSxIKP534tD-qpDU1AI74vqB78RsukQ0XP5eKdvzHcwy_lf8lpL9wAoHoom-koo5GKcbrcuX0=@pm.me>
+ <CAPig+cQZmEdx1Th9VAHbEkJ=zm73TP7Wuda_G5CzFw7j9HTFQQ@mail.gmail.com> <w7hncKNNAlJFs7fyi_ZzMj8iNF-GMgbm3E-7Wit9qUey2FDVTwj0CKg_Youi3mPpOcBvDEWyVEaeryeL10LqAY002FdBxBpi7zTQervXgyM=@pm.me>
+In-Reply-To: <w7hncKNNAlJFs7fyi_ZzMj8iNF-GMgbm3E-7Wit9qUey2FDVTwj0CKg_Youi3mPpOcBvDEWyVEaeryeL10LqAY002FdBxBpi7zTQervXgyM=@pm.me>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 6 Oct 2024 18:19:34 -0400
-Message-ID: <CAPig+cS06E1xjM6asqF9-5KSSgGaVQgF2_QdYSziSPJ-5mRSBg@mail.gmail.com>
+Date: Sun, 6 Oct 2024 18:24:56 -0400
+Message-ID: <CAPig+cRzvKddHsqahndU-pnScqNB9tL1KR-XBBGB6wx6U9v40w@mail.gmail.com>
 Subject: Re: [PATCH 0/4] Link worktrees with relative paths
 To: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 6, 2024 at 6:01=E2=80=AFPM Caleb White <cdwhite3@pm.me> wrote:
-> On Sunday, October 6th, 2024 at 00:11, Eric Sunshine <sunshine@sunshineco=
+On Sun, Oct 6, 2024 at 6:08=E2=80=AFPM Caleb White <cdwhite3@pm.me> wrote:
+> On Sunday, October 6th, 2024 at 02:45, Eric Sunshine <sunshine@sunshineco=
 .com> wrote:
-> > Also, since you're touching infer_backlink(), see [1] which makes some
-> > changes nearby.
-> > [1]: https://lore.kernel.org/git/20240923075416.54289-1-ericsunshine@ch=
-arter.net/
+> > Can you try GitGitGadget instead (preferable) or perhaps publish this
+> > series somewhere (less preferable).
 >
-> Thanks for the heads up, what is the best way to move forward on this?
-> Should I base my patch series on that topic branch or bring in that
-> particular patch?
+> I just created a GGG PR [1], can someone please give me /access?
 
-If that particular patch impacts your patch series in a way which
-would require Junio (or any reviewer who wants to test your series) to
-make non-trivial changes to resolve merge conflicts, then it would
-probably be best to base your series atop that one (rather than
-bringing that patch into your series). When composing the cover
-material for your series, be sure to mention that you have based your
-series atop that patch.
+Done.
 
-> > And you might be interested in [2] which may indicate that there are
-> > some holes in the tests around worktrees which might need filling.
-> > (Since your patches are whitespace-damaged, I haven't checked whether
-> > your series succeeds or fails in the way the series to which [2] is a
-> > response fails.)
-> > [2]: https://lore.kernel.org/git/CAPig+cQXFy=3DxPVpoSq6Wq0pxMRCjS=3DWbk=
-gdO+3LySPX=3Dq0nPCw@mail.gmail.com/
->
-> I just ran through the scenarios you described and everything works as
-> you would expect. This is because internally the code handles both
-> absolute and relative paths, and the worktree.path has been updated to
-> always be the absolute path. I will make this clear when I rewrite that
-> patch's commit message.
+> Speaking of which, is there a way to tell GGG that I want to start on v3 =
+to
+> keep the continuity? I suppose I could always just reference the other ve=
+rsions
+> in the PR body but I wasn't sure if there were other commands available b=
+esides
+> just `/submit`.
 
-Thanks.
+Um, I'm not a GitGitGadget user, so I can't say definitively, but I
+don't believe there is a way to do that.
+
+Referencing the previous versions is always appreciated by reviewers
+anyhow since it makes their task simpler. In particular, in the cover
+commentary for any given version, reviewers like to see an explanation
+of the series, references to previous versions, and a prose
+description of what has changed in the current version as compared
+with the previous version. Reviewers also really appreciate seeing a
+mechanically-generated difference between versions, such as generated
+by `git format-patch --cover-letter --range-diff=3D...`, or generated
+automatically by GitGitGadget.
