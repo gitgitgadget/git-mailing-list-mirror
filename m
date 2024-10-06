@@ -1,161 +1,165 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DCC189B81
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 16:06:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146BA1A716
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 16:18:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728230776; cv=none; b=E6A4r+vXLLpDWj6WKOgelogsLem+6WNnwYelPnKUaX3LZeYFymRSEu67WSPJbAv1vFLX5jF+/Bs/T+z8lOysjNi2wBzxgHdHh7G468OJ8gjjmW8/9X6vhHpCyLklqcX2guitakBp5PM5CW0P4w3KMPSq7WsjBr6hklbMT2CatWI=
+	t=1728231528; cv=none; b=MOypEy9YQv/FJ5aYp0f8vYUk88HPsVv5q7JNF+nqlRg1QPw0q2xZtYZJ9UiN7U3mqBr+wjiq8Efk6nCgAZdm/31tOjba90etAuT+wDGBfwKfwIm4+S1XYtjDtaeuLtTveJpcMSCFqv9uw0ILJtJIs5Vyd11vb/ivbR3YucqeeuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728230776; c=relaxed/simple;
-	bh=PUEIXCF3DtANtaoHxw0rA8VJ/DijqpHQV5On1NkaGH8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=WgI+s5MFAh3cppFjAbNKLYuYYJ14If0xyyx71fBq1L3YwGDt3mQxXGZtJiCqzKVijX1Rbfvg8etNWKX0WHvrSulIbPA7sKrEwXL1LaYVa/6Fjh0royo9l4BbutJpLy9nP3L//HLQeIPJSo88I+mNHIIOyKA5rRQY9aZujW9f4kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QsVhH0ot; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1728231528; c=relaxed/simple;
+	bh=8Ihs9tMnzLYZvpXKdtYhO/PCIpNui3itPgVGU/wvkVQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B1JVdpDYQr9qEM0v7al6G62o1ogkMX6NvxlQBVxV9TUgAzhNewgD8F8nyhFnel6Hoox6Kz+PkPzRIpHJFOrYiGUK5SrDeFIyS4I8PXqNyO+Bb63D60F2nv6mIH6w+avuxX9Uj4hD3RUPDw51eWgtWTXC8uvc9lDv1GrO4vP5wi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FaP262EW; arc=none smtp.client-ip=209.85.221.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QsVhH0ot"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a8d0d82e76aso621601566b.3
-        for <git@vger.kernel.org>; Sun, 06 Oct 2024 09:06:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FaP262EW"
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-50c9fb5d88fso352394e0c.3
+        for <git@vger.kernel.org>; Sun, 06 Oct 2024 09:18:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728230772; x=1728835572; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1728231526; x=1728836326; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LaeFS5oWtug1ZZsawHwx7IKifPdFVJcnzlM4ZYbdU0M=;
-        b=QsVhH0otfIPojuShDiL0uApneBp+yW1tUbebZ3g4LWP+mgJWXYNm03RRvlRzvfbWpL
-         gVZnP78L0pxpLubNkfj4nnePuLn/P28hgZrSl4xXBu9113GP6nUskKPh4fcN6ZlnSpzX
-         A69JEWNRwkQsK9RLtLViACUsI+lO5s6jgIcasmCt+Lu9C/wsID1GFRReeuvEo9irLtY0
-         VErz4btqtF6iFu63sxbNPT3iBQzB0B5nHKF0719XM6+efIuedmW+yDH4ceis3FsuZ7zH
-         AuaWgc60RW0eUJuPoGxvmRB9NJnsyT0Ep+589impxoraCUY79T8YpVlVCfbjI3f/Mfha
-         t7VQ==
+        bh=w+qE+j4KCPcDSpK2HedCsmjVIpgbSDnRV4/07WRMgS4=;
+        b=FaP262EWhl9W49mq3rSpxFYFWJAGxicjyuHpQL8fqES4w19KjlMqHz+jQMhqqiCZ79
+         xTT2gd1Wehromb1bz0I6Ry0jp/EJUqMIHaoOW4vt6T8loSBbgOr9JPtUh+pYMJkp+1s3
+         B54m7wtZlch3H8n9p7qLUHWi2n/0hvQdatbkF+KdkMPmGNqieEY36p59ARxv6RDyqxTd
+         tj7DU1N+17TLJNKbvAwLQmR5pOLhfbegaNTrkOvJuv/prx4Ma9NzYLHL6Gphw5Q/ZP/O
+         Dv4WAF52Uh1RE98lwBtRJuWGavp4B5lnlDP1PP+ikwK9gHiT8nz8KaPPIPgzrEcUO3Jk
+         qrqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728230772; x=1728835572;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1728231526; x=1728836326;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LaeFS5oWtug1ZZsawHwx7IKifPdFVJcnzlM4ZYbdU0M=;
-        b=E+Ws0EpUocJGYafVzJ5bHuWFm2hw4JmTXdUVa3sBIfBAZamSAwIpfpo13Tj7cAJ3dZ
-         LJnp1GIadSFnqaQsWxTDF527DNbMvv0RvUwLJMnc9Bxur0GyLo2+hwDpvA5q5hN0cqxs
-         xRQ6thf3/hqxdDe939PQoYRDxr9hLTALyGcUFOadr7FBx54uyISXF2Y+pjh9OyeY0zPB
-         p8lBwyMORg3dGKR1ji65DTtIfv1Nk0ISq+zmaXU1liTLWTd2FILGHSA5TzXYCqQfWSvw
-         hZ4fzSXRzXNnG792yBX8ykjNtvtyVb7XSgpLiX576KmB3uXZ+Unu0A5YRJLa6Qa5MIBY
-         UJLw==
-X-Gm-Message-State: AOJu0YxH5VsbysCWM32AjQQoaxUqJB8VrEyx3t5U886IhyIzzNRrn6W3
-	hjvZKB6mAB3wzxxk90x95I+f/yjF/VLjYUolGPUPxhGFdcr7WJ8WXzcmCw==
-X-Google-Smtp-Source: AGHT+IHnF7x7MKxuQCSrT6AKKeTY15rO7URBGrHGWF3cOcPuCDsh3vhR6YnVTZ8gSAauas35+aYrEA==
-X-Received: by 2002:a17:907:747:b0:a86:68a1:6a08 with SMTP id a640c23a62f3a-a991bd71c59mr1026927266b.29.1728230771577;
-        Sun, 06 Oct 2024 09:06:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a994ae7d1d1sm114165966b.104.2024.10.06.09.06.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 09:06:11 -0700 (PDT)
-Message-Id: <37b1411ee2c420f1a8578d27a2f7d54ccd3f329f.1728230769.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1805.v3.git.git.1728230769.gitgitgadget@gmail.com>
-References: <pull.1805.v2.git.git.1728203495287.gitgitgadget@gmail.com>
-	<pull.1805.v3.git.git.1728230769.gitgitgadget@gmail.com>
-From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 06 Oct 2024 16:06:09 +0000
-Subject: [PATCH v3 2/2] [Outreachy][Patch v1] t3404: employing
- test_line_count() to replace test
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=w+qE+j4KCPcDSpK2HedCsmjVIpgbSDnRV4/07WRMgS4=;
+        b=IvQgocadLWnuXVAvmaphnyNGnM2Ko8d5bjuUutTfwqneP0/DsNs3lJf/vd8oMcPm6H
+         Rzcg1A40vpYpc5m+CMkNfI0A4E39fqRQZuICSp7Gryf6l/5hqoEFhSvXg01wOuJcBNFR
+         trwcYZCKyZQEuN8R9/jQZUpcs8ZiKU0hH/o5558xLooor/7ADp022EKf4TZ7CnHXmPR6
+         3vZ9d/EAiFdn/GXwqCsdFMpiqi8q3ngNOTVZ34CoRuHTpR7hAPeMq7da5qwjSM/g29jH
+         VUyfZi5N0CIxE5iqkmt9c4EIa+8vGiFEu6eeiNS1PhyzyYk/jHGGzYCTsu+Y7nNqgHK7
+         k26A==
+X-Gm-Message-State: AOJu0YwZ5IkYb2I1Os7FQGNizcKs3V1iflKkzo49RyKfuqY6q/RTeUgX
+	HMZiWOIChVskcvSGZMhRL5EFyBxzD9ntZviEnni1yofgGrF4BCY8qFOuMZF5MWNOxiMg1T6AbTW
+	CbnwyGFgHdOCKxvXvR9wMhxacs8k=
+X-Google-Smtp-Source: AGHT+IGtmyaNWhVqinBeUBoX39eFeFwQH1ar6zBS1yfZrKhR9Im3iS7++oTesD1m91Q4o3gGLmNdsOH/8rneW8jci/s=
+X-Received: by 2002:a05:6122:2229:b0:50a:c7cd:bee4 with SMTP id
+ 71dfb90a1353d-50c8545a77fmr5599540e0c.1.1728231525833; Sun, 06 Oct 2024
+ 09:18:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Phillip Wood Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Eric Sunshine <sunshine@sunshineco.com>,
-    shejialuo <shejialuo@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>
-
+References: <pull.1805.v2.git.git.1728203495287.gitgitgadget@gmail.com> <pull.1805.v3.git.git.1728230769.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1805.v3.git.git.1728230769.gitgitgadget@gmail.com>
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Sun, 6 Oct 2024 16:18:34 +0000
+Message-ID: <CAPSxiM9eExGxy5biEr_23tCKXaUQg=tsD57VR7e2SVdvVJR+Kg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] [Outreachy][Patch v2] t3404: avoid losing exit
+ status to pipes
+To: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Phillip Wood Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Eric Sunshine <sunshine@sunshineco.com>, shejialuo <shejialuo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Refactor t3404 to replace instances of `test` with `test_line_count()`
-for checking line counts. This improves readability and aligns with Git's
-current test practices.
+Hello,
 
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- t/t3404-rebase-interactive.sh | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+Kindly, help take a look if this is okay now.
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 96a65783c47..19390eaf331 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -281,7 +281,8 @@ test_expect_success 'stop on conflicting pick' '
- 	test_cmp expect2 file1 &&
- 	test "$(git diff --name-status |
- 		sed -n -e "/^U/s/^U[^a-z]*//p")" = file1 &&
--	test 4 = $(grep -v "^#" < .git/rebase-merge/done | wc -l) &&
-+	grep -v "^#" < .git/rebase-merge/done > actual &&
-+	test_line_count = 4 actual &&
- 	test 0 = $(grep -c "^[^#]" < .git/rebase-merge/git-rebase-todo)
- '
- 
-@@ -401,8 +402,8 @@ test_expect_success 'multi-squash only fires up editor once' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual
- '
- 
- test_expect_success 'multi-fixup does not fire up editor' '
-@@ -436,8 +437,8 @@ test_expect_success 'commit message used after conflict' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count &&
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual &&
- 	git checkout @{-1} &&
- 	git branch -D conflict-fixup
- '
-@@ -456,8 +457,8 @@ test_expect_success 'commit message retained after conflict' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep TWICE output | wc -l) &&
--	test 2 = $count &&
-+	grep TWICE output >actual &&
-+	test_line_count = 2 actual &&
- 	git checkout @{-1} &&
- 	git branch -D conflict-squash
- '
-@@ -501,8 +502,8 @@ test_expect_success 'squash ignores comments' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count &&
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual &&
- 	git checkout @{-1} &&
- 	git branch -D skip-comments
- '
-@@ -519,8 +520,8 @@ test_expect_success 'squash ignores blank lines' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count &&
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual &&
- 	git checkout @{-1} &&
- 	git branch -D skip-blank-lines
- '
--- 
-gitgitgadget
+Also, I wanted to change this also to use test_line_count,
+ test 0 =3D $(grep -c "^[^#]" < .git/rebase-merge/git-rebase-todo)
+
+ But, I tried a different approach and the test kept failing.
+
+Similar as
+
+git show >output &&
+count=3D$(grep NEVER output | wc -l) &&
+test 0 =3D $count &&
+
+Thank you.
+
+On Sun, Oct 6, 2024 at 4:06=E2=80=AFPM Usman Akinyemi via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> At the beginning of my task, I made the mistake of submitting two patches
+> for two separate commits instead of one. The first patch addressed the is=
+sue
+> of losing the Git exit status due to pipes.
+>
+> After submitting the first patch, I noticed that the output of wc -l was
+> failing due to trailing whitespace. I attempted to fix this by using tr -=
+d
+> to remove the whitespace. However, instead of squashing the two patches i=
+nto
+> one, I inadvertently created another commit.
+>
+> Eric Sunshine sunshine@sunshineco.com provided valuable feedback during t=
+he
+> review process. He explained the details of the patches to me and pointed
+> out that using tr -d was unnecessary to resolve the whitespace issue.
+>
+> The root cause of the whitespace issue was quoting $count in the test
+> command, which led to the inclusion of whitespace in the comparison. By
+> removing the quotes around $count, the comparison works as expected witho=
+ut
+> the need for tr -d.
+>
+> Signed-off-by: Usman Akinyemi
+>
+> Usman Akinyemi (2):
+>   t3404: avoid losing exit status with focus on `git show` and `git
+>     cat-files`
+>   [Outreachy][Patch v1] t3404: employing test_line_count() to replace
+>     test
+>
+>  t/t3404-rebase-interactive.sh | 74 +++++++++++++++++++++++------------
+>  1 file changed, 50 insertions(+), 24 deletions(-)
+>
+>
+> base-commit: 90fe3800b92a49173530828c0a17951abd30f0e1
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-180=
+5%2FUnique-Usman%2Favoid_git_pipes-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1805/U=
+nique-Usman/avoid_git_pipes-v3
+> Pull-Request: https://github.com/git/git/pull/1805
+>
+> Range-diff vs v2:
+>
+>  1:  be5a691e96f ! 1:  c9a0cca179b [Outreachy][Patch v1] t3404: avoid los=
+ing exit status to pipes
+>      @@ Metadata
+>       Author: Usman Akinyemi <usmanakinyemi202@gmail.com>
+>
+>        ## Commit message ##
+>      -    [Outreachy][Patch v1] t3404: avoid losing exit status to pipes
+>      +    t3404: avoid losing exit status with focus on `git show` and `g=
+it cat-files`
+>
+>           The exit code of the preceding command in a pipe is disregarded=
+. So
+>           if that preceding command is a Git command that fails, the test=
+ would
+>           not fail. Instead, by saving the output of that Git command to =
+a file,
+>           and removing the pipe, we make sure the test will fail if that =
+Git
+>      -    command fails.
+>      +    command fails. This particular patch focuses on some of the ins=
+tances
+>      +    which include `git show` and `git cat-files`.
+>
+>           Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+>
+>  -:  ----------- > 2:  37b1411ee2c [Outreachy][Patch v1] t3404: employing=
+ test_line_count() to replace test
+>
+> --
+> gitgitgadget
