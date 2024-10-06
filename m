@@ -1,69 +1,87 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4830A2D
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 05:16:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2D94120B
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 05:33:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728191795; cv=none; b=j/hXiUx+hBGAN3ujHPkPmnY9cFmJgZnaLEvkbZ/S4lmNLUVW3RLxufZXsP/2NtqPLPa2IOQaolmQ0QWeYucUNCjJ3cOhxyEWY1JJYavpJJfEPytW3C071WUA9sE7NodIwffld8kdXLTq+H2daDUz/1gJKwGxSoMsOYSC49wGAQw=
+	t=1728192819; cv=none; b=UrFy+H8D4K7cFBujKWW3S1OwAXI0Sww0ryBZGSTSUJvlcwP1uRUZQXBlWQDIypYfh8OzkDaU10yuEb6geAf+3Pwykd2ycvGak0cw1OVV9LY1BMGkrWLW/rYdaJeOJj0Rlb6UXg5zAf35qeHIXO6Irfndyku4iyUEQZhUbtcCrL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728191795; c=relaxed/simple;
-	bh=FXmZa8qL7h3OWGncFsVytg/f9Cuomtkw8FLyHvXVZLY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TAtaGEmOC8uF1+fkZ30WKPYlnQ+g3mEon0no1tKsPSR5FCRspGHkyWAecjPS216b/t6A/iLrtEoxpV+Kk7MusYdyEdS2sLHEY6HBvwvHMQ/I2+8EheojkE4LbmFHDh60Vw/illTZ/f6UlVq2q5HlVZj8HvBMz3JCZcKJF5YiRoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1728192819; c=relaxed/simple;
+	bh=Y54At509K5QWpis0SoB3GgMxmpAefzrYCo14HUUmypQ=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=FqL/GeeJKnAxMQlmeXi5O9i+EmTQg9IXfAmn4JWIuJ9upSGjUgNauoCngtmI3raxZR5ciRANZ6eylOQ/GBfRpxwfAM0gp4S2DZYGpCcike36G1XHMIZ24dlBf3ChvYSVW4dcQs0UiDCZ0N6GzQkFl6bbna2mYtf9Yz3u7rj9NWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fhOxjzTD; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6cb3a412136so5290126d6.1
-        for <git@vger.kernel.org>; Sat, 05 Oct 2024 22:16:33 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fhOxjzTD"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a8d4979b843so461362866b.3
+        for <git@vger.kernel.org>; Sat, 05 Oct 2024 22:33:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728192816; x=1728797616; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=bnr2bxZqw2alVMd03b/mx8cTP5YyIUujD1A43XRfg94=;
+        b=fhOxjzTD0lrDhooxf7jswdQcrmiWAiLTb2q3E1Dl1O6T+s7y6MR5NWMbioFK+NX9Ln
+         NQ50drc2zHmJaXyWE5qAFtlfuayCYwNTgtAHtdq1DZC3MD/Wd9l1n3EXcEm7GlVJBK2i
+         WBaSCVEkn92rTixFbakJFE9IQZ+y4QGc0Pi2/RZfSf6Fs3zRjFS0vsMEZs1jf1coTKv7
+         VSVJcjwJEpSs8UqHRWaNFGvt1Xo1zPsnHJI6Gy/eD3EhZ2tHXmLDPuWW/2Go3iq8Z+pV
+         JLBP6HANSq4xKkqU/vy/q754E9CgET8W+sN4/zazkyeVZGkK/kXqrf8zfSyG430/2z1z
+         60Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728191792; x=1728796592;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tq5wl4SG7BUhGe+Ocb63IADID6I6eWRdlYkmdR7+/nc=;
-        b=TgndkUE11dmWufWbgWiMfpbSBA666iYp+iCXJobxWG1Bwq3MO8g7xsmDg+lUIur1Oj
-         bRbQsDqU5Q+BpPk3Cp0Bh8K+m3uxmQ0rOnlrk3x2rvoqKbwrR+I8Cfyf3nnO2Igmg9jS
-         FbFxGej+akmHxEl9Fv03WJSsHjiuiI8oKIHZtEDidLsmQKgJfeYatEl5QqvjSLq/xnT0
-         SQXlmUZTJ1bTgM3TVaQMTlLpDShUYX3uBB9ClvDp0QX68RZyM6RNyKeupVziRnhgvlO3
-         TMMVTQJ1uCSS46WvzoZWrZTWyXi/QlbMvINdUt95gErOQr8QpjvWG1QL2/eRnL2m6yUu
-         oZ4g==
-X-Gm-Message-State: AOJu0YwVtayPpNxOIkwujP4/gCI+O0HTgy9dcpUdDV0ApYOdJBm18ERt
-	Jr0YkpJoTOEEDF7KDYhoSfjcxFG2vfYwoHcyH+H1FXkozzC05qbTsx2C+MrfusZEkkfO0U9nKSX
-	s1i0dfi5jULNHjITi1XUFMDLDZWbqNw==
-X-Google-Smtp-Source: AGHT+IGHjEvgrEdmp5XTVi3F5O+ErUfipe/sryw/1/dHnctvPwGgk4BR7hiMYK7fZM1Zi8Qt7CgctvnCJLvRNPMbCro=
-X-Received: by 2002:a05:6214:5011:b0:6c3:662f:8e09 with SMTP id
- 6a1803df08f44-6cb9a4f34b0mr61300566d6.9.1728191792557; Sat, 05 Oct 2024
- 22:16:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728192816; x=1728797616;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bnr2bxZqw2alVMd03b/mx8cTP5YyIUujD1A43XRfg94=;
+        b=glJSileCNj8l5lDEZ/+FGUamjKhwZozTF2mQnIn60kxfBcxY3J/iB9B705nNMn62Lo
+         oGyHmBFgcbwCTKFOkdjLpbLevv/fuoWjWke7ZFHVEXnDfom6uO2Ar3aEEBnrMz3onokK
+         q1eds6ie7IRKgeJabiqo7rdmnFHwFqjfToKItmdebVNIBWOpc9S2H4IdR5lgwMeik0EG
+         MCrtyxgO9HDvx91ROJxDxT/Y5bq7iPSVwvcQCEZthKp1h7lT+o7GirOACKPtL7g/TKVI
+         hpw8k9MHvOSUAVGssFx9b2R0rcqzMsx9fykIeTLmuUmrVRBXNNQV4N1/gqQkdEhvTEx4
+         zKPw==
+X-Gm-Message-State: AOJu0YxLFB7WAoerWYey8joe3XnhhwSjTEV10g88SAwCSvCfWKdGDPYG
+	/pky88+Td7wkWWzDrgsQsURj/zs3CTvNQwCRd9S9F9sp5/5smUUH3AJvwQ==
+X-Google-Smtp-Source: AGHT+IFZ4N/pL8KRBWK43ubrheG44BlndDoOJUdT1Nj/7g+tpQGpD82Yi3+byBMZGp+2IBokkK95KA==
+X-Received: by 2002:a17:906:7956:b0:a99:45c5:339 with SMTP id a640c23a62f3a-a9945c50440mr230782866b.32.1728192815820;
+        Sat, 05 Oct 2024 22:33:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a992e78757asm216189566b.102.2024.10.05.22.33.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Oct 2024 22:33:35 -0700 (PDT)
+Message-Id: <pull.1805.git.git.1728192814.gitgitgadget@gmail.com>
+From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 06 Oct 2024 05:33:32 +0000
+Subject: [PATCH 0/2] [Outreachy][Patch v2] t3404: avoid losing exit status to pipes
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241006045847.159937-1-cdwhite3@pm.me> <CAPig+cTB-sA-g4cdhfEjWwY1mnbWJ41e=bOCNwp=Y8JKvpmpRg@mail.gmail.com>
- <zKUnWY8u1SJNeS4oLK85znjacgYJJeN8HefenwaJ9B9Q1YrQAumpAxWos4svaawkTfQZ_HaS3yp6WrOQQI7yt3ZO0UMCfkM0lJDDnMD-Lno=@pm.me>
- <CAPig+cT6LALKjEappB7QkB7oc88NyMcr40T_qJGL2mPA77K7XQ@mail.gmail.com>
-In-Reply-To: <CAPig+cT6LALKjEappB7QkB7oc88NyMcr40T_qJGL2mPA77K7XQ@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 6 Oct 2024 01:16:21 -0400
-Message-ID: <CAPig+cT7CEnb6cQmAOMbD82wxkg=7T0MMW=QNUSPU62a0rEGLA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Link worktrees with relative paths
-To: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>
 
-On Sun, Oct 6, 2024 at 1:14=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
-> I noticed the whitespace-damage just by visual inspection as I quickly
-> scanned my eyes over the patches. For instance, in patch [1/4], I see:
->
->     + struct strbuf backlink =3D STRBUF_INIT;
->        struct strbuf gitd
->     ir =3D STRBUF_INIT;
->
-> The "gitdir" variable got split.
+Changes since v1:
 
-Maybe "whitespace-damaged" was the wrong terminology. They are
-incorrectly wrapped/line-split.
+ * Added "tr -d '[:space:]'" to handle whitespace on macOS
+
+Signed-off-by: Usman Akinyemi usmanakinyemi202@gmail.com
+
+Usman Akinyemi (2):
+  [Outreachy][Patch v1] t3404: avoid losing exit status to pipes
+  [Outreachy][Patch v2] t3404: avoid losing exit status to pipes
+
+ t/t3404-rebase-interactive.sh | 71 +++++++++++++++++++++++------------
+ 1 file changed, 48 insertions(+), 23 deletions(-)
+
+
+base-commit: 90fe3800b92a49173530828c0a17951abd30f0e1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1805%2FUnique-Usman%2Favoid_git_pipes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1805/Unique-Usman/avoid_git_pipes-v1
+Pull-Request: https://github.com/git/git/pull/1805
+-- 
+gitgitgadget
