@@ -1,207 +1,135 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8549A184537
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 15:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB3713CA97
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 16:06:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728229027; cv=none; b=hZ/gq86XboleA30Fd3y8UTtvd4VTCbuXrdRtV/bV/rkDmm35cXZVs+ci13/oqbfI5RiUWezZ39kgwQE3ZGnzyWLe5RrZrn/0Mu4CJnII3LTf/9pk/8jHTVgOWeVjjicVWWOQi+nUK2orjZAe0FtNueRW8amwyGzDHptLizuDEOc=
+	t=1728230774; cv=none; b=P1x5xD40AxTZvuqQ4k8F+HXcYVnID86gj/ymxQNNtagdeRstXrOn9RrFauy1uhVkDdWRM/Qiij46KdwoA10usD79xpcpIHehdI78JO2ywym2SRVajvCPncpT7pTnoU2cFfL13jf/HDz7CG9QUJQ/Tjky84ch3IxOYc0BKPGnSzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728229027; c=relaxed/simple;
-	bh=YB0Rrxy6IIxG7ZuXQNAskFqpbMeDQqZvS3K5de4ldl8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gJ0NDj48izzK95shpWq1FnDdQn0IglS8K15m0xyj7Nbv+VJ+MOEEpQtLdagyWW1z3LRzYrdicN/0+DxOrZJ7TwpVpEoaK+re84TJv3qDJcDwhQDOvHdq3vTBEQWVHBr8OIe2fLQ8C0arZdDX0sJZzkMLswbeq7QhbYQkvsJQHzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eLoyOG0M; arc=none smtp.client-ip=209.85.215.175
+	s=arc-20240116; t=1728230774; c=relaxed/simple;
+	bh=vVh8atIrfkGqTOwWwu6L0oJ/MCi7Wqor6FrRUVTEDkg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=V03SLc42Ihkp1dtAG+p3SBBb2zRAPXNd3qUr89OaJ+sQkbLZL+gfJM/1vgSE+anH4aq9D6c7iSjF7Nre0pUalOjDWd3o9hMCDeb5b8ElL1j9gB9+r7lCqqu5q0TX+l/Y5tTPaA+uFPLZ1iT3EhXcJVRqsucB1ld5Kv6fIDBND3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xm9fCViI; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eLoyOG0M"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-7e9f98f2147so564220a12.1
-        for <git@vger.kernel.org>; Sun, 06 Oct 2024 08:37:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xm9fCViI"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a9957588566so9762066b.3
+        for <git@vger.kernel.org>; Sun, 06 Oct 2024 09:06:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728229025; x=1728833825; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=w2WWOzn95kxthF0C0cjQd3ZRln6OfZG3O9S2/5l/9Y4=;
-        b=eLoyOG0M4KW1dxmWni8zt/gfxkppXYOBz2fi6JP0OlvNWiyEohAmW9tg5G8Hx8rYyl
-         gf0hWENcoULSGk4qvb2ShdBxuDYK857otEw1CnYj9Wj3ySdCBSm6+MlE6coGYYuPHIuf
-         GWjP+hZiGuxDmumaZj63/qsbOTGg5+hNBQJq8p70tDuvGzmr4jSuamyypnU6G86sm5fy
-         iwDfyDFhyL/ZL4dI8JvK9bMquK63hd+L8wlPyyh+zM01o4VkENNNvtfGjuL77ClriDUt
-         XXeA6uMeeru7bcUKgB4j81imK1fWhVRQ5kT8z2SEs2+rI60WPA26wHmgDGTdtZbIPIXu
-         qbOw==
+        d=gmail.com; s=20230601; t=1728230770; x=1728835570; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MDHJkF5EKa31Ine7/EUdwu5VO/6sQnz/X8Ujk3pe1Rk=;
+        b=Xm9fCViIxjvfd/mY/vyyrgb5E1KqbwmLJ875n4i14NQxGBJQpwSm365/hXtgXsAH3d
+         JrqpJlxWn2mKGhCAPVsdTs8lQwdtj6aJAijrhkbrYNv2/j5XppINrvjnq6THSEL109YP
+         G/uAE7VB4HeYEljDENX+aj8rBJFBsQlR1KOPG4L7gLlBzTMJs464zbWr42rflFPQ9MYJ
+         prwwCa+N7zH+xlNh99HC0S8PUfqtsbV7agmI+OCQ3Wh2QCm25yXzzJfWXcsMN2kcVZ4f
+         iqBw48FozZiMvagWf2P/xzdIQv+ts68M1ja8/7w3M4TEUxJNvuoz2YQ/3WBoXZVm1Xzq
+         3KuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728229025; x=1728833825;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w2WWOzn95kxthF0C0cjQd3ZRln6OfZG3O9S2/5l/9Y4=;
-        b=i/Gb+uX3EWO9JRYx8tyLJ+ZVlEeSCFto2+ikU6Q7HnoRC7Ru/aMzqo99qcOgQvTSy4
-         JWPa7XoutjHzASQVBaaeTnJNA3WnnBk30tcHsNN8ieLBZAnqab7bcp/LebEfcUvhAYp+
-         Aqc+9SHRw+Gr8MMeLg+MmtOUfbh82Z+g2v9MhFLV2J6ux4749lPyehwXbmUIlmAJVHsO
-         C/kmtsoK4J3BI5SCL3OW9jc3wK3Zbtk5vSNDzNpTYgsqm4uNqPgUigEDzZPTpbPCspcW
-         NxTJJxZ7MrEdmEsCeVraSUJcCKsxnF65xO4CrNVri7937jlidVv7KdkydF7DN5oG8Z7h
-         ZYog==
-X-Gm-Message-State: AOJu0YyEMCw7d1cSgdKPM20XSRdRWf2BmAtPwu6EoAv+EE73Hsv7GeaF
-	K+z+lkVcUSEMJNRrazlSZwUhd5PtInksbUNZTiFFbYqC6kM2Xuh4HFoCyQ==
-X-Google-Smtp-Source: AGHT+IEgTfoVvG1Qc/+6rIT0x9pCePk5TjV89Jmzlh+7TmDfpckAT1H6COUe9LDgKjqek352/F7/OQ==
-X-Received: by 2002:a05:6a20:2d22:b0:1d2:bc91:d49 with SMTP id adf61e73a8af0-1d6dfabadffmr14072828637.31.1728229024710;
-        Sun, 06 Oct 2024 08:37:04 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7e9f6c4a1c1sm2828329a12.81.2024.10.06.08.37.03
+        d=1e100.net; s=20230601; t=1728230770; x=1728835570;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MDHJkF5EKa31Ine7/EUdwu5VO/6sQnz/X8Ujk3pe1Rk=;
+        b=FNMArIpSrE7SCjDBuZkslNvPPN+oNXOUL/LrDWvfPBaVfxwY4rcgE+6oc8rnLYQmwc
+         0RMSQo2tz6+xhCerNHDhFaUhbni1rAzypzmvL/jYFVYiwLeYNwUrZWm4w8Rzin4PT7n9
+         8tfr49YruYXfdloOEyFsE1xmcDB5PPVjHgrTY5p7aQ5Yz8MoS18xvbU6OsijgYq43+6/
+         AZWLA/+ITBKsg6Tq/oX7dlmuynyYrmHtv8/IVIvPQxLhQ6OkLTSKmt/xTZUKr4enEban
+         y39c/wi41gHC2NqORiIdcUfdG20123PIefi4xHzjQb4s0XylejLANPeJuIawvV9vYapp
+         2MgA==
+X-Gm-Message-State: AOJu0Yx9hWlJL9rwBdG9xaN/I/vVKvY+0ypKKeYNvlK0Quh2Mfb787Fw
+	D8b9ge2CxNeJ9/n41xgnZtjKTQDw7v7NIAHMbkmjvwMowGA3BItoViA0Ug==
+X-Google-Smtp-Source: AGHT+IEwUqvBtiBcec3lPBG2eTLq9s5o83tUVQnSEpUT8Yw7gagYSwPg0azc2y9mdmIZgL0mN/Bjrg==
+X-Received: by 2002:a17:907:1c84:b0:a99:420c:80b2 with SMTP id a640c23a62f3a-a99420c8123mr419836966b.27.1728230770111;
+        Sun, 06 Oct 2024 09:06:10 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a992e5ba412sm272203266b.18.2024.10.06.09.06.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 08:37:04 -0700 (PDT)
-Date: Sun, 6 Oct 2024 23:37:10 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] worktree: link worktrees with relative paths
-Message-ID: <ZwKuptTMf9ECd-kf@ArchLinux>
-References: <20241006060017.171788-1-cdwhite3@pm.me>
- <20241006060017.171788-3-cdwhite3@pm.me>
+        Sun, 06 Oct 2024 09:06:09 -0700 (PDT)
+Message-Id: <pull.1805.v3.git.git.1728230769.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1805.v2.git.git.1728203495287.gitgitgadget@gmail.com>
+References: <pull.1805.v2.git.git.1728203495287.gitgitgadget@gmail.com>
+From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 06 Oct 2024 16:06:07 +0000
+Subject: [PATCH v3 0/2] [Outreachy][Patch v2] t3404: avoid losing exit status to pipes
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241006060017.171788-3-cdwhite3@pm.me>
+To: git@vger.kernel.org
+Cc: Christian Couder <christian.couder@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Phillip Wood Phillip Wood <phillip.wood@dunelm.org.uk>,
+    Eric Sunshine <sunshine@sunshineco.com>,
+    shejialuo <shejialuo@gmail.com>,
+    Usman Akinyemi <usmanakinyemi202@gmail.com>
 
-On Sun, Oct 06, 2024 at 06:01:17AM +0000, Caleb White wrote:
-> This modifies Git’s handling of worktree linking to use relative
-> paths instead of absolute paths. Previously, when creating a worktree,
-> Git would store the absolute paths to both the main repository and the
-> linked worktrees. These hardcoded absolute paths cause breakages such
-> as when the repository is moved to a different directory or during
-> containerized development where the absolute differs between systems.
-> 
-> By switching to relative paths, we help ensure that worktree links are
-> more resilient when the repository is moved. While links external to the
-> repository may still break, Git still automatically handles many common
-> scenarios, reducing the need for manual repair. This is particularly
-> useful in containerized or portable development environments, where the
-> absolute path to the repository can differ between systems. Developers
-> no longer need to reinitialize or repair worktrees after relocating the
-> repository, improving workflow efficiency and reducing breakages.
-> 
-> For self-contained repositories (such as using a bare repository with
-> worktrees), where both the repository and its worktrees are located
-> within the same directory structure, using relative paths guarantees all
-> links remain functional regardless of where the directory is located.
-> 
+At the beginning of my task, I made the mistake of submitting two patches
+for two separate commits instead of one. The first patch addressed the issue
+of losing the Git exit status due to pipes.
 
-Eric has already commented on this commit message. I think this commit
-has done a lot of things which make the review painful.
+After submitting the first patch, I noticed that the output of wc -l was
+failing due to trailing whitespace. I attempted to fix this by using tr -d
+to remove the whitespace. However, instead of squashing the two patches into
+one, I inadvertently created another commit.
 
-> Signed-off-by: Caleb White <cdwhite3@pm.me>
-> ---
->  builtin/worktree.c           |  17 ++--
->  t/t2408-worktree-relative.sh |  39 +++++++++
->  worktree.c                   | 152 +++++++++++++++++++++++++----------
->  3 files changed, 159 insertions(+), 49 deletions(-)
->  create mode 100755 t/t2408-worktree-relative.sh
-> 
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index fc31d07..99cee56 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -414,7 +414,8 @@ static int add_worktree(const char *path, const char *refname,
->  			const struct add_opts *opts)
->  {
->  	struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
-> -	struct strbuf sb = STRBUF_INIT, realpath = STRBUF_INIT;
-> +	struct strbuf sb = STRBUF_INIT, sb_tmp = STRBUF_INIT;
-> +	struct strbuf sb_path_realpath = STRBUF_INIT, sb_repo_realpath = STRBUF_INIT;
->  	const char *name;
->  	struct strvec child_env = STRVEC_INIT;
->  	unsigned int counter = 0;
-> @@ -490,11 +491,11 @@ static int add_worktree(const char *path, const char *refname,
->  
->  	strbuf_reset(&sb);
->  	strbuf_addf(&sb, "%s/gitdir", sb_repo.buf);
-> -	strbuf_realpath(&realpath, sb_git.buf, 1);
-> -	write_file(sb.buf, "%s", realpath.buf);
-> -	strbuf_realpath(&realpath, repo_get_common_dir(the_repository), 1);
-> -	write_file(sb_git.buf, "gitdir: %s/worktrees/%s",
-> -		   realpath.buf, name);
-> +	strbuf_realpath(&sb_path_realpath, path, 1);
-> +	strbuf_realpath(&sb_repo_realpath, sb_repo.buf, 1);
-> +	write_file(sb.buf, "%s/.git", relative_path(sb_path_realpath.buf, sb_repo_realpath.buf, &sb_tmp));
-> +	strbuf_reset(&sb_tmp);
+Eric Sunshine sunshine@sunshineco.com provided valuable feedback during the
+review process. He explained the details of the patches to me and pointed
+out that using tr -d was unnecessary to resolve the whitespace issue.
 
-Do we need reset the "sb_tmp"? I guess we do not need, "relative_path"
-does not care about "sb_tmp". It will always reset the value of the
-"sb_tmp". So, we may delete this line.
+The root cause of the whitespace issue was quoting $count in the test
+command, which led to the inclusion of whitespace in the comparison. By
+removing the quotes around $count, the comparison works as expected without
+the need for tr -d.
 
-[snip]
+Signed-off-by: Usman Akinyemi
 
-> diff --git a/worktree.c b/worktree.c
-> index c6d2ede..fc14e9a 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -373,18 +379,30 @@ int validate_worktree(const struct worktree *wt, struct strbuf *errmsg,
->  void update_worktree_location(struct worktree *wt, const char *path_)
->  {
->  	struct strbuf path = STRBUF_INIT;
-> +	struct strbuf repo = STRBUF_INIT;
-> +	struct strbuf tmp = STRBUF_INIT;
-> +	char *file = NULL;
->  
->  	if (is_main_worktree(wt))
->  		BUG("can't relocate main worktree");
->  
-> +	strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
->  	strbuf_realpath(&path, path_, 1);
->  	if (fspathcmp(wt->path, path.buf)) {
-> -		write_file(git_common_path("worktrees/%s/gitdir", wt->id),
-> -			   "%s/.git", path.buf);
-> +		file = xstrfmt("%s/gitdir", repo.buf);
-> +		write_file(file, "%s/.git", relative_path(path.buf, repo.buf, &tmp));
-> +		free(file);
-> +		strbuf_reset(&tmp);
-> +		file = xstrfmt("%s/.git", path.buf);
+Usman Akinyemi (2):
+  t3404: avoid losing exit status with focus on `git show` and `git
+    cat-files`
+  [Outreachy][Patch v1] t3404: employing test_line_count() to replace
+    test
 
-Still, we do not need to call "strbuf_reset" again for "tmp". But there
-is another question here. Should we define the "file" just in this "if"
-block and free "file" also in the block?
+ t/t3404-rebase-interactive.sh | 74 +++++++++++++++++++++++------------
+ 1 file changed, 50 insertions(+), 24 deletions(-)
 
-And I don't think it's a good idea to use "xstrfmt". Here, we need to
-allocate two times and free two times. Why not just define a "struct
-strbuf" and the use "strbuf_*" method here?
 
-> +		write_file(file, "gitdir: %s", relative_path(repo.buf, path.buf, &tmp));
-> +
->  		free(wt->path);
->  		wt->path = strbuf_detach(&path, NULL);
->  	}
-> +	free(file);
->  	strbuf_release(&path);
-> +	strbuf_release(&repo);
-> +	strbuf_release(&tmp);
->  }
->  
-> @@ -564,38 +582,52 @@ static void repair_gitfile(struct worktree *wt,
->  {
->  
+base-commit: 90fe3800b92a49173530828c0a17951abd30f0e1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1805%2FUnique-Usman%2Favoid_git_pipes-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1805/Unique-Usman/avoid_git_pipes-v3
+Pull-Request: https://github.com/git/git/pull/1805
 
-[snip]
+Range-diff vs v2:
 
->  	strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
->  	strbuf_addf(&dotgit, "%s/.git", wt->path);
-> -	backlink = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
-> +	git_contents = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
+ 1:  be5a691e96f ! 1:  c9a0cca179b [Outreachy][Patch v1] t3404: avoid losing exit status to pipes
+     @@ Metadata
+      Author: Usman Akinyemi <usmanakinyemi202@gmail.com>
+      
+       ## Commit message ##
+     -    [Outreachy][Patch v1] t3404: avoid losing exit status to pipes
+     +    t3404: avoid losing exit status with focus on `git show` and `git cat-files`
+      
+          The exit code of the preceding command in a pipe is disregarded. So
+          if that preceding command is a Git command that fails, the test would
+          not fail. Instead, by saving the output of that Git command to a file,
+          and removing the pipe, we make sure the test will fail if that Git
+     -    command fails.
+     +    command fails. This particular patch focuses on some of the instances
+     +    which include `git show` and `git cat-files`.
+      
+          Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+      
+ -:  ----------- > 2:  37b1411ee2c [Outreachy][Patch v1] t3404: employing test_line_count() to replace test
 
-Why here we need to use "xstrdup_or_null". The life cycle of the
-"git_contents" variable is in the "repair_gitfile" function.
-
-[snip]
-
-I omit the review for the later code, there are too many codes to
-review. And due to my limited knowledge about worktree, the overhead
-will be too big for me.
-
-Thanks,
-Jialuo
+-- 
+gitgitgadget
