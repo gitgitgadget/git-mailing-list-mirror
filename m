@@ -1,55 +1,41 @@
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100C179D1
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 06:31:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073F054F95
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 07:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728196285; cv=none; b=d+8UU305ARUk845x0GRVjhtDRD7w32nBj2IZYI8y5QOOlI2CLAzb2ia58DKK02dk30r6Mm0BuGuu3Nh0mKjnqUBc1r1m/ZfX6YvI+7wF7og2gZ8kidZXyQL3fHqDwioXkKk+eiIJ06y/+b4sSSxsYlqjVW+uzXi6GZFOTL5mfVo=
+	t=1728199718; cv=none; b=CnnY41QdypO8Mofx+FE7ntYW7wx+WgDDJic0E5gGzvhBoqMgkqBihMkF7NTeQUrtR+Rkc/BrHsbFyrYx5Fy7cEwZuebm6HvsrwOA747nnmKdxSohCmw9Ry8Nd+s/Zmj841i4JaA+284C85tAucnC4HufUNTKFCJh5CVyKIVTkgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728196285; c=relaxed/simple;
-	bh=BpL512SDsRS7J4w5MfIKz7Llvw+AoUwJRBmF1qzk4MI=;
+	s=arc-20240116; t=1728199718; c=relaxed/simple;
+	bh=n4l5UYnWrNmEiPX+HXvJJ6TpZei0pa8fN00zCTnGkVE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AmQtmhX497bSZQ8RzsdawaWg6fOj70BTNLiYhQfGvOz4d1G1pzz/U9HMn/QAN2/IuO5IGM2Ab8lBplJE5520haLwICj88A/yEfIEr3iKi4HG4nfp0vHXLo/lPmlvNJ9C2xsu5tVe0rJ3QBBEvu2tKBOqarNL3yPBTxqp3AUDjUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VMpiqruK; arc=none smtp.client-ip=209.85.222.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	 To:Cc:Content-Type; b=GxN0uVoiJ3hAfKksD/2BT5I+aK8jc3S79yri4wOj+PiAuIRB72ltJMdY/arHpsnzLA125gzkycVdPWrbZxrKgp5wNT1RZ3H6AOyCjMT6hZl9bX+hbAkfm142mx4JD4zo4r0Zia+RmF5sRmOqzBvNxNRJykZllpOtIYTV2o1RZVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMpiqruK"
-Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-84ead864cd4so838036241.1
-        for <git@vger.kernel.org>; Sat, 05 Oct 2024 23:31:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728196283; x=1728801083; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+Ovp1SD78QEPEm+6UhMbPE77ccDSjJ6EtprjEyShKUk=;
-        b=VMpiqruKXPjXpP61jdiUztQvf0QBbKilej8dh0VpZj5qYHLeVLo7TqyTz5FjBk8/w8
-         A/hX1zUEVsJ15U/KCqFWKnQWmMVQX8p+PCio2fPXG/bZqbs6PDwUlmL/sbbMM4z4nCBS
-         lOvAxHhQg6UbOxcKRsAecDfiv3EhOAiqclkdBiCpheMa3YVPsMyhzQZGtDyAjgwtr46D
-         pINcbrx/CJeHTdXtCbExypDhtC/xKUO/D8ljo7eM0/ZRgsuougKu7s4RrbU4a8BLYkLN
-         lqThK24aIMiGBGyw29sskgdfkfbU2LckneuFPOKGLQlearNJWC6VmDQUXob/RJLK/XwK
-         34LQ==
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6c567b2e81fso2665756d6.3
+        for <git@vger.kernel.org>; Sun, 06 Oct 2024 00:28:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728196283; x=1728801083;
+        d=1e100.net; s=20230601; t=1728199716; x=1728804516;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+Ovp1SD78QEPEm+6UhMbPE77ccDSjJ6EtprjEyShKUk=;
-        b=HOFVhiVsHcNYY2SuqD1+F2Ig0O0A8Lxzjr9EHC7MlP06NeKx+r3xhSSTTQcTu2RwRc
-         /2MjFDvjqPUT3Gs54GwJZtwZlJdrU0lSDbHo0Sj6E4J4QVabr/T0lz0Oxq/8UDQiqbF+
-         eVKe22+yk1SocizKmPEWog18GFA9e5TrZa7DoRC9cps20ZvIBdJsVeGKgD80NVv7SfIU
-         D9TjwLMRyCp1NwZ2Ka7QB3lypLhFkX73wOeLA/VjA5n/dVHM/FFEG/H9MTdppLJ4LGuq
-         Iyq0Vor3MDWBrN6kkbj3iUsInUpXVWuERebWvoUmHaQII9JksQNA6ALPWjTBpVs1YGhF
-         05zA==
-X-Forwarded-Encrypted: i=1; AJvYcCWmZTLxlTNgNzTBkoK9+u3vRCkv9NcOVBIhWC2WvYZK6EiQroxuJWh+cyp8fn2+SazqLj0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywd1Q4C4aOVfSKOpMOWGbThxY7sRSdAYth7YuxCzPDsiIoh8Kd+
-	a8fL3N0PqHG9MJm0zponDDh1xOUoBiEvsRAo7wO562aIRCl85R9kKrsNLxVKgmyOlKrpzzhZr34
-	p7NokhWmfi5vv/kMKwXsG/gz11NU=
-X-Google-Smtp-Source: AGHT+IFobgP5FvYmzpGiFjkpc09jgKxu76B5XJf4OPlYEpg9tMaa6G+IVVYp5M1PqOn3OOmEkhKCbabdJ9QpQ/W8j6c=
-X-Received: by 2002:a05:6122:130f:b0:50a:76c9:1b0 with SMTP id
- 71dfb90a1353d-50c8557ee60mr4783793e0c.11.1728196282989; Sat, 05 Oct 2024
- 23:31:22 -0700 (PDT)
+        bh=wbXTa2ipuuFLwZpqMYs+BKz+Q4D+Zu6GhiNS54FE+4U=;
+        b=vJQciFcbtbexsE+c0XONjvz//D1dj2PQuyhGLHjNQvpkd0Pi/h57bNsb3P5g+6H+JB
+         dQV6p9P9RXGtbJlBp6MV7r1cLCY4It66bOAwYC7G+aWphlZf1XsQ6P222LYWFiYkMyyv
+         5pn9+lEF+czf0VhdoSX3k43xTNqgyazj9iIJeq3Y4ytb6o+Jjbu08thXOOgUD7PjCwrU
+         lMWcFHZysKislTbvKJTJa8vKwpp7xrq6kf2niJzKbfMvMZhcI8LwRoV5jiEbrU44MMsy
+         i90qtrlBzTdkIiJOiUt1DR45e6vk4GTLYiU6QQs5vwSe3PsJ/woedhrtcy7lTkg2t0Sp
+         FsWA==
+X-Forwarded-Encrypted: i=1; AJvYcCVWeIAWDYLNTi7xseODQovnusds/9Ov1eyQpZl9uY1hlzOUDAFkvnnOxDdUe+RyzdamFPE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhQWSrAxS9/2lywDlpwZVVnDZ/emedGQ3vIoo0t14iCIEkYYh3
+	+cHVBJjNiBVU6qcYfSDC0I7wEfaFoPz64qlQ++pUDmrZFd+3GoOmY1lD/FveR/MXCgJbYAVJLRU
+	zxbFgqSESbQTGk+bJR2CaM8yl8FMxCQ==
+X-Google-Smtp-Source: AGHT+IFA+kuBaaQwNhDOE7uxqRXj7xYofWvaBVEisEO9BoEk7UZLeGoqjsn2q9GG8xtbDXQxcLydNoa4ViQqpMST1DI=
+X-Received: by 2002:a05:6214:ca6:b0:6c3:5dbd:449c with SMTP id
+ 6a1803df08f44-6cb9a2eea34mr56719276d6.1.1728199715807; Sun, 06 Oct 2024
+ 00:28:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -57,57 +43,108 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.1805.git.git.1728192814.gitgitgadget@gmail.com>
- <5dd96eaf14cb6fbe130fb50ce2738646d7d3ac57.1728192814.git.gitgitgadget@gmail.com>
- <CAPig+cTO5_mDyEX=druLh6HkFazi=SBmDser8GdsVQP4iVaKug@mail.gmail.com>
-In-Reply-To: <CAPig+cTO5_mDyEX=druLh6HkFazi=SBmDser8GdsVQP4iVaKug@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Sun, 6 Oct 2024 06:31:12 +0000
-Message-ID: <CAPSxiM9eJafyL4NiKHCjR83ZpL8FA_6sf=SYBjqEXP6tFrTzRw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] [Outreachy][Patch v1] t3404: avoid losing exit status
+ <4199434bd6ef2142192d1c720ccd877b1a80536b.1728192815.git.gitgitgadget@gmail.com>
+ <CAPig+cTb4mgpXnN79UrXvjvCnqGZhaR51oZX_Ds=HwdqQYFN9w@mail.gmail.com> <CAPSxiM_RKpp2_Y7HqhhFJqnavKpToViAjE3s6AiwCwUjGa8H4g@mail.gmail.com>
+In-Reply-To: <CAPSxiM_RKpp2_Y7HqhhFJqnavKpToViAjE3s6AiwCwUjGa8H4g@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 6 Oct 2024 03:28:24 -0400
+Message-ID: <CAPig+cTkj-wXqgLNM5hyKa9c3U3AT6L2oUpdbTg7nGUHpa=1Vg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] [Outreachy][Patch v2] t3404: avoid losing exit status
  to pipes
-To: Eric Sunshine <sunshine@sunshineco.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
 Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 6, 2024 at 5:55=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
+On Sun, Oct 6, 2024 at 2:31=E2=80=AFAM Usman Akinyemi
+<usmanakinyemi202@gmail.com> wrote:
+> On Sun, Oct 6, 2024 at 5:48=E2=80=AFAM Eric Sunshine <sunshine@sunshineco=
+.com> wrote:
+> > This second patch fixes problems with the first patch, but since this
+> > is an entirely new submission, you should instead "squash" these two
+> > patches together and then force-push them to the same branch that you
+> > used when submitting them via GitGitGadget, and re-submit them as a
+> > single patch. When you squash them, keep the commit message from the
+> > first patch.
+> >
+> > Reviewers do appreciate that you explained what changed since the
+> > previous version, but we'd like to see that information as commentary
+> > in the patch cover letter, not as the commit message of the patch
+> > itself. In GitGitGadget, the way you would do so is to write this as
+> > the "Description" of the pull-request (possibly replacing or amending
+> > the previous description).
+> >
+> > These days, instead of manually using `wc -l` and `test`, we would
+> > instead write:
+> >
+> >     grep ONCE output >actual &&
+> >     test_line_count 1 actual
+> >
+> > However, that sort of change is independent of the purpose of this
+> > patch, so you probably should not make such a change in this patch. If
+> > you're up to it, you could instead turn this into a two-patch series
+> > in which patch [1/2] fixes the "Git upstream of a pipe" problem, and
+> > then patch [2/2] converts these cases to use test_line_count().
 >
-> On Sun, Oct 6, 2024 at 1:33=E2=80=AFAM Usman Akinyemi via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > The exit code of the preceding command in a pipe is disregarded. So
-> > if that preceding command is a Git command that fails, the test would
-> > not fail. Instead, by saving the output of that Git command to a file,
-> > and removing the pipe, we make sure the test will fail if that Git
-> > command fails.
+> thanks for the review. I really appreciate it. I have a couple of
+> doubts to clear.
 >
-> Okay, makes sense.
->
-> One minor style comment below...
->
-> > Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> > ---
-> > diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-.sh
-> > @@ -470,10 +481,10 @@ test_expect_success 'squash and fixup generate co=
-rrect log messages' '
-> > -       git cat-file commit HEAD@{2} |
-> > -               grep "^# This is a combination of 3 commits\."  &&
-> > -       git cat-file commit HEAD@{3} |
-> > -               grep "^# This is a combination of 2 commits\."  &&
-> > +       git cat-file commit HEAD@{2} >actual &&
-> > +               grep "^# This is a combination of 3 commits\." actual &=
-&
-> > +       git cat-file commit HEAD@{3} >actual &&
-> > +               grep "^# This is a combination of 2 commits\." actual  =
-&&
->
-> We wouldn't normally indent the `grep` line like this. Now that you've
-> dropped the patch, it would be best to lose the extra indentation, as
-> well:
->
->     git cat-file commit HEAD@{2} >actual &&
->     grep "^# This is a combination of 3 commits\." actual &&
->     ...
+> My next patch should be the squash of my three patches which include
+> my first two patches and the new one on the same branch ?
 
-Noted and thanks.
+I'm not sure which three patches you mean. Does the third patch, the
+"new one on the same branch", fix problems from the earlier two
+patches? Or does your third patch implement the suggestion regarding
+test_line_count()?
+
+> Two patch series means two different commits on different patches ?
+> But, since they both depend on each other would not they lead to merge
+> conflict ?
+
+A patch series consists of one or more patches in sequence. Patches
+within a series don't conflict with one another; later patches build
+upon earlier patches. You create a series of commits on a single Git
+branch. When you submit that branch as a pull-request via
+GitGitGadget, it turns the commits on that branch into a series of
+patch emails to the Git mailing list, one per commit.
+
+Before submitting the patches via GitGitGadget, you polish them
+locally to repair any problems before submitting them for review.
+Rather than making subsequent commits fix problems with earlier
+commits, you instead should fix the bad commits by using "git rebase
+--interactive ..." to either "fixup", "squash", or otherwise edit the
+bad commits. Once you are happy with the commits, submit them. This
+way, reviewers only see your polished result, not the series of steps
+you made to arrive at the polished results.
+
+You do the same thing after reviewers point out problems or ask for
+changes. Edit and re-polish the existing commits to address reviewer
+comments rather than merely making new commits on top of the existing
+commits, and then resubmit once all the fixes have been applied and
+polished.
+
+When I suggested squashing your two original commits it was for the
+above reason. In your original submission, patch [1/2] had some
+problems which you fixed in patch [2/2], but reviewers don't need or
+want to see that; they just want to see the polished end-result, which
+you can obtain by squashing the two patches together. (However, in
+this case, as I pointed out in my review, you don't even need to use
+`tr`; just use `test 1 =3D $count` instead of `test 1 =3D "$count"`.)
+
+If you wanted to do the extra step of also updating the tests to use
+test_line_count(), then that would be a separate patch, still on the
+same branch, built on top of your "fix Git upstream of pipe" patch.
+Thus, it would become a two-patch series: patch [1/2] fixing Git
+upstream of a pipe, and [2/2] employing test_line_count().
+
+> Also, to be clear, "Description" is the body of the commit message if
+> I use the gitgitgadget while the "commit message" is the header ?
+
+The commit message is separate from the patch-series commentary. The
+commit message of each patch explains what that patch changes or does.
+
+Once you have polished your commit(s), force-push them to the
+GitGitGadget pull-request you already created. Then edit the very
+first (topmost) comment in the pull-request to explain what the patch
+series is about and what you changed since the previous version. That
+comment becomes the "commentary" portion of the patch series.
