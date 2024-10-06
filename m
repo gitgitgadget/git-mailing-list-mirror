@@ -1,147 +1,175 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD922C853
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 18:41:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0014214AD17
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 18:47:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728240096; cv=none; b=tIFxR8EN7le3jEtnLjnef3eF2r0ngZB386Tqq6orICZtEgwz6bnMMssKj8u08aaDuc9kxamqMt87gnBrHFv498Bs0hOm8kMgD3+0ec0igpNjxsZD6BTOjdNL42rEZ1fhnSirC0iSRDZphVap+aqQGe3EUYLWhiARV5qot7CVSFY=
+	t=1728240456; cv=none; b=iPwm4q8LAdgD3DFliY9HGKZbehKhplIllxd9hkSWLJfWV0HNRwgOahhsaEIBxo6Ai+60mk6cJ2tomFmxi3hAyQi2gs+N/VoEER5OqoSdnsKdRNF1m6DcfHlr6YHyk7sD5QEnEdkCndm58XQhvNGVybMrW5oENN0lh66YN4K0X2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728240096; c=relaxed/simple;
-	bh=Vm/RxGpSwOXmg4aL1NI/UBipdUlFpqdSVAxLt7DNxWM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MpGv4qQEcqQL6YirYM6YQktixdbtPlEwXdF8BQRNJdzhcZWk0AIIzB97zpsKYejKi8FXDY9Hx43Uwmf3iFGfYoZ3FfzdnT+YTfWvfZH8ZUBhOF2Bnwr7TnO+NKGQ6M9X69HGnqHsNuxJJq0r0Wtz6sFQlGmIpVsXDN1cm57Ekgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6cb36237f28so5357846d6.3
-        for <git@vger.kernel.org>; Sun, 06 Oct 2024 11:41:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728240093; x=1728844893;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cf3AUeG9spC6EigSFEP42btK6I2s9tvH3GBrCb20w64=;
-        b=GIV3WFYQvds04Tlr0snNYWwP0vHm3/kf07/vjJI9ODj34ZP0AxTYToG5QezK+DPFxA
-         V0kJ9UFl8H6zwb9lZb4djLzf/jkvnK/Yfn5RhmrP5NI6lCw+1p72wKhZceon+UpEW0oY
-         +W7T6l947c4gkztVY8pflJDoC6CCLXr+nbyVWBqrcMEp6bbOZWTaz1toyJbrOfTHnm1S
-         qGOLpp26GxGRt9ZumIfh3jUy0GsvV4fy/3uJ3u+OPLeCLFx3qwa7PSprEdUJ4/35LP2O
-         +TITvT+bHQXLutgUREpE7WH1gqaoX3lHs3qCpMq4pqz4DeR8+YCpEfOZjVWSZl0tJdlm
-         AdYg==
-X-Forwarded-Encrypted: i=1; AJvYcCU9RSweuZ/c4GEyDXsEHEAfdAICgBOPkYa9xnUJeeb1l4p5bXd1zoCVlFjaqm6mrIIVgGM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwwhjDVHE+gtJbb+Q1i0BanMungIgwKQgQoX3aHFig9/22SQC7x
-	/v6+XP5nDkYKX6HW7bHRKF0FUKBvjpI/lcAnLKhpPZ/WNL+sDIqaS3AsYIjSNiFxgrelYpdHADp
-	LaaCzzYCSWav8FdUuwzPiEpJM1nM=
-X-Google-Smtp-Source: AGHT+IFMC4PGtfrcjxecIlolLRntiT5NAhC2CU2g3jeqQF7DG/lXMxaR7HKKgP/9lf1z6YNw76zl9vd9lsNINxQl3/k=
-X-Received: by 2002:a05:6214:2262:b0:6cb:2d1d:348d with SMTP id
- 6a1803df08f44-6cb9a45511bmr72669776d6.4.1728240093098; Sun, 06 Oct 2024
- 11:41:33 -0700 (PDT)
+	s=arc-20240116; t=1728240456; c=relaxed/simple;
+	bh=ipYpqjlQIgb8y8GmeLaI6Ku95nVldh3QA0kzkkg2Qjg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WSniEAK88ZjSz1FipA7lvv+n+N0pM66+bt6NrpSbLfw0DRCAJ2SzgQZKr9YPjI3dscfbm+Us2p/OFB7FXy4lWj3oYe6POHYdpS7s0iJz0Cn0wphevIF/ySGOwYuDYh/MQTRGD8bD7xRfmDKiCt46BefeYm9hJC6rTo7jX0cQaIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=HQJQZM+J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ti9sKnPg; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="HQJQZM+J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ti9sKnPg"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id C34CB1140090;
+	Sun,  6 Oct 2024 14:47:32 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Sun, 06 Oct 2024 14:47:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
+	:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1728240452; x=1728326852; bh=vTFtuf6ZiS
+	KCcND/qPsxn8E83FAXdIDd6QnU5HgMh1s=; b=HQJQZM+JiRqs75eHpVHKHUMR77
+	51SSmY5m4gfs3H3z8KD/QmP5Npsrew28ftw6H50sSEVp+yEfGg45EmpzaSaNzuNr
+	diio05KE81Qw6w2XqowFlK71irua2lCaiYsbvtpvfpU1uBjU80DcFf9ESP5aVbHn
+	UJB6WkgRP32W0+stZlZ/WGY96SGqDWCQ8VrpzdqW1a43x3zkY5cna1KdFpXEU1aw
+	PYIUcyZ+OzejwbmnxWkbxCOTA9Uyonmdo4hk7aFdJL2wdLu26R8XTE4kI8y6XLdZ
+	+xaoxQKYNC00bskCHoyECUl6UEuzglaRcR2arVetdDX8lFiAKmRRvSi6uahQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728240452; x=1728326852; bh=vTFtuf6ZiSKCcND/qPsxn8E83FAX
+	dIDd6QnU5HgMh1s=; b=Ti9sKnPghKwjPMTJ3hUrAFfpeTxCbwtYphUNLfygl26z
+	q3oCJ/rOSKu9RxFM6wWcZJ9c25CdJ3AOMHHKX0hCbGKEzavgnzYlBvFPOFWORLPT
+	P/dnocncZ6GzNQHxNergvt/fswJC1/RT+Y9nkr9WP9PCl+szR55JLygOP3v/B332
+	mlQEcJ0eN+u2cPWR6erJaiQUPzOD0FQxxdIvdCHGK7Hnz+fC1DqQEOdZrqfGB10i
+	mutVb8ohc21EWfo9Ner+UG8+mLxBzxGBEia0qZUiy9XhTUnVB1eptXli1G5VgfsK
+	MPHxUU591mDBTA6IS6aBt5YnX7/yN1imEFJ9LWeKKQ==
+X-ME-Sender: <xms:RNsCZ5mE9iXCtlSzytlKfNB1Va2aeKH_hHdLh4Hz2mPTQ9XX2pUdzy8>
+    <xme:RNsCZ00HGtgx0OCRsrQAJNbCx9643htwF0JknO7w6PldFlhpSSkIEN8t2Olpu7h6R
+    YQrwKFbyd2GO5RsjQ>
+X-ME-Received: <xmr:RNsCZ_qhAN4aIAjXJ5hkp708uyHXJGg6tmbHFh5RmEGeFnOeFRauL3mjjB8-JMd3S2D-4jxHfLT4Lqii5SZQfKp8GBRnnggciSvT32eeZwEiUR7h0hKd97lljw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvjedgudeftdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fufffkofgggfestdekredtredttdenucfhrhhomhepmfhrihhsthhofhhfvghrucfjrghu
+    ghhssggrkhhkuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrg
+    htthgvrhhnpeefueffhfekhfeiuddtudduieegvdevgfefudegveelhfeikeeijeeggeeu
+    feeujeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    gtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghrtghpthhtohepfedpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
+    rghilhdrtghomhdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:RNsCZ5n_JnszMob0kONeB8Yob6u9pa1JsIPGRR9TiYssrgW_NUS4NA>
+    <xmx:RNsCZ30OjgRN82jgKa0deWmrWWWZAM2tOB7ZqDYVjD-C2b5dk2p43g>
+    <xmx:RNsCZ4sVo9NTbBK0Hm0Gjkci8BUx3UjmmHb-bDiBeTWYQ5KAVTaPyw>
+    <xmx:RNsCZ7WfjHr8qJZwQLW9TlCHIAuT6Fi7xLV0Els0QyoBViNLiMEvFw>
+    <xmx:RNsCZ4yBJuqsYLqdpFWYoQYOtz-qBv413o4gqCs_QBwxg0XtfagdlLaf>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 6 Oct 2024 14:47:31 -0400 (EDT)
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [BUG?] format-patch: --cover-letter doesn't use --from
+Date: Sun,  6 Oct 2024 20:46:10 +0200
+Message-ID: <95cb9cf15a4f3b17cee5f14fa0bcba9d40a0ebb8.1728239131.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241006060017.171788-1-cdwhite3@pm.me> <20241006060017.171788-2-cdwhite3@pm.me>
- <ZwKoNg-HYGaohvCd@ArchLinux>
-In-Reply-To: <ZwKoNg-HYGaohvCd@ArchLinux>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 6 Oct 2024 14:41:22 -0400
-Message-ID: <CAPig+cQC45_Pofw31h2RSydj_CjqpfajLLa5O_sR9m0AQh5OVw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] worktree: refactor infer_backlink() to use *strbuf
-To: shejialuo <shejialuo@gmail.com>
-Cc: Caleb White <cdwhite3@pm.me>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Commit-Hash: 95cb9cf15a4f3b17cee5f14fa0bcba9d40a0ebb8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Oct 6, 2024 at 11:09=E2=80=AFAM shejialuo <shejialuo@gmail.com> wro=
-te:
-> On Sun, Oct 06, 2024 at 06:00:57AM +0000, Caleb White wrote:
-> > -     backlink =3D xstrdup_or_null(read_gitfile_gently(realdotgit.buf, =
-&err));
-> > +     git_contents =3D xstrdup_or_null(read_gitfile_gently(realdotgit.b=
-uf, &err));
->
-> So, we create a new variable "git_contents" here. I suspect this is a
-> poor design. In the original logic, we will do the following things for
-> "backlink".
->
->   1. Call the "read_gitfile_gently" function. If it encounters error, it
->      will return NULL and the "err" variable will be set to NON-zero.
->   2. If the value of "err" is 0, we would simply execute the
->      "strbuf_addstr(&gitdir, "%s/gitdir", backlink)".
->   3. If not, and the "err" is "READ_GITFILE_ERR_NOT_A_REPO". We will
->      call "infer_backlink" to set the "backlink".
->
-> Because now "backlink" is "struct strbuf", we cannot just assign it by
-> using "xstrdup_or_null(read_gitfile_gently(...))". So, we create a new
-> variable "git_contents" here.
->
-> And we will check whether "git_contents" is NULL to set the value for
-> the "backlink".
+From: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 
-Thanks for thinking through this logic. I have a few additional comments...
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-> Why not simply do the following things here (I don't think
-> "git_contents" is a good name, however I am not familiar with the
-> worktree, I cannot give some advice here).
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-I found the name "git_contents" clear enough and understood its
-purpose at-a-glance, so I think it's a reasonably good choice. A
-slightly better name might be "gitfile_contents" or perhaps
-"dotgit_contents" for consistency with other similarly-named variables
-in this function.
+Steps to reproduce is in the test below.
 
->     const char *git_contents;
->     git_contents =3D read_gitfile_gently(...);
->     if (git_contents)
->         strbuf_addstr(&backlink, git_contents);
->
-> Even more, we could enhance the logic here.
+I wanted to send patches with my own domain as the author but using my email
+provider as the sender.
 
-Upon reading this patch, I had a similar thought about this, that it
-would be more reflective of the original code to set "backlink" early
-here rather than waiting until the end of the if-else-cascade.
-However, upon reflection, I don't mind that setting "backlink" is
-delayed until after the if-else-chain, though I think it deserves at
-least one change which I will explain below.
+What did you expect to happen? (Expected behavior)
 
-> If "git_contents" is not
-> NULL, there is no need for us to check the "err" variable.
+That the `--from` ident was used for the cover letter and the patches.
 
-I'm not sure we would want to change this; the existing logic seems
-clear enough.
+What happened instead? (Actual behavior)
 
-> >       if (err =3D=3D READ_GITFILE_ERR_NOT_A_FILE) {
-> >               fn(1, realdotgit.buf, _("unable to locate repository; .gi=
-t is not a file"), cb_data);
-> >               goto done;
-> >       } else if (err =3D=3D READ_GITFILE_ERR_NOT_A_REPO) {
-> > -             if (!(backlink =3D infer_backlink(realdotgit.buf))) {
-> > +             if (infer_backlink(&backlink, realdotgit.buf)) {
-> >                       fn(1, realdotgit.buf, _("unable to locate reposit=
-ory; .git file does not reference a repository"), cb_data);
-> >                       goto done;
-> >               }
-> >       } else if (err) {
-> >               fn(1, realdotgit.buf, _("unable to locate repository; .gi=
-t file broken"), cb_data);
-> >               goto done;
-> > +     } else if (git_contents) {
-> > +             strbuf_addstr(&backlink, git_contents);
-> >       }
+The cover letter used my committer ident.  It correctly used the `--from` ident
+for the patches.
 
-It certainly makes sense to check whether "git_contents" is NULL
-before trying to copy it into the "backlink" strbuf, however, if
-"git_contents" is NULL here, then what does that mean? What does it
-mean to leave "backlink" empty? The only way (presumably) we get this
-far is if read_gitfile_gently() succeeded, so (presumably)
-"git_contents" should not be NULL. Thus, rather than conditionally
-copying into "backlink", we should instead indicate clearly via BUG()
-that it should be impossible for "git_contents" to be NULL. So, rather
-than making this part of the existing if-else-cascade, we should do
-this as a standalone `if`:
+What's different between what you expected and what actually happened?
 
-    if (!git_contents)
-        BUG(...);
-    strbuf_addstr(&backlink, git_contents);
+-
+
+Anything else you want to add:
+
+See the test.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.46.2
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 7.81.0
+zlib: 1.2.11
+uname: Linux 6.8.0-45-generic #45~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Sep 11 15:25:05 UTC 2 x86_64
+compiler info: gnuc: 11.4
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+post-applypatch
+post-checkout
+post-commit
+post-merge
+post-rewrite
+pre-auto-gc
+reference-transaction
+sendemail-validate
+
+-- >8 --
+Subject: t4014: exercise --from with --cover-letter
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+ t/t4014-format-patch.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 1c46e963e43..41a3fffcd2f 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -2548,4 +2548,14 @@ test_expect_success 'format-patch --default-prefix overrides format.noprefix' '
+ 	grep "^--- a/blorp" actual
+ '
+ 
++test_expect_success '--cover-letter respects --from' '
++	git format-patch -1 --stdout --cover-letter \
++		--from="Me <me@example.com>" |
++		grep "^From: " | head -1 >actual &&
++	cat <<-\EOF >expect &&
++	From: Me <me@example.com>
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.46.1.641.g54e7913fcb6
+
