@@ -1,385 +1,108 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C706F23CB
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 08:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F6E28EC
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 09:01:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728203500; cv=none; b=tD0mRXpf+AUC857zGbqQH4piy52MGqpWG1oXxZ7TAr0wsKUAxSxiVkZvrFvvN7iwBYHuSbPLAEPWM/Wa0CyAIxBcy22YSH75QxRHk1SrQI0L8c/jMwczQxGE/uwm/JJ9gUwKnWmdEnkSDx38XnJn+5IwLh5vnYsXaU8Wk+8J5UA=
+	t=1728205267; cv=none; b=i0mF5N8Up5lzEsS/6TSoVCmL4Ddq/s4faa/w7B73V2y1lapAhcMYJ3Y3nc0mbikDe9DeU5EVNaHS8eZLm+adXy6zXBAw4VVdRSshcRrHjO8ZalXbGRKwe0a14c5rO3a8NRbm3m/KGO/IBvWwWxj81/hOjAJnDKz8DeGRNF+XT0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728203500; c=relaxed/simple;
-	bh=+gKOcuqt3w71kUSe5zRDLEL0Pfg+tOdmcX8VcI4fsPY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gQ93wb0gNjmBlR0JhF2xaCe0gyEPz6sfWO2PXHrTn7Ov/MVE/YzhSp3856RpiCKXd277OuO1rJMabFZo1asBtVVrEggNKOYQiqQDWmHu/7Q55tVckekzoBIzYQ3Gwk1quQti4rpMG+O5AtbkLAnhHrfDBVqgfpfs7bTDc36CNhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cGI0i5ui; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728205267; c=relaxed/simple;
+	bh=QN0fsKdt0Bpda926UmMaxDDkACQWIV8LI3ffYz1r+4o=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=PkluP28L6oMe4uQHch8wEh4eS4VmPj3bzV3bo/k34Xa1GUREV137HOa9qlXTaD+ckbG3PSH/Ninmlkpnv0zEKgA+v3rzxr2ARdT5EUkB3N/NA8jSsd14lXy3OWuKa6RcZ6yugCNwgj+8b6D/m0yXZwOmS5c8QeoJ7a2pIYvscQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=XKIkGKRf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PeDacXB2; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cGI0i5ui"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a99422c796eso110464166b.3
-        for <git@vger.kernel.org>; Sun, 06 Oct 2024 01:31:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728203497; x=1728808297; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pUxT9A9+S4cVf90bv0/ONE6sl2NUyGTrQb0ryoxhJBg=;
-        b=cGI0i5uiL4Pe6SGX8AVUrggSTAfDS8FS7B4iHkIs0H0ZfGfpxr0wKVcTwJkxKC3Uiu
-         41yOPYpQnXQ/y4aW0nKp7UZ1/PqXZ69eJrmcSBMGTLEwH9LWLgs7Ds5KWe6psR8ssuoa
-         NU7uCpeSkqDAB7q/NZKXVxlfw4SEwtBhXyMoJ8/VWJuJNpTZ4vsHDDkUp3ODpPNNLzWr
-         FwfEs//wz+GVNkAof0JNbPi7MO7hHJVeu1yL8cHwUxGctTQANv39nzoA9ED0Te10SIUE
-         yFGfl93JLzVyMcWJSVPaWYNFNXD2v3mfI3SWvJVzB11z20uoy51nIFIZBdMFLh1RPizQ
-         XuGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728203497; x=1728808297;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pUxT9A9+S4cVf90bv0/ONE6sl2NUyGTrQb0ryoxhJBg=;
-        b=eQB93sLFwQT8iL2Tqkqgkwk36Bpnx7FzU6jikztDuVQuEqi2/xEyXdwyjXXvZ5xRbc
-         diSp1v8lYFK0jAQDLF7I2TTbGID6HbRoaVQlZAG8tR0tre8ta23D697rQohCDBd7bpzX
-         AmRJOlrdp6jKCLLFOSbSxHtH8DNmUlcqwCol/kTzFige9Ic85LAEJpbDAgi4PNnmI/Ai
-         3Pa1Nw2VwXLozd2wk4RoWOTux2vRlHTDSQZDX+pH4rytrPNgBzDHj/d9Nz88oatW68dD
-         OvnNKMrnRAyCDIz+bLnjqsUOuwfn9GU2ZtEeCUR3bvCpr0tD83N3Cx/+sRG/SgTNm73B
-         +zhg==
-X-Gm-Message-State: AOJu0Yy0JFPxdg5SnhAg36raA/4k7r29NOYGVrwWq8A6dazD5tfOI0FF
-	Lvs7k/wiwAhRHHlA0N65Zzt1Nm8awHxvwFa6BVWmb7YbFw6hyKAbPegSJg==
-X-Google-Smtp-Source: AGHT+IFdwlKxLcpRPeaefSEjKns2iWlwwQHY0LQn4VRePZuaygELxm9WQru9NBRrUJOT0qxRPVGnSg==
-X-Received: by 2002:a17:907:6eab:b0:a99:442e:34ac with SMTP id a640c23a62f3a-a99442e3691mr326919866b.40.1728203496470;
-        Sun, 06 Oct 2024 01:31:36 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9950d0af39sm19454566b.33.2024.10.06.01.31.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 01:31:36 -0700 (PDT)
-Message-Id: <pull.1805.v2.git.git.1728203495287.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1805.git.git.1728192814.gitgitgadget@gmail.com>
-References: <pull.1805.git.git.1728192814.gitgitgadget@gmail.com>
-From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 06 Oct 2024 08:31:35 +0000
-Subject: [PATCH v2] [Outreachy][Patch v1] t3404: avoid losing exit status to
- pipes
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="XKIkGKRf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PeDacXB2"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 36F3A1140293;
+	Sun,  6 Oct 2024 05:01:04 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sun, 06 Oct 2024 05:01:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1728205264;
+	 x=1728291664; bh=QN0fsKdt0Bpda926UmMaxDDkACQWIV8LI3ffYz1r+4o=; b=
+	XKIkGKRfYMHMXavGjnDvqOAHK7tambW4Q0SN3PMQdV953F6xLDFCrct3ZPxS+Gl2
+	jtajdBYPR+UfCs5PYTlAQo11FaANmWcBLyULw1hmkbbND8V6kmIswxmBdS/9va5y
+	boaC8uFK+sqwv9lRQsG0qL0UgNupK1IgzuNuex/MEB9RoH4IJNg/hjDwUMGQmm0b
+	II0/jPnGaYmwbT7THas66ElVeihq3PtAQIO8X1MW65vQwJAkK4t2yAr/YEGG/WqQ
+	LoCsrQhY7967dqV1ckwl/9zZcCZXDF32UC8S+ZJJwL7yzSJI5VIQLF+cNZ57kZFl
+	9LgzSk0gyNMjdYqSG1ElOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728205264; x=
+	1728291664; bh=QN0fsKdt0Bpda926UmMaxDDkACQWIV8LI3ffYz1r+4o=; b=P
+	eDacXB27dE7NhMaXV1zz2NtNH6bnzaY2iIb5moxXyJptkL3xMU2CoGXo1GU4PDeE
+	WX87GGAIHuQouJTfP5FbM78FkqIbRK0n46d8XiM5nBdbf418f5vgiDXbjpgikNcz
+	fe78s7beimWrNQy5gXEnfDuMAL4wQ/M+xGUZj2EvJtjgOpO/BTqjZFrlrhkDDVAG
+	8B5dVF6pAztmyxFxU4nntKg2s/ZE1uiLrCPgAo/Qn0q5yB5BvqbTqynVko2mpMVE
+	K8hedBAPV5OGnddODBSLbfZWY1V9MKOeByCTFAtUw1LYbnKt8iDaURMCU9V4zx2z
+	UUvrVqwYwr4Ug/tIznXAw==
+X-ME-Sender: <xms:z1ECZyNyfhT1maNBtagiWGqkJBPYjDp7DevBDbVfCmfqP2d20gCpkk4>
+    <xme:z1ECZw8nnC6RnApF53PqIp-YR29mqgxw3Q7xr-MrP5ktbnGY8ZMopi_lSK5oDfD2g
+    _09ixPh5SnRaMbGNg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvjedgudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddt
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnhepffeuueeiheehffejgedtveefhedthfevvdegudeltdffheejvdfhjeduff
+    ehgeelnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigv
+    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptggufihhihhtvgefsehpmhdrmhgvpdhrtghpthhtoh
+    epshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:z1ECZ5RzyB5XU-lC81h2BfG7rqpMOl1ZsOl5jTuXy0wcSwrmxLdqfQ>
+    <xmx:z1ECZyuag1w-JB6NeHjAAA8TL19I1M-rONgAO5NsIIDxNtvF3NPhDQ>
+    <xmx:z1ECZ6cKc0blA65Rc5W0twR9bIwE5wpBUU9jofcsTOmPfdb2Wpfr-Q>
+    <xmx:z1ECZ20vaH9arT5LvUBpKma2VmTKQ1TQkDTFLwFqYMV_-QIFUOno7w>
+    <xmx:0FECZ7olYIj-dO_wHAWCO6ykDTqyCdOnddQR3s8UHiM5nPTq3Mg2gNZk>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id BEA73780068; Sun,  6 Oct 2024 05:01:03 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Sun, 06 Oct 2024 11:00:43 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Eric Sunshine" <sunshine@sunshineco.com>, "Caleb White" <cdwhite3@pm.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Message-Id: <4bbe8ceb-2e72-463a-81a0-138815a1cf8c@app.fastmail.com>
+In-Reply-To: 
+ <CAPig+cQZmEdx1Th9VAHbEkJ=zm73TP7Wuda_G5CzFw7j9HTFQQ@mail.gmail.com>
+References: <20241006045847.159937-1-cdwhite3@pm.me>
+ <CAPig+cT6LALKjEappB7QkB7oc88NyMcr40T_qJGL2mPA77K7XQ@mail.gmail.com>
+ <CAPig+cT7CEnb6cQmAOMbD82wxkg=7T0MMW=QNUSPU62a0rEGLA@mail.gmail.com>
+ <TEfKiit-RYyr0ZuiQszaKaM64iSonfaQwWRqExOgXyPR1tVWyAzR3kVKmCd3aREZwDGuS5VXcHjCvneY-gCg2OuZyv2N2EkfARlZu4AVSsU=@pm.me>
+ <CAPig+cTE0gaD=7dwSqY4S+7AqRoU9yOrS4sdBoybj0Pfyk9vxA@mail.gmail.com>
+ <K1lpl_AWj4xpiHLG9AloFDP7hkJ7Ysf-LA5H-OeP6suaBcES3WS6NTYZGX96oQuNQ3x36eEOxGdqlj3fG3ybrn5y3LRPfCNqC7yqTyvqVrk=@pm.me>
+ <CAPig+cQE0RNLhktuja-BbF8WwZmKC3cox_GUC-o4w87PadDpgw@mail.gmail.com>
+ <gX8RNUg1e1FCYFS1vP-uT4rbMpg21Ax07CZm5Ha7Dsk93EN6CTuXiLr3boTaoNEi71O1rDoUxhTs6KQt7Cvfz7B3KlbpZzis5b05KW7ARls=@pm.me>
+ <CAPig+cR4FXsGDE9Uu04EjK+vOo-Pi_VwOub8+Dy3r9t7z8GdkQ@mail.gmail.com>
+ <AtSpzKynOkmMPZ3bR4qx-eA93Xo-1miPCIQSxIKP534tD-qpDU1AI74vqB78RsukQ0XP5eKdvzHcwy_lf8lpL9wAoHoom-koo5GKcbrcuX0=@pm.me>
+ <CAPig+cQZmEdx1Th9VAHbEkJ=zm73TP7Wuda_G5CzFw7j9HTFQQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Link worktrees with relative paths
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+On Sun, Oct 6, 2024, at 09:45, EricSunshine wrote:
+> Can you try GitGitGadget instead (preferable) or perhaps publish this
+> series somewhere (less preferable).
+>
+> [*]: https://lore.kernel.org/git/20241006060017.171788-3-cdwhite3@pm.me/raw
 
-The exit code of the preceding command in a pipe is disregarded. So
-if that preceding command is a Git command that fails, the test would
-not fail. Instead, by saving the output of that Git command to a file,
-and removing the pipe, we make sure the test will fail if that Git
-command fails.
-
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
-    [Outreachy][Patch v2] t3404: avoid losing exit status to pipes
-    
-    At the beginning of my task, I made the mistake of submitting two
-    patches for two separate commits instead of one. The first patch
-    addressed the issue of losing the Git exit status due to pipes.
-    
-    After submitting the first patch, I noticed that the output of wc -l was
-    failing due to trailing whitespace. I attempted to fix this by using tr
-    -d to remove the whitespace. However, instead of squashing the two
-    patches into one, I inadvertently created another commit.
-    
-    Eric Sunshine sunshine@sunshineco.com provided valuable feedback during
-    the review process. He explained the details of the patches to me and
-    pointed out that using tr -d was unnecessary to resolve the whitespace
-    issue.
-    
-    The root cause of the whitespace issue was quoting $count in the test
-    command, which led to the inclusion of whitespace in the comparison. By
-    removing the quotes around $count, the comparison works as expected
-    without the need for tr -d.
-    
-    Signed-off-by: Usman Akinyemi
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1805%2FUnique-Usman%2Favoid_git_pipes-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1805/Unique-Usman/avoid_git_pipes-v2
-Pull-Request: https://github.com/git/git/pull/1805
-
-Range-diff vs v1:
-
- 1:  5dd96eaf14c ! 1:  be5a691e96f [Outreachy][Patch v1] t3404: avoid losing exit status to pipes
-     @@ t/t3404-rebase-interactive.sh: test_expect_success 'multi-squash only fires up e
-      -	test 1 = $(git show | grep ONCE | wc -l)
-      +	git show >output &&
-      +	count=$(grep ONCE output | wc -l) &&
-     -+	test 1 = "$count"
-     ++	test 1 = $count
-       '
-       
-       test_expect_success 'multi-fixup does not fire up editor' '
-     @@ t/t3404-rebase-interactive.sh: test_expect_success 'multi-fixup does not fire up
-      -	test 0 = $(git show | grep NEVER | wc -l) &&
-      +	git show >output &&
-      +	count=$(grep NEVER output | wc -l) &&
-     -+	test 0 = "$count" &&
-     ++	test 0 = $count &&
-       	git checkout @{-1} &&
-       	git branch -D multi-fixup
-       '
-     @@ t/t3404-rebase-interactive.sh: test_expect_success 'commit message used after co
-      -	test 1 = $(git show | grep ONCE | wc -l) &&
-      +	git show >output &&
-      +	count=$(grep ONCE output | wc -l) &&
-     -+	test 1 = "$count" &&
-     ++	test 1 = $count &&
-       	git checkout @{-1} &&
-       	git branch -D conflict-fixup
-       '
-     @@ t/t3404-rebase-interactive.sh: test_expect_success 'commit message retained afte
-      -	test 2 = $(git show | grep TWICE | wc -l) &&
-      +	git show >output &&
-      +	count=$(grep TWICE output | wc -l) &&
-     -+	test 2 = "$count" &&
-     ++	test 2 = $count &&
-       	git checkout @{-1} &&
-       	git branch -D conflict-squash
-       '
-     @@ t/t3404-rebase-interactive.sh: test_expect_success 'squash and fixup generate co
-      -	git cat-file commit HEAD@{3} |
-      -		grep "^# This is a combination of 2 commits\."  &&
-      +	git cat-file commit HEAD@{2} >actual &&
-     -+		grep "^# This is a combination of 3 commits\." actual &&
-     ++	grep "^# This is a combination of 3 commits\." actual &&
-      +	git cat-file commit HEAD@{3} >actual &&
-     -+		grep "^# This is a combination of 2 commits\." actual  &&
-     ++	grep "^# This is a combination of 2 commits\." actual  &&
-       	git checkout @{-1} &&
-       	git branch -D squash-fixup
-       '
-     @@ t/t3404-rebase-interactive.sh: test_expect_success 'squash ignores comments' '
-      -	test 1 = $(git show | grep ONCE | wc -l) &&
-      +	git show >output &&
-      +	count=$(grep ONCE output | wc -l) &&
-     -+	test 1 = "$count" &&
-     ++	test 1 = $count &&
-       	git checkout @{-1} &&
-       	git branch -D skip-comments
-       '
-     @@ t/t3404-rebase-interactive.sh: test_expect_success 'squash ignores blank lines'
-      -	test 1 = $(git show | grep ONCE | wc -l) &&
-      +	git show >output &&
-      +	count=$(grep ONCE output | wc -l) &&
-     -+	test 1 = "$count" &&
-     ++	test 1 = $count &&
-       	git checkout @{-1} &&
-       	git branch -D skip-blank-lines
-       '
- 2:  4199434bd6e < -:  ----------- [Outreachy][Patch v2] t3404: avoid losing exit status to pipes
-
-
- t/t3404-rebase-interactive.sh | 71 +++++++++++++++++++++++------------
- 1 file changed, 48 insertions(+), 23 deletions(-)
-
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index f171af3061d..96a65783c47 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -319,7 +319,8 @@ test_expect_success 'retain authorship' '
- 	GIT_AUTHOR_NAME="Twerp Snog" git commit -m "different author" &&
- 	git tag twerp &&
- 	git rebase -i --onto primary HEAD^ &&
--	git show HEAD | grep "^Author: Twerp Snog"
-+	git show HEAD >actual &&
-+	grep "^Author: Twerp Snog" actual
- '
- 
- test_expect_success 'retain authorship w/ conflicts' '
-@@ -360,7 +361,8 @@ test_expect_success 'squash' '
- '
- 
- test_expect_success 'retain authorship when squashing' '
--	git show HEAD | grep "^Author: Twerp Snog"
-+	git show HEAD >actual &&
-+	grep "^Author: Twerp Snog" actual
- '
- 
- test_expect_success '--continue tries to commit' '
-@@ -374,7 +376,8 @@ test_expect_success '--continue tries to commit' '
- 		FAKE_COMMIT_MESSAGE="chouette!" git rebase --continue
- 	) &&
- 	test_cmp_rev HEAD^ new-branch1 &&
--	git show HEAD | grep chouette
-+	git show HEAD >actual &&
-+	grep chouette actual
- '
- 
- test_expect_success 'verbose flag is heeded, even after --continue' '
-@@ -397,7 +400,9 @@ test_expect_success 'multi-squash only fires up editor once' '
- 			git rebase -i $base
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
--	test 1 = $(git show | grep ONCE | wc -l)
-+	git show >output &&
-+	count=$(grep ONCE output | wc -l) &&
-+	test 1 = $count
- '
- 
- test_expect_success 'multi-fixup does not fire up editor' '
-@@ -410,7 +415,9 @@ test_expect_success 'multi-fixup does not fire up editor' '
- 			git rebase -i $base
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
--	test 0 = $(git show | grep NEVER | wc -l) &&
-+	git show >output &&
-+	count=$(grep NEVER output | wc -l) &&
-+	test 0 = $count &&
- 	git checkout @{-1} &&
- 	git branch -D multi-fixup
- '
-@@ -428,7 +435,9 @@ test_expect_success 'commit message used after conflict' '
- 			git rebase --continue
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
--	test 1 = $(git show | grep ONCE | wc -l) &&
-+	git show >output &&
-+	count=$(grep ONCE output | wc -l) &&
-+	test 1 = $count &&
- 	git checkout @{-1} &&
- 	git branch -D conflict-fixup
- '
-@@ -446,7 +455,9 @@ test_expect_success 'commit message retained after conflict' '
- 			git rebase --continue
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
--	test 2 = $(git show | grep TWICE | wc -l) &&
-+	git show >output &&
-+	count=$(grep TWICE output | wc -l) &&
-+	test 2 = $count &&
- 	git checkout @{-1} &&
- 	git branch -D conflict-squash
- '
-@@ -470,10 +481,10 @@ test_expect_success 'squash and fixup generate correct log messages' '
- 	) &&
- 	git cat-file commit HEAD | sed -e 1,/^\$/d > actual-squash-fixup &&
- 	test_cmp expect-squash-fixup actual-squash-fixup &&
--	git cat-file commit HEAD@{2} |
--		grep "^# This is a combination of 3 commits\."  &&
--	git cat-file commit HEAD@{3} |
--		grep "^# This is a combination of 2 commits\."  &&
-+	git cat-file commit HEAD@{2} >actual &&
-+	grep "^# This is a combination of 3 commits\." actual &&
-+	git cat-file commit HEAD@{3} >actual &&
-+	grep "^# This is a combination of 2 commits\." actual  &&
- 	git checkout @{-1} &&
- 	git branch -D squash-fixup
- '
-@@ -489,7 +500,9 @@ test_expect_success 'squash ignores comments' '
- 			git rebase -i $base
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
--	test 1 = $(git show | grep ONCE | wc -l) &&
-+	git show >output &&
-+	count=$(grep ONCE output | wc -l) &&
-+	test 1 = $count &&
- 	git checkout @{-1} &&
- 	git branch -D skip-comments
- '
-@@ -505,7 +518,9 @@ test_expect_success 'squash ignores blank lines' '
- 			git rebase -i $base
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
--	test 1 = $(git show | grep ONCE | wc -l) &&
-+	git show >output &&
-+	count=$(grep ONCE output | wc -l) &&
-+	test 1 = $count &&
- 	git checkout @{-1} &&
- 	git branch -D skip-blank-lines
- '
-@@ -572,7 +587,8 @@ test_expect_success '--continue tries to commit, even for "edit"' '
- 		FAKE_COMMIT_MESSAGE="chouette!" git rebase --continue
- 	) &&
- 	test edited = $(git show HEAD:file7) &&
--	git show HEAD | grep chouette &&
-+	git show HEAD >actual &&
-+	grep chouette actual &&
- 	test $parent = $(git rev-parse HEAD^)
- '
- 
-@@ -757,19 +773,23 @@ test_expect_success 'reword' '
- 		set_fake_editor &&
- 		FAKE_LINES="1 2 3 reword 4" FAKE_COMMIT_MESSAGE="E changed" \
- 			git rebase -i A &&
--		git show HEAD | grep "E changed" &&
-+		git show HEAD >actual &&
-+		grep "E changed" actual &&
- 		test $(git rev-parse primary) != $(git rev-parse HEAD) &&
- 		test_cmp_rev primary^ HEAD^ &&
- 		FAKE_LINES="1 2 reword 3 4" FAKE_COMMIT_MESSAGE="D changed" \
- 			git rebase -i A &&
--		git show HEAD^ | grep "D changed" &&
-+		git show HEAD^ >actual &&
-+		grep "D changed" actual &&
- 		FAKE_LINES="reword 1 2 3 4" FAKE_COMMIT_MESSAGE="B changed" \
- 			git rebase -i A &&
--		git show HEAD~3 | grep "B changed" &&
-+		git show HEAD~3 >actual &&
-+		grep "B changed" actual &&
- 		FAKE_LINES="1 r 2 pick 3 p 4" FAKE_COMMIT_MESSAGE="C changed" \
- 			git rebase -i A
- 	) &&
--	git show HEAD~2 | grep "C changed"
-+	git show HEAD~2 >actual &&
-+	grep "C changed" actual
- '
- 
- test_expect_success 'no uncommitted changes when rewording and the todo list is reloaded' '
-@@ -1003,8 +1023,10 @@ test_expect_success 'rebase -i --root retain root commit author and message' '
- 		set_fake_editor &&
- 		FAKE_LINES="2" git rebase -i --root
- 	) &&
--	git cat-file commit HEAD | grep -q "^author Twerp Snog" &&
--	git cat-file commit HEAD | grep -q "^different author$"
-+	git cat-file commit HEAD >output &&
-+	grep -q "^author Twerp Snog" output &&
-+	git cat-file commit HEAD >actual &&
-+	grep -q "^different author$" actual
- '
- 
- test_expect_success 'rebase -i --root temporary sentinel commit' '
-@@ -1013,7 +1035,8 @@ test_expect_success 'rebase -i --root temporary sentinel commit' '
- 		set_fake_editor &&
- 		test_must_fail env FAKE_LINES="2" git rebase -i --root
- 	) &&
--	git cat-file commit HEAD | grep "^tree $EMPTY_TREE" &&
-+	git cat-file commit HEAD >actual &&
-+	grep "^tree $EMPTY_TREE" actual &&
- 	git rebase --abort
- '
- 
-@@ -1036,7 +1059,8 @@ test_expect_success 'rebase -i --root reword original root commit' '
- 		FAKE_LINES="reword 1 2" FAKE_COMMIT_MESSAGE="A changed" \
- 			git rebase -i --root
- 	) &&
--	git show HEAD^ | grep "A changed" &&
-+	git show HEAD^ >actual &&
-+	grep "A changed" actual &&
- 	test -z "$(git show -s --format=%p HEAD^)"
- '
- 
-@@ -1048,7 +1072,8 @@ test_expect_success 'rebase -i --root reword new root commit' '
- 		FAKE_LINES="reword 3 1" FAKE_COMMIT_MESSAGE="C changed" \
- 		git rebase -i --root
- 	) &&
--	git show HEAD^ | grep "C changed" &&
-+	git show HEAD^ >actual &&
-+	grep "C changed" actual &&
- 	test -z "$(git show -s --format=%p HEAD^)"
- '
- 
-
-base-commit: 90fe3800b92a49173530828c0a17951abd30f0e1
--- 
-gitgitgadget
+If Caleb gives us a clone link then I could try to send.
