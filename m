@@ -1,117 +1,80 @@
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4C5EC5
-	for <git@vger.kernel.org>; Sun,  6 Oct 2024 05:11:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2CAEC5
+	for <git@vger.kernel.org>; Sun,  6 Oct 2024 05:11:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728191496; cv=none; b=ume1Cocad4gZ2cuiY4mZ7cZ7azl+0Bj3vLt3jDyTG2RnOmlQFNhmzaOAp5sjnut6hAN70f/st+yP1JQ8T4a45w96VV78pxSHpAMV8N4/Bk0BsHuX/3uCtckOqEEIVXogsPWH7snFUngGskevb5QgjB7qYjiBBDa6Y8/FUZMnEm4=
+	t=1728191509; cv=none; b=OEQ0z9PAiGIMFbT2oxooZXWCLSJrYwCfO3QHkEVzgXzNtnWltqHRIO4wSwBXFhD1YVsw5wP2HW4nOv9x+u7losxQLusCCX1ZEq/NFHwPEqcjGVe9XABh6rRPqHpCh2MDmno9jeX2HgMy/bxOA2IyPdr6xicHa+nkZtFf61G9JWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728191496; c=relaxed/simple;
-	bh=itwQNvBbXS4Uc4y8p5X1Vih2cGwLAjRMdJh/aVr2ROA=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nulfE2hUVx46pe+6EL9bPVwUodagZx8tb6gVhyreeCDlJH5saATIfWc1+pfRwtQtiEy8qwKZj23dJlC1WHfThlVLjzrs3zJpsTWyI5z+UdB4GVA8Lo0B+ODuKwwoZP4smFidoHRAIoojo8l0hIID16ZZLuI7ax8FcHH4TiPLpzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=RB+YYbzm; arc=none smtp.client-ip=185.70.43.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="RB+YYbzm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728191493; x=1728450693;
-	bh=itwQNvBbXS4Uc4y8p5X1Vih2cGwLAjRMdJh/aVr2ROA=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=RB+YYbzmPyS3EAlLeTczkZCAtpsaE2q5qi5T5F2IsEkTiN0zfI2RcQ4YdyJQzRtF5
-	 SKlM1hkzAlYSylWxBzdnbZ0PRJeVpr+rNM/isX+g2dju+KOut10gPY6+d+NPKXhRsB
-	 M0G2LsJEan5Qj4pGa6oPDNNr6XUvYnW4GhYhWmWyBzxBx5s5odo3/2ZP2JNA0VcKO/
-	 drlXXS/8AxfaU9PEvfNPLbs5N1wuC1UzWKlOUhrzLOhDL2Z30tL89GN8NjZlGNWbez
-	 zKMHI2ckQeUvdOKCY0b8GY1XXiBntrIhqfmSsVdedMVNJyWET2STqTOAbe397r0aMf
-	 pAUGhXSbh1eWg==
-Date: Sun, 06 Oct 2024 05:11:28 +0000
-To: Eric Sunshine <sunshine@sunshineco.com>
-From: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/4] Link worktrees with relative paths
-Message-ID: <zKUnWY8u1SJNeS4oLK85znjacgYJJeN8HefenwaJ9B9Q1YrQAumpAxWos4svaawkTfQZ_HaS3yp6WrOQQI7yt3ZO0UMCfkM0lJDDnMD-Lno=@pm.me>
-In-Reply-To: <CAPig+cTB-sA-g4cdhfEjWwY1mnbWJ41e=bOCNwp=Y8JKvpmpRg@mail.gmail.com>
-References: <20241006045847.159937-1-cdwhite3@pm.me> <CAPig+cTB-sA-g4cdhfEjWwY1mnbWJ41e=bOCNwp=Y8JKvpmpRg@mail.gmail.com>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 961ca382835fe74ffa0e3979a9d47ff89edf9fc8
+	s=arc-20240116; t=1728191509; c=relaxed/simple;
+	bh=O/ubpcf1o6YB1PmGZZ+UqjI2oXCBo4oAvOidHsp69dY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RMntlUevTJ8mXSf3e7SZOfGcMdrmvABlpEt43t8zbqPjWs7RVZ4gzBEj0G9OF3xwOOeSZ6BFw5aSjvIie+Ioh1pXj4oGGXfGWs8Xaj3BaCA8y4PAnSAOP99aetSdxruiFLvjs8Db2rOAEhe8cGXS1j3htT48YsGjafKbapQy/A8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6cb48e77b16so5273236d6.0
+        for <git@vger.kernel.org>; Sat, 05 Oct 2024 22:11:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728191506; x=1728796306;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=O/ubpcf1o6YB1PmGZZ+UqjI2oXCBo4oAvOidHsp69dY=;
+        b=HS06vuvc0iZApVL57eUl2dgdB1QTThhrph3fDhWGTk048PpxKbnhf56NeP5YJLPLnV
+         QDhSUBxVTbMODsrNBBycDg4n6XyVOfTgidYguou8wwXWCYjNAOpNCIBsTOhi4+sSWw8f
+         aZ6W+kqztnPlfx5uW/Zqdk4oKqUT7X46ypKJKrcn2F+r4qlgHTecb/QxF7udD43bAhZi
+         v4hR4Vaw6YNZ2tsOdzeRs58reJ1NXiePGyPGNYfv55f6ew5QmOG7h0YRJokaih3ZAdHt
+         ovoKumpLEqPE2ObZRY0UHo5bm2aAC426jwoCpOzSKdfd7ZP34aEFkiJf4vkAkfJzrmOU
+         MCjg==
+X-Gm-Message-State: AOJu0YxB1BFJj68909xzUTBxQfz8S/m36e3HzcDHpLTS6xPWZ0r1aGTK
+	AGunSyvn1e4DhcaIDAGbxNY5xoA72SnwLZq7yoZmUUWviGbnPXEGCix5A8oar4qScyjA5AKX1Q8
+	z//zvBMk/ODLskUNuY4gLybyfRfI0lHsu
+X-Google-Smtp-Source: AGHT+IFdrtjt8c5J/ovqcnsHVL7GYssaFoM2rLnM+1nvNsZOUOIggbKqOW+smRZrnlpY+1tqjdH0uhJbOXSQNPW3Tuk=
+X-Received: by 2002:ad4:5ae4:0:b0:6c3:69f9:fb5b with SMTP id
+ 6a1803df08f44-6cb9a02b35fmr58902256d6.0.1728191505934; Sat, 05 Oct 2024
+ 22:11:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------0f53783b6231fb36d3ee7db42323e2822099f9986b6b762d2048838a8685eab4"; charset=utf-8
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------0f53783b6231fb36d3ee7db42323e2822099f9986b6b762d2048838a8685eab4
-Content-Type: multipart/mixed;boundary=---------------------5128656bfbe1b83550fe79fd23ba4b35
-
------------------------5128656bfbe1b83550fe79fd23ba4b35
+References: <20241006045847.159937-1-cdwhite3@pm.me> <CAPig+cTB-sA-g4cdhfEjWwY1mnbWJ41e=bOCNwp=Y8JKvpmpRg@mail.gmail.com>
+In-Reply-To: <CAPig+cTB-sA-g4cdhfEjWwY1mnbWJ41e=bOCNwp=Y8JKvpmpRg@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 6 Oct 2024 01:11:35 -0400
+Message-ID: <CAPig+cTVbXVffSeyNAV3c0zuSUozY7giWtMw3GpHs+xVEpaNvA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Link worktrees with relative paths
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
 
-On Sunday, October 6th, 2024 at 00:04, Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
-
-> On Sun, Oct 6, 2024 at 12:59=E2=80=AFAM Caleb White cdwhite3@pm.me wrote=
-:
-> =
-
-
+On Sun, Oct 6, 2024 at 1:04=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.c=
+om> wrote:
+> On Sun, Oct 6, 2024 at 12:59=E2=80=AFAM Caleb White <cdwhite3@pm.me> wrot=
+e:
 > > This patch series modifies Git's handling of worktree linking to use
 > > relative paths instead of absolute paths. The motivation behind this
 > > change is to enhance the robustness of worktree links when the main
 > > repository is moved, or when used in environments like containerized
 > > development where absolute paths differ across systems.
-> > [...]
-> > Caleb White (4):
-> > worktree: refactor infer_backlink() to use *strbuf
-> > worktree: link worktrees with relative paths
-> > worktree: sync worktree paths after gitdir move
-> > worktree: prevent null pointer dereference
-> =
-
-
-> =
-
-
+>
 > Unfortunately, these patches are whitespace-damaged. Can you please
 > resubmit using either `git send-email` or GitGitGadget[1]?
-> =
 
+Also, since you're touching infer_backlink(), see [1] which makes some
+changes nearby.
 
-> [1]: https://gitgitgadget.github.io/
+And you might be interested in [2] which may indicate that there are
+some holes in the tests around worktrees which might need filling.
+(Since your patches are whitespace-damaged, I haven't checked whether
+your series succeeds or fails in the way the series to which [2] is a
+response fails.)
 
-I sent them with `git send-email`, let me try again and then if that
-doesn't work then I'll try GitGitGadget. Just out of curiosity, how
-could you tell that they are whitespaced-damaged (so I know what to
-look for)?
-
-Thanks,
------------------------5128656bfbe1b83550fe79fd23ba4b35--
-
---------0f53783b6231fb36d3ee7db42323e2822099f9986b6b762d2048838a8685eab4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsBzBAEBCAAnBYJnAhvxCZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
-28viAADAIQf+LgzfDOh3atZmzGS73wZ4/EFnavkEV/Mq+et1IFHgAR2FtyPp
-mbTMMV2+V/3XRrD5mb3HKKhAXRDxtaIBOUP7/1I+VPdG83uS/hGI2ypzVK19
-bZlfx9dQE3/+oPtTJnaQS7jmXHPeAl+10WBLm9MoKhMa+SYXOP7yM48LtNRp
-vYe+sszgGNbFQk/8g5ADuGiWGnyD63StTs7nyD4wMtxMbtdo00y/HZlzNTOs
-6PD+gxKR6FWnt+JQBa8EmoaV6iYhgjx815tQBYIq6ZTJjhj/RHr3gw2/OJMf
-IpQK5Ux57fpNGZ58gFVQmRjl9hnpcBW+stI14zKQU5dh5pQWxqBQRw==
-=tKuD
------END PGP SIGNATURE-----
-
-
---------0f53783b6231fb36d3ee7db42323e2822099f9986b6b762d2048838a8685eab4--
-
+[1]: https://lore.kernel.org/git/20240923075416.54289-1-ericsunshine@charte=
+r.net/
+[2]: https://lore.kernel.org/git/CAPig+cQXFy=3DxPVpoSq6Wq0pxMRCjS=3DWbkgdO+=
+3LySPX=3Dq0nPCw@mail.gmail.com/
