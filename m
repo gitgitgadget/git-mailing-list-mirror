@@ -1,107 +1,191 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D621FC0E
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 15:00:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9DF1DA4C
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 15:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728313253; cv=none; b=Ajz7jHIOJZbyrr1eddftkxVQo13AwiM3ngjl0+W6TF8wmE13VIGp/59idCwbteHxPJ2BaHauVIlyc/JCj8E/us3kmbee3oJh7qIPVXUZYC8yCICS5fHx7XIKNYzu5ndkkX386hA3SkqVpqXIW/OAy1lRQdXWAF/b6W4Ba4Jxz/Y=
+	t=1728313653; cv=none; b=IhMzwluBNYH8mLHUpCwU84CBmB61obqn57rZfaPKWmgmrbBsWr6Kda+PKTNr+QZ/CxbVmWwIHTPj89k77RZcnvE0wTMxKC4801TzJtHja9T7nQxLWm8FXHZ8wLNkMysHWSFlc5fKW5/BQDvyhkwS0JM0n7xlvQKMuKxPWjH1Tyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728313253; c=relaxed/simple;
-	bh=Ly1Aox00CkXWMRMhEj9nMR0Aici4wyp9klFffuVXbC8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=m4/3C7jjXV3JTg1KIZFdx/QBOlHKrQ60MautwcCyWmG86tIVp2cQNoeTALTWihjgxAzDPYosa3BmXBaMupUvM9VhFqPXIzfIa+PtONxG7Le9xNiihmyBY1exS2KHolE+KKBnPUozVUBxTisoUuk3lini8yhcuxF2cGcbGLCWOUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=JknMeNio; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nIjwpQuo; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1728313653; c=relaxed/simple;
+	bh=2gIpSc1MeZghd1NREVGhKGOowc9vYFWYqeJpShURELc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=f8DxsrngvFDjuhQIfljUbUjbkRPy2SCxgQkIw1vR4lEE01nU0L7xohnd6RghnU/a1QeO8v3BLEhsg+JXuk/K2Un7gmevjCoRCZZlWxwF6/qV66l6eyUZB2tB7WX4CDec9NodrvydrRupWAaXSHId3CUc+cQJzsiDYpc6QLH1Jiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aFe91+UO; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="JknMeNio";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nIjwpQuo"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 98CCF11401CA;
-	Mon,  7 Oct 2024 11:00:50 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 07 Oct 2024 11:00:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728313250;
-	 x=1728399650; bh=KyMR214CLgPyGBdwfI3ARO8rfZnQzK6Wre/t3InEHd0=; b=
-	JknMeNiojoUXIfLwC0pWZscOmmlWxil3oLJRtXN/z3gf/TT01tyPvIXNSfYEiUjj
-	+NgtC6T4FN1NcWRPA+SKRx7h2611Kh0XrI8p2cvlY6geGMqz5fo5fdszlH1fzPmx
-	6inHUdZU6Gi9rqCAzNG0FbegVeuR2BJiDQdhih+E7eILiIjxpFR26sVy9r8V56ob
-	K6v3tlxq6oDcGRP9pdD3iQ965ULGvt4umFZF09gZGmAn/TmzObYaqIq0TFjIW5NY
-	sPLXvtElu4S7cYOk1olrRcQveDnK22+p3sZrcwxm6WmOB0u1sj2emhyh3ed6W6kE
-	/aovKyVjAEOPLeGNUcMlIA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728313250; x=
-	1728399650; bh=KyMR214CLgPyGBdwfI3ARO8rfZnQzK6Wre/t3InEHd0=; b=n
-	IjwpQuoiwGrv/b8I0UiIKBYuq9P3a6in939S1TZAz6LZHm96iPg4ZJM7x5Gs+lMj
-	DNRjvAQXDWzi2OYrrqRp7gch2GZYHuZwmuqXk6tn6U4HDYIkoAUDSOGHY8uyARVI
-	tqj0KAUiCIBDjJg8W+CMSr8nNfdSOS8T+Iv8ys8JrSSTRO8/B43s/iyTdeDej0eU
-	JogPXSYxgwkNwUbV1YKP9lJeGH59mP5CmbNsGcvu/sdtN1OkXz+M6/Ognu5d9FKL
-	OZMO4Zy/HQkvOd5mr1pbKigw4yRc0QpZscS3c9KakSszTzstL048XMhEZDmuL9OA
-	msBrTJwO0HsrEslaY5PnQ==
-X-ME-Sender: <xms:ofcDZz82Oob-a2kXpVmNPLPh7a2WZtoq2CkfOdjMwW8ruVLoulrerPg>
-    <xme:ofcDZ_vOj199M1UfFBBLv1epEapyo2_axqyGNJJNCiM9kwoFtJumQ_3ud7YvRqGW5
-    4i0z5INhY0z3gHxwA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgkeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddt
-    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
-    thhtvghrnhepgedtjeeiteeghfeutdeutddtiefgvdegteektdeutddugfekleeugfelte
-    ffjeffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhl
-    ihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehnvgifrhgvnh
-    esghhmrghilhdrtghomhdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhn
-    rghmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:ofcDZxD79FSMLR2PT5b3M-9ApQVE2nF2hTrKTLjsj2195wN5TUYMZg>
-    <xmx:ofcDZ_exgt3_-5dlHvzcQoYP8tdGgTgjDVLk5EB2bUBrfmjf5iIqaQ>
-    <xmx:ofcDZ4N0gTrbSqFDcOTzoOIUzeTn1ixhccoh9-bGPwpOVuXLe-OwcQ>
-    <xmx:ofcDZxnqdrtIEw71OYlvfdaXGAshWmIAxUmKGe7PFMLGPr2NV0o7Wg>
-    <xmx:ovcDZ9oZ_0f4A6-BKOZC3lmMXKF9YS59XXHYpIh2JELA2itwiLSsLte9>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 9065F780068; Mon,  7 Oct 2024 11:00:49 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aFe91+UO"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2fad0f66d49so68135161fa.3
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 08:07:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728313649; x=1728918449; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=uUkxkrKPjWy7lOW3xi6VbTbZWxG9F/OvUCBLhpqb/OE=;
+        b=aFe91+UO4c50xKyiwSmMsodpp1Gr8VfiWMTCl8D+fvsNDAXiqaJdMuHDF2bO25qgtf
+         4VCQq7eM/ZQMZLJrUUJ38k2A7Id5VScPGjfXyZMGRfz8orSsOGCx44wIJKg+nV8tpRMq
+         Zo08yff+kgffurQYtqpL3xXaYDKZ9PcfmtEYq+pzQuighD3u0SyzT+1imiZfdVlDhaea
+         bw//7UhTT+p3wwZWs/DKQ8LcTyyguw3KRpN+PmLmRZUPZNqij0bdd7THhix4vgGKIO6Z
+         UOH2exd3BCZCNkiZ+gReILd/S71PlC3IcfhBITUBQhun5lbwXxOo2u4rQNEid8hvAxcz
+         hElA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728313649; x=1728918449;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uUkxkrKPjWy7lOW3xi6VbTbZWxG9F/OvUCBLhpqb/OE=;
+        b=tsRydq5PjSNvDXtMOzn23plN2ug30jLWsEPQ/3c+POnq+e698SyymRLoTIoA21yLQV
+         vvwaI5QetRh8OMmdb3e06DOgEj21NCM04gP6V186ZOAiyrAuu/OKuWoOQsuQU5kiR/r9
+         /6GnxFCUIIwjW6mqammtJ9nhV5dKZ2QeNFO95uzyOryibL6U2+pT+lLSKSpJSJlIIZMI
+         ERPmsv8ImQ2HxRHp0ir7IrykmZHKGhcQAL75lm7Tz2zBqSRzn351QIDWxl4SXG9b1LEW
+         Cz3CUn8SPv7NBpa1V4q43FB0PQszQ7SEYOwl+4rsRBZREPruStvCn3r5y+WjnzMJb+/W
+         zN8w==
+X-Forwarded-Encrypted: i=1; AJvYcCU3kzQ+0v7tcclSnPMtYn7W+N8u2yn/LYv4431Gh286Hnv1g8t5PD+y3GAC/HvC7PUdXhA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYWEMiuQ01/gxvqxNOLFe9wrpUTF9WoCvZHJM6i56w43ZnFpxV
+	ZAeqA1MKRPyCq/VxoNld8MPGgL4GKdqJItxYx657NdBXryJiv1mM
+X-Google-Smtp-Source: AGHT+IG+6lel+l8maMtShmvvWL6AQn8FwzvC4b2W0DvCqFVsSz9sYfQ5cyboZeTr90xRjpxaBJ26Wg==
+X-Received: by 2002:a05:6512:3e0a:b0:536:56d8:24b4 with SMTP id 2adb3069b0e04-539ab859f0cmr5913299e87.5.1728313649194;
+        Mon, 07 Oct 2024 08:07:29 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:61a:f001:1402:4f50:9447:3e15? ([2a0a:ef40:61a:f001:1402:4f50:9447:3e15])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a994f7bf7b8sm192762266b.66.2024.10.07.08.07.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Oct 2024 08:07:28 -0700 (PDT)
+Message-ID: <4f79f144-9f48-4fbe-b646-2d146e57606a@gmail.com>
+Date: Mon, 7 Oct 2024 16:07:28 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 07 Oct 2024 17:00:28 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Kristoffer Haugsbakk" <code@khaugsbakk.name>, git@vger.kernel.org
-Cc: "Elijah Newren" <newren@gmail.com>
-Message-Id: <002b3e89-fa60-4927-bae3-bf95bdfd60cf@app.fastmail.com>
-In-Reply-To: <3ce39bec-24e4-4850-b947-e6476fac5132@gmail.com>
-References: <cover.1728298931.git.code@khaugsbakk.name>
- <3ce39bec-24e4-4850-b947-e6476fac5132@gmail.com>
-Subject: Re: [PATCH 0/3] doc: merge-tree: improve the script example
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v6 2/2] t3404: employing test_line_count() to replace test
+To: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+ Usman Akinyemi <usmanakinyemi202@gmail.com>
+References: <pull.1805.v5.git.git.1728298308.gitgitgadget@gmail.com>
+ <pull.1805.v6.git.git.1728299466.gitgitgadget@gmail.com>
+ <b3d3deced25f038defe6afe7d474350464328299.1728299466.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <b3d3deced25f038defe6afe7d474350464328299.1728299466.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 7, 2024, at 16:59, Phillip Wood wrote:
-> Hi Kristoffer
->
-> Thanks for working on this. Patches 1 and 3 look like clear improvements 
-> to me, I've left a comment on patch 2 as the improvement is less clear 
-> to me but I wouldn't object to it being merged.
->
-> Best Wishes
->
-> Phillip
+Hi Usman
 
-Thanks for taking a look!
+I missed this when I read the earlier version of this series but our 
+commit subjects use the imperative so we would say
 
--- 
-Kristoffer Haugsbakk
+     t3403: employ test_line_count() to replace test
+
+or
+
+     t3404: replace test with test_line_count()
+
+I agree with Patrick that we should let this series settle for a couple 
+of days to allow others to comment before sending any new version.
+
+This series is looking good, congratulations
+
+Phillip
+
+On 07/10/2024 12:11, Usman Akinyemi via GitGitGadget wrote:
+> From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+> 
+> Refactor t3404 to replace instances of `test` with `test_line_count()`
+> for checking line counts. This improves readability and aligns with Git's
+> current test practices.
+> 
+> Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+> ---
+>   t/t3404-rebase-interactive.sh | 28 ++++++++++++++--------------
+>   1 file changed, 14 insertions(+), 14 deletions(-)
+> 
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 96a65783c47..2ab660ef30f 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -281,8 +281,9 @@ test_expect_success 'stop on conflicting pick' '
+>   	test_cmp expect2 file1 &&
+>   	test "$(git diff --name-status |
+>   		sed -n -e "/^U/s/^U[^a-z]*//p")" = file1 &&
+> -	test 4 = $(grep -v "^#" < .git/rebase-merge/done | wc -l) &&
+> -	test 0 = $(grep -c "^[^#]" < .git/rebase-merge/git-rebase-todo)
+> +	grep -v "^#" <.git/rebase-merge/done >actual &&
+> +	test_line_count = 4 actual &&
+> +	test 0 = $(grep -c "^[^#]" <.git/rebase-merge/git-rebase-todo)
+>   '
+>   
+>   test_expect_success 'show conflicted patch' '
+> @@ -401,8 +402,8 @@ test_expect_success 'multi-squash only fires up editor once' '
+>   	) &&
+>   	test $base = $(git rev-parse HEAD^) &&
+>   	git show >output &&
+> -	count=$(grep ONCE output | wc -l) &&
+> -	test 1 = $count
+> +	grep ONCE output >actual &&
+> +	test_line_count = 1 actual
+>   '
+>   
+>   test_expect_success 'multi-fixup does not fire up editor' '
+> @@ -416,8 +417,7 @@ test_expect_success 'multi-fixup does not fire up editor' '
+>   	) &&
+>   	test $base = $(git rev-parse HEAD^) &&
+>   	git show >output &&
+> -	count=$(grep NEVER output | wc -l) &&
+> -	test 0 = $count &&
+> +	! grep NEVER output &&
+>   	git checkout @{-1} &&
+>   	git branch -D multi-fixup
+>   '
+> @@ -436,8 +436,8 @@ test_expect_success 'commit message used after conflict' '
+>   	) &&
+>   	test $base = $(git rev-parse HEAD^) &&
+>   	git show >output &&
+> -	count=$(grep ONCE output | wc -l) &&
+> -	test 1 = $count &&
+> +	grep ONCE output >actual &&
+> +	test_line_count = 1 actual &&
+>   	git checkout @{-1} &&
+>   	git branch -D conflict-fixup
+>   '
+> @@ -456,8 +456,8 @@ test_expect_success 'commit message retained after conflict' '
+>   	) &&
+>   	test $base = $(git rev-parse HEAD^) &&
+>   	git show >output &&
+> -	count=$(grep TWICE output | wc -l) &&
+> -	test 2 = $count &&
+> +	grep TWICE output >actual &&
+> +	test_line_count = 2 actual &&
+>   	git checkout @{-1} &&
+>   	git branch -D conflict-squash
+>   '
+> @@ -501,8 +501,8 @@ test_expect_success 'squash ignores comments' '
+>   	) &&
+>   	test $base = $(git rev-parse HEAD^) &&
+>   	git show >output &&
+> -	count=$(grep ONCE output | wc -l) &&
+> -	test 1 = $count &&
+> +	grep ONCE output >actual &&
+> +	test_line_count = 1 actual &&
+>   	git checkout @{-1} &&
+>   	git branch -D skip-comments
+>   '
+> @@ -519,8 +519,8 @@ test_expect_success 'squash ignores blank lines' '
+>   	) &&
+>   	test $base = $(git rev-parse HEAD^) &&
+>   	git show >output &&
+> -	count=$(grep ONCE output | wc -l) &&
+> -	test 1 = $count &&
+> +	grep ONCE output >actual &&
+> +	test_line_count = 1 actual &&
+>   	git checkout @{-1} &&
+>   	git branch -D skip-blank-lines
+>   '
+
