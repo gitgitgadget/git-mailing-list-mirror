@@ -1,85 +1,82 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2DC13B58B
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 04:38:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9954C91
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 05:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728275906; cv=none; b=EB+Yi+dWz4tLjl7IoSY28ZkDII91HCcDR05c0knTNMc0Cq/YrIbHtqPGF+A9RPHBJWymvDs+RG6p7T7HfiiHACfyExNhS0I+0QV/6/JGEj4nW2t9fUlZh9//x5OMyG2OirD9ATNNlLHWPL8u8/TAb9LB8J6S5q0rKZuHJxpUKIc=
+	t=1728278474; cv=none; b=XHRou01ye2tJtDFK13aznpudaWfAw1GSGjKVc754vq1ykYNKRvclwgUceRy+0K6VOj5EjaPyDpZ+oylux/cH2SlBkEo0uaYVV2D2ThF0REuF4TC3TQ7CGacsarFg7F7QndVEJYjFyxv0MW+0wZ6wW/alNTN9f/U0JEwp2q8+kms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728275906; c=relaxed/simple;
-	bh=CT5qE4fKBipG42aB+ehTQI6vfJrG1b8Mm454URLpGb0=;
+	s=arc-20240116; t=1728278474; c=relaxed/simple;
+	bh=Ex15r2isprcIAVboPxaaPIfTx/LeQqUR+NJHtVCw34Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B6ci4c1SPKSqBTcBpD3gnOUBeJIFFf0jqVxr9qCEb9L0V/6ZCizeiqCpcqRQQJH3Que4cyhj4IJU9j5vxzJOFK8si8cjeDwCyFj4FfViKDGC9hICNQ3+uUXmV7vpEDAfCZ0X/IdVez+AwX0fihj1rKtY5dHF7c+zSjkvLpiYxdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fenwPimS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eibkSAsb; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=foErXNuxH2zYs2rUcI2RnfaHlg6IxqoKxKZPBoc1qLyXOeLWMaRjaMLPi8W0qPl9kZy7IyI/qN3J/f6TtIRUbi3+E5OH6wHaJ33NiEgQ7GDW4BJ+9R6//IaSs0+PjiHtPc23yRJr1SN8JwfP+T9VFCM7fB3aDwIQ4tGh1oH3DBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eK9Jzqa8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O4DaOPS8; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fenwPimS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eibkSAsb"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0CD9B114021C;
-	Mon,  7 Oct 2024 00:38:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eK9Jzqa8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O4DaOPS8"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2885A1380085;
+	Mon,  7 Oct 2024 01:21:11 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Mon, 07 Oct 2024 00:38:24 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 07 Oct 2024 01:21:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728275904; x=1728362304; bh=ye801GLyTx
-	ZfhU6VtnpGVzHAUWybF6RuZXySO0tt/eQ=; b=fenwPimSi9rMc9LalAcX2jeQ6U
-	NzNgEvPHJVwZchDMlQahHwK/22wAvistLVDkE+73S6e5zy7uypLpprUbXlqCDke4
-	stm66cTn4QrjEH2zB9YU320YtKRBhiDyzfn2DNhfuXC+heazV8lSaVnoixumbmcF
-	ElQBOmaXqbjqTjqOYGKprdGziSLMDem5wtRBfOZi9eyCFSrSxByuN2/XbWDw2Xlf
-	tinD2HQoF4KXRaZFplz3qvFSY0EjCFmJyx2/yKAAkdOPgywqvaEZ9/1E8p0wxu8o
-	iqCnt13u/Hcz+bdcU87T7Q2RFgVz8nFVqugrVbnmaWYnFwHyCrVh57Xe6fqQ==
+	:subject:to:to; s=fm2; t=1728278471; x=1728364871; bh=Ex15r2ispr
+	cIAVboPxaaPIfTx/LeQqUR+NJHtVCw34Q=; b=eK9Jzqa8nNGVuSzEZLfkTvwXT+
+	tVUWjCUEq4e31JDeX4jpT3f0PuDss/Fgc/GISt5LE2uqPzhOpnRPssJrx/xcDRgZ
+	4SgvDotWNiCQUhnacT3VZa3OV0ICzhl3AU3uwKrLBftdkMvmuTFIExia5FvqBbjH
+	k8tRkxhf+5xRzm8B5pfYH78fIQCf1G+QlVOUbhJny0l2o+sgSUk+EwUFjKVwez99
+	JbgLKKCaZwp+z8Q4WPPWxRsC3MmdwAi7wB+WXJY4A/Rh304i7bQXmlcEOeWqelX/
+	nmcQSsW9TUjTTZdtorFIUbdleouUnpCu05GflUeGzkVYplHrKbjCQx4pgJXA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728275904; x=1728362304; bh=ye801GLyTxZfhU6VtnpGVzHAUWyb
-	F6RuZXySO0tt/eQ=; b=eibkSAsbObSiPWPdeaWAMsgIESb7xMe3s5TWVxNSANps
-	BXB0iyuXLWcEBCecC4k3fjoi0okkErGcfiir09C1IRpFo7O4bDTnbIl2vQ3Xd0hB
-	mMQpStM0Ck+rXpRUuzYLxfufEn6+OXnHZM8yvaaH12ycLfJyH4SKoMkIOEmOq/ZK
-	og2kxAAJJ7Vdcs8ji6Xzd0PjxGWAZWHunPy8QHfmy/tk5BdBM4obRMSZkfItFpSB
-	a/sTKK+FXzA+9IjIgPjWtO0Dti8hmArKAPU3Ira110ybR6+6J6opSMccF1N+dgf4
-	zfHz5zWhNdbsXcwn/4VTCyFsJw4pEfXB4+oH9qNiFQ==
-X-ME-Sender: <xms:v2UDZyOtMYW3F1lS3z_rJ_nRUsk6qQnbDvjSM51S2GoG7gBkLizkuQ>
-    <xme:v2UDZw9G7pWOnCFIprI0OGSiEY0-Qk41WFfr3jmtlrMe-QO2uZagGI3_xeV7MrMcw
-    hte3RM-JP-W37KOug>
-X-ME-Received: <xmr:v2UDZ5SmmXhmPBWSzOCGTjK22_l6eiDapWXHI0iFgwG587d-vMlUbQPjG-pfzxV01_nALkPjsyBdNOeqCK-AE-O29htvfe4UVF4pSyPtP34nNrMEtw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvkedgkeejucetufdoteggodetrfdotf
+	fm2; t=1728278471; x=1728364871; bh=Ex15r2isprcIAVboPxaaPIfTx/Le
+	QqUR+NJHtVCw34Q=; b=O4DaOPS8tHlMWh5vOKlCZn2mQ7xswy7CAe0x5LE4Roxp
+	fH2XVnkUvtPxC5WL8GAGsP4wOWBEPiQzcYIESrJEm+l1PHI+/Pa3WUvxjJRL5h2z
+	uC1dRU1Yc7+qp2QM6ITSH4KjEF7Qe9/8bjAyDhNPG1VgBswELJLBOwQgCrB0zXXG
+	rI/7vY+In3JQwmIAONOIKLMcoGbAzVcYUHoqQ9Aw2+QB4vyphpMVrnaHyiaoVkFF
+	kdY38jlbJ7bcoh5VTnJJ3TlkJZG3xcSo8L8PysVKB8eU6kaXBPcTQI0S4tBs9c37
+	cthKRi7m2MM8BX2EleTNDRN8P/4GEJWPIyDZ0YEWeQ==
+X-ME-Sender: <xms:xm8DZx5JdZXbQuI-mmB31af2w892WJ7IEgsIGqnIykO1ooPC8GLtvw>
+    <xme:xm8DZ-4xP7Y3_sVkmcZ0HbeSxo1iifgb4f7wJj2yV66Fj2sMIu_sn_ZARsdNlSZtQ
+    c8ihUO_xUA2q3KGAg>
+X-ME-Received: <xmr:xm8DZ4dujMIvB-DFjOvykuSSKftfIPLrKJrRAi-p9svc3JySDIHlQKRKpL9EwYLHGFkgUYDANsD8hl0UkGeCpOoQEghrNAJQEVef726FE8XffhXMRQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvkedgleeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucgoufhushhpvggtthffoh
+    hmrghinhculdegledmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhs
-    hhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:v2UDZytRaJK7MF8756yj_yOykvqDsQF0yEI8DgI8-ClgZfqiWHV7Bg>
-    <xmx:v2UDZ6f1PmkoSrOmICzSjTrGOYW4n9T3uojDrAu4nt5vBe3mG-QF1Q>
-    <xmx:v2UDZ20-XSlC4jttksRbEf4bLk4OwVuWDTjvyJ4FhMJqbbq0gvCG6g>
-    <xmx:v2UDZ-8T4-frc3V61XYbPw88gBsOW1WGjXRkhHMapea-1uvb_H6Vrg>
-    <xmx:wGUDZ64kNN071u-X5yYnIPLkYaJof6KngVwyOmyYoRvqdWaYPn5NYP-m>
+    eqnecuggftrfgrthhtvghrnhepvefhffejvdffkeevtdegudelledtvdekudeivdffgfdu
+    keehkeffudfhgeduiefgnecuffhomhgrihhnpehgihhthhhusgdrihhonecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
+    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhiiihosggrjhgrmhgv
+    shdvudesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:xm8DZ6LFbzzxsFOeGDZM3PNfVrpw5oI0YdX9MfimT2WeeFDMGbbZOw>
+    <xmx:xm8DZ1J2whAuRg5pQhFJfQnrNfozmVKY-_kOMcjB1Sfq1UBtnYsaCw>
+    <xmx:xm8DZzypmInUizTrcS44dwvimuqT2fbdZYzeFD6_LkQ_Lk7pbz5Cng>
+    <xmx:xm8DZxKI-Tvq9d6_BD3DfgPcRLuDf9y19O0k7MYBY_M-f1cOmLArUw>
+    <xmx:x28DZ8U7M7VX3YD3OgR4jtucHln7nN0nO4f665fZse0s0yqiqXDAGIjS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 00:38:23 -0400 (EDT)
+ 7 Oct 2024 01:21:10 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1d480114 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Oct 2024 04:37:25 +0000 (UTC)
-Date: Mon, 7 Oct 2024 06:38:21 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f140c44e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Oct 2024 05:20:10 +0000 (UTC)
+Date: Mon, 7 Oct 2024 07:21:06 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/3] unpack-trees: detect mismatching number of
- cache-tree/index entries
-Message-ID: <5e578c1f4161ba5c23fd5b27e792807b632e9c06.1728275640.git.ps@pks.im>
-References: <cover.1726556195.git.ps@pks.im>
- <cover.1728275640.git.ps@pks.im>
+To: Chizoba ODINAKA <chizobajames21@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [Outreachy] Applicant Introduction
+Message-ID: <ZwNvu00mQuFQD7Ps@pks.im>
+References: <CACwP9ara-N1PGYi8wt3MsDvs50thXf9iw2w4n-syZD0wwXXqfA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,61 +85,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1728275640.git.ps@pks.im>
+In-Reply-To: <CACwP9ara-N1PGYi8wt3MsDvs50thXf9iw2w4n-syZD0wwXXqfA@mail.gmail.com>
 
-Same as the preceding commit, we unconditionally dereference the index's
-cache entries depending on the number of cache-tree entries, which can
-lead to a segfault when the cache-tree is corrupted. Fix this bug.
+Hi,
 
-This also makes t4058 pass with the leak sanitizer enabled.
+On Sun, Oct 06, 2024 at 01:12:19PM +0100, Chizoba ODINAKA wrote:
+> Hello, Chizoba here. I am interested in contributing to Git - Convert
+> unit tests to use the clar testing framework.
+> PS: I also have read:
+> [1]: https://git.github.io/Mentoring-Program-Guide/
+> [2]: https://git.github.io/General-Microproject-Information/
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t4058-diff-duplicates.sh | 7 +++++--
- unpack-trees.c             | 2 ++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+welcome to our community, thanks for your interest in contributing to
+Git! Let us know in case you hit any issues while working on your
+microproject of choice.
 
-diff --git a/t/t4058-diff-duplicates.sh b/t/t4058-diff-duplicates.sh
-index 3f602adb05..18e5ac88c3 100755
---- a/t/t4058-diff-duplicates.sh
-+++ b/t/t4058-diff-duplicates.sh
-@@ -10,6 +10,8 @@
- #   that the diff output isn't wildly unreasonable.
- 
- test_description='test tree diff when trees have duplicate entries'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # make_tree_entry <mode> <mode> <sha1>
-@@ -143,11 +145,12 @@ test_expect_success 'reset --hard does not segfault' '
- 	test_grep "error: corrupted cache-tree has entries not present in index" err
- '
- 
--test_expect_failure 'git diff HEAD does not segfault' '
-+test_expect_success 'git diff HEAD does not segfault' '
- 	git checkout base &&
- 	GIT_TEST_CHECK_CACHE_TREE=false &&
- 	git reset --hard &&
--	test_might_fail git diff HEAD
-+	test_must_fail git diff HEAD 2>err &&
-+	test_grep "error: corrupted cache-tree has entries not present in index" err
- '
- 
- test_expect_failure 'can switch to another branch when status is empty' '
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 21cc197d47..e10a9d1209 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -808,6 +808,8 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
- 
- 	if (!o->merge)
- 		BUG("We need cache-tree to do this optimization");
-+	if (nr_entries + pos > o->src_index->cache_nr)
-+		return error(_("corrupted cache-tree has entries not present in index"));
- 
- 	/*
- 	 * Do what unpack_callback() and unpack_single_entry() normally
--- 
-2.47.0.rc0.dirty
-
+Patrick
