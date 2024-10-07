@@ -1,83 +1,113 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361D912B64
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 04:24:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBD9502BE
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 04:28:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728275077; cv=none; b=j6ENz+uuROzga9TIj+d6D0ie8AY4M8B5QC9QtSsWxuccAHDKoquuIIEYGFJAK/pNPHrw84zAJ47CdRso6gty0ezP8uXepup3Kllboye/4JqzLf0HQQ2/eWIcfU1AmldLe8266nhg8niNhx1//RFSBdNc0wbtbDaa4aqgyd+EQo8=
+	t=1728275326; cv=none; b=a9B+/qKNFCFIGnzExAHv9zFWOzb18gT/sSjyakCtQ3D0JinUsXJmK75FV7pyHkrCs1GgNWqQfkPPMy/s8Qr1upwFgL2PQbm+M//ZixMgCEYMFoq/77lLmZ69u0Mk4S9kxZMbkQtc19A4AbAldngwScrCWs/fXAHyu9dZ5bcHnEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728275077; c=relaxed/simple;
-	bh=9Q47ZTDhHr5pOajq9siCKqw+1k2kVy0sUSRg1JC8Qog=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ia6WQG+q/8eXGSAwgjpP+0+06fo8GKtXatdVyCv8zsxX+hztZS7mhQmnH5x8+dJiFigUMiIhgr+DY3qTVX2I4vLdtu4jTOasAIJdOtFQD16NtVw+Qsom+DCpou5lUuXFZpVU+8bsjcY4rpuEz77ZCcuM7or/sbmuCgISe2dCsZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1728275326; c=relaxed/simple;
+	bh=9Rij+3q9MuYsw/3RpzQMK9Q+1hgyY8DSTpjrjUj+388=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=plcgPv5eDUwkGEFXfXWKkLhWRWJY4hnXcSJYXHbKCw817Yh7elZw9nNieQKswkxYxjx6qqnSAtpXYDww1+gUTarjzxG+XPCXYJVD1UiblJ44cbRakQqI2X4d/ZKFyYcwU5LVtVEIn95+geY6bfnshSlHt90MyYLIl6PxKcautDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kSKy48W7; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6cb316db199so6134096d6.2
-        for <git@vger.kernel.org>; Sun, 06 Oct 2024 21:24:35 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kSKy48W7"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2e09ff2d890so3387316a91.0
+        for <git@vger.kernel.org>; Sun, 06 Oct 2024 21:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728275324; x=1728880124; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CflEsSx7uVhB5tQgH5lnh+MWmpJZg5RBv8dOOQ9SIFU=;
+        b=kSKy48W7IwkbG7ndelTawBs5mQnVt/i+7vDRTbO1CBoLhEyOtvLWmAyXyLfMXrBgCv
+         dPRJ3dxBR2r4/E5Oyi2DjJ2LDn9PqTtPE+XbZ2pZp9ogIHzAPnnk6Ah/xOY1M7R9sVYO
+         7X0NxQ6lT7GeawYrOgndjdnrQIdQKmJlhZXO8Ego+DfOmmdfNqSIx2zxxCxHsbwHHqfy
+         H492qCdPZtSI/s2BFM6hpgFxILvRsNxnVcWCAyagTnhOqfl2QIAJFlmru/fdf+RPfNdQ
+         0B7aeOVLfFDiZ/ij4zh2ehLP3aOxw6eNUhHsVgh5ku0QwTJS1WksYAwP5tz9SdB7ssHH
+         dP8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728275075; x=1728879875;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pN6SazN9aigkifhtLn8UgZwlFNF71xRA9FBIxEQI8b4=;
-        b=Q33mqX3rRRk39lhdW4Kt5XS+vmXcDw5rx3PkICJmeHwmEphkxdcN9cepSPdhUS+stn
-         GqZ21EKt/woIJrbqQQxVDgISx4+lr4HyRvN4SZixfq9+114xc4uPe8UToYWBUBFA1FQ0
-         MKnrBKWvIcnVYE1NpsfauWzuP5IKpjHLk+aAU1nqnEyPvYEaiB+sX4iFZtEMhl+NWAZG
-         V6rbUIfnUKdn+h45juJfsACaCpMitYqoRgXjfJuuXRczPkjTZXXb3Jm5SMMoSgTdMQJ1
-         McfIRQbiDNVmCja6NCFI+aQD/16gljoYfMMPPnEOl2Qz9LOTTmOg/DOSD6z3xHIHwhTN
-         5e9w==
-X-Forwarded-Encrypted: i=1; AJvYcCXUez4TnL2cELvoK0u9pTx7J9G31GCPs7hF7YUuW00Fe5R4SsURrfGNn3gvk4JEvSE+udg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxjxJCMW+WzmyrbzplQWWzJ0gVMtHMO+XkrsxQ5fgQu7s0r4jLA
-	4bJBWzztLGm3H4+u7AIGXwNMLiNo6wSdmIS94ynGCuJjqoozPBwGD5wuaFgDJATj/l50sFbD9qL
-	hiAIKS8uWdltWjs8FSbSYZESvg80=
-X-Google-Smtp-Source: AGHT+IHtzRiedIT6uxmkoKz954Vt4sleo305eygZRkl8b/PA7pVCP/R2jUp00R4hqDrWIn+js8uVSx/FXUNEAKtdUj4=
-X-Received: by 2002:a05:6214:124e:b0:6cb:4a88:8cf5 with SMTP id
- 6a1803df08f44-6cb9a2f7f81mr77049686d6.2.1728275075040; Sun, 06 Oct 2024
- 21:24:35 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728275324; x=1728880124;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CflEsSx7uVhB5tQgH5lnh+MWmpJZg5RBv8dOOQ9SIFU=;
+        b=gyYSOR9V53yxMrEBr6n552ERMcTHPZk4Fy977YBmMwLypvHRGRZb41EUV7ZU18c9Uk
+         tpoiED/KzIzfUg2/iztuBTXoPvO8yppKEyEZHkOGA9TBIPE+NdyFUh9JocoOL2fyc9j1
+         wuoyM88O/8N9pJKXBUwjxzQxfyTo+ElwKl1QC4CzyoF7ePVfpuqXpf22vZIUiIluCcsg
+         NT7VCUPZ/0mUDamgbynGYJFYat6ZZM8ZZ9FNxTSiWrYXWvIG2jstFXQzeFfzrOBXN2OL
+         IZi0pKmxzgXu6nKpmB/UkRTPVnv2CSt+anqvp7lDjF9w9eX65N42dpjs7+VJTD66hX8G
+         2a+w==
+X-Forwarded-Encrypted: i=1; AJvYcCU605N7CklpuEGw9c3R4g/LTgHXuWna/keyA9wk0qNr+Ktq9/q2c3Z7mJKJ0tmmfq+1uYg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxk/iVqWy2yU2z3IvDLhqPPmHjuOSfttvlp/C5QTnCaU5sLCiYQ
+	AXxxq5Uum2zv9wGPrFnjYiBQq4hyFOhtLtZQAJRhM2auBM07Bukz/COwF90f
+X-Google-Smtp-Source: AGHT+IE81Dn4T48aTW71iAfi6yz70xbQpKw6tzcOuDk8Dkus3gsilj0E0b7FeD3Yvz0YVvLHCTyhUA==
+X-Received: by 2002:a17:90b:4a4c:b0:2da:61e1:1597 with SMTP id 98e67ed59e1d1-2e1e636f476mr13879802a91.36.1728275324471;
+        Sun, 06 Oct 2024 21:28:44 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e20b0f89basm4166640a91.39.2024.10.06.21.28.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Oct 2024 21:28:44 -0700 (PDT)
+Date: Mon, 7 Oct 2024 12:28:50 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Caleb White <cdwhite3@pm.me>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] worktree: refactor infer_backlink() to use *strbuf
+Message-ID: <ZwNjgvMbUKgpbP7O@ArchLinux>
+References: <20241006060017.171788-1-cdwhite3@pm.me>
+ <20241006060017.171788-2-cdwhite3@pm.me>
+ <ZwKoNg-HYGaohvCd@ArchLinux>
+ <CAPig+cQC45_Pofw31h2RSydj_CjqpfajLLa5O_sR9m0AQh5OVw@mail.gmail.com>
+ <o7jQV4JUYr2iQtErKFhCrjCySiGn7_I18gmdInKbOC9TAsvqazG0O_fPUtiWZ5UfiGLr25OZ5xvqIhfOIwCG-s1RGgri-BJIdHqiokIw4z0=@pm.me>
+ <ZwNfuLoVn4aU4mgQ@ArchLinux>
+ <XzNC1BXk2OaIGmgas_MWKZ_ubpeR_kA19hNxmF76FLtgI_WfYrMOGEDEr5uqOETNPHTI_bA3qJE0R0eah4UTPXZUgeRjG7psN6ncDOdPXNA=@pm.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1805.v2.git.git.1728203495287.gitgitgadget@gmail.com>
- <pull.1805.v3.git.git.1728230769.gitgitgadget@gmail.com> <CAPSxiM9eExGxy5biEr_23tCKXaUQg=tsD57VR7e2SVdvVJR+Kg@mail.gmail.com>
-In-Reply-To: <CAPSxiM9eExGxy5biEr_23tCKXaUQg=tsD57VR7e2SVdvVJR+Kg@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 7 Oct 2024 00:24:23 -0400
-Message-ID: <CAPig+cQ1xC9ky8+NZO0ywmYAa6Vxe2ZUbs_Ae4OTTcWM8tHY_Q@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] [Outreachy][Patch v2] t3404: avoid losing exit
- status to pipes
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Christian Couder <christian.couder@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Phillip Wood Phillip Wood <phillip.wood@dunelm.org.uk>, shejialuo <shejialuo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <XzNC1BXk2OaIGmgas_MWKZ_ubpeR_kA19hNxmF76FLtgI_WfYrMOGEDEr5uqOETNPHTI_bA3qJE0R0eah4UTPXZUgeRjG7psN6ncDOdPXNA=@pm.me>
 
-On Sun, Oct 6, 2024 at 12:18=E2=80=AFPM Usman Akinyemi
-<usmanakinyemi202@gmail.com> wrote:
-> Kindly, help take a look if this is okay now.
->
-> Also, I wanted to change this also to use test_line_count,
->  test 0 =3D $(grep -c "^[^#]" < .git/rebase-merge/git-rebase-todo)
->
->  But, I tried a different approach and the test kept failing.
->
-> Similar as
->
-> git show >output &&
-> count=3D$(grep NEVER output | wc -l) &&
-> test 0 =3D $count &&
+On Mon, Oct 07, 2024 at 04:19:22AM +0000, Caleb White wrote:
+> On Sunday, October 6th, 2024 at 23:12, shejialuo <shejialuo@gmail.com> wrote:
+> > That's not correct. It is true that the contents can be NULL and
+> > `backlink` could be filled with the infer_backlink. But do you notice
+> > that if `backlink` was filled with the infer_backlink, it will jump
+> > to the "done" label.
+> 
+> This is not correct, if backlink is filled with `infer_backlink` it
+> continues on with the processing. I have made this more clear:
+> 
+>     dotgit_contents = xstrdup_or_null(read_gitfile_gently(realdotgit.buf, &err));
+>     if (dotgit_contents) {
+> 	if (is_absolute_path(dotgit_contents)) {
+> 	    strbuf_addstr(&backlink, dotgit_contents);
+>         } else {
+> 	    strbuf_addbuf(&backlink, &realdotgit);
+> 	    strbuf_strip_suffix(&backlink, ".git");
+> 	    strbuf_addstr(&backlink, dotgit_contents);
+>         }
+>     } else if (err == READ_GITFILE_ERR_NOT_A_FILE) {
+> 	fn(1, realdotgit.buf, _("unable to locate repository; .git is not a file"), cb_data);
+> 	goto done;
+>     } else if (err == READ_GITFILE_ERR_NOT_A_REPO) {
+> 	if (!infer_backlink(realdotgit.buf, &backlink)) {
+> 	    fn(1, realdotgit.buf, _("unable to locate repository; .git file does not reference a repository"), cb_data);
+> 	    goto done;
+>         }
+>     } else if (err) {
+>         fn(1, realdotgit.buf, _("unable to locate repository; .git file broken"), cb_data);
+>         goto done;
+>     }
+> 
+> 
 
-What is the actual error you encountered?
+Thanks, you are correct here. We cannot use "BUG" here. And I think
+currently this is OK.
 
-By the way, we have a handy function, test_must_be_empty(), which can
-be used if you expect the output to not contain anything. As an
-example:
-
-    git show >output &&
-    grep NEVER output >actual &&
-    test_must_be_empty actual
