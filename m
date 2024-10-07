@@ -1,124 +1,116 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F97B185952
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 21:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5224D74C08
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 21:49:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728337704; cv=none; b=Ci22M2BliUKxuJr9iAmtnk6EsE9V4I2IVFGDbDp6IEF0aDUo7fZfHb3me4u2PFhGt9B0JQYBCyezllIf2BeeQ2a8iTFryMKsGtK6kO7p7MRXN3vg6AmccaPmnRclIX+NvrMcavvusXfn4qDiKskggeMob1R0c4knK1O1iXfbTbg=
+	t=1728337769; cv=none; b=oVsFz4DKdua2wFihZP5InfxkNSG10IrYyRVpxnfzGsALszeFIJcsI6Ms7BIAB5H6LO1tlzfrkCikdIgWte8uvFFXMGhR45GhrsaCJgEuHuyESf51xkeeH5D02VzwsOpsbb9QU6KbJCgDa88i1bYrw8oqwLptsQg7h/EogvH8T4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728337704; c=relaxed/simple;
-	bh=BFsL231W1slz1XyPig+qsj1KzdhCO89yTcOxeM8qtDs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZLsxyfPX0v8r83FUxiWnx8PE4CLPIcvxugyMVX9qqupTD50/W1TUhHYFhcfl8Y1P5nlvRsvcjb/8+4yjXG2ONvONXNbINMSPjR9iYj2LuB8xCIpG6YLrlZEIj3cRKuoBgUski6AA9S5So3hd5gmRq79xLx7sjWkDNykk2qlm2mE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=pNTHmRf3; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1728337769; c=relaxed/simple;
+	bh=5w4Q8NA/sIOOKeBYmv46dFWeTmdwZX71MAUCjMO6F3s=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=DvPD97VqKQC5PekI4iUGCe2paaRN9fPhexWIFTrsNauJmZ8ucGKGH8AELJFZiPZbqDO65GvpXE8d6ZD+M4Sj5xrOBaxEmtDN8Oaq7VKoRkhpeDXQfBZiFAo42EvUNeRHkTeYchWLGNV3+I/tHDOcet3bG3kFu5S9ZJ5xZnj6SqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QaPohdJu; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pNTHmRf3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1728337695;
-	bh=BFsL231W1slz1XyPig+qsj1KzdhCO89yTcOxeM8qtDs=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=pNTHmRf3CuIqhNDoXVyTR4V7dXtNHWW86J3mE49fUXNh0RChw27K3rznGQKCFgyNj
-	 Qha3cdrIog+3bpeGq3Y5Pw8dV5FT0RNCMe0Unfekdi4++GnhRRyjDindxH4H8Rwkam
-	 rjehMgqU6OqCu6Jj7enKU7sEwJXCoJBkiTvWQ2elPn3h0LMAn45xMUnChbaDgF0yQt
-	 LBxR83pXOKGe/j358/TNmKzfV9ukiICkc7hpta+XGRnLx3pyS0A8ld8JrOQHxcHWpP
-	 IQFgGKy1ZMU5/wBfhpswCe9QvUNqbOGrLFPIrlE/rRc/r2DWnd9alrShbLeTmYypxk
-	 SC1G79fl+SzALiFmp0L6JCc+L2Xe3dO+5Gsl+X/047Gp2QV1FKE+/CARlK07PgUzJI
-	 lTUN2w2jStmcCAP1H5qWpaEeZE5hj328mUe32dVerZ02yLLmIeA/aCkGCnqOZqWlKU
-	 KHHw6M/2W5dfKwQJy9rAL0f/+5roltJrrzwUjWmkJmLOVdXqq5O
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 6632A20081;
-	Mon,  7 Oct 2024 21:48:15 +0000 (UTC)
-Date: Mon, 7 Oct 2024 21:48:14 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: benaryorg <binary@benary.org>
-Cc: git@vger.kernel.org
-Subject: Re: how to use git with unreachable paths (namespaces, proc)?
-Message-ID: <ZwRXHlzzeSvh7SQR@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	benaryorg <binary@benary.org>, git@vger.kernel.org
-References: <353abc17-d65b-409f-8784-e2267e2be243@benary.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QaPohdJu"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a7a843bef98so661559866b.2
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 14:49:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728337766; x=1728942566; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=PLE8wbobKS8CQk+epf8k8msSD/wulM4NyIzntJr5CwU=;
+        b=QaPohdJuVplQzIF8UJr8Fk5nyv1eTHYfnuhlQU9vrIyzH9qQYQpbMIdg61wTIj8AaH
+         QYqrKreB1HyG8JuOiypcwn3xSZtMgFLaf6GCk8xHmNTt83CMIEGSewDtmAxcNf5oEcRu
+         PfjXXKNriixCd4EY8IskKzZZevg7ZHIFTDFKlctmpny73C8RdWBo2bWNPkaIdqi4kvIW
+         5O+gHlsGx7XZhNostvmkmw6vYIb8EXX8is/MeXgPnWMuDbCSxc4zfGZcCoICMsg8KAd6
+         vU40W/2fvcRVvICabSnEtk7nsFD0m8YpMk7gwX6JKQ4N3lD8P6dEGuPHSK9GtmRcyE0k
+         ZJaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728337766; x=1728942566;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PLE8wbobKS8CQk+epf8k8msSD/wulM4NyIzntJr5CwU=;
+        b=e61zX+oStD8NT8FwC4sWja+jEVrtzeBxu414cgK9GJB0fre0unb2esRU30oUGMXcub
+         r19mbqLu8/AeW+rVKzvBDkC3OCYdXpSTC9o2klmkXM1QV02gQ07Matbm60rCtuW41aOk
+         B2oU+M4lJ3qXLsPNQaxodGMkDMqS+RCarcpB3Sa11RGYOzkEL4/GlEtziGXcGoFiMu3m
+         qZTY5iOdT289Kwx1smgOPGMji69y9t2kvWuJRdvURJYFxTgy9+7nnOaifx72Es7R/CdU
+         sT7ClGQzAnT2NosG5Aba1l3nG8kenYB1p7barwwwjW68cwtyXjA1q382t4Zaj+vCuApQ
+         d7zQ==
+X-Gm-Message-State: AOJu0YzClM5ZdxlucK7JZpA+fguN/SF6geKQOQlwg9f8FJ7s9u0tJzGX
+	rCU2C7n0dK5qdTuOH4yYyfjHspbXoCimh7XhL5bNABh7J+Y/vLr6SKOY9Q==
+X-Google-Smtp-Source: AGHT+IH6+7ibIdDCf5ts43qsmidTSJML/c1Bcaf5ZGdMoptq6IcbjFVCqosoOXv7cIO2ahc0wd6Nkg==
+X-Received: by 2002:a17:907:3f87:b0:a99:4e2e:6f58 with SMTP id a640c23a62f3a-a994e2e76dfmr648892866b.35.1728337765867;
+        Mon, 07 Oct 2024 14:49:25 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a993729c4casm397497666b.149.2024.10.07.14.49.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Oct 2024 14:49:25 -0700 (PDT)
+Message-Id: <pull.1812.git.1728337764963.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 07 Oct 2024 21:49:24 +0000
+Subject: [PATCH] docs: fix the `maintain-git` links in
+ `technical/platform-support`
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zPB4tNMi479gd0UY"
-Content-Disposition: inline
-In-Reply-To: <353abc17-d65b-409f-8784-e2267e2be243@benary.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
---zPB4tNMi479gd0UY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+These links should point to `.html` files, not to `.txt` ones.
 
-On 2024-10-07 at 00:59:43, benaryorg wrote:
-> Now as far as I can tell this is because git tries to resolve the
-> symlinks in the path (/proc/$$/fd/3 is provided by the kernel as a
-> symlink to ~/Documents/my_git_dir even though it doesn't exist in that
-> hierarchy, yet you can access it, please don't ask me about the
-> specifics of that) and then access them, which of course here doesn't
-> work out. For the shared clone I understand why a path is necessary,
-> considering that it needs to add the references to the new repository,
-> however there seems to be no fallback for a scenario like this one.
-> strace tells me that the call to `getcwd(2)` yields the path (outside
-> the namespace) prefixed with "(unreachable)", which would explain why
-> things fall apart (as this path is neither absolute nor accessible),
-> or in other cases that git tries to walk the tree up (and by that I
-> mean the tree outside the namespace) until it hits root, which I
-> assume is its way to try and canonicalize the path, which here won't
-> work either.
->=20
-> So my question is: is this a bug or intentional behaviour (given how
-> particular git is around symlinks I can imagine either), and how can I
-> work around this and make git perform basic operations such as status,
-> archive, or alternatively get clone with `--shared` to work so that
-> git can at least operate on a separate repository without all the
-> prior objects being duplicated?
-> Also note that this is absolutely not important to me, so if this is
-> just something that git cannot handle in its current implementation
-> that'd be fine by me, I just figured the chances that someone will
-> reply to this with "why don't you use --ignore-path-reachability" are
-> not negligible.
+Compare also to 4945f046c7f (api docs: link to html version of
+api-trace2, 2022-09-16).
 
-Git (and all compatible implementations) always canonicalize the path to
-the `.git` directory (or bare repository) and the working tree (if any).
-In your case, that won't work, because `getcwd(2)` returns a path that
-doesn't work with `realpath(3)`, so Git is always going to fail.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    docs: fix the maintain-git links in technical/platform-support
+    
+    Noticed while deploying to git-scm.com
+    [https://github.com/git/git-scm.com/actions/runs/11219313103/job/31184984303].
 
-The path canonicalization is required because otherwise it's very easy
-to accidentally break the repository, and some old versions of Git had
-problems when accessed from a path that contained a symlink[0], so it's
-unlikely we'll add an option to skip it.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1812%2Fdscho%2Ffix-maintain-git-links-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1812/dscho/fix-maintain-git-links-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1812
 
-[0] Since I copy all of my home directory across when I get a new
-machine, I actually have a broken repository from this era still today.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+ Documentation/technical/platform-support.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---zPB4tNMi479gd0UY
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/Documentation/technical/platform-support.txt b/Documentation/technical/platform-support.txt
+index a227c363d78..0a2fb28d627 100644
+--- a/Documentation/technical/platform-support.txt
++++ b/Documentation/technical/platform-support.txt
+@@ -49,7 +49,7 @@ will be fixed in a later release:
+   notice problems before they are considered "done with review"; whereas
+   watching `master` means the stable branch could break for your platform, but
+   you have a decent chance of avoiding a tagged release breaking you. See "The
+-  Policy" in link:../howto/maintain-git.txt["How to maintain Git"] for an
++  Policy" in link:../howto/maintain-git.html["How to maintain Git"] for an
+   overview of which branches are used in the Git project, and how.
+ 
+ * The bug report should include information about what platform you are using.
+@@ -125,7 +125,7 @@ Compatible on `next`
+ 
+ To avoid reactive debugging and fixing when changes hit a release or stable, you
+ can aim to ensure `next` always works for your platform. (See "The Policy" in
+-link:../howto/maintain-git.txt["How to maintain Git"] for an overview of how
++link:../howto/maintain-git.html["How to maintain Git"] for an overview of how
+ `next` is used in the Git project.) To do that:
+ 
+ * You should add a runner for your platform to the GitHub Actions or GitLab CI
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZwRXHgAKCRB8DEliiIei
-ge6kAQDS8DlEo+x0IsHAmFtNAjzMhex+JR4e2hcAIAZTEQJnWwEAgJF5IEgkKUzE
-LpkQB1AIrXEoaXuGEDEuIfwVZNrcNAM=
-=FMDh
------END PGP SIGNATURE-----
-
---zPB4tNMi479gd0UY--
+base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
+-- 
+gitgitgadget
