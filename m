@@ -1,68 +1,68 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8A318B483
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 12:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279911D2215
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 12:08:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728302783; cv=none; b=tAN3RLpq6hoyPs1Y6idcxLuMILGROHC4yYpJwtgGbL7LQcfD8OBdNSt3QZowNVw11FAvY9Ff6lr5UUhI2ofGaiARqTSAPKWsJW7PJxpVHxdAtf3ul39NMRZC9RdibNfxakRTy1MkHczbVwrmW47umo8IVoVwaphasA+eQwU24+I=
+	t=1728302916; cv=none; b=qe6ozX0UCl1gK3jDaGuVIs/m2jLnVHTaTqPWg9HcyIOYfy7S+lhzUPkcbz3ZdDUPDP7ZGXznGIMcQKJSnNMoSYDDHDDPd4d2CWXsiic7pYbC/qLh3gMWVg+hTBVoN5Z7bezu4L5cgwrxMxofvo6fb5kyhtV7xYq7JssUoVuuFpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728302783; c=relaxed/simple;
-	bh=6y5nWknXxeL/jHFhViAjAHX6QGHJkkdT4am3IJyw408=;
+	s=arc-20240116; t=1728302916; c=relaxed/simple;
+	bh=2JceZER5ouvOY/02RuczTXXGTNoJk7PzAmsxdnjCtJ4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GAU3cvvy1qHhnGpmUW7CLzp+6FY6kdJILBPYwL5p1qQIU2WaErEydkyYPnmvepCifdjDgkusDLgW29bNwRx27q74uPfmvcY0poRQVlbBHZAZdCccPiGNYsrRm+fa4hzVFYwJJQOxf6yOJCSSpP9M7NeOOUoU6m9c9ST9BilFsRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i75gkKF5; arc=none smtp.client-ip=209.85.214.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=ivVcTS+7zyQEwRxDmliB0Nv5alpJHC4nkQGcaEVK4gLHpP8PCB/I/nTdWT21OWFNevVWt6yMTEP4L/nz2ohnorlNugI9AKVeVTpoQrMMY+6ATUhXH+P4p328wGqc2kWcHsDUnOLlADovLqdFN5r4FjsZ9C5fo+vUs5NhQOFEtyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bT/0YpCS; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i75gkKF5"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-20bb92346caso27080085ad.0
-        for <git@vger.kernel.org>; Mon, 07 Oct 2024 05:06:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bT/0YpCS"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-20b95359440so36050065ad.0
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 05:08:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728302780; x=1728907580; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728302914; x=1728907714; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lVlFR1S2BOWtNkjb5bGuKKAu7hYobhGeJvI3hkdUQ9I=;
-        b=i75gkKF5im4vwMKaiZZ6Np0N32chLb+JPVzMZz6IoYq/Nn8q0x2t5HLc4hZnAVgEzE
-         VMDpuVzWP5nURI3dqSPM/FYqQj+3IOsK/AqG+6lWYrsEy6+HpWdIIbnrnwADxg0Eu4fE
-         y32gpulL3tuLmG7/6JvktNbbYf8DLfgVIsibDAkXH8wYV+4WUucqZqjFdQuzsaoQ4WL3
-         KKabgou301UKArSYjUv16EIYPOyU6ZEjno1GwKc6EYHNI2nWu0fbIO+H+vkj9j2uouwV
-         vky4cgK4hPZ0NgDULH7Jf2n3Ebi7b4Ot29CKaLNLhmISegbG2hqlHQzy2+wN9UU2h3z+
-         wFqQ==
+        bh=10I48uQAGwuF45NgLz+WQpGSBmCs4TY9ZQdOwnI1MLo=;
+        b=bT/0YpCSHt3aHuh0ureG5JFqgmVXIqyV874LRELg74al8PZhMPSh6LruwM5ZnSK4+g
+         AgwbBmg+rWPfhvcNEpkAoiq6jQgB1u6TudgBHO2i3MK5UlQoKoZ4RIESlVbjTmjYAn3f
+         /xmhnWYN9UW71BHas1L+wVR9Qr2KTP9qj3jTsa17fyHUuXvlc+r3C+DwJ2gfO2QpaxU9
+         Kdgnpb0YXtxgqwMng2sWQwR4d8VvGeCd8BUuvfKJVUEMhYg/X/7d+3LG/LLYstabYzh7
+         YL5xqJTMWkDIPU9pEKIAvbW9d69Bvuq9KLdmDg6U4tQ7VP427+9bACedRtL43Wj9y/0q
+         Yo5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728302780; x=1728907580;
+        d=1e100.net; s=20230601; t=1728302914; x=1728907714;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lVlFR1S2BOWtNkjb5bGuKKAu7hYobhGeJvI3hkdUQ9I=;
-        b=GNqmNaTvpg58xRQRdvaMwp93tmJKevmt7GxS4ke6VnEJjEPSCDW0UaFEWhI71Tr+o/
-         6faZEYRsnKxtSj/bMv/4plAcA97i6DmhmeB81TLpfl2mW9B/TaLLefQDVMNQbi/1UK0I
-         RlZhQJZqy2fmBc49Ad+SO+rkQodSlB+qB/DgZUdt9Sx+omr8npVEwdDPGQXOJUcWiyrc
-         hR/SwXGgy/mf1AoJNlrZL2A+eutsrun2ue2Eg55kgcp9UcG5roRvr5jtJKPzf9UjHf1r
-         dh2S/vZ9Yj5gzU+Cgq5zoqcbrBfsNvvhkJFxoTKl2XctcWDkjs80QjOO2Y8C2mstLGyb
-         ymgg==
-X-Gm-Message-State: AOJu0YwRPp03PEDNkX4GSM3kiQPNxu5bJO8QtoQTntYEJfkHt+DgL3Sj
-	ys0jCRwn7T+xOSobNRzevSMiMCjEjkzWgLT4grlg6UCYXH+oS+Oa
-X-Google-Smtp-Source: AGHT+IEQAiXEyqcvViKeYiNW5X8/3Azn64mpdk/0lVgYbkl0oNi5OPqtFx9giyFkucIhfLT4LySmkg==
-X-Received: by 2002:a17:902:da82:b0:20b:51c2:d792 with SMTP id d9443c01a7336-20bff37a652mr216241485ad.2.1728302779831;
-        Mon, 07 Oct 2024 05:06:19 -0700 (PDT)
+        bh=10I48uQAGwuF45NgLz+WQpGSBmCs4TY9ZQdOwnI1MLo=;
+        b=DOy/HJwDs1mMKfzIfW9IQKyjouPCSupWDD7sf2K/RZdJ0y4PxikD9m3SWilkyXZSEQ
+         XW00Luf47fO3eMfSwfOPgBsDeLC7g4q7mxZtgqJZ3QhletLLajor5JMT8WjakLMe4VOk
+         TTHvdtsDDAx4CJXSGE6p3mZLky2NxcNJwklcInjRTXIs6rf/RIRxoi5FNT18lSRTmTZS
+         XGZwA+ul00JN+P+an8AjQwnL9txhcxmmwPYj2k24fGtlBiSbbOKBK+9guA1upeZuI+t9
+         YKPXG+6MysFwpgUfCT30wauph30jaJVCK4VWwvVAv4cq5cxQrQLbpfemrXPeRlT+KURZ
+         OxMg==
+X-Gm-Message-State: AOJu0Yy9Y7qsJ5pY7kqxLzf9/drgljxKa6S4sgQP8IP5bXuJOA4Oa+gK
+	OtqqLSAPQNYWpokOnGHHalLtPjCGAyRUodzmiJ9qDzopY5de3dStsM/YeK3b
+X-Google-Smtp-Source: AGHT+IGoFwXK2/zaaL2Zph3NOy4U5lJQFkGCuXr4KkVAbxxEYYra/I9CujmQfxhsYSxY4ws12jgs1A==
+X-Received: by 2002:a17:903:2447:b0:20b:bdbf:da82 with SMTP id d9443c01a7336-20bfde554famr190332545ad.9.1728302914345;
+        Mon, 07 Oct 2024 05:08:34 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c1395db96sm38152605ad.213.2024.10.07.05.06.18
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c1395a2ecsm38466105ad.206.2024.10.07.05.08.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Oct 2024 05:06:19 -0700 (PDT)
-Date: Mon, 7 Oct 2024 20:06:26 +0800
+        Mon, 07 Oct 2024 05:08:33 -0700 (PDT)
+Date: Mon, 7 Oct 2024 20:08:41 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 2/9] builtin/refs: support multiple worktrees check
- for refs.
-Message-ID: <ZwPOwgXITjoUejp5@ArchLinux>
+Subject: Re: [PATCH v5 3/9] ref: port git-fsck(1) regular refs check for
+ files backend
+Message-ID: <ZwPPSe3KGjU_XAPY@ArchLinux>
 References: <Zvj-DgHqtC30KjJe@ArchLinux>
- <Zvj-jkFE9NN30uDl@ArchLinux>
- <ZwOBwxiSZpxJlsfT@pks.im>
- <ZwOe7YVWmhshRhI9@ArchLinux>
- <ZwOm43a2ZmpvnlWc@pks.im>
+ <Zvj-osCNDMrUQv83@ArchLinux>
+ <ZwOGmoX5ner_F3Ac@pks.im>
+ <ZwOfBCSTO4Qvtos3@ArchLinux>
+ <ZwOnYAx_h9uGzPst@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,34 +71,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZwOm43a2ZmpvnlWc@pks.im>
+In-Reply-To: <ZwOnYAx_h9uGzPst@pks.im>
 
-On Mon, Oct 07, 2024 at 11:16:19AM +0200, Patrick Steinhardt wrote:
-
-[snip]
-
-> > However, the refname would be printed to "refs/worktree/test". It will
-> > make the user confused which "refs/worktree/test" is checked. So, we
-> > should print this information like:
+On Mon, Oct 07, 2024 at 11:18:24AM +0200, Patrick Steinhardt wrote:
+> On Mon, Oct 07, 2024 at 04:42:44PM +0800, shejialuo wrote:
+> > On Mon, Oct 07, 2024 at 08:58:34AM +0200, Patrick Steinhardt wrote:
+> > > On Sun, Sep 29, 2024 at 03:15:46PM +0800, shejialuo wrote:
+> > > > "git-fsck(1)" will report an error when the ref content is invalid.
+> > > > Following this, add a similar check to "git refs verify". Then add a new
+> > > > fsck error message "badRefContent(ERROR)" to represent that a ref has an
+> > > > invalid content.
+> > > 
+> > > It would help readers to know where the code is that you're porting over
+> > > to `git refs verify` so that one can double check that the port is done
+> > > faithfully to the original.
+> > > 
 > > 
-> >     Checking references consistency in .git
-> >     ...
-> >     checking references consistency in .git/worktrees/A
-> >     ...
-> >     checking references consistency in .git/worktrees/B
-> > 
-> > However, when writing this, I feel a ".git" is a bad usage. It will make
-> > the user think it will check everything here. This should be improved in
-> > the next version.
+> > I am a little confused here. There are too many codes in "git-fsck(1)"
+> > to check the ref consistency. How could I accurately express this info
+> > in the commit message?
 > 
-> But wouldn't it be the better solution if we printed the fully-qualified
-> reference name "worktrees/worktree/refs/worktree/test" instead? That
-> would remove the need to say which directory we're currently verifying
-> in the first place.
+> Well, you say you ported over a specific consistency check from
+> git-fsck(1) to `git refs verify` in the commit message. So I assume that
+> it should match a specific check in git-fsck(1), shouldn't it?
 > 
 
-Good idea. I will use this way in the next version.
+I understand your meaning here. I will improve the commit message in the
+next version.
 
 > Patrick
-
-Thanks
