@@ -1,98 +1,37 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081B9136672
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 05:55:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0BC3A8F0
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 05:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728280516; cv=none; b=RnBkIkIGhzXkrnhduwXuS2rvEFVJ65sBhS2857OwHjja00pD1yppsxHKU3JYgJct6wfNJifu/x1oEikgwYIRbpxoNpRQCDH+pKNzeU98zulHcyHSbZnT8X4wMq0QzaA0D1BEwnCDe/C+u5cdvhaIPafFQTYrEu/5gIIYDwr6uNQ=
+	t=1728280714; cv=none; b=HrfZ8enmWf/T49gpPGA5hLj0eNZ/Gk5bAkB36x6iWu+K9sw57FDWK6MQU3qEImV6HyObrFwemJHubXTcNSPU3TmzR6y4W6Qs7dYfDAIrxkNueL4FkjafI8fX28tN0oePF1LL7vtXm6kr2AbczY0jY//lIwsoe5l48nLxwO2ZO/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728280516; c=relaxed/simple;
-	bh=LSuxS/XHkxiLSN+iqDEfyPnhStJ6KuBn6t26SBWcMcE=;
+	s=arc-20240116; t=1728280714; c=relaxed/simple;
+	bh=67a0/KHO72YZptSwmsHp+E+qmteUNmYrDCPLWpdPS6U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BXM9/MlIs2p2vhdbTgzyMv0Ip9c1rKfCRWsSjYN6/IptDPs6znvhZ3vEoL4tR4L/DaIJCMrwGSkfwvhPSqSjd1PQ88FqhSm+XSLCSe5RqE0X2fjyFW3pVFn4Hoh2w/TWpqy4HR+Lu5bUi/TXS+wMnENJoN3XGT0Pru0t0y0/+7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cWIZ56uV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nj1d728s; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=GwSq1CDdLv7VtHJn00ueHRyjS27RWJ69iVQAsIX+gPJ4AfxKuJq4+9ZXGztlcXAovNgtZErXxOd3X1PIgGz0ju4bbbrQ2wzZKO3ZXWFqf8Z8j2Q1w0WyLTC67+Ztgnx7IJEUqhG0HQ0BUirUJIBkqJ6BGUfMfJYnnvyPNuZgi4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=atJ0vPhv; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cWIZ56uV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nj1d728s"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2EFEF13802A5;
-	Mon,  7 Oct 2024 01:55:14 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Mon, 07 Oct 2024 01:55:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728280514;
-	 x=1728366914; bh=OmZPwIKZSUt9z6DGGpya15SpzQpBrnpZTCqL89dqk+U=; b=
-	cWIZ56uVfZ5SaTW3G25d76dFeO4FAtuApUF5vcWieZ3L0/3B8x8rrCcloWlSg3Tr
-	BSLWENQ/JKk+6FgyLcADJcMpQ3UH7qAbtUjcKZ3YgAfM+ZHRNlTDDJjbH7qFTbpW
-	Zv2ejk090/q09d6SGzmZtCekDFX3KMEaZgaKABhcvbfos+DsG3MAjJFTeKbaI09n
-	c3nwHwLhkGOnQYJmTuw0+CXTh3YUaO3SrLRz0wAcrYgjuiw47MLAEuKCZ+RyUSfN
-	MgmEvM0IqhpxaxmypAwvWKfulQpawzlOWcLMpOFKY0KVXgxwyUxjW3s2gMZmROM/
-	U1hI+2fEZ9VOFCq+tXxR/w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728280514; x=
-	1728366914; bh=OmZPwIKZSUt9z6DGGpya15SpzQpBrnpZTCqL89dqk+U=; b=n
-	j1d728swhBauDMhZB2d713tzt/uocAS8ouvz7nP+yUHALNjkxstsAriJ0/FgLdWO
-	iDuSkc7Ursyl5pLdG8dO/EIOSZ3MJA25GnBlBxbeX6LSd9YSrM4Qte/O2YTwBbot
-	LxmeCtnNaze/b+ZyYoL4ukV2A6epTRy461e/G0XKrPainZJzTifaMYXYrnfjPoR2
-	fHSzulH8Ao9aJn2HKjhfVWf7lRkjIb532oGVdrMpp+AFEePZ8ftxjDrXQ5xfM7X0
-	xhX61taNfPu3PpNEeYCyMMWyTbhhKDtIWCi1SFq6W9WVxHTr/XeH3ArmLEd8gI3s
-	wb2sR08NBnTuk9dK3Jy1A==
-X-ME-Sender: <xms:wXcDZ74TnCHMeky_HeUt5EunaeZugProh-GLVS2gPswfNJB-1WcnXg>
-    <xme:wXcDZw44T8iJRwIzZSxwKybCmtR_Xv761DiZHc6-44XlEdr9IYnmh27XCwdjoBTUj
-    Wlf0JomANcJcdp4rg>
-X-ME-Received: <xmr:wXcDZyfKXz6KjkhxJEzZj8EUQF7jAGdmrP8rWCVx1f2uT3Yl7esSCu5Lt2Ap3qipsfCMR_DJFcYj53OyTb97tAS2VA_GYjUdH8SyYPDqhnLEqxrNOA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvkedguddtvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
-    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
-    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmh
-    drohhrghdruhhkpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprh
-    gtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthht
-    oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhs
-    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:wXcDZ8KIPxHa26wHa3r8XGsIef1UzdWNEmcFBERlgQ6dVdLFplj1Tw>
-    <xmx:wXcDZ_JKB_hvO9x1zCClh1SEJUKxCnvzvhxN2PcMOOvnffiQrbXmLQ>
-    <xmx:wXcDZ1zxbpxxuJymsy44LAZoPwZRR-sbZfV3TVQ34rT2TFZColfG1Q>
-    <xmx:wXcDZ7L9ggNv5K5qzrom0XY2T_j47uG3lu_Y7wPBmZ4XeQnu8kl42A>
-    <xmx:wncDZ2-KQQdGzFLhZCvAYw7ogPRwxpaqqpVf8nIYzg60dkBI3WlhnwFK>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 01:55:12 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1e6040dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Oct 2024 05:54:12 +0000 (UTC)
-Date: Mon, 7 Oct 2024 07:55:08 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org,
-	Christian Couder <christian.couder@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	shejialuo <shejialuo@gmail.com>
-Subject: Re: [PATCH v3 0/2] [Outreachy][Patch v2] t3404: avoid losing exit
- status to pipes
-Message-ID: <ZwN3sz_gPGqKAWqO@pks.im>
-References: <pull.1805.v2.git.git.1728203495287.gitgitgadget@gmail.com>
- <pull.1805.v3.git.git.1728230769.gitgitgadget@gmail.com>
- <92496582-8414-4d5b-8883-8b0a0b3c0988@app.fastmail.com>
- <CAPSxiM-jKgsuqkF_aHDJxiTz0FWwuT==FYxJPKUP0O_wwDahEg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="atJ0vPhv"
+Received: (qmail 31485 invoked by uid 109); 7 Oct 2024 05:58:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=67a0/KHO72YZptSwmsHp+E+qmteUNmYrDCPLWpdPS6U=; b=atJ0vPhvl7SMAQDw3nu853gD9Xv4t3GZPO9rAT2Rd1tYv9jvk6TYOv3KqUi81N3pLCUV21h3S4YsMKr71ANPdwflBmEIPrv3P8CTxcsm8GTwwMYfvXAM09xhyUv4zPDXB7f4CN5iVglfD4UdCNkLlPIMidrkXyHqjlk5gU26cvMhXIq9e93ggMBf6Yq09Yq0yLfRpzgJkb8VAr8vQBZJhafQ8xXP4gGb9a8UV82jzCQx1MFgWdE9rAA8J+xStQUR6P6uRlsqdRuxzoIW1/0xg/oBdA2fnSoEznRjF2r0qf3DVnTUlBNbUP+dfcnTWGDwH3v7pbRWqjzyS+/axfC50A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Oct 2024 05:58:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3387 invoked by uid 111); 7 Oct 2024 05:58:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Oct 2024 01:58:22 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 7 Oct 2024 01:58:21 -0400
+From: Jeff King <peff@peff.net>
+To: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Koji Nakamaru <koji.nakamaru@gree.net>
+Subject: Re: [PATCH] fsmonitor: fix hangs by delayed fs event listening
+Message-ID: <20241007055821.GA34037@coredump.intra.peff.net>
+References: <pull.1804.git.1727862424713.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -101,37 +40,235 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPSxiM-jKgsuqkF_aHDJxiTz0FWwuT==FYxJPKUP0O_wwDahEg@mail.gmail.com>
+In-Reply-To: <pull.1804.git.1727862424713.gitgitgadget@gmail.com>
 
-On Sun, Oct 06, 2024 at 04:26:03PM +0000, Usman Akinyemi wrote:
-> Thanks for this. I will definitely take note of this next time. Thank you.
+On Wed, Oct 02, 2024 at 09:47:04AM +0000, Koji Nakamaru via GitGitGadget wrote:
 
-Please note that we tend to not top-post on this mailing list. Instead,
-your reply should be either inline in the quoted parts in case you want
-to reply to individual parts of it, or below the quoted part as others
-are doing :)
+> From: Koji Nakamaru <koji.nakamaru@gree.net>
+> 
+> The thread serving the client (ipc-thread) calls
+> with_lock__wait_for_cookie() in which a cookie file is
+> created. with_lock__wait_for_cookie() then waits for the event caused by
+> the cookie file from the thread for fs events (fsevent-thread).
+> 
+> However, in high load situations, the fsevent-thread may start actual fs
+> event listening (triggered by FSEventStreamStart() for Darwin, for
+> example) *after* the cookie file is created. In this case, the
+> fsevent-thread cannot detect the cookie file and
+> with_lock__wait_for_cookie() waits forever, so that the whole daemon
+> hangs [1].
 
-Patrick
+First off, thank you for looking into this. I _think_ what you have here
+would work, but I had envisioned something a little different. So let me
+first try to walk through your solution...
 
-> On Sun, Oct 6, 2024 at 4:21 PM Kristoffer Haugsbakk
-> <kristofferhaugsbakk@fastmail.com> wrote:
-> >
-> > On Sun, Oct 6, 2024, at 18:06, Usman Akinyemi via GitGitGadget wrote:
-> > >
-> > > The root cause of the whitespace issue was quoting $count in the test
-> > > command, which led to the inclusion of whitespace in the comparison. By
-> > > removing the quotes around $count, the comparison works as expected without
-> > > the need for tr -d.
-> > >
-> > > Signed-off-by: Usman Akinyemi
-> > >
-> > > Usman Akinyemi (2):
-> > >   t3404: avoid losing exit status with focus on `git show` and `git
-> > >     cat-files`
-> > >   [Outreachy][Patch v1] t3404: employing test_line_count() to replace
-> > >     test
-> >
-> > You don’t have to sign off on your cover letter.  Just the patches. :)
-> >
-> > Of course do what you prefer.
+> diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+> index dce8a3b2482..ccff2cb8bed 100644
+> --- a/builtin/fsmonitor--daemon.c
+> +++ b/builtin/fsmonitor--daemon.c
+> @@ -172,6 +172,9 @@ static enum fsmonitor_cookie_item_result with_lock__wait_for_cookie(
+>  	trace_printf_key(&trace_fsmonitor, "cookie-wait: '%s' '%s'",
+>  			 cookie->name, cookie_pathname.buf);
+>  
+> +	while (fsmonitor_get_listen_error_code(state) == 0)
+> +		sleep_millisec(50);
+> +
+>  	/*
+>  	 * Create the cookie file on disk and then wait for a notification
+>  	 * that the listener thread has seen it.
+
+OK, so here we're going to basically busy-wait for the error code value
+to become non-zero.
+
+That happens in a thread-safe way inside our helper function, and the
+matching thread-safe set() is called here:
+
+> diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+> index 2fc67442eb5..92373ce247f 100644
+> --- a/compat/fsmonitor/fsm-listen-darwin.c
+> +++ b/compat/fsmonitor/fsm-listen-darwin.c
+> @@ -515,6 +515,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+>  		goto force_error_stop_without_loop;
+>  	}
+>  	data->stream_started = 1;
+> +	fsmonitor_set_listen_error_code(state, 1);
+>  
+>  	pthread_mutex_lock(&data->dq_lock);
+>  	pthread_cond_wait(&data->dq_finished, &data->dq_lock);
+
+which then releases all of the waiting clients to start working.
+
+They'd similarly be released on errors such as this one:
+
+> @@ -522,7 +523,7 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+>  
+>  	switch (data->shutdown_style) {
+>  	case FORCE_ERROR_STOP:
+> -		state->listen_error_code = -1;
+> +		fsmonitor_set_listen_error_code(state, -1);
+>  		/* fall thru */
+>  	case FORCE_SHUTDOWN:
+>  		ipc_server_stop_async(state->ipc_server_data);
+
+There's some risk that we'd have a code path fails to set the listen
+code, in which case our clients might spin forever. But from a cursory
+look, I think you've got all spots.
+
+I think your patch has one small bug, which is that you don't
+pthread_mutex_destroy() at the end of fsmonitor_run_daemon(). But other
+than that I think it should work OK (I haven't tried it in practice yet;
+I assume you did?).
+
+My two small-ish complaints are:
+
+  - busy-waiting feels a bit hacky. I think it's not too bad here
+    because it only happens during startup (and even then only if we get
+    a request) because after that the listen code will already be set to
+    "1".
+
+  - the check for the listen code is in the wait_for_cookie() function.
+    So even after we've started up, we'll still keep taking a lock to
+    check it for every such request. I guess it probably isn't much
+    overhead in practice, though.
+
+But what I had envisioned instead was teaching the ipc_server code to
+let us control when it starts actually running. We can do that by
+holding the existing work lock, and letting the callers (in this case,
+the individual fsm backends) tell it when to start operating.
+
+And then we are not introducing a new lock, but rather relying on the
+existing lock-checks for getting work to do. So there's no busy-wait.
+And after the startup sequence finishes, there are no additional lock
+checks.
+
+The patch below implements that. The only complication is that we have
+to keep a "started" flag to avoid double-locking during an early
+shutdown. Access to the "started" flag is not thread-safe, but I think
+that's OK. Until we've started the clients, only the main thread would
+do either a start or shutdown operation.
+
+So I dunno. Both solutions have their own little warts, I suppose, and
+I'm not sure if one is vastly better than the other.
+
+---
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 2fc67442eb..17d0b426e3 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -516,6 +516,12 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ 	}
+ 	data->stream_started = 1;
+ 
++	/*
++	 * Our fs event listener is now running, so it's safe to start
++	 * serving client requests.
++	 */
++	ipc_server_start(state->ipc_server_data);
++
+ 	pthread_mutex_lock(&data->dq_lock);
+ 	pthread_cond_wait(&data->dq_finished, &data->dq_lock);
+ 	pthread_mutex_unlock(&data->dq_lock);
+diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
+index 5a21dade7b..d9a02bc989 100644
+--- a/compat/fsmonitor/fsm-listen-win32.c
++++ b/compat/fsmonitor/fsm-listen-win32.c
+@@ -741,6 +741,8 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ 	    start_rdcw_watch(data->watch_gitdir) == -1)
+ 		goto force_error_stop;
+ 
++	ipc_server_start(state->ipc_server_data);
++
+ 	for (;;) {
+ 		dwWait = WaitForMultipleObjects(data->nr_listener_handles,
+ 						data->hListener,
+diff --git a/compat/simple-ipc/ipc-shared.c b/compat/simple-ipc/ipc-shared.c
+index cb176d966f..603b60403b 100644
+--- a/compat/simple-ipc/ipc-shared.c
++++ b/compat/simple-ipc/ipc-shared.c
+@@ -21,6 +21,7 @@ int ipc_server_run(const char *path, const struct ipc_server_opts *opts,
+ 	if (ret)
+ 		return ret;
+ 
++	ipc_server_start(server_data);
+ 	ret = ipc_server_await(server_data);
+ 
+ 	ipc_server_free(server_data);
+diff --git a/compat/simple-ipc/ipc-unix-socket.c b/compat/simple-ipc/ipc-unix-socket.c
+index 9b3f2cdf8c..9a2e93cff5 100644
+--- a/compat/simple-ipc/ipc-unix-socket.c
++++ b/compat/simple-ipc/ipc-unix-socket.c
+@@ -328,6 +328,7 @@ struct ipc_server_data {
+ 	int back_pos;
+ 	int front_pos;
+ 
++	int started;
+ 	int shutdown_requested;
+ 	int is_stopped;
+ };
+@@ -888,6 +889,12 @@ int ipc_server_run_async(struct ipc_server_data **returned_server_data,
+ 	server_data->accept_thread->fd_send_shutdown = sv[0];
+ 	server_data->accept_thread->fd_wait_shutdown = sv[1];
+ 
++	/*
++	 * Hold work-available mutex so that no work can start until
++	 * we unlock it.
++	 */
++	pthread_mutex_lock(&server_data->work_available_mutex);
++
+ 	if (pthread_create(&server_data->accept_thread->pthread_id, NULL,
+ 			   accept_thread_proc, server_data->accept_thread))
+ 		die_errno(_("could not start accept_thread '%s'"), path);
+@@ -918,6 +925,15 @@ int ipc_server_run_async(struct ipc_server_data **returned_server_data,
+ 	return 0;
+ }
+ 
++void ipc_server_start(struct ipc_server_data *server_data)
++{
++	if (!server_data || server_data->started)
++		return;
++
++	server_data->started = 1;
++	pthread_mutex_unlock(&server_data->work_available_mutex);
++}
++
+ /*
+  * Gently tell the IPC server treads to shutdown.
+  * Can be run on any thread.
+@@ -933,7 +949,9 @@ int ipc_server_stop_async(struct ipc_server_data *server_data)
+ 
+ 	trace2_region_enter("ipc-server", "server-stop-async", NULL);
+ 
+-	pthread_mutex_lock(&server_data->work_available_mutex);
++	/* If we haven't started yet, we are already holding lock. */
++	if (!server_data->started)
++		pthread_mutex_lock(&server_data->work_available_mutex);
+ 
+ 	server_data->shutdown_requested = 1;
+ 
+diff --git a/simple-ipc.h b/simple-ipc.h
+index a849d9f841..764bf7a309 100644
+--- a/simple-ipc.h
++++ b/simple-ipc.h
+@@ -179,12 +179,21 @@ struct ipc_server_opts
+  * When a client IPC message is received, the `application_cb` will be
+  * called (possibly on a random thread) to handle the message and
+  * optionally compose a reply message.
++ *
++ * This initializes all threads but no actual work will be done until
++ * ipc_server_start() is called.
+  */
+ int ipc_server_run_async(struct ipc_server_data **returned_server_data,
+ 			 const char *path, const struct ipc_server_opts *opts,
+ 			 ipc_server_application_cb *application_cb,
+ 			 void *application_data);
+ 
++/*
++ * Let an async server start running. This needs to be called only once
++ * after initialization.
++ */
++void ipc_server_start(struct ipc_server_data *server_data);
++
+ /*
+  * Gently signal the IPC server pool to shutdown.  No new client
+  * connections will be accepted, but existing connections will be
+
