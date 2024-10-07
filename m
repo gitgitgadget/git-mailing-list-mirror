@@ -1,126 +1,99 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E816C18BB91
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 11:11:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285382AD05
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 11:12:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728299507; cv=none; b=b271XPJB06DSp2O293eM+/YwNsqZ8P0/Cm9RUtnHZ4hZCwcA6J03CSc2Bgl6A2FbhzqcoMeREpKIlCPutucUpj/xiGfGZue3LAftPQ17LYQz8H4MzmR8kE0EhIblxXNz0x+NeHZKGn6G+Q/000jmCMn2mavF7Pr9NiPr22aIS3M=
+	t=1728299540; cv=none; b=dCqv6VLGWn+QV9vnduY8e5z8OmApUTBFYr9IpTMorKTUiaa2YfLK2u5dSg5ncqe8hISnAsrkMOFHWeGCHTCnFf+oWGzTjjFfac8RAv8BE773e0WtSptI7V2YVKgmkGza1KZblEW0CUla7asHWX/9TTCzeEccv4hU+QfE7BuHyEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728299507; c=relaxed/simple;
-	bh=fs3qLKFJtfK3dqSvDK9HC0nYSnMEBWM8rXAaLy0Vyqw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UX3+LPWyweeP8+FYjFvBd7aVmoi+IRPbhDlQjS6L/CUrV7f9AOq/dgxsAPhhBax+YVphwPK4lmNOg2vl72gV4TWwpqp4hivjPvkMbBh6nUXomt2Ur5jaTIkl6K3TJmJwGIXPgwBUlUlxkvKSfmWZZDp7bc/6rTReNy1cmKwM0HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=SSFZqt/O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k7Rb1WK6; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1728299540; c=relaxed/simple;
+	bh=HTXSs1Eyy9mEvoTLoyzuLq09bGpc9tJIV9TB+CVHWKs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=umhSW8us+2LqHVLg3/zUc4EZuQXMVLFHlcn7xDAB5ocYgPN1hUWmXa4sDWvooJyWC7BVwRHTvzIono14g3SY5RvPRBdgnmijDndTd6EIqtcuqBE/fs4GAyzVCAKqUtA5IfmFGUGLFS/y0kju1+4OCzxZguDx6Y84hMV0bAKauL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rrsWXQHo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lsoSpRL+; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="SSFZqt/O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k7Rb1WK6"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F2D0C11401C8;
-	Mon,  7 Oct 2024 07:11:44 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Mon, 07 Oct 2024 07:11:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
-	:from:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1728299504; x=
-	1728385904; bh=NLwq5FczTksTqRNwXW5tFifv2GYcK5mpxf84BQ0RJaw=; b=S
-	SFZqt/OjPFI45iuziqysEyepg9nwvp+9xZTMQFngrWuQ0bYxZXxjFVgGRnlRptb6
-	C5JVmSRWNlfK71mVj3ol8rPxeAXg1khL4PqjkiUiY+J/0ywvXCuJoLVNnv0oBRqD
-	C3BNCuc6IHY8F86osMqzhyLrlVA5oF/+xvmbCCGbx9I/CuzPJDhkWKnxHrfnz7FF
-	41IpSpw3GHK75UpksneHsepTfLyo6CoI2WRlZNWOTCbnCx0leJ5Ib7c8KmkcnkYF
-	8Ybaei04m5tA5UCiZvYxcz4tMjkWCewFzdvBmNi0k0rDEtNnkm7NcrXENZAsmff3
-	CdtoYr7xWUai/MazixF2w==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rrsWXQHo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lsoSpRL+"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 22D8B25400BC;
+	Mon,  7 Oct 2024 07:12:18 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 07 Oct 2024 07:12:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1728299537; x=1728385937; bh=ma2eVetPwL
+	aZVZGhCMg6UOzQWMP/CmhcD6hDnGxlNQw=; b=rrsWXQHoFeg74Icm3joUm5jO+0
+	6I19QIWe4524YtsEdp5BILVDgXfunYwULBQzudLVDxYh8WofPSNlYvN5ysDC2EOr
+	iarIbbTo4DspxOfTmQVcpTLhZUG8VqdACHIsSALXBWnd3okBORWWvyGIeoSEflV9
+	Ncla+KsvZ9AKb9Ek/l40NKI4LbU23SaVHecA/hit1uCT4IwOfk1SleMenUMFPGrX
+	0lmBN9peFhuq7aG4NtKKhtU/t8EoJM/9RHBd4Ma/MiMmVYJYkS2TBK8qDymQpq32
+	OvpSyaARGkKJnS5QAOTq8S3LmGC4n6eGZQm4/Whf/cqNNmnwd2bS3L+t+dCA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728299504; x=
-	1728385904; bh=NLwq5FczTksTqRNwXW5tFifv2GYcK5mpxf84BQ0RJaw=; b=k
-	7Rb1WK6HYW/mJZvzUuSFSr6pMae25pXDtoh77Ln83HqXfHS72TLIA43ZICwjAB1U
-	hn2LOy5YUwIIKjqHOc1Mijh/3oTk35fjnRm6G2Bhb7eXmxf8W6ELvjGJCx9OnyPG
-	PMUwiTH3JRGmpMh7BpRSfJ/WnMrUQiQ6aM406DAxKF28hC2ysFhvMFaP1XtgvEGR
-	HNG7fPZDpMapaatrKVMhT3n5PguJZYtd4h1g8Fonm/57xZL1Xy6GgBXVIT2QjgfT
-	zWCZv32YEo4gxJwv5mvoXMu79AlKi7CdT6P9GvNBRV/hWYa0XnyEhFzxxG+uXpAX
-	ZnrT+ajHgb+4s59cfDbpA==
-X-ME-Sender: <xms:8MEDZz-N5Rvtrphf9RZqiGRf7Fr0f_Ptpy7zjaCTbUc9kVGkcZ6les8>
-    <xme:8MEDZ_vZrT1JQdBTxSbyCs4jdWyoSxq3sngRr-uC3l3LjPPKRl1ZF8vY2RBn3Ek6T
-    X5JLzXi4Jk7mivtww>
-X-ME-Received: <xmr:8MEDZxCqoQlcvx2I7P34fbnBdMFX_WR2wcF6N5LiCTRFUW21ullGEtktu3RKVXRuOsenVSqrl17ilOwcPhyllzWtU4DvfV8VwJ-uMptG2A>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728299537; x=1728385937; bh=ma2eVetPwLaZVZGhCMg6UOzQWMP/
+	CmhcD6hDnGxlNQw=; b=lsoSpRL+WFg1KaC5Z7mQLNWfyXMjO2+4AT8AtzoNjGrb
+	BSyxOdMh5442e0xcsx4QWaO4VR0DEMCxw50rYsj/Bf90NjkU6BVV1ABWkqJQcERD
+	WGMh+QrjrFUQuLxslHYjIttWpAFEouCC8g2cYz7m1UU0aesVZDKqKGgXggg7DPZA
+	KpWnCSPZF2IVEf+4+5zfQWnyLZRYMYcXIrMirH4ckxG34A1C6lYUY31u3NFnedAN
+	vcAcsbwwhA9BIpB6QpKg67FNPmZtwolczSMgozG50VY9UQiW4CNtQ3TcT9WEBq3f
+	oh6CNsH8fIarvuj7v5/su6Tcp1dGeFhuLfgYxEUNcw==
+X-ME-Sender: <xms:EcIDZ6fdDvcJYiDcw3SfqLOrhNYEXtfDp5LR2JMRiRdCPCdPkrEB7g>
+    <xme:EcIDZ0OGYvz4x7-XuKb-eGh07wIjk8STGu6c9rI8p9uGp4ZA8QWlnjYrLX118mFYW
+    2mYW4Mom8oBsCZBIg>
+X-ME-Received: <xmr:EcIDZ7i0t9FzLDYLcfN_C3GW6fCkE77nGadODkKC7sXTGHIPgkZXW3JjPWYedAo-NNiUeF9OKdSv4spkbgULHSrmO6AjsKnX90-w79MjA-00dNnl_g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgfeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgr
-    uhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrf
-    grthhtvghrnhepteduieehgedutdfgudevkefhveduieeiteejhfffteeitdegjeeihedt
-    hfejgfetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    eptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopeegpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:8MEDZ_c0Q0T14RdMS936D3The6JJUJj5B8swkcqgQ1yz8uFRSYrJWA>
-    <xmx:8MEDZ4M7K7QJqPVSs_0DXfGEne6szj0I_-aqqapLrDqdBfWJL98GFQ>
-    <xmx:8MEDZxmlioUdDNCoauUCf_HHAYTfZSTdQyig6QUWEVP7NvQ-RcXgWQ>
-    <xmx:8MEDZytTBsD0etJWNCrRGdKpwi7L85sZ-w_FGIIQ4QL4drocFURQYA>
-    <xmx:8MEDZ1r8oL0C8UZRXt4BF0-ldXAi7Hoo7bfNc6qoMVAKnP4YISsu4heY>
-Feedback-ID: i2671468f:Fastmail
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:EcIDZ3-uGMY399olNJ3SvJiUB-KJETjbrVxWfjKxFGlFuZ-Exey7VQ>
+    <xmx:EcIDZ2sqoMC0eML_AlXSTTN3e9OosJuH5AaJZA-ev9_Qk17XbNblBQ>
+    <xmx:EcIDZ-HN2E-dTsTxgenxZcifupLy92G9B9JDRiZeH8Hcz7yJCH-84A>
+    <xmx:EcIDZ1NgUSTyv-5UrYXbMa5_NJ6Yhczo61rsZJeAdoOnHCY0Xat5EA>
+    <xmx:EcIDZ6Ku_ljS7UQKHoO9mY_XwwBCGU-YdsilqmSSFnvw4vbfqrC9iDFM>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 07:11:43 -0400 (EDT)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	newren@gmail.com,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH 3/3] doc: merge-tree: use || directly
-Date: Mon,  7 Oct 2024 13:10:29 +0200
-Message-ID: <4057d6386125e51fd934f92abd11c62a9d24a832.1728298931.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
-In-Reply-To: <cover.1728298931.git.code@khaugsbakk.name>
-References: <cover.1728298931.git.code@khaugsbakk.name>
+ 7 Oct 2024 07:12:16 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9ec466e2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Oct 2024 11:11:17 +0000 (UTC)
+Date: Mon, 7 Oct 2024 13:12:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
+Subject: Re: [PATCH v6 0/2] [Outreachy][Patch v2] t3404: avoid losing exit
+ status to pipes
+Message-ID: <ZwPCDAjeQVf4VFc_@pks.im>
+References: <pull.1805.v5.git.git.1728298308.gitgitgadget@gmail.com>
+ <pull.1805.v6.git.git.1728299466.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Commit-Hash: 4057d6386125e51fd934f92abd11c62a9d24a832
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1805.v6.git.git.1728299466.gitgitgadget@gmail.com>
 
-From: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+On Mon, Oct 07, 2024 at 11:11:04AM +0000, Usman Akinyemi via GitGitGadget wrote:
+> Changes since v5:
+> 
+>  * Remove spaces between redirect to conform with git style.
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Thanks, this version looks good to me now.
 
-Use `||` directly since that is more straightforward than checking the
-last exit status.
-
-Also use `echo` and `exit` since `die` is not defined.
-
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/git-merge-tree.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-index 10f8ac7f80a..46091da022d 100644
---- a/Documentation/git-merge-tree.txt
-+++ b/Documentation/git-merge-tree.txt
-@@ -211,8 +211,10 @@ linkgit:git-commit-tree[1], linkgit:git-write-tree[1],
- linkgit:git-update-ref[1], and linkgit:git-mktag[1].  Thus, it can be
- used as a part of a series of steps such as:
- 
--       newtree=$(git merge-tree --write-tree $branch1 $branch2)
--       test $? -eq 0 || die "There were conflicts..."
-+       newtree=$(git merge-tree --write-tree $branch1 $branch2) || {
-+           echo "There were conflicts..." 1>&2
-+           exit 1
-+       }
-        newcommit=$(git commit-tree $newtree -mMerge -p $branch1 -p $branch2)
-        git update-ref $branch1 $newcommit
- 
--- 
-2.46.1.641.g54e7913fcb6
-
+Patrick
