@@ -1,97 +1,136 @@
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60A012E48
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 04:31:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C318510A1C
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 04:38:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728275471; cv=none; b=CvG0JRqSDxk6GC1BjxdfmeQDzfhDUXA1RGzep2i3qqU+EYoXUrXPWhL2sqNRsFT0x9ENAm6+eg2sibLDvcGBdTKNpU03Kjb/IflgZQoaG9jZXxYpRmij16YweUu2KX0qIFfWYa51AzFhKLnDlYdLWq/32LwMPBN+LlApbeEMVZg=
+	t=1728275902; cv=none; b=uCK2vaDn1G+7m3E3OTlSL7UeTN1uvebJjhxwVHlBsq7yWLOe1x5oZetKG+eSNcGTI7uOChbh0oqqvewdioMysGEi5ZLr6tJm1jzZdb3MiKUCD3gnzmzI5zmC8XfkcNumHrvC4Qeu6zLR6X2q6IlTwe8B/ud2kdgH51iL/u+9yvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728275471; c=relaxed/simple;
-	bh=8Vb6Qw3hp00rZfFpZ7Rz9qsNKtBIHhUUWUhw8Ij0cMk=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=geCZhS6C0PWaYzBIp06E8WaQJLmhvegb9DL85mqfqC22VJoxbZXpa6CMZRA9zxpJdVKhKj2v+QV8Yr9jPLTdDb+6KTrEcuJc9yKmqf7IYBio/l926SqPGntCrWapyzMykc3AU/Lc4hNOxiXQGgYoyJiIW38mAC7dRfLHifiMQj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=cv6id4lH; arc=none smtp.client-ip=185.70.40.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1728275902; c=relaxed/simple;
+	bh=slkWlWHhjR4amjCmh5DJAMD9Ale8i31zxbDD5d3MV7g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kRrmdEnFl60DIzfkCrv4EPBHx/LXuubPihG+DXCgV6zZKL7RY1ojEQxJ0As4pfXJWpdKwMuhEKudrX7Eaytn4Ozdgedpegj8TUlHsz7IEoWbL4nlZPaVsPCV5g0uAnBjBRU2WNp8kCtA28NIEFyFJBoIq6j57xI9c+Jd2zbgcRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QDg57/Kh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DCIORALw; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="cv6id4lH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728275467; x=1728534667;
-	bh=8Vb6Qw3hp00rZfFpZ7Rz9qsNKtBIHhUUWUhw8Ij0cMk=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=cv6id4lHEo6n4GJ/q3TLYU/X1QIp1ZPzhoyU3dfvzzzlIXk2PcdwKtZ2J4KhiLWJ4
-	 zj8XbBuBCfacq6JpqRtwZd46A8G+NGwEfzQQjptCH2UW2Iz1NIc2CTAhllS3Iv4MGB
-	 oMtd+OICKNKRRcWm9GJeEunbCVqQnD3lHXO9IvPvKb7yT7+yhvJTkkBsQ3ZUrIZ2k5
-	 PZskKtb2PvjWgW8WWU70t1oKrl/CqC+gsJUfTXSuj4rimoh33Z75poQ5/LFl0yJIik
-	 mZskmrDHfdlBoBjlvaEyhoRENr7NCRVr0tT2tywUY3hw8Q1IC6EN3JzwnM23yROCqF
-	 ZbV+6GuMTAfGQ==
-Date: Mon, 07 Oct 2024 04:31:04 +0000
-To: shejialuo <shejialuo@gmail.com>
-From: Caleb White <cdwhite3@pm.me>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] worktree: refactor infer_backlink() to use *strbuf
-Message-ID: <vkneUltI5q9qajOYcG8GYE8FHCRIJbH1ExR58YoEm9pam2_L6LlchL4otU6jk6l7iIN0kjOWtknZx4aCxRjGTVicQ69RmOYt_RUghGlV4hA=@pm.me>
-In-Reply-To: <ZwNjgvMbUKgpbP7O@ArchLinux>
-References: <20241006060017.171788-1-cdwhite3@pm.me> <20241006060017.171788-2-cdwhite3@pm.me> <ZwKoNg-HYGaohvCd@ArchLinux> <CAPig+cQC45_Pofw31h2RSydj_CjqpfajLLa5O_sR9m0AQh5OVw@mail.gmail.com> <o7jQV4JUYr2iQtErKFhCrjCySiGn7_I18gmdInKbOC9TAsvqazG0O_fPUtiWZ5UfiGLr25OZ5xvqIhfOIwCG-s1RGgri-BJIdHqiokIw4z0=@pm.me> <ZwNfuLoVn4aU4mgQ@ArchLinux> <XzNC1BXk2OaIGmgas_MWKZ_ubpeR_kA19hNxmF76FLtgI_WfYrMOGEDEr5uqOETNPHTI_bA3qJE0R0eah4UTPXZUgeRjG7psN6ncDOdPXNA=@pm.me> <ZwNjgvMbUKgpbP7O@ArchLinux>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 3a2f0edea4fe348b5f2563e0603f8ab6acd6566a
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QDg57/Kh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DCIORALw"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9AB37138039F;
+	Mon,  7 Oct 2024 00:38:18 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 07 Oct 2024 00:38:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1728275898; x=1728362298; bh=P5crSj46Sz
+	PJDqsNixjCefXLYieLoA4MOP1jeGYVS/c=; b=QDg57/Kh3c7OrziO4XUOguVe5r
+	PUjQg/ko/day0TpwroxCGHOjlFP9hQqeMifYdDjE1o4ly65RtGaGKR6boTi/WJo2
+	gPaY0qUDhHHO+MgID3oWZfSZVbAcfI/+7uvrZMz+lXPjEbCX38macfcA7k8tNtir
+	SqQM0ICIQ/PTVmUm9r9eMp9V6k8+2RdW/XOuvGXxWjPZpzqYnvCnQUMtYftEgMEB
+	vlH7FErHOoZVN2abK8AkH/6kORPAHW/LKz7qqQ+j2lFDPzEeJdF+ckVaGOm/bJqd
+	dq9DuSgdDDxhJuD50AsyeBE6e7PpARYHooduW67PcCtV8FRobjiwsLC1Oz6w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728275898; x=1728362298; bh=P5crSj46SzPJDqsNixjCefXLYieL
+	oA4MOP1jeGYVS/c=; b=DCIORALwsqWNK8kzsHGwIZEcAcsPtUQJEIGuYQDVj14m
+	MbZj3K8ihRdCuiNOFUGLvMuOT3oLmpRMdWKYZ7pl5Bfe0El3sNXceRCZCPtW5YCj
+	tCXlrMG1TVyHn/GRYB00gD3Tr8VPGLIc6KPy4ZGavELP0+lfgTiH0Y/x0+wvW+Zh
+	zKmBQ7062pk0T9RgtFW0lVH8x9+Nb3/GRBqS3HGPaLbIeLN9IdjqCNpzc/zT4xbt
+	RKHHjRAC414ntLlFTNSijNMvAIY7gbgBfChKefd57qYRMXVCR+RuO+6H7AxGnzIj
+	IejC8aE8C48vJEg7Kkqhm56V2kR20ebBP5sZGF+10w==
+X-ME-Sender: <xms:umUDZzrCX9aOOUomLFl_QA8P69tYZaOSQ1AMTaei7UGaDuWzL--bQg>
+    <xme:umUDZ9rqs_AH97uDswzXQ5AhAJS-WJ8eMU9AsRsWd7TOfVfxNiI4hGdsY36FU1T7E
+    s0O29izTHM2k8JfjA>
+X-ME-Received: <xmr:umUDZwMz86WsLmfBXoF9yHp27664dDSeQ6qFTyUl89uWiRykk-I9RZHxiUfS4Jipet8GELje6hXdY3dxMje-DLVB9zIFT9VraEU2qhGdHmxve0DTDA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvkedgkeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:umUDZ27WCA5QWtpUlEJv1QtbgwUPfl7rnXnwOieaJE-EnxCPBEGfTA>
+    <xmx:umUDZy7lFTirafbXkkzBfRdjL6Z6Mj0K-3CfcTFIgNln9KmxQjC28Q>
+    <xmx:umUDZ-iEiDg3ezdq4OQ5AAt9a4OCJ8wOiuop9oBHZv6EqLT9ZlLdVw>
+    <xmx:umUDZ06YBuIWLqm3KGCHl2McpQpiOtXjw_v5Ik3Zf38NJzt9G6Mg5A>
+    <xmx:umUDZ4mfVUf-wfII0vvOgeN5CZe6HFu_2xNIlaDf6IBBFvny5vm0CMed>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Oct 2024 00:38:17 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id f3104d23 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Oct 2024 04:37:16 +0000 (UTC)
+Date: Mon, 7 Oct 2024 06:38:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/3] cache-tree: fix segfaults with invalid cache-trees
+Message-ID: <cover.1728275640.git.ps@pks.im>
+References: <cover.1726556195.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------5ab04d7da822e5c23b78408ccff8b76badd350933e888a8bbadf287ab9746cb2"; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1726556195.git.ps@pks.im>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------5ab04d7da822e5c23b78408ccff8b76badd350933e888a8bbadf287ab9746cb2
-Content-Type: multipart/mixed;boundary=---------------------ae4346aa5f12c5a0c5dc7a275afdfb02
+Hi,
 
------------------------ae4346aa5f12c5a0c5dc7a275afdfb02
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+this is the second version of my patch series that fixes segfaults when
+the index has a corrupted cache-tree extension.
 
-On Sunday, October 6th, 2024 at 23:28, shejialuo <shejialuo@gmail.com> wro=
-te:
-> > } else if (err) {
-> > fn(1, realdotgit.buf, _("unable to locate repository; .git file broken=
-"), cb_data);
-> > goto done;
-> > }
-> =
+I completely forgot about this series, and it seems to have slipped the
+radar, until I rediscovered some of the segfaults while doing the last
+couple of leak fixes. So I decided to just resend it with Eric's comment
+addressed, which boils down to a single clarification of one of the
+commit messages.
 
+Thanks!
 
-> =
+Patrick
 
+Patrick Steinhardt (3):
+  cache-tree: refactor verification to return error codes
+  cache-tree: detect mismatching number of index entries
+  unpack-trees: detect mismatching number of cache-tree/index entries
 
-> Thanks, you are correct here. We cannot use "BUG" here. And I think
-> currently this is OK.
+ cache-tree.c               | 102 ++++++++++++++++++++++++++-----------
+ cache-tree.h               |   2 +-
+ read-cache.c               |   5 +-
+ t/t4058-diff-duplicates.sh |  19 ++++---
+ unpack-trees.c             |  12 +++--
+ 5 files changed, 97 insertions(+), 43 deletions(-)
 
-Granted, that last `else if` could just become an `else` statement now,
-I'll make that change.
------------------------ae4346aa5f12c5a0c5dc7a275afdfb02--
+Range-diff against v1:
+1:  413faa2b81 ! 1:  df5a2d0dbc cache-tree: refactor verification to return error codes
+    @@ Commit message
+     
+         Refactor the function to instead return error codes. This also ensures
+         that the function can be used e.g. by git-fsck(1) without the whole
+    -    process dying.
+    +    process dying. Furthermore, this refactoring plugs some memory leaks
+    +    when returning early by creating a common exit path.
+     
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     
+2:  4bdcc43518 = 2:  d63087c53c cache-tree: detect mismatching number of index entries
+3:  fbffeeb6f1 = 3:  5e578c1f41 unpack-trees: detect mismatching number of cache-tree/index entries
 
---------5ab04d7da822e5c23b78408ccff8b76badd350933e888a8bbadf287ab9746cb2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsBzBAEBCAAnBYJnA2P5CZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
-28viAADQmQf/Yu4big2l59CxkInaqoybJQNNGi0pWRf2xRWM46wWUZuhbZ9Y
-Ccw1wk6CKQLXTUYXbwuMSyQBCyJrIlkXUgBdLpXn5+Hjzeto16Lsxcj7LWA2
-j8hDOLju4Nii+krSzlPj1/J8b4nOteWlUMp6UdOnDPaR3JRlTeBk9zIDHW/6
-EbgXAk5W6N3GbrGIlPRGebw5lAboODXcilW4MZG/CeJTgYjkKtJTck7rDIqR
-ot59iNQ7XaYvKffkPPlMJhW8GQMjIPYGnl9HDMxaQnjq28Asl7n/bXG5NKRI
-ODsxgrhgZZQ6qlGC9VXqjxhHxO9juvpLKKmFfDKOuKyAQomVpsOSzg==
-=bueA
------END PGP SIGNATURE-----
-
-
---------5ab04d7da822e5c23b78408ccff8b76badd350933e888a8bbadf287ab9746cb2--
+base-commit: 3969d78396e707c5a900dd5e15c365c54bef0283
+-- 
+2.47.0.rc0.dirty
 
