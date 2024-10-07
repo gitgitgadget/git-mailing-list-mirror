@@ -1,79 +1,81 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4ABD1D2B2F
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 15:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F8F1D2711
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 16:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728316425; cv=none; b=jcaSGBgMNIfPPFf4ec+2VMpNCXJ8tBMk9SnDg1v1jwpWoRhcNMRG2mDrY0FKnf0w+5UySluSBKHfy77JS6jJloAJ0NripK/nwtMX3L6WZRrRR/ssJN7YfhfNjDYeJ303fKxweyWrtlvCEnM6ndnA35lyL/YUe8SsBkvqn3eXCJs=
+	t=1728317625; cv=none; b=Ky62yIRtriUcH/sBVGPAly/vebSPriBCqI8Y3N++uTXyci2LxWerr+3QOXPoDsaAnaosCTR+tSg35s+zuj7p4YL/zZgSpIUHkegRZxtN1o+R1LfhEEjO40FMo4TwiAGpdwTXkbdp362YBo5zcfhwGcEpvS0twiu2SwljaMbk63Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728316425; c=relaxed/simple;
-	bh=dZWUjZk3yeYMWwMCO5hmVLrqHE4cz2lJ16EfcPxdnn4=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hI8Qnqq7/Ev+rNYcitvlhdJ81gto6sP/Fb6HPETqa7NVjhdpKpWSWO6l87qSyKoZlXw1WSGuKVoiJZUgtcZ1KwrDdA3k0t/krPwTWoRceCEgz53TfRhXbrg8ioyuKWxaj+x8MNhjWnD7Ai2inUzb/6VjgVW61iRcdpYQXhbKurE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dmqQCxW7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X/p8uppX; arc=none smtp.client-ip=103.168.172.154
+	s=arc-20240116; t=1728317625; c=relaxed/simple;
+	bh=UlXyXtGv6IHGo8mfiMyTi9k05Xb2OSt2g+cjmFs2AAU=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=RJ6gNfInPpeykj886a+sBnWNfTeuqUDS4ykuAv2Io5c4ZULiD/gvWoAKHok1RSV8MAKiRHSq6IY6D71bIH5zKzMAb/+QTeVHp4Kom/SecJqGP0XA9X/jVXX5cCVVToLc7Kt2nZo1d/45diuugcXuyxNEYyNTh/HgbSZbKVv1crw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QqCunH6+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XclogDmz; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dmqQCxW7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X/p8uppX"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D3D7411400C4;
-	Mon,  7 Oct 2024 11:53:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QqCunH6+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XclogDmz"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 874A9114019D;
+	Mon,  7 Oct 2024 12:13:41 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Mon, 07 Oct 2024 11:53:41 -0400
+  by phl-compute-10.internal (MEProxy); Mon, 07 Oct 2024 12:13:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1728316421; x=1728402821; bh=pttKv76LWXeHOIQPESJ8qnXGMX50poYN
-	cIWagtGjNNs=; b=dmqQCxW7PcqRFJrplgcMfD81YsofzJmjt5fbfvbmZF7A70h3
-	+V6s4nOpeTemo3Hwt8lwxl/qctrm+eMeXsFnVNy0XfWXWBrOdOnPmI8Y2L6H+FV7
-	NOF4XM/ja/Q944MnlJfnFJJP2tvsLw3FSP/m7OFhbvKZOpuwKI2jSS14UVOfn+P+
-	P6wG3m3jNFyzjzGF1oIaewhCHamiZP5LCeluboBo6zUH+ujzaYqVN5liLCIz+jp0
-	x9hZxHo5BgD2x3KTgDH8vAc0ZoZDtOgbNpYASbwWDbhuoO7VFH8dHQ5EVr6TNVHh
-	4yhubm001kt9ENdbThE3ghThxXVuktFCQVehzA==
+	 t=1728317621; x=1728404021; bh=VfGz0IOBsHdXElxMhGKXGEL1IfCYcXfL
+	1NLGvE+KL3c=; b=QqCunH6+QgFhOZQtZAwWFq+qzMZBtWuaHXfcSzhOSrYkT/JI
+	PwjWGhj8o6Ra97KJhndUC1OVvZooDnds2RfxvqH/EgWQckvVMrmhrWU/Y8Pnp65N
+	Yt6E/OZRirA0F0lPjipPKVqtVIclWdFSoc2jjf3SUGRiyK9Q628u/NTYagYgGMvh
+	ojmEASR9/Uw8G8C99iKekdBoN613zFl3Eeg6TyE0vo3qwbdKp+oZtPnRwG/LSs74
+	v5FFZE35Y0rUGhHve1/eY5NKb8ModogglS723MkC5U0rCVIRYlv3CNIDP62DT03q
+	nVG+LaVZcIGwbPGEVAi2hbAQeqLLAC6bTYu1+w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:message-id
 	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1728316421; x=1728402821; bh=pttKv76LWXeHOIQPESJ8qnXGMX50poYNcIW
-	agtGjNNs=; b=X/p8uppXnSNSpNjx1f5xQbXVl+ZjXIbatcrNJsLDd7iQrOkOHsy
-	dDG0KGaVRgvnLZviMOFykDKNgrnLJF9aBbdeepaU/EuHKcY8SJk+E6jrJmTvcutr
-	bS/lxhRYYtF2/KvRopE86nocJlfscvIG/EvxNzvY6RgpiLvtI3ThErlg3Z8NcfRy
-	dVxFu7o7S1Hnjrrz/hD1uFDiba3N+XrOAM6PLP52LpDVC0azOCAklKr60tUw0w7c
-	iqT9DyLeNX25eOyhBFjYS37aCT8MkSPAfpgOU0ioDFQiJ1IcSSFHg8MM+CMtWHgx
-	rKQgWJ12Ay/rXQzLfAaHm4AuL+L7eh3zA0A==
-X-ME-Sender: <xms:BQQEZ5G_dgHOGQwVCVNVStjmFUvmVXATGbc38rFKwxhlnbGMOjWAoQ>
-    <xme:BQQEZ-XyTe81luzhE3LtB03OqUPNCdI2rZMTqNoK0CHW55XHFLLOc8zpD-T8jky2R
-    Ix0pCW2UImJ_dYi2g>
-X-ME-Received: <xmr:BQQEZ7KB5mQ_ckmUMX-dpant3BHMN2J_odgs9t33gFYzNvCgrkwWFWiBORWL-UwcR59kGS43EMNuQ-6gEw_y9t3vt6iMokP6nEB4cv0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgleeiucetufdoteggodetrfdotf
+	1728317621; x=1728404021; bh=VfGz0IOBsHdXElxMhGKXGEL1IfCYcXfL1NL
+	GvE+KL3c=; b=XclogDmzf4uoFIKwGvXKWcFxEfXr2cxN4dsfEYmtZnqh44h8AvU
+	rjtMbzYJXQUILDZ6niMELc4nkVuBNS8WWBr5kNAC+lOEzZTHBdXMNJogerXo+SWr
+	8BgyG4JeC3EKV39vy4mgabitNetkMH52JyAc1iATdMykPzABCAfuC4icvtUXckkg
+	+ZNkknBfD0DQmnHQkCHPrJ5R/SjfApyKMdAB09dpIxgvUymNI+OSkBQM5zZfsUJd
+	HfmdckZx0c3bMYrLoxRb7RXljl6wCbzNNps3S51YN9oeQU6PcUUB+krrWkVjvZxL
+	+7JOldrHKlJEDUdA7G13aGGOENCFejj8lEA==
+X-ME-Sender: <xms:tQgEZ1kAZ41DqzQHPsxwFMhtPE9d7rD3QT0fOIiAbDHab5ROemVcCg>
+    <xme:tQgEZw04LYcFydNdmlhsnVQn-wj3mJ2WceW3ehHhnzUk2_YRNpihgzfMSobN_CQYm
+    Iy1CrSG0sXikX4AdA>
+X-ME-Received: <xmr:tQgEZ7rj-Bd1C_9zye-xvqT7WvI-P1d8_VfRA2b__f5oyHaHtyVf_KAfy5ISj6R8on9aKyUCj8mlKWF5f5m-q1RDO_lklUQRavvBo8A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgleelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvffuff
-    fkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceo
-    ghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhephfduuedtve
-    dvvefgheekleduteettdfhhfdtvdehiedvtdeghfdtffefgeeiffehnecuffhomhgrihhn
-    pehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpd
-    hgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmpdhpkhhsrdhimhenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhifnh
-    eslhifnhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:BQQEZ_GQpj_-zoBdX9QOpVTVr0yvJn3Ypeb29GvKf36z_f0UbpC9Cg>
-    <xmx:BQQEZ_UAlJg7j96Yv3OLATb3e8dgP3fCICD_5EFMoI6FwoWQkr7kCQ>
-    <xmx:BQQEZ6Mio8hiHM_fdDoIUf3JAVzMjM2Wu9faY2IgNJDA8qy0JgenKQ>
-    <xmx:BQQEZ-3CdbnSHYy12h6MFR72A7hBj9evMKY7r1iHzoM5RNmVviF74w>
-    <xmx:BQQEZ6QZwlO1XdGV1EZWGVjyB_QPSCrmCFrHsj4nwVlTgARP0Wsiy9RZ>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucgoufhushhpvggtthffoh
+    hmrghinhculdegledmnecujfgurhephffvufffkfgfgggtsehttdertddtredtnecuhfhr
+    ohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtoh
+    hmqeenucggtffrrghtthgvrhhnpefgjefgjedvffffjeejudfhtedvfeeuteekvdfggfff
+    tdehjeevtdfhkeefheduhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhmrghrtg
+    drihhnfhhopdhsphhinhhitghsrdhnvghtpdhpuhgslhhitgdqihhnsghogidrohhrghdp
+    tgholhgrsghtihdrohhrghdpghhithhhuhgsrdhiohdpshhftghonhhsvghrvhgrnhgthi
+    drohhrghdpghhithhhuhgsrdgtohhmpdgtohguvggpohhfpggtohhnughutghtrdhmugdp
+    ghhrvggvnhgvnhgurdhorhhgrdhukhdpghhoohhglhgvshhouhhrtggvrdgtohhmpdhorh
+    drtgiipdhgihhtlhgrsgdrtghomhdpohiilhgrsghsrdhorhhgnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogi
+    drtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:tQgEZ1l-7VEOEqo_55ngYt2iepy127MbxSGsvsslNqMBU1_OKIEREA>
+    <xmx:tQgEZz2G8iUAxWDBFE_SPqY6VbP5GM9rp5tNa6zUcvn3Mp478zGe8A>
+    <xmx:tQgEZ0uSADTeKPuRfF6s99ahXtipycOG2oR8O_QZD6YGBYsl8BMMWw>
+    <xmx:tQgEZ3U9bwFDUGhWziYUxHGOHT1emlJKI3WpnBk9onKbEMz3p596rg>
+    <xmx:tQgEZxA-P4xcI-HsVtYzAIfRsCOdMej3YlG6AS_sNr7sEBKFBoCBifA4>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 11:53:41 -0400 (EDT)
+ 7 Oct 2024 12:13:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: What's cooking in git.git (Oct 2024, #04; Sun, 6)
-X-master-at: 777489f9e09c8d0dd6b12f9d90de6376330577a2
-X-next-at: 4ca455297942c5c9616351bc68bad2034c719206
-Date: Mon, 07 Oct 2024 08:53:40 -0700
-Message-ID: <xmqq4j5naozf.fsf@gitster.g>
+Subject: A note from the maintainer
+Date: Mon, 07 Oct 2024 09:13:40 -0700
+Message-ID: <xmqqy12z99hn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,405 +85,295 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
+Welcome to the Git development community.
 
-Git 2.47 (final) has been tagged.
+This message is written by the maintainer and talks about how Git
+project is managed, and how you can work with it.
 
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
+The current maintainer is Junio C Hamano <gitster@pobox.com>.  Spam
+filters learned that legitimate messages come only from a very few
+sender addresses that are known to be good to this address, and all
+other messages are likely to be spam unless they are also sent to the
+mailing list at the same time (i.e. "Reply-all" to the list message
+would reach the mailbox, but "Reply" will likely be thrown into the
+spam folder), so please do not send a message to this address unless
+it is also sent to the mailing list as well.
 
-With maint, master, next, seen, todo:
 
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
+* Mailing list and the community
 
-With all the integration branches and topics broken out:
+The development is primarily done on the Git mailing list. Help
+requests, feature proposals, bug reports and patches should be sent to
+the list address <git@vger.kernel.org>.  You don't have to be
+subscribed to send messages.  The convention on the list is to keep
+everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
+I am not subscribed".
 
-	https://github.com/gitster/git/
+As an anti-spam measure, the mailing list software rejects messages
+that are not text/plain and drops them on the floor.  If you are a
+GMail user, you'd want to make sure "Plain text mode" is checked.
 
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
+Before sending patches, please read Documentation/SubmittingPatches
+and Documentation/CodingGuidelines to familiarize yourself with the
+project convention.
 
---------------------------------------------------
-[Cooking]
+If you sent a patch and you did not hear any response from anybody for
+several days, it does not necessarily mean that your patch was totally
+uninteresting; it may merely mean that it was lost in the noise.  Please
+do not hesitate to send a reminder message in such a case.  Messages
+getting lost in the noise may be a sign that those who can evaluate
+your patch don't have enough mental/time bandwidth to process them
+right at the moment, and it often helps to wait until the list traffic
+becomes calmer before sending such a reminder.
 
-* ds/line-log-asan-fix (2024-10-03) 1 commit
-  (merged to 'next' on 2024-10-04 at ee702f6c95)
- + line-log: protect inner strbuf from free
- (this branch is used by jk/output-prefix-cleanup.)
+The list archive is available at a few public sites:
 
- Use after free and double freeing at the end in "git log -L... -p"
- had been identified and fixed.
+        https://lore.kernel.org/git/
+        https://marc.info/?l=git
+        https://www.spinics.net/lists/git/
 
- Will cook in 'next'.
- source: <05c21616c350b5141c17fde1aa5d3aea881c6031.1727956724.git.gitgitgadget@gmail.com>
+For those who prefer to read it over NNTP:
 
+	nntp://nntp.lore.kernel.org/org.kernel.vger.git
+        nntp://news.public-inbox.org/inbox.comp.version-control.git
 
-* sk/doc-maintenance-schedule (2024-10-03) 1 commit
-  (merged to 'next' on 2024-10-04 at 2d3722c29d)
- + doc: add a note about staggering of maintenance
+are available.
 
- Doc update to clarify how periodical maintenance are scheduled,
- spread across time to avoid thundering hurds.
+When you point at a message in a mailing list archive, using its
+message ID is often the most robust (if not very friendly) way to do
+so, like this:
 
- Will cook in 'next'.
- source: <pull.1794.git.git.1727945877922.gitgitgadget@gmail.com>
+	https://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
 
+Often these web interfaces accept the message ID with enclosing <>
+stripped (like the above example to point at one of the most important
+message in the Git list).
 
-* jk/output-prefix-cleanup (2024-10-03) 5 commits
-  (merged to 'next' on 2024-10-04 at 06298d1525)
- + diff: store graph prefix buf in git_graph struct
- + diff: return line_prefix directly when possible
- + diff: return const char from output_prefix callback
- + diff: drop line_prefix_length field
- + line-log: use diff_line_prefix() instead of custom helper
- (this branch uses ds/line-log-asan-fix.)
+Some members of the development community can sometimes be found on
+the #git and #git-devel IRC channels on Libera Chat.  Their logs are
+available at:
 
- Code clean-up.
+        https://colabti.org/ircloggy/git/last
+        https://colabti.org/ircloggy/git-devel/last
 
- Will cook in 'next'.
- source: <pull.1806.v2.git.1727956724.gitgitgadget@gmail.com>
+There is a volunteer-run newsletter to serve our community ("Git Rev
+News" https://git.github.io/rev_news/).
 
+Git is a member project of software freedom conservancy, a non-profit
+organization (https://sfconservancy.org/).  To reach a committee of
+liaisons to the conservancy, contact them at <git@sfconservancy.org>.
 
-* kn/fsmonitor-event-listener-fix (2024-10-02) 1 commit
- - fsmonitor: fix hangs by delayed fs event listening
+For our expectations on the behaviour of the community participants
+towards each other, see CODE_OF_CONDUCT.md at the top level of the source
+tree, or:
 
- Under high load, fsmonitor process can hang at start-up, which has
- been corrected.
+    https://github.com/git/git/blob/master/CODE_OF_CONDUCT.md
 
- Comments?
- source: <pull.1804.git.1727862424713.gitgitgadget@gmail.com>
 
+* Reporting bugs
 
-* jc/a-commands-without-the-repo (2024-10-06) 3 commits
- - archive: remove the_repository global variable
- - annotate: remove usage of the_repository global
- - git: pass in repo to builtin based on setup_git_directory_gently
+When you think git does not behave as you expect, please do not stop
+your bug report with just "git does not work".  "I used git in this
+way, but it did not work" is not much better, neither is "I used git
+in this way, and X happend, which is broken".  It often is that git is
+correct to cause X happen in such a case, and it is your expectation
+that is broken.  People would not know what other result Y you
+expected to see instead of X, if you left it unsaid.
 
- Commands that can also work outside Git have learned to take the
- repository instance "repo" when we know we are in a repository, and
- NULL when we are not, in a parameter.  The uses of the_repository
- variable in a few of them have been removed using the new calling
- convention.
+Please remember to always state
 
- Comments?
- source: <pull.1788.v3.git.git.1728099043.gitgitgadget@gmail.com>
+ - what you wanted to achieve;
 
+ - what you did (the version of git and the command sequence to reproduce
+   the behavior);
 
-* ps/leakfixes-part-8 (2024-09-30) 25 commits
-  (merged to 'next' on 2024-10-04 at 3cfb5747d2)
- + builtin/send-pack: fix leaking list of push options
- + remote: fix leaking push reports
- + t/helper: fix leaks in proc-receive helper
- + pack-write: fix return parameter of `write_rev_file_order()`
- + revision: fix leaking saved parents
- + revision: fix memory leaks when rewriting parents
- + midx-write: fix leaking buffer
- + pack-bitmap-write: fix leaking OID array
- + pseudo-merge: fix leaking strmap keys
- + pseudo-merge: fix various memory leaks
- + line-log: fix several memory leaks
- + diff: improve lifecycle management of diff queues
- + builtin/revert: fix leaking `gpg_sign` and `strategy` config
- + t/helper: fix leaking repository in partial-clone helper
- + builtin/clone: fix leaking repo state when cloning with bundle URIs
- + builtin/pack-redundant: fix various memory leaks
- + builtin/stash: fix leaking `pathspec_from_file`
- + submodule: fix leaking submodule entry list
- + wt-status: fix leaking buffer with sparse directories
- + shell: fix leaking strings
- + scalar: fix leaking repositories
- + read-cache: fix leaking hash context in `do_write_index()`
- + builtin/annotate: fix leaking args vector
- + Merge branch 'jk/http-leakfixes' into ps/leakfixes-part-8
- + Merge branch 'ps/leakfixes-part-7' into ps/leakfixes-part-8
-
- More leakfixes.
-
- Will cook in 'next'.
- source: <cover.1727687410.git.ps@pks.im>
-
-
-* tb/notes-amlog-doc (2024-10-03) 1 commit
-  (merged to 'next' on 2024-10-04 at e73c8753e8)
- + Documentation: mention the amlog in howto/maintain-git.txt
-
- Document "amlog" notes.
-
- Will cook in 'next'.
- source: <88a13b9f2b6e7fbed517a7e268e4e371d84a9a10.1727917792.git.me@ttaylorr.com>
-
-
-* ej/cat-file-remote-object-info (2024-09-27) 6 commits
- - cat-file: add remote-object-info to batch-command
- - cat-file: add declaration of variable i inside its for loop
- - transport: add client support for object-info
- - serve: advertise object-info feature
- - fetch-pack: move fetch initialization
- - fetch-pack: refactor packet writing
-
- "git cat-file --batch" and friends can optionally ask a remote
- server about objects it does not have.
-
- Comments?
- source: <20240926013856.35527-1-eric.peijian@gmail.com>
-
-
-* es/worktree-repair-copied (2024-09-23) 1 commit
- - worktree: repair copied repository and linked worktrees
-
- The heuristics in "git worktree repair" can be confused when a
- worktree and its repository are copied and break correctly
- configured worktree and repository that point at each other, which
- has been corrected.
-
- Needs review.
- source: <20240923075416.54289-1-ericsunshine@charter.net>
-
-
-* cw/fix-reachable-in-repo-with-promisor (2024-09-19) 2 commits
- - fetch-pack.c: do not declare local commits as "have" in partial repos
- - packfile: split promisor objects oidset into two
-
- "git gc" in a partial clone (i.e. lacking objects that can be
- lazily fetched from promisor remotes) collected more than objects
- that promisor-remote can give.
-
- Needs review.
- source: <20240802073143.56731-1-hanyang.tony@bytedance.com>
-
-
-* jc/breaking-changes-early-adopter-option (2024-09-19) 1 commit
- - BreakingChanges: early adopter option
-
- Describe the policy to introduce breaking changes.
-
- Comments?
- source: <xmqq7cb77810.fsf@gitster.g>
-
-
-* ps/reftable-alloc-failures (2024-10-04) 28 commits
-  (merged to 'next' on 2024-10-04 at 5649ef3dd7)
- + reftable/basics: fix segfault when growing `names` array fails
-  (merged to 'next' on 2024-10-02 at a6d42d51d4)
- + reftable/basics: ban standard allocator functions
- + reftable: introduce `REFTABLE_FREE_AND_NULL()`
- + reftable: fix calls to free(3P)
- + reftable: handle trivial allocation failures
- + reftable/tree: handle allocation failures
- + reftable/pq: handle allocation failures when adding entries
- + reftable/block: handle allocation failures
- + reftable/blocksource: handle allocation failures
- + reftable/iter: handle allocation failures when creating indexed table iter
- + reftable/stack: handle allocation failures in auto compaction
- + reftable/stack: handle allocation failures in `stack_compact_range()`
- + reftable/stack: handle allocation failures in `reftable_new_stack()`
- + reftable/stack: handle allocation failures on reload
- + reftable/reader: handle allocation failures in `reader_init_iter()`
- + reftable/reader: handle allocation failures for unindexed reader
- + reftable/merged: handle allocation failures in `merged_table_init_iter()`
- + reftable/writer: handle allocation failures in `reftable_new_writer()`
- + reftable/writer: handle allocation failures in `writer_index_hash()`
- + reftable/record: handle allocation failures when decoding records
- + reftable/record: handle allocation failures on copy
- + reftable/basics: handle allocation failures in `parse_names()`
- + reftable/basics: handle allocation failures in `reftable_calloc()`
- + reftable: introduce `reftable_strdup()`
- + reftable/basics: merge "publicbasics" into "basics"
- + reftable/error: introduce out-of-memory error code
- + Merge branch 'ps/reftable-exclude' into ps/reftable-alloc-failures
- + Merge branch 'cp/unit-test-reftable-stack' into ps/reftable-alloc-failures
-
- The reftable library is now prepared to expect that the memory
- allocation function given to it may fail to allocate and to deal
- with such an error.
-
- Will cook in 'next'.
- source: <CAPig+cT7nni11bGmNyYCQZ0P0QZ_HG-izPtsymq==sUOkOn-Lw@mail.gmail.com>
- source: <cover.1727866394.git.ps@pks.im>
-
-
-* jc/strbuf-commented-something (2024-09-12) 2 commits
- - strbuf: retire strbuf_commented_lines()
- - strbuf: retire strbuf_commented_addf()
-
- Update two functions whose callers always pass the same global
- variable to omit the redundant parameter and use the global in the
- callee themselves.
-
- On hold.
- source: <20240912205301.1809355-1-gitster@pobox.com>
-
-
-* cc/promisor-remote-capability (2024-09-10) 4 commits
- - promisor-remote: check advertised name or URL
- - Add 'promisor-remote' capability to protocol v2
- - strbuf: refactor strbuf_trim_trailing_ch()
- - version: refactor strbuf_sanitize()
-
- The v2 protocol learned to allow the server to advertise possible
- promisor remotes, and the client to respond with what promissor
- remotes it uses, so that the server side can omit objects that the
- client can lazily obtain from these other promissor remotes.
-
- Comments?
- source: <20240910163000.1985723-1-christian.couder@gmail.com>
-
-
-* ds/pack-name-hash-tweak (2024-10-04) 6 commits
- - test-tool: add helper for name-hash values
- - p5313: add size comparison test
- - git-repack: update usage to match docs
- - pack-objects: add GIT_TEST_FULL_NAME_HASH
- - repack: test --full-name-hash option
- - pack-objects: add --full-name-hash option
-
- In a repository with too many (more than --window size) similarly
- named files, "git repack" would not find good delta-base candidate
- and worse, it may not use a blob from exactly the same path as a
- good delta-base candidate.  Optionally replace the name hash so
- that only blobs at the same path and nothing else are used as
- delta-base candidate.
-
- On hold.
- cf. <34346998-deac-4e1f-9d5f-218f664e9e08@gmail.com>
- source: <pull.1785.v2.git.1726692381.gitgitgadget@gmail.com>
-
-
-* sj/ref-contents-check (2024-09-30) 9 commits
- - ref: add symlink ref content check for files backend
- - t0602: add ref content checks for worktrees
- - ref: enhance escape situation for worktrees
- - ref: add escape check for the referent of symref
- - ref: add basic symref content check for files backend
- - ref: add more strict checks for regular refs
- - ref: port git-fsck(1) regular refs check for files backend
- - builtin/refs: support multiple worktrees check for refs.
- - ref: initialize "fsck_ref_report" with zero
-
- "git fsck" learned to issue warnings on "curiously formatted" ref
- contents that have always been taken valid but something Git
- wouldn't have written itself (e.g., missing terminating end-of-line
- after the full object name).
-
- Needs review.
- cf. <xmqqikud6kc0.fsf@gitster.g>
- source: <Zvj-DgHqtC30KjJe@ArchLinux>
-
-
-* tb/incremental-midx-part-2 (2024-10-04) 17 commits
- - fixup! pack-bitmap.c: open and store incremental bitmap layers
- - fixup! midx: implement writing incremental MIDX bitmaps
- - midx: implement writing incremental MIDX bitmaps
- - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
- - pack-bitmap.c: keep track of each layer's type bitmaps
- - ewah: implement `struct ewah_or_iterator`
- - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
- - pack-bitmap.c: compute disk-usage with incremental MIDXs
- - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
- - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
- - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
- - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
- - pack-bitmap.c: open and store incremental bitmap layers
- - pack-revindex: prepare for incremental MIDX bitmaps
- - Documentation: describe incremental MIDX bitmaps
- - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
- - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
-
- Incremental updates of multi-pack index files.
-
- Needs review.
- source: <cover.1723760847.git.me@ttaylorr.com>
- source: <ZwBsbW5jsFw0mxKk@nand.local>
-
-
-* js/libgit-rust (2024-09-09) 7 commits
- . SQUASH???
- . Makefile: add option to build and test libgit-rs and libgit-rs-sys
- . libgit: add higher-level libgit crate
- . config: add git_configset_alloc() and git_configset_clear_and_free()
- . libgit-sys: add repo initialization and config access
- . libgit-sys: introduce Rust wrapper for libgit.a
- . common-main: split init and exit code into new files
-
- An rust binding to libgit.a functions has been introduced.
-
- Expecting a reroll.
- cf. <xmqqv7z8tjd7.fsf@gitster.g>
- source: <20240906221853.257984-1-calvinwan@google.com>
-
-
-* jc/too-many-arguments (2024-08-06) 4 commits
- - miscellaneous: avoid "too many arguments"
- - notes: avoid "too many arguments"
- - cat-file: avoid "too many arguments"
- - refs: avoid "too many arguments"
-
- Error message clarification.
-
- On hold.
- source: <20240806003539.3292562-1-gitster@pobox.com>
-
-
-* ja/doc-synopsis-markup (2024-09-24) 3 commits
-  (merged to 'next' on 2024-09-30 at 15ec13edec)
- + doc: apply synopsis simplification on git-clone and git-init
- + doc: update the guidelines to reflect the current formatting rules
- + doc: introduce a synopsis typesetting
-
- The way AsciiDoc is used for SYNOPSIS part of the manual pages has
- been revamped.  The sources, at least for the simple cases, got
- vastly pleasant to work with.
-
- Will cook in 'next'.
- source: <pull.1766.v5.git.1727161730.gitgitgadget@gmail.com>
-
-
-* ew/cat-file-optim (2024-08-25) 10 commits
- - cat-file: use writev(2) if available
- - cat-file: batch_write: use size_t for length
- - cat-file: batch-command uses content_limit
- - object_info: content_limit only applies to blobs
- - packfile: packed_object_info avoids packed_to_object_type
- - cat-file: use delta_base_cache entries directly
- - packfile: inline cache_or_unpack_entry
- - packfile: fix off-by-one in content_limit comparison
- - packfile: allow content-limit for cat-file
- - packfile: move sizep computation
-
- "git cat-file --batch" has been optimized.
-
- Waiting for review responses.
- source: <20240823224630.1180772-1-e@80x24.org>
-
---------------------------------------------------
-[Discarded]
-
-* gt/unit-test-oidset (2024-08-25) 1 commit
- . unit-tests: add tests for oidset.h
-
- Another unit-test.
-
- Has been expecting a reroll for too long.
- source: <20240824172028.39419-1-shyamthakkar001@gmail.com>
+ - what you saw happen (X above);
+
+ - what you expected to see (Y above); and
+
+ - how the last two are different.
+
+See https://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
+hints.  Our `git bugreport` tool gives you a handy way you can use to
+make sure you do not forget these points when filing a bug report.
+
+If you think you found a security-sensitive issue and want to disclose
+it to us without announcing it to wider public, please contact us at
+our security mailing list <git-security@googlegroups.com>.  This is
+a closed list that is limited to people who need to know early about
+vulnerabilities, including:
+
+  - people triaging and fixing reported vulnerabilities
+  - people operating major git hosting sites with many users
+  - people packaging and distributing git to large numbers of people
+
+where these issues are discussed without risk of the information
+leaking out before we're ready to make public announcements.
+
+
+* Repositories and documentation.
+
+My public git.git repositories are (mirrored) at:
+
+  https://git.kernel.org/pub/scm/git/git.git/
+  https://kernel.googlesource.com/pub/scm/git/git
+  https://repo.or.cz/alt-git.git/
+  https://github.com/git/git/
+  https://gitlab.com/git-scm/git/
+
+This one shows not just the main integration branches, but also
+individual topics broken out:
+
+  https://github.com/gitster/git/
+
+A few web interfaces are found at:
+
+  https://git.kernel.org/pub/scm/git/git.git
+  https://kernel.googlesource.com/pub/scm/git/git
+  https://repo.or.cz/w/alt-git.git
+
+Preformatted documentation from the tip of the "master" branch can be
+found in:
+
+  https://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
+  https://repo.or.cz/git-{htmldocs,manpages}.git/
+  https://github.com/gitster/git-{htmldocs,manpages}.git/
+
+The manual pages formatted in HTML for the tip of 'master' can be
+viewed online at:
+
+  https://git.github.io/htmldocs/git.html
+
+
+* How various branches are used.
+
+There are four "integration" branches in git.git repository that track
+the source tree of git: "master", "maint", "next", and "seen".  They
+however almost never get new commits made directly on them.  Instead,
+a branch is forked from either "master" or "maint" for each "topic",
+whether it is a new feature or a fix for a bug, and holds a set of
+commits that belong to the same theme.  Such a "topic branch" is then
+merged to these integration branches.
+
+The "master" branch is meant to contain what are very well tested and
+ready to be used in a production setting.  Every now and then, a
+"feature release" is cut from the tip of this branch.  They used to be
+named with three dotted decimal digits (e.g., "1.8.5"), but we have
+switched the versioning scheme and "feature releases" are named with
+three-dotted decimal digits that ends with ".0" (e.g., "1.9.0").
+
+The last such release was 2.47 done on Oct 7th, 2024.  We aim to keep
+that the tip of the "master" branch is always more stable than any of
+the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off from
+"master" at that point.  Obvious and safe fixes after a feature
+release are merged to this branch and maintenance releases are cut
+from it.  Usually the topic branches that contain these fixes are
+merged to the "master" branch first, before getting merged to the
+"maint" branch, to reduce the chance of last-minute issues, but
+things like embargoed security fixes may first appear in the "maint"
+and merged up to "master" at the same time.  The maintenance releases
+used to be named with four dotted decimal, named after the feature
+release they are updates to (e.g., "1.8.5.1" was the first maintenance
+release for "1.8.5" feature release).  These days, maintenance releases
+are named by incrementing the last digit of three-dotted decimal name
+(e.g., "2.43.2" was the second maintenance release for the "2.43" series).
+
+New features almost never go to the "maint" branch.  It is merged into
+"master" primarily to propagate the description in the release notes
+forward.
+
+When you send a series of patches, after review discussions on the
+mailing list, a separate topic branch is forked from the tip of
+"master" (or somewhere older, especially when the topic is about
+fixing an earlier bug) and your patches are applied on that topic
+branch, and kept out of "master" while people test it out.  The
+quality of topic branches are judged primarily by the mailing list
+discussions.
+
+Topic branches that are in good shape are merged to the "next" branch.
+The "next" branch is where new and exciting things take place.  In
+general, the "next" branch always contains the tip of "master".  It
+might not be quite rock-solid, but is expected to work more or less
+without major breakage.  A topic that is in "next" is expected to be
+polished to perfection before it is merged to "master".  Please help
+this process by building & using the "next" branch for your daily
+work, and reporting any new bugs you find to the mailing list, before
+the breakage is merged down to the "master".
+
+The "seen" (formerly "pu", proposed updates) branch bundles the
+remaining topic branches the maintainer happens to have seen to remind
+the maintainer that the topics in them might become interesting when
+they are polished.
+
+The contributors can use it to anticipate what topics from others
+may cause conflict with their own work, and find people who are
+working on these topics to talk to before the potential conflicts
+get out of control.  It would be a good idea to fork from maint or
+master to grow a topic and to test (1) it by itself, (2) a temporary
+merge of it to 'next' and (3) a temporary merge to it to 'seen',
+before publishing it.
+
+Consider that a topic only in "seen" is not part of "git" yet.  When a
+topic that was in "seen" proves to be in a testable shape, it is
+merged to "next".
+
+You can run "git log --first-parent master..seen" to see what topics
+are currently in flight.  Sometimes, a topic that looked promising
+proves to be a bad idea and the topic gets dropped from "seen" in such
+a case.  The output of the above "git log" talks about a "jch" branch,
+which is an early part of the "seen" branch; that branch contains all
+topics that are in "next" and a bit more (but not all of "seen") and
+is used by the maintainer for his daily work.
+
+The two branches "master" and "maint" are never rewound, and "next"
+usually will not be either.  After a feature release is made from
+"master", however, "next" will be rebuilt from the tip of "master"
+using the topics that didn't make the cut in the feature release.
+Some topics that used to be in "next" during the previous cycle may
+get ejected from "next" when this happens.
+
+A natural consequence of how "next" and "seen" bundles topics together
+is that until a topic is merged to "next", updates to it is expected
+by replacing the patch(es) in the topic with an improved version, and
+once a topic is merged to "next", updates to it needs to come as
+incremental patches, pointing out what was wrong in the previous
+patches and how the problem was corrected.  The idea is that if many
+reviewers thought it has seen enough eyeballs and is good enough for
+"next", yet we later find that there was something we all missed, that
+is worth a separate explanation, e.g., "The primary motivation behind
+the series is still good, but for such and such reasons we missed this
+case we are fixing.", hence we prefer follow-up incremental patches.
+
+Note that being in "next" is not a guarantee to appear in the next
+release, nor even in any future release.  There were cases that topics
+needed reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" was reverted from "next" because
+fatal flaws were found in it after it was merged to "next".
+
+
+* Other people's trees.
+
+Documentation/SubmittingPatches outlines to whom your proposed changes
+should be sent.  As described in contrib/README, I would delegate fixes
+and enhancements in contrib/ area to the primary contributors of them.
+
+Although the following are included in git.git repository, they have their
+own authoritative repository and maintainers:
+
+ - git-gui/ comes from git-gui project, maintained by Johannes Sixt:
+
+        https://github.com/j6t/git-gui
+
+ - gitk-git/ comes from Paul Mackerras's gitk project:
+
+        git://ozlabs.org/~paulus/gitk
+
+ - po/ comes from the localization coordinator, Jiang Xin:
+
+	https://github.com/git-l10n/git-po/
+
+When sending proposed updates and fixes to these parts of the system,
+please base your patches on these trees, not git.git (the former two
+even have different directory structures).
