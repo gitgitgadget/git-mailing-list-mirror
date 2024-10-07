@@ -1,178 +1,140 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C89315B130
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 06:58:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738361BC5C
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 07:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728284340; cv=none; b=GXGNjIY2U+EXC4NCBP5WBxROC54RJq0AAatHkLRsUz4Eq6PkhIT5nicFUc1vYFnMcig1D5AuvD2MNLWxTU6PwHfXkZ07ubImMfMtRomFh7v5IT1tAUrsnFKpWeM8356sPaa69FbUkLSH5NZFOORNy43+p9WDmFoObPeUuQGupG0=
+	t=1728285957; cv=none; b=VDNhB/l939p9LSjUfUdlgyyOKH8We8lACaqnuArEQDq3xT9dr3Un6hvfmuYHOE7HEWfhNYSDC47bUslOM8Daa7+dkHRpgyvnPG8V58y8D+DGX0LCCeeo5rJd3ogWM6qwV6jgg8ORTYH7dTrp8FMhfeBIeuXQbelsjtFDCSRkXhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728284340; c=relaxed/simple;
-	bh=CnapbXn8cV3e3Q1nVQgvq+J9T7U3c4m6lEpjBb6A/Qw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l4XBl4HhbxFLY2bYDP7tO6jGQFJuinoYA+ce/PDsQawaHLwBsgP17p8Dwp//YL7TwAXtbkWF4Kxi+8LQL1GgpPtfzDcFFeL9b9VVHWU72pr4aq083+KNk1TyM70nCN1S1FEzUN3fhXLTS6U8s5a4539xzcv3jNoyW3tlXxUCnAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WqK6zevg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MYNM1qZu; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728285957; c=relaxed/simple;
+	bh=XuZzVwN2ps00AKVLoMG7SaqDqp0k12Ls4NziToicmeA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=S2ix+fiORt/j/19TVNxSC0NIhiXXjpdz4EhgfT3BWxbt0J1Xad2RPlHrDuk/fmc+ZVN6LQ/PjYJkru3Oqo0p/CSkvt6nwz5a331pFiTKtdW2mmi/G0uNJzO/scAg5QsQ1D6uahF+iFoUB0uOcduvrTOMuZlAtYQ8dYunaZuPHAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eSkFf1qA; arc=none smtp.client-ip=209.85.222.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WqK6zevg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MYNM1qZu"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1784125400CB;
-	Mon,  7 Oct 2024 02:58:58 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 07 Oct 2024 02:58:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728284337; x=1728370737; bh=eACfhoj3Y2
-	JFHsZWmyJT0LE5KpwThTZUI9rCB7H77jw=; b=WqK6zevgfyoXt1FRFuORMsphBm
-	7tg81Ri07nytXQpUi/Zof7k5sHYGQBJ62cUN5LaVA+sEZrbt7tdqU5D7qKn1B4BK
-	HGXednyCBeznsuqFllW3dN9MNUaomeaDF5W9/n5UBuAy4mrwfosIkVAzeGPdrEGL
-	PEr1Bv2RXCR6IEws77IiUiyOktEQaL6AjWKGhroTnhWCwfSUvyDO/deY19k+ZJO2
-	hc+p3HumZynpoXCKVhV2x9U/2CjlKToxe13zbVs1M6PVNwqNZ+/5o7j/3ftmG+B8
-	HRIgZ8TEyt/Lm0VZZsHZvXwgs9RVrjxjZr3kh+ycsl2fsS8MV/tZxTVuTUlQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728284337; x=1728370737; bh=eACfhoj3Y2JFHsZWmyJT0LE5KpwT
-	hTZUI9rCB7H77jw=; b=MYNM1qZuudxKt3NIEpQu6zcom2n+4Ftg10D+ArxqVb4r
-	b3JD8k0mgJkImOuKjqPDzrgzyQxlhmQb4JxltJxHEmDZzQ0we67j+DvLAOBdTIrg
-	4ja9cx6Y6KBnZipSh4jHZ6dhSxqDid4JYXqUhnyzhPk7yvzCZSWJXc5Z+nODAVGp
-	zLqmsHc89mQaH5RWkhsc8BEZANggvoEIwUR0MAw/h/CBNd9941ZXZ2d+nzwGeDBr
-	fd9CJpWrsGHsw1KHe77Iqpjpxvi4RF9Htm9HlUGVzwHr5mrnl0c8Rqlph9fY1Rch
-	brZQ8FPWyML9YfnovWSH0zrrKeAvoc3ZbvBFBxg9Gg==
-X-ME-Sender: <xms:sYYDZ6DwO4xirjMY3YHRicVuSTDuCA5w44IdYWZjExNMzZNvRN3ZPQ>
-    <xme:sYYDZ0hQK2so1FXH3ate2yTpmP0tDe1anKRoUIPIsUQRcBygqeJZLZseUg50AdUyH
-    kRi9C7gF8CCTuc1Xg>
-X-ME-Received: <xmr:sYYDZ9k2UvVccQJupAuNpsMseNsMe1nNr7vDAu2KbBpd4UqOskvvAsKhI2WFQDPJzwRJlaZOaApnLigwVN6_aA9eNn3xAwvldo0S98g3s2v_vgJE1w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvkedgudduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhgv
-    jhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekke
-    esghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:sYYDZ4y8N1SJHTTr71272YYxCC9ztDALg_IPweAV62MstdruTYGQGg>
-    <xmx:sYYDZ_TTdGTuun9rjDzJsikECyvOBdztXZBzQ6kI2qsVxQSnp-N7PA>
-    <xmx:sYYDZzYTAjpS0PVjLvUnDY80TEG4FFFsOVUQVJkmkDvLJE_dZvKM0Q>
-    <xmx:sYYDZ4RDioz6mGUBavNRWwumhN-W8xhAGm-NSBhmAMjoARn18j4CEg>
-    <xmx:sYYDZ9M-xxA5kaY-VgS36qz-BB93kODu7ey85okRv49gBbfSJWX5FcJI>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 02:58:56 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b04a32ac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Oct 2024 06:57:59 +0000 (UTC)
-Date: Mon, 7 Oct 2024 08:58:55 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 6/9] ref: add escape check for the referent of symref
-Message-ID: <ZwOGr4Tv8K_wemtD@pks.im>
-References: <Zvj-DgHqtC30KjJe@ArchLinux>
- <Zvj-xaa_j26Auig7@ArchLinux>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eSkFf1qA"
+Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-84e9dda8266so875600241.3
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 00:25:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728285955; x=1728890755; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hz6XUC4WlwM7pS+hXhDgoSOQ3QwmzNPkIyGeVehV5ck=;
+        b=eSkFf1qAunz1niOx2jx1m0jgBQD4Bk80Gt2k9eCdeanknC/NNZBiE9/7XMhLsY6yxp
+         2LE4PKzGEAMx7OYRsOHyeTrdzMggkmZ8z3z4i7Llj52qtldjDg9HwJfVNvTnkTuM050T
+         s4ghc0xKHLJvP/SOx7zjuEatzg/s4VuiRG1XEwNYsU079Q6Ja99ShKHVZJCuVH1qgOIx
+         YboiKD1mc7UrsbvhuZMwezzikDipk56PsFjGHqSQp+lneSCmImUOQ7R3Wf4JNKXZvjpL
+         uwKMY2B3KFK4RwFisG1Xota2YW0kU3Kb8TWrVUaSBIwhcMlQGO3cB/mLUdSkOId6kRsm
+         oBmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728285955; x=1728890755;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hz6XUC4WlwM7pS+hXhDgoSOQ3QwmzNPkIyGeVehV5ck=;
+        b=poaxrl7nURXs/+NYzhptm/xLqolWIY1JR5CFw79jRzmDmk5nRrEfIKSDNBG3jJ1mHL
+         c1ExbMOrGRieteIW69nkmQxetQc5oRquTshumQdCPJH0l0HqcmOiG5oZGsGQyYE421wb
+         E78OabCRPjwyg83Udoftn5voOZg73BsmExl6Vt2l8goMPGt7vuFvxkY1QZn7AbswaVo1
+         BoapWNWmkccQuKQBZC/8np+4A385//4O1ToNac53idilrsCgnQZNLqsexy6pdBT2RWkC
+         HHFBvj65BRXHIYPK0u+cDc5ywFHy0tnl+Egs8gDoKnIovIqZGeH9pkSumLEf1V6JkUnj
+         J/mg==
+X-Forwarded-Encrypted: i=1; AJvYcCWmvf9M2rmJ3NGGKgO9PTwnhKjHvNrTLOLwSy6rzq1r8lesfHvN7BNEb2uvrVjp91GvMGI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgqpfRgiD8eNet2bhs8kVjKbHOMveA2X1ZIHQnsnNGrMprcLfk
+	2TeRaoxNv+wQ9LMF9GsvFJn2elqUE/SBzVx7Z2xE7LM4uISPKB6qI2Kuz2PIvaY6pGFFW3G5+iK
+	jtp7lzBFHwBqqSDQHMcT6OjdFeSM=
+X-Google-Smtp-Source: AGHT+IGvMZyaPLqjXpKzgo812w+c0vPSIoYjcnXI84BNT6tPR/qg0PZ/Ej/ofhQHDBYtynPO68AEabokuqvrM5oJo+w=
+X-Received: by 2002:a05:6102:510e:b0:498:f38a:2c8b with SMTP id
+ ada2fe7eead31-4a405901affmr7860055137.25.1728285955236; Mon, 07 Oct 2024
+ 00:25:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zvj-xaa_j26Auig7@ArchLinux>
+References: <pull.1805.v2.git.git.1728203495287.gitgitgadget@gmail.com>
+ <pull.1805.v3.git.git.1728230769.gitgitgadget@gmail.com> <CAPSxiM9eExGxy5biEr_23tCKXaUQg=tsD57VR7e2SVdvVJR+Kg@mail.gmail.com>
+ <CAPig+cQ1xC9ky8+NZO0ywmYAa6Vxe2ZUbs_Ae4OTTcWM8tHY_Q@mail.gmail.com>
+In-Reply-To: <CAPig+cQ1xC9ky8+NZO0ywmYAa6Vxe2ZUbs_Ae4OTTcWM8tHY_Q@mail.gmail.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Mon, 7 Oct 2024 07:25:44 +0000
+Message-ID: <CAPSxiM9Z3q5Oz0PkadC72J0cU2F9D8Rh5eAtNz7aZoUZxp6PUA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] [Outreachy][Patch v2] t3404: avoid losing exit
+ status to pipes
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Christian Couder <christian.couder@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood Phillip Wood <phillip.wood@dunelm.org.uk>, shejialuo <shejialuo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Sep 29, 2024 at 03:16:21PM +0800, shejialuo wrote:
-> Ideally, we want to the users use "git symbolic-ref" to create symrefs
-> instead of writing raw contents into the filesystem. However, "git
-> symbolic-ref" is strict with the refname but not strict with the
-> referent. For example, we can make the "referent" located at the
-> "$(gitdir)/logs/aaa" and manually write the content into this where we
-> can still successfully parse this symref by using "git rev-parse".
-> 
->   $ git init repo && cd repo && git commit --allow-empty -mx
->   $ git symbolic-ref refs/heads/test logs/aaa
->   $ echo $(git rev-parse HEAD) > .git/logs/aaa
->   $ git rev-parse test
+On Mon, Oct 7, 2024 at 4:24=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.c=
+om> wrote:
+>
+> On Sun, Oct 6, 2024 at 12:18=E2=80=AFPM Usman Akinyemi
+> <usmanakinyemi202@gmail.com> wrote:
+> > Kindly, help take a look if this is okay now.
+> >
+> > Also, I wanted to change this also to use test_line_count,
+> >  test 0 =3D $(grep -c "^[^#]" < .git/rebase-merge/git-rebase-todo)
+> >
+> >  But, I tried a different approach and the test kept failing.
+> >
+> > Similar as
+> >
+> > git show >output &&
+> > count=3D$(grep NEVER output | wc -l) &&
+> > test 0 =3D $count &&
+>
+> What is the actual error you encountered?
+>
+> By the way, we have a handy function, test_must_be_empty(), which can
+> be used if you expect the output to not contain anything. As an
+> example:
+>
+>     git show >output &&
+>     grep NEVER output >actual &&
+>     test_must_be_empty actual
 
-Oh, curious. This should definitely be tightened in git-symbolic-ref(1)
-itself. The target should either be a root ref or something starting
-with "refs/". Anyway, that is of course outside of the scope of this
-patch series.
+Thanks for your review, I really appreciate it. I tried this approach,
+but I was getting this particular error for the testing.
 
-> We may need to add some restrictions for "referent" parameter when using
-> "git symbolic-ref" to create symrefs because ideally all the
-> nonpeudo-refs should be located under the "refs" directory and we may
-> tighten this in the future.
+not ok 32 - multi-fixup does not fire up editor
+#
+# git checkout -b multi-fixup E &&
+# base=3D$(git rev-parse HEAD~4) &&
+# (
+# set_fake_editor &&
+# FAKE_COMMIT_AMEND=3D"NEVER" \
+# FAKE_LINES=3D"1 fixup 2 fixup 3 fixup 4" \
+# git rebase -i $base
+# ) &&
+# test $base =3D $(git rev-parse HEAD^) &&
+# git show >output &&
+# grep NEVER output >actual &&
+# test_must_be_empty actual &&
+# git checkout @{-1} &&
+# git branch -D multi-fixup
+#
+Below is the particular test case
 
-Agreed.
-
-> In order to tell the user we may tighten the "escape" situation, create
-> a new fsck message "escapeReferent" to notify the user that this may
-> become an error in the future.
-> 
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Signed-off-by: shejialuo <shejialuo@gmail.com>
-> ---
->  Documentation/fsck-msgids.txt |  8 ++++++++
->  fsck.h                        |  1 +
->  refs/files-backend.c          |  7 +++++++
->  t/t0602-reffiles-fsck.sh      | 18 ++++++++++++++++++
->  4 files changed, 34 insertions(+)
-> 
-> diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-> index e0e4519334..223974057d 100644
-> --- a/Documentation/fsck-msgids.txt
-> +++ b/Documentation/fsck-msgids.txt
-> @@ -52,6 +52,14 @@
->  `emptyName`::
->  	(WARN) A path contains an empty name.
->  
-> +`escapeReferent`::
-> +	(INFO) The referent of a symref is outside the "ref" directory.
-
-Proposal: 'The referent of a symbolic reference points neither to a root
-reference nor to a reference starting with "refs/".'
-
-I'd also rename this to e.g. "symrefTargetIsNotAReference" or something
-like that, because it's not really about whether or not the referent is
-"escaping". It's a bit of a mouthful, but I don't really have a better
-name. So feel free to pick something different that describes the error
-better.
-
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 57ac466b64..bd215c8d08 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3520,6 +3520,13 @@ static int files_fsck_symref_target(struct fsck_options *o,
->  	orig_last_byte = referent->buf[orig_len - 1];
->  	strbuf_rtrim(referent);
->  
-> +	if (!starts_with(referent->buf, "refs/")) {
-> +		ret = fsck_report_ref(o, report,
-> +				      FSCK_MSG_ESCAPE_REFERENT,
-> +				      "referent '%s' is outside of refs/",
-> +				      referent->buf);
-> +	}
-> +
->  	if (check_refname_format(referent->buf, 0)) {
->  		ret = fsck_report_ref(o, report,
->  				      FSCK_MSG_BAD_REFERENT,
-
-This check is invalid, because referents can also point to root refs. So
-you should probably also add a call to `is_root_ref()` here.
-
-We also have `is_pseudo_ref()`, and one might be tempted to also allow
-that. But pseudo refs aren't proper refs, so I'd argue that a symref
-pointing to a pseudo ref is invalid, too.
-
-Patrick
+test_expect_success 'multi-fixup does not fire up editor' '
+git checkout -b multi-fixup E &&
+base=3D$(git rev-parse HEAD~4) &&
+(
+set_fake_editor &&
+FAKE_COMMIT_AMEND=3D"NEVER" \
+FAKE_LINES=3D"1 fixup 2 fixup 3 fixup 4" \
+git rebase -i $base
+) &&
+test $base =3D $(git rev-parse HEAD^) &&
+git show >output &&
+grep NEVER output >actual &&
+test_must_be_empty actual &&
+git checkout @{-1} &&
+git branch -D multi-fixup
+'
