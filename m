@@ -1,54 +1,54 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C135231CA9
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 09:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6268D18E054
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 09:25:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728292711; cv=none; b=F4yFcPpWCbuafWd5f695ioHqhaUyBswprEIwizAfKZ0i5+Lc/pd5ImU4cfxWyXwzvaXErndBlwW7piip6WzJJoGv1oSBWUWWHzpIJRhcpZG8OC8IrW0KoLmZossiGR+cclHhqWvudmV1jC0ZSPrCaFfY+vsynVJB6YHQ5Z/o2xY=
+	t=1728293124; cv=none; b=Xsz1uhoL+ZMXp+8rfOmijEfF2FD2BkiZoIVLjwbPVmWCYNsbCEVJE6vylNMg6UWsEOfa1g9LwD8CtEaVg/IZIT/AVaF4Bl6rU9HnOtwPGsdxXxf0dYiYLCj3gPB1pY0KBvVu3feMfwLMyyXq7/CDZDkGtuNq2xWzvmJdXlxpcM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728292711; c=relaxed/simple;
-	bh=Xo1DqORT/lnmOzc20ak4ZBx6wHFd7DGoETucBlcH+XQ=;
+	s=arc-20240116; t=1728293124; c=relaxed/simple;
+	bh=lyN9r3tRSdc5nj9a1i9665s62gJoXF1gGxb4BXSK+Rw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cv4vkvpcNV4vqcS3nurJd7+Je36nPL/sILPEC2plK7GqI0HifBZtZBU7QBRn/p7YxeQNv1x2/OZd9NKl5ykoU+j1BDYsyTV3dAPSzcS+78noouKnMTQXlf9tBxh/rwlfe/6PEVqeMINvF2Ld2zutIG8MUT1Z1dyABi3FGTARO7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=quwZ+4wd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PZVBnMz/; arc=none smtp.client-ip=202.12.124.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=jSSFOZRJVU/JMFk8DSOdK21LK025hwwhGoKEhzbFnJ+axfmU3FcxlkpHTHQkIhKwn9vlRsK3269A6mSw0AXVlryYzs92/1OaF/XNyt4niGunfnN2Q94fBCYEvTVNrMxtZHxtROjQnqq80hbReH3otw/nLoZ+c+UKFN5d9GR/Ygg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DD9MpxPJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=obmkiLra; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="quwZ+4wd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PZVBnMz/"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8407411400E4;
-	Mon,  7 Oct 2024 05:18:29 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Mon, 07 Oct 2024 05:18:29 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DD9MpxPJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="obmkiLra"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 521C225400CF;
+	Mon,  7 Oct 2024 05:25:21 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Mon, 07 Oct 2024 05:25:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728292709; x=1728379109; bh=am77FiboMH
-	4Yt1VVTr6z3rP8QVR/BChYVC1c5fc1HGw=; b=quwZ+4wdEZiq6V6dGuAT5MENhV
-	+iNgE2IpOCKJK+r6r7U6gl/jC2fEwJMXknRR6D/PmvdGEDOXlR+6aSK1u/OhWGWk
-	b8lkxOxn4NyILIh11MS1sZYNWZbt869OcQo3UwKvDTo1NM6jd337oJ5DKVFVonDv
-	UPM+L+XU5M9Ei+rDyBsot0TKuEl1jIUKlMAb4+HzcgZxLTvjr8yb3P9TZkAhVFpU
-	y7nwTymPhMd6ybpu0PKgBEtfwp9ugeCTbA2vGL54thDRhqN/5IGLNtamgv0b05IO
-	zYJye3GXZ97QsRWNddQisc91xj8DZ2xLr5h716auocP66i+VY2nqnAB/d+XA==
+	:subject:to:to; s=fm2; t=1728293121; x=1728379521; bh=iEdzVtXn5q
+	rCZD/BV9n7x8pGb8rlxCLD1RquilWBj40=; b=DD9MpxPJCQ2iGgwB8bSICzlW9B
+	z+3mFDZ350+JgHGNNjRXKDV+N/UpdC3DF7Gz6R2hBeHYhIukcD+i4FRdY4koMZh8
+	j07zyqpvDOYF0HtY9Vr9pwpVxI/iI1TtXiA+K6f/fH7WW5jsjSoxe/KKfcq+cT3f
+	mnuf/t+b8GiehIFtZnPmqQ+8A00R80+skkGXLBzjUnhUPr5hqzubehtksboDb+rL
+	erGpLnUqO9WexzHBrNFggciOdesnVMm/16YukYpXEjmB28OzmMedqypzMlYeKjR5
+	WbMV8XyILourvwsl+N9Dw/OylHeCBCEbM+ChwJbLS+1cPS+uV2ZRLezUrqBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728292709; x=1728379109; bh=am77FiboMH4Yt1VVTr6z3rP8QVR/
-	BChYVC1c5fc1HGw=; b=PZVBnMz/43G5epTPz5RqkpKGViJecBVfJNKfliP0X+NG
-	FFMtONLOTUGrzg091hgtqpl36y5sfa244uauscWOohj3PVbHQMqpKHjo3QD5wQ/l
-	nceXyxZLWPr8L8Th+DCh6BS7gF7sBj0DZxf1jLBrg4BQLsRMwp8mfL3SAJ/wRnRh
-	jYPhVC2cFWMiy2AKALNJybs9df4U0qR8QgupB6wAF7dZqTM+d4fl+sReUEJNT7P5
-	EkHPMZD0srvfXZzwzxTbdP9LDkYav883Z2+SgISAh2c8B8vuUBv/Xgg7EpnoVvkd
-	I0HxkOaHasVGjVTQ8txhGgtEesOIXrJcttwez9ODgg==
-X-ME-Sender: <xms:ZacDZx68ZOl0QInqHVXiiurDByEn8FaljJE18Fdylosw4-pOIcz7EQ>
-    <xme:ZacDZ-4ohZh-mDPQPt9QV2ksZZTSRsAymWlvFvnGHC-T8i4KtWsyHd9QbQ1GlRHJb
-    -OMbrfovFlZO_G3Rg>
-X-ME-Received: <xmr:ZacDZ4eZQKoCoZBYvT-urFXYz2K5QuJP3P_FBPZOyW6EbDQsbMuWm-KdhBLCurEzCtDps4rfQ4oo02vxJ1yaa0AWZPsVegphGUnmY9wrNooDSIOIHQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgudegucetufdoteggodetrfdotf
+	fm2; t=1728293121; x=1728379521; bh=iEdzVtXn5qrCZD/BV9n7x8pGb8rl
+	xCLD1RquilWBj40=; b=obmkiLrarTGM/n7WP4urr0G9eVzt/EjDyml+GmgSK8aC
+	sf5tN5daJV5MQEI2VVuNERFCyXJrLL0fHUlSMbDicFk0Jj+FXrORHgcQMq3zDNRk
+	DwGKIEVIhTLKATLKTMdQ8nYscHCHEz9Yi5lM3ilo/Ibd+eNZxaZBGQxHkxEMu2LF
+	W/Jf9T6BuXCHQfDh+BwmLXMFlmLNUIdc3XY2sUyC0TwlOZ+QIonKBET4Hx1IGb2U
+	H7D5GOcP2rXw2mX+54/9Hynk3mhDuf5T50HjVXnfwOrfJvI6Oafz2C31NjUYeifU
+	mGaGAw+bH7j6Jp4Wr0PqB0tmYS/TkjYlIZvQ+QsFSw==
+X-ME-Sender: <xms:AakDZ1aBEO9G8QQLECgs-dhf_0AJP1MvzLaUARgGAS4p7G3vPbjwAg>
+    <xme:AakDZ8ZxeLXgxcwt-7TmzR6l6TjROtHNzuvRC35wtgdikVMtUzm918iHP191nW7-E
+    aFY6ebZ_BAWpnCLqA>
+X-ME-Received: <xmr:AakDZ3-taAiYJigrrB0xXH_sRooB_DV544EDmNwAjFYpuiDt_uskvT02I7R7Sh2Jou4oyhT1lVy6PylArFLFMPLAVXKqHLfeykdewy1y-VRftVB0Lw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgudehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -56,33 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgudegucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    shhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
     hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ZacDZ6IUyGYNP8dbaMfajycybsXA13_8Q0lTwXuWFAk-MYF8dNgLrA>
-    <xmx:ZacDZ1IZVkOEqr6usVYGJRPoR9MogzSFt8o4DrhhRW31DbyTqlgqFg>
-    <xmx:ZacDZzwQ5_qjxME8MJnSqBI704YVls-ekQn1XW7jprjrcRQQ_xdo_g>
-    <xmx:ZacDZxJj5d5U1hyurTUWG7IaSynwr3pPFRxuxFyK-DYlt01AX4ttFw>
-    <xmx:ZacDZyGCpQgO1Ykd5-13r22A3qu1v0fhh_u_gZsDAIoLy89_HNtifo9_>
+X-ME-Proxy: <xmx:AakDZzplafgSCoHdx3Z0vVxvAztbkCVA1RBNSClOMAFdD6t8LtwHwA>
+    <xmx:AakDZwr6jU_iv8b2gwDER9ia5wsj42J80gqWL8xj2mDoXr2VDnbZYw>
+    <xmx:AakDZ5QONxznwVl4eip6r0gUF_8FGAPjgqEKmL-l2n76hxat1FkZ1A>
+    <xmx:AakDZ4q-l7VDp5jM1DMk60txjGeUvuut47YUcxewxKU-qEQH6-9pUA>
+    <xmx:AakDZ5nUyjyVWLrdK5rgBDK0-bk6apppdrFdB7gKY3WOcr2tZC_Q_u3h>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 05:18:28 -0400 (EDT)
+ 7 Oct 2024 05:25:20 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 89e0a2da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Oct 2024 09:17:29 +0000 (UTC)
-Date: Mon, 7 Oct 2024 11:18:24 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f124ff7d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Oct 2024 09:24:20 +0000 (UTC)
+Date: Mon, 7 Oct 2024 11:25:17 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 3/9] ref: port git-fsck(1) regular refs check for
- files backend
-Message-ID: <ZwOnYAx_h9uGzPst@pks.im>
+Subject: Re: [PATCH v5 4/9] ref: add more strict checks for regular refs
+Message-ID: <ZwOo9dQSr8Xu-PBb@pks.im>
 References: <Zvj-DgHqtC30KjJe@ArchLinux>
- <Zvj-osCNDMrUQv83@ArchLinux>
- <ZwOGmoX5ner_F3Ac@pks.im>
- <ZwOfBCSTO4Qvtos3@ArchLinux>
+ <Zvj-sBX-0AFsuFDC@ArchLinux>
+ <ZwOGnQSqmwALK-9z@pks.im>
+ <ZwOfYGi21oa302sS@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,27 +90,81 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZwOfBCSTO4Qvtos3@ArchLinux>
+In-Reply-To: <ZwOfYGi21oa302sS@ArchLinux>
 
-On Mon, Oct 07, 2024 at 04:42:44PM +0800, shejialuo wrote:
-> On Mon, Oct 07, 2024 at 08:58:34AM +0200, Patrick Steinhardt wrote:
-> > On Sun, Sep 29, 2024 at 03:15:46PM +0800, shejialuo wrote:
-> > > "git-fsck(1)" will report an error when the ref content is invalid.
-> > > Following this, add a similar check to "git refs verify". Then add a new
-> > > fsck error message "badRefContent(ERROR)" to represent that a ref has an
-> > > invalid content.
+On Mon, Oct 07, 2024 at 04:44:16PM +0800, shejialuo wrote:
+> On Mon, Oct 07, 2024 at 08:58:37AM +0200, Patrick Steinhardt wrote:
+> > On Sun, Sep 29, 2024 at 03:16:00PM +0800, shejialuo wrote:
+> > > diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
+> > > index 22c385ea22..e310b5bce9 100644
+> > > --- a/Documentation/fsck-msgids.txt
+> > > +++ b/Documentation/fsck-msgids.txt
+> > > @@ -3541,6 +3546,21 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
+> > >  		goto cleanup;
+> > >  	}
+> > >  
+> > > +	if (!(type & REF_ISSYMREF)) {
+> > > +		if (!*trailing) {
+> > > +			ret = fsck_report_ref(o, &report,
+> > > +					      FSCK_MSG_UNOFFICIAL_FORMATTED_REF,
+> > > +					      "misses LF at the end");
+> > > +			goto cleanup;
+> > > +		}
+> > > +		if (*trailing != '\n' || *(trailing + 1)) {
+> > > +			ret = fsck_report_ref(o, &report,
+> > > +					      FSCK_MSG_UNOFFICIAL_FORMATTED_REF,
+> > > +					      "has trailing garbage: '%s'", trailing);
+> > > +			goto cleanup;
+> > > +		}
+> > > +	}
+> > > +
 > > 
-> > It would help readers to know where the code is that you're porting over
-> > to `git refs verify` so that one can double check that the port is done
-> > faithfully to the original.
+> > I think we should discern these two error cases and provide different
+> > message IDs.
 > > 
 > 
-> I am a little confused here. There are too many codes in "git-fsck(1)"
-> to check the ref consistency. How could I accurately express this info
-> in the commit message?
+> Actually, in the previous versions, I have mapped one message id to one
+> error case. But, in the v4, Junio asked a question
+> 
+>   Not limited to this patch, but isn't fsck_report_ref() misdesigned,
+>   or is it just they are used poorly in these patches?  In these two
+>   callsites, the message string parameter does not give any more
+>   information than what the FSCK_MSG_* enum gives.
+> 
+>   That is what I meant by "misdesigned"---if one message enum always
+>   corresponds to one human-readable message, there is not much point
+>   in forcing callers to supply both, is there?
+> 
+> In my opinion, we should have only one case here for trailing garbage
+> and not end with a newline. When writing the code, I chose the name
+> "unofficialFormattedRef" for the following reason:
+> 
+>   1. If we use two message ids here, for every message id, we need write
+>   to info the user "please report this to git mailing list".
+> 
+>   2. If we decide to make this as an error. We could just classify them
+>   into "badRefContent" message category.
+> 
+>   3. The semantic is correct here, they are truly curious formatted
+>   refs, and eventually we will give the info to the user what is
+>   curious.
+> 
+> So, I think we should not always map one message to one error case.
 
-Well, you say you ported over a specific consistency check from
-git-fsck(1) to `git refs verify` in the commit message. So I assume that
-it should match a specific check in git-fsck(1), shouldn't it?
+From my point of view the error codes should be the single source of
+truth, as this is what a user can use to disable specific checks. So if
+one code maps to multiple messages they have the problem that they can
+only disable all of those messages.
+
+I don't disagree with what Junio is saying. It is somewhat duplicate
+that the user has to pass both a code and a message in the current
+form-- it should be sufficient for them to pass the code, and the
+message can then e.g. be extracted from a central array that maps codes
+to messages.
+
+But you can also make the reverse argument: messages can be dynamic, so
+that the caller may include additional details around why specfically
+the check failed. The code and message would still be 1:1, but we may
+include additional details like that to guide the user.
 
 Patrick
