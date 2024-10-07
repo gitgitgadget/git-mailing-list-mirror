@@ -1,86 +1,97 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F9D849C
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 08:03:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DC7188013
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 08:08:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728288220; cv=none; b=t61fDgmu4QRbiatOMaXDaYG8VJre9HT5OQ4oqbc9KcP6cl67L+i4hbbrrQIGsM+f94Db1wHSO4+UNsh6QiPhVvS4jOu0OoJUPhKmAIZy9DlwLHuWz5RaU4IiD1jbSZ/gBws4D8cTGtkmrk1a+XV8Jcy3t4Fa725NNYuP6UihYJg=
+	t=1728288516; cv=none; b=iKFVco1SbJls39Bs+EU1gwvzsbxf2+RN1qhDjNdiAN/bsWolbdSezSw/TWXcupFVfBem+3lrNWPr0kEtKC46o2ZxQZ82z/xiCysTb+plasJuWxTlhRTw78PMVrm5eDXeI2xxE/TkSq0xUWNDcjBqM+8bd5E3aUCxkqW4s7eBsDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728288220; c=relaxed/simple;
-	bh=ssKm5X4kYJcccVT7+UwhlULt5+8x0SMWqJ2VaHZOi1k=;
+	s=arc-20240116; t=1728288516; c=relaxed/simple;
+	bh=Bj4c2nUv6cR+6L2ouDxyRD7SUV3kZRJT7bvOi8RhMLA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FDvr0TLTaRkB7QA/6rLI4cxNXV1RSfxV6gSgR+7zMnmu3BWosdZwpj/z9re9ipy+hFc0TYEZA16EoBPU4UNTuTU7AMIOZT9KLpF+KNFW2VyJaXoJumGDZAtffeeSDv/61uk495B9OCb0yhEtvfWnYVP7B6Bz3ij8nvN0B+5as2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C+Ks7bXO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jTMQ8KZF; arc=none smtp.client-ip=202.12.124.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=lk9j8lfzeUn6TOsy3dFmzh/AyFl3UBK5UK3XqTA3CsaLqG3aSYKiIss1c8Oa9h7ZcWVAKk3I+LRjo4DN6K0ov1pRC/s0oBybmcOIB5l9GvlSBkAeTGJAIfb6OLpVDP5yRtSNRNAreYOkwA8H+E2hdwzBgvf6lbqewjqU5ZckfQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dOkRuT2j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CSJ799Ph; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C+Ks7bXO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jTMQ8KZF"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 767EF11400DF;
-	Mon,  7 Oct 2024 04:03:37 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 07 Oct 2024 04:03:37 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dOkRuT2j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CSJ799Ph"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6D70F25400DD;
+	Mon,  7 Oct 2024 04:08:33 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Mon, 07 Oct 2024 04:08:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728288217;
-	 x=1728374617; bh=t0YSM3o7rTKM+Iq09HeyHE63Mekolt4vu0A5NqxjjaM=; b=
-	C+Ks7bXOunzie2cU37ertT9RZiH07pyoMhBgtsX0kIS2oBxFb4ewoLBvEX7oSGeZ
-	sq6WEXo0juIvu9cNgN2/R9ZJi2LLytyRmGeLU2Fwpl9XzzVpcUM6c38E6Liz2GSA
-	VmuzyH5O45uxssBwv8WvE3sW9st1dHFDV5yMPsBRmsc1irKGDl/+/VKopKBEOOn7
-	qDyCuoKtXALWyRnlXuRGyyaaMXwFg39gVjZDQU+md2MfcwyAcSuc/hPJ/wmJblDU
-	Qg8C2gzLGdMvjXxFE5qUSxDFPaEMjqPTZt/yiSRxhwPqAcrT4vxuC4Sq5BR9s7qe
-	XyHHwwHWPKRuPcbG1VY3tw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1728288513;
+	 x=1728374913; bh=DMqprM2iaRm0K0HrcU66GB0TI23DLQ9masxUdiF2DuQ=; b=
+	dOkRuT2j0Dv4Srj8Ch/oxthkf0SN20jldui9ttEuS6lZX0MGCYfumS0cxbh8RERM
+	+gDpJuzhd8MjgtHN7v6G4MeMTXQJzhiuqwXdcBKxS1pBbMCS+nBQZ3xzsazhHJTQ
+	kK6nN9hJTg4J7Ir1n0arMdKbEkpCNkafgDxGnC5KjV8KV50MlO+lUFfghonr63fm
+	sVGwU1qAsqnRFlsF2lVMnnHBD5/T2/P5N8KxjgqLCmmT9jRq8v7hz7jxolIjP/mV
+	vpLKw0t+YQWQl3uhzC87TgtPeP4XPkUSnZk3tWD8Pf1ILP4JbONkADGZ384CvHmW
+	THNQghSfXy5zyvJzBMmXMQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728288217; x=
-	1728374617; bh=t0YSM3o7rTKM+Iq09HeyHE63Mekolt4vu0A5NqxjjaM=; b=j
-	TMQ8KZFUap+Ow8QNac2e9kl72+/HKbnvYVLjsLRwl9VBwpatGG7ze9rKyhGS1R/W
-	kgt6XHn5DM86INorsAeWIkYBeDV7KP0wXnzdykevwYQXkaWOYvBWImN3ctRZFz+q
-	G9NbdebmXXo68s02ntg1/DiokNQBEWNuvS5YPAASncJSCf14m/DkGxwgWt9OG8w6
-	DxnfLJzj6PD0VnOKa7JLiF/Ay+r75AYCFJaWjlME94lgo/WwTi/Lqgq6jnV0ovjD
-	7YjZGLDZPZjZebL/O40CqRLgHlEqGHKNY1WgTVIgferDq5vv/XE79Qr/ltQh5rFO
-	in4uxWDZowt3t5SSce7+A==
-X-ME-Sender: <xms:2ZUDZzeS3jUMn_8SzASKK-FfV7x-eYY2a8n0scgflcjEALyNZLxjig>
-    <xme:2ZUDZ5PHy6vM1bQE6kmHrIwBtyBK0bpIQWVYdJM3Z1ei-HoFioCYjf3nW0rOX63Zs
-    vDVPnkFDqz7hjaOxg>
-X-ME-Received: <xmr:2ZUDZ8hj9qewY2NpUxq9WM-noRrFvr42_YWbvxh-RRdymYI5wmaQabcv4E6jFz66SYdwqx5ZV_T7V92kw-H4OLVNYoiyA1KRTNEAKjo_bA6DwpCP-w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvkedguddvkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
-    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepfeehffegfeelgfeiudelheeuuefgieefveejjeev
-    leehtedvgeejgfekgeeugfdtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhnuhgvthii
-    ihesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhg
-X-ME-Proxy: <xmx:2ZUDZ0-Y0ZIwpbXACUsh1lU5LMq_vSYTHuVYPHg8O6qpS_ixV4pESA>
-    <xmx:2ZUDZ_uXLPnAFVB3KgwAlvjYejiJ2mQKKoJYeWfz-3eSD1Ua8fNJxQ>
-    <xmx:2ZUDZzHU0m58VW4hZV1j2tE-K9ZjTU6pnGfJzPfnxV6Wmk4ESQl7oA>
-    <xmx:2ZUDZ2PwMSjIQqcsdPNIPotDnmnvoBF6s2rk-DrRl-lQTkdjRO6sig>
-    <xmx:2ZUDZ_IutTqPvaYEBodmyLpXVpmw4j6GGMqkgKbhqe8q7JMarlSzuHjd>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728288513; x=
+	1728374913; bh=DMqprM2iaRm0K0HrcU66GB0TI23DLQ9masxUdiF2DuQ=; b=C
+	SJ799PhD1oWb/xQ1f5jO9lg9kv92aP9GIQXfRVJ0Foifmrm34p1ZFYA2Bzc8QlOP
+	CqVUSPdIFHQVOZudh3quTzLwHuzZj8BDxFl2P7eB/02mAu/Dyc8d/bMEN0Oo1K7S
+	pnb3tuqH6yo2V13mP1qXLjnhcTHX/9IQRiuah+0IranYM95O53BbvoKPa7EJcKZr
+	iAGJRpK649DxwtEJakfX9kcz6e0cMz4CA2Z0ftPOdlE2O5KQ8yjlCkZjjZzo4RMY
+	dDOUmKgD4iUrKPsSzqRUUxV/MlLSyaCi256oqM6xlTqEzHIl18oU5Jo3q+ulenkB
+	04b6tSwfHuyb2UQqM2UOA==
+X-ME-Sender: <xms:AJcDZ89KYLVQSpVX4UOivUP2aVMnTtnh9toufY3civNlEGBSLyOYXw>
+    <xme:AJcDZ0vw_31ggRoYeD7FblOPxBKXkbMFV1DryfRLUiTVqvk37uJp4XyxB720qKSif
+    e3ICqgjbt8IuhRbTg>
+X-ME-Received: <xmr:AJcDZyAKYR6563f3gJk7TBFKVVYLTkwPuLqePaIZN_5-3mGnSrSsTR4efUbSK_-_PYI0ZjG_ttTIf-6XnyrSFd2WKSUr40MKgfWg523IinYI55c0Vw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvlecutefuodetggdotefrodftvfcurf
+    hrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffrtefo
+    kffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsuc
+    dlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfh
+    rhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqne
+    cuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdev
+    veejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphht
+    thhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepsh
+    hhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghn
+    rdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggugh
+    gvthesghhmrghilhdrtghomhdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddt
+    vdesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:AJcDZ8d7zXhO00NHURwEaT6HNGnRuLTovC_kIJnIKp8_7g00yxrXlQ>
+    <xmx:AJcDZxNCavbHwpDodjrp3JCUZW7KbIjN8dWDQ1nm8qsnDd4ADDXEjg>
+    <xmx:AJcDZ2nQBUe_oWRJl3reNfV0ZUl8JDcrM_Q1faZfwxH5QC0ZaslVew>
+    <xmx:AJcDZzukIRijHoYOWVRFWjlDogfkVF3joBZun6VeAq0VSJX2HuGLLw>
+    <xmx:AZcDZ0cjQvIZ-INygjffL19Mgi6S5V2bojj21Jqdep8J5SrrVS0g-kKO>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 04:03:36 -0400 (EDT)
+ 7 Oct 2024 04:08:31 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c3516acd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Oct 2024 08:02:35 +0000 (UTC)
-Date: Mon, 7 Oct 2024 10:03:30 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id d19a2315 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Oct 2024 08:07:32 +0000 (UTC)
+Date: Mon, 7 Oct 2024 10:08:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Gabriel =?utf-8?B?TsO8dHpp?= <gnuetzi@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: Bug: `git init` with hook `reference-transaction` running `git
- rev-parse --git-dir` fails
-Message-ID: <ZwOVy4FltrEjxHn_@pks.im>
-References: <0084cc18b6d90ba14849a7f788939f4a1d0d61c9.camel@gmail.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+	Phillip Wood Phillip Wood <phillip.wood@dunelm.org.uk>,
+	shejialuo <shejialuo@gmail.com>
+Subject: Re: [PATCH v3 0/2] [Outreachy][Patch v2] t3404: avoid losing exit
+ status to pipes
+Message-ID: <ZwOW96K1_12Kzefo@pks.im>
+References: <pull.1805.v2.git.git.1728203495287.gitgitgadget@gmail.com>
+ <pull.1805.v3.git.git.1728230769.gitgitgadget@gmail.com>
+ <CAPSxiM9eExGxy5biEr_23tCKXaUQg=tsD57VR7e2SVdvVJR+Kg@mail.gmail.com>
+ <CAPig+cQ1xC9ky8+NZO0ywmYAa6Vxe2ZUbs_Ae4OTTcWM8tHY_Q@mail.gmail.com>
+ <CAPSxiM9Z3q5Oz0PkadC72J0cU2F9D8Rh5eAtNz7aZoUZxp6PUA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,108 +101,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0084cc18b6d90ba14849a7f788939f4a1d0d61c9.camel@gmail.com>
+In-Reply-To: <CAPSxiM9Z3q5Oz0PkadC72J0cU2F9D8Rh5eAtNz7aZoUZxp6PUA@mail.gmail.com>
 
-On Fri, Sep 20, 2024 at 12:07:53PM +0200, Gabriel Nützi wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
+On Mon, Oct 07, 2024 at 07:25:44AM +0000, Usman Akinyemi wrote:
+> On Mon, Oct 7, 2024 at 4:24 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> >
+> > On Sun, Oct 6, 2024 at 12:18 PM Usman Akinyemi
+> > <usmanakinyemi202@gmail.com> wrote:
+> > > Kindly, help take a look if this is okay now.
+> > >
+> > > Also, I wanted to change this also to use test_line_count,
+> > >  test 0 = $(grep -c "^[^#]" < .git/rebase-merge/git-rebase-todo)
+> > >
+> > >  But, I tried a different approach and the test kept failing.
+> > >
+> > > Similar as
+> > >
+> > > git show >output &&
+> > > count=$(grep NEVER output | wc -l) &&
+> > > test 0 = $count &&
+> >
+> > What is the actual error you encountered?
+> >
+> > By the way, we have a handy function, test_must_be_empty(), which can
+> > be used if you expect the output to not contain anything. As an
+> > example:
+> >
+> >     git show >output &&
+> >     grep NEVER output >actual &&
+> >     test_must_be_empty actual
 > 
-> What did you do before the bug happened? (Steps to reproduce your
-> issue)
+> Thanks for your review, I really appreciate it. I tried this approach,
+> but I was getting this particular error for the testing.
 > 
-> I set `git config --global core.hooksPath ~/myhooks` and placed a
-> `reference-transaction` hook in `~/myhooks/reference-transaction`
-> with the content:
+> not ok 32 - multi-fixup does not fire up editor
+> #
+> # git checkout -b multi-fixup E &&
+> # base=$(git rev-parse HEAD~4) &&
+> # (
+> # set_fake_editor &&
+> # FAKE_COMMIT_AMEND="NEVER" \
+> # FAKE_LINES="1 fixup 2 fixup 3 fixup 4" \
+> # git rebase -i $base
+> # ) &&
+> # test $base = $(git rev-parse HEAD^) &&
+> # git show >output &&
+> # grep NEVER output >actual &&
+> # test_must_be_empty actual &&
+> # git checkout @{-1} &&
+> # git branch -D multi-fixup
+> #
+> Below is the particular test case
 > 
-> ```shell
-> #!/usr/bin/env bash
-> 
-> set -e
-> echo "$GIT_DIR"
-> git rev-parse --absolute-git-dir
-> ```
-> 
-> then I ran
-> 
-> ```shell
-> mkdir ~/test && cd test
-> git init
-> ```
-> 
-> What did you expect to happen? (Expected behavior)
-> 
-> The Git repo `~/test` should have been initialized (and the hook
-> `reference-transaction` would have passed successfully.)
-> 
-> 
-> What happened instead? (Actual behavior)
-> 
-> The hook `reference-transaction` crashes since `git rev-parse --
-> absolute-git-dir` with
-> ```
-> failed: not a git repository: ...
-> ```
-> 
-> What's different between what you expected and what actually happened?
-> 
-> The documentation says that `git rev-parse --absolute-git-dir` inside
-> the `reference-transaction` hooks read "$GIT_DIR" if defined (which is
-> defined!) so the `reference-transaction` should have passed. I assume
-> that hooks should be executed on properly initialized repositories,
-> right? Therefore I do not understand why `git rev-parse --absolute-git-
-> dir` fails -> Bug?
-> 
-> Anything else you want to add:
-> 
-> This came up with `Githooks` hooks manager
-> https://github.com/gabyx/Githooks where we use this command
-> to locate the current Git dir...
-> 
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
+> test_expect_success 'multi-fixup does not fire up editor' '
+> git checkout -b multi-fixup E &&
+> base=$(git rev-parse HEAD~4) &&
+> (
+> set_fake_editor &&
+> FAKE_COMMIT_AMEND="NEVER" \
+> FAKE_LINES="1 fixup 2 fixup 3 fixup 4" \
+> git rebase -i $base
+> ) &&
+> test $base = $(git rev-parse HEAD^) &&
+> git show >output &&
+> grep NEVER output >actual &&
+> test_must_be_empty actual &&
+> git checkout @{-1} &&
+> git branch -D multi-fixup
+> '
 
-Thanks for your bug report, and sorry for taking so long to respond.
-Reproducing the observed behaviour is quite simple:
-
-    test_expect_success 'git-init with global hook' '
-        test_when_finished "rm -rf hooks repo" &&
-        mkdir hooks &&
-        write_script hooks/reference-transaction <<-EOF &&
-        git rev-parse --absolute-git-dir >>"$(pwd)/reftx-logs"
-        EOF
-        test_config --global core.hooksPath "$(pwd)/hooks" &&
-        git init repo
-    '
-
-This breakage is new in Git v2.46 and comes from the patch series that
-introduces support for symbolic refs in the reftx hook via a8ae923f85
-(refs: support symrefs in 'reference-transaction' hook, 2024-05-07) .
-Before that change we didn't execute the hook for "HEAD" in the first
-place, now we do.
-
-Now the question is whether this is a bug or not. When the reftx hook
-executes the first time it is when we are creating the "HEAD" ref in
-the repo. Consequently, that file did not yet exist beforehand. And as
-Git only considers something a repository when the "HEAD" file exists it
-rightfully complains that this is not a valid Git repository when you
-ask it to resolve the repo paths. So conceptually, the behaviour here is
-correct.
-
-There are two ways we could fix this that I can think of:
-
-  - We can create a dummy "HEAD" file with invalid contents such that we
-    do have a proper Git repository when creating "HEAD". It feels like
-    a bit of a hack though, but we play similar games in git-clone(1).
-
-  - We can skip execution of the "reference-transaction" hook during
-    initialization of the repository. But this would make us miss some
-    ref updates, which feels conceptually wrong.
-
-I'd rule out (2), but (1) could be feasible if we label this a bug. I'm
-not a 100% sure whether we should, as you could also argue that this is
-reflecting the actual state of the repo. I'd be happy to hear arguments
-in either direction.
-
-Also Cc'd Karthik, the author of the menitoned change.
+That makes sense. The expectation here is that `output` shouldn't
+contain the string "NEVER" at all. And as grep(1) would fail when it
+doesn't find a match the whole test would fail like this. So the below
+would likely be the best solution.
 
 Patrick
+
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index f171af3061..978fdfc2f1 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -410,7 +410,8 @@ test_expect_success 'multi-fixup does not fire up editor' '
+ 			git rebase -i $base
+ 	) &&
+ 	test $base = $(git rev-parse HEAD^) &&
+-	test 0 = $(git show | grep NEVER | wc -l) &&
++	git show >output &&
++	! grep NEVER output &&
+ 	git checkout @{-1} &&
+ 	git branch -D multi-fixup
+ '
