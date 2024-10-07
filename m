@@ -1,86 +1,85 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBE715B130
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 06:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C89315B130
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 06:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728284337; cv=none; b=l25ukukuBeSKOOoetcamtKSpIvvHe9S0eUi6NCdlMbXMbCWFlG0DRnPg217DqLC0y/UP18mk9aWn+hQt47t4/xo0Os8UuxxbpAG1bNPGByWzoh6pQHh3p2ZqdHqxHF9G1tvVS4MixL1C0K6miNJgzGFgHj42nwnzVrD5OZMe0s8=
+	t=1728284340; cv=none; b=GXGNjIY2U+EXC4NCBP5WBxROC54RJq0AAatHkLRsUz4Eq6PkhIT5nicFUc1vYFnMcig1D5AuvD2MNLWxTU6PwHfXkZ07ubImMfMtRomFh7v5IT1tAUrsnFKpWeM8356sPaa69FbUkLSH5NZFOORNy43+p9WDmFoObPeUuQGupG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728284337; c=relaxed/simple;
-	bh=p6UJ9WlGhsJ87GargKrFPANbiEYm3G40ozeo2oy5aoY=;
+	s=arc-20240116; t=1728284340; c=relaxed/simple;
+	bh=CnapbXn8cV3e3Q1nVQgvq+J9T7U3c4m6lEpjBb6A/Qw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pBeLcngOrV8sfjUmKXei4XDSo2O6JqWBD0Zo3QCO0SeCL56v1Aw4H1OBa3qCV3krTy1dEeeCcH/PSZpaZ2xwHnwMCoMvBcBlK2ldDiYdmlmCJQMF9zus+iW7MdrpN6PrdiogpQBtD5cYguAx+D4eVJobEMqnOjCa7iFgfGeVMlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=q2SAvk3w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=osQTiREC; arc=none smtp.client-ip=202.12.124.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=l4XBl4HhbxFLY2bYDP7tO6jGQFJuinoYA+ce/PDsQawaHLwBsgP17p8Dwp//YL7TwAXtbkWF4Kxi+8LQL1GgpPtfzDcFFeL9b9VVHWU72pr4aq083+KNk1TyM70nCN1S1FEzUN3fhXLTS6U8s5a4539xzcv3jNoyW3tlXxUCnAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WqK6zevg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MYNM1qZu; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="q2SAvk3w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="osQTiREC"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 849DC25400CB;
-	Mon,  7 Oct 2024 02:58:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WqK6zevg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MYNM1qZu"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1784125400CB;
+	Mon,  7 Oct 2024 02:58:58 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 07 Oct 2024 02:58:54 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 07 Oct 2024 02:58:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728284334; x=1728370734; bh=p6UJ9WlGhs
-	J87GargKrFPANbiEYm3G40ozeo2oy5aoY=; b=q2SAvk3wBIlLX0fW3nOVnrPVWX
-	7Dk9E5zME4S6v9CGBGbVHos2u0Q1ZsCrgZJ6Tpnzs43YFHFGzbkCd9wtSzbN0S1y
-	FGKL/xZFyd+mms5rWGl04HFHAsMyAX0MgJQ5gZS4ZWz5zzKf6P5GaDZD2lfd40tg
-	erzuiT/k2k4UYlsJDyYCT1WLDbc5e00MJJL3wYOa2vu4rK3LHXwFXMx7zNtnwklc
-	QPUghwbA8BZdcFSXhFq8DNtWOT2m7Z/xssMI5JHn9J0mTkE2xc12JotxAls2+WbB
-	W0Ku9nr4ifi/08GQ0c1WRE8Dylda3Ghpj+mNLyMCjmjkrz0cEGACNdl/aDlQ==
+	:subject:to:to; s=fm2; t=1728284337; x=1728370737; bh=eACfhoj3Y2
+	JFHsZWmyJT0LE5KpwThTZUI9rCB7H77jw=; b=WqK6zevgfyoXt1FRFuORMsphBm
+	7tg81Ri07nytXQpUi/Zof7k5sHYGQBJ62cUN5LaVA+sEZrbt7tdqU5D7qKn1B4BK
+	HGXednyCBeznsuqFllW3dN9MNUaomeaDF5W9/n5UBuAy4mrwfosIkVAzeGPdrEGL
+	PEr1Bv2RXCR6IEws77IiUiyOktEQaL6AjWKGhroTnhWCwfSUvyDO/deY19k+ZJO2
+	hc+p3HumZynpoXCKVhV2x9U/2CjlKToxe13zbVs1M6PVNwqNZ+/5o7j/3ftmG+B8
+	HRIgZ8TEyt/Lm0VZZsHZvXwgs9RVrjxjZr3kh+ycsl2fsS8MV/tZxTVuTUlQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728284334; x=1728370734; bh=p6UJ9WlGhsJ87GargKrFPANbiEYm
-	3G40ozeo2oy5aoY=; b=osQTiRECaqkMVM2ynzFCdg1WpJ8udUTFy9sD2d6aMMch
-	Ox5XAI1Vj1ymWwfk/uNInMPG32KQ8dnPd5BD+54ooNQRi3oycqUNBbp6waexgTCb
-	Ws+a73MgY7e3JIeM1C7YPE9sZYj6P2IL9h6Su3YpbHtyLJZwOifEUcXtKC54f5Oo
-	ySrgq0ccUVoNuZqLs9rh1VaWiXL39PrW3R4pTe+Iwd8EWy6GG+XVet6Nf5jU6kTl
-	+TwYmSQbrIULhDi9/odBPNvPwUwO5C9c3xQF9rIhW9fvmWNUyFghfkfNBrzupPLs
-	fgrPyOrtlCdCs0xGRa8ZeWdNv9HGZ87LWGt/b49Shw==
-X-ME-Sender: <xms:roYDZz4N6WTjyAr-SAIbczPpSyoUxFi1MeuIiCE-4akCx9MWfCRioA>
-    <xme:roYDZ45zPpopdUrnJaBEakMYT8g3LtgmxU_3Fs3hdJloThYOFNI12E-xeG3C07_ZZ
-    _1cxrktSUMdOM2WTQ>
-X-ME-Received: <xmr:roYDZ6cfsWoKKOhfGMCjtszmg-TBeUS3VPgqd_ystCfK2DocYMZoPJNbVzE9hEJzq19rQIi9frNvGk8yqz4iHxotYuNQ-4XAxOcFOLGAUwsi7N7Dlw>
+	fm2; t=1728284337; x=1728370737; bh=eACfhoj3Y2JFHsZWmyJT0LE5KpwT
+	hTZUI9rCB7H77jw=; b=MYNM1qZuudxKt3NIEpQu6zcom2n+4Ftg10D+ArxqVb4r
+	b3JD8k0mgJkImOuKjqPDzrgzyQxlhmQb4JxltJxHEmDZzQ0we67j+DvLAOBdTIrg
+	4ja9cx6Y6KBnZipSh4jHZ6dhSxqDid4JYXqUhnyzhPk7yvzCZSWJXc5Z+nODAVGp
+	zLqmsHc89mQaH5RWkhsc8BEZANggvoEIwUR0MAw/h/CBNd9941ZXZ2d+nzwGeDBr
+	fd9CJpWrsGHsw1KHe77Iqpjpxvi4RF9Htm9HlUGVzwHr5mrnl0c8Rqlph9fY1Rch
+	brZQ8FPWyML9YfnovWSH0zrrKeAvoc3ZbvBFBxg9Gg==
+X-ME-Sender: <xms:sYYDZ6DwO4xirjMY3YHRicVuSTDuCA5w44IdYWZjExNMzZNvRN3ZPQ>
+    <xme:sYYDZ0hQK2so1FXH3ate2yTpmP0tDe1anKRoUIPIsUQRcBygqeJZLZseUg50AdUyH
+    kRi9C7gF8CCTuc1Xg>
+X-ME-Received: <xmr:sYYDZ9k2UvVccQJupAuNpsMseNsMe1nNr7vDAu2KbBpd4UqOskvvAsKhI2WFQDPJzwRJlaZOaApnLigwVN6_aA9eNn3xAwvldo0S98g3s2v_vgJE1w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvkedgudduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdortddttddv
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeejtddtgeffkedujeejgeduhefghedtgfdtieduleeu
-    lefgueetheeludegueeuveenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
     shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
     hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhgv
     jhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekke
     esghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:roYDZ0LwsdTEvXWBa0dB_D9AWKm4y4FSgb9fLXDstPZnAUv_01Hwqg>
-    <xmx:roYDZ3JcumL0nIDWXT9dr1nYgUv7zE2aY-VdQejJ110dWdxyP4PozA>
-    <xmx:roYDZ9xkZg6tm7jW098SWLbtay2SBP33A-zsmRQ-CtMhpGykJd-1fg>
-    <xmx:roYDZzIrpFU2hwiTcExK2OXDtovLO78hOVllbKTbkI7Ph8x3sdI3qg>
-    <xmx:roYDZ0EuKaLGYo87CMi1W9-Ebr8KqhLRU-RvVuToo2TSsQfe_Vru1Ati>
+X-ME-Proxy: <xmx:sYYDZ4y8N1SJHTTr71272YYxCC9ztDALg_IPweAV62MstdruTYGQGg>
+    <xmx:sYYDZ_TTdGTuun9rjDzJsikECyvOBdztXZBzQ6kI2qsVxQSnp-N7PA>
+    <xmx:sYYDZzYTAjpS0PVjLvUnDY80TEG4FFFsOVUQVJkmkDvLJE_dZvKM0Q>
+    <xmx:sYYDZ4RDioz6mGUBavNRWwumhN-W8xhAGm-NSBhmAMjoARn18j4CEg>
+    <xmx:sYYDZ9M-xxA5kaY-VgS36qz-BB93kODu7ey85okRv49gBbfSJWX5FcJI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 02:58:53 -0400 (EDT)
+ 7 Oct 2024 02:58:56 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6fa73550 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Oct 2024 06:57:54 +0000 (UTC)
-Date: Mon, 7 Oct 2024 08:58:50 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id b04a32ac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Oct 2024 06:57:59 +0000 (UTC)
+Date: Mon, 7 Oct 2024 08:58:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 9/9] ref: add symlink ref content check for files
- backend
-Message-ID: <ZwOGqpeYiKITgsoV@pks.im>
+Subject: Re: [PATCH v5 6/9] ref: add escape check for the referent of symref
+Message-ID: <ZwOGr4Tv8K_wemtD@pks.im>
 References: <Zvj-DgHqtC30KjJe@ArchLinux>
- <Zvj_EELQdMsN7j2w@ArchLinux>
+ <Zvj-xaa_j26Auig7@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,18 +88,91 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zvj_EELQdMsN7j2w@ArchLinux>
+In-Reply-To: <Zvj-xaa_j26Auig7@ArchLinux>
 
-On Sun, Sep 29, 2024 at 03:17:36PM +0800, shejialuo wrote:
-> We have already introduced "files_fsck_symref_target". We should reuse
-> this function to handle the symrefs which use legacy symbolic links. We
-> should not check the trailing garbage for symbolic refs. Add a new
-> parameter "symbolic_link" to disable some checks which should only be
-> executed for textual symrefs.
+On Sun, Sep 29, 2024 at 03:16:21PM +0800, shejialuo wrote:
+> Ideally, we want to the users use "git symbolic-ref" to create symrefs
+> instead of writing raw contents into the filesystem. However, "git
+> symbolic-ref" is strict with the refname but not strict with the
+> referent. For example, we can make the "referent" located at the
+> "$(gitdir)/logs/aaa" and manually write the content into this where we
+> can still successfully parse this symref by using "git rev-parse".
+> 
+>   $ git init repo && cd repo && git commit --allow-empty -mx
+>   $ git symbolic-ref refs/heads/test logs/aaa
+>   $ echo $(git rev-parse HEAD) > .git/logs/aaa
+>   $ git rev-parse test
 
-You're getting into implementation details before noting what the actual
-problem is. So I'd recommend first describing the problem at a higher
-level, and then note that we can reuse parts of preexisting infra to
-address the issue.
+Oh, curious. This should definitely be tightened in git-symbolic-ref(1)
+itself. The target should either be a root ref or something starting
+with "refs/". Anyway, that is of course outside of the scope of this
+patch series.
+
+> We may need to add some restrictions for "referent" parameter when using
+> "git symbolic-ref" to create symrefs because ideally all the
+> nonpeudo-refs should be located under the "refs" directory and we may
+> tighten this in the future.
+
+Agreed.
+
+> In order to tell the user we may tighten the "escape" situation, create
+> a new fsck message "escapeReferent" to notify the user that this may
+> become an error in the future.
+> 
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+> Signed-off-by: shejialuo <shejialuo@gmail.com>
+> ---
+>  Documentation/fsck-msgids.txt |  8 ++++++++
+>  fsck.h                        |  1 +
+>  refs/files-backend.c          |  7 +++++++
+>  t/t0602-reffiles-fsck.sh      | 18 ++++++++++++++++++
+>  4 files changed, 34 insertions(+)
+> 
+> diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
+> index e0e4519334..223974057d 100644
+> --- a/Documentation/fsck-msgids.txt
+> +++ b/Documentation/fsck-msgids.txt
+> @@ -52,6 +52,14 @@
+>  `emptyName`::
+>  	(WARN) A path contains an empty name.
+>  
+> +`escapeReferent`::
+> +	(INFO) The referent of a symref is outside the "ref" directory.
+
+Proposal: 'The referent of a symbolic reference points neither to a root
+reference nor to a reference starting with "refs/".'
+
+I'd also rename this to e.g. "symrefTargetIsNotAReference" or something
+like that, because it's not really about whether or not the referent is
+"escaping". It's a bit of a mouthful, but I don't really have a better
+name. So feel free to pick something different that describes the error
+better.
+
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 57ac466b64..bd215c8d08 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -3520,6 +3520,13 @@ static int files_fsck_symref_target(struct fsck_options *o,
+>  	orig_last_byte = referent->buf[orig_len - 1];
+>  	strbuf_rtrim(referent);
+>  
+> +	if (!starts_with(referent->buf, "refs/")) {
+> +		ret = fsck_report_ref(o, report,
+> +				      FSCK_MSG_ESCAPE_REFERENT,
+> +				      "referent '%s' is outside of refs/",
+> +				      referent->buf);
+> +	}
+> +
+>  	if (check_refname_format(referent->buf, 0)) {
+>  		ret = fsck_report_ref(o, report,
+>  				      FSCK_MSG_BAD_REFERENT,
+
+This check is invalid, because referents can also point to root refs. So
+you should probably also add a call to `is_root_ref()` here.
+
+We also have `is_pseudo_ref()`, and one might be tempted to also allow
+that. But pseudo refs aren't proper refs, so I'd argue that a symref
+pointing to a pseudo ref is invalid, too.
 
 Patrick
