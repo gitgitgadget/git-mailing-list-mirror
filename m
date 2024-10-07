@@ -1,149 +1,121 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536C1199929
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 09:41:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4672417CA1F
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 09:45:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728294086; cv=none; b=UtwtNP+8v+3aEw3yQdYyDkCqLfOJhcHqLQXJ+bHI3ZR+SttEDwEgH1KsWi4CAtUaBOm8VgTLbBqaixReE84xmaCV1AG2olmCzsXEXq0OrZRUiMmmPofueqrYIkoR6MbigrBNs6gCvCk4GyL18B6EHarInMXlkuusU9uqLdb9bWo=
+	t=1728294336; cv=none; b=kxRTew2CR5m3rMcXdkH3YWyxTNp96YloDVJvWLbmpCbEcMqFYAnf1Po1uxAzNRDM5vvDcfq/4iXwybdIIFuKHiwGZZNCRW5vmHgRu3ir0RbLXW366luriQPTyV6jf+2CVl8w3tjCKVzaG2lu6VAIi1hH1xoJZaA1SmWMhlJCuAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728294086; c=relaxed/simple;
-	bh=n0YYFnKG0Z5waAlhY4RcJmIWLorfJDJh9o074oEo94g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tD3zTxtTxuxi1dinREtWoyYQdG2kFSudArjUVooPgReZt1iEB9HCeCDKYOUVeJ+MW/xeFvLHPYayu17HCqFKuOA9dM5pH8eVYdqd0oYLgFVcuAb0usE3wkgMISK9MK1BgYZ9D0dCBR2xKIfhjxhLf3IACsS5s1XYgZT0XMffyHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PSTsJ9gy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B2WY6ZHG; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728294336; c=relaxed/simple;
+	bh=t3a6OVO0Ms1/TSv/TJ0UeKfKRkxuAhi2RyqNs6dMIKs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aAUp3S7vwZ/E1F0mEPxO9KSCV0gjuNmQhCIVYye4UegeTz5+46PrwbLlCUyyh6qGgy7ZfMmq/A2m/CNuOLr9KzM+fMjbO0E9qO+kzqmG3nJZdDm9qynoCMNjiKuM97TdnhBuHFJC7jJ4MrfLb00gQ3tFGLYfF6re97p3VpP7DXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=EAyrvs7U; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PSTsJ9gy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B2WY6ZHG"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6B79211400BF;
-	Mon,  7 Oct 2024 05:41:23 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 07 Oct 2024 05:41:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728294083; x=1728380483; bh=TnS8YODOt8
-	11XiE3AZbjyId959gVB7Oq0pbBkXGj09k=; b=PSTsJ9gyHZvkydd2dnGMy36Q47
-	/pVcCkACAvHRUrN+Nnfd0r4Gwi18cG+hlCDm/5dwWidatSwlgiQ5Z+Bh3qrFY2VV
-	jwdly/HlroKG1t0i7mt7MCvKdtfa2NOug1zHrH33Dg7Rdrf1PFTkAKv1IGfuhPBa
-	EgRB+slqPwnd/6Vrn2hpjvTJkVhjpsncQsfUVj7vd6xZK7lV+yYnONey5eD2qYtE
-	/cZUHuSyXId5i9rlx79dhMpIU+C8+oxY7zsHhlYmqk+xrTPwu6WVXiXMbZZu9+RJ
-	2aloVzdKRmV3bgObSUOj1Jxv1ao8jqZXewMJztVFhvGN+hUkSKkbQdZhk23w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728294083; x=1728380483; bh=TnS8YODOt811XiE3AZbjyId959gV
-	B7Oq0pbBkXGj09k=; b=B2WY6ZHGNU/JMfbAuo59pTQdK8Ta/J7hfa8bZF05foQn
-	xLwXDKahWX+FRo5TwyIsmp5Xl15jqO5Rt6XmtEIjSZMnSLow5+KejnWZw0IeaGKh
-	1fKtTuDrd6D9XthVvqIpxhFd21ru3cn9T4nvYqwhpc9V//AhW1cURMYsmuIfBaZn
-	Jqy3qIxmHF2DQNY6wt31UcWzNvpWNjaH9CMp4qTT+4b55SHciP2RrqNdAa9ygQYO
-	cgJbPiL+z3042l7TVCIJl8shi+Fti2gO1IFnzulYZk0U0WSs5ffFHmVAKg6OlEHX
-	8KtAtCZgdyOIkVgRm8nzowf2Q5DJgKQ5iqhpZTqlSg==
-X-ME-Sender: <xms:w6wDZ-aEr5bTv2MLGe_2zRdIwD_7sBTCOjFqM3x-CK5W39OkL-QKvA>
-    <xme:w6wDZxZWIBpsa071SmQb0coKssSKWT-as30Eyqfx8gXSiv_oYj9F3xwYQLJzlpQbN
-    bBVuVp-1eEuh8MNcA>
-X-ME-Received: <xmr:w6wDZ4_DxJS9Y_t9nn5tyXnUnINTN2Pp328oRVtNXNzqpvD6RtrSKNT_Zpt6jPKB_2IMDkYToRV_Adufujr3b4tWWJ6IarXIOd5EqT11KjAJzqxYCA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgudelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtg
-    homh
-X-ME-Proxy: <xmx:w6wDZwoqMa5f71aX78dgDPrePm28ckpzRWf6UeeokbWdkzQTruyz_w>
-    <xmx:w6wDZ5qmLwDGSdKAc8lnFJ45g5zuh45W0RIkUBozob8hydpZZepmQA>
-    <xmx:w6wDZ-Tn1oZ1GTLBIx_y0eMQnfaE1qbwbCFZVbPxpf2uJq5ntFU1RQ>
-    <xmx:w6wDZ5olpW7eiUKQd0mAo5V8sBQkUPjvG7rjVI7k5dtc5rEV9jG8Wg>
-    <xmx:w6wDZw0tqxU5B0FTWIpxQmCqwWU2XEmdcKjG3UAeGu4cL7ibrHOGLTEn>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 05:41:22 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ac5145e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Oct 2024 09:40:24 +0000 (UTC)
-Date: Mon, 7 Oct 2024 11:41:21 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 17/23] midx-write: fix leaking buffer
-Message-ID: <ZwOswYaNe74WkJHJ@pks.im>
-References: <cover.1727687410.git.ps@pks.im>
- <5db4e17db9b9b991e0dbe56d7043b56e5d161097.1727687410.git.ps@pks.im>
- <ZvsXrQadrU78rEha@nand.local>
+	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="EAyrvs7U"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6e2e4d1c992so10536847b3.0
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 02:45:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1728294333; x=1728899133; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2gz1L294BvEJz+KgvypI7m0BDtk5OmlW+Qhqei6GoR4=;
+        b=EAyrvs7U+LHoHeBKaL/kwsnElYSo4qU71Li6NoZC23CcW3NZdyR1WwBFQb71wDdc0M
+         zcfIUTRhESS/cj2Lqb/nUv0dM9QZi1myJf5TsulUCuCQLhu5yEzq5KXwf5ZGCfhMe+g0
+         ejM3JKJ7CSbkldeZaQXVdoz0IwFcdLah3pG03i+Dbt/D7i5Advea9bPkDMCct3oql1TP
+         +1tOp6Zg2gM7IRYPdMEl0018qH4uWTaC37P3bS4rTqo5W7Ssadu20QtMJPxCluFye6ut
+         jUOulqb0gh5DuAEF80Dm5q7MrgebsmtY5IeERaFgt6NAw2bpfztr1JLhYq1ySfH9Ev4T
+         g+9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728294333; x=1728899133;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2gz1L294BvEJz+KgvypI7m0BDtk5OmlW+Qhqei6GoR4=;
+        b=sRVPyTuStPFWk+b+1N+iGWnfKu5J+9V3CnhtlN4fm+6QOrRgCqTpQfDW3R5Gg/azya
+         2IFT4O9Gz6VJfmOXO8XDw7NudYPCNIZWr3r11jf4ChOypKJR+WFB8LMlMIwjJi4Yod8i
+         dIbny2Atcwpm2lpxlESsrOrPsv41W4OO2Cnbyh2dDbkD66lJEr6xZ2a+Q2ayFUN46qim
+         NXJSudNFD5Czr8VtIUt+O4a2cxwKOn2624KE4jA8Hsxwz7xvUTxIYvy39C6HNTfbD1ta
+         hxqtE/tD2BVgwt7bEBYukv7RrgKf5c9LzuprrpVSO2StY3NVFS6N5Klm2ci/syauk6fo
+         tMzg==
+X-Forwarded-Encrypted: i=1; AJvYcCXRuY/NxHRxvN2nW5VmdL6qplgHEAPrPom4YE5A1G6tO46/sBI+G8aJ8YrmNvMQL2tamm8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7exEUrQMxo5g8Jrhkyj+lyPm+kKugENxsLG9R7/9zJ7u2KIN5
+	ATf33u8BiT35uE9gTKUFlW6iT8LVw0IRylopmsFXwHl1J92HT7ERus4qH5mbcnjXnbaGQCDqNuu
+	0H8N6e9ol4XIwtyVeHe2wjbetZdsnma13uvK7YoJSmNFF08U2bvxZq28ac6T5aLg/rGrzdTvfFG
+	T20ZsUYNfoAc7dHvQa++ubCN/1kSZuam8Wg9d6Ui7LKn2e46yP5BfXKDMGn8By4Y+qlTbDRXhG4
+	lERcTbGrKqL74Xm0DntCqMI+7r9UZJT6yI7oLZur5U44wx4oO80G6/mTk77NTWtEPvf8w/txlrJ
+	fUnbD80CBz4=
+X-Google-Smtp-Source: AGHT+IGkGAvKuVNUqPrjUEUnE6XeoAmuZP5w/FB53llxAUCFzWr0XGKwGGl3UaM1FgNUQq8cq7QYjQPYhhHfBs2+AxM=
+X-Received: by 2002:a05:690c:f0d:b0:6db:cea9:6ed9 with SMTP id
+ 00721157ae682-6e2c7beb946mr75391157b3.4.1728294333130; Mon, 07 Oct 2024
+ 02:45:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZvsXrQadrU78rEha@nand.local>
+References: <pull.1804.git.1727862424713.gitgitgadget@gmail.com>
+ <20241007055821.GA34037@coredump.intra.peff.net> <20241007060813.GA34827@coredump.intra.peff.net>
+In-Reply-To: <20241007060813.GA34827@coredump.intra.peff.net>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Mon, 7 Oct 2024 18:45:22 +0900
+Message-ID: <CAOTNsDwwikiX3u6DG=+4hn+mcgfXzzDoqR3ZFVEdGi=mPGQbpg@mail.gmail.com>
+Subject: Re: [PATCH] fsmonitor: fix hangs by delayed fs event listening
+To: Jeff King <peff@peff.net>
+Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 30, 2024 at 05:27:09PM -0400, Taylor Blau wrote:
-> On Mon, Sep 30, 2024 at 11:14:01AM +0200, Patrick Steinhardt wrote:
-> > The buffer used to compute the final MIDX name is never released. Plug
-> > this memory leak.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  midx-write.c                            | 2 ++
-> >  t/t5334-incremental-multi-pack-index.sh | 2 ++
-> >  2 files changed, 4 insertions(+)
-> >
-> > diff --git a/midx-write.c b/midx-write.c
-> > index 1ef62c4f4b..625c7d3137 100644
-> > --- a/midx-write.c
-> > +++ b/midx-write.c
-> > @@ -1445,6 +1445,8 @@ static int write_midx_internal(const char *object_dir,
-> >  			return -1;
-> 
-> Would you also want to strbuf_release() the final_midx_name buffer here
-> as well?
-> 
-> I guess the point is moot since there are a number of other finalization
-> steps that we likewise skip here by returning -1 directly instead of
-> jumping to the cleanup sub-routine.
-> 
-> In the above sense I'm OK with it as-is, but it would be nice to verify
-> that this portion of the code is leak-free even when we return early
-> (e.g., because we couldn't rename() the tempfile into place).
-> 
-> Of course, because final_midx_name is local to the body of this
-> conditional, I think you'd need to do something like:
-> 
->     if (ctx.incremntal) {
->         struct strbuf final_midx_name = STRBUF_INIT;
-> 
->         /* ... */
-> 
->         get_split_midx_filename_ext(&final_midx_name, object_dir,
->                                     midx_hash, MIDX_EXT_MIDX);
-> 
->         if (rename_tempfile(&incr, final_midx_name.buf) < 0) {
->             result = error_errno(_("unable to rename new multi-pack-index layer"));
->             strbuf_release(&final_midx_name); /* <- here */
->             goto cleanup;
->         }
-> 
->         strbuf_release(&final_midx_name); /* ... <- and here */
-> 
->         keep_hashes[ctx.num_multi_pack_indexes_before] =
->           xstrdup(hash_to_hex(midx_hash));
->     }
+On Mon, Oct 07, 2024 at 01:58:21AM -0400, Jeff King wrote:
+> First off, thank you for looking into this. I _think_ what you have here
+> would work, but I had envisioned something a little different. So let me
+> first try to walk through your solution...
 
-Potentially. Until now we never really cared all that much about
-releasing resources in error paths, and for all I can see this leak
-isn't hit in our test suite. But it is an easy fix to make, so I can
-include this in case I'll have to reroll this series due to other
-reasons.
+Thank you very much for looking through my patch in detail and providing
+another approach. I agree that busy-waiting is not smart ;) I utilized
+it to minimize code modification and not to worry about any new
+deadlock. Your approach is more natural if the code is written from
+scratch with the problem in mind.
 
-Patrick
+> @@ -933,7 +949,9 @@ int ipc_server_stop_async(struct ipc_server_data *ser=
+ver_data)
+>
+>       trace2_region_enter("ipc-server", "server-stop-async", NULL);
+>
+> -     pthread_mutex_lock(&server_data->work_available_mutex);
+> +     /* If we haven't started yet, we are already holding lock. */
+> +     if (!server_data->started)
+> +             pthread_mutex_lock(&server_data->work_available_mutex);
+>
+>       server_data->shutdown_requested =3D 1;
+
+Is this condition inverted?
+
+On Mon, Oct 7, 2024 at 3:08=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+> I just checked your patch in our CI, using the sleep(1) you suggested
+> earlier to more predictably lose the race(). It does work reliably (and
+> I confirmed with some extra trace statements that it does spin on the
+> sleep_millisec() loop).
+>
+> I had also previously checked my suggested solution. So I do think
+> either is a valid solution to the problem.
+
+I also tested your approach on Windows with a few additions to
+ipc-win32.c, and it worked correctly.
+
+* define work_available_mutex and started in ipc_server_data.
+
+* call pthread_mutex_lock(&server_data->work_available_mutex) before
+creating the server_thread_proc thread.
+
+* define ipc_server_start()
+
+Shall we adopt your approach as it is more natural. Can I ask you to
+submit a new patch?
+
+Koji Nakamaru
