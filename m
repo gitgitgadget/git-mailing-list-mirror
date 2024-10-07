@@ -1,182 +1,110 @@
-Received: from smtp1.lxd.bsocat.net (lxd4.cloud.bsocat.net [37.187.92.26])
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F31D6FC5
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 01:06:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.187.92.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5785695
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 02:26:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728263195; cv=none; b=ca6mqH1jlev9bfPHxOk8m7D645GBaQXUZXuP2TMtE/ffI/xlwj7pIu2zcqHyqGmOmOFdCZLaDm34qpPRJGLmfZJKgMtiFppDrCpVPn/SQUCozIsgTPi/B0lrFjCefr57p7TpwvmUB2hi/X6kCcToFvivv2XFi3rshbDkq3MPjLw=
+	t=1728268017; cv=none; b=MlYxRvbFJEfjIwGlQix+JI25Q1zXokXziuOuepOVIyZ7LPxVNFnRf+m/mnTIz+DlxATvIEovNsPLniWsO9sd2SD/HSSoz9bQgCRk/7A0+wjLMTwX3YRmy2//AlSuDN/dd+UKHsU3aYeAwir0caaczg81e+1cT3o/NuX78z7kHx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728263195; c=relaxed/simple;
-	bh=+RS99D1CDFRbVZeIaS1KKGXc7j4AagpT+3lbjIFP7VE=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Kidotrg/p7yQlJDr4auz0QikGc6f7nXPA3130B0j+KXZnOsQ5VuBu4QLTOOuZi7gb9U8DMECM+WpcK2pAcVRFzZja3yBNOqCz8ACpocyBgElu7gQQrOfH4V09w3ph9kQLiUlewDCCutYtyU3b8PQsw1XxySt1cvUXgVts0WGQ3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=benary.org; spf=pass smtp.mailfrom=benary.org; dkim=pass (1024-bit key) header.d=benary.org header.i=@benary.org header.b=gTPR+Pgm; arc=none smtp.client-ip=37.187.92.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=benary.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=benary.org
+	s=arc-20240116; t=1728268017; c=relaxed/simple;
+	bh=jafok7TP9m++SIDsCcepvOaVOPL9H1jqcgpNl9AuUqA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XC0sM+DduElODjJIE7XPz9HYZH+VHJp/MmULqAqoJ2UJYdCbP1638h3utEAhQsHjxkQuF+78uaWCm6np/4e60DgFZEgu0B6abYa2YOoWapHGsdDLKcXvrjD9xX2ASUXIgIP3ARxlrS+LN+erVBZBLz6oGmsx2xDAjZ3KCbYGaHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=ZMayFMkm; arc=none smtp.client-ip=185.70.43.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=benary.org header.i=@benary.org header.b="gTPR+Pgm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=benary.org; s=gnufor;
-	t=1728262790;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	to:to:cc:mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
-	bh=+RS99D1CDFRbVZeIaS1KKGXc7j4AagpT+3lbjIFP7VE=;
-	b=gTPR+PgmDfqyV8sf7mVt76NtV4TspD+OgpljGmNx467oQprV6zcvD69JE/XJnfFBbv2pj/
-	+/JuLZa/etcgw8y/CI83MfVa8RuqxKLTxtKZ/X01vmpx76jACm81zRQo6MpkWQptFINuTb
-	of+DO2KIDof5g2JrnuqfvHWW3EGXaTc=
-Received: from [IPV6:2a0c:b641:a40:0:2fa:5bff:fe25:4e0b] (gnutoo.home.bsocat.net [2a0c:b641:a40:0:2fa:5bff:fe25:4e0b])
-	by smtp1 (OpenSMTPD) with ESMTPSA id 6ecb0861 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 7 Oct 2024 00:59:50 +0000 (UTC)
-Message-ID: <353abc17-d65b-409f-8784-e2267e2be243@benary.org>
-Date: Mon, 7 Oct 2024 00:59:43 +0000
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="ZMayFMkm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1728268013; x=1728527213;
+	bh=jafok7TP9m++SIDsCcepvOaVOPL9H1jqcgpNl9AuUqA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=ZMayFMkmSzZVbaOUeLxQ8kjh+unu/TI1rxuoTX4ds2I3W0W0MiIH9PnMnprCwSGD2
+	 1i1V34ITT0P9XXQzkrkwP19XY1dORUM241h6O8Nnnio+Qmi4wCu2uNY9DT1IymX9bW
+	 MGOCgmuBwl0NQQcGSY74nYx81erh/r3lHkHtSIWrbXBj+RrKbtidR4TDGf/7JK/bQz
+	 rOx5/1uxQUVZY4E2jpXUgurD10LdvFORBW3OjUbrDSOjJ7N0KPJQdPK7SYJraT4vgI
+	 L0NKW0WScFva4npqp9NaXkUOzdSchET03fJK2s1UqFbAk4KpbfgX1BR97R5u1esnt3
+	 YyPpxj0t3lmKQ==
+Date: Mon, 07 Oct 2024 02:26:51 +0000
+To: Eric Sunshine <sunshine@sunshineco.com>
+From: Caleb White <cdwhite3@pm.me>
+Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] worktree: refactor infer_backlink() to use *strbuf
+Message-ID: <o7jQV4JUYr2iQtErKFhCrjCySiGn7_I18gmdInKbOC9TAsvqazG0O_fPUtiWZ5UfiGLr25OZ5xvqIhfOIwCG-s1RGgri-BJIdHqiokIw4z0=@pm.me>
+In-Reply-To: <CAPig+cQC45_Pofw31h2RSydj_CjqpfajLLa5O_sR9m0AQh5OVw@mail.gmail.com>
+References: <20241006060017.171788-1-cdwhite3@pm.me> <20241006060017.171788-2-cdwhite3@pm.me> <ZwKoNg-HYGaohvCd@ArchLinux> <CAPig+cQC45_Pofw31h2RSydj_CjqpfajLLa5O_sR9m0AQh5OVw@mail.gmail.com>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: f1061db6063c18a760f33f60ef1006e31d94f030
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: en-US
-From: benaryorg <binary@benary.org>
-Autocrypt: addr=binary@benary.org; keydata=
- xjMEZPRnKxYJKwYBBAHaRw8BAQdAAKdlNe0o2M0j1n2xyv8Amf+7ct0odnZp4jEAX4Y3S4TN
- HWJlbmFyeW9yZyA8YmluYXJ5QGJlbmFyeS5vcmc+wpwEExYKAEQCGwMFCQWjmoAFCwkIBwIC
- IgIGFQoJCAsCBBYCAwECHgcCF4AWIQSAS2y4rtVh2T2tTcXi8ixe3yARnQUCZPRoPAIZAQAK
- CRDi8ixe3yARnY3PAQCuFua4uDblRjF011aWK6KI0mueNX1gZu+SAzO6myGAKAD/aga/N26m
- 1UFPE3yt1MmC6d/3ALQ4tSeuvIbQ0LDFJgLOOARk9GcrEgorBgEEAZdVAQUBAQdAsrZv4Bxa
- d00C48383RfNVMnYtqRP8pu2dwiqr1Y9r3ADAQgHwn4EGBYKACYWIQSAS2y4rtVh2T2tTcXi
- 8ixe3yARnQUCZPRnKwIbDAUJBaOagAAKCRDi8ixe3yARnWVmAP0UsdgYTanOIdnE2f2wBCbo
- 7oncBxEY0NXIvAA70R4JsAEAu6nxEMD5b7SlMikbj1ARXG6ZlcQWM95zMOCHC7JykgA=
-Subject: how to use git with unreachable paths (namespaces, proc)?
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Hyx8lZVr0yP1i03inh9EpFea"
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------c7b6229b45148926e3a056325e11d0de1752ca61a6987dccbfd970158714da06"; charset=utf-8
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------Hyx8lZVr0yP1i03inh9EpFea
-Content-Type: multipart/mixed; boundary="------------8wUDr0DeFl7oacS73Mgl0pZ9";
- protected-headers="v1"
-From: benaryorg <binary@benary.org>
-To: git@vger.kernel.org
-Message-ID: <353abc17-d65b-409f-8784-e2267e2be243@benary.org>
-Subject: how to use git with unreachable paths (namespaces, proc)?
+--------c7b6229b45148926e3a056325e11d0de1752ca61a6987dccbfd970158714da06
+Content-Type: multipart/mixed;boundary=---------------------9d55193a50c92ffd319fcfe6885af545
 
---------------8wUDr0DeFl7oacS73Mgl0pZ9
-Content-Type: multipart/mixed; boundary="------------a0xfao9LCGG1UYaiu7joXwXa"
-
---------------a0xfao9LCGG1UYaiu7joXwXa
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-
-QWZ0ZXIgdHJ5aW5nIHRvIGNvbnZpbmNlIHNlYXJjaCBlbmdpbmVzIHRvIHRhbGsgdG8gbWUg
-YWJvdXQgZ2l0IGFuZCB1bnJlYWNoYWJsZSBwYXRocyBvciBkaXJlY3RvcmllcyBhbmQgc3lt
-bGlua3MsIEkndmUgZ2l2ZW4gdXAgZ2l2ZW4gaG93IGRpZmZpY3VsdCBpdCBpcyB0byBzZWFy
-Y2ggZm9yIHRoaXMuDQoNClRoZSBpc3N1ZSBJJ20gcnVubmluZyBpbnRvIGlzIHdoZW4gZ2l0
-IG9uIExpbnV4IGlzIGZhY2VkIHdpdGggdW5yZWFjaGFibGUgcGF0aHMsIGxpa2UgYSBzeW1s
-aW5rIHRoYXQgcG9pbnRzIGF0IGEgZGlyZWN0b3J5IHRoYXQgaXMgb3RoZXJ3aXNlIHVucmVh
-Y2hhYmxlIGZyb20gdGhlIGZpbGVzeXN0ZW0sIG9yIHdoZW4gdGhlIGN1cnJlbnQgd29ya2lu
-ZyBkaXJlY3RvcnkgcmVzaWRlcyBpbiBhIHBsYWNlIHRoYXQgaXMgbm90IGEgZGVzY2VuZGFu
-dCBmcm9tIC8gKHN5bWxpbmtzIHRoZSBsaWtlcyBvZiAvZGV2L2ZkIGFuZCAvcHJvYy8uLi4v
-ZmQpLg0KTXkgdXNlIGNhc2UgaXMgdHJ5aW5nIHRvIGFjY2VzcyBhIGRpcmVjdG9yeSB2aWEg
-YW4gb3BlbiBmaWxlIGRlc2NyaXB0b3IgZnJvbSB3aXRoaW4gYSBMaW51eCBuYW1lc3BhY2Ug
-KGNyZWF0ZWQgdXNpbmcgYnViYmxld3JhcCwgYmFzaWNhbGx5IGEgc2FuZGJveCB3aXRob3V0
-IG15IGhvbWUgZGlyZWN0b3J5KS4NClNvbWV0aGluZyBhbG9uZyB0aGVzZSBsaW5lcyBzaG91
-bGQgd29yazoNCg0KICAgICBid3JhcCAtLXVuc2hhcmUtYWxsIC0tc2hhcmUtbmV0IC0tcm8t
-YmluZCAvYmluIC9iaW4gLS1yby1iaW5kIC91c3IgL3VzciAtLXJvLWJpbmQgL2xpYiAvbGli
-IC0tcm8tYmluZCAvZXRjIC9ldGMgLS1yby1iaW5kIC9zYmluIC9zYmluIC0tZGV2IC9kZXYg
-LS1wcm9jIC9wcm9jIC0tZGlyIH4gLS1jaGRpciB+ICRTSEVMTCAzPCB+L0RvY3VtZW50cy9t
-eV9naXRfZGlyICMgKGFkZCBtb3JlIHJvLWJpbmRzIGFzIG5lY2Vzc2FyeSwgYWxzbyBhc3N1
-bWVzIHlvdXIgaG9tZSBpcyBub3QgaW4gYW55IG9mIHRoZSByby1iaW5kcykNCg0KVGhpcyBz
-aG91bGQgZHJvcCB5b3UgaW4geW91ciB1c3VhbCBzaGVsbCBidXQgd2l0aG91dCB5b3VyIGhv
-bWUgZGlyZWN0b3J5LCBob3dldmVyIGl0IHNob3VsZCBhbHNvIGdpdmUgeW91IGFjY2VzcyB0
-byB0aGUgZ2l0IGRpcmVjdG9yeSBwcm92aWRlZCBpbiB0aGUgbGFzdCBiaXQgdmlhIC9wcm9j
-LyQkL2ZkLzMsIC9kZXYvZmQvMywgb3Igc2ltaWxhci4NCihJIGFtIGF3YXJlIHRoYXQgdGhp
-cyBlZmZlY3RpdmVseSBicmVha3MgdGhlIHNlY3VyaXR5IGd1YXJhbnRlZXMgb2YgdGhlIHNh
-bmRib3ggc2luY2UgYWNjZXNzaW5nIC9wcm9jLyQkL2ZkLzMvLi4vLi4vLi4gd29ya3MsIGhv
-d2V2ZXIgc2VjdXJpdHkgd2Fzbid0IHRoZSBwb2ludCBvZiB0aGUgc2FuZGJveCB0byBiZWdp
-biB3aXRoKQ0KTm93IGlmIHlvdSB0cnkgdG8gY2QgdG8gL3Byb2MvJCQvZmQvMyBhbmQgcnVu
-IHNvbWV0aGluZyBsaWtlIGBnaXQgc3RhdHVzYCB5b3UnbGwgYmUgZ3JlZXRlZCBieSBgZmF0
-YWw6IFVuYWJsZSB0byByZWFkIGN1cnJlbnQgd29ya2luZyBkaXJlY3Rvcnk6IE5vIHN1Y2gg
-ZmlsZSBvciBkaXJlY3RvcnlgIChhdCBsZWFzdCBvbiBteSBtYWNoaW5lKS4NCkNsb25pbmcg
-dGhlIHJlcG9zaXRvcnkgc2VlbXMgdG8gd29yaywgaG93ZXZlciBpZiB5b3UnZCB3YW50IHRv
-IGNsb25lIGl0IHdpdGhvdXQgZHVwbGljYXRpbmcgdGhlIGRhdGEgeW91IG1heSBiZSBpbmNs
-aW5lZCB0byB1c2UgYGdpdCBjbG9uZSAtLXNoYXJlZCAvcHJvYy8kJC9mZC8zYCB3aGljaCBl
-cnIncyBvdXQgd2l0aCBhIGxvdCBvZiBgZXJyb3I6IHVuYWJsZSB0byBub3JtYWxpemUgYWx0
-ZXJuYXRlIG9iamVjdCBwYXRoOiAvcHJvYy8yL2ZkLzMvLmdpdC9vYmplY3RzYC4NClNpbWls
-YXJseSBgY2QgLVAgL3Byb2MvJCQvZmQvMyAmJiBnaXQgY2xvbmUgLS1zaGFyZWQgLiB+L3Rl
-c3RgIHdpbGwgZmFpbCB3aXRoIGBmYXRhbDogdW5hYmxlIHRvIGdldCBjdXJyZW50IHdvcmtp
-bmcgZGlyZWN0b3J5OiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5YC4NCg0KTm93IGFzIGZh
-ciBhcyBJIGNhbiB0ZWxsIHRoaXMgaXMgYmVjYXVzZSBnaXQgdHJpZXMgdG8gcmVzb2x2ZSB0
-aGUgc3ltbGlua3MgaW4gdGhlIHBhdGggKC9wcm9jLyQkL2ZkLzMgaXMgcHJvdmlkZWQgYnkg
-dGhlIGtlcm5lbCBhcyBhIHN5bWxpbmsgdG8gfi9Eb2N1bWVudHMvbXlfZ2l0X2RpciBldmVu
-IHRob3VnaCBpdCBkb2Vzbid0IGV4aXN0IGluIHRoYXQgaGllcmFyY2h5LCB5ZXQgeW91IGNh
-biBhY2Nlc3MgaXQsIHBsZWFzZSBkb24ndCBhc2sgbWUgYWJvdXQgdGhlIHNwZWNpZmljcyBv
-ZiB0aGF0KSBhbmQgdGhlbiBhY2Nlc3MgdGhlbSwgd2hpY2ggb2YgY291cnNlIGhlcmUgZG9l
-c24ndCB3b3JrIG91dC4NCkZvciB0aGUgc2hhcmVkIGNsb25lIEkgdW5kZXJzdGFuZCB3aHkg
-YSBwYXRoIGlzIG5lY2Vzc2FyeSwgY29uc2lkZXJpbmcgdGhhdCBpdCBuZWVkcyB0byBhZGQg
-dGhlIHJlZmVyZW5jZXMgdG8gdGhlIG5ldyByZXBvc2l0b3J5LCBob3dldmVyIHRoZXJlIHNl
-ZW1zIHRvIGJlIG5vIGZhbGxiYWNrIGZvciBhIHNjZW5hcmlvIGxpa2UgdGhpcyBvbmUuDQpz
-dHJhY2UgdGVsbHMgbWUgdGhhdCB0aGUgY2FsbCB0byBgZ2V0Y3dkKDIpYCB5aWVsZHMgdGhl
-IHBhdGggKG91dHNpZGUgdGhlIG5hbWVzcGFjZSkgcHJlZml4ZWQgd2l0aCAiKHVucmVhY2hh
-YmxlKSIsIHdoaWNoIHdvdWxkIGV4cGxhaW4gd2h5IHRoaW5ncyBmYWxsIGFwYXJ0IChhcyB0
-aGlzIHBhdGggaXMgbmVpdGhlciBhYnNvbHV0ZSBub3IgYWNjZXNzaWJsZSksIG9yIGluIG90
-aGVyIGNhc2VzIHRoYXQgZ2l0IHRyaWVzIHRvIHdhbGsgdGhlIHRyZWUgdXAgKGFuZCBieSB0
-aGF0IEkgbWVhbiB0aGUgdHJlZSBvdXRzaWRlIHRoZSBuYW1lc3BhY2UpIHVudGlsIGl0IGhp
-dHMgcm9vdCwgd2hpY2ggSSBhc3N1bWUgaXMgaXRzIHdheSB0byB0cnkgYW5kIGNhbm9uaWNh
-bGl6ZSB0aGUgcGF0aCwgd2hpY2ggaGVyZSB3b24ndCB3b3JrIGVpdGhlci4NCg0KU28gbXkg
-cXVlc3Rpb24gaXM6IGlzIHRoaXMgYSBidWcgb3IgaW50ZW50aW9uYWwgYmVoYXZpb3VyIChn
-aXZlbiBob3cgcGFydGljdWxhciBnaXQgaXMgYXJvdW5kIHN5bWxpbmtzIEkgY2FuIGltYWdp
-bmUgZWl0aGVyKSwgYW5kIGhvdyBjYW4gSSB3b3JrIGFyb3VuZCB0aGlzIGFuZCBtYWtlIGdp
-dCBwZXJmb3JtIGJhc2ljIG9wZXJhdGlvbnMgc3VjaCBhcyBzdGF0dXMsIGFyY2hpdmUsIG9y
-IGFsdGVybmF0aXZlbHkgZ2V0IGNsb25lIHdpdGggYC0tc2hhcmVkYCB0byB3b3JrIHNvIHRo
-YXQgZ2l0IGNhbiBhdCBsZWFzdCBvcGVyYXRlIG9uIGEgc2VwYXJhdGUgcmVwb3NpdG9yeSB3
-aXRob3V0IGFsbCB0aGUgcHJpb3Igb2JqZWN0cyBiZWluZyBkdXBsaWNhdGVkPw0KQWxzbyBu
-b3RlIHRoYXQgdGhpcyBpcyBhYnNvbHV0ZWx5IG5vdCBpbXBvcnRhbnQgdG8gbWUsIHNvIGlm
-IHRoaXMgaXMganVzdCBzb21ldGhpbmcgdGhhdCBnaXQgY2Fubm90IGhhbmRsZSBpbiBpdHMg
-Y3VycmVudCBpbXBsZW1lbnRhdGlvbiB0aGF0J2QgYmUgZmluZSBieSBtZSwgSSBqdXN0IGZp
-Z3VyZWQgdGhlIGNoYW5jZXMgdGhhdCBzb21lb25lIHdpbGwgcmVwbHkgdG8gdGhpcyB3aXRo
-ICJ3aHkgZG9uJ3QgeW91IHVzZSAtLWlnbm9yZS1wYXRoLXJlYWNoYWJpbGl0eSIgYXJlIG5v
-dCBuZWdsaWdpYmxlLg0K
---------------a0xfao9LCGG1UYaiu7joXwXa
-Content-Type: application/pgp-keys; name="OpenPGP_0xE2F22C5EDF20119D.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xE2F22C5EDF20119D.asc"
-Content-Description: OpenPGP public key
+-----------------------9d55193a50c92ffd319fcfe6885af545
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+On Sunday, October 6th, 2024 at 13:41, Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
+> I found the name "git_contents" clear enough and understood its
+> purpose at-a-glance, so I think it's a reasonably good choice. A
+> slightly better name might be "gitfile_contents" or perhaps
+> "dotgit_contents" for consistency with other similarly-named variables
+> in this function.
 
-xjMEZPRnKxYJKwYBBAHaRw8BAQdAAKdlNe0o2M0j1n2xyv8Amf+7ct0odnZp4jEA
-X4Y3S4TNHWJlbmFyeW9yZyA8YmluYXJ5QGJlbmFyeS5vcmc+wpwEExYKAEQCGwMF
-CQWjmoAFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AWIQSAS2y4rtVh2T2tTcXi
-8ixe3yARnQUCZPRoPAIZAQAKCRDi8ixe3yARnY3PAQCuFua4uDblRjF011aWK6KI
-0mueNX1gZu+SAzO6myGAKAD/aga/N26m1UFPE3yt1MmC6d/3ALQ4tSeuvIbQ0LDF
-JgLNHmJlbmFyeW9yZyA8bm9yZXBseUBiZW5hcnkub3JnPsKZBBMWCgBBFiEEgEts
-uK7VYdk9rU3F4vIsXt8gEZ0FAmT0Z2gCGwMFCQWjmoAFCwkIBwICIgIGFQoJCAsC
-BBYCAwECHgcCF4AACgkQ4vIsXt8gEZ1R/AEApobml/Gwt7WzHGk6gfEqXC22VHT+
-/DmGPtxHOmqbm+oBAJ5+Soe1Cy7L4q2lLbIdjf8cVltI0tZhKagIphloCQQNzjgE
-ZPRnKxIKKwYBBAGXVQEFAQEHQLK2b+AcWndNAuPN/N0XzVTJ2LakT/KbtncIqq9W
-Pa9wAwEIB8J+BBgWCgAmFiEEgEtsuK7VYdk9rU3F4vIsXt8gEZ0FAmT0ZysCGwwF
-CQWjmoAACgkQ4vIsXt8gEZ1lZgD9FLHYGE2pziHZxNn9sAQm6O6J3AcRGNDVyLwA
-O9EeCbABALup8RDA+W+0pTIpG49QEVxumZXEFjPeczDghwuycpIA
-=3DoM9+
------END PGP PUBLIC KEY BLOCK-----
+I will rename to `dotgit_contents`.
 
---------------a0xfao9LCGG1UYaiu7joXwXa--
+> It certainly makes sense to check whether "git_contents" is NULL
+> before trying to copy it into the "backlink" strbuf, however, if
+> "git_contents" is NULL here, then what does that mean? What does it
+> mean to leave "backlink" empty? The only way (presumably) we get this
+> far is if read_gitfile_gently() succeeded, so (presumably)
+> "git_contents" should not be NULL. Thus, rather than conditionally
+> copying into "backlink", we should instead indicate clearly via BUG()
+> that it should be impossible for "git_contents" to be NULL. So, rather
+> than making this part of the existing if-else-cascade, we should do
+> this as a standalone `if`:
+> =
 
---------------8wUDr0DeFl7oacS73Mgl0pZ9--
 
---------------Hyx8lZVr0yP1i03inh9EpFea
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+> if (!git_contents)
+> BUG(...);
+> strbuf_addstr(&backlink, git_contents);
+
+We can't use BUG because this is handled as part of the err
+conditions. The contents can be NULL and `backlink` could be
+filled with the inferred backlink. I moved this to the top
+and I think it reads better.
+-----------------------9d55193a50c92ffd319fcfe6885af545--
+
+--------c7b6229b45148926e3a056325e11d0de1752ca61a6987dccbfd970158714da06
+Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-wnsEABYIACMWIQSAS2y4rtVh2T2tTcXi8ixe3yARnQUCZwMyfwUDAAAAAAAKCRDi8ixe3yARnbCB
-AP9CCPU73fcpTS7Z9WJ67nNVjzLnY2io2o8i9D0QeuGFfAD+KszGCOpMjot7yJ6YHf26VQNYkN2p
-17miaKHttBU6AAs=
-=Oc5a
+wsBzBAEBCAAnBYJnA0bbCZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
+28viAACoZQf/RowCZSB2m/C2MOl+MlhqR9dZnsOLXfJD/9aczz2Kvw4fgIru
+7NMX1QExDYKMscAE76ER7zDqM6mucjPQC/bcRvCRe19G9+eYqvwGwxz5xx6B
+6984NbtO5DsKYmPfyngrC2U92FxGkDdfnfsFWX1guxwhOwS7cViv51WnT60E
+4pBFyJVlvcr5rdXyf5Jv4Cfty1ukJ+j+TqUlisNkokT642kwyoWA5Ak8HYxC
+Xorq3QFtb2iMNmT4R4t306p9kW7xYmiFOZvhbq48RFeYBOKoDZVmawgDLkmx
+/e2hV8eY+dDLElsFOHZ4MgCIw14SM1AtTeJPIXed1i05BD1Gs8xLJg==
+=iyfk
 -----END PGP SIGNATURE-----
 
---------------Hyx8lZVr0yP1i03inh9EpFea--
+
+--------c7b6229b45148926e3a056325e11d0de1752ca61a6987dccbfd970158714da06--
+
