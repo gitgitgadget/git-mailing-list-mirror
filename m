@@ -1,168 +1,98 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3D91D1E60
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 11:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AF71D1F76
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 11:11:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728299473; cv=none; b=K3q9oUJNYWjvlMBP4ku90j3nmwm0DDW4YXn5CvHKQ5eRw3NUxOyhqJS5svDycU4EhnL7SxscqrNGQAuDMFyHLa95XBYRcM63Km0BeG/KZixJGNhAMxhWkEiD3780LC+EbaaslH108pLHHxhBEqEe6OHkWLP/f4xHbV/VRKJkfB0=
+	t=1728299475; cv=none; b=ZUm8oO/rnV9zyxOcekI4MEDPmUfiHDXC6q6sVVdE8hWqJbzhOcP/Cv9scj/AycnSs/LMQOOAt7sf62VVYi281D047SZQyQeeoclY8NemCHjGZw8d2+stkPip6L4RfdIY8niix8r2vS2OC1ZKjZlOK4At7TgBsHhcLtbHZdMxzhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728299473; c=relaxed/simple;
-	bh=QiL+XQMXI9+QVUPG8YvRTi9B+M+EDHuwj+mxNg8SJDo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Wt1x16MR4DrHMcKYwYE4VVBCHm1z+jGothoJhmzh0CYsJ5FQHTxYaWSwY1ixOdQ0HpFW/D7202D7vnko+5HbjmwycCQLsxoFClVjDbHDqugpa0KoVE22HZMZKEiOr9t2aGQTCMPeNEenzvP7rK62wanjvJYvM9AZBzuOvH3rWWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CMKP2hKX; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728299475; c=relaxed/simple;
+	bh=n14JmJKHTVeywntAH9fOzY/mzIzFF1DUgtDq29mOFOU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pTHJwNaGKo8RC4ZNP47rwd3whDxJhfxiQK0U70CY9x0dR8vhjE+8y6zheKvIWYN3z5wngy0YEa/GDQoPrdOheePdE2Z1OXNxH3MJcPJvF2Tug3nQrAD83m1pwEEbTJ2zjYC0UfBf48kwDeB4nz1XDVTYK/L8ZNWj0ctMY7SZ9oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=FvcVXSwE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ObJbO/j+; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CMKP2hKX"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2facaa16826so36783531fa.0
-        for <git@vger.kernel.org>; Mon, 07 Oct 2024 04:11:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728299469; x=1728904269; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D2i3Q1aTCZLQZNTzPO6oISTv/cdcApWY4GY97NPGCzY=;
-        b=CMKP2hKXVdWb7elskDdspse9AS/ejiValfDCttxf7Ubar3mrYco4y6HKt1SaTPJgrK
-         IDyIchlU63IaLy38xvSE3Jj/JvQ5ohq5xu7t1MErJlxd2ZQu4Wl8+f+8OiGBcbDQPgF+
-         mh00xMieasF9cIgvFhFaEXReVq9w5oR/ePSNmO0fqCAGpLta6SjFNPtP6khvVk1vB0Eb
-         Vyg2kVub8opFtYLlSeY5qG829PQCe2UquQT9wiL4a3tMT2FBzOUHvQ899XpIl4o2YAnP
-         rB17E0o4KFHmm55VeKnDrLPz1zzxCwPdA1F6wwwIz6iKwWbj5xNvUj9KOHJhCf8Kl/sV
-         fjIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728299469; x=1728904269;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=D2i3Q1aTCZLQZNTzPO6oISTv/cdcApWY4GY97NPGCzY=;
-        b=bmfEgCmdPqT6ymdRB7/ovilGq9Gu2X+tWttsPgiILFR+UVwRk3Oh1p9/QIS/Oh4MTj
-         q9z069X804UjRCLo7+JPRMhQR3kI3+0TdZhVJAzxtdC15W6/JKGV0OawkT1V9eNCTL7e
-         rSadrm9YDPk70jrNHigBB9e3iAM4uIfZBbtccgMbV26dR0l9J3ZdK3eJB1D4x1OpMTlJ
-         FBI4ZXm0koFyNiFk1HxSpfB1xWpYIgxlhTl0s5Tjoei6Q4o5P/xCoFHLp1gWF+mUYSZT
-         3ZMIy0tcvMZK+ks5fP35ZlDwGt0G/Q/6582VFMhZtCkmHlQVhfRHgWpmGcYIlY655JjN
-         Y4+A==
-X-Gm-Message-State: AOJu0Yz+QoG1RKf8KncDpXb3n9EonAo2+1eTTnrFZ98/Pfg0Uwg9syid
-	rALf0DDa/VKUaGDy9UeCySA8cY/bzDx8XKdxqqXIc447/kerEhSAGoEW6g==
-X-Google-Smtp-Source: AGHT+IElH9o1pmICQ5Dr8MyjGYXDC0p+yOV87Jo0QY+Mo7zLY3XZ98q3YdJJqPF14KN/YypnMCV98w==
-X-Received: by 2002:a05:651c:1a0a:b0:2f9:ce91:dea9 with SMTP id 38308e7fff4ca-2faf3d75c6cmr43133551fa.32.1728299468671;
-        Mon, 07 Oct 2024 04:11:08 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c8e05bd3a5sm3051377a12.41.2024.10.07.04.11.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Oct 2024 04:11:08 -0700 (PDT)
-Message-Id: <b3d3deced25f038defe6afe7d474350464328299.1728299466.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1805.v6.git.git.1728299466.gitgitgadget@gmail.com>
-References: <pull.1805.v5.git.git.1728298308.gitgitgadget@gmail.com>
-	<pull.1805.v6.git.git.1728299466.gitgitgadget@gmail.com>
-From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 07 Oct 2024 11:11:06 +0000
-Subject: [PATCH v6 2/2] t3404: employing test_line_count() to replace test
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="FvcVXSwE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ObJbO/j+"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8F4A8114026F;
+	Mon,  7 Oct 2024 07:11:12 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Mon, 07 Oct 2024 07:11:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
+	:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1728299472; x=1728385872; bh=bbmllCanmS
+	C9Vq5SBAkAqy22YEOFEdykjP8gw7PsjBk=; b=FvcVXSwE4rQVINDmEJ28q7hI15
+	sTORJd4yfhOoKQaxzlBkH0ekxQwGBxEImkQWTqHmmhySTmuvIj2xA7SVeuoh4jxA
+	/d0EILaHTF8C1Sh/XKGRXa40o/ToUwxvkDYgOXBmFQYEbC1g5U5aE/zD+o8u1weO
+	ugfvULryeB49lZp+jt/ws3zF7EwOF/8XmIWQ5S4LKqV5c240QomBw2mt7UYyQAca
+	9SWESK9t/WC9urtHrDwKhL4BNRe/qdzql0mjgPzA6aMCP1oVtEZ1ImD2WonuBG9w
+	y58wdPptimghvdwrMAJBqmbQUTGdKCR6iEFkIaffAF1L5S4YpeG3t0Otq/Uw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728299472; x=1728385872; bh=bbmllCanmSC9Vq5SBAkAqy22YEOF
+	EdykjP8gw7PsjBk=; b=ObJbO/j+SDcXAmCaueu11AU+yEhM1bwrpfJ9ruhzfwPl
+	50e3HT4YDZPhW+f7EihTChXpTuLLyLQzQI9W4nfCdaQg17p4R0SLmxMNb8LjaEsj
+	9Kwo+fCgKTfytit2oGfIY5HAn4pN7G26jFHDbqxmL1RrIG1IsXZs0Muptkc1bMzc
+	UrhbNjp9onl8R41CLxszfnOGuPb2gRYeAGtMQi0RDRYUe1Gc8+4MmrA2VZvkDMnJ
+	dnbMfUJyGr1Z1X2mtYcjetpewr5i/9KVq7cCBLhnYoaqNLSMmyNaU5ej0j5xB4hP
+	ggZ/81KWCLRVaOZMPrLhUEY4MNXUXmBlscbU2/B73A==
+X-ME-Sender: <xms:0MEDZ-OphLW2AlCHkoWGiPJl2b5kc1m08-ys8tq8d36Oj46hFycXtZQ>
+    <xme:0MEDZ89jWDlCjwLsbQOS0FcSDWJONMYT0ER1BHLH32PoYWDUp_E-1dTQjIvGj_J-O
+    21G_GFoX-EuxAhVVA>
+X-ME-Received: <xmr:0MEDZ1TRglApYPzRcng9W5xTXm8vjYoiF7fQzP_0dOBsL6jS3LxD-lWdJkgYB4dC1qoJXjYDib5x4AMBPPDT1SYog9FaGcE8ctnEfS7c5w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgfeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    ffkffoggfgsedtkeertdertddtnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhg
+    shgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrth
+    htvghrnhepfeeufffhkefhiedutdduudeigedvvefgfedugeevlefhieekieejgeegueef
+    ueejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptg
+    houggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopeefpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:0MEDZ-sEGOZdpLuN803ll81b6yg5q03Ad-NEfesDtQOwjst0ZcRMaw>
+    <xmx:0MEDZ2f-jBsJ26GYjPUu45PIZqU-Irht5T99hJNbLb2f4QRWhdlypQ>
+    <xmx:0MEDZy14c8EbwYcOKlhkG1Vw8PzT259vFWu1wAaTLbmFZ0-ZhSwDiw>
+    <xmx:0MEDZ68qPF7uoBm3TXbWqW4_K4N4HjUo9l7K99CeCuenx5W2BdmLhA>
+    <xmx:0MEDZ27Wr94W0qhtj1oep5-v-9FFD8xg0Z-yraNQB6QqVSZzq0zcz8kU>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Oct 2024 07:11:11 -0400 (EDT)
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	newren@gmail.com
+Subject: [PATCH 0/3] doc: merge-tree: improve the script example
+Date: Mon,  7 Oct 2024 13:10:26 +0200
+Message-ID: <cover.1728298931.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>
+X-Commit-Hash: 4057d6386125e51fd934f92abd11c62a9d24a832
+Content-Transfer-Encoding: 8bit
 
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+From: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 
-Refactor t3404 to replace instances of `test` with `test_line_count()`
-for checking line counts. This improves readability and aligns with Git's
-current test practices.
 
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- t/t3404-rebase-interactive.sh | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+Kristoffer Haugsbakk (3):
+  doc: merge-tree: provide a commit message
+  doc: merge-tree: use lower-case variables
+  doc: merge-tree: use || directly
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 96a65783c47..2ab660ef30f 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -281,8 +281,9 @@ test_expect_success 'stop on conflicting pick' '
- 	test_cmp expect2 file1 &&
- 	test "$(git diff --name-status |
- 		sed -n -e "/^U/s/^U[^a-z]*//p")" = file1 &&
--	test 4 = $(grep -v "^#" < .git/rebase-merge/done | wc -l) &&
--	test 0 = $(grep -c "^[^#]" < .git/rebase-merge/git-rebase-todo)
-+	grep -v "^#" <.git/rebase-merge/done >actual &&
-+	test_line_count = 4 actual &&
-+	test 0 = $(grep -c "^[^#]" <.git/rebase-merge/git-rebase-todo)
- '
- 
- test_expect_success 'show conflicted patch' '
-@@ -401,8 +402,8 @@ test_expect_success 'multi-squash only fires up editor once' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual
- '
- 
- test_expect_success 'multi-fixup does not fire up editor' '
-@@ -416,8 +417,7 @@ test_expect_success 'multi-fixup does not fire up editor' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep NEVER output | wc -l) &&
--	test 0 = $count &&
-+	! grep NEVER output &&
- 	git checkout @{-1} &&
- 	git branch -D multi-fixup
- '
-@@ -436,8 +436,8 @@ test_expect_success 'commit message used after conflict' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count &&
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual &&
- 	git checkout @{-1} &&
- 	git branch -D conflict-fixup
- '
-@@ -456,8 +456,8 @@ test_expect_success 'commit message retained after conflict' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep TWICE output | wc -l) &&
--	test 2 = $count &&
-+	grep TWICE output >actual &&
-+	test_line_count = 2 actual &&
- 	git checkout @{-1} &&
- 	git branch -D conflict-squash
- '
-@@ -501,8 +501,8 @@ test_expect_success 'squash ignores comments' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count &&
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual &&
- 	git checkout @{-1} &&
- 	git branch -D skip-comments
- '
-@@ -519,8 +519,8 @@ test_expect_success 'squash ignores blank lines' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count &&
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual &&
- 	git checkout @{-1} &&
- 	git branch -D skip-blank-lines
- '
--- 
-gitgitgadget
+ Documentation/git-merge-tree.txt | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+--
+2.46.1.641.g54e7913fcb6
