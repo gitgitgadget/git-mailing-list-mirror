@@ -1,66 +1,66 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B532622087
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 08:42:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4B718B462
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 08:42:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728290538; cv=none; b=iWMlqECdRgO0qqSQi+GFyiSWCxXKPYsZP6TxSXP+r9dXorwEBKYzfxd7ef+JsV21rKrh1WTXQv5n81jYYP+3rGRxAHmlnE3Mv8kmw2r1npsvB7QMrvxC+MUS0ji/qaGg2Hc+IMMP0I/VyKSHjzaBCPoD2wiamlP0sF/45ymnF8Q=
+	t=1728290560; cv=none; b=iR4zP1EssKYVCfrU6wbf5yq2ArEjePivgPvSdiKbQfdV/G0rH3ltRhoRLxDxs66hCFXNaaGk/7n64mYqk87Iq3+ISclMaxP44ToU10CgbimFUj53lS0eIhVEmhMPNd6WvFHPYm+ivTulkKfYh1mJ5T2G/n1vYqkcCJSGrZ5oCT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728290538; c=relaxed/simple;
-	bh=+z93bOEXpHDnGViUBmPV1EYI3+HWq16pOCr0O64+utk=;
+	s=arc-20240116; t=1728290560; c=relaxed/simple;
+	bh=7L3Bpwd3Ofqy2OU9XVaoikeQsHrBdQz/wCEbe0rNQLs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yt2wndUIVkI3MpmthoA+4EVkprK030fXSd308hha/MqsI1dYOH8w7Ux+XlgfnYjG+DWxwebDYghy1XDHrIXGBzhMt6QkjEpN/RIf4BmOO99xdsuFzbe/bz+Z2hXSsQpZahYsGPViixAidmupE5JAj+xZLV6OF48LOxiXxO7NC+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=crqHH/Cb; arc=none smtp.client-ip=209.85.210.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y9oJ7Hm/A0Gkv4Sb4VvR55A/H/+dT78UiCL2QRhduhtr3R37O8yvf5lRQHbKknqsoAjurTfhqPZm2kW7zHzAtO9DLIvmOZUeSR9nCqxLJgcBGhvshN7iOh1dzidpe7Vl7HPQpoVBuh0SQanFWCTac1doEYTgcno/qQsBa831P78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YzgaGBJB; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="crqHH/Cb"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-71dfc1124cdso828498b3a.1
-        for <git@vger.kernel.org>; Mon, 07 Oct 2024 01:42:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YzgaGBJB"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2e188185365so3403386a91.1
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 01:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728290536; x=1728895336; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728290558; x=1728895358; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dgVbZJ185evlap+j/RzmR1oINa+lUp6A5hmvCIGoU/E=;
-        b=crqHH/CbNtmm72+7GCHt63dlQM5lPxw/2+f7CVpaYh5nAJnfONkxLXDBx8SBACAdos
-         fhmPkIb9XK7pIqkrRideNfoPKoe2m91xP/S8ojFyo8bkF/TE/maiuflWLW57kcObLXhw
-         ZTk5IMIV0ONx59J9Edl4avXemqI/rCNvkreq5du7hnPrx1WJSuffOgzRJL8PWx6d7nGw
-         UM5HgsS7MTrx18oGiXvLQyfV51yF8FSWg7I3pHpdZawzIMEgnQWLCM0FG1yzgiCOe55x
-         2VHxNWoowBZsbkIhmvSaOEY9r02OFLcMRIMF+cGeiVVRuN5Y7C7ULvt4JxRCPcecc+tC
-         3iqg==
+        bh=nNrGO8rFU0/IyfUA7pVRC8X4qZ9XRFyUAYhQqXowYnE=;
+        b=YzgaGBJBXGriNqwhV7H3KR2LZNFK/P6Tg93YgNPPzJRZpLMLU5ZOHDhGrPhhaWKfOS
+         5Px1HGkYBADhYLdYqd5KEJR6sVNZmRQ908kSxE3GT0BtjziyqD/MqEBYnNUWs4jknQ2W
+         FD5IGELRymV0fVLrMAEztnKRnDiIYosNm4wh4/GoeCG4ucBIhHxCoavEahkbTd8hraoh
+         HfHM33tt7KhnS3qBqhHeJkwbOBeWvbAuzxz1LQZ6ssSHO+GWTlcHkxEE4Bzw1Slfw3de
+         RS8uflZDsI4A2CQ2C7dpBiq5EsdvE4GyLHdFfDwgi/+KVS8jvN7EoICdfuRniD2qSdo2
+         Y18g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728290536; x=1728895336;
+        d=1e100.net; s=20230601; t=1728290558; x=1728895358;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dgVbZJ185evlap+j/RzmR1oINa+lUp6A5hmvCIGoU/E=;
-        b=CgnYLVANl893x1RtZS5kH2ZzST8QYAXv2dtWY5GAtVXJYiBPUYzPEVgoij2HrWCtkW
-         Cwp/ePM42Gp9SKv4PEb5iO2jM3ZrpjiVgqpqcaCKL2AiDDniX8RKKlLYa1S/J7TlhECO
-         MnZYvs84RP2XAtOAnb/Hpt+1zWG6D/DXMWLtd6ukVxGW572oXQ8qOmgIYp634HAK5Rgx
-         XM83FZ4P5U/dCxZ8HlvRJ412wSoVces/Eq7v+bzoRoYJ6X7abe5RceToKCVE3yugwEo/
-         Q6KdIPMd7o4LgR9mmwaAj/8WkLXi+adXy6PAjPxHpPlRW+4KmUpPzfvjJQhphlfVz0X9
-         vDbg==
-X-Gm-Message-State: AOJu0YwSWAMXyld1UI4FEOXp/bFw59lMQa3Az0P/0xbXkJngoHU3tYSw
-	zCEp6swXtj8U2myT+TGrUzAvqgkD7AZ99Sr4MOv0UtYfAVFmX0Rp
-X-Google-Smtp-Source: AGHT+IGpTEfRLZ4KoEAXScCgZTB98t7a1TpJ15SasKqPekB4yQOIX7Xpv8aC8RVIpEoUr36xXJzDaQ==
-X-Received: by 2002:a05:6a00:91c5:b0:71d:eefd:e3de with SMTP id d2e1a72fcca58-71deefdedf3mr14040688b3a.4.1728290535827;
-        Mon, 07 Oct 2024 01:42:15 -0700 (PDT)
+        bh=nNrGO8rFU0/IyfUA7pVRC8X4qZ9XRFyUAYhQqXowYnE=;
+        b=UtpfxtrC3SZ+LETktOpnN55ufRzRxc/ZW1tALJsakzrGWXmNsfw70cUIa7jkmv3+gS
+         TF8UaWvbdC+/Qp5UHTIIIkHnQtPQAOlKhP82nqTsMBi21ihouKSA+FIqZW6zHsQkLwtk
+         vrD1e+UnOa7BpEsUE0K9An1p45QYa9+jtolzaJkZzm2wZvOm6xkRn83Lx+sY/eAoR9Qu
+         ld+KR2HokUrExgvRfqaGOuTfHZ2xwHP5Lqh6yIoDibjdEhGx+7xdpyWrsoc3ikzc+kNz
+         ZbM36hcppxiS2qtkPOhWiru1ZUy5lVc1+FlVyqJxoizApgMyO+pyS+AZnrDoOkWN2qod
+         YPKw==
+X-Gm-Message-State: AOJu0Yys+YjS5GV+1ZxpZ/IaQ8+WsqPTq6bSJ48A9vQuBK6Z4D985zYz
+	m0F4vD9ogY0466f4VV34/YlORHrKoDA55/M/TauSk3llUgSQtRo1
+X-Google-Smtp-Source: AGHT+IH9/d6+FVaGFOUoUSRl0v56rO6Ag6Ul31ggVSSZA0nLU++U1SfTnGwOCgHaxYVzBWuyDZ7mSw==
+X-Received: by 2002:a17:90a:cb04:b0:2cb:5112:740 with SMTP id 98e67ed59e1d1-2e1e6354248mr12750680a91.26.1728290558145;
+        Mon, 07 Oct 2024 01:42:38 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71df0d4a278sm4027324b3a.140.2024.10.07.01.42.14
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e20af64d33sm4804268a91.30.2024.10.07.01.42.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Oct 2024 01:42:15 -0700 (PDT)
-Date: Mon, 7 Oct 2024 16:42:21 +0800
+        Mon, 07 Oct 2024 01:42:37 -0700 (PDT)
+Date: Mon, 7 Oct 2024 16:42:44 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 2/9] builtin/refs: support multiple worktrees check
- for refs.
-Message-ID: <ZwOe7YVWmhshRhI9@ArchLinux>
+Subject: Re: [PATCH v5 3/9] ref: port git-fsck(1) regular refs check for
+ files backend
+Message-ID: <ZwOfBCSTO4Qvtos3@ArchLinux>
 References: <Zvj-DgHqtC30KjJe@ArchLinux>
- <Zvj-jkFE9NN30uDl@ArchLinux>
- <ZwOBwxiSZpxJlsfT@pks.im>
+ <Zvj-osCNDMrUQv83@ArchLinux>
+ <ZwOGmoX5ner_F3Ac@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,130 +69,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZwOBwxiSZpxJlsfT@pks.im>
+In-Reply-To: <ZwOGmoX5ner_F3Ac@pks.im>
 
-On Mon, Oct 07, 2024 at 08:58:30AM +0200, Patrick Steinhardt wrote:
-> On Sun, Sep 29, 2024 at 03:15:26PM +0800, shejialuo wrote:
-> > We have already set up the infrastructure to check the consistency for
-> > refs, but we do not support multiple worktrees. As we decide to add more
-> > checks for ref content, we need to set up support for multiple
-> > worktrees. Use "get_worktrees" and "get_worktree_ref_store" to check
-> > refs under the worktrees.
+On Mon, Oct 07, 2024 at 08:58:34AM +0200, Patrick Steinhardt wrote:
+> On Sun, Sep 29, 2024 at 03:15:46PM +0800, shejialuo wrote:
+> > "git-fsck(1)" has some consistency checks for regular refs. As we want
+> > to align the checks "git refs verify" performs with them (and eventually
+> > call the unified code that checks refs from both), port the logic
+> > "git-fsck" has to "git refs verify".
 > 
-> Makes sense.
-> 
-> > Because we should only check once for "packed-refs", let's call the fsck
-> > function for packed-backend when in the main worktree. In order to know
-> > which directory we check, we should default print this information
-> > instead of specifying "--verbose".
-> 
-> This change should likely be evicted into its own commit with a bit more
-> explanation.
-> 
-> > It's not suitable to print these information to the stderr. So, change
-> > to stdout.
-> 
-> This one, too. Why exactly is in not suitable to print to stderr?
+> What's missing here is the actual intent of this commit, namely why we
+> want to align the checks. I assume that this prepares us for calling
+> `git refs verify` as part of git-fsck(1), but readers not familiar with
+> the larger picture may be left wondering.
 > 
 
-I am sorry for the confusion. We should not print which directory we
-check here into stderr. Because I think this will make test script
-contain many unrelated info when using "git refs verify 2>err".
+Indeed, I will improve this in the next version.
 
-The reason here is when checking the consistency of refs in multiple
-worktrees. The ref name could be repeat. For example, worktree A
-has its own ref called "test" under ".git/worktrees/A/refs/worktree/test"
-and worktree B has its own ref still called "test" under
-".git/worktrees/B/refs/worktree/test".
-
-However, the refname would be printed to "refs/worktree/test". It will
-make the user confused which "refs/worktree/test" is checked. So, we
-should print this information like:
-
-    Checking references consistency in .git
-    ...
-    checking references consistency in .git/worktrees/A
-    ...
-    checking references consistency in .git/worktrees/B
-
-However, when writing this, I feel a ".git" is a bad usage. It will make
-the user think it will check everything here. This should be improved in
-the next version.
-
-> > @@ -75,7 +77,7 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
-> >  		OPT_BOOL(0, "strict", &fsck_refs_options.strict, N_("enable strict checking")),
-> >  		OPT_END(),
-> >  	};
-> > -	int ret;
-> > +	int ret = 0;
-> >  
-> >  	argc = parse_options(argc, argv, prefix, options, verify_usage, 0);
-> >  	if (argc)
-> > @@ -84,9 +86,14 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
-> >  	git_config(git_fsck_config, &fsck_refs_options);
-> >  	prepare_repo_settings(the_repository);
-> >  
-> > -	ret = refs_fsck(get_main_ref_store(the_repository), &fsck_refs_options);
-> > +	worktrees = get_worktrees();
-> > +	for (p = worktrees; *p; p++) {
-> > +		struct worktree *wt = *p;
-> > +		ret += refs_fsck(get_worktree_ref_store(wt), &fsck_refs_options);
-> > +	}
+> > "git-fsck(1)" will report an error when the ref content is invalid.
+> > Following this, add a similar check to "git refs verify". Then add a new
+> > fsck error message "badRefContent(ERROR)" to represent that a ref has an
+> > invalid content.
 > 
-> I think it is more customary to say `ret |=` instead of `ref +=`.
-> Otherwise we could at least in theory wrap around and even land at `ret
-> == 0`, even though this is quite unlikely.
+> It would help readers to know where the code is that you're porting over
+> to `git refs verify` so that one can double check that the port is done
+> faithfully to the original.
 > 
 
-I agree here. I will improve this in the next version.
-
-[snip]
-
-> > @@ -3600,8 +3600,16 @@ static int files_fsck(struct ref_store *ref_store,
-> >  	struct files_ref_store *refs =
-> >  		files_downcast(ref_store, REF_STORE_READ, "fsck");
-> >  
-> > -	return files_fsck_refs(ref_store, o) |
-> > -	       refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
-> > +	int ret = files_fsck_refs(ref_store, o);
-> > +
-> > +	/*
-> > +	 * packed-refs should only be checked once because it is shared
-> > +	 * between all worktrees.
-> > +	 */
-> > +	if (!strcmp(ref_store->gitdir, ref_store->repo->gitdir))
-> > +		ret += refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
-> > +
-> > +	return ret;
-> >  }
-> >  
-> >  struct ref_storage_be refs_be_files = {
-> 
-> What is the current behaviour? Is it that we verify the packed-refs file
-> multiple times, or rather that we call `packed_ref_store->be->fsck()`
-> many times even though we know it won't do anything for anything except
-> for the main worktree?
-> 
-
-That's a good question. I think the second is the current behaviour. We
-will call `packed_ref_store->be->fsck()` many times. I understand what
-you mean here, we just put the check into `packed_ref_store->be->fsck()`
-function.
-
-> If it is the former I very much agree that we should make this
-> conditional. If it's the latter I'm more in the camp of letting it be
-> such that if worktrees were to ever gain support for "packed-refs" we
-> wouldn't have to change anything.
-> 
-
-I agree.
-
-> In any case, as proposed I think it would make sense to evict this into
-> a standalone commit such that these details can be explained in the
-> commit message.
-> 
-
-Yes, the current commit message lacks of details.
+I am a little confused here. There are too many codes in "git-fsck(1)"
+to check the ref consistency. How could I accurately express this info
+in the commit message?
 
 > Patrick
 
