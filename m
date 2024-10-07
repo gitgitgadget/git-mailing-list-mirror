@@ -1,86 +1,147 @@
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A561B7FD
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 03:29:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F26200DB
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 03:45:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728271742; cv=none; b=JSujd7K77YSMFcLveJEafNYA5XUw3Z2h4u2dBCXlls3jV+Ukrv6/lsH8rqna1fyUERhhq0YSiPhSiPbXDpwzcWw/9PhsEDsRH2N7jl9qsiaBNlDAFZA3dl16pRUBx7vmwplvc5GEwUCpkgOJTOZDWiKGqrpT6xjrFwV/0UpFU54=
+	t=1728272706; cv=none; b=ZAkOoyVJVLviS0IK/MoQZaUPUWPOA6cCOTA6V7V6gxEBASRDB7++lcbunRk2HgipDd1PaTK9pmDzhK6x8aZcSq/mbUNzL/Li2+/1RadCUXt866Dc7lKjyPpUIW7MfIYNJhC3rhDKcwCv+s4axwqn5TKRnRANnF7Tn4t7UxfNKfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728271742; c=relaxed/simple;
-	bh=jk55ukkpGtu+L0cRA+BFKd6TWmX2N6oFkB6naU0DDZk=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=unUF28lFr2hy/gE/g+8B2IDEieWEdU3PzWe7+Q8XnYTGeLkHQ5hodmqaueDxKo+mTTUPdd0tthU3oekz3/a1q0iTodeKEILi94dYHpFbUCCyXGOM2mpsB5WMnLiI7HAZHMJ3j+Y2UTPdMMVG2fzn4q/cZKL+u885/AmjWDH1sGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=U++QWuF1; arc=none smtp.client-ip=185.70.40.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1728272706; c=relaxed/simple;
+	bh=Kt8D46RwA+G7OiCjh+9jWuxtfaJpTeXdoZA1pBcczok=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vtbpd6m1RQZVwTJnra9oqF2JSRzOvUOcZuZokznLo9B5pncsRMZBzFJTAanPyYOa3zgIH1bVa1kyLE1Pyx9O/z7SpXVgXI5jDuFIFE0BIZAdhDIRcaDNT6JwSXnpzecp/BJBw6TXUplKgE1/1bfEpmM6kQ0UUrpEFC4svbrRfqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kSbAy5Hr; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="U++QWuF1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728271739; x=1728530939;
-	bh=jk55ukkpGtu+L0cRA+BFKd6TWmX2N6oFkB6naU0DDZk=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=U++QWuF1UXWH0fhiqTMBlNf4uTzec1BOHYK0Upe8MoI4IXm8XnQ/08Gk9Xohaq0wK
-	 fXZtluQWC+rRerFG70ADe/ecATIsXZQZcJjqbFwCUVbAq44dd7cavWQkV1+PB0rGSp
-	 Okc+ZwAvu8K7gqe7iyVR5RK5XZff7Tf86Z0QuZAU2LigBzyiEq+kTx66ZNeSj3RpdK
-	 vZE47LnwYmnExwbgENE3LFrKJ6j1CF5P+GzFFm57g2iYvetngC12r2CQ2rHzS+3dGy
-	 wWeCNNbFdFwz+0QdQe6okHxf+AAISh0+vIMc4hUvyjM3UEin97yV29Yvzh2xpqv6c3
-	 j00hzjtQtbtVw==
-Date: Mon, 07 Oct 2024 03:28:56 +0000
-To: Eric Sunshine <sunshine@sunshineco.com>
-From: Caleb White <cdwhite3@pm.me>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kSbAy5Hr"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-71dec1cf48fso2042590b3a.0
+        for <git@vger.kernel.org>; Sun, 06 Oct 2024 20:45:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728272704; x=1728877504; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=71ZvA86Vtkwrugd5psS8ztJC1akSQjbBFqwlUeGAJW8=;
+        b=kSbAy5Hr/ST+AkhBt8BlkOJJwnCiyMJ8lk6pIeaX53OFQk4rbJH8K/c0BStxKK9r1D
+         FeJhUVROHs2W5qzxgGROwdhBFxm7qpODafBQVawxstX7wXYH3K+6sn/9PLzZP7oRdX9W
+         erry0oVdz5Nro0ge60hdit4qqKO528l00DgVrZpAaqtSYACALxj/WaYr+SAduukuQl5s
+         BIM5OsR8KEdMdhwqKvcYBl+1ZXjOXpaoIC5ZO44D2Y/mp7TxXJjRoyI+kMkP7NGGZ8qA
+         D/caRmI08olhIE9cucFNEoAAB13+D6Y4vrGVDHzgkcjK8R0SlBf7XVBZUNc7fjE+sM0R
+         R0Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728272704; x=1728877504;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=71ZvA86Vtkwrugd5psS8ztJC1akSQjbBFqwlUeGAJW8=;
+        b=iQbxCxnCHzKYZdTk4/14Ts/SgFCAIZhcokMNmB1MV3axtiU5kctz5zJlFd4tZjCOJ6
+         nXOdLLQWqRG3yISPGpqaT7I2dhcS5vsa52/fGu7kUfEtKvNFiKXu7T2CaMSdz/df9unM
+         8smI8yYZkhZZKS7lB9IUOENI0627jqOnp3zNyTt39iC2Dxb8tfKs83CsBw2EIBNXI8Ad
+         LJGmmriN1wgKV96Y3jhB3tvKzCH84FjC5ZK1Wtne57nUlTf+ucBgpdSafKLNZye1JHYd
+         W5+mtEnrj/uMCoVhdpJtCwkZL3hcocaGxi5yZCnxDvLYO1sycrW6a1s6YuHk0Bmh29Gr
+         V8rQ==
+X-Gm-Message-State: AOJu0Yz4uJtBMbmh5nTEixxMDiKY+42uX8muYaeTFrRWfTu5P3bkdwQR
+	l97hZxGtNjPduL6ObRxsoJIRPgaqPehJMajBZR/lOP18rT7FoSHZ
+X-Google-Smtp-Source: AGHT+IEt14pZlrZxG4OoZLoRj3XHuW/eMlkXqOE3RNHnf0h36dhUrMzdrF+KZKDRY0FWk6IW+M2prg==
+X-Received: by 2002:a05:6a20:43a0:b0:1d3:293d:4c5a with SMTP id adf61e73a8af0-1d6dfa4278bmr16274317637.22.1728272703701;
+        Sun, 06 Oct 2024 20:45:03 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71df0d4530dsm3461742b3a.102.2024.10.06.20.45.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Oct 2024 20:45:03 -0700 (PDT)
+Date: Mon, 7 Oct 2024 11:45:09 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Caleb White <cdwhite3@pm.me>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] worktree: refactor infer_backlink() to use *strbuf
-Message-ID: <Mx9TmTS1dWiDxvYmluzhFOd7JikyhHmhluVLSYToYgzJhIWKsKUT2TV-FJIjUGKU6zp2w7KJJ2Tiz4kHXbi6mKg78FujZGel4Xx8iEEWgME=@pm.me>
-In-Reply-To: <CAPig+cTDK7dk-BNgidQnyTBXi7dqQ1uZ91geerzN4aLtJyHkgw@mail.gmail.com>
-References: <20241006060017.171788-1-cdwhite3@pm.me> <20241006060017.171788-2-cdwhite3@pm.me> <CAPig+cSe0ykN=Mmb8Nwp112ROOCuhzzP0jofvL91PsVi8W4dHg@mail.gmail.com> <LyrqJt-X7sHVSKc-97V4-hTsDiIuz8ucEUMDtLCPWAN15k31EBjZnbeuJ2PldcCVvZaPyudvgb3H00T6uZQsI-XON7Ku8jNFjkfRCgrdr8U=@pm.me> <CAPig+cTDK7dk-BNgidQnyTBXi7dqQ1uZ91geerzN4aLtJyHkgw@mail.gmail.com>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 6ab5cc2e2dcbc187b63604b5b04492dec68b2254
+Subject: Re: [PATCH v2 2/4] worktree: link worktrees with relative paths
+Message-ID: <ZwNZRX1LHlxawJJc@ArchLinux>
+References: <20241006060017.171788-1-cdwhite3@pm.me>
+ <20241006060017.171788-3-cdwhite3@pm.me>
+ <ZwKuptTMf9ECd-kf@ArchLinux>
+ <I3BmSHTyOELt2DzfSaLhRYLouu5iAPZIZGZ2Ne73AygO35CM0mq44INa68t6VD4XV61DgzbrfUW0m8fivd3N9Rejgm-tecXQHXQRs1BP9CQ=@pm.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------5a5b55a6085d9cac5b2c5f2cd0293c56edaf0d1bd40bbcea9d11cbf6544c6ad8"; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <I3BmSHTyOELt2DzfSaLhRYLouu5iAPZIZGZ2Ne73AygO35CM0mq44INa68t6VD4XV61DgzbrfUW0m8fivd3N9Rejgm-tecXQHXQRs1BP9CQ=@pm.me>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------5a5b55a6085d9cac5b2c5f2cd0293c56edaf0d1bd40bbcea9d11cbf6544c6ad8
-Content-Type: multipart/mixed;boundary=---------------------2c63016c84ae162a11e2b7e94203c4e4
+On Sun, Oct 06, 2024 at 11:57:22PM +0000, Caleb White wrote:
 
------------------------2c63016c84ae162a11e2b7e94203c4e4
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+[snip]
 
-On Sunday, October 6th, 2024 at 22:26, Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
-> I mentioned it because it made my reading hiccup, but I don't feel too
-> strongly about it one way or the other considering that this is an
-> internal function.
+> > Still, we do not need to call "strbuf_reset" again for "tmp". But there
+> > is another question here. Should we define the "file" just in this "if"
+> > block and free "file" also in the block?
+> 
+> The style this code uses seems to place most / all of the declarations at
+> the top of the function and frees at the bottom so I think this fits in.
+> 
 
-I reversed the flags :thumsup:
------------------------2c63016c84ae162a11e2b7e94203c4e4--
+Yes, as you have said, the code style places most / all of the
+declarations at the top and free at the bottom. But the trouble here is
+we will free the "file" in the "if" block.
 
---------5a5b55a6085d9cac5b2c5f2cd0293c56edaf0d1bd40bbcea9d11cbf6544c6ad8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+    char *file = NULL;
 
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
+    if (...) {
+        file = xstrfmt(...);
+        free(file);
+        file = xstrfmt(...);
+    }
 
-wsBzBAEBCAAnBYJnA1VnCZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
-28viAAAw4QgAoHLiBcQRvoWPxABXnBO+HyIG0kaJKpVzxwBq7llU38TeygYY
-K08ZO7sJLbhh+YLJN4+fCCFEemDSgpW9p+Vq0nfGYu2vkgHmnuwdb5puIR0p
-s53Kq1Vz8IWzN73yPfUqLr5JyJOP71cn9NIyvnJpJLYmvhczoP17hVlVFtSy
-Bo9/A15uldewEjrEVLg6UFze7htbb8TaHocSzQoshbhqn2Gfy64UjJaaxJz4
-Te3dBjt5HDGibwUxvkx6c7DxYz92ZkWZwQU40qqajGnYaNuCaea21bMZgZvc
-CjQT1/AqrlQaQES1WPGe4aA2CKk4r1v0Ay80Fkpqf/M6YjEicqSpfg==
-=ikrV
------END PGP SIGNATURE-----
+    free(file);
 
+If we want to follow the original code style, should we create two
+variables at the top and free them at the bottom?
 
---------5a5b55a6085d9cac5b2c5f2cd0293c56edaf0d1bd40bbcea9d11cbf6544c6ad8--
+> > And I don't think it's a good idea to use "xstrfmt". Here, we need to
+> > allocate two times and free two times. Why not just define a "struct
+> > strbuf" and the use "strbuf_*" method here?
+> 
+> I can use strbufs, I just wasn't sure if I really needed a strbuf for
+> each of the paths and was just trying to reuse a var.
+> 
 
+You don't need to create a new "strbuf" for each of the paths. You could
+just use "strbuf_reset" for only one "struct strbuf".
+
+    struct strbuf file = STRBUF_INIT;
+
+    if (...) {
+        strbuf_addf(...);
+        strbuf_reset(&file);
+        strbuf_addf(...);
+
+    }
+
+    strbuf_release(&file);
+
+> > > strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
+> > > strbuf_addf(&dotgit, "%s/.git", wt->path);
+> > > - backlink = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
+> > > + git_contents = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
+> > 
+> 
+> > 
+> 
+> > Why here we need to use "xstrdup_or_null". The life cycle of the
+> > "git_contents" variable is in the "repair_gitfile" function.
+> 
+> This what the existing code used and I saw no reason to change it...
+
+Actually, I somehow understand why in the original code, it will use
+"xstrdup_or_null" to initialize the "backlink". Because in
+"read_gitfile_gently", we will use a static "struct strbuf" as the
+buffer.
+
+I guess the intention of the original code is that if we call again
+"read_gitfile_gently" in this function or we have another thread which
+calls this function, the content of the buffer will be changed. So we
+explicitly use "xstrdup_or_null" to create a copy here to avoid this.
+
+But I wonder whether we really need to consider above problem?
