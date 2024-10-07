@@ -1,630 +1,155 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD8813B797
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 19:19:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462AD18C932
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 20:16:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728328761; cv=none; b=FGXR4gb5zD/z7B/7AnlI9ErcQYSQBJLkO4E+Q7LqM9KtuBhX1HJdOvqLGTQFRd8a9QECSKLetcxoG0DYQqVJyI9w6IFKDClUBTbEMedWZdzDvKKbm/7eJoyIVu7IQiDRP6AQLVogdZY3Fb4i10yUERKoWwXkFQMb1ny04SjH9nc=
+	t=1728332174; cv=none; b=odzSxcc8TP9hp0xcrpOzbbWVuYip1Qi4SzRzzSVgx8grzE4gERRnigOyK8SEw23rXBfzFnwDC64MnvYq+s1B2j91YYUxz+xdDqYtbdnvaSdXDB5Y4E4SpdxzgARKnV2U2EXV4nMdEGR0fWdzFhgzGvYVHb9QqnFVu7dyvaMEwas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728328761; c=relaxed/simple;
-	bh=yUolhNecDO8uvNPhbmFIljUWeVWaZmMyoOjmDl9xqDY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=I0DNwHGNhOxCGPku9NL50GwuuiFe1w+9sx7/aCxoYX8v780R/2gruPVA1VtDn+kW8ssuswVZ9skul9ordjjRXpyurBEKNCpOrN/L2Z0UUH1hmC5eUITIswBQHZLt4XsDvbRJzicgFSzo2foIBpo/O9/oxf+z+0kmikEdYfkjEe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CYfPOXcL; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728332174; c=relaxed/simple;
+	bh=itOe7gB8U2GtV+3ZBYnRVOeomRllIJ4UxCWqcRIn/wA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WOn9vypc0RGQp9a1Ea72l+wa9UOZ9wPuPKg2KdeYPOriNuzNl54h+0bdC8z320UjtbjW8KxZGvxyjqqfgbAyJw78PjgLMsbIqxZDGW8RjAMhpHdJznjQPl3n0GdqC+ezjGavKCMD8kG/RV7Eqdyow7xLx/RisWkMfmhLxEgblgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=jSWoXaPE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BJw7nG2P; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CYfPOXcL"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2fabc9bc5dfso55039501fa.0
-        for <git@vger.kernel.org>; Mon, 07 Oct 2024 12:19:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728328757; x=1728933557; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=lBUaqbQfp7ddRU6W4kFwSUVGXeLyA3j5i74r1igtMZo=;
-        b=CYfPOXcLYX8SbJOd0kaGpuNqNUPmmPn54V52rvQFmim9/UkGq+xVelsLkJKq6NJ4gN
-         xjwT7ekoLuobgkQdK8UUDtoJ69oBprSEDa5J9r47+HQOJxqPDfCTRc0tIA6VVc9Hw3g9
-         zMhzim5XzkECda7WoJrWIDOjAE7H/EyjPu+zE5PWSCGkiNDO4X6XfnDzDeCtggvgjVZQ
-         asqlphLGdsZ9VcyZIsmjyGW7zh90kw2/Fc8x00ieANBcnOG0zwXs9F55Fj3Y82Ak1Qku
-         rBtnfEoWZwVr6nj3xuXkgMAcKIFdlQd6TJ9TCxagYKkNvQ/DbGNDq7bUXcYaxZpjt/Yf
-         E5yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728328757; x=1728933557;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lBUaqbQfp7ddRU6W4kFwSUVGXeLyA3j5i74r1igtMZo=;
-        b=hVofxCDsjUl9aFA1LENO+tJoTobOzrIIB5XE6LSosF0MO809bLLtImwzi7bz5yRr4S
-         YZEG7hYPjjRvuAml5pqwFaP3HwWdv6P9bS+Qg/5uXrAkgLVIq8vutL565w5HPhY11xdf
-         AnzBOJtVD8rw21x/AAXpyAAXCepsYIjnjnutsB4ep6szDSHrb/fcfJN/bJZ18FLBbCel
-         wkqTSt6W8ET6xiCFhy4Qh7CxH6fjuKMDX/yDsVPlwXLxYgin8OCC6ONW1xbjRTMJg0sC
-         4Tpfh7538fOIeWO7C9zy5e/74aDsUns25qITG0ReTgTizTkSeBUkI9aC5OFAJvbCrOIS
-         /dvg==
-X-Gm-Message-State: AOJu0YxeiPPMx0EGd8JUFBMkXiuyJHuS63urxxp9w2Gbe8R/N0T3J0d6
-	gt3B4dwD2w3psHqjsTN2B8+jTLfVhcFwrduwV3JruCtTMMpUf4rtShM6/Q==
-X-Google-Smtp-Source: AGHT+IGkKY6EXFEGbM9V1VAUF4HzuolUTmw3WMTLOzWhhivOzPZMim0DNA0l7KrN33AezqR2ABN3qQ==
-X-Received: by 2002:a2e:a543:0:b0:2fa:d177:13e6 with SMTP id 38308e7fff4ca-2faf3c416f8mr60289051fa.21.1728328756788;
-        Mon, 07 Oct 2024 12:19:16 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c8e05a7e87sm3492325a12.24.2024.10.07.12.19.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Oct 2024 12:19:16 -0700 (PDT)
-Message-Id: <pull.1811.git.1728328755490.gitgitgadget@gmail.com>
-From: "Samuel Adekunle Abraham via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 07 Oct 2024 19:19:15 +0000
-Subject: [PATCH] t7300-clean.sh: use test_path_* helper functions
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="jSWoXaPE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BJw7nG2P"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5430513803A2;
+	Mon,  7 Oct 2024 16:16:11 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 07 Oct 2024 16:16:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:message-id:mime-version
+	:reply-to:subject:subject:to:to; s=fm1; t=1728332171; x=
+	1728418571; bh=I89n166pT0UFdvZYxyebTQwXw/PpRqvM3gF8ac/zfJM=; b=j
+	SWoXaPE9vSB3x0tD5b8IxtbSiSr/AGfK0UN3YCaJIslAD+WyKtnv1oN3FNM3a6Eg
+	IBG3rHzOIxsPcG/uts+KAp08JfMOpDNum0xZx25Ft+66HeJgxwXCOL/l7DZ+c3cS
+	a+AYwTf8fg3EynBSNbYbkjkq8Ov7xDwJqiu8UTL2ubwrtam6FgryElKLq1S4sOuH
+	eg9HXy/xGDN615RXcZA9Ab2t7sXoZff859S3A8bUxMi5rXRyL8IAiiQQNgoZa6so
+	BMbWwVBgLj3ZbDOuBEQoGY0a0Opj1xwc6Yn7YFjTYiYY2y8I8keUk1bsu2jqpj3i
+	BtTnNfcp0pe8XhRndXMQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1728332171; x=1728418571; bh=I89n166pT0UFd
+	vZYxyebTQwXw/PpRqvM3gF8ac/zfJM=; b=BJw7nG2Pj+DTuuY+VSbWdwh8VwbS+
+	+0VZtnTWuJRlD78UB842DC5Q7HtsPbrhWZie4zMpydNZ3u27gRcojlgBO6va6paB
+	wNxXxUZNqIyobWDI5JPCgHyIpuhlJ1s7zAPX67orIc5wuKQlchWYw5dwtLFjqo8L
+	4+jHzMgtsUetHpc/Uwlp1YEA6qHRD//I1pmdjTzpnFv65tsigXymW9eFMyZrs6bt
+	iJ2qqZ/k4CySOS7Z5nbM11gQsGxo797IkMPguFTkUZhFeR/6rvgDHVDAeJyO4/87
+	ggoR5w3lghL8oqmsftzWw7IEbBkjLhMMq2H6yMtxfHTAdCNGv9NgfnaYA==
+X-ME-Sender: <xms:i0EEZ98UT1t7gBecUVIXJ7ZlDzHj_txcfEulKu13QZxrHxSONsMoLR4>
+    <xme:i0EEZxtZ9tTCcrTG0k94lkTMn6zuOHyeZ4oTr_P38nufqWFZDBkTPjjMFyJErU4r-
+    reiS79GkGtva0Ch_Q>
+X-ME-Received: <xmr:i0EEZ7CKNocR3rJs9kplofO5iog_tQdzFOH4FbmTPlhHz5_IuvpPoiyJK10w3gXjyslDSIy_567HDpCXL_kOyiRPQ-CAh1utnqa45Z0D_ir-Oia0ji01RqcbmA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgudeglecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgr
+    uhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrf
+    grthhtvghrnhepgfevhedtjeffledvheeftedtgfevieefteeujeevveejhfeludelheet
+    ffdtudeknecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpphhusghlihgtqdhinhgsoh
+    igrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
+    mheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopeefpd
+    hmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtg
+    hpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:i0EEZxeZ9lEkaZEBdW3OMqh1n0xiphitBBem7atMxEP0gzVaqtpuAg>
+    <xmx:i0EEZyOdAcNHzde9ndjZFZiFXqmcxdB4Aqc96FaCJ_yyNi7c4pKlkQ>
+    <xmx:i0EEZzn2BzKNXtWENFs6Mzpbr8qUFwCPePlHBRurNJDUPklP9MaeCw>
+    <xmx:i0EEZ8udxFFDHomwbcJ0D8GOPcPa39QElwZQgNt-krgjKyLPLoSgVQ>
+    <xmx:i0EEZ_qJ2UdTtelWn002XlU6p1z9Y_LFbY-bH6p47efdGK3iMrEXOX3q>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Oct 2024 16:16:09 -0400 (EDT)
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	peff@peff.net
+Subject: [PATCH 0/3] object-name: don't allow @ as a branch name
+Date: Mon,  7 Oct 2024 22:15:16 +0200
+Message-ID: <cover.1728331771.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Samuel Adekunle Abraham <abrahamadekunle50@gmail.com>,
-    Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+X-Commit-Hash: 8262b81141bbd36cd7a17e6abe5eb6bb688290f3
+Content-Transfer-Encoding: 8bit
 
-From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+I use `@` a lot for Git commands in the terminal.  I accidentally did
+something that made me create a branch named `@`.  This puzzled me since
+`HEAD` is not allowed.
 
-The test_path_* helper functions provide error messages which show the cause
-of the test failures. Hence they are used to replace every instance of
-test - [def] uses in the script.
+Note that the bare/one-level `@` ref name is already banned.  So this is
+just about not allowing `refs/heads/@`.
 
-Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
----
-    [Outreachy] [PATCH] t7300-clean.sh: replace instances of test - [def]
-    with test_path_* helper functions.
-    
-    The test_path_* helper functions provide error messages which show the
-    cause of the test failure should a failure occur. This is more useful
-    and helpful when debugging errors.
-    
-    Signed-off-by: Abraham Samuel Adekunle abrahamadekunle50@gmail.com
+§ Research
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1811%2Fdevdekunle%2Fupdate_tests-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1811/devdekunle/update_tests-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1811
+This has come up before.  There even is a test which guards the current
+behavior (allow `@` as a branch name) with the comment:[1]
 
- t/t7300-clean.sh | 370 +++++++++++++++++++++++------------------------
- 1 file changed, 185 insertions(+), 185 deletions(-)
+```
+# The thing we are testing here is that "@" is the real branch refs/heads/@,
+# and not refs/heads/HEAD. These tests should not imply that refs/heads/@ is a
+# sane thing, but it _is_ technically allowed for now. If we disallow it, these
+# can be switched to test_must_fail.
+```
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 0aae0dee670..5c97eb0dfe9 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -29,15 +29,15 @@ test_expect_success 'git clean with skip-worktree .gitignore' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so &&
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so &&
- 	git update-index --no-skip-worktree .gitignore &&
- 	git checkout .gitignore
- '
-@@ -47,15 +47,15 @@ test_expect_success 'git clean' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -64,15 +64,15 @@ test_expect_success 'git clean src/' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean src/ &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -81,15 +81,15 @@ test_expect_success 'git clean src/ src/' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean src/ src/ &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -98,16 +98,16 @@ test_expect_success 'git clean with prefix' '
- 	mkdir -p build docs src/test &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so src/test/1.c &&
- 	(cd src/ && git clean) &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test ! -f src/part3.c &&
--	test -f src/test/1.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file src/test/1.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -163,16 +163,16 @@ test_expect_success 'git clean -d with prefix and path' '
- 	mkdir -p build docs src/feature &&
- 	touch a.out src/part3.c src/feature/file.c docs/manual.txt obj.o build/lib.so &&
- 	(cd src/ && git clean -d feature/) &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test -f src/part3.c &&
--	test ! -f src/feature/file.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_missing src/feature/file.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -182,16 +182,16 @@ test_expect_success SYMLINKS 'git clean symbolic link' '
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	ln -s docs/manual.txt src/part4.c &&
- 	git clean &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test ! -f src/part4.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_missing src/part4.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -199,13 +199,13 @@ test_expect_success 'git clean with wildcard' '
- 
- 	touch a.clean b.clean other.c &&
- 	git clean "*.clean" &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.clean &&
--	test ! -f b.clean &&
--	test -f other.c
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.clean &&
-+	test_path_is_missing b.clean &&
-+	test_path_is_file other.c
- 
- '
- 
-@@ -214,15 +214,15 @@ test_expect_success 'git clean -n' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -n &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -231,15 +231,15 @@ test_expect_success 'git clean -d' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -d &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test ! -d docs &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_missing docs &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -248,16 +248,16 @@ test_expect_success 'git clean -d src/ examples/' '
- 	mkdir -p build docs examples &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so examples/1.c &&
- 	git clean -d src/ examples/ &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test ! -f src/part3.c &&
--	test ! -f examples/1.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_missing examples/1.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -266,15 +266,15 @@ test_expect_success 'git clean -x' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -x &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test ! -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -283,15 +283,15 @@ test_expect_success 'git clean -d -x' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -d -x &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test ! -d docs &&
--	test ! -f obj.o &&
--	test ! -d build
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_missing docs &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_missing build
- 
- '
- 
-@@ -300,15 +300,15 @@ test_expect_success 'git clean -d -x with ignored tracked directory' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -d -x -e src &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test -f src/part3.c &&
--	test ! -d docs &&
--	test ! -f obj.o &&
--	test ! -d build
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_missing docs &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_missing build
- 
- '
- 
-@@ -317,15 +317,15 @@ test_expect_success 'git clean -X' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -X &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test ! -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -334,15 +334,15 @@ test_expect_success 'git clean -d -X' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -d -X &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test ! -f obj.o &&
--	test ! -d build
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_missing build
- 
- '
- 
-@@ -351,15 +351,15 @@ test_expect_success 'git clean -d -X with ignored tracked directory' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -d -X -e src &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test ! -f obj.o &&
--	test ! -d build
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_missing obj.o &&
-+	test_path_is_missing build
- 
- '
- 
-@@ -382,29 +382,29 @@ test_expect_success 'clean.requireForce and -n' '
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
- 	git clean -n &&
--	test -f Makefile &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test -f a.out &&
--	test -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file Makefile &&
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_file a.out &&
-+	test_path_is_file src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
- test_expect_success 'clean.requireForce and -f' '
- 
- 	git clean -f &&
--	test -f README &&
--	test -f src/part1.c &&
--	test -f src/part2.c &&
--	test ! -f a.out &&
--	test ! -f src/part3.c &&
--	test -f docs/manual.txt &&
--	test -f obj.o &&
--	test -f build/lib.so
-+	test_path_is_file README &&
-+	test_path_is_file src/part1.c &&
-+	test_path_is_file src/part2.c &&
-+	test_path_is_missing a.out &&
-+	test_path_is_missing src/part3.c &&
-+	test_path_is_file docs/manual.txt &&
-+	test_path_is_file obj.o &&
-+	test_path_is_file build/lib.so
- 
- '
- 
-@@ -453,11 +453,11 @@ test_expect_success 'nested git work tree' '
- 		test_commit deeply.nested deeper.world
- 	) &&
- 	git clean -f -d &&
--	test -f foo/.git/index &&
--	test -f foo/hello.world &&
--	test -f baz/boo/.git/index &&
--	test -f baz/boo/deeper.world &&
--	! test -d bar
-+	test_path_is_file foo/.git/index &&
-+	test_path_is_file foo/hello.world &&
-+	test_path_is_file baz/boo/.git/index &&
-+	test_path_is_file baz/boo/deeper.world &&
-+	test_path_is_missing bar
- '
- 
- test_expect_success 'should clean things that almost look like git but are not' '
-@@ -624,9 +624,9 @@ test_expect_success 'force removal of nested git work tree' '
- 		test_commit deeply.nested deeper.world
- 	) &&
- 	git clean -f -f -d &&
--	! test -d foo &&
--	! test -d bar &&
--	! test -d baz
-+	test_path_is_missing foo &&
-+	test_path_is_missing bar &&
-+	test_path_is_missing baz
- '
- 
- test_expect_success 'git clean -e' '
-@@ -638,10 +638,10 @@ test_expect_success 'git clean -e' '
- 		touch known 1 2 3 &&
- 		git add known &&
- 		git clean -f -e 1 -e 2 &&
--		test -e 1 &&
--		test -e 2 &&
--		! (test -e 3) &&
--		test -e known
-+		test_path_exists 1 &&
-+		test_path_exists 2 &&
-+		test_path_is_missing 3 &&
-+		test_path_exists known
- 	)
- '
- 
-@@ -649,7 +649,7 @@ test_expect_success SANITY 'git clean -d with an unreadable empty directory' '
- 	mkdir foo &&
- 	chmod a= foo &&
- 	git clean -dfx foo &&
--	! test -d foo
-+	test_path_is_missing foo
- '
- 
- test_expect_success 'git clean -d respects pathspecs (dir is prefix of pathspec)' '
+There was no reply to this change in neither the first[2] nor second
+version.
 
-base-commit: 90fe3800b92a49173530828c0a17951abd30f0e1
+That series points back to a bug report thread[3] which is about
+expanding `@` to a branch named `HEAD`.
+
+Peff found a way for the branch name `HEAD` to be created While figuring
+out a solution:[4]
+
+> Checking "HEAD" afterwards means you can't actually have a branch
+> named "HEAD". Doing so is probably insane, but we probably really _do_
+> want to just disallow the @-conversion here.
+
+So that was tangential to the bug fix (`HEAD` as a branch name was not
+disallowed in the patch series that resulted from this bug).
+
+🔗 1: https://lore.kernel.org/git/20170302082306.n6kfc5uqz2kdxtpm@sigill.intra.peff.net/
+🔗 2: https://public-inbox.org/git/20170228121514.qajydm5bjdbzsucg@sigill.intra.peff.net/
+🔗 3: https://public-inbox.org/git/20170228120633.zkwfqms57fk7dkl5@sigill.intra.peff.net/
+🔗 4: https://public-inbox.org/git/20170227090233.uk7dfruggytgmuw2@sigill.intra.peff.net/
+
+  §2 Disallow `HEAD` as a branch name
+
+This was done later in 2017:
+
+https://lore.kernel.org/git/20171114114259.8937-1-kaartic.sivaraam@gmail.com/
+
+  §2 `refs/heads/@` is apparently disallowed by git-refs(1)
+
+See `t/t1508-at-combinations.sh`:
+
+```
+error: refs/heads/@: badRefName: invalid refname format
+```
+
+Kristoffer Haugsbakk (3):
+  object-name: fix whitespace
+  object-name: don't allow @ as a branch name
+  t1402: exercise disallowed branch names
+
+ object-name.c                         | 5 ++---
+ t/t1402-check-ref-format.sh           | 4 ++++
+ t/t3204-branch-name-interpretation.sh | 9 ++-------
+ 3 files changed, 8 insertions(+), 10 deletions(-)
+
 -- 
-gitgitgadget
+2.46.1.641.g54e7913fcb6
+
