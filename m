@@ -1,61 +1,114 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC19E14387B
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 06:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CBD15B97D
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 06:58:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728281297; cv=none; b=C1opONy5DAYAnUE3lwk0cXkthT9yXnWGYyvZvZj6J1lxrTj1IIVzfBeC4E8wGg71xdzFZIvTYrk8wgHdpGBX9SBGAR7yE2tGFSxyrafwQDxIry5KXq4Jp1klTSblv7BR8/iyuFj26WGN+SK8VR91EAf7PzyUnvPJ/qqR40zJiMg=
+	t=1728284320; cv=none; b=ka5gUu2SRExfVPYIz8cT1gYu8Y0K5p0RtWNXEUG3F2HMm71X3ermDho1ziH2IcaZphUYkwIGTNuN6/EbeyEman1/59Z5Q4c6gaRbgbeL41S+iI7jIOOHQmYO/wjZSR8Wg1k0sGYcQp7s3QYIrvDw7TYXBx1bCPbsjEi54MObP3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728281297; c=relaxed/simple;
-	bh=Ihw1GzHcNTexwDxt1xd2xsqvBX41rkIxIX8U/tHj90k=;
+	s=arc-20240116; t=1728284320; c=relaxed/simple;
+	bh=c9zIA4nOvqPqZt5pKtCnPJ8ThIo+S8vpd/zKRrJXgqM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QJLlcEqwc/NCRduGf7n8nq7ZHPkBubGuX0a+Y7+Lm1oVs0cyQ4uyER8JOP6sg9aVzA5ZTDRxFuyk7tYAnn2tcaCUrODG5ZYlItDvz/rQILg8Vs/+kNmLg8xmdZZGsHrxfrd9xALR9Ss7OppaXa1F/S0ta495yr/Z5etK8zGASDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UJRXcCS5; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=ulyQcnSa5/4lUkntQFdhUhjw1R+2CZVxlxMWRdhzuqk2o5hhrGoto2MM0GMCmTOCjTc467NoNi5iYUCBvljx2ORYTDmFOxnwlJClalkD0eDBVLP60ba4hKtG/ob9zbYmFfrdv+rbp+lVdPNf2mcEy8xLequPw3iYfivIcovgAGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jVeggnMu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EycBLsfC; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UJRXcCS5"
-Received: (qmail 31585 invoked by uid 109); 7 Oct 2024 06:08:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Ihw1GzHcNTexwDxt1xd2xsqvBX41rkIxIX8U/tHj90k=; b=UJRXcCS5Dq408t6AFXqMklP6Qv1RZp3vjHx9U9NVOFQo/NNeBKA/DmoqpuKF/QBBCkpsxplfIQr/WGv/wG5FT2xsGKcWn31now2KoMurG2uknwA9W890NA6mlwjcQlY0kGW4GFiYcz3FV4je3bTL9jOF7iT+v1FjyzHK9LdLThNDMKN67vU8Kc91etmmldhwsQDZNPf5OKorUMBWbLBHNGm0/mK5PpnoyJDpZHESg2dHm8bMUT8MaPUUwQVrgbd6TxN5hHnSMAKhvNd5X0zjTTEL+rFkAMaQJtPqZ7azuqMg/BNCCJTM1DCzDJLQu1fOUSPlafjdG7UXyRgsEi/3sw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Oct 2024 06:08:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3469 invoked by uid 111); 7 Oct 2024 06:08:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Oct 2024 02:08:14 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 7 Oct 2024 02:08:13 -0400
-From: Jeff King <peff@peff.net>
-To: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Koji Nakamaru <koji.nakamaru@gree.net>
-Subject: Re: [PATCH] fsmonitor: fix hangs by delayed fs event listening
-Message-ID: <20241007060813.GA34827@coredump.intra.peff.net>
-References: <pull.1804.git.1727862424713.gitgitgadget@gmail.com>
- <20241007055821.GA34037@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jVeggnMu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EycBLsfC"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4C07D11400E5;
+	Mon,  7 Oct 2024 02:58:37 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Mon, 07 Oct 2024 02:58:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1728284317; x=1728370717; bh=c9zIA4nOvq
+	PqZt5pKtCnPJ8ThIo+S8vpd/zKRrJXgqM=; b=jVeggnMuF17MBPw5za4nD8bcvB
+	P23zvGcfMqHnb1a8NhrsQUs8qJLxoV7sND6Ld8paIc0bFj45tbpiS1n5dsL/XHJQ
+	fziHBJaSoJ+Eq48FEW9ES+/LJ4P5iu3PFIedWn6wefVNGqdeWE10oA+pwnlCPvp/
+	QoYC8IOWxwUft7YiI99zTWLjthZ7g5POq+pFlFUj7o9IXeNyqeyIIE1dCRddp/AR
+	tOMTm4glpzbWGqhgsimM1ww/kj+MSgcxd/BP9yTLhoJ6fNNWZZqePaeYo7acM+GH
+	MdPOQ/FkQpf0B80RBh2qgFilvKWRMJoB/NxIVun6qClnPLb0pTtrKbeJeTVg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728284317; x=1728370717; bh=c9zIA4nOvqPqZt5pKtCnPJ8ThIo+
+	S8vpd/zKRrJXgqM=; b=EycBLsfCuNDmO6+KVaDtjqKLY2WeSIy4Ppt3GrM7671N
+	HjRu36h1AWsH0JE1jXdq9B7H90B/aeRmfLVbxiLH6DOO4CuTCeDVHK3XjRopNqxi
+	/j0quT+wBYdFKmIjgTtaDZ7LIXrYKsF5q7oEsrMqJHBtpNYCZUH37eUClppA3CrR
+	/n3wl5/eMNcrL5cQPOPJKnt1sC52UuTMqXkC/0pst18rrQFReMXpdQeGGLt9TEjl
+	FT3a2I0CczhaxyDBo9Y4OiOydil8SOwK713ecDHG6r6Ajl6FWzu/9YMKR2kymWrc
+	96sVyEK83HybsmHlFQ6p1kNqIruZF+mXbwNRfVMHVA==
+X-ME-Sender: <xms:nIYDZ-qwBBK6GjkEERIocpHPHf7zaP1j-LstAqCT-wlPPzfUlVh3ng>
+    <xme:nIYDZ8qrny6_GthRVS7PuraUKefTab0YqLqIas3oBMQq2R9_O-_xGfmzamHko507u
+    iWFwSewWGeCS6HuAQ>
+X-ME-Received: <xmr:nIYDZzP568_gDyLbJXcfK_iSJL_ITBp4kZ3ogE_V2E-IYblPt2-QU90LTjkkwqtZNS8T6sW8W0Y54d-qWY6GilVcHar56wkX4MHnWsqheKQz6qxrRQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvkedgudduhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghr
+    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuoh
+    esghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:nYYDZ95YRMNXqetKWiIfHBpjqV-hiCC3D8wQiDMt9qz4ZqC_OmLDLw>
+    <xmx:nYYDZ94O3ThGpMTGKAZMSVh3lxDzzEaxBJPMagh_7g2Y8gL8Zh_3Jg>
+    <xmx:nYYDZ9hkCYsI9e5J_nRj34sKVxuzeuicsW9hkmDooxi4YrxR5Rv7fg>
+    <xmx:nYYDZ36RV11Wc5nlMAEDJ6iZ9JhieYjUW24lwZQDNzGneWP3Bakg1Q>
+    <xmx:nYYDZw2SzgmYKl9Xj9USUfgW4ea9cHo3flgbEv3ZqD6absrZBGxjlGHA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Oct 2024 02:58:36 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6a2a3b3d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Oct 2024 06:57:38 +0000 (UTC)
+Date: Mon, 7 Oct 2024 08:58:34 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 3/9] ref: port git-fsck(1) regular refs check for
+ files backend
+Message-ID: <ZwOGmoX5ner_F3Ac@pks.im>
+References: <Zvj-DgHqtC30KjJe@ArchLinux>
+ <Zvj-osCNDMrUQv83@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241007055821.GA34037@coredump.intra.peff.net>
+In-Reply-To: <Zvj-osCNDMrUQv83@ArchLinux>
 
-On Mon, Oct 07, 2024 at 01:58:21AM -0400, Jeff King wrote:
+On Sun, Sep 29, 2024 at 03:15:46PM +0800, shejialuo wrote:
+> "git-fsck(1)" has some consistency checks for regular refs. As we want
+> to align the checks "git refs verify" performs with them (and eventually
+> call the unified code that checks refs from both), port the logic
+> "git-fsck" has to "git refs verify".
 
-> I think your patch has one small bug, which is that you don't
-> pthread_mutex_destroy() at the end of fsmonitor_run_daemon(). But other
-> than that I think it should work OK (I haven't tried it in practice yet;
-> I assume you did?).
+What's missing here is the actual intent of this commit, namely why we
+want to align the checks. I assume that this prepares us for calling
+`git refs verify` as part of git-fsck(1), but readers not familiar with
+the larger picture may be left wondering.
 
-I just checked your patch in our CI, using the sleep(1) you suggested
-earlier to more predictably lose the race(). It does work reliably (and
-I confirmed with some extra trace statements that it does spin on the
-sleep_millisec() loop).
+> "git-fsck(1)" will report an error when the ref content is invalid.
+> Following this, add a similar check to "git refs verify". Then add a new
+> fsck error message "badRefContent(ERROR)" to represent that a ref has an
+> invalid content.
 
-I had also previously checked my suggested solution. So I do think
-either is a valid solution to the problem.
+It would help readers to know where the code is that you're porting over
+to `git refs verify` so that one can double check that the port is done
+faithfully to the original.
 
--Peff
+Patrick
