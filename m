@@ -1,54 +1,54 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6268D18E054
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 09:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AD318CC0A
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 09:26:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728293124; cv=none; b=Xsz1uhoL+ZMXp+8rfOmijEfF2FD2BkiZoIVLjwbPVmWCYNsbCEVJE6vylNMg6UWsEOfa1g9LwD8CtEaVg/IZIT/AVaF4Bl6rU9HnOtwPGsdxXxf0dYiYLCj3gPB1pY0KBvVu3feMfwLMyyXq7/CDZDkGtuNq2xWzvmJdXlxpcM4=
+	t=1728293203; cv=none; b=lKUoGlT+JrORgALTckSFBY9UqI23jDDOEvuU3g28ydnPmp0mD3TmMJ7i2V5LUmLpt+weudP8UyNLNRUfEuj8PejJNiQjIHifUTP9KPEF8svwsEw4uamUac6n8m+jB1nf5l0Pdzckqpipl4rEV6ey2NgWyjlHKQN4VLAdypsD+tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728293124; c=relaxed/simple;
-	bh=lyN9r3tRSdc5nj9a1i9665s62gJoXF1gGxb4BXSK+Rw=;
+	s=arc-20240116; t=1728293203; c=relaxed/simple;
+	bh=hJdNqdtLWO454rzTPSbj/qmXDsQ4n/9AjUXpAwZJyls=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jSSFOZRJVU/JMFk8DSOdK21LK025hwwhGoKEhzbFnJ+axfmU3FcxlkpHTHQkIhKwn9vlRsK3269A6mSw0AXVlryYzs92/1OaF/XNyt4niGunfnN2Q94fBCYEvTVNrMxtZHxtROjQnqq80hbReH3otw/nLoZ+c+UKFN5d9GR/Ygg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DD9MpxPJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=obmkiLra; arc=none smtp.client-ip=202.12.124.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=C87Pt2TcwY8hOLroHcelmKwX/UlJdAgNK0BjqW01KMVlnk4VYKdYUA2B9emZPztyeEmUOhlc1kfts3MT81wLiZY/qN2190ZND5KK008kUnhVBxoeCiYZNxgIMO2HsMnBXJL1Ac/BIn3TVn2wE79TbOU8XI+SCl9f1raTKS1PhRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=htmtMcK8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ViY3VmRS; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DD9MpxPJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="obmkiLra"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 521C225400CF;
-	Mon,  7 Oct 2024 05:25:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="htmtMcK8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ViY3VmRS"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id A61EB11400DB;
+	Mon,  7 Oct 2024 05:26:40 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 07 Oct 2024 05:25:21 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 07 Oct 2024 05:26:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728293121; x=1728379521; bh=iEdzVtXn5q
-	rCZD/BV9n7x8pGb8rlxCLD1RquilWBj40=; b=DD9MpxPJCQ2iGgwB8bSICzlW9B
-	z+3mFDZ350+JgHGNNjRXKDV+N/UpdC3DF7Gz6R2hBeHYhIukcD+i4FRdY4koMZh8
-	j07zyqpvDOYF0HtY9Vr9pwpVxI/iI1TtXiA+K6f/fH7WW5jsjSoxe/KKfcq+cT3f
-	mnuf/t+b8GiehIFtZnPmqQ+8A00R80+skkGXLBzjUnhUPr5hqzubehtksboDb+rL
-	erGpLnUqO9WexzHBrNFggciOdesnVMm/16YukYpXEjmB28OzmMedqypzMlYeKjR5
-	WbMV8XyILourvwsl+N9Dw/OylHeCBCEbM+ChwJbLS+1cPS+uV2ZRLezUrqBQ==
+	:subject:to:to; s=fm2; t=1728293200; x=1728379600; bh=wOJW59YG26
+	xRiu57cnZ+XyXa9PJ54h2SS+sm+CAf56o=; b=htmtMcK8e/qWgoADaZ/6J5XQ+8
+	nZJ6kYfff5VhPqE9eUq3phJdaQFAWYGqc5blUPh+TMnJ9738vGAER55QnbPAz11Q
+	mX1q5cGYci8rqs7YH6ZvoT+4vIk91Vf+T3Smir06DNCllz1ZQQlF+OfiMOoi+IUH
+	Ey0IESZmp0pteGy160Qi9JV41cYEaS9ttul+3Ut3Js+nCXlTlR1PAnQkRSTRbxCE
+	O87KQkn1E8v+7Ggbs/AdPzclEuolwPwPAsxm/ymclX2kAxTjZLq5ZxQo1c7evSlt
+	NC0IlZ6IaWaclf8mjw+UX/Ob+FGyBCnS/wgfDTLQQjXa6xnNCD/QObC15eHA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728293121; x=1728379521; bh=iEdzVtXn5qrCZD/BV9n7x8pGb8rl
-	xCLD1RquilWBj40=; b=obmkiLrarTGM/n7WP4urr0G9eVzt/EjDyml+GmgSK8aC
-	sf5tN5daJV5MQEI2VVuNERFCyXJrLL0fHUlSMbDicFk0Jj+FXrORHgcQMq3zDNRk
-	DwGKIEVIhTLKATLKTMdQ8nYscHCHEz9Yi5lM3ilo/Ibd+eNZxaZBGQxHkxEMu2LF
-	W/Jf9T6BuXCHQfDh+BwmLXMFlmLNUIdc3XY2sUyC0TwlOZ+QIonKBET4Hx1IGb2U
-	H7D5GOcP2rXw2mX+54/9Hynk3mhDuf5T50HjVXnfwOrfJvI6Oafz2C31NjUYeifU
-	mGaGAw+bH7j6Jp4Wr0PqB0tmYS/TkjYlIZvQ+QsFSw==
-X-ME-Sender: <xms:AakDZ1aBEO9G8QQLECgs-dhf_0AJP1MvzLaUARgGAS4p7G3vPbjwAg>
-    <xme:AakDZ8ZxeLXgxcwt-7TmzR6l6TjROtHNzuvRC35wtgdikVMtUzm918iHP191nW7-E
-    aFY6ebZ_BAWpnCLqA>
-X-ME-Received: <xmr:AakDZ3-taAiYJigrrB0xXH_sRooB_DV544EDmNwAjFYpuiDt_uskvT02I7R7Sh2Jou4oyhT1lVy6PylArFLFMPLAVXKqHLfeykdewy1y-VRftVB0Lw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgudehucetufdoteggodetrfdotf
+	fm2; t=1728293200; x=1728379600; bh=wOJW59YG26xRiu57cnZ+XyXa9PJ5
+	4h2SS+sm+CAf56o=; b=ViY3VmRSG4Vd7E4SM6OWVbK39/HOecrK4dWsK5IlMSFf
+	gK5T9BR5Q4r/7cjVrwOl7mMGmTFFGj6Gu4yd1pgmGxfJ0pQhRIxvPiCSni3W/aXb
+	7q8ARGrm/Ji+edA7OhgedTrxGSaOPhz7nmwyQ/L7gw3SjIDuretobjsXK+foBEnv
+	wPfCik0MXRFjnqahYiubFfZIoXghRB4CpqOhtKVUsA4xXhtIRm3p5ywouJz3WH8d
+	Oh/w8pPujnSXHx8gv+/+bVJlwH6xjub9FTyQwdo2vqSQXlLEYGbg/TTGbf3HCavl
+	NEVGyNFe1R3rqVtgx2YjngaWeeAIMokNOxcbrL+8kw==
+X-ME-Sender: <xms:UKkDZ7z9bQZ2NOjaEO3Pyfr2p0-NGGphfhfvGezoyPg3fksAf7XCag>
+    <xme:UKkDZzQNEsjCdLDiP0IwWQA4WZprdMgyeJWiTY_pMbMNpeOG-LQzajxb_Fs00yaxk
+    xyYhCOQ33GCbfcmjw>
+X-ME-Received: <xmr:UKkDZ1Wv3KIx1gtJ2L5pHNHtyMpkuFQ8v6KAttNBovnhD1JwQoJ6gxvMbIzsH3-gsq81ZnAiXGyv38dsG4cDQjmOF_LW97stbds7XLZpNyjL_UBBqQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgudeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -56,32 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgudehucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    shhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:AakDZzplafgSCoHdx3Z0vVxvAztbkCVA1RBNSClOMAFdD6t8LtwHwA>
-    <xmx:AakDZwr6jU_iv8b2gwDER9ia5wsj42J80gqWL8xj2mDoXr2VDnbZYw>
-    <xmx:AakDZ5QONxznwVl4eip6r0gUF_8FGAPjgqEKmL-l2n76hxat1FkZ1A>
-    <xmx:AakDZ4q-l7VDp5jM1DMk60txjGeUvuut47YUcxewxKU-qEQH6-9pUA>
-    <xmx:AakDZ5nUyjyVWLrdK5rgBDK0-bk6apppdrFdB7gKY3WOcr2tZC_Q_u3h>
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeekse
+    hgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:UKkDZ1hxvDqAqfuvMs1uZuBFeiPeCXbL2bT6Md_yTv64I90s1qvfvQ>
+    <xmx:UKkDZ9AWdVmkD9J0hRlfCgeQ6Nkwe0gNU7hXp08n6tpTOr4RX9vx_g>
+    <xmx:UKkDZ-IyADLf7tJQlT9wp84B_Yc4YESOz8sNFq8HOchkc_Y2Ev78EQ>
+    <xmx:UKkDZ8BHws5WbT24ebCwqUj44VkFbVupRj3eWaQ1uTp0JPik4qrzwQ>
+    <xmx:UKkDZ48OTUVZxwm6dj4oAi-sYxP6DPhvSTflE0Luev1vfEkB2USpel-6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 05:25:20 -0400 (EDT)
+ 7 Oct 2024 05:26:39 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f124ff7d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Oct 2024 09:24:20 +0000 (UTC)
-Date: Mon, 7 Oct 2024 11:25:17 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id dba301f7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 7 Oct 2024 09:25:40 +0000 (UTC)
+Date: Mon, 7 Oct 2024 11:26:31 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 4/9] ref: add more strict checks for regular refs
-Message-ID: <ZwOo9dQSr8Xu-PBb@pks.im>
+Subject: Re: [PATCH v5 6/9] ref: add escape check for the referent of symref
+Message-ID: <ZwOpR2kQ0cWb_7Kq@pks.im>
 References: <Zvj-DgHqtC30KjJe@ArchLinux>
- <Zvj-sBX-0AFsuFDC@ArchLinux>
- <ZwOGnQSqmwALK-9z@pks.im>
- <ZwOfYGi21oa302sS@ArchLinux>
+ <Zvj-xaa_j26Auig7@ArchLinux>
+ <ZwOGr4Tv8K_wemtD@pks.im>
+ <ZwOffN9UWX1gP0gy@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,81 +90,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZwOfYGi21oa302sS@ArchLinux>
+In-Reply-To: <ZwOffN9UWX1gP0gy@ArchLinux>
 
-On Mon, Oct 07, 2024 at 04:44:16PM +0800, shejialuo wrote:
-> On Mon, Oct 07, 2024 at 08:58:37AM +0200, Patrick Steinhardt wrote:
-> > On Sun, Sep 29, 2024 at 03:16:00PM +0800, shejialuo wrote:
-> > > diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-> > > index 22c385ea22..e310b5bce9 100644
-> > > --- a/Documentation/fsck-msgids.txt
-> > > +++ b/Documentation/fsck-msgids.txt
-> > > @@ -3541,6 +3546,21 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
-> > >  		goto cleanup;
-> > >  	}
-> > >  
-> > > +	if (!(type & REF_ISSYMREF)) {
-> > > +		if (!*trailing) {
-> > > +			ret = fsck_report_ref(o, &report,
-> > > +					      FSCK_MSG_UNOFFICIAL_FORMATTED_REF,
-> > > +					      "misses LF at the end");
-> > > +			goto cleanup;
-> > > +		}
-> > > +		if (*trailing != '\n' || *(trailing + 1)) {
-> > > +			ret = fsck_report_ref(o, &report,
-> > > +					      FSCK_MSG_UNOFFICIAL_FORMATTED_REF,
-> > > +					      "has trailing garbage: '%s'", trailing);
-> > > +			goto cleanup;
-> > > +		}
-> > > +	}
-> > > +
-> > 
-> > I think we should discern these two error cases and provide different
-> > message IDs.
+On Mon, Oct 07, 2024 at 04:44:44PM +0800, shejialuo wrote:
+> On Mon, Oct 07, 2024 at 08:58:55AM +0200, Patrick Steinhardt wrote:
+> > On Sun, Sep 29, 2024 at 03:16:21PM +0800, shejialuo wrote:
+> > I'd also rename this to e.g. "symrefTargetIsNotAReference" or something
+> > like that, because it's not really about whether or not the referent is
+> > "escaping". It's a bit of a mouthful, but I don't really have a better
+> > name. So feel free to pick something different that describes the error
+> > better.
 > > 
 > 
-> Actually, in the previous versions, I have mapped one message id to one
-> error case. But, in the v4, Junio asked a question
+> I guess "symrefTargetIsNotAReference" is a little too long. If we decide
+> to convert it to error later. Why not just put it into the "badReferent"
+> fsck message?
 > 
->   Not limited to this patch, but isn't fsck_report_ref() misdesigned,
->   or is it just they are used poorly in these patches?  In these two
->   callsites, the message string parameter does not give any more
->   information than what the FSCK_MSG_* enum gives.
-> 
->   That is what I meant by "misdesigned"---if one message enum always
->   corresponds to one human-readable message, there is not much point
->   in forcing callers to supply both, is there?
-> 
-> In my opinion, we should have only one case here for trailing garbage
-> and not end with a newline. When writing the code, I chose the name
-> "unofficialFormattedRef" for the following reason:
-> 
->   1. If we use two message ids here, for every message id, we need write
->   to info the user "please report this to git mailing list".
-> 
->   2. If we decide to make this as an error. We could just classify them
->   into "badRefContent" message category.
-> 
->   3. The semantic is correct here, they are truly curious formatted
->   refs, and eventually we will give the info to the user what is
->   curious.
-> 
-> So, I think we should not always map one message to one error case.
+> So, I do not think we need to rename. As I have talked about, we don't
+> need to map error case to fsck message id one by one.
 
-From my point of view the error codes should be the single source of
-truth, as this is what a user can use to disable specific checks. So if
-one code maps to multiple messages they have the problem that they can
-only disable all of those messages.
-
-I don't disagree with what Junio is saying. It is somewhat duplicate
-that the user has to pass both a code and a message in the current
-form-- it should be sufficient for them to pass the code, and the
-message can then e.g. be extracted from a central array that maps codes
-to messages.
-
-But you can also make the reverse argument: messages can be dynamic, so
-that the caller may include additional details around why specfically
-the check failed. The code and message would still be 1:1, but we may
-include additional details like that to guide the user.
+Mostly because I disagree with this here. I think there should be a 1:1
+mapping, and "badReferent" is too generic to provide that.
 
 Patrick
