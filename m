@@ -1,99 +1,90 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285382AD05
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 11:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7164C91
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 11:17:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728299540; cv=none; b=dCqv6VLGWn+QV9vnduY8e5z8OmApUTBFYr9IpTMorKTUiaa2YfLK2u5dSg5ncqe8hISnAsrkMOFHWeGCHTCnFf+oWGzTjjFfac8RAv8BE773e0WtSptI7V2YVKgmkGza1KZblEW0CUla7asHWX/9TTCzeEccv4hU+QfE7BuHyEw=
+	t=1728299824; cv=none; b=udE7JDb3REy3n6QTDu7gACkYY4L0JyqKvkE7gJsrvp96ydNbHyRhXs6bAtejHKeYv1lqR7lVHPq7+rWMyH6v6MmNWLS5eemtpoWsqPVVQo9Vc5q22JERlysAg2VRMd4mK3THv96ekVmNUSCETY2X5eU+CPC8IdNrAUpjrjUvAGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728299540; c=relaxed/simple;
-	bh=HTXSs1Eyy9mEvoTLoyzuLq09bGpc9tJIV9TB+CVHWKs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=umhSW8us+2LqHVLg3/zUc4EZuQXMVLFHlcn7xDAB5ocYgPN1hUWmXa4sDWvooJyWC7BVwRHTvzIono14g3SY5RvPRBdgnmijDndTd6EIqtcuqBE/fs4GAyzVCAKqUtA5IfmFGUGLFS/y0kju1+4OCzxZguDx6Y84hMV0bAKauL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rrsWXQHo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lsoSpRL+; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728299824; c=relaxed/simple;
+	bh=bmREvKN1sE4Vm3vvg2FUqnuREJOB+VwkLfABAWfq/tA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Fk1omUs2WKYkiXSRT3HG7hKovlL1eZblkvbG0lTwuxh9MQc2s6z6k36JyWUGdcrLoaFLLA+mcV5jhw874QCqNV3fU9D87IL6YL3nTxNK7I5E36oTv58qEoL5ICt0fnX1gPoOLBsZFWQ8GNHRg+6YtUP81mGr975OTIngnrr16Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZJfmfwmD; arc=none smtp.client-ip=209.85.217.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rrsWXQHo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lsoSpRL+"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 22D8B25400BC;
-	Mon,  7 Oct 2024 07:12:18 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 07 Oct 2024 07:12:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728299537; x=1728385937; bh=ma2eVetPwL
-	aZVZGhCMg6UOzQWMP/CmhcD6hDnGxlNQw=; b=rrsWXQHoFeg74Icm3joUm5jO+0
-	6I19QIWe4524YtsEdp5BILVDgXfunYwULBQzudLVDxYh8WofPSNlYvN5ysDC2EOr
-	iarIbbTo4DspxOfTmQVcpTLhZUG8VqdACHIsSALXBWnd3okBORWWvyGIeoSEflV9
-	Ncla+KsvZ9AKb9Ek/l40NKI4LbU23SaVHecA/hit1uCT4IwOfk1SleMenUMFPGrX
-	0lmBN9peFhuq7aG4NtKKhtU/t8EoJM/9RHBd4Ma/MiMmVYJYkS2TBK8qDymQpq32
-	OvpSyaARGkKJnS5QAOTq8S3LmGC4n6eGZQm4/Whf/cqNNmnwd2bS3L+t+dCA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728299537; x=1728385937; bh=ma2eVetPwLaZVZGhCMg6UOzQWMP/
-	CmhcD6hDnGxlNQw=; b=lsoSpRL+WFg1KaC5Z7mQLNWfyXMjO2+4AT8AtzoNjGrb
-	BSyxOdMh5442e0xcsx4QWaO4VR0DEMCxw50rYsj/Bf90NjkU6BVV1ABWkqJQcERD
-	WGMh+QrjrFUQuLxslHYjIttWpAFEouCC8g2cYz7m1UU0aesVZDKqKGgXggg7DPZA
-	KpWnCSPZF2IVEf+4+5zfQWnyLZRYMYcXIrMirH4ckxG34A1C6lYUY31u3NFnedAN
-	vcAcsbwwhA9BIpB6QpKg67FNPmZtwolczSMgozG50VY9UQiW4CNtQ3TcT9WEBq3f
-	oh6CNsH8fIarvuj7v5/su6Tcp1dGeFhuLfgYxEUNcw==
-X-ME-Sender: <xms:EcIDZ6fdDvcJYiDcw3SfqLOrhNYEXtfDp5LR2JMRiRdCPCdPkrEB7g>
-    <xme:EcIDZ0OGYvz4x7-XuKb-eGh07wIjk8STGu6c9rI8p9uGp4ZA8QWlnjYrLX118mFYW
-    2mYW4Mom8oBsCZBIg>
-X-ME-Received: <xmr:EcIDZ7i0t9FzLDYLcfN_C3GW6fCkE77nGadODkKC7sXTGHIPgkZXW3JjPWYedAo-NNiUeF9OKdSv4spkbgULHSrmO6AjsKnX90-w79MjA-00dNnl_g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgfeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:EcIDZ3-uGMY399olNJ3SvJiUB-KJETjbrVxWfjKxFGlFuZ-Exey7VQ>
-    <xmx:EcIDZ2sqoMC0eML_AlXSTTN3e9OosJuH5AaJZA-ev9_Qk17XbNblBQ>
-    <xmx:EcIDZ-HN2E-dTsTxgenxZcifupLy92G9B9JDRiZeH8Hcz7yJCH-84A>
-    <xmx:EcIDZ1NgUSTyv-5UrYXbMa5_NJ6Yhczo61rsZJeAdoOnHCY0Xat5EA>
-    <xmx:EcIDZ6Ku_ljS7UQKHoO9mY_XwwBCGU-YdsilqmSSFnvw4vbfqrC9iDFM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 07:12:16 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9ec466e2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 7 Oct 2024 11:11:17 +0000 (UTC)
-Date: Mon, 7 Oct 2024 13:12:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Subject: Re: [PATCH v6 0/2] [Outreachy][Patch v2] t3404: avoid losing exit
- status to pipes
-Message-ID: <ZwPCDAjeQVf4VFc_@pks.im>
-References: <pull.1805.v5.git.git.1728298308.gitgitgadget@gmail.com>
- <pull.1805.v6.git.git.1728299466.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZJfmfwmD"
+Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-4a3a2410ba2so2480504137.1
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 04:17:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728299821; x=1728904621; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5jxX5dZs3tbwFC8oHxJB3rn+RqK8p0+ELH53rjw9VPo=;
+        b=ZJfmfwmD6C+rDfu8PXtiaPrIAdtdQTNI4wA6FIRnyjNbmu07p0tcttwqkXQjo+WQ9T
+         3kMvPW6U5d3l06fx2yEr2bu4OAIIlC3ONUtSB7L+HSrwzYtKneSUPM+P3zNAI6BNYYqp
+         lw/8UE0NaGwHPSGpB1RylXNzntdbquv2T/pAY78ogO3d8D/c2NFFC9dNvWa0eAz80BDk
+         7MADjH2KAP6V4rsIs1DRsPBPRUBRzG1rd438ouVpiKuD+T22gyaJUdSMlx6v0dzIx8qo
+         f8+MlKqWu0vKt6dWbNepc4bpq3pg8jrs1c0NvGjHwByt8LkzAjE0wvhgL87Tkg5LKk0w
+         7p3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728299821; x=1728904621;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5jxX5dZs3tbwFC8oHxJB3rn+RqK8p0+ELH53rjw9VPo=;
+        b=HOQI88WabDvteJnRXRNI6q679SmkXBIgy8x2d4xBJkAjn+LpI76rhq0hEYklJ0IeIz
+         fOW1Xu0A038ONnJBoiJfLCJcDyAYIc2FnBQUPZZQcTCw0e4731ALwWn35cl78zFDIfz9
+         2zKHNjFXAV2bN6feVA8cRHjDGjaVR06tE/VJCRR5WfGflj+pRIEhBjvhdWJf3SmJ5LI2
+         nGfDQjdY6TDunHMtXgYZJrxicyGwKXnUvRoL1Tz3ounwJhxrAxC9SM2jrIYGuwR9r+N1
+         CE5XD3G505bFrwN5+Zs8DfDkoaTdJAqVv03vwWGpOybR3rqeb2HSnhgUP1zad4nI38PB
+         kD4A==
+X-Forwarded-Encrypted: i=1; AJvYcCXldcD5PWZ7ZsUHASpNMLUEj+98hGXZ78koKhM29EtpJ0XCh8ZGECdOATXWPrAgasbcmGY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzsAVoV7ZK+5qzIOanDs7FKErH6f+MPymH9vBgrn9XuE5J/JF3N
+	wF4HHchDpfcQeVrJTlCJNuSjsrY0zcksBf3+nNIo+voxlYhQsatQ/B2tfoX1I3p40faPtznbh0T
+	uTtrjT8g2pR+kUQuwLBCpteQB/PE=
+X-Google-Smtp-Source: AGHT+IGp5tc8DZNnFg8qIu5lFyHp8VcA79+K6MopT1Bt4DHD4SISPGhmPsvfVRN2GyQ3TO1A3bMdNjOvo8P6nnK4uK0=
+X-Received: by 2002:a05:6102:4429:b0:4a2:89a1:133c with SMTP id
+ ada2fe7eead31-4a3f4e0a084mr9145492137.4.1728299821431; Mon, 07 Oct 2024
+ 04:17:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1805.v6.git.git.1728299466.gitgitgadget@gmail.com>
+References: <pull.1805.v5.git.git.1728298308.gitgitgadget@gmail.com>
+ <pull.1805.v6.git.git.1728299466.gitgitgadget@gmail.com> <ZwPCDAjeQVf4VFc_@pks.im>
+In-Reply-To: <ZwPCDAjeQVf4VFc_@pks.im>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Mon, 7 Oct 2024 11:16:49 +0000
+Message-ID: <CAPSxiM8FpPyCgvRqrH1gEhZEskGRAeBO_2+_1FamTHaezr9+Cw@mail.gmail.com>
+Subject: Re: [PATCH v6 0/2] [Outreachy][Patch v2] t3404: avoid losing exit
+ status to pipes
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 07, 2024 at 11:11:04AM +0000, Usman Akinyemi via GitGitGadget wrote:
-> Changes since v5:
-> 
->  * Remove spaces between redirect to conform with git style.
+On Mon, Oct 7, 2024 at 11:12=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Mon, Oct 07, 2024 at 11:11:04AM +0000, Usman Akinyemi via GitGitGadget=
+ wrote:
+> > Changes since v5:
+> >
+> >  * Remove spaces between redirect to conform with git style.
+>
+> Thanks, this version looks good to me now.
+>
+> Patrick
 
-Thanks, this version looks good to me now.
-
-Patrick
+Thank you very much and I appreciate all the guidance from all
+reviewers. I Learned a great lot of new things.
+Going forward, what should be my next step? Can I work on other tasks
+now or wait for this to be merged? Are there any other things also
+expected from my side as an outreachy applicant ? Thank you  very
+much.
