@@ -1,116 +1,108 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0555B1D8E02
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 15:23:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCFA1D88B9
+	for <git@vger.kernel.org>; Mon,  7 Oct 2024 15:24:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728314630; cv=none; b=Zu3YxRUr8AtT6SAaMs/oXLm/IkTBNYsaqtsTdi31C5I+gc4q69lKhhMTTykTds5ip+amFlYzUhU4Rgvfa44rlV5/jskkMc4Dui+JpWTVq1JFHcU8oRwjIMOR45ye24Q2vf2WayIq7801qaatkzKuQyDkLPawowTb6/AfnZYrmGM=
+	t=1728314674; cv=none; b=NJt0xy3kov9dURDOdXAmEuH3ga2mZgq8bOW8duMwqCy9NWSQQ1XzRfb5JgtOTMDs4oXC4QM2hoP84S8KN3mQEM9pBfQFs7qyz6/pMHAgHRheLQohYLDt3oq13JETd7eWBL2Ea7xKfdihlrGRPXqXhtsVyX745vuYypa4bfgthzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728314630; c=relaxed/simple;
-	bh=YMyW/IlMpF7FYTNNdyYwy1GBM+PmJt0AT8jTEtjNYSU=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=oG5IWpTYjewxVI0fE0K+AVmF1pvek8aSd1527m5gOeggqRuHIHB2xpLNOk3CrU6PESplfF7KmMWd7nm3uYjfNBExmEcCbCsnO0UBA/DI0RIaE7UH1Hxpls6v8qnzFxQ3gQ251jLAXUd8PksS4fmsEbHYvLSVeYTpuduJo9I7oqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Bhie9EjB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=auI3YKpo; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1728314674; c=relaxed/simple;
+	bh=2PN5qAc9ZSf4tO+3CzPmzUlmTQ91JyliKiBFNThVH7o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YMRi4uRIGcJV/m/ompv7lUVzzNdMd5/9CDWQgNyHWAKnncmgt083gP0RkBoCzP68jX+R92g5eMGGR+yy505BGCCyM+MfLu+yvhSAgpKhsE+7XHeqSwEH0roOg9pnb1JkKMCHAKhKHLKFEwJeDFsOP32BoTUhDfnhIxPyIx8O5rU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xw6NCgC0; arc=none smtp.client-ip=209.85.166.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Bhie9EjB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="auI3YKpo"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E0B1A11401E9;
-	Mon,  7 Oct 2024 11:23:47 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 07 Oct 2024 11:23:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728314627;
-	 x=1728401027; bh=DrBzoAyVPrMSZixXQDn/Xq/EbNJm6RWBWkpl2PqvBGQ=; b=
-	Bhie9EjBys4ichtcGeJE+TGaIzWqdJp9Zou6n1EvNDVxT+SZDjH71OpexDzq6Fg1
-	VnVdKubiFSuTWqi7UiYQr6ltvLutsWp17fEbBxGNPSL1RfQPSYU6/m58UG/omLbH
-	lC+Yl7M2ejRejdBMpxjLJSaax8Rv7PJnaVu2/5Z7B6TV5mkUZtSbNx+BRTTne6dY
-	VdUoTnb5nHOih2Afpf+d1AzHWT1fWgoYcCDLkr+oPeHMajLPGXFgJE4biqRfo4MY
-	1sG8d5K2JfsbYH5kaDcbo8Le48QNPXwGHkPHrNPYOcWZjrLzAoFRCowq/+1cJss4
-	UgVCk51dOCRSXeXghMkktQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728314627; x=
-	1728401027; bh=DrBzoAyVPrMSZixXQDn/Xq/EbNJm6RWBWkpl2PqvBGQ=; b=a
-	uI3YKpo5brPNvhR9hWuZ+DVjzxss86ht8mRicwBGwaNwwrcxVS3SCpc1/46S5es2
-	/Cd9RdrtpLQiffUCJhvKnUJCNzZ7WRevd3hX/9F6RRKjBz31BcLJ0QsEVC0bn2ll
-	0YPXtznvRBqaWFEUwRMQau98O0PPYxMr62vLNOJ+G08mwAKGJgQswR26vNxEEkwu
-	JIAT+DLiy3xh3lMNeMwaTUdOK/baOGCMd6NWExmZ6fZpB5cf11rtKonDGF9OVq8f
-	I4CQU4odBxBeV9jM71vRb6uvDwX1ZoweuoJNI8/ftngrj2j41csYW+lvQjU0iH0n
-	ImbJ+zov92+LwyQ1YF63g==
-X-ME-Sender: <xms:A_0DZ-EFeBzr7-llyUanKYTVsUoKmp1uxz6vxO70pfSYkShNazC9xns>
-    <xme:A_0DZ_XCxMWX5sWg3X25ldkZfFQ68RPB7Atj8RRNj4XTYa0zvAiq9SATSsAMXQhmC
-    HuanMaXXTnX6O80dA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddvledgkeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
-    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
-    thhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfe
-    ekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgv
-    nhesghhmrghilhdrtghomhdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrd
-    hnrghmvgdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:A_0DZ4J4KyPSSk9ukKyiXetHDlZtD8wXuenImnxSoPRvIOgaRJnfZw>
-    <xmx:A_0DZ4GHgiA9ZRTO1DKM6xWos8-qUHJ2x5xjjqBX-aogq3Gse-6dow>
-    <xmx:A_0DZ0VcgSKieMLUlxWVbjqVqnmasws4lHTvSO7DvdgTSRRiTcVVqg>
-    <xmx:A_0DZ7PjfFAqemrbv_P4EDD7XipT2JF9gRY30TwZsTUlEbqkBONDWQ>
-    <xmx:A_0DZ7TsDO0lKSF6xYatxPx36yPSElpDbhK6-kEmCFAWI_dmSgFBEN2B>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 7EEF6780068; Mon,  7 Oct 2024 11:23:47 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xw6NCgC0"
+Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3a1f1ef7550so17666355ab.1
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 08:24:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728314672; x=1728919472; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o7aB40FkRm8NjE3+Di/WICtM0auTYiubqf88LgKWihM=;
+        b=Xw6NCgC0PIkBPoa6oYFQbiM1vrfHbWdW9342dv0IrPAFDK/0Dj4Vr+hKE5furDNYeG
+         6i0PeDceCLuvESx4J2Gilj9tf8nL8PrlPEFA7L181MCDbGxVqIALYV3LpzKleQDcuBXZ
+         ZCklIKulPVg1NBseU1adATouQdZdXbanAS34ucDbwwarc9sFUzHE66bz6qfymdS8KVNs
+         6ldzQ+N7qbeTtnzfwqvs+kGXZZNJXPeaAAhj7xOF/+HQBX5c/Emlsj0V6y0PAL/UNSwP
+         nIXXA0hcYF7Qf3IBMfgJSyW0tp7ZPBhhYMrTQSKZgbpRchTrw9ueYih8Os0ilplUZ4W8
+         Iugw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728314672; x=1728919472;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o7aB40FkRm8NjE3+Di/WICtM0auTYiubqf88LgKWihM=;
+        b=HM7ngEObG5Ci0nUVSOpoWX43YGAD6bgqlNnzDNj16GiDY+NQ/1ZlEWMkL84SwRSG+5
+         QIbXNxMZQ9YC7Rv4IlCzAajMbD2Fyk2C0kSVOg91upWjXgL1ymH3XfqqdgoLdChL1EOq
+         RIY6CueacEOQVGYY3QQym+nz//77l7qI0rNiB1eolObfqB7pWJw2kKRy4F5aSDAQB69C
+         OjHYYa1LIMQNJQelAWLWM3Sj6FzCf8w8mCQ1gd1DiDj+/MaScvy2GHS5PVMeRsKxe06v
+         nitPADsPyHZOTZHPE5qkGDvUCEcCdOwtgGliwe2JspoMVL6Ke8J0V3zG/WnCyArZ+008
+         tRNw==
+X-Gm-Message-State: AOJu0YyPYyfolB5LgkeEWFnPbmXAR3IOGir1bAC40YUSTeTCCHV8+7Gz
+	TINkVQBRWe/fl1SCMBI48JOai6Ito4Rt/CtZiidiaA4wOwY4CJrUbDYpd+K2MR+KBYGRValOszI
+	BjgCQbnV4k+YEHIIHBXIeGnO26ZQ=
+X-Google-Smtp-Source: AGHT+IGd9LbKHXVyk8nfeHHEB/Y1HRY7IKaATPmAaXgYHnsgAqBhjvI/pZl3ASNVbQDoJIHlFTtvLA5OwNqmH/MGEU4=
+X-Received: by 2002:a05:6e02:170b:b0:3a2:91f:497b with SMTP id
+ e9e14a558f8ab-3a375b96075mr114353855ab.13.1728314672201; Mon, 07 Oct 2024
+ 08:24:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 07 Oct 2024 17:23:27 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Elijah Newren" <newren@gmail.com>,
- "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- "Eric Sunshine" <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Message-Id: <2fe12309-7b5b-487b-bcf4-0639a1dc610d@app.fastmail.com>
-In-Reply-To: 
- <CABPp-BHoYSmxCDDXhC8MGxGV+wzaNc96Fbv60JAbhgX9O_x7oQ@mail.gmail.com>
-References: <cover.1728298931.git.code@khaugsbakk.name>
- <fef203471f4492af1468a0c91088324c394effd5.1728298931.git.code@khaugsbakk.name>
- <CABPp-BHoYSmxCDDXhC8MGxGV+wzaNc96Fbv60JAbhgX9O_x7oQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] doc: merge-tree: provide a commit message
-Content-Type: text/plain; charset=utf-8
+References: <cover.1728298931.git.code@khaugsbakk.name> <4057d6386125e51fd934f92abd11c62a9d24a832.1728298931.git.code@khaugsbakk.name>
+In-Reply-To: <4057d6386125e51fd934f92abd11c62a9d24a832.1728298931.git.code@khaugsbakk.name>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 7 Oct 2024 08:24:19 -0700
+Message-ID: <CABPp-BFG0KQVzu_AT-GwW0rg0Ly3uVY1+M4Sgh5E8Gn9A=5BKQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] doc: merge-tree: use || directly
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 7, 2024, at 17:17, Elijah Newren wrote:
->>         NEWTREE=3D$(git merge-tree --write-tree $BRANCH1 $BRANCH2)
->>         test $? -eq 0 || die "There were conflicts..."
->> -       NEWCOMMIT=3D$(git commit-tree $NEWTREE -p $BRANCH1 -p $BRANCH=
-2)
->> +       NEWCOMMIT=3D$(git commit-tree $NEWTREE -mMerge -p $BRANCH1 -p=
- $BRANCH2)
+On Mon, Oct 7, 2024 at 4:11=E2=80=AFAM Kristoffer Haugsbakk
+<code@khaugsbakk.name> wrote:
 >
-> ...perhaps this can be -F ${FILE_WITH_COMMIT_MESSAGE} ?  I personally
-> have a problem with writing example code that models horrible commit
-> messages; I'd rather give them an example that hangs waiting on stdin
-> than do that.
+> From: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+>
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> Use `||` directly since that is more straightforward than checking the
+> last exit status.
+>
+> Also use `echo` and `exit` since `die` is not defined.
 
-Yes.  I=E2=80=99ll do that in the reroll.
+Not defined where?  It's defined in my scripts...  ;-)
 
-Both this part and the uppercase variables.
+Just kidding; this is a good change.
 
-Cheers
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
+>  Documentation/git-merge-tree.txt | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-t=
+ree.txt
+> index 10f8ac7f80a..46091da022d 100644
+> --- a/Documentation/git-merge-tree.txt
+> +++ b/Documentation/git-merge-tree.txt
+> @@ -211,8 +211,10 @@ linkgit:git-commit-tree[1], linkgit:git-write-tree[1=
+],
+>  linkgit:git-update-ref[1], and linkgit:git-mktag[1].  Thus, it can be
+>  used as a part of a series of steps such as:
+>
+> -       newtree=3D$(git merge-tree --write-tree $branch1 $branch2)
+> -       test $? -eq 0 || die "There were conflicts..."
+> +       newtree=3D$(git merge-tree --write-tree $branch1 $branch2) || {
+> +           echo "There were conflicts..." 1>&2
+> +           exit 1
+> +       }
 
---=20
-Kristoffer Haugsbakk
+Thanks.
