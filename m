@@ -1,94 +1,90 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D551DE89F
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 13:34:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BDD17C7C9
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 13:37:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728394477; cv=none; b=kcTm3y4uLhFlayIMRgn4BkUJOJ4ccIGutpN9nmK+R68UTL8zNSPkd3bc7neptciZQztW4HmwFizFW6CaX/wabi5gnsRX0xN8CjB/Kx8MMZ55zI/+W1ClcjXMzJZuD6C2pKRw8Tt2gBWxX9vBwMaA0QMW6jm7iF+kbYUUtqZang0=
+	t=1728394660; cv=none; b=G+OXgE6xXOkhzL+0qvRf/inHfVZpZUtYaTJQaFwL4JRNNlMzBddDgrrnLdE35PBkRRdfGgUJxMtzK2xEvkNOO1FMxQAP44VncmVYGuJzB2QWBYNcw0HWwkmpuI+AY1p+llbm+p6CLujA9C2NepQDA62E/4VtD/cI7mClXbQF/6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728394477; c=relaxed/simple;
-	bh=4zggei7YJXz1Rn/UiIL74Ej7ycn6JRNyq8qLI/HmRrQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=rcDGGPcEwseq0yMR4zB1Tba/CfHeW0rCHdt3Oqhvae55PEkgEhj38bkooRFJAwcf9M50JYTTZTqnFOgbL5n6g69nVfbcRXOu4wz4vB71p6QGSd1KM5RDpVJL2BLJoaF32Iu8uvhIix08oDxbIZkFJUlBdwlSLPJEPkYqA4r7jO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Basn/G1i; arc=none smtp.client-ip=209.85.221.47
+	s=arc-20240116; t=1728394660; c=relaxed/simple;
+	bh=NoQJbrWXUtZ6NBvOgLH+byIhH5N5xobQ2j03rO4bdC0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P5pGOntg6icZwC4vosDi0YOOJMJEwiYzuD4gQGO++SFSRF6XkKstU828S/NXazDVPGU/NJuWcDzRa6nCDaB4VruWjF53pGZ16my/hETcfuL43xZBZg+xMc3z6I6+6wvoWUSfJyQTLIFPZsChIP4MWIYk0EmdNagLdebcdFg8/PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aO9leQU5; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Basn/G1i"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-37ccfada422so3394812f8f.2
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 06:34:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aO9leQU5"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42ca6ba750eso35722995e9.0
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 06:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728394473; x=1728999273; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=krnSsc3rt8RuJ9N3cbTHjr7Cw2i9XvvOpZ3OnQAvabc=;
-        b=Basn/G1iQJRtcw0iHgY3w3PoNeARa2mpdg3JXdhCtYNQER0HesG57CwTF8duC/Fht7
-         /M0Vb7TjECz+FwJci4vURlhl8b/C55gkXd0tA3rISHXIsXYy6IljyM12ApBVnAXaQCx2
-         dzi8R93uqgaozS8OenusQlgIjSvNmubjWi2ZJQ5Dg6bGdE3DQ/jc8oTwfzVvdtMGZVOW
-         glZJRmSq6xo9bwHw7D10WC9xfNiBxloPMTXtqCqR6PZAy9WoD2evePjVmidI4sEehmP/
-         Q6HxBbIpuZIqlWF6TndH+MUn7rszyGTB+HDwBfQJamvLmZbv/BruwrwYb7FEHLQdzZOi
-         Fjmg==
+        d=gmail.com; s=20230601; t=1728394657; x=1728999457; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=A5zO2xr5PFSuiYXHSkSeZGCvhlsxhYyMnBQtS9BodXo=;
+        b=aO9leQU5TXspCGkuX4JSR6XGW3p4gZ8u4nYpYZ+Gh3Aj9zSeoCboZ7snOFEMAQxIwV
+         aUXmwcFZgaPqjUPc+YRa9U8rFrlz0ay4xBtYSuJKhCREgbNdhW9fSZQtxsioi7qUSIqT
+         zhX5GGAYJbGufsdfI3PzYkj5e3d0I34cUzJl+RIiifB09jlTVcGIt7yqpvwbUOq3K5iT
+         nDPkjmEaOeKsZcLA7OzgCXdVv9VYX/rc5v9Bd1IvrA+Nvd0UV1MsTUD6pRQHTZ4sF7MZ
+         h2eYkgfYT9iDArQLmVaYuJl3mt4NmDusH3Z4GmFUeTuDFB8PAeS1WkaFA+mhxUJnrGr4
+         759w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728394473; x=1728999273;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=krnSsc3rt8RuJ9N3cbTHjr7Cw2i9XvvOpZ3OnQAvabc=;
-        b=cBSwlm1/Ybp3+9/LwW6ZLeZioQGnelQjZrNvanAhzkqf8eEDACJkEw+DpbV2EANmfG
-         tiYY3fHReRKZd/+6gnMS93wkGJz1ejBTPHbisNHxk+PIN0rZrZnc5hOqtoDzCCIWGkC7
-         MugQHZ/++TFNMNWL1HyNr3bcRhRDgHr5FszNLhufuNdCXV8vaDuSdt8uDdxmCqWr5E6S
-         eQPHVHDCDPTgywcPVKcJPeTNf494HDdIQCOT1UcF8GxXeRXDL3OdgPitlmSw/QoAHZ42
-         lsBUjED//F9gHKsfxgiUA0NYlwWKPoEaz2ofAyl70iopfhMfUPL6wl6Kd8AndpORUeBc
-         nKhw==
-X-Gm-Message-State: AOJu0Yz17Pv/SufE0/Ob1zVqMwrDWddD1rBtEq7kCN+erzAAUtjiDtr1
-	34ccdUmDlpT+Fi0hiXNUhqfqrdgka5FqX4XcWZoor3EHf2WDHETD3m4hTj1Cimg=
-X-Google-Smtp-Source: AGHT+IGwYo2C2BCCF1cJL7RzeZq9ZpcWtC6DEYz/joayAqR0SsCOsHuwRUZhqY/K+akLsSFhqElFKg==
-X-Received: by 2002:a05:6000:1818:b0:37c:d54b:a39a with SMTP id ffacd0b85a97d-37d0e7b5615mr9571668f8f.33.1728394472615;
-        Tue, 08 Oct 2024 06:34:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728394657; x=1728999457;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=A5zO2xr5PFSuiYXHSkSeZGCvhlsxhYyMnBQtS9BodXo=;
+        b=CLVpEiPDTtNU2GTfrUlLBkTxMTA3i7/jT9ThEyJ6D5jhlKYJM7aK+ucOoDWDOGAtTX
+         IiY+t6+KdD4zkrX++Z7KAkhXAGurG2SnZABii0RCpt/Hujcqql97kZOXHvBAWTwekaek
+         vRwuo5Z1rjIjTJNryw/acS8zhDLeiB9UsiaVfa8cxIw+a/7xdBSiCLP9F4A9PjR/XPnW
+         vZWibZil5qUJhbx18xHeGk/KZzLQWferr0SzeB7e/k7dzO/Xjf0alf5zio4R40aJV9jP
+         d+lBug58y9QHEtQcSeEorKlGtLieKcgkEbUiwEFdkvehSXg900TX0rSdf3GEJINZ9Ya6
+         i4Wg==
+X-Gm-Message-State: AOJu0YxkfLZmWVdo8vLzpLUiJKgQvvHdvcsVQa0TWrztVTOfWbqyeZrM
+	pDZNnp8m1L+WVptXBpWl0i3Sud1ulN/T2KyInVw9fPoIlYkJth2Prhp/igZvICw=
+X-Google-Smtp-Source: AGHT+IHxSyGPw0Id0r/3ovuKF9Cyy46paa70NLWQ9QjpSFUTKd9JwFTjzMsKVJo2OLDKsG2z7MPjrA==
+X-Received: by 2002:a05:600c:3b88:b0:42f:8515:e4ad with SMTP id 5b1f17b1804b1-43057b8792bmr1087105e9.14.1728394656955;
+        Tue, 08 Oct 2024 06:37:36 -0700 (PDT)
 Received: from void.void ([141.226.169.59])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d1695e606sm8141261f8f.69.2024.10.08.06.34.31
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d2e65d618sm1468484f8f.23.2024.10.08.06.37.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2024 06:34:32 -0700 (PDT)
+        Tue, 08 Oct 2024 06:37:36 -0700 (PDT)
+Date: Tue, 8 Oct 2024 16:37:34 +0300
 From: Andrew Kreimer <algonell@gmail.com>
-To: git@vger.kernel.org
-Cc: Andrew Kreimer <algonell@gmail.com>
-Subject: [PATCH v2] gitk: fix a typo
-Date: Tue,  8 Oct 2024 16:34:27 +0300
-Message-Id: <20241008133427.5443-1-algonell@gmail.com>
-X-Mailer: git-send-email 2.39.5
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/5] Fix typos
+Message-ID: <ZwU1ntz8gZ3Ewrcb@void.void>
+References: <20241002223816.14858-1-algonell@gmail.com>
+ <CAPig+cSjiNF0o8SDOQ5Xgg9dMJnzQBgC71W4VSCFok-DL73OPw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cSjiNF0o8SDOQ5Xgg9dMJnzQBgC71W4VSCFok-DL73OPw@mail.gmail.com>
 
-Fix a typo in comments: wont -> won't.
+On Wed, Oct 02, 2024 at 06:49:06PM -0400, Eric Sunshine wrote:
+> On Wed, Oct 2, 2024 at 6:38 PM Andrew Kreimer <algonell@gmail.com> wrote:
+> > Fix typos in documentation, comments, etc.
+> >
+> >  gitk-git/gitk      | 2 +-
+> >  mergetools/vimdiff | 2 +-
+> >  perl/Git/I18N.pm   | 2 +-
+> >  reftable/reader.h  | 2 +-
+> >  trace2/tr2_ctr.c   | 2 +-
+> >  trace2/tr2_tls.h   | 2 +-
+> >  6 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> The gitk fix, though, may need to be sent separately since gitk is
+> maintained as a separate project which Junio periodically pulls into
+> Git. (Unfortunately, however, the gitk maintainer has gone missing,
+> so...)
 
-Signed-off-by: Andrew Kreimer <algonell@gmail.com>
----
-v2:
-  - A repost, there is no range-diff.
-v1:
-  - https://lore.kernel.org/all/20241002223816.14858-5-algonell@gmail.com/
-
- gitk-git/gitk | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 7a087f123d..f85c421c5f 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -3687,7 +3687,7 @@ proc external_diff {} {
-         set diffidto [lindex $diffids 1]
-     }
- 
--    # make sure that several diffs wont collide
-+    # make sure that several diffs won't collide
-     set diffdir [gitknewtmpdir]
-     if {$diffdir eq {}} return
- 
--- 
-2.39.5
-
+Thank you.
