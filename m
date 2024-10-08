@@ -1,189 +1,105 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B143BE4E
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 01:48:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8249FEC4
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 01:59:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728352097; cv=none; b=NdQG79xo5HCczDuZ6ONcBFkZA48aCVM/Awr6e+thr8etsbrOCkWqTAl3HSzSQmtAGyZI+c6tkJtF6WKvZqbfQp3z8AxQQtlm/td95v+8kvbxeG5ldZ+fqXbGi/8uCOxqVscYlXsHyzbW5zHpv2/PgwToveQBiZCRXBIwwPCaD0Q=
+	t=1728352759; cv=none; b=FaX8F+6exd9ewy63/aZ8BJB8EOdfhl+zG1cxzr6VO41VTekb4BPvE15k5b3KvlhEA/I2htZk+jBEF3Bcrre1aYxNulRrW1pllLNrtU2ZQuDKlUKJQ9Gvur5sHJ02Mm+WslrRO37VCFL01//pnPWJLK/bkk4OH/O9Wsm1wGGvJq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728352097; c=relaxed/simple;
-	bh=lbIiv8RuZDSDK5X63xYp3eLh8kVir85Y/Mefg5XGYEs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gbXGZtgpx6joIgePZYuBxYKNAL4jTUIWO00sjhU2Vr8a3k3RUDEFWeDB0Iet9NVAEIrOGBP498C5FWojpiJ7Mg2MMchJo9iFkMiV5uD3bm3UGJZEqnt/7hdKsnfewIVUlhAWW5hW1X8ydZ31tAz3pJikUyIzvVYhrGP00gZQ45w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nr9ffgTb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TMNEPYTP; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728352759; c=relaxed/simple;
+	bh=TQr3gXBz7t3pvLBUjehY67F5CpRoiCtubU/2IRzrKyA=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KI7w4AgbWtftzFPB0tyysa9xWmFDVPhLKFNqsVwLTQ+m9K6FQ0y0JYCvFKtiSw3aeotkDlJGaF/8hw+dimpxWx+xOb8KnsPsH3fpXg2ZMac/V4/ANgKW8kqws+KB7xOiIDufrlyYAJZGVd12VDYgBn8yeWXiqNIBIfUfNNs/MjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mariadb.org; spf=pass smtp.mailfrom=mariadb.org; dkim=pass (2048-bit key) header.d=mariadb.org header.i=@mariadb.org header.b=pEY9+Snc; arc=none smtp.client-ip=209.85.215.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mariadb.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mariadb.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nr9ffgTb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TMNEPYTP"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id B345E1380246;
-	Mon,  7 Oct 2024 21:48:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 07 Oct 2024 21:48:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728352094; x=1728438494; bh=YEJ9heXQbr
-	rKpLFbE3ofYV1rxS7WUpu2MRpnceijzHI=; b=nr9ffgTbLn9/kuzPmC63prWR8u
-	VDdCAKpz9qImqsbxfs57I4XEhGSNVwgOh5GYevj1ZQxYSR/j6o2KWtFrMPnRsH6a
-	29XOR2A1WHVDxT+iXVI+o1W9B5ftmiFzyi98EvVHEu7xCuAIQQA08xRC+59x2xk/
-	VXtdW4EBQhUINTwtqp94viD1810myPRgheaZVVEb2FVuwDD3iCk819OdLJedvtIO
-	w9YLd6pJvizBKYOeJLtZkbzPH8e96ILyASSuP3ScFoUBJ3JmZFd+tc0fCI0ytU2X
-	rdrkAAmVPWDCP2pZhdKwlO0Z6pPyl0lllmUHzwbUU+QEzrJHw3f9B2YtnEbw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728352094; x=1728438494; bh=YEJ9heXQbrrKpLFbE3ofYV1rxS7W
-	Upu2MRpnceijzHI=; b=TMNEPYTPcZIhen0slhEemjzw1UwVoSztg2gPZTcpfUf/
-	JCA0IvZklMEWAZNrkJDnMzhJ/MBx8bIY0NcgXfrb9hgzI1XnighaFmn5NXLfrjQ0
-	5G5pcgMfF2U+nkjTbd9bFeqqkwidaJV+bVWhzlDHF+6S1BF3jB8zpFQwVb5HMLi1
-	b/OCmpKhNGisSWZEPlTtWQVUyZhW1OA/YG3asWqP4yPzGerav+PlSc10BCea7bG3
-	NaYdtNf1iIOF3Fmc/pObFcl/e8rGBzq0bSglvAEBRSLhY0Zm3Y75p/TGJR+S+ueL
-	WT/57gWrenFghJAjWncqavs3ujCfmRjUaYT0iWCRMQ==
-X-ME-Sender: <xms:Xo8EZyKyxD8lqrHli01PskXC0uOFqPMmvyR19X2TP71t9UEdH8iujg>
-    <xme:Xo8EZ6KAGNqqdvvqSOdUEfBbbJrcxeM1Kp-xXBd7tIh32pKbw0s6j69spKic0bEml
-    R1frA8lOvktImbgpg>
-X-ME-Received: <xmr:Xo8EZyupuOiq9Vz58IEzaHmkUjcnF_MlMLj7sy8CLHB_LrTIpSt5PwSYExhTywzNd2KnBT1bTRIwfo6cisZL-OHeCkSXVscMNlfRy3s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeftddgheduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
-    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopegrsghrrghhrghmrgguvghkuhhnlhgvhedtsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Xo8EZ3YVJIE-KzBE_elu6RzJ592KijZ81i-Sx75XkZVGMzCEUYz92Q>
-    <xmx:Xo8EZ5brsMBhyM3oNZJvnvdrwLD8ndgyEmNGSMrqG08GGa6lZYdtoA>
-    <xmx:Xo8EZzCvK8LwkitlVqtINVGyUO9kviZs4KP_ONOQQEaFP5Lj0gsQ8Q>
-    <xmx:Xo8EZ_ZI3H4_4v2R1USKvAUcDw_RcqkVhtJzLThn_4WJT26gD96DFA>
-    <xmx:Xo8EZ4XANdb95uKFyKBLyHGzFOOKl_k7jK2rsQ-LO2chUz4NSofTnu5w>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Oct 2024 21:48:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Samuel Adekunle Abraham via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Samuel Adekunle Abraham <abrahamadekunle50@gmail.com>
-Subject: Re: [PATCH] t7300-clean.sh: use test_path_* helper functions
-In-Reply-To: <pull.1811.git.1728328755490.gitgitgadget@gmail.com> (Samuel
-	Adekunle Abraham via GitGitGadget's message of "Mon, 07 Oct 2024
-	19:19:15 +0000")
-References: <pull.1811.git.1728328755490.gitgitgadget@gmail.com>
-Date: Mon, 07 Oct 2024 18:48:12 -0700
-Message-ID: <xmqq34l75pr7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=mariadb.org header.i=@mariadb.org header.b="pEY9+Snc"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-7db54269325so4158977a12.2
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 18:59:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mariadb.org; s=google; t=1728352756; x=1728957556; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2tYs3cx1siGdqJqgvbiLY0+VoWf2/uY0LEewX5c9LgM=;
+        b=pEY9+SncEgODwj+q+5zthLI0ei8NvJFHTzIuiUQB6gfH/HGtjoXpYA2H05n3JbmtfD
+         xLa8IxD1fupTfc0+LdxQR1F5/FZlMGLEIr0cAGqc7/CZmMHCQGLQtjWbHISdzjcPuDUR
+         G2xkm20/1Dv5k/4zoY+7g/oRGW2hxQ1FuE4QRkdIhdAcnXCHpDEWN8GOLAiRwqhtL8D7
+         mniNgrXcj3NclDpT+N/oECJHecAR4hhLz5Eh9Rro5oDvZu1PujORu+trISBgAF4vsAyu
+         /ji0RYTQGlI7ZvsljUwBvIinRqemHAxa0CP5SUmqCha/3PXmdcj3jvZsOPem53jMOd9N
+         mKSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728352756; x=1728957556;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2tYs3cx1siGdqJqgvbiLY0+VoWf2/uY0LEewX5c9LgM=;
+        b=ja8fDGZpf18IeEQDYeR7hxq8so/BhgjU/IsDRPEUvb9HhE6PwIa050apqzwXmZTA5K
+         0wFP4Y6E42ZE56aufdVxtXftWLeJ5WXbPbfUo+TY9iQW5grHSKIEAxHt4+deqASmKJte
+         OdlxmwVYESmy+UK3R4XgIFjc4d6w5b1VvlJlK+u6j9MJblUAiGdhGWq9W1ve+dzo0b9l
+         PAkdK64mhnFskxGLDDwSGdHIoprRbfKJiu2AZnmVjVL/74GakdZUzISVgEWcl1eN6YWB
+         LtHEYqCS62ojcB5yBudUkWnBMtta6Q8MOtWGpb4zWZATSWPim/smCqNCHOXPIzuNijxn
+         AL6g==
+X-Gm-Message-State: AOJu0YxMt1gG2rqOq+EzHur7JyvCtLb7kc/Jczf41TBcd/vaTkX/ZkqL
+	lW+YpVkLbl9cyO2rrvFmT/PjaQH8EsZROmPresmMAaA524M07KCESRvgXC/x6kjUOeGnkhNuz3f
+	4tbo=
+X-Google-Smtp-Source: AGHT+IFTvZaPVFCnPjqYFqXRr9+DXhf6zhUTMHSp4lykrBpax3z3VMOVBIs7CGXomt0RuLyedcBsQA==
+X-Received: by 2002:a05:6a20:6f91:b0:1d2:e889:1513 with SMTP id adf61e73a8af0-1d6dfa354e0mr21878997637.17.1728352756452;
+        Mon, 07 Oct 2024 18:59:16 -0700 (PDT)
+Received: from bark.fritz.box ([206.148.31.17])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71df0d695cdsm5112789b3a.183.2024.10.07.18.59.15
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Oct 2024 18:59:16 -0700 (PDT)
+From: Daniel Black <daniel@mariadb.org>
+To: git@vger.kernel.org
+Subject: 
+Date: Tue,  8 Oct 2024 12:49:53 +1100
+Message-ID: <20241008015835.41678-1-daniel@mariadb.org>
+X-Mailer: git-send-email 2.46.2
+In-Reply-To: <xmqq7carzpzi.fsf@gitster.g>
+References: <xmqq7carzpzi.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Samuel Adekunle Abraham via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+I have this so far, but I need a hand with the test case.
 
-> From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
->
-> The test_path_* helper functions provide error messages which show the cause
-> of the test failures.
+With a manual hack of the code:
 
-> Hence they are used to replace every instance of
-> test - [def] uses in the script.
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2450,7 +2450,7 @@ static int run_update_procedure(const struct update_data *ud)
+                 * Now we tried the usual fetch, but `oid` may
+                 * not be reachable from any of the refs.
+                 */
+-               if (!is_tip_reachable(ud->sm_path, &ud->oid) &&
++               if (is_tip_reachable(ud->sm_path, &ud->oid) &&
+                    fetch_in_submodule(ud->sm_path, ud->depth, ud->quiet, &ud->oid))
+                        return die_message(_("Fetched in submodule path '%s', but it did not "
+                                             "contain %s. Direct fetching of that commit failed."),
 
-It is unclear the use of present tense "they are used" describes the
-status quo, or the way you wish the test script were written.
+I'm able to using the GIT_TRACE= of git submodule update arrive at the
+correct fetching from origin in the test case where before the code fix
+it was fetching from remote o1.
 
-The usual way to compose a log message of this project is to
+trace: run_command: cd sub; unset GIT_PREFIX; GIT_DIR=.git git rev-list -n 1 27fe1b65df6f55a58636afcba364dfcb64916cd6 --not --all
+trace: start_command: /home/dan/repos/git/git rev-list -n 1 27fe1b65df6f55a58636afcba364dfcb64916cd6 --not --all
+trace: built-in: git rev-list -n 1 27fe1b65df6f55a58636afcba364dfcb64916cd6 --not --all
+trace: run_command: cd sub; unset GIT_PREFIX; GIT_DIR=.git git rev-list -n 1 27fe1b65df6f55a58636afcba364dfcb64916cd6 --not --all
+trace: start_command: /home/dan/repos/git/git rev-list -n 1 27fe1b65df6f55a58636afcba364dfcb64916cd6 --not --all
+trace: built-in: git rev-list -n 1 27fe1b65df6f55a58636afcba364dfcb64916cd6 --not --all
+trace: run_command: cd sub; unset GIT_PREFIX; GIT_DIR=.git git fetch origin 27fe1b65df6f55a58636afcba364dfcb64916cd6
+trace: start_command: /home/dan/repos/git/git fetch origin 27fe1b65df6f55a58636afcba364dfcb64916cd6
 
- - Give an observation on how the current system work in the present
-   tense (so no need to say "Currently X is Y", just "X is Y"), and
-   discuss what you perceive as a problem in it.
+As Sergei said in the original referenced message "a submodule where the commit cannot be fetched by simply
+`git fetch` and needs a direct fetch".
 
- - Propose a solution (optional---often, problem description
-   trivially leads to an obvious solution in reader's minds).
+So this is the test case that I'm having trouble generating.
 
- - Give commands to the codebase to "become like so".
-
-in this order.  
-
-Also, for a patch like this one, which is rather large, repetitious,
-and tire reviewers to miss simple typos easily, giving a procedure
-to mechanically validate the patch would help.  Instead of having to
-match up "test -f" that was removed with "test_is_file" that was
-added, while ensuring the pathname given to them are the same, a
-reader can reason about what the mechanical rewrite is doing, and
-when the reader is convinced that the mechanical rewrite is doing
-the right thing, being able to mechanically compare the result of
-the procedure with the result of applying a patch is a really
-powerful thing.
-
-I probably would have written your two paragraphs more like the
-first two paragraphs below, followed by the validation procedure,
-like this:
-
-    This test script uses "test -[edf]", but when a test fails
-    because a file given to "test -f" does not exist, it fails
-    silently.
-
-    Use test_path_* helpers, which are designed to give better error
-    messages when their expectations are not met.
-
-    If you pass the current test script through
-
-	sed -e 's/^\(	*\)test -f /\1test_path_is_file /' \
-	    -e 's/^\(	*\)test -d /\1test_path_is_dir /' \
-	    -e 's/^\(	*\)test -e /\1test_path_exists /' \
-	    -e 's/^\(	*\)! test -[edf] /\1test_path_is_missing /' \
-	    -e 's/^\(	*\)test ! -[edf] /\1test_path_is_missing /'
-
-    and then compare the result with the result of applying this
-    patch, you will see an instance of "! (test -e 3)", which was
-    manually replaced with "test_path_is_missing 3", and everything
-    else should match.
-
-And I did perform the sed script, aka "how would I reproduce what is
-in this patch" procedure, and compared the result with this patch.
-The patch seems to be doing the right thing.
-
-Manual validation is still needed for "test ! -f foo".  If the
-original expects 'foo' to be gone, and has a reason to expect 'foo'
-to be a file when the code being tested is broken, then rewriting it
-into "test_path_is_missing" is OK.  But otherwise, the original
-would have been happy when 'foo' existed as a directory and
-rewriting it into "test_path_is_missing" is not quite right.
-
-This check cannot be done mechanically, unfortunately.  Hits from
-
-   $ git show | grep -e 'test ! -[df]'
-
-need to be eyeballed to make sure that it is reasonable to rewrite
-"test ! -f foo" into "test_path_is_missing foo".
-
-For example:
-
->  	mkdir -p build docs &&
->  	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
->  	git clean &&
-> ...
-> -	test ! -f a.out &&
-> -	test ! -f src/part3.c &&
-
-this test creates a.out and src/part3.c as regular files before
-running "git clean", so the expected failure modes do not include
-a.out to be a directory (which would also make "test ! -f a.out"
-happy), and rewriting it to "test_path_is_missing a.out" is fine.
-
-I did *not* go through all the instances of test_path_is_missing
-in the postimage of this patch.  Instead of forcing reviewers to
-do so on their own, mentioning that the author did that already
-would probably help the process.
-
-Thanks.
