@@ -1,95 +1,132 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C785F9E8
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 20:37:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5081F1E104B
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 20:42:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728419838; cv=none; b=f1cBFlVorqJHLmXBA+NPmsI7PHBOGSFT1Vw1V0sESVDgaQheDYQQ2V/PNJXmkizB8SkoPdcLWlN6jylQLIa4FKHymYBS2JRMKshrPbUZmDXUywrdalvJOhfccD1/6dtnYOfJjTyn0fDJquWFQ8A/caumSAz9dchbiGsyOPim2is=
+	t=1728420156; cv=none; b=RhWmfdwGSVHMezPth1BnAhHjAIaUYqPfj5LiOXIN56EUuY5098wFvbnYn4hVYwh5ZoArdfNrNHPae+b3H9NjL3Wl7F1BHq9u7QC2tHPVxhAZw1VjZAWX3/UYpRf50KP77RrKBpnVOFwYVEy2azkm7MnSRMAssqD8toVODwrsl8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728419838; c=relaxed/simple;
-	bh=24N9hDEyD+AFSHGECrywLhDHn7P8b+IUUKof/JHTRQU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K6p2MbrmVge6MLOhrlLjyXv6gahc/fI5dz3yAml9l1r/Fj8d5IRAG/cn3q4qaS8udkaVBtyyb9prfwLNZD5gW3wWoc8wZMQl+uMAYJ8ms4Ys7OHx8vPgy2vZLWKSEyJSxBSLmOei+o0+CkF3vYt/k2itDBTM6/NdT4EHcNUQ2XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U7aRFp5T; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728420156; c=relaxed/simple;
+	bh=v3Bo5PmrcfpwDBtpIbYqCDeYm2UaZK6y1NvNaGXF6WU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=h7/xSifdNRnaiNDphNae/+aUC0N0gTdp6ha7Aq1blSFtIS4tqS4yt5uiCHq9n3WQwVt+p6ZFOtB1yUEF+hAQvlsGLJnP56lJcwYTeMv3g9QeSZKUCbY9qH/Z5mDdzi20r9ClneqWZohwu6xeZz9jt3ZgwbcqtWDOP6Yr6c/9xI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Da+faUOK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S734101I; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U7aRFp5T"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-42cb57f8b41so81763635e9.0
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 13:37:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728419835; x=1729024635; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=up+1BFEQTZQeWMrktmPADcDciLpQwdSs9tv6n9iNcOA=;
-        b=U7aRFp5TWe8lKyjEyJzgpZoBEYQ8ZkUtkOamzorqUzKdL8s2GGowhiPQz4l8aDnXZU
-         FIl6VGUif8TeJkKaZ39jDWp+zYirpqs+A7i9CFZzLPgsDrwRkwMgZpPlZFLRz5xsR9Ye
-         PWNg4iLS9XjkbQpZ6ttCj5QOgJ+87I7E9Vjl5iZc1Trg2at+urEouJ1QM4+GVl3L0Wes
-         gp61AAga5MX0kgghVRiYkQeYuZ5mHMtxKx+LLn6nNorTmHFuxMrB7ArweDKiFB875tTu
-         7LVOiavwc00lYRpfVwMZTDEArRUrxNkmfIFAtwdyoVjrDvOBBEJ4U2Hhh4YNZGXBeTH/
-         ktrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728419835; x=1729024635;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=up+1BFEQTZQeWMrktmPADcDciLpQwdSs9tv6n9iNcOA=;
-        b=fP9lcZGtKwxUdw3OJs9oWZ1oS7wX4IHz8Z0c6CyJUNynGNWE23LrRg/yJC7QJbvRlE
-         xekDD4TyxIlLAIrv1nIkSr0kcdae5zdcQhCIYIx5rwS1YrP/mxq1KNLr02PE0yU0lNKw
-         fIMOwtZWaE8K/fQcBDQ/brEFyiDxiuT/V5mlguhdAf3MRXX3d9hEA5STWRhoUK/8j7IB
-         19bIQLczFEAkqa3LhmLYGODs3Mt8BwVrValRcCUdf9O9Kk9qix+lDa6rPDbNGJ64akAp
-         M3judjVcTKRCPimjdT8AMQXSvj+f1fS5+k1esYAstOSyKD4TXu+qZwrQ9fw5dWC7s5CC
-         M/iQ==
-X-Gm-Message-State: AOJu0Yzzq3xcstI/2nFZbytVhDQ5hRzkWmo9JmGArPNrOBtOoeAku/Kd
-	VH1VRpNUrl/RoqCUf6grf7nB05DpdAo4uX7Dm+8+6tb61K5RC7Di
-X-Google-Smtp-Source: AGHT+IEzElWi6/Y9zoIhH4DJjDCLefd/Hjpah8nX1l27hbO7PsKKSiJ5nWYEb/BywEdPYdwDHuDVQw==
-X-Received: by 2002:a05:600c:5494:b0:42f:8229:a09e with SMTP id 5b1f17b1804b1-42f85aef6e2mr185269695e9.29.1728419835391;
-        Tue, 08 Oct 2024 13:37:15 -0700 (PDT)
-Received: from gmail.com (178.red-88-14-42.dynamicip.rima-tde.net. [88.14.42.178])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-430ccf31b35sm21215e9.3.2024.10.08.13.37.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 13:37:14 -0700 (PDT)
-Message-ID: <b1f2b664-34ea-4d9d-9bf5-fb6632b265f5@gmail.com>
-Date: Tue, 8 Oct 2024 22:37:13 +0200
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Da+faUOK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S734101I"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 648211140171;
+	Tue,  8 Oct 2024 16:42:33 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Tue, 08 Oct 2024 16:42:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728420153; x=1728506553; bh=/L7LP8O9nR
+	fYDvQn0KpyhBVbStgix3E5Du5HkM0/Vdc=; b=Da+faUOKcHADOPvHhKIkWwWrlr
+	CX8dFPWArL3UWK6IF9hvuQ6dSixBX1rGEwYZirFsLQ0BIddM5iuYuBTqCYzXDztp
+	V47mLreuAFdJyz4Kv8er+48Qdmh5vzyDonYu9JLwpMgQcgQ5LWNXcjPdf1VDd4Qh
+	hKEIM+UXULrl1IqeWHn1x+4ffgUTEBLiDPpzE7nm4TvUPUrqkr5wjXw/SEWc01G5
+	6OuFlkMta7BFgn+FhJBOn1WYU2J9nTbkP32yjBvDH0mpqLKzCuvVut1/D0NHP1ie
+	tvKvb6GfHgaBqyhyh55XXBb3pfCJlV+wA1/84PHGnUCrf6qvZMMeOZr2/j1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728420153; x=1728506553; bh=/L7LP8O9nRfYDvQn0KpyhBVbStgi
+	x3E5Du5HkM0/Vdc=; b=S734101IqrkWe8914vP36T8YyboVi9hqyWhpxKCpndUY
+	goH2O69WBPpI9IJx6QFax2u0k+UlxG08oWCZ2w+rh+YGLLELZSGpZS1QO2z0b3rv
+	j6YTVVGdfagRHXoiw9VQblrjgKbIo+fjiZ8PMHANlBnVYJaQKQe0Mgjb+aFpEcfe
+	1qhdEcvC0odkB8LWiX152EYKXeSprkAqwfkOP5MxMBfwaAhXnGQQnA0blN1MByUv
+	rBlejyfA2JktN/QOT3Zacbr3ug13+LAYm/GAyhHQ4wd63TMejtxSkqLedIaLlJFE
+	31pvKxhHU7ueNFc9PJAoe4XFu99WnbY0MyX1ipfogA==
+X-ME-Sender: <xms:OZkFZz4zKSTtADgMrSwmaCCNXLdF3YK5vd4CAJDV4R_TOuXNg66_KQ>
+    <xme:OZkFZ46hsrK0Bt-BGlllMYdtCpAnahSK3Lv3YH6P3sEyy2j8F01IsEA8x-UrFV_hC
+    Ts3nl_Yn1NTNR8Htw>
+X-ME-Received: <xmr:OZkFZ6e1fJ3yoc_hNND_0PfgEBDDAHwbcmlkgOOWGCpIHpaOsdfghrkls0Zdrzod7434QjudfJdgTXx1q0W2kiLYDG62Hle5weOw6HI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefuddgudehfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtohguvgeskhhhrg
+    hughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
+    dprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:OZkFZ0LOJKYuXuDuf22RECT0hFc79O4oASpCgwPessmmJpAnhv5c_Q>
+    <xmx:OZkFZ3LiFmycMMShhMkR8vCAKR8eKzw7Z9sG7jZO8fLeJcBx1TkA2Q>
+    <xmx:OZkFZ9xyL7OZ-1GxGC5hNYZRpkHt4eRvovcaMcrM6xsw7_-M9_GcRg>
+    <xmx:OZkFZzIh0wkgyeXYKehUiyY68HQ4x99ty03gAp3C-wOB9G-XAUNpjw>
+    <xmx:OZkFZ9iLqDy0z2irIhJlgljYTC_p6v-awZWY8s2_Kfbz9oVJrRD_8_8p>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Oct 2024 16:42:32 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,
+  newren@gmail.com
+Subject: Re: [PATCH v2 1/2] doc: merge-tree: provide a commit message
+In-Reply-To: <b1ca5cae76845f84147d385cc5ff47f219cd471e.1728413450.git.code@khaugsbakk.name>
+	(Kristoffer Haugsbakk's message of "Tue, 8 Oct 2024 21:06:05 +0200")
+References: <cover.1728298931.git.code@khaugsbakk.name>
+	<cover.1728413450.git.code@khaugsbakk.name>
+	<b1ca5cae76845f84147d385cc5ff47f219cd471e.1728413450.git.code@khaugsbakk.name>
+Date: Tue, 08 Oct 2024 13:42:31 -0700
+Message-ID: <xmqqo73uz5qg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] object-name: don't allow @ as a branch name
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <cover.1728331771.git.code@khaugsbakk.name>
- <b88c2430f88b641d69e5f161d3a18cce113a81c9.1728331771.git.code@khaugsbakk.name>
- <20241007204447.GB603285@coredump.intra.peff.net>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20241007204447.GB603285@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On Mon, Oct 07, 2024 at 04:44:47PM -0400, Jeff King wrote:
+Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
 
-> The refname "refs/heads/HEAD" is allowed by plumbing, as we try
-> to maintain backwards compatibility there. So the current prohibition is
-> just within the porcelain tools: we won't allow "git branch HEAD"
-> because it's an easy mistake to make, even though you could still create
-> it with "git update-ref".
+> Provide a commit message in the example command.
+>
+> The command will hang since it is waiting for a commit message on
+> stdin.  Which is usable but not straightforward enough since this is
+> example code.
+>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
 
-Ah, your comment reminded me that something similar happened recently
-near me:
+Makes sense.
 
-   $ git push origin some-ref:HEAD
+> -       NEWCOMMIT=$(git commit-tree $NEWTREE -p $BRANCH1 -p $BRANCH2)
+> +       NEWCOMMIT=$(git commit-tree $NEWTREE -F $FILE_WITH_COMMIT_MESSAGE \
+> +           -p $BRANCH1 -p $BRANCH2)
+>         git update-ref $BRANCH1 $NEWCOMMIT
 
-It caused a small disaster, although it was quickly fixed.
+The shell should know, after seeing $FILE_WITH_COMMIT_MESSAGE and
+encountering the end of line, that you haven't completed telling
+what you started telling it.  Do you need " \" at the end of the
+line?
 
-The backwards compatibility you mentioned, which can also be understood
-as a non-limitation in this aspect, is worth maintaining.
+I know that it was suggested to use a file with message, and I agree
+with the suggestion, but then I wonder if we want to be more
+complete and show that a file gets prepared in the example to avoid
+making readers wonder where $FILE_WITH_COMMIT_MESSAGE comes from?
 
-I haven't had time to investigate why git-push doesn't warn (or stop)
-the user when attempting that, but perhaps there's a small crack we
-want to fix.  Or maybe it's something we actually want to allow...
+E.g.,
+
+        vi message.txt
+        NEWCOMMIT=$(git comimt-tree $NEWTREE -F message.txt
+                    -p $BRANCH1 -p $BRANCH2)
+
+or something like that?
+
+Other than that, looking good.
+
+Thanks.
+
