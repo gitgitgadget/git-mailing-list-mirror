@@ -1,134 +1,85 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2B92B9A2
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 04:00:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCB1762D0
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 04:08:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728360014; cv=none; b=ivpBhYSZJVmDZAKY0yWqlOftkVIjKoGMwyuQomBMojgzp3ADHG/uTh6kANZhg0JaWZpFvW2Bf5znvsqY0Sbr2xsD9TJZa0jYzWmyZ/GFS4fRMXSDBjbiKOvPLTVLoh/yfxO6AHZ/RwKFNuHxcs0HgL8se5Dbl+YbjCq7NKP2cmo=
+	t=1728360508; cv=none; b=SIqe7uCaC7riYlODZVrTI+GkktLsvYGyIu7rHjKpC6yjldY4+mymnFxgE3W8FDEPVX+LrJ/gXsTIr+NPsylUTi4VKkskWqM40StTkizosnOD5+jqUhKELkRyOW6lanuS7b10Cvm45wryGaYq02s3TUKC6kgKPKvpCq2AgAeDRQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728360014; c=relaxed/simple;
-	bh=41trTW5pKhIxXH7jX6vHeqd0ymqT5XLjIPzbmiicdb0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o7C/EEkwEBK7AYVSGo9zB2mp8t6WomDIDH5tewBVFk4slPWQHkRpBB2HFmweXqKVAoPjlTylXZ1e4dNhtJh0lOPlNms8O+jLGp4bvFmhQB5RB2TqCtp/GOPLo+Isec3sWRZSnAxbdMPJIc4GPJU0606aWWXbGq1VUEKM95cjs5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DhJSLBrZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ViPntn/5; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728360508; c=relaxed/simple;
+	bh=OMuVPkI6/UipUCzTIUXUSgSyeRybziPREEUJDh05IVc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=s0TxeJCrJlxZCeLnsf8mtUPHGCWMwvpGQ2QWXhiK7LFVtsFZA2XnaZ2wEJMZGw49BHIsmXvaDipflF6CysP4JnC7wU4N8yfC52EBBfjpkn/hYCgBKaMMf/kuX520KLKtuEcJvJTaDUJgAWci+oTkKwwgjr/o0by88XE0Tze6rKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h0sOv7nH; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DhJSLBrZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ViPntn/5"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7795F1380609;
-	Tue,  8 Oct 2024 00:00:11 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Tue, 08 Oct 2024 00:00:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728360011; x=1728446411; bh=2pJl/JkZQA
-	yZh+92+PKpTqhr8lkQnd0MO6dfmRWA6ng=; b=DhJSLBrZVFHHVxH/z8rLVnmxhS
-	Z4dvWUMHKqSpQ/PL3Sb9l5x/5r8mB0TtT2i+B1aAIFX3EwVgLnox+OCGIEzIHqgZ
-	QFZa9iC+RsuLQQClvXgUCJkkuH5XvWxTO71mtdX8W1VUU9jqVuUnY2iBUbUxqhv4
-	ESpbrfVntuF69UKMmAf473SeXljSQm0jKScnUMh1K6KHmXjF8Pxll+db1gD0/U47
-	UBMH8mlBmyYfdD/r4o9Q9OQin23jyamdsXQc8z1PUr4u/i4HW8LNEVIPnxwNebo2
-	evAWcyzZOb9zLUTPkJbn9CAXEBBVkgepTFID7VMzrz64dpQUjd2A8Bdey97w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728360011; x=1728446411; bh=2pJl/JkZQAyZh+92+PKpTqhr8lkQ
-	nd0MO6dfmRWA6ng=; b=ViPntn/5cx20gulOuQPaE/erzrjOo5VEcsI16tsg6UY3
-	QuExM8DDB8Lc84+JMisS1CHyUW5Gs9YXW2GiFaK+tyQwayyxZLX5HGNPZe5tkFRE
-	qIz0dAJ6Rc1NrSg/VYlFHZewj/WiFc2QxuzJ9lSJJQyRNz8gFzjK2SdQbbbgozg1
-	Sy2Su/Gz100v0HvtzsJp8wRmxyMw01fWXz88R5aWJw1PJ651LqKm87IgGxo6d38m
-	JYRiLCyM7oBfZXYQwbUEFluWkVCqedsKMWKEBL6glef3Kr8oZMgOHeREhVso/t9t
-	/bqWI385WpkeLESPxaOZhM2GMRFeAd7pd8/zg2dsrQ==
-X-ME-Sender: <xms:S64EZ834ebf1lVNjdG_LECqZZfsa_ml4RZ3QjF6WfUiHMDs7ZDBEag>
-    <xme:S64EZ3E5aR-2wlxMFUw-VJIOuRNdoUZDbc-Gv3Cnl-KnlpwyxVRgIrVYkXl6RuIaY
-    mAUeTajXC6LC0fSVw>
-X-ME-Received: <xmr:S64EZ05T9dJZ7IPiUNTcq6v3hhAhodN9YK1dsJjCNwIMQgKJXbahSfoBMMZiLBqJ2dScztk0F-fBob96T8ZavHVRB-zVlEmjdDb8Jz0r4NodxSI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeftddgjeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnheptefhvdeijeettedugfffueekgfekiedttddtgedttdeu
-    udfhhfegvedvgeehvdeunecuffhomhgrihhnpehgihhtqdhstghmrdgtohhmnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsg
-    huphhtpgigihhnghigihhnseduieefrdgtohhmpdhrtghpthhtoheplhhiuhiihhhonhhg
-    sghordeiieeiieessgihthgvuggrnhgtvgdrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhies
-    ghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepsghmfihilhhlsehgohhoghhlvgdrtghomh
-X-ME-Proxy: <xmx:S64EZ134F_CEcDIE9bqBhKuqDYkdk4L1ZkBCa2RCIR1zMYBhRaXW_g>
-    <xmx:S64EZ_ERWJvRu4oRDN8G87XLUP0XSwj_6zBiJJh97PUPAbw1F1wADw>
-    <xmx:S64EZ-_FsE2zlYhPApV9aCuaO8_mAlJkKYnG8Z-aEK5Rho1gDllQtw>
-    <xmx:S64EZ0mSChOoPcdwHhvpcfFkUfTXthRjTTZVxxCVGNKLlxNoAaa1QA>
-    <xmx:S64EZ04rO9JqFMOGbrxFAM4qQcJGQaI4mLHOMUV7zpILVy5ZFAAhiAZm>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Oct 2024 00:00:09 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d9eaf5da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 8 Oct 2024 03:59:09 +0000 (UTC)
-Date: Tue, 8 Oct 2024 06:00:05 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: blanet via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-	Jonathan Tan <jonathantanmy@google.com>,
-	Liu Zhongbo <liuzhongbo.6666@bytedance.com>,
-	blanet <bupt_xingxin@163.com>
-Subject: Re: [PATCH v3 0/5] Support server option from configuration
-Message-ID: <ZwSuRa_2OeAAv3pQ@pks.im>
-References: <pull.1776.v2.git.git.1727093878.gitgitgadget@gmail.com>
- <pull.1776.v3.git.git.1728358699.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h0sOv7nH"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2e28b2df104so7326a91.0
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 21:08:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728360506; x=1728965306; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ezOGhyZSZnacQwxx9fBceiARhNr5ZIXKCldRwmApAV8=;
+        b=h0sOv7nHp9SBE6Ys1c1TIxdlaOq7lHQNYuIZevvN0dipMhQPKuobeFL6dCFC9pawU1
+         cnP4DnbLwTOtCWwVoGPrT0C/07+4lg9DN8LEk02+D6oPc03vCAkwQQ1n4RwjX3tdURek
+         wUibpnHbQM6lGJZU8jnX4TjFnhJY6UM+qm0bVu8fMDc5UOJ4bKBfUG7zY4De3F3dxhGB
+         Jl50jtrr5Axeaqu+oVOxdtYNUODPF8ltKAa4pOiol1/XkDW25bxQvWV9Bks1jUV5BC/N
+         LwV/AcXI7ms8o4SeOeitibgiy2xZ9CvfSVRI9WvBN8sgcnDLZjYud4s8wzeBwdZY+Ntn
+         5vig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728360506; x=1728965306;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ezOGhyZSZnacQwxx9fBceiARhNr5ZIXKCldRwmApAV8=;
+        b=KzxNG+7D47QQW8UyHNSdcMhCfL6AD0AfU65a5eEm5U031uTeToA51jcPlB7rgu+DnD
+         C7uHMwssb4HS90H8OAMO1xL+hHx5RqtwHNwbZchKWIuWfmYiC0U2FAj/H0reCCKgfG1B
+         yBXAgJiBvDNzWW848rJ+Hm0kpJP9m/si3BpzBO90DOBwkMGbhfhjVf8fJKA3KtJyxEZA
+         FWOr7o5/oKOKB4Mk4+g7q2+bANSroyefby3d/m6mvxC7tdqp2cw4l+IoSkz7yQ4wU/ol
+         41zDBP3RIsuIlwVvUMCawir4LSKWswKncJm5iqqu3go8TJ+Z5yowTxISOqvOM7m3lQwO
+         T7vg==
+X-Gm-Message-State: AOJu0YyMw2m3KOo1/pD5FpEwQ5ONsGw8VchGilhbJKuZ6doLiBhFCJ8B
+	asiDm5ZqV9RyzOW/2FDZ4ce8x4iQu9HcgbNtSrEEjN06vkrd/P8pf+LMHw==
+X-Google-Smtp-Source: AGHT+IG2OnHQNFkzSOtiQKWWnlf+MovoDbt5WLViX2F0LLlMkh+zLO+4PXnF8KzTIBN2JYZN5Nk7/w==
+X-Received: by 2002:a17:903:188:b0:207:14d2:ddeb with SMTP id d9443c01a7336-20bff1c5568mr92853465ad.13.1728360506004;
+        Mon, 07 Oct 2024 21:08:26 -0700 (PDT)
+Received: from localhost.localdomain ([2604:3d09:e083:d900:fddc:a13c:16ae:b340])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c1395a533sm47056035ad.204.2024.10.07.21.08.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Oct 2024 21:08:25 -0700 (PDT)
+From: Josh Heinrichs <joshiheinrichs@gmail.com>
+To: git@vger.kernel.org
+Cc: Josh Heinrichs <joshiheinrichs@gmail.com>
+Subject: [PATCH 0/1] Remove value from positional args in config unset usage
+Date: Mon,  7 Oct 2024 22:07:48 -0600
+Message-Id: <20241008040749.69801-1-joshiheinrichs@gmail.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1776.v3.git.git.1728358699.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Oct 08, 2024 at 03:38:14AM +0000, blanet via GitGitGadget wrote:
-> We manage some internal repositories with numerous CI tasks, each requiring
-> code preparation through git-clone or git-fetch. These tasks, triggered by
-> post-receive hooks, often fetch the same copy of code concurrently using
-> --depth=1, causing extremely high load spikes on our Git servers.
-> 
-> To reduce performance impacts caused by these tasks, we plan to deploy a
-> specially designed pack-objects-hook [1]. This hook would allow the packs
-> generated by git-pack-objects(during git-clone or git-fetch) to be reused.
-> Since not all clone/fetch operations will benefit from this caching (e.g.,
-> pulls from developer environments), clients need to pass a special
-> identifier to indicate whether caching should be enabled. Using server
-> options [2] is suitable for this purpose.
-> 
-> However, server options can only be specified via the command line option
-> (via --server-option or -o), which is inconvenient and requires
-> modifications to CI scripts. A configuration-based approach is preferable,
-> as it can be propagated through global configuration (e.g. ~/.gitconfig) and
-> avoids compatibility issues with older Git versions that don't support
-> --server-option.
-> 
-> This patch series introduces a new multi-valued configuration,
-> remote.<name>.serverOption, similar to push.pushOption, to specify default
-> server options for the corresponding remote.
-> 
->  * Patches 1~3 contain the main changes for introducing the new
->    configuration.
->  * Patch 4 fixes a issue for git-fetch not sending server-options when
->    fetching from multiple remotes.
->  * Patch 5 is a minor fix for a server options-related memory leak.
-> 
->  1. https://git-scm.com/docs/git-config#Documentation/git-config.txt-uploadpackpackObjectsHook
->  2. https://git-scm.com/docs/gitprotocol-v2#_server_option
+I tripped over this while attempting to use `git config unset --fixed-value`.
+The value is supposed to be provided via `--value`, but the usage makes it
+seem like it can be provided as a positional argument.
 
-The range-diff looks as expected to me, so this should be ready
-to go from my point of view. Thanks!
+While I was looking at the translations I noticed that po/bg.po was missing
+`<name>` as a positional argument. From my reading of the docs it sounds like
+translation changes are made independently, so I have not changed them in this
+series.
 
-Patrick
+Josh Heinrichs (1):
+  git-config.1: remove value from positional args in unset usage
+
+ Documentation/git-config.txt | 2 +-
+ builtin/config.c             | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+-- 
+2.25.1
+
