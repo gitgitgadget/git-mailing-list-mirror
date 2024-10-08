@@ -1,600 +1,198 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559EE339A1
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 03:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86563BBCB
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 03:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728357164; cv=none; b=THGDLutHB9bo4lc2/wqgqMyyN9BERpL6vbE5lZMa4VSwp8FeDsfSMv8hgFuoVo9nVuHVLbvJJimDGmEATB8Nf5jDMpt8CCXw04TznGkMIN+4Frq1pK9LfaaxpBRZIpMWIljzKBgY4pMQ+miQuMZikKl+GO2XNPB9tNjK6tB4DM0=
+	t=1728358705; cv=none; b=pn9yAJuYIZKWvMGcyjlOtbtwG94Slqwl18sA/JbQyqBm24EIfgPLOvIoCuwb5jv3SXayZVBJ9dQVypS0x1Bj8gllOSTdcjuxtsAJphqAvQxEPJQ5DQ/NX7rovfajR09XKtR93SA4evZNrcGRaVgSALYdXzJrqzWQeY+cM2rvcVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728357164; c=relaxed/simple;
-	bh=3x5LhvRCoj8l4WH/LO13or1Ab9ps3fnnJAy43iJXpzM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HH+OVSkt7RGxaIAw4lvyYnsJ3CRcp4+0kOQNuTpsZ4jcnBn+p2EXe+ngBHNQguQ7zadwKFLjDmitlB2VUDqsGHRqxR/NvVKYvT4rF0Iw3AQ+CUbt/RwBFdEhVSxSrClPB1CYRG76fV3AhdOC947shxFJhgLAolU0tLCHXGopsgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JxTzgdyL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728358705; c=relaxed/simple;
+	bh=i/FToDMlJQ1QoUPpG9oqYOcAtAhRkxV6YqivASKBdvQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Rkq+V9WDTeI9Tgl9yHr9Z00SGd07jwHdlYGhHQutIfqeclTQxPzeR0Y2cnJ3k5ot6x6cUhuORbGvpz1I+IJfGSqZyFzZX6NFj7mzl5sfYennIyTyXjrOU0gSalcuvu+cupBQ2uYqBjK3W3007yOmJR/h9OwIOVGxCCm08R0TY50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N1CZscPk; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JxTzgdyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E443CC4CEC6;
-	Tue,  8 Oct 2024 03:12:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728357163;
-	bh=3x5LhvRCoj8l4WH/LO13or1Ab9ps3fnnJAy43iJXpzM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=JxTzgdyLBxs/yGp5VZ9GBs/v+yTQFAjXhVYC2unHtpcw6OvSUjuSq1USaFeQrKysI
-	 y1LbHOr10HSyxS2zPs3ZyijhPsnuBP21QMUgVaO3wbtcrJq33wLzBBI9VFIDpjxAbP
-	 hS+p3G+dUgMNil1W0f4ivTEzsLGniglMulM3n2PddAzBLotrRPuDOQK1rxx5euGjx2
-	 467XJdUq7laNdwuMjPSe9M7okuzCpK0gbjHTaXyfch5e+WNq4aGV5nuPOliuyRG0pa
-	 1DbtGmQTOpZ2nq+uqBcI6vlvLtk7xzgRG9ptt2fFSUhAeIb5We5HqE6JpRZf+BPa1F
-	 K+HkK9w5htihw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D489CCED260;
-	Tue,  8 Oct 2024 03:12:43 +0000 (UTC)
-From: Caleb White via B4 Relay <devnull+cdwhite3.pm.me@kernel.org>
-Date: Mon, 07 Oct 2024 22:12:31 -0500
-Subject: [PATCH v3 2/3] worktree: link worktrees with relative paths
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N1CZscPk"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5c5b954c359so5924388a12.1
+        for <git@vger.kernel.org>; Mon, 07 Oct 2024 20:38:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728358702; x=1728963502; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ldF0OtitYZyfYvLmhl2N8NxbjjI5Mj4Z3IPrtpkFtbI=;
+        b=N1CZscPkQub68HURNT4zmdosAQDmyk29qOaQZfwx9oKq/N9cCkBMBo9LJtZ9tDhUTM
+         MYiqXnfjI0b/2U+34Vmbeirfp43DmftWc5K/bYr50CXax2pymI18WZilYSBjJ7lK8TES
+         ztMkxksg4Y/uiS3T20o4RcqU3nkpOGqJA4t9yKKywGSR47f7f7LnF2MyA0KWVR1SeWSF
+         DEyVS43NJijMPRCxkLpBnu2wr08GW6rM54phI1v23x6Iie8uUfyhY4901gQgxdYac7dR
+         RNLx0fdZ/2mzYsbVH8jm84VExLjIjZ7AQ82XvnWmJf986gds+r3aJyMh60VLzZywgWnK
+         Xy0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728358702; x=1728963502;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ldF0OtitYZyfYvLmhl2N8NxbjjI5Mj4Z3IPrtpkFtbI=;
+        b=QyCRxvzObDH2Z45O04BBS5IZot0ekUBzrl+2B/A7JE3YpLHwxCviGVC6Z3by2pEzIA
+         tBhFYw2G3cZQwDp3gF7WDtL/jRWVvR8UeUJoflOc+Oee55knmS5rkHHLb96IFLbDNUJl
+         DjihiKhwtg7mR1v6FbxtmdccVbBv8gfCzdV+IgRQBt1UOVT3kO32J9oS5i1xcuEw0DYh
+         HYWGUVNFTyqgIJIogVvjUKsiPVdP4w0joIyasnRgR+ejk7z4QOiGTQwcDidW3hQhNrHO
+         xF59YciES5MMZ3/iNhiSNTABTwKvgVcQO1RRP5mouLKnlBZeOPRy4o0WMjzX5ERlNCB0
+         DvpA==
+X-Gm-Message-State: AOJu0YwY+ai45QqBSBkEQywR17wIx734WeS402lZb6E76dhX2F8E4PmF
+	4giYPXV8E9rzBP/xVbilrMz1qCBlX4X4NjvWpYyabeZ8X+Gy8343yU+oyQ==
+X-Google-Smtp-Source: AGHT+IHR1zjruA2U14TYhAWR9ZSFHnULk/uydBdMv8hV/JuSxUz9OMAcIaOq4fVPjooPuRf9Acws6g==
+X-Received: by 2002:a05:6402:268d:b0:5c8:9e36:ccaf with SMTP id 4fb4d7f45d1cf-5c8d2ed2e6bmr11484160a12.33.1728358701281;
+        Mon, 07 Oct 2024 20:38:21 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c8e05ecbe0sm3893512a12.78.2024.10.07.20.38.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Oct 2024 20:38:20 -0700 (PDT)
+Message-Id: <pull.1776.v3.git.git.1728358699.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1776.v2.git.git.1727093878.gitgitgadget@gmail.com>
+References: <pull.1776.v2.git.git.1727093878.gitgitgadget@gmail.com>
+From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 08 Oct 2024 03:38:14 +0000
+Subject: [PATCH v3 0/5] Support server option from configuration
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241007-wt_relative_paths-v3-2-622cf18c45eb@pm.me>
-References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me>
-In-Reply-To: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me>
 To: git@vger.kernel.org
-Cc: Caleb White <cdwhite3@pm.me>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=18366; i=cdwhite3@pm.me;
- h=from:subject:message-id;
- bh=tMOBmEFiprE/90ruABRAlvbNBuy+NRwM+1Cxn111E2A=;
- b=owGbwMvMwCVmxF73kO8jewrjabUkhnSWxVrCAUer1MPrl/BI1M6d+mmFQfLXOsblnRHik2fGH
- Xxc+39nRykLgxgXg6yYIsubrd8L1FMfZ3B/KJ8NM4eVCWQIAxenAEzk+URGhhlsmft9HW8qm9iv
- MV150iLvu8v5q3IzFryfeOOnjXKlujYjw6Opl0XuP/+rziD/Jn7iUrXFYZMXXmS4OEEtY1MQo93
- xxVwA
-X-Developer-Key: i=cdwhite3@pm.me; a=openpgp;
- fpr=99981A649E1CA829A335E77493EDE5A0C788BC38
-X-Endpoint-Received: by B4 Relay for cdwhite3@pm.me/default with
- auth_id=237
-X-Original-From: Caleb White <cdwhite3@pm.me>
-Reply-To: cdwhite3@pm.me
+Cc: Brandon Williams <bmwill@google.com>,
+    Jonathan Tan <jonathantanmy@google.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Liu Zhongbo <liuzhongbo.6666@bytedance.com>,
+    blanet <bupt_xingxin@163.com>
 
-From: Caleb White <cdwhite3@pm.me>
+We manage some internal repositories with numerous CI tasks, each requiring
+code preparation through git-clone or git-fetch. These tasks, triggered by
+post-receive hooks, often fetch the same copy of code concurrently using
+--depth=1, causing extremely high load spikes on our Git servers.
 
-Git currently stores absolute paths to both the main repository and
-linked worktrees. However, this causes problems when moving repositories
-or working in containerized environments where absolute paths differ
-between systems. The worktree links break, and users are required to
-manually execute `worktree repair` to repair them, leading to workflow
-disruptions. Additionally, mapping repositories inside of containerized
-environments renders the repository unusable inside the containers, and
-this is not repairable as repairing the worktrees inside the containers
-will result in them being broken outside the containers.
+To reduce performance impacts caused by these tasks, we plan to deploy a
+specially designed pack-objects-hook [1]. This hook would allow the packs
+generated by git-pack-objects(during git-clone or git-fetch) to be reused.
+Since not all clone/fetch operations will benefit from this caching (e.g.,
+pulls from developer environments), clients need to pass a special
+identifier to indicate whether caching should be enabled. Using server
+options [2] is suitable for this purpose.
 
-To address this, this patch makes Git always write relative paths when
-linking worktrees. Relative paths increase the resilience of the
-worktree links across various systems and environments, particularly
-when the worktrees are self-contained inside the main repository (such
-as when using a bare repository with worktrees). This improves
-portability, workflow efficiency, and reduces overall breakages.
+However, server options can only be specified via the command line option
+(via --server-option or -o), which is inconvenient and requires
+modifications to CI scripts. A configuration-based approach is preferable,
+as it can be propagated through global configuration (e.g. ~/.gitconfig) and
+avoids compatibility issues with older Git versions that don't support
+--server-option.
 
-Although Git now writes relative paths, existing repositories with
-absolute paths are still supported. There are no breaking changes
-to workflows based on absolute paths, ensuring backward compatibility.
+This patch series introduces a new multi-valued configuration,
+remote.<name>.serverOption, similar to push.pushOption, to specify default
+server options for the corresponding remote.
 
-At a low level, the changes involve modifying functions in `worktree.c`
-and `builtin/worktree.c` to use `relative_path()` when writing the
-worktree’s `.git` file and the main repository’s `gitdir` reference.
-Instead of hardcoding absolute paths, Git now computes the relative path
-between the worktree and the repository, ensuring that these links are
-portable. Locations where these respective file are read have also been
-updated to properly handle both absolute and relative paths. Generally,
-relative paths are always resolved into absolute paths before any
-operations or comparisons are performed.
+ * Patches 1~3 contain the main changes for introducing the new
+   configuration.
+ * Patch 4 fixes a issue for git-fetch not sending server-options when
+   fetching from multiple remotes.
+ * Patch 5 is a minor fix for a server options-related memory leak.
 
-Additionally, `repair_worktrees_after_gitdir_move()` has been introduced
-to address the case where both the `<worktree>/.git` and
-`<repo>/worktrees/<id>/gitdir` links are broken after the gitdir is
-moved (such as during a re-initialization). This function repairs both
-sides of the worktree link using the old gitdir path to reestablish the
-correct paths after a move.
+ 1. https://git-scm.com/docs/git-config#Documentation/git-config.txt-uploadpackpackObjectsHook
+ 2. https://git-scm.com/docs/gitprotocol-v2#_server_option
 
-The `worktree.path` struct member has also been updated to always store
-the absolute path of a worktree. This ensures that worktree consumers
-never have to worry about trying to resolve the absolute path themselves.
+Xing Xin (5):
+  transport: introduce parse_transport_option() method
+  remote: introduce remote.<name>.serverOption configuration
+  transport.c::handshake: make use of server options from remote
+  fetch: respect --server-option when fetching multiple remotes
+  ls-remote: leakfix for not clearing server_options
 
-Signed-off-by: Caleb White <cdwhite3@pm.me>
----
- builtin/worktree.c           |  16 ++--
- setup.c                      |   2 +-
- t/t2408-worktree-relative.sh |  39 ++++++++
- worktree.c                   | 207 ++++++++++++++++++++++++++++++++++---------
- worktree.h                   |  10 +++
- 5 files changed, 223 insertions(+), 51 deletions(-)
+ Documentation/config/remote.txt |  10 +++
+ Documentation/fetch-options.txt |   3 +
+ Documentation/git-clone.txt     |   3 +
+ Documentation/git-ls-remote.txt |   3 +
+ builtin/fetch.c                 |   2 +
+ builtin/ls-remote.c             |   1 +
+ builtin/push.c                  |   9 +--
+ remote.c                        |   6 ++
+ remote.h                        |   3 +
+ t/t5702-protocol-v2.sh          | 133 ++++++++++++++++++++++++++++++++
+ transport.c                     |  15 ++++
+ transport.h                     |   4 +
+ 12 files changed, 184 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index fc31d072a620d7b455d7f150bd3a9e773ee9d4ed..dae63dedf4cac2621f51f95a39aa456b33acd894 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -414,7 +414,8 @@ static int add_worktree(const char *path, const char *refname,
- 			const struct add_opts *opts)
- {
- 	struct strbuf sb_git = STRBUF_INIT, sb_repo = STRBUF_INIT;
--	struct strbuf sb = STRBUF_INIT, realpath = STRBUF_INIT;
-+	struct strbuf sb = STRBUF_INIT, sb_tmp = STRBUF_INIT;
-+	struct strbuf sb_path_realpath = STRBUF_INIT, sb_repo_realpath = STRBUF_INIT;
- 	const char *name;
- 	struct strvec child_env = STRVEC_INIT;
- 	unsigned int counter = 0;
-@@ -490,11 +491,10 @@ static int add_worktree(const char *path, const char *refname,
- 
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/gitdir", sb_repo.buf);
--	strbuf_realpath(&realpath, sb_git.buf, 1);
--	write_file(sb.buf, "%s", realpath.buf);
--	strbuf_realpath(&realpath, repo_get_common_dir(the_repository), 1);
--	write_file(sb_git.buf, "gitdir: %s/worktrees/%s",
--		   realpath.buf, name);
-+	strbuf_realpath(&sb_path_realpath, path, 1);
-+	strbuf_realpath(&sb_repo_realpath, sb_repo.buf, 1);
-+	write_file(sb.buf, "%s/.git", relative_path(sb_path_realpath.buf, sb_repo_realpath.buf, &sb_tmp));
-+	write_file(sb_git.buf, "gitdir: %s", relative_path(sb_repo_realpath.buf, sb_path_realpath.buf, &sb_tmp));
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
- 	write_file(sb.buf, "../..");
-@@ -578,11 +578,13 @@ static int add_worktree(const char *path, const char *refname,
- 
- 	strvec_clear(&child_env);
- 	strbuf_release(&sb);
-+	strbuf_release(&sb_tmp);
- 	strbuf_release(&symref);
- 	strbuf_release(&sb_repo);
-+	strbuf_release(&sb_repo_realpath);
- 	strbuf_release(&sb_git);
-+	strbuf_release(&sb_path_realpath);
- 	strbuf_release(&sb_name);
--	strbuf_release(&realpath);
- 	free_worktree(wt);
- 	return ret;
- }
-diff --git a/setup.c b/setup.c
-index 94e79b2e487f3faa537547e190acf9b7ea0be3b5..7b648de0279116b381eea46800ad130606926103 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2420,7 +2420,7 @@ static void separate_git_dir(const char *git_dir, const char *git_link)
- 
- 		if (rename(src, git_dir))
- 			die_errno(_("unable to move %s to %s"), src, git_dir);
--		repair_worktrees(NULL, NULL);
-+		repair_worktrees_after_gitdir_move(src);
- 	}
- 
- 	write_file(git_link, "gitdir: %s", git_dir);
-diff --git a/t/t2408-worktree-relative.sh b/t/t2408-worktree-relative.sh
-new file mode 100755
-index 0000000000000000000000000000000000000000..a3136db7e28cb20926ff44211e246ce625a6e51a
---- /dev/null
-+++ b/t/t2408-worktree-relative.sh
-@@ -0,0 +1,39 @@
-+#!/bin/sh
-+
-+test_description='test worktrees linked with relative paths'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success 'links worktrees with relative paths' '
-+	test_when_finished rm -rf repo &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		git worktree add wt1 &&
-+		echo "../../../wt1/.git" >expected_gitdir &&
-+		cat .git/worktrees/wt1/gitdir >actual_gitdir &&
-+		echo "gitdir: ../.git/worktrees/wt1" >expected_git &&
-+		cat wt1/.git >actual_git &&
-+		test_cmp expected_gitdir actual_gitdir &&
-+		test_cmp expected_git actual_git
-+	)
-+'
-+
-+test_expect_success 'move repo without breaking relative internal links' '
-+	test_when_finished rm -rf repo moved &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+		git worktree add wt1 &&
-+		cd .. &&
-+		mv repo moved &&
-+		cd moved/wt1 &&
-+		git status >out 2>err &&
-+		test_must_be_empty err
-+	)
-+'
-+
-+test_done
-diff --git a/worktree.c b/worktree.c
-index 0cba0d6e6e9ad02ace04a0301104a04a07cbef65..77ff484d3ec48c547ee4e3d958dfa28a52c1eaa7 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -110,6 +110,12 @@ struct worktree *get_linked_worktree(const char *id,
- 	strbuf_rtrim(&worktree_path);
- 	strbuf_strip_suffix(&worktree_path, "/.git");
- 
-+	if (!is_absolute_path(worktree_path.buf)) {
-+	    strbuf_strip_suffix(&path, "gitdir");
-+	    strbuf_addbuf(&path, &worktree_path);
-+	    strbuf_realpath_forgiving(&worktree_path, path.buf, 0);
-+	}
-+
- 	CALLOC_ARRAY(worktree, 1);
- 	worktree->repo = the_repository;
- 	worktree->path = strbuf_detach(&worktree_path, NULL);
-@@ -373,18 +379,29 @@ int validate_worktree(const struct worktree *wt, struct strbuf *errmsg,
- void update_worktree_location(struct worktree *wt, const char *path_)
- {
- 	struct strbuf path = STRBUF_INIT;
-+	struct strbuf repo = STRBUF_INIT;
-+	struct strbuf file = STRBUF_INIT;
-+	struct strbuf tmp = STRBUF_INIT;
- 
- 	if (is_main_worktree(wt))
- 		BUG("can't relocate main worktree");
- 
-+	strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
- 	strbuf_realpath(&path, path_, 1);
- 	if (fspathcmp(wt->path, path.buf)) {
--		write_file(git_common_path("worktrees/%s/gitdir", wt->id),
--			   "%s/.git", path.buf);
-+		strbuf_addf(&file, "%s/gitdir", repo.buf);
-+		write_file(file.buf, "%s/.git", relative_path(path.buf, repo.buf, &tmp));
-+		strbuf_reset(&file);
-+		strbuf_addf(&file, "%s/.git", path.buf);
-+		write_file(file.buf, "gitdir: %s", relative_path(repo.buf, path.buf, &tmp));
-+
- 		free(wt->path);
- 		wt->path = strbuf_detach(&path, NULL);
- 	}
- 	strbuf_release(&path);
-+	strbuf_release(&repo);
-+	strbuf_release(&file);
-+	strbuf_release(&tmp);
- }
- 
- int is_worktree_being_rebased(const struct worktree *wt,
-@@ -564,38 +581,52 @@ static void repair_gitfile(struct worktree *wt,
- {
- 	struct strbuf dotgit = STRBUF_INIT;
- 	struct strbuf repo = STRBUF_INIT;
--	char *backlink;
-+	struct strbuf backlink = STRBUF_INIT;
-+	struct strbuf tmp = STRBUF_INIT;
-+	char *dotgit_contents = NULL;
- 	const char *repair = NULL;
- 	int err;
- 
- 	/* missing worktree can't be repaired */
- 	if (!file_exists(wt->path))
--		return;
-+		goto done;
- 
- 	if (!is_directory(wt->path)) {
- 		fn(1, wt->path, _("not a directory"), cb_data);
--		return;
-+		goto done;
- 	}
- 
- 	strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
- 	strbuf_addf(&dotgit, "%s/.git", wt->path);
--	backlink = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
-+	dotgit_contents = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
-+
-+	if (dotgit_contents) {
-+		if (is_absolute_path(dotgit_contents)) {
-+			strbuf_addstr(&backlink, dotgit_contents);
-+		} else {
-+			strbuf_addf(&backlink, "%s/%s", wt->path, dotgit_contents);
-+			strbuf_realpath_forgiving(&backlink, backlink.buf, 0);
-+		}
-+	}
- 
- 	if (err == READ_GITFILE_ERR_NOT_A_FILE)
- 		fn(1, wt->path, _(".git is not a file"), cb_data);
- 	else if (err)
- 		repair = _(".git file broken");
--	else if (fspathcmp(backlink, repo.buf))
-+	else if (fspathcmp(backlink.buf, repo.buf))
- 		repair = _(".git file incorrect");
- 
- 	if (repair) {
- 		fn(0, wt->path, repair, cb_data);
--		write_file(dotgit.buf, "gitdir: %s", repo.buf);
-+		write_file(dotgit.buf, "gitdir: %s", relative_path(repo.buf, wt->path, &tmp));
- 	}
- 
--	free(backlink);
-+done:
-+	free(dotgit_contents);
- 	strbuf_release(&repo);
- 	strbuf_release(&dotgit);
-+	strbuf_release(&backlink);
-+	strbuf_release(&tmp);
- }
- 
- static void repair_noop(int iserr UNUSED,
-@@ -618,6 +649,59 @@ void repair_worktrees(worktree_repair_fn fn, void *cb_data)
- 	free_worktrees(worktrees);
- }
- 
-+void repair_worktree_after_gitdir_move(struct worktree *wt, const char *old_path)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	struct strbuf repo = STRBUF_INIT;
-+	struct strbuf gitdir = STRBUF_INIT;
-+	struct strbuf dotgit = STRBUF_INIT;
-+	struct strbuf olddotgit = STRBUF_INIT;
-+	struct strbuf tmp = STRBUF_INIT;
-+
-+	if (is_main_worktree(wt))
-+		goto done;
-+
-+	strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
-+	strbuf_addf(&gitdir, "%s/gitdir", repo.buf);
-+
-+	if (strbuf_read_file(&olddotgit, gitdir.buf, 0) < 0)
-+		goto done;
-+
-+	strbuf_rtrim(&olddotgit);
-+	if (is_absolute_path(olddotgit.buf)) {
-+		strbuf_addbuf(&dotgit, &olddotgit);
-+	} else {
-+		strbuf_addf(&dotgit, "%s/worktrees/%s/%s", old_path, wt->id, olddotgit.buf);
-+		strbuf_realpath_forgiving(&dotgit, dotgit.buf, 0);
-+	}
-+
-+	if (!file_exists(dotgit.buf))
-+		goto done;
-+
-+	strbuf_addbuf(&path, &dotgit);
-+	strbuf_strip_suffix(&path, "/.git");
-+
-+	write_file(dotgit.buf, "gitdir: %s", relative_path(repo.buf, path.buf, &tmp));
-+	write_file(gitdir.buf, "%s", relative_path(dotgit.buf, repo.buf, &tmp));
-+done:
-+	strbuf_release(&path);
-+	strbuf_release(&repo);
-+	strbuf_release(&gitdir);
-+	strbuf_release(&dotgit);
-+	strbuf_release(&olddotgit);
-+	strbuf_release(&tmp);
-+}
-+
-+void repair_worktrees_after_gitdir_move(const char *old_path)
-+{
-+	struct worktree **worktrees = get_worktrees_internal(1);
-+	struct worktree **wt = worktrees + 1; /* +1 skips main worktree */
-+
-+	for (; *wt; wt++)
-+		repair_worktree_after_gitdir_move(*wt, old_path);
-+	free_worktrees(worktrees);
-+}
-+
- static int is_main_worktree_path(const char *path)
- {
- 	struct strbuf target = STRBUF_INIT;
-@@ -684,6 +768,8 @@ void repair_worktree_at_path(const char *path,
- 	struct strbuf inferred_backlink = STRBUF_INIT;
- 	struct strbuf gitdir = STRBUF_INIT;
- 	struct strbuf olddotgit = STRBUF_INIT;
-+	struct strbuf realolddotgit = STRBUF_INIT;
-+	struct strbuf tmp = STRBUF_INIT;
- 	char *dotgit_contents = NULL;
- 	const char *repair = NULL;
- 	int err;
-@@ -701,9 +787,17 @@ void repair_worktree_at_path(const char *path,
- 	}
- 
- 	infer_backlink(realdotgit.buf, &inferred_backlink);
-+	strbuf_realpath_forgiving(&inferred_backlink, inferred_backlink.buf, 0);
- 	dotgit_contents = xstrdup_or_null(read_gitfile_gently(realdotgit.buf, &err));
- 	if (dotgit_contents) {
--		strbuf_addstr(&backlink, dotgit_contents);
-+		if (is_absolute_path(dotgit_contents)) {
-+			strbuf_addstr(&backlink, dotgit_contents);
-+		} else {
-+			strbuf_addbuf(&backlink, &realdotgit);
-+			strbuf_strip_suffix(&backlink, ".git");
-+			strbuf_addstr(&backlink, dotgit_contents);
-+			strbuf_realpath_forgiving(&backlink, backlink.buf, 0);
-+		}
- 	} else if (err == READ_GITFILE_ERR_NOT_A_FILE) {
- 		fn(1, realdotgit.buf, _("unable to locate repository; .git is not a file"), cb_data);
- 		goto done;
-@@ -721,7 +815,7 @@ void repair_worktree_at_path(const char *path,
- 			fn(1, realdotgit.buf, _("unable to locate repository; .git file does not reference a repository"), cb_data);
- 			goto done;
- 		}
--	} else if (err) {
-+	} else {
- 		fn(1, realdotgit.buf, _("unable to locate repository; .git file broken"), cb_data);
- 		goto done;
- 	}
-@@ -753,90 +847,117 @@ void repair_worktree_at_path(const char *path,
- 		repair = _("gitdir unreadable");
- 	else {
- 		strbuf_rtrim(&olddotgit);
--		if (fspathcmp(olddotgit.buf, realdotgit.buf))
-+		if (is_absolute_path(olddotgit.buf)) {
-+			strbuf_addbuf(&realolddotgit, &olddotgit);
-+		} else {
-+			strbuf_addf(&realolddotgit, "%s/%s", backlink.buf, olddotgit.buf);
-+			strbuf_realpath_forgiving(&realolddotgit, realolddotgit.buf, 0);
-+		}
-+		if (fspathcmp(realolddotgit.buf, realdotgit.buf))
- 			repair = _("gitdir incorrect");
- 	}
- 
- 	if (repair) {
- 		fn(0, gitdir.buf, repair, cb_data);
--		write_file(gitdir.buf, "%s", realdotgit.buf);
-+		write_file(gitdir.buf, "%s", relative_path(realdotgit.buf, backlink.buf, &tmp));
- 	}
- done:
- 	free(dotgit_contents);
- 	strbuf_release(&olddotgit);
-+	strbuf_release(&realolddotgit);
- 	strbuf_release(&backlink);
- 	strbuf_release(&inferred_backlink);
- 	strbuf_release(&gitdir);
- 	strbuf_release(&realdotgit);
- 	strbuf_release(&dotgit);
-+	strbuf_release(&tmp);
- }
- 
- int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath, timestamp_t expire)
- {
- 	struct stat st;
--	char *path;
-+	struct strbuf dotgit = STRBUF_INIT;
-+	struct strbuf gitdir = STRBUF_INIT;
-+	struct strbuf repo = STRBUF_INIT;
-+	struct strbuf file = STRBUF_INIT;
-+	char *path = NULL;
-+	int rc = 0;
- 	int fd;
- 	size_t len;
- 	ssize_t read_result;
- 
- 	*wtpath = NULL;
--	if (!is_directory(git_path("worktrees/%s", id))) {
-+	strbuf_realpath(&repo, git_common_path("worktrees/%s", id), 1);
-+	strbuf_addf(&gitdir, "%s/gitdir", repo.buf);
-+	if (!is_directory(repo.buf)) {
- 		strbuf_addstr(reason, _("not a valid directory"));
--		return 1;
-+		rc = 1;
-+		goto done;
- 	}
--	if (file_exists(git_path("worktrees/%s/locked", id)))
--		return 0;
--	if (stat(git_path("worktrees/%s/gitdir", id), &st)) {
-+	strbuf_addf(&file, "%s/locked", repo.buf);
-+	if (file_exists(file.buf)) {
-+		goto done;
-+	}
-+	if (stat(gitdir.buf, &st)) {
- 		strbuf_addstr(reason, _("gitdir file does not exist"));
--		return 1;
-+		rc = 1;
-+		goto done;
- 	}
--	fd = open(git_path("worktrees/%s/gitdir", id), O_RDONLY);
-+	fd = open(gitdir.buf, O_RDONLY);
- 	if (fd < 0) {
- 		strbuf_addf(reason, _("unable to read gitdir file (%s)"),
- 			    strerror(errno));
--		return 1;
-+		rc = 1;
-+		goto done;
- 	}
- 	len = xsize_t(st.st_size);
- 	path = xmallocz(len);
- 
- 	read_result = read_in_full(fd, path, len);
-+	close(fd);
- 	if (read_result < 0) {
- 		strbuf_addf(reason, _("unable to read gitdir file (%s)"),
- 			    strerror(errno));
--		close(fd);
--		free(path);
--		return 1;
--	}
--	close(fd);
--
--	if (read_result != len) {
-+		rc = 1;
-+		goto done;
-+	} else if (read_result != len) {
- 		strbuf_addf(reason,
- 			    _("short read (expected %"PRIuMAX" bytes, read %"PRIuMAX")"),
- 			    (uintmax_t)len, (uintmax_t)read_result);
--		free(path);
--		return 1;
-+		rc = 1;
-+		goto done;
- 	}
- 	while (len && (path[len - 1] == '\n' || path[len - 1] == '\r'))
- 		len--;
- 	if (!len) {
- 		strbuf_addstr(reason, _("invalid gitdir file"));
--		free(path);
--		return 1;
-+		rc = 1;
-+		goto done;
- 	}
- 	path[len] = '\0';
--	if (!file_exists(path)) {
--		if (stat(git_path("worktrees/%s/index", id), &st) ||
--		    st.st_mtime <= expire) {
-+	if (is_absolute_path(path)) {
-+		strbuf_addstr(&dotgit, path);
-+	} else {
-+		strbuf_addf(&dotgit, "%s/%s", repo.buf, path);
-+		strbuf_realpath_forgiving(&dotgit, dotgit.buf, 0);
-+	}
-+	if (!file_exists(dotgit.buf)) {
-+		strbuf_reset(&file);
-+		strbuf_addf(&file, "%s/index", repo.buf);
-+		if (stat(file.buf, &st) || st.st_mtime <= expire) {
- 			strbuf_addstr(reason, _("gitdir file points to non-existent location"));
--			free(path);
--			return 1;
--		} else {
--			*wtpath = path;
--			return 0;
-+			rc = 1;
-+			goto done;
- 		}
- 	}
--	*wtpath = path;
--	return 0;
-+	*wtpath = strbuf_detach(&dotgit, NULL);
-+done:
-+	free(path);
-+	strbuf_release(&dotgit);
-+	strbuf_release(&gitdir);
-+	strbuf_release(&repo);
-+	strbuf_release(&file);
-+	return rc;
- }
- 
- static int move_config_setting(const char *key, const char *value,
-diff --git a/worktree.h b/worktree.h
-index 11279d0c8fe249bb30642563bf221a8de7f3b0a3..e96118621638667d87c5d7e0452ed10bd1ddf606 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -131,6 +131,16 @@ typedef void (* worktree_repair_fn)(int iserr, const char *path,
-  */
- void repair_worktrees(worktree_repair_fn, void *cb_data);
- 
-+/*
-+ * Repair the linked worktrees after the gitdir has been moved.
-+ */
-+void repair_worktrees_after_gitdir_move(const char *old_path);
-+
-+/*
-+ * Repair the linked worktree after the gitdir has been moved.
-+ */
-+void repair_worktree_after_gitdir_move(struct worktree *wt, const char *old_path);
-+
- /*
-  * Repair administrative files corresponding to the worktree at the given path.
-  * The worktree's .git file pointing at the repository must be intact for the
+
+base-commit: 6258f68c3c1092c901337895c864073dcdea9213
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1776%2Fblanet%2Fxx%2Fadd-server-option-from-config-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1776/blanet/xx/add-server-option-from-config-v3
+Pull-Request: https://github.com/git/git/pull/1776
+
+Range-diff vs v2:
+
+ 1:  c95ed5e0dd5 = 1:  b44face42e1 transport: introduce parse_transport_option() method
+ 2:  2474b4c69d6 ! 2:  3c6b129d368 remote: introduce remote.<name>.serverOption configuration
+     @@ Documentation/config/remote.txt: remote.<name>.partialclonefilter::
+       	database, use the `--refetch` option of linkgit:git-fetch[1].
+      +
+      +remote.<name>.serverOption::
+     -+	When no `--server-option=<option>` argument is given from the command
+     -+	line, git will use the values from this configuration as a default list of
+     -+	server options for this remote.
+     ++	The default set of server options used when fetching from this remote.
+     ++	These server options can be overridden by the `--server-option=` command
+     ++	line arguments.
+      ++
+      +This is a multi-valued variable, and an empty value can be used in a higher
+      +priority configuration file (e.g. `.git/config` in a repository) to clear
+     @@ remote.c
+       
+       enum map_direction { FROM_SRC, FROM_DST };
+       
+     -@@ remote.c: static struct remote *make_remote(struct remote_state *remote_state,
+     - 	struct remote *ret;
+     - 	struct remotes_hash_key lookup;
+     - 	struct hashmap_entry lookup_entry, *e;
+     -+	struct string_list server_options = STRING_LIST_INIT_DUP;
+     - 
+     - 	if (!len)
+     - 		len = strlen(name);
+      @@ remote.c: static struct remote *make_remote(struct remote_state *remote_state,
+       	ret->name = xstrndup(name, len);
+       	refspec_init(&ret->push, REFSPEC_PUSH);
+       	refspec_init(&ret->fetch, REFSPEC_FETCH);
+     -+	ret->server_options = server_options;
+     ++	string_list_init_dup(&ret->server_options);
+       
+       	ALLOC_GROW(remote_state->remotes, remote_state->remotes_nr + 1,
+       		   remote_state->remotes_alloc);
+     @@ remote.c: static void remote_clear(struct remote *remote)
+       
+       static void add_merge(struct branch *branch, const char *name)
+      @@ remote.c: static int handle_config(const char *key, const char *value,
+     - 					 key, value);
+       	} else if (!strcmp(subkey, "vcs")) {
+     + 		FREE_AND_NULL(remote->foreign_vcs);
+       		return git_config_string(&remote->foreign_vcs, key, value);
+      +	} else if (!strcmp(subkey, "serveroption")) {
+      +		return parse_transport_option(key, value,
+ 3:  a7f3e458501 = 3:  f0835259b06 transport.c::handshake: make use of server options from remote
+ 4:  39ee8dbef78 = 4:  420b15d9f37 fetch: respect --server-option when fetching multiple remotes
+ 5:  39c07a6c8ee ! 5:  2528d929c7e ls-remote: leakfix for not clearing server_options
+     @@ Commit message
+          Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
+      
+       ## builtin/ls-remote.c ##
+     -@@ builtin/ls-remote.c: int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+     +@@ builtin/ls-remote.c: int cmd_ls_remote(int argc,
+       	transport_ls_refs_options_release(&transport_options);
+       
+       	strvec_clear(&pattern);
 
 -- 
-2.46.2
-
-
+gitgitgadget
