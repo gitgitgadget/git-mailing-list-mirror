@@ -1,91 +1,203 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97822762D0
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 15:14:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3654207A
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 15:30:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728400495; cv=none; b=ISKFezcAd64PWONhaV27QTxWedgr26sX5W7HpdDuv4Iw0nc5V8ZXbYJB/1CQvzW4V5tl9tn65gLMcmOns1VElS/yKp8DAlaifJUcCPcoh4jGoxB/k0u4JjCXwEi0GoznuphZ0iqC0ggvYBpqge7axISfEunNC6eSPbP/5WCCwik=
+	t=1728401450; cv=none; b=NNJrGlLs92NWWYIlVnmSkAPhw1G7JjjbTUVzMBAGv4nunwqaHL5ZPsF8LW0EnzPaHamJSbcRuM7u4+mJNgeBIuAhiMmIodtBA+bTfQFYpMzeXEL+CknQGvPyxVegjT2pL3Z1o0RlnUKkO3SFjAYC6I0lqQYO9gQGFxs4FQa+8x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728400495; c=relaxed/simple;
-	bh=KsDGLDMcd/CqIoDXUv/wqjLsU9rhASUajqLZ6HlkG6Y=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=RT4wV8FtiZsj8JX36Eat30jRgCwSD7Bp1LtP3b8XbdPb7NkzK1KYWuoet1s0t+st/4HzuSpRxIWXlO5CCxtaiVnxHFjytRyGiZtp3JLC32Dzkx08yZ7ypl+fFwMqGe0ULIeng4AdAb+d8eWRZmACS15p4RQ0Vi6d3ONklnbE+Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cUUHQhsk; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728401450; c=relaxed/simple;
+	bh=qEsmgJM5oIytBWIXieovXfqhU8XFTIgLhAbJUPUyqgM=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=jkXP/xZrqmBDBXvX/vBXGNUfy+4g1y4ZE0Qc/3tTjRyruOeyfbVh3HgGrMG5QKNCJQ3/im96MlzlCOcAPykdaX+4pzU7B+NUena1liaQs596d7TCX3l1pb2hLtEI9QJZf03MhObeIvh286nw1pnUsXDS/3kQhmHQQGhrqHNxyjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=KKJiyRCt; arc=none smtp.client-ip=185.70.43.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cUUHQhsk"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a994ecf79e7so351713166b.0
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 08:14:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728400491; x=1729005291; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0knWRIB+wfDAajqkaHwRj7mCSzX2OF4q59WeX/hzSQA=;
-        b=cUUHQhskMcUPbrhrcirfhiNhS8Gs9pWzYTu8DpRgGxYdN1EuL0RgchbS/DH4PN1C2W
-         BP9qc0HaCugb1i3SkvyERF7QdXS/3bq+LDl1JukCZ5V0mI+siIYxZ77zX7gttv4U9ibU
-         n6Gkkqt+9s5Q1ASzPuLYdeLbRod9Y8IbGlg4kOwsuREFsHvVO9YvHVGphwAaDVkCAdK8
-         Auqitu/mwHDJwnreXsYr7o0O04OxPv1zF9V3h5fBgFHeIEGPqzApK5WMGqOme8bGlGCg
-         N80/cBg5uDhRy2haL6BI1Ezm+/1F/+KVkawH8AArdbFhlMfSPUTGLWQr5XAkkCHTF23W
-         8Xiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728400491; x=1729005291;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=0knWRIB+wfDAajqkaHwRj7mCSzX2OF4q59WeX/hzSQA=;
-        b=iy5MapB8bRmWunaMiyBja1I3Sa5E+xYfyAbtYDiOuF1HBzgkhRT2ozhErsNa3L3xUf
-         L2u/R79BPuZxDE4FdBPXKRIxRRriAuj98xTUhBMu3OdMoTLwk8RaogufREU12+gGiWtC
-         LzA2PSM5xd/Zp301pjIuFcR3Xd7PYY5VAPVSyeW67wEwyJgJBJp8oxNOmKG0i2ataVf+
-         VXU3H74m4D5l2/r2ziw2ihYwA30j7OvSRHWSSmxN0FvFYdv8blywpQ+ImfEGG3flnN9r
-         orzD4UCJtPUZ0nebPrFxwhus5qqJJsekwIiKqM0BkFZY6PfzJR2zCmBCDNqQiR86vbzR
-         2ynA==
-X-Gm-Message-State: AOJu0YzlvGkafEZ8cqgFJzx/qfG7O+mmwYJWzs5j51KYOwTv06fwSf1r
-	lLfPlyMq2beTbEgC/q22qe0yELw1euI3ozcV4+owBz//zdJOHeAm4jjf33mk
-X-Google-Smtp-Source: AGHT+IE5WAti2dKbOKE8iVYCN6PAxFKgWJNAknZB6CaOusb+G55eJ5tfknU3M0ukZsUJb9H0hV0OLw==
-X-Received: by 2002:a17:907:ea0:b0:a80:7193:bd93 with SMTP id a640c23a62f3a-a991bd40f79mr1694622266b.25.1728400490838;
-        Tue, 08 Oct 2024 08:14:50 -0700 (PDT)
-Received: from [192.168.1.102] (host-188-15-132-105.business.telecomitalia.it. [188.15.132.105])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99325c5c48sm514030966b.170.2024.10.08.08.14.50
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 08:14:50 -0700 (PDT)
-Message-ID: <447ddc34-ab3a-4607-908f-64b9cc0268fd@gmail.com>
-Date: Tue, 8 Oct 2024 17:14:49 +0200
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="KKJiyRCt"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1728401447; x=1728660647;
+	bh=XkPAgR1iyf03vkhAxG/SQLR407LxpLQFYf3EpgJ4Mpc=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=KKJiyRCt39AntvUsg3YLcl/C3mvKm+VKZoW5MnGtnGWeYeXlYvSPpKqB2Y/x+FK27
+	 qIoIsC0qEdb9m6KG2uNEqxymzeZZNy2pZx1RDymmTB9YsyzEgA/f7iZchUrQ/yiFyl
+	 e5HZqniIo4dvH+TAKtHHS+qnmzfWCB13oXunKvUmnlLCJ1f3CiCU7iVO3F/a5WirTp
+	 kd9MO/VnwGOytG6ISrPteHzwOYVJCme5UNnCXeajL70wJSwMAnjdw47Tnby4uMSuTW
+	 fDStJ+/tl2w17TJlumH05Zeqqu4UfOO1Ju1JHqd8fO0f7T3azc1AOBA4UqJZmgzZWv
+	 i23M92wSZsycA==
+Date: Tue, 08 Oct 2024 15:30:42 +0000
+To: ericsunshine@charter.net
+From: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org, russell+git.vger.kernel.org@stuart.id.au, sunshine@sunshineco.com, cdwhite3@pm.me
+Subject: Re: [PATCH] worktree: repair copied repository and linked worktrees
+Message-ID: <20241008153035.71178-1-cdwhite3@pm.me>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: 5b5ca20afdd535a4d639ef382188c252c83b1fc8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB, it
-To: git@vger.kernel.org
-From: "Alessio De Marchi (GMail)" <alessio.demarchi@gmail.com>
-Subject: Remote git server dubious ownership
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------caf6c92498ed59a493a1ca497a224e898dae2f3c39b94d4ec876c21b2c4b5cb7"; charset=utf-8
 
-Hello
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------caf6c92498ed59a493a1ca497a224e898dae2f3c39b94d4ec876c21b2c4b5cb7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+From: Caleb White <cdwhite3@pm.me>
+To: ericsunshine@charter.net
+Cc: git@vger.kernel.org,
+	russell+git.vger.kernel.org@stuart.id.au,
+	sunshine@sunshineco.com,
+	cdwhite3@pm.me
+Subject: Re: [PATCH] worktree: repair copied repository and linked worktrees
+Date: Tue,  8 Oct 2024 10:30:35 -0500
+Message-ID: <20241008153035.71178-1-cdwhite3@pm.me>
+X-Mailer: git-send-email 2.46.2
+In-Reply-To: <20240923075416.54289-1-ericsunshine@charter.net>
+References: <20240923075416.54289-1-ericsunshine@charter.net>
+MIME-Version: 1.0
 
-I'm using git v2.46.2 on windows, and I have a server linux (git 
-v2.45.2) where me and other developer push our repositories.
+Eric Sunshine <ericsunshine@charter.net> writes:
 
-If i push my changes on a repository that is owned by another user the 
-server git respond:
+> +	inferred_backlink = infer_backlink(realdotgit.buf);
+>  	backlink = xstrdup_or_null(read_gitfile_gently(realdotgit.buf, &err));
+>  	if (err == READ_GITFILE_ERR_NOT_A_FILE) {
+>  		fn(1, realdotgit.buf, _("unable to locate repository; .git is not a file"), cb_data);
+>  		goto done;
+>  	} else if (err == READ_GITFILE_ERR_NOT_A_REPO) {
+> -		if (!(backlink = infer_backlink(realdotgit.buf))) {
+> +		if (inferred_backlink) {
+> +			/*
+> +			 * Worktree's .git file does not point at a repository
+> +			 * but we found a .git/worktrees/<id> in this
+> +			 * repository with the same <id> as recorded in the
+> +			 * worktree's .git file so make the worktree point at
+> +			 * the discovered .git/worktrees/<id>. (Note: backlink
+> +			 * is already NULL, so no need to free it first.)
+> +			 */
+> +			backlink = inferred_backlink;
+> +			inferred_backlink = NULL;
+> +		} else {
+>  			fn(1, realdotgit.buf, _("unable to locate reposito
+ry; .git file does not reference a repository"), cb_data);
+>  			goto done;
+>  		}
 
-fatal: detected dubious ownership in repository...
+Moving the `infer_backlink()` call outside of the error condition caused me to
+discover a bug in my own refactor of infer_backlink() on my relative paths series.
+Turns out I needed to clear the `inferred` path if an error occurred.
+This is OK.
+
+> +	/*
+> +	 * If we got this far, either the worktree's .git file pointed at a
+> +	 * valid repository (i.e. read_gitfile_gently() returned success) or
+> +	 * the .git file did not point at a repository but we were able to
+> +	 * infer a suitable new value for the .git file by locating a
+> +	 * .git/worktrees/<id> in *this* repository corresponding to the <id>
+> +	 * recorded in the worktree's .git file.
+> +	 *
+> +	 * However, if, at this point, inferred_backlink is non-NULL (i.e. we
+> +	 * found a suitable .git/worktrees/<id> in *this* repository) *and* the
+> +	 * worktree's .git file points at a valid repository *and* those two
+> +	 * paths 
+differ, then that indicates that the user probably *copied*
+> +	 * the main and linked worktrees to a new location as a unit rather
+> +	 * than *moving* them. Thus, the copied worktree's .git file actually
+> +	 * points at the .git/worktrees/<id> in the *original* repository, not
+> +	 * in the "copy" repository. In this case, point the "copy" worktree's
+> +	 * .git file at the "copy" repository.
+> +	 */
+> +	if (inferred_backlink && fspathcmp(backlink, inferred_backlink)) {
+> +		free(backlink);
+> +		backlink = inferred_backlink;
+> +		inferred_backlink = NULL;
+> +	}
+
+This edge case seems to primarily be an artifact of using absolute paths to link
+the worktrees. The test case you provided passes on my relative path series even
+with this condition commented out. However, we do still want to support absolute
+paths to maintain backwards compatibility so I think we should try to detect
+this edge case if we can.
+
+Unfortunately, this change now "repairs" (i.e., breaks) worktr
+ees from other
+repositories if the worktree_id happens to be identical between the repositories.
+For example, the following test passes on `master` (with absolute paths) and on
+my relative path series (relative paths without your changes integrated), but it
+fails on your patch (and my relative patch series with your changes integrated):
+
+    test_expect_success 'does not repair worktrees from another repo' '
+        test_when_finished "rm -rf repo1 repo2" &&
+        mkdir -p repo1 &&
+        git -C repo1 init main &&
+        test_commit -C repo1/main nothing &&
+        git -C repo1/main worktree add ../linked &&
+        cp repo1/main/.git/worktrees/linked/gitdir repo1/main.expect &&
+        cp repo1/linked/.git repo1/linked.expect &&
+        mkdir -p repo2 &&
+        git -C repo2 init main &&
+        test_commit -C repo2/main nothing &&
+        git -C repo2/main worktree add ../linked &&
+        cp repo2/main/.git/worktrees/linked/gitdir repo2/main.expect &&
+        
+cp repo2/linked/.git repo2/linked.expect &&
+        git -C repo1/main worktree repair ../.. &&
+        test_cmp repo1/main.expect repo1/main/.git/worktrees/linked/gitdir &&
+        test_cmp repo1/linked.expect repo1/linked/.git &&
+        test_cmp repo2/main.expect repo2/main/.git/worktrees/linked/gitdir &&
+        test_cmp repo2/linked.expect repo2/linked/.git &&
+        git -C repo2/main worktree repair ../../repo1/linked &&
+        test_cmp repo1/main.expect repo1/main/.git/worktrees/linked/gitdir &&
+        test_cmp repo1/linked.expect repo1/linked/.git &&
+        test_cmp repo2/main.expect repo2/main/.git/worktrees/linked/gitdir &&
+        test_cmp repo2/linked.expect repo2/linked/.git
+    '
+
+Granted, this is likely a rare edge case, but I would not expect trying to repair
+a valid worktree from another repository to change the pointers. I think a good
+solution to this would be to introduce a unique hash on the worktree_id when
+creating a worktree to guarantee uniqu
+eness across repositories, e.g.,:
+
+    repo1/main/.git/worktrees/linked-6a4b5d/gitdir:
+        /path/to/repo1/linked/.git
+    repo1/linked/.git:
+        gitdir: /path/to/repo1/main/worktrees/linked-6a4b5d
+
+    repo2/main/.git/worktrees/linked-9ab26fe/gitdir:
+        /path/to/repo2/linked/.git
+    repo2/linked/.git:
+        gitdir: /path/to/repo2/main/worktrees/linked-9ab26fe
+
+This would allow us to detect this copied case while not "repairing" valid
+worktrees from other repositories with the same linked worktree directory name.
 
 
-So I can push changes only in repository owned by myself.
+Best,
 
-It is possible to share a repository to more that one user? (I remember 
-that it was possible untill some years ago)
+- Caleb
+
+--------caf6c92498ed59a493a1ca497a224e898dae2f3c39b94d4ec876c21b2c4b5cb7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wsBzBAEBCAAnBQJnBVAgCRAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
+28viAAATAwf/RbZ1t51if2cXdqW+7IY3AzwVVCVF64zLD6TZqTXdKBeGvqey
+8Mrle8JpB1H78Ln7IP/6rsbMM9jArteubavhwFo+3AH43L69noCYcITBtS/Z
+iSfcpBEWHhv/SzImBgyOCimmQPgyAdgLb6IxwJ3/fMo4CkPi64nzFnu2olV7
+tZ5nAKF84WmpFss/4WSBkWaLp/yj3frsmD7tlrhTkBpJ8PKYfokepUqoD1wr
+yQSM+Z/kfoxz9YEUe8locLcoGB5NX4IqTvUqP3mV/E6CcUJUV9SaKTFl/x5Y
+dsRA36m5OEAOcQRzDtA3Z4sbChm24b1MvtXjVsg+I4hucLZuKOpFTQ==
+=k0WF
+-----END PGP SIGNATURE-----
 
 
-thanks
-
-Alessio De Marchi
-
+--------caf6c92498ed59a493a1ca497a224e898dae2f3c39b94d4ec876c21b2c4b5cb7--
 
