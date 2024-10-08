@@ -1,88 +1,83 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66325216448
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 22:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02C3173336
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 23:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728427400; cv=none; b=mS2EAKYv0+t7qaWLgze793YvHRNMaasXzuQj77OVfWEtVhdd0xIsPYqhl3o1okQ3UycvGAqGMz6UB/yxWeeppHowxvaQcHvuFoKRsdLH+Qelw1Xue0eERznYL0Eiu6Ce8NPKTcFU/+WKPX1NXIqGaWncvEVEA2Dpt6pcSKuKqd8=
+	t=1728428996; cv=none; b=ZaUStqeuDg7ehBSf45R9AxNaGEJMbL9AACT+pCvNR/YB9M1bDqGog5cuen+zfOWcECYgmqZRC9fflqtVW5e674GRfTsWFK8iWB0KFgTy3/08g6EIftN+9cEWNp5bq/FxU+JBExXVsAiHUi1nyUx7Y4x0vLk5/SIU9c2bTbFJa5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728427400; c=relaxed/simple;
-	bh=SEdCCp+RRNiiDgCDemrGMgcOPiQqf21OB5TUTlTGMbM=;
+	s=arc-20240116; t=1728428996; c=relaxed/simple;
+	bh=CvWNeRh2yQqO98yQVHRgERIe4YjN3McRTl5KsJhnDB0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CnWp/0ayeKWmPSGZGpxa2+3nquYAx8HRV99r0Xq+7IEDXXAbcT+ARtvjUM80LaSkmAsFZ/bgYRZiXSuiaAA6RvClgWz/duUhP6Y95HP9n0pNVW3y6KG37DChsJO6YXU9ECCZWJRXiIDYmqMsoVjbYoCyXCXcZW4qabSRcIHjKbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=keBEbcAg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eo3dgYFd; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=t3yMzDHMaO5ICTyHwCjz7++K7n1kSiYyuBFG1sJElCeMs6vEjC+gv6EWpqm9vZxInp8Qmgq/m4VRPTGgHuWJMry9YPr4FcTa0ldpFl/wGFT0OXS9hJtF2rzNI+yiUOqhNvflafvuf2Fzv0FzN8lY+x6h0mk2Eigtdmj/lFgQ7XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kGZnSyb1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A2eBoWT9; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="keBEbcAg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eo3dgYFd"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 435AB11401C0;
-	Tue,  8 Oct 2024 18:43:16 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kGZnSyb1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A2eBoWT9"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1C07311400EE;
+	Tue,  8 Oct 2024 19:09:53 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 08 Oct 2024 18:43:16 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 08 Oct 2024 19:09:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728427396; x=1728513796; bh=64fJv1jYvg
-	s7fLQ/Bb99Ojokrb2E0GAa/25wGhjiGRo=; b=keBEbcAgG+SbAFsFERgiZbWv7T
-	Pfee+iDmdMKevOTo1fAnAqx3RPYXRuV259OFrn6h/T6Qn5QNFKGlAjs10KmNluiZ
-	ZcWxMbmM+qRXUCQtvPESTVBFMhqNdeqO7sFttTpkbqiflEQCtG+au7IHDNEyxNN+
-	+VSftVZLcOo6d6Hci8dfT1lC6aRV1iXiDRRq3EnC7t5+gXGT4euqvIkLsan9GUS2
-	K4nMqMZbHAiRRCqJXCOuHp+j2sRaHM0RNPcOKJ3ctg3QNflzSXuPjzNWWHBitIM+
-	9gt4be1O6iwjqxc2Gn4kdzVLgc7sXONclvakjmNWMMI2dX3GgZyvMUcG8GkQ==
+	:subject:to:to; s=fm1; t=1728428993; x=1728515393; bh=r13qo1IGXG
+	C1t0Klig/X7A9hOzrqc66WmAgGdQ3N6wI=; b=kGZnSyb19Y5Gsl4FaF35Sc9+re
+	cp11VVLlxF+p6rBbgBuxbA4L2XlNnIhgFAM4a/OqaW94My1pi3IbhQWh4PfKJSGX
+	495K/gCDb6Xe0s05GJrrZ3N9yseXxfaoHt0ge497hnDTwPcdv7ehH2bnlhQFMzG5
+	t2ZEZJ38jqZGOvSzeUb4vSvMh8ZXTE8bnYc1scAR+sTE3vwkY0zaTtC/PPWPm5Ae
+	FbYFgaRlLo8bjL4x6S5DYpo4KRfd/XMPziyBZHz0IF57IIsidH43PPIMlW2YOHc1
+	i4D5iRpC0QbV8HJMOUp6Ix9DixGdJunWDwKAGlERql+/M5x3xfLfwxpDCZpQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728427396; x=1728513796; bh=64fJv1jYvgs7fLQ/Bb99Ojokrb2E
-	0GAa/25wGhjiGRo=; b=eo3dgYFdDt4jHmyx5r9hNAHgLjM2G/lOuMbdC6ECtvAC
-	XBLKb7yf82VA1v7SJDGC2DyXWwbMMQDj8IZCvcaS6hjbKn3QfUTVIUfv6HfGLtG8
-	XhzR/tmHjBEltxX8hU4r+UuPifMXaCVClh18tD9b4bkqKbJHWsG5KqcnUFkfRqkb
-	m2V4tymWpsHKvx7TpY6i6fjxwp4j5HL+QxO+AwCeWym+JHJWV7LTHa9+BadmWJxp
-	bu+P2aNAgC+C5tpbLOyjCyxVOZcQF1rjclYrkHvS0kqk5vkxoPqrclqv2a3ncorb
-	izyDSWajMoBB9iDPtAv5uhuGBaDFbOvQwND9vvwrSQ==
-X-ME-Sender: <xms:g7UFZyMDOsET1chDvKIMD56JKq_pd9VuT49l38SPIVE1t0-AfYRxHw>
-    <xme:g7UFZw_kvurigvylfyafHpr_ZRIt1LV7GmpLFuOXPAIZ6iuCUr79QyAFyxYDUNGWT
-    I-j4AoTTAGImfoyuQ>
-X-ME-Received: <xmr:g7UFZ5TsYKux5K68cq3wTb6jhxQwUMUzXTLUGIwCt_uUmIT5ZUauFQhK2eLYbKtw6Qsaf6P2Tid8DHK67Qyo3vGJfTbD5-ZQBQ6JIGc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefvddgudefucetufdoteggodetrfdotf
+	fm2; t=1728428993; x=1728515393; bh=r13qo1IGXGC1t0Klig/X7A9hOzrq
+	c66WmAgGdQ3N6wI=; b=A2eBoWT9ewuXZEVvVdoBoAHh305Gc1zOEYpRVYx3cZsW
+	UAIYvFtIcN+02u0k4X91MH+m4GAEczhXJZuSBW7mv2x7owDo+WqVnToUShiAK9iX
+	1ODoAzaqDiFRcqqE5GbNa72im6Mn9Yii6MbFemkAc7IOh5PvXz+faLHmW4RpCjQS
+	w0pVYbz2K3mW4FwMwfPtXSxmFPbnXtmhtUChcAupRk27W0Gu3/oIX7BJJ2lO7QUa
+	9yFWz+qnC3AzbIerp/1ZgvxEDCQ2SuSaWePduLKHjOZlswAaDwSz5UIWhYnQQ5ja
+	7v6R2uxZg5D6DRSHIk/5i6GjXf0Eb6OojTLgIJNWBQ==
+X-ME-Sender: <xms:wLsFZ7AZwn19xON4bx18UTtSdW7-IoSjvMgeZiMd8xIAAqhnMQN6_w>
+    <xme:wLsFZxgs74RZHNcENZSChlwdYhL3VP8uPO32DNd-GMOjuMp0g4S9ukbKCCRrST9eM
+    ubuWqh2PjhYy146Qg>
+X-ME-Received: <xmr:wLsFZ2mu8-hwi2-01pJoS-ZfNhzqyKhg8os4iE3V1UHQi2UGkl_stUtLzwB7x3Zvc5VUr3VBPMruig_kBz0Xc2i-9gzRNo98oUJHN_g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefvddgudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeike
-    eufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileffudenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehhrghnhigrnhhgrdhtohhnhiessgihthgvuggrnhgtvgdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggr
-    lhhvihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhonhgrthhhrghnth
-    grnhhmhiesghhoohhglhgvrdgtohhmpdhrtghpthhtohepshhokhgtvghvihgtsehgohho
-    ghhlvgdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:g7UFZysfJcKNAWWymocc92OFgq-OJGNjo6e9feziTKx0993MZqyjUg>
-    <xmx:g7UFZ6ertkXCXNqBXZYRnWpBQTB7GYilZtqD9LbhqOMp2lxRsoC88A>
-    <xmx:g7UFZ2282V286LMKpSfSvbNY3nxPrY2c5cqzbtgrL3_I7fi4hBsQlA>
-    <xmx:g7UFZ--5GEKASZlCPbyfPushJFzRWNEw-WhnKFp_vrsIovtSYbDmYw>
-    <xmx:hLUFZwuQdQHkCT1BKOGEgSPSlZ9-IKYKH-y3DaLgIPFPoxJEYktfWJv2>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
+    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggvvhhnuhhllhdotg
+    gufihhihhtvgefrdhpmhdrmhgvsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggufihhihhtvgefsehpmh
+    drmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:wLsFZ9wEIzozaW6lYMFdC93bQ5-VkqxKRXsUuLa4ecZnxhRbsorcIQ>
+    <xmx:wLsFZwR-WrYYWhIiNRsjduTZ_o5wVv6BsmEJte6iAUmseX79EB99Cw>
+    <xmx:wLsFZwbcVRblo1d_QmeUmYluY-iDvSO0qiwC1suTP6eQHw2qVavhGA>
+    <xmx:wLsFZxSkYSL69WZfQWKDOxONhtguRCoxYxA9hi_Aus6USCbNacDZ7Q>
+    <xmx:wbsFZ2MhVIsgXzNw0JnsoZjkjdsGfJl13_FAsCgjhSR8GRSNHUSbADyp>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Oct 2024 18:43:15 -0400 (EDT)
+ 8 Oct 2024 19:09:52 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Han Young <hanyang.tony@bytedance.com>
-Cc: git@vger.kernel.org,  calvinwan@google.com,  jonathantanmy@google.com,
-  sokcevic@google.com,  phillip.wood123@gmail.com
-Subject: Re: [PATCH v2 0/3] repack: pack everything into promisor packfile
- in partial repos
-In-Reply-To: <xmqq4j5mz295.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	08 Oct 2024 14:57:42 -0700")
-References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
-	<20241008081350.8950-1-hanyang.tony@bytedance.com>
-	<xmqq4j5mz295.fsf@gitster.g>
-Date: Tue, 08 Oct 2024 15:43:13 -0700
-Message-ID: <xmqqzfnexlku.fsf@gitster.g>
+To: Caleb White via B4 Relay <devnull+cdwhite3.pm.me@kernel.org>
+Cc: git@vger.kernel.org,  Caleb White <cdwhite3@pm.me>
+Subject: Re: [PATCH v3 2/3] worktree: link worktrees with relative paths
+In-Reply-To: <20241007-wt_relative_paths-v3-2-622cf18c45eb@pm.me> (Caleb White
+	via's message of "Mon, 07 Oct 2024 22:12:31 -0500")
+References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me>
+	<20241007-wt_relative_paths-v3-2-622cf18c45eb@pm.me>
+Date: Tue, 08 Oct 2024 16:09:51 -0700
+Message-ID: <xmqqmsjexkcg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,15 +87,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Caleb White via B4 Relay <devnull+cdwhite3.pm.me@kernel.org> writes:
 
-> I've managed to apply and then merge, so unless review discussions
-> find needs for updates, there is no need for immediate reroll, but
-> if you end up having to update these patches, it is a good idea to
-> rebase the topic on top of v2.47.0 that was released early this
-> week, as we are now entering a new development cycle.
+> From: Caleb White <cdwhite3@pm.me>
+>
+> Git currently stores absolute paths to both the main repository and
 
-When merged to the tip of 'seen', it seems to break t5710.  It might
-be due to mismerge, but can you check on your end?
+As always, drop "currently".
+
+The usual way to compose a log message of this project is to
+
+ - Give an observation on how the current system work in the present
+   tense (so no need to say "Currently X is Y", just "X is Y"), and
+   discuss what you perceive as a problem in it.
+
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
+
+ - Give commands to the codebase to "become like so".
+
+in this order.
+
+> linked worktrees. However, this causes problems when moving repositories
+
+The above claim is way too strong.  When relative references are
+used, you can move directories without problems only if you move all
+the worktrees and the repository in unison without breaking their
+relative locations, which is an exception and not the norm.
+
+    The repository knows where its extra worktrees are by their
+    absolute paths (and vice versa) to allow discovery of each
+    other.  When a directory is moved, "git worktree repair" must be
+    used to adjust these references.
+
+    It however becomes possible, in a narrow special case, to do
+    without "git worktree repair".  When the repository and the
+    worktrees move in parallel without breaking their relative
+    location, the repair operation becomes unneeded if we made them
+    refer to each other using relative paths (think: tarring up both
+    the reposity and the worktrees at the same time, and then
+    untarring the result at a different place).
+
+or something, perhaps.
+
+> Although Git now writes relative paths, existing repositories with
+> absolute paths are still supported. There are no breaking changes
+> to workflows based on absolute paths, ensuring backward compatibility.
+
+Good.  Being able to work with existing repositories is an absolute
+requirement.  Are there good test cases?  I would imagine that you
+would need to force a worktree and its repository to refer to each
+other using absolute paths and then try to access with the updated
+code, perhaps moving one of such "old-style" directory and then
+using the updated "git worktree repair" and observing the result.
+To allow such a test possible, you might even need an option to "git
+worktree" to allow it to create these linkages using absolute paths,
+not relative (and if you need to keep both possibilities anyway, you
+might make the newer "relative" layout an optional feature,
+triggered by a command line option given to "git worktree add" and
+friends).
+
+Have we considered how badly existing third-party tools, that has
+learned to assume that the paths are aboslute, may break with this
+change, though?  Or is this "we won't know until we inflict it on
+real users and see who screams"?
 
 Thanks.
