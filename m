@@ -1,130 +1,153 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B22017279E
-	for <git@vger.kernel.org>; Mon,  7 Oct 2024 23:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2541A94A
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 00:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728343869; cv=none; b=u+h9tyWobMXt2tkYk2vfGoFyQw2COtSgwfaoVuvnwJQD93sT9wTAnAyiLYMQzrus0GmSb0aQO95IVJtM/iWEbR7BKq0SSKh5/4odAaPC/v9lkyDn/Wm1rjTva1SQ/G7VSUyMP+f0NP9w2u6b23Xg40cc15iB2rJSLziQhjEXaUE=
+	t=1728348826; cv=none; b=swklzSU7SziS3gb7jkXHM8A3tJTeeV5yE7qBGeA8cd2ilZjVXk47TZvp3nyLKzDBRog0F+wnuEtgThCZWwt9aSiXNKNFiCDisGJAYYuXipt2eLoE7aNZ4/IjVCBCsaR614KgEaB3HUBYceQLMnrkEzDMhARatfc510y75xmwjrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728343869; c=relaxed/simple;
-	bh=pkftUGNVFsEisPPuO1v64EgBVKbmWiIvwwZ7muiv3RQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sNlt4w9DYz45cCJKN54/BGGg4AjOir1ffcC1jcmcTK8Cuea6gbtPKne45SmhgxcSfNXh6f+Yt9J/Xvnu0pMAB2JYAk+4Xh/nqKUFRePhIIbt5NeKF3LIj+vxD1qNRnOUC0kp273nR2gMZTMxTBRvKbReZ3ulf0pREVh1K1B8bQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rZBuEfOn; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1728348826; c=relaxed/simple;
+	bh=JnFh+ImPrT/HpVrQT4kVpQNWYJJZSYcdv8IOL9Y5Xyo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=quN7dl2AYQKv1CdrPSZB+IhleyiFeY/c78iV+W04ynuiAO6B2uELLBLCW55Z82NkK3xAVd9a87JMfaRdG4vM0ZOrvgzvJb0qZanBhMd+kbCt6Lqq55Ac9JMXdB2l9GSL40tZwrpZxuP3/EV72QJXyCiRblzuUQZFBSSndsyg6dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sp5EX73h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wx562C2r; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rZBuEfOn"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-20b3d1a77bbso87275ad.0
-        for <git@vger.kernel.org>; Mon, 07 Oct 2024 16:31:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1728343866; x=1728948666; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WvCvjIcXr5Clua5toMXg2s8L13nJ3TZnjL4le0OVIMk=;
-        b=rZBuEfOn4U/g7aKuoZbHcWThpHVup8GdPo5ZffoDTdnnY43Yjc+xFfxXHshSBr2Lj7
-         GX4FxjnWLxN9LBW2o1ZRxqYq1kU9/BwN6AZtK/JbfCRBCij/5ytLnVx3XH133w5JlUZC
-         sE4oR1JesH9YDMLfjy3kwj+Zo313pMnd7Cnr3yx3i9CK4h+GfpUj5e9wZhgQD728wL9n
-         W/e+6qSTZHFegmwFh3XAnM1ynCxzxhRZLee1tYTvVlAxFQOD/hMrmyPXbqd3FgGEEv57
-         StlRcfvVMZ2wSV1sFFx0lbAh936A9L/+5GDttRbIvHNZ7bJlotRwgAIHVZfatjWhNSpo
-         GFGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728343866; x=1728948666;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WvCvjIcXr5Clua5toMXg2s8L13nJ3TZnjL4le0OVIMk=;
-        b=LmJ6KYgHYT+LgwbtPw6JUePwI4Q9JvuwPqqoy9x23apGAaog6JdIv+DczJA2MrJ7Ce
-         svrq0aMkErz6+XqFRfpTuCarWr5wTAG9WA9eHYP4NWlN6SAD9lcwZXZaG6pK1XLY3Z84
-         lFNJikH+EbmelGTJ1pqsM16LwYfMsChq6Ogouj826M/2/obGGa3NC8LTdJ1gMn4sX9K8
-         qO0vx5r0pLIndEPWDk8JQBVPfF7v0OzfW0J5XeohmfLbeMdWbqKZk4RfODQ+iDOQPeeD
-         Z5IEG8PhRVncjAAUF0mHtod9iB9wpBPpLEEFnAcKsG4SHGqFbteZixRbrDE4oWp51nhn
-         36GA==
-X-Forwarded-Encrypted: i=1; AJvYcCV+tQkfIuzbO6eoltQCq1nw4uEdI9go56DWhyOjYfJwkTL6UJYM6nRpZHO8exCIziXmlpE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzpgQh4VEvbzbqyzkmmd2Izbu1P3WgxkHwedxT9Fr/Ff811CjJS
-	csgicjGip3D/7QpLl3G8LbeFYzoq/gY1p8n/utw8JPE7SUVpLUEv/uPHUcVeZw==
-X-Google-Smtp-Source: AGHT+IEzwdYIWQBIFMiyDlpY72+grEdwP8agoqyVc+k5Ll5UMr3oZFaPX+B2WTkcU5rnJtVOe3b2nQ==
-X-Received: by 2002:a17:903:41d2:b0:206:9e8f:7cb with SMTP id d9443c01a7336-20c4ff9e95amr1244065ad.2.1728343866198;
-        Mon, 07 Oct 2024 16:31:06 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:2b15:5dbe:c4f0:bf3f])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71df0d4780fsm4938343b3a.124.2024.10.07.16.31.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Oct 2024 16:31:05 -0700 (PDT)
-Date: Mon, 7 Oct 2024 16:31:00 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, mh@glandium.org, sandals@crustytoothpaste.net, Jason@zx2c4.com, 
-	dsimic@manjaro.org, phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 5/6] libgit: add higher-level libgit crate
-Message-ID: <paya2jpm67x3zfkwtttcjrkfe7ai63ez3scrtarbdolkcmxvbq@yant6zn63p4z>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, mh@glandium.org, sandals@crustytoothpaste.net, Jason@zx2c4.com, 
-	dsimic@manjaro.org, phillip.wood@dunelm.org.uk
-References: <20240906221853.257984-1-calvinwan@google.com>
- <20240906222116.270196-5-calvinwan@google.com>
- <xmqqv7z8tjd7.fsf@gitster.g>
- <xmqqcylcpnah.fsf@gitster.g>
- <CAFySSZBECCQafaLEv80WoK6SMovwC97-tf9gh_btPc+8OuP4NA@mail.gmail.com>
- <xmqqttene2ya.fsf@gitster.g>
- <honvpowfa6zze7p56pcefrzokjjawcc43du7vuxbdbjbv2vzlv@eskr2npegzxd>
- <xmqqo74kj4ys.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sp5EX73h";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wx562C2r"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id A3BBE1380461;
+	Mon,  7 Oct 2024 20:53:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Mon, 07 Oct 2024 20:53:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728348823; x=1728435223; bh=q57pyzOfM+
+	HD2m3qFuzjqDWf6DUwxmpYrYp6+t9od6M=; b=sp5EX73hTpNAU5UW7iPwzP1I7L
+	V5p9YxUt5KNTKiIA7L9C5BCZYysT4ZSCiOHLphY4HhnY+L5YW0fOANUqQ7wxX7lw
+	WOUHiVv8iVWHvW0Vf2qDTsO0+uHMJKOHEBdWQn1fETBZK+ocKg9s5zxP9y7DTMIn
+	d6RjGJoAo+PdZiVj7vTsVDNfHZfSJjvwFHU2bX7YU/OkSpA4rlCsH0yXBbb4nWG9
+	BfL7fgygjuNzUpeQ9ZjwmuMIgrTCWOtC00scaxzG7TbaU7IIbtIiiSIBjBd/L8Jz
+	7QmHhk+n/txjCAebJgmHr5lZGgfSGZwWgOpfKsCDI6lYKSGMm5kUOamuxh3w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728348823; x=1728435223; bh=q57pyzOfM+HD2m3qFuzjqDWf6DUw
+	xmpYrYp6+t9od6M=; b=Wx562C2r1scJU8WBShJ9ES0YCaK3+b7G0yqlgDoTvc9i
+	rfS9WZqGruDUL1a1p0gv9GOQBfVjPE3a9LjvoMEu8cUcstv5zXezAS7KlpFYq2DC
+	kXv8Dc8C7GTrX6q5FIWRjMKJGuJLCFlSckpnhwIrw4Vw8GSgLVb8T7kMlgiGzD0M
+	ifU6nYid10P4xi48HUrd12Ffmo26iZC8oNEAnYLkazGfq3slPPuNY1Bj6yiY9Mwt
+	6qvG/DRRO4W3RhFJmCn5Eo78R0NMcGSf7q85s1RTLIsYj07HlQUvpARuiZ75xtGa
+	9ZqxhVFwGKGaQ5rz8cxjb246JuxEWTUTO98smpnxWQ==
+X-ME-Sender: <xms:l4IEZ4_NCR7K-MnE6CgHkIBubSSS4oowGRitHKvrZZUWcew3yXKBCw>
+    <xme:l4IEZwscpWLHITjxhRtvEQCO45VDNfG8I1z-A6e_Ob-SL6CfasE3f-7UIewpvKdD2
+    k7zMxqT21aaAJIclw>
+X-ME-Received: <xmr:l4IEZ-AqA7PUUcTmFEuuWznDoJHhLpKLU_dUCS8YoJjmxcBXHNNBw-tXTnZktrEOl_ru0BjcG_3DGiiJdIu7iEcQTPdAldhU7_IzPh4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeftddggedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefh
+    tddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhsse
+    hpkhhsrdhimhdprhgtphhtthhopehlvghvrhgrihhphhhilhhiphhpvggslhgrihhnsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:l4IEZ4ftQRxdXcZRZYyaRb4lh_KmUBc0l6ICpXMfvjvqoU0UprpeGQ>
+    <xmx:l4IEZ9MwMYrYOknak6MwqF7xHIk3w34IzPb_0ec8Gp6m_8A7_Sb2NQ>
+    <xmx:l4IEZyn4OYaUx4jENVHGd9S-7ZDHM_Lm0JKovIE2vIzOKKivcKcroQ>
+    <xmx:l4IEZ_sQDQItA0lZdpGqaW6C3OeJyVmSqCWomuRET0b90C5xUsxnOA>
+    <xmx:l4IEZw2Yu3C1-LuANEQGEKRESWr_rk7LE285QwlQZN9pbPC78_5kUZJE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Oct 2024 20:53:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Philippe Blain
+ <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] Makefile: fix dependency for $(UNIT_TEST_DIR)/clar/clar.o
+In-Reply-To: <pull.1810.git.1728323033680.gitgitgadget@gmail.com> (Philippe
+	Blain via GitGitGadget's message of "Mon, 07 Oct 2024 17:43:53 +0000")
+References: <pull.1810.git.1728323033680.gitgitgadget@gmail.com>
+Date: Mon, 07 Oct 2024 17:53:41 -0700
+Message-ID: <xmqqldyz76ui.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo74kj4ys.fsf@gitster.g>
+Content-Type: text/plain
 
-On 2024.09.18 09:34, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
-> > We want to namespace types as well as functions, as Phillip pointed out
-> > in 47b18fa4-f01b-4f42-8d04-9e145515ccc1@gmail.com.
-> >
-> > Is there a reason why we need the shim struct from your
-> > xmqqcylcpnah.fsf@gitster.g and can't just cast directly like so:
-> > ...
-> >  int libgit_configset_get_string(struct libgit_config_set *cs, const char *key, char **dest)
-> >  {
-> > -       return git_configset_get_string(cs, key, dest);
-> > +       return git_configset_get_string((struct config_set *) cs, key, dest);
-> >  }
-> 
-> Not at all.  I just didn't see your intentions in the patch if all
-> you wanted to do was merely to flip names, or wanted to leave the
-> possibility to allow the wrapped ones to optionally have different
-> shape (e.g. for bookkeeping purposes for either the host environment
-> or the shim layer).  If it is merely "we do not want to expose these
-> names but we want bit-for-bit identical data", then you do not need
-> extra logic at all---the casts would be suffficient[*].
-> 
-> PS. I am not feeling well today, so please expect delayed and/or
-> sparse responses.
-> 
-> 
-> [Footnote]
-> 
-> * Building objects that go to libgit.a, partially linking them to
->   resolve internal references, and then rewriting the symbol table
->   of the resulting relocatable object file to expose only the entry
->   points and data you want to show to the rust world to whatever
->   names you want, would be a less gross solution, I would imagine.
->   You only then need to write a (fake) public_symbol_export.h file
->   that will never has to be seen on the C side, but to be seen as
->   the header to describe that C library to the rust side (and
->   obviously you do not need public_symbol_export.c file only to keep
->   these casts).
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I don't think I'll have time to experiment with this approach for V4,
-but I'll put it on our list of future work. For now I'm just keeping
-public_symbol_export.{c,h} as-is and casting to avoid exposing the
-unmangled struct name.
+> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>
+> The clar source file '$(UNIT_TEST_DIR)/clar/clar.c' includes the
+> generated 'clar.suite', but this dependency is not taken into account by
+> our Makefile, so that it is possible for a parallel build to fail if
+> Make tries to build 'clar.o' before 'clar.suite' is generated.
+>
+> Correctly specify the dependency.
+>
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+>     Makefile: fix dependency for $(UNIT_TEST_DIR)/clar/clar.o
+>     
+>     Hi Patrick,
+>     
+>     I tried building v2.47.0 and stumbled onto this small issue. It
+>     reproduces for me from a fresh clone on my old 2009 Mac with make -j -l
+>     2.5, it's a little curious that no one ran into this yet.
+
+I suspect that nobody tells make to build clar.o (and nothing else).
+
+Instead, the t/unit-tests/bin/unit-tests target is what is typically
+built, which is part of $(CLAR_TEST_PROG) that has clar.suite as one
+of its dependencies.
+
+    $ make
+    $ rm -f t/unit-tests/clar.suite t/unit-tests/clar/clar.o
+    $ make -j1 t/unit-tests/bin/unit-tests
+    GEN t/unit-tests/clar.suite
+    CC t/unit-tests/clar/clar.o
+    LINK t/unit-tests/bin/unit-tests
+
+What is possible to happen from the broken dependencies is when I
+did not remove clar.o in the above experiment.  We may rebuild
+clar.suite and then link clar.o that is outdated without realizing.
+
+>     I found it best to declare the dependency directly on clar.o, instead of
+>     adjusting the dependencies of CLAR_TEST_OBJS on the line above, since it
+>     is really only this clar.c that includes clar.suite
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1810%2Fphil-blain%2Fclar-build-dep-fix-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1810/phil-blain/clar-build-dep-fix-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1810
+>
+>  Makefile | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Makefile b/Makefile
+> index 2dde1fd2b8b..b615de74811 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -3911,6 +3911,7 @@ $(UNIT_TEST_DIR)/clar-decls.h: $(patsubst %,$(UNIT_TEST_DIR)/%.c,$(CLAR_TEST_SUI
+>  $(UNIT_TEST_DIR)/clar.suite: $(UNIT_TEST_DIR)/clar-decls.h
+>  	$(QUIET_GEN)awk -f $(UNIT_TEST_DIR)/clar-generate.awk $< >$(UNIT_TEST_DIR)/clar.suite
+>  $(CLAR_TEST_OBJS): $(UNIT_TEST_DIR)/clar-decls.h
+> +$(UNIT_TEST_DIR)/clar/clar.o: $(UNIT_TEST_DIR)/clar.suite
+>  $(CLAR_TEST_OBJS): EXTRA_CPPFLAGS = -I$(UNIT_TEST_DIR)
+>  $(CLAR_TEST_PROG): $(UNIT_TEST_DIR)/clar.suite $(CLAR_TEST_OBJS) $(GITLIBS) GIT-LDFLAGS
+>  	$(call mkdir_p_parent_template)
+>
+> base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
