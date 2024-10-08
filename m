@@ -1,137 +1,92 @@
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1ED3BBDE
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 15:53:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BCD224F0
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 16:03:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728402835; cv=none; b=HlJMcaOynksEwv2zZM/05/kYYr4qpKUlqqq3kTvKXU36U0I3tgXgVD9azFQK5Y7ujsFN1nk/5pSXL5Jis1WRXxyTCxYycSi1EkYY+8NMs60OucGqeFvSzatpwVL7TME1UkZnsrrJQus6qj11ETbU7w8NAxfWTTcpitksoh7pX7w=
+	t=1728403408; cv=none; b=oKFhz/chqxgXKPY52RlNmxUdRBJ6CnKiCZozNgvTcz5+RmgYdgslpmgaX0f3NfCLXJs+nbjGxQq7p8PpAzuSNF5eerhG34HteyqpamNR9aqe9wBznugSo8WFfQPSsl7sbkrYH6VXgJng4Z7RGuq3b/1aWPYRrmzVF3ytlFRD204=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728402835; c=relaxed/simple;
-	bh=YRjWQ8soWFBtNfRGj9KycQEcT7rwvNGW30viipOLOyo=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nhFYJ7NYAxszI24ja2rO/jbaU5AYuL8Fb8sDVp/931oaobZ0INd3nWtqmrEl9LJvKY5v8ROtIKJzRxgRNtOU78+L+cdBajcCkeYSeZmSA8srGjBo+8NkL63u15A/TJJc0W4jC8FaGgrysH1HiILa20n9am0fZS8MZL5zjW8ir/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=Dj/GeFjm; arc=none smtp.client-ip=185.70.43.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1728403408; c=relaxed/simple;
+	bh=BR4JHUsjWA/IsLYfkeex8VhIgtRp9mmi76S1jSry5zk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pRg4VaqcyUZNoHw1jc5EGzeKRgydJpVpsvRCNrD+joTwBG9eQ8Ug56l65RTcXLF2AzfRVRSLhqKwphB0wHzJN6w1lmzrWYyUuhMeVgtC0tVSEn7P9mlCZ1CQ/CwicAGGmtYJIwXbbTjYVT5W1cPOXEqAoMK++3j+zbnSiJngz2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=spZlmkV4; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="Dj/GeFjm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728402831; x=1728662031;
-	bh=+1YEFRCLMqTdOFJZUFGccYifDBOpKyASX2mex7vMlq4=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Dj/GeFjm3eM+zLr7CxoKHZrgS/Dq9JLcHzCJ+weA8Tm/hEZbanWajNg2EKTuqgmLc
-	 AYRZ63UesJ03dBq4Z/F6sQ9nDmw6d7vS9rXazoK6TEEoZNtqNj2fSHRzmQFjRrpnxe
-	 9Cc1+BmHa8EJzPfyxF5C4DKHO416AXRZV5NDn+o4btibAb72VZyZrrLoq4vGc107MB
-	 sIu8/8jN/vjer0eviOFBd6uvMtNEexpgYybF1kO+jNxknrRurThMHLOAOf3hLHp1og
-	 tpJ+8FaUBKlw5AagTsqlNJDyocBAK924O9wo/DEPJBRBDfxzBZswq2ObjHCfuACyaj
-	 w/0BX0vz11hBQ==
-Date: Tue, 08 Oct 2024 15:53:46 +0000
-To: ericsunshine@charter.net
-From: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org, russell+git.vger.kernel.org@stuart.id.au, sunshine@sunshineco.com, cdwhite3@pm.me
-Subject: Re: [PATCH] worktree: repair copied repository and linked worktrees
-Message-ID: <r4zmcET41Skr_FMop47AKd7cms9E8bKPSvHuAUpnYavzKEY6JybJta0_7GfuYB0q-gD-XNcvh5VDTfiT3qthGKjqhS1sbT4M2lUABynOz2Q=@pm.me>
-In-Reply-To: <20241008153035.71178-1-cdwhite3@pm.me>
-References: <20241008153035.71178-1-cdwhite3@pm.me>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 70de43fbca257c7c63ff0170ac14982d8e99659e
+	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="spZlmkV4"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6e2e4244413so30515727b3.3
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 09:03:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1728403405; x=1729008205; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BR4JHUsjWA/IsLYfkeex8VhIgtRp9mmi76S1jSry5zk=;
+        b=spZlmkV4NWE/u4M+xyA6fllGbShUDMPutCImQUWJ7yXHN7mqztOvBJXof1aPi9daCQ
+         3q25Hgf+Hxda7DGs5FOO5Gz8643fyAvPGFy/MfVZ1PALqR6kQto0zaGn0n/6RxwZm8wu
+         e3r2ZPpDpI/0Yy8p/eNZmNpyZyNC1IJnDo5WeEOWXFRQHAYprmUiFKcWeT9kq0+Xm2Yx
+         ERrHWI+AT35mCCEINIgtsOddYm8Rk/Lm+Q3aadrQOg8uXU7Cm6m/rpKaqgpeW57NSTvq
+         IoMYdF+WAmfplPzCIMkxToTj3rx4aiTXyAM7FNdCdAYUcpSSy9YjAXkykertRlLIDaPI
+         C1qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728403406; x=1729008206;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BR4JHUsjWA/IsLYfkeex8VhIgtRp9mmi76S1jSry5zk=;
+        b=Plxsy+mdvOxv9XJGYVCg0Y0K8VW+QVAeLgy5p941dHFGupvaPhSQbFDetYp3sgH3lR
+         /Ung/eT+HiXJRUkeQp4oRMJs/lgES/MN9PhGlKBgOBulIWKWId3fY7upbggdSBlVZlZW
+         HM8vSFyLE246V1SQPgIa0RIcmYP7Tu5QhsnBpicUJdvKuxh9Tin5PzOomlQ/FghVK0OF
+         /Uo9F27p+XofiJax7zYNKxxoh7UGcQ2jfAaS3RIAW6LrDIPvQ/5qTAx5pv7zvAZKit4T
+         15BBngh8r6dxceV/TXqlMwstl9bRErFlAJZHGb8JH1KrYPYUBqanWEi1KfF5xomubVln
+         pCZw==
+X-Forwarded-Encrypted: i=1; AJvYcCWJrLtNhOtj3aB3f+pGHyr7l/HKx5qKXocrPXC6/FeoTDVUfah4ryr7WiQN4ePAq+rlJ84=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLSOz9UT6nWQJ62FlmwlW2TP84BmwV4SY1P85cLI6veCx5VAc/
+	Tg99efaaN32ZjIV8eW7+3FPxuVexrhIp6iePIgPBCe+btimNiRroyjIqzuLHzMwe3B9r/r41Sh3
+	u0sjtQsDRMQcYBjEJ+VfkHz1A/JSkvWqpuSuTlBT45Zqs7YBWcPpgZau4sgkKja0s0VgdvJTbHk
+	zWzhx26YtJTJZxPrnVFaiCHcWbWE4y+GKF8RoGHAMsMybWGYzUVhmnNgEtJplK+xnwW3MOnhA5i
+	SxnUL7FbZEiJPl86JQVrroRFfeMQpIxoXVN6aEaKuNx8htqLvI5y+133/8c/IlI+NQIZaLyhb0y
+	15jeiFuLLAw=
+X-Google-Smtp-Source: AGHT+IEzeNJdV2+chR6U9zx2jh/JkV9KsSotIhbHAZDBSNaK43gQuzQojzCALPfqh2s5XdkeJK8mwlJN0JiBb/KgfSw=
+X-Received: by 2002:a05:690c:f13:b0:6e2:1545:730 with SMTP id
+ 00721157ae682-6e2c6ff1688mr150689497b3.2.1728403405423; Tue, 08 Oct 2024
+ 09:03:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------a949510fc7052e26ecb55329e7bf51dfc613d2d7e198fd757c7fb7deacbf5c59"; charset=utf-8
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------a949510fc7052e26ecb55329e7bf51dfc613d2d7e198fd757c7fb7deacbf5c59
-Content-Type: multipart/mixed;boundary=---------------------2ae4bc2d3523c169eeffefe56b393287
-
------------------------2ae4bc2d3523c169eeffefe56b393287
+References: <pull.1804.git.1727862424713.gitgitgadget@gmail.com>
+ <20241007055821.GA34037@coredump.intra.peff.net> <20241007060813.GA34827@coredump.intra.peff.net>
+ <CAOTNsDwwikiX3u6DG=+4hn+mcgfXzzDoqR3ZFVEdGi=mPGQbpg@mail.gmail.com> <20241008083121.GA676391@coredump.intra.peff.net>
+In-Reply-To: <20241008083121.GA676391@coredump.intra.peff.net>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Wed, 9 Oct 2024 01:03:14 +0900
+Message-ID: <CAOTNsDyxmRZ155vV-Jh=1obMnR+F4ExY9B136fiGk0Vd23-zrw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] alternate approach to fixing fsmonitor hangs
+To: Jeff King <peff@peff.net>
+Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
 
-On Tuesday, October 8th, 2024 at 10:30, Caleb White <cdwhite3@pm.me> wrote=
-:
+On Tue, Oct 8, 2024 at 5:31=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+> I've added in the necessary Windows bits, along with smoothing a few
+> rough edges. Especially with the extra Windows changes (which I mostly
+> had to guess-and-check by pushing to CI), I'm beginning to wonder if my
+> solution isn't getting a bit too complicated, and maybe yours was the
+> right way after all.
+>
+> But I've cleaned it up for presentation here, so at least we can look at
+> the final form of both and see which we prefer.
 
-> test_expect_success 'does not repair worktrees from another repo' '
-> test_when_finished "rm -rf repo1 repo2" &&
-> mkdir -p repo1 &&
-> git -C repo1 init main &&
-> test_commit -C repo1/main nothing &&
-> git -C repo1/main worktree add ../linked &&
-> cp repo1/main/.git/worktrees/linked/gitdir repo1/main.expect &&
-> cp repo1/linked/.git repo1/linked.expect &&
-> mkdir -p repo2 &&
-> git -C repo2 init main &&
-> test_commit -C repo2/main nothing &&
-> git -C repo2/main worktree add ../linked &&
-> cp repo2/main/.git/worktrees/linked/gitdir repo2/main.expect &&
-> cp repo2/linked/.git repo2/linked.expect &&
-> git -C repo1/main worktree repair ../.. &&
-> test_cmp repo1/main.expect repo1/main/.git/worktrees/linked/gitdir &&
-> test_cmp repo1/linked.expect repo1/linked/.git &&
-> test_cmp repo2/main.expect repo2/main/.git/worktrees/linked/gitdir &&
-> test_cmp repo2/linked.expect repo2/linked/.git &&
-> git -C repo2/main worktree repair ../../repo1/linked &&
-> test_cmp repo1/main.expect repo1/main/.git/worktrees/linked/gitdir &&
-> test_cmp repo1/linked.expect repo1/linked/.git &&
-> test_cmp repo2/main.expect repo2/main/.git/worktrees/linked/gitdir &&
-> test_cmp repo2/linked.expect repo2/linked/.git
-> '
+Thank you for the new patch. It prevents to start accepting requests
+until starting fs event listening and simplifies the code flow. It also
+has sufficient comments, so later everyone can easily understand how it
+works. I also tested it both on mac and windows and it works correctly.
 
-Apologies on this test case, it should be:
+I think this one should be adopted :)
 
-    test_expect_success 'does not repair worktrees from another repo' '
-	test_when_finished "rm -rf repo1 repo2" &&
-	mkdir -p repo1 &&
-	git -C repo1 init main &&
-	test_commit -C repo1/main nothing &&
-	git -C repo1/main worktree add ../linked &&
-	cp repo1/main/.git/worktrees/linked/gitdir repo1/main.expect &&
-	cp repo1/linked/.git repo1/linked.expect &&
-	mkdir -p repo2 &&
-	git -C repo2 init main &&
-	test_commit -C repo2/main nothing &&
-	git -C repo2/main worktree add ../linked &&
-	cp repo2/main/.git/worktrees/linked/gitdir repo2/main.expect &&
-	cp repo2/linked/.git repo2/linked.expect &&
-	git -C repo1/main worktree repair ../../repo2/linked &&
-	test_cmp repo1/main.expect repo1/main/.git/worktrees/linked/gitdir &&
-	test_cmp repo1/linked.expect repo1/linked/.git &&
-	test_cmp repo2/main.expect repo2/main/.git/worktrees/linked/gitdir &&
-	test_cmp repo2/linked.expect repo2/linked/.git &&
-	git -C repo2/main worktree repair ../../repo1/linked &&
-	test_cmp repo1/main.expect repo1/main/.git/worktrees/linked/gitdir &&
-	test_cmp repo1/linked.expect repo1/linked/.git &&
-	test_cmp repo2/main.expect repo2/main/.git/worktrees/linked/gitdir &&
-	test_cmp repo2/linked.expect repo2/linked/.git
-    '
-
-- Caleb
------------------------2ae4bc2d3523c169eeffefe56b393287--
-
---------a949510fc7052e26ecb55329e7bf51dfc613d2d7e198fd757c7fb7deacbf5c59
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsBzBAEBCAAnBYJnBVV7CZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
-28viAADgYgf+OtydBq1B4/oPy9S6s0mF4sEqkiFEu9XfaMPHKz6V0ZPzny7W
-yiGFgzHpNMB/YEH+MK/BJJBgFZFF8drLvfDk0I9234heW3D0Ctip3pzpgrI6
-k1Se9BZQqcBFpIy6xvsPZCrjyjkVf7fQrICABVxwI4QcjFaunenaSoljFFuR
-8Yi/WZgZBYmpR30WOW8DUiIH/fJPy2ORowMuX7ZBlE41R6mOHd2dj6JmfzBY
-TwhCr8pG3vx6kVi4uc3bnqM9yFxB+LXs5jMK+c6c6fd9DzwKXTAddCupQog+
-foknLWA6hlpLJYt3kxpQki3Ak2wfV5W6htVRM1sIwNArBGnUCLPmPg==
-=Gw1Z
------END PGP SIGNATURE-----
-
-
---------a949510fc7052e26ecb55329e7bf51dfc613d2d7e198fd757c7fb7deacbf5c59--
-
+Koji Nakamaru
