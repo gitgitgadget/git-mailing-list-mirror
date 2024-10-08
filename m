@@ -1,90 +1,134 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34AE13FB9F
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 03:43:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30961DFD1
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 03:58:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728358993; cv=none; b=PKEf5zpcSfmKTarcpOshYijjcUlOcmojgBA0ycFs0LfuWAubqnpHte8gJy0lh2eH4dy/MUWYBNbnI8F6/KQowYLhnGL/tDFRp/P4x5u03aMjsSXUA0YpIImERVG8TEvH81Vd3BLOcasVnfBIr1om4bPyy3/Zj+1KVGmzQF1hTnA=
+	t=1728359903; cv=none; b=QpA6XAqpBYEWNkqFnS3GL4uhkmCCUL/W04/atRXqv2seOGfbtkBvNicFa5FGqzWKKWP0waZ325wJa+B/TJJP3kohlJIdZz9r+pxBdbQx7bsEVFmCylQB0UmWvZwyzWjgD8j8UubxG1wZ5Kp9Rr0t/m6jb/dRKZ63ihFsBImT4qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728358993; c=relaxed/simple;
-	bh=iA7ty1WW+bI3q317JV6oNmgQ2RC38RPtGzRo7GaN1SY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=H56KIdSr0i+DfdytZMddkDtwX3pdBnF1uQ7JKFYyv4NbEKVgg9ATbg+8OcelzeX2Pqlnr5rPKU52TkjaFjcJUOncU1GlqrxfhouSForyFSkQYxf9D7uXuulpmLefZ9jxxVfwmvJq07gVaLB7XJuemxPd/4dF43dqOfgb4v74JwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=Pp/J4KNB reason="signature verification failed"; arc=none smtp.client-ip=220.197.31.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1728359903; c=relaxed/simple;
+	bh=OcEYughh8KwlxhoLvSVerrYSt4yPPgmfkFr9YGvCkho=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wp+nRRv2JyfsCT6xfGZuJFlR3zAohVzfLJYZgMhGzOKWh3lFU9KLrbBwfM+cVYYQ0OuWOrzn9qzDmbORCKgjObgO0SPtY6BRrwDXOtzKR4VqhBwhE3n4Uk6+Uira++pWEN5mH6kAe4Lsmdy4sQxApLwbm5U44SUQlBj7xqWFP3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pREpBiQW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h7fPECo0; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="Pp/J4KNB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=4izUfZyWzhJ4doE+/szQwHXHx2MzDFdvW0VIKGaAaWs=; b=P
-	p/J4KNBCwed2YD6rE0bpNURSqrrLzHgC1VfZOdq+77yNkoHYwbqL3Lv8vtotAGyG
-	jr6qet4xbHd7i4uxgyaIGMjOWaaYL4E5vgek/lJlz8lfRDxLIUj2rpSsbeuCWJKp
-	KXHBzkE/uXOykRsKel3jBH77336bxx19CB7R5rQZL4=
-Received: from bupt_xingxin$163.com ( [240e:694:e21:b::2] ) by
- ajax-webmail-wmsvr-40-105 (Coremail) ; Tue, 8 Oct 2024 11:42:45 +0800 (CST)
-Date: Tue, 8 Oct 2024 11:42:45 +0800 (CST)
-From: "Xing Xin" <bupt_xingxin@163.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: "blanet via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"Brandon Williams" <bmwill@google.com>, 
-	"Jonathan Tan" <jonathantanmy@google.com>
-Subject: Re:Re: [PATCH v2 0/5] Support server option from configuration
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <ZwOaZkxETwdId9Qg@pks.im>
-References: <pull.1776.git.git.1725279236.gitgitgadget@gmail.com>
- <pull.1776.v2.git.git.1727093878.gitgitgadget@gmail.com>
- <ZwOaZkxETwdId9Qg@pks.im>
-X-NTES-SC: AL_Qu2ZCv+et0Et4yKdZOkXn0oVhe85UMW2ufsg3YReP500tyTsxQ0LbW9AOFTI+s6LKRqhoAi8dRR/9dRqf6BhVoeSDWLgAZRK8egrUlXZiuGK
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pREpBiQW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h7fPECo0"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B9E0B114023A;
+	Mon,  7 Oct 2024 23:58:17 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Mon, 07 Oct 2024 23:58:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1728359897; x=1728446297; bh=Nqwjd9QmtY
+	qQQlbFAo0QYa1kTP+WOi9WoeJ0jzXvRrk=; b=pREpBiQW1w0LYazOWHKtO8cRtO
+	o0qG83b8SPZq6T79n3yewfhgPohpx93dPOafyP+hb+/1TLcu6OPXKW1uSF1YxqgF
+	CNQY/gNU66mOo0vPjAGOMVmkjrYlnXl6fvSTRoIvsIH5ckifGfwEB7rhWjlzPpmT
+	+Hk4cjNhalrYjEZtYTUgv7BTquObNk23GJmC1A11SujACFKojy8Ey07bwliWkoMu
+	MXrs09UvMO/WpRrcbmACVe4qdBQdwnTBTopr/ZXiQ9fqUQNTFFBigwY4oBN02T0m
+	Wbxe3/fuI2940r7mhFLtkT+RoWazSxbvyxtCoOfFbjA7wlOOAxhQKasf3peg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728359897; x=1728446297; bh=Nqwjd9QmtYqQQlbFAo0QYa1kTP+W
+	Oi9WoeJ0jzXvRrk=; b=h7fPECo0fyMFOHc5WZQw2QavWugW7zRvpehN+bSIXKBD
+	4jDHSeWkyKJvdMicePG1dHLqngMRR4M/uzI52HPTrexyVTzvEEjlGJWg+KMixb0C
+	EDDFsBxXwdOXmSSoXkXyVuFMYZSj7cfvxxuIYVMls81drcYNGu2SQtKtzMs178pT
+	eYIDbaJvujrmjNGbW8++DLHfb8Xu/RXa04R0vxeFfBAuGS7HBLZ0AJhaXxyIhqF9
+	Xzas2TQNtFw9vc/ZuYVsqXJSqGhWdWqTgmPyoFb+2FjlyVCxbX39FiPJ6Y+4G2E1
+	E9iLjM3yvVDrYhmBtVNp49C/ztCM7I3v7fRRH8yYDQ==
+X-ME-Sender: <xms:2a0EZ_F5ZULmf5WA0ttb2X0nGz1Bl8vrxC4HjNws69M8etv-xsaGBg>
+    <xme:2a0EZ8WN5SCL5Xgo_MdHz61ffFxGyF4JQDQSmtrPkKrlMVi1pddNON6nJ6PUe3bUK
+    lK7R8wvW4WYU2r-HA>
+X-ME-Received: <xmr:2a0EZxKzGL51N_-DQCJntuj-A_qu1ZDRZseQ6ocLp4WYOmfDCgTpKO5ubr4ec_CvcIHUDPdPNGYzgrHsxVyy4v9Nrbq4hoF58_-rrS2jpr8xr2Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeftddgjeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheplhgvvhhrrghiphhhihhlihhpphgvsghlrghinhesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:2a0EZ9HW4RbMiqe6uX0ayusiScDcODdIQTTaZYSOSPQTuBC2QZ1QPQ>
+    <xmx:2a0EZ1UBGCi6KZLuQ092pQ7R1HsV7_J7LiNFny8Dy76nYlZUHHgrvg>
+    <xmx:2a0EZ4OLrRRTJurGTP1Kbb0PiN6LU4--cjS-uWUAYsDm4c3uqNen8g>
+    <xmx:2a0EZ02qnWIwLVNlXtZZO6N18COR4-jGJr__s70qBJmFW7W99TuKLw>
+    <xmx:2a0EZ7xVK2jYWAuITLgDkQGNF3OlIBIj-VM7Vz6-FCeCwzBmfr-hN7ie>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Oct 2024 23:58:16 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 711067c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 8 Oct 2024 03:57:13 +0000 (UTC)
+Date: Tue, 8 Oct 2024 05:58:09 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] Makefile: fix dependency for $(UNIT_TEST_DIR)/clar/clar.o
+Message-ID: <ZwSt0ZrlDaYCzfRX@pks.im>
+References: <pull.1810.git.1728323033680.gitgitgadget@gmail.com>
+ <xmqqldyz76ui.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <2d736d9e.4c15.1926a38e006.Coremail.bupt_xingxin@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:aSgvCgDXX1I1qgRnDIgHAA--.49104W
-X-CM-SenderInfo: xexs3sp0lqw5llq6il2tof0z/1tbiRQNybWcEpsJeLgABsv
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqldyz76ui.fsf@gitster.g>
 
-QXQgMjAyNC0xMC0wNyAxNjoyMzowMiwgIlBhdHJpY2sgU3RlaW5oYXJkdCIgPHBzQHBrcy5pbT4g
-d3JvdGU6Cj5PbiBNb24sIFNlcCAyMywgMjAyNCBhdCAxMjoxNzo1M1BNICswMDAwLCBibGFuZXQg
-dmlhIEdpdEdpdEdhZGdldCB3cm90ZToKPj4gV2UgaGF2ZSBtdWx0aXBsZSBpbnRlcm5hbCByZXBv
-c2l0b3JpZXMgY29uZmlndXJlZCB3aXRoIGEgaHVnZSBudW1iZXIgb2YgQ0kKPj4gdGFza3MsIGVh
-Y2ggcmVxdWlyaW5nIGNvZGUgcHJlcGFyYXRpb24gKGVpdGhlciB2aWEgY2xvbmUgb3IgZmV0Y2gp
-LiBUaGVzZSBDSQo+PiB0YXNrcywgdHJpZ2dlcmVkIGJ5IHBvc3QtcmVjZWl2ZSBob29rcywgb2Z0
-ZW4gZmV0Y2ggdGhlIHNhbWUgY29kZSAodXN1YWxseQo+PiB1c2luZyAtLWRlcHRoPTEpIGNvbmN1
-cnJlbnRseS4KPj4gCj4+IFRvIHJlZHVjZSBwZXJmb3JtYW5jZSBpbXBhY3RzIG9uIHRoZSBnaXQg
-c2VydmVyIGNhdXNlZCBieSB0aGVzZSB0YXNrcywgd2UKPj4gd2FudCB0byBkZXBsb3kgYSBzcGVj
-aWFsIGRlc2lnbmVkIHBhY2stb2JqZWN0cy1ob29rLiBUaGlzIGhvb2sgd291bGQgYWxsb3cKPj4g
-dGhlIHBhY2tzIGdlbmVyYXRlZCBieSBnaXQtcGFjay1vYmplY3RzIHRvIGJlIHJldXNlZC4gU2lu
-Y2Ugbm90IGFsbAo+PiBjbG9uZS9mZXRjaCBvcGVyYXRpb25zIHdpbGwgYmVuZWZpdCBmcm9tIHRo
-aXMgY2FjaGluZyAoZS5nLiwgcHVsbHMgZnJvbQo+PiBkZXZlbG9wZXJzJyBlbnZpcm9ubWVudHMp
-LCBjbGllbnRzIG5lZWQgdG8gcGFzcyBhIHNwZWNpYWwgaWRlbnRpZmllciB0bwo+PiBpbmRpY2F0
-ZSB3aGV0aGVyIGNhY2hpbmcgc2hvdWxkIGJlIGVuYWJsZWQgZm9yIGEgcGFydGljdWxhciBvcGVy
-YXRpb24uIFVzaW5nCj4+IHNlcnZlciBvcHRpb25zIGlzIGEgc3VpdGFibGUgbWV0aG9kIGZvciB0
-aGlzLgo+PiAKPj4gSG93ZXZlciwgc2VydmVyIG9wdGlvbnMgY2FuIG9ubHkgYmUgc3BlY2lmaWVk
-IHZpYSB0aGUgY29tbWFuZCBsaW5lIG9wdGlvbgo+PiAodmlhIC0tc2VydmVyLW9wdGlvbiBvciAt
-byksIHdoaWNoIGlzIGluY29udmVuaWVudCBhbmQgcmVxdWlyZXMgQ0kgc2NyaXB0Cj4+IG1vZGlm
-aWNhdGlvbnMuIEEgY29uZmlndXJhdGlvbi1iYXNlZCBhcHByb2FjaCBpcyBlYXNpZXIgdG8gcHJv
-cGFnYXRlIChieQo+PiBjaGFuZ2luZyB0aGUgZ2xvYmFsIGNvbmZpZ3VyYXRpb24gfi8uZ2l0Y29u
-ZmlnKSBhbmQgYXZvaWRzIGlzc3VlcyB3aXRoIG9sZGVyCj4+IEdpdCB2ZXJzaW9ucyB0aGF0IGRv
-bid0IHN1cHBvcnQgLS1zZXJ2ZXItb3B0aW9uLgo+PiAKPj4gVGhpcyBwYXRjaCBzZXJpZXMgaW50
-cm9kdWNlcyBhIG5ldyBtdWx0aS12YWx1ZWQgY29uZmlndXJhdGlvbiwKPj4gcmVtb3RlLjxuYW1l
-Pi5zZXJ2ZXJPcHRpb24sIHNpbWlsYXIgdG8gcHVzaC5wdXNoT3B0aW9uLCB0byBzcGVjaWZ5IGRl
-ZmF1bHQKPj4gc2VydmVyIG9wdGlvbnMgZm9yIHRoZSBjb3JyZXNwb25kaW5nIHJlbW90ZS4KPj4g
-Cj4+ICAqIFBhdGNoIDF+MyBpcyB0aGUgbWFpbiBjaGFuZ2UgZm9yIGludHJvZHVjaW5nIHRoZSBu
-ZXcgY29uZmlndXJhdGlvbi4KPj4gICogUGF0Y2ggNCBmaXhlcyBhIGlzc3VlIGZvciBnaXQtZmV0
-Y2ggbm90IHNlbmRpbmcgc2VydmVyLW9wdGlvbnMgd2hlbgo+PiAgICBmZXRjaGluZyBtdWx0aXBs
-ZSByZW1vdGVzLgo+PiAgKiBQYXRjaCA1IGlzIGEgbWlub3IgZml4IGZvciBhIHNlcnZlciBvcHRp
-b25zLXJlbGF0ZWQgbWVtb3J5IGxlYWsuCj4KPlNvcnJ5IGZvciB0YWtpbmcgdGhpcyBsb25nIHRv
-IGdldCBiYWNrIHRvIHRoaXMgcGF0Y2ggc2VyaWVzLiBJJ3ZlIGdpdmVuCj5pdCBhbm90aGVyIGNh
-cmVmdWwgcmVhZCBhbmQgaGF2ZSBhIHNpbmdsZSBwcm9wb3NhbCBmb3IgaW1wcm92ZWQgZG9jcwo+
-dGhhdCB5b3UgbWF5IHdhbnQgdG8gYWRkcmVzcy4gQnV0IG90aGVyIHRoYW4gdGhvc2Ugbml0cyB0
-aGlzIHZlcnNpb24KPmxvb2tzIGdyZWF0IHRvIG1lLCB0aGFua3MhCgoKVGhhbmtzIGZvciB5b3Vy
-IGtpbmQgaGVscCEgSSBqdXN0IGdvdCBiYWNrIGZyb20gaG9saWRheSwgc28geW91ciByZXBseSB3
-YXMKcGVyZmVjdGx5IHRpbWVkLiA6LSkKClhpbmcgWGluCg==
+On Mon, Oct 07, 2024 at 05:53:41PM -0700, Junio C Hamano wrote:
+> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+> > From: Philippe Blain <levraiphilippeblain@gmail.com>
+> >
+> > The clar source file '$(UNIT_TEST_DIR)/clar/clar.c' includes the
+> > generated 'clar.suite', but this dependency is not taken into account by
+> > our Makefile, so that it is possible for a parallel build to fail if
+> > Make tries to build 'clar.o' before 'clar.suite' is generated.
+> >
+> > Correctly specify the dependency.
+> >
+> > Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> > ---
+> >     Makefile: fix dependency for $(UNIT_TEST_DIR)/clar/clar.o
+> >     
+> >     Hi Patrick,
+> >     
+> >     I tried building v2.47.0 and stumbled onto this small issue. It
+> >     reproduces for me from a fresh clone on my old 2009 Mac with make -j -l
+> >     2.5, it's a little curious that no one ran into this yet.
+> 
+> I suspect that nobody tells make to build clar.o (and nothing else).
+> 
+> Instead, the t/unit-tests/bin/unit-tests target is what is typically
+> built, which is part of $(CLAR_TEST_PROG) that has clar.suite as one
+> of its dependencies.
+> 
+>     $ make
+>     $ rm -f t/unit-tests/clar.suite t/unit-tests/clar/clar.o
+>     $ make -j1 t/unit-tests/bin/unit-tests
+>     GEN t/unit-tests/clar.suite
+>     CC t/unit-tests/clar/clar.o
+>     LINK t/unit-tests/bin/unit-tests
+> 
+> What is possible to happen from the broken dependencies is when I
+> did not remove clar.o in the above experiment.  We may rebuild
+> clar.suite and then link clar.o that is outdated without realizing.
+
+Makes sense. In any case, the fix looks good to me, thanks!
+
+Patrick
