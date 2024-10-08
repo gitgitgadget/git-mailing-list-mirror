@@ -1,158 +1,180 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAD913D2B2
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 08:54:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F8817C9B6
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 08:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728377667; cv=none; b=lEn0KPP3YVEwF24RQ1l5aS/7M9qjZIRomjz/5tLkLHFAGBiVkxjbgO1vNxaubO0TcV372mplThiFWkQN5hl1dssXumQyYyzV6EIoHMWp0OC95fJ+sMUGaJx97Gxy3A146cwlWBDwNLD2LucQ6mAqJQVAMhKJWJ42ztBmc7PUbMQ=
+	t=1728377938; cv=none; b=FaxIE/MdPV6gcHwKyRXKXLJh1CpfcMrY3dMJZvXTDrGOXXjMB+ryjLPncZQq2YVTQjdDixFW2lVz/ZudaDtTYzH6dya2rgGU+Sybjp3YGFw5aXawJeUfjvjFNW7N+NetGhABtdvbMC1NlkquYWkXwTQiFrYF3fSKU4sdupgCXPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728377667; c=relaxed/simple;
-	bh=W7tUdOGjJd3FKAT6KLy6BP9bVmkPe+7DtogJcVyAjZM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D3uaS4EUwSmvso2RKSvcBEbbdIESc/nKlqNISzFduv4Y9ogakqpns8xeIM7usv9m8d83f//ktXFJcgtcW4OvnTAKQEpme0C6mJ8hMBXLIkHkEFfdVDauhsyld5K0SJdbVYHN+vqOULcB+xSm+t+zwxf04BIXc/vKzWK2SrorWlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HTQCh5Oz; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1728377938; c=relaxed/simple;
+	bh=tJMmWDPqIOLH42yxJB/qiaf83MpCh+uArJLj+PfUGfo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GO3z7rvrvYBhLo2dbGbIEFYrFhjseZm4HQgw51pIMGjN7sGVwF6Q9Z/70IqWaYxQRjh3xzaTw4jfFuaarzemCAgRDQ+6OSP7AUBUX9IkNoo5wwiap8LaPPofuAEXfqomoDt6IzvWdBKf9BXSzOH5A5Ss8cuvK3Go0QsSwgcGZ1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CNrsT/uR; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HTQCh5Oz"
-Received: (qmail 9616 invoked by uid 109); 8 Oct 2024 08:54:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=W7tUdOGjJd3FKAT6KLy6BP9bVmkPe+7DtogJcVyAjZM=; b=HTQCh5OzPLa6E+iTEi+eKY5/7YlSKi4BHTH5Ram/F/lb/wTYv/7i1TP+Lh4hAFlAcg9dMHwQSxSHluXTf61PZc5ELsjr8fAJhWHONWx+pzWkglDPnGRt1jASbK+0taZ4feW7Gz8xJ5P4W56HiW5RIiaNJgw1esk6/ntEGEBoQjlUz2HSGtIXGl0AgGoKPAcSqo5NRXuhfMMR5NjdE22vSRalyUekswyI3/ipwoMAiuALBV1jmaGB+F6AIb2IVFjzode09Q8BQZjPBJDbZFNBKGN64jWZT7HSiOvVQSB9/HuNnwcgPpnjMRw79BnBrpshnqbWOt4Volfpw3deAZzJGg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 08 Oct 2024 08:54:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15959 invoked by uid 111); 8 Oct 2024 08:54:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 08 Oct 2024 04:54:24 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 8 Oct 2024 04:54:23 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH 15/23] pseudo-merge: fix leaking strmap keys
-Message-ID: <20241008085423.GA1211512@coredump.intra.peff.net>
-References: <cover.1727687410.git.ps@pks.im>
- <9e1161d55f96253bfeb5cddd1bbd381e2dad8a71.1727687410.git.ps@pks.im>
- <ZvsWlNPGxt5AOQcK@nand.local>
- <ZwOstswKzqMNNOUO@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CNrsT/uR"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-42cb806623eso49901715e9.2
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 01:58:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728377935; x=1728982735; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RbXo5U/mYPOBiza+FouPG0wlBuedPl5cr4ebK2hVj8I=;
+        b=CNrsT/uR7EOziolJVuFlTKLp7/UydwcKqOHA/Vuekn2EUpJSbT7gCYxoxv3gtDg/xj
+         3bxY0EEeg+KXnDcowja8lKoVwzvf14RH6sh3OEiGsyxZ87u3m0SfShTRDVhApDnT9Y+J
+         4FZCwLduxWpOWXf6Anbdk4iVMkNdfruhovEHvuuClGn5XbbO1ZBOp2Q930othr8Oekh2
+         NDafwGxMDIMp0pOiLRCV1eijRVoH4bL/iItaJ2VQrcVgL/4fd2+4psKI+ScwhSx9TR/z
+         HBWGDjqYEMn2+AnX7JeL/dbUNPyOqChAoSf3/ZqpTlHc3S1/RbxGarPlAlFXSiMwSP3d
+         gOBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728377935; x=1728982735;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RbXo5U/mYPOBiza+FouPG0wlBuedPl5cr4ebK2hVj8I=;
+        b=fHaCCHoCvi8EWQ6Htg3w0Rl7t3K1OILYnDo4dhZxtvoY2aDcs6sfbgtAYDE8+2+Ool
+         k4B6QuNZ0Xsey1dClZJl/QxT6MhrRshF6+HVXFx/PIGhQZ0y/XJpKePranLnrBfvfLvy
+         YJGu+dh7WXpks13LMmo/Qu4RY/n8mUpS6b1/zuxsQ2xZl9yNv9tx1adeppFwqvBCYsAf
+         D0k3Ju2PqUy0FOHfdhYTBwLhRIUE5Ryeck8nmsRHyYHAy7R6griI0Cs4tt+u4TCdtqzN
+         2hV301+SepOw5sXG1FvmwhIQnbF5u2xC/oF+5XHjhqoz9C8kmSPndP2UrE1lJwdmm7YJ
+         r9uQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWeZmubp41zZlaNdTlsIJlbftPqFcn1TRJVW9lJ4tFgoEa5NW1WMHYSmTk82HJ/ER3k9Fk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLs31jPbXlpdKVaQyfFcRblska1XWVVS34kmO/ff1VZQFHB0Kq
+	jXAQRtn8yJRVOaROV7zGF27TvDmoxQBIM2uNZYRc4WG6DTD/0jMyj1V9azrasB923uCM2M7+gfq
+	iGI64NF7cwEp5MKSe3MWwkNi2QNo=
+X-Google-Smtp-Source: AGHT+IHLyAncHsEhcI4urSi00QNGkBcnRDVLjSi+ItF7k8KDRRNRoRBmeMuRHNHsU7szyHA1bVY3GvGHqXSTBmaKYE4=
+X-Received: by 2002:a05:600c:4f14:b0:42c:b1f0:f67 with SMTP id
+ 5b1f17b1804b1-42f85af4350mr101257925e9.27.1728377935132; Tue, 08 Oct 2024
+ 01:58:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZwOstswKzqMNNOUO@pks.im>
+References: <pull.1811.git.1728328755490.gitgitgadget@gmail.com> <xmqq34l75pr7.fsf@gitster.g>
+In-Reply-To: <xmqq34l75pr7.fsf@gitster.g>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Tue, 8 Oct 2024 09:58:44 +0100
+Message-ID: <CADYq+fYZSGBTnO+dM+MtHj=oUMqDWt+6wu-wEzwfWQJkSomkWA@mail.gmail.com>
+Subject: Re: [PATCH] t7300-clean.sh: use test_path_* helper functions
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Samuel Adekunle Abraham via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, ps@pks.im, 
+	phillip.wood@dunelm.org.uk, christian.couder@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 07, 2024 at 11:41:16AM +0200, Patrick Steinhardt wrote:
+On Tue, Oct 8, 2024 at 2:48=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> "Samuel Adekunle Abraham via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+> >
+> Manual validation is still needed for "test ! -f foo".  If the
+> original expects 'foo' to be gone, and has a reason to expect 'foo'
+> to be a file when the code being tested is broken, then rewriting it
+> into "test_path_is_missing" is OK.  But otherwise, the original
+> would have been happy when 'foo' existed as a directory and
+> rewriting it into "test_path_is_missing" is not quite right.
+>
+> This check cannot be done mechanically, unfortunately.  Hits from
+>
+>    $ git show | grep -e 'test ! -[df]'
+>
+> need to be eyeballed to make sure that it is reasonable to rewrite
+> "test ! -f foo" into "test_path_is_missing foo".
+>
+> For example:
+>
+> >       mkdir -p build docs &&
+> >       touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+> >       git clean &&
+> > ...
+> > -     test ! -f a.out &&
+> > -     test ! -f src/part3.c &&
+>
+> this test creates a.out and src/part3.c as regular files before
+> running "git clean", so the expected failure modes do not include
+> a.out to be a directory (which would also make "test ! -f a.out"
+> happy), and rewriting it to "test_path_is_missing a.out" is fine.
+>
 
-> > Hmm. I think I am probably splitting hairs, since a few xstrdup() calls
-> > between friends is unlikely to matter here, but... ;-)
-> > 
-> > It does seem wasteful if we can avoid it. We already allocated heap
-> > space for the matches via the underlying strbuf, and we really do want
-> > to hand ownership over if we can.
-> > 
-> > Would doing something like this on top of your previous patch do the
-> > trick?
-> > 
-> > --- >8 ---
-> > diff --git a/pseudo-merge.c b/pseudo-merge.c
-> > index 28782a31c6..6b6605d3dc 100644
-> > --- a/pseudo-merge.c
-> > +++ b/pseudo-merge.c
-> > @@ -110,6 +110,7 @@ void pseudo_merge_group_release(struct pseudo_merge_group *group)
-> >  		free(matches->stable);
-> >  		free(matches->unstable);
-> >  		free(matches);
-> > +		free((char*)e->key);
-> >  	}
-> >  	strmap_clear(&group->matches, 0);
-> > --- 8< ---
-> > 
-> > That introduces an ugly const-cast, but I think it's tolerable (and may
-> > be moreso with a comment explaining why it's safe).
-> 
-> Well, to me this is a tradeoff between complexity and performance. If
-> the performance benefit outweighs the additional complexity that this
-> shared ownership of keys brings along with it then I'm okay with the
-> code being intimate with each others lifetime requirements.
-> 
-> But as far as I can see the number of entries is determined by the group
-> pattern, and I expect that in most cases it's going to be quite limited.
-> So it does not feel like this should lead to all that many extra
-> allocations, and thus I tend to prefer the simpler solution.
+Hi Junio,
+Thanks again for your time and review.
+I have gone through all the instances of "test ! - [df]" and for each
+test case where "test ! -f foo" was used, foo was first created as a
+regular file in the control flow before "git clean" was called and is
+expected not to exist afterwards.
+a few more examples are to the one you referenced above are shown below;
 
-I'd tend to agree with you that the allocations aren't a big deal here.
-But I think we've run into this kind of strbuf-detaching thing before,
-and there's another pattern that is efficient without getting too
-intimate between modules. Like this (plus your change to set the
-strmap's strdup_strings mode):
+>         mkdir -p build docs src/test &&
+>         touch a.out src/part3.c docs/manual.txt obj.o build/lib.so src/te=
+st/1.c &&
+>         (cd src/ && git clean) &&
+> -       test -f Makefile &&
+> -       test -f README &&
+> -       test -f src/part1.c &&
+> -       test -f src/part2.c &&
+> -       test -f a.out &&
+> -       test ! -f src/part3.c &&
 
-diff --git a/pseudo-merge.c b/pseudo-merge.c
-index 10ebd9a4e9..fb1164edfa 100644
---- a/pseudo-merge.c
-+++ b/pseudo-merge.c
-@@ -210,6 +210,7 @@ static int find_pseudo_merge_group_for_ref(const char *refname,
- 	struct bitmap_writer *writer = _data;
- 	struct object_id peeled;
- 	struct commit *c;
-+	struct strbuf group_name = STRBUF_INIT;
- 	uint32_t i;
- 	int has_bitmap;
- 
-@@ -227,10 +228,11 @@ static int find_pseudo_merge_group_for_ref(const char *refname,
- 	for (i = 0; i < writer->pseudo_merge_groups.nr; i++) {
- 		struct pseudo_merge_group *group;
- 		struct pseudo_merge_matches *matches;
--		struct strbuf group_name = STRBUF_INIT;
- 		regmatch_t captures[16];
- 		size_t j;
- 
-+		strbuf_reset(&group_name);
-+
- 		group = writer->pseudo_merge_groups.items[i].util;
- 		if (regexec(group->pattern, refname, ARRAY_SIZE(captures),
- 			    captures, 0))
-@@ -256,8 +258,7 @@ static int find_pseudo_merge_group_for_ref(const char *refname,
- 		matches = strmap_get(&group->matches, group_name.buf);
- 		if (!matches) {
- 			matches = xcalloc(1, sizeof(*matches));
--			strmap_put(&group->matches, strbuf_detach(&group_name, NULL),
--				   matches);
-+			strmap_put(&group->matches, group_name.buf, matches);
- 		}
- 
- 		if (c->date <= group->stable_threshold) {
-@@ -270,9 +271,9 @@ static int find_pseudo_merge_group_for_ref(const char *refname,
- 			matches->unstable[matches->unstable_nr++] = c;
- 		}
- 
--		strbuf_release(&group_name);
- 	}
- 
-+	strbuf_release(&group_name);
- 	return 0;
- }
- 
+and
 
-Now we skip the duplicate allocations because we are reusing the
-group_name scratch buffer in the loop over and over. But wait, there's
-more! We're actually _more_ efficient than the original which did one
-allocation per entry, because:
+>         mkdir -p build docs &&
+>         touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+>         git clean -d -X -e src &&
+> -       test -f Makefile &&
+> -       test -f README &&
+> -       test -f src/part1.c &&
+> -       test -f src/part2.c &&
+> -       test -f a.out &&
+> -       test ! -f src/part3.c &&
+> -       test -f docs/manual.txt &&
+> -       test ! -f obj.o &&
 
-  1. We can allocate the correct number of bytes for each name, rather
-     than using the over-estimated buffer made by strbuf.
+Also for the tests where "test ! -d foo" was used, the control flow
+followed similar pattern as mentioned above where foo was created as a
+directory and then "git clean -d" was called. The control flow
+expected foo to be a directory which could have been removed
+afterwards as can be seen below.
 
-  2. In strdup_strings mode, strmap is smart enough to use a FLEXPTR to
-     stick the name inside the struct. So we've actually reduced the
-     number of allocations per entry by 1.
+> @@ -300,15 +300,15 @@ test_expect_success 'git clean -d -x with ignored t=
+racked directory' '
+>         mkdir -p build docs &&
+>         touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+>         git clean -d -x -e src &&
+> -       test -f Makefile &&
+> -       test -f README &&
+> -       test -f src/part1.c &&
+> -       test -f src/part2.c &&
+> -       test ! -f a.out &&
+> -       test -f src/part3.c &&
+> -       test ! -d docs &&
+> -       test ! -f obj.o &&
+> -       test ! -d build
 
-Now possibly it is not even worth doing this optimization, because this
-is not really a hot path. But it doesn't violate any module boundaries,
-and I think the "loop over a reusable strbuf" trick is a general idiom
-for solving these kinds of allocation problems. So a good thing to keep
-in our toolbox.
+and
 
--Peff
+>  test_expect_success 'should clean things that almost look like git but a=
+re not' '
+> @@ -624,9 +624,9 @@ test_expect_success 'force removal of nested git work=
+ tree' '
+>                 test_commit deeply.nested deeper.world
+>         ) &&
+>         git clean -f -f -d &&
+> -       ! test -d foo &&
+> -       ! test -d bar &&
+> -       ! test -d baz
+
+ This was the reason for replacing "test ! -[df]" with
+"test_path_is_missing" where I think is appropriate. I will appreciate
+it and be very grateful if test instances in this script where
+"test_path_is_missing" is inappropriate to be used are pointed out by
+other maintainers as well.
+Thanks once again for your time.
