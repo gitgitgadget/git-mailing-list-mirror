@@ -1,66 +1,103 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B5D2CA8
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 10:50:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA3D1C2DCB
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 11:45:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728384659; cv=none; b=bRJzWIz6y03W1w+7oZm8p7RH+kfZicf9ztGCanPScqPxef/ea1MAhvl2US3++w5rgYa+zBPwmKHZoVCoWRwdcn8hKbjH7K4HHV1g7JtazCEaCLEGcYy4FTJmPezJWOLC9bsJzaBKCujci32Z2RMnxGCEGBXU/aXErDTT+QUWJzA=
+	t=1728387932; cv=none; b=fpOM9wufuzpmLjVzX5C2a5u+PKg5gb41FjJrHNjKE71kj4e1LNh8HDoG2tTOU4OeyrEqk1Kwlwph8FQcp5tw6eTwrKn0x8BWxYLWiPiZ45laiRsQgRmc/5db9WXddSICki/n3ged96o28lXpCaa9D8Vh/iM9Rb87PX3ClExwm9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728384659; c=relaxed/simple;
-	bh=33VxCB3W9AndthF0gE1zwc2WenGCdcoy/n8wOvOel4Q=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=A2FkXPITJ25Oaf+BPQEEFEewa4iXObxW0+8J55/BIMuvMxrnPxKwCXGC9whQYIpyK+zsXcwURjgpEcXNfcuQ5iRJYLL02jbHRiCspw9irB5bAnSnt4UKD2IgFtiC/TznKalj6gN5X+a4MmP3UWyp0hDnIGYqY55JdrveFKHVB3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cf2NgUI7; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728387932; c=relaxed/simple;
+	bh=7CA2FejnLqHKwA3ebM1yyu1DwZLMUHOIJ+VRxIPFp4k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iY4HpmfXoXbnkbK5Os+BVN1/gfMm6OjG7h6ubxlPev5Baw8BHKQRyRxuVcBx47usHNDltHWj6M+yep7V8LPjNl07rJKT76V3dPqSsfjsOJgkGujPwkHfKQ7GOEzAjEcPpSQxsZJd2v1W8/6Scm9ydPCL7M44I83gqhGJBqShQoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IohPJheT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DswFgwRg; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cf2NgUI7"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-20b1335e4e4so54318445ad.0
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 03:50:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728384656; x=1728989456; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=33VxCB3W9AndthF0gE1zwc2WenGCdcoy/n8wOvOel4Q=;
-        b=Cf2NgUI7IZu2xH93VZudIg0QBv5gnmbi97wgz+bbNLbxbbCROPpqOuoeZAomn3IyYK
-         G0qpz1EVh1ZlZzAKnDxz+M5cMT9/0m7APRjJGrVKQJ2EISYyD2OP4gu5RivML2fWQ10x
-         5y2SrKt1N7KqJig1+INiNmSrx9EWo/LiNHh4Uy+ltCmjEgsB35YDOuqPeixupOmN6D7c
-         EAdp7iWTX5T3GJLWgTny7KKxPeaVY9cLVS1ortEpmXoaiOmyKTsYtZRgrv/tcAu9DsW2
-         kPc0yQOi5rk4ZjxH4D8CWymLtPL/GNZKebyROGy9olbf4U7MTPo76nKXQAwgdetpFuIP
-         vu6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728384656; x=1728989456;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=33VxCB3W9AndthF0gE1zwc2WenGCdcoy/n8wOvOel4Q=;
-        b=GzZJHSHy4dR0vI1SAkqT1RTmB/Zxl9DW5diDbrb9znmetPx65B+fU4XreHFaIQYYTD
-         pYbOR3i9tRbuThtShZ8CW/H5yzTQcpfus1vib6Xeu0c49nJPr/+Aq02sUTykwSNREvVD
-         UKFlopdVcErawzzK9AZIO9+OfdsxUj6GKdp15ox94GAO29ou7T7qFoc50CERkHAf261S
-         0wDz6j4ChYa4dc5gSkl4v/1pLghjlaLbkaHk9K8i+Z7bRD1BJx7b6t4YE/mA1+CzyHv+
-         sQ0Ypl/lakd4sS1PC27YvaznPhKxS0dWlSBlQO3xvWDRjLh/0bll1/qTB0aYsuDZK4H6
-         2v7g==
-X-Gm-Message-State: AOJu0YzjITjrEaCXo1Q8BHy1FafKMyDvY7p94zXCXOLA8t9zv6thDaac
-	OZj0M6cZVgjskadkzSWR+csJO1FimsyWMgWONp7F+92f9gfjQO7Jbf328eVnqwvywK9U0T2Efvy
-	axuuQwLm4xiddn81sLY9PMoYFSMgEV6DYwAQ=
-X-Google-Smtp-Source: AGHT+IHp/WQAjeTr72MjVpDFCimChapYhJ9zTRxcXOhcxSru3SeBIS4VDOXwS6moJg10o6HrbUASC7nuaTPRnXQnPTU=
-X-Received: by 2002:a17:902:f68d:b0:20c:5c37:e2c6 with SMTP id
- d9443c01a7336-20c5c37e5bfmr5998765ad.11.1728384656450; Tue, 08 Oct 2024
- 03:50:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IohPJheT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DswFgwRg"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 30FB91380477;
+	Tue,  8 Oct 2024 07:45:28 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Tue, 08 Oct 2024 07:45:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1728387928; x=1728474328; bh=keVKnzxo12
+	MzSZfVIfkrr+xynejIKrX/yw8Y2ID4kq0=; b=IohPJheTFqVRiJw2mBjrNApaCK
+	GUIRyTSwTSukRnqzB05qHNij8OLDWasifziPjdasQFv/8PNB3MmxgY0jKWcayWfR
+	nxySTqr1QAlwROEoMB0JkWuszzngZl3MNZ0Z49PDv/93j3OczcGCRYzOV/qp4nTl
+	3H3X61DHH+OxhEV/3BWqAvOJdo6bj2GbjTqflO0KHo6pq795rX9MaSZzyKtqlqvq
+	GpUNodkZyYKu4G2jl5kRa9lpi6VZaOkPfCn63D6QP+o4GbvDEq/GXvnS1TTD5lMA
+	wvCXOR3c4cXIpJ0csJoS7Ztwyl43TQptACXzUW6fjpjY3GtlDBLuYnecT7yg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728387928; x=1728474328; bh=keVKnzxo12MzSZfVIfkrr+xynejI
+	KrX/yw8Y2ID4kq0=; b=DswFgwRg0+VqU8ZuPDlN+aUz9xguhTMV57P0J4wsrURK
+	+Hknj9tiocGDsz3eNfdkW5XhHyMp5b8YXyNqL39dnRYgA0aanGL78fAATzOCbRWG
+	F0o60H0oHrtlNPa46rN3TDDn0o5/hTq6tOVOmBsGgaFGMPaL+Bdao8tU0bb/WwjB
+	P8FbDYjdVUaS0FKRPI9iWiS3qGy8curG7mbl+27fTmhoqweeRT/4krNPfGX+0A6K
+	ldOEll19wWDQzUouL0roR3E7eus/JJsunR7ncT8Qt4I7OtmbiSbJ7T8Ur/WwWjom
+	KfobHcSus6cRao5FUn9BxSmW3UR8bodmnRXbhs2Ebg==
+X-ME-Sender: <xms:VxsFZ-2bCypkQDkhDH5wuFZlIS3d6pPphZ2E5PcRfeFqE8mcGWxsLw>
+    <xme:VxsFZxFueuGSfJSgSUYLpQ29a0T1v-h7UQm5KXMTrUUiCE8iMTfhKUhDVHYANaI2Q
+    uv8Lfq2KHL7SZ8MFA>
+X-ME-Received: <xmr:VxsFZ257EC0QVK5j66SnKG-slODj-rqGP8-mgFDzTpsTj4H5cBPzNfLC6YW_pnCnctQkynQwh5Z9KkZeoonBVX8dPSKNhu32voy3E9rk68X02BI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefuddggeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepudekrdhgrghuthhhrghmsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegr
+    jhhithhhshgrkhhhrghrihgrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhuhgshh
+    grmhdrkhgrnhhoughirgdutdesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:VxsFZ_3NNHHFe6ZRY0s3jVH0ogYpZfNt9G66FSdDaDAf7FS7c7-rXw>
+    <xmx:VxsFZxHHDCxHuudokueGxknTE8XPozMMUaMGGvwc9ltiw-N1lIGgaw>
+    <xmx:VxsFZ4-k3P7xCAJYPHiDz7CSw_5pPBRKm8dyzBBNi68KDNncVVEdFg>
+    <xmx:VxsFZ2kcPOiHenfm0gtI2vu-kHAIZ93PozwPOtZ3mx-ToZnA6zjU3w>
+    <xmx:WBsFZ1hvg-xqD_tXjIPiLHxsqPVrZIZRbzunZPSl3FaLeGdQEHT5-fn7>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Oct 2024 07:45:26 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2f204f7c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 8 Oct 2024 11:44:24 +0000 (UTC)
+Date: Tue, 8 Oct 2024 13:45:23 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Cc: git@vger.kernel.org, ajithsakharia@gmail.com,
+	Gautham R <18.gautham@gmail.com>
+Subject: Re: Bug: `git maintenance start` is likely broken in 2.47
+Message-ID: <ZwUbTJS-mg6cCG1e@pks.im>
+References: <CAG=Um+0mJW-oAH+YLC3dWEU64JwS-zMkkTiFWYBe4g6HMbe-iA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Shubham Kanodia <shubham.kanodia10@gmail.com>
-Date: Tue, 8 Oct 2024 16:20:19 +0530
-Message-ID: <CAG=Um+0mJW-oAH+YLC3dWEU64JwS-zMkkTiFWYBe4g6HMbe-iA@mail.gmail.com>
-Subject: Bug: `git maintenance start` is likely broken in 2.47
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, ajithsakharia@gmail.com, Gautham R <18.gautham@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAG=Um+0mJW-oAH+YLC3dWEU64JwS-zMkkTiFWYBe4g6HMbe-iA@mail.gmail.com>
 
-In the most recent release of git (2.47.0), running `git maintenance
-start` results in a segmentation fault error both on mac & ubuntu.
+On Tue, Oct 08, 2024 at 04:20:19PM +0530, Shubham Kanodia wrote:
+> In the most recent release of git (2.47.0), running `git maintenance
+> start` results in a segmentation fault error both on mac & ubuntu.
+> 
+> `b6c3f8e12c` seems to be the first bad commit.
 
-`b6c3f8e12c` seems to be the first bad commit.
+This is embarassingly easy to reproduce. None of our tests catch the
+issue because we are forced to stub out the commands that run, and the
+error only happens when _not_ stubbing it out. I'll send a patch later
+today to address the issue and will also think about a way to test this.
+
+Patrick
