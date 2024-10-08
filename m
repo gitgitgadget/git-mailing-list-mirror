@@ -1,120 +1,137 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896A81DED5B
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 12:37:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2F91DE4CC
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 13:19:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728391060; cv=none; b=bwGFci23vPHR3R5OCGnJA69n1ZBdrE5XMNXgpCTbY7mHcMVclybbi0Gpnwa52nxB32ZteyRPFbGHF9xWJaKkp8Hp07Uwpd00QvUS8GE+ilhsDzwZxjSEsfVsfDfrBJvvanSI0A/blfPHDZ+HG6K34z7y8dSqmYYKJDv/50LIh/0=
+	t=1728393585; cv=none; b=pcmokVFS1c7ce57/XR7QOnQvr+oH2hl0hJM8gsFeUIqKydRFir4rzrvbz7OPLL/hZ4gyMzYAp0dTBLyh0d4Yr79LUK8dX5Ukt+FcVbF21SAYsCnMWZO7S3RQhifSRID/7+lx8nu9QuKx+qxUMnB4sziEG7flfxHfBdSPsCuWl4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728391060; c=relaxed/simple;
-	bh=qWRCEa5OyiQ7k+GJTHSqjHCMOYfaD4PTzpjypgljIOQ=;
+	s=arc-20240116; t=1728393585; c=relaxed/simple;
+	bh=uvWR4ClEJ9Qa76YreNsVPuDqYCNZTEIjtEcxeSsHqdU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qSv8AnUs7EuNtBxbt4raHLrjUs4Efh3Y/rRF0D9k7wh1BTVRZVUNVvH69IBvHxZnsay6iKwiqbmsk4pP6tquSfwdLWSqmk9RQY7Ib9L6AcCOfchOr8WzdLkk9Lb5PGe0OzPir1OhYlLNHBcaHGJWHUC5TQaHYM8ebvSSPIl7mSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VJVoOwdG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K3MWNM+l; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=lr1u/3HfB5aNb9uyptbdEzZBLYCqvsuAxVyDjPFI/4axEJEk+1V44EDznyDfOgwvy7gm8lqIVpGm5EzXjXn9M21quWNKEpE2TwFRipYkHM6DSiERrN15M4w9tRp1gWlFTUei5NjS1m7Fv9ud96Y3QrFw69W4Q6OCRkZsL17qle0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J5KW50JH; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VJVoOwdG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K3MWNM+l"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id B31E81380667;
-	Tue,  8 Oct 2024 08:37:37 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 08 Oct 2024 08:37:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728391057; x=1728477457; bh=eL7AvfThzA
-	Iy539pZh4kmsaiyzl0Td9CZSxI8wJ3Il0=; b=VJVoOwdGIpNec6v0Y0+DHB7koF
-	s98DQns3ckbVnMSWVPCoAegiSO0i+kmVjLPuw84a8RsqyESmkwtFudBy4jtjQpo2
-	VXqxFqcm0zIF4KazEzR2lzNBKF+JdDp9ff+DUznSa/x7e5OYfVGxJWuEvUcTdGxs
-	Kwjgkujwga6Oh9oahhMBZNuWQSt1KuqGjD3Gllat0nSZgNhiLNnhpZ706Jn0vViV
-	FktKNOVX8MykEaOQKOEzrnXpvRxYYUYwQYYOQUFyrA6nRIAedBsgSWszLeuKJLMH
-	9VASV3rFfDEfE4+SrZGjsopxTnMdlrvxyh5SIFH23qDuYsSzkwm1MIS6Xglg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728391057; x=1728477457; bh=eL7AvfThzAIy539pZh4kmsaiyzl0
-	Td9CZSxI8wJ3Il0=; b=K3MWNM+lzgYUKm3A0vEqiXhKwH4PW43mJN5nM5MwG2Vt
-	NI3A0yo7RCys8iWqcSjkjijo+oZqn4ZX6Mp4rSCORF9VBx5AqFBjJMf9hPFWyvik
-	o38+60WrdnR/jtmaK28bem2tsnSw7Bt8oIfjhrpwz6K9+2vxqJpaepPxC5sp1DNb
-	LUTqvB4TtFWpKqVRpS2wlJly+1yPbSMsE/lKtxQcEsWrTlqzDsmc7W1kNNl5GvAM
-	dL+jfyoGIx5tmxHjs5lp3ldjCxtlfdDuz2678pG/N9qwdioxJOXhlO18LQohdXDh
-	hDvnJ9kXPckhg40QuEqxKHHUpUnDwko47c6Crm3EFw==
-X-ME-Sender: <xms:kScFZ7OsYeCGAD_nQDsGvZHwlvE0QQtaayWpeUAoxEC-NFewdYezdw>
-    <xme:kScFZ192uQG6z7qpQd7dDVsuVrK3Qavjvbyhesl9E-NgMZbE4PJxdek00vjIhS5Jr
-    Av_5XeOJk5_XkRafw>
-X-ME-Received: <xmr:kScFZ6QYRdU0q7HaG9P7iKnGBre0U0gelEoMy940Q2ZQ2MVaSr6jKeM9hvHaQKhFv_G_1o5m1-xfQzJdKz8pFAQWxt82Z-0U1zsWXt6fxCngXBQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefuddgheegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhoshhhihhhvghinhhrihgthhhssehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:kScFZ_tBoha6WGuFuEdLgp7w3MCqhRJGuimE6G1o4aZ_yJGnCuaPYg>
-    <xmx:kScFZzdeBSTYhdLmP8smA08vT3g8Z9JuhuNKAZfbSGlij8Rj52YqUw>
-    <xmx:kScFZ70jiTZ0844vNS1nmO24oMthkjqw0eaIjrLOpES4VIdQyOQ6pQ>
-    <xmx:kScFZ_-WWbnoOH5Asv8FB5j1wHpheKR-Llpr1sxI3DCezK0S8Edz6A>
-    <xmx:kScFZ0pb831hn3cxf1GzvMtUJ_KEKR8jtCZ6hPtmCF5h-mdZRn4xk_8M>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Oct 2024 08:37:36 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8d1231e4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 8 Oct 2024 12:36:34 +0000 (UTC)
-Date: Tue, 8 Oct 2024 14:37:34 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Josh Heinrichs <joshiheinrichs@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/1] git-config.1: remove value from positional args in
- unset usage
-Message-ID: <ZwUnhPbpwtA1MM34@pks.im>
-References: <20241008040749.69801-1-joshiheinrichs@gmail.com>
- <20241008040749.69801-2-joshiheinrichs@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J5KW50JH"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-7ea07610762so1546005a12.0
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 06:19:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728393583; x=1728998383; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Xn+/eO1kvaruu5MhxgW6XbEAnr/yFswRCrLq2Et1EgY=;
+        b=J5KW50JHZjytfYO+YEDYVjkFoAYWO7NHCkUQFzY/HbXNzqMw5bYSOEqAr7Alvj1rPH
+         YSKhUSYkyp/GGydD+TeQOpmAOyE54bI1y+YMainOvQoMTVh88ljFw3zkTcFK84rXLRd7
+         6LBkh5QVFnImMVipRtN75rRsnc1DxljbhhxbqdyWlxobfllzXlJpl6cSc9qP1JHinuPx
+         SPO9to0+0TTtWU+XpjfE22d9xi9kWQvnpYhhO+/Fjz/5P65/zafeUy5SR0yOFxSAsuCX
+         5OW5tWQjOlBXopMcnxqUpfdjigtqJc44vXkHwvMNSOtMmbwKzyEDBecMerdAl893LIka
+         UjYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728393583; x=1728998383;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xn+/eO1kvaruu5MhxgW6XbEAnr/yFswRCrLq2Et1EgY=;
+        b=sDUgh0PLIUJso6XrF4kQc42opvYTsXlAr3/HyNhqVvwi1zfxV16elhqmvi5r08+ZG8
+         OndUssJjuzoTNYJJumN8sJoJ3hujiPV7N1XseKe/Ug08BfgzbHOZpLcacKrvW0VArNEC
+         jQ5Bc+7UMumWH/FiIa+zlDTEgFG8I3eSdyPo9HNICGf0aufTkCiHeDttimW7iRL3retY
+         tf32RAzXGj3PGuxg9U7Xh37CZU6j+wm1nxCv0azx3LlmyGE0p1z2vB4D9j7IVXh9R94Y
+         dBrAPYDdq10FVyXive9ZI2fNNLDyy/T/NGmklm4dWwdofK9x6TKJESEQHd29VLoI9uER
+         IH9A==
+X-Gm-Message-State: AOJu0Yy1SD0RpCXtgAD9DLVlB74N4LoEecAHvWsHNsVoGxnmN6NpvjqW
+	+yLFIfYBCT0Snok75p82FZvSpmQ7ysT6MWzXTS+Za/AQf5E+/F+aQw/bDQ==
+X-Google-Smtp-Source: AGHT+IHJwLB6S0OPgXi5EbHuDILcqPtI+F7h90frZwyp4C+J/4A0IeoF8zv1YLmFfBO6yRCyP6DMfQ==
+X-Received: by 2002:a05:6a20:d80d:b0:1d6:d2cb:1998 with SMTP id adf61e73a8af0-1d6dfa3fc6dmr21913578637.22.1728393582749;
+        Tue, 08 Oct 2024 06:19:42 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71df0ccf01dsm6112019b3a.70.2024.10.08.06.19.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Oct 2024 06:19:42 -0700 (PDT)
+Date: Tue, 8 Oct 2024 21:19:51 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: git@vger.kernel.org, peff@peff.net, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] object-name: don't allow @ as a branch name
+Message-ID: <ZwUxdz_HobRGF9yq@ArchLinux>
+References: <cover.1728331771.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20241008040749.69801-2-joshiheinrichs@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1728331771.git.code@khaugsbakk.name>
 
-On Mon, Oct 07, 2024 at 10:07:49PM -0600, Josh Heinrichs wrote:
-> A single positional argument appears to be enforcecd at
-> builtin/config.c:993. Values need to be provided via --value.
+On Mon, Oct 07, 2024 at 10:15:16PM +0200, Kristoffer Haugsbakk wrote:
 
-Good catch!
+[snip]
 
-Two comments regarding the commit message:
+>   §2 Disallow `HEAD` as a branch name
+> 
+> This was done later in 2017:
+> 
+> https://lore.kernel.org/git/20171114114259.8937-1-kaartic.sivaraam@gmail.com/
+> 
+>   §2 `refs/heads/@` is apparently disallowed by git-refs(1)
+> 
+> See `t/t1508-at-combinations.sh`:
+> 
+> ```
+> error: refs/heads/@: badRefName: invalid refname format
+> ```
+> 
 
-  - You are missing the Signed-off-by tag.
+It's true that using "git refs verify" will report "refs/heads/@" is a
+bad refname.
 
-  - Our commit messages are typically structured such that they first
-    give an observation of the issue and why it is an issue, followed by
-    a proposed solution and imperative instructions for the code to
-    become so.
+From the man page of the "git-check-ref-format(1)", it is clear that
 
-So something like the following:
+    9. They cannot be the single character @.
 
-  The synopsis for the `git config unset` command mentions two
-  positional arguments `<name>` and `<value>`. While the first
-  positional argument is indeed correct, the second one is not. Instead,
-  users are expected to pass in the value via the `--value=<value>`
-  option.
+Because I am interesting in this patch which is highly relevant with my
+recent work, so I try somethings here and find some interesting results
+as below shows.
 
-  Remove the positional argument. The `--value=<value>` option is
-  already documented correctly, so this is all we need to do to fix up
-  the documentation.
+    $ git check-ref-format refs/heads/@
+    $ echo $? # will be 0
+    # git check-ref-format --allow-onelevel @
+    # echo $? # will be 1
 
-Other than that the change looks good to me, thanks!
+The reason why "git refs verify" will report this error is that in the
+code implementation, I have to iterate every file in the filesystem. So
+it's convenient for me to do the following:
 
-Patrick
+    if (check_refname_format(iter->basename, REFNAME_ALLOW_ONELEVEL)) {
+        ret = fsck_report(...);
+    }
+
+Because I specify "REFNAME_ALLOW_ONELEVEL" here, so it will follow the
+"git check-ref-format --allow-onelevel" command thus reporting an error
+to the user.
+
+I am curious why "git check-ref-format refs/heads/@" will succeed, so I
+try to use "git symbolic-ref" and "git update-ref" to verify to test the
+behavior.
+
+    $ git symbolic-ref refs/heads/@ refs/heads/master
+    error: cannot lock ref 'refs/heads/@': unable to resolve reference 'refs/heads/@': reference broken
+    $ git update-ref refs/heads/@ refs/heads/master
+    fatal: update_ref failed for ref 'refs/heads/@': cannot lock ref 'refs/heads/@': unable to resolve reference 'refs/heads/@': reference broken
+
+So, we are not consistent here. I guess the reason why "git
+check-ref-format refs/heads/@" will succeed is that we allow user create
+this kind of branch.
+
+If we decide to not allow user to create such refs. We should also
+change the behavior of the "check_refname_format" function. (I am not
+familiar with the internal implementation, this is my guess)
+
+Thanks,
+Jialuo
