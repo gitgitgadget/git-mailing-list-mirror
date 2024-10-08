@@ -1,303 +1,138 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59E338DF2
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 16:21:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D368D1DFE2B
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 16:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728404495; cv=none; b=Q2YGryvSG4MbHsYSHX92c9H8hXs1bzhHmaIQxlfj4uLVbPEmU5gkPjBZJJtpP6rRTI0ohFq85ZgyIh6AglVaAuii1tzVchUi9Qgmp4LW8R+ZagS0Q56D0sm6ATv7vEVUrGtPAwmMtcxsj7h5pMaPkLqGu+EW9+fSvF/yOGcy7GY=
+	t=1728406602; cv=none; b=qks4WHrMLjFCM3Fr6otk8d9SJFXk9M5xi8E672dj72RNdFoaeRczB18a223b2HLO7cfgjLkpkWxv9v7d/ELLfKTUVkFCXXU424uJV0+0IipXF9VxOUkJwVv87kGoHJm9fic9MuDupu51ZVgqXqKf23orsGOtrZYI09x7W7sd5KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728404495; c=relaxed/simple;
-	bh=ZjL+NnSs+/H4AA0xiJVhh7iREzKi4hxkt4164LivxG8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YVvmBfvQFLnlXKC/Lul7vwapv5m+hWT1QIvepfAQosJMOfSZOG9Fkz/ScjNFEQvkMkv4G59xJN/M/HPiTxChLoxEl6DNl0KWHRzeKQ1M2W5gXI6NlL5gj+98fwvlxtZShdFqSq9/h2Sa10UK5nFoqbE5kiwyiHA4z1VZmK8DlQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BVEndunA; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728406602; c=relaxed/simple;
+	bh=rqmXe8GrYRA/nPDm+hihFy+HRcQ7zTWrqRLvkWdIoUU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nN8UDVvryoVUXSBtO2HSwuNzBvX1dDe6l1OeIKWTtkQMoWPQJrDyJ/ItFHpEaqj4iPlDrQfNhkwSgiv3ct0H+ZKoA2NVaWQit6D3BtTws3jBdSUIM1I31ljjLjvLupTvwav2XSmWJc8bmU/t/Zp1a56ewY1HZ4eLZ2FPcAtHJw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pvwiehWA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nu7t+NJR; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BVEndunA"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5c896b9b4e0so8568350a12.3
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 09:21:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728404492; x=1729009292; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pzghPiIdJ3OMTR1sbcykZgjJaY4OKTA4vEy2kV89SDE=;
-        b=BVEndunAM7ha40LsEKarnkBF5EDuWwn+2gBQ5jVGakh6ROd+CEgsZSot5FV/aJNjiD
-         xMsqR38wCB7SnXJjiNopZlPRWgOMKmE0kMDSxG1U/jRmM3/miNhZA0rL2H/ylPRseEkg
-         pOA3GFOGm4RO2i+CEf0noWAhL9sk8Mq4LAyZvywwz0z+DuLE7J4qUgFcSMVfxRrq1LNM
-         xHAIo1uDjojA9aKR7W945SchBipR+OInQKiQgDf52k+LQL2+L/QHEBWvh2d8C2E3PNIe
-         UtPH4Zay+bjMZrBPYRNdqJNvmk/xtlchTaL/twpB1Ra+a0JHXen9ONGbrEtCG1mcIni/
-         il0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728404492; x=1729009292;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pzghPiIdJ3OMTR1sbcykZgjJaY4OKTA4vEy2kV89SDE=;
-        b=TV4N+KXVwPM7pzfhXmfSnaVXd6zagEe/WdCI9JUmclJ3SoiFZpOyl/xaj/yzzNHQrL
-         DhcC9tYPfABMmr+znRfjTnAbw4uGPO83hbe8ByECtWYBYHyBqMj2omTRa7H/KYPwxlCc
-         Vkn5Vd3jpYzBF7LIsrOQ3qarOLlg+lvGM0qyEeO5G3lGdOtts3QEe0uKy/mypzRL9rMd
-         PxpGrnTU0U6KQhx7rKbozwf+fU8/oJS+jQG2kxDxFTq64KkU/QNRCaiTOVOkQlVde+vv
-         ZxVrka1b6vyZWYBCTtlmH/FiR+4ziHTJTouPMOLMSw0cGiM/dD5Wt9IqtsL+c0689y1q
-         iahA==
-X-Gm-Message-State: AOJu0YyqmEtAYliEEat1NOaq+nTVp0X1Bh0S/5wb88KhETPs5DB+HbRO
-	jnVYgzjJ9YXYos5p1RuGmG8rbtECQ6Q2XxGA8Hp9AoV+BxoZAyakDO5rk1D/+JM=
-X-Google-Smtp-Source: AGHT+IEDSHRhF2q8mJPmEIgA56MoY4VOwSLIt03yCiSjn8Z8m9ZwRyulkhuMTVEva9ZFxLSZRrE4gA==
-X-Received: by 2002:a05:6402:51c9:b0:5c7:1911:f134 with SMTP id 4fb4d7f45d1cf-5c8d2e0ff86mr11792756a12.9.1728404491123;
-        Tue, 08 Oct 2024 09:21:31 -0700 (PDT)
-Received: from zihco-Latitude-7390-2-in-1.. ([197.210.35.67])
-        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5c8e05ad8cfsm4482877a12.37.2024.10.08.09.21.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2024 09:21:30 -0700 (PDT)
-From: chizobajames21@gmail.com
-To: git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk,
-	ps@pks.im,
-	Chizoba ODINAKA <chizobajames21@gmail.com>
-Subject: [Outreachy][PATCH] t6050: avoid pipes in git related commands
-Date: Tue,  8 Oct 2024 17:21:17 +0100
-Message-Id: <20241008162117.6452-1-chizobajames21@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pvwiehWA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nu7t+NJR"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id D228E13801C5;
+	Tue,  8 Oct 2024 12:56:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Tue, 08 Oct 2024 12:56:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728406598; x=1728492998; bh=q50/0jC/bn
+	+nQ7yIkDDgElKbl3UHxama54wCCHevwxE=; b=pvwiehWA2oiEtVyvp+AibPLn3p
+	gH9LeMKIekX0VYCciCtLmf8gKku37RY9CkHx7jxCV04f9bE6xnHDr39yGawDz6uM
+	ZfcTih+1cgIr6EEAw3JtJa27RAdS+7jxtTUXZDi6DZG4filYkUd+lOnlNLMWxCB6
+	sFrAWB5sMZ7VgnNTj5ZKtkdtlhLPDlvFqxuh20hXik7k2PDHJ8Y5ahNXWybrJss5
+	I1vZKUjejk0JAqdm0D0C3VKE/Z9f1Tr/cT8e3y1HCWqg7WxOl8pebocE7kG5Etdv
+	nonyLb5Vz7bgqschIZ3N6VK9sxiRu2h7DAjr0mM01qNz19A9zR0pp0KjB1Sw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728406598; x=1728492998; bh=q50/0jC/bn+nQ7yIkDDgElKbl3UH
+	xama54wCCHevwxE=; b=nu7t+NJRfUjL+gUhyU+gbPDxfOUkYQzdtmnN9kk/ma8Z
+	WtmXaiO9XuzKIMyCLXMe//YqKFO8S2CbN57POzeKq7ZBVdDLIMglxo4Eg0cp2TMy
+	njgBgfYoZiNaE22/M4r4gEZd8505c86ulOmFg2QleZYsYGstOXajRx0af2v1+qAG
+	oPlQ6gtcpPYew/o6D/ouDqmqRy+ruHreFjwGESRJi7syE6bVcphQkSYfCi6US7Do
+	vUjCMchlPX92BcvcNVULwA0yiblmTDk0p2V2Zk2SQa3wOyRbjZAt8chQkW4siMK2
+	mVLGi5gx46jatJzGLFbNctta431J69UdAUf8frl5Jw==
+X-ME-Sender: <xms:RmQFZ2Ysto_wY4ayZCjkH6Xi1XWFO_kH5-9W5wSwV_FfdRNaZD4R6A>
+    <xme:RmQFZ5ancoaeST6K-gip-aSMhdKoSJxiz0KpDdFFII6Gg3OQBuX8iWsBGr0YXGPO3
+    on3OpvtS9Y0S5lOAg>
+X-ME-Received: <xmr:RmQFZw93Csuhui215XkEZ41GxDId0TdsMxRVVD4ipUXa3F9c4tAqeIadD34s05gOauamwyjoNOy_aMx6wYlEKdDASuNIvbzoqW6BMw4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefuddguddtiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlh
+    horhhrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:RmQFZ4qXI-MjbvmxiYulvCpM0a6a1gPn2XZMGWwoBauPrbycRjXptg>
+    <xmx:RmQFZxpGyUvPHeliVxv432-ADAP1-B7pAD6IyapkcbP1wKi1-rsTyg>
+    <xmx:RmQFZ2TRjMaLSAP5GPbd258DDLlIMpcv9YLGEJwyJw4ifKRNuFTH3A>
+    <xmx:RmQFZxqR4kCouZVPWgW-QnXYARDL96FiqIjz4jCU4yE-FL8ZUS3qEg>
+    <xmx:RmQFZylpB4lubvJk5RlR1yLdnk8tjii392-fq-V5C52KZ_qHfvLEGviI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Oct 2024 12:56:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: the latter half of october, the maintainer goes offline
+In-Reply-To: <ZwBwcOK2/sazF17B@nand.local> (Taylor Blau's message of "Fri, 4
+	Oct 2024 18:47:12 -0400")
+References: <xmqqh69thzd0.fsf@gitster.g> <Zv7aLRXwt9cfqW58@nand.local>
+	<ZwAIM6GO3VtoG3ZM@pks.im> <ZwBwcOK2/sazF17B@nand.local>
+Date: Tue, 08 Oct 2024 09:56:36 -0700
+Message-ID: <xmqqv7y2354r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Chizoba ODINAKA <chizobajames21@gmail.com>
+Taylor Blau <me@ttaylorr.com> writes:
 
-In pipes, the exit code of a chain of commands is determined by
-the downstream command. For more accurate info on exit code tests,
-write output of upstreams into a file.
+> On Fri, Oct 04, 2024 at 05:22:27PM +0200, Patrick Steinhardt wrote:
+>> There are two maintainership models I can think of: either a single
+>> individual or a group of people would take over.
+>> ...
+> I do think there is a need to have a single individual who is ultimately
+> responsible for ensuring that the patches are reviewed and merged in a
+> timely fashion, that releases are cut on time and are high-quality, etc.
+>
+> But I also think that the project benefits from having trusted
+> individuals who are knowledgeable about specific areas of the codebase.
+> The maintainer can lean and rely on those individuals to get a sanity
+> check of whether or not some patches are good or not. For instance, I
+> would imagine that Junio relies on you to help review patches in the
+> reftable implementation.
+>
+> I think that's more or less the status-quo, and IMHO it works well from
+> a contributor's perspective. I would be curious if the maintainer feels
+> the same or not ;-).
 
-Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
----
- t/t6050-replace.sh | 86 +++++++++++++++++++++++-----------------------
- 1 file changed, 43 insertions(+), 43 deletions(-)
+This turned my "explore how you folks want to manage yourselves
+while I am away" into "how would we want to run the project after
+Gitster retires (or moves on)".  While I find that the rumor of my
+retirement is greatly exaggerated, I think that is a discussion
+worth having.
 
-diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index d7702fc756..6b9811ed67 100755
---- a/t/t6050-replace.sh
-+++ b/t/t6050-replace.sh
-@@ -98,30 +98,30 @@ test_expect_success 'set up buggy branch' '
- '
- 
- test_expect_success 'replace the author' '
--	git cat-file commit $HASH2 | grep "author A U Thor" &&
--	R=$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
--	git cat-file commit $R | grep "author O Thor" &&
-+	git cat-file commit $HASH2 >actual && grep "author A U Thor" actual &&
-+	R=$(git cat-file commit $HASH2 >actual && sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
-+	git cat-file commit $R >actual && grep "author O Thor" actual &&
- 	git update-ref refs/replace/$HASH2 $R &&
--	git show HEAD~5 | grep "O Thor" &&
--	git show $HASH2 | grep "O Thor"
-+	git show HEAD~5 >actual && grep "O Thor" actual &&
-+	git show $HASH2 >actual && grep "O Thor" actual
- '
- 
- test_expect_success 'test --no-replace-objects option' '
--	git cat-file commit $HASH2 | grep "author O Thor" &&
--	git --no-replace-objects cat-file commit $HASH2 | grep "author A U Thor" &&
--	git show $HASH2 | grep "O Thor" &&
--	git --no-replace-objects show $HASH2 | grep "A U Thor"
-+	git cat-file commit $HASH2 >actual && grep "author O Thor" actual &&
-+	git --no-replace-objects cat-file commit $HASH2 >actual && grep "author A U Thor" actual &&
-+	git show $HASH2 >actual && grep "O Thor" actual &&
-+	git --no-replace-objects show $HASH2 >actual && grep "A U Thor" actual
- '
- 
- test_expect_success 'test GIT_NO_REPLACE_OBJECTS env variable' '
--	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
--	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
-+	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 >actual && grep "author A U Thor"  actual &&
-+	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 >actual && grep "A U Thor" actual
- '
- 
- test_expect_success 'test core.usereplacerefs config option' '
- 	test_config core.usereplacerefs false &&
--	git cat-file commit $HASH2 | grep "author A U Thor" &&
--	git show $HASH2 | grep "A U Thor"
-+	git cat-file commit $HASH2 >actual && grep "author A U Thor" actual &&
-+	git show $HASH2 >actual && grep "A U Thor" actual
- '
- 
- cat >tag.sig <<EOF
-@@ -148,14 +148,14 @@ test_expect_success 'repack, clone and fetch work' '
- 	git clone --no-hardlinks . clone_dir &&
- 	(
- 		cd clone_dir &&
--		git show HEAD~5 | grep "A U Thor" &&
--		git show $HASH2 | grep "A U Thor" &&
-+		git show HEAD~5 >actual && grep "A U Thor" actual &&
-+		git show $HASH2 >actual && grep "A U Thor" actual &&
- 		git cat-file commit $R &&
- 		git repack -a -d &&
- 		test_must_fail git cat-file commit $R &&
- 		git fetch ../ "refs/replace/*:refs/replace/*" &&
--		git show HEAD~5 | grep "O Thor" &&
--		git show $HASH2 | grep "O Thor" &&
-+		git show HEAD~5 >actual && grep "O Thor" actual &&
-+		git show $HASH2 >actual && grep "O Thor" actual &&
- 		git cat-file commit $R
- 	)
- '
-@@ -169,13 +169,13 @@ test_expect_success '"git replace" listing and deleting' '
- 	test_must_fail git replace --delete &&
- 	test_must_fail git replace -l -d $HASH2 &&
- 	git replace -d $HASH2 &&
--	git show $HASH2 | grep "A U Thor" &&
-+	git show $HASH2 >actual && grep "A U Thor" actual &&
- 	test -z "$(git replace -l)"
- '
- 
- test_expect_success '"git replace" replacing' '
- 	git replace $HASH2 $R &&
--	git show $HASH2 | grep "O Thor" &&
-+	git show $HASH2 >actual && grep "O Thor" actual &&
- 	test_must_fail git replace $HASH2 $R &&
- 	git replace -f $HASH2 $R &&
- 	test_must_fail git replace -f &&
-@@ -186,7 +186,7 @@ test_expect_success '"git replace" resolves sha1' '
- 	SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
- 	git replace -d $SHORTHASH2 &&
- 	git replace $SHORTHASH2 $R &&
--	git show $HASH2 | grep "O Thor" &&
-+	git show $HASH2 >actual && grep "O Thor" actual &&
- 	test_must_fail git replace $HASH2 $R &&
- 	git replace -f $HASH2 $R &&
- 	test_must_fail git replace --force &&
-@@ -209,10 +209,10 @@ test_expect_success '"git replace" resolves sha1' '
- #
- test_expect_success 'create parallel branch without the bug' '
- 	git replace -d $HASH2 &&
--	git show $HASH2 | grep "A U Thor" &&
-+	git show $HASH2 >actual && grep "A U Thor" actual &&
- 	git checkout $HASH1 &&
- 	git cherry-pick $HASH2 &&
--	git show $HASH5 | git apply &&
-+	git show $HASH5 >actual && git apply actual &&
- 	git commit --amend -m "hello: 4 more lines WITHOUT the bug" hello &&
- 	PARA2=$(git rev-parse --verify HEAD) &&
- 	git cherry-pick $HASH3 &&
-@@ -225,7 +225,7 @@ test_expect_success 'create parallel branch without the bug' '
- 	git checkout main &&
- 	cur=$(git rev-parse --verify HEAD) &&
- 	test "$cur" = "$HASH7" &&
--	git log --pretty=oneline | grep $PARA2 &&
-+	git log --pretty=oneline >actual && grep $PARA2 actual &&
- 	git remote add cloned ./clone_dir
- '
- 
-@@ -234,23 +234,23 @@ test_expect_success 'push to cloned repo' '
- 	(
- 		cd clone_dir &&
- 		git checkout parallel &&
--		git log --pretty=oneline | grep $PARA2
-+		git log --pretty=oneline >actual && grep $PARA2 actual
- 	)
- '
- 
- test_expect_success 'push branch with replacement' '
--	git cat-file commit $PARA3 | grep "author A U Thor" &&
--	S=$(git cat-file commit $PARA3 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
--	git cat-file commit $S | grep "author O Thor" &&
-+	git cat-file commit $PARA3 >actual && grep "author A U Thor" actual &&
-+	S=$(git cat-file commit $PARA3 >actual && sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
-+	git cat-file commit $S >actual && grep "author O Thor" actual &&
- 	git replace $PARA3 $S &&
--	git show $HASH6~2 | grep "O Thor" &&
--	git show $PARA3 | grep "O Thor" &&
-+	git show $HASH6~2 >actual && grep "O Thor" actual &&
-+	git show $PARA3 >actual && grep "O Thor" actual &&
- 	git push cloned $HASH6^:refs/heads/parallel2 &&
- 	(
- 		cd clone_dir &&
- 		git checkout parallel2 &&
--		git log --pretty=oneline | grep $PARA3 &&
--		git show $PARA3 | grep "A U Thor"
-+		git log --pretty=oneline >actual && grep $PARA3 actual &&
-+		git show $PARA3 >actual && grep "A U Thor" actual
- 	)
- '
- 
-@@ -284,8 +284,8 @@ test_expect_success 'bisect and replacements' '
- '
- 
- test_expect_success 'index-pack and replacements' '
--	git --no-replace-objects rev-list --objects HEAD |
--	git --no-replace-objects pack-objects test- &&
-+	git --no-replace-objects rev-list --objects HEAD >actual &&
-+	git --no-replace-objects pack-objects test- <actual &&
- 	git index-pack test-*.pack
- '
- 
-@@ -319,7 +319,7 @@ test_expect_success '-f option bypasses the type check' '
- '
- 
- test_expect_success 'git cat-file --batch works on replace objects' '
--	git replace | grep $PARA3 &&
-+	git replace >actual && grep $PARA3 actual &&
- 	echo $PARA3 | git cat-file --batch
- '
- 
-@@ -344,7 +344,7 @@ test_expect_success 'test --format medium' '
- 		echo "$PARA3 -> $S" &&
- 		echo "$MYTAG -> $HASH1"
- 	} | sort >expected &&
--	git replace -l --format medium | sort >actual &&
-+	git replace -l --format medium >actual && sort actual &&
- 	test_cmp expected actual
- '
- 
-@@ -356,7 +356,7 @@ test_expect_success 'test --format long' '
- 		echo "$PARA3 (commit) -> $S (commit)" &&
- 		echo "$MYTAG (tag) -> $HASH1 (commit)"
- 	} | sort >expected &&
--	git replace --format=long | sort >actual &&
-+	git replace --format=long >actual && sort actual &&
- 	test_cmp expected actual
- '
- 
-@@ -374,12 +374,12 @@ test_expect_success 'setup fake editors' '
- test_expect_success '--edit with and without already replaced object' '
- 	test_must_fail env GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
- 	GIT_EDITOR=./fakeeditor git replace --force --edit "$PARA3" &&
--	git replace -l | grep "$PARA3" &&
--	git cat-file commit "$PARA3" | grep "A fake Thor" &&
-+	git replace -l >actual && grep "$PARA3" actual &&
-+	git cat-file commit "$PARA3" >actual && grep "A fake Thor" actual &&
- 	git replace -d "$PARA3" &&
- 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
--	git replace -l | grep "$PARA3" &&
--	git cat-file commit "$PARA3" | grep "A fake Thor"
-+	git replace -l >actual && grep "$PARA3" actual &&
-+	git cat-file commit "$PARA3" >actual && grep "A fake Thor" actual
- '
- 
- test_expect_success '--edit and change nothing or command failed' '
-@@ -387,8 +387,8 @@ test_expect_success '--edit and change nothing or command failed' '
- 	test_must_fail env GIT_EDITOR=true git replace --edit "$PARA3" &&
- 	test_must_fail env GIT_EDITOR="./failingfakeeditor" git replace --edit "$PARA3" &&
- 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
--	git replace -l | grep "$PARA3" &&
--	git cat-file commit "$PARA3" | grep "A fake Thor"
-+	git replace -l >actual && grep "$PARA3" actual &&
-+	git cat-file commit "$PARA3" >actual && grep "A fake Thor" actual
- '
- 
- test_expect_success 'replace ref cleanup' '
-@@ -468,7 +468,7 @@ test_expect_success GPG 'set up a merge commit with a mergetag' '
- 	git checkout main &&
- 	git merge -s ours test_tag &&
- 	HASH10=$(git rev-parse --verify HEAD) &&
--	git cat-file commit $HASH10 | grep "^mergetag object"
-+	git cat-file commit $HASH10 >actual && grep "^mergetag object" actual
- '
- 
- test_expect_success GPG '--graft on a commit with a mergetag' '
--- 
-2.34.1
+It is a tricky topic how we want open source funding to work.
+
+The "benevolent dictator" model, even if the day-to-day operation is
+delegated to various area experts (aka lieutenants), cannot work if
+such a dictator simply does not exist (due to various reasons,
+ranging from "nobody wants to become one" to "community cannot agree
+on whom to make one").  The community has to go with some other
+model that does not require a dedicated full-time maintainer, even
+if it prefers to have one (and the community can choose to follow a
+different model even if it can afford one, of course).
+
+I think the status-quo, which was nurtured over the years, is the
+best this community can have, *if* we want to keep the "benevolent
+dictator" model.  I would not claim that we perfected the model, but
+I would say we are close enough.
+
+What I hoped to see happen here was that the community is prepared
+when the community has to (or wants to)choose another model.  And I
+am happy to see the recent trend to document and codify how we make
+decisions and move the project forward, because these efforts help
+us whether we have the "benevolent dictator" or not.
 
