@@ -1,127 +1,161 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2021E0DFB
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 19:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46121E0DCC
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 19:23:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728414587; cv=none; b=T5+CG90Dpe+pBhzAIzkr4rTTetAn9YRf26x90CweyAj5qg0fGaVNnieAEm9YXcnxdj4oo0M7ptN7MNmXoi47/cwWxwz0732uwws/f1yhPISsiZKEc9ZF834aW8BHbrNP9NzcqhJ86MkVtfkOQ5LvxNyAklwTLZU7fsJ49mzLvWo=
+	t=1728415425; cv=none; b=lwJbHAq+cmlJtixUU+tfqiN6iiGyfot7A/WTOCbewa4OGCSUoirtM+Fv6IdM/ujbAq3GAf/btb1pxVJ8Elne0XVLvRJAw62E0eFzj+UEC63+2y9imO1RpVQAu89PVUfFpPTcS4YuIxElvt1eJeeyQNfNNbfmGjwbIBp3dJ+ndcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728414587; c=relaxed/simple;
-	bh=JD93eMkUJadKXckKmbF3+dDxOBS0/82tx0LPChtcFIc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O/5smWNSCx91iFEjgMe3p2DAvS9RRo37JSxnWUeYFsd1EO/uQc/jwuxrOWbPTkl8hk6ds7yUCspvzDy8OFKeh79E8zWtmD/75w5URGm24X0mj6HFj/5SHBCODFC0CmfFdEiNd0cNTQYjo3emvD2LyO/tehYFkgBpMo5WiZ4/XdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=nagdr0tv; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1728415425; c=relaxed/simple;
+	bh=V5Nw46ZTnAoT8EuIiP33cmL6UF+c7hQacuzOJLbvORo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Rw7Vzw0Ed72Fu8PWn3mQEDWy3+iFGuhFXMkNyzRnp3w77+qHYVDbI20q5/JmwcfCdQM+ex18XcT57+QHANZI7nDnNxCmyxekQdb6HNUqDkhcQo3uIi+CokasSZIuLV56BcZo3EKRTDwjrnMFXvUslwquyMv2KWo4+C18AR67Yw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KeNtVI2T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e312K0s+; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="nagdr0tv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1728414584;
-	bh=JD93eMkUJadKXckKmbF3+dDxOBS0/82tx0LPChtcFIc=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=nagdr0tv0EDtAx7Q798O/QZ5sFoqsNI0RJ9Th9XT/A/V7mQ4DIAuRXzLJUY9D+JZv
-	 Uzw6j0Flha+ytjOJ90ZLfwVWXv7y+e7lfMm+8HJALKCqohLiyNnE02SpVb8Rei0ZV2
-	 xJhBpvsrSnJ9AoL4w0UvRCZWSkQ7+LLVf72+UPQcAu+AdK+Ll5R5T5mcGyMqVtuW9a
-	 OaAxwFM8MRC/mx1JcJ0LdR/C6xA4L7+EYfO3wdb4qDdXs8+RuyXNVcLCV3BkPC6X36
-	 CHEJALam3YJPnoGQjjoTFeM6LaLDHitbVmTr/jUWg2mkZ7yv+Ypu+NEAdCiy2EwLo7
-	 2vaz/F3qKDMLiW+TAJhZF+QNn/j+iVB2Qz1UsjPkbojia5gZ0DWIiiU9R9kv16udCS
-	 nz9KwryaczIZA1OYxQM1HU9lSpEMMji9FyzoNFwTE/pNPZlI9R1AH5WnGM/0yYp3Rm
-	 gdJtu58TaAbF9ZrnuKr6S8paMPaCQUradxNIfyXVBz9fmLrgmB7
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7BA0F20081;
-	Tue,  8 Oct 2024 19:09:44 +0000 (UTC)
-Date: Tue, 8 Oct 2024 19:09:43 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Spencer Fretwell <spencer.fretwell@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KeNtVI2T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e312K0s+"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id D2ECE1380667;
+	Tue,  8 Oct 2024 15:23:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 08 Oct 2024 15:23:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728415421; x=1728501821; bh=dSTvBFsZc6
+	wfOPjeYjroQD9W7q5pT8Yn/lFkMhlYL1g=; b=KeNtVI2Tr556qnwIMeMGj5vguN
+	Mq1CotyqdPL0WlHDunW7L+MWOaJpk6K+CrumAZus2Xg1ChptZSrCo8LCk6tdZyXD
+	aX0zJNik9cLWLGdPVbgt0gR/xMe0L+xbPxfR+TpKrxWgKKG/Fn7eWJXjVsiOKYl3
+	0xN6LbuBVeDAkgLD0BnSCupL5/yM8+/9U+rl4SgRmrss0j8Qgpu+0crj8rr06gMj
+	QHTZUB0pzNLGZ0Sm/clh/gsw01w+8EokEPZYtVqKGG91CWmO1qqw2YXxJt5pWdL4
+	U2OSa3uW2dZci7fJ6HqNDgzGMmJP94TnE0WcZCvsCPR58raMETi42q0Hswaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728415421; x=1728501821; bh=dSTvBFsZc6wfOPjeYjroQD9W7q5p
+	T8Yn/lFkMhlYL1g=; b=e312K0s+Kf/ee/z+eMGi7+vy//c37sAyl1NoR4WHK2Ye
+	BxPAfFjyJlpiHMCNfaLAKpjZbnKRCdXFoxMIRKKrxcNiELtWIdeAwzy1MCxcZQJJ
+	9LZjFCZLTUb8IFhnGk/x4RTluJoXXO+BR7jxN4MrcBqstCx8OJWIj369gex0gi4B
+	6PefbC7o6DwTcsvN4mm0MVWaD7KF1qwImByhYAMzKTk8TQWGdHLy4MKSODbf9zuB
+	CTjk1mujCqck54wwweaQMqADj9RrotFZLhP8GSpw1OVN3eyKfZZOPYOjEWasVReO
+	oVSmPCZJ47Be0Fo9Ga7yzHmtn00Wk7q/c/sivMF3Zg==
+X-ME-Sender: <xms:vYYFZ6jkhahrhviHe9ZbzW3SLA6ex9MV9ojsenONVoH1-xdjvKr-PQ>
+    <xme:vYYFZ7BnR886OOMM2OCwEfePlzLr3v8QEMLFIxFAWLUxleOF2EbkSmJsf7_iK7v5E
+    Mh4AaAwJWO9ApdVzg>
+X-ME-Received: <xmr:vYYFZyGeL5ZFvx0tT3wBHrcfD8L2PwT5PwmjSepb1kJg9_SBEIV4Ol4VmcL7apSuF4k2WUeCVMYQ0ij_t2Y3xxoLPpAb1Hru5zGN_NU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefuddgudefjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
+    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
+    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepuggrnhhivghlsehmrghrihgruggsrdhorhhgpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:vYYFZzRmp2NQTCU44DQSuYj2UxHLyIAjmoNP-h30Og2q6y_aNxu5Mw>
+    <xmx:vYYFZ3wATWDsLEHGiZiv2HlOigbzYOtTFMdkq2cuEclyS_A3NbnqxA>
+    <xmx:vYYFZx45b6ouxkWelYUK6G0iUgYvXK1r8_qJAkLBBRu_t7PBKdNslg>
+    <xmx:vYYFZ0zX8Zxg37UkSLEUUbv8RWi7dWQswpoOkytLcLGJ24-DR4_pLQ>
+    <xmx:vYYFZ39kztXodAUrbvTAVg8qNOKvdAgJ5h3QkukHgbk4Ym9wwHB1hEi0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Oct 2024 15:23:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Daniel Black <daniel@mariadb.org>
 Cc: git@vger.kernel.org
-Subject: Re: Verbose Commit Ignore Line Fails via CRLF Line Endings
-Message-ID: <ZwWDd1_76Z6zH4mP@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Spencer Fretwell <spencer.fretwell@gmail.com>, git@vger.kernel.org
-References: <CABa71ByU_9g_6OgJ9PsoQ99oyMspucTBqO-RkB_2W4smTr2RNw@mail.gmail.com>
- <CABa71BwtEWS79CZwPOa_Nrh1iMrXRo+hyxNBc5F8GsQiwjdapw@mail.gmail.com>
+Subject: Re: [RFC PATCH v2] submodule: correct remote name with fetch
+In-Reply-To: <20241008015835.41678-2-daniel@mariadb.org> (Daniel Black's
+	message of "Tue, 8 Oct 2024 12:49:54 +1100")
+References: <xmqq7carzpzi.fsf@gitster.g>
+	<20241008015835.41678-1-daniel@mariadb.org>
+	<20241008015835.41678-2-daniel@mariadb.org>
+Date: Tue, 08 Oct 2024 12:23:40 -0700
+Message-ID: <xmqqzfnez9dv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="grdIryJEQiWVo9sv"
-Content-Disposition: inline
-In-Reply-To: <CABa71BwtEWS79CZwPOa_Nrh1iMrXRo+hyxNBc5F8GsQiwjdapw@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+
+Daniel Black <daniel@mariadb.org> writes:
+
+> The code fetches the submodules remote based on the superproject remote name
+> instead of the submodule remote name[1].
+>
+> Instead of grabbing the default remote of the superproject repository, ask
+> the default remote of the submodule we are going to run 'git fetch' in.
+>
+> 1. https://lore.kernel.org/git/ZJR5SPDj4Wt_gmRO@pweza/
+>
+> Signed-off-by: Daniel Black <daniel@mariadb.org>
+> ---
+>  builtin/submodule--helper.c |  9 ++++-
+
+The proposed log message is very well written.
+
+>  t/t5568-fetch-submodule.sh  | 65 +++++++++++++++++++++++++++++++++++++
+>  2 files changed, 73 insertions(+), 1 deletion(-)
+>  create mode 100755 t/t5568-fetch-submodule.sh
+
+Hmph,
+
+	$ git grep "submodule update" t/
+
+gives quite a many hits in existing tests.  Didn't any of them have
+sufficient preparation steps that testing of this bugfix can reuse?
+
+A test on "submodule update" behaviour tends to need quite a lot of
+preparation.  Preparing the superproject, addition of a submodule to
+it, cloning of these two projects, and then half-preparing a clone
+of these super-sub arrangement.  All of that needs to happen before
+we can say "submodule update" and observe the outcome to see if the
+bug still exists.  If we can piggy-back on a test script that already
+has such preparation, it would be far more preferrable than having to
+do another set of preparation.
+
+Another thing.  If this is not about a bug that only manifests when
+the HTTP transport is in use, it is strongly preferred to avoid
+turning it into an httpd test.  Some developers and/or environments
+skip them.
 
 
---grdIryJEQiWVo9sv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index a1ada86952..567d21d330 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2322,7 +2322,14 @@ static int fetch_in_submodule(const char *module_path, int depth, int quiet,
+>  		strvec_pushf(&cp.args, "--depth=%d", depth);
+>  	if (oid) {
+>  		char *hex = oid_to_hex(oid);
+> -		char *remote = get_default_remote();
+> +		char *remote;
+> +		int code;
+> +
+> +		code = get_default_remote_submodule(module_path, &remote);
+> +		if (code) {
+> +			child_process_clear(&cp);
+> +			return code;
+> +		}
 
-On 2024-10-08 at 18:37:47, Spencer Fretwell wrote:
-> On second glance it might involve having a file being committed that
-> has CRLF endings in it.
-> Committing files with LF only does not produce issue.
->=20
-> I suspect git either needs to add support for a magic ignore line
-> ending with a CRLF,
-> or has to sanitize verbose output when that output has CRLF (less ideal)
->=20
-> Bug originally seen as early as
-> [2018](https://superuser.com/questions/1367811/sometimes-git-includes-the=
--diff-to-commit-message-when-using-verbose)
+The get_default_remote_submodule() helper eventually calls into
+repo_get_default_remote() that returns an allocated string in
+remote, but it only does so when it succeeds, so this early return
+does not have to worry about leaking "remote" here.  Good.
 
-Ah, yes, that would probably explain it.  Your editor is seeing some
-lines that are CRLF and assuming that the entire file is CRLF, which it
-should not.  In Vim and Neovim, you can do `setl ff=3Dunix` when loading a
-buffer for `git commit` that will force it to always use Unix line
-endings, and there's probably some functionality in Sublime Text that
-lets you force a particular line ending.
+The code change looks quite straight-forward and looking good.
 
-What might also help is that if these are intended to be text files, you
-can set a `.gitattributes` file as outlined in the Git FAQ[0]:
+>  		strvec_pushl(&cp.args, remote, hex, NULL);
+>  		free(remote);
 
-  # By default, guess.
-  *	text=3Dauto
-  # Mark all C files as text.
-  *.c	text
-  # Ensure all shell files have LF endings and all batch files have CRLF
-  # endings in the working tree and both have LF in the repo.
-  *.sh text eol=3Dlf
-  *.bat text eol=3Dcrlf
-  # Mark all JPEG files as binary.
-  *.jpg	binary
-
-You can customize the file patterns as you see fit.  Once you do that
-and run `git add --renormalize .` (which you should do in the same
-commit as adding your `.gitattributes` file) and then commit, your text
-files will be stored in the repository as LF even though they may have
-CRLF endings in the working tree, and your diff output won't contain
-CRLF.
-
-[0] https://git-scm.com/docs/gitfaq#Documentation/gitfaq.txt#recommended-st=
-orage-settings
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---grdIryJEQiWVo9sv
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZwWDdwAKCRB8DEliiIei
-gU1AAQCZZejHqwKKT6T7h0mAhFIcMZTMP/0QtsaSdf9iQIRgggEAhf/PSzZ/SzLJ
-o+YmM2G6B2G/dNGS5D/uDmIZa7D4jQk=
-=4lQE
------END PGP SIGNATURE-----
-
---grdIryJEQiWVo9sv--
+Thanks.
