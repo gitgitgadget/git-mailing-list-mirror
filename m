@@ -1,133 +1,140 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A371FA254
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 17:57:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACD91FA254
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 17:59:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728410238; cv=none; b=iWUrFZ+vyvOFB8IjWjOWMA+9LLE3ftgaPNZYsGMKjN5NcbnNR656G1GL/L/WmruUL+wzfDGsYbU0kb0vti+cB8rdblGN2b7p2iV2NzrNrAFhYHYPEMfOggZrysaQ+OFnIbYV4dogRdL8AfwCv1b2Vqw/CcgJDjrxv5qZHzDSs/I=
+	t=1728410396; cv=none; b=a0Sam3aHX210XGK4JiAt3URJg3BmDL/X7yXBMuWI80U5Yg/Ort1zLwc5zWysQ2OoG4lqqBsJmH2MzV7CVrN0EqfhuyCL21kuBI8yzBLeu6N2tAWop+vjBO7PEG0YsrFUQTNcC76CSTnPW8kAXBNjDeJLQ4pZNCIm5TnXdwpwBwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728410238; c=relaxed/simple;
-	bh=B0OOIs3znPd64x47C7KdqVrXjNMCMD1xnhrJhzKKKic=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ibondDJY/UsZG7OF4dl+rAi7VWHdtLIRgNVqlLBg2qNzGCvmz7zc0y4v8gQ1+APP9kYFZFdrnVHGszAlxMQy05zr07P03iKJCc1BgpN0uESpoiVB/Dq7j8eFaaidysZdKYQLmKHSidvcpMM4lj/VoZKoi/Dny96CdBQpDpfXymI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CaAQYewy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DUHRxHYO; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728410396; c=relaxed/simple;
+	bh=YCX8yzCUQIaXBcypanaJUUVuyKf3SBF/GenbxTlJvIE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hCiSunftpJ1YX9Hf5U6WVkjqESCLVjfOnLNRGpd36UPr2I9tU3KY8UAp6Aq0Zw3yuCsH2jb0BGfAB7PkrNaPMHmkJMo5z7TqvMT6EX/UAXeV62//fVkZ0KRBMeAT1zvMnf7j3GHHP65pq8dUCDsrGcLRXJQq+Rhi36D00HW8mQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=khRqsjAl; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CaAQYewy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DUHRxHYO"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EB37D1140177;
-	Tue,  8 Oct 2024 13:57:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Tue, 08 Oct 2024 13:57:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728410234; x=1728496634; bh=MgEUk65w+s
-	sgS3T9AV8Mdak3uLpS9HZxTjyMBpxeD8w=; b=CaAQYewy0AS6En6XfbzB4ITFO7
-	ujI4LxKrY2zt2wvM/jbWGoLBeYTaot21jM1gmex6Nr0W7tXUqFLL7HqnZVLTms55
-	ROSLJqo0+t239OYM0RmkdBO3umbam0192MKRXXD5Ew//n0yUP0Nkm321JUU3TB5s
-	H5ydUPmhGWi3HG/r+gp/JJ1bY4Pk1SeS1IhCcfjH4VR4Fhen8oc98Usvr6QkfG3a
-	+o5Xq14d+5/ZvSdSEytemc4VbHCKIu2hFO++iindtQISyagAsfC9J4RtogtzuxZ8
-	NuhkB6hUfzABrZm7ItdgMA8LYRoWMtQXjrBIEmQm3EeN4shx5r5oPecLp0zA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728410234; x=1728496634; bh=MgEUk65w+ssgS3T9AV8Mdak3uLpS
-	9HZxTjyMBpxeD8w=; b=DUHRxHYOfQ7ugokJY1cRRq4gFF0/qm6892ymg9zNltLT
-	Y6PoYDWucP+AML5S19hZV8S/iQHJiyhIaXInR5WkRrilZTO6n+HsiBXdJIvyoppO
-	Ch35r4InS3suTodtFV8VL3eglEo3M4Ug0Xwv4iWYcGwXB76av2DVYaXp9BqZwHd6
-	mWJf4ixdCA7T+oMfh4eNw0LC7ANv4rNlmTNp46hQCqqB5qphwcB5aZJjXpfKbnIG
-	aH8bTQeCC41CRUMcjVLvctHN0ZPTkqywJmDhhlgl+04f0z+hyMcfzrpUmA02jlJO
-	Jr9EAY/CGjm7QtIlo66QAKoHyIvha1kGN3IyJ1wAyw==
-X-ME-Sender: <xms:enIFZ73osxrzIq7UNhLHi7MYbdL6GgqDF5QEplrLw5xFScTrKYAfqg>
-    <xme:enIFZ6EC5r3S9xhFG60QKv17yVUQ7qSowszc2GhmXvTlY-Ctl5jYSVm0vT4TDSoIw
-    GvNnGH9h4Z7IFcIHg>
-X-ME-Received: <xmr:enIFZ74cGIOQzI0yO2Raq608hwr5d6oPKs9ltAGB9zfI22fGvLJPkRld6f9LT1-7gnf1CdCXp2L6lK9v02n3NroXYfSE216pMnSpRnE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefuddguddulecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepsghmfihilhhlsehgohhoghhlvgdrtghomhdprhgtph
-    htthhopehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtghomhdprhgtphhtthho
-    pehpshesphhkshdrihhmpdhrtghpthhtoheplhhiuhiihhhonhhgsghordeiieeiieessg
-    ihthgvuggrnhgtvgdrtghomhdprhgtphhtthhopegsuhhpthgpgihinhhggihinhesudei
-    fedrtghomhdprhgtphhtthhopeigihhnghigihhnrdiggiessgihthgvuggrnhgtvgdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:enIFZw1dIgNhEQ3rqWE6E_i4ruORMJhPeH4xe_h04mRGdDVNfytc_Q>
-    <xmx:enIFZ-EQe38Cxuui43imyw9YEN6o7QlvrQ33CE6Oh9uPVprWxrm07A>
-    <xmx:enIFZx_y4gZR1Ad4Zvk9hpPTyKvxo41vkR4p0uCs4vVU2tPysSEvqQ>
-    <xmx:enIFZ7mCWl0zsR8MFgEtwlA2mHqxBAmi0ybhi5on2QoWyFboaMHV4w>
-    <xmx:enIFZxDbbDcx193xvVEzP97gOEn0zWV-m3szjftQI1ee_MkuDldpYcrT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Oct 2024 13:57:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Xing Xin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Brandon Williams <bmwill@google.com>,  Jonathan
- Tan <jonathantanmy@google.com>,  Patrick Steinhardt <ps@pks.im>,  Liu
- Zhongbo <liuzhongbo.6666@bytedance.com>,  blanet <bupt_xingxin@163.com>,
-  Xing Xin <xingxin.xx@bytedance.com>
-Subject: Re: [PATCH v3 4/5] fetch: respect --server-option when fetching
- multiple remotes
-In-Reply-To: <420b15d9f37d2510d0e4f5390a4b93a5ead7c966.1728358699.git.gitgitgadget@gmail.com>
-	(Xing Xin via GitGitGadget's message of "Tue, 08 Oct 2024 03:38:18
-	+0000")
-References: <pull.1776.v2.git.git.1727093878.gitgitgadget@gmail.com>
-	<pull.1776.v3.git.git.1728358699.gitgitgadget@gmail.com>
-	<420b15d9f37d2510d0e4f5390a4b93a5ead7c966.1728358699.git.gitgitgadget@gmail.com>
-Date: Tue, 08 Oct 2024 10:57:13 -0700
-Message-ID: <xmqqv7y21nra.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="khRqsjAl"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-20b0b2528d8so67536275ad.2
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 10:59:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728410395; x=1729015195; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=U5D7ktOQl5WJvNF+yid/o2u0m5APNzzmN+ODdgbRWRA=;
+        b=khRqsjAlCLJvOQ2gxyNn1sY4PSl0DEN5Oi8zm8Watl0xIx9+fMXX8TGJrWafuVUYQM
+         lxmwUFgUU361z90hz695DoA8Nt+msiKjxTmNQOUvlne7vRQdqlJVjit+FLS9IYqT0hus
+         u69PyfxdZ4TskywaniGUhJZ2yDiA62oYEeDXk3Xf8u7DKqyZrR4TsaS2y0o+CWSSxfas
+         SxyAL/A8/0GrVqw6R/pixf3JF+VOcjVnavfx04AvnzrqT4bcectucPP030QUWQagsRDO
+         Tnxm0bkkvQ+TizBdRByH38mXby2rXq8efV6p9Q25YdmuLiQF5IGc5qNwgIrIzA7xmxIg
+         fo3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728410395; x=1729015195;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U5D7ktOQl5WJvNF+yid/o2u0m5APNzzmN+ODdgbRWRA=;
+        b=u9+xzy1THAe/7mQofyzI0S54rNu3Rlv5u3dGxWq83kqrVeINejGjJcNYbLvEHQNNHk
+         6VYk/wV79nZ5mc6flmarViSMkiH3fpapvoO584hsigGlJbdA6XhY8TfitK5doGoFKQ2Y
+         c53yYbIiJgLduF4YmblSFsRnM0KDHdRonkvGg1s01R3Rn0eHb7mJNM/ACn9+2GBZPxf2
+         4WjB/S9MVj2A6QQlpvCRB8wEN9LrO23Bwfu3fuWWjs+cjA8MLFNgJHHzMh4P7GMhDC94
+         6JDUC0m1QHH7N3vXl4XPzvnD5zxZhoU2dWjNnH5FCqQw8QMuPzP1coY+dAWIgi20D276
+         i5Ag==
+X-Gm-Message-State: AOJu0Yxhk0edBV91eAjV+f8tDmoP1jdMmzaZD+z9TA8nAIer6MtwKDwW
+	rlQ2s7Ia+tQJeYhpDz1c2HMvEebFbeODWXdXEFWXgsqWCDcdM17RKtIYFA==
+X-Google-Smtp-Source: AGHT+IGssSruZIX2g15HBlQ0FPl7Guo/6Kg5kQYymUzs3iW81wFACF2UQT7tuhnykktMaUUymSKI5A==
+X-Received: by 2002:a17:903:228f:b0:206:b04e:71b3 with SMTP id d9443c01a7336-20bff03f465mr256737335ad.51.1728410394638;
+        Tue, 08 Oct 2024 10:59:54 -0700 (PDT)
+Received: from five231003 ([2405:201:c006:3236:eb8a:e5f7:a2c7:6285])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c593f8152sm12593465ad.153.2024.10.08.10.59.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Oct 2024 10:59:54 -0700 (PDT)
+Date: Tue, 8 Oct 2024 23:29:51 +0530
+From: Kousik Sanagavarapu <five231003@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [Question] local paths when USE_THE_REPOSITORY_VARIABLE is not
+ defined
+Message-ID: <ZwVzF9Xgn72tT5Ee@five231003>
+References: <ZwQSWcmr6HWTxxGL@five231003>
+ <ZwUkUuQgxaE2-djk@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZwUkUuQgxaE2-djk@pks.im>
 
-"Xing Xin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Oct 08, 2024 at 02:23:54PM +0200, Patrick Steinhardt wrote:
+> On Mon, Oct 07, 2024 at 10:24:49PM +0530, Kousik Sanagavarapu wrote:
+> > Hi,
+> > 
+> > I have two questions but a bit of a background first -
+> > 
+> > [...]
+> > 
+> > So my question is - do we want, in the future in which we are free from
+> > the dependency on "the_repository", for all the local paths to be a part
+> > of "struct repo_path_cache"?  Which in my gut feels wrong - one alternative
+> > then is that  we will have to refactor REPO_GIT_PATH_FUNC - or am I missing
+> > something here?
+> 
+> What I don't quite understand: what is the problem with making it part
+> of the `struct repo_path_cache`? Does this cause an actual issue, or is
+> it merely that you feel it is unnecessary complexity?
 
-> From: Xing Xin <xingxin.xx@bytedance.com>
->
-> Fix an issue where server options specified via the command line
-> (`--server-option` or `-o`) were not sent when fetching from multiple
-> remotes using Git protocol v2.
->
-> To reproduce the issue with a repository containing multiple remotes:
->
->   GIT_TRACE_PACKET=1 git -c protocol.version=2 fetch --server-option=demo --all
->
-> Observe that no server options are sent to any remote.
->
-> The root cause was identified in `builtin/fetch.c:fetch_multiple`, which
-> is invoked when fetching from more than one remote. This function forks
-> a `git-fetch` subprocess for each remote but did not include the
-> specified server options in the subprocess arguments.
->
-> This commit ensures that command-line specified server options are
-> properly passed to each subprocess. Relevant tests have been added.
+I feel it is unnecessary complexity.
 
-A more interesting use case, as there is no reason to expect that a
-single server-option command line option may apply to all remotes,
-would be to configure different server options for different remotes
-via the new serverOption configuration, so that different server
-options are used for different remotes.
+	$ git grep -E "(static GIT_PATH_FUNC|^GIT_PATH_FUNC)" | wc -l
+	65
 
-If it happens that the same server option is applicable for all
-remotes, it is reasonable to give --server-option from the command
-line and expect it to be propagated down to subfetches, so
-regardless of the "what happens when different remotes have
-different options configured?" above, the change in this step looks
-reasonable to me.
+Meaning each of these would have to have an entry in
+"struct repo_path_cache" in the world where we don't rely on
+"the_repository".  Some of these are also not direct ".git/some-file" but
+".git/dir/files" where ".git/dir" is also given by a seperate path func,
+like ".git/rebase-merges" and ".git/rebase-merges/head-name".
+
+So why hold pointers to such filenames instead of just calling
+repo_git_path() manually - all these filenames are "local" anyways - unlike
+say files such as "SQUASH_MSG"?
+
+> > I got into this when I was trying to refactor builtin/branch.c to be
+> > independent of "the_repository".  It was a very naive approach of just
+> > manual conversion of all the git_* calls to repo_* calls and similar
+> > changes but the compiler started to complain since I overlooked
+> > GIT_PATH_FUNC and some variables in environment.h which are also hidden
+> > under USE_THE_REPOSITORY_VARIABLE.
+> > 
+> > Which raises another question - why are variables such as
+> > "comment_line_str" and "default_abbrev" hidden under
+> > USE_THE_REPOSITORY_VARIABLE?[1]  They don't seem to be dependent on
+> > "the_repository"?  Again, I might be missing something here but am not
+> > sure what.
+> 
+> They do depend on `the_repository`, but implicitly only. The problem is
+> that those variables are populated via the config, and that may include
+> repository-local configuration. As such they contain values that have
+> been derived via `the_repository`, and those values may not be the
+> correct value when you handle multiple repositories in a single process,
+> because those may have a different value for e.g. "core.commentChar".
+
+I see.  Guess I didn't do my research right - didn't know about
+"core.commentChar".
+
+> > By the way I don't expect this "naive approach" to be the right method
+> > of doing this - I was just tinkering to get to know
+> > USE_THE_REPOSITORY_VARIABLE better - since builtin/branch.c also calls
+> > into ref-filter which heavily relies on "the_repository" so changes
+> > there also would be appropriate for the complete picture.
+> 
+> Yeah, in the ideal case you'd first adapt any underlying code that you
+> happen to spot that relies on `the_repository`. That doesn't always
+> work as it is easy to miss that something implicitly depends on the
+> variable. But in case such a dependency is missed it will get to light
+> eventually as we continue with our quest to remove `the_repository`.
+
+Thanks for such a nice explanation.
