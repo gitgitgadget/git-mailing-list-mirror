@@ -1,136 +1,113 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A2C213EDF
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 19:35:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE50212D21
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 19:52:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728416102; cv=none; b=QRIo6g3nhFHIkCiQja9Bl5VWpAlYXOqlsqmCOlV9MLd2ozXUwPDg9R/8yz5jclqCF4o7273nLVeLvFUlVvg2rhCUByam6XmsbcKg+yoFRSVGQ3uYcB6M8jLiyukeuR22iWSRzdW9frGf7YKVZJnd0vFXRZzRgsgCEQcmU7mAIig=
+	t=1728417158; cv=none; b=JL4ulY0xJ6KNCq26HhujCDemwfwB3zbXGkNMKlWrZffpuvSWH7aui6Ec85l2COfzQDRDaIeQsV4kgNNb0JhPVD4vDDyfcbX3260lfG/IgquJ1Rffh4soiT9J/N2hzsrBxyhvRrOgwK5CUcEIwtnSPZu/TnUKlkSbAdZvFPfxIqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728416102; c=relaxed/simple;
-	bh=8iS+idRCx39StPUfTLU5MimZziGxM4Yr+MdrzjexD8Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=iI+BkocxyDI6/oPAXcWto/6x1iUSo97pPIBeWvpeRyQZ044q86BMhZVVdmgMA6IyRThftkXimK6M2+EeqHwtpkI83f5LPHqWisaDlr2Qe5+eEQG/q5P1oiwWtQbNvi1uS+NVvng50RfKSEd2vOHxLjjLZAFqx2SgJQQk/qdxtp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QHtXTVGE; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728417158; c=relaxed/simple;
+	bh=kbbVuMcbRYEiIB2FW7SQCMDjTRTXVCyiNYLpjqTl46Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M0gWyQjNS6eZ3gr82fjDa7I8RxWUujs+UKLerYWoTmbGaYX0zPa779w03Hk8GVOwbyN4N3WouumnCCfF7SAJSEW5mOrBv7+YbcxJky2Cs5LnATO9F6888A56qrAedikYCQY5+E5bvHDFdnJnqXYjXvLB5JEJk0cegsUipQly+Hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IzhoAjIj; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QHtXTVGE"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2fac3f20f1dso65548801fa.3
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 12:35:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728416098; x=1729020898; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kKwAyP863110+LooQ77d22W1fWpMbV1LSFaQcqaHu4A=;
-        b=QHtXTVGEK/WZq6IOieeHs5HtGFYm53I48pM4kuvkniyBE2QvUr+e/E6k1c/DM6TIMo
-         dPDBZzYeQh6k0NKwm6UZPbWtLTO+FlBdk3MiRg+t4xTOK3pcHhUnhhJEYnDXrYd/eb/9
-         lWl92y6aX9qprZWz9uTsakxiurcTsJCJqCseRzTE+ltD9vtvFVK3FeSBbLstzFMEs8fk
-         +wzFhLs9KTsoCFpvsL3NcoEkexj4gQutE6eo4DY9HwcSSYsDL/ooh+X9oq3VdeoZWYgd
-         dtz3u9xJ8Gf/HMVFjDzIqN96K6Y43tBEtVwDsHPryo+qN27/Ss9bgcoXaj20pZyH36Pc
-         ViSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728416098; x=1729020898;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kKwAyP863110+LooQ77d22W1fWpMbV1LSFaQcqaHu4A=;
-        b=DnZUvsHghB7/xagZWz8yVRPi99nd85Vr7k57Sog2fSz6kc46OtZTepgKBqABmhjYH4
-         dDTGZ6u1DS/7YNbrGXXeg6TyX9X00B4p7kwd+hbmID6dV0R8JDhv8iMvQo5bL32fWJbm
-         r/wEy5Y5Tk8bs4HH54KmLuAWR6jyumpZaiNOVZ/oBoTH8ih7A9idVIGd3tVza9WHKNBA
-         PrL45mQPfhd5yCOK0eyCRoREE3L+eYBpyiX1g68pobqb/ioVtPE3bfbl0a5daTfPQfVX
-         gnud+oHVecflPiCQa2jyzwwg1GSFgu2xoMsX6OnQkdXNuxC+Ea/V8gWszAg/lW28q2oQ
-         GHbg==
-X-Forwarded-Encrypted: i=1; AJvYcCXEDgr9EL5T9Exd7IzYwh0vxshlg9pJgQ+YIYf9zxkxVXFDzhCReQo/sRAnyfU46KN7Kgw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOj70GNGsyC6B9fcwhTD2Nhja7OiiTUDDkO1FUeR9xJYT4mRgt
-	hOS+FZwozmm0igE2PEtZBS+UcWTfFCWifyxtdI0mHEBHBHoitCv7FPJqaCHTjWEuMRL23Tp3Lpw
-	YgHP8YSeBx2pGRbeGHmN026ejxzPm
-X-Google-Smtp-Source: AGHT+IFOhpNiyJhHR1CHuKaLqVJdS7C/Yo9isROd/VOk5cgF6n2vLnNj/0UKkMdhn4YnOUw2dlXXaEsrSSOaL/kwL7k=
-X-Received: by 2002:a05:651c:505:b0:2fa:d9db:7bbe with SMTP id
- 38308e7fff4ca-2fb1872ee2fmr1202821fa.16.1728416098052; Tue, 08 Oct 2024
- 12:34:58 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IzhoAjIj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1728417155;
+	bh=kbbVuMcbRYEiIB2FW7SQCMDjTRTXVCyiNYLpjqTl46Y=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=IzhoAjIjytA/9uNnJX5FEPT6bpMdQt/lL2NZSgjaqMpTQ/fMdDtU0oMXtYs6Gbjmu
+	 jL/3ID315NdACZBX083WlBg9jm5Jx5jREH9QlgZfhxru6FakViB3406xaJBA2waKEb
+	 fJkTBKrmwIrj3m+6mkKSd+c4o9jBkSbeSuuYur/DCnWGfySO3LumKwc07wTmeYADsg
+	 AX1QO2dXzevlH4Bsj9NGyTUxNvDofs+xUWQjB20t2UFE8vLv/wWkkaXVMskptegMDP
+	 CxKkqViKtpBzA8r7E3fTidoRKctwQd4eS22oZq/pJp2RuKnlu5RNES1r/fJe89OgwW
+	 MVo0em/xOOmSMf8ig51dTrf0mLcAUPeB8XqoqzxWoYUYxVGrmnGiFe8bso5lEs1YwN
+	 /+/DZmRLUJntf4IgwaA1+WaFuaBcUiZu4RvyYUeWrlHWUey5Z8wvI3NoqpQPsm4QAV
+	 L7aKo3R794g+6HtgwOWY4V6AjB6HieLdkOKobKRCnNpHFUklBsI
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2762920081;
+	Tue,  8 Oct 2024 19:52:35 +0000 (UTC)
+Date: Tue, 8 Oct 2024 19:52:33 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Spencer Fretwell <spencer.fretwell@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Verbose Commit Ignore Line Fails via CRLF Line Endings
+Message-ID: <ZwWNgc6JY46bmcjE@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Spencer Fretwell <spencer.fretwell@gmail.com>, git@vger.kernel.org
+References: <CABa71ByU_9g_6OgJ9PsoQ99oyMspucTBqO-RkB_2W4smTr2RNw@mail.gmail.com>
+ <CABa71BwtEWS79CZwPOa_Nrh1iMrXRo+hyxNBc5F8GsQiwjdapw@mail.gmail.com>
+ <ZwWDd1_76Z6zH4mP@tapette.crustytoothpaste.net>
+ <CABa71By0WYkbNip6-hmcX2jH1GuHWEx=WBTda5=RV9koR-cVFg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CABa71ByU_9g_6OgJ9PsoQ99oyMspucTBqO-RkB_2W4smTr2RNw@mail.gmail.com>
- <CABa71BwtEWS79CZwPOa_Nrh1iMrXRo+hyxNBc5F8GsQiwjdapw@mail.gmail.com> <ZwWDd1_76Z6zH4mP@tapette.crustytoothpaste.net>
-In-Reply-To: <ZwWDd1_76Z6zH4mP@tapette.crustytoothpaste.net>
-From: Spencer Fretwell <spencer.fretwell@gmail.com>
-Date: Tue, 8 Oct 2024 13:34:46 -0600
-Message-ID: <CABa71By0WYkbNip6-hmcX2jH1GuHWEx=WBTda5=RV9koR-cVFg@mail.gmail.com>
-Subject: Re: Verbose Commit Ignore Line Fails via CRLF Line Endings
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Spencer Fretwell <spencer.fretwell@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jte2wW8/6DKhK+wX"
+Content-Disposition: inline
+In-Reply-To: <CABa71By0WYkbNip6-hmcX2jH1GuHWEx=WBTda5=RV9koR-cVFg@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--jte2wW8/6DKhK+wX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Thanks Brian,
+On 2024-10-08 at 19:34:46, Spencer Fretwell wrote:
+> Thanks Brian,
+>=20
+> It appears sublime auto-normalizes endings to "whatever occurs most
+> frequently in the first 32kB". So, I guess it was witnessing the CRLF
+> from the verbose output and replacing all lines with CRLF. Thanks for
+> the reminder about --renormalize.
+>=20
+> Is there any chance for git to support a CRLF magic ignore line,
+> particularly considering the variation in standard line ending across
+> different platforms? I tried autocrlf=3Dinput as well and it sadly
+> doesn't normalize the commit message file itself. Either way (magic
+> ignore with CRLF or normalizing line endings in the commit message),
+> would be appreciated for mixed line ending workflows (especially
+> considering WSL)
 
-It appears sublime auto-normalizes endings to "whatever occurs most
-frequently in the first 32kB". So, I guess it was witnessing the CRLF
-from the verbose output and replacing all lines with CRLF. Thanks for
-the reminder about --renormalize.
+The answer is essentially that I don't know.  We typically make
+decisions on whether we'll accept features when we see the patch.  My
+guess is that, assuming someone (maybe you) sends a patch, it will
+probably be accepted, since I wouldn't expect it would be very difficult
+to do or have major impacts on the code.  It might, as with any patch,
+take a couple of rounds, though.
 
-Is there any chance for git to support a CRLF magic ignore line,
-particularly considering the variation in standard line ending across
-different platforms? I tried autocrlf=3Dinput as well and it sadly
-doesn't normalize the commit message file itself. Either way (magic
-ignore with CRLF or normalizing line endings in the commit message),
-would be appreciated for mixed line ending workflows (especially
-considering WSL)
+I use Linux or rarely other Unix systems and always use LF endings, so I
+don't plan to send a patch since this doesn't affect me, but assuming
+the patch looked reasonable, I don't see myself having an objection to
+it.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-On Tue, Oct 8, 2024 at 1:09=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2024-10-08 at 18:37:47, Spencer Fretwell wrote:
-> > On second glance it might involve having a file being committed that
-> > has CRLF endings in it.
-> > Committing files with LF only does not produce issue.
-> >
-> > I suspect git either needs to add support for a magic ignore line
-> > ending with a CRLF,
-> > or has to sanitize verbose output when that output has CRLF (less ideal=
-)
-> >
-> > Bug originally seen as early as
-> > [2018](https://superuser.com/questions/1367811/sometimes-git-includes-t=
-he-diff-to-commit-message-when-using-verbose)
->
-> Ah, yes, that would probably explain it.  Your editor is seeing some
-> lines that are CRLF and assuming that the entire file is CRLF, which it
-> should not.  In Vim and Neovim, you can do `setl ff=3Dunix` when loading =
-a
-> buffer for `git commit` that will force it to always use Unix line
-> endings, and there's probably some functionality in Sublime Text that
-> lets you force a particular line ending.
->
-> What might also help is that if these are intended to be text files, you
-> can set a `.gitattributes` file as outlined in the Git FAQ[0]:
->
->   # By default, guess.
->   *     text=3Dauto
->   # Mark all C files as text.
->   *.c   text
->   # Ensure all shell files have LF endings and all batch files have CRLF
->   # endings in the working tree and both have LF in the repo.
->   *.sh text eol=3Dlf
->   *.bat text eol=3Dcrlf
->   # Mark all JPEG files as binary.
->   *.jpg binary
->
-> You can customize the file patterns as you see fit.  Once you do that
-> and run `git add --renormalize .` (which you should do in the same
-> commit as adding your `.gitattributes` file) and then commit, your text
-> files will be stored in the repository as LF even though they may have
-> CRLF endings in the working tree, and your diff output won't contain
-> CRLF.
->
-> [0] https://git-scm.com/docs/gitfaq#Documentation/gitfaq.txt#recommended-=
-storage-settings
-> --
-> brian m. carlson (they/them or he/him)
-> Toronto, Ontario, CA
+--jte2wW8/6DKhK+wX
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZwWNgQAKCRB8DEliiIei
+gSMFAP9rXSGWu0fTbSTGTNpVEu5xQRSyDE83mKnsDPvUJf3gxAD+O8wvnir8WqJl
+mxE7zCL2zxoloXBS0Y7CqYcRhAdW9AY=
+=IEZ6
+-----END PGP SIGNATURE-----
+
+--jte2wW8/6DKhK+wX--
