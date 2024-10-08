@@ -1,104 +1,106 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9B1212EE2
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 18:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF17E487BF
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 18:31:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728412246; cv=none; b=Fv3wCJEn/cPd826ya+524KorKEso+ZrwsH6Mpi74oR3VZXU6B3w3KHqoyrPTOY8UfgQCBl7J68Ac3GciCdDXwjnL9H458A3OWtOSkUnjkBSQmMEMVMDAthcYPDz9JKLMdXHCxxhlyM2YNP4H6Pk0n+nUrBD1mc6R/2osYqCvgj4=
+	t=1728412269; cv=none; b=B7wdWIPlFbsOMylC8ew8Pv36phoMJ8InUYiPX9nXvbNqlkagILzCsZd+AnM+g24ntZCDQiyCAwyhhfCAxcJ8xC9r4HVWfVMOGsg1RSM3aGzLCAgxgxnaeWuOpxGSmSh5MXPrOZvyyW+Ef4ns0St8T4ZC7hI+oG5ZecXh5RJ7nxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728412246; c=relaxed/simple;
-	bh=/mHuGHAB4GCvkhZofmqobdWj1e5aWoal2jcSCOluNLc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FVFtER3vq/zpimF0Iwu7hqSSPrORPMulB1MZOUy1HiPyYOSyTe6hzs82+xSgB683cTJSfKbhVWdyJk70SrQoc/WfDjU5xqhyswMoxbmf0QXzcgBVTyiEieAT9w1gJ5on/X+NIEoHjEqDouavSmMSPxt2u0YqGveGSCNN77YB3u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HHde81Mm; arc=none smtp.client-ip=209.85.219.179
+	s=arc-20240116; t=1728412269; c=relaxed/simple;
+	bh=nGTN5NtIsm7zHKlSKuSfiIia+8heoR1s0IfWw8ywKyw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=RNw7kiTLl+1ua4eFue+ccaJlRU6bkch4B5hK7QE0qLsrMy05JHzWQA0GXR2d169pNOw2VA9cVYb8Lod3VJUkstTO/DAmZM8SCRisBZWavh0nRNVB4o19LoGUabSa/fHPffUSJbf8yvzO3W0DA3lUiuZKZVD6j3rvrmyuEZ90BYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FbRsOqhy; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HHde81Mm"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e25cc9e94eeso5174304276.3
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 11:30:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FbRsOqhy"
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5398e3f43f3so6927368e87.2
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 11:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728412244; x=1729017044; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2QLoJaiQo4rgb6+IUD9qJl2lXz7m6f9vbcxYE/AY/Uw=;
-        b=HHde81MmXLccWT2xKRpz3+zqioWWxXpvh4YMQsKKVit/N+E9xlmDxlMGpg5TFHV/b0
-         vxOuHIZPTUHJfIOEecZwznUQkmATMAVa8Onz0MLT7M7P6e+XkXdWYw0p8rVVy6OhqIoK
-         7o6Z/3FQSRtccBIVnmQ7A9XmA/c7hZyrVDWwvPtgwVDBHdcs4JsUUOyqj28FHHeTAsmS
-         /apJTAubmHOgl8BpuFp8QTbjecpudkybD6Dwx/Msi6ajV4ndWYEEJTmf6KVGMG2NaoPW
-         Lz87uKsKQazsSiopGAuJtohOPeH9RjT3B4nnsddxu62Hq62qujmrqAJwoaYDJHkIR5SF
-         Tk2Q==
+        d=gmail.com; s=20230601; t=1728412266; x=1729017066; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nM0FE5DoFomo60eIBRL1vuwA76xh3Cbq8uoxZFyrPFo=;
+        b=FbRsOqhy/sruWwIEvFjsc2lds4Z5Y6JkjcstzC+px1+Hjr5PM6jvixFo1RmyH4VQJP
+         to6uNaOaq0MTxj3eEbPV4C4ZmF6RM+CE1/LEpnKLRyImwpPz1UboF/ONylS4wVrNIRWj
+         S9AD+vEwjzkClOCBweB7hJN3JPtnOtVnW+TWJKcxJ1alQ2VwROsOO9NI0bciewr/tL3l
+         QzWKB3zyKHRCK+U/5WGRYlK/CkQVPPGiHZYiY+azsBWN8wcuVjPFGSNlrWNNlMDhCMob
+         YvTw/6nPPNL6uVzXPQHb5A44NuYDmnSxYosoY24URLBa/iLHZWsczejvWlVBsLXeJTor
+         YRnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728412244; x=1729017044;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2QLoJaiQo4rgb6+IUD9qJl2lXz7m6f9vbcxYE/AY/Uw=;
-        b=b+D1sbzqTprMUwxF66mWTJAkbxmFuWxfdCiogNWruCnT7so/vRIixH5rlwmjL9wVoI
-         cWt4Dh5Pyx0rGaJr3evGuRLHHm5Yr6ngPgdjX3Lr7c0WYvHkREt6yWZ1K1iKkFnvtNjh
-         REkwiScXUq0KM4ihnuD0HroSK3OZ/lU+thM9mKcLSldyQnj7nwNnJJpTYSBLPArVnDml
-         XbaQ1uOm57AH4k9xy3fdJhb0jOdU8ZM9A9dbmivTdkeQr0sT5z4cGFYJnmCaVBdgu1B4
-         YHccY4cgQ6BLuEuYk6DyuUbxClXRh3ERPGXtS/Wjvkttml+EIDksNdQXhKlkfJ2lrMQX
-         xunA==
-X-Forwarded-Encrypted: i=1; AJvYcCUy9WcBss0o9pvZ1xAN78iJ9luidLhl42XOD39c19rrsQGNmiiU1vvAHsX/qnU465/Kgaw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YycdKOWtLNi9EomnxIcgF/UhH06m3oDY5lVwzNH0ux5iNR0Fhf4
-	Q9emhZFcGP51pRp7u+heCfc2bJo4ueBGES6YqGm67EVlt3+6zaeWzMPv1A==
-X-Google-Smtp-Source: AGHT+IExtmefELKp9OndvqafhDqfIp/ruvXEYDmrHmwJKkGwmZztA0IQnDiTTBG+ze1UIl4/JokYQg==
-X-Received: by 2002:a05:6902:a0a:b0:e26:1a02:e061 with SMTP id 3f1490d57ef6-e28fe3ab150mr42210276.34.1728412243703;
-        Tue, 08 Oct 2024 11:30:43 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:799f:a786:d66d:649f? ([2600:1700:60ba:9810:799f:a786:d66d:649f])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e28ee8c438csm319835276.47.2024.10.08.11.30.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 11:30:43 -0700 (PDT)
-Message-ID: <c1271bf6-3648-4eca-916f-67a8518fe4e1@gmail.com>
-Date: Tue, 8 Oct 2024 14:30:42 -0400
+        d=1e100.net; s=20230601; t=1728412266; x=1729017066;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nM0FE5DoFomo60eIBRL1vuwA76xh3Cbq8uoxZFyrPFo=;
+        b=UfX3qQWhCzMD2jg1Ojf4HnFi+ztgPcdCAmxtRjKyeF3KdFYAPYSF7V8HqZq6ry7lcQ
+         8tglx4nEu2UFwJbwSC6yDbetfoZ/JwTbd5tdzYWadjyrN6ITiPXILO2sPYqi7dyBHOCa
+         IEZf05M7l69B0ZE6WdGEMclzLP6dXWf9/x8vz6BRN7YGy7swDsO5lQB6cIt4kNEhdbbf
+         qxQZx6SnJbMEkLuww1l0xT9C/GsIOJvefXxZXoMt1yE0j5OGCGHRZRpk0b35axw2RllJ
+         MmZSwiw5ENpTsAWO3sCDqB5Pn4R2icxoUDsD/6cHwndlfyeC9gw7ER82jMq9oQ/rqolK
+         Lo1g==
+X-Gm-Message-State: AOJu0Yzs7ldO3Rntauhdr1UAAGy4KRhfNLDq0RKiX5ST0h9lZxKUhSHr
+	smLWmuxb0PnQ2hmbEUq+C/M4Yc2ni/RarVucFRGhNLWW7XWRiF4/3dxBJq3MOgFFEhX0XGrsPmm
+	z8h0D/V/hoXGWaxWFEMo9YZSc28c0
+X-Google-Smtp-Source: AGHT+IHnZli9jyaold18ow5JBklt/39q4Nl1/bhixvYw/3/aTlfT1jmpcJzjB2gD6X8REoDwOBJ18AWoju43F4oruXM=
+X-Received: by 2002:a05:6512:ac7:b0:539:8f68:e032 with SMTP id
+ 2adb3069b0e04-539ab9e421cmr7327173e87.43.1728412265471; Tue, 08 Oct 2024
+ 11:31:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] builtin/gc: fix crash when running `git maintenance
- start`
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Shubham Kanodia <shubham.kanodia10@gmail.com>
-References: <CAG=Um+0mJW-oAH+YLC3dWEU64JwS-zMkkTiFWYBe4g6HMbe-iA@mail.gmail.com>
- <976c97081af7c62960bd71d1b70039657e7cb711.1728389731.git.ps@pks.im>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <976c97081af7c62960bd71d1b70039657e7cb711.1728389731.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Spencer Fretwell <spencer.fretwell@gmail.com>
+Date: Tue, 8 Oct 2024 12:30:53 -0600
+Message-ID: <CABa71ByU_9g_6OgJ9PsoQ99oyMspucTBqO-RkB_2W4smTr2RNw@mail.gmail.com>
+Subject: Verbose Commit Ignore Line Fails via CRLF Line Endings
+To: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000001c08cc0623fb579b"
 
-On 10/8/24 8:15 AM, Patrick Steinhardt wrote:
-> It was reported on the mailing list that running `git maintenance start`
-> immediately segfaults starting with b6c3f8e12c (builtin/maintenance: fix
-> leak in `get_schedule_cmd()`, 2024-09-26). And indeed, this segfault is
-> trivial to reproduce up to a point where one is scratching their head
-> why we didn't catch this regression in our test suite.
+--0000000000001c08cc0623fb579b
+Content-Type: text/plain; charset="UTF-8"
 
-> +test_expect_success 'start without GIT_TEST_MAINT_SCHEDULER' '
-> +	test_when_finished "rm -rf crontab.log script repo" &&
-> +	mkdir script &&
-> +	write_script script/crontab <<-EOF &&
-> +	echo "\$*" >>"$(pwd)"/crontab.log
-> +	EOF
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		sane_unset GIT_TEST_MAINT_SCHEDULER &&
-> +		PATH="$(pwd)/../script:$PATH" git maintenance start --scheduler=crontab
-> +	) &&
-> +	test_grep -- -l crontab.log &&
-> +	test_grep -- git_cron_edit_tmp crontab.log
-> +'
-> +
-I see why we didn't catch this immediately. This is a good way to work
-around this issue of "mocking" the scheduler.
+gc -v produces CRLF file which does not ignore verbose description.
 
-Thanks for the fast response.
--Stolee
+OSX + git-annex (pre-commit hook disabled just in case)
+using subl -w (sublime text 4) as editor, which indicated the change
+in line endings
+- committing as Unix fixes the issue (workaround, tedious)
+- leaving as Windows is the issue
 
+see attached bugreport
+
+--0000000000001c08cc0623fb579b
+Content-Type: text/plain; charset="US-ASCII"; name="git-bugreport-2024-10-08-1220.txt"
+Content-Disposition: attachment; 
+	filename="git-bugreport-2024-10-08-1220.txt"
+Content-Transfer-Encoding: base64
+Content-ID: <f_m20rxyxr0>
+X-Attachment-Id: f_m20rxyxr0
+
+VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
+IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
+LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
+cm9kdWNlIHlvdXIgaXNzdWUpCgotIGdjIC12CgpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBl
+bj8gKEV4cGVjdGVkIGJlaGF2aW9yKQoKLSBsaW5lIGVuZGluZ3MgcmVzcGVjdCBPUwotIGdjIHdp
+dGhvdXQgLXYgdXNlcyBVbml4IGxpbmUgZW5kaW5ncwotIGxpbmUgZW5kaW5nIGlzIHZpc2libGUg
+aW4gc3VibGltZSAoZWRpdG9yID0gc3VibCAtdykKCldoYXQgaGFwcGVuZWQgaW5zdGVhZD8gKEFj
+dHVhbCBiZWhhdmlvcikKCi0gZ2MgLXYgdXNlcyBDUkxGIChXaW5kb3dzKSBsaW5lIGVuZGluZ3MK
+LSBhcyBzZWVuIGluIHN1YmxpbWUgKGVkaXRvciA9IHN1YmwgLXcpCgpXaGF0J3MgZGlmZmVyZW50
+IGJldHdlZW4gd2hhdCB5b3UgZXhwZWN0ZWQgYW5kIHdoYXQgYWN0dWFsbHkgaGFwcGVuZWQ/Cgot
+IHVzZSBvZiBDUkxGIGlzIGxlYXZpbmcgdmVyYm9zZSBvdXRwdXQgaW4gY29tbWl0IG1lc3NhZ2UK
+CkFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOgoKUGxlYXNlIHJldmlldyB0aGUgcmVzdCBv
+ZiB0aGUgYnVnIHJlcG9ydCBiZWxvdy4KWW91IGNhbiBkZWxldGUgYW55IGxpbmVzIHlvdSBkb24n
+dCB3aXNoIHRvIHNoYXJlLgoKCltTeXN0ZW0gSW5mb10KZ2l0IHZlcnNpb246CmdpdCB2ZXJzaW9u
+IDIuNDYuMgpjcHU6IGFybTY0Cm5vIGNvbW1pdCBhc3NvY2lhdGVkIHdpdGggdGhpcyBidWlsZApz
+aXplb2YtbG9uZzogOApzaXplb2Ytc2l6ZV90OiA4CnNoZWxsLXBhdGg6IC9iaW4vc2gKZmVhdHVy
+ZTogZnNtb25pdG9yLS1kYWVtb24KbGliY3VybDogOC40LjAKemxpYjogMS4yLjEyCnVuYW1lOiBE
+YXJ3aW4gMjMuNi4wIERhcndpbiBLZXJuZWwgVmVyc2lvbiAyMy42LjA6IE1vbiBKdWwgMjkgMjE6
+MTM6MDQgUERUIDIwMjQ7IHJvb3Q6eG51LTEwMDYzLjE0MS4yfjEvUkVMRUFTRV9BUk02NF9UNjAy
+MCBhcm02NApjb21waWxlciBpbmZvOiBjbGFuZzogMTUuMC4wIChjbGFuZy0xNTAwLjMuOS40KQps
+aWJjIGluZm86IG5vIGxpYmMgaW5mb3JtYXRpb24gYXZhaWxhYmxlCiRTSEVMTCAodHlwaWNhbGx5
+LCBpbnRlcmFjdGl2ZSBzaGVsbCk6IC9iaW4venNoCgoKW0VuYWJsZWQgSG9va3NdCnBvc3QtY2hl
+Y2tvdXQKcG9zdC1tZXJnZQpwb3N0LXJlY2VpdmU=
+--0000000000001c08cc0623fb579b--
