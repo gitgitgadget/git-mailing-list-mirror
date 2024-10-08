@@ -1,113 +1,116 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE50212D21
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 19:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D96213EFB
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 20:13:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728417158; cv=none; b=JL4ulY0xJ6KNCq26HhujCDemwfwB3zbXGkNMKlWrZffpuvSWH7aui6Ec85l2COfzQDRDaIeQsV4kgNNb0JhPVD4vDDyfcbX3260lfG/IgquJ1Rffh4soiT9J/N2hzsrBxyhvRrOgwK5CUcEIwtnSPZu/TnUKlkSbAdZvFPfxIqM=
+	t=1728418410; cv=none; b=Knu0oprahyD647sgKAdxiWcYgtC72CfYFYNNWVWj9OdhAzrpe2WLvDDVFNQIUAhuvNDjIYHaDsrY6oIdCdyx864PS9sDNJSumqdr0JZ9JF3FoVstyF2zli2PgCMv5H8lhDo1fc+YO8ynFNW4hi2ZjiMBaD8mqHbhLxy+op/5Db8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728417158; c=relaxed/simple;
-	bh=kbbVuMcbRYEiIB2FW7SQCMDjTRTXVCyiNYLpjqTl46Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M0gWyQjNS6eZ3gr82fjDa7I8RxWUujs+UKLerYWoTmbGaYX0zPa779w03Hk8GVOwbyN4N3WouumnCCfF7SAJSEW5mOrBv7+YbcxJky2Cs5LnATO9F6888A56qrAedikYCQY5+E5bvHDFdnJnqXYjXvLB5JEJk0cegsUipQly+Hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IzhoAjIj; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1728418410; c=relaxed/simple;
+	bh=BGnayJjWk0BfFMCZ7GLFGNZMm6xy0qIGufDt9RDs4o0=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=PuX1rQSFHJsyfMz4xg58QhGZuC1FSOq3ggZfUAub2XDgO0SIsCcJEDTcaFELsgwhnN/zVJzmotq73wNpmxIDPISQmkzh8cuPCT1oB7mAKjUz66faOekw/RZrXS/VyvNDYWROrlXMmQw1KB9aRHx5q3jXm8461O3qxmALOuVdntM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lioMEFsV; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IzhoAjIj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1728417155;
-	bh=kbbVuMcbRYEiIB2FW7SQCMDjTRTXVCyiNYLpjqTl46Y=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=IzhoAjIjytA/9uNnJX5FEPT6bpMdQt/lL2NZSgjaqMpTQ/fMdDtU0oMXtYs6Gbjmu
-	 jL/3ID315NdACZBX083WlBg9jm5Jx5jREH9QlgZfhxru6FakViB3406xaJBA2waKEb
-	 fJkTBKrmwIrj3m+6mkKSd+c4o9jBkSbeSuuYur/DCnWGfySO3LumKwc07wTmeYADsg
-	 AX1QO2dXzevlH4Bsj9NGyTUxNvDofs+xUWQjB20t2UFE8vLv/wWkkaXVMskptegMDP
-	 CxKkqViKtpBzA8r7E3fTidoRKctwQd4eS22oZq/pJp2RuKnlu5RNES1r/fJe89OgwW
-	 MVo0em/xOOmSMf8ig51dTrf0mLcAUPeB8XqoqzxWoYUYxVGrmnGiFe8bso5lEs1YwN
-	 /+/DZmRLUJntf4IgwaA1+WaFuaBcUiZu4RvyYUeWrlHWUey5Z8wvI3NoqpQPsm4QAV
-	 L7aKo3R794g+6HtgwOWY4V6AjB6HieLdkOKobKRCnNpHFUklBsI
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2762920081;
-	Tue,  8 Oct 2024 19:52:35 +0000 (UTC)
-Date: Tue, 8 Oct 2024 19:52:33 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Spencer Fretwell <spencer.fretwell@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Verbose Commit Ignore Line Fails via CRLF Line Endings
-Message-ID: <ZwWNgc6JY46bmcjE@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Spencer Fretwell <spencer.fretwell@gmail.com>, git@vger.kernel.org
-References: <CABa71ByU_9g_6OgJ9PsoQ99oyMspucTBqO-RkB_2W4smTr2RNw@mail.gmail.com>
- <CABa71BwtEWS79CZwPOa_Nrh1iMrXRo+hyxNBc5F8GsQiwjdapw@mail.gmail.com>
- <ZwWDd1_76Z6zH4mP@tapette.crustytoothpaste.net>
- <CABa71By0WYkbNip6-hmcX2jH1GuHWEx=WBTda5=RV9koR-cVFg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lioMEFsV"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42e82f7f36aso53616585e9.0
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 13:13:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728418407; x=1729023207; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BGnayJjWk0BfFMCZ7GLFGNZMm6xy0qIGufDt9RDs4o0=;
+        b=lioMEFsVqxRy9XvUeAImduDCtrVZN57hAerabyVjd7F2fpyug4k71w1AiFOYAdJuPd
+         qb7kwMmCIjRfnTspM0Z7rAg/DoC/sSnnKOB3KHonQCTI7zxqGDmWd5MT9OZJwaZEyRq6
+         VnCnCpdJat4oZ0/lungCtKVfM7w8b4ciJeV3Q9F/Hh7iJl+bC6x+kHLxm8v3SuWA8PjW
+         US/cib6r+y+JhNYr0LaeaSZ/JXMFJ/N4mvf4v2QaLI4pjXTTsCjOvrTFuwU7VyHWyZYV
+         tH45RcJbiiZTZiBu0RHfJWm4qNRtIP91DbTElTmmieFFGktxK/2x2CGA3fdKVArVMOIS
+         FbGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728418407; x=1729023207;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BGnayJjWk0BfFMCZ7GLFGNZMm6xy0qIGufDt9RDs4o0=;
+        b=eSlE0eEzPEZV2qA6QK7XidbIxKiLITAPUrlxykEd8YwYDnkENdx8qtob8UG0wp4tUO
+         vH47nf7lm3k/BupEYCxE2YAiIQx++ji60jLENcGkBUjPMGY1gZ0WlvcLh3VY/5iKVz9/
+         MScBknhduRTsRw7SIQKrEqKKLOPWQCqOkrS98rr4JYmLeTB1blF+ALeLm+VMMjXbwAeI
+         C7rQ7F9r26nZLfUFX3KBt+q49KoCZNSYjUaGyN/0o4/f6/Ydbi0jS48OjEcCiFbLff2L
+         xLwK5ubQalhQ0WX0DZwLmQF+UhoW/obciIqOrOrCsjDuh1pjMfgZtSDiA6vNoHc3el5z
+         pFxw==
+X-Gm-Message-State: AOJu0YxxS9HwqeEjBa/cC10WgwdLToxMNjaItYG2eOHc5TiiRI5Xn5tC
+	cxYqlO4gIaJc+wJTi8Rsqv03trTnll2EFA6ubn8Gnk1GlI9ldgS6XQUjCg==
+X-Google-Smtp-Source: AGHT+IFph7HBEPX8POdfsy07q8n6BCMACDFHtnACCb/iQxLts+CO8yiw65axX+rjo8ac7LsNdfZtTA==
+X-Received: by 2002:a05:600c:1d8c:b0:42c:b2fa:1c15 with SMTP id 5b1f17b1804b1-42f85abe372mr104188045e9.15.1728418406976;
+        Tue, 08 Oct 2024 13:13:26 -0700 (PDT)
+Received: from smtpclient.apple ([2a00:23c7:890d:5f01:2cbf:b5f5:42f:9d0e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42f89eaabc5sm118795005e9.27.2024.10.08.13.13.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Oct 2024 13:13:26 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jte2wW8/6DKhK+wX"
-Content-Disposition: inline
-In-Reply-To: <CABa71By0WYkbNip6-hmcX2jH1GuHWEx=WBTda5=RV9koR-cVFg@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---jte2wW8/6DKhK+wX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
+Subject: Re: Interest in a Git meetup in Bay Area, California?
+From: Luca Milanesio <luca.milanesio@gmail.com>
+In-Reply-To: <CAJoAoZ=UyfDjAvG0-kC++R7fpR871Gsi4crR=o5F3PvNfB=7Uw@mail.gmail.com>
+Date: Tue, 8 Oct 2024 21:13:16 +0100
+Cc: Luca Milanesio <luca.milanesio@gmail.com>,
+ Emily Shaffer <nasamuffin@google.com>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <50C75377-2AD5-4DDE-980F-21C5D0425008@gmail.com>
+References: <CAJoAoZ=UyfDjAvG0-kC++R7fpR871Gsi4crR=o5F3PvNfB=7Uw@mail.gmail.com>
+To: Git List <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3774.300.61.1.2)
 
-On 2024-10-08 at 19:34:46, Spencer Fretwell wrote:
-> Thanks Brian,
+
+
+> On 8 Oct 2024, at 18:09, Emily Shaffer <nasamuffin@google.com> wrote:
 >=20
-> It appears sublime auto-normalizes endings to "whatever occurs most
-> frequently in the first 32kB". So, I guess it was witnessing the CRLF
-> from the verbose output and replacing all lines with CRLF. Thanks for
-> the reminder about --renormalize.
+> After seeing Berlin have a meetup recently[1], I wonder if we have
+> enough critical mass for a similar meetup in Silicon Valley. I know of
+> my own team and one or two other contributors in the Bay, but since
+> there are so many developers here, surely there must be more?
 >=20
-> Is there any chance for git to support a CRLF magic ignore line,
-> particularly considering the variation in standard line ending across
-> different platforms? I tried autocrlf=3Dinput as well and it sadly
-> doesn't normalize the commit message file itself. Either way (magic
-> ignore with CRLF or normalizing line endings in the commit message),
-> would be appreciated for mixed line ending workflows (especially
-> considering WSL)
+> Please respond (directly to me is fine, if you don't want the whole
+> world to know your location) with answers to the following, iff you
+> are in or near the Bay Area and interested to meet.
 
-The answer is essentially that I don't know.  We typically make
-decisions on whether we'll accept features when we see the patch.  My
-guess is that, assuming someone (maybe you) sends a patch, it will
-probably be accepted, since I wouldn't expect it would be very difficult
-to do or have major impacts on the code.  It might, as with any patch,
-take a couple of rounds, though.
+We (GerritForge) are based in Sunnyvale, CA, and would be interested.
+Currently, we host the GerritMeets once a month (see =
+https://www.meetup.com/gerritmeets/), and we often talk about Git =
+topics.
 
-I use Linux or rarely other Unix systems and always use LF endings, so I
-don't plan to send a patch since this doesn't affect me, but assuming
-the patch looked reasonable, I don't see myself having an objection to
-it.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Gerrit is 100% based on Git for everything, including reviews and all =
+meta-data.
+Not a surprise, therefore, that 90% of the Gerrit topics are actually =
+Git topics.
 
---jte2wW8/6DKhK+wX
-Content-Type: application/pgp-signature; name="signature.asc"
+> * Which part of the Bay is your preference? (San Francisco / East Bay
+> / South Bay / Peninsula / other)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+San Francisco is always a bit far to reach if you don=E2=80=99t live in =
+the city.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZwWNgQAKCRB8DEliiIei
-gSMFAP9rXSGWu0fTbSTGTNpVEu5xQRSyDE83mKnsDPvUJf3gxAD+O8wvnir8WqJl
-mxE7zCL2zxoloXBS0Y7CqYcRhAdW9AY=
-=IEZ6
------END PGP SIGNATURE-----
+Anywhere around Mountain View / Sunnyvale / Cupertino / San Jose would =
+be best for us.
 
---jte2wW8/6DKhK+wX--
+> * Which days of the week/time of the day are you most available? (e.g.
+> weekdays after 6pm, weekend mornings, only Thursdays coinciding with
+> the crescent waning moon)
+>=20
+> * If you are interested in helping to organize such a meetup, please
+> indicate this.
+
+Dani typically organises the GerritMeets; I=E2=80=99m sure he would be =
+happy to help with the Git meetups as well :-)
+
+Luca.=
