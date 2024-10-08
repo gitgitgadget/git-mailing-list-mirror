@@ -1,57 +1,57 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B6E1DC046
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 08:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4669217ADE1
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 08:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728375250; cv=none; b=sSiWyLNFK3l1xVHoiv9zQQc94XhqEzAAVJzd9J3eUJ8CfFPncSetvVGXVaniCFI8rjkcoyp13GgjoH0Xwv8nN1tQXg3WLlvbwOH4TWRMfUbP56/R0LqurPczyB3ws0SZCCVIEH9bAK6ZZ3hXRGuZZqsGFwbaQC7OSQcMQKm9mKU=
+	t=1728375253; cv=none; b=M6mkBJ8lDRwmr2VLgOk0BpEq05bjjO+6aEhFpjzFgD8NEgXbpx0mbG5LbLAautaE9ZIkKxi8rb0Om+uKJY7sff8HpT2uQ61O5QhsIlv72NrjCM43T85zYRjFBV1D4jf9luaqmLsEZIcM4KomPRPM86eWxi16AoLPTp/emIEqcV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728375250; c=relaxed/simple;
-	bh=cC0RZZIWkpyHuRJz3IoEoS7wQDuApojvG++sJnvsvQE=;
+	s=arc-20240116; t=1728375253; c=relaxed/simple;
+	bh=Q0ZkySsPRgXuKb99NgsCtB5/hyfsAxgtEAsGiYMgx2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8OGghATUuWciJ2POnWbN3Aa8s69nT/yhjsb0jlx7uGixisYWjwfRT7unaKT7kyNrrwSMKKbgSlsP8d26ZSUCsMxS4v2iXAGrtJL+/3/DMh9mlirPdf0e7/RDokftY2tZDpL9LYTwSORl6S7KO0aCbbVqlI/9WornzYx+Al9J2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=i5LfItdp; arc=none smtp.client-ip=209.85.216.43
+	 MIME-Version; b=uzemVt1UL3ys5Wx8JPfHHnPaS0Hs7efhsWAEeuSCiGF1Az3rg95vokRPqHG3Aiv/oiqpMabTcTsHzrkpMy1MGscOXJeiMGA23bD3Q0aEoojYwHsinK1l0lJ9YMNLbZotff+MYVenZszhqWxSajMCI1PURza7BCV/HhyjmKqyKTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=ZOKKNURs; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="i5LfItdp"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2e18aa9f06dso3790667a91.0
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 01:14:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="ZOKKNURs"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2e0946f9a8eso3653642a91.1
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 01:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1728375247; x=1728980047; darn=vger.kernel.org;
+        d=bytedance.com; s=google; t=1728375251; x=1728980051; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lGR3mW3SExbQVu2QHULPkFA06M+rTTCGJlowrDVvC74=;
-        b=i5LfItdpleQB8H7pyMQMFp/TeZwIdia3qLeeVOUpp4w+xAeqC3Znvp+a0dvZRdny0p
-         7JT0cDED6f4gr/wwBqqab7jtC8olg14Z0soZY4qYd0b5IQXQt+40ABCYtgsnAFbLJavB
-         L/NaR03I3RdA/o5tDGRWN2CRmd0uHc1QfSCw2a/mPjhUcfh5fj2Cpm/UgH1IJjH7/Xxx
-         kg9v5iRrOwbu7xCTjJc/twBEJiCTh1PEytjVrW2jCVw0bxZEt+7Z3OACO5gQPyMRjtUN
-         4irqALhvx1d3s3sUK2lDCUZEe9cEntPC3l1KqCwHBZyWAen7VRaeqARabZQmBVdTEJ5d
-         FRXg==
+        bh=3WVxW3kjCUYpN9aCAR5CYmn0Sg+BnR1VvxehgUzJ1yE=;
+        b=ZOKKNURsMpixLgXbsq4Y8X1+uK9eg5OOn++1d5zPqRdIqFWXz6zOicjdeLW3JDk8Uy
+         I82DabiG3BrpOI790mTFxQIUsjjAeIFvBFdHQuGlTjpt4Ixf5YSAXoMYz7Yee35teB6v
+         axLpxYfroVf8EPzv0b4DnoWBgRKzvWPn0bU/yAai34XqcIyVBB59C2wboep7tcs3Ezb3
+         /XjnIVlPUO3p+2CVqkoa1ueDHpJnWgmFUu3JDWP2NPNMR6jYkbkT7BkECqswsLV0B0sG
+         5kcSEY7y969s/fFbiMNGQOFdFlIp06YOk1DaMfFrhqDlb8jHbW+c+VGZlx+1qRjVtW4e
+         UKUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728375247; x=1728980047;
+        d=1e100.net; s=20230601; t=1728375251; x=1728980051;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lGR3mW3SExbQVu2QHULPkFA06M+rTTCGJlowrDVvC74=;
-        b=ZNqayNDTC0vBikRusGAfQiu/bDwA5LyxZyJd9UnYqQTQhoKRqGks40nJ1f2E51DaZT
-         qdk4k2aWaj3GesAj60D3iTaCHtlGuRg2i9er7vyxxHx7BnFSyhS+c8e//zzLVO9RMhnd
-         2ul4dztYrJRD3+jvURpDEalIZmgvbd3chsouJXHHqcDSRbuCNWhItsqZbH9axBp6Hiwz
-         ZlFWg4oX90w/7lXURnQYAPENFFJ1/PpbYjROXMIQ8l9x5R7axBgGgMg431Sx0v/i3qRV
-         9wRqRGUyoBxM2xz8jh3pSzimyUg3C0A7DmnRG5XUOT1Z2HxwjBWTg+RgwGszoh1WBN6K
-         eFQQ==
-X-Gm-Message-State: AOJu0YxvYjC1ZNwvkJajQz43v307Pl12U53JKc2igB8Jy2O+DXcVmd/c
-	xYF1M5+b7jjfI0rsrkAqcAE5Dj27LUYBWs333T1V6Mcln8vNlsXeQc0gb95WgP81cO2S3AS7Uha
-	a
-X-Google-Smtp-Source: AGHT+IGLEVPpO4QtbytIU5Sj6F12AKzYbjuWBX9Ru/gVQeJil3QriFKcR+OiRwZHTI9FJ+PVBwRtzA==
-X-Received: by 2002:a17:90b:46cd:b0:2e2:85b8:14e with SMTP id 98e67ed59e1d1-2e285b801c0mr1924810a91.15.1728375247427;
-        Tue, 08 Oct 2024 01:14:07 -0700 (PDT)
+        bh=3WVxW3kjCUYpN9aCAR5CYmn0Sg+BnR1VvxehgUzJ1yE=;
+        b=pJypD3FrM18X1u7hoKvcW5FX1YpHFehDDX4BxAsmGTuvgCnKBFJpT9RGfrJvDyr1WE
+         +lxo5emZRDXKbaQwO2HnjDQjAOc1P9TuF9wvmczfCGNCBX+Pr09W5dbqPsFOuCkpGAgo
+         vGpYxnr7fK5unWwNrRD/W6aCoeLVSG3VNqMhRuo98lzHZbTg9uqQU0dKBMtSdMnXkqor
+         Zd+Ob1El0aVv+5ETXAlhgoxcBHj9NhcUrB6T+REoll9xfAYUssoRhcwlTK4w+Nwj3UQj
+         5CAEoviR5cOYR3uw6fgec9Mmc89H2g4soT4T1q0Eif402WYP83ZBOjdPHk3ntZdleONX
+         2PDg==
+X-Gm-Message-State: AOJu0Yzu04QQnTjfft/cZEUHEPq4unTqQLl/kos+Exlq3re21/NUL0sz
+	Pvms5xwPdEJx59q3WvifHKLAQKWPZgMCQq5vYC0Q4+h3SwG51uuhUGswqCYJoOqDyIN5D6KmhWd
+	K
+X-Google-Smtp-Source: AGHT+IH+zw+8nboMV/aYOrvEq5lQDHXyJobwoN99AEsUNiX98Z1Zw8rrFjvRTNCA2LjCCLoq4uHrVQ==
+X-Received: by 2002:a17:90b:370f:b0:2cc:ef14:89e3 with SMTP id 98e67ed59e1d1-2e1e622226emr16255975a91.15.1728375251022;
+        Tue, 08 Oct 2024 01:14:11 -0700 (PDT)
 Received: from localhost.localdomain ([63.216.146.178])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e1e83ca28fsm8739647a91.7.2024.10.08.01.14.04
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e1e83ca28fsm8739647a91.7.2024.10.08.01.14.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2024 01:14:06 -0700 (PDT)
+        Tue, 08 Oct 2024 01:14:10 -0700 (PDT)
 From: Han Young <hanyang.tony@bytedance.com>
 To: git@vger.kernel.org
 Cc: calvinwan@google.com,
@@ -60,9 +60,9 @@ Cc: calvinwan@google.com,
 	gitster@pobox.com,
 	phillip.wood123@gmail.com,
 	Han Young <hanyang.tony@bytedance.com>
-Subject: [PATCH v2 2/3] t0410: adapt tests to repack changes
-Date: Tue,  8 Oct 2024 16:13:49 +0800
-Message-ID: <20241008081350.8950-3-hanyang.tony@bytedance.com>
+Subject: [PATCH v2 3/3] partial-clone: update doc
+Date: Tue,  8 Oct 2024 16:13:50 +0800
+Message-ID: <20241008081350.8950-4-hanyang.tony@bytedance.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20241008081350.8950-1-hanyang.tony@bytedance.com>
 References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
@@ -75,139 +75,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the previous commit, we changed how partial repo is cloned.
-Adapt tests to these changes. Also check gc does not delete normal
-objects too.
+Document new repack behavior for partial repo
 
 Signed-off-by: Han Young <hanyang.tony@bytedance.com>
 ---
- t/t0410-partial-clone.sh | 68 +---------------------------------------
- t/t5616-partial-clone.sh |  9 +-----
- 2 files changed, 2 insertions(+), 75 deletions(-)
+ Documentation/technical/partial-clone.txt | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 34bdb3ab1f..c169b47160 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -499,46 +499,6 @@ test_expect_success 'single promisor remote can be re-initialized gracefully' '
- 	git -C repo fetch --filter=blob:none foo
- '
+diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
+index cd948b0072..9791c9ac24 100644
+--- a/Documentation/technical/partial-clone.txt
++++ b/Documentation/technical/partial-clone.txt
+@@ -124,6 +124,10 @@ their "<name>.pack" and "<name>.idx" files.
+ +
+ When Git encounters a missing object, Git can see if it is a promisor object
+ and handle it appropriately.  If not, Git can report a corruption.
++
++To prevent `repack` from removing locally created objects, `repack` packs all
++the objects into one promisor packfile. It's no longer possible to determine
++the cause of missing objects after `gc`.[7]
+ +
+ This means that there is no need for the client to explicitly maintain an
+ expensive-to-modify list of missing objects.[a]
+@@ -156,8 +160,9 @@ and prefetch those objects in bulk.
  
--test_expect_success 'gc repacks promisor objects separately from non-promisor objects' '
--	rm -rf repo &&
--	test_create_repo repo &&
--	test_commit -C repo one &&
--	test_commit -C repo two &&
--
--	TREE_ONE=$(git -C repo rev-parse one^{tree}) &&
--	printf "$TREE_ONE\n" | pack_as_from_promisor &&
--	TREE_TWO=$(git -C repo rev-parse two^{tree}) &&
--	printf "$TREE_TWO\n" | pack_as_from_promisor &&
--
--	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
--	git -C repo gc &&
--
--	# Ensure that exactly one promisor packfile exists, and that it
--	# contains the trees but not the commits
--	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
--	test_line_count = 1 promisorlist &&
--	PROMISOR_PACKFILE=$(sed "s/.promisor/.pack/" <promisorlist) &&
--	git verify-pack $PROMISOR_PACKFILE -v >out &&
--	grep "$TREE_ONE" out &&
--	grep "$TREE_TWO" out &&
--	! grep "$(git -C repo rev-parse one)" out &&
--	! grep "$(git -C repo rev-parse two)" out &&
--
--	# Remove the promisor packfile and associated files
--	rm $(sed "s/.promisor//" <promisorlist).* &&
--
--	# Ensure that the single other pack contains the commits, but not the
--	# trees
--	ls repo/.git/objects/pack/pack-*.pack >packlist &&
--	test_line_count = 1 packlist &&
--	git verify-pack repo/.git/objects/pack/pack-*.pack -v >out &&
--	grep "$(git -C repo rev-parse one)" out &&
--	grep "$(git -C repo rev-parse two)" out &&
--	! grep "$TREE_ONE" out &&
--	! grep "$TREE_TWO" out
--'
--
- test_expect_success 'gc does not repack promisor objects if there are none' '
- 	rm -rf repo &&
- 	test_create_repo repo &&
-@@ -569,7 +529,7 @@ repack_and_check () {
- 	git -C repo2 cat-file -e $3
- }
+ - `fsck` has been updated to be fully aware of promisor objects.
  
--test_expect_success 'repack -d does not irreversibly delete promisor objects' '
-+test_expect_success 'repack -d does not irreversibly delete objects' '
- 	rm -rf repo &&
- 	test_create_repo repo &&
- 	git -C repo config core.repositoryformatversion 1 &&
-@@ -583,40 +543,14 @@ test_expect_success 'repack -d does not irreversibly delete promisor objects' '
- 	TWO=$(git -C repo rev-parse HEAD^^) &&
- 	THREE=$(git -C repo rev-parse HEAD^) &&
+-- `repack` in GC has been updated to not touch promisor packfiles at all,
+-  and to only repack other objects.
++- `repack` in GC has been taught to handle partial clone repo differently.
++  `repack` will pack every objects into one promisor packfile for partial
++  repos.
  
--	printf "$TWO\n" | pack_as_from_promisor &&
- 	printf "$THREE\n" | pack_as_from_promisor &&
- 	delete_object repo "$ONE" &&
+ - The global variable "fetch_if_missing" is used to control whether an
+   object lookup will attempt to dynamically fetch a missing object or
+@@ -244,8 +249,7 @@ remote in a specific order.
+   objects.  We assume that promisor remotes have a complete view of the
+   repository and can satisfy all such requests.
  
--	repack_and_check --must-fail -ab "$TWO" "$THREE" &&
- 	repack_and_check -a "$TWO" "$THREE" &&
- 	repack_and_check -A "$TWO" "$THREE" &&
- 	repack_and_check -l "$TWO" "$THREE"
- '
+-- Repack essentially treats promisor and non-promisor packfiles as 2
+-  distinct partitions and does not mix them.
++- It's not possible to discard dangling objects in repack.
  
--test_expect_success 'gc stops traversal when a missing but promised object is reached' '
--	rm -rf repo &&
--	test_create_repo repo &&
--	test_commit -C repo my_commit &&
--
--	TREE_HASH=$(git -C repo rev-parse HEAD^{tree}) &&
--	HASH=$(promise_and_delete $TREE_HASH) &&
--
--	git -C repo config core.repositoryformatversion 1 &&
--	git -C repo config extensions.partialclone "arbitrary string" &&
--	git -C repo gc &&
--
--	# Ensure that the promisor packfile still exists, and remove it
--	test -e repo/.git/objects/pack/pack-$HASH.pack &&
--	rm repo/.git/objects/pack/pack-$HASH.* &&
--
--	# Ensure that the single other pack contains the commit, but not the tree
--	ls repo/.git/objects/pack/pack-*.pack >packlist &&
--	test_line_count = 1 packlist &&
--	git verify-pack repo/.git/objects/pack/pack-*.pack -v >out &&
--	grep "$(git -C repo rev-parse HEAD)" out &&
--	! grep "$TREE_HASH" out
--'
--
- test_expect_success 'do not fetch when checking existence of tree we construct ourselves' '
- 	rm -rf repo &&
- 	test_create_repo repo &&
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index c53e93be2f..2c6f10026f 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -643,16 +643,9 @@ test_expect_success 'fetch from a partial clone, protocol v2' '
- 	grep "version 2" trace
- '
- 
--test_expect_success 'repack does not loosen promisor objects' '
--	rm -rf client trace &&
--	git clone --bare --filter=blob:none "file://$(pwd)/srv.bare" client &&
--	test_when_finished "rm -rf client trace" &&
--	GIT_TRACE2_PERF="$(pwd)/trace" git -C client repack -A -d &&
--	grep "loosen_unused_packed_objects/loosened:0" trace
--'
--
- test_expect_success 'lazy-fetch in submodule succeeds' '
- 	# setup
-+	rm -rf client &&
- 	test_config_global protocol.file.allow always &&
- 
- 	test_when_finished "rm -rf src-sub" &&
+ - Dynamic object fetching invokes fetch-pack once *for each item*
+   because most algorithms stumble upon a missing object and need to have
+@@ -365,3 +369,7 @@ Related Links
+ [6] https://lore.kernel.org/git/20170714132651.170708-1-benpeart@microsoft.com/ +
+     Subject: [RFC/PATCH v2 0/1] Add support for downloading blobs on demand +
+     Date: Fri, 14 Jul 2017 09:26:50 -0400
++
++[7] https://lore.kernel.org/git/20240802073143.56731-1-hanyang.tony@bytedance.com/ +
++    Subject: [PATCH 0/1] revision: fix reachable objects being gc'ed in no blob clone repo +
++    Date: Fri,  2 Aug 2024 15:31:42 +0800
 -- 
 2.46.0
 
