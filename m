@@ -1,66 +1,82 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA89DEEC8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F82190663
 	for <git@vger.kernel.org>; Tue,  8 Oct 2024 12:23:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390240; cv=none; b=jPiX2n5AZbPNTFMHa5bzBFoXAMBw41e8IecvckdcjDJpMQrw+S/S7Zbn13mPLNU5Y5qsFHAVyoJFDBjwafI2apD7TOiQBwJRTIgstrR1xbmZ4LEhRzDhNVCO6np2ZBKlJ0HHd5oui/mxqYDrRqB0z/xs4y+CGwB0v9NbxzK4+XE=
+	t=1728390241; cv=none; b=E8+RrzqGDuXcL0d3UImK4UbshXTUnrdsMsARGV3s7lFvVzMdZ9d6TQ+8oiwUBoe+TVp/nb8GT1KVIneoM5C+u6PQIZeXGqsxIdpkF27US77Wjq6dPb4TOHzSHRIs2dAw45KzaQ1I8QmEBJUBSs77fIoL3CgLITf6TFZIXSwvtsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390240; c=relaxed/simple;
-	bh=mkNxq/XeDJH2zJA504Z59qQJcbySul/cq5YgNkb3Wsk=;
+	s=arc-20240116; t=1728390241; c=relaxed/simple;
+	bh=TPYVcg/Qbpp//DBoeByB+GJmXbDiA9nQGfvG2ZlEZZ4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t/f4syB0imuGWQyRWhiTPYG64X1S8+JLOV8lBg2NhSTQE9E970nWWrt8QDlHERkF3Jk5YJM6Lbe1mDb8gxEowYHnQmkHmUlX5Q/6TBkO5ABZAh/QHocHYahz+QC4+D9PJMndpYTTRtNboXA8DeMFyiiII9aAzoAP3KroeJNy79k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RsXOET2W; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=YQk8z7sdX/dJYsokXzFJy+XzqKT1PWZjDJbcgLeMOlmlipWLBRpeV3ekueZu4GeX6YNcXp2JzBeIowqnAYsGZd9S19gq9KykKs78wW/qYTRSFMTxkwA0eLEk+FAxBLbIX7am91ALvvfD1tbfkjhKF6TEVyAOyWcMPH+AQIHkjJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l9H1kPej; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ha9Lr6jR; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RsXOET2W"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-71e02249621so1534122b3a.1
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 05:23:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728390238; x=1728995038; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pEe7Eu38JtlAQ/NkiW4j1C0wUizqp1/g8oS+JXwcRWo=;
-        b=RsXOET2WFiAqsyR3NGcs4D/o2Bzt2afcE3J2B4gMQBi0BYQdEENOSd6SW+jB+Ndt3p
-         eZMNVOOhJ8SGZN71clmSK4lNtSG+59501mA1+1PJ0PXPWM89A4s0dhjipV9HCW5CzqN8
-         ejkz0bJF6YrSzEYncwWP2bAUeODvC54pGoufmcOaG7rlE+Vbk0cJZrOhpHP5F8pesfja
-         TgKl7BGpmsqwytIQx9AKg9fNNvu38iss3ee/jCNKbZ0Qf50lPuBkYe61FAQ7l2nClE9b
-         IaTIqre/Z31Di16wl9FvIDqKHWP7gZUDrMnHc4Q2o1P7PCbWd86liC8dtje7JOBm9Gzz
-         K5kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728390238; x=1728995038;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pEe7Eu38JtlAQ/NkiW4j1C0wUizqp1/g8oS+JXwcRWo=;
-        b=X5T/oypidsOeStoB4Xe7rnx4cd7/0N3Ypd9hRJCaK3TsUi5AOnC7U0heOsKtUwzasD
-         1WlGvBCg9Eia8nZL48BMTpgZ8HSDANqFOTAbNoE61xnKWd52LJ5C1FPZVKPrWq+DPUYF
-         359SwUTGNDr8V2b9fRK6D70n1bcMMlWVd4lnqlzUEoYyzmh2ias3CkAyzjPFA+6VQ0C8
-         8hQFEBMmAu6cUVrupenmzF3zwHtnZsfIw8ASoHRcSvCSgCmNWLqCTs2splsBORxwR9P/
-         Za12jC0jdauHt25CogtW3qoc9kZrMRXgLQtcpSYGGn3lgjWGXTGRJtZ4MUVRRXvHTcSq
-         pUoA==
-X-Gm-Message-State: AOJu0YzIv5alqJ+UBXuCY2T7lNBN9SwgezyQxnbdTRZH83u4QvuIFBTK
-	856lHXkZQWjvbTwqb91vHhiiu1b/26XldueoFXdnBbtUr/ic/eO64vMl6w==
-X-Google-Smtp-Source: AGHT+IEzDZtId+AMXEXbvuoNRNuYAbweJR1fgzPxJhaCTD4JKAeOI6IvP40rg+Egu3ucWYi2sVkFPA==
-X-Received: by 2002:a05:6a20:9f0f:b0:1d4:fac8:966 with SMTP id adf61e73a8af0-1d6dfa27e8emr24087717637.10.1728390238035;
-        Tue, 08 Oct 2024 05:23:58 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71df0d67bd5sm6227345b3a.176.2024.10.08.05.23.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2024 05:23:57 -0700 (PDT)
-Date: Tue, 8 Oct 2024 20:24:06 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 3/9] ref: port git-fsck(1) regular refs check for
- files backend
-Message-ID: <ZwUkZuCtYu7niuFM@ArchLinux>
-References: <Zvj-DgHqtC30KjJe@ArchLinux>
- <Zvj-osCNDMrUQv83@ArchLinux>
- <CAOLa=ZQ3Gytt4Lsttxws3DWqbjteJS8mXvZSPzDwBJi_ALS03Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l9H1kPej";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ha9Lr6jR"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 32474114022E;
+	Tue,  8 Oct 2024 08:23:58 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Tue, 08 Oct 2024 08:23:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1728390238; x=1728476638; bh=prGNEZz4wb
+	8cYQYm8s1VIRkRUJcpKm4lK3JCVtME0Fc=; b=l9H1kPejIeDoxCrQ/9KUSqYL7x
+	FPS4o8LIlFGoajKzeuoz4Qu0wXAixKPNT6gZX+QONEiU8Ymvgz/FqfKz7R+A6R6z
+	eT4TVhJFExgSitW9fgijfY55zuKeIYZRcpkaTUgoeTJrBR5s2Fh8GhGDYbeubnE6
+	gt1GTdptiOqqzBE6qT6gn86i7aWBfGK7syavrNvyAtsKyNH5NlteZtSPOgjfVV81
+	aCyeQSO29DUb9RlscKnl2+mQYlEK/aww2U1BB0yZYZI5MH7ICaTMonZuIJtVXgyd
+	0UBn6VLaoYcrdJfWdVsG2ATMaYjFvOApGIsC5OYBgaNCfyGqEI6K3VPGGF6g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728390238; x=1728476638; bh=prGNEZz4wb8cYQYm8s1VIRkRUJcp
+	Km4lK3JCVtME0Fc=; b=ha9Lr6jRsYcQzAsjXgAz8TmSb1u/ZIQ25Un0vSvRLvFB
+	sGck3jwaGmi47aXXxtQHxS17mW1MgSwyNqAddZkqcDpb6I+VyGLlcQl9DQGbCIRL
+	hg/mp5kHmMV+dRTPnN0+Hr/QwpjoWds+2NPP2pSa+9m7rO4Z+Pwi6joVdkyBqRR0
+	aMyKXZiuBYGKRHTMDZOD1KYuWrSKeP4RrS1Shun3aVwpxQGD8vsigzFNfQPsW+lB
+	f1msZ5bzblIsBv4ZM+Hvi7/uTpWAeZhYNMA/FasMfqk0TSCUoF29M93Hapz+dvJT
+	63qHNOJBHiXAFR+X4Z+iq/z+XUOcueK8PdVAvyk2cw==
+X-ME-Sender: <xms:XiQFZ8ymea-hp-e6hRHHxquvcPyPRy9NniHrrzYzj-nSgYOFcwdsrA>
+    <xme:XiQFZwRprfa9cUo9poTnfacgZZkLeLUO93ebUnq10N7DYdjtRToiNifimKOtli0uv
+    Ev6BRIi16PCN5eusQ>
+X-ME-Received: <xmr:XiQFZ-WmPxMZGHBysAuZDFbhrJxBqZbfUVUHGKsNIu64ulNxNNDaHwJc-E7FSPd52zSzXCUwi2bFpEKiUudgqNsO5ZfRAA2EWoHdfqumleBqIdQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefuddgheduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeejfefhleeutd
+    dtffeigfevudegheekfeffhedutdefveeftdejtdeljeelkeevtdenucffohhmrghinhep
+    tghomhhmvghnthgthhgrrhdrsgihnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehfihhvvgdvfedutddtfeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:XiQFZ6g5CxiCPOSFUvibven6_wzO_nK2KwzVfyN0lQdUOkzDPCr6sA>
+    <xmx:XiQFZ-BAuGXXb8X8AhMVztJcBKRDLbWkyadWPacKlcXoW69kXwAhpQ>
+    <xmx:XiQFZ7J7I2kpyj1IL0YSfZ5POyamLKwX-NaHuOsNT9oFyvl2zKssgA>
+    <xmx:XiQFZ1Ao83sk4J46jFtdAUCvoCdsohACz_3J1KmNa-VQXgzHJyzXSQ>
+    <xmx:XiQFZxOKNsqjQ4t5WtPjGMbgWMuOv4OcxCeSEU8NffqPAlw02jHNdb9u>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Oct 2024 08:23:57 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7ef3ba75 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 8 Oct 2024 12:22:54 +0000 (UTC)
+Date: Tue, 8 Oct 2024 14:23:54 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kousik Sanagavarapu <five231003@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [Question] local paths when USE_THE_REPOSITORY_VARIABLE is not
+ defined
+Message-ID: <ZwUkUuQgxaE2-djk@pks.im>
+References: <ZwQSWcmr6HWTxxGL@five231003>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,34 +85,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQ3Gytt4Lsttxws3DWqbjteJS8mXvZSPzDwBJi_ALS03Q@mail.gmail.com>
+In-Reply-To: <ZwQSWcmr6HWTxxGL@five231003>
 
-On Tue, Oct 08, 2024 at 12:43:20AM -0700, Karthik Nayak wrote:
-> shejialuo <shejialuo@gmail.com> writes:
+On Mon, Oct 07, 2024 at 10:24:49PM +0530, Kousik Sanagavarapu wrote:
+> Hi,
 > 
-> [snip]
+> I have two questions but a bit of a background first -
 > 
-> > +	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
-> > +		ret = fsck_report_ref(o, &report,
-> > +				      FSCK_MSG_BAD_REF_CONTENT,
-> > +				      "cannot read ref file");
-> > +		goto cleanup;
-> > +	}
-> > +
+> 102de880d2 (path.c: migrate global git_path_* to take a repository
+> argument, 2018-05-17) made global git_path_* functions take a repo
+> argument.  The commit msg mentions that this migration doesn't change
+> the local path functions in various builtins - which were defined using
+> GIT_PATH_FUNC.  This was also the commit which introduced the macro
+> REPO_GIT_PATH_FUNC.
 > 
-> Shouldn't we use `die_errno` here instead? I mean, this is not really a
-> bad ref content issue. If we don't want to die here, it would still
-> probably be nice to get the actual issue using `strerror` instead and
-> use that instead of the generic message we have here.
+> Skip to 7ac16649ec (path: hide functions using `the_repository` by
+> default, 2024-08-13), GIT_PATH_FUNC is hidden under
+> USE_THE_REPOSITORY_VARIABLE and the REPO_GIT_PATH_FUNC is made its
+> arbitrary repo equivalent - which can be inferred from the following
+> portion of the diff
 > 
+> @@ -165,19 +130,10 @@ void report_linked_checkout_garbage(struct repository *r);
+>  /*
+>   * You can define a static memoized git path like:
+>   *
+> - *    static GIT_PATH_FUNC(git_path_foo, "FOO")
+> + *    static REPO_GIT_PATH_FUNC(git_path_foo, "FOO")
+>   *
+>   * or use one of the global ones below.
+>   */
+> -#define GIT_PATH_FUNC(func, filename) \
+> -       const char *func(void) \
+> -       { \
+> -               static char *ret; \
+> -               if (!ret) \
+> -                       ret = git_pathdup(filename); \
+> -               return ret; \
+> -       }
+> -
+>  #define REPO_GIT_PATH_FUNC(var, filename) \
+>         const char *git_path_##var(struct repository *r) \
+>         { \
+> 
+> (the GIT_PATH_FUNC macro is moved to be under USE_THE_REPOSITORY_VARIABLE)
+> 
+> Looking at the expansion of REPO_GIT_PATH_FUNC ...
+> 
+> #define REPO_GIT_PATH_FUNC(var, filename) \
+> 	const char *git_path_##var(struct repository *r) \
+> 	{ \
+> 		if (!r->cached_paths.var) \
+> 			r->cached_paths.var = repo_git_path(r, filename); \
+> 		return r->cached_paths.var; \
+> 	}
+> 
+> It seems that REPO_GIT_PATH_FUNC isn't an exact equivalent of
+> GIT_PATH_FUNC.  That is, REPO_GIT_PATH_FUNC expects even a local path to be
+> a field of the "struct repo_path_cache".  An example of a local path is
+> EDIT_DESCRIPTION from "git branch --edit-description" (which inturn gets
+> used by "git format-patch").
+> 
+> So my question is - do we want, in the future in which we are free from
+> the dependency on "the_repository", for all the local paths to be a part
+> of "struct repo_path_cache"?  Which in my gut feels wrong - one alternative
+> then is that  we will have to refactor REPO_GIT_PATH_FUNC - or am I missing
+> something here?
 
-Well, I think I need to dive into the "open" system call here. Actually,
-we have two opinions now. Junio thought that we should use
-"fsck_report_ref" to report. Karthik, Patrick and I thought that we
-should report using "*errno" because this is a general error.
+What I don't quite understand: what is the problem with making it part
+of the `struct repo_path_cache`? Does this cause an actual issue, or is
+it merely that you feel it is unnecessary complexity?
 
-Let me investigate what situations will make "open" system call fail.
-Thus, we could fully explain which choice we will choose.
+> I got into this when I was trying to refactor builtin/branch.c to be
+> independent of "the_repository".  It was a very naive approach of just
+> manual conversion of all the git_* calls to repo_* calls and similar
+> changes but the compiler started to complain since I overlooked
+> GIT_PATH_FUNC and some variables in environment.h which are also hidden
+> under USE_THE_REPOSITORY_VARIABLE.
+> 
+> Which raises another question - why are variables such as
+> "comment_line_str" and "default_abbrev" hidden under
+> USE_THE_REPOSITORY_VARIABLE?[1]  They don't seem to be dependent on
+> "the_repository"?  Again, I might be missing something here but am not
+> sure what.
 
-Thanks,
-Jialuo
+They do depend on `the_repository`, but implicitly only. The problem is
+that those variables are populated via the config, and that may include
+repository-local configuration. As such they contain values that have
+been derived via `the_repository`, and those values may not be the
+correct value when you handle multiple repositories in a single process,
+because those may have a different value for e.g. "core.commentChar".
+
+> By the way I don't expect this "naive approach" to be the right method
+> of doing this - I was just tinkering to get to know
+> USE_THE_REPOSITORY_VARIABLE better - since builtin/branch.c also calls
+> into ref-filter which heavily relies on "the_repository" so changes
+> there also would be appropriate for the complete picture.
+
+Yeah, in the ideal case you'd first adapt any underlying code that you
+happen to spot that relies on `the_repository`. That doesn't always
+work as it is easy to miss that something implicitly depends on the
+variable. But in case such a dependency is missed it will get to light
+eventually as we continue with our quest to remove `the_repository`.
+
+Patrick
