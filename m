@@ -1,365 +1,303 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407CC1E0DC5
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 16:13:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59E338DF2
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 16:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728403991; cv=none; b=EM5CzzTqmX9MHTCOHPEyHtT6mDSNeDBsN0LWuTgcyNFT9LXzvouXZR9hCXZS1NiyA2eZ1LRbvhqkCtiwmmvQuzOWXg3MlaOxQRn/0VFgP34n6Z9fAFzvFKTDmWhfCpdO7vNJqzQZK7YByA6+xoFzzgI9sgodLi9Mc9k6lz+0gsQ=
+	t=1728404495; cv=none; b=Q2YGryvSG4MbHsYSHX92c9H8hXs1bzhHmaIQxlfj4uLVbPEmU5gkPjBZJJtpP6rRTI0ohFq85ZgyIh6AglVaAuii1tzVchUi9Qgmp4LW8R+ZagS0Q56D0sm6ATv7vEVUrGtPAwmMtcxsj7h5pMaPkLqGu+EW9+fSvF/yOGcy7GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728403991; c=relaxed/simple;
-	bh=Gmqa/T0jlgjCjGWQiBTIPjoR+4sexV3ov2txJbbL8Zk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Lo5SNKm9itJcjQTPieKvGHtQngKCA5BHhIJ8Wj2NIh1ZL/VQJ2jhyFfrZFhedBA0DtG5blmXJaXLmUVADPb0C/VxAJBrVRe7pP/8mzTbEHHAOnCDScJ7jS0KppqkvaQAWVl8hlmo0KPW4iIOoEuePuTvolU1o821myGDXD8GHFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EIFKjsE/; arc=none smtp.client-ip=209.85.218.52
+	s=arc-20240116; t=1728404495; c=relaxed/simple;
+	bh=ZjL+NnSs+/H4AA0xiJVhh7iREzKi4hxkt4164LivxG8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YVvmBfvQFLnlXKC/Lul7vwapv5m+hWT1QIvepfAQosJMOfSZOG9Fkz/ScjNFEQvkMkv4G59xJN/M/HPiTxChLoxEl6DNl0KWHRzeKQ1M2W5gXI6NlL5gj+98fwvlxtZShdFqSq9/h2Sa10UK5nFoqbE5kiwyiHA4z1VZmK8DlQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BVEndunA; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EIFKjsE/"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a9982f90e92so54034266b.0
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 09:13:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BVEndunA"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5c896b9b4e0so8568350a12.3
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 09:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728403987; x=1729008787; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ohZ0eVn7uKHXr9/1tTWurDOygf9SQC+nEbvInH3nhV0=;
-        b=EIFKjsE/+gs4YlnUnbNInoOcE+u1Oi1uT0rRahA1BQd/z2YOLTeRFDrObufzJcUNez
-         5eAG3OG1C3kbNNkV/UWI180sV7WIZm4TS/j2H17VkbAYQzfTZdNJFXRI03vWtNdmcNvh
-         KmbIdDoCEV59HjmTvCBU90FT6uS1sWt4urPnQa+YBWXAcZ8syTnRywKEbYFAjT8bsv0N
-         0Rh8kkBeMWa4EuacSXzk/Q7niiabXwNY2OHfV/NVLTxG9MvrcS52d+JMq8J7CMyOxkJK
-         gTeMzKA9WVY57+1XOo+sB7KdtjrrZGp/ya+PfueOSp38AmP9NXwchkb2C9wLOhFcyjKC
-         cdWg==
+        d=gmail.com; s=20230601; t=1728404492; x=1729009292; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pzghPiIdJ3OMTR1sbcykZgjJaY4OKTA4vEy2kV89SDE=;
+        b=BVEndunAM7ha40LsEKarnkBF5EDuWwn+2gBQ5jVGakh6ROd+CEgsZSot5FV/aJNjiD
+         xMsqR38wCB7SnXJjiNopZlPRWgOMKmE0kMDSxG1U/jRmM3/miNhZA0rL2H/ylPRseEkg
+         pOA3GFOGm4RO2i+CEf0noWAhL9sk8Mq4LAyZvywwz0z+DuLE7J4qUgFcSMVfxRrq1LNM
+         xHAIo1uDjojA9aKR7W945SchBipR+OInQKiQgDf52k+LQL2+L/QHEBWvh2d8C2E3PNIe
+         UtPH4Zay+bjMZrBPYRNdqJNvmk/xtlchTaL/twpB1Ra+a0JHXen9ONGbrEtCG1mcIni/
+         il0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728403987; x=1729008787;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ohZ0eVn7uKHXr9/1tTWurDOygf9SQC+nEbvInH3nhV0=;
-        b=Cqco6DDV2ejjzXLk39VE3IoCyVQsfw0lCO+Au6MFiSwUHIV0c0Xq/cSph/ly2Fv5RN
-         DeqS+NufMx5ykE8kW9Mbdm7zvSgK7BFUQZuBFCjql3GfRN/e25WiZcFyiIV84UfsWuy+
-         9yxEx8GQF2lv4/oGlwdhWkDTANJnT1/YFyhlmY64wEFHPpM62ZFJNEUJueqi8ooMo1rp
-         RDgtsXYRLmqJmNRqN5N0Wgw5Qb6vNbeLAgBuPmw2bcr/ppmFYPdZqC4vNn8GipeRRpX1
-         /baSkYhboUGnEKbzoAoD2mwo8/wIng35ZYBKx4awQzhC9XtpKl+yZOq44OWzmlgRfXSc
-         oabw==
-X-Gm-Message-State: AOJu0YxBXJDQWiOX+Z0GCyxSQ1C9cIlb4pyQeuE94pCjxfGTEEMuZCSK
-	qth+gNGSN71lhKiBudDrG6a8MkmDF62tOIvTHyzEj8QQpfDhj/xi/Pw739Vx1T0LFLgHma7y0dC
-	X0msbpxnth9dI+UpKHZ2Mok/QXz0=
-X-Google-Smtp-Source: AGHT+IEVgLxwcE3KzeKNJbrI1l64ZoFIEwUXWWb0Mjz8hgqbtatNmYd/xrJ74GKkAEosa8MTtCK9aEf4nxnirWhirnM=
-X-Received: by 2002:a17:907:9801:b0:a99:63fa:2686 with SMTP id
- a640c23a62f3a-a9967a7b4d2mr393990966b.20.1728403987214; Tue, 08 Oct 2024
- 09:13:07 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728404492; x=1729009292;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pzghPiIdJ3OMTR1sbcykZgjJaY4OKTA4vEy2kV89SDE=;
+        b=TV4N+KXVwPM7pzfhXmfSnaVXd6zagEe/WdCI9JUmclJ3SoiFZpOyl/xaj/yzzNHQrL
+         DhcC9tYPfABMmr+znRfjTnAbw4uGPO83hbe8ByECtWYBYHyBqMj2omTRa7H/KYPwxlCc
+         Vkn5Vd3jpYzBF7LIsrOQ3qarOLlg+lvGM0qyEeO5G3lGdOtts3QEe0uKy/mypzRL9rMd
+         PxpGrnTU0U6KQhx7rKbozwf+fU8/oJS+jQG2kxDxFTq64KkU/QNRCaiTOVOkQlVde+vv
+         ZxVrka1b6vyZWYBCTtlmH/FiR+4ziHTJTouPMOLMSw0cGiM/dD5Wt9IqtsL+c0689y1q
+         iahA==
+X-Gm-Message-State: AOJu0YyqmEtAYliEEat1NOaq+nTVp0X1Bh0S/5wb88KhETPs5DB+HbRO
+	jnVYgzjJ9YXYos5p1RuGmG8rbtECQ6Q2XxGA8Hp9AoV+BxoZAyakDO5rk1D/+JM=
+X-Google-Smtp-Source: AGHT+IEDSHRhF2q8mJPmEIgA56MoY4VOwSLIt03yCiSjn8Z8m9ZwRyulkhuMTVEva9ZFxLSZRrE4gA==
+X-Received: by 2002:a05:6402:51c9:b0:5c7:1911:f134 with SMTP id 4fb4d7f45d1cf-5c8d2e0ff86mr11792756a12.9.1728404491123;
+        Tue, 08 Oct 2024 09:21:31 -0700 (PDT)
+Received: from zihco-Latitude-7390-2-in-1.. ([197.210.35.67])
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5c8e05ad8cfsm4482877a12.37.2024.10.08.09.21.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Oct 2024 09:21:30 -0700 (PDT)
+From: chizobajames21@gmail.com
+To: git@vger.kernel.org
+Cc: phillip.wood@dunelm.org.uk,
+	ps@pks.im,
+	Chizoba ODINAKA <chizobajames21@gmail.com>
+Subject: [Outreachy][PATCH] t6050: avoid pipes in git related commands
+Date: Tue,  8 Oct 2024 17:21:17 +0100
+Message-Id: <20241008162117.6452-1-chizobajames21@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1809.git.1728370892696.gitgitgadget@gmail.com>
- <pull.1809.v2.git.1728397437637.gitgitgadget@gmail.com> <CAAirc3j2MfLyiNVnseRmTsDDu6R4gkcms1GXk=9_jAVLvEYaUg@mail.gmail.com>
- <CAAirc3gX=PBixcyR0NRyRDnrydkeeu8A9or90c8MSUdHQ6uo=w@mail.gmail.com> <CAAirc3jxEV9ZrLcZRMNahZTXWV-1H3KwGXT2iEU+nsZWX2bUnA@mail.gmail.com>
-In-Reply-To: <CAAirc3jxEV9ZrLcZRMNahZTXWV-1H3KwGXT2iEU+nsZWX2bUnA@mail.gmail.com>
-From: Abhijeetsingh Meena <abhijeetsingh.github@gmail.com>
-Date: Tue, 8 Oct 2024 21:42:55 +0530
-Message-ID: <CAAirc3iMSo9euq+UPoxi+zXU-a6n_VJOfHog5SQKHzxUVrt4rw@mail.gmail.com>
-Subject: Re: [PREVIEW v2] blame: respect .git-blame-ignore-revs automatically
-To: Abhijeetsingh Meena via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Abhijeetsingh Meena <abhijeet040403@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Phillip,
+From: Chizoba ODINAKA <chizobajames21@gmail.com>
 
-Thank you for your feedback on my patch. I appreciate your insights
-regarding the decision not to support a default file for the
---ignore-revs-file feature and the concerns related to ignoring
-"cleanup" commits that could potentially introduce bugs.
+In pipes, the exit code of a chain of commands is determined by
+the downstream command. For more accurate info on exit code tests,
+write output of upstreams into a file.
 
-I understand that addressing these concerns is crucial. Specifically,
-I will focus on:
+Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
+---
+ t/t6050-replace.sh | 86 +++++++++++++++++++++++-----------------------
+ 1 file changed, 43 insertions(+), 43 deletions(-)
 
-1. Ensuring there=E2=80=99s a clear and easy way for users to opt out or
-override the default behavior of ignoring certain commits, especially
-if they suspect those commits might contain bugs.
-2. Investigating how this new feature could interact with existing
-configuration options that allow users to specify what should be
-ignored manually.
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index d7702fc756..6b9811ed67 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -98,30 +98,30 @@ test_expect_success 'set up buggy branch' '
+ '
+ 
+ test_expect_success 'replace the author' '
+-	git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	R=$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
+-	git cat-file commit $R | grep "author O Thor" &&
++	git cat-file commit $HASH2 >actual && grep "author A U Thor" actual &&
++	R=$(git cat-file commit $HASH2 >actual && sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
++	git cat-file commit $R >actual && grep "author O Thor" actual &&
+ 	git update-ref refs/replace/$HASH2 $R &&
+-	git show HEAD~5 | grep "O Thor" &&
+-	git show $HASH2 | grep "O Thor"
++	git show HEAD~5 >actual && grep "O Thor" actual &&
++	git show $HASH2 >actual && grep "O Thor" actual
+ '
+ 
+ test_expect_success 'test --no-replace-objects option' '
+-	git cat-file commit $HASH2 | grep "author O Thor" &&
+-	git --no-replace-objects cat-file commit $HASH2 | grep "author A U Thor" &&
+-	git show $HASH2 | grep "O Thor" &&
+-	git --no-replace-objects show $HASH2 | grep "A U Thor"
++	git cat-file commit $HASH2 >actual && grep "author O Thor" actual &&
++	git --no-replace-objects cat-file commit $HASH2 >actual && grep "author A U Thor" actual &&
++	git show $HASH2 >actual && grep "O Thor" actual &&
++	git --no-replace-objects show $HASH2 >actual && grep "A U Thor" actual
+ '
+ 
+ test_expect_success 'test GIT_NO_REPLACE_OBJECTS env variable' '
+-	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
++	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 >actual && grep "author A U Thor"  actual &&
++	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 >actual && grep "A U Thor" actual
+ '
+ 
+ test_expect_success 'test core.usereplacerefs config option' '
+ 	test_config core.usereplacerefs false &&
+-	git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	git show $HASH2 | grep "A U Thor"
++	git cat-file commit $HASH2 >actual && grep "author A U Thor" actual &&
++	git show $HASH2 >actual && grep "A U Thor" actual
+ '
+ 
+ cat >tag.sig <<EOF
+@@ -148,14 +148,14 @@ test_expect_success 'repack, clone and fetch work' '
+ 	git clone --no-hardlinks . clone_dir &&
+ 	(
+ 		cd clone_dir &&
+-		git show HEAD~5 | grep "A U Thor" &&
+-		git show $HASH2 | grep "A U Thor" &&
++		git show HEAD~5 >actual && grep "A U Thor" actual &&
++		git show $HASH2 >actual && grep "A U Thor" actual &&
+ 		git cat-file commit $R &&
+ 		git repack -a -d &&
+ 		test_must_fail git cat-file commit $R &&
+ 		git fetch ../ "refs/replace/*:refs/replace/*" &&
+-		git show HEAD~5 | grep "O Thor" &&
+-		git show $HASH2 | grep "O Thor" &&
++		git show HEAD~5 >actual && grep "O Thor" actual &&
++		git show $HASH2 >actual && grep "O Thor" actual &&
+ 		git cat-file commit $R
+ 	)
+ '
+@@ -169,13 +169,13 @@ test_expect_success '"git replace" listing and deleting' '
+ 	test_must_fail git replace --delete &&
+ 	test_must_fail git replace -l -d $HASH2 &&
+ 	git replace -d $HASH2 &&
+-	git show $HASH2 | grep "A U Thor" &&
++	git show $HASH2 >actual && grep "A U Thor" actual &&
+ 	test -z "$(git replace -l)"
+ '
+ 
+ test_expect_success '"git replace" replacing' '
+ 	git replace $HASH2 $R &&
+-	git show $HASH2 | grep "O Thor" &&
++	git show $HASH2 >actual && grep "O Thor" actual &&
+ 	test_must_fail git replace $HASH2 $R &&
+ 	git replace -f $HASH2 $R &&
+ 	test_must_fail git replace -f &&
+@@ -186,7 +186,7 @@ test_expect_success '"git replace" resolves sha1' '
+ 	SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
+ 	git replace -d $SHORTHASH2 &&
+ 	git replace $SHORTHASH2 $R &&
+-	git show $HASH2 | grep "O Thor" &&
++	git show $HASH2 >actual && grep "O Thor" actual &&
+ 	test_must_fail git replace $HASH2 $R &&
+ 	git replace -f $HASH2 $R &&
+ 	test_must_fail git replace --force &&
+@@ -209,10 +209,10 @@ test_expect_success '"git replace" resolves sha1' '
+ #
+ test_expect_success 'create parallel branch without the bug' '
+ 	git replace -d $HASH2 &&
+-	git show $HASH2 | grep "A U Thor" &&
++	git show $HASH2 >actual && grep "A U Thor" actual &&
+ 	git checkout $HASH1 &&
+ 	git cherry-pick $HASH2 &&
+-	git show $HASH5 | git apply &&
++	git show $HASH5 >actual && git apply actual &&
+ 	git commit --amend -m "hello: 4 more lines WITHOUT the bug" hello &&
+ 	PARA2=$(git rev-parse --verify HEAD) &&
+ 	git cherry-pick $HASH3 &&
+@@ -225,7 +225,7 @@ test_expect_success 'create parallel branch without the bug' '
+ 	git checkout main &&
+ 	cur=$(git rev-parse --verify HEAD) &&
+ 	test "$cur" = "$HASH7" &&
+-	git log --pretty=oneline | grep $PARA2 &&
++	git log --pretty=oneline >actual && grep $PARA2 actual &&
+ 	git remote add cloned ./clone_dir
+ '
+ 
+@@ -234,23 +234,23 @@ test_expect_success 'push to cloned repo' '
+ 	(
+ 		cd clone_dir &&
+ 		git checkout parallel &&
+-		git log --pretty=oneline | grep $PARA2
++		git log --pretty=oneline >actual && grep $PARA2 actual
+ 	)
+ '
+ 
+ test_expect_success 'push branch with replacement' '
+-	git cat-file commit $PARA3 | grep "author A U Thor" &&
+-	S=$(git cat-file commit $PARA3 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
+-	git cat-file commit $S | grep "author O Thor" &&
++	git cat-file commit $PARA3 >actual && grep "author A U Thor" actual &&
++	S=$(git cat-file commit $PARA3 >actual && sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
++	git cat-file commit $S >actual && grep "author O Thor" actual &&
+ 	git replace $PARA3 $S &&
+-	git show $HASH6~2 | grep "O Thor" &&
+-	git show $PARA3 | grep "O Thor" &&
++	git show $HASH6~2 >actual && grep "O Thor" actual &&
++	git show $PARA3 >actual && grep "O Thor" actual &&
+ 	git push cloned $HASH6^:refs/heads/parallel2 &&
+ 	(
+ 		cd clone_dir &&
+ 		git checkout parallel2 &&
+-		git log --pretty=oneline | grep $PARA3 &&
+-		git show $PARA3 | grep "A U Thor"
++		git log --pretty=oneline >actual && grep $PARA3 actual &&
++		git show $PARA3 >actual && grep "A U Thor" actual
+ 	)
+ '
+ 
+@@ -284,8 +284,8 @@ test_expect_success 'bisect and replacements' '
+ '
+ 
+ test_expect_success 'index-pack and replacements' '
+-	git --no-replace-objects rev-list --objects HEAD |
+-	git --no-replace-objects pack-objects test- &&
++	git --no-replace-objects rev-list --objects HEAD >actual &&
++	git --no-replace-objects pack-objects test- <actual &&
+ 	git index-pack test-*.pack
+ '
+ 
+@@ -319,7 +319,7 @@ test_expect_success '-f option bypasses the type check' '
+ '
+ 
+ test_expect_success 'git cat-file --batch works on replace objects' '
+-	git replace | grep $PARA3 &&
++	git replace >actual && grep $PARA3 actual &&
+ 	echo $PARA3 | git cat-file --batch
+ '
+ 
+@@ -344,7 +344,7 @@ test_expect_success 'test --format medium' '
+ 		echo "$PARA3 -> $S" &&
+ 		echo "$MYTAG -> $HASH1"
+ 	} | sort >expected &&
+-	git replace -l --format medium | sort >actual &&
++	git replace -l --format medium >actual && sort actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -356,7 +356,7 @@ test_expect_success 'test --format long' '
+ 		echo "$PARA3 (commit) -> $S (commit)" &&
+ 		echo "$MYTAG (tag) -> $HASH1 (commit)"
+ 	} | sort >expected &&
+-	git replace --format=long | sort >actual &&
++	git replace --format=long >actual && sort actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -374,12 +374,12 @@ test_expect_success 'setup fake editors' '
+ test_expect_success '--edit with and without already replaced object' '
+ 	test_must_fail env GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --force --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor" &&
++	git replace -l >actual && grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual && grep "A fake Thor" actual &&
+ 	git replace -d "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor"
++	git replace -l >actual && grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual && grep "A fake Thor" actual
+ '
+ 
+ test_expect_success '--edit and change nothing or command failed' '
+@@ -387,8 +387,8 @@ test_expect_success '--edit and change nothing or command failed' '
+ 	test_must_fail env GIT_EDITOR=true git replace --edit "$PARA3" &&
+ 	test_must_fail env GIT_EDITOR="./failingfakeeditor" git replace --edit "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor"
++	git replace -l >actual && grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual && grep "A fake Thor" actual
+ '
+ 
+ test_expect_success 'replace ref cleanup' '
+@@ -468,7 +468,7 @@ test_expect_success GPG 'set up a merge commit with a mergetag' '
+ 	git checkout main &&
+ 	git merge -s ours test_tag &&
+ 	HASH10=$(git rev-parse --verify HEAD) &&
+-	git cat-file commit $HASH10 | grep "^mergetag object"
++	git cat-file commit $HASH10 >actual && grep "^mergetag object" actual
+ '
+ 
+ test_expect_success GPG '--graft on a commit with a mergetag' '
+-- 
+2.34.1
 
-I will take these points into consideration as I work on my changes
-and come up with a solution to address these concerns.
-
-Thank you again for your guidance, and I look forward to your
-continued feedback!
-
-Best wishes,
-Abhijeet (Ethan0456)
-
-On Tue, Oct 8, 2024 at 9:42=E2=80=AFPM Abhijeetsingh Meena
-<abhijeetsingh.github@gmail.com> wrote:
->
-> Hi Kristoffer,
->
-> Thank you so much for your feedback and for taking the time to review
-> my patch. I appreciate your suggestions, particularly regarding the
-> project convention of using the present tense to describe the current
-> behavior, as well as your mention of the --no-ignore-revs-file option
-> and the importance of documenting it.
->
-> Regarding your first point:
->
-> > My assumption then is that, with this change, I could use --no-ignore-r=
-evs-file to turn off the default file.
->
-> I=E2=80=99ll check how this works in the current setup and get back to yo=
-u to confirm.
->
-> As for your second observation:
->
-> > git blame --ignore-revs-file=3DREADME.md
-> > --no-ignore-revs-file README.md
-> > And that works without giving errors. So it=E2=80=99s there. Just appar=
-ently undocumented?
->
-> I=E2=80=99ll look into opening an issue and submitting a PR to add
-> documentation for this, as it seems important to address.
->
-> I=E2=80=99m excited to refine the patch with these improvements in mind a=
-nd
-> will continue working on the commit message and necessary
-> documentation in line with your feedback.
->
-> Thanks again for your guidance and support!
->
-> Best regards,
-> Abhijeet (Ethan0456)
->
-> On Tue, Oct 8, 2024 at 8:53=E2=80=AFPM Abhijeetsingh Meena
-> <abhijeetsingh.github@gmail.com> wrote:
-> >
-> > Hi Phillip,
-> >
-> > Thank you for your feedback on my patch. I appreciate your insights reg=
-arding the decision not to support a default file for the --ignore-revs-fil=
-e feature and the concerns related to ignoring "cleanup" commits that could=
- potentially introduce bugs.
-> >
-> > I understand that addressing these concerns is crucial. Specifically, I=
- will focus on:
-> >
-> > 1. Ensuring there=E2=80=99s a clear and easy way for users to opt out o=
-r override the default behavior of ignoring certain commits, especially if =
-they suspect those commits might contain bugs.
-> > 2. Investigating how this new feature could interact with existing conf=
-iguration options that allow users to specify what should be ignored manual=
-ly.
-> >
-> > I will take these points into consideration as I work on my changes and=
- come up with a solution to address these concerns.
-> >
-> > Thank you again for your guidance, and I look forward to your continued=
- feedback!
-> >
-> > Best wishes,
-> > Abhijeet (Ethan0456)
-> >
-> > On Tue, Oct 8, 2024 at 8:53=E2=80=AFPM Abhijeetsingh Meena <abhijeetsin=
-gh.github@gmail.com> wrote:
-> >>
-> >> Hi Kristoffer,
-> >>
-> >> Thank you so much for your feedback and for taking the time to review =
-my patch. I appreciate your suggestions, particularly regarding the project=
- convention of using the present tense to describe the current behavior, as=
- well as your mention of the --no-ignore-revs-file option and the importanc=
-e of documenting it.
-> >>
-> >> Regarding your first point:
-> >>
-> >> > My assumption then is that, with this change, I could use --no-ignor=
-e-revs-file to turn off the default file.
-> >>
-> >> I=E2=80=99ll check how this works in the current setup and get back to=
- you to confirm.
-> >>
-> >> As for your second observation:
-> >>
-> >> > git blame --ignore-revs-file=3DREADME.md
-> >> > --no-ignore-revs-file README.md
-> >> > And that works without giving errors. So it=E2=80=99s there. Just ap=
-parently undocumented?
-> >>
-> >> I=E2=80=99ll look into opening an issue and submitting a PR to add doc=
-umentation for this, as it seems important to address.
-> >>
-> >> I=E2=80=99m excited to refine the patch with these improvements in min=
-d and will continue working on the commit message and necessary documentati=
-on in line with your feedback.
-> >>
-> >> Thanks again for your guidance and support!
-> >>
-> >> Best regards,
-> >> Abhijeet (Ethan0456)
-> >>
-> >> On Tue, Oct 8, 2024 at 7:54=E2=80=AFPM Abhijeetsingh Meena via GitGitG=
-adget <gitgitgadget@gmail.com> wrote:
-> >>>
-> >>> From: Abhijeetsingh Meena <abhijeet040403@gmail.com>
-> >>>
-> >>> Modify `git blame` to automatically respect a `.git-blame-ignore-revs=
-`
-> >>> file if it exists in the repository. This file is used by many projec=
-ts
-> >>> to ignore non-functional changes, such as reformatting or large-scale
-> >>> refactoring, when generating blame information.
-> >>>
-> >>> Before this change, users had to manually specify the file with the
-> >>> `--ignore-revs-file` option. This update streamlines the process by
-> >>> automatically detecting the `.git-blame-ignore-revs` file, reducing
-> >>> manual effort.
-> >>>
-> >>> This change aligns with the standardized practice in many repositorie=
-s
-> >>> and simplifies the workflow for users.
-> >>>
-> >>> Signed-off-by: Abhijeetsingh Meena <abhijeet040403@gmail.com>
-> >>> ---
-> >>>     blame: respect .git-blame-ignore-revs automatically
-> >>>
-> >>>
-> >>>     Introduction
-> >>>     =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >>>
-> >>>     Hi, I'm Abhijeet (Ethan0456), and this is my first contribution t=
-o the
-> >>>     Git project. I currently work as an ML Engineer at an early-stage
-> >>>     startup, and I=E2=80=99m excited to contribute to this open-sourc=
-e project.
-> >>>
-> >>>
-> >>>     Why the Change?
-> >>>     =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >>>
-> >>>     I came across this enhancement request on the bug tracker and fou=
-nd it
-> >>>     beginner-friendly, making it a great opportunity for me to get fa=
-miliar
-> >>>     with the Git codebase. The ability for git blame to automatically
-> >>>     respect the .git-blame-ignore-revs file is something that can str=
-eamline
-> >>>     workflows for many users, and I felt it would be a valuable addit=
-ion.
-> >>>
-> >>>
-> >>>     Feedback
-> >>>     =3D=3D=3D=3D=3D=3D=3D=3D
-> >>>
-> >>>     While I=E2=80=99m confident in the changes made to builtin/blame.=
-c and the new
-> >>>     test case in t/t8015-blame-ignore-revs.sh, I welcome any feedback=
- or
-> >>>     suggestions to improve both my code and approach. I=E2=80=99m eag=
-er to learn
-> >>>     from the community and improve where needed.
-> >>>
-> >>>
-> >>>     Community Need
-> >>>     =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >>>
-> >>>     There is precedent for this functionality in other projects:
-> >>>
-> >>>      * Chromium
-> >>>        [https://chromium.googlesource.com/chromium/src.git/+/f0596779=
-e57f46fccb115a0fd65f0305894e3031/.git-blame-ignore-revs],
-> >>>        which powers many popular browsers, uses .git-blame-ignore-rev=
-s to
-> >>>        simplify the blame process by ignoring non-functional changes.
-> >>>      * Rob Allen's blog post
-> >>>        [https://akrabat.com/ignoring-revisions-with-git-blame/] discu=
-sses
-> >>>        the need for ignoring revisions with git blame, and a commente=
-r
-> >>>        specifically suggests that it would be helpful if Git automati=
-cally
-> >>>        respected .git-blame-ignore-revs.
-> >>>
-> >>>     I hope this change aligns with community needs and improves the g=
-it
-> >>>     blame experience for users.
-> >>>
-> >>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-180=
-9%2FEthan0456%2Fblame-auto-ignore-revs-v2
-> >>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1809/E=
-than0456/blame-auto-ignore-revs-v2
-> >>> Pull-Request: https://github.com/gitgitgadget/git/pull/1809
-> >>>
-> >>> Range-diff vs v1:
-> >>>
-> >>>  1:  666404681d9 =3D 1:  666404681d9 blame: respect .git-blame-ignore=
--revs automatically
-> >>>
-> >>>
-> >>>  builtin/blame.c                      |  8 ++++++++
-> >>>  t/t8015-blame-default-ignore-revs.sh | 26 ++++++++++++++++++++++++++
-> >>>  2 files changed, 34 insertions(+)
-> >>>  create mode 100755 t/t8015-blame-default-ignore-revs.sh
-> >>>
-> >>> diff --git a/builtin/blame.c b/builtin/blame.c
-> >>> index e407a22da3b..1eddabaf60f 100644
-> >>> --- a/builtin/blame.c
-> >>> +++ b/builtin/blame.c
-> >>> @@ -1105,6 +1105,14 @@ parse_done:
-> >>>                 add_pending_object(&revs, &head_commit->object, "HEAD=
-");
-> >>>         }
-> >>>
-> >>> +       /*
-> >>> +       * By default, add .git-blame-ignore-revs to the list of files
-> >>> +       * containing revisions to ignore if it exists.
-> >>> +       */
-> >>> +       if (access(".git-blame-ignore-revs", F_OK) =3D=3D 0) {
-> >>> +               string_list_append(&ignore_revs_file_list, ".git-blam=
-e-ignore-revs");
-> >>> +       }
-> >>> +
-> >>>         init_scoreboard(&sb);
-> >>>         sb.revs =3D &revs;
-> >>>         sb.contents_from =3D contents_from;
-> >>> diff --git a/t/t8015-blame-default-ignore-revs.sh b/t/t8015-blame-def=
-ault-ignore-revs.sh
-> >>> new file mode 100755
-> >>> index 00000000000..84e1a9e87e6
-> >>> --- /dev/null
-> >>> +++ b/t/t8015-blame-default-ignore-revs.sh
-> >>> @@ -0,0 +1,26 @@
-> >>> +#!/bin/sh
-> >>> +
-> >>> +test_description=3D'default revisions to ignore when blaming'
-> >>> +
-> >>> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
-> >>> +. ./test-lib.sh
-> >>> +
-> >>> +test_expect_success 'blame: default-ignore-revs-file' '
-> >>> +    test_commit first-commit hello.txt hello &&
-> >>> +
-> >>> +    echo world >>hello.txt &&
-> >>> +    test_commit second-commit hello.txt &&
-> >>> +
-> >>> +    sed "1s/hello/hi/" <hello.txt > hello.txt.tmp &&
-> >>> +    mv hello.txt.tmp hello.txt &&
-> >>> +    test_commit third-commit hello.txt &&
-> >>> +
-> >>> +    git rev-parse HEAD >ignored-file &&
-> >>> +    git blame --ignore-revs-file=3Dignored-file hello.txt >expect &&
-> >>> +    git rev-parse HEAD >.git-blame-ignore-revs &&
-> >>> +    git blame hello.txt >actual &&
-> >>> +
-> >>> +    test_cmp expect actual
-> >>> +'
-> >>> +
-> >>> +test_done
-> >>> \ No newline at end of file
-> >>>
-> >>> base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
-> >>> --
-> >>> gitgitgadget
