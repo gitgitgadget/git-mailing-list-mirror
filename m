@@ -1,123 +1,199 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88A31FA243
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 20:59:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219322AEFE
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 21:36:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728421171; cv=none; b=W931W/+chs/OijqeMZhfH4z+4Oi6T3Qzp+8E05aopkAYD3wa2UIN0Tnkvl0E8EkGnY3eNB0C66GrIGwB4z6ak0uaE7rE+39V2T7eGyodFoeSFQabS1lXTtIqufxsjZyhzDI4kiuIgJD65g3Y0oLHpbwh5f3vox966hV9UmmZQdo=
+	t=1728423371; cv=none; b=LD4LqjojnAUoIQueEAOBF59VGYzwYw0PNKpI8KRTCkEW3jfu3pUtjRByn/0ZVvAxoy5FpQ/NGFFIhFSYiReZXayx0AmYonbK0VGYBQo+aeIntvaSEgmqyp7nn8XqXUpN4rhvcwWsPva5mNOMUBEuL6Wd6Nq7X+s9O5Wit9MVRKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728421171; c=relaxed/simple;
-	bh=+F1j4L+SPBj4ianHkssjwSWxw8ELd7cp+J+4eietL6w=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ajczxWjA7RscdfxrIQezlnTlR9zMxI7F6oC9jW+0wVbUxn9QGzvHIQim0OipysthvCTP3Y/1wBQ+ZLRzjtc89A+lmRdlArMzMi+bRFJQf8GVFV3LQ/pFG+tIoqR06GKszsUgdVv1kVrXcdyI/d+l4JcVWDqrX5w7COuHn0Qkksk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=35WUhdm5; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1728423371; c=relaxed/simple;
+	bh=iJP/yDx9xrC5PDKNpJZBQI91s/+XxXFK2w3a8e48DmI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TgrPwXOAx0FOXOnzDMI27KZWzOHf8L6PivI74J0zKRRcGQQSrfPBs+I/mYOzSfMx6Q+ajAdvwbJfl643dudTq5xKvl7qzKeKOfH8EktyYYn1asCrLDVHUzRN+5i4xuQOIjIMzE+XG9DZt8uiLNcoCeSb2bX6itybAExFj+Zx9Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=2BogQMqi; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="35WUhdm5"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-20b061b7299so18435ad.1
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 13:59:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="2BogQMqi"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42f6995dab8so91305e9.0
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 14:36:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1728421169; x=1729025969; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=lA7Do2jbEhds/dsLDUTNyM4174I4aA3CoavS93yDZnk=;
-        b=35WUhdm5U4/YMb3JsC6N8NuxfNW8I9gr7VBZf43ULggkI6/V9yCQ5Dn9BrqZGRbYDd
-         f1/n/WgBpKyJyrBCql+mufsOG2IaBCl+pzsZz1sN4yN3XwRSeOaTlH6G0UYBhH/1fJ0O
-         fv6A/rM7lJF/dVzhoykyqRoo9lNFA8FdLIoo9DVeqXAI6S51rwB/mqvE//JkRogpXxzB
-         CMbmT1/6AbJk8ZT/aTVgpSiRa8jKcgsM1j4ovVe6SsMy0oTJReMxph8G75+wN9JolCKe
-         u/EJyaxWzEujKn5yZCeWLGMARW3ao9++qK/MEz6fjAyqMzB3xM4YUq+aVp9yFz0b/GpW
-         l6Gw==
+        d=google.com; s=20230601; t=1728423368; x=1729028168; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5/+oDfyI3uWPqfQhVtwpYAbZkDQyC2u5Ik4MN26OLrw=;
+        b=2BogQMqivXIkKFwJZJDhKWabzS2QaRB2LaW9mo6YfQnWC+QsJBxJ+wYNfqe19YBeDF
+         Lo6dDfzrsDPjoVKs/DzK7qCaDmcwNkTLcVk2KhgZSntoks0iB3j8FIxZAMfvOXHa7ZVI
+         ZSpa0n8uEyqbRd6S6LNY+aHzYOYNhHYru8AuVBVN1akCSGinyib/Z80OaFgkJCB6oNTU
+         0P61hYOdjbfG4FKRmaCVpoxLsoc9utXdVWGLfdaNKLnzFISmZlVyhd63Z2LD9jE8hsXl
+         VyZOfk3nATHhs4d8aQUiAcfVPE2VdCDARaYoAn5aULM6tEhvEGGuZ7E7XwjOeuYIgUKr
+         AC6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728421169; x=1729025969;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lA7Do2jbEhds/dsLDUTNyM4174I4aA3CoavS93yDZnk=;
-        b=IU8VGbo5ElAWPN1u+KzILfYWuqnumstPQYcxG1yVE8EPgq3ID2yO7qVCXdyQbucZ1E
-         12+JC8Sus8E4Es3f8cV5Mr60G/oZQcdo/cVMEir6TIoRDR4LtCj+dPLsGZqTQk6rKt0g
-         uWIHpVYwDF9CKLLOzwLMYWTEGWcZ1EE0G0UqxA7Nu0OtR+P7iePSs3Zd/pFZYERGf3Hd
-         T87yMDh5pbpgkSrA+w2TJhPDyc2DLpnzHwZEoKFcfN6kpkPIsLahsNySHQGyOjHuOD40
-         XTANlsr01+gjZPjMpYC8Bp+STLkkPRnZqznbXqBk04uijKEBArSz54+KrrXPDtI6fS9R
-         Sqlg==
-X-Forwarded-Encrypted: i=1; AJvYcCVwOcIy5/F54aYIyxvY9J5ukejRjdhLDiOBiVgp4qFoSk+WTxlmee39Q5JTzGPbHSmh4Lc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXNYj1NojwQ+ww6rdlhSV8QTU6i5DTCSJrdL11sqEUiAkJfG/7
-	4i5XxUylGhd+Z+KuLxrrVCI5AS9NY2dpQBgQLAwAhFnAIur1do3aCj4/DZlfUg==
-X-Google-Smtp-Source: AGHT+IElAqAsQKnPONGhOiZF9IBkpaPMSk+GOozYcl79ISipwdCu947iS3Cx7RmDsRJ3rPeGvJgkAw==
-X-Received: by 2002:a17:903:192:b0:20b:5046:376 with SMTP id d9443c01a7336-20c64b6356amr126875ad.1.1728421168942;
-        Tue, 08 Oct 2024 13:59:28 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:7c00:8752:4498:cc1b])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c138cec85sm59540685ad.69.2024.10.08.13.59.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2024 13:59:28 -0700 (PDT)
-Date: Tue, 8 Oct 2024 13:59:23 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Patrick Steinhardt <ps@pks.im>, Calvin Wan <calvinwan@google.com>, 
-	git@vger.kernel.org, spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
-	Jason@zx2c4.com, dsimic@manjaro.org
-Subject: Re: [PATCH v3 3/6] libgit-sys: add repo initialization and config
- access
-Message-ID: <zmdze3hbxfzuupx32hbnvyghzihkgjjhmh3prlwgby2hatgvuo@s6kdajzcagnb>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Patrick Steinhardt <ps@pks.im>, Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	rsbecker@nexbridge.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
-	Jason@zx2c4.com, dsimic@manjaro.org
-References: <20240906221853.257984-1-calvinwan@google.com>
- <20240906222116.270196-3-calvinwan@google.com>
- <Zt_qOrrWubdU_yvx@pks.im>
- <bjgxdo7sjueppt2y4i2psifuvgnld47jrusgpsao6fjyqfyld7@7hybmrhbdli5>
+        d=1e100.net; s=20230601; t=1728423368; x=1729028168;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5/+oDfyI3uWPqfQhVtwpYAbZkDQyC2u5Ik4MN26OLrw=;
+        b=BwsAWlGohvQikV8o4BKmu/IzLsdPQ5DetDtH4ep37w2H1ydFeF92iLbLjoXw/ejrhE
+         H2Xo45ez6LcwUfwCLD6gyc8ty3T3qyAW53QN1lEJ66ZiAA+H8JniAAcl6N5YnJRfQjMc
+         OY9HT78ekW+JH/f947mQvVIpNTZY6Iq3z/H5NENkGBgonDOIXvrYrGI0L08TXtGukovN
+         aW52WHzLfu5ciQwbGzzzW1YQQXKTd8AnYy7Am5XePq3qt3gHdoQQ3LfnqicQHF3Gq49j
+         WljIAZN6JychNC/K2xNQ8pgS/pij5qXqtdO629/vRtkXaHHivlL/05AmtVBFLW36LErH
+         m+vw==
+X-Forwarded-Encrypted: i=1; AJvYcCWT4psEqA3f2XgLE6vzGyMVYcuBDd0G6KMyjC21h8EV6AKKTirm0W57GcFJgR7aQb5MNi4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBPYymFjSfEk5i1iY+AfOA2y0ABIAdeZBfwLFvg2KRyLmZMeD8
+	Tzgw6fjRI6jhEOUgM3+GT1NtQ/yOTwP5nG5wPKENXQ9C9I6FVEfmS+gesnK/9Qwd3j/Se3f53jt
+	ZiLygQBdFcIiNmYNsW3A+Tt6sXYBO4VuZu4Zv
+X-Google-Smtp-Source: AGHT+IH1VHE71/lHwhzb/iKA535tctnYgWJ2tyPLQHN033vMoho30MnYYNcQ3Od1eJvJie4Wjzje9Sne4POA6936oCE=
+X-Received: by 2002:a05:600c:1e22:b0:426:68ce:c97a with SMTP id
+ 5b1f17b1804b1-430c3aa66f9mr363245e9.7.1728423368256; Tue, 08 Oct 2024
+ 14:36:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bjgxdo7sjueppt2y4i2psifuvgnld47jrusgpsao6fjyqfyld7@7hybmrhbdli5>
+References: <20241001191811.1934900-1-calvinwan@google.com> <xmqqo743qkn9.fsf@gitster.g>
+In-Reply-To: <xmqqo743qkn9.fsf@gitster.g>
+From: Calvin Wan <calvinwan@google.com>
+Date: Tue, 8 Oct 2024 14:35:56 -0700
+Message-ID: <CAFySSZCyoaKCGycYgJjCJGJ2mV1yfg+gVFb7RytGKmkjupkNkQ@mail.gmail.com>
+Subject: Re: Missing Promisor Objects in Partial Repo Design Doc
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Christian Couder <chriscool@tuxfamily.org>, Han Young <hanyang.tony@bytedance.com>, 
+	git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Enrico Mrass <emrass@google.com>, sokcevic@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2024.10.07 14:21, Josh Steadmon wrote:
-> On 2024.09.10 08:42, Patrick Steinhardt wrote:
-> > I don't quite get why we expose functionality that is inherently not
-> > libified. Exposing the current state to library users certainly does not
-> > feel right to me, doubly so because `the_repository` is deprecated and
-> > will eventually go away. So we already know that we'll have to break the
-> > API here once that has happened. I'd rather want to see that introducing
-> > the library makes us double down on providing properly encapsulated
-> > interfaces from hereon.
-> > 
-> > Also, we already have ways to initialize a repository and read their
-> > config without relying on `the_repository`. So shouldn't we expose that
-> > instead?
-> > 
-> > Patrick
-> 
-> Specifically in this case, yeah, we should have started with the
-> libified version. This is an artifact due to the way we are figuring out
-> C/Rust interop as we go, and it was easier to convert it this way
-> without making the Rust side care about handling repository pointers.
-> But you're right, and I'll fix this soon for V4.
-> 
-> In general though, we're treating the initial version of libgit-rs as a
-> proof-of-concept that we can call from JJ into Git without blowing
-> things up. We might not always have the option of exposing
-> fully-libified code paths, and for our $DAYJOB purposes, we may have to
-> deal with non-ideal interfaces for the early versions. However, we do
-> want to use this as a way to motivate development of better, libified
-> APIs when we find real-world use cases for them.
-> 
-> We've said before (even before we started libgit-rs) that we're not
-> going to be able to make guarantees about early libified APIs, because
-> we're learning as we go along. I don't want to use that as an excuse to
-> cover up bad design, but I do want to be upfront that we can't commit to
-> fully libifying any given code path before we expose it through the shim
-> library or through libgit-rs.
+On Tue, Oct 1, 2024 at 7:54=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> True.  Will it become even worse, if a protocol extension Christian
+> proposes starts suggesting a repository that is not lazy to add a
+> promisor remote?  In such a set-up, perhaps all history leading to
+> C2b down to the root are local, but C3 may have come from a promisor
+> remote (hence in a promisor pack).
 
-In fact, since the JJ proof-of-concept doesn't rely on repository
-initialization or repository-level config access, I think we can just
-drop this patch for now and worry about getting a better interface for
-repo initialization later.
+Yes if we and consequently Git considers this state to be problematic.
+
+> > Bad State Solutions
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > Fetch negotiation
+> > -----------------
+> > Implemented at
+> > https://lore.kernel.org/git/20240919234741.1317946-1-calvinwan@google.c=
+om/
+> >
+> > During fetch negotiation, if a commit is not in a promisor pack and
+> > therefore local, do not declare it as "have" so they can be fetched int=
+o
+> > a promisor pack.
+> >
+> > Cost:
+> > - Creation of set of promisor pack objects (by iterating through every
+> >   .idx of promisor packs)
+>
+> What is "promisor PACK objects"?  Is it different from the "promisor
+> objects" (i.e. what I called the useless definition above)?
+
+Objects that are in promisor packs, specifically the ones that have the
+flag, packed_git::pack_promisor, set. However, since this design doc
+was sent out, it turns out the creation of a set of promisor pack objects
+in a large repository (such as Android or Chrome) is very expensive, so
+this design is infeasible in my opinion.
+
+>
+> > - Refetch number of local commits
+> >
+> > Pros: Implementation is simple, client doesn=E2=80=99t have to repack, =
+prevents
+> > state from ever occurring in the repository.
+> >
+> > Cons: Network cost of refetching could be high if many local commits
+> > need to be refetched.
+>
+> What if we get into the same state by creating local C4, which gets
+> to outside and on top of which C5 is built, which is now sitting at
+> the tip of the remote history and we fetch from them?  In order to
+> include C4 in the "promisor pack", we refrain from saying C4 is a
+> "have" for us and refetch.  Would C2 be fetched again?
+>
+> I do not think C2 would be, because we made it an object in a
+> promisor pack when we "fixed" the history for C3.
+>
+> So the cost will not grow proportionally to the depth of the
+> history, which makes it OK from my point of view.
+
+Correct, the cost of refetching is only a one time cost, but
+unfortunately creation of a set of promisor pack objects isn't.
+
+>
+> > Garbage Collection repack
+> > -------------------------
+> > Not yet implemented.
+> >
+> > Same concept at =E2=80=9Cfetch repack=E2=80=9D, but happens during garb=
+age collection
+> > instead. The traversal is more expensive since we no longer have access
+> > to what was recently fetched so we have to traverse through all promiso=
+r
+> > packs to collect tips of =E2=80=9Cbad=E2=80=9D history.
+>
+> In other words, with the status quo, "git gc" that attempts to
+> repack "objects in promisor packs" and "other objects that did not
+> get repacked in the step that repack objects in promisor packs"
+> separately, it implements the latter in a buggy way and discards
+> some objects.  And fixing that bug by doing the right thing is
+> expensive.
+>
+> Stepping back a bit, why is the loss of C2a/C2b/C2 a problem after
+> "git gc"?  Wouldn't these "missing" objects be lazily fetchable, now
+> C3 is known to the remote and the remote promises everything
+> reachable from what they offer are (re)fetchable from them?  IOW, is
+> this a correctness issue, or only performance issue (of having to
+> re-fetch what we once locally had)?
+
+My first thought is that from both the user and developer perspective,
+we don't expect our reachable objects to be gc'ed. So all of the "bad
+state" solutions work to ensure that that isn't the case in some way or
+form. However, if it turns out that all of these solutions are much more
+expensive and disruptive to the user than accepting that local objects
+can be gc'ed and JIT refetching, then the latter seems much more
+palatable. It is inevitable that we take some performance hit to fix this
+problem and we may just have to accept this as one of the costs of
+having partial clones to begin with.
+
+>
+> > Cons: Packing local objects into promisor packs means that it is no
+> > longer possible to detect if an object is missing due to repository
+> > corruption or because we need to fetch it from a promisor remote.
+>
+> Is this true?  Can we tell, when trying to access C2a/C2b/C2 after
+> the current version of "git gc" removes them from the local object
+> store, that they are missing due to repository corruption?  After
+> all, C3 can reach them so wouldn't it be possible for us to fetch
+> them from the promisor remote?
+
+I should be more clear that "detecting if an object is missing due to
+repository corruption" refers to fsck currently not having the
+functionality to do that. We are "accidentally" discovering the
+corruption when we try to access the missing object, but we can
+still fetch them from the promisor remote afterwards.
+
+> After a lazy clone that omits a lot of objects acquires many objects
+> over time by fetching missing objects on demand, wouldn't we want to
+> have an option to "slim" the local repository by discarding some of
+> these objects (the ones that are least frequently used), relying on
+> the promise by the promisor remote that even if we did so, they can
+> be fetched again?  Can we treat loss of C2a/C2b/C2 as if such a
+> feature prematurely kicked in?  Or are we failing to refetch them
+> for some reason?
+
+Yes if such a feature existed, then it would be feasible and a possible
+solution for this issue (I'm leaning quite towards this now after testing
+out some of the other designs).
