@@ -1,145 +1,171 @@
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FE21E0E11
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 21:55:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B124F185923
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 21:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728424558; cv=none; b=iIYE1lN/QPW9uCwuflk5mWlZPQI1IWi6rBgKEAuMisuaCdfWcVyyAN5FIHWmvhAjSAMla0khzqXR8mP3j4ZWZdWq5UpEJr7PA2rMScKBu6n7QdfCYWyS/q4JHMVn06kwTh/ZCsqJhhgbf+S9/dDAnUos1uxrC/UT0EijpX4JaXc=
+	t=1728424668; cv=none; b=ICEoqmK8ud6iji/qPqIIrYhGpa3hKoQ+KSHtvbwNr9b+jhrtZxbtdYIswAVpIDcC8pXgoJ+H8yikT81Hky5L9WxuDuVgUyGhl97LBik2AXzSeV5DcbNIjE0I40l8WmKD83xXQFWwjhCTbAJl/iNOVCUp44aLHUu60RpMonA1iSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728424558; c=relaxed/simple;
-	bh=Bzbsk49xrWLH+AumyruGZyqAoPmlrub4PoJ0dM4Cp9E=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OTcEZQQ+0YbNviOoWtdvrEAFN5A1+ce1qBu8h8079d1zL9MVAhANRY9cHS/jQ+u8fZdI7S+CE/fLc7ZHPgn77bep3l8FujxefhcmJZ5jbmlYFz854WXVPg4fSblgoRC6XtmS22S25Cb0u5E1cGbXlfEkqJ93SD1V8lB/L0holNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=JRuaYltX; arc=none smtp.client-ip=185.70.43.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1728424668; c=relaxed/simple;
+	bh=ePxIpvfBqtmuu66vEtn7fHHrt0ummLxjUfPddBJ9bQQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dPJAGDn7Me3E3z/Ix3NupAP81lChmvtn2mfaEykBtz6pt7Mmk0UKktpNTwKxwR+YEGM00WdzcqVJxRqytP9Cxz2EyoF/HG3Y0NxHWcLJSxn9HSl+H/7UdzSL6G4FLW72mFODtJ6NMs3W5I02SOFmOrPHXXiUq0nsCnsfyoJlBD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JCQBhdNK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I8iM/9kI; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="JRuaYltX"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728424548; x=1728683748;
-	bh=Bzbsk49xrWLH+AumyruGZyqAoPmlrub4PoJ0dM4Cp9E=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=JRuaYltXtynDFeD0ZI+/YueNWAK5xRgz6rMJOtChBkmtJOwsxjrnn7zM8ZiYzxnrr
-	 XShITSMWHJAuTg+zBsis+64ljHz3C2MpHH6SIqrgvFb2FRQ1TbhCtAhutcTaeszn03
-	 1EE3ZyQa1nz7ELIQxQottee1HYnHNfnYsJk5osU7Tba/Y7cXRlAqEuGujQ70yYZggs
-	 06oBij94Kg5EDFtvgrsxpgISLUbOEtWLJ/Qu2GDewKJhyz9ECajmBKTYrLqzEN4XP+
-	 Qwv5NVaXWHV3OvPFidjE5QJB0ZfV7NOZl3Bx0R8aWhEhFqePgYp2YIjSftod/umRxE
-	 7nLK8NwurX+Fw==
-Date: Tue, 08 Oct 2024 21:55:45 +0000
-To: Junio C Hamano <gitster@pobox.com>
-From: Caleb White <cdwhite3@pm.me>
-Cc: Caleb White via B4 Relay <devnull+cdwhite3.pm.me@kernel.org>, git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 0/3] Link worktrees with relative paths
-Message-ID: <qBPeXsmRWeJG-VRJyU_75S-f6dZWTlXQx0PjXmc9FMOrciammmLNivZ6kRt3mWuWC9x9W65FeU2Qdc99VvXGccLtdxnMctxeJqN92g41l40=@pm.me>
-In-Reply-To: <xmqq5xq21kub.fsf@gitster.g>
-References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me> <xmqq5xq21kub.fsf@gitster.g>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 2351562814abfd7312f7ff7c8c4f3781ef605c26
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JCQBhdNK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I8iM/9kI"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9B16A138077B;
+	Tue,  8 Oct 2024 17:57:44 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 08 Oct 2024 17:57:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728424664; x=1728511064; bh=3ufFQQYDiS
+	fYnd1F1/m/2cA4aul2u10W+q/B93cQxAE=; b=JCQBhdNKLYcoGPQEvVkvM9xmB1
+	pnWXK0PKXANY+EPHkvkkjJ7WStUOCEcKjw0U4oJZzhkGOFAU8J8bNAF+I/iKADV3
+	t4ue+u6Q25v+CMIwjP8Ghe+0knU85OKY0Lk23CH6Pvjyn/rGtkALDuUjo7Qm0GpM
+	cKM92qrcQyy8xEUmMuY7h09Sot+Z0ClgykCm+8OiJKYsZ2ayz3jHhTGZ22noPDny
+	fvUtPnb7grNQQgZcB6afd0I8Lyhfa+LHo2ASZgzqUq6NWVpNGt/DU3NxdnuhtQQ/
+	mr+34vlYjnispzsZHqbvogKFSsv9OsGVzViiHAeNXntxfQrLsNwRTxZa6+oA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728424664; x=1728511064; bh=3ufFQQYDiSfYnd1F1/m/2cA4aul2
+	u10W+q/B93cQxAE=; b=I8iM/9kI0i0LUD1HYBQkPSNTDG3gNfnMwO4LRuih8Ok8
+	B4eyppVQKL6rap46IaU/X+4JWcSwPCYCZe25Bdj86mo14PtA9gsthcbINTOQ1dfy
+	S3ucJxdGBmSrwiaVQEnAQ0OZbEVOyS+6kvM31Lwitmgzh7rcVVifCTDZYI53G1ch
+	LgdQhIoq7E9Rdm74BX8tOnxJvkQelIknq5+Mxi3lPtWkqFJETTwFcQ6E8qKxM9jP
+	NWB5KZwYQlnWZ7XGD8yKaG9+7ggjH4iiNKMdeWEcO/ATvGy2AE6Vr5iijbhTQ+3x
+	tuc30xwxlqvR9mU+ODFciZ45pS/Uq8FTEovgQYVxmQ==
+X-ME-Sender: <xms:2KoFZ6r2P4frmxcUyOX78XStxie07o7qDkPzAU7h1Up-w-PGI4b6jw>
+    <xme:2KoFZ4rehib6JzDOQQZXUZyteTfrUoP8yqSFsEMosDTP8sp_o8JNLhYn974g5PwRX
+    _hbrcY2jhjl4Y7clA>
+X-ME-Received: <xmr:2KoFZ_MU9V3PGvi8vTmC4nOYIrVxCBIY0EP3xWEWXJAyKDUxgbpeAtLxTq3ZoazEy1pM0yev4512EG7WYepIXrb9JrXNL-dijkINTts>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefvddgtdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeettd
+    dtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeeludenucffohhm
+    rghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephhgrnhihrghnghdrth
+    honhihsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtg
+    homhdprhgtphhtthhopehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtghomhdp
+    rhgtphhtthhopehsohhktggvvhhitgesghhoohhglhgvrdgtohhmpdhrtghpthhtohepph
+    hhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:2KoFZ56pE4E1bUaxBFfGTdbjw-1iYCxy8L2Efqj8axywPwUKqQuTWg>
+    <xmx:2KoFZ57wrj3BWbrDixlu65kqS5g9gkI-99KwWTP7tX7LkH1c4cB7OQ>
+    <xmx:2KoFZ5gDOca62ktuPxWH02Ka7o3revGZg6rOPuzSl79hbDkkcpmzEA>
+    <xmx:2KoFZz6pPjLGG_FZQrrRJ5nm08wLmdR0ig7qY_urcey5jZ12FQXCtg>
+    <xmx:2KoFZ0Yf7V7GiZdz_L2EE_RYskSu7Ig-uUDDuyVOkXKyTpTzG4SjMdnD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Oct 2024 17:57:44 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: git@vger.kernel.org,  calvinwan@google.com,  jonathantanmy@google.com,
+  sokcevic@google.com,  phillip.wood123@gmail.com
+Subject: Re: [PATCH v2 0/3] repack: pack everything into promisor packfile
+ in partial repos
+In-Reply-To: <20241008081350.8950-1-hanyang.tony@bytedance.com> (Han Young's
+	message of "Tue, 8 Oct 2024 16:13:47 +0800")
+References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
+	<20241008081350.8950-1-hanyang.tony@bytedance.com>
+Date: Tue, 08 Oct 2024 14:57:42 -0700
+Message-ID: <xmqq4j5mz295.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------9434b4e8982e1b379ba67a9e552c5cb5b288a501651a4048d7a6996e872efa09"; charset=utf-8
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------9434b4e8982e1b379ba67a9e552c5cb5b288a501651a4048d7a6996e872efa09
-Content-Type: multipart/mixed;boundary=---------------------8a9fb28e7ab498d1eba2c468e2867956
+Han Young <hanyang.tony@bytedance.com> writes:
 
------------------------8a9fb28e7ab498d1eba2c468e2867956
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+> As suggested by Jonathan[1], there are number of ways to fix this issue.
+> We have already explored some of them in this thread, and so far none of them
+> is satisfiable. Calvin and I tried to address the problem from fetch-pack side
+> and rev-list side. But the fix either consumes too much CPU power or results
+> in inefficient bandwidth use.
+>
+> So let's attack the problem from repack side. The goal is to prevent repack
+> from discarding local objects, previously it is done by carefully
+> separating promisor objects and normal objects in rev-list.
+> The implementation is flawed and no solution have been found so far.
+> Instead, we can get ride of rev-list and just pack everything into promisor
+> files. This way, no objects would be lost.
+>
+> By using 'repack everything', repacking requires less work and we are not
+> using more bandwidth.
 
-On Tuesday, October 8th, 2024 at 14:00, Junio C Hamano <gitster@pobox.com>=
- wrote:
+OK, perhaps.
 
-> Caleb White via B4 Relay devnull+cdwhite3.pm.me@kernel.org writes:
-> =
+> Packing local objects into promisor packfiles means that it is no longer
+> possible to detect if an object is missing due to repository corruption
+> or because we need to fetch it from a promisor remote.
 
+Is it true that without doing this, we can tell between these two
+cases, though?  More importantly, even if it is true, would there be
+a practical difference?
 
-> > - Rebased onto 20240923075416.54289-1-ericsunshine@charter.net
-> > ...
-> > base-commit: 4ec4435df758668055cc904ef64c275bc8d1089b
-> > change-id: 20241007-wt_relative_paths-88f9cf5a070c
-> > prerequisite-message-id: 20240923075416.54289-1-ericsunshine@charter.n=
-et
-> > prerequisite-patch-id: 78371f4dbb635e6edab8c51ee7857b903e60df8f
-> =
+In the sample scenario used in [1/3] where you created C2/T2/B2 on
+top of C1/T1/B1 (which came from a promisor remote), somebody else
+built C3/T3/B3 on top, and it came back from the promisor remote,
+you could lose 3's objects and 1's objects and they can be refetched
+but even if you lose 2's objects, since 3's objects are building on
+top of them, you should be able to fetch them from the promisor
+remote just like objects from 1 and 3, no?  So strictly speaking,
+missing 2's objects may be "repository corruption" while missing 1's
+and 3's objects may not be, would there be a practical use for that
+information?
 
+> Promisor objects packing does not benefiting from the history and
+> path based delta calculation, and GC does not remove unreachable promisor
+> objects. By packing locally created normal objects into promisor packfile,
+> normal objects are converted into promisor objects. However, in partial cloned
+> repos, the number of locally created objects are small compared to promisor
+> objects. The impact should be negligible.
 
-> =
+> [1] https://lore.kernel.org/git/20240813004508.2768102-1-jonathantanmy@google.com/
+>
+> *** Changes since v1 ***
+> Added tradeoffs in cover letter.
+> Fixed some partial clone test cases.
+> Updated partial clone documentation.
 
+These patches are based on the tip of master before 365529e1 (Merge
+branch 'ps/leakfixes-part-7', 2024-10-02), which will give mildly
+annoying conflicts when merged to 'seen'.
 
-> It is more common on this list to explain how the base was prepared
-> in the cover letter, something like:
-> =
+I've managed to apply and then merge, so unless review discussions
+find needs for updates, there is no need for immediate reroll, but
+if you end up having to update these patches, it is a good idea to
+rebase the topic on top of v2.47.0 that was released early this
+week, as we are now entering a new development cycle.
 
-
-> The patch was built on the result of merging the
-> es/worktree-repair-copied topic, i.e. 992f7a4f (worktree: repair
-> copied repository and linked worktrees, 2024-09-23), to v2.47.0.
-> =
-
-
-> To help those who are reading from sidelines, the above may need
-> some deciphering, as the patches as posted do not cleanly apply to
-> the base-commit 4ec4435df, which is 777489f9 (Git 2.47, 2024-10-06).
-> =
-
-
-> $ git grep '<2024092307...charter.net>' notes/amlog
-> =
-
-
-> =
-
-
-> finds that the message resulted in 992f7a4f (worktree: repair copied
-> repository and linked worktrees, 2024-09-23). So the right base to
-> apply them is obtained by checking out the v2.47.0 and then merging
-> the es/worktree-repair-copied topic (which is a single commit topic
-> with the 992f7a4f on it).
-> =
-
-
-> $ git checkout --detach 4ec4435df758^0
-> $ git merge --into cw/worktree-relative es/worktree-repair-copied
-> $ git am -s ./+cw-worktree-relative-3-patch-series
-
-Ah, thank you, I'll make preparing the base more clear in the next revisio=
-n.
-This is just how b4 tracks things so it knows how to apply the deps.
-
-> And of course the series applied cleanly ;-) I haven't read them
-> yet, though.
-
-That's good to hear :)
+Thanks.
 
 
------------------------8a9fb28e7ab498d1eba2c468e2867956--
-
---------9434b4e8982e1b379ba67a9e552c5cb5b288a501651a4048d7a6996e872efa09
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsBzBAEBCAAnBYJnBapSCZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
-28viAACx/wf+IU7KwNGFPbCUIHFY+7+H8a4WWLba4yxrJsUzPwXly/+nF6BO
-11iCnbKd2ZVj1FIAfZJ0QQ6wn8x2omRP3yY9nsU/Bg/rMljGl0fuwUeyaPE8
-AQLCJ2mFV6PR7k8OTF93O3uXw187+OPQtDB3lgltmFDLpiTWc6D+JnBQ+FE3
-yYfVgtb/ipZtksVlA/pALNHxSjKHq1Mdnc8pYNzMisvabIw3JmAaM4bwGxHZ
-5LeAZDd9hdMabkEKvM7fCecCRQzi+88AqQ4iYNRrNm2FXGRapBR4U1MSFdq+
-HnJKmPBT2aSh2E2L+in/m9iwb3OpQXUsp15XsMhmjwuzXp9KTgjF/g==
-=S1EV
------END PGP SIGNATURE-----
-
-
---------9434b4e8982e1b379ba67a9e552c5cb5b288a501651a4048d7a6996e872efa09--
-
+>
+> Han Young (3):
+>   repack: pack everything into packfile
+>   t0410: adapt tests to repack changes
+>   partial-clone: update doc
+>
+>  Documentation/technical/partial-clone.txt |  16 +-
+>  builtin/repack.c                          | 257 ++++++++++++----------
+>  t/t0410-partial-clone.sh                  |  68 +-----
+>  t/t5616-partial-clone.sh                  |   9 +-
+>  4 files changed, 157 insertions(+), 193 deletions(-)
