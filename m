@@ -1,127 +1,126 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E6E212EE0
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 19:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525B318C922
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 19:02:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728414017; cv=none; b=fDGguc8V5ekZxnJYvOuSlJL8XgDl9+Qqa2Jz4WFv/TP533oJcglXw7WUBxdPNebQqstavKdA49zTTvi8nJKUJaOmT8UnrZWCovSrdik+D3Ex0A/3O6uz1hXNvsfwJwAtfNtuDQgEcgkEPjxXupYVjpRa1L8JOP0flJmDZxX86d0=
+	t=1728414157; cv=none; b=Vwpnad/g2SQWMQdr9pOKb9TbdKyOpbMwgFCJkvl66yjdIsTOlUTRQfpU+miRkNMEQTP3NHRp9RZmssB7EtLoPRapoi/XCfgPOpFx1CD1FDOsnDUd72LuppHlzxqdsDFxL9vfUf6pDXxPS1BvNHfifwW9wW72nbHVKR3L159jkbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728414017; c=relaxed/simple;
-	bh=jwSXkHqn3r4gepXwr5ZXoaDD1OfuEwY+KAfic4vTDQM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=as3mP7vKyzjnx2vfzDK5b3I47o82jumiNa+hA42juBX/YH39yPC70ho04jzSek3Vng+ZzTEXuRKuw+MeRLYitRTPA4dZH11JdzzjF9HYfGwYYzaJz/eFKbBjJTYcET3DOX/vU5P3Zsjlr4UlGoFTEYuyYj56wUK4zTx9S6OVGKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wPEnCjzV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jvS+vba5; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728414157; c=relaxed/simple;
+	bh=KH/7LOHidpKT5WwfpCT0Vb0CB+NHBpbC2GMMyavyljo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gprFFGWo6aSIRGi6n6uf4CR8iDqwJQkyPYpkmzVWUWi9rUNxNlbYKJmgJPK5TXg+llRuDG2t4jWYrPPTRTpKS2TIZGUjdoPL2sTbggAvpGvt2pjcNFStsUXBx0ikWFiDpncDU4R71+wWIqxRLOvGxJXeEawKHi/jJpkOzJyqErQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Xoemc+/C; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wPEnCjzV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jvS+vba5"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 480D611401FB;
-	Tue,  8 Oct 2024 15:00:14 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 08 Oct 2024 15:00:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728414014; x=1728500414; bh=njk0POJ3vF
-	hMElEUsS1FzaEh8xQthRwACMtd6ipajsI=; b=wPEnCjzV3Qm7aG6TUe2De9OGbf
-	IoBx5JVpFaXGv2+/d8NlQzRR7Vi5P6BD6Zsj1OC39F2Lv5+5yjm/Otg8mLjwCdtj
-	M3VXrzoMan0L1m/+5JUwQBPFWcH/WB5t9B5xf9iLifrdY5jgBsq/ZMCa4Kf40VDx
-	bjx9kiHtfqDPs6Gu8D3vvI50Bdlfwbx979P9WaquA0gKgCJOiSGNrqUQPLMOh3ku
-	oDlrvxYYoy9tFkGFDI/V+KHvvm7PPqQWBEhYjLVlTRMUsJ4O42TkCQtpH+r53qeJ
-	JRRHattF5miFvIRzs3Vu+SYkzcPpDI+9PBnbUuqawWXBNWO4nYyah9XRi5BQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728414014; x=1728500414; bh=njk0POJ3vFhMElEUsS1FzaEh8xQt
-	hRwACMtd6ipajsI=; b=jvS+vba5EeER1PNDgiuJIiflFMc90EZXtahgurRynSLi
-	ONBo7PEBmBCKDpfzERVDVT2Eat+apFKelWAHrj1SJau0X86h6Uhtd7Ma9xw3HCIt
-	v7eZ9sBDub9hNbWToKg1MQ/kStfKb014+EswNtlIphY2Xg2J2G3xDHIEcoNW9/AE
-	XdFAut5hRPCCRpmRSG5m+IDAvzBqXLC4cJeOu64YtFxdoUrHTptpmjNc5newp/WI
-	jwe6G9+VLcJSLXnoEaLtkEk+tX+Eze98P/U/e+dvABME/taQWuvd3ymrxw2ytI4k
-	+yw+S8ZhtZzQ1Qnqziq0rd7CbC/PuZAya+awL8v8Rg==
-X-ME-Sender: <xms:PoEFZ4VKWRg3RBbsJtllIH3FWff-hGrSoy0-X2bz2x5bzQ1v_6XLCw>
-    <xme:PoEFZ8lUiudsfACrGwTjltUkGG-z-2EFBlDzkjd-SN59N3LKX5S0KJPxoLJE3-fYQ
-    ahM4PpF6c3DwikyWA>
-X-ME-Received: <xmr:PoEFZ8YHv0yKeY1ytl2YCHNYb5LUN9KewFCenO0aK1YrVTFhXFYBqVShvTmxXNyg7Xn4vh-XXQyqHWejdTHqLdmbh_PezdYJ2Kybcjs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefuddgudefvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeguvghvnhhulhhlod
-    gtugifhhhithgvfedrphhmrdhmvgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtugifhhhithgvfeesph
-    hmrdhmvgdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:PoEFZ3WfvXET9qgaSZSs6LpHJro9c7hVOGq5duiqVx1P1ivA5a7zvw>
-    <xmx:PoEFZynHH30_fSwl3koRGE0obNFWQweVMyyfFxTAmWzXJTg1LgL2qQ>
-    <xmx:PoEFZ8c-KXzpRiyOCRqvZjABtYx-EpQJELWxg1dZ7mb88IQHjfukEA>
-    <xmx:PoEFZ0EWCNDCp67PaGX3MvwM09MERdy1NP6F78RSnNXoFQLcj2H6iQ>
-    <xmx:PoEFZ5sGCkoJ4YHffkF8NB3FTnPdKL3TYJyEyuBLwSig-KOOY22mdP1s>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Oct 2024 15:00:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Caleb White via B4 Relay <devnull+cdwhite3.pm.me@kernel.org>
-Cc: git@vger.kernel.org,  Caleb White <cdwhite3@pm.me>,  Eric Sunshine
- <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 0/3] Link worktrees with relative paths
-In-Reply-To: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me> (Caleb White
-	via's message of "Mon, 07 Oct 2024 22:12:29 -0500")
-References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me>
-Date: Tue, 08 Oct 2024 12:00:12 -0700
-Message-ID: <xmqq5xq21kub.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Xoemc+/C"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1728414152;
+	bh=KH/7LOHidpKT5WwfpCT0Vb0CB+NHBpbC2GMMyavyljo=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=Xoemc+/C06fqHY4NG3OJP2s+i/gLiJrCablM8iKEGCz9B7h2BPeBBgA6y9czIIvab
+	 fSQLq26e/FT2mlq8bvGD8QTaAjB0CTqj29o7pCx7mfBaa/tPIbFs6eQPtxLEb8m57c
+	 aZrxJUURAxTUGXHuOF2jjitlHZ84aIKyinUqZdRpBIaL2RQOeRqfo5ChmlAOg1Ezar
+	 nAbhEl+ddaxt/bcoXISVw1OM2cZawdgWgZs87jTEtjtG2OWcQvjuLQYzb3yWBh8JoG
+	 sNd4G7g4P2d+KYQkp7cyJjDFZpTMUHgoq1Nqlmz9G9GnA6/g09U1rFOrsp0GWwk0z8
+	 SAzNS0MSk6hQLbM4yDAZ7/orGRMJHSren7I2bCmmr3gz7vuBZehmvUwZEq3YyaNjQi
+	 g2AIEs+ytjrPCp0cRpyLFVJU8XlSjeaHgV1Pa/y5OWmP54pYUzwbWOU5RTse/X0Kd7
+	 HAmP7gyuV9wQDwj++10nahzT/98DWMGHgGhkhCgEG59y1cuJ8Gl
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id EF38520081;
+	Tue,  8 Oct 2024 19:02:32 +0000 (UTC)
+Date: Tue, 8 Oct 2024 19:02:31 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Spencer Fretwell <spencer.fretwell@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Verbose Commit Ignore Line Fails via CRLF Line Endings
+Message-ID: <ZwWBxy-wx6bn5tYz@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Spencer Fretwell <spencer.fretwell@gmail.com>, git@vger.kernel.org
+References: <CABa71ByU_9g_6OgJ9PsoQ99oyMspucTBqO-RkB_2W4smTr2RNw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="nrY/S4EJ4EYFM7xV"
+Content-Disposition: inline
+In-Reply-To: <CABa71ByU_9g_6OgJ9PsoQ99oyMspucTBqO-RkB_2W4smTr2RNw@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Caleb White via B4 Relay <devnull+cdwhite3.pm.me@kernel.org> writes:
 
-> - Rebased onto 20240923075416.54289-1-ericsunshine@charter.net
-> ...
-> base-commit: 4ec4435df758668055cc904ef64c275bc8d1089b
-> change-id: 20241007-wt_relative_paths-88f9cf5a070c
-> prerequisite-message-id: <20240923075416.54289-1-ericsunshine@charter.net>
-> prerequisite-patch-id: 78371f4dbb635e6edab8c51ee7857b903e60df8f
+--nrY/S4EJ4EYFM7xV
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It is more common on this list to explain how the base was prepared
-in the cover letter, something like:
+On 2024-10-08 at 18:30:53, Spencer Fretwell wrote:
+> gc -v produces CRLF file which does not ignore verbose description.
 
-    The patch was built on the result of merging the
-    es/worktree-repair-copied topic, i.e. 992f7a4f (worktree: repair
-    copied repository and linked worktrees, 2024-09-23), to v2.47.0.
+I'm not sure what software you're suggesting here, but we don't
+distribute any software called "gc".  I can't imagine `git gc` is
+affecting anything here.  Is this maybe an alias for `git commit` or
+something else?  (I'm going to assume so below.)  If so, do you see the
+problem with a plain `git commit -v`?
 
-To help those who are reading from sidelines, the above may need
-some deciphering, as the patches as posted do not cleanly apply to
-the base-commit 4ec4435df, which is 777489f9 (Git 2.47, 2024-10-06).
+> OSX + git-annex (pre-commit hook disabled just in case)
+> using subl -w (sublime text 4) as editor, which indicated the change
+> in line endings
+> - committing as Unix fixes the issue (workaround, tedious)
+> - leaving as Windows is the issue
+>=20
+> see attached bugreport
 
-    $ git grep '<2024092307...charter.net>' notes/amlog
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>=20
+> - gc -v
+>=20
+> What did you expect to happen? (Expected behavior)
+>=20
+> - line endings respect OS
+> - gc without -v uses Unix line endings
+> - line ending is visible in sublime (editor =3D subl -w)
 
-finds that the message resulted in 992f7a4f (worktree: repair copied
-repository and linked worktrees, 2024-09-23).  So the right base to
-apply them is obtained by checking out the v2.47.0 and then merging
-the es/worktree-repair-copied topic (which is a single commit topic
-with the 992f7a4f on it).
+Does this happen if you use a different editor as well, such as vi or
+nano?  I don't see this on a Linux system with `git commit -v` using
+Neovim.
 
-    $ git checkout --detach 4ec4435df758^0
-    $ git merge --into cw/worktree-relative es/worktree-repair-copied
-    $ git am -s ./+cw-worktree-relative-3-patch-series
+Also, if you do see this problem when you open the editor, can you leave
+the editor as it is (don't save or modify the file), and change into
+another terminal window and use something like `xxd -g` or `od -tx1` to
+see if `.git/COMMIT_EDITMSG` has CRLF pairs (that should show up as `0d
+0a`) or just LF (plain `0a`)?
 
-And of course the series applied cleanly ;-)  I haven't read them
-yet, though.
+The reason I ask this is that I'm wondering if maybe there's a
+configuration of your editor that's causing it to switch into a special
+diff mode with `git commit -v` that it thinks should have CRLF endings.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-Thanks.
+--nrY/S4EJ4EYFM7xV
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZwWBxwAKCRB8DEliiIei
+gW0HAQDTgO7aTIYKifdVsNR7hSnHVDDTl4ts0u0g2GBY55Uw5gEAxXa86OQq7tsA
+QAE3sbfDVjqoaCQSiR/ky+/m1mo7+AA=
+=pgwq
+-----END PGP SIGNATURE-----
+
+--nrY/S4EJ4EYFM7xV--
