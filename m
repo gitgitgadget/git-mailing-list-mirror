@@ -1,41 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A111E0DAE
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 08:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770A01CDFDA
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 08:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728376286; cv=none; b=DIRBh9q3GrVK+64e+8scAz4rc1Zm15cOuZ1SV2aXpvST8cnV5BLGH0Ih86vah+Wb3uYgM5YH6oLDc9aE0zW5TRRo9NHzaN5ekwu+/UqeBGPFC6KnM6cN2zJtBmUoEEQEGHkKkgAfiK8e2zpxkDc7Du2rDoSuPjO7gEwXmxuI0Tw=
+	t=1728376431; cv=none; b=mL9hkTdaayBPwDl2mokxdWuI3qfChjHuw3KOXpXaqPk2n97eEdcXT0l421eYHRfZcbfj29S1so5yCF1zZLumFVnJV16LsZVWF3ScYr9tS1k7JxRw/Lfx/VrXtkTFoNzv8i18w35DECLZkC6nx2pczcqcc3Rc5tbwVd9PqBnMv1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728376286; c=relaxed/simple;
-	bh=su3kEhsV1MyM6pS0qI0EpvN1yFbt1DBn3Csu2ITi0Eg=;
+	s=arc-20240116; t=1728376431; c=relaxed/simple;
+	bh=xIYSBvmsBjjFey2cWpyRpdlWlpyr+yPeObaeRXwCFnw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NycdbV2czoQJEGLro9aNbcbuKrI8DUnwt6HbWHc/Jb1kIJrLZIjkmX8suMQbugYhPc7xN2aNTJJ0NVtl13fYFaXdJVTJGt6IZZpFPC+oqCAoxN5tDEoMPBvpdaShhmf0KpBLeSLFqwXpgmQO1pF/0ugjUP6E+KJlP8adeBDJm4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=P5qDkT7o; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=oWEObssXAGSizYmpckq6URWfbyyVOQ4H915AftA0mz/XHnXc1am0qVuck2lUaLbfMEl8ZkwK21+yXTll3zvf+NYoxlcsG4+UY2HdoOOTaC736gxyBKjBtH5ml72nDAF2OUBwXRObRsdbGG7Y71485DvUGwOVoVbMrBxkub72TZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SsXNVNcr; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="P5qDkT7o"
-Received: (qmail 9567 invoked by uid 109); 8 Oct 2024 08:31:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=su3kEhsV1MyM6pS0qI0EpvN1yFbt1DBn3Csu2ITi0Eg=; b=P5qDkT7oN0XwsJ0umEkh6gE3m/pWYRSKtRakX/AQAY4Cw18n4KGTFS17XlYK/M+2zzhdsJFOWjI07zyQ+0HiQzBJ2+sbPSh/himC54wLJLR0y0M/8IiG7dX/XsaFNCfyv7V8DjcG0kFwfSQC0M3uZ4zzToQCNhjZH/GRZE5UsJ+7JiO58mzGpkWBbxNl7EuB6BVvbARgr8Q3jSeBNqai0LAmP/5msJeyuFReX8IFXrC7LCGHE9HNaiqZcSE9CaKUMwm4MNMfeidxXKkNCdt3Xmr8pDeUXT3I2/YDgmD7UrauE4ywcBwP1WI2yndeU9ZN//yv+/h8V15Idrn73UUgtg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SsXNVNcr"
+Received: (qmail 9579 invoked by uid 109); 8 Oct 2024 08:33:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xIYSBvmsBjjFey2cWpyRpdlWlpyr+yPeObaeRXwCFnw=; b=SsXNVNcrpdo1z7hiRlj2mNkAIV9x9yM0Iu4KFIUFhBwTlFS78y5gCcLOlYIw/qZ+XUbfJmfByOFo/Oiwdg9ZGPQFgohcoDCgVtgYUvNLdKoQJ4S+48KICCnDlX4fd8HyycCWPV42/B5y0GpmnukINovBJuhm8Tabk7VYneWg0Z5TjnQebmJAGPORKyfcBILEtkr4VrBw4JXGvu9aUmiqdijzku9Zb+JwAAUu5UwRywEbqG0h36AHjhyFy52VtWPO2mN5JvcCffOJARwi2abHn59Q5lq9wJoPQ0dcmEadAMralDdrUbDaJsXlgJGxO5jJwWr3czCRRBxJWjDlDttXtg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 08 Oct 2024 08:31:22 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 08 Oct 2024 08:33:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15751 invoked by uid 111); 8 Oct 2024 08:31:22 -0000
+Received: (qmail 15767 invoked by uid 111); 8 Oct 2024 08:33:48 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 08 Oct 2024 04:31:22 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 08 Oct 2024 04:33:48 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 8 Oct 2024 04:31:21 -0400
+Date: Tue, 8 Oct 2024 04:33:47 -0400
 From: Jeff King <peff@peff.net>
 To: Koji Nakamaru <koji.nakamaru@gree.net>
 Cc: Koji Nakamaru via GitGitGadget <gitgitgadget@gmail.com>,
 	git@vger.kernel.org
-Subject: [PATCH 0/2] alternate approach to fixing fsmonitor hangs
-Message-ID: <20241008083121.GA676391@coredump.intra.peff.net>
-References: <pull.1804.git.1727862424713.gitgitgadget@gmail.com>
- <20241007055821.GA34037@coredump.intra.peff.net>
- <20241007060813.GA34827@coredump.intra.peff.net>
- <CAOTNsDwwikiX3u6DG=+4hn+mcgfXzzDoqR3ZFVEdGi=mPGQbpg@mail.gmail.com>
+Subject: [PATCH 1/2] simple-ipc: split async server initialization and running
+Message-ID: <20241008083347.GA1210958@coredump.intra.peff.net>
+References: <20241008083121.GA676391@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,49 +41,307 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAOTNsDwwikiX3u6DG=+4hn+mcgfXzzDoqR3ZFVEdGi=mPGQbpg@mail.gmail.com>
+In-Reply-To: <20241008083121.GA676391@coredump.intra.peff.net>
 
-On Mon, Oct 07, 2024 at 06:45:22PM +0900, Koji Nakamaru wrote:
+To start an async ipc server, you call ipc_server_run_async(). That
+initializes the ipc_server_data object, and starts all of the threads
+running, which may immediately start serving clients.
 
-> > -     pthread_mutex_lock(&server_data->work_available_mutex);
-> > +     /* If we haven't started yet, we are already holding lock. */
-> > +     if (!server_data->started)
-> > +             pthread_mutex_lock(&server_data->work_available_mutex);
-> >
-> >       server_data->shutdown_requested = 1;
-> 
-> Is this condition inverted?
+This can create some awkward timing problems, though. In the fsmonitor
+daemon (the sole user of the simple-ipc system), we want to create the
+ipc server early in the process, which means we may start serving
+clients before the rest of the daemon is fully initialized.
 
-Yes, good catch.
+To solve this, let's break run_async() into two parts: an initialization
+which allocates all data and spawns the threads (without letting them
+run), and a start function which actually lets them begin work. Since we
+have two simple-ipc implementations, we have to handle this twice:
 
-> > I had also previously checked my suggested solution. So I do think
-> > either is a valid solution to the problem.
-> 
-> I also tested your approach on Windows with a few additions to
-> ipc-win32.c, and it worked correctly.
+  - in ipc-unix-socket.c, we have a central listener thread which hands
+    connections off to worker threads using a work_available mutex. We
+    can hold that mutex after init, and release it when we're ready to
+    start.
 
-Yeah, I never even tried building mine on Windows, and was just testing
-via tmate on our macOS CI environment. :-/
+    We do need an extra "started" flag so that we know whether the main
+    thread is holding the mutex or not (e.g., if we prematurely stop the
+    server, we want to make sure all of the worker threads are released
+    to hear about the shutdown).
 
-I've added in the necessary Windows bits, along with smoothing a few
-rough edges. Especially with the extra Windows changes (which I mostly
-had to guess-and-check by pushing to CI), I'm beginning to wonder if my
-solution isn't getting a bit too complicated, and maybe yours was the
-right way after all.
+  - in ipc-win32.c, we don't have a central mutex. So we'll introduce a
+    new startup_barrier mutex, which we'll similarly hold until we're
+    ready to let the threads proceed.
 
-But I've cleaned it up for presentation here, so at least we can look at
-the final form of both and see which we prefer.
+    We again need a "started" flag here to make sure that we release the
+    barrier mutex when shutting down, so that the sub-threads can
+    proceed to the finish.
 
-  [1/2]: simple-ipc: split async server initialization and running
-  [2/2]: fsmonitor: initialize fs event listener before accepting clients
+I've renamed the run_async() function to init_async() to make sure we
+catch all callers, since they'll now need to call the matching
+start_async().
 
- builtin/fsmonitor--daemon.c          |  6 ++--
- compat/fsmonitor/fsm-listen-darwin.c |  6 ++++
- compat/fsmonitor/fsm-listen-win32.c  |  6 ++++
- compat/simple-ipc/ipc-shared.c       |  5 +--
- compat/simple-ipc/ipc-unix-socket.c  | 28 +++++++++++++---
- compat/simple-ipc/ipc-win32.c        | 48 +++++++++++++++++++++++++---
- simple-ipc.h                         | 17 +++++++---
- 7 files changed, 98 insertions(+), 18 deletions(-)
+We could leave run_async() as a wrapper that does both, but there's not
+much point. There are only two callers, one of which is fsmonitor, which
+will want to actually do work between the two calls. And the other is
+just a test-tool wrapper.
 
--Peff
+For now I've added the start_async() calls in fsmonitor where they would
+otherwise have happened, so there should be no behavior change with this
+patch.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/fsmonitor--daemon.c         |  8 +++--
+ compat/simple-ipc/ipc-shared.c      |  5 +--
+ compat/simple-ipc/ipc-unix-socket.c | 28 ++++++++++++++---
+ compat/simple-ipc/ipc-win32.c       | 48 ++++++++++++++++++++++++++---
+ simple-ipc.h                        | 17 +++++++---
+ 5 files changed, 88 insertions(+), 18 deletions(-)
+
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index e1e6b96d09..4a077810d0 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -1208,13 +1208,15 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
+ 	 * system event listener thread so that we have the IPC handle
+ 	 * before we need it.
+ 	 */
+-	if (ipc_server_run_async(&state->ipc_server_data,
+-				 state->path_ipc.buf, &ipc_opts,
+-				 handle_client, state))
++	if (ipc_server_init_async(&state->ipc_server_data,
++				  state->path_ipc.buf, &ipc_opts,
++				  handle_client, state))
+ 		return error_errno(
+ 			_("could not start IPC thread pool on '%s'"),
+ 			state->path_ipc.buf);
+ 
++	ipc_server_start_async(&state->ipc_server_data);
++
+ 	/*
+ 	 * Start the fsmonitor listener thread to collect filesystem
+ 	 * events.
+diff --git a/compat/simple-ipc/ipc-shared.c b/compat/simple-ipc/ipc-shared.c
+index cb176d966f..d1c21b49bd 100644
+--- a/compat/simple-ipc/ipc-shared.c
++++ b/compat/simple-ipc/ipc-shared.c
+@@ -16,11 +16,12 @@ int ipc_server_run(const char *path, const struct ipc_server_opts *opts,
+ 	struct ipc_server_data *server_data = NULL;
+ 	int ret;
+ 
+-	ret = ipc_server_run_async(&server_data, path, opts,
+-				   application_cb, application_data);
++	ret = ipc_server_init_async(&server_data, path, opts,
++				    application_cb, application_data);
+ 	if (ret)
+ 		return ret;
+ 
++	ipc_server_start_async(server_data);
+ 	ret = ipc_server_await(server_data);
+ 
+ 	ipc_server_free(server_data);
+diff --git a/compat/simple-ipc/ipc-unix-socket.c b/compat/simple-ipc/ipc-unix-socket.c
+index 9b3f2cdf8c..57d919c6b4 100644
+--- a/compat/simple-ipc/ipc-unix-socket.c
++++ b/compat/simple-ipc/ipc-unix-socket.c
+@@ -328,6 +328,7 @@ struct ipc_server_data {
+ 	int back_pos;
+ 	int front_pos;
+ 
++	int started;
+ 	int shutdown_requested;
+ 	int is_stopped;
+ };
+@@ -824,10 +825,10 @@ static int setup_listener_socket(
+ /*
+  * Start IPC server in a pool of background threads.
+  */
+-int ipc_server_run_async(struct ipc_server_data **returned_server_data,
+-			 const char *path, const struct ipc_server_opts *opts,
+-			 ipc_server_application_cb *application_cb,
+-			 void *application_data)
++int ipc_server_init_async(struct ipc_server_data **returned_server_data,
++			  const char *path, const struct ipc_server_opts *opts,
++			  ipc_server_application_cb *application_cb,
++			  void *application_data)
+ {
+ 	struct unix_ss_socket *server_socket = NULL;
+ 	struct ipc_server_data *server_data;
+@@ -888,6 +889,12 @@ int ipc_server_run_async(struct ipc_server_data **returned_server_data,
+ 	server_data->accept_thread->fd_send_shutdown = sv[0];
+ 	server_data->accept_thread->fd_wait_shutdown = sv[1];
+ 
++	/*
++	 * Hold work-available mutex so that no work can start until
++	 * we unlock it.
++	 */
++	pthread_mutex_lock(&server_data->work_available_mutex);
++
+ 	if (pthread_create(&server_data->accept_thread->pthread_id, NULL,
+ 			   accept_thread_proc, server_data->accept_thread))
+ 		die_errno(_("could not start accept_thread '%s'"), path);
+@@ -918,6 +925,15 @@ int ipc_server_run_async(struct ipc_server_data **returned_server_data,
+ 	return 0;
+ }
+ 
++void ipc_server_start_async(struct ipc_server_data *server_data)
++{
++	if (!server_data || server_data->started)
++		return;
++
++	server_data->started = 1;
++	pthread_mutex_unlock(&server_data->work_available_mutex);
++}
++
+ /*
+  * Gently tell the IPC server treads to shutdown.
+  * Can be run on any thread.
+@@ -933,7 +949,9 @@ int ipc_server_stop_async(struct ipc_server_data *server_data)
+ 
+ 	trace2_region_enter("ipc-server", "server-stop-async", NULL);
+ 
+-	pthread_mutex_lock(&server_data->work_available_mutex);
++	/* If we haven't started yet, we are already holding lock. */
++	if (server_data->started)
++		pthread_mutex_lock(&server_data->work_available_mutex);
+ 
+ 	server_data->shutdown_requested = 1;
+ 
+diff --git a/compat/simple-ipc/ipc-win32.c b/compat/simple-ipc/ipc-win32.c
+index 8bfe51248e..a8fc812adf 100644
+--- a/compat/simple-ipc/ipc-win32.c
++++ b/compat/simple-ipc/ipc-win32.c
+@@ -371,6 +371,9 @@ struct ipc_server_data {
+ 	HANDLE hEventStopRequested;
+ 	struct ipc_server_thread_data *thread_list;
+ 	int is_stopped;
++
++	pthread_mutex_t startup_barrier;
++	int started;
+ };
+ 
+ enum connect_result {
+@@ -526,6 +529,16 @@ static int use_connection(struct ipc_server_thread_data *server_thread_data)
+ 	return ret;
+ }
+ 
++static void wait_for_startup_barrier(struct ipc_server_data *server_data)
++{
++	/*
++	 * Temporarily hold the startup_barrier mutex before starting,
++	 * which lets us know that it's OK to start serving requests.
++	 */
++	pthread_mutex_lock(&server_data->startup_barrier);
++	pthread_mutex_unlock(&server_data->startup_barrier);
++}
++
+ /*
+  * Thread proc for an IPC server worker thread.  It handles a series of
+  * connections from clients.  It cleans and reuses the hPipe between each
+@@ -550,6 +563,8 @@ static void *server_thread_proc(void *_server_thread_data)
+ 	memset(&oConnect, 0, sizeof(oConnect));
+ 	oConnect.hEvent = hEventConnected;
+ 
++	wait_for_startup_barrier(server_thread_data->server_data);
++
+ 	for (;;) {
+ 		cr = wait_for_connection(server_thread_data, &oConnect);
+ 
+@@ -752,10 +767,10 @@ static HANDLE create_new_pipe(wchar_t *wpath, int is_first)
+ 	return hPipe;
+ }
+ 
+-int ipc_server_run_async(struct ipc_server_data **returned_server_data,
+-			 const char *path, const struct ipc_server_opts *opts,
+-			 ipc_server_application_cb *application_cb,
+-			 void *application_data)
++int ipc_server_init_async(struct ipc_server_data **returned_server_data,
++			  const char *path, const struct ipc_server_opts *opts,
++			  ipc_server_application_cb *application_cb,
++			  void *application_data)
+ {
+ 	struct ipc_server_data *server_data;
+ 	wchar_t wpath[MAX_PATH];
+@@ -787,6 +802,13 @@ int ipc_server_run_async(struct ipc_server_data **returned_server_data,
+ 	strbuf_addstr(&server_data->buf_path, path);
+ 	wcscpy(server_data->wpath, wpath);
+ 
++	/*
++	 * Hold the startup_barrier lock so that no threads will progress
++	 * until ipc_server_start_async() is called.
++	 */
++	pthread_mutex_init(&server_data->startup_barrier, NULL);
++	pthread_mutex_lock(&server_data->startup_barrier);
++
+ 	if (nr_threads < 1)
+ 		nr_threads = 1;
+ 
+@@ -837,6 +859,15 @@ int ipc_server_run_async(struct ipc_server_data **returned_server_data,
+ 	return 0;
+ }
+ 
++void ipc_server_start_async(struct ipc_server_data *server_data)
++{
++	if (!server_data || server_data->started)
++		return;
++
++	server_data->started = 1;
++	pthread_mutex_unlock(&server_data->startup_barrier);
++}
++
+ int ipc_server_stop_async(struct ipc_server_data *server_data)
+ {
+ 	if (!server_data)
+@@ -850,6 +881,13 @@ int ipc_server_stop_async(struct ipc_server_data *server_data)
+ 	 * We DO NOT attempt to force them to drop an active connection.
+ 	 */
+ 	SetEvent(server_data->hEventStopRequested);
++
++	/*
++	 * If we haven't yet told the threads they are allowed to run,
++	 * do so now, so they can receive the shutdown event.
++	 */
++	ipc_server_start_async(server_data);
++
+ 	return 0;
+ }
+ 
+@@ -900,5 +938,7 @@ void ipc_server_free(struct ipc_server_data *server_data)
+ 		free(std);
+ 	}
+ 
++	pthread_mutex_destroy(&server_data->startup_barrier);
++
+ 	free(server_data);
+ }
+diff --git a/simple-ipc.h b/simple-ipc.h
+index a849d9f841..3916eaf70d 100644
+--- a/simple-ipc.h
++++ b/simple-ipc.h
+@@ -179,11 +179,20 @@ struct ipc_server_opts
+  * When a client IPC message is received, the `application_cb` will be
+  * called (possibly on a random thread) to handle the message and
+  * optionally compose a reply message.
++ *
++ * This initializes all threads but no actual work will be done until
++ * ipc_server_start_async() is called.
++ */
++int ipc_server_init_async(struct ipc_server_data **returned_server_data,
++			  const char *path, const struct ipc_server_opts *opts,
++			  ipc_server_application_cb *application_cb,
++			  void *application_data);
++
++/*
++ * Let an async server start running. This needs to be called only once
++ * after initialization.
+  */
+-int ipc_server_run_async(struct ipc_server_data **returned_server_data,
+-			 const char *path, const struct ipc_server_opts *opts,
+-			 ipc_server_application_cb *application_cb,
+-			 void *application_data);
++void ipc_server_start_async(struct ipc_server_data *server_data);
+ 
+ /*
+  * Gently signal the IPC server pool to shutdown.  No new client
+-- 
+2.47.0.427.g067ae60d0d
+
