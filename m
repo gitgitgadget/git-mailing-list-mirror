@@ -1,93 +1,107 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4197620ADC9
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 18:04:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049212940F
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 18:13:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728410659; cv=none; b=iIQP7VTk5cHYQLGtKJubnSgQCtz7z4GS5zZdtd2/1erf+Lb+GBVOn+BC7ulPnRhyUPDHp2D0iTLqpNlXx8U+hNlG8PRpaLd1PIbDbEvSDPh2DZo98GIclBKiS88C6oFzJdrbpFiO5p/fBDuDZHJxNHZdyjoQxQoVxNf/CQ88gAE=
+	t=1728411200; cv=none; b=neZUS6TzRomqzTd0BMHhnJV3XyzbxSP1zR0h4GukrOg6Y68sCS6oEcntTktHUPHSs9O0KBstKkDAIDUS1fut1fG2cDgmaeJ7haCcOw2vJgiJbVe1a4uwt95d7nF9EhPswequWuwzJtjkL/j+fMXjOh3aBHNxzAceS6F/56pJBS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728410659; c=relaxed/simple;
-	bh=HE6uXc2O29EHRm7wg7yCQpPZRYnjmCUsM2gpOjvQd0c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B6TXKumE5VG2wl4OLwOYVsxNw6yNUztGV73Hf0yasT77DzE6fvIWMnURNXOcs2xdijoFlPezCjdZXJ3Z2jNYSv4xQLRMId2v5gBxMU7bRlaGeEJ4eqYA1NEIiINSC399UU5bD6X9fF24LLFYh1hYuJApllKMc7pejUI4cOZ1Z9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=isf6BNIh; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728411200; c=relaxed/simple;
+	bh=0qQsRA417i8PcGrs8JRHixNHPQYi0FMuMHNojCSZ86c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oWpJRD7xmMgFQySBEJtnz6njNDQOHOEKfeoBQQKIhKTMAytxToWlZorxGBeCozALmBl8dkH3j+Kv0rLJU845M8YCDTFSnDIexOMIeHZiyGOXprSp8BHLzREGTOcHbY3HYsFSU+hj/vInl5RbIaMtvw3e3U0OqWPx0CR2L7QvHds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sh9a3yz0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g6SHguHc; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="isf6BNIh"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5c896b9b3e1so8267696a12.2
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 11:04:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728410655; x=1729015455; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HE6uXc2O29EHRm7wg7yCQpPZRYnjmCUsM2gpOjvQd0c=;
-        b=isf6BNIhXfTCu2W6yc6SO47En6gbe7jOHXjyE/KV0Hxeix5itB50OZQInJTeCU6+jo
-         0OZ9XMRYoEGopDbZYwwfPAqAzFY4VVMS+Y6Fa4hI2F5Tm3/8eY6wkCleuLcg0qYLUzts
-         jOcQdz01aOiukJeLdtxXsFpMXBGcX95ArreuhZwtKz+v/QN7Zk8XaNcfHMiDhiKkcHhn
-         WcpTMRXEFnI6chG3wRJ8Z/+t/jszsBWihNWQPM9tyrOO2Z/sJ9RSxNsGO7++y7ibhHge
-         lwBtxtFg/VNYfK4w3xBigxzgbI4n5c0CVbBcrRo8zc1rWfq/RwVgEwAQR6qK5lYJxA9E
-         rnSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728410655; x=1729015455;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HE6uXc2O29EHRm7wg7yCQpPZRYnjmCUsM2gpOjvQd0c=;
-        b=Dblv0tDVRuZZc5k2FnA6PqrG+r1TpD85t4kIUd716que3D38I2Y/vLwjk92JCtOn7k
-         J/rgmkdUmJjaZce+63ExIfflP/3Z8zwqqzZiFSNcaNivIe/yLo7IAC9G7q3ybJv7kyQk
-         fmb2C73MGsjr/qRglNETyWdUiQRGAyF2ZOdy+ddMy8ZG0wwePY9FT54Vyt7WWhQ3UvSn
-         T6D9dKdQG1HRhFrwDdxl1FdvSMIObLtk8hnmvMdrChWKZBMIAC+U0RfVwt/BZlAb9ppd
-         aWpHlEcryfMh+ZxmcZ6WFYjDT2v9h5dD9q/3EnKX0Ejwr2LEGvO3q64us3sCdoZJnkOn
-         nMEw==
-X-Gm-Message-State: AOJu0Yz+CeyPcnHn8+2A0ZRtK2JwsBbVP26LqQyv9roPnLyOs7lc/mKl
-	9HNCETX7iiAntb18KGGjW46CchqLRx6jQciK6qfHUZdcqO3sEYl/Bk/owi5Tu9JAGkcRv3QurXq
-	zYdO3SCwqNCyZ3ZiJq24xiRDnNdmE8SEX4w==
-X-Google-Smtp-Source: AGHT+IGCx2Y+FKbCnnLvO9yt99E3Daz59nIuxmsiXg5wihUEbk9V9mK2j0ayXrsj8IO74oGrWG+NKvkyzUfpHr+lCqU=
-X-Received: by 2002:a17:907:6e8b:b0:a99:52aa:cae9 with SMTP id
- a640c23a62f3a-a9952ab0a42mr831999266b.24.1728410655223; Tue, 08 Oct 2024
- 11:04:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sh9a3yz0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g6SHguHc"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 06C69114015B;
+	Tue,  8 Oct 2024 14:13:17 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 08 Oct 2024 14:13:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728411197; x=1728497597; bh=HCR1e4Hdvm
+	X2a5iCTn114iTEw0hx7xnWSvthylReGqo=; b=sh9a3yz0je/Bbptc2hwXFZEU7b
+	XhY1/QR/yBcltJS+IbECKvZprRMXLt8Rt4VWY+a32V0RiA0c2L0TTPuaKbx6YM6b
+	xMB7pvA4F7sl8Oy8a0Dou5zQ/+KCxYODR2QlQzdZm1PkOmzqZsSBxTP9LIkmcFGG
+	hoTu0E3BTtThXrFkIqVbTVi92YQrXAWztayhDnbw9WEA0bo8ug6PJCzXBgtdbq4/
+	dGk0Cdw8pPrfKQHgzN09U51fmtozxW/AdaFVK5xBjfVsz3c92mI4FGo53BaRvMuZ
+	YTFiqhtACcwx2GtnURSf2aQMB2X/SwaOikqVwogXlzuea5BQr87fNAMJM4hQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728411197; x=1728497597; bh=HCR1e4HdvmX2a5iCTn114iTEw0hx
+	7xnWSvthylReGqo=; b=g6SHguHcWCDF8tO+ulqeGofuOup1B+JmYncPcIuOz2Ek
+	tq6zoKZeHQ01kT1fiNwfbFyWaIkcWh9SILjjsGwpkD0bQ8HJGdsw6GRfo7XZvGuq
+	8HeFH+nTHPKS3ys/wzkh432ljMK2msksbxpspD8ACLrTeWJWrdTUsBU1DuGLDlnM
+	gJkC9uZPD7ZN+lDWI97Fxf508WcqyxpFEjpcJvvsDyb1A81bHvJmF3nUnTsGyIo3
+	jYWrG7yWVS+u32Y3p66YhO4JfpYATkfXQfNFZxLZ5uZ9NOs8ZOzWdSXNgvb5Dwo+
+	uO2ujCbLu9LwaOIGKpsV42eU/xwgbvuiiqkA8PHMhQ==
+X-ME-Sender: <xms:PHYFZygXYm0Qvmy845JmW53wbUKRGgB2_-5h1H9HYsrBHCmNTYe2ag>
+    <xme:PHYFZzDoZwTEE1bkqO_hCG4URmmwcgTPhTvKeH_ezYKMx1YeaeQfsNwage7lQr4Ox
+    R9tx89zY3Q3UFOk4w>
+X-ME-Received: <xmr:PHYFZ6FUed6yQMwsHkpP697HQ0NotydZVw8wTxfCPuoSrKoOFLHy2xbXKspuDYZl-o2Te-53O0X6i92eE33b2-XauVb6h0o83C3Lt1g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefuddguddvvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrsghrrghhrghmrg
+    guvghkuhhnlhgvhedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgr
+    ughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhl
+    lhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoheptghhrhhish
+    htihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:PHYFZ7QaAaOVka5Awq8bsIQ-KR4e03sbYbWcaeLn3M5MyZXlPQ3khw>
+    <xmx:PHYFZ_zaqVeZEZvCaDh3IHJ-qs4ULGu3T-GrCdJXgk7g3Vic3KN65g>
+    <xmx:PHYFZ55BR9c0iLlM0E1TSR1zTcRPaHUqLmvnfYBKPDe4i8x1OGcEUA>
+    <xmx:PHYFZ8x1kKKisMSoitLtcSZitdnIT7Eh030OUJiykjm2tHKe0JVHhA>
+    <xmx:PHYFZ2zeWxZg61pyupD36O5om2WlXsUgnLtj-An9u88MhgXjGwKrQYwY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Oct 2024 14:13:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Samuel Abraham <abrahamadekunle50@gmail.com>
+Cc: Samuel Adekunle Abraham via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  ps@pks.im,  phillip.wood@dunelm.org.uk,
+  christian.couder@gmail.com
+Subject: Re: [PATCH] t7300-clean.sh: use test_path_* helper functions
+In-Reply-To: <CADYq+fYZSGBTnO+dM+MtHj=oUMqDWt+6wu-wEzwfWQJkSomkWA@mail.gmail.com>
+	(Samuel Abraham's message of "Tue, 8 Oct 2024 09:58:44 +0100")
+References: <pull.1811.git.1728328755490.gitgitgadget@gmail.com>
+	<xmqq34l75pr7.fsf@gitster.g>
+	<CADYq+fYZSGBTnO+dM+MtHj=oUMqDWt+6wu-wEzwfWQJkSomkWA@mail.gmail.com>
+Date: Tue, 08 Oct 2024 11:13:15 -0700
+Message-ID: <xmqqo73u1n0k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CACS=G2yH+k801G0z4BO6T2Gc2c6vVDieSr=2B6kT_1P-j0smZw@mail.gmail.com>
- <CAF+8dM9k=z+KR6xd_1jhsM86e=BOwOKkxdJDbX2VUYeu8yMkdA@mail.gmail.com>
-In-Reply-To: <CAF+8dM9k=z+KR6xd_1jhsM86e=BOwOKkxdJDbX2VUYeu8yMkdA@mail.gmail.com>
-From: Naomi Ibe <naomi.ibeh69@gmail.com>
-Date: Tue, 8 Oct 2024 11:04:05 -0700
-Message-ID: <CACS=G2w_rUUntaCU2NXYODUNfh+kDRPiftCRg04TPapTM_KPSg@mail.gmail.com>
-Subject: Re: [Outreachy] Indication Of Interest To Intern At Git
-To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-I have trouble finding a microproject task, I know mentors are not
-going to assign us tasks but I can not seem to find a microproject. If
-there is a link to available microprojects, could someone please point
-me to it? And yes, I have read:
-[1]: https://git.github.io/Mentoring-Program-Guide/
-[2]: https://git.github.io/General-Microproject-Information/
+Samuel Abraham <abrahamadekunle50@gmail.com> writes:
 
+> ...
+>  This was the reason for replacing "test ! -[df]" with
+> "test_path_is_missing" where I think is appropriate.
 
-On Thu, Oct 3, 2024 at 6:57=E2=80=AFAM Shinshu manne <shinshumanne@gmail.co=
-m> wrote:
->
-> Congratulations
->
->
-> On Wed, 2 Oct 2024, 21:22 Naomi Ibe, <naomi.ibeh69@gmail.com> wrote:
->>
->> Hi, my name is Naomi, and I would love to intern at Git under the
->> Outreachy remote internship scheme, and work on project #2: Finish
->> adding an os-version capability to Git protocol v2.
->> I applied to intern here last year but I did not get in, but I will
->> put in extra effort this year and I really hope I get in. I will get
->> started on the micro project task today, and I am glad I got the
->> opportunity to apply to Git again.
->>
+Telling that concisely in the proposed log message will help those
+who are reviewing the patch and those who are reading "git log -p"
+later, and that is what I would want to see after a review exchange
+like this.
+
+Thanks.
