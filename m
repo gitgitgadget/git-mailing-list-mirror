@@ -1,116 +1,95 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D96213EFB
-	for <git@vger.kernel.org>; Tue,  8 Oct 2024 20:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C785F9E8
+	for <git@vger.kernel.org>; Tue,  8 Oct 2024 20:37:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728418410; cv=none; b=Knu0oprahyD647sgKAdxiWcYgtC72CfYFYNNWVWj9OdhAzrpe2WLvDDVFNQIUAhuvNDjIYHaDsrY6oIdCdyx864PS9sDNJSumqdr0JZ9JF3FoVstyF2zli2PgCMv5H8lhDo1fc+YO8ynFNW4hi2ZjiMBaD8mqHbhLxy+op/5Db8=
+	t=1728419838; cv=none; b=f1cBFlVorqJHLmXBA+NPmsI7PHBOGSFT1Vw1V0sESVDgaQheDYQQ2V/PNJXmkizB8SkoPdcLWlN6jylQLIa4FKHymYBS2JRMKshrPbUZmDXUywrdalvJOhfccD1/6dtnYOfJjTyn0fDJquWFQ8A/caumSAz9dchbiGsyOPim2is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728418410; c=relaxed/simple;
-	bh=BGnayJjWk0BfFMCZ7GLFGNZMm6xy0qIGufDt9RDs4o0=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=PuX1rQSFHJsyfMz4xg58QhGZuC1FSOq3ggZfUAub2XDgO0SIsCcJEDTcaFELsgwhnN/zVJzmotq73wNpmxIDPISQmkzh8cuPCT1oB7mAKjUz66faOekw/RZrXS/VyvNDYWROrlXMmQw1KB9aRHx5q3jXm8461O3qxmALOuVdntM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lioMEFsV; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1728419838; c=relaxed/simple;
+	bh=24N9hDEyD+AFSHGECrywLhDHn7P8b+IUUKof/JHTRQU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=K6p2MbrmVge6MLOhrlLjyXv6gahc/fI5dz3yAml9l1r/Fj8d5IRAG/cn3q4qaS8udkaVBtyyb9prfwLNZD5gW3wWoc8wZMQl+uMAYJ8ms4Ys7OHx8vPgy2vZLWKSEyJSxBSLmOei+o0+CkF3vYt/k2itDBTM6/NdT4EHcNUQ2XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U7aRFp5T; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lioMEFsV"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42e82f7f36aso53616585e9.0
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 13:13:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U7aRFp5T"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-42cb57f8b41so81763635e9.0
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 13:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728418407; x=1729023207; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BGnayJjWk0BfFMCZ7GLFGNZMm6xy0qIGufDt9RDs4o0=;
-        b=lioMEFsVqxRy9XvUeAImduDCtrVZN57hAerabyVjd7F2fpyug4k71w1AiFOYAdJuPd
-         qb7kwMmCIjRfnTspM0Z7rAg/DoC/sSnnKOB3KHonQCTI7zxqGDmWd5MT9OZJwaZEyRq6
-         VnCnCpdJat4oZ0/lungCtKVfM7w8b4ciJeV3Q9F/Hh7iJl+bC6x+kHLxm8v3SuWA8PjW
-         US/cib6r+y+JhNYr0LaeaSZ/JXMFJ/N4mvf4v2QaLI4pjXTTsCjOvrTFuwU7VyHWyZYV
-         tH45RcJbiiZTZiBu0RHfJWm4qNRtIP91DbTElTmmieFFGktxK/2x2CGA3fdKVArVMOIS
-         FbGg==
+        d=gmail.com; s=20230601; t=1728419835; x=1729024635; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=up+1BFEQTZQeWMrktmPADcDciLpQwdSs9tv6n9iNcOA=;
+        b=U7aRFp5TWe8lKyjEyJzgpZoBEYQ8ZkUtkOamzorqUzKdL8s2GGowhiPQz4l8aDnXZU
+         FIl6VGUif8TeJkKaZ39jDWp+zYirpqs+A7i9CFZzLPgsDrwRkwMgZpPlZFLRz5xsR9Ye
+         PWNg4iLS9XjkbQpZ6ttCj5QOgJ+87I7E9Vjl5iZc1Trg2at+urEouJ1QM4+GVl3L0Wes
+         gp61AAga5MX0kgghVRiYkQeYuZ5mHMtxKx+LLn6nNorTmHFuxMrB7ArweDKiFB875tTu
+         7LVOiavwc00lYRpfVwMZTDEArRUrxNkmfIFAtwdyoVjrDvOBBEJ4U2Hhh4YNZGXBeTH/
+         ktrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728418407; x=1729023207;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BGnayJjWk0BfFMCZ7GLFGNZMm6xy0qIGufDt9RDs4o0=;
-        b=eSlE0eEzPEZV2qA6QK7XidbIxKiLITAPUrlxykEd8YwYDnkENdx8qtob8UG0wp4tUO
-         vH47nf7lm3k/BupEYCxE2YAiIQx++ji60jLENcGkBUjPMGY1gZ0WlvcLh3VY/5iKVz9/
-         MScBknhduRTsRw7SIQKrEqKKLOPWQCqOkrS98rr4JYmLeTB1blF+ALeLm+VMMjXbwAeI
-         C7rQ7F9r26nZLfUFX3KBt+q49KoCZNSYjUaGyN/0o4/f6/Ydbi0jS48OjEcCiFbLff2L
-         xLwK5ubQalhQ0WX0DZwLmQF+UhoW/obciIqOrOrCsjDuh1pjMfgZtSDiA6vNoHc3el5z
-         pFxw==
-X-Gm-Message-State: AOJu0YxxS9HwqeEjBa/cC10WgwdLToxMNjaItYG2eOHc5TiiRI5Xn5tC
-	cxYqlO4gIaJc+wJTi8Rsqv03trTnll2EFA6ubn8Gnk1GlI9ldgS6XQUjCg==
-X-Google-Smtp-Source: AGHT+IFph7HBEPX8POdfsy07q8n6BCMACDFHtnACCb/iQxLts+CO8yiw65axX+rjo8ac7LsNdfZtTA==
-X-Received: by 2002:a05:600c:1d8c:b0:42c:b2fa:1c15 with SMTP id 5b1f17b1804b1-42f85abe372mr104188045e9.15.1728418406976;
-        Tue, 08 Oct 2024 13:13:26 -0700 (PDT)
-Received: from smtpclient.apple ([2a00:23c7:890d:5f01:2cbf:b5f5:42f:9d0e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42f89eaabc5sm118795005e9.27.2024.10.08.13.13.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Oct 2024 13:13:26 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+        d=1e100.net; s=20230601; t=1728419835; x=1729024635;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=up+1BFEQTZQeWMrktmPADcDciLpQwdSs9tv6n9iNcOA=;
+        b=fP9lcZGtKwxUdw3OJs9oWZ1oS7wX4IHz8Z0c6CyJUNynGNWE23LrRg/yJC7QJbvRlE
+         xekDD4TyxIlLAIrv1nIkSr0kcdae5zdcQhCIYIx5rwS1YrP/mxq1KNLr02PE0yU0lNKw
+         fIMOwtZWaE8K/fQcBDQ/brEFyiDxiuT/V5mlguhdAf3MRXX3d9hEA5STWRhoUK/8j7IB
+         19bIQLczFEAkqa3LhmLYGODs3Mt8BwVrValRcCUdf9O9Kk9qix+lDa6rPDbNGJ64akAp
+         M3judjVcTKRCPimjdT8AMQXSvj+f1fS5+k1esYAstOSyKD4TXu+qZwrQ9fw5dWC7s5CC
+         M/iQ==
+X-Gm-Message-State: AOJu0Yzzq3xcstI/2nFZbytVhDQ5hRzkWmo9JmGArPNrOBtOoeAku/Kd
+	VH1VRpNUrl/RoqCUf6grf7nB05DpdAo4uX7Dm+8+6tb61K5RC7Di
+X-Google-Smtp-Source: AGHT+IEzElWi6/Y9zoIhH4DJjDCLefd/Hjpah8nX1l27hbO7PsKKSiJ5nWYEb/BywEdPYdwDHuDVQw==
+X-Received: by 2002:a05:600c:5494:b0:42f:8229:a09e with SMTP id 5b1f17b1804b1-42f85aef6e2mr185269695e9.29.1728419835391;
+        Tue, 08 Oct 2024 13:37:15 -0700 (PDT)
+Received: from gmail.com (178.red-88-14-42.dynamicip.rima-tde.net. [88.14.42.178])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-430ccf31b35sm21215e9.3.2024.10.08.13.37.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Oct 2024 13:37:14 -0700 (PDT)
+Message-ID: <b1f2b664-34ea-4d9d-9bf5-fb6632b265f5@gmail.com>
+Date: Tue, 8 Oct 2024 22:37:13 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
-Subject: Re: Interest in a Git meetup in Bay Area, California?
-From: Luca Milanesio <luca.milanesio@gmail.com>
-In-Reply-To: <CAJoAoZ=UyfDjAvG0-kC++R7fpR871Gsi4crR=o5F3PvNfB=7Uw@mail.gmail.com>
-Date: Tue, 8 Oct 2024 21:13:16 +0100
-Cc: Luca Milanesio <luca.milanesio@gmail.com>,
- Emily Shaffer <nasamuffin@google.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <50C75377-2AD5-4DDE-980F-21C5D0425008@gmail.com>
-References: <CAJoAoZ=UyfDjAvG0-kC++R7fpR871Gsi4crR=o5F3PvNfB=7Uw@mail.gmail.com>
-To: Git List <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.3774.300.61.1.2)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] object-name: don't allow @ as a branch name
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
+References: <cover.1728331771.git.code@khaugsbakk.name>
+ <b88c2430f88b641d69e5f161d3a18cce113a81c9.1728331771.git.code@khaugsbakk.name>
+ <20241007204447.GB603285@coredump.intra.peff.net>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20241007204447.GB603285@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On Mon, Oct 07, 2024 at 04:44:47PM -0400, Jeff King wrote:
 
+> The refname "refs/heads/HEAD" is allowed by plumbing, as we try
+> to maintain backwards compatibility there. So the current prohibition is
+> just within the porcelain tools: we won't allow "git branch HEAD"
+> because it's an easy mistake to make, even though you could still create
+> it with "git update-ref".
 
-> On 8 Oct 2024, at 18:09, Emily Shaffer <nasamuffin@google.com> wrote:
->=20
-> After seeing Berlin have a meetup recently[1], I wonder if we have
-> enough critical mass for a similar meetup in Silicon Valley. I know of
-> my own team and one or two other contributors in the Bay, but since
-> there are so many developers here, surely there must be more?
->=20
-> Please respond (directly to me is fine, if you don't want the whole
-> world to know your location) with answers to the following, iff you
-> are in or near the Bay Area and interested to meet.
+Ah, your comment reminded me that something similar happened recently
+near me:
 
-We (GerritForge) are based in Sunnyvale, CA, and would be interested.
-Currently, we host the GerritMeets once a month (see =
-https://www.meetup.com/gerritmeets/), and we often talk about Git =
-topics.
+   $ git push origin some-ref:HEAD
 
-Gerrit is 100% based on Git for everything, including reviews and all =
-meta-data.
-Not a surprise, therefore, that 90% of the Gerrit topics are actually =
-Git topics.
+It caused a small disaster, although it was quickly fixed.
 
-> * Which part of the Bay is your preference? (San Francisco / East Bay
-> / South Bay / Peninsula / other)
+The backwards compatibility you mentioned, which can also be understood
+as a non-limitation in this aspect, is worth maintaining.
 
-San Francisco is always a bit far to reach if you don=E2=80=99t live in =
-the city.
-
-Anywhere around Mountain View / Sunnyvale / Cupertino / San Jose would =
-be best for us.
-
-> * Which days of the week/time of the day are you most available? (e.g.
-> weekdays after 6pm, weekend mornings, only Thursdays coinciding with
-> the crescent waning moon)
->=20
-> * If you are interested in helping to organize such a meetup, please
-> indicate this.
-
-Dani typically organises the GerritMeets; I=E2=80=99m sure he would be =
-happy to help with the Git meetups as well :-)
-
-Luca.=
+I haven't had time to investigate why git-push doesn't warn (or stop)
+the user when attempting that, but perhaps there's a small crack we
+want to fix.  Or maybe it's something we actually want to allow...
