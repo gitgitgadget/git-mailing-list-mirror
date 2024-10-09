@@ -1,62 +1,62 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9F717CA0B
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 11:49:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B554192590
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 11:49:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728474592; cv=none; b=ReIAzx2weTLoTlBwKJ+czJ7hW8hrhHcYhffIkgpSLW7HTUGM5fIOKOlDFouCpHRuz2DzIoOUz6nBiueS1LTzjkXvhEl0OnzZmgZkLGTO63heyVFuo1xu7cCZDQkAuPrZIAa94U9rmqFvy2B1+Z550QkRuWv0gmqcQajK5wvUP8c=
+	t=1728474594; cv=none; b=dh9jdsNxRmxLRoTYDvtsxKVh6zj7iks28xsbEraywtX6FzMlVekvemsNrsM9qNIWthD5dUGeJw8HBH+SeHVVqo8bl0R0a1M5JXzDMdC4BGBbc8LJJ+fYIf0rpC8PmD8B0pxljw0/YzYv0Qv96Ijxwru2on7tCLdN14uP2t6IeQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728474592; c=relaxed/simple;
-	bh=IILCdqy6AEUv0k1Mx337OMrGCi5edaniqQkZp+pXLEo=;
+	s=arc-20240116; t=1728474594; c=relaxed/simple;
+	bh=wjxkVm/CLgTira+o7sqXH/xBx3y9O+HpiHshaA6ypnM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QGd9brtvLEDPU0WjbNcmuxaxP0aeecvky+eM7X3a3AvsTSmGf4J25oGERF4WA9oejicObXWQI6u7LUF1u9vBGgeQvGyUos3jE1DSJiddxYJlJQgh9lFViOPJ1Ipb0six8eQ6eZqxOFwrsaVb9QDauI5OTup9IusAYec1BL5G4+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MCTgPXhP; arc=none smtp.client-ip=209.85.218.53
+	 MIME-Version; b=sCjHYgU+HM+C8sa/5MQo85q3NmfLvXDOMH9Hz/xCKpafVGzqYi3j4cZdH26d5B6/tKIuYAD0Vqk/ETsPBh8u4nnyxApDLWdtruFK5KBdpovfY3CtkLIjVaRMAGET0Vo5/cNa6m/6rrUPZReK/ebWcI0jyf+qn+ZXkQQ/4NVNrms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C2RmnBBH; arc=none smtp.client-ip=209.85.208.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MCTgPXhP"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a99388e3009so554514666b.3
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 04:49:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C2RmnBBH"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2f75c56f16aso70294301fa.0
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 04:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728474589; x=1729079389; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728474590; x=1729079390; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=K/pRwiPiPM4zPteB/9zuLooh2x0QhJzsa2/pZlWnXQg=;
-        b=MCTgPXhPbDrcEcEGGmcHLTDSSR6jSCR9Cc6zuhmeEuLRMDLFUkrCGAA72IeWKZT64s
-         fL/oO22d9nXAVHQAk+g7Nu3NObhZlWJKHTUn6HpTyIu3QR4FvJfmacpRXwCQzjvVdkxF
-         loF/2An4GD2GVxTEH0sycPQ5F0mRy85nUYLXqyhKrgeG+FpVHjRNvBlfp6q5Ixdxbi+N
-         A9dRgSFBE4ZTbaa84rEu/TkrPq9Q/b0EbuqooA3shMxdMziTXyIxItClk3MBs/ltWxVD
-         nCRereCw+0kbyryvigWT/bYvHBFY27BCbcR4TdsCXRdTt/3uqKYU/NrIAC5x2WA1P0Ec
-         zlBw==
+        bh=7w4w3smvcYTy79Meehr4W8kfjb5FoQWIdfgkuDILvcw=;
+        b=C2RmnBBHsOg4cYNc0dFliM1s7RtAzH8zKglYOjeS0zHCeykCcVkVMUOwiJA/kHZJRV
+         VYqw8EW57iy5zmM4/0ELi2OQAUtnC7pX28y2YRk8Uk+1FWRbEkGAky4rUmnrSAv0tIKx
+         IqCC5nr9cdReuCNYK/k91q3fkk0rxBM+F+fEh+GIHw3sbBOqYcX+HLIWkWfoMy/hNUX1
+         1tNzELbU8e+NGwJoNVceiVnqWhGuy+GoPDQBPw8oPuENyfN5jEhpss247Zrm69ozrqHr
+         AnomCOiIcUWBVVuhiWlEGnkAVzhnJKPj3Vnb5oOjn2GY5JLCnC5SAPfqz2WHNtu59fu+
+         IvjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728474589; x=1729079389;
+        d=1e100.net; s=20230601; t=1728474590; x=1729079390;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=K/pRwiPiPM4zPteB/9zuLooh2x0QhJzsa2/pZlWnXQg=;
-        b=ZRa2lroET3yKkKNQBuk9vL+QWAKShLngLGu/U1A1E1h0wQkUO3/49XkqaY/LTffaLh
-         jnyUH6qBJoh/VaMkryirGjnEndQl8iXgtVcz+1lBBGxbe5yelsAb+OkVJDAADIYRMDdQ
-         cULtaN81QgflFBH1yEAaTRsy3yMfzoWhMVBzTR1UTzmsHtkAVNJ69jkszorHqY/HRWyH
-         uH+XgtiylbWSXopyTOS2z5G3WHHFj0Xbng7qvlmHTfctPYwQg0V4N3NOCyp1Tx3K/wD0
-         v56OMiM8wk7HGA85sxiNfsiNvVRCuH8157G9NCdKM3xiFbEvz4TahjSOGJ8IQbihGKH2
-         L+VQ==
-X-Gm-Message-State: AOJu0YxJ8YV4YlIOce+jhMJdm+rbmeOyRkQqvL/CZGx6vWPe1akVQlBS
-	HOo+p934W3cS/hV0QORRvlkagy59v5EWwcU/wQLlQYFMDrRzowdEZ6+LUQHk
-X-Google-Smtp-Source: AGHT+IH/5JZ0z2mTNV4y+rgoSLGHpJygvtc4KkK/vvuJWg6GGkXehqx8cHjBrksyHajbknAPkxsIUA==
-X-Received: by 2002:a17:907:9801:b0:a8b:6ee7:ba28 with SMTP id a640c23a62f3a-a998d114862mr183412366b.1.1728474588813;
-        Wed, 09 Oct 2024 04:49:48 -0700 (PDT)
+        bh=7w4w3smvcYTy79Meehr4W8kfjb5FoQWIdfgkuDILvcw=;
+        b=sbuaOtk1KNp0Srs9IRCqBAyXpylt1MrakBLmYIW6IMxL6L6q5dNyOtBlq4uEGJuGC7
+         QOTTETv1LYtWKodGZNaGC4Ldza48kFv2JdWWqrMXVTjcI/VtsR2CQXL/DndHB30zik6z
+         i8sQtg2B3Il/l3MZ1LDQVabecHuf+MachOnulE1B7NgY94WIqmXcHK1KmNHbK6pS9n6v
+         SIkSPkG2gdMrGoAHvtauI6yfguTWRfAIOu0Q3G+YnIYhAzEyUWTY2pKKn6z/9cGQLv02
+         tAJITXHQuH1l3Sk8vEXsMe/QvB6Rtqn780rcZ1t9n6JH3HGHwk2vWVJN7Nb5DRVdEvpM
+         EZBg==
+X-Gm-Message-State: AOJu0Yy7fnqVCQfvmGo1uQoPAn35tPR1xC93rjLItWvuq3hXyoC/bXnd
+	gtVsD14dzx0IuWS6GZBqI8y9UYGUl9I54EzC+mv0ZAapY7uK8kEU2wVRvp2z
+X-Google-Smtp-Source: AGHT+IEEJ1woYiqfY+squcDig8tldXVKZlEycVg/K2m3TFKldIs3kS6dNoNnDAUyOaOOKc6AWhi8Hw==
+X-Received: by 2002:a05:6512:3b83:b0:535:6795:301a with SMTP id 2adb3069b0e04-539c4945f49mr1186054e87.47.1728474589815;
+        Wed, 09 Oct 2024 04:49:49 -0700 (PDT)
 Received: from void.void ([141.226.169.1])
         by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a993a4ff9f7sm595800566b.26.2024.10.09.04.49.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 04:49:48 -0700 (PDT)
+        Wed, 09 Oct 2024 04:49:49 -0700 (PDT)
 From: Andrew Kreimer <algonell@gmail.com>
 To: git@vger.kernel.org
 Cc: Andrew Kreimer <algonell@gmail.com>
-Subject: [PATCH 1/7] compat: fix typos
-Date: Wed,  9 Oct 2024 14:49:34 +0300
-Message-Id: <20241009114940.520486-2-algonell@gmail.com>
+Subject: [PATCH 2/7] contrib: fix typos
+Date: Wed,  9 Oct 2024 14:49:35 +0300
+Message-Id: <20241009114940.520486-3-algonell@gmail.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241009114940.520486-1-algonell@gmail.com>
 References: <20241009114940.520486-1-algonell@gmail.com>
@@ -72,53 +72,59 @@ Fix typos via codespell.
 
 Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 ---
- compat/fsmonitor/fsm-listen-win32.c | 4 ++--
- compat/regex/regexec.c              | 2 +-
- compat/simple-ipc/ipc-unix-socket.c | 2 +-
+ contrib/completion/git-completion.bash | 4 ++--
+ contrib/subtree/git-subtree.sh         | 2 +-
+ contrib/subtree/t/t7900-subtree.sh     | 2 +-
  3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
-index 80e092b511..9a6efc9bea 100644
---- a/compat/fsmonitor/fsm-listen-win32.c
-+++ b/compat/fsmonitor/fsm-listen-win32.c
-@@ -431,9 +431,9 @@ static int recv_rdcw_watch(struct one_watch *watch)
- 	 * but I observed ERROR_ACCESS_DENIED (0x05) errors during
- 	 * testing.
- 	 *
--	 * Note that we only get notificaiton events for events
-+	 * Note that we only get notification events for events
- 	 * *within* the directory, not *on* the directory itself.
--	 * (These might be properies of the parent directory, for
-+	 * (These might be properties of the parent directory, for
- 	 * example).
- 	 *
- 	 * NEEDSWORK: We might try to check for the deleted directory
-diff --git a/compat/regex/regexec.c b/compat/regex/regexec.c
-index e92be5741d..15ab2d1d40 100644
---- a/compat/regex/regexec.c
-+++ b/compat/regex/regexec.c
-@@ -292,7 +292,7 @@ compat_symbol (libc, __compat_regexec, regexec, GLIBC_2_0);
-    concerned.
- 
-    If REGS is not NULL, and BUFP->no_sub is not set, the offsets of the match
--   and all groups is stroed in REGS.  (For the "_2" variants, the offsets are
-+   and all groups is stored in REGS.  (For the "_2" variants, the offsets are
-    computed relative to the concatenation, not relative to the individual
-    strings.)
- 
-diff --git a/compat/simple-ipc/ipc-unix-socket.c b/compat/simple-ipc/ipc-unix-socket.c
-index 57d919c6b4..7db3b2a897 100644
---- a/compat/simple-ipc/ipc-unix-socket.c
-+++ b/compat/simple-ipc/ipc-unix-socket.c
-@@ -713,7 +713,7 @@ static int accept_thread__wait_for_connection(
-  * Block SIGPIPE in this thread for the life of the thread.  This
-  * avoids any stray SIGPIPE signals when closing pipe fds under
-  * extremely heavy loads (such as when the fifo queue is full and we
-- * drop incomming connections).
-+ * drop incoming connections).
-  */
- static void *accept_thread_proc(void *_accept_thread_data)
- {
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 60a22d619a..3d4dff3185 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3296,7 +3296,7 @@ __gitcomp_directories ()
+ 		#       i.e. which are *already* part of their
+ 		#       sparse-checkout.  Thus, normal file and directory
+ 		#       completion is always useless for "git
+-		#       sparse-checkout add" and is also probelmatic for
++		#       sparse-checkout add" and is also problematic for
+ 		#       "git sparse-checkout set" unless using it to
+ 		#       strictly narrow the checkout.
+ 		COMPREPLY=( "" )
+@@ -3698,7 +3698,7 @@ _git_worktree ()
+ 		# Here we are not completing an --option, it's either the
+ 		# path or a ref.
+ 		case "$prev" in
+-		-b|-B)	# Complete refs for branch to be created/reseted.
++		-b|-B)	# Complete refs for branch to be created/reset.
+ 			__git_complete_refs
+ 			;;
+ 		-*)	# The previous word is an -o|--option without an
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 5dab3f506c..15ae86db1b 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -946,7 +946,7 @@ cmd_split () {
+ 		rev=$(git rev-parse -q --verify "$1^{commit}") ||
+ 			die "fatal: '$1' does not refer to a commit"
+ 	else
+-		die "fatal: you must provide exactly one revision, and optionnally a repository.  Got: '$*'"
++		die "fatal: you must provide exactly one revision, and optionally a repository.  Got: '$*'"
+ 	fi
+ 	repository=""
+ 	if test "$#" = 2
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index c3bd2a58b9..3c6103f6d2 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -47,7 +47,7 @@ last_commit_subject () {
+ # pre-2.32.0 versions of 'git subtree' would write the hash of the tag
+ # (sub1 below), instead of the commit (sub1^{commit}) in the
+ # "git-subtree-split" trailer.
+-# We immitate this behaviour below using a replace ref.
++# We imitate this behaviour below using a replace ref.
+ # This function creates 3 repositories:
+ # - $1
+ # - $1-sub (added as subtree "sub" in $1)
 -- 
 2.39.5
 
