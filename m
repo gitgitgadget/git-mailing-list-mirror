@@ -1,150 +1,113 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFD91D356C
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 17:28:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989E5137C37
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 17:31:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728494914; cv=none; b=fwU2bSMwAx6i5ki9VNQjRIJTSXjwEI8YtJfN8hv8NzOcejr2Jb7mq/E9jdCzkdxxW8nrapgJEQBGxOJpQFDP1nQlbthVCa3nuG2EU1IGe7E//vRrg4EkvtPQOWbLlE0XKJAMdHgnu0+pTDl/sKMumqo2I8e5cajlEtXaI9/c854=
+	t=1728495100; cv=none; b=baXThYrGhSSh6hpNzhuXE4miPUbZ0sDME7dMmHLRj6PjHbw/e4c7GR4Nsg+6cILmLB6NDLYvME93k7MhB+pK3LoCIqH83ezYK7RTyQDoNV/iHqNqC2uxrO9eNCCuQ+BDAn274v+4nlyaQ3MNDnH1Cn9kMMBiFaHBEA889N+r224=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728494914; c=relaxed/simple;
-	bh=YjG9nhHz2z5eIndOOSWRA3VWv2WjTNjVE4CplUlCmKQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lFo0QbMPEaMPhTlQHdf0GOK0GtmDt6UNlwL2/gPRC2CHbkrRX1mlJTyXHXDBA/SOh1WqvmGG+hXV/r0DPpT+ol8Xx68Y2TkrFeQRIPZ9Ta8Vfymb/aUgXQjbxMlo8SF/FfbI8RGWOiu6x3wzx+sZ627QvTSrlN5aVuuhrJYAib0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=HXrVGBfw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U8hsEWfF; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1728495100; c=relaxed/simple;
+	bh=swGCddSJw9oga459Uz0tgthOGZLY8WvasyzZ+kgYfqg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=krlhTHVDm/fSjctMFfLWfJVUzT6IiC0IAiQmZqp/9aJsqa1hJU8IlxssQIFTsaXWN8YjiXiMPcuEJ3JaG1ikUTKnHeVNqRxIBy+J3PaprZJKy8U7xUYIxoBE8+Buy6wMaLGYZ+a4xnU6cp30RHzjbCgoR6T/GBJq+CtxFUj6o14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VetPyrsZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EqYvtg9V; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="HXrVGBfw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U8hsEWfF"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 26E6011401E2;
-	Wed,  9 Oct 2024 13:28:31 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Wed, 09 Oct 2024 13:28:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:message-id:mime-version
-	:reply-to:subject:subject:to:to; s=fm1; t=1728494911; x=
-	1728581311; bh=AS48G+XgHFpyXeLdOnnL/AcPn02N0jQyF40iSrYvb4U=; b=H
-	XrVGBfw8GQwOZpNUAt4aK4iIL+BDwMdCU/tSExhf+bBU387NyO+jirW3WNoTd7mQ
-	B+mzu++L5iaBVcRkQLEqkKkolp+G3sGH7PhsqHlJPZCxPSAW5eJA9ukBI7vsHuDa
-	a6aHuI/gA4+JG9wz2T0h+TA1yBRyY5EqZ+RvyBqTT1Z8PeHu41DE0YOheA8rtO0n
-	HEJV8lBxww03hefY4xuGqpqx6zdZvYh+8A38bMt+h+JbscIIfjV/iPswfjEvojIt
-	QKhYy95YK3NXwLcA0elevEde1gfhXJjyyedHccazDKEp0xHhJkuHBsnafabPzduz
-	XMGy1GELK384dAvl3NvFA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VetPyrsZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EqYvtg9V"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8F3AD1380142;
+	Wed,  9 Oct 2024 13:31:37 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 09 Oct 2024 13:31:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728495097; x=1728581497; bh=hhIIVi1MYn
+	biYHyY4Kzxk7HXU5KYsBxeBl+Q5PB0YeI=; b=VetPyrsZFk3ZZajgWVjd8mNbGo
+	VINsJnKtNM1x2KS9qlDswyCjFY4CAvIqxaQWgZXAiK6gmPcVTBkO0PemByfvg0wc
+	47TePJN2h6USMQ/+AAsVN+ImxtWBcyA+PLR40mBfGTdWhOJUDtO4hu4EwDkvbtvj
+	46WCTE1PGLzszDqTdczeIvqEZkNZqUTlxU99ipsFsMYKYnrX5ecdvmuij/iDLVCI
+	3J0AjLa/JbzCtQVwsfM/IZb3hSkBITkP0pOdfgayMLYojPjxB4teCkm2JgeNBbmE
+	kKW0e2v1Q5AVm+/SPLTxE7+h5DOw3RkgoZfkvSXAxJRX0l/SsDcoFRJoOuoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1728494911; x=1728581311; bh=AS48G+XgHFpyX
-	eLdOnnL/AcPn02N0jQyF40iSrYvb4U=; b=U8hsEWfFe/UBrxb444TCjWNMtJeTd
-	KJvY78+dL2wa7zuAVdTkXzUZkkxsAjKhFkZDQ76tj8IxOdqJxosV10sjpja2kfSu
-	R2X3xdVjiBO0j/vVoeXmdH/Cqhlwf3//mraU/nj5YwWOBht7wnU/UFodU3RgMd4j
-	2NaqVDQd0/0bQ74dQmMdI98jpniw1L77D/abMJJ3lCh0yZ19vSz+Iy8BUAPuOVh7
-	PikR4yXoQDZaw/ZMeAhcQHqq4hATU9jQAm6ndmCm+THrIGCT2NOYhZoybIVvv0I6
-	rBnE3u1XgXufgcoGIy6Mg8fVp/W32C7WvUW1+Rcnpm3uZr4TifsfxJAjw==
-X-ME-Sender: <xms:Pr0GZ7RiHzT8aWnIPbKkZZftFabH6nX4ZSMCNHav1pDaeSkv_34cYUk>
-    <xme:Pr0GZ8za8MGIzcSrwyi796vKa_XyBKg95A6JqGENfWMxaygIZV9uiP_K3ZfFJum16
-    Y3GJFc48RRledXFzA>
-X-ME-Received: <xmr:Pr0GZw3JkIsD3boj5eUe0Sfu0noDfqaU5jGpK-MsohANq0WUCsZasdb4_NhpLgCJ7OT-RwZbHwP8FM0YQ-3XI8txi8EMDX2icw3pcxQHJA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgudduhecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728495097; x=1728581497; bh=hhIIVi1MYnbiYHyY4Kzxk7HXU5KY
+	sBxeBl+Q5PB0YeI=; b=EqYvtg9Vgf5Tz2ZPUpKGGU7q9hZrnRdap+91ggWtFdhs
+	348AqxX+9kLsOqnzgghIRbqYH+kwWcRZ0J4GTKloyN7XGDNMXb6IunMSgXCdO4Rl
+	dEAlv12PjyyviCbhgRN1tglC6HVkJjVByflMBRahLFOv4a0RZM15Ssw7VvgC51Ur
+	IzOgzqqUIkUricjlZuVaqVHRWfLjwGFaYWdgJGIZRAAZCeDr5vjNYjWuPry3lh5x
+	azia0PI6sB1rJkBbkHJf3KFVi6IhKihw8ab1YH3/a4hyg7BAlRwVqLxgQfcrTC1k
+	JmWg9PeV1HQry8opmQsjj+u6scuP/ErqK4+BUngWKg==
+X-ME-Sender: <xms:-b0GZw2XY7cHdgJXhVW3yyKLg-Kw6-3rX_pf7AjH6mEYUvybt0KjbQ>
+    <xme:-b0GZ7EaD12dw0VLMTcqjUvJOkAzXyxMb3hmA0pEm-_et3GrY-dPCs_7iVIuIvGAU
+    tUiJqDxoP1cEfF-6w>
+X-ME-Received: <xmr:-b0GZ4679UG5WF2J3Ej6LgCP1lehHD8bLGveMFsVxWJKvfhdswywB9dZQoippoZgl9IHF_Doj9WgW2FHTkgOvUkcZJoubH-xl_6p>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgudduiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgr
-    uhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrf
-    grthhtvghrnhepgfdvhefgffekgfeiheeivdetffelkefhheeitdejhfelhffhkeevudfh
-    leekvdeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    eptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopeefpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmh
-    gv
-X-ME-Proxy: <xmx:P70GZ7C0JmSBFruixWSck5MvHyFNkUXyS6fAf_UMPNo4_hRkJyhm0Q>
-    <xmx:P70GZ0jTVNlNUtCkDkg84TrGukz-dH2ZW9wQNR7EgrTrrvqdfQnNrw>
-    <xmx:P70GZ_pBN3Zk7Tdp_YW4uw4P2n0QFlUifNKMzDFaeJ8ucdGITvWjKQ>
-    <xmx:P70GZ_hE4wtkRwxYVCJ4DbAPOZDin6ucc98tuCXlnTQzqcA3hn56tQ>
-    <xmx:P70GZ9ss5EOpCaqpOgDM_fzLZh-akZwpfvKd3HDAFrTTIfbLwa0WaZ5A>
-Feedback-ID: i2671468f:Fastmail
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
+    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtoheprggsrhgrhhgrmhgruggvkhhunhhlvgehtdesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhl
+    lhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoheptghhrhhish
+    htihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-b0GZ53b7SuO_uxa2eHbSw57uBrufW_XwhPXWiu6DGi_B808xEh4EQ>
+    <xmx:-b0GZzFUlT51ac5DKCR14Uxf1doH27qDozSyOPow84X3oEICauvC7Q>
+    <xmx:-b0GZy97S2vUK0FGY6c9fCEbH1wfJ4q4btEE4vnuI7upoVqu2KOm_A>
+    <xmx:-b0GZ4k-wUNCh8sC6ac1VFvhJPpxoSU_2TCHfXZtfZzjbrGgdHt-pw>
+    <xmx:-b0GZy2zqCktaq9jlXtJPT1OP0AE8zHE4PP-Tuvc01qWNqr7-e9yNwT5>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Oct 2024 13:28:29 -0400 (EDT)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH] checkout: refer to other-worktree branch, not ref
-Date: Wed,  9 Oct 2024 19:27:58 +0200
-Message-ID: <259fcbb61f13873421d50df77f151130fdbf0166.1728494795.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
+ 9 Oct 2024 13:31:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Samuel Abraham <abrahamadekunle50@gmail.com>,  Samuel Adekunle Abraham
+ via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
+  phillip.wood@dunelm.org.uk,  christian.couder@gmail.com
+Subject: Re: [PATCH] t7300-clean.sh: use test_path_* helper functions
+In-Reply-To: <ZwYux_Nb9GwqPuuk@pks.im> (Patrick Steinhardt's message of "Wed,
+	9 Oct 2024 09:20:45 +0200")
+References: <pull.1811.git.1728328755490.gitgitgadget@gmail.com>
+	<xmqq34l75pr7.fsf@gitster.g>
+	<CADYq+fYZSGBTnO+dM+MtHj=oUMqDWt+6wu-wEzwfWQJkSomkWA@mail.gmail.com>
+	<xmqqo73u1n0k.fsf@gitster.g>
+	<CADYq+fb9ux6K+m-8y0owopt_zKJmXXYLh6Rswot3r7UNX30LAQ@mail.gmail.com>
+	<ZwYux_Nb9GwqPuuk@pks.im>
+Date: Wed, 09 Oct 2024 10:31:35 -0700
+Message-ID: <xmqqmsjduqrs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Commit-Hash: 259fcbb61f13873421d50df77f151130fdbf0166
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Patrick Steinhardt <ps@pks.im> writes:
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> I think that your v2 isn't quite there yet. As Junio mentions, he'd like
+> to see an updated commit message that includes your explanations why you
+> have done certain conversions the way you did. The fact that some parts
+> of the patch required discussion to arrive at a common understanding is
+> a good telling factor that a summarized form of the discussion should
+> likely be part of the commit message such that future readers of the
+> patch will get the same context.
 
-We can only check out commits or branches, not refs in general.  And the
-problem here is if another worktree is using the branch that we want to
-check out.
+What v2 had after the three-dash line seemed to me an OK material
+for a proposed commit log message, but it should have been before
+the line.  I suspect that it was from typical GGG gotcha?
 
-Let’s be more direct and just talk about branches instead of refs.
-
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    I also change “is holding” to “is using”.  This has plenty of
-    precedence:
-    
-    1. The code ultimately calls
-      `builtin/checkout.c:die_if_switching_to_a_branch_in_use` which says
-      that we die if the branch is “in use” by another worktree, just like
-      we do here for the new description string on
-      `--ignore-other-worktrees` (c.f. “holding the given ref”).
-    2. `man git checkout` uses the phrase “in use by” when talking about the
-       branch being checked out in another worktree.
-
- Documentation/git-checkout.txt | 6 +++---
- builtin/checkout.c             | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 8bdfa54ab09..b00b375dd27 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -290,9 +290,9 @@ Note that this option uses the no overlay mode by default (see also
- `--overlay`), and currently doesn't support overlay mode.
- 
- --ignore-other-worktrees::
--	`git checkout` refuses when the wanted ref is already checked
--	out by another worktree. This option makes it check the ref
--	out anyway. In other words, the ref can be held by more than one
-+	`git checkout` refuses when the wanted branch is already checked
-+	out by another worktree. This option makes it check the branch
-+	out anyway. In other words, the branch can be held by more than one
- 	worktree.
- 
- --overwrite-ignore::
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 9c30000d3af..c449558e663 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1716,7 +1716,7 @@ static struct option *add_common_switch_branch_options(
- 			   N_("update ignored files (default)"),
- 			   PARSE_OPT_NOCOMPLETE),
- 		OPT_BOOL(0, "ignore-other-worktrees", &opts->ignore_other_worktrees,
--			 N_("do not check if another worktree is holding the given ref")),
-+			 N_("do not check if another worktree is using this branch")),
- 		OPT_END()
- 	};
- 	struct option *newopts = parse_options_concat(prevopts, options);
--- 
-2.46.1.641.g54e7913fcb6
-
+Thanks.
