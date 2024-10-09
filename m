@@ -1,62 +1,62 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C084192B6D
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 11:49:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17276192B85
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 11:49:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728474594; cv=none; b=ARPB6qL1ecR+aL9dGtM2nq6cUwLFTEzNeeg5U7fABmThMzU7z67ITnFQk54Ejnzq3EiAZ0odEDFuE0JKgYqVdFhlrD81f4WaE8FPjjh0qpi1ORf2/EGTGQkhkxIv2wyYAyhgvvQ4jrUkUqCdvPVjJgS9MiXRkMX421wlZ+guujs=
+	t=1728474596; cv=none; b=Sye/azUdtht483jpkxEq8gXi/VqGdiuas/GUYpL/c+DDyMaVDD3NVsw3sQTcfwEPW08yDOti67xHbyrWvQPagVEOlCLFSPMcgkYwszH1+MeinoGnCHPcMHv4oyatp3EeihnCC+b/cjFd1cv/Buz/VhogO/EitkVWe1n7NlRILZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728474594; c=relaxed/simple;
-	bh=z4ltqboBE1OWE/O5ZSaDRqAR21e1zcvcrl7X64Lx5JE=;
+	s=arc-20240116; t=1728474596; c=relaxed/simple;
+	bh=TtPKBoiirzRwPKW3Fbc8h9CTuiRAJud8wq2JwnUEpcQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OTGQrlbiaSLHANyUfWRAPIGaD2V81WJh3U8LNxdvEsV8MCMwHGIu3wKGYY9mh1jG4HX/JBVx56O/2uGSSIIwCWjtbKeJKYoBcAnQUrrtDFnrE2Qtkgx057LFGNkerK7IrtXqdfWtKtf9UKzwa3nJiuPkVI9oHd+tPfrrbHXo1vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U2Ws9vTQ; arc=none smtp.client-ip=209.85.218.53
+	 MIME-Version; b=JYYH6TGcVvV3SRUcBwZiXIl5F/CQZPQgZ5T0ayaHc63k9KlAL/zbW8BNiDFcgeE1L9JyFGRLEOCkCFJzVXTFOfp6RxOD2fVg03IeLjxd/b58irsDCQ/0IfpaS69HY1CyrXInxEjeoL2wMoTtF9s9EjSDM0+6an0tO7lhOh0pzsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PvttDDjm; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U2Ws9vTQ"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a994cd82a3bso510658766b.2
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 04:49:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PvttDDjm"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5398b589032so10425685e87.1
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 04:49:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728474591; x=1729079391; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728474593; x=1729079393; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wyacuLypCTBfP6IiHEggVFxQ1wOadkPx7srF2VO262k=;
-        b=U2Ws9vTQc29F9GF1rEYZPx5sLll450UC5kiblVHKCt51sFgWe27t+X79NrWRn2ZyxP
-         9hIuT3FRyQCJ1CHieTkGLwl5vWkXMx44P1l3QKV7rAGqL4nEpyUOhaLEviSwXa9hxIKf
-         OCrLTTld5N7ED1aQ3o7G00q60zwWy+yxEo4dD9fTOsJ7zD5dP8MH7o1Bf/XID1gzzZOH
-         le81mWY90CdkmIc4lnBAp3VDPQGYAySfS24KcU+ANYwl0mTHXYMG9vtZCpAvAiw3z6Ak
-         FgSpcBSmFxInEtzVEoE226B3RE6Wal3ZW/aiJVrqbXuoHFHShjKtLeel0HgZqKNy5L4p
-         yqgA==
+        bh=kllgDYvBs6AL03xeRynB/4omnEpgePtHWu3/MAI+j5Y=;
+        b=PvttDDjmfS7xJiofm9lXPVN5f8NgTrH1hn0j5CWS8UOgWViUPPTiJy0p4efR0GEp0+
+         qlhj9ImV2IFfgRPGEPDYBrab19P55famQxMug0dSFnZ0vUp42PYLDDQ9+bRtZJ69b1V9
+         v96EtWKpFztgkP0ItjtYggNDX5Fw/bRIt5dMWyX6Y8iK0teSDAJMnpNWvZDrhAx7JaQ2
+         I76sDNhZJssx31MTpNkIn+yzJI0ukBObBw7Bk4xw4uLS6fUfbC0G+j21gC/XFOp1mxpE
+         XBV93ItTaOiXm0rkSApfUu3Z4PC0OvXzG6l/9z1kDqFpJ3FMolngCbzDn0XQk8TbVwwg
+         IHug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728474591; x=1729079391;
+        d=1e100.net; s=20230601; t=1728474593; x=1729079393;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wyacuLypCTBfP6IiHEggVFxQ1wOadkPx7srF2VO262k=;
-        b=btYaAJDfL5rDjbnQElorCIcS66e1nkdCixEv0FMb7S1X/daogHSYM1KlC/gZ8HKIHM
-         QhFexpLsuqtPXHwyFNo8GfnTlPLIW9pHGAoVPzrhm2IRNvE9Bws9O9WuN/Vh5PUZ3bM0
-         iRdWm15SobsZaiwZN0r9P7HdBuHNKvdCOc3ZD+Nmfr4doJMRsmrQNZTetN3ZWKx73cCq
-         peFBVkO89jvfb4BQX6vBywlmOoT1tTu4mx54xqxB+YnLL/H4t80g1fFw1mhXLYAR5Nyk
-         45Eo0VEFDfbT1x+Iw/QXJUhPuvf9H5+ppWwl5vWaapzjr5SDHoWcKjdOFZDYNqUnfgcq
-         LEgw==
-X-Gm-Message-State: AOJu0Yzpf6ilS9XMsXkxa3Qwfaa1r5J8vnyzy3Al1A9ZQ4ocY24UKikr
-	toQoLeootZ4C8U3R9wIPjl6dgvvIOx+Y5eF65O62Ot5VdkRW/VBxLD0pdZxB
-X-Google-Smtp-Source: AGHT+IGSOk/E8SGW33OVnEvKua9s7PL+0KUkd1IAjaX4VlTbLia0y3esf/6xxhf5CZLCl8Tzi7CWhw==
-X-Received: by 2002:a17:907:c7d1:b0:a8a:8d81:97b1 with SMTP id a640c23a62f3a-a998d20769bmr179725566b.27.1728474591399;
-        Wed, 09 Oct 2024 04:49:51 -0700 (PDT)
+        bh=kllgDYvBs6AL03xeRynB/4omnEpgePtHWu3/MAI+j5Y=;
+        b=wu5zmsAOQHklV+vCZUT+3aaSqTjVS7Ow/t6DSQ1nEWmF+Tok7eug3ngHAsQDaH7rl7
+         ePKTfD2hrzCDKXxWwyA+Y0hDkh8CUU9vfJkkvs4sd16u4kkL4EDIWf0pWr2B/13pWn8C
+         MdMlGPyNK0o95dmWN8GnyTymB4Q+Itmsn009u4qaXLwnu+J6CHG/A46ltVrjj9AL19c8
+         Fdu7464OURfnyFyK3/H0qi+IFwoabYL3s4aNgUWaPEC3RGvTLBLFYXWmCrsHQGrw50bL
+         UlcwJdwmQyfs3yAXSZ0t5NnmO7MuHuhfHMQRtxJFt3O3bhcdpU9W+/qJRwtZD2mFrFSj
+         llsw==
+X-Gm-Message-State: AOJu0YxwmqsPx4tBhsqAKtLEKKJF+ocaEIGL4vRA4Z1A1O69P/Hn/3s1
+	gz2YxgxTQzAv3PIgXM1SA7ixLoH1MaVIlWAB1TcgYtbjfe+s5BPpB61PQkWq
+X-Google-Smtp-Source: AGHT+IHRGQ9qJh841XrbR7Q1Na2y7uNhpEk0n7GTV2L1njb3aIplSZ7B/0uPko3qTH/Imj5fupvzQw==
+X-Received: by 2002:a05:6512:3087:b0:52c:e10b:cb33 with SMTP id 2adb3069b0e04-539c496804bmr1879100e87.50.1728474592469;
+        Wed, 09 Oct 2024 04:49:52 -0700 (PDT)
 Received: from void.void ([141.226.169.1])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a993a4ff9f7sm595800566b.26.2024.10.09.04.49.50
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a993a4ff9f7sm595800566b.26.2024.10.09.04.49.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 04:49:50 -0700 (PDT)
+        Wed, 09 Oct 2024 04:49:51 -0700 (PDT)
 From: Andrew Kreimer <algonell@gmail.com>
 To: git@vger.kernel.org
 Cc: Andrew Kreimer <algonell@gmail.com>
-Subject: [PATCH 3/7] git-gui: Fix typos
-Date: Wed,  9 Oct 2024 14:49:36 +0300
-Message-Id: <20241009114940.520486-4-algonell@gmail.com>
+Subject: [PATCH 4/7] t: fix typos
+Date: Wed,  9 Oct 2024 14:49:37 +0300
+Message-Id: <20241009114940.520486-5-algonell@gmail.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241009114940.520486-1-algonell@gmail.com>
 References: <20241009114940.520486-1-algonell@gmail.com>
@@ -72,36 +72,64 @@ Fix typos via codespell.
 
 Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 ---
- git-gui/lib/status_bar.tcl | 2 +-
- git-gui/lib/themed.tcl     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ t/lib-bundle.sh          | 2 +-
+ t/lib-rebase.sh          | 2 +-
+ t/lib-sudo.sh            | 2 +-
+ t/lib-unicode-nfc-nfd.sh | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/git-gui/lib/status_bar.tcl b/git-gui/lib/status_bar.tcl
-index d32b14142f..a680452524 100644
---- a/git-gui/lib/status_bar.tcl
-+++ b/git-gui/lib/status_bar.tcl
-@@ -216,7 +216,7 @@ method _delete {current} {
- # activity, with the context that there are a few situations where multiple
- # overlapping asynchronous operations might want to display status information
- # simultaneously. Instances of status_bar_operation are created by calling
--# start on the status_bar, and when the caller is done with its stauts bar
-+# start on the status_bar, and when the caller is done with its status bar
- # operation, it calls stop on the operation.
+diff --git a/t/lib-bundle.sh b/t/lib-bundle.sh
+index cf7ed818b2..62b7bb13c8 100644
+--- a/t/lib-bundle.sh
++++ b/t/lib-bundle.sh
+@@ -11,7 +11,7 @@ convert_bundle_to_pack () {
+ }
  
- class status_bar_operation {
-diff --git a/git-gui/lib/themed.tcl b/git-gui/lib/themed.tcl
-index f43d84e54f..68c999a9be 100644
---- a/git-gui/lib/themed.tcl
-+++ b/git-gui/lib/themed.tcl
-@@ -4,7 +4,7 @@
- 
- namespace eval color {
- 	# Variable colors
--	# Preffered way to set widget colors is using add_option.
-+	# Preferred way to set widget colors is using add_option.
- 	# In some cases, like with tags in_diff/in_sel, we use these colors.
- 	variable select_bg				lightgray
- 	variable select_fg				black
+ # Check count of objects in a bundle file.
+-# We can use "--thin" opiton to check thin pack, which must be fixed by
++# We can use "--thin" option to check thin pack, which must be fixed by
+ # command `git-index-pack --fix-thin --stdin`.
+ test_bundle_object_count () {
+ 	thin=
+diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+index 11d2dc9fe3..0dd764310d 100644
+--- a/t/lib-rebase.sh
++++ b/t/lib-rebase.sh
+@@ -187,7 +187,7 @@ set_reword_editor () {
+ 			exit 1
+ 		fi
+ 	fi &&
+-	# There should be no uncommited changes
++	# There should be no uncommitted changes
+ 	git diff --exit-code HEAD &&
+ 	# The todo-list should be re-read after a reword
+ 	GIT_SEQUENCE_EDITOR="\"$PWD/reword-sequence-editor.sh\"" \
+diff --git a/t/lib-sudo.sh b/t/lib-sudo.sh
+index b4d7788f4e..477e0fdc04 100644
+--- a/t/lib-sudo.sh
++++ b/t/lib-sudo.sh
+@@ -6,7 +6,7 @@ run_with_sudo () {
+ 	local RUN="$TEST_DIRECTORY/$$.sh"
+ 	write_script "$RUN" "$TEST_SHELL_PATH"
+ 	# avoid calling "$RUN" directly so sudo doesn't get a chance to
+-	# override the shell, add aditional restrictions or even reject
++	# override the shell, add additional restrictions or even reject
+ 	# running the script because its security policy deem it unsafe
+ 	sudo "$TEST_SHELL_PATH" -c "\"$RUN\""
+ 	ret=$?
+diff --git a/t/lib-unicode-nfc-nfd.sh b/t/lib-unicode-nfc-nfd.sh
+index 22232247ef..aed0a4dd44 100755
+--- a/t/lib-unicode-nfc-nfd.sh
++++ b/t/lib-unicode-nfc-nfd.sh
+@@ -74,7 +74,7 @@ test_lazy_prereq UNICODE_NFD_PRESERVED '
+ # Yielding:   \xcf \x89  +  \xcc \x94  +  \xcd \x82
+ #
+ # Note that I've used the canonical ordering of the
+-# combinining characters.  It is also possible to
++# combining characters.  It is also possible to
+ # swap them.  My testing shows that that non-standard
+ # ordering also causes a collision in mkdir.  However,
+ # the resulting names don't draw correctly on the
 -- 
 2.39.5
 
