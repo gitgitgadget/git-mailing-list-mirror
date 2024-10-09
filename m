@@ -1,262 +1,162 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439C318785D
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 07:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDAA17C22B
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 08:05:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728460709; cv=none; b=XgEYQ/onFufUjmD8n2JT9beNhdYeNxmeeyA7tXej7Qnfc1vXWDVy+3ltoKyRzn7OVFhklBXF43iuY0AHJTxVpz858BsPRyO8GR2PUtExuk6xT+GOkI/Pqt15nKFXT0CVAjgSpn/vsyoyDy6GX1BHLc/NaX+3HL4acrIVFOLA0Ss=
+	t=1728461127; cv=none; b=JVjTnZEJawump/S6YvrEui09eq4G14ajR3MbEpp4DKQAngWvvEpwhhMfOrxkHGSW/CNuzGx9e+9a4g6mFmF6X2EmY3U8b3p02IMF61xnvu7d8DdQ2oaF9MiCTjL2slcghs7a9v8kVlv1iW+HpIq0Fa9y2CYUgfTxeY8YgBLoF7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728460709; c=relaxed/simple;
-	bh=gxIAHGM5qqPeR6HQ9auAtcfyzuz2bxbRGIGYEeLLOzo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=sc+PHOWHgJ5ZatIb7PtV/W8QY7a3Y3Hgw6YwJoqAtmWpnddnEpXgpYR2iRmrTYzC2NUFmOXvn2ZcJrdLm22rFRpvR7WwUdnWwGmWP9XSOI2qz4Iknnut+Y0C7wUIdg9exLlicCRpmb/pvdmjSjQsrSvKSqKvdSCo2+LWqDSu37g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SLBEcx97; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728461127; c=relaxed/simple;
+	bh=it5zOTxYQcQwohDYBPch40ofvdUaoBPEJH4a3N86/Sc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qexBDg4OJ8NG1ouf3YOhVSGQzVfl2LKVh81TlcDjg/GwJzEihBw9y5gZXe6cTx/UVoCWP+LNAAam0R4DTaI6r7j9uOnfb5oVsJfNgyLOnAlWlKnJWXNUSi50pDXkAHMy1j8k4EXWXcNKoEXBKA/Tx8BvovEWOCkf62wA2ueuoxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I8mmgP5t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mB/LBcwI; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SLBEcx97"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2fad100dd9fso94135231fa.3
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 00:58:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728460705; x=1729065505; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZeS2pvSlRuc7GfnujIl/tRD2Qzg5WU4sxuY0Rb3pfiU=;
-        b=SLBEcx97gOcPRGjgNnQpzMwZe9l29Ht25z/0q9ZCVzwuNYEj99gRkiyz/zQIAIcRmN
-         7glhGuHjSPvhYpwPtdfEB9ho5ZPRLE4C4RSS/kTj1trRC3itX5oHB9dq2pVIYDCqfLYD
-         Vmg70aSyjkRpBFtW5fmmDgxC5o3t4A4V0Ekh/TgAbMgPUkEt1jUuOVdSbNcbkWWDDw/P
-         lg358fn7nwJ8KhdeNHeSDqCHhXW6bhGDKs0d5uyWq2qYbU84AOW/JdtOQrpOdmQu0bmq
-         bcCBXZrf0afM6nCq5ymWilv6kON8U8QbQuZe0ra9cfZnF9WkAUiaFyhWqPiC1g7Gvklz
-         QOMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728460705; x=1729065505;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZeS2pvSlRuc7GfnujIl/tRD2Qzg5WU4sxuY0Rb3pfiU=;
-        b=rGqVAyTLy2oRGvX3W1MY0tGbMLBGlTtiIAMMKEDmBNSuO+m56b549crnKD1uwjfPn1
-         0p0RDMZAGifjYvjCXSaxW94PC31J+Hg/QSFfWn7clPVoyGS+hiUZDcDmQ0+brx0gnfLY
-         fPI4R3f4oY5gj0PRbeY2BdVtrWtzz6DD3Szxa78pcQYvov8C7oC1Gtp8eneY/K+NuutI
-         /V5fH4qXOSzAsufznM2/I7iQYoeyjdprC7+zY2e0aDUVwFeXOmxWgyzzksH1eGC2hb+3
-         03bqZh7En2CtZUW8JZw0HyjvXq4sBFsJXevJkEfLmpHjT5UK1IxuD3cHwcDPndw1lLi1
-         zvwg==
-X-Gm-Message-State: AOJu0YzIoxZtl7C1kz3tRWpi63skxO/2wB17jl7rGj80fSFFICUv7Wbp
-	IciT3sU7wW6yhkq107qAVBsV6bNTGev+hoGz/hcl67TF0KlRgLJMu29kHQ==
-X-Google-Smtp-Source: AGHT+IEEBX/CpgPELfFoyfy8U4XJNEc78MFZbQteuBZjyK1qUxdsWR+PP/6vdlnYzZcmxo20KK5akg==
-X-Received: by 2002:a05:6512:4028:b0:539:8d2c:c01a with SMTP id 2adb3069b0e04-539c48e2bc9mr1228731e87.29.1728460704487;
-        Wed, 09 Oct 2024 00:58:24 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9944839974sm500996466b.218.2024.10.09.00.58.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 00:58:24 -0700 (PDT)
-Message-Id: <19d8253da07624aa14ec78d00b549bba8799c55c.1728460700.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1784.v3.git.git.1728460700.gitgitgadget@gmail.com>
-References: <pull.1784.v2.git.git.1728084140.gitgitgadget@gmail.com>
-	<pull.1784.v3.git.git.1728460700.gitgitgadget@gmail.com>
-From: "Nicolas Guichard via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 09 Oct 2024 07:58:20 +0000
-Subject: [PATCH v3 3/3] rebase-merges: try and use branch names as labels
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I8mmgP5t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mB/LBcwI"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id C1ADF138047C;
+	Wed,  9 Oct 2024 04:05:24 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Wed, 09 Oct 2024 04:05:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1728461124; x=1728547524; bh=4UwPOoYwvs
+	t1ocwWJ8TAs6/WuU0ZDjtLk+rruKsYf40=; b=I8mmgP5tDdEXG+fa8Up1KMcfHg
+	3TbZYnaAMuy6/oK9vL5rkBGYPsazuXEgKsWkiXYPLs25HUTxOi4pq/anf79KOenk
+	ZHd2ZN5huiqKX6d/zKH1OwYLtibqAMUu4k4xcO8NJdmC+GhakfWcuSyRnZ7WR0e6
+	rI+e74nX11TReKAy7Q34GaVz228+1dPzl/BKKcGP6bttI8i5DZMpJmzLkoOah/c5
+	v4ECsEoYyLkp7o5YvR4oXxca3tb4K1K2s6ITl/vgqnll7Ygf1vSu8nfYL7DZNa3r
+	a4pG5Q0r7CA7NLtUqXHvSvFCR0rEzWtLSOqCoE6aJeV04ztWmgYpdt8CbMTw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728461124; x=1728547524; bh=4UwPOoYwvst1ocwWJ8TAs6/WuU0Z
+	DjtLk+rruKsYf40=; b=mB/LBcwIn7PBcAU80IUE6B8e3xAAo4oOARIX6TzYfOqq
+	FyAwoe6kRF1MBQyf7WaQss6FjCSmvO77h4Ek0Jg2RyHiucAg0rbXWmjMJFTcuBRs
+	vxf0BqNgb1C12Uu/d9DK4XVTZhD/9V4Xc7lsN2b0lh2roBzjwG+LLSSbgiSsK1kb
+	FYQvJcWhUDgrgsav9B4/jtam+N4/mq5rFK8uBneMuRh1duHxqMeOajXp3QJYhGOD
+	qvtPFXnUS9PxENBPXhbFzL+ZrEm13plEPy/7J6JXm4zfgO1nDusjvSI/7D4ikk6e
+	eG53+96j1LhLLG6MYNni+pG2LgdH9gtaL0lNU2vSCg==
+X-ME-Sender: <xms:RDkGZ8kRkd4NizXOiQt5lDF18uJ-mp7bjPoNYEzdzZOhNQVNHLkbog>
+    <xme:RDkGZ71EARX-jVNwIhDgnumRrrfIu_LIaTzPc6y6TvJyf-3gbqriw_4CCeDYbtHYm
+    Ar_thLfILwQHgs6dg>
+X-ME-Received: <xmr:RDkGZ6pq6FDcLg2tV21qgUkgru94tBLlnYA6jnFXV9hLkQs5U_ZA66p9B26jVR-j3zmTZoyZfqmvgHAxFH_ojVxZIGxzZ3SeRr6WRhauhug7nA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffecutefuodetggdotefrodftvfcurf
+    hrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffrtefo
+    kffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsuc
+    dlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhr
+    ohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenuc
+    ggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffh
+    ueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+    hrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhp
+    ohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhh
+    ihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:RDkGZ4mSZUjHXyqe4y1EknBSceJKPrcNvMQiMLVJXi0n-YIf8hwP-g>
+    <xmx:RDkGZ60-djUmXox0ZPQ97RzaWch_ad6-wEFAopEjzcP5_L8CcVvTqw>
+    <xmx:RDkGZ_u5Ck7I6-va0ZTHKpSqHZu6TG-iBpPdDzgigl1o3o4IupdxhQ>
+    <xmx:RDkGZ2VDqm36XD3Sb5yCDtSqxEQS0tC8k0HpJTonTsEfq413bgtf5Q>
+    <xmx:RDkGZ9T5WLB94WUhVQ-Tgj6rX5AvsDCZs_qkf4OOoNPy9f3c3Ux08x_Z>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Oct 2024 04:05:23 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id dced6617 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 9 Oct 2024 08:04:19 +0000 (UTC)
+Date: Wed, 9 Oct 2024 10:05:19 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: shejialuo <shejialuo@gmail.com>, Karthik Nayak <karthik.188@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v5 3/9] ref: port git-fsck(1) regular refs check for
+ files backend
+Message-ID: <ZwY5O63OI01LZX1u@pks.im>
+References: <Zvj-DgHqtC30KjJe@ArchLinux>
+ <Zvj-osCNDMrUQv83@ArchLinux>
+ <CAOLa=ZQ3Gytt4Lsttxws3DWqbjteJS8mXvZSPzDwBJi_ALS03Q@mail.gmail.com>
+ <ZwUkZuCtYu7niuFM@ArchLinux>
+ <xmqq5xq232wa.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-    Eric Sunshine <sunshine@sunshineco.com>,
-    Nicolas Guichard <nicolas@guichard.eu>,
-    Nicolas Guichard <nicolas@guichard.eu>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5xq232wa.fsf@gitster.g>
 
-From: Nicolas Guichard <nicolas@guichard.eu>
+On Tue, Oct 08, 2024 at 10:44:53AM -0700, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
+> 
+> > On Tue, Oct 08, 2024 at 12:43:20AM -0700, Karthik Nayak wrote:
+> >> shejialuo <shejialuo@gmail.com> writes:
+> >> 
+> >> [snip]
+> >> 
+> >> > +	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
+> >> > +		ret = fsck_report_ref(o, &report,
+> >> > +				      FSCK_MSG_BAD_REF_CONTENT,
+> >> > +				      "cannot read ref file");
+> >> > +		goto cleanup;
+> >> > +	}
+> >> > +
+> >> 
+> >> Shouldn't we use `die_errno` here instead? I mean, this is not really a
+> >> bad ref content issue. If we don't want to die here, it would still
+> >> probably be nice to get the actual issue using `strerror` instead and
+> >> use that instead of the generic message we have here.
+> >> 
+> >
+> > Well, I think I need to dive into the "open" system call here. Actually,
+> > we have two opinions now. Junio thought that we should use
+> > "fsck_report_ref" to report. Karthik, Patrick and I thought that we
+> > should report using "*errno" because this is a general error.
+> 
+> What do you mean by "a general error"?  It is true that we failed to
+> read a ref file, so even if it is an I/O error, I'd think it is OK
+> to report it as an error while reading one particular ref.
+> 
+> Giving more information is a separate issue.  If fsck_report_ref()
+> can be extended to take something like
+> 
+>     "cannot read ref file '%s': (%s)", iter->path.buf, strerror(errno)
+> 
+> that would give the user necessary information.
 
-When interactively rebasing merge commits, the commit message is parsed to
-extract a probably meaningful label name. For instance if the merge commit
-is “Merge branch 'feature0'”, then the rebase script will have thes lines:
-```
-label feature0
+Yeah, this is also in line with what I proposed elsewhere, where we have
+been discussing the 1:1 mapping between error codes and error messages.
+If the error messages were dynamic they'd be a whole lot useful overall
+and could provide more context.
 
-merge -C $sha feature0 # “Merge branch 'feature0'
-```
+> And I agree with half-of what Karthik said, i.e., we do not want to
+> die here if this is meant to run as a part of "git fsck".
+> 
+> I may have said this before, but quite frankly, the API into the
+> fsck_report_ref() function is misdesigned.  If the single constant
+> string "cannot read ref file" cnanot give more information than
+> FSCK_MSG_BAD_REF_CONTENT, the parameter has no value.
 
-This heuristic fails in the case of octopus merges or when the merge commit
-message is actually unrelated to the parent commits.
+True in the current form, yeah. If `fsck_report_ref()` learned to take a
+vararg argument and treat its first argument as a string format it would
+be justified though, as the message is now dynamic and can contain more
+context around the specific failure that cannot be provided statically
+via the 1:1 mapping between error code and message.
 
-An example that combines both is:
-```
-*---.   967bfa4 (HEAD -> integration) Integration
-|\ \ \
-| | | * 2135be1 (feature2, feat2) Feature 2
-| |_|/
-|/| |
-| | * c88b01a Feature 1
-| |/
-|/|
-| * 75f3139 (feat0) Feature 0
-|/
-* 25c86d0 (main) Initial commit
-```
-yields the labels Integration, Integration-2 and Integration-3.
+> The fsck.c:report() function, which is the main function to report
+> fsck's findings before fsck_report_ref() was introduced, did not
+> have such a problem, as it allowed "const char *fmt, ..." at the
+> end.  Is it too late to fix the fsck_report_ref()?
 
-Fix this by using a branch name for each merge commit's parent that is the
-tip of at least one branch, and falling back to a label derived from the
-merge commit message otherwise.
-In the example above, the labels become feat0, Integration and feature2.
+I don't think so, I think we should be able to refactor the code rather
+easily to do so.
 
-Signed-off-by: Nicolas Guichard <nicolas@guichard.eu>
----
- sequencer.c                   | 25 +++++++++++++++++--------
- t/t3404-rebase-interactive.sh |  4 ++--
- t/t3430-rebase-merges.sh      | 12 ++++++------
- 3 files changed, 25 insertions(+), 16 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 97959036b50..353d804999b 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -5819,7 +5819,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 	int root_with_onto = flags & TODO_LIST_ROOT_WITH_ONTO;
- 	int skipped_commit = 0;
- 	struct strbuf buf = STRBUF_INIT, oneline = STRBUF_INIT;
--	struct strbuf label = STRBUF_INIT;
-+	struct strbuf label_from_message = STRBUF_INIT;
- 	struct commit_list *commits = NULL, **tail = &commits, *iter;
- 	struct commit_list *tips = NULL, **tips_tail = &tips;
- 	struct commit *commit;
-@@ -5842,6 +5842,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 	oidmap_init(&state.commit2label, 0);
- 	hashmap_init(&state.labels, labels_cmp, NULL, 0);
- 	strbuf_init(&state.buf, 32);
-+	load_branch_decorations();
- 
- 	if (revs->cmdline.nr && (revs->cmdline.rev[0].flags & BOTTOM)) {
- 		struct labels_entry *onto_label_entry;
-@@ -5902,18 +5903,18 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 			continue;
- 		}
- 
--		/* Create a label */
--		strbuf_reset(&label);
-+		/* Create a label from the commit message */
-+		strbuf_reset(&label_from_message);
- 		if (skip_prefix(oneline.buf, "Merge ", &p1) &&
- 		    (p1 = strchr(p1, '\'')) &&
- 		    (p2 = strchr(++p1, '\'')))
--			strbuf_add(&label, p1, p2 - p1);
-+			strbuf_add(&label_from_message, p1, p2 - p1);
- 		else if (skip_prefix(oneline.buf, "Merge pull request ",
- 				     &p1) &&
- 			 (p1 = strstr(p1, " from ")))
--			strbuf_addstr(&label, p1 + strlen(" from "));
-+			strbuf_addstr(&label_from_message, p1 + strlen(" from "));
- 		else
--			strbuf_addbuf(&label, &oneline);
-+			strbuf_addbuf(&label_from_message, &oneline);
- 
- 		strbuf_reset(&buf);
- 		strbuf_addf(&buf, "%s -C %s",
-@@ -5921,6 +5922,14 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 
- 		/* label the tips of merged branches */
- 		for (; to_merge; to_merge = to_merge->next) {
-+			const char *label = label_from_message.buf;
-+			const struct name_decoration *decoration =
-+				get_name_decoration(&to_merge->item->object);
-+
-+			if (decoration)
-+				skip_prefix(decoration->name, "refs/heads/",
-+					    &label);
-+
- 			oid = &to_merge->item->object.oid;
- 			strbuf_addch(&buf, ' ');
- 
-@@ -5933,7 +5942,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 			tips_tail = &commit_list_insert(to_merge->item,
- 							tips_tail)->next;
- 
--			strbuf_addstr(&buf, label_oid(oid, label.buf, &state));
-+			strbuf_addstr(&buf, label_oid(oid, label, &state));
- 		}
- 		strbuf_addf(&buf, " # %s", oneline.buf);
- 
-@@ -6041,7 +6050,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 	free_commit_list(commits);
- 	free_commit_list(tips);
- 
--	strbuf_release(&label);
-+	strbuf_release(&label_from_message);
- 	strbuf_release(&oneline);
- 	strbuf_release(&buf);
- 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index f171af3061d..4896a801ee2 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1870,7 +1870,7 @@ test_expect_success '--update-refs adds commands with --rebase-merges' '
- 		pick $(git log -1 --format=%h branch2~1) F
- 		pick $(git log -1 --format=%h branch2) I
- 		update-ref refs/heads/branch2
--		label merge
-+		label branch2
- 		reset onto
- 		pick $(git log -1 --format=%h refs/heads/second) J
- 		update-ref refs/heads/second
-@@ -1881,7 +1881,7 @@ test_expect_success '--update-refs adds commands with --rebase-merges' '
- 		update-ref refs/heads/third
- 		pick $(git log -1 --format=%h HEAD~2) M
- 		update-ref refs/heads/no-conflict-branch
--		merge -C $(git log -1 --format=%h HEAD~1) merge # merge
-+		merge -C $(git log -1 --format=%h HEAD~1) branch2 # merge
- 		update-ref refs/heads/merge-branch
- 		EOF
- 
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 2aa8593f77a..cb891eeb5fd 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -108,19 +108,19 @@ test_expect_success 'generate correct todo list' '
- 
- 	reset onto
- 	pick $b B
--	label E
-+	label first
- 
- 	reset onto
- 	pick $c C
- 	label branch-point
- 	pick $f F
- 	pick $g G
--	label H
-+	label second
- 
- 	reset branch-point # C
- 	pick $d D
--	merge -C $e E # E
--	merge -C $h H # H
-+	merge -C $e first # E
-+	merge -C $h second # H
- 
- 	EOF
- 
-@@ -462,11 +462,11 @@ test_expect_success 'A root commit can be a cousin, treat it that way' '
- '
- 
- test_expect_success 'labels that are object IDs are rewritten' '
--	git checkout -b third B &&
-+	git checkout --detach B &&
- 	test_commit I &&
- 	third=$(git rev-parse HEAD) &&
- 	git checkout -b labels main &&
--	git merge --no-commit third &&
-+	git merge --no-commit $third &&
- 	test_tick &&
- 	git commit -m "Merge commit '\''$third'\'' into labels" &&
- 	echo noop >script-from-scratch &&
--- 
-gitgitgadget
+Patrick
