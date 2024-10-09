@@ -1,86 +1,87 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F5E19ABB4
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 14:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510C719ABB4
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 14:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728485804; cv=none; b=suc+my6yb5ddePn+VtVfXwO1qPmfRJzG6XOzIhEGs4QHfNP2e7daFuexbo9fwMyFs/hUWTmlPEkVuRALlbUiMa6pBXC9aPhoqvsIe0TNm4b3Oy8Z85UbPh052v+Yoyrhan0rnwTVnravYgm6yNcTl4p1XddpEU59AX5Yp4pzRTg=
+	t=1728485807; cv=none; b=KMMBqLhLlf8pj10jyqonDlxN1BSf6JNxxXEE5TWJGKZHeGpMX43ZvXY+/s+twouPqbOBMfojK+/m6vlwsIgixuge/L/2w/RNtCM61AzsMjsP9zl6VHepLUZpr1rOekBgzHYaRIPNyjGticcGt6J3bxlSZ0yweqTQe4i2MyKBdfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728485804; c=relaxed/simple;
-	bh=kNfiY0nZiQdr8/PQWWx8B/jOLPij4m/0of+73XP5QNE=;
+	s=arc-20240116; t=1728485807; c=relaxed/simple;
+	bh=eZDN8vTPDZkLkCbsgVDKUtL8DHla4HnHRiZI5yXLqjE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qXb+6uBD5QwAZ2ezEYlUPEMFPNou5aNX2S0EZIBl6NPQmu2A6Ly1KmI2AL1Mp2n/09cq/phm0dc2D6MGyNr4zQhjRkSZj0WDuGxuLTVhnZbnRKWO4rJlp88rLzo9oNlWqPgN0n9wA8K752UKNPvvnM0SMbRzqkMAtNigagNCdKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e8TagWIL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LMDH92Zq; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=ORqwxgYYCLrbZr8MUj1Ef1H1vB60VPhDr14zXcLJzMmRgcBVF/JqLamBbJTApeL4T/PLbcfgjiIpGh+GsgDnfTEnLxBcrCFXn1pLV4Tuw4bmszTTBNnRZda+EqirInjSJBN+iWasaCDaSxgeuYzp69x98bk6Woaz7HA82EYYm1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MFL85whz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hTadlg83; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e8TagWIL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LMDH92Zq"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CED821140170;
-	Wed,  9 Oct 2024 10:56:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MFL85whz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hTadlg83"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5934111401C0;
+	Wed,  9 Oct 2024 10:56:45 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 09 Oct 2024 10:56:41 -0400
+  by phl-compute-07.internal (MEProxy); Wed, 09 Oct 2024 10:56:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728485801; x=1728572201; bh=Bogt4+iT0R
-	BusDmJrhAyRYq1hr55jIYxp2MCUYsPP8s=; b=e8TagWILvah095e1e+5+WZ/oEE
-	Cx9ih8gA0M6y8UfEAu/vtBOVoz8WDJ+P9BjxAXnrdYSoA6sssjCF1DHjljkopV1W
-	rgsYE2jKtjU8kZSETw/ENoZ6TsL8W5NfftVZxehqgM9bzwW7J0DR3V1psj1sOO/b
-	4W+JDv0EvsrO+4T9tLvvqCk3zEE/2aljwnQr1xe+G5AdaqT43gN3veJGBqb7BJhM
-	ELE2LxoqJxT0AEOS5oQgAOs4DIfGfTCSXM88yltikGRUih+IcRjTXgnPRS/+O20w
-	SRpjYvD9ShoMtkFQ45AE2kH8BhkYmfu6yudIfmutWS4KaR8Wf8RPcEZT3Kgw==
+	:subject:to:to; s=fm2; t=1728485805; x=1728572205; bh=5DiS/1/xM3
+	0Sr1Il2mV2ExXQNnP7gvUibDkC05llDI0=; b=MFL85whz2enQH6cEjBtnpiu6f3
+	lh4dgsVrdFWip5N5v0Fxws45Hk5MurkBrAc6VflGGxaWnlIPuZNGShDp5Y2lRdid
+	KatKZZWH3/dfou9lusmk+dJZr3kJkNMaTX27AVCnFBV8ulhmoR84OOPryrUpJPqI
+	gkIgDSJxOsfJSFLxDJzv3J7uDa+E3sHqQqTOCdjIoMhcXVDct2GX8kFQ5V6aDuzL
+	wgWih78PfGSuXNp8vUf1CSf9HpTtz7honFLb1WxQ5eb4XSQsH2lOnGCL4FVox3Jy
+	Qfa+0B+ocCU7pWapxnox7E21JasNXRignVnSewEbaTbieM5yovXhLjzl34Og==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728485801; x=1728572201; bh=Bogt4+iT0RBusDmJrhAyRYq1hr55
-	jIYxp2MCUYsPP8s=; b=LMDH92ZqPYbQ/T9PlDw50v8cStwye5IfqI/kEWOZobRf
-	EXp8QZKZCmP5VFkjygGl0D1EKhdNv7XrJ/LDCv8iX5OAnBbgxxw6ukE0dP6WWOq9
-	iH58RN0eJJy8wOYcSTei9DpjnRDS5OCmRhLgYS3IIYsKCYkJDR1+Asws5H/fAY/M
-	N9orIkrVM4BDCzJw4BeNmPqeygBJpOu/ALFrcyQcwkhDGmfmhChxqFy+QuZ1Tybh
-	y65K79ui09E0iL573gv3d5PilHK9SjTswgp7D3iz9nq2JTJ0nVKXuW/dVik7lR5I
-	MG8tTCCZ4SKb1iu3hY1J96/eKum73U1Yz3WphLusbA==
-X-ME-Sender: <xms:qZkGZ4NeqS3jQdp7RpFccoj3E07sZSXe-li6wI_IzKcyXPMA3Fv2Pg>
-    <xme:qZkGZ-8LwZ7rwc4NB2QqggINJsO6I8Toiam_CPo7r6e9oWjJZVITmVYSEKELH3ocR
-    UkNfEh1iZ4iBh48Bw>
-X-ME-Received: <xmr:qZkGZ_Qmn0ISdChF2M-utI6rJ0cej5H36aBT0y1GWN-VbGc2e7U2k5Pr1UQIqNuQM2ccLqbFR8h1EbqnE4lY_bhLNHKjK-VjXU4so17F0bS2Kw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgkeehucetufdoteggodetrfdotf
+	fm2; t=1728485805; x=1728572205; bh=5DiS/1/xM30Sr1Il2mV2ExXQNnP7
+	gvUibDkC05llDI0=; b=hTadlg83Fg40o08ebUfBNCCaihKAgHIuFgqSowLbl77J
+	LDyfYkCrvDdp+HjsgDI/Cd5HPh+FFq4bfmjv+toshJ//qfQFFutMNghuM/Zd+dPw
+	LxYysOGz/p2M52rxypc53WbbbEnZPSnLhBwogNXwJmxMwPH8z+GwJIrKMMSmii51
+	1fx44IxPav9IM8QEYsS6G9GR2RmdHMw9LggJWaSGvvFC/7aciNL43GRlhSFUS30c
+	gOypKpk4vLKWB91fXqxQ+1PtV7kuKHR1Sp5SIXDrQSXHL3/TPmPwFhSfkSPvcHQQ
+	YCdg9ijWJmxNAgdlPtkwUEky5t4IR7TRJJvSyjlJ5g==
+X-ME-Sender: <xms:rZkGZ5fo6GeET4a8hisMi7GBsnaBWV-DWt5mO-_Hu5WgGBZHlRb9gw>
+    <xme:rZkGZ3POTCSEyfFzjvLZBWJE82KBPSfLcRh_EVq1LnOOZDCCiT3Tr2ru0WFqUE45Q
+    a1LJD1Tf8mflgeNRQ>
+X-ME-Received: <xmr:rZkGZyiRk3nBAmtXvk56KUjHOL7p-fzZmpKZ2tZHKh5NO22k-NsYIccWQ4RZ9p4xKID3Bqk31CCOwhIgoRVhKN_0DZGLLJ8f_B_sObIyZG3F6g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgkeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhifrg
-    hrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhs
-    hhhinhgvtghordgtohhm
-X-ME-Proxy: <xmx:qZkGZws6liBhB_UNjjJRfyDzn4BULt_BK1Dsf69f2LEXRa28sFHaaQ>
-    <xmx:qZkGZwddhCBsbY1nv2WXI5oeyrcm7c6pS3fZtDjCHXNZj71Qh1x8Ew>
-    <xmx:qZkGZ02CShm5F5k1Xh22v4f8h1cTAO6DT7C7TBoCX5AX60YTX-dXug>
-    <xmx:qZkGZ086ZA17hQQjvMIAn7BOkN16yaQcu0AovohOVI6tbd94JiesWQ>
-    <xmx:qZkGZ1F96V-NnswL_Mt5UcRQ2EVMl0YOHbn65_GIqyPc11aLst4MNW-1>
+    mhhtphhouhhtpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsuhhn
+    shhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdef
+    sehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:rZkGZy8qAh6Jc1q9iXH2aRews8pVKjbkrhhcvaNneHPB33Wk6-esZA>
+    <xmx:rZkGZ1v0aZo6iCiGbVDZQeNNUPNSVLSrqpNm4I6HQbzZCLg0HVpnFw>
+    <xmx:rZkGZxFpcZ_plvFoT73UdAyAt_QfDLcVgnrJdmPadGp3qpwcBxRYXw>
+    <xmx:rZkGZ8OT-NPtHz9QYvzK6Z9z7uMRGL8P7eQmBQO4lxXxjC10Y_s-7g>
+    <xmx:rZkGZzW0j_zsod4d_ifLwC4bKVc_0360mnHVOIuufihRzakVQxRlpxAa>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Oct 2024 10:56:40 -0400 (EDT)
+ 9 Oct 2024 10:56:43 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f4a60c0c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 9 Oct 2024 14:55:37 +0000 (UTC)
-Date: Wed, 9 Oct 2024 16:56:38 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6b693e43 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 9 Oct 2024 14:55:41 +0000 (UTC)
+Date: Wed, 9 Oct 2024 16:56:41 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eli Schwartz <eschwartz@gentoo.org>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH v2 11/24] http: fix build error on FreeBSD
-Message-ID: <e4ef4bdf1c562b6ab30a315fe46ff95d57bf7bd9.1728485139.git.ps@pks.im>
+Subject: [RFC PATCH v2 12/24] Makefile: extract script to generate clar
+ declarations
+Message-ID: <6ea97bc92f2ae09d406c445fd8dad1fe803cec19.1728485139.git.ps@pks.im>
 References: <cover.1727881164.git.ps@pks.im>
  <cover.1728485139.git.ps@pks.im>
 Precedence: bulk
@@ -93,52 +94,56 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728485139.git.ps@pks.im>
 
-The `result` parameter passed to `http_request_reauth()` may either
-point to a `struct strbuf` or a `FILE *`, where the `target` parameter
-tells us which of either it actually is. To accommodate for both types
-the pointer is a `void *`, which we then pass directly to functions
-without doing a cast.
-
-This is fine on most platforms, but it breaks on FreeBSD because
-`fileno()` is implemented as a macro that tries to directly access the
-`FILE *` structure.
-
-Fix this issue by storing the `FILE *` in a local variable before we
-pass it on to other functions.
+Extract the script to generate function declarations for the clar unit
+testing framework into a standalone script. This is done such that we
+can reuse it in other build systems.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- http.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ Makefile                            |  4 +---
+ t/unit-tests/generate-clar-decls.sh | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 3 deletions(-)
+ create mode 100755 t/unit-tests/generate-clar-decls.sh
 
-diff --git a/http.c b/http.c
-index d59e59f66b1..72973175a85 100644
---- a/http.c
-+++ b/http.c
-@@ -2290,17 +2290,19 @@ static int http_request_reauth(const char *url,
- 		case HTTP_REQUEST_STRBUF:
- 			strbuf_reset(result);
- 			break;
--		case HTTP_REQUEST_FILE:
--			if (fflush(result)) {
-+		case HTTP_REQUEST_FILE: {
-+			FILE *f = result;
-+			if (fflush(f)) {
- 				error_errno("unable to flush a file");
- 				return HTTP_START_FAILED;
- 			}
--			rewind(result);
--			if (ftruncate(fileno(result), 0) < 0) {
-+			rewind(f);
-+			if (ftruncate(fileno(f), 0) < 0) {
- 				error_errno("unable to truncate a file");
- 				return HTTP_START_FAILED;
- 			}
- 			break;
-+		}
- 		default:
- 			BUG("Unknown http_request target");
- 		}
+diff --git a/Makefile b/Makefile
+index c094840426c..0d542c58f3a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3906,9 +3906,7 @@ GIT-TEST-SUITES: FORCE
+             fi
+ 
+ $(UNIT_TEST_DIR)/clar-decls.h: $(patsubst %,$(UNIT_TEST_DIR)/%.c,$(CLAR_TEST_SUITES)) GIT-TEST-SUITES
+-	$(QUIET_GEN)for suite in $(CLAR_TEST_SUITES); do \
+-		sed -ne "s/^\(void test_$${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$$\)/extern \1;/p" $(UNIT_TEST_DIR)/$$suite.c; \
+-	done >$@
++	$(QUIET_GEN)$(SHELL_PATH) $(UNIT_TEST_DIR)/generate-clar-decls.sh "$@" $(patsubst %,$(UNIT_TEST_DIR)/%.c,$(CLAR_TEST_SUITES))
+ $(UNIT_TEST_DIR)/clar.suite: $(UNIT_TEST_DIR)/clar-decls.h
+ 	$(QUIET_GEN)awk -f $(UNIT_TEST_DIR)/clar-generate.awk $< >$(UNIT_TEST_DIR)/clar.suite
+ $(CLAR_TEST_OBJS): $(UNIT_TEST_DIR)/clar-decls.h
+diff --git a/t/unit-tests/generate-clar-decls.sh b/t/unit-tests/generate-clar-decls.sh
+new file mode 100755
+index 00000000000..6646a90f711
+--- /dev/null
++++ b/t/unit-tests/generate-clar-decls.sh
+@@ -0,0 +1,18 @@
++#!/bin/sh
++
++if test $# -lt 2
++then
++	echo "USAGE: $0 <OUTPUT> <SUITE>..." 2>&1
++	exit 1
++fi
++
++OUTPUT="$1"
++shift
++
++while test "$#" -ne 0
++do
++	suite="$1"
++	shift
++	sed -ne "s/^\(void test_$suite__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$\)/extern \1;/p" "$suite" ||
++	exit 1
++done >"$OUTPUT"
 -- 
 2.47.0.rc1.33.g90fe3800b9.dirty
 
