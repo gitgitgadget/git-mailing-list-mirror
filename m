@@ -1,65 +1,84 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3541A0BFF
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 19:38:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728502706; cv=pass; b=dUEESB4ABCHSRQdNwin170nHra+yWnsQiRxHbg4mei0Es41OsPzuKYgWleCfDc7MDdEA1rMLbot5E+Mvksz2vR8csiJS42fib7ZoM2fn+/57gg+xlJ1pSFab0OkHCoogT+SeH+VX7/LU+X1ySmzDjMxyrZjZcFQis8CSfHYZOvU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728502706; c=relaxed/simple;
-	bh=VzyAJME2nEnq6XQiVDmP1zJOCJoUkYsFQClTZLmxey0=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=QNLwI/B7jsDgJNJzNzO0GX9j6GEMyxRAfxpNNS3LdOJIy9s/nbjbEdee/HYGTvwv2Gvj0NSL2o0sJuxKOyzm0iy6FHSr3QmCG/edCtd78GoG6nUqQqBriEpTjaNmlTvch0Z+emCNZt/xuafHXwH/4a2mEkarFlZ/R1hSPppvAU4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kibit.lt; spf=pass smtp.mailfrom=kibit.lt; dkim=pass (1024-bit key) header.d=kibit.lt header.i=monika@kibit.lt header.b=tqamMPRX; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kibit.lt
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kibit.lt
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189531714A4
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 19:41:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1728502909; cv=none; b=HJBAihKD92qpcPm8Xix0IBwpcb8vTvBBWPiXDizdiW44Gm5QU/nN/fVV94YBbm4Z4gA7zeHW8fdbTbp8NDTjagQZV2slLgZmWDblsYSFOlcCZ7rUAveNajGjPJhlI6mXu3v+YAPpTDB0QrvDAgkDnqtQJyNa+pMZcEllfByou6I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1728502909; c=relaxed/simple;
+	bh=druRtb8TgQtI58pefgXT9+z55CFxsSKlJ6oWXnKkHs4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W5Gt+kC9AmokZUHEoBD85lbaSKLMlQm1AdGDBU3nnzfE0+tfJP/R7fACu9vcW7+I+br0PRNOsm8yENV0ML3UHl30r+kyS6tGLSykJkpgynQ5NW7jOZH8jYK2I6jYn2BZ1Z/rSyDKgaSyE3CjJaupROy00fo7oOuMZvEECND1hVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WVEYyqiw; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kibit.lt header.i=monika@kibit.lt header.b="tqamMPRX"
-ARC-Seal: i=1; a=rsa-sha256; t=1728502689; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=XG/5C1Eb4KYCUzWAsWRYkE/Ms1PFYfO9NZB0an7UeXMixQmbyXKSaEMoMCHsE25g62XUVtEWRN8luJXts/TQIk1S98jq3pxJFT/sdPHT4QsSPpxXCqIS+PUvsvwTvA+uTNaVaat1NduOhOmRAsJkePB44YJQl6SHE8DWkDABVvk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1728502689; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=KwdRdDLg6I/JZCBdwVRSbP6L2rj49HOzRLmqv+6JAKg=; 
-	b=FZ5yKpNWqx5G160KSAik1pCfX6bgv/W7b1N8pRq365It7NeAPRznqjoPA5HycugMeIdEQ2PxO1xNfoz9mDxl3L2FGFg3TOv7d+EfXMv3Edx5Xog1EJsUt1v6dMJd5FZEAP5EUBH2l97vytRJe0XlCtZ1S2W/eqPBA+eeNZq7laE=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=kibit.lt;
-	spf=pass  smtp.mailfrom=monika@kibit.lt;
-	dmarc=pass header.from=<monika@kibit.lt>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1728502689;
-	s=zoho; d=kibit.lt; i=monika@kibit.lt;
-	h=Message-ID:Date:Date:MIME-Version:To:To:Cc:Cc:References:Subject:Subject:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=KwdRdDLg6I/JZCBdwVRSbP6L2rj49HOzRLmqv+6JAKg=;
-	b=tqamMPRXMTyw0muhhRVYPA2UBlCDvOoczKZcqoCoUI3TUl7p7tzu47oyml1GNH1T
-	LHV/3bqhYXZf6sUMJeP6un/7JMCX5NnEIqn2OGui7bXNfrGAAPFWQU45CAHDtMpVI5O
-	RanPq/jKDfCNUIalOmYzoZe9Le3RlqTtynPJ2lRY=
-Received: by mx.zohomail.com with SMTPS id 1728502687901608.342862583636;
-	Wed, 9 Oct 2024 12:38:07 -0700 (PDT)
-Message-ID: <d036a759-dd1d-4d09-8a60-d0a98fffeada@kibit.lt>
-Date: Wed, 9 Oct 2024 22:38:17 +0300
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WVEYyqiw"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-208cf673b8dso1098615ad.3
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 12:41:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728502907; x=1729107707; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cVi56HnFwzc+jjeM2m7juAX160TDpWt1LnJc/djFcKM=;
+        b=WVEYyqiwTxyD6455uC7Xhz1g1uK6iPecgvMjlfgQNpu0oaQV4StwHrCAJ1vrJ3Mu+c
+         3xv7OsTVimeH6y46ufYLRc/2AlV3weMZGmHLyaFTOhBxPIRZa42UrpZ1WnpgSA7qKddx
+         iMDLtFLmzf9hXiOI0I7o3VFRhX6QjU5VDO4Y+/KFuR19F4dSspzysQHNC6EQe7LXr0Qv
+         gELW2lANpa9SjTHD570NHHV9PhHF+J3y02rUJavlGhqcM3Q7Vmw2LeVS16avRYv4QQLj
+         HswpZ5KDdK7dI3K/SdT2Y0v/NkAnu5t/b0HBxjlOOxxzLEFyzXVMhwIx07EckhWP98Ck
+         jSbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728502907; x=1729107707;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cVi56HnFwzc+jjeM2m7juAX160TDpWt1LnJc/djFcKM=;
+        b=Ljj8GS/22zfIFN1IlYL4udL/FgBcw7kTm96kFeyUiaez0SC7c4Nlsymj5FgLdmrLnP
+         CCozqcnPhSMXiypamILSlOedE/9S4c0rCL7MC8oIFZnsJWb3oS5g7bbDV00EyyDY3t+w
+         VKTDk4npHgFIuxJPUx4L1vIwOJpyUFsoKIhKlNbpGXYqG+wne3ves/y1Lwrq9cthjq4R
+         B9hVB/DoJ7nrsj7QlfogCDA65tPiPTSmea3/KV02TAYlCxxQjS8coTRHYU7xD09qlscG
+         gJG7pOP0RA46XP4rB5KRtRJ+boE2eqqRNdr8IUPJpGrLaAeSBOFfuXrtF/2J2ESwMcGL
+         iZoA==
+X-Gm-Message-State: AOJu0YzD305sZJZQEJlj0vpq4TS5J/Vtkaq4SbGzyegEwBseA7RQJOy2
+	zlZ6r1eqqU/I0kYLORXhAfl2QnVuRBtHpv7ESZPxvPIudGDS5ii7SUL7o3mYaey7HLDmf3hDa6m
+	xF3PhwkqpUk+Oiby5pkdozI1theBkhJdx
+X-Google-Smtp-Source: AGHT+IEHM0g7hXUXQHeWx2znJKqQFwcuNwnYDWLjMAAhL9nSlh2veIHblDAiSI0fOhxgIpdxqT/TKhZkIENubtZCpGM=
+X-Received: by 2002:a17:902:e841:b0:20b:9062:7b08 with SMTP id
+ d9443c01a7336-20c6377f2e3mr43316885ad.45.1728502907297; Wed, 09 Oct 2024
+ 12:41:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: gitster@pobox.com
-Cc: git@vger.kernel.org, gitgitgadget@gmail.com, monika@kibit.lt
-References: <xmqqy137wtyz.fsf@gitster.g>
-Subject: Re: [PATCH] documentation: add missing word "ref"
-Content-Language: en-US
-From: Monika Kairaityte <monika@kibit.lt>
-In-Reply-To: <xmqqy137wtyz.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
+References: <CAOLa=ZRMaw-PAsZ9s0zJ2zp_suMppi=ZrT67B__LU1tWZSvuUQ@mail.gmail.com>
+ <xmqqcyk9rtwv.fsf@gitster.g>
+In-Reply-To: <xmqqcyk9rtwv.fsf@gitster.g>
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Wed, 9 Oct 2024 21:41:19 +0200
+Message-ID: <CAOLa=ZThTs=EzFEAHM+aLJ5Eq_E-RPfGrKiceDADsBGJQE859w@mail.gmail.com>
+Subject: Re: [PATCH] loose: don't rely on repository global state
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Sorry for late response, it took a while to figure out replies to 
-mailing list.
+On Wed, Oct 9, 2024 at 8:52=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+> >                       strbuf_addf(&buf, "%s %s\n", oid_to_hex(&kh_key(m=
+ap, iter)),
+> > oid_to_hex(kh_value(map, iter)));
+>
+> The line seems corrupt.  Joining them with one SP in between makes
+> the patch cleanly apply.
 
-Thanks for review and suggested changes. I agree that it looks better.
-
-Cheers,
-Monika
+Indeed. I used `format-patch` and `send-email` right after, I don't
+remember messing with it, but perhaps I did. Thanks for fixing it up
+and checking.
