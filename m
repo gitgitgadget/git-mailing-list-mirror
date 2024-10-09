@@ -1,50 +1,51 @@
 Received: from mout1.freenet.de (mout1.freenet.de [195.4.92.91])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20FE1D318A
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 17:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACE01DFE13
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 17:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.4.92.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728494038; cv=none; b=d8HoO9XBRVxcNBKkzV88X9C+58phLzWp4CAyOAFAo0OwPvjQ7Z2f2zurESuhmoLG12U5eBCTYLnBRuwKrWX3RylLkMSghFiyy0qO5J52pisSViBxfh1PdOxVb0mqnMkjQeSLM9buhl6sHuHCrQ5Or0mzmZFptl2BLE5EAX9+3yU=
+	t=1728494038; cv=none; b=JgGMXl9A57E/HPTn/l3c++9KYOFyLnfmv61W9i5WEg1wsl7gclmucw1HQHLreND0DpQ0DgDzMXS8u2Xe2Ko+b2tIdT31ck6LcTEu6GHVpJcdHL7eGKyxB71FFXOtA9reOiciIpGnzlYKOLfO5xi2wTyDRtBv5Z9bkmYwH9fuVHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1728494038; c=relaxed/simple;
-	bh=8l0iiBT4FCNSAf7dS9pY3If1aYqXgDsVrNgvnajbQLM=;
+	bh=MpZIKiuTSu3RsMYDvqS1LyjBLBZRQrz+taNMCWy7sdQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EWS3E/By3SJqHoCu4k4G7DlPjZJs2mPy1pu6PXn9gKg7wmB9vYOx1jM/4Dqbt0PwDBxjpRe+AKb+hfUn+b9nGPeCbXb/TbxwOVThKp4n/QzDtA/GSlPjxY6D1VhgeQ8MucYDs1B7JKCFNO8bGjMzX0JUfNz3V7cczJPB0SmrQR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de; spf=pass smtp.mailfrom=freenet.de; dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b=dkp89FH/; arc=none smtp.client-ip=195.4.92.91
+	 MIME-Version:Content-Type; b=rRqBbEkNELm0QS2Wu5GHyLOEg94eShJqBtJ9RNx+ft1B7RmKu4I5LHRJ2TTvXubDnZebQN6NfrDd6skbL1Lz4OIkHgMxA0funTwaSHE0uqIvNPdLumoR0eS3A8R+5sx/A9sGX6Oq5eH5WkK2G78WPD4puzh4bTR53wteTge57M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de; spf=pass smtp.mailfrom=freenet.de; dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b=YWfRmljX; arc=none smtp.client-ip=195.4.92.91
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="dkp89FH/"
+	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="YWfRmljX"
 Received: from [195.4.92.127] (helo=sub8.freenet.de)
 	by mout1.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
-	id 1syaFx-00Gyts-Hx; Wed, 09 Oct 2024 19:13:49 +0200
+	id 1syaFz-00GyzE-QM; Wed, 09 Oct 2024 19:13:51 +0200
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
 	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
 	References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
 	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
 	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
 	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ZGhuKBGOSNKKpGnvaJq9CedIQDEMDo/iHQg/RJQy8zU=; b=dkp89FH/oKl3z46SzbLYzGdDvg
-	v1dHQeyG0bipx7IrykBnwPVijdtSVtkq57uH6zLdu2WUspa7jWT85lynMuZ5JIYs/tCddXRyRTZkQ
-	n+JoBcAu/EUCgudtJRv+hPU1lEj6cWH2flh6MiD/hSg22tQI6rnFEcWX7gO5haqLpNOAS4bzzwocV
-	SBmx6CgMFoMUvQBsN2MOK8Aa3Y9VOQhR3it2txhuBYw8tH9uMrwxoqZLB4DdpSQsU7FUst29BLUz6
-	IlkjrwdZHuGeLcgo+0Wu/SbY543rab8DvnIUoEEG8dc29iBhIXuya6lOzUoYO1n1ftK4UpZ/mP8qq
-	M6aS0iCA==;
+	bh=w+uKOaBLqsCS6Gigwe4v00wl5AG83ybJzhKag20bir8=; b=YWfRmljXkfPwnqA8xe2subDpd9
+	KrZiR9vx2Cx6QkLAqhsv/t11AOh71waE3SzjSNxdaV62V5z4Sw9FoC/kHdUBltOz7yA5HmcSiiwlP
+	4JoSfVF0FwjtGPav4LDSPu8wgLX3z5MhU5QwSMRGP0/CdfOw9OdaZTryhgHN3qOdK5AjG7YK37c4f
+	Dr0Es959MEytvFYjG3Kb6HMI25eqGOPSS3O9RKNDShMaD7Mo6DHLaA97Ry7ONK9BOFFGiBa99NeQw
+	f+wP1f9+qikTTfKzcxXj3NddW6v9KQl2AadsBk1S9fx0g381kaY6c+OO0rPDZ7ahqfYUXOuExmb2G
+	cR15IR3A==;
 Received: from p200300e2e7083000dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e708:3000:dacb:8aff:fee0:ca63]:41540 helo=soren-pc.lan)
 	by sub8.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
-	id 1syaFx-004YLd-7H; Wed, 09 Oct 2024 19:13:49 +0200
+	id 1syaFz-004YLd-Ga; Wed, 09 Oct 2024 19:13:51 +0200
 From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
 To: git@vger.kernel.org
 Cc: tboegi@web.de,
 	phillip.wood@dunelm.org.uk,
 	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-Subject: [PATCH] mimgw: remove Compiler Warnings
-Date: Wed,  9 Oct 2024 19:13:41 +0200
-Message-Id: <20241009171342.2354-1-soekkle@freenet.de>
+Subject: [PATCH v2 1/1] [PATCH] mimgw: remove Compiler Warnings
+Date: Wed,  9 Oct 2024 19:13:42 +0200
+Message-Id: <20241009171342.2354-2-soekkle@freenet.de>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <4530b7cc-3f91-4009-977e-97519a5a9f85@gmail.com>
+In-Reply-To: <20241009171342.2354-1-soekkle@freenet.de>
 References: <4530b7cc-3f91-4009-977e-97519a5a9f85@gmail.com>
+ <20241009171342.2354-1-soekkle@freenet.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,29 +54,156 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-FN-MUUID: 1728494029AF00E80A0DFCO
+X-FN-MUUID: 172849403111B178841696O
 X-Originated-At: 2003:e2:e708:3000:dacb:8aff:fee0:ca63!41540
-X-Scan-TS: Wed, 09 Oct 2024 19:13:49 +0200
+X-Scan-TS: Wed, 09 Oct 2024 19:13:51 +0200
 
-Hi Torsten, Hi Phillip,
+Remove some compiler warnings from msvc in compat/mingw.c for value truncation from 64 bit to 32 bit intigers.
 
-I have tried to implement your comments. I add som comments after the verable to explain what there contains.
-I try to do less a possiable changes, the _ssize_t was there before and I change the type on win 64.
-
-Best regards,
-
-Sören Krecker
-
-Sören Krecker (1):
-  mimgw: remove Compiler Warnings
-
+Signed-off-by: Sören Krecker <soekkle@freenet.de>
+---
  compat/compiler.h               |  4 ++--
  compat/mingw.c                  | 25 +++++++++++++++----------
  compat/vcbuild/include/unistd.h |  4 ++++
  3 files changed, 21 insertions(+), 12 deletions(-)
 
-
-base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
+diff --git a/compat/compiler.h b/compat/compiler.h
+index e9ad9db84f..e12e426404 100644
+--- a/compat/compiler.h
++++ b/compat/compiler.h
+@@ -9,7 +9,7 @@
+ 
+ static inline void get_compiler_info(struct strbuf *info)
+ {
+-	int len = info->len;
++	size_t len = info->len;
+ #ifdef __clang__
+ 	strbuf_addf(info, "clang: %s\n", __clang_version__);
+ #elif defined(__GNUC__)
+@@ -27,7 +27,7 @@ static inline void get_compiler_info(struct strbuf *info)
+ 
+ static inline void get_libc_info(struct strbuf *info)
+ {
+-	int len = info->len;
++	size_t len = info->len;
+ 
+ #ifdef __GLIBC__
+ 	strbuf_addf(info, "glibc: %s\n", gnu_get_libc_version());
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 0e851ecae2..5293f4cdae 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -782,7 +782,7 @@ static inline void filetime_to_timespec(const FILETIME *ft, struct timespec *ts)
+  */
+ static int has_valid_directory_prefix(wchar_t *wfilename)
+ {
+-	int n = wcslen(wfilename);
++	ssize_t n = wcslen(wfilename); /*can become negative*/
+ 
+ 	while (n > 0) {
+ 		wchar_t c = wfilename[--n];
+@@ -891,7 +891,7 @@ static int do_lstat(int follow, const char *file_name, struct stat *buf)
+  */
+ static int do_stat_internal(int follow, const char *file_name, struct stat *buf)
+ {
+-	int namelen;
++	size_t namelen; /* contains length of a string*/
+ 	char alt_name[PATH_MAX];
+ 
+ 	if (!do_lstat(follow, file_name, buf))
+@@ -1274,7 +1274,8 @@ static const char *parse_interpreter(const char *cmd)
+ {
+ 	static char buf[100];
+ 	char *p, *opt;
+-	int n, fd;
++	ssize_t n; /* read() can return negativ values */
++	int fd;
+ 
+ 	/* don't even try a .exe */
+ 	n = strlen(cmd);
+@@ -1339,7 +1340,7 @@ static char *path_lookup(const char *cmd, int exe_only)
+ {
+ 	const char *path;
+ 	char *prog = NULL;
+-	int len = strlen(cmd);
++	size_t len = strlen(cmd);
+ 	int isexe = len >= 4 && !strcasecmp(cmd+len-4, ".exe");
+ 
+ 	if (strpbrk(cmd, "/\\"))
+@@ -1956,7 +1957,7 @@ char *mingw_getenv(const char *name)
+ #define GETENV_MAX_RETAIN 64
+ 	static char *values[GETENV_MAX_RETAIN];
+ 	static int value_counter;
+-	int len_key, len_value;
++	size_t len_key, len_value; /* lengt of strings */
+ 	wchar_t *w_key;
+ 	char *value;
+ 	wchar_t w_value[32768];
+@@ -1968,7 +1969,8 @@ char *mingw_getenv(const char *name)
+ 	/* We cannot use xcalloc() here because that uses getenv() itself */
+ 	w_key = calloc(len_key, sizeof(wchar_t));
+ 	if (!w_key)
+-		die("Out of memory, (tried to allocate %u wchar_t's)", len_key);
++		die("Out of memory, (tried to allocate %"PRIuMAX" wchar_t's)",
++			(uintmax_t)len_key);
+ 	xutftowcs(w_key, name, len_key);
+ 	/* GetEnvironmentVariableW() only sets the last error upon failure */
+ 	SetLastError(ERROR_SUCCESS);
+@@ -1983,7 +1985,8 @@ char *mingw_getenv(const char *name)
+ 	/* We cannot use xcalloc() here because that uses getenv() itself */
+ 	value = calloc(len_value, sizeof(char));
+ 	if (!value)
+-		die("Out of memory, (tried to allocate %u bytes)", len_value);
++		die("Out of memory, (tried to allocate %"PRIuMAX" bytes)",
++			(uintmax_t)len_value);
+ 	xwcstoutf(value, w_value, len_value);
+ 
+ 	/*
+@@ -2001,7 +2004,7 @@ char *mingw_getenv(const char *name)
+ 
+ int mingw_putenv(const char *namevalue)
+ {
+-	int size;
++	size_t size; /* lengt of a string */
+ 	wchar_t *wide, *equal;
+ 	BOOL result;
+ 
+@@ -2011,7 +2014,8 @@ int mingw_putenv(const char *namevalue)
+ 	size = strlen(namevalue) * 2 + 1;
+ 	wide = calloc(size, sizeof(wchar_t));
+ 	if (!wide)
+-		die("Out of memory, (tried to allocate %u wchar_t's)", size);
++		die("Out of memory, (tried to allocate %" PRIuMAX " wchar_t's)",
++		    (uintmax_t)size);
+ 	xutftowcs(wide, namevalue, size);
+ 	equal = wcschr(wide, L'=');
+ 	if (!equal)
+@@ -3085,7 +3089,8 @@ static void maybe_redirect_std_handles(void)
+  */
+ int wmain(int argc, const wchar_t **wargv)
+ {
+-	int i, maxlen, exit_status;
++	int i, exit_status;
++	size_t maxlen; /*contains length os arguments*/
+ 	char *buffer, **save;
+ 	const char **argv;
+ 
+diff --git a/compat/vcbuild/include/unistd.h b/compat/vcbuild/include/unistd.h
+index 3a959d124c..1c0096ab21 100644
+--- a/compat/vcbuild/include/unistd.h
++++ b/compat/vcbuild/include/unistd.h
+@@ -14,7 +14,11 @@ typedef _mode_t	mode_t;
+ 
+ #ifndef _SSIZE_T_
+ #define _SSIZE_T_
++#ifdef _WIN64
++typedef __int64 _ssize_t;
++#else
+ typedef long _ssize_t;
++#endif // _AMD64
+ 
+ #ifndef	_OFF_T_
+ #define	_OFF_T_
 -- 
 2.39.5
 
