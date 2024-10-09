@@ -1,89 +1,117 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856C828EF
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 06:18:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D578922EEF
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 06:20:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728454718; cv=none; b=kx/q2OKxJnLSbdPiP0KiVH6uqAUPdrJXvMqUIMVtGds7YSx+pjMGZCI1pFMM0P9d9aEyC28e9p5YaRcV1tguxok1SDu4SMMH09tj5cfnzAN61FWyU/QWd8yJc8QK2bKdLSNNLvvy2sfnuwujLioxncF9MzeUzFQFxlqZuNQGE7U=
+	t=1728454814; cv=none; b=jD5CB4h7pfmR1Efc1yMWpzStozm0d3ez+vUyc6ybQC5o5LvzDVjdWFvlO/58DxoLQvofqQwT+og6oeCoDG7PHGkjMbyHSIwV5fzYh8YEFc5rEPxv8wxH1FPFMu5SSubFlgAi5y6AOERSOFs/bW1Xx7QtfDzC0ZdQ52klWJUd8SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728454718; c=relaxed/simple;
-	bh=Sdu0eMBuncD5Cn2LXC/k1fNLv/zmDEaamVpXhnVZO84=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hJdDN8hGBMoHOmr0NFC5f7cIyJm3JbGH7TTiMlhMjZFbKuTlFYln31SJxz1Sm+k4fFZXS/DCBM/0k/Htet+CCVAvOglf0efjSwARZecIjMh0jBZcJzK/HSONLvABqd1fi0ymYMTX9XBOr0N9BWCVmHjpQ1cBdXtgx2SkcKdmKvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1728454814; c=relaxed/simple;
+	bh=FDC0iVEDWnu9Iq1CDumYFxxr5uQGb+4g7pIUNhzOv2I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h0JZ64DTvQujwCjtLE8PvGlQLrd6b3Yw8Y/5eA+j4B6ahHXTC2oXdK1FEPVYxcDCLzE+dPM5w9xNjMQqK971WgNjkn4BRISgln3X7cwt9mk427wCoDCDJyv1f493YVfldS3EReWivGv13PbYPcsv2Opw9Wg8vIkpAaLeaUebJO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VU7I5BW1; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6cbc9d17305so719126d6.1
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 23:18:36 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VU7I5BW1"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2e29522f0f1so896842a91.0
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 23:20:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728454812; x=1729059612; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UbV8y2zWHU93iJeEpNjpx49qUFwa/2mQidkgrfSjqW4=;
+        b=VU7I5BW1YlzOmMU4xZsS7YvfDWKx7QX2Ld2gy76OwanRUQeNscD+34BUmzvq2Ol/Ht
+         KIIgbH1Bno/I+2OvaKH/6L2PbHKibqCawGEtnGzDMpvFPLVLZZyPh3p91PsY9E1I5CIG
+         MBAh8X4NN4+fB/KC4RzuPA5iih6RcRmBqpUgh39eRWMHXt4QnBqsOtlzFd1WGhZrS/TQ
+         0OZslxr9ATQfG7N4hZzgKLhBN1vFRoC0ZKkHu/QDBdMo9ur4DXsV6Cih/58NZ1kPgtgr
+         znTlgpcvVidshImuNnFOC789d+JbTVrJl0VKEGoMdYO8CezdM/9+80fzwMigCaNKj//d
+         d+Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728454715; x=1729059515;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qfeyj9sNFknSS8k59pzDx1xMe/X5DdM5EemJG8B4Sgs=;
-        b=tfvyTbPGInufNcreSw1K0LaUKQV/emYMcIDcBesoiIV9InZVzrrElL4jfR0/KGX39L
-         m3VmQq30DDySgandWPeTY4CxeQYXzLUJyUlS0vT9N4YbzspxBwHQyAg8TVkkI0SpcdYr
-         DpEwP+E/Eq4p5iVFu/ktofcoaYrJjOXuUQ1f9FG5SmdWxQHPJDagUvFv5QQ98fkN5uQ/
-         O5x0clSwXkzQQfm2Fot3wBJZMm78IgVhWGaaIVLgHaPoM7o7NvBy4bW0cR23+vLgjDUb
-         5Vg+l8NBv1id6ZuCMp6HN+hOd+I0TpchXP8FzLIuDD/quVzhUeonimqosQdfiU7z0JKL
-         OokQ==
-X-Gm-Message-State: AOJu0YwZdrK2IS+zlK25jeBdOlypq8f6kknUT7iDKsiZnZAYF0XD6sqS
-	a2O8B06aR0hPmAHqk+5LjZJdfUGUq6GLyjXENV32M4Tr3vOJzbgYdvLd1ozaxHz6vqq0o3hzUkr
-	5W55Gzarm1osdn+SPS4O4VNSGgqM=
-X-Google-Smtp-Source: AGHT+IFYTZsgma+lr60W0RFvBFC3GrlvMvKtp77MjM/++80WedvM0dKfJr71FzHmLgBNJMl66FDjnBo6jH4DJoDVkCM=
-X-Received: by 2002:ad4:5ec5:0:b0:6b9:299e:132 with SMTP id
- 6a1803df08f44-6cbc953bd9amr11500006d6.9.1728454715291; Tue, 08 Oct 2024
- 23:18:35 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728454812; x=1729059612;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UbV8y2zWHU93iJeEpNjpx49qUFwa/2mQidkgrfSjqW4=;
+        b=Z3CMzyWY05KvgdLo9fLzbCM2oBvLjYUoCvuAQ5jvnWgAIKxzo6k3Cn6bABygOuNz0b
+         YVzJ8VWNn9FM0BnQ27Rqdr2gq6gmH2REws1QWgoe+mkey9C6SpQq0SmIYflsQTMZioi7
+         k5d4cYDTrWgfFFggK87+UlZ7IToAMzHqw6wx8BmZSDFiWvYSMB8VcWMUQgLPUm/BmViG
+         qolkCMPFOG0PSPrBIpa1KOIPba4k+jxND1wPefzj889OUP9/rNV/MFMHn314ezdGWF9r
+         qqVByeycR0hkkTiuC/IEa20RxsNIfVvWx5qziT6bomJQ3R5hl+vMqzmatq3F6rFQkAR2
+         UnQQ==
+X-Gm-Message-State: AOJu0Yz1mcMX9GtkWdKGepERlPZzXYpGSh6PvpNejH9DeGhnSBFvWZqO
+	Z922exPbmufDVBi2z8Voek4oM/oLiuTyVdq1BLq0FOTnsyzNbWV6s7oDIg==
+X-Google-Smtp-Source: AGHT+IFGPbwsbd812vcBwCBBfcK0QnNkWnbxvo3QNbHcAl/SHLdjvNau/l7a5SMTTXRY0hteLoKIIQ==
+X-Received: by 2002:a17:90b:11d5:b0:2d8:9f4c:ecb8 with SMTP id 98e67ed59e1d1-2e2a2335c89mr1983677a91.13.1728454812019;
+        Tue, 08 Oct 2024 23:20:12 -0700 (PDT)
+Received: from five231003 ([2405:201:c006:3236:904b:28a0:64b5:6637])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2a55fe0cdsm737765a91.23.2024.10.08.23.20.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Oct 2024 23:20:11 -0700 (PDT)
+Date: Wed, 9 Oct 2024 11:50:08 +0530
+From: Kousik Sanagavarapu <five231003@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [Question] local paths when USE_THE_REPOSITORY_VARIABLE is not
+ defined
+Message-ID: <ZwYgmNe6qk6jBZVT@five231003>
+References: <ZwQSWcmr6HWTxxGL@five231003>
+ <ZwUkUuQgxaE2-djk@pks.im>
+ <ZwVzF9Xgn72tT5Ee@five231003>
+ <ZwX7ieAvmjQma45E@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1723054623.git.steadmon@google.com> <cover.1728429158.git.steadmon@google.com>
- <29599e9c7be1737bcf0de0541c9635212a1b691d.1728429158.git.steadmon@google.com>
-In-Reply-To: <29599e9c7be1737bcf0de0541c9635212a1b691d.1728429158.git.steadmon@google.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 9 Oct 2024 02:18:24 -0400
-Message-ID: <CAPig+cQEE=rOxb49rHHY5sDvSFm4+nU6RdFgXmQyt8EhMpFMLg@mail.gmail.com>
-Subject: Re: [PATCH v4 4/5] libgit: add higher-level libgit crate
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, gitster@pobox.com, 
-	mh@glandium.org, sandals@crustytoothpaste.net, ps@pks.im, 
-	phillip.wood123@gmail.com, allred.sean@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZwX7ieAvmjQma45E@pks.im>
 
-On Tue, Oct 8, 2024 at 7:19=E2=80=AFPM Josh Steadmon <steadmon@google.com> =
-wrote:
-> Wrap `struct config_set` and a few of its associated functions in
-> libgit-sys. Also introduce a higher-level "libgit" crate which provides
-> a more Rust-friendly interface to config_set structs.
->
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
-> diff --git a/contrib/libgit-rs/src/lib.rs b/contrib/libgit-rs/src/lib.rs
-> @@ -0,0 +1,95 @@
-> +pub struct ConfigSet(*mut libgit_config_set);
-> +impl ConfigSet {
-> +    pub fn get_int(&mut self, key: &str) -> Option<c_int> {
-> +        let key =3D CString::new(key).expect("Couldn't convert to CStrin=
-g");
-> +        let mut val: c_int =3D 0;
-> +        unsafe {
-> +            if libgit_configset_get_int(self.0, key.as_ptr(), &mut val a=
-s *mut c_int) !=3D 0 {
-> +                return None;
-> +            }
-> +        }
-> +        Some(val)
-> +    }
+On Wed, Oct 09, 2024 at 05:42:01AM +0200, Patrick Steinhardt wrote:
+> On Tue, Oct 08, 2024 at 11:29:51PM +0530, Kousik Sanagavarapu wrote:
+> > On Tue, Oct 08, 2024 at 02:23:54PM +0200, Patrick Steinhardt wrote:
+> > > On Mon, Oct 07, 2024 at 10:24:49PM +0530, Kousik Sanagavarapu wrote:
+> > > > Hi,
+> > > > 
+> > > > I have two questions but a bit of a background first -
+> > > > 
+> > > > [...]
+> > > > 
+> > > > So my question is - do we want, in the future in which we are free from
+> > > > the dependency on "the_repository", for all the local paths to be a part
+> > > > of "struct repo_path_cache"?  Which in my gut feels wrong - one alternative
+> > > > then is that  we will have to refactor REPO_GIT_PATH_FUNC - or am I missing
+> > > > something here?
+> > > 
+> > > What I don't quite understand: what is the problem with making it part
+> > > of the `struct repo_path_cache`? Does this cause an actual issue, or is
+> > > it merely that you feel it is unnecessary complexity?
+> > 
+> > I feel it is unnecessary complexity.
+> > 
+> > 	$ git grep -E "(static GIT_PATH_FUNC|^GIT_PATH_FUNC)" | wc -l
+> > 	65
+> > 
+> > Meaning each of these would have to have an entry in
+> > "struct repo_path_cache" in the world where we don't rely on
+> > "the_repository".  Some of these are also not direct ".git/some-file" but
+> > ".git/dir/files" where ".git/dir" is also given by a seperate path func,
+> > like ".git/rebase-merges" and ".git/rebase-merges/head-name".
+> > 
+> > So why hold pointers to such filenames instead of just calling
+> > repo_git_path() manually - all these filenames are "local" anyways - unlike
+> > say files such as "SQUASH_MSG"?
+> 
+> It does make the interface easier to use at times because you don't have
+> to worry about freeing returned strings. In other situations it likely
+> is unnecessary.
+> 
+> In any case, not all cases must strictly be converted to REPO_PATH_FUNC.
+> A refactoring may also decide that using e.g. `repo_git_path()` or
+> `repo_common_pathv()` might be better alternatives.
 
-Considering that v4 finally gets around to swapping out `CString` for
-`String` in order to make this high-level crate more
-Rust-programmer-friendly, I was more than a little surprised to see
-that this function is still exposing `c_int` rather than, say, `i64`
-or such.
+Got it.  Thanks again for the nice explanations.
