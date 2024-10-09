@@ -1,169 +1,133 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451F41A3049
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 18:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E72517332C
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 19:10:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728499996; cv=none; b=TvS8cojjHPeyWilqDn1y8pb684onxllqT5prjTpfpQRUG8kJamuznUtURY+41N7hlzWdCpecmdK12nh8nSPjMMVFOWO0EOdo3wP5cBvlSI3wX2IwzuJMheOB1XYo/cr2x2yrbGOXTM7jHBqt8rhiGCotYsumUvYb4wHJ83iQANQ=
+	t=1728501043; cv=none; b=oPqgk9XX68/LDYnK/DN/HxN2p3AJIuxVGq43wnZOZauRHjTBHbUqDn3yZiD+2KQnO4wmukK0SHW/E7tgWZYkPFFHSJE/IQ2eLcSDFXp+YjpVzs2OVrtl2IfzZnea3AHbbk8H9Qba9tzktQ+Lro4efnSBL11cSPGC0bpREhn4eAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728499996; c=relaxed/simple;
-	bh=wuO3RteMmfO62rTPtcik/AyYCmdrio60oKITZj/3aog=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=hRzpsT/GNHYe/2A8wF5/fMbLFsnHhnEnQ0QGJSUchLEF5eftwaXR3EIaDtCI8sbHYDWgncKD1mZYQNIt0pzvfGuFBloBu23CZ7AXbQcmvSdTRYrzkyJtykF5yYU8/ggQTzxY8MKvo2ops0znLiTNht9/i5ngAv3iRwXPfr1lyc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uAKL/tkf; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1728501043; c=relaxed/simple;
+	bh=OAmuAnkCNPM/MszklnPsNBViAkha5QNkmrbVVN/GgBM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fMcx3P5IUJIZhHF2P2VrdMw1CZHJRdJlPJG1fhvlH6+rRbtFeInyu56okhZcz07DQkYH+x0sNo+QfgIQ6yFxME57nPrqgiBdfuKcfygEt8GyL4hDXslkKkTj8/K88x9bcn3tvmOo53KjAeNYz78hIpOewIhMmYIl9R4+2wo1fII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AWho4vxw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cJrfjcpC; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uAKL/tkf"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6e284982a31so5379607b3.3
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 11:53:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1728499994; x=1729104794; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BeGrDgyyZOvzNm/y8AQhg+s4E+vlbIfgfdiqEnN6lTA=;
-        b=uAKL/tkfgVxoKLwTcbWlnlQjdvBoXlTYEzLDMYuSZOg3K2p9l5MNY0fcoglwONvY7r
-         A/QWE7LIU/byn62j/rldskGuL19qCy1EK07miGPc4nfNhvcsT8OmoFldC0ncSxnhi52c
-         ub6CAD+oLGZTqEzg3DzcQo0z4Ndc01fIZfgZtP1BC/4ht2lqdGB1kyCSoLFHzJNx68KN
-         nGT2s2brEIBZ9YcVSAFgUKwZlfSoka8sIWbcl+lEv3INETYb3ExKzNZOYKSquPqExvBV
-         ncAXc5tfBx4qVlf42oMG2/0eO8dSkhdPbC/QePkstsk3FgXe7p7hoVcgbGQmL4rascOl
-         NZhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728499994; x=1729104794;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=BeGrDgyyZOvzNm/y8AQhg+s4E+vlbIfgfdiqEnN6lTA=;
-        b=V3nMugk3U231yfO100dHR7ptK2PdaUNS7In4QvQN2L4RUVqLiUPyr9N4Z4gwEu9yDO
-         ZYxLboPwNg//sVkPvAyzbrJasHdPvXPix309tUyKr7IJyzJZPaXPtRcrkFZKPx5WhKt2
-         DB1p/vG7DbFomz/8td2MPVOQkgixpBfNQy217t+r2sFQgTZMYdu98uSkdACh92nDSXcD
-         8HssxyWlJ9IcbrJd3cksZ8sXUHWOx0uTxzg0McrQ+L7joXPy2lMMVvRsz2u+SRRbm3XS
-         zl5P8oRaCmwP3To/2gCqs759MhrhneF44o6zkr9oBD9F+rV2C4LLhN9zvMP130t3iLsr
-         oUmg==
-X-Forwarded-Encrypted: i=1; AJvYcCU5GaIYDot4V55pO15ZlgdrFfvA3Yb2g+70YR3skpBO1ClbG7cR2XnxEb3um6D/TxSOVU0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyrMA52OFaK0H2mTP64J/cuER1UBHuaR3GYimkqxYpfHgTMFMIS
-	MbprHNVHG+PrQOAneTylcBIxqpOwWbBeH1SO1fFj08sGaqgY9NLjfAOG8p7DKKhydjGgDjbcl/N
-	w5YnwlNOVVwjhgIkrKbUhyFqIr+PsVA==
-X-Google-Smtp-Source: AGHT+IF8fuVZrh85aZ/hUkDkRMZkmx4LhlR7Izptkh4BFXQjsEsVGIKhVDRxtEhT5lvLCHhMw3W4cW5nLflWtuSqpCfG
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:424d:d3f9:36a6:1e7d])
- (user=jonathantanmy job=sendgmr) by 2002:a81:ad16:0:b0:6c1:298e:5a7 with SMTP
- id 00721157ae682-6e3224662ffmr815907b3.5.1728499994114; Wed, 09 Oct 2024
- 11:53:14 -0700 (PDT)
-Date: Wed,  9 Oct 2024 11:53:11 -0700
-In-Reply-To: <xmqqo743qkn9.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AWho4vxw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cJrfjcpC"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1DE2A11401FC;
+	Wed,  9 Oct 2024 15:10:40 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Wed, 09 Oct 2024 15:10:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728501040; x=1728587440; bh=E/0jHHt+AJ
+	qJ+7SuDAvRb5H58G5HtqSVNDRS6quSNhA=; b=AWho4vxwYt01caTLbxmmiT5eD+
+	AIMYBBvgmm01gdWebPGQKOPblT7Q4OCgkH61UnNUEE4yxssNTN7ILnZQU9nIA9ml
+	0SBqqeIqLn3F6drtZELZ9Vas0aWSnQnuAzc9CVhPrIQjpREkE2l9V1LJuGI3is2T
+	r95hhfizPm9+I4CnVoHplwC00wvB0AoiSYhvlawiDAf8Xr5cs4XB6zySXV/2DLD5
+	OzlUfJJ5aAU+fAiO9MK3aSz7AKVzR7+noho85PB5xdv253HfHNErv51jUVgE+yON
+	B3hFqig6SFxGjfmP11/7IiZ3bzEEi3m+pUw09mlpfKvMU4iIPoixh7C7kvew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728501040; x=1728587440; bh=E/0jHHt+AJqJ+7SuDAvRb5H58G5H
+	tqSVNDRS6quSNhA=; b=cJrfjcpCzUERso6Cn6yAIRA6hcg2xA3L7yJdsKq2BZ71
+	uee/NFb/qw2QvH+Ot6Ef1KrfE8zGfYJBA6q3EQLsPwY0s92/fuFA2fu8Nfo0osFZ
+	cM/DpN2s27VNdbfQv3I2I7XiYBDhX80M5quK8fzqpI6yFiQK3oR/mxbfZs3EJ67R
+	WmI1ogJpGlIXENbwQKmQD9WbE3of/DBk0Fot6MldKemio4DsQVPRYRKK4Bzbyet+
+	n101sNike/1TCA22V8x3GCPCEjawunW24Fg3ju/GaU1AkMpMgE9aBSbLYnBAgHkR
+	7dfGWXeDS2Ao1yk+4wQ7sEUtcpbV21gCh1KNMm1fNQ==
+X-ME-Sender: <xms:L9UGZyDiF2oyXvyNr8aslVMZR1wElTf1JypPobkG7DAnsfJwhpXqJQ>
+    <xme:L9UGZ8gjyh6yI42hnmk-_QrVhy-rYEjYM21JYB0E_s6zMVHV9E-1BbPeB0ksPTadp
+    DNStnYCaV3Yo3NDjQ>
+X-ME-Received: <xmr:L9UGZ1lE9xtAlZ2hs0mrXGNw0SEWj6POI5Ru_1E4MHGLtekv8-Mq5sfeL0jgXC365KAo_mEka7-tFpFbYT4E-bJXbgE5sW11QIr->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgudefjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtugifhhhithgvfe
+    esphhmrdhmvgdprhgtphhtthhopeguvghvnhhulhhlodgtugifhhhithgvfedrphhmrdhm
+    vgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:L9UGZwx8n4S-7NXaQN14XHhIjvHIWMaAdgpDYTLOthEzxxPWUmYmWg>
+    <xmx:L9UGZ3RdrsB8dX7l214q93lV8CPHBL4-1xYyuDJVRUgZkb_2KSrGOw>
+    <xmx:L9UGZ7aeCvLDaobDbUdLpRjJII2MXNEnGJxuz9sYSFLH1DNCDQ7KZg>
+    <xmx:L9UGZwSpgi-j8oZPp6J8agOSGtWLZnCyH57FVqOfVEuxfSCsaClz7Q>
+    <xmx:MNUGZ1PUVoXuQMuRr8eq7wSmE-tuzGIfRcMMgTtsakCu4VQu-NNVPFUp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Oct 2024 15:10:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Caleb White <cdwhite3@pm.me>
+Cc: Caleb White via B4 Relay <devnull+cdwhite3.pm.me@kernel.org>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] worktree: link worktrees with relative paths
+In-Reply-To: <k3X5W4US76LBJ_IUq-quVRha2jd-4iWJ9yX6Ukh6-ifZdWC3iajoUJ8VUyTDfkJHSqiD1RJlqIuVlDGIsReR_SDREVWyHGIqsXhazvJu1ek=@pm.me>
+	(Caleb White's message of "Wed, 09 Oct 2024 18:34:10 +0000")
+References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me>
+	<20241007-wt_relative_paths-v3-2-622cf18c45eb@pm.me>
+	<xmqqmsjexkcg.fsf@gitster.g>
+	<k3X5W4US76LBJ_IUq-quVRha2jd-4iWJ9yX6Ukh6-ifZdWC3iajoUJ8VUyTDfkJHSqiD1RJlqIuVlDGIsReR_SDREVWyHGIqsXhazvJu1ek=@pm.me>
+Date: Wed, 09 Oct 2024 12:10:38 -0700
+Message-ID: <xmqqy12xqehd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
-Message-ID: <20241009185312.200629-1-jonathantanmy@google.com>
-Subject: Re: Missing Promisor Objects in Partial Repo Design Doc
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jonathan Tan <jonathantanmy@google.com>, Calvin Wan <calvinwan@google.com>, 
-	Christian Couder <chriscool@tuxfamily.org>, Han Young <hanyang.tony@bytedance.com>, 
-	git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>, 
-	Enrico Mrass <emrass@google.com>, sokcevic@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
-> > (C2b is a bit of a special case. Despite not being in a promisor pack,
-> > it is still considered to be a promisor object since C3 directly
-> > references it.)
->=20
-> Yes, and I suspect the root cause of this confusion is because
-> "promisor object", as defined today, is a flawed concept.  If C2b
-> were pointed by a local ref, just like the case the ref points at
-> C2a, they should be treated the same way, as both of them are
-> locally created.  To put it another way, presumably the local have
-> already been pushed out to elsewhere and the promisor remote got
-> hold of them, and that is why C3 can build on top of them.  And the
-> fact C2b is directly reachable from C3 and C2a is not should not
-> have any relevance if C2a or C2b are not _included_ in promisor
-> packs (hence both of them need to be included in the local pack).
->=20
-> Two concepts that would have been useful are (1) objects that are in
-> promisor packs and (2) objects that are reachable from an object
-> that is in a promisor pack.  I do not see how the current definition
-> of "promisor objects" (i.e. in a promisor pack, or one hop from an
-> object in a promisor pack) is useful in any context.
+Caleb White <cdwhite3@pm.me> writes:
 
-The one-hop part in the current definition is meant to (a) explain what
-objects the client knows the remote has (in theory the client has no
-knowledge of objects beyond the first hop, but we now know this theory
-to not be true) and (b) explain what objects a non-promisor object can
-reference (in particular, a non-promisor tree can reference promisor
-blobs, even when our knowledge of that promisor blob only comes from a
-tree in a promisor pack).
+> What's the best way to parameterize the worktree tests? I would like
+> to run the same tests for both absolute and relative paths and I'm
+> not particularly a fan of just copying them all into new *-relative.sh
+> files.
 
-If we think that a promisor commit being a child of a non-promisor
-commit as a "bad state" that needs to be fixed [1], then the one-hop
-current definition seems to be equivalent to (2).
+What I meant by interoperability tests are a lot smaller scale.
 
-As for (1), we do use that concept in Git, although it's limited to the
-repack during GC (or maybe there are others that I don't recall), so the
-concept doesn't have a widely-used name like "promisor object".
+A test that creates worktree/repository pair without the option to
+use relative, and then tries to use such a worktree/repository pair
+with the option would simulate "how well the newer Git handles an
+existing repository", and another test that creates with the option
+to use relative and uses the worktree/repository without the option
+would simulate "how well existing versions of Git works when seeing
+a worktree made with the newer git with the relative option".
 
-[1] https://lore.kernel.org/git/20241001191811.1934900-1-calvinwan@google.c=
-om/
+By "parameterise", if you mean running a set of worktree/repository
+tests without the "relative" option enabled, and run the same set of
+tests with the option enabled, you could model it after how t8001
+and t8002 (or t5560 and t5561) share a lot of same tests that are in
+a file that is included by both of them.  In smaller scale, it is
+common to have an ad-hoc construct like:
 
-> > Garbage Collection repack
-> > -------------------------
-> > Not yet implemented.
-> >
-> > Same concept at =E2=80=9Cfetch repack=E2=80=9D, but happens during garb=
-age collection
-> > instead. The traversal is more expensive since we no longer have access
-> > to what was recently fetched so we have to traverse through all promiso=
-r
-> > packs to collect tips of =E2=80=9Cbad=E2=80=9D history.
->=20
-> In other words, with the status quo, "git gc" that attempts to
-> repack "objects in promisor packs" and "other objects that did not
-> get repacked in the step that repack objects in promisor packs"
-> separately, it implements the latter in a buggy way and discards
-> some objects.  And fixing that bug by doing the right thing is
-> expensive.
->=20
-> Stepping back a bit, why is the loss of C2a/C2b/C2 a problem after
-> "git gc"?  Wouldn't these "missing" objects be lazily fetchable, now
-> C3 is known to the remote and the remote promises everything
-> reachable from what they offer are (re)fetchable from them?  IOW, is
-> this a correctness issue, or only performance issue (of having to
-> re-fetch what we once locally had)?
+	for conf in relative absolute
+	do
+		test_expect_success ... 
+		test_expect_success ... 
+		test_expect_success ... 
+	done
 
-I believe the re-fetch didn't happen because it was run from a command
-with fetch_if_missing=3D0. (But even if we decide that we shouldn't use
-fetch_if_missing, and then change all commands to not use it, there
-still remains the performance issue, so we should still fix it.)
+that has bunch of test_expect_success, which may change the
+behaviour depending on the value of $conf, not &&-chained inside the
+for loop.  You can use a nested loop (one for preparing, the other
+for testing the use of worktree) if you want to test the full
+matrix.
 
-> > Cons: Packing local objects into promisor packs means that it is no
-> > longer possible to detect if an object is missing due to repository
-> > corruption or because we need to fetch it from a promisor remote.
->=20
-> Is this true?  Can we tell, when trying to access C2a/C2b/C2 after
-> the current version of "git gc" removes them from the local object
-> store, that they are missing due to repository corruption?  After
-> all, C3 can reach them so wouldn't it be possible for us to fetch
-> them from the promisor remote?
->=20
-> After a lazy clone that omits a lot of objects acquires many objects
-> over time by fetching missing objects on demand, wouldn't we want to
-> have an option to "slim" the local repository by discarding some of
-> these objects (the ones that are least frequently used), relying on
-> the promise by the promisor remote that even if we did so, they can
-> be fetched again?  Can we treat loss of C2a/C2b/C2 as if such a
-> feature prematurely kicked in?  Or are we failing to refetch them
-> for some reason?
+I do not offhand know if such parametralized tests are necessary in
+the context of this change, though.
 
-This is under the "repack all" option, which states that we repack all
-objects (wherever they came from) into promisor packs. If we locally
-created commit A and then its child commit B, and the repo got corrupted
-so that we lost A, repacking all objects would mean that we could never
-detect that the loss of A is problematic.
-
+Thanks.
