@@ -1,75 +1,73 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A25316BE3A
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 22:24:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2971E132D
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 22:25:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728512684; cv=none; b=pIZL+B+0vkMc8pd6c9ALhCJEmXfKzU46kIM3ZJ2mw0NWImLQJ9+I/G+TmScbUO40TxBO9P1OEsQp0um8vkli3i/CRwZB0KnxrwBJtI2Zsm+LAfHNhGFDjQoERIgbxNggtT/Q0qs8q9jFTGOO1HyUAYLUBC2/e1ZyVHAaVgrES+E=
+	t=1728512738; cv=none; b=ebccAaJsSoeSc2y2QWvmANTjcr54U8s8Oeg7sFpAtKd5TZIejvnN84xF3UNgRV+SB1F5y5u94RBb8RNUadQLYiwzNTli7nJbKZViSihuCW8VGHtjGTWxGmQm6yRNnQQT3iF5eCY6zsJay7bmVnxkBG0LZyzrjUlBrX5jVBNYZSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728512684; c=relaxed/simple;
-	bh=Y/kWI8y+qgnHeqdgfokB81tEnGzQosCrsqi9ufcFQ0c=;
+	s=arc-20240116; t=1728512738; c=relaxed/simple;
+	bh=kih+9wJw7CuhGn0TTMH0h/9Am9K2atg+ZyPYK4/fq6Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e4cL06lC1Kvoa/F/2ipgc69Y1ZAMPmAa2d42xB73HHDl3zTIZ6hHIP+Lf8MM+VU72ZhFMI8nDtsyCO+FQVYprZ4ywXEEnG1kIKMY10BDXTgLl6EeT4J/3yzi9vf+gSFyYXedLQd2LsdzDS0wr6+X13DeVfqtU+ZaJe+M9Q5IvBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lxGT26C9; arc=none smtp.client-ip=209.85.214.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=sYmjBJaR3PlLUnrWweg2VT2Ba7Ka6vilQJ1rKyJGRiGxmn2MZoUc+jv02/BmIN6PdVzXbLPsh7iltdOwx4M1V+zLSTxOek0lpLBYs4VEtHkpMQcC92fCHV/5KNk3Fe4XTMSw3YKXSd0zVaya06lFalixc1OdTV0ls7pxaq7pG8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bMpeou7E; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lxGT26C9"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-20c5fdd0fe3so76965ad.0
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 15:24:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bMpeou7E"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-20c87b0332cso11155ad.1
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 15:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1728512683; x=1729117483; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1728512736; x=1729117536; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Sr7N6No04EE1QGOlXDHJCDqqmkWHQ0rQ+dfMApQgdKE=;
-        b=lxGT26C9VKIo3TLz752LnbhDUGcOagWVwHEFNddjujK0dSn6dkAcptT9bJ+sVUxkNQ
-         +0UZKI/Mlqj+7sc0VvZxjLliu8lioy6SsBs3dJPPQAV9bu9Y0q46OwYJ0EYHksc5c4uK
-         UCAu0vkrLwH4B9+3QUeNcrSWuPcXNtNSA3e5IgtbIKRgr5D0rPypno5LTQljWfnac32w
-         MqqKhkMN25ZDG5Tbnb2Wfv1hzPyZ63gNc0RLVDQQ6+mGU8I3Hj5TK3G05rVFvWUCkhlB
-         8dnPX+bwtsTjWWKu8bkhEoVIdylHPPKoAYpOPyRY2RIhy/YJwY35miS6b8SvvsDj2i0b
-         kefQ==
+        bh=a+dI622EoSYoW6bXijqcLOi7TNNexpVgggwiAHIAyHk=;
+        b=bMpeou7EI73nUlSUUb3jOchxhAVnjcrmbm7DUF2IPdkPBP2VcELF7Dd5PIlrxv5FqI
+         5orJSSTfefxyPL27CSPEfFP5JiIpWqj4iY7wtl8J1zFeSPzJLWOuqg4RGZahD68j23U1
+         y0NkiNxdUyIW7WYig5fRSlhr8LivGj+OSmtpH0dDgZ9hcVhjBTyjvq2mlVXVugFao7tZ
+         /YarQbc6wuOXZ7dcVi9oCGxRRuv+bF/wuBdm7SZksuGOD4BH0cS85bGQF1ES1sgpzcRO
+         N4lEuM1H1CV05/EkiuYm3Y+Y+oUT4P/rlDnyPeEYnTVIFG828xDudpsoPpuYxC4IXOqN
+         4Utg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728512683; x=1729117483;
+        d=1e100.net; s=20230601; t=1728512736; x=1729117536;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sr7N6No04EE1QGOlXDHJCDqqmkWHQ0rQ+dfMApQgdKE=;
-        b=B7RcJQga4cOdjM3HjDtTAEvKO166gKOJtGb+/5MDrSquVhSfSs2z3n4n4lHTg9xEzg
-         DffC0suN5SfSswzoB2fgLlrTwYc1VVcN9jQ3Rk6t6KMgliWCh4hZ8SRUpbx4urRJsCtV
-         y81OajXGng9y79YXJQ4bwPmDwvTxL4Bvs9JDxhrGchgIdgLyj5tTDm7Uvr8LunVE54Hh
-         seTcKNhiIyIbOr5JBvOEull0gTTCETtRc4GoGlldTq2my5c/moZQknkrvaczBirxk0j7
-         jZdsu2TzGWQsMCcv3c4rQ6bdWUA7MC1WgiZ5Ztns2t679cAsS+N5QxqjSQMFiik7wWO1
-         jvnQ==
-X-Gm-Message-State: AOJu0YxvjHZHlbf55wnGEr4x60ALBiPCRV4zfGuGuPa0m0e4ep0yRmSP
-	jUaq42wPErNT2NNEIKFjofsO2avZ8ENnygMciJk1G02TdJ6fF/7dCtMPC4G5vQ==
-X-Google-Smtp-Source: AGHT+IGKr2zWNiTFcw/v21aOLxgXOJAMkvZv6Gviq/IuQUhLe9gwctWNH7DSwArt74j2370xkAkcQQ==
-X-Received: by 2002:a17:902:e806:b0:206:9e8f:7cb with SMTP id d9443c01a7336-20c8258ac66mr1170865ad.2.1728512682406;
-        Wed, 09 Oct 2024 15:24:42 -0700 (PDT)
+        bh=a+dI622EoSYoW6bXijqcLOi7TNNexpVgggwiAHIAyHk=;
+        b=rp0SfpE3ZRKymtd7Y/vKh+3Rx94rPAFEIi6Rg+il49fmlrtCVpB3ZQ/NlOFsckme0F
+         nxH26EBOkbYRU8BmuOCsQvDiB0AbNf5JEMt0IUV/tY6GmSreNk8gduOcmW2/WA5f89vo
+         E/zcUEsm32T6Li9F+Bz4svTysQ7WUMM4IL4zHaJUAb4cEngUZghOEQMMKLV9rUJx4fCp
+         CS3XXVCgBnPgxVIoyC5lTRNLf9sFTGj0ZTPMqhFTF7yvyVONms23hpDOUCoRJNsOwYJ2
+         F0yEiN4jL2qFUnk24/J5oUnvntL9q+MAxFtxueHWJ5gTHwtWvPD52aQHP4tIXozl3+sc
+         oVpg==
+X-Gm-Message-State: AOJu0Yy72mUSCHv5rd3oefuRx9b7VTh/hVoVyn4rpBYmQeQoc5NBHi72
+	baHToQ3EkbZJfFC4xdJJH/rJhnMoCVmmZVd8trgRmU02TbQPVMb6EJ6mJtP81oqTHb/f+9vX3GN
+	ipQ==
+X-Google-Smtp-Source: AGHT+IEiMpgx7ivTEUEORNtkgwVEgo4fW8XGjmc1QWiOfDOXscwbrtxPECV62JMQpC+w7K8gglY73g==
+X-Received: by 2002:a17:902:ce8a:b0:209:dc6d:76a7 with SMTP id d9443c01a7336-20c8298f0a6mr1193125ad.14.1728512735366;
+        Wed, 09 Oct 2024 15:25:35 -0700 (PDT)
 Received: from google.com ([2620:15c:2d3:204:4268:1c66:e2c:2ffb])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c139317desm74672465ad.125.2024.10.09.15.24.41
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c138afc65sm75303295ad.38.2024.10.09.15.25.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 15:24:41 -0700 (PDT)
-Date: Wed, 9 Oct 2024 15:24:36 -0700
+        Wed, 09 Oct 2024 15:25:34 -0700 (PDT)
+Date: Wed, 9 Oct 2024 15:25:29 -0700
 From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, mh@glandium.org, sandals@crustytoothpaste.net, 
+To: git@vger.kernel.org
+Cc: calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, 
+	emrass@google.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
 	ps@pks.im, sunshine@sunshineco.com, phillip.wood123@gmail.com, 
 	allred.sean@gmail.com
-Subject: Re: [PATCH v4 5/5] Makefile: add option to build and test libgit-rs
- and libgit-rs-sys
-Message-ID: <bn4qspsmqtbbr6mi2tx3gjbldopc5qf7iaqjudnahrhllwecqe@rtk6inujylzc>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, mh@glandium.org, sandals@crustytoothpaste.net, 
-	ps@pks.im, sunshine@sunshineco.com, phillip.wood123@gmail.com, 
-	allred.sean@gmail.com
+Subject: Re: [PATCH v4 4/5] libgit: add higher-level libgit crate
+Message-ID: <sojvhdl2jfsvngaixtccfsezlp7mpoj3ag62q66zphragf7o2l@3auva7nngupm>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
+	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
+	gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, ps@pks.im, 
+	sunshine@sunshineco.com, phillip.wood123@gmail.com, allred.sean@gmail.com
 References: <cover.1723054623.git.steadmon@google.com>
  <cover.1728429158.git.steadmon@google.com>
- <2ed503216f8e14d7b516c488caf3c76ffcb15697.1728429158.git.steadmon@google.com>
- <xmqq1q0qxhj2.fsf@gitster.g>
+ <29599e9c7be1737bcf0de0541c9635212a1b691d.1728429158.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,87 +76,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq1q0qxhj2.fsf@gitster.g>
+In-Reply-To: <29599e9c7be1737bcf0de0541c9635212a1b691d.1728429158.git.steadmon@google.com>
 
-On 2024.10.08 17:10, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
+On 2024.10.08 16:19, Josh Steadmon wrote:
+> From: Calvin Wan <calvinwan@google.com>
 > 
-> > From: Calvin Wan <calvinwan@google.com>
-> >
-> > Add libgitrs, libgitrs-sys, libgitrs-test, and libgitrs-sys-test targets
-> > to their respective Makefiles so they can be built and tested without
-> > having to run cargo build/test.
-> >
-> > Add environment variable, INCLUDE_LIBGIT_RS, that when set,
-> > automatically builds and tests libgit-rs and libgit-rs-sys when `make
-> > all` is ran.
-> >
-> > Signed-off-by: Calvin Wan <calvinwan@google.com>
-> > Signed-off-by: Josh Steadmon <steadmon@google.com>
-> > ---
-> >  Makefile   | 16 ++++++++++++++++
-> >  t/Makefile | 16 ++++++++++++++++
-> >  2 files changed, 32 insertions(+)
+> Wrap `struct config_set` and a few of its associated functions in
+> libgit-sys. Also introduce a higher-level "libgit" crate which provides
+> a more Rust-friendly interface to config_set structs.
 > 
-> After 
-> 
->     $ make INCLUDE_LIBGIT_RS=YesPlease
-> 
-> running either
-> 
->     $ make INCLUDE_LIBGIT_RS=YesPlease distclean
->     $ make distclean
-> 
-> leaves
-> 
->     $ git clean -n -x
->     Would remove contrib/libgit-rs/libgit-sys/libgitpub.a
-> 
-> behind.  We'd need to add a bit more to the Makefile, it seems.
-> 
-> 
-> 
->  Makefile | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git i/Makefile w/Makefile
-> index 41ad458aef..2acb5353d1 100644
-> --- i/Makefile
-> +++ w/Makefile
-> @@ -392,6 +392,9 @@ include shared.mak
->  # INSTALL_STRIP can be set to "-s" to strip binaries during installation,
->  # if your $(INSTALL) command supports the option.
->  #
-> +# Define INCLUDE_LIBGIT_RS if you want your gostak to distim
-> +# the doshes.
-> +#
->  # Define GENERATE_COMPILATION_DATABASE to "yes" to generate JSON compilation
->  # database entries during compilation if your compiler supports it, using the
->  # `-MJ` flag. The JSON entries will be placed in the `compile_commands/`
-> @@ -771,6 +774,9 @@ PROGRAM_OBJS += shell.o
->  .PHONY: program-objs
->  program-objs: $(PROGRAM_OBJS)
->  
-> +# libgit-rs stuff
-> +LIBGITPUB_A = contrib/libgit-rs/libgit-sys/libgitpub.a
-> +
->  # Binary suffix, set to .exe for Windows builds
->  X =
->  
-> @@ -3708,6 +3714,7 @@ clean: profile-clean coverage-clean cocciclean
->  	$(RM) po/git.pot po/git-core.pot
->  	$(RM) git.res
->  	$(RM) $(OBJECTS)
-> +	$(RM) $(LIBGITPUB_A)
->  	$(RM) headless-git.o
->  	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
->  	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
-> @@ -3892,5 +3899,5 @@ contrib/libgit-rs/libgit-sys/partial_symbol_export.o: contrib/libgit-rs/libgit-s
->  contrib/libgit-rs/libgit-sys/hidden_symbol_export.o: contrib/libgit-rs/libgit-sys/partial_symbol_export.o
->  	$(OBJCOPY) --localize-hidden $^ $@
->  
-> -contrib/libgit-rs/libgit-sys/libgitpub.a: contrib/libgit-rs/libgit-sys/hidden_symbol_export.o
-> +$(LIBGITPUB_A): contrib/libgit-rs/libgit-sys/hidden_symbol_export.o
->  	$(AR) $(ARFLAGS) $@ $^
+> Co-authored-by: Josh Steadmon <steadmon@google.com>
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  .gitignore                              |  1 +
+>  Makefile                                |  2 +-
+>  contrib/libgit-rs/Cargo.lock            | 77 ++++++++++++++++++++
+>  contrib/libgit-rs/Cargo.toml            | 15 ++++
+>  contrib/libgit-rs/build.rs              |  4 ++
+>  contrib/libgit-rs/libgit-sys/src/lib.rs |  4 ++
+>  contrib/libgit-rs/src/lib.rs            | 95 +++++++++++++++++++++++++
+>  contrib/libgit-rs/testdata/config1      |  2 +
+>  contrib/libgit-rs/testdata/config2      |  2 +
+>  contrib/libgit-rs/testdata/config3      |  2 +
+>  10 files changed, 203 insertions(+), 1 deletion(-)
+>  create mode 100644 contrib/libgit-rs/Cargo.lock
+>  create mode 100644 contrib/libgit-rs/Cargo.toml
+>  create mode 100644 contrib/libgit-rs/build.rs
+>  create mode 100644 contrib/libgit-rs/src/lib.rs
+>  create mode 100644 contrib/libgit-rs/testdata/config1
+>  create mode 100644 contrib/libgit-rs/testdata/config2
+>  create mode 100644 contrib/libgit-rs/testdata/config3
 
-Done in V5.
+Just realized that this commit message is not accurate anymore (and
+could provide more useful info anyway). I've reworded it in V5.
