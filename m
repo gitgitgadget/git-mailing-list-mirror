@@ -1,54 +1,54 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847D1194C6B
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 12:56:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88F5196D98
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 12:56:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728478562; cv=none; b=N7bp/2rgL+Sc8V98w6wdW9kRsx/iOCN2bhrAAxzv9aL6RUzyPuz/3wKHOCR55Lg6bYhM7ZWg6e7PF0Cwl/a/vTvxxlD+4gsAfd0xwpKCTa5hEM7P2joFrbdflkXoASBPG/v6nReHKx105JftMABvLs9TL35hsQ5389HIuHwpT7E=
+	t=1728478571; cv=none; b=RDOz0CRxj/0BQvwnMKHX3i7iE3F2SFze3WAG6FvbZ5D8NQ4SPJxIH1O/nDKOC/bZRYaHO0fwmLgHcp4P6qGYIDj8rjh9aV5BLuDOd8Kaa+HHPZt5Tfp9/jrdwQzXly9dZhrOXAVcGFem3rDoZ8pcE9DUUkbW+OmkAynNzZ7k7l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728478562; c=relaxed/simple;
-	bh=LJH0cXYbFTonO9Zu+PA1/nKmbt4HEXQbpqw2DhqCR6M=;
+	s=arc-20240116; t=1728478571; c=relaxed/simple;
+	bh=4rSDABI0v1KaG4Qb0/Rx6P9AcCOBAaOOMgrUbDnCYgA=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qOu4b0owElH9ha0sgjpXTSQa+Zc3OiTU/EcWpJSEhfDSyVLyvqZBVUqWPlJOTJneUqWwbqLSTpFTHsW4qH3nk+tb/r+fqsxrhGngDYk2IaLb0sCwSaGhjNOtO6Gxwkp5rqdWfrngHlLkS6il8fYhC9rmPmH9m5EJOlOdZqydgSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MAvRqiwH; arc=none smtp.client-ip=209.85.221.181
+	 To:Cc:Content-Type; b=PQhszA0hDD7fBUFJQ450nFqkYC2UyKUkL70aOoMZDHGAfIkgYoaE/XkIwkocQEdnGVsYlDmgPkR9wLhJlqPFrStxEU+RyJHU1f8omvXT8vf32yxUlxHhgjCJIHzkgVagBEvAWEQcPEitSiSRQXPP1d1tJz5WJSgCxnRcxP2o9q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h0wV6pSS; arc=none smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MAvRqiwH"
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-50ca3428289so1221901e0c.1
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 05:56:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h0wV6pSS"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-84ea658b647so2325920241.1
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 05:56:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728478559; x=1729083359; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728478568; x=1729083368; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Aqup1YDOyJ4x3b28qxI/cCxkTLBX+87HPrp73Yp1XCE=;
-        b=MAvRqiwHAPmp0IdMgiKQX43/jZ42yeo51vLPOwVoJrVoSR5ckXXa2t/NEQwuPcHjcZ
-         c1RPuYnMh89UaD5XauXbb8XxsULruX2y/mU5e9kiDtgn9A0nTbtOJLy8h4By2qIjWUt3
-         Hku6rf1zDaCO1GnMVFXv+FS1b5xRh/w+VpXPP/BTID47LEpxJBuN34ZoP3y1IVgXAugv
-         7lSBoJXfuE8Wcuxv7eKKhphPjddmk38bXfAoJjJQQukdSTS6pf5fY3GmP+u61L8L71Oc
-         dPdPV8AwnSsJNdyZPEun1HRU1YgNWaQLmp4n18RRweD+4gtdQNftP6yea7g6a0QKCd91
-         v0TQ==
+        bh=g0p4hikNOHVCj2ttRmpxSvyhwJWT2kuvnY0RoITqCPM=;
+        b=h0wV6pSSHEUy6jSuQLDYag0htoMcQTM4WSomteNCfXucvAlsLRkFQZzeHznAuwOXoB
+         Pe5tqGO6denQTRliuS4fWI6lvSIY1NvahZmVNWBDlhJNmev9XL8Nsf0bu6UEmK30xkOF
+         9+Sj+pd9Z88qNHZZmbwCXKgBoYjIhdNcxgLsEPU3rLCzuMuJrA9aInAY8JyET2k8x83g
+         YDnzMGxVvLsMQrv9aA9gTGBU5DDSiWwv3tMDuSTIynoan7uYFoZ9tQWlU+K7x+be2T1W
+         Ozd2+qJ1D0NT82p4m+qosohI9QIrNEjLy+Y2A5XP4BfXV+LdONHlQ12UkKzh6vZpshdI
+         NBIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728478559; x=1729083359;
+        d=1e100.net; s=20230601; t=1728478568; x=1729083368;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Aqup1YDOyJ4x3b28qxI/cCxkTLBX+87HPrp73Yp1XCE=;
-        b=avgpZyiDqJ5g8blAIa7l807HGbjyBIH+aUvFu9hsk5m6GVK97t1Ye0r0VQO1YuxoZh
-         kNnDhkNYcGvOo93sjE9oza+gSVEETIj0kY80a+J/B43QKcNF92SbOtYg/+P0EAqq6WjB
-         VRqk+yKOAEDJX7WD9+rnI0lfPG5uJg/PivD0/iSDzRxHzNZM87T3UdGF7xbuQGU4K2vu
-         SZzrj1//LjHke0Cv7YAzsJXcK8dK2tEpdqDIICc7bE/T6dc08U9V1JwHoyfjtopKLxWM
-         es/E1NOrpUdwkBc9kf5uzin1GiumZ5iK3qTbOpcg9ILPU9SXEpJtl82QRLGTyuwru6cI
-         amVw==
-X-Gm-Message-State: AOJu0Yw/jYRUXVEaVLNkJFzSY8vmMo+DlKaTlSWIQW+6z3vudGwT+k05
-	1VHPyqNeyLUoECS0oMzUKbyRU6NXyF1BG0woymlxEaxXgDC+dvjm5huQ8DB5sPdoRUrsOkDrcDt
-	TffE6ckfYd6S6e/3bbNPRw/Duvt4=
-X-Google-Smtp-Source: AGHT+IHtQjKCfDgWP0lDGpP3BOgu2jFHQIP9hqtKCoNzt/sx/hZyg8HzsgjJWocTOcT+a+Lna3/iPrlQxIvj1hHWNo8=
-X-Received: by 2002:a05:6122:d11:b0:50a:ca33:b033 with SMTP id
- 71dfb90a1353d-50cf09b7c21mr1251750e0c.4.1728478559434; Wed, 09 Oct 2024
- 05:55:59 -0700 (PDT)
+        bh=g0p4hikNOHVCj2ttRmpxSvyhwJWT2kuvnY0RoITqCPM=;
+        b=HqgcaZJiPngtw7kbFsTkmcGqThcQuMpnknnL0PnICUAXMFV+vuxs4rRb5EoB5bOhLj
+         3SQqLxcXJ4A+pRhLGAQs/CpRpEVsyfYJVj1sm+oSBNFP0WLhHGsFZnIx8XlFvvH7EQib
+         vombINGg/v/vKfQ9jLYPDRtSAQFJB2pieCHrHiaPRnnSftihLIab74L41EgLdoIOXXB3
+         xIW1dHsg4NjMCR67LxV2SMReBZ2rHocQxPXG2FdqbN2eJvfGADeoZ3Qjj8NnuLZ7KrpZ
+         eZGnnHVo6yOZPG3dFA6nYPjID/zE+/owN2qajyXtjql8bFZqtDkC+yjZ/v2tGWWoKmF2
+         vCcw==
+X-Gm-Message-State: AOJu0YyLC4fp5kXSnNttCDgZ44JydyUkNISFt/b3gVpvCwcWMl9c35Rt
+	OPw9c2+IGm8rR4QOXS9N+7H9O2eKMJNIj7hNep/WSiVxngv8eHRDarWXqOxQ1nVbvzO7pNdDbiR
+	KFce//npsaziiInfgxjh6KvGvMc4=
+X-Google-Smtp-Source: AGHT+IErFmGsdMdigxgxN6k1+zNX+lCJuXbfdgN0HwCmMa+UpB6Sh9eT/RM+taXJKLU9i8QctFU+wb0bB7J0/vQgb0U=
+X-Received: by 2002:a05:6102:c93:b0:4a3:a3c6:c674 with SMTP id
+ ada2fe7eead31-4a448d1566amr2928838137.4.1728478568598; Wed, 09 Oct 2024
+ 05:56:08 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 9 Oct 2024 05:55:59 -0700
+ HTTPREST; Wed, 9 Oct 2024 05:56:08 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <CAOLa=ZRvFBhageS65uE5enzLBz7H_CAvvnEcPsi_QAi0exRx2w@mail.gmail.com>
@@ -59,40 +59,49 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 9 Oct 2024 05:55:59 -0700
-Message-ID: <CAOLa=ZS+naxOzJUkLLOZk++WVZ2dt3eQq9VmW+G-5O1ZLgggUA@mail.gmail.com>
-Subject: [PATCH 1/3] clang-format: don't enforce the column limit
+Date: Wed, 9 Oct 2024 05:56:08 -0700
+Message-ID: <CAOLa=ZQOyio__8a5=h=65kkENhxPC4tTAFczioeOTvU2iSSkJQ@mail.gmail.com>
+Subject: [PATCH 2/3] clang-format: don't align expressions after linebreaks
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-The current value for the column limit is set to 80. While this is as
-expected, we often prefer readability over this strict limit. This means
-it is common to find code which extends over 80 characters. So let's
-change the column limit to be 0 instead. This ensures that the formatter
-doesn't complain about code strictly not following the column limit.
+We enforce alignment of expressions after linebreaks. Which means for
+code such as
+
+    return a || b;
+
+it will expect:
+
+   return a ||
+          b;
+
+we instead want 'b' to be indent with tabs, which is already done by the
+'ContinuationIndentWidth' variable. So let's explicitly set
+'AlignOperands' to false.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- .clang-format | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .clang-format | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/.clang-format b/.clang-format
-index 41969eca4b..38910a3a53 100644
+index 38910a3a53..af12a038f7 100644
 --- a/.clang-format
 +++ b/.clang-format
-@@ -12,7 +12,11 @@ UseTab: Always
- TabWidth: 8
- IndentWidth: 8
- ContinuationIndentWidth: 8
--ColumnLimit: 80
-+
-+# While we recommend keeping column limit to 80, we don't want to
-+# enforce it as we generally are more lenient with this rule and
-+# prefer to prioritize readability.
-+ColumnLimit: 0
+@@ -43,10 +43,9 @@ AlignConsecutiveDeclarations: false
+ #   int cccccccc;
+ AlignEscapedNewlines: Left
 
- # C Language specifics
- Language: Cpp
+-# Align operands of binary and ternary expressions
+-# int aaa = bbbbbbbbbbb +
+-#           cccccc;
+-AlignOperands: true
++# Don't enforce alignment after linebreaks and instead
++# rely on the ContinuationIndentWidth value.
++AlignOperands: false
+
+ # Don't align trailing comments
+ # int a; // Comment a
 -- 
 2.46.2
