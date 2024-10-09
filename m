@@ -1,45 +1,60 @@
-Received: from mout1.freenet.de (mout1.freenet.de [195.4.92.91])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B58F18F2C1
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 10:41:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.4.92.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74475191461
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 11:49:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728470467; cv=none; b=r9/JpuG2QOlbkcQh1Gkd2egk30G1gmE1BbaFBCcvqCisD1+CzP8waOlSDC0yiFWmuUOLk+eIbdoFj1o1KvLc/sNQTjMwJIvAOatKXVe2wZp4Weg0NdhB2bgiv6bLZFeyyY688ldBihSiz6U4GrTmNZp0D1qEtNRLeKDfhEQvJcw=
+	t=1728474591; cv=none; b=TofPejJbj7dZgHb8QI8s5ZFTOVOgfvqowW5k7sr0De06Fsp41uO6eWhB83OieLyqzdxId8kdKysLjL7D3VDSXut67odBSHhD1jeI/RCQgMIx7HrBYm3tnwST1u0GxshiTAiLiODqMcj+f2Lywu0AAwqCbp2QfpAWEPFIB82tVDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728470467; c=relaxed/simple;
-	bh=Wtu0kCNRmLCCbY+ZnvmQg9VpJwZSwpBLjO9dLJBeiGc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=HvUnEaWTRHvwNb5o/1vmMhQ8NIMEeUnv5nrdQOzXAvwAQdKr4eB9OnTw/KEA1ak+k6R78O7mv+1nLrOv8Q1Vtd+T5LckadxyDztvVZnqic7/kNQp5jhfJiPZsyoFg30IUbuBy9ouO7ZoryCKx+I2fgfg8OSbkPrUQOmeMFF90So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de; spf=pass smtp.mailfrom=freenet.de; dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b=zM2QcAZO; arc=none smtp.client-ip=195.4.92.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
+	s=arc-20240116; t=1728474591; c=relaxed/simple;
+	bh=HqJ32cBTsNLEgnITG2e0g3JOlEIcwlwSHDWNE0u5msk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=coqzHXRZdtrj52j8t3JLZX5aEB+zwDCYoW2DD9IxD4ecC5Zl8L1ooMP4sn8/wY/i5r7dYwcUmjhyVViov2lcsa99pA3k/yJOz6uUCICo8FW4G3eUuwQ6Mi2xw3n9Hf1oFBI3bigEYi6dYmeVhANwL/jKSeRIYF9VN7ni9LgIWks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ehazo0Sl; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="zM2QcAZO"
-Received: from [195.4.92.123] (helo=sub4.freenet.de)
-	by mout1.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
-	id 1syU2s-006MTl-7O
-	for git@vger.kernel.org; Wed, 09 Oct 2024 12:35:54 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
-	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
-	Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=G1GZjJo1tj4Arkr2u4JwM8XePCjG/ScOOrZ5QdaBHGk=; b=zM2QcAZOPaBQ9QS1xGRqSvsAzU
-	RWuclTIrmZJYn99dntlxZPK6F9CC96jH/BWUIDtQAF2m59zC3PkmrGajajZtDaZjIZIqb8cz3LWZY
-	0lxDtYhgBQR+21153d9rQVkwstRnsRcdJelbaRp++pMkdp958OowF0PV1YLk6RgaWo8nbNwbw1B+9
-	Nxf6q7aJ27Yt9SRPoHxRJwqcHRJ2+A3hm3OqpOlb6DTddPJ/J/0CVBYnTjFaOL8sGwRjtNU3HhQvx
-	KZNU0F8gNnbXpr127Inu0icXZNXgoLlproq73s5fQn0r0n6AWcs39yAwEMYOPAN0Xe9TI2Z1G0/0+
-	pJmIkEBA==;
-Received: from p200300e2e7083000dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e708:3000:dacb:8aff:fee0:ca63]:60838 helo=soren-pc.lan)
-	by sub4.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
-	id 1syU2r-0054S3-UH; Wed, 09 Oct 2024 12:35:54 +0200
-From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ehazo0Sl"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2fac6b3c220so89390321fa.2
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 04:49:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728474588; x=1729079388; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zN8rzQRh8F/KEwbFnGTOfZGS7MqJiKwF5JtjQMPGqvI=;
+        b=ehazo0Sl6StEoHjYPSgOipBTgKo19KcdO0Bwy7Hee6rxPmwNtNMP8hbCsC2KaouajQ
+         mZ3cRl59olsLABUWNlJIwtf6D047sgYy+H7ZuW6/acl58yWv8U6VhSOrxL3sGTJttdK4
+         O3WYyCLQeC4N0TwtTvfAvGtpFoveLtaDbv7NjNMAFFjdoxp0lYYxH675piyGlnJGLVc8
+         eBNx5Lkd6tsOGGDpDtslaKahNaAk7oIhb8AJlHN1gsfz6jUyt9CgSMWOwAcPrBX8f6zQ
+         39RLD1t8kgKRjG/snTa6zO4wyuhFho6xUj3CO2pI8uOlqqVxChFv366v5LvfkxKFKtb1
+         7+Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728474588; x=1729079388;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zN8rzQRh8F/KEwbFnGTOfZGS7MqJiKwF5JtjQMPGqvI=;
+        b=HQwb2N5Yd008wntw6jHtRfvlJNeNbNY1haFYczkdthDP//1HMwbBl95cRj1zTw1iHn
+         nmUQi22QCtMDbf4Al+vfZYW6GeUMAHqxPNYcUN/BCtF22cVNeQwLI/LUtlaICQMZogAC
+         hnrrJhOK0/cWzH7/78mdoheb7EkcUAv2crHup4T4TiRgNGPyYu49iTOkqab/Ocz+Bnrs
+         YrlnKaeEUWDt6+I5JM5zCLbmefwf/7LYTDjS78oOQPbNIlJRmxzCvmJCOF0YyxB2Dvj3
+         AmzXbD2zxCQLaSYCLM46GPIISMBolDsOxIXS5tmtHIfj64wRW5Wl6F9FcPFqDs/iC/SJ
+         B1uA==
+X-Gm-Message-State: AOJu0Yzuy3B0prkVBzTdzwqRocjY5Pyic9AXdSMyykgDw+u/aEtjK6M/
+	YIGCdMTk9CRSWEBwEzqM4x4vYJWlNlh4GXEM13MRXKr/Tg+eDKk9b7Wsuhpr
+X-Google-Smtp-Source: AGHT+IEGk/AIKqYe+3I6qaAHIHtxFW4EBvt3L3LOoy0YQ5Ffxf2kcYAjdj8xyZVfgXY/e+7x9CRYTA==
+X-Received: by 2002:a05:6512:3b81:b0:539:a4ef:6765 with SMTP id 2adb3069b0e04-539c488d907mr1780246e87.7.1728474588005;
+        Wed, 09 Oct 2024 04:49:48 -0700 (PDT)
+Received: from void.void ([141.226.169.1])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a993a4ff9f7sm595800566b.26.2024.10.09.04.49.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Oct 2024 04:49:47 -0700 (PDT)
+From: Andrew Kreimer <algonell@gmail.com>
 To: git@vger.kernel.org
-Cc: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-Subject: [PATCH] mimgw: remove Compiler Warnings
-Date: Wed,  9 Oct 2024 12:35:41 +0200
-Message-Id: <20241009103541.2887-1-soekkle@freenet.de>
+Cc: Andrew Kreimer <algonell@gmail.com>
+Subject: [PATCH 0/7] Fix typos
+Date: Wed,  9 Oct 2024 14:49:33 +0300
+Message-Id: <20241009114940.520486-1-algonell@gmail.com>
 X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -47,165 +62,44 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-FN-MUUID: 172847015399E9A1C9554CO
-X-Originated-At: 2003:e2:e708:3000:dacb:8aff:fee0:ca63!60838
-X-Scan-TS: Wed, 09 Oct 2024 12:35:53 +0200
 
-Remove some complier warnings from msvc in compat/mingw.c for value truncation from 64 bit to 32 bit intigers.
+Fix typos in documentation, comments and messages.
 
-Signed-off-by: Sören Krecker <soekkle@freenet.de>
----
- compat/compiler.h               |  4 ++--
- compat/mingw.c                  | 26 ++++++++++++++++----------
- compat/vcbuild/include/unistd.h |  7 +++++++
- 3 files changed, 25 insertions(+), 12 deletions(-)
+Synced with:
+  - e1dc6361a9532f9c7e2f8010615f63a659bd92bc (seen) Merge branch 'ds/path-walk' into seen
 
-diff --git a/compat/compiler.h b/compat/compiler.h
-index e9ad9db84f..e12e426404 100644
---- a/compat/compiler.h
-+++ b/compat/compiler.h
-@@ -9,7 +9,7 @@
- 
- static inline void get_compiler_info(struct strbuf *info)
- {
--	int len = info->len;
-+	size_t len = info->len;
- #ifdef __clang__
- 	strbuf_addf(info, "clang: %s\n", __clang_version__);
- #elif defined(__GNUC__)
-@@ -27,7 +27,7 @@ static inline void get_compiler_info(struct strbuf *info)
- 
- static inline void get_libc_info(struct strbuf *info)
- {
--	int len = info->len;
-+	size_t len = info->len;
- 
- #ifdef __GLIBC__
- 	strbuf_addf(info, "glibc: %s\n", gnu_get_libc_version());
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 0e851ecae2..dca0816267 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -782,7 +782,7 @@ static inline void filetime_to_timespec(const FILETIME *ft, struct timespec *ts)
-  */
- static int has_valid_directory_prefix(wchar_t *wfilename)
- {
--	int n = wcslen(wfilename);
-+	ssize_t n = wcslen(wfilename);
- 
- 	while (n > 0) {
- 		wchar_t c = wfilename[--n];
-@@ -891,7 +891,7 @@ static int do_lstat(int follow, const char *file_name, struct stat *buf)
-  */
- static int do_stat_internal(int follow, const char *file_name, struct stat *buf)
- {
--	int namelen;
-+	ssize_t namelen;
- 	char alt_name[PATH_MAX];
- 
- 	if (!do_lstat(follow, file_name, buf))
-@@ -1274,7 +1274,8 @@ static const char *parse_interpreter(const char *cmd)
- {
- 	static char buf[100];
- 	char *p, *opt;
--	int n, fd;
-+	ssize_t n;
-+	int fd;
- 
- 	/* don't even try a .exe */
- 	n = strlen(cmd);
-@@ -1339,7 +1340,7 @@ static char *path_lookup(const char *cmd, int exe_only)
- {
- 	const char *path;
- 	char *prog = NULL;
--	int len = strlen(cmd);
-+	size_t len = strlen(cmd);
- 	int isexe = len >= 4 && !strcasecmp(cmd+len-4, ".exe");
- 
- 	if (strpbrk(cmd, "/\\"))
-@@ -1956,7 +1957,7 @@ char *mingw_getenv(const char *name)
- #define GETENV_MAX_RETAIN 64
- 	static char *values[GETENV_MAX_RETAIN];
- 	static int value_counter;
--	int len_key, len_value;
-+	size_t len_key, len_value;
- 	wchar_t *w_key;
- 	char *value;
- 	wchar_t w_value[32768];
-@@ -1968,7 +1969,9 @@ char *mingw_getenv(const char *name)
- 	/* We cannot use xcalloc() here because that uses getenv() itself */
- 	w_key = calloc(len_key, sizeof(wchar_t));
- 	if (!w_key)
--		die("Out of memory, (tried to allocate %u wchar_t's)", len_key);
-+		die("Out of memory, (tried to allocate %"
-+			    PRIuMAX" wchar_t's)",
-+		    (uintmax_t)len_key);
- 	xutftowcs(w_key, name, len_key);
- 	/* GetEnvironmentVariableW() only sets the last error upon failure */
- 	SetLastError(ERROR_SUCCESS);
-@@ -1983,7 +1986,8 @@ char *mingw_getenv(const char *name)
- 	/* We cannot use xcalloc() here because that uses getenv() itself */
- 	value = calloc(len_value, sizeof(char));
- 	if (!value)
--		die("Out of memory, (tried to allocate %u bytes)", len_value);
-+	    die("Out of memory, (tried to allocate %" PRIuMAX " bytes)",
-+	    (uintmax_t)len_value);
- 	xwcstoutf(value, w_value, len_value);
- 
- 	/*
-@@ -2001,7 +2005,7 @@ char *mingw_getenv(const char *name)
- 
- int mingw_putenv(const char *namevalue)
- {
--	int size;
-+	size_t size;
- 	wchar_t *wide, *equal;
- 	BOOL result;
- 
-@@ -2011,7 +2015,8 @@ int mingw_putenv(const char *namevalue)
- 	size = strlen(namevalue) * 2 + 1;
- 	wide = calloc(size, sizeof(wchar_t));
- 	if (!wide)
--		die("Out of memory, (tried to allocate %u wchar_t's)", size);
-+		die("Out of memory, (tried to allocate %" PRIuMAX " wchar_t's)",
-+		    (uintmax_t)size);
- 	xutftowcs(wide, namevalue, size);
- 	equal = wcschr(wide, L'=');
- 	if (!equal)
-@@ -3085,7 +3090,8 @@ static void maybe_redirect_std_handles(void)
-  */
- int wmain(int argc, const wchar_t **wargv)
- {
--	int i, maxlen, exit_status;
-+	int exit_status;
-+	size_t i, maxlen;
- 	char *buffer, **save;
- 	const char **argv;
- 
-diff --git a/compat/vcbuild/include/unistd.h b/compat/vcbuild/include/unistd.h
-index 3a959d124c..ab3dc06709 100644
---- a/compat/vcbuild/include/unistd.h
-+++ b/compat/vcbuild/include/unistd.h
-@@ -13,8 +13,15 @@ typedef _mode_t	mode_t;
- #endif	/* Not _MODE_T_ */
- 
- #ifndef _SSIZE_T_
-+#ifdef _WIN64
- #define _SSIZE_T_
-+typedef __int64 _ssize_t;
-+#pragma message("Compiling on Win64")
-+#else
- typedef long _ssize_t;
-+#endif // _AMD64
-+
-+
- 
- #ifndef	_OFF_T_
- #define	_OFF_T_
+Tested:
+  - Debian 6.1.106-3 (2024-08-26) x86_64 GNU/Linux
 
-base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
+Andrew Kreimer (7):
+  compat: fix typos
+  contrib: fix typos
+  git-gui: Fix typos
+  t: fix typos
+  t/perf: fix typos
+  t/unit-tests: fix typos
+  t/helper: fix a typo
+
+ compat/fsmonitor/fsm-listen-win32.c    | 4 ++--
+ compat/regex/regexec.c                 | 2 +-
+ compat/simple-ipc/ipc-unix-socket.c    | 2 +-
+ contrib/completion/git-completion.bash | 4 ++--
+ contrib/subtree/git-subtree.sh         | 2 +-
+ contrib/subtree/t/t7900-subtree.sh     | 2 +-
+ git-gui/lib/status_bar.tcl             | 2 +-
+ git-gui/lib/themed.tcl                 | 2 +-
+ t/helper/test-rot13-filter.c           | 2 +-
+ t/lib-bundle.sh                        | 2 +-
+ t/lib-rebase.sh                        | 2 +-
+ t/lib-sudo.sh                          | 2 +-
+ t/lib-unicode-nfc-nfd.sh               | 2 +-
+ t/perf/p7527-builtin-fsmonitor.sh      | 2 +-
+ t/perf/perf-lib.sh                     | 4 ++--
+ t/unit-tests/t-reftable-basics.c       | 2 +-
+ t/unit-tests/t-reftable-merged.c       | 2 +-
+ 17 files changed, 20 insertions(+), 20 deletions(-)
+
 -- 
 2.39.5
 
