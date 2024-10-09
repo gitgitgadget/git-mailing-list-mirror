@@ -1,53 +1,53 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A29319F113
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 14:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56671A2625
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 14:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728485783; cv=none; b=uWlw6wJYv+Fa3AnDkr4ln2FyOWyYLidicOXVEwovWy/cYfgXZJg33LHvSLhMBbP7cXBAK9lpDb84GiSTyR8ocSqNhyr/y45jNQR8G1cOywI0asGr6kS+54OQflh83KF+NHhIyBCyox8T1y7N0/KyTajZ8y97bJHBzBBd6sSwmVY=
+	t=1728485785; cv=none; b=dq68MLoTy34YrR6hC/LXiL23/GRQkNGisY3FPjgOpvQ3Tf7ik0cjDkmgy3nqcft33UTZKROcSouXChcQU0qTchU5Zev3AXW4xDpk35cRFpggRXa4SKd1vL9ntzzhaMLfxZy04pNXunfaUsLeKIl9J020vg4P5JtKFfXA/IMRu5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728485783; c=relaxed/simple;
-	bh=sz8+FJfbDJEmYGlSsULuVY4b5/VYRLAVtiLICeNnSbQ=;
+	s=arc-20240116; t=1728485785; c=relaxed/simple;
+	bh=SUTkDErwh/2420QFyiqh7ViEIcXNKG28IQr40jcDmE4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r0LQ1Ik3t46z15mmYqg8uByJu+xTHuGoC/EdV6tM4LqGfAeGytdxd7SygMRrmTXmXPWsYi/zs+3lHAzv6ks166W/X1SvnS3SOpUukuM+m3JFFLR9QLRU+whQv7gjryMiy4mp8IY94u/YLOqHgLNZAJDxLH2pLApsS8qAPx03ZEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L9PFqjIF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dn55+29j; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=sMuG/py30BLm0H5og7HMzZi6G4ZC4faYKHCuEde7K6vr98koHJeRoq3YaCwM0ac28AxQtgQBWGT+fRK4CYE1r+hTBGzGcUH8CiEIQJWyxC0v1RMymmKmqA6Fb3GlP2l8HRk0jotVujRrXyXm629XGDdOgRN3uDhR6bZUz9D05s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GWE5TkPZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AsGdQzbc; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L9PFqjIF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dn55+29j"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GWE5TkPZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AsGdQzbc"
 Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8911313801AA;
-	Wed,  9 Oct 2024 10:56:20 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id EF14513801C2;
+	Wed,  9 Oct 2024 10:56:22 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 09 Oct 2024 10:56:20 -0400
+  by phl-compute-09.internal (MEProxy); Wed, 09 Oct 2024 10:56:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728485780; x=1728572180; bh=XbpwAVxM/1
-	jpu5o6notWdip+cxP/ESw0hvmoxD/VpLQ=; b=L9PFqjIFsXiJyXTmbt02CCOBG4
-	S4icda0y4yWvdK5NtFCUw9v4H05kZNZdZf82Ws6bOCAi9LOUULSabeeITD6sjCjx
-	CVOJJewhkSfxmRWMBL8GDXvl/qi4yrSlmrR3q5WGdUxi0H33KQB+yzAnxL1tFc1H
-	Y1pM4hQEFAIJizAlbIrVwEmz7oSZSlMH+hbCqBgTJt3POn2dYevEYIX4wiAF88vI
-	EQYifGpjhkDvfRmEbsZv5Y8QoZbcCDqTZweVY5yJdBpUPgIGwLjvOCSngxMLdSZV
-	x3OO06AvArHMMFYeiw5qKH4da9T4QzSUdWcVhnUV/WHxncOTuFznaEZs7apw==
+	:subject:to:to; s=fm2; t=1728485782; x=1728572182; bh=Edrn/jY8KK
+	Ig/SxNLl1HGOfkbyIXTVGJDW4/Di3p/28=; b=GWE5TkPZVXJjQyeZVA269aNYOw
+	/SUJdqSKSnv2lLS+LmUUfwK/A6DBPQ0Src9JCP4JhnwIO49hzxGE509FmPNQJnnF
+	kmD17Bk0FXt4YZEoshyDf6HUZhXEf+s1qcl4ZMZLNbEWou+ARRimSxM4WCtnHsH8
+	+3b4Txn0bPZaCw8UW+vHu4fjmIbNEtSpxREbWC+5GkT6bSvv0xSzLbpjOdsW1rsK
+	2UDd8TgsAJtYAhGc39t6wCyMfI1XK2bolGDGw7KX2NobdRI+wCXmdcgMqzk9A80C
+	VaNToWsXnQZQjjz2j7PqMs8q2MU025lFx27WS8KgrVxzO44OB+tLByxID85A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728485780; x=1728572180; bh=XbpwAVxM/1jpu5o6notWdip+cxP/
-	ESw0hvmoxD/VpLQ=; b=Dn55+29jPLyQwzmco7p71Q244pzFQP+v776vVbabYm/w
-	lxnjpzBfIib/viWxZaTBYjzmm7REUMvCkIOF1ZDPQgL6ddj4taKl8Q2qVpbcsnBe
-	31CPuM/IJK0Ts9YlZ9/LY93ryZJ77HOBMMU3BgfHAZk12qIvMdfAu1rSlLAUiW23
-	zY2ZL+xqeNR16RBa95BMSD+7ol1o/7urQ6FvK0Qfdc6Xz02UIW4I8IE1zEsXoEpg
-	VuXquvMvNMgB8Mwt2Zx+ZVe48ZKKmW4gAkgmhdpflJpjdydBpf5lIbdRF4o4rkmq
-	/X/6EXBypiibIAr+9luLAsOMhylXuyuvTnuRe7kj3g==
-X-ME-Sender: <xms:lJkGZ-YR7r4JpCu0n7agRn6j4PoRkiYZXjOYygpnZ-JBUZrososbJw>
-    <xme:lJkGZxZfcGsH6USllm7a3KsxuW5IczOFwVhN6iNmlXN1Jp1QS-0ZlFmTBDdta0DDB
-    j24Z9X7KaO3eJ5E-g>
-X-ME-Received: <xmr:lJkGZ4-Y7mdG43ZmmciTpp3xPfg6ukKtRl51faQb3PMA1-cu9-RpRoiiiHZiEtWBn_gyGmSMm1gIdJ9SICNb77mo7ZqMNp6LSjhnrxWxsLT6Mw>
+	fm2; t=1728485782; x=1728572182; bh=Edrn/jY8KKIg/SxNLl1HGOfkbyIX
+	TVGJDW4/Di3p/28=; b=AsGdQzbcHTE0N+bcFGfoxzRIFmpplBnG/PWAbESfaQYH
+	nZo84xQJWa5DYFRMtEZ0wAg4hV1YKyzjEe0UfGdMHOzgiodJX1qF3rNrubiJPDlS
+	7N67dkYj4ETcoKZ4N+bSZF/6kYEvpN2nptLIN+fv3m2ZJklmzvl7rmlwTagUQBJH
+	lauK85tI3jwmo+0gmjnGgiJ42X8tmEfioYFvEKankE2f5Fx8R4Jgu0Z+k7lwLvSB
+	ULE7euYtK5W2RdzsxaDAHTAxwuGi9GFe/m2sZyfmMVdz1ehS+nPEUG0MOIVLisZA
+	WwWZ9SEEAxuX1+tpjUSV5xC+2GIwwUwsWBcCZ3Z9Ww==
+X-ME-Sender: <xms:lpkGZ3BuAxKcDt9o1BKCLnMyPt-KdFBLWoM7xLH5cRrBetwtzfiJ7w>
+    <xme:lpkGZ9jB5Pfdr7KwIAThdhjIixauCL0fTQEaZffWco2DoM5yf4DzQFRaqUMyI69gq
+    oW2W4NkOFcKHOEhOQ>
+X-ME-Received: <xmr:lpkGZynxDg0oV4y1IsP6H1cQew5kkjR5UPKwMhd_FjVeFWjkwN0H96hM39E9-OxLqb6IKsTfjazVQ77ZLFc5W0EvlJ0ZTmxSgN0zOXzYYE3qUQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgkeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,31 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgkeehucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhifrghrth
-    iisehgvghnthhoohdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdef
-    sehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:lJkGZwrbXoh48Y1tCDegnK88QOBsFmWMKECGIxsRQWUP2S3C3Y6NlA>
-    <xmx:lJkGZ5oDqh4pZdA43yPa_WeR5-7DCAcUgFAcF5xXB8Bm0ZOZ8sttOQ>
-    <xmx:lJkGZ-SAfiy_cpcxuen7gPBspNh8ueNZYcYX0IlIPIZXvQBUKv6Gyw>
-    <xmx:lJkGZ5pKd5a4schLhx5lif81b-oIZv6kGgIcvEQCoGRyCljzJZKLkA>
-    <xmx:lJkGZyB-5z-6Q-OA3z1dBQCngBMAsKYFLkHkXV9TuPzPvqxGVyOhj7Z9>
+    mhhtphhouhhtpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpd
+    hrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunh
+    hshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:lpkGZ5zwtiB7xBASBZBrWz2cBlohaWVxGZKCHqot34ySfMEtOI06Lg>
+    <xmx:lpkGZ8ReJJ4va9-Zw_N6Sahnq_OM3A7nZxA1KfqzsgmYwTMAJ1oqmw>
+    <xmx:lpkGZ8YNN9hZmaVgwdLR612hcN2BJZDHBqnVMZiEjQdifvozCxDuAQ>
+    <xmx:lpkGZ9RS9l4hiAevxx2CLmH4ey9ldaSMETECOB2VNuIdTTAX4YyRHQ>
+    <xmx:lpkGZxI_OqLTbJf2UVEEPndpAplTgFkOFuBI3bLaq4woH8qJUD1ju5Xy>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Oct 2024 10:56:19 -0400 (EDT)
+ 9 Oct 2024 10:56:21 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3df3c697 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 9 Oct 2024 14:55:16 +0000 (UTC)
-Date: Wed, 9 Oct 2024 16:56:17 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0dc47553 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 9 Oct 2024 14:55:18 +0000 (UTC)
+Date: Wed, 9 Oct 2024 16:56:20 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eli Schwartz <eschwartz@gentoo.org>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [RFC PATCH v2 04/24] t/lib-gpg: fix setup of GNUPGHOME in MinGW
-Message-ID: <ffb661dad7170759642e4012de169b1db0cbb8df.1728485139.git.ps@pks.im>
+Subject: [RFC PATCH v2 05/24] t1401: make invocation of tar(1) work with
+ Win32-provided one
+Message-ID: <958cf3a6b578449eb26caeec6cb7ab9ce3fe66e2.1728485139.git.ps@pks.im>
 References: <cover.1727881164.git.ps@pks.im>
  <cover.1728485139.git.ps@pks.im>
 Precedence: bulk
@@ -93,37 +94,30 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728485139.git.ps@pks.im>
 
-In "t/lib-gpg.sh" we set up the "GNUPGHOME" environment variable to
-point to a test-specific directory. This is done by using "$PWD/gpghome"
-as value, where "$PWD" is the current test's trash directory.
+Windows nowadays provides a tar(1) binary in "C:\Windows\system32". This
+version of tar(1) doesn't seem to handle the case where directory paths
+end with a trailing forward slash. And as we do that in t1401 the result
+is that the test fails.
 
-This is broken for MinGW though because "$PWD" will use Windows-style
-paths that contain drive letters. What we really want in this context is
-a Unix-style path, which we can get by using `$(pwd)` instead. It is
-somewhat puzzling that nobody ever hit this issue, but it may easily be
-that nobody ever tests on Windows with GnuPG installed, which would make
-us skip those tests.
-
-Adapt the code accordingly to fix tests using this library.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Drop the trailing slash. Other tests that use tar(1) work alright, this
+is the only instance where it has been failing.
 ---
- t/lib-gpg.sh | 2 +-
+ t/t1401-symbolic-ref.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index add11e88fc0..3845b6ac449 100644
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -6,7 +6,7 @@
- #   executed in an eval'ed subshell that changes the working directory to a
- #   temporary one.
+diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+index 5c60d6f812d..90af3f955c0 100755
+--- a/t/t1401-symbolic-ref.sh
++++ b/t/t1401-symbolic-ref.sh
+@@ -16,7 +16,7 @@ reset_to_sane() {
+ test_expect_success 'setup' '
+ 	git symbolic-ref HEAD refs/heads/foo &&
+ 	test_commit file &&
+-	"$TAR" cf .git.tar .git/
++	"$TAR" cf .git.tar .git
+ '
  
--GNUPGHOME="$PWD/gpghome"
-+GNUPGHOME="$(pwd)/gpghome"
- export GNUPGHOME
- 
- test_lazy_prereq GPG '
+ test_expect_success 'symbolic-ref read/write roundtrip' '
 -- 
 2.47.0.rc1.33.g90fe3800b9.dirty
 
