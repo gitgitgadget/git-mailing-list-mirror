@@ -1,137 +1,114 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC3C1DA5F
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 06:28:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B28433B5
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 06:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728455327; cv=none; b=Bs12uUdNXKNtLrC7birSmIlXDpHgwXG55UD/zVyp78UT/IuxMZzGVrECBftxIXtGrbN9fvd+H6Bfj6HtweZzFocvkCayMZrQknRNMPIcfX8gl0CfdmyxOQwaYYqJFhJCDeK1xm738PhIz3C+n5MF1kYVBIBM6o5TtCnNr1txtTk=
+	t=1728455529; cv=none; b=amvuoQm0w8HbbcL2j/P/CUhXreeiR5j9j0qdE07Q8NroauInDqFyMvoUcDq9FaAgOMSiZtnRzuj2cEhTETFmJzOYt5p6sk6NNjL+RvVi5XxVQ6sGl7SDsnidcqHN2ZhxnQtvF5RPLVuVxyM+6O4hb53zOADpL6Bxmf3UUTWVva4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728455327; c=relaxed/simple;
-	bh=98JEBZ6xFMj011OI1Bg+76pMOqm+q3oiEVVoq8TBLrU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AFyfD8aBfQ+Ae5QIATltNJWcRjQRS/sT+jicsvK/hZ+LHU3y7RAv1IYQGxz6yNm4CQc0XiraRCYk1kjK0UwbuwBwo34TV0/1NM4Cys9jExoHCSfTxuPArJMNSkGm0kgJJ7PbfP4aggvpFYyQUxrPE1BQ5+l2IqMM4J7qFyLiciI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IqYfVW8f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a+iNgKoG; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728455529; c=relaxed/simple;
+	bh=V2SzI445eMudCwPXbYCWUwyaV0DgkKz+XdKM/TlMuCw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Pb221sBe9cEPUdAUE6uAd9frHBtRC5oDslDUR1Z81+aZASfLa8gX9Guthrcgd7xZOh+bkeltHaFx3OP8e5aQcAkfvH2OkwG6wfuNhYs/M17gIAEZWzYXvKRaddenHJUcxQelWn6yrqNp48+JOS4Lc7HFjUBShhEryfHKP/156Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=O0LgVt0v; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IqYfVW8f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a+iNgKoG"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 97DD21380696;
-	Wed,  9 Oct 2024 02:28:44 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 09 Oct 2024 02:28:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728455324;
-	 x=1728541724; bh=JYSHOvSgE9UXVMBvaX5Gp8RASvyncylZEzpjHOM57ak=; b=
-	IqYfVW8fDIYnLHAcI4CHYCFEqP82sZSI3awUHXr1YjdOLD39/hdF/GKqgwFgvkno
-	6b1H41/j2kDs7hBtDOg+GgS3dM574hJ1GaUmBl5y2B5ino5HMHFMiZqgmqmxcf/M
-	1COU5FhuyVwx4NbeFZqlLZiC1/WLD7Ewhlg5KEsGVBOZKkpJuQpAMoxxn5zn/flP
-	LG6FVvfVhl0cOFPve1iB+2MaTaQxirve9AZxxzflnMh8A5BoYvuJ/ZNrmgQQ9Ocu
-	004jcLUnTgAZz0jb5bd3SaIsrqNHCvMB22B8S2tRim1hHZ/D1SmmBW4BARD4oLyL
-	178hYlB2dWptG28jxP0HUg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728455324; x=
-	1728541724; bh=JYSHOvSgE9UXVMBvaX5Gp8RASvyncylZEzpjHOM57ak=; b=a
-	+iNgKoGMnFsD3gfpejYXxfHLgufREtGwxCtx5PgI3sxfedyz20kr9JTujY47ce8I
-	HmFNggiHQNo00KWuOYJBtQMNygfLt/Tqd9yD2w09oqhbOzDmqFNG8XGLHzS2neMj
-	GwiT9uqDPlPqnnrFlmBlxrAwAPiB7tIFgqp+AjcziWjx096FzCPk1MHkydkfbnFF
-	DTJfdjnwAOO5sJX4dAYU8RQxia5EHb/JOVXiHCuI/g7IEqngi4uh+FbcFLd7RVg/
-	phEh2FmN7aTw0bBR9dz1SFEwjHO1GaWDezSlexf4CjXkn+dYCHhEBUMvSxUXhkiT
-	qBCdwBqfkxq76akol9/cg==
-X-ME-Sender: <xms:nCIGZ6yJc-1UP3Tq5c2r8TjvUSRzfy87J8a-UO_KQKdf0NxecjCtJA>
-    <xme:nCIGZ2RCaEJKYNB6o-zfVNkjcm_1z4AzDrT29vfPTcWOKhtC2WXzlMQuoI4pr1yf7
-    fDd9WZZLW7fu9argw>
-X-ME-Received: <xmr:nCIGZ8V0mtWDiIA6EbumjPNWSClnJFMBAfyLlHXhKSAbP5gtPdvZ4IUYu8B31KPZuD3P6vZu6PJZEEm749zmqrirc-A8s6Bm15LlhZ0YvELc_w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefvddguddtlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
-    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
-    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepshhhuhgshhgrmhdrkhgrnhhoughirgdutdesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:nCIGZwgiLHjnrFKhuxMYKrho3-_blT3vhijkMnAUXt5BC7zENEQtbw>
-    <xmx:nCIGZ8BxAV1nwvnVCdRETO_PxgXR5fU666Fj5sC8Bse_OiPMKVOJ5Q>
-    <xmx:nCIGZxKLtsP8yqei2OmC6WO20-7rli3LrP9Xr6efR05ZnnbdgFQ9ZA>
-    <xmx:nCIGZzD04Jg2nggBhaDEoZT1al9vJI6Azn5lXADgXxEgfrMeHzqN5g>
-    <xmx:nCIGZ_OAKsht638JRO1NYA5-FizmOVKxJZLsQn_plplEiulr6R07-OGP>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Oct 2024 02:28:43 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 11e8aa01 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 9 Oct 2024 06:27:40 +0000 (UTC)
-Date: Wed, 9 Oct 2024 08:28:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org, Shubham Kanodia <shubham.kanodia10@gmail.com>
-Subject: Re: [PATCH] builtin/gc: fix crash when running `git maintenance
- start`
-Message-ID: <ZwYij4t5eDgy23iw@pks.im>
-References: <CAG=Um+0mJW-oAH+YLC3dWEU64JwS-zMkkTiFWYBe4g6HMbe-iA@mail.gmail.com>
- <976c97081af7c62960bd71d1b70039657e7cb711.1728389731.git.ps@pks.im>
- <c1271bf6-3648-4eca-916f-67a8518fe4e1@gmail.com>
- <b4d75b35-bfe2-4950-b2de-b56d95918b3c@gmail.com>
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="O0LgVt0v"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-20c693b68f5so3353085ad.1
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 23:32:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1728455527; x=1729060327; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ELbrGym9cVeoNcOE4WWrjd7QuiAJKdl7R9RGT1FHNi4=;
+        b=O0LgVt0v7Gsw+rXbwi9T1H61E7GBTTTAx99i+BZsDkExFLtFHsQ3Qt2DMK0Jh4/D3s
+         vKnsCSHAwC4y3VxJsU/mUpV5hIpU1469sFH7TTLNs8KFlGbPArYiGPTJhte/WVy6TVba
+         1tpur2mAvFvnnMd0l+JhoG5opTB46jVTi8zf0pwZIJWazHkcLbH5lsBRHXIHFUAWB5iA
+         T/1xNfyNXQl/YYQ3/MzM72pfafrDCMp+UoPG5HAJvXLFM1KNALo69YDF9afjsrn2mBIj
+         PDf3e+E4M9H1xJNUbwki6Biq8oFhe1VoCCpeuDcIVss2mzaPpkFj8agdj2puPXrmNWNy
+         7S/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728455527; x=1729060327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ELbrGym9cVeoNcOE4WWrjd7QuiAJKdl7R9RGT1FHNi4=;
+        b=RssGw69aWe1Q1j9ThKUeDsaXxJgNUaGoBUyVf7Rx1oDsE80fPtAe0XXo7lxgEE82yp
+         wJaph3z4JfYSGu5jCoy3IB9W0WZpuNNRQKyPuHs4D2jUZA5Wv7aZB/rOwmlsfcnLodYh
+         zJsvfTQXSU9T+3ZbxR0JjLr7Cel6Vmv/Gx3pcxV5xbgSUPJKAjDypbYW4uN7VRa+gYiS
+         h9Zky2Leugd1bN0MZCJcZgSle4bNtuLAYD00Bb0vJHBd+70GR57KZVKrIw8J7PGMF1WO
+         YL8nBs1EuJ1RG6ES8svE5mYot9RL1Dn5b7NEkDebjiV/msVQes3NPtNOpMgYcQvEruUq
+         5rhA==
+X-Gm-Message-State: AOJu0YxdStMKu9aIJ5uEPlNtE3Jz6snVsjmL7d4qkDMIhqqdVYQ2ZnmI
+	/ZV6bOKVLe/KLMEoBaC2PexFyZ5eJmr5iT20G+hJUt966anMuiguEJ08WuSki/THwM/da968Coz
+	4pLwZHSFNfnoXjynaouzDxSJuO+16aC6aVOG5yA==
+X-Google-Smtp-Source: AGHT+IGlgobS1HhNdDPrR70uaMzrNVNE7rw2hkLhrOmL9qEuD9Iv7WKXGadwRFoTs45oq2m0kNAvkeKfBJ2mNjlb1gc=
+X-Received: by 2002:a17:902:fc44:b0:20b:8ef3:67a with SMTP id
+ d9443c01a7336-20c636d7ccemr22611915ad.7.1728455526940; Tue, 08 Oct 2024
+ 23:32:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b4d75b35-bfe2-4950-b2de-b56d95918b3c@gmail.com>
+References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
+ <20241008081350.8950-1-hanyang.tony@bytedance.com> <xmqq4j5mz295.fsf@gitster.g>
+In-Reply-To: <xmqq4j5mz295.fsf@gitster.g>
+From: Han Young <hanyang.tony@bytedance.com>
+Date: Wed, 9 Oct 2024 14:31:55 +0800
+Message-ID: <CAG1j3zFOMz-C=6xq_+mN2PrfyVcDrrTpMEHpLrrP_crS9J+rUg@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v2 0/3] repack: pack everything into
+ promisor packfile in partial repos
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
+	sokcevic@google.com, phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 08, 2024 at 10:58:06PM -0400, Derrick Stolee wrote:
-> On 10/8/24 2:30 PM, Derrick Stolee wrote:
-> > On 10/8/24 8:15 AM, Patrick Steinhardt wrote:
-> > > It was reported on the mailing list that running `git maintenance start`
-> > > immediately segfaults starting with b6c3f8e12c (builtin/maintenance: fix
-> > > leak in `get_schedule_cmd()`, 2024-09-26). And indeed, this segfault is
-> > > trivial to reproduce up to a point where one is scratching their head
-> > > why we didn't catch this regression in our test suite.
-> > 
-> > > +test_expect_success 'start without GIT_TEST_MAINT_SCHEDULER' '
-> > > +    test_when_finished "rm -rf crontab.log script repo" &&
-> > > +    mkdir script &&
-> > > +    write_script script/crontab <<-EOF &&
-> > > +    echo "\$*" >>"$(pwd)"/crontab.log
-> > > +    EOF
-> > > +    git init repo &&
-> > > +    (
-> > > +        cd repo &&
-> > > +        sane_unset GIT_TEST_MAINT_SCHEDULER &&
-> > > +        PATH="$(pwd)/../script:$PATH" git maintenance start --scheduler=crontab
-> > > +    ) &&
-> > > +    test_grep -- -l crontab.log &&
-> > > +    test_grep -- git_cron_edit_tmp crontab.log
-> > > +'
-> > > +
-> > I see why we didn't catch this immediately. This is a good way to work
-> > around this issue of "mocking" the scheduler.
-> 
-> Unfortunately, this test is broken on macOS and Windows. Those platforms will
-> fail when asked for 'crontab' without the test variable.
-> 
-> Here is a potential fixup that will make your test succeed:
+On Wed, Oct 9, 2024 at 5:57=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
 
-Oh, indeed, thanks for flagging this. The issue is that those platforms
-do not make `crontab` available at all.
+> > Packing local objects into promisor packfiles means that it is no longe=
+r
+> > possible to detect if an object is missing due to repository corruption
+> > or because we need to fetch it from a promisor remote.
+>
+> Is it true that without doing this, we can tell between these two
+> cases, though?  More importantly, even if it is true, would there be
+> a practical difference?
+>
+> In the sample scenario used in [1/3] where you created C2/T2/B2 on
+> top of C1/T1/B1 (which came from a promisor remote), somebody else
+> built C3/T3/B3 on top, and it came back from the promisor remote,
+> you could lose 3's objects and 1's objects and they can be refetched
+> but even if you lose 2's objects, since 3's objects are building on
+> top of them, you should be able to fetch them from the promisor
+> remote just like objects from 1 and 3, no?  So strictly speaking,
+> missing 2's objects may be "repository corruption" while missing 1's
+> and 3's objects may not be, would there be a practical use for that
+> information?
 
-I think we can land at a better fix though: the systemctl-based
-scheduler _is_ available on all platforms if the systemctl binary is
-found. So let me adapt the script accordingly.
+ Some code path does check if the missing object is promisor object before
+ lazy fetching, `--missing=3D` does this check.
+But in that case, C2 is also a promisor object, the check would pass.
+There are no partial clone filter that omits commits, missing commit will
+always result in error. And even if we do report "repository corruption",
+the best course of action is still try to fetching them.
+So, no. I don't think there are practical uses for that information
 
-Patrick
+
+> These patches are based on the tip of master before 365529e1 (Merge
+> branch 'ps/leakfixes-part-7', 2024-10-02), which will give mildly
+> annoying conflicts when merged to 'seen'.
+>
+> I've managed to apply and then merge, so unless review discussions
+> find needs for updates, there is no need for immediate reroll, but
+> if you end up having to update these patches, it is a good idea to
+> rebase the topic on top of v2.47.0 that was released early this
+> week, as we are now entering a new development cycle.
+
+Thanks, I will rebase to master and see if any other tests break.
