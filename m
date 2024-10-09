@@ -1,139 +1,87 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BA818C92A
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 18:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1526552F9E
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 18:36:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728498900; cv=none; b=Z5HmwH/5zt9Y6wsDA1DRP/JinoOKvapzyRppBfYCHw7GjCGKq+MbjbLGLoY91zsCIv2pgxANkBOA7/agBKxwc0sErFwSfylzQ5Dgd8HBgVzUTsjfg8QUKn6iAtqQJZfaaJY9ep0kK43bYu9PWylBNx6rviVr0kQ/+987bCeqhzI=
+	t=1728498970; cv=none; b=fUSUqHhc5ljDfvVo84DRIR6N/c5fuHF/ciKRREA/ohMjrmRHRr9ErHdqyvzCwwgXBxtoaGkXcDHlzaAn6UQr7bX8HW+X1z1KudUKx0GDTPAOEOOHs4GrkHd52VDcvsPbt1KgIlyAWG5DRpAGu7JN1SW8LUvCPOXJrsyRhvQptm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728498900; c=relaxed/simple;
-	bh=NZMSS/K22xfi8buPK8s2JzmLAFrA7K2nLNUNvdFpxcM=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=akYfqwxocSeP/7NETwrmJrjqDefq4vuUJ9HhLWcSCNubK+y7X2gI6+JweGZThOQFt8mALVCTC2g/FcuMX+8Voj/w8SS+qE+agxhyaeE8ARdlsODLxzDMzWepCTWWVb3eKNzItkZNc7sRBCzAjRWPfkuTz5AfGh9WfQUlZD2XAZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pQegiBUR; arc=none smtp.client-ip=209.85.219.202
+	s=arc-20240116; t=1728498970; c=relaxed/simple;
+	bh=18TI0MxIKX37mNqt3vx77m7qhIkyzGVC2+qciEZ+aus=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=mt41oNa8oMKLezj+2UwjdT7o66XpCbfx2G2OwWQ+2w738gZr8lQ8aOprRLoogV4FNcPJEBPTnPa25grjwsJ34CmaZKZQTQscm/CyzE3ZDqR4UG5Vvasnzfn+epdvtnERDIP40ytEzq4TVH/lTd8zB2oSlUUKm507nih/OJDyP20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=k8ey4QxJ; arc=none smtp.client-ip=209.85.160.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pQegiBUR"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e28fc60660dso219380276.0
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 11:34:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="k8ey4QxJ"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-45fb0ebb1d0so38261cf.1
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 11:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1728498898; x=1729103698; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jfPg2pCmBno9bewTXDrw6AhHNVs5CsAN2aWt8X4EX30=;
-        b=pQegiBURRMjrZ9OhGFPKZcG/bcrLfvFJChXO5j9gGQvYN1HeOYltfYNVqHZS2qJZoA
-         Bdcu+yh1dxPM1StPb1kT2InECWAyhGuzGKGQ+K8lfvYL9pwtnIUBvaW8TARufySjKGh8
-         azmvMwnbrBNWJlHh1Qv7ogXtZQLfwjoKnIhG+ezKhkGfYaLymBXjBPNOVVMLI/0I/W3r
-         715armO2DcHTLhazrSGnZEczt9OasaIO8hDgxRGWIPRKydFn5SoONdgbnM/qGgBNAHv3
-         j+QKCD9B3aKLPnubBfmrkSuOC3VGw2tx0dasPVK5D+Zid55QMrtQRUi0fZacHR5Gxalu
-         l+IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728498898; x=1729103698;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+        d=google.com; s=20230601; t=1728498968; x=1729103768; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=jfPg2pCmBno9bewTXDrw6AhHNVs5CsAN2aWt8X4EX30=;
-        b=iKiNOqa9TsNG0H06vCnaabFF0ou+Pw0j/ca6BqC2JdElaQfT7tJnCXZWgzMvplau7u
-         01h2NZcYHj5W9YZmC8uRn5S0vjUutQPLRXHeO5Efdpb/oo8m4Y39A0Xw9pSa3dxv+Dv6
-         pL/evyvvPtzM1q30bCIh/GpgOpnaGapuHrOPtDSh+5pnKZokyFcEzWYVQNrjOqIYvGaf
-         oi6F2VYqQYSxClgqOsGg3A11B7cAGLz7CsgK5l+Yojvvc3EyQAHniO+IHQOHa+kAb/Aw
-         0kIsmNhnypjKwlJrCo+H2GhrNmb7Gt78JES1wCYUREiBvNC+v8GjJZuRkk2pb7JdFvrU
-         UMjA==
-X-Forwarded-Encrypted: i=1; AJvYcCX3Q2x2Cx7wF7ZcMtOAyBTgTBy3b/kWC6nkADu8ec1O1KpfzdbbyWBp6QeIyv+sGgZnV8k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyaQx8+niG+GkfBqUJGYQA78I60IYnH2+QFYq1MZt6rr0TRt5jT
-	rBPQ4R5d+/ouC/X2ThE/Jd8IxhKd6viFT/Q8uV1wqbOjzHQN/rbkl7fVOqE0JoQY97o2flm4K7B
-	U6c3hC6M3Ii7E5Xza8y63jrpyjlPgyg==
-X-Google-Smtp-Source: AGHT+IFSbtU16ih9/YwvoSTT249ZfhhziuGw6JcSlQdHMWmLeIV0zyuAqZxhugJDNC1eszzE4aemTizCiAGE+gR4YPCg
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:424d:d3f9:36a6:1e7d])
- (user=jonathantanmy job=sendgmr) by 2002:a25:83c3:0:b0:e20:1596:87b8 with
- SMTP id 3f1490d57ef6-e28fe473b09mr60486276.11.1728498898020; Wed, 09 Oct 2024
- 11:34:58 -0700 (PDT)
-Date: Wed,  9 Oct 2024 11:34:53 -0700
-In-Reply-To: <CAG1j3zGcdfd6YRb=Fb1Aqt5kLajueagV+6upt6vwsGW9RxaR7Q@mail.gmail.com>
+        bh=18TI0MxIKX37mNqt3vx77m7qhIkyzGVC2+qciEZ+aus=;
+        b=k8ey4QxJU3zW3hLiPU+acaHXFkequDr4HiDxp1T1cb3ww+xkijUwNf++mriFhl5+qb
+         ScXSmFkY7DHa8/DWTpY/34oeik60yoICWG8EkQ9AYLksVc2V9jLL9H2EGBzYTAMqDYdW
+         DyDhCOn2MY82EhMsa1SGRewbhTSV48fEoo6CBmqj8gfXj5EMUn87Woj0E8W63M9b2Ub5
+         bMBgdOiQQGpFn40nu+ueie/+VEDWnnVuFXfiFrOwkt/RmwCjPuUet3Oswkcwnn0NnItA
+         EPiSzUY3yTxO6ZFT4f/T40FIXQZyYUgyIAtaar8mpO1rNV+OvXcGVqtBaCUBf33VxCGA
+         eGQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728498968; x=1729103768;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=18TI0MxIKX37mNqt3vx77m7qhIkyzGVC2+qciEZ+aus=;
+        b=H15vdMSqFDKi/MB844DRMwcILzNqVAo1duZmuo0Czcji/gAVT3Bf4j5T00P2RBw9Fe
+         ZKZXIE7YUiy3mCSDJzZNnv7CdC0OSH16vXrW4tmu3P5Fn4FDOrDe2XPna+ztugOi5RAB
+         YYn4SauMihuuX6uuxqcIQJSKgNv1W3n8sxhMiKnN9E+zAW4XdHge31aPOkzFyvyjxvXt
+         5tcKuMx+4yq9+03QUhIKUMbgRGmLA1axI4vQlCzg6S6SJdPYb9sDCBkwIBxCUbpSBMC5
+         yl0ZkQijIIf3S9KCDlysD/wedpJ3lzhGDqiQ4SQremq7zgKEijLi84txIOQDZI2h2sdF
+         6EOg==
+X-Gm-Message-State: AOJu0YwPObVNhBIHfKsRv0lF3z7kbgLcfjWuXKLz6xj2alehuqBwreo3
+	L5l/9rIElx2Hx/sfHKZKvgNE/WFaErZQdODle5oO6egGCT1tauhn7bBlc5WHQBD4O18vY4X9lVy
+	dvf8+Svk8xKpOkKmL/36AVGterfonsF3iLZbGLvhzEI78g2HWNT1jwXg=
+X-Google-Smtp-Source: AGHT+IG1EWTQXirLAxnQEC5bQzqaBZj2HpbweqKdIa9RgwWKtjxHdFNS8qAM1AE7v6hHpJHJRVInUQbFF4u/eoOXzaY=
+X-Received: by 2002:a05:622a:2d11:b0:447:e59b:54eb with SMTP id
+ d75a77b69052e-46040440c57mr373451cf.26.1728498967553; Wed, 09 Oct 2024
+ 11:36:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.rc0.187.ge670bccf7e-goog
-Message-ID: <20241009183455.164222-1-jonathantanmy@google.com>
-Subject: Re: [External] Re: Missing Promisor Objects in Partial Repo Design Doc
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Han Young <hanyang.tony@bytedance.com>
-Cc: Jonathan Tan <jonathantanmy@google.com>, Calvin Wan <calvinwan@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood123@gmail.com>, Enrico Mrass <emrass@google.com>, sokcevic@google.com
+MIME-Version: 1.0
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Wed, 9 Oct 2024 11:35:53 -0700
+Message-ID: <CAJoAoZnovapqMcu72DGR40jRRqRn57uJVTJg82kZ_rohtGDSfQ@mail.gmail.com>
+Subject: nasamuffin unavailable 2024-10-28 - 2024-12-23
+To: Git List <git@vger.kernel.org>
+Cc: Josh Steadmon <steadmon@google.com>, Calvin Wan <calvinwan@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Han Young <hanyang.tony@bytedance.com> writes:
-> On Wed, Oct 9, 2024 at 5:36=E2=80=AFAM Calvin Wan <calvinwan@google.com> =
-wrote:
->=20
-> > Objects that are in promisor packs, specifically the ones that have the
-> > flag, packed_git::pack_promisor, set. However, since this design doc
-> > was sent out, it turns out the creation of a set of promisor pack objec=
-ts
-> > in a large repository (such as Android or Chrome) is very expensive, so
-> > this design is infeasible in my opinion.
->=20
-> I wonder if a set of local loose/pack objects will be cheaper to construc=
-t?
-> Normally loose objects are always non-promisor objects, unless the user
-> running something like `unpack-objects`.
+Hi folks,
 
-We had a similar idea at $JOB. Note that you don't actually
-need to create the set - when looking up an object using
-oid_object_info_extended(), we know if it's a loose object and if not,
-which pack it is in. The pack has a promisor bit that we can check.
+Heads up that I will be taking a personal leave beginning October 28th
+of this year, returning December 23rd. During this time, I will not be
+working, and don't expect to be monitoring the mailing list,
+participating in reviews or discussions, looking at the Discord, or
+writing patches. If I do participate, it will be in a personal
+capacity and not related to any of my work at Google, but I think that
+is quite unlikely.
 
-Note that there is a possibility of a false positive. If the same object
-is in two packs - one promisor and one non-promisor - I believe there's
-no guarantee that one pack will be preferred. So we can see that the
-object is in a non-promisor pack, but there's no guarantee that it's not
-also in a promisor pack. For the omit-local-commits-in-"have" solution,
-this is a fatal flaw (we absolutely must guarantee that we don't send
-any promisor commits) but for the repack-on-fetch solution, this is no
-big deal (we are looking for objects to repack into a promisor pack, and
-repacking a promisor object into a promisor pack is perfectly file). For
-this reason, I think the repack-on-fetch solution is the most promising
-one so far.
+Lately I don't write many patches, because I spend most of my time
+facilitating Josh Steadmon's and Calvin Wan's work as their technical
+lead at Google. During my absence, Josh and Calvin will spend more of
+their time covering for some of that work, which means their
+participation upstream may be slower or more sporadic than usual.
+We're hoping to be transparent about availability and response times
+over these two months, but in general, please be understanding of any
+higher latency.
 
-Loose objects are always non-promisor objects, yes. (I don't think the
-user running `unpack-objects` counts - the user running a command on a
-packfile in the .git directory is out of scope, I think.)
+I'm looking forward to returning at the end of the year with fresh
+energy and ideas for how to move forward the libification effort and
+keep the Git community healthy and efficient.
 
-> > > After a lazy clone that omits a lot of objects acquires many objects
-> > > over time by fetching missing objects on demand, wouldn't we want to
-> > > have an option to "slim" the local repository by discarding some of
-> > > these objects (the ones that are least frequently used), relying on
-> > > the promise by the promisor remote that even if we did so, they can
-> > > be fetched again?  Can we treat loss of C2a/C2b/C2 as if such a
-> > > feature prematurely kicked in?  Or are we failing to refetch them
-> > > for some reason?
-> >
-> > Yes if such a feature existed, then it would be feasible and a possible
-> > solution for this issue (I'm leaning quite towards this now after testi=
-ng
-> > out some of the other designs).
->=20
-> Since no partial clone filter omits commit objects, we always assume
-> commits are available in the codebase. `merge` reports "cannot merge
-> unrelated history" if one of the commits is missing, instead of trying to
-> fetch it.
-> Another problem is current lazy fetching code does not report "haves"
-> to remote, so a lazy fetching of commit ended up pulling all the trees,
-> blobs associated with that commit.
-> I also prefer the "fetching the missing objects" approach, making sure
-> the repo has all the "correct" objects is difficult to get right.
-
-If I remember correctly, our intention (or, at least, my intention)
-of not treating missing commits differently was so that we don't limit
-the solutions that we can implement. For example, we had the idea of
-server-assisted merge base computation - this and other features would
-make it feasible to omit commits locally. It has not been implemented,
-though.
+Thanks,
+ - Emily
