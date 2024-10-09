@@ -1,173 +1,115 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F2C161313
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 07:58:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1248417BEC5
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 07:58:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728460706; cv=none; b=a+5P5gRfRL2wyUD3IcM0CCBnrdKboxfO7Y7528kiyShlvsQgvaB603GAjfgviZtYxEBCX+JEmh89ei9ATLo+GHZTxloeQ0JAq6U0gbBJkDBXeXrrqlmkaGc27faAkDE7FuqES/0x9UYCUlbR4c04LpegQA4gNbg3N2jSx9JHKw4=
+	t=1728460707; cv=none; b=fDovnuOUTOVm9E1LBCGkeq0aHBc9kzw0sMvAgoR0QvTB5C27vgHCNmqjvus4zLUrwsoqWDvJvkTE82A8Rw6LhuHBJtNmt8DHBS5FM8MPucsy+j596QEUmJ8owdnFFTcO5l/ZjDQyFN+QA9zFPVQxmrCk4wAwyYwmHrfH65t7LSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728460706; c=relaxed/simple;
-	bh=0Ymsu9S+jr3QXkM8pgXBL6GoemalY0hXxXwaMB2zoeY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=APXF9pxdOTjlwUJS6bAdDmywPgirpCY7TmnsU6eactrLD82IHRv7I2Rsyqs8S67H0Cxv9u4RJ6txvkdPLFhK1ai1rvWa9IClFn9dSGp+uKCdLt8z6CFFBWgvXus26L8xiHn9cUx1MIxLAnovZr36uo0Dgm41a+yLG5MQKj1eFAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ksRmvdAD; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1728460707; c=relaxed/simple;
+	bh=NmI1eWkVK50hGlaljjYOi+mXXxgNpdpJhOVxWJdx2UU=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=W9bjtnlcOC2OmyuKY9rrLUQI6yYI+SENp0N+vMH+PiwN1wiwwyx8KJ5ehma6vfmavALHSdKWLlmBDtggz5KVDPaUg63ImtJvw4hHiiQwZA1AfwYNkez030XPfkPpP4D5JGQo7spGvMKxgNs/ioGZrdsjfeKyFaPixy1DaWiOIck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WaJ7imHi; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ksRmvdAD"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5c896b9b3e1so8982173a12.2
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 00:58:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WaJ7imHi"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5c8967dd2c7so8051752a12.1
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 00:58:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728460702; x=1729065502; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        d=gmail.com; s=20230601; t=1728460704; x=1729065504; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lO37Y9LoIXSdDur2CCkpJyBDBA8Ol87MOgiLtCLaJcE=;
-        b=ksRmvdADygcj97RrzsY441FZ7nXmLKSL6c4J4PXriCnfPtNC++AxN0oxthUi3LCHsX
-         1HIT453DwrPktveDODGCXPZYgFxHd+uy/hR605F3gQs8lZDw8NSUHsK8cZnT4dF2Zaoj
-         Je6gLjiVna/4EitGhkudM2lQXPY46o5RTRJQf5IKpDisJzObzaZaYspnEa3J8nfrXe7O
-         OOxUvc9Oc1YI1JvtaM8w7ryo0TgGiEUzYsRAQog3FgfzfNrUbSiAA1Svj5VigpPGHVQX
-         0kfGcY9GH+lQHlNSeZOjPgAvX2Lvq9u+LHaiMMLGxef45fQHZrlYJ/94DRYjBjchE52x
-         JDvA==
+        bh=S8/AU0s2/N0BDJJGcVeSY8sR4P/MU5YBpYYWLkQ84L8=;
+        b=WaJ7imHi3PkKFbSXPKPrGiYOHnxfy5uc5srL3k/2+x2pfTw19w2MccfTuopjC11w/5
+         0Vu+aUVKZX2miap6yWGBkREzt19ECSJyg4+kfjQI1qlsDaNrGLvCv2fzyii5NUp8kvax
+         HHJhvZNUhsg00oR8/W+rX7vDx60LbT6BEYO7dYzj5Fy4reSFOgT9gBbFrusxIjaLNbDT
+         QQQmV7N6sDLdDevsDsvZR0H+8kQvmCyeVFTY4DlEMYD6uWzRVhGiZMqEmWJM2tBcH97A
+         /VT9K4sjeqELw3EWCWv5Vd4BqYJwBdWkvcW+mIgifYA9fJDoyprXH1Noc0vQyCos0y8j
+         b5xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728460702; x=1729065502;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        d=1e100.net; s=20230601; t=1728460704; x=1729065504;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lO37Y9LoIXSdDur2CCkpJyBDBA8Ol87MOgiLtCLaJcE=;
-        b=UF49zFkTYnh0tcuqfO7ERzDmvrILgLIKee0Rucc+ziualm8+9QUTiyZvfhwd5IBxO3
-         Xk8u3wO198f/T4yABD7+ySf8/FIBfac5xk3zCvwi32VZZaXAA1d0DIsPYOK5ZQsWfyLr
-         KASH8uD6oZGQOkn2h0PtEZd76ksV0mxjlIRv6T1ZE3+5Hg2Nwwed8XRqrcLSpg34cG4D
-         yWji0AHdYT1TP4Pf2knWE0n2Hh1tSjidyI7HrX8eUji3kv9whXcA3U3gTWbRjawVsQ36
-         N5yakO0SPp3Ra7UsWBOf2R25/1xYdfbPDZz/slqdEvzNMmrJdueNJR9iDhEYvFRIU+w/
-         gudA==
-X-Gm-Message-State: AOJu0Ywbz45YtSCGVlywVA8dQM9eVstjHW9ElgZoyZ6LHFQnfC4p7XZT
-	HIAD7fFDnjM1IjKEv5XuOqf+yVTO9r873tXq6so5f2WTIUJUhXNnwmrttg==
-X-Google-Smtp-Source: AGHT+IGzpUzQ8Yw4VthLseGdyxV8vAAhCoUGRIPodbmIqKpAvBEfFyDL77p+76QOgr/hsSjG75zZqw==
-X-Received: by 2002:a17:907:f1da:b0:a8a:822e:44c6 with SMTP id a640c23a62f3a-a998d117e20mr157672266b.4.1728460702196;
+        bh=S8/AU0s2/N0BDJJGcVeSY8sR4P/MU5YBpYYWLkQ84L8=;
+        b=mYdsL2OKg2AivZKBl0KZ5Noz/OOJ1JI+SgdzRAvPz5lnW2ZBBXEp2n4RNPtq2fzbED
+         52JjzXyucOwdn5GRa4tGF54feRW9Xe0qbmll1OMT+UCv4NFaryUQkORlYxyVoFZZa4Zn
+         cb3p6R4dFe7a7Io0izWO6AOr0DF5W8gG0Zun4Hm2DsvTQof2m9fG39cyoWFd0PAsTst3
+         iBBSAAsA5fAxX+KBsObeeaFAgKq9TPiZ+RdpXnz26Um6eGeoteiM4S56qfryppjbQZcd
+         AaKgVit7yBGPpHukuXAlPL6NX0QNQyRqq24ijT5ePu+xy/JCz9auQK2a3cwZ4deEHXgu
+         NzLw==
+X-Gm-Message-State: AOJu0YyAO1hlSFDxPHPionyHw/yyJXN7gGmsdiYWvG1jbL5nwUbv3Wi6
+	culMwu93wngWo/oh/wSvz+QmKsoGXszRdWIvDebrVADC7srDZY+wHFRcVw==
+X-Google-Smtp-Source: AGHT+IHRNN2d4Mx9t3oHbWqKy+o04UhUb562TSgxMo77/yJY7B7ElIQgb9/pdLce0hkkQaw7SB8m3w==
+X-Received: by 2002:a05:6402:40c8:b0:5c8:f9d1:dfdf with SMTP id 4fb4d7f45d1cf-5c91d66392dmr1366208a12.27.1728460702988;
         Wed, 09 Oct 2024 00:58:22 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99414b675esm544723166b.10.2024.10.09.00.58.21
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c8e05be8d2sm5174919a12.53.2024.10.09.00.58.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 00:58:21 -0700 (PDT)
-Message-Id: <pull.1784.v3.git.git.1728460700.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1784.v2.git.git.1728084140.gitgitgadget@gmail.com>
+        Wed, 09 Oct 2024 00:58:22 -0700 (PDT)
+Message-Id: <e030ddd91f365b870332467057ab054bb34aa4cd.1728460700.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1784.v3.git.git.1728460700.gitgitgadget@gmail.com>
 References: <pull.1784.v2.git.git.1728084140.gitgitgadget@gmail.com>
+	<pull.1784.v3.git.git.1728460700.gitgitgadget@gmail.com>
 From: "Nicolas Guichard via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 09 Oct 2024 07:58:17 +0000
-Subject: [PATCH v3 0/3] rebase-merges: try and use branch names for labels
+Date: Wed, 09 Oct 2024 07:58:18 +0000
+Subject: [PATCH v3 1/3] load_branch_decorations: fix memory leak with
+ non-static filters
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
     Eric Sunshine <sunshine@sunshineco.com>,
+    Nicolas Guichard <nicolas@guichard.eu>,
     Nicolas Guichard <nicolas@guichard.eu>
 
-When interactively rebasing merge commits, the commit message is parsed to
-extract a probably meaningful label name. For instance if the merge commit
-is “Merge branch 'feature0'”, then the rebase script will have thes lines:
+From: Nicolas Guichard <nicolas@guichard.eu>
 
-label feature0
-merge -C $sha feature0 # “Merge branch 'feature0'
+load_branch_decorations calls normalize_glob_ref on each string of filter's
+string_lists. This effectively replaces the potentially non-owning char* of
+those items with an owning char*.
 
+Set the strdup_string flag on those string_lists.
 
-This heuristic fails in the case of octopus merges or when the merge commit
-message is actually unrelated to the parent commits.
+This was not caught until now because:
+- when passing string_lists already with the strdup_string already set, the
+  behaviour was correct
+- when passing static string_lists, the new char* remain reachable until
+  program exit
 
-An example that combines both is:
+Signed-off-by: Nicolas Guichard <nicolas@guichard.eu>
+---
+ log-tree.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-*---.   967bfa4 (HEAD -> integration) Integration
-|\ \ \
-| | | * 2135be1 (feature2, feat2) Feature 2
-| |_|/
-|/| |
-| | * c88b01a Feature 1
-| |/
-|/|
-| * 75f3139 (feat0) Feature 0
-|/
-* `25c86d0` (main) Initial commit
-
-
-which yields the labels Integration, Integration-2 and Integration-3.
-
-Fix this by using a branch name for each merge commit's parent that is the
-tip of at least one branch, and falling back to a label derived from the
-merge commit message otherwise. In the example above, the labels become
-feat0, Integration and feature2.
-
-Changes since v1:
-
- * moved load_branch_decorations to re-use the decoration_loaded guard and
-   avoid pointlessly appending "refs/heads/" to a static string_list, as
-   pointed out by Junio C Hamano (thanks!)
- * fixed a leak in load_branch_decorations found by making the filter
-   string_lists non-static
-
-Changes since v2:
-
- * style changes (true/false -> 1/0 and // -> /* */)
-
-Nicolas Guichard (3):
-  load_branch_decorations: fix memory leak with non-static filters
-  rebase-update-refs: extract load_branch_decorations
-  rebase-merges: try and use branch names as labels
-
- log-tree.c                    | 26 +++++++++++++++++++++++++
- log-tree.h                    |  1 +
- sequencer.c                   | 36 +++++++++++++++++------------------
- t/t3404-rebase-interactive.sh |  4 ++--
- t/t3430-rebase-merges.sh      | 12 ++++++------
- 5 files changed, 53 insertions(+), 26 deletions(-)
-
-
-base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1784%2Fnicolas-guichard%2Fuse-branch-names-for-rebase-merges-labels-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1784/nicolas-guichard/use-branch-names-for-rebase-merges-labels-v3
-Pull-Request: https://github.com/git/git/pull/1784
-
-Range-diff vs v2:
-
- 1:  6250a7f6d6c ! 1:  e030ddd91f3 load_branch_decorations: fix memory leak with non-static filters
-     @@ log-tree.c: void load_ref_decorations(struct decoration_filter *filter, int flag
-       				normalize_glob_ref(item, NULL, item->string);
-       			}
-      +
-     -+			// normalize_glob_ref duplicates the strings
-     -+			filter->exclude_ref_pattern->strdup_strings = true;
-     -+			filter->include_ref_pattern->strdup_strings = true;
-     -+			filter->exclude_ref_config_pattern->strdup_strings = true;
-     ++			/* normalize_glob_ref duplicates the strings */
-     ++			filter->exclude_ref_pattern->strdup_strings = 1;
-     ++			filter->include_ref_pattern->strdup_strings = 1;
-     ++			filter->exclude_ref_config_pattern->strdup_strings = 1;
-       		}
-       		decoration_loaded = 1;
-       		decoration_flags = flags;
- 2:  167418d10d1 ! 2:  1dad6096eb7 rebase-update-refs: extract load_branch_decorations
-     @@ log-tree.c: void load_ref_decorations(struct decoration_filter *filter, int flag
-      +		string_list_append(&decorate_refs_include, "refs/heads/");
-      +		load_ref_decorations(&decoration_filter, 0);
-      +
-     -+		string_list_clear(&decorate_refs_exclude, false);
-     -+		string_list_clear(&decorate_refs_exclude_config, false);
-     -+		string_list_clear(&decorate_refs_include, false);
-     ++		string_list_clear(&decorate_refs_exclude, 0);
-     ++		string_list_clear(&decorate_refs_exclude_config, 0);
-     ++		string_list_clear(&decorate_refs_include, 0);
-      +	}
-      +}
-      +
- 3:  dfa1f0a7648 = 3:  19d8253da07 rebase-merges: try and use branch names as labels
-
+diff --git a/log-tree.c b/log-tree.c
+index 3758e0d3b8e..c65ebd29202 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -232,6 +232,11 @@ void load_ref_decorations(struct decoration_filter *filter, int flags)
+ 			for_each_string_list_item(item, filter->exclude_ref_config_pattern) {
+ 				normalize_glob_ref(item, NULL, item->string);
+ 			}
++
++			/* normalize_glob_ref duplicates the strings */
++			filter->exclude_ref_pattern->strdup_strings = 1;
++			filter->include_ref_pattern->strdup_strings = 1;
++			filter->exclude_ref_config_pattern->strdup_strings = 1;
+ 		}
+ 		decoration_loaded = 1;
+ 		decoration_flags = flags;
 -- 
 gitgitgadget
+
