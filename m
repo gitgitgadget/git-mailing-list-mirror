@@ -1,128 +1,85 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38471DF275
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 15:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8FA282F1
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 15:47:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728488521; cv=none; b=C1SbyIOl3C6sskNn3dS0b5mR+S8+F8DWmTuWZtt0gtiLnRWclvmP/kDwnbX6Cqbizb0hx84lIyKN/j8yEiVJ9rveV8qBdGCFmGXVrlg4/a0inI6culK3wpPpx98LZVyFTBuJpQIm1K3c/ev+aOUE22eHO3a8DkNovFYqdZb1tY8=
+	t=1728488833; cv=none; b=J+zlUR8NY6nKjozc/jTC5jM5W6wMHXAnIh7A+TdwNtAP6XciIOJSXLX8YriiICsu1/11MvL+BqwWmYQnfnaB0IRpduPIoEBuXAw3nmhWOT8sAf4uBaTsD2yjh7m1SsytFhJiKyn5/pGdoUihbyugZeBaRroBLXPC+Z9knoz/iHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728488521; c=relaxed/simple;
-	bh=IhIIdtlHEe3JVwGr0FsIA+fRNJJkxsbNKc1gDtT9WUA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t7IsaSOGtA4Rj48KfiDfXMLbNYapqr6ZsuQzjpU/P+N32SJOaXYB4f3t0wd7ObiBSjS8YZ0d6aCMzBr5YNsbQOXbnMoZnYPmOP7BIywxK8UlwkImAq6YDWxA+v/oXta+8oQMCgdKBTbeiXYHgOnZOAIksJhgvtFvZyJar/3ewM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YcrxFhu7; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1728488833; c=relaxed/simple;
+	bh=3xG1bz4UuvsvsoGznkLf1Mh++AeydPsdBNl0/RNtOgA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EKqt+WBKQwtlL+UTQP//ns5XS0er/HT4jobXThPZMGEocEc7y90BmvC8nMYR0ZEsFoA6kYpcefzdI0V1oWlIUp6gu2NlDdgzt2P63DJOfbdQiBxqYLQaW3pyNBPr5GPulDMF+ajwYFAtXLjWXvx8SHbPz8YVST4SsQwV90mQSd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EnSVlRny; arc=none smtp.client-ip=209.85.210.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YcrxFhu7"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-431137d12a5so5603895e9.1
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 08:41:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EnSVlRny"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-716a5b9ee6fso443893a34.2
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 08:47:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728488518; x=1729093318; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XGFrKAsFPKEcBRVmpKYNCrrlYHf77Qj+e1NLPOh0wRE=;
-        b=YcrxFhu7d8ocU/Fy5Mb/DmkdX6bBuD7MwnVpjS4NeurJUDf2Yh+GNLR+YsOwG1/o7R
-         PopNyXQcIMLs9tRcJl+b0+9qltgmIA9vn3/OFK7qUrImFqY2+5voVvV0ovSs9mpecyKy
-         pvC9qqyeLDjz5KRRbRxs0HEysKkc3lvyKPwXvBe+ZuZm6Pffq9uXySjJ63GdXc2dp0vD
-         rGnHNe0031nODZHUVbaAOXpP3HdYsIZ0JJNreFsTK9Dghpa3HIj0QhJ7FJiv9oUOKqCs
-         3uLpBhRhr6/Gk/WN4bHacZHfDfyJaFbe0MfmjOAL+lpTUe2uhF8lU679GkwuAPe9fbvD
-         Dxrg==
+        d=gmail.com; s=20230601; t=1728488831; x=1729093631; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3xG1bz4UuvsvsoGznkLf1Mh++AeydPsdBNl0/RNtOgA=;
+        b=EnSVlRnym3gpDX0e9coHicuNlBGTXO02QA+AEdSR5bc9lKdFpxtBs44haNejAAhvvG
+         /fo+ao9bN3B1sZ9E2nw5/b/H8T6t1+t8CIxNkdGbi/0aj8TzptuCHAeGUun+qtndpkTq
+         NY/1DSM7pvfKYRrwVo2Uf0Zo+faO+xKu2cMTweLYYtg6ggLgBg2fliQduJBeI+tdWu4F
+         QeqLJ5iYz46QnCufTR83Vt8LrAsYKyff5++hrdkYtEbFP9iLPUQP/acKagQRWSQ/mtqZ
+         7JmVdxeBchQcqEx7baqbv2m2GgXQyrMrJdk8SBsCYQN517IBCVAn806y3AU1b8C3GY6H
+         2sPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728488518; x=1729093318;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XGFrKAsFPKEcBRVmpKYNCrrlYHf77Qj+e1NLPOh0wRE=;
-        b=LqrdVXwg/iAmg28dp8Cu9//yXBWzpuy2YCsF+5N7zF2I8sIZaJdFzjsax+iICi63Pg
-         c67hSmPf/9pF+tDM892Sg72kBHKT2MKMyivpQG1Dg5sPNUlVmh+byWaBU0KdRv6eSYbN
-         yeQvZ9IAVU4XghNm6RlWywGEXTrgxEbR2Z+yKfFQ4FIF3ID/j9VflpxNElchs2WtEYYw
-         YhDjvDVRMbiPST+TXBw+TAPBfDrsOxGiNV+INumm/EK65zok2u4lzmGWZLUZ5TKmHhdw
-         6J3XoUPE8YM1EgX+1zO9N9xOlQs9Osk8glwWQA7Fp9SO2oT+7C8pdrlRHxFzawdO5kV5
-         4gkA==
-X-Forwarded-Encrypted: i=1; AJvYcCWm5PsbqtQJCZLKXQ55fwFYCoTCSqweXHcusq/MSlz5vr63GTbRzV0SaU+0HmsaX3UO3jY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxo4zvjv8FuJZQdb5GEizJ/30mGFu9NGKeaiMLfTqsQL5cgMMDm
-	GOaBLTJ446GBtIYwmfn12FZXUJkiUCs42ElntJwtOGIaSYsJBRB0dsQMAXP42ztGOWqsIWm5m+k
-	h6G+OliEItS/KzdpgOYLD2N2zvSU0RoaPA1Ch4A==
-X-Google-Smtp-Source: AGHT+IGvfnBVameEO3LqMl3K/JlFp40YMiUf+hyUuU59I0SyCHD0mu10A13yd5MkT0yPLVYzwDaj4F+73H5a4VIJ1ZA=
-X-Received: by 2002:a05:600c:4ec9:b0:430:5887:c238 with SMTP id
- 5b1f17b1804b1-430ccf2879cmr23817675e9.11.1728488517814; Wed, 09 Oct 2024
- 08:41:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728488831; x=1729093631;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3xG1bz4UuvsvsoGznkLf1Mh++AeydPsdBNl0/RNtOgA=;
+        b=HRtdWLLzrVuMGQ5H9FD9pIjsKVElsfljcKFzPvG9mvR/Vumo8UpsBbgq0m1MVUee9X
+         vVF9nqsub38S2Pv2pSaxQRoXX767O8OIJgf36rc57brisyJSvNF0o4psBz+StW/ArLMG
+         5kYu2Oi+wGF5psBRgP4+GulP2Sh5ZNvBYnJ3oweegKTRtuwfmVDsVZD4FV8BGoT9Y6sr
+         QHk7yqIGkCvg5aMRKaVcFz/7eigjJn+A4bBxFiPyvZlEXXnXTU85DXBA5zOh2zxzaraT
+         M8UGbtK8rZugoWJIM6FLyY1WZZDJNwIP7eMYBDq/BO7CMwhE5N9eaRpTvaMQppGTjYmf
+         LSjA==
+X-Gm-Message-State: AOJu0YxmP5vmzyEA1Ml87+ea0VRTH4MyTitW1uQIz9lkrHrlHeZFUVmQ
+	XmZ5gEYGG3HNJ2yV9ZKinMd/Sc1QUhjm7gqmtPnb47QEZwhw4IHk
+X-Google-Smtp-Source: AGHT+IGmT/J6sjms+Y2C4t/d2/MFUdHWg4iqOAOy66OPBhn15wl9+MPPxn2q6tFdtCoUFpLywo40fQ==
+X-Received: by 2002:a05:6830:f94:b0:713:8387:9f07 with SMTP id 46e09a7af769-716a404f9e2mr2354676a34.0.1728488830796;
+        Wed, 09 Oct 2024 08:47:10 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-716a9841cc2sm62748a34.66.2024.10.09.08.47.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Oct 2024 08:47:10 -0700 (PDT)
+Date: Wed, 9 Oct 2024 10:45:45 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/3] clang-format: don't enforce the column limit
+Message-ID: <zmqyj3v2h3hswoujpz2er5luvjipjl3i4ts6xjdeb43wp42xf2@i5xee2lsmriz>
+References: <CAOLa=ZRvFBhageS65uE5enzLBz7H_CAvvnEcPsi_QAi0exRx2w@mail.gmail.com>
+ <CAOLa=ZS+naxOzJUkLLOZk++WVZ2dt3eQq9VmW+G-5O1ZLgggUA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1811.git.1728328755490.gitgitgadget@gmail.com>
- <xmqq34l75pr7.fsf@gitster.g> <CADYq+fYZSGBTnO+dM+MtHj=oUMqDWt+6wu-wEzwfWQJkSomkWA@mail.gmail.com>
- <xmqqo73u1n0k.fsf@gitster.g> <CADYq+fb9ux6K+m-8y0owopt_zKJmXXYLh6Rswot3r7UNX30LAQ@mail.gmail.com>
- <ZwYux_Nb9GwqPuuk@pks.im>
-In-Reply-To: <ZwYux_Nb9GwqPuuk@pks.im>
-From: Samuel Abraham <abrahamadekunle50@gmail.com>
-Date: Wed, 9 Oct 2024 16:41:47 +0100
-Message-ID: <CADYq+faN2zFS712tPcfjBE5OjmPVei6Q+ZvcAHU94nag59ZpEA@mail.gmail.com>
-Subject: Re: [PATCH] t7300-clean.sh: use test_path_* helper functions
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Samuel Adekunle Abraham via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, phillip.wood@dunelm.org.uk, 
-	christian.couder@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZS+naxOzJUkLLOZk++WVZ2dt3eQq9VmW+G-5O1ZLgggUA@mail.gmail.com>
 
-On Wed, Oct 9, 2024 at 8:20=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> On Wed, Oct 09, 2024 at 04:35:04AM +0100, Samuel Abraham wrote:
-> > On Tue, Oct 8, 2024 at 7:13=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
-m> wrote:
-> > >
-> > > Samuel Abraham <abrahamadekunle50@gmail.com> writes:
-> > >
-> > > > ...
-> > > >  This was the reason for replacing "test ! -[df]" with
-> > > > "test_path_is_missing" where I think is appropriate.
-> > >
-> > > Telling that concisely in the proposed log message will help those
-> > > who are reviewing the patch and those who are reading "git log -p"
-> > > later, and that is what I would want to see after a review exchange
-> > > like this.
-> > >
-> > > Thanks.
-> > Hi, Junio
-> > I want to express my gratitude to you and every member for your time,
-> >  guidance and patience and to my Outreachy mentors Patrick and Phillip.
-> > It has been a great learning experience.  I can see the patch has been
-> > integrated into seen.
-> > I look forward to working on #leftoverbits projects to enhance my under=
-standing
-> > of the git codebase. Thank you very much once again.
->
-> Note that a patch that has been merged into "seen" does not yet say that
-> it will be part of the next release. "seen" is only an integration
-> branch for topics which are currently in-flight on the mailing list and
-> in the process of being reviewed. The intent is that we can catch any
-> incompatibilities between two different in-flight patch series early.
->
-> So declaring victory is a bit too early :) A better indicator is that
-> the patch has been merged to "next". This is described in
-> Documentation/MyFirstContribution.txt, section "After Review Approval",
-> and more in-depth in Documentation/howto/maintain-git.txt.
->
-> I think that your v2 isn't quite there yet. As Junio mentions, he'd like
-> to see an updated commit message that includes your explanations why you
-> have done certain conversions the way you did. The fact that some parts
-> of the patch required discussion to arrive at a common understanding is
-> a good telling factor that a summarized form of the discussion should
-> likely be part of the commit message such that future readers of the
-> patch will get the same context.
->
-> Patrick
+On 24/10/09 05:55AM, Karthik Nayak wrote:
+> The current value for the column limit is set to 80. While this is as
+> expected, we often prefer readability over this strict limit. This means
+> it is common to find code which extends over 80 characters. So let's
+> change the column limit to be 0 instead. This ensures that the formatter
+> doesn't complain about code strictly not following the column limit.
 
-Hello Patrick,
-Thank you very much for the clarification. Yes I was almost
-celebrating already :).
-I will write a detailed commit message and send an updated patch.
-Thanks.
+The column limit does lead to quite a few false positives. At the same
+time though, in some ways having a tool point out all the instances it
+occurs does make it easier to review if any should be addressed.
+
+If the goal is to have a CI job that we generally expect to pass, then
+it makes sense to remove it. I don't feel super strongly either way.
+
+-Justin
