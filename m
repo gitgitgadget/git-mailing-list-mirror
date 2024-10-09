@@ -1,64 +1,64 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157B91E2831
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 20:31:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8821E284B
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 20:31:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728505882; cv=none; b=QIGhOfGRr4RPUj/ej+7vj2hRxAyZombjw91fVMYE7YZ0hJWfatxLZl0JkOfPngs/fQQrgUN0zkHcxEkByc+tQpY9YVpXb+FQ8lq7cNr20PkgytE8PwibPfRFIgf6TW23LDPrAi9Oi6jAPztw1w/Gw2FUCcdRuCGeBSAj0qCa5bQ=
+	t=1728505885; cv=none; b=ugwVJEGxxd8zfrLjWaAV1Mzq+jlcTroRrpjhCkkkAm681N3NrwOzY+orWBTgrpLolIgtNXH4DXxHcgrYmlwUmeBaAxIJzHt+wrSNysdMhNOZf3FIXpM3zyuYSa4jaf6h2zT+XS0ZwXSoRSwnuZalgQXfYm3zMSr0iy56pFCnTxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728505882; c=relaxed/simple;
-	bh=mMAgZa07M/tSaFvM4gDdX6SIaFdy73SCo6kbM0z+P+Y=;
+	s=arc-20240116; t=1728505885; c=relaxed/simple;
+	bh=8+RhcNlNymeg5o2rLVPpOBBAFzTvS9OJEsV8+beC2hA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eP1eDiOTh29WccleGiX2SzMgk01PibqVfi36nuDng8cjQppJQWmm2cvvYx9Q5NfTKIzOjk9prrqZqd6sRJXbv1yaa9CZDTtm2iisXRDwZh0VYFI235S/fBf/2vjk/c4z7WA+o+POnPPwTnzdNiOB7+Dp7fW0Pl9Fug2NCFD1mqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=LCaD9ErN; arc=none smtp.client-ip=209.85.219.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=HbVFnylJbOTFqW9ILcmfM3W4pMdfY6kpYPFs6q1nrn2ZTDKjmxWzkhUK9EbIsEoCaWK4xhd/KUuflNnr3e+df2iRDZViVTRpevYqGTRKDDSQULWIUmub31HZz03OIrpLCp6FkiUvrWRCBq7Q7SSDJS0uNIXNeX9YaGjy5XBYpQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=N5TIShPD; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="LCaD9ErN"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e28fa28de37so152771276.3
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 13:31:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="N5TIShPD"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6e2346f164cso2603157b3.3
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 13:31:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728505879; x=1729110679; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728505882; x=1729110682; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=a8fC45fk3kkuGgz5bp0aKHUHsvCc3Jgn8s/zOrWkLl4=;
-        b=LCaD9ErNZfXdfVQPvz2eDLrhWI1QwkkJZRvCqt+PkyqKe9McQch7tIBmQt+5iZSH2V
-         hcDLpBnR72rcvwBSi++OPvR/wGOxeF7VRpNw9Q/FujQddh842+/rrkXoT8fw/q7M1J+I
-         CyKj6oYyIqriU8Tj0jLG5QNcNjW7CnhFaH4VpYjMCU0NOPPUmqN/JG7caRjKDfPQr8cs
-         48NIy5702wCrdHDGPCJWmAyp1I6N5AvUHrS9TfYGVT2c/Xea8maHKy4sq2ze/OE89gsI
-         /fKeMJFEFgKbfVrwbxeb8TdY1z+xoYvhuPKtJ5UsyqHI77vvkIkEPRuxqKEzIU7mof5W
-         kQVg==
+        bh=Mqe0GPnuXb9j/DsS9BJF8/QGW/5Dw4Nes3IsxXwm4R4=;
+        b=N5TIShPD2jQX08DvrSyu5s1gxGdwRJfXT1+ZkP1bHzf6GzWYTht0JDlcOJdJ1xz1IQ
+         bC3NbCObBgkH4m7eY3SIeq02DPRmKruVk/CuNCcXRIiTZCou5ihW1K766+HsCJeAKat3
+         10GozdOqapbeyZ97MR/3NK9zjAe+dGoPTsjwEAP71//cgFqYEXGyeW1joLiouNVfADDP
+         lqQQeGdOpbxL8eN5TkNNLrM2jroKaWg8PMkz7zBqsBTJxzfePQJHvSO4n8lFGpHFtPEW
+         LepZ2hFKpqn20pghc2LfqNH3VycP0cy9VfRCEOde507tcJDntaAtRZjlhnPv0TWiz4XQ
+         Bxtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728505879; x=1729110679;
+        d=1e100.net; s=20230601; t=1728505882; x=1729110682;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=a8fC45fk3kkuGgz5bp0aKHUHsvCc3Jgn8s/zOrWkLl4=;
-        b=K+xxJbIgqgGzY++nJYUiOw3KGW6wwWUPuuZsSSu6Wqj48s2rvPb8ydA5T5zievRYJm
-         0t3ThsQ8NelrDdoT5X2JrIheao361BqfNY511npbHQ8wlbszSo/w7N3yPbmsuxe54Njg
-         wGilb7iTasL1U2zl4tQ67w0zvxf1dOUQ4FfOxi2fATFSDLmC6s69r2RIqqGjXR4BiTOs
-         K/zoS360sBRL4xGiM0XhGQMpLePFH8QOumBtQKa4G/u87tw8jL8Bxr6rPwoLDQPbp206
-         SbUe6lzKL/hVoJ/9u3hj3grUH3AcuCosQVggCKgAfTtdlOLAbnGbBrtQstTdRgXgoE4i
-         1QmQ==
-X-Gm-Message-State: AOJu0YyJgHYiwm7rb+jpadVJ5yQHAOtYpt7qvYnxcyQ/TA/LnLTZp7AS
-	IFq7Ed51+GX/oSSDWoQpx34EIhR7jomvNwnnorszY1y2Pzbu9CXr5/072+4TDrk+MIFHX7fLmZ0
-	KZbM=
-X-Google-Smtp-Source: AGHT+IGf/IEk5AtA0WDnEKW35I0p0zu/B1H9Z/T5/ACsPwuH316Qgsk8ueHTiu0mMSx64m2lV3uEWg==
-X-Received: by 2002:a05:6902:218f:b0:e28:f176:105 with SMTP id 3f1490d57ef6-e28fe4dbdc4mr3789125276.36.1728505879397;
-        Wed, 09 Oct 2024 13:31:19 -0700 (PDT)
+        bh=Mqe0GPnuXb9j/DsS9BJF8/QGW/5Dw4Nes3IsxXwm4R4=;
+        b=sgEuaJ4DiwVOzI8kKz/MOnZsz5d5y9ONNp3AEzxcfEuugfocYW3fnmibadJEE7KuCY
+         Db2uPomaV7zRhQoTFWEThR2k2Mlpx88fIkAaopGI1uCEncCivIbIT7P+YwjVNyQYh6jF
+         lBh/Qh1p/K0oDT8UqIyHcID/vOXMH3mYPEPY2Xe/jpuN90kaoadcLWkSr7q4zNkz4nfP
+         +F+xteWYL88HfmQmighnmq8qZ+fnkdjXXxh9sPuQgyDis4hnE1NCIoTAa0/yG85B2628
+         CIPMZcql2qmOrbRog77Kb9gyxVbSWPbxZdbFJjE2RTuom9Cav8+svrIhCnTW1BXEawLS
+         Oxyw==
+X-Gm-Message-State: AOJu0YxKLcQdl8EsN3lt99zwforsnF3ZCZIjARXdmNI1EvcqoqRde7XT
+	0fKevwxOdNKXgoH2VinA0nHKUT9m6AnMDnQ/6nTW82XmWOgDT0f8hRUfBA6+R4877TctdvhsEH9
+	nAgE=
+X-Google-Smtp-Source: AGHT+IHdLnL1jg4F4w9r+rw56f0uO5RMMGyDeG4knzXHNPck/OgxH7kh8aHoyvZXZmzDMsACsgFS/w==
+X-Received: by 2002:a05:690c:3502:b0:6e3:21fa:e50f with SMTP id 00721157ae682-6e322197244mr45605567b3.13.1728505882551;
+        Wed, 09 Oct 2024 13:31:22 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e28f0e31127sm729836276.58.2024.10.09.13.31.18
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e2d93d75a8sm20404927b3.96.2024.10.09.13.31.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 13:31:19 -0700 (PDT)
-Date: Wed, 9 Oct 2024 16:31:17 -0400
+        Wed, 09 Oct 2024 13:31:22 -0700 (PDT)
+Date: Wed, 9 Oct 2024 16:31:21 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 06/11] pack-bitmap: drop `from_midx` field from
- `bitmapped_pack`
-Message-ID: <278beed9cfbca0ec00a113e36d615d1d47a5223f.1728505840.git.me@ttaylorr.com>
+Subject: [PATCH 07/11] write_reused_pack_one(): translate bit positions
+ directly
+Message-ID: <94e5c96f6859479e0206d6d775eacf54b3639ee5.1728505840.git.me@ttaylorr.com>
 References: <cover.1728505840.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,111 +70,148 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1728505840.git.me@ttaylorr.com>
 
-This field was added in 41cd4b478f7 (pack-bitmap: tag bitmapped packs
-with their corresponding MIDX, 2024-08-27) in order to expose the
-bitmap's MIDX in order to translate bit positions correctly from
-within 'pack-objects' during pack-reuse (c.f., 125c32605ab
-(builtin/pack-objects.c: translate bit positions during pack-reuse,
-2024-08-27) for more details).
+A future commit will want to deal with bit positions instead of pack
+positions from within builtin/pack-objects.c::write_reused_pack_one().
 
-But another approach would have been to use the `->midx` field of the
-`struct bitmap_index *` directly, which feels clearer and avoids
-duplicating information.
+That function at present takes a pack position, so one approach to
+accommodating the new functionality would be to add a secondary bit
+position parameter, making the function's declaration look something
+like:
 
-Unfortunately, we can't access that field directly since it is part of
-the `bitmap_index` structure which is static within the pack-bitmap.c
-compilation unit.
+    static void write_reused_pack_one(struct packed_git *reuse_packfile,
+                                      size_t pack_pos, size_t bitmap_pos,
+                                      struct hashfile *out,
+                                      off_t pack_start,
+                                      struct pack_window **w_curs);
 
-So let's instead introduce a new function which returns that pointer
-to us, and replace the `from_midx` field with uses of that new
-function (which we call `bitmap_midx()` here).
+But because the pack-relative position can be easily derived from the
+bit position, it makes senes to just pass the latter and let the
+function itself translate it into a pack-relative position.
+
+To do this, extract a new function `bitmap_to_pack_pos()` from the
+existing `write_reused_pack()` function. This new routine is responsible
+for performing the conversion from bitmap- to pack-relative positions.
+
+Instead of performing that translation in `write_reused_pack()`, instead
+call the new function from within `write_reused_pack_one()` so that we
+can just pass a single bit position to it.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 4 ++--
- midx.c                 | 1 -
- pack-bitmap.c          | 6 +++++-
- pack-bitmap.h          | 2 +-
- 4 files changed, 8 insertions(+), 5 deletions(-)
+ builtin/pack-objects.c | 78 ++++++++++++++++++++++--------------------
+ 1 file changed, 41 insertions(+), 37 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 0fc0680b402..097bb5ac2ca 100644
+index 097bb5ac2ca..7f50d58a235 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -1201,7 +1201,7 @@ static void write_reused_pack(struct bitmapped_pack *reuse_packfile,
+@@ -1017,6 +1017,42 @@ static off_t find_reused_offset(off_t where)
+ 	return reused_chunks[lo-1].difference;
+ }
+ 
++static uint32_t bitmap_to_pack_pos(struct packed_git *reuse_packfile,
++				   size_t pos)
++{
++	if (bitmap_is_midx(bitmap_git)) {
++		/*
++		 * When doing multi-pack reuse on a
++		 * non-preferred pack, translate bit positions
++		 * from the MIDX pseudo-pack order back to their
++		 * pack-relative positions before attempting
++		 * reuse.
++		 */
++		struct multi_pack_index *m = bitmap_midx(bitmap_git);
++		uint32_t midx_pos, pack_pos;
++		off_t pack_ofs;
++
++		if (!m)
++			BUG("non-zero bitmap position without MIDX");
++
++		midx_pos = pack_pos_to_midx(m, pos);
++		pack_ofs = nth_midxed_offset(m, midx_pos);
++
++		if (offset_to_pack_pos(reuse_packfile, pack_ofs, &pack_pos) < 0)
++			BUG("could not find expected object at offset %"PRIuMAX" in pack %s",
++			    (uintmax_t)pack_ofs, pack_basename(reuse_packfile));
++
++		return pack_pos;
++	} else {
++		/*
++		 * Can use bit positions directly, even for MIDX
++		 * bitmaps. See comment in try_partial_reuse()
++		 * for why.
++		 */
++		return pos;
++	}
++}
++
+ static void write_reused_pack_one(struct packed_git *reuse_packfile,
+ 				  size_t pos, struct hashfile *out,
+ 				  off_t pack_start,
+@@ -1025,9 +1061,10 @@ static void write_reused_pack_one(struct packed_git *reuse_packfile,
+ 	off_t offset, next, cur;
+ 	enum object_type type;
+ 	unsigned long size;
++	uint32_t pack_pos = bitmap_to_pack_pos(reuse_packfile, pos);
+ 
+-	offset = pack_pos_to_offset(reuse_packfile, pos);
+-	next = pack_pos_to_offset(reuse_packfile, pos + 1);
++	offset = pack_pos_to_offset(reuse_packfile, pack_pos);
++	next = pack_pos_to_offset(reuse_packfile, pack_pos + 1);
+ 
+ 	record_reused_object(offset,
+ 			     offset - (hashfile_total(out) - pack_start));
+@@ -1191,7 +1228,6 @@ static void write_reused_pack(struct bitmapped_pack *reuse_packfile,
+ 		size_t pos = (i * BITS_IN_EWORD);
+ 
+ 		for (offset = 0; offset < BITS_IN_EWORD; ++offset) {
+-			uint32_t pack_pos;
+ 			if ((word >> offset) == 0)
+ 				break;
+ 
+@@ -1201,40 +1237,8 @@ static void write_reused_pack(struct bitmapped_pack *reuse_packfile,
  			if (pos + offset >= reuse_packfile->bitmap_pos + reuse_packfile->bitmap_nr)
  				goto done;
  
--			if (reuse_packfile->bitmap_pos) {
-+			if (bitmap_is_midx(bitmap_git)) {
- 				/*
- 				 * When doing multi-pack reuse on a
- 				 * non-preferred pack, translate bit positions
-@@ -1209,7 +1209,7 @@ static void write_reused_pack(struct bitmapped_pack *reuse_packfile,
- 				 * pack-relative positions before attempting
- 				 * reuse.
- 				 */
--				struct multi_pack_index *m = reuse_packfile->from_midx;
-+				struct multi_pack_index *m = bitmap_midx(bitmap_git);
- 				uint32_t midx_pos;
- 				off_t pack_ofs;
- 
-diff --git a/midx.c b/midx.c
-index 67e0d640046..ca98bfd7c64 100644
---- a/midx.c
-+++ b/midx.c
-@@ -496,7 +496,6 @@ int nth_bitmapped_pack(struct repository *r, struct multi_pack_index *m,
- 				 MIDX_CHUNK_BITMAPPED_PACKS_WIDTH * local_pack_int_id +
- 				 sizeof(uint32_t));
- 	bp->pack_int_id = pack_int_id;
--	bp->from_midx = m;
- 
- 	return 0;
- }
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 6dbe6a2c5bc..b9ea1fab397 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -2326,7 +2326,6 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 		packs[packs_nr].pack_int_id = pack_int_id;
- 		packs[packs_nr].bitmap_nr = pack->num_objects;
- 		packs[packs_nr].bitmap_pos = 0;
--		packs[packs_nr].from_midx = bitmap_git->midx;
- 
- 		objects_nr = packs[packs_nr++].bitmap_nr;
+-			if (bitmap_is_midx(bitmap_git)) {
+-				/*
+-				 * When doing multi-pack reuse on a
+-				 * non-preferred pack, translate bit positions
+-				 * from the MIDX pseudo-pack order back to their
+-				 * pack-relative positions before attempting
+-				 * reuse.
+-				 */
+-				struct multi_pack_index *m = bitmap_midx(bitmap_git);
+-				uint32_t midx_pos;
+-				off_t pack_ofs;
+-
+-				if (!m)
+-					BUG("non-zero bitmap position without MIDX");
+-
+-				midx_pos = pack_pos_to_midx(m, pos + offset);
+-				pack_ofs = nth_midxed_offset(m, midx_pos);
+-
+-				if (offset_to_pack_pos(reuse_packfile->p,
+-						       pack_ofs, &pack_pos) < 0)
+-					BUG("could not find expected object at offset %"PRIuMAX" in pack %s",
+-					    (uintmax_t)pack_ofs,
+-					    pack_basename(reuse_packfile->p));
+-			} else {
+-				/*
+-				 * Can use bit positions directly, even for MIDX
+-				 * bitmaps. See comment in try_partial_reuse()
+-				 * for why.
+-				 */
+-				pack_pos = pos + offset;
+-			}
+-
+-			write_reused_pack_one(reuse_packfile->p, pack_pos, f,
+-					      pack_start, &w_curs);
++			write_reused_pack_one(reuse_packfile->p, pos + offset,
++					      f, pack_start, &w_curs);
+ 			display_progress(progress_state, ++written);
+ 		}
  	}
-@@ -2981,6 +2980,11 @@ int bitmap_is_midx(struct bitmap_index *bitmap_git)
- 	return !!bitmap_git->midx;
- }
- 
-+struct multi_pack_index *bitmap_midx(struct bitmap_index *bitmap_git)
-+{
-+	return bitmap_git->midx;
-+}
-+
- const struct string_list *bitmap_preferred_tips(struct repository *r)
- {
- 	const struct string_list *dest;
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index d7f4b8b8e95..a1e8c8936c9 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -60,7 +60,6 @@ struct bitmapped_pack {
- 	uint32_t bitmap_pos;
- 	uint32_t bitmap_nr;
- 
--	struct multi_pack_index *from_midx; /* MIDX only */
- 	uint32_t pack_int_id; /* MIDX only */
- };
- 
-@@ -157,6 +156,7 @@ char *midx_bitmap_filename(struct multi_pack_index *midx);
- char *pack_bitmap_filename(struct packed_git *p);
- 
- int bitmap_is_midx(struct bitmap_index *bitmap_git);
-+struct multi_pack_index *bitmap_midx(struct bitmap_index *bitmap_git);
- 
- const struct string_list *bitmap_preferred_tips(struct repository *r);
- int bitmap_is_preferred_refname(struct repository *r, const char *refname);
 -- 
 2.47.0.11.g487258bca34
 
