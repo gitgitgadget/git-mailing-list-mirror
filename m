@@ -1,156 +1,150 @@
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CA11CFA9
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 19:19:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BA11E0DA7
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 19:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728501587; cv=none; b=Lp09bilwR/DQw65Hekef6QLFp+A4vcY2PCrd0VDrJuyk4FLtOJvmLLNkADHk6lNwdHqnVGLIPZUK8PCIpFi/oQZXPzau7yu3BeDyYAuBmEeDcnq9F+52abNDJjaQBqd2SFiCR+loCymkKxJWQTJtNK8/C2K08hczwb83vQwojd4=
+	t=1728501991; cv=none; b=IiGaLQOmwQeio+WWIPwumj2EsFqicD/eejOTczPP0aGxJSWQ7IGJpacFk1Yhc5ExAFkVxt7pOeCFIGvEfb14jx8hpU3K14Tihje/CELK2qVTW1AeRh6U8UdokAFioLnQy95fRRJi/7Y0kwmdukxZwU79fXIUl0W1kx0khp3/zMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728501587; c=relaxed/simple;
-	bh=ecirRlREFJNs+THxjZWRpZIxXkWNzrxhTgpKrORobA0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dc5F5PDjoYkLxyw/XAx+vs9CQbEbxU2gAT0Vbj5IdOVfADFvOxU1t2KmpsKwuy57cTcBJ3c4weWnPbapC+K7yI/elYPpt/Guu4ljHDPu3ArE9QAOfO6QBVgZUFjdwWGVpWDZDW4t0wJ6sFUVWNU0NaSVIz5PYN6bqdIyrh7WWhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=Qkfi5V8+; arc=none smtp.client-ip=185.70.43.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1728501991; c=relaxed/simple;
+	bh=UiKOJzfAMlCzh+eJmcw8lwx2W7zQSIqPKz+OCm5jQnk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YFUbxlUGJd7jCkYqLgP8FcAOl5Cn4JQozzAcJaZXeGjwSlQkxIHTK5bYZ++KPjwP2nWm9XOD9iipwieitHOR5yvc7MzZPzI35MyGTCQZbUKXnTb1gx0DPnV6yZoTfFE7TeT+QNPzKSuaZDpzZYH0IpRLiTfYvoYf6dQwzzjl8pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JuK74MrS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hss3OtNL; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="Qkfi5V8+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728501583; x=1728760783;
-	bh=ecirRlREFJNs+THxjZWRpZIxXkWNzrxhTgpKrORobA0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Qkfi5V8+iXJwABWiz8+iDvWY5+lqy0OpBbzzdIK1zm7L/qsXoSUWWGCyfcMk5HBpg
-	 D8s4qNhOVkP0/zYH4pMVZjSMhLGRu57Ad/IDwqAZbOppU6agkgju9E//H5E0feCR5T
-	 H1ewuHWD31mo+CTKOSelzpp718tOCechs/RcVPcoB2hN3/54vgoyFs011Nnj8Yfxkn
-	 DRntBCBV3YMex4PsmRu9eFQmaucUHSPY0CTCO6VwulGomoSZRK7KFD5tJJEBpfOora
-	 WsOekGX2yoV9DaTm8PZLNPB64r6HmuEH9i+IvpvxoSr3f2GpKl+5d/ceoHmSzbAZR8
-	 RrZuJzT44Xp8A==
-Date: Wed, 09 Oct 2024 19:19:40 +0000
-To: Junio C Hamano <gitster@pobox.com>
-From: Caleb White <cdwhite3@pm.me>
-Cc: Caleb White via B4 Relay <devnull+cdwhite3.pm.me@kernel.org>, git@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] worktree: link worktrees with relative paths
-Message-ID: <oUBKv4JI3Bf1nqAFU_C-HDl5vkZC6mg8mb5F0HB7akXC6n0T1ddV0LiOCqY_AGHCyr9_W7gs2EyTGqIihz89ciBbL61UFwznnHcYRNzfGLI=@pm.me>
-In-Reply-To: <xmqqy12xqehd.fsf@gitster.g>
-References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me> <20241007-wt_relative_paths-v3-2-622cf18c45eb@pm.me> <xmqqmsjexkcg.fsf@gitster.g> <k3X5W4US76LBJ_IUq-quVRha2jd-4iWJ9yX6Ukh6-ifZdWC3iajoUJ8VUyTDfkJHSqiD1RJlqIuVlDGIsReR_SDREVWyHGIqsXhazvJu1ek=@pm.me> <xmqqy12xqehd.fsf@gitster.g>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 4753510af3a11970e707f1298c979e11c3755a1b
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JuK74MrS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hss3OtNL"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id E88BE13801BD;
+	Wed,  9 Oct 2024 15:26:27 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Wed, 09 Oct 2024 15:26:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728501987; x=1728588387; bh=dosPQRHDqf
+	ny+/p/3qYmareOaTdO3de313upyaq1jPo=; b=JuK74MrSv+hfqziBVdFtKH0RzH
+	euFEGexjlgM1VVq8RcYNy4Fll6B88yiQKXgjdXhrffRz5+geWXTI4gi8nlQ6BAOc
+	MI2RVrAJNQjOb5fAjpAfXD7fgdpJ5OQoyVe7FVGdUH6dB1ZtJVI7EY0bVRfzZmnB
+	jS0dbFqUf/TeD+VewpYwjXcn6eU6WLyW4osxoMSSKxEt0q1aAiB01XI4U/tkd/yD
+	hGlr247qa2ontz3uJ55Sxt3hSKLFyd7MVrYxAHIwYeFHGISMnF5/TK6zxrqA4kg9
+	TDkcN2twSJhbp674I+xfIx13fwpiJBxXSdp5om0NZ+h1bgrAu1JXADh1ciNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728501987; x=1728588387; bh=dosPQRHDqfny+/p/3qYmareOaTdO
+	3de313upyaq1jPo=; b=Hss3OtNLM3lTo2idm05+gGYQCCK0gXH5YJmeY5o2Qsm7
+	0PMLRdqgQDNQaKNtIxlrPLJQktZy6a3yW/+YwlmK5rSSYdXVTI5Ti64cCyEeeTuX
+	2cGiiFYYZ/fdjn9rSYSGxP1DlfSRUk+wz92iTVXDX6lX7uM48ROZj2LsDeJdcWcM
+	g+HRamfBpOH63xUkgSiSWG+vXXbMa+CxJpOCMhsdhBB7iRF+MIXwqUeHPRl2ZP4C
+	1h6Kl9n1hslcoc3sPOdDJMZbpEWIHmt90Hlz9wzdwYsSYoUmjIWVpAb3oN97iwIQ
+	yWUFR21j3agrb0J1iaen3FggiIzFGnqCcmsa5mtNMg==
+X-ME-Sender: <xms:49gGZzbDIW3eF5WrRMt9s-vlJ9cV_zTVBBohYlaAhc39Y4Sti6BkgQ>
+    <xme:49gGZya-gN5Bd2XfDEBo6Ifa26w3klh1oLiSUzwijQ0p4h5ulPavuNsf56m7wVXqV
+    eVf2KUqlCPeHaBZyg>
+X-ME-Received: <xmr:49gGZ19yD57A7dUapPf36f3OTIfOtRPq5u3xP1zHS3vUTR_nyo2-a7LywYCM-2-xoOS2rk7iLlIevLD1yEhOQx0K-wQojRhjq3fm>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgudeflecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghntggvsehfvg
+    hrughinhgrnhguhidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrgh
+    druhhkpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehl
+    rdhsrdhrseifvggsrdguvgdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvg
+    hlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:49gGZ5p4zEPJKKWkcNq7PGPBIEkLZQx8TFuH18tigfPhyH8__s9hcQ>
+    <xmx:49gGZ-p5pYg-cjn7KE08ZX5EPtkJXCsqRZJYGGv6qgcyP6CgZCsScQ>
+    <xmx:49gGZ_TAm6pXxUvDpO1N63QEYN6ssfF7AEC1bfEOMuoC1yLSjfDTTw>
+    <xmx:49gGZ2rxOX9i8mWUKzM7kxbKahWBXrp10XthalZIX36zqeKMla6ZyA>
+    <xmx:49gGZ-Idztt2stWGkB-rQXM43fw08ApVvIF_WE3itShQ7AtBy8MpCRaS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Oct 2024 15:26:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org,  phillip.wood@dunelm.org.uk, 	Taylor Blau
+ <me@ttaylorr.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Johannes
+ Schindelin
+ <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v5 2/6] set-head: add new variable for readability
+In-Reply-To: <20241009135747.3563204-2-bence@ferdinandy.com> (Bence
+	Ferdinandy's message of "Wed, 9 Oct 2024 15:57:24 +0200")
+References: <xmqq1q0xhu13.fsf@gitster.g>
+	<20241009135747.3563204-1-bence@ferdinandy.com>
+	<20241009135747.3563204-2-bence@ferdinandy.com>
+Date: Wed, 09 Oct 2024 12:26:25 -0700
+Message-ID: <xmqqttdlqdr2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------f71fcb580722f17d0cbc0d47c9ec5ff080839829b76b4525082c2536cc94fe17"; charset=utf-8
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------f71fcb580722f17d0cbc0d47c9ec5ff080839829b76b4525082c2536cc94fe17
-Content-Type: multipart/mixed;boundary=---------------------21d8f9d185d323daa609255a67a085b9
+Bence Ferdinandy <bence@ferdinandy.com> writes:
 
------------------------21d8f9d185d323daa609255a67a085b9
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+> Instead of calling get_main_ref_store(the_repository) multiple times,
+> call it once and store in a new refs variable. Although this change
+> probably offers some performance benefits, the main purpose is to
+> shorten the line lengths of function calls using this variable for
+> better readability.
+> ---
+>
+> Notes:
+>     v5: new patch (split from the next patch as a preparatory step)
 
-> Caleb White cdwhite3@pm.me writes:
-> =
+It is a good idea to help making it obvious that we are accessing
+the same ref store.
 
-
-> > What's the best way to parameterize the worktree tests? I would like
-> > to run the same tests for both absolute and relative paths and I'm
-> > not particularly a fan of just copying them all into new *-relative.sh
-> > files.
-> =
-
-
-> =
+The patch needs to be signed-off, though.
 
 
-> What I meant by interoperability tests are a lot smaller scale.
-> =
 
-
-> A test that creates worktree/repository pair without the option to
-> use relative, and then tries to use such a worktree/repository pair
-> with the option would simulate "how well the newer Git handles an
-> existing repository", and another test that creates with the option
-> to use relative and uses the worktree/repository without the option
-> would simulate "how well existing versions of Git works when seeing
-> a worktree made with the newer git with the relative option".
-> =
-
-
-> By "parameterise", if you mean running a set of worktree/repository
-> tests without the "relative" option enabled, and run the same set of
-> tests with the option enabled, you could model it after how t8001
-> and t8002 (or t5560 and t5561) share a lot of same tests that are in
-> a file that is included by both of them. In smaller scale, it is
-> common to have an ad-hoc construct like:
-> =
-
-
-> for conf in relative absolute
-> do
-> test_expect_success ...
-> test_expect_success ...
-> test_expect_success ...
-> done
-> =
-
-
-> that has bunch of test_expect_success, which may change the
-> behaviour depending on the value of $conf, not &&-chained inside the
-> for loop. You can use a nested loop (one for preparing, the other
-> for testing the use of worktree) if you want to test the full
-> matrix.
-> =
-
-
-> I do not offhand know if such parametralized tests are necessary in
-> the context of this change, though.
-> =
-
-
-> Thanks.
-
-Ah, I see what you mean, thank you for the details! I'll be sure to
-look at the examples and try to determine which would be the best
-paths forward.
-
-> existing repository", and another test that creates with the option
-> to use relative and uses the worktree/repository without the option
-> would simulate "how well existing versions of Git works when seeing
-> a worktree made with the newer git with the relative option".
-
-I can already tell you that this particular case is not going to work
-because existing versions of git expect the path to be absolute. Most
-of the changes in this patch revolve around properly reading/handling
-the relative paths, not writing the relative paths.
-
-Best,
-
------------------------21d8f9d185d323daa609255a67a085b9--
-
---------f71fcb580722f17d0cbc0d47c9ec5ff080839829b76b4525082c2536cc94fe17
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsBzBAEBCAAnBYJnBtc/CZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
-28viAACLugf+N4L7LeGwGoAgvPrYM/iN6ICrKYAD+QgFNuYiu1h/zdulb1wL
-f32VW0UrtbmHTxJ9+HvPJPWLIl8Qw0lWAHXP2Rc5xf0Kp3hfxJ1JM200DwED
-Hvhi7eX7eFQetolqRE+lH7u3vv2uijbJaI7IL/iBZPSLaNvnn4G6NY7nGZEn
-+vne8D4lhgY9pCMyN6geUICsD8OKFYNW7LIgfvoYhH4vDu0kpvLRl5u5jF0d
-PyTjdN/eYHnpG7lSn5sVJlQDJDAZkzPNElFaPuFh1l9YjeGedN+JRMqVGIkN
-BDXMBrT4p0vJOgCzabSU2izbnc4Js5+64bpl63uz2tAWaCDMTaeRLA==
-=P0+h
------END PGP SIGNATURE-----
-
-
---------f71fcb580722f17d0cbc0d47c9ec5ff080839829b76b4525082c2536cc94fe17--
-
+>  builtin/remote.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index d8ff440027..353ffd2c43 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -1404,6 +1404,7 @@ static int set_head(int argc, const char **argv, const char *prefix)
+>  	int i, opt_a = 0, opt_d = 0, result = 0;
+>  	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
+>  	char *head_name = NULL;
+> +	struct ref_store *refs = get_main_ref_store(the_repository);
+>  
+>  	struct option options[] = {
+>  		OPT_BOOL('a', "auto", &opt_a,
+> @@ -1434,7 +1435,7 @@ static int set_head(int argc, const char **argv, const char *prefix)
+>  			head_name = xstrdup(states.heads.items[0].string);
+>  		free_remote_ref_states(&states);
+>  	} else if (opt_d && !opt_a && argc == 1) {
+> -		if (refs_delete_ref(get_main_ref_store(the_repository), NULL, buf.buf, NULL, REF_NO_DEREF))
+> +		if (refs_delete_ref(refs, NULL, buf.buf, NULL, REF_NO_DEREF))
+>  			result |= error(_("Could not delete %s"), buf.buf);
+>  	} else
+>  		usage_with_options(builtin_remote_sethead_usage, options);
+> @@ -1442,9 +1443,9 @@ static int set_head(int argc, const char **argv, const char *prefix)
+>  	if (head_name) {
+>  		strbuf_addf(&buf2, "refs/remotes/%s/%s", argv[0], head_name);
+>  		/* make sure it's valid */
+> -		if (!refs_ref_exists(get_main_ref_store(the_repository), buf2.buf))
+> +		if (!refs_ref_exists(refs, buf2.buf))
+>  			result |= error(_("Not a valid ref: %s"), buf2.buf);
+> -		else if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote set-head", NULL))
+> +		else if (refs_update_symref(refs, buf.buf, buf2.buf, "remote set-head", NULL))
+>  			result |= error(_("Could not setup %s"), buf.buf);
+>  		else if (opt_a)
+>  			printf("%s/HEAD set to %s\n", argv[0], head_name);
