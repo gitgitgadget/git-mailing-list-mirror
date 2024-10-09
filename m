@@ -1,104 +1,125 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0615615C15E
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 17:37:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E3315C138
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 17:38:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728495431; cv=none; b=IBhxYXjamn+WZzj3L8pt1iiMvU1vWnKNDvxLCY38LUxomCzNIpk2mwLXYcWWdaXm2laUtIGSxOACCUllxsR3c+HuqJOR8IiTs+DiVBFWc13pzkf+ZWrwtpaOkmSFoDquQ7O7PJCwW14wk2pCe1gHKhnCNUNwJebpTKoYW8R8k0Q=
+	t=1728495541; cv=none; b=KY+tBSAhqKaQTHww1LgQw9HoZyN6DqGr4Ox/kLPsMJREXdLYIZ9vOOXB+fmDrOsqPJAGmkgyHfz6sXwt5qn//MAgWDho+WR+Thv3QW7Jqc6rQW06cdJtEMKqpo6DjN+6NUICp38mFydzMfP6XMtENQVUKLDyMFOHvAlS/RBC/+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728495431; c=relaxed/simple;
-	bh=YVv882rMrWv03G4oGUhXV9IeUXzupQFSOJTvnsB3DfU=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=hupygDhZI+ec6dGn286Jz/DsnJSZ5/EbR9HFCd0LJyUqNhhfgGrh35YY/zFq7wR58iu3mMW/0VKRVT3A+CDQ0vSMwASYpxQWa9kMj2S/hXbjXg4j2QiR5LgYYbPQ41L2pcKciVCkuVAi6b6okwKPQh8/cq6IufMELe2B+o2YyVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=VFnsTQxa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M+hzmAtw; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1728495541; c=relaxed/simple;
+	bh=72f2UUFX3zwgPrJQrXl7KT7oc/RgRlKxhZh3yxuF6F8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ly2hvb2Bn6QBuaM++1699shPFJtQUM/nfmibwF8nfyam+Y+77RIxUuRJYk3hDLfrBb3CSHBRaXf/qVt5nj8zuaXAE0oclxydFXtWHczJW/WGD31Inl/PHhZjntPRlzb57DSbWNB6mkBDpU5sOJodYwShC2W++ZCI8phzchGdDmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sqyv0oiI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EzcG/02A; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="VFnsTQxa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M+hzmAtw"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E0ED8114012B;
-	Wed,  9 Oct 2024 13:37:07 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 09 Oct 2024 13:37:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sqyv0oiI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EzcG/02A"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id D42AA13800E8;
+	Wed,  9 Oct 2024 13:38:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 09 Oct 2024 13:38:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728495427;
-	 x=1728581827; bh=t1wMiH8J1Fnqwlr8ukYifzfxXD8OaID/0dUn04VrAfI=; b=
-	VFnsTQxa+6f9OQNE/9H2E6JUo5oGKJ071b433yoP4Z+WDYw8zsraPlXJ74OgGV3p
-	OVtz2Z/x4IzsXna8y0aHGC1o9VzgvSRnNaxeKidnd0Yq30o6CGeIhBaQSXCrE2vS
-	vxf/SNr15Dkj14V3jkmbZnr3VTlE44Y3bDju1rXU9hP/k5OoJo8fdJOv/XZSAEiz
-	0Ztv8yvjsLTuFDsrmVf8Nis5e2J/NcgxMRroSifg92x2tkmJpjmppl5Z5swiLx2P
-	da5mhVJIsZ9Rtc3ATvfuPDRek78kng1hf5h2Vm+jdDcXjEJQYJC02heawdbfnOlt
-	iEI5t7zoE9kGaGpxwo18fw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1728495538;
+	 x=1728581938; bh=aZWiTLnCFEOFOCd+XB8NOGfmzQif3hU30x7bPwEXak0=; b=
+	sqyv0oiIm4+KNFtyxIRnRW8xsT3Zsoejj+CbtLCIDnSpIdV3GXtDZWk3EqA+WAlS
+	sk0UgEE356V/rhSfVOXhklACMMxgYv2geqb5Ivhl2aVIieyaT6ddCH4316Wq1Hr9
+	zT6vNUY+c4HahLUtDze7ZB9fvp5j1X0Lt/49g/sORLqH1RI9SLJBJh8A+oZx2ctl
+	SKhzyBsri8k5wdKROpdpkpelE6InOCjkOwh0ojmhD2VJidaBs20m25IUDrFvugp+
+	WZVWlHlkOL2cLBwMiOkVx1bH7it6q6YOD34bWAs9NQQ0QXQW8VJcnOtGM19JwLrR
+	nVCMcfsVac8PxJts6ZMSHw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728495427; x=
-	1728581827; bh=t1wMiH8J1Fnqwlr8ukYifzfxXD8OaID/0dUn04VrAfI=; b=M
-	+hzmAtwKNsgTu06hTjPKSUyUkJK8DoJ5f3t/HKR+3VoKbennZ9wcyVYzAATUtjNm
-	yn3egj5MPKxj1EgPjOf3o1fepteY9p8FmxKLdakTChKD0dWYPqWAJ/S6aKUv8n0D
-	1LWo8d9fnyIFfTqhtnSTGKT0LdIG7HUG4XmESPd/pWOUlf4spsvVa5jDHH/AFMy/
-	Ap2i55hW60+iNGgSoV4ha3pLugwWpQ/yWVph5q1oWB6sWZUNoBkqGRxZNqUFtcPT
-	3icQ725c3wo1gtuT5xI4g2avx8TjLuJEYlVk5QgtHEPh96nXAYr8WXA4pwlAt1rf
-	7gyBIMGdJ7cGtx73TRTaA==
-X-ME-Sender: <xms:Q78GZ_HIps5meOTAWFwMb9mzaQeBKTuxpMiD4Ko5HRDFVdayGBf3gE8>
-    <xme:Q78GZ8UwrlmYgfk_7mavdw9bTxE7nsDh7VDGiyEmTeQyi9GB19PrMLOYeoFozUOUv
-    bH0fB4gIo7bmQ79rA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728495538; x=
+	1728581938; bh=aZWiTLnCFEOFOCd+XB8NOGfmzQif3hU30x7bPwEXak0=; b=E
+	zcG/02A8B877G8y7INDO7MEs+ZHrAHC4hid7rzPEwEFy4qshvah4LUBKqPaMi4dY
+	4nsiiv/st0ZXr8BJTYg/pp9YQPOQZvWIx17WE1Ow2iiKmeqGn8FWZtv6c8JiymDM
+	vkVMg68HmC8feuGYegkFvkNw2SlE7sqSTW07JioCvzrG4lxwCBZJSU/dosmvVq4A
+	hCVjodYGWbOYPsJRI8HxuzsZT7sXOQ2Fg6b3uWEZsBeqxf4lS4k+ex6N7j/mr0kr
+	d3vOw/c4RzgAH35EBobuzJCxu9a17jVq91urJeBFDOWmQz/XqkUPFR0G/EYwhKC7
+	dFKM0c0isFoAbvo544bNQ==
+X-ME-Sender: <xms:sr8GZxkwSLnaP7wDGZw4tx6FDlAUR9eJvKyThY0H0NifuxY0p1NybQ>
+    <xme:sr8GZ80M9QvQnix8eqVPXDvm068B8Fw_ug8wPhmXs1a7f2uVOtdwsaY78UajvhHYY
+    iMdF-336JN-BrLARA>
+X-ME-Received: <xmr:sr8GZ3r5Msuv1WCHwaaxQDi6Wk0VCbWly8NjCFF9hr70SR5F1ni53dlt4-Gn3RrXSG34r8NUyjudk7k03hNOEw-IoNpFBAtLHKCz>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedguddujecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
-    fhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghr
-    ucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepffeuueeiheehffejgedtveef
-    hedthfevvdegudeltdffheejvdfhjeduffehgeelnecuffhomhgrihhnpehkvghrnhgvlh
-    drohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
-    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhs
-    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Q78GZxIa-HFdJmL3Eq2gNZvkKnD8t-sMsjBYRcZBojP1UisuPAdp3g>
-    <xmx:Q78GZ9Gxilef9QUMgBy5fy4Z1CVRDJTmlGRwhQQHe5iU8zMQ01QMZw>
-    <xmx:Q78GZ1VAv0jBUxILW2YppBrMwGZGOrtKFOd6h72rt79KsBoXEb-GXQ>
-    <xmx:Q78GZ4NefVLzRbXGd-_X2QJIsQP6CkGDWdP7DS38Q0_nHZuUF_x1Gg>
-    <xmx:Q78GZ0fG3Qqo7mjood0r0FWjZPCIi-gSrs3QaF9HSZt3pVb5GGA4Pua2>
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id A690C780068; Wed,  9 Oct 2024 13:37:07 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
+    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
+    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofh
+    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgessh
+    hunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:sr8GZxlBM15PBkfi_e4X__DMkmjQ3McJXe4BUnKF4ktt2V-HUW2zmg>
+    <xmx:sr8GZ_3xnhXK0hD5JS5JXd9XbwAnT5EqG3ZPoJZ6YrcyNhYKNvG0JQ>
+    <xmx:sr8GZwvzOP7ddYsPiY8-bRxNqIOH7gxnOroyijWkzfKrQgUONHpJFw>
+    <xmx:sr8GZzXvXHMsxnCGkRcy1UGZevSng1fLU3yLrRWvJcjkB_XiQArPXQ>
+    <xmx:sr8GZ5rNdXKEdFJUiVZjB8H3h_x1L_SsmEEMpba6HhJGrqnfdbJ5hfkD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Oct 2024 13:38:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org,  "Eric Sunshine" <sunshine@sunshineco.com>,
+  "Elijah Newren" <newren@gmail.com>,  "Phillip Wood"
+ <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 1/2] doc: merge-tree: provide a commit message
+In-Reply-To: <e339f796-bb9c-439f-a24c-0c5e79257379@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 09 Oct 2024 18:35:36 +0200")
+References: <cover.1728298931.git.code@khaugsbakk.name>
+	<cover.1728413450.git.code@khaugsbakk.name>
+	<b1ca5cae76845f84147d385cc5ff47f219cd471e.1728413450.git.code@khaugsbakk.name>
+	<xmqqo73uz5qg.fsf@gitster.g>
+	<e339f796-bb9c-439f-a24c-0c5e79257379@app.fastmail.com>
+Date: Wed, 09 Oct 2024 10:38:57 -0700
+Message-ID: <xmqq5xq1uqfi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 09 Oct 2024 19:36:30 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: git@vger.kernel.org
-Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Message-Id: <203447e2-5305-4367-adb9-3cdf16c32f27@app.fastmail.com>
-In-Reply-To: 
- <259fcbb61f13873421d50df77f151130fdbf0166.1728494795.git.code@khaugsbakk.name>
-References: 
- <259fcbb61f13873421d50df77f151130fdbf0166.1728494795.git.code@khaugsbakk.name>
-Subject: Re: [PATCH] checkout: refer to other-worktree branch, not ref
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 9, 2024, at 19:27, Kristoffer Haugsbakk wrote:
-> From: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+
+>>> +       NEWCOMMIT=$(git commit-tree $NEWTREE -F $FILE_WITH_COMMIT_MESSAGE \
+>>> +           -p $BRANCH1 -p $BRANCH2)
+>>>         git update-ref $BRANCH1 $NEWCOMMIT
+>>
+>> The shell should know, after seeing $FILE_WITH_COMMIT_MESSAGE and
+>> encountering the end of line, that you haven't completed telling
+>> what you started telling it.  Do you need " \" at the end of the
+>> line?
 >
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> I tried that and got an error: `-p: not found`.
 
-I did the format-patch + send-email mistake again.
+Thanks for trying.  Sorry, but I think I got confused by trying it
+with two "echo" (one per line).  The newline still acts as a
+inter-command separator.
 
-https://lore.kernel.org/git/b41ce281-d3b8-43c3-8b27-f5dc59601ca7@app.fastmail.com/
-
--- 
-Kristoffer
-
-
+>> E.g.,
+>>
+>>         vi message.txt
+>>         NEWCOMMIT=$(git comimt-tree $NEWTREE -F message.txt
+>>                     -p $BRANCH1 -p $BRANCH2)
+>>
+>> or something like that?
+>
+> I’ll do that.
