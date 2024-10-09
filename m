@@ -1,154 +1,129 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C83F5684
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 18:46:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A65EDE
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 18:49:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728499582; cv=none; b=OvfQ7xTAX9nxB6Mt+1ucAypigjpHz9g9JyHQkbbVxPlri4KAxWDQ3mhSAeg4pd65vHoP0OAs3Q1qWkAAHlTr4hhOo5yX173ctJMlA+SvFAvvH/6yOBIZvDJi2SP1H7KyadNWw4HxJRzNhFc9VEiHIXU/6ffdlbYQy0vvQiD8n2M=
+	t=1728499798; cv=none; b=gdR/c9fQRSkGImyuRiJoUg3bIDHa0g9q1pHcIYmpTdPz5/R3jBDQEBrK1lD5bSib2nv/JQ0jbKR7qesF6frnWcKXarYYjsziUsGk4JQDrDW1ZQ6rKYWgCAp5t65lpaudibMOdVyW5oZ6x9xpfCrat8VkvB86WtyXVzujjncqrm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728499582; c=relaxed/simple;
-	bh=hS4Jneb5g4QqX4zUgbZi0CuuQZIEqjZ7kU9rSl6TR5U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LknZyA7OfE5kmeR4hHATxht58OXS6x5pu1evu1YDaADSEczkK7V+5Rx6iFi5bqn97U3EQpuCqJG9+WB86A7cI9P5udygXj2yM6an0Cy8ufvS+Bhxx4mNxBQaeevGkCLHo1tVzjQ3VyKxfO6CABxvaaLYQqydV2QQ1RmIlXRJSHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jNnGtybs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SiGMQWgm; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728499798; c=relaxed/simple;
+	bh=cdSPOb4ly8ZGKNsQDNykI85I3ahenXj6ogq8p8gV+qM=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PfyY5iH3JKhsO0ngqkzW6sEXFsPFbfqCQkrJDhQhKgQ7Yt8WfDkY+d2QO1ydpDAP5QHzQiCDWl2aKj3YoIHF3zBScHtVatA1OkizBmT8Gofr8+kKMb9+Jvnohl0+qaZNb0hsOQ/YS1hILtv8oTikweBLM+FTP3ROHeuPV+l7Fc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=VaKkTzij; arc=none smtp.client-ip=185.70.43.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jNnGtybs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SiGMQWgm"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 16E20114018A;
-	Wed,  9 Oct 2024 14:46:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 09 Oct 2024 14:46:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1728499579;
-	 x=1728585979; bh=PhS+xrWoStx5Hgfpciwr2SR3WvHLxQI+8i53kJNXwDg=; b=
-	jNnGtybsKZZcuwPbO/lNvKfLdWxskMMJkgaz1/Ofjv4lQXSAy4gL8NZ0F1APaNyT
-	gJleXezY9SXSTSn5bS+I6TMv7hh6Yt+SSqgaErnYE6z5TXPr5QOwhSDQYT1ivoPn
-	h7nCNPbGgYRMu1GCrSZCpQ4qtnzSmOmoPo9GwACmdJ/E5dTCqR77XdWk4Z/F0Vz0
-	RE77Olpv3uooE2wK5KYyFEQXOBUOoRXbJ2gKWKoJMEdI9lD4UhWVDXmYEICcwxES
-	jJf0RMAIF+9VssHflb6OmoPeoUcUeTLb9s6lSlsm8yGaxj+5DzXXQxNLIw5yFeCu
-	IDOqxOaemtxTNRpSUAJWCg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728499579; x=
-	1728585979; bh=PhS+xrWoStx5Hgfpciwr2SR3WvHLxQI+8i53kJNXwDg=; b=S
-	iGMQWgmP9M2MjvVfmEGaV7zaMeoqCoZlmsTq/qRbh/vgqddZRyvMmt1/ZNZzh2zi
-	5xUTmgoJHMgxGi2p9AVMy4rDERA7fzOR8B3u2pIPQ7jqzWdCxC7JCnPgF+50NzVd
-	tNOZ1csUvYBAXuYOwp36FPF1AHjwQXW+92PhVskMTImUtK6mbSD7TOMWhI76E4m9
-	RFXK4j3ETXwtxF3mr2pu+UtrqNf9K/2nuiIrp0UcF0itiUXPimk2cc/Dfsp9pa0U
-	u67Lh5LWpcdN4Rr/hb7MVHaqJZ5ePEVPtwergZL1ROeF3hjjzucJnDmNqfafv4aN
-	Vyn9d40qzBRSh3Vw5i9Rg==
-X-ME-Sender: <xms:es8GZ1BGmiBpJH1FVJvC9bWSfaJpFamKbM4b1Llsc4NsoaoOsZLqUQ>
-    <xme:es8GZzjskfYlZCJaGj2eglxW-SFhQU0bN-Gn9qHrghx_rFaNKR7FwELr5fmckTn-K
-    rEx5EQZPVa_Vgm9HA>
-X-ME-Received: <xmr:es8GZwk8XGGvbOlitPLlQQh2lFtDkJY2jQ7joVXyfpwhxkw0T0NebWsJn1kmHp6Q9Nbq2gxeB6th3fQiNTdiBZ_JXzJU42a-j0ls>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgudefudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghouggvsehkhh
-    gruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:es8GZ_wRZb29H4F79vUZ26esiyN8ObbDlinroXj1xW-AnhhwbhSa7A>
-    <xmx:es8GZ6TUxMr3BpkZKiGCDSOatmO5twbTJz36ShLeLS9Wck9dyvrUqQ>
-    <xmx:es8GZyZ-8OzmKIgkGyW7i4vQnbH3EXYsYSAAzi9jgjlsktNoJ_5v5Q>
-    <xmx:es8GZ7RrYaUFPmbvfh8IVqssJ1ZB9SIzi7cCdUAdrfITaFTYgiwNvQ>
-    <xmx:e88GZwM9aYXugEMC8b2QwbxOfTPFxkVOzbY8upkJ8Ayu7U_JI2uQMW20>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Oct 2024 14:46:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH] checkout: refer to other-worktree branch, not ref
-In-Reply-To: <259fcbb61f13873421d50df77f151130fdbf0166.1728494795.git.code@khaugsbakk.name>
-	(Kristoffer Haugsbakk's message of "Wed, 9 Oct 2024 19:27:58 +0200")
-References: <259fcbb61f13873421d50df77f151130fdbf0166.1728494795.git.code@khaugsbakk.name>
-Date: Wed, 09 Oct 2024 11:46:17 -0700
-Message-ID: <xmqqh69lru6e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="VaKkTzij"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1728499794; x=1728758994;
+	bh=cdSPOb4ly8ZGKNsQDNykI85I3ahenXj6ogq8p8gV+qM=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=VaKkTzijF2ag66lb3615BgECpnMG+g/rnvdOVkL21254SAFtKaBim0JX8NXSOlscS
+	 Cp9H+sCgJo5fB3WKy5WAWAAxeT3mFrPdnYmGi/8vEY9t5/Mta0gb0Km9Aj9/xL1utZ
+	 yOFZN6ec6ZfTZ0XgWvyOvbCLXO5OPHUyRYVLzOiubSrAIq+woYcUv+r60vQOs4EZyq
+	 rV6c1JSAo28ZdsY9xkvjL1zpgGUvbVLDZJdDXQTvshz/P7XgZaXgYLsDhP2jSY6gSm
+	 ox2Ag99GNUEzQPNSjpEuI3phyRx0YRKNUK5b9LLsqeTpmf7/Y13wBSWOIMfOgTBe4x
+	 pUSV2Af63G0SQ==
+Date: Wed, 09 Oct 2024 18:49:49 +0000
+To: phillip.wood@dunelm.org.uk
+From: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/3] worktree: link worktrees with relative paths
+Message-ID: <18nudmdBF3K-9cMiTynl4-amBudFtwKaaZtIkF4E86BwxmjYNV_ISMihIddKiwYZBTEXSbJ2XFliyXDwaGs94pn3Xj8-V8QtggsTgFXl4to=@pm.me>
+In-Reply-To: <de748e18-d3c1-4c34-a2c8-086271c208dd@gmail.com>
+References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me> <20241007-wt_relative_paths-v3-2-622cf18c45eb@pm.me> <de748e18-d3c1-4c34-a2c8-086271c208dd@gmail.com>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: 78219fe60178bbff559d86918c0b91f954369c61
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------b859b5c2791458920ce280097e86c3e56cf77bb8f5e5cee3b8b0e8cb25070552"; charset=utf-8
 
-Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------b859b5c2791458920ce280097e86c3e56cf77bb8f5e5cee3b8b0e8cb25070552
+Content-Type: multipart/mixed;boundary=---------------------135bb4f93925a86f3eff8630073975f9
 
-> Notes (series):
->     I also change “is holding” to “is using”.  This has plenty of
->     precedence:
->     
->     1. The code ultimately calls
->       `builtin/checkout.c:die_if_switching_to_a_branch_in_use` which says
->       that we die if the branch is “in use” by another worktree, just like
->       we do here for the new description string on
->       `--ignore-other-worktrees` (c.f. “holding the given ref”).
->     2. `man git checkout` uses the phrase “in use by” when talking about the
->        branch being checked out in another worktree.
+-----------------------135bb4f93925a86f3eff8630073975f9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-Good to see an update is done with such an attention to detail.
+On Wednesday, October 9th, 2024 at 05:11, Phillip Wood <phillip.wood123@gm=
+ail.com> wrote:
 
-A branch "in use" includes, but is not limited to, being checked
-out.  For example, "git rebase" may first detach the HEAD when it
-goes to work, but it fully intends to switch back to the branch it
-rebased when it is done.  It does not want somebody else mucking
-with the branch from other worktrees, so "checkout" or "switch"
-would consider such a branch is "in use".
+> This is quite a sweeping claim, it would be helpful to describe the
+> trade off that this patch is making.
 
->  --ignore-other-worktrees::
-> -	`git checkout` refuses when the wanted ref is already checked
-> -	out by another worktree. This option makes it check the ref
-> -	out anyway. In other words, the ref can be held by more than one
-> +	`git checkout` refuses when the wanted branch is already checked
-> +	out by another worktree. This option makes it check the branch
-> +	out anyway. In other words, the branch can be held by more than one
->  	worktree.
+Thank you for your feedback, I'll adjust the language and add some
+additional examples.
 
-As you are updating the usage string, we may want to unify the use
-of the same word, just like the original said "be held" here to
-match "is holding" over there.  Perhaps
+> but as I understand it while there are cases such as
+> sharing a drive between Windows and linux or moving all the worktrees
+> including the main one together where using relative paths prevents prob=
+lems
 
-	... branch is already checked out or otherwise in use by
-	another worktree. ... the branch can be in use by more than
-	one worktree.
+This is true, there are several cases where relative paths prevent breakag=
+es.
 
-or something?
+> there are other cases such as moving a single worktree that are
+> fixable by running "git worktree repair" when using absolute paths but
+> not with relative paths.
 
->  --overwrite-ignore::
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 9c30000d3af..c449558e663 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1716,7 +1716,7 @@ static struct option *add_common_switch_branch_options(
->  			   N_("update ignored files (default)"),
->  			   PARSE_OPT_NOCOMPLETE),
->  		OPT_BOOL(0, "ignore-other-worktrees", &opts->ignore_other_worktrees,
-> -			 N_("do not check if another worktree is holding the given ref")),
-> +			 N_("do not check if another worktree is using this branch")),
+This is not exactly true, if only the **repository** is moved then yes it
+will no longer be able to find it's worktrees without the absolute path,
+however, `git worktree repair` can still repair the worktree when provided
+the path to the worktree (or the directory containing the worktrees I beli=
+eve).
 
-Good.
+> It was suggested in another thread I saw recently that storing both
+> would be more resiliant.
 
->  		OPT_END()
->  	};
->  	struct option *newopts = parse_options_concat(prevopts, options);
+I'm not too sure what you mean here, but storing both the absolute
+and relative paths in both files seems like an over-complication
+(not sure if that's what you were talking about or not). However,
+this patch series does support the linking files containing either
+absolute or relative paths.
 
-Thanks.
+> Another possibility would be to store the an absolute path in the
+> worktree's .git file and relative paths in worktrees/*/gitdir. That
+> would enable "git worktree repair" run in a moved worktree to find the
+> main worktree if the main worktree has not been moved as it does now. It
+> would also allow "git worktree repair" run in the main worktree that has
+> been moved to find the linked worktrees that were moved in tandam with i=
+t.
+
+Storing the absolute path in the `.git` and relative paths in the `gitdir`
+will not work---it will still suffer from the same limitations that we are
+trying to avoid. And all the test cases related to `worktree repair` are
+passing with relative paths.
+
+Best,
+-----------------------135bb4f93925a86f3eff8630073975f9--
+
+--------b859b5c2791458920ce280097e86c3e56cf77bb8f5e5cee3b8b0e8cb25070552
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wsBzBAEBCAAnBYJnBtA9CZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
+28viAAB4aQgAoYw1WfssX4kIWVLuAXdtA1z9A9APaxBXp33kTpeX9lNvwx+K
+Wtqphh8P1qN25sKq9ZPXo7QMcJoBV1KIAN6M4/V/dmM8M0UbqnewNckO/byz
+eMAd3e5+J+eQU9SC6bRh6RBle1XgJTMGZmXaz4vhFMZqRrFsE92MVby+GESK
+hLWkpmqgh2f1sX/jLXz6EgqOtSKLbpVjbgZQ9/+WBztvUlqUK6D4aY4tmuST
+6QW8o2KRTl1wBGJ51Re94mK375Hq5MvhLowktyGdv1z75s5dfRdIswLD9vI4
+gOOWOOTuv69KjVNeuwihbM7seZ7nnbtrP2Ui0gv3/scZ2APGhp8AsA==
+=S4G2
+-----END PGP SIGNATURE-----
+
+
+--------b859b5c2791458920ce280097e86c3e56cf77bb8f5e5cee3b8b0e8cb25070552--
 
