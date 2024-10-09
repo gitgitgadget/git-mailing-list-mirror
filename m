@@ -1,84 +1,92 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh122.zrh1.oracleemaildelivery.com (aib29agh122.zrh1.oracleemaildelivery.com [192.29.178.122])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189531714A4
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 19:41:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858C1D530
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 19:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728502909; cv=none; b=HJBAihKD92qpcPm8Xix0IBwpcb8vTvBBWPiXDizdiW44Gm5QU/nN/fVV94YBbm4Z4gA7zeHW8fdbTbp8NDTjagQZV2slLgZmWDblsYSFOlcCZ7rUAveNajGjPJhlI6mXu3v+YAPpTDB0QrvDAgkDnqtQJyNa+pMZcEllfByou6I=
+	t=1728503591; cv=none; b=lxm1pOfERr/vBcv0enX2yZFpuji9kgnU9QW8qqNj504mEZf+/r/p2v+rA4lmZI6JacRTidxR1Fb8iMAHGkg0Q9EpMr9dxnrXD3uOAwUmAz8IcwSW4+TkGHZy5OF26iedPiGL/DgB+tsUJHZyBVooMsmR5wKT7JdnjSb1cNXhb8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728502909; c=relaxed/simple;
-	bh=druRtb8TgQtI58pefgXT9+z55CFxsSKlJ6oWXnKkHs4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=W5Gt+kC9AmokZUHEoBD85lbaSKLMlQm1AdGDBU3nnzfE0+tfJP/R7fACu9vcW7+I+br0PRNOsm8yENV0ML3UHl30r+kyS6tGLSykJkpgynQ5NW7jOZH8jYK2I6jYn2BZ1Z/rSyDKgaSyE3CjJaupROy00fo7oOuMZvEECND1hVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WVEYyqiw; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728503591; c=relaxed/simple;
+	bh=k6JKnbK+DkLqJ+xlbyaL5sfVEkc+5CKVBP/B/MWAr20=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=e5HPJvH/c2APkTi9RuZZ5weRx9sUHligiPlI98z9D1kvvwZI4JB5ikqO7sUSWicKo1gsBdF2X1QiakpLY4vReSSelNpM+Yl+5svViy+Fj3oom88qbLJ4oVfL+6q4svGqk5bpXYxUmPJFg4AwkSPwYsOZboEtjI82Snf98Sy1P70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=JvojGpXr; arc=none smtp.client-ip=192.29.178.122
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WVEYyqiw"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-208cf673b8dso1098615ad.3
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 12:41:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728502907; x=1729107707; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cVi56HnFwzc+jjeM2m7juAX160TDpWt1LnJc/djFcKM=;
-        b=WVEYyqiwTxyD6455uC7Xhz1g1uK6iPecgvMjlfgQNpu0oaQV4StwHrCAJ1vrJ3Mu+c
-         3xv7OsTVimeH6y46ufYLRc/2AlV3weMZGmHLyaFTOhBxPIRZa42UrpZ1WnpgSA7qKddx
-         iMDLtFLmzf9hXiOI0I7o3VFRhX6QjU5VDO4Y+/KFuR19F4dSspzysQHNC6EQe7LXr0Qv
-         gELW2lANpa9SjTHD570NHHV9PhHF+J3y02rUJavlGhqcM3Q7Vmw2LeVS16avRYv4QQLj
-         HswpZ5KDdK7dI3K/SdT2Y0v/NkAnu5t/b0HBxjlOOxxzLEFyzXVMhwIx07EckhWP98Ck
-         jSbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728502907; x=1729107707;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cVi56HnFwzc+jjeM2m7juAX160TDpWt1LnJc/djFcKM=;
-        b=Ljj8GS/22zfIFN1IlYL4udL/FgBcw7kTm96kFeyUiaez0SC7c4Nlsymj5FgLdmrLnP
-         CCozqcnPhSMXiypamILSlOedE/9S4c0rCL7MC8oIFZnsJWb3oS5g7bbDV00EyyDY3t+w
-         VKTDk4npHgFIuxJPUx4L1vIwOJpyUFsoKIhKlNbpGXYqG+wne3ves/y1Lwrq9cthjq4R
-         B9hVB/DoJ7nrsj7QlfogCDA65tPiPTSmea3/KV02TAYlCxxQjS8coTRHYU7xD09qlscG
-         gJG7pOP0RA46XP4rB5KRtRJ+boE2eqqRNdr8IUPJpGrLaAeSBOFfuXrtF/2J2ESwMcGL
-         iZoA==
-X-Gm-Message-State: AOJu0YzD305sZJZQEJlj0vpq4TS5J/Vtkaq4SbGzyegEwBseA7RQJOy2
-	zlZ6r1eqqU/I0kYLORXhAfl2QnVuRBtHpv7ESZPxvPIudGDS5ii7SUL7o3mYaey7HLDmf3hDa6m
-	xF3PhwkqpUk+Oiby5pkdozI1theBkhJdx
-X-Google-Smtp-Source: AGHT+IEHM0g7hXUXQHeWx2znJKqQFwcuNwnYDWLjMAAhL9nSlh2veIHblDAiSI0fOhxgIpdxqT/TKhZkIENubtZCpGM=
-X-Received: by 2002:a17:902:e841:b0:20b:9062:7b08 with SMTP id
- d9443c01a7336-20c6377f2e3mr43316885ad.45.1728502907297; Wed, 09 Oct 2024
- 12:41:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="JvojGpXr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=WzEoapwhFU2S9O+wyfb/PRla4TIQGBOY/K8K3CDGvW4=;
+ b=JvojGpXrCWlR6VyIWPZy5Sf9hHL7apeL93XGhikPA5VPv84A5g2SYXbEiVmlH5sruFc4p6/PBF40
+   ppWQemyeoOzHI47jLP8q78YU0TDmzJnMOGvOL2EZNBCUYdhlO+5qavYikyY5DUosNUxcvFFxDzok
+   XBqNjFqWW/BjHWGYbGZIX5pTweoWhmM6ks1z0s5ldLz/zkeP3Wf2w1aqH3/NoTWb/ZGm9BXyYQAO
+   9ynYdSf9NIWk+KL1JH6Gm2b9Nm354QWGJ8IG4l0UJFSNW81d3e6+tXprEWVvKnFcE8pcxxbXkvsa
+   5uDF4t6EjAt5zYkuCgLksMri1qoWaNp9SdCegg==
+Received: by omta-ad1-fd1-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SL300KQDTNW7840@omta-ad1-fd1-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Wed, 09 Oct 2024 19:47:56 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <CAOLa=ZRMaw-PAsZ9s0zJ2zp_suMppi=ZrT67B__LU1tWZSvuUQ@mail.gmail.com>
- <xmqqcyk9rtwv.fsf@gitster.g>
-In-Reply-To: <xmqqcyk9rtwv.fsf@gitster.g>
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 9 Oct 2024 21:41:19 +0200
-Message-ID: <CAOLa=ZThTs=EzFEAHM+aLJ5Eq_E-RPfGrKiceDADsBGJQE859w@mail.gmail.com>
-Subject: Re: [PATCH] loose: don't rely on repository global state
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Wed, 09 Oct 2024 21:47:21 +0200
+Message-id: <D4RJ9EZMHPHG.3BMTRPU3B2PMD@ferdinandy.com>
+Subject: Re: [PATCH v5 2/6] set-head: add new variable for readability
+Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>,
+ "Taylor Blau" <me@ttaylorr.com>, =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Junio C Hamano" <gitster@pobox.com>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <xmqq1q0xhu13.fsf@gitster.g>
+ <20241009135747.3563204-1-bence@ferdinandy.com>
+ <20241009135747.3563204-2-bence@ferdinandy.com> <xmqqttdlqdr2.fsf@gitster.g>
+In-reply-to: <xmqqttdlqdr2.fsf@gitster.g>
+Reporting-Meta:
+ AAEOh8JvwDIwEtHVdovQ7aIYfruWuQirX1Irqbmhm8auUmIexQok5efponkZgmLn
+ OJ71M0K4uoyImheFhcOh+UeN2i8/39Ea5dLiWHlcJsfYBUD2Do4AwzbsTRrS4EyZ
+ bIlWuc0FoFG1W7Nud4vwpozekK93Sv3keAOQmFM0ahOughsAfmf9dPbKoLzzvCGn
+ iOgtY21Oz1iHew7Dx/deZuoxfl7cVCltFMvQWQP72S9da4V83eX8FM+iFhcTwahS
+ 8bQ5YvO9MTrW4+j8RiVT+nOOCRQei1K3shBet5kwLCJ2tVjjttJEBL70puobxGlm
+ jj0iXVwWmJT0MFFGozMTstQ6B+/UIma8FWjxUtHeI/ErGpxHdqa56NWDQ7ZO2Wa2
+ 0kvr7W9ZhXCAGR8quB5VDzGdsdsgPv6MRdy9/nLD6GbE0xUl/IKDCuH10b1dXLX0
+ 089vPV/cvGARx4T6XSEKEU6ELQK2YC1ueClI6ojSiL6r+d+2miN0r0u6
 
-On Wed, Oct 9, 2024 at 8:52=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
-> >                       strbuf_addf(&buf, "%s %s\n", oid_to_hex(&kh_key(m=
-ap, iter)),
-> > oid_to_hex(kh_value(map, iter)));
->
-> The line seems corrupt.  Joining them with one SP in between makes
-> the patch cleanly apply.
 
-Indeed. I used `format-patch` and `send-email` right after, I don't
-remember messing with it, but perhaps I did. Thanks for fixing it up
-and checking.
+On Wed Oct 09, 2024 at 21:26, Junio C Hamano <gitster@pobox.com> wrote:
+> Bence Ferdinandy <bence@ferdinandy.com> writes:
+>
+>> Instead of calling get_main_ref_store(the_repository) multiple times,
+>> call it once and store in a new refs variable. Although this change
+>> probably offers some performance benefits, the main purpose is to
+>> shorten the line lengths of function calls using this variable for
+>> better readability.
+>> ---
+>>
+>> Notes:
+>>     v5: new patch (split from the next patch as a preparatory step)
+>
+> It is a good idea to help making it obvious that we are accessing
+> the same ref store.
+
+Indeed, although it was your idea ;)
+
+>
+> The patch needs to be signed-off, though.
+
+Damn :/ Sorry, another oversight ... Should I send a v6 for the series with
+this fixed now or wait a bit to see if there are other comments?
+
+Thanks again for the patience!
+
+Best,
+Bence
