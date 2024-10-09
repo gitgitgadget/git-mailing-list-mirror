@@ -1,64 +1,63 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1248417BEC5
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 07:58:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B458A18756D
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 07:58:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728460707; cv=none; b=fDovnuOUTOVm9E1LBCGkeq0aHBc9kzw0sMvAgoR0QvTB5C27vgHCNmqjvus4zLUrwsoqWDvJvkTE82A8Rw6LhuHBJtNmt8DHBS5FM8MPucsy+j596QEUmJ8owdnFFTcO5l/ZjDQyFN+QA9zFPVQxmrCk4wAwyYwmHrfH65t7LSI=
+	t=1728460708; cv=none; b=rodhZoKMN1kHFcLnPO6awahtCMp9FBrjM4Gp+fPfTgywqA15YS9VoS596tO8VawjJCefyyIIc3sO2m1nJgmAAXZHIoG6fkbIW3DA1KB8Ktip79PYri6yG2T6azjdeBe2fcunWiRvINIqYgD6TGK1pXkikzbyhbTMcWUPI3a+neU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728460707; c=relaxed/simple;
-	bh=NmI1eWkVK50hGlaljjYOi+mXXxgNpdpJhOVxWJdx2UU=;
+	s=arc-20240116; t=1728460708; c=relaxed/simple;
+	bh=UzUkw+lEkUC3fXwqsucIoM7DC2PfblCNaKUFZm2RFcY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=W9bjtnlcOC2OmyuKY9rrLUQI6yYI+SENp0N+vMH+PiwN1wiwwyx8KJ5ehma6vfmavALHSdKWLlmBDtggz5KVDPaUg63ImtJvw4hHiiQwZA1AfwYNkez030XPfkPpP4D5JGQo7spGvMKxgNs/ioGZrdsjfeKyFaPixy1DaWiOIck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WaJ7imHi; arc=none smtp.client-ip=209.85.208.53
+	 MIME-Version:To:Cc; b=Vj8h8GxbGKVS1ZnuUCIC3+u/qdYRYbjKNSoyeU+TOaWqi9aSCwDKRyZk1Z9gHHiGceoNAGU1XdROf2HFQxMCjE/ldsl/qgtBfo4gfLoUGIHtBxeAW7iu5xP+n+EeTeiHsM8BzdJstSBEt8awPqvrhRFwefIp8xsAi/d7zuaT0is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R9NZbE7g; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WaJ7imHi"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5c8967dd2c7so8051752a12.1
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 00:58:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R9NZbE7g"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a993302fa02so506841366b.0
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 00:58:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728460704; x=1729065504; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728460705; x=1729065505; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=S8/AU0s2/N0BDJJGcVeSY8sR4P/MU5YBpYYWLkQ84L8=;
-        b=WaJ7imHi3PkKFbSXPKPrGiYOHnxfy5uc5srL3k/2+x2pfTw19w2MccfTuopjC11w/5
-         0Vu+aUVKZX2miap6yWGBkREzt19ECSJyg4+kfjQI1qlsDaNrGLvCv2fzyii5NUp8kvax
-         HHJhvZNUhsg00oR8/W+rX7vDx60LbT6BEYO7dYzj5Fy4reSFOgT9gBbFrusxIjaLNbDT
-         QQQmV7N6sDLdDevsDsvZR0H+8kQvmCyeVFTY4DlEMYD6uWzRVhGiZMqEmWJM2tBcH97A
-         /VT9K4sjeqELw3EWCWv5Vd4BqYJwBdWkvcW+mIgifYA9fJDoyprXH1Noc0vQyCos0y8j
-         b5xA==
+        bh=bsHe18VBI10BDW/fSoPKanp4k8unG/pui4QBSPjAWaQ=;
+        b=R9NZbE7gaMCn7rbucQUBL9jd5ONFzYrKRsh2DZbO6mxGGZ8SzXGEY2eRwvk+ztSKB5
+         uwzmehj6bIJRPesXSJC60dWmG2Wqi83tdS2LpQI+v1ITAsML3tpOef/ieDrwOlIhZ/rZ
+         WSYp+O8kAiiEFXkYm+vsT8rWY4JhF6eLqXz0bVWexj9n6+hoMDofdjaY2RqC58VEYI8t
+         16OHNgA+0P+trBxz7cTj1qriqclmPSujRWucsRfGICxGqlTn72vjzpUZQMi6jZOJ6oDp
+         gXikGdG3T1BMOpBpx3pLxsnAAC9EImRttak+vQVEk1QhkQ79l7uZzLK5b2DyG3spdgXY
+         ToHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728460704; x=1729065504;
+        d=1e100.net; s=20230601; t=1728460705; x=1729065505;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=S8/AU0s2/N0BDJJGcVeSY8sR4P/MU5YBpYYWLkQ84L8=;
-        b=mYdsL2OKg2AivZKBl0KZ5Noz/OOJ1JI+SgdzRAvPz5lnW2ZBBXEp2n4RNPtq2fzbED
-         52JjzXyucOwdn5GRa4tGF54feRW9Xe0qbmll1OMT+UCv4NFaryUQkORlYxyVoFZZa4Zn
-         cb3p6R4dFe7a7Io0izWO6AOr0DF5W8gG0Zun4Hm2DsvTQof2m9fG39cyoWFd0PAsTst3
-         iBBSAAsA5fAxX+KBsObeeaFAgKq9TPiZ+RdpXnz26Um6eGeoteiM4S56qfryppjbQZcd
-         AaKgVit7yBGPpHukuXAlPL6NX0QNQyRqq24ijT5ePu+xy/JCz9auQK2a3cwZ4deEHXgu
-         NzLw==
-X-Gm-Message-State: AOJu0YyAO1hlSFDxPHPionyHw/yyJXN7gGmsdiYWvG1jbL5nwUbv3Wi6
-	culMwu93wngWo/oh/wSvz+QmKsoGXszRdWIvDebrVADC7srDZY+wHFRcVw==
-X-Google-Smtp-Source: AGHT+IHRNN2d4Mx9t3oHbWqKy+o04UhUb562TSgxMo77/yJY7B7ElIQgb9/pdLce0hkkQaw7SB8m3w==
-X-Received: by 2002:a05:6402:40c8:b0:5c8:f9d1:dfdf with SMTP id 4fb4d7f45d1cf-5c91d66392dmr1366208a12.27.1728460702988;
-        Wed, 09 Oct 2024 00:58:22 -0700 (PDT)
+        bh=bsHe18VBI10BDW/fSoPKanp4k8unG/pui4QBSPjAWaQ=;
+        b=AOLrFQRpzf5F0acDhIgrUgR3hL5QCtckUFAK2gbawEDmvokvrGYIgU1eeadfpFjbuX
+         P1WxxchwvwO94tKyK+sx3i3l4ddh0CBqE78AoTTwuzQ/i0fD7fi377+kypd70ZqvT/X+
+         +19Rf9DfCBH+aI17FLQsaD8uGH2+NpSp0tpgzmzhyLZAe6TJs7EX38TN/2mSaaMmw1Yi
+         sPFITo2mV+RtgtQReJpZ3ADcgmTy3H3mP6Jm8pm3rSDhq//8VBJdwDmWK+DCkiFVUiL+
+         z4HzqvwRbqTZBjKGAu3VUCBK41CW0VlJcs1MmrirWQ/06bGYKBLiM4ZBmPJ6b7AtSsyL
+         +6RQ==
+X-Gm-Message-State: AOJu0Ywtg5sUSL6fCGIiQ5vJplDtxMn//EzFB5OoX8AyPwGSlfpr7PX1
+	4IHbT82zcqM+wD9HPzpGzSA+jIh8q76ZlQKMuDSwDtmFXEsofvZmpK8Yrg==
+X-Google-Smtp-Source: AGHT+IFWx4p0I0q0zQlnPaOJt9gm0kRBydDrLvWl0Gr2nyxrOtyAJ9+TzEmcEnsZjqgRq1IxP5gBhg==
+X-Received: by 2002:a17:907:e8b:b0:a99:7c14:9197 with SMTP id a640c23a62f3a-a998d3856ecmr120965166b.64.1728460703712;
+        Wed, 09 Oct 2024 00:58:23 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c8e05be8d2sm5174919a12.53.2024.10.09.00.58.22
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9957d955f8sm356466566b.74.2024.10.09.00.58.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 00:58:22 -0700 (PDT)
-Message-Id: <e030ddd91f365b870332467057ab054bb34aa4cd.1728460700.git.gitgitgadget@gmail.com>
+        Wed, 09 Oct 2024 00:58:23 -0700 (PDT)
+Message-Id: <1dad6096eb7f329d8b43390f1a445e28d0e609d9.1728460700.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1784.v3.git.git.1728460700.gitgitgadget@gmail.com>
 References: <pull.1784.v2.git.git.1728084140.gitgitgadget@gmail.com>
 	<pull.1784.v3.git.git.1728460700.gitgitgadget@gmail.com>
 From: "Nicolas Guichard via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 09 Oct 2024 07:58:18 +0000
-Subject: [PATCH v3 1/3] load_branch_decorations: fix memory leak with
- non-static filters
+Date: Wed, 09 Oct 2024 07:58:19 +0000
+Subject: [PATCH v3 2/3] rebase-update-refs: extract load_branch_decorations
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,39 +76,92 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 
 From: Nicolas Guichard <nicolas@guichard.eu>
 
-load_branch_decorations calls normalize_glob_ref on each string of filter's
-string_lists. This effectively replaces the potentially non-owning char* of
-those items with an owning char*.
+Extract load_branch_decorations from todo_list_add_update_ref_commands so
+it can be re-used in make_script_with_merges.
 
-Set the strdup_string flag on those string_lists.
-
-This was not caught until now because:
-- when passing string_lists already with the strdup_string already set, the
-  behaviour was correct
-- when passing static string_lists, the new char* remain reachable until
-  program exit
+Since it can now be called multiple times, use non-static lists and place
+it next to load_ref_decorations to re-use the decoration_loaded guard.
 
 Signed-off-by: Nicolas Guichard <nicolas@guichard.eu>
 ---
- log-tree.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ log-tree.c  | 21 +++++++++++++++++++++
+ log-tree.h  |  1 +
+ sequencer.c | 11 +----------
+ 3 files changed, 23 insertions(+), 10 deletions(-)
 
 diff --git a/log-tree.c b/log-tree.c
-index 3758e0d3b8e..c65ebd29202 100644
+index c65ebd29202..bf6d2ae40c8 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -232,6 +232,11 @@ void load_ref_decorations(struct decoration_filter *filter, int flags)
- 			for_each_string_list_item(item, filter->exclude_ref_config_pattern) {
- 				normalize_glob_ref(item, NULL, item->string);
- 			}
+@@ -248,6 +248,27 @@ void load_ref_decorations(struct decoration_filter *filter, int flags)
+ 	}
+ }
+ 
++void load_branch_decorations(void)
++{
++	if (!decoration_loaded) {
++		struct string_list decorate_refs_exclude = STRING_LIST_INIT_NODUP;
++		struct string_list decorate_refs_exclude_config = STRING_LIST_INIT_NODUP;
++		struct string_list decorate_refs_include = STRING_LIST_INIT_NODUP;
++		struct decoration_filter decoration_filter = {
++			.include_ref_pattern = &decorate_refs_include,
++			.exclude_ref_pattern = &decorate_refs_exclude,
++			.exclude_ref_config_pattern = &decorate_refs_exclude_config,
++		};
 +
-+			/* normalize_glob_ref duplicates the strings */
-+			filter->exclude_ref_pattern->strdup_strings = 1;
-+			filter->include_ref_pattern->strdup_strings = 1;
-+			filter->exclude_ref_config_pattern->strdup_strings = 1;
- 		}
- 		decoration_loaded = 1;
- 		decoration_flags = flags;
++		string_list_append(&decorate_refs_include, "refs/heads/");
++		load_ref_decorations(&decoration_filter, 0);
++
++		string_list_clear(&decorate_refs_exclude, 0);
++		string_list_clear(&decorate_refs_exclude_config, 0);
++		string_list_clear(&decorate_refs_include, 0);
++	}
++}
++
+ static void show_parents(struct commit *commit, int abbrev, FILE *file)
+ {
+ 	struct commit_list *p;
+diff --git a/log-tree.h b/log-tree.h
+index 94978e2c838..ebe491c543c 100644
+--- a/log-tree.h
++++ b/log-tree.h
+@@ -33,6 +33,7 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 			     int *need_8bit_cte_p,
+ 			     int maybe_multipart);
+ void load_ref_decorations(struct decoration_filter *filter, int flags);
++void load_branch_decorations(void);
+ 
+ void fmt_output_commit(struct strbuf *, struct commit *, struct rev_info *);
+ void fmt_output_subject(struct strbuf *, const char *subject, struct rev_info *);
+diff --git a/sequencer.c b/sequencer.c
+index 8d01cd50ac9..97959036b50 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -6403,14 +6403,6 @@ static int add_decorations_to_list(const struct commit *commit,
+ static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
+ {
+ 	int i, res;
+-	static struct string_list decorate_refs_exclude = STRING_LIST_INIT_NODUP;
+-	static struct string_list decorate_refs_exclude_config = STRING_LIST_INIT_NODUP;
+-	static struct string_list decorate_refs_include = STRING_LIST_INIT_NODUP;
+-	struct decoration_filter decoration_filter = {
+-		.include_ref_pattern = &decorate_refs_include,
+-		.exclude_ref_pattern = &decorate_refs_exclude,
+-		.exclude_ref_config_pattern = &decorate_refs_exclude_config,
+-	};
+ 	struct todo_add_branch_context ctx = {
+ 		.buf = &todo_list->buf,
+ 		.refs_to_oids = STRING_LIST_INIT_DUP,
+@@ -6419,8 +6411,7 @@ static int todo_list_add_update_ref_commands(struct todo_list *todo_list)
+ 	ctx.items_alloc = 2 * todo_list->nr + 1;
+ 	ALLOC_ARRAY(ctx.items, ctx.items_alloc);
+ 
+-	string_list_append(&decorate_refs_include, "refs/heads/");
+-	load_ref_decorations(&decoration_filter, 0);
++	load_branch_decorations();
+ 
+ 	for (i = 0; i < todo_list->nr; ) {
+ 		struct todo_item *item = &todo_list->items[i];
 -- 
 gitgitgadget
 
