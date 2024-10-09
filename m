@@ -1,81 +1,81 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11215196C86
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 13:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E3F198A24
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 13:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728480323; cv=none; b=q2KJJHuwg8qpN//KlsZQSM/aIxodZdCb751nen1soa0iKSSeiSSQfWKsq0t2G2V+dSYpjxJRpLXKRk/UiZTOmqil2T5it/RUGLxDthLTEXp/JNsrouV4ZsC+BY4s2w+DbNX5F2nDc7hekK42sDIu/29/4vkqExZ4D6+zV4Fft2s=
+	t=1728480325; cv=none; b=YPi1rmM6qk8tkFrsXO26E9vpyvhjf5TeCvO62z+9MjrTgFf7oGZQo7StqAlktNJEzWC2OgifulSGDwgun8LRTrUNxnkPZJjdVveUMz9LQ3dYoz/clNTq+R0sHDc+te8uTI2xkCYRoxHRw6Pqe4udHN0jN2XMab99sYTjR8F6VZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728480323; c=relaxed/simple;
-	bh=1yCIAfjhdKFTfj0dZfdiqbEjfI+ddB9eZ4/UfhxhG4c=;
+	s=arc-20240116; t=1728480325; c=relaxed/simple;
+	bh=KrGVR2bjeKOoHiyyEm3ZL/GqOGrGyHJzuc8NN02ci34=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XRE0dDz2aLbK3kP+glJ5pX2qKpsSekE5yRph96stDuYqS95oP1qCU1oNu3CwSD0p4WvdNHZ9bV0PnT3X6F+RLXAlnkTeo6rvf97Je1QnoKf97NFnZqsaTSEfRL6wU6CzrBnDFaoMPRI6vNCJdI3kDWYKGWGmf/fQPRFZanFVAKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a1/zdaKZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F0athtRU; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZLWxLbV+njyfIANVdJLeNlJrDmcXAOkLztAoIEEbHumgtQobAo523C2C6SKMFt1YwiDYDLzy59pxubVRukMrbXD+Fyxf39QvTcuy342gkvxZ8tPi7lNEBVzFNbdykJy7ivKXIDMveVubEIzrzRxiWwAa/nsaa6X2YT/5jWp0+CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HEgGfT2m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rg4gk1mr; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a1/zdaKZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F0athtRU"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2E3C81140126;
-	Wed,  9 Oct 2024 09:25:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HEgGfT2m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rg4gk1mr"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 33DB7114019F;
+	Wed,  9 Oct 2024 09:25:23 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 09 Oct 2024 09:25:21 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 09 Oct 2024 09:25:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728480321; x=1728566721; bh=Pwhz13NUWE
-	Z66UKZevT+M3aaoVZtSCY2uliqi+YYyXU=; b=a1/zdaKZfUywnhhfYFNkiuyqD6
-	FXItfww3v1DmJc/0lF4DInq2DByCgmEsdZx9ceUprZI9EOopfih2holTu88atLjA
-	UISS6UorbpEE35zO0tFWRjUyBRzKMksdUpChBtpyC1e3c9CFOsTCmXRUYM/L3PWW
-	fv8AxspTiGZ2HKQLmpnu6pV7wGm1Q7C/eoscTuj2rlfc4DYuT6+DPlOkvQ23MNHG
-	RAD5x6qgMBbubRMxgCzV1Xv1G0eM0bGP0XVskyM/ZMI0tUSUH+1RfR+Ty8beq9HF
-	VVx7y2KxyduShRbXzm39e2VALQBYM9EbueGMjswGECU67Mv2Mo2NVYJLt6EQ==
+	:subject:to:to; s=fm2; t=1728480323; x=1728566723; bh=pdcBwyN1Vq
+	F/f1ZAV1WTuvcdLJOvDh+mlvzrHHkLwdE=; b=HEgGfT2m4uy7Lw/B3qqFu6JEEJ
+	FfLKbZxOuL4ZMD7KX1TA+mDcDL0z7CLV6bKOgQj0vHUWkKkxxgMOc9FeHWx9r2xG
+	OK9MPmxH599G+H8LoGEi9VEKxTE6cfv+zYRoz7GhNYyVmKZdQWQJpAujt8gLkF7B
+	QOMH79Di+BFB/tJWpPt3PPQ1pMqR/IZZE2Iz74LZ43eFKNorRzTGcB+tvs4zi/dC
+	JlGIBqaiePb8/O2BbtlIVOlfa+Gw0DAYJEOXd948CFHvglY/AZN4vhPxrY1Z7NJn
+	yV1JQmay94yB0cMlbj/mVUw6sZN9SPpa144WH4urS+5oOycxyrTvi1QErilA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728480321; x=1728566721; bh=Pwhz13NUWEZ66UKZevT+M3aaoVZt
-	SCY2uliqi+YYyXU=; b=F0athtRU9gaCL8SiPXx4aBVzY1cXanb84GeAjyL/Rtoe
-	DPSE87wqGdSfj458M1AjTFLiPJbqec+cZ2FugEf23CKPovYx3HmnXvR2FD/DlSIl
-	EBzmjQB9zXwAIpaHRDxGTJeKr8PFZcE4pkzaQPOJEzTTfrBqvr9zaHyNtIcmcre9
-	JZpTIeNFbsmEyhZlapsF3IMNWTMRi57DmCbqmmdUqv6syIvUu03IQ3cssp7zGKhI
-	m2MQK7LRJfmMollg8aXvL6bUEtxOr8cS7mVWA9ejzLdM0XgzvgIR2oFPfE1S25tI
-	KbchdnR1APAtqDjSXg7FMAhU3GHVP56+4AqSp79cGA==
-X-ME-Sender: <xms:QIQGZ46scryDICNs_sdfQC6EIf6xrU2NkrinjkapwrtGjzCyxDTV5w>
-    <xme:QIQGZ54oucIGFyJFAfzClliIB9xxlETrkKELL-bJhq_zzSWog3OMDd7pqnmDKLxmj
-    N3hMqa2ogPRW1ACTg>
-X-ME-Received: <xmr:QIQGZ3eXXLBaDaiJXJcrhT_hjAA7Ye5xXlsNj34COBUcyphwn1qhN70WtccszGtGebnBuC4yHAkcjoSsbbABtyV4D9JFqhMlKyiE0HKlFGM1Sw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgieejucetufdoteggodetrfdotf
+	fm2; t=1728480323; x=1728566723; bh=pdcBwyN1VqF/f1ZAV1WTuvcdLJOv
+	Dh+mlvzrHHkLwdE=; b=Rg4gk1mrHHp7MwS3YKfMXsWF+pDTQTLe/T5yJ73NWeCD
+	HPT3TQcR+SAQA1nJoQaoK3CkAs+aOuufKLjK7RaywRAahT4wDsexOWb9KOu0Aoz6
+	oxq/dRz298qRPiiBL8zbcVUMU9OkHWXG5zpzuUTbBKUdWab1uuo5fkUMIGP4H7vW
+	fSeKIIfQ5nzurxNeto9PAH0EIQl2AWhnRFGsSy08Xzw/RNylg2r/0YnLTBFVyy+s
+	mFsn62lZuIqMWNYtj7B7dfV6CXRweh7ZOvCjpD/Uy9zMY0ahiYURytKMSl+WMLXA
+	amcmaAHNPmjgA+Jda33b/SQMDlf3mqu7End/lq6yPg==
+X-ME-Sender: <xms:Q4QGZ4wCp3FJNrXm0vMYeaBgEerTGkh_rz2DYyWa6U9ev74h8PTu-g>
+    <xme:Q4QGZ8T5a3lHsDaJbrMKBvQ7New5QBZF33DQv26SNFjj-fUbzJESmXUthOSg4Fo_X
+    INfRFT3fEiYC8OgKQ>
+X-ME-Received: <xmr:Q4QGZ6XIb-VdQQ8zACvpjrt7t9jd6g2H0ChP34AhFrX1rYtG-ki5oqvUREUkeJfQ-vSzic2JkjVBjoVZroWMTKUMZzLWU8tTvCsYuFrpNrEbRA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgieeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:QIQGZ9LTGGBGNyJ6k1QilRuTTPg9CKTI63NBe8elstbcDz7HwScpsw>
-    <xmx:QIQGZ8KgvNaxj3ZewzVXxPGXHcP7dyooc4_B5sYA6HfrPPd_R5yw1w>
-    <xmx:QIQGZ-xafda2nb7awN91-4H1wNM_AAiWN2Cmcbv3ceWYPjZFqa44Tw>
-    <xmx:QIQGZwJQPd-tmeg6B9_XDJJX25Wyc127HXCP_6DVzvc2NTh61Oj39g>
-    <xmx:QYQGZzVE_kzudaaStYAh_OS8pZ1cY1m3jmxSfCxXwAzhEh4eICuJTrk7>
+    eqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfeh
+    tefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhs
+    tghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:Q4QGZ2gY3HHkLwc3tQR3cfN2I3wQnwMY_N7Dmf9bU-GKFjanmkBTng>
+    <xmx:Q4QGZ6CYxyROlA6L77HGEFUbvIckAtDj_rWKDj_IZ1zg1C-ND9wvTA>
+    <xmx:Q4QGZ3JYgvBskKmdK26UMqm_3lbtRkizFaVaIFauTQW4jyOOceuwkQ>
+    <xmx:Q4QGZxCmq1ploIOrLfQvVWX3xe8VaHCPVFZnF4dOtvjgILBOm880sw>
+    <xmx:Q4QGZ9MZceGSbpTgmSLC_Tol4Jgl6_ojLRCdyonxW8ng1mW_aZ9LXUgN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Oct 2024 09:25:20 -0400 (EDT)
+ 9 Oct 2024 09:25:22 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6a860483 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 9 Oct 2024 13:24:17 +0000 (UTC)
-Date: Wed, 9 Oct 2024 15:25:18 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 410ad99b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 9 Oct 2024 13:24:19 +0000 (UTC)
+Date: Wed, 9 Oct 2024 15:25:21 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 1/5] t7300: work around platform-specific behaviour with long
- paths on MinGW
-Message-ID: <bdaf16a06168b7320e8dd1115258f00745a104c7.1728480039.git.ps@pks.im>
+Subject: [PATCH 2/5] ci: create script to set up Git for Windows SDK
+Message-ID: <9f36f2125f0f17b173aa0cf9ed2e7df66cd8e76f.1728480039.git.ps@pks.im>
 References: <cover.1728480039.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,41 +87,94 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728480039.git.ps@pks.im>
 
-Windows by default has a restriction in place to only allow paths up to
-260 characters. This restriction can nowadays be lifted by setting a
-registry key, but is still active by default.
+In order to build and test Git, we have to first set up the Git for
+Windows SDK, which contains various required tools and libraries. The
+SDK is basically a clone of [1], but that repository is quite large due
+to all the binaries it contains. We thus use both shallow clones and
+sparse checkouts to speed up the setup. To handle this complexity we use
+a GitHub action that is hosted externally at [2].
 
-In t7300 we have one test that exercises the behaviour of git-clean(1)
-with such long paths. Interestingly enough, this test fails on my system
-that uses Windows 10 with mingw-w64 installed via MSYS2: instead of
-observing ENAMETOOLONG, we observe ENOENT. This behaviour is consistent
-across multiple different environments I have tried.
+Unfortunately, this makes it rather hard to reuse the logic for CI
+platforms other than GitHub Actions. After chatting with Johannes
+Schindelin we came to the conclusion that it would be nice if the Git
+for Windows SDK would regularly publish releases that one can easily
+download and extract, thus moving all of the complexity into that single
+step. Like this, all that a CI job needs to do is to fetch and extract
+the resulting archive. This published release comes in the form of a new
+"ci-artifacts" tag that gets updated regularly [3].
 
-I cannot say why exactly we observe a different error here, but I would
-not be surprised if this was either dependent on the Windows version,
-the version of MinGW, the current working directory of Git or any kind
-of combination of these.
+Implement a new script that knows how to fetch and extract that script
+and convert GitHub Actions to use it.
 
-Work around the issue by handling both errors.
+[1]: https://github.com/git-for-windows/git-sdk-64/
+[2]: https://github.com/git-for-windows/setup-git-for-windows-sdk/
+[3]: https://github.com/git-for-windows/git-sdk-64/releases/tag/ci-artifacts/
 
+Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t7300-clean.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .github/workflows/main.yml | 16 ++++++++++------
+ ci/install-sdk.ps1         | 12 ++++++++++++
+ 2 files changed, 22 insertions(+), 6 deletions(-)
+ create mode 100755 ci/install-sdk.ps1
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 0aae0dee67..12ab25296b 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -747,7 +747,7 @@ test_expect_success MINGW 'handle clean & core.longpaths = false nicely' '
- 	test_must_fail git clean -xdf 2>.git/err &&
- 	# grepping for a strerror string is unportable but it is OK here with
- 	# MINGW prereq
--	test_grep "too long" .git/err
-+	test_grep -e "too long" -e "No such file or directory" .git/err
- '
- 
- test_expect_success 'clean untracked paths by pathspec' '
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 916a64b673..9301a1edd6 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -113,13 +113,15 @@ jobs:
+       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
+     steps:
+     - uses: actions/checkout@v4
+-    - uses: git-for-windows/setup-git-for-windows-sdk@v1
++    - name: setup SDK
++      shell: powershell
++      run: ci/install-sdk.ps1
+     - name: build
+-      shell: bash
++      shell: powershell
+       env:
+         HOME: ${{runner.workspace}}
+         NO_PERL: 1
+-      run: . /etc/profile && ci/make-test-artifacts.sh artifacts
++      run: git-sdk/usr/bin/bash.exe -l -c 'ci/make-test-artifacts.sh artifacts'
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+@@ -147,10 +149,12 @@ jobs:
+     - name: extract tracked files and build artifacts
+       shell: bash
+       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+-    - uses: git-for-windows/setup-git-for-windows-sdk@v1
++    - name: setup SDK
++      shell: powershell
++      run: ci/install-sdk.ps1
+     - name: test
+-      shell: bash
+-      run: . /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10
++      shell: powershell
++      run: git-sdk/usr/bin/bash.exe -l -c 'ci/run-test-slice.sh ${{matrix.nr}} 10'
+     - name: print test failures
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       shell: bash
+diff --git a/ci/install-sdk.ps1 b/ci/install-sdk.ps1
+new file mode 100755
+index 0000000000..66f24838a4
+--- /dev/null
++++ b/ci/install-sdk.ps1
+@@ -0,0 +1,12 @@
++param(
++    [string]$directory='git-sdk',
++    [string]$url='https://github.com/git-for-windows/git-sdk-64/releases/download/ci-artifacts/git-sdk-x86_64-minimal.zip'
++)
++
++Invoke-WebRequest "$url" -OutFile git-sdk.zip
++Expand-Archive -LiteralPath git-sdk.zip -DestinationPath "$directory"
++Remove-Item -Path git-sdk.zip
++
++New-Item -Path .git/info -ItemType Directory -Force
++New-Item -Path .git/info/exclude -ItemType File -Force
++Add-Content -Path .git/info/exclude -Value "/$directory"
 -- 
 2.47.0.rc1.33.g90fe3800b9.dirty
 
