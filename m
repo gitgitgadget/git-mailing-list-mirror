@@ -1,66 +1,88 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D578922EEF
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 06:20:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC3C1DA5F
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 06:28:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728454814; cv=none; b=jD5CB4h7pfmR1Efc1yMWpzStozm0d3ez+vUyc6ybQC5o5LvzDVjdWFvlO/58DxoLQvofqQwT+og6oeCoDG7PHGkjMbyHSIwV5fzYh8YEFc5rEPxv8wxH1FPFMu5SSubFlgAi5y6AOERSOFs/bW1Xx7QtfDzC0ZdQ52klWJUd8SI=
+	t=1728455327; cv=none; b=Bs12uUdNXKNtLrC7birSmIlXDpHgwXG55UD/zVyp78UT/IuxMZzGVrECBftxIXtGrbN9fvd+H6Bfj6HtweZzFocvkCayMZrQknRNMPIcfX8gl0CfdmyxOQwaYYqJFhJCDeK1xm738PhIz3C+n5MF1kYVBIBM6o5TtCnNr1txtTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728454814; c=relaxed/simple;
-	bh=FDC0iVEDWnu9Iq1CDumYFxxr5uQGb+4g7pIUNhzOv2I=;
+	s=arc-20240116; t=1728455327; c=relaxed/simple;
+	bh=98JEBZ6xFMj011OI1Bg+76pMOqm+q3oiEVVoq8TBLrU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h0JZ64DTvQujwCjtLE8PvGlQLrd6b3Yw8Y/5eA+j4B6ahHXTC2oXdK1FEPVYxcDCLzE+dPM5w9xNjMQqK971WgNjkn4BRISgln3X7cwt9mk427wCoDCDJyv1f493YVfldS3EReWivGv13PbYPcsv2Opw9Wg8vIkpAaLeaUebJO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VU7I5BW1; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=AFyfD8aBfQ+Ae5QIATltNJWcRjQRS/sT+jicsvK/hZ+LHU3y7RAv1IYQGxz6yNm4CQc0XiraRCYk1kjK0UwbuwBwo34TV0/1NM4Cys9jExoHCSfTxuPArJMNSkGm0kgJJ7PbfP4aggvpFYyQUxrPE1BQ5+l2IqMM4J7qFyLiciI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IqYfVW8f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a+iNgKoG; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VU7I5BW1"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2e29522f0f1so896842a91.0
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 23:20:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728454812; x=1729059612; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UbV8y2zWHU93iJeEpNjpx49qUFwa/2mQidkgrfSjqW4=;
-        b=VU7I5BW1YlzOmMU4xZsS7YvfDWKx7QX2Ld2gy76OwanRUQeNscD+34BUmzvq2Ol/Ht
-         KIIgbH1Bno/I+2OvaKH/6L2PbHKibqCawGEtnGzDMpvFPLVLZZyPh3p91PsY9E1I5CIG
-         MBAh8X4NN4+fB/KC4RzuPA5iih6RcRmBqpUgh39eRWMHXt4QnBqsOtlzFd1WGhZrS/TQ
-         0OZslxr9ATQfG7N4hZzgKLhBN1vFRoC0ZKkHu/QDBdMo9ur4DXsV6Cih/58NZ1kPgtgr
-         znTlgpcvVidshImuNnFOC789d+JbTVrJl0VKEGoMdYO8CezdM/9+80fzwMigCaNKj//d
-         d+Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728454812; x=1729059612;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UbV8y2zWHU93iJeEpNjpx49qUFwa/2mQidkgrfSjqW4=;
-        b=Z3CMzyWY05KvgdLo9fLzbCM2oBvLjYUoCvuAQ5jvnWgAIKxzo6k3Cn6bABygOuNz0b
-         YVzJ8VWNn9FM0BnQ27Rqdr2gq6gmH2REws1QWgoe+mkey9C6SpQq0SmIYflsQTMZioi7
-         k5d4cYDTrWgfFFggK87+UlZ7IToAMzHqw6wx8BmZSDFiWvYSMB8VcWMUQgLPUm/BmViG
-         qolkCMPFOG0PSPrBIpa1KOIPba4k+jxND1wPefzj889OUP9/rNV/MFMHn314ezdGWF9r
-         qqVByeycR0hkkTiuC/IEa20RxsNIfVvWx5qziT6bomJQ3R5hl+vMqzmatq3F6rFQkAR2
-         UnQQ==
-X-Gm-Message-State: AOJu0Yz1mcMX9GtkWdKGepERlPZzXYpGSh6PvpNejH9DeGhnSBFvWZqO
-	Z922exPbmufDVBi2z8Voek4oM/oLiuTyVdq1BLq0FOTnsyzNbWV6s7oDIg==
-X-Google-Smtp-Source: AGHT+IFGPbwsbd812vcBwCBBfcK0QnNkWnbxvo3QNbHcAl/SHLdjvNau/l7a5SMTTXRY0hteLoKIIQ==
-X-Received: by 2002:a17:90b:11d5:b0:2d8:9f4c:ecb8 with SMTP id 98e67ed59e1d1-2e2a2335c89mr1983677a91.13.1728454812019;
-        Tue, 08 Oct 2024 23:20:12 -0700 (PDT)
-Received: from five231003 ([2405:201:c006:3236:904b:28a0:64b5:6637])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2a55fe0cdsm737765a91.23.2024.10.08.23.20.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2024 23:20:11 -0700 (PDT)
-Date: Wed, 9 Oct 2024 11:50:08 +0530
-From: Kousik Sanagavarapu <five231003@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [Question] local paths when USE_THE_REPOSITORY_VARIABLE is not
- defined
-Message-ID: <ZwYgmNe6qk6jBZVT@five231003>
-References: <ZwQSWcmr6HWTxxGL@five231003>
- <ZwUkUuQgxaE2-djk@pks.im>
- <ZwVzF9Xgn72tT5Ee@five231003>
- <ZwX7ieAvmjQma45E@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IqYfVW8f";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a+iNgKoG"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 97DD21380696;
+	Wed,  9 Oct 2024 02:28:44 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 09 Oct 2024 02:28:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1728455324;
+	 x=1728541724; bh=JYSHOvSgE9UXVMBvaX5Gp8RASvyncylZEzpjHOM57ak=; b=
+	IqYfVW8fDIYnLHAcI4CHYCFEqP82sZSI3awUHXr1YjdOLD39/hdF/GKqgwFgvkno
+	6b1H41/j2kDs7hBtDOg+GgS3dM574hJ1GaUmBl5y2B5ino5HMHFMiZqgmqmxcf/M
+	1COU5FhuyVwx4NbeFZqlLZiC1/WLD7Ewhlg5KEsGVBOZKkpJuQpAMoxxn5zn/flP
+	LG6FVvfVhl0cOFPve1iB+2MaTaQxirve9AZxxzflnMh8A5BoYvuJ/ZNrmgQQ9Ocu
+	004jcLUnTgAZz0jb5bd3SaIsrqNHCvMB22B8S2tRim1hHZ/D1SmmBW4BARD4oLyL
+	178hYlB2dWptG28jxP0HUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728455324; x=
+	1728541724; bh=JYSHOvSgE9UXVMBvaX5Gp8RASvyncylZEzpjHOM57ak=; b=a
+	+iNgKoGMnFsD3gfpejYXxfHLgufREtGwxCtx5PgI3sxfedyz20kr9JTujY47ce8I
+	HmFNggiHQNo00KWuOYJBtQMNygfLt/Tqd9yD2w09oqhbOzDmqFNG8XGLHzS2neMj
+	GwiT9uqDPlPqnnrFlmBlxrAwAPiB7tIFgqp+AjcziWjx096FzCPk1MHkydkfbnFF
+	DTJfdjnwAOO5sJX4dAYU8RQxia5EHb/JOVXiHCuI/g7IEqngi4uh+FbcFLd7RVg/
+	phEh2FmN7aTw0bBR9dz1SFEwjHO1GaWDezSlexf4CjXkn+dYCHhEBUMvSxUXhkiT
+	qBCdwBqfkxq76akol9/cg==
+X-ME-Sender: <xms:nCIGZ6yJc-1UP3Tq5c2r8TjvUSRzfy87J8a-UO_KQKdf0NxecjCtJA>
+    <xme:nCIGZ2RCaEJKYNB6o-zfVNkjcm_1z4AzDrT29vfPTcWOKhtC2WXzlMQuoI4pr1yf7
+    fDd9WZZLW7fu9argw>
+X-ME-Received: <xmr:nCIGZ8V0mtWDiIA6EbumjPNWSClnJFMBAfyLlHXhKSAbP5gtPdvZ4IUYu8B31KPZuD3P6vZu6PJZEEm749zmqrirc-A8s6Bm15LlhZ0YvELc_w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefvddguddtlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
+    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
+    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepshhhuhgshhgrmhdrkhgrnhhoughirgdutdesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:nCIGZwgiLHjnrFKhuxMYKrho3-_blT3vhijkMnAUXt5BC7zENEQtbw>
+    <xmx:nCIGZ8BxAV1nwvnVCdRETO_PxgXR5fU666Fj5sC8Bse_OiPMKVOJ5Q>
+    <xmx:nCIGZxKLtsP8yqei2OmC6WO20-7rli3LrP9Xr6efR05ZnnbdgFQ9ZA>
+    <xmx:nCIGZzD04Jg2nggBhaDEoZT1al9vJI6Azn5lXADgXxEgfrMeHzqN5g>
+    <xmx:nCIGZ_OAKsht638JRO1NYA5-FizmOVKxJZLsQn_plplEiulr6R07-OGP>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Oct 2024 02:28:43 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 11e8aa01 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 9 Oct 2024 06:27:40 +0000 (UTC)
+Date: Wed, 9 Oct 2024 08:28:40 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: git@vger.kernel.org, Shubham Kanodia <shubham.kanodia10@gmail.com>
+Subject: Re: [PATCH] builtin/gc: fix crash when running `git maintenance
+ start`
+Message-ID: <ZwYij4t5eDgy23iw@pks.im>
+References: <CAG=Um+0mJW-oAH+YLC3dWEU64JwS-zMkkTiFWYBe4g6HMbe-iA@mail.gmail.com>
+ <976c97081af7c62960bd71d1b70039657e7cb711.1728389731.git.ps@pks.im>
+ <c1271bf6-3648-4eca-916f-67a8518fe4e1@gmail.com>
+ <b4d75b35-bfe2-4950-b2de-b56d95918b3c@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,49 +91,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZwX7ieAvmjQma45E@pks.im>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b4d75b35-bfe2-4950-b2de-b56d95918b3c@gmail.com>
 
-On Wed, Oct 09, 2024 at 05:42:01AM +0200, Patrick Steinhardt wrote:
-> On Tue, Oct 08, 2024 at 11:29:51PM +0530, Kousik Sanagavarapu wrote:
-> > On Tue, Oct 08, 2024 at 02:23:54PM +0200, Patrick Steinhardt wrote:
-> > > On Mon, Oct 07, 2024 at 10:24:49PM +0530, Kousik Sanagavarapu wrote:
-> > > > Hi,
-> > > > 
-> > > > I have two questions but a bit of a background first -
-> > > > 
-> > > > [...]
-> > > > 
-> > > > So my question is - do we want, in the future in which we are free from
-> > > > the dependency on "the_repository", for all the local paths to be a part
-> > > > of "struct repo_path_cache"?  Which in my gut feels wrong - one alternative
-> > > > then is that  we will have to refactor REPO_GIT_PATH_FUNC - or am I missing
-> > > > something here?
-> > > 
-> > > What I don't quite understand: what is the problem with making it part
-> > > of the `struct repo_path_cache`? Does this cause an actual issue, or is
-> > > it merely that you feel it is unnecessary complexity?
+On Tue, Oct 08, 2024 at 10:58:06PM -0400, Derrick Stolee wrote:
+> On 10/8/24 2:30 PM, Derrick Stolee wrote:
+> > On 10/8/24 8:15 AM, Patrick Steinhardt wrote:
+> > > It was reported on the mailing list that running `git maintenance start`
+> > > immediately segfaults starting with b6c3f8e12c (builtin/maintenance: fix
+> > > leak in `get_schedule_cmd()`, 2024-09-26). And indeed, this segfault is
+> > > trivial to reproduce up to a point where one is scratching their head
+> > > why we didn't catch this regression in our test suite.
 > > 
-> > I feel it is unnecessary complexity.
-> > 
-> > 	$ git grep -E "(static GIT_PATH_FUNC|^GIT_PATH_FUNC)" | wc -l
-> > 	65
-> > 
-> > Meaning each of these would have to have an entry in
-> > "struct repo_path_cache" in the world where we don't rely on
-> > "the_repository".  Some of these are also not direct ".git/some-file" but
-> > ".git/dir/files" where ".git/dir" is also given by a seperate path func,
-> > like ".git/rebase-merges" and ".git/rebase-merges/head-name".
-> > 
-> > So why hold pointers to such filenames instead of just calling
-> > repo_git_path() manually - all these filenames are "local" anyways - unlike
-> > say files such as "SQUASH_MSG"?
+> > > +test_expect_success 'start without GIT_TEST_MAINT_SCHEDULER' '
+> > > +    test_when_finished "rm -rf crontab.log script repo" &&
+> > > +    mkdir script &&
+> > > +    write_script script/crontab <<-EOF &&
+> > > +    echo "\$*" >>"$(pwd)"/crontab.log
+> > > +    EOF
+> > > +    git init repo &&
+> > > +    (
+> > > +        cd repo &&
+> > > +        sane_unset GIT_TEST_MAINT_SCHEDULER &&
+> > > +        PATH="$(pwd)/../script:$PATH" git maintenance start --scheduler=crontab
+> > > +    ) &&
+> > > +    test_grep -- -l crontab.log &&
+> > > +    test_grep -- git_cron_edit_tmp crontab.log
+> > > +'
+> > > +
+> > I see why we didn't catch this immediately. This is a good way to work
+> > around this issue of "mocking" the scheduler.
 > 
-> It does make the interface easier to use at times because you don't have
-> to worry about freeing returned strings. In other situations it likely
-> is unnecessary.
+> Unfortunately, this test is broken on macOS and Windows. Those platforms will
+> fail when asked for 'crontab' without the test variable.
 > 
-> In any case, not all cases must strictly be converted to REPO_PATH_FUNC.
-> A refactoring may also decide that using e.g. `repo_git_path()` or
-> `repo_common_pathv()` might be better alternatives.
+> Here is a potential fixup that will make your test succeed:
 
-Got it.  Thanks again for the nice explanations.
+Oh, indeed, thanks for flagging this. The issue is that those platforms
+do not make `crontab` available at all.
+
+I think we can land at a better fix though: the systemctl-based
+scheduler _is_ available on all platforms if the systemctl binary is
+found. So let me adapt the script accordingly.
+
+Patrick
