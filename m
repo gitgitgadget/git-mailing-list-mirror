@@ -1,92 +1,145 @@
-Received: from aib29agh122.zrh1.oracleemaildelivery.com (aib29agh122.zrh1.oracleemaildelivery.com [192.29.178.122])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858C1D530
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 19:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60ECC18A6B9
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 20:21:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728503591; cv=none; b=lxm1pOfERr/vBcv0enX2yZFpuji9kgnU9QW8qqNj504mEZf+/r/p2v+rA4lmZI6JacRTidxR1Fb8iMAHGkg0Q9EpMr9dxnrXD3uOAwUmAz8IcwSW4+TkGHZy5OF26iedPiGL/DgB+tsUJHZyBVooMsmR5wKT7JdnjSb1cNXhb8M=
+	t=1728505267; cv=none; b=a3bq5ZjDkePhHaev1HFkWMo/aE8ocBR2iXgHqS0RhtXpNBK5qjCh87vLaLqmktwyHP5PjWuWUFpBklvPZYN6WFMyn3u4NgLvnyeCXObXc/upbuPJvjwjS7WhkuqjhI1Xo27u63Z787KiBIUUXj0NkFcsSQn2wEWh5R2iAmsZR2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728503591; c=relaxed/simple;
-	bh=k6JKnbK+DkLqJ+xlbyaL5sfVEkc+5CKVBP/B/MWAr20=;
-	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
-	 References:In-reply-to; b=e5HPJvH/c2APkTi9RuZZ5weRx9sUHligiPlI98z9D1kvvwZI4JB5ikqO7sUSWicKo1gsBdF2X1QiakpLY4vReSSelNpM+Yl+5svViy+Fj3oom88qbLJ4oVfL+6q4svGqk5bpXYxUmPJFg4AwkSPwYsOZboEtjI82Snf98Sy1P70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=JvojGpXr; arc=none smtp.client-ip=192.29.178.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1728505267; c=relaxed/simple;
+	bh=i05yK5JTjM51IGCZ+OxYuBVdA9s8uNc0HxXcnMYilcc=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=qvFL3Mny/35vSoF9H2eKxky8WScdOTOwTW1MA4vL3kwkRlyXNS7G8aNOVVmrS1FK1CTDXbkdVsLRTsv/nFTFnfL0r6vV5YjYZzKBUonqs+EsdDSJQhA2L4loBMPEU/dkEsCSiIETc08AOjuM69Nk7NdpZfQmucAzCKzpUAFSlmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=e4YLZqhs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DwnBWLhE; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="JvojGpXr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=WzEoapwhFU2S9O+wyfb/PRla4TIQGBOY/K8K3CDGvW4=;
- b=JvojGpXrCWlR6VyIWPZy5Sf9hHL7apeL93XGhikPA5VPv84A5g2SYXbEiVmlH5sruFc4p6/PBF40
-   ppWQemyeoOzHI47jLP8q78YU0TDmzJnMOGvOL2EZNBCUYdhlO+5qavYikyY5DUosNUxcvFFxDzok
-   XBqNjFqWW/BjHWGYbGZIX5pTweoWhmM6ks1z0s5ldLz/zkeP3Wf2w1aqH3/NoTWb/ZGm9BXyYQAO
-   9ynYdSf9NIWk+KL1JH6Gm2b9Nm354QWGJ8IG4l0UJFSNW81d3e6+tXprEWVvKnFcE8pcxxbXkvsa
-   5uDF4t6EjAt5zYkuCgLksMri1qoWaNp9SdCegg==
-Received: by omta-ad1-fd1-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SL300KQDTNW7840@omta-ad1-fd1-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Wed, 09 Oct 2024 19:47:56 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="e4YLZqhs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DwnBWLhE"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4A4C01140061;
+	Wed,  9 Oct 2024 16:21:04 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 09 Oct 2024 16:21:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1728505264;
+	 x=1728591664; bh=++13A3uUfDNhhDRYim7/MSapAQIsRyIqb+443Z4mvQs=; b=
+	e4YLZqhsExK5YxCHhOzBQEMHsMfmNewIgLyXJTlprHFHa5b/C6vKG1zBZwxvsPps
+	nhjhecRwV8p5+nLOiV0aGscJHfBTYx8MwHfaGJSpcDUpKQ88nZOr+lCqDRpXRa8o
+	xtrO1eVPF3z2t195UHdXKUDEyZzRNBYBKxSfC8Q5vbPf0GEDyzpYwCJHKhTghC72
+	IQTTcLTcN1b66jUlpjY67Sv8pUyNjYAbNW3+3me+D22AucyJ6Bcs9biS8SnMMZ/M
+	vzGbtU2bsqw0bt6duEYfRqQn7q8gU0e5blHNzZLGzER9YrVyLJm0AcUQVzXnOnch
+	AZIDEFU01cjV8+umJBVLjQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728505264; x=
+	1728591664; bh=++13A3uUfDNhhDRYim7/MSapAQIsRyIqb+443Z4mvQs=; b=D
+	wnBWLhEDV6fEa0eA3sZqlaIsk8xaXkpG9PcBmQpLP6qs5YJX83Pjl6OCzvmEYbaU
+	n0nqNw1GZ52gZYIwv2a3tmGTLgvgjLXXOI3HecXF8STlNbEwO3EX8+fajrZSfqTJ
+	0LMUOl97wlbtc736+EwyN/Yo7KkLRAisL2WTDbAXJFwOhfXJ2dA42799VO9K4AsO
+	aKegUEQX0wghYruMFIFxMEn1XMPWmxAtvCVTiZ6wwRdiVtCbsGXfPAW8TKqzGoG+
+	LkVPb/Ew03nF3UFn3OQ4hxaByejuGGZJGh3qrQebN8VaDtJ694OhIUAh0BKvoRx+
+	wmfREEAn/jdBDr0r7K6vw==
+X-ME-Sender: <xms:r-UGZ6uZIhBQ2OtWZGZm076vauxDYIh_0hosC2noCEYxVA1LHzmVhB8>
+    <xme:r-UGZ_crZTB4FvO12OBPd-p6sPxcHyF0G7UwdO4WHdayqKaJodiFYR1PqCo6jc_Kd
+    CKHWC-W6ZidkYLtIA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeffedgudehudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvkfgjfhfutgfgsehtqhertdertdej
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnheptdfgffettedulefhfeekheetgfegfeejveeikeeffeeikeekhfevieeltd
+    ekgfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrmhhithhh
+    rghshhhokheksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:sOUGZ1z6pzFSK6hIH7ZjGQwfo2GqXWbknEqDOfcLDBhXyjgep07O2g>
+    <xmx:sOUGZ1OtJ-krNhrd-1cLGoxGswWZ7nsEmwHpSNVv5TMw3A3yTeJbrQ>
+    <xmx:sOUGZ68iZeoL4WoT56uzD0pi9U0bWdZSoTuayW8_N18hLVC7gOE5nw>
+    <xmx:sOUGZ9Wac-bZrffV1dmGHtW4N6h4JaCfDEM6XbEBcskf-yFXJUhPgw>
+    <xmx:sOUGZwnwGWj94XZa6jEfIme-8YavRg6B4yKnhuGN9Ryrg_TMQzga5yeX>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id E4AED780068; Wed,  9 Oct 2024 16:21:03 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Wed, 09 Oct 2024 21:47:21 +0200
-Message-id: <D4RJ9EZMHPHG.3BMTRPU3B2PMD@ferdinandy.com>
-Subject: Re: [PATCH v5 2/6] set-head: add new variable for readability
-Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>,
- "Taylor Blau" <me@ttaylorr.com>, =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Junio C Hamano" <gitster@pobox.com>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-References: <xmqq1q0xhu13.fsf@gitster.g>
- <20241009135747.3563204-1-bence@ferdinandy.com>
- <20241009135747.3563204-2-bence@ferdinandy.com> <xmqqttdlqdr2.fsf@gitster.g>
-In-reply-to: <xmqqttdlqdr2.fsf@gitster.g>
-Reporting-Meta:
- AAEOh8JvwDIwEtHVdovQ7aIYfruWuQirX1Irqbmhm8auUmIexQok5efponkZgmLn
- OJ71M0K4uoyImheFhcOh+UeN2i8/39Ea5dLiWHlcJsfYBUD2Do4AwzbsTRrS4EyZ
- bIlWuc0FoFG1W7Nud4vwpozekK93Sv3keAOQmFM0ahOughsAfmf9dPbKoLzzvCGn
- iOgtY21Oz1iHew7Dx/deZuoxfl7cVCltFMvQWQP72S9da4V83eX8FM+iFhcTwahS
- 8bQ5YvO9MTrW4+j8RiVT+nOOCRQei1K3shBet5kwLCJ2tVjjttJEBL70puobxGlm
- jj0iXVwWmJT0MFFGozMTstQ6B+/UIma8FWjxUtHeI/ErGpxHdqa56NWDQ7ZO2Wa2
- 0kvr7W9ZhXCAGR8quB5VDzGdsdsgPv6MRdy9/nLD6GbE0xUl/IKDCuH10b1dXLX0
- 089vPV/cvGARx4T6XSEKEU6ELQK2YC1ueClI6ojSiL6r+d+2miN0r0u6
+MIME-Version: 1.0
+Date: Wed, 09 Oct 2024 22:20:43 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Amith Ashok" <amithashok8@gmail.com>, git@vger.kernel.org
+Message-Id: <6b1f434a-fb56-4699-a03a-069a1da118ab@app.fastmail.com>
+In-Reply-To: 
+ <CAHoc8a8b2o7eJULhoF+5VM15ickjRY_f=WBmpPsG=0kwrx1CfQ@mail.gmail.com>
+References: 
+ <CAHoc8a8JQd=c0bD5Yneg8R7tEjETyns-yyWjP=V3TTn9R48Nzg@mail.gmail.com>
+ <CAHoc8a8b2o7eJULhoF+5VM15ickjRY_f=WBmpPsG=0kwrx1CfQ@mail.gmail.com>
+Subject: Re: Fwd: Git bug
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-
-On Wed Oct 09, 2024 at 21:26, Junio C Hamano <gitster@pobox.com> wrote:
-> Bence Ferdinandy <bence@ferdinandy.com> writes:
+On Wed, Oct 9, 2024, at 20:04, Amith Ashok wrote:
+> Hi ,
 >
->> Instead of calling get_main_ref_store(the_repository) multiple times,
->> call it once and store in a new refs variable. Although this change
->> probably offers some performance benefits, the main purpose is to
->> shorten the line lengths of function calls using this variable for
->> better readability.
->> ---
->>
->> Notes:
->>     v5: new patch (split from the next patch as a preparatory step)
+> I wanted to report a git bug that I encountered today .
 >
-> It is a good idea to help making it obvious that we are accessing
-> the same ref store.
+> I created a feature branch from a release branch before my peer
+> committed to it . My peer committed to this branch through the lower
+> branches of auto merge option to this high branch .
+>
+> However when I do a git  pull I was facing the issue in of the files.
 
-Indeed, although it was your idea ;)
+What issue?
+
+Usually a git(1) bug can be reproduced with a set of commands
+(reproduction).  And some part of the output demonstrates that there is
+a bug.  Which could be:
+
+- The output itself tells you it=E2=80=99s a `BUG` (code path that shoul=
+d be
+  unreachable)
+- The output or behavior is unreasonable or unexpected given the context
+
+Then you provide it here in the bug report.  Like:
+
+```
+BUG: this should never happen but it did (<file>:<line>)
+```
+
+There=E2=80=99s also git-bugreport(1) which you can use to fill out such=
+ a
+report.  That will record things like your Git version and other
+relevant system info.
+
+> I tried multiple ways to debug this but ultimately found that the
+> issue is with got itself .
+>
+> I took the a fresh branch from this branch (post merge of my friend )
+> then the error does not occur.
+>
+>
+> I appreciate if you look into this . And if this indeed is an issue
+> could you fix it and you acknowledge my original receipt as the
+> findings to this .
+
+It is standard to credit bug reporters in this project.
 
 >
-> The patch needs to be signed-off, though.
+>
+> Thanks
+> Amith Ashok Chugani
 
-Damn :/ Sorry, another oversight ... Should I send a v6 for the series with
-this fixed now or wait a bit to see if there are other comments?
+--=20
+Kristoffer Haugsbakk
 
-Thanks again for the patience!
-
-Best,
-Bence
