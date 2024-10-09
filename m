@@ -1,142 +1,167 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0284F29429
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 02:58:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B472119
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 03:23:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728442690; cv=none; b=V4j9EAkEUXo0iXhpFIGMAWduXKj9BK180+zLIKHThx8+kbWsNzfxkWmovNvuaVS/rrdpqvxjyK0PCYzAtAK+j0CHYAPatV+GTHrNBZ8TsXi/H1+CEnBTsaUpe5Mk5vrSYu/qUzqy4/1Xr3DJZV1dsRIHP+xyRUY7LefkdoAQ4UM=
+	t=1728444209; cv=none; b=IdUZ1jHKatb1ALl+Q2vMkUdUkFJHj7EdXBmtaQ0cna13qO+d5KGZRuhHA9qF41GYf2mYyT08NFZl+FPJLM/vrrKgzKi6FuyBO2wxCzO25yt17EtK0iLD61rl43yCRGmT5oCYn54YBTYAevy8BZJnVuvPQGVgR+gtZp8IZBWhECU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728442690; c=relaxed/simple;
-	bh=tSP2R+ITrm8VBpdrJqfePyFmkRSi+P8+DgSbSXOuRC8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=chPcKjdrC1R7SqgJKnD369xs7StXfAUoNAu+KpctAnNeWHwC/fAATQx+YRkK79dHoGMHrBJ3g2GUyC0tHM3GHpJp0/yYXarBURxKu13DFLdpGsMeYt1yiGv8XdVABvgdtLqwaOIJfwXsOQmRhJ9uT0Qc7XgIiJySGGe/xhPG/vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hEsEJFmn; arc=none smtp.client-ip=209.85.128.175
+	s=arc-20240116; t=1728444209; c=relaxed/simple;
+	bh=9czrEiFmYFFwAX5kG8i+AgZaMxDtxRwwJAOnWCLQROg=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=LLlbX8yuzycWAwDt3W2Q3FIA1h5kr0Mzg9Lc+2XW6ll/MEBu8+bN9LNlzJW1xtui5gfrz1cxpmv/SpJhTh1CR6lW8rNBmHKGt9tJRe6r42zsHGSs8cT9Tzy1hGxiUDowil9mC1Gnl2wSy5BWLkqh2yjoxwIhbmuK6rt0V7c6xbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d2Q752YQ; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hEsEJFmn"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6e31413a196so12090397b3.3
-        for <git@vger.kernel.org>; Tue, 08 Oct 2024 19:58:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d2Q752YQ"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-20c70abba48so420745ad.0
+        for <git@vger.kernel.org>; Tue, 08 Oct 2024 20:23:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728442688; x=1729047488; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Wbvgu9eS03hhlZbY0G5+mfQ7XUWGfeiy+WbcotHjuks=;
-        b=hEsEJFmnqTc89kOuoHxUlTkPdlQ1nM6metdyYi3ut8Z60RpMgzngKL8LQGN/cClKY6
-         qr7nYPavw1Z+hnbzBjsLD8qWjp2n/upJ0Cv8tgg9CnsQI2OZLM37o5Il8Yt1HGKmJOBe
-         p3byWNqV5R4aYCujs23Gmx8QnXTgFpQJE3rETgEb47aJRMtICrKSe4lBwVGqra7P7gCX
-         e6p80NsYGbp7WPZ0vJEKOlCxHnoDRAzIoo/F1V5Pt0yLYoWhYdoIRG9JfIaUUG2aSgmW
-         OhkUPdCY/2LQfPja1QV1PGjhpL6qgql/x8WQvVv2Z9Ya5+Ubx4sS2gnnC3aJAxCGKFIv
-         gmPw==
+        d=gmail.com; s=20230601; t=1728444206; x=1729049006; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=PK1Y/Ogs920Sq5uiL9qHkxbFb4E0Cpk6tdAXhXLWW+Y=;
+        b=d2Q752YQxkdPQp972346Sn51E1pZ9j7YYyLannelAUsWzyWk2WV/j0KDS2z58lAHXp
+         7H6uZuyuwQMyOsHbxmZXzahyxdJrmA6HFrQHnX12y4PYT+V/kM6EkGjnPwT1n+fmT1iE
+         mzFHdL2OWtgQWk8g+XrBzs79Xt+RXK3cDEKLA8XK4bPKSI4CwnslAlxupbfZU4rRIurv
+         zQoPfo0Br0Jv2RpOxZLuH88uRHmEWFkRNxCXnoaTfpjxaY7WyFQTVZqNxFL3taHvkT3J
+         4iwxZZij0E+22GcUiZYLgPrNsLTl6Wt9RAWRRd3Qy/aNky46BfLhX/ATbF8AzMh8Frhx
+         aTMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728442688; x=1729047488;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wbvgu9eS03hhlZbY0G5+mfQ7XUWGfeiy+WbcotHjuks=;
-        b=pHadd1rc8BvwV8Pze5kUvKI8XudkHQ0GjroUUuxQs9n10k+ge6w5LJboyuUw8YFoCn
-         w4jd1p+mB1J0u45KpLTxxTCYyw3bDO+j6WJVSO0NG//i1Y28OsFjjUQwxNleCH8IpGga
-         mip5rAirzlx4l4f0wjDRQBWOYdYeBBiR3d9Yw6ec5INBYRHLbajdlAs+7tesbtaQIRr0
-         0V0wDzl8R8T7lFzlbBAoXXMbE+vuh7I9iFYMOtV5VLAUkt8ZUOmCldNP04Woasl5lSJZ
-         ThBfS/gFZSqQPA9daKy8HwWj8bUFs3iJpl332TkvbIWqd7zsVSXITYVuwBrL0Ber4u9Y
-         petg==
-X-Forwarded-Encrypted: i=1; AJvYcCWNuCyKHSzg2qDymW2DlRw6zjVjiGXNiXIxb3aKqfe6Hsi2f2HA5g8bvAdxrnlwfHyr0Eg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGNvYxPK9gIzhs3tZsXyY9krpRrS+kdcJdg1GqUIX6NOHezP6g
-	Lr65WQNDdTxntny0/K87Fev5Mz6NL4Dsr+y4d9Dl1vFxOnuwThow
-X-Google-Smtp-Source: AGHT+IHytllcMqGxY3Vm7XTpqFtfAooU4etoBitywQTk6AXVpQrw2dXQOkkxVaWu+8hDyWdvmXdQiA==
-X-Received: by 2002:a05:690c:f90:b0:6e2:ad08:4905 with SMTP id 00721157ae682-6e3221124bbmr11395987b3.1.1728442687958;
-        Tue, 08 Oct 2024 19:58:07 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:799f:a786:d66d:649f? ([2600:1700:60ba:9810:799f:a786:d66d:649f])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e30eaab581sm5739397b3.117.2024.10.08.19.58.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 19:58:07 -0700 (PDT)
-Message-ID: <b4d75b35-bfe2-4950-b2de-b56d95918b3c@gmail.com>
-Date: Tue, 8 Oct 2024 22:58:06 -0400
+        d=1e100.net; s=20230601; t=1728444206; x=1729049006;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PK1Y/Ogs920Sq5uiL9qHkxbFb4E0Cpk6tdAXhXLWW+Y=;
+        b=OmGl4XsVNWYFzTWxJDDvuutJbxZ0m3GLnmniiHleHfnsEnitaxxB+/iZUPH6yY3j9T
+         /GnMD8qP6s/SFx4SwS8UqNpcmn5o1150YkvcFBeCZaWFlr1WdRJ2sctwAA4EEyGjxh5x
+         EH3NL6d/ctH6m+6VO8uBLi4JkYk/qH37ViV6BM1fCYHHJf7jJifke6OR7n7H3BgutIPh
+         cIrM2K75+kFs3Tf/ehAjmfagpQcU6YyyHDThMS+SX6RLQ9OGwt4xeRzXLqQPAuETkf9+
+         5K+HT9a7akGZ+7kEYwT8jiBynsxG4XVdWml9Hna2Mmr9y9fbaXYY2y6/De3XGqY1aHgT
+         YQhw==
+X-Gm-Message-State: AOJu0Yz2KR+rGdczr5a1FzPubctH0IqRd6Ir4sIg47os3btXgc7t/1T2
+	jg4f0ZM36t5ZvSODVw//wsf4U0uYfzo6Qx8ffA0YiwL8/7BL/ch3zgmhaOdviiP6oNxm4dOQlSu
+	/1bmOIwDfjN/pFCoz9wrqQHI1kxBrPMtI
+X-Google-Smtp-Source: AGHT+IHtlyZ5aUSMWUfwTiQQre2qvEx2D3wiaOITWzMp5tdHV7Q56ax1MaakNdloEdCBYvYRBL6Lx4EN7U/cZxJth3c=
+X-Received: by 2002:a17:902:e811:b0:20b:b75d:e8c0 with SMTP id
+ d9443c01a7336-20c6377c836mr18787675ad.45.1728444206146; Tue, 08 Oct 2024
+ 20:23:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] builtin/gc: fix crash when running `git maintenance
- start`
-From: Derrick Stolee <stolee@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Shubham Kanodia <shubham.kanodia10@gmail.com>
-References: <CAG=Um+0mJW-oAH+YLC3dWEU64JwS-zMkkTiFWYBe4g6HMbe-iA@mail.gmail.com>
- <976c97081af7c62960bd71d1b70039657e7cb711.1728389731.git.ps@pks.im>
- <c1271bf6-3648-4eca-916f-67a8518fe4e1@gmail.com>
-Content-Language: en-US
-In-Reply-To: <c1271bf6-3648-4eca-916f-67a8518fe4e1@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Ed Reel <edreel@gmail.com>
+Date: Tue, 8 Oct 2024 22:23:14 -0500
+Message-ID: <CAGjHeYfyH+cOMYYYHnFR+Vu9T+RbmzO1SpB_-kbmBSf1DitJhA@mail.gmail.com>
+Subject: Bug report
+To: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000ec0379062402c6e1"
 
-On 10/8/24 2:30 PM, Derrick Stolee wrote:
-> On 10/8/24 8:15 AM, Patrick Steinhardt wrote:
->> It was reported on the mailing list that running `git maintenance start`
->> immediately segfaults starting with b6c3f8e12c (builtin/maintenance: fix
->> leak in `get_schedule_cmd()`, 2024-09-26). And indeed, this segfault is
->> trivial to reproduce up to a point where one is scratching their head
->> why we didn't catch this regression in our test suite.
-> 
->> +test_expect_success 'start without GIT_TEST_MAINT_SCHEDULER' '
->> +    test_when_finished "rm -rf crontab.log script repo" &&
->> +    mkdir script &&
->> +    write_script script/crontab <<-EOF &&
->> +    echo "\$*" >>"$(pwd)"/crontab.log
->> +    EOF
->> +    git init repo &&
->> +    (
->> +        cd repo &&
->> +        sane_unset GIT_TEST_MAINT_SCHEDULER &&
->> +        PATH="$(pwd)/../script:$PATH" git maintenance start --scheduler=crontab
->> +    ) &&
->> +    test_grep -- -l crontab.log &&
->> +    test_grep -- git_cron_edit_tmp crontab.log
->> +'
->> +
-> I see why we didn't catch this immediately. This is a good way to work
-> around this issue of "mocking" the scheduler.
+--000000000000ec0379062402c6e1
+Content-Type: text/plain; charset="UTF-8"
 
-Unfortunately, this test is broken on macOS and Windows. Those platforms will
-fail when asked for 'crontab' without the test variable.
+See attachment...
 
-Here is a potential fixup that will make your test succeed:
 
---- >8 ---
 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 4008e4e45e..86bc77e73f 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -646,7 +646,7 @@ test_expect_success !MINGW 'register and unregister with 
-regex metacharacters' '
-  		maintenance.repo "$(pwd)/$META"
-  '
+-- 
+"God gave us two ears and one mouth to remind us we should listen
+twice as much as we talk."
 
--test_expect_success 'start without GIT_TEST_MAINT_SCHEDULER' '
-+test_expect_success !MINGW,!DARWIN 'start without GIT_TEST_MAINT_SCHEDULER' '
-  	test_when_finished "rm -rf crontab.log script repo" &&
-  	mkdir script &&
-  	write_script script/crontab <<-EOF &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index b1a8ee5c00..f12f3a7609 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1715,6 +1715,12 @@ case $uname_s in
-  	test_set_prereq GREP_STRIPS_CR
-  	test_set_prereq WINDOWS
-  	;;
-+*Darwin*)
-+	test_set_prereq POSIXPERM
-+	test_set_prereq BSLASHPSPEC
-+	test_set_prereq EXECKEEPSPID
-+	test_set_prereq DARWIN
-+	;;
-  *)
-  	test_set_prereq POSIXPERM
-  	test_set_prereq BSLASHPSPEC
+--000000000000ec0379062402c6e1
+Content-Type: text/plain; charset="UTF-8"; name="git-bugreport-2024-10-09-0244.txt"
+Content-Disposition: attachment; 
+	filename="git-bugreport-2024-10-09-0244.txt"
+Content-Transfer-Encoding: base64
+Content-ID: <f_m21b0q560>
+X-Attachment-Id: f_m21b0q560
 
+V2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVwcm9k
+dWNlIHlvdXIgaXNzdWUpCkF0dGVtcHQgdG8gYnVpbGQgd2l0aCBjbWFrZQoKV2hhdCBkaWQgeW91
+IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3RlZCBiZWhhdmlvcikKU3VjY2Vzc2Z1bCBidWlsZAoK
+V2hhdCBoYXBwZW5lZCBpbnN0ZWFkPyAoQWN0dWFsIGJlaGF2aW9yKQpVbnN1Y2Nlc3NmdWwgYnVp
+bGQKCldoYXQncyBkaWZmZXJlbnQgYmV0d2VlbiB3aGF0IHlvdSBleHBlY3RlZCBhbmQgd2hhdCBh
+Y3R1YWxseSBoYXBwZW5lZD8KWzUqMTAvMTYyXSBCdWlsZGluZyBDIG9iamVjdCBDTWFrZUZpbGVz
+L3VuaXQtdGVzdHMtbGliLmRpci91c3IvbG9jYWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5MDIxNzE1
+LmRpci90L3VuaXQtdGVzdHMvc3RydmVjLmMubwpGQUlMRUQ6IENNYWtlRmlsZXMvdW5pdC10ZXN0
+cy1saWIuZGlyL3Vzci9sb2NhbC90bXAvY3Jldy9naXQuMjAyNDEwMDkwMjE3MTUuZGlyL3QvdW5p
+dC10ZXN0cy9zdHJ2ZWMuYy5vIAovdXNyL2xvY2FsL2Jpbi9jYyAtREJJTkRJUj1cImJpblwiIC1E
+REVGQVVMVF9HSVRfVEVNUExBVEVfRElSPVwic2hhcmUvZ2l0LWNvcmUvdGVtcGxhdGVzXCIgLURE
+RUZBVUxUX0hFTFBfRk9STUFUPVwiaHRtbFwiIC1ERVRDX0dJVEFUVFJJQlVURVM9XCJldGMvZ2l0
+YXR0cmlidXRlc1wiIC1ERVRDX0dJVENPTkZJRz1cImV0Yy9naXRjb25maWdcIiAtREZBTExCQUNL
+X1JVTlRJTUVfUFJFRklYPVwiL2hvbWUvY2hyb25vc1wiIC1ERlJFQURfUkVBRFNfRElSRUNUT1JJ
+RVMgLURHSVRfQlVJTFRfRlJPTV9DT01NSVQ9XCJcIiAtREdJVF9FWEVDX1BBVEg9XCJsaWJleGVj
+L2dpdC1jb3JlXCIgLURHSVRfSE9TVF9DUFU9XCJ4ODZfNjRcIiAtREdJVF9IVE1MX1BBVEg9XCJz
+aGFyZS9kb2MvZ2l0LWRvY1wiIC1ER0lUX0lORk9fUEFUSD1cInNoYXJlL2luZm9cIiAtREdJVF9M
+T0NBTEVfUEFUSD1cInNoYXJlL2xvY2FsZVwiIC1ER0lUX01BTl9QQVRIPVwic2hhcmUvbWFuXCIg
+LURHSVRfVVNFUl9BR0VOVD1cImdpdC8yLjQ3LjAuR0lUXCIgLURHSVRfVkVSU0lPTj1cIjIuNDcu
+MC5HSVRcIiAtREhBVkVfQUxMT0NBX0ggLURIQVZFX0NMT0NLX0dFVFRJTUUgLURIQVZFX0NMT0NL
+X01PTk9UT05JQyAtREhBVkVfREVWX1RUWSAtREhBVkVfR0VUREVMSU0gLURIQVZFX1BBVEhTX0gg
+LURIQVZFX1NUUklOR1NfSCAtREhBVkVfU1lTSU5GTyAtRElOVEVSTkFMX1FTT1JUIC1ETk9fT1BF
+TlNTTCAtRE5PX1NUUkxDUFkgLURQQUdFUl9FTlY9IlwiTEVTUz1GUlggTFY9LWNcIiIgLURQUk9D
+RlNfRVhFQ1VUQUJMRV9QQVRIPVwiL3Byb2Mvc2VsZi9leGVcIiAtRFJVTlRJTUVfUFJFRklYIC1E
+U0hBMURDX0NVU1RPTV9JTkNMVURFX1NIQTFfQz1cImdpdC1jb21wYXQtdXRpbC5oXCIgLURTSEEx
+RENfQ1VTVE9NX0lOQ0xVREVfVUJDX0NIRUNLX0M9XCJnaXQtY29tcGF0LXV0aWwuaFwiIC1EU0hB
+MURDX0lOSVRfU0FGRV9IQVNIX0RFRkFVTFQ9MCAtRFNIQTFEQ19OT19TVEFOREFSRF9JTkNMVURF
+UyAtRFNIQTFfREMgLURTSEEyNTZfQkxLIC1EU1VQUE9SVFNfU0lNUExFX0lQQyAtRFVTRV9DVVJM
+X0ZPUl9JTUFQX1NFTkQgLURVU0VfTElCUENSRTIgLUkvdXNyL2xvY2FsL3RtcC9jcmV3L2dpdC4y
+MDI0MTAwOTAyMTcxNS5kaXIvY29udHJpYi9idWlsZHN5c3RlbXMvLi4vLi4gLUkvdXNyL2xvY2Fs
+L3RtcC9jcmV3L2dpdC4yMDI0MTAwOTAyMTcxNS5kaXIvY29udHJpYi9idWlsZHN5c3RlbXMvYnVp
+bGRkaXIgLUkvdXNyL2xvY2FsL3RtcC9jcmV3L2dpdC4yMDI0MTAwOTAyMTcxNS5kaXIvY29udHJp
+Yi9idWlsZHN5c3RlbXMvLi4vLi4vdC91bml0LXRlc3RzIC1PMiAtcGlwZSAtZmZhdC1sdG8tb2Jq
+ZWN0cyAtZlBJQyAgIC1mbHRvPWF1dG8gLU8zIC1ETkRFQlVHIC1mbHRvPWF1dG8gLWZuby1mYXQt
+bHRvLW9iamVjdHMgLU1EIC1NVCBDTWFrZUZpbGVzL3VuaXQtdGVzdHMtbGliLmRpci91c3IvbG9j
+YWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5MDIxNzE1LmRpci90L3VuaXQtdGVzdHMvc3RydmVjLmMu
+byAtTUYgQ01ha2VGaWxlcy91bml0LXRlc3RzLWxpYi5kaXIvdXNyL2xvY2FsL3RtcC9jcmV3L2dp
+dC4yMDI0MTAwOTAyMTcxNS5kaXIvdC91bml0LXRlc3RzL3N0cnZlYy5jLm8uZCAtbyBDTWFrZUZp
+bGVzL3VuaXQtdGVzdHMtbGliLmRpci91c3IvbG9jYWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5MDIx
+NzE1LmRpci90L3VuaXQtdGVzdHMvc3RydmVjLmMubyAtYyAvdXNyL2xvY2FsL3RtcC9jcmV3L2dp
+dC4yMDI0MTAwOTAyMTcxNS5kaXIvdC91bml0LXRlc3RzL3N0cnZlYy5jCkluIGZpbGUgaW5jbHVk
+ZWQgZnJvbSAvdXNyL2xvY2FsL3RtcC9jcmV3L2dpdC4yMDI0MTAwOTAyMTcxNS5kaXIvdC91bml0
+LXRlc3RzL3N0cnZlYy5jOjE6Ci91c3IvbG9jYWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5MDIxNzE1
+LmRpci90L3VuaXQtdGVzdHMvdW5pdC10ZXN0Lmg6MzoxMDogZmF0YWwgZXJyb3I6IGNsYXItZGVj
+bHMuaDogTm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeQogICAgMyB8ICNpbmNsdWRlICJjbGFyLWRl
+Y2xzLmgiCiAgICAgIHwgICAgICAgICAgXn5+fn5+fn5+fn5+fn4KY29tcGlsYXRpb24gdGVybWlu
+YXRlZC4KWzE0KjEvMTYyXSBMaW5raW5nIEMgZXhlY3V0YWJsZSBnaXQKSW4gZnVuY3Rpb24g4oCY
+c3RyYnVmX2FkZOKAmSwKICAgIGlubGluZWQgZnJvbSDigJhzdHJidWZfYWRkc3Ry4oCZIGF0IC91
+c3IvbG9jYWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5MDIxNzE1LmRpci9jb250cmliL2J1aWxkc3lz
+dGVtcy8uLi8uLi9zdHJidWYuaDozMTA6MiwKICAgIGlubGluZWQgZnJvbSDigJh2ZXJpZnlfb25l
+X3BhY2vigJkgYXQgL3Vzci9sb2NhbC90bXAvY3Jldy9naXQuMjAyNDEwMDkwMjE3MTUuZGlyL2J1
+aWx0aW4vdmVyaWZ5LXBhY2suYzo0MDozLAogICAgaW5saW5lZCBmcm9tIOKAmGNtZF92ZXJpZnlf
+cGFja+KAmSBhdCAvdXNyL2xvY2FsL3RtcC9jcmV3L2dpdC4yMDI0MTAwOTAyMTcxNS5kaXIvYnVp
+bHRpbi92ZXJpZnktcGFjay5jOjkwOjc6Ci91c3IvbG9jYWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5
+MDIxNzE1LmRpci9zdHJidWYuYzozMTI6OTogd2FybmluZzog4oCYbWVtY3B54oCZIHdyaXRpbmcg
+NSBieXRlcyBpbnRvIGEgcmVnaW9uIG9mIHNpemUgMSBvdmVyZmxvd3MgdGhlIGRlc3RpbmF0aW9u
+IFstV3N0cmluZ29wLW92ZXJmbG93PV0KICAzMTIgfCAgICAgICAgIG1lbWNweShzYi0+YnVmICsg
+c2ItPmxlbiwgZGF0YSwgbGVuKTsKICAgICAgfCAgICAgICAgIF4KL3Vzci9sb2NhbC90bXAvY3Jl
+dy9naXQuMjAyNDEwMDkwMjE3MTUuZGlyL3N0cmJ1Zi5jOiBJbiBmdW5jdGlvbiDigJhjbWRfdmVy
+aWZ5X3BhY2vigJk6Ci91c3IvbG9jYWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5MDIxNzE1LmRpci9z
+dHJidWYuYzo2NTo2OiBub3RlOiBkZXN0aW5hdGlvbiBvYmplY3Qg4oCYc3RyYnVmX3Nsb3BidWbi
+gJkgb2Ygc2l6ZSAxCiAgIDY1IHwgY2hhciBzdHJidWZfc2xvcGJ1ZlsxXTsKICAgICAgfCAgICAg
+IF4KSW4gZnVuY3Rpb24g4oCYc3RyYnVmX3JlbGVhc2XigJksCiAgICBpbmxpbmVkIGZyb20g4oCY
+c3RyYnVmX3JlbGVhc2XigJkgYXQgL3Vzci9sb2NhbC90bXAvY3Jldy9naXQuMjAyNDEwMDkwMjE3
+MTUuZGlyL3N0cmJ1Zi5jOjc1OjYsCiAgICBpbmxpbmVkIGZyb20g4oCYYnVuZGxlX3VyaV9wYXJz
+ZV9saW5l4oCZIGF0IC91c3IvbG9jYWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5MDIxNzE1LmRpci9i
+dW5kbGUtdXJpLmM6OTM5OjIsCiAgICBpbmxpbmVkIGZyb20g4oCYZ2V0X3JlbW90ZV9idW5kbGVf
+dXJp4oCZIGF0IC91c3IvbG9jYWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5MDIxNzE1LmRpci9jb25u
+ZWN0LmM6NTI3OjgsCiAgICBpbmxpbmVkIGZyb20g4oCYZ2V0X2J1bmRsZV91cmnigJkgYXQgL3Vz
+ci9sb2NhbC90bXAvY3Jldy9naXQuMjAyNDEwMDkwMjE3MTUuZGlyL3RyYW5zcG9ydC5jOjQwNjo5
+OgovdXNyL2xvY2FsL3RtcC9jcmV3L2dpdC4yMDI0MTAwOTAyMTcxNS5kaXIvc3RyYnVmLmM6Nzg6
+MTc6IHdhcm5pbmc6IOKAmGZyZWXigJkgY2FsbGVkIG9uIHVuYWxsb2NhdGVkIG9iamVjdCDigJhz
+dHJidWZfc2xvcGJ1ZuKAmSBbLVdmcmVlLW5vbmhlYXAtb2JqZWN0XQogICA3OCB8ICAgICAgICAg
+ICAgICAgICBmcmVlKHNiLT5idWYpOwogICAgICB8ICAgICAgICAgICAgICAgICBeCi91c3IvbG9j
+YWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5MDIxNzE1LmRpci9zdHJidWYuYzogSW4gZnVuY3Rpb24g
+4oCYZ2V0X2J1bmRsZV91cmnigJk6Ci91c3IvbG9jYWwvdG1wL2NyZXcvZ2l0LjIwMjQxMDA5MDIx
+NzE1LmRpci9zdHJidWYuYzo2NTo2OiBub3RlOiBkZWNsYXJlZCBoZXJlCiAgIDY1IHwgY2hhciBz
+dHJidWZfc2xvcGJ1ZlsxXTsKICAgICAgfCAgICAgIF4KbmluamE6IGJ1aWxkIHN0b3BwZWQ6IHN1
+YmNvbW1hbmQgZmFpbGVkLgpUaGVyZSB3YXMgYSBidWlsZCBlcnJvci4KCltTeXN0ZW0gSW5mb10K
+Z2l0IHZlcnNpb246CmdpdCB2ZXJzaW9uIDIuNDYuMS5HSVQKY3B1OiB4ODZfNjQKbm8gY29tbWl0
+IGFzc29jaWF0ZWQgd2l0aCB0aGlzIGJ1aWxkCnNpemVvZi1sb25nOiA4CnNpemVvZi1zaXplX3Q6
+IDgKc2hlbGwtcGF0aDogL2Jpbi9zaApsaWJjdXJsOiA4LjEwLjAKemxpYjogMS4zLjEKdW5hbWU6
+IExpbnV4IDYuNC4wLTFteC1haHMtYW1kNjQgIzEgU01QIFBSRUVNUFRfRFlOQU1JQyBEZWJpYW4g
+Ni40LjQtMX5teDIzKzEgKDIwMjMtMDctMjYpIHg4Nl82NApjb21waWxlciBpbmZvOiBnbnVjOiAx
+NC4yCmxpYmMgaW5mbzogZ2xpYmM6IDIuMjcKJFNIRUxMICh0eXBpY2FsbHksIGludGVyYWN0aXZl
+IHNoZWxsKTogL2Jpbi9iYXNoCg==
+--000000000000ec0379062402c6e1--
