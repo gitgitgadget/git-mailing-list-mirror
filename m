@@ -1,106 +1,173 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A007C1865F3
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 07:57:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F2C161313
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 07:58:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728460658; cv=none; b=eTzJGaqk+uT9RY7BtsMucNkDxJFd0t573Df7i14cOycv5aNtHvcvLp1OhFz4fo5lnPdC8ZCh9lXWn0t1nkSfwPFaUsmMXJzYHHWXPf+FrvWlZsbckiose+nA1v6msBidZLV7GPikQjepALYaGZ8qgdSPYduo1F4pWoHN7+bXN44=
+	t=1728460706; cv=none; b=a+5P5gRfRL2wyUD3IcM0CCBnrdKboxfO7Y7528kiyShlvsQgvaB603GAjfgviZtYxEBCX+JEmh89ei9ATLo+GHZTxloeQ0JAq6U0gbBJkDBXeXrrqlmkaGc27faAkDE7FuqES/0x9UYCUlbR4c04LpegQA4gNbg3N2jSx9JHKw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728460658; c=relaxed/simple;
-	bh=ymEFejrbdfbRF3Evb4CmlWhV3+c+45oE3iNfXn13RuQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d4+U0UNMuvHQmci7f3CnMGH3FWXsKozs4vthh/7jZzM1j4A5N3FifBc4Qa69Vzwyv20QiPsHKI4QGfquHwj2Ws0qTv0BMECDovCDywpR0wVSow0fEeDOgUPpDqSCjiu0CwQZ6kqsPxdZ1hV3iPPROQjqVFw//DzCTVcZSzbfWPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fjbDkkz9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hrAlA59d; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728460706; c=relaxed/simple;
+	bh=0Ymsu9S+jr3QXkM8pgXBL6GoemalY0hXxXwaMB2zoeY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=APXF9pxdOTjlwUJS6bAdDmywPgirpCY7TmnsU6eactrLD82IHRv7I2Rsyqs8S67H0Cxv9u4RJ6txvkdPLFhK1ai1rvWa9IClFn9dSGp+uKCdLt8z6CFFBWgvXus26L8xiHn9cUx1MIxLAnovZr36uo0Dgm41a+yLG5MQKj1eFAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ksRmvdAD; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fjbDkkz9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hrAlA59d"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A3CBA114016C;
-	Wed,  9 Oct 2024 03:57:35 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Wed, 09 Oct 2024 03:57:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728460655; x=1728547055; bh=ymEFejrbdf
-	bRF3Evb4CmlWhV3+c+45oE3iNfXn13RuQ=; b=fjbDkkz91VoBK14T6o0FFaPLa5
-	T8YVyYQt3AR/C1qYcah0fdTLRkzS/1/IZ30HjxVfSbIzwEXROn/xjls9gwxUUyOR
-	KbdoOJXqFUotS3VLcvKKOoCXbFP2Zv758ASvr7rtBx47I6p4y0A74rX4NVCMnSeg
-	nuxFidWtRvRwXXplufkt7w4zBDCJnp7Qq8g7okwfRwKLkr1Jwcq5rEoowgFA+9nF
-	xNCBvIqCZJ/ictKHcOYhJaGvMGpq4GqsabiIHU/HkS4vBfpRQmzNgMICrkKb0D1+
-	STn/a45JvELSXfN+Cj1/EWAC1sAOdgp3WHEiIb6Wp7cEhJYIll9JLsSapDeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728460655; x=1728547055; bh=ymEFejrbdfbRF3Evb4CmlWhV3+c+
-	45oE3iNfXn13RuQ=; b=hrAlA59d5LWitJU9F/e5RC0YBFn3+Mbnwwm1Rm6sPJ8+
-	jExCHBr3WOErXBiBwwl1IQULanMdzHwyAC4EEIWV0RuFdP3p9eW0HHYRhiAtiT0L
-	zy0bQF0Vef9tY2ddHZIgbYeilbd46hEnrneIXwl1fFr2N/I9sE/PsvpC6xH/9iUt
-	cnL4KWQHW6rEAyU1gAYzPMm5mqTEuaMe28V05ufvgBIITK61TFhsD61YhpJRyOOY
-	WheCs+WyUZ3Vl2jpPGyV6D+HWremMKgFeAtuhWmnNgE+7i5WLDu+JeAZikpJWpb7
-	nI3tVpX2XDOewEAC82Axz3cS0Okm9FZ1uZk+Eqpkkg==
-X-ME-Sender: <xms:bzcGZ7evbxoQmyRZSbdgW_DRuYxpor8r1SHHrfTnB9AW6NvJNg8znw>
-    <xme:bzcGZxNXFpCbtrpMuXeq08GA9_Yp0ZCK87LKkL1N-rCW2L5A9UxJh-yrTCnVHdvgz
-    lnYJZ1clUlwIjGXHg>
-X-ME-Received: <xmr:bzcGZ0h9oiIa8rS9mTvHDxAuudzm8QLXFXpqsRBlzKx6n4mSbjksnycD0gHDBiKnO5jGvF3aMKhLWv3hmN9KS_1TuXAEA7BV32FmletkOUcZ4A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefvddguddvjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughr
-    peffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkuc
-    futhgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeev
-    hfffjedvffekvedtgeduleeltddvkeduiedvfffgudekheekffduhfegudeigfenucffoh
-    hmrghinhepghhithhhuhgsrdhiohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehnrghomhhirdhisggvhheileesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:bzcGZ89zAe942Omv6oeqlcsYlKqdpS3l818s9_Z28ikrcFrNt4QxGw>
-    <xmx:bzcGZ3sNwpKwCjIzAqA0I4AeOfoIM00zOZz13Yb1VIIwVRIp3zTC4Q>
-    <xmx:bzcGZ7HbBm0F_oFmAEswsN0_4xi1mHowjHko-JfKk_fi9AoA_VUu5A>
-    <xmx:bzcGZ-MhFg1YrWFhfsHzDkUcfyPg2L_QXXMrDprtfAV7BLUnX3FiPg>
-    <xmx:bzcGZ3KmkuVl7VojlZBC7uT-35CRC4aWqp9UVG1_iJnKf-9Off2jFt6L>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Oct 2024 03:57:34 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 85c29baf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 9 Oct 2024 07:56:30 +0000 (UTC)
-Date: Wed, 9 Oct 2024 09:57:31 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Naomi Ibe <naomi.ibeh69@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [Outreachy] Indication Of Interest To Intern At Git
-Message-ID: <ZwY3ZtHPBWWHU3wP@pks.im>
-References: <CACS=G2yH+k801G0z4BO6T2Gc2c6vVDieSr=2B6kT_1P-j0smZw@mail.gmail.com>
- <CAF+8dM9k=z+KR6xd_1jhsM86e=BOwOKkxdJDbX2VUYeu8yMkdA@mail.gmail.com>
- <CACS=G2w_rUUntaCU2NXYODUNfh+kDRPiftCRg04TPapTM_KPSg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ksRmvdAD"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5c896b9b3e1so8982173a12.2
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 00:58:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728460702; x=1729065502; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lO37Y9LoIXSdDur2CCkpJyBDBA8Ol87MOgiLtCLaJcE=;
+        b=ksRmvdADygcj97RrzsY441FZ7nXmLKSL6c4J4PXriCnfPtNC++AxN0oxthUi3LCHsX
+         1HIT453DwrPktveDODGCXPZYgFxHd+uy/hR605F3gQs8lZDw8NSUHsK8cZnT4dF2Zaoj
+         Je6gLjiVna/4EitGhkudM2lQXPY46o5RTRJQf5IKpDisJzObzaZaYspnEa3J8nfrXe7O
+         OOxUvc9Oc1YI1JvtaM8w7ryo0TgGiEUzYsRAQog3FgfzfNrUbSiAA1Svj5VigpPGHVQX
+         0kfGcY9GH+lQHlNSeZOjPgAvX2Lvq9u+LHaiMMLGxef45fQHZrlYJ/94DRYjBjchE52x
+         JDvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728460702; x=1729065502;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lO37Y9LoIXSdDur2CCkpJyBDBA8Ol87MOgiLtCLaJcE=;
+        b=UF49zFkTYnh0tcuqfO7ERzDmvrILgLIKee0Rucc+ziualm8+9QUTiyZvfhwd5IBxO3
+         Xk8u3wO198f/T4yABD7+ySf8/FIBfac5xk3zCvwi32VZZaXAA1d0DIsPYOK5ZQsWfyLr
+         KASH8uD6oZGQOkn2h0PtEZd76ksV0mxjlIRv6T1ZE3+5Hg2Nwwed8XRqrcLSpg34cG4D
+         yWji0AHdYT1TP4Pf2knWE0n2Hh1tSjidyI7HrX8eUji3kv9whXcA3U3gTWbRjawVsQ36
+         N5yakO0SPp3Ra7UsWBOf2R25/1xYdfbPDZz/slqdEvzNMmrJdueNJR9iDhEYvFRIU+w/
+         gudA==
+X-Gm-Message-State: AOJu0Ywbz45YtSCGVlywVA8dQM9eVstjHW9ElgZoyZ6LHFQnfC4p7XZT
+	HIAD7fFDnjM1IjKEv5XuOqf+yVTO9r873tXq6so5f2WTIUJUhXNnwmrttg==
+X-Google-Smtp-Source: AGHT+IGzpUzQ8Yw4VthLseGdyxV8vAAhCoUGRIPodbmIqKpAvBEfFyDL77p+76QOgr/hsSjG75zZqw==
+X-Received: by 2002:a17:907:f1da:b0:a8a:822e:44c6 with SMTP id a640c23a62f3a-a998d117e20mr157672266b.4.1728460702196;
+        Wed, 09 Oct 2024 00:58:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99414b675esm544723166b.10.2024.10.09.00.58.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Oct 2024 00:58:21 -0700 (PDT)
+Message-Id: <pull.1784.v3.git.git.1728460700.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1784.v2.git.git.1728084140.gitgitgadget@gmail.com>
+References: <pull.1784.v2.git.git.1728084140.gitgitgadget@gmail.com>
+From: "Nicolas Guichard via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 09 Oct 2024 07:58:17 +0000
+Subject: [PATCH v3 0/3] rebase-merges: try and use branch names for labels
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACS=G2w_rUUntaCU2NXYODUNfh+kDRPiftCRg04TPapTM_KPSg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    Eric Sunshine <sunshine@sunshineco.com>,
+    Nicolas Guichard <nicolas@guichard.eu>
 
-On Tue, Oct 08, 2024 at 11:04:05AM -0700, Naomi Ibe wrote:
-> I have trouble finding a microproject task, I know mentors are not
-> going to assign us tasks but I can not seem to find a microproject. If
-> there is a link to available microprojects, could someone please point
-> me to it? And yes, I have read:
-> [1]: https://git.github.io/Mentoring-Program-Guide/
-> [2]: https://git.github.io/General-Microproject-Information/
+When interactively rebasing merge commits, the commit message is parsed to
+extract a probably meaningful label name. For instance if the merge commit
+is “Merge branch 'feature0'”, then the rebase script will have thes lines:
 
-Hum, true. I expected that [2] would contain a list of microproject
-ideas, but in fact it does not. You can find that list at [3].
+label feature0
+merge -C $sha feature0 # “Merge branch 'feature0'
 
-Patrick
 
-[3]: https://git.github.io/SoC-2024-Microprojects/
+This heuristic fails in the case of octopus merges or when the merge commit
+message is actually unrelated to the parent commits.
+
+An example that combines both is:
+
+*---.   967bfa4 (HEAD -> integration) Integration
+|\ \ \
+| | | * 2135be1 (feature2, feat2) Feature 2
+| |_|/
+|/| |
+| | * c88b01a Feature 1
+| |/
+|/|
+| * 75f3139 (feat0) Feature 0
+|/
+* `25c86d0` (main) Initial commit
+
+
+which yields the labels Integration, Integration-2 and Integration-3.
+
+Fix this by using a branch name for each merge commit's parent that is the
+tip of at least one branch, and falling back to a label derived from the
+merge commit message otherwise. In the example above, the labels become
+feat0, Integration and feature2.
+
+Changes since v1:
+
+ * moved load_branch_decorations to re-use the decoration_loaded guard and
+   avoid pointlessly appending "refs/heads/" to a static string_list, as
+   pointed out by Junio C Hamano (thanks!)
+ * fixed a leak in load_branch_decorations found by making the filter
+   string_lists non-static
+
+Changes since v2:
+
+ * style changes (true/false -> 1/0 and // -> /* */)
+
+Nicolas Guichard (3):
+  load_branch_decorations: fix memory leak with non-static filters
+  rebase-update-refs: extract load_branch_decorations
+  rebase-merges: try and use branch names as labels
+
+ log-tree.c                    | 26 +++++++++++++++++++++++++
+ log-tree.h                    |  1 +
+ sequencer.c                   | 36 +++++++++++++++++------------------
+ t/t3404-rebase-interactive.sh |  4 ++--
+ t/t3430-rebase-merges.sh      | 12 ++++++------
+ 5 files changed, 53 insertions(+), 26 deletions(-)
+
+
+base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1784%2Fnicolas-guichard%2Fuse-branch-names-for-rebase-merges-labels-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1784/nicolas-guichard/use-branch-names-for-rebase-merges-labels-v3
+Pull-Request: https://github.com/git/git/pull/1784
+
+Range-diff vs v2:
+
+ 1:  6250a7f6d6c ! 1:  e030ddd91f3 load_branch_decorations: fix memory leak with non-static filters
+     @@ log-tree.c: void load_ref_decorations(struct decoration_filter *filter, int flag
+       				normalize_glob_ref(item, NULL, item->string);
+       			}
+      +
+     -+			// normalize_glob_ref duplicates the strings
+     -+			filter->exclude_ref_pattern->strdup_strings = true;
+     -+			filter->include_ref_pattern->strdup_strings = true;
+     -+			filter->exclude_ref_config_pattern->strdup_strings = true;
+     ++			/* normalize_glob_ref duplicates the strings */
+     ++			filter->exclude_ref_pattern->strdup_strings = 1;
+     ++			filter->include_ref_pattern->strdup_strings = 1;
+     ++			filter->exclude_ref_config_pattern->strdup_strings = 1;
+       		}
+       		decoration_loaded = 1;
+       		decoration_flags = flags;
+ 2:  167418d10d1 ! 2:  1dad6096eb7 rebase-update-refs: extract load_branch_decorations
+     @@ log-tree.c: void load_ref_decorations(struct decoration_filter *filter, int flag
+      +		string_list_append(&decorate_refs_include, "refs/heads/");
+      +		load_ref_decorations(&decoration_filter, 0);
+      +
+     -+		string_list_clear(&decorate_refs_exclude, false);
+     -+		string_list_clear(&decorate_refs_exclude_config, false);
+     -+		string_list_clear(&decorate_refs_include, false);
+     ++		string_list_clear(&decorate_refs_exclude, 0);
+     ++		string_list_clear(&decorate_refs_exclude_config, 0);
+     ++		string_list_clear(&decorate_refs_include, 0);
+      +	}
+      +}
+      +
+ 3:  dfa1f0a7648 = 3:  19d8253da07 rebase-merges: try and use branch names as labels
+
+-- 
+gitgitgadget
