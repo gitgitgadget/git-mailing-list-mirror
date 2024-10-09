@@ -1,85 +1,82 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8FA282F1
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 15:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2034D1E32CE
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 16:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728488833; cv=none; b=J+zlUR8NY6nKjozc/jTC5jM5W6wMHXAnIh7A+TdwNtAP6XciIOJSXLX8YriiICsu1/11MvL+BqwWmYQnfnaB0IRpduPIoEBuXAw3nmhWOT8sAf4uBaTsD2yjh7m1SsytFhJiKyn5/pGdoUihbyugZeBaRroBLXPC+Z9knoz/iHc=
+	t=1728490191; cv=none; b=engOoYUJ5RUmXmx0rYtmrxNq5d2E2FpPPe0a7H3ciAf6hFNA+TNPK7B6mfR2gMPrfpmFLZS5TCrU6U1fck5PtTfo4WCfCO0f65/su2ULebGrhUQNSux4IV2arcwq/k2bin6nVtEteobPezesKLZyxExb4eAj16DSJmsXHbmYqEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728488833; c=relaxed/simple;
-	bh=3xG1bz4UuvsvsoGznkLf1Mh++AeydPsdBNl0/RNtOgA=;
+	s=arc-20240116; t=1728490191; c=relaxed/simple;
+	bh=2IgUSUC/tDdFola6BH9/4KICl1wzLbLLhNKtwHI1yrA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EKqt+WBKQwtlL+UTQP//ns5XS0er/HT4jobXThPZMGEocEc7y90BmvC8nMYR0ZEsFoA6kYpcefzdI0V1oWlIUp6gu2NlDdgzt2P63DJOfbdQiBxqYLQaW3pyNBPr5GPulDMF+ajwYFAtXLjWXvx8SHbPz8YVST4SsQwV90mQSd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EnSVlRny; arc=none smtp.client-ip=209.85.210.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=dd0S1uNiCH9EpEFHs7ED558OTHQLhFFLCtaoHuHRyBwnK7hagRB1gdvZ07NVKbCqVZOWNYuctnWskr1ZiZtkx43ypS9t2D97xhkT3s0NIpcIc5Kp6ktF+5QMIy8hPZ3ZeSq7fN/2br9kt7lUU9RmUUd+6NYWkv//CDoW+Taf7H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=R2NSLYOv; arc=none smtp.client-ip=209.85.166.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EnSVlRny"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-716a5b9ee6fso443893a34.2
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 08:47:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="R2NSLYOv"
+Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-82cdb749598so296724839f.1
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 09:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728488831; x=1729093631; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728490189; x=1729094989; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3xG1bz4UuvsvsoGznkLf1Mh++AeydPsdBNl0/RNtOgA=;
-        b=EnSVlRnym3gpDX0e9coHicuNlBGTXO02QA+AEdSR5bc9lKdFpxtBs44haNejAAhvvG
-         /fo+ao9bN3B1sZ9E2nw5/b/H8T6t1+t8CIxNkdGbi/0aj8TzptuCHAeGUun+qtndpkTq
-         NY/1DSM7pvfKYRrwVo2Uf0Zo+faO+xKu2cMTweLYYtg6ggLgBg2fliQduJBeI+tdWu4F
-         QeqLJ5iYz46QnCufTR83Vt8LrAsYKyff5++hrdkYtEbFP9iLPUQP/acKagQRWSQ/mtqZ
-         7JmVdxeBchQcqEx7baqbv2m2GgXQyrMrJdk8SBsCYQN517IBCVAn806y3AU1b8C3GY6H
-         2sPQ==
+        bh=2IgUSUC/tDdFola6BH9/4KICl1wzLbLLhNKtwHI1yrA=;
+        b=R2NSLYOvHnJg40bjG426sznQBAQetwcUwGA6i06+s2u0WRSHtf+Um4GZZTRlQNBWFI
+         RC82PlseyPWOOn6htX6c56TFb0xwvHdQOt9zvGfW1rnZdBszFdedKN6JXPo7416YyapS
+         wRAKQaq1x6YsaXVEG/e8AVWg4iBEGpNzRYi/HzrP4wJWxWLAWXviVbDOB1Kf/Lb6yiYn
+         CK3AdokrgUz92jyRdrbMHhgT4jk4dWggYl3vPge9Lj5IDwRvUuys6r9469vSwSjWdKQG
+         F5UAh4Hf/clbfbyJ+Iw5j1wS6NYbkdlhTekA/NOhAr/BvWxgIAFiUJNuLkY2hRUI8tfo
+         7dzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728488831; x=1729093631;
+        d=1e100.net; s=20230601; t=1728490189; x=1729094989;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3xG1bz4UuvsvsoGznkLf1Mh++AeydPsdBNl0/RNtOgA=;
-        b=HRtdWLLzrVuMGQ5H9FD9pIjsKVElsfljcKFzPvG9mvR/Vumo8UpsBbgq0m1MVUee9X
-         vVF9nqsub38S2Pv2pSaxQRoXX767O8OIJgf36rc57brisyJSvNF0o4psBz+StW/ArLMG
-         5kYu2Oi+wGF5psBRgP4+GulP2Sh5ZNvBYnJ3oweegKTRtuwfmVDsVZD4FV8BGoT9Y6sr
-         QHk7yqIGkCvg5aMRKaVcFz/7eigjJn+A4bBxFiPyvZlEXXnXTU85DXBA5zOh2zxzaraT
-         M8UGbtK8rZugoWJIM6FLyY1WZZDJNwIP7eMYBDq/BO7CMwhE5N9eaRpTvaMQppGTjYmf
-         LSjA==
-X-Gm-Message-State: AOJu0YxmP5vmzyEA1Ml87+ea0VRTH4MyTitW1uQIz9lkrHrlHeZFUVmQ
-	XmZ5gEYGG3HNJ2yV9ZKinMd/Sc1QUhjm7gqmtPnb47QEZwhw4IHk
-X-Google-Smtp-Source: AGHT+IGmT/J6sjms+Y2C4t/d2/MFUdHWg4iqOAOy66OPBhn15wl9+MPPxn2q6tFdtCoUFpLywo40fQ==
-X-Received: by 2002:a05:6830:f94:b0:713:8387:9f07 with SMTP id 46e09a7af769-716a404f9e2mr2354676a34.0.1728488830796;
-        Wed, 09 Oct 2024 08:47:10 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-716a9841cc2sm62748a34.66.2024.10.09.08.47.10
+        bh=2IgUSUC/tDdFola6BH9/4KICl1wzLbLLhNKtwHI1yrA=;
+        b=w6FiWlhcE3qstU97cycfkBx+2VI8NaLsFgW6CBg7ALs58Dpsk86G44B2jLVnrcr0Mt
+         F+yz4EC0pkZw1Sw8ztfmAZ5+GQBE7Spef1x5FqShY4iOoyUCBvgE3jEhJEJP9+3TwPty
+         HdUWHQB2N+OytARsYecdUg8ookBWJ69Mqu7zUBu2Q2XNVAAzd50nALnz1WaZFx0FjD9B
+         R32yZLh79D7JEB9kYv7L0IF5ZKXG8pHLmZqd+KgajnOdLsk4+kQQJW9i34qBN38SIHBK
+         EYzOW48UuZZiLhTZpBNeqGt8zKxrsnWpZyzVHZP/P8WmvTFGz3TqPk9xrVzpYrkAutU1
+         8Nag==
+X-Gm-Message-State: AOJu0YySJLu4iKhw7TQwwfGIWx1FyUujjaOEErIcU+Rff1WMTiYARXqI
+	IXnKKJBjaA8dfhbbbePB3panRKYMH7gSgVcyRvPRhOBsoqnGMRJWTP8DZeXbTxs=
+X-Google-Smtp-Source: AGHT+IF13NlfgYaLBjZZGd+O8opbz18lHl89zI0jxWun1THGgrA2Mt7hJ19x7s3vNUdHWNklYzOZNQ==
+X-Received: by 2002:a05:6602:6199:b0:835:46e0:d141 with SMTP id ca18e2360f4ac-83546e0d443mr113888539f.3.1728490189128;
+        Wed, 09 Oct 2024 09:09:49 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4db89c36b20sm1280776173.173.2024.10.09.09.09.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 08:47:10 -0700 (PDT)
-Date: Wed, 9 Oct 2024 10:45:45 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
+        Wed, 09 Oct 2024 09:09:48 -0700 (PDT)
+Date: Wed, 9 Oct 2024 12:09:47 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/3] clang-format: don't enforce the column limit
-Message-ID: <zmqyj3v2h3hswoujpz2er5luvjipjl3i4ts6xjdeb43wp42xf2@i5xee2lsmriz>
-References: <CAOLa=ZRvFBhageS65uE5enzLBz7H_CAvvnEcPsi_QAi0exRx2w@mail.gmail.com>
- <CAOLa=ZS+naxOzJUkLLOZk++WVZ2dt3eQq9VmW+G-5O1ZLgggUA@mail.gmail.com>
+Subject: Re: git-scm.com is now a static website
+Message-ID: <Zwaqy3oh83tuM3m6@nand.local>
+References: <c3e372f6-3035-9e6b-f464-f1feceacaa4b@gmx.de>
+ <ZvM65LqtFW8f9uqC@nand.local>
+ <ZvrNmsycmamx2dcR@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZS+naxOzJUkLLOZk++WVZ2dt3eQq9VmW+G-5O1ZLgggUA@mail.gmail.com>
+In-Reply-To: <ZvrNmsycmamx2dcR@nand.local>
 
-On 24/10/09 05:55AM, Karthik Nayak wrote:
-> The current value for the column limit is set to 80. While this is as
-> expected, we often prefer readability over this strict limit. This means
-> it is common to find code which extends over 80 characters. So let's
-> change the column limit to be 0 instead. This ensures that the formatter
-> doesn't complain about code strictly not following the column limit.
+On Mon, Sep 30, 2024 at 12:11:06PM -0400, Taylor Blau wrote:
+> The only thing that is left is to actually delete the account itself,
+> which can't be done until our last invoice is cleared, which should
+> happen on sometime later today. Our final invoice is $61.86 USD. Once
+> that is cleared, I'll delete the account entirely.
 
-The column limit does lead to quite a few false positives. At the same
-time though, in some ways having a tool point out all the instances it
-occurs does make it easier to review if any should be addressed.
+This settled yesterday, and I have deleted our Heroku account. The last
+traces of the old Rails site are now gone for good!
 
-If the goal is to have a CI job that we generally expect to pass, then
-it makes sense to remove it. I don't feel super strongly either way.
-
--Justin
+Thanks,
+Taylor
