@@ -1,112 +1,110 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2971E132D
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 22:25:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B76156C6C
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 22:32:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728512738; cv=none; b=ebccAaJsSoeSc2y2QWvmANTjcr54U8s8Oeg7sFpAtKd5TZIejvnN84xF3UNgRV+SB1F5y5u94RBb8RNUadQLYiwzNTli7nJbKZViSihuCW8VGHtjGTWxGmQm6yRNnQQT3iF5eCY6zsJay7bmVnxkBG0LZyzrjUlBrX5jVBNYZSQ=
+	t=1728513144; cv=none; b=WwU2zfELBvECjFUq7gHdB7Dj6W+NR7ETqDVcxxJx2yFjIZ09zznQQGhDf3bvDDnRzPldvQMbBGb1N25xHvpuuw3+ttN8ZVUn51T4EyefiS1D8kb+SvcVam7mjIMIAyH0rJuo47wQvQe5cr/owpLsfELE14Wv0/E4kFz9jMj7lHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728512738; c=relaxed/simple;
-	bh=kih+9wJw7CuhGn0TTMH0h/9Am9K2atg+ZyPYK4/fq6Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sYmjBJaR3PlLUnrWweg2VT2Ba7Ka6vilQJ1rKyJGRiGxmn2MZoUc+jv02/BmIN6PdVzXbLPsh7iltdOwx4M1V+zLSTxOek0lpLBYs4VEtHkpMQcC92fCHV/5KNk3Fe4XTMSw3YKXSd0zVaya06lFalixc1OdTV0ls7pxaq7pG8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bMpeou7E; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1728513144; c=relaxed/simple;
+	bh=jkhK7J/bnhV6ICSM/kIhvMBj/QZAHOGjulfDpcSFl7U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dxAXDlURtBTbStK5V72/Wv3V/bqx/6XQRLz3ormFE0I49rpjNUIacjSNxGXm5LgPg7V6hAOpQKn9BjAgEs0FpJKJjdP0vqf9TgUGaK+Aj2ENneCAZKL7brYSy5mwP+OICC1LgFaOaKN1gJwMktjoCXtainm+StcUaAiKpJ2a0E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YT2g2/VP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GMPa5ryN; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bMpeou7E"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-20c87b0332cso11155ad.1
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 15:25:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1728512736; x=1729117536; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a+dI622EoSYoW6bXijqcLOi7TNNexpVgggwiAHIAyHk=;
-        b=bMpeou7EI73nUlSUUb3jOchxhAVnjcrmbm7DUF2IPdkPBP2VcELF7Dd5PIlrxv5FqI
-         5orJSSTfefxyPL27CSPEfFP5JiIpWqj4iY7wtl8J1zFeSPzJLWOuqg4RGZahD68j23U1
-         y0NkiNxdUyIW7WYig5fRSlhr8LivGj+OSmtpH0dDgZ9hcVhjBTyjvq2mlVXVugFao7tZ
-         /YarQbc6wuOXZ7dcVi9oCGxRRuv+bF/wuBdm7SZksuGOD4BH0cS85bGQF1ES1sgpzcRO
-         N4lEuM1H1CV05/EkiuYm3Y+Y+oUT4P/rlDnyPeEYnTVIFG828xDudpsoPpuYxC4IXOqN
-         4Utg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728512736; x=1729117536;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a+dI622EoSYoW6bXijqcLOi7TNNexpVgggwiAHIAyHk=;
-        b=rp0SfpE3ZRKymtd7Y/vKh+3Rx94rPAFEIi6Rg+il49fmlrtCVpB3ZQ/NlOFsckme0F
-         nxH26EBOkbYRU8BmuOCsQvDiB0AbNf5JEMt0IUV/tY6GmSreNk8gduOcmW2/WA5f89vo
-         E/zcUEsm32T6Li9F+Bz4svTysQ7WUMM4IL4zHaJUAb4cEngUZghOEQMMKLV9rUJx4fCp
-         CS3XXVCgBnPgxVIoyC5lTRNLf9sFTGj0ZTPMqhFTF7yvyVONms23hpDOUCoRJNsOwYJ2
-         F0yEiN4jL2qFUnk24/J5oUnvntL9q+MAxFtxueHWJ5gTHwtWvPD52aQHP4tIXozl3+sc
-         oVpg==
-X-Gm-Message-State: AOJu0Yy72mUSCHv5rd3oefuRx9b7VTh/hVoVyn4rpBYmQeQoc5NBHi72
-	baHToQ3EkbZJfFC4xdJJH/rJhnMoCVmmZVd8trgRmU02TbQPVMb6EJ6mJtP81oqTHb/f+9vX3GN
-	ipQ==
-X-Google-Smtp-Source: AGHT+IEiMpgx7ivTEUEORNtkgwVEgo4fW8XGjmc1QWiOfDOXscwbrtxPECV62JMQpC+w7K8gglY73g==
-X-Received: by 2002:a17:902:ce8a:b0:209:dc6d:76a7 with SMTP id d9443c01a7336-20c8298f0a6mr1193125ad.14.1728512735366;
-        Wed, 09 Oct 2024 15:25:35 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:4268:1c66:e2c:2ffb])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c138afc65sm75303295ad.38.2024.10.09.15.25.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 15:25:34 -0700 (PDT)
-Date: Wed, 9 Oct 2024 15:25:29 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: git@vger.kernel.org
-Cc: calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, 
-	emrass@google.com, gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, 
-	ps@pks.im, sunshine@sunshineco.com, phillip.wood123@gmail.com, 
-	allred.sean@gmail.com
-Subject: Re: [PATCH v4 4/5] libgit: add higher-level libgit crate
-Message-ID: <sojvhdl2jfsvngaixtccfsezlp7mpoj3ag62q66zphragf7o2l@3auva7nngupm>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
-	calvinwan@google.com, spectral@google.com, emilyshaffer@google.com, emrass@google.com, 
-	gitster@pobox.com, mh@glandium.org, sandals@crustytoothpaste.net, ps@pks.im, 
-	sunshine@sunshineco.com, phillip.wood123@gmail.com, allred.sean@gmail.com
-References: <cover.1723054623.git.steadmon@google.com>
- <cover.1728429158.git.steadmon@google.com>
- <29599e9c7be1737bcf0de0541c9635212a1b691d.1728429158.git.steadmon@google.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YT2g2/VP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GMPa5ryN"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 80C39138011C;
+	Wed,  9 Oct 2024 18:32:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Wed, 09 Oct 2024 18:32:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728513141; x=1728599541; bh=UgR9UUgopp
+	DmL+L/mbSTLkJgka4LPXravysNyP2HMLo=; b=YT2g2/VPr6sYmkPDEE3evFd3JF
+	pDkKtm+SWfFPi5abLwHQCa5IPyz8yqlWrc6MLUc6GO8QzcDjPe+vcYY/jak9dIB6
+	f9kVgI2rxZw7dFPeAtKoq35882Hh4TCCYZ2gdowE09yFb+hhtlX9w4fGEYRGKg3S
+	AHv5xDW4lJesprAOx4tLN4GCaBkmNS3OV1KQrtm7hv8IR873mnjtRLTllc8CORfn
+	fBKERjdkpLYnnqmuhKCtKYxeUKfW/pQK/y8jq6vZj0DzJ15Izo9sgzM2bUnx/5qc
+	Rh2pHXrOIVJoA8Bvg/nXjn51ggW00x0Dv6fXu2gfqMQ7kKlbwGv90c5lWT4g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728513141; x=1728599541; bh=UgR9UUgoppDmL+L/mbSTLkJgka4L
+	PXravysNyP2HMLo=; b=GMPa5ryNUzTk5szvh2iduBnFEi3iqxHm1tneurgq3KH8
+	ZAf+BSnIzL2M7JgTHkh00q2SmfcU2OzDbclrCanB9DDH4X9v4YO5A2woEtMBgRgu
+	9RL+NWMvNMEw89Mxd+pACRkC38zBYBA2W9wXxvVRSVqBg3g/IuS62sopOmFlkek0
+	TBMTgFB85I9yFu0e9K3uKLTkdi5LvY28iyGGiaKF4NMhu0eTuqqF4lUEbHA+JeuH
+	WeYOxi62tl48n0Bc3fuoaxBgDSx1uNvrikHLTBDMBLbZ725yuyM4H5E87P4F4U6l
+	LfuidJKtace2lDVgmXx4waItTb1pP13lpaLEfefVjw==
+X-ME-Sender: <xms:dQQHZ8eyJ7SIvzQmNikp3xm_TXXR61izrMm_oYFInoGfmObclKa70Q>
+    <xme:dQQHZ-ME8Aj8rwGgrSf8y9CBQtiOpGBL6Ns5f5DtRGWUMb5nAMm4ifthS2fwLI0LT
+    FM3ah4ol-on66qvAg>
+X-ME-Received: <xmr:dQQHZ9heOsXu3pCIg0wgx12aW5Y9UB8t9rF0lccEqVyLtvaDla1K60t7tWCYgKfQZzfKw9quLEOOoY64cqNPI5zDMRf4Deqtka0y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefgedgudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
+    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:dQQHZx_eE2_41Hxpvsf-q1kxNST7GC39D3SICrsNdC_WHJx-grqc8Q>
+    <xmx:dQQHZ4sx3Qd7rpJiwZT6X6nZzvxdRM5qVX2z_REbazHMC8s9f3Rz6w>
+    <xmx:dQQHZ4GWu8rxozm6eukz3mD83lAdEnDB9vwCGhBr0AfUzuWYZwqXHg>
+    <xmx:dQQHZ3OMoOo7zgz1MBCi30FTBBuRIzfW1pLJygbaPdL1Ek795NpZNA>
+    <xmx:dQQHZ6IWfgRpprEsH6x9wVIh0liZuSzchxMr6HgMidHh9iAZ1yMELgaG>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Oct 2024 18:32:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 1/3] clang-format: don't enforce the column limit
+In-Reply-To: <zmqyj3v2h3hswoujpz2er5luvjipjl3i4ts6xjdeb43wp42xf2@i5xee2lsmriz>
+	(Justin Tobler's message of "Wed, 9 Oct 2024 10:45:45 -0500")
+References: <CAOLa=ZRvFBhageS65uE5enzLBz7H_CAvvnEcPsi_QAi0exRx2w@mail.gmail.com>
+	<CAOLa=ZS+naxOzJUkLLOZk++WVZ2dt3eQq9VmW+G-5O1ZLgggUA@mail.gmail.com>
+	<zmqyj3v2h3hswoujpz2er5luvjipjl3i4ts6xjdeb43wp42xf2@i5xee2lsmriz>
+Date: Wed, 09 Oct 2024 15:32:19 -0700
+Message-ID: <xmqqttdkoqks.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <29599e9c7be1737bcf0de0541c9635212a1b691d.1728429158.git.steadmon@google.com>
+Content-Type: text/plain
 
-On 2024.10.08 16:19, Josh Steadmon wrote:
-> From: Calvin Wan <calvinwan@google.com>
-> 
-> Wrap `struct config_set` and a few of its associated functions in
-> libgit-sys. Also introduce a higher-level "libgit" crate which provides
-> a more Rust-friendly interface to config_set structs.
-> 
-> Co-authored-by: Josh Steadmon <steadmon@google.com>
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
->  .gitignore                              |  1 +
->  Makefile                                |  2 +-
->  contrib/libgit-rs/Cargo.lock            | 77 ++++++++++++++++++++
->  contrib/libgit-rs/Cargo.toml            | 15 ++++
->  contrib/libgit-rs/build.rs              |  4 ++
->  contrib/libgit-rs/libgit-sys/src/lib.rs |  4 ++
->  contrib/libgit-rs/src/lib.rs            | 95 +++++++++++++++++++++++++
->  contrib/libgit-rs/testdata/config1      |  2 +
->  contrib/libgit-rs/testdata/config2      |  2 +
->  contrib/libgit-rs/testdata/config3      |  2 +
->  10 files changed, 203 insertions(+), 1 deletion(-)
->  create mode 100644 contrib/libgit-rs/Cargo.lock
->  create mode 100644 contrib/libgit-rs/Cargo.toml
->  create mode 100644 contrib/libgit-rs/build.rs
->  create mode 100644 contrib/libgit-rs/src/lib.rs
->  create mode 100644 contrib/libgit-rs/testdata/config1
->  create mode 100644 contrib/libgit-rs/testdata/config2
->  create mode 100644 contrib/libgit-rs/testdata/config3
+Justin Tobler <jltobler@gmail.com> writes:
 
-Just realized that this commit message is not accurate anymore (and
-could provide more useful info anyway). I've reworded it in V5.
+> On 24/10/09 05:55AM, Karthik Nayak wrote:
+>> The current value for the column limit is set to 80. While this is as
+>> expected, we often prefer readability over this strict limit. This means
+>> it is common to find code which extends over 80 characters. So let's
+>> change the column limit to be 0 instead. This ensures that the formatter
+>> doesn't complain about code strictly not following the column limit.
+>
+> The column limit does lead to quite a few false positives. At the same
+> time though, in some ways having a tool point out all the instances it
+> occurs does make it easier to review if any should be addressed.
+>
+> If the goal is to have a CI job that we generally expect to pass, then
+> it makes sense to remove it. I don't feel super strongly either way.
+
+Is it possible for gatekeeper jobs to complain only on newly added
+violations?  Then it is fine to have a limit with a bit of slack,
+say like 96 columns (with 16-column readability slack).
+
