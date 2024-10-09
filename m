@@ -1,155 +1,258 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C757E40849
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 21:53:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A4D188925
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 22:01:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728510806; cv=none; b=o14qPvhcnqdE45blIlzqD4HFrAptSb7bHqg9kDMRHZlgvNoocIPWBR6IfYqoTFtND07AHDERmvAYLfIiUc/v611si8RYeQHUlGfxpmCom0Rq3G+/u3ctX0ZFp27tq7nRwiw2QywhPpy188yF4cRveRom0b52OA5dhKtb67VrWbM=
+	t=1728511299; cv=none; b=SRFRFpdA5FeRNJV6sS3goUM+5SnkXn9LTOSsktIvAjGKKyVbJcOm4sF0CK2f5+6ILARhVFccaoUTbcuk/IVv67cOq4Ni6rim9Q8DKn9Q1TqAMwN0izuqKF734BwkMOuPTeBKb1D7928o6SgMPb2yn8zMMY7SNSp5/5dYnoRycA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728510806; c=relaxed/simple;
-	bh=eWRBKfjru4YmUsE6pKFhPFTZCE1DSyWqiD5OJPvhtHU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZFv93Lfl9rDPSiJy5oZF1U/+Wd2TIyMCJRwBkgnsdhrS6lxrlLi+iA/56G0TPaoQoJRHxyc3D2DcCi/706Jhznnmp20zE1lySEYaxXN4OOoVOawhbqSOo0N1rp3G3jWIEkMg8mfZTyi3v2r9ApTawNLfsyxEsONqEErtUVyNRV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KPW+gPIY; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1728511299; c=relaxed/simple;
+	bh=Bg/eObximUTcXLdxv+wZLKH6+M2gV9cMLh/3Nb+5U3E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qQPELV/7i8FZY1LOFTNKjvh2hTAceJAQNwBEM5liGmbCJiuokTZ1ZU+y61lNCThRyYj3BO26kdrznLt03nKz+UC8rpg9Ob5wSDlqhJr2ZR9vP0l0IDAKt2RH5Jrna476kHfdEIvYJ+UPNwCGaEsEzVQLQtOx7sOcInM9LfDU7DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tqrXYlOu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kCW67Nhc; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KPW+gPIY"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20c5fdd0fe3so73005ad.0
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 14:53:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1728510803; x=1729115603; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2DbDsqeELN9Az1Na8mV277gsiz7Id+Wi70oh5rkMiLA=;
-        b=KPW+gPIY2dSrczTzzpPXiuabnZS0Wm6SB/eATa3fcSwJodsueHeM/AtlKKxZB4w8X8
-         mZ15qfZ14U7dWiWlFpYYl2sQErBPKLDCaTPirHdRC/EbocbAXbtW24IGRx70IbpbKQuq
-         8Em/6nDaWztD82wMvh1RtOGC2DqZsnN7pCX/txbpmmHhk7EwxR4ZvoEN0LIzgbjcykhv
-         ZhoeUGvzmPOXY/VT3FEUWSOZkAfVRbS6Cc5AXdqdHl7O5Bst4KaKO/vaY3dNj3lBeHTq
-         dz2mezKNYT/XO1e0acHVOoFau7F3JBdUC4XyJCURwWglF+LWQT/Qk+OOoFZA5fiXbMPP
-         Qo2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728510803; x=1729115603;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2DbDsqeELN9Az1Na8mV277gsiz7Id+Wi70oh5rkMiLA=;
-        b=oKEsrAYWOSH3G7xvBAeaVPEpnbMaUSa3lQg4w0XVacIO924FSdHIND2xFacqnqoJWE
-         viFj1xVSZLurxqvIzmZ/GGLvpb24T1Yid4a8aklIJsLyR49lP7sju4a2igMpZ1MPoaFa
-         fQJhgLxUXeMkfCCdXvH7kjJ7O2kese7dLVIVTgT4C4/RYtOpoZXG/N5co8gBpbyt8Vn9
-         LKDbDDg469aT6w7TyfRDmfOkGxk+2ZTtelDKMS+3zi3uX4pXO0rQ420HqPwMONtd33x9
-         kbHduXeUSPJgGdaq8JNUqr5RjrRuSngU7q7K5RltgxEc+l+h5Q0lJ24NpDF7dosNNTQc
-         g/SQ==
-X-Gm-Message-State: AOJu0Yy6kmVXGH17txtu2g1B7908FzFYJ7F1HEUoN0tgFLVNNCApyh4A
-	l47rE5Xnua/IxFI62UVb/ST5B+ZgOJ+4z3jDbAenct5Z4hVHSdVsyEFs9/gZfY3/PnUX/6+IlZO
-	3NQ==
-X-Google-Smtp-Source: AGHT+IFzXma7IB36VHTIPp7clZTyjxUItyW0YG7wO8ge3/KMfb2CP7Zk0x1LpdnN+q3T88O0OpKrrA==
-X-Received: by 2002:a17:902:cec2:b0:20b:b48d:6ae with SMTP id d9443c01a7336-20c8720e49cmr326375ad.13.1728510802853;
-        Wed, 09 Oct 2024 14:53:22 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:204:4268:1c66:e2c:2ffb])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2a5751d75sm2240938a91.25.2024.10.09.14.53.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 14:53:22 -0700 (PDT)
-Date: Wed, 9 Oct 2024 14:53:17 -0700
-From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, mh@glandium.org, sandals@crustytoothpaste.net, 
-	ps@pks.im, sunshine@sunshineco.com, phillip.wood123@gmail.com, 
-	allred.sean@gmail.com
-Subject: Re: [PATCH v4 5/5] Makefile: add option to build and test libgit-rs
- and libgit-rs-sys
-Message-ID: <yynolodpcv43doqcab4bin7z7gembixqfhvqdzpcoeipnyjwl4@ek3gr4l2ycrr>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, calvinwan@google.com, spectral@google.com, 
-	emilyshaffer@google.com, emrass@google.com, mh@glandium.org, sandals@crustytoothpaste.net, 
-	ps@pks.im, sunshine@sunshineco.com, phillip.wood123@gmail.com, 
-	allred.sean@gmail.com
-References: <cover.1723054623.git.steadmon@google.com>
- <cover.1728429158.git.steadmon@google.com>
- <2ed503216f8e14d7b516c488caf3c76ffcb15697.1728429158.git.steadmon@google.com>
- <xmqq7caixhz0.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tqrXYlOu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kCW67Nhc"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EE3441140167;
+	Wed,  9 Oct 2024 18:01:35 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Wed, 09 Oct 2024 18:01:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728511295; x=1728597695; bh=OkovUagnQ1
+	16j1h0jKboUJ4pVbFu79xFq4emYNqxiYY=; b=tqrXYlOuGqVO2aTWEsSib9aLoP
+	BaT4dp8oYJnv3qtPrfhN9oPL0ZGoxOpoyklqu3tsSPUIsa6bDaJqP8H4mhBe9g4s
+	h/ZahpJC9M174pnbUs2A1rwKNqQi2/25PZViiemwMpy0CZfnxEObU8NNi4rD9xXf
+	9Uc/72X3KFqICR0FwB3SfAU+8C7gMOTGryUa5IVsxxNMXB7LfC9y4F4dPG4XwgT0
+	4J1ddr8Q4AYEZRTyjCpsuPvkar4TtO0wMuZVdtiIZiP/gA7WUGQar+nL/aQeWFq2
+	+EwHS59cwUcFRGP8mVZ9VOKv1sMhVm05oaQtWVp2BhKezKhC+COB3CVLvHdw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728511295; x=1728597695; bh=OkovUagnQ116j1h0jKboUJ4pVbFu
+	79xFq4emYNqxiYY=; b=kCW67Nhckwk9InsKeDyxQUnJp0jDGKzW+LCBsFDXgElk
+	xmIP3cVSOpcQS8XXU0KcxYwXSzPL5ZcLYLhFaPlz72dsElvfrDdfBveB6B2742ml
+	VcjFEaEh2hI0elUjuUkNRcMXl5RWn3PFA8oIQLbip4Cvt+xRmVWnmKck165KsTNr
+	xf2+03aw2eo5Ohcp7bFt8UTAx9T0sWSBwXoGbDWTRdTggEjl3sZTfsHppmTLrMBh
+	g82ltBvF/icxjgnpzRZcJkgR22cgOgvBJS04zOXh8rTziD3ku6tgusXkvWXyFZY9
+	9VefNSY5vBnYYwa/NW3QdRBwjRwNU1bMPxTLeb782A==
+X-ME-Sender: <xms:P_0GZ9T-s2mGvCvQPipA3P2pF9gWZvvNGhQH9jV7xpHrXO6YyGifDg>
+    <xme:P_0GZ2wU_MOx6qvAqk0OL8hAZnZXUhHkjyTX0c19vILlGp7lcZ7Xo0hUIy39tYyo0
+    Da-2UEQwpvZbgvdSg>
+X-ME-Received: <xmr:P_0GZy0Snl8LWNWtuiFj4a_VXOf5ijZchw-BFTMUIyMzbPj_I6kY5hFSA_1Ba41NHQnQf4vu6pUk0N21sOkDWOd91rX3jSKJ7KV3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefgedgtdehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
+    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhgtvgesfhgvrh
+    guihhnrghnugihrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrd
+    hukhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoheplhdr
+    shdrrhesfigvsgdruggvpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlh
+    hinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:P_0GZ1CXAce1QJf25YewZ3CdoZGRPafHNLdMGtuCM0ngXIByQ9-pjA>
+    <xmx:P_0GZ2gRo0MEPeLgA4MuKx8YDu_B6zQGnb1FiIx2e23uHwYwWJ1N-Q>
+    <xmx:P_0GZ5p12AotCylExGTue72fqO2TxU26iFxNHTvQBqDdXcPSdwG8Aw>
+    <xmx:P_0GZxgAaID0eLrFR-hUR9dNY2te1prXhHaNVOwo6jqBzN-8AgKm3g>
+    <xmx:P_0GZ6iRg27ExAIAcck9wSknvlDBSQz9t5LpHkWq99UxIzU8rmMPgK_B>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Oct 2024 18:01:34 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org,  phillip.wood@dunelm.org.uk, 	Taylor Blau
+ <me@ttaylorr.com>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Johannes
+ Schindelin
+ <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v5 6/6] fetch: set remote/HEAD if it does not exist
+In-Reply-To: <20241009135747.3563204-6-bence@ferdinandy.com> (Bence
+	Ferdinandy's message of "Wed, 9 Oct 2024 15:57:28 +0200")
+References: <xmqq1q0xhu13.fsf@gitster.g>
+	<20241009135747.3563204-1-bence@ferdinandy.com>
+	<20241009135747.3563204-6-bence@ferdinandy.com>
+Date: Wed, 09 Oct 2024 15:01:33 -0700
+Message-ID: <xmqqzfndndfm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7caixhz0.fsf@gitster.g>
+Content-Type: text/plain
 
-On 2024.10.08 17:01, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
-> > From: Calvin Wan <calvinwan@google.com>
-> >
-> > Add libgitrs, libgitrs-sys, libgitrs-test, and libgitrs-sys-test targets
-> > to their respective Makefiles so they can be built and tested without
-> > having to run cargo build/test.
-> >
-> > Add environment variable, INCLUDE_LIBGIT_RS, that when set,
-> > automatically builds and tests libgit-rs and libgit-rs-sys when `make
-> > all` is ran.
-> >
-> > Signed-off-by: Calvin Wan <calvinwan@google.com>
-> > Signed-off-by: Josh Steadmon <steadmon@google.com>
-> > ---
-> >  Makefile   | 16 ++++++++++++++++
-> >  t/Makefile | 16 ++++++++++++++++
-> >  2 files changed, 32 insertions(+)
-> 
-> Interesting.
-> 
-> I tried
-> 
-> 	$ make INCLUDE_LIBGIT_RS=YesPlease
-> 
-> which did not fail, and then did the same
-> 
-> 	$ make INCLUDE_LIBGIT_RS=YesPlease
-> 
-> and was surprised to see that not only the libgit-sys part but
-> everything was recompiled and rebuilt.
-> 
-> > diff --git a/Makefile b/Makefile
-> > ...
-> > +.PHONY: libgitrs
-> > +libgitrs:
-> > +	$(QUIET)(\
-> > +		cd contrib/libgit-rs && \
-> > +		cargo build \
-> > +	)
-> > +ifdef INCLUDE_LIBGIT_RS
-> > +all:: libgitrs
-> > +endif
-> > +
-> >  contrib/libgit-rs/libgit-sys/partial_symbol_export.o: contrib/libgit-rs/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
-> >  	$(LD) -r $^ -o $@
-> 
-> I can see libgitrs is a phony target designed to run every time it
-> gets triggered, and I would imagine "cargo build" itself would avoid
-> repeating unnecessary work, but I do not see this patch screwing up
-> with the dependencies for other object files.
-> 
-> Is it fair to say this is still a WIP?  Showing a WIP to others and
-> asking for help is OK, but it is fair to make sure that others know
-> what is expected of them.
+Bence Ferdinandy <bence@ferdinandy.com> writes:
 
-Hmm, I think this may be an unfortunate interaction between Git's `make
-all`, followed by libgit-sys's `build.rs` calling make again (with
-different CFLAGS, specifically '-fvisibility=hidden') to build
-libgitpub.a. So then the second `make all` has to rebuild everything due
-to changing the CFLAGS back, and then libgit-sys has to rebuild
-libgitpub.a once again.
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 80a64d0d26..c3d3c05950 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1578,6 +1578,82 @@ static int backfill_tags(struct display_state *display_state,
+>  	return retcode;
+>  }
+>  
+> +static void report_set_head(const char *remote, const char *head_name,
+> +			struct strbuf *buf_prev) {
+> +	struct strbuf buf_prefix = STRBUF_INIT;
+> +	const char *prev_head;
+> +
+> +	strbuf_addf(&buf_prefix, "refs/remotes/%s/", remote);
+> +	skip_prefix(buf_prev->buf, buf_prefix.buf, &prev_head);
 
-Unfortunately, I don't see a way around this problem, at least with our
-current approach for building libgitpub.a. We have to pass
-'-fvisibility=hidden' when compiling each source file, not just at link
-time, so I think the object files created when building vanilla Git will
-necessarily differ from those created when building libgit-rs.
+The same "uninitialized prev_head" problem I discussed earlier for a
+separate patch is here, I think.
 
-I think that means we'll need to drop this patch for now, and revisit
-if/when we change our libgitpub.a strategy.
+> +	if (prev_head && !strcmp(prev_head, head_name))
+> +		;
+> +	else if (prev_head) {
+> +		printf("'HEAD' at '%s' has changed from '%s' to '%s'\n",
+> +			remote, prev_head, head_name);
+> +		printf("Run 'git remote set-head %s %s' to follow the change.\n",
+> +			remote, head_name);
+> +	}
+
+If the condition is only for one arm, can't we do this without
+else/if?  Would the condition become too contorted to read if we did
+so?  Let's see.
+
+	if (prev_head && strcmp(prev_head, head_name)) {
+		HEAD has changed from prev_head to head_name;
+	}
+
+I guess it is a bit subjective, but as long as you are used to read
+"strcmp(a,b)" as "a and b are different", this should be easier to
+read than the original.
+
+> +static const char *strip_refshead(const char *name){
+> +	skip_prefix(name, "refs/heads/", &name);
+> +	return name;
+> +}
+> +
+> +static int set_head(const struct ref *remote_refs)
+> +{
+> +	int result = 0;
+> +	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT,
+> +		b_local_head = STRBUF_INIT;
+> +	const char *remote = gtransport->remote->name;
+> +	char *head_name = NULL;
+> +	struct ref *ref, *matches;
+> +	struct ref *fetch_map = NULL, **fetch_map_tail = &fetch_map;
+> +	struct refspec_item refspec = {
+> +		.force = 0,
+> +		.pattern = 1,
+> +		.src = (char *) "refs/heads/*",
+> +		.dst = (char *) "refs/heads/*",
+> +	};
+> +	struct string_list heads = STRING_LIST_INIT_DUP;
+> +	struct ref_store *refs = get_main_ref_store(the_repository);
+> +
+> +	get_fetch_map(remote_refs, &refspec, &fetch_map_tail, 0);
+> +	matches = guess_remote_head(find_ref_by_name(remote_refs, "HEAD"),
+> +				    fetch_map, 1);
+> +	for (ref = matches; ref; ref = ref->next) {
+> +		string_list_append(&heads, strip_refshead(ref->name));
+> +	}
+> +
+> +
+> +	if (!heads.nr)
+> +		result = 1;
+> +	else if (heads.nr > 1) {
+
+Curious use of extra {braces}.  In this case we can just lose them.
+
+> +		result = 1;
+> +	} else
+> +		head_name = xstrdup(heads.items[0].string);
+
+
+> +	if (head_name) {
+> +		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", remote);
+> +		strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", remote, head_name);
+> +		/* make sure it's valid */
+> +		if (!refs_ref_exists(refs, b_remote_head.buf))
+> +			result |= error(_("Not a valid ref: %s"), b_remote_head.buf);
+> +		else if (refs_update_symref(refs, b_head.buf, b_remote_head.buf,
+> +					"remote set-head", &b_local_head, true))
+> +			result |= error(_("Could not setup %s"), b_head.buf);
+
+Two problems.
+
+ * we do not capitalize the beginning of the sentence in an error()
+   message, i.e. "Could not" -> "could not" (or "cannot").
+
+ * "setup" is not a verb.
+
+I know both were inherited from builtin/remote.c but existing
+breakage is not a good excuse to make new code worse.
+
+> +		else {
+
+Curious use of extra {braces}.  In this case we can just lose them.
+
+> +			report_set_head(remote, head_name, &b_local_head);
+> +		}
+> +		free(head_name);
+> +	}
+> +
+> +	strbuf_release(&b_head);
+> +	strbuf_release(&b_local_head);
+> +	strbuf_release(&b_remote_head);
+> +	return result;
+> +}
+> +
+>  static int do_fetch(struct transport *transport,
+>  		    struct refspec *rs,
+>  		    const struct fetch_config *config)
+> @@ -1647,6 +1723,8 @@ static int do_fetch(struct transport *transport,
+>  				    "refs/tags/");
+>  	}
+>  
+> +	strvec_push(&transport_ls_refs_options.ref_prefixes,"HEAD");
+
+Missing SP after ",".
+
+>  	if (must_list_refs) {
+>  		trace2_region_enter("fetch", "remote_refs", the_repository);
+>  		remote_refs = transport_get_remote_refs(transport,
+> @@ -1791,6 +1869,9 @@ static int do_fetch(struct transport *transport,
+>  				  "you need to specify exactly one branch with the --set-upstream option"));
+>  		}
+>  	}
+> +	if (set_head(remote_refs))
+> +		; // Way too many cases where this can go wrong.
+> +		  // Just fail silently.
+
+	/*
+	 * our multi-line comments
+	 * look like this.
+	 */
+
+More importantly, we are not failing silently.  As we saw in the
+implementation of set_head() above, a non-zero return came from ret
+that was assigned the return value of error() in the function, so an
+error message is already given, no?
+
+> @@ -2021,6 +2102,7 @@ static int fetch_multiple(struct string_list *list, int max_children,
+>  	return !!result;
+>  }
+>  
+> +
+>  /*
+>   * Fetching from the promisor remote should use the given filter-spec
+>   * or inherit the default filter-spec from the config.
+
+An unintended change?
+
+Thanks.
