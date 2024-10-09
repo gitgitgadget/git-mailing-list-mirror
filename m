@@ -1,63 +1,64 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93A11DFE2B
-	for <git@vger.kernel.org>; Wed,  9 Oct 2024 20:31:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DD41E25ED
+	for <git@vger.kernel.org>; Wed,  9 Oct 2024 20:31:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728505872; cv=none; b=ceR+RD6qekPn+XfbOL69+Cm8z/Z4KBGuyM6HLgq2IhDS777ShnLH+qSvvfWGxZ99q2ePGvz89eknTTEJdebZeiagA5sGdgEiFgsY1Z6jZ2MbrUwYAirgNbgK9bEnt1SiW3y39njxp17rKgtRJ5xckvjdxo1dvKmoIQLVS9OCyvU=
+	t=1728505875; cv=none; b=tHiR+ULAN4x5qg+koT9kr3c0YF1a5FDo7IwjrrggOU3T3RSunmjE10nXRPG/PPz+MOHQ7aRsqUmuQu/fFTrrJrK6fTAVZdAcBXd0vCHGSDZnRNIokFr7i2iFXCbBTw8brWhLCnGZ48GlXfBJPtEQ/YqaKBmvQMQgo81qRusYfSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728505872; c=relaxed/simple;
-	bh=4Yw2pzGR0wOeq8aVIy6qUhcZZRmfYt79+Ng9IcpXeTM=;
+	s=arc-20240116; t=1728505875; c=relaxed/simple;
+	bh=VHXqtIrTQ8EoL49wvasLQy0bQ90hM+ngote5lOyTFs4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OOzrrmk6PUwnF1bbiVm4Nh5kPbTdzVVHRMlCK1TCrmEUooGYVRhF9rYkmT9lOt2BkswK8yO1NGd2627xvzZ8M3go0htHsizC3C5x3DH25pI6Q/EhfgeXdFOTTuMwj9lcoQXlx1ZCHWZEOOWIgIkXWKEYjLOZmM8O16SIt+ZJCpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZoZ5WvtI; arc=none smtp.client-ip=209.85.128.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=VXs9bp3yS5kIh6YF3lWAr6TX2FfJk7alrPs/C8vlp0WdzSFexF5pquwtk4/T0/ZAZreZgt3VAEi/pxHyFd1wZVqcvy4T0G7mli9WU9/EhGRNqC0ii2mmoFu5OeQZCSHtr9Z1nsFq8dklP6iDD3LsYoZS/CuTx/Stl5h7UV5mJdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=1NEkCfK0; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZoZ5WvtI"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6dbb24ee34dso2225017b3.2
-        for <git@vger.kernel.org>; Wed, 09 Oct 2024 13:31:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="1NEkCfK0"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6dbc9a60480so2802037b3.0
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 13:31:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728505869; x=1729110669; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728505873; x=1729110673; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gZ4CWK6MEGYelnnHf5BZR9q0ny8i9QOTMIHGQ3r9LF8=;
-        b=ZoZ5WvtIJ7R0EUtwg3BJ1RMOSGlFC9CHy6/+R6jiKidpFxy8vJ5qOYMiTBqg+2uCRJ
-         aL7MtoAvE/YGoouxnR+pmNGnH2HJSBJbreCzI6xlstrq6JD06k4/DRwnyNqVecQsA5f2
-         2y+2DrdXDrmGL9DGBUWPxyYVaQKdhpTADgtuRleM7uSN84kabfdJ71eWQW9IG/LBeB94
-         FuIAQdHkkHjygFDExn659htLucBFTUNu/ag0w3Egrvksi9E/42MEAu4brb1ybcsL/6++
-         kc2QmeD0bmKtmNinH96ILqpdO0PnM4dn4balVmd5D2Lt+GUFa6FP6YDyxCcUkUNuXN9I
-         ov+Q==
+        bh=3DmxUW9VfrcaxEOmru85wG8XZ8VpKgOyjgrDK9i/sLc=;
+        b=1NEkCfK0z12L0kXte+VXzm/8+qEW5gaxBQD4HZw7kJNUTFolD7BGlJQcohyAAeAgv1
+         aAg88LbI1iX7lqBli3sSzFuQOT4/C3NVEismZX/9UYHgX24ZOAYzhfEwtBrUQckudIMl
+         +uUggrbRQOU9nU9/Y+V3XzV1NPKygbnRZcn5pXA/T370kfu8PlgrwTIsGsJVjPG02gQ4
+         5Ravqq/GvevAmGLBxOebTzhKvGHLVNBL/bkX26ZEEaaDeCwp+VYnzlViw2N+dYr+zQpd
+         WW7pwtTNMsBczOslcLzhk8dKTKh49Wsn/VslxzvGV9Q8MpPZtwAoY/tt/Fn1qQDHs4yF
+         MjLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728505869; x=1729110669;
+        d=1e100.net; s=20230601; t=1728505873; x=1729110673;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gZ4CWK6MEGYelnnHf5BZR9q0ny8i9QOTMIHGQ3r9LF8=;
-        b=fywnL3U9aB6T+1uQlRESR5KLfBdR7AQ/XaT0Vur2ZIBdz/IY3fIdZzBT7JnyzQ9D57
-         OQNjPY6cP4F7sHNVekkYlQZI74c28Y1VQCswryoK4VnBfZXFTQse1OdTukgNDnRJVOyl
-         TVKP2KOjBt4DSC+Y3Zns6Axjt21o6EPs0VPwRwKEdE02sgxvKj3PJYkRzNpDbj5RwaQV
-         847+vZwpCc/y4YtJE7hZmfWrpJlmwycVmPxLy0qfIjEvdxG+F0ovXqtpGSLVpQwXIum0
-         refQ/osAqOToOJRpSuxdrpCdGJiKpza0mlzw47EZaCe03DiJHnlBTxpathqpKnv6itmX
-         ofEw==
-X-Gm-Message-State: AOJu0YyY4fMG+ta7AjJmzOgLRhx3JL+9Q4rsw05P5rYKfePuegvkBI83
-	2tLDhbdv6M+nJTBxIwvkw8+BTjGsV9Zhjdw+8Ss3Pmnz+mRLKksyI5gMzRozf2iOtqgvh7oOKnI
-	bdgE=
-X-Google-Smtp-Source: AGHT+IF5WwZj2e6CmXZc6hvjSYKjx34/pGzy7pRHLXUjytW8UaNMIaQ5Y9cz3S7YSlQ5cMzuF8K03w==
-X-Received: by 2002:a05:690c:f03:b0:6e2:1626:fc24 with SMTP id 00721157ae682-6e32e1d7532mr17341687b3.7.1728505869453;
-        Wed, 09 Oct 2024 13:31:09 -0700 (PDT)
+        bh=3DmxUW9VfrcaxEOmru85wG8XZ8VpKgOyjgrDK9i/sLc=;
+        b=qhfonmE+i+lWie6NV46JV/uLUzieo4N8aNG0ZJMBtG7tL+aeVmDLww1aM/62m3qbfb
+         i21kiSLrT4Q8HaN4MiSCJCG7NXxk/pFrNfyoeckfDTWl57iX85yMS2d3MJez98jfqWbg
+         5K2hk+q1AqXEQERVnilkDoIcTY6mVNINBbJEkib/jxmwvRuo/HAxx7GqJfzLp0eV5NKG
+         oEXHTZZ43A3Bpzb52NXPkPO/5Vro+rtWzzFY8diKtRRCzqQVdT2hBycHgUUnyECFwXEW
+         ySOE4MsqNqv7BX/eF7NPEUVgkbJe445YSgb+DzOARjeKEKXRKSPHAJXmCz9dJJrknnIb
+         2Ulg==
+X-Gm-Message-State: AOJu0YzkSixqAs87ZyflSYOxgcYn36HZCzCILwZmkqf99UYkEttGqh20
+	/xNjiqkqgfNMEdGABAyjPRTUif94UOb1ljasH/2r27qATqEJ4bEc2az4bdwkqaqu9AwfOkCjd9S
+	bu/o=
+X-Google-Smtp-Source: AGHT+IFXrXhIyjKXfwuHcnpecIIWIXyda3nc72rNMpnN9+/kvWFfZHUeWpIL1qkUdAlj4qHrq/4fYg==
+X-Received: by 2002:a05:690c:f0f:b0:6de:351:3e with SMTP id 00721157ae682-6e3221867e6mr43772907b3.8.1728505872947;
+        Wed, 09 Oct 2024 13:31:12 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e32d5ebeacsm2030567b3.6.2024.10.09.13.31.08
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e318698e66sm6554917b3.32.2024.10.09.13.31.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 13:31:08 -0700 (PDT)
-Date: Wed, 9 Oct 2024 16:31:07 -0400
+        Wed, 09 Oct 2024 13:31:12 -0700 (PDT)
+Date: Wed, 9 Oct 2024 16:31:11 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 03/11] pack-bitmap.c: delay calling 'offset_to_pack_pos()'
-Message-ID: <6118055b55c801f964b5a4b5d001196c00b757ab.1728505840.git.me@ttaylorr.com>
+Subject: [PATCH 04/11] pack-bitmap.c: compare `base_offset` to
+ `delta_obj_offset`
+Message-ID: <bc5ff77f63b42dbea70b12f736e48f95fe8d6cf3.1728505840.git.me@ttaylorr.com>
 References: <cover.1728505840.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -69,65 +70,40 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1728505840.git.me@ttaylorr.com>
 
-When handling single object reuse from a single-pack bitmap, we first
-convert the base object's offset into a pack-relative position. Then,
-we check if the base object's offset occurs after the delta object's
-offset. If that's the case, then we kick the delta'd object back to
-the slow path.
+When comparing the offsets of either half of a delta/base-pair, we
+compare `base_offset` to `offset`.
 
-But there are a couple of oddities here:
+There is nothing functionally wrong with that comparison, but it is
+slightly confusing, since `offset` points to just after the delta
+object's type header in the pack, whereas `base_offset` points to the
+beginning of the header.
 
-  - However unlikely it is that we'll find a delta/base pair with
-    base_offset >= offset, it doesn't make sense to convert the base's
-    offset to a pack-relative position if we're going to throw out the
-    reuse opportunity anyway.
+In practice, that distinction does not matter, and it is perfectly
+fine to compare base_offset to offset.
 
-  - We "convert" the base object's position into bitmap order by
-    offsetting it by 'pack->bitmap_pos'. But this makes no sense,
-    since single-pack bitmaps have only one pack (by definition), and
-    that pack's first object occurs at bit position 0.
-
-Let's clean up this part of 'try_partial_reuse()' by (a) first seeing
-if we can reuse the delta before converting its base object's offset
-into a pack position, and (b) avoid an unnecessary conversion with
-'pack->bitmap_pos'.
-
-(b) allows us to avoid the intermediate 'base_pos' variable, and
-instead write directly into 'base_bitmap_pos', which we also change
-here for further clarity.
+But we already make a copy of `offset` before it is moved forward by
+calling the function `unpack_object_header()`. So let's use that copy
+(which points at the beginning of the delta object's header) in the
+comparison so that we are comparing like quantities.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ pack-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 5c5c26efe0d..faabc0ba0e9 100644
+index faabc0ba0e9..3e1034cabf3 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -2102,11 +2102,6 @@ static int try_partial_reuse(struct bitmap_index *bitmap_git,
- 				return 0;
- 			}
- 		} else {
--			uint32_t base_pos;
--
--			if (offset_to_pack_pos(pack->p, base_offset,
--					       &base_pos) < 0)
--				return 0;
- 			/*
- 			 * We assume delta dependencies always point backwards.
- 			 * This lets us do a single pass, and is basically
-@@ -2124,7 +2119,9 @@ static int try_partial_reuse(struct bitmap_index *bitmap_git,
+@@ -2117,7 +2117,7 @@ static int try_partial_reuse(struct bitmap_index *bitmap_git,
+ 			 * position, since the bits are ordered by their
+ 			 * positions within the pack.
  			 */
- 			if (base_offset >= offset)
+-			if (base_offset >= offset)
++			if (base_offset >= delta_obj_offset)
  				return 0;
--			base_bitmap_pos = pack->bitmap_pos + base_pos;
-+			if (offset_to_pack_pos(pack->p, base_offset,
-+					       &base_bitmap_pos) < 0)
-+				return 0;
- 		}
- 
- 		/*
+ 			if (offset_to_pack_pos(pack->p, base_offset,
+ 					       &base_bitmap_pos) < 0)
 -- 
 2.47.0.11.g487258bca34
 
