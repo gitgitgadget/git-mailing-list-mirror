@@ -1,57 +1,57 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F72F18DF9E
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 21:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639351E47A3
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 21:12:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728594724; cv=none; b=O0OgCqpQHubmeQ2sfMD8ozAuN8pNkBxltstVnCNQPa1EfWhWT9J+0gwgnsRKCSJP2eUOS2ohmioTSoWf0t4qgnVLzMuphYnd/IG0ykwFNQlrgJ+78otTAUzwANsxPRK/0ztoISgtua4EuVC8ZAPg+iodvSjlY+NZeln3ym8NrB8=
+	t=1728594726; cv=none; b=qzsBaoTFssE0wc3gL3q7ZWdGzhzxkv9ImluZoUbZtqWQeiXECYBwR+P/sAXuZpt7u4J2tavQTwJb0q0QYngeyR0f3D57RJwMCUu5o+iSMDy6tmeaN7cab72xtUP6wncnsfcRmWI7U7bY6om4r/kvS0INPjW1hIVFpSVU17ruuPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728594724; c=relaxed/simple;
-	bh=SksNYFhgOmMcSUC6Nc0a+z8yZGuwRwsmlbf60jF4T0c=;
+	s=arc-20240116; t=1728594726; c=relaxed/simple;
+	bh=MEXVEtPwIIXHZDdp0ABonxaS7weLVIIfVUWgsXBJYOg=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=aH1skK1iiNaVOoAKXVERzQxWqkLF03uNLjXA8F3LQflVP/jDi6A5EwmFOJNSYFUMra1iHR1Jo/8uj4n6+h3X8Tlm6LTfy+FqY0jPDBJuM9U8du3kRlFsqGR94F4wBOYJvWwFbhI3Qsjq7XZHy26L0nCUKSTsZPGSctmIyw5EMlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lpy326JN; arc=none smtp.client-ip=209.85.128.202
+	 To:Cc:Content-Type; b=c1o4Cc2dAgO1XwtbUyRg+Hs854gnNjwAKfH49Xfc9VeKmLO7Bnxnho2jOydm0CgskV9usFAWpM5sksUaB7tY9dPkEIkQtj95QvzDYIe3AO/P7vf+/6FIeWQ+ttMT5WKijGXGXinljUseFhVurGKmuSianAkIgG8Vchy2QnnfICk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=J3rsN9Nb; arc=none smtp.client-ip=209.85.219.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lpy326JN"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6e315a5b199so27092167b3.2
-        for <git@vger.kernel.org>; Thu, 10 Oct 2024 14:12:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="J3rsN9Nb"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-e24b43799e9so1421876276.2
+        for <git@vger.kernel.org>; Thu, 10 Oct 2024 14:12:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1728594721; x=1729199521; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1728594723; x=1729199523; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oQZQbRoNRBxHmUuDOufrZ/vTZykZqe0/hdNVXod1fR8=;
-        b=lpy326JNxe/ymQ1Zn91RnKRR3zXHk7inyg7bBuy9VsnKP6ExX/ScU1xtzyyyU6WrVR
-         doJVXS8G3ZvlazA99OQYY4ykgrvUEf4GgrnpLjVB4ATEwBvyNcc0nArSa4N5uAgKYmTa
-         wDqFnlcU5+ooKq1kURmE1yKAcbLDQ0hJR03siAwhu+sehvu1OmIkAFok4+CLK7qbHZiv
-         hkwESVCmJq/F4h4/BU3DRP5fbAvTdFFEYlUmz+xaCRPceahNDAggYC1c31Ro45jdPEmK
-         5xT1iQY9HGSaGb8EzgJdGFAmaqizqkHoHh+kPGlOWHfFMEDGeODcAQl2i9H45a2WyY+A
-         Y07A==
+        bh=ITAwUM+BBZEk4BUg91KAA202UlRn8RI8CGRYLLaz4RM=;
+        b=J3rsN9NbN1AwKP934e+m1NH69ycgil4wJ7G8KphAHudXs32/0vSzeo7bsrmCy5u6GT
+         WrHCZ+YBtqJ5Nhr1pv7X0+UD4p3OfakaE+fYNZMLDzYxa8chdpt+U+ZO8JfC1trv998N
+         saqfmOSr/0dQ3N2CgrTJvwdT/63b/xF6VF7u0/YetDiB4ss8lsrp4u8Y/hKHXng8ng1Q
+         YSvumKwBy6Ff3aJ39QjQejyIZWbFft2iwgZH9j5vWahce+6dt7XTMmqbSQhMMUQ1kYir
+         OKojOo3Nt0onPw8Sa4Z+eh31Q3w1lWn1X4nCaa4cM+ScF61TKhHUjixZ+Qzn6gNDITpr
+         S8aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728594721; x=1729199521;
+        d=1e100.net; s=20230601; t=1728594723; x=1729199523;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=oQZQbRoNRBxHmUuDOufrZ/vTZykZqe0/hdNVXod1fR8=;
-        b=eZwC7ZRZsWRpvsBzn14rI0Kg24+inNkM8FqctySKGb8f1GL4Af0LvbeP6NiNTENgoz
-         x/taFMOigrxHTwL0yC3/yJgYg3w0JniPh4qQqW7Cy+U55nv3l5YnjHNa9OZJPcEpIDLF
-         oiItiLdDd0Ao6FTIsStS4OYHw/JnivaPGmI0iPv1BI7nUqFcYdsAk8wxkzNWf+jLQlQI
-         cbFwnavMZoQVO6MNQ28KMDSDboy8LE3BUAgcHhC3T6ExbYFM7Lu+WcA2ykBIKeMEPmnc
-         aO8fHRT7QgwKt5Vp97REG6IxVlAzdMcGfgOCC141ra3aaeMot9vipKaXzwf3cz5hBJwl
-         bj3g==
-X-Gm-Message-State: AOJu0YxfPZP6ODTk09i8NdG1xQIdU8sf8xaJF6QvMfI4Ie9s/lYwIk3N
-	8c72PTz3Cq5jGD73198/F1yro61ypAt1q9L69m56wi03ADkIjg894EDEZG4wfmq6pJZtQNtBFVO
-	Cl6ZUllJ3XHAV5qSJdHz/vr+CzSGCPtrrKGIWUglqHEchlbITcBBg0Izid+nCm5X1ZV9BVUc2Hy
-	XXtwjUCU1B7M7ICdQe68zoJp6Nt9MDAqNqlQ9MwzI=
-X-Google-Smtp-Source: AGHT+IF/PNrPmoTIhDT/7G1/XMMcim2IxH77p7vshqJHKsRtGqk/llzWuhUcn8pidXcHPsE12g7S7XhEbyO5PQ==
+        bh=ITAwUM+BBZEk4BUg91KAA202UlRn8RI8CGRYLLaz4RM=;
+        b=hY34U+o/tVNs1S/di/+YHbVXEb9c/EU5FrFEClsC9opcg6u2lbcfGXK88KHYOaONVE
+         5LcHA7pbn4aofjpuE+6f/cPPqF53cEtgLYZdp4L14dBUH5hXE0jpeeAwom+WeIRAW0lE
+         BJ0YmZfH8710FTxClmteBEcMDraE5A2/Sjz1SC3nZ9ATikJM3KNd6AZxOAoo8md61004
+         bddBIoXtowxhN8HWUlzPI0z8Xr4mwVxjavz58hJZPrImvqjKDPbRX5NLL3I1iu0M1II4
+         kujFX1e08Z5a8kgU+1odmZdBuINAxbqT4lYFnnMY6+Vwwx/bqJkDuwrpdi0KI5uSAGtc
+         mPIw==
+X-Gm-Message-State: AOJu0Yy0uTNO7KlbSNr47zQ/eHc+g/nCnTN6fo55kUV15vCCKb99rT7Q
+	e4op1jpokoqj/MC/XMWADHnYSg+DSdqEzRa7PlUU7rszv6Pmz4QhkRhAIghYoXC+j76IiYvrnnH
+	NASOIhJ4KL+nRTL99W8Q8zf3J/D5M2dAQ4WAox6zXBvPFUEwmGLIQEgmHo8ErAxFaBJiLg0sPqb
+	m6Owx7j09xr2PNWEbBvu0HNpcLmpeQprDcrHwMB8Y=
+X-Google-Smtp-Source: AGHT+IElw3uLkLZBWCcNmrb4WTBqtMzBIhBu++SKBEtjVLIKp33P1Tdoh25qWJUrNaIulLi2wMIfaTAiQJJuwQ==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:5a71:d442:305f:726f])
- (user=steadmon job=sendgmr) by 2002:a25:74ce:0:b0:e24:a00a:518e with SMTP id
- 3f1490d57ef6-e291a202b4fmr258276.7.1728594721344; Thu, 10 Oct 2024 14:12:01
- -0700 (PDT)
-Date: Thu, 10 Oct 2024 14:11:54 -0700
+ (user=steadmon job=sendgmr) by 2002:a05:6902:504:b0:e16:4d66:982e with SMTP
+ id 3f1490d57ef6-e2919de7e0bmr212276.5.1728594723167; Thu, 10 Oct 2024
+ 14:12:03 -0700 (PDT)
+Date: Thu, 10 Oct 2024 14:11:55 -0700
 In-Reply-To: <cover.1728594659.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -61,8 +61,8 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1728594659.git.steadmon@google.com>
 X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
-Message-ID: <770fe27c67638c315daf03412d0ce935d5e9bee5.1728594659.git.steadmon@google.com>
-Subject: [PATCH 2/3] fuzz: port fuzz-parse-attr-line from OSS-Fuzz
+Message-ID: <4c9813313ccb620f2ac176ef9fe9223113523c75.1728594659.git.steadmon@google.com>
+Subject: [PATCH 3/3] fuzz: port fuzz-url-decode-mem from OSS-Fuzz
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: eric.sesterhenn@x41-dsec.de, jarlob@gmail.com
@@ -78,7 +78,7 @@ during Git's CI runs, and thus breaking changes are much less likely to
 be noticed by Git contributors.
 
 Port one of these tests back to the Git project:
-fuzz-parse-attr-line
+fuzz-url-decode-mem
 
 This test was originally written by Eric Sesterhenn as part of a
 security audit of Git [2]. It was then contributed to the OSS-Fuzz repo
@@ -97,180 +97,68 @@ Co-authored-by: Josh Steadmon <steadmon@google.com>
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
  Makefile                            |  1 +
- attr.c                              | 38 +------------------------
- attr.h                              | 43 +++++++++++++++++++++++++++++
  ci/run-build-and-minimal-fuzzers.sh |  1 +
  oss-fuzz/.gitignore                 |  1 +
- oss-fuzz/fuzz-parse-attr-line.c     | 39 ++++++++++++++++++++++++++
- 6 files changed, 86 insertions(+), 37 deletions(-)
- create mode 100644 oss-fuzz/fuzz-parse-attr-line.c
+ oss-fuzz/fuzz-url-decode-mem.c      | 43 +++++++++++++++++++++++++++++
+ 4 files changed, 46 insertions(+)
+ create mode 100644 oss-fuzz/fuzz-url-decode-mem.c
 
 diff --git a/Makefile b/Makefile
-index 3ce391062f..141e194bf5 100644
+index 141e194bf5..2cd7a6e003 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2382,6 +2382,7 @@ FUZZ_OBJS +=3D oss-fuzz/fuzz-credential-from-url-gent=
-ly.o
- FUZZ_OBJS +=3D oss-fuzz/fuzz-date.o
+@@ -2383,6 +2383,7 @@ FUZZ_OBJS +=3D oss-fuzz/fuzz-date.o
  FUZZ_OBJS +=3D oss-fuzz/fuzz-pack-headers.o
  FUZZ_OBJS +=3D oss-fuzz/fuzz-pack-idx.o
-+FUZZ_OBJS +=3D oss-fuzz/fuzz-parse-attr-line.o
+ FUZZ_OBJS +=3D oss-fuzz/fuzz-parse-attr-line.o
++FUZZ_OBJS +=3D oss-fuzz/fuzz-url-decode-mem.o
  .PHONY: fuzz-objs
  fuzz-objs: $(FUZZ_OBJS)
 =20
-diff --git a/attr.c b/attr.c
-index 06b5b5e55e..f7898285c5 100644
---- a/attr.c
-+++ b/attr.c
-@@ -259,42 +259,6 @@ const struct git_attr *git_attr(const char *name)
- 	return git_attr_internal(name, strlen(name));
- }
-=20
--/* What does a matched pattern decide? */
--struct attr_state {
--	const struct git_attr *attr;
--	const char *setto;
--};
--
--struct pattern {
--	const char *pattern;
--	int patternlen;
--	int nowildcardlen;
--	unsigned flags;		/* PATTERN_FLAG_* */
--};
--
--/*
-- * One rule, as from a .gitattributes file.
-- *
-- * If is_macro is true, then u.attr is a pointer to the git_attr being
-- * defined.
-- *
-- * If is_macro is false, then u.pat is the filename pattern to which the
-- * rule applies.
-- *
-- * In either case, num_attr is the number of attributes affected by
-- * this rule, and state is an array listing them.  The attributes are
-- * listed as they appear in the file (macros unexpanded).
-- */
--struct match_attr {
--	union {
--		struct pattern pat;
--		const struct git_attr *attr;
--	} u;
--	char is_macro;
--	size_t num_attr;
--	struct attr_state state[FLEX_ARRAY];
--};
--
- static const char blank[] =3D " \t\r\n";
-=20
- /* Flags usable in read_attr() and parse_attr_line() family of functions. =
-*/
-@@ -353,7 +317,7 @@ static const char *parse_attr(const char *src, int line=
-no, const char *cp,
- 	return ep + strspn(ep, blank);
- }
-=20
--static struct match_attr *parse_attr_line(const char *line, const char *sr=
-c,
-+struct match_attr *parse_attr_line(const char *line, const char *src,
- 					  int lineno, unsigned flags)
- {
- 	size_t namelen, num_attr, i;
-diff --git a/attr.h b/attr.h
-index bb33b60880..2319ef31e3 100644
---- a/attr.h
-+++ b/attr.h
-@@ -240,4 +240,47 @@ int git_attr_system_is_enabled(void);
-=20
- extern char *git_attr_tree;
-=20
-+/*
-+ * Exposed for fuzz-testing only.
-+ */
-+
-+/* What does a matched pattern decide? */
-+struct attr_state {
-+	const struct git_attr *attr;
-+	const char *setto;
-+};
-+
-+struct pattern {
-+	const char *pattern;
-+	int patternlen;
-+	int nowildcardlen;
-+	unsigned flags;		/* PATTERN_FLAG_* */
-+};
-+
-+/*
-+ * One rule, as from a .gitattributes file.
-+ *
-+ * If is_macro is true, then u.attr is a pointer to the git_attr being
-+ * defined.
-+ *
-+ * If is_macro is false, then u.pat is the filename pattern to which the
-+ * rule applies.
-+ *
-+ * In either case, num_attr is the number of attributes affected by
-+ * this rule, and state is an array listing them.  The attributes are
-+ * listed as they appear in the file (macros unexpanded).
-+ */
-+struct match_attr {
-+	union {
-+		struct pattern pat;
-+		const struct git_attr *attr;
-+	} u;
-+	char is_macro;
-+	size_t num_attr;
-+	struct attr_state state[FLEX_ARRAY];
-+};
-+
-+struct match_attr *parse_attr_line(const char *line, const char *src,
-+					  int lineno, unsigned flags);
-+
- #endif /* ATTR_H */
 diff --git a/ci/run-build-and-minimal-fuzzers.sh b/ci/run-build-and-minimal=
 -fuzzers.sh
-index d9d3ad23c7..60fe8b0dfc 100755
+index 60fe8b0dfc..08c556c818 100755
 --- a/ci/run-build-and-minimal-fuzzers.sh
 +++ b/ci/run-build-and-minimal-fuzzers.sh
-@@ -20,6 +20,7 @@ credential-from-url-gently \
- date \
+@@ -21,6 +21,7 @@ date \
  pack-headers \
  pack-idx \
-+parse-attr-line \
+ parse-attr-line \
++url-decode-mem \
  "
 =20
  for fuzzer in $fuzzers ; do
 diff --git a/oss-fuzz/.gitignore b/oss-fuzz/.gitignore
-index 2cfc845b20..ec185f061c 100644
+index ec185f061c..f2d74de457 100644
 --- a/oss-fuzz/.gitignore
 +++ b/oss-fuzz/.gitignore
-@@ -4,3 +4,4 @@ fuzz-credential-from-url-gently
- fuzz-date
+@@ -5,3 +5,4 @@ fuzz-date
  fuzz-pack-headers
  fuzz-pack-idx
-+fuzz-parse-attr-line
-diff --git a/oss-fuzz/fuzz-parse-attr-line.c b/oss-fuzz/fuzz-parse-attr-lin=
-e.c
+ fuzz-parse-attr-line
++fuzz-url-decode-mem
+diff --git a/oss-fuzz/fuzz-url-decode-mem.c b/oss-fuzz/fuzz-url-decode-mem.=
+c
 new file mode 100644
-index 0000000000..45a4c4e53c
+index 0000000000..2342aa993b
 --- /dev/null
-+++ b/oss-fuzz/fuzz-parse-attr-line.c
-@@ -0,0 +1,39 @@
++++ b/oss-fuzz/fuzz-url-decode-mem.c
+@@ -0,0 +1,43 @@
 +#include "git-compat-util.h"
 +#include <stddef.h>
 +#include <stdlib.h>
 +#include <stdint.h>
 +#include <string.h>
-+#include "attr.h"
++#include <stdio.h>
++#include "url.h"
 +
 +int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
 +
 +int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 +{
-+	struct match_attr *res;
 +	char *buf;
++	char *r;
++	const char *pbuf;
 +
 +	buf =3D malloc(size + 1);
 +	if (!buf)
@@ -279,20 +167,22 @@ index 0000000000..45a4c4e53c
 +	memcpy(buf, data, size);
 +	buf[size] =3D 0;
 +
-+	res =3D parse_attr_line(buf, "dummy", 0, 0);
++	// start fuzzing
++	r =3D url_decode(buf);
++	free(r);
 +
-+	if (res) {
-+		int j;
-+		for (j =3D 0; j < res->num_attr; j++) {
-+			const char *setto =3D res->state[j].setto;
-+			if (ATTR_TRUE(setto) || ATTR_FALSE(setto) ||
-+				ATTR_UNSET(setto))
-+				;
-+			else
-+				free((char *)setto);
-+		}
-+		free(res);
-+	}
++	r =3D url_percent_decode(buf);
++	free(r);
++
++	pbuf =3D (const char*) buf;
++	r =3D url_decode_parameter_name(&pbuf);
++	free(r);
++
++	pbuf =3D (const char*) buf;
++	r =3D url_decode_parameter_value(&pbuf);
++	free(r);
++
++	// cleanup
 +	free(buf);
 +
 +	return 0;
