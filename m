@@ -1,296 +1,153 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F0315B0F2
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 19:19:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46CD1CEAD8
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 19:49:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728587991; cv=none; b=Jm8zVrI7Iu9JIPSRhNglOVC+Tay/vjjCQxFbYBTnJ2uEX7Jl9KNbzYPyDKCB0G2zDQ8GWU4fkAn87O39ZMmToiToVlno/HWFk+UUxtbYIaKrWbjt1qoSVoK0H9eHpYUEMCBTS0I2iiu8mcRtcrwzCqv3KBAlwHq3ZDscoLJ3ekI=
+	t=1728589765; cv=none; b=oFplsiIIKmOEwxJznPYPcYV1VPoeXk3YHxn4dx1X9hbRzcgMsehD0OLSMbGVi+YplBRUHqRV4lvnmMVKpmsWqnjZIuxBLD24+MXZupQt7mhVynQeV8oKnfG4EQ/HyPzacgQ69AJF2WlGJopiF9O4RePsoLTLIAtyZW1yZYyL3+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728587991; c=relaxed/simple;
-	bh=+RCkzTZ7qR5lX8COL23ejsVOsPxtttu43zlA/afIfy8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bpyZQsJCe0x5xje/bVqarxy1xD+sGGCJLwSpMgB7w9QEAgBKyJI9KAb6+tUbEZ0Ka8Ocuv2nUyTTKh1mzs5nBoMtPzT+4KTCgk9hq28BsPhEcnJs4bO5cZWq3uZlJUi3VdrOL7FtPsfsbxu1dNYltuX7kQPAecdA7GS0sH+Q96Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=HShG/QKk; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1728589765; c=relaxed/simple;
+	bh=KoqNEuPSlAIyf6VPvF5JIrNzM7Q83MgDfZUjufVTklk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c3/ku9Z8ks546q+miw1Z/jvWkP9pbGT2SOpqCD+AYeIXyzBGo/eKXNg5ZgOHWJC5r7VY+02KHMeI14wFMAkAE3XQMykgNVCy2G2/OPUr0vzitbrDTmGOhmdMCcZePJaCEvnxf4ZQmNt6Xad3IpHQ4TfMYpI9+mnWhXInYG5uK2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R7qRZj3a; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="HShG/QKk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1728587980; x=1729192780; i=tboegi@web.de;
-	bh=JmcdfO/JWC4Ysx5S5buMSaEjaI5dTqHc2fNB28olM34=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=HShG/QKkPkoIS3eE2bT0Lq9PA/0Q08LMAprtgPnwRleopp9TTYA2scvBUpvc/OS4
-	 asvsCtQ7O5XHkvRiua5vqLTRSxlESx0Yq1mV998XZtJxMrdtb/98UHKSovvorL1CG
-	 Azm8JO9xfOYcrYWYugI8adFOR2R7YyPiQxv9b2jYlEc8Sm6R8eoNreaArZPeCFfyc
-	 B3mQsh3yYJOiOghgz1s8yHR5lm4lvphjMoakKW+Bnm3qDCajW9kiVo9IETkp4+ADf
-	 JNpaulCauexcZY2A23Z3v8LJ6D8N7bebOVIRDGMSn/CvGlVXTSue6olHbuRIFFBRZ
-	 mC2ctouJZOYA1gd1iw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N79N8-1u23ea0O6e-014mpt; Thu, 10
- Oct 2024 21:19:40 +0200
-Date: Thu, 10 Oct 2024 21:19:39 +0200
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: =?iso-8859-1?Q?S=F6ren?= Krecker <soekkle@freenet.de>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk, gitster@pobox.com
-Subject: Re: [PATCH] [PATCH] mimgw: Remove Compiler Warnings
-Message-ID: <20241010191939.GA17171@tb-raspi4>
-References: <e7646092-84e0-4210-88e9-98352e1f60e0@gmail.com>
- <20241010102950.2151-1-soekkle@freenet.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R7qRZj3a"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-84fd616acf0so314014241.0
+        for <git@vger.kernel.org>; Thu, 10 Oct 2024 12:49:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728589763; x=1729194563; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=awUwU8wZipWUKhPAXYXosuiggD37mY3pCWJCZxVy11g=;
+        b=R7qRZj3a3aRO2lgKVULLCgv0s/V4/qD4L3Ygg0DNSGv9KrfMZRGTelu5bYxOTeLnsL
+         ok9fQbbGCDZxlYLc/MSoV9apfZXFmjz0At7Cx0IG5F4JkSzTYVG2zZM5Ju8KERTpISD8
+         j2O5pOU37ww6IsK4iDHqX6kW9u0f90G5Ck2zKa4Gz2ai7V25bDzDVZhAgXdJVk3ViSEy
+         NK0fbUf5/1BrmBGrjYKZi2mxH0PPu8STufnbXOwDF98umMHHNqEC7JEtPRqZBoLkxwGQ
+         gddr48DOXrNtAvOiszG2VuP9gUwv5UG5o9EpxBYXIdSADYonWzkvYIa5ZxFLIZiSo50b
+         fNbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728589763; x=1729194563;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=awUwU8wZipWUKhPAXYXosuiggD37mY3pCWJCZxVy11g=;
+        b=Z59UQLZxAW9UIc8mCSN9zjvSsGVBVcS3tC7OYUBn80eOuF2+MqkQ2oawjKLkyqRHCe
+         VQC7a1KazSqRau6muAkYvKj1zK6qKOrktBpGetFhotUH85If2LDUMTCGFF/a8nmElFCN
+         QcHC4Hbfo76tqBHymVlNBI6EnZDVj1C0HybK1Gp3AoargwWBfnXmXakAQQQHKrs6drzE
+         M1/OkYqypLGb4z+ClZ+s1cWCGvuUNtvJRHsd9bX+qzjfz77OaFjguqNqwOYIGlMUPvb6
+         2sn7s6nfKwivVm7pJQ6IDMO3nqB3Zx/0X9JmXacl9NukznC9vCq2NAaePRn0fn9x0zod
+         5llQ==
+X-Gm-Message-State: AOJu0YzRYeOoDKpbUOGLHJW75gCdLMhFVXn2RHJfVvIQlGyEgayyjIwZ
+	9FDvAHQCC2hLSVKhIROck+AFqvLbAZe44LSx/Uckgc65wXci0nqUukIJTgLWuY8GDxi8I68IWB8
+	eYkQeRnlLiTQa1U9AfTEb/qA9YNjASqPk
+X-Google-Smtp-Source: AGHT+IGwfAomsoDHJ2fgPMnowZbglif3KQOtSfClOQ578lQgN8xP0/GUvx8b/TwAyHKqUJ2HKxTj1lhYcgV7AtDmPi4=
+X-Received: by 2002:a05:6122:2021:b0:50a:c31b:33d6 with SMTP id
+ 71dfb90a1353d-50cffbd14f5mr6068245e0c.9.1728589762593; Thu, 10 Oct 2024
+ 12:49:22 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 10 Oct 2024 12:49:21 -0700
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <CAO_smVjuseH6WJgU5CRg5kyZ7J1mgqLjrvxzapR0xB6XvQ7VdA@mail.gmail.com>
+References: <cover.1728582927.git.karthik.188@gmail.com> <e22ffbe0f65971579809d817984766af12898127.1728582927.git.karthik.188@gmail.com>
+ <CAO_smVjuseH6WJgU5CRg5kyZ7J1mgqLjrvxzapR0xB6XvQ7VdA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Date: Thu, 10 Oct 2024 12:49:21 -0700
+Message-ID: <CAOLa=ZQ=-GwnCX7CP6sqmoArphQuUNbfcCje2_64k9g8yJ1PBA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] clang-format: change column limit to 96 characters
+To: Kyle Lippincott <spectral@google.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com, toon@iotcl.com
+Content-Type: multipart/mixed; boundary="000000000000c3264e062424aa89"
+
+--000000000000c3264e062424aa89
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20241010102950.2151-1-soekkle@freenet.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:pzz01ikXHaM5er8ODqu4zyaIxd9hBqudyrODuFADWN5g3Hxsq3F
- NLU18gHz5TxgOe/YvAv3Qvy937cZ/K5HytSeA7jzqwb03PfAR7FYgKM8AWzPOK3gAwVKqr4
- v0oWLS/a0NMJ9xdCznrvF9FUXsEueLk/ygBiHfrivANs4OEgdT1uwh9dCE8eW9x78zzxylX
- oh+BY0Pb20DZqwpaXZjLA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:n9ydRp3kKzU=;MxXG964rKn4Tc5UtRdrzSlRiQWf
- HtdHhvLCPvx9x0yuwZgKRgEyd8//D62VS1qbYKl7jRfSLdWagzgFcfejZob2DoeUpLII2UbRd
- QqcRYL8acLvge4Q+f+jZHvhVOmju0nELLlno+80/tW41kz50Dku/F4Tew0Cf4UkYOKJFKYPuO
- Ae+vgP6yryKYXzx2kW5NIRDNM/13ILjb+XvdZod1te8Xm6BZG6jf2Wdk102igwdlTiuhiVuZ9
- qiGNmgv122FsC/ZErlxwhXJ08NJiV4LpO2LLZLDE2tTdU2xYOOdw/sR1GWHgdeIyagiKwg1yZ
- wTbwrQncQ8PW3qC6Otq+IQNryx1rcyJNx53eOGfk/SlNeGvL9TNolW6e6ZStWcMKhBZvHcgbo
- uHk3QOOqhKD95cL8U8MhCgWW2LuWLEzVazRE6fvpNDAh2J5GW3bCZ0Ie8MpBKstEyz6Syae1f
- psXLDMzGcj5pvy7JOE0Hw7UxPU0pmh+C4/qBS7Uv8mGvYyjkJwYl3mcArmDmSDscORFEsB5fb
- Di+xT7IOzA9f6qBA5vFYHOClxDYNI7Uv3e+iFEcMODKo7BOb8kS6yEBYU3TV4Dg3D7yc6Ylh5
- uXTT4vQRAyTMmeCS6OtpAkkwjM8aodzTfookMuwUkAAGS8KKq1I/NgdbzWxjS6UbF1Yq239Me
- H8ZXrzt9L5s8l0Sw5c43ByCnOsIGdfBlWkUH71iC2vYmB0poOD6jZQlTDGk0AWvDjqrAkNAEc
- Cr5P9OyTCqA6dMo1swg/rcRhxYgoSvtUdwCNFz+f4614p/1UEhty6RBsUyaKfqmwa5NL1fHly
- fNjhg35r9fvpiP3LPsOk8o/w==
 
-On Thu, Oct 10, 2024 at 12:29:50PM +0200, S=F6ren Krecker wrote:
-> Remove some complier warnings from msvc in compat/mingw.c for value trun=
-cation from 64 bit to 32 bit integers.
->
-> Use size_t instead of int as all of the changed variables hold the resul=
-t of strlen() or wcslen() which cannot be negative.
-> and set the size of ssize_t to 64 bit on windwos 64 bit.
->
-> Signed-off-by: S=F6ren Krecker <soekkle@freenet.de>
+Kyle Lippincott <spectral@google.com> writes:
 
-I think that commit message can be improved a little bit.
-The headline deserves to be shortened,
-in order to fit the rest of the commit messages in Git.
-The non-headlines should stay below 72 characters or so, and it could make=
- sense
-to explain the problem for the readers that are not as familiar with the
-problem as you.
+> On Thu, Oct 10, 2024 at 11:00=E2=80=AFAM Karthik Nayak <karthik.188@gmail=
+.com> wrote:
+>>
+>> The current value for the column limit is set to 80. While this is as
+>> expected, we often prefer readability over this strict limit. This means
+>> it is common to find code which extends over 80 characters. So let's
+>> change the column limit to be 96 instead. This provides some slack so we
+>> can ensure readability takes preference over the 80 character hard
+>> limit.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  .clang-format | 5 ++++-
+>>  1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/.clang-format b/.clang-format
+>> index 41969eca4b..684ab32d28 100644
+>> --- a/.clang-format
+>> +++ b/.clang-format
+>> @@ -12,7 +12,10 @@ UseTab: Always
+>>  TabWidth: 8
+>>  IndentWidth: 8
+>>  ContinuationIndentWidth: 8
+>> -ColumnLimit: 80
+>> +
+>> +# While we recommend keeping column limit to 80, we want to also provid=
+e
+>> +# some slack to maintain readability.
+>> +ColumnLimit: 96
+>>
+>>  # C Language specifics
+>>  Language: Cpp
+>> --
+>> 2.47.0
+>>
+>>
+>
+> I think this means that the next automated `clang-format` invocation
+> will un-wrap lines that were wrapped at 80 columns (not characters)
+> but fit in 96 columns. Modifying this setting and running
+> `clang-format -i *.{c,h}` produces a lot of diffs of that kind. I
+> don't think there's a way of setting a soft column limit in
+> clang-format.
 
-Something like this, please treat it as inspiration, I am not a user of ms=
-vc.
+Ah! Good point.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-mingw.c: Fix complier warnings for a 64 bit msvc
+> Personally, I'd be fine with a higher column limit, but we'd need to
+> make a conscious change to the style guidelines for that.
 
-Compiling compat/mingw.c under a 64 bit version of msvc produces warnings.
-An "int" is 32 bit, and ssize_t or size_t should be 64 bit long.
-Prepare compat/vcbuild/include/unistd.h to have a 64 bit type _ssize_t,
-when _WIN64 is defined and 32 bit otherwise.
+With this, I would say that the best choice here would be to actually
+set it to 0 like the previous version. So that we don't actually enforce
+the column limit.
 
-Further down in this include file, as before,
-ssize_t is defined as _ssize_t, if needed.
+We could perhaps set the value here in the '.clang-format' to 0. While
+also setting 'max_line_length =3D 95' in the '.editorconfig'. That would
+mean that we don't enforce a width, but we nudge editors to wrap at 95
+characters. Here contributors would still have the power to decide the
+adequate width as needed.
 
-Use size_t instead of int for all variables that hold
-the result of strlen() or wcslen() (which cannot be negative).
+--000000000000c3264e062424aa89
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 749d3ed64ec57663_0.1
 
-Use ssize_t to hold the return value of read().
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-However, looking at the current code:
-
-static const char *parse_interpreter(const char *cmd)
-{
-	static char buf[100];
-	char *p, *opt;
-	int n, fd;
-
-	/* don't even try a .exe */
-	n =3D strlen(cmd);
-	if (n >=3D 4 && !strcasecmp(cmd+n-4, ".exe"))
-		return NULL;
-
-	fd =3D open(cmd, O_RDONLY);
-	if (fd < 0)
-		return NULL;
-	n =3D read(fd, buf, sizeof(buf)-1);
-
-It looks as if 2 variables are better:
-size_t n;
-ssize_t i;
-[]
-n =3D strlen(cmd);
-i =3D read();
-
-
->
-> ---
->  compat/compiler.h               |  4 ++--
->  compat/mingw.c                  | 25 +++++++++++++++----------
->  compat/vcbuild/include/unistd.h |  4 ++++
->  3 files changed, 21 insertions(+), 12 deletions(-)
->
-> diff --git a/compat/compiler.h b/compat/compiler.h
-> index e9ad9db84f..e12e426404 100644
-> --- a/compat/compiler.h
-> +++ b/compat/compiler.h
-> @@ -9,7 +9,7 @@
->
->  static inline void get_compiler_info(struct strbuf *info)
->  {
-> -	int len =3D info->len;
-> +	size_t len =3D info->len;
->  #ifdef __clang__
->  	strbuf_addf(info, "clang: %s\n", __clang_version__);
->  #elif defined(__GNUC__)
-> @@ -27,7 +27,7 @@ static inline void get_compiler_info(struct strbuf *in=
-fo)
->
->  static inline void get_libc_info(struct strbuf *info)
->  {
-> -	int len =3D info->len;
-> +	size_t len =3D info->len;
->
->  #ifdef __GLIBC__
->  	strbuf_addf(info, "glibc: %s\n", gnu_get_libc_version());
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 0e851ecae2..0ff550cef3 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -782,7 +782,7 @@ static inline void filetime_to_timespec(const FILETI=
-ME *ft, struct timespec *ts)
->   */
->  static int has_valid_directory_prefix(wchar_t *wfilename)
->  {
-> -	int n =3D wcslen(wfilename);
-> +	size_t n =3D wcslen(wfilename);
->
->  	while (n > 0) {
->  		wchar_t c =3D wfilename[--n];
-> @@ -891,7 +891,7 @@ static int do_lstat(int follow, const char *file_nam=
-e, struct stat *buf)
->   */
->  static int do_stat_internal(int follow, const char *file_name, struct s=
-tat *buf)
->  {
-> -	int namelen;
-> +	size_t namelen;
->  	char alt_name[PATH_MAX];
->
->  	if (!do_lstat(follow, file_name, buf))
-> @@ -1274,7 +1274,8 @@ static const char *parse_interpreter(const char *c=
-md)
->  {
->  	static char buf[100];
->  	char *p, *opt;
-> -	int n, fd;
-> +	ssize_t n; /* read() can return negative values */
-> +	int fd;
->
->  	/* don't even try a .exe */
->  	n =3D strlen(cmd);
-> @@ -1339,7 +1340,7 @@ static char *path_lookup(const char *cmd, int exe_=
-only)
->  {
->  	const char *path;
->  	char *prog =3D NULL;
-> -	int len =3D strlen(cmd);
-> +	size_t len =3D strlen(cmd);
->  	int isexe =3D len >=3D 4 && !strcasecmp(cmd+len-4, ".exe");
->
->  	if (strpbrk(cmd, "/\\"))
-> @@ -1956,7 +1957,7 @@ char *mingw_getenv(const char *name)
->  #define GETENV_MAX_RETAIN 64
->  	static char *values[GETENV_MAX_RETAIN];
->  	static int value_counter;
-> -	int len_key, len_value;
-> +	size_t len_key, len_value;
->  	wchar_t *w_key;
->  	char *value;
->  	wchar_t w_value[32768];
-> @@ -1968,7 +1969,8 @@ char *mingw_getenv(const char *name)
->  	/* We cannot use xcalloc() here because that uses getenv() itself */
->  	w_key =3D calloc(len_key, sizeof(wchar_t));
->  	if (!w_key)
-> -		die("Out of memory, (tried to allocate %u wchar_t's)", len_key);
-> +		die("Out of memory, (tried to allocate %"PRIuMAX" wchar_t's)",
-> +			(uintmax_t)len_key);
->  	xutftowcs(w_key, name, len_key);
->  	/* GetEnvironmentVariableW() only sets the last error upon failure */
->  	SetLastError(ERROR_SUCCESS);
-> @@ -1983,7 +1985,8 @@ char *mingw_getenv(const char *name)
->  	/* We cannot use xcalloc() here because that uses getenv() itself */
->  	value =3D calloc(len_value, sizeof(char));
->  	if (!value)
-> -		die("Out of memory, (tried to allocate %u bytes)", len_value);
-> +		die("Out of memory, (tried to allocate %"PRIuMAX" bytes)",
-> +			(uintmax_t)len_value);
->  	xwcstoutf(value, w_value, len_value);
->
->  	/*
-> @@ -2001,7 +2004,7 @@ char *mingw_getenv(const char *name)
->
->  int mingw_putenv(const char *namevalue)
->  {
-> -	int size;
-> +	size_t size;
->  	wchar_t *wide, *equal;
->  	BOOL result;
->
-> @@ -2011,7 +2014,8 @@ int mingw_putenv(const char *namevalue)
->  	size =3D strlen(namevalue) * 2 + 1;
->  	wide =3D calloc(size, sizeof(wchar_t));
->  	if (!wide)
-> -		die("Out of memory, (tried to allocate %u wchar_t's)", size);
-> +		die("Out of memory, (tried to allocate %" PRIuMAX " wchar_t's)",
-> +		    (uintmax_t)size);
->  	xutftowcs(wide, namevalue, size);
->  	equal =3D wcschr(wide, L'=3D');
->  	if (!equal)
-> @@ -3085,7 +3089,8 @@ static void maybe_redirect_std_handles(void)
->   */
->  int wmain(int argc, const wchar_t **wargv)
->  {
-> -	int i, maxlen, exit_status;
-> +	int i, exit_status;
-> +	size_t maxlen;
->  	char *buffer, **save;
->  	const char **argv;
->
-> diff --git a/compat/vcbuild/include/unistd.h b/compat/vcbuild/include/un=
-istd.h
-> index 3a959d124c..a261a925b7 100644
-> --- a/compat/vcbuild/include/unistd.h
-> +++ b/compat/vcbuild/include/unistd.h
-> @@ -14,7 +14,11 @@ typedef _mode_t	mode_t;
->
->  #ifndef _SSIZE_T_
->  #define _SSIZE_T_
-> +#ifdef _WIN64
-> +typedef __int64 _ssize_t;
-> +#else
->  typedef long _ssize_t;
-> +#endif /* _WIN64 */
->
->  #ifndef	_OFF_T_
->  #define	_OFF_T_
->
-> base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
-> --
-> 2.39.5
->
->
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jSUw3MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNlFmQy93S1F4emdGdVRJRnljcTNadjB0U0FtYTIrMQppS2hsY1FKd0Uy
+dzl5RzRtdkV1Y0lTSUtaUUJjTmJ4cTZ0VllQdWlpTGNvbHhnaUxmdzhrUDRmYktlRnZUY0d5Cmd3
+bEtYR1RERlJEczhIa2hlTmk5SEtEZjNIbmlPM3NVY0dwYmx2RWs3MnJKV1pwb3V1cVlFa1ZuTnJj
+bjZxL2oKYUdlVFRCdEdOaTB5b0hoM2VmMjhESjl3RENEN2krZGpuMlJSNGFKcWlFeDYvUmx3Vkxm
+VWNMZWh0SDNuOGkyYwo4TW9RWDE4MlpNbkgyQkR4emNBbllxOHhMOXQwOW1HM21vZGZRbXJmY21u
+aWxxaFM0bUVxVGY5VktnOFZMS2dtCnBPOVpDTGZ4V1RjVXlKQ1JyRE9USS8zWTBYWExqbWJCUUY4
+V0VzM3lMbDFkWmNuSVpXSzJud2dlcTFkcWl5VVEKc2E0bVB5NEppTy9pRC9RdnFwUCtBT1dBM1ZS
+RmNoNGljR283MG9Wa0hpWFFuNzZ1TFFiM3p3dUVOQ01wcW1PTApCVU5Oc1J6YUUxbnUvTnRqd3pU
+TTY4SFVrN24rMldseUNYb3RGT0tha3pWNVkvRkNMV3c1YlkyM1MxaS90MmlTCkZvVyt2U1BSL1dr
+ZVR3bjNKVUV5dTdPMjBrdE1xTU5HaVkzNmo5QT0KPS9aKzgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000c3264e062424aa89--
