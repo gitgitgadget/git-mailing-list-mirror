@@ -1,48 +1,48 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444821E571F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F351E7C34
 	for <git@vger.kernel.org>; Thu, 10 Oct 2024 23:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728604598; cv=none; b=TyU2BRxm4WUHyLi29c3P8oW507bKsmwVywOF98jCDuH4p8IHVLlMFu2Jgv0CK6WrqdonNgjTWkwquYTz3HLq96Y8nZrNEso80uLmsCxz9atWWNthr4MUdatMaIarDvsqFKUncs8JeLoZe35kKiWR/JQAEY75BIIHOOU88wvcNmI=
+	t=1728604599; cv=none; b=CldJqAqFao29CC24yayB5+3Ir5gSfSnVHoP07N595clIO2EziAlDZS4lws4tF+zcLtX2lYSImRvJ5Wh4d01GyecuD9N5u/YLu6JwHp767RF700gXKsKhrs/UeShaiqikdmFXrt9QztODYoNXYG6+vqX19whcmjDzpF979SYXpbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728604598; c=relaxed/simple;
-	bh=/eZ0oHRZKK+QdeosQHMaDtMJ5DTkT1eLqH/CW8IIE3I=;
+	s=arc-20240116; t=1728604599; c=relaxed/simple;
+	bh=dtfw2xRbiDHcM4T1nUorlbwVxN0N9b9G/mFEo9WO2M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2xZZqlY9RcapRQ/Ja6UcFmq8hjs2nkARyiz+Y3rqDbFsfwWq62JmChgcXVJfGpa/22MqtCu+dLw/wLW2CwNe7+7G5neraqb8rkg7uMxB3Ki6DLEGC8imZt5W269hpj5OtrWyemQdz3DRfgoU5LVSMbobjGANa3PG+YbWIv2xVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=DLNktl+6; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=nIPsMV94XT5cBFLeytDorYw9CTxGsY+OzD+2m+IuLOgeHdHLFV/yMV8z+KlmN8AxWIi0fm/k+I2FD66uCyLLEqqvK9C0f/a/F/AgHzgWVzkTRqTCBAeEC2XF7RSVWAq/n+mP7EPw0UpDWp4FycEXAoUi0n4uc0j4O4bgSKfVntw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=DmNlynHn; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DLNktl+6"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DmNlynHn"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1728604594;
-	bh=/eZ0oHRZKK+QdeosQHMaDtMJ5DTkT1eLqH/CW8IIE3I=;
+	bh=dtfw2xRbiDHcM4T1nUorlbwVxN0N9b9G/mFEo9WO2M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=DLNktl+6X9wgdOHGz4KasXSSVQTIYr+X7vPjb1Wa1U6mfWleNtT5QsrhYr8vAoSaL
-	 Jp8bewbSjns4+mmuht3jk6vM2Q4ElM1PqTSIqoDCY+ofBN9w1yolkxoewNxLCWp6Wt
-	 L59FtP+YoTWSbFDcle/PFh611Q2FRkvuPocUWFNBwXNzaDjtgsI0D3sfqODF2DLk0A
-	 /rQ13DdxxCBQn/zOfGNw+UvhqRXWl3F0SMi4tEAuAXIL0DL75QZQziVrNuy6KtiK1C
-	 CuhcmBXFQSOlWDAJSig0g7KQyItm6ogm3TCnvSwisaqXhjy2ZMnQg9HHg4KPuVxaxN
-	 xUhN8iGV+IpWjiNdQC+DnbrKD6pJd99+3BdjQ6gOs8wNMw7UWE0C9ggxgomUAQtR1o
-	 ivR/DumxrehN9iOwcLaB4qY7AAeIZ4es0XRfgS97ZZ7RLd5czVc8T5kbwk/JGrtnra
-	 k6zdF4MUc2oHX78mwahXaIa39k/kehoJxiWY0NG7BdlBEzTAv9I
+	b=DmNlynHnDw1OYCjC7dCVmJ+aA4V2G6Sec73iQX0QPtQa6Kkhspu3mH1Pae6JIZSJL
+	 xcCjKbgTUEiRvpJQqapE6aOeLcSlQuYnNCstf1Z77s6qXnZX67vC684vm04xCou1wT
+	 a/m+eS8bB6pkOJbGi1UoQ/7OG9sZkBGRn0E6erH9cbVt+GX5MDoqFAQ4pLuYAO7XQB
+	 egdIXc4uf3xWmIDxuPmhA2+scKaiSmEB7jqgV3htyaPc4g/kNKJexqebi0GzjY2NfC
+	 tVlHo011wx8NahFeuDlxd7k7sGxGNqLUapY2tOCfiSHo1ipY/qYf+g8Dv6dVdEJEQC
+	 RP+tzBva5/JNXaiG51beCZ1gLWOwojqYWH21XN3xZeqxTAqKhuF/JfYhAfn2hjqhXV
+	 SzAC7e3+wNx943V5JB11EiHVjyDTHq62ogse/lwuz2YHuxjcR4mwrepdve8DhBys9u
+	 qhWrjbJ/TJZhtz6hjZeII/Jc96u3IQXGILJfNKGHe7yZV1JEo8w
 Received: from tapette.. (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1D70A200BB;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 27047200BC;
 	Thu, 10 Oct 2024 23:56:34 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>
-Subject: [PATCH 05/13] git-curl-compat: remove check for curl 7.43.0
-Date: Thu, 10 Oct 2024 23:56:13 +0000
-Message-ID: <20241010235621.738239-6-sandals@crustytoothpaste.net>
+Subject: [PATCH 06/13] git-curl-compat: remove check for curl 7.44.0
+Date: Thu, 10 Oct 2024 23:56:14 +0000
+Message-ID: <20241010235621.738239-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.45.2.753.g447d99e1c3b
 In-Reply-To: <20241010235621.738239-1-sandals@crustytoothpaste.net>
 References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
@@ -54,7 +54,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-libcurl 7.43.0 was released in June 2015, which is over nine years
+libcurl 7.44.0 was released in August 2015, which is over nine years
 ago, and no major operating system vendor is still providing security
 support for it.  Debian 9 and Ubuntu 16.04, both of which are out of
 mainstream security support, have supported a newer version, and RHEL 8,
@@ -65,66 +65,44 @@ unconditionally.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- git-curl-compat.h | 11 -----------
- http.c            |  5 -----
- 2 files changed, 16 deletions(-)
+ git-curl-compat.h | 10 ----------
+ http.c            |  4 ----
+ 2 files changed, 14 deletions(-)
 
 diff --git a/git-curl-compat.h b/git-curl-compat.h
-index b301ef154c..cd970e34d6 100644
+index cd970e34d6..6b05d70d42 100644
 --- a/git-curl-compat.h
 +++ b/git-curl-compat.h
-@@ -28,17 +28,6 @@
+@@ -28,16 +28,6 @@
   * introduced, oldest first, in the official version of cURL library.
   */
  
 -/**
-- * CURL_HTTP_VERSION_2 was added in 7.43.0, released in June 2015.
+- * CURLSSLOPT_NO_REVOKE was added in 7.44.0, released in August 2015.
 - *
-- * The CURL_HTTP_VERSION_2 alias (but not CURL_HTTP_VERSION_2_0) has
-- * always been a macro, not an enum field (checked on curl version
-- * 7.78.0)
+- * The CURLSSLOPT_NO_REVOKE is, has always been a macro, not an enum
+- * field (checked on curl version 7.78.0)
 - */
--#if LIBCURL_VERSION_NUM >= 0x072b00
--#define GIT_CURL_HAVE_CURL_HTTP_VERSION_2 1
+-#if LIBCURL_VERSION_NUM >= 0x072c00
+-#define GIT_CURL_HAVE_CURLSSLOPT_NO_REVOKE 1
 -#endif
 -
  /**
-  * CURLSSLOPT_NO_REVOKE was added in 7.44.0, released in August 2015.
-  *
+  * CURLOPT_PROXY_CAINFO was added in 7.52.0, released in August 2017.
+  */
 diff --git a/http.c b/http.c
-index cdef059090..945df9a628 100644
+index 945df9a628..bdf8bf7b59 100644
 --- a/http.c
 +++ b/http.c
-@@ -980,7 +980,6 @@ static long get_curl_allowed_protocols(int from_user, struct strbuf *list)
- 	return bits;
- }
+@@ -1048,11 +1048,7 @@ static CURL *get_curl_handle(void)
  
--#ifdef GIT_CURL_HAVE_CURL_HTTP_VERSION_2
- static int get_curl_http_version_opt(const char *version_string, long *opt)
- {
- 	int i;
-@@ -1003,8 +1002,6 @@ static int get_curl_http_version_opt(const char *version_string, long *opt)
- 	return -1; /* not found */
- }
- 
+ 	if (http_ssl_backend && !strcmp("schannel", http_ssl_backend) &&
+ 	    !http_schannel_check_revoke) {
+-#ifdef GIT_CURL_HAVE_CURLSSLOPT_NO_REVOKE
+ 		curl_easy_setopt(result, CURLOPT_SSL_OPTIONS, CURLSSLOPT_NO_REVOKE);
+-#else
+-		warning(_("CURLSSLOPT_NO_REVOKE not supported with cURL < 7.44.0"));
 -#endif
--
- static CURL *get_curl_handle(void)
- {
- 	CURL *result = curl_easy_init();
-@@ -1022,7 +1019,6 @@ static CURL *get_curl_handle(void)
- 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2);
  	}
  
--#ifdef GIT_CURL_HAVE_CURL_HTTP_VERSION_2
-     if (curl_http_version) {
- 		long opt;
- 		if (!get_curl_http_version_opt(curl_http_version, &opt)) {
-@@ -1030,7 +1026,6 @@ static CURL *get_curl_handle(void)
- 			curl_easy_setopt(result, CURLOPT_HTTP_VERSION, opt);
- 		}
-     }
--#endif
- 
- 	curl_easy_setopt(result, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
- 	curl_easy_setopt(result, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+ 	if (http_proactive_auth != PROACTIVE_AUTH_NONE)
