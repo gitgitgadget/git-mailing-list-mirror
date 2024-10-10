@@ -1,153 +1,130 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46CD1CEAD8
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 19:49:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05471CB528
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 20:03:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728589765; cv=none; b=oFplsiIIKmOEwxJznPYPcYV1VPoeXk3YHxn4dx1X9hbRzcgMsehD0OLSMbGVi+YplBRUHqRV4lvnmMVKpmsWqnjZIuxBLD24+MXZupQt7mhVynQeV8oKnfG4EQ/HyPzacgQ69AJF2WlGJopiF9O4RePsoLTLIAtyZW1yZYyL3+I=
+	t=1728590615; cv=none; b=UbEtX/efdBXoExed31jpcdI5pgJLJawzGhMOFxUckIFd1XQzjvRevIzpXZp263EU4BG0xbNfRpcSDOz0WppBPTXqtUopAKS37FDOZPTy3x1WxR354D0WjrQgoquW2tyMk5J0NJC6/Y47/Xb15WjhWiQJgGGFOAcZfK5z3AxGEw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728589765; c=relaxed/simple;
-	bh=KoqNEuPSlAIyf6VPvF5JIrNzM7Q83MgDfZUjufVTklk=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=c3/ku9Z8ks546q+miw1Z/jvWkP9pbGT2SOpqCD+AYeIXyzBGo/eKXNg5ZgOHWJC5r7VY+02KHMeI14wFMAkAE3XQMykgNVCy2G2/OPUr0vzitbrDTmGOhmdMCcZePJaCEvnxf4ZQmNt6Xad3IpHQ4TfMYpI9+mnWhXInYG5uK2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R7qRZj3a; arc=none smtp.client-ip=209.85.222.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728590615; c=relaxed/simple;
+	bh=QiaR3Vlwis1faFS2uxLaJafnS9hqxCPWNw9DwhB+dRg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cmukAQc/DadrVahE77b7LOv/j+h1k8xPDwZcKa3jmDXdYSlvSF8H7WVW5KHrvXQSLMVkeq3MYO4zPsG+6gHfCbUt9ZQVn6jhlsdJ7+opM1Kj3Xs6VV98ZgA+78cY3Kt5QkrsE5EdabUm98hxuYpk7bk5EU0sWjtgsYRugpCL8GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XrEzpMGr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZrBAvFAm; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R7qRZj3a"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-84fd616acf0so314014241.0
-        for <git@vger.kernel.org>; Thu, 10 Oct 2024 12:49:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728589763; x=1729194563; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=awUwU8wZipWUKhPAXYXosuiggD37mY3pCWJCZxVy11g=;
-        b=R7qRZj3a3aRO2lgKVULLCgv0s/V4/qD4L3Ygg0DNSGv9KrfMZRGTelu5bYxOTeLnsL
-         ok9fQbbGCDZxlYLc/MSoV9apfZXFmjz0At7Cx0IG5F4JkSzTYVG2zZM5Ju8KERTpISD8
-         j2O5pOU37ww6IsK4iDHqX6kW9u0f90G5Ck2zKa4Gz2ai7V25bDzDVZhAgXdJVk3ViSEy
-         NK0fbUf5/1BrmBGrjYKZi2mxH0PPu8STufnbXOwDF98umMHHNqEC7JEtPRqZBoLkxwGQ
-         gddr48DOXrNtAvOiszG2VuP9gUwv5UG5o9EpxBYXIdSADYonWzkvYIa5ZxFLIZiSo50b
-         fNbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728589763; x=1729194563;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=awUwU8wZipWUKhPAXYXosuiggD37mY3pCWJCZxVy11g=;
-        b=Z59UQLZxAW9UIc8mCSN9zjvSsGVBVcS3tC7OYUBn80eOuF2+MqkQ2oawjKLkyqRHCe
-         VQC7a1KazSqRau6muAkYvKj1zK6qKOrktBpGetFhotUH85If2LDUMTCGFF/a8nmElFCN
-         QcHC4Hbfo76tqBHymVlNBI6EnZDVj1C0HybK1Gp3AoargwWBfnXmXakAQQQHKrs6drzE
-         M1/OkYqypLGb4z+ClZ+s1cWCGvuUNtvJRHsd9bX+qzjfz77OaFjguqNqwOYIGlMUPvb6
-         2sn7s6nfKwivVm7pJQ6IDMO3nqB3Zx/0X9JmXacl9NukznC9vCq2NAaePRn0fn9x0zod
-         5llQ==
-X-Gm-Message-State: AOJu0YzRYeOoDKpbUOGLHJW75gCdLMhFVXn2RHJfVvIQlGyEgayyjIwZ
-	9FDvAHQCC2hLSVKhIROck+AFqvLbAZe44LSx/Uckgc65wXci0nqUukIJTgLWuY8GDxi8I68IWB8
-	eYkQeRnlLiTQa1U9AfTEb/qA9YNjASqPk
-X-Google-Smtp-Source: AGHT+IGwfAomsoDHJ2fgPMnowZbglif3KQOtSfClOQ578lQgN8xP0/GUvx8b/TwAyHKqUJ2HKxTj1lhYcgV7AtDmPi4=
-X-Received: by 2002:a05:6122:2021:b0:50a:c31b:33d6 with SMTP id
- 71dfb90a1353d-50cffbd14f5mr6068245e0c.9.1728589762593; Thu, 10 Oct 2024
- 12:49:22 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 10 Oct 2024 12:49:21 -0700
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <CAO_smVjuseH6WJgU5CRg5kyZ7J1mgqLjrvxzapR0xB6XvQ7VdA@mail.gmail.com>
-References: <cover.1728582927.git.karthik.188@gmail.com> <e22ffbe0f65971579809d817984766af12898127.1728582927.git.karthik.188@gmail.com>
- <CAO_smVjuseH6WJgU5CRg5kyZ7J1mgqLjrvxzapR0xB6XvQ7VdA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XrEzpMGr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZrBAvFAm"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id D61741380188;
+	Thu, 10 Oct 2024 16:03:31 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 10 Oct 2024 16:03:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728590611; x=1728677011; bh=eOzstDetul
+	8j1e1u/NmupyaIKCCgopOaLjnOXwQA3yo=; b=XrEzpMGr1MRArfkRB4dgYC5rI/
+	4++BosXZjGYBBs/wumhjxBQ7tL0KsPAEKVFZN3q+RZENILEdOQtM32DUXU7HGBra
+	EKDLfZpb/XgnWNOyTpvd8vOI1Xvr/KTTPKAW+3byBRJXS4ybXiHtrf7sxHH1u65e
+	Qg2b3Lds/xgcfXVS9MepjIj52oTbLed/2c+9gPr5Y3A39vbWUb9OHlAbMlfA890y
+	xHuDUKkcoW2CAflzvtm6T1B6cj/F2+468aIi1ZQOSJ/kvoRyO4ejyUqjL53cLqI0
+	65XDGBqHvRVl0UiQHti1glS1+29D3W83gbIhtcAv4er/qkztCL/yNKoHOMdg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728590611; x=1728677011; bh=eOzstDetul8j1e1u/NmupyaIKCCg
+	opOaLjnOXwQA3yo=; b=ZrBAvFAmFgNXnvtGHnrdaZogEQic8tZdFLUHG6f6kIzM
+	RoHqAyfD9DJQo0acYbW+L+HmSIHxlqkyBXmVxgRhQ1lh5dGmkqCLoDHF4b2Pgsql
+	VmHPk2WHj6QL+9pL4/Md64GK6bU+3FSFzLbPnin485GgfWLM0PmEa9KV35l24L7q
+	OwP3a4GBhZIT5mW97ae6kCZ1Ggy1FdSPU/uZ1Ez4DzlymwRf7V1GqvF0zTU2/gOz
+	L/+r4+M8pGZagmC2dxZHm2lIV12+se919lGI0otIMZtX2/6/mg+mxIV4P1DxfTeO
+	b+ECVgZATD7O+KILJ40IAljy5A62XqGrxxo6ryttUA==
+X-ME-Sender: <xms:EzMIZ63bHMVWHyGIS7sxwwf-4i05dQnHmPfQUk79D6AQe-eDxVyEhw>
+    <xme:EzMIZ9ESGaztruAMtNM_67nQZ8PuE8qhqSxj5fPOyYZ2RqB16gNruQMDhwN-risGq
+    FQ4-WCuvin-Z3N54w>
+X-ME-Received: <xmr:EzMIZy4hoVvYVQ10LOLIlAF1ciCDF8UaotDbdEGuv5Imfw_NWYcjiN_VWRiVA70I6wrdVqgoewDaJcgaxOUzfpjp8mzSjtkOQ5_epxc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefiedgudekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptggufihhihhtvgefse
+    hpmhdrmhgvpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:EzMIZ73gtYYbd4GW4LrES7OpMrGppyUCMvWSYklsD0NeFCBtd32Ulg>
+    <xmx:EzMIZ9FC2hMJVkdh6uljhSy-tLqR-QXISdwhuAhOovLKSPiHGfDy-w>
+    <xmx:EzMIZ0_ViOM7rJbbYxSFSkYPpiFaGqgIWgiJE7ERtBL5ZYCjjC_BuA>
+    <xmx:EzMIZyleWWpNQ100HPqrbL7M6kJRpqdDcL4nJ7juhvEbVZR2oTIfDw>
+    <xmx:EzMIZxgp354BPkk9Po_GQF7kntFwxWQunoaY5iVu-EwiDp8t36954WY7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Oct 2024 16:03:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Caleb White <cdwhite3@pm.me>
+Cc: shejialuo <shejialuo@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] worktree: refactor infer_backlink() to use *strbuf
+In-Reply-To: <J1frhnJqftB1IUvIGDnJiz6uYTDNl_Bc92NLj1gXJtgRxapI3Uy-fyFHYtv5_p8e7yzF0pegawV6NlHQTn0GHcXP8MZ_1X8CNkIvO3_MP9c=@pm.me>
+	(Caleb White's message of "Thu, 10 Oct 2024 17:52:49 +0000")
+References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me>
+	<20241007-wt_relative_paths-v3-1-622cf18c45eb@pm.me>
+	<Zwf4PT-vaLX35ELL@ArchLinux>
+	<e1RptKNShhPZHXDhBkQBaCNCmKBKik4nQzRShqtgVfjcH7vBWpuLYV60PSHaJ0diX-oG3XiKHc7IebhIZM4eSkeYdQQZ_QYK2ixxsK-XwrE=@pm.me>
+	<ZwgOURNkNhg8BsaU@ArchLinux>
+	<J1frhnJqftB1IUvIGDnJiz6uYTDNl_Bc92NLj1gXJtgRxapI3Uy-fyFHYtv5_p8e7yzF0pegawV6NlHQTn0GHcXP8MZ_1X8CNkIvO3_MP9c=@pm.me>
+Date: Thu, 10 Oct 2024 13:03:30 -0700
+Message-ID: <xmqqcyk7k9nx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 10 Oct 2024 12:49:21 -0700
-Message-ID: <CAOLa=ZQ=-GwnCX7CP6sqmoArphQuUNbfcCje2_64k9g8yJ1PBA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] clang-format: change column limit to 96 characters
-To: Kyle Lippincott <spectral@google.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com, toon@iotcl.com
-Content-Type: multipart/mixed; boundary="000000000000c3264e062424aa89"
+Content-Type: text/plain
 
---000000000000c3264e062424aa89
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Caleb White <cdwhite3@pm.me> writes:
 
-Kyle Lippincott <spectral@google.com> writes:
-
-> On Thu, Oct 10, 2024 at 11:00=E2=80=AFAM Karthik Nayak <karthik.188@gmail=
-.com> wrote:
->>
->> The current value for the column limit is set to 80. While this is as
->> expected, we often prefer readability over this strict limit. This means
->> it is common to find code which extends over 80 characters. So let's
->> change the column limit to be 96 instead. This provides some slack so we
->> can ensure readability takes preference over the 80 character hard
->> limit.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  .clang-format | 5 ++++-
->>  1 file changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/.clang-format b/.clang-format
->> index 41969eca4b..684ab32d28 100644
->> --- a/.clang-format
->> +++ b/.clang-format
->> @@ -12,7 +12,10 @@ UseTab: Always
->>  TabWidth: 8
->>  IndentWidth: 8
->>  ContinuationIndentWidth: 8
->> -ColumnLimit: 80
->> +
->> +# While we recommend keeping column limit to 80, we want to also provid=
-e
->> +# some slack to maintain readability.
->> +ColumnLimit: 96
->>
->>  # C Language specifics
->>  Language: Cpp
->> --
->> 2.47.0
->>
->>
+>> If so, why not just return "infer_backlink.len"?
 >
-> I think this means that the next automated `clang-format` invocation
-> will un-wrap lines that were wrapped at 80 columns (not characters)
-> but fit in 96 columns. Modifying this setting and running
-> `clang-format -i *.{c,h}` produces a lot of diffs of that kind. I
-> don't think there's a way of setting a soft column limit in
-> clang-format.
+> I would say because the purpose of the return is a boolean,
+> either the call was successful or it wasn't. The developer
+> knowledge that you speak of should be a given---if the
+> function returned true then there's obviously a path
+> in the strbuf.
 
-Ah! Good point.
+That does not say what should be left in the strbuf when the request
+failed.  If it is undefined, then using its .len (or .buf) is not
+quite right, without relying on too much implementation details of
+the called function.
 
-> Personally, I'd be fine with a higher column limit, but we'd need to
-> make a conscious change to the style guidelines for that.
+Usually, this project uses 0 to signal a success, while errors are
+signalled by returning a negative value (and if there can be
+multiple ways to fail, such a design leaves different negative
+values as a possibility).
 
-With this, I would say that the best choice here would be to actually
-set it to 0 like the previous version. So that we don't actually enforce
-the column limit.
+If the result the caller finds useful is always positive value (or
+non-negative value), however, it is perfectly fine and often more
+convenient if you used the "positive (or non-negative) value gives
+the intended result and signals a success, negative (or
+non-positive) value signals an error" convention.  The caller can
 
-We could perhaps set the value here in the '.clang-format' to 0. While
-also setting 'max_line_length =3D 95' in the '.editorconfig'. That would
-mean that we don't enforce a width, but we nudge editors to wrap at 95
-characters. Here contributors would still have the power to decide the
-adequate width as needed.
+    if (0 < do_the_thing())
+	; /* success */
 
---000000000000c3264e062424aa89
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 749d3ed64ec57663_0.1
+just fine, instead of the boolean "0 is success, negative values are
+various errors",
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jSUw3MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNlFmQy93S1F4emdGdVRJRnljcTNadjB0U0FtYTIrMQppS2hsY1FKd0Uy
-dzl5RzRtdkV1Y0lTSUtaUUJjTmJ4cTZ0VllQdWlpTGNvbHhnaUxmdzhrUDRmYktlRnZUY0d5Cmd3
-bEtYR1RERlJEczhIa2hlTmk5SEtEZjNIbmlPM3NVY0dwYmx2RWs3MnJKV1pwb3V1cVlFa1ZuTnJj
-bjZxL2oKYUdlVFRCdEdOaTB5b0hoM2VmMjhESjl3RENEN2krZGpuMlJSNGFKcWlFeDYvUmx3Vkxm
-VWNMZWh0SDNuOGkyYwo4TW9RWDE4MlpNbkgyQkR4emNBbllxOHhMOXQwOW1HM21vZGZRbXJmY21u
-aWxxaFM0bUVxVGY5VktnOFZMS2dtCnBPOVpDTGZ4V1RjVXlKQ1JyRE9USS8zWTBYWExqbWJCUUY4
-V0VzM3lMbDFkWmNuSVpXSzJud2dlcTFkcWl5VVEKc2E0bVB5NEppTy9pRC9RdnFwUCtBT1dBM1ZS
-RmNoNGljR283MG9Wa0hpWFFuNzZ1TFFiM3p3dUVOQ01wcW1PTApCVU5Oc1J6YUUxbnUvTnRqd3pU
-TTY4SFVrN24rMldseUNYb3RGT0tha3pWNVkvRkNMV3c1YlkyM1MxaS90MmlTCkZvVyt2U1BSL1dr
-ZVR3bjNKVUV5dTdPMjBrdE1xTU5HaVkzNmo5QT0KPS9aKzgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000c3264e062424aa89--
+    if (!do_the_thing())
+	; /* success */
+
+when it does not care how/why the thing failed.
+
