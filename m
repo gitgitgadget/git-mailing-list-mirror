@@ -1,123 +1,108 @@
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626981D0E10
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 20:24:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27881CF2A1
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 20:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728591856; cv=none; b=Iz1xlHxCAICit03wDwT/csbjvINMDkdPUt8NeDgcHl8JR8pp0xyhdWVO5pcZoydi2JtUG1XzyL/wyaYrAmVi7KPQk3A657nKDE3dp4Cwv54fkePpN9a1iUjYskKXgBN2iZNYGmbJ7hDWwVzdwCqutwStfWT3BBsGZQEH2ZmwMLE=
+	t=1728592375; cv=none; b=hsxKrQsIO6+GxjyIK66j9nIU+BaXv9APn1RPLx7+tbKRIX8ZVUfNExsrowsBnqywrd7G7PfusOckV5tswp9p9JYqTBzfql/umuZexjZTtS0OQjvLJJX/mHEmgUu3QJZwhkeackyKbMgk2wBW6bNGJjvkSielTLPLodZteGMth4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728591856; c=relaxed/simple;
-	bh=D89MNDOroh6cXhS28UOFcmNAWZztkyrlr3AV5kVQ/ho=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XXN9U7GZ4B+CkxU8RPMIwgIK1e/AVMIvlugOgTuk9xwNwImYtLLM5HVscnjx6fg6gg6ogn/p+GT9GANGCbXAkpBvv/s5+J5bBc+9mPcTOp81mKf1fVDPMLyopLeRaMYjhPKEyQuRn71tgoJGobquEItO4t6j8fvIVDDWila9KY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=Im09ATJE; arc=none smtp.client-ip=185.70.43.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1728592375; c=relaxed/simple;
+	bh=tI7xi9ebSc6kditxz2tJuNi7YGdYTiNvTnK2p1yQUCA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bLKNChGG7VyivsOw1dDl0ILmocx9EV0hRPyXaV6Q08uayroHJxnrcDLuE7fMybhvS7lDCJsIwFpfFo2Mo/+c+IUK4pVCHQR0Ec1TTZ9lk3T18cATbIC6AcFZGgVtr9x1GP/tTtxULGNyzS+Oz+XLpwF2gYxZ/Z0HQ7u5c9t+SRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=spPzOliv; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="Im09ATJE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728591852; x=1728851052;
-	bh=D89MNDOroh6cXhS28UOFcmNAWZztkyrlr3AV5kVQ/ho=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Im09ATJEh/+V2LqyWrhM4bNsvKskWfFRxvBLkfy9y9L3ES51V/LxnnenL+xlboNH+
-	 dlLCvmp119MPl55IOftyta0rfKFNKMjXh2VSC6bBZwldUYMWM6GOB3LrzUhkha0dun
-	 pX/DN0p/rTdyIKTwPToCjKSSfP/qJq7hr+iqZ3tQ7P5lCueyU2iZUSVvnSgNEKkXu5
-	 Gja/6MFqw9tI5/AHAogI4nc6yeoGe70cGHv8s+R14QaLTXCsli2+jRAz5txXWIVA5L
-	 YlVM6W0/urfcZhfwx0/oFo1026n5yrMkkCXrPxPf2b12p2XAZ3FQJfbRebjjqEWdqb
-	 XiUVJYRo/TC0Q==
-Date: Thu, 10 Oct 2024 20:24:07 +0000
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="spPzOliv"
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e25cf3c7278so1186371276.3
+        for <git@vger.kernel.org>; Thu, 10 Oct 2024 13:32:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728592373; x=1729197173; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YFOykvTd3xbAWHwINoj3zoXCLPUHyhCqEo5XUjv/nqg=;
+        b=spPzOlivEjpJzSAtxE6ZpM4Q6G321zIjsjffdWEcPvlpXef6urD0wwziAKazM6jAZy
+         4/GXYUOZ1ZOfAEI4vlEL8zA+OoAWBtqseo1Kv0xGl34L6hzgLms/33UNbfi6ie0dgPPW
+         kdYirA2kNCkQ/KNC6B6bpAzanbuCHq31OM109Mbz7zJvBZi+svOc91r42WKUNPVdwB5n
+         DVv//aMRXoCX1aKVwh/rjvzxw984t/KV0Err63yLuUbIJoWoMsTn3RKHRV3OBuOaXd7c
+         TVjWzLvXBPjyazGM/0CDZ2jy0tK1KxdNL6cwUXcUGqMys5ZsZzp/V4bFtXBKhf6UPBaa
+         dyQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728592373; x=1729197173;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YFOykvTd3xbAWHwINoj3zoXCLPUHyhCqEo5XUjv/nqg=;
+        b=HEuDOCM0Pd8HWYLnWkXbuSaFX/yUqGzu+t3gtCGSs+Bnl10O/96T4j41e0pok5JSfS
+         l4MRFHtsLCaFUbG/I8tRCaaUxS0/F2XkIbm+YQcW6PIGwSRd4mLBQ0OHDCPNubg74RWA
+         FVXFa5bTBywwMwnOdtCPu+TA56QZBxHRyTIfrtArszUHrQ2nJkxklsRRP3CGwZCtTEjw
+         wVLeFUj5zwMTjaR1h1liI/SjC9oGf1S3ZLWn0KRw1Pa/HJW2+QwLvjgJQoJBeUM5fH9D
+         FvFQBDKLsEz7ZmNKroRZQGnVQZ0ykc0+rFmvKbmn5A23tY4mf/L0cxnzt+rtkYMEKn45
+         SmWg==
+X-Gm-Message-State: AOJu0YxvaxRp1G2lmfXLTXex0CZjqlHVaJkv7hIDNUTSmCUvX8rRbAgS
+	RTADMYOXVdirD9aEMI2/cRvMaqrZXIITsfWcVPk80bCKMkQs2/JT5lFfCb2GYw0=
+X-Google-Smtp-Source: AGHT+IE1NCVjdkryOMRekBntdbPejvW4A6+77WBJWdEpJllYUjLx8E1D/j88bJ5PrpRxKR7VfpEaYQ==
+X-Received: by 2002:a05:690c:388:b0:6dd:bd27:8b07 with SMTP id 00721157ae682-6e347b5136bmr1528367b3.36.1728592372831;
+        Thu, 10 Oct 2024 13:32:52 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e332b611c5sm3411457b3.6.2024.10.10.13.32.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2024 13:32:52 -0700 (PDT)
+Date: Thu, 10 Oct 2024 16:32:51 -0400
+From: Taylor Blau <me@ttaylorr.com>
 To: Junio C Hamano <gitster@pobox.com>
-From: Caleb White <cdwhite3@pm.me>
-Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] worktree: refactor infer_backlink() to use *strbuf
-Message-ID: <XUb4_NFTymdqM_NMxxIfI3YZdQXYu0zViporhB_GbnDFY1pjJNaM8usiQB68mu4RIM_ud9bt8lqq28fdeJhYs-J09YKma67O8kuC8rOGG-8=@pm.me>
-In-Reply-To: <xmqqcyk7k9nx.fsf@gitster.g>
-References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me> <20241007-wt_relative_paths-v3-1-622cf18c45eb@pm.me> <Zwf4PT-vaLX35ELL@ArchLinux> <e1RptKNShhPZHXDhBkQBaCNCmKBKik4nQzRShqtgVfjcH7vBWpuLYV60PSHaJ0diX-oG3XiKHc7IebhIZM4eSkeYdQQZ_QYK2ixxsK-XwrE=@pm.me> <ZwgOURNkNhg8BsaU@ArchLinux> <J1frhnJqftB1IUvIGDnJiz6uYTDNl_Bc92NLj1gXJtgRxapI3Uy-fyFHYtv5_p8e7yzF0pegawV6NlHQTn0GHcXP8MZ_1X8CNkIvO3_MP9c=@pm.me> <xmqqcyk7k9nx.fsf@gitster.g>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: c0a90261b6a1410eb9203bd8b0a11bd6f77c4799
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 00/11] pack-bitmap: convert offset to ref deltas where
+ possible
+Message-ID: <Zwg583RghrWdgqO1@nand.local>
+References: <cover.1728505840.git.me@ttaylorr.com>
+ <xmqqzfnblxdj.fsf@gitster.g>
+ <ZwgJt19kWVRTQhld@nand.local>
+ <xmqq8quvk8w9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------23d7c56ea45700c7a56f021bae8a9b951c11d7ee4d4249d82bd2e64db25b0562"; charset=utf-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8quvk8w9.fsf@gitster.g>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------23d7c56ea45700c7a56f021bae8a9b951c11d7ee4d4249d82bd2e64db25b0562
-Content-Type: multipart/mixed;boundary=---------------------356e44b48968b5e14f6235667c03ab7a
+On Thu, Oct 10, 2024 at 01:20:06PM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> >> So when you pick the copy of Y out of another pack, what's so
+> >> different?  After emitting Y to the resulting pack stream (and
+> >> remembering where in the packstream you did so), when it is X's turn
+> >> to be emitted, shouldn't you be able to compute the distance in the
+> >> resulting packstream to represent X as an ofs-delta against Y, which
+> >> should already be happening when you had both X and Y in the same
+> >> original pack?
+> >
+> > Good question. The difference is that if you're reusing X and Y from
+> > same pack, you know that Y occurs some number of bytes *before* X in the
+> > resulting pack.
+> >
+> > But if Y comes from a different pack, it may get pushed further back in
+> > the MIDX pseudo-pack order. So in that case the assembled pack may list
+> > X before Y, in which case X cannot be an OFS_DELTA of Y, since offset
+> > deltas require that the base object appears first.
+>
+> That is what we have always done even before we started bitmap based
+> optimization.  If we happen to write Y before X, we consider doing
+> ofs-delta for X, but otherwise we do ref-delta for X.  We do reorder
+> fairly late in the pipeline when we notice that X that we are about
+> to write out depends on Y that we haven't emitted to avoid this,
+> though.  All of that the bitmap-based optimization code path should
+> be able to imitate, I would think.
 
------------------------356e44b48968b5e14f6235667c03ab7a
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+I see..., so yeah: before this patch series we would have not processed
+X via the bitmap-powered pack reuse mechanism, and after this series we
+will.
 
-On Thursday, October 10th, 2024 at 15:03, Junio C Hamano <gitster@pobox.co=
-m> wrote:
-
-> That does not say what should be left in the strbuf when the request
-> failed. If it is undefined, then using its .len (or .buf) is not
-> quite right, without relying on too much implementation details of
-> the called function.
-> =
-
-
-> Usually, this project uses 0 to signal a success, while errors are
-> signalled by returning a negative value (and if there can be
-> multiple ways to fail, such a design leaves different negative
-> values as a possibility).
-> =
-
-
-> If the result the caller finds useful is always positive value (or
-> non-negative value), however, it is perfectly fine and often more
-> convenient if you used the "positive (or non-negative) value gives
-> the intended result and signals a success, negative (or
-> non-positive) value signals an error" convention. The caller can
-> =
-
-
-> if (0 < do_the_thing())
-> ; /* success /
-> =
-
-
-> just fine, instead of the boolean "0 is success, negative values are
-> various errors",
-> =
-
-
-> if (!do_the_thing())
-> ; / success */
-> =
-
-
-> when it does not care how/why the thing failed.
-
-That makes sense. I can update the function to return -1 on error
-and the strbuf.len on success.
------------------------356e44b48968b5e14f6235667c03ab7a--
-
---------23d7c56ea45700c7a56f021bae8a9b951c11d7ee4d4249d82bd2e64db25b0562
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsBzBAEBCAAnBYJnCDfaCZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
-28viAABgIgf/dPG91nhfHwwmKcpC3/R69FtWVZ/YgbxT587bAm7exExOdDeY
-cb8DJOw7IPlU8UBmFN6GTj2YMoi3sI1Q8BuI3sccE8EFJSZtjGKInvBCCtos
-0Dg9LeUJgnsW/FQOBAFlWYfCAvDuaKWuZgby+2aL4pmRA4/+iSQXuPe82aqO
-zdxsQtFvXXSHa4NuzogZUq8pjJ3kvusX0ZV269uKkU2g5kUWzY146uR1zPrw
-IkHtrX66VA6hIQ4yR78bwbB48xtoyLSB+bKelUjn9QXP+UPMKSJ5S6HOTCPl
-ai+ngluXIboSYvdi/DNBcx0vKwL0vmUMGPu6a/1m12SQqiqeQ+7SBQ==
-=uwX/
------END PGP SIGNATURE-----
-
-
---------23d7c56ea45700c7a56f021bae8a9b951c11d7ee4d4249d82bd2e64db25b0562--
-
+Thanks,
+Taylor
