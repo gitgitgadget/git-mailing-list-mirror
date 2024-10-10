@@ -1,99 +1,132 @@
-Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D8C7462
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 16:57:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895D22AD12
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 17:03:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728579439; cv=none; b=ZFv7055f/IY1yb2GZmOj5PnnPAi7txoha1HoUTrwnvTESL6Olcd29rjWoxMW2uakwBC5H3CY+xfMcCYU4w43VHZP68Y+KnsKfIPiMhfP3TyQ4zM3ktCrNjS/jifngX9EJB5ZJvTd5stNItHH9vOtdJTofMRHWpXQ3TVrGJ7XeDQ=
+	t=1728579792; cv=none; b=ODqvmquiPt6P62VnIs0L6OuGRUFcCSYhfDgbfNy5IvuiiIjFjBAgpX/fvOoyLcBE5OdDt7Kc8BMNMh1w5Y4m+FWpunih77J/Km7CaZPUvmbqkv6zutFdNvcKA6LTNP200b/E+RxJVupENHNjhUofMrBw7QuMpOh3yPpqByrR6zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728579439; c=relaxed/simple;
-	bh=rjqRvMIyAu3zNhIGNqlPMGoddf4xwHEyyfYrVFoDhvE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c9nqd2BQ7xc98laVBKfAg+f2fRhuQUbhL8STBeDL0Fx3Q16+g85SxOSMKpjV4yUL7ymA87jW9PQD0qycSmeil9To0bKK/oDCwtT39hK58ZJFkGpFxmOpXyVz1VCuqBlGKXIX47mZSbT71cYo1beRus/Xpu+pVmypFdNjSWsBqw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=PDV/4hsF; arc=none smtp.client-ip=212.159.14.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1728579792; c=relaxed/simple;
+	bh=Ynr1iBEvtQj5oDkmBuPJHJZRwwEUyqMqGXyNVCCM4rY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EEwTKzJIA901tw9RDNMa3F1GQY2YiTDDeeKmr/IYNqJtakW9PE6gxti2MrYU3+byrjXGNCHo1tE154yWBFf0vuz1DQWLxB5QfCnNc05ynkTgI2Pgl+n/hoLdhoCAX5tzpWapK/PxZE3zrXYgObkkCY5lx83BcwTPQDxOuzZXAR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OeoLhV+t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VxMTt5av; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="PDV/4hsF"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id ywQOskQeKx2dSywQPsy4Jp; Thu, 10 Oct 2024 17:54:07 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1728579247; bh=MkGP2cnR6X9Q3wmG+AVhrh/rbG7/AD6qZXPSGwoRzFE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=PDV/4hsFuSNjrw7VEsrKgnXKNhwfstCjOHVhSRQgrehxjmOoIkJ9bLhZlRwhTvo12
-	 8S/WQX5+tK80KfOD8IbLZii4nyd8m5nppDBcgjyAQY5e4NR4KQooQrfdg/U1WzfmZw
-	 aW0gHk5yYnRxU0gg1tt1R275Xh5HKkJuXpTASaMnQnakh+dzs9NrK6p/6LF9hmExPF
-	 b02kvdfz82xZh0OyoNU7GpYsxK//f2jblwJOSZZL9sFutuY7l5Aglj5v39tZ1amCjZ
-	 K9LS62EH+gtGWx9w9LeQxlUjFrqQo5icx+fTYzMEqyuO9Bd+rl+UdbzTW35BXNrpXg
-	 rWwwPLJzLDGKQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=GMarEfNK c=1 sm=1 tr=0 ts=670806af
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=cMI7se6uAAAA:8 a=NEAV23lmAAAA:8
- a=4T-PPbLPzZviJ6YSvgwA:9 a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
- a=60UZMENMP0NzwrUPKbDS:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <ebd5e3d4-7299-4cfa-a209-9399a1cd79fd@ramsayjones.plus.com>
-Date: Thu, 10 Oct 2024 17:54:04 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OeoLhV+t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VxMTt5av"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B29B611401C3;
+	Thu, 10 Oct 2024 13:03:09 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Thu, 10 Oct 2024 13:03:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728579789; x=1728666189; bh=sNoE5hoHzc
+	jXhizUhljWH5acoX3zEUgqyT6BueRd2OA=; b=OeoLhV+ti/TqnLlpSiq3OMJODd
+	uwCgxOEKGWxaWS1egMsvN10X6cm3q5l1ZuqC0Q1kJ1bOBrAp3P9pZ5v9cpN/dmfe
+	gGnsum+/z55YhPLW6/Sxjv/pRYayK4usCR7b5YPjxap6OTbdREueYlwswdWTZDdG
+	y1KMOOgODTh0Mb2EV2qLS9EyULQMjZwv4Ix0Wd7T1ObkY6wC1oiAOem35iLpgfPc
+	bxCMr/OHfPtqaZR4I5VeIMzyO7bVLPKk6lWjyfz44ndcmq5JnsH4BXlEMMmTqsu9
+	SKPjP+c1vBdS7fMpDgta8RdstkSTLltvAKy7j9d8MC2XrmxWHFVa6kOAa0Uw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728579789; x=1728666189; bh=sNoE5hoHzcjXhizUhljWH5acoX3z
+	EUgqyT6BueRd2OA=; b=VxMTt5av0WM3GKuUJsrmxd4HtrSUD8UEMIEzD/cMlcmD
+	xvq7uWl+kRzjsYG4Uk+zrQ95EYB3wdKCAYG6bVZrwf2VPSWMkhWRLA7OLt4Pt62A
+	55/gGI50eaVFJk7Hv28DLmmvQc2MlQgfnnJV0B1UuEFVSqyySCH+OTTxIASZLZce
+	vh6B8ibVFhlrTOPpsbD8Kppt4U9WokdvPCGkFnf/PDeK1os8iyJ26OuFcsIpduw/
+	nSeo7If+jasDDeKhKZNOZJDAS/rsLVlYNTtyyI4JGrkhyUTVqDAlJuBX/hzv1UUx
+	y/qh2sWqv0xipgSQgPpvYmIyOTclfUMmuOyRoOEvNg==
+X-ME-Sender: <xms:zAgIZ7XlONcC_UTIzlglDnre6aP_idQsf_ucVnvHf-RqmYIaD3CvOg>
+    <xme:zAgIZzmIbMLW0ahiF958jZekr2Ge1Ne-dzdkkBOclXkcLiSF6j3LUbnIAIUUh-MaB
+    j-D47mb77rCypck7Q>
+X-ME-Received: <xmr:zAgIZ3aOhUSfVN9vRPdFcK-WldWRXr725gyfhxpWW7xTGBke4F_ZWiTO0dt1xXsh4TL6coMWTbZctKxvjpuOUFzaFA4YGFi9dE3RFa4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefhedgudduvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpefhvdeltdeuleffieegjeffveefhfehgeev
+    keeugeffleegfedtjedvudehgfekteenucffohhmrghinhepohhuthhrvggrtghhhidroh
+    hrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepsh
+    hmthhpohhuthdprhgtphhtthhopehnvggvmhgrjhhojhhuleeisehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehushhmrghnrghkihhnhi
+    gvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmh
+    drohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:zAgIZ2UYhxhKHM5zj5_yA6gKiieoXktHDfEixOmb8hm2zqDGwu-jwg>
+    <xmx:zAgIZ1nlzyDf7MZmJ2HjE3tSNdeBJwHBk_UrKuVgYbzU0z9kS_xHow>
+    <xmx:zAgIZzc5hd2DstBPAWfN32dIjA0xY2bvyKYteCpFFTSEldamb6NWwA>
+    <xmx:zAgIZ_FXcuaDu5ogrfG0eGf45wSzWlOCHAsBdDZmNhbzxLJSKNoi8A>
+    <xmx:zQgIZzYir7hXAREqmtyiXJQh4v8m6aU1I3HyHzzXtNMJ4-uksbGxHRLe>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Oct 2024 13:03:08 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Neema Joju <neemajoju96@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,  git@vger.kernel.org,
+  Phillip Wood Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [OutReachy] Introduction and Contribution Phase
+In-Reply-To: <ZwdpHNOPKpi12n3e@pks.im> (Patrick Steinhardt's message of "Thu,
+	10 Oct 2024 07:41:54 +0200")
+References: <CAEqABkKmkqJCqpG5nOgGnK_BKhN_rTgmioptTvCLYGWd4WV0ig@mail.gmail.com>
+	<CAPSxiM_OssSLAGd1JC3UJ9Saorf4yxx9FtvnhpL4=hBrcoh8hw@mail.gmail.com>
+	<ZwdpHNOPKpi12n3e@pks.im>
+Date: Thu, 10 Oct 2024 10:03:07 -0700
+Message-ID: <xmqqiktzlwl0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/6] set-head: better output for --auto
-To: Junio C Hamano <gitster@pobox.com>,
- Bence Ferdinandy <bence@ferdinandy.com>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk,
- Taylor Blau <me@ttaylorr.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <xmqq1q0xhu13.fsf@gitster.g>
- <20241009135747.3563204-1-bence@ferdinandy.com>
- <20241009135747.3563204-3-bence@ferdinandy.com> <xmqqjzehq9qk.fsf@gitster.g>
- <xmqqv7y0lzn5.fsf@gitster.g>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqqv7y0lzn5.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfNE8XPXM+0F8O6uSxzSNn+eCpZwaHokiaR/MLVZ0n0QPBMagR0RS+boqlAAR8nrBoFBaD+qzoNbNjeRK254SUCfxiMcAsHl1DeEObgIismdTRVPaYxaS
- qQhb9xnuXRGiWb3gfgTVDEFHrayuGQ+uy+5i9s7xvl76gqW6VTaXI93gdSjGvyK5TJVC7z5ybKcSJkDhwoMS0cwRsEwe3dNbsIE=
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
+>> > ... As a part of outreachy
+>> > contribution phase, making one contribution is mandatory. In the
+>> > Project Contribution Information
+>> > [
+>> > https://www.outreachy.org/outreachy-dec-2024-internship-cohort/communities/git/
+>> > ]
+>> > section, an applicant has to complete a tutorial, microproject and
+>> > then make a contribution.
+> ...
+> You are of course free to do additional changes after you have completed
+> the microproject to get more familiar with how things work. After all,
+> this is an open source project, so people are free to contribute at any
+> point in time. But this is not a requirement.
 
-On 10/10/2024 16:57, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Bence Ferdinandy <bence@ferdinandy.com> writes:
->>
->>> +static void report_auto(const char *remote, const char *head_name,
->>> +			struct strbuf *buf_prev) {
->>> +	struct strbuf buf_prefix = STRBUF_INIT;
->>> +	const char *prev_head;
->>
->> I think we need to initialize prev_head to NULL.
->>
->>> +	strbuf_addf(&buf_prefix, "refs/remotes/%s/", remote);
->>> +	skip_prefix(buf_prev->buf, buf_prefix.buf, &prev_head);
->>
->> If the symref was not pointing into the "refs/remotes/<remote>/"
->> hierarchy previously, skip_prefix() comes back without touching
->> prev_head (i.e. not starting with the prefix does not clear it).
-> 
-> The two uninitialized prev_head were also noticed by compilers in
-> multiple jobs at GitHub CI.
-> 
-> https://github.com/git/git/actions/runs/11265515664
+There seems to be a bit of confusion between what Outreachy wants to
+see and what we need to see before adopting somebody as an Outreachy
+intern.
 
-Heh, I was just about to send a patch to fix up these two warnings
-(errors with -Werror), so that I could build 'seen'. However, it
-seems to be well in hand, so I won't bother! :)
+I doubt Outreachy considers a microproject contribution qualifies as
+the "required" contribution.
 
-ATB,
-Ramsay Jones
+Instead of being a theme for a full 3-months internship, a
+microproject is designed to be a bite-sized project, with which a
+potential participant can experience the end-to-end contribution
+process of proposing a change, polishing it while working with
+others, and seeing the evolution of the proposed change through to
+completion, without requiring technical skills or project specific
+knowledge.  It is primarily a "dip your toes in the water, learn how
+things are done in the development community that may choose you as
+an intern" practice session.
 
+As Patrick said, it may still be a "contribution" from the Git
+project's point of view, but it is not designed to be something that
+qualifies as a "Contribution" they talk about when they say the
+"Applicants are required to make a contribution" section in their
+https://www.outreachy.org/docs/applicant/#make-contributions page.
 
