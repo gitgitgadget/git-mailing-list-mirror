@@ -1,174 +1,104 @@
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F60D19C57D
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 17:52:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1D31C1ABE
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 17:59:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728582781; cv=none; b=YtjYvfzzNMKZX/HF9ha30ffYlorzjpoJdMibmWts4arAwcMz2FVu+EoiXU6Vwi6WN9TPXktv+puiYy0B37QpwsYrG7I6ox2da4k5PGU59Ic2D7xird9RVKvGg55NU1uFRsCowq+EJ9Ky5VhO3HfTP4+k7cktpPwNCR+Psh6Lpa4=
+	t=1728583159; cv=none; b=A4ZRvhasnjgc8O7yYDAeViQifjQ56q3d8VVFh4H3SmuksLXM9iUvmhm7uEXqbEgv1fT3pl3QzczkRJyVqvCK186ZENZla3c5pBO+lwPTHhX5IKPVZgiaNcMHCBXImWZEEPS/XzCaMDwdeCtjnvHARn10xYTcocOMqmjq5iFI6cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728582781; c=relaxed/simple;
-	bh=zO0SUxvvbxeInYclhs3bJbmzqNO+uTEceWzkfgyXUsw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lMclWkmJVpVm3zp33KYjgRg39UPjbP2szK0qv2wtBW6x2RLX0cO0ZKnuStSW/fKkkje+pzSu9AIaHDKAVbHNWgdPpZe2f1iwYgcpLmttn5YtQejKXpAbImjtpK+eYZ9Ifto/z3rE1VjidCmzifWx9daaLLspfttUlm2DUReoK68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=hI60FqOX; arc=none smtp.client-ip=185.70.43.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1728583159; c=relaxed/simple;
+	bh=Q0yHjm0/uJa0AAruC3fqk6K3HMcq33NPbaVHTSBxXoI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SiRfO3YPOZOMrTw56WQQomWoBPi2jWmadhIzcLPnQ9XE9kjIXudyQHEFPgImzFzSfQgd78hsac7yTqU84skWm+2ROy/OTbM71iKIz1azg/bREKB4O5YlnJRBg7ooHq+TkxKZGybQ05Ulenm0bJPeDCmDC6VQkszuhfCv5yucwUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b4MBjgS0; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="hI60FqOX"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728582771; x=1728841971;
-	bh=zO0SUxvvbxeInYclhs3bJbmzqNO+uTEceWzkfgyXUsw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=hI60FqOXdw5utFPkgRkcOSNv5nNADSbuV6NcVt0kDB1QUTao0SvXf4NjqS3cbvvgl
-	 4LghxoNq33oPO52Cgwen1Q0N/xEfleqpICtGw7CI9cn7lWysvDgVRinjBI/WcbXX6S
-	 ucPwpSulstvG7HzG8V/VUOq9EWLh3CVyRw2QhUQ71OOylUZFa5mirkCpwfBiZ/6cJh
-	 xweO9qlGeg/jdCaZ7yku77VZdACpzxTe25ZCXWULWmQby6w0xR9QEqVC8aUpnRmyka
-	 GHufo7w181uR0DDJG3IU2jcjFx33keMsITcBp1RW2iBnqzMBfIvZeeYkU7orNmB3b0
-	 1MW5iZKlAYQ6g==
-Date: Thu, 10 Oct 2024 17:52:49 +0000
-To: shejialuo <shejialuo@gmail.com>
-From: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] worktree: refactor infer_backlink() to use *strbuf
-Message-ID: <J1frhnJqftB1IUvIGDnJiz6uYTDNl_Bc92NLj1gXJtgRxapI3Uy-fyFHYtv5_p8e7yzF0pegawV6NlHQTn0GHcXP8MZ_1X8CNkIvO3_MP9c=@pm.me>
-In-Reply-To: <ZwgOURNkNhg8BsaU@ArchLinux>
-References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me> <20241007-wt_relative_paths-v3-1-622cf18c45eb@pm.me> <Zwf4PT-vaLX35ELL@ArchLinux> <e1RptKNShhPZHXDhBkQBaCNCmKBKik4nQzRShqtgVfjcH7vBWpuLYV60PSHaJ0diX-oG3XiKHc7IebhIZM4eSkeYdQQZ_QYK2ixxsK-XwrE=@pm.me> <ZwgOURNkNhg8BsaU@ArchLinux>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 4dfd31188a3e9ca7548eb779d255c33b358eb87b
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b4MBjgS0"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5c89f3e8a74so1546778a12.0
+        for <git@vger.kernel.org>; Thu, 10 Oct 2024 10:59:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728583156; x=1729187956; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1goZbVpUqBcA+JJH9ZJi9mPq/UqfKzZ3cUUK8wqywPo=;
+        b=b4MBjgS0Qh1/2VOJbnsR1BJjwVeqMFVNRqrhZ5zB/WngIKJJUx9bWcDGGqRGniYftS
+         7fBnNNjhmStdzyXskITkOu2cldqYS3j1q7zbiHICC/1fNWUo38VxaH8c/id8jkO86lc5
+         kJ3DHbqA+Hw7VNZoseX5/0jcSS+LxIiSBys2KYMX1+VI9r52rNFJBhHIZDP1tjPjkF+w
+         wwVDcpiSjbBNNvpA2bSlkZuWT3oizb6zOzs+5kSSLbhgyb2pUFEUcqrKx6iCxbsJgMmD
+         m3UrXjE6sYw/tGZAVTtwEAjE5Bc5/LsYoNr4LXy9mTi/qUnsJGyGiKyMFpHkFU1gzyt4
+         YKCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728583156; x=1729187956;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1goZbVpUqBcA+JJH9ZJi9mPq/UqfKzZ3cUUK8wqywPo=;
+        b=bKIt3Ob+SXqmk7TIp0Ro4+utTCU8spQlL2TsaA3NJ6w73jpfof0BPHlRAu9EueiA/g
+         k90x5OWIBYFZt7LjWGt6JwxozoZrrBDt5/9h4Wmb4Q1gNnXHXAXk1kOvfyXNaSBlcQ1J
+         g0dJw4VyMQddyIx8zUqshIJaUBUW/tw3R7gypZLUBRdiiIa3tEbJEkmL/L+nkLyajTPg
+         fZmxR7sY/hJy3r5A4n3MnnKDjroCW4y0razpvG9KS0fMJBC74zpIauWWEJr1U87AFp5a
+         PQllAPDfr5IRSH4ejaCERRCbABclirUd5nzivEJ/kn4OTK2a0GgjupeBRlfyGMS9Np/b
+         YiAw==
+X-Gm-Message-State: AOJu0YwlRtq5X9FvIQLvuk/pTHVGiGE6EyDGr8LWamVVqeo5PLwLb1wO
+	YZS67nXSzA25iktW24XcX589ZaB2TpDnWXGkD0uZLovJBVombb0H
+X-Google-Smtp-Source: AGHT+IE0lcDrLEfnIVbOVUTXKogY1Thqzz7gahn2Bdrq6y6wTbk6J2Na4P25I1imv6adpAfTLDoCRw==
+X-Received: by 2002:a05:6402:4411:b0:5c4:a6f:9be7 with SMTP id 4fb4d7f45d1cf-5c91d57f4a4mr6885996a12.8.1728583155647;
+        Thu, 10 Oct 2024 10:59:15 -0700 (PDT)
+Received: from archlinux.fritz.box ([2a02:2455:825d:6a00:6bb4:436f:5699:ff21])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c9372608f4sm1059995a12.70.2024.10.10.10.59.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2024 10:59:15 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: karthik.188@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	jltobler@gmail.com,
+	toon@iotcl.com
+Subject: [PATCH v2 1/3] clang-format: change column limit to 96 characters
+Date: Thu, 10 Oct 2024 19:59:09 +0200
+Message-ID: <e22ffbe0f65971579809d817984766af12898127.1728582927.git.karthik.188@gmail.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <cover.1728582927.git.karthik.188@gmail.com>
+References: <cover.1728582927.git.karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------72cb826018ba015d6d96343dd02b0cbafe11d2bfa79f40a60ccd329039f99cdc"; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------72cb826018ba015d6d96343dd02b0cbafe11d2bfa79f40a60ccd329039f99cdc
-Content-Type: multipart/mixed;boundary=---------------------b80ee5430c168d4abe06791fd569472f
+The current value for the column limit is set to 80. While this is as
+expected, we often prefer readability over this strict limit. This means
+it is common to find code which extends over 80 characters. So let's
+change the column limit to be 96 instead. This provides some slack so we
+can ensure readability takes preference over the 80 character hard
+limit.
 
------------------------b80ee5430c168d4abe06791fd569472f
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ .clang-format | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-On Thursday, October 10th, 2024 at 12:26, shejialuo <shejialuo@gmail.com> =
-wrote:
-
-> > > We have two signals to indicate the success. I think it's a bad idea=
- to
-> > > use "inferred.buf.len". Let me give you an example here:
-> > =
-
-
-> > I don't see a problem with this---the two "signals" are guaranteed to
-> > always be in sync (either the return is 1 and len is > 0, or return is
-> > 0 and len is 0). Having the boolean return gives you flexibility in ho=
-w
-> > you can call the function (if it can be placed inside an if condition)=
-.
-> =
-
-
-> Yes, there is nothing wrong with this. But we also introduce a burden he=
-re,
-> when we need to change/refactor `infer_backlink`, the developer should
-> have the knowledge "when the return is 1 and len is >0 or return is 0
-> and len is 0".
-> =
-
-
-> If so, why not just return "infer_backlink.len"?
-
-I would say because the purpose of the return is a boolean,
-either the call was successful or it wasn't. The developer
-knowledge that you speak of should be a given---if the
-function returned true then there's obviously a path
-in the strbuf.
-
-> I am sorry for this, I gave a wrong example here, it should be the
-> following (I copied the wrong line in the previous email):
-> =
-
-
-> struct strbuf inferred_backlink =3D STRBUF_INIT;
-> infer_backlink(realdotgit.buf, &inferred_backlink);
-> =
-
-
-> // What if I wronly use the following statements?
-> strbuf_addstr(&inferred_backlink, "foo");
-
-There's nothing wrong with this, it's on the developer
-to check the error condition before proceeding to use
-the strbuf.
-
-> Actually, I am not against your way. Instead, you should mention why you
-> choose "inferred_backlink.len" as the signal in the commit message.
-> That's the main reason why I think we may add some comments here. The
-> caller may do not know we should use "inferred_backlink.len" to indicate
-> that we have successfully found the inferred backlink especially there
-> is already a return code in the function.
-
-I think the intent is fairly self-evident and does not warrant a
-comment in the commit message? If the strbuf does not have a
-length then it should be obvious there is no inferred backlink?
-
-> > > If you insist using "inferred_backlink.buf.len" as the result, this
-> > > function should return `void`. And you should add some comments for =
-this
-> > > function.
-> > =
-
-
-> > I can add comments, and I can change the return type to `void` if ther=
-e's
-> > consensus, but I really don't see any issue with leaving it as-is.
-> =
-
-
-> I agree with you that this function is NOT harmful. Actually, I do not
-> think using "void" as the return type is a good idea. If we decide to
-> use two signals, let's leave it as-is. Some comments should be enough.
-
-I've added a comment to the function docs.
-
-> The original patch has three lines. So it should use `{`. After your
-> change, it only has one line, isn't it?
-> =
-
-
-> You could refer to this to see the code style.
-> =
-
-
-> https://github.com/git/git/blob/master/Documentation/CodingGuidelines
-
-Ah I'm sorry, you're right---I'll adjust.
-
-Best,
------------------------b80ee5430c168d4abe06791fd569472f--
-
---------72cb826018ba015d6d96343dd02b0cbafe11d2bfa79f40a60ccd329039f99cdc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsBzBAEBCAAnBYJnCBRjCZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
-28viAAAo6Qf/b2/z4HMzeMgCUE3kaiWSrJxa00bDHrU8ugrG8Lp8R2zlW/g4
-lweBLT1ceWa3l3+lMRfLzgCXDGVGU1LA+e40zTIFud+FutTchC+lG/hf9HIr
-RCLOuyeMJR4Cm1X/GkIqfAAiCrQOBMzugvmH85c3H4caPPacNi+VLb2hhSJN
-P5WcURbBCdP6iK0jhTEzmTLGPLgmgK6SAqyUp5Hhp/hvEu7Jb7uiwGsi31Hx
-pQzbd02JN0Klv9DDQ9YLjYXITnKEj9afsKuHhP5w5X81j6gz0lYIxe4gSrx6
-djER7zO1egOmIMhfAkG2tuIqZJ2WbLTa/FOwq+GngT0ogO7qL3qwSQ==
-=Gqod
------END PGP SIGNATURE-----
-
-
---------72cb826018ba015d6d96343dd02b0cbafe11d2bfa79f40a60ccd329039f99cdc--
+diff --git a/.clang-format b/.clang-format
+index 41969eca4b..684ab32d28 100644
+--- a/.clang-format
++++ b/.clang-format
+@@ -12,7 +12,10 @@ UseTab: Always
+ TabWidth: 8
+ IndentWidth: 8
+ ContinuationIndentWidth: 8
+-ColumnLimit: 80
++
++# While we recommend keeping column limit to 80, we want to also provide
++# some slack to maintain readability.
++ColumnLimit: 96
+ 
+ # C Language specifics
+ Language: Cpp
+-- 
+2.47.0
 
