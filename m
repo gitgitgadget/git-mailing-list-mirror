@@ -1,109 +1,125 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F7518C03D
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 06:55:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1644F1A3BDA
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 06:57:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728543315; cv=none; b=oJQTwFjI1CfTWTKpLA+Qd7Kqc2r5scUBFG6z2zaBwvGzXn7oxt19TtmlPGKKB7meJTNKjlUbGeLsEkPxf7essFgL+JGzQDw71hHivddi+PXhRFLg8viJBzO/lnDCKE+tpuI0u2OusLfMzxXEaZ/4iW+4MXKi5QInhJJLzZ+GK1I=
+	t=1728543432; cv=none; b=E2LYiqwaT5Q59y1f8IjVefivd9GMkEw743O0ywM1PipBzCYCn8bXVLgYXEK+6hzBRNsY7k+BDeD+g0y7UoUADPZn/+sjvB5YTWSQdkIK7Co9368UnLa8RYQ23PyhSGDFrkp9hz6ubBOGrt6xytEZRNqr1CQp57jWycu9tNShOHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728543315; c=relaxed/simple;
-	bh=IkAhMabTRb3b+ggtC4iatdeH2iQU5c4J/E98+5MrDFM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TpDJKwOqSCO5AiHWpwNydb/WeaX3MPYXQpViHZMSla8tMb8u291vUhEHfyiDNkaQ439pVm6SBZn3vsQ6xqcCUCqxg9rPbNH7taaixYiOW2b3fLP13/f8c8rEdZDDYuGpJ//LycAzmLFzC0cqbtw5iBCASwW/MlswuSDzfEAlOjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hdkaEbbe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E1ON6cyc; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728543432; c=relaxed/simple;
+	bh=YKfX6CXodpo5lsCcfpyj/VI/ebYlOSj9C5k/xjDfrPg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Gj9KsXXvNcp73DyXg0wBVWh7M2+WM+88UDP+Vhdpal0JM/qujVXk/PdPB+cnDVK5ISY+JdxMnvsUwCB+TnIhkn0hWV4GrIU0Baxjddl0agqvz5x9JTawQbNRuCtKhePQz09BTHN8Y0VbcnFOObHwY8TcK9boPTWC1/5PfEfQvYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LoUJpIio; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hdkaEbbe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E1ON6cyc"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 29AE313805F6;
-	Thu, 10 Oct 2024 02:55:13 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Thu, 10 Oct 2024 02:55:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728543313; x=1728629713; bh=W29ptr309m
-	PvaUekT+uf4Gdp0CfnOnEYASLJ6m7Gtt8=; b=hdkaEbbemav8AugAtSyR2pemZO
-	ssz1F/QcJK+Uuj067YKVzszhOdi0GjfIU5pE+MK4O6uIPyhDhkbQktxpr30auw8i
-	8aUvftnAfvBlI7ofzq4frzLAknzA9J8//J4rSB8YeDiNasajAI26zInhw21HnAsf
-	cI5rHtoP27DmMmtFgPZ6CYUA69HeEpUaMFzktV4at7Awv/sG1gCo1+i/kyirnsK4
-	7s6T9YWkuC9z54vnk0VhPJDr5qaGS+QfXpuOo5gPQzG8dkPTFNAhrhLicVRSSIwQ
-	TszaiK2TkRrdENGqx8gwjNQleDNQlkI7xSBzQPbxiPDo/S/0w57S8HhSV99g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728543313; x=1728629713; bh=W29ptr309mPvaUekT+uf4Gdp0Cfn
-	OnEYASLJ6m7Gtt8=; b=E1ON6cycM78KrL6nbz6do05CgbxpUS6z1fqWPCB55pHM
-	G1OWLeQpqb6n1f/TgN3obJRH+c1Ua3+szK0SkSfwKIN3xGg7lqAjCN2v2N8L+Mge
-	81SdM2I0tPezHIp2f5Bb/AhjQ4XH7p9MHEqm9/eQ9u3/j9iw4etXAbt0X7/UN2X7
-	LRU/TpzaiPnTXAlEZtc7fBCacQ7HfyQit6RcTilW75pmss9+1Eocz0YWqYtPgF1o
-	B5nMNKxizOHUDN7Pji3jRzpxcmMEhZ0KwzYHhMLJzPWznWzKI3eIIcbcIskqJbS0
-	CTeii77pH+6G7EYn7UqCq37R9ZjUtmZrgV2aECIR1A==
-X-ME-Sender: <xms:UXoHZ1zmox5ErxuEHdAO1AnNzWqVzNYC61Dc5kOMpA8Nsy9WkQt8ww>
-    <xme:UXoHZ1TZhblDvc80sneHLBUogtRD61Wq9CB-ucbeYjZzgZOyfkzeoMP2m0SBs1IrL
-    NLNvncc2xOKjcnuqg>
-X-ME-Received: <xmr:UXoHZ_VYD2jjJQDaMarPFt5TcHKGpL8azl2wXuuwxJVWbY9aBR_oCG60GVE9i2DlFJ0VbpgRnlPjvK-EFRgSHLkHFxGQAQrfX7K6VravkAhkFMdh>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefgedguddugecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrlhhgohhnvghllhesghhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:UXoHZ3hqNNXCRuQRvt1-Sn1NJQ6mF1djL3DuvSV-GwDhYp4UJnYq5g>
-    <xmx:UXoHZ3Dp3FFxH7Ic6i-z-Ky1dP5zxW60YjhOMwKK5Tw5QtcHChksXQ>
-    <xmx:UXoHZwKh8ChUDIiBy_dmdDwGbzBXfbMUBD2Bcq1Qjv_TfV-IEaDltQ>
-    <xmx:UXoHZ2DrkTu-abSVBBRRhNXLRsVf6DGf3xCbuvIo3mSZpO5lyy7WhA>
-    <xmx:UXoHZ6O0ccympvLHykCKN1oUwsH4XfCATN0yoiuyiwH2aY9YCTAFCZ8R>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Oct 2024 02:55:12 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3926145b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 10 Oct 2024 06:54:07 +0000 (UTC)
-Date: Thu, 10 Oct 2024 08:55:08 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Andrew Kreimer <algonell@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/7] compat: fix typos
-Message-ID: <Zwd6TGeksR9UiM8i@pks.im>
-References: <20241009114940.520486-1-algonell@gmail.com>
- <20241009114940.520486-2-algonell@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LoUJpIio"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5c928611371so693962a12.0
+        for <git@vger.kernel.org>; Wed, 09 Oct 2024 23:57:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728543429; x=1729148229; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YKfX6CXodpo5lsCcfpyj/VI/ebYlOSj9C5k/xjDfrPg=;
+        b=LoUJpIiovOQJTJuyge4qPVZ7G9OFeJIS8JAoRG4LxDHaQXUacY547RTSM+WwTQD916
+         SYaZHheI57ZMyUz/QkzdcSeGtgXw00cyq4ESHLxY9ks1zJXxQ1VTTqv3LNFkrn4op1qg
+         wbWQasaYxXLakUmlVl+1ubvn/g9owukcbutGQXaSm7K0nKycLrSCBFF9IPeb/wFWXvAS
+         NAXRYV5kjOg9bfODX2K2p94+lmUCy5RaRVGR5lUJVJIXsjixq7n7UWf9jpBgn2bOioQJ
+         nGVkBy6lDvT2IX6g3S1PT+GUk9Gqfmd6lsCmb6iPom/siyt0xtqnN30ut/nXW5khtwll
+         MgsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728543429; x=1729148229;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YKfX6CXodpo5lsCcfpyj/VI/ebYlOSj9C5k/xjDfrPg=;
+        b=QUybOrcRJLV/NoXlvUnHQKq/TXSIwHGHFTm2+dojIvsXEZm0WY8nTC2ktsT6Oxf755
+         6fQuQFvFV3oAmd3nF4yKisbGjSMCdwd5zOs9pjmunTsPfFFe/jyyUKWSJtruMWydMXJF
+         Yew3lf/csrWWaAMk/tYq85fG3JNLSgnlsaiLM4KmgZZG4bcB3GWVVZxqJc25GZ2UzXGr
+         iuv0hd4ghVD57HkF8L88wtJ4R9Reo5DUVDw++mR4mJzliODJuto86a7+pXmz4SqbW3u1
+         JfvPEJYQ37P0lffGVy9OLJ2fo2DTgQQ1OLpWKezGGAzvHOEPJsnBhAa60c+WINODBE4k
+         G/kA==
+X-Forwarded-Encrypted: i=1; AJvYcCVG+jM5G825rsMOba6j/UEG8VWehfVVKiB2O/Jq3KIbgHQ3QWFUlrvHy6o+06SaqXRpBLQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCtlKtvSlvwuvpWxh3DTMlGxnN2IkO4KAlA9cpzbLX5HIG4vg3
+	QyWQ80HGS238ufnw5LXAXZm3JWBYgL9elaQcZjq704H+RcO8IVwBgD8wBCsDdbMlizOhesEJCOO
+	m/p9kLGEgbb+gvhTK3zKT7DzMovE=
+X-Google-Smtp-Source: AGHT+IEKnoW5RvDp5pxO0M8tCTp3Lo7QeCOnPLA4SipqujfDz7pRH5vP3myrsIhFxoIxdiCuImP3q42vtohh1AvfDOI=
+X-Received: by 2002:a05:6402:1d51:b0:5c8:957a:b1e2 with SMTP id
+ 4fb4d7f45d1cf-5c91d3f9cf3mr3977899a12.0.1728543429307; Wed, 09 Oct 2024
+ 23:57:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241009114940.520486-2-algonell@gmail.com>
+References: <CAEqABkKmkqJCqpG5nOgGnK_BKhN_rTgmioptTvCLYGWd4WV0ig@mail.gmail.com>
+ <CAPSxiM_OssSLAGd1JC3UJ9Saorf4yxx9FtvnhpL4=hBrcoh8hw@mail.gmail.com> <ZwdpHNOPKpi12n3e@pks.im>
+In-Reply-To: <ZwdpHNOPKpi12n3e@pks.im>
+From: Neema Joju <neemajoju96@gmail.com>
+Date: Thu, 10 Oct 2024 12:26:32 +0530
+Message-ID: <CAEqABkKvbpo-8-gDpFtfNcpmiC8A5mJMkcDXfhcdNrpwMvBsDA@mail.gmail.com>
+Subject: Re: [OutReachy] Introduction and Contribution Phase
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>, git@vger.kernel.org, 
+	Phillip Wood Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 09, 2024 at 02:49:34PM +0300, Andrew Kreimer wrote:
-> diff --git a/compat/regex/regexec.c b/compat/regex/regexec.c
-> index e92be5741d..15ab2d1d40 100644
-> --- a/compat/regex/regexec.c
-> +++ b/compat/regex/regexec.c
-> @@ -292,7 +292,7 @@ compat_symbol (libc, __compat_regexec, regexec, GLIBC_2_0);
->     concerned.
->  
->     If REGS is not NULL, and BUFP->no_sub is not set, the offsets of the match
-> -   and all groups is stroed in REGS.  (For the "_2" variants, the offsets are
-> +   and all groups is stored in REGS.  (For the "_2" variants, the offsets are
->     computed relative to the concatenation, not relative to the individual
->     strings.)
->  
+On Thu, Oct 10, 2024 at 11:12=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
+te:
+>
+> On Thu, Oct 10, 2024 at 10:21:54AM +0530, Usman Akinyemi wrote:
+> > On Thu, Oct 10, 2024, 10:17 AM Neema Joju <neemajoju96@gmail.com> wrote=
+:
+> >
+> > > Hi,
+> > > My name is Neema. Pronouns (she/her/hers).
+> > > I am an Outreachy applicant. Completed my initial application and am
+> > > currently in the contribution phase. Looking forward to working with
+> > > you.
+> > >
+> > > I have read through
+> > > https://git.github.io/General-Microproject-Information/,
+> > > https://git.github.io/General-Application-Information/ and
+> > > https://git.github.io/SoC-2024-Microprojects/.
+> > >
+> > > I am in the process of selecting a microproject. However, there are
+> > > some things I would like to clarify. As a part of outreachy
+> > > contribution phase, making one contribution is mandatory. In the
+> > > Project Contribution Information
+> > > [
+> > > https://www.outreachy.org/outreachy-dec-2024-internship-cohort/commun=
+ities/git/
+> > > ]
+> > > section, an applicant has to complete a tutorial, microproject and
+> > > then make a contribution.
+> > > While I see detailed instructions regarding the microproject, there
+> > > aren't any regarding contributions. Is the microproject considered th=
+e
+> > > contribution? or are they separate entities?
+> > >
+> >
+> > Hi Neema, when you do the Microproject, you are also contributing to Gi=
+t.
+> > The Microproject is all about making a contribution. You can also wait =
+to
+> > hear more from the mentor.
+>
+> No need to say much more than you did though, as what you've been saying
+> is exactly right :) The microproject is how applicants demonstrate their
+> ability to adapt to the workflow in the Git project. So this is how we
+> mentors ultimately decide which applicant is likely to be the best fit
+> for the Git project.
+>
+> You are of course free to do additional changes after you have completed
+> the microproject to get more familiar with how things work. After all,
+> this is an open source project, so people are free to contribute at any
+> point in time. But this is not a requirement.
+>
+> Patrick
 
-Do we want to fix grammar while at it? s/all group is/all group are/
-
-In any case, this and all of the other patches look good to me. Thanks!
-
-Patrick
+Thanks Patrick. Thanks Usman.
