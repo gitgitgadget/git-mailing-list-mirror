@@ -1,200 +1,122 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D2A194082
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 17:26:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EF419922D
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 17:30:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728581193; cv=none; b=k7drY1ophFnLHhpC4jgckh1HGpNr6p1LbEbiunumb60CleF69RftS3UaNS6AB35tfrl2yxSfL7wGOwAct/evFYCOd7X5Kkgr4S/XUVXWWloSI6CWlLnhbZPSKwDsyitL80dDI28UgOcpcevlRmg8EUCnDAuPG4yi4R1zn+Hu9ww=
+	t=1728581431; cv=none; b=Vi1QpdpJi4rHpbAOH0NfNEbOcy03T5U+Y2gqCG0ZlyyZqaR9Flejf+54ry4wdCNfyg/OaCNlwPQR2x4VQSgqq++zelYAryMKnx0GF/l5rx7eAmxXBmtMXkOAMJO1h0gvFfuN/QKteQCC+QvxjSkvgmrIhEthy6BGFiBIWq8nsXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728581193; c=relaxed/simple;
-	bh=gaO5v82mn+oYArgxx1o10nagyPXoR/8PsPwVnyTvKAs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oO+MnervWSFzOwv9b8BeKPxYdRwvsf6v8zFWhUbrdrfxln4i/nRaU1SFypmv0Mt0fCUV6jU7o3Ca7SORdiF7qlWrpOfFARV8lL4y4sUURTdqeE/2tNWBudkSBgYLwhklyhyc5JMDCno0SPvSpOJOCFXh0zoYuLRWDB0xNlHKEkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fTut+1I8; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728581431; c=relaxed/simple;
+	bh=35P5a2uFDVWOh3EVC2l1OZJuvz1/mH/P1/tNFbu4UxM=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=olgDHAxbyQFHCDdMJU4sH2R/JhB1T+0I7KgnuxzqrnpIpjagqWt+gDsaly5Z8V5bwOs1Husr1tgyQ0aG40AKRxJy8iY1Kte3uajQIxa3ofez886+j/CFcevOebt1bLl/4AQjgJCVFEUL9jPUA0TZuZD3YDvoxypJWrQdqXyLb2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=oVz7maWg; arc=none smtp.client-ip=185.70.40.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fTut+1I8"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-7e9ff6fb4c6so1476620a12.3
-        for <git@vger.kernel.org>; Thu, 10 Oct 2024 10:26:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728581191; x=1729185991; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ndv4iq5broYEeCiaO29JRxsFcHzBfKTnEGIT0LwAtrc=;
-        b=fTut+1I8zxVtB5qSz5ixYI3GlHOnyWBDW/c7VOt/Cd/rdUmp7XwXrllbO6OEZf4uSs
-         aC/7HtMZ3Dq6SgLwpOamOdbXnsxkeR+4ieWxagG482NypJLm4H1uKSC0cTzKwCE4o0gf
-         ubPYIRkM3UK6Rg2L1A1K2/DhSoYEzUp8CjmPMcDZpjy5oQ+s4SQIjPjsyH8dBPOGBAui
-         46g/cW1yeqgUW2DPYFdgsLmbHa1p3eYURHhpIvhgkrcqiezkD6cIFT2ng8x6ANUo6dQa
-         hGdMg0gBldkxPQMoPOW5NvgL5zscAAgosaYE0EUdREmOaxojp8Ch7RCa+8Hpll+VfuYb
-         mERw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728581191; x=1729185991;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ndv4iq5broYEeCiaO29JRxsFcHzBfKTnEGIT0LwAtrc=;
-        b=HQzU5sOSeT7OkDPIaCXLCjQlMlFixu2DlpVnuQSyvbzW5trgVwrcD6efVhr330GH4C
-         6TR2joJgx+4sQS3h+eGiWqimg34O0RfcFz9BwBdUGYjncrPSRd4x31CHxEJT4wI4HmUz
-         2uoO4Si7NmU3EHxMo663KIGR1BOATeORQh14Xyox2/Iy9uj+uvNBICvY/3jmNrihRTiL
-         af1YNgyWp/Ku8oUWcgLIg9obxVk0UU38HPkvKGq3fQpyaVG2Bl9Ksq/8/p7PJjT8aqn6
-         DFweJGJBmzYz0l835P2SoM6GcA9WYmaYZvqH318TvBiai7nCX0poTB7fFZo5c8v1cJfW
-         CWZw==
-X-Gm-Message-State: AOJu0YzqMjgx9NojpxyZ5LBhzNt1aTtnfQFgQfua3uNqGGxjqbjjJdSc
-	UuJDjqb//f0zV+FxaRf2Shro8aXsjBk0K9RsHGMi06jpIQEh4h3ju5RJpg==
-X-Google-Smtp-Source: AGHT+IHzElJImIx8V10ZziLTu692URm4t87lO5uvY4uuPNcFDh5WVM7uk4ml96veLFemAFNLSXUjSA==
-X-Received: by 2002:a05:6a21:4006:b0:1d3:e4e:ff55 with SMTP id adf61e73a8af0-1d8a3be37bbmr13300853637.7.1728581191167;
-        Thu, 10 Oct 2024 10:26:31 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7ea448fb7c9sm1071073a12.35.2024.10.10.10.26.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2024 10:26:30 -0700 (PDT)
-Date: Fri, 11 Oct 2024 01:26:41 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] worktree: refactor infer_backlink() to use *strbuf
-Message-ID: <ZwgOURNkNhg8BsaU@ArchLinux>
-References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me>
- <20241007-wt_relative_paths-v3-1-622cf18c45eb@pm.me>
- <Zwf4PT-vaLX35ELL@ArchLinux>
- <e1RptKNShhPZHXDhBkQBaCNCmKBKik4nQzRShqtgVfjcH7vBWpuLYV60PSHaJ0diX-oG3XiKHc7IebhIZM4eSkeYdQQZ_QYK2ixxsK-XwrE=@pm.me>
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="oVz7maWg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1728581428; x=1728840628;
+	bh=35P5a2uFDVWOh3EVC2l1OZJuvz1/mH/P1/tNFbu4UxM=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=oVz7maWggrdWuMWZuEU7pmlvrYxUc08xDNPx2FbXNKFZa4eoNR4DV2scrgWMYe2ml
+	 tZsxVcnbv8Z1QjC3liUh6hNmN8XfMKXjfYg7Mcxu3tmKlIHuTwAGQR83ORc+lrZiPZ
+	 bltnWCiEbm0ljrHSXjsFSuvrhsOMO8Yu/mm+TVDG9aChS72La7TVDaV19jbt8N8q+z
+	 FJmIuBO0nG8yhGeLmBbaBOLJjRo7dIT17koyFvuiVhpTX8tbrfUGvhGwRP/Hsk1Kxv
+	 nmadyYTL3iJSDgTqRZHH4oKH4mLZG7PefPzyqxoerVF1fvHb1PztxN86bYiM0/v3US
+	 Ac36W34DWHZ6A==
+Date: Thu, 10 Oct 2024 17:30:22 +0000
+To: Junio C Hamano <gitster@pobox.com>
+From: Caleb White <cdwhite3@pm.me>
+Cc: Caleb White via B4 Relay <devnull+cdwhite3.pm.me@kernel.org>, git@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] worktree: link worktrees with relative paths
+Message-ID: <gSEdRZ0rf9yJ68dp1Jgq7CYrXPGMgUxgBji4qs_emJy25eHOG7ULCtH8f2bawTRFSMGoxC_QsB7EN0OJnbQ_Olf66hNk8fEJoVMkkIlyA14=@pm.me>
+In-Reply-To: <xmqqfrp4onjd.fsf@gitster.g>
+References: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me> <20241007-wt_relative_paths-v3-2-622cf18c45eb@pm.me> <xmqqmsjexkcg.fsf@gitster.g> <k3X5W4US76LBJ_IUq-quVRha2jd-4iWJ9yX6Ukh6-ifZdWC3iajoUJ8VUyTDfkJHSqiD1RJlqIuVlDGIsReR_SDREVWyHGIqsXhazvJu1ek=@pm.me> <xmqqy12xqehd.fsf@gitster.g> <oUBKv4JI3Bf1nqAFU_C-HDl5vkZC6mg8mb5F0HB7akXC6n0T1ddV0LiOCqY_AGHCyr9_W7gs2EyTGqIihz89ciBbL61UFwznnHcYRNzfGLI=@pm.me> <xmqqfrp4onjd.fsf@gitster.g>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: 422fdcb5dd257ddd3b46ac78d4c01bcab8fa77b2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e1RptKNShhPZHXDhBkQBaCNCmKBKik4nQzRShqtgVfjcH7vBWpuLYV60PSHaJ0diX-oG3XiKHc7IebhIZM4eSkeYdQQZ_QYK2ixxsK-XwrE=@pm.me>
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------9ecb843d7ae508a0942b6f551aec0f87803e663d74232f75442641d34cb66b36"; charset=utf-8
 
-On Thu, Oct 10, 2024 at 04:41:03PM +0000, Caleb White wrote:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------9ecb843d7ae508a0942b6f551aec0f87803e663d74232f75442641d34cb66b36
+Content-Type: multipart/mixed;boundary=---------------------e8542617f3ce24bfaee60847911af45e
 
-[snip]
+-----------------------e8542617f3ce24bfaee60847911af45e
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-> > > @@ -658,17 +657,18 @@ static char *infer_backlink(const char gitfile)
-> > > id++; / advance past '/' to point at <id> */
-> > > if (!*id)
-> > > goto error;
-> > > - strbuf_git_common_path(&inferred, the_repository, "worktrees/%s", id);
-> > > - if (!is_directory(inferred.buf))
-> > > + strbuf_reset(inferred);
-> > 
-> 
-> > 
-> 
-> > Question here: should we use `strbuf_reset` here? I want to know the
-> > reason why you design this. Is the caller's responsibility to clear the
-> > "inferred" when calling this function?
-> 
-> Yes we should, sure it is the caller's responsibility but this just helps
-> prevent bugs. There's plenty of functions that reset the strbuf that's
-> passed to the function before modifying it.
-> 
+On Wednesday, October 9th, 2024 at 18:37, Junio C Hamano <gitster@pobox.co=
+m> wrote:
 
-Yes, that make senses.
+> Caleb White cdwhite3@pm.me writes:
+> =
 
-[snip]
 
-> > We have two signals to indicate the success. I think it's a bad idea to
-> > use "inferred.buf.len". Let me give you an example here:
-> 
-> I don't see a problem with this---the two "signals" are guaranteed to
-> always be in sync (either the return is 1 and len is > 0, or return is
-> 0 and len is 0). Having the boolean return gives you flexibility in how
-> you can call the function (if it can be placed inside an if condition).
-> 
+> > > existing repository", and another test that creates with the option
+> > > to use relative and uses the worktree/repository without the option
+> > > would simulate "how well existing versions of Git works when seeing
+> > > a worktree made with the newer git with the relative option".
+> > =
 
-Yes, there is nothing wrong with this. But we also introduce a burden here,
-when we need to change/refactor `infer_backlink`, the developer should
-have the knowledge "when the return is 1 and len is >0 or return is 0
-and len is 0".
 
-If so, why not just return "infer_backlink.len"?
+> > I can already tell you that this particular case is not going to work
+> > because existing versions of git expect the path to be absolute. Most
+> > of the changes in this patch revolve around properly reading/handling
+> > the relative paths, not writing the relative paths.
+> =
 
-> > struct strbuf inferred_backlink = STRBUF_INIT;
-> > inferred_backlink = infer_backlink(realdotgit.buf);
-> > 
-> 
-> > // What if I wrongly use the following statements?
-> > strbuf_addstr(&inferred_backlink, "foo");
-> > 
-> 
-> > if (inferred_backlink.buf.len) {
-> > 
-> 
-> > }
-> 
-> I'm sorry, but this example doesn't make sense. This will fail to compile
-> for several reasons:
-> - infer_backlink() requires two args
-> - you cannot assign an `int` to a `struct strbuf`
-> - even if inferred_backlink became an int then the strbuf_addstr()
->   would fail because you can't pass an `int*` to a `struct strbuf*`
-> - `inferred_backlink.buf.len` doesn't exist, it's `inferred_backlink.len`
->   (probably just a typo)
-> 
 
-I am sorry for this, I gave a wrong example here, it should be the
-following (I copied the wrong line in the previous email):
+> =
 
-    struct strbuf inferred_backlink = STRBUF_INIT;
-    infer_backlink(realdotgit.buf, &inferred_backlink);
 
-    // What if I wronly use the following statements?
-    strbuf_addstr(&inferred_backlink, "foo");
+> If we are talking about making irreversible change to an existing
+> repository, we may need to grab one extensions bit (cf.
+> Documentation/technical/repository-version.txt and then refer also
+> to Documentation/config/extensions.txt [*]) and flip it when we
+> wrote a relative link to refer to an worktree and repository.
 
-    if (inferred_backlink.len) {
-        ...
-    }
+Thanks, I'll take a look at the references.
 
-Actually, I am not against your way. Instead, you should mention why you
-choose "inferred_backlink.len" as the signal in the commit message.
-That's the main reason why I think we may add some comments here. The
-caller may do not know we should use "inferred_backlink.len" to indicate
-that we have successfully found the inferred backlink especially there
-is already a return code in the function.
+> [Footnote]
+> =
 
-> > If you insist using "inferred_backlink.buf.len" as the result, this
-> > function should return `void`. And you should add some comments for this
-> > function.
-> 
-> I can add comments, and I can change the return type to `void` if there's
-> consensus, but I really don't see any issue with leaving it as-is.
-> 
 
-I agree with you that this function is NOT harmful. Actually, I do not
-think using "void" as the return type is a good idea. If we decide to
-use two signals, let's leave it as-is. Some comments should be enough.
+> * The repository-version document claims that any extensions
+> invented must be registered there, but config/extensions.txt that
+> came later ignored it and seems to have acquired a few more than
+> the "master list". We should clean up the mess.
 
-> > > - if (inferred_backlink && fspathcmp(backlink, inferred_backlink)) {
-> > > - free(backlink);
-> > > - backlink = inferred_backlink;
-> > > - inferred_backlink = NULL;
-> > > + if (inferred_backlink.len && fspathcmp(backlink.buf, inferred_backlink.buf)) {
-> > > + strbuf_swap(&backlink, &inferred_backlink);
-> > > }
-> > 
-> 
-> > 
-> 
-> > For single line statement after "if", we should not use `{`.
-> 
-> The brackets were introduced by the patch that my series depends on.
-> I can remove them, but perhaps it would be better to address that
-> on the dependent patch?
-> 
+Would you like the contents of config/extensions.txt moved into
+the repository-version document and then deleted?
+-----------------------e8542617f3ce24bfaee60847911af45e--
 
-The original patch has three lines. So it should use `{`. After your
-change, it only has one line, isn't it?
+--------9ecb843d7ae508a0942b6f551aec0f87803e663d74232f75442641d34cb66b36
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-You could refer to this to see the code style.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-  https://github.com/git/git/blob/master/Documentation/CodingGuidelines
+wsBzBAEBCAAnBYJnCA8gCZAy5Kywm9vL4hYhBE+hHqFr3OG0O+P29TLkrLCb
+28viAAA0uAgAoTm3qqMrykrK5l5BoAAuvBbqOjdhBVGujwrGVweCmzS/avCA
+Qge0MQLNkGqSI8AY3fEnbibOH6X/PP7omO/7JAjSAdfpQ2irmycmaw23Oa11
+b4cs3EEolo0b8EQbQns2hVAKncWAMTlWHFNGLiQmUg9z5PhXvIFa65+99QGG
+URLSxInabgv3244uDjbqT+YvycsSjvID5vdYwKMjyofG1UQ4HCwuKmq4YC2c
+aBu9KjD4K21mn7N1KtzsvZ6YpsgauprJGv4YdaoSm26UKd+Iu89ZZdMf3O/N
+jbRMpviCjfLu+tkDqATNsmKDNjX2HEob0WYcMUYldB2yIFz3UhQDHA==
+=fp7E
+-----END PGP SIGNATURE-----
 
-> Best,
 
-Thanks,
-Jialuo
+--------9ecb843d7ae508a0942b6f551aec0f87803e663d74232f75442641d34cb66b36--
+
