@@ -1,111 +1,113 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3A51CDA2F
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 17:59:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05CB1C9B64
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 18:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728583161; cv=none; b=BDxWXKo86zvBB0oArOIJBntspLAUotX4HGmsmvZhUuvdFmkBKPSc1CvGBd4Gnjj+T0hPul7TTd5GVcGhX7lKx6Ggp+8156mVvxp4v+8O17PjPllSuSOR8M2kwrnvGpRB13C2Uj2sAsMcQl2IEbCOSUADL7Ia2rMdRtlyeynWUaU=
+	t=1728583900; cv=none; b=LeFsBoSE32UCFy+qMfhiA78vVJfk0DnxB8jDx4/0clRMU/QOLy2Z1RSxS1VHooBdGBdj1X7soBCLdE4U8ApzX8jtK9B3D6yUgxrDXL6x0ayvTGL2T9/YjtQlJUx0loHyZl7ypPPy/si0dvPyZjvYmP12+tqUGuh7mTnrG8LiIDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728583161; c=relaxed/simple;
-	bh=GCV0b7WimHT/zs/J2i0xhuYCqqjmycV1vGTRUHpvp3c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZqXMlNaqILXNzK7HOMBZ4s2vnKSlFB+Re+6loShfSwep6I+doMOfzzGEhTVpSafpOe2MqEQxjDErDPHznBdGSwWD/dT6HeqEFvu4ic7iNvqSmKO6NOsbYewzgBarInwPsh7Ycf43vy1nTgJ8oGPRirOxsSeuebaAaSdbXkq0jE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XTj0c9JK; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728583900; c=relaxed/simple;
+	bh=BaZAdm83lQN+XVTAGn1s/adWxJblJUO7TB9yrPtc4ns=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uv3Cc9z2sLw8iVgKQs06x4dCSnufJZrzi+pUAddD5dSsWqB3ZKiHaRFpMirV/bSCOSOsccRjViG824f3UZs+W1xcWUEl8e9CFxKOyL2csHkZ/69n5k9+sqMVJjJrLay+H7fZljkOyctMH321JbFUDBMR3LFpxQP8J4539sY9qrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=R+Sx+Di4; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XTj0c9JK"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5c5bca6603aso1380166a12.1
-        for <git@vger.kernel.org>; Thu, 10 Oct 2024 10:59:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="R+Sx+Di4"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a99543ab209so168638466b.2
+        for <git@vger.kernel.org>; Thu, 10 Oct 2024 11:11:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728583158; x=1729187958; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1728583897; x=1729188697; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aS5qzjDh8HtV9jAGqw4Hw1nQflg2cdOkuSbGuvHPIUg=;
-        b=XTj0c9JKAKzFeAL09vqrEAZO5RpEQ/3tNoLdcB1NbPNHnJFslFzJcMPOZcJ4J1HWQO
-         3ov0p26No/N0ohpKhzLKuAyxrbFmwOqTOlJBXDxTx8WcMtKXpX+IjBWYdj0EYsBT4mq+
-         7U2v/w24Y77cRDBpo4GnphlMK6a7DHlF9aJZIHf9LoSCGvaB2B9aroDfo7fNrXjm587n
-         cPXPKUDlXRd/TYuN8iz0u0uZ82sP5cX65BOsz894Oyl4pGkO2Ux9ryD1lDvJwqnYforB
-         cb+l+nKg44HQoZf9c5J1Ko01sLm7oabspYTtWz8MawP1tMDpm+asY5xtNpT2g7OMxT+C
-         MH9w==
+        bh=1LYEuP3mGku5Fv2ahzTd2BgUqEIuhhPUfmHxb88uiSY=;
+        b=R+Sx+Di4oWtKP1GvQyhVirtYRGErlJoH/hFcuu2/ufzWh71sWRSOO9mP7TOKkCicVr
+         oSnsRXUOd90hgBLj40py4n/0mnF6MNRZTu13iCPeyM9sA+p2rojp7/pRs7kkmsdooxNv
+         3ztRcjFqaXdvC8Vupl2AV2scwGMTG/CX/m9l/7e8JjdDchcfU4shvbbF22o4tH9EAe3X
+         6fzUe0JsxgoJnSJpHkaZLGUlaJMJuXGSwsYs5vXKLxiomrmSt8IRhmlQuSQqpcAK09cY
+         UGJrBQwUmet3RazOanGNaczSNmLCZgtwwgZI8HMbtSIda6BWRWgTFgp7a5u89BcxcIZw
+         45Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728583158; x=1729187958;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1728583897; x=1729188697;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=aS5qzjDh8HtV9jAGqw4Hw1nQflg2cdOkuSbGuvHPIUg=;
-        b=g3mAdgEjj6Kcimfngj+zINLECEG1HQubnXiksrCn79daXvn2np8FMjgNdluDVu5fNF
-         IpTbC5SafdvJ+3a3KzLBGXzftX2yQQc3IcJxqDUUS+iSz7uHQMy24phuY623hUx4zjoc
-         80CQBYyd62XKPu/yZK5Ow6zIU1HGB1GFm/iySPNRTQQzo1Izart2hsb+qtpe3GGRsx+a
-         YkxC/iNXGCiYmyLjBKxwy6C7vXrhTu0GatZnO+78HugqUWBbtatFH9NG/cXPu7GYzI6T
-         s0MwMleTcSk3SwkroWvwfXEI0zeEv/toJikTkczhrb4j+Xnr0oNhkYVba7U3l9RQ9RGc
-         97/w==
-X-Gm-Message-State: AOJu0YwJkmDI1xAM8b320xN3S69FPY/St0aHTjGNIPj59WhznifUAseN
-	efgKc6doYNa6sYd8eudJkgnb+kdyR73R5khUuRgA/W/PHMn4uxZ4xeMTTlF5
-X-Google-Smtp-Source: AGHT+IGdCpk4RjEc3srteOEmTb92UEZYtfSFCA7FB6wTDbBmZIOJ2DWBHaPUgBleafbO1ISW7aHCYw==
-X-Received: by 2002:a05:6402:524e:b0:5c8:81bd:ac90 with SMTP id 4fb4d7f45d1cf-5c91d65c330mr5802306a12.27.1728583157726;
-        Thu, 10 Oct 2024 10:59:17 -0700 (PDT)
-Received: from archlinux.fritz.box ([2a02:2455:825d:6a00:6bb4:436f:5699:ff21])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c9372608f4sm1059995a12.70.2024.10.10.10.59.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2024 10:59:17 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-To: karthik.188@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	jltobler@gmail.com,
-	toon@iotcl.com
-Subject: [PATCH v2 3/3] clang-format: align consecutive macro definitions
-Date: Thu, 10 Oct 2024 19:59:11 +0200
-Message-ID: <6ebcd2690e05820e15584fe5459dc46011fde101.1728582927.git.karthik.188@gmail.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <cover.1728582927.git.karthik.188@gmail.com>
-References: <cover.1728582927.git.karthik.188@gmail.com>
+        bh=1LYEuP3mGku5Fv2ahzTd2BgUqEIuhhPUfmHxb88uiSY=;
+        b=Zr6RKCFGnPV5JSFscSc3DcAsr2CiUtXaODUT1C1hfwYRZdRCWX/RurjJAjXDA0IPR0
+         67/F7Y3nW03SL/yV5Hl1mccmM5Em+WbZ0LffMaNp1VdkaXh5nnG8ESZkMFbZlZqf03b/
+         IOu9jSK/f37XEbtzoReUAeXBOJU0RUnqLEPH1MY2e4Zm9LxFzdVV87RCXCvgnsOSoLaW
+         NvDFWlZfEkMSkyIJiW6GKh7q/490VJxoV97H6V/7n5NmYQG6c0nP3xXpCOWZoxTcs/2i
+         +doMb5fhgssaGeRKb/3GZexqNj3SBqE4yUtjdX6a33sW5vann7sQN426S9iMmfe5WYJx
+         N3BA==
+X-Gm-Message-State: AOJu0Yxvgqj0WBJJg+I4MpsvZbcR6AxycyOw1EQcGum30XbMsdPc/6fM
+	KKQlooyv2H2HsWXqSul/S7Wc+Nl9woweLnJHkKHqr8ByCiVGR1MNIO4qvtRa3wPjHn42+jUzGaX
+	pBo14vvzyBoeJaXEHYY1zY5nGnXClt3Ekg+qT
+X-Google-Smtp-Source: AGHT+IEjggnu6OU85j1GRDhzRkvFTKSwfS+U43g+StyhUH5WatSWV/eKg3JMdflwbZtiYd+dyglM9oOMZVl75ynEgQQ=
+X-Received: by 2002:a17:907:9487:b0:a99:5c0e:e3ca with SMTP id
+ a640c23a62f3a-a998d201507mr506816366b.34.1728583896532; Thu, 10 Oct 2024
+ 11:11:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1728582927.git.karthik.188@gmail.com> <e22ffbe0f65971579809d817984766af12898127.1728582927.git.karthik.188@gmail.com>
+In-Reply-To: <e22ffbe0f65971579809d817984766af12898127.1728582927.git.karthik.188@gmail.com>
+From: Kyle Lippincott <spectral@google.com>
+Date: Thu, 10 Oct 2024 11:11:19 -0700
+Message-ID: <CAO_smVjuseH6WJgU5CRg5kyZ7J1mgqLjrvxzapR0xB6XvQ7VdA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] clang-format: change column limit to 96 characters
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com, toon@iotcl.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-We generally align consecutive macro definitions for better readability:
+On Thu, Oct 10, 2024 at 11:00=E2=80=AFAM Karthik Nayak <karthik.188@gmail.c=
+om> wrote:
+>
+> The current value for the column limit is set to 80. While this is as
+> expected, we often prefer readability over this strict limit. This means
+> it is common to find code which extends over 80 characters. So let's
+> change the column limit to be 96 instead. This provides some slack so we
+> can ensure readability takes preference over the 80 character hard
+> limit.
+>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  .clang-format | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/.clang-format b/.clang-format
+> index 41969eca4b..684ab32d28 100644
+> --- a/.clang-format
+> +++ b/.clang-format
+> @@ -12,7 +12,10 @@ UseTab: Always
+>  TabWidth: 8
+>  IndentWidth: 8
+>  ContinuationIndentWidth: 8
+> -ColumnLimit: 80
+> +
+> +# While we recommend keeping column limit to 80, we want to also provide
+> +# some slack to maintain readability.
+> +ColumnLimit: 96
+>
+>  # C Language specifics
+>  Language: Cpp
+> --
+> 2.47.0
+>
+>
 
-  #define OUTPUT_ANNOTATE_COMPAT      (1U<<0)
-  #define OUTPUT_LONG_OBJECT_NAME     (1U<<1)
-  #define OUTPUT_RAW_TIMESTAMP        (1U<<2)
-  #define OUTPUT_PORCELAIN            (1U<<3)
+I think this means that the next automated `clang-format` invocation
+will un-wrap lines that were wrapped at 80 columns (not characters)
+but fit in 96 columns. Modifying this setting and running
+`clang-format -i *.{c,h}` produces a lot of diffs of that kind. I
+don't think there's a way of setting a soft column limit in
+clang-format.
 
-over
-
-  #define OUTPUT_ANNOTATE_COMPAT (1U<<0)
-  #define OUTPUT_LONG_OBJECT_NAME (1U<<1)
-  #define OUTPUT_RAW_TIMESTAMP (1U<<2)
-  #define OUTPUT_PORCELAIN (1U<<3)
-
-So let's add the rule in clang-format to follow this.
-
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- .clang-format | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/.clang-format b/.clang-format
-index d655b08ff6..22ae882923 100644
---- a/.clang-format
-+++ b/.clang-format
-@@ -35,6 +35,9 @@ AlignConsecutiveAssignments: false
- # double b = 3.14;
- AlignConsecutiveDeclarations: false
- 
-+# Align consecutive macro definitions.
-+AlignConsecutiveMacros: true
-+
- # Align escaped newlines as far left as possible
- # #define A   \
- #   int aaaa; \
--- 
-2.47.0
-
+Personally, I'd be fine with a higher column limit, but we'd need to
+make a conscious change to the style guidelines for that.
