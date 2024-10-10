@@ -1,204 +1,143 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77F018DF9E
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 21:12:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E2318DF9E
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 21:13:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728594762; cv=none; b=bH2gCUhiQmRzanQzztIuuqj9LJWKK5xRkpK08TXzR9RGn4v/k0Em03iMiJpuLrgrPb8IHzgnkC5i4YChqCwCcF2rI71OdTpKlfhnUBoAIaOLsc8GCeUc1fb2DzOyya7A5pTUI7VSbucvgbmWI3yN0rTxTYiJQBIdAfjWAJaFV3o=
+	t=1728594833; cv=none; b=gdgy9x7qUdeE0Vt2gNePrlcMJ0nhB8EkEUjP9fu38Cmb/nDRGtbNiXKO3WdYbD9Yf66JrBXJt6plVgthCGMAbNgn4gn0WAoQYDD+rhO/fmxmmdhjp15FhmoGUOsc2Zk6SA3psOQqD24RXODleWudTtLOlGnYzoERz1mEXFdNZRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728594762; c=relaxed/simple;
-	bh=EbowzoWayO7U9C0TBpZPylq5mC1zpBJwRTHx7O7NX5c=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gXNoqhA5US50SGWwIeur6HX7YjIxHMvoU6S3McvGcS0eclmULsNrqWf9kOmfrgQ3zSeounXt8IteQPqiP/AjZ15L0GMeD+dtuSsxzPDfK1FuQWCS+nYbUMWdN6bj8pgFCnCqQNZdOr/A2pfzT5RuU4tWnNzkK27Esrc4M6gTzqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UjL9nmjU; arc=none smtp.client-ip=209.85.222.47
+	s=arc-20240116; t=1728594833; c=relaxed/simple;
+	bh=aAcOhYm7DHceMHm+5vhJLZqZwkizbSy2W2RMTF2S0pA=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=a8HWhFwun9/QWPQ8TTtGj9GMC9l5Yn2mX2ktp6Zi4nx3UezkFBNVahVOCGoa3GevAfvUxfLo2DyJsf/nbJeoGIst/uw/KW1ljugoaNZtpLF0MhivpP+VcDgrehAf/YwqaWWWObdWJaWj8zNvWnvEmACvAZbLnUbmoDeJnv6m/Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OnA/uqe0; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UjL9nmjU"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-84fd764f6ddso531260241.1
-        for <git@vger.kernel.org>; Thu, 10 Oct 2024 14:12:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OnA/uqe0"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a994c322aefso91073166b.1
+        for <git@vger.kernel.org>; Thu, 10 Oct 2024 14:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728594759; x=1729199559; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mriETGIu4txh81zUp9Mp/jCI13OuEvLpF/daY6gMOkM=;
-        b=UjL9nmjUZZIY/OXz5OP+Y+ZSmAJsyUdVhClcUlScNwGriGBJ/n1SxB1s0juC7hbxNg
-         3uk0LD+AsT4E7PTsYlxNo+UCL7kQdygdahtaZK5wNbWajd/j4ifNFTVCKYMaOmRrmzaJ
-         qKN4NY3euKVtRqVUj5R6gKRdsXy1Kvn1NbPJu+cDQ7s08DLbWev2sevS6fA3EzRtJvJx
-         zReuXdbzvt3t6V2lv6inLZ33CW51vDWpuS3cAxy/HkhWm+b59LBazdjVsUvkAy7K4LSM
-         UGXn91f6K0LL1rv/TglmwK4TsqoQEA1NV/2tJPvtYOwv6tU+pwlNmguJJ+bd+6TAg9aA
-         xtLQ==
+        d=gmail.com; s=20230601; t=1728594830; x=1729199630; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JE2WF0kie868YYHQjaZPoZQElJVmtCji9826je647C0=;
+        b=OnA/uqe0QnUNYMmK7B/xf+rCD7POO0XGCjqre3TCHE1BY61CxUmXnPPdKivOXENHAJ
+         64CVFTjnNJ1rHArXVx0hB1/1bCNEjB8FLKBNGWdfMnDd+bh/OZwQgoUFsDRM+pBeb6aW
+         j9bexPCqDuON8hBXTxnCv4RMI1QEev1l5TmlOFmc4HnOZ+VKZcuuUPcWCuGAeScZcBGK
+         kaWpwt2ASPy/6/dttxtKprspg/0tR1hI0zXY99Mp+bkkIDU0yC1im5KAM78f53A1V2Wk
+         ezn2mISd9GMTa8j2uE6FAen4oRpPhXdNJHg8MVX8qL9yi65+nAJr2O9hyAtmtq+dxjXk
+         m3cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728594759; x=1729199559;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mriETGIu4txh81zUp9Mp/jCI13OuEvLpF/daY6gMOkM=;
-        b=V+XpEdT9r65dERA6Sb8OF73GldCo7CRZKMNeqNMVBtWOyZ06sRd/492LlXNygPnvi9
-         GSlMSyOlvHhCL5VceMhxYOvBWMOWw573f7LlHhAYw9sIUWmA12HVSGbPm49M3DvyEhzZ
-         +rKtwFlyGIglk9tfGoR1SiHpd16MEZd61g6ONZfi/W8G8u+I1CNLOTSdNuKrvT1woXdY
-         iyTHIHsmZETSxoSCVIz8uGgZTk+llE/YYr+NENc+ojwHV29CEvIcOWSPe2Hj3BPVfcw9
-         j1IDuxefg33vX39gQw0qLgTPtkY6pc3YKR8jxuYLfaS+FvwUpygy2NqWvvWuB90PGIna
-         fy7g==
-X-Forwarded-Encrypted: i=1; AJvYcCXXVO2H/yjqac9yTomscduyLj10MRlW6VhaPZ6MGd0jBexhVrHy/b/Sp2vogF77mnEgKAo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLRFG9XTm7qfp6vNfkfPGHUGn5TTYdP7kQNPtZvtDQlx2mz9aZ
-	FrgYwMFcfVdFuAb0nRluePLL2AlJwNVMy8LU5Npn9Nq7NfjSmgn10CggQqra6xzJ97GcOc148kx
-	CCJlBFyG8hVI/Lv7FkykUKfxMAhbsijgo
-X-Google-Smtp-Source: AGHT+IF9gg1BdCogI89IqSqUAuzGdZLuu68vSn5AhMVUfGjmwAPjewn53pvAoOJGNAlrsR/1etFt1IlRVRkJiR+49Bk=
-X-Received: by 2002:a05:6102:510e:b0:49b:e4eb:37d2 with SMTP id
- ada2fe7eead31-4a4543cb9d9mr4208053137.11.1728594759605; Thu, 10 Oct 2024
- 14:12:39 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 10 Oct 2024 16:12:38 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <20241010133022.1733542-4-bence@ferdinandy.com>
-References: <xmqqzfndndfm.fsf@gitster.g> <20241010133022.1733542-1-bence@ferdinandy.com>
- <20241010133022.1733542-4-bence@ferdinandy.com>
+        d=1e100.net; s=20230601; t=1728594830; x=1729199630;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JE2WF0kie868YYHQjaZPoZQElJVmtCji9826je647C0=;
+        b=Ib8o7uPlUqXHgxUQI8AjDhNsJawglbhBsgA/odJ3/L/3pPqkckTxYTswH7B+M6mIpT
+         JrpSvk4oMOACM1RcUOJaCsRr9leydZxd1fiHJrH27wyawgbOvEt8Vi3aEkVU63QCU0af
+         N2Xse0HQYX11tdr63oqcArXQV5AD9B4ULNyFf0MwMtpwSbXl6saFVSS4oHTXkVC1r+mw
+         PpR9487woKVwvuPF/k6Gz16+ccUH1OMMW4LT9Enx8QsnCg4Sx57/R2HU0a5ZQWEfczRx
+         nixe8EeYY8rVURjrldfJu/24qaajNCKBZqP4cwTuXPq093Ki4PL3+zF0f58aVwunkMyT
+         gmAQ==
+X-Gm-Message-State: AOJu0Ywp4lrC2xwY6URMWjeFkvVAMOztT+M1rED1SHodsu8P/G1eMTIN
+	vJ+5kJFAOCyW0eMAi4L8m8xw7/99f/4K7FElD9OvWSSjReq+eszP9Fm2Cg==
+X-Google-Smtp-Source: AGHT+IHo/+OpYY6jyawPcEPk8fWzlp4F26WvymrztoB0eKlyjS/fqv1pWHpt0XMhBgXlHLnBFDJ0Cw==
+X-Received: by 2002:a17:907:720f:b0:a98:f44d:a198 with SMTP id a640c23a62f3a-a99b8775a40mr36842766b.1.1728594829524;
+        Thu, 10 Oct 2024 14:13:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99a80efb66sm137346066b.194.2024.10.10.14.13.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2024 14:13:48 -0700 (PDT)
+Message-Id: <pull.1788.v4.git.git.1728594828.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1788.v3.git.git.1728099043.gitgitgadget@gmail.com>
+References: <pull.1788.v3.git.git.1728099043.gitgitgadget@gmail.com>
+From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 10 Oct 2024 21:13:45 +0000
+Subject: [PATCH v4 0/3] Remove the_repository global for am, annotate, apply, archive builtins
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 10 Oct 2024 16:12:38 -0500
-Message-ID: <CAOLa=ZQA6vc246LRxW8n+a5qNDGxsSLUAhT-x-9tdAKDb2LBCQ@mail.gmail.com>
-Subject: Re: [PATCH v6 4/6] transaction: add TRANSACTION_CREATE_EXISTS error
-To: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk, Taylor Blau <me@ttaylorr.com>, 
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="0000000000009b7ace062425d4bb"
+To: git@vger.kernel.org
+Cc: shejialuo <shejialuo@gmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    John Cai <johncai86@gmail.com>
 
---0000000000009b7ace062425d4bb
-Content-Type: text/plain; charset="UTF-8"
+Remove the_repository global variable for the annotate, apply, and archive
+bulitins.
 
-Bence Ferdinandy <bence@ferdinandy.com> writes:
+Changes since V3:
 
-> transaction: add TRANSACTION_CREATE_EXISTS error
+ * Improve commit message in patch 2
 
-Nit: but it would be nice to have s/transaction/refs here and similarly
-in other patches. Phrasing 'Documentation/SubmittingPatches':
+Changes since V1:
 
-  It is also conventional in most cases to prefix the first line with
-  "area: " where the area is a filename or identifier for the general
-  area of the code being modified, e.g.
+ * in patch 1, only pass in repo to the bulitin if the repo exists
 
-    * doc: clarify distinction between sign-off and pgp-signing
-    * githooks.txt: improve the intro section
+Changes since V2:
 
-So in this sense, it would be the refs area, no?
+ * drop patch 3, which is a bit more involved to dis-entangle the_repository
+ * use a single variable in run_builtin() to keep track of whether or not we
+   are operating in a repository
 
-> Currently there is only one special error for transaction, for when
-> there is a naming conflict, all other errors are dumped under a generic
-> error. Add a new special error case for when the caller requests the
-> reference to be updated only when it does not yet exist and the
-> reference actually does exist.
->
-> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
-> ---
->
-> Notes:
->     v4: new patch
->     v5: no change
->     v6: no change
->
->  refs.h                  |  4 +++-
->  refs/files-backend.c    | 28 ++++++++++++++++++++--------
->  refs/reftable-backend.c |  6 ++++--
->  3 files changed, 27 insertions(+), 11 deletions(-)
->
-> diff --git a/refs.h b/refs.h
-> index f38616db84..166affbc89 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -759,8 +759,10 @@ int ref_transaction_verify(struct ref_transaction *transaction,
->
->  /* Naming conflict (for example, the ref names A and A/B conflict). */
->  #define TRANSACTION_NAME_CONFLICT -1
-> +/* When only creation was requested, but the ref already exists. */
-> +#define TRANSACTION_CREATE_EXISTS -2
->  /* All other errors. */
-> -#define TRANSACTION_GENERIC_ERROR -2
-> +#define TRANSACTION_GENERIC_ERROR -3
->
->  /*
->   * Perform the preparatory stages of committing `transaction`. Acquire
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 8415f2d020..272ad81315 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2502,14 +2502,18 @@ static int split_symref_update(struct ref_update *update,
->  static int check_old_oid(struct ref_update *update, struct object_id *oid,
->  			 struct strbuf *err)
->  {
-> +	int ret = TRANSACTION_GENERIC_ERROR;
-> +
->  	if (!(update->flags & REF_HAVE_OLD) ||
->  		   oideq(oid, &update->old_oid))
->  		return 0;
->
-> -	if (is_null_oid(&update->old_oid))
-> +	if (is_null_oid(&update->old_oid)) {
->  		strbuf_addf(err, "cannot lock ref '%s': "
->  			    "reference already exists",
->  			    ref_update_original_update_refname(update));
-> +		ret = TRANSACTION_CREATE_EXISTS;
-> +	}
->  	else if (is_null_oid(oid))
->  		strbuf_addf(err, "cannot lock ref '%s': "
->  			    "reference is missing but expected %s",
-> @@ -2522,7 +2526,7 @@ static int check_old_oid(struct ref_update *update, struct object_id *oid,
->  			    oid_to_hex(oid),
->  			    oid_to_hex(&update->old_oid));
->
-> -	return -1;
-> +	return ret;
->  }
->
->  /*
-> @@ -2603,9 +2607,13 @@ static int lock_ref_for_update(struct files_ref_store *refs,
->  					ret = TRANSACTION_GENERIC_ERROR;
->  					goto out;
->  				}
-> -			} else if  (check_old_oid(update, &lock->old_oid, err)) {
-> -				ret = TRANSACTION_GENERIC_ERROR;
-> -				goto out;
-> +			} else {
-> +				int checkret;
-> +				checkret = check_old_oid(update, &lock->old_oid, err);
-> +				if  (checkret) {
-> +					ret = checkret;
-> +					goto out;
-> +				}
+John Cai (3):
+  git: pass in repo to builtin based on setup_git_directory_gently
+  annotate: remove usage of the_repository global
+  archive: remove the_repository global variable
 
-Can't we simply do:
+ builtin/add.c      | 3 ++-
+ builtin/annotate.c | 5 ++---
+ builtin/archive.c  | 5 ++---
+ git.c              | 7 ++++---
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
-  ret = check_old_oid(update, &lock->old_oid, err);
-  if (ret) {
-     goto out
-  }
 
-if ret is '0', it shouldn't matter no?
+base-commit: 3857aae53f3633b7de63ad640737c657387ae0c6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1788%2Fjohn-cai%2Fjc%2Fremove-global-repo-a-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1788/john-cai/jc/remove-global-repo-a-v4
+Pull-Request: https://github.com/git/git/pull/1788
 
-[snip]
+Range-diff vs v3:
 
---0000000000009b7ace062425d4bb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: e6110cea5ca63f3f_0.1
+ 1:  8009fdb38b0 = 1:  d59b85b5298 git: pass in repo to builtin based on setup_git_directory_gently
+ 2:  1b82b5dc678 ! 2:  f26d09215c3 annotate: remove usage of the_repository global
+     @@ Metadata
+       ## Commit message ##
+          annotate: remove usage of the_repository global
+      
+     -    Remove the the_repository with the repository argument that gets passed
+     -    down through the builtin function.
+     +    As part of the effort to get rid of global state due to the_repository
+     +    variable, remove the the_repository with the repository argument that
+     +    gets passed down through the builtin function.
+      
+          Signed-off-by: John Cai <johncai86@gmail.com>
+      
+ 3:  5d33a375f41 ! 3:  736212f34b5 archive: remove the_repository global variable
+     @@ Metadata
+       ## Commit message ##
+          archive: remove the_repository global variable
+      
+     -    Replace the_repository with the repository argument that gets passed
+     -    down through the builtin function.
+     +    As part of the effort to get rid of global state due to the global
+     +    the_repository variable, replace the_repository with the repository
+     +    argument that gets passed down through the builtin function.
+     +
+     +    The repo might be NULL, but we should be safe in write_archive() because
+     +    it detects if we are outside of a repository and calls
+     +    setup_git_directory() which will error.
+      
+          Signed-off-by: John Cai <johncai86@gmail.com>
+      
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jSVEwUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNS9mQy85YXhSL1hHWDFHNFRBUjdBd09PNTd6R1JPcwpYbC9nSXVGSVUy
-T3BvOVBzRnZtVXhPaDRxbVg4eVF5K3JqU2hkcldTdE0wa01oc0tVWTlPL24yT0EvMGdpN0xDCnBV
-SzJtcS9HaUpGK0pIWlJLNU00WEQ5bVRXZ2gzQTNneDVQR0grMVhXNTAxVktvUTdJY0ltcG9DV3g1
-emVmVXQKZ0pDMGFXUVJhNkV4enRUaXlSUHJRU1hDVTQ5WkZLdzZQRm9SeFBTanI5eTJVZ05XV3lz
-am1zcGJObEYyRTdRNgpPRVZsS0k2eWNIQ0cxeThDdFc5bzN6MjZBVjJWMldTS2tUMmNMeDd6Wmxh
-aDUzS2ZIRm5xZnVOU0lyRStGNzRaCnM1MzRjVmU1QWZTUTMwSkJaampVWnFmZzAwRWhRUW5reVdH
-dkIybzMzaklXVGY5eUN3QlV4T2tzeW1SNmxUN3YKbVhaWmkzU2hZaEY0UXg0ay9PK0lna3U5bXV4
-MjcwV21KdmxJN0V6REhBVlVFU0pRalNtQUtMeDh0UWFwRDlzNApBKzFUQ2F2UGV6RC9Vd1IvQndV
-RVM4N0F6QTd0MVRWbUwxRXQwb29aekRhQWQvRktKeERWakFNZW5mdmxtV2dvCldnSjVNdGRxK2pS
-QWg4SkE5NTcvVU53ekhZc2gzOVFaNDI2bGY2dz0KPW10dTgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000009b7ace062425d4bb--
+-- 
+gitgitgadget
