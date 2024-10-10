@@ -1,149 +1,121 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7671957E4
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 16:46:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF82A199252
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 16:48:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728578769; cv=none; b=HRTXfVlacPpx6sY+POBd8lqNctDi1ksLWMAlAA6ZKoKg0Z6Ea8baquuLBBe1dGHQxMeclW8NTkvgd9YOg3WzE2TV2PKt+icogz+wsLq2MVjF6kT751QGRzxAzfTKkt5SmCK6RA8ybICN1Ah+xPGg8T4NGiUt+WWYxxIJm+OjQkU=
+	t=1728578918; cv=none; b=opx04IgxxRuNRkv/ZxhyxrRY5Vdjc3Ri0Yfv5u6ut5yBCKc4Rs4aFNRuh5Us/Ht9XLmG7+TaLfi+cd/6u/TS0UKCEgVtqx5gS6wnwaQj434dy+vciTU6bJRiEgpIsG5dM4V1N35mX0CHC3aYlnmckjagYsf4ret1TAOlnqhfMTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728578769; c=relaxed/simple;
-	bh=6jIIa7wRBmjS3RyxnScNmGSf5o/O3lbKimz/jdSI2N8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lV1vPryS9FHonZI7YpDf6V+nJDutc1TN5+FN6tW3d+k5WG3NRZhYs/DNgIlycDSkXGqxXlR6fM8lDntvK3SVB6FIgOOXhcTwz6+qhx/7K4W4SpVc/oYv+jMjZaAfxlACD4NM1LJvGcfpi1eA63dtDzXGHG4TDheV72k6F71BgjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qePcLZDD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CNXPdYVm; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728578918; c=relaxed/simple;
+	bh=uMkEguiz0h1D9xvWykAjS9L82oJ/vMmRDZoz5fQuq4k=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SO2sMU09Ib1USDu3Ddb0+N66btwJdZy945Et3TSqCTw9cQZZ62hKuoxXCD6FvY/XSUCSfNvv/0MLUGl48V4ZLKRohNKEuvEBtULwP52Qqv+G2a502xSNKW0zKeULPhOn7Tvq9IZpv+G1mSOtpEMPu2/gNvOZNW6XdJ6zzlNELIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OcewQIMz; arc=none smtp.client-ip=209.85.217.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qePcLZDD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CNXPdYVm"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CD33D114022D;
-	Thu, 10 Oct 2024 12:46:02 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 10 Oct 2024 12:46:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728578762; x=1728665162; bh=Q3QVsY9EH2
-	XAs7tIy9eZZbGP8p3CvdYkIjY9rLbchuo=; b=qePcLZDDdFT5Ahbqx7w4AmBfCa
-	A4pWkPMjAJN/1PQNYYbqQCnO1DKZbRKy+c2A+O8oJpmi+OMgemkR7TnFVHnOTz+7
-	zx8m8nFndeDcD6BhUCNpf3QGYCBDDkXi2vn3yDNWVX2obH8GN5ycNe3UI2TnXwL2
-	cxdEEMis/D3PClgK4E5c9437p4bmCk2kuM8OWQTMyzkLsEDElalakZMJOEKvS0se
-	c4zkU285F38JcvF1Qxqfq3EdYRtIGOIIWvZOF2XSFzqVa6Ic/rvBks2Bku+8g4ii
-	XzBcQDnw42Z8egDaskBXrLT7dEwSRPjzxKE2ta5FYtfYmORTGoN2ZVRvD9Pw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728578762; x=1728665162; bh=Q3QVsY9EH2XAs7tIy9eZZbGP8p3C
-	vdYkIjY9rLbchuo=; b=CNXPdYVmpmqyxaQtMigv/Z3L68K66991qKIipKIcLxqT
-	kXg9fJTlK5UfCYm+tkVfLtZ6URTgJX29Q2hqx6plWvix5vB/pgk7LnXbZZCaUKkt
-	w+Pt7VebEMiVeNNzbI6XSumJL1FJhIt7rckMM9KegvnfPKfN07XJdtu/iqvao89r
-	TXgDsGNXjrW/AH9SOZgBYJWIJyQZtjLyt88J8ARLlzQgX1g2HWrGeKdcwuCMbAo9
-	GOBjvSGjTqa6M912sfgmt2shgGc8WAWN8bZJ2U4oKM8B5mVbS0z6BmTcFfqI+gx6
-	xfdPyekxxHgWxs883LRG/qilMMsuR1UNbSCtTLnUXQ==
-X-ME-Sender: <xms:ygQIZ-UjSRfNd5TiHg8BWcJ2aE3VkkNM2RaooR-13FlGlkXMrQ5LBA>
-    <xme:ygQIZ6kidpUvVK_bNmJr4sEER5p35bkv8kK74hnWyDevo-1c3-tG4cZJuJ_mw3_4k
-    Y1RwJ8dqgi5uuzveA>
-X-ME-Received: <xmr:ygQIZybwnD-xqIQNeXCeyroj2t245KpE6o8-QMtb9E0ViIFi5yvQp8l_nSytl85vohoRVrd0NXyDF9jZNE_GVCi34IBe1X_cw1b9Qgg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefhedguddtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
-    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlh
-    horhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ygQIZ1XQf7Hh2AySV7XNQXlb86YZ649vun0WNM8Gur_WehQII_9mbg>
-    <xmx:ygQIZ4nWN2ntNQEfnDzg934_ZXljE2eOY1Zk1kWjVZ3CMCs-TBL_cw>
-    <xmx:ygQIZ6cKuAy4uuR6W1Yc4DjEhWwCXqLOPj2MhE5RReOLQWNPwPqCCA>
-    <xmx:ygQIZ6EkgNrCkgtZddlulo3RFaHnL0EKLHWcrtslbuVLeaugra44Cg>
-    <xmx:ygQIZ2ZMC0u79UyKainKB_5LE7J1WxKByQ0uUkKxPfXvTOxBaNVAz8xZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Oct 2024 12:46:01 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
- <peff@peff.net>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 00/11] pack-bitmap: convert offset to ref deltas where
- possible
-In-Reply-To: <cover.1728505840.git.me@ttaylorr.com> (Taylor Blau's message of
-	"Wed, 9 Oct 2024 16:30:52 -0400")
-References: <cover.1728505840.git.me@ttaylorr.com>
-Date: Thu, 10 Oct 2024 09:46:00 -0700
-Message-ID: <xmqqzfnblxdj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OcewQIMz"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4a3af308745so360538137.0
+        for <git@vger.kernel.org>; Thu, 10 Oct 2024 09:48:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728578915; x=1729183715; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uMkEguiz0h1D9xvWykAjS9L82oJ/vMmRDZoz5fQuq4k=;
+        b=OcewQIMzQsGOj5a1VcOX+6aE0ZadK5/rq2IPddC7LRGZYiNoEW0wTIFlde2kHD19LX
+         9H6MwHHJd68AlEAoXEy4LJ0qMjlwLvBOS7QfF7VXGs/DdMLS2efsbrZDvlMzufp+dgLA
+         mW4LO8X82gvbUg5qoqHccKVN1Rct14p5jiGNeTC/o4LOkHoUJZO/EekkmLU/B/70Xdzc
+         dH8wkInwruCo6Y0wozkrHsYUr8G6W3QtvzqzWwstdY8ulu6g6kVS3M+sApkds3CB2f3t
+         FnRQyvshXAMGsJ19p7oi1hF27FesgCJieSl/fcsXXWVxMFBV11GQjDkwsw/N+xYNZybO
+         P7kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728578915; x=1729183715;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uMkEguiz0h1D9xvWykAjS9L82oJ/vMmRDZoz5fQuq4k=;
+        b=jGaofqC3U6PwtmHKcTsBzgWFlE95e8aAq8x7gOvEK2nF1y+S9BVUR6fdnn9Xzs7I3J
+         Xu1nnjmPS2LqsuGXNeI04vVKJ9cvAHSUBh1sv2JMaV/t1LdHy95fB5cN8M8BppB24nbF
+         B3mSleYVLty5crRrDW4sBNnq+WZFAYLFttp3VDA5m0RVeYPD5qg1qv6tiLQ2i4ZwOtzi
+         CISeZMfzsCK2+w/nheuZwo0x8/svu+FUzAmhxPeKjZfGBF+ilAfJk7VbF04F/0nNRTHJ
+         wqIAD3paQRg6JSfAFx4RpE//XAdT5G4pECdC//HX4pyDpLENHNZt0uCw5RdZUgJnFgGZ
+         s9Nw==
+X-Gm-Message-State: AOJu0YzGUjGTIa+S4FgCbHg8cEE8Lki5wz6UmGdp4IwF5+WcQZTJM43n
+	Efg2i5iNj0fCTrRSklgGAlrbCmC4UqDEKwOkAURWbxwb+a8FgwQWF4t/nXOEeqc3lVYpEYuspG6
+	dyEiuhnZ7QQ4jJ+VIsMkQDCFrQpg=
+X-Google-Smtp-Source: AGHT+IH79C+iipi8P1fpG0XCjReUbKhVgVHO6v6riNsV5VqUGDQnpNRMbdMy7pj99jtjlNYo/jHysmhQheqSQHhChco=
+X-Received: by 2002:a05:6102:290f:b0:4a3:a6f6:57d5 with SMTP id
+ ada2fe7eead31-4a448d78035mr8163389137.12.1728578915341; Thu, 10 Oct 2024
+ 09:48:35 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 10 Oct 2024 11:48:34 -0500
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqttdkoqks.fsf@gitster.g>
+References: <CAOLa=ZRvFBhageS65uE5enzLBz7H_CAvvnEcPsi_QAi0exRx2w@mail.gmail.com>
+ <CAOLa=ZS+naxOzJUkLLOZk++WVZ2dt3eQq9VmW+G-5O1ZLgggUA@mail.gmail.com>
+ <zmqyj3v2h3hswoujpz2er5luvjipjl3i4ts6xjdeb43wp42xf2@i5xee2lsmriz> <xmqqttdkoqks.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Thu, 10 Oct 2024 11:48:34 -0500
+Message-ID: <CAOLa=ZRRHYwe7=aJogL0=R8SHyPkHeC7C34R3mkR-gmzkRQ9JA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] clang-format: don't enforce the column limit
+To: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000374aca0624222438"
 
-Taylor Blau <me@ttaylorr.com> writes:
+--000000000000374aca0624222438
+Content-Type: text/plain; charset="UTF-8"
 
-> This patch series enables more objects to be candidates for verbatim
-> reuse when generating a pack with the aide of reachability bitmaps.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Justin Tobler <jltobler@gmail.com> writes:
 >
-> By the end of this series, two new classes of objects are now reuse
-> candidates which were not before. They are:
->
->   - Cross-pack deltas. In multi-pack bitmaps, if the delta and base
->     were selected from different packs, the delta was not reusable.
+>> On 24/10/09 05:55AM, Karthik Nayak wrote:
+>>> The current value for the column limit is set to 80. While this is as
+>>> expected, we often prefer readability over this strict limit. This means
+>>> it is common to find code which extends over 80 characters. So let's
+>>> change the column limit to be 0 instead. This ensures that the formatter
+>>> doesn't complain about code strictly not following the column limit.
+>>
+>> The column limit does lead to quite a few false positives. At the same
+>> time though, in some ways having a tool point out all the instances it
+>> occurs does make it easier to review if any should be addressed.
+>>
+>> If the goal is to have a CI job that we generally expect to pass, then
+>> it makes sense to remove it. I don't feel super strongly either way.
+> Is it possible for gatekeeper jobs to complain only on newly added
+> violations?
 
-Hmph.  Suppose that you need to send object X, you happen to have X
-as a ofs-delta against Y, but Y may appear in multiple packs.
+The CI job is indeed only checking the newly added code. We do this
+using 'git clang-format' which takes in the basecommit as a param. This
+is in 'ci/run-style-check.sh'.
 
-Even if the copy of Y you are going to send together with X is from
-the same packfile, you may not be sending all the objects between X
-and Y in the original local packfile, so you would need to recompute
-the offset to give ofs-delta X to the distance between X and Y in
-the resulting packstream, no?
+> Then it is fine to have a limit with a bit of slack,
+> say like 96 columns (with 16-column readability slack).
 
-So when you pick the copy of Y out of another pack, what's so
-different?  After emitting Y to the resulting pack stream (and
-remembering where in the packstream you did so), when it is X's turn
-to be emitted, shouldn't you be able to compute the distance in the
-resulting packstream to represent X as an ofs-delta against Y, which
-should already be happening when you had both X and Y in the same
-original pack?
+This is a good idea. Let me add change this in the next version.
 
->   - Thin deltas. In both single- and multi-pack bitmaps, we did not
->     consider reusing deltas whose base object appears in the 'haves'
->     bitmap.
+--000000000000374aca0624222438
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f85813f687231bf0_0.1
 
-I hope this optimization does not kick in unless the receiving end
-is prepared to do "index-pack --fix-thin".
-
-I've never thought about this specifically, but it is interesting to
-realize that by definition "thin" deltas cannot be ofs-deltas.
-
-> Of course, REF_DELTAs have a less compact representation than
-> OFS_DELTAs, so the resulting packs will trade off some CPU time for a
-> slightly larger pack.
-
-Is comparing ref- vs ofs- delta a meaningful thing to do in the
-context of this series?
-
-What does the current code without these patches do in the same
-situation?  Give up on reusing the existing delta and then?  If we
-send the base representation instead, the comparison is "we
-currently do not use delta, but with this change we can reuse delta
-(even though we do not bother recompute the offset and instead use
-ref-delta)".
-
-Do we recompute the delta on the fly and show it as an ofs-delta
-with the current code?  Then the comparison would be "we spend time
-doing diff-delta once right now but instead reuse an existing one
-(even though we do not bother recompute the offset and instead use
-ref-delta)".
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jSUJXQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMVpPREFDRjFNOUdzVmdNeDFpVXg0a0MrQWQwZmFPZgpoUDhPMGQ4WDhw
+dmVldGx5LzY5UDlKQ1BWbk44TmhPWE1TbDBTMjU1TlNFK0o0VWdIMkxNMitmSVdONk9XejFBCjBs
+a1Z2cEdhVktjeXA0RzRFTFVndWdISHdrMFJnOXBDYVlaVSsvZElxRGdZYTg1NHBsNWpSYkpydW4z
+QlJ2cmIKZHU3R3RPbGkwbkZJYWFDeEhtbEtwU1E0dHJQZENsSys4emsxNHdKVkRtY25Vc3c3NGx4
+Z2VhNStjaDFVMEJJTwpwZEh0aWxHQnZoQkRNcFlUVUpPM1FXam5oV1BGQmR2THV1eXhKeFBWbmZr
+c241T0ptdFR1cmc0M1M0eGhRVGFSCm90cDE1T1lGRkl5ajVWaFVFb1UrZ1lZSzJwSnZ1Z0JWRklN
+UkJ0QjVjdFBuZUZDLzk3SmJYdFJER3ZHcWplRkMKR2J1citUdmVoTWpwbnMvbXlKdjdJUnVGZU9M
+d3Q0Y2l5TnNYejJPK2xrOUJzT2s4K0FSdk84S2w5UEs0dXJLOApLZDZHUmlkRUlHaGlRb0R1Qm5r
+ZHlTU2RvL3ZYaHljWGY1dm9zVXR3a3prQisxakRFb3B3WVN0NWFVbzBYcXZPCkxXOWFuM2RIVHVo
+Ly92cnFSdDBBNUcwSWNQK0FPWmVZUVVrYkdPRT0KPUxmTlMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000374aca0624222438--
