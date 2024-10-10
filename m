@@ -1,102 +1,129 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE428F6A
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 21:30:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39301BC077
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 21:34:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728595822; cv=none; b=O4bGeB0RSb3ictfCBOSlzNA2VxpWaLnv6KOyuAUHpz0iwXPgkIW67n7y4/9kzIdXaIxIWlpbETD5atxDPz61Jm+O4PXuanTjCoE53jjlrySU2yMQGlI9AEs6zmMEQnlbPQ8gSMWJmqusW/Ex6x2Tk48cbYLgL35WNfj3aZ4v3J0=
+	t=1728596049; cv=none; b=V4khauLWE1TKFd4fDQTPX5G8iEKesTsn4vQqG1Gi0gzB3Jug9oj4DI+vsJvv2ywZ+sQqUA5KIJskGzIvcQ9RzoHfRjESu+bzZvN+3vNszpktHdUUbV73nwQODjzHA+y75y8TY5xkuQSo86aCssZJkeCtFB5hI6/twzbkeXI70sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728595822; c=relaxed/simple;
-	bh=JlsQB2mxv+82kXeFoHuvzMHZyVlQpivP34Gq/9haIsg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BWJWW4B5LEi++EQ90RiN9oFkWrjpqcsFZ8Sm6zd2waoGti3iW1Eiz4prC58EkufaebUqCIKcSoZKd0jmQ1sCEu7iqhy5uaHXD+2YFp4bjbZNa/mwDIfa8y3NjqGEcks4wFjRWOYxWIG1wrLxEtjBkHvwbYKucL2PMtCjvLjwcgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e291831f421so211312276.0
-        for <git@vger.kernel.org>; Thu, 10 Oct 2024 14:30:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728595820; x=1729200620;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=64DYH7itZwA5JxTiQM5pyn2ULBgwYnT0pHTxabzMu3I=;
-        b=odWjdnrF9vLM2LkcEGOXkFMTSEcZU2G1myNkSRws1uTaFwNbXEUaD0xBnMObG8NenI
-         9EsxJgjPgVLQGROstHYuFt5khIYTe0GmFdacN0XrstVzUaQaoFO6v7Xr5O19LOkGFeWR
-         Heat7Lf7bLI3tHSK07/PRM4nS5+uqDk//eLLchDvw+zm3YmivMc/K9o9wAPjOlkV/iE5
-         dkAIgfRtr+ZKArpQLQErglCEOUf2pNkrvxVM0nyWpEW2fYYNq2P9d7tU103qPLAc68tR
-         lCibdYanGubDfanu6g/95zjTNzoZtfjBpheVNINqVS239DtZMAclfY7Gc7Fqd7vh9aZL
-         0ZAQ==
-X-Gm-Message-State: AOJu0YwVUP2VVecGJcwbuDFMpAc693YAt25PlED62ZgATSEdIEf65Vue
-	YE+FBYBiRCHN6dK5grfOkaDXpSW3vRrAgiQHJIDaBsJxidnuVoPBDlhptXYNlRRTqc9zjyGsz/X
-	2tD7wHegBdqOIdnDkBMkzt50obk0=
-X-Google-Smtp-Source: AGHT+IGnaaj1mkxZTYOZj1K+jC6mk6lBzBKUYl5iOMCL+VL8GoBqTSCGADUqF2Fs6l1iOgpSOMq0OdM+Ub+XXrcPmII=
-X-Received: by 2002:a05:6902:2b89:b0:e29:2a3:72d0 with SMTP id
- 3f1490d57ef6-e2919d5ee49mr397921276.2.1728595820295; Thu, 10 Oct 2024
- 14:30:20 -0700 (PDT)
+	s=arc-20240116; t=1728596049; c=relaxed/simple;
+	bh=jOufIG0mZzLdQSuJIt/iGvVT/rmq7oRYNqE8NiF2fvs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZoZKJI26c6soKVWVuWqIQ23suEMIFi5CffJwHX9jzZ9V4WfOsBXxmHz+P9jJz9ESDjtucQQRAYaPDnF5LNs1osFAmucvubaVHI2nVIkj2Vf6cvG6pTf4yUCKNUGflr43vrNhhlYvw1EHqBrrY2NrDSS7Cy4+kuWq6NQW3/ba3qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CEf3ZjUB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aDpPRE8w; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CEf3ZjUB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aDpPRE8w"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E80D01140180;
+	Thu, 10 Oct 2024 17:34:05 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 10 Oct 2024 17:34:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728596045; x=1728682445; bh=q4XWc4EEDI
+	CeSKDNs0img/fN9HWHwnIqSEjgCfuB1Mw=; b=CEf3ZjUBtTUY8VcGutwTUWkg0G
+	Cb8nWTPsI1a/3XbPqZ/73jc4BJECTzunBUgp2Z2u7TD5vR41rChIp/uzoAEhSfi3
+	T5VfLdKDFYHbzLXHFblg4RROX/5vc4LOeNfvzYBzjDRRfROJNg4m6HbcnDN5wPZL
+	QChU7tzo2laf9+oyC9/zDzy3+oR8cRYLeKtopbbxIpe3sOXAFTsVZSy4jUWB7QZW
+	t3T9f2DP25xZg3+pxZT7+gI5PDuLodY2zdQR8caDNd02BRc7BmLvVthkAw7DwUEH
+	ZNviqlJNMtn0R+3kjK0OsDaRZb0CLfqI/uViBi/kwppdG6NF0F88jlqgrqDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728596045; x=1728682445; bh=q4XWc4EEDICeSKDNs0img/fN9HWH
+	wnIqSEjgCfuB1Mw=; b=aDpPRE8wTgeomDC3LSTh2Mhw9x3jMrkgcSF9IL0bztYp
+	itCrY3h8UaVsSBo1cdyn7ZvNkass6RezwWy9O+qRxbbU4blchGCr7ELDomwfRLMI
+	yWWAnyDlcKiAc5zBTZV/l497BFdKr2lsS6eOQ8mJByEhDjaqcSOa1fGCHGIB80uO
+	BYCax5Qyl8pqnJnkQ6EczFZOzR5SFHZynYTZfbVIuCJmwSTwH+Yciq+wKtXKl9/d
+	608L3gCym4YNcpYDcyGYUN13vmvd8uR+RCa9BxHB0NaChaURounU6Qbrehl3ZA3B
+	cV2egIvbtP7KcsNfCSJXoGhN5znB2KKQO75cJaJ1jQ==
+X-ME-Sender: <xms:TUgIZ7T1UOhCI-plkeAbnFuocyS6m9yab8VdmnMTOYkl9kJj0bZS4A>
+    <xme:TUgIZ8xxHokuI61KdNnRMp6v7xGL6FX_yTnTFh5xHJdN-QP7QUe_l3M-vwEK0VD0X
+    cxsZDn3mnOBpNuqUg>
+X-ME-Received: <xmr:TUgIZw0UpIPqYie50V7waLc1Z6P_nw_anP13GcdtgOC1HjVJQ_mNzVksmIfEIAW3WONMYzMHMSFS3qKx22zNmOqtQKvuc5QoNOz1g34>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefiedgfeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnecujfgurhep
+    hffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujf
+    grmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghr
+    nhepgeeuheelveevleffkeeghedvhfevfeekuddujeehheegkeetueetueefgfduheefne
+    cuffhomhgrihhnpehgihhthhhusgdrihhonecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtvggrughm
+    ohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepvghrihgtrdhsvghsthgvrhhhvghnnhesgieguddqughs
+    vggtrdguvgdprhgtphhtthhopehjrghrlhhosgesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:TUgIZ7Cjv30ttZV4fKdyGP-xGohkT5eB9MdZfE0R6sqnVsxybqQ2xg>
+    <xmx:TUgIZ0iWLHqyLX6naKwMF1dISzVUE5W7aa2NHMgmZozwLlwal6PcmQ>
+    <xmx:TUgIZ_pIR482O4EnFokA1BKSpZK6QtGPuTwSJqHJm1lgdwDZWDMLdg>
+    <xmx:TUgIZ_g_AJIAWpsSrJ3BoqKtrZpXbUiW9thtFQSG4TP9oAr2B_6U9g>
+    <xmx:TUgIZ-bFxA5yGnk7bHlht8sTW3gSJo2uN_S4apeFed1Cww5ltgJj7w1k>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Oct 2024 17:34:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org,  eric.sesterhenn@x41-dsec.de,  jarlob@gmail.com
+Subject: Re: [PATCH 0/3] fuzz: port OSS-Fuzz tests back to Git
+In-Reply-To: <cover.1728594659.git.steadmon@google.com> (Josh Steadmon's
+	message of "Thu, 10 Oct 2024 14:11:52 -0700")
+References: <cover.1728594659.git.steadmon@google.com>
+Date: Thu, 10 Oct 2024 14:34:03 -0700
+Message-ID: <xmqq4j5jk5h0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOO-Oz0NUA-YeyFT1MJ=XKyLWJvQoFH1b-F0EFOzvy8iWka3KA@mail.gmail.com>
- <ZwhF0OZ2gpLWUfHD@tapette.crustytoothpaste.net>
-In-Reply-To: <ZwhF0OZ2gpLWUfHD@tapette.crustytoothpaste.net>
-From: =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-Date: Thu, 10 Oct 2024 17:30:04 -0400
-Message-ID: <CAOO-Oz1KhFcyErVx1Qb142PtPJS=UpgSD-FacckqNS4_okAtFQ@mail.gmail.com>
-Subject: Re: minimum curl version effectively changed
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-Cc: Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-I have a patch I plan to send in tomorrow that will properly
-conditionalize using the symbol on versions of curl that have it, and
-emitting a warning otherwise. It will also follow up with some
-corrections to errors in git-curl-compat.h.
+Josh Steadmon <steadmon@google.com> writes:
 
-I don't think a new feature should unilaterally change the minimum
-requirements of git without some announcement and forethought.
-
--Alejandro
-
-On Thu, Oct 10, 2024 at 5:23=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+> Git's fuzz tests are run continuously as part of OSS-Fuzz [1]. Several
+> additional fuzz tests have been contributed directly to OSS-Fuzz;
+> however, these tests are vulnerable to bitrot because they are not built
+> during Git's CI runs, and thus breaking changes are much less likely to
+> be noticed by Git contributors.
 >
-> On 2024-10-10 at 18:24:52, Alejandro R. Sede=C3=B1o wrote:
-> > As of ad9bb6dfe6e598d87ffe6e2285b4b86dac3bc726, http.c depends on
-> > symbols introduced curl 7.37.0, which is newer than the documented
-> > minimum version of 7.21.3 in INSTALL.
-> >
-> > ```
-> > In file included from /usr/include/curl/curl.h:2238:0,
-> >                  from git-curl-compat.h:3,
-> >                  from http.c:4:
-> > http.c: In function =E2=80=98set_proxyauth_name_password=E2=80=99:
-> > http.c:655:28: error: =E2=80=98CURLOPT_PROXYHEADER=E2=80=99 undeclared =
-(first use in
-> > this function)
-> >    curl_easy_setopt(result, CURLOPT_PROXYHEADER,
-> >                             ^
-> > http.c:655:28: note: each undeclared identifier is reported only once
-> > for each function it appears in
-> > make: *** [http.o] Error 1
-> > ```
+> OSS-Fuzz's recommended setup is for tests to live in the repository of
+> the code they test and to be built along with other tests [1].
 >
-> From the curl changelog, I do agree that that feature was added in
-> 7.37.0.  I think that's okay, since that was released in May 2014, over
-> a decade ago, so we probably need to update INSTALL appropriately.  I
-> don't think any major Linux distros are still offering complementary
-> security support for such an old version of libcurl, so I don't see us
-> restoring support for older libcurl.
+> Port some of these tests back to the Git project, so that they can be
+> built and tested during our normal development workflow and CI, and as
+> such avoid future bitrot.
 >
-> It will probably also involve ripping out appropriate parts of
-> `git-curl-compat.h` and the option flags. If nobody else gets to it over
-> the next couple of days, I'll try to, but of course anyone is free to
-> send in a patch.
-> --
-> brian m. carlson (they/them or he/him)
-> Toronto, Ontario, CA
+> [1] https://google.github.io/oss-fuzz/advanced-topics/ideal-integration/
+
+Thanks!  Very much appreciated.
+
+> Eric Sesterhenn (3):
+>   fuzz: port fuzz-credential-from-url-gently from OSS-Fuzz
+>   fuzz: port fuzz-parse-attr-line from OSS-Fuzz
+>   fuzz: port fuzz-url-decode-mem from OSS-Fuzz
+>
+>  Makefile                                   |  3 ++
+>  attr.c                                     | 38 +------------------
+>  attr.h                                     | 43 ++++++++++++++++++++++
+>  ci/run-build-and-minimal-fuzzers.sh        | 15 +++++++-
+>  oss-fuzz/.gitignore                        |  3 ++
+>  oss-fuzz/fuzz-credential-from-url-gently.c | 32 ++++++++++++++++
+>  oss-fuzz/fuzz-parse-attr-line.c            | 39 ++++++++++++++++++++
+>  oss-fuzz/fuzz-url-decode-mem.c             | 43 ++++++++++++++++++++++
+>  8 files changed, 177 insertions(+), 39 deletions(-)
+>  create mode 100644 oss-fuzz/fuzz-credential-from-url-gently.c
+>  create mode 100644 oss-fuzz/fuzz-parse-attr-line.c
+>  create mode 100644 oss-fuzz/fuzz-url-decode-mem.c
+>
+>
+> base-commit: 159f2d50e75c17382c9f4eb7cbda671a6fa612d1
