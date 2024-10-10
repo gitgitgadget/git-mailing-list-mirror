@@ -1,111 +1,101 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64661C5798
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 12:55:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3281C9B88
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 13:20:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728564926; cv=none; b=UqHhPBbwW2T5S4Ehi2BH6jI44f1EDwNdIM9YjKTU0E2uoxFG6/60aO/pPAgqVh4a3xFadnbyhxEDW1BK6Od+bou4vcWSmUrJLCcuKvg43VfN8iTnlD7w9FV41/zBigUmdAiuPCfltlGz5M37uqzflq//f/2LLAIiX65GEh9RwfY=
+	t=1728566448; cv=none; b=PQf59XU2c2/ldmWMFleKo7YNMdPbOhtut76/UO/ZRasFTF1/Nk5RsFMDC4crKBdwzY+RiGNZBvuLdHWaxtg6hUBLJYMyva+RvI3MYdIjYd7Ha4GjTn6Jl2chnrgqlZFuics862eqsOyRHPi2QuGwM4YX6VlUoKXWYBJMTBO2KZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728564926; c=relaxed/simple;
-	bh=LklHz4WloDGU/xuzY+wgf0mfRx3xIV4ArgvHDafKoh0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=feZu5GuYKBUmim4GCZQohp+me7ruTYO4lAc0OBRS+p13dQpeR7und4juf8Yqkjr65U+O5UU1ffG8bvbnIuN6eUhyK6QPj0b1qNerKRS3axRydLp6Jlegg92Vhx4Xon0sOnF51Z37bQMj6VIV/8DRRbpE8iPPXxKE0tNVgQBxB8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nPJ1OfaR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OkggbMrB; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728566448; c=relaxed/simple;
+	bh=z+pxM4Ip/l5wEEeqXVONCPv05FMpekQq82BBu/efAQg=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Q4akKzk6n9vR6wzkJj+Wga1K2TNgCZqBogzNkxa5ps6jVPbf4rcQbOQ+kqboqnsI+BFtbeXPU4Gnc/8gn5krfSc5NNRc5O5fMbSV3qzOg5uuhjMMYq3hM+o+BfoKOKl5sYhfOQOAcnZ0EdBci5iitnRVtFcX9vuYo1re1Nw1Cg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FFgJztBG; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nPJ1OfaR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OkggbMrB"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BF2A5114026F;
-	Thu, 10 Oct 2024 08:55:22 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Thu, 10 Oct 2024 08:55:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728564922; x=1728651322; bh=Wj4JX0YFpm
-	Wdgfs5XaPXW518AHETj0Fz1D0RrZ48cL4=; b=nPJ1OfaR/4Hev3JcNopN+hlmxF
-	Ky0iL886BjqXxwSijFAf7gypDfYwspYn84/LdY+pLU6mZjKpQLP1fAbsZQy+ytxt
-	ioYQQ+ilwB4g2vGyejj0G23YSNsZHCa7TKhSAPsd5PCF7DQRjHl9336NFY5BUgm4
-	Qf1KJKIOkbMuu5gn2rmx5RHPlCWrtc5aWTovTtLFvipd/+b5hEy9mekVYNgdBcb6
-	La3ex7YHTA/Z/ith8Y5nvBzARXlt7JGkPC47as9Ey5j7nOKvULUC0fStYmDfVLQh
-	6RoR1+ezTFg/DCS1BiJZjpS5dC1RccfxZSSxms+wrxFI9WHkTK6lVBEmgNQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728564922; x=1728651322; bh=Wj4JX0YFpmWdgfs5XaPXW518AHET
-	j0Fz1D0RrZ48cL4=; b=OkggbMrBm0vQZqzMAy1TPsP/eYYn7rmZbx4KvGAdevIR
-	/mvS/udp38QhC9WRjHRGg0bsDyWqlMLJdrSZsBGfFYWMgxIFVCVUI6gRl6IN7BKt
-	eQqw6FBcgLeMaX0ehpOTxNizfz70FQmkKgH2+o+PzLyzdir9icwwOkccNaDuo7WC
-	3LP8QMmafRwB1IW58F259haYA8tFDOeIHPU/1ReSNwHnZe6g5StMjHndy++H7SGD
-	59W1wJTSmr8+GdgxGMKtKuA47a7youcOS+gq9BXclz1ZMX+mznyw6763snoemwis
-	1TMakG4c+t6aSq0BDnTguI/+27i0VMNHUhlQizAB6w==
-X-ME-Sender: <xms:us4HZ_UUr5Lo7NANRd4op6GNBBLuqP4nJMmRAkT9Lsq4U12Xwiil8w>
-    <xme:us4HZ3kmMtGM2NHfwv3tHulWYyRUYTTZqiXRbkURzsPCu78GJy9nIggwqIlbtte8n
-    xPGRkVnUeBwFXkVJg>
-X-ME-Received: <xmr:us4HZ7Zv131whgB-pewlCNEEEOeNzXiyNbqbjglFVJF0gX8PgyOb7KXMYtsX1YIdq4AVZCyb1DfrjALuhbhGh0FGIpqngxrtPMnuRE_2bvLiHpX3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefhedgheelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehtohhonhesihhothgtlhdrtghomh
-X-ME-Proxy: <xmx:us4HZ6WAwzcAlI7ELlbavqrueNBJnBe_DOlRupFKL3wzwsOc3896kg>
-    <xmx:us4HZ5nIMU5uisjnG0OT3muLWoOXOf1mPVPifxfXQUNhoKG-myoqJg>
-    <xmx:us4HZ3d7XiEnfGRpGL6imVn5enaFAqeH4_JKJnTCAOJ-AHqyPgmfwQ>
-    <xmx:us4HZzENeY6F3f_11m5i6jMic1T3r54kurK5QI9uh4wujW9e8WAdiA>
-    <xmx:us4HZ-zv6cF6vbCoYJAJcCAKv1Qr0ELo2EgekuSaRkXu2A8Ww2ZrNnq1>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Oct 2024 08:55:21 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bd87d5f7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 10 Oct 2024 12:54:13 +0000 (UTC)
-Date: Thu, 10 Oct 2024 14:55:14 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] bundle-uri: plug leak in unbundle_from_file()
-Message-ID: <ZwfOsoC35x-wyn7S@pks.im>
-References: <20240826083052.1542228-1-toon@iotcl.com>
- <20241010091249.1895960-1-toon@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FFgJztBG"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a9950d27234so135855666b.1
+        for <git@vger.kernel.org>; Thu, 10 Oct 2024 06:20:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728566444; x=1729171244; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qhNLuigEnzxx+oZB2yedrOLnuLlxcHKpBiOijb2hBV4=;
+        b=FFgJztBGfQed8Xw6/jXIX+VHrxxze8lzFtXSv5cMWAb/spmel4ZiWe0h9XmqmX77UR
+         0kP2G4ucO9Yc/wTlf41nF1M4lDHkYR4lrA/IeBvFXLsEgomBUp58bu6Z9OTvPj1Z2+Nv
+         QjY6V8wrAlIlZQiEGSqfunK6rS6Nf2iNcSrvC9fCkrQtqUqkQW9v9GcZ41buQ0RnB7Oi
+         hfphsYHy3BdKzFCBz8V1899WOHq8U3RnOzuODiSZimL4VIcvjk8rurHRdDN3yNQXKXL2
+         fFfTjNoUzxOH2SPXuqzKYSVPHsQCnoujkChJrlKcByGlZagjb98rNEyY+jACxybnGaed
+         jLUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728566444; x=1729171244;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qhNLuigEnzxx+oZB2yedrOLnuLlxcHKpBiOijb2hBV4=;
+        b=RHrjcD8N2aV7F5sAtOrH6aEXrznD3Ke4EwynE8Jf9CmRDCeYH5eNZ/Hxehcy0e7Fmb
+         DZxR+URdlryCLsSL65WyJSiDZQmAdyz2EEskpfHcY/XYmj9QOTK+qS8gL/lUdBsTcGo0
+         R/0U/xU1ZYkDY0S1vLmAQ9+MaEW2caerJqFWjbAG168vj4kzFq1R3GXKoDvXVXMgWALZ
+         g6evfTU3TfKxYt1c+G+9tC/m/piVerNMygx0qx6BUiuXXsc1FQ6x7kTMzNxZzh+BwVTD
+         34ahrrDz3waXLMMmOxmKwNSSYAwM/YDgWZGb48/22EOaglYnehTqhVCQ2hB/GEFf2xU8
+         s8ow==
+X-Gm-Message-State: AOJu0Yze/APf/bW/FtLvgNOLg9OssTFYmrtLzvxK4yexG0pvPFp7m5vO
+	EMj0Bk4VDzvpudjTMGI5548kiJCcTslrT0L06vdQ0cgF+PgUVoXP0XUgiA==
+X-Google-Smtp-Source: AGHT+IFOi/Gs4ftsbTAYCoPVU7aWHvt09ejiixGksz5jCTG/0cl/zOly9Xa+Ve8FNAVm9CF+TkVqqA==
+X-Received: by 2002:a17:907:972a:b0:a99:537d:5d10 with SMTP id a640c23a62f3a-a998cf3aee8mr487598466b.0.1728566444162;
+        Thu, 10 Oct 2024 06:20:44 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99a7ede515sm87953566b.45.2024.10.10.06.20.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2024 06:20:43 -0700 (PDT)
+Message-Id: <pull.1807.git.git.1728566443089.gitgitgadget@gmail.com>
+From: "blanet via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 10 Oct 2024 13:20:42 +0000
+Subject: [PATCH] Documentation/gitprotocol-v2.txt: fix a slight inconsistency
+ in format
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241010091249.1895960-1-toon@iotcl.com>
+To: git@vger.kernel.org
+Cc: blanet <bupt_xingxin@163.com>,
+    Xing Xin <xingxin.xx@bytedance.com>
 
-On Thu, Oct 10, 2024 at 11:12:49AM +0200, Toon Claes wrote:
-> The function `unbundle_from_file()` has two memory leaks:
-> 
->   - We do not release the `struct bundle_header header` when hitting
->     errors because we return early without any cleanup.
-> 
->   - We do not release the `struct strbuf bundle_ref` at all.
-> 
-> Plug these leaks by creating a common exit path where both of these
-> variables are released.
-> 
-> While at it, refactor the code such that the variable assignments do not
-> happen inside the conditional statement itself according to our coding
-> style.
+From: Xing Xin <xingxin.xx@bytedance.com>
 
-Thanks, this version looks good to me. We now avoid any discussion
-around the changed error code completely, and the commit message seems
-reasonable to me.
+Signed-off-by: Xing Xin <xingxin.xx@bytedance.com>
+---
+    Documentation/gitprotocol-v2.txt fix a slight inconsistency in format
 
-Thanks!
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1807%2Fblanet%2Fxx%2Fdoc-format-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1807/blanet/xx/doc-format-v1
+Pull-Request: https://github.com/git/git/pull/1807
 
-Patrick
+ Documentation/gitprotocol-v2.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotocol-v2.txt
+index 414bc625d5d..ca83b2ecc54 100644
+--- a/Documentation/gitprotocol-v2.txt
++++ b/Documentation/gitprotocol-v2.txt
+@@ -527,8 +527,8 @@ a request.
+ 
+ The provided options must not contain a NUL or LF character.
+ 
+- object-format
+-~~~~~~~~~~~~~~~
++object-format
++~~~~~~~~~~~~~
+ 
+ The server can advertise the `object-format` capability with a value `X` (in the
+ form `object-format=X`) to notify the client that the server is able to deal
+
+base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
+-- 
+gitgitgadget
