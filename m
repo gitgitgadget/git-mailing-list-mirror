@@ -1,81 +1,91 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D4219307F
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 06:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAB01A7AD0
+	for <git@vger.kernel.org>; Thu, 10 Oct 2024 06:52:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728542726; cv=none; b=d2ZbIyPg0fsggVOAgBhVh5H6KSYXbWiFK+s7uvkpL8br0uvjMJH4jLB+OdC/VgFEnHa5F+36E/rWKcRtOTG1maRSqzlOoRGKMKiL+0XhTSty/lsV3fxp8VjJbrmOb8Bg+PnC23SSLUy/dlBwZtAlfv4hvvINeK0ddSplqJIJx9U=
+	t=1728543134; cv=none; b=Bijh/asNx/g2CNiY9NcFAKJkiBHWQjsuC1gBfNEqOHW0pSYNZpwnctcvSmn2vU3lVN3OBcTqyxKMahEokQsBIoiQx9h2hHYqfn3qc71mUjvGWWvqw5GZfOKGWKtfpcO/AlQgmGlUrSzEgfRu+cb49AarKwoGwme7c7nLAsBqbNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728542726; c=relaxed/simple;
-	bh=7tmnC/adcFC1HrBXPrHmI6EtdE/P/MNcNqMfZrChqSg=;
+	s=arc-20240116; t=1728543134; c=relaxed/simple;
+	bh=fnKKFQryaAWImmBIDn3yiFXsMzeh25AzudcUZpKQnLU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E6hjutiCHNiODxZS4IKYUbNpbOxy1oWC8b2J2Xai7mkzj5uv5lOJSQ8xVk6wdL8+hcTFAHjZQqk/8iEVLvk5Mu7lWwm5dST8ZYrg8UAs3C3ioYXRpL6MeNBpJeeXuE2pM75CIFEb7xP0DG2G0TZ42bloCv0OhsZQ7gc9UFcMZ2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G7qDRkMx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SM9Bzs4k; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=NgWeOuXNbsGFktE/DXUvMpgr8E2qCHa17h4QbY93kj27LBIFK26czvO1hr0WoJKIQSmXD70o237UJK84QjQJGXIW5e3Z2GaTWDEztK58he55fI3qRysmdI0Z/kX5sfmnammpgrnYrkyo2E50Qs19V2xHLBJaLhKdUFMvXokdjEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AfMvUCes; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JKQcKy5L; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G7qDRkMx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SM9Bzs4k"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id DAFC71380507;
-	Thu, 10 Oct 2024 02:45:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AfMvUCes";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JKQcKy5L"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 90D8011400DB;
+	Thu, 10 Oct 2024 02:52:11 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 10 Oct 2024 02:45:22 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 10 Oct 2024 02:52:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728542722; x=1728629122; bh=I9FJ5cnov+
-	/xCfM3YMSYMNLOLLSDwTcMQ0y+0WFNuFE=; b=G7qDRkMx/fwROTLU5dAFzoH4ms
-	FNE/xyiIGOP3EafQ/2Bm7w6pAsdUynGXeq3tPie6VyZzsAMSj2xPa5TwNjFC5fyG
-	knkOor9doJxz4ehqCxtqemNkkSmHuvLU872S9iiA6TAhsNK8VoNcfkKkTkRCJYaH
-	c8KATm9mWjJLzND5s+XEk+D5CYvPennUr+RY6PLfbfURvJqYLJLSxC+ZybwrlhnJ
-	NfZnRE/6Y63Lg5gMBGHzRkjAloBT9VpTzKqJajd26+VmrxtIXGBxrSGyPvj+8A9v
-	bNgPaU6rn/oTi7X272N9ZrjHrVMheTtV86akfVkmMdseQIyjDgTXiN3e+BXw==
+	:subject:to:to; s=fm2; t=1728543131; x=1728629531; bh=AKHrBNkk8i
+	91lly6hSYd/mJBp77Juk7ZxNIIdz/jzFA=; b=AfMvUCesnxdBRCcTDnB5Qg59ej
+	2THpxxsSZNfMkjkhpfl00gkun+Az5hcxmQoFkzzHCwmwpM17q9sPsIOeeQnSFbho
+	ELUtL+WK+vyLVdu04F4xmrlXTEXc+hSK8f81R8bQGr7c84XB+SGwEONSBLscsEbP
+	SOwuKcSSO+JpxUSL3usZt6ayUAbkCbn3E9UVQWhygyHvbW9fEBoLMNPzw8OzOSRf
+	o6wi5oqF7tooOpgyKYq+rwW1k0hjbaBFvewSlPbxiYOMV0jf7U9avrAx4cFC9xIq
+	LNCgySpww/Z2Yof+ESGq2cgoXcVgPhrsZRl4nw4tm7f5XtK//QIRLqVZ8tkg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728542722; x=1728629122; bh=I9FJ5cnov+/xCfM3YMSYMNLOLLSD
-	wTcMQ0y+0WFNuFE=; b=SM9Bzs4kOpzEhIRx0oQSrWvCN2nYRLVGtqpLySxNtmo8
-	1XMsjZiuKI+dc7yR27ZrhXpQYpOx+kWxArbYyM+y6DHgVUKKKoH5wlyHFJE5dWK+
-	Tsi/kYZXXxpEF7fcxfSFixXMww+yubBFdy/dF3FSKWrBc4BZt8w8u2youJQpXihZ
-	a9JloYozmndKEM7tglhoxZNqVzv0dGVFBFvEXSi0+yZYMBl+ZsfKpgWNRQbhlnSU
-	8hgzIRxLRh09kr9tbpdZd0Hv+P4Vv8MezvP2EvH5v3b8sNf0zRys+/bIUwECsGst
-	NHRnz5doeDyvx3Mg6Jixs5YNA2XupQ2Zm8dchmjLoQ==
-X-ME-Sender: <xms:AngHZyyG3lKmnTh7WV95in_i5GJcQnS75UAPyt8g0ZUxtu813vlbVw>
-    <xme:AngHZ-TE0FVsCbf2JTAupT5g_k94aoFdWLq4b-90VkIzT-9bef_Dt6luoLifd8W83
-    63HUvJo1hGjRl8vLA>
-X-ME-Received: <xmr:AngHZ0UFWUzft4pSz8s2URMvALjHcve36mMkUFBAkr_PD2ggsDR4zPjM-uLj3gk74ilcT2sML7hkYdmH7BQ94tfDyZ-pn1uaLIKZe6DtUCVATZbc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefgedgudduvdcutefuodetggdotefrod
+	fm2; t=1728543131; x=1728629531; bh=AKHrBNkk8i91lly6hSYd/mJBp77J
+	uk7ZxNIIdz/jzFA=; b=JKQcKy5LjbNY/aNWeotcyMKMCxU5R1KqytR/0MqSrfQq
+	bIsW+BNJc094v5HicrPY79MqMJFsYzPXE4ytuJv4nKfYiNCqmu59HB/WAyQGyw9X
+	dWrml8hW6R1gciTlzEwKfiFhSOWrG33QAvi4rOeXYWobEEUwrFL4pzHEXErMxbSE
+	1kyyUrw/7OVsZ8j/CRA+uGdclJv5S15zzIP91ClKpfxT4E6G3t5G3DdtL7sbINaS
+	Na16g3ISJA8JPjUhHVmLqyr1DfFkZaC98UsAvso/yN/LkmSE4+dF6g2ylzS+NMo4
+	xtXx9N01OmY3CUwCjHBZwUZh3XVa6wncioELGVO6AA==
+X-ME-Sender: <xms:m3kHZzVfvRgmZR8B3zXFXIFrzStswcWCNFRDAZzZUzT3iu4LXKDAEg>
+    <xme:m3kHZ7lD_a7tHqYtytjb7WSBaQZaySVmCWWRzdw2N7E-7SJuZAwJegDaoFN0-fxDi
+    tIdPiwaybPs9HHOmQ>
+X-ME-Received: <xmr:m3kHZ_ZjmuBDIWl_ZtPl9KbCxfiUtcPGhDelzsdGAjwwG9AriGtEr7QVdGIPIwm9sC0WII6zsZ4n5cpew3jCMUfHwJ1IYEHjPQsrR1JTDW-YJUqm>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefgedguddugecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
     shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:AngHZ4ioInP_c1oEj4CxjqjIQd1P4p4jBL2X7KtwyBp_ESe6xzKwEw>
-    <xmx:AngHZ0C2z7Khh1OQpY2m1hmVgPz58WE1FKvFqkacpFo4nXFnqomskA>
-    <xmx:AngHZ5K1FMRfWKR61vLpRkE3QO95MSODF3Z-ocn_np1vRsS_cUsgCA>
-    <xmx:AngHZ7AMKIlKH-T26BIDdkXyYWeFlkmEHW97nlTFqwpZhG7tWe6GPQ>
-    <xmx:AngHZ3NLA-MSjGpMluU8gD6c3xLPl6a4B--EhTaI9ptRLFE8q3E55i6C>
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuoh
+    esghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:m3kHZ-X_Nhe_nzClPz7NnYQ9m8bmWwuJQp2y7pseXnt8Vse_kc3mYA>
+    <xmx:m3kHZ9l2sgUZ0CGmPiup4LzkA2DcB5HB3bYAGsqZ5TZZhKzyzHU4Vg>
+    <xmx:m3kHZ7cstgL85Zzj7bhmosM2DT22YxeXVSbu0uY5UwnSGsZKiace_A>
+    <xmx:m3kHZ3EFDzHia0P13eu4Qv3SshYHheWxTia9CKgUsdmAGLIcK45BIQ>
+    <xmx:m3kHZ2Bxl_QTMGKSuAfbTAc3KPsJxKFp9tYJ8NiGvB6hIOtwCf5rsCMu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Oct 2024 02:45:22 -0400 (EDT)
+ 10 Oct 2024 02:52:10 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b743493b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 10 Oct 2024 06:44:15 +0000 (UTC)
-Date: Thu, 10 Oct 2024 08:45:17 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5850e69d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 10 Oct 2024 06:51:04 +0000 (UTC)
+Date: Thu, 10 Oct 2024 08:52:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] loose: don't rely on repository global state
-Message-ID: <Zwd393AHNAGQ_zAx@pks.im>
-References: <CAOLa=ZRMaw-PAsZ9s0zJ2zp_suMppi=ZrT67B__LU1tWZSvuUQ@mail.gmail.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v5 3/9] ref: port git-fsck(1) regular refs check for
+ files backend
+Message-ID: <Zwd5kiZZME3ygM0K@pks.im>
+References: <Zvj-DgHqtC30KjJe@ArchLinux>
+ <Zvj-osCNDMrUQv83@ArchLinux>
+ <CAOLa=ZQ3Gytt4Lsttxws3DWqbjteJS8mXvZSPzDwBJi_ALS03Q@mail.gmail.com>
+ <ZwUkZuCtYu7niuFM@ArchLinux>
+ <xmqq5xq232wa.fsf@gitster.g>
+ <ZwY5O63OI01LZX1u@pks.im>
+ <ZwZwGAxkbQtnozh9@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,53 +94,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZRMaw-PAsZ9s0zJ2zp_suMppi=ZrT67B__LU1tWZSvuUQ@mail.gmail.com>
+In-Reply-To: <ZwZwGAxkbQtnozh9@ArchLinux>
 
-On Wed, Oct 09, 2024 at 02:58:59AM -0700, Karthik Nayak wrote:
-> In `loose.c`, we rely on the global variable `the_hash_algo`. As such we
-> have guarded the file with the 'USE_THE_REPOSITORY_VARIABLE' definition.
-> Let's derive the hash algorithm from the available repository variable
-> and remove this guard. This brings us one step closer to removing the
-> global 'the_repository' variable.
+On Wed, Oct 09, 2024 at 07:59:20PM +0800, shejialuo wrote:
+> On Wed, Oct 09, 2024 at 10:05:19AM +0200, Patrick Steinhardt wrote:
+> > > The fsck.c:report() function, which is the main function to report
+> > > fsck's findings before fsck_report_ref() was introduced, did not
+> > > have such a problem, as it allowed "const char *fmt, ..." at the
+> > > end.  Is it too late to fix the fsck_report_ref()?
+> > 
+> > I don't think so, I think we should be able to refactor the code rather
+> > easily to do so.
+> > 
 > 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  loose.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/loose.c b/loose.c
-> index 6d6a41b7e5..897ba389da 100644
-> --- a/loose.c
-> +++ b/loose.c
-> @@ -1,10 +1,9 @@
-> -#define USE_THE_REPOSITORY_VARIABLE
-> -
->  #include "git-compat-util.h"
->  #include "hash.h"
->  #include "path.h"
->  #include "object-store.h"
->  #include "hex.h"
-> +#include "repository.h"
->  #include "wrapper.h"
->  #include "gettext.h"
->  #include "loose.h"
-> @@ -142,8 +141,8 @@ int repo_write_loose_object_map(struct repository *repo)
-> 
->  	for (; iter != kh_end(map); iter++) {
->  		if (kh_exist(map, iter)) {
-> -			if (oideq(&kh_key(map, iter), the_hash_algo->empty_tree) ||
-> -			    oideq(&kh_key(map, iter), the_hash_algo->empty_blob))
-> +			if (oideq(&kh_key(map, iter), repo->hash_algo->empty_tree) ||
-> +			    oideq(&kh_key(map, iter), repo->hash_algo->empty_blob))
->  				continue;
->  			strbuf_addf(&buf, "%s %s\n", oid_to_hex(&kh_key(map, iter)),
-> oid_to_hex(kh_value(map, iter)));
->  			if (write_in_full(fd, buf.buf, buf.len) < 0)
+> It's not hard to refactor the code. But this is not the problem. I am a
+> little confused here. Because we already allowed "fsck_report_ref"
+> having "const char *fmt, ..." at the end.
 
-I've already had a look internally and couldn't spot any other things
-that'd need to be converted in this file. So this looks good to me,
-except for the whitespace-broken parts.
-
-Thanks!
+Ah, I didn't double check, but was operating on what I understood from
+this thread. In that case I think that the current interface is okay.
 
 Patrick
