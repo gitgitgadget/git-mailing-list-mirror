@@ -1,77 +1,103 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820FA1E5731
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 08:19:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35BA20B1F3
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 08:24:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728634783; cv=none; b=Wtmvp4dgJkhxMjONsEIkAnb5vCw3KLV6ImbZAAfQdeKQAyudXYw2tNTXH5d/fUfwjo5Xlh711H6HT8PauYw0M0Bu6tZCeqh9tmmzkwl4h4G9xgV7mrs5U7M/GOp3tLjViQanVlSoNzqb1WuqTNFSGbOXjad7oJ5TJH16tzBI454=
+	t=1728635057; cv=none; b=rg6mJcfWtFzGUzKHiy1Oi8MRWt5C7TZSmHQUO3TmaUPydd4uj8mIB6+kA3BbORuGYJYG3Pf66kvE+mJHFjwBOJ2uCn1fj8kL8dCxC6wLGcWHiKKORRpq2C3NRZn4HzGBSBryf8G0x6cTnQPx1l+8PFfj12LEyGeS8VJR24Do+9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728634783; c=relaxed/simple;
-	bh=tk7WclRI8Gro+YJU+snnX9z9hylYKnnLdYCxP/zQpsE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GYXSg4fudSZzTQkWk7Pg0luM4V6OI4vESo7kbBbcVWwTgwNnVPmgrVb8Oxh5P/nVXS1b4+YIPqLwkd9haS6znD4jMTmrEL21hg3P7HdpVe17AFK+3vTVn2lCMV8c+bmL09merJYMJjmTYrkZyj/6CzqJudveI03m5tHhRtynt68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=e8FO3k1p; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1728635057; c=relaxed/simple;
+	bh=KlRO9h87nM/LSELz1LqyBup/KFgmkHF+Q90ppAt/pUM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=oaiXtdR4InaVGSotePeZZS7CswIIqFlxo1OzaVuN4YvI9iNr8bNhW4c0l0shwwSYUFm64XwS0eJCwYrmGgMQJUJ7aNdKj1U5u5a3LYDO25aJ2N1/6rmEC+jO6LcBE9Ml25TYBRTNOMxi49jc+5EDXN337YWhalB/QZckingA6Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=ElkaFyil; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="e8FO3k1p"
-Received: (qmail 5677 invoked by uid 109); 11 Oct 2024 08:19:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tk7WclRI8Gro+YJU+snnX9z9hylYKnnLdYCxP/zQpsE=; b=e8FO3k1pCoEZbj5QHV68u3L6NBwrhCp9tC4URUVQ7T39mRVfuDUekWE5TKW4fanGguoLYZkoSHRqG8DBOjxIli4MRTKHn/xrTf4krmRsHrPmCbfPG/pMaA114QJpUkWQzqErqRP0rvmAqxqL2sjdebEivD/kXmdGf71SXxDjtGmys2ipkzswlZ5KT+wsSVxFV4aBx7UjVRL0JnDk9ECIHvSg/xvv0Agz/Df9+OAFdHFU1cHpgt70rp4lMpAdOwj/L42YHwogBQ6QplsBx7fZXr2RvSOAcCyMDqKrvAcYLos7eT4sO7Y6LlRNFD8xJJgVsx6ftia+o49quu6+xDHHoA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Oct 2024 08:19:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17658 invoked by uid 111); 11 Oct 2024 08:19:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Oct 2024 04:19:40 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 11 Oct 2024 04:19:39 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 08/11] t5332: enable OFS_DELTAs via
- test_pack_objects_reused
-Message-ID: <20241011081939.GF18010@coredump.intra.peff.net>
-References: <cover.1728505840.git.me@ttaylorr.com>
- <9d81d890402f94f4126aedef0845d615d10455bc.1728505840.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="ElkaFyil"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2e2e8c8915eso806785a91.3
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:24:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1728635055; x=1729239855; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qHpdo/IqtUQFXAehwR1zf5UyhQTNM0GrZDpH/NrHIJM=;
+        b=ElkaFyilnOVGvGs4sy4ZJJVV4jOF3m4+5rB2mC08JXwhOig7MwM6MCwrzcMjvOE/lE
+         3cLgMwPD++jdx+CPLWd7eE7FMn3nVAQuSweqc5AAtNf/xYzGkZPFr+Uv/5SoTwsVC2Ek
+         D1vEavmzUW721PKwTE0NJTHqzFDtjjNzTWqmoLVrq9hRoeYuRcw+imL5I/DSnyeS5Cbt
+         us/3O+b4vosEAfXMqtQjH1mcsAwDS2Aa3Sfsfy1Uajqvj8n9mFyzfzR37gK+A6MUYyiH
+         wHDvsJafh6sEncFsnzhRpOkfBi1vYeuz97QHevFzIvRBH9hM4+uYOh5jYYXcrvnUftHK
+         bJuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728635055; x=1729239855;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qHpdo/IqtUQFXAehwR1zf5UyhQTNM0GrZDpH/NrHIJM=;
+        b=Q4Uab2wkUW8qyJFLfDW7nyxR7HLkwZPpxjSisL0r8SSYNogH14AhAAC7hKp/1zYr5o
+         f/4MReOOMl+HaAKH0GPaV3zqqZkOrbJXCPX4WStGVSkjO5d24rvnxqai56pAofk8DmJ0
+         4PRqFYFQpdrME9IPBkIQlemIta0t4/xcVCLUC1iEUq46K6uzaf4ObUjcP0KHMkLROjmy
+         RyO0YZFxID+hIqcy6v1qXXOz5QFeovILibiGb/AQ0NnjmiQFd2WKYVQzQxHiYe8b5wC0
+         8aQNRcqz2i5q0KgcNTwqdZStz4RO6ZtEpWBIiuA4kaAcFLFSE6AOF+HPeL6CFYg4C9SZ
+         M+wQ==
+X-Gm-Message-State: AOJu0Yx8+Qmm8JjJwQedxGIQTvzLfM8hd25OKx88nAo9NPbm/LzU88tU
+	HQAFXMJJrKN0RSsr8UJcoPcyxP6fhmBKvVvcD8hfde6H9HTvcMkKqbN9UEbtxWB2q5azLX+d9IW
+	puV8=
+X-Google-Smtp-Source: AGHT+IFSnUP50EqTCkD81iPxcZDLjqD7LVmyVT1l26Glh5G9SDSFGnokNPeCvJLWfPPibTxwq/70+A==
+X-Received: by 2002:a17:90a:5e07:b0:2e2:d9f5:9cf7 with SMTP id 98e67ed59e1d1-2e2f0e001a9mr2612421a91.26.1728635054620;
+        Fri, 11 Oct 2024 01:24:14 -0700 (PDT)
+Received: from localhost.localdomain ([203.208.167.151])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2d5fa8ddesm2643121a91.39.2024.10.11.01.24.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Oct 2024 01:24:14 -0700 (PDT)
+From: Han Young <hanyang.tony@bytedance.com>
+To: git@vger.kernel.org
+Cc: calvinwan@google.com,
+	jonathantanmy@google.com,
+	sokcevic@google.com,
+	gitster@pobox.com,
+	phillip.wood123@gmail.com,
+	Han Young <hanyang.tony@bytedance.com>
+Subject: [PATCH v3 0/3] repack: pack everything into promisor packfile in partial repos
+Date: Fri, 11 Oct 2024 16:24:01 +0800
+Message-ID: <20241011082404.88939-1-hanyang.tony@bytedance.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240802073143.56731-1-hanyang.tony@bytedance.com>
+References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <9d81d890402f94f4126aedef0845d615d10455bc.1728505840.git.me@ttaylorr.com>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 09, 2024 at 04:31:24PM -0400, Taylor Blau wrote:
+Changes since v2:
+- rebased to seen: 89afaf27d3 (Merge branch 'ak/typofixes' into seen, 2024-10-10)
+- fixed t5710, "repack all" affects how the test repo is initialized
+- use goto to skip normal repack
 
-> Back when test_pack_objects_reused was introduced via commit
-> 7c01878eeb (t5332-multi-pack-reuse.sh: extract pack-objects helper
-> functions, 2024-02-05), we converted bare pack-objects invocations
-> into one of two wrapped variants, either test_pack_objects_reused or
-> test_pack_objects_reused_all.
-> 
-> The latter passes `--delta-base-offset`, allowing pack-objects to
-> generate OFS_DELTAs in its output pack. But the former does not, for
-> no good reason.
-> 
-> As we do not want to convert OFS_DELTAs to REF_DELTAs unnecessarily,
-> let's unify these two and pass `--delta-base-offset` to both.
+This series doesn't address the underlying problem with promisor objects,
+but rather mitigates the "repack removes local objects" problem.
+Until a satisfiable solution can be found[1], this would at least prevent
+more promisor repos from becoming corrupted.
 
-I think that matches what happens in the real world. I am puzzled that
-your BUG() instrumenting turns up some conversion cases. Why are we
-still converting in those cases?
+[1] https://lore.kernel.org/git/20241001191811.1934900-1-calvinwan@google.com/
 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 0fc0680b402..0f1b22b8674 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
+Han Young (3):
+  repack: pack everything into packfile
+  repack: adapt tests to repack changes
+  partial-clone: update doc
 
-You need to indent or otherwise comment-out this diff. Otherwise "git
-am" will pick it up as the start of the actual diff, adding the bogus
-BUG() call to the applied patch (and dropping the rest of your commit
-message).
+ Documentation/technical/partial-clone.txt | 16 ++++--
+ builtin/repack.c                          | 46 ++++++++++++---
+ t/t0410-partial-clone.sh                  | 68 +----------------------
+ t/t5616-partial-clone.sh                  |  9 +--
+ t/t5710-promisor-remote-capability.sh     | 15 ++++-
+ 5 files changed, 65 insertions(+), 89 deletions(-)
 
--Peff
+-- 
+2.47.0.266.g0b04b6b485.dirty
+
