@@ -1,81 +1,128 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3059A198832
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 16:00:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794A8194151
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 16:02:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728662406; cv=none; b=L69WiEC/36swd43o3ih15NS85dBjucADe/HufTBAxDqI6wPlkMj0Kom1mwVGm2fwagMoSb/CzQlyqGngkORHrZDKL9w2YPJ3a4W+rhmR3TGE0oJZSZbzZmvf43U8HOEzHAJWdJuZkZB0+CixsKM4xMMdI5XXH6dme2GWmvntFSY=
+	t=1728662579; cv=none; b=qDYd9T8No9zbNNfqgb8cg9wXV25ayYQFv1aHCFJxRg+6zIP7e97yzPyZAGigHyUPvGqFp5namBC+ranW7lgjVkc9pFf/1RsQFGBYuuHqu5MHysztCX7PfA3KFu74TjbC72VNrvg+WNDE1mqUQm44NBGIW5o3ySBoRbAvzLIbJFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728662406; c=relaxed/simple;
-	bh=Qzit2eRXBNzn7JNT+Y7Ncc+xSA392+XZOSmnLt6EnF8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nFokcJK/bKLWtmUpQn5ymXUdBn6cIFm114hxD7hDUKye5CEGNjXNeknv1oXs/4MkLAu8qSlKw2PpNQPIGsOhqlCazd7gm+IlmR9ne7iAKCd+j2v38WAiV2QrCLjQrHtz2ZPQXZF3uJhTO+K9D8xvjVPXEGojPI/UN3X2cfNm4iQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=QzgCrByH; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1728662579; c=relaxed/simple;
+	bh=YlGnDPkRPWTFeNgPgcIF+zsdYd1clAjcZihgmjLx1M4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Xq3oWeG2/QdTAoaeTVP9theGzzwACeAfEdm8xTzoAuXFuD4qnpV8M+xH0Zu+RBwvLK92BKNBtOHzTV71s+Rkzsu2sobTwPC+u4cNdGs4b+M/+4Md9Ni00TSUVzgas3gGdzJG3GCPz+vYtffHohwef+sSdt1S9tTuSeikveeAQ/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mYJUVdE6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J/U7/8nP; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="QzgCrByH"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6e2ef9af517so18236997b3.1
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 09:00:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728662403; x=1729267203; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qzit2eRXBNzn7JNT+Y7Ncc+xSA392+XZOSmnLt6EnF8=;
-        b=QzgCrByHV+FyoPQhEwOPMlNIFvKUyx02uQUxYFR17cCZOvym6w3yBkyL2BKooHX36U
-         E4iIKWHCn7eFsP/jRDBVrcFZB8jmz3ikJLFPLzyKalcJ0iybYG0Np4lf95RM8Gb743Mi
-         G6Bze0sxkj1gLS0K4pYvgMJbDynBuLGH/Q5PN2JcjtHElPIllGDPK1VsdqhmCbvA/bpg
-         6zJTwLcdr6UmeYgHMe95IZEbmZ9z4YVZrIA/ABpPCcpgd+fDF2PTSvBlFSh5qrokCfz/
-         bPbzXT99C/wfyy3JQPXkgMKc55+jI1ZJmcauZdq1PPG7q23WdVTqH3szQlVTwhg4CiZE
-         qWkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728662403; x=1729267203;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qzit2eRXBNzn7JNT+Y7Ncc+xSA392+XZOSmnLt6EnF8=;
-        b=lKF9yyywzLe91pQNIBbsfjZ71pfSar5nRcJEimio19otsJhKMzZDVtv2oBOcTnxaRK
-         68s6rgp/lYA/A19yMl8K2goClyNnVmICBZqy8pUt8QriDaXpEfyrVXXuHS10OOretBv6
-         uB2hkGF2G1znU9swdrDAAE8s44TExD9DEyt4Xz+DFVv0VRCMUjCSkTyqFiBQLMzZXXBU
-         BM8WDvgaf+vjf8+A3R4PUjBBpdfm4YLX4sMdhMKVD4EUW97uhtIfDOlaQGodugk2h+et
-         Q13uGfF0D5Mb9QrOpl20aYvqed6VG7eJ9Tad5pZQlODg5PKb3V3H5qVS9UxvmjUu2Uye
-         bl3w==
-X-Forwarded-Encrypted: i=1; AJvYcCWjHh+0n4Wu9FS9QenIDjmQG9O7AanGcxepb9p35Act4uClihaarW9lLqkCwIRxM/B91oo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNERK28NrMeFaNLl5GcIGen6g68j9TKBljP9C97cgitOBkYEjO
-	0gx0zSzdC+JVxMO4Qk8x7HTolFAGB/dbSnsK+9RhtMA2AJdlcnLGFrh/Ve1nA4Q=
-X-Google-Smtp-Source: AGHT+IGSpmRfieU7iocbA3KtziiI/22rwCD0L11jnbiWtVD3nGFf98aTw4aRdTRpsqI+KrFCvifICw==
-X-Received: by 2002:a05:690c:4c8f:b0:6de:b23:f2a1 with SMTP id 00721157ae682-6e3479bafb4mr22718007b3.15.1728662402846;
-        Fri, 11 Oct 2024 09:00:02 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e332baa9acsm6391417b3.61.2024.10.11.09.00.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2024 09:00:02 -0700 (PDT)
-Date: Fri, 11 Oct 2024 12:00:00 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Scott Chacon <schacon@gmail.com>
-Cc: Emily Shaffer <nasamuffin@google.com>, Git List <git@vger.kernel.org>
-Subject: Re: Interest in a Git meetup in Bay Area, California?
-Message-ID: <ZwlLgJ6e5aWQKJgm@nand.local>
-References: <CAJoAoZ=UyfDjAvG0-kC++R7fpR871Gsi4crR=o5F3PvNfB=7Uw@mail.gmail.com>
- <CAP2yMaJc8ZDiyZrxym-azUpkUOCTjLWEkv6gO_hJ1TqU==Bdcg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mYJUVdE6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J/U7/8nP"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9918B13801F4;
+	Fri, 11 Oct 2024 12:02:56 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Fri, 11 Oct 2024 12:02:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728662576; x=1728748976; bh=ZmgIN0IY4i
+	REANy9fZo3ZqHyruGWPXfSmFut1o1gBPM=; b=mYJUVdE6MFJ04SOD0CImZNrBWV
+	F4zdxhsTPrOmeZUYRcbtX0EKtup4/bUibfCw1grs++ViGYRoYHMsmODh8Ji2/L9V
+	NHxP/bd4Q+yyB278sLwsRHnbBgn+pcnmgjhPZ8PC+cbpOUXEVgsdFQ0EmJJv+CLS
+	SNJ+5JYr+ONjjzhh33be+EHGMWmMRFOd2Gbd1Zs8l2cUhtOnD0y4YFC8jRaaBqHj
+	0573DTplrSbYnXSkVrYNRFbmuTqXXwakihuk472uT+8/zFkRgnTAqXFcxTZBXOTz
+	rLmPe8dNOWq26MDMyCzk4owXQVidDHoBI+Wg6rRHo8e7lcUOJaBSAnvC+Uww==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728662576; x=1728748976; bh=ZmgIN0IY4iREANy9fZo3ZqHyruGW
+	PXfSmFut1o1gBPM=; b=J/U7/8nP7+CvPZYBDSLWhbi/m7mHn0at3VeJV6tNY1HD
+	ueKGexmvrTi7lmVvmL9emZ/RyinmJHFQ/X2Uc/0R/VyveCeQGmALisA8pFN1Zvsl
+	zI1mLpf0gsGADk3itP3x7m1+GQyzWw8/oyaAKCu3KcmqoOlpMO6EBK7uV9UGju+N
+	24CE6z99YCxNaY26ntJs5H/oBUPnWER+cKBVyTShX0a1S+55esJn0sd8yxt6HlQl
+	n9X10p2DQosiQHId4BiFFCBz+hysd4sf7aRqhSElVdYaqJw7/1jrv5UFNt4HmPZv
+	eyf707LfdTE/hGJRduW3xG1SVgR24Gt4eCZcR0jbyw==
+X-ME-Sender: <xms:MEwJZwul-e9DosAhwtBMfVtGP1vFU1N2-JOOifI6U0k86Ia2BJ4DLA>
+    <xme:MEwJZ9dDrW_dXc4CBiAQoEK5Wgka8E5m732411alv92zjJrtLCBbNiBe0UCr1vDFr
+    zRURAgCl9H02UclHg>
+X-ME-Received: <xmr:MEwJZ7xkTStKD5aAwKzFvtnbuZpq3Myk6B5dPpbJ1gXsnKC2wyh10M2Nx95fFjMBwSzIs5yEwywYnOLhpzHwWnjLTddZS9doc90nv0o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefkedgleehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
+    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopegthhhiiihosggrjhgrmhgvshdvudesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhl
+    lhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepphhssehpkh
+    hsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:MEwJZzM4qCL-OmKMhlpYvieQn0xQg9dowerMaMgewH-09npn_Ie0Nw>
+    <xmx:MEwJZw-EZSl4UAYHlb1KuZNzgnxj9b_gAsWspCXhGdlJ1SvxxS73eg>
+    <xmx:MEwJZ7VQmRUGEEcfdxZGqvkx-MgUvSL1p4pKqtHVj2n_CjMUQd_lcA>
+    <xmx:MEwJZ5eMQ8DNw-9PjPw4J7nBLAjjhQ6VTaV1PXJ8JIvYujP1c1_oRw>
+    <xmx:MEwJZ_mim7wHIvcaVbiNXy0bxcaLthB1AJTowrjNhgFtnnDNEaIYpBLV>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Oct 2024 12:02:55 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: chizobajames21@gmail.com
+Cc: git@vger.kernel.org,  phillip.wood@dunelm.org.uk,  ps@pks.im
+Subject: Re: [Outreachy][PATCH v3] t6050: avoid pipes with downstream Git
+ commands
+In-Reply-To: <20241011154555.584917-1-chizobajames21@gmail.com>
+	(chizobajames's message of "Fri, 11 Oct 2024 16:45:55 +0100")
+References: <20241010063906.51767-1-chizobajames21@gmail.com>
+	<20241011154555.584917-1-chizobajames21@gmail.com>
+Date: Fri, 11 Oct 2024 09:02:54 -0700
+Message-ID: <xmqq8quuiq4x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP2yMaJc8ZDiyZrxym-azUpkUOCTjLWEkv6gO_hJ1TqU==Bdcg@mail.gmail.com>
+Content-Type: text/plain
 
-On Thu, Oct 10, 2024 at 08:53:18AM +0200, Scott Chacon wrote:
-> Or, what also might be interesting is to do one in the evening on Mon
-> Oct 28th, as there will be a lot of people in town for GitHub
-> Universe.
+chizobajames21@gmail.com writes:
 
-I'll be in town for that, and it would be a lot of fun to meet up with
-some CA-local Git folks while I'm there, too.
+> From: Chizoba ODINAKA <chizobajames21@gmail.com>
+>
+> In pipes, the exit code of a chain of commands is determined by
+> the final command. In order not to miss the exit code of a failed
+> Git command, avoid pipes instead write output of Git commands
+> into a file.
+> For better debugging experience, instances of "grep" were changed
+> to "test_grep". "test_grep" provides more context in case of a
+> failed "grep".
+>
+> Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
+> ---
+> Changes in v3:
+> - remove some duplicated lines of code
+> - fixed some typo, an ommitted input redirection sign, <,
+>   and another omitted logic negation operator, !
 
-Thanks,
-Taylor
+I'd suggest looking at your commit title again.  "with downstream
+Git commands" sounds like the git being tested is at the tail, not
+in front, of a pipeline, which would be perfectly OK arrangement to
+see what its exit status is.
+
+The updated patch does indeed use such a construct, e.g.
+
+> +	git cat-file commit $HASH2 >actual &&
+> +	test_grep "author A U Thor" actual &&
+> +	R=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
+
+here.
+
+    Subject: [Outreachy][PATCH v3] t6050: don't lose exit status of Git to pipes
+
+or something, perhaps.
+
+Other than that, looking very good.  Big thanks to all of you.
+
