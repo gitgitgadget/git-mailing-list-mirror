@@ -1,82 +1,90 @@
-Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FF31C5782
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 19:12:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C261A1CCB31
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 19:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728673949; cv=none; b=rCCkAdPvDp2R5kmOSWQhCR3DYiN61DXnYEPdlCGEM8kBADbPoxHXlhW5WQeiVIQE2O6mEHRqLncz5V9v+5aDVlXnywxsDGC1n/bB1P5/aghnB4TnMii1vRcrsOHwY2q4kuoS8nmjrpj01hqUBCaJ6Lz5SVzmoSyNjephkriRsAQ=
+	t=1728674589; cv=none; b=dh1ccB4lIBGGCc7GiECw3dlM94h/0faCmDdaIEqI4TDld294jIhP80glVbgtot6Dj4SVIRMLeeKLUp2WK58vGJ+RwMxhxewk77TXixiS9KXUpa+tCBeY/S/w67ng5JmqLiiwHEl339G8bRkCcSRpKDrRpEHeJFsMYZ38RJHv90A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728673949; c=relaxed/simple;
-	bh=zA5t/4iibsUDaLdixuZgFHdieOU5CgDrM9MZ+Ktz004=;
-	h=From:To:Cc:Subject:Date:Message-id:MIME-version; b=mIAImhlhwpY6NIiFFVCJa1R/G0jxcCgmgo5HBjGTjrfsEALZi7yRyiv5CKaPZu22pqYN0vy9z9ZEUnBafaTBzI0f6DD30n42gBtyU0VssaK2F75f/kAxdculofbnvzJZcKMhmOem3UVO193Vpt2figXzB8tQocbbmU/1ZPNV0cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=PS2twnnV; arc=none smtp.client-ip=192.29.178.125
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="PS2twnnV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=S+C0N/QhEvZpEoV4E1I/pN7Nx4Iv+DcLtJRIn5xCnGc=;
- b=PS2twnnVi/MABaaFy64XOnqklvQiufJHu0uEHok54v/SqvSriIm/sH3xf05+G8dzRvu+X9Mdnw0F
-   UrzATJXJuRYvE20PxaO60Y+edJgxfOG5Fkz72sccew5TBc/duurEXe/Mew9cS0r8QtSR5lxtgDdp
-   rWiTi581dXqy8M/wYvSJWFS90uXeEZ8WET8E5G4H5/URALucuaWUFNUprdDOats1n3DrFfB7QnFC
-   vSPJ/Op1wEo+URExTO9UUDLvNXGZvRZQwoKuCLMCvLy4FrZqSr43meYX8ohOOPcRHPemAX/KKm/2
-   P0a4VI1rae3yqHDbFM42rJhHatghioLbw43Ebg==
-Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SL7000R6HCJI120@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Fri, 11 Oct 2024 19:12:19 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-From: Bence Ferdinandy <bence@ferdinandy.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH] t/README: add missing value for GIT_TEST_DEFAULT_REF_FORMAT
-Date: Fri, 11 Oct 2024 21:11:33 +0200
-Message-id: <20241011191150.825255-1-bence@ferdinandy.com>
+	s=arc-20240116; t=1728674589; c=relaxed/simple;
+	bh=1Xqa/TfWER4hIvjPJElz2+JPmDqSd2nhMNB0ORQjLMI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V4NDQTI1m1sASbdkVIr2Xay22GeXg8ZFYkKpCoCBBJi3n3rj6fbbLdvp0TYrYV+SF+f6gViKtwkBvDcL2ghl3a5PPNnVSef8kky7QgzzrXVW4yaJBPRVF/NBPujxiwQ8/aM4paWsk3MqhBEpUAUMB8lGaFL7yf2qb1PRoPiygt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6cbf8cee5aaso565376d6.3
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 12:23:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728674587; x=1729279387;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WA6QyP1S7nfDJxs4Oyd2ViYRVReeAK0UnblAuwpbprY=;
+        b=G4ADEz16yY1lr6eYdZ1NwPPlOPRErJfwdszs/O7nkmsm21+BX/q4Y/K4AAi8zU8InP
+         XeEb4yyExKuTIK3sd3pvK8Q5clxY6V4eHPjGWt0dQt7O8dv6ZARkvw7EKuapLZ3wjyAZ
+         +of7IsjjNIb0iaxwD9GtDUPo4xu+rDHCtcXOLv1QbonCa/J0v2iV/jgFnwZ4vhFHw05f
+         ifPPOjFbxNn04MVm0JPn+Z6VTUFqDcqTnVSNKyDW4qg8ZZ4CSSqJhJOgQrhHOVWEPIc7
+         WzQH4xN7YLPbbgILiYN7MiUejZCmqCYcOtuFXooaU8ClG+W1dzNvsbaosj/qvmYvp9B3
+         M1ow==
+X-Forwarded-Encrypted: i=1; AJvYcCWeqw3m9BtFfnrqH8POKg0CxV6/pzB3+jM6zp2akb9Qe/CGVmie/MZCL9Bskg4KEj+hNhM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzVOGQYMchStZzZPsnLFAqwhiettjrOZnuJjsa3cALIoLpwiBXW
+	3XWtpSIZBZh7YSCoDarxUAY3hWEnAIteUioKJrvGcll/XapJ/7a400YLQPoGOQa4fSe3Lquoxzl
+	EGVIhldvTxQZcExV1gccbFg2zYf4=
+X-Google-Smtp-Source: AGHT+IFMyVDWMc3tVOAhIgOWH4+dHnVW0riUGMs6evO3pM11CpgBVw+twmgFzpUqO6gZvB6TdtwIplGHaZIjc/7NjFU=
+X-Received: by 2002:a05:6214:5291:b0:6c3:69f9:fb5b with SMTP id
+ 6a1803df08f44-6cbefe46ec0mr24790616d6.0.1728674586815; Fri, 11 Oct 2024
+ 12:23:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: 8bit
-Reporting-Meta:
- AAEl/1XRwa+o16Aws43g7ydwnHWRzzvjBB+uV45msQyGDhcGeSPReNH71PPPy3XX
- oQJLEmIhzFMwciQPlXxTMDipqaQYYnklIUo5CzgbPgFC2Yr1y6Uvl3ChGkKVgxNT
- aDJW9VQeWHQkdjYEgB8KPFfa0N2oUBXjFDvSRSufnH7EBkbGOP4FDq/ZClkJawpc
- eXK86AtRlGN8MJIo2FMywwZIomwfBKFEiEqTmFmGm+sfDhmk0kVaSZbFLiBzd82z
- i4IPgNRZWzCaqFUMMXif++z1jIjTA80Mu41A+1/roV6Nsjg042iRhw2MxUUzxbQc
- uEnc7mC4hoq5KyNQid0Kf47qy82Ws6dwUaTp7XDn68+uhkoyKHedEQampyoF1+Us
- ee9H0DGT16ibIx1CZWkHc2AvASUpNXaZS4elE8ec3eTUV+EOTjWxcVZOX0SNCwbF
- 9kAEusenPqNzhDGLxM9DBhk6insLkpmuKAW7vqA6QWzR3qn6cNz/TyUj
+MIME-Version: 1.0
+References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+ <20241011074022.GC18010@coredump.intra.peff.net> <CAPig+cRmyZhq1qtomTFP7p7XMqrCP8-u7ah8D2+yUtrL880y7g@mail.gmail.com>
+ <xmqqttdicws8.fsf@gitster.g>
+In-Reply-To: <xmqqttdicws8.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 11 Oct 2024 15:22:55 -0400
+Message-ID: <CAPig+cRo3ptvgxctL-pjupzHsPeXCb3KfaBTwdzawGNezML6VA@mail.gmail.com>
+Subject: Re: [PATCH 00/13] Update versions of libcurl and Perl
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	=?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The documentation only lists "files" as a possible value, but
-"reftable" is also valid.
+On Fri, Oct 11, 2024 at 2:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > I may be in the minority here, but I'm fairly negative on this entire
+> > patch series. As you say, supporting these old versions is effectively
+> > zero-cost, so how does this project benefit from these changes which
+> > potentially "break" Git for users on older platforms? I see no upside
+> > here. The cover letter provides no strong justification for
+> > (potentially) inconveniencing people; the argument about being able to
+> > utilize more modern Perl features is weak[1] at best and is not
+> > convincing.
+>
+> Having said all that, I did find it was surprising that we raised to
+> a merely 6-year old cutoff point.  If it were discarding versions of
+> libraries that are older than 12 years (instead of 6 years), would
+> you be having the same reaction?
 
-Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
----
- t/README | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+I almost certainly would have had the same reaction had it been 12
+years instead of 6. As one who "lives" with these old platforms both
+professionally and personally, I'm sensitive to the issue because I
+have been burned too many times by projects arbitrarily dropping
+support for older platforms (or, more generally, not taking their user
+population into consideration when making arbitrary changes).
 
-diff --git a/t/README b/t/README
-index 8dcb778e26..8c0319b58e 100644
---- a/t/README
-+++ b/t/README
-@@ -465,8 +465,9 @@ GIT_TEST_DEFAULT_HASH=<hash-algo> specifies which hash algorithm to
- use in the test scripts. Recognized values for <hash-algo> are "sha1"
- and "sha256".
- 
--GIT_TEST_DEFAULT_REF_FORMAT=<format> specifies which ref storage format
--to use in the test scripts. Recognized values for <format> are "files".
-+GIT_TEST_DEFAULT_REF_FORMAT=<format> specifies which ref storage format to use
-+in the test scripts. Recognized values for <format> are "files" and
-+"reftable".
- 
- GIT_TEST_NO_WRITE_REV_INDEX=<boolean>, when true disables the
- 'pack.writeReverseIndex' setting.
--- 
-2.47.0.6.g93f83f3a03
-
+I would be much more tolerant and understanding of changes with
+substantial and provable value, such as ridding the project of a
+high-cost maintenance burden, or eliminating some maldesign which
+impedes implementation of some new important feature (or even which
+impedes fixing some serious flaw). But the patch series under
+discussion does not fall into those categories; it (potentially)
+penalizes an arbitrary chunk of the Git user base without any obvious
+benefit to the project itself.
