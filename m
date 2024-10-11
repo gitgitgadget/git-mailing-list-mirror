@@ -1,97 +1,82 @@
-Received: from coleridge.oriole.systems (coleridge.oriole.systems [89.238.76.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C901C244B
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 18:40:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.238.76.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6B81C5796
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 19:08:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728672048; cv=none; b=OM6oX7/1HRGMjg6cGxww2QLpgSqkdcML/82Jjj9urtFrfRFodkEDM0gDb/8Vc6/BQ1gCpH7lpPf1OVovuVcn35plikbIASh9U84MyFDyyd5Weaz6Efs+QZ/WlvtNcbsFXnoB0X7EhP4uTW9yGuPIlfQFk3OFxOnXijsvxG/Wt88=
+	t=1728673710; cv=none; b=HQ96Pnqa2n2qylfQk0mKyEb24ebYyrGj+pjnkHedGTJoSym2xFEkgoQYEKi7oWJuaICTBWBoXnbGiVTjXtFRgXWCm5g35Y4DiKxgU3r4zUFyGCEd4b0tLA7mCktPYgg5Ta/ZQxtFCIxe6bO6fcrnGzGS7oJMPHsTjIn6QArOOVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728672048; c=relaxed/simple;
-	bh=IU+M7Po1uFbs2b8K0hCSPpPn6KpyLgivOi9tYy+HfW8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mG/h1t8t7Gb1sliXofQ3K9D5YewEAIibIRyapdA/WIWz/1Fm7sfdIO8NM6Y49/fHV1xCP56oZU++SSwkbFVVtNCvWjb0cBTqpUt93QzXf9I53VVUnagf3mhKEBBhokw85A7JUt7txpffczMZeHat8sQEkevAe3zfc6hvoAjkPC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oriole.systems; spf=pass smtp.mailfrom=oriole.systems; dkim=pass (2048-bit key) header.d=oriole.systems header.i=@oriole.systems header.b=ZtnQsZeS; arc=none smtp.client-ip=89.238.76.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oriole.systems
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oriole.systems
+	s=arc-20240116; t=1728673710; c=relaxed/simple;
+	bh=BPXdi1tNDR6b8bIfNHNZUUFjojXXHOjnSxMHEvxEY4k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=LXWCjodJjIWSOGVsLzXa90LcIyrpIk+ku8hAIN2gHnmKsXadyoj0alyp/rvBdrGphtfyjpedPIfpxSukj0WUWVzq6MFd7ct8wercme6ldwn+vliQWOeUqR6UypejnrtnjTEL11+ezIL0nAdcW7H6i/Na0r1NutbVse7ipeEJ0OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=GurWtTxf; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oriole.systems header.i=@oriole.systems header.b="ZtnQsZeS"
-From: =?UTF-8?q?Wolfgang=20M=C3=BCller?= <wolf@oriole.systems>
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=oriole.systems;
-	s=canary-202303; t=1728671690;
-	bh=IU+M7Po1uFbs2b8K0hCSPpPn6KpyLgivOi9tYy+HfW8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:From:Sender:Reply-To:Subject:Date:
-	 Message-Id:To:Cc:Mime-Version:Content-Type:
-	 Content-Transfer-Encoding:In-Reply-To:References;
-	b=ZtnQsZeSD8BYg9b99gxQeO+Fz5gt/CmLbQzSojtACL/xiAexPQJrK376M6BC07tvV
-	 FBzQoLGOLPbqlB3Z13+n6n/vrWnDcOPMi3V+ZKMUMDCkdd9SDDEUANqWQdShpykCjl
-	 0vHlj0xyHaoldktfF9c8J0h+ewVqEW5fmXAPPe47sQFWaFGBpf3ymavKXCPmdUiK8n
-	 /JJZ7/hrpadH/70ZLfPH+n2tPjKtPFEnmZQy2OG5jraPY58r4djUi4VwmmLcfRqtPi
-	 9GVCC4UU5KOO8q6FPRCutLVoUDHtWcjR8K9847IBwmojkC3vNMpXBKOuGtTV5jQZvm
-	 gPLY5K5XAinbQ==
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?Wolfgang=20M=C3=BCller?= <wolf@oriole.systems>
-Subject: [RFC PATCH] builtin/shortlog: explicitly set hash algo when there is no repo
-Date: Fri, 11 Oct 2024 20:34:45 +0200
-Message-ID: <20241011183445.229228-1-wolf@oriole.systems>
-X-Mailer: git-send-email 2.47.0
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="GurWtTxf"
+Received: from localhost (CSAIL-SQUARED.MIT.EDU [18.9.64.19])
+	(authenticated bits=0)
+        (User authenticated as asedeno@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 49BJ8CjV024828;
+	Fri, 11 Oct 2024 15:08:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1728673695; bh=iMKNBSQYzXaoxytEBK/0lFPzZ0Y0fuJEDgnbDQcVX5Y=;
+	h=From:Subject:Date:Message-ID:MIME-Version;
+	b=GurWtTxfA8CObTiSE+Vd9fKVu3869C92vXxZb0/grOtAdDY2IVn7FKFQqhgzTvqoj
+	 7UAT2qDpToCL3yxe3C8MA79lSsTN7hBT4g/kP1EePmKbQ6LsVmj/3nrp3ZhtvFkXJP
+	 a9TO5uYU5tuVhHWyeeO36VtxrQLPPbSx8yj+wJCAWt4bdVaJaruhAJZRPPwSQZc0cj
+	 UbRYvqMHvkPyY4o+rYHLmSKOqgRKK+KzBswfOFGnTRASFF49Jt9p0wnKa1/A6wlQcx
+	 445DOjOrcl7YLXYYKcRBfv/o3zRLW30S+E2tPNR9S+3+3vHVDFj3MZ0zLI0v8pddFb
+	 b+IGVDAwTGUZA==
+From: =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
+To: gitster@pobox.com
+Cc: asedeno@mit.edu, git@vger.kernel.org, peff@peff.net,
+        sandals@crustytoothpaste.net, sunshine@sunshineco.com, ps@pks.im
+Subject: Re: [PATCH 00/13] Update versions of libcurl and Perl
+Date: Fri, 11 Oct 2024 15:08:12 -0400
+Message-ID: <20241011190812.2654837-1-asedeno@mit.edu>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <xmqqttdicws8.fsf@gitster.g>
+References: <xmqqttdicws8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Whilst git-shortlog(1) does not explicitly need any repository
-information when run without reference to one, it still parses some of
-its arguments with parse_revision_opt() which assumes that the hash
-algorithm is set. However, in c8aed5e8da (repository: stop setting SHA1
-as the default object hash, 2024-05-07) we stopped setting up a default
-hash algorithm and instead require commands to set it up explicitly.
+Junio C Hamano <gitster@pobox.com> writes:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+> > I may be in the minority here, but I'm fairly negative on this entire
+> > patch series. As you say, supporting these old versions is effectively
+> > zero-cost, so how does this project benefit from these changes which
+> > potentially "break" Git for users on older platforms? I see no upside
+> > here. The cover letter provides no strong justification for
+> > (potentially) inconveniencing people; the argument about being able to
+> > utilize more modern Perl features is weak[1] at best and is not
+> > convincing.
+>
+> While I agree with all you said above, one thing I find missing is
+> that even with #ifdef, we won't be shipping what we tested in real,
+> as nobody, not just the author that touches the same file with the
+> #ifdef we added 6 months ago is in, but all other developers who
+> looked at the change.  It merely is "we have #ifdef here and those
+> with ancient version of the library shouldn't see this new code",
+> which certainly is good enough for those of us who consider the
+> ancient platform support as a "best effort" thing.
 
-This was done for most other commands like in ab274909d4 (builtin/diff:
-explicitly set hash algo when there is no repo, 2024-05-07) but was
-missed for builtin/shortlog, making git-shortlog(1) segfault outside of
-a repository when given arguments like --author that trigger a call to
-parse_revision_opt().
+Should I go ahead and send the patch series that I had planned to fix
+the breakage for old libcurl after all? I've gone ahead and built the
+latest version for one of the ancient platforms I inexplicably build
+git for, but am now dealing with breakage on another (SunOS 5.10).
 
-Fix this for now by explicitly setting the hash algorithm to SHA1.
+(Specifically, the new unit test framework stuff was failing to
+generate a suite file, patch forthcoming, and depends on mkdtemp,
+which we check for in configure but use unconditionally in the
+newly-imported clar, and which I don't have here.)
 
-Signed-off-by: Wolfgang Müller <wolf@oriole.systems>
----
-I think there is a much cleaner patch here if one would look at
-disentangling the parsing machinery split between cmd_shortlog() and
-parse_revision_opt() such that the latter is only called if there is an
-actual repository, but I'm not at all familiar enough with the codebase
-to do that. Like the commit says some other commands were fixed like
-this as well, so I thought to send this patch your way.
-
- builtin/shortlog.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 3ed5c46078..6422f088b2 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -387,6 +387,14 @@ int cmd_shortlog(int argc,
- 	struct rev_info rev;
- 	int nongit = !startup_info->have_repository;
- 
-+	/*
-+	 * Later on we'll call parse_revision_opt which relies on the hash
-+	 * algorithm being set but since we are operating outside of a Git
-+	 * repository we cannot determine one. For now default to SHA1.
-+	 */
-+	if (nongit && !the_hash_algo)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	const struct option options[] = {
- 		OPT_BIT('c', "committer", &log.groups,
- 			N_("group by committer rather than author"),
-
-base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
--- 
-2.47.0
-
+-Alejandro
