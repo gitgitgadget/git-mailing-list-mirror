@@ -1,121 +1,77 @@
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C531991DB
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 20:43:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D16199231
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 20:51:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728679409; cv=none; b=H/44FbnVDvFjKbAODtpUFHc1Kiart+pjP/y1zVW+vnUmvhS5mnzL87ZVCFoG3AmCiSwshZr79ivCTSHDwBDlRruwEl4K9RIL/apC4wjFtph1OWDdrIDxf6u77N3pUiiJ7Zg2L8+yGN5mf39snvEVGERmsWYDc0A8C+YMeIb/NBM=
+	t=1728679913; cv=none; b=nVblARQv8Wz78Z2MCGQBHXxh1L3jbAnWZ/24Pai+73IKt3YE3oyWofU2yjUNoqhYgiFu7/40vGDeipco7HnH4WYGc5Jo0i1DWoxzMlprgtjk3dtBu3nMcBjcsZamrNMrbVmT7DN5clhd4OFqNhV+6a1HBJHIw8jIahLXbrbWFFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728679409; c=relaxed/simple;
-	bh=XTejNXLGtxLPQaodYV8h84wtDRlsqWcO/KRnIA329ec=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QXI6Bv8hChr+CQ9iYhd6SSh7U7b5BE5EXRYDp0b+T1ikJKLDKSriQjwztQr3M8gQEYY97KwBj+0vYiCNUODMRq/uY1YlWyck+31hwNfiaY6lI8CDRxcbxjop3oGAhXTpJfmpUZUdveIErTL1gAgxecOvEhptJNZGMe0aYlCvsIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DNPLJ689; arc=none smtp.client-ip=209.85.217.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728679913; c=relaxed/simple;
+	bh=YZmEmrdtAHreP8oQJLn7m2yiX5aPYhLCN25A47u86SE=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:To:From; b=FWWpNNdcsSUlKPnJpsK9Ejy0uMRPqmJWfiFGVQrKEsKNPtg5eFc788405VEEODLYyToTyzWa7QykD8WmjVbGOnnpjsMzY9P1mwh7GnVldRCYmP2hkb1yZVo9Cq7KWCxKbudnSKi5cj9QfIapyxQJ3PLc99vohjwSXQyO9UK2L4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=hBSM6u+k; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DNPLJ689"
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4a47177cf6bso214748137.3
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 13:43:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728679405; x=1729284205; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=E6oUCNL6f+NGqS/fXSgDIIz5HKUxtKqUT+n0LXkP9cw=;
-        b=DNPLJ689z+6kgV22dpG5+UgpMhvnl+IY2gc7aOMRCOB3TT73XzPM7wP34be64LyRKR
-         vS63kMYzZNGrpDgDSjLSRjCkGePXu3iHsFmoZ91tfRCD66/z3nc+XXtcGqkD149hs5/a
-         9lcXUnLDb17HIaLYHrm/dzX3lLtMCkEnRxhxY9A3jWjaERhgLOLrwfaQh/XfpyVYXLAn
-         rTZsJ17u/Yt4vrwXwzLQQLEyXeuE/Bv+J3YHejDXC9AnzNCn+quTK1fe1eEldnESCNMt
-         ydtwTJVszP5j3YaakX5lgAm/m7Ah/LjFVoJ+yZWs4z+RomUtrQ6sFLJNW1OEnsmQpjEp
-         EKxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728679405; x=1729284205;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E6oUCNL6f+NGqS/fXSgDIIz5HKUxtKqUT+n0LXkP9cw=;
-        b=HsxeitXEZ1DdwWn8JLCr6LaQ2rddr6Hu0Yiq3r8HIfGNfIL+16ETCSKQOIiRE6EXMl
-         bdVzR3G2SwRHt1X44cSRFhy13KoE8rnoPd0M9KdpQgi6/7w7JJeJc1NMpjQ63SczhwP8
-         Lh2jrGIZb7qUBuOEHMJuavfRbzabfZD39i9xyampPApYxfRZ1VdW2lvgYMWxU2ccpZZ2
-         3WWTsGFIrjojMBDL3JpiCGo7hndjdxPaf/HsHdvsq3iMZE0mBvtLQ1y02EV04Hr3TjTb
-         9UvDZrlEeVnqL29f6u3RBxDq1oWLonOtVyQbWk0+IueysSVBcCSrXUXLTXL6ReYurUhC
-         9uAA==
-X-Forwarded-Encrypted: i=1; AJvYcCUOY5ErHrYg8Jh8kS6QAjtxc3eMxi3iBKYI6AzOAQimU5hREsd53dSpfygwT+F6GM8Cr18=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwLrS7NXXFlVQzMSK51ad92h7kgCozTXvKzNTB5Y016BnAKYohd
-	zFJc/FKJxC/4EX0wXrZ9Xcw6VRlhmIsoIyssohn3bfy+L8xEmL2e6xpDsesDhhxl/iU1Bt9Cwur
-	tHS16rh2WiAb3isYS3oORfu+MxXs=
-X-Google-Smtp-Source: AGHT+IGpuXfKghPW0h/FKcMjQnhEBa+bReUy51zBexnm+lmZ06SIXlt8ilECYN6EOK4DK+rvjDX2gkUAPpXk604tN6I=
-X-Received: by 2002:a05:6102:4188:b0:4a3:f9e8:2fb9 with SMTP id
- ada2fe7eead31-4a47600a7f5mr1215685137.24.1728679404735; Fri, 11 Oct 2024
- 13:43:24 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 11 Oct 2024 15:43:23 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <D4SUTJDV0Y04.3Q8YED2MVOKBL@ferdinandy.com>
-References: <xmqqzfndndfm.fsf@gitster.g> <20241010133022.1733542-1-bence@ferdinandy.com>
- <20241010133022.1733542-3-bence@ferdinandy.com> <CAOLa=ZSV50OkDC2p5AHHW0u+fAtLMcCX36W1SuT8AnTkX7HNZg@mail.gmail.com>
- <D4SUTJDV0Y04.3Q8YED2MVOKBL@ferdinandy.com>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="hBSM6u+k"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=YZmEmrdtAHreP8oQJLn7m2yiX5aPYhLCN25A47u86SE=;
+ b=hBSM6u+kh2fYjLggo2V2mqJ72SWlE4iePDVs0E/Szs6/VET00sV22CKSwbHpUqj+G6+KmphLjLQE
+   cmT+TtWpILd/w7p+1VAogdPoyPHWQMjEHTo8+xyU3o87B/gk5CalU5WS0E2qoFPVLAJ85tqliB2J
+   X7OVfpzrsbY8XX7kRr+L3sJPjhJUiXF9CrSzG3QZv61EeVtaHqwV2RqsNIA/M+mGdURhkcZNztSp
+   l31PCKHOEhPoSprBiYa8mpDeM+ZSYbg8u4OywQajkTASZ6hSYzaOCH6Ugfq5XigLKS9DYNDg5EUy
+   qFEWIpoOlutvtelQ37fSV3Ptlt7GVQaUWZav4A==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SL7001JALYBLLD0@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Fri, 11 Oct 2024 20:51:47 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Fri, 11 Oct 2024 15:43:23 -0500
-Message-ID: <CAOLa=ZQY_a_dEZQ2EcLVfE_5Kjy7b2R3OFbQHQbkzH0o9-q1JA@mail.gmail.com>
-Subject: Re: [PATCH v6 3/6] set-head: better output for --auto
-To: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk, Taylor Blau <me@ttaylorr.com>, 
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="000000000000d9ac910624398949"
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Fri, 11 Oct 2024 22:51:08 +0200
+Message-id: <D4T9VCF8OS6U.1FMB8P6YU7I3S@ferdinandy.com>
+Subject: ref: with git update-ref?
+To: <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+Reporting-Meta:
+ AAE9JU+4RyCOgAzz8MaVIdK7uXQOW52i3u0fqX3+ncX6a2+WNYHatMOff650UT5i
+ rzrEo9oC5EmHS4ueFoRSTrWPnI7+yC43jvYVu/9wcl+eE1fb2ALbRI5fmwKDSGD3
+ pKSzcd8U7MESlRLZPWsLiHOifVzS0UE7DQZjCBvUriL1DhkFtfh1dEii9zFiFA8D
+ isMfu705U5yytQnxkoq6HSohUY+MfywgM9sn/FCdoVYuRLs+7IHnPjJZU+O2lRLh
+ GlyH6mCU2dfZGYZo8/Y637F5bOgpE53z5aAUDCDJGutvcfP06v//mPaxEBWNZ5Jj
+ Af6B/rgXhZ1VYMRgJP0vXitdaSz8Oyk1U97zZBoQSh4Db/F/qCguLbfxPZmxaeUl
+ bPikO9Tpd8tpN3fge75GNbEikGaXI/tjvvFRW8C0+tRD4UFiUI6mS2d1a24NySXb
+ vsyhBNJxegA45vROJwM3pvsfoLOZStHSEWXFZF8aLpMOgJz4I9WY6aaB
 
---000000000000d9ac910624398949
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-"Bence Ferdinandy" <bence@ferdinandy.com> writes:
+the documentation for `git update-ref` has this sentence:
 
-[snip]
+> It also allows a "ref" file to be a symbolic pointer to another
+> ref file by starting with the four-byte header sequence of
+> "ref:".
 
->>
->> > +		git remote set-head --auto origin >output &&
->> > +		echo "'\''origin/HEAD'\'' is now created and points to '\''main'\''" >expect &&
->>
->> Nit: might be cleaner to use `${SQ}` here and below
-> You mean something like this?
->
-> 	git remote set-head --auto origin >output &&
-> 	HEAD="'\''origin/HEAD'\''" &&
-> 	echo "${HEAD} is now created and points to '\''main'\''" >expect &&
->
-> I tried a few variations and this is what I could get working, but I may be
-> simply missing something with the backtick.
+After fumbling around a bit and getting errors like=20
 
-I mean simply this
+fatal: ref:refs/remotes/origin/test: not a valid SHA1
 
-    git remote set-head --auto origin >output &&
-    echo "${SQ}origin/HEAD${SQ} is now created and points to
-${SQ}main${SQ}" >expect &&
+I looked in builtin/update-ref.c and I do not see a call to refs_update_sym=
+ref
+nor any checks for "ref:". Am I missing something here?
 
-- Karthik
+Thanks,
+Bence
 
---000000000000d9ac910624398949
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5c8af0b574f95bf4_0.1
+--=20
+bence.ferdinandy.com
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jSmplZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMjg2Qy80NHFabklrN0FDOUFoa21kd3BOQUFEdll2NQo3aGJwQUpTNXli
-NDAvRE5uUjBBSjlPYzl4NElCRFB1OFpodUt3Qm5JUEVlaitOaDl5ZWNqYmFxOVRyU1BWTVdzCmNM
-NVpDZ2FBT0hxMS8yeWlscUxWSUFmaTQ1Y082N0c3S0dlZ1lyVmh3ME5JVDB4eFZvYWUvQndKUmw1
-ZWV0c1EKN0N0WWc4UlF2N1Bua3c1bkVXV0dsUy9CQjdwTDZGU20zUjBNWk05MkFZbjI5dDdseHF6
-NUJNTm9hd0VTMExsZwpNMUtTVjFsdEpXOGd6OXl3Y1FRNjdpSUJMYnY5TWNZWlJrK25XTExzTUZK
-clRGUndCc3pFZXgwRjd5WWNQblhCCjcrZ2dpVXNJZTQvVDZ3UUs3SUFXdk9tRzRSTXA5bS9abS9x
-OXZMSjhRTWczenhMK0ZJU0RkZHJkS2UwTUZBQU0KcjMvVFBDWmI2NDIvTUVpUlZxWTU1SDR0aGhS
-YmpRWDZTNkd5a2VUK0g3b3RkZjJpeGNnRXY5TTBCV21XNCtPRAo1TkpYTEZjb2xJd2RQL2IzaUNC
-RzFLbDY0RmNqSkFOeHp3eXFKRDhWK2d1WHdDUXJSaHNqUFljSExDN2YzbFNiCnJ3M0g0OXVnald4
-Ty9NVSsvOGIvdGFCNjlnSlNFeDRMZkJZc0pOMD0KPU15eFYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000d9ac910624398949--
