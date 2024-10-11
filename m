@@ -1,72 +1,119 @@
-Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55D81CF5F9
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 17:31:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5075381E
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 17:47:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728667917; cv=none; b=L/Z11S6p+sL3hctRIrPVQhInsoX4PBXcqB/rcvb5l7hk3HSQQ8mtPqPxGmWGZVHjxtxtbX0kVDzVVaD781wx/IDu6rznzsGaFEZhnjHMq39QeNsmolu9mSxpdP9NV0V4jWpK/zr73q6Xe7cWmYKuXRlh43uE4O6xwKPu+24VQf4=
+	t=1728668867; cv=none; b=BdyD/X0fSoBYlcZPyXex+LYlJcwBLiZdXXjtNi95OmPJcd4FXzHSNwcU7GJ04Vf0mz+R1F5SlUMGK4wH3VWtzucNtY1pu5dZwcR63wBN8GSY+fFT0YALHTO73BVf21LFpN1HprRw6gRRGVJCIcyZTkYutQW0hF1Fi1u7KqThanI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728667917; c=relaxed/simple;
-	bh=4p9zMCHyTvIHqWb+RiLLmYJIcUZSBcLyXxn110UCViQ=;
-	h=From:Message-ID:To:Subject:Date:MIME-Version:Content-Type; b=VWaJFnmKAECjzRibQlZVRGR3b937MHjdYyur4CyJ9F65E66t1Fjq/CqRvOUX8uMorLu4Z1xk7Tjwy6b/0pKCOQ8hZ1+QJrKoFVlfHxWV2RHubfx80aD9e7t5DC50EQ6hmva63Pq0teKT6cy6Rxufx/DLM2nYsDcGxqiLMCqAWVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mTDRh1yw; arc=none smtp.client-ip=209.85.214.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728668867; c=relaxed/simple;
+	bh=Fo6UohHg+mzRaiDfrh3ftwdw0/tn/gv2DO6z52wuiWo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Hx4ydYOKhiZ66UagMmxv4hU79UyT5YWagRgSoPR8oPqc+GKCBpJpBZ+bYKr1mAGHsmldVuvqMnp0SeVDnTkIJD6WaDDLRUkWfuMqiwcHmgzwfDvRJtYWRNd+3Yyvjd3tSAc8sjjig5XbrXJBcnIJiW1tpG4bCTrSIzodhzwWCrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W3Js2rCP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EQ6mbc1j; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mTDRh1yw"
-Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-20cb89a4e4cso2280795ad.3
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 10:31:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728667915; x=1729272715; darn=vger.kernel.org;
-        h=mime-version:date:subject:to:reply-to:message-id:from:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4p9zMCHyTvIHqWb+RiLLmYJIcUZSBcLyXxn110UCViQ=;
-        b=mTDRh1ywAaWywf1FEbGvWi4VCZ+PGTdWlAHfVMUjwFmlD2CDfebeJ+85AaqoN3CgYY
-         7CKpapgKUywEmLm7GxQ5Zo+UDVZU3NMv0OMR4zggVHqkv5ltJlPeTibim8xth9a/2LH5
-         z70qjOaNZ2/AmknSRRt33rLmK8bC0JeoaRr1xNRI/0RP608Q/z6FZzIRNeExaFmWfka6
-         dv4RsSH6zbeyJap3kE8iGy8xqMdYCUYWeCeDhJXq2j4uJVZ+/Q5UopXvdVdEMn6AcBVs
-         rjvK4po2VnDUk4rYlKzDljZOQoyZiBxVv1zQxKzSYEoS5IO6VlIGNhpDnoSsDsBggF6c
-         JBgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728667915; x=1729272715;
-        h=mime-version:date:subject:to:reply-to:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4p9zMCHyTvIHqWb+RiLLmYJIcUZSBcLyXxn110UCViQ=;
-        b=kMR3M/zyI/fArfiqqXg2FqTT61HvU5ddkljmcACeKiXZ0OsvY8mK2a3ek9IzR1TeCs
-         D/ylZ0fVljtTVXEBMzv00T8nxfqqyG/tVR9kTkkxbphtGcNWb+tMIP5wKB+zz5dWGqSR
-         rPY9dqUNEUysHpo3LKis+7AcG4p6hm8Folk22Cv5oGOzU7g+txF83CTW7ISMeiGU5n+y
-         wPqrWyPmvXfXvFxKZWtUJmNNQS0eiwHiMe0JT6vDMPr+4HuuG9E8ftSuNEqLNA+TbhcO
-         FmHw/ELcE8CrcttM4qKJxklyu9OqfDah3h5ESuIaepZZDTpfayHnmMan5uS5LfM7muVs
-         uAZA==
-X-Gm-Message-State: AOJu0Ywqaqy3GLB0Q5DW7wJS7CHvr+VAGKb1GNd0fh4bQBMIn1N3c6hy
-	2bMjhynXntk8Ixr3lBuqidPuN/Dp2ROibZ7m1jgXivVMYdz9NbQjpkahZiFK
-X-Google-Smtp-Source: AGHT+IFOeA2YkYZrFbVDoHowqBGY8rbSJVXy5snVngqPZYepIGtbxf/NsQw2MY2GKj1rM9GyrFo7Rg==
-X-Received: by 2002:a17:902:d2c1:b0:20c:9821:69b9 with SMTP id d9443c01a7336-20ca1426578mr44515855ad.5.1728667914977;
-        Fri, 11 Oct 2024 10:31:54 -0700 (PDT)
-Received: from [103.67.163.162] ([103.67.163.162])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c8c212d40sm25744965ad.195.2024.10.11.10.31.54
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Oct 2024 10:31:54 -0700 (PDT)
-From: Josey Swihart <mdsalem309999@gmail.com>
-X-Google-Original-From: Josey Swihart <joswihart@outlook.com>
-Message-ID: <a18d6325f8f703cd3d472478d1a45d0b47982d80268322c3ec583bf8decdaf7a@mx.google.com>
-Reply-To: joswihart@outlook.com
-To: git@vger.kernel.org
-Subject: Yamaha Piano 10/11
-Date: Fri, 11 Oct 2024 13:31:53 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W3Js2rCP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EQ6mbc1j"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id D5DAF1380299;
+	Fri, 11 Oct 2024 13:47:44 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 11 Oct 2024 13:47:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728668864; x=1728755264; bh=F0k4jt+9un
+	5dt6I8JCemEVyoZV2jX6EpSOPuEgo/6nw=; b=W3Js2rCPg9SDzYTZvoLhLgAvPr
+	oKCJWHBbqP7nu1Ah1vpy5QYBMfZKq2HNDDDMTnsMoTd2oEEcgUVmrHctNYYbhapG
+	7ki5Xv8sXsPT/BhsVmS3Lq0XlGBWjqKiRFGn9MgN+v2amq/jGXF4OGKVRrqmFnD5
+	XZ2LCs6ChVNyWeQbbbnV0sFVxFXNFN8Rpj/8PEuWzB34JbIcBKDDXGAbhOq3SIVC
+	Ya+MHtdo9gVGD2wuY7aJ1Iv/44dnk+8aDNyLhKzO2wu8Sl0gF48XLLhI6K8Gk2O5
+	ywzaGjUicQz1UFvjql0DotqBzTtwViAbjQm5qbuDovMf6JTr49rc4JYapHVg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728668864; x=1728755264; bh=F0k4jt+9un5dt6I8JCemEVyoZV2j
+	X6EpSOPuEgo/6nw=; b=EQ6mbc1jwUtts232PLd7FQE71NsD7gm+mpCnldggFn7Q
+	7CHHXI6drCRazhfIi8msMcAK+C8WOBK5WZ3n+phVBj7Lmn5f9eMpdp/8NpCmDXjZ
+	E19whgXWOZ5fTuUCETbwM1DnX/whRJKR6Xqk2QUQyBr06PA36t01uxcquDCkkoa2
+	Qsy1sNk5lJdcGm3uWnCmUmn18HTLaxLbMjft/JGAadJgCLmT8JEfjpDDVucunw1z
+	O87S8/LgGm1FtIpskb2zptu9UWSjWWOeMzot2BV5w7qSsIIgMS7f2o6C746WABlM
+	qvqMlXhSpcl91CXqIzRKyNQ1fFTG4jFO1Bn41m8jAw==
+X-ME-Sender: <xms:wGQJZ9dY24CNnVz0EQV9jOChiyHMj3vksD5Nk8Wfs_pBw69EZ2MckA>
+    <xme:wGQJZ7MZYI-tVw3LSsj-I-p8rdS290mXaet0t-I5rJEySDx5Qk0JISg7sMXltTetO
+    eoCWUnowvdfXDXJVw>
+X-ME-Received: <xmr:wGQJZ2gbZkUIaoeKVIMm2xtnlc47kA9-Yo5kkuvtKsjiaIcjVppyMiCeNA9wP9vUUdp6DU-hvBzh2JrqwDMJBRANLVCeccW1WElVqm8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefkedgudduiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
+    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprh
+    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhohhhntggrihekieesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wGQJZ2-H3AEJyiqjZidfF9iDlMJ0s8dGjMqM819VdCxZaQ5Y96ShDw>
+    <xmx:wGQJZ5soK0V3sXgJMWCkDTG4LlzovMVTzLN7nuXhS4YwMXzKSmUX2A>
+    <xmx:wGQJZ1EoppNZNDk8Wai9zpnhZR-92F65bHrZbZywEeMrdNT2quwnDw>
+    <xmx:wGQJZwOCQQHQoC2tvQAMX5mlXns_2mz2pJQKHAA3W2EJY-BkJOGBFA>
+    <xmx:wGQJZ9ihPPtcQOOELsMfm5_fUdQ6__9woSF1i7L7S7SBnXZdebPKnf3D>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Oct 2024 13:47:44 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  shejialuo <shejialuo@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v4 0/3] Remove the_repository global for am, annotate,
+ apply, archive builtins
+In-Reply-To: <pull.1788.v4.git.git.1728594828.gitgitgadget@gmail.com> (John
+	Cai via GitGitGadget's message of "Thu, 10 Oct 2024 21:13:45 +0000")
+References: <pull.1788.v3.git.git.1728099043.gitgitgadget@gmail.com>
+	<pull.1788.v4.git.git.1728594828.gitgitgadget@gmail.com>
+Date: Fri, 11 Oct 2024 10:47:43 -0700
+Message-ID: <xmqq8quufs5c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 
-Hello,
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I?m offering my late husband?s Yamaha piano to anyone who would truly appreciate it. If you or someone you know would be interested in receiving this instrument for free, please don?t hesitate to contact me.
+> Remove the_repository global variable for the annotate, apply, and archive
+> bulitins.
+>
+> Changes since V3:
+>
+>  * Improve commit message in patch 2
+>
+> Changes since V1:
+>
+>  * in patch 1, only pass in repo to the bulitin if the repo exists
+>
+> Changes since V2:
+>
+>  * drop patch 3, which is a bit more involved to dis-entangle the_repository
+>  * use a single variable in run_builtin() to keep track of whether or not we
+>    are operating in a repository
+>
+> John Cai (3):
+>   git: pass in repo to builtin based on setup_git_directory_gently
+>   annotate: remove usage of the_repository global
+>   archive: remove the_repository global variable
 
-Warm regards,
-Josey
+Will queue.  Thanks, all.
+
+
