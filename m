@@ -1,77 +1,102 @@
-Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D16199231
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 20:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F022199231
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 20:57:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728679913; cv=none; b=nVblARQv8Wz78Z2MCGQBHXxh1L3jbAnWZ/24Pai+73IKt3YE3oyWofU2yjUNoqhYgiFu7/40vGDeipco7HnH4WYGc5Jo0i1DWoxzMlprgtjk3dtBu3nMcBjcsZamrNMrbVmT7DN5clhd4OFqNhV+6a1HBJHIw8jIahLXbrbWFFM=
+	t=1728680229; cv=none; b=hRZnjkonGU+nkiGZm4NvtFtcectLFHeeMsLl9lNtqVJCsoY57BHxs2RQnz7tHGftA9knw23ABJv8PH12f+QJ3GEkXxDya7HUm9ntW1LSwmmTAypQ5imCnYQQxK9nF9Qa6a5FGsT3qJmQgRml6hHvcGIddqcZbQ3Q9saRMDAbg1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728679913; c=relaxed/simple;
-	bh=YZmEmrdtAHreP8oQJLn7m2yiX5aPYhLCN25A47u86SE=;
-	h=MIME-version:Content-type:Date:Message-id:Subject:To:From; b=FWWpNNdcsSUlKPnJpsK9Ejy0uMRPqmJWfiFGVQrKEsKNPtg5eFc788405VEEODLYyToTyzWa7QykD8WmjVbGOnnpjsMzY9P1mwh7GnVldRCYmP2hkb1yZVo9Cq7KWCxKbudnSKi5cj9QfIapyxQJ3PLc99vohjwSXQyO9UK2L4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=hBSM6u+k; arc=none smtp.client-ip=192.29.178.125
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1728680229; c=relaxed/simple;
+	bh=5lekA7Cmi/yMPb4p/eZbgeodeF8J8Geu9NdmoViIEDs=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=LP2i6ZMqVg5fJejZFLOZff7b094yd+xrqSM0l8f9P4KYrNsvtJfIruQIPsE39156vvgRU3w+LvnPrgiNwqx7wOgS9QIygCFP8xV0fi/nTecD5QTD/l0OmCg+4HMQTDqOk0Y8RKLdlfKi4vPQDngQNcSTpARCdn4pEjF14olmJnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=d3q8Uajz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Iy49cTl1; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="hBSM6u+k"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=YZmEmrdtAHreP8oQJLn7m2yiX5aPYhLCN25A47u86SE=;
- b=hBSM6u+kh2fYjLggo2V2mqJ72SWlE4iePDVs0E/Szs6/VET00sV22CKSwbHpUqj+G6+KmphLjLQE
-   cmT+TtWpILd/w7p+1VAogdPoyPHWQMjEHTo8+xyU3o87B/gk5CalU5WS0E2qoFPVLAJ85tqliB2J
-   X7OVfpzrsbY8XX7kRr+L3sJPjhJUiXF9CrSzG3QZv61EeVtaHqwV2RqsNIA/M+mGdURhkcZNztSp
-   l31PCKHOEhPoSprBiYa8mpDeM+ZSYbg8u4OywQajkTASZ6hSYzaOCH6Ugfq5XigLKS9DYNDg5EUy
-   qFEWIpoOlutvtelQ37fSV3Ptlt7GVQaUWZav4A==
-Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SL7001JALYBLLD0@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Fri, 11 Oct 2024 20:51:47 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="d3q8Uajz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Iy49cTl1"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 656CC1380246;
+	Fri, 11 Oct 2024 16:57:05 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Fri, 11 Oct 2024 16:57:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1728680225;
+	 x=1728766625; bh=hNY+FfMhjZ12Dw9PAMnrhszwv0+PX6oNAfJly4wqVeU=; b=
+	d3q8UajzlLlrdkQWB5r8JUpSoyYeWUSQmqjenY1bk+93LTRR9M5x+PSK3l6h3IYO
+	urNIhosVX+his3SIK6f99FarvXn8YxqIxXi8xLqoAfn6rYnYWDxNdsj9Y6fAVIjj
+	WnuU+J1/CCTfxYBibADe7+fFoi0xWZ/SBIHKP4trkgheV30/F0zGynQ965Ekgfln
+	1uvpS1ElS5vr3iEqzG5gosZ4eYcr0zliuyV0wE4z7X4TpLkLs4+9X0vfTyGdsac9
+	N4GFzhjf6AEVGqiPDK45wHzH1++Y7/ZyePFVOgqicZAOqyQUu3p1Qsfu/yi/TxeT
+	yp4axiDvq5/0T49U8mhZWQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728680225; x=
+	1728766625; bh=hNY+FfMhjZ12Dw9PAMnrhszwv0+PX6oNAfJly4wqVeU=; b=I
+	y49cTl1vY3npOVdRY8zF2uErqkwnS6s7pvUa3FGZEtFYmhd0+CwxD1AGheEbxFPL
+	kmrTJFZsNS/R/QBZrRrtVJfIzfCpnvChfYNwwmm6wOoezzx85lv1AsZe/u3kXWYd
+	XJtSm0Rt3dDH2i20PDHS3zmJ4kUIr85DIe6bNBYgXnKRVnh1sZhovyX6V+uhP4SU
+	ZkOlnbjOPzv55eh/ujnZD1ET4TUCT4FYAV/b2K6V5CuTGIHEt5pz3CexHD6La7PM
+	Kkk0HsKs5uDFiMdBl0PJ9ZShp6S4br3QebxjmjWGs4WB0gzkSD62m4F2jP8rWBrM
+	I7qs3WMosQ9W1gZNsTP5A==
+X-ME-Sender: <xms:IZEJZ8CLx7nhYC4iaiWrBRPV8Fh1FttTn6HQ3HM2OwjTE3PHOPdXQUg>
+    <xme:IZEJZ-gce_7XyunQ6fPVjWcL9KAlfhIKn4dmMW2_d2e0LLTmtYgcD8R34j0npsfeN
+    qHt6HYimcH8HZGx6w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefkedgudehgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvkfgjfhfutgfgsehtjeertdertddt
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnhepvdeigedtgfetgefhffetteeludevheetfeekffehheefieehudekveelve
+    ffhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghntggv
+    sehfvghrughinhgrnhguhidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhg
+X-ME-Proxy: <xmx:IZEJZ_kWpMMri6-iqWI2SwEEJvHu-Bqm9fN158RPdTHlgwuS1PoMgg>
+    <xmx:IZEJZyzq8BlKe1AUdlSjGfdz_w_hBvTumekLzY21vX__7AE4L2EJBQ>
+    <xmx:IZEJZxQBy8LBjVH2dD3CgisbiYrFLqSHYaPi_b3_1NqYnZC0vYAvwQ>
+    <xmx:IZEJZ9YJviqIx6LSWS_z4cpawverXk_5chYuFBBUOizb3mqIPXrDGw>
+    <xmx:IZEJZwKPMkFv5MvOOesnC-W3eC0UIdjHdEbi7lMiASZzkri1hGRKDXXc>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 2785A780068; Fri, 11 Oct 2024 16:57:05 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Fri, 11 Oct 2024 22:51:08 +0200
-Message-id: <D4T9VCF8OS6U.1FMB8P6YU7I3S@ferdinandy.com>
-Subject: ref: with git update-ref?
-To: <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Reporting-Meta:
- AAE9JU+4RyCOgAzz8MaVIdK7uXQOW52i3u0fqX3+ncX6a2+WNYHatMOff650UT5i
- rzrEo9oC5EmHS4ueFoRSTrWPnI7+yC43jvYVu/9wcl+eE1fb2ALbRI5fmwKDSGD3
- pKSzcd8U7MESlRLZPWsLiHOifVzS0UE7DQZjCBvUriL1DhkFtfh1dEii9zFiFA8D
- isMfu705U5yytQnxkoq6HSohUY+MfywgM9sn/FCdoVYuRLs+7IHnPjJZU+O2lRLh
- GlyH6mCU2dfZGYZo8/Y637F5bOgpE53z5aAUDCDJGutvcfP06v//mPaxEBWNZ5Jj
- Af6B/rgXhZ1VYMRgJP0vXitdaSz8Oyk1U97zZBoQSh4Db/F/qCguLbfxPZmxaeUl
- bPikO9Tpd8tpN3fge75GNbEikGaXI/tjvvFRW8C0+tRD4UFiUI6mS2d1a24NySXb
- vsyhBNJxegA45vROJwM3pvsfoLOZStHSEWXFZF8aLpMOgJz4I9WY6aaB
+MIME-Version: 1.0
+Date: Fri, 11 Oct 2024 22:56:44 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Bence Ferdinandy" <bence@ferdinandy.com>, git@vger.kernel.org
+Message-Id: <cb60b7ad-7902-4293-81e9-06d1b1526842@app.fastmail.com>
+In-Reply-To: <D4T9VCF8OS6U.1FMB8P6YU7I3S@ferdinandy.com>
+References: <D4T9VCF8OS6U.1FMB8P6YU7I3S@ferdinandy.com>
+Subject: Re: with git update-ref?
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On Fri, Oct 11, 2024, at 22:51, Bence Ferdinandy wrote:
+> Hi,
+>
+> the documentation for `git update-ref` has this sentence:
+>
+>> It also allows a "ref" file to be a symbolic pointer to another
+>> ref file by starting with the four-byte header sequence of
+>> "ref:".
+>
+> After fumbling around a bit and getting errors like 
+>
+> fatal: ref:refs/remotes/origin/test: not a valid SHA1
 
-the documentation for `git update-ref` has this sentence:
-
-> It also allows a "ref" file to be a symbolic pointer to another
-> ref file by starting with the four-byte header sequence of
-> "ref:".
-
-After fumbling around a bit and getting errors like=20
-
-fatal: ref:refs/remotes/origin/test: not a valid SHA1
-
-I looked in builtin/update-ref.c and I do not see a call to refs_update_sym=
-ref
-nor any checks for "ref:". Am I missing something here?
-
-Thanks,
-Bence
-
---=20
-bence.ferdinandy.com
-
+`ref: refs/remotes/origin/test`? (space after colon)
