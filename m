@@ -1,96 +1,156 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92C920C497
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 09:38:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A04B212634
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 09:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728639539; cv=none; b=gSu5sNjWIz1gUgrYIOko5onk7iDFJ+At5Kx6UP996NFzn+cN2irNTCa2pMP+hlku2l9epllOwpGhNUb1ZxpQmJIrc27iWfcbLb4/sN1ys3tjGppk1/mYYZoMx2pny4vvXrGuvEwAqmdLIU1Cf3wOzERs8FHZuLVVwKU5fNfzzG0=
+	t=1728640321; cv=none; b=mBZH4MY+UQCzm2KqMNzWPkAoSUNSlPG24qnQSUgxb6uSyuz53WIc34hI6K/9SGHgrr12xIlgzM00/6iXWiD/GSEgDRFwC2XqxqdzLoMdSZTGNIqEkt0g1cY5yoYKijUFRcaS5aQHpT4E/xoOHA1X70Quem5VA6Z+d68HGfzhiWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728639539; c=relaxed/simple;
-	bh=YGTRhjfwc2FBzZrGCd+NCwihIhtr7zgzH+7Q3f6g7o8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U7o/KsOaDoBMPK8jGncRX+CrAmuVtBETZ6PcNESoA9mcrte5IWKeX8v13eyxZ6CvAGRkYNBK36hU7sPAmWvwEKliOJKxmuxZScIJx2WjyLcoYNz2HI0XYaRkHj+jkA3f+UzDHJ1i+gk1/En4k+Va15+EDX3ext4l2oeZKg98KVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=Dusg1tRN; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1728640321; c=relaxed/simple;
+	bh=RtTzBk+8UVZ/pumJD1G9XVLWz6gZ/L31og53ly534R0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZGkSCZUTF0eAhLTJnWZa6dSLTN1d0Fpt/EN6vVXs6vDdTUzMaG/BlRLHYiBzmVA+EtgMBz7rR6MbQcmSNLE8QUSxDVrbbPUD38vR1m0U68ba+zsjLEH+Qw6/WwxknS+lveDUtCmhHWY4zi/JR4KuGeOefjTSV1G+IbV2C16tBng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lAr7090W; arc=none smtp.client-ip=209.85.221.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="Dusg1tRN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1728639520; x=1729244320;
-	i=oswald.buddenhagen@gmx.de;
-	bh=YGTRhjfwc2FBzZrGCd+NCwihIhtr7zgzH+7Q3f6g7o8=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=Dusg1tRNycodgn5CpUebh0NWta9Ee1ECwx6+yChxWW0KZz4Vb2H188mpoNNA0AlH
-	 Thu9xbS/uCUMQN0GQKXveRPM59WRbgifCwsqwEabPTRL1dT+5eCeJkQewENoLeN5v
-	 Qwoi6BrPkpsJHgMSFtYbmKHAmgd0AjIboBxY+UMuaVGSvwVDcLwluzPogiqSDSfz2
-	 xp3Y+CW9V+j3NbefrECp2t8fe5FNAwl5wiF0T9WCm72gDL30dM3kvEEAFMNXxazJW
-	 OKbNewZMuXxK0tPSi+Nb6+ifoWg26hjgv3PU65R8uPNUn2fl5yR3qnz7+fGDXGFmv
-	 yXXQc6I9hF8b9ZsGmA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from ugly.fritz.box ([89.247.162.125]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3DJv-1syNpN2kcn-008iap; Fri, 11
- Oct 2024 11:38:40 +0200
-Received: by ugly.fritz.box (MasqMail 0.3.5-13-g85b6fce-plus, from userid 1000)
-	id 1szC6Y-d1y-00; Fri, 11 Oct 2024 11:38:38 +0200
-Date: Fri, 11 Oct 2024 11:38:38 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH 12/13] INSTALL: require Perl 5.26.0
-Message-ID: <ZwjyHl98xRs9TDQZ@ugly>
-References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
- <20241010235621.738239-13-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lAr7090W"
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-50a87472832so527181e0c.3
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 02:51:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728640319; x=1729245119; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2KXBYG3H+ODKM+8ucgZXeqSuyK52cgo3ic1kIFeAIbo=;
+        b=lAr7090WU9R7pJJLF7bCJzF9ITA7kbiuLu06+BibmSio4NDuODOUBkpR/jMxtMB5YS
+         HGoU5KHLVG8hlC8VVzQRTQzzs8IY9z9xQ1jbeEVFpjFGyIFRoTyB9b5KCDH4vaO0OvRU
+         7ZIck3nS6uQ383jwgX05r54Beg2bNQWMwCwnjRbZ8ifiGISmVh06iWVCMxoocSsabO3G
+         2h4SiL/Z7vhpNONpyg7Z5GX+VESEQmEnBr6jctV+yxPLIrdkcFuUzKGflm1LAyYXWPQS
+         UhcGUw8RyAjduTfSQcb4N8fGoVYVeLC0gV/dw1xTTRC5+trJork0ouMYuFNgT5pJmLEs
+         oJcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728640319; x=1729245119;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2KXBYG3H+ODKM+8ucgZXeqSuyK52cgo3ic1kIFeAIbo=;
+        b=Fv1D6IHF5I3bjeaG05h3gl8avaIrEfHrjhd46UGHng2/bGpA4FIUwQWou/D8mMkFOM
+         9jFX8BB8gl1uGX7JRQkHXdJp88GJyTzQhfq1AXwhm3JmOCvkVHAplr41yN9vSg0Nczkl
+         QxziIMrAdsN8l/ekoNSvhS0+dvdjZb8IFe9VFxRc6ciRE6ItFMc6Fy5TcGs9Jgyyv92G
+         H8SMQxLXABKxL38pHbKGgeQ1lzig0nGLJqXvndSyx0vOspUv24R6OvoZ/klROLbyGxlv
+         fyRSbGlZem9KdyYivLT9xlogpWkHEW8F/UBggnvwknWOZHcc50sfsHbKbeZma/1vL6MO
+         JaIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVV6LfubkMNflZstv3N87OFR5iwlC7kJ8T70KIauw/CAk70gcJMkXxs8yzUe/SaDrfDBKE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxTShfnfkY3J2x0tZrxswsjz62TP0TvEcPV/oFpMyMm42bLdHjK
+	4ZZTiVkICuQ/NovqHE+jYz3oozcQg2Les7giHMbQwaWgFX2/FRqgi0Jg+efmkGR84/X02F7wegx
+	53F8XXGKO4Ke+XWpSOvNhefvW9nj6bwDp
+X-Google-Smtp-Source: AGHT+IH7wNxsuXB+bE/6KL4JtxSshE+PxHMW07M9BV8zkrdPNEDUtjEH2JhfgTcPHDLun+X0nshwlc68oircbiVU91U=
+X-Received: by 2002:a05:6122:458e:b0:502:8cca:1313 with SMTP id
+ 71dfb90a1353d-50d1f5f71bbmr867429e0c.12.1728640318757; Fri, 11 Oct 2024
+ 02:51:58 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 11 Oct 2024 02:51:57 -0700
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <abc28d7664f151e00568a6a3d18bf8a2de46470d.1728629612.git.ps@pks.im>
+References: <cover.1728629612.git.ps@pks.im> <abc28d7664f151e00568a6a3d18bf8a2de46470d.1728629612.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20241010235621.738239-13-sandals@crustytoothpaste.net>
-X-Provags-ID: V03:K1:Q2+NoH8qZybr5bT1X6/gKuJELsQ/dwC3FQzgLbZDXDYrDzmbhE5
- w3mwrH7tozVEh3WRmkx+9wX6gRDHwiPPwZT3rEJoZluo5P4vEUC1cOn2/rpl+mV2cElQiHG
- VBZcqbUDiXv8SvR3MY/y6F1zCqGdEnddmk4mNM6/hzH4XZhqV8Ncs3MKEK7wHbIXmPo84XH
- 7zVda0I3fxldUj37EnQOA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:fZtk/VHYgys=;YMgRMbTjakzWEy0dFl3xlPjZF2w
- Xzn0eU/l2vP5J3qjkRaRjLL7vfXlp72fTXXc5tSNY9KRQ+n8SCx1G05IRGi3V5bsMcxzl7f+l
- sxOscxujLqbuQ1/gYIgP5fPAnYXC/CH959vsmpBsYhYeFWm8DVeJUBNJdjepJ6ToziACtCtba
- zQfqmOlqz7DzCuqJpJ5QN7xTpElcM4Jixw7POYhtT00rWHMqDJEObdgabxkEHidT6Vp51iPCh
- Qoa5BIjYMNOXt9gmA9nxbuyHJa0aFsnyW4qhXupp6EVs+1YV9c2Z12TwEpjqPVc0vTaWDeHj0
- rKqI19hAELWiP6Opg5j8XPYVQcEHH7i9vRTlJMrtE2OEUym4eRVkQfln1m6v34At6YrbkaBQB
- dnuwvUfn3rE//FBQVfuTSDalyHQlIv+9t6hqDVmHZXorA5xg8Am0S3qQDEVw7iVuqW+jtMThV
- tCQWwfGq3aUDa6LPstC5hu1s4dnMAVBZ0BatvYTdZ0w0K+RGdpCAUW/vkmPswMI2w4+rTMKxA
- o4UrKt4qwZcbEJMEwjWPEFDdEHekeIoW4hNqhUNuCb3r/0uxiwnedR7P7REKQ70MPn82EtjAI
- zhuyiZ4NXoyiRf9cL+0phzqNCF0ogTO1e5FDi7Vdb+PrsV7V7NEN0TAKcTtLKdXG+rtr4a8HB
- yclsJGG+ggEjmZs/iJlDJN/jqpEm6qNSY95b6EV5OUyBq9yNdGmGTKFAw3+/UMyLoVzs9mahO
- epl4AMP+6fcrPWR4qYQZx+LZ3K1UKgB0nmEqaFxuolML6tKxIV2f9to8maIKwbEq1gP9m9ADc
- bnSGUh8DaegJfapqZgXJMKQtZ1vxapZvvC4+idVOg+vZ8=
-Content-Transfer-Encoding: quoted-printable
+Date: Fri, 11 Oct 2024 02:51:57 -0700
+Message-ID: <CAOLa=ZTHuWstTD56ZVTecW7ThHhpEqmrL28Emt5DtPL6pYhcpw@mail.gmail.com>
+Subject: Re: [PATCH 02/10] reftable: stop using `strbuf_addf()`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Edward Thomson <ethomson@edwardthomson.com>
+Content-Type: multipart/mixed; boundary="00000000000025014c062430700b"
 
-On Thu, Oct 10, 2024 at 11:56:20PM +0000, brian m. carlson wrote:
->Update the INSTALL file to reflect our new dependency requirement.
+--00000000000025014c062430700b
+Content-Type: text/plain; charset="UTF-8"
+
+Patrick Steinhardt <ps@pks.im> writes:
+
+[snip]
+
+> diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
+> index 27ce84445e8..5f59b0ad6ad 100644
+> --- a/t/unit-tests/t-reftable-readwrite.c
+> +++ b/t/unit-tests/t-reftable-readwrite.c
+> @@ -753,12 +753,13 @@ static void t_write_multiple_indices(void)
+>  	struct reftable_write_options opts = {
+>  		.block_size = 100,
+>  	};
+> -	struct strbuf writer_buf = STRBUF_INIT, buf = STRBUF_INIT;
+> +	struct strbuf writer_buf = STRBUF_INIT;
+>  	struct reftable_block_source source = { 0 };
+>  	struct reftable_iterator it = { 0 };
+>  	const struct reftable_stats *stats;
+>  	struct reftable_writer *writer;
+>  	struct reftable_reader *reader;
+> +	char buf[128];
+>  	int err, i;
 >
-any particular reason not to squash this into the parent commit?
-i see how the separation makes sense for the libcurl sub-series, but
-that doesn't seem applicable here.
+>  	writer = t_reftable_strbuf_writer(&writer_buf, &opts);
+> @@ -770,9 +771,8 @@ static void t_write_multiple_indices(void)
+>  			.value.val1 = {i},
+>  		};
+>
+> -		strbuf_reset(&buf);
 
-regarding the actual `use` statements, you could make them somewhat more
-legible by using 'v5.26' as the version number.
+Here, it is okay to remove this, since we define our own buf array.
 
-another aspect to consider is that the statement doesn't just specify
-the minimal version, but also subtly changes behavior. for example, the
-`use strict;` statements become redundant.
+> -		strbuf_addf(&buf, "refs/heads/%04d", i);
+> -		ref.refname = buf.buf,
+> +		snprintf(buf, sizeof(buf), "refs/heads/%04d", i);
+> +		ref.refname = buf;
+>
+>  		err = reftable_writer_add_ref(writer, &ref);
+>  		check(!err);
+> @@ -788,9 +788,8 @@ static void t_write_multiple_indices(void)
 
-cf. https://perldoc.perl.org/functions/use#use-VERSION
+[snip]
 
-lastly, it would be nice to update the build systems to reflect the
-version requirements. though the only pre-existing version check i found
-is the libcurl one in contrib/buildsystems/CMakeLists.txt.
+> @@ -1077,8 +1078,10 @@ static void t_reftable_stack_auto_compaction_with_locked_tables(void)
+>  	 * size, we expect that auto-compaction will want to compact all of the
+>  	 * tables. Locking any of the tables will keep it from doing so.
+>  	 */
+> -	strbuf_reset(&buf);
 
+However here it is different, since we still use the strbuf. I guess it
+should be okay, since 'buf' is initialized using 'STRBUF_INIT' and that
+still keeps the buf.len to 0.
+
+> -	strbuf_addf(&buf, "%s/%s.lock", dir, st->readers[2]->name);
+> +	strbuf_addstr(&buf, dir);
+> +	strbuf_addstr(&buf, "/");
+> +	strbuf_addstr(&buf, st->readers[2]->name);
+> +	strbuf_addstr(&buf, ".lock");
+>  	write_file_buf(buf.buf, "", 0);
+>
+
+So when we do 'strbuf_addstr(&buf, ...)' it should allocate the required
+memory. But the reset removal did catch my eye.
+
+[snip]
+
+--00000000000025014c062430700b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 4f2cfc604978c806_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jSTlUd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNVJ4Qy85MG5ENXF2N2RtMmJJSVlnSC94TGN6ZTJMbwpDZ3dQZlY5NGFh
+angrZUNRZXZqUUMxR0swbUFrZmRJbmpWVThZd0JjSGxMU1JzMm1mUmJJSngxekFoeDA5cXZNCjNj
+V1J1bUxVQVpxMmpLZE1rSGF3eW5zb2dPRE5PV3h0ZmxrWW5BaDVYOUZYUU9XZU5aRkJRM3ZSMkdo
+bGhKWDgKUXUrWGJJQ3pBNGdHeWZnOEI4amlCZlVzaUlQQk9OK2hueGFXb1oyeE43UHJxMzMrMUxN
+U216RVhBWUVYZDVoaQoxckRhZGw3emx0ZndMZmpNUHRkd05uK1NJMjF6Z1l6Si85SXRvYkNXRGhl
+SjJpNDlQWnd0dGc3VEhLRGkzMFpVCkJwOHNUeW9ybjAzU1JNY3V5NEo0WnZoN0ZyOUp3bjNiZjlH
+M0dJQnVDczl0SnM0Z1JSRmpTN1NYdVlUWlJwTDgKNkRwdGxnSGExL0hyWWpxMDlyQVhoRnVQUWsr
+RWNxQWRZTWhkd0NiMkhZT3ZpdzkvdzFzWWtHYkhTVVlNZ0R2NQo0YW1VRldyRmlYSzloTEZTYThH
+V01mWVpKTjQwRHJwVHFYV1cvamRkNC9ScERVYTBXVjdTY1F1TU95eUdDY1B0CkpuNlE1RDE3RDFt
+OWdJOWRiSWpCOVB3MW52Y3MzTEQzWTlRdCsvVT0KPXR2YVIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000025014c062430700b--
