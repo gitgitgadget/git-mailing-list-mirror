@@ -1,79 +1,79 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC65D207A07
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:32:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0139B208993
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:32:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728624759; cv=none; b=kXK4Py3sy8qSCYYYwBXwhxwv5G0BiccxRJA4HP0HrozIRFc6VAyd6E3SZbryatsof6WrXIjIidD7fHsy8CCO+jPswcSjLS+Iad0MJ41pbFj2uOAYFCc/oOr5gmDiSuqa7lVGFBdfKkV+KvOTg0Ej72djUEI7EA/9eKG5olJRr+c=
+	t=1728624762; cv=none; b=ALD8XPSDFrRlcZd4tPuAZFkVjSHd54Lg5qWZIAGqPilQJ5qFKRq1Dioy4U9np2CY00Tq/p4jA4uY7YoY2dG1Zs/UdqkM8Q5XrQeejf4ZZeZ/I9KgkgshryX89b+Uo9NX+qWRGd1bqeYvnNhQFajwuwJqRpHkV6CdhYzaOR04QY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728624759; c=relaxed/simple;
-	bh=bBi4qB3iFZLBb8pz/84IHwjAnposOszMOzZ2eKrmric=;
+	s=arc-20240116; t=1728624762; c=relaxed/simple;
+	bh=uGVslUYdt/uDwZUxtKTdHrcHada0/VnuDqYlTcFKQhY=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UeDfo2zrFafR/74GlP83D2qy4LQYfR0NRlBesU4phuGJScYB4ghMQ70lesBkjFK44ptZ8Zztxm0NFApUEW0Bs7jymCcPRyZceF+vOoC7LzzzErtdX1jRREp+avEEXigzcoRq9UiqFZRAR8GMESqXLTnnimBY5chHWXGet+yydyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rdqwJCtr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mLfk3OuK; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=tG1qOg4MViyvYIeJJZQ8wsYhCIWTgfOf+Km7FbEWHIqX2JLAquvQXxANJvdlJ7Fu1E3EetcQLlsLS4cAvRp6ftsBihaMD9hYEDFDtvSppvNJw5T0Js4ckmpmoXB1xy23vD311SHzH6nRd0kb2d0rcN6ksc6SQ+nepgYVQQ1vbBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OPVB0GgF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XStCzRR1; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rdqwJCtr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mLfk3OuK"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 16CAA1140139
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OPVB0GgF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XStCzRR1"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id EA719138019D
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:39 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 11 Oct 2024 01:32:37 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 11 Oct 2024 01:32:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728624757; x=1728711157; bh=sYRnfP4hGi
-	0Olig43R02iSA1smd3zS6lNqahH/JzB2Y=; b=rdqwJCtrVT6V2UpyrERjW8kDgD
-	JqIw0FM8wS/T2bS5l/6cMj1bFdPKiC2OJFrOojdBMhsYHTgnIDHjBOLuNplpHtb5
-	9HKlXDmzb5nrAvnfVJOVSwumIDWVyrim3dkCrWq+caIstH6KY7Hq+9A4ohIr948H
-	CYYS1j61DO1L+dxP32Vohqg77iIWl491yofqXMRwDiIN087Lx4600Hp2GcMe1DpA
-	mxe2TmTNm+VFZE0Cq7o0Z+J4RwQfYum79F1BeRiDLg/zvBHlMjwdNOcwTENrvZWt
-	kgoUVJDrvuWaidv+HKeJtWvSgpnRcgDksXJQZaRsna1And1/6G69kRZw0Rug==
+	:subject:to:to; s=fm2; t=1728624759; x=1728711159; bh=IkbFydlBJt
+	CbeeAxjfuGaV6+f7pnlS6r1oCsHP3w6LE=; b=OPVB0GgFs8Fg0FdP55uqL3ZZ1O
+	U+DVyYcC5oLCLHtOEfvvFdpEgoM3y5Ue84dQfHhCpNQ/Hh0tWwN08GL2zDxz/cUj
+	AKlK7YBU74CPceeL0qd304m3XE98PJe3eygDvZ3Zn4/+jXd5KO+Y7xaocQWpSzmZ
+	6pCEnejA56TdEcdH1ifoh+bMjS9U91sUx2g0z6drPSYz+ivqB95MfnoSDDbefe6y
+	pqa01s3rqSqvFCy7BopuIPTMw1LtHAMhwoVIA6xs7t/Qux4sWKTEdS/MbdX7DT8l
+	ooEu1lql80vBRrJ6SFlSUMKHR7SoZcTLv4jiR1qWdeNJ8TfPP2Qioi+X9AhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728624757; x=1728711157; bh=sYRnfP4hGi0Olig43R02iSA1smd3
-	zS6lNqahH/JzB2Y=; b=mLfk3OuK2Avz+CUG6jFvxN11HlBhk1UCTZQNS2NUH84Y
-	2XYGsaOI3xup3eP/WjRR7SBarSzrmNZQc7LwwLQV47kgBqmKnQKo767wrdKURiAb
-	y2kmuYZzw/zhiNw+4Zu+gqaF+RzLBByicZFLQBMnNWlRXCQLGGe1/R6cqlubDNWI
-	P/iQ5a0EYu9t+8Uitrx9utaSUN6rpchBJaMWp7/eA3yXfBZ0j3hUByEs52cgFkz0
-	sxgJQOpywCm9w+1AXrYGPM9a2v7OlmehWv8uYk3Vs93tGW64i6KLPbTD2X81VVYQ
-	sYD/twQTQp5K0fqyvyqeWH5tf+niJXEpCxvEUHOjQA==
-X-ME-Sender: <xms:dLgIZ6dtsQ8kvWpOCGtCibuGS8mwFoISiXZtNhxv09xpUevMFAcQEw>
-    <xme:dLgIZ0PW-UaUOziRhCDfs17MCnCTx66LdrYSUFp52QcH8Uihh9kc1SVwBXifOcwI6
-    gcbpu9ElBS6cKABtA>
-X-ME-Received: <xmr:dLgIZ7jEBEZ5159mTDBsSzWfDs_VNoUuncrWA9CmcPqZKjZjC5z6m6EiKze0LdBjca5TkiYhWsnTYZLwAclxB0zJD7L1rcOTVOAvyAnO0ZQl1AE>
+	fm2; t=1728624759; x=1728711159; bh=IkbFydlBJtCbeeAxjfuGaV6+f7pn
+	lS6r1oCsHP3w6LE=; b=XStCzRR1GtALT+y6cqR16OY7nQ9PLbnjWDfAAgGjshTZ
+	mFAwaU37DCQscSPTALPynA3IfFCpooB+biDzJr1ctdrLdrCFP/V29RGdUXpp62Wy
+	OuytczptVMSanc814Z8GLj3wltfM7nKz+SETPCRQtK8TeEE65eZqLCtHyYs4MxoW
+	+ytyMB+xSjZAl4euDwo84W2PQb3sA6sMvTnuTV5XCBh0Begb2QxhOQGxnIu0HaJw
+	KsitYIeis51U9+NfQO0z+Gt2rwGiA4Qay/jv3DfrNbizYoncYc6fvehUNz9DE10m
+	+vLarPZtgrXsRnouAlJbRfTmUnEPycIUXhpHUEOS5g==
+X-ME-Sender: <xms:d7gIZ6L1FvVLVjIYZXeteFdR2k-IPeHraTc6KXJ27sR5qNqrZXfI2A>
+    <xme:d7gIZyI-xDD6xE5yKqhn4A-ujYeLEC2dYvrGuZIUcPNOm3Oe4ef-FfFbw54FM2xeC
+    oAAixOy__igZ13lAA>
+X-ME-Received: <xmr:d7gIZ6tYGc5xAGR2bFvQ5mYnI3jBoMYeSfvRt9iGcOTS4IyHLPHvUFUfuCmobTpZ7qC30ZMLFdvfWbwB8L1EkjiG0bbswatxauwTvOdQJ-COym0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefjedgleelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:dLgIZ39-SEd_JtHcWUTZKRYxwmDaAwAs_fLzEFaWmTgLA-HO6ehfdA>
-    <xmx:dLgIZ2u623Z4Q3ziro6dfZfZg6TRDc7kyVL0PSlyQ-A6ojFeMifqgA>
-    <xmx:dLgIZ-EdlSpIp5UVzS0wtDBwdK2CqGbJwzRoiden1jGNs2BVykLdww>
-    <xmx:dLgIZ1NwXzbjrgI1J3v95V19RA--apdjRlCOQjOowXdyVSEdpHIy9w>
-    <xmx:dbgIZ7U6m3vyiUSX3nsxk4uHIwxQ4P-ZGFUaZaXUKr_zYRu-LK6i60t8>
+X-ME-Proxy: <xmx:d7gIZ_bO-9LIOyltf1ZWHd678xmm_dKgzFTJ4cvx5uf7TFG_LShcKA>
+    <xmx:d7gIZxbnM2x_x9oPxxd_3qofQPxM8pheVxCtdjSC9nLAYBnjlO_T9g>
+    <xmx:d7gIZ7DE5VDOtAXdF-9VV2iG8d92eTVBOHbl0xn_OXTolhn8pQ4b7w>
+    <xmx:d7gIZ3ZwaEUfjF-EMkYxGKoc1bJDscIjY7_NHwZgGvrP7yB_5Fz_3Q>
+    <xmx:d7gIZwyD5WYgHErXvIh_Gv4A8q1NjaYowOWq5xsyRYpEKJ5eToBi3IrN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:36 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:39 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3eec2174 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7cbec7a4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 11 Oct 2024 05:31:30 +0000 (UTC)
-Date: Fri, 11 Oct 2024 07:32:35 +0200
+	Fri, 11 Oct 2024 05:31:33 +0000 (UTC)
+Date: Fri, 11 Oct 2024 07:32:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 09/21] builtin/commit: fix leaking change data contents
-Message-ID: <9f967dfe5d55ca7150bf3e118279388290f7d28c.1728624670.git.ps@pks.im>
+Subject: [PATCH 10/21] trailer: fix leaking trailer values
+Message-ID: <ca5370d572d5750e5fb21c84d4a4134669e7e3c1.1728624670.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,54 +85,87 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728624670.git.ps@pks.im>
 
-While we free the worktree change data, we never free its contents. Fix
-this.
+Fix leaking trailer values when replacing the value with a command or
+when the token value is empty.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/commit.c                          | 9 ++++++++-
- t/t7500-commit-template-squash-signoff.sh | 1 +
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ t/t7513-interpret-trailers.sh |  1 +
+ trailer.c                     | 18 +++++++++++++-----
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 8db4e9df0c9..18a55bd1b91 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -728,6 +728,13 @@ static void prepare_amend_commit(struct commit *commit, struct strbuf *sb,
- 	repo_unuse_commit_buffer(the_repository, commit, buffer);
- }
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 0f7d8938d98..38d6ccaa001 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -5,6 +5,7 @@
  
-+static void change_data_free(void *util, const char *str UNUSED)
-+{
-+	struct wt_status_change_data *d = util;
-+	free(d->rename_source);
-+	free(d);
-+}
-+
- static int prepare_to_commit(const char *index_file, const char *prefix,
- 			     struct commit *current_head,
- 			     struct wt_status *s,
-@@ -991,7 +998,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		s->use_color = 0;
- 		committable = run_status(s->fp, index_file, prefix, 1, s);
- 		s->use_color = saved_color_setting;
--		string_list_clear(&s->change, 1);
-+		string_list_clear_func(&s->change, change_data_free);
- 	} else {
- 		struct object_id oid;
- 		const char *parent = "HEAD";
-diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 4dca8d97a77..379d3ed3413 100755
---- a/t/t7500-commit-template-squash-signoff.sh
-+++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -7,6 +7,7 @@ test_description='git commit
- 
- Tests for template, signoff, squash and -F functions.'
+ test_description='git interpret-trailers'
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- . "$TEST_DIRECTORY"/lib-rebase.sh
+ # When we want one trailing space at the end of each line, let's use sed
+diff --git a/trailer.c b/trailer.c
+index 682d74505bf..5c0bfb735a9 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -249,17 +249,23 @@ static char *apply_command(struct conf_info *conf, const char *arg)
+ static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg_tok)
+ {
+ 	if (arg_tok->conf.command || arg_tok->conf.cmd) {
+-		const char *arg;
++		char *value_to_free = NULL;
++		char *arg;
++
+ 		if (arg_tok->value && arg_tok->value[0]) {
+-			arg = arg_tok->value;
++			arg = (char *)arg_tok->value;
+ 		} else {
+ 			if (in_tok && in_tok->value)
+ 				arg = xstrdup(in_tok->value);
+ 			else
+ 				arg = xstrdup("");
++			value_to_free = arg_tok->value;
+ 		}
++
+ 		arg_tok->value = apply_command(&arg_tok->conf, arg);
+-		free((char *)arg);
++
++		free(value_to_free);
++		free(arg);
+ 	}
+ }
+ 
+@@ -1114,6 +1120,7 @@ void format_trailers(const struct process_trailer_options *opts,
+ 		if (item->token) {
+ 			struct strbuf tok = STRBUF_INIT;
+ 			struct strbuf val = STRBUF_INIT;
++
+ 			strbuf_addstr(&tok, item->token);
+ 			strbuf_addstr(&val, item->value);
+ 
+@@ -1124,7 +1131,7 @@ void format_trailers(const struct process_trailer_options *opts,
+ 			 * corresponding value).
+ 			 */
+ 			if (opts->trim_empty && !strlen(item->value))
+-				continue;
++				goto next;
+ 
+ 			if (!opts->filter || opts->filter(&tok, opts->filter_data)) {
+ 				if (opts->separator && out->len != origlen)
+@@ -1145,9 +1152,10 @@ void format_trailers(const struct process_trailer_options *opts,
+ 				if (!opts->separator)
+ 					strbuf_addch(out, '\n');
+ 			}
++
++next:
+ 			strbuf_release(&tok);
+ 			strbuf_release(&val);
+-
+ 		} else if (!opts->only_trailers) {
+ 			if (opts->separator && out->len != origlen) {
+ 				strbuf_addbuf(out, opts->separator);
 -- 
 2.47.0.dirty
 
