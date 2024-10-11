@@ -1,88 +1,64 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012EB1EABB3
-	for <git@vger.kernel.org>; Thu, 10 Oct 2024 23:56:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58C31C36
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 00:02:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728604601; cv=none; b=uiOZ0WtFKI4zdA3wkjusuyCK5RViO6t90ZIfDo+QGjqE/TnIYb40LGssm8CRL5BqkifpSz7VvN7E1XDCgUiR5mHIKFL1aXTA2KSXfXnetGLH4NXynd3g2hsWfJjFPp1qx9+pSKZf0mVeNLrIhUKLfdB9Dz8Z08Wswrsec73OXrQ=
+	t=1728604955; cv=none; b=h1CiMeafl6cJv1X5m0mgl1GLhHen1AGm5foIdXhlR/b2j/hVQxomTdSX1yIYT9kkkpHBfx7/JUfnz/wardhhL+Qf8v49UKonwAm+QH+1cDrNfrT+7uq/r78NhBxfZuN9vgjzgKafDMyem4H3qCGPs/y8kuDS8NnCbdkDhpodWlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728604601; c=relaxed/simple;
-	bh=vZ4m+6+T6wBo/Q/VL8ZZwKE0cBp/C/cfDgA2El8hRjk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFj9t/h9AUyxGHXRZPSI87JmV6iERfwrVcOad5ELpG25Dr9usTAwBOIcKQuk9JmpU8bGvn4P/7W4RQTqaxgr3cjx7yjTuaJ6yh2KfSOo0Db08CcuNC/xIjI6Z2CufxZvPp3Qim3HgJq9eRnJuqHP0iePWvLErlNTZawCbgZKGKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=R7veVgtO; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1728604955; c=relaxed/simple;
+	bh=FuWcNdHpNdVUfHRkW6JtBJz0jvfnbuVNEYyo/lhRs/c=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=j10Li+y9BwwFEmeD+GUxtRxH8Rz7EKxG9+13U3D3fUu9Vda/w3/0tbo5hrCWTVjVCBwDZNoIqE3YJA8CrvduA79M6WKu5CCOTRiU+6AZiui3clQdu/UAnPjVjzFHu39g9RL35+3/zWgi/YR7Z391IOpjB0TpPAUM811B9oYQstI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hqzRuYI5; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="R7veVgtO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1728604594;
-	bh=vZ4m+6+T6wBo/Q/VL8ZZwKE0cBp/C/cfDgA2El8hRjk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=R7veVgtOi6BFut9DLrzUJ/q2td8434avEo0iKyUoPxdX+PNT006ySltPznSoBjhHl
-	 3qHyTcWevsICI5XccBw5BdlCnCa/r7/ZE33pOtXbBQ4n8iRI8DVCQQvnFl6YHHxBHZ
-	 LTQMGarYGt+jQPHvnRKLsCGLRrd336p62Codf9zy/QMXhUKYAcNFSUWJYLtZuwxj7a
-	 dwKyv4+n8smYghofsuUW//Z9iFDdAW7i3kRG0fXC1WJvYwopL5Tkzs5lr64YTrM2iS
-	 09mJ1R3QUDiKB38V4jFcfPdMwcEwyJKpdXiGvHDUMvsZQwORHA59B0T5m9YI7d85VG
-	 ZBrHtYPASjb76/5gcc8tBgQIirQAxlK4qMCSSy96BceBXyuVwKSufKzmXroHXZM+fQ
-	 +S5ZyzxxqdtKoe3dIKBxyBCtAIHona/mK3OSuDnDnxrisSqKiZbUCP4WGKXkOV9V94
-	 JuoNBj1fsgPFzUesxw63gI6UFCbEKa+7n7OjX+E5o9j7cWtSjcV
-Received: from tapette.. (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 84ADB200C3;
-	Thu, 10 Oct 2024 23:56:34 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH 13/13] gitweb: make use of s///r
-Date: Thu, 10 Oct 2024 23:56:21 +0000
-Message-ID: <20241010235621.738239-14-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.45.2.753.g447d99e1c3b
-In-Reply-To: <20241010235621.738239-1-sandals@crustytoothpaste.net>
-References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hqzRuYI5"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2e2d1858cdfso874110a91.1
+        for <git@vger.kernel.org>; Thu, 10 Oct 2024 17:02:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728604952; x=1729209752; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=wBhctxHUTa0l4Ap3ifUliNWnO3GOmBBfG6xfem8ElBA=;
+        b=hqzRuYI5Ai+BWdojvsYaE3VSjIgvSXtjj5Z7VSR11SU9QRVOpYDcyDpjxXmfZ5rVpa
+         0IGdKM0YWo35Y/0BYT0LIl0WY33B8J4Kxe3eN5OO0a6cbDT0pU5KFb4PwFqoe9bnLEkL
+         KwpxsC3qvXB24U5i2p3Xve084B1mpjm8f8id1EepUo6LoPe6IAsCq3bFW8oWJZ/84O/r
+         EC+tJURbUEn35YC3XXKTTHXEvPcUcYFh6tFN2AXqPbVnX4i7FMWLXAvZENdLzmcLu6GP
+         8unlLkfRqNwAY85CMRKvEGIeyn9eESdfwoVPKuG2jBo0fCOIj2i8fI/ApmluW8jq9Gd8
+         b98A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728604952; x=1729209752;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wBhctxHUTa0l4Ap3ifUliNWnO3GOmBBfG6xfem8ElBA=;
+        b=YKKtaTiyUpBFuhZgcLxx2zVkRJe/7FdxLfZuYNELV4+X7lj4U60cWuWztw8uG1auGW
+         s6PJ/7PlecV+PxRi+e9UQe9o8+hdxyfyGDMc1iaCkzw1hd+GDxN1VumBYk0uW80lCvRL
+         9F5pcMUUKPTLaiU/BQlz01MEwzvq97QLj1fumxkHQM0gHh2nkxbSs4xvmQorfddlFOfv
+         xdk1OM10SjaYVJw35/V8Uj7atB0rJUtjjBdql+fIBj9KOfe03dWZ0hrQOoqGGR5pdr1r
+         Y6AiDu+njbqZCy26gIfAX5bZXjnsR8EA8xkKFpzdwqhyhTM0DssOIVhUCc+wLukZMkT4
+         Iz+w==
+X-Gm-Message-State: AOJu0YygB0imhTKSd7TqChlQfHHtcodfgscFmxMn4MpQ92W4Tx45Bj1g
+	2QltDqH5Pff6s5h8g+FhZpS1pOH52CR/xaH3MFRuahffHRykTbZpfoaZCKzMsYydz2YH9Qv/FcS
+	gXRHC0G3+9T2FUH7xGkRurBRfDolTY5Bg
+X-Google-Smtp-Source: AGHT+IFLlX1N1DdMopcKWhEiHgwwrgJzkbKMbl3U9kqragXpGWHSLK+iMceqrXgNamt30sg7HvkHGuvsm2VB6WgS3dc=
+X-Received: by 2002:a17:90a:cb84:b0:2e2:af88:2b9f with SMTP id
+ 98e67ed59e1d1-2e2f0a52515mr1180551a91.16.1728604952581; Thu, 10 Oct 2024
+ 17:02:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Ed Reel <edreel@gmail.com>
+Date: Thu, 10 Oct 2024 19:02:21 -0500
+Message-ID: <CAGjHeYdxczCNtT=2rk+r8i6xtMTQxt4PLf5wAv-=bmS5xx12jg@mail.gmail.com>
+Subject: Unsubscribe
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-In Perl 5.14, released in May 2011, the r modifier was added to the s///
-operator to allow it to return the modified string instead of modifying
-the string in place. This allows to write nicer, more succinct code in
-several cases, so let's do that here.
-
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- gitweb/gitweb.perl | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c4f92386eb..f0d8fac7ba 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1188,7 +1188,7 @@ sub evaluate_and_validate_params {
- 		if ($search_use_regexp) {
- 			$search_regexp = $searchtext;
- 			if (!eval { qr/$search_regexp/; 1; }) {
--				(my $error = $@) =~ s/ at \S+ line \d+.*\n?//;
-+				my $error = $@ =~ s/ at \S+ line \d+.*\n?//r;
- 				die_error(400, "Invalid search regexp '$search_regexp'",
- 				          esc_html($error));
- 			}
-@@ -2700,7 +2700,7 @@ sub git_cmd {
- # Try to avoid using this function wherever possible.
- sub quote_command {
- 	return join(' ',
--		map { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ );
-+		map { my $a = $_ =~ s/(['!])/'\\$1'/gr; "'$a'" } @_ );
- }
- 
- # get HEAD ref of given project as hash
+-- 
+"God gave us two ears and one mouth to remind us we should listen
+twice as much as we talk."
