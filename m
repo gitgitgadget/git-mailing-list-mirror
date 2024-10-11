@@ -1,54 +1,54 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE812209671
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 06:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82211209F35
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 06:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728629673; cv=none; b=cEZ4PGs9G0KIfECVhs4C6sCsJWam2ad3RNa8aX+ynBCNrDwJN4fEShD3ZcmaLjHjcSVJbgSTUmAnLAE6bcLKvd9ddDE4JuVJedI/98dca7aSjbw58giqJ2EM7Y5WMBN4wQMGy/KiEJDsYuks3tY6tXCDICOoBj6ErulnmJ8ZXLM=
+	t=1728629675; cv=none; b=LBxfJD5WRtmqvLFEk1OsAAI7YKOsAA4bzkzC9dqFXvt/RK3UoJ+uMWg+V44KE1w5lb8r2GfnXC4d3gJP0/URevc5LfSPhxazYNjCxQHNiu0R+nUZyqcjwSDbOQ4YFd2ak8nPOjKpUimKEwD+CPnBZKARxTRyjRG5mI3Azm0CYLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728629673; c=relaxed/simple;
-	bh=Tk0oMZrq4CRE/ub7qX9V8oNGnZIbRZMx8SfDFtiixA8=;
+	s=arc-20240116; t=1728629675; c=relaxed/simple;
+	bh=jJ7wKMWhn/cbe3mGH6jVc9x65MzJO6SSCf7suizBgxw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KUe0u69DZH1PxzHmrUKSFanzJ+VdBivwCWQvc/ASQXgkbaDx6yMEv1KY6stX60HD4Gz+HLSfL30uY3+uYQBDIHrJKk7vAe7LKtz7RG8yEvQ/nVIezc0wtLp8tgV4EKfm9oo3LrojUkA1qmWrdoRqtgc/JZgg9RuL2+qN8LKYwDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PRpcGhdx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LJybQxom; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=UJHilgm7j+IkSSf4ZrP5NHzJZoeX4gfq3mmTZ/NZxf9DwieihIrFNHYQPtPoiNGS/dlIRer559qmQVXWCy5lxtmwlZVeor5yHlLGRaA9+V5LYDlUtPb2wdERsYs2hbvx0KbdwvK4ixNdxvAlAQXlT30jNALJS4goELg8Fi2oZ7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ao2AxY69; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qNb5KG2g; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PRpcGhdx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LJybQxom"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A421B1140126;
-	Fri, 11 Oct 2024 02:54:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ao2AxY69";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qNb5KG2g"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A93DE114011D;
+	Fri, 11 Oct 2024 02:54:32 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 11 Oct 2024 02:54:29 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 11 Oct 2024 02:54:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728629669; x=1728716069; bh=scPwH1WlF5
-	aRQ4d89oiaN7TBm6/NF1xSMsbZ4zNKfBw=; b=PRpcGhdxOwQX9FGlziuCd5gd+T
-	R1nqeU9XIQXlSoVVe2zkV09EF5ZCJ6ALs0WvTigk+a8bduS9zqqG8d3VeE9YbkAY
-	tfzfQrPqAONT8ilyromPSH36qVoIanM7zXLjqjc4j7qz2llBrYYxwXGpZlmXcPv3
-	msCO97TYkt6gBW6vxXFkYaNIYA+9pYZKmJI5r4F3ldf5Lxu0mvN3NM0Wq7gtHgp8
-	NgICVZzBeMGK/eM+Cm8UgbX1FPLaMQpsGBzcm4+fdPhqN07agkg0AmaHGy3YXbLA
-	rMJHpfd0ScBG4EKY2Ku4xcBXb4atEQkdUmkNECf4jxP425RbuQFMqwQyQsBg==
+	:subject:to:to; s=fm2; t=1728629672; x=1728716072; bh=ABdmqwpmgo
+	uAElw/ia2YQyNjmI2rQlEBuZTFZdafW1A=; b=ao2AxY69idSzQI0tToWxdrI68L
+	N8+y4oOmU9LrSgbUFcx8081l8P52RuwtoSiIaU9NKV36YIz2mcLtxGHQoeZQq1X1
+	9TZakb0wCoOdyJsodsP6nhqAK2xLteWq5TAx5OpezGLqltOu6rQizm9gyXmLMu0+
+	T58dJz+0Py8C9w6A4gRj1urJFjBjomv75heSwb9v/AQMchx2r8mEEQw/JICGJLR2
+	ZyRmQSIPjhuIIq13yXDon540W9nrsUWjAR0X9Fvglq9STTKAMdBNfcErCXyp9Zbz
+	bccljjgkofBrsSr2eL7dLdaIg1Li1oSwpoQ46kizxLdj+6eOph4NUCKDS3bA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728629669; x=1728716069; bh=scPwH1WlF5aRQ4d89oiaN7TBm6/N
-	F1xSMsbZ4zNKfBw=; b=LJybQxomNAW9ziAJS++s2G61KvjKI9OwCiTQK3JM+uxH
-	nCVrr4mZf3SK/piyfftoLGiSRpEY+wrvWOFvlOB2DW0IrGKqmWhFIAgbco9JII8g
-	CJCpYtSx2yxZbAFPzi2NEJRgyuqDkRPZiT1/akWPf6v6EQR6LV+S0zu91a9eOPJm
-	2Knam3NKjRmX7tqHI6bP8FUc0Odsj6sCJs25dtqjdcHHYmsj8Pm0fuE0X4KzkDGi
-	FfdkqmjhRT6htfssTF0o+Ou+fVsR4inYzY2g/IgbJBf+u+rbOCc5D5rhvP6mmBoN
-	7Ed1aikxex/fAVfcIxVkv/d68bLIAC6AobDQ2BOa1Q==
-X-ME-Sender: <xms:pcsIZz1929Z-m9Plv7KA5nVfp7KXRC_b9F2P4yo5ERfi_uk1G2sGXQ>
-    <xme:pcsIZyE9K1AAUKIvaulHtnr9Q37DkGdgyZHBLW9tWPmMufYTCMmWUkR-W5i-73bIo
-    fHsJ6Q8AFuFjNrmjA>
-X-ME-Received: <xmr:pcsIZz4FIes5KumErxXZwEU0vFLlek6Re63HuLyt0OtM97lD5UAbKpm3G_XaVc5tL2Mlctn_cMuwwZrTIPcl7xt5lUa95_ZgM2kkXCd1bVRYFiQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefjedgudduiecutefuodetggdotefrod
+	fm2; t=1728629672; x=1728716072; bh=ABdmqwpmgouAElw/ia2YQyNjmI2r
+	QlEBuZTFZdafW1A=; b=qNb5KG2gA0eD+sxSQiiP2tjM1l0rGAKZ+Cr01bJqhgcV
+	6gMLr8M3pZntq/ZP12RtKODrqMHUxlAbeobahAAKsf29PCunnIC7iahgH5ebB4lG
+	yKABKD/ku+1f+85XoxlL7liCvJMBjD/LBnzZ9dFkdMun9N98SFDVLUC01BE/eNOv
+	O2wpy+Eix0MLTDDuVxIqyQFcjBrABvcMZi1aqXFgtVdXVbBMmvDErdsqgOGmfNaJ
+	CmyLF7Xp/evpacdlNHitfFRp4QKKNgdFVJAv7UZo6dDaL5lVt0OJqr1IzciO4ppP
+	+CI6HAz8d5p2tEx8VWwapP2DpWpzR9h2QkDbuvfp2A==
+X-ME-Sender: <xms:qMsIZxOnn-bVXLZpQOmleUmc2FC0ajtLXiFWvxvCdXjw_TQi4DjF5g>
+    <xme:qMsIZz9Rj2lM2GAX5ySOugi5n6kO8GGzQWmDWIceWpPWHAQCcye1SAUa7_W6T5udK
+    lvnuufmSz5nw7j6lQ>
+X-ME-Received: <xmr:qMsIZwSKeDT6o2YiGg_HRLMHyaLev7Ekg7D9uVbTienMcykn-Aj6EjQFM8W3xiv6nEMNxq8k_u6MoFE153qrTJ-j6-jwX_vZR1_wq3N4iBTYQok>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefjedguddujecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefjedgudduiecutefuodetgg
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
     shhmthhpohhuthdprhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmsh
     honhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:pcsIZ41b0KV2KEkArqCL7_zD9YN5FooUk_cFJyfkPNgefyEk0HdIvg>
-    <xmx:pcsIZ2FtN7Q7KwYznnTy7x7uOY6PK521o4XkMLIM6IHSjotp669BsQ>
-    <xmx:pcsIZ59UMfzlV8SEMtDrolQlxMHwed3dMaasLRjcq9eZtGOzAjtCEg>
-    <xmx:pcsIZzlzOQqwEq1z41Lb0oX6W7ux0ugPpbKWmj_19NXW9v7NWmbNhQ>
-    <xmx:pcsIZ7Rl5HJLP79Us9m-zMpxF0Ki45CacEuADpcSLaPnkZtrGgjAU9gk>
+X-ME-Proxy: <xmx:qMsIZ9vH5ZvQt-ENP2PNqzJpkGCjmJwx9OhWYmdj2bQMqOJU24YfXg>
+    <xmx:qMsIZ5eejDZcbRBZFd6Ad3cyCqBZ7N6dtuVjTC0uP5YSkDexmR91hw>
+    <xmx:qMsIZ53MdTYqJTj48KELaf7sK9K3N75Dpn8KTi8aWYykUTaEXyBPcA>
+    <xmx:qMsIZ1--Vj-XAC3bTMWYsY1XdF-w9zVyBRA9_Zw8t8nOpsenJ2krXA>
+    <xmx:qMsIZ6pHPtAMzQeRq00jOV4lra-1R8L7YJUvoWFDZYo-S29ThTbixT2c>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Oct 2024 02:54:28 -0400 (EDT)
+ 11 Oct 2024 02:54:31 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8f4cd0a8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 11 Oct 2024 06:53:22 +0000 (UTC)
-Date: Fri, 11 Oct 2024 08:54:27 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id e33ef3b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 11 Oct 2024 06:53:25 +0000 (UTC)
+Date: Fri, 11 Oct 2024 08:54:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>
-Subject: [PATCH 06/10] t/unit-tests: check for `reftable_buf` allocation
- errors
-Message-ID: <797e435ed2e2e6e074e960714de6b5eee2b53340.1728629612.git.ps@pks.im>
+Subject: [PATCH 07/10] reftable/stack: adapt `format_name()` to handle
+ allocation failures
+Message-ID: <66ee431db464fbd1e2fdfb6a8c8452621908bfed.1728629612.git.ps@pks.im>
 References: <cover.1728629612.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,247 +87,88 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728629612.git.ps@pks.im>
 
-Adapt our unit tests to check for allocations errors.
+The `format_name()` function cannot pass any errors to the caller as it
+has a `void` return type. Adapt it and its callers such that we can
+handle errors and start handling allocation failures.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/unit-tests/t-reftable-basics.c    |  4 +-
- t/unit-tests/t-reftable-block.c     |  4 +-
- t/unit-tests/t-reftable-readwrite.c |  8 ++--
- t/unit-tests/t-reftable-record.c    | 14 +++----
- t/unit-tests/t-reftable-stack.c     | 58 ++++++++++++++---------------
- 5 files changed, 44 insertions(+), 44 deletions(-)
+ reftable/stack.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-basics.c
-index a814e819756..a329f552025 100644
---- a/t/unit-tests/t-reftable-basics.c
-+++ b/t/unit-tests/t-reftable-basics.c
-@@ -113,8 +113,8 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
- 		};
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 6ba48ddce5d..e94eb3c4685 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -623,14 +623,14 @@ int reftable_stack_add(struct reftable_stack *st,
+ 	return 0;
+ }
  
- 		for (size_t i = 0; i < ARRAY_SIZE(cases); i++) {
--			reftable_buf_addstr(&a, cases[i].a);
--			reftable_buf_addstr(&b, cases[i].b);
-+			check(!reftable_buf_addstr(&a, cases[i].a));
-+			check(!reftable_buf_addstr(&b, cases[i].b));
- 			check_int(common_prefix_size(&a, &b), ==, cases[i].want);
- 			reftable_buf_reset(&a);
- 			reftable_buf_reset(&b);
-diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
-index df1d45fe8e4..f9af907117b 100644
---- a/t/unit-tests/t-reftable-block.c
-+++ b/t/unit-tests/t-reftable-block.c
-@@ -167,7 +167,7 @@ static void t_log_block_read_write(void)
- 	for (i = 0; i < N; i++) {
- 		block_iter_reset(&it);
- 		reftable_buf_reset(&want);
--		reftable_buf_addstr(&want, recs[i].u.log.refname);
-+		check(!reftable_buf_addstr(&want, recs[i].u.log.refname));
+-static void format_name(struct reftable_buf *dest, uint64_t min, uint64_t max)
++static int format_name(struct reftable_buf *dest, uint64_t min, uint64_t max)
+ {
+ 	char buf[100];
+ 	uint32_t rnd = (uint32_t)git_rand();
+ 	snprintf(buf, sizeof(buf), "0x%012" PRIx64 "-0x%012" PRIx64 "-%08x",
+ 		 min, max, rnd);
+ 	reftable_buf_reset(dest);
+-	reftable_buf_addstr(dest, buf);
++	return reftable_buf_addstr(dest, buf);
+ }
  
- 		ret = block_iter_seek_key(&it, &br, &want);
- 		check_int(ret, ==, 0);
-@@ -314,7 +314,7 @@ static void t_index_block_read_write(void)
+ struct reftable_addition {
+@@ -846,7 +846,10 @@ int reftable_addition_add(struct reftable_addition *add,
+ 	int tab_fd;
  
- 		reftable_buf_init(&recs[i].u.idx.last_key);
- 		recs[i].type = BLOCK_TYPE_INDEX;
--		reftable_buf_addstr(&recs[i].u.idx.last_key, buf);
-+		check(!reftable_buf_addstr(&recs[i].u.idx.last_key, buf));
- 		recs[i].u.idx.offset = i;
+ 	reftable_buf_reset(&next_name);
+-	format_name(&next_name, add->next_update_index, add->next_update_index);
++
++	err = format_name(&next_name, add->next_update_index, add->next_update_index);
++	if (err < 0)
++		goto done;
  
- 		ret = block_writer_add(&bw, &recs[i]);
-diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
-index 7c7c72bb162..d279b86df0a 100644
---- a/t/unit-tests/t-reftable-readwrite.c
-+++ b/t/unit-tests/t-reftable-readwrite.c
-@@ -23,7 +23,7 @@ static void t_buffer(void)
- 	struct reftable_block out = { 0 };
- 	int n;
- 	uint8_t in[] = "hello";
--	reftable_buf_add(&buf, in, sizeof(in));
-+	check(!reftable_buf_add(&buf, in, sizeof(in)));
- 	block_source_from_buf(&source, &buf);
- 	check_int(block_source_size(&source), ==, 6);
- 	n = block_source_read_block(&source, &out, 0, sizeof(in));
-@@ -443,8 +443,8 @@ static void t_table_read_write_seek(int index, int hash_id)
- 		reftable_iterator_destroy(&it);
+ 	stack_filename(&temp_tab_file_name, add->stack, next_name.buf);
+ 	reftable_buf_addstr(&temp_tab_file_name, ".temp.XXXXXX");
+@@ -893,7 +896,9 @@ int reftable_addition_add(struct reftable_addition *add,
+ 		goto done;
  	}
  
--	reftable_buf_addstr(&pastLast, names[N - 1]);
--	reftable_buf_addstr(&pastLast, "/");
-+	check(!reftable_buf_addstr(&pastLast, names[N - 1]));
-+	check(!reftable_buf_addstr(&pastLast, "/"));
+-	format_name(&next_name, wr->min_update_index, wr->max_update_index);
++	err = format_name(&next_name, wr->min_update_index, wr->max_update_index);
++	if (err < 0)
++		goto done;
+ 	reftable_buf_addstr(&next_name, ".ref");
+ 	stack_filename(&tab_file_name, add->stack, next_name.buf);
  
- 	err = reftable_reader_init_ref_iterator(reader, &it);
- 	check(!err);
-@@ -901,7 +901,7 @@ static void t_corrupt_table(void)
- 	struct reftable_block_source source = { 0 };
- 	struct reftable_reader *reader;
- 	int err;
--	reftable_buf_add(&buf, zeros, sizeof(zeros));
-+	check(!reftable_buf_add(&buf, zeros, sizeof(zeros)));
+@@ -944,9 +949,11 @@ static int stack_compact_locked(struct reftable_stack *st,
+ 	struct tempfile *tab_file;
+ 	int tab_fd, err = 0;
  
- 	block_source_from_buf(&source, &buf);
- 	err = reftable_reader_new(&reader, &source, "file.log");
-diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
-index f2dd01688f3..eb98bf2da91 100644
---- a/t/unit-tests/t-reftable-record.c
-+++ b/t/unit-tests/t-reftable-record.c
-@@ -335,14 +335,14 @@ static void t_key_roundtrip(void)
- 	int n, m;
- 	uint8_t rt_extra;
+-	format_name(&next_name,
+-		    reftable_reader_min_update_index(st->readers[first]),
+-		    reftable_reader_max_update_index(st->readers[last]));
++	err = format_name(&next_name, reftable_reader_min_update_index(st->readers[first]),
++			  reftable_reader_max_update_index(st->readers[last]));
++	if (err < 0)
++		goto done;
++
+ 	stack_filename(&tab_file_path, st, next_name.buf);
+ 	reftable_buf_addstr(&tab_file_path, ".temp.XXXXXX");
  
--	reftable_buf_addstr(&last_key, "refs/heads/master");
--	reftable_buf_addstr(&key, "refs/tags/bla");
-+	check(!reftable_buf_addstr(&last_key, "refs/heads/master"));
-+	check(!reftable_buf_addstr(&key, "refs/tags/bla"));
- 	extra = 6;
- 	n = reftable_encode_key(&restart, dest, last_key, key, extra);
- 	check(!restart);
- 	check_int(n, >, 0);
- 
--	reftable_buf_addstr(&roundtrip, "refs/heads/master");
-+	check(!reftable_buf_addstr(&roundtrip, "refs/heads/master"));
- 	m = reftable_decode_key(&roundtrip, &rt_extra, dest);
- 	check_int(n, ==, m);
- 	check(!reftable_buf_cmp(&key, &roundtrip));
-@@ -469,9 +469,9 @@ static void t_reftable_index_record_comparison(void)
- 			.u.idx.last_key = REFTABLE_BUF_INIT,
- 		},
- 	};
--	reftable_buf_addstr(&in[0].u.idx.last_key, "refs/heads/master");
--	reftable_buf_addstr(&in[1].u.idx.last_key, "refs/heads/master");
--	reftable_buf_addstr(&in[2].u.idx.last_key, "refs/heads/branch");
-+	check(!reftable_buf_addstr(&in[0].u.idx.last_key, "refs/heads/master"));
-+	check(!reftable_buf_addstr(&in[1].u.idx.last_key, "refs/heads/master"));
-+	check(!reftable_buf_addstr(&in[2].u.idx.last_key, "refs/heads/branch"));
- 
- 	check(!reftable_record_equal(&in[0], &in[1], GIT_SHA1_RAWSZ));
- 	check(!reftable_record_cmp(&in[0], &in[1]));
-@@ -510,7 +510,7 @@ static void t_reftable_index_record_roundtrip(void)
- 	int n, m;
- 	uint8_t extra;
- 
--	reftable_buf_addstr(&in.u.idx.last_key, "refs/heads/master");
-+	check(!reftable_buf_addstr(&in.u.idx.last_key, "refs/heads/master"));
- 	reftable_record_key(&in, &key);
- 	t_copy(&in);
- 
-diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
-index f49856270d6..72f6747064f 100644
---- a/t/unit-tests/t-reftable-stack.c
-+++ b/t/unit-tests/t-reftable-stack.c
-@@ -172,17 +172,17 @@ static void t_reftable_stack_add_one(void)
- 	check_int(st->readers_len, >, 0);
- 
- #ifndef GIT_WINDOWS_NATIVE
--	reftable_buf_addstr(&scratch, dir);
--	reftable_buf_addstr(&scratch, "/tables.list");
-+	check(!reftable_buf_addstr(&scratch, dir));
-+	check(!reftable_buf_addstr(&scratch, "/tables.list"));
- 	err = stat(scratch.buf, &stat_result);
- 	check(!err);
- 	check_int((stat_result.st_mode & 0777), ==, opts.default_permissions);
- 
- 	reftable_buf_reset(&scratch);
--	reftable_buf_addstr(&scratch, dir);
--	reftable_buf_addstr(&scratch, "/");
-+	check(!reftable_buf_addstr(&scratch, dir));
-+	check(!reftable_buf_addstr(&scratch, "/"));
- 	/* do not try at home; not an external API for reftable. */
--	reftable_buf_addstr(&scratch, st->readers[0]->name);
-+	check(!reftable_buf_addstr(&scratch, st->readers[0]->name));
- 	err = stat(scratch.buf, &stat_result);
- 	check(!err);
- 	check_int((stat_result.st_mode & 0777), ==, opts.default_permissions);
-@@ -432,10 +432,10 @@ static void t_reftable_stack_auto_compaction_fails_gracefully(void)
- 	 * Adding a new table to the stack should not be impacted by this, even
- 	 * though auto-compaction will now fail.
+@@ -1370,8 +1377,11 @@ static int stack_compact_range(struct reftable_stack *st,
+ 	 * it into place now.
  	 */
--	reftable_buf_addstr(&table_path, dir);
--	reftable_buf_addstr(&table_path, "/");
--	reftable_buf_addstr(&table_path, st->readers[0]->name);
--	reftable_buf_addstr(&table_path, ".lock");
-+	check(!reftable_buf_addstr(&table_path, dir));
-+	check(!reftable_buf_addstr(&table_path, "/"));
-+	check(!reftable_buf_addstr(&table_path, st->readers[0]->name));
-+	check(!reftable_buf_addstr(&table_path, ".lock"));
- 	write_file_buf(table_path.buf, "", 0);
+ 	if (!is_empty_table) {
+-		format_name(&new_table_name, st->readers[first]->min_update_index,
+-			    st->readers[last]->max_update_index);
++		err = format_name(&new_table_name, st->readers[first]->min_update_index,
++				  st->readers[last]->max_update_index);
++		if (err < 0)
++			goto done;
++
+ 		reftable_buf_addstr(&new_table_name, ".ref");
+ 		stack_filename(&new_table_path, st, new_table_name.buf);
  
- 	ref.update_index = 2;
-@@ -575,17 +575,17 @@ static void t_reftable_stack_add(void)
- 	}
- 
- #ifndef GIT_WINDOWS_NATIVE
--	reftable_buf_addstr(&path, dir);
--	reftable_buf_addstr(&path, "/tables.list");
-+	check(!reftable_buf_addstr(&path, dir));
-+	check(!reftable_buf_addstr(&path, "/tables.list"));
- 	err = stat(path.buf, &stat_result);
- 	check(!err);
- 	check_int((stat_result.st_mode & 0777), ==, opts.default_permissions);
- 
- 	reftable_buf_reset(&path);
--	reftable_buf_addstr(&path, dir);
--	reftable_buf_addstr(&path, "/");
-+	check(!reftable_buf_addstr(&path, dir));
-+	check(!reftable_buf_addstr(&path, "/"));
- 	/* do not try at home; not an external API for reftable. */
--	reftable_buf_addstr(&path, st->readers[0]->name);
-+	check(!reftable_buf_addstr(&path, st->readers[0]->name));
- 	err = stat(path.buf, &stat_result);
- 	check(!err);
- 	check_int((stat_result.st_mode & 0777), ==, opts.default_permissions);
-@@ -1078,10 +1078,10 @@ static void t_reftable_stack_auto_compaction_with_locked_tables(void)
- 	 * size, we expect that auto-compaction will want to compact all of the
- 	 * tables. Locking any of the tables will keep it from doing so.
- 	 */
--	reftable_buf_addstr(&buf, dir);
--	reftable_buf_addstr(&buf, "/");
--	reftable_buf_addstr(&buf, st->readers[2]->name);
--	reftable_buf_addstr(&buf, ".lock");
-+	check(!reftable_buf_addstr(&buf, dir));
-+	check(!reftable_buf_addstr(&buf, "/"));
-+	check(!reftable_buf_addstr(&buf, st->readers[2]->name));
-+	check(!reftable_buf_addstr(&buf, ".lock"));
- 	write_file_buf(buf.buf, "", 0);
- 
- 	/*
-@@ -1164,10 +1164,10 @@ static void t_reftable_stack_compaction_with_locked_tables(void)
- 	check_int(st->merged->readers_len, ==, 3);
- 
- 	/* Lock one of the tables that we're about to compact. */
--	reftable_buf_addstr(&buf, dir);
--	reftable_buf_addstr(&buf, "/");
--	reftable_buf_addstr(&buf, st->readers[1]->name);
--	reftable_buf_addstr(&buf, ".lock");
-+	check(!reftable_buf_addstr(&buf, dir));
-+	check(!reftable_buf_addstr(&buf, "/"));
-+	check(!reftable_buf_addstr(&buf, st->readers[1]->name));
-+	check(!reftable_buf_addstr(&buf, ".lock"));
- 	write_file_buf(buf.buf, "", 0);
- 
- 	/*
-@@ -1324,13 +1324,13 @@ static void t_reftable_stack_reload_with_missing_table(void)
- 	 * our old readers. This should trigger a partial reload of the stack,
- 	 * where we try to reuse our old readers.
- 	*/
--	reftable_buf_addstr(&content, st->readers[0]->name);
--	reftable_buf_addstr(&content, "\n");
--	reftable_buf_addstr(&content, st->readers[1]->name);
--	reftable_buf_addstr(&content, "\n");
--	reftable_buf_addstr(&content, "garbage\n");
--	reftable_buf_addstr(&table_path, st->list_file);
--	reftable_buf_addstr(&table_path, ".lock");
-+	check(!reftable_buf_addstr(&content, st->readers[0]->name));
-+	check(!reftable_buf_addstr(&content, "\n"));
-+	check(!reftable_buf_addstr(&content, st->readers[1]->name));
-+	check(!reftable_buf_addstr(&content, "\n"));
-+	check(!reftable_buf_addstr(&content, "garbage\n"));
-+	check(!reftable_buf_addstr(&table_path, st->list_file));
-+	check(!reftable_buf_addstr(&table_path, ".lock"));
- 	write_file_buf(table_path.buf, content.buf, content.len);
- 	err = rename(table_path.buf, st->list_file);
- 	check(!err);
 -- 
 2.47.0.dirty
 
