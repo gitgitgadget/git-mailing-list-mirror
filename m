@@ -1,132 +1,120 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B167820ADFF
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 08:24:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227061922C4
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 08:31:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728635070; cv=none; b=UbwOF/Er9wfy6GRinnop3+FdCxi+vgzDgKRPUJqt6JjJzXeYAdGS/9/jJr+E1ERvrn5Cj6lbmYEVAQCJJfqUZzX2LGjl/+lUaVT7qPPyOODGcfz3raQ1aj/UMy5DLw4fvrvZ6O42b7tpFUEDX5hnFsOQFVryh2dhXQbR/hSJ7y4=
+	t=1728635497; cv=none; b=Q+6mLoqbTabeT6yNnihFlAMN4092WgeNb0377xyE9rUFZO66cfqzvPiHT2SkzOYcazjsFY89clhyqchMJ/gdtTOYVBsV+J2QHViN93WRvlrzpQVLzPXwYWealsJc1cJa/YUORe2GNUwKgwMXLbHpDmOlcQApq5EMaSW1/NsHoh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728635070; c=relaxed/simple;
-	bh=kaabz/6sfZ714al2ILcyRJYb9RZU37PfLSYbEjJMROU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VYPBq0dw9ropnVwSxc9T3hzCYma5ThhNGY3GMH/XIh7/IsewgufMb2EFG/lR9AAUc4kBH8+ICgTaIvLSbuPLyo3y/KTK3VaO9MhtGJ9Zrt2FalMF7VWEBx/Y2VYMQGx2O0e8o0EpdWIthDPswJ3YEKfilLyu4v7QwVb6z1KknIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=Nsbg9eEu; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1728635497; c=relaxed/simple;
+	bh=WdBwDxhppCIvNEGVyoCJXn2SvE2S+rXRgkE+A4fJMOA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ditBxpjiuSbhwb59bVECeWX9pxAnQPuMDfJ9p3u+GlRN/qvAqyCnowARRHAZex1XcsMSxug+oPIfYCVGxFVvOkeO44B2AJ/UEv+bzu3IOWY5wnGnn6vTSjCCNfF3VIT5s/s8GYFhehPgIeMdjqKFrdY2PYNRN4w2BMl9icKkivc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DMKG3w5g; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="Nsbg9eEu"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-20bb39d97d1so16643495ad.2
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:24:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1728635065; x=1729239865; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HVi/K/K7xb3JdT6OhwnwPhP+OqrFV2WObVuQYLZqLAw=;
-        b=Nsbg9eEumte9oKP0puNEyv4wd4rUVUm/Q1UPTOyhOkF/XNCOv2QS7FTfHPpPNgNkiw
-         fD9zYdk4x40EzrhPAsCM/9m3eu5jCsTaaqQXGQTUZPnoziG/fdfb6Lu/5uvTIv3oLYRd
-         fEriZ8Lu+aoganTVOuzJHbNgsDAJRMlNL8c7F3q/M2K1XhtmwSChQGwZY/Ma5qtrkll8
-         KwCFT3nyp15oSo8oDyOEqFgeW/ekPXvvH3ZOMxKm/sVcIaxSFwW2+2vg5vw4HVtWcDo5
-         /+qlTEZymvaDdYa28l+hWJaMaq1tGj6ir1hX3WmyclnLEdNtnmhKLrqjVKZL8Mcr+bhJ
-         LCbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728635065; x=1729239865;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HVi/K/K7xb3JdT6OhwnwPhP+OqrFV2WObVuQYLZqLAw=;
-        b=MU5g3h+5243FZ3SIPGMxpX0Tz7HkmrwbBvc6Mb05KTJ+RD28tgCxGFKvaRVH/lLtCo
-         5o1JEj0LbSdCeKvqvpTguTq4ctAqiz7DMnJXhUb+jbgIS0zHlpdxMxrAYyzYpEnHXcr9
-         2lstfVpskKpcvqzY8Xnw18+NCW554WdjavKPJlkt5iyCfRC/QqYIkG2IpcXuGCTtf4+O
-         jfuUTwEHXYknljfRmEwezSzZLEWPnRPyOIwOnD73cE6AJJ8FVhwR4BRW9dawWOOKyvf2
-         qAMQwzqydQUAlZdNTcE+Yefc6xVyoWFhjHVEBDJc66a5mF5+ymn668vgT8q9NSub/qBO
-         kd3g==
-X-Gm-Message-State: AOJu0Yy0PkXz0b/gM5rXChtzWwNw33TWBqsTyZc7LpOR0xrqQYKM1cg8
-	eNtttvOX1FOqDwbqNRBz3d+18+Z/Nn7V2a/484PhIczyiyie4ynF18vAz9OA92JjBARk1ED1QnA
-	yviU=
-X-Google-Smtp-Source: AGHT+IHXDpZRrIdrGjt9/R+ILhfqeaRcTdP15+f5N5NUNBjLFdu4P6OsVcktD+NN/e5QbgZZYFWKOA==
-X-Received: by 2002:a17:90a:cb8e:b0:2d8:e7db:9996 with SMTP id 98e67ed59e1d1-2e2f0aa5605mr2461137a91.13.1728635065534;
-        Fri, 11 Oct 2024 01:24:25 -0700 (PDT)
-Received: from localhost.localdomain ([203.208.167.151])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2d5fa8ddesm2643121a91.39.2024.10.11.01.24.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2024 01:24:25 -0700 (PDT)
-From: Han Young <hanyang.tony@bytedance.com>
-To: git@vger.kernel.org
-Cc: calvinwan@google.com,
-	jonathantanmy@google.com,
-	sokcevic@google.com,
-	gitster@pobox.com,
-	phillip.wood123@gmail.com,
-	Han Young <hanyang.tony@bytedance.com>
-Subject: [PATCH v3 3/3] partial-clone: update doc
-Date: Fri, 11 Oct 2024 16:24:04 +0800
-Message-ID: <20241011082404.88939-4-hanyang.tony@bytedance.com>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20241011082404.88939-1-hanyang.tony@bytedance.com>
-References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
- <20241011082404.88939-1-hanyang.tony@bytedance.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DMKG3w5g"
+Received: (qmail 5828 invoked by uid 109); 11 Oct 2024 08:31:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=WdBwDxhppCIvNEGVyoCJXn2SvE2S+rXRgkE+A4fJMOA=; b=DMKG3w5g0jZs7XVOf8iWIvQ+QiTV3Yhbl186mu6Rknuwrl2S30LvEInin0YSFjjPtFaPYewmTwUqUEIn7rZn2VmPJj3cO5yk5E49adDVnvW++fcKLLhMYcZWe7gI858MzJqaG8qwvC8hto7SaNM1dofwOSMrWU/vVQie0V9pSaFDmindwpx2cZp4h5dUeTBosFp+sM/HDNZa9hhnm5yxQEmZp62XRT301TC53tzA6cj1iwFBCchQdiynBgqwKcNghsnjuMqBe5KGJHoPN8IirzcgRf1Jd4ReQzj0i7Rxmq8dkchPtULtRwyW87Yv3/uZGwDZmFJSpKcktE0ldXfPkQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Oct 2024 08:31:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17761 invoked by uid 111); 11 Oct 2024 08:31:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Oct 2024 04:31:34 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 11 Oct 2024 04:31:34 -0400
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 09/11] pack-bitmap: enable cross-pack delta reuse
+Message-ID: <20241011083134.GG18010@coredump.intra.peff.net>
+References: <cover.1728505840.git.me@ttaylorr.com>
+ <ca3a916cd6e93aaa09ccff9f77fc127254222068.1728505840.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ca3a916cd6e93aaa09ccff9f77fc127254222068.1728505840.git.me@ttaylorr.com>
 
-Document new repack behavior for partial repo
+On Wed, Oct 09, 2024 at 04:31:28PM -0400, Taylor Blau wrote:
 
-Signed-off-by: Han Young <hanyang.tony@bytedance.com>
----
- Documentation/technical/partial-clone.txt | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+> In order to do this, the pack-reuse code within pack-bitmap.c marks
+> bits in a separate bitmap called 'reuse_as_ref_delta'. Objects whose
+> bits are marked in that bitmap must be converted from OFS_DELTAs to
+> REF_DELTAs.
+> 
+> To mark bits in that bitmap, we adjust find_base_bitmap_pos() to
+> return the bitmap position of any delta object's base regardless of
+> whether or not it came from the same pack. This is done by:
+> 
+>   1. First converting the base object's into a pack position (via
+>      `offset_to_pack_pos()`).
+> 
+>   2. Then converting from pack position into into lexical order (via
+>      `pack_pos_to_index()`).
+> 
+>   3. Then into an object ID (via `nth_packed_object_id()`).
+> 
+>   4. Then into a position in the MIDX's lexical order of object IDs
+>      (via `bsearch_midx()`).
+> 
+>   5. And finally into a position in the MIDX's pseudo-pack order (via
+>      `midx_pair_to_pack_pos()`).
+> 
+> If we can find that base object in the MIDX, then we use its position
+> in the MIDX's pseudo-pack order to determine whether or not it was
+> selected from the same pack. If it is, no adjustment is necessary.
+> Otherwise, we mark the delta object's position in the new
+> `reuse_as_ref_delta` bitmap, and convert accordingly from within
+> `write_reused_pack_one()`.
 
-diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
-index cd948b0072..9791c9ac24 100644
---- a/Documentation/technical/partial-clone.txt
-+++ b/Documentation/technical/partial-clone.txt
-@@ -124,6 +124,10 @@ their "<name>.pack" and "<name>.idx" files.
- +
- When Git encounters a missing object, Git can see if it is a promisor object
- and handle it appropriately.  If not, Git can report a corruption.
-+
-+To prevent `repack` from removing locally created objects, `repack` packs all
-+the objects into one promisor packfile. It's no longer possible to determine
-+the cause of missing objects after `gc`.[7]
- +
- This means that there is no need for the client to explicitly maintain an
- expensive-to-modify list of missing objects.[a]
-@@ -156,8 +160,9 @@ and prefetch those objects in bulk.
- 
- - `fsck` has been updated to be fully aware of promisor objects.
- 
--- `repack` in GC has been updated to not touch promisor packfiles at all,
--  and to only repack other objects.
-+- `repack` in GC has been taught to handle partial clone repo differently.
-+  `repack` will pack every objects into one promisor packfile for partial
-+  repos.
- 
- - The global variable "fetch_if_missing" is used to control whether an
-   object lookup will attempt to dynamically fetch a missing object or
-@@ -244,8 +249,7 @@ remote in a specific order.
-   objects.  We assume that promisor remotes have a complete view of the
-   repository and can satisfy all such requests.
- 
--- Repack essentially treats promisor and non-promisor packfiles as 2
--  distinct partitions and does not mix them.
-+- It's not possible to discard dangling objects in repack.
- 
- - Dynamic object fetching invokes fetch-pack once *for each item*
-   because most algorithms stumble upon a missing object and need to have
-@@ -365,3 +369,7 @@ Related Links
- [6] https://lore.kernel.org/git/20170714132651.170708-1-benpeart@microsoft.com/ +
-     Subject: [RFC/PATCH v2 0/1] Add support for downloading blobs on demand +
-     Date: Fri, 14 Jul 2017 09:26:50 -0400
-+
-+[7] https://lore.kernel.org/git/20240802073143.56731-1-hanyang.tony@bytedance.com/ +
-+    Subject: [PATCH 0/1] revision: fix reachable objects being gc'ed in no blob clone repo +
-+    Date: Fri,  2 Aug 2024 15:31:42 +0800
--- 
-2.47.0.266.g0b04b6b485.dirty
+OK, that makes sense. It does feel like a non-trivial amount of work to
+do for each delta we're going to (potentially) reuse from a midx'd pack.
+Can we recognize the common case that the base is in the same pack and
+also being sent/reused without doing the full conversion to oid and the
+resulting bsearch?
 
+> @@ -1182,10 +1188,24 @@ static size_t write_reused_pack_verbatim(struct bitmapped_pack *reuse_packfile,
+>  	if (pos >= end)
+>  		return reuse_packfile->bitmap_pos / BITS_IN_EWORD;
+>  
+> -	while (pos < end &&
+> -	       reuse_packfile_bitmap->words[pos / BITS_IN_EWORD] == (eword_t)~0)
+> +	while (pos < end) {
+> +		size_t wpos = pos / BITS_IN_EWORD;
+> +		eword_t reuse;
+> +
+> +		reuse = reuse_packfile_bitmap->words[wpos];
+> +		if (reuse_as_ref_delta_packfile_bitmap) {
+> +			/*
+> +			 * Can't reuse verbatim any objects which need
+> +			 * to be first rewritten as REF_DELTAs.
+> +			 */
+> +			reuse &= ~reuse_as_ref_delta_packfile_bitmap->words[wpos];
+> +		}
+> +
+> +		if (reuse != (eword_t)~0)
+> +			break;
+> +
+>  		pos += BITS_IN_EWORD;
+> -
+> +	}
+
+This is accessing reuse_as_ref_delta_packfile_bitmap->words directly
+using pos/end as limits. But those come from reuse_packfile_bitmap. Are
+we guaranteed to have zero-extended the reuse_as_ref_delta bitmap as far
+as the original went?
+
+Could we just be calling bitmap_get() here, which would do the length
+check for us? Though I guess we would miss out on some whole-word magic
+it is doing. So maybe we need to just do that length check ourselves.
+
+-Peff
