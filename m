@@ -1,88 +1,126 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A238207A30
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 07:40:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478E420A5CA
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 07:49:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728632426; cv=none; b=gxAVtHMMI1Bg7gNZJXIQ3I56420l0lYTvIbdb9PYnMWEYJq8b0LeAakDYY8Q3i2IMNbFUOHpXZ9RGXS8K2gAcKFDaVub1oNk0k59KMIISGt40kwTnZ+tPR3gg5HTwvBD866waboNzHR+M46IaUrRjYxXgjKxs2eNxExa7VMeJJQ=
+	t=1728632978; cv=none; b=ILj2IrX6N/KxtQDaGakdSuiXo48wNt4N1MqElffodWXiozoKE5FGLgO1Kwnt0PN5sj5+BABw0dFPIMKf0/uWU361yCzP+DQU/2UZ0q64btCyEhCJ3bSbJd/bGgghS5B/VF231MmwwW+3ndZi+W2jioXfYd7824SJR3lqLjidz2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728632426; c=relaxed/simple;
-	bh=qPHbKu4gWGNOKLjB1Ld3xW6l3uHkaNv+fzrZx072U18=;
+	s=arc-20240116; t=1728632978; c=relaxed/simple;
+	bh=s4eF7ydGBehs5abVg6JG+6S1b6NCl0f8OJn9v5oATtA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LcVefv+C22Dk0sSax3tZvxBfSuaXFZvx4wYzPIRIHb99YtJ8ATxg+OuucuM/AL+QvQeVvQoOURWBYg0I1Y7nNVzVNaC6KTT1MJYcCflfOiaF4m+RZBJkg0DOvG9sLSGBt+bQv2zYrjxwyWajY7xtlQ+RHd9nAAZAqfreCQFLVd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Q5D9DPcm; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=cS5r+Y+EgeT77NjXjAKJgCV3CJ+nry5b8i4hmeQ6HA+opXuhdoddvLTOXspr68HiEs7NC2Pwf35OZoFMq4j3iPCP7AnYac5O26eIY9Vx0k8xdsZqQ/Lr+qZ2dmylfg8+W2ufWCP3rOLY7WgF7TVFHNl65XHjWZ5/noAhG4y3rFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WKVgtv96; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i9qFBWq4; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Q5D9DPcm"
-Received: (qmail 5113 invoked by uid 109); 11 Oct 2024 07:40:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=qPHbKu4gWGNOKLjB1Ld3xW6l3uHkaNv+fzrZx072U18=; b=Q5D9DPcm3/8E9z/Hz6NjAv11FiRAPNOXuW+tHkfJyxstL40DWglTSAIM35qSmd6NPX/QY+P/ZKmqE2IZ7FPHSEA1fs4JXNHTFIrUQurHlP3tYDgQGHbqRQaRRUjnI4b1JSYpSqEZGpKWoZo9eZktaMRs8kgcAEavqG/jnmksPQQBsQa5E+tXUqRPCaJjuZF4Kv3H2L/f32NM+iKUADLnPbPulnIcrECJJKjyasF2V7IVhb/ug9RSKLaSakFx+KlMyfcPF5olxf/R/vvoa2aIRh3sBq1OvCvSLk5Uf/wFd0hhVsTWjSXXD+QSKvyMZwcPlQfyljZzqGK1/alhvKZMBA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Oct 2024 07:40:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17391 invoked by uid 111); 11 Oct 2024 07:40:22 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Oct 2024 03:40:22 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 11 Oct 2024 03:40:22 -0400
-From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/13] Update versions of libcurl and Perl
-Message-ID: <20241011074022.GC18010@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WKVgtv96";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i9qFBWq4"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 73D0D1380138;
+	Fri, 11 Oct 2024 03:49:35 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Fri, 11 Oct 2024 03:49:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1728632975; x=1728719375; bh=ukaMdO61PU
+	Y9I19T0WCnHaDaZayDakNNOJWSP7SBJ5g=; b=WKVgtv96HYi8dqchgT4shB3/+z
+	EayY6ORz0YDd7PWp1By06W9B7E/NhLjR9dAM7L2Jx+jhVTIl6LsCa0q5w+9zQeFB
+	eUv7qyV3/j7KRmQmFtkn9tQjO2bex1ViwJX5D6l9q82e058m54zJ36R+mDHRB2HV
+	KjbF914S2QT5nIYR3DDBNgZ2njKVbtFbEEVVhzGfKezsRj/g5jCZksrx+jH1+zgV
+	JGJKfAZmboFgPQqS6VrRqC9P8s4C8ZFq3ZMf3giCyEl6TvZYwiQ1X1OFKtssvWL1
+	RABlDyqpb4biBxM5Vp/X3nOtxVIKmseyXhlW6x2L6j+vWJcIUaOsvO2SdUbw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728632975; x=1728719375; bh=ukaMdO61PUY9I19T0WCnHaDaZayD
+	akNNOJWSP7SBJ5g=; b=i9qFBWq4k/vl6OL0IDAkNw8/7ESDZB0Bo2HgskqMCq1T
+	6TCZZuBwrlE2juAC7Kt5j0oXo9WiVf0+oP322v+M5mmFEMUNgZAvp6E+q8hhAio/
+	ZXCGbo1mAhmrKpPYU3xxqEtHJUfcYnib9yzKp6e4IkxOSa5Ne+fNGuU0zrFnjgwT
+	G4x1J/M8j4j9vWz5VOXHFyD7edMeJPOJ+aQl20Wqaxuz+jzMoFS8rX2SsMzDj4yo
+	idlIJsLy0dRRH7sJkIRFbd52yIGq2hi2Qjt2EaO4gOfrxe43/1nTg/AhGek9cgQw
+	U6/lTedsR24RGqYm9tOVHyDWsutGp2SUiu9mox5R7w==
+X-ME-Sender: <xms:j9gIZxIsKuDIo53S5QoSFDR_zF2qY9sbhjbh1foJS88YJ-4j49m9qA>
+    <xme:j9gIZ9ILG9oysAxoWUS7xP1F8942v84lS4ki900NaP8iJPvfUUhMGGSIaC-rhRKks
+    wbPWxTlBNkcgGKuHQ>
+X-ME-Received: <xmr:j9gIZ5sMGyPmGH9Jk-uYIzvhzSjgbrcrnbqPEBwzbXW69LH4ArUy-UpjwPFY9WE5kMGLYkwXuwvtXimIQOZn51vJ4mV-_wyQtdnpxqLvBZMY2iA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefjedguddvjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepjeevudeggf
+    ffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecuffhomhgrihhn
+    pehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhph
+    grshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:j9gIZyYMn43yK_7U9BwEdgM9_e4_BbApgBFzzU4GL14IBDb2KqFQLg>
+    <xmx:j9gIZ4YU7pThKhH4p18yaQAOI-zUsdw3qqAGKDTMJqxrkrDMgvZ_Nw>
+    <xmx:j9gIZ2C9PfB8NSlyxbcXv2xKn6dumfrxDeU92gzOiS-kvBnGm9SJTQ>
+    <xmx:j9gIZ2Zziwn5Pf0uBLyMcbHO0lZuTvOipMDRX64V-D1r3QRB4CxM8w>
+    <xmx:j9gIZ_XIVTTBry7n7JdNRkfjDB3XjeaHm8NokL33Rba8BWSPW60EuzLU>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Oct 2024 03:49:34 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 03135639 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 11 Oct 2024 07:48:25 +0000 (UTC)
+Date: Fri, 11 Oct 2024 09:49:30 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 09/13] git-curl-compat: remove check for curl 7.56.0
+Message-ID: <ZwjYinN7oKSw2DIq@pks.im>
 References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+ <20241010235621.738239-10-sandals@crustytoothpaste.net>
+ <ZwjKTJye2OmQClSW@pks.im>
+ <20241011073326.GB18010@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+In-Reply-To: <20241011073326.GB18010@coredump.intra.peff.net>
 
-On Thu, Oct 10, 2024 at 11:56:08PM +0000, brian m. carlson wrote:
-
-> This series updates our requirements for libcurl to 7.61.0 (the version
-> in RHEL 8) and for Perl to 5.26.0 (the version in 15.6).  I considered
-> the mainstream LTS versions of RHEL, Debian, Ubuntu, and SLES, but
-> omitted consideration of paid support extended LTS, since we cannot
-> expect Git developers to have to pay a large corporation lots of money
-> just to test functionality.  This is in conformance with our policy,
-> which states that versions must be "in line with the version used by
-> other long-term-support distributions", which does not include extended
-> LTS distributions.
+On Fri, Oct 11, 2024 at 03:33:26AM -0400, Jeff King wrote:
+> On Fri, Oct 11, 2024 at 08:48:51AM +0200, Patrick Steinhardt wrote:
 > 
-> The libcurl dependency changes come in incremental patches so that if we
-> have people on unsupported systems, they can simply revert the patches
-> that they'd like to omit.  It also makes the changes easier to review
-> than one giant commit.
+> > I wonder whether we want to have something like the below patch to give
+> > people a better error message in case they have a version that is too
+> > old now.
+> > [...]
+> > +#if LIBCURL_VERSION_NUM < 0x073d00
+> > +# error "Your version of curl is too old. You need to have at least curl 7.61.0"
+> > +#endif
+> 
+> IIRC we ran into some interesting situations in the past where some
+> distros had older versions that had backported some features. So Git
+> would continue to compile, even though it was not technically the
+> version we said was needed. And a patch like the one above would break
+> those systems, even they'd otherwise be OK.
+> 
+> Now possibly that is a little bit insane and not something we should
+> worry about. I don't have good examples of what kinds of things got
+> backported, but searching the archive for LIBCURL_VERSION_NUM and
+> "backport" yielded this:
+> 
+>   https://lore.kernel.org/git/4d29d43d458f61c6dabca093f591ad8698ca2ceb.1502462884.git.tgc@jupiterrise.com/
+> 
+> and I seem to recall most of the discussion of this was around that
+> author and RHEL/EPEL.
 
-The libcurl changes all looked OK to me. I was a little surprised that
-we could move to 7.61.0, which is only 6 years old, since many long-term
-releases target 10 years. I guess the ones you looked at have had point
-releases with updated libcurl?
+Huh, interesting, thanks for the context! I'm not really sure whether we
+really should worry about such weird backports all that much. But in any
+case I'm okay with not pursuing the error.
 
-I don't have a strong opinion on the extended LTS issue. Like you, I
-don't really care about dealing with paid support. OTOH, I think in many
-cases there was little to no maintenance burden for these older
-versions, since we'd already done the work to #ifdef them. But I guess
-since you broke up the patches, they can always choose to revert or
-include what they want.
-
-> The Perl changes are a huge upgrade.  5.8.1, our former supported
-> version, was from 2003.  5.26 has substantially improved Unicode support
-> (including Unicode strings), s///r (to allow returning a modified value
-> instead of modifying it in place), postderef syntax (which also provides
-> better interpolation for complex expressions), and subroutine signatures
-> (although these are experimental until 5.36).  These allow us much more
-> readable, modern Perl.
-
-I'm OK with a move to perl 5.26. It does feel a little weird to be
-mass-updating the "require" lines in stuff in contrib/ (specifically I
-noticed diff-highlight, since I maintain it). But 5.008 is so absurdly
-old that I find it hard to believe anybody would ever notice the
-difference.
-
--Peff
+Patrick
