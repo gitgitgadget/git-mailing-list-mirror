@@ -1,87 +1,78 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F2D8F5B
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 21:28:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C017B19D8B7
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 21:49:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728682121; cv=none; b=p/J8bsbhIYveVnRHUg1ESsPunrlJvVGbCldoJJD8R3LkN0MammUTMXIs2Zghw9X0vjXfJLmCMY0b2nj85dCud3szfMb5qqmlCGS97cXiy5dYzdM0Moimj+HyWqQyd0+yGgibhQDdVL62vK8pG8D1QzVVs5YckGta1Woym1RC7CA=
+	t=1728683384; cv=none; b=i7D6WNxXfRWMd4AlGFi97jyhs5mdBfoRoSx0WCL6pg7KHtp8o0eeAvxKOa7N2jZyTNyeeJ6QIXfbVT41tFF4/P2+MpbE52SfxZSG5oIbOsmioQvmq4QXjFUOINHyeDKIaRh6NEULBbNrAU1GUElV1+yPSh7UIzy7LSb5AN1CsDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728682121; c=relaxed/simple;
-	bh=pEbbkeeXafizcHBnXiHVpuHhoaWw44NLrBDqM6ATawI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Jblc7DUy4TwQgwXBukiRiaKNyfs9y3qlwL/6ESuCVtMpmftjHKfLAkk0OYlxJrNdtC3BmyTKNQUALODFa8gHmjEqYYf/b+aRGyGEZVPhbhLmlMNxa7xKRP0jjgycFGZjsgBrhGKawp3ISEl0ld7OIrEzlLb2OnwF2WsCM61cQhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=T0gPI2pL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kN6Ynov3; arc=none smtp.client-ip=103.168.172.147
+	s=arc-20240116; t=1728683384; c=relaxed/simple;
+	bh=lHTvfXKp0vMaGRiZO/r+WK58HlkgZM6ENW6iC+YztPo=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=M7FlI+rOFNv9+icNd9hGdhhsV35MgJrwWDjd9sYgdFChs6NXPsb/6mHjYalBO709rASWJ+lKOt12tdi4tjAtEsHps7nzxlOAkyn2KUikw8dp/PHC5V/YpDKBY2jxnB7JgrURkkUyAAC2lhf4ZLrw18QCiRiyCx1mhk84zMrqJaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uIdCe7Lc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m9gtVpZr; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="T0gPI2pL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kN6Ynov3"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uIdCe7Lc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m9gtVpZr"
 Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7173F138025A;
-	Fri, 11 Oct 2024 17:28:38 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 11 Oct 2024 17:28:38 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DD9051140268;
+	Fri, 11 Oct 2024 17:49:40 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Fri, 11 Oct 2024 17:49:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1728682118;
-	 x=1728768518; bh=9Scxt7zozNevNgIj0kbju5/39njwVgHUcMIHW1Kf9hs=; b=
-	T0gPI2pL2vb2XZA9taDeGstIC8d+mi7m29aJbv8x8AgkEzEaaxEcq8HtAvlZhC/s
-	3Bt+UjMWlxb1YuBH7nPoVZWq8UwYxNyuQeAxiEucbBUkpmgBJE2oCuRhJTJfXNVf
-	T+Hhtuo24SomoO76v1UmEZIR0lRHD4CeRxVMw90kWvsCpbPJuqfE2WQoax7gAZvv
-	NU3Z9ixxiSN2kTwDFlj63GJHoAlfMsazcHwfxeAh+UU+xgXyH5pDs+SR+VniLzTT
-	+SVPzigUSdoApH56Ls/HVqeiYbcrwX7gPLH3Pm7/zyY7WAe1NVhRYDfQsIjIWLGC
-	qAq8jPuqVvL6pldmqy8sHQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728683380; x=1728769780; bh=ROnmifSLGe
+	yyzYraxl1xTigF60ozQrkgekJIzFPzDJY=; b=uIdCe7LcSFFqW7qIv/7KoSYM9C
+	4CgPLeRU6pNnL7Am5baqwJOUdmcs7PDUNukcLdwsCxoFgAq4BQwHwY30+1OKNpQI
+	N95ySfaP4/R1ipxAR5cQhN6F4ca0kVnapg8dqiUBpg8LHNkx1WD7YKR4axZxHlbm
+	VFrDU39IR6Nv2FMvenpVnTaMR840wGnWiOMMrO+xtvyQKPc2VPkpBwRAy5RUQUPL
+	5a+8UH3Zpx/52XXwOIUTIbmnnZln/DpZZfiIsCbJcc1/91xSfwTz54J4xw85N60O
+	g92VnZgDHlzL9VpR0rza7rjxJk/CSa8DFvOafsCjoKCMIw4JdQyrkfZBSkVQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728682118; x=
-	1728768518; bh=9Scxt7zozNevNgIj0kbju5/39njwVgHUcMIHW1Kf9hs=; b=k
-	N6Ynov3QeEqzH9Ya8MfE3cKKTobdRp6sxb1NmmRkXx1zOkmRoDUL7sAQycVutAwQ
-	CUNHDSA/FMJBXaKWEX/pgUX2oMsml2AA+UbmLz7ZcbDqKQoS8tTw2VR3IAZmN/aO
-	UyOYE7j1xhQuwG7Eqs3yF6oc72sJwmvLlm0vn1BGl6VXLrJECv/v7jOm0WkQsqBK
-	ckQG9Mes0+2ahI4YZTKgXGKXdzq/FRYy7mwSQzUTmA9ZISxLiE8gYE+2k6v9oXHB
-	cwfpikFKZmn/6f9w7RPe0jc9cv9hl119KhLkUdOEvtQyMyCdzijdgmYKIOv6l9LF
-	2fFdCARdmv1tJtFTCNJQw==
-X-ME-Sender: <xms:hpgJZy-ihOfKIKzEoDzqtQxCGVK-g0sqjR_uO13ipattnhGKKWLBMw>
-    <xme:hpgJZytkeUqdTlFg5S7i5QVSdC8ogoTBB_QoIaYZJL7exp1XQ4e8KQdpMvTEYpdLB
-    P1HtQFntl6f2L7aZw>
-X-ME-Received: <xmr:hpgJZ4Cgsl7MDRxmOwrDnpRDL6WFKHXj1j3m9K7OJ53fBKtR7ZqlISmIVBIGIiSOdxKKfLkCg0kxlh3GAUBjucrk0VXurVF78kbBRsQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefkedgudeitdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhgtvgesfh
-    gvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:hpgJZ6fCJAm6nYc8FmbevZOvdOmMYh-t23ajt_bsRHwbbt4a6tSsnw>
-    <xmx:hpgJZ3OvwGvJiQJcZ3ixiP8fjblnl2DoJOZOPBc0b_UAAnnbx-9qfQ>
-    <xmx:hpgJZ0milvep_30MVSul3glA8A72LkkuWTXWyYYOUbd8y8phwwo_KQ>
-    <xmx:hpgJZ5tA2hwK_SI2vyBJcZeIFOLXXG7THC8rnEn3H1_Vcw1LT3VpUA>
-    <xmx:hpgJZ8onmzaGf1D7NfU2gfg4kRqCjkrxwq7Rjwr0z1LqFywCWICd7X6c>
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728683380; x=1728769780; bh=ROnmifSLGeyyzYraxl1xTigF60oz
+	QrkgekJIzFPzDJY=; b=m9gtVpZr/rMJtg65kVRK5vrgEFfEJ3H3bXC6JdFKv1eP
+	Dm9sAxVCMpKBoSBrOAMGvfD/M3bKJWLufXK4iN1H1ETG6WJW/gMXGYoj05mKB3Hq
+	bABrvuPBj87PMqf/6bRJIC77csj+FrU8QJ29IZlTE7feDcUZQOItPW+0tk4ETwBq
+	ZlaTP4ABspiNvjWLtEcXum/NLZHXG4u9SCgXOK2JS+VXLTbf2vb3FwJf/wloyyRU
+	C3i1FAZD7oWU5t8iCjLmaDcBSPC7gSJ3SYGBuIqeuKMu83Aty+6ln3BBhS1klqoM
+	Tary5ygBZ3O9gGVEqMwk/vGiaYHXR0xvW8P1Hw2qgg==
+X-ME-Sender: <xms:dJ0JZ9iSK_RPM75bUhmcrMPoR5egSPJe_VBgv7QtRVuFLt1FyoID7Q>
+    <xme:dJ0JZyCykRPqYKDXDAMXelTnYq8AsQL66Ds3118ga7IHx4upjFN7aWcL7UOJyl7LZ
+    OjU8v3eM0gbsc06aA>
+X-ME-Received: <xmr:dJ0JZ9Hv8SdAt5V1EalDBgJkewmVChsE6l5dTghyN5p-YzgW0NiY7oWGdqHLyAHyKnNQBZ9ShV41_77EdAoSQIvbQeZu_qZxJTfCuno>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefledgtdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvffujg
+    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
+    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepkefhue
+    duteekgfdtueegvdfgueeiuedvlefggfefkedvffduvddvkeeuhfeifeejnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
+    hosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:dJ0JZyROCPcyijRenQRPTAn6-N-sttJZf4OloUJLIoHl7RkLma1n4w>
+    <xmx:dJ0JZ6xhMSJZpl8ad47FF5b7a-58mC2_1zH78O8G0ZLVG_GzdzNa9w>
+    <xmx:dJ0JZ466PaAsls_mXNXHs_XZBqhVpVmMV0MSSVGC1_aJA9fFctRMgA>
+    <xmx:dJ0JZ_yTaUElwziCf6_AXcNKsWwfu5f7OHp414QMQHsQNdsGTmTw2w>
+    <xmx:dJ0JZ194rsJQjmyz9KsUMEzvPqBhmXycmgN_UP2N4Aa58nxUMkiAfsBU>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Oct 2024 17:28:37 -0400 (EDT)
+ 11 Oct 2024 17:49:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Bence Ferdinandy" <bence@ferdinandy.com>
-Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
-  <git@vger.kernel.org>
-Subject: Re: with git update-ref?
-In-Reply-To: <D4TA5EXQFFA0.1XVEK1RM2Q6VA@ferdinandy.com> (Bence Ferdinandy's
-	message of "Fri, 11 Oct 2024 23:04:17 +0200")
-References: <D4T9VCF8OS6U.1FMB8P6YU7I3S@ferdinandy.com>
-	<cb60b7ad-7902-4293-81e9-06d1b1526842@app.fastmail.com>
-	<D4TA5EXQFFA0.1XVEK1RM2Q6VA@ferdinandy.com>
-Date: Fri, 11 Oct 2024 14:28:36 -0700
-Message-ID: <xmqqa5facosb.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: [PATCH v2] BreakingChanges: early adopter option
+In-Reply-To: <xmqq7cb77810.fsf@gitster.g>
+References: <xmqq7cb77810.fsf@gitster.g>
+Date: Fri, 11 Oct 2024 14:49:39 -0700
+Message-ID: <xmqq1q0mcnt8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,44 +80,99 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Bence Ferdinandy" <bence@ferdinandy.com> writes:
+Discussing the desire to make breaking changes, declaring that
+breaking changes are made at a certain version boundary, and
+recording these decisions in this document, are necessary but not
+sufficient.  We need to make sure that we can implement, test, and
+deploy such impactful changes.
 
-> On Fri Oct 11, 2024 at 22:56, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com> wrote:
->> `ref: refs/remotes/origin/test`? (space after colon)
->
-> I tried a couple of variations and no:
->
-> ❯ git update-ref --no-deref refs/remotes/origin/HEAD 'ref: refs/remotes/origin/test'
-> fatal: ref: refs/remotes/origin/test: not a valid SHA1
-> ❯ git update-ref refs/remotes/origin/HEAD 'ref: refs/remotes/origin/test'
-> fatal: ref: refs/remotes/origin/test: not a valid SHA1
-> ❯ git update-ref --no-deref refs/remotes/origin/HEAD 'ref:refs/remotes/origin/test'
-> fatal: ref:refs/remotes/origin/test: not a valid SHA1
-> ❯ git update-ref  refs/remotes/origin/HEAD 'ref:refs/remotes/origin/test'
-> fatal: ref:refs/remotes/origin/test: not a valid SHA1
->
-> I guess the intended way of doing this is via git symbolic-ref anyway, but I'm
-> curious if this should work somehow or I'm misinterpreting the meaning of that
-> sentence.
+Earlier we considered to guard the breaking changes with a run-time
+check of the `feature.git<version>` configuration to allow brave
+users and developers to opt into them as early adoptors.  But the
+engineering cost to support such a run-time switch, covering new and
+disappearing git subcommands and how "git help" would adjust the
+documentation to the run-time switch, would be unrealistically high
+to be worth it.
 
-I do not think update-ref is a tool to modify a symbolic-ref.
-Moreover, the mention of "ref:" is meant to be for those who are
-overly curious for their own good and go peek into their .git/
-directory; script writers should not have to know such an
-implementation detail.
+Formalize the mechanism based on a compile-time switch to allow
+early adopters to opt into the breaking change in a version of Git
+before the planned version for the breaking change.
 
-: ask what the current state is.
-$ git symbolic-ref refs/remotes/origin/HEAD
-fatal: ref refs/remotes/origin/HEAD is not a symbolic ref
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-: set it
-$ git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
+ * As we discussed and came to agreement during the review of v1,
+   let's specify this as a build-time knob.
 
-: inspect the result
-$ git symbolic-ref refs/remotes/origin/HEAD
-refs/remotes/origin/master
+ Documentation/BreakingChanges.txt | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-Thanks.
+diff --git a/Documentation/BreakingChanges.txt b/Documentation/BreakingChanges.txt
+index 2b64665694..eeb26c9155 100644
+--- a/Documentation/BreakingChanges.txt
++++ b/Documentation/BreakingChanges.txt
+@@ -59,10 +59,29 @@ over time. If circumstances change, an earlier decision to deprecate or change
+ something may need to be revisited from time to time. So do not take items on
+ this list to mean "it is settled, do not waste our time bringing it up again".
+ 
++== Procedure
++
++Discussing the desire to make breaking changes, declaring that breaking
++changes are made at a certain version boundary, and recording these
++decisions in this document, are necessary but not sufficient.
++Because such changes are expected to be numerous, and the design and
++implementation of them are expected to span over time, they have to
++be deployable trivially at such a version boundary.
++
++The breaking changes MUST be guarded with the a compile-time switch,
++WITH_BREAKING_CHANGES, to help this process.  When built with it,
++the resulting Git binary together with its documentation would
++behave as if these breaking changes slated for the next big version
++boundary are already in effect.  We may also want to have a CI job
++or two to exercise the work-in-progress version of Git with these
++breaking changes.
++
++
+ == Git 3.0
+ 
+ The following subsections document upcoming breaking changes for Git 3.0. There
+-is no planned release date for this breaking version yet.
++is no planned release date for this breaking version yet.  The early
++adopter configuration used for changes for this release is `feature.git3`.
+ 
+ Proposed changes and removals only include items which are "ready" to be done.
+ In other words, this is not supposed to be a wishlist of features that should
+
+Interdiff against v1:
+  diff --git a/Documentation/BreakingChanges.txt b/Documentation/BreakingChanges.txt
+  index cc19e03230..eeb26c9155 100644
+  --- a/Documentation/BreakingChanges.txt
+  +++ b/Documentation/BreakingChanges.txt
+  @@ -68,15 +68,13 @@ Because such changes are expected to be numerous, and the design and
+   implementation of them are expected to span over time, they have to
+   be deployable trivially at such a version boundary.
+   
+  -The breaking changes MUST be guarded with the configuration
+  -variable, `feature.git<version>` to help this process.  Each
+  -individual breaking change must be implemented in such a way that
+  -for a user who has this configuration variable set to true, it goes
+  -in effect even before Git <version>.  Note that setting the
+  -configuration to `false` MUST have no effect, either before or AFTER
+  -Git <version>.  In other words, this is purely an option to recruit
+  -early adopters and not a mechanism to keep the old behaviour after
+  -the announced version boundary for breaking changes.
+  +The breaking changes MUST be guarded with the a compile-time switch,
+  +WITH_BREAKING_CHANGES, to help this process.  When built with it,
+  +the resulting Git binary together with its documentation would
+  +behave as if these breaking changes slated for the next big version
+  +boundary are already in effect.  We may also want to have a CI job
+  +or two to exercise the work-in-progress version of Git with these
+  +breaking changes.
+   
+   
+   == Git 3.0
+-- 
+2.47.0-150-gc349d40f0e
+
