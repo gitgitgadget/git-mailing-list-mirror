@@ -1,119 +1,105 @@
-Received: from aib29agh123.zrh1.oracleemaildelivery.com (aib29agh123.zrh1.oracleemaildelivery.com [192.29.178.123])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A5D20C46F
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 09:04:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C3120C46C
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 09:13:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728637452; cv=none; b=O5EsnYYaIwSG2X0nbOOvsJw62SSZIKnR+uuBEnvWjX2dVeH4pwfK+Qe1AuksRBt71aPMzOMYiwceX67FrzPVNrE6c/zfxjXC9+foSBDpVPV4a4ZuvPu+ycUxul/SoMdG3FmZGDfVn0R9vqHLJwxqhE3eYIjgYza/lnAKCj9fSqI=
+	t=1728638007; cv=none; b=QTadBJFXICr3o9a+OAAS+CfLMc8oxdUGRdijP62smviQIe9Mn2Ct5emATp1fqurZHLsL6qJ0RN6I8K7PJjz0DQfr5KSZj67Gkggzhncx1XIq9R0SYx2bvzp0QZpNI0Lp8em2fMfC2nxuAXcLyj9qyLEP68xSkz+oA5voQIKyPes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728637452; c=relaxed/simple;
-	bh=Qr5R+Gps8x+ZKgf3/RZ1q6T2zS4MoAuVhaOjPFLg58M=;
-	h=Content-type:Date:Message-id:Subject:Cc:To:From:MIME-version:
-	 References:In-reply-to; b=L8j41rA7qrpmm2oSLNy8+RoZk25YHqf50e1K3wULqKhSttXs2fTaML3zJBEp9woqzCcuM8Vg6ymRilDJkWKHjuUWyE67pOBQPQDj3nkBWRNUmiVP0F/hkHVL50Uh1SJIQTanDuk8G6qCb5086sEAEj09pO2om40gUSxwV3w3uNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=jKqB7Gis; arc=none smtp.client-ip=192.29.178.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1728638007; c=relaxed/simple;
+	bh=CIVv11afA0FB5srv4LDxoJ07dyBGELWTSmNn1xc+r0M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DuPxzzc9+jT/soyahWGnZhDUuh0+2w5BK+vzwl/MtjItL+AX2YmRRgWo6m6uNb9mzACnBHSUV3FiUAZSAeYPlXKI3i0fxnlOAQxYwTvZzOp6itJB+ztuoxAYrduVCOX0RUQ6JTHEEbRLNvrDVxNXgPo0SaC4Kgvif8V0W2Q9EE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=as/qcoCN; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="jKqB7Gis"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=Z+Sfx9wqrHeL6WQVp0wVqzHp8V4Zi/X0SILltXMQrkQ=;
- b=jKqB7Gis3pseR2vzzvXHTwBbnSxmAciJVir/+6yqQC3UbdQYEKJDCi5tpu+9522vxUHWU1ysj6Sc
-   0RyOVuUTD/wHBqalAelotGV434GPfGfzkZBydTrp49t6c+DrZUXK3qxMJyIHS/uGo05IlxcTdH7u
-   z+FojFk7VoNzqDatNwSOkfh8upYjLR6KUVGL/8n3/c3G4VTCjzf+6HPU7HL+5hM+BZVv8eJehFCb
-   kE+U4+UejtSENLdQ+OImztZPsPijIqkK1P4xsvPPBaT/2LsvhMSOH8oPX3DcPNmrTjpCGfrrlWvE
-   1SVoc8BoiNrQnmUYcwCohfiYPHLtZDCN48oJLA==
-Received: by omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SL600MZUP6QF630@omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Fri, 11 Oct 2024 09:04:02 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-Content-type: text/plain; charset=UTF-8
-Date: Fri, 11 Oct 2024 11:03:30 +0200
-Message-id: <D4SUTJDV0Y04.3Q8YED2MVOKBL@ferdinandy.com>
-Subject: Re: [PATCH v6 3/6] set-head: better output for --auto
-Cc: <phillip.wood@dunelm.org.uk>, "Taylor Blau" <me@ttaylorr.com>,
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>
-To: "karthik nayak" <karthik.188@gmail.com>, <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="as/qcoCN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1728637996; x=1729242796;
+	i=oswald.buddenhagen@gmx.de;
+	bh=CIVv11afA0FB5srv4LDxoJ07dyBGELWTSmNn1xc+r0M=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=as/qcoCNXJ/m/5+iMBcZx5y5IpkU/6WXgmNUJFjhG7ltw1KQkg16NUrgIqXvMrQe
+	 b3fNjdcsbbMVH4MiWFnLa6q5KalBA9fiFKfd76maZx2wL5Az3I7Mty8CPc7cBvdpq
+	 6IB92Sg83Eq9m+X5wr/kMspWXmvE5VieVLZUrr5PSPUfmxyZGwLINEbpzT2PyzMfQ
+	 HJT95gkzj4Z5gA8yUtHVd1eoO5De1Shg86PcKJQnIEUmLFZcx36CkUfCCm/WXvGVP
+	 J/o5/SEWDB03QNdQEhR3CRMs4eY2rLeaBrLVrP+PdNKIQeB8GsSYpgWdgXewNNk5W
+	 b4OKWuruyYmIdiRODQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from ugly.fritz.box ([89.247.162.125]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6bjy-1u2OsE1owo-012GVd; Fri, 11
+ Oct 2024 11:13:16 +0200
+Received: by ugly.fritz.box (MasqMail 0.3.5-13-g85b6fce-plus, from userid 1000)
+	id 1szBhz-cXJ-00; Fri, 11 Oct 2024 11:13:15 +0200
+Date: Fri, 11 Oct 2024 11:13:15 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org, eric.sesterhenn@x41-dsec.de, jarlob@gmail.com
+Subject: Re: [PATCH 1/3] fuzz: port fuzz-credential-from-url-gently from
+ OSS-Fuzz
+Message-ID: <ZwjsK-uprX0eUAl5@ugly>
+References: <cover.1728594659.git.steadmon@google.com>
+ <625b8d607ed2c95e396e7794616d9f290f23d15c.1728594659.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-References: <xmqqzfndndfm.fsf@gitster.g>
- <20241010133022.1733542-1-bence@ferdinandy.com>
- <20241010133022.1733542-3-bence@ferdinandy.com>
- <CAOLa=ZSV50OkDC2p5AHHW0u+fAtLMcCX36W1SuT8AnTkX7HNZg@mail.gmail.com>
-In-reply-to:
- <CAOLa=ZSV50OkDC2p5AHHW0u+fAtLMcCX36W1SuT8AnTkX7HNZg@mail.gmail.com>
-Reporting-Meta:
- AAHMmVLZzPZS/o+H4svL0TEGtjNH6/98eocg9PEqbxhdnsZHmm45YksMQBZnH1qB
- weo6SIjE/5FjXHdpOZwlom0JfpsSytH0nyR3nmtDnAyUvFy937Wr79PeMQH2OjIT
- KwVi/XY9AucPd/kMFI/XVNijSCyJZV9kvVfKyJW5VLGBNgss3bYTl5i48GvbgsuI
- IS4WQPSH9549K3qa5J9Lpvuc155iI8FWogDsuAV1ZiHpfnWkXZa1RbEZShLoDKHU
- iKbcWna2fD8qt1b73g2FYwLDnW+ylaH1iotBYUGLvXvrA7KrZKR6/d5YmafN4npj
- rtG/YZ/b8WT2EEBe4L4wzJV23nfDUExwU9l0qTvQ1hpSfH21fCJP/ojEMAu7zFS6
- YM/6sF/80DDZ/i3jaoVC2+MTnpzxsaOvBF5p0M48AbQ/O2+bMKD15TgLYKszVuhy
- Yb6Pfmlq4s0z88dwJptGhTHomEyR0TKcvilN2fQn+eLgTRAi0r4gEYo=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <625b8d607ed2c95e396e7794616d9f290f23d15c.1728594659.git.steadmon@google.com>
+X-Provags-ID: V03:K1:9afpxLbT91VSw2PQzbpmo2r4VVuC6pxB8XjXVfss8jntF0j+W3f
+ 4Sw0plj7GCSgdyDvrbscX3D9IEh2Y1ufusYzoMVu4aAUWt4UBhaVtJjV74x0KyrR1HHDW94
+ eq7ZMKcrSp0wnBM0jPXjO8gRDrYPhrQkrAiJ2p65ii+ddxeAaZaIUd0reLT2Z8OGaQSAV0i
+ ZH9FJztjhmQYjzebUnkGw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:CjmdN6eLJmg=;o7Hync22+FMJMKlOJf9xlXvUXab
+ SLfCjkuIFy8hPQGFeA21OhjOIMSByV+FLhVOTpWHLdeslJcQMimvS9AxUNLjcurAeFXOtSM53
+ V20NY8CfLM1/GjUaKfX8BQnTcwoXz0lO59c3K9E5qudlBYPgP2Jfo7rFMFVadqsq/tvEOvAfv
+ Uz1uMZ2LeRDNQR7X/JmqN10/um8+1WXxMar4SZjVQxGV2gkVFGdcKdDu5VkWxwaqhMTpgOIqn
+ TT8ZUugfsIwNrvSXZvqWJFUoHw96HZnEZ99VhihmBSn+pluoPn6LiPHwlI/K4n+RF8VoJ+R0U
+ EK0f/RsC2goDkraUpEdatpR1DdWFLwgtSmWDt3WubkmpprbpxIUeRrhYXTe6/GkRkXevAmrlA
+ imS9WBaGxA3f9uRGjL834h+GSkPKTut0ZhJsL01k2rKtIL55YmAbQjL0Kb5o1ahQvB/o+F9dp
+ EJK6XhpqHiN03G2WCvBZ8erEf/J0/1+RUaMzTfgKt1optTGpXDmEBbpjyBlgzORcXg6gjj+G2
+ E5uBulcIgu0nHIc2fb/hFADrVr7ByCIxetN8dRwDuFJv52cQAJcIJ+qHl4gGlhVfMia9UjWFj
+ wVQ4gYQbwKlyJg3NidMc8EzRggHjr2Sv/HyZgUXzTyTg5onuQCQipGnBWgQrTV+L8P+sUK8+w
+ PJKBWrYO0nRpTHtStsJkxSOE5OaUMg/Dgi7IhRdCADcrZMxvE5NA2Ou7bIN2a4pKdya4n+W3t
+ dzAKBGNn4ODS3ksDN25Rcu4SCCPNOOmGs1cIiiXsNSPrB0S4Lksn3wtQjpTbY1or9+zcLMfbU
+ lGFAkASvrHGWB5nXhcCiRktQ==
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for the very helpful review on the series! Most of it is clear to me=
- and
-I agree with, so for brevity I'll only comment where I have a question/comm=
-ent.
+just some nits:
 
-On Thu Oct 10, 2024 at 23:05, karthik nayak <karthik.188@gmail.com> wrote:
-[snip]
+On Thu, Oct 10, 2024 at 02:11:53PM -0700, Josh Steadmon wrote:
+>+++ b/ci/run-build-and-minimal-fuzzers.sh
+>+fuzzers=3D"
+>+commit-graph \
+>+config \
+>+credential-from-url-gently \
+>+date \
+>+pack-headers \
+>+pack-idx \
+>+"
+the trailing space-backslashes can be left out, which would make the
+code less noisy. then the variable would contain linebreaks instead of
+spaces, which the for loop would be just fine with (as $IFS contains
+LF).
 
-> > diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-> > index 532035933f..77c12b8709 100755
-> > --- a/t/t5505-remote.sh
-> > +++ b/t/t5505-remote.sh
-> > @@ -429,12 +429,51 @@ test_expect_success 'set-head --auto' '
-> >  	)
-> >  '
-> >
-> > +test_expect_success 'set-head --auto detects creation' '
-> > +	(
-> > +		cd test &&
-> > +		rm .git/refs/remotes/origin/HEAD &&
+>+for fuzzer in $fuzzers ; do
 >
-> does this work with reftables too?
+the space before the semicolon seems excessive.
 
-You got me there, probably not. I'm guessing I should use git update-ref or
-something similar to set these values manually instead of editing the file.
+>+++ b/oss-fuzz/fuzz-credential-from-url-gently.c
+>+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
+>+
+are these seemingly redundant prototypes meant to suppress compiler
+warnings?
 
-On the other hand, is there a way to force the tests to run on a reftables
-backend? t/README does not mention anything about this and since in a previ=
-ous
-round it already came up that I forgot to update the reftables backend, it
-would be nice if I could actually test everything with that as well.
-
->
-> > +		git remote set-head --auto origin >output &&
-> > +		echo "'\''origin/HEAD'\'' is now created and points to '\''main'\''"=
- >expect &&
->
-> Nit: might be cleaner to use `${SQ}` here and below
-You mean something like this?
-
-	git remote set-head --auto origin >output &&
-	HEAD=3D"'\''origin/HEAD'\''" &&
-	echo "${HEAD} is now created and points to '\''main'\''" >expect &&
-
-I tried a few variations and this is what I could get working, but I may be
-simply missing something with the backtick.
-
-Thanks,
-Bence
-
---=20
-bence.ferdinandy.com
-
+>+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+>+{
