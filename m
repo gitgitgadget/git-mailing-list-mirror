@@ -1,69 +1,102 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA3381723
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 18:03:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BBD81723
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 18:05:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728669790; cv=none; b=HxjsCst7qSeZMvHiByAj572JNuDO+Xtn78COmtmzIxKSb326ORHFc2SR2A50ihmnaY4MgBhQuV179b6T5r7IEviD3mbdO23+jxI0hrXpi2HPXB82Qnn/oyQ4J4xFcwRlmxCTeKOtelxygHi1+liqfEC2ixB9rKgo6QXi309SdqU=
+	t=1728669919; cv=none; b=TIGzv4gryjsVWvaCxBb+0as2Dw/IiYsADl/PTBUXDL6EL+gDyp2Ccg9l0aK2+WykGQEWZs3nKwlKM0XGR28gVVGG5RKNVXSrRmMEDnpkss81UU7+DSokZOQKIxRb2i+QClz2CMPIKEzG0fK9PHh/42/2QOQXXOaNfY299QddazA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728669790; c=relaxed/simple;
-	bh=uProWZ/r7U6rlPwYJqabYPmFb7nOaSX0hnOh6JZTu2w=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Snb2Mlg3iIAT0EowiCm5yCrlpLybwgRW6kkv0p9k8S5qZN6pnI1zWBMDEM817VSUn2wVEr4KK+3KEV90xU6/Vhf0VDgezHxopkZ32WICb586zbfFTlXuUZ/MKqLDw42zuJC5jKVYFQ1ZpaGl83OuOubvOvhSDC1omzRkHYhnzqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WxnWHvRU; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728669919; c=relaxed/simple;
+	bh=qLBSwGa6CkpOHyRtEJrvAnW4PsFkObC4wINmIOYr23Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=k164aJbjNxTP1ea0nK3OLkzN+NvB2+CEFSEXhGB3LG0JjeSnzMfaakDZxYl+VM7KJAW65fflsYTscKwCIOCTNGOTaLBfepJJN8iuXbuptqc9+WVHxljUjR9Tg3j7M7CIF/kDuFqziqGqD0TpztFCAz9oLNfyM+AXPXQTDcALsx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZGkdPCDe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h0a079p9; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WxnWHvRU"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a994cd82a3bso323489266b.2
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 11:03:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728669787; x=1729274587; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=uProWZ/r7U6rlPwYJqabYPmFb7nOaSX0hnOh6JZTu2w=;
-        b=WxnWHvRUpEcf8C3BxWWAWF94U2MST74q4PkfBRLqoY/M+IyNJMJd92olqCXy3KD3oJ
-         pzbRJInz5HbOxUc7vQccq/0V7humO17D0e84hb3iITADcb+VAKJzwRnCEyIfCowX+tSF
-         s4OB0fjr6V7mM7vCD2ifpxSLXoz4P8n0/SQvgV7D6+SdPo7P3CQmEsNE4gsboulnEfvn
-         IfKiXtfw4HDqyZVti1jKkSuXqJLKSGOa3CTQh6ggEmgXLPKx8NItaW6d5qsARVUSdETQ
-         JVL94lwplezrgd7uhBzn16TlkowBG2yJcyKIhOa2r1yrsHTjW1l/Vzx78tX/BSCdvCL7
-         dlnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728669787; x=1729274587;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uProWZ/r7U6rlPwYJqabYPmFb7nOaSX0hnOh6JZTu2w=;
-        b=fANQPP6H1fzdrs4+l+JfvpLoCeENm3mVaK4DFiufjQcLKFL2zfCw0G5fv3/eE+GBth
-         3BMWAz1eR2iOPaj09FKYHgaBZHu1wUL5YkzFD34gh8Y7zg8KfuY1A2zIG3Ko7YnpfNk3
-         lqJrK1fgLOo6pvIk8xQtDQ/1V9Ny3Fq9P53Nlqs8g0Sy4U9+94CYdM28AMQi5hBruUY8
-         7K2NB7e0ivyhs42kSSFyAwWAgwXQO1lOWoIEcxSnawrhaspEt3PMv9+kXXsOKMYIeatF
-         IVoYoMVfeqjan5uqRk3ikK0FAgHfQB7DhrmMkL2UwLM0PaMZkcRo74s9ZOuRCIzHzhqg
-         2DbA==
-X-Forwarded-Encrypted: i=1; AJvYcCVk8AylSbBtfPwNboROFGe/aZ/3JSwwkQ+qtoH44zhMVoITzWQxICG76tr24OxI/tMlsWw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxThyJcsydLWHHELW45iSMjB3aQwkEAKKCBmxLhTVA0/Ogx5oMk
-	tasDy0T5NynChpJqiK8P2ghypOvuTwpBEy3ZMNQZy8Y4MmBCubkdNr0QZzY/bp/LXRl2hIt+Hfz
-	TysEoYOP2FZK5JYiTOObyBw6Wftc=
-X-Google-Smtp-Source: AGHT+IFvPK8vFqQOTSz5o8NIW31izJ1iipizBg54kUkAOmKOMw5xQm5IBOU7z1L6u3fjRGDGp1nBCmVqMPSTmhcIuYc=
-X-Received: by 2002:a17:907:f75c:b0:a99:43b2:41af with SMTP id
- a640c23a62f3a-a99b9638d33mr290649366b.56.1728669787192; Fri, 11 Oct 2024
- 11:03:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZGkdPCDe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h0a079p9"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 80C1013800D4;
+	Fri, 11 Oct 2024 14:05:15 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 11 Oct 2024 14:05:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728669915; x=1728756315; bh=IvI5JDm2I8
+	yXbxeCcWopJnKmhjwp1NnZwB72Goa/yqw=; b=ZGkdPCDemB9/yZFnIiMKhdu40s
+	5kvBHvQYL8wknAXTJyU/hSFpSoFnn43/8JC+InWG4H+vGJN5GCSsPNS+gEpp1OP3
+	M4ra2qh2nOA7e7jWIBcnBEu0GLxzXNUlfTTpg5p32zjM9IMomBR+0CN3DT3M58S7
+	nH1TW/5NWHn6uJHC9j5SopcdJou4rCGiZCsG2+bjMqxXlLb6Y8cCnCLDPUGVYf23
+	TJ718O9V9s28jVfNPt/8wYYFMdQkoTIS1ifqd+Jvdl+j42JRw6tewbH1R7z4xaxZ
+	dBO/wV0hZzbEic0kQ7WsL5gI4HW8UM2RZdHO2xuurU1/i00ZjKgVAvfYzTcA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728669915; x=1728756315; bh=IvI5JDm2I8yXbxeCcWopJnKmhjwp
+	1NnZwB72Goa/yqw=; b=h0a079p9mxFT1XMgpcLq6Fxd+J+0jtvPqghGzpErkY9q
+	FPsSkkA+Mw1p/uGGK9grAw7KNHnvC1n4KxXJQ9at8muX+0JGFHy4JSnoE7gcwvyR
+	ci05VV2dLliPRAtjEHNo0iby4SgZx2F3XfCW7opa8argHOWX4T4TmzDA2hWFFDoV
+	x40UbBGN6GfgeLoEQ/hNNEcbzWuHUGa+yAS2zP01vf3+jbyYRqDQLbwjU07RrAkk
+	2fuayDrvzvFjiZ5O03I4dUrMdCwVYVacmgmS0kJxIsSIzQbWx7R2V9fUqTC0O/2V
+	FglvrY3ZDioBGN6RK4oS4cky1YRkfBkzs0BcBqa71Q==
+X-ME-Sender: <xms:22gJZ-f2VX6vqF-QWZ27rrj4N1avgIbD_vmId59J1qDSsi7gHuy2cw>
+    <xme:22gJZ4PGVz0Wk8zWOAhN1UBcWjZm00f6wVbTIIh14JROljJ2QqvVR1kl1YGHky2NB
+    -DFBMkGN3pUzgAfng>
+X-ME-Received: <xmr:22gJZ_iP3YzbJwAchfxesgQA2XBTd2pFwAhrXm4pSvXc_plchMUNcApwxjv-Eohbsl50YR7zqgYBgHBcrmNYnlT5lcvqKmtDZZZzpFM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefkedguddulecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeifihgrghhnvdeffe
+    esohhuthhlohhokhdrtghomhdprhgtphhtthhopehjuhhlihgrnhesshifrghgvghmrghk
+    vghrshdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:22gJZ7-IMhebTD_DW9_rYioBXuwgPL3mPaXBlVvaG5DUY4jX_zfAtw>
+    <xmx:22gJZ6uXtzWO-PgB2jvPfjfcSGJKRhMez5ZxtwaQEBJgoREbbXWKMQ>
+    <xmx:22gJZyHS-W2wGpIPpXwFL9UWAfX5V5ApIYeMfxOtLs9_3ec-omJIoA>
+    <xmx:22gJZ5OvMQ0Hqt3NlMujbknT7prJHFahgRtJ4P8b1V2XMGAqjUS5eA>
+    <xmx:22gJZ8J9pJHDHNNdEXjP4_v_wtNaPN7MMtWJhhWV6afIcqaE59XcP2iU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Oct 2024 14:05:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Shengyu Qu <wiagn233@outlook.com>
+Cc: Julian Swagemakers <julian@swagemakers.org>,  git@vger.kernel.org
+Subject: Re: [PATCH] send-email: implement SMTP bearer authentication
+In-Reply-To: <TYCPR01MB843751F88AF98DFDB606B0BE98792@TYCPR01MB8437.jpnprd01.prod.outlook.com>
+	(Shengyu Qu's message of "Sat, 12 Oct 2024 01:48:18 +0800")
+References: <20240225103413.9845-1-julian@swagemakers.org>
+	<TYCPR01MB843751F88AF98DFDB606B0BE98792@TYCPR01MB8437.jpnprd01.prod.outlook.com>
+Date: Fri, 11 Oct 2024 11:05:13 -0700
+Message-ID: <xmqqed4mecrq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Dhanwanth Rao Varala Balaji <dhanwanthvarala@gmail.com>
-Date: Fri, 11 Oct 2024 23:32:54 +0530
-Message-ID: <CABXkuJMYhq2ht-_edzv2AebGU1LDqi8ZBx0EE36KQ5ZMqSKzzQ@mail.gmail.com>
-Subject: want yamaha piano 10/11
-To: mdsalem309999@gmail.com, joswihart@outlook.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi Josey, Sorry about your late husband. My sincere condolences. I
-have much respect towards the music industry and would be very
-grateful if you could deliver your husband's piano to me. I shall take
-care of the delivery financials whatever they might be.
+Shengyu Qu <wiagn233@outlook.com> writes:
 
-Thank you,
-Vikas Bagalkot.
+> Sorry to bother but what had happened to this patch? It is more useful now
+> since outlook also switched to oauth2 only mode.
+
+You are the second person to mention that what the change wants to
+do is sensible, but nobody gave any review that verified that the
+change does what the change says it wants to do, so it was left in
+the mailing list archive.
+
+Thanks for pinging.  Perhaps it would remind and encourage others
+(or even better, yourself) to review the patch to help it move
+forward.
