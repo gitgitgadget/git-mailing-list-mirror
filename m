@@ -1,124 +1,117 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3EF215F55
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 12:13:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C0D1F9415
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 12:18:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728648782; cv=none; b=WqoLStqQVJgQngHazVd4pnSZdO/1ir8WdrMigFkJ/T9F5+m7IyKlGX236qzEo0TYKGR7FHDDD8vcu92r2RBQOx1ZUyC/L0BxnVgFyAULnIWOIcjvobNrES6UNRNUgiPwQs4p5MqJHtwy1fryy9znYncRSAkagF04VBFV4BDhaMs=
+	t=1728649109; cv=none; b=fdksvkDdLEr3ETe9ZYRiEWUvrlCo1MdKUmF/dut3mdj2lwX+vontaJcvPBMED+vJvSdGkqDsbudHfgsWGlxhjl4Kk7z/YozHqg6qCh6MEwJgcRxc65oVAP0h7gj+tCQea4Gnsi2KloKcfgNt3PusJs5flAdVBaU9Iu20+5veUbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728648782; c=relaxed/simple;
-	bh=1guwdQRN67LHeaQ9L0eNF4/IRrggUoDzgaiXWgU1TUU=;
+	s=arc-20240116; t=1728649109; c=relaxed/simple;
+	bh=mkGTkoHjZrifXLaOp6cCjUcFEYqAEIipji3B7Yg/Y98=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TaFCeJVnVz8xW01BIqfTlKgmBQDFVjk9F79cB1fKvXx9pNyc9GWfNotMbvUO8s5iEUPWvctp4aHI+tRbh7xgFeyohLYFXsmjk9NWqvWrdusuuzbDDu7x4wsQVy2dpz0lzFxilFAYZXt4SvW5kUQ4NAqg/90qV2krAtaMDWzndB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eceTY7fH; arc=none smtp.client-ip=209.85.221.171
+	 To:Cc:Content-Type; b=lDgUNXHw+a/sNqcD5yPoAPFpUeVil4Sgjef/2OQ1tciSzmyBKZ5dMS2lV78lFbDkujS6lymfvtvS62Z8NaLXtsyR1k5tZupqhMJoFmm+Z4SHFrg9nSwbrGKvOpx8RhABPlF1+T5UfBguDcL1dRcSu4EztSbwrAzC1x/8PYnQsF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JkiyyUP7; arc=none smtp.client-ip=209.85.221.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eceTY7fH"
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-50d24099415so144155e0c.3
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:13:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JkiyyUP7"
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-50ac27e3530so1688603e0c.1
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:18:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728648780; x=1729253580; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728649107; x=1729253907; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4uWFACZWFTby5Yy47TFnIpljKQVmo7U55/o+V//E2Wo=;
-        b=eceTY7fH587xxe/p7wSzX98pAYE3cT2x6B+u8ckXz4SWTp8QhDm7dnINXIgQ9RJgpf
-         vhxykhY6ppvSufu5IRc7LKhCSzqrgFZI8yGBRtl61asiDwKUHducQVH4ifurhiHGZDj4
-         kyu3FHgiZExoQgseFQuIJMaOUqsvfVH7jKpUUcb4RH2FSx6k7N390RcLgdteSW4E1arI
-         gJfOYGnNlUGcIOpM99P4SEGYLSIUN5IbRc9i+TXSci+qrOcODhBZaEXiO1DHXxv3Zysb
-         vVlcW7o2VKxUxN5nLfzqIEMzlfxaMcx3I57ZHetUevkgU1FJilTb8rjb0X7q8x7Mtcwb
-         nlsA==
+        bh=+cf05sKNVVi4XGi9qvLN4zzAUzrbs6DBuhJkfW853F4=;
+        b=JkiyyUP71a6Y3DkGnNThWHd4w20Qg+v/4M97ahwq7/gUXUlyMkvlAJhzaNTawqQPwJ
+         SKPTPMvwei4fsKwnpAlnA1TzgcAqZiwhlvUI+pNlDcsoxv+x2mtxnjieGAKF9ZYxBxVC
+         YHP2uRV7DUkIzaVE1e0OZ6//BuZWlaRpOfRSuE2gHC08EjY4YzPztp+hvVfCKf2DxQ8l
+         R/ryJz0f4UrvJB1OmeJaq+RpwJVRndzRYo6K6Now3tFsvSCjDF81ajBvOLydJa42s5Pe
+         1tYI2iz9KD7bYjJFiwhlUIemsYC3wmtPMqzwtUN53/wiXBOzkufhose9zOR+yQTw3joq
+         xsLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728648780; x=1729253580;
+        d=1e100.net; s=20230601; t=1728649107; x=1729253907;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4uWFACZWFTby5Yy47TFnIpljKQVmo7U55/o+V//E2Wo=;
-        b=OM3QgFX9YESbBf/03HR//JOS2ckv9ucETOqpqEzHXqm4Lzhu1XMb7F0CUK8r43A0xq
-         tzKCqixlz6kK6xYU12IrPPaqqjpNPPyl5F/cZFaAj6hpCGC3zh/fItNFVqBR/I86VK56
-         Oaz2WzK14mrrle5ngglIOjLVjzvllnQRC3FtmRABHioeE4mbCh0b7MlmJKgropD4x/I/
-         Q41FjPd99xrUIOocACc9aZRg9e7GHfYRPTVgjSnB3BOqeG0cfyAEA3L3p92uFgDCNqdp
-         rIJSfpsVw1x3xCRLevW6nGJdKJY9xPN+kYUZ8UZhLieYRyhnZNimexFU/U8D5cnmNoQG
-         G3oQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUmrXIREH1X/3F8rPuoW+TFiiX0wi+y4BittkpbSqQ3bZBzoqb4OSciQC5U4DBChd0huCU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBuUBOq6dmV75G88kgzGEEV72VWgTJX8w3LB1+odBVnKhDztFY
-	urDU09rmqDVwRqO3r/8vFd5nY0efMRe4iRTBTk06TiBgkGTOXDe3igQekBuUWcu0Bc+mEQwd1dt
-	CIxH90xKuT3kWTBksbZ6u3fIS+EDAL1/o
-X-Google-Smtp-Source: AGHT+IHmp4kFBqVF5Jz8NLJkJROErFHJN0N/9gtKQ6yPGnuo5x/eR74RnU7yLQ+XOOycD8PnKw/GYVxz50W2x9Nvkxw=
-X-Received: by 2002:a05:6122:2024:b0:50c:4707:df0 with SMTP id
- 71dfb90a1353d-50d1f3bdc59mr1099464e0c.5.1728648780163; Fri, 11 Oct 2024
- 05:13:00 -0700 (PDT)
+        bh=+cf05sKNVVi4XGi9qvLN4zzAUzrbs6DBuhJkfW853F4=;
+        b=faGc3VMuNIu7plzzKWLOj1flj3002UwJaWJFK3KDdd/BxAFVE0IryrnG/sSudv6+Xx
+         0/iTVrxdv2mrGR5qWuHoTZjqCB3X2K4d1JKuH5poHp88Y3+RTy49yrc+uS1BtfyMqYgq
+         bYTnS12K9iebL89+dpr+ynFQcJeLBzRLRrPSEoiXfX6W6rdzSVU7Q2rhj04KptYlExkC
+         UvVqlJY3bYFfK2Nje+qBhhoNVZjDsuKxBPdI18elkfH3f/3t9XwVKXvPaiAhmv+eTrP/
+         u8U3172icWnJY0lxkGcClTIq/ouT24aNOQY5kkyWiQ+/utLWIsgw5abWjMatZ3Pv20cE
+         j4mA==
+X-Forwarded-Encrypted: i=1; AJvYcCUVduufEL5FmycUdZvFOEOCpxSvQTMdHsnPucBsiWJxBWLO92C+/9BDk/BNqE48ufaIbRU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxsqOwHeL959y08R7Amdv91w03FlUCaezcZ+PkNNRxG+EqDNX6w
+	lVX3aHVxeXqXW0gSVMX5g6HS8eQb5WK+muQBYCwVQt2SPCiA5R9QIWvjK3FzIlqLFvraVQj3qmH
+	SCXxpam2mvN6X+bDEfLBW8sDwk5Y=
+X-Google-Smtp-Source: AGHT+IEuVLTv2XYbeZV+CUcsqQuk2UZaLArFpp2h6j/nKXQ4qHR5in5EntauYx1JZoRwTPcbIwuPTc9CVQok4eA4eA0=
+X-Received: by 2002:a05:6122:178a:b0:50a:b54e:79b with SMTP id
+ 71dfb90a1353d-50d01963076mr5474001e0c.1.1728649107014; Fri, 11 Oct 2024
+ 05:18:27 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 11 Oct 2024 07:12:59 -0500
+ HTTPREST; Fri, 11 Oct 2024 05:18:26 -0700
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <e2ac27dbca0956bc231ad2a866bd796170deacf4.1728629612.git.ps@pks.im>
-References: <cover.1728629612.git.ps@pks.im> <e2ac27dbca0956bc231ad2a866bd796170deacf4.1728629612.git.ps@pks.im>
+In-Reply-To: <cover.1728629612.git.ps@pks.im>
+References: <cover.1728629612.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 11 Oct 2024 07:12:59 -0500
-Message-ID: <CAOLa=ZTOVGNxqJq0mj9GuLFqa6mVHp7WOkhuQsgiW79OKhhyNg@mail.gmail.com>
-Subject: Re: [PATCH 04/10] reftable: convert from `strbuf` to `reftable_buf`
+Date: Fri, 11 Oct 2024 05:18:26 -0700
+Message-ID: <CAOLa=ZR_fcq0NyraV01FQBeOZ=uv7JWLV0+tSsi=zsvt+VZOdw@mail.gmail.com>
+Subject: Re: [PATCH 00/10] reftable: stop using `struct strbuf`
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>
-Content-Type: multipart/mixed; boundary="0000000000007bcccf062432688e"
+Content-Type: multipart/mixed; boundary="000000000000f7351d0624327b74"
 
---0000000000007bcccf062432688e
+--000000000000f7351d0624327b74
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Convert the reftable library to use the `reftable_buf` interface instead
-> of the `strbuf` interface. This is a mechanical change via sed(1) and
-> does not yet handle allocation failures. These will be addressed in
-> subsequent commits.
+> Hi,
+>
+> this is the second patch series on my quest to make the reftable library
+> become a standalone library again that can be used by libgit2 without
+> pulling in all kinds of dependencies from the Git codebase. This part
+> makes us lose the dependency on `struct strbuf`, which is done due to
+> three reasons:
+>
+>   - To make us independent of libgit.a.
+>
+>   - To ensure that we use the pluggable allocators that users can set up
+>     via `reftable_set_alloc()`.
+>
+>   - To make it possible to handle memory allocation failures.
+>
+> While this leads to some duplication, we're only talking about ~70 lines
+> of code.
 >
 
-Nit: Would be nice to list the sed command used here, so reviewers can
-review that instead.
+I only have a few small comments, but overall this series looks good.
+Thanks
 
 [snip]
 
-> diff --git a/reftable/basics.h b/reftable/basics.h
-> index 4cf3f0e7593..ac3100417ec 100644
-> --- a/reftable/basics.h
-> +++ b/reftable/basics.h
-> @@ -104,8 +104,7 @@ char *reftable_strdup(const char *str);
->  #endif
->
->  /* Find the longest shared prefix size of `a` and `b` */
-> -struct strbuf;
-
-I guess this is the only manual part of this commit, would be nice to
-mention this in the message.
-
-> -int common_prefix_size(struct strbuf *a, struct strbuf *b);
-> +int common_prefix_size(struct reftable_buf *a, struct reftable_buf *b);
->
->  int hash_size(uint32_t id);
->
-[snip]
-
---0000000000007bcccf062432688e
+--000000000000f7351d0624327b74
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 9526a30e046c3e57_0.1
+X-Attachment-Id: c1e6ee8548116c8f_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jSkZrWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mLzg1Qy85UnlxUmdBRlhvS1NCMmdEY2pVNlpJaEZuQwpRWlRvUllIOVlN
-dWt2YzR3a0wyOVhJWUVsTytKNEUreGVsVlBuTi9ZVy9nczh4S0ljVHNOdmNlaHlvaEE4TUllCkdq
-aE9IajA4d1VGbHN4YTJselV2RGtFZTNzRjBxV2g0Qjh5cTB0QWdKbnhPKzBKNVIrNStnQnJoU255
-U0RuUncKYVl1UHhpZ2hKRjU0dzJOalRPNnZuQm5CVzhlSVFpZ3R4T2VOZnJ2clY3aGNzQTJzdzNR
-NXNMQ1FpZitQVTF6bQp4MXNLT3VSRXQ1cWlOOEdobU1pVDBMWlZjNTBBWlIzaHVkREJteUozVE1Z
-ZFVWbFdac2F0emZaaUF4Q3VkaTJSCnpoSlhUVUNoZWtva0IrY0ZhN20wd0dMT2c2QlFVTFdoYTgz
-WmNHZWhRbVBkNkFXZDYzMmJXNjRiTW9pNkI0Q2YKbGJVdnVtcVBaKzluTWZJUjBCQ0Q1VHJ3OURV
-UFl1cjN1c3c5UlM4K0tCTnhVS2I3ajJjRi95OC9FOEd6VHhXcAptTGdJYWViekdiMlJ5N2pDVFZv
-WnVXQ0NmTU9KdjlWcGM0ZHB2Ynp4UU1MVXhIdjhlMG5OcWZVaCtVZFh3TnF4CncyNzhLdEIyRVhP
-R3pGM2VHRFlWZ1o2U0NQTDBSWlR2WXArNmgrYz0KPWhaczAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jSkY0OFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMHNlREFDTVBqS0ozUkF5N0tIa24vamcvaXczaGhDSQp2QkdsaXBhb3h4
+djRoYmd2T3Fzdll1dzRIbjZGenQ2Sy9EVjcvUHF3cE02WU9BTERpanJ6WEdjR1llNFBCd3NMCm1P
+b2dnZGV5dDgzLytrdDBjUEdsTUhXWEdUTnRuV2I3RC81NXpYcm4zTUJ4ZnlXNHhHaVZ6dnNZcWIy
+dDhSRGwKK2RXSW1XRzdtbTZTTDIxeUQrZWEzYXN5RFpHSEYySFY2Q3dBUHlNT2twWXNiQVpieS92
+RHVlYlpYZUpFU1lCQgozd3FwRVR5SzJGcWpVeVFUdTFZMzExUTh3T2VTUlM4UEx6MEpRUGw3K2F4
+aitvbi9PdVlja0NnZ2IzOHV0RysvCkN0djU0ZEt5T3hFZEFpY1o2SlpKUTRoNkJPaG95SzVNYm52
+SFJtQ3JtRkZNQjd6UitTd1NhMUpmRmZOaXVFUVEKZTg1ZG5CS1R0YzVVV3JlMWM3L3FNZllMRlps
+WnZqWmVmNktnZ2hnRVRyQUxmM1djWDVBNTZpWlRHVWpyRnluaAp2Y0g2U1FLeFBLZnpTL2ZSaUtG
+ekpYdG5TUlIvc1N1ZmdtbkYzNFNtaGIraFZwU3pzRkpFSllGZU5TWm5RRXNqClJBQVNkbldqTXh1
+ekd3SWpHU0JWZDQwejFDL2NuQnhXOU0rWm5saz0KPVcxbEoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000007bcccf062432688e--
+--000000000000f7351d0624327b74--
