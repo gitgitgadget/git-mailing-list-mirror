@@ -1,105 +1,133 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C3120C46C
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 09:13:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCBD20A5F0
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 09:17:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728638007; cv=none; b=QTadBJFXICr3o9a+OAAS+CfLMc8oxdUGRdijP62smviQIe9Mn2Ct5emATp1fqurZHLsL6qJ0RN6I8K7PJjz0DQfr5KSZj67Gkggzhncx1XIq9R0SYx2bvzp0QZpNI0Lp8em2fMfC2nxuAXcLyj9qyLEP68xSkz+oA5voQIKyPes=
+	t=1728638271; cv=none; b=cGEJQQKBdcGsrdbyJyfme4WvVcos8quDxMD75DSmioIV2T7Bj0mYQfSOUs46G9/UvgbkyLt+yzcAYPgta+NnRwcxpFEw4cNqyAi9Cv6c06yyCVlI966ggVX2QTcUYvff+IuFomw2P3e4poVPKdSDvovsxNCJe7AYutqHhjpAVpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728638007; c=relaxed/simple;
-	bh=CIVv11afA0FB5srv4LDxoJ07dyBGELWTSmNn1xc+r0M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DuPxzzc9+jT/soyahWGnZhDUuh0+2w5BK+vzwl/MtjItL+AX2YmRRgWo6m6uNb9mzACnBHSUV3FiUAZSAeYPlXKI3i0fxnlOAQxYwTvZzOp6itJB+ztuoxAYrduVCOX0RUQ6JTHEEbRLNvrDVxNXgPo0SaC4Kgvif8V0W2Q9EE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=as/qcoCN; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1728638271; c=relaxed/simple;
+	bh=iH9n54je3He0pvRuFjHyOR9rX6kWWZ+Lz664UHHvN2M=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=tAe/3MiJTjIyTWgfDTD4BrulJvH8fl2VQSSHRYthJ8yp6AIVvgw86BcqIaL+YNMEB1Ft1uWH8ix46vNlXaGDlg7NX2tblXPkHcMX4epRwfzvGgYFJNf50MSxhBk4W8W3zK7rmpiyO2f6Jm5yPN5xjN3itcaA6QeQUuCf5zh2Mtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AneA9huh; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="as/qcoCN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1728637996; x=1729242796;
-	i=oswald.buddenhagen@gmx.de;
-	bh=CIVv11afA0FB5srv4LDxoJ07dyBGELWTSmNn1xc+r0M=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=as/qcoCNXJ/m/5+iMBcZx5y5IpkU/6WXgmNUJFjhG7ltw1KQkg16NUrgIqXvMrQe
-	 b3fNjdcsbbMVH4MiWFnLa6q5KalBA9fiFKfd76maZx2wL5Az3I7Mty8CPc7cBvdpq
-	 6IB92Sg83Eq9m+X5wr/kMspWXmvE5VieVLZUrr5PSPUfmxyZGwLINEbpzT2PyzMfQ
-	 HJT95gkzj4Z5gA8yUtHVd1eoO5De1Shg86PcKJQnIEUmLFZcx36CkUfCCm/WXvGVP
-	 J/o5/SEWDB03QNdQEhR3CRMs4eY2rLeaBrLVrP+PdNKIQeB8GsSYpgWdgXewNNk5W
-	 b4OKWuruyYmIdiRODQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from ugly.fritz.box ([89.247.162.125]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6bjy-1u2OsE1owo-012GVd; Fri, 11
- Oct 2024 11:13:16 +0200
-Received: by ugly.fritz.box (MasqMail 0.3.5-13-g85b6fce-plus, from userid 1000)
-	id 1szBhz-cXJ-00; Fri, 11 Oct 2024 11:13:15 +0200
-Date: Fri, 11 Oct 2024 11:13:15 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org, eric.sesterhenn@x41-dsec.de, jarlob@gmail.com
-Subject: Re: [PATCH 1/3] fuzz: port fuzz-credential-from-url-gently from
- OSS-Fuzz
-Message-ID: <ZwjsK-uprX0eUAl5@ugly>
-References: <cover.1728594659.git.steadmon@google.com>
- <625b8d607ed2c95e396e7794616d9f290f23d15c.1728594659.git.steadmon@google.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AneA9huh"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4305413aec9so16455025e9.2
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 02:17:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728638268; x=1729243068; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5oPo9OgWlAcLVjTHJrY5JFnMfQVObA/dsjhBvZrz+Is=;
+        b=AneA9huhKWQ7Arf2EEG1Gqn+RCAkkZKY8MG9FzlIlZhqQ4dCtUZnakrFp3NnPPfiSO
+         uv7wQKScwhOALDvVMgu8a1226B5Hxe80uabEGAcMN0BxMM8BQuAV35h/hiM1eQC5cdnr
+         6L18CCW6QxqqaodOK1yykdMjyMT7JzwjfDbklgkB112pGqbWhQIR/3wd70nFGABv/cd3
+         NbwNaSzHqqRV7UvySNdm/E2KMSoY9duBrmRAX49j/cn92LgIS5Pz2Owq3pW61Lo+ge1C
+         Y1O0Ze+t2oBNkx92UROY+PUgZIINyjkpL2j3YPGXETDUnrwNVAkMlgeo4sK+jvsNodfe
+         OgoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728638268; x=1729243068;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5oPo9OgWlAcLVjTHJrY5JFnMfQVObA/dsjhBvZrz+Is=;
+        b=aiBTGnb1c/5AC2qYWmUQozPAJuAe99y5LcLv/Pf56Bcd6RUWuLgunv/f2i02oIPpgy
+         Tm68xxL9NOkO9d3KBbcJbRhtQ+l9NRQjsp1J4Veyl2420IHcaomW2aLAwOdFIdhIOtLy
+         8gcDKC/2xwXi9LsnYWtsH7RlzzZ0g4sGsF4ViODUU4ZGe/m6+bBaikH4dBXOfZ7uNnUG
+         4xCi5cOKRVAVPsWhqj8TBq6jnZuVKYdxLcAdVClZX/b9BU2EI7gwQqbwZMKYlU4I7vgR
+         1SlnR1+DGY9x+XBIwEPkk5Xp4P8DQ3/cqfbTPhHKYFK0oIvBliU5nG0ClMXPxNbXFN/p
+         +I5w==
+X-Gm-Message-State: AOJu0YwWUX3h/XO1XXJtbBVHIaExrdKRCRpi0fImI9ikrSM4Fc049wTl
+	J+WsQt7LqLj5qVYlfy30oEQX1T6ipLUdSv9RP4y04LFVg+45DDBo
+X-Google-Smtp-Source: AGHT+IFlipL0lXy6Z9djLBXbbfU4jbm2Z0tNTZxbiLptXrEVa6VxgaWKvPVSMp9PGSYZRLp1UKuptQ==
+X-Received: by 2002:a05:600c:548a:b0:431:157a:986e with SMTP id 5b1f17b1804b1-4311dee8220mr13281605e9.20.1728638268024;
+        Fri, 11 Oct 2024 02:17:48 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-430d70b4674sm69479215e9.38.2024.10.11.02.17.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Oct 2024 02:17:47 -0700 (PDT)
+Message-ID: <712557bd-f3f1-4489-95df-a55f90f1dbda@gmail.com>
+Date: Fri, 11 Oct 2024 10:17:46 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <625b8d607ed2c95e396e7794616d9f290f23d15c.1728594659.git.steadmon@google.com>
-X-Provags-ID: V03:K1:9afpxLbT91VSw2PQzbpmo2r4VVuC6pxB8XjXVfss8jntF0j+W3f
- 4Sw0plj7GCSgdyDvrbscX3D9IEh2Y1ufusYzoMVu4aAUWt4UBhaVtJjV74x0KyrR1HHDW94
- eq7ZMKcrSp0wnBM0jPXjO8gRDrYPhrQkrAiJ2p65ii+ddxeAaZaIUd0reLT2Z8OGaQSAV0i
- ZH9FJztjhmQYjzebUnkGw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:CjmdN6eLJmg=;o7Hync22+FMJMKlOJf9xlXvUXab
- SLfCjkuIFy8hPQGFeA21OhjOIMSByV+FLhVOTpWHLdeslJcQMimvS9AxUNLjcurAeFXOtSM53
- V20NY8CfLM1/GjUaKfX8BQnTcwoXz0lO59c3K9E5qudlBYPgP2Jfo7rFMFVadqsq/tvEOvAfv
- Uz1uMZ2LeRDNQR7X/JmqN10/um8+1WXxMar4SZjVQxGV2gkVFGdcKdDu5VkWxwaqhMTpgOIqn
- TT8ZUugfsIwNrvSXZvqWJFUoHw96HZnEZ99VhihmBSn+pluoPn6LiPHwlI/K4n+RF8VoJ+R0U
- EK0f/RsC2goDkraUpEdatpR1DdWFLwgtSmWDt3WubkmpprbpxIUeRrhYXTe6/GkRkXevAmrlA
- imS9WBaGxA3f9uRGjL834h+GSkPKTut0ZhJsL01k2rKtIL55YmAbQjL0Kb5o1ahQvB/o+F9dp
- EJK6XhpqHiN03G2WCvBZ8erEf/J0/1+RUaMzTfgKt1optTGpXDmEBbpjyBlgzORcXg6gjj+G2
- E5uBulcIgu0nHIc2fb/hFADrVr7ByCIxetN8dRwDuFJv52cQAJcIJ+qHl4gGlhVfMia9UjWFj
- wVQ4gYQbwKlyJg3NidMc8EzRggHjr2Sv/HyZgUXzTyTg5onuQCQipGnBWgQrTV+L8P+sUK8+w
- PJKBWrYO0nRpTHtStsJkxSOE5OaUMg/Dgi7IhRdCADcrZMxvE5NA2Ou7bIN2a4pKdya4n+W3t
- dzAKBGNn4ODS3ksDN25Rcu4SCCPNOOmGs1cIiiXsNSPrB0S4Lksn3wtQjpTbY1or9+zcLMfbU
- lGFAkASvrHGWB5nXhcCiRktQ==
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [Outreachy][PATCH v2] t6050: avoid pipes with downstream Git
+ commands
+To: Chizoba ODINAKA <chizobajames21@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, ps@pks.im
+References: <20241008162117.6452-1-chizobajames21@gmail.com>
+ <20241010063906.51767-1-chizobajames21@gmail.com>
+ <90dea722-0762-4a37-a216-6883f4889c67@gmail.com>
+ <CACwP9aqEoRchNN-4iuSxrhtt5k-yHMsjmyQjaG9uV4xUsQ7geg@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CACwP9aqEoRchNN-4iuSxrhtt5k-yHMsjmyQjaG9uV4xUsQ7geg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-just some nits:
+Hi Chizoba
 
-On Thu, Oct 10, 2024 at 02:11:53PM -0700, Josh Steadmon wrote:
->+++ b/ci/run-build-and-minimal-fuzzers.sh
->+fuzzers=3D"
->+commit-graph \
->+config \
->+credential-from-url-gently \
->+date \
->+pack-headers \
->+pack-idx \
->+"
-the trailing space-backslashes can be left out, which would make the
-code less noisy. then the variable would contain linebreaks instead of
-spaces, which the for loop would be just fine with (as $IFS contains
-LF).
+On 10/10/2024 19:51, Chizoba ODINAKA wrote:
+> On Thu, 10 Oct 2024 at 15:08, Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> On 10/10/2024 07:39, chizobajames21@gmail.com wrote:
+>>> From: Chizoba ODINAKA <chizobajames21@gmail.com>
+>>>
+>>> In order not to loss the entire result code of tests,
+>>> write output of upstreams into a file.
+>>
+>> We're interested in checking the exit code of git, but not other
+>> commands so it would be helpful to make that clear. Usman's patch [1]
+>> has a good explanation of this.
+>>
+> I just read that sentence again, it obviously needs some clarity. "In order not
+> to miss the exit code of any Git command, avoid using pipe and write
+> output into a file"
+> has more clarity. I will look up on Usman's patch [1], before my next changes.
+> 
+>> This patch also changes instances of "grep" to "test_grep" so the commit
+>> message needs to explain the reason for that change which is that it
+>> gives a better debugging experience if the test fails.
+>>
+> I had included that in my "Changes in v2", appended beneath my "Sign-off-by".
+> "Changes in v2:
+> - split multiple commands chain on the same line across multiple line,
+>    for easier readability
+> - replace "grep" with "test_grep", for more context in case of a "grep"
+>    failure"
+> Maybe it was not so obvious that you didn't notice, or it is not the
+> traditional way of including it.
 
->+for fuzzer in $fuzzers ; do
->
-the space before the semicolon seems excessive.
+It's great that you listed the changes between versions below the "---" 
+line - that is really helpful for reviewers. However those comments are 
+not part of the commit message when the patch is applied. It is 
+important for the commit message to explain the reasons for all the 
+changes in a patch so that someone reading it later can understand why 
+the change was made. Therefore the grep->test_grep change should be 
+explained in the commit message. In general one should avoid making 
+unrelated changes in the same commit. In this case I think one can argue 
+that the changes are small enough that combining them is fine.
 
->+++ b/oss-fuzz/fuzz-credential-from-url-gently.c
->+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
->+
-are these seemingly redundant prototypes meant to suppress compiler
-warnings?
+> Thanks Philip for the review, I will make the needed changes in my
+> next patch.
 
->+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
->+{
+That's great, I look forward to reviewing it
+
+> And look into
+> the index-pack proposal in a new patch, since it is outside this scope.
+
+Let's finish this patch first. I'm not sure what the best way to improve 
+that test is at the moment.
+
+Best Wishes
+
+Phillip
