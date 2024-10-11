@@ -1,79 +1,79 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B143208983
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:33:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76EFA209685
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:33:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728624790; cv=none; b=eQtsbNkKySTVfBPqKwLEQr011ED0MBM9rhWBcZyUZhEBjJ6Dn/glvNmzMaGvwG3c5h+ATorJ7lNAH4vO9kGxLcFGNytT1LvfEvp6swRoQpJ2H5NPWmxRG5RQ8JOv2EWaHnd4XO0lkHwe6ndFg5OFM5PiGSiig07JYy17BM3065c=
+	t=1728624792; cv=none; b=Ivs7UEJTohPtv5QqBSMxw+Nqoc0ptB7NGGYnzrnjw/NQseHRDHSeCCRoTkoIgcZt7DSIc5vpCCfNasJIvd1vaTv85MSLtYmlScZbM8TT4p+q+bzoD8jNL1X0ncd1MD2YQzJI5ul7RF8Gg2epJ46i6kKtg2r3ZWB0FPffgbGz1yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728624790; c=relaxed/simple;
-	bh=yJC1w/xycMqIXIducOqTn3Hsjcbnzx6lmv2R9/ALpkg=;
+	s=arc-20240116; t=1728624792; c=relaxed/simple;
+	bh=rgLYx63ZPfp4w3ctEetrXm/FoDM1vQGpLr/1VgTa97Q=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dMgUcT5b81OdKbRyId/g1Kpkkih4hR54PyG48G9eSH3WRaNGKfM92Wkt9PAWA/yEis3sJopMREMk+4hgfw+HFzh3FrSjAB6oiGPr+21xNo/+fBj8Cf4yjGNcGMu6fK1pNrypHpb1vepjirpBBNRNqRSefNh2rxKrxrUeWdhpGZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AZL4OBG3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AWaAlkM/; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=GoCcIyvfj1/AZYK9N4PCZl1WQum+HFqBQ0IMzDFGA7NFMB7Vcr9ldhKxPA0FP+gYGEqGdRd+ngpLlZOyOBXzms6ryUD7fkDhJZK496OPzlfBoij8WERLhczoN4iYfDmjI3Qnjs6nxEL5ms/9XcUUGWjj1wF8FJLCONLHZ2fnLb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lmGuAVwh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D0Exe5OC; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AZL4OBG3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AWaAlkM/"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D206511400E9
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:33:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lmGuAVwh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D0Exe5OC"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id A5F3C1380198
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:33:10 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Fri, 11 Oct 2024 01:33:07 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 11 Oct 2024 01:33:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728624787; x=1728711187; bh=+k26Sr0L5q
-	DX5MYZuttPVSscffqxxNce/ZnwAcLyhjc=; b=AZL4OBG3479cwJk80Pn81ubliS
-	6sjAwTSiZhTTFjq2SJ6d8gwI/jGCUfhBrudSx2+q7TTdyE8BpE20uF1zBc3x1V9w
-	L/AiZCeLRlMnxSqYxSsSmZnnZJJviPN8alrRwErh3aImDtZfIOMaOs+5owdvL/Ep
-	P+s+RgWgMaTwK9q45XlHwjmEbghiZs9ImQbYW6HigWDTwFW/txgDHt0t89tLJp6s
-	SK8pmz33eTSq4QNASo+v11QGW/ZlaEJ3X+WvGc8D4vIqS9Xob9d5rAWi2qXE6rE0
-	AMp1Pz14Rj8awtIUITlo9pFcdAKo2O2Z5EB9UQmMvN+4cJFAyoUtR02nJTHg==
+	:subject:to:to; s=fm2; t=1728624790; x=1728711190; bh=076heWZQK1
+	tkC3KULbM8M0kyY+OFpanYThebcBezQIg=; b=lmGuAVwhn/CHbh28C7NnDRJZ6Q
+	/01vFiQ2lBQ/uidJNULq6WASv1aLpNVBCop8OHdimFAAFaQRku9IzTa9kAvNRMih
+	Tu1bHXR7olO8wFscBRQMlp9l2x1F7AxdA323CSlU0IdwmZEIY3PtPp5aNA4b66Vs
+	GH34G+3Mmf+CMbV0xNT98I2BDAMP/nzpEJlIJk7tO9v1368Y6tHvi6gxPXGOqocW
+	fqwC8KwKf5PP8jNXcDMDgnMt2nszpAXWKrTK5lUUGyGBtm9KsM+Q/syDxoW3o9/X
+	w0CKjf22qkjo/AiYtP97GEAvM3k0ZN4oveR6siZ2q75oEYX1O4ZsGHNfSMzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728624787; x=1728711187; bh=+k26Sr0L5qDX5MYZuttPVSscffqx
-	xNce/ZnwAcLyhjc=; b=AWaAlkM/R6ci+STpCs6wi3MrWI4gw7psQDRfjAOb463j
-	ZfUyCwA8xQ8ADgstRJUgBcPLmAt89T5XiDT9IVp3R3nO4hKsa4VmQCdRjUe7UvkK
-	YDD+EfBkcgClPo+xSBIcLFuBDxIBO+NBLJhu/GCa0MCxuyihcNlEM3g3Q/R6a7TR
-	fsDBuvB14Z4u7RHFTXUrXG6Sg4XEmYo2TI3myZ0SUY+GsGxrcTScK+trog/DrbJJ
-	KBjjJGAmPoG8KVq5JROgXSAS3XVQ2pBbOCN9oVEX6lYid8IZ0X69CLR0yZ5tAqno
-	gyJDqEsX3w158f4g4my0VZGsTuzcn1bVj/mpr70faw==
-X-ME-Sender: <xms:k7gIZ6JOXcuARM1rcgvqGoGRX_8guQe9ogC8bXZwmDX8hUtOs3G1sA>
-    <xme:k7gIZyIjrqww0ZpQirvFwgKpEYaVt3llhkUpQRa6eJQUsbCXcSaHNXfnIW1YEFDba
-    8bPzEYJ5p74VN-v-g>
-X-ME-Received: <xmr:k7gIZ6vZbdBnZYDvpfuhq7o6pEiDUBAW9iUOAzA-26RXmqMxxpR5qMRrlFjnhT6NzSUGGdqQj7r8iKuBJEsdMvemlN_FG1sFi3KHV9-AXCr_ehg>
+	fm2; t=1728624790; x=1728711190; bh=076heWZQK1tkC3KULbM8M0kyY+OF
+	panYThebcBezQIg=; b=D0Exe5OCh437Y7hCB4+QR+Url4dZDJo5ipnnUoSFgXZi
+	Pu1PK/Cd9b8GOhvqgq7u6Ors2TXhxXVmRfwjASv4GxmGyJ6/MEIxL5XGJk1wj/WL
+	a3Arrps8wR7vhY3J7l0TPQeW3Jyp3URph31HEfPoxG13WKeoSA1/pILHWzslThLJ
+	Dn8Y6Y4ochzJuR58c764IIKs4ZpCGa/wARmve7wcv0PFOq4gTIFW46RtKnhmzCoU
+	HjMQb7w6/QNZyLsu2+4IK+oWFH+QsgK7Q1pN2VwgoIpfD1pdIjlxBiI12JYUqs++
+	NipBv/bZIrF96DU/PK41fS1rBE5QYVWl3xPXSANpWw==
+X-ME-Sender: <xms:lrgIZwsIXk5zLwf6LdG8fTK6iOenv_0FNJr329JuEz0j-nqNdwQ5og>
+    <xme:lrgIZ9dqXRUm_nfUOLAlJ-nbh7AiOHZ8scHAoPg0zuqQXb-gslHi1cjumvc1DUh-n
+    kQVe1UjjF3ukrpkgw>
+X-ME-Received: <xmr:lrgIZ7z_V-5UALgahO4BXWTbWdVbvcKhVbmgltiH_LEdoRBEZ1Hln5E0Kz-PpB6DoIFROP_ZPEfKUe7VKsGamVcdTnNYdcTvGxlEAB-oqda5xLk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefjedgleelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:k7gIZ_a73KjykvShFlmDQ8bENVkW5VrQNBVRYXuJDjEm2rd6b-GuPA>
-    <xmx:k7gIZxbQ5g0aU3iNv_l3tZDOzJ25T8BRC6JC6ALy5MGGlTzuIaFUow>
-    <xmx:k7gIZ7D5aLP1RUNUjqnDmtJgICLXWM4ZtU2vmhKPTKow6XPgq0TMjQ>
-    <xmx:k7gIZ3YB5PR-kP5JO2T6GjyUj-96-DwZaHvIexQk1yKwdaBIta5a9g>
-    <xmx:k7gIZwwQF-11wkLbX_vc7rW8lmQiJap7sw3KBHVhy7GFv1pDabGAjCA7>
+X-ME-Proxy: <xmx:lrgIZzM3bpmeDaxo34X4gnYwlSlg1flpbRLU6Nm_A-XpG50lnSvs_w>
+    <xmx:lrgIZw8XzbL20s-fdFOBBjO6CwNaZFLEP34d3pZM2to4vMhhCvT8fA>
+    <xmx:lrgIZ7XnxChXOE4KjhCLfepf1i9u5tOyhCceNZqUxNy3RcJxIz_tHg>
+    <xmx:lrgIZ5fXfEdDTybPH6IKtPGWePwV9R6K7_29dD115U1_COmllKLerA>
+    <xmx:lrgIZ-nVM_4D2wdJtWjE2mlL04kvl9D3XnmnjvVXMFbCoDM5Svz2Yu_7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 11 Oct 2024 01:33:07 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 11 Oct 2024 01:33:09 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5b2ccd20 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1ee76905 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 11 Oct 2024 05:32:00 +0000 (UTC)
-Date: Fri, 11 Oct 2024 07:33:05 +0200
+	Fri, 11 Oct 2024 05:32:03 +0000 (UTC)
+Date: Fri, 11 Oct 2024 07:33:07 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 18/21] t/helper: fix leaking buffer in "dump-untracked-cache"
-Message-ID: <71fd1c76b8a9daa338b2669abe0b7fbe19484abf.1728624670.git.ps@pks.im>
+Subject: [PATCH 19/21] dir: fix leak when parsing "status.showUntrackedFiles"
+Message-ID: <8ccc246432da8060b4c3a12d17f6fecebe54dff3.1728624670.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,29 +85,53 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728624670.git.ps@pks.im>
 
-We never release the local `struct strbuf base` buffer, thus leaking
-memory. Fix this leak.
+We use `repo_config_get_string()` to read "status.showUntrackedFiles"
+from the config subsystem. This function allocates the result, but we
+never free the result after parsing it.
 
-This leak is exposed by t7063, but plugging it alone does not make the
-whole test suite pass.
+The value never leaves the scope of the calling function, so refactor it
+to instead use `repo_config_get_string_tmp()`, which does not hand over
+ownership to the caller.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/helper/test-dump-untracked-cache.c | 2 ++
- 1 file changed, 2 insertions(+)
+ dir.c                             | 4 ++--
+ t/t7063-status-untracked-cache.sh | 1 +
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/helper/test-dump-untracked-cache.c b/t/helper/test-dump-untracked-cache.c
-index 4f010d53249..b2e70837a90 100644
---- a/t/helper/test-dump-untracked-cache.c
-+++ b/t/helper/test-dump-untracked-cache.c
-@@ -68,5 +68,7 @@ int cmd__dump_untracked_cache(int ac UNUSED, const char **av UNUSED)
- 	printf("flags %08x\n", uc->dir_flags);
- 	if (uc->root)
- 		dump(uc->root, &base);
-+
-+	strbuf_release(&base);
- 	return 0;
- }
+diff --git a/dir.c b/dir.c
+index cb9782fa11f..7f35a3e3175 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2872,14 +2872,14 @@ static void set_untracked_ident(struct untracked_cache *uc)
+ static unsigned new_untracked_cache_flags(struct index_state *istate)
+ {
+ 	struct repository *repo = istate->repo;
+-	char *val;
++	const char *val;
+ 
+ 	/*
+ 	 * This logic is coordinated with the setting of these flags in
+ 	 * wt-status.c#wt_status_collect_untracked(), and the evaluation
+ 	 * of the config setting in commit.c#git_status_config()
+ 	 */
+-	if (!repo_config_get_string(repo, "status.showuntrackedfiles", &val) &&
++	if (!repo_config_get_string_tmp(repo, "status.showuntrackedfiles", &val) &&
+ 	    !strcmp(val, "all"))
+ 		return 0;
+ 
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 8929ef481f9..13fea7931cd 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -5,6 +5,7 @@ test_description='test untracked cache'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # On some filesystems (e.g. FreeBSD's ext2 and ufs) directory mtime
 -- 
 2.47.0.dirty
 
