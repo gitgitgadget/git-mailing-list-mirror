@@ -1,79 +1,79 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CA7207A03
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C25209679
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728624778; cv=none; b=ck3LsdXhUdQLBOQ1WXNQ/AViiqZY07Bk0QAClBEZFGV28PpeRhpqKKAPahrcXFh3tLC8wSy6NKPQoCt6Mvd/8jV1YR8BKsAiE9f5S/DVtyRZpuqlBQHrhs55G/0wSAls4QPrz1g6AjSgU08YekWrLT7vvQnr0bYK1zWWSNFDdKs=
+	t=1728624781; cv=none; b=YaJ088HhKw7oWnsMBJ59ArharkiAYs5ajf7tBDqKgK3hv/BdbtmwpxbV2quO+UbzA72pLnMljObuTimwW8awKHjqMhJm2zWTdEHsE7JkgM7o1B8qlKdyH/+/MGAJof0pZYLoP+O6mMuHaa6Zi5Xffh9G2NhJuOJKs2kgD3dyk2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728624778; c=relaxed/simple;
-	bh=yaTz0OuvfIZSewtasO5Y0812oJPDC04C0/PZEkT5I5g=;
+	s=arc-20240116; t=1728624781; c=relaxed/simple;
+	bh=UuCFJkPoyxER7iGPRZbJFc8IZ07FKz5kwtZPBD1U2dc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lYC+qN6kW0TEtmDCEhugPtWiQzVkWETqRGFzxeb/FHHR4hoXcMxKpe9OxjtSDV+aZxPssRkNxTrSOG5+ygGPuAGayT/EJE6UwyX13y5ZZz8FUA5iUYx2NAyfscM2e/dQDgH7i6365Ud3EhdrmeVY2g+P/HNYpnTlOx4QYJjnPPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J+csHf8h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qKcYPwl4; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=FkyGRz9/W/EfhLLvtF7y7gsQZIxQzUayI3+ydy6zO9odt3RP2v4LQoy8Qg8aPem70xxoQ3PGke9S8I6UcMwza4FheOKSy3RQS1Q2BoiH3llrQSLnQ2FEP3z2VH9Mc2BgPKnN3raLWEB5E0F4HyPVSuY6thQQaNF/pnskRSqW93A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J2v5iDwX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gzd0YmKr; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J+csHf8h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qKcYPwl4"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 407E011400C4
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J2v5iDwX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gzd0YmKr"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1D37811400C4
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:59 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 11 Oct 2024 01:32:56 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 11 Oct 2024 01:32:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728624776; x=1728711176; bh=MWc6OZvi6N
-	j80bKJ4FI+H/LCdF+lXw3y0fGje5nkQjY=; b=J+csHf8hTHisf0EBWwD7amhFMl
-	75Vfhlmo6A2oNhRv7eX3g5x/EsSMK2iaWLxZwp5aybLrJHcCQNk34wT50+k41EAQ
-	4tTmCd7+JP4f2+TWHBkwXcc9SMLtAR7JHlGdBBEW1g7bNjVDpU4AmicMMZ5ONOvn
-	et8ANetjVnzfBseHsYjjpJ+wA3Kj0oXpOjvaJnxI7tPNoZ/gYN6n407U1cU63voP
-	nzeq04lVj022LQbZ2dyjyade/Geffqx/AC7kucyBzD/H/MY3aNmJb8EgFxZfByE8
-	lQgIaO2jd+tjUfew3NCdqTfuGH9zYsR68F81CnwXIMPGk9dm33wglQrS3lRA==
+	:subject:to:to; s=fm2; t=1728624779; x=1728711179; bh=NvMn4yIYOQ
+	eHoZTsAWbx/uGMpS8oHLqnnd3k23+pq6Y=; b=J2v5iDwX6CWTEUiLkoy5QUeaqK
+	jUQSQ+elcf3zBd1AUVjv5B25hXvyEa6kQ+GZBOM5ptmhaQiTeMZuxHw8rwNUIMGi
+	IG50fOlS1gxyHrrQpCJ/K0mELtaGrpWwvem58TStXqXul4zvJs9avYtAnCERWRf6
+	sR7CgzD8Dqn+YtEa4mEActgPYG+rbtrqUGMJcVL8oLVVeF/HNazDsSx1VGfhqDwo
+	oIL8b4VDTcO4y0Dltn61jLfPAWcKkfWcaPzh/EjH5uf+a0yQBxwwWYL0NEo+nzQ4
+	AFw7JZ5Ey/4EqTZHlr5znXifSLmTyCpzFEosQmlb/swVubeZAXOndC2JadVA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728624776; x=1728711176; bh=MWc6OZvi6Nj80bKJ4FI+H/LCdF+l
-	Xw3y0fGje5nkQjY=; b=qKcYPwl4NBYCt8v72zyBnvK8TMsOQfpKJoO7Ft1ID2Ch
-	mugDWMlQjav5qT0fyxMJwNQxTkEsYpfaWtcvFWV3hZr4N3uWLFGMMIIq0sO7sFPZ
-	7pOcrhCtgYMZeaRYOJsVuJKhulrrbyA53cGO3Ltug8MmRxySruxWq0Ki9nQ5I5Va
-	zbXGZUKjEl0hCHWNrh3N7qDMGGF7R6qL6mr5glqyiSIViT8EMCgtjcf75Vsf7zRr
-	2AIcQVWfHPZxztKNc0gDT0whwDvFisWI4MoIYBx2AeY0qnpQ+S3IiYV1H6BXliXl
-	XHFnuSvC8lVueEu43qMYHIKEQ8YFfnqOCAGVxhWYMQ==
-X-ME-Sender: <xms:iLgIZ62fD4A3Tehyp9ceAchtbZ75Xy54oFD8UZGy637qIu6vxYf7zg>
-    <xme:iLgIZ9GGjhGxCKxZMQMH9-EK6YdxNfB7aNhqA7Yglb7r9QEZAvg2U9QwAfEKjsHqh
-    TU3S7I1ofyU-J1UTw>
-X-ME-Received: <xmr:iLgIZy6F2wTcNV4FTyq849GNVnrM-JWES7BdPRzn7e5ANnI9tVfw899-_ZBUoz2Gx0w37ieedcm3zUqfWbDpZp5FLgNZmHTR5zMz8mY0omdbPiM>
+	fm2; t=1728624779; x=1728711179; bh=NvMn4yIYOQeHoZTsAWbx/uGMpS8o
+	HLqnnd3k23+pq6Y=; b=Gzd0YmKrSFMGPKr166y3LFEBVAW/S3kvNYMEkggyD0Hq
+	0NVHNb4YHQIh0DkRgZOFkmcOVbAxT1RmjHgl57agI2jYrwBnzgV4Vv7g0zSWkCTo
+	z3roYwRIZsYTn4+/Q7Z25o5X+oZ5jr9+Zyyb5tFDVlhyvNSEJcAIGcieJaFjatrb
+	uTyJvvqh3LA9E8RFjSuWoA0AFd0u0L/izZg55dyzTHqAVzBcip9/gCfyAJeBTr02
+	El9PHqRWdbS0ULo/NaSzHNCqkgwEpsZ/4p83b2jpZb0v+cx6uHUdgpgn/hBnZCTE
+	x2JOc0yeVVBcES6897WU2LSHxPQFgbB2U97BdmQsIg==
+X-ME-Sender: <xms:irgIZ3nNXM_JTqUpxd_Uzvgw45Ex6rpwA0c9n7O7wqDt-9TZbKND_Q>
+    <xme:irgIZ61OoExM_FrnazptQ4JwAdN3SpXgG-pqIR-qvOF2EZOw9hzqtfgROGSWhvZue
+    TFnCP3uLrKYrQUCdg>
+X-ME-Received: <xmr:irgIZ9pFzSutDTvum6i_29PdKL2NhJqt5wVPl4E5oBeh_T-94tdN3Auj8bK8ed-o4L5Kxi0Rbx0gDInHBz05wbxd84s17G2amespOsvViZZnROY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefjedgleelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:iLgIZ710ajqLbVRVTmpw3STzcXFRJRsZ5Ns35kvJS9Rau6vByoCwsw>
-    <xmx:iLgIZ9FGtURI9gSgjdPRF5cHfj6k2uwL0zlp9lGgWKeXoi9Nnf2J8w>
-    <xmx:iLgIZ0-JYSbl1qY0aD419u-VxnzujjF6QaAZrcg3lVyz0KfA2jbgoA>
-    <xmx:iLgIZykCVoInomAMwtw3EXEXEf81ztzsm1kcHLR7WiLOtbJuogfvCQ>
-    <xmx:iLgIZ7N64gM_TK6uUX9blziupngfh5cSmEMMqPDn8b414pNkg-jB8cF_>
+X-ME-Proxy: <xmx:i7gIZ_kFBMmdDUfj6jCQbULx2oS_b55L-dl4rvq3a5dUjvkmx08ccg>
+    <xmx:i7gIZ10F5N93haUoSubwuSkIfjv0ZzgByO_oEoTjWuisOsh1KhkGYg>
+    <xmx:i7gIZ-tyiknens74r5GE5MmT0qMh8RecJaFDtV6eub_YR57vi0fHAw>
+    <xmx:i7gIZ5Whc-BbTca1Kc02ni6B3FYRCrNC47ree7fec7ZJKnesACO-8A>
+    <xmx:i7gIZ293jgjubGEmFWxmbhIoAOdAbB6IJymFeVEyLHwaAeqBYwHrnEPs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:55 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:58 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bb6ad03c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d9ba339c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 11 Oct 2024 05:31:49 +0000 (UTC)
-Date: Fri, 11 Oct 2024 07:32:54 +0200
+	Fri, 11 Oct 2024 05:31:52 +0000 (UTC)
+Date: Fri, 11 Oct 2024 07:32:57 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 15/21] dir: release untracked cache data
-Message-ID: <f977a033cf4b9d09ec32cac841038d1f5ea98374.1728624670.git.ps@pks.im>
+Subject: [PATCH 16/21] sparse-index: correctly free EWAH contents
+Message-ID: <170cc61edaa38d3ff76578f2228e855f19b8b8b0.1728624670.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,60 +85,50 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728624670.git.ps@pks.im>
 
-There are several cases where we invalidate untracked cache directory
-entries where we do not free the underlying data, but reset the number
-of entries. This causes us to leak memory because `free_untracked()`
-will not iterate over any potential entries which we still had in the
-array.
+While we free the `fsmonitor_dirty` member of `struct index_state`, we
+do not free the contents of that EWAH. Do so by using `ewah_free()`
+instead of `FREE_AND_NULL()`.
 
-Fix this issue by freeing old entries. The leak is exposed by t7519, but
-plugging it alone does not make the whole test suite pass.
+This leak is exposed by t7519, but plugging it alone does not make the
+test suite pass.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- dir.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sparse-index.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index e3ddd5b5296..cb9782fa11f 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1056,6 +1056,8 @@ static void do_invalidate_gitignore(struct untracked_cache_dir *dir)
- {
- 	int i;
- 	dir->valid = 0;
-+	for (size_t i = 0; i < dir->untracked_nr; i++)
-+		free(dir->untracked[i]);
- 	dir->untracked_nr = 0;
- 	for (i = 0; i < dir->dirs_nr; i++)
- 		do_invalidate_gitignore(dir->dirs[i]);
-@@ -1083,6 +1085,8 @@ static void invalidate_directory(struct untracked_cache *uc,
- 		uc->dir_invalidated++;
+diff --git a/sparse-index.c b/sparse-index.c
+index 3d7f2164e25..2107840bfc5 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -2,6 +2,7 @@
  
- 	dir->valid = 0;
-+	for (size_t i = 0; i < dir->untracked_nr; i++)
-+		free(dir->untracked[i]);
- 	dir->untracked_nr = 0;
- 	for (i = 0; i < dir->dirs_nr; i++)
- 		dir->dirs[i]->recurse = 0;
-@@ -3573,6 +3577,8 @@ static void write_one_dir(struct untracked_cache_dir *untracked,
- 	 * for safety..
- 	 */
- 	if (!untracked->valid) {
-+		for (size_t i = 0; i < untracked->untracked_nr; i++)
-+			free(untracked->untracked[i]);
- 		untracked->untracked_nr = 0;
- 		untracked->check_only = 0;
- 	}
-@@ -3905,6 +3911,8 @@ static void invalidate_one_directory(struct untracked_cache *uc,
- {
- 	uc->dir_invalidated++;
- 	ucd->valid = 0;
-+	for (size_t i = 0; i < ucd->untracked_nr; i++)
-+		free(ucd->untracked[i]);
- 	ucd->untracked_nr = 0;
- }
+ #include "git-compat-util.h"
+ #include "environment.h"
++#include "ewah/ewok.h"
+ #include "gettext.h"
+ #include "name-hash.h"
+ #include "read-cache-ll.h"
+@@ -242,7 +243,8 @@ int convert_to_sparse(struct index_state *istate, int flags)
+ 	cache_tree_update(istate, 0);
  
+ 	istate->fsmonitor_has_run_once = 0;
+-	FREE_AND_NULL(istate->fsmonitor_dirty);
++	ewah_free(istate->fsmonitor_dirty);
++	istate->fsmonitor_dirty = NULL;
+ 	FREE_AND_NULL(istate->fsmonitor_last_update);
+ 
+ 	istate->sparse_index = INDEX_COLLAPSED;
+@@ -438,7 +440,8 @@ void expand_index(struct index_state *istate, struct pattern_list *pl)
+ 	istate->cache_nr = full->cache_nr;
+ 	istate->cache_alloc = full->cache_alloc;
+ 	istate->fsmonitor_has_run_once = 0;
+-	FREE_AND_NULL(istate->fsmonitor_dirty);
++	ewah_free(istate->fsmonitor_dirty);
++	istate->fsmonitor_dirty = NULL;
+ 	FREE_AND_NULL(istate->fsmonitor_last_update);
+ 
+ 	strbuf_release(&base);
 -- 
 2.47.0.dirty
 
