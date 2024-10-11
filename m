@@ -1,102 +1,109 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BBD81723
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 18:05:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F33C804
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 18:09:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728669919; cv=none; b=TIGzv4gryjsVWvaCxBb+0as2Dw/IiYsADl/PTBUXDL6EL+gDyp2Ccg9l0aK2+WykGQEWZs3nKwlKM0XGR28gVVGG5RKNVXSrRmMEDnpkss81UU7+DSokZOQKIxRb2i+QClz2CMPIKEzG0fK9PHh/42/2QOQXXOaNfY299QddazA=
+	t=1728670170; cv=none; b=bUp6e+0pe47/p/7xnlb3oJR0X4sbFHeXeA82UP9eEz1qVU98f6mGsyeyDUXzFc11ZkhqfW4N5/6cH3FeNmeQj8OkkbEcSIuLUxM5TryZPGW6J6aT213g7DTNTL6eQfnMOuGmauXVICc+0scgilZtB7TwlTanG07yor3mclpb0cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728669919; c=relaxed/simple;
-	bh=qLBSwGa6CkpOHyRtEJrvAnW4PsFkObC4wINmIOYr23Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=k164aJbjNxTP1ea0nK3OLkzN+NvB2+CEFSEXhGB3LG0JjeSnzMfaakDZxYl+VM7KJAW65fflsYTscKwCIOCTNGOTaLBfepJJN8iuXbuptqc9+WVHxljUjR9Tg3j7M7CIF/kDuFqziqGqD0TpztFCAz9oLNfyM+AXPXQTDcALsx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZGkdPCDe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h0a079p9; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZGkdPCDe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h0a079p9"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 80C1013800D4;
-	Fri, 11 Oct 2024 14:05:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Fri, 11 Oct 2024 14:05:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728669915; x=1728756315; bh=IvI5JDm2I8
-	yXbxeCcWopJnKmhjwp1NnZwB72Goa/yqw=; b=ZGkdPCDemB9/yZFnIiMKhdu40s
-	5kvBHvQYL8wknAXTJyU/hSFpSoFnn43/8JC+InWG4H+vGJN5GCSsPNS+gEpp1OP3
-	M4ra2qh2nOA7e7jWIBcnBEu0GLxzXNUlfTTpg5p32zjM9IMomBR+0CN3DT3M58S7
-	nH1TW/5NWHn6uJHC9j5SopcdJou4rCGiZCsG2+bjMqxXlLb6Y8cCnCLDPUGVYf23
-	TJ718O9V9s28jVfNPt/8wYYFMdQkoTIS1ifqd+Jvdl+j42JRw6tewbH1R7z4xaxZ
-	dBO/wV0hZzbEic0kQ7WsL5gI4HW8UM2RZdHO2xuurU1/i00ZjKgVAvfYzTcA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728669915; x=1728756315; bh=IvI5JDm2I8yXbxeCcWopJnKmhjwp
-	1NnZwB72Goa/yqw=; b=h0a079p9mxFT1XMgpcLq6Fxd+J+0jtvPqghGzpErkY9q
-	FPsSkkA+Mw1p/uGGK9grAw7KNHnvC1n4KxXJQ9at8muX+0JGFHy4JSnoE7gcwvyR
-	ci05VV2dLliPRAtjEHNo0iby4SgZx2F3XfCW7opa8argHOWX4T4TmzDA2hWFFDoV
-	x40UbBGN6GfgeLoEQ/hNNEcbzWuHUGa+yAS2zP01vf3+jbyYRqDQLbwjU07RrAkk
-	2fuayDrvzvFjiZ5O03I4dUrMdCwVYVacmgmS0kJxIsSIzQbWx7R2V9fUqTC0O/2V
-	FglvrY3ZDioBGN6RK4oS4cky1YRkfBkzs0BcBqa71Q==
-X-ME-Sender: <xms:22gJZ-f2VX6vqF-QWZ27rrj4N1avgIbD_vmId59J1qDSsi7gHuy2cw>
-    <xme:22gJZ4PGVz0Wk8zWOAhN1UBcWjZm00f6wVbTIIh14JROljJ2QqvVR1kl1YGHky2NB
-    -DFBMkGN3pUzgAfng>
-X-ME-Received: <xmr:22gJZ_iP3YzbJwAchfxesgQA2XBTd2pFwAhrXm4pSvXc_plchMUNcApwxjv-Eohbsl50YR7zqgYBgHBcrmNYnlT5lcvqKmtDZZZzpFM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefkedguddulecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeifihgrghhnvdeffe
-    esohhuthhlohhokhdrtghomhdprhgtphhtthhopehjuhhlihgrnhesshifrghgvghmrghk
-    vghrshdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:22gJZ7-IMhebTD_DW9_rYioBXuwgPL3mPaXBlVvaG5DUY4jX_zfAtw>
-    <xmx:22gJZ6uXtzWO-PgB2jvPfjfcSGJKRhMez5ZxtwaQEBJgoREbbXWKMQ>
-    <xmx:22gJZyHS-W2wGpIPpXwFL9UWAfX5V5ApIYeMfxOtLs9_3ec-omJIoA>
-    <xmx:22gJZ5OvMQ0Hqt3NlMujbknT7prJHFahgRtJ4P8b1V2XMGAqjUS5eA>
-    <xmx:22gJZ8J9pJHDHNNdEXjP4_v_wtNaPN7MMtWJhhWV6afIcqaE59XcP2iU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Oct 2024 14:05:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shengyu Qu <wiagn233@outlook.com>
-Cc: Julian Swagemakers <julian@swagemakers.org>,  git@vger.kernel.org
-Subject: Re: [PATCH] send-email: implement SMTP bearer authentication
-In-Reply-To: <TYCPR01MB843751F88AF98DFDB606B0BE98792@TYCPR01MB8437.jpnprd01.prod.outlook.com>
-	(Shengyu Qu's message of "Sat, 12 Oct 2024 01:48:18 +0800")
-References: <20240225103413.9845-1-julian@swagemakers.org>
-	<TYCPR01MB843751F88AF98DFDB606B0BE98792@TYCPR01MB8437.jpnprd01.prod.outlook.com>
-Date: Fri, 11 Oct 2024 11:05:13 -0700
-Message-ID: <xmqqed4mecrq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1728670170; c=relaxed/simple;
+	bh=ydcOFXRKfj7WfIHCR+aRXwP0vfRu0PLrmAjed13emdM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VHiujWSvwjQRvJquCujfeRsnONH3LnmUvwGJLWsIdRbLez4AamTN7I7mITYVDFSNFPsTfV1GwihhP16xKgFh21xuTeB2vhBDG/b/jHj15q1j2l4QoBoPRx17HenR+RsMw2KyfplwKLe7G4VYlsKpW5TIlGv73dqAOuempBa8Usw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6cbf3f7272eso1442596d6.3
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 11:09:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728670167; x=1729274967;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rhVGzd50APDG+o24MSwgQVhQlD+GKgKPRlVEeAaS7aE=;
+        b=S+mf34LWH3dEye5m7MygkY3tPqi5NC0AsOMHfoT4Ld+G6vsX1cGGYJacvPVhGQLKc2
+         ryLiSGSOMirzjPEReg1V1Avz4oigJkuHWi/BttuGWh0+/PqazOzANmFPR8p9GAwL5vHn
+         wa1k4N2B+foiNR5FdVRAAM61rQDji4KpsdiwCj7qDoNgjeQID1p9cnYGeEr15scFl1Gv
+         r2xH3Y1p3nvwd4GQE3EwjowhtwnculBH6s0Q4wOWCUuQyRht/mwNGGHu2+DR+f5MJmwI
+         uqDg4szX48Nx+im4eCPuzs4u5lx1slL35qUeN+f7nSWlYAPGWt1beWNtvmOIRRxhGSgN
+         Jmug==
+X-Forwarded-Encrypted: i=1; AJvYcCVlRU6BpGnxoEXysw+hQnoVW7mlwf2VTxXIfc+tqq951d7/8T+uuYhK8/9eC0m0mdU0eSU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDakFGqq3Sl2xX/kWzodunGLszNV1AVjpsWhCwHr+t7ljIvLBT
+	ahMhKWwExJU6u4StmENzFRztL70efGnbcsji7ps+nSTeQ6m/Z2DrWgAhtrBF6F5qYRQpUv+uqQU
+	GLs8B8Y5VNlQgd4r8PX9HsPyBEv8=
+X-Google-Smtp-Source: AGHT+IEdBH0ckvhDVOjdxvjCI2lJY2S6DFBpVIILCfWoYIiDacGJaC4vaG9NiFrXEOcR+KfCXh7hE2oSN7EH+Qy/uus=
+X-Received: by 2002:a05:6214:76c:b0:6b9:5c25:c41e with SMTP id
+ 6a1803df08f44-6cbeff323d8mr20890636d6.3.1728670166782; Fri, 11 Oct 2024
+ 11:09:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20241010235621.738239-1-sandals@crustytoothpaste.net> <20241011074022.GC18010@coredump.intra.peff.net>
+In-Reply-To: <20241011074022.GC18010@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 11 Oct 2024 14:09:14 -0400
+Message-ID: <CAPig+cRmyZhq1qtomTFP7p7XMqrCP8-u7ah8D2+yUtrL880y7g@mail.gmail.com>
+Subject: Re: [PATCH 00/13] Update versions of libcurl and Perl
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Shengyu Qu <wiagn233@outlook.com> writes:
+On Fri, Oct 11, 2024 at 3:40=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+> On Thu, Oct 10, 2024 at 11:56:08PM +0000, brian m. carlson wrote:
+> > This series updates our requirements for libcurl to 7.61.0 (the version
+> > in RHEL 8) and for Perl to 5.26.0 (the version in 15.6).  I considered
+> > the mainstream LTS versions of RHEL, Debian, Ubuntu, and SLES, but
+> > omitted consideration of paid support extended LTS, since we cannot
+> > expect Git developers to have to pay a large corporation lots of money
+> > just to test functionality.  This is in conformance with our policy,
+> > which states that versions must be "in line with the version used by
+> > other long-term-support distributions", which does not include extended
+> > LTS distributions.
+>
+> I don't have a strong opinion on the extended LTS issue. Like you, I
+> don't really care about dealing with paid support. OTOH, I think in many
+> cases there was little to no maintenance burden for these older
+> versions, since we'd already done the work to #ifdef them. But I guess
+> since you broke up the patches, they can always choose to revert or
+> include what they want.
 
-> Sorry to bother but what had happened to this patch? It is more useful now
-> since outlook also switched to oauth2 only mode.
+I may be in the minority here, but I'm fairly negative on this entire
+patch series. As you say, supporting these old versions is effectively
+zero-cost, so how does this project benefit from these changes which
+potentially "break" Git for users on older platforms? I see no upside
+here. The cover letter provides no strong justification for
+(potentially) inconveniencing people; the argument about being able to
+utilize more modern Perl features is weak[1] at best and is not
+convincing.
 
-You are the second person to mention that what the change wants to
-do is sensible, but nobody gave any review that verified that the
-change does what the change says it wants to do, so it was left in
-the mailing list archive.
+Although brian is (quite rightly) concerned about security (or lack
+thereof with older installations), it is not this project's
+responsibility to "force" people to upgrade their insecure
+installations. And it is not at all uncommon in the "Real World" for
+decade-or-more old installations to be running in production
+environments, and programmers need to work within those environments,
+however, those installations are, for various business reasons (such
+as cost-effectiveness and known stability), unlikely to (ever) be
+upgraded to more modern versions. I, personally, deal with such
+installations on a very regular basis, and in my experience, the only
+time upgrades are undertaken (in production settings) is when the
+systems break completely and there is no choice but to replace them.
 
-Thanks for pinging.  Perhaps it would remind and encourage others
-(or even better, yourself) to review the patch to help it move
-forward.
+Finally, there clearly are real-world cases[2] which benefit from Git
+continuing to support older platforms; why should we abandon them
+intentionally? And why should we turn down[3] the periodic trivial
+patch[4] which trickles in to help people on older platforms?
+
+[1]: https://lore.kernel.org/git/xmqq1q0mh9gn.fsf@gitster.g/
+[2]: https://lore.kernel.org/git/CAOO-Oz0NUA-YeyFT1MJ=3DXKyLWJvQoFH1b-F0EFO=
+zvy8iWka3KA@mail.gmail.com/
+[3]: https://lore.kernel.org/git/ZwhMmGt0kZvaSzSL@tapette.crustytoothpaste.=
+net/
+[4]: https://lore.kernel.org/git/CAOO-Oz1KhFcyErVx1Qb142PtPJS=3DUpgSD-Facck=
+qNS4_okAtFQ@mail.gmail.com/
