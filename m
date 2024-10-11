@@ -1,150 +1,111 @@
-Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B053E49E
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 16:45:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FA77F9
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 16:48:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728665130; cv=none; b=QwqXeBsrh9woty0T2ahPTox11pgVsyqfA6JlMZP+ByXoAI6fOr9fhX96GXJSSmS+RNXBE7wCtZHHQq/sZOzVm6UFN75cLE9lDF0sD5yC9yb4xkoqiK/hPkHxVdITtjJHLMazQp34TmNXsG/3DIN63rEm+E2+0SAOhI0W+aonKUU=
+	t=1728665308; cv=none; b=VsDvwmNcFCPDCBbshPOZSWQYj2yPOTWq6pUzYKYT0yJxNW8yOk1F9ACUuEzb8lGuXnGJjUrg1+7hGelqReOuCBJXizMERwq7M76/WYYFnrr2kCe4DHbvOeauT5DQldG8AcI/7utKvdYh/LQ0tv4f0cOQ8XbKAlng98wa1W1I4j0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728665130; c=relaxed/simple;
-	bh=Q9norb/bciQhOYybtQkA6DU+m6qbDo5c73z3i3AELzI=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bFZZ+jK66vhvMjZP4/ZkIAys0AgZ2+KOmW/PhUVZy9k/edULcat9MzBq9Vdf4YGi1/DnKP3qMAR/FyeXJDtUcnlw7iJZAwkrj+N2Gxv/HLU6+/HXKHBhl7fsB+Lz9/YOWxO5u17ElXv0dcuRO72uAmfynp14PtLCPJu6e0IQbNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=Ycyc+8s0; arc=none smtp.client-ip=185.70.40.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1728665308; c=relaxed/simple;
+	bh=AlD0h3atKQPC03HZps5OiRnyY9OqDU3CeZm0g5qkOnM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=J/4wA69zMg43YtFxiUEjWSlA48pGCaIzIeFaFB4l5STvbmvtSYfGqcm+c7cocxq5AHISMqwgRKCgbel1SUt362GGVvkTTHPv7audb2XKePymNyuC2d07cWJFO3s4ts/eSdxYgoLNpfdPSC+Xq8FrDZa7lWWT+85rNW2ZDZ+2Hzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Cm1SMnrF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O+K2bHMr; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="Ycyc+8s0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1728665126; x=1728924326;
-	bh=7ZRy58b61JclDQ7ZYR0uW/QEmZdBLItkQoWDDPWKmfQ=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Ycyc+8s0HbNHDxBwXBPNXi0xKgtJxKb7x8k5fBbeHeUlGVw7TuAdAFZ1Bj8megsH+
-	 exntaRe8T8yHCUgXp8TY3jsbcHyHfjXYWmhLjaX1DeJF9A5nkvzliaIwrcZqR8nu3H
-	 /+vDkX6/Oaoe7XAJ23/BNNRiSrKVZDp4i0xEj1sXL1Jm5veq67h28fLFVB1vBXhzMi
-	 eX+wvxIe1Uf0bVw1p55Os/87bpKnmsSXh1/k4H45Zip5aOZgeg98pnPWitQJUdQrh7
-	 7ccHKjqxQWQ5BQHZop3L7VFUv93dkMd7PYsPoCmbYkybJ1kSbyrVg31UkHmOV9udyr
-	 XEiVG7h3LToWA==
-Date: Fri, 11 Oct 2024 16:45:22 +0000
-To: Rebecca Turner <rbt@fastmail.com>
-From: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
-Subject: Re: `git worktree list` when bare repository is named `.git`
-Message-ID: <D4T4N4E0BR32.14QK0OEESB5CH@pm.me>
-In-Reply-To: <517c8829-f98f-4fed-af4d-b84182fb253e@app.fastmail.com>
-References: <D4SO70M9Z1QI.1AC4QF9ZG8T4L@pm.me> <444a412d-bf4c-4bbe-8250-18d8bc86fd21@app.fastmail.com> <D4SQFBEB1HYZ.QDOLCYY80DIZ@pm.me> <517c8829-f98f-4fed-af4d-b84182fb253e@app.fastmail.com>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: fa6511cd0e2cc314eaeb5683a3a5d6533e4e76a4
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Cm1SMnrF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O+K2bHMr"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 567A513801B7;
+	Fri, 11 Oct 2024 12:48:26 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 11 Oct 2024 12:48:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728665306; x=1728751706; bh=c1VMPROYA4
+	YOHZ64wB9ppR0Qf+oaBqcbCeob1nyHqHk=; b=Cm1SMnrFaRY+t7rT3Pz3fGhhZe
+	Oif0bwy1eSqdUIN4upX9rpilVXtSTM8cHot5MsO2X1GItLOv/wn7t+gDEcxBolQG
+	VJ0JQ+E8V35FWmHdZ0xoPw/PUSBhNIkXvHm+2wwMNUuig4BibUS5lCE/1Hr6Qk1M
+	jmaj27+KwaVvCmoaRBu2VWOvD2UgHvbkX1cs2sKjEybLnFpfXErsEpTDokrY9CGx
+	EK+QGKnlhXRWBh5EykjldPcl1/gGSdZpZ9appvrkjvpVK2mxbuYQSUBegliZm5bl
+	bA6y/K2EF9b+bY+nIyRO91+dRx1FvFimIF5NiTD5GjWQbv/udNrFXvvnw4gA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728665306; x=1728751706; bh=c1VMPROYA4YOHZ64wB9ppR0Qf+oa
+	BqcbCeob1nyHqHk=; b=O+K2bHMrMNvUJ9qx6U3XXjwxYZbWxWVLpFrlW8akXck2
+	ziabPxfBk7rxFKrl94pNlBvcVHhuzDvQ3TkMKYcIL7jnxdtbOBSxzdrA9TF6eTQX
+	mBm88koV+KbV+Q1SLr5Jtx6u3Ecp2nHQWvRjBjwy6A5mkrj01DPxqC+Vyke/kMom
+	6v+zzZLZhCASj0dC+eup5DNW51mpfvr8DF9I9dyU8e9QQyVUf+sZ7VmvMAgCBOVG
+	l9CQ43/VrNwlTL3J+rbIGY/ezzZYs3oj8vZwwXsoFcwjgzGs8TNnm4bZwKy4rF8c
+	tegwSRJg3LjXRS4qLf7Ksdyw3cOdXsiiVtyD2RwO2g==
+X-ME-Sender: <xms:2lYJZ9I8A77c49JgPg9qLsyA4OczZxw350raXl_AIc5uH0-QU4yTWg>
+    <xme:2lYJZ5Ktk0UC7L-Kq6Rim0QOEssLDlRytuR6Ta3epikKhcG4TrX7na1EZuYEzvybA
+    PgQN5_O_kDAlk83Qw>
+X-ME-Received: <xmr:2lYJZ1tryuP3kP_YvGSeZi0-8tRQxv_0Gg3fpgkTYPQ0g2KA7KeJROLzu-A-S-9k_4qgzVIAD4TlfhXB8YCiOKfWfrapxUCXjzQ3Ijw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefkedguddtgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
+    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
+    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvg
+    htpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:2lYJZ-bjagDbdLRBuvso4wHvKCX2W-jkV9MXT_kpT5Uy02ct_6atmw>
+    <xmx:2lYJZ0Zxj_4zTZi51xj_85k5sQkAuUB2cu80tctZdZU5TNePARhu5A>
+    <xmx:2lYJZyC7RuQdRjR8IDmn_WpZ5x6q4h_4E2KgfvopWT8LVgv2qHUU2Q>
+    <xmx:2lYJZyb-WXJ6OwIHWvlg_MkRFOaMXL34MjKmP30AiDQw9jSNsB9ZEg>
+    <xmx:2lYJZ7Xr4kwEoO28Q0Bu6Xnj9U9KReNlRKGATwFx8u8x12Knf5jwXRpN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Oct 2024 12:48:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH 00/13] Update versions of libcurl and Perl
+In-Reply-To: <20241010235621.738239-1-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 10 Oct 2024 23:56:08 +0000")
+References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+Date: Fri, 11 Oct 2024 09:48:24 -0700
+Message-ID: <xmqq1q0mh9gn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri Oct 11, 2024 at 11:19 AM CDT, Rebecca Turner wrote:
-> Ah, I should give some context here. I'm using worktrees with the layout =
-you
-> describe later in your email:
->
->     my-repo/
->       .git/      <- bare git directory
->       main/      <- worktree for main branch
->       feature1/  <- worktree for feature work
->       ...
->
-> I'm writing a tool to manage these layouts for you. I want to provide two
-> features:
->
-> 1. The ability to add a new worktree in a slightly more magical manner; i=
-n
->    particular, I want to be able to do `git my-tool add feature2` and add=
- a new
->    worktree in the same directory as all the other worktrees.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-If your repository is already set up in the layout you describe, you can
-just execute `git worktree add` (I have this aliased to `g w add`, I'm a
-lazy typer haha) in the `my-repo` directory.
+> The final commit introduces a small but useful change that we can now
+> take advantage of with our newly updated Perl dependency as an example
+> of why this is a generally beneficial change.  It can be omitted without
+> problem if it is judged to be too noisy.
 
->    For a non-bare main worktree, that directory is the parent of the main
->    worktree.
+Quite honestly, these two changes, each of which is a one-liner, are
+so boringly trivial for being "too noisy".  But on the other hand, I
+am not sure it demonstrates why it is a "generally beneficial
+change" sufficiently well, either.  The pre-s///r idiom
 
-I would *not* do this, you may just want to not support this case. I
-imagine most folks have a common directory for all their repositories,
-and polluting the parent directory with worktrees sounds like a bad idea.
+    (my $result = $orig_to_be_kept) =~ s/...//;
 
->
->    For a bare main worktree named `.git`, it's the path of the main
->    worktree. (Nothing in the `git worktree list` output indicates this is=
- the
->    case!)
->
->    For other bare worktrees, it's the parent of the main worktree.
+was concice enough that
 
-Note that you can use `rev-parse` to get the actual directory:
+    my $result = ($orig_to_be_kept =~ s/...//r);
 
-    git rev-parse --absolute-git-dir
-    ~/sources/bare-repo/.git
+does not make all that much improvement.  Where it shines, I would
+imagine, is to rewrite an original that did not use the idiom using
+the 'r' modifier, but fortunately we didn't have such a code?
 
-> 2. The ability to convert an existing repository in this layout.
->
->    This requires separating the `$GIT_DIR` from the worktree and then
->    reassociating them, in order to convert the non-bare main worktree int=
-o a
->    bare main worktree and a second linked worktree. (In particular, I'd l=
-ike to
->    avoid the cost of copying all the files in a large checkout.)
-
-To convert an existing repository to this layout, all you should have to
-do is:
-- Add `bare =3D true` to the `[core]` section of the `.git/config` file
-- Remove everything except the `.git` directory
-- Create a new worktree for the default branch
-- Profit!
-
->> When I was first doing research on this, I found a ton of articles with
->> all kinds of different ways to do it. Some folks put their worktrees in
->> the same directory as the actual repository (intermixed with their
->> code), some polluted the parent directory, some created a detached
->> commit that removed all files from the default working tree and then
->> created the worktrees, some used a bare repository but then just created
->> the worktrees in the same directory, etc. I finally came across an
->> article that showed the `.bare` method above and I thought that was the
->> cleanest method. However, after using it for a while, I realized that
->> I could just move `.bare` to `.git` and it would work just fine (and
->> I could remove an extra file). I've been using that method ever since.
->
-> Yes, exactly! My frustration with this technique is how difficult it is t=
-o use.
-> I have existing checkouts I'd like to convert to worktree repositories, a=
-nd
-> `git clone --bare` doesn't create remote-tracking branches, so it's stran=
-gely
-> difficult to set up repositories like this. I'm hoping to ease some of th=
-is
-> with my new tool.
-
-I've created a helper script[1] that allows me to clone a bare repository
-to use with worktrees. In case you don't know, any script in your PATH
-that starts with `git-` can be called as `git <script-name>`. I then
-have a git alias for this script and so I can run the following to set
-everything up:
-
-    git cloneb https://github.com/git/git
-
-The script also allows setting up an upstream remote at the same time
-in case you've forked the repository.
-
-    git cloneb --remote=3Dhttps://github.com/git/git https://github.com/<us=
-er>/git
-
-[1]: https://github.com/calebdw/dotfiles/blob/master/scripts/git-clone-bare=
--for-worktrees
-
-Best,
 
