@@ -1,178 +1,180 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C017B19D8B7
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 21:49:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB95194A73
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 22:18:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728683384; cv=none; b=i7D6WNxXfRWMd4AlGFi97jyhs5mdBfoRoSx0WCL6pg7KHtp8o0eeAvxKOa7N2jZyTNyeeJ6QIXfbVT41tFF4/P2+MpbE52SfxZSG5oIbOsmioQvmq4QXjFUOINHyeDKIaRh6NEULBbNrAU1GUElV1+yPSh7UIzy7LSb5AN1CsDs=
+	t=1728685117; cv=none; b=hc/8fHsHBRDE5bw0PoKmK0IZKumuGOFCeVVnHt0YAPY0A2fggAol29uEGlZcDIltdPR2CUfwZ5OIn+qf6uRLIy3izLWEAa0g1RBRAiiMUT+jALF0DRy2fwvRnCTF5a1G/0ZQho0TI5ToDlQaiiA9ADZx+tLu3FFwbi+SuKgurT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728683384; c=relaxed/simple;
-	bh=lHTvfXKp0vMaGRiZO/r+WK58HlkgZM6ENW6iC+YztPo=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M7FlI+rOFNv9+icNd9hGdhhsV35MgJrwWDjd9sYgdFChs6NXPsb/6mHjYalBO709rASWJ+lKOt12tdi4tjAtEsHps7nzxlOAkyn2KUikw8dp/PHC5V/YpDKBY2jxnB7JgrURkkUyAAC2lhf4ZLrw18QCiRiyCx1mhk84zMrqJaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uIdCe7Lc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m9gtVpZr; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728685117; c=relaxed/simple;
+	bh=+T8fmX44k+928lO0cMM/1/r+5nA/+e5QlbTThY2kkkA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 Cc:Content-Type; b=Le94nXL/sX5AvdGe3asZ0ZHePafil7D0ZChPrUBywKPHiEBrJySfpVkdE/h4+0e0kw8t8ZhM5/kmYmucelqfqNq3SpgVP2kiT1F39U1hl5tjyN3SGw17duYXs6GxPGwDgWQ6QncMC0eLFy8jJT4msMupu7P24HBOoBMTBbOncJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZxbOewvF; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uIdCe7Lc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m9gtVpZr"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DD9051140268;
-	Fri, 11 Oct 2024 17:49:40 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Fri, 11 Oct 2024 17:49:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728683380; x=1728769780; bh=ROnmifSLGe
-	yyzYraxl1xTigF60ozQrkgekJIzFPzDJY=; b=uIdCe7LcSFFqW7qIv/7KoSYM9C
-	4CgPLeRU6pNnL7Am5baqwJOUdmcs7PDUNukcLdwsCxoFgAq4BQwHwY30+1OKNpQI
-	N95ySfaP4/R1ipxAR5cQhN6F4ca0kVnapg8dqiUBpg8LHNkx1WD7YKR4axZxHlbm
-	VFrDU39IR6Nv2FMvenpVnTaMR840wGnWiOMMrO+xtvyQKPc2VPkpBwRAy5RUQUPL
-	5a+8UH3Zpx/52XXwOIUTIbmnnZln/DpZZfiIsCbJcc1/91xSfwTz54J4xw85N60O
-	g92VnZgDHlzL9VpR0rza7rjxJk/CSa8DFvOafsCjoKCMIw4JdQyrkfZBSkVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728683380; x=1728769780; bh=ROnmifSLGeyyzYraxl1xTigF60oz
-	QrkgekJIzFPzDJY=; b=m9gtVpZr/rMJtg65kVRK5vrgEFfEJ3H3bXC6JdFKv1eP
-	Dm9sAxVCMpKBoSBrOAMGvfD/M3bKJWLufXK4iN1H1ETG6WJW/gMXGYoj05mKB3Hq
-	bABrvuPBj87PMqf/6bRJIC77csj+FrU8QJ29IZlTE7feDcUZQOItPW+0tk4ETwBq
-	ZlaTP4ABspiNvjWLtEcXum/NLZHXG4u9SCgXOK2JS+VXLTbf2vb3FwJf/wloyyRU
-	C3i1FAZD7oWU5t8iCjLmaDcBSPC7gSJ3SYGBuIqeuKMu83Aty+6ln3BBhS1klqoM
-	Tary5ygBZ3O9gGVEqMwk/vGiaYHXR0xvW8P1Hw2qgg==
-X-ME-Sender: <xms:dJ0JZ9iSK_RPM75bUhmcrMPoR5egSPJe_VBgv7QtRVuFLt1FyoID7Q>
-    <xme:dJ0JZyCykRPqYKDXDAMXelTnYq8AsQL66Ds3118ga7IHx4upjFN7aWcL7UOJyl7LZ
-    OjU8v3eM0gbsc06aA>
-X-ME-Received: <xmr:dJ0JZ9Hv8SdAt5V1EalDBgJkewmVChsE6l5dTghyN5p-YzgW0NiY7oWGdqHLyAHyKnNQBZ9ShV41_77EdAoSQIvbQeZu_qZxJTfCuno>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefledgtdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvffujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepkefhue
-    duteekgfdtueegvdfgueeiuedvlefggfefkedvffduvddvkeeuhfeifeejnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:dJ0JZyROCPcyijRenQRPTAn6-N-sttJZf4OloUJLIoHl7RkLma1n4w>
-    <xmx:dJ0JZ6xhMSJZpl8ad47FF5b7a-58mC2_1zH78O8G0ZLVG_GzdzNa9w>
-    <xmx:dJ0JZ466PaAsls_mXNXHs_XZBqhVpVmMV0MSSVGC1_aJA9fFctRMgA>
-    <xmx:dJ0JZ_yTaUElwziCf6_AXcNKsWwfu5f7OHp414QMQHsQNdsGTmTw2w>
-    <xmx:dJ0JZ194rsJQjmyz9KsUMEzvPqBhmXycmgN_UP2N4Aa58nxUMkiAfsBU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Oct 2024 17:49:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v2] BreakingChanges: early adopter option
-In-Reply-To: <xmqq7cb77810.fsf@gitster.g>
-References: <xmqq7cb77810.fsf@gitster.g>
-Date: Fri, 11 Oct 2024 14:49:39 -0700
-Message-ID: <xmqq1q0mcnt8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZxbOewvF"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-37d4c1b1455so1537590f8f.3
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 15:18:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728685113; x=1729289913; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BNXMNfUMtm5y+MdpSkE8wJ6Y5zva/KPXU3g5E/xST04=;
+        b=ZxbOewvFR8DN1PrMNED9of9r7aVgk9KC7uXgCKIVOMJkYfkrx+zPGNDKq+iGKUnHJp
+         Ud3R3btfYLNY5pvpcwcPI0TISMJNykTvJNE6w1StMmntB0LuQ+vnofgDmq3/FcBNJFO6
+         PmmHtBLYhg1R1vT0143YpCr3rw+62/MZx4/UmhbzhxL0FiBigfroyn4ymt6wHdfD1BLz
+         jGri5hgVpY3KmhR7Lgb0x9Gpq0Pyxuuc3Ntn+dUQ/ePCpltsdY0ZH4rK/3KUhcCHN6zq
+         Riox+Sj0ZePARxlayEHu8Y3BnaK9K8zl4zt2//Wtbyse5i8/cgUet8jdNBVKrlFmeA6P
+         LaeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728685113; x=1729289913;
+        h=content-transfer-encoding:cc:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BNXMNfUMtm5y+MdpSkE8wJ6Y5zva/KPXU3g5E/xST04=;
+        b=tIqQXdPkWdg6yY26SuJ4QRrhK8boT/FTWLoglxjlVXOjnMVoaQYa+M3TqK6INbJCQT
+         DL+q1Y6Z4V0q2MWcBMutUA3/WLMnCwMdnLz3bRUCH13E1ggoGhixrKUw0waLM6Ec9TL9
+         GFKOisBzHqzXWr1NOVFrXO9Q9ucMvcLepLIpJ4AucgFNFLnzrDkCghGjfnrkKH1L3yTM
+         amEiI/larcf6K4HbHlO60dCrVnQhAL30IyhELVdcbpqf3SIcPMpo8D6J33EYyYeMC/0L
+         dVRhKCHDVncJxTgSVjNIy7Oqa+cJvIdhuvYKolEv7viAR+hUqEacs917MPeyOIxwMIjQ
+         vP7A==
+X-Gm-Message-State: AOJu0YwyGVxoSn3802oZ78Sc6yx4mjqFGop3Llg3UUDkY9IJQRahDznm
+	eOzs/GiIHkXTPmtaivC7+PCqSsXfv9Q0XctR3Hyr2H5NWnBsvB8jdv84zdyHj4fudpGK3wEKzjn
+	oVl5WKzzwlAJw1NPUfY4Hn8VSROcE3LcJ
+X-Google-Smtp-Source: AGHT+IFBPNM9vw3KPuCuB8bdudEFFf3nVgMsckzb0ui1itZVTK72IN8wbf3MdRh7dHNRjMmKd+PTa3cD+JD41TVTqTI=
+X-Received: by 2002:a5d:4f8f:0:b0:37d:387b:f080 with SMTP id
+ ffacd0b85a97d-37d5519b99bmr3017147f8f.15.1728685113267; Fri, 11 Oct 2024
+ 15:18:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <D4SO70M9Z1QI.1AC4QF9ZG8T4L@pm.me> <444a412d-bf4c-4bbe-8250-18d8bc86fd21@app.fastmail.com>
+ <D4SQFBEB1HYZ.QDOLCYY80DIZ@pm.me> <517c8829-f98f-4fed-af4d-b84182fb253e@app.fastmail.com>
+In-Reply-To: <517c8829-f98f-4fed-af4d-b84182fb253e@app.fastmail.com>
+From: Patrick Callahan <pat.callahan1@gmail.com>
+Date: Fri, 11 Oct 2024 18:17:57 -0400
+Message-ID: <CACt=GQpQNvhuCJgkOcjefkaC+TToEMEp1V3Kt15t68zYpN0W4A@mail.gmail.com>
+Subject: Re: `git worktree list` when bare repository is named `.git`
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Discussing the desire to make breaking changes, declaring that
-breaking changes are made at a certain version boundary, and
-recording these decisions in this document, are necessary but not
-sufficient.  We need to make sure that we can implement, test, and
-deploy such impactful changes.
+On Fri, Oct 11, 2024 at 12:21=E2=80=AFPM Rebecca Turner <rbt@fastmail.com> =
+wrote:
+>
+> > Why would you move the `.git` directory? If you're trying to move the
+> > repository, then wouldn't you just move the directory that contains the
+> > `.git` directory?
+>
+> Ah, I should give some context here. I'm using worktrees with the layout =
+you
+> describe later in your email:
+>
+>     my-repo/
+>       .git/      <- bare git directory
+>       main/      <- worktree for main branch
+>       feature1/  <- worktree for feature work
+>       ...
+>
+> I'm writing a tool to manage these layouts for you. I want to provide two
+> features:
+>
+> 1. The ability to add a new worktree in a slightly more magical manner; i=
+n
+>    particular, I want to be able to do `git my-tool add feature2` and add=
+ a new
+>    worktree in the same directory as all the other worktrees.
+>
+>    For a non-bare main worktree, that directory is the parent of the main
+>    worktree.
+>
+>    For a bare main worktree named `.git`, it's the path of the main
+>    worktree. (Nothing in the `git worktree list` output indicates this is=
+ the
+>    case!)
+>
+>    For other bare worktrees, it's the parent of the main worktree.
 
-Earlier we considered to guard the breaking changes with a run-time
-check of the `feature.git<version>` configuration to allow brave
-users and developers to opt into them as early adoptors.  But the
-engineering cost to support such a run-time switch, covering new and
-disappearing git subcommands and how "git help" would adjust the
-documentation to the run-time switch, would be unrealistically high
-to be worth it.
 
-Formalize the mechanism based on a compile-time switch to allow
-early adopters to opt into the breaking change in a version of Git
-before the planned version for the breaking change.
+ Rebecca,
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+I'm working on a tool to manage worktrees as well. Can we compare notes?
+My directory structure separates repositories and worktrees in
+separate directories, but the goals seem similar.
 
- * As we discussed and came to agreement during the review of v1,
-   let's specify this as a build-time knob.
+git documentation seems to treat the bare repository concept as if one
+only uses bare repositories on a server, not locally in a development
+environment.
 
- Documentation/BreakingChanges.txt | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+But, I've found that local worktree-based development is possible for
+multiple applications, libraries, toolchains, and CI, but it isn't
+very easy to maintain by hand, so tooling is a must. With some
+scripting, it works well for many bare repositories, numerous branch
+worktrees, and multiple build-and-run scenarios. Switching between
+tasks is almost instantaneous, with no need to stash or un-stash
+anything.
 
-diff --git a/Documentation/BreakingChanges.txt b/Documentation/BreakingChanges.txt
-index 2b64665694..eeb26c9155 100644
---- a/Documentation/BreakingChanges.txt
-+++ b/Documentation/BreakingChanges.txt
-@@ -59,10 +59,29 @@ over time. If circumstances change, an earlier decision to deprecate or change
- something may need to be revisited from time to time. So do not take items on
- this list to mean "it is settled, do not waste our time bringing it up again".
- 
-+== Procedure
-+
-+Discussing the desire to make breaking changes, declaring that breaking
-+changes are made at a certain version boundary, and recording these
-+decisions in this document, are necessary but not sufficient.
-+Because such changes are expected to be numerous, and the design and
-+implementation of them are expected to span over time, they have to
-+be deployable trivially at such a version boundary.
-+
-+The breaking changes MUST be guarded with the a compile-time switch,
-+WITH_BREAKING_CHANGES, to help this process.  When built with it,
-+the resulting Git binary together with its documentation would
-+behave as if these breaking changes slated for the next big version
-+boundary are already in effect.  We may also want to have a CI job
-+or two to exercise the work-in-progress version of Git with these
-+breaking changes.
-+
-+
- == Git 3.0
- 
- The following subsections document upcoming breaking changes for Git 3.0. There
--is no planned release date for this breaking version yet.
-+is no planned release date for this breaking version yet.  The early
-+adopter configuration used for changes for this release is `feature.git3`.
- 
- Proposed changes and removals only include items which are "ready" to be done.
- In other words, this is not supposed to be a wishlist of features that should
+I've managed to come up with a bash implementation with just three
+commands for starting an editor/ide, building and running.  Parameters
+to these commands set the context for whatever it is I'm working on at
+the moment. I'm working on separate commands to maintain the
+environment.  I need to do such things as clone an upstream repo,
+clone
 
-Interdiff against v1:
-  diff --git a/Documentation/BreakingChanges.txt b/Documentation/BreakingChanges.txt
-  index cc19e03230..eeb26c9155 100644
-  --- a/Documentation/BreakingChanges.txt
-  +++ b/Documentation/BreakingChanges.txt
-  @@ -68,15 +68,13 @@ Because such changes are expected to be numerous, and the design and
-   implementation of them are expected to span over time, they have to
-   be deployable trivially at such a version boundary.
-   
-  -The breaking changes MUST be guarded with the configuration
-  -variable, `feature.git<version>` to help this process.  Each
-  -individual breaking change must be implemented in such a way that
-  -for a user who has this configuration variable set to true, it goes
-  -in effect even before Git <version>.  Note that setting the
-  -configuration to `false` MUST have no effect, either before or AFTER
-  -Git <version>.  In other words, this is purely an option to recruit
-  -early adopters and not a mechanism to keep the old behaviour after
-  -the announced version boundary for breaking changes.
-  +The breaking changes MUST be guarded with the a compile-time switch,
-  +WITH_BREAKING_CHANGES, to help this process.  When built with it,
-  +the resulting Git binary together with its documentation would
-  +behave as if these breaking changes slated for the next big version
-  +boundary are already in effect.  We may also want to have a CI job
-  +or two to exercise the work-in-progress version of Git with these
-  +breaking changes.
-   
-   
-   == Git 3.0
--- 
-2.47.0-150-gc349d40f0e
+-Pat Callahan
+ Framingham, Ma
 
+Here's the list of requirements I'm working with:
+
+Overview
+
+- Use only bare repositories and worktrees
+- Start an Ide, a build, a run for whatever I'm working on at the moment
+- Support development work on multiple applications, libraries, or tools
+- No limit to the number of working contexts.
+- Instant focus on a specific context: a set of repositories,
+git-references. and worktrees
+- Instant switch between different working contexts within the same
+application or between different applications.
+
+Repositories
+
+- Bare clones of a set of official and forked repositories from
+Github, Gitlab, or Sourceforge
+- Local Bare Repos Only
+- All Repos in one directory as repo-name.git
+- Worktrees as needed for building
+
+Worktrees
+
+- All Worktrees in another single directory as repo-name.git-reference
+ (git reference being a branch, tag, or commit
+- Worktree synchronization by git pull upstream, or git pull upstream --reb=
+ase
+- Directories
+- Hierarchy as flat as possible
+- Automatic setup of out-of-tree builds using symbolic links to one or
+more worktrees
+
+IDE or Code Editor support
+
+- Automatic setup of multiple multi-root workspaces based on the list
+of worktrees used to build a specific branch.
+
+Building and Running
+
+- A default build script and custom build scripts where appropriate
+- A default application run script with custom run scripts where appropriat=
+e
+- Straightforward, flexible command line syntax
+  Example: Build four separate cmake build types: Debug,
+RelWithDebInfo for each of two branches
+
+    b app-name branch-name1 branch-name-2 d rd r m
