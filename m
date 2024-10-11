@@ -1,180 +1,418 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB95194A73
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 22:18:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0419327702
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 00:00:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728685117; cv=none; b=hc/8fHsHBRDE5bw0PoKmK0IZKumuGOFCeVVnHt0YAPY0A2fggAol29uEGlZcDIltdPR2CUfwZ5OIn+qf6uRLIy3izLWEAa0g1RBRAiiMUT+jALF0DRy2fwvRnCTF5a1G/0ZQho0TI5ToDlQaiiA9ADZx+tLu3FFwbi+SuKgurT4=
+	t=1728691211; cv=none; b=RUdCubTv9pWUOGX7yI+tx2Lyoxam9uUPhxP5nm3EOV3n1pD+zvIPY3dIzopl9StMVtSR7OH0QEPEn+BkEtgZc/CM9ZD+p8puTFyfNKW2vJP/nGVKuLvsN09L4zJf+rjRsoK55OXHZA8XEg4dzr/meL5eL6KJzKDJ+WLePZElpu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728685117; c=relaxed/simple;
-	bh=+T8fmX44k+928lO0cMM/1/r+5nA/+e5QlbTThY2kkkA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 Cc:Content-Type; b=Le94nXL/sX5AvdGe3asZ0ZHePafil7D0ZChPrUBywKPHiEBrJySfpVkdE/h4+0e0kw8t8ZhM5/kmYmucelqfqNq3SpgVP2kiT1F39U1hl5tjyN3SGw17duYXs6GxPGwDgWQ6QncMC0eLFy8jJT4msMupu7P24HBOoBMTBbOncJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZxbOewvF; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1728691211; c=relaxed/simple;
+	bh=50XNwk8GZX/N6Ae1bVwNicTnxkBQsGZxeoN0OVfCHkI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=exTepWhj2Xb5CdDTDxgTEu3aid2WIeYSR8UTC8StaY8dS08tjo4B7o1srW4Kq6DzV9QmM3sDWc1GdPtXbukSMsIco7dJFuQhU1B4O54+Ny2bKfz9qt8pANw/SOb0ijG3zSleX901uaazQCMsZyBwuQ8N533UAA1a0y6FFFz2z9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TEBM4XJ8; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZxbOewvF"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-37d4c1b1455so1537590f8f.3
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 15:18:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TEBM4XJ8"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4311ae6426aso14161985e9.2
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 17:00:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728685113; x=1729289913; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1728691207; x=1729296007; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BNXMNfUMtm5y+MdpSkE8wJ6Y5zva/KPXU3g5E/xST04=;
-        b=ZxbOewvFR8DN1PrMNED9of9r7aVgk9KC7uXgCKIVOMJkYfkrx+zPGNDKq+iGKUnHJp
-         Ud3R3btfYLNY5pvpcwcPI0TISMJNykTvJNE6w1StMmntB0LuQ+vnofgDmq3/FcBNJFO6
-         PmmHtBLYhg1R1vT0143YpCr3rw+62/MZx4/UmhbzhxL0FiBigfroyn4ymt6wHdfD1BLz
-         jGri5hgVpY3KmhR7Lgb0x9Gpq0Pyxuuc3Ntn+dUQ/ePCpltsdY0ZH4rK/3KUhcCHN6zq
-         Riox+Sj0ZePARxlayEHu8Y3BnaK9K8zl4zt2//Wtbyse5i8/cgUet8jdNBVKrlFmeA6P
-         LaeQ==
+        bh=kvKlqi6NPU9W2r4Mze6qUN5Ue5CsPaOFUxOXVN/6uX0=;
+        b=TEBM4XJ8TY0aHxUWIZE1a/rndYUEpOkdKos1v+BbP5HKlzaNVdSofJtPABmS1yKIvH
+         XEOe69YItr1Y1eRzorGNqiJOsz+WW0jZYnbQKMtbc6uyi0DHysUTlpWnoWQ7Gb0mPVxy
+         EVls7F3xwr/jvTBJ2TUEpDVagSUtundHHdS1y94YlHx3MVeoOEJl7QZtCVcjKt3VUcdL
+         S82b4pZ2Fyw/XxyQb+uYeArdP5tp7Rjhqhn8dkmdkiu+RA1jnfwQv4RlKLqqXHx2sVSO
+         Q5m1ZEy/u9/5f32U9fx6W7fuEI8JWKRdrkVHsnIzBMi7SSMKAXaXHRkxsBrUquGB2+cb
+         uqzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728685113; x=1729289913;
-        h=content-transfer-encoding:cc:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1728691207; x=1729296007;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BNXMNfUMtm5y+MdpSkE8wJ6Y5zva/KPXU3g5E/xST04=;
-        b=tIqQXdPkWdg6yY26SuJ4QRrhK8boT/FTWLoglxjlVXOjnMVoaQYa+M3TqK6INbJCQT
-         DL+q1Y6Z4V0q2MWcBMutUA3/WLMnCwMdnLz3bRUCH13E1ggoGhixrKUw0waLM6Ec9TL9
-         GFKOisBzHqzXWr1NOVFrXO9Q9ucMvcLepLIpJ4AucgFNFLnzrDkCghGjfnrkKH1L3yTM
-         amEiI/larcf6K4HbHlO60dCrVnQhAL30IyhELVdcbpqf3SIcPMpo8D6J33EYyYeMC/0L
-         dVRhKCHDVncJxTgSVjNIy7Oqa+cJvIdhuvYKolEv7viAR+hUqEacs917MPeyOIxwMIjQ
-         vP7A==
-X-Gm-Message-State: AOJu0YwyGVxoSn3802oZ78Sc6yx4mjqFGop3Llg3UUDkY9IJQRahDznm
-	eOzs/GiIHkXTPmtaivC7+PCqSsXfv9Q0XctR3Hyr2H5NWnBsvB8jdv84zdyHj4fudpGK3wEKzjn
-	oVl5WKzzwlAJw1NPUfY4Hn8VSROcE3LcJ
-X-Google-Smtp-Source: AGHT+IFBPNM9vw3KPuCuB8bdudEFFf3nVgMsckzb0ui1itZVTK72IN8wbf3MdRh7dHNRjMmKd+PTa3cD+JD41TVTqTI=
-X-Received: by 2002:a5d:4f8f:0:b0:37d:387b:f080 with SMTP id
- ffacd0b85a97d-37d5519b99bmr3017147f8f.15.1728685113267; Fri, 11 Oct 2024
- 15:18:33 -0700 (PDT)
+        bh=kvKlqi6NPU9W2r4Mze6qUN5Ue5CsPaOFUxOXVN/6uX0=;
+        b=IuCaCdX5JLbI7Y68QJRjpQnyGLR75HaSTJ4Z/WC66GyBV9TORdntAKzBXuSy+EKC+f
+         miKvIIOsCUuZWszrDUhzyLbcsPT0Qy0+XW8dJw2FPpA4jlIUOzdw7QJO7MMOpJtBm0Re
+         mF8qKLcUxOUIjFC4ksDq4XWzC/1Zh7Sr9RUBxQ6HpnuZRIXki7f4Ck5J7JFlAHCFCode
+         O47uWWTbvBo8PDbfFlAi44eYlXXXg+/JtHnda/uEPRhooCKDFLAQia9ukP0evlb5FyNn
+         K9uEPaNiYde476zUfP4m6vHEKpzTiXjG6mVNNAnYJgAwph9Lr/8F6roMIaX+my7P9xqK
+         UlWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVW1Iuqjsah7PIAk+4rT9AJGtBhomXn3qXcddIjpgTl5hwp/MRJFz6jb4aWNKY73XJL6O4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzj0XS/+Ei5Fr/x4oxdR3/iSXoKt9H7as813Ugjv1t/lPygUTe/
+	maYwjsaszbm1P8nQdqq+5hnDZONaAYY1M26kkgOxf5CWGum+gg==
+X-Google-Smtp-Source: AGHT+IGpUf79/loxLfwElnybG4Zy9sRlumrjPRzWsdSNYVcYyHD3YOOXkGMOEr2NDSzndHUibxO/yQ==
+X-Received: by 2002:a05:600c:1c19:b0:431:1513:34a5 with SMTP id 5b1f17b1804b1-4311df474a0mr30840195e9.23.1728691206905;
+        Fri, 11 Oct 2024 17:00:06 -0700 (PDT)
+Received: from zihco-Latitude-7390-2-in-1.. ([105.113.33.177])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-37d4b2780c1sm5012449f8f.0.2024.10.11.17.00.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Oct 2024 17:00:06 -0700 (PDT)
+From: chizobajames21@gmail.com
+To: gitster@pobox.com
+Cc: chizobajames21@gmail.com,
+	git@vger.kernel.org,
+	phillip.wood@dunelm.org.uk,
+	ps@pks.im,
+	sunshine@sunshineco.com
+Subject: [Outreachy][PATCH v4] t6050: avoid pipes with upstream Git commands
+Date: Sat, 12 Oct 2024 00:59:59 +0100
+Message-Id: <20241011235959.596136-1-chizobajames21@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <xmqqzfnaedh6.fsf@gitster.g>
+References: <xmqqzfnaedh6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <D4SO70M9Z1QI.1AC4QF9ZG8T4L@pm.me> <444a412d-bf4c-4bbe-8250-18d8bc86fd21@app.fastmail.com>
- <D4SQFBEB1HYZ.QDOLCYY80DIZ@pm.me> <517c8829-f98f-4fed-af4d-b84182fb253e@app.fastmail.com>
-In-Reply-To: <517c8829-f98f-4fed-af4d-b84182fb253e@app.fastmail.com>
-From: Patrick Callahan <pat.callahan1@gmail.com>
-Date: Fri, 11 Oct 2024 18:17:57 -0400
-Message-ID: <CACt=GQpQNvhuCJgkOcjefkaC+TToEMEp1V3Kt15t68zYpN0W4A@mail.gmail.com>
-Subject: Re: `git worktree list` when bare repository is named `.git`
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 11, 2024 at 12:21=E2=80=AFPM Rebecca Turner <rbt@fastmail.com> =
-wrote:
->
-> > Why would you move the `.git` directory? If you're trying to move the
-> > repository, then wouldn't you just move the directory that contains the
-> > `.git` directory?
->
-> Ah, I should give some context here. I'm using worktrees with the layout =
-you
-> describe later in your email:
->
->     my-repo/
->       .git/      <- bare git directory
->       main/      <- worktree for main branch
->       feature1/  <- worktree for feature work
->       ...
->
-> I'm writing a tool to manage these layouts for you. I want to provide two
-> features:
->
-> 1. The ability to add a new worktree in a slightly more magical manner; i=
-n
->    particular, I want to be able to do `git my-tool add feature2` and add=
- a new
->    worktree in the same directory as all the other worktrees.
->
->    For a non-bare main worktree, that directory is the parent of the main
->    worktree.
->
->    For a bare main worktree named `.git`, it's the path of the main
->    worktree. (Nothing in the `git worktree list` output indicates this is=
- the
->    case!)
->
->    For other bare worktrees, it's the parent of the main worktree.
+From: Chizoba ODINAKA <chizobajames21@gmail.com>
 
+In pipes, the exit code of a chain of commands is determined by
+the final command. In order not to miss the exit code of a failed
+Git command, avoid pipes instead write output of Git commands
+into a file.
+For better debugging experience, instances of "grep" were changed
+to "test_grep". "test_grep" provides more context in case of a
+failed "grep".
 
- Rebecca,
+Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
+---
+Changes in v4:
+- Correct the subject
+- fixed some ommitted output option in sorts that where writing to
+  stdout
 
-I'm working on a tool to manage worktrees as well. Can we compare notes?
-My directory structure separates repositories and worktrees in
-separate directories, but the goals seem similar.
+Range-diff against v3:
+1:  3ef388e9aa ! 1:  28cab4c752 t6050: avoid pipes with downstream Git commands
+    @@ Metadata
+     Author: Chizoba ODINAKA <chizobajames21@gmail.com>
+     
+      ## Commit message ##
+    -    t6050: avoid pipes with downstream Git commands
+    +    t6050: avoid pipes with upstream Git commands
+     
+         In pipes, the exit code of a chain of commands is determined by
+         the final command. In order not to miss the exit code of a failed
+    @@ Commit message
+         failed "grep".
+     
+         Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
+    +    Changes in v4:
+    +    - Correct the subject
+    +    - fixed some ommitted output option in sorts that where writing to
+    +      stdout
+     
+      ## t/t6050-replace.sh ##
+     @@ t/t6050-replace.sh: test_expect_success 'set up buggy branch' '
+    @@ t/t6050-replace.sh: test_expect_success 'test --format medium' '
+      	} | sort >expected &&
+     -	git replace -l --format medium | sort >actual &&
+     +	git replace -l --format medium >actual &&
+    -+	sort actual &&
+    ++	sort actual -o actual &&
+      	test_cmp expected actual
+      '
+      
+    @@ t/t6050-replace.sh: test_expect_success 'test --format long' '
+      	} | sort >expected &&
+     -	git replace --format=long | sort >actual &&
+     +	git replace --format=long >actual &&
+    -+	sort actual &&
+    ++	sort actual -o actual &&
+      	test_cmp expected actual
+      '
+      
 
-git documentation seems to treat the bare repository concept as if one
-only uses bare repositories on a server, not locally in a development
-environment.
+ t/t6050-replace.sh | 133 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 86 insertions(+), 47 deletions(-)
 
-But, I've found that local worktree-based development is possible for
-multiple applications, libraries, toolchains, and CI, but it isn't
-very easy to maintain by hand, so tooling is a must. With some
-scripting, it works well for many bare repositories, numerous branch
-worktrees, and multiple build-and-run scenarios. Switching between
-tasks is almost instantaneous, with no need to stash or un-stash
-anything.
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index d7702fc756..018d672c1b 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -98,30 +98,42 @@ test_expect_success 'set up buggy branch' '
+ '
+ 
+ test_expect_success 'replace the author' '
+-	git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	R=$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
+-	git cat-file commit $R | grep "author O Thor" &&
++	git cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor" actual &&
++	R=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
++	git cat-file commit $R >actual &&
++	test_grep "author O Thor" actual &&
+ 	git update-ref refs/replace/$HASH2 $R &&
+-	git show HEAD~5 | grep "O Thor" &&
+-	git show $HASH2 | grep "O Thor"
++	git show HEAD~5 >actual &&
++	test_grep "O Thor" actual &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual
+ '
+ 
+ test_expect_success 'test --no-replace-objects option' '
+-	git cat-file commit $HASH2 | grep "author O Thor" &&
+-	git --no-replace-objects cat-file commit $HASH2 | grep "author A U Thor" &&
+-	git show $HASH2 | grep "O Thor" &&
+-	git --no-replace-objects show $HASH2 | grep "A U Thor"
++	git cat-file commit $HASH2 >actual &&
++	test_grep "author O Thor" actual &&
++	git --no-replace-objects cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor" actual &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual &&
++	git --no-replace-objects show $HASH2 >actual &&
++	test_grep "A U Thor" actual
+ '
+ 
+ test_expect_success 'test GIT_NO_REPLACE_OBJECTS env variable' '
+-	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
++	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor"  actual &&
++	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 >actual &&
++	test_grep "A U Thor" actual
+ '
+ 
+ test_expect_success 'test core.usereplacerefs config option' '
+ 	test_config core.usereplacerefs false &&
+-	git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	git show $HASH2 | grep "A U Thor"
++	git cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor" actual &&
++	git show $HASH2 >actual &&
++	test_grep "A U Thor" actual
+ '
+ 
+ cat >tag.sig <<EOF
+@@ -148,14 +160,18 @@ test_expect_success 'repack, clone and fetch work' '
+ 	git clone --no-hardlinks . clone_dir &&
+ 	(
+ 		cd clone_dir &&
+-		git show HEAD~5 | grep "A U Thor" &&
+-		git show $HASH2 | grep "A U Thor" &&
++		git show HEAD~5 >actual &&
++		test_grep "A U Thor" actual &&
++		git show $HASH2 >actual &&
++		test_grep "A U Thor" actual &&
+ 		git cat-file commit $R &&
+ 		git repack -a -d &&
+ 		test_must_fail git cat-file commit $R &&
+ 		git fetch ../ "refs/replace/*:refs/replace/*" &&
+-		git show HEAD~5 | grep "O Thor" &&
+-		git show $HASH2 | grep "O Thor" &&
++		git show HEAD~5 >actual &&
++		test_grep "O Thor" actual &&
++		git show $HASH2 >actual &&
++		test_grep "O Thor" actual &&
+ 		git cat-file commit $R
+ 	)
+ '
+@@ -169,13 +185,15 @@ test_expect_success '"git replace" listing and deleting' '
+ 	test_must_fail git replace --delete &&
+ 	test_must_fail git replace -l -d $HASH2 &&
+ 	git replace -d $HASH2 &&
+-	git show $HASH2 | grep "A U Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "A U Thor" actual &&
+ 	test -z "$(git replace -l)"
+ '
+ 
+ test_expect_success '"git replace" replacing' '
+ 	git replace $HASH2 $R &&
+-	git show $HASH2 | grep "O Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual &&
+ 	test_must_fail git replace $HASH2 $R &&
+ 	git replace -f $HASH2 $R &&
+ 	test_must_fail git replace -f &&
+@@ -186,7 +204,8 @@ test_expect_success '"git replace" resolves sha1' '
+ 	SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
+ 	git replace -d $SHORTHASH2 &&
+ 	git replace $SHORTHASH2 $R &&
+-	git show $HASH2 | grep "O Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual &&
+ 	test_must_fail git replace $HASH2 $R &&
+ 	git replace -f $HASH2 $R &&
+ 	test_must_fail git replace --force &&
+@@ -209,10 +228,12 @@ test_expect_success '"git replace" resolves sha1' '
+ #
+ test_expect_success 'create parallel branch without the bug' '
+ 	git replace -d $HASH2 &&
+-	git show $HASH2 | grep "A U Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "A U Thor" actual &&
+ 	git checkout $HASH1 &&
+ 	git cherry-pick $HASH2 &&
+-	git show $HASH5 | git apply &&
++	git show $HASH5 >actual &&
++	git apply actual &&
+ 	git commit --amend -m "hello: 4 more lines WITHOUT the bug" hello &&
+ 	PARA2=$(git rev-parse --verify HEAD) &&
+ 	git cherry-pick $HASH3 &&
+@@ -225,7 +246,8 @@ test_expect_success 'create parallel branch without the bug' '
+ 	git checkout main &&
+ 	cur=$(git rev-parse --verify HEAD) &&
+ 	test "$cur" = "$HASH7" &&
+-	git log --pretty=oneline | grep $PARA2 &&
++	git log --pretty=oneline >actual &&
++	test_grep $PARA2 actual &&
+ 	git remote add cloned ./clone_dir
+ '
+ 
+@@ -234,23 +256,30 @@ test_expect_success 'push to cloned repo' '
+ 	(
+ 		cd clone_dir &&
+ 		git checkout parallel &&
+-		git log --pretty=oneline | grep $PARA2
++		git log --pretty=oneline >actual &&
++		test_grep $PARA2 actual
+ 	)
+ '
+ 
+ test_expect_success 'push branch with replacement' '
+-	git cat-file commit $PARA3 | grep "author A U Thor" &&
+-	S=$(git cat-file commit $PARA3 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
+-	git cat-file commit $S | grep "author O Thor" &&
++	git cat-file commit $PARA3 >actual &&
++	test_grep "author A U Thor" actual &&
++	S=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
++	git cat-file commit $S >actual &&
++	test_grep "author O Thor" actual &&
+ 	git replace $PARA3 $S &&
+-	git show $HASH6~2 | grep "O Thor" &&
+-	git show $PARA3 | grep "O Thor" &&
++	git show $HASH6~2 >actual &&
++	test_grep "O Thor" actual &&
++	git show $PARA3 >actual &&
++	test_grep "O Thor" actual &&
+ 	git push cloned $HASH6^:refs/heads/parallel2 &&
+ 	(
+ 		cd clone_dir &&
+ 		git checkout parallel2 &&
+-		git log --pretty=oneline | grep $PARA3 &&
+-		git show $PARA3 | grep "A U Thor"
++		git log --pretty=oneline >actual &&
++		test_grep $PARA3 actual &&
++		git show $PARA3 >actual &&
++		test_grep "A U Thor" actual
+ 	)
+ '
+ 
+@@ -260,14 +289,14 @@ test_expect_success 'fetch branch with replacement' '
+ 		cd clone_dir &&
+ 		git fetch origin refs/heads/tofetch:refs/heads/parallel3 &&
+ 		git log --pretty=oneline parallel3 >output.txt &&
+-		! grep $PARA3 output.txt &&
++		test_grep ! $PARA3 output.txt &&
+ 		git show $PARA3 >para3.txt &&
+-		grep "A U Thor" para3.txt &&
++		test_grep "A U Thor" para3.txt &&
+ 		git fetch origin "refs/replace/*:refs/replace/*" &&
+ 		git log --pretty=oneline parallel3 >output.txt &&
+-		grep $PARA3 output.txt &&
++		test_grep $PARA3 output.txt &&
+ 		git show $PARA3 >para3.txt &&
+-		grep "O Thor" para3.txt
++		test_grep "O Thor" para3.txt
+ 	)
+ '
+ 
+@@ -284,8 +313,8 @@ test_expect_success 'bisect and replacements' '
+ '
+ 
+ test_expect_success 'index-pack and replacements' '
+-	git --no-replace-objects rev-list --objects HEAD |
+-	git --no-replace-objects pack-objects test- &&
++	git --no-replace-objects rev-list --objects HEAD >actual &&
++	git --no-replace-objects pack-objects test- <actual &&
+ 	git index-pack test-*.pack
+ '
+ 
+@@ -319,7 +348,8 @@ test_expect_success '-f option bypasses the type check' '
+ '
+ 
+ test_expect_success 'git cat-file --batch works on replace objects' '
+-	git replace | grep $PARA3 &&
++	git replace >actual &&
++	test_grep $PARA3 actual &&
+ 	echo $PARA3 | git cat-file --batch
+ '
+ 
+@@ -344,7 +374,8 @@ test_expect_success 'test --format medium' '
+ 		echo "$PARA3 -> $S" &&
+ 		echo "$MYTAG -> $HASH1"
+ 	} | sort >expected &&
+-	git replace -l --format medium | sort >actual &&
++	git replace -l --format medium >actual &&
++	sort actual -o actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -356,7 +387,8 @@ test_expect_success 'test --format long' '
+ 		echo "$PARA3 (commit) -> $S (commit)" &&
+ 		echo "$MYTAG (tag) -> $HASH1 (commit)"
+ 	} | sort >expected &&
+-	git replace --format=long | sort >actual &&
++	git replace --format=long >actual &&
++	sort actual -o actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -374,12 +406,16 @@ test_expect_success 'setup fake editors' '
+ test_expect_success '--edit with and without already replaced object' '
+ 	test_must_fail env GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --force --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor" &&
++	git replace -l >actual &&
++	test_grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual &&
++	test_grep "A fake Thor" actual &&
+ 	git replace -d "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor"
++	git replace -l >actual &&
++	test_grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual &&
++	test_grep "A fake Thor" actual
+ '
+ 
+ test_expect_success '--edit and change nothing or command failed' '
+@@ -387,8 +423,10 @@ test_expect_success '--edit and change nothing or command failed' '
+ 	test_must_fail env GIT_EDITOR=true git replace --edit "$PARA3" &&
+ 	test_must_fail env GIT_EDITOR="./failingfakeeditor" git replace --edit "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor"
++	git replace -l >actual &&
++	test_grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual &&
++	test_grep "A fake Thor" actual
+ '
+ 
+ test_expect_success 'replace ref cleanup' '
+@@ -468,7 +506,8 @@ test_expect_success GPG 'set up a merge commit with a mergetag' '
+ 	git checkout main &&
+ 	git merge -s ours test_tag &&
+ 	HASH10=$(git rev-parse --verify HEAD) &&
+-	git cat-file commit $HASH10 | grep "^mergetag object"
++	git cat-file commit $HASH10 >actual &&
++	test_grep "^mergetag object" actual
+ '
+ 
+ test_expect_success GPG '--graft on a commit with a mergetag' '
+-- 
+2.34.1
 
-I've managed to come up with a bash implementation with just three
-commands for starting an editor/ide, building and running.  Parameters
-to these commands set the context for whatever it is I'm working on at
-the moment. I'm working on separate commands to maintain the
-environment.  I need to do such things as clone an upstream repo,
-clone
-
--Pat Callahan
- Framingham, Ma
-
-Here's the list of requirements I'm working with:
-
-Overview
-
-- Use only bare repositories and worktrees
-- Start an Ide, a build, a run for whatever I'm working on at the moment
-- Support development work on multiple applications, libraries, or tools
-- No limit to the number of working contexts.
-- Instant focus on a specific context: a set of repositories,
-git-references. and worktrees
-- Instant switch between different working contexts within the same
-application or between different applications.
-
-Repositories
-
-- Bare clones of a set of official and forked repositories from
-Github, Gitlab, or Sourceforge
-- Local Bare Repos Only
-- All Repos in one directory as repo-name.git
-- Worktrees as needed for building
-
-Worktrees
-
-- All Worktrees in another single directory as repo-name.git-reference
- (git reference being a branch, tag, or commit
-- Worktree synchronization by git pull upstream, or git pull upstream --reb=
-ase
-- Directories
-- Hierarchy as flat as possible
-- Automatic setup of out-of-tree builds using symbolic links to one or
-more worktrees
-
-IDE or Code Editor support
-
-- Automatic setup of multiple multi-root workspaces based on the list
-of worktrees used to build a specific branch.
-
-Building and Running
-
-- A default build script and custom build scripts where appropriate
-- A default application run script with custom run scripts where appropriat=
-e
-- Straightforward, flexible command line syntax
-  Example: Build four separate cmake build types: Debug,
-RelWithDebInfo for each of two branches
-
-    b app-name branch-name1 branch-name-2 d rd r m
