@@ -1,79 +1,79 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014E91F9AA7
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CA7207A03
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728624775; cv=none; b=qtRN8jO+K+5V5ZuuWL0aC9PvKXv0cpnG4s8+V/Va6p8BPK9jY/NCj7wMnqJpRukYUkabSwsBZ5n3kGEf9/Kzt9KoeQWEbUkO+xzV+oiB7TIt2g3XMTea598FbC6buNbUs9pQKcZnhidYFL2Dly4/aikwKVmBQiAF875RoaTsXzs=
+	t=1728624778; cv=none; b=ck3LsdXhUdQLBOQ1WXNQ/AViiqZY07Bk0QAClBEZFGV28PpeRhpqKKAPahrcXFh3tLC8wSy6NKPQoCt6Mvd/8jV1YR8BKsAiE9f5S/DVtyRZpuqlBQHrhs55G/0wSAls4QPrz1g6AjSgU08YekWrLT7vvQnr0bYK1zWWSNFDdKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728624775; c=relaxed/simple;
-	bh=8m04HFlqdCTdA6Ohgz4zVvskbeSsPm0QI5Xq+CN3D0I=;
+	s=arc-20240116; t=1728624778; c=relaxed/simple;
+	bh=yaTz0OuvfIZSewtasO5Y0812oJPDC04C0/PZEkT5I5g=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NR61+3VeH4/gTLxPlDKRW1sh0E5iiIiRLCqlpLhJkg+aZIrBQnysEOjxxGEd7VKLLpWL1Ue5c7/vBpMOeY8oqmLXjNtYkk84Em3NxfkkaZuya00atr7PyVt9iVtKHNhHfvoRmd6fSCAxiCa+CWAiYd4dRFXTHA4Ochb/9EKDcSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UL8bTDzb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jNwY0ehU; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=lYC+qN6kW0TEtmDCEhugPtWiQzVkWETqRGFzxeb/FHHR4hoXcMxKpe9OxjtSDV+aZxPssRkNxTrSOG5+ygGPuAGayT/EJE6UwyX13y5ZZz8FUA5iUYx2NAyfscM2e/dQDgH7i6365Ud3EhdrmeVY2g+P/HNYpnTlOx4QYJjnPPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J+csHf8h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qKcYPwl4; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UL8bTDzb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jNwY0ehU"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5F0D31140135
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J+csHf8h";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qKcYPwl4"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 407E011400C4
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:56 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 11 Oct 2024 01:32:53 -0400
+  by phl-compute-12.internal (MEProxy); Fri, 11 Oct 2024 01:32:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728624773; x=1728711173; bh=bAFKi7QxuD
-	Ddn5Ffp9cMNlApG+6az0YdD1+EC6TZ5pM=; b=UL8bTDzbNx2Q+e93+geikFYFwg
-	Yem1RNA15/dZkGCEaYniYtckAwu3SrJ2T0tyrsEj3BuSSyU5VCw9pHtigMtUu3TE
-	/d/sj/AVZCRlKgPDOlSQDwPxdI9vlU14Qy6OjgAjpGoaY0JRalS5zm4RQ3SSFSVe
-	vbAkShZdYPeKZ2OIbOciXWA6ZVmfroZUehneVQLmcmnaUk3F+1kG7ctDkkFBmqGP
-	FmeKdsZTnYr5NpalzHawfjYdP4FPWaSS7/uQ/588qPeh+wcfozdSEFtwXVahIcU4
-	hv9hepTOXe3DKooTkChxTzyPypzZQtpK/dz5L/BbCF+nUTlUN6OR2j7ZKFfg==
+	:subject:to:to; s=fm2; t=1728624776; x=1728711176; bh=MWc6OZvi6N
+	j80bKJ4FI+H/LCdF+lXw3y0fGje5nkQjY=; b=J+csHf8hTHisf0EBWwD7amhFMl
+	75Vfhlmo6A2oNhRv7eX3g5x/EsSMK2iaWLxZwp5aybLrJHcCQNk34wT50+k41EAQ
+	4tTmCd7+JP4f2+TWHBkwXcc9SMLtAR7JHlGdBBEW1g7bNjVDpU4AmicMMZ5ONOvn
+	et8ANetjVnzfBseHsYjjpJ+wA3Kj0oXpOjvaJnxI7tPNoZ/gYN6n407U1cU63voP
+	nzeq04lVj022LQbZ2dyjyade/Geffqx/AC7kucyBzD/H/MY3aNmJb8EgFxZfByE8
+	lQgIaO2jd+tjUfew3NCdqTfuGH9zYsR68F81CnwXIMPGk9dm33wglQrS3lRA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728624773; x=1728711173; bh=bAFKi7QxuDDdn5Ffp9cMNlApG+6a
-	z0YdD1+EC6TZ5pM=; b=jNwY0ehUCpBtS+LJg26Jf1YWEFtl1JAQpNuMafg2cRqf
-	sg5L/iWSJZbQo9neGmRtLMJWuo3QdvqU4x4UdCIP4zD1IpW4CY1Wyb7JFMA9TJdG
-	ZM2OObTonTjF6f11eIE7zKletzukkEn0ZXDJ8fzETWyaB561utUSByuwlTwfkNC3
-	jYqc5wrJkcuT6ufgVwOYWDYV5GR4X6VgDZWxt1AUeVMTIsAS+T1KGRtaVTQcX6lV
-	2KZhWzU9sfesX71x3jdsSXekMe+yHFVp3SbDw0j4gk82M6ViKIv6ShwG8rOh7hOv
-	3//oTXGg0VxAIEmnmoJTY3LXXCN14h6+ExxSoDEycA==
-X-ME-Sender: <xms:hbgIZ56ll5fc6rR3NX_YDhmY4OBff6UrC7YZXPgj5__g-4cgB9fWdA>
-    <xme:hbgIZ26U-8PGKqaDcOrCIsOljOeqdgrV3kPztGmNcIt1S9fr3renBj5LJTRdAQ_C1
-    lQjNINHzJBPlwzNvw>
-X-ME-Received: <xmr:hbgIZwdfQarMaUXzb0s5r8GcakQQPen3GvzD85rzt_997GmIHZtTaRms6XZ5OeWVtdTRGehN7RvJciYYl9c0WBZseywngmuLVG-wCL_ZwsffcFY>
+	fm2; t=1728624776; x=1728711176; bh=MWc6OZvi6Nj80bKJ4FI+H/LCdF+l
+	Xw3y0fGje5nkQjY=; b=qKcYPwl4NBYCt8v72zyBnvK8TMsOQfpKJoO7Ft1ID2Ch
+	mugDWMlQjav5qT0fyxMJwNQxTkEsYpfaWtcvFWV3hZr4N3uWLFGMMIIq0sO7sFPZ
+	7pOcrhCtgYMZeaRYOJsVuJKhulrrbyA53cGO3Ltug8MmRxySruxWq0Ki9nQ5I5Va
+	zbXGZUKjEl0hCHWNrh3N7qDMGGF7R6qL6mr5glqyiSIViT8EMCgtjcf75Vsf7zRr
+	2AIcQVWfHPZxztKNc0gDT0whwDvFisWI4MoIYBx2AeY0qnpQ+S3IiYV1H6BXliXl
+	XHFnuSvC8lVueEu43qMYHIKEQ8YFfnqOCAGVxhWYMQ==
+X-ME-Sender: <xms:iLgIZ62fD4A3Tehyp9ceAchtbZ75Xy54oFD8UZGy637qIu6vxYf7zg>
+    <xme:iLgIZ9GGjhGxCKxZMQMH9-EK6YdxNfB7aNhqA7Yglb7r9QEZAvg2U9QwAfEKjsHqh
+    TU3S7I1ofyU-J1UTw>
+X-ME-Received: <xmr:iLgIZy6F2wTcNV4FTyq849GNVnrM-JWES7BdPRzn7e5ANnI9tVfw899-_ZBUoz2Gx0w37ieedcm3zUqfWbDpZp5FLgNZmHTR5zMz8mY0omdbPiM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefjedgleelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
     egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    ihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:hbgIZyIsjSpm2Hzlh2kfFFwERo0N4E3Li6mBzZJi_NcFOSL7BprVug>
-    <xmx:hbgIZ9IaXluMRKPYUuBnjjC7iu9WekS_0bF9BOEqk-9Q3_TeUn9jAg>
-    <xmx:hbgIZ7yzqMkbH7nNsMP-pAsgiHeUsDRKnHFOSDuK8MJsF7ZztnugnQ>
-    <xmx:hbgIZ5IAPZrL4yZntGFAl_Nv_JBnY9gn3g2TeTDCTBp_rB7_luP_yw>
-    <xmx:hbgIZ7jZ3MSLU0qowt_GcFzJbXdBQvorJjPt-OmVz2IyGJyIDjXFEGDX>
+X-ME-Proxy: <xmx:iLgIZ710ajqLbVRVTmpw3STzcXFRJRsZ5Ns35kvJS9Rau6vByoCwsw>
+    <xmx:iLgIZ9FGtURI9gSgjdPRF5cHfj6k2uwL0zlp9lGgWKeXoi9Nnf2J8w>
+    <xmx:iLgIZ0-JYSbl1qY0aD419u-VxnzujjF6QaAZrcg3lVyz0KfA2jbgoA>
+    <xmx:iLgIZykCVoInomAMwtw3EXEXEf81ztzsm1kcHLR7WiLOtbJuogfvCQ>
+    <xmx:iLgIZ7N64gM_TK6uUX9blziupngfh5cSmEMMqPDn8b414pNkg-jB8cF_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:52 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:55 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7e4f1467 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id bb6ad03c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 11 Oct 2024 05:31:46 +0000 (UTC)
-Date: Fri, 11 Oct 2024 07:32:51 +0200
+	Fri, 11 Oct 2024 05:31:49 +0000 (UTC)
+Date: Fri, 11 Oct 2024 07:32:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 14/21] combine-diff: fix leaking lost lines
-Message-ID: <8d305d9b1c8b234f0a029d5db462a0f3bf5b7d12.1728624670.git.ps@pks.im>
+Subject: [PATCH 15/21] dir: release untracked cache data
+Message-ID: <f977a033cf4b9d09ec32cac841038d1f5ea98374.1728624670.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,45 +85,59 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728624670.git.ps@pks.im>
 
-The `cnt` variable tracks the number of lines in a patch diff. It can
-happen though that there are no newlines, in which case we'd still end
-up allocating our array of `sline`s. In fact, we always allocate it with
-`cnt + 2` entries. But when we loop through the array to clear it at the
-end of this function we only loop until `lno < cnt`, and thus we may not
-end up releasing whatever the two extra `sline`s contain.
+There are several cases where we invalidate untracked cache directory
+entries where we do not free the underlying data, but reset the number
+of entries. This causes us to leak memory because `free_untracked()`
+will not iterate over any potential entries which we still had in the
+array.
 
-Plug this memory leak.
+Fix this issue by freeing old entries. The leak is exposed by t7519, but
+plugging it alone does not make the whole test suite pass.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- combine-diff.c           | 2 +-
- t/t4038-diff-combined.sh | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ dir.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/combine-diff.c b/combine-diff.c
-index f6b624dc288..3c6d9507fec 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1220,7 +1220,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+diff --git a/dir.c b/dir.c
+index e3ddd5b5296..cb9782fa11f 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1056,6 +1056,8 @@ static void do_invalidate_gitignore(struct untracked_cache_dir *dir)
+ {
+ 	int i;
+ 	dir->valid = 0;
++	for (size_t i = 0; i < dir->untracked_nr; i++)
++		free(dir->untracked[i]);
+ 	dir->untracked_nr = 0;
+ 	for (i = 0; i < dir->dirs_nr; i++)
+ 		do_invalidate_gitignore(dir->dirs[i]);
+@@ -1083,6 +1085,8 @@ static void invalidate_directory(struct untracked_cache *uc,
+ 		uc->dir_invalidated++;
+ 
+ 	dir->valid = 0;
++	for (size_t i = 0; i < dir->untracked_nr; i++)
++		free(dir->untracked[i]);
+ 	dir->untracked_nr = 0;
+ 	for (i = 0; i < dir->dirs_nr; i++)
+ 		dir->dirs[i]->recurse = 0;
+@@ -3573,6 +3577,8 @@ static void write_one_dir(struct untracked_cache_dir *untracked,
+ 	 * for safety..
+ 	 */
+ 	if (!untracked->valid) {
++		for (size_t i = 0; i < untracked->untracked_nr; i++)
++			free(untracked->untracked[i]);
+ 		untracked->untracked_nr = 0;
+ 		untracked->check_only = 0;
  	}
- 	free(result);
- 
--	for (lno = 0; lno < cnt; lno++) {
-+	for (lno = 0; lno < cnt + 2; lno++) {
- 		if (sline[lno].lost) {
- 			struct lline *ll = sline[lno].lost;
- 			while (ll) {
-diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
-index 2ce26e585c9..00190802d83 100755
---- a/t/t4038-diff-combined.sh
-+++ b/t/t4038-diff-combined.sh
-@@ -5,6 +5,7 @@ test_description='combined diff'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-diff.sh
+@@ -3905,6 +3911,8 @@ static void invalidate_one_directory(struct untracked_cache *uc,
+ {
+ 	uc->dir_invalidated++;
+ 	ucd->valid = 0;
++	for (size_t i = 0; i < ucd->untracked_nr; i++)
++		free(ucd->untracked[i]);
+ 	ucd->untracked_nr = 0;
+ }
  
 -- 
 2.47.0.dirty
