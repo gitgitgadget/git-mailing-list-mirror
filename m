@@ -1,82 +1,82 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6B81C5796
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 19:08:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FF31C5782
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 19:12:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728673710; cv=none; b=HQ96Pnqa2n2qylfQk0mKyEb24ebYyrGj+pjnkHedGTJoSym2xFEkgoQYEKi7oWJuaICTBWBoXnbGiVTjXtFRgXWCm5g35Y4DiKxgU3r4zUFyGCEd4b0tLA7mCktPYgg5Ta/ZQxtFCIxe6bO6fcrnGzGS7oJMPHsTjIn6QArOOVc=
+	t=1728673949; cv=none; b=rCCkAdPvDp2R5kmOSWQhCR3DYiN61DXnYEPdlCGEM8kBADbPoxHXlhW5WQeiVIQE2O6mEHRqLncz5V9v+5aDVlXnywxsDGC1n/bB1P5/aghnB4TnMii1vRcrsOHwY2q4kuoS8nmjrpj01hqUBCaJ6Lz5SVzmoSyNjephkriRsAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728673710; c=relaxed/simple;
-	bh=BPXdi1tNDR6b8bIfNHNZUUFjojXXHOjnSxMHEvxEY4k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LXWCjodJjIWSOGVsLzXa90LcIyrpIk+ku8hAIN2gHnmKsXadyoj0alyp/rvBdrGphtfyjpedPIfpxSukj0WUWVzq6MFd7ct8wercme6ldwn+vliQWOeUqR6UypejnrtnjTEL11+ezIL0nAdcW7H6i/Na0r1NutbVse7ipeEJ0OI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=GurWtTxf; arc=none smtp.client-ip=18.9.28.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
+	s=arc-20240116; t=1728673949; c=relaxed/simple;
+	bh=zA5t/4iibsUDaLdixuZgFHdieOU5CgDrM9MZ+Ktz004=;
+	h=From:To:Cc:Subject:Date:Message-id:MIME-version; b=mIAImhlhwpY6NIiFFVCJa1R/G0jxcCgmgo5HBjGTjrfsEALZi7yRyiv5CKaPZu22pqYN0vy9z9ZEUnBafaTBzI0f6DD30n42gBtyU0VssaK2F75f/kAxdculofbnvzJZcKMhmOem3UVO193Vpt2figXzB8tQocbbmU/1ZPNV0cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=PS2twnnV; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="GurWtTxf"
-Received: from localhost (CSAIL-SQUARED.MIT.EDU [18.9.64.19])
-	(authenticated bits=0)
-        (User authenticated as asedeno@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 49BJ8CjV024828;
-	Fri, 11 Oct 2024 15:08:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1728673695; bh=iMKNBSQYzXaoxytEBK/0lFPzZ0Y0fuJEDgnbDQcVX5Y=;
-	h=From:Subject:Date:Message-ID:MIME-Version;
-	b=GurWtTxfA8CObTiSE+Vd9fKVu3869C92vXxZb0/grOtAdDY2IVn7FKFQqhgzTvqoj
-	 7UAT2qDpToCL3yxe3C8MA79lSsTN7hBT4g/kP1EePmKbQ6LsVmj/3nrp3ZhtvFkXJP
-	 a9TO5uYU5tuVhHWyeeO36VtxrQLPPbSx8yj+wJCAWt4bdVaJaruhAJZRPPwSQZc0cj
-	 UbRYvqMHvkPyY4o+rYHLmSKOqgRKK+KzBswfOFGnTRASFF49Jt9p0wnKa1/A6wlQcx
-	 445DOjOrcl7YLXYYKcRBfv/o3zRLW30S+E2tPNR9S+3+3vHVDFj3MZ0zLI0v8pddFb
-	 b+IGVDAwTGUZA==
-From: =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
-To: gitster@pobox.com
-Cc: asedeno@mit.edu, git@vger.kernel.org, peff@peff.net,
-        sandals@crustytoothpaste.net, sunshine@sunshineco.com, ps@pks.im
-Subject: Re: [PATCH 00/13] Update versions of libcurl and Perl
-Date: Fri, 11 Oct 2024 15:08:12 -0400
-Message-ID: <20241011190812.2654837-1-asedeno@mit.edu>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <xmqqttdicws8.fsf@gitster.g>
-References: <xmqqttdicws8.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="PS2twnnV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=S+C0N/QhEvZpEoV4E1I/pN7Nx4Iv+DcLtJRIn5xCnGc=;
+ b=PS2twnnVi/MABaaFy64XOnqklvQiufJHu0uEHok54v/SqvSriIm/sH3xf05+G8dzRvu+X9Mdnw0F
+   UrzATJXJuRYvE20PxaO60Y+edJgxfOG5Fkz72sccew5TBc/duurEXe/Mew9cS0r8QtSR5lxtgDdp
+   rWiTi581dXqy8M/wYvSJWFS90uXeEZ8WET8E5G4H5/URALucuaWUFNUprdDOats1n3DrFfB7QnFC
+   vSPJ/Op1wEo+URExTO9UUDLvNXGZvRZQwoKuCLMCvLy4FrZqSr43meYX8ohOOPcRHPemAX/KKm/2
+   P0a4VI1rae3yqHDbFM42rJhHatghioLbw43Ebg==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SL7000R6HCJI120@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Fri, 11 Oct 2024 19:12:19 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH] t/README: add missing value for GIT_TEST_DEFAULT_REF_FORMAT
+Date: Fri, 11 Oct 2024 21:11:33 +0200
+Message-id: <20241011191150.825255-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAEl/1XRwa+o16Aws43g7ydwnHWRzzvjBB+uV45msQyGDhcGeSPReNH71PPPy3XX
+ oQJLEmIhzFMwciQPlXxTMDipqaQYYnklIUo5CzgbPgFC2Yr1y6Uvl3ChGkKVgxNT
+ aDJW9VQeWHQkdjYEgB8KPFfa0N2oUBXjFDvSRSufnH7EBkbGOP4FDq/ZClkJawpc
+ eXK86AtRlGN8MJIo2FMywwZIomwfBKFEiEqTmFmGm+sfDhmk0kVaSZbFLiBzd82z
+ i4IPgNRZWzCaqFUMMXif++z1jIjTA80Mu41A+1/roV6Nsjg042iRhw2MxUUzxbQc
+ uEnc7mC4hoq5KyNQid0Kf47qy82Ws6dwUaTp7XDn68+uhkoyKHedEQampyoF1+Us
+ ee9H0DGT16ibIx1CZWkHc2AvASUpNXaZS4elE8ec3eTUV+EOTjWxcVZOX0SNCwbF
+ 9kAEusenPqNzhDGLxM9DBhk6insLkpmuKAW7vqA6QWzR3qn6cNz/TyUj
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
-> > I may be in the minority here, but I'm fairly negative on this entire
-> > patch series. As you say, supporting these old versions is effectively
-> > zero-cost, so how does this project benefit from these changes which
-> > potentially "break" Git for users on older platforms? I see no upside
-> > here. The cover letter provides no strong justification for
-> > (potentially) inconveniencing people; the argument about being able to
-> > utilize more modern Perl features is weak[1] at best and is not
-> > convincing.
->
-> While I agree with all you said above, one thing I find missing is
-> that even with #ifdef, we won't be shipping what we tested in real,
-> as nobody, not just the author that touches the same file with the
-> #ifdef we added 6 months ago is in, but all other developers who
-> looked at the change.  It merely is "we have #ifdef here and those
-> with ancient version of the library shouldn't see this new code",
-> which certainly is good enough for those of us who consider the
-> ancient platform support as a "best effort" thing.
+The documentation only lists "files" as a possible value, but
+"reftable" is also valid.
 
-Should I go ahead and send the patch series that I had planned to fix
-the breakage for old libcurl after all? I've gone ahead and built the
-latest version for one of the ancient platforms I inexplicably build
-git for, but am now dealing with breakage on another (SunOS 5.10).
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+---
+ t/README | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-(Specifically, the new unit test framework stuff was failing to
-generate a suite file, patch forthcoming, and depends on mkdtemp,
-which we check for in configure but use unconditionally in the
-newly-imported clar, and which I don't have here.)
+diff --git a/t/README b/t/README
+index 8dcb778e26..8c0319b58e 100644
+--- a/t/README
++++ b/t/README
+@@ -465,8 +465,9 @@ GIT_TEST_DEFAULT_HASH=<hash-algo> specifies which hash algorithm to
+ use in the test scripts. Recognized values for <hash-algo> are "sha1"
+ and "sha256".
+ 
+-GIT_TEST_DEFAULT_REF_FORMAT=<format> specifies which ref storage format
+-to use in the test scripts. Recognized values for <format> are "files".
++GIT_TEST_DEFAULT_REF_FORMAT=<format> specifies which ref storage format to use
++in the test scripts. Recognized values for <format> are "files" and
++"reftable".
+ 
+ GIT_TEST_NO_WRITE_REV_INDEX=<boolean>, when true disables the
+ 'pack.writeReverseIndex' setting.
+-- 
+2.47.0.6.g93f83f3a03
 
--Alejandro
