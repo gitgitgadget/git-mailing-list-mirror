@@ -1,79 +1,79 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8755A1FA247
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051D5208216
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 05:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728624752; cv=none; b=WDgYbJoEPJ8UhV6rC45+nB7mU8aZAyhL16CvKGUcW33BU+Ol/Se7lsV5x8/7fT/4PBJzXp17ihDLq31EKYJe8z2IlCE0f4kMU4ff5bZ/qGx7aAuMupU27wNcqaIuXh3ChGuzy6xM6AwF9RIzYWD0Y77RGPH635CpxOGEUJBbv7o=
+	t=1728624754; cv=none; b=j1PVVZ8ye+Fh03Pi8ER3jWbUZEhidZ7XMWOkJmhUWaJ24bWimXTc8Qgc59ONOzoxbrIYsMYH0oz8RYBz+yNYYFbYHj9T00J5Mvfxf9NjI0+j+CG5Oj14/1LR50s+5YN1t3EcWgPSq+8bzAAD3c9P+SgTtWMn3OOZZFoJ7EejTGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728624752; c=relaxed/simple;
-	bh=mdiN6ue/eOZdFWkdYu8EOE/ga50DanGvi8gNXSeh5QU=;
+	s=arc-20240116; t=1728624754; c=relaxed/simple;
+	bh=wAfvhPFldsAk1ENfmTWyT2kjMkc39kSM/wL7UH3uTns=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KoUW8vbtpbntV3LPTGFA55WACMelXp8FiM+oSNLRi62YLqrA6PDgxp2knHrmJ6IS0TYQ0Y3D7yM4kPfotu8eOEa4cm5z/VhM1Yitj8/PrpLap8gC9VViK78cWE1FMp8KBgxItYA6Jdj4q/C0N3ggOXrfCcCAdHzz6WG0JzgZn9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m6D4WKGB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JpYE9Iup; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=R9v5i7VKiF3nEi7BpdHn7uNwpz+nc2T6t0oGzj2F/DNC7Q6RIhUF0vxQTymM7T4pRae65uCNwUGumKIVESWOvAfZF/eBBadGnqTCsC7mzgGy85Va/D0Sidk2zTYkF0z9VcPMkSaXXLMbWRjqu9KCY/1uFsw+wEIjmetEvfQfxEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=glNCUW5G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TFVMIyyJ; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m6D4WKGB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JpYE9Iup"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 73D1B1380158
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="glNCUW5G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TFVMIyyJ"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 629E51380123
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:32 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 11 Oct 2024 01:32:29 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 11 Oct 2024 01:32:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728624749; x=1728711149; bh=sJ4deOtsyp
-	fqcT64kwHJU5mmp+as5epFSpTG2Rq+xU4=; b=m6D4WKGBxuwKbnG/9HJez0cbiX
-	1gwZSKFAR1H7WP6MI1Ttg/gm9Ha4FOOAJZ89TrRGf8rnlMdr7vBlN3JeGwkKCYe7
-	xGvUbTgede3A010WBCgMa3MzmB6w1kTdZ4Y9qVy+cJ9pYIy1iGqwBPDPbvHjm1Ma
-	Z3nWRiYaa/jd2Y2Cq0oQY0bfVxmZmLAszAfZUOnw4FqpHEJVC2/pRyDHihuMwF5c
-	mh/gQyMobAMQzXSvicKk8hyEPcLMtvdp8rjBiwAMbvrt6VuZS2STYHIqaKCTCgyt
-	quOTcDlkIh/+DwrZLMmsFRVIe0e0x8Eenoi1MR0PPN9RJsX/1AiW6R/1nXxA==
+	:subject:to:to; s=fm2; t=1728624752; x=1728711152; bh=tZObAy4DHE
+	F/a+fzzNqxX5HuWJEycgm/nu8ulIuXZV4=; b=glNCUW5GlUeksgM/BHvkn4Goxw
+	Uu3l4KvI+r83yPBAwt9eKqDRZyudASPgd/bI8tgrr5frTFTxe7KkMt78MJDDmekK
+	Q8nh4qeqSZOy+7C74VVFqpGjMzW8sOP6nSk8QOHL6m03CMhRA6nkPX/gFAMcVxsj
+	wAVqxq55jnnbsCLWAepRllnIrSf6jPuvCxQNJXnNBBZnasr1msxOTSL8TumrW59r
+	otXyKKXHm4oU46ZFeh5xT/ZJyyvnnxEOlfR+LZRUDwFhPXMQpSHA14d9mBk2rM8P
+	qUxwLM2uRDbn/BmhevzisL1AK8aztePQlAWd2g4ezGP7bXaZrt6M7TSwjj/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728624749; x=1728711149; bh=sJ4deOtsypfqcT64kwHJU5mmp+as
-	5epFSpTG2Rq+xU4=; b=JpYE9IupoMYvwlFnIpGYrsx+w3nX3WUb1BXJuKPmWhsi
-	AEHnOjN8UL2dSYgKvsw4LEAiKTxTUH2fCX1lA+9JNLmOSygDCGBaB72kxvBeHwKw
-	niMXjbIUHp1G6RSmjkNpXATaCxWOtP457YHshBUk587GfehCM9KNYh9x9zmi4dEl
-	nhkjpZ+a6oRAnX3QO1CO+ilN85e1uMEEz9kiYThxBcWH1mo1JjGLr6FQ/Nr0fpZU
-	UQr5PA1zD2KXaB4UwSfuqPAtC5Hl0q4enWRcSJ9GGIrokYJ3R8cGsKO8SjKdeqxu
-	pF0pDHd7KQHSTKeQnABQV0ebaOA7MakX1MIgQ795rQ==
-X-ME-Sender: <xms:bbgIZ5gY-lCtwLAW6CNAy5OcwolYWhfwWcNgaUG7kIY-ijGzBPYATg>
-    <xme:bbgIZ-Akq_CRrVnqYYTHDkrS8f0jBrQdluvhm0sBOHka4rSXwmP7g5ypDZCBW-hEG
-    JvedX2ACqhLCMc4xw>
-X-ME-Received: <xmr:bbgIZ5FL4HGqyMpZnUj-g0xuqazMvE1hgCcYQGdy_E-iUmkDDsju7pn3muFeEBZJyI68tOkMKznJLXnQPoFLmWCFag1KiWau-Rf1yly-pc_qY20>
+	fm2; t=1728624752; x=1728711152; bh=tZObAy4DHEF/a+fzzNqxX5HuWJEy
+	cgm/nu8ulIuXZV4=; b=TFVMIyyJkak1kN686Z8KdYm9t85E/3KNKRfME/9xEB2C
+	yye516mb95i6i4Sgm0SKJWZ4CSqSxJHLnLDmEo2RUBVYfVkXPwcjCgJfeBcNpBBZ
+	L/gLqoXCkzzTq6wBlrG69QKFhjjuLc1Gdvf6Cn53eZ0e1P49J0h+zg8FnkhsXTx6
+	VX+K/HwO4zJ+aMzVOn9b0FNJkIFgzrBLY8Cm8ykp+eZp3NJm/qsEs0Ad6Fs4TfUu
+	Lc43sa6Jsm5LKPGsPX8MGjvbHAIgpPPwKlYa9FVWw5qU5j9fHmq4FCeMZZITeDI6
+	B7D8rQ5VfCUCPHPKN5tS+xDO0lR0KUFdcpEp6Eycig==
+X-ME-Sender: <xms:cLgIZ0Rb-pmDKYr0UMYvjqIC4l957fkRZqpeXTqbijMxr0ogd704lw>
+    <xme:cLgIZxwQPuAVU-8wQyRDG19R7yaN6nF2HHLdeUnHi6q8PejIeLgCYnXxfRuEhASdA
+    tZ0VFNG8fcqKLkIFw>
+X-ME-Received: <xmr:cLgIZx1cFlbrZOiv4eDa0tlxyu4McIi7aJlP-tGnCjXRbXKhveEd3mcJThMAGbsaUODUSW_BvFdHKFV-VyCf3HwbczXi-nMQcw5MzuPSd1d9cC4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefjedgleelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
     fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepieeljeehtdeiie
-    ekhfevkeeviedtvdehhedtudeigfegtdejhffhfedukeeujeehnecuffhomhgrihhnpegu
-    ihhffhhophhtrdhnohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:bbgIZ-Te86zIKscxNXzi_H2FCk5CSsb0BbHUH52zFXz6TwRxEN0S4A>
-    <xmx:bbgIZ2yDiiwlrqmiNVdG18jFSBoAQWgNXOWZbc8dMOqeyZIH_RP5pg>
-    <xmx:bbgIZ06Zg7nWRwjYt_ibIh_9rwncZ7yLWvY5ahZpfcy0dOchYnddfQ>
-    <xmx:bbgIZ7zrSaNf8AB33L2PFHSqfcKrbOH2bujZZXJeqMSdv0CdlSAWhg>
-    <xmx:bbgIZ7piKrGGkVuIuWw_70eANhMVOs5Q200FxxvIlmepKfl1k6iOVQvs>
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
+    egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
+    ihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:cLgIZ4Cy5hN_E2C_cG7IMzDWlWSSFVCoAFAD3Vp25Vw-l9WFlHg_tA>
+    <xmx:cLgIZ9jE3Idlu8g7Q2WK1p1dz2ZR2teTL2AZH4T2fAaOPTpvg3zuWQ>
+    <xmx:cLgIZ0p84Hlh8VXxIDUo6TqlUqheNNpus3BlYjgK1xtzR-RRY__DOA>
+    <xmx:cLgIZwj5FMewPlCc3nv2Re7t4ODWIoUrlE7a_5Wy7EiJD6aBpe3_fw>
+    <xmx:cLgIZ9aNcUGwd--BJkqTS6DWMVAs-BLGg6oe_bXsffeH89zJL3Az3ESW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:28 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 11 Oct 2024 01:32:31 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b4235a7e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6fbcbbb3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 11 Oct 2024 05:31:22 +0000 (UTC)
-Date: Fri, 11 Oct 2024 07:32:26 +0200
+	Fri, 11 Oct 2024 05:31:25 +0000 (UTC)
+Date: Fri, 11 Oct 2024 07:32:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 06/21] diff-lib: fix leaking diffopts in `do_diff_cache()`
-Message-ID: <60af98cb2c7752edc7cd5c5fe8173dc5b2522a7b.1728624670.git.ps@pks.im>
+Subject: [PATCH 07/21] pretty: clear signature check
+Message-ID: <5d5f6867f918460001f62aaa78f24cf3cbe53a3c.1728624670.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,44 +85,78 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728624670.git.ps@pks.im>
 
-In `do_diff_cache()` we initialize a new `rev_info` and then overwrite
-its `diffopt` with a user-provided set of options. This can leak memory
-because `repo_init_revisions()` may end up allocating memory for the
-`diffopt` itself depending on the configuration. And as that field is
-overwritten we won't ever free that.
-
-Plug the memory leak by releasing the diffopts before we overwrite them.
+The signature check in of the formatting context is never getting
+released. Fix this to plug the resulting memory leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- diff-lib.c           | 1 +
- t/t7610-mergetool.sh | 1 +
- 2 files changed, 2 insertions(+)
+ pretty.c                         | 1 +
+ t/t4202-log.sh                   | 1 +
+ t/t7031-verify-tag-signed-ssh.sh | 1 +
+ t/t7510-signed-commit.sh         | 1 +
+ t/t7528-signed-commit-ssh.sh     | 1 +
+ 5 files changed, 5 insertions(+)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 6b14b959629..3cf353946f5 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -661,6 +661,7 @@ int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
+diff --git a/pretty.c b/pretty.c
+index 6403e268900..098378720a4 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -2032,6 +2032,7 @@ void repo_format_commit_message(struct repository *r,
  
- 	repo_init_revisions(opt->repo, &revs, NULL);
- 	copy_pathspec(&revs.prune_data, &opt->pathspec);
-+	diff_free(&revs.diffopt);
- 	revs.diffopt = *opt;
- 	revs.diffopt.no_free = 1;
+ 	free(context.commit_encoding);
+ 	repo_unuse_commit_buffer(r, commit, context.message);
++	signature_check_clear(&context.signature_check);
+ }
  
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 22b3a85b3e9..5c5e79e9905 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -10,6 +10,7 @@ Testing basic merge tool invocation'
+ static void pp_header(struct pretty_print_context *pp,
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 51f7beb59f8..35bec4089a3 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -5,6 +5,7 @@ test_description='git log'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-gpg.sh"
+ . "$TEST_DIRECTORY/lib-terminal.sh"
+diff --git a/t/t7031-verify-tag-signed-ssh.sh b/t/t7031-verify-tag-signed-ssh.sh
+index 20913b37134..2ee62c07293 100755
+--- a/t/t7031-verify-tag-signed-ssh.sh
++++ b/t/t7031-verify-tag-signed-ssh.sh
+@@ -4,6 +4,7 @@ test_description='signed tag tests'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- # All the mergetool test work by checking out a temporary branch based
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-gpg.sh"
+ 
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 0d2dd29fe6a..eb229082e40 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -4,6 +4,7 @@ test_description='signed commit tests'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ GNUPGHOME_NOT_USED=$GNUPGHOME
+ . "$TEST_DIRECTORY/lib-gpg.sh"
+diff --git a/t/t7528-signed-commit-ssh.sh b/t/t7528-signed-commit-ssh.sh
+index 065f7806362..68e18856b66 100755
+--- a/t/t7528-signed-commit-ssh.sh
++++ b/t/t7528-signed-commit-ssh.sh
+@@ -4,6 +4,7 @@ test_description='ssh signed commit tests'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ GNUPGHOME_NOT_USED=$GNUPGHOME
+ . "$TEST_DIRECTORY/lib-gpg.sh"
 -- 
 2.47.0.dirty
 
