@@ -1,123 +1,91 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DAF18787F
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 17:50:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3491BB6BB
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 17:51:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728669002; cv=none; b=lkyrox2UMy7Km5zI9o3GQxRcRYg3hRfYLlI3D3vEjhtl0sVvxHjEG0UfCQjXWxBE9GHSDek1xYNXnz8w7oEBJNLFvGy3WeekqCxDuQfKzBZKJf0xt45B4JUNosAw4CiSMbVByICxTjLUX+O5EM8gpWS71wePUE0sywnXQhDUqL4=
+	t=1728669111; cv=none; b=chPeXc0przzcO6mhtnSgapZRpiXHBWaJDnJ4aBDe2Ya+WPpNptJYSC2jcteHaNYBGUgNiz7NbVZ79WZpykeXmEBKNpG1w4I3ZA9j9M7zy0/Z81+KesK83W35HHXOS+ukgvN7uRgVPM+S1qna2auldHTPchFbgg5gANYlvk4GY3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728669002; c=relaxed/simple;
-	bh=iexG+jP8SudStonkWzbDBdONmWd5oMiF5mda+QHqx70=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dNAxV3+FO8G7jHxJmL/bS7y7gsqaBkz3nePQZNgOnzToVOQkG6FMYc8ph7f0qrBVo6tB0ETnpPM5UXq5pm87JoTMm5avPZulHmdSjZpDjgOBOkLdOwoljPv7ITG7Wd71C0Eqk51Ri+UROysfpUcEwDSHOdAkpLRP37DotpCaTrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C7nAa93E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RofoaO3T; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728669111; c=relaxed/simple;
+	bh=kVvQhMfNBPDRtslOZDOaj/sWS9/vBOHYOTNvE6FBed4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gleTzDklIr/yWPNmGRFtfRBHrEU2Yo7TL4KDM1vQIFt6U6wQvehYngpFjVJVFRK22GdnmbyyLpBxR5oDO3KooxBzFvbmGWo8mZmECzYV1sVpZhwrNtIj7K4hAVCO2zEabpJaSrDgkU89Fwo3ZIYYhAjE8gi5n+iMLFa0R6VrFJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UesoiGvf; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C7nAa93E";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RofoaO3T"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 842EF13800E9;
-	Fri, 11 Oct 2024 13:49:59 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Fri, 11 Oct 2024 13:49:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1728668999;
-	 x=1728755399; bh=3lI07JLDHIWKdfeGU/oc3vlb1vPV4kYYtq+GgKu2mdo=; b=
-	C7nAa93EfYVC6QEGanqjW7lf3FfDeVJT0f8897PmIEUJG3qgI3QWnXyMBdhZYd1m
-	EpD/QJ2nEHmpg9DoOzy/zYUBKOQ0q1Lpy/CfNEBes/0O8R4VSwA9t+YrZYxHw+Wp
-	L09cvv7hXEKEiR2dZbCPK2HUSltccf3HiTJUjfBc329QCgV3lOqZoKnmcTY4+ynN
-	pLpRsuVtN4ryVMyFSOX9F8+AWkMWG6rjnIqksTKs2SHbhe6C2k1ZkG+30kWM5Gbw
-	0jagcVGeaEL3W923Z6XTIWFqYbc7/xWtFl+wtdlTYc7SWvU2nmtMpziDiYsFr6F8
-	w/ImbcojluerMA9EoDeY3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728668999; x=
-	1728755399; bh=3lI07JLDHIWKdfeGU/oc3vlb1vPV4kYYtq+GgKu2mdo=; b=R
-	ofoaO3TRkrWws6Vu/qqETsFfz417LXDXQ/q9TuDgAL9F0PFvR+Rv5vR8HZKiAtPq
-	PjLIEJi+gZ90zKfXW5g9kUjIscpxRUmvM/dEmUK0SaR1VCClwdfrTld4/wUkUw6i
-	bvMB8lCutC2yy5z3+bUEGcSt4mg6+Oz7Kyao2ARtVPSVRjBosPi9oTQeEW/1fgNg
-	TaDgCVEZeORw2k7O8+YjJgUrEPyzt4WgxV2pgZo/zPB/w8ZutJRwCjlgbUqG+ivD
-	yHTIbNVaVEilmfSkEeB4KenjWYGCBE1fOhvfgmSnDbJL+pd4/pmKrziyF3QXBcla
-	YYLnzl7HyRkVfh8E/yXpg==
-X-ME-Sender: <xms:RmUJZ1Lv8tqBI0qI5NeuqLGlyuhaS6YslBSqSpsKlFRcVC4v6CSNnw>
-    <xme:RmUJZxKuAYAosogSnxRRRouevFjZF1GQy1T4yHcH67BEa05JR6GF1fddfCBPQmI7C
-    bqi1l8ZByYWKTzAFg>
-X-ME-Received: <xmr:RmUJZ9uhEw9Cl2OuabLPTD4TvgBUYUciLfbmUBJ4j2xWndZqs-LcuoHAt-b5CXX3r7O1rwRGaPPQOCEMf_0YstIdIFFEIgj8YmAF228>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefkedgudduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinh
-    gvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopegthhhiiihosggrjhgrmhgv
-    shdvudesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhr
-    ghdruhhkpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:RmUJZ2YYjnNOVnaUl4efXA9QQST_FDjugnuSpBRq_hvlB6LXGX4eQQ>
-    <xmx:RmUJZ8bLtwscBRnNn36sP9NJ15PPcrg_6WjztHAo5ePRAFDJU5xVjw>
-    <xmx:RmUJZ6BDxC2feL4rTrCBH6fAfWGEoAnQ7xMkeAr7tDHHzAgvv6KiMg>
-    <xmx:RmUJZ6YccFtgApii58uHU_IMQM9D8XUmCYgDH4hzJykHj6ZJLR_Lbw>
-    <xmx:R2UJZxPNIlrcu77jEyqtuMoKH0ZbCUGUn2X297WLVnfsIYvheMi_u8eG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Oct 2024 13:49:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: chizobajames21@gmail.com,  git@vger.kernel.org,
-  phillip.wood@dunelm.org.uk,  ps@pks.im
-Subject: Re: [Outreachy][PATCH v3] t6050: avoid pipes with downstream Git
- commands
-In-Reply-To: <CAPig+cRLdzAEA-G=L81yR9dmm8Y-5VEU7ybyohKmbq9=0bDUaQ@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 11 Oct 2024 12:03:14 -0400")
-References: <20241010063906.51767-1-chizobajames21@gmail.com>
-	<20241011154555.584917-1-chizobajames21@gmail.com>
-	<CAPig+cRLdzAEA-G=L81yR9dmm8Y-5VEU7ybyohKmbq9=0bDUaQ@mail.gmail.com>
-Date: Fri, 11 Oct 2024 10:49:57 -0700
-Message-ID: <xmqqzfnaedh6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UesoiGvf"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-460395fb1acso23471cf.0
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 10:51:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1728669108; x=1729273908; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kVvQhMfNBPDRtslOZDOaj/sWS9/vBOHYOTNvE6FBed4=;
+        b=UesoiGvfdZKn72XAweMkuSQb2b9x/bbodTy8v5JDBGyj8bfQ7rrRfC21bIARA9OFS6
+         0X4GxK+p+/TCYyEabFanLR6pwsU5vHQEPiUF41w+Vs1lRy+optPx/Y/wFQXGt6xtsKf8
+         58kqn8rvpZY3B4cI7UVN4Ekg6TgtYLS5mSPOFTwk0FruXc+D4iurKs3ZKiJ4Ha4+tgZn
+         Jz9c8DDcIhnp4aySPGhN53qWeJOJOwpOMvczmm3rbe1M93ZqSRUjpivcTmJe6oLhwK+J
+         QPNZmltm8lFhM45ipAPA33DErtzUCMYbmHVF5kBeqKAdIWTe1Z9W3w9on2yzYBqs6agp
+         MHYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728669108; x=1729273908;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kVvQhMfNBPDRtslOZDOaj/sWS9/vBOHYOTNvE6FBed4=;
+        b=sgKHGLE9wVb4cIIfG6yLf1pbhZ95khqjQiOl6Vpcy4F/3dmd/wVsiN/3fOuXMiPqqH
+         8CsrG8mr1ih3msWDzekhP4niBhD3fSjyPUcw/929gcG794q7uj6dBizBpjL55XMBqc6+
+         FKbcMO4H3KfncGZSepjPuGGnyZnO50TI+KuNHUemx3QAI2zn32o2oSl86F+0CdOYwOIa
+         qQjFaY2AyjDpka5M4CY6IA0tJ5uMf0mV3VMyB7RJmMjZrjsBXXHhuNMG1jWuo0cgRxx+
+         cR+Ofs/QkSaeaJLXarztDxZbGgqbUHWE+FxneGGFRIwTBRRdVrhDwrBcipYqEEdtBTOR
+         6OlA==
+X-Forwarded-Encrypted: i=1; AJvYcCVdh8UNWSSm5NUztXAloK7Kz9Xp3bVEv7iTAEbTBeAsjYJqK1GAaCIFOKsjW2cWOJXbDQk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWULQhcN+cHGyg9L9TYZIvqt3xJbD6Y4SRjuvFR1+wNgzGM/ml
+	eEp3Rbx3yGQxFWgVI9PGfcI1Zi5deoGeWDIgsxGXmut6jWP6TXlwOYqrsNGQRy1kYKCuQeaxhPp
+	wYEQuU2bc1KyHULszM7gejU3Qjuf/sVaOmU6Q
+X-Google-Smtp-Source: AGHT+IGXBU44LiZw5tCQ99v+3k/ERy9LyE07xHOkJIXi92YYJsocRnXc2Ocbrv18vvzao0HfFwt7itjbvEr5ukAyC3Q=
+X-Received: by 2002:a05:622a:450f:b0:447:e59b:54eb with SMTP id
+ d75a77b69052e-46058f5e530mr116531cf.26.1728669108288; Fri, 11 Oct 2024
+ 10:51:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CAJoAoZ=UyfDjAvG0-kC++R7fpR871Gsi4crR=o5F3PvNfB=7Uw@mail.gmail.com>
+ <CAP2yMaJc8ZDiyZrxym-azUpkUOCTjLWEkv6gO_hJ1TqU==Bdcg@mail.gmail.com>
+ <ZwlLgJ6e5aWQKJgm@nand.local> <xmqq4j5ifs2g.fsf@gitster.g>
+In-Reply-To: <xmqq4j5ifs2g.fsf@gitster.g>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Fri, 11 Oct 2024 10:51:35 -0700
+Message-ID: <CAJoAoZmrGZGpKbF63aPY-kkKDEG1WqZ1N9OeKMbZyeWnfcNcHg@mail.gmail.com>
+Subject: Re: Interest in a Git meetup in Bay Area, California?
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Taylor Blau <me@ttaylorr.com>, Scott Chacon <schacon@gmail.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> On Fri, Oct 11, 2024 at 11:46 AM <chizobajames21@gmail.com> wrote:
->> In pipes, the exit code of a chain of commands is determined by
->> the final command. In order not to miss the exit code of a failed
->> Git command, avoid pipes instead write output of Git commands
->> into a file.
->> For better debugging experience, instances of "grep" were changed
->> to "test_grep". "test_grep" provides more context in case of a
->> failed "grep".
->>
->> Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
->> ---
->> diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
->> @@ -344,7 +374,8 @@ test_expect_success 'test --format medium' '
->> -       git replace -l --format medium | sort >actual &&
->> +       git replace -l --format medium >actual &&
->> +       sort actual &&
->>         test_cmp expected actual
+On Fri, Oct 11, 2024 at 10:49=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> Isn't this conversion broken? The `sort` command emits the sorted
-> content to its standard output stream; it does not sort the file in
-> place. So this is doing the sort but then simply throwing the output
-> away, not capturing it to a file for comparison via `test_cmp`.
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > On Thu, Oct 10, 2024 at 08:53:18AM +0200, Scott Chacon wrote:
+> >> Or, what also might be interesting is to do one in the evening on Mon
+> >> Oct 28th, as there will be a lot of people in town for GitHub
+> >> Universe.
+> >
+> > I'll be in town for that, and it would be a lot of fun to meet up with
+> > some CA-local Git folks while I'm there, too.
+>
+> I may be interested if I were nearby, but unfortunately I won't.
+> I'll be back online at the end of the month, but not in California.
 
-Good eyes.
+Yeah, I'll miss this as well as I'll be on leave - but I think it's a
+great idea, if someone wants to coordinate it.
+
+ - Emily
