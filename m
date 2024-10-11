@@ -1,109 +1,106 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F33C804
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 18:09:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB1F1C689D
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 18:18:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728670170; cv=none; b=bUp6e+0pe47/p/7xnlb3oJR0X4sbFHeXeA82UP9eEz1qVU98f6mGsyeyDUXzFc11ZkhqfW4N5/6cH3FeNmeQj8OkkbEcSIuLUxM5TryZPGW6J6aT213g7DTNTL6eQfnMOuGmauXVICc+0scgilZtB7TwlTanG07yor3mclpb0cY=
+	t=1728670739; cv=none; b=TJAcf2whMNeTdDYQLJG7nv52AeH+tNr4xhzzlOH8C9Oq0EKc7LFTF+L6CUxIxwH/9xy3rVx7UePMSt4k4WGDRPtZpOE/1MG/bk+O97xxetWBPeo/IDX252OX4il4D2t+SuWJzhcBk59kTVSmZeukBgfj9wwHxOOj+msntvVLWXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728670170; c=relaxed/simple;
-	bh=ydcOFXRKfj7WfIHCR+aRXwP0vfRu0PLrmAjed13emdM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VHiujWSvwjQRvJquCujfeRsnONH3LnmUvwGJLWsIdRbLez4AamTN7I7mITYVDFSNFPsTfV1GwihhP16xKgFh21xuTeB2vhBDG/b/jHj15q1j2l4QoBoPRx17HenR+RsMw2KyfplwKLe7G4VYlsKpW5TIlGv73dqAOuempBa8Usw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6cbf3f7272eso1442596d6.3
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 11:09:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728670167; x=1729274967;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rhVGzd50APDG+o24MSwgQVhQlD+GKgKPRlVEeAaS7aE=;
-        b=S+mf34LWH3dEye5m7MygkY3tPqi5NC0AsOMHfoT4Ld+G6vsX1cGGYJacvPVhGQLKc2
-         ryLiSGSOMirzjPEReg1V1Avz4oigJkuHWi/BttuGWh0+/PqazOzANmFPR8p9GAwL5vHn
-         wa1k4N2B+foiNR5FdVRAAM61rQDji4KpsdiwCj7qDoNgjeQID1p9cnYGeEr15scFl1Gv
-         r2xH3Y1p3nvwd4GQE3EwjowhtwnculBH6s0Q4wOWCUuQyRht/mwNGGHu2+DR+f5MJmwI
-         uqDg4szX48Nx+im4eCPuzs4u5lx1slL35qUeN+f7nSWlYAPGWt1beWNtvmOIRRxhGSgN
-         Jmug==
-X-Forwarded-Encrypted: i=1; AJvYcCVlRU6BpGnxoEXysw+hQnoVW7mlwf2VTxXIfc+tqq951d7/8T+uuYhK8/9eC0m0mdU0eSU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDakFGqq3Sl2xX/kWzodunGLszNV1AVjpsWhCwHr+t7ljIvLBT
-	ahMhKWwExJU6u4StmENzFRztL70efGnbcsji7ps+nSTeQ6m/Z2DrWgAhtrBF6F5qYRQpUv+uqQU
-	GLs8B8Y5VNlQgd4r8PX9HsPyBEv8=
-X-Google-Smtp-Source: AGHT+IEdBH0ckvhDVOjdxvjCI2lJY2S6DFBpVIILCfWoYIiDacGJaC4vaG9NiFrXEOcR+KfCXh7hE2oSN7EH+Qy/uus=
-X-Received: by 2002:a05:6214:76c:b0:6b9:5c25:c41e with SMTP id
- 6a1803df08f44-6cbeff323d8mr20890636d6.3.1728670166782; Fri, 11 Oct 2024
- 11:09:26 -0700 (PDT)
+	s=arc-20240116; t=1728670739; c=relaxed/simple;
+	bh=UFIPkfEfQyumk3GBsO5FdsFQnX2WZNs5gVKbq8zxGGM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=b0hbdrp89dz+JKmGLaKsOoYT0lWRMuZrmVkLxmkgP8I2C8hWnjCNbq+OT/+iFQqlGlq+LPOT3Wv3sLWp1teLI5LnQq7+V//k8HCnNcBD7ZCuGSG5qSBCBnvlEoyzlFAwgN1eaCfazYfV2umnSAQ9YEkLRfW1zy8TfM1iPlJAiJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hxcruxFA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l6gEqbdg; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hxcruxFA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l6gEqbdg"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id C22091380398;
+	Fri, 11 Oct 2024 14:18:56 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Fri, 11 Oct 2024 14:18:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728670736; x=1728757136; bh=84vGQfVR7I
+	HqCOfKqeo0RiNRlsCwD1eG16K0sFD0qeE=; b=hxcruxFAJ3wvTS9quvLG0ip6pu
+	yQlFAZ85dL6D5qucBCyMAS506rdG/qFc8rnvyFbLNmtIjadUSchTwEsGrWpO/J4p
+	4362E3AksGJGbB+V3VMpjZyaHA5eQenplFQK4PxyD50d2hYmUrA5DeC7sx+x9AIT
+	f1vyMkXD7g6JvZytUNLSqkSl6lWlxwBBgmZPirnP93lFIBX68Pvq8JcKJJjMpeT5
+	37xBGr69SlNIEexpSVxE5yuBn7J4iurOaqbJ9aI2ydthf3T5VJ+/Culh0oN8hvVI
+	WH3gsEKZpHCM7jxXG2rdCdVEvT5GaiRPYKjLo75HvxoW6Md7AsLp8NldNUGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728670736; x=1728757136; bh=84vGQfVR7IHqCOfKqeo0RiNRlsCw
+	D1eG16K0sFD0qeE=; b=l6gEqbdg2G1yzcp0TWWHmxJ6apB8ChLKAsvQ9HIEkb6k
+	qrGgD9PlrZnHnxQQlrNxY7DgL+4eM9va9W4lT2RPUY7bYBdI6ibHIsGzC2cwgMIL
+	C0C7uVm1OTOVPRqTS5an72EQIUZGL0SU+mNOYuvRlRynF+3XDAruasCCPT5O+kIj
+	MG2MPU8+in8cWnrCSLOx4gJEuOygKKPAcaOonUFJY24Fu34TSDBuzi7jA/AnnGF6
+	oZ7aTx0Je9zmQkbo3HzeTy8t42tqP8BvHtN2UwI91hNjpm7QeQBVtZbqQ63oy0H0
+	tJqrpOz9VlCifQ5D5FJm3mxKCdBVdHCBdE/IvwjhLA==
+X-ME-Sender: <xms:EGwJZ_WvivT2hV7SDrPYiy3b4yO2T3A_z233Ap8sOrb9Ne_dbB4CHw>
+    <xme:EGwJZ3kl9axe35YPxXkS0i_KBq_dx3g5o9cyTBZf7pkozAwGklUGfVU-JEh9iu7_U
+    BhJyY-K36zLZHbCRQ>
+X-ME-Received: <xmr:EGwJZ7YC-FSYD-ELUll-10B2X7pxKHUFbcXHononGVLKsMfqCsfRutc8WpEwQ6l15Z7IMm3JJM3H5pMZe02IVc8sfJXYyir-JcnFpNc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefkedguddvvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
+    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
+    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohephhgrnhihrghnghdrthhonhihsegshihtvggurghntggvrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegt
+    rghlvhhinhifrghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehjohhnrghthhgrnh
+    htrghnmhihsehgohhoghhlvgdrtghomhdprhgtphhtthhopehsohhktggvvhhitgesghho
+    ohhglhgvrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:EGwJZ6UXtJh49DhgYQ7F8tBRkx2xmALarb808OYK6VbE4TT_tPoFuw>
+    <xmx:EGwJZ5kTTPCtmQnUtP4C5TTJJJAYOd6lEI-r2zeoID1dFeaXO7CDwQ>
+    <xmx:EGwJZ3dq8unVtazK4R5aXTR0Eyxg3l3jwoAk_vZqh2b_8wwvWTTk_Q>
+    <xmx:EGwJZzHQLzIdT-oNA7rQ2XKRfrS9i7ZP4R15ewqN1_hpwrpe4vaz7Q>
+    <xmx:EGwJZ_X_xiEyA0op-uBWbGZLAPiM-qATIxYajD0jL10P6b5dHP_hLDyi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Oct 2024 14:18:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: git@vger.kernel.org,  calvinwan@google.com,  jonathantanmy@google.com,
+  sokcevic@google.com,  phillip.wood123@gmail.com
+Subject: Re: [PATCH v3 0/3] repack: pack everything into promisor packfile
+ in partial repos
+In-Reply-To: <20241011082404.88939-1-hanyang.tony@bytedance.com> (Han Young's
+	message of "Fri, 11 Oct 2024 16:24:01 +0800")
+References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
+	<20241011082404.88939-1-hanyang.tony@bytedance.com>
+Date: Fri, 11 Oct 2024 11:18:54 -0700
+Message-ID: <xmqqa5faec4x.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241010235621.738239-1-sandals@crustytoothpaste.net> <20241011074022.GC18010@coredump.intra.peff.net>
-In-Reply-To: <20241011074022.GC18010@coredump.intra.peff.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 11 Oct 2024 14:09:14 -0400
-Message-ID: <CAPig+cRmyZhq1qtomTFP7p7XMqrCP8-u7ah8D2+yUtrL880y7g@mail.gmail.com>
-Subject: Re: [PATCH 00/13] Update versions of libcurl and Perl
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Oct 11, 2024 at 3:40=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> On Thu, Oct 10, 2024 at 11:56:08PM +0000, brian m. carlson wrote:
-> > This series updates our requirements for libcurl to 7.61.0 (the version
-> > in RHEL 8) and for Perl to 5.26.0 (the version in 15.6).  I considered
-> > the mainstream LTS versions of RHEL, Debian, Ubuntu, and SLES, but
-> > omitted consideration of paid support extended LTS, since we cannot
-> > expect Git developers to have to pay a large corporation lots of money
-> > just to test functionality.  This is in conformance with our policy,
-> > which states that versions must be "in line with the version used by
-> > other long-term-support distributions", which does not include extended
-> > LTS distributions.
->
-> I don't have a strong opinion on the extended LTS issue. Like you, I
-> don't really care about dealing with paid support. OTOH, I think in many
-> cases there was little to no maintenance burden for these older
-> versions, since we'd already done the work to #ifdef them. But I guess
-> since you broke up the patches, they can always choose to revert or
-> include what they want.
+Han Young <hanyang.tony@bytedance.com> writes:
 
-I may be in the minority here, but I'm fairly negative on this entire
-patch series. As you say, supporting these old versions is effectively
-zero-cost, so how does this project benefit from these changes which
-potentially "break" Git for users on older platforms? I see no upside
-here. The cover letter provides no strong justification for
-(potentially) inconveniencing people; the argument about being able to
-utilize more modern Perl features is weak[1] at best and is not
-convincing.
+> Changes since v2:
+> - rebased to seen: 89afaf27d3 (Merge branch 'ak/typofixes' into seen, 2024-10-10)
 
-Although brian is (quite rightly) concerned about security (or lack
-thereof with older installations), it is not this project's
-responsibility to "force" people to upgrade their insecure
-installations. And it is not at all uncommon in the "Real World" for
-decade-or-more old installations to be running in production
-environments, and programmers need to work within those environments,
-however, those installations are, for various business reasons (such
-as cost-effectiveness and known stability), unlikely to (ever) be
-upgraded to more modern versions. I, personally, deal with such
-installations on a very regular basis, and in my experience, the only
-time upgrades are undertaken (in production settings) is when the
-systems break completely and there is no choice but to replace them.
+Please NEVER do this.  'seen' is as unstable and fluid as you can get.
 
-Finally, there clearly are real-world cases[2] which benefit from Git
-continuing to support older platforms; why should we abandon them
-intentionally? And why should we turn down[3] the periodic trivial
-patch[4] which trickles in to help people on older platforms?
+Instead, base it on something that is well known and (supposedly)
+stable, like v2.47.0 (or an updated tip of 'master'), and then
+test (1) the topic by itself, (2) the result of trial merge of the
+topic into 'next', and optionally (3) the same for 'seen'.
 
-[1]: https://lore.kernel.org/git/xmqq1q0mh9gn.fsf@gitster.g/
-[2]: https://lore.kernel.org/git/CAOO-Oz0NUA-YeyFT1MJ=3DXKyLWJvQoFH1b-F0EFO=
-zvy8iWka3KA@mail.gmail.com/
-[3]: https://lore.kernel.org/git/ZwhMmGt0kZvaSzSL@tapette.crustytoothpaste.=
-net/
-[4]: https://lore.kernel.org/git/CAOO-Oz1KhFcyErVx1Qb142PtPJS=3DUpgSD-Facck=
-qNS4_okAtFQ@mail.gmail.com/
+Thanks.
