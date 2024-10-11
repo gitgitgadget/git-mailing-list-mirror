@@ -1,116 +1,69 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A149804
-	for <git@vger.kernel.org>; Fri, 11 Oct 2024 18:01:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA3381723
+	for <git@vger.kernel.org>; Fri, 11 Oct 2024 18:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728669676; cv=none; b=M2DksjQvJBQ8bFpPNQula+ARHa2IUQpwLc6b5Y5kNsbfnAJ+b8PEmDsYREjEm8IRNoTDOgTyO3qTT94Oa15fW37omSDnsrzpcvwWiyqhhqSLmcPR9TyVhPy0uDo2CbdjOiTC6Q1l0s+n0ywr68yuxvi98JrKJECUQyA18e5wPt8=
+	t=1728669790; cv=none; b=HxjsCst7qSeZMvHiByAj572JNuDO+Xtn78COmtmzIxKSb326ORHFc2SR2A50ihmnaY4MgBhQuV179b6T5r7IEviD3mbdO23+jxI0hrXpi2HPXB82Qnn/oyQ4J4xFcwRlmxCTeKOtelxygHi1+liqfEC2ixB9rKgo6QXi309SdqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728669676; c=relaxed/simple;
-	bh=yxnBWi2808nXPLZ4LjbqGpUuXYcb6mE3QkKpaZycu7A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LTX+Qp4RS4q7S3Z77mibindtRzeWyqrxU6qeWJOdorW0fSdVVZWjf7sy4u/xfJoeDov64JbKmQffbg6W3+4f+7Ii1Q00OYkf5VHvBmWuN9y/sQ+h9MJu44fEOPfu5WOxpl+CWl/Z9jI1+CcbEbdR7cIS7dF9zCzNTZnZfH5l+Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bVuq8QXB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FtAAqOZs; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728669790; c=relaxed/simple;
+	bh=uProWZ/r7U6rlPwYJqabYPmFb7nOaSX0hnOh6JZTu2w=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Snb2Mlg3iIAT0EowiCm5yCrlpLybwgRW6kkv0p9k8S5qZN6pnI1zWBMDEM817VSUn2wVEr4KK+3KEV90xU6/Vhf0VDgezHxopkZ32WICb586zbfFTlXuUZ/MKqLDw42zuJC5jKVYFQ1ZpaGl83OuOubvOvhSDC1omzRkHYhnzqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WxnWHvRU; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bVuq8QXB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FtAAqOZs"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2485F13800DC;
-	Fri, 11 Oct 2024 14:01:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 11 Oct 2024 14:01:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728669674; x=1728756074; bh=uAla/0iRvd
-	z0RR9+l8OfM0323sbIw+ecMBuJLm8KcPw=; b=bVuq8QXBC9YkDLLFUHIHYLoYKj
-	7RNsXh0cJGhX0nJCQa6B1NC4iVXdr9MTlEfEz9CwDdcV62wH8Sv7Heg+B9zeKuS8
-	iovysBD3dV0tvfMLoQyCWjnqpeEvPxRi4xet0osVrTblQ7D0YlB7UqD/I9i7m8tf
-	PefK+JEgzyDx2KT6dUmLXjGtJced+8CnbyvQbhAuK7JrLFWt5zS/u4xvdgwrxJnG
-	fhwn+GgaNamXyfXRTgdGuIW5pHLwI9nOqieKHAilUoAgE87XDpfyqwfsCSESefbd
-	paC13e0+ND7p2i6TpwXKiVFc2z0YKMrWrKMaYW/wm2xG9GZCs46qCR1n2qGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728669674; x=1728756074; bh=uAla/0iRvdz0RR9+l8OfM0323sbI
-	w+ecMBuJLm8KcPw=; b=FtAAqOZsLGtvz5icRYehUIyjlZ2DhaVn42dc+6GgfADD
-	FNJNKihuyWkqMNezsQF7btID4la7/tPH0vnBk84HM0cAa3W2rv1yjx7cISiTe/Tw
-	jTFf6DWDAP+rHI0GVKCMVJfqtg2eE71ukDEPVG6fatHMnEfSrxoVvph+ZB4ychwR
-	O0Q1RW8wWv0A6J96iWCYLMsjXpEiHL5uiopoXVkixs2Vl9eWAGILzrYdUggEbZ/0
-	o+Iw0Md9tsQgHd21TKE5IAWlqKuFvgZH3gvPJpp2Sd0uXb988p4XYk25Ae3UhTA5
-	ldiwbSmxW65G0pZsRyXWinMPVdZeNLaLHNa2RVWpbg==
-X-ME-Sender: <xms:6WcJZ_1ZDtohpWGj6bWP29P3UzV9aqd65E-ZdnhoQMKKAHW5t-Vk6g>
-    <xme:6WcJZ-G6J2CyLj8RnYYKqJwFWXtyqA8TuEKB-fQlwZhvtguUmGvQwRYaIiW44_MYl
-    DgVpGZxgiyA5z2IHQ>
-X-ME-Received: <xmr:6WcJZ_4Pnf9kQiADcx4Byr_Su1WN0BhnVdaEiXxghyRAcFOhL69OtQXPQJlGgjatrDrNhIqTkrbo82_Y2Id38lw-unM8KF0CU478Jf4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdefkedguddulecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
-    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepkhhojhhirdhnrghkrghmrghruhesghhrvggvrdhnvght
-    pdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:6WcJZ01vSTkWsxB8Pqj2wkal9gu0amyo0tbYGr6KNZjoPzu0IcsHRw>
-    <xmx:6WcJZyFWg_ud4rkyNVrqXaU201nIHEusxs4y2riKGybcrA6rekF2-g>
-    <xmx:6WcJZ1_un5uhux74Fyvm0amqaJKoRt9LcJx9tYNsvJD46pz2yMfogA>
-    <xmx:6WcJZ_lpc4eLr5mawGVMvJ7wEJ9Fz5nUgDe5EBN9Xed7_68Mv6pywg>
-    <xmx:6mcJZ_NO7MtuNqqfsE5orEEd2UC0aMKDgXCH7LgfvuM3-NMQ9fe3b0WX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Oct 2024 14:01:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Koji Nakamaru <koji.nakamaru@gree.net>,  Koji Nakamaru via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 0/2] alternate approach to fixing fsmonitor hangs
-In-Reply-To: <20241011090051.GA563709@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 11 Oct 2024 05:00:51 -0400")
-References: <pull.1804.git.1727862424713.gitgitgadget@gmail.com>
-	<20241007055821.GA34037@coredump.intra.peff.net>
-	<20241007060813.GA34827@coredump.intra.peff.net>
-	<CAOTNsDwwikiX3u6DG=+4hn+mcgfXzzDoqR3ZFVEdGi=mPGQbpg@mail.gmail.com>
-	<20241008083121.GA676391@coredump.intra.peff.net>
-	<CAOTNsDyxmRZ155vV-Jh=1obMnR+F4ExY9B136fiGk0Vd23-zrw@mail.gmail.com>
-	<20241011090051.GA563709@coredump.intra.peff.net>
-Date: Fri, 11 Oct 2024 11:01:12 -0700
-Message-ID: <xmqqiktyecyf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WxnWHvRU"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a994cd82a3bso323489266b.2
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 11:03:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728669787; x=1729274587; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=uProWZ/r7U6rlPwYJqabYPmFb7nOaSX0hnOh6JZTu2w=;
+        b=WxnWHvRUpEcf8C3BxWWAWF94U2MST74q4PkfBRLqoY/M+IyNJMJd92olqCXy3KD3oJ
+         pzbRJInz5HbOxUc7vQccq/0V7humO17D0e84hb3iITADcb+VAKJzwRnCEyIfCowX+tSF
+         s4OB0fjr6V7mM7vCD2ifpxSLXoz4P8n0/SQvgV7D6+SdPo7P3CQmEsNE4gsboulnEfvn
+         IfKiXtfw4HDqyZVti1jKkSuXqJLKSGOa3CTQh6ggEmgXLPKx8NItaW6d5qsARVUSdETQ
+         JVL94lwplezrgd7uhBzn16TlkowBG2yJcyKIhOa2r1yrsHTjW1l/Vzx78tX/BSCdvCL7
+         dlnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728669787; x=1729274587;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uProWZ/r7U6rlPwYJqabYPmFb7nOaSX0hnOh6JZTu2w=;
+        b=fANQPP6H1fzdrs4+l+JfvpLoCeENm3mVaK4DFiufjQcLKFL2zfCw0G5fv3/eE+GBth
+         3BMWAz1eR2iOPaj09FKYHgaBZHu1wUL5YkzFD34gh8Y7zg8KfuY1A2zIG3Ko7YnpfNk3
+         lqJrK1fgLOo6pvIk8xQtDQ/1V9Ny3Fq9P53Nlqs8g0Sy4U9+94CYdM28AMQi5hBruUY8
+         7K2NB7e0ivyhs42kSSFyAwWAgwXQO1lOWoIEcxSnawrhaspEt3PMv9+kXXsOKMYIeatF
+         IVoYoMVfeqjan5uqRk3ikK0FAgHfQB7DhrmMkL2UwLM0PaMZkcRo74s9ZOuRCIzHzhqg
+         2DbA==
+X-Forwarded-Encrypted: i=1; AJvYcCVk8AylSbBtfPwNboROFGe/aZ/3JSwwkQ+qtoH44zhMVoITzWQxICG76tr24OxI/tMlsWw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxThyJcsydLWHHELW45iSMjB3aQwkEAKKCBmxLhTVA0/Ogx5oMk
+	tasDy0T5NynChpJqiK8P2ghypOvuTwpBEy3ZMNQZy8Y4MmBCubkdNr0QZzY/bp/LXRl2hIt+Hfz
+	TysEoYOP2FZK5JYiTOObyBw6Wftc=
+X-Google-Smtp-Source: AGHT+IFvPK8vFqQOTSz5o8NIW31izJ1iipizBg54kUkAOmKOMw5xQm5IBOU7z1L6u3fjRGDGp1nBCmVqMPSTmhcIuYc=
+X-Received: by 2002:a17:907:f75c:b0:a99:43b2:41af with SMTP id
+ a640c23a62f3a-a99b9638d33mr290649366b.56.1728669787192; Fri, 11 Oct 2024
+ 11:03:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Dhanwanth Rao Varala Balaji <dhanwanthvarala@gmail.com>
+Date: Fri, 11 Oct 2024 23:32:54 +0530
+Message-ID: <CABXkuJMYhq2ht-_edzv2AebGU1LDqi8ZBx0EE36KQ5ZMqSKzzQ@mail.gmail.com>
+Subject: want yamaha piano 10/11
+To: mdsalem309999@gmail.com, joswihart@outlook.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+Hi Josey, Sorry about your late husband. My sincere condolences. I
+have much respect towards the music industry and would be very
+grateful if you could deliver your husband's piano to me. I shall take
+care of the delivery financials whatever they might be.
 
-> On Wed, Oct 09, 2024 at 01:03:14AM +0900, Koji Nakamaru wrote:
->
->> > But I've cleaned it up for presentation here, so at least we can look at
->> > the final form of both and see which we prefer.
->> 
->> Thank you for the new patch. It prevents to start accepting requests
->> until starting fs event listening and simplifies the code flow. It also
->> has sufficient comments, so later everyone can easily understand how it
->> works. I also tested it both on mac and windows and it works correctly.
->> 
->> I think this one should be adopted :)
->
-> Thanks for reviewing, and for all your work identifying the problem in
-> the first place! Looks like Junio has picked up my patch and it's
-> already in 'next', so hopefully these 6-hour CI timeouts will soon be a
-> thing of the past. :)
-
-Yup.  Thanks, both of you.
+Thank you,
+Vikas Bagalkot.
