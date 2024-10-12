@@ -1,35 +1,35 @@
 Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB9B19B5B5
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 23:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1698149C52
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 23:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728774947; cv=none; b=J4drgZC57W/Gak3Itqa6WPzfTP1u8UqxmIsheTSzSNNA1NjcPLR2m3VuBLrSrSAOosarj8RtrYPBcTZcH6RQ2tighWRJXKaHA5GsvnWcorxYvEqwwPt6L0Y+PgWDDFzMG9QF+rdooXd4j/3CmN+fasbN2soIf7YEWcRaQdRMu0w=
+	t=1728774951; cv=none; b=DWExRx8wh3ARcUDZxllf43pMcZdV9JxoDaum9Vt5ZAPyr+IECsHyJZL7ie1dEicjpJliAxqMK5XpchwrQeu2rs18x60d5S6HRs8tIcgiivH9fjPAIEVmyIr5kF/78j0Kj0Xw5nyRyrCmRrglBTvKq2eDdPpgEVdcU6oSvSR/e1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728774947; c=relaxed/simple;
-	bh=odkChGjQG2ZHCGNwnDAcSEM3hB+O5MVQuHOUR0TDGuQ=;
+	s=arc-20240116; t=1728774951; c=relaxed/simple;
+	bh=IjaO5ZwaRlqS6jpgYqOUOcatdtzts0zTIkBULUdJy20=;
 	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
-	 MIME-version; b=mNEDk/rRQt/EqdoNc6OgeYGarxnZgJSiojzbqpUOPfz3Rox+WuS0P39gL5+x92ZlMJl+HzIqWVk9ClD8iHPwPS+A7SvzN1Ush4VV6hitWSkyRQdHI/AjmFDx9ShNxsl/QF2+EdVuo8v020BWRhvpIt/D/ldhevUaTeHL2DXu/yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=ZclCEcXq; arc=none smtp.client-ip=192.29.178.127
+	 MIME-version; b=QIcSqEgv/kFEPfcLl04+ufbRinpxYfyxzxfQb7a7dW6Afq7jyd3MaLAulh+8c8pLiWf08ggnXQknYzUbZ8wZo285+wyCvwF9gXyOt8JQAJxfjkBjmCcz7n/DlvNGJVFTwq6Pilp2lu5IXj25Pb6Mpzz9uhipXJGtRPR0KSmi388=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=PguSqsjN; arc=none smtp.client-ip=192.29.178.127
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="ZclCEcXq"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="PguSqsjN"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=xv/V/03Ge7vGD5PUlB2ajgFFVhV+BrOOx5RuFcLdbEs=;
- b=ZclCEcXqfGaBEqKekHakuz2RBiyZf2+TQV1aTr14RL9ETc3ZHlaqv0JPhBdPvYCbghIIGc2Ts5Bi
-   Gw8kkVRx23RayVWbqeMD+F9WAzXOeRYrzZIVt4Q3llnEFg1H+LRx2q7fBFt/fgxFI95/Qv5t1x7s
-   XJ8mVu/XX1IdmL+8Tz4VEcMkb/OuXh2lLtpD+eWpkpK+1SavXlufwdGF/sNC/mysWODasKM3hJEB
-   wQx0G5cuG16tTmYptEHmwQKEAYxHVkv6+Lfov8+h3fg40erAUNOmlhisqvmLG+8AB7YFyVSdJTeG
-   Y4Lddfg8PJwbm4z5jnX/rJNwNBRIjxdW/8k/fw==
+ bh=bIy6emYsXIp48Rwy+1DKliiTQTMc9jsUtNSxp3rqSdc=;
+ b=PguSqsjNJlG9xnkmHrOzKSF1YnJSk2QfsgNsNiuTxeGRAKUDFwWUtJEp3eoEvv1YoDHF7lsrre1Y
+   F1bAYSwPZ86njuF7y97fnWiHI5WqhQXPrV9RmeAbvdC8rZ28am/vLYjKrBaJG9e3DdVRjhUeIRF5
+   XLo+/CupSU5KVQS03106CS3Eylx9IsVLnZIdOtZp8Gu9znCzSJa/+IKOed7sokmn0Mgbslnv2rFP
+   upsbW52YE0T50OpP3TssWgOMf+ojKGy29ijvBP05kq5Ebu0F+NSQfKUoSbN6RppNgvkifH/Mclkj
+   NxGoXeNNTHr/vaYCojC/AHFghX01RlVq5rDdAA==
 Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
  2024))
- with ESMTPS id <0SL9008VZNA8XY60@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sat, 12 Oct 2024 23:15:44 +0000 (GMT)
+ with ESMTPS id <0SL9008W7NACXY60@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sat, 12 Oct 2024 23:15:48 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
 From: Bence Ferdinandy <bence@ferdinandy.com>
 To: git@vger.kernel.org
@@ -37,9 +37,9 @@ Cc: phillip.wood@dunelm.org.uk,	Taylor Blau <me@ttaylorr.com>,
 	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>,	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH v7 4/6] refs: add TRANSACTION_CREATE_EXISTS error
-Date: Sun, 13 Oct 2024 01:03:24 +0200
-Message-id: <20241012230428.3259229-4-bence@ferdinandy.com>
+Subject: [PATCH v7 3/6] remote set-head: better output for --auto
+Date: Sun, 13 Oct 2024 01:03:23 +0200
+Message-id: <20241012230428.3259229-3-bence@ferdinandy.com>
 In-reply-to: <20241012230428.3259229-1-bence@ferdinandy.com>
 References: <20241010133022.1733542-1-bence@ferdinandy.com>
  <20241012230428.3259229-1-bence@ferdinandy.com>
@@ -51,143 +51,204 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
 Content-transfer-encoding: 8bit
 Reporting-Meta:
- AAH5WjwJA9YJE1eMNxG4kucu7BjGwMzMiiZCwtQcLQfhQVT3cNAlp8pJlIUdzg4y
- sh3cOykRyQotKGSzVWDOhpHd3upg32zoUimOy/NcSkqjKgrg7OqADJG/1OHFgF+c
- Ie7T5+XG3e4rRD1+L/P4TP3gb3XNWg8W+pMTBUYF1iasHNUtiYVVEwVBWRotdrBu
- U/ZEMfTupuKi0JzgCNJejoEB/z2gmKzWVZrba2znAOgAhyqTM/JtOIqHOCjn6d46
- NqVpVcstz3kywfzc/5IC7amiKxg+QLfPB9cvTK/oopO0t5aW++y+YirSgyGgxET4
- GCNuhnNanHno88e7K6+n8Mj88YSsgyWhp1tfX/BT7DTLkuVU+JNuVeI282fbb/qu
- UI7ASNwgY6TpQWqvblSi3nGbK9qLBRTu4OlEZT4mNsO6s54fhl2ztaCYVufYNa1i
- upYuR1S0eXx/53mG7+fBFyqMIIRKfM1Jl3OjC9n4ZVB+lua20Eazk+4g
+ AAGyDThqj/DzwlIBYYc38z5yYxtl9qs7mkGlf7wRrUuWXwwLHFDkH9H0TANtg48M
+ bt7VpTaqMosFK23dNH77fpg6dTuEhPCEG9YyxE0pKpxoxiGe8rzeOVDS4Bbzw167
+ InEb/5nrR1Ux6dh9jNeMBjHXOMYca9XB3BvdrUn8lrbICws3uwHt40Xr47Yl5BEf
+ TUWZD7yYy/UrIb1giwon+6kvN7GJLy4JhDC9TLzsGr9Cn9lfZaBLXj7XaDIbYL6X
+ iBgqdSSXUPWXwRaguOd0ipygwVSyHr8TMvMavEw9NO58xRnUxZLKCaFiw2lkbwLc
+ +jLi2e9N4bQiYVQdSL0Wemc4WZSApoS+uza0+gaZuByb773HUGvwTL3fyEdUdWRP
+ qppPw5YVIgTdcvQ7mzKSrfec1bSzQOtA0LIyr+qKKvzdBthMl5+Kqx9mNH6ee5DN
+ bReKuX4xLZrNi3NWDcH7PUVrMwEYXso3Pkr7Emi2rbNhGScTF/aP1O8d
 
-Currently there is only one special error for transaction, for when
-there is a naming conflict, all other errors are dumped under a generic
-error. Add a new special error case for when the caller requests the
-reference to be updated only when it does not yet exist and the
-reference actually does exist.
+Currently, set-head --auto will print a message saying "remote/HEAD set
+to branch", which implies something was changed.
+
+Change the output of --auto, so the output actually reflects what was
+done: a) set a previously unset HEAD, b) change HEAD because remote
+changed or c) no updates. As a fourth output, if HEAD is changed from
+a previous value that was not a remote branch, explicitly call attention
+to this fact.
 
 Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
 ---
 
 Notes:
-    v4: new patch
-    v5: no change
-    v6: no change
+    v1-v2:
+    
+        was RFC in https://lore.kernel.org/git/20240910203835.2288291-1-bence@ferdinandy.com/
+    
+    v3:
+    
+        This patch was originally sent along when I thought set-head was
+        going to be invoked by fetch, but the discussion on the RFC
+        concluded that it should be not. This opened the possibility to make
+        it more explicit.
+    
+        Note: although I feel both things the patch does are really just
+        cosmetic, an argument could be made for breaking it into two, one
+        for the no-op part and one for the --auto print update.
+    
+        Was sent in:
+        https://lore.kernel.org/git/20240915221055.904107-1-bence@ferdinandy.com/
+    
+    v4:
+        - changes are now handled atomically via the ref update transaction
+        - outputs have changed along the lines of Junio's suggestion
+        - minor refactor to set_head for improved legibility
+    
+    v5: - the minor refactor has been split out into its own patch
+    
+    v6: - fixed uninitialized prev_head
+        - fixed case of unusual previous target
+        - fixed a test that would have been actually broken at this patch
+          (the output was only correct with the later update to fetch)
+        - added 4 tests for the 4 output cases
     
     v7: - change commit prefix to be more in line with project standards
-        - changed error checking to Karthik's suggestion
+        - fixed tests to also work with the reftable backend
+        - renamed report function, fixed style issue with checking buf len
+        - fixed not releasing an strbuf
 
- refs.h                  |  4 +++-
- refs/files-backend.c    | 24 ++++++++++++++++--------
- refs/reftable-backend.c |  6 ++++--
- 3 files changed, 23 insertions(+), 11 deletions(-)
+ builtin/remote.c  | 35 ++++++++++++++++++++++++++++----
+ t/t5505-remote.sh | 51 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 81 insertions(+), 5 deletions(-)
 
-diff --git a/refs.h b/refs.h
-index b09a3a4384..c83b1ec76e 100644
---- a/refs.h
-+++ b/refs.h
-@@ -759,8 +759,10 @@ int ref_transaction_verify(struct ref_transaction *transaction,
- 
- /* Naming conflict (for example, the ref names A and A/B conflict). */
- #define TRANSACTION_NAME_CONFLICT -1
-+/* When only creation was requested, but the ref already exists. */
-+#define TRANSACTION_CREATE_EXISTS -2
- /* All other errors. */
--#define TRANSACTION_GENERIC_ERROR -2
-+#define TRANSACTION_GENERIC_ERROR -3
- 
- /*
-  * Perform the preparatory stages of committing `transaction`. Acquire
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0824c0b8a9..e743ec44b5 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2502,14 +2502,18 @@ static int split_symref_update(struct ref_update *update,
- static int check_old_oid(struct ref_update *update, struct object_id *oid,
- 			 struct strbuf *err)
- {
-+	int ret = TRANSACTION_GENERIC_ERROR;
-+
- 	if (!(update->flags & REF_HAVE_OLD) ||
- 		   oideq(oid, &update->old_oid))
- 		return 0;
- 
--	if (is_null_oid(&update->old_oid))
-+	if (is_null_oid(&update->old_oid)) {
- 		strbuf_addf(err, "cannot lock ref '%s': "
- 			    "reference already exists",
- 			    ref_update_original_update_refname(update));
-+		ret = TRANSACTION_CREATE_EXISTS;
-+	}
- 	else if (is_null_oid(oid))
- 		strbuf_addf(err, "cannot lock ref '%s': "
- 			    "reference is missing but expected %s",
-@@ -2522,7 +2526,7 @@ static int check_old_oid(struct ref_update *update, struct object_id *oid,
- 			    oid_to_hex(oid),
- 			    oid_to_hex(&update->old_oid));
- 
--	return -1;
-+	return ret;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 353ffd2c43..2b6948439f 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1399,10 +1399,35 @@ static int show(int argc, const char **argv, const char *prefix)
+ 	return result;
  }
  
- /*
-@@ -2602,9 +2606,11 @@ static int lock_ref_for_update(struct files_ref_store *refs,
- 					ret = TRANSACTION_GENERIC_ERROR;
- 					goto out;
- 				}
--			} else if  (check_old_oid(update, &lock->old_oid, err)) {
--				ret = TRANSACTION_GENERIC_ERROR;
--				goto out;
-+			} else {
-+				ret = check_old_oid(update, &lock->old_oid, err);
-+				if  (ret) {
-+					goto out;
-+				}
- 			}
- 		} else {
- 			/*
-@@ -2635,9 +2641,11 @@ static int lock_ref_for_update(struct files_ref_store *refs,
- 				    update->old_target);
- 			ret = TRANSACTION_GENERIC_ERROR;
- 			goto out;
--		} else if  (check_old_oid(update, &lock->old_oid, err)) {
--			ret = TRANSACTION_GENERIC_ERROR;
--			goto out;
-+		} else {
-+			ret = check_old_oid(update, &lock->old_oid, err);
-+			if  (ret) {
-+				goto out;
-+			}
- 		}
++static void report_set_head_auto(const char *remote, const char *head_name,
++			struct strbuf *buf_prev) {
++	struct strbuf buf_prefix = STRBUF_INIT;
++	const char *prev_head = NULL;
++
++	strbuf_addf(&buf_prefix, "refs/remotes/%s/", remote);
++	skip_prefix(buf_prev->buf, buf_prefix.buf, &prev_head);
++
++	if (prev_head && !strcmp(prev_head, head_name))
++		printf("'%s/HEAD' is unchanged and points to '%s'\n",
++			remote, head_name);
++	else if (prev_head)
++		printf("'%s/HEAD' has changed from '%s' and now points to '%s'\n",
++			remote, prev_head, head_name);
++	else if (!buf_prev->len)
++		printf("'%s/HEAD' is now created and points to '%s'\n",
++			remote, head_name);
++	else
++		printf("'%s/HEAD' used to point to '%s' "
++			"(which is not a remote branch), but now points to '%s'\n",
++			remote, buf_prev->buf, head_name);
++	strbuf_release(&buf_prefix);
++}
++
+ static int set_head(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, opt_a = 0, opt_d = 0, result = 0;
+-	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT,
++		buf_prev = STRBUF_INIT;
+ 	char *head_name = NULL;
+ 	struct ref_store *refs = get_main_ref_store(the_repository);
  
- 		/*
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 3c96fbf66f..ebf8e57fbc 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1206,10 +1206,13 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
- 				goto done;
- 			}
- 		} else if ((u->flags & REF_HAVE_OLD) && !oideq(&current_oid, &u->old_oid)) {
--			if (is_null_oid(&u->old_oid))
-+			ret = TRANSACTION_NAME_CONFLICT;
-+			if (is_null_oid(&u->old_oid)) {
- 				strbuf_addf(err, _("cannot lock ref '%s': "
- 						   "reference already exists"),
- 					    ref_update_original_update_refname(u));
-+				ret = TRANSACTION_CREATE_EXISTS;
-+			}
- 			else if (is_null_oid(&current_oid))
- 				strbuf_addf(err, _("cannot lock ref '%s': "
- 						   "reference is missing but expected %s"),
-@@ -1221,7 +1224,6 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
- 					    ref_update_original_update_refname(u),
- 					    oid_to_hex(&current_oid),
- 					    oid_to_hex(&u->old_oid));
--			ret = -1;
- 			goto done;
- 		}
+@@ -1445,15 +1470,17 @@ static int set_head(int argc, const char **argv, const char *prefix)
+ 		/* make sure it's valid */
+ 		if (!refs_ref_exists(refs, buf2.buf))
+ 			result |= error(_("Not a valid ref: %s"), buf2.buf);
+-		else if (refs_update_symref(refs, buf.buf, buf2.buf, "remote set-head", NULL))
++		else if (refs_update_symref(refs, buf.buf, buf2.buf, "remote set-head", &buf_prev))
+ 			result |= error(_("Could not setup %s"), buf.buf);
+-		else if (opt_a)
+-			printf("%s/HEAD set to %s\n", argv[0], head_name);
++		else if (opt_a) {
++			report_set_head_auto(argv[0], head_name, &buf_prev);
++		}
+ 		free(head_name);
+ 	}
  
+ 	strbuf_release(&buf);
+ 	strbuf_release(&buf2);
++	strbuf_release(&buf_prev);
+ 	return result;
+ }
+ 
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 532035933f..d99cd1d0aa 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -429,12 +429,51 @@ test_expect_success 'set-head --auto' '
+ 	)
+ '
+ 
++test_expect_success 'set-head --auto detects creation' '
++	(
++		cd test &&
++		git symbolic-ref -d refs/remotes/origin/HEAD &&
++		git remote set-head --auto origin >output &&
++		echo "'\''origin/HEAD'\'' is now created and points to '\''main'\''" >expect &&
++		test_cmp expect output
++	)
++'
++
++test_expect_success 'set-head --auto detects no change' '
++	(
++		cd test &&
++		git remote set-head --auto origin >output &&
++		echo "'\''origin/HEAD'\'' is unchanged and points to '\''main'\''" >expect &&
++		test_cmp expect output
++	)
++'
++
++test_expect_success 'set-head --auto detects change' '
++	(
++		cd test &&
++		git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/ahead &&
++		git remote set-head --auto origin >output &&
++		echo "'\''origin/HEAD'\'' has changed from '\''ahead'\'' and now points to '\''main'\''" >expect &&
++		test_cmp expect output
++	)
++'
++
++test_expect_success 'set-head --auto detects strange ref' '
++	(
++		cd test &&
++		git symbolic-ref refs/remotes/origin/HEAD refs/heads/main &&
++		git remote set-head --auto origin >output &&
++		echo "'\''origin/HEAD'\'' used to point to '\''refs/heads/main'\'' (which is not a remote branch), but now points to '\''main'\''" >expect &&
++		test_cmp expect output
++	)
++'
++
+ test_expect_success 'set-head --auto has no problem w/multiple HEADs' '
+ 	(
+ 		cd test &&
+ 		git fetch two "refs/heads/*:refs/remotes/two/*" &&
+ 		git remote set-head --auto two >output 2>&1 &&
+-		echo "two/HEAD set to main" >expect &&
++		echo "'\''two/HEAD'\'' is now created and points to '\''main'\''" >expect &&
+ 		test_cmp expect output
+ 	)
+ '
+@@ -453,6 +492,16 @@ test_expect_success 'set-head explicit' '
+ 	)
+ '
+ 
++test_expect_success 'set-head --auto reports change' '
++	(
++		cd test &&
++		git remote set-head origin side2 &&
++		git remote set-head --auto origin >output 2>&1 &&
++		echo "'\''origin/HEAD'\'' has changed from '\''side2'\'' and now points to '\''main'\''" >expect &&
++		test_cmp expect output
++	)
++'
++
+ cat >test/expect <<EOF
+ Pruning origin
+ URL: $(pwd)/one
 -- 
 2.47.0.7.g072c39eddb.dirty
 
