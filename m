@@ -1,102 +1,99 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637CECA6B
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 02:04:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E209AD528
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 02:05:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728698683; cv=none; b=k/EFZ0sIHjVLQahAKvhVIl717FpGwLHkVxaqx5yyfUY+L7Z1u53woow1ZQWda6o3Q0WMBHcJW93FqfUFjJMBsxZnyTPKl/KBXuZ35izu6ZgnNl5G8Cezzj9XNbj2Yd79soy12iQPUBMhQZKb4Xeytmo+1fHLp3aDeiygTYRPwPc=
+	t=1728698717; cv=none; b=WNdzUgIJhU+aRryT+JDYXDk/wM/1BXOqfxeETqUPTV1HxgG3ucE5liW8ldQ4p5g6OFefaJyR3uRmJXSwkyVkeVyZTel5cjCd5xYfiYcb1lRrMZ5JqOdRpeLTEUXLjg64VpxlK3bo9JPxXZoN0uSA2JrlTboN5kRQvOvBfTfB77E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728698683; c=relaxed/simple;
-	bh=JENce+yiemN81y0ciOHOx3svLayhhCB3/22Rwc/tGyM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a926r6wf1uig2afoets0mmHn+DQbdWTBfP1wb85M+EfOjy0UbiNyh+XPfVXHyHg0x6wXwbRTXna428THwtErbDlCirbyIWm5ffbgfF3dVfBnj1DHZ3bQ0/D67vHQCUVj9CZYN3mrHmvS/CS9eHUCVhWbUNnT+K1FI8FsYfkz9pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fDBCgA5b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HG+Z2p+h; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1728698717; c=relaxed/simple;
+	bh=5KmYshAjadRKH8Q2lzHK/06Rq8X6MPQSxeWWzqM7Y0g=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=Qt9YFEQ+95iKFcaQIujjVH8+Mf8wySaziuY8yhea7rxkmQ9r4XQy3Dw41uPJwL2dR6T+ZnVozXSNxEq72Wg4PNTnjT8ALVbk3SjdJUwPNDzY2vwrFbYJX/A3Gl+mrDc14Z0fcg1R541DLZovyuGBUVay7vVYzyfBtmKXpJFhWxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Bzs6Kd1E; arc=none smtp.client-ip=209.85.128.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fDBCgA5b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HG+Z2p+h"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 60B3C1380472;
-	Fri, 11 Oct 2024 22:04:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Fri, 11 Oct 2024 22:04:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1728698680; x=1728785080; bh=odaMIIsEVF
-	bud1PPxn4I/sEJGVf8rEVwFWW9OwtCVlk=; b=fDBCgA5bSiGIOv+0PtyNOdzdJU
-	TB0juRHepiN48p/0wWpDs6e/v9yvWPlQEQtMWdlPg/tHzT6kpNSnsnLwMp2iyR+8
-	zxi+5GtfwC3oWaT78Lj3iloPcu7lUJAxLTfwax+wmeX029GFktCHirR0hhfUZwH0
-	ltfZszpCRQaDugV+0y24xoPCove3EqL/pH+FzMRGfq81FaTMxW0QiCjaFsh2fBEH
-	IvKTn237QMFa6gv4J93weQbf75F08jAUCt/5iUo3Dc3G7MGkbgGxaw6V219eEHFH
-	j+8iQmlK4Msu0kJWhuwPss/ltsvt9Aro6lYsK0UYGo5sVd7edLbWD9nqyxEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728698680; x=1728785080; bh=odaMIIsEVFbud1PPxn4I/sEJGVf8
-	rEVwFWW9OwtCVlk=; b=HG+Z2p+htn8iGSBkapii1qrLdTDtCf3NgqJDeblf1UfR
-	0n2WR7tiQStIIWL5KovEJWQNTOMkTyjkjfkEjPpkhWgTAAdDItDK08fIRZQy1g+X
-	yRF0+3/EoS8kpnQGcTNGMOTbpaenpEkDgqhNGBWfBnozBb+CHgsAFEkVzxmxlmny
-	IkaZ0yT2sCM4HBm3afprIelDr+J9Rgq3t9wcz/tarpW1XnDqBa1rAJq7Nrjw6a9g
-	2COJRQGE5Mmud611yT03i6FLdYEqGe6j3h9wsRQIOp4aDs0TR1K6MtasEo2ouLg2
-	kLnzjYckoslmYMJtkf+L+OkgG7SxF8fZPzfAec/hFw==
-X-ME-Sender: <xms:N9kJZwfjZkzarZfca2sUJHm9NA-sIPu__FpBz3Badaa3WJuyR9Hr9g>
-    <xme:N9kJZyMQMZyO5U_hnBVg1SxOgYoZwKsctsLt1mX5obx38oVKjbN9XdvmKcyx22S1y
-    oglUpN7MxUR-c_5xA>
-X-ME-Received: <xmr:N9kJZxipB8faYtkH1SLqU_VNMm9kBNEqS6UbaxdHWgM1ADC7JgtBHHHHZuxPkhKum4BoaQbAW6syxm6cpGUMxTU236W3CumcMXJcMBE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegtddgvdegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefh
-    tddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpoh
-    huthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhooh
-    drohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
-    pdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ONkJZ1_7MZcxUzjT7gkqvajkRTSp_xLEkAIPi_RfuG25PvkInXXGyQ>
-    <xmx:ONkJZ8sl96GMUsPgCQVWXT1GQpnbLS-_4SJ3uwLABb3VKPX6gGeQsg>
-    <xmx:ONkJZ8EVOmSh84fZuowz88LYZKrFyfeZ3DOXrVnbAQFxn07DtIhQjw>
-    <xmx:ONkJZ7M60LpeImvjVCoVcotuFXrMZR34Qd8mzm5yPEMTMv-dynKW8Q>
-    <xmx:ONkJZwgYf17YWq9OhsOtNvNz9foVwW3dh7egAR4_HGwUuVgBIFbe7IXp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Oct 2024 22:04:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Eli Schwartz <eschwartz@gentoo.org>,  Eric
- Sunshine <sunshine@sunshineco.com>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [RFC PATCH v2 00/24] Modernize our build system
-In-Reply-To: <cover.1728485139.git.ps@pks.im> (Patrick Steinhardt's message of
-	"Wed, 9 Oct 2024 16:56:01 +0200")
-References: <cover.1727881164.git.ps@pks.im> <cover.1728485139.git.ps@pks.im>
-Date: Fri, 11 Oct 2024 19:04:38 -0700
-Message-ID: <xmqqh69i9ivd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Bzs6Kd1E"
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6d9e31e66eeso51113387b3.1
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 19:05:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1728698715; x=1729303515; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=5KmYshAjadRKH8Q2lzHK/06Rq8X6MPQSxeWWzqM7Y0g=;
+        b=Bzs6Kd1EASluq3m1G9qxDt/wi2h9hurEVegYpAEwkrkQTy9DaeLMtFbDCmWjxua5si
+         XiKMjv4BHxVCH9Ippo5rAXfXGLynqUAiR3niT7LZbw4YFd0nHO/IhbitfTOaBSKTVCT3
+         qgs7xWR7uwz9+RbeKawHjbja9CQSjYg/9hz1eAVIMebuzzlpbUzvtZXT/qQjABaS4KEs
+         b4gfc+8iueHX8scbGy3FuAES8VWIGq6jiQgqmgwnPaitbKtf4y7R/3Or/7haosWhxz5R
+         0/+l+QCgSBL3F6vcqiAeObERVbvikNwARXE7CDlJIR5+IP3mxFpGt275sJpIQ948ihIV
+         QPsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728698715; x=1729303515;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5KmYshAjadRKH8Q2lzHK/06Rq8X6MPQSxeWWzqM7Y0g=;
+        b=ZL/5Uo0jPIM1i9qkxbd2ROyoVTXxLFiZNCIIJNmC6a5F0hR9aFk4sX8v0T2yUZP61G
+         kfvTd/kdiDrUIWjNQq7Cvh3BvmXWYLGx/lq3pnnWkrvLJbebbVt8cZiJL1553J0+l6jg
+         4rXktK7dqkFGUEvEv8gxLRbNeet4C7LcfULBHZUfyArS74rypoOe7VQE12WsIOkj15L5
+         tT4KoGN738CX43rzo6HeAVsgTyJ5SX7Tqgml6QnDsHd0rboxKi7AkQSQm4EP3k30buKn
+         x2cAbTjbvtqixLAYq+41P9QMiBhMdv2yN2Q+8l+MpHd9SOe4AIWHOuifturiVO1EHIe3
+         N1Fw==
+X-Forwarded-Encrypted: i=1; AJvYcCXyU2uF/QzftudO+OL/sDvWAoqizDltaGSKTYMUUYIKIC4fzsBuA8fgVwSW2NtmzyikWDs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaYcErwWKD0j9ri4va5F7Y9V5DKozhJY531eq70Ed+ZGELjFWC
+	CHvctLBXvWgM9zla+cH1Pekf90AxSy+WK/VksSAvR9TuCm7+OAU0apctiN2qJL/Ibj+mAdQOMYm
+	TPaU/etxk8wIbIOQEySs02qnkgzcfog==
+X-Google-Smtp-Source: AGHT+IEnk3LFm2vP5SJpSsWIyI3+/p9QJ/7uxVVlQjVyNE6Z+/DBPb1ibN5wuKCsylbEXsMzRudGI4LM+3jDEnUGBAA8
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:142d:eae7:a14b:a39c])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:690c:318c:b0:6e3:f12:1ad3 with
+ SMTP id 00721157ae682-6e347c75f04mr684547b3.6.1728698714757; Fri, 11 Oct 2024
+ 19:05:14 -0700 (PDT)
+Date: Fri, 11 Oct 2024 19:05:12 -0700
+In-Reply-To: <20241009183455.164222-1-jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
+Message-ID: <20241012020512.217383-1-jonathantanmy@google.com>
+Subject: Re: [External] Re: Missing Promisor Objects in Partial Repo Design Doc
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Jonathan Tan <jonathantanmy@google.com>
+Cc: Han Young <hanyang.tony@bytedance.com>, Calvin Wan <calvinwan@google.com>, 
+	Junio C Hamano <gitster@pobox.com>, Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>, Enrico Mrass <emrass@google.com>, sokcevic@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
+> For
+> this reason, I think the repack-on-fetch solution is the most promising
+> one so far.
 
-> this is the second version of the patch series that modernizes our build
-> system by introducing Meson. This series is still in an RFC state.
+I had time to take a closer look at this solution. One problem that
+I've noticed is that the "best effort" promisor object check cannot
+naively replace is_promisor_object(), because a lot of the time (e.g.
+in revision.c's get_reference()) is_promisor_object() is used when an
+object is missing to check whether we need to error out or not. Our
+"best effort" promisor object check cannot replace this because it needs
+us to have looked up the object in the first place to check whether it's
+loose or packed (and if packed, which packfile it's in), so it can't
+work with an object that's missing.
 
-I'll keep it in the broken-out repository (https://github.com/gitster/git)
-but eject it out of 'seen' for now.  Builds with the topic seem to
-be unhappy with circular dependency, 
+So I think we'll need to use do_not_die_on_missing_objects. It does have
+the weakness that if the object is not supposed to be missing, we don't
+inform the user, but perhaps this is OK here because we know that all
+objects we encounter on this object walk are promisor objects, so if
+it's missing, it's OK.
 
-cf. https://github.com/git/git/actions/runs/11299216196
+In addition to do_not_die_on_missing_objects, we'll also need the actual
+code that stops iteration through objects that pass our "best effort"
+promisor object check. Probably the best place is in get_revision_1()
+after the NULL check, but I haven't fully thought through what happens
+if this option is used when some commits are UNINTERESTING. (For the
+repack-on-fetch, no commits are UNINTERESTING, but it's probably best
+to make sure our feature is as useful in as many cases as possible,
+especially since we're going to further complicate revision walking
+code, which is complicated enough.
