@@ -1,78 +1,83 @@
-Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089544315F
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 06:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.18.0.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE144315F
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 06:26:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728714336; cv=none; b=sm5Ig0pBqGC7IOtXqPVUnWdAuIGy/MnBx1gATy3mH79lAYlpLCcPkzeTr2usStNYvwGzbfWu0++mx/tzHX3ocfceiOaQkixbvqJqkkM5tkPgzkBNs37+IPqooP+gHQ1RPHwHMAxn7cw+bs3A7Xg+jevDiKhEs7B0EfF+e5cV1jo=
+	t=1728714414; cv=none; b=MGtPobbk5mzTbtxslmovpbw/ga4PH/ghGU+bZMlPhjcKbx42+Rhh6Y4/4el4Abk4wn5Iz3CQREggorgrbPzClzzapcx7NRUxYK+u0ZuTHG7w4oQEkfB0Ddsz8QPQZtGmF/nrPqw1stYQ6LiZX3kanv5k7PhPZ1GQJo3gZEradXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728714336; c=relaxed/simple;
-	bh=1q/b6b4Wfma5Z+zo58EopVFBvQafHghMD944tV+DGx8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=olnfBJJXAVP0XhflJCkrpqgeSfPJnGRKpqgd/L3dYKnxvOF0oQKtHxQO7mTf/1vF0LJh7TKMT11IYjrjb7YDKrGQfP39oC8Zc42JWLO0o8BXzfi3RkvWDzzBS5jo73LCCqlTLzrkHNfkTy4Y7LsOXh9Wl/T1q/e3vTORzBrVUXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=nefkom.net; arc=none smtp.client-ip=212.18.0.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nefkom.net
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 4XQYQF3S8Zz1s953;
-	Sat, 12 Oct 2024 08:25:25 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 4XQYQF2ykRz1qqlS;
-	Sat, 12 Oct 2024 08:25:25 +0200 (CEST)
-X-Virus-Scanned: amavis at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
- by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
- with ESMTP id KxBRDDocODCb; Sat, 12 Oct 2024 08:25:24 +0200 (CEST)
-X-Auth-Info: hwvqEnYixcQMwCaX2ogyE0APZY5+gcdJkhmFTpU37rRHmDitTFygWzaydVR0+G3n
-Received: from igel.home (aftr-82-135-83-221.dynamic.mnet-online.de [82.135.83.221])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by mail.mnet-online.de (Postfix) with ESMTPSA;
-	Sat, 12 Oct 2024 08:25:24 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 7C6C82C1A11; Sat, 12 Oct 2024 08:25:24 +0200 (CEST)
-From: Andreas Schwab <schwab@linux-m68k.org>
-To: "Bence Ferdinandy" <bence@ferdinandy.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: ref: with git update-ref?
-In-Reply-To: <D4T9VCF8OS6U.1FMB8P6YU7I3S@ferdinandy.com> (Bence Ferdinandy's
-	message of "Fri, 11 Oct 2024 22:51:08 +0200")
-References: <D4T9VCF8OS6U.1FMB8P6YU7I3S@ferdinandy.com>
-X-Yow: I'm rated PG-34!!
-Date: Sat, 12 Oct 2024 08:25:24 +0200
-Message-ID: <87ttdhsuqz.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1728714414; c=relaxed/simple;
+	bh=MR1I9e2NtqoPnQLPIfalEOEP5PVEkP8CDDUrZzGBCPY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=T0jSUGV+97eVwbXrXbwGIPkDHg/EiNzWDO+Hh7EMbFIArdthagFTS28OYukZ/F+OYWWUoxmeuj7RRgrWfHmSdJPDpcDhpjjzMhPSEkIVy+3b3m0DKyf35cIHg5yd3LH7y1rFT9vjtS1MBNF4tdjkOSpkH0rdRePNSguk/cBvSQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6cbf113dc8dso2673306d6.0
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 23:26:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728714411; x=1729319211;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Oqm7Xi0W1XrCUBLti5LmIF+C7/+PT4LFZjqAsK8zsvk=;
+        b=jhT8uy3Sn863L6ch+xptsQUVOkCvr3QcARQiew7yBiKlks3Qqu36AMXbkfh5718mHt
+         gpVq3nnb93hVc63BTMEF3K10eJuiOlEtDUNUJEQl/dX/n+1CvG0TOFIBohGNS4hUZWqU
+         aTX9WMzwpfEtIswAckxZqyLUIvGyFztZ9DZg1yt6VQChiU+qIjxuHp2QUemtiiY0IrfV
+         9NMFolpV8AKWXpwl+fHIfSPKMgvpdHoZywmXP6YAhP66VvhzsxLQkg4v8ISag1mDHttW
+         96/BgI6szVP9EHKkNGfHEd/hXAJNxfWGt6INnEQBNDqMQiW0VifbGnC0s50G0EaGZOij
+         FZxQ==
+X-Gm-Message-State: AOJu0Yw44sDGgAtBzYA9ACu8YX1UV2fI1xqC9os/Flguj2eklol4/90z
+	oIt89FxhhKnGkl/cdjh/yipybqYXuSQSqsB7H5xW4HNdODdxhdkIiwZir2gpWxV9fpGzd/IpHq2
+	xBXqetF4o/bicmdYmPriXSkvZHfE=
+X-Google-Smtp-Source: AGHT+IGY4zjw32OKTzt39qBK+iYxJwx+d9OF3qRdI1NBnfnP23TXub+43+3hQO4/+h+lkxy1nSt2hmYuzC7J9y2UAfo=
+X-Received: by 2002:a05:6214:20a5:b0:6cb:4a88:8cf5 with SMTP id
+ 6a1803df08f44-6cbeff32402mr31761756d6.2.1728714411060; Fri, 11 Oct 2024
+ 23:26:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1809.git.1728370892696.gitgitgadget@gmail.com>
+ <pull.1809.v2.git.1728707867.gitgitgadget@gmail.com> <8d2fa3af7964dacd09d454de4325b1d5eb7a5c3d.1728707867.git.gitgitgadget@gmail.com>
+ <CAPig+cRkp3ZrykLvgDaGnKgZNV5GiFqc5zq6ZZ-fM7RJcqxM7A@mail.gmail.com>
+In-Reply-To: <CAPig+cRkp3ZrykLvgDaGnKgZNV5GiFqc5zq6ZZ-fM7RJcqxM7A@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sat, 12 Oct 2024 02:26:40 -0400
+Message-ID: <CAPig+cQ=WGz4vmkcBR0Rk8KtQiF2vaH1PLt0-rTDvYi=z=EEUg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] blame: introduce --override-ignore-revs to bypass
+ ignore revisions list
+To: Abhijeetsingh Meena via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>, 
+	Phillip Wood <phillip.wood123@gmail.com>, 
+	Abhijeetsingh Meena <abhijeetsingh.github@gmail.com>, 
+	Abhijeetsingh Meena <abhijeet040403@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Okt 11 2024, Bence Ferdinandy wrote:
-
-> the documentation for `git update-ref` has this sentence:
+On Sat, Oct 12, 2024 at 2:24=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
+> On Sat, Oct 12, 2024 at 12:38=E2=80=AFAM Abhijeetsingh Meena via GitGitGa=
+dget
+> <gitgitgadget@gmail.com> wrote:
+> > [...]
+> > This patch introduces the --override-ignore-revs option (or -O),
+> > which allows users to easily bypass the --ignore-revs-file
+> > option, --ignore-rev option and the blame.ignoreRevsFile
+> > configuration. When this option is used, git blame will completely
+> > disregard all configured ignore revisions lists.
+> > +               OPT_BOOL('O', "override-ignore-revs", &override_ignore_=
+revs, N_("override all configurations that exclude revisions")),
 >
->> It also allows a "ref" file to be a symbolic pointer to another
->> ref file by starting with the four-byte header sequence of
->> "ref:".
+> We don't normally allocate a short option name ("-O" in this case)
+> when introducing a new option since short option names are considered
+> a valuable and limited resource. A short option name may be added
+> *later* if experience shows that the option is popular enough that the
+> convenience of the short option name is warranted.
 
-This is about the format of the reference to be updated, not the
-<new-oid> argument.
-
-See gitglossary(1):
-
-       symref
-           Symbolic reference: instead of containing the SHA-1 id itself, it
-           is of the format ref: refs/some/thing and when referenced, it
-           recursively dereferences to this reference.  HEAD is a prime
-           example of a symref. Symbolic references are manipulated with the
-           git-symbolic-ref(1) command.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+I forgot to mention that this patch also deserves a documentation
+update; otherwise how are users going to know that the new option
+exists?
