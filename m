@@ -1,103 +1,93 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825ABC133
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 02:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C158314F90
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 03:30:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728699045; cv=none; b=IISA6hyia6h/Gwdc629t/V+ZgSe/vtKzVhKy1Aw+bAPAhb6uxKDTb5MuPzKHc6GLspk/BeDkpdZE+fWGri+3yfByuvjvWp4K5Jl4uLqOnnCjPli+0r1ESyozKOjJHxzMuClPuZyorYa1Wgn0qs6WbPRwJGQQnbPzIsQiswqkZxQ=
+	t=1728703820; cv=none; b=ixi12a3dRF0AxSvjyD5MalFWI+luJx3o0IYgVm45rwSH4T0dQP7eaRs8m+DMXhdust2NQCQnFwnYnEbb2pJ3VsxU5KxKrwHcBFTYj2p0EwvaimKlzCkQwOdG76QUYDOAPmgr7bkXBi2SJPIY5u2qNfq1I4IqLKgiQz4W4yo7xZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728699045; c=relaxed/simple;
-	bh=J4Fvd+9s/b+XMF1o2DSCkgplfO7D3lww57BYb7kYv2Q=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=nkU5pSnzLgWnXj7yfd6UrePBNlF2i5GleZukAnitWR5d2zSDXLZ3s4M/+W6qoZA+nMNRTstIq+tNrm/UUZ167b+DDzC4MkaTOPyIDwrFWjWFudNg57LxyZsJrNvDVt7Lt3Ftsif0FbUFhikGndQDhVQhvrzstTeQZU5lSfe8t8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e28e4451e0bso2321277276.0
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 19:10:43 -0700 (PDT)
+	s=arc-20240116; t=1728703820; c=relaxed/simple;
+	bh=t8+MktNRIvBTLeyAUNSkHadYwIBnqXgtnF6rlZjhlIA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RDlppOaapXhnHn4cCDx2N7pHVkmdNMWoLtD8Nhl5qY5g9WOJPON1QohcOGxk2KnGIXiSABtHVuqKtFjFKEyZjuei5SZzvlJl/BZ8gzNZ/zi2Wr8q+QtSgd1myrhlsHRSHAes7YE0buXvFIg7zqqDv/4DwTi8UEnROcSJ8LAepZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=LmajdkRl; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="LmajdkRl"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20c803787abso18119335ad.0
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 20:30:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1728703818; x=1729308618; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t8+MktNRIvBTLeyAUNSkHadYwIBnqXgtnF6rlZjhlIA=;
+        b=LmajdkRlojlGYvceVddPFsd8nyLAvi9eqpj74tspiKdu6qPk8ENWHmBSjsckXowkB0
+         PwUeu6ntz8u2FlD0WWMElE6HCt9rVDEl1+9TDBBNCstHJ2TDM1UfeQ9rND6yG7M8WbfW
+         P+rRKFrvNsT46lbPpa9u+5yeaAoXDTK5H7Jrc/ebMuwLkfC/qy3okaEd7NQV/Q55DudT
+         FhKDMDLGdJ6bjzQivwgdwlBDiaUrUuu264Mto0UGE5jqt6eI86ZLNmZBejy7tr4upRdt
+         CepNq+flerLw94KjAZ0wO3nA+0dTsBtyJmiY+OlgMYK01tMvzVgZOcALiMDZyuxo008/
+         Q/fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728699042; x=1729303842;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J4Fvd+9s/b+XMF1o2DSCkgplfO7D3lww57BYb7kYv2Q=;
-        b=GeuSM76vPr/rR3V6EcFQgryVMpYHN71ywUwW4Bb2WEu257stFIfrRrBjGkn+rx4hZG
-         7ePzmFO+jKwvYS62h9nL94HqEqzEtI5frDGH3cGLNyLVnvs71vakeHyvw884M2MLpPAA
-         68q7VtFEaNjX5nYmWkFvrf3RWU5obagBw4SzhrRGSWJV0G0sP1WOzEEh2B9+7RxUntg8
-         sg0ZTnIvgFGPGFS85leSulYnA4CgGCKbHDMRQKAgFWhsMyy2xFC5yuLqyjQPE1GBiLGC
-         vEOCSGT3U4ZeQZX8C6fHDDMMF0o4EQRjPxr+WY1jSrhzOh1tFT9/1xKKY9ZAxf0l3nnL
-         o0Mg==
-X-Gm-Message-State: AOJu0Yw7jWWftOfSRObg9vTMIYA1CcejQCeqlZcA7Dd8HI8B2PRwLENn
-	/sFszc0pHoCSeixBXj0I9+dXtMq34N7xNuD+43qzaOG9wtjQv6GkDLz3vPqclZXGreqpza55Xzt
-	naxGEjRaG1KdBd+0idEpXr/5oeYCFUw==
-X-Google-Smtp-Source: AGHT+IHfQpkHCl7NtMmYYhJ3GqXz/YuH2n/AAWMZWrWhRl6SUd2AvW75+oBHeCcxIQXYUX/QCxPKaZ/9FGvlbltOaSw=
-X-Received: by 2002:a5b:88c:0:b0:e29:1def:1032 with SMTP id
- 3f1490d57ef6-e291def112bmr2795046276.41.1728699042029; Fri, 11 Oct 2024
- 19:10:42 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728703818; x=1729308618;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t8+MktNRIvBTLeyAUNSkHadYwIBnqXgtnF6rlZjhlIA=;
+        b=iflbUJBZFH9IAIxxpM5Dbiw5AbQeiJbGZZCIAIH1mokwyZj8uLa/m2uKXAcbFI69/I
+         G48DixNNECbt7YHA3Dn+uqjoDswEhEdaLm3ka6vZT1EyPfZCMCTOE/w9CBfQ9ZgXiJ9h
+         ddqW8ZxiGkkL5SA0umc/w0uSs9MlFabSQiB7eFStZ/28TbcMaNFw0PTpMWdW2aAdINcd
+         AoEr2mABxT4BvMxdaAwDK59VJYvnyt7cV0o9Csm92zNEPu5MXPiMG75f+blXQbDc9XM+
+         WRCDq2A2ErCGdbqpYl9hx2x7JcxwmpiLgXmnMfDZjixHX0EkO6SWPziMy9xnndlheEmG
+         MOUw==
+X-Forwarded-Encrypted: i=1; AJvYcCW/baClfnNjQYcjAScJ2KYF8DUudsmC8PXv/U/BtGpEs0jbjhGoXAV9uDjzicbuePvuWu8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0BqoOHnm60Kaxw9lqmvJiX7WRioX/JvVk9P3jn15QdLa7A26v
+	cgPesFWmIV6Yr4rlQC7TlmTrzpR+LNdKCByF9muxDwbtUs4WI7UKrF0A1e1ccRvCKWdk0sGhE1L
+	3BYFPsCnN7L4bWztxnPDw74vFFAnbIZsh8VsmiA==
+X-Google-Smtp-Source: AGHT+IG99n9sFJi+P8I5FKlPVAb3881fZ0FHjvGw24wuWub6ANfe1Nu3plOFdqQMJBJqWwLgYH2uRiU+LMGDQImGfcQ=
+X-Received: by 2002:a17:903:1104:b0:20c:5990:897c with SMTP id
+ d9443c01a7336-20c8051483bmr139677725ad.27.1728703817958; Fri, 11 Oct 2024
+ 20:30:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-Date: Fri, 11 Oct 2024 22:10:26 -0400
-Message-ID: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
-Subject: git no longer builds on SunOS 5.10, a report
-To: Git List <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20241009183455.164222-1-jonathantanmy@google.com> <20241012020512.217383-1-jonathantanmy@google.com>
+In-Reply-To: <20241012020512.217383-1-jonathantanmy@google.com>
+From: Han Young <hanyang.tony@bytedance.com>
+Date: Sat, 12 Oct 2024 11:30:06 +0800
+Message-ID: <CAG1j3zFFYcwYg7b9_xGRGHAOHm+qTHY=WpngqtJCrmDznhD+HA@mail.gmail.com>
+Subject: Re: [External] Re: Missing Promisor Objects in Partial Repo Design Doc
+To: Jonathan Tan <jonathantanmy@google.com>
+Cc: Calvin Wan <calvinwan@google.com>, Junio C Hamano <gitster@pobox.com>, 
+	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>, Enrico Mrass <emrass@google.com>, sokcevic@google.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi all,
+On Sat, Oct 12, 2024 at 10:05=E2=80=AFAM Jonathan Tan <jonathantanmy@google=
+.com> wrote:
+> So I think we'll need to use do_not_die_on_missing_objects. It does have
+> the weakness that if the object is not supposed to be missing, we don't
+> inform the user, but perhaps this is OK here because we know that all
+> objects we encounter on this object walk are promisor objects, so if
+> it's missing, it's OK.
 
-I've spent the entire day trying to fix the build for SunOS 5.10, as
-I've done a few times over the years out of sheer stubbornness, but
-this time I'm throwing in the towel. I figured I would at least relay
-what I found though, in case anyone else came looking.
+And I think users would prefer the git command to succeed if possible,
+rather than die on the first (noncritical) error. Maybe show a warning
+and swallow the error?
 
-First, clar.suite was generated as broken because clar-decls.h was
-generated as empty. Tweaking the sed one-liner in Makefile that is
-used to generate clar-decls.h fixed that (move the end-of-line marker
-outside of the capture group, `$$\)` -> `\)$$`), which I would submit
-as a patch, but (a) that only fixed part of the problem and (b) I'm
-not entirely sure why it helped. If someone else wants to apply this
-change, which would align the end-of-line marker placement with the
-start-of-line marker placement, have at it.
+> In addition to do_not_die_on_missing_objects, we'll also need the actual
+> code that stops iteration through objects that pass our "best effort"
+> promisor object check. Probably the best place is in get_revision_1()
+> after the NULL check
 
-The next issue was that clar/sandbox.h uses mkdtemp, which I don't
-have here. Git has solved this in compat/mkdtemp.c via
-git-compat-util.h, but clar is not using it. Adding git-compat-util.h
-to clar/sandbox.h feels weird, but does get us further along. That
-change introduced banned.h into clar, which exposed the use of strncpy
-and localtime, both otherwise banned in git.
-
-Including git-compat-util.h in clar/sandbox.h (bringing in mkdtemp,
-and replacing strncpy with strlcpy) and clar/summary.h (replacing
-localtime with localtime_r) leads to our next issue: a redefinition of
-_FILE_OFFSET_BITS, which is defined unconditionally in
-git-compat-util.h, because clar.c imports system headers that define
-it first. git-compat-util.h is meant to be included first, so, I added
-git-compat-util.h to the top of clar.c. That caused system includes
-via <wchar.h> to no longer compile due to syntax errors. This is where
-I gave up.
-
-I'm sad that I can no longer build git on this old version of SunOS,
-and that it's the newly-imported unit-testing framework and not git
-itself that is preventing me from building it. Given the talk of
-adding rust to git, and of bumping the perl requirements to 5.26.0 (I
-have a system 5.8.3, and a 5.10.1 for building openssl), this moment
-was inevitable. On the plus side, this was the slowest platform I
-built git on, so perhaps I should be happy about my new free time.
-
-Please note that this should not be read as opposition to the new
-unit-testing framework in any way. Building git (and curl, and gmake,
-and zlib, and openssl, and perl, all for git) for SunOS was a hobby
-for me, and not anything I personally need, and besides, it's not like
-my previous builds have disappeared.
-
-The last successful build for me was 2.45.2. I've built or tried to
-build most versions since 1.6.6. Some of my build infrastructure was
-unavailable since sometime after 2.45.2, so I have not tried 2.46.x,
-but it lacks clar, so I expect it would build fine.
-
-Cheers,
--Alejandro
+get_revision_1() only does commit limiting though. Some callers of rev-list
+also do tree walking on commits, in a (corrupted) partial repo, tree could
+also be missing. There isn't a central place we can stop tree walking,
+callers using this feature would have to implement "tree walking early
+termination" themself.
