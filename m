@@ -1,83 +1,148 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899D1946C
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 05:35:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD3A4A1E
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 06:07:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728711345; cv=none; b=tM4MlbBYmzfe3qXrzVEsSCIm2Pdpo54dRgsLQ8DkhLgMSHON18ZvrkpDUGpCTWoZ5yzQ2tsHOkPov6nEh4qKOG9PpZKuwEfc3jC+8f8NW6qOBgz/8sGAbl6BzJww19bO+7vmn5qHvwIsNZDNfLOIPMBLLOYxQltQ1GzfQyJOogQ=
+	t=1728713271; cv=none; b=loPpB/jHCVhNzIiSROpreSGdwDqMiPB8n/StKTGoE7wqPK4818iVdnb+YImt1np1UW0CpWUdsbAMBpCIY/0gQ+ZWJtGzEmXgo3m3lEafXbct5+BMgseNmbSlblfi6TZ2iW2JUJPHRpLFXEvpnA7n4usLQP4loxsMdDKj6zt5KG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728711345; c=relaxed/simple;
-	bh=yZKpDWsZ/EwQvBBoQ+HA3llBP2Q2Eq3J7AHAXXsTfJE=;
+	s=arc-20240116; t=1728713271; c=relaxed/simple;
+	bh=AiyJxw/XkZ9eKJvJ0sugrLaDAn0iDK4RfGqmD3ZCI9E=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pAg9lx7pm3lTjj8Bh/BKqCmbp1E1ohvCkwCcBC5aZ8Wemzzu3xH+CmD1xDlBbsPjfDH7mobIDP+uhlbXxYJieyCHF8DSHZJXAnTw8reyzzIIawcEIsQW7gHHhL3WnbsGMY6IkS+jKZKThLr7P9tyqXIP2OgbWk5Jur84pyKIXJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
+	 To:Cc:Content-Type; b=VtMzyVckL4k378cpORzVaSm3rVmiizoGItMJREfmlruK5/hsediO0dBZC/GwFnwY/6FdzlKb6bhK0bt80OQ+JI4egsd0Ur56dGJNx185MtXVWEEpyZMAM//6DG8JC2M+KBAntXyD4N07f4/k/9338JJU8GBCNRw2fR3l86Cm4H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6cbe53e370eso3061936d6.2
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 22:35:43 -0700 (PDT)
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6cbc46f8b3bso3373396d6.0
+        for <git@vger.kernel.org>; Fri, 11 Oct 2024 23:07:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728711342; x=1729316142;
+        d=1e100.net; s=20230601; t=1728713268; x=1729318068;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=y4hTeRGL7iJEEu4it3qHg5ml8FQ8CvH4j1zmGB7c3oY=;
-        b=cX/zh1Su8y3XDLJ5mmKWQroZNY+TdcJSvmS0ANx7DgwdQg8uX5rMwdWi49asrLVKs8
-         FUURw5wsJFJFggxQ2Cas+cRCnG6v2IPB4I80sPoKkolJ4k8BkSFFO00ur19GRodPZi4B
-         QrclbHM4ObvfCgCRVP7O5pczO5VhAIM8bCGV7MY/PWC/n4pGL+ZWx5/wSHnYLzVSO9e5
-         TsPsSxO0yAX4nz0LMCFP9W38J1y4A62NKdThuHbFZcFBz4UUldbm59SQlm06x6Sz2Kra
-         RPe8AUOgn0dYs2tfvI31xxx7Qht46+uiYf+GXL+GdrUoSCyTWRVbUESLJH8BEd0pqM3K
-         7gIg==
-X-Forwarded-Encrypted: i=1; AJvYcCW+4podNgmMlcQ6KD89i7auJHol4LukshTW03aPIXNQoAHwNPktWU2vLSFFdM1lr5IQGMM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YylHg2L3yPEI9KZ3xn73J083IBLtUJD8k/XsJSHa0TpOEozZmA3
-	rg+Ja4SxSAfpult7PWVVDDZyXCkB1/SLMohAKPv734It7Vyx3yISHRicyaIgmUmgJGtxhqfHGox
-	DZ12vX/u9dQSHLLdoJoPtgTNBDFU=
-X-Google-Smtp-Source: AGHT+IFtNyIF4G49cRwEhEYtPdWmhS4Pqlnr4o0WcW/uVmGPDG+0RxYIi+jZi0gGf9+3JItMnV9z/CgVnppexEoElWo=
-X-Received: by 2002:a05:6214:2b0a:b0:6cb:e8d3:cfcc with SMTP id
- 6a1803df08f44-6cbf0044bc9mr30850836d6.10.1728711342479; Fri, 11 Oct 2024
- 22:35:42 -0700 (PDT)
+        bh=zwqlTlfmhUmbei5BZF441t0HP+eIl12iMkRcA43PIyg=;
+        b=u3+jyc9rGgAIvODPH3gVM4sR717bSHcg6YRq4pRgfLUMtTVZUNyqNRCUynNyeIJj+U
+         nTxEKN8ExrdzFcugX2FZD3lFJjVv8sL6s07xM4NTsBVdB0iPGR+GJLjvDWjU+uqjFlFq
+         y9ro896L8KjIO5VMWbrSoJyu+/jO43/Lg99NmL1TAOJFRCh251PunmmqXOX1vViKd9RT
+         R1fc67gjvaW33AaQCKM8onumegtybV2satn2QcGFKb2MIQy7HcPcH+ImiRsS+V78QBQB
+         B2EwlHpbl5qYMx0W1GF17nUye5xM19rFoIJ6oWZaQupMYlZzMRms2V+LnWC9ErMMqK2E
+         bYKA==
+X-Gm-Message-State: AOJu0YwT0BxlewCOfyMuOGs8dWUpQm4v0yjh5B3xlgi/tiSbT6tkj2oI
+	ZhEy2R8Eyu4/Mhbq4LTXhYE/aF3XHOxrPNCq+6gu0nwNjCYsEiyjr6xzaWNdRrJdX4H/AWF0ThV
+	jtglpPHCPhH5q8huMaQ+PA+IO8w4=
+X-Google-Smtp-Source: AGHT+IH0/38BykPeXF83zf3+dXKNiujhRB757SWk7JC2NBmwX3lpTYhtgeOTiMrm87k1fbg9e6oZxsYnJcX3v+XyOGw=
+X-Received: by 2002:a05:6214:2481:b0:6bf:6d90:c084 with SMTP id
+ 6a1803df08f44-6cbeff3daf1mr31085706d6.3.1728713267570; Fri, 11 Oct 2024
+ 23:07:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqzfnaedh6.fsf@gitster.g> <20241011235959.596136-1-chizobajames21@gmail.com>
-In-Reply-To: <20241011235959.596136-1-chizobajames21@gmail.com>
+References: <pull.1809.git.1728370892696.gitgitgadget@gmail.com>
+ <pull.1809.v2.git.1728707867.gitgitgadget@gmail.com> <4ed930cab1b7f5e9738e73c7b9374d927a8acd94.1728707867.git.gitgitgadget@gmail.com>
+In-Reply-To: <4ed930cab1b7f5e9738e73c7b9374d927a8acd94.1728707867.git.gitgitgadget@gmail.com>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sat, 12 Oct 2024 01:35:31 -0400
-Message-ID: <CAPig+cSRJXoZfXdBmWt8md78t-6c2NBjeR=PK=RaKqLoCjxXMw@mail.gmail.com>
-Subject: Re: [Outreachy][PATCH v4] t6050: avoid pipes with upstream Git commands
-To: chizobajames21@gmail.com
-Cc: gitster@pobox.com, git@vger.kernel.org, phillip.wood@dunelm.org.uk, 
-	ps@pks.im
+Date: Sat, 12 Oct 2024 02:07:36 -0400
+Message-ID: <CAPig+cR4WbcDDav0cdXxOMC-EDe2ipWxEzB+0C7zbFjvY_kXtg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] blame: respect .git-blame-ignore-revs automatically
+To: Abhijeetsingh Meena via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>, 
+	Phillip Wood <phillip.wood123@gmail.com>, 
+	Abhijeetsingh Meena <abhijeetsingh.github@gmail.com>, 
+	Abhijeetsingh Meena <abhijeet040403@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 11, 2024 at 8:00=E2=80=AFPM <chizobajames21@gmail.com> wrote:
-> In pipes, the exit code of a chain of commands is determined by
-> the final command. In order not to miss the exit code of a failed
-> Git command, avoid pipes instead write output of Git commands
-> into a file.
-> For better debugging experience, instances of "grep" were changed
-> to "test_grep". "test_grep" provides more context in case of a
-> failed "grep".
+On Sat, Oct 12, 2024 at 12:38=E2=80=AFAM Abhijeetsingh Meena via GitGitGadg=
+et
+<gitgitgadget@gmail.com> wrote:
+> git-blame(1) can ignore a list of commits with `--ignore-revs-file`.
+> This is useful for marking uninteresting commits like formatting
+> changes, refactors and whatever else should not be =E2=80=9Cblamed=E2=80=
+=9D.  Some
+> projects even version control this file so that all contributors can
+> use it; the conventional name is `.git-blame-ignore-revs`.
 >
-> Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
+> But each user still has to opt-in to the standard ignore list,
+> either with this option or with the config `blame.ignoreRevsFile`.
+> Let=E2=80=99s teach git-blame(1) to respect this conventional file in ord=
+er
+> to streamline the process.
+>
+> Signed-off-by: Abhijeetsingh Meena <abhijeet040403@gmail.com>
 > ---
-> diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-> @@ -344,7 +374,8 @@ test_expect_success 'test --format medium' '
-> -       git replace -l --format medium | sort >actual &&
-> +       git replace -l --format medium >actual &&
-> +       sort actual -o actual &&
->         test_cmp expected actual
+>  builtin/blame.c                      |  8 ++++++++
+>  t/t8015-blame-default-ignore-revs.sh | 26 ++++++++++++++++++++++++++
+>  2 files changed, 34 insertions(+)
 
-Although `sort -o` is POSIX, it may not be supported by all platforms
-on which Git is built. Moreover, as far as I can tell, `sort -o` is
-not used at all in the Git test suite, so we should be wary of using
-it here. Therefore, rather than introducing a novel use of this
-command, which might possibly break on some platform, instead stick
-with what is known to work without problem:
+This change should be accompanied by a documentation update, I would think.
 
-    git replace -l --format medium >output &&
-    sort output >actual &&
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> @@ -1105,6 +1105,14 @@ parse_done:
+> +       /*
+> +       * By default, add .git-blame-ignore-revs to the list of files
+> +       * containing revisions to ignore if it exists.
+> +       */
+> +       if (access(".git-blame-ignore-revs", F_OK) =3D=3D 0) {
+> +               string_list_append(&ignore_revs_file_list, ".git-blame-ig=
+nore-revs");
+> +       }
+
+A couple style nits and a couple questions...
+
+nit: drop the braces around the one-line `if` body
+
+nit: this project uses `!foo(...)` rather than `foo(...) =3D=3D 0`
+
+Presumably this consults ".git-blame-ignore-revs" in the top-level
+directory (as you intended) rather than ".git-blame-ignore-revs" in
+whatever subdirectory you happen to issue the command because the
+current-working-directory has already been set to the top-level
+directory by the time cmd_blame() has been called, right?
+
+But that leads to the next question. Should automatic consulting of
+".git-blame-ignore-revs" be restricted to just the top-level
+directory, or should it be modeled after, say, ".gitignore" which may
+be strewn around project directories and in which ".gitignore" files
+are consulted rootward starting from the directory in which the
+command is invoked. My knee-jerk thought was that the ".gitignore"
+model may not make sense for ".git-blame-ignore-revs", but the fact
+that `git blame` can accept and work with multiple ignore-revs files
+makes me question that knee-jerk response.
+
+> diff --git a/t/t8015-blame-default-ignore-revs.sh b/t/t8015-blame-default=
+-ignore-revs.sh
+> new file mode 100755
+
+Let's avoid allocating a new test number just for this single new
+test. Instead, the existing t8013-blame-ignore-revs.sh would probably
+be a good home for this new test.
+
+> +test_expect_success 'blame: default-ignore-revs-file' '
+> +    test_commit first-commit hello.txt hello &&
+> +
+> +    echo world >>hello.txt &&
+> +    test_commit second-commit hello.txt &&
+> +
+> +    sed "1s/hello/hi/" <hello.txt > hello.txt.tmp &&
+
+style: drop space after redirection operator
+
+    sed "1s/hello/hi/" <hello.txt >hello.txt.tmp &&
+
+> +    mv hello.txt.tmp hello.txt &&
+> +    test_commit third-commit hello.txt &&
+> +
+> +    git rev-parse HEAD >ignored-file &&
+> +    git blame --ignore-revs-file=3Dignored-file hello.txt >expect &&
+> +    git rev-parse HEAD >.git-blame-ignore-revs &&
+> +    git blame hello.txt >actual &&
+
+I would suggest copying or renaming "ignored-file" to
+".git-blame-ignore-revs" rather than running `git rev-parse HEAD`
+twice. This way readers won't have to waste mental effort verifying
+that the result of `git rev-parse HEAD` isn't intended to change
+between invocations.
