@@ -1,99 +1,104 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126B512CDA5
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 20:55:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4588013B58E
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 22:29:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728766517; cv=none; b=qZdlCRsbz+okPRrSEoy88DJIXv5N7g74SxAlxdWTB8E4VqxBj9Zmo/Tl5cgZwpQmAKv9ZIIE0mm6mDxouhOAAco8J/CE890aKm0DUG4tgE8hW8Lu5XG77Mj74SrS1IBQVLslrSVh3CfEYUJTCgN0cItir5pd6pA77ugEQeBMl34=
+	t=1728772195; cv=none; b=YjJU/YhMGLsz5yJvyNxVdf6/GHhJKAXfb3u9kBp4thJ3EALOwUVmA3k2cX3FuSdNmm9Ph4ncw527eEvZSiRxxsQO3q3QmPOYDuVwAfBvd+U4xzlX79oegggAe9vvJY6uz9fpdiUXFzcAvtd4Uel2ZglkLjGy/nfNt11ZAZW7sOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728766517; c=relaxed/simple;
-	bh=fSosS/p7Cej/LF+LwoPQiBOomKSdVHbvXANqEBHMCdI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ObdsEcMmlDlm7ZdyOYxRvubXuRlDKFmz5+G3mD1+66yq1kZynA7xjHoeOZUnT2BKTE61pgdQ77o4Qr4T/ogAMOkZFX6tBk7oXI37uJt1VSedeXTNXrzkt6Lt72WGEoXD/1gk9jXsaE8jacq4ulasduwLmCOZpZwG49KYaRBR3Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OPEBSjYW; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1728772195; c=relaxed/simple;
+	bh=qmmIGjp5JvoU3w7xsyeGtMmZCyNvPLVq9IaKIZMlZM8=;
+	h=MIME-version:Content-type:Date:Message-id:To:From:Subject:Cc:
+	 References:In-reply-to; b=Eocma6X8L151oTW9IpP2Q8aJuBfQIzaly5BIHrvGCbRKFvZhEJa/jQLiYqhRw8AQyWp39IqpZOEsKteC1pEKaFlquh+bFv+KgEE0lbw/O60xAM+D0A+K9KTyeGmj6IUAcPNK+PoiESHzGD5fiBnLo68E8rqEHXXZlsa2drjLoBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=DmtYwFO1; arc=none smtp.client-ip=192.29.178.127
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OPEBSjYW"
-Received: (qmail 11729 invoked by uid 109); 12 Oct 2024 20:55:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=fSosS/p7Cej/LF+LwoPQiBOomKSdVHbvXANqEBHMCdI=; b=OPEBSjYWUdKlATQY6755U9fDEgxHYxWDuKxvMz9mk75AzxpI9bY8f3lT+KIaSj2uXqdLAKftJbgYlY0XnZtOPiTNv4Sk2DstWN3wsHi688LW4SvQu00H5mYtIs7xgpVdISv0OuW5m/l7CIHI283t0ODFGO79qUmIWXwOKHSaZ1mLuZRZaNx3RKZruNNQWqcPXne5GXwJOITFkOVGsbKTUrMp+AHlodRONivDV4C3Ew6hrJ2dLumBEk0qlBPrv6RQ99sSjQ0UqtAFCDGHmsVCS7LK05LYkayC29+VXNJNZ4PKBSYIGpcXLCk8mn5LCKccP+BMLCrwaKDki2JQYFR18g==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 12 Oct 2024 20:55:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2219 invoked by uid 111); 12 Oct 2024 20:55:07 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 12 Oct 2024 16:55:07 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 12 Oct 2024 16:55:06 -0400
-From: Jeff King <peff@peff.net>
-To: =?utf-8?Q?imme=C3=ABmosol?= via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	=?utf-8?Q?imme=C3=ABmosol?= <will+developer@willfris.nl>
-Subject: Re: [PATCH v3] diff-highlight: make install link into DESTDIR
-Message-ID: <20241012205506.GA55242@coredump.intra.peff.net>
-References: <pull.938.v2.git.git.1728754230466.gitgitgadget@gmail.com>
- <pull.938.v3.git.git.1728764613835.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="DmtYwFO1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=x0KesoxrlPwGfsftaj7KiyP9eltRhhWIjVpW+RI6YvY=;
+ b=DmtYwFO10LlACtHOZRYrfCBiQAhpZBX6E/MMw7MnsK1vpIGUIYZ5mn+dpkI3msE955lIXjoBqK/a
+   5uf6DJ+svKGs6V2Ro4Gl+gRCU3aWISG+ZFXPuK4dbaBTcY0Npxj9v+epAEf03aaRc8JNdJ1WO9Ch
+   CGVbC/+E8ewROVU84FIlyFpEoCaQOEyJby3Azy7UqHlBYHlE6lSsUq/EXMNI5fDVpP/B4TLqkwG1
+   LpuD5wvTYev5DHMGQbNS9DXCdJXwmJw3ErCl0jSwOpcj9H89xatn4+xnYtXzyNuY3ZfvCWRI9IDK
+   rK0lXJHpBfbbXL2jwbCSiy7sinzwnUVSrZrZ0g==
+Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SL90089UL5KXY60@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sat, 12 Oct 2024 22:29:44 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <pull.938.v3.git.git.1728764613835.gitgitgadget@gmail.com>
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Sun, 13 Oct 2024 00:29:21 +0200
+Message-id: <D4U6L3C2GHZG.2SN8P0C7ZH33M@ferdinandy.com>
+To: "karthik nayak" <karthik.188@gmail.com>, <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+Subject: Re: [PATCH v6 3/6] set-head: better output for --auto
+Cc: <phillip.wood@dunelm.org.uk>, "Taylor Blau" <me@ttaylorr.com>,
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ "Junio C Hamano" <gitster@pobox.com>
+References: <xmqqzfndndfm.fsf@gitster.g>
+ <20241010133022.1733542-1-bence@ferdinandy.com>
+ <20241010133022.1733542-3-bence@ferdinandy.com>
+ <CAOLa=ZSV50OkDC2p5AHHW0u+fAtLMcCX36W1SuT8AnTkX7HNZg@mail.gmail.com>
+ <D4SUTJDV0Y04.3Q8YED2MVOKBL@ferdinandy.com>
+ <CAOLa=ZQY_a_dEZQ2EcLVfE_5Kjy7b2R3OFbQHQbkzH0o9-q1JA@mail.gmail.com>
+In-reply-to:
+ <CAOLa=ZQY_a_dEZQ2EcLVfE_5Kjy7b2R3OFbQHQbkzH0o9-q1JA@mail.gmail.com>
+Reporting-Meta:
+ AAH5WjwJA9YJE1eMNxG4kucu7BjGwMzMiiZCwtQcLQfhQVT3cNAlp8pJlIUdzg4y
+ sh3cOykRyQotKGSzVWC2e5Hd3upg32zoUil5+8eDnmhjxP03y6q1upvnLke0bHUZ
+ x/dUwBLMRVEAQjkAdYyvz/EWVrmbptweWW+qaD29h0Vqx930jxd3IflYB12T9BzI
+ ERWDjwlLOh68HHZkgZVuciwf8pm8rQXch98kG6GKl69YsjXM6ttQx6kLxJDjz2jE
+ dZxZq8SrdOjS0PutEtJLnNfvNYa8rcnEVScuVeunr5m8iWfU36t6BwimV3qroAW4
+ +Gt/O2BanHMKsZipi2EKGBiXIabAWU1NRXa5nO02sKC51r6k8Jpw2bzL5tScHL9a
+ eEoqmBiBtwSx84ev6D14hgqxp4pyDBStWNBy4HqnrvWm2n+rjsb4ggtogGmdgblQ
+ QtGh+flM0EZmc3w7P1i0rOHrpMDlxMoii6ly/mRIyD0GFe5qhkgeG2rX
 
-On Sat, Oct 12, 2024 at 08:23:33PM +0000, immeëmosol via GitGitGadget wrote:
 
-> diff --git a/contrib/diff-highlight/Makefile b/contrib/diff-highlight/Makefile
-> index f2be7cc9243..a53e09e0bdd 100644
-> --- a/contrib/diff-highlight/Makefile
-> +++ b/contrib/diff-highlight/Makefile
-> @@ -10,6 +10,9 @@ diff-highlight: shebang.perl DiffHighlight.pm diff-highlight.perl
->  	chmod +x $@+
->  	mv $@+ $@
->  
-> +install: diff-highlight
-> +	test -w $(DESTDIR) && ln -s $(abspath $<) $(DESTDIR)
-> +
+On Fri Oct 11, 2024 at 22:43, karthik nayak <karthik.188@gmail.com> wrote:
+> "Bence Ferdinandy" <bence@ferdinandy.com> writes:
+>
+> [snip]
+>
+>>>
+>>> > +		git remote set-head --auto origin >output &&
+>>> > +		echo "'\''origin/HEAD'\'' is now created and points to '\''main'\'=
+'" >expect &&
+>>>
+>>> Nit: might be cleaner to use `${SQ}` here and below
+>> You mean something like this?
+>>
+>> 	git remote set-head --auto origin >output &&
+>> 	HEAD=3D"'\''origin/HEAD'\''" &&
+>> 	echo "${HEAD} is now created and points to '\''main'\''" >expect &&
+>>
+>> I tried a few variations and this is what I could get working, but I may=
+ be
+>> simply missing something with the backtick.
+>
+> I mean simply this
+>
+>     git remote set-head --auto origin >output &&
+>     echo "${SQ}origin/HEAD${SQ} is now created and points to
+> ${SQ}main${SQ}" >expect &&
 
-I'm not opposed to having an install target here, like we do in the main
-Makefile and in a few other contrib directories.
-
-But in that case, I think it should behave more like those other
-targets:
-
-  1. Actually copy the program rather than making a symlink. Preferably
-     using $(INSTALL).
-
-  2. Respect $(prefix) in the usual way.
-
-And also...
-
->  clean:
-> +	test ! -L $(DESTDIR)/diff-highlight || \
-> +		$(RM) -f $(DESTDIR)/diff-highlight
->  	$(RM) diff-highlight
-
-  3. It's unusual for "clean" to reach outside of the build directory.
-     What you're doing here is more like an "uninstall" target, but we
-     don't usually provide one.
-
-There are a few different approaches other contrib/ items take to
-work like the rest of the Git:
-
-  - in contrib/contacts, we source config.mak from the top-level, and
-    then define a default $(prefix). This gives some repeated
-    boilerplate, but is pretty independent from the top-level Makefile.
-
-  - in contrib/credential/netrc, we piggy-back on the top-level
-    Makefile's "install-perl-script", which knows where the user has
-    asked us to install things. That might not be appropriate here,
-    though, as I think it only puts things in libexec/, so
-    "diff-highlight" wouldn't be generally available in the user's $PATH
-    (though it would be enough to use as a pager within git).
-
--Peff
+Ah, I see in other tests this is used, but not in this particular test file=
+.
+It's a bit hard to decide which is more cryptic, but ${SQ} is nicer on the
+eyes. On the other hand I would either switch the entire file in a separate
+patch or leave in the '\'' here as well. Or I guess one could go through th=
+e
+entire test base and switch everything to either one or the other for
+consistency.
