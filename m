@@ -1,62 +1,62 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF4019C555
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 23:09:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A3319D093
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 23:09:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728774581; cv=none; b=hLveXtuViM40DDZvnUELNUMEsFLIKwEBukJym5x+uqR3UHM72GT5Asw5gAdGAnBfySOnw5xMQuuiC6HaK/eI2ctKrHDB0OzEYqVjAy+phhVck2r8ovZZ9K/1/65WLticKe60EiBdICk0XCX10DLk6TXHWvNwnjH/nCJL+srUK7Y=
+	t=1728774582; cv=none; b=pkK3fXX2CLMv6bEHTALkYwSLVbWRVVkQApNsdynUP4RVTunmkMRtLbbG4cFnwjvYnKPv/LxXpV6aFtKfUNRvjANAck4KmcWWOzv8bOi+Ehw7dUNRRI2Fhq+UbWjhb2/KrphCV1el0/on5FSjulhNFkRo9AtW7SxGtAhzPyDCPqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728774581; c=relaxed/simple;
-	bh=QiL+XQMXI9+QVUPG8YvRTi9B+M+EDHuwj+mxNg8SJDo=;
+	s=arc-20240116; t=1728774582; c=relaxed/simple;
+	bh=7bpQVogFRZba4WJYe1GBYmR8qgJSoJW70VY5OPh60DI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bddcNSoTMM/lkWYJedlh+8/B+tw4YKi+DZAyABmkn56+doLkIxo5o2ryMdP2elI9u42QbfBkezLu2++kSzgXtr8VaYXLW3kHeoiYfE20Hfi4cFmJJxhEvvxzktGESDtxCzyF67eAatDyF6Fag53gAMTQg1JML/PhsTaRbTCs/6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gvg1OwVz; arc=none smtp.client-ip=209.85.218.49
+	 MIME-Version:To:Cc; b=lcqbdNLCWUMjnaNTfSNKYdU6WciZhGF0uAXeggbteWpOXJNRl2P426lZLh4M1qMmepOHP7m04147ENG1DLbTDAAFulqiVZrdYKiKNbqxgNlYKkKnYF9QRDud/aI5HorvqsJzR/MIHdtuEUgfqQzXHsfR/Lxs4lLkzUlCamfVbaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QISWxOQ8; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gvg1OwVz"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a99f1fd20c4so101207666b.0
-        for <git@vger.kernel.org>; Sat, 12 Oct 2024 16:09:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QISWxOQ8"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5c9693dc739so863212a12.3
+        for <git@vger.kernel.org>; Sat, 12 Oct 2024 16:09:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728774577; x=1729379377; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728774578; x=1729379378; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=D2i3Q1aTCZLQZNTzPO6oISTv/cdcApWY4GY97NPGCzY=;
-        b=Gvg1OwVzCgZgRR5PuLk2LgsEa5x6ANhbi9JNpGTSyBiNfl4GOoZ1KJF9le3eVG246Q
-         cbxjhs+PBGNKRXl397Tpp8bAJXgLcwND7b6Lztx0EoBp8eC2o5xgZom3IIxudxylvv/H
-         3C1b8i6M01XKU7eR+kMz67qCIVpRIkRcUyQC7TjhGAOINqVPsf0CVxP9TGG+jEMBVnxa
-         JRzGWL45xONi0O0cbJY7bx+60CBWKyIdrWBiYVljel5ejpDmGGhvnKP2eHwnTRJ1VEAn
-         Djh2CSwtP7MUM+iDE0Gy7NC+OUQzCcyDFMDj+huDFciEzgpYOcU2eu21rr+QuAy7TbuX
-         F8Tg==
+        bh=ixC0PykCG8fT0v2MCRNh7cdq1tQKAbrAjjYPXFEUFio=;
+        b=QISWxOQ8DVJnnUPx8OuSvPOvVZ1zNuITW+EdKsi7KUiDatR/vXpfwen8Px44LJKepW
+         93f7ueplnFrz6tiH3JH2WHUeulrP6JCUXFe7EWbYoqynRv4C8Ay/OjI6YKaJYPwbCMEO
+         MTZUI1ePWW44wVIRV1o9bq6iMc8MzkOitzxx51siLdheAKsEeb1IN1+np7H+t23S09yS
+         P6sPw6Kgk34i9e1/L54nbADhvu9NibpBnPkTvAJ3aRxQBBaJIk0MDmoZ7NXqZ393nSMv
+         sz9wqMYA1Goj/+1T2N/1vsIUMdaQP0OAn8Pcc9cc544ae7FveYb/HlQy5+ETu/4INGC/
+         kX7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728774577; x=1729379377;
+        d=1e100.net; s=20230601; t=1728774578; x=1729379378;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=D2i3Q1aTCZLQZNTzPO6oISTv/cdcApWY4GY97NPGCzY=;
-        b=kOmlhNKTKXh3C5g/xM80DH9o2TQU1/zje0SSHi//Ytv+vaLyPUSOpDSFq9MaDnzgOb
-         EgQYmqK+xLX8j5qGfn2cOWs398wRWQPRk+OflGTRciL9L3DDdtDdBvEIHBojUJQti9Jd
-         e8QOD4IsB0daJbAgm713eUN9B+xw2VGCjjI9qsIQZwh6ZCkniUbaMH/zOmZwUnwKzbMr
-         6S1LJEeia5Z1gbHmaBsOCaL9y7abUd9ska2wH6ElcAfNj6I+P1diNV79APsEIKn3ubMK
-         OacciIicNGP5WkJu859NKqYNiLwmWuQgiikw0ZqlOZCZSqFLfAS1ttq8U4sUJq7tlEMh
-         H4FQ==
-X-Gm-Message-State: AOJu0YxPdEVWVpGy/UBKN7XQt0onVwzPPdKcvsvE5BNyrHPxvHoMdu1M
-	VX5/KcYb7PHUX9RDSEnEH9njhK/7GZHSgljB1tdTBTzwuUWdb8tOIXasBw==
-X-Google-Smtp-Source: AGHT+IEMUPSLSjQexGECRoJc57B5sr90scQcU0ZyJNiQDEQ3JD7gpk+9mwkJ/kHgO1LblyHvpKwVNQ==
-X-Received: by 2002:a17:907:97cb:b0:a99:da6c:f607 with SMTP id a640c23a62f3a-a99da6cf789mr395295766b.44.1728774576930;
-        Sat, 12 Oct 2024 16:09:36 -0700 (PDT)
+        bh=ixC0PykCG8fT0v2MCRNh7cdq1tQKAbrAjjYPXFEUFio=;
+        b=SonVGRexCnS0zOJeLX/wS32AjetW18nTVlZztye3Juo50zODOHZzEjCu6la+bz1K7N
+         jhs8iwNENenOo5i2HNyPN/FIXIeCNgonUW/hYbneW9kIbMum76IwzaeSWntjKp19H7cO
+         hQdrGYY2Jrx/4yuZ6isQWGzCM2N8qQQezw4RBNjJGzKT25i8hbhq1aKNjmdaAI1y0gyj
+         5gEoYuXAREiEad1ba+yTViemCtWM98GNKa5Djh7aAAnPpEvS6f9gaJM8tLs0JA+6VN7L
+         6lMmxijkOdTPlwMDLUj86bwBie1kvC6fVM8/uZ1GIBWkKBa1G7/HUpdHs4Nyy0JTpgoO
+         3mPA==
+X-Gm-Message-State: AOJu0YyUYCrufATDIEsBH4uUGSKyRe1Q0bUA2vLuxO7tbaDvV+/3ZLJR
+	dX4HavqHhBCE8pSN30WARZxsBssB1KxEYTudmuaEo+ppSdcgpetjL7YLQw==
+X-Google-Smtp-Source: AGHT+IHLt/OobXcAI+fNKM1Zs8OYovlq2Z337LW98JFQXr3bFolmVYAuUYJIFJPSnApH2YLR6/wzPA==
+X-Received: by 2002:a05:6402:27d3:b0:5c9:5737:ddf2 with SMTP id 4fb4d7f45d1cf-5c95abf2c9emr2002291a12.6.1728774578348;
+        Sat, 12 Oct 2024 16:09:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99f8dbd6d0sm63434166b.200.2024.10.12.16.09.36
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c937151e50sm3257512a12.43.2024.10.12.16.09.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Oct 2024 16:09:36 -0700 (PDT)
-Message-Id: <e2cae7f3a510027864303fe91dcf447f63eb0873.1728774574.git.gitgitgadget@gmail.com>
+        Sat, 12 Oct 2024 16:09:37 -0700 (PDT)
+Message-Id: <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
 References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
 From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 12 Oct 2024 23:09:33 +0000
-Subject: [PATCH 2/3] t3404: replace test with test_line_count()
+Date: Sat, 12 Oct 2024 23:09:34 +0000
+Subject: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and strtol_i()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,96 +72,135 @@ Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
 
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 
-Refactor t3404 to replace instances of `test` with `test_line_count()`
-for checking line counts. This improves readability and aligns with Git's
-current test practices.
+Replace unsafe uses of atoi() with strtoul_ui() for unsigned integers
+and strtol_i() for signed integers across multiple files. This change
+improves error handling and prevents potential integer overflow issues.
+
+The following files were updated:
+- daemon.c: Update parsing of --timeout, --init-timeout, and
+  --max-connections
+- imap-send.c: Improve parsing of UIDVALIDITY, UIDNEXT, APPENDUID, and
+  tags
+- merge-ll.c: Enhance parsing of marker size in ll_merge and
+  ll_merge_marker_size
+
+This change allows for better error detection when parsing integer
+values from command-line arguments and IMAP responses, making the code
+more robust and secure.
+
+This is a #leftoverbit discussed here:
+ https://public-inbox.org/git/CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com/
 
 Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- t/t3404-rebase-interactive.sh | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 96a65783c47..2ab660ef30f 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -281,8 +281,9 @@ test_expect_success 'stop on conflicting pick' '
- 	test_cmp expect2 file1 &&
- 	test "$(git diff --name-status |
- 		sed -n -e "/^U/s/^U[^a-z]*//p")" = file1 &&
--	test 4 = $(grep -v "^#" < .git/rebase-merge/done | wc -l) &&
--	test 0 = $(grep -c "^[^#]" < .git/rebase-merge/git-rebase-todo)
-+	grep -v "^#" <.git/rebase-merge/done >actual &&
-+	test_line_count = 4 actual &&
-+	test 0 = $(grep -c "^[^#]" <.git/rebase-merge/git-rebase-todo)
- '
- 
- test_expect_success 'show conflicted patch' '
-@@ -401,8 +402,8 @@ test_expect_success 'multi-squash only fires up editor once' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual
- '
- 
- test_expect_success 'multi-fixup does not fire up editor' '
-@@ -416,8 +417,7 @@ test_expect_success 'multi-fixup does not fire up editor' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep NEVER output | wc -l) &&
--	test 0 = $count &&
-+	! grep NEVER output &&
- 	git checkout @{-1} &&
- 	git branch -D multi-fixup
- '
-@@ -436,8 +436,8 @@ test_expect_success 'commit message used after conflict' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count &&
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual &&
- 	git checkout @{-1} &&
- 	git branch -D conflict-fixup
- '
-@@ -456,8 +456,8 @@ test_expect_success 'commit message retained after conflict' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep TWICE output | wc -l) &&
--	test 2 = $count &&
-+	grep TWICE output >actual &&
-+	test_line_count = 2 actual &&
- 	git checkout @{-1} &&
- 	git branch -D conflict-squash
- '
-@@ -501,8 +501,8 @@ test_expect_success 'squash ignores comments' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count &&
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual &&
- 	git checkout @{-1} &&
- 	git branch -D skip-comments
- '
-@@ -519,8 +519,8 @@ test_expect_success 'squash ignores blank lines' '
- 	) &&
- 	test $base = $(git rev-parse HEAD^) &&
- 	git show >output &&
--	count=$(grep ONCE output | wc -l) &&
--	test 1 = $count &&
-+	grep ONCE output >actual &&
-+	test_line_count = 1 actual &&
- 	git checkout @{-1} &&
- 	git branch -D skip-blank-lines
- '
+Cc: gitster@pobox.com
+Cc: Patrick Steinhardt <ps@pks.im>
+Cc: phillip.wood123@gmail.com
+Cc: Christian Couder <christian.couder@gmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Taylor Blau <me@ttaylorr.com>
+---
+ daemon.c    | 14 +++++++++-----
+ imap-send.c | 13 ++++++++-----
+ merge-ll.c  |  6 ++----
+ 3 files changed, 19 insertions(+), 14 deletions(-)
+
+diff --git a/daemon.c b/daemon.c
+index cb946e3c95f..3fdb6e83c40 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -1308,17 +1308,21 @@ int cmd_main(int argc, const char **argv)
+ 			continue;
+ 		}
+ 		if (skip_prefix(arg, "--timeout=", &v)) {
+-			timeout = atoi(v);
++			if (strtoul_ui(v, 10, &timeout) < 0) {
++				die("'%s': not a valid integer for --timeout", v);
++			}
+ 			continue;
+ 		}
+ 		if (skip_prefix(arg, "--init-timeout=", &v)) {
+-			init_timeout = atoi(v);
++			if (strtoul_ui(v, 10, &init_timeout) < 0) {
++				die("'%s': not a valid integer for --init-timeout", v);
++			}
+ 			continue;
+ 		}
+ 		if (skip_prefix(arg, "--max-connections=", &v)) {
+-			max_connections = atoi(v);
+-			if (max_connections < 0)
+-				max_connections = 0;	        /* unlimited */
++			if (strtol_i(v, 10, &max_connections) != 0 || max_connections < 0) {
++				max_connections = 0;  /* unlimited */
++			}
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--strict-paths")) {
+diff --git a/imap-send.c b/imap-send.c
+index ec68a066877..33b74dfded7 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -668,12 +668,12 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
+ 		return RESP_BAD;
+ 	}
+ 	if (!strcmp("UIDVALIDITY", arg)) {
+-		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg))) {
++		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &ctx->uidvalidity) != 0) {
+ 			fprintf(stderr, "IMAP error: malformed UIDVALIDITY status\n");
+ 			return RESP_BAD;
+ 		}
+ 	} else if (!strcmp("UIDNEXT", arg)) {
+-		if (!(arg = next_arg(&s)) || !(imap->uidnext = atoi(arg))) {
++		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &imap->uidnext) != 0) {
+ 			fprintf(stderr, "IMAP error: malformed NEXTUID status\n");
+ 			return RESP_BAD;
+ 		}
+@@ -686,8 +686,8 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
+ 		for (; isspace((unsigned char)*p); p++);
+ 		fprintf(stderr, "*** IMAP ALERT *** %s\n", p);
+ 	} else if (cb && cb->ctx && !strcmp("APPENDUID", arg)) {
+-		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg)) ||
+-		    !(arg = next_arg(&s)) || !(*(int *)cb->ctx = atoi(arg))) {
++		if (!(arg = next_arg(&s)) || (strtol_i(arg, 10, &ctx->uidvalidity) != 0) ||
++			!(arg = next_arg(&s)) || (strtol_i(arg, 10, (int *)cb->ctx) != 0)) {
+ 			fprintf(stderr, "IMAP error: malformed APPENDUID status\n");
+ 			return RESP_BAD;
+ 		}
+@@ -773,7 +773,10 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
+ 			if (!tcmd)
+ 				return DRV_OK;
+ 		} else {
+-			tag = atoi(arg);
++			if (strtol_i(arg, 10, &tag) != 0) {
++				fprintf(stderr, "IMAP error: malformed tag %s\n", arg);
++				return RESP_BAD;
++			}
+ 			for (pcmdp = &imap->in_progress; (cmdp = *pcmdp); pcmdp = &cmdp->next)
+ 				if (cmdp->tag == tag)
+ 					goto gottag;
+diff --git a/merge-ll.c b/merge-ll.c
+index 8e63071922b..2bfee0f2c6b 100644
+--- a/merge-ll.c
++++ b/merge-ll.c
+@@ -427,8 +427,7 @@ enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
+ 	git_check_attr(istate, path, check);
+ 	ll_driver_name = check->items[0].value;
+ 	if (check->items[1].value) {
+-		marker_size = atoi(check->items[1].value);
+-		if (marker_size <= 0)
++		if (strtol_i(check->items[1].value, 10, &marker_size) != 0 || marker_size <= 0)
+ 			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+ 	}
+ 	driver = find_ll_merge_driver(ll_driver_name);
+@@ -454,8 +453,7 @@ int ll_merge_marker_size(struct index_state *istate, const char *path)
+ 		check = attr_check_initl("conflict-marker-size", NULL);
+ 	git_check_attr(istate, path, check);
+ 	if (check->items[0].value) {
+-		marker_size = atoi(check->items[0].value);
+-		if (marker_size <= 0)
++		if (strtol_i(check->items[0].value, 10, &marker_size) != 0 || marker_size <= 0)
+ 			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+ 	}
+ 	return marker_size;
 -- 
 gitgitgadget
-
