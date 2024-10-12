@@ -1,301 +1,149 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAA41E892
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 14:25:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9D739ACC
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 14:34:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728743157; cv=none; b=ovTBIcDtIZeMbi3F+YNtgkWHkAD24w1NJYIsoDaN0UhM648QnrOhME1ttLPhvpz/TAw2sifgPaddq4zaUVkZPRtdd8Ng2IT3jipvv51jxg8/BOr6WvkX2t7s5WtDd3aje+5uaaR6GltNCNhwd+PI2rjxtDQLBhxne6iCYrycHDU=
+	t=1728743677; cv=none; b=ughj5ED4rXgiXK0GYS5BRm9bo8YQR43nXSLwa/i3+cVwFTcrLY55epCNdtTVEk5r339xsu6nr/AjPkvlJ5GNRJ0Z3dZKJ7v9NNhNSCdvCnRPHF9o9rWwZ4KaMssvQ+8cmptKVutop/Iqw3Q6ERjYuOc2/5OoLjlXyUa6exZqnys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728743157; c=relaxed/simple;
-	bh=6NZ3zgjdRr274YY8yGjzfod5oyec33J8gmZUimM4hWY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=tE1T5ucFaByblueDdVFGa2GbA197vTjVTnLLkL9ovWT2OoTmqAn6bYHp2q48oM4EbbedXeePAdiZZ/k90bKskGb+Miq+r38Y1i9BRSE1kmJhZaG0lib7X1OE8BJgxOEkY2sMkYJjimEwTWXtALCpRKfHown7NWow+pHmh/WKFQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=lLhH15pq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SpuAJXY+; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="lLhH15pq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SpuAJXY+"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2A93A13802D9;
-	Sat, 12 Oct 2024 10:25:54 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Sat, 12 Oct 2024 10:25:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1728743154; x=1728829554; bh=/FsmvLP2Oyfh0oA7+VB97GVSy1s6Dt4U
-	jcCzMFL1FT8=; b=lLhH15pqZbsMzoHa07mo7ypVdCbk3ysSU1eibEA8E8KcyWjx
-	0NGKJdBu9km5IrV3TPbERpp95ZJgmxINyqlRywO8aGpFxh2g7dt6QmIOC8KKuMs1
-	qrETqjkAFHIctgX5ASXaKkqshGe7JCb7d36+WDIOBTIhGvd98zDVQHcD0q+Z2Nk1
-	uwDxh1io5ML1qv7eu0vuGjjG33Yeja6p6/45Rl+jRmNeWnc2MYc2L5L25jAZvq+M
-	5P/RmZIYtARk40uPI/pip4/0hXpdDIRoeoNIQeJC57m/2jLpiXmp+lYb/rwXhgkl
-	t81rZ2zVudXGstE+j4xB/OIRW3DtH2j08qllmA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728743154; x=
-	1728829554; bh=/FsmvLP2Oyfh0oA7+VB97GVSy1s6Dt4UjcCzMFL1FT8=; b=S
-	puAJXY+YJnoH6x3xgT4izVVIdHWJrDftRyNKaK7XU/dUrEwcB++E7ExqgUXBbJjt
-	H2/xX3GX/MrTg7VKUewvcKMsEbxo6OWmfW4XgUOHkFD0K3z8dhBI3mYSB40w3r5O
-	9P0tNZJPJZSMyGJbOzPhVS0svQnFerDi7yHgZSgDhXzPvXP9Ts8j5jr22nxiKFyD
-	AdS6kfZqd9nwS84Mw+2cpW82Em4ccyq3RhrUs0CfMivRyI50x2azMMQCgBX4yd61
-	SxQ+vQHEtLIjbIihFJ9Duqs6suXPabdWduIm5uF99vFiBtkscohaibXGx2x6KZAd
-	+M5qVOXoEb/QUhm/cBGvw==
-X-ME-Sender: <xms:8YYKZ75_pPjwL94HPbbfCj3_MO9h6gIukmKpAgzMey70WIemdM4UAJ0>
-    <xme:8YYKZw407XeC6P9Vyxw2an7-gbUjcdMtdE_QxgEW7y0oTqTnnLXMU1hLJflbAIFOI
-    L-U5tlW1enb-Mdh9Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeguddgjeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
-    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvg
-    eskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepfeetgefhgeef
-    veelgeduvdekteehieevffdujeelgfduffffjeelffffledukeejnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgs
-    rghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopegrsghhihhjvggvthdtgedtgedtfeesghhmrghilhdrtghomhdprhgtphht
-    thhopegrsghhihhjvggvthhsihhnghhhrdhgihhthhhusgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsh
-    hunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:8YYKZycWDEUfNh8wa1B2jmVY5C0nMzBErSYGhu0NUBFcwbSx22tYuw>
-    <xmx:8YYKZ8Lk48QrIJbJddCtTxNxCoesErNpRC6dN1FskfpurWC0pHAuvg>
-    <xmx:8YYKZ_J2qu-4ZDyTPtkiRG_7SXpAIR-qNr71ymsDLXzevR79t1hvyw>
-    <xmx:8YYKZ1ytcDaIMlb-57DPbd-MxIRUlIwT3bnGp3NtFAGBD7JuCbcs8w>
-    <xmx:8oYKZ1jag00j-R3lYQdqGW_5HDIaUxzDrImp9sr80SSufMvkLEWU1rlV>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id CD5ED780068; Sat, 12 Oct 2024 10:25:53 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1728743677; c=relaxed/simple;
+	bh=hnJJmKSf0TYMK+Oc7Slyn+illLlHd/KFXfD/RcERQXY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=s+koQVohnjCiMs6WEdvddts5aODWRapKUs7m4M81x4+tYuR1FeWkvEBmfOWLEkSW9/aT8Jjcs3FwSpLmzq7i4xEHXUBH/ITCjhlKh7JZ37DAr6UQMSpRvolzarVvgE9gwyC34IbIp/u/n74g3G7Qa0HkfTBI06wPl5jtFgpEXgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e290582301fso3315100276.1
+        for <git@vger.kernel.org>; Sat, 12 Oct 2024 07:34:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728743675; x=1729348475;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8d4CAuu6gNvDYTkiMw27HVnLP99hTxn3Lmm9xkyLZCc=;
+        b=Lystpet0u/patiWrYb8sb+TLezdbr4A/xBORjlsr/nRg+rFFRl96w0e/+x1a8QtKoP
+         rTaA3Srq2a/D55sc0cno+KpUp2ULBsS4fyO+QA1TGkmweMhyzIJ1KOulCQU7WJXn0PIy
+         Ytevf+fXJvz9lpBIkPutoXbXNV7tJjI8IrVaj+TU0QYWDD6RdzcAQDke4HyTvVGXaI5/
+         VVAIFTZZUO8aTZBgL1qzdVSlpHjcy1IR2FkXqkjSXZ6XWMDpwF4/P7Zc8HcSK5DTvl9+
+         c8RQ/cfx/gAkDV58gYnnqpPpSyEyh8dnLMbQwscaKRAkpPLMQN6c2OO/22xkYB3bUcKR
+         52MA==
+X-Gm-Message-State: AOJu0YzqMPOnCZLDQhjs33YwJ6nz1G7fUsytupsbKa1eoYfRgvMEj48Y
+	FtT+5Jbf9n5ksDhaU+iXPJw6AVtWHs/+SO1O2sxlDYXPMqyXUesYfdVcSYIL2Xnge9I0rZmHNmk
+	45snnCEBi4+vA+SeMRBFN+FnD5Yu05V9Z
+X-Google-Smtp-Source: AGHT+IHrKFCIKhlRAUEhT+VHxu7k7BNIPmpvMcPmDR7nuC1Bp6OWwAlV1LO0lX/57RRR3danoL6ZU+03D+hsXFC3/oc=
+X-Received: by 2002:a05:6902:2789:b0:e28:6bc3:3e51 with SMTP id
+ 3f1490d57ef6-e2919da6cc9mr5728078276.27.1728743674590; Sat, 12 Oct 2024
+ 07:34:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 12 Oct 2024 16:25:23 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "Phillip Wood" <phillip.wood123@gmail.com>,
- "Abhijeetsingh Meena" <abhijeetsingh.github@gmail.com>,
- "Abhijeetsingh Meena" <abhijeet040403@gmail.com>,
- "Eric Sunshine" <sunshine@sunshineco.com>
-Message-Id: <09a4cec6-c655-44e9-9577-01e6a8cb1a3d@app.fastmail.com>
-In-Reply-To: 
- <8d2fa3af7964dacd09d454de4325b1d5eb7a5c3d.1728707867.git.gitgitgadget@gmail.com>
-References: <pull.1809.git.1728370892696.gitgitgadget@gmail.com>
- <pull.1809.v2.git.1728707867.gitgitgadget@gmail.com>
- <8d2fa3af7964dacd09d454de4325b1d5eb7a5c3d.1728707867.git.gitgitgadget@gmail.com>
-Subject: Re: [PATCH v2 2/2] blame: introduce --override-ignore-revs to bypass ignore
- revisions list
-Content-Type: text/plain; charset=utf-8
+References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
+ <ZwoxHYD-e4qo7OyW@pks.im>
+In-Reply-To: <ZwoxHYD-e4qo7OyW@pks.im>
+From: =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
+Date: Sat, 12 Oct 2024 10:34:18 -0400
+Message-ID: <CAOO-Oz0+sOpF6YQHSu0ytCO5TL+Anpr1k_9vQx6hebr624WjMA@mail.gmail.com>
+Subject: Re: git no longer builds on SunOS 5.10, a report
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Git List <git@vger.kernel.org>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Oct 12, 2024, at 06:37, Abhijeetsingh Meena via GitGitGadget wro=
-te:
-> From: Abhijeetsingh Meena <abhijeet040403@gmail.com>
+On Sat, Oct 12, 2024 at 4:20=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> The git blame command can ignore a list of revisions specified either
-> through the --ignore-revs-file option or the blame.ignoreRevsFile
-> configuration. This feature is useful for excluding irrelevant
-> commits, such as formatting changes or large refactors, from blame
-> annotations.
-
-In a later paragraph you mention `--ignore-rev` but not here.
-
-> However, users may encounter cases where they need to
-> temporarily override these configurations to inspect all commits,
-> even those excluded by the ignore list. Currently, there is no
-> simple way to bypass all ignore revisions settings in one go.
-
-=E2=80=9CNo simple way=E2=80=9D gives me pause.  But there are those opt=
-ions/methods
-that we discussed before:
-
-=E2=80=A2 `--no-ignore-rev`
-=E2=80=A2 `--no-ignore-revs-file`
-
-These are not documented but I can provide these options and get a
-different output from git-blame(1).
-
-`builtin/blame.c` uses `parse-options.h` which provides automatic
-negated options.  I just looked at the code today (so it=E2=80=99s new t=
-o me)
-but it seems like it will empty the lists that are associated with these
-options.  See `parse-options-cb.c:parse_opt_string_list`.
-
-So I think this should be sufficient to reset all =E2=80=9Cignore=E2=80=9D=
- options:
-
-```
-git blame --no-ignore-rev --no-ignore-revs-file
-```
-
-However I tested with this:
-
-```
-git blame --ignore-revs-file=3D.git-blame-ignore-revs --no-ignore-revs
-```
-
-And the output suggests to me that `--no-ignore-revs` affect the result
-of the before-mentioned list of files.  Even though these are two
-different lists.  I can=E2=80=99t make sense of that from the code.  But=
- I=E2=80=99m not
-a C programmer so this might just be a me-problem.
-
+> On Fri, Oct 11, 2024 at 10:10:26PM -0400, Alejandro R. Sede=C3=B1o wrote:
+> > First, clar.suite was generated as broken because clar-decls.h was
+> > generated as empty. Tweaking the sed one-liner in Makefile that is
+> > used to generate clar-decls.h fixed that (move the end-of-line marker
+> > outside of the capture group, `$$\)` -> `\)$$`), which I would submit
+> > as a patch, but (a) that only fixed part of the problem and (b) I'm
+> > not entirely sure why it helped. If someone else wants to apply this
+> > change, which would align the end-of-line marker placement with the
+> > start-of-line marker placement, have at it.
 >
-> This patch introduces the --override-ignore-revs option (or -O),
+> I'd still appreciate it if you could show me the diff. From thereon I
+> can handle the rest.
 
-Phrases like =E2=80=9Cthis patch=E2=80=9D is discouraged compared to the=
- imperative mood
-style of commanding the code base to change (so to speak).  See
-`imperative-mood` in Documentation/SubmittingPatches.
+diff --git a/Makefile b/Makefile
+index 2dde1fd2b8..87c1f9e220 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3906,7 +3906,7 @@ GIT-TEST-SUITES: FORCE
 
-> which allows users to easily bypass the --ignore-revs-file
-> option, --ignore-rev option and the blame.ignoreRevsFile
+ $(UNIT_TEST_DIR)/clar-decls.h: $(patsubst
+%,$(UNIT_TEST_DIR)/%.c,$(CLAR_TEST_SUITES)) GIT-TEST-SUITES
+        $(QUIET_GEN)for suite in $(CLAR_TEST_SUITES); do \
+-               sed -ne "s/^\(void
+test_$${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$$\)/extern \1;/p"
+$(UNIT_TEST_DIR)/$$suite.c; \
++               sed -ne "s/^\(void
+test_$${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)\)$$/extern \1;/p"
+$(UNIT_TEST_DIR)/$$suite.c; \
+        done >$@
+ $(UNIT_TEST_DIR)/clar.suite: $(UNIT_TEST_DIR)/clar-decls.h
+        $(QUIET_GEN)awk -f $(UNIT_TEST_DIR)/clar-generate.awk $<
+>$(UNIT_TEST_DIR)/clar.suite
 
-I can see no precedence for the name =E2=80=9Coverride=E2=80=9D for an o=
-ption in this
-project.  The convention is `--[no-]option`.
+Or feel free to grab the entire commit from here:
+https://asedeno.scripts.mit.edu/gitweb/?p=3Dgit.git;a=3Dshortlog;h=3Drefs/h=
+eads/clar_sed_tweak
 
-Like Eric Sunshine discussed: a common convention is to let the user
-activate and negate options according to the last-wins rule.  This is
-pretty useful in my opinion.  Because I can then make an alias which
-displays some Git Note:
-
-```
-timber =3D log [options] --notes=3Dresults
-```
-
-But then what if I don=E2=80=99t want any notes for a specific invocatio=
-n?  I
-don=E2=80=99t have to copy the whole alias and modify it.  I can just:
-
-```
-git timber --no-notes
-```
-
-And the same goes for an alias which disables notes:
-
-```
-timber =3D log [options] --no-notes
-```
-
-Because then I can use `git timber --notes=3Dresults`.
-
-> configuration. When this option is used, git blame will completely
-> disregard all configured ignore revisions lists.
+> > The next issue was that clar/sandbox.h uses mkdtemp, which I don't
+> > have here. Git has solved this in compat/mkdtemp.c via
+> > git-compat-util.h, but clar is not using it. Adding git-compat-util.h
+> > to clar/sandbox.h feels weird, but does get us further along. That
+> > change introduced banned.h into clar, which exposed the use of strncpy
+> > and localtime, both otherwise banned in git.
 >
-> The motivation behind this feature is to provide users with more
-> flexibility when dealing with large codebases that rely on
-> .git-blame-ignore-revs files for shared configurations, while
-> still allowing them to disable the ignore list when necessary
-> for troubleshooting or deeper inspections.
-
-You might be able to achieve the same thing with the existing negated
-options.
-
-If you *cannot* disable all =E2=80=9Cignore=E2=80=9D config and options =
-in one negated
-one then you might want an option like `--no-ignores` which acts like:
-
-```
-git blame --no-ignore-rev --no-ignore-revs-file
-```
-
+> Yeah, we don't want to pull in that header. The clar is from upstream,
+> so ideally we shouldn't have to modify it with non-upstreamable bits.
 >
-> Signed-off-by: Abhijeetsingh Meena <abhijeet040403@gmail.com>
-> ---
->  builtin/blame.c                       |  8 +++++++-
->  t/t8016-blame-override-ignore-revs.sh | 25 +++++++++++++++++++++++++
->  2 files changed, 32 insertions(+), 1 deletion(-)
->  create mode 100755 t/t8016-blame-override-ignore-revs.sh
+> In any case, I've got a similar report yesterday where some functions
+> weren't available. The root cause is that we don't set `_POSIX_C_SOURCE`
+> in "clar.c", so with the below patch things started to work. Does that
+> patch work for you, too? At least I think it should, as [1] mentions
+> that the function is available on SunOS when those defines exist.
 >
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 1eddabaf60f..956520edcd9 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -69,6 +69,7 @@ static int coloring_mode;
->  static struct string_list ignore_revs_file_list =3D STRING_LIST_INIT_=
-DUP;
->  static int mark_unblamable_lines;
->  static int mark_ignored_lines;
-> +static int override_ignore_revs =3D 0;
+> In any case, the patch has already been merged upstream [2], and I'll
+> send a patch early next week that updates our bundled version of clar.
 >
->  static struct date_mode blame_date_mode =3D { DATE_ISO8601 };
->  static size_t blame_date_width;
-> @@ -901,6 +902,7 @@ int cmd_blame(int argc,
->  		OPT_BIT('w', NULL, &xdl_opts, N_("ignore whitespace differences"),
-> XDF_IGNORE_WHITESPACE),
->  		OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"),
-> N_("ignore <rev> when blaming")),
->  		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list,
-> N_("file"), N_("ignore revisions from <file>")),
-> +		OPT_BOOL('O', "override-ignore-revs", &override_ignore_revs,
-> N_("override all configurations that exclude revisions")),
->  		OPT_BIT(0, "color-lines", &output_option, N_("color redundant
-> metadata from previous line differently"), OUTPUT_COLOR_LINE),
->  		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"),
-> OUTPUT_SHOW_AGE_WITH_COLOR),
->  		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find
-> better match"), XDF_NEED_MINIMAL),
-> @@ -1119,7 +1121,11 @@ parse_done:
->  	sb.reverse =3D reverse;
->  	sb.repo =3D the_repository;
->  	sb.path =3D path;
-> -	build_ignorelist(&sb, &ignore_revs_file_list, &ignore_rev_list);
-> +
-> +	if (!override_ignore_revs) {
-> +		build_ignorelist(&sb, &ignore_revs_file_list, &ignore_rev_list);
-> +	}
-> +
+> [1]: https://www.unix.com/man-page/sunos/3/MKDTEMP/
+> [2]: https://github.com/clar-test/clar/pull/106
 
-This demonstrates the more limited behavior: you either override
-(discard) the ignores or you don=E2=80=99t.  With the negated options yo=
-u build
-up and reset/empty those lists before you get to this point.  That ends
-up being more flexible for the user.
+The listed man page is from the Linux Programmer's Manual, regardless of
+the url path. It won't be enough here as mkdtemp is nowhere to be found
+in /usr/include or any other /usr/**/include.
 
->  	string_list_clear(&ignore_revs_file_list, 0);
->  	string_list_clear(&ignore_rev_list, 0);
->  	setup_scoreboard(&sb, &o);
-> diff --git a/t/t8016-blame-override-ignore-revs.sh
-> b/t/t8016-blame-override-ignore-revs.sh
-> new file mode 100755
-> index 00000000000..b5899729f8e
-> --- /dev/null
-> +++ b/t/t8016-blame-override-ignore-revs.sh
-> @@ -0,0 +1,25 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'default revisions to ignore when blaming'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'blame: override-ignore-revs' '
-> +    test_commit first-commit hello.txt hello &&
-> +
-> +    echo world >>hello.txt &&
-> +    test_commit second-commit hello.txt &&
-> +
-> +    sed "1s/hello/hi/" <hello.txt > hello.txt.tmp &&
-> +    mv hello.txt.tmp hello.txt &&
-> +    test_commit third-commit hello.txt &&
-> +
-> +    git blame hello.txt >expect &&
-> +    git rev-parse HEAD >.git-blame-ignore-revs &&
-> +    git blame -O hello.txt >actual &&
-> +
-> +    test_cmp expect actual
-> +'
-> +
-> +test_done
-> --
-> gitgitgadget
+For what it's worth, the compat objects are being linked in, so perhaps a
+smaller compat shim for clar that brings in definitions for mkdtemp, mkdir,
+and whatever else might be handy without the weight of git-compat-util.h
+would be a reasonable compromise. Maybe not. I don't know.
+
+> [snip]
+> > Please note that this should not be read as opposition to the new
+> > unit-testing framework in any way. Building git (and curl, and gmake,
+> > and zlib, and openssl, and perl, all for git) for SunOS was a hobby
+> > for me, and not anything I personally need, and besides, it's not like
+> > my previous builds have disappeared.
+>
+> Sure. But if the fix is easy enough I don't see a reason why we
+> shouldn't try to support your platform. It would be great to get earlier
+> feedback such that we can fix issues like this before we create the
+> release (see also our Documentation/technical/platform-support.txt,
+> which we have released recently.). But I'll take what I can get, so
+> thanks a lot for sending the report in the first place!
+
+I appreciate that. Builds here are very slow, which is why I usually only
+build releases. The effort that went into this report would have taken
+maybe an hour or two on any other platform I use.
+
+Oh, and for the sake of future readers of the thread, git v2.46.2 did build=
+.
+
+Thanks,
+-Alejandro
