@@ -1,235 +1,262 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D396815099D
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 11:21:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17CA188599
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 13:58:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728732088; cv=none; b=D6KxS8v8nVrhU2lY4JkiXsJeZNquNVnIMx/dnRFjuaDa80hU3yhru9Kvr5S96Bw8Vs60x/QWmkAuZ0MthxgKY/hI/zDTCQxyFZ2dGnXTD42tq7zLWcEdpJU2UipikaW9mUDbnOoKBBtPpWMJe0VHf4t6X4hqDf+pwpremUx70eE=
+	t=1728741507; cv=none; b=JheH7bSiiOLxpKRy1sc7aKqaLh8xQvYaPTedFMW4LduWKIr37JjLMzKrry1W74muxja9GjH50pJwLZqDfyMUoDixQiAE6RbGYZUwZHhxzEx46P5dlRZrx+GxrZ+C2VB/XbTt2qyba/THWZcBiQcf4diLy1tFSOr2zbGRaLLWOjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728732088; c=relaxed/simple;
-	bh=Iz4VfQQ+9Na14mZvgUGiGZRrZRJxzVt93sNJE8Rk8oU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=b2lQtCHFYB9vNjsYbAovvZlyZ4R07J6qKDoV1LG6aZeMChQo6C+f45DWgGqJQszSWn8EfTb5SdH8z7RBTfDseih1RiDLotMTAsknwFsnbyHsAN7EDzHpRHz5uKawWkHIKX2uo1g+y1yInHnByFVkc0Avr1rPLyA9ITiJ56PSiHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bKoo5f02; arc=none smtp.client-ip=209.85.217.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728741507; c=relaxed/simple;
+	bh=KC+CVxVnr5t6eM3IiF+d5zbJZDKZhjL0C3PL68fYK7Y=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Iw0nqGP2XkWR3RgK7ifJ50SykzQuz2k//PLd4m31B+fnZx6c4Z95HT3Lhmuf6YtTzrhf3YC2lTem/knt/eXIQrod+qt48qyn6Oa/7aDfVcoIIloaY9RliYGhkyhAM96Wk7w+deoThWbkWAKvX0n0MAtWv6jwAzAJHAnFNSnp0ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=c1MT4lQE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mCZ+TFmM; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bKoo5f02"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-4a46edda7d1so391295137.0
-        for <git@vger.kernel.org>; Sat, 12 Oct 2024 04:21:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728732085; x=1729336885; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Y6I2/CFLmhBnOcPHqIXPdOJkO1+X4kYHp7BgK78uoNY=;
-        b=bKoo5f02Gphe6dRIr/oCqFVKXsYo6pZeIbpM56yE6APKaeyJoliqL3OvlKERMa2N5m
-         gdUdMZnVf5ZwX3v3BC+Y5EjWV87pjtQR3RyOx80Qn2FvJt3MO/mUTBl+Mo4TMMxe9R6o
-         BmsutB9Fm6pHM0Guy9s2PLxP14OKJN+ZqfKX+2E3Dd2tR1ILYw45TgVVloeX6lN0tEaP
-         XhcgcyA8LSu7YoCVgcti+53HT2xKypYNhKLZmFlAxyZqZIRXnapHLYR5gjY2mJMvOiQI
-         UHLF8Wh+ViaHid1XjaxS0EJBE/FzZ2f4Nvp7p4VbIeBTjKbrIy3/SdVOIqfQydOy+bmi
-         xxpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728732085; x=1729336885;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y6I2/CFLmhBnOcPHqIXPdOJkO1+X4kYHp7BgK78uoNY=;
-        b=AIxhJc3S3Ct4j00N8rfBAi4zy03LjtjQBZGJBjvK7/WmbyJSNi3pDkYOW1d7ej1kDi
-         JX11tkqlME7B+QZp8x9L77QGqH0riGKmbMiRAQYSSncvnxYRVA4g/wvREhk8xguDVuO3
-         G1puQVvd+/LNORtJNCbAyxZod0VIVPZr2YZn7Zm5E52dC+b32AKKbhVggZuzuSefv5a7
-         jMpevUKb8rAvETgVTBC83IjphrhyXK3wyeFItLpwNOpevVqHC7KoiG4v7ZVelKDUOGnl
-         lFXH1DkldCnjm6MWfIPbZgI6GNQl6lQ6FmT4PWhVYlKlBzX89dSQoSurBJ6Uzbg4akI8
-         JN5g==
-X-Gm-Message-State: AOJu0YwBUZYo3xI/IrzcNWFE9tgmrah1O1C/dp2VhIes8SnPIlc+blMx
-	iLmbSPA/PFbgcRDYZN1rQ5/EYJcphuYdKfE7dcWpRgQ+TOOT4XZFlj4Kq+ajk31TkIZOZBeDiYg
-	jIsmUFWPr38bjPLWKND6o0vKfjqikADBDxLyZuQ==
-X-Google-Smtp-Source: AGHT+IFb6Ynlc3lx/rcx+GOGhdUvp2U5R/OSbQALEadRL8E/zzlwUbl0g1zSNHdJw+joUvKvhuXrXIGABFg8M/+PFtM=
-X-Received: by 2002:a05:6102:26c1:b0:4a3:e644:54dd with SMTP id
- ada2fe7eead31-4a465994c45mr3669816137.12.1728732085505; Sat, 12 Oct 2024
- 04:21:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="c1MT4lQE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mCZ+TFmM"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CC18111401C7;
+	Sat, 12 Oct 2024 09:58:23 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sat, 12 Oct 2024 09:58:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1728741503; x=1728827903; bh=y2SGPCTPTa9HX1bCRM7LtxcILJYYAUQo
+	yPYrtslLrac=; b=c1MT4lQEEFaKqnc7J7kFUh9EuVa0VaHxnpYe17xvd7gJao5D
+	+6MbbNfeoLyhTplbmw10PycQ3ZMkY3ii8kUaaBnrq5QTftmiDbSjj3DM3/DWx1LO
+	H0Yle83gqi4OIsC9YZNNlAHhQwnq+tK+eA2P5t5Ko6WSp8kBoF+bYsOauJYMMBQR
+	VMp6KhCPUqLR+g+iEXX+fupj0Vtn6sXyo0Tsuqba5066TISB/bRiLbo92O26jTha
+	ACAEpAX8D8F3IyGMcJ82cHYR/xTv5mHD2dJ2yvbE+mtERan/zAJImrAtB155/l5t
+	8G12Cy1zAa0JBr4VOZbyjeNZ2fC+amhbl7OptA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728741503; x=
+	1728827903; bh=y2SGPCTPTa9HX1bCRM7LtxcILJYYAUQoyPYrtslLrac=; b=m
+	CZ+TFmMrF+l6ipamF2pRSYQy/WPXPeB8qUBg3CRxvtJWxxRfnxVMT5qk2RK+tguu
+	Qgsb1jb0OCuQMTa//V+em4IZyLsz3vZ+sXBCEonvHkYrSbVbCKyzJOc2TJLuvskz
+	80WG0M6VlzqszWaBvQzSi5mTfENrb0YVDDAcDpz5Tj1YJlrTJRE+kkolbhpIFV4O
+	DcmgOHWNoUYAP3freE0aWwVxgx9XmXuM/xFlr+zPPfmUh5NvOmrRSGyorrpQ2dZo
+	yDCBdrwiRlzj4S5RosOgBuagr7VVAnlp0eEWHAlcN9ng6wLBjNbeFWdj/ZzrDOQ+
+	JTTidRYpshxbr0nmWl/yA==
+X-ME-Sender: <xms:f4AKZ0oZpqSSOI-NuAGVz8QeTDqJ334NZvp2bcvdIjZktyPoKivMAco>
+    <xme:f4AKZ6pcnxn8GBlvk3eI9kJCYDKP7-f1HX9VYyrG3US4KdSn-2Lk0AF3Ef8y_7KmV
+    sneD1zQ8nZDiy_Fuw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeguddgjeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvg
+    eskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepfeetgefhgeef
+    veelgeduvdekteehieevffdujeelgfduffffjeelffffledukeejnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgs
+    rghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprh
+    gtphhtthhopegrsghhihhjvggvthdtgedtgedtfeesghhmrghilhdrtghomhdprhgtphht
+    thhopegrsghhihhjvggvthhsihhnghhhrdhgihhthhhusgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
+    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:f4AKZ5OIM-Y4DcKF2dYq7eFjcmQiQc-oIywO1xzMLVM_ZexD9E_gOw>
+    <xmx:f4AKZ76kDPeI-nOm92z_qRGe8R0xl0U3b8CoKNBDMtICpcoNC9eObQ>
+    <xmx:f4AKZz6d0GuKwFSWR25kVg3rAjA8SMVtqQ6Wvmxqd8KF__11Nx3xow>
+    <xmx:f4AKZ7hDJ4-L7O7oYTHwgKRv4B3HMCNSWMeuymGzY4-MuD0R1MyEKg>
+    <xmx:f4AKZ20D_84ye-ZOmk5x1tZLldBcLKDcr_VJ3HtPP-PZkYFjXIEU3CIl>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 73944780068; Sat, 12 Oct 2024 09:58:23 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Sat, 12 Oct 2024 11:21:13 +0000
-Message-ID: <CAPSxiM9FoGBhsnBE4E0Fvq-x_HvyFGGkkhaLNoRdVkvE6CpaZw@mail.gmail.com>
-Subject: [RFC Outreachy] Leftoverbits, which involve replacing atoi with
- strtol or strtol_i or equivalent.
-To: git@vger.kernel.org
-Cc: gitster@pobox.com, Patrick Steinhardt <ps@pks.im>, phillip.wood123@gmail.com, 
-	Christian Couder <christian.couder@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Date: Sat, 12 Oct 2024 15:58:03 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>,
+ "Abhijeetsingh Meena" <abhijeetsingh.github@gmail.com>,
+ "Abhijeetsingh Meena" <abhijeet040403@gmail.com>
+Message-Id: <4f835282-d921-4cd3-9680-d8522bef7b39@app.fastmail.com>
+In-Reply-To: 
+ <4ed930cab1b7f5e9738e73c7b9374d927a8acd94.1728707867.git.gitgitgadget@gmail.com>
+References: <pull.1809.git.1728370892696.gitgitgadget@gmail.com>
+ <pull.1809.v2.git.1728707867.gitgitgadget@gmail.com>
+ <4ed930cab1b7f5e9738e73c7b9374d927a8acd94.1728707867.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2 1/2] blame: respect .git-blame-ignore-revs automatically
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+Hi Abhijeetsingh
 
-I was looking at some #leftoverbits which I can work on and I came
-across this conversation.
-https://public-inbox.org/git/CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com/
+For what it=E2=80=99s worth here=E2=80=99s how I imagine this feature co=
+uld work
+conceptually:
 
-I followed the conversation and came accross
-three instances where I think atoi can be
-converted to strtol or strtol_i or parse_timestamp().
-These are the three files which I think the atoi can be
-replaced with.
+Before this feature/change, the effective config for Git use looks like =
+this:
 
-merge-ll.c
+```
+[blame]
+```
 
-something like this can be replace with
-if (check->items[1].value) {
-  marker_size = atoi(check->items[1].value);
-  if (marker_size <= 0)
-    marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
-}
+No `blame.ignoreRevsFile`.
 
-if (check->items[1].value) {
-    char *endptr;
-    long temp_marker_size = strtol(check->items[1].value, &endptr, 10);
+But with/after it:
 
-    // Check for conversion errors
-    if (endptr == check->items[1].value || *endptr != '\0' ||
-temp_marker_size <= 0) {
-        marker_size = DEFAULT_CONFLICT_MARKER_SIZE; // Set to default on error
-    } else {
-        marker_size = (int)temp_marker_size;
-    }
-}
+```
+[blame]
+	ignoreRevsFile=3D.git-blame-ignore-revs
+```
 
-alternative is to use strtol_i here which I think is more neater.
-if (check->items[1].value) {
-    if (strtol_i(check->items[1].value, 10, &marker_size) != 0 ||
-marker_size <= 0) {
-        marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
-    }
-}
+This is the effective config.  Not what the user has typed out.
 
+If the user types out this:
 
-daemon.c
-if (skip_prefix(arg, "--timeout=", &v)) {
-  timeout = atoi(v);
-  continue;
-}
-if (skip_prefix(arg, "--init-timeout=", &v)) {
-  init_timeout = atoi(v);
-  continue;
-}
-if (skip_prefix(arg, "--max-connections=", &v)) {
-  max_connections = atoi(v);
-  if (max_connections < 0)
-    max_connections = 0;         /* unlimited */
-  continue;
-}
+```
+[blame]
+	ignoreRevsFile=3D.git-blame-more-revs
+```
 
+Then this becomes their effective config:
 
-if (skip_prefix(arg, "--timeout=", &v)) {
-    timeout = parse_age(v);
-    continue;
-}
+```
+[blame]
+	ignoreRevsFile=3D.git-blame-ignore-revs
+	ignoreRevsFile=3D.git-blame-more-revs
+```
 
-if (skip_prefix(arg, "--init-timeout=", &v)) {
-    init_timeout = parse_age(v);
-    continue;
-}
+Now there are two files: the default one and the user-supplied one (this
+config variable is documented as being multi-valued: =E2=80=9CThis optio=
+n may be
+repeated multiple times.=E2=80=9D).
 
-if (skip_prefix(arg, "--max-connections=", &v)) {
-    // Use strtol_i to convert the string to an integer
-    if (strtol_i(v, 10, &max_connections) != 0 || max_connections < 0) {
-        max_connections = 0; // Set to default on error
-    }
-    continue;
-}
+=C2=A7 How to ignore this new default =C2=A7=C2=A7=C2=A7
 
-imap-send.c
+Considering users who do not want this new default:
 
-if (!strcmp("UIDVALIDITY", arg)) {
-  if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg))) {
-    fprintf(stderr, "IMAP error: malformed UIDVALIDITY status\n");
-    return RESP_BAD;
-  }
-} else if (!strcmp("UIDNEXT", arg)) {
-  if (!(arg = next_arg(&s)) || !(imap->uidnext = atoi(arg))) {
-    fprintf(stderr, "IMAP error: malformed NEXTUID status\n");
-    return RESP_BAD;
-  }
-} else if (!strcmp("CAPABILITY", arg)) {
-  parse_capability(imap, s);
-} else if (!strcmp("ALERT", arg)) {
-  /* RFC2060 says that these messages MUST be displayed
-   * to the user
-   */
-  for (; isspace((unsigned char)*p); p++);
-  fprintf(stderr, "*** IMAP ALERT *** %s\n", p);
-} else if (cb && cb->ctx && !strcmp("APPENDUID", arg)) {
-  if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg)) ||
-      !(arg = next_arg(&s)) || !(*(int *)cb->ctx = atoi(arg))) {
-    fprintf(stderr, "IMAP error: malformed APPENDUID status\n");
-    return RESP_BAD;
-  }
-}
+```
+[blame]
+	ignoreRevsFile=3D
+```
 
-proposed one using strtol_i and I think instead of using strtol_i here, we can
-have another custom function that indicate what cause the UIDVALIDITY
-to be malformed
-either overflow, letter etc
+This is the change they would have to make.  Because a blank/empty
+resets/empties the list of files.
 
-if (!strcmp("UIDVALIDITY", arg)) {
-    if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &ctx->uidvalidity) != 0) {
-        fprintf(stderr, "IMAP error: malformed UIDVALIDITY status\n");
-        return RESP_BAD;
-    }
+On Sat, Oct 12, 2024, at 06:37, Abhijeetsingh Meena via GitGitGadget wro=
+te:
+> From: Abhijeetsingh Meena <abhijeet040403@gmail.com>
+>
+> git-blame(1) can ignore a list of commits with `--ignore-revs-file`.
+> This is useful for marking uninteresting commits like formatting
+> changes, refactors and whatever else should not be =E2=80=9Cblamed=E2=80=
+=9D.  Some
+> projects even version control this file so that all contributors can
+> use it; the conventional name is `.git-blame-ignore-revs`.
+>
+> But each user still has to opt-in to the standard ignore list,
+> either with this option or with the config `blame.ignoreRevsFile`.
+> Let=E2=80=99s teach git-blame(1) to respect this conventional file in =
+order
+> to streamline the process.
+>
+> Signed-off-by: Abhijeetsingh Meena <abhijeet040403@gmail.com>
+> ---
+>  builtin/blame.c                      |  8 ++++++++
+>  t/t8015-blame-default-ignore-revs.sh | 26 ++++++++++++++++++++++++++
+>  2 files changed, 34 insertions(+)
+>  create mode 100755 t/t8015-blame-default-ignore-revs.sh
+>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index e407a22da3b..1eddabaf60f 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -1105,6 +1105,14 @@ parse_done:
+>  		add_pending_object(&revs, &head_commit->object, "HEAD");
+>  	}
+>
+> +	/*
+> +	* By default, add .git-blame-ignore-revs to the list of files
+> +	* containing revisions to ignore if it exists.
+> +	*/
+> +	if (access(".git-blame-ignore-revs", F_OK) =3D=3D 0) {
+> +		string_list_append(&ignore_revs_file_list, ".git-blame-ignore-revs"=
+);
+> +	}
+> +
 
+I have not tested these patches.  But I see why you check for file acces=
+s/existence.  Because with this config:
 
-} else if (!strcmp("UIDNEXT", arg)) {
-    if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &imap->uidnext) != 0) {
-        fprintf(stderr, "IMAP error: malformed NEXTUID status\n");
-        return RESP_BAD;
-    }
+```
+[blame]
+	ignoreRevsFile=3D.git-blame-ignore-revs
+```
 
-} else if (!strcmp("CAPABILITY", arg)) {
-    parse_capability(imap, s);
-} else if (!strcmp("ALERT", arg)) {
-    // RFC2060 says that these messages MUST be displayed to the user
-    for (; isspace((unsigned char)*p); p++);
-    fprintf(stderr, "*** IMAP ALERT *** %s\n", p);
-} else if (cb && cb->ctx && !strcmp("APPENDUID", arg)) {
-    if (!(arg = next_arg(&s)) ||
-        (strtol_i(arg, 10, &ctx->uidvalidity) != 0) ||
-        !(arg = next_arg(&s)) ||
-        (strtol_i(arg, 10, (int *)cb->ctx) != 0)) {
+I get this warning in repositories that don=E2=80=99t have the file:
 
-        fprintf(stderr, "IMAP error: malformed APPENDUID status\n");
-        return RESP_BAD;
-    }
-}
+```
+fatal: could not open object name list: .git-blame-ignore-revs
+```
 
-- Another instance inside imap-send.c
-} else {
-    tag = atoi(arg);
-    for (pcmdp = &imap->in_progress; (cmdp = *pcmdp); pcmdp = &cmdp->next)
-        if (cmdp->tag == tag)
-            goto gottag;
-    fprintf(stderr, "IMAP error: unexpected tag %s\n", arg);
-    return RESP_BAD;
-}
+Which is just noise.
 
-- Possible solution.
+I get the same thing with Git Notes namespace configurations.  I need to
+configure them for certain repositories (like `amlog` in this project),
+but then I get warnings about them when using the relevant commands in a
+project that does not have them.
 
-} else {
-    int tag_result; // Variable to hold the result of strtol_i
-    if (strtol_i(arg, 10, &tag_result) != 0) {
-        fprintf(stderr, "IMAP error: malformed tag %s\n", arg);
-        return RESP_BAD;
-    }
+Maybe this is totally off-topic but I think it would make more sense if
+`blame.ignoreRevsFile` just didn=E2=80=99t say anything if it didn=E2=80=
+=99t find the
+file.  Because the point of the config might be to opt-in to this file
+for those projects that does have it.
 
-    // Now use the valid tag_result
-    for (pcmdp = &imap->in_progress; (cmdp = *pcmdp); pcmdp = &cmdp->next)
-        if (cmdp->tag == tag_result)
-            goto gottag;
+>  	init_scoreboard(&sb);
+>  	sb.revs =3D &revs;
+>  	sb.contents_from =3D contents_from;
+> diff --git a/t/t8015-blame-default-ignore-revs.sh
+> b/t/t8015-blame-default-ignore-revs.sh
+> new file mode 100755
+> index 00000000000..d4ab686f14d
+> --- /dev/null
+> +++ b/t/t8015-blame-default-ignore-revs.sh
+> @@ -0,0 +1,26 @@
+> +#!/bin/sh
+> +
+> +test_description=3D'default revisions to ignore when blaming'
+> +
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'blame: default-ignore-revs-file' '
+> +    test_commit first-commit hello.txt hello &&
+> +
+> +    echo world >>hello.txt &&
+> +    test_commit second-commit hello.txt &&
+> +
+> +    sed "1s/hello/hi/" <hello.txt > hello.txt.tmp &&
+> +    mv hello.txt.tmp hello.txt &&
+> +    test_commit third-commit hello.txt &&
+> +
+> +    git rev-parse HEAD >ignored-file &&
+> +    git blame --ignore-revs-file=3Dignored-file hello.txt >expect &&
+> +    git rev-parse HEAD >.git-blame-ignore-revs &&
+> +    git blame hello.txt >actual &&
+> +
+> +    test_cmp expect actual
+> +'
+> +
+> +test_done
+> --
+> gitgitgadget
 
-    fprintf(stderr, "IMAP error: unexpected tag %s\n", arg);
-    return RESP_BAD;
-}
-
-Thank you.
-Usman Akinyemi.
+--=20
+Kristoffer
