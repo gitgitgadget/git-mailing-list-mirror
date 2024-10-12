@@ -1,77 +1,67 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119A0199249
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 14:41:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49243196D80
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 14:42:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728744082; cv=none; b=Bk/PJQ5Go0fhLUdiXr+1iMQ7an8tPZnRLcLJWCGecsjv05YT9EewhU9brXqg+97eu/TSwcrsWMJO007c+LvmAwjLqCKGM75t4WCN7aaoOSnZusOHDJWqIoPsrRUJPF2wKchcaPukUoc6ymbpK3s84uZGqcnw52C6qOSEiy3C2uU=
+	t=1728744173; cv=none; b=o3Wpn4sYCfBDw9pkQ46vJLiTzH5YWZ1M29mOQTk4pA1Mt3I5YQjd/ewKt+KKGYIouEa7E7Sw/sylMEqySg1XyH0gzyvD9a4D+1O1RTXgz5DWPgLR1YweMBCybJIYOkEsciShQ16I+Mx2jl2EvfhowOZ6qRYsrFLo+O4BQm2ngxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728744082; c=relaxed/simple;
-	bh=+KQDex6zgzXayC1voSzS3PubzHizET4B6Pf6dw+s1fM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k4WoOxA57ok1NoOL1lDFdyPpoAkA3d0WYqt7J1/szAHa1uzgWjBByOVgZRGajhLz+l2eXjysMVGk8k3BsHpd8FwIckM4guRjOD06P8WGmoN80MQPla7z3pcVU7w25+gDgvuSQ1G5Ndl/ySWEjr6X+BK2N9kJDjqI1WmBbfTCF4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=XiQHZHAD; arc=none smtp.client-ip=18.9.28.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="XiQHZHAD"
-Received: from localhost (SENIOR-HOUSE-TOMBSTONE.MIT.EDU [18.9.64.17])
-	(authenticated bits=0)
-        (User authenticated as asedeno@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 49CEf1de009310;
-	Sat, 12 Oct 2024 10:41:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1728744065; bh=2LW/Bl6q0mpjDUOONJBpu8nBk1qRPDUygA9En60Tn8k=;
-	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	b=XiQHZHAD88E+9RKerAsxFY4HOGMMBuEoa4pam5LhO8mVDtF30bN1aB/soGMD+mHHS
-	 +a7qHVgwldP35q8Jb0GU4PAvzm76md4xrpRerbSZA+Nq8yxOIiDQHkcP7DP98cIw6w
-	 f6JYFfpuk6hOJ1iWMdAeibfKMDufBS9hVvhWhim5WwlZSZTW8C7woizjg+gheSkYhV
-	 o/9kEzhEqmhSQDzKWT86+++1rOI+3JeUMa6c3Zzc4ycqLb9tECcB0VF5uVP9ydXxsx
-	 dhBLyFADuR5G7m+/WKy/86aHCwmcXc1S6XP5yaCn2kaXNT2fHzL0WJwXGapHBT7GnR
-	 8r+27utKdyDZQ==
-From: =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
-To: asedeno@mit.edu
-Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org, ps@pks.im,
-        =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@google.com>
-Subject: [PATCH] Makefile: adjust sed command for generating "clar-decls.h"
-Date: Sat, 12 Oct 2024 10:40:27 -0400
-Message-ID: <20241012144027.2573690-1-asedeno@mit.edu>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <CAOO-Oz0+sOpF6YQHSu0ytCO5TL+Anpr1k_9vQx6hebr624WjMA@mail.gmail.com>
-References: <CAOO-Oz0+sOpF6YQHSu0ytCO5TL+Anpr1k_9vQx6hebr624WjMA@mail.gmail.com>
+	s=arc-20240116; t=1728744173; c=relaxed/simple;
+	bh=R+baMk45voL0Iylu5yPjfcsUhEDL0QtFPVOiU5YtYGE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JOKrffM4+lWRiwj/pjSOWbN53jM8KwynKQwoTEZu4AFgnh8aAbIFMbrGl0vekNr+XvhE+8uFD3441lgaJmmT9WirXjb+DTCkvzse7BbXI8i1pLVDla22jeVQ+ujFcVf/txyM9Pk9AdNbZsjkjz7aPEON2ky7Z+eEi6JGSQv9Ogs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e28ff55468dso3039619276.2
+        for <git@vger.kernel.org>; Sat, 12 Oct 2024 07:42:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728744171; x=1729348971;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R+baMk45voL0Iylu5yPjfcsUhEDL0QtFPVOiU5YtYGE=;
+        b=RS22BkxaeXeR8w1FZZWf5icCrvmhJiBFGxQzWDzznGN7hPiX5QE5UyhnPYBO6zdhgO
+         zVt6gpdRquldia465M+wJDT7DYb6sWT/flipBmAAwjO3ZC/pFSgOyOloJdCY4+AIevJ3
+         IU8Vj9p0v/Gc6o+Ey91N6eJXEqVj7Jy80snrthRh/KfoiaDtepVvBhFJ7BWZEeY3OLQA
+         BkvN4UEAczIbNF69glBPw7HL+uI/qIbG2GkpGZDV7No6IVmnyaBWR+9oujXYo3Rf9AHZ
+         MaVK2iN3Jvz2EamSoyYDlDi458KRTYCuZ321McpELRtqXyHZV866CRgtwIhHFaYuwkGm
+         kA0Q==
+X-Gm-Message-State: AOJu0YxnlOHcqx9RJnE/BvQ8sbQ0W1giXLKCny3eTqzy5t1CFUNrVPS7
+	qdmusdyRUJdus+47VW1OexWzJSf/LQ0WaEWaj0YXrNJiXt/gHuqEpu+0n9lync8/DXsyqPyolfP
+	LwD0EIroaXgmcT3v6JLkHSw53Xc2LHQ==
+X-Google-Smtp-Source: AGHT+IEI/jHzgPzaFmrMhUbJLPhq0kQFuc/3gf/FY6eMru6hJvS3oU5+pCV8QqzpzjGXlS8GkjxGXOt7fbfMTQ+ZDqo=
+X-Received: by 2002:a05:6902:1105:b0:e29:9ab:d39d with SMTP id
+ 3f1490d57ef6-e2919da0e7amr5314807276.24.1728744171239; Sat, 12 Oct 2024
+ 07:42:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
+ <ZwoxHYD-e4qo7OyW@pks.im> <CAOO-Oz0+sOpF6YQHSu0ytCO5TL+Anpr1k_9vQx6hebr624WjMA@mail.gmail.com>
+In-Reply-To: <CAOO-Oz0+sOpF6YQHSu0ytCO5TL+Anpr1k_9vQx6hebr624WjMA@mail.gmail.com>
+From: =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
+Date: Sat, 12 Oct 2024 10:42:35 -0400
+Message-ID: <CAOO-Oz3fTJDC8W6mF-bawn=+9-=s2hLiMDP=16C5DVYgw7cb_A@mail.gmail.com>
+Subject: Re: git no longer builds on SunOS 5.10, a report
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Git List <git@vger.kernel.org>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This moves the end-of-line marker out of the captured group, matching
-the start-of-line marker and for some reason fixing generation of
-"clar-decls.h" on some older, more esoteric platforms.
+On Sat, Oct 12, 2024 at 10:34=E2=80=AFAM Alejandro R. Sede=C3=B1o <asedeno@=
+mit.edu>
+wrote and gmail mangled:
+> diff --git a/Makefile b/Makefile
+> index 2dde1fd2b8..87c1f9e220 100644
+> --- a/Makefile
+> +++ b/Makefile
+<snip>
 
-Signed-off-by: Alejandro R. Sedeño <asedeno@mit.edu>
-Signed-off-by: Alejandro R. Sedeño <asedeno@google.com>
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+resent as a whole patch via git send-email, since that was just sad.
 
-diff --git a/Makefile b/Makefile
-index 2dde1fd2b8..87c1f9e220 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3906,7 +3906,7 @@ GIT-TEST-SUITES: FORCE
- 
- $(UNIT_TEST_DIR)/clar-decls.h: $(patsubst %,$(UNIT_TEST_DIR)/%.c,$(CLAR_TEST_SUITES)) GIT-TEST-SUITES
- 	$(QUIET_GEN)for suite in $(CLAR_TEST_SUITES); do \
--		sed -ne "s/^\(void test_$${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$$\)/extern \1;/p" $(UNIT_TEST_DIR)/$$suite.c; \
-+		sed -ne "s/^\(void test_$${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)\)$$/extern \1;/p" $(UNIT_TEST_DIR)/$$suite.c; \
- 	done >$@
- $(UNIT_TEST_DIR)/clar.suite: $(UNIT_TEST_DIR)/clar-decls.h
- 	$(QUIET_GEN)awk -f $(UNIT_TEST_DIR)/clar-generate.awk $< >$(UNIT_TEST_DIR)/clar.suite
--- 
-2.39.5
-
+-Alejandro
