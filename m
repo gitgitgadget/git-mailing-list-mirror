@@ -1,115 +1,102 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4CF1758B
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 01:50:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637CECA6B
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 02:04:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728697807; cv=none; b=CYPtw7L2tSAm6iBS/A4CogtvQVUl4TU2VEFP2ipkLozy2iT2DhkqbKfwGETO/8+7V32LQdPhgatu/QO11Cao9/1Nbnjyq/Ei5Q8D5w186gXguUAuECT6Diq2gvt8bVXZDm5zPPQiyETyvLnU05l06CV7h5v5y4TM4NVVeljHrTc=
+	t=1728698683; cv=none; b=k/EFZ0sIHjVLQahAKvhVIl717FpGwLHkVxaqx5yyfUY+L7Z1u53woow1ZQWda6o3Q0WMBHcJW93FqfUFjJMBsxZnyTPKl/KBXuZ35izu6ZgnNl5G8Cezzj9XNbj2Yd79soy12iQPUBMhQZKb4Xeytmo+1fHLp3aDeiygTYRPwPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728697807; c=relaxed/simple;
-	bh=6Rv490zObb9O7tt+3CZ39LH88N4f7Gxd84rnolFsj+g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gpijSGOIdkn7lGUDHLiqiECytavsnJ31u+MzBXL97xCVw9u38t1o0NMbsmE4NzD6m0JfD36vfm1FWuV7aN1zyh3u2fEmD/Hd2JX3yd3H0jZ7DQnXUh0Bd+y1qG1HecJkvbdao3Wtk2H2aHT4uu4/nYu7gQVl+Ejyet+M8cohENM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VPlyCgRG; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728698683; c=relaxed/simple;
+	bh=JENce+yiemN81y0ciOHOx3svLayhhCB3/22Rwc/tGyM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=a926r6wf1uig2afoets0mmHn+DQbdWTBfP1wb85M+EfOjy0UbiNyh+XPfVXHyHg0x6wXwbRTXna428THwtErbDlCirbyIWm5ffbgfF3dVfBnj1DHZ3bQ0/D67vHQCUVj9CZYN3mrHmvS/CS9eHUCVhWbUNnT+K1FI8FsYfkz9pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fDBCgA5b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HG+Z2p+h; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VPlyCgRG"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5c9362c26d8so4140362a12.1
-        for <git@vger.kernel.org>; Fri, 11 Oct 2024 18:50:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728697804; x=1729302604; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pQiyu6/b8ObIzOn7Qa2T97QA6hjFZVFnL+HM6wELhYk=;
-        b=VPlyCgRGuAUeYpSoH70uy9MfG5dfqtGBQujYUFhZV46jfvFEfcDAXfeiyQxkYYT0Tq
-         1rBpvTmjM1oVG6TgAYT6pnCDweeq6CgzDiumCsQDkz4NMaQ9abp/g9WSz42LLJIHJC8+
-         XsIr3ihlSCUtj0h9ZFg/nTnbPjnIrRhX+9hvxr/y+Of7oiVzWiYSF5eOezL6+StgYOqu
-         3uIpcNOvteqelrCZJijS0jt1wBbRNUBlO9tVxtKwFOEeOD+wJYR88bwZ7TWAfmjUM0w0
-         EZd6pCwz+nofTbYhXgFaMc8YBYbbAyexc0WkbYGbaurA17etdFkIH0pAffa7NM9jHmJV
-         dkSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728697804; x=1729302604;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pQiyu6/b8ObIzOn7Qa2T97QA6hjFZVFnL+HM6wELhYk=;
-        b=Oouk5KBjNuf71F5irP8frqG/c8e799En06l+QI8uXW5SLKyVfhvWURXOp/MkZH4VEi
-         zvDHQFDzEiBYBdBxEDTnGBSDD3MYkD3N/Y37+Wz0ypFOYH9Vq94fZrK7mD/7nsM6uC36
-         tXZbELcNXbVkR0W7pOKpYG+dsjQd4bvQYxMyF19cH/AHGeRWTcqaNO3IrdizBfY4jYvL
-         dzNsru1wxXZxGi2YLLeBB+L7PqssvGnmPwn74YqJ11CbIiYYXTiE6SifA8BTV3v4nOdw
-         0dSync72iTr9Z+xUhvho/cLd7+aoCuDeHP8sKrW5Xnx02KcHQfJKIBHqV/otHKK0q0Dd
-         PqCg==
-X-Gm-Message-State: AOJu0YxdHxAsw+Kiia2ehNCa4gW52+C7seGMh7IwPhzhLU9heSmP846l
-	r2DbZBcqJMgKFcj670JQUXN7L8L/zbo0nPPJ3r2oP2JxVzOSPER2
-X-Google-Smtp-Source: AGHT+IGJHy2HE9S7Lq5JzDYta0HvwAQsU92nrnhroSYg4m1C4WEg/bWDGTwFHG07IQoW3K/R3llwiQ==
-X-Received: by 2002:a17:907:d25:b0:a99:63fa:2686 with SMTP id a640c23a62f3a-a99a13aa2femr857315766b.20.1728697804054;
-        Fri, 11 Oct 2024 18:50:04 -0700 (PDT)
-Received: from archlinux.fritz.box ([2a02:2455:825d:6a00:6bb4:436f:5699:ff21])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99a80bfc5esm273122266b.142.2024.10.11.18.50.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2024 18:50:03 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-To: karthik.188@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	jltobler@gmail.com,
-	toon@iotcl.com,
-	johannes.schindelin@gmx.de,
-	spectral@google.com
-Subject: [PATCH v3 3/3] clang-format: don't align expressions after linebreaks
-Date: Sat, 12 Oct 2024 03:49:53 +0200
-Message-ID: <36a53299c1ab1b55a09b7e1d499832e6715ebaba.1728697428.git.karthik.188@gmail.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <cover.1728697428.git.karthik.188@gmail.com>
-References: <cover.1728697428.git.karthik.188@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fDBCgA5b";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HG+Z2p+h"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 60B3C1380472;
+	Fri, 11 Oct 2024 22:04:40 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Fri, 11 Oct 2024 22:04:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1728698680; x=1728785080; bh=odaMIIsEVF
+	bud1PPxn4I/sEJGVf8rEVwFWW9OwtCVlk=; b=fDBCgA5bSiGIOv+0PtyNOdzdJU
+	TB0juRHepiN48p/0wWpDs6e/v9yvWPlQEQtMWdlPg/tHzT6kpNSnsnLwMp2iyR+8
+	zxi+5GtfwC3oWaT78Lj3iloPcu7lUJAxLTfwax+wmeX029GFktCHirR0hhfUZwH0
+	ltfZszpCRQaDugV+0y24xoPCove3EqL/pH+FzMRGfq81FaTMxW0QiCjaFsh2fBEH
+	IvKTn237QMFa6gv4J93weQbf75F08jAUCt/5iUo3Dc3G7MGkbgGxaw6V219eEHFH
+	j+8iQmlK4Msu0kJWhuwPss/ltsvt9Aro6lYsK0UYGo5sVd7edLbWD9nqyxEA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728698680; x=1728785080; bh=odaMIIsEVFbud1PPxn4I/sEJGVf8
+	rEVwFWW9OwtCVlk=; b=HG+Z2p+htn8iGSBkapii1qrLdTDtCf3NgqJDeblf1UfR
+	0n2WR7tiQStIIWL5KovEJWQNTOMkTyjkjfkEjPpkhWgTAAdDItDK08fIRZQy1g+X
+	yRF0+3/EoS8kpnQGcTNGMOTbpaenpEkDgqhNGBWfBnozBb+CHgsAFEkVzxmxlmny
+	IkaZ0yT2sCM4HBm3afprIelDr+J9Rgq3t9wcz/tarpW1XnDqBa1rAJq7Nrjw6a9g
+	2COJRQGE5Mmud611yT03i6FLdYEqGe6j3h9wsRQIOp4aDs0TR1K6MtasEo2ouLg2
+	kLnzjYckoslmYMJtkf+L+OkgG7SxF8fZPzfAec/hFw==
+X-ME-Sender: <xms:N9kJZwfjZkzarZfca2sUJHm9NA-sIPu__FpBz3Badaa3WJuyR9Hr9g>
+    <xme:N9kJZyMQMZyO5U_hnBVg1SxOgYoZwKsctsLt1mX5obx38oVKjbN9XdvmKcyx22S1y
+    oglUpN7MxUR-c_5xA>
+X-ME-Received: <xmr:N9kJZxipB8faYtkH1SLqU_VNMm9kBNEqS6UbaxdHWgM1ADC7JgtBHHHHZuxPkhKum4BoaQbAW6syxm6cpGUMxTU236W3CumcMXJcMBE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegtddgvdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefh
+    tddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhooh
+    drohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
+    pdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ONkJZ1_7MZcxUzjT7gkqvajkRTSp_xLEkAIPi_RfuG25PvkInXXGyQ>
+    <xmx:ONkJZ8sl96GMUsPgCQVWXT1GQpnbLS-_4SJ3uwLABb3VKPX6gGeQsg>
+    <xmx:ONkJZ8EVOmSh84fZuowz88LYZKrFyfeZ3DOXrVnbAQFxn07DtIhQjw>
+    <xmx:ONkJZ7M60LpeImvjVCoVcotuFXrMZR34Qd8mzm5yPEMTMv-dynKW8Q>
+    <xmx:ONkJZwgYf17YWq9OhsOtNvNz9foVwW3dh7egAR4_HGwUuVgBIFbe7IXp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Oct 2024 22:04:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Eli Schwartz <eschwartz@gentoo.org>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>
+Subject: Re: [RFC PATCH v2 00/24] Modernize our build system
+In-Reply-To: <cover.1728485139.git.ps@pks.im> (Patrick Steinhardt's message of
+	"Wed, 9 Oct 2024 16:56:01 +0200")
+References: <cover.1727881164.git.ps@pks.im> <cover.1728485139.git.ps@pks.im>
+Date: Fri, 11 Oct 2024 19:04:38 -0700
+Message-ID: <xmqqh69i9ivd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-We enforce alignment of expressions after linebreaks. Which means for
-code such as
+Patrick Steinhardt <ps@pks.im> writes:
 
-    return a || b;
+> this is the second version of the patch series that modernizes our build
+> system by introducing Meson. This series is still in an RFC state.
 
-it will expect:
+I'll keep it in the broken-out repository (https://github.com/gitster/git)
+but eject it out of 'seen' for now.  Builds with the topic seem to
+be unhappy with circular dependency, 
 
-   return a ||
-          b;
-
-we instead want 'b' to be indent with tabs, which is already done by the
-'ContinuationIndentWidth' variable. So let's explicitly set
-'AlignOperands' to false.
-
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- .clang-format | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/.clang-format b/.clang-format
-index 9547fe1b77..b48e7813e4 100644
---- a/.clang-format
-+++ b/.clang-format
-@@ -42,10 +42,9 @@ AlignConsecutiveMacros: true
- #   int cccccccc;
- AlignEscapedNewlines: Left
- 
--# Align operands of binary and ternary expressions
--# int aaa = bbbbbbbbbbb +
--#           cccccc;
--AlignOperands: true
-+# Don't enforce alignment after linebreaks and instead
-+# rely on the ContinuationIndentWidth value.
-+AlignOperands: false
- 
- # Don't align trailing comments
- # int a; // Comment a
--- 
-2.47.0
-
+cf. https://github.com/git/git/actions/runs/11299216196
