@@ -1,104 +1,88 @@
-Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4588013B58E
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 22:29:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EDE19C551
+	for <git@vger.kernel.org>; Sat, 12 Oct 2024 23:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728772195; cv=none; b=YjJU/YhMGLsz5yJvyNxVdf6/GHhJKAXfb3u9kBp4thJ3EALOwUVmA3k2cX3FuSdNmm9Ph4ncw527eEvZSiRxxsQO3q3QmPOYDuVwAfBvd+U4xzlX79oegggAe9vvJY6uz9fpdiUXFzcAvtd4Uel2ZglkLjGy/nfNt11ZAZW7sOk=
+	t=1728774579; cv=none; b=MeF+eGo3L6aUByW22neTAVqe1hxFiwXXCUW4t8U6EXTRfaFeqf+5Y0o8ti6Kv2ScM1UJNybFtQ/D4DX6soLdFPsjaktd9R1Oimcdab/z8EggOors58d93Tcj6dXnl0KOFQ8QY9mfipQYy4Vy+8oDGWw5/tjVHTeUaRU8VdLn4JY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728772195; c=relaxed/simple;
-	bh=qmmIGjp5JvoU3w7xsyeGtMmZCyNvPLVq9IaKIZMlZM8=;
-	h=MIME-version:Content-type:Date:Message-id:To:From:Subject:Cc:
-	 References:In-reply-to; b=Eocma6X8L151oTW9IpP2Q8aJuBfQIzaly5BIHrvGCbRKFvZhEJa/jQLiYqhRw8AQyWp39IqpZOEsKteC1pEKaFlquh+bFv+KgEE0lbw/O60xAM+D0A+K9KTyeGmj6IUAcPNK+PoiESHzGD5fiBnLo68E8rqEHXXZlsa2drjLoBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=DmtYwFO1; arc=none smtp.client-ip=192.29.178.127
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1728774579; c=relaxed/simple;
+	bh=jsmKu8bpyQU8myOEm2XGCEAFN6M3cU4EJF9kV/RfPXw=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=qDvqJRh/GJRQJO4U2EXov2TYnYsAPpJhv/PIB5DxUH6obtMzxf3L9+X3XCQS2vDe29Gi9ssv6YWhXR+vmDHYFPp1eY7aLcyQ+qNceIlwDReHinyB8MiguBP3RhTe9bO5pvBEwHeoy3dsBuYcImtdl4aclifjYTzSboUJ0XNotUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BRkYOH4F; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="DmtYwFO1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=x0KesoxrlPwGfsftaj7KiyP9eltRhhWIjVpW+RI6YvY=;
- b=DmtYwFO10LlACtHOZRYrfCBiQAhpZBX6E/MMw7MnsK1vpIGUIYZ5mn+dpkI3msE955lIXjoBqK/a
-   5uf6DJ+svKGs6V2Ro4Gl+gRCU3aWISG+ZFXPuK4dbaBTcY0Npxj9v+epAEf03aaRc8JNdJ1WO9Ch
-   CGVbC/+E8ewROVU84FIlyFpEoCaQOEyJby3Azy7UqHlBYHlE6lSsUq/EXMNI5fDVpP/B4TLqkwG1
-   LpuD5wvTYev5DHMGQbNS9DXCdJXwmJw3ErCl0jSwOpcj9H89xatn4+xnYtXzyNuY3ZfvCWRI9IDK
-   rK0lXJHpBfbbXL2jwbCSiy7sinzwnUVSrZrZ0g==
-Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SL90089UL5KXY60@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sat, 12 Oct 2024 22:29:44 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BRkYOH4F"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5c960af31daso800486a12.3
+        for <git@vger.kernel.org>; Sat, 12 Oct 2024 16:09:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728774576; x=1729379376; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=jy6fyxD1fwLahXX9BBXWcMuBXqMLhi0IHPh73hbm1wk=;
+        b=BRkYOH4FnDZzKBnH96gqU+LGLTdePHKQmgT+UyaHXuwnMuWBYcDJBI4RAdghFS3m9c
+         hUXcJLtUvks3SjuHnwIvbKWSiVELViiCGQhp/jvsvABLnP8BqXYZ9XHMgH6aIq0gPm/p
+         PvL5m2UmS5OKDL7qXfpccZXsUXzw61OTp+YWgYpPG4pGuLzb1dIw2dCPtUlVLaK7eiCG
+         AKph86iTwsVqS+Xqxx8VGRYu3o6il5hBHU2vEJEzGR8fTGgU7Pksho6ItR/348OHHavT
+         VzMdk4rpTaf1+/nl9zZj9nL9uuZxykFnXAhuItDVrghkkc8xL7gVFgnzo4oN1647qbg/
+         1fHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728774576; x=1729379376;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jy6fyxD1fwLahXX9BBXWcMuBXqMLhi0IHPh73hbm1wk=;
+        b=B7tyrFHReesZXsqanbsLj+eV2/LhqyqqSFPJ+dLwmeH5rHALMYoEqgpI+8L1ce12R+
+         NMu6egvh6rb/qXUUQFzBonRfqlNBZ8bydOX7LC8dPhm37STKi+nQvUh/e0/SzaF29R6I
+         82yX9ivV1JuzjrpwXJuMDy7wU2AE3sr/x0oVMd3mb3SniLGSblru71a8fInIeEVV7w/d
+         AQIlZuzC6KD9mur510o6m/Y3LELujNEini9JWPkC4MCh8dBRlGNF/kLoWsUPAJWe2cfN
+         R16hxuqCco+T24wbE3mDo5kPQgDJRO192JGBRETsJvLexc7+xiLs3tBszoy+P4W7c39r
+         sgxg==
+X-Gm-Message-State: AOJu0YyLJPoTYwJ90ETEQ6Ko/l6IF4WiSIcTBDOsihf1cr+f/qjK6rpX
+	VccTzBNNvfMSOyPUAaMc8Z4WrJ6stW8LhRGJVOatsOmA7IJ3enkCsyqf2g==
+X-Google-Smtp-Source: AGHT+IGwjksNLBYP9cUwG1FJWYtHBfJzfzAT7q/seNZLsxQGrt3EMT24xmt528lyBKYPVgVsBMD0Ig==
+X-Received: by 2002:a17:907:d2c7:b0:a99:7a05:a652 with SMTP id a640c23a62f3a-a99b943b060mr586383566b.13.1728774575570;
+        Sat, 12 Oct 2024 16:09:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a04223e3csm7796566b.52.2024.10.12.16.09.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Oct 2024 16:09:35 -0700 (PDT)
+Message-Id: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
+From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 12 Oct 2024 23:09:31 +0000
+Subject: [PATCH 0/3] R atoi
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Sun, 13 Oct 2024 00:29:21 +0200
-Message-id: <D4U6L3C2GHZG.2SN8P0C7ZH33M@ferdinandy.com>
-To: "karthik nayak" <karthik.188@gmail.com>, <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Subject: Re: [PATCH v6 3/6] set-head: better output for --auto
-Cc: <phillip.wood@dunelm.org.uk>, "Taylor Blau" <me@ttaylorr.com>,
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>
-References: <xmqqzfndndfm.fsf@gitster.g>
- <20241010133022.1733542-1-bence@ferdinandy.com>
- <20241010133022.1733542-3-bence@ferdinandy.com>
- <CAOLa=ZSV50OkDC2p5AHHW0u+fAtLMcCX36W1SuT8AnTkX7HNZg@mail.gmail.com>
- <D4SUTJDV0Y04.3Q8YED2MVOKBL@ferdinandy.com>
- <CAOLa=ZQY_a_dEZQ2EcLVfE_5Kjy7b2R3OFbQHQbkzH0o9-q1JA@mail.gmail.com>
-In-reply-to:
- <CAOLa=ZQY_a_dEZQ2EcLVfE_5Kjy7b2R3OFbQHQbkzH0o9-q1JA@mail.gmail.com>
-Reporting-Meta:
- AAH5WjwJA9YJE1eMNxG4kucu7BjGwMzMiiZCwtQcLQfhQVT3cNAlp8pJlIUdzg4y
- sh3cOykRyQotKGSzVWC2e5Hd3upg32zoUil5+8eDnmhjxP03y6q1upvnLke0bHUZ
- x/dUwBLMRVEAQjkAdYyvz/EWVrmbptweWW+qaD29h0Vqx930jxd3IflYB12T9BzI
- ERWDjwlLOh68HHZkgZVuciwf8pm8rQXch98kG6GKl69YsjXM6ttQx6kLxJDjz2jE
- dZxZq8SrdOjS0PutEtJLnNfvNYa8rcnEVScuVeunr5m8iWfU36t6BwimV3qroAW4
- +Gt/O2BanHMKsZipi2EKGBiXIabAWU1NRXa5nO02sKC51r6k8Jpw2bzL5tScHL9a
- eEoqmBiBtwSx84ev6D14hgqxp4pyDBStWNBy4HqnrvWm2n+rjsb4ggtogGmdgblQ
- QtGh+flM0EZmc3w7P1i0rOHrpMDlxMoii6ly/mRIyD0GFe5qhkgeG2rX
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>
+
+parse: replace atoi() with strtoul_ui() and strtol_i()
+
+Usman Akinyemi (3):
+  t3404: avoid losing exit status with focus on `git show` and `git
+    cat-file`
+  t3404: replace test with test_line_count()
+  parse: replace atoi() with strtoul_ui() and strtol_i()
+
+ daemon.c                      | 14 ++++---
+ imap-send.c                   | 13 +++---
+ merge-ll.c                    |  6 +--
+ t/t3404-rebase-interactive.sh | 75 +++++++++++++++++++++++------------
+ 4 files changed, 69 insertions(+), 39 deletions(-)
 
 
-On Fri Oct 11, 2024 at 22:43, karthik nayak <karthik.188@gmail.com> wrote:
-> "Bence Ferdinandy" <bence@ferdinandy.com> writes:
->
-> [snip]
->
->>>
->>> > +		git remote set-head --auto origin >output &&
->>> > +		echo "'\''origin/HEAD'\'' is now created and points to '\''main'\'=
-'" >expect &&
->>>
->>> Nit: might be cleaner to use `${SQ}` here and below
->> You mean something like this?
->>
->> 	git remote set-head --auto origin >output &&
->> 	HEAD=3D"'\''origin/HEAD'\''" &&
->> 	echo "${HEAD} is now created and points to '\''main'\''" >expect &&
->>
->> I tried a few variations and this is what I could get working, but I may=
- be
->> simply missing something with the backtick.
->
-> I mean simply this
->
->     git remote set-head --auto origin >output &&
->     echo "${SQ}origin/HEAD${SQ} is now created and points to
-> ${SQ}main${SQ}" >expect &&
-
-Ah, I see in other tests this is used, but not in this particular test file=
-.
-It's a bit hard to decide which is more cryptic, but ${SQ} is nicer on the
-eyes. On the other hand I would either switch the entire file in a separate
-patch or leave in the '\'' here as well. Or I guess one could go through th=
-e
-entire test base and switch everything to either one or the other for
-consistency.
+base-commit: 90fe3800b92a49173530828c0a17951abd30f0e1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1810%2FUnique-Usman%2Fr_atoi-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1810/Unique-Usman/r_atoi-v1
+Pull-Request: https://github.com/git/git/pull/1810
+-- 
+gitgitgadget
