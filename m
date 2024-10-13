@@ -1,35 +1,35 @@
-Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB00F132106
-	for <git@vger.kernel.org>; Sun, 13 Oct 2024 20:52:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA718F64
+	for <git@vger.kernel.org>; Sun, 13 Oct 2024 21:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728852771; cv=none; b=Vl7+ouxr0u2xXu4FRtCSbkg4GYlctx1bh+5M3KJ66AOM957oJobj2SsDMMd3E97LK55WLru7jZKViGpuRF9eZb2Cv2Bet1Lzh8yrCvaOwj/7mW+v0JKL80JhK5DCBOcuKoyTn1cu0dsYXzUdbxI6dD209x+mA7Ka4fKly+OBC1U=
+	t=1728854700; cv=none; b=PRJuySW8jC9anSyfY6n8NnbffuF7JzzieIh9sdKQft0J+9AO21w5dVQbjhoiuKWoVd4BponhePslvfJvBHEq71buMfS0ww6jbVOAqAQfjYixrRln+aouSnAGqWleBbbtTm8z4M4kVf8Mwbtb3c1EZh1dOrvj3DDX1nzEWCp4H8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728852771; c=relaxed/simple;
-	bh=rFmLfXe9pwvWz8dEGnhXLoBrkXGwAYe+uquUmAPU39c=;
+	s=arc-20240116; t=1728854700; c=relaxed/simple;
+	bh=2XiICeX9OvpmEZ7kdS/LdFZTH8ApgGDvUGMcvtqWVJU=;
 	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
-	 References:In-reply-to; b=CjxwsHZ1KHg9/WqCpZyn2EltxuMg1XdiTpfDeiDkceK3mtQw60DnSqDYbwocmHe1nFGFPd0+mN7UoFcI4g+ly0SB7XiSRYciYQ6aDnv23HAn3v3IrIvBTDCOBHS95eAkyMswg3Uq39zjW4APlx/rYoppdSfVi8I4cT1JIHWm3RA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=DP5Pn/Uc; arc=none smtp.client-ip=192.29.178.126
+	 References:In-reply-to; b=QT+7ew1kowcT9AOXq/0o62bwnJGF3UkN27atrDbqUxj7yavVL+CpMYJdjWNWudS3mUKaP/HU9er15dLut0eCoLt52H1jM705auPCi+j7TpCj2FKxPTxSvIBvdmYKRkUhhgwy1lf1E1jnbvKJNXT9UPdDVwa/J44oWkmCvVYzcoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=Z+S3m85R; arc=none smtp.client-ip=192.29.178.125
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="DP5Pn/Uc"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="Z+S3m85R"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=WAya84hxa0aCKG+0jmz55FA3+fJX8DCKZY2EfnFtLMY=;
- b=DP5Pn/UcctdRIg+ZdZkoMNEicdHQkKSzoXGc3PlTIeJJ4F7zMwFRDrVIkPJ7TYOvYjtfm5UBujv8
-   c1Slm3cussrg+ABzoHprIcZkoGN7xdtM75CUKjg6kyTvh0LzmukMFcHepV5ZoMF8gMN4bDVSkN/E
-   Hu6LWzcIjommDplbfqlaF/Fvr4f0bR2C3o1KQEF32b2T5mdUNpS3RZOU8411kSH8a0qs3c5QNE0N
-   U0qXYyaZHHBhvSU7NitJ6LM3AwowAXvqgx69LwjkaB69rT0eZ0PkOdKG1GqlQsm7P1qHOI/N6hLJ
-   pZRxwSQG/y8UMgLFrgo7dBatpvaam3LAoPrqdw==
-Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ bh=2XiICeX9OvpmEZ7kdS/LdFZTH8ApgGDvUGMcvtqWVJU=;
+ b=Z+S3m85R001tmf5CU9iSNkXJomHgeYI+4zcbsZpM8XotbH5t3U4apFkZZfG01wxalSdF/vSl2ObT
+   cXpM8B860/XNXlJFvhQg5Nm6Cu3yh8j2lCAQ4It/7lXL7erw4qq48yvP2Znlt/GmHsAz93BOtQyV
+   +aYXrZuzReImb00NEsSwSOU6XkVdg0c2eylT8j+g6qli4oGiOzD4B109yjSHLSQqv0YtoaKDdQcy
+   F0otsuC7JyvZB8Y+5bP4cMchiKz15Pz7EnRIUIT+ZSapcX15xVxsEus01VbjzCF1wlzs1j3msybH
+   ljupMzOjk8j2hy2jtwBuqz8MVbN24YEAaTSeLQ==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
  2024))
- with ESMTPS id <0SLB00NEMBBY7930@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sun, 13 Oct 2024 20:52:46 +0000 (GMT)
+ with ESMTPS id <0SLB00H6WCTF6C80@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sun, 13 Oct 2024 21:24:51 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,9 +39,10 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
 Content-transfer-encoding: quoted-printable
 Content-type: text/plain; charset=UTF-8
-Date: Sun, 13 Oct 2024 22:52:22 +0200
-Message-id: <D4UZ5DJWM3WM.MYD9YL6SLE@ferdinandy.com>
-Subject: Re: [PATCH v7 4/6] refs: add TRANSACTION_CREATE_EXISTS error
+Date: Sun, 13 Oct 2024 23:24:22 +0200
+Message-id: <D4UZTVHXXL1X.2KBQI9FYTAU72@ferdinandy.com>
+Subject: Re: [PATCH v7 1/6] refs: atomically record overwritten ref in
+ update_symref
 Cc: "Taylor Blau" <me@ttaylorr.com>,
  =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
  "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
@@ -50,90 +51,86 @@ To: <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>
 From: "Bence Ferdinandy" <bence@ferdinandy.com>
 References: <20241010133022.1733542-1-bence@ferdinandy.com>
  <20241012230428.3259229-1-bence@ferdinandy.com>
- <20241012230428.3259229-4-bence@ferdinandy.com>
- <cf7c4831-a766-430c-aac6-5cd5c2ceabed@gmail.com>
-In-reply-to: <cf7c4831-a766-430c-aac6-5cd5c2ceabed@gmail.com>
+ <3c848f10-ac14-4cd7-8fbe-868da9599244@gmail.com>
+In-reply-to: <3c848f10-ac14-4cd7-8fbe-868da9599244@gmail.com>
 Reporting-Meta:
- AAG2WuwX+0TdiR1K2l5vLykhxTy9yHVqq8v4/IADvLNFY7HqXl5xzduuy2sMmN/T
- zBBhrvmcIwAHPOq+QnPgqsxpqmSaL5VaH7PfT9ays3+tya5ljSuTfEH8ZjKDgcxw
- AblCRQL2mQ3ufBCYQTiDDCyGxRAvAmTpm1F/4CTQAM/0KU8+AtJ6oes50mVx87m0
- aFgCFotz0p0uW3Wp4Tq9sGhEUptxaJ55aox8PftGskRu/Ue05gp4StZONRBf3W9N
- 3qRyvlGoqWQvbUcoNrsEf2CDF0d40osKN41XqADYApChELb811Fec/yO+bVDKngJ
- FS1cIHVNJ+n9Snp/b6DOIphuhhdQfs/qYZW2FkwPGVMF2oP6TQzORDX1FhIGcymn
- 1AfBG6zSLNLA8jSi5PwudX85ELdl/WWd5/cyhQ1zeZqhvvBBe7HTcQmFgKts/LYN
- 1czpxtZcldQOa/nnXkqmxHTDcnTFd73NmAED1zwSuaCUtlBow+ZXrng=
+ AAHjxn49sluWjC2XK2rAnFaGwPW4kz47/7U9LKr5dYcCwL37X6n/dtXU9ndxKg+k
+ bsvKx9fbz7JOFJNYvi4p9hMJgifyHzLmG3nPAwF0Xz+9ZEcX4kIvvcU2QbnYVers
+ nNTSOXBkG03+Zi0ZxecSW254VsslLikjZks/8+pUucaO3Ec5GHJUJ98mbZeHjBSY
+ jaelyXitu6m1kAcq18C7lpBl6v3geA7yVj38Nid/1G5uzubSmbY3EIHYLWqprFLz
+ WVOMx0EnAy2x8+c42czi/F+H7R+I3zJ9h69k4883tpZICOG4T0GdNr+cvaF/3g1q
+ Er0J6kNWbNyqlDHLtHCaR6aAeabKldjGEVa7u/DapR6J/lgbzrFrgMWF9N1Fmsno
+ ns1m9wn5eFCKhVcQLT99cE+kNRLgGyilGya9waoja+QArjJjL/D4/CWaokSw/uTO
+ JHXDdeR99d4GHj9CkLNG2J3Z6cZVB+74XRkjssRlSDM7Dvvc+tyzdu9S
 
 
-On Sun Oct 13, 2024 at 16:03, Phillip Wood <phillip.wood123@gmail.com> wrot=
+On Sun Oct 13, 2024 at 15:52, Phillip Wood <phillip.wood123@gmail.com> wrot=
 e:
 > Hi Bence
 >
 > On 13/10/2024 00:03, Bence Ferdinandy wrote:
->> Currently there is only one special error for transaction, for when
->> there is a naming conflict, all other errors are dumped under a generic
->> error. Add a new special error case for when the caller requests the
->> reference to be updated only when it does not yet exist and the
->> reference actually does exist.
+>> When updating a symref it's currently not possible to know for sure what
+>> was the previous value that was overwritten.
 >
-> This looks like useful improvement. Are the changes to=20
-> reftable-backend.c correct - it looks like where it previously returned=
+> It is if you use a ref transaction rather than call refs_update_symref()=
 =20
-> TRANSACTION_GENERIC_ERR it now returns TRANSACTION_NAME_CONFLICT which I=
+> and query the ref after calling ref_transaction_prepare() and before=20
+> calling ref_transaction_commit() which is what the code below does.
+
+Yeah, it would be more clear if that sentence would say "when using
+update_symref".
+
+>
+>> Record the value after the
+>> ref has been locked if the caller of refs_update_symref requests it via
+>> a new variable in the function call.
+>
+> To me this patch and patch 5 feel quite disruptive to all the existing=20
+> callers which don't need this specialized functionality. I think it=20
+> would be less disruptive over all if you used a ref transaction rather=20
+> than calling refs_update_symref() in the final patch. That would enable=
 =20
-> think is used to indicate a file/directory conflict (e.g. trying to=20
-> create refs/heads/topic/one when refs/heads/topic exists)
+> us to keep the simpler interface for refs_update_symref().
 
-This passes:
-GIT_TEST_DEFAULT_REF_FORMAT=3Dreftable prove --timer --jobs 8 ./t[0-9]*.sh
-so I'm hoping it's correct :)
+The extra parameter introduced here is actually used in two places by the e=
+nd
+of the series, in remote set-head and fetch (of course you could make a sim=
+ilar
+argument for the functionality added in 5/6 which is only used in fetch by =
+the
+final patch). To avoid code duplication I think even if we did not touch
+refs_update_symref() it would make sense to create
+a "refs_update_symref_extended()" and make refs_update_symref() a wrapper
+around that with a few less parameters. That would be similar to how
+refs_update_symref() and refs_update_ref() predetermine a couple of paramet=
+ers
+to say transaction_update().
 
-[snip]
+Currently there are 15 calls to refs_update_symref() in total, of these=20
+5 do not use the complete functionality of the function (they pass NULL as
+logmsg), so the current implementation would not be completely unprecedente=
+d.
+(This tally did make me catch an error on my side: the logmsg in fetch's
+set_head should be "fetch" not "remote set-head", I'll fix that in a v8).
 
-I guess you are referring to this part below:
+Imho, even if I manage to come up with a better name than
+"refs_update_symref_extended()" wouldn't it be more confusing to have two w=
+ays
+to update symrefs via a function call, rather than have one, where _usually=
+_
+you pass two NULL-s at the end?
 
->> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
->> index 3c96fbf66f..ebf8e57fbc 100644
->> --- a/refs/reftable-backend.c
->> +++ b/refs/reftable-backend.c
->> @@ -1206,10 +1206,13 @@ static int reftable_be_transaction_prepare(struc=
-t ref_store *ref_store,
->>   				goto done;
->>   			}
->>   		} else if ((u->flags & REF_HAVE_OLD) && !oideq(&current_oid, &u->old=
-_oid)) {
->> -			if (is_null_oid(&u->old_oid))
->> +			ret =3D TRANSACTION_NAME_CONFLICT;
->> +			if (is_null_oid(&u->old_oid)) {
->>   				strbuf_addf(err, _("cannot lock ref '%s': "
->>   						   "reference already exists"),
->>   					    ref_update_original_update_refname(u));
->> +				ret =3D TRANSACTION_CREATE_EXISTS;
->> +			}
->>   			else if (is_null_oid(&current_oid))
->>   				strbuf_addf(err, _("cannot lock ref '%s': "
->>   						   "reference is missing but expected %s"),
->> @@ -1221,7 +1224,6 @@ static int reftable_be_transaction_prepare(struct =
-ref_store *ref_store,
->>   					    ref_update_original_update_refname(u),
->>   					    oid_to_hex(&current_oid),
->>   					    oid_to_hex(&u->old_oid));
->> -			ret =3D -1;
->>   			goto done;
->>   		}
->>  =20
+>
+> I'm also not sure about the proposed interface I would have thought it=20
+> would be simpler to take a "char**" rather than an "struct strbuf*" if=20
+> we do decide that it is useful for callers of refs_update_symref() to=20
+> query the old value.
 
-This originally returned -1, and it still returns that if it doesn't return=
- -2,
-I just used the named variable instead of the integer itself. It might stil=
-l be
-that this should be -3 GENERIC_ERROR, but if that is the case I think fixin=
-g
-that should be a different patch? I didn't check if changing that -1 to
-something else breaks anything or not.
+refs_read_symbolic_ref requires a strbuf, so one would need to be created
+anyway and I also sort of got the feeling that the project likes to handle =
+refs
+in strbufs (which may be wrong). Are there any downsides I'm not seeing?
 
-Best,
+Thanks,
 Bence
-
---=20
-bence.ferdinandy.com
 
