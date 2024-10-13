@@ -1,136 +1,390 @@
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7908513E02E
-	for <git@vger.kernel.org>; Sun, 13 Oct 2024 12:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C1113AD03
+	for <git@vger.kernel.org>; Sun, 13 Oct 2024 13:53:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728821358; cv=none; b=ouxHRlEhfWdexp17KU6weQYwURJbivyQADoNN4Dr1P8rag0ccX626Je0NpkMaVZkyX8zDkSqpm/jJExY3vefzMGilEFCujNkqYZ4dMk2IQRpnCTyNPSKxS93nGSzaXApjNczVYZuMe0Axs8+0pPDJqaY89FP0teeYd7ErB+phmU=
+	t=1728827584; cv=none; b=ZWkw2AGmKOC+XwNl6w7GA9zMA283fEa2t1PTvwYEkJuBoOWtz0gWSAQjrpkDn/T/E26e3lL+ZQuEvqj6U3ucUX7p4fD5LvI3DKozoLVs7jliXeohozpC3NqPB+OUYWRHSCkvVdJ1IR1QwdN30wRWWGap9PQ/VLHgUnz0hSxk/mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728821358; c=relaxed/simple;
-	bh=4LsCKdKX0auaR66NpNyrxiUy2FfpBXHw2gN+vmvjWVU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pSQItHFktKym17tevrcBvgagCpmTKR3kGqe+l/j1tc7S/dopEBsaH4Kfn3Mfg4uF6g38VyHwzPnnulBhccyP3IA1wyMX8sNvUpfH/vmB9uN0dYt/OZEcsmjSLj2KJBy4+ztaRGkDttn2UIrMrBIoQft7uaL/hmqcyrr6yjzQhVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RxVmaYk7; arc=none smtp.client-ip=209.85.222.48
+	s=arc-20240116; t=1728827584; c=relaxed/simple;
+	bh=P/HzLOp089ptN4eywt1Eu4gFwTaSpGgGHiclDmBOuOg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=o2jLx0kOfPCe5TCtuJbVfonQmRdddmc25Jje5KeRO5QE282YefIq/mb85HojXBCZd19X5P5IpBEE2Yi+ab2T1yejjiBrB5fQB76USCKnIdXEct7V1US69ZjstFuB7WLu9tfQj5706a1RmJD15DNDfzv36mfCgfp45qx4I/Eh8GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kvg4GSqr; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RxVmaYk7"
-Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-84fe454176bso538060241.1
-        for <git@vger.kernel.org>; Sun, 13 Oct 2024 05:09:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kvg4GSqr"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4305413aec9so33711385e9.2
+        for <git@vger.kernel.org>; Sun, 13 Oct 2024 06:53:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728821355; x=1729426155; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=n+HWHXiStcaoVYBcef5Vkm8RWLTcppbD9Hp8/fw8hDw=;
-        b=RxVmaYk7MQhHP1A3eYjw6pG3XNvx9bzS1dZnChTFz4kQH/Sb+5NnUUC4AcCw2Dg+d4
-         p6GQSunpELN9nJvCNp0jtxXXTojN5sG3N/5d27UHa2eZHZhmFGqUN3vC5fKFJpUCvf6/
-         yiD3OvFKViJjMeC/vp0NAtsRG6ZFE4ogDcnoKavkXtI4LSFWNboJ4CZaDDzbwYxkRylc
-         EFtWm+PPhcr/PwBmRx/kO4lZv0LsU0ChHOy2TraVY1z6pEaXY97b6WpvnvwxQh9LbXY3
-         6jOFD+GCrieLDiBMFWQbqTxy8pW1kDgsOoqFX4aEgD1tlKuHMNg5+QWAsbaEgfnRyh2A
-         y7gA==
+        d=gmail.com; s=20230601; t=1728827580; x=1729432380; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=aUTuOMlGWD7lEF7eIpJrYCRVXseoM2go+8qTcOn0Q7U=;
+        b=Kvg4GSqr8ZOtuhotZruYmCxPW9eyJ9WL+N8sO3O8NZZe5nWlkwmsCHc7bLHA6MWppu
+         n/PlzyWSBxPNNVVseyzjiHuK0M+x21oqzHhy8PhS+5Xr4nLQLtDkmxORjwWJ1BwUDrg1
+         rdDiVq/CWnuVPa/BtrXkL9vJicvM37E5T88m2ED6yrDOEmHS4RHxLj2C6ExCACJkJtPc
+         ilisDVG36MzFE5IaYCE4z3HGnog504zf36FD6+dZFYQ/wcIgCRBE0M8dH013NXDqeDfz
+         sjw0na6BrOZLa/cDmq1qwvMR+xCFmF8hkqdiqlBPypP9Z8p2/xtH2q+q8xmNGlUtyc4q
+         m6FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728821355; x=1729426155;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n+HWHXiStcaoVYBcef5Vkm8RWLTcppbD9Hp8/fw8hDw=;
-        b=i2kH6UU51TBabJK73RnLNZ23mWN8jKJiBMqvg2tXHcwmh6EX6bTojmUibG2YOEC0Lm
-         MJ+pJH1ejyiBwcpOCcAZtNVz0CEPmWXlev9E07sdvRrXbnmGd0jIRyRMrorrRSv3GjR1
-         rqkpr9Grqhg6D7AMDPvXQ8b/JW9+lJJ/qrv3x9EHJidYf0bIP+zAUezWBqphpY1HSqMj
-         W2XJFq9YjB5PPnDQUHj1KdnbUwp9xI56DsdRQzfmJqTTf02LKTbiaI6qUHgLEtdjbDIb
-         B4fP2IseWDCfyMv8lzb609Y3/o6bmpwnkQtsmgNlLEIPrFvP0fAqpc6d+CYxly7AnYIz
-         xMeQ==
-X-Gm-Message-State: AOJu0YySRYdBvrZ6/SIdnOZV1S/pyD7dHvScukqtUbNit83aQEo3FMVB
-	1HMquomeus9ciGsdm6eTInflVPW5VwM0vEbUxHhx3m/Xl2NaNcClLUXGxgN65LwIKMiCIYl/Kx8
-	2Al94Q4ZsPi6yyY5Tr+bQYMgpbY4=
-X-Google-Smtp-Source: AGHT+IHYKGMG7JdbF+VLRlbX2w4LKaahpYrIFNNVS6BuJJJ+4FLQErECwF5wVckeMqyfIdam8/K6VmkNlOoI0b2U/ss=
-X-Received: by 2002:a05:6122:250e:b0:50a:cc6f:2a32 with SMTP id
- 71dfb90a1353d-50d1f38f7c1mr6304470e0c.3.1728821355071; Sun, 13 Oct 2024
- 05:09:15 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 13 Oct 2024 07:09:14 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <16d2d47c-5887-4658-b6db-996dac075828@app.fastmail.com>
-References: <D4T9VCF8OS6U.1FMB8P6YU7I3S@ferdinandy.com> <cb60b7ad-7902-4293-81e9-06d1b1526842@app.fastmail.com>
- <D4TA5EXQFFA0.1XVEK1RM2Q6VA@ferdinandy.com> <xmqqa5facosb.fsf@gitster.g>
- <f7a7046c-020a-4365-baf4-49184bd2c60b@gmail.com> <16d2d47c-5887-4658-b6db-996dac075828@app.fastmail.com>
+        d=1e100.net; s=20230601; t=1728827580; x=1729432380;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aUTuOMlGWD7lEF7eIpJrYCRVXseoM2go+8qTcOn0Q7U=;
+        b=K2CTm1so49sGORa8/FxYXNsTL6zu7iG+2rfEHnSI5MG04MkXtBdQkJc9XFH1voLuJi
+         SP5QiaqfOh1NQOxYqq5mrfufmRSkVRhZG6LVRRChUb81Vrb0wfJJcqJoVrnPpgArJjTT
+         DtVB618AHkCfxn/ih1mNDzymqaQLrJTOh3qp/8oKb+T0CGDx4izhjp4fXXVhRyb0b026
+         HBq70pf/I8me2O/J2WyhZKHdoQbxoJf9DFqrSMbSPKVY3qtmtM4bWolCVb5d0tuF54MY
+         2D4h6qZ7+HTeZlg9Gh4zxcVFhbhcWEgz7xAefksbgn+MEWmgq5vCvLxt/zhVBxBwkbf5
+         6uAA==
+X-Forwarded-Encrypted: i=1; AJvYcCW5KWNknmNNFz+2HkPsarI+DvNexSS+3Bn7NcqlLfaK49fCo/WTaPhkmOp+Poy7MOCEeRk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5zwYXTXG369B8g694yYu2p1THgsMWFBCbxiv0DuEhhG1FHqek
+	umvzeR472X0BU78WjsuAIlXMSY9GQEMQJ2SCESpI+olWM38Z/fdgbVFmbg==
+X-Google-Smtp-Source: AGHT+IGwjZ+o/hcesiTrFgg6SqA7QpsXvgrhJPKYeUwMqRVKxA4cDv/M+rSaqsa12/+uOpDYvdsJUQ==
+X-Received: by 2002:a05:600c:1ca3:b0:42c:de34:34be with SMTP id 5b1f17b1804b1-4311deae9famr76501305e9.3.1728827580254;
+        Sun, 13 Oct 2024 06:53:00 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d4b6a8911sm8699652f8f.14.2024.10.13.06.52.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 13 Oct 2024 06:52:59 -0700 (PDT)
+Message-ID: <3c848f10-ac14-4cd7-8fbe-868da9599244@gmail.com>
+Date: Sun, 13 Oct 2024 14:52:58 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 13 Oct 2024 07:09:14 -0500
-Message-ID: <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
-Subject: Re: with git update-ref?
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>, Junio C Hamano <gitster@pobox.com>, 
-	Bence Ferdinandy <bence@ferdinandy.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000bfebf406245a968d"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v7 1/6] refs: atomically record overwritten ref in
+ update_symref
+To: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
+Cc: phillip.wood@dunelm.org.uk, Taylor Blau <me@ttaylorr.com>,
+ =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>
+References: <20241010133022.1733542-1-bence@ferdinandy.com>
+ <20241012230428.3259229-1-bence@ferdinandy.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20241012230428.3259229-1-bence@ferdinandy.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000bfebf406245a968d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Bence
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+On 13/10/2024 00:03, Bence Ferdinandy wrote:
+> When updating a symref it's currently not possible to know for sure what
+> was the previous value that was overwritten.
 
-> On Sun, Oct 13, 2024, at 11:34, Phillip Wood wrote:
->>> I do not think update-ref is a tool to modify a symbolic-ref.
->>
->> Didn't we add support for symbolic-refs to update-ref with
->> 'kn/update-ref-symref'? Maybe it only works with --stdin? I've Cc'd
->> Karthik for clarification on how it is supposed to work.
->
-> Yes.  The man page says that you can use the `symref-update` command
-> with `--stdin`.
->
+It is if you use a ref transaction rather than call refs_update_symref() 
+and query the ref after calling ref_transaction_prepare() and before 
+calling ref_transaction_commit() which is what the code below does.
 
-That's correct, we did indeed add support for symref in the --stdin part
-of `git update-ref`. To give some context, this is because we sometimes
-want to update regular refs and symrefs in the same transaction. While
-the underlying code exists, we didn't add support for symrefs without
---stdin, mostly because `git symbolic-ref` already exists.
+> Record the value after the
+> ref has been locked if the caller of refs_update_symref requests it via
+> a new variable in the function call.
 
-> So the issue or confusion here seems to be that you have to use specific
-> commands for symrefs.  git-update-ref(1) won=E2=80=99t try to figure it o=
-ut.
->
+To me this patch and patch 5 feel quite disruptive to all the existing 
+callers which don't need this specialized functionality. I think it 
+would be less disruptive over all if you used a ref transaction rather 
+than calling refs_update_symref() in the final patch. That would enable 
+us to keep the simpler interface for refs_update_symref().
 
-I agree, the documentation here could use some cleanup. The confusion
-here lies around
+I'm also not sure about the proposed interface I would have thought it 
+would be simpler to take a "char**" rather than an "struct strbuf*" if 
+we do decide that it is useful for callers of refs_update_symref() to 
+query the old value.
 
-    It also allows a "ref" file to be a symbolic pointer to another ref
-    file by starting with the four-byte header sequence of "ref:".
+Best Wishes
 
-This is added to talk about how the command de-references symbolic refs,
-but it can be misinterpreted to mean that it does support symbolic refs
-on the top level.
+Phillip
 
-Do either of you want to take a stab at updating the documentation here?
+> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+> ---
+> 
+> Notes:
+>      v4: new patch
+>      
+>      v5: - added before_target to reftables backend
+>          - added an extra safety check for transaction's existence in refs.c
+>      
+>      v6: - no change
+>      
+>      v7: - remove the whole before_target concept from the backends and
+>            handle checking it in refs.c instead (thanks Karthik)
+>          - rename the before_target to referent which is how the same concept
+>            is called in the backends
+>          - change commit prefix to be more in line with project standards
+> 
+>   builtin/branch.c          |  2 +-
+>   builtin/checkout.c        |  4 ++--
+>   builtin/clone.c           |  6 +++---
+>   builtin/notes.c           |  2 +-
+>   builtin/remote.c          |  6 +++---
+>   builtin/symbolic-ref.c    |  2 +-
+>   builtin/worktree.c        |  2 +-
+>   refs.c                    | 16 +++++++++++-----
+>   refs.h                    |  3 ++-
+>   reset.c                   |  2 +-
+>   sequencer.c               |  2 +-
+>   setup.c                   |  2 +-
+>   t/helper/test-ref-store.c |  2 +-
+>   13 files changed, 29 insertions(+), 22 deletions(-)
+> 
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index fd1611ebf5..6c87690b58 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -559,7 +559,7 @@ static int replace_each_worktree_head_symref(struct worktree **worktrees,
+>   			continue;
+>   
+>   		refs = get_worktree_ref_store(worktrees[i]);
+> -		if (refs_update_symref(refs, "HEAD", newref, logmsg))
+> +		if (refs_update_symref(refs, "HEAD", newref, logmsg, NULL))
+>   			ret = error(_("HEAD of working tree %s is not updated"),
+>   				    worktrees[i]->path);
+>   	}
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 9c30000d3a..356ee9bcde 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1015,7 +1015,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+>   			describe_detached_head(_("HEAD is now at"), new_branch_info->commit);
+>   		}
+>   	} else if (new_branch_info->path) {	/* Switch branches. */
+> -		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", new_branch_info->path, msg.buf) < 0)
+> +		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", new_branch_info->path, msg.buf, NULL) < 0)
+>   			die(_("unable to update HEAD"));
+>   		if (!opts->quiet) {
+>   			if (old_branch_info->path && !strcmp(new_branch_info->path, old_branch_info->path)) {
+> @@ -1479,7 +1479,7 @@ static int switch_unborn_to_new_branch(const struct checkout_opts *opts)
+>   		die(_("You are on a branch yet to be born"));
+>   	strbuf_addf(&branch_ref, "refs/heads/%s", opts->new_branch);
+>   	status = refs_update_symref(get_main_ref_store(the_repository),
+> -				    "HEAD", branch_ref.buf, "checkout -b");
+> +				    "HEAD", branch_ref.buf, "checkout -b", NULL);
+>   	strbuf_release(&branch_ref);
+>   	if (!opts->quiet)
+>   		fprintf(stderr, _("Switched to a new branch '%s'\n"),
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index e77339c847..ead2af20ea 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -661,7 +661,7 @@ static void update_remote_refs(const struct ref *refs,
+>   		strbuf_addstr(&head_ref, "HEAD");
+>   		if (refs_update_symref(get_main_ref_store(the_repository), head_ref.buf,
+>   				       remote_head_points_at->peer_ref->name,
+> -				       msg) < 0)
+> +				       msg, NULL) < 0)
+>   			die(_("unable to update %s"), head_ref.buf);
+>   		strbuf_release(&head_ref);
+>   	}
+> @@ -673,7 +673,7 @@ static void update_head(const struct ref *our, const struct ref *remote,
+>   	const char *head;
+>   	if (our && skip_prefix(our->name, "refs/heads/", &head)) {
+>   		/* Local default branch link */
+> -		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", our->name, NULL) < 0)
+> +		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", our->name, NULL, NULL) < 0)
+>   			die(_("unable to update HEAD"));
+>   		if (!option_bare) {
+>   			refs_update_ref(get_main_ref_store(the_repository),
+> @@ -702,7 +702,7 @@ static void update_head(const struct ref *our, const struct ref *remote,
+>   		 * Unborn head from remote; same as "our" case above except
+>   		 * that we have no ref to update.
+>   		 */
+> -		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", unborn, NULL) < 0)
+> +		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", unborn, NULL, NULL) < 0)
+>   			die(_("unable to update HEAD"));
+>   		if (!option_bare)
+>   			install_branch_config(0, head, remote_name, unborn);
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index 8c26e45526..ba646f06ff 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+> @@ -980,7 +980,7 @@ static int merge(int argc, const char **argv, const char *prefix)
+>   			die(_("a notes merge into %s is already in-progress at %s"),
+>   			    notes_ref, wt->path);
+>   		free_worktrees(worktrees);
+> -		if (refs_update_symref(get_main_ref_store(the_repository), "NOTES_MERGE_REF", notes_ref, NULL))
+> +		if (refs_update_symref(get_main_ref_store(the_repository), "NOTES_MERGE_REF", notes_ref, NULL, NULL))
+>   			die(_("failed to store link to current notes ref (%s)"),
+>   			    notes_ref);
+>   		fprintf(stderr, _("Automatic notes merge failed. Fix conflicts in %s "
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 76670ddd8b..d8ff440027 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -244,7 +244,7 @@ static int add(int argc, const char **argv, const char *prefix)
+>   		strbuf_reset(&buf2);
+>   		strbuf_addf(&buf2, "refs/remotes/%s/%s", name, master);
+>   
+> -		if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote add"))
+> +		if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote add", NULL))
+>   			result = error(_("Could not setup master '%s'"), master);
+>   	}
+>   
+> @@ -864,7 +864,7 @@ static int mv(int argc, const char **argv, const char *prefix)
+>   		strbuf_reset(&buf3);
+>   		strbuf_addf(&buf3, "remote: renamed %s to %s",
+>   				item->string, buf.buf);
+> -		if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, buf3.buf))
+> +		if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, buf3.buf, NULL))
+>   			die(_("creating '%s' failed"), buf.buf);
+>   		display_progress(progress, ++refs_renamed_nr);
+>   	}
+> @@ -1444,7 +1444,7 @@ static int set_head(int argc, const char **argv, const char *prefix)
+>   		/* make sure it's valid */
+>   		if (!refs_ref_exists(get_main_ref_store(the_repository), buf2.buf))
+>   			result |= error(_("Not a valid ref: %s"), buf2.buf);
+> -		else if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote set-head"))
+> +		else if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote set-head", NULL))
+>   			result |= error(_("Could not setup %s"), buf.buf);
+>   		else if (opt_a)
+>   			printf("%s/HEAD set to %s\n", argv[0], head_name);
+> diff --git a/builtin/symbolic-ref.c b/builtin/symbolic-ref.c
+> index 299d23d76a..7728fbc3c1 100644
+> --- a/builtin/symbolic-ref.c
+> +++ b/builtin/symbolic-ref.c
+> @@ -88,7 +88,7 @@ int cmd_symbolic_ref(int argc,
+>   		if (check_refname_format(argv[1], REFNAME_ALLOW_ONELEVEL) < 0)
+>   			die("Refusing to set '%s' to invalid ref '%s'", argv[0], argv[1]);
+>   		ret = !!refs_update_symref(get_main_ref_store(the_repository),
+> -					   argv[0], argv[1], msg);
+> +					   argv[0], argv[1], msg, NULL);
+>   		break;
+>   	default:
+>   		usage_with_options(git_symbolic_ref_usage, options);
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index fc31d072a6..a7ab4193c1 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -517,7 +517,7 @@ static int add_worktree(const char *path, const char *refname,
+>   		ret = refs_update_ref(wt_refs, NULL, "HEAD", &commit->object.oid,
+>   				      NULL, 0, UPDATE_REFS_MSG_ON_ERR);
+>   	else
+> -		ret = refs_update_symref(wt_refs, "HEAD", symref.buf, NULL);
+> +		ret = refs_update_symref(wt_refs, "HEAD", symref.buf, NULL, NULL);
+>   	if (ret)
+>   		goto done;
+>   
+> diff --git a/refs.c b/refs.c
+> index 5f729ed412..b964ac44d0 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2114,7 +2114,8 @@ int peel_iterated_oid(struct repository *r, const struct object_id *base, struct
+>   }
+>   
+>   int refs_update_symref(struct ref_store *refs, const char *ref,
+> -		       const char *target, const char *logmsg)
+> +		       const char *target, const char *logmsg,
+> +		       struct strbuf *referent)
+>   {
+>   	struct ref_transaction *transaction;
+>   	struct strbuf err = STRBUF_INIT;
+> @@ -2122,17 +2123,23 @@ int refs_update_symref(struct ref_store *refs, const char *ref,
+>   
+>   	transaction = ref_store_transaction_begin(refs, &err);
+>   	if (!transaction ||
+> -	    ref_transaction_update(transaction, ref, NULL, NULL,
+> +		ref_transaction_update(transaction, ref, NULL, NULL,
+>   				   target, NULL, REF_NO_DEREF,
+>   				   logmsg, &err) ||
+> -	    ref_transaction_commit(transaction, &err)) {
+> +		ref_transaction_prepare(transaction, &err)) {
+>   		ret = error("%s", err.buf);
+> +		goto cleanup;
+>   	}
+> +	if (referent)
+> +		refs_read_symbolic_ref(refs, ref, referent);
+> +
+> +	if (ref_transaction_commit(transaction, &err))
+> +		ret = error("%s", err.buf);
+>   
+> +cleanup:
+>   	strbuf_release(&err);
+>   	if (transaction)
+>   		ref_transaction_free(transaction);
+> -
+>   	return ret;
+>   }
+>   
+> @@ -2948,4 +2955,3 @@ int ref_update_expects_existing_old_ref(struct ref_update *update)
+>   	return (update->flags & REF_HAVE_OLD) &&
+>   		(!is_null_oid(&update->old_oid) || update->old_target);
+>   }
+> -
+> diff --git a/refs.h b/refs.h
+> index 108dfc93b3..b09a3a4384 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -571,7 +571,8 @@ int refs_copy_existing_ref(struct ref_store *refs, const char *oldref,
+>   		    const char *newref, const char *logmsg);
+>   
+>   int refs_update_symref(struct ref_store *refs, const char *refname,
+> -		       const char *target, const char *logmsg);
+> +		       const char *target, const char *logmsg,
+> +		       struct strbuf *referent);
+>   
+>   enum action_on_err {
+>   	UPDATE_REFS_MSG_ON_ERR,
+> diff --git a/reset.c b/reset.c
+> index b22b1be792..cc36a9ed56 100644
+> --- a/reset.c
+> +++ b/reset.c
+> @@ -76,7 +76,7 @@ static int update_refs(const struct reset_head_opts *opts,
+>   		if (!ret)
+>   			ret = refs_update_symref(get_main_ref_store(the_repository),
+>   						 "HEAD", switch_to_branch,
+> -						 reflog_head);
+> +						 reflog_head, NULL);
+>   	}
+>   	if (!ret && run_hook)
+>   		run_hooks_l(the_repository, "post-checkout",
+> diff --git a/sequencer.c b/sequencer.c
+> index 8d01cd50ac..23b162924c 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -5107,7 +5107,7 @@ static int pick_commits(struct repository *r,
+>   			}
+>   			msg = reflog_message(opts, "finish", "returning to %s",
+>   				head_ref.buf);
+> -			if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", head_ref.buf, msg)) {
+> +			if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", head_ref.buf, msg, NULL)) {
+>   				res = error(_("could not update HEAD to %s"),
+>   					head_ref.buf);
+>   				goto cleanup_head_ref;
+> diff --git a/setup.c b/setup.c
+> index 94e79b2e48..d95f051465 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -2275,7 +2275,7 @@ void create_reference_database(enum ref_storage_format ref_storage_format,
+>   			die(_("invalid initial branch name: '%s'"),
+>   			    initial_branch);
+>   
+> -		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", ref, NULL) < 0)
+> +		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", ref, NULL, NULL) < 0)
+>   			exit(1);
+>   		free(ref);
+>   	}
+> diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+> index 65346dee55..a911302bea 100644
+> --- a/t/helper/test-ref-store.c
+> +++ b/t/helper/test-ref-store.c
+> @@ -120,7 +120,7 @@ static int cmd_create_symref(struct ref_store *refs, const char **argv)
+>   	const char *target = notnull(*argv++, "target");
+>   	const char *logmsg = *argv++;
+>   
+> -	return refs_update_symref(refs, refname, target, logmsg);
+> +	return refs_update_symref(refs, refname, target, logmsg, NULL);
+>   }
+>   
+>   static struct flag_definition transaction_flags[] = {
 
-> That seems in line with a plumbing command.
->
-> --
-> Kristoffer Haugsbakk
-
---000000000000bfebf406245a968d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 3b797b9736e0a556_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jTHVHUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN3ZPQy93TGZwUGduUjRHY1FHbkh0RXpEZFhnYjNmSAp4N2RwbWl0MXJM
-YjhqQnN3bkxvMUtsZVh4QWo4R08wYUxtT0FOR3p1ZEwxTCsxNEpMSWFZVTl2bjgyM25NZEpHClcw
-Mk1vU0Zta2R1eHR4RVl3blArTVJubDZKZ0thbmJIWlAxd1d4M3pLOGxZSmxvZ2V1S1IrcHVvU2Na
-SzFUMzkKTTlVM1FsQlhHMXV5TWZvRmxYUzFOVDRwQjllOGtpSFRsOGZNMlhrb0JhRlQzNHFEN1hr
-dEVkbGszNGVONTh1UQpnQ1pkTExudjFxVGo3MEV0eHJVbGNMZ2RJUlp3WEs4bHNxVUFwWllUTEJl
-U2xObkQ0ZWlvWmt2dGJEajFPaTExCmZ6V1lZZ2hEQkdJeTdSajI1bXlnYmNoRFlzUnIreTBqWHRI
-QWxBVGpmV1NFamFBTVNSSHIvTWJ2Y3ZjMVYvVWwKeVRMMmtobjkvdE90ODUyT2lpYi9ST0FQTmF2
-QnVtNzYvOHJlNnI3RnJKVEVIUDl0N2pGYkVUTUtDUGJxTlN2QQorK1FvTjdNSVdaWkNUaWZrNE9I
-ZHpGMC83WEtNaDcrSDArcWtPTE9BZ3lCR1AwTUdtdDNlTWNFWTRvNGlaODl1CjRiMmlON0Vidnow
-NDNwSHlUazNIcCt2cWFZRkM1T1NaNU83UDFtOD0KPXFLYzgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000bfebf406245a968d--
