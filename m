@@ -1,60 +1,60 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5626137776
-	for <git@vger.kernel.org>; Sun, 13 Oct 2024 15:18:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7291DFFC
+	for <git@vger.kernel.org>; Sun, 13 Oct 2024 15:20:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728832717; cv=none; b=ilnpbHxlcbxnEBF0T11Ifk+9aVIo0P3zYCNBXspLlQ6wNInM6j1ZOxEpoRX6ZkQNyj433/Nqc+xkJYl2E0C1zaPQj+7cfsrjQWeFWCkvMArufNjl3nqV81rdMlDJlmCXKw0hz1TrSYQ4QmfYjc1cFVzSZ9KoW5jNDIfM3WIKWlQ=
+	t=1728832857; cv=none; b=pZRiR6nhraXUsfRhG4OnXHTCgZESXgGdVj12ChnRrRU8eSzkgbp0Noiwd1dHcXcHbJKsjKkgDy0BO+j4ZccBQFk3dCr+nYPy4KQ7M2ErgQyUt22mZFwzTS99QwTXMaovoXWcB3nJgFhZFJjrT73sRcksWSBylYrTuLeTlaOpRoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728832717; c=relaxed/simple;
-	bh=vDayRoLHccJeUJflMctNG0Z/aGlNEyrmPeVy7JMVz5I=;
+	s=arc-20240116; t=1728832857; c=relaxed/simple;
+	bh=QKAKnDMrT5FYhyIZy3LRyJTsiM5BfXKSSCblfeKUL7k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C4alw5BiSNmJ4E8xSPgQa1xDwYbJhHuKijcsat+ILcbA0PlGYtIsPvVoOCR+Y8NLYBx8dFgTPGYcJCbFOy7ahOhK7+Oz1IyUrHQhR3MurvIlj7pkgYO0XyLwOQ5Nt7FJ6gMRUIH/GU+MEBz8DSsXuIt2EWH70daVT+cVJ3n09wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JoJjLqf0; arc=none smtp.client-ip=209.85.128.43
+	 In-Reply-To:Content-Type; b=AD9eGtAiKyapv37WRtciD9USwWBAeJIT6EagrZBCrNrKtqPD7zb4dIZ/IhOhGJvCcvlx2e4YSeFdBANDExc1jKXesmBsB6zActe2xXFUBa52NeParvXdJkd+jh02L+2WubZzxLrBMYH+JxTiqV6m24OAkkjNSQ9coMFx4QkVZzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eq+tN6sX; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JoJjLqf0"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4305724c12eso25672485e9.1
-        for <git@vger.kernel.org>; Sun, 13 Oct 2024 08:18:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eq+tN6sX"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-430ee5c9570so40186525e9.3
+        for <git@vger.kernel.org>; Sun, 13 Oct 2024 08:20:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728832714; x=1729437514; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728832854; x=1729437654; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ae6mOFB0JP04Va5Zv1NxB8E0Qui0B8TML778Ijq1rpc=;
-        b=JoJjLqf0RMMwxtHpZ8qflVqsYQICWfeG1bhnM856Cm8e8iBEyy81zkWUZ/VvnhZc0m
-         X9mEFT7iKan2+cWBRGiV99Hl1FxRiHMmy2uF3Cptf5dA8z9e8gYHxheW5aH6DAKWekLZ
-         Elh2fd0Gk0qv+sjft6UsuEQOb4gP5QXifeZ8iH4Z6TfAFxu7TT+M69tFmwQC3ma0BRFc
-         2zsJwSt/VkU65f7PTnUMT0XeZCPr6O1A4naOHENWs+dSslZ8vdxGnOhCsAqNNLZQ9o/t
-         PN/Pi8AKMz3WbX9so73fjuJVEMzgVQEFQiWH6pfgR8+kh1FGO4ixhBI9KdGqnz6qekl/
-         7XgQ==
+        bh=h258N+BileuHcyvVCtqEs/A3pVXUJDlsaS8AhsKU3tw=;
+        b=eq+tN6sXDmMYCZv8O5pRzJRKSg89lzW9ljqw6mEjArZhmYKBMEnDOCGpadXg7UkI5t
+         dUvN6NolS38JgCpHIA07WM6afNzoAhHlkvJC6kzPcXEagYbwK/Qy4FJHnl+gckHybR/p
+         DGeOgipNTYYx31BPI27j+YVqAJOUIeRjWCMc3vDiNzQYBRPCEzv64RTdlox33ZkleUry
+         fMLHFwMfASWMWAbmBVqs2C/TIXSH0TxK7bCcxGIEoKZsUR9/h65HOchZ4CFH0qQ3S0Ya
+         IOis6zix5ISuy0lf/8uy6ma7lpZoW142YLi8dPIqzLxF52E5YRtIVEUHbYQghdUK+DU5
+         IlxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728832714; x=1729437514;
+        d=1e100.net; s=20230601; t=1728832854; x=1729437654;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Ae6mOFB0JP04Va5Zv1NxB8E0Qui0B8TML778Ijq1rpc=;
-        b=g5P5UHjIzsBZROHcme1VF9scfmOpiNi6GRkV2/nSwQio3sLWez0OIBb2MUlJg9ubFl
-         YiBlEozXYoOyJQs6itvz/zUYgyDb0xB+5uofiR9fb3BdIMq1VEnv/Ncm1D0vIqSiR+KV
-         BULTGdQl2tjpjxogARZzBOc0HJZWrmjVJsW09Rg+fq736wvg3Cw0LghytUDWlvCRiINh
-         yZ3g0+pS0PIZetHV0ariFIzQ/QJWQDi30NcJkV9AlCA6VjjtcGuUvFAzPJ7ddE+nM+jT
-         L/OEhlvVQoZ++mmHULi1E0p3HSdzhL0WwJ4mbbLDCZJ1iMwpC0xuLNjqzVgE3JJHKvlx
-         TlFg==
-X-Forwarded-Encrypted: i=1; AJvYcCXdyF5LDHB3fZdMReUaku6czI9mNz/RTreLvjD1Xl1cGC5gp49zKdNLiY9+FBTY/d6MOwY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyFbCwl09dIj/AKKevxujDSMBCwIDUh5oKlaYcBWvsShfUqjlAd
-	ZO+tQdInwp9COctoKMNO/MiCEiFI/FRS/F7WL8FiwwaSiC2/J841KUX4tg==
-X-Google-Smtp-Source: AGHT+IFeJXyJPdv5/NW7dPoH+I7apvIG9QmEvQ/Cxb5Z5MjKkrlJlrwLz6ZDkNo5BYaSzWzQiy93AQ==
-X-Received: by 2002:a05:600c:1c9c:b0:426:6f27:379a with SMTP id 5b1f17b1804b1-431255dcb1dmr53419895e9.13.1728832713843;
-        Sun, 13 Oct 2024 08:18:33 -0700 (PDT)
+        bh=h258N+BileuHcyvVCtqEs/A3pVXUJDlsaS8AhsKU3tw=;
+        b=kBIxBjq5NofknlIc4KdfFhNT4cn4dN0XQ4Pp2qAc5AMv6Lgkbnx0Jr5XGTJyT3EFg6
+         4oB6MwODAcZ7z5swD9yLctlJWD4z9oVNbwekSEER4G8UYG4sKlLwNhItlVOP7BW9zLjE
+         bYpyULe01GCVBvmBMxmI4tErScrsi9Nqij1gndGqjwCSQAiJGNPws73KCY97/Tt8FZl/
+         wR5Y136Mm2UGSy/2Mjyc7vvOzVG4Zh2Hy/GMvoMnPg58mY6KlDjcnJ/8YIuPGSQeZz9G
+         uBrbhTUX2B6jw1N+/YmbkzPanSgmTQ9e8Q4uDRkjREDnmvphLOjdzbv9mHFafbgismtk
+         ltHA==
+X-Forwarded-Encrypted: i=1; AJvYcCXXFeye2ifebMJ44UOjhuQlz5K4FCsy0BwMX5xxCGUbGtkOjFmTrrZCaUg4jBkCTGRwneA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+8l924YvWFxzeMB5yNrPA8iBKkt0TaRYL73xypPmJdfV8jKa7
+	43QWDDBBRM18ZrJTeIqktLQNm7IQEqxah2dficoxsYbvTwWOr90w
+X-Google-Smtp-Source: AGHT+IGCwxG7EgHxyKFmR4BTRI/vuPaJl572sNjkesJx5HSS/LCPdw24U0rooyt1QDQH0ziG8Z9nBA==
+X-Received: by 2002:a05:600c:1d93:b0:430:4ed0:d5ce with SMTP id 5b1f17b1804b1-43125617316mr58626195e9.34.1728832854230;
+        Sun, 13 Oct 2024 08:20:54 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-430ccf204f7sm128867295e9.2.2024.10.13.08.18.32
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-431182ff785sm95561345e9.13.2024.10.13.08.20.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 13 Oct 2024 08:18:33 -0700 (PDT)
-Message-ID: <0ac9d9a1-cb91-4b1c-bba1-022ecc485684@gmail.com>
-Date: Sun, 13 Oct 2024 16:18:29 +0100
+        Sun, 13 Oct 2024 08:20:53 -0700 (PDT)
+Message-ID: <2a119bdd-93ba-468b-bf80-bea41a5e8e60@gmail.com>
+Date: Sun, 13 Oct 2024 16:20:51 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,8 +63,8 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/2] blame: respect .git-blame-ignore-revs
- automatically
+Subject: Re: [PATCH v2 2/2] blame: introduce --override-ignore-revs to bypass
+ ignore revisions list
 To: Abhijeetsingh Meena via GitGitGadget <gitgitgadget@gmail.com>,
  git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -72,79 +72,118 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
  Abhijeetsingh Meena <abhijeet040403@gmail.com>
 References: <pull.1809.git.1728370892696.gitgitgadget@gmail.com>
  <pull.1809.v2.git.1728707867.gitgitgadget@gmail.com>
- <4ed930cab1b7f5e9738e73c7b9374d927a8acd94.1728707867.git.gitgitgadget@gmail.com>
+ <8d2fa3af7964dacd09d454de4325b1d5eb7a5c3d.1728707867.git.gitgitgadget@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <4ed930cab1b7f5e9738e73c7b9374d927a8acd94.1728707867.git.gitgitgadget@gmail.com>
+In-Reply-To: <8d2fa3af7964dacd09d454de4325b1d5eb7a5c3d.1728707867.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 Hi Abhijeetsingh
 
 On 12/10/2024 05:37, Abhijeetsingh Meena via GitGitGadget wrote:
 > From: Abhijeetsingh Meena <abhijeet040403@gmail.com>
 > 
-> git-blame(1) can ignore a list of commits with `--ignore-revs-file`.
-> This is useful for marking uninteresting commits like formatting
-> changes, refactors and whatever else should not be “blamed”.  Some
-> projects even version control this file so that all contributors can
-> use it; the conventional name is `.git-blame-ignore-revs`.
+> The git blame command can ignore a list of revisions specified either
+> through the --ignore-revs-file option or the blame.ignoreRevsFile
+> configuration. This feature is useful for excluding irrelevant
+> commits, such as formatting changes or large refactors, from blame
+> annotations.
 > 
-> But each user still has to opt-in to the standard ignore list,
-> either with this option or with the config `blame.ignoreRevsFile`.
-> Let’s teach git-blame(1) to respect this conventional file in order
-> to streamline the process.
+> However, users may encounter cases where they need to
+> temporarily override these configurations to inspect all commits,
+> even those excluded by the ignore list. Currently, there is no
+> simple way to bypass all ignore revisions settings in one go.
 
-It's good that the commit message now mentions the config setting. It 
-would be helpful to explain why the original implementation deliberately 
-decided not to implement a default file and explain why it is now a good 
-idea to do so. Supporting a default file in addition to the files listed 
-in blame.ignoreRevsFile config setting leaves us in an odd position 
-compared to other settings which use a fixed name like .gitignore or 
-have a default that can be overridden by a config setting like 
-core.excludesFile or require a config setting to enable the feature like 
-diff.orderFile.
-
-I've left a couple of code comments below but really the most important 
-things are to come up with a convincing reason for changing the behavior 
-and figuring out how the default file should interact with the config 
-setting.
-
-> +	/*
-> +	* By default, add .git-blame-ignore-revs to the list of files
-> +	* containing revisions to ignore if it exists.
-> +	*/
-> +	if (access(".git-blame-ignore-revs", F_OK) == 0) {
-
-There are some uses of "access(.., F_OK)" in our code base but it is 
-more usual to call file_exists() these days.
-
-> +		string_list_append(&ignore_revs_file_list, ".git-blame-ignore-revs");
-
-If the user already has this path in their config we'll waste time 
-parsing it twice. We could avoid that by using a "struct strset" rather 
-than a "struct string_list". I don't think we have OPT_STRSET but it 
-should be easy to add one by copying OPT_STRING_LIST.
-
-> +    echo world >>hello.txt &&
-> +    test_commit second-commit hello.txt &&
-
-test_commit overwrites the file it is committing so you need to use the 
---printf option
-
-	test_commit --printf second-commit hello.txt "hello\nworld\n"
-
-> +    git rev-parse HEAD >ignored-file &&
-> +    git blame --ignore-revs-file=ignored-file hello.txt >expect &&
-> +    git rev-parse HEAD >.git-blame-ignore-revs &&
-> +    git blame hello.txt >actual &&
-> +    test_cmp expect actual
-
-I have mixed feelings about this sort of differential testing, comparing 
-the actual output of git blame to what we expect makes it unambiguous 
-that the test is checking what we want it to.
+As Kristoffer has pointed out --no-ignore-revs-file should be sufficient 
+to disable the default file. If it isn't we should fix it so that it is, 
+not add a new option.
 
 Best Wishes
 
 Phillip
+
+> This patch introduces the --override-ignore-revs option (or -O),
+> which allows users to easily bypass the --ignore-revs-file
+> option, --ignore-rev option and the blame.ignoreRevsFile
+> configuration. When this option is used, git blame will completely
+> disregard all configured ignore revisions lists.
+> 
+> The motivation behind this feature is to provide users with more
+> flexibility when dealing with large codebases that rely on
+> .git-blame-ignore-revs files for shared configurations, while
+> still allowing them to disable the ignore list when necessary
+> for troubleshooting or deeper inspections.
+> 
+> Signed-off-by: Abhijeetsingh Meena <abhijeet040403@gmail.com>
+> ---
+>   builtin/blame.c                       |  8 +++++++-
+>   t/t8016-blame-override-ignore-revs.sh | 25 +++++++++++++++++++++++++
+>   2 files changed, 32 insertions(+), 1 deletion(-)
+>   create mode 100755 t/t8016-blame-override-ignore-revs.sh
+> 
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 1eddabaf60f..956520edcd9 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -69,6 +69,7 @@ static int coloring_mode;
+>   static struct string_list ignore_revs_file_list = STRING_LIST_INIT_DUP;
+>   static int mark_unblamable_lines;
+>   static int mark_ignored_lines;
+> +static int override_ignore_revs = 0;
+>   
+>   static struct date_mode blame_date_mode = { DATE_ISO8601 };
+>   static size_t blame_date_width;
+> @@ -901,6 +902,7 @@ int cmd_blame(int argc,
+>   		OPT_BIT('w', NULL, &xdl_opts, N_("ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
+>   		OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"), N_("ignore <rev> when blaming")),
+>   		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list, N_("file"), N_("ignore revisions from <file>")),
+> +		OPT_BOOL('O', "override-ignore-revs", &override_ignore_revs, N_("override all configurations that exclude revisions")),
+>   		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line differently"), OUTPUT_COLOR_LINE),
+>   		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"), OUTPUT_SHOW_AGE_WITH_COLOR),
+>   		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
+> @@ -1119,7 +1121,11 @@ parse_done:
+>   	sb.reverse = reverse;
+>   	sb.repo = the_repository;
+>   	sb.path = path;
+> -	build_ignorelist(&sb, &ignore_revs_file_list, &ignore_rev_list);
+> +
+> +	if (!override_ignore_revs) {
+> +		build_ignorelist(&sb, &ignore_revs_file_list, &ignore_rev_list);
+> +	}
+> +
+>   	string_list_clear(&ignore_revs_file_list, 0);
+>   	string_list_clear(&ignore_rev_list, 0);
+>   	setup_scoreboard(&sb, &o);
+> diff --git a/t/t8016-blame-override-ignore-revs.sh b/t/t8016-blame-override-ignore-revs.sh
+> new file mode 100755
+> index 00000000000..b5899729f8e
+> --- /dev/null
+> +++ b/t/t8016-blame-override-ignore-revs.sh
+> @@ -0,0 +1,25 @@
+> +#!/bin/sh
+> +
+> +test_description='default revisions to ignore when blaming'
+> +
+> +TEST_PASSES_SANITIZE_LEAK=true
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'blame: override-ignore-revs' '
+> +    test_commit first-commit hello.txt hello &&
+> +
+> +    echo world >>hello.txt &&
+> +    test_commit second-commit hello.txt &&
+> +
+> +    sed "1s/hello/hi/" <hello.txt > hello.txt.tmp &&
+> +    mv hello.txt.tmp hello.txt &&
+> +    test_commit third-commit hello.txt &&
+> +
+> +    git blame hello.txt >expect &&
+> +    git rev-parse HEAD >.git-blame-ignore-revs &&
+> +    git blame -O hello.txt >actual &&
+> +
+> +    test_cmp expect actual
+> +'
+> +
+> +test_done
 
