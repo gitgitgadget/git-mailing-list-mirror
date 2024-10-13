@@ -1,130 +1,100 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from out162-62-57-252.mail.qq.com (out162-62-57-252.mail.qq.com [162.62.57.252])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929A41DFFC
-	for <git@vger.kernel.org>; Sun, 13 Oct 2024 15:40:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7591013C9A6
+	for <git@vger.kernel.org>; Sun, 13 Oct 2024 15:45:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.252
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728834010; cv=none; b=Q4MpW0cwyas3RC8DjjoBDqYgByXpK3uWfyhch4n4rTd5q3PAsFL4vAO9R+fBdBGR8uvCd7EUHFLtk7c9lGAI9XfImm1w+6ogDkBOgZ422vZiCsmsbyMql2PvJlVWuMyO/snMkq05a6xpjphsPeKrbTPNCfNOLEFeFKn6S+KP508=
+	t=1728834345; cv=none; b=VAwHWId5a7fxervO3m5bz7ySeWnYgjPGNs4woMwp6Wax3WgmLbEcYqBgk9V7sdaT4uVf5sCCFFCVC5x8VhEln7QapRdBLYLQbLUb0WLOqyvP6Q3B5IFYBs1M7YLaLlYC9pJdZL5g2nYrH25gxPoxskgrZL6jmaz7ZRoH/QCPZe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728834010; c=relaxed/simple;
-	bh=FddRj28kb7N9shysTZXbIYpimzSmapUJsYUCfJKsiVA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Ly5tsWYNz49gcAAhF51AJ0DHTmMdiimOM2lfrwupkGM8GyRBSlr4BKwCBAJEedazsX/WWmF93wVgxEby9mdR+2k1FkoF/v9ilk5Xq6SOKWkmhccZglzqk6p+QnlxyGZbVNOIKjG4IYeZVJN+bSs/pyQGoIRb+NU/9GVdLjrpqos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ce4mBpcP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IQiO2hm2; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1728834345; c=relaxed/simple;
+	bh=fopDfpmZ/Ha5ZhPYNos5tuaCGqO1Jyf6r4LPEkSKnwU=;
+	h=From:To:Subject:Mime-Version:Content-Type:Date:Message-ID; b=nfELg5srKOf8joDWiLs79Nnmz0cy6PCblS9VSjSSX72jmLbma3j9g2mMK0DNKgkPG56dWiHNtkea/bdTG/+bGwwHTnMUW3ByKwW9u2HdVO8f7TUQBNhudHkNOW+b9fFK3rUZ0WP5mRxOnlt8mwxk4YVrlaOJybn0NxeYGjrjkhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=pjnmzqMF; arc=none smtp.client-ip=162.62.57.252
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ce4mBpcP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IQiO2hm2"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id B3AF813801C5;
-	Sun, 13 Oct 2024 11:40:05 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Sun, 13 Oct 2024 11:40:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728834005;
-	 x=1728920405; bh=2RmjZg/HgZsDNJsXnlxnrwQ1a/yPqR+0WBN8JsG5pgk=; b=
-	ce4mBpcPaYaPQSLCsfCHBi6ByGp3h/xdiPfpM/2NjH2CHgNbDWT/zJX5iPg/LBPV
-	0PUgZR/saTIWjPqdLAHW5isfjzu92h9HfGiMVsMc6KKsOq6kSgeWhqFVYjMv23rU
-	QaaEHmLjEKYgSfHzBf+XgsHDjeyv9sZTqDJwwD5h5Lk1+3KcXufkk9ID163nqsw4
-	/X28CGfZcd7eRjQO0VOAr7QH60ApCc27n/g9toAPc8TaijaCfw4ReWLXysAkBfMZ
-	8F97SWJkxxYT437JB5QYe6zv6Le8sVy0VW+yWOh28d+uCOh0MV/j13rdEU72CiCN
-	lZ3I2uEs8jCnlCIVo1Swww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728834005; x=
-	1728920405; bh=2RmjZg/HgZsDNJsXnlxnrwQ1a/yPqR+0WBN8JsG5pgk=; b=I
-	QiO2hm2E9bJtvMxUFHAqKrljWcYUPonu7OrFyREsR6Og+YqexZ01vdn0/uS2nGrw
-	o+K45LWH1KlTO0MJ3DQTKOAZQfoq9/+PzuZ2ekN89++ldnUflDu4hD4+IIe2aYvB
-	Z3vHCgOgEt7Ua8TyRvXGgLTegYi7XFH7woiFxG3VCz8OyVd7pmGycoI40uzHcoW6
-	o0ORU9COQeWazJgpG3oEtkgHhh+4IujAaZ+N3dyOiqWr1g//CsbPYcwqhV4B9ELZ
-	BM7pmb3bb0xg/nWFpsHVgJ+BQskXVpOyucUKMHi64Smw2l2bLWkc+blW1xCfdHBu
-	/3xVWd/IxZAySCVFZBIkw==
-X-ME-Sender: <xms:1ekLZ--xuu1UO9OK8JZH9t_zVC39pRWhj9BvDqF7G_iM_PBG8USsXcU>
-    <xme:1ekLZ-uYpIaOPFFWTeCwOubzUvzydZQAyVrK7mk7ZhNgmxnofxaCyreS4l94nHnZK
-    LogFryqfxv1uoJL8Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegfedgleegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddt
-    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
-    thhtvghrnhepgedtjeeiteeghfeutdeutddtiefgvdegteektdeutddugfekleeugfelte
-    ffjeffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhl
-    ihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopegsvghntggvse
-    hfvghrughinhgrnhguhidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:1ekLZ0CWfO-iNQKDMWXPkoKzwsa-81z4jF-Z1DSzz8h2HhUoaDRRUA>
-    <xmx:1ekLZ2fl7C4rlaY5w6kLLaA_RfFwkt-v7pMjnoHhfVkxJPKoa3rdNQ>
-    <xmx:1ekLZzP7L9q6uDllNl2aeHTAIH_fJuyyon4uPxVooiiErTDEBMiBXw>
-    <xmx:1ekLZwljCFClqd7y_h9RJ9VxEkuO8kBD90tfTA5rypjYDBOv-7DLQg>
-    <xmx:1ekLZ4ox78buBZP1i7z_bh2IAhjBPiuSK3u1qJQPc5RKQVwnIvaJUWls>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 38195780068; Sun, 13 Oct 2024 11:40:05 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="pjnmzqMF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+	s=s201512; t=1728834332;
+	bh=fopDfpmZ/Ha5ZhPYNos5tuaCGqO1Jyf6r4LPEkSKnwU=;
+	h=From:To:Subject:Date;
+	b=pjnmzqMF07PBB5BC+XkO8WuKGUI9E2rD7gO7ZK8LaXRzL2SFJo2+LI06+CNV6SEH0
+	 AUXpo5E7ELndT+8zXNHKxa00zHM7hyv/jOoOryO7PHtFDhWL05aZKFcIaVI9pHAl68
+	 wCYYfXOD/sDZDHnwsUHzJGJ3HiBgn+scGChY7vUo=
+X-QQ-FEAT: oHWrrGTW1dDtz/MFGzupqCMH20Bzyq2O
+X-QQ-SSF: 00000000000000F0000000000000
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
+X-QQ-XMAILINFO: NH0oLxhOOEtdSCBd+i75yFxOgaWB/eUOVUPosx5o42MfF9cYo1zFAWlJ96VDkp
+	 UAofP3KYRTCM5uC9ldP7/ojuqWHZ/D6bPRQSx0wiYq6GY/E9CE9HWNj3YcWFMqPolZuONQ4C6sFn6
+	 4twTmJp54QVScvYE8iVlhxuJDNv5+IBB8KIR3Skwh0L63qf0v4CsGKq4DUd7IoTmm9K3snEG7bzhk
+	 r6FedHFIqpOpT+7jtJIJpZHCUA4Zde7g5V/XPfc00YNzutMYtJyd28IFmOR4r3TQ6xKppAUip2tG4
+	 Q9wANr9VdVOOpZTyNOf836FV3JRiVV8mpRVoA5pf2akMxbV5+gkOO0e7xOVDNrLJoPUG0Dj2meJVa
+	 P4RgW9SA3yksixim8276H6TBdm7MgIpH07cXaGMsstZJBWuLRAobcpM2ksCgKqdmgo4O40utwyjVF
+	 EOMh/nv4zyKtCy1kMsDqszmvxnncg6Dlmanmbuf+d9n1OlohcBHazcLP5yrxNQO0UlPVluZ3Z5gK1
+	 PucQVfBzSjvt0p03Br46MfQf26CH88pMBP5rGJKpeGqGKSid5beMVvqt7jpTbZWpHiFNEd1ajoh+M
+	 jOGMBrkAlZ52lxnitNSlijUbWnLVOumrfJeLq0Z+lo/rXHP2T1bFvadqn8NAL+5U9/7RiBorES4hU
+	 z3FsEhsZd9fx+MuLnvIstVyW/da4T9t1IFQVgvzC5Zzlm7dgt/KPlmy57vfeEA69gXe7nY78cBPwS
+	 kQHNvQHJnZRA88sHATnppQ7ge2tprPWU3pN0uxF5mwctyGjdks3UQUlEmiJPlyoFILDBJUW+SKh0s
+	 kB21nCdi/33IjjmPTc86XKWa3qul6yt1Hk1XEBzZ8Kq/phtYac3Y1RqZ0wtbWyIdCiwjuaqjpFwYn
+	 /kB4iB1ZQWuVie/9LpsMuIt8Tq4V0sv8HRYPI0f9HqKHIf7Ci4kx5UPafH8CFMMGhtIqq3iMvY=
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-QQ-STYLE: 
+X-QQ-mid: webmail649t1728834264t977557
+From: "=?gb18030?B?zuLUqsrY?=" <wu.yuanshou@foxmail.com>
+To: "=?gb18030?B?Z2l0?=" <git@vger.kernel.org>
+Subject: Bug Report
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Sun, 13 Oct 2024 17:39:30 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Karthik Nayak" <karthik.188@gmail.com>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Junio C Hamano" <gitster@pobox.com>,
- "Bence Ferdinandy" <bence@ferdinandy.com>
-Cc: git@vger.kernel.org
-Message-Id: <ef5a38af-e2bf-49f3-8611-6134970f829b@app.fastmail.com>
-In-Reply-To: 
- <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
-References: <D4T9VCF8OS6U.1FMB8P6YU7I3S@ferdinandy.com>
- <cb60b7ad-7902-4293-81e9-06d1b1526842@app.fastmail.com>
- <D4TA5EXQFFA0.1XVEK1RM2Q6VA@ferdinandy.com> <xmqqa5facosb.fsf@gitster.g>
- <f7a7046c-020a-4365-baf4-49184bd2c60b@gmail.com>
- <16d2d47c-5887-4658-b6db-996dac075828@app.fastmail.com>
- <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
-Subject: Re: with git update-ref?
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
+Date: Sun, 13 Oct 2024 23:44:24 +0800
+X-Priority: 3
+Message-ID: <tencent_D0324DD61B7E04E0B4686FD8761E1CDDE108@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
 
-
-On Sun, Oct 13, 2024, at 14:09, karthik nayak wrote:
->
-> I agree, the documentation here could use some cleanup. The confusion
-> here lies around
->
->     It also allows a "ref" file to be a symbolic pointer to another ref
->     file by starting with the four-byte header sequence of "ref:".
->
-> This is added to talk about how the command de-references symbolic refs,
-> but it can be misinterpreted to mean that it does support symbolic refs
-> on the top level.
->
-> Do either of you want to take a stab at updating the documentation here?
->
->> That seems in line with a plumbing command.
->>
->> --
->> Kristoffer Haugsbakk
->
-> Attachments:
-> * signature.asc
-
-I wonder if the third (It also) and the fourth
-(about FS symlinks) could be removed. The
-third is confusing like Bernard said and the
-fourth doesn't seem relevant enough any more. Not relevant enough to be part of Description.
-
-And the "safety" paragraphs could be moved
-to its own section. Because it looks like it's meant as an advice to unlearn the habits of a Git user from, I don't know, 2005 maybe.
+V2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
+cm9kdWNlIHlvdXIgaXNzdWUpClVwZGF0ZSB0aGUgZ2l0IHZlcnNpb24gZnJvbSAyLjQ2LjIg
+dG8gMi40Ny4wIC4KQ2xvbmUgYW55IHJlcG9zaXRvcnkgZnJvbSBHaXRodWIgdXNpbmcgc3No
+KEhUVFAgaXMgbm90IGFmZmVjdGVkKS4KCldoYXQgZGlkIHlvdSBleHBlY3QgdG8gaGFwcGVu
+PyAoRXhwZWN0ZWQgYmVoYXZpb3IpCkNsb25lIHN1Y2NlZWQuCgpXaGF0IGhhcHBlbmVkIGlu
+c3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpCkdpdCBjbG9uZSBoYW5nIGZvciBhIGxvbmcgdGlt
+ZSBkdXJpbmcgY2xvbmUoTWF5YmUgaGFuZyBmb3JldmVyKS4KJmd0OyBnaXQgY2xvbmUgZ2l0
+QGdpdGh1Yi5jb206aWJibGVzL0xlYXJuaW5nVW5yZWFsLmdpdCBMZWFybmluZ1VucmVhbDIK
+Q2xvbmluZyBpbnRvICdMZWFybmluZ1VucmVhbDInLi4uCnJlbW90ZTogRW51bWVyYXRpbmcg
+b2JqZWN0czogMzQxNiwgZG9uZS4KcmVtb3RlOiBDb3VudGluZyBvYmplY3RzOiAxMDAlICgz
+NjAvMzYwKSwgZG9uZS4KcmVtb3RlOiBDb21wcmVzc2luZyBvYmplY3RzOiAxMDAlICgyNjEv
+MjYxKSwgZG9uZS4KUmVjZWl2aW5nIG9iamVjdHM6ICAgMiUgKDY5LzM0MTYpCgpBbnl0aGlu
+ZyBlbHNlIHlvdSB3YW50IHRvIGFkZDoKSSBjYW4gcmVwcm9kdWNlIGl0IGluIHR3byBvZiBt
+eSBtYWNoaW5lICwgYW5kIGl0IHNlZW1zIHRvIGJlIGVhc2lseSByZXByb2R1Y2FibGUuClRo
+ZSBnaXQgcHJvY2VzcyB3aGljaCBpcyBoYW5naW5nIGZvcmV2ZXIgaGF2ZSBhIHN0YWNrIGFz
+IGZvbGxvd2VkLgoKICAgICBudGRsbC5kbGwhTnRSZWFkRmlsZSgpCiAgICAgS2VybmVsQmFz
+ZS5kbGwhMDAwMDdmZmNhNTkxYmQzYgogICAgIG1zdmNydC5kbGwhX3JlYWRfbm9sb2NrKCkK
+ICAgICBtc3ZjcnQuZGxsIV9yZWFkKCkKICAgICBnaXQuZXhlIXhyZWFkKCkgTGluZSAyMzEK
+Jmd0OyAgICBnaXQuZXhlIWZpbGwoKSBMaW5lIDMxMQogICAgIGdpdC5leGUhcGFyc2VfcGFj
+a19vYmplY3RzKCkgTGluZSA0ODQKICAgICBnaXQuZXhlIWNtZF9pbmRleF9wYWNrKCkgTGlu
+ZSAxOTI5CiAgICAgZ2l0LmV4ZSFoYW5kbGVfYnVpbHRpbigpIExpbmUgNDg0CiAgICAgZ2l0
+LmV4ZSFydW5fYXJndigpIExpbmUgODIxCiAgICAgZ2l0LmV4ZSFjbWRfbWFpbigpIExpbmUg
+OTU3CiAgICAgZ2l0LmV4ZSFtYWluKCkgTGluZSA2NwogICAgIGdpdC5leGUhd21haW4oKSBM
+aW5lIDQxNDMKICAgICBnaXQuZXhlIV9fdG1haW5DUlRTdGFydHVwKCkgTGluZSAyNjAKICAg
+ICBnaXQuZXhlIW1haW5DUlRTdGFydHVwKCkgTGluZSAxODIKICAgICBrZXJuZWwzMi5kbGwh
+MDAwMDdmZmNhN2JmMjU3ZCgpCiAgICAgbnRkbGwuZGxsIVJ0bFVzZXJUaHJlYWRTdGFydCgp
+CgpbU3lzdGVtIEluZm9dCmdpdCB2ZXJzaW9uOgpnaXQgdmVyc2lvbiAyLjQ3LjAud2luZG93
+cy4xCmNwdTogeDg2XzY0CmJ1aWx0IGZyb20gY29tbWl0OiBkNTNlNDY0OGNiNjVlYjc1ZGQ4
+ZDhhMDkzZDE3NDAwYTE4YTlhMTVkCnNpemVvZi1sb25nOiA0CnNpemVvZi1zaXplX3Q6IDgK
+c2hlbGwtcGF0aDogRDovZ2l0LXNkay02NC1idWlsZC1pbnN0YWxsZXJzL3Vzci9iaW4vc2gK
+ZmVhdHVyZTogZnNtb25pdG9yLS1kYWVtb24KbGliY3VybDogOC4xMC4xCk9wZW5TU0w6IE9w
+ZW5TU0wgMy4yLjMgMyBTZXAgMjAyNAp6bGliOiAxLjMuMQp1bmFtZTogV2luZG93cyAxMC4w
+IDIyNjMxCmNvbXBpbGVyIGluZm86IGdudWM6IDE0LjIKbGliYyBpbmZvOiBubyBsaWJjIGlu
+Zm9ybWF0aW9uIGF2YWlsYWJsZQokU0hFTEwgKHR5cGljYWxseSwgaW50ZXJhY3RpdmUgc2hl
+bGwpOiA8dW5zZXQ+CgoKW0VuYWJsZWQgSG9va3NdCm5vdCBydW4gZnJvbSBhIGdpdCByZXBv
+c2l0b3J5IC0gbm8gaG9va3MgdG8gc2hvdzwvdW5zZXQ+
+rCount
