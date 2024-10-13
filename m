@@ -1,136 +1,132 @@
-Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA718F64
-	for <git@vger.kernel.org>; Sun, 13 Oct 2024 21:24:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A542F5E
+	for <git@vger.kernel.org>; Sun, 13 Oct 2024 22:50:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728854700; cv=none; b=PRJuySW8jC9anSyfY6n8NnbffuF7JzzieIh9sdKQft0J+9AO21w5dVQbjhoiuKWoVd4BponhePslvfJvBHEq71buMfS0ww6jbVOAqAQfjYixrRln+aouSnAGqWleBbbtTm8z4M4kVf8Mwbtb3c1EZh1dOrvj3DDX1nzEWCp4H8Q=
+	t=1728859827; cv=none; b=g+7MYeu5Ew2Hfe6lRHdyBZHFCzNZgzGlu2u5IiGc6QbhlAVzhlBaUO1UN6oe0P0wtmfojZXmrsmDGmdUt2R1ob00cC/E58AFT5n+EXn2oFei8b/gE/GUpo0gVEepYfW5x4cqOmeyADppcaUqNd1hZh9RbEelwJ5ORKxwENCYh9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728854700; c=relaxed/simple;
-	bh=2XiICeX9OvpmEZ7kdS/LdFZTH8ApgGDvUGMcvtqWVJU=;
-	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
-	 References:In-reply-to; b=QT+7ew1kowcT9AOXq/0o62bwnJGF3UkN27atrDbqUxj7yavVL+CpMYJdjWNWudS3mUKaP/HU9er15dLut0eCoLt52H1jM705auPCi+j7TpCj2FKxPTxSvIBvdmYKRkUhhgwy1lf1E1jnbvKJNXT9UPdDVwa/J44oWkmCvVYzcoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=Z+S3m85R; arc=none smtp.client-ip=192.29.178.125
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="Z+S3m85R"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=2XiICeX9OvpmEZ7kdS/LdFZTH8ApgGDvUGMcvtqWVJU=;
- b=Z+S3m85R001tmf5CU9iSNkXJomHgeYI+4zcbsZpM8XotbH5t3U4apFkZZfG01wxalSdF/vSl2ObT
-   cXpM8B860/XNXlJFvhQg5Nm6Cu3yh8j2lCAQ4It/7lXL7erw4qq48yvP2Znlt/GmHsAz93BOtQyV
-   +aYXrZuzReImb00NEsSwSOU6XkVdg0c2eylT8j+g6qli4oGiOzD4B109yjSHLSQqv0YtoaKDdQcy
-   F0otsuC7JyvZB8Y+5bP4cMchiKz15Pz7EnRIUIT+ZSapcX15xVxsEus01VbjzCF1wlzs1j3msybH
-   ljupMzOjk8j2hy2jtwBuqz8MVbN24YEAaTSeLQ==
-Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SLB00H6WCTF6C80@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sun, 13 Oct 2024 21:24:51 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	s=arc-20240116; t=1728859827; c=relaxed/simple;
+	bh=gejX25Eo/iJC586ej972+j2TJvHTLHCFQhA0NyeOLjA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hiNOEcEsjEahLyvieLzQxKZojFhoQnH54MrmuyQpoVVeDC81CnONFiQWECpX7B0ENO7HyWDBcLCoKmkqobXlPtrT5l/Nf/BE3bwiJGjGVDIn2bOYcuzE4znIe3EW+WmqWkP01sCzHnAF/Ka3sFuBN21QC81//oK/atgL2fmSxDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e2908e8d45eso3029584276.2
+        for <git@vger.kernel.org>; Sun, 13 Oct 2024 15:50:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728859825; x=1729464625;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0qq8ZX+JGe4TPoHxR4fsS6mAUGV5Zxiz5dcKOedNZKs=;
+        b=B7Z8z3ZHWKTbTiXc2EvOQI/d40hAlcuYLFkE4X4RIBWcKo0yxD92cn1VfGDHhzSP1a
+         yU96hv36eF4OkjFzwG8o0C3gTQMDBSv6fB77aMXIrfEymEK5K5+4l4eSJT2GsUEbqrgg
+         cZZaxrmbRcaqHmREfIxecNKjKO4Oj/PcVpo2hxnu/8oasi0wHTDSgQzUn8Bi2ut8GkhG
+         q1Wwzwt15ZwdA6ortutXsozdtudeBawq6Rf2vm8hrna/uI7OX1K2EXFpSL5AeYFcqKDK
+         5BuOCVdQwjqdgkTJByJ5b/b3Myap0dU/3FG/d/ZXJsj1dts9Al32CByVv1xdog25r3w2
+         Qe0A==
+X-Gm-Message-State: AOJu0Yys8d/VQi6ymZruuCgeZNXuGjtkIqfmXBLBGdNPAaMFpMwKJpvz
+	se8TGHUq1BRJ2TgXWS7Ph3TUjMZtmMK9a8FdmTB37B10k+j6iCqBA462o0r9DLvdG7b6Av4qYEG
+	0ds7fgU18pnqzfNqVPr9CgwMpwlw=
+X-Google-Smtp-Source: AGHT+IEHSn5CBWhg54pVr0vSq9i+8pyIUurNXbwbg+elndrC4V5I1dVGnxwzAfZDijyUWbT9VBv6X/vR9Z3esI031LI=
+X-Received: by 2002:a05:6902:705:b0:e24:a0da:f89c with SMTP id
+ 3f1490d57ef6-e2919da2719mr7035268276.30.1728859824775; Sun, 13 Oct 2024
+ 15:50:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Sun, 13 Oct 2024 23:24:22 +0200
-Message-id: <D4UZTVHXXL1X.2KBQI9FYTAU72@ferdinandy.com>
-Subject: Re: [PATCH v7 1/6] refs: atomically record overwritten ref in
- update_symref
-Cc: "Taylor Blau" <me@ttaylorr.com>,
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>
-To: <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-References: <20241010133022.1733542-1-bence@ferdinandy.com>
- <20241012230428.3259229-1-bence@ferdinandy.com>
- <3c848f10-ac14-4cd7-8fbe-868da9599244@gmail.com>
-In-reply-to: <3c848f10-ac14-4cd7-8fbe-868da9599244@gmail.com>
-Reporting-Meta:
- AAHjxn49sluWjC2XK2rAnFaGwPW4kz47/7U9LKr5dYcCwL37X6n/dtXU9ndxKg+k
- bsvKx9fbz7JOFJNYvi4p9hMJgifyHzLmG3nPAwF0Xz+9ZEcX4kIvvcU2QbnYVers
- nNTSOXBkG03+Zi0ZxecSW254VsslLikjZks/8+pUucaO3Ec5GHJUJ98mbZeHjBSY
- jaelyXitu6m1kAcq18C7lpBl6v3geA7yVj38Nid/1G5uzubSmbY3EIHYLWqprFLz
- WVOMx0EnAy2x8+c42czi/F+H7R+I3zJ9h69k4883tpZICOG4T0GdNr+cvaF/3g1q
- Er0J6kNWbNyqlDHLtHCaR6aAeabKldjGEVa7u/DapR6J/lgbzrFrgMWF9N1Fmsno
- ns1m9wn5eFCKhVcQLT99cE+kNRLgGyilGya9waoja+QArjJjL/D4/CWaokSw/uTO
- JHXDdeR99d4GHj9CkLNG2J3Z6cZVB+74XRkjssRlSDM7Dvvc+tyzdu9S
+MIME-Version: 1.0
+References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
+ <ZwoxHYD-e4qo7OyW@pks.im> <CAOO-Oz0+sOpF6YQHSu0ytCO5TL+Anpr1k_9vQx6hebr624WjMA@mail.gmail.com>
+ <ZwwmFtF1Y30y8eoU@pks.im>
+In-Reply-To: <ZwwmFtF1Y30y8eoU@pks.im>
+From: =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
+Date: Sun, 13 Oct 2024 18:50:09 -0400
+Message-ID: <CAOO-Oz2gN1Y9h-p_AJ=7iKzxOK2ShmgEmWzpFrpwwAD2GH=6TQ@mail.gmail.com>
+Subject: Re: git no longer builds on SunOS 5.10, a report
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Git List <git@vger.kernel.org>, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On Sun Oct 13, 2024 at 15:52, Phillip Wood <phillip.wood123@gmail.com> wrot=
+On Sun, Oct 13, 2024 at 3:57=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
 e:
-> Hi Bence
+> diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
+> index cef0f023c2..064ca5c2ea 100644
+> --- a/t/unit-tests/clar/clar.c
+> +++ b/t/unit-tests/clar/clar.c
+> @@ -4,6 +4,10 @@
+>   * This file is part of clar, distributed under the ISC license.
+>   * For full terms see the included COPYING file.
+>   */
+> +
+> +#define _DARWIN_C_SOURCE
+> +#define _POSIX_C_SOURCE=3D200809L
+
+token "=3D" is not valid in preprocessor expressions.
+
+2008 postdates my available compiler by many years, so trying to define thi=
+s
+is not going to get you everything you might expect here.
+
+Fixing the #define to use a space and not =3D results in
+
+/usr/include/sys/feature_tests.h:332:2: #error "Compiler or options
+invalid for pre-UNIX 03 X/Open applications and pre-2001 POSIX
+applications"
+
+The relevant bits of the header:
+
+#if defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && !defined(_XPG6))
+#error "Compiler or options invalid for pre-UNIX 03 X/Open applications \
+        and pre-2001 POSIX applications"
+#elif !defined(_STDC_C99) && \
+        (defined(__XOPEN_OR_POSIX) && defined(_XPG6))
+#error "Compiler or options invalid; UNIX 03 and POSIX.1-2001 applications =
+\
+        require the use of c99"
+#endif
+
+Removing `#define _POSIX_C_SOURCE 200809L` results in successful compilatio=
+n.
+
+> +
+>  #include <assert.h>
+>  #include <setjmp.h>
+>  #include <stdlib.h>
+> @@ -271,9 +275,7 @@ static double clar_time_diff(clar_time *start, clar_t=
+ime *end)
 >
-> On 13/10/2024 00:03, Bence Ferdinandy wrote:
->> When updating a symref it's currently not possible to know for sure what
->> was the previous value that was overwritten.
+>  static void clar_time_now(clar_time *out)
+>  {
+> -       struct timezone tz;
+> -
+> -       gettimeofday(out, &tz);
+> +       gettimeofday(out, NULL);
+>  }
 >
-> It is if you use a ref transaction rather than call refs_update_symref()=
-=20
-> and query the ref after calling ref_transaction_prepare() and before=20
-> calling ref_transaction_commit() which is what the code below does.
-
-Yeah, it would be more clear if that sentence would say "when using
-update_symref".
-
+>  static double clar_time_diff(clar_time *start, clar_time *end)
+> diff --git a/t/unit-tests/clar/clar/sandbox.h b/t/unit-tests/clar/clar/sa=
+ndbox.h
+> index e25057b7c4..b499d2e1e6 100644
+> --- a/t/unit-tests/clar/clar/sandbox.h
+> +++ b/t/unit-tests/clar/clar/sandbox.h
+> @@ -122,7 +122,7 @@ static int build_sandbox_path(void)
 >
->> Record the value after the
->> ref has been locked if the caller of refs_update_symref requests it via
->> a new variable in the function call.
+>         if (mkdir(_clar_path, 0700) !=3D 0)
+>                 return -1;
+> -#elif defined(__TANDEM)
+> +#elif defined(__sunos) || defined(__TANDEM)
+
+I think we want __sun here, not __sunos.
+
+>         if (mktemp(_clar_path) =3D=3D NULL)
+>                 return -1;
 >
-> To me this patch and patch 5 feel quite disruptive to all the existing=20
-> callers which don't need this specialized functionality. I think it=20
-> would be less disruptive over all if you used a ref transaction rather=20
-> than calling refs_update_symref() in the final patch. That would enable=
-=20
-> us to keep the simpler interface for refs_update_symref().
 
-The extra parameter introduced here is actually used in two places by the e=
-nd
-of the series, in remote set-head and fetch (of course you could make a sim=
-ilar
-argument for the functionality added in 5/6 which is only used in fetch by =
-the
-final patch). To avoid code duplication I think even if we did not touch
-refs_update_symref() it would make sense to create
-a "refs_update_symref_extended()" and make refs_update_symref() a wrapper
-around that with a few less parameters. That would be similar to how
-refs_update_symref() and refs_update_ref() predetermine a couple of paramet=
-ers
-to say transaction_update().
-
-Currently there are 15 calls to refs_update_symref() in total, of these=20
-5 do not use the complete functionality of the function (they pass NULL as
-logmsg), so the current implementation would not be completely unprecedente=
-d.
-(This tally did make me catch an error on my side: the logmsg in fetch's
-set_head should be "fetch" not "remote set-head", I'll fix that in a v8).
-
-Imho, even if I manage to come up with a better name than
-"refs_update_symref_extended()" wouldn't it be more confusing to have two w=
-ays
-to update symrefs via a function call, rather than have one, where _usually=
-_
-you pass two NULL-s at the end?
-
->
-> I'm also not sure about the proposed interface I would have thought it=20
-> would be simpler to take a "char**" rather than an "struct strbuf*" if=20
-> we do decide that it is useful for callers of refs_update_symref() to=20
-> query the old value.
-
-refs_read_symbolic_ref requires a strbuf, so one would need to be created
-anyway and I also sort of got the feeling that the project likes to handle =
-refs
-in strbufs (which may be wrong). Are there any downsides I'm not seeing?
-
-Thanks,
-Bence
-
+-Alejandro
