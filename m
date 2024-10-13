@@ -1,100 +1,195 @@
-Received: from out162-62-57-252.mail.qq.com (out162-62-57-252.mail.qq.com [162.62.57.252])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7591013C9A6
-	for <git@vger.kernel.org>; Sun, 13 Oct 2024 15:45:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.252
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BE8231CA0
+	for <git@vger.kernel.org>; Sun, 13 Oct 2024 19:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728834345; cv=none; b=VAwHWId5a7fxervO3m5bz7ySeWnYgjPGNs4woMwp6Wax3WgmLbEcYqBgk9V7sdaT4uVf5sCCFFCVC5x8VhEln7QapRdBLYLQbLUb0WLOqyvP6Q3B5IFYBs1M7YLaLlYC9pJdZL5g2nYrH25gxPoxskgrZL6jmaz7ZRoH/QCPZe4=
+	t=1728849425; cv=none; b=OYzusB/Yfuu3iN66B17NjfetcWZXy/j2asp9OJ+oSumGdXxq7dhIuchRlcZHYEOZXNsyOjgalqLrbxf26qz7bSEl3lRtwAOsWMVufH3n86osmPxyjarRqHOLtYkI5jDjK8zLl6Tg8yHj4f5n/92BuMujAYfw3p5lVDy50eVgoWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728834345; c=relaxed/simple;
-	bh=fopDfpmZ/Ha5ZhPYNos5tuaCGqO1Jyf6r4LPEkSKnwU=;
-	h=From:To:Subject:Mime-Version:Content-Type:Date:Message-ID; b=nfELg5srKOf8joDWiLs79Nnmz0cy6PCblS9VSjSSX72jmLbma3j9g2mMK0DNKgkPG56dWiHNtkea/bdTG/+bGwwHTnMUW3ByKwW9u2HdVO8f7TUQBNhudHkNOW+b9fFK3rUZ0WP5mRxOnlt8mwxk4YVrlaOJybn0NxeYGjrjkhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=pjnmzqMF; arc=none smtp.client-ip=162.62.57.252
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
+	s=arc-20240116; t=1728849425; c=relaxed/simple;
+	bh=l+blrJyBeNiReo9tFA8W/9DfmjTsGxLchyrjhrtSmHU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sEDNgnutejb+HezqP5t9tkSbHjahxcLdKzl4i8rXLbSy4JmHBdhF/YT6oqBVjBvJIjz3iIu3LG4CCevMOi10t7HlGrgT28ir9dFmL+OFpXPEK4GdPcEuqjK4OzxdfhTufzApZHVTqdYsFgccLu8U++dtDLu7fIcccImSAmZhE/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R8TC2b+j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oXom/dfn; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="pjnmzqMF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1728834332;
-	bh=fopDfpmZ/Ha5ZhPYNos5tuaCGqO1Jyf6r4LPEkSKnwU=;
-	h=From:To:Subject:Date;
-	b=pjnmzqMF07PBB5BC+XkO8WuKGUI9E2rD7gO7ZK8LaXRzL2SFJo2+LI06+CNV6SEH0
-	 AUXpo5E7ELndT+8zXNHKxa00zHM7hyv/jOoOryO7PHtFDhWL05aZKFcIaVI9pHAl68
-	 wCYYfXOD/sDZDHnwsUHzJGJ3HiBgn+scGChY7vUo=
-X-QQ-FEAT: oHWrrGTW1dDtz/MFGzupqCMH20Bzyq2O
-X-QQ-SSF: 00000000000000F0000000000000
-X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
-X-QQ-XMAILINFO: NH0oLxhOOEtdSCBd+i75yFxOgaWB/eUOVUPosx5o42MfF9cYo1zFAWlJ96VDkp
-	 UAofP3KYRTCM5uC9ldP7/ojuqWHZ/D6bPRQSx0wiYq6GY/E9CE9HWNj3YcWFMqPolZuONQ4C6sFn6
-	 4twTmJp54QVScvYE8iVlhxuJDNv5+IBB8KIR3Skwh0L63qf0v4CsGKq4DUd7IoTmm9K3snEG7bzhk
-	 r6FedHFIqpOpT+7jtJIJpZHCUA4Zde7g5V/XPfc00YNzutMYtJyd28IFmOR4r3TQ6xKppAUip2tG4
-	 Q9wANr9VdVOOpZTyNOf836FV3JRiVV8mpRVoA5pf2akMxbV5+gkOO0e7xOVDNrLJoPUG0Dj2meJVa
-	 P4RgW9SA3yksixim8276H6TBdm7MgIpH07cXaGMsstZJBWuLRAobcpM2ksCgKqdmgo4O40utwyjVF
-	 EOMh/nv4zyKtCy1kMsDqszmvxnncg6Dlmanmbuf+d9n1OlohcBHazcLP5yrxNQO0UlPVluZ3Z5gK1
-	 PucQVfBzSjvt0p03Br46MfQf26CH88pMBP5rGJKpeGqGKSid5beMVvqt7jpTbZWpHiFNEd1ajoh+M
-	 jOGMBrkAlZ52lxnitNSlijUbWnLVOumrfJeLq0Z+lo/rXHP2T1bFvadqn8NAL+5U9/7RiBorES4hU
-	 z3FsEhsZd9fx+MuLnvIstVyW/da4T9t1IFQVgvzC5Zzlm7dgt/KPlmy57vfeEA69gXe7nY78cBPwS
-	 kQHNvQHJnZRA88sHATnppQ7ge2tprPWU3pN0uxF5mwctyGjdks3UQUlEmiJPlyoFILDBJUW+SKh0s
-	 kB21nCdi/33IjjmPTc86XKWa3qul6yt1Hk1XEBzZ8Kq/phtYac3Y1RqZ0wtbWyIdCiwjuaqjpFwYn
-	 /kB4iB1ZQWuVie/9LpsMuIt8Tq4V0sv8HRYPI0f9HqKHIf7Ci4kx5UPafH8CFMMGhtIqq3iMvY=
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-QQ-STYLE: 
-X-QQ-mid: webmail649t1728834264t977557
-From: "=?gb18030?B?zuLUqsrY?=" <wu.yuanshou@foxmail.com>
-To: "=?gb18030?B?Z2l0?=" <git@vger.kernel.org>
-Subject: Bug Report
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R8TC2b+j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oXom/dfn"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D6F1511400DD;
+	Sun, 13 Oct 2024 15:57:01 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Sun, 13 Oct 2024 15:57:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1728849421;
+	 x=1728935821; bh=Y2OnRKUBvxLXEaxa4cfC2yjSNmoGUlKXu6I8+GZd3hQ=; b=
+	R8TC2b+jRIQa0NIbESXBCgM/gdJPtgzJ7y45C+E3M7DtQJuIlEA1GZ462gnjmyfA
+	2jIYEeu5opGKphqH92+njO4Xk1zx7aqadHFYVoB2xck6nqMdgjM6TvpAn3CFUdCL
+	vRXmNd8GqN3oAtGUfLqDo+HuCaTqxdPa85ByEAmDl719PLjEdTqMqASk5WkPdKw7
+	ZrPAAk06deyNxZ0Hi7LHl0JOlP3y8U7bmm5eKkoeF1c+8KC7sLhC4nn/cIvai2Em
+	tPUp9N2vNAsnHhekIbQ2QyV4LvMA6IugY/RwKsuB/pP4yZbey87SYZ+8I1RRI7gw
+	Ob12ITRYBtCvACarztrthw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728849421; x=
+	1728935821; bh=Y2OnRKUBvxLXEaxa4cfC2yjSNmoGUlKXu6I8+GZd3hQ=; b=o
+	Xom/dfn6pYyiLgUy63lqXi/Cvg8qtL9Ge87DbGvuuOsW/riZkiA5PBudDToNeZkO
+	UpvFn+XUBjAlYc23AvxQxJkCrYLS+Y/6WAWYEYfMQ6OwLolZWovmAv/rrMhqhCDQ
+	vOGhMZdP6WqgUqFtbcHKUW4D+R6AhHADStHip8gtpune8nlSryhJNiE2/lFFlDmv
+	w+KOI4k9Bu+1Czz4XKKlmTyS0hTICPUyxkw6rIMGKRoTY2nX3BGL8yeGICH5kvLH
+	3c/BdgD2dWJMj103bdhADqiWVDoysbKpmLTtaYYbDRhSCtST6eXKKkMU8xKk9YUW
+	S7J4L8mjU1BqeZE7Nyqng==
+X-ME-Sender: <xms:DSYMZ_FRJVHsfYI-HXR_LvFrFz2El7mdAJNrsbepQFiCcrMJJb1FVA>
+    <xme:DSYMZ8WFpOSpNgDYhmnvQbVWA1fgoLO92ayFDgI_QR5LZM1CLVxepL6oaQ8hRdCh-
+    mW6Zlxf46NV64D-Mw>
+X-ME-Received: <xmr:DSYMZxJLOEkOvdQCn3ig5DktIyafeKxusV7uFcixCFKKEIsGrmdmkqrXUqNlxrj_xeZa9k_95vkD4KrkxArzYRrfgcK2rT7dYh4BiZ6IBo6Xsg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegfedgudegiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
+    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepgfeifeegheeiteeltdetgeelhfevfeejtdetfefh
+    keejteekffeigeelvdehheevnecuffhomhgrihhnpehmihhtrdgvughupdhunhhigidrtg
+    homhdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopegrshgvuggvnhhosehmihhtrdgvughupdhrtghpthhtohepjhhohh
+    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:DSYMZ9GO5dVP4I0jZih5nkUIi0E6Z9hcPWuI_D1Z58bb51Ycft-gtA>
+    <xmx:DSYMZ1VZ_XORPBNxxkgqO1XcWqoxKMyANIw_i5iExVGfqQrzmhfShg>
+    <xmx:DSYMZ4MDZJLQzADzOcqRoC2wbub0udK_8k2hqMlzSNMwiMNdJ9Q_JQ>
+    <xmx:DSYMZ03CHnmmgdAOHRpTYT7sLvgSMXm9fElXEyVQkpyQ7cvQybjM7w>
+    <xmx:DSYMZ4Q2qsGx6uuHqn5r-Jclpytt4p9-CDsNxd7kOlWI-pNYVgT3HQnF>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 13 Oct 2024 15:57:00 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 29a5e032 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sun, 13 Oct 2024 19:55:45 +0000 (UTC)
+Date: Sun, 13 Oct 2024 21:57:10 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git no longer builds on SunOS 5.10, a report
+Message-ID: <ZwwmFtF1Y30y8eoU@pks.im>
+References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
+ <ZwoxHYD-e4qo7OyW@pks.im>
+ <CAOO-Oz0+sOpF6YQHSu0ytCO5TL+Anpr1k_9vQx6hebr624WjMA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
-Date: Sun, 13 Oct 2024 23:44:24 +0800
-X-Priority: 3
-Message-ID: <tencent_D0324DD61B7E04E0B4686FD8761E1CDDE108@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAOO-Oz0+sOpF6YQHSu0ytCO5TL+Anpr1k_9vQx6hebr624WjMA@mail.gmail.com>
 
-V2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
-cm9kdWNlIHlvdXIgaXNzdWUpClVwZGF0ZSB0aGUgZ2l0IHZlcnNpb24gZnJvbSAyLjQ2LjIg
-dG8gMi40Ny4wIC4KQ2xvbmUgYW55IHJlcG9zaXRvcnkgZnJvbSBHaXRodWIgdXNpbmcgc3No
-KEhUVFAgaXMgbm90IGFmZmVjdGVkKS4KCldoYXQgZGlkIHlvdSBleHBlY3QgdG8gaGFwcGVu
-PyAoRXhwZWN0ZWQgYmVoYXZpb3IpCkNsb25lIHN1Y2NlZWQuCgpXaGF0IGhhcHBlbmVkIGlu
-c3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpCkdpdCBjbG9uZSBoYW5nIGZvciBhIGxvbmcgdGlt
-ZSBkdXJpbmcgY2xvbmUoTWF5YmUgaGFuZyBmb3JldmVyKS4KJmd0OyBnaXQgY2xvbmUgZ2l0
-QGdpdGh1Yi5jb206aWJibGVzL0xlYXJuaW5nVW5yZWFsLmdpdCBMZWFybmluZ1VucmVhbDIK
-Q2xvbmluZyBpbnRvICdMZWFybmluZ1VucmVhbDInLi4uCnJlbW90ZTogRW51bWVyYXRpbmcg
-b2JqZWN0czogMzQxNiwgZG9uZS4KcmVtb3RlOiBDb3VudGluZyBvYmplY3RzOiAxMDAlICgz
-NjAvMzYwKSwgZG9uZS4KcmVtb3RlOiBDb21wcmVzc2luZyBvYmplY3RzOiAxMDAlICgyNjEv
-MjYxKSwgZG9uZS4KUmVjZWl2aW5nIG9iamVjdHM6ICAgMiUgKDY5LzM0MTYpCgpBbnl0aGlu
-ZyBlbHNlIHlvdSB3YW50IHRvIGFkZDoKSSBjYW4gcmVwcm9kdWNlIGl0IGluIHR3byBvZiBt
-eSBtYWNoaW5lICwgYW5kIGl0IHNlZW1zIHRvIGJlIGVhc2lseSByZXByb2R1Y2FibGUuClRo
-ZSBnaXQgcHJvY2VzcyB3aGljaCBpcyBoYW5naW5nIGZvcmV2ZXIgaGF2ZSBhIHN0YWNrIGFz
-IGZvbGxvd2VkLgoKICAgICBudGRsbC5kbGwhTnRSZWFkRmlsZSgpCiAgICAgS2VybmVsQmFz
-ZS5kbGwhMDAwMDdmZmNhNTkxYmQzYgogICAgIG1zdmNydC5kbGwhX3JlYWRfbm9sb2NrKCkK
-ICAgICBtc3ZjcnQuZGxsIV9yZWFkKCkKICAgICBnaXQuZXhlIXhyZWFkKCkgTGluZSAyMzEK
-Jmd0OyAgICBnaXQuZXhlIWZpbGwoKSBMaW5lIDMxMQogICAgIGdpdC5leGUhcGFyc2VfcGFj
-a19vYmplY3RzKCkgTGluZSA0ODQKICAgICBnaXQuZXhlIWNtZF9pbmRleF9wYWNrKCkgTGlu
-ZSAxOTI5CiAgICAgZ2l0LmV4ZSFoYW5kbGVfYnVpbHRpbigpIExpbmUgNDg0CiAgICAgZ2l0
-LmV4ZSFydW5fYXJndigpIExpbmUgODIxCiAgICAgZ2l0LmV4ZSFjbWRfbWFpbigpIExpbmUg
-OTU3CiAgICAgZ2l0LmV4ZSFtYWluKCkgTGluZSA2NwogICAgIGdpdC5leGUhd21haW4oKSBM
-aW5lIDQxNDMKICAgICBnaXQuZXhlIV9fdG1haW5DUlRTdGFydHVwKCkgTGluZSAyNjAKICAg
-ICBnaXQuZXhlIW1haW5DUlRTdGFydHVwKCkgTGluZSAxODIKICAgICBrZXJuZWwzMi5kbGwh
-MDAwMDdmZmNhN2JmMjU3ZCgpCiAgICAgbnRkbGwuZGxsIVJ0bFVzZXJUaHJlYWRTdGFydCgp
-CgpbU3lzdGVtIEluZm9dCmdpdCB2ZXJzaW9uOgpnaXQgdmVyc2lvbiAyLjQ3LjAud2luZG93
-cy4xCmNwdTogeDg2XzY0CmJ1aWx0IGZyb20gY29tbWl0OiBkNTNlNDY0OGNiNjVlYjc1ZGQ4
-ZDhhMDkzZDE3NDAwYTE4YTlhMTVkCnNpemVvZi1sb25nOiA0CnNpemVvZi1zaXplX3Q6IDgK
-c2hlbGwtcGF0aDogRDovZ2l0LXNkay02NC1idWlsZC1pbnN0YWxsZXJzL3Vzci9iaW4vc2gK
-ZmVhdHVyZTogZnNtb25pdG9yLS1kYWVtb24KbGliY3VybDogOC4xMC4xCk9wZW5TU0w6IE9w
-ZW5TU0wgMy4yLjMgMyBTZXAgMjAyNAp6bGliOiAxLjMuMQp1bmFtZTogV2luZG93cyAxMC4w
-IDIyNjMxCmNvbXBpbGVyIGluZm86IGdudWM6IDE0LjIKbGliYyBpbmZvOiBubyBsaWJjIGlu
-Zm9ybWF0aW9uIGF2YWlsYWJsZQokU0hFTEwgKHR5cGljYWxseSwgaW50ZXJhY3RpdmUgc2hl
-bGwpOiA8dW5zZXQ+CgoKW0VuYWJsZWQgSG9va3NdCm5vdCBydW4gZnJvbSBhIGdpdCByZXBv
-c2l0b3J5IC0gbm8gaG9va3MgdG8gc2hvdzwvdW5zZXQ+
-rCount
+On Sat, Oct 12, 2024 at 10:34:18AM -0400, Alejandro R. Sedeño wrote:
+> On Sat, Oct 12, 2024 at 4:20 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > On Fri, Oct 11, 2024 at 10:10:26PM -0400, Alejandro R. Sedeño wrote:
+> diff --git a/Makefile b/Makefile
+> index 2dde1fd2b8..87c1f9e220 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -3906,7 +3906,7 @@ GIT-TEST-SUITES: FORCE
+> 
+>  $(UNIT_TEST_DIR)/clar-decls.h: $(patsubst
+> %,$(UNIT_TEST_DIR)/%.c,$(CLAR_TEST_SUITES)) GIT-TEST-SUITES
+>         $(QUIET_GEN)for suite in $(CLAR_TEST_SUITES); do \
+> -               sed -ne "s/^\(void
+> test_$${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$$\)/extern \1;/p"
+> $(UNIT_TEST_DIR)/$$suite.c; \
+> +               sed -ne "s/^\(void
+> test_$${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)\)$$/extern \1;/p"
+> $(UNIT_TEST_DIR)/$$suite.c; \
+>         done >$@
+>  $(UNIT_TEST_DIR)/clar.suite: $(UNIT_TEST_DIR)/clar-decls.h
+>         $(QUIET_GEN)awk -f $(UNIT_TEST_DIR)/clar-generate.awk $<
+> >$(UNIT_TEST_DIR)/clar.suite
+> 
+> Or feel free to grab the entire commit from here:
+> https://asedeno.scripts.mit.edu/gitweb/?p=git.git;a=shortlog;h=refs/heads/clar_sed_tweak
+
+Thanks!
+
+> > > The next issue was that clar/sandbox.h uses mkdtemp, which I don't
+> > > have here. Git has solved this in compat/mkdtemp.c via
+> > > git-compat-util.h, but clar is not using it. Adding git-compat-util.h
+> > > to clar/sandbox.h feels weird, but does get us further along. That
+> > > change introduced banned.h into clar, which exposed the use of strncpy
+> > > and localtime, both otherwise banned in git.
+> >
+> > Yeah, we don't want to pull in that header. The clar is from upstream,
+> > so ideally we shouldn't have to modify it with non-upstreamable bits.
+> >
+> > In any case, I've got a similar report yesterday where some functions
+> > weren't available. The root cause is that we don't set `_POSIX_C_SOURCE`
+> > in "clar.c", so with the below patch things started to work. Does that
+> > patch work for you, too? At least I think it should, as [1] mentions
+> > that the function is available on SunOS when those defines exist.
+> >
+> > In any case, the patch has already been merged upstream [2], and I'll
+> > send a patch early next week that updates our bundled version of clar.
+> >
+> > [1]: https://www.unix.com/man-page/sunos/3/MKDTEMP/
+> > [2]: https://github.com/clar-test/clar/pull/106
+> 
+> The listed man page is from the Linux Programmer's Manual, regardless of
+> the url path. It won't be enough here as mkdtemp is nowhere to be found
+> in /usr/include or any other /usr/**/include.
+
+Okay. I assume that both mktemp and mkdir are available though, right?
+If so, does the below patch work? The last bit is new, where we now use
+the same mkdtemp implementation as we use on NonStop in clar.
+
+Patrick
+
+diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
+index cef0f023c2..064ca5c2ea 100644
+--- a/t/unit-tests/clar/clar.c
++++ b/t/unit-tests/clar/clar.c
+@@ -4,6 +4,10 @@
+  * This file is part of clar, distributed under the ISC license.
+  * For full terms see the included COPYING file.
+  */
++
++#define _DARWIN_C_SOURCE
++#define _POSIX_C_SOURCE=200809L
++
+ #include <assert.h>
+ #include <setjmp.h>
+ #include <stdlib.h>
+@@ -271,9 +275,7 @@ static double clar_time_diff(clar_time *start, clar_time *end)
+ 
+ static void clar_time_now(clar_time *out)
+ {
+-	struct timezone tz;
+-
+-	gettimeofday(out, &tz);
++	gettimeofday(out, NULL);
+ }
+ 
+ static double clar_time_diff(clar_time *start, clar_time *end)
+diff --git a/t/unit-tests/clar/clar/sandbox.h b/t/unit-tests/clar/clar/sandbox.h
+index e25057b7c4..b499d2e1e6 100644
+--- a/t/unit-tests/clar/clar/sandbox.h
++++ b/t/unit-tests/clar/clar/sandbox.h
+@@ -122,7 +122,7 @@ static int build_sandbox_path(void)
+ 
+ 	if (mkdir(_clar_path, 0700) != 0)
+ 		return -1;
+-#elif defined(__TANDEM)
++#elif defined(__sunos) || defined(__TANDEM)
+ 	if (mktemp(_clar_path) == NULL)
+ 		return -1;
+ 
