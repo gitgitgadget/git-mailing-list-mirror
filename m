@@ -1,197 +1,107 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F304B146D5A
-	for <git@vger.kernel.org>; Sat, 12 Oct 2024 23:41:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33851862
+	for <git@vger.kernel.org>; Sun, 13 Oct 2024 03:46:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728776507; cv=none; b=rEDiWwc9XpMNLY4VwXlHjnKVFNX3EVdFdrOgIczxFP6Nx1XMHn4Cd7e5415wt7hg47W0mtTIFWs80p0K+bkZvCPDl/WwGB+IOq2YCWv9GdrmY72ToYVzBm5oLp4XNrELi9tJd6HTUn7vQldP8tf8dcS6F3h/B0YIiBvrpedeCCI=
+	t=1728791179; cv=none; b=oJMK+8vDXcPCqlJn0TlXpvSa7ncvf0PKnTvpB2PcJN5FVcaq2rKLJum/y8CklLy8FXaNYmLbT/74Cx6dej1fNm+xct3CrrZrJh4TKoFNlblMG7BUJi/ekkItYPXQnsSLVaWBymeNHpAXoRGgro7N0SDJHS+vtAcMamrc5gxwU7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728776507; c=relaxed/simple;
-	bh=LcxOue4JsbQv/6DFD/4f/HdvHL9hx1VAK3Z5SVyV3FA=;
+	s=arc-20240116; t=1728791179; c=relaxed/simple;
+	bh=VJorXecxrhkp98bQeQMDoe54Cm03m/GGSya0IHEFh7g=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HkAM5249rSqYsQ8Tf9IJaKu7XQPcZ8wzSx/gpQ7WgVLvLHP8njkdYjJNyEYTHLS5zq0bqs5UL4nePQSWCinYuwNa5lHDSiIIozCC7RypC4QYDmEc9xwHGTlm8Z1vvDm4rBWMd9u04Zaf0zuHu6AotvnmeernrPaTlYp/Hzk02BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=willfris.nl; spf=pass smtp.mailfrom=willfris.nl; dkim=pass (1024-bit key) header.d=willfris.nl header.i=@willfris.nl header.b=Z6egwSKY; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=willfris.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=willfris.nl
+	 To:Cc:Content-Type; b=dzO6RdR1hyRXU8gQoKn0uDnJuKXi1+P49snhPWUq0CQzgSfDB+O5zx1pdCLn1f3bGWCl+KpDj5ubt5/C+xST0FC8HUC3tnn/E0CAKWXJilLgvru/HRy5ETpVt2Yt4Yjg4lH0A2vuc9RdwBIvtHrInk8AzeD+1EHG+05BXesByb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CmS9sCn/; arc=none smtp.client-ip=209.85.221.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=willfris.nl header.i=@willfris.nl header.b="Z6egwSKY"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2e18293a5efso2151053a91.3
-        for <git@vger.kernel.org>; Sat, 12 Oct 2024 16:41:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CmS9sCn/"
+Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-50d564df009so756e0c.0
+        for <git@vger.kernel.org>; Sat, 12 Oct 2024 20:46:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=willfris.nl; s=auth; t=1728776503; x=1729381303; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728791177; x=1729395977; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/BoW32o9+Miy90pu1d5yO/3QEzI/jsP+JurZ85r1lzw=;
-        b=Z6egwSKYsIRu/d2x6MHoGwaVCL69AriekmlGSIGPj5SIKiy9Pq4CRoOuPK0XkfS3Kr
-         hEpQ+R769NZLdyWjeGnwl5XLeqFyO7DbjyvJYRY+PoggzG8Uq6ksSmTYVUv+Tz+B+UDH
-         FThH1xXKik1tATodFhywppw65t7mmEiwdFDmU=
+        bh=vTc7ZUcp+ZtH3yR4gT+snjODldNFz/c78HiEq/sNbW4=;
+        b=CmS9sCn/zdLeLkUJhfNbsrOqF6utZZ1u7Gn/bfEVUzmqlf6LpY1uTks5HBPDV81vBM
+         cYqKClOpyupOI/Z05xW7SksDQAjI6b/jWCDicCg6clTKKO2LPIJaExDjG8vpmF3dczJ7
+         xUR1TB+WL7AXjvZmCPmRYflRKWwAGOLkRslKqoFpwfe6t0DQ0FXI8Tn+LklFk/Rlbb0u
+         mMNhJfe73YWzqmouV5D+FfdqtU5qz9z6Wfh4MzkJjC6MJqYi4532pfef7rh6XkH96Q4O
+         lUsOUkMcWw7qEyBomIhaiC9OnRGWpI8O1EtHm2PGEsmva4FEKABrPSGZG9Ffl3jgIXgG
+         S18A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728776503; x=1729381303;
+        d=1e100.net; s=20230601; t=1728791177; x=1729395977;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/BoW32o9+Miy90pu1d5yO/3QEzI/jsP+JurZ85r1lzw=;
-        b=DLGNIFxRbatYnqXZs7SZsDbpUTHgK05hgfoQr9mqI5WgApOWGtCP59VXdbHs2HZyYK
-         VZyGjvTrxIqMABbQbPuvjfxphx6AjI/3ZKRW0renXHjQI9XWrvnTvsseFYldDmFs4HOx
-         qJPqTbkhfjMJyIs9hJ9KUFWNtF4W0blDU3i0Qb/Wqi22bt+tc/64nWp6RRpB1m/LrS3Q
-         6JUVtiWEH2OqModTAiWYxctZ+C3KV6vp+WpE6uYGKc5rO8+39cTvcCa9OtYNV/4/DQ8m
-         0ov0tLgQiMKnu2rNSl/LHh9NdIdcHRvIwRSoQHdQbB+k9aK6ZrIBq6Wjb2DS8ImcHnrF
-         Dtbg==
-X-Gm-Message-State: AOJu0YzwtFgyL9Nidme68mwfZsDOxBq3/pk/jgF202Wxkf6b6Q72qEBm
-	oZ6wU7TcEDbyxrDOwxazwul5uaCiojUHM/bvacl+89aIApPrceZw8q5PeJRlSUR8Y6uU2CI4htT
-	O2wmvBxDq1P9mxleJFlHyPhLraw/02Ql8QlZEtSJ+SaW713Sv60I=
-X-Google-Smtp-Source: AGHT+IG08KCTiIYpK6lkngYIOWFDPgLzknHpq5GGUE2Vu+BqgxgfBbjd9PbcQmZQftozX9vRUazqj0WoTHObqkPWvHY=
-X-Received: by 2002:a17:90a:5588:b0:2e2:d3e1:f863 with SMTP id
- 98e67ed59e1d1-2e2f0a49376mr8519705a91.12.1728776502933; Sat, 12 Oct 2024
- 16:41:42 -0700 (PDT)
+        bh=vTc7ZUcp+ZtH3yR4gT+snjODldNFz/c78HiEq/sNbW4=;
+        b=BQiAp8M8d9r9he6szrhEfCbJgByaUQcMZ+0zbfSnUkmk7+bLGWoNMOO/SjqEd0ilrE
+         PFPLKv3v4WfP+oMsmvQGtFl7YoyrQ1Wx+ga6iNUHEaUNZIoJppfNLNCgCqtsxzneUjVs
+         Q0+bwIM58BpLoGGLdY6gOTBTVwFVa9NMZR4Z0CJo4Q/1Prs5gW8opyK3weCIUxGmSHvl
+         AElSWF0is17ifvxBopR9ZfwmarAuTtvfP4io6boYPGmKfTrrSWfFb++JjyskrjbkrIUc
+         sWzV4VAB+eMjXdrqqlRnrM1pFl3SlVTxWcPJwP/SrKkTENdMJ8Hg+JQhhdZXVqVsI8Rg
+         OVZw==
+X-Gm-Message-State: AOJu0Ywxa0jUTlj4B4sBTrgNYuyfNHDdQIL5cJizLWwS/aPkuASJjMKi
+	t/X5HIbYhBWQ33icwgYBMlFSI8KuWDwPkpMMjZLnf6s3qmi+6SHEwN0jnnabJef4BmZbgAZAVyk
+	kwVUvIPxXxWMEofC6hmggAGfq7Ts=
+X-Google-Smtp-Source: AGHT+IE007NpadbL8bNfJ3mkdQC24vslYpp0/w5QRcx4rF5JsPyJNZEEcByt+vR25C5V0oNUIk8Pb52u1Lc4TbCVGVI=
+X-Received: by 2002:a05:6122:2a41:b0:50d:4cb8:5aef with SMTP id
+ 71dfb90a1353d-50d4cb86025mr320276e0c.6.1728791176603; Sat, 12 Oct 2024
+ 20:46:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.938.v2.git.git.1728754230466.gitgitgadget@gmail.com>
- <pull.938.v3.git.git.1728764613835.gitgitgadget@gmail.com> <20241012205506.GA55242@coredump.intra.peff.net>
-In-Reply-To: <20241012205506.GA55242@coredump.intra.peff.net>
-From: =?UTF-8?Q?imme=C3=ABmosol?= <will+developer@willfris.nl>
-Date: Sun, 13 Oct 2024 01:41:06 +0200
-Message-ID: <CABOUa4bqPiUM+=6dxW5TTHOdMzXiFD02vWoVJcgAQDhZs8DoXg@mail.gmail.com>
-Subject: Re: [PATCH v3] diff-highlight: make install link into DESTDIR
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?imme=C3=ABmosol_via_GitGitGadget?= <gitgitgadget@gmail.com>
+References: <CAPSxiM9FoGBhsnBE4E0Fvq-x_HvyFGGkkhaLNoRdVkvE6CpaZw@mail.gmail.com>
+ <ZwqcHDzaR2U2JNu0@nand.local>
+In-Reply-To: <ZwqcHDzaR2U2JNu0@nand.local>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Sun, 13 Oct 2024 03:46:05 +0000
+Message-ID: <CAPSxiM_U5ffBCsTrbBqsJK0jUZtAuWSLook8CLKat46CX0QC7g@mail.gmail.com>
+Subject: Re: [RFC Outreachy] Leftoverbits, which involve replacing atoi with
+ strtol or strtol_i or equivalent.
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>, 
+	phillip.wood123@gmail.com, Christian Couder <christian.couder@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Resending this mail to the list 'cause mail-client added html to previous m=
-ail.
-
-On Sat, 12 Oct 2024 at 22:55, Jeff King <peff@peff.net> wrote:
+On Sat, Oct 12, 2024 at 3:56=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
 >
-> On Sat, Oct 12, 2024 at 08:23:33PM +0000, imme=C3=ABmosol via GitGitGadge=
-t wrote:
+> Hi Usman,
 >
-> > diff --git a/contrib/diff-highlight/Makefile b/contrib/diff-highlight/M=
-akefile
-> > index f2be7cc9243..a53e09e0bdd 100644
-> > --- a/contrib/diff-highlight/Makefile
-> > +++ b/contrib/diff-highlight/Makefile
-> > @@ -10,6 +10,9 @@ diff-highlight: shebang.perl DiffHighlight.pm diff-hi=
-ghlight.perl
-> >       chmod +x $@+
-> >       mv $@+ $@
+> On Sat, Oct 12, 2024 at 11:21:13AM +0000, Usman Akinyemi wrote:
+> > Hello,
 > >
-> > +install: diff-highlight
-> > +     test -w $(DESTDIR) && ln -s $(abspath $<) $(DESTDIR)
-> > +
+> > I was looking at some #leftoverbits which I can work on and I came
+> > across this conversation.
+> > https://public-inbox.org/git/CAC4O8c-nuOTS=3Da0sVp1603KaM2bZjs+yNZzdAaa=
+5CGTNGFE7hQ@mail.gmail.com/
+> >
+> > I followed the conversation and came accross
+> > three instances where I think atoi can be
+> > converted to strtol or strtol_i or parse_timestamp().
+> > These are the three files which I think the atoi can be
+> > replaced with.
 >
-> I'm not opposed to having an install target here, like we do in the main
-> Makefile and in a few other contrib directories.
+> This seems like a good #leftoverbits to use as an Outreachy
+> contribution. From a brief skim, it looks like this is going in the
+> right direction.
 >
-> But in that case, I think it should behave more like those other
-> targets:
+> But to get help from the rest of the list, please submit this change as
+> a patch or patch series, following the instructions in:
 >
->   1. Actually copy the program rather than making a symlink. Preferably
->      using $(INSTALL).
+>   - Documentation/MyFirstContribution.txt, and
+>   - Documentation/SubmittingPatches
 >
->   2. Respect $(prefix) in the usual way.
->
-> And also...
->
-> >  clean:
-> > +     test ! -L $(DESTDIR)/diff-highlight || \
-> > +             $(RM) -f $(DESTDIR)/diff-highlight
-> >       $(RM) diff-highlight
->
->   3. It's unusual for "clean" to reach outside of the build directory.
->      What you're doing here is more like an "uninstall" target, but we
->      don't usually provide one.
->
-> There are a few different approaches other contrib/ items take to
-> work like the rest of the Git:
->
->   - in contrib/contacts, we source config.mak from the top-level, and
->     then define a default $(prefix). This gives some repeated
->     boilerplate, but is pretty independent from the top-level Makefile.
->
->   - in contrib/credential/netrc, we piggy-back on the top-level
->     Makefile's "install-perl-script", which knows where the user has
->     asked us to install things. That might not be appropriate here,
->     though, as I think it only puts things in libexec/, so
->     "diff-highlight" wouldn't be generally available in the user's $PATH
->     (though it would be enough to use as a pager within git).
->
-> -Peff
-
-As mentioned, `contrib/diff-highlight` is less like other perl contribs
-like `contrib/contacts` and `contrib/credential/netrc`, those two seem to
-be git subcommands (`git-*`) where diff-highlight is more of a "standalone"
-command.
-
-My usecase was to peek at what the command does by making it available in a
-`$PATH` writable by a non-root user. (Much like what is mentioned in
-`contrib/diff-highlight/README#Use`: `git log -p --color | diff-highlight`.=
-=3D
-)
-
-```sh
-echo '# Given ~/.local/bin is in $PATH,'
-( export DESTDIR=3D3D"${HOME?}/.local/bin/" ; make linked-in-destdir )
-echo '# In another already open shell, try suggestion from readme.'
-( export DESTDIR=3D3D"${HOME?}/.local/bin/" ; make clean )
-```
-
-Thanks to all of you for the introduction into how contributions to git/git
-are handled.
-Though it has been quite an informative introduction, and i can understand
-the suggestion of making it a install-target like other contrib-parts, i am
-currently not spending more time on this. Thanks again, and have a good day=
-=3D
-.
-
----
-Make git's diff-highlight program immediately available to the command-line=
-=3D
-.
-Create a link in DESTDIR that
-refers to the generated/concatenated diff-highlight perl script
-
-Signed-off-by: imme=3DC3=3DABmosol <will+developer@willfris.nl>
----
- contrib/diff-highlight/Makefile | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/diff-highlight/Makefile
-b/contrib/diff-highlight/Makefile
-index f2be7cc9243719..84f6e65c730380 100644
---- a/contrib/diff-highlight/Makefile
-+++ b/contrib/diff-highlight/Makefile
-@@ -10,6 +10,11 @@ diff-highlight: shebang.perl DiffHighlight.pm
-diff-highlight.perl
-     chmod +x $@+
-     mv $@+ $@
-
-+linked-in-destdir: diff-highlight
-+    test -n "$(DESTDIR)" && \
-+        test -w $(DESTDIR) && \
-+        ln -s $(abspath $<) $(DESTDIR)
-+
- shebang.perl: FORCE
-     @echo '#!$(PERL_PATH_SQ)' >$@+
-     @cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@
-@@ -17,7 +22,13 @@ shebang.perl: FORCE
- test: all
-     $(MAKE) -C t
-
--clean:
-+unlink-from-destdir:
-+    test -z "$(DESTDIR)" || \
-+        test ! -L $(DESTDIR)/diff-highlight || \
-+        $(RM) $(DESTDIR)/diff-highlight
-+
-+clean: unlink-from-destdir
-     $(RM) diff-highlight
-
- .PHONY: FORCE
-+.PHONY: linked-in-destdir unlink-from-destdir
+Thanks Taylor, I already went through these as I already sent my first
+patch before.  Also, I already sent a patch as you suggested. Thank
+you very much.
+Usman Akinyemi.
+> Thanks,
+> Taylor
