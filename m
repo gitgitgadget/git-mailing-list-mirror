@@ -1,60 +1,60 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8CB1AB536
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 14:55:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8761C304B
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 15:00:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728917728; cv=none; b=nghVAFbhtWF951XAo6NMkLmDArVBW5By3imX58cnDDjrnwy83bZP55p3SepH9IoGinBMXN2z56F7jNgd6wHwjipxOlqozg3iiQKWZo1Qr+hfRb+zewB/iEl+coe+99+WN/se4ioUY50SCmRB1oiC8KnQP+zvaAzI+4qr83xIXLA=
+	t=1728918039; cv=none; b=keEkyT8lS8iQFCdD/J1t9ckWrFy0zMwwdBwsoEXxiSbDhGULBUuTrjM8+RBWYK294QFMrG9g7q+fQpzR+9PvfvC/IIt2pID+YWs+/a5uAnyENEBMnZdVk3B0a5xzZ2foUkhIx70VlBJETuYGLBrZ72hOsjq6mh0cRjIL4Jp/Z/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728917728; c=relaxed/simple;
-	bh=2JcmhUYudcLWkhAkUs9PliRcBW8XyuU0+xSl3bPMIFo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AS+bRt0FfBO5492wDSKmbm+CP1buGqJXH8dVOCq22zh2H78o5uwqgnQpWcCJWKikUWF3aPTrdUBLhls0aah5qT7c/W6Dw6MXsYho6rnj8Y9WmCvxE8yNJx9azlmEPLLAQ5REop6+c10dY7KMbtTKBo+xTu+f/Vesw3JD9FZvqO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GfeRkuZ5; arc=none smtp.client-ip=209.85.221.44
+	s=arc-20240116; t=1728918039; c=relaxed/simple;
+	bh=HSJiNZff5AjJn7lJ0QZWz384ru55F2EcL3D0RA/2fBY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=AUa4R7Mclp/t/tSvnZkCLfTxnHhCMbu9IRLXl5g4xyB9GeGpM7gQFFlpvPPLPGwwnR/s8jKZkHVC7tTJPQBdU14R30FUVog/CPK9JGdCBNtKGLDvs3nAueFScfvYDe1THyKptMdB7dgCHtqBl514JTxH6cdHJ9DHTaOqnR4jsFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dn2Zcrev; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GfeRkuZ5"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-37d6ff1cbe1so1032984f8f.3
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 07:55:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dn2Zcrev"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-431286f50e1so23786125e9.0
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:00:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728917725; x=1729522525; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728918036; x=1729522836; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :references:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=AEayYZLfY1l1UgjT29gc7eAeWQ9mmyr4zcXArWofq1Q=;
-        b=GfeRkuZ5HG2uzz2nDFWRFzgrAoQlLl+PsE1O3Q91utu+RCjiqRGR93oZfKzjaw1qAH
-         2W2nZU2es+SFhEyCoov5SlDl56FpCSVkmK1ngoOEBBGXW+ldEbvEvBGllDoyj8CCjZNB
-         eBm+GhHbflPiorqxgVFZ+T39L5rR0g2zBOHkJXYh+ZJqfyMiRRiooklkdvqA7/RVRMS2
-         dzASiWLHXZHjkYNxmODAvwjO3YVSZaj0a0uehwYigugMfwNbGw0rFXZKeSZ7Z9GIXROR
-         xV86nevCN3jug4yRKuE48aUs0oJ2xIS5yRXZZyvHtyFoOs7H01Nx0IzFX24bWA2jUUlQ
-         wCWA==
+        bh=QglTfWXCItgYrnZV8fNIpT5wjQB1VfYm0FEiHg5Qf4k=;
+        b=Dn2Zcrevtz44Aj5pKIaIraVLIE40SLTigUPe5IIkQSYXC1tj5HgXtjliY0DDG9Yk1L
+         YU7MJLRB4lBeVOfFCKWO85FOGRGIPEYLJPdOXO6zO+af+8POJlDm40tGfLhxT5Rbtlmo
+         ssMm+44mkJ7Yds5AQYQZixXfcQtulopWpIVDMSQm6Racx5+qjbeF+/QByrMd5fTNI6HY
+         ofdJ50JISa2ThPjJY3dVuD12K5YAMFHdZTCSgVZDj9ShjCHpu7w9hCMbzrWmRxP1x+ZU
+         xDUCWHIvReKpfF5g8PCWQrRx+x7y3eNTcdmsR2woOv2siGL1Zose2fpKZZDzcZHgTLuu
+         ETtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728917725; x=1729522525;
+        d=1e100.net; s=20230601; t=1728918036; x=1729522836;
         h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :references:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AEayYZLfY1l1UgjT29gc7eAeWQ9mmyr4zcXArWofq1Q=;
-        b=rVyqi6HUfOkxQGjzXCz9WMzXvvF7oZyO/XTI5HgQg6ZDZhkrMzwVx19LqE7YPFKOnW
-         2tZfRuS9uxCM8i0uCpbKKMCUiG2YTM3lbCLxp+12iZ2SsVsRmkZT4X9oZe66/tzeBe2A
-         4O8IjFXn303ooUnC0IRBMWg4aWNNW+4KfGC0+LA+hL0p/Scyt7ICvdqEAF8SrVQTqPxE
-         QzuMt/mFd2MJ61Ko+nrrdbfV60xZ7jLjtWabD3XmmiJVrlmkowdfjKxTwgXF+hEpIk+Y
-         dxkkK1obnQtvPRFVqWLSxz1PdHYcO60FFZn2bnl2A09uxo9IXP26kbIy32p+zlR7fbV4
-         oXjw==
-X-Forwarded-Encrypted: i=1; AJvYcCUJ/QZSOLTWrUFkVcS2sy2Wt7bfqQ/3MdJqwnH6rh+if+pTBTVm7OfnweSjfUgVDtA0l6k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGUU+6GfyFrORDpyCa8lLVDn54ON2lUwUnAjgsPzKBzHCxkVJ4
-	EpnYhiewP8GI3fog0yULfLglRtou/+tK5XavbGEmZoq9908T0691PQUawg==
-X-Google-Smtp-Source: AGHT+IFy9bFiNyMp9DF7sSSUHaYTvWN3p2NzEqeCxjucg/yPucYQOp9XJVXgnmxR9Eg4I/e82p+gng==
-X-Received: by 2002:a05:6000:11cf:b0:37d:4e59:549a with SMTP id ffacd0b85a97d-37d551d397fmr8783166f8f.16.1728917725310;
-        Mon, 14 Oct 2024 07:55:25 -0700 (PDT)
+        bh=QglTfWXCItgYrnZV8fNIpT5wjQB1VfYm0FEiHg5Qf4k=;
+        b=LOOFQnFi1GO3z6J/1v4bijhTm6Hhg6eaLTm9EioLtn6NvbliCKW4iy78VXp7gaTy+f
+         bE09WzBm8GQZtlCwvAIIvsKdfP5kPWGwLkC2SL6Qdriq4D9Qc0GizpGbxjQ7Bv6zX67Y
+         DGIEjPzx/2lSBXK68kTd5ke6wBl/lO4hoJTr0smG1iP/9vhp9pI/PEkbWr46YDz/iISe
+         caoa3yY1a8nidJqLQvNto8F+U/GzDdBbHq+0BYvx1XXtlhuHrCoLT9T4fp1oHtA442Ju
+         5K3BBsTtFQBYp/k9bbiP4eTutNVpnwrmpWVn0861KAWm92fdMaKYWYf6ymR4+6tm6cRd
+         guHg==
+X-Forwarded-Encrypted: i=1; AJvYcCVKvB+UQI2pmQ6J5f9zzjvzgVVOR9QWw9XvvlCcIC9MmoatcYBMV6d7seLQsQeBg1KEFuU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzHxjBUwmZIjY428VbPZas4WfbTQ8PgNjOBqh+bV+IKkNBSr82I
+	gTARdqmVXrXcM9rUXwDTcECo1gOThkYg5nS0bR8kcHMdOdnm1hb8II9MKg==
+X-Google-Smtp-Source: AGHT+IEcmFSWsAWfzkZkMFoY8kHG6bhpW7MIPzSt+P1uWlfS6kFRn6Fi3dLl38ECG07cUrXrMutnUw==
+X-Received: by 2002:a05:600c:1d93:b0:430:4ed0:d5ce with SMTP id 5b1f17b1804b1-43125617316mr90259405e9.34.1728918035965;
+        Mon, 14 Oct 2024 08:00:35 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d4b6a87c8sm11593147f8f.8.2024.10.14.07.55.24
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-430ccf1f696sm154875985e9.5.2024.10.14.08.00.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Oct 2024 07:55:24 -0700 (PDT)
-Message-ID: <2160f8ea-5f00-49d9-8e02-d71d4d827d39@gmail.com>
-Date: Mon, 14 Oct 2024 15:55:18 +0100
+        Mon, 14 Oct 2024 08:00:34 -0700 (PDT)
+Message-ID: <6f6d6518-fa01-457f-a482-5e6ffbba3f2b@gmail.com>
+Date: Mon, 14 Oct 2024 16:00:28 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,73 +63,166 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and
- strtol_i()
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
- Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
- <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
- <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com>
- <Zwz4B4osJnYJw6pd@pks.im> <2a937b6f-a3fb-4f2a-997b-5508f0e20e65@gmail.com>
- <Zw0kGLZ-mcYjb6Je@pks.im>
+Subject: Re: Bug: diff --color-moved={zebra,blocks,dimmed-zebra} fails to
+ identify some individual moved line
+To: lolligerhans@gmx.de, git@vger.kernel.org
+References: <trinity-1a7c1cfa-3f79-4430-bf3d-776c526c242b-1728914461526@msvc-mesg-gmx102>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <Zw0kGLZ-mcYjb6Je@pks.im>
+In-Reply-To: <trinity-1a7c1cfa-3f79-4430-bf3d-776c526c242b-1728914461526@msvc-mesg-gmx102>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 14/10/2024 15:00, Patrick Steinhardt wrote:
-> On Mon, Oct 14, 2024 at 02:57:13PM +0100, Phillip Wood wrote:
->> On 14/10/2024 11:53, Patrick Steinhardt wrote:
->>> On Sun, Oct 13, 2024 at 09:42:41AM +0000, Usman Akinyemi wrote:
->>>> On Sat, Oct 12, 2024 at 11:09 PM Usman Akinyemi via GitGitGadget
->>>> <gitgitgadget@gmail.com> wrote:
->>>>>
->>>>> From: Usman Akinyemi <usmanakinyemi202@gmail.com>
->>>>>
->>>>> Replace unsafe uses of atoi() with strtoul_ui() for unsigned integers
->>>>> and strtol_i() for signed integers across multiple files. This change
->>>>> improves error handling and prevents potential integer overflow issues.
->>>>>
->>>>> The following files were updated:
->>>>> - daemon.c: Update parsing of --timeout, --init-timeout, and
->>>>>     --max-connections
->>>>> - imap-send.c: Improve parsing of UIDVALIDITY, UIDNEXT, APPENDUID, and
->>>>>     tags
->>>>> - merge-ll.c: Enhance parsing of marker size in ll_merge and
->>>>>     ll_merge_marker_size
->>>
->>> To me it's always an indicator that something should be split up across
->>> multiple commits once you have a bulleted list of changes in your commit
->>> message.
->>
->> Agreed, but I think in this case there is a common theme (converting atoi()
->> to a safer alternative) and the problem is with the commit message listing
->> which files have changed rather than unrelated code changes being grouped
->> together. This patch could be split up and if there were many more atoi()
->> conversions it would need to be split to prevent it being too long but I
->> don't think its essential to do so.
-> 
-> In theory I agree. In practice I think we should have better
-> explanations why the respective conversions are fine and whether this is
-> fixing a bug or not. And if it is fixing bugs I'd also like to see tests
-> added to the tree.
+On 14/10/2024 15:01, lolligerhans@gmx.de wrote:
+> : ' What did you do before the bug happened? (Steps to reproduce your issue)
+>      I diff-d after moving lines.
+>      Reproduce:
+>          This entire report can be run verbatim as a bash script. The executed
+>          code is at the end.
+>              - 1. Execute: Copy-paste the suggested command to hide ~/.gitconfig
+>              - 2. Execute: Produces example diff
+>              - 3. Execute: Copy-paste the suggested command(s) to unhide and
+>                            clean up.
 
-I'm not sure if I would describe any of the changes as fixing bugs. The 
-option and config parsing code becomes stricter so I guess you could say 
-it was a bug to accept any old rubbish and treat it as zero before. The 
-imap code that's changed all rejected zero anyway apart from the tag 
-parsing so maybe accepting the changes to the tag parsing are fixing a bug.
+Thank you for taking the time to report this. Are you able to show a 
+diff and point to the lines which you think should be marked as moved 
+but aren't? With the block modes a block must contain 20 alphanumeric 
+ascii characters for it to be considered moved so you maybe running up 
+against that.
 
-> And by the time we got there it makes sense to split up commits.
-
-Yes if we start adding tests then it is worth splitting them up, I'm not 
-sure we have anyway of testing the imap changes but it would be worth 
-testing the other changes though.
+Best Wishes
 
 Phillip
 
-> Patrick
+> What did you expect to happen? (Expected behavior)
+>      All (!) moved-only lines are colour coded cyan-purple.
+> 
+> What happened instead? (Actual behavior)
+>      Some (the first?) individual moved lines are colour coded (treated?) as if
+>      the line changed (red-green).
+>      In a commit with only one moved line, it is coloured as changed.
+> 
+> Whats different between what you expected and what actually happened?
+>      The distinct colouration for moved lines is lacking in the actual
+>      behaviour.
+> 
+> Anything else you want to add:
+>      Running "script.sh show" will use "git show" instead of "git diff". Same
+>      problem.
+> 
+>      Moved mode "plain" behaves as expected.
+> 
+>      Skimming "git log -p next" suggests that "--color-moved" did not change on
+>      "next" nor recently.
+> 
+> [System Info]
+>      git version 2.47.0
+>      shell-path: /bin/sh
+>      libc info: glibc: 2.39
+> 
+> [Enabled Hooks]
+>      None
+> 
+> ----------------------------------------------------------------
+> Script to reproduce
+> ----------------------------------------------------------------';
+> 
+> #!/usr/bin/env bash
+> 
+> trap 'echo 1>&2 "Error: $BASH_SOURCE:$LINENO $BASH_COMMAND";' ERR
+> 
+> function diff_now() {
+>    declare mode
+>    echo -e "==================== [${1:-""}] ===================="
+>    for mode in plain blocks zebra dimmed-zebra; do
+>    echo -e "\t----- (${mode}) -----";
+>      git "${2:-"diff"}" --color-moved="${mode}";
+>    done
+>    echo
+> }
+> 
+> clear || true;
+> if [[ -f ~/.gitconfig ]]; then
+>    echo 'mv -v ~/.gitconfig ~/.gitconfig.save';
+>    exit 0;
+> else
+>    echo 'mv -v ~/.gitconfig.save ~/.gitconfig';
+> fi
+> mkdir color_moved || { echo 'rm -rf color_moved'; exit 0; };
+> cd color_moved &&
+> git --version &&
+> git init &&
+> git config --local user.email "you@example.com" &&
+> git config --local user.name "Your Name" &&
+> cat <<-EOF >file.txt &&
+> 	Is this even a line?
+> 	The first line number 1
+> 	The second line number 2
+> 	The third line number 3
+> 	The fourth line number 4
+> 	The fifth line number 5
+> 	The sixth line number 6
+> 	The seventh line number 7
+> 	The eighth line number 8
+> 	The ninth line number 9
+> 	The tenth line number 10
+> 	The eleventh line number 11
+> 	The twelfth line number 12
+> 	The thirteenth line number 13
+> 	The fourteenth line number 14
+> 	The fifteenth line number 15
+> EOF
+> git add . &&
+> git commit -m "Initial commit" &&
+> 
+> cat <<-EOF >file.txt &&
+> 	The first line number 1
+> 	The second line number 2
+> 	The ninth line number 9
+> 	The tenth line number 10
+> 	The eleventh line number 11
+> 	The sixth line number 6
+> 	The seventh line number 7
+> 	The eighth line number 8
+> 	The third line number 3
+> 	The fourth line number 4
+> 	The fifth line number 5
+> 	Is this even a line?
+> 	The twelfth line number 12
+> 	The thirteenth line number 13
+> 	The fourteenth line number 14
+> 	The fifteenth line number 15
+> EOF
+> diff_now "Can identify moved lines in blocks (but not the single line)" "${1}" &&
+> git add . &&
+> git commit -m "Moved multiple blocks and a single line" &&
+> 
+> cat <<-EOF >file.txt &&
+> 	The first line number 1
+> 	The second line number 2
+> 	The ninth line number 9
+> 	The tenth line number 10
+> 	Is this even a line?
+> 	The eleventh line number 11
+> 	The sixth line number 6
+> 	The seventh line number 7
+> 	The fourteenth line number 14
+> 	The eighth line number 8
+> 	The third line number 3
+> 	The fourth line number 4
+> 	The fifth line number 5
+> 	The twelfth line number 12
+> 	The thirteenth line number 13
+> 	The fifteenth line number 15
+> EOF
+> diff_now "Cannot identify a single moved line" "${1}" &&
+> git add . &&
+> git commit -m "Moved only a single line" &&
+> 
+> echo;
+> echo "[OK]";
+> echo;
+> echo 'mv -v ~/.gitconfig.save ~/.gitconfig';
+> exit 0;
 > 
 
