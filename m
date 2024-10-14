@@ -1,118 +1,85 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F111AB511
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:09:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E2F1AAE33
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:14:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728911397; cv=none; b=Zv9VDirkP4VSQa/ThH4mr87JtByjB7YBsRMzNcH8ds7FL5VG73qI7U8LywyLApzUDrV6IQJuIO+LBbYa/9tAM3Lf1xjxEMXZF2gnVqyddma5YBfzUMHI8Aag4Z3ctwzTqCdX/LNq6y5QJVTPnncTK/V+/sbrjwdeSb5BOFP2l6I=
+	t=1728911650; cv=none; b=Hoo2cfzaYHlulv4pOty9/xQVbw69/VxOlYqiwJgi7Cnl0g2dnoYacZ+eK4dIIRqPq7ySLXNHhzK4VLGUrcgXBXzYbo8dMH6DxR+KfKUt9ot7TbQDr8fk97MiI7b/8h2e/ZPgCdVV+9vJ82+j2YYps8D/C4wexBDkBDqZlbyNEoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728911397; c=relaxed/simple;
-	bh=RNL7uPiiDXFvq4OwfBZFqJRPiOKakHwFjTv8wtf/Tk0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ETASA5n1fQ/7EaB4NnWwqovHOuLsbPEIrfnJPxL5wRglH21nNfIsXv7jse2q4IjkXGf2w0U9VshBn2gz2JSoLRP7qUdybSlU8xP+jPl1OqeRSQ3O/siui+9j/DJK4ehSUPypaWFWjsNWpHDvHpaKTc+qy/a7IoZzARUtitNUdbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TvtEzmZ2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cobvShes; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728911650; c=relaxed/simple;
+	bh=VX7g06Td4Fuol4cBbXT9o/fIiij88oNSCy+AW5dPhgk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rhKVpfm6nqZrMJx2s+Lqh0AH3qwJapGTyiUHtRyf5lpTxbhVUMOlhciHxUoXGkaWvRsqSrIn1Pm7GDty9dbkevI6reHeXiw+5W/YEj6VeCw/xuQ+ogxBjtZosDjq+BWQO879ZAE/lLykgpsphpwUesVhLakc5qOlzQ6WnDw+i4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=dvOUThLF; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TvtEzmZ2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cobvShes"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 873BA138049A;
-	Mon, 14 Oct 2024 09:09:55 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 14 Oct 2024 09:09:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728911395; x=1728997795; bh=zomGLdjhNu
-	UAsPaVnTWHbzVUtdsb9hHFeQrtue8ysus=; b=TvtEzmZ2GiFdsD+/eZxhN+pV5u
-	bagh5exM2674I9Q6EnwF9+iLPOPDNNU7amtR8ZrmTqqB3UQaxMRXqyTbhgipLw+i
-	Eld5+oK1LeH+za8EHUQkF9SqvHoRB7os/xvju0ogYo6oRNbk9/DRzn9kAueUtwj5
-	RfWW23xDNQQaON6V9O2nP1DR62+zXU5qUhzq4mlGR3hzShvwqW575y99n6Hw+H16
-	ABW4j0VNzphIhr+RtUiBgjqFbmryBsYLueyyoZOtEGLRVGVPLr9Y9e3BybUo1uUp
-	gbaOccrdmbJJGzU2K/Lh0/wotyp2N06g9RAHmRCgO8/f4qvsUwBHWFWKVeYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728911395; x=1728997795; bh=zomGLdjhNuUAsPaVnTWHbzVUtdsb
-	9hHFeQrtue8ysus=; b=cobvShescyOVl36Z9265OJylIHdu7qXEB/P/EEzjh5aC
-	fSyQa0fTLh0wMw9DbjDBS8lnHzxQMTnKjsTGjKADxxVroWTJBZUKSeops9rhmH5m
-	aj9lItB2sCS3LXtZUclbQJYghz5w0lJ71UM+Wzyd553i28wQqRhLkeAy3PiinRno
-	TZ0qb5jIP0hRTz5y8wP7ERMyd0iGR7fRU3hfoCn+fmZ70B42Y+08jzkuS98nMIFR
-	Sm5qKlAZdcG/43Ufl5dOCcs2jE6nL3YACbz42LQEtZBxD5Fwdi4qzxn/0gCjCaxh
-	u13rhslz4XG3QWW+SWXvgZbUIgVjIQDQJwfqUhhemQ==
-X-ME-Sender: <xms:IxgNZ8uCf-eMcjoQXb9SQjiLAzjlKeo1Z-Ai43G5noDVu3KWnqIFKg>
-    <xme:IxgNZ5cu5wV6B2W7xmzO4odW-_LebpdV-l1Ty6qv6kDrzIIDXqeYDo1tY1c4EFAZE
-    ppO0EsAKPFethfJBA>
-X-ME-Received: <xmr:IxgNZ3zY3hMJlkbxjDUyPSSeBMWhHL_tWF4mOPgpQlT5qUSsNS27TDDcBbOkHzZ_GYEzti0oEdb4SbRNuPk1q3IT_6DJMEL7OAg-L2NQZD2P-w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgiedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsoh
-    hnrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:IxgNZ_MAlQvnAJWni57LcxH8FUvl4DBcnFVybIVp84yB98nTXB6vtA>
-    <xmx:IxgNZ899k6Mr1YhQZNvqldrYtFlff3ubn9wOgJsb4zN9m4q34nP9tg>
-    <xmx:IxgNZ3UnjybKKCwXfTjblDTUCbsUlCCbU60pwd8xEtCYz0FLRAB_IA>
-    <xmx:IxgNZ1d84FAQ6KQuScIcL6_zI0p4Qv-I__0_KLHXlkTAelWdl8E0_g>
-    <xmx:IxgNZ7YmhybvPUyg0tA0AzfeihHirUXc9BLt9DMvcVcKj_R-mcFbNwoA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Oct 2024 09:09:54 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3551d7ac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 14 Oct 2024 13:08:41 +0000 (UTC)
-Date: Mon, 14 Oct 2024 15:09:52 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: [PATCH 00/10] reftable: stop using `struct strbuf`
-Message-ID: <Zw0YIJp-kl7glf_U@pks.im>
-References: <cover.1728629612.git.ps@pks.im>
- <CAOLa=ZR_fcq0NyraV01FQBeOZ=uv7JWLV0+tSsi=zsvt+VZOdw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="dvOUThLF"
+Received: from localhost (CSAIL-SQUARED.MIT.EDU [18.9.64.19])
+	(authenticated bits=0)
+        (User authenticated as asedeno@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 49EDDoVx002017;
+	Mon, 14 Oct 2024 09:13:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1728911632; bh=nUNAEvxUzh2GfpYM1mRfdxytU07jdWXVbjSamleAxuw=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type;
+	b=dvOUThLFevxNttyBLphDhPaCfdr/eKGGgRcZosyY2UtqFWBc5tz3EyQ4kQRo5Df2A
+	 bnErlauZRCbX3Jx2FfK7lmqCFXOP3q0W9BDCnDduCD66qcKIicZtFNfNcfNQ+wmvWa
+	 /wevf4CokeoQuc/rPXk7j4kmdVpUwn7xrJIHBEBjLCy3aiATFIuMRdBj1NDjFwR2Qv
+	 sbqCg8vQxyNOzSqMVva0UpPeHAWsgITfUxJxQccs2/XRZBtQhCOTn+V9ZSwSRHn3qZ
+	 nP1/f/H36WVNgWugZV6z476iC7Ij1dEbJhub6nJoNdBA9TXFpOUQs5v1eXa+q3Tw8U
+	 c8bBKu/xmqTuw==
+From: =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
+To: git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net, sunshine@sunshineco.com, asedeno@google.com,
+        =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
+Subject: [PATCH 0/2] Restore support for older libcurl and fix some typos
+Date: Mon, 14 Oct 2024 09:13:44 -0400
+Message-ID: <20241014131346.3556163-1-asedeno@mit.edu>
+X-Mailer: git-send-email 2.47.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZR_fcq0NyraV01FQBeOZ=uv7JWLV0+tSsi=zsvt+VZOdw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 11, 2024 at 05:18:26AM -0700, karthik nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Hi,
-> >
-> > this is the second patch series on my quest to make the reftable library
-> > become a standalone library again that can be used by libgit2 without
-> > pulling in all kinds of dependencies from the Git codebase. This part
-> > makes us lose the dependency on `struct strbuf`, which is done due to
-> > three reasons:
-> >
-> >   - To make us independent of libgit.a.
-> >
-> >   - To ensure that we use the pluggable allocators that users can set up
-> >     via `reftable_set_alloc()`.
-> >
-> >   - To make it possible to handle memory allocation failures.
-> >
-> > While this leads to some duplication, we're only talking about ~70 lines
-> > of code.
-> >
-> 
-> I only have a few small comments, but overall this series looks good.
-> Thanks
+Hi,
 
-Thanks for your review!
+This is the small patchset I've mentioned on a couple of threads
+in the past few days [1, 2].
 
-Patrick
+The first patch adds a version check for CURLOPT_PROXYHEADER in
+git-curl-compat.h and uses it to wrap the one use of
+CURLOPT_PROXYHEADER, replacing it with a translatable warning if it's
+used on an older version of libcurl.
+
+The second patch adjusts some typos I noticed in
+git-curl-compat.h. These should be easily verifiable against curl's
+docs/libcurl/symbols-in-version, which is the source of truth for
+git-curl-compat.h.
+
+This is presented as an alternative to the patch series from
+brian m. carlson that bumps the minimum version of libcurl
+to 7.61.0 [3].
+
+-Alejandro
+
+[1] https://lore.kernel.org/git/CAOO-Oz1KhFcyErVx1Qb142PtPJS=UpgSD-FacckqNS4_okAtFQ@mail.gmail.com/
+[2] https://lore.kernel.org/git/20241011190812.2654837-1-asedeno@mit.edu/
+[3] https://lore.kernel.org/git/20241010235621.738239-1-sandals@crustytoothpaste.net/
+
+
+Alejandro R. Sedeño (2):
+  Conditional use of CURLOPT_PROXYHEADER based on libcurl version
+  Fix inconsistencies in git-curl-compat.h
+
+ git-curl-compat.h | 11 +++++++++--
+ http.c            |  4 ++++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+-- 
+2.39.5
+
