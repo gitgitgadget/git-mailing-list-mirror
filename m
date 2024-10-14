@@ -1,35 +1,35 @@
-Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CBA1D150C
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 22:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB70B1D89E2
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 22:55:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728946539; cv=none; b=ZGB3eZp9MLEpx+NY8EYhk9q97yZCSc4O85kU3qsnk9fLQpb6nJpaHA8JU1wFo7lAvmuIxAwPZUWBO3aZmISFSPrBQTMRDKnv2HbcN2jKboHTy6pMD4kE6J+qjQ4nox0dpM4hddtRiATeauT9pVFyR+IFG5KT4sMjlnVn5ruW+KA=
+	t=1728946542; cv=none; b=RFHa5ql/JoZGsNJBYGTm+kdxnHTWi7gsCO/q4ZWIKQfL0EizYagEbGny5UmQP1AD3lCNSPQGLJuSUFj9m5dCh3Z0UKcCjYWBLqMdU8KMoIOS6kNtZ0pwkjo5Sq4Wtr3Vxcl6AUd+V7zhgYs5uIK4RVa6Ui96yvpU99t6vUNPbfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728946539; c=relaxed/simple;
-	bh=gmhsJaXOBW3wMdcHdUF47yIz5h5aTnzuOq3cVS63nxA=;
+	s=arc-20240116; t=1728946542; c=relaxed/simple;
+	bh=pOJgOjo3fdR9oHe4WnAsQat3Tvvu7AuN4KT0BFSK7yk=;
 	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
-	 MIME-version; b=eNYr2oJMicVitt2LWkTMC4hBJfIxAviEQmh8KqQ1qywT32Z1hSwEkHe32IJCuZkNEaaqYKhzK5mAdTUxYLrnl9hyulOXTVCXp2olNA3bt6299KVOxx4xRb1rLtOAdMAXsvHxjgN6/LiZlU2iwcutrLeiBd6yHHblpYtFlxMMn3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=o/QY/Q2E; arc=none smtp.client-ip=192.29.178.125
+	 MIME-version; b=oT7M4h8iatnjeyxUYJQzVJ2I0xTUcCglILIbeTlKOkqk4VJ1XKBmB2jVNKtCc5Gc9a8HFZQTuTk/3NZfB52X3NOxBYGh3984ccbdf8gA+dI6bLLob+jF7Pu1aMK7bnmeybyLH3UN4sQjossb5Yro+JcOYH/fmJM0g7FsI0R4IyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=eVIDG+cW; arc=none smtp.client-ip=192.29.178.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="o/QY/Q2E"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="eVIDG+cW"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=13kLsyyvTUo3TQFyhL/nr+TFa9nY5TepCu6PXcrzVkY=;
- b=o/QY/Q2EhvlOaTKoC9wmqHJmH32JzIKbhJ6n6+1pBYVN8RayehIYPr36XPdaSMtd45IC91Y7IrgO
-   xeTdQWZ7XGOH6U41Uq4AKrnDZS7iKz+3F029QNasR4uzpyx4VSINVq8IV1khgzkQaZD0qvSPMWdd
-   IPCe+rgv7MgabOk4nFB4+u/eRFjp9YZbQUSjNzYsd4LPLjzQ6CGe2OQXp9+j3//qAi0pcKNFqVHs
-   L1DoG5rBRvLxiD2cSnL/xcLK4zcjXiyhqwaAV4aBWpjPjAV0jW2fVYRNHqQ5KPFue/IMt0j5Kscl
-   kszhBoRy+oyspwF4qdLJTbGlf0q9usVI2GT9Zw==
-Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ bh=SBqfR8s00AfVK6FadKRCPg3nePwCminbF4sw5R8x0E8=;
+ b=eVIDG+cWNmqMPY9R9X2Q1TPDo/8OHQjh7djLR+qyk2FQNDEFNQyLN9yFSA/rGKvi+nnpKj1rFQwM
+   zKHoeYUecXCHTpVvOdFH9NRynrrpfe59tu1wyDaxkOkkmiswZjSkCLj4S0x2oPdlriTPsqArwnsl
+   9HCpyEm/QybKMehPQPQqAiHCZAkUi1yOq3BlggBOmMX2WigYXvVt7L1W3M4In4UN0OJn801SOtJQ
+   RybQg/1cwDzp42M0nWA/snEb0Fw//e0WnDU5xcEZeqIwRTW3L5nGOgSZDl3betgmQ1XRP8FCnNh1
+   fTle6hLkdActxAgN2NCRDOYSb27ZE9n13j8OVw==
+Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
  2024))
- with ESMTPS id <0SLD003LMBOITI80@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Mon, 14 Oct 2024 22:55:30 +0000 (GMT)
+ with ESMTPS id <0SLD00GK9BOLT970@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Mon, 14 Oct 2024 22:55:33 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
 From: Bence Ferdinandy <bence@ferdinandy.com>
 To: git@vger.kernel.org
@@ -38,9 +38,9 @@ Cc: phillip.wood@dunelm.org.uk,	Taylor Blau <me@ttaylorr.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>,	Bence Ferdinandy <bence@ferdinandy.com>,
 	karthik.188@gmail.com
-Subject: [PATCH v8 2/6] remote set-head: add new variable for readability
-Date: Tue, 15 Oct 2024 00:53:11 +0200
-Message-id: <20241014225431.1394565-3-bence@ferdinandy.com>
+Subject: [PATCH v8 4/6] refs: add TRANSACTION_CREATE_EXISTS error
+Date: Tue, 15 Oct 2024 00:53:13 +0200
+Message-id: <20241014225431.1394565-5-bence@ferdinandy.com>
 In-reply-to: <20241014225431.1394565-1-bence@ferdinandy.com>
 References: <20241012230428.3259229-1-bence@ferdinandy.com>
  <20241014225431.1394565-1-bence@ferdinandy.com>
@@ -52,69 +52,145 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
 Content-transfer-encoding: 8bit
 Reporting-Meta:
- AAGcuVeOwkX3W2cLsPbVZLkAlTmB2rPTAs2X0MxsxKf4JHeph2UTvCBUpG9DynqP
- BAMwpCbQX7N2fsaWFaNCub7VRSd+4CjzMyXodx/KT9msStynRRvu59dg1j3Olk+u
- UJ1z4jI1iTPpf0A70bDgFmAggYDfhtRbxD8fmkv1h5Pbf2c4Em9cyPjWYIsewJve
- /WTXXzSOyvE6qrtnLvWWkz6rBXTQwPNFTqymxOp2Rr2NqNjdISOZ/AOzdllj5zbF
- kX7eBhxZfKcvgrtBCHJCExnhFffnFDi44DECEOzm4eVcplrfGzUqcR9Lrl5/8mOV
- eahdNA0hhe7OCvadwvpTwgJPki27iWU+QQZThLl50iqkPeBbg8vtST0Rr0acx0Eo
- JjQDtvcYm3wBkuWtV2U1jtVCkUx8SWn8XFuv2cyYeENoniW81fJLWiTtcTrof9de
- PtXQ6k23i0H9ugjv3rLcQ1XEVyN1eK0spjn4mFLVGH6CWTO+/6wul5ff
+ AAGyUyoccjwg+DPq/RUqKKB7HW1cwrNdDQ4Km9MNht1P2yoegfdjKDNnYYqF/e+e
+ 8jnzQXWuHx6hIWAMmzBBkIP02gd9Z/JmfJGV56GXtc/RPmaSRy5pvTkqv0JnCdF/
+ ln8ai30d05HGm6Dh1hwvFS154OWBgcJNLJEBYIxAi6vV9wOICKp6LjU8f5ZdkdWV
+ TRstrpjJvP1ExRsOXlTR4x4hLYrpbIpL6ai32E+TpOdDCootK2YWZqu3bZSuLpa3
+ cUfhv8FQGrwcS+dyYB97jv/6NnmcZeDj/uvUpgFdeahnYigSF7DapqsFdvvRSAaK
+ Kzq11BkldXXUuj1A2HdKWShtNAUmloUK4kIFZqlWGODKANkbONXpZXHTA6mHRXZr
+ eQjcmfvStZReM8TZl6fsQtMmKNtyiCp9EaCR23SQaJztFlpJILKvOm71KLyLjS95
+ O/R5kRvaFMZbvsqbYmeSuKay3JCZzepuAL+sNaeqk4GEFNThrDC5ALyo
 
-Instead of calling get_main_ref_store(the_repository) multiple times,
-call it once and store in a new refs variable. Although this change
-probably offers some performance benefits, the main purpose is to
-shorten the line lengths of function calls using this variable for
-better readability.
+Currently there is only one special error for transaction, for when
+there is a naming conflict, all other errors are dumped under a generic
+error. Add a new special error case for when the caller requests the
+reference to be updated only when it does not yet exist and the
+reference actually does exist.
 
 Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
 ---
 
 Notes:
-    v5: new patch (split from the next patch as a preparatory step)
-    
+    v4: new patch
+    v5: no change
     v6: no change
     
     v7: - change commit prefix to be more in line with project standards
+        - changed error checking to Karthik's suggestion
     
     v8: no change
 
- builtin/remote.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ refs.h                  |  4 +++-
+ refs/files-backend.c    | 24 ++++++++++++++++--------
+ refs/reftable-backend.c |  6 ++++--
+ 3 files changed, 23 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index d8ff440027..353ffd2c43 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1404,6 +1404,7 @@ static int set_head(int argc, const char **argv, const char *prefix)
- 	int i, opt_a = 0, opt_d = 0, result = 0;
- 	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
- 	char *head_name = NULL;
-+	struct ref_store *refs = get_main_ref_store(the_repository);
+diff --git a/refs.h b/refs.h
+index b09a3a4384..c83b1ec76e 100644
+--- a/refs.h
++++ b/refs.h
+@@ -759,8 +759,10 @@ int ref_transaction_verify(struct ref_transaction *transaction,
  
- 	struct option options[] = {
- 		OPT_BOOL('a', "auto", &opt_a,
-@@ -1434,7 +1435,7 @@ static int set_head(int argc, const char **argv, const char *prefix)
- 			head_name = xstrdup(states.heads.items[0].string);
- 		free_remote_ref_states(&states);
- 	} else if (opt_d && !opt_a && argc == 1) {
--		if (refs_delete_ref(get_main_ref_store(the_repository), NULL, buf.buf, NULL, REF_NO_DEREF))
-+		if (refs_delete_ref(refs, NULL, buf.buf, NULL, REF_NO_DEREF))
- 			result |= error(_("Could not delete %s"), buf.buf);
- 	} else
- 		usage_with_options(builtin_remote_sethead_usage, options);
-@@ -1442,9 +1443,9 @@ static int set_head(int argc, const char **argv, const char *prefix)
- 	if (head_name) {
- 		strbuf_addf(&buf2, "refs/remotes/%s/%s", argv[0], head_name);
- 		/* make sure it's valid */
--		if (!refs_ref_exists(get_main_ref_store(the_repository), buf2.buf))
-+		if (!refs_ref_exists(refs, buf2.buf))
- 			result |= error(_("Not a valid ref: %s"), buf2.buf);
--		else if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote set-head", NULL))
-+		else if (refs_update_symref(refs, buf.buf, buf2.buf, "remote set-head", NULL))
- 			result |= error(_("Could not setup %s"), buf.buf);
- 		else if (opt_a)
- 			printf("%s/HEAD set to %s\n", argv[0], head_name);
+ /* Naming conflict (for example, the ref names A and A/B conflict). */
+ #define TRANSACTION_NAME_CONFLICT -1
++/* When only creation was requested, but the ref already exists. */
++#define TRANSACTION_CREATE_EXISTS -2
+ /* All other errors. */
+-#define TRANSACTION_GENERIC_ERROR -2
++#define TRANSACTION_GENERIC_ERROR -3
+ 
+ /*
+  * Perform the preparatory stages of committing `transaction`. Acquire
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 0824c0b8a9..e743ec44b5 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2502,14 +2502,18 @@ static int split_symref_update(struct ref_update *update,
+ static int check_old_oid(struct ref_update *update, struct object_id *oid,
+ 			 struct strbuf *err)
+ {
++	int ret = TRANSACTION_GENERIC_ERROR;
++
+ 	if (!(update->flags & REF_HAVE_OLD) ||
+ 		   oideq(oid, &update->old_oid))
+ 		return 0;
+ 
+-	if (is_null_oid(&update->old_oid))
++	if (is_null_oid(&update->old_oid)) {
+ 		strbuf_addf(err, "cannot lock ref '%s': "
+ 			    "reference already exists",
+ 			    ref_update_original_update_refname(update));
++		ret = TRANSACTION_CREATE_EXISTS;
++	}
+ 	else if (is_null_oid(oid))
+ 		strbuf_addf(err, "cannot lock ref '%s': "
+ 			    "reference is missing but expected %s",
+@@ -2522,7 +2526,7 @@ static int check_old_oid(struct ref_update *update, struct object_id *oid,
+ 			    oid_to_hex(oid),
+ 			    oid_to_hex(&update->old_oid));
+ 
+-	return -1;
++	return ret;
+ }
+ 
+ /*
+@@ -2602,9 +2606,11 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 					ret = TRANSACTION_GENERIC_ERROR;
+ 					goto out;
+ 				}
+-			} else if  (check_old_oid(update, &lock->old_oid, err)) {
+-				ret = TRANSACTION_GENERIC_ERROR;
+-				goto out;
++			} else {
++				ret = check_old_oid(update, &lock->old_oid, err);
++				if  (ret) {
++					goto out;
++				}
+ 			}
+ 		} else {
+ 			/*
+@@ -2635,9 +2641,11 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 				    update->old_target);
+ 			ret = TRANSACTION_GENERIC_ERROR;
+ 			goto out;
+-		} else if  (check_old_oid(update, &lock->old_oid, err)) {
+-			ret = TRANSACTION_GENERIC_ERROR;
+-			goto out;
++		} else {
++			ret = check_old_oid(update, &lock->old_oid, err);
++			if  (ret) {
++				goto out;
++			}
+ 		}
+ 
+ 		/*
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 3c96fbf66f..ebf8e57fbc 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1206,10 +1206,13 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 				goto done;
+ 			}
+ 		} else if ((u->flags & REF_HAVE_OLD) && !oideq(&current_oid, &u->old_oid)) {
+-			if (is_null_oid(&u->old_oid))
++			ret = TRANSACTION_NAME_CONFLICT;
++			if (is_null_oid(&u->old_oid)) {
+ 				strbuf_addf(err, _("cannot lock ref '%s': "
+ 						   "reference already exists"),
+ 					    ref_update_original_update_refname(u));
++				ret = TRANSACTION_CREATE_EXISTS;
++			}
+ 			else if (is_null_oid(&current_oid))
+ 				strbuf_addf(err, _("cannot lock ref '%s': "
+ 						   "reference is missing but expected %s"),
+@@ -1221,7 +1224,6 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 					    ref_update_original_update_refname(u),
+ 					    oid_to_hex(&current_oid),
+ 					    oid_to_hex(&u->old_oid));
+-			ret = -1;
+ 			goto done;
+ 		}
+ 
 -- 
 2.47.0.7.g072c39eddb.dirty
 
