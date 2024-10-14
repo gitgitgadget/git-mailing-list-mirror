@@ -1,103 +1,108 @@
-Received: from avasout-ptp-001.plus.net (avasout-ptp-001.plus.net [84.93.230.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DBF1CDFD2
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 20:21:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0D64C7C
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 20:33:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728937286; cv=none; b=jigHGZ9oRigwpdWUPzk4ViI+FikghesTBunh0Suk4dwATeZABfpdUAJdniZMhcffHsCdE3xWz1ws0PuZJiMyMeMPRh8zLmkbXOjU+lfGNyDGfyHXAW6qB0z6b97fvWWm4Qo0z55WMVU1sxrELFwUDO+qRb6Xj3bJDPnVVDxg0Vw=
+	t=1728938013; cv=none; b=lDefYMQt8SwhL7hcWaZC1S/pAcbeGxCWytEgoqvumiPhNc36Spf6SS9A5It68bIw7l2WcJ6RO4X+MkfSShuyvoAuOaH1VpGyIoUu/o6+PwGZ1yN+ibym94Dr/fBWsbxzPpyk1xY8b40YmbF0h3sE9hZlpgnM0ZVCdA+N7FoVkRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728937286; c=relaxed/simple;
-	bh=E+UrGV6ncfGRtWCkc4Cjz7w67SgVxPQjoF9tVmWdI7k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LC0g7z1YmqjUSWnpikKzvyWWMbrAh7IOte6OouvWExLoqH9nAFkghhCQn8yuS4UPR2v8IiHQjA8mCiN03HpxlXYACGw5/ZNdEZ76dJgOkeVAwjnm8Y0J/3zS5VtrotkdXek6/tSJmqN4ImdCFEE35HLZR1E3JJ5eQe/MhVa5uEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=CT5O6FDD; arc=none smtp.client-ip=84.93.230.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1728938013; c=relaxed/simple;
+	bh=6hqENWNH3j3q5xT+r/QnhNxCKYV5q5PxPcHON+SfK1M=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=s9rm/UdgP0qpF+IxDS9cEwW1XDeyZahATQmmhDQCjZjvuDn0Wq6+GPd1RAJypPeHK18Q7T8ACMqm58o/GUk8/AOzEbln0t09KQAh600lNcJFFgAkNViqKNIQ5LgcFnGKyWYIwgUHMMfFsolOyOgMkrGgEpfzSetrWef9ZwGynqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXlceToV; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="CT5O6FDD"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id 0RW6tzzWxy9pX0RW7tmNf6; Mon, 14 Oct 2024 21:18:13 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1728937093; bh=dm3I8GC1aoNwslOv7uxH/h/Q7qXAMMq6FLsjygNRhsQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=CT5O6FDDgTqRe+0if0IRzoNDUWsGyiPg2OmRS5uH0JuzTaFKvrAESNbO55LI2QrNj
-	 vfESgn2RsG+02EgUXoP6lfrO7tkQTgj98E8sq/ztAqOuY7KmOS6Mocx4mZCa4tCOMW
-	 gQ1YG9ISIxCqmhJb3NAqwlztlrhI4A9ONQhwBuTAdwDAnmYGVx7lDpCzVlTYVeav9I
-	 MnphM4K/qaw85QlGzZ4IJQJc6qL8Up1Ya3aKY6aVW7UFMmhH5VMldDEJf7fmx43ySK
-	 UZb+ekLJukdl48fgGvYwCD4FeAT2jzeo7HGCb6nAWEP004fSKVl71hkVWrdJjSUAOA
-	 YPWWmcd/5pWbQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=JYgfrlKV c=1 sm=1 tr=0 ts=670d7c85
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=dYdzlRXR2cQIcYpYj_oA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <4dd62151-38d8-48ac-b5ad-d8e2d00fa820@ramsayjones.plus.com>
-Date: Mon, 14 Oct 2024 21:18:10 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXlceToV"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4305413aec9so45073035e9.2
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:33:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728938010; x=1729542810; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6hqENWNH3j3q5xT+r/QnhNxCKYV5q5PxPcHON+SfK1M=;
+        b=nXlceToVFvAh/t5YDcGQlAx2N207PfKSxx1OmCvwDU0ZlCs4VyHAeAxZN7KSfXwA2M
+         w2VAmLTpp5ZPMP8xU10i4L3v2Fzgm8xvGXSWF/x0Mj/oioGaPq5McvzQeY8ZrGUZCuFG
+         OmK9NV5xGbMTYDnhNRI4cVcXlRq7FDnBpfy3Z3ZSm7h89lJtVJSdlSkHdZfpP2V6SmQY
+         x8snfb2R32/+8ZU2vOTCFRCSEf2ichd7HFOrYP+OMsdO7LFE5gv8R5csqIF4mXP7+8Na
+         7vEb4YGhdLqgQylpHV0mPhk2lm96hNB5fLWKMZEPdTcBeVs9YoXSroxIA8GLV3wMDQxT
+         odpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728938010; x=1729542810;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6hqENWNH3j3q5xT+r/QnhNxCKYV5q5PxPcHON+SfK1M=;
+        b=JaSbDfAIrIUvjvNmdiSEXyMCaRbRDPHYA17iBrPr094/tRfCWRv3q/SgNoN4fsFum9
+         Ne4MwFAdwD09SyHYD+hy9vvLHKo3LzAUBViiuNJNtnawndUTYaSndUs77PaMq7ZDcQcQ
+         Ew0iQt+Wd5ypHlcvFcG5QZom1LZnQlpx+qmxMhYLdAkqpML+oRQzoClhgX6TSsN0xY6p
+         ydFVMsQGxaMUGRqZiCzUDIQbob5rRGv/zYSeOnFhmoHyD+ulBENghoQtvpZAcmXely8W
+         kwp8l4TrAHd+VxEJt8isQItHYw6jyutjoMCg1eAN0P49uzKIACmNlptahl3ZnYvZMyVM
+         BO7w==
+X-Gm-Message-State: AOJu0YxmSVMqQNqMhDcg6Qw0lT9Vrl1ZkI3k6OuLf3QKks3Ie8ODLz5v
+	Brv0Rsp4EWVT5e+PKYh4R0GpBwLjUhrCM9izkyEfLItNUQKXuJp3w0X8pPl9
+X-Google-Smtp-Source: AGHT+IG/awr5PVhOWINeNS9goLZxCslRcadKYvfL4PGP+bFU2U/iBqtMrU82EUC3U6/IinKueHPmsw==
+X-Received: by 2002:a05:600c:350f:b0:42e:d4a2:ce67 with SMTP id 5b1f17b1804b1-4311dee8073mr124089675e9.17.1728938010137;
+        Mon, 14 Oct 2024 13:33:30 -0700 (PDT)
+Received: from smtpclient.apple ([2a00:23c7:890d:5f01:51fa:eff7:33e4:8633])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-430ccf5188dsm162522705e9.24.2024.10.14.13.33.28
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 Oct 2024 13:33:28 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Modernize the build system v2 problem
-To: Eli Schwartz <eschwartz93@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Cc: GIT Mailing-list <git@vger.kernel.org>
-References: <28e13e74-d4a4-4be5-8555-27a69c5c5787@ramsayjones.plus.com>
- <cd118725-f820-494c-8d10-81aba32e4064@gmail.com>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <cd118725-f820-494c-8d10-81aba32e4064@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfBmiIX+o/9ms+8713a379dN192oKz0iQ59imbH3Aumc7TQFtb438oJq/tpG/l4lVRPzWdLodUbqmpt5GFdyJc0jXFAiYXFiZh8668DOSIi198U0o3Cht
- 9esWjZbXhygwlq/a1OrLDw4LZPk2YrC0p4iQkWvURXcLe6bIpSKSbWB52B2hybQ6qNhXMa0wLtTEqYAe2zb/Fa/d/yD84/uPm7U=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
+Subject: Re: Should object repacking only update server-info for packs instead
+ of doing it for refs?
+From: Luca Milanesio <luca.milanesio@gmail.com>
+In-Reply-To: <LV8PR12MB9407CB282D1FD4998C659D29C2442@LV8PR12MB9407.namprd12.prod.outlook.com>
+Date: Mon, 14 Oct 2024 21:33:17 +0100
+Cc: Luca Milanesio <luca.milanesio@gmail.com>,
+ Martin Fick <mfick@nvidia.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <569E3AEA-AC68-4186-B38C-2E47DAB9890E@gmail.com>
+References: <LV8PR12MB9407CB282D1FD4998C659D29C2442@LV8PR12MB9407.namprd12.prod.outlook.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3774.300.61.1.2)
 
 
 
-On 14/10/2024 20:19, Eli Schwartz wrote:
-[snip]
+> On 14 Oct 2024, at 21:07, Martin Fick <mfick@nvidia.com> wrote:
+>=20
+> I have been experimenting with trying to run git geometric repacking =
+after every push on our servers
 
->> So, keeping in mind that I know absolutely nothing about meson, it seems that
->> the 'configure_file' function is mangling the 'gitweb.perl' file. I assume
->> that you are not seeing this, so I suspect that you are using a newer (fixed)
->> version than me. :(
->>
->>   $ meson --version
->>   1.3.2
->>   $ ninja --version
->>   1.11.1
->>   $ 
-> 
-> 
-> I recognize this: https://github.com/mesonbuild/meson/pull/13302
+I had the same sentiment when I studied how geometric repacking works.
+When we tried to do geometric repacking every 5 minutes on a busy repo, =
+we ended up with a single pack file most of the time, which isn=E2=80=99t =
+really what you would expect with a geometric progression.
 
-Yep, that looks pretty much on point. :)
+Running it after *every* push would make more sense, as Martin is =
+experimenting.
+Please keep us posted on the results :-)
 
-Having said that, after squinting at the patch text for about ten
-minutes, I'm still not sure it would leave all valid perl syntax
-alone. So, ...
+> and have noticed that even a NOOP geometric repack takes approximately =
+30s on one of my large repositories. Further investigation determined =
+that it was the update-server-info call that was taking that 30s, so =
+running repacking with the -n instead only takes 6ms in this case! I dug =
+a bit deeper and found that it was the update_info_refs() call that =
+takes all the time. This seemed a bit off to me. Yes, it makes sense =
+that would be slow, I have almost 2Mrefs, but I had to ask myself, why =
+is this being done from git repack?
 
-> 
-> Note that for files which can change semi-regularly as part of
-> development it may be better to avoid configure_file() and create
-> something like edit-files.sh.in which then produces build rules, not
-> configure-time changes. This would sidestep the problem entirely as
-> you'd then process gitweb.cgi via e.g. a sed script.
+I believe it should be done to update objects/info/packs
 
-Showing ignorance of meson, I don't quite follow the 'edit-files.sh.in'
-suggestion, but I had intended (before Patrick's email) to use a script
-to generate 'gitweb.cgi' as the 'command' in the 'configure_file'.
-It feels like you are suggesting something else.
+> It seems counterintuitive that an operation designed to repack objects =
+would be performing maintenance of any sort on refs?
 
-> (The main reason though is because it avoids reconfiguring meson when
-> the gitweb.cgi script is modified via a patch / git pull.)
+True, it should not touch info/refs IMHO, as you=E2=80=99re really not =
+changing any refs.
 
-Thanks.
-
-ATB,
-Ramsay Jones
-
+Luca.=
