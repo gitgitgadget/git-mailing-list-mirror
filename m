@@ -1,108 +1,115 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0D64C7C
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 20:33:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6722D4C7C
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 20:35:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728938013; cv=none; b=lDefYMQt8SwhL7hcWaZC1S/pAcbeGxCWytEgoqvumiPhNc36Spf6SS9A5It68bIw7l2WcJ6RO4X+MkfSShuyvoAuOaH1VpGyIoUu/o6+PwGZ1yN+ibym94Dr/fBWsbxzPpyk1xY8b40YmbF0h3sE9hZlpgnM0ZVCdA+N7FoVkRY=
+	t=1728938110; cv=none; b=iCkssvwcfVvHaCywPPsSL8+nz40cRG6O5mNH6ZoyfFh4G55RiDtT3QpujexBZeW9SCaMQ+Cmhx+vaknfV1cGuDL7dA5f1b3phumJjhkij5wIafW4rhuuHY3cOQWp1ZOyji3o2tbNMC3rYm7odBDDrXBEXqvIDgRkVSwkgMeT2Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728938013; c=relaxed/simple;
-	bh=6hqENWNH3j3q5xT+r/QnhNxCKYV5q5PxPcHON+SfK1M=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=s9rm/UdgP0qpF+IxDS9cEwW1XDeyZahATQmmhDQCjZjvuDn0Wq6+GPd1RAJypPeHK18Q7T8ACMqm58o/GUk8/AOzEbln0t09KQAh600lNcJFFgAkNViqKNIQ5LgcFnGKyWYIwgUHMMfFsolOyOgMkrGgEpfzSetrWef9ZwGynqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXlceToV; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728938110; c=relaxed/simple;
+	bh=vY1I2hNG60z81fFHc3M4051AM9bVl1ZmyW/7PNxwc30=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NtmgOZ7m5GJSxIPo0sWoE/ZHx3LgEiOAuEX7R3ozN/giWiWT+dBaq0118LybddDKzAZYKJWZk0NWRMNNlb8c+viYXV1eTXR49vUzrBNMMT4Awn/s5ZVCEFankOas4a/gm/FIVS5A+FQDqLt86+Rq0T1lBXtNlaOl+32DMmU+D7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WD3BuRHf; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXlceToV"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4305413aec9so45073035e9.2
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:33:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WD3BuRHf"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20c8ac50b79so325485ad.0
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728938010; x=1729542810; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6hqENWNH3j3q5xT+r/QnhNxCKYV5q5PxPcHON+SfK1M=;
-        b=nXlceToVFvAh/t5YDcGQlAx2N207PfKSxx1OmCvwDU0ZlCs4VyHAeAxZN7KSfXwA2M
-         w2VAmLTpp5ZPMP8xU10i4L3v2Fzgm8xvGXSWF/x0Mj/oioGaPq5McvzQeY8ZrGUZCuFG
-         OmK9NV5xGbMTYDnhNRI4cVcXlRq7FDnBpfy3Z3ZSm7h89lJtVJSdlSkHdZfpP2V6SmQY
-         x8snfb2R32/+8ZU2vOTCFRCSEf2ichd7HFOrYP+OMsdO7LFE5gv8R5csqIF4mXP7+8Na
-         7vEb4YGhdLqgQylpHV0mPhk2lm96hNB5fLWKMZEPdTcBeVs9YoXSroxIA8GLV3wMDQxT
-         odpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728938010; x=1729542810;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+        d=google.com; s=20230601; t=1728938109; x=1729542909; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6hqENWNH3j3q5xT+r/QnhNxCKYV5q5PxPcHON+SfK1M=;
-        b=JaSbDfAIrIUvjvNmdiSEXyMCaRbRDPHYA17iBrPr094/tRfCWRv3q/SgNoN4fsFum9
-         Ne4MwFAdwD09SyHYD+hy9vvLHKo3LzAUBViiuNJNtnawndUTYaSndUs77PaMq7ZDcQcQ
-         Ew0iQt+Wd5ypHlcvFcG5QZom1LZnQlpx+qmxMhYLdAkqpML+oRQzoClhgX6TSsN0xY6p
-         ydFVMsQGxaMUGRqZiCzUDIQbob5rRGv/zYSeOnFhmoHyD+ulBENghoQtvpZAcmXely8W
-         kwp8l4TrAHd+VxEJt8isQItHYw6jyutjoMCg1eAN0P49uzKIACmNlptahl3ZnYvZMyVM
-         BO7w==
-X-Gm-Message-State: AOJu0YxmSVMqQNqMhDcg6Qw0lT9Vrl1ZkI3k6OuLf3QKks3Ie8ODLz5v
-	Brv0Rsp4EWVT5e+PKYh4R0GpBwLjUhrCM9izkyEfLItNUQKXuJp3w0X8pPl9
-X-Google-Smtp-Source: AGHT+IG/awr5PVhOWINeNS9goLZxCslRcadKYvfL4PGP+bFU2U/iBqtMrU82EUC3U6/IinKueHPmsw==
-X-Received: by 2002:a05:600c:350f:b0:42e:d4a2:ce67 with SMTP id 5b1f17b1804b1-4311dee8073mr124089675e9.17.1728938010137;
-        Mon, 14 Oct 2024 13:33:30 -0700 (PDT)
-Received: from smtpclient.apple ([2a00:23c7:890d:5f01:51fa:eff7:33e4:8633])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-430ccf5188dsm162522705e9.24.2024.10.14.13.33.28
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 Oct 2024 13:33:28 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+        bh=Rjr920c3aiMMz1TWsbmJ2QFf5YXcRVh9DraQXAryuvA=;
+        b=WD3BuRHfIlIyWqcY7/bBK6A23+4h7hwLVMwFXfbmV4HlWUBBZj1zofWfZLcAcaS4t/
+         wwcBEL690UydqPt0CFsUPOTqwdbSwN97jJa2lwlZgZ9k5coEIqD8WLm/aHqI1wrsuF14
+         TdtfbvtmD+miTxXij2AMntzTcV7bxAuDejyZt57qxbUF1FS4eXuS8synZ2mgQit54x8G
+         6Ehder8o/xX8RSqpTUG1c4OgSCPZO9TXTP9BEsnO1B/0E+XWsQ8Ud5W2wiHW9UjV6go0
+         HXSzsNblNyCxnBWy5RMjba2wXnGJjiSzESBmF+CzsfAUUNDkIyx6yj0dXRBvSI0TworC
+         GTYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728938109; x=1729542909;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rjr920c3aiMMz1TWsbmJ2QFf5YXcRVh9DraQXAryuvA=;
+        b=JuLNF87KHkLBBUH//wXop2kP+BrHXgrOzJBhtlI1JecU63JmG096QnUSoa7fluhHAG
+         KKMClezKRQtX6Q1wfUzCEXwx1pMgzHABhz6HyT+fORReHmkxDtS5E7ezIdcnMuPWw1/i
+         rWzPXpP6/wEhpSl7TDvE+/d1gVv11XHIBJ54KIxXB3XrwIK8k0SPgdQpqxvhSNBykF9q
+         dIojqPuRyY0nJKOgukxp/7YYbR2PwJrK9SsIx4+o9izfHIe2RHVXQOqvbhB9dU1IcHv7
+         8g7JpXtlwmTu9wR+9UmctGzqRg9qCmdXngG+zCPobSN9eZRs3uT9ISO50AT88SX2Kg8A
+         raKw==
+X-Gm-Message-State: AOJu0YxNzZH/GjdRSLhIIDsd4zzrV/JbPus4M+dWHy5jaiJn/6RakzPW
+	8OQKB2rhtXTN8FmaHkx4ggj3DjFazkN35k01dDNdareYHvh8dmi0izWjHNuB+XK1gNgcZDG0pRA
+	43A==
+X-Google-Smtp-Source: AGHT+IF/hK8CRk5+W8XRxxIuiM8d1Wagu2r1vFJXm7O6S4MJvVTzp4c1Z6zp02EErTjUjIASDRoaGA==
+X-Received: by 2002:a17:903:2442:b0:20c:769b:f04d with SMTP id d9443c01a7336-20cc02bd0c7mr3809995ad.7.1728938108323;
+        Mon, 14 Oct 2024 13:35:08 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:204:2a9b:d27f:d626:2e54])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7ea76808b86sm3699621a12.32.2024.10.14.13.35.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Oct 2024 13:35:07 -0700 (PDT)
+Date: Mon, 14 Oct 2024 13:35:03 -0700
+From: Josh Steadmon <steadmon@google.com>
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: git@vger.kernel.org, eric.sesterhenn@x41-dsec.de, jarlob@gmail.com
+Subject: Re: [PATCH 1/3] fuzz: port fuzz-credential-from-url-gently from
+ OSS-Fuzz
+Message-ID: <qno6z2tvnx44qvcz3s3klldpshszfw3d6zk5io6chsg4mz7t4v@c7hfalghw56u>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org, eric.sesterhenn@x41-dsec.de, 
+	jarlob@gmail.com
+References: <cover.1728594659.git.steadmon@google.com>
+ <625b8d607ed2c95e396e7794616d9f290f23d15c.1728594659.git.steadmon@google.com>
+ <ZwjsK-uprX0eUAl5@ugly>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
-Subject: Re: Should object repacking only update server-info for packs instead
- of doing it for refs?
-From: Luca Milanesio <luca.milanesio@gmail.com>
-In-Reply-To: <LV8PR12MB9407CB282D1FD4998C659D29C2442@LV8PR12MB9407.namprd12.prod.outlook.com>
-Date: Mon, 14 Oct 2024 21:33:17 +0100
-Cc: Luca Milanesio <luca.milanesio@gmail.com>,
- Martin Fick <mfick@nvidia.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <569E3AEA-AC68-4186-B38C-2E47DAB9890E@gmail.com>
-References: <LV8PR12MB9407CB282D1FD4998C659D29C2442@LV8PR12MB9407.namprd12.prod.outlook.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-Mailer: Apple Mail (2.3774.300.61.1.2)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZwjsK-uprX0eUAl5@ugly>
 
+On 2024.10.11 11:13, Oswald Buddenhagen wrote:
+> just some nits:
+> 
+> On Thu, Oct 10, 2024 at 02:11:53PM -0700, Josh Steadmon wrote:
+> > +++ b/ci/run-build-and-minimal-fuzzers.sh
+> > +fuzzers="
+> > +commit-graph \
+> > +config \
+> > +credential-from-url-gently \
+> > +date \
+> > +pack-headers \
+> > +pack-idx \
+> > +"
+> the trailing space-backslashes can be left out, which would make the
+> code less noisy. then the variable would contain linebreaks instead of
+> spaces, which the for loop would be just fine with (as $IFS contains
+> LF).
 
+Fixed in V2.
 
-> On 14 Oct 2024, at 21:07, Martin Fick <mfick@nvidia.com> wrote:
->=20
-> I have been experimenting with trying to run git geometric repacking =
-after every push on our servers
+> > +for fuzzer in $fuzzers ; do
+> > 
+> the space before the semicolon seems excessive.
 
-I had the same sentiment when I studied how geometric repacking works.
-When we tried to do geometric repacking every 5 minutes on a busy repo, =
-we ended up with a single pack file most of the time, which isn=E2=80=99t =
-really what you would expect with a geometric progression.
+Fixed in V2.
 
-Running it after *every* push would make more sense, as Martin is =
-experimenting.
-Please keep us posted on the results :-)
+> > +++ b/oss-fuzz/fuzz-credential-from-url-gently.c
+> > +int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
+> > +
+> are these seemingly redundant prototypes meant to suppress compiler
+> warnings?
 
-> and have noticed that even a NOOP geometric repack takes approximately =
-30s on one of my large repositories. Further investigation determined =
-that it was the update-server-info call that was taking that 30s, so =
-running repacking with the -n instead only takes 6ms in this case! I dug =
-a bit deeper and found that it was the update_info_refs() call that =
-takes all the time. This seemed a bit off to me. Yes, it makes sense =
-that would be slow, I have almost 2Mrefs, but I had to ask myself, why =
-is this being done from git repack?
+Yes, unfortunately we get complaints without them.
 
-I believe it should be done to update objects/info/packs
+> > +int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+> > +{
 
-> It seems counterintuitive that an operation designed to repack objects =
-would be performing maintenance of any sort on refs?
-
-True, it should not touch info/refs IMHO, as you=E2=80=99re really not =
-changing any refs.
-
-Luca.=
+Thanks for the review!
