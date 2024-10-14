@@ -1,174 +1,129 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF708F64
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 17:43:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437D5231C8A
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 17:52:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728927783; cv=none; b=c6NFk2c20DbI4LNuyfhUgIshl4N/67a6JV5S9scL9RT6U4z0WZavX28pmg4t0p9Tl7wMrI4r7csPC+OQzlwAs8vyDBKNPuZw0zi8oGykmE4yOa7IYSBXhgPFEsvEFVlMB3RifmGyGP8rHohxohbUX/soupDxom+Mf6NqnIpQ7RY=
+	t=1728928328; cv=none; b=T8zMCi0aTczoZZR1/vabf/jlvaSTYv81T2BNLdb3AlH0wE467/Kga9HcEfOPCBBZenB0oK92Sk1Tq3fA05mPHJYl7qxj5mOdcn9ZVE1CIANIusil3wEQhV724PZO5kAOnEqRBivpA0CGh42f+Rhgq015KLak71gp7ucZQP2D4yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728927783; c=relaxed/simple;
-	bh=1NOiqI5Mbld+NuamSpnPlbAcIe1nTDWoljJKE6r/nog=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JXQfcIJQQvx/CRJUPEcKoLLX5U2Cuc7SXo3pMbhpZ8KHCAr14umie7km9A7qCb4j7cWzJEl+u8Kgq322YY3ZcrvQB9g551UaZF2gycWK7sNnLtgoYVZ7VJ+NPKMOlAqQcZLRSWuOFxCpBaXsfsdyJ2nGO2ZgDiQZJo0UrtwzusU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UYDvBLdb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UrotUpRt; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728928328; c=relaxed/simple;
+	bh=FXovKHXvZ0sy+9sSO8uWLZ8O/5fFZWny03OeU6/GKEI=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=YwcZZFY9MuZMV0kjee4hOixSxJm1Puoj/KJHQ3a3113Xiop3+QtYzH9M1Bs5l9O7d41MsFWBMBSzH5QSwzTokWB1pivKEQ7W4au8vFDFiXNvJFkt1RukM/SNbRulQcyyQ8WU0SYAD4cpP0pSFwHj69gx2EVpnrZ11p1TkscNDx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gu7qy8n/; arc=none smtp.client-ip=209.85.128.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UYDvBLdb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UrotUpRt"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id BB81C138022D;
-	Mon, 14 Oct 2024 13:42:59 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 14 Oct 2024 13:42:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728927779; x=1729014179; bh=xTP6yhR49n
-	MboqloAkoTR+zktmqSYl0KhEVaKUWg6Pc=; b=UYDvBLdbbuufv4XxGCcYysO7iE
-	ngERZribBTrY9ZvSxg/du3wnV2l62vSZzyS0WV3WbN4/+h5QaZM0CSihgnbqPldW
-	J4uURJHoEfPyWnnAOFnkJn7TbBkiV2eCkwpkYRIW+hPHt8QZHvxhZ1MugbUq/BXm
-	+3170E3kTApbxOF9l05rwtqegmUyJIiTyAlV6tI46SA+o+ixnqoRTwaA9cRlMVSA
-	EmPpadLnuFLcT00vh+HEYmHdGg25R0grL6h4aTvRalIJe/rNYoXybvzcttzxy4k7
-	pypLj4ZGQ5tPr43ds+zqzvXUE2S4ZzCNQF9yJk6KGMjyBVZu3Ejw7rcibmdg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728927779; x=1729014179; bh=xTP6yhR49nMboqloAkoTR+zktmqS
-	Yl0KhEVaKUWg6Pc=; b=UrotUpRtjsV79QiGN+S6L6fko7MdaQMXhw8YknZIZIrh
-	ai2k8sNLri16R9tTeHr52jn++EnRt0iJIa0nE7LJtbEE+oeqSTl1NdTzlex/+rsQ
-	+u4X9qF/Ey+RdDeYKuF56txKdWmXPhkgbovk/f9L8lHWBzwTf7auc6tAhklZxCRm
-	l8spZq7DmYyVzVDjOZfB1DH9qvr0RUS+Pj66OrqU++HzfAPZoL7PyqvFIsH+oDjt
-	AztLPmdjTC0A8At8gNOylK8knewm2LIVU+MljrVOGfYAQiun48yKM9ruGTwylUKi
-	r/8O5CGqhIHcChwMcW8wX4rYRfK+2erWsem769BcDw==
-X-ME-Sender: <xms:I1gNZ9H_14o3Oea3q4g8D-0gLsuqSBTCNm6MMSTnwUMX5pfR5l1N9A>
-    <xme:I1gNZyXOb4gAunuYku4j4EWAnA6XuUTH9wDClinekzVoenQxL88_QIpJ9sL_n4U2g
-    -U9qk29sBxCRWWegg>
-X-ME-Received: <xmr:I1gNZ_JbTKIs41VRXi28UbzCtsW52Pa8YbSB10XAJizKnBY5U3h06xI1cGxftfTV-7j2uLs2FpT-8Q6tGcdSYuU5ShUEtNICbaCR7IatoHvgAA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgudduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomh
-X-ME-Proxy: <xmx:I1gNZzH-GZkqVOmAW5-O8Z1XTfkH2ryFslhQa10upSZ9ZI107YRfSQ>
-    <xmx:I1gNZzUF4Zk10N32sQrFQwx6xYnDp-qbpBt4VBtrt7EZy5Nl2HTbOQ>
-    <xmx:I1gNZ-NxP_PfRyYOxWclf40LXXcWaL5wzkCkGi-pZHlPAVSgTmlj8g>
-    <xmx:I1gNZy0BN9yyhVMPTiZ7t2Pdl1ZKd4U6iUNplZnT9jcyNWTmHkFz0w>
-    <xmx:I1gNZwiksQCJVuacIXUjaAx8AD4ILue5n7u0VljIfTr4nOpjL8fSOmaX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Oct 2024 13:42:58 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 22715ea1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 14 Oct 2024 17:41:41 +0000 (UTC)
-Date: Mon, 14 Oct 2024 19:42:20 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: Modernize the build system v2 problem
-Message-ID: <Zw1X9-d1OH7Df8Wh@pks.im>
-References: <28e13e74-d4a4-4be5-8555-27a69c5c5787@ramsayjones.plus.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gu7qy8n/"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-6e2e5e376fcso87014517b3.2
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 10:52:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1728928326; x=1729533126; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FXovKHXvZ0sy+9sSO8uWLZ8O/5fFZWny03OeU6/GKEI=;
+        b=gu7qy8n/OIl1NcjAXivOcMQVMKNQpX/hSgyWOFxgMALZ9sTfqedsEMGvCv6y++pzn9
+         cAlzLk6+9WAJdlzQJPmzS63A1Y1zeweeC1smpp6n56ytvbma4W23xTgPExgrGx2n934Y
+         306jDQ63zTenxbDXAhRsnaqLV/FSUzsUD2FNW+qKH3K2H8at8lFZPYRVAR3ZZrEZTC8b
+         UOEtNTqvUOBVA/vj3lU7DPa0yEaD8HV1DacLUPMDZlGnhKaj9Oq5MpFVV7r0rXEUwozq
+         qAEeSODuJs6kK6mTFdss1OF7WtbMT6+3iutyE5ksdmquU9aYhqUWkFWUsJCvD8ptEzft
+         mT7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728928326; x=1729533126;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=FXovKHXvZ0sy+9sSO8uWLZ8O/5fFZWny03OeU6/GKEI=;
+        b=L8/Zrr16hNFa/nEixhX5yX8JofZZL7ThFx6NOYmcysUGxrY8ZTLkvBgu1u7Yjj6nPa
+         xESVwLLXgJ9LwvBxIAMag9SyzsxKepkHlzK6jaVjMhPe5K9q4OTzXzH6GdXxAiNHUxlC
+         GpcKYpLdq1v73hRNCkM8OwJOmSXGICJeey+QRJ/tFQHaOsQdtWd4PArCW4A5PW6REezW
+         9quP3Aar/kNY4DRkt3SdGPHAP+epI/pZJs0B5tuOWvgnm7vGkakgHUGM/LFxya3W3+u6
+         0t+nPBRIY5ep07oeO2SMvLILCgOPKREjvugfG1YnqZpMNqoRDkTsjzBj3a1MmQhf5uZw
+         1obw==
+X-Forwarded-Encrypted: i=1; AJvYcCWgrQzLq0JaL3MkLWzrupUs+B7bwJlVWsWgcl6VkDEu0JqNVq4QXfCS1TGMsz8MlRnWM0k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOmKNv4Uk3oShFE3HtxPv4GbGshAto9+rjX2eU1XzTE/SUG6Zh
+	NzSNwzefOzXOfmGjCwHjWVpRwGdVmlbtVO/FNEzPjD4CECokfimNyG5gFfVdb8IK4GMk57n1klB
+	dyuUT2fFGzYHA3PT61KW9nagMGXZi+g==
+X-Google-Smtp-Source: AGHT+IGhnPw4lEHYKd39RipK5Sl944uuyn8b1c737xnXU15reNgVKQ9Y6Mjk9moAhEVeXRoZSgCXZUNUhVG2zNEUcogO
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:a67b:e464:3f29:ea51])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:aa68:0:b0:e28:e4b2:15fc with
+ SMTP id 3f1490d57ef6-e2919d638fcmr7279276.3.1728928326105; Mon, 14 Oct 2024
+ 10:52:06 -0700 (PDT)
+Date: Mon, 14 Oct 2024 10:52:03 -0700
+In-Reply-To: <CAG1j3zFFYcwYg7b9_xGRGHAOHm+qTHY=WpngqtJCrmDznhD+HA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <28e13e74-d4a4-4be5-8555-27a69c5c5787@ramsayjones.plus.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
+Message-ID: <20241014175203.740046-1-jonathantanmy@google.com>
+Subject: Re: [External] Re: Missing Promisor Objects in Partial Repo Design Doc
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, Calvin Wan <calvinwan@google.com>, 
+	Junio C Hamano <gitster@pobox.com>, Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>, Enrico Mrass <emrass@google.com>, sokcevic@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 14, 2024 at 05:59:03PM +0100, Ramsay Jones wrote:
-> Hi Patrick,
-> 
-> I took your 'Modernize the build system' v2 series, from 2024-10-09, as patches
-> from the mailing list and put them on top of master@ef8ce8f3d4 ("Start the 2.48
-> cycle", 2024-10-10). I had to hand edit the 14th patch to change the version
-> number from DEF_VER=v2.47.0 to DEF_VER=v2.47.GIT, because of the change of base.
-> (It would probably have been easier to just base it on v2.47.0, but what would
-> be the fun in that! :) ).
-> 
-> In order to fix the 'dependency loop' error/warning from make, I applied the
-> following change:
-> 
->     diff --git a/Makefile b/Makefile
->     index dc60b2581d..c7b28975ac 100644
->     --- a/Makefile
->     +++ b/Makefile
->     @@ -3219,7 +3219,7 @@ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(
->      
->      all:: $(TEST_PROGRAMS) $(test_bindir_programs) $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG)
->      
->     -bin-wrappers/%: bin-wrappers/wrap-for-bin.sh
->     +$(test_bindir_programs): bin-wrappers/wrap-for-bin.sh
->      	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
->      	     -e 's|@BUILD_DIR@|$(shell pwd)|' \
->      	     -e 's|@GIT_TEXTDOMAINDIR@|$(shell pwd)/po/build/locale|' \
+Han Young <hanyang.tony@bytedance.com> writes:
+> On Sat, Oct 12, 2024 at 10:05=E2=80=AFAM Jonathan Tan <jonathantanmy@goog=
+le.com> wrote:
+> > So I think we'll need to use do_not_die_on_missing_objects. It does hav=
+e
+> > the weakness that if the object is not supposed to be missing, we don't
+> > inform the user, but perhaps this is OK here because we know that all
+> > objects we encounter on this object walk are promisor objects, so if
+> > it's missing, it's OK.
+>=20
+> And I think users would prefer the git command to succeed if possible,
+> rather than die on the first (noncritical) error. Maybe show a warning
+> and swallow the error?
 
-Yup, I've already got this exact change pending in v3.
+Just to be clear, this is not an error condition so we shouldn't show an
+error or warning. Whenever we repack non-promisor objects in a partial
+clone we will almost always encounter missing objects. In the gc repack,
+this is mitigated by --exclude-promisor-objects, which checks the
+promisor object set whenever a missing object is encountered; it does
+not show an error if the missing object is in that set.
 
-> There are several ways to fix it, but this seemed like the easiest. I suspect
-> that you have already fixed this.
-> 
-> Having determined that the 'make' build procedure seemed to be unaffected,
-> I now tried the meson build. I had to install meson at this point (ninja
-> came along for the ride). I have never used meson or ninja before.
-> 
-> At this point I had to fix another fallout from changing the base:
-> 
->     diff --git a/meson.build b/meson.build
->     index 338d472bc6..54557eee03 100644
->     --- a/meson.build
->     +++ b/meson.build
->     @@ -194,7 +194,6 @@ libgit_sources = [
->        'reftable/block.c',
->        'reftable/blocksource.c',
->        'reftable/iter.c',
->     -  'reftable/publicbasics.c',
->        'reftable/merged.c',
->        'reftable/pq.c',
->        'reftable/reader.c',
+My proposal is to use do_not_die_on_missing_objects instead, which
+always tolerates missing objects (without showing any error or warning).
+This is probably not safe enough for the gc repack, but should be OK
+for the fetch repack, since we are only repacking ancestors of known
+promisor objects (so we can deduce that the missing objects are promisor
+objects).
 
-This one, as well.
+> > In addition to do_not_die_on_missing_objects, we'll also need the actua=
+l
+> > code that stops iteration through objects that pass our "best effort"
+> > promisor object check. Probably the best place is in get_revision_1()
+> > after the NULL check
+>=20
+> get_revision_1() only does commit limiting though. Some callers of rev-li=
+st
+> also do tree walking on commits,
 
-[snip]
-> So, keeping in mind that I know absolutely nothing about meson, it seems that
-> the 'configure_file' function is mangling the 'gitweb.perl' file. I assume
-> that you are not seeing this, so I suspect that you are using a newer (fixed)
-> version than me. :(
+Ah, yes, you're right. The repack on fetch is one such caller (that will
+need tree walking).
 
-I didn't, no, so this is quite helpful to me.
+> in a (corrupted) partial repo, tree could
+> also be missing. There isn't a central place we can stop tree walking,
+> callers using this feature would have to implement "tree walking early
+> termination" themself.
 
->   $ meson --version
->   1.3.2
->   $ ninja --version
->   1.11.1
->   $ 
-> 
-> This is on Linux Mint 22.1, which is based on Ubuntu LTS, so not that old!
-> 
-> I am about to try converting the Makefile 'procedure' into a shell script
-> to use in both the Makefile and in the meson.build file (I see that the
-> 'configure_file' procedure can take a 'command' to generate the file).
-> 
-> Note that '$project_maxdepth' is a snowflake in the make procedure! :)
-> 
-> Any thoughts?
+The repo could have been cloned with a tree filter (e.g.
+"--filter=3Dtree:0") too, in which case trees would be missing even if the
+repo is not corrupted. But even in a non-corrupted --filter=3Dblob:none
+partial clone, we still don't want to iterate through promisor trees, so
+that we don't repack them unnecessarily. So yes, get_revision_1() is not
+the only place that needs to be changed.
 
-I'll investigate tomorrow and come up with a fix. I'd prefer to not have
-to script our way around this, as eventually I would like to get rid of
-shellscripts in the build system altogether. But that is something for
-the future anyway, and for now I'll do whatever it takes to fix issues.
+I think that there is a central place to stop tree walking - in
+list-objects.c.
 
-In any case, I'll try to reproduce the reported issues tomorrow and will
-then come up with a fix. Thanks a lot for testing things!
 
-Patrick
