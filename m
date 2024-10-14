@@ -1,244 +1,387 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB481ADFE8
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 15:23:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA4E1C7617
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 15:24:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919418; cv=none; b=jTBPm27WyY97Ugh53NtfSK4BcxENgwLKGum6EiQz0xhY3Xdd1gf0T4npMlVgwxuaTAfi65WbNfnuNI3RRMDufZPyxZfUL0VcC2HcKOQuT00l/5B2MUhxCJx+G+ZlEOrE6Smlt1M6tL3Ajm7o5htJeBXBf7pHw4eJ4bv3ueT0hfQ=
+	t=1728919501; cv=none; b=ZbDRMaqyx8O7MHq6PgFksBbS+5Zp4RkXSv++i6L4Qb0Gn8I6+uBF9IrsyLgfhVaAT8InvncYiQBTA7/51Z0PppPt4PBcNzcT6Cu6L0oI0+wr7x9N/eUACgSVsi81xjfZLRhDuNrOGxez0MhaXh2BoNtDDjDzQjwx6Yk/Sop1b4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919418; c=relaxed/simple;
-	bh=kZHDCQwDbnUVVUoZwBaoCEt57CFbO6s3CCyMNGhLd6A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D4UtBLkuvE2vTSBSbJs4eRzsi3DAx4aumuNhUFcZoGCykoVYJgoyGxfotAlYfrDkFx6B+kH9NkbziFhyH/GhTW18VQQjiWycTfGuPWAnhi8kPlHZTSqzQDlF+wlSBNNzYtbNX5eOeEDsZygt9kyLC0AMng0jXPvIJK2HHIegRAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c/QkUPzl; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1728919501; c=relaxed/simple;
+	bh=289+v8pX3T5assBqEmobcJ1WVaxnHfI91tT/eLjg8rQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=mXjJAe+WQONF89g5TJcPvCzNUOBqYoRvLZDVngsEK7Iunb11D5kanTTUZUoado3+3rGoFfZfNaye7L1Igx+y3Un3d2Du2ShSCSrvswNSvUzH2+FdM80H3zZQ+t81PE52A9a/yUaz6UEXGtTMjcdP+HDpL1gLFZGb7r5aNT/HfyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gVVrgRlk; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c/QkUPzl"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-431160cdbd0so27863515e9.1
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:23:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gVVrgRlk"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a7aa086b077so580673766b.0
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728919414; x=1729524214; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hUewdoHZJNHiXABP5XQYuRjdyeaF9gVi69hBf5W3yLs=;
-        b=c/QkUPzly7ZzDONaSuXl79Z6QXcFv/UmnkGLYizJ6lMlt4Xi6KAXo7H2jd0w/bfxz6
-         ZQpg8AieAdavcKEBHn+sGm1ZU5k3LT6R7ZMqVRe+1miVrODu60dMKY5L+rE/NNwDCg3M
-         9QpGM4A2Q72ekApzTximAeMi63ZONPjUhpBsjVzSdD+/5i9TpcvBAE8iH6wEMNNwsdTf
-         4pJUEcW8tSpjH0LPZ4H5x6GfWZkzNDUzk4OEAsliYLKz/mQ5SNPvTVC/WXdopqJ/u2S0
-         iJUrWq8+OOFX6HhedrRIaqB9qu2Ur1m81dlV8Xwmy2cSbPbcAxJOR04wlb+/Ph43LcK7
-         +CVw==
+        d=gmail.com; s=20230601; t=1728919498; x=1729524298; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Z5y9Matphe1R9FpHcbF7xO3eU1sVVDIaL3phRJiGj+k=;
+        b=gVVrgRlkHc+fL7kVOTpjjT+FtwPv2egqsZsFeXQjZBMPV+WcZD59zRb2sTFXqpJCZe
+         ooltOpQcZypLxtzcmDw7AQOlcLD8MySqqmFQHVN7yZ+7b5Dd2vJpX/RlAEfq4lzkGLm0
+         qJdfCWHbFtS8LhP9ChQFH/a5ivsXrqof+PE1iAQX4/OxK5pgknhd08NaQnR0rqydyZj1
+         jMNkdCEoNMUv/lnKrDC0wCu9ISXZxD1LPN4G7QzUEeFN7w6TjqbOt08W5BGA/rnQO6Zy
+         ze4AKxqrLq6oj5NYCNjI++etFn00QxqQpiYyQvFWiipMxUclUhJ4bsRJ1zOhge8mBE8e
+         CifQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728919414; x=1729524214;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hUewdoHZJNHiXABP5XQYuRjdyeaF9gVi69hBf5W3yLs=;
-        b=qmzrn1NH30VuxRlEfLJgV09eTGPtMwkybl1cRQNsmvUXRwpgNYhJjJ62pvatWoyZq6
-         16wYHbH0HVioQ63n3uGCxrFsZzWd2/uIm1B2Qq2AM9uwrSYUHW45LZ9M05t3DhYgLWnK
-         YSo9hC6saZBGRG+LQ1wNJzUSbQT2wbrY4CMiSW3/Mkzt6eiLFZ5a3KkTYGK1D4Ou4dFL
-         6THVqMjKVSuXdR9SphK+OAYuanFsTN2yol9tV5uW9JAZmPdhRVwRuJGHUngnjRnbdCl2
-         DbQWsIzK486nncvGDHYUFyDkC2x5nlC2yB0xtPNYOcRvutMIxMZV9fandhq9vv5+pDLl
-         WMoA==
-X-Forwarded-Encrypted: i=1; AJvYcCUf5t1SM606OSJ/7PvdoaOdVJeYmLg3shELVuVXhuUWHRgHZRNYHRO/Yp/JhVJxqaspTgg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHx760RIlF74zQbvSAARMwb9JODTa/1xEPxQUJ5yg2gdRC3Iyn
-	qcwHluhhL2liJuuO8RzsvxmpGjn9Oo2hdXa79T4PFSDxFXb9vHxYHfJTSA==
-X-Google-Smtp-Source: AGHT+IHoH5c9czQViUgiVe/95hHNOzKI35DNuX+dhX5b9aS3f9uj0weaU5LZuW27JoVvra1fbrk6jQ==
-X-Received: by 2002:a05:6000:dd2:b0:374:c21a:9dd4 with SMTP id ffacd0b85a97d-37d5529cb8dmr8896167f8f.20.1728919414326;
-        Mon, 14 Oct 2024 08:23:34 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d4b6bd3e7sm11522731f8f.39.2024.10.14.08.23.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Oct 2024 08:23:33 -0700 (PDT)
-Message-ID: <72da40d7-2570-456c-966d-cd09579edd22@gmail.com>
-Date: Mon, 14 Oct 2024 16:23:33 +0100
+        d=1e100.net; s=20230601; t=1728919498; x=1729524298;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Z5y9Matphe1R9FpHcbF7xO3eU1sVVDIaL3phRJiGj+k=;
+        b=HQslJ7ZGuUaYZglMcBvyJG0uTp1qFgX1Zi9jBkRuNCwfCWAhAk1x0BcIC5CRutOq2C
+         8JeRg4+IlaZggazumfs2UCVBb1m+0RImI5QhmUkMOYD0JcNt65nXqh6FU2tmeXVt9QjT
+         5S+A/R/zbGuuv6VaFzaj+sw4Cx9Bgkc0TKniCZ3n3vzSBgvjNqn3OAEzS5tI4HLSCebd
+         fbYPXMI4pacXyoQwlXTf0mwT4u7BbpHhNIowGLWevG2A2liK289tuW8PYZ7XhNZ+oa9Q
+         IW1+QDPHLu9byzOgnVPi3YqiR72FMliRhyUCa3/GxJL4EPun6zNNNhN5b8oAU9tyWjqx
+         KMTw==
+X-Gm-Message-State: AOJu0YzixYi16hHjJsulcE8y8EKYE9A8wKfbwhOqHWuyKHk1BjGbTcAH
+	r+nHvFscgXCztX/B/wPMRd0uHoZfy4gSX09JL4fYKILH3lzAVg==
+X-Google-Smtp-Source: AGHT+IEnCC3hCoZZC9NR0JCierX/Gpt6JTA4DSAF4Fk+C9cCImPFQBQJfLxbCzmKncqz6Qn7Plcw6w==
+X-Received: by 2002:a17:907:3ea6:b0:a99:fcbe:c965 with SMTP id a640c23a62f3a-a99fcbf0344mr529989066b.59.1728919497334;
+        Mon, 14 Oct 2024 08:24:57 -0700 (PDT)
+Received: from zihco-Latitude-7390-2-in-1.. ([102.90.58.232])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a9a04cf932asm238616566b.115.2024.10.14.08.24.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Oct 2024 08:24:56 -0700 (PDT)
+From: chizobajames21@gmail.com
+To: chizobajames21@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	phillip.wood@dunelm.org.uk,
+	ps@pks.im,
+	sunshine@sunshineco.com
+Subject: [Outreachy][PATCH v6] t6050: avoid pipes with upstream Git commands
+Date: Mon, 14 Oct 2024 16:24:11 +0100
+Message-Id: <20241014152411.11052-1-chizobajames21@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241012062126.603967-1-chizobajames21@gmail.com>
+References: <20241012062126.603967-1-chizobajames21@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH v2 23/24] Documentation: add comparison of build
- systems
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Eli Schwartz <eschwartz@gentoo.org>,
- Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>
-References: <cover.1727881164.git.ps@pks.im> <cover.1728485139.git.ps@pks.im>
- <afa2f79d46cb9b2e25cd31b622d5f547e2746f2e.1728485139.git.ps@pks.im>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <afa2f79d46cb9b2e25cd31b622d5f547e2746f2e.1728485139.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Patrick
+From: Chizoba ODINAKA <chizobajames21@gmail.com>
 
-On 09/10/2024 15:57, Patrick Steinhardt wrote:
+In pipes, the exit code of a chain of commands is determined by
+the final command. In order not to miss the exit code of a failed
+Git command, avoid pipes instead write output of Git commands
+into a file.
+For better debugging experience, instances of "grep" were changed
+to "test_grep". "test_grep" provides more context in case of a
+failed "grep".
 
-Thanks for putting this together, I've left a few comments below.
+Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
+---
+Change in v6:
+- fixed a typographical error in the commit message
 
-> +== Requirements
-> +
-> +The following subsections present a list of requirements that we have for any
-> +potential build system. Sections are sorted by decreasing priority, even though
-> +these priorities will naturally differ between users.
+Range-diff against v5:
+1:  b339b1f550 ! 1:  aad95a1b96 t6050: avoid pipes with upstream Git commands
+    @@ Commit message
+         failed "grep".
+     
+         Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
+    -    Changes in v5:
+    -    - replace 'sort -o' which might not be supported by some platforms
+    -      to the more conventional output redirection, > .
+     
+      ## t/t6050-replace.sh ##
+     @@ t/t6050-replace.sh: test_expect_success 'set up buggy branch' '
 
-This last sentence sounds a bit self contradictory - whose priorities 
-are we using?
+ t/t6050-replace.sh | 133 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 86 insertions(+), 47 deletions(-)
 
-> +=== Platform support
-> +
-> +The build system must have support for all of our primary platforms as outlined
-> +by. These platforms are:
-
-Something seems to have been lost when the first sentence was edited.
-
-> +  - Linux
-> +  - Windows
-> +  - macOS
-> +
-> +Furthermore, the build system should have support for the following secondary
-> +platforms:
-> +
-> +  - AIX
-> +  - FreeBSD
-> +  - NetBSD
-> +  - OpenBSD
-> +
-> +The platforms which must be supported by the tool should be aligned with our
-> +[platform support policy](platform-support.txt).
-
-The platform support document does not use the terms primary or 
-secondary when talking about support so I'm not sure what distinction 
-we're trying to make here. Also where does NonStop fit into this?
-
-> +=== Ease of use
-> +
-> +The build system should be both easy to use and easy to extend. While this is
-> +naturally a subjective metric it is likely not controversial to say that some
-> +build systems are considerably harder to use than others.
-
-The tricky part is deciding how to measure ease of use if we're going to 
-use it as a metric for selecting a build system.
-
-> +=== Out-of-tree builds
-> +
-> +The build system should support out-of-tree builds.
-
-Yes please!
-
-> +=== Language support
-> +
-> +The following languages and toolchains are of relevance and should be supported
-> +by the build system:
-> +
-> +  - C: the primary compiled language used by Git, must be supported. Relevant
-> +    toolchains are GCC, Clang and MSVC.
-> +  - Rust: candidate as a second compiled lanugage, should be supported. Relevant
-> +    toolchains is the LLVM-based rustc.
-> +
-> +Built-in support for the respective languages is preferred over support that
-> +needs to be wired up manually to avoid unnecessary complexity. Native support
-> +includes the following features:
-> +
-> +  - Compiling objects.
-> +  - Dependency tracking.
-> +  - Detection of available features.
-> +  - Discovery of relevant toolchains.
-> +  - Linking libraries and executables.
-
-Do we want a section about templating (i.e. substituting @XXX@) support 
-which we use when installing scripts?
-
-> +=== Test integration
-> +
-> +It should be possible to integrate tests into the build system such that it is
-> +possible to build and test Git within the build system. Features which are nice
-> +to have:
-> +
-> +  - Track build-time dependencies for respective tests. Unit tests have
-> +    different requirements than integration tests.
-> +  - Allow filtering of which tests to run.
-> +  - Allow interactive tests that drop the user into a shell with `test_pause` or
-> +    `debug`.
-
-Does this last point mean we want to be able to selectively pass 
---interactive to the test script(s) being run?
-
-> +=== CMake
-> +
-> +- Platform support: not as extensive as GNU Make or autoconf, but all major
-> +  platforms are supported.
-> +  - AIX
-> +  - Cygwin
-> +  - FreeBSD
-> +  - Linux
-> +  - OpenBSD
-> +  - Solaris
-> +  - Windows
-> +  - macOS
-
-This matches the list in the CMake README but in practice it is 
-available for a much wider range of platforms including all those listed 
-below for meson.
-
-> +- Ease of use: easy to use, discovering available options is not always
-> +  trivial. The scripting language used by CMake is somewhat cumbersome to use,
-> +  but extending CMake build instructions is doable.
-> +- IDE support: natively integrated into Microsoft Visual Studio. Can generate
-> +  project descriptions for Xcode. An extension is available for Visual Studio
-> +  Code. Many other IDEs have plugins for CMake.
-> +- Out-of-tree builds: supported.
-> +- Cross-platform builds: supported.
-> +- Language support:
-> +  - C: Supported for GCC, Clang, MSVC and other toolchains.
-> +  - Rust: No built-in support, needs to be wired up manually.
-> +- Test integration: supported, even though test dependencies are a bit
-> +  cumbersome to use via "test fixtures". Interactive test runs are not
-> +  supported.
-> +
-> +=== Meson
-> +
-> +- Platform: not as extensive as GNU Make or autoconf, but all major platforms
-> +  and some smaller ones are supported.
-> +  - AIX
-> +  - Cygwin
-> +  - DragonflyBSD
-> +  - FreeBSD
-> +  - Haiku
-> +  - Linux
-> +  - NetBSD
-> +  - OpenBSD
-> +  - Solaris
-> +  - Windows
-> +  - macOS
-> +- Ease of use: easy to use, discovering available options is easy. The
-> +  scripting language is straight-forward to use.
-> +- IDE support: Supports generating build instructions for Xcode and Microsoft
-> +  Visual Studio, a plugin exists for Visual Studio Code.
-
-This is my main concern about meson - it means we either loose the nice 
-integration on Windows that we have with CMake or we have to continue to 
-maintain both. As I understand it Microsoft Visual Studio support 
-requires the user to open a mingw terminal and run some to generate a 
-build description which they can then use form the GUI which is what the 
-CMake support was added to avoid. I guess they also need to install 
-meson somehow as well.
-
-Best Wishes
-
-Phillip
-
-> +- Out-of-tree builds: supported.
-> +- Cross-platform builds: supported.
-> +- Language support:
-> +  - C: Supported for GCC, Clang, MSVC and other toolchains.
-> +  - Rust: Supported for rustc.
-> +- Test integration: supported. Interactive tests are supported starting with
-> +  Meson 1.5.0 via the `--interactive` flag.
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index d7702fc756..37cb6547b6 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -98,30 +98,42 @@ test_expect_success 'set up buggy branch' '
+ '
+ 
+ test_expect_success 'replace the author' '
+-	git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	R=$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
+-	git cat-file commit $R | grep "author O Thor" &&
++	git cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor" actual &&
++	R=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
++	git cat-file commit $R >actual &&
++	test_grep "author O Thor" actual &&
+ 	git update-ref refs/replace/$HASH2 $R &&
+-	git show HEAD~5 | grep "O Thor" &&
+-	git show $HASH2 | grep "O Thor"
++	git show HEAD~5 >actual &&
++	test_grep "O Thor" actual &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual
+ '
+ 
+ test_expect_success 'test --no-replace-objects option' '
+-	git cat-file commit $HASH2 | grep "author O Thor" &&
+-	git --no-replace-objects cat-file commit $HASH2 | grep "author A U Thor" &&
+-	git show $HASH2 | grep "O Thor" &&
+-	git --no-replace-objects show $HASH2 | grep "A U Thor"
++	git cat-file commit $HASH2 >actual &&
++	test_grep "author O Thor" actual &&
++	git --no-replace-objects cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor" actual &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual &&
++	git --no-replace-objects show $HASH2 >actual &&
++	test_grep "A U Thor" actual
+ '
+ 
+ test_expect_success 'test GIT_NO_REPLACE_OBJECTS env variable' '
+-	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
++	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor"  actual &&
++	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 >actual &&
++	test_grep "A U Thor" actual
+ '
+ 
+ test_expect_success 'test core.usereplacerefs config option' '
+ 	test_config core.usereplacerefs false &&
+-	git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	git show $HASH2 | grep "A U Thor"
++	git cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor" actual &&
++	git show $HASH2 >actual &&
++	test_grep "A U Thor" actual
+ '
+ 
+ cat >tag.sig <<EOF
+@@ -148,14 +160,18 @@ test_expect_success 'repack, clone and fetch work' '
+ 	git clone --no-hardlinks . clone_dir &&
+ 	(
+ 		cd clone_dir &&
+-		git show HEAD~5 | grep "A U Thor" &&
+-		git show $HASH2 | grep "A U Thor" &&
++		git show HEAD~5 >actual &&
++		test_grep "A U Thor" actual &&
++		git show $HASH2 >actual &&
++		test_grep "A U Thor" actual &&
+ 		git cat-file commit $R &&
+ 		git repack -a -d &&
+ 		test_must_fail git cat-file commit $R &&
+ 		git fetch ../ "refs/replace/*:refs/replace/*" &&
+-		git show HEAD~5 | grep "O Thor" &&
+-		git show $HASH2 | grep "O Thor" &&
++		git show HEAD~5 >actual &&
++		test_grep "O Thor" actual &&
++		git show $HASH2 >actual &&
++		test_grep "O Thor" actual &&
+ 		git cat-file commit $R
+ 	)
+ '
+@@ -169,13 +185,15 @@ test_expect_success '"git replace" listing and deleting' '
+ 	test_must_fail git replace --delete &&
+ 	test_must_fail git replace -l -d $HASH2 &&
+ 	git replace -d $HASH2 &&
+-	git show $HASH2 | grep "A U Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "A U Thor" actual &&
+ 	test -z "$(git replace -l)"
+ '
+ 
+ test_expect_success '"git replace" replacing' '
+ 	git replace $HASH2 $R &&
+-	git show $HASH2 | grep "O Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual &&
+ 	test_must_fail git replace $HASH2 $R &&
+ 	git replace -f $HASH2 $R &&
+ 	test_must_fail git replace -f &&
+@@ -186,7 +204,8 @@ test_expect_success '"git replace" resolves sha1' '
+ 	SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
+ 	git replace -d $SHORTHASH2 &&
+ 	git replace $SHORTHASH2 $R &&
+-	git show $HASH2 | grep "O Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual &&
+ 	test_must_fail git replace $HASH2 $R &&
+ 	git replace -f $HASH2 $R &&
+ 	test_must_fail git replace --force &&
+@@ -209,10 +228,12 @@ test_expect_success '"git replace" resolves sha1' '
+ #
+ test_expect_success 'create parallel branch without the bug' '
+ 	git replace -d $HASH2 &&
+-	git show $HASH2 | grep "A U Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "A U Thor" actual &&
+ 	git checkout $HASH1 &&
+ 	git cherry-pick $HASH2 &&
+-	git show $HASH5 | git apply &&
++	git show $HASH5 >actual &&
++	git apply actual &&
+ 	git commit --amend -m "hello: 4 more lines WITHOUT the bug" hello &&
+ 	PARA2=$(git rev-parse --verify HEAD) &&
+ 	git cherry-pick $HASH3 &&
+@@ -225,7 +246,8 @@ test_expect_success 'create parallel branch without the bug' '
+ 	git checkout main &&
+ 	cur=$(git rev-parse --verify HEAD) &&
+ 	test "$cur" = "$HASH7" &&
+-	git log --pretty=oneline | grep $PARA2 &&
++	git log --pretty=oneline >actual &&
++	test_grep $PARA2 actual &&
+ 	git remote add cloned ./clone_dir
+ '
+ 
+@@ -234,23 +256,30 @@ test_expect_success 'push to cloned repo' '
+ 	(
+ 		cd clone_dir &&
+ 		git checkout parallel &&
+-		git log --pretty=oneline | grep $PARA2
++		git log --pretty=oneline >actual &&
++		test_grep $PARA2 actual
+ 	)
+ '
+ 
+ test_expect_success 'push branch with replacement' '
+-	git cat-file commit $PARA3 | grep "author A U Thor" &&
+-	S=$(git cat-file commit $PARA3 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
+-	git cat-file commit $S | grep "author O Thor" &&
++	git cat-file commit $PARA3 >actual &&
++	test_grep "author A U Thor" actual &&
++	S=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
++	git cat-file commit $S >actual &&
++	test_grep "author O Thor" actual &&
+ 	git replace $PARA3 $S &&
+-	git show $HASH6~2 | grep "O Thor" &&
+-	git show $PARA3 | grep "O Thor" &&
++	git show $HASH6~2 >actual &&
++	test_grep "O Thor" actual &&
++	git show $PARA3 >actual &&
++	test_grep "O Thor" actual &&
+ 	git push cloned $HASH6^:refs/heads/parallel2 &&
+ 	(
+ 		cd clone_dir &&
+ 		git checkout parallel2 &&
+-		git log --pretty=oneline | grep $PARA3 &&
+-		git show $PARA3 | grep "A U Thor"
++		git log --pretty=oneline >actual &&
++		test_grep $PARA3 actual &&
++		git show $PARA3 >actual &&
++		test_grep "A U Thor" actual
+ 	)
+ '
+ 
+@@ -260,14 +289,14 @@ test_expect_success 'fetch branch with replacement' '
+ 		cd clone_dir &&
+ 		git fetch origin refs/heads/tofetch:refs/heads/parallel3 &&
+ 		git log --pretty=oneline parallel3 >output.txt &&
+-		! grep $PARA3 output.txt &&
++		test_grep ! $PARA3 output.txt &&
+ 		git show $PARA3 >para3.txt &&
+-		grep "A U Thor" para3.txt &&
++		test_grep "A U Thor" para3.txt &&
+ 		git fetch origin "refs/replace/*:refs/replace/*" &&
+ 		git log --pretty=oneline parallel3 >output.txt &&
+-		grep $PARA3 output.txt &&
++		test_grep $PARA3 output.txt &&
+ 		git show $PARA3 >para3.txt &&
+-		grep "O Thor" para3.txt
++		test_grep "O Thor" para3.txt
+ 	)
+ '
+ 
+@@ -284,8 +313,8 @@ test_expect_success 'bisect and replacements' '
+ '
+ 
+ test_expect_success 'index-pack and replacements' '
+-	git --no-replace-objects rev-list --objects HEAD |
+-	git --no-replace-objects pack-objects test- &&
++	git --no-replace-objects rev-list --objects HEAD >actual &&
++	git --no-replace-objects pack-objects test- <actual &&
+ 	git index-pack test-*.pack
+ '
+ 
+@@ -319,7 +348,8 @@ test_expect_success '-f option bypasses the type check' '
+ '
+ 
+ test_expect_success 'git cat-file --batch works on replace objects' '
+-	git replace | grep $PARA3 &&
++	git replace >actual &&
++	test_grep $PARA3 actual &&
+ 	echo $PARA3 | git cat-file --batch
+ '
+ 
+@@ -344,7 +374,8 @@ test_expect_success 'test --format medium' '
+ 		echo "$PARA3 -> $S" &&
+ 		echo "$MYTAG -> $HASH1"
+ 	} | sort >expected &&
+-	git replace -l --format medium | sort >actual &&
++	git replace -l --format medium >output &&
++	sort output >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -356,7 +387,8 @@ test_expect_success 'test --format long' '
+ 		echo "$PARA3 (commit) -> $S (commit)" &&
+ 		echo "$MYTAG (tag) -> $HASH1 (commit)"
+ 	} | sort >expected &&
+-	git replace --format=long | sort >actual &&
++	git replace --format=long >output &&
++	sort output >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -374,12 +406,16 @@ test_expect_success 'setup fake editors' '
+ test_expect_success '--edit with and without already replaced object' '
+ 	test_must_fail env GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --force --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor" &&
++	git replace -l >actual &&
++	test_grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual &&
++	test_grep "A fake Thor" actual &&
+ 	git replace -d "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor"
++	git replace -l >actual &&
++	test_grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual &&
++	test_grep "A fake Thor" actual
+ '
+ 
+ test_expect_success '--edit and change nothing or command failed' '
+@@ -387,8 +423,10 @@ test_expect_success '--edit and change nothing or command failed' '
+ 	test_must_fail env GIT_EDITOR=true git replace --edit "$PARA3" &&
+ 	test_must_fail env GIT_EDITOR="./failingfakeeditor" git replace --edit "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor"
++	git replace -l >actual &&
++	test_grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual &&
++	test_grep "A fake Thor" actual
+ '
+ 
+ test_expect_success 'replace ref cleanup' '
+@@ -468,7 +506,8 @@ test_expect_success GPG 'set up a merge commit with a mergetag' '
+ 	git checkout main &&
+ 	git merge -s ours test_tag &&
+ 	HASH10=$(git rev-parse --verify HEAD) &&
+-	git cat-file commit $HASH10 | grep "^mergetag object"
++	git cat-file commit $HASH10 >actual &&
++	test_grep "^mergetag object" actual
+ '
+ 
+ test_expect_success GPG '--graft on a commit with a mergetag' '
+-- 
+2.34.1
 
