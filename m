@@ -1,54 +1,54 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94571AAE33
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:09:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413C41AB511
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:09:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728911391; cv=none; b=TMlba68KYuZ6L+aoVpmN/+GEbSpa6Kat7hW9WZKO/m0j7WcFvUzIp33MLuoqObMccrPWOx3jvKmrftVV+KIR4xe0zAiEgy6p35bfvXpcdqHEebFR6JsTO6FaaRPRbHCcEHIr97CL21LQ2SDSnUUlYuJhVC9kU7gT7wdyzKDZjKI=
+	t=1728911394; cv=none; b=T1a9Mt7xs+kdvt1ceDqrkYPVdXjQZlioenI98HHRQSjebD6l7CnEM4X6sYUpVZnCsjlxIyG9QRYaFbYbB8Oxy3DLjrr03cb4M4pEkyg4zL8tafYxEf3psJTFZzp6vrBI4pGg6uwBkyBVKS1uNJgo1/C128jWMBK2hOfDv4Ucazw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728911391; c=relaxed/simple;
-	bh=3BiONQy5c7IeXZ/Lw1K7n8c/Z7tfLAPX5uSD4VYZPCI=;
+	s=arc-20240116; t=1728911394; c=relaxed/simple;
+	bh=ukl6RHt7zWf4WRNA071DutVSEkaJCB653yzioCMj3qs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XyEjI6NvWprZsk7V4zj3u9prqCzzoNZXa/2s8eRXsdJO1qr69PpQ04esFze+y26C1AetrljjFkW9W7m/ESudd5ih6ZMYkujRbcpbmLEd6URr92mG88JfG0OABzCxE+Z/DfSLJOPWN/aS07d7hiLap84Opnx31IIBl/ZzchjQUFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XquCh5FR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mI9YYVRw; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=KAXTbK5DGaeMAepiwfTBY2DzETZV5H1vnyxJFTSBqW8phxMGU5g1taHXDbwSFui4EXvcsebSspf+X2rsgzdvTqWcNHg7IocmfFM87YIzJ1cpgVLVmWnYIYVv2zcVx5NkQXsT5EZXMAxTnadlElWIf6jH1q5GqcK8IfxIvXD6C5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Djsbidjl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hOH/PBiQ; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XquCh5FR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mI9YYVRw"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 27FCA1140171;
-	Mon, 14 Oct 2024 09:09:49 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Djsbidjl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hOH/PBiQ"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4EC68138044F;
+	Mon, 14 Oct 2024 09:09:52 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 14 Oct 2024 09:09:49 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 14 Oct 2024 09:09:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728911389; x=1728997789; bh=WraGLMH3UG
-	jWdqF+8AT7tddyOcexPR9OX1N44w8tZVo=; b=XquCh5FR0ehlcglMe1pHxNdESs
-	M9I+10gjXjtvbDb0YKdsoPkPjfz5ixTRIzhWgNdTuMPvWGA34bEVX0hoIYuMdo0u
-	V3jYqQZSQ6M9sTKgwmNvkHIBvizv4pEIqlQyfHLCoYiXlZA+mkl5Wp0lyTFZN4IR
-	4GilwXZlVdz2nAanwcHw0hfX5HavYXdeVmk2Ly68b3jTBavHUUEdIca+0Kc+8ROy
-	XbyAj/cKyYZrSQEdIi75pLAQl3qX7EZMfdcAD3sieqld36jJbD1VgKu4mlv3gw7a
-	uaKxQFED4rkas/VkxQRb+Qo49AAVNi3CjpaKW1sZh7ZZZ7ZHulfOI0anjRhw==
+	:subject:to:to; s=fm2; t=1728911392; x=1728997792; bh=4XMBq1h/ha
+	Z/SbJ+N4fAh82gnCoiGrHI5Uuc1UvpAco=; b=Djsbidjlkt7IYwDiPm1xuC6aLM
+	iCCx6b9vg3duHcEFi0e8y4SW5pinf+X1rH1+oKsDWJm/dbUHDX/yO6R443nrlBIY
+	VQKyKLvC4hxpeCa1K5L5NI4leRhFMKdpfy6yTjf7MiIm6kPoXy3PfY6yIQQVrbKr
+	/hCaJR3Mk+YbXSRg08UUXYQRqHrmtA5eaFf9RIrfwzVyuci5uneZ/PWiXLl54xqm
+	edDPaXGsm4H2UBDigdvcSc6gBdXzPh4yA5Gz/k+7BZpBTpzo7rW6h31NbxEx2k4Z
+	KCjBvZcw08QIFRGYC1x1HFFXFaysIZe1kkywzRtmORp2Mo7hBoXvqtRqK+Ew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728911389; x=1728997789; bh=WraGLMH3UGjWdqF+8AT7tddyOcex
-	PR9OX1N44w8tZVo=; b=mI9YYVRwLqR/OiqxwXqa9aMBiOL/fttmWoMpluflpA7T
-	GCNAgiqw+C5vJU19Z8I+59nJ0Lns2VMxkpFqubp2+lmK/sHBN7ry1Zppb4D3rkkX
-	ZMJccsfEH2TZidWQSTJICRnqOUY6tV40Mqa+RYxsZlepOxTs9+AJZ5j1HjDI8KAR
-	rfndInTA2jL/EXMl0qJnOin3h8sSwTGbMb7TRZcDNCAdYZh0z+17K35Fqk3JskCn
-	QXQoX47kzHdvtCSe7LXKxpJ+3BJuHDWcmM0IVwERsAAAuI+bo4K/mZqXw+N4f0/u
-	RjvaHVz5qVX8LPSMGCp/z5LhfYO+Dyn4h1UfCRNjCA==
-X-ME-Sender: <xms:HBgNZ267O3MXZqxhARW_U_InW2vNXtVgU4sGI25O6iav7aqpUuXccA>
-    <xme:HBgNZ_69MTD9DHVsIbRM4iSzkOZie-OQdXi-zCGw5uuuKbZg7vzOze2ziF_S5D4GK
-    xe9zK90txmxxDWxUQ>
-X-ME-Received: <xmr:HBgNZ1dxaJfWNRrqQ9b6wrh2tFXX9pbyw6A1zj7gUnr4b9gxWJEN7YQP0dZmXGETvMMKkhAIw4KOOjimxn5O-A-UF6atO9qTQTTibWDVqT6hFg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgiedtucetufdoteggodetrfdotf
+	fm2; t=1728911392; x=1728997792; bh=4XMBq1h/haZ/SbJ+N4fAh82gnCoi
+	GrHI5Uuc1UvpAco=; b=hOH/PBiQFBUIzLjJLykNdhhmkmHE01+y35kQmUCiJtL0
+	LrggwDGZZhQkn3CovD3nfHjcfmS31ih+x7WCDmwpNo1rbJ6RPYTOzf4qCoRf6lrt
+	TtYSjlT0CGvJ+qG9cRIA8vm4biCSJkjUtvJkl2rIJh52Cn8dfdm0jf0hliILhKuv
+	HqY3wIvySItnxg7L40ZdlYvIFyUGtDuiTp8OZyQJOzwOsA1CQpgysdo3tjboumus
+	wkWlWThud/ONcjsGZYVMvPFgveo9O9Rs1FdguE2O8+DE0p7PBhid9IAPQxXs86KT
+	+jUa4ULdyv6urfOMUG1BfRpFUFlFu6mw5gVlbjthiQ==
+X-ME-Sender: <xms:IBgNZxAPCnNSgZt1XsIIYa0gm9PAHa5rJ8_AOa6iUTfrWDM_Cw7evQ>
+    <xme:IBgNZ_jlhg-iEzTnYTiyh7c-kkDv0o1C3BHfWulckE1PfUwuCJDk3t0R7rpuDB4In
+    JGfng3SdmDZa5oDhg>
+X-ME-Received: <xmr:IBgNZ8kSDdcADkw68Dq8--fA6NrlKvJ1QXqqaBycjX5ATe_SYZbcULvEZ1GKLKcrgDI7w83pDysvhi2VkZv3dLvvHsDiTl9RZWru6StTj6gJwA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgieduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -56,30 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgiedtucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsoh
-    hnrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:HBgNZzLYY4AF6oZgetPBKMWNxRnskDcZX1401Eod4wfCIpWIxaS7fw>
-    <xmx:HRgNZ6K9G0Xw7ZUi08GkSK62vGgd4gpy3eHSl95FBfAxzvdK3wkQVw>
-    <xmx:HRgNZ0zmbSdetSOcdDeQoQZLwxLJWCDB4dLuWtWm2WBOmcEkV46eIQ>
-    <xmx:HRgNZ-LnYC_hHDWIrjQxIMc6v9UDqLdRA2O8KkioFBMed9-1OswgMQ>
-    <xmx:HRgNZ21J2LmnLzq9gJtsMMLDgI0QW4ngm3Rj2oe3jjdDd9NQykEwapW2>
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:IBgNZ7wBoTO6q54aNsmiCUZZkeuHYIEL0nPJX3SDENOjkntJtnuWlg>
+    <xmx:IBgNZ2RpsIBH9RCUvb6-8tM9m_wkQcR_5hRCamRqalYW-lCz10FdZw>
+    <xmx:IBgNZ-ZT46pAGHyXDnhQffflXddEPfziZIHKkip8jEuvFL4Smd3RaQ>
+    <xmx:IBgNZ3Tu0D5weOHt-sbeT1uGxk55jw0VV4Bslb0c2T5fvbJ3biVNTg>
+    <xmx:IBgNZ0cQUBiwi7INyYc4JWC5D-MwBIdUN2-a66MpKFs6uwCC08TXXmgg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Oct 2024 09:09:48 -0400 (EDT)
+ 14 Oct 2024 09:09:51 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 06d190dc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 14 Oct 2024 13:08:34 +0000 (UTC)
-Date: Mon, 14 Oct 2024 15:09:45 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c8167f2d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 14 Oct 2024 13:08:37 +0000 (UTC)
+Date: Mon, 14 Oct 2024 15:09:49 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: karthik nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: [PATCH 03/10] reftable/basics: provide new `reftable_buf`
- interface
-Message-ID: <Zw0YGX-o4qteQyvU@pks.im>
+Subject: Re: [PATCH 04/10] reftable: convert from `strbuf` to `reftable_buf`
+Message-ID: <Zw0YHQ9byrFmKCmP@pks.im>
 References: <cover.1728629612.git.ps@pks.im>
- <24e31619b936166404b801dde0e2bca478328386.1728629612.git.ps@pks.im>
- <CAOLa=ZSwHeDAFi9RTzuGAi+5ogo9L6XG2K9WHY8kmvz6v-ZAeQ@mail.gmail.com>
+ <e2ac27dbca0956bc231ad2a866bd796170deacf4.1728629612.git.ps@pks.im>
+ <CAOLa=ZTOVGNxqJq0mj9GuLFqa6mVHp7WOkhuQsgiW79OKhhyNg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,40 +87,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSwHeDAFi9RTzuGAi+5ogo9L6XG2K9WHY8kmvz6v-ZAeQ@mail.gmail.com>
+In-Reply-To: <CAOLa=ZTOVGNxqJq0mj9GuLFqa6mVHp7WOkhuQsgiW79OKhhyNg@mail.gmail.com>
 
-On Fri, Oct 11, 2024 at 05:03:39AM -0500, karthik nayak wrote:
+On Fri, Oct 11, 2024 at 07:12:59AM -0500, karthik nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > Convert the reftable library to use the `reftable_buf` interface instead
+> > of the `strbuf` interface. This is a mechanical change via sed(1) and
+> > does not yet handle allocation failures. These will be addressed in
+> > subsequent commits.
+> >
+> 
+> Nit: Would be nice to list the sed command used here, so reviewers can
+> review that instead.
+> 
+> [snip]
+> 
 > > diff --git a/reftable/basics.h b/reftable/basics.h
-> > index 4c9ef0fe6c5..4cf3f0e7593 100644
+> > index 4cf3f0e7593..ac3100417ec 100644
 > > --- a/reftable/basics.h
 > > +++ b/reftable/basics.h
-> > @@ -16,6 +16,22 @@ license that can be found in the LICENSE file or at
-> >  #include "system.h"
-> >  #include "reftable-basics.h"
+> > @@ -104,8 +104,7 @@ char *reftable_strdup(const char *str);
+> >  #endif
 > >
-> > +struct reftable_buf {
-> > +	size_t alloc;
-> > +	size_t len;
-> > +	char *buf;
-> > +};
-> > +#define REFTABLE_BUF_INIT { 0 }
-> > +
-> > +void reftable_buf_init(struct reftable_buf *buf);
-> > +void reftable_buf_release(struct reftable_buf *buf);
-> > +void reftable_buf_reset(struct reftable_buf *buf);
-> > +int reftable_buf_setlen(struct reftable_buf *buf, size_t len);
-> > +int reftable_buf_cmp(const struct reftable_buf *a, const struct reftable_buf *b);
-> > +int reftable_buf_add(struct reftable_buf *buf, const void *data, size_t len);
-> > +int reftable_buf_addstr(struct reftable_buf *buf, const char *s);
-> > +char *reftable_buf_detach(struct reftable_buf *buf);
-> > +
+> >  /* Find the longest shared prefix size of `a` and `b` */
+> > -struct strbuf;
 > 
-> Nit: would be nice to have some comments explaining the functions here.
-> I know most of them are self-explanatory and similar to strbuf, but
-> since this is supposed to be isolated, it would be nice.
+> I guess this is the only manual part of this commit, would be nice to
+> mention this in the message.
 
-Fair enough. I was being lazy here because the code is internal, only.
-But that's not really a good excuse, I guess.
+Well, it's basically a lie anyway that this uses sed(1), only. Some of
+the functions are different between strbuf and reftable_buf, and I was
+too lazy to craft an sed invocation for that.
+
+I'll adapt the message a bit to say that this is mostly using sed, but
+not really, without going into too many details.
 
 Patrick
