@@ -1,228 +1,115 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8761C304B
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 15:00:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87A01798C
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 15:06:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728918039; cv=none; b=keEkyT8lS8iQFCdD/J1t9ckWrFy0zMwwdBwsoEXxiSbDhGULBUuTrjM8+RBWYK294QFMrG9g7q+fQpzR+9PvfvC/IIt2pID+YWs+/a5uAnyENEBMnZdVk3B0a5xzZ2foUkhIx70VlBJETuYGLBrZ72hOsjq6mh0cRjIL4Jp/Z/c=
+	t=1728918405; cv=none; b=GnOsig15XwvugQRU79k8wS+LG/aL44s+s6X9jWLlLdWPB4vO/CHnIq5gu+BJe7ImzySrihZJw4cA/Y8NV1l6TSVlXTCtY285+D9YJ3YWzMDc7F5R0pPwyWIGy3zzqUFwKt27ogRoIUZqEMOLOoRM7LXqfqE+xnyxOWsuFtdkiLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728918039; c=relaxed/simple;
-	bh=HSJiNZff5AjJn7lJ0QZWz384ru55F2EcL3D0RA/2fBY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=AUa4R7Mclp/t/tSvnZkCLfTxnHhCMbu9IRLXl5g4xyB9GeGpM7gQFFlpvPPLPGwwnR/s8jKZkHVC7tTJPQBdU14R30FUVog/CPK9JGdCBNtKGLDvs3nAueFScfvYDe1THyKptMdB7dgCHtqBl514JTxH6cdHJ9DHTaOqnR4jsFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dn2Zcrev; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728918405; c=relaxed/simple;
+	bh=X+VgPyybYaJmRfD2UVSzCFpm1uGwhPJqqCGOCF3NIEQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=nJuKEVqe5jyLwWed6LLff/KngDs2rJ6Cu5eKrJztE6tnxajb4u2t4zXFsjY8LShurZ18CXQ9JJYCx3xwfm6yqC2mSst8+qgxt5X/RklbhKzMWZnrfPvSgVVZr0vi8hcx9mtb+8ZbzBp3PbRRaX5nF5U71EMG5rQWychfcOS+ifM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=rX1/uZDu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gRYLqODy; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dn2Zcrev"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-431286f50e1so23786125e9.0
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:00:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728918036; x=1729522836; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=QglTfWXCItgYrnZV8fNIpT5wjQB1VfYm0FEiHg5Qf4k=;
-        b=Dn2Zcrevtz44Aj5pKIaIraVLIE40SLTigUPe5IIkQSYXC1tj5HgXtjliY0DDG9Yk1L
-         YU7MJLRB4lBeVOfFCKWO85FOGRGIPEYLJPdOXO6zO+af+8POJlDm40tGfLhxT5Rbtlmo
-         ssMm+44mkJ7Yds5AQYQZixXfcQtulopWpIVDMSQm6Racx5+qjbeF+/QByrMd5fTNI6HY
-         ofdJ50JISa2ThPjJY3dVuD12K5YAMFHdZTCSgVZDj9ShjCHpu7w9hCMbzrWmRxP1x+ZU
-         xDUCWHIvReKpfF5g8PCWQrRx+x7y3eNTcdmsR2woOv2siGL1Zose2fpKZZDzcZHgTLuu
-         ETtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728918036; x=1729522836;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QglTfWXCItgYrnZV8fNIpT5wjQB1VfYm0FEiHg5Qf4k=;
-        b=LOOFQnFi1GO3z6J/1v4bijhTm6Hhg6eaLTm9EioLtn6NvbliCKW4iy78VXp7gaTy+f
-         bE09WzBm8GQZtlCwvAIIvsKdfP5kPWGwLkC2SL6Qdriq4D9Qc0GizpGbxjQ7Bv6zX67Y
-         DGIEjPzx/2lSBXK68kTd5ke6wBl/lO4hoJTr0smG1iP/9vhp9pI/PEkbWr46YDz/iISe
-         caoa3yY1a8nidJqLQvNto8F+U/GzDdBbHq+0BYvx1XXtlhuHrCoLT9T4fp1oHtA442Ju
-         5K3BBsTtFQBYp/k9bbiP4eTutNVpnwrmpWVn0861KAWm92fdMaKYWYf6ymR4+6tm6cRd
-         guHg==
-X-Forwarded-Encrypted: i=1; AJvYcCVKvB+UQI2pmQ6J5f9zzjvzgVVOR9QWw9XvvlCcIC9MmoatcYBMV6d7seLQsQeBg1KEFuU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHxjBUwmZIjY428VbPZas4WfbTQ8PgNjOBqh+bV+IKkNBSr82I
-	gTARdqmVXrXcM9rUXwDTcECo1gOThkYg5nS0bR8kcHMdOdnm1hb8II9MKg==
-X-Google-Smtp-Source: AGHT+IEcmFSWsAWfzkZkMFoY8kHG6bhpW7MIPzSt+P1uWlfS6kFRn6Fi3dLl38ECG07cUrXrMutnUw==
-X-Received: by 2002:a05:600c:1d93:b0:430:4ed0:d5ce with SMTP id 5b1f17b1804b1-43125617316mr90259405e9.34.1728918035965;
-        Mon, 14 Oct 2024 08:00:35 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-430ccf1f696sm154875985e9.5.2024.10.14.08.00.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Oct 2024 08:00:34 -0700 (PDT)
-Message-ID: <6f6d6518-fa01-457f-a482-5e6ffbba3f2b@gmail.com>
-Date: Mon, 14 Oct 2024 16:00:28 +0100
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="rX1/uZDu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gRYLqODy"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A3CAB11400B9;
+	Mon, 14 Oct 2024 11:06:41 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Mon, 14 Oct 2024 11:06:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1728918401;
+	 x=1729004801; bh=g/UQ4Wa2xzdd8hZPp65f1gl6U7da9OFEtJMqAwD2KpY=; b=
+	rX1/uZDu8gDrpYphM7FcW8RnfGYYJXMsvy0dhT7KMp9irtu1GXV9ZdrYFNGlhJR5
+	Mq3eVbuB3Qzp3fCODvHLiGTa6wrdE5G+dlPvuHhgcVECn+9ONFypNqjAfuhNMiul
+	kDNOuKITfRzbHFHH/4HEBWBFgilr2qiG2+V13CdKEN77I0smSBW/7zfZwN0Jr8uD
+	rmgwpN5Gis9EGI3+PdL0b0SA5yKKemfnAWb2hlFNlhEVBK9b+2EZjz88ZBaU6R6l
+	2xX5T/ceFS2y0EDlR0KjmKozeU84oSyWqtuYillyVHRBGAryK6vjqpF3MRc1Qkng
+	QM5ac1zYXFVaf6uaaAibAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728918401; x=
+	1729004801; bh=g/UQ4Wa2xzdd8hZPp65f1gl6U7da9OFEtJMqAwD2KpY=; b=g
+	RYLqODyKgfi1vmMXV+ax4Kd1BowK869oIN156L5vzuqtXiJiM/PFI1I9wSiEYK2g
+	41In+s/Ua9aLAnLDBSi8N02NDqdI7uq6Q/pX+iVwxYlGGavG0bNZLNPgrES7aFVr
+	lK8XHbzTjnKcwsu92n34IleX3Xa2ZQVu/OV6TTwaUc4MiajCCPryhZilRoWt9IZO
+	8KNvQKSAhmfkbHFKNz0TKOB92sJlxMDkD1+YNiMrIvlvncBHai5iy+drl6mADr2x
+	5MHXPRj7y0FrDA/rrjVG/zkaajaLogt74KkVNJwqNaj3xvzlBXK/zIDNPO3TrUKM
+	THivv5oaeR9AL+83h4CFg==
+X-ME-Sender: <xms:gTMNZxPOu6yh3aDw94JDvjAY2cv8SiIxYE9BNFafH32Wj65rVVdjgqg>
+    <xme:gTMNZz_slQLVQiU_yqstpyX1Xc7yVye8P5HedmXlDX2M2rs0WR0zzDzrmERf0TNwV
+    vfUe_CwbuIE0xsKyQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgkeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddt
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnhepgedtjeeiteeghfeutdeutddtiefgvdegteektdeutddugfekleeugfelte
+    ffjeffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhl
+    ihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopegsvghntggvse
+    hfvghrughinhgrnhguhidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:gTMNZwSJii91HoiFTqWZ-fp7B4D-YlA1PCGxZu4fX7aoE-3qm9nGMQ>
+    <xmx:gTMNZ9taqcGoMgzOLi7EJVz9dSj3lFSDCVszxQBxIgYo2OLCKUwJ6Q>
+    <xmx:gTMNZ5c15IRzBSL7BtP8phvWOpEi0fuNouga2noyURCHpaRhHIb7aw>
+    <xmx:gTMNZ50Xa3dntMWn4eR7cFUdYuVVkF-qcemIrogfT9nvgqS2IzstBQ>
+    <xmx:gTMNZw7puVnZDphEqxAnOG2A3L7kPX7Bh-DRrfV1_qwx_xVsm1zXgC58>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 08FEA780068; Mon, 14 Oct 2024 11:06:41 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Bug: diff --color-moved={zebra,blocks,dimmed-zebra} fails to
- identify some individual moved line
-To: lolligerhans@gmx.de, git@vger.kernel.org
-References: <trinity-1a7c1cfa-3f79-4430-bf3d-776c526c242b-1728914461526@msvc-mesg-gmx102>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <trinity-1a7c1cfa-3f79-4430-bf3d-776c526c242b-1728914461526@msvc-mesg-gmx102>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Mon, 14 Oct 2024 17:06:19 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Karthik Nayak" <karthik.188@gmail.com>,
+ "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ "Junio C Hamano" <gitster@pobox.com>,
+ "Bence Ferdinandy" <bence@ferdinandy.com>
+Cc: git@vger.kernel.org
+Message-Id: <756c9e41-f53c-485e-b2e0-a67fdc9372b7@app.fastmail.com>
+In-Reply-To: 
+ <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
+References: <D4T9VCF8OS6U.1FMB8P6YU7I3S@ferdinandy.com>
+ <cb60b7ad-7902-4293-81e9-06d1b1526842@app.fastmail.com>
+ <D4TA5EXQFFA0.1XVEK1RM2Q6VA@ferdinandy.com> <xmqqa5facosb.fsf@gitster.g>
+ <f7a7046c-020a-4365-baf4-49184bd2c60b@gmail.com>
+ <16d2d47c-5887-4658-b6db-996dac075828@app.fastmail.com>
+ <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
+Subject: Re: with git update-ref?
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-On 14/10/2024 15:01, lolligerhans@gmx.de wrote:
-> : ' What did you do before the bug happened? (Steps to reproduce your issue)
->      I diff-d after moving lines.
->      Reproduce:
->          This entire report can be run verbatim as a bash script. The executed
->          code is at the end.
->              - 1. Execute: Copy-paste the suggested command to hide ~/.gitconfig
->              - 2. Execute: Produces example diff
->              - 3. Execute: Copy-paste the suggested command(s) to unhide and
->                            clean up.
+On Sun, Oct 13, 2024, at 14:09, karthik nayak wrote:
+>     It also allows a "ref" file to be a symbolic pointer to another ref
+>     file by starting with the four-byte header sequence of "ref:".
+>
+> This is added to talk about how the command de-references symbolic refs,
+> but it can be misinterpreted to mean that it does support symbolic refs
+> on the top level.
+>
+> Do either of you want to take a stab at updating the documentation here?
 
-Thank you for taking the time to report this. Are you able to show a 
-diff and point to the lines which you think should be marked as moved 
-but aren't? With the block modes a block must contain 20 alphanumeric 
-ascii characters for it to be considered moved so you maybe running up 
-against that.
+I have some ideas. I think I should have something ready later this
+evening.
 
-Best Wishes
-
-Phillip
-
-> What did you expect to happen? (Expected behavior)
->      All (!) moved-only lines are colour coded cyan-purple.
-> 
-> What happened instead? (Actual behavior)
->      Some (the first?) individual moved lines are colour coded (treated?) as if
->      the line changed (red-green).
->      In a commit with only one moved line, it is coloured as changed.
-> 
-> Whats different between what you expected and what actually happened?
->      The distinct colouration for moved lines is lacking in the actual
->      behaviour.
-> 
-> Anything else you want to add:
->      Running "script.sh show" will use "git show" instead of "git diff". Same
->      problem.
-> 
->      Moved mode "plain" behaves as expected.
-> 
->      Skimming "git log -p next" suggests that "--color-moved" did not change on
->      "next" nor recently.
-> 
-> [System Info]
->      git version 2.47.0
->      shell-path: /bin/sh
->      libc info: glibc: 2.39
-> 
-> [Enabled Hooks]
->      None
-> 
-> ----------------------------------------------------------------
-> Script to reproduce
-> ----------------------------------------------------------------';
-> 
-> #!/usr/bin/env bash
-> 
-> trap 'echo 1>&2 "Error: $BASH_SOURCE:$LINENO $BASH_COMMAND";' ERR
-> 
-> function diff_now() {
->    declare mode
->    echo -e "==================== [${1:-""}] ===================="
->    for mode in plain blocks zebra dimmed-zebra; do
->    echo -e "\t----- (${mode}) -----";
->      git "${2:-"diff"}" --color-moved="${mode}";
->    done
->    echo
-> }
-> 
-> clear || true;
-> if [[ -f ~/.gitconfig ]]; then
->    echo 'mv -v ~/.gitconfig ~/.gitconfig.save';
->    exit 0;
-> else
->    echo 'mv -v ~/.gitconfig.save ~/.gitconfig';
-> fi
-> mkdir color_moved || { echo 'rm -rf color_moved'; exit 0; };
-> cd color_moved &&
-> git --version &&
-> git init &&
-> git config --local user.email "you@example.com" &&
-> git config --local user.name "Your Name" &&
-> cat <<-EOF >file.txt &&
-> 	Is this even a line?
-> 	The first line number 1
-> 	The second line number 2
-> 	The third line number 3
-> 	The fourth line number 4
-> 	The fifth line number 5
-> 	The sixth line number 6
-> 	The seventh line number 7
-> 	The eighth line number 8
-> 	The ninth line number 9
-> 	The tenth line number 10
-> 	The eleventh line number 11
-> 	The twelfth line number 12
-> 	The thirteenth line number 13
-> 	The fourteenth line number 14
-> 	The fifteenth line number 15
-> EOF
-> git add . &&
-> git commit -m "Initial commit" &&
-> 
-> cat <<-EOF >file.txt &&
-> 	The first line number 1
-> 	The second line number 2
-> 	The ninth line number 9
-> 	The tenth line number 10
-> 	The eleventh line number 11
-> 	The sixth line number 6
-> 	The seventh line number 7
-> 	The eighth line number 8
-> 	The third line number 3
-> 	The fourth line number 4
-> 	The fifth line number 5
-> 	Is this even a line?
-> 	The twelfth line number 12
-> 	The thirteenth line number 13
-> 	The fourteenth line number 14
-> 	The fifteenth line number 15
-> EOF
-> diff_now "Can identify moved lines in blocks (but not the single line)" "${1}" &&
-> git add . &&
-> git commit -m "Moved multiple blocks and a single line" &&
-> 
-> cat <<-EOF >file.txt &&
-> 	The first line number 1
-> 	The second line number 2
-> 	The ninth line number 9
-> 	The tenth line number 10
-> 	Is this even a line?
-> 	The eleventh line number 11
-> 	The sixth line number 6
-> 	The seventh line number 7
-> 	The fourteenth line number 14
-> 	The eighth line number 8
-> 	The third line number 3
-> 	The fourth line number 4
-> 	The fifth line number 5
-> 	The twelfth line number 12
-> 	The thirteenth line number 13
-> 	The fifteenth line number 15
-> EOF
-> diff_now "Cannot identify a single moved line" "${1}" &&
-> git add . &&
-> git commit -m "Moved only a single line" &&
-> 
-> echo;
-> echo "[OK]";
-> echo;
-> echo 'mv -v ~/.gitconfig.save ~/.gitconfig';
-> exit 0;
-> 
-
+-- 
+Kristoffer Haugsbakk
