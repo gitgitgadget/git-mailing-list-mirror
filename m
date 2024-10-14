@@ -1,168 +1,135 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453F21AD9C3
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 14:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8CB1AB536
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 14:55:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728914812; cv=none; b=inLZYNXr0GASYCxjT+L2gyVD916Awxjr+Uz84dp66lvNEjCpMreeLES4wPlxQnzYgC34UWZrCJlwEoif1FgmGmPPyidzTmpHYIlaqIp9BPDFuN9fZGlXQIIMC/69uc0Eg/RB+p49shoePtlpwJzA7J3X+pegYm44X8SMvQRJYWM=
+	t=1728917728; cv=none; b=nghVAFbhtWF951XAo6NMkLmDArVBW5By3imX58cnDDjrnwy83bZP55p3SepH9IoGinBMXN2z56F7jNgd6wHwjipxOlqozg3iiQKWZo1Qr+hfRb+zewB/iEl+coe+99+WN/se4ioUY50SCmRB1oiC8KnQP+zvaAzI+4qr83xIXLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728914812; c=relaxed/simple;
-	bh=GsLwj5/w33fv4cikxIvLwctBSP2ExHPAE6i4bKSo6PU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gQO5EVloISJjSpsHh5eIgpbztrhnL8WTqi2bsaT7+7sx4x+DpGsMBqC3P5OqLya7imFxakCKU4AS66y9IvcCRm0d3EIZEjMCdz8Mul9mqqVwvAo5TKAe2LnQwRzlNXpemeLfCT2tfbu2nk5iiUIVpHM687hqOFwdKNkL99n00UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j1aTaxSJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UltOuLkQ; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728917728; c=relaxed/simple;
+	bh=2JcmhUYudcLWkhAkUs9PliRcBW8XyuU0+xSl3bPMIFo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AS+bRt0FfBO5492wDSKmbm+CP1buGqJXH8dVOCq22zh2H78o5uwqgnQpWcCJWKikUWF3aPTrdUBLhls0aah5qT7c/W6Dw6MXsYho6rnj8Y9WmCvxE8yNJx9azlmEPLLAQ5REop6+c10dY7KMbtTKBo+xTu+f/Vesw3JD9FZvqO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GfeRkuZ5; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j1aTaxSJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UltOuLkQ"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5B352138023C;
-	Mon, 14 Oct 2024 10:06:50 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 14 Oct 2024 10:06:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728914810; x=1729001210; bh=nXEBxyoUXU
-	2vNAnXcDZ4i2LAL0iOEDM9z+7UIryYypU=; b=j1aTaxSJ9CsGvJO2m2T2TJVah3
-	Mge8TNSjK7dPMPPSlc32xZ8MPk4o9+hqSzpdlw8KMA/Ev8mTyETCWLRCD3QVgu7o
-	95/z9khEptye6nRt8MFEELJ/ZE8voYRNsYiS+pGa8cbdYZIR3RuXjZoPwbjzEtZg
-	R6bz5Z/863tAflydzTEi8bAejZisDwJhES3ZTsgPRsRvuU7UFy/+Y+bzcjtQqSsv
-	gSqn+vSrHClCThZr6DUIxwHtvH2wEKxmzEvPNnAg6ucy+Gre3o2C954vx9se4kht
-	+5gdnVez+kdKWvgg6jL/jALPufBi91WcsjFxDkpctosKmmzIaicUTcPGHCUA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728914810; x=1729001210; bh=nXEBxyoUXU2vNAnXcDZ4i2LAL0iO
-	EDM9z+7UIryYypU=; b=UltOuLkQDpspRYhEX9yZLtT77FlWkFC4jfbRcv483AFf
-	XqUqLBSGO5FMntSCJth7ZIoDvx9mGqD6WPatkruz0ClrqvTVVfmOcOYamyYGoNLX
-	uQly38cX2Z2hzY7Ax2GYj839FdPW3iTX0eINGTAoW7XTUTUDPAQ1l24sWZ+SXLcN
-	vCtF+0AqogvjbYIIBMdiP+A409mUgOKR9UcdeFiAP8e16zC9IXu1SQn1DDNUpTO4
-	3MeuhpJPswLWHSJJXrc9OYvhVHDlU1l4pa3f4wunCt0VGTQ3P6irK4Twczk1kQOA
-	2mJL9Jkqi5O1ru1Gn8v5nl9FWNZ/MKoAiGsZcj6gIg==
-X-ME-Sender: <xms:eiUNZ1Q2MNrl71-x9CUcpDOO5GWL97gfHdFjYnrgfPa24Y0QnqH58g>
-    <xme:eiUNZ-y1vGybuP7mHO6mekKBs-opg_hxkpXHhmXItc-g_yE1y7FxfD3DLotBuALS5
-    UbL9sL597YdtWnzmw>
-X-ME-Received: <xmr:eiUNZ63VuyyzQXQkhfSayL3eg_gprLIoFsFieIddv2uOv1Db3Mxl7yotEOAR1Eq24sz8c8LkMhuCwHFAkbUYJ9rD9I0bIeknH1MWKUdfuf24kw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgjedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvggurhgvvghlsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:eiUNZ9DUUhT6Z-gQwNAPTHlmFY19db8jlCcDyoyU_WMSGbD2asRXkw>
-    <xmx:eiUNZ-hAe94-VzUXth-VLLN-LC7gHfUQXd3V2PGUFBBMk9A4FhyetA>
-    <xmx:eiUNZxqvkf10_XsTE7IlOB3_ZDms4d4xFWWb-yxOSkPSstI7Oiygpg>
-    <xmx:eiUNZ5h77kSc9eAkYxWQUeiiMaLZE35ho8pvAGRdEhlyEhVJR8Fhug>
-    <xmx:eiUNZ_sd84UVe8DKNELhGkxvcWBIZI0VUgjmxrOuScTrhSPo2p-MUJF2>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Oct 2024 10:06:49 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 61697154 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 14 Oct 2024 14:05:36 +0000 (UTC)
-Date: Mon, 14 Oct 2024 16:06:47 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Ed Reel <edreel@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 3/3] cmake: set up proper dependencies for generated clar
- headers
-Message-ID: <129d28ae48ad984e9fae8bf803ae50a390b15a46.1728914219.git.ps@pks.im>
-References: <CAGjHeYfyH+cOMYYYHnFR+Vu9T+RbmzO1SpB_-kbmBSf1DitJhA@mail.gmail.com>
- <cover.1728914219.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GfeRkuZ5"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-37d6ff1cbe1so1032984f8f.3
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 07:55:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728917725; x=1729522525; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=AEayYZLfY1l1UgjT29gc7eAeWQ9mmyr4zcXArWofq1Q=;
+        b=GfeRkuZ5HG2uzz2nDFWRFzgrAoQlLl+PsE1O3Q91utu+RCjiqRGR93oZfKzjaw1qAH
+         2W2nZU2es+SFhEyCoov5SlDl56FpCSVkmK1ngoOEBBGXW+ldEbvEvBGllDoyj8CCjZNB
+         eBm+GhHbflPiorqxgVFZ+T39L5rR0g2zBOHkJXYh+ZJqfyMiRRiooklkdvqA7/RVRMS2
+         dzASiWLHXZHjkYNxmODAvwjO3YVSZaj0a0uehwYigugMfwNbGw0rFXZKeSZ7Z9GIXROR
+         xV86nevCN3jug4yRKuE48aUs0oJ2xIS5yRXZZyvHtyFoOs7H01Nx0IzFX24bWA2jUUlQ
+         wCWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728917725; x=1729522525;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AEayYZLfY1l1UgjT29gc7eAeWQ9mmyr4zcXArWofq1Q=;
+        b=rVyqi6HUfOkxQGjzXCz9WMzXvvF7oZyO/XTI5HgQg6ZDZhkrMzwVx19LqE7YPFKOnW
+         2tZfRuS9uxCM8i0uCpbKKMCUiG2YTM3lbCLxp+12iZ2SsVsRmkZT4X9oZe66/tzeBe2A
+         4O8IjFXn303ooUnC0IRBMWg4aWNNW+4KfGC0+LA+hL0p/Scyt7ICvdqEAF8SrVQTqPxE
+         QzuMt/mFd2MJ61Ko+nrrdbfV60xZ7jLjtWabD3XmmiJVrlmkowdfjKxTwgXF+hEpIk+Y
+         dxkkK1obnQtvPRFVqWLSxz1PdHYcO60FFZn2bnl2A09uxo9IXP26kbIy32p+zlR7fbV4
+         oXjw==
+X-Forwarded-Encrypted: i=1; AJvYcCUJ/QZSOLTWrUFkVcS2sy2Wt7bfqQ/3MdJqwnH6rh+if+pTBTVm7OfnweSjfUgVDtA0l6k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyGUU+6GfyFrORDpyCa8lLVDn54ON2lUwUnAjgsPzKBzHCxkVJ4
+	EpnYhiewP8GI3fog0yULfLglRtou/+tK5XavbGEmZoq9908T0691PQUawg==
+X-Google-Smtp-Source: AGHT+IFy9bFiNyMp9DF7sSSUHaYTvWN3p2NzEqeCxjucg/yPucYQOp9XJVXgnmxR9Eg4I/e82p+gng==
+X-Received: by 2002:a05:6000:11cf:b0:37d:4e59:549a with SMTP id ffacd0b85a97d-37d551d397fmr8783166f8f.16.1728917725310;
+        Mon, 14 Oct 2024 07:55:25 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d4b6a87c8sm11593147f8f.8.2024.10.14.07.55.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Oct 2024 07:55:24 -0700 (PDT)
+Message-ID: <2160f8ea-5f00-49d9-8e02-d71d4d827d39@gmail.com>
+Date: Mon, 14 Oct 2024 15:55:18 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1728914219.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and
+ strtol_i()
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
+ Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
+ <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
+ <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com>
+ <Zwz4B4osJnYJw6pd@pks.im> <2a937b6f-a3fb-4f2a-997b-5508f0e20e65@gmail.com>
+ <Zw0kGLZ-mcYjb6Je@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <Zw0kGLZ-mcYjb6Je@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-The auto-generated headers used by clar are written at configure time
-and thus do not get regenerated automatically. Refactor the build
-recipes such that we use custom commands instead, which also has the
-benefit that we can reuse the same infrastructure as our Makefile.
+On 14/10/2024 15:00, Patrick Steinhardt wrote:
+> On Mon, Oct 14, 2024 at 02:57:13PM +0100, Phillip Wood wrote:
+>> On 14/10/2024 11:53, Patrick Steinhardt wrote:
+>>> On Sun, Oct 13, 2024 at 09:42:41AM +0000, Usman Akinyemi wrote:
+>>>> On Sat, Oct 12, 2024 at 11:09 PM Usman Akinyemi via GitGitGadget
+>>>> <gitgitgadget@gmail.com> wrote:
+>>>>>
+>>>>> From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+>>>>>
+>>>>> Replace unsafe uses of atoi() with strtoul_ui() for unsigned integers
+>>>>> and strtol_i() for signed integers across multiple files. This change
+>>>>> improves error handling and prevents potential integer overflow issues.
+>>>>>
+>>>>> The following files were updated:
+>>>>> - daemon.c: Update parsing of --timeout, --init-timeout, and
+>>>>>     --max-connections
+>>>>> - imap-send.c: Improve parsing of UIDVALIDITY, UIDNEXT, APPENDUID, and
+>>>>>     tags
+>>>>> - merge-ll.c: Enhance parsing of marker size in ll_merge and
+>>>>>     ll_merge_marker_size
+>>>
+>>> To me it's always an indicator that something should be split up across
+>>> multiple commits once you have a bulleted list of changes in your commit
+>>> message.
+>>
+>> Agreed, but I think in this case there is a common theme (converting atoi()
+>> to a safer alternative) and the problem is with the commit message listing
+>> which files have changed rather than unrelated code changes being grouped
+>> together. This patch could be split up and if there were many more atoi()
+>> conversions it would need to be split to prevent it being too long but I
+>> don't think its essential to do so.
+> 
+> In theory I agree. In practice I think we should have better
+> explanations why the respective conversions are fine and whether this is
+> fixing a bug or not. And if it is fixing bugs I'd also like to see tests
+> added to the tree.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- contrib/buildsystems/CMakeLists.txt | 50 +++++++----------------------
- 1 file changed, 12 insertions(+), 38 deletions(-)
+I'm not sure if I would describe any of the changes as fixing bugs. The 
+option and config parsing code becomes stricter so I guess you could say 
+it was a bug to accept any old rubbish and treat it as zero before. The 
+imap code that's changed all rejected zero anyway apart from the tag 
+parsing so maybe accepting the changes to the tag parsing are fixing a bug.
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 093852ad9d6..9f80ab92656 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1002,46 +1002,20 @@ foreach(unit_test ${unit_test_PROGRAMS})
- endforeach()
- 
- parse_makefile_for_scripts(clar_test_SUITES "CLAR_TEST_SUITES" "")
--
--set(clar_decls "")
--set(clar_cbs "")
--set(clar_cbs_count 0)
--set(clar_suites "static struct clar_suite _clar_suites[] = {\n")
--list(LENGTH clar_test_SUITES clar_suites_count)
--foreach(suite ${clar_test_SUITES})
--	file(STRINGS "${CMAKE_SOURCE_DIR}/t/unit-tests/${suite}.c" decls
--		REGEX "^void test_${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*\\(void\\)$")
--
--	list(LENGTH decls decls_count)
--	string(REGEX REPLACE "void (test_${suite}__([a-zA-Z_0-9]*))\\(void\\)" "    { \"\\2\", &\\1 },\n" cbs ${decls})
--	string(JOIN "" cbs ${cbs})
--	list(TRANSFORM decls PREPEND "extern ")
--	string(JOIN ";\n" decls ${decls})
--
--	string(APPEND clar_decls "${decls};\n")
--	string(APPEND clar_cbs
--		"static const struct clar_func _clar_cb_${suite}[] = {\n"
--		${cbs}
--		"};\n")
--	string(APPEND clar_suites
--		"    {\n"
--		"        \"${suite}\",\n"
--		"        { NULL, NULL },\n"
--		"        { NULL, NULL },\n"
--		"        _clar_cb_${suite}, ${decls_count}, 1\n"
--		"    },\n")
--	math(EXPR clar_cbs_count "${clar_cbs_count}+${decls_count}")
--endforeach()
--string(APPEND clar_suites
--	"};\n"
--	"static const size_t _clar_suite_count = ${clar_suites_count};\n"
--	"static const size_t _clar_callback_count = ${clar_cbs_count};\n")
--file(WRITE "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" "${clar_decls}")
--file(WRITE "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite" "${clar_decls}" "${clar_cbs}" "${clar_suites}")
--
- list(TRANSFORM clar_test_SUITES PREPEND "${CMAKE_SOURCE_DIR}/t/unit-tests/")
- list(TRANSFORM clar_test_SUITES APPEND ".c")
--add_library(unit-tests-lib ${clar_test_SUITES} "${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c")
-+add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
-+	COMMAND ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" ${clar_test_SUITES}
-+	DEPENDS ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh ${clar_test_SUITES})
-+add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
-+	COMMAND awk -f "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" > "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
-+	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
-+
-+add_library(unit-tests-lib ${clar_test_SUITES}
-+	"${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c"
-+	"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
-+	"${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
-+)
- target_include_directories(unit-tests-lib PUBLIC "${CMAKE_BINARY_DIR}/t/unit-tests")
- add_executable(unit-tests "${CMAKE_SOURCE_DIR}/t/unit-tests/unit-test.c")
- target_link_libraries(unit-tests unit-tests-lib common-main)
--- 
-2.47.0.72.gef8ce8f3d4.dirty
+> And by the time we got there it makes sense to split up commits.
+
+Yes if we start adding tests then it is worth splitting them up, I'm not 
+sure we have anyway of testing the imap changes but it would be worth 
+testing the other changes though.
+
+Phillip
+
+> Patrick
+> 
 
