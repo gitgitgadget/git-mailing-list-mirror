@@ -1,66 +1,65 @@
 Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9179D1411DE
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 22:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793221CC179
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 22:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728944354; cv=none; b=jaLlnplZPaxKZrYsqgH2VXNcZ1Al7arfqzSO3qyzxHs3hBKPLsT0/MRi3svy7qxLjX+/9AgITURUFaEcbjyr9J4JIyyO878/Ef9JISVXQdGPCOUkMTzV2QEAeyesC/Zej77ldvAj4sGhBvvgZKd5eK10KdPv+Z9WNLaxx3gcxMY=
+	t=1728945132; cv=none; b=c+i9jjVdnTa42RM8CunOA5tNNlzoVDaXzE5GPHzhgKNUqX7p8a9UevasdtsTAbBtgQrm9dTFlgKDDrPPNG0Y7f0AsKvwd9lhhRoj4EwZjG0aPX87UthihlEvFPjU0KLjdBOGx+ExvTcG62Kt+QpoTFbPo4vo32Dr9G2+LllNGtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728944354; c=relaxed/simple;
-	bh=DZLtWI/eddbC9cchlKGaOm8f9kOdBlfZUoWgLCD5CuQ=;
+	s=arc-20240116; t=1728945132; c=relaxed/simple;
+	bh=AXLG1PLQAzvp3rfW66/arqnPVEFag2nixSL88AqSM7k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fs+I7iU+NpAui+eNtkAcpG+AJR/4xqULOvtWBt6yB/pa8C7TWY3cdR0D3c+YGKPyErxdE+XrRGBcn+iLxDfkL+ahI2oTtp6KfWtWp/BVPDy0ViCnTgArNkHv4H9wUfyzITWp/atXCQJiscs9rq3/h8GrRpMEHqBaFk9luJNj+G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=oNxjNuyo; arc=none smtp.client-ip=209.85.128.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=YX9v8OZsZT47ILEDlBUjeKaJP70Yo4x9ZHLSJT7RfxQY/E14QCUDuXFA9+l6UhixCBKD1A06RD4AREgYFRqgs4X0f6BxMzeJZamfvgAuFieV5Dqksg9P2NcPMbTiRU6W6wNFiOU6ItqjyraghYaFTj2lXIxUSDZqlI6xgzJ/+MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=uFIPIS3p; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="oNxjNuyo"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6e2f4c1f79bso40825987b3.1
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 15:19:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="uFIPIS3p"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6e232e260c2so38665247b3.0
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 15:32:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728944351; x=1729549151; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728945129; x=1729549929; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=y+/Lw0S9m1Geib73rC/4q6COp21udNm7TMg/om2NQQk=;
-        b=oNxjNuyoQVnCsDj08yTrYfE+JHahPla7j2au8FmHyNlsmATv3jbWYxBsebTCbAkUA/
-         l56YawtIOcGKteJWHkWB+36bL43274imfVIo+hEiFT3loovvbu2e52YWsFlTZqJ+P2YE
-         smxyxur/mCJpgOzEXdUb6O9g2NKBkKpvkaRQ6rHgNc9jbPDw933jtMBe7tdfP0g63YIm
-         TB4qMsNJV/cMDWwiTuapfUllUE9BXwGJNS16Po3PYA/IwiDYVrJHWrTLAokUBKDObi7l
-         SsA+LpGvKGf7+BwdhAz6xVQ7jTpfl5PrNYJoaQtVfNxjhd4YoVuvXovqCn1hgzlhnTsm
-         wbTA==
+        bh=AXLG1PLQAzvp3rfW66/arqnPVEFag2nixSL88AqSM7k=;
+        b=uFIPIS3pDTEdldRvqY+yodynhkJWpTK5YIcyw6qGNHDaTadnufl9kCnR+CrtEx+KxU
+         uHPlhi7TrzmZfWviexNlj09+VZKVGdu73V9HzJmWaDwABCTcIhV6BnxIQRxdCz79mMAb
+         iS+bg7L/U3mzWhz2C/mjDVfsThqg2OP/dG1mVh5/zmkD/9RY0Y9Me+CGfu+Fh6NVMh47
+         deaei0NDhUTD5N5EekcFVBCQS2AV8WZWHXhZgjhnXHKriDrOtqkpLC3mlgWYmqWXdWjG
+         +1/1bZNh+xyUH1QpmLjcIhgMm4gZbqywBldj42A3wytBS6oEjlXloe/yBzNg7627LJy5
+         r5nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728944351; x=1729549151;
+        d=1e100.net; s=20230601; t=1728945129; x=1729549929;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y+/Lw0S9m1Geib73rC/4q6COp21udNm7TMg/om2NQQk=;
-        b=Tml/2tp2j94snImsvBI9UHk/7tljjSKVbMtAvwWKovv76OghlCAYXh9gTUQYJ3OQ86
-         Ujg/dD1eedOGi90PLQeeaoZfO65Mu68dgxUC+RF6Xl2N2QbZ/3wevwpttHwDxuerhcxK
-         th62A1AjtACKFSuY/hXF78ZmTXsHA1VdS9Duq1CdW+qIWnRW9CbFuXs3sF/PHn9LawOx
-         3QxGt3MBGPGyzx0CzS1aI/jko3cymejrq6sRmWC8IXaAQw+VUJF4CM/dZLDk/KQbWjVy
-         cB9WdP8sSp5bCW/akdKeRdhX8fNdT0wivsKdh9KjJqrW2sZt75E0i5EUDEUOyHzGdAwM
-         ySeQ==
-X-Gm-Message-State: AOJu0Yw3ea1AKDuYdsxc1p3hUruI6TDoHh/4ZIyFlgm6MKWY9zcv4kil
-	2evFn01/nffqGJ6jnO+DiTRpnNh//T+vplW3GKF3siVtMtdpxsfzcTEHwPSDZF03KIDwQd1KzEC
-	6
-X-Google-Smtp-Source: AGHT+IEQ469abThgSFU6H2RgtFMHw4GI7nCWPChgEElBviLS2wKp0Y8CEqHXrbvaitRZvbJ6Q045mw==
-X-Received: by 2002:a05:690c:dc5:b0:6e3:3716:2d42 with SMTP id 00721157ae682-6e3477befd7mr117161867b3.6.1728944351508;
-        Mon, 14 Oct 2024 15:19:11 -0700 (PDT)
+        bh=AXLG1PLQAzvp3rfW66/arqnPVEFag2nixSL88AqSM7k=;
+        b=qKqG4G94a572jKAjYIecD/x2vNJ2j+hQFmm1N+DGigQ4uy2gxS9o8BFfTR0S7AnsUA
+         KJ0Kti/6EFZwLxrK2IBfkWWu2aH9Lcr19QUr0Yi2/n1YWJE5qN+6F1iNe/anyYaC5khP
+         KLTmVcFQYi5DIR54dVrUV9lh9DglYImdpqDW+3tQO9LAl9dIb1A7lKh04Kci0LXA9n/L
+         g9x9KoqnK7ZtSUp8OGA7TWgxntTJQ9j1HlTPkab/sPZA9DbcDxpKxncsFDxR4ZXMGY1d
+         gQ/4tKTyZIK3y4ubYE4Z09HiSXMRzDmohCWxjZk0+wtLfkixciQQLLYyEcQsvXjuPhE/
+         6/og==
+X-Gm-Message-State: AOJu0YzL7dqPERqhHI1NRKQGdmu8kE3MGu5HIy85S6sB+YFdWkJ4QZyn
+	/6U3L+vQOGSBKrackTND+GbzDOS53IhALNgPckPBQGkZbBroBYBQJeBYvEuk7NM=
+X-Google-Smtp-Source: AGHT+IF9Rm4GX/aC8I53FZ+JRpoNE9lXUIywcmSsN9lbe7v3yrJw5Pz9/oOgqFjy44XmRqsuaJBhNg==
+X-Received: by 2002:a05:690c:4485:b0:6e3:2e20:a03c with SMTP id 00721157ae682-6e36434ef6bmr79382737b3.26.1728945129393;
+        Mon, 14 Oct 2024 15:32:09 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5d4a505sm64507b3.132.2024.10.14.15.19.10
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5b87612sm133567b3.70.2024.10.14.15.32.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Oct 2024 15:19:11 -0700 (PDT)
-Date: Mon, 14 Oct 2024 18:19:09 -0400
+        Mon, 14 Oct 2024 15:32:08 -0700 (PDT)
+Date: Mon, 14 Oct 2024 18:32:07 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>,
 	karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 01/10] reftable: stop using `strbuf_addbuf()`
-Message-ID: <Zw2Y3cOz4px0TEsj@nand.local>
+Subject: Re: [PATCH v2 02/10] reftable: stop using `strbuf_addf()`
+Message-ID: <Zw2b5+8Lw83ywhzk@nand.local>
 References: <cover.1728629612.git.ps@pks.im>
  <cover.1728910726.git.ps@pks.im>
- <7408482c152bbf465ecd098059b1477fd38c251a.1728910727.git.ps@pks.im>
+ <6a7333b275e9f7eab81568a8de939011d292a31a.1728910727.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,37 +68,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7408482c152bbf465ecd098059b1477fd38c251a.1728910727.git.ps@pks.im>
+In-Reply-To: <6a7333b275e9f7eab81568a8de939011d292a31a.1728910727.git.ps@pks.im>
 
-On Mon, Oct 14, 2024 at 03:02:19PM +0200, Patrick Steinhardt wrote:
+On Mon, Oct 14, 2024 at 03:02:21PM +0200, Patrick Steinhardt wrote:
 > We're about to introduce our own `reftable_buf` type to replace
-> `strbuf`. Get rid of the seldomly-used `strbuf_addbuf()` function such
+> `strbuf`. Get rid of the seldomly-used `strbuf_addf()` function such
 > that we have to reimplement one less function.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reftable/block.c  | 2 +-
->  reftable/record.c | 6 +++---
->  reftable/writer.c | 7 ++++---
->  3 files changed, 8 insertions(+), 7 deletions(-)
->
-> diff --git a/reftable/block.c b/reftable/block.c
-> index 8d41a2f99ed..cd4180eac7b 100644
-> --- a/reftable/block.c
-> +++ b/reftable/block.c
-> @@ -60,7 +60,7 @@ static int block_writer_register_restart(struct block_writer *w, int n,
->  	w->next += n;
->
->  	strbuf_reset(&w->last_key);
-> -	strbuf_addbuf(&w->last_key, key);
-> +	strbuf_add(&w->last_key, key->buf, key->len);
->  	w->entries++;
->  	return 0;
->  }
 
-OK, this makes sense. FWIW, it feels like this would have been an easy
-function to port over to the new 'reftable_buf' type. But I understand
-wanting to implement fewer functions if possible.
+Hmm. I count twelve calls to strbuf_addf() here in this patch that were
+rewritten in terms of snprintf()ing to a temporary buffer. So I am not
+sure that I agree that it is "seldomly-used".
+
+Sure, implementing fewer functions is nice, but I am not sure that
+forcing the caller to use snprintf() directly is necessarily a
+worthwhile trade-off.
+
+Part of me wishes that we didn't have to write our own `reftable_buf` in
+the first place. Could we use `strbuf` as-is and expose it through a
+generic reftable-specific interface that users of reftable fill in with
+a vtable or something?
 
 Thanks,
 Taylor
