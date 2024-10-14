@@ -1,114 +1,98 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA194A1C
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 04:45:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BF913B7AF
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 05:04:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728881132; cv=none; b=L4JzX8nH/0+/nUYzsH9BdZq8dO/tMhhp9vliVezZ9CJ/G5VK4ie5NATAsvnf+dA28JChWgSuoE6/ug3YuEZZ3dCEJJYxri4jZm52HbaG6DwoJDHmD4SX/88PQUcf05+2H69/yMexG5wjrQKFxT2qd3ZS4uwfgO2fzlhkONXPOMk=
+	t=1728882285; cv=none; b=S5l8GEH4ANLXKiqZEMdZ6v1T/CSd6O1Z7NpcpaRYfkJ7MnTXpEeLIjpa8Aqtw1PTp8HNFNNk1f8RMwozDPT/Tasn51aMty76VhnQRD90A/v9TOuqfE5GfzsHuvG2M0Faa4r+eK3jdSV9KL+k2EI6VGkYi/Sgb/v86YDcB48PwQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728881132; c=relaxed/simple;
-	bh=07hrMNUQdYDYIV5DrLfkG9j5llR1NRXQru0xw/HjuQc=;
+	s=arc-20240116; t=1728882285; c=relaxed/simple;
+	bh=1A72uIThMY9w8RTORYX1CH49uzD/+phG0r6WKdicrsQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R5iGK0BHe7k5RGgv446S+lkosYLn+CzkrldB/g+yVsKAMipVC5YK4yCsVbcOPqoO2R4YVF2DWLxWikUccAVODWM9smxzEuCamCYgHsRtvBAwSh2AxszIFHPCzQqlMN9Io5EjEaebX6d06y6dmIHQNyvPX7mzkbFzdmA89d9QYSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KyEVJ832; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=NwCTiMhsu2ogOuYcdjw/PwhRDWjgrVn3jddfgSxbf82/nnOQ9OCmjzE3QCShs3BU89Rhy52w3MFLMA/Ge2eIrpNKYdSvGeAv6n+xdFdSEXqGDENHLgGGoEryaGUtw3GSSwygP18k3mTzzC8YQiuHuc9wfivmyEychi5wSXZbY/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=3Ejv7Cn3; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KyEVJ832"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2e2dc61bc41so2296311a91.1
-        for <git@vger.kernel.org>; Sun, 13 Oct 2024 21:45:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="3Ejv7Cn3"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e2908e8d45eso3143368276.2
+        for <git@vger.kernel.org>; Sun, 13 Oct 2024 22:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728881131; x=1729485931; darn=vger.kernel.org;
+        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1728882282; x=1729487082; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZNXNwYe9HSXhx1+SA+cicU2zzXXVzgPLzP+JHjWGp/E=;
-        b=KyEVJ832XbRxobRd0+NWvGj78PLycXmbGzmjskCpA82dCeEgVewt1lmbGMirTyPUR0
-         n63ku9qfzWLVO15VVcmxut/3kChmdr8fMxNoYRcgDcG0SQUeem/TrFGeAUrmsykwOWp4
-         N2JmeatRvBJ9bKdYBkB7jTcnWV9BNt5EnNpH+0NT0TwoSkyFtXbe2deQTkSDqzD3NPep
-         vGk9slTkEKdpa37+9WhxloIQOow4jadRk7L6ddgvAElErT5Pk7mCD+4lRcq+WV9BLQI6
-         ESM6auCTt6cdxeIcRpy3nrOxJ63i/+ONKFz/eWWUZxVkObmfqhfHLA1Vd81CHUhQUz6R
-         /vdA==
+        bh=aRRdIpVMQvVBrzJbUzwSmPy15CSfvtp4jlkNzreYtJE=;
+        b=3Ejv7Cn3UpXxbxIUhMq++4XjWh3LMIGraJJ0NtjosaimKEz8GdqR7sRxWMae/07NqI
+         jF3Qp9i/rN53at1YmWsCvkLhLVeFFDPQe5/l6iEEtniBIHgA8OP4rhGJD/ynLz0g60VK
+         AgybTDlCR5LEUsxZkoVqsqL0g/vzrHaxZ7DeqR8d4Ld60izRBsrHhSWtcOuI2Of8XFDD
+         S0ASa4g8Tm0VwrJ3OOyXFfCqm75ggbAWx7U31azOg3J1AQsl5D1H/2nq+o8cAIGVH6H6
+         L7/bos0MfXerkm4tcuMYISmBKiN6mOMHO8xAEwv18T0fkmkruyFdCdasEZfgqc62rNZo
+         vCUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728881131; x=1729485931;
+        d=1e100.net; s=20230601; t=1728882282; x=1729487082;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZNXNwYe9HSXhx1+SA+cicU2zzXXVzgPLzP+JHjWGp/E=;
-        b=ouzZXeUXRlU1w3RjWs/rLuK9H3PhQeaVuo2NiZPHwqztSWp8m66TBymqdnq8h99XsA
-         wtSQ/3qDvpntG+hcCKPHU8IR0CZ1lKQhpZUPZ/JGNfT24SEr+630lNDYRTcotnt8KvkC
-         DnC12oagyjC5E3g4MpoogInSMV/SATpGYLw1X8Ol+y6FiXIxRdvQ7+YZBwDT796bwBb6
-         dLInhsPoPxxxg18P4FPcph+/1kxWUTmVuz5hZe8XMH4IFtnVX9wt+zn4zHxzwGZyshNY
-         f8WJCh/ffGcifAn8OTVlTtJ63NN9qrurJ2LnhZAt+hpNA/hB5HvTp0Aoi2JVEIJ1yzLY
-         sZCg==
-X-Forwarded-Encrypted: i=1; AJvYcCUPJ51+pbvbl0sTA36ntkGaYDZBnuoZQIr9ujhTnNU655Zc8O2rLd519pTkp9f4TcY7l5Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmN1VH7AQXFdyLaQcHm/L1vthBtG8M8+bglFt5W8FMfQQ49joY
-	f0D3hqFdQ8acqTw0WvUbq4Yk2ZW5spSBLfKvOTYe63I/dpWgnVNeiLJ1mFvxt+FYf1kfFglylgX
-	nqdziv3GCpTyRaqpbG3zVSCE+L9jAMWNPu1Q=
-X-Google-Smtp-Source: AGHT+IF5oqu9WoCIdhGG/3af8T4CN28qM5jFar01TY0EHGgRLOvUH3tEjUINjSbSuPSMwWaW0ccQK2/+r80bcUWqP0w=
-X-Received: by 2002:a17:90b:4c43:b0:2e2:f044:caaa with SMTP id
- 98e67ed59e1d1-2e31538fb87mr9271320a91.37.1728881130433; Sun, 13 Oct 2024
- 21:45:30 -0700 (PDT)
+        bh=aRRdIpVMQvVBrzJbUzwSmPy15CSfvtp4jlkNzreYtJE=;
+        b=r9CgJ3fwd3in0LzLCqSDPCQrjlgVC1KAlYm7dmbIS4HJ15WuRAVZzEZRf5xyfWo/up
+         xfCPQv8bdMeozgmjpz1BGsh+Mj03vPF4j7KLlD1SNYzJpUP2SadGluaIN6k+9auUX+88
+         N8lzCejIG3mDCa+PIstxoItS3GAksyBqJdbkMQaUtpa70J401qQ7RmYLKGCPjBhH5BB3
+         uuiIimhbY9N4rtvqqFRH/a3WfeKhSUxIC2imnHzgIv+VIwI7vWRnkbWTvde22adKbJCr
+         z5xzy/8MX1nTK8mJsiJ+ZpWYGp/E+AFE2x7X9yhkxGGPAChMRVUT+AFXlDKbK7IrAtN5
+         xnGA==
+X-Gm-Message-State: AOJu0YyIaQnq75E3NRoTPtBQE6LuDgZ0sEwji+bEqAHwkRV+LrBaIMFs
+	2pqxnvoq92E85TudR6mdGJFZ7QNquFHiw9uuscmvLKMFqBQTEkMHQB8XScb1reactHF1o4PFyVr
+	FaMfpgsJkEWycAWsGQNYSLyhDEYCqg4ntU+VVpUua+E2JAitrWTAA7OYhzyRUBsTA6oaeDM4J3m
+	euIpLrKN5l4A2AU9FsDcBo19rVm5+JsevzFhWrYHjmAK/9H/pEMo1dITVbThPsjZt7fbYsV86XC
+	r4OgccjrPdoZHE3vZKm/9DDenqN/13QHpY4EBZIob5VtJTFG/bTpPDcqtuAokIktqlGHyarF8O5
+	n/2T0taxeC0=
+X-Google-Smtp-Source: AGHT+IGeKu/3/KvknZrTpYXJGI+rME1sGIxQav8ciZa4VVGziiJ2FGStIM/aa7T83CEaYXndiXFf3FtTUj3kbkNCysg=
+X-Received: by 2002:a05:690c:5085:b0:6e3:b8f:3637 with SMTP id
+ 00721157ae682-6e347c629edmr46066417b3.36.1728882282245; Sun, 13 Oct 2024
+ 22:04:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAG=Um+0mJW-oAH+YLC3dWEU64JwS-zMkkTiFWYBe4g6HMbe-iA@mail.gmail.com>
- <a5b1433abfd84cb627efc17f52e0d644ee207bb0.1728538282.git.ps@pks.im> <xmqqcyk7lwa4.fsf@gitster.g>
-In-Reply-To: <xmqqcyk7lwa4.fsf@gitster.g>
-From: Shubham Kanodia <shubham.kanodia10@gmail.com>
-Date: Mon, 14 Oct 2024 10:14:53 +0530
-Message-ID: <CAG=Um+3=SQ7bZYvr4BNxWgMBNreQHgfs-0VQwkzBq=HW8Zxf=Q@mail.gmail.com>
-Subject: Re: [PATCH v3] builtin/gc: fix crash when running `git maintenance start`
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <tencent_D0324DD61B7E04E0B4686FD8761E1CDDE108@qq.com>
+In-Reply-To: <tencent_D0324DD61B7E04E0B4686FD8761E1CDDE108@qq.com>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Mon, 14 Oct 2024 14:04:31 +0900
+Message-ID: <CAOTNsDw58poRNMpKiCOTouH84ah7+jvMfM0OPj-Y02Bo2O4kXg@mail.gmail.com>
+Subject: Re: Bug Report
+To: =?UTF-8?B?5ZC05YWD5a6I?= <wu.yuanshou@foxmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 10, 2024 at 10:39=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
+On Mon, Oct 14, 2024 at 12:46=E2=80=AFAM =E5=90=B4=E5=85=83=E5=AE=88 <wu.yu=
+anshou@foxmail.com> wrote:
 >
-> Patrick Steinhardt <ps@pks.im> writes:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> Update the git version from 2.46.2 to 2.47.0 .
+> Clone any repository from Github using ssh(HTTP is not affected).
 >
-> > +     write_script script/systemctl <<-\EOF &&
-> > +     echo "$*" >>../systemctl.log
-> > +     EOF
+> What did you expect to happen? (Expected behavior)
+> Clone succeed.
 >
-> Ah, for the purpose of this test, we _know_ in which directory the
-> "systemctl" will be spawned, so this is good enough for us, of
-> course.
->
-> > +     git init repo &&
-> > +     (
-> > +             cd repo &&
-> > +             sane_unset GIT_TEST_MAINT_SCHEDULER &&
-> > +             PATH=3D"$PWD/../script:$PATH" git maintenance start --sch=
-eduler=3Dsystemd
->
-> I suspect we can use the same idea and add a relative path in $PATH
-> for the test, perhaps, even though it is not a good coding
-> discipline.  If $PWD, instead of $(pwd), works, it is perfectly OK.
->
-> Will queue.  Thanks.
+> What happened instead? (Actual behavior)
+> Git clone hang for a long time during clone(Maybe hang forever).
+> &gt; git clone git@github.com:ibbles/LearningUnreal.git LearningUnreal2
+> Cloning into 'LearningUnreal2'...
+> remote: Enumerating objects: 3416, done.
+> remote: Counting objects: 100% (360/360), done.
+> remote: Compressing objects: 100% (261/261), done.
+> Receiving objects:   2% (69/3416)
 
-Appreciate for the quick fix, Patrick.
+I was able to reproduce the issue. It seems to be related to runtime
+changes. If we replace "C:/Program Files/Git/usr/bin/msys-2.0.dll" with
+the file comes with
+https://github.com/git-for-windows/git/releases/tag/v2.46.2.windows.1,
+"git clone" succeeds.
 
-Homebrew upgraded their formulas to 2.47 rather quickly (the next day
-after release) =E2=80=94
-https://github.com/Homebrew/homebrew-core/commit/0435f258701abd3acb9e2f4cd7=
-58cc13aa93997c
-
-Mac users who do a `brew install git` would now install versions with
-a broken maintenance command.
-Fortunately, `brew` auto-updates the world every time a user installs
-anything so it's likely they get to a 2.47.1 in the future,
-but that still might be a while away from when they install the
-current latest (2.47.0).
-
-I'm not sure if Git has a hotfix workflow, but it might make sense to
-prevent more users from getting onto the buggy version
-(especially since repo admins usually set up maintenance in the
-background and the error might not be evident to users).
+Koji Nakamaru
