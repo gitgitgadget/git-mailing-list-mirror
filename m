@@ -1,182 +1,84 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B6622318
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 06:20:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A00322318
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 06:22:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728886852; cv=none; b=WR8x5pDrHZ/acmrEW8x20aUMijsZQgWZsGuscnFvaEx4z3ebbBFSPnBMBxp2rA6Guc0v0v9cnGM9hmQjjxgCgAs6IunFz8Ho7MC6rKw16Q6AnmUzVBVYRiUKl5CyndSu7po+UW1N6g5RpM1cPvlpmlcx05p7Cfd/Cxa0oGSeses=
+	t=1728886947; cv=none; b=Te4NH/EKDd+XUH7oUk1CxP+0xlF7z3mRcRuGe9MfdixL4cwbe4skbm+BEJ22TKc/dL01JlTl0qa1G8vu0E3Ojtkd1fiClktHAQj1ZIuBuE4MhYC9IDsHwF27c3GkHwItZQcYeeitlHZO/qDsRih4QLsazkrOvOoI45xZhyQW/PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728886852; c=relaxed/simple;
-	bh=yBAzM1dXckPyJlU8+lcqdGzsPQaHVmhwuRuNeLyzjpU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TbniPF62TZvgQlit094Ht4mnyLtn4VKpSmDZ5O5P6DAmIk1gRjWRETulFtdI0DDvjZt8ozb9p2et9BGi9sYMCJ8mMvY+dsWgbY+Y8SmrDbiwcFjmRzzuCQpGO2YDmuIYIvKm8NqDh6BjoK8yHzwRR42EHmXeQ+hHx3mI50Mma5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MWKsPxQ5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FO7tNeJt; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728886947; c=relaxed/simple;
+	bh=ki68I4r5EpDmNgJ4JypKYcuhRlfBY6f+ybvT/ZEmPag=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N3rQtchPN6h5Z9Hf8dlvHNa1yPjipp6CutVAfLeeeXIRoYoR1SWr4DJXcVr4q/5poogEHXpRC+Ds6IwvsmSNJFLnA1tJHCmWyLrx3bTkcAyKpfLF5KO9Hr7GHLwzNKotm7LjhEMx7cczLffeR9zHG4Aiwttefu6zcTQ7TkUT5Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=m5NGc4iw; arc=none smtp.client-ip=209.85.219.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MWKsPxQ5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FO7tNeJt"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CC3CD11401A0;
-	Mon, 14 Oct 2024 02:20:48 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 14 Oct 2024 02:20:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728886848;
-	 x=1728973248; bh=uo7vBjuizZfHFdd4NfRTrmhf+ITMHqJNM2K24/L7AOc=; b=
-	MWKsPxQ5TBCc33lP0AMKgNOpSMZsFv/zNOtfYegaKRTGl5LDG4nhLX0lTV8eoyNn
-	mWt5OHbbqDlbh6g1CxGF8+9P/e9BmFp7SyWRzrKhg7OLgeHQlZfGhxnv80xhsIR2
-	jZLZjcThKgUwz1RaA+x73bwY3iDrl1TzQADjRiK3zmG5GU5zKK2du+Q5ny1iE73c
-	pRoeDVqMbOlrRTCyEjX53vaRQwFI8qSbufS07A9VTrsJ9pjEljKSNrow2gWscrwg
-	4Jv1JgRCvUO8A6jAlZ4Em5Frt8CAPJPlM2JeuFPWRJEzpZVB0wMxRB1WrpGnUur+
-	DWvtCwK7tHoz6YIMDs1YxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728886848; x=
-	1728973248; bh=uo7vBjuizZfHFdd4NfRTrmhf+ITMHqJNM2K24/L7AOc=; b=F
-	O7tNeJt3+We+oMyvsks7k9zreWbzZIpNiT3kPcmSPd7K+15H9xdNjY8yq35f3ykW
-	Mgt2g1p5ZmWb3sEWDou8gUcEaWdzRF2HvNOIKwlilLDLVMkN38jDQczwj7Pb2Kta
-	CL3/DRsdVO2uGS5O9A6ena0SKIryAFR1tpd2o0/ngK+brw+3ThuqixHfBoaOqpMC
-	EoYpzEqATTt22PH7HnezfbIaRiG+xMuEKuPTMkiCC/ISDixW5w4SbDFyzrJ3JVb3
-	2WydJa13kKreEc7lTXN9MfiUaGBnziCDeKTFhO/CD7S41ghsPDkFv5R6b/NDsb8m
-	/kQj6MDifvFzKMzJ28Vwg==
-X-ME-Sender: <xms:QLgMZ1SbREZsTUDf8GpUqTNja0LLU3MJouq6muRSA3gsMX4yjFkvTQ>
-    <xme:QLgMZ-y2KeABUwxEsDKpOBikN9lMgbRepfVBxtkGpyMv8sacISB6NXHh0KQWVPcun
-    xjd_CmUwothBwzLGA>
-X-ME-Received: <xmr:QLgMZ61CCy1fal4XtZp9tqkU7zPjqLDA05cL_KWQyr5jAgbg9dl1bex6Hp58QR2joCmRiB3txYAIqzJqvvrjbUmDckW7i_-v-HoY48bfH_NuUw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeggedguddtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
-    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepfeehffegfeelgfeiudelheeuuefgieefveejjeev
-    leehtedvgeejgfekgeeugfdtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    grshgvuggvnhhosehmihhtrdgvughupdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
-    hgmhigrdguvg
-X-ME-Proxy: <xmx:QLgMZ9A9Eg4m3L0WOkcJr52Feov9T-9BTpdoMxc2uby3nZUWxIXzlA>
-    <xmx:QLgMZ-j1UPndQgZxXSUdOiytXPi5Lv2XwOfL5ouXhC6FD8dpe4WrVQ>
-    <xmx:QLgMZxrALUd0AAYEQ47nPWV7cD69CHNiXW4VBlQfPvE-S0lkKlqAIQ>
-    <xmx:QLgMZ5i4p3-_FwcmcZbq-6_rSUhmrv4_dMTv6QWCuV0juamg98JO2Q>
-    <xmx:QLgMZ_tOoGa5x8bTlWvC0IcxLQbxa6biqiMkS_nwVyIvHZBbweiKCPK6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Oct 2024 02:20:47 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bfb3cbcf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 14 Oct 2024 06:19:32 +0000 (UTC)
-Date: Mon, 14 Oct 2024 08:20:42 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git no longer builds on SunOS 5.10, a report
-Message-ID: <Zwy4NUHQ3zpzkaXU@pks.im>
-References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
- <ZwoxHYD-e4qo7OyW@pks.im>
- <CAOO-Oz0+sOpF6YQHSu0ytCO5TL+Anpr1k_9vQx6hebr624WjMA@mail.gmail.com>
- <ZwwmFtF1Y30y8eoU@pks.im>
- <CAOO-Oz2gN1Y9h-p_AJ=7iKzxOK2ShmgEmWzpFrpwwAD2GH=6TQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="m5NGc4iw"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e28fa2807eeso3675872276.1
+        for <git@vger.kernel.org>; Sun, 13 Oct 2024 23:22:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1728886944; x=1729491744; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ki68I4r5EpDmNgJ4JypKYcuhRlfBY6f+ybvT/ZEmPag=;
+        b=m5NGc4iwNlmDXBuUA8h5DWSnH0DZlbr6DdQ2VRirHqPRI1Ccm+ajiGjzcy6iHCqqNY
+         MO6k4JkmQH+LE+JCshZO7vHmG7JTk09r9PZr/QPmv+7JZSMBrCeFk+8jEgMRywVYHYGs
+         z72lrGnfgshd580lib+QxeerbPhNQkiI8ljCAyyeR/s3AqobXPLqvsQDZsoExQfqsxwr
+         n146245/P29c5D+Zn+d82AgPAAcGWQaFN8oUbbDJ+Nv8IYLT0yWzqcZqyUe+CDcTGrUC
+         T5jA3/SPvMazSECgRyxOWxXefxtWH8dfxYO/sWgfobqZQIjwk76Mat0TYsXP9BX/JhQY
+         1bQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728886944; x=1729491744;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ki68I4r5EpDmNgJ4JypKYcuhRlfBY6f+ybvT/ZEmPag=;
+        b=Nd2evFgXenbjQfty9CoE+5VNlvvH0PBWkpV0cafj4O2HecZ7+Oty6qfmhARGM3kZa1
+         p7ZOmr4pWp0Pn8BSw0u8zPN8lPfKGV8teCYTO+QJyFOyIFS7syKrR61hUIBWtCVpIUpZ
+         qmxYiyLmmq85Scj/TiMvV2Mo6hWK6qpcxctzeicqLlPx0HXaFBZPjvP5CXy1xxjQ/t9a
+         e0M3zxqHWsuwbMU4qtLQ5HFiDU4Z/0n8M7+BtnmJuqb6Oqgco//cCSmrP6qdvKJOKSK1
+         o+XOY3Nb9dBIRcCwOE9B5ENJCsSnVb54HMoqtCEXtVqozrMqh+ZeifL+8l3T/aoHmmtx
+         YkCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWvQvHLRtuIFfAt04WfAhASWzknA5A6tPuKBPWXm6JhMHzrnpdV59KSxByikmN0I4uxpME=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzbl3tLooUen3OJ+vlijapgzkV0nQ2uHE5P6jAD8kr89Aiy0+cS
+	IBGKXWga4eXzJp/xb5re/gtAzPXS0G8h3A+2CnXrIn2BbwsG4KrQKhkwYyzkw02vML9PJ5y5rTh
+	DBSwtXEEBzyCXvQ5ewqw67eKmtC0cjdFPdKfz20BsadYfiKM4gaTI9UwZ/EUDNrJCzoNoZ7aeau
+	tyJakyQLgA5EJq8uvWgHqxUwxlFUiZu1KqyVAv8N9kw25Oh0vrFBvM1eql4Wxx7bJUCPUiMjgeb
+	5CB9i+KZyCuo75nk1XruvGqG34TM7nncAxfYl6U0HxeR18OEbOLiQbkT8jhxnebsJFHGrl0rISk
+	VxoGGZodvDs=
+X-Google-Smtp-Source: AGHT+IEBO9w0Onr42pZXXVQ1nY4Us1mkuXa5cZckql0YoiZJdiuobXjdgBcgLLhE83AzSML7+M2qIOUj2bM2TpaM2A8=
+X-Received: by 2002:a05:690c:f93:b0:6e2:4c7b:e379 with SMTP id
+ 00721157ae682-6e3479c7bf6mr75758207b3.19.1728886944183; Sun, 13 Oct 2024
+ 23:22:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOO-Oz2gN1Y9h-p_AJ=7iKzxOK2ShmgEmWzpFrpwwAD2GH=6TQ@mail.gmail.com>
+References: <tencent_D0324DD61B7E04E0B4686FD8761E1CDDE108@qq.com>
+ <CAOTNsDw58poRNMpKiCOTouH84ah7+jvMfM0OPj-Y02Bo2O4kXg@mail.gmail.com> <9d2d6e7b-9691-4c9f-9b13-f1019cd1c491@gmx.de>
+In-Reply-To: <9d2d6e7b-9691-4c9f-9b13-f1019cd1c491@gmx.de>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Mon, 14 Oct 2024 15:22:13 +0900
+Message-ID: <CAOTNsDz7Q=KrRgeV2EN6Y4WmSNdn7kF-4Xury8dbxEcbcoxBbQ@mail.gmail.com>
+Subject: Re: Bug Report
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: =?UTF-8?B?5ZC05YWD5a6I?= <wu.yuanshou@foxmail.com>, 
+	git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 13, 2024 at 06:50:09PM -0400, Alejandro R. Sedeño wrote:
-> On Sun, Oct 13, 2024 at 3:57 PM Patrick Steinhardt <ps@pks.im> wrote:
-> > diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
-> > index cef0f023c2..064ca5c2ea 100644
-> > --- a/t/unit-tests/clar/clar.c
-> > +++ b/t/unit-tests/clar/clar.c
-> > @@ -4,6 +4,10 @@
-> >   * This file is part of clar, distributed under the ISC license.
-> >   * For full terms see the included COPYING file.
-> >   */
-> > +
-> > +#define _DARWIN_C_SOURCE
-> > +#define _POSIX_C_SOURCE=200809L
-> 
-> token "=" is not valid in preprocessor expressions.
+On Mon, Oct 14, 2024 at 3:02=E2=80=AFPM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> This bug has been reported at
+> https://github.com/git-for-windows/git/issues/5199 and has been addressed
+> in the latest snapshot at
+> https://wingit.blob.core.windows.net/files/index.html
 
-Yeah, typoed this one.
+Thank you. I tried the latest snapshot and it worked perfectly.
 
-> 2008 postdates my available compiler by many years, so trying to define this
-> is not going to get you everything you might expect here.
-> 
-> Fixing the #define to use a space and not = results in
-> 
-> /usr/include/sys/feature_tests.h:332:2: #error "Compiler or options
-> invalid for pre-UNIX 03 X/Open applications and pre-2001 POSIX
-> applications"
-> 
-> The relevant bits of the header:
-> 
-> #if defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && !defined(_XPG6))
-> #error "Compiler or options invalid for pre-UNIX 03 X/Open applications \
->         and pre-2001 POSIX applications"
-> #elif !defined(_STDC_C99) && \
->         (defined(__XOPEN_OR_POSIX) && defined(_XPG6))
-> #error "Compiler or options invalid; UNIX 03 and POSIX.1-2001 applications \
->         require the use of c99"
-> #endif
-> 
-> Removing `#define _POSIX_C_SOURCE 200809L` results in successful compilation.
-
-Ah, I didn't even know that headers would bail out in case they don't
-support the standard, but it makes sense in retrospect. My current
-version is:
-
-#define _BSD_SOURCE
-#define _DEFAULT_SOURCE
-#define _DARWIN_C_SOURCE
-
-I hope that should work fine on all platforms. In any case, I have
-created [1] upstream now.
-
-[1]: https://github.com/clar-test/clar/pull/107
-
-> > +
-> >  #include <assert.h>
-> >  #include <setjmp.h>
-> >  #include <stdlib.h>
-> > @@ -271,9 +275,7 @@ static double clar_time_diff(clar_time *start, clar_time *end)
-> >
-> >  static void clar_time_now(clar_time *out)
-> >  {
-> > -       struct timezone tz;
-> > -
-> > -       gettimeofday(out, &tz);
-> > +       gettimeofday(out, NULL);
-> >  }
-> >
-> >  static double clar_time_diff(clar_time *start, clar_time *end)
-> > diff --git a/t/unit-tests/clar/clar/sandbox.h b/t/unit-tests/clar/clar/sandbox.h
-> > index e25057b7c4..b499d2e1e6 100644
-> > --- a/t/unit-tests/clar/clar/sandbox.h
-> > +++ b/t/unit-tests/clar/clar/sandbox.h
-> > @@ -122,7 +122,7 @@ static int build_sandbox_path(void)
-> >
-> >         if (mkdir(_clar_path, 0700) != 0)
-> >                 return -1;
-> > -#elif defined(__TANDEM)
-> > +#elif defined(__sunos) || defined(__TANDEM)
-> 
-> I think we want __sun here, not __sunos.
-
-And typoed that one, as well :)
-
-Patrick
+Koji Nakamaru
