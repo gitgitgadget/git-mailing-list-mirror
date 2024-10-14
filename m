@@ -1,427 +1,206 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220E118035
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 14:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AA118035
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 14:01:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728914434; cv=none; b=XZ0I3iYNG1LbGMDOmL6LietsxNCS4Ns++nX9ABPs9eehYiuiqXog1CnODwOGNVVi3Y5BTRY7TS4MNWpwLulgDwfZp2to8uHHDM3KZPl4ekpHtFxl9Cuqckirjc2Uh8+7qF0QSuYrrjqCjpEk8qyEHhPo23mFZTEk8wUfs0zUtNc=
+	t=1728914466; cv=none; b=Wqq5TLE0heP/9U7GKJQy/lGL7MbVYS7IzLgvq1U1/gE7eUlm32AunZS/USkCH25xqtLTO5FkN2hKROP3ilgKCfn8s6VGO85wc27Qt0KLivPxliSDemZXfUegSWFYQLsUn0JvC35AqDvURpZWME2oNYm+YNWRutYfqs4KS+LTLks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728914434; c=relaxed/simple;
-	bh=CUPe+7g4VT/JYDauAEH4Psv5y/dgiB7uXUPqEFxH+S8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tC+gbUwrDHmouPHgJPtg0aUdnaktXReEnNMBNo9ptQsEBZNEtKXowrsR8NUHa1lYYdndztYBOHZat7pAucbAHxHKJbWnmacVTvRzJN3b3amOjd7xX8GaaqwnMF10aiL8Uoufcrv88KqtPp6xg3uKhLv/+z7ZDsDlYMFPgcQlqak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B49Za71E; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728914466; c=relaxed/simple;
+	bh=v+WnqyzZ/FecyXony6U3ZQphqihPzx2EnMcDzq1chl0=;
+	h=MIME-Version:Message-ID:From:To:Subject:Content-Type:Date; b=Q5BfYLUbukDl2YyvFCVTYLFhAsGB9tDw1ndFqM2A6iY2MR2KO7n9nb2fGkpIEP/YxuPzc9sVDlJTWyCnUmaVY2Ll4JRaNddblsOolDnZRUuRbw39pUVdUcknui471kYb6p3n475vIFPy2fx4Lhw/pgv2HjnqMtU3ZtOyjgrZxAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=lolligerhans@gmx.de header.b=S66a63Sc; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B49Za71E"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5369f1c7cb8so5354403e87.1
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 07:00:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728914430; x=1729519230; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CjIhU710wNioUNoNtq6AMhipYZ3M5H1gc22d+YaceEs=;
-        b=B49Za71E62+BNXItnEy8b70gytWyiffRiOujN0lWhVf4qops0OzOtueGAiTD0Mcwrl
-         MGD6K4YyHHy2GWHlZ951hXrt+V3834BPnlVCo9r9gOPYs62OYZJeoC1jZ5pdbd8yoFUV
-         tSL3LsASIfrt+J9zWNjueaYCpv1NGgU86JV11mdKMMRQXbf7W+WqHnEmXvopusUMCY/U
-         eFCM02dba44oFuLohHE39CERXXb/q5+Pn+POPoujTHDCb/3RD942QEmRviXHas6Medac
-         hhIBuNwh8rPOy5nkyqVyppFuOle1Lh4ExXLl/5Rn6KPqQ6nie6CQjh5eobuWX8bNt3Fz
-         IfLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728914430; x=1729519230;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CjIhU710wNioUNoNtq6AMhipYZ3M5H1gc22d+YaceEs=;
-        b=iCBqo6UEsXZIkt6kcZ5plPLazAAQd3SBOHRwpek5c3WSyKhlQlVFZcvmwpeXdNljBv
-         jmEq++KYSTd+ZvigMstn1a5fvyWpNHw9Sh/HPKsci8LJiH69hMX83ShpL2lvi+hjBEN/
-         xO+jHWf0RuL07KBDKtD9Qt/fXc4ObDfNv7lzohPjoL/qD3P113T5HMqA+9DHahSqoLlB
-         o8NedoTSpB0dGevtLE474FxNy+fd6wlsjzAXaaz9L/b2ewSfVDPtG7lrzpdwho6/fN2L
-         xX0tV7OqzrtCFvV2QNL06Rle7SW9kB8/pDgJu50HB4jJeiYS+ddza61EzCEsBZAcXCwd
-         OIXw==
-X-Gm-Message-State: AOJu0YzzOv9osF+Kc2SZmICQNmsyc2nXJUdKAUfwEJDW7B4aidL/OKWf
-	42szxbCPsYP8C6E1QYbKOol8NnwAS9yxjrdr2WPQ0E/iQe8YjlmN
-X-Google-Smtp-Source: AGHT+IF7iwDEYw2xbQvBOIkaP5GCYW3x0SfIdY9mS/I92VD5mv3WyWUTf4J+7DkBEG64a6/HqOFLNw==
-X-Received: by 2002:a05:6512:401a:b0:536:54df:bff2 with SMTP id 2adb3069b0e04-539e574b7e4mr3080889e87.54.1728914429732;
-        Mon, 14 Oct 2024 07:00:29 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d605c197bsm7195582f8f.38.2024.10.14.07.00.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Oct 2024 07:00:29 -0700 (PDT)
-Message-ID: <879cac32-f59c-4adb-973e-4a8fc1770f8e@gmail.com>
-Date: Mon, 14 Oct 2024 15:00:23 +0100
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=lolligerhans@gmx.de header.b="S66a63Sc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1728914461; x=1729519261; i=lolligerhans@gmx.de;
+	bh=OBngpEz1akzWK4BhMM4x+CS+nylxgleezq+L7CfdJCc=;
+	h=X-UI-Sender-Class:MIME-Version:Message-ID:From:To:Subject:
+	 Content-Type:Date:cc:content-transfer-encoding:content-type:date:
+	 from:message-id:mime-version:reply-to:subject:to;
+	b=S66a63ScXMOT5SdZ6xFSMi0WqFpcSHp77AqQLe/PgB1Lk+hsx1yeY9ag8ASebiUS
+	 6oYwMyA9SHQPdK+SeOUK1qlhul99UUjg2Vq1tD41GNPFwdPeJO5HA6r/YZWD4hcJR
+	 oRG740KrQLLLpKG/ghG/gr1u2z9jw6N/3xdrFExIHgwYEGzNhZmnMx1OaUGTvMFjr
+	 NRF95ORa/WuFsCHVUlHE9K6xMSs3Kf6+XAE9JPamPUwUYvYh6VwUP8mi2ZfmPtO2d
+	 PyApSP+8rCLIlEas1u02pKZEPsP03fbjfGWg4I+AnVVfzGE4ijI3b0BS0sTkbA4RP
+	 SaXUeSWNov1qCzdlug==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [92.200.132.118] ([92.200.132.118]) by msvc-mesg-gmx105 (via
+ HTTP); Mon, 14 Oct 2024 16:01:01 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [Outreachy][PATCH v5] t6050: avoid pipes with upstream Git
- commands
-To: chizobajames21@gmail.com
-Cc: git@vger.kernel.org, gitster@pobox.com, phillip.wood@dunelm.org.uk,
- ps@pks.im, sunshine@sunshineco.com
-References: <20241011235959.596136-1-chizobajames21@gmail.com>
- <20241012062126.603967-1-chizobajames21@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20241012062126.603967-1-chizobajames21@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Message-ID: <trinity-1a7c1cfa-3f79-4430-bf3d-776c526c242b-1728914461526@msvc-mesg-gmx102>
+From: lolligerhans@gmx.de
+To: git@vger.kernel.org
+Subject: Bug: diff --color-moved={zebra,blocks,dimmed-zebra} fails to
+ identify some individual moved line
+Content-Type: text/plain; charset=UTF-8
+Importance: normal
+Sensitivity: Normal
+Date: Mon, 14 Oct 2024 16:01:01 +0200
+X-Priority: 3
+X-Provags-ID: V03:K1:Yl3Ab9vhm0qXmAarCAQa3uN/xEPLtQFOw8yzLocKOZnw/H/KDPr1l09UeAZMGGJ3B8NMa
+ 1fHi+S0cO+GrwkX6N58yJNg0zvbY3ZRxzv5LSIre7277WrS12nYHdIvNVV7Ru0kvyn5hSPSK4/2X
+ bXzRs13LT5FDU8G06yzzLPy6CmACizkWhP5FR1sP2CJwxGtdC2k+5j2BzkIL+mdMmGNUOCKRgDsC
+ xYpRa9OK2+jkBBrSLzdH8NL4Xrlt/7sCD/i/8jV8H+2i+tail0JADrQuQgYViH5Xly06BlC4Yg2A
+ 5Q=
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:0SXm/cIMjWg=;qdsIx9jrMsxUYb3xgo8EWWl1UE+
+ x/4Wc6Z6LNGbCMcPB2lHMcG569qNyL7rYD/8tly7xpXqG9xkpwTIFcOHR9BjpIb//u8tmHuog
+ UzhdM4oQBVVl99r67T+f7paQcSJF5KSQ6+r5ZJ6NMcWEhVqJERI/txhqFvRfC9JMilLigJbmP
+ eX0q8F3nFsilDzbYBfvTgBunHiNOKqIbb0hWfqBBuLnQNaTEPwauZp33NOaclNj6Rs0YXqVoV
+ TAiab+UevS0zkkX0VKzFBM5bBeUwoaAnJvc+u8k+ADqXcZBS2fVor2tO/738q/gNrSy/dbFp+
+ yqq2kMW2sXiG4NawkvJNCJk5N8OsAJR4vtgpuaFeG/9yNiGS6GGatn92XI+GGIxYyNsjqTwoK
+ aEyGcsvo0ueQ75+hS+pJGJ8PgQIWsbToLfdV/UM9dHa4UM7wUIrOJU1F5z4RzFl9TM5xsu+k7
+ D3LBce3MdRldeRRbvy72LGypXGWPeJT75jW/xcl6pW8CH0S10kUKuXPO7iSQBPOyOPE6taTa6
+ hfdbBVpV2Ort2HTZ/PSYP7BVl+Ye6Pc5pe8RMMq8m442LkhSAWt92DxwmNwA2aqGeCG1Z16d+
+ mb1i64wzAHtJcRNC3ikGwscN1aWZMf/ATPgTviBYH/k/2BmGwQNhf2ZttbdmnSefOOkAWpBJg
+ 9Y2zCitzleEcohXonoX01AbPfjO5VAqj15WK6gKq4w==
 
-Hi Chizoba
+: ' What did you do before the bug happened? (Steps to reproduce your issue)
+    I diff-d after moving lines.
+    Reproduce:
+        This entire report can be run verbatim as a bash script. The executed
+        code is at the end.
+            - 1. Execute: Copy-paste the suggested command to hide ~/.gitconfig
+            - 2. Execute: Produces example diff
+            - 3. Execute: Copy-paste the suggested command(s) to unhide and
+                          clean up.
 
-On 12/10/2024 07:21, chizobajames21@gmail.com wrote:
-> From: Chizoba ODINAKA <chizobajames21@gmail.com>
-> 
-> In pipes, the exit code of a chain of commands is determined by
-> the final command. In order not to miss the exit code of a failed
-> Git command, avoid pipes instead write output of Git commands
-> into a file.
-> For better debugging experience, instances of "grep" were changed
-> to "test_grep". "test_grep" provides more context in case of a
-> failed "grep".
-> 
-> Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
-> Changes in v5:
-> - replace 'sort -o' which might not be supported by some platforms
->    to the more conventional output redirection, > .
+What did you expect to happen? (Expected behavior)
+    All (!) moved-only lines are colour coded cyan-purple.
 
-It's really helpful to list the changes like this, but please do so 
-below the "---" line so it does not become part of the commit message 
-when the patch is applied. The range-diff looks good, with a fixed up 
-commit message I think we can declare victory for this microproject.
+What happened instead? (Actual behavior)
+    Some (the first?) individual moved lines are colour coded (treated?) as if
+    the line changed (red-green).
+    In a commit with only one moved line, it is coloured as changed.
 
-Best Wishes
+Whats different between what you expected and what actually happened?
+    The distinct colouration for moved lines is lacking in the actual
+    behaviour.
 
-Phillip
+Anything else you want to add:
+    Running "script.sh show" will use "git show" instead of "git diff". Same
+    problem.
 
-> ---
-> Range-diff against v4:
-> 1:  28cab4c752 ! 1:  b339b1f550 t6050: avoid pipes with upstream Git commands
->      @@ Commit message
->           failed "grep".
->       
->           Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
->      -    Changes in v4:
->      -    - Correct the subject
->      -    - fixed some ommitted output option in sorts that where writing to
->      -      stdout
->      +    Changes in v5:
->      +    - replace 'sort -o' which might not be supported by some platforms
->      +      to the more conventional output redirection, > .
->       
->        ## t/t6050-replace.sh ##
->       @@ t/t6050-replace.sh: test_expect_success 'set up buggy branch' '
->      @@ t/t6050-replace.sh: test_expect_success 'test --format medium' '
->        		echo "$MYTAG -> $HASH1"
->        	} | sort >expected &&
->       -	git replace -l --format medium | sort >actual &&
->      -+	git replace -l --format medium >actual &&
->      -+	sort actual -o actual &&
->      ++	git replace -l --format medium >output &&
->      ++	sort output >actual &&
->        	test_cmp expected actual
->        '
->        
->      @@ t/t6050-replace.sh: test_expect_success 'test --format long' '
->        		echo "$MYTAG (tag) -> $HASH1 (commit)"
->        	} | sort >expected &&
->       -	git replace --format=long | sort >actual &&
->      -+	git replace --format=long >actual &&
->      -+	sort actual -o actual &&
->      ++	git replace --format=long >output &&
->      ++	sort output >actual &&
->        	test_cmp expected actual
->        '
->        
-> 
->   t/t6050-replace.sh | 133 +++++++++++++++++++++++++++++----------------
->   1 file changed, 86 insertions(+), 47 deletions(-)
-> 
-> diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-> index d7702fc756..37cb6547b6 100755
-> --- a/t/t6050-replace.sh
-> +++ b/t/t6050-replace.sh
-> @@ -98,30 +98,42 @@ test_expect_success 'set up buggy branch' '
->   '
->   
->   test_expect_success 'replace the author' '
-> -	git cat-file commit $HASH2 | grep "author A U Thor" &&
-> -	R=$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
-> -	git cat-file commit $R | grep "author O Thor" &&
-> +	git cat-file commit $HASH2 >actual &&
-> +	test_grep "author A U Thor" actual &&
-> +	R=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
-> +	git cat-file commit $R >actual &&
-> +	test_grep "author O Thor" actual &&
->   	git update-ref refs/replace/$HASH2 $R &&
-> -	git show HEAD~5 | grep "O Thor" &&
-> -	git show $HASH2 | grep "O Thor"
-> +	git show HEAD~5 >actual &&
-> +	test_grep "O Thor" actual &&
-> +	git show $HASH2 >actual &&
-> +	test_grep "O Thor" actual
->   '
->   
->   test_expect_success 'test --no-replace-objects option' '
-> -	git cat-file commit $HASH2 | grep "author O Thor" &&
-> -	git --no-replace-objects cat-file commit $HASH2 | grep "author A U Thor" &&
-> -	git show $HASH2 | grep "O Thor" &&
-> -	git --no-replace-objects show $HASH2 | grep "A U Thor"
-> +	git cat-file commit $HASH2 >actual &&
-> +	test_grep "author O Thor" actual &&
-> +	git --no-replace-objects cat-file commit $HASH2 >actual &&
-> +	test_grep "author A U Thor" actual &&
-> +	git show $HASH2 >actual &&
-> +	test_grep "O Thor" actual &&
-> +	git --no-replace-objects show $HASH2 >actual &&
-> +	test_grep "A U Thor" actual
->   '
->   
->   test_expect_success 'test GIT_NO_REPLACE_OBJECTS env variable' '
-> -	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
-> -	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
-> +	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 >actual &&
-> +	test_grep "author A U Thor"  actual &&
-> +	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 >actual &&
-> +	test_grep "A U Thor" actual
->   '
->   
->   test_expect_success 'test core.usereplacerefs config option' '
->   	test_config core.usereplacerefs false &&
-> -	git cat-file commit $HASH2 | grep "author A U Thor" &&
-> -	git show $HASH2 | grep "A U Thor"
-> +	git cat-file commit $HASH2 >actual &&
-> +	test_grep "author A U Thor" actual &&
-> +	git show $HASH2 >actual &&
-> +	test_grep "A U Thor" actual
->   '
->   
->   cat >tag.sig <<EOF
-> @@ -148,14 +160,18 @@ test_expect_success 'repack, clone and fetch work' '
->   	git clone --no-hardlinks . clone_dir &&
->   	(
->   		cd clone_dir &&
-> -		git show HEAD~5 | grep "A U Thor" &&
-> -		git show $HASH2 | grep "A U Thor" &&
-> +		git show HEAD~5 >actual &&
-> +		test_grep "A U Thor" actual &&
-> +		git show $HASH2 >actual &&
-> +		test_grep "A U Thor" actual &&
->   		git cat-file commit $R &&
->   		git repack -a -d &&
->   		test_must_fail git cat-file commit $R &&
->   		git fetch ../ "refs/replace/*:refs/replace/*" &&
-> -		git show HEAD~5 | grep "O Thor" &&
-> -		git show $HASH2 | grep "O Thor" &&
-> +		git show HEAD~5 >actual &&
-> +		test_grep "O Thor" actual &&
-> +		git show $HASH2 >actual &&
-> +		test_grep "O Thor" actual &&
->   		git cat-file commit $R
->   	)
->   '
-> @@ -169,13 +185,15 @@ test_expect_success '"git replace" listing and deleting' '
->   	test_must_fail git replace --delete &&
->   	test_must_fail git replace -l -d $HASH2 &&
->   	git replace -d $HASH2 &&
-> -	git show $HASH2 | grep "A U Thor" &&
-> +	git show $HASH2 >actual &&
-> +	test_grep "A U Thor" actual &&
->   	test -z "$(git replace -l)"
->   '
->   
->   test_expect_success '"git replace" replacing' '
->   	git replace $HASH2 $R &&
-> -	git show $HASH2 | grep "O Thor" &&
-> +	git show $HASH2 >actual &&
-> +	test_grep "O Thor" actual &&
->   	test_must_fail git replace $HASH2 $R &&
->   	git replace -f $HASH2 $R &&
->   	test_must_fail git replace -f &&
-> @@ -186,7 +204,8 @@ test_expect_success '"git replace" resolves sha1' '
->   	SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
->   	git replace -d $SHORTHASH2 &&
->   	git replace $SHORTHASH2 $R &&
-> -	git show $HASH2 | grep "O Thor" &&
-> +	git show $HASH2 >actual &&
-> +	test_grep "O Thor" actual &&
->   	test_must_fail git replace $HASH2 $R &&
->   	git replace -f $HASH2 $R &&
->   	test_must_fail git replace --force &&
-> @@ -209,10 +228,12 @@ test_expect_success '"git replace" resolves sha1' '
->   #
->   test_expect_success 'create parallel branch without the bug' '
->   	git replace -d $HASH2 &&
-> -	git show $HASH2 | grep "A U Thor" &&
-> +	git show $HASH2 >actual &&
-> +	test_grep "A U Thor" actual &&
->   	git checkout $HASH1 &&
->   	git cherry-pick $HASH2 &&
-> -	git show $HASH5 | git apply &&
-> +	git show $HASH5 >actual &&
-> +	git apply actual &&
->   	git commit --amend -m "hello: 4 more lines WITHOUT the bug" hello &&
->   	PARA2=$(git rev-parse --verify HEAD) &&
->   	git cherry-pick $HASH3 &&
-> @@ -225,7 +246,8 @@ test_expect_success 'create parallel branch without the bug' '
->   	git checkout main &&
->   	cur=$(git rev-parse --verify HEAD) &&
->   	test "$cur" = "$HASH7" &&
-> -	git log --pretty=oneline | grep $PARA2 &&
-> +	git log --pretty=oneline >actual &&
-> +	test_grep $PARA2 actual &&
->   	git remote add cloned ./clone_dir
->   '
->   
-> @@ -234,23 +256,30 @@ test_expect_success 'push to cloned repo' '
->   	(
->   		cd clone_dir &&
->   		git checkout parallel &&
-> -		git log --pretty=oneline | grep $PARA2
-> +		git log --pretty=oneline >actual &&
-> +		test_grep $PARA2 actual
->   	)
->   '
->   
->   test_expect_success 'push branch with replacement' '
-> -	git cat-file commit $PARA3 | grep "author A U Thor" &&
-> -	S=$(git cat-file commit $PARA3 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
-> -	git cat-file commit $S | grep "author O Thor" &&
-> +	git cat-file commit $PARA3 >actual &&
-> +	test_grep "author A U Thor" actual &&
-> +	S=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
-> +	git cat-file commit $S >actual &&
-> +	test_grep "author O Thor" actual &&
->   	git replace $PARA3 $S &&
-> -	git show $HASH6~2 | grep "O Thor" &&
-> -	git show $PARA3 | grep "O Thor" &&
-> +	git show $HASH6~2 >actual &&
-> +	test_grep "O Thor" actual &&
-> +	git show $PARA3 >actual &&
-> +	test_grep "O Thor" actual &&
->   	git push cloned $HASH6^:refs/heads/parallel2 &&
->   	(
->   		cd clone_dir &&
->   		git checkout parallel2 &&
-> -		git log --pretty=oneline | grep $PARA3 &&
-> -		git show $PARA3 | grep "A U Thor"
-> +		git log --pretty=oneline >actual &&
-> +		test_grep $PARA3 actual &&
-> +		git show $PARA3 >actual &&
-> +		test_grep "A U Thor" actual
->   	)
->   '
->   
-> @@ -260,14 +289,14 @@ test_expect_success 'fetch branch with replacement' '
->   		cd clone_dir &&
->   		git fetch origin refs/heads/tofetch:refs/heads/parallel3 &&
->   		git log --pretty=oneline parallel3 >output.txt &&
-> -		! grep $PARA3 output.txt &&
-> +		test_grep ! $PARA3 output.txt &&
->   		git show $PARA3 >para3.txt &&
-> -		grep "A U Thor" para3.txt &&
-> +		test_grep "A U Thor" para3.txt &&
->   		git fetch origin "refs/replace/*:refs/replace/*" &&
->   		git log --pretty=oneline parallel3 >output.txt &&
-> -		grep $PARA3 output.txt &&
-> +		test_grep $PARA3 output.txt &&
->   		git show $PARA3 >para3.txt &&
-> -		grep "O Thor" para3.txt
-> +		test_grep "O Thor" para3.txt
->   	)
->   '
->   
-> @@ -284,8 +313,8 @@ test_expect_success 'bisect and replacements' '
->   '
->   
->   test_expect_success 'index-pack and replacements' '
-> -	git --no-replace-objects rev-list --objects HEAD |
-> -	git --no-replace-objects pack-objects test- &&
-> +	git --no-replace-objects rev-list --objects HEAD >actual &&
-> +	git --no-replace-objects pack-objects test- <actual &&
->   	git index-pack test-*.pack
->   '
->   
-> @@ -319,7 +348,8 @@ test_expect_success '-f option bypasses the type check' '
->   '
->   
->   test_expect_success 'git cat-file --batch works on replace objects' '
-> -	git replace | grep $PARA3 &&
-> +	git replace >actual &&
-> +	test_grep $PARA3 actual &&
->   	echo $PARA3 | git cat-file --batch
->   '
->   
-> @@ -344,7 +374,8 @@ test_expect_success 'test --format medium' '
->   		echo "$PARA3 -> $S" &&
->   		echo "$MYTAG -> $HASH1"
->   	} | sort >expected &&
-> -	git replace -l --format medium | sort >actual &&
-> +	git replace -l --format medium >output &&
-> +	sort output >actual &&
->   	test_cmp expected actual
->   '
->   
-> @@ -356,7 +387,8 @@ test_expect_success 'test --format long' '
->   		echo "$PARA3 (commit) -> $S (commit)" &&
->   		echo "$MYTAG (tag) -> $HASH1 (commit)"
->   	} | sort >expected &&
-> -	git replace --format=long | sort >actual &&
-> +	git replace --format=long >output &&
-> +	sort output >actual &&
->   	test_cmp expected actual
->   '
->   
-> @@ -374,12 +406,16 @@ test_expect_success 'setup fake editors' '
->   test_expect_success '--edit with and without already replaced object' '
->   	test_must_fail env GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
->   	GIT_EDITOR=./fakeeditor git replace --force --edit "$PARA3" &&
-> -	git replace -l | grep "$PARA3" &&
-> -	git cat-file commit "$PARA3" | grep "A fake Thor" &&
-> +	git replace -l >actual &&
-> +	test_grep "$PARA3" actual &&
-> +	git cat-file commit "$PARA3" >actual &&
-> +	test_grep "A fake Thor" actual &&
->   	git replace -d "$PARA3" &&
->   	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
-> -	git replace -l | grep "$PARA3" &&
-> -	git cat-file commit "$PARA3" | grep "A fake Thor"
-> +	git replace -l >actual &&
-> +	test_grep "$PARA3" actual &&
-> +	git cat-file commit "$PARA3" >actual &&
-> +	test_grep "A fake Thor" actual
->   '
->   
->   test_expect_success '--edit and change nothing or command failed' '
-> @@ -387,8 +423,10 @@ test_expect_success '--edit and change nothing or command failed' '
->   	test_must_fail env GIT_EDITOR=true git replace --edit "$PARA3" &&
->   	test_must_fail env GIT_EDITOR="./failingfakeeditor" git replace --edit "$PARA3" &&
->   	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
-> -	git replace -l | grep "$PARA3" &&
-> -	git cat-file commit "$PARA3" | grep "A fake Thor"
-> +	git replace -l >actual &&
-> +	test_grep "$PARA3" actual &&
-> +	git cat-file commit "$PARA3" >actual &&
-> +	test_grep "A fake Thor" actual
->   '
->   
->   test_expect_success 'replace ref cleanup' '
-> @@ -468,7 +506,8 @@ test_expect_success GPG 'set up a merge commit with a mergetag' '
->   	git checkout main &&
->   	git merge -s ours test_tag &&
->   	HASH10=$(git rev-parse --verify HEAD) &&
-> -	git cat-file commit $HASH10 | grep "^mergetag object"
-> +	git cat-file commit $HASH10 >actual &&
-> +	test_grep "^mergetag object" actual
->   '
->   
->   test_expect_success GPG '--graft on a commit with a mergetag' '
+    Moved mode "plain" behaves as expected.
 
+    Skimming "git log -p next" suggests that "--color-moved" did not change on
+    "next" nor recently.
+
+[System Info]
+    git version 2.47.0
+    shell-path: /bin/sh
+    libc info: glibc: 2.39
+
+[Enabled Hooks]
+    None
+
+----------------------------------------------------------------
+Script to reproduce
+----------------------------------------------------------------';
+
+#!/usr/bin/env bash
+
+trap 'echo 1>&2 "Error: $BASH_SOURCE:$LINENO $BASH_COMMAND";' ERR
+
+function diff_now() {
+  declare mode
+  echo -e "==================== [${1:-""}] ===================="
+  for mode in plain blocks zebra dimmed-zebra; do
+  echo -e "\t----- (${mode}) -----";
+    git "${2:-"diff"}" --color-moved="${mode}";
+  done
+  echo
+}
+
+clear || true;
+if [[ -f ~/.gitconfig ]]; then
+  echo 'mv -v ~/.gitconfig ~/.gitconfig.save';
+  exit 0;
+else
+  echo 'mv -v ~/.gitconfig.save ~/.gitconfig';
+fi
+mkdir color_moved || { echo 'rm -rf color_moved'; exit 0; };
+cd color_moved &&
+git --version &&
+git init &&
+git config --local user.email "you@example.com" &&
+git config --local user.name "Your Name" &&
+cat <<-EOF >file.txt &&
+	Is this even a line?
+	The first line number 1
+	The second line number 2
+	The third line number 3
+	The fourth line number 4
+	The fifth line number 5
+	The sixth line number 6
+	The seventh line number 7
+	The eighth line number 8
+	The ninth line number 9
+	The tenth line number 10
+	The eleventh line number 11
+	The twelfth line number 12
+	The thirteenth line number 13
+	The fourteenth line number 14
+	The fifteenth line number 15
+EOF
+git add . &&
+git commit -m "Initial commit" &&
+
+cat <<-EOF >file.txt &&
+	The first line number 1
+	The second line number 2
+	The ninth line number 9
+	The tenth line number 10
+	The eleventh line number 11
+	The sixth line number 6
+	The seventh line number 7
+	The eighth line number 8
+	The third line number 3
+	The fourth line number 4
+	The fifth line number 5
+	Is this even a line?
+	The twelfth line number 12
+	The thirteenth line number 13
+	The fourteenth line number 14
+	The fifteenth line number 15
+EOF
+diff_now "Can identify moved lines in blocks (but not the single line)" "${1}" &&
+git add . &&
+git commit -m "Moved multiple blocks and a single line" &&
+
+cat <<-EOF >file.txt &&
+	The first line number 1
+	The second line number 2
+	The ninth line number 9
+	The tenth line number 10
+	Is this even a line?
+	The eleventh line number 11
+	The sixth line number 6
+	The seventh line number 7
+	The fourteenth line number 14
+	The eighth line number 8
+	The third line number 3
+	The fourth line number 4
+	The fifth line number 5
+	The twelfth line number 12
+	The thirteenth line number 13
+	The fifteenth line number 15
+EOF
+diff_now "Cannot identify a single moved line" "${1}" &&
+git add . &&
+git commit -m "Moved only a single line" &&
+
+echo;
+echo "[OK]";
+echo;
+echo 'mv -v ~/.gitconfig.save ~/.gitconfig';
+exit 0;
