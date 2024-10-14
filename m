@@ -1,55 +1,55 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663D014C5AE
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 20:44:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB68A1CF7D0
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 20:44:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728938673; cv=none; b=qCP45hzO1kfzmFERo2LZ24oTpgcRJy/Qzt2BdtGHzun8h3bcuOVTKEv+lrufjvEz7y/BlPwJLx+Xp5AQHCmsKiMIF7fwE1DEQXdtCGvq2cAN+1GO4Dsb2WlUez/6SHSX+AsDTtzUrRCyanBdbwH0qri/MAc7gxpKLtqm3vOi6bI=
+	t=1728938674; cv=none; b=lNlsI9jQTdb+1MBA605NQRgvw0hSIMFvzI9mZYGQfJAN7Hptyv2Y6eZTbYvb5MHo5FaE/3ZlxbBgVgtrnjv9Xo+GoN0lgiByMxXwgwIH8nVj/bNKUZy4WwN6vcB610eXbgbwgiQ8OIm83KdpslHHFj1YFVsCtAzNK/PPzO+RBqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728938673; c=relaxed/simple;
-	bh=v4jhb9TrjkvZR87VylTvWloVFAcGDa4xDojYZoEH2xQ=;
+	s=arc-20240116; t=1728938674; c=relaxed/simple;
+	bh=s9xW7L4yUb6PlkmdlvcGsos0maVa08R1PUbaOj9mPnM=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uTvLeElNaK9zs9sngSO33VXcGspLfGnq1YNjeXk/SIGBz/8NTXRx9ouA6grWila4VhOC6KFxpnO7m9wLkJZRkPTGTDqLQPfWYn/wTXPo96z1aqytCwARNJHFVK5wEGmZQ7FoU0CS0NrSlcBhwz5gapMadVfI/Lk+3cb6WGLxV2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rPzbIv0N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WuYhC+WQ; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version; b=p9aQ0ssKHPMOwHsVY+RjKZw4Mxem/XfEivhBxnzVVglfeK6fbNM3UInQiLXjPLI0U2F6h2xAS1BdKzqFVGDpnsbnXwLfewdAZjNf9Ld3Qxgfokn8vDUBNhib9c2nPnEHwLVo56ExVwQCmntSFGeePXYZ+XbpNHPteP2Zu9lwLBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZoiyRDXP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rm6/Ae/g; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rPzbIv0N";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WuYhC+WQ"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6EBFA11401B5;
-	Mon, 14 Oct 2024 16:44:30 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Mon, 14 Oct 2024 16:44:30 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZoiyRDXP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rm6/Ae/g"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id D8D7013800E0;
+	Mon, 14 Oct 2024 16:44:31 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 14 Oct 2024 16:44:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1728938670; x=
-	1729025070; bh=5vKmta+kteOpLPP5tcPt+e34gAjVWYRailpFgJHabZk=; b=r
-	PzbIv0NrpfL86cf/+t8lRFeVJTo3DMfMknkgxhSueb9pAx4nF4rHNh5kmfPIqMaf
-	GzlumIme2D4NTu2hxB7dc31txBa7UeG6EEiuRR9nRtra5wMnapfEXez4UX/q0bFs
-	1ILxdQbg/bbT+oaltwe64Rh6O32e+DGqLitnWMVbcC6yVYHUD7S3MZV0MJBunMoo
-	E20YQVmlFTlz41p3dfyG13igi/jAcLrIkCa4kja9L1EgBYaornpSfQSTo/q+rHzJ
-	fw+WzCVBQ+/1bvtt3UCkUdwFGOP9mzhiulaTn2LyHDOwMNTgGkvQjv/NBmbg7VJT
-	21Ce68wsRKL0hYlJzE85g==
+	:reply-to:subject:subject:to:to; s=fm1; t=1728938671; x=
+	1729025071; bh=6/bzj2naTsJB2wyMsM36wq1DCdA71n/CI09DTLX5Eko=; b=Z
+	oiyRDXP7XCWFQ334RvbakvS42QJLjE3SX+7glzl2pAh/Da9rHjEnbnBD9VPzUWk2
+	aApmkBhbNEM+EU2GA75Sx3MxKhcrNCqShaKlFDq+JWpNjCuH5miiPCGGWe3ekAVr
+	MXk2I/vyDRSvBK2pyztRol9jW0zShNmD4EyuaF2rjkZSDo3yoqRZgHqprLXWtldZ
+	oYOEvOQxHI05+VQf2rLZZ+A76dC90eeUHgan+vXcx3+mjWlM4Ytz2pbKwfNABrQd
+	XUz/RfcwpsPNyzqf7RxCvm/6KYfYb6jVip7BJZ8V7AFFxL1p8/HG/+wiG0r+Woh8
+	87HTZpak3CRDtYvQ+mA7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1728938670; x=1729025070; bh=5vKmta+kteOpL
-	PP5tcPt+e34gAjVWYRailpFgJHabZk=; b=WuYhC+WQQrSBnMUzFKF4fJEuF1ft/
-	Ze7x/mAQy5dD+AShRFW3WiVgNPS8KaOFCYqAPjhOCq33ybZJBPBKt8rBfCjEG97p
-	Qe2niOTn2ob+MHaxyNzoLAJ9/spPXO3Kgz6oJwWse6PtQrSzWKRXTZP4c8J77ll1
-	qajCpFUle6L5lshZOj/MoBI/PrHW6/bDCkhJ04bV37vv57/cqjFHW0SXj16nOaGY
-	o3ZHGvYNcWe9t+Tbj7zCPpM61hTMb9N+k4UVZl09hPcuP2bYC5RzzYEYjU5RvraT
-	FBbtt77E7hMegvNpnOoaiUFCA4qgIPfYlYrYAsSFkFREMGL726aTAWbzw==
-X-ME-Sender: <xms:roINZzVCvM0gCE-BmoTexKLj90y0ohvUjfw9ZkAlbHaxYzfkzRH1JA>
-    <xme:roINZ7nqdQM65Fs41RQk5tFzt93_00DQU_aYmMeJuqGGH0-SLSvKS3q4gX7t9U0_N
-    VyvRqHHU2pxnkqo8A>
-X-ME-Received: <xmr:roINZ_Z-AzIcGEu3-Vi58Mz6YznzPDqRScWxVOmrPep_N10OX5GJHMOocHUW89WrRbggqyRJgzPM0Qw1J22bRb_40fVC8e-DoKLR>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgudehfecutefuodetggdotefrod
+	:x-sasl-enc; s=fm2; t=1728938671; x=1729025071; bh=6/bzj2naTsJB2
+	wyMsM36wq1DCdA71n/CI09DTLX5Eko=; b=Rm6/Ae/gItSDjAOTqyBYmF24NwWx7
+	6wY8PbIEw88CWWJ0fw0KDnxCkSdx00eMAubYWKE/sgBxAmnT7yq4kXtN28kTMYVt
+	I47dPcmkq5APRsjcG+5n1ehnOr/JsoG5ux7rnhQttblrlkClDMXmiwSF3yIlYb1A
+	czB9SNfrLCh9JpTfW3FJnJbM5NU+xlcKP9534IGvhLrEb+ax0zoXwnqaQH8v0FPV
+	BUDcyEk9UTO5A5u8lpz+QDVKMgXm0JIRbqLMC+I0WQ041eMJLXbiVKN3R6yixeZ+
+	nVrMzkj8m0snIgg5uP6AJdIBw9iRBv9FYZQ6dxVE5LjUeELd0w7rCJIhA==
+X-ME-Sender: <xms:r4INZx-N7t2YyVNrvTg40oha8WkhLU9Tn2dXIfPR8rtdt6HEORnGEQ>
+    <xme:r4INZ1sM5hMouSUwDNF9BQ-zyZ-JGXee1IvmCrDwd5KROEN_IAQUzTnAR0bpunSr8
+    wmxm6isEkRBaUBAaw>
+X-ME-Received: <xmr:r4INZ_BcUW2FfFO6MDr4uknqWpl53n6LeJSyjHvjGRm7gsCmUAFV24_vu7_pqxGfXY2-iEsbgPbmb85Vwd9BjwmBR3cuL7sLnC6J>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgudehgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvuf
     ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgudehfecutefuodetgg
     hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdp
     rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgh
     hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:roINZ-V-ORPhsVTtmjcfurJu2SSMm00B52pE0rrbXMkzmhF0XqRW3A>
-    <xmx:roINZ9mJ3KTjBDx0cwb40XYeVihgt9FZwQb0VX5wdHNLyp10IVg2nQ>
-    <xmx:roINZ7dDshiVfQQ0I16nPYovjnlqFrWKIpx1KE0xey3ljRdiX48LNQ>
-    <xmx:roINZ3HQDj6KaS-AKn1qFhsG7Sr6MsTaDcA_hGNNaNQbd4NeqP57cA>
-    <xmx:roINZyyZM6r8-Us5Q54I8AHdk3Zp7xk1qOjV4AJbJGyqgkvXs5_HxARa>
+X-ME-Proxy: <xmx:r4INZ1eeR7eIJTUrYZMoUrsuy7mtQqWDNLbU152Wi4CyveGnWllgbA>
+    <xmx:r4INZ2NZOAhKTyw_jvhh9cq3Lq2C6wvCvW5KH7vuFNRckQXy6zVsgA>
+    <xmx:r4INZ3mdd-I8egFpFVUUPREyKxzvnL7eCIp7dPkaZHp19uk4R48_Jg>
+    <xmx:r4INZwtUknAzMqzSYvVuk-ubegv2wPke2Y0pLOe1OzDMqPHi4HnjaQ>
+    <xmx:r4INZ_YP4jMsvQCkM7Jlo7z-jWFZ3YNtiizG49T_XJ6HhstYaQmJs_jd>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Oct 2024 16:44:29 -0400 (EDT)
+ 14 Oct 2024 16:44:31 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 1/3] t7500: make each piece more independent
-Date: Mon, 14 Oct 2024 13:44:25 -0700
-Message-ID: <20241014204427.1712182-2-gitster@pobox.com>
+Subject: [PATCH 2/3] config: values of pathname type can be prefixed with :(optional)
+Date: Mon, 14 Oct 2024 13:44:26 -0700
+Message-ID: <20241014204427.1712182-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.47.0-148-g19c85929c5
 In-Reply-To: <20241014204427.1712182-1-gitster@pobox.com>
 References: <20241014204427.1712182-1-gitster@pobox.com>
@@ -83,64 +83,93 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-These tests prepare the working tree & index state to have something
-to be committed, and try a sequence of "test_must_fail git commit".
-If an earlier one did not fail by a bug, a later one will fail for
-a wrong reason (namely, "nothing to commit").
+Sometimes people want to specify additional configuration data
+as "best effort" basis.  Maybe commit.template configuration file points
+at somewhere in ~/template/ but on a particular system, the file may not
+exist and the user may be OK without using the template in such a case.
 
-Give them "--allow-empty" to make sure that they would work even
-when there is nothing to commit by accident.
+When the value given to a configuration variable whose type is
+pathname wants to signal such an optional file, it can be marked by
+prepending ":(optional)" in front of it.  Such a setting that is
+marked optional would avoid getting the command barf for a missing
+file, as an optional configuration setting that names a missing or
+an empty file is not even seen.
+
+cf. <xmqq5ywehb69.fsf@gitster.g>
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t7500-commit-template-squash-signoff.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ Documentation/config.txt                  |  5 ++++-
+ config.c                                  | 16 ++++++++++++++--
+ t/t7500-commit-template-squash-signoff.sh |  9 +++++++++
+ 3 files changed, 27 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 8c0b3ed807..199e29ccea 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -358,7 +358,10 @@ compiled without runtime prefix support, the compiled-in prefix will be
+ substituted instead. In the unlikely event that a literal path needs to
+ be specified that should _not_ be expanded, it needs to be prefixed by
+ `./`, like so: `./%(prefix)/bin`.
+-
+++
++If prefixed with `:(optional)`, the configuration variable is treated
++as if it does not exist, if the named path does not exist or names an
++empty file.
+ 
+ Variables
+ ~~~~~~~~~
+diff --git a/config.c b/config.c
+index a11bb85da3..4a060f1d82 100644
+--- a/config.c
++++ b/config.c
+@@ -1364,11 +1364,23 @@ int git_config_string(char **dest, const char *var, const char *value)
+ 
+ int git_config_pathname(char **dest, const char *var, const char *value)
+ {
++	int is_optional;
++	char *path;
++
+ 	if (!value)
+ 		return config_error_nonbool(var);
+-	*dest = interpolate_path(value, 0);
+-	if (!*dest)
++
++	is_optional = skip_prefix(value, ":(optional)", &value);
++	path = interpolate_path(value, 0);
++	if (!path)
+ 		die(_("failed to expand user dir in: '%s'"), value);
++
++	if (is_optional && is_empty_or_missing_file(path)) {
++		free(path);
++		return 0;
++	}
++
++	*dest = path;
+ 	return 0;
+ }
+ 
 diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 4dca8d97a7..4927b7260d 100755
+index 4927b7260d..e28a79987d 100755
 --- a/t/t7500-commit-template-squash-signoff.sh
 +++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -50,33 +50,33 @@ test_expect_success 'nonexistent template file in config should return error' '
+@@ -46,6 +46,15 @@ test_expect_success 'nonexistent template file in config should return error' '
+ 	)
+ '
+ 
++test_expect_success 'nonexistent optional template file in config' '
++	test_config commit.template ":(optional)$PWD"/notexist &&
++	(
++		GIT_EDITOR="echo hello >\"\$1\"" &&
++		export GIT_EDITOR &&
++		git commit --allow-empty
++	)
++'
++
+ # From now on we'll use a template file that exists.
  TEMPLATE="$PWD"/template
  
- test_expect_success 'unedited template should not commit' '
--	echo "template line" > "$TEMPLATE" &&
--	test_must_fail git commit --template "$TEMPLATE"
-+	echo "template line" >"$TEMPLATE" &&
-+	test_must_fail git commit --allow-empty --template "$TEMPLATE"
- '
- 
- test_expect_success 'unedited template with comments should not commit' '
--	echo "# comment in template" >> "$TEMPLATE" &&
--	test_must_fail git commit --template "$TEMPLATE"
-+	echo "# comment in template" >>"$TEMPLATE" &&
-+	test_must_fail git commit --allow-empty --template "$TEMPLATE"
- '
- 
- test_expect_success 'a Signed-off-by line by itself should not commit' '
- 	(
- 		test_set_editor "$TEST_DIRECTORY"/t7500/add-signed-off &&
--		test_must_fail git commit --template "$TEMPLATE"
-+		test_must_fail git commit --allow-empty --template "$TEMPLATE"
- 	)
- '
- 
- test_expect_success 'adding comments to a template should not commit' '
- 	(
- 		test_set_editor "$TEST_DIRECTORY"/t7500/add-comments &&
--		test_must_fail git commit --template "$TEMPLATE"
-+		test_must_fail git commit --allow-empty --template "$TEMPLATE"
- 	)
- '
- 
- test_expect_success 'adding real content to a template should commit' '
- 	(
- 		test_set_editor "$TEST_DIRECTORY"/t7500/add-content &&
--		git commit --template "$TEMPLATE"
-+		git commit --allow-empty --template "$TEMPLATE"
- 	) &&
- 	commit_msg_is "template linecommit message"
- '
 -- 
 2.47.0-148-g19c85929c5
 
