@@ -1,53 +1,53 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E585D1A4F30
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 12:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E431A4F38
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 12:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728908499; cv=none; b=NfbZj4n6SQFh/Tb0BmmRgywOk7d+aiH5he1KUWw5SixkvLSEPFoX5Cnx9YaZcVsrlz7UNjLvXPbR/Iaaku0LcJ/8wSf0nSN6A47py7XeY4o8HzqR/+h2ONnaVBIy6JwOt812BXxeZpK0/sc8PwFyVxH2ao8hpFwpDYt/Rigj9oM=
+	t=1728908502; cv=none; b=atjBbaWm+68H7jfPwYvi5z7OEq7wIWjgvClphkALWizFeZ8JwkjOPSDlvZjbE/hwxhUkKw5fqwOjHTrtTR22ogDpFIWFBoVU3dpJLyRBhPLMHw0FbY7dIAIxQta7UDA9BnsXBDl0GyG7+wsg5E3wsUTMcacOcHzryT27HvZztAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728908499; c=relaxed/simple;
-	bh=AivzP14oKcMpocfx/+iJ/3wqhpuJyBerkIfxff8rzn8=;
+	s=arc-20240116; t=1728908502; c=relaxed/simple;
+	bh=z5fcBVOlJRoUYkjxuCCNUcYz7u24YP7CyLGAoi69czc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dRWSwZjJlp/C68Uv+KBFzgW7ychgkb3acs4nDZ+1/05fPmuhZ/6QBchewJ68WKrPMnFG9hXnmnFWjvcJmuLJ8dNNnVXrFogIuBjvsCw8yqHv3j9LP5oSAcUxmefvLPh+XnPU6Mos6oLvUT2aB6Ddvc50niuJjPt33p87v+vMUKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BaYD0v8U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JE2+dplQ; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=SxWY3rjudeqJaI3F1ST7b7xtIOB8pciJi/ot5JRxpgmh6EvyJqGlPwfYZmDowXq48b6uJdoB7L5Pv8yyLHvbM5XQ4u6KMJy14uc//jcZiFEnU7dt05bAAx13b8RDKYpqxmcnchwysLepJrnpf4I/fLXaAlXYjPOdAZqkRSPxRMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fEDKKncT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VmAiUXoy; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BaYD0v8U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JE2+dplQ"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 32E7211401DD
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:21:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fEDKKncT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VmAiUXoy"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1839E11401D9
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:21:40 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Mon, 14 Oct 2024 08:21:37 -0400
+  by phl-compute-12.internal (MEProxy); Mon, 14 Oct 2024 08:21:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728908497; x=1728994897; bh=1B2585PgIM
-	xaSR2K8p8wDvhkiDm40GBB5/JuaUgNzos=; b=BaYD0v8UFJlSLwkkeV+UhtWWnk
-	aMJhT9/ynKmHelbBegKBOt47aiii1h5dNlXSafFk7E2x/FqJqth7149VX9LWgPQU
-	Rk5YVrs5waZ205+i7tVy4PIyngylRCheU3/MdQO+1v21bHXxciyn+tPvG9GVoZs0
-	FD2WeI8C+loOnNoGxGRqQQ2TiW+k/MG+hacIzCnBHoZgyqT0P8d+OI0CzsiUFQUr
-	QBmpBR85LyOC6yHsFt7nCIyiLSTERBEKBcWnIaHMYDTzLhP9xboAxa7BeGguTzgY
-	ZjRWrkAmahS7nrlpgiFYV2DT5uKnSm6hJ9gkqGrzLrCpiKZW2I4ThHH+TcKw==
+	:subject:to:to; s=fm2; t=1728908500; x=1728994900; bh=OjO+BO/SB5
+	iPDMJKqNhiLMNDSumXSGUa9S6Qe2/1BaA=; b=fEDKKncTXwffVIEp1KTUo60pTs
+	roFLTSDmJ17lhFjIMTWeBrZECtNlxXlbkE08odVwxC+0h3FnTjdVx14ze4o0wDtA
+	d+PpbKFGRhvhCQjT7A/FE4lDTq0dHkx201lkAA7ya5KyLH6/E1LdlR3JKAZ0l0pV
+	4+rAgFsaNY3hY0zyRCGymbDFX3pcX03wwiB59sZO7CKOhR9z9sfXrC94+0dstXBu
+	jyubYyAyiWwwzSQYf9NUCO7zJ/2LE5d2MU8yLdGGTkw9TTwes9Wc0VAT03E2O1jF
+	GgRX75wdtROK6RfwFskfUg26MS7GHCzHY7x1xjdSa/GhjD+n+vJJUbvBAYHw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728908497; x=1728994897; bh=1B2585PgIMxaSR2K8p8wDvhkiDm4
-	0GBB5/JuaUgNzos=; b=JE2+dplQ8zgG4vaX2OxbA7b7O/P4JH2J3QwJTlmT5akT
-	UVN41JODZgLn8Hd+BpUz+bNjki0ylsz3cK3l25IaD15xzE9WOdno2PJ92pUQvY/4
-	JDVsGz0/35sqiyErcWYkVET06CWKO4eFgd7Kzq0vEEqH0UQCgvrdf1/6+dvpOcfZ
-	YNHXBuPUvldlEvNO3nqCrb2zK65FzmJGiKlwUfjH6Yl7nQLPWbl6CIWu0mH9LuO4
-	X2cYmBTdncuV6t2VoAc44qZBqvHz35o335WhGj5Iogt5M5NADPNnZxyi6d2c1E9V
-	PVFWO7UWPf7yZfTEEAtw3a7Wk6Re5itln78zYL5N7g==
-X-ME-Sender: <xms:0QwNZ9lwJJznKjt-OBeil4m72sz8QOTCqdBJp8kX78C_3lKmO9jWCg>
-    <xme:0QwNZ40e6bZUdyAipsJ7lnHofQ2rVWsO-GG9WKRob-XmqOw0VbEnqI1vgBJQoYxVc
-    vNGpz2mPtU3ivp_2Q>
-X-ME-Received: <xmr:0QwNZzoIEbp2qH6fMgU7xLlvxGrJFI2gAtoobzx58a38_iaGaRuAO6WmivsRlBAQBZnWppMuOHeOYCPBjmOFP-JfTIgCbXFXcTVZHuh5U8YA3g>
+	fm2; t=1728908500; x=1728994900; bh=OjO+BO/SB5iPDMJKqNhiLMNDSumX
+	SGUa9S6Qe2/1BaA=; b=VmAiUXoyk1F6ZkjONnyz/Xd1zi9KjIg01SLPvitsBrNF
+	6vR0w/JeUMGUUTRqSM5FSwcw3uBYXpUE7o8a4h0D+oRH/Yt1P00w5SzbwIcU1CaD
+	QsVbh0JIdL7CmDhH1MDTYOpYAJAy3vA9UySwfEd55/nN09s5qtGZgmQGGnvTuSB8
+	OEMba8QJm8p6/JFWuSNs29wS6qW/xD5eEZ30LBDb0A/bsz5QxWAo3dBZgsfM+6JG
+	3TdwrrwTk+WfCQIwY/dcz+1nLysTam/lt459lD9IG510pqd3jC4B+H95Ce8cVfuE
+	qzQy7E5Eve73zUT3AeIPk9+7BZzX3JM0NKUyIm1tIA==
+X-ME-Sender: <xms:0wwNZzD05o9wgg-YrfA52GVWRcmWHe12tlaI87LUrYArLMRwh9KTOA>
+    <xme:0wwNZ5g078jg11ot-tE8cLW197Uf4oCGe5AWzvPrhy_IAi-UB6sILo3ENic8Yt_SY
+    -epweSNsvYEyBuryw>
+X-ME-Received: <xmr:0wwNZ-lMmrrcMQaaHAg4bGh3bL12jMKzpk-TnIi56qcm2zicd4-DP8UDGJT2n_HtG6smYRNcwh90cIuq56VYtmNPo5fiZsXKDGsbNEHStEHhkA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedghedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
@@ -57,24 +57,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedghedtucetufdoteggod
     ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
     hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:0QwNZ9kIAK2l8F8qv_j2VUWHipcHq4Sa9GkEOsCN-bzvnzQemtEOPg>
-    <xmx:0QwNZ71-RkOsRkfs_zjmetGqI-iDrrRTFPRpvcP2_lv99LjILz6BEA>
-    <xmx:0QwNZ8tgBDgnJsvB8piyIOVG7UX4EQucee_CuyGaQW33P1hX1mj66w>
-    <xmx:0QwNZ_UplYBXd7LGnpwUt61ABBpnPJCjmBcwHwztK2SlptRsXN3zYw>
-    <xmx:0QwNZ0_2M3w2Q3xGSkU7-7MmHSg77PzrO6Cu93_6wcOn03GLyfYwiWH2>
+X-ME-Proxy: <xmx:0wwNZ1yBe05EVsQOwqVy2siINX6F0PlpXq1OL0twB5O8_eghyFqz1g>
+    <xmx:0wwNZ4SA4qWBMaJWI5YmBjgPcFO1n0SAf0HjeMgX3sU_PGVL0yM6rg>
+    <xmx:0wwNZ4bsfZMdcsL1nTyExlrCwIpKmg6gCIC7aZ3cGz_hl2kKzTl_og>
+    <xmx:0wwNZ5SqQ6HRtIkX8xNIVHKAqyJwOfHcMz7xJLGvyXBQjpw6PZfDLg>
+    <xmx:1AwNZzLc5sRTDw9lGFesDOQzt9XuJa4ivqtVRFQykL3ZZeD3zzf3M7Az>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 14 Oct 2024 08:21:36 -0400 (EDT)
+ <git@vger.kernel.org>; Mon, 14 Oct 2024 08:21:39 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8f1bd89c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id a06f8c92 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 14 Oct 2024 12:20:23 +0000 (UTC)
-Date: Mon, 14 Oct 2024 14:21:34 +0200
+	Mon, 14 Oct 2024 12:20:26 +0000 (UTC)
+Date: Mon, 14 Oct 2024 14:21:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 08/10] t7300: work around platform-specific behaviour with
- long paths on MinGW
-Message-ID: <b94fd876adb1933e582984ce824398857c2e50fd.1728906490.git.ps@pks.im>
+Subject: [PATCH 09/10] builtin/credential-cache: fix missing parameter for
+ stub function
+Message-ID: <8cce69e5ba63d02ef4eb1e8cf56f47443b5bb1dd.1728906490.git.ps@pks.im>
 References: <cover.1728906490.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,41 +86,34 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728906490.git.ps@pks.im>
 
-Windows by default has a restriction in place to only allow paths up to
-260 characters. This restriction can nowadays be lifted by setting a
-registry key, but is still active by default.
+When not compiling the credential cache we may use a stub function for
+`cmd_credential_cache()`. With commit 9b1cb5070f (builtin: add a
+repository parameter for builtin functions, 2024-09-13), we have added a
+new parameter to all of those top-level `cmd_*()` functions, and did
+indeed adapt the non-stubbed-out `cmd_credential_cache()`. But we didn't
+adapt the stubbed-out variant, so the code does not compile.
 
-In t7300 we have one test that exercises the behaviour of git-clean(1)
-with such long paths. Interestingly enough, this test fails on my system
-that uses Windows 10 with mingw-w64 installed via MSYS2: instead of
-observing ENAMETOOLONG, we observe ENOENT. This behaviour is consistent
-across multiple different environments I have tried.
-
-I cannot say why exactly we observe a different error here, but I would
-not be surprised if this was either dependent on the Windows version,
-the version of MinGW, the current working directory of Git or any kind
-of combination of these.
-
-Work around the issue by handling both errors.
+Fix this by adding the missing parameter.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t7300-clean.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/credential-cache.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 0aae0dee670..12ab25296b0 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -747,7 +747,7 @@ test_expect_success MINGW 'handle clean & core.longpaths = false nicely' '
- 	test_must_fail git clean -xdf 2>.git/err &&
- 	# grepping for a strerror string is unportable but it is OK here with
- 	# MINGW prereq
--	test_grep "too long" .git/err
-+	test_grep -e "too long" -e "No such file or directory" .git/err
- '
+diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
+index 5de8b9123bf..c51f7fc2ade 100644
+--- a/builtin/credential-cache.c
++++ b/builtin/credential-cache.c
+@@ -189,7 +189,8 @@ int cmd_credential_cache(int argc,
  
- test_expect_success 'clean untracked paths by pathspec' '
+ #else
+ 
+-int cmd_credential_cache(int argc, const char **argv, const char *prefix)
++int cmd_credential_cache(int argc, const char **argv, const char *prefix,
++			 struct repository *repo UNUSED)
+ {
+ 	const char * const usage[] = {
+ 		"git credential-cache [options] <action>",
 -- 
 2.47.0.dirty
 
