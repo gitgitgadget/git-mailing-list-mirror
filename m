@@ -1,136 +1,114 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CC81A7056
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 12:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A36C231C9C
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 12:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728908505; cv=none; b=KvJe4dkOCbXE1RqEdFXf6hJRdQsUkB5DNVH7M3V8Q46/uGIyFzjD45NsY7swTKAw9yZJdtXd35nZgFU5b92hFIA5+S5XzZXFTyc7QldicPslcxsKIjBlJt8+SY5CzEvoSipUICMYgVm5s4V/+UGveXvES4CLowLbJCM3+PeEeK4=
+	t=1728908733; cv=none; b=fzSXCg+pR5qntKJ3FKpk7xsMpOIo7+4d1jHt0tabkwqZ8B/CGv3uPV4+6Owk/l1bOXvl4lCc1WVq3AtajQw1XTe5SlUcNYPNGjSqpooolcyNHqSoLJKaB0KmyakB4eoa2GdzWQ0bzMVbqwd1pIBsQG/g4ZoGuY3Wgb/kCpwFwyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728908505; c=relaxed/simple;
-	bh=7qF58BLt+iICgHW+tFTbVgpiTxnRkJd++dU6o0JiNaI=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s2LVgcJTdGeETVeiwtt+FnRg0GcF9tIaFejLJ+aME2zzxWn8k13vQm9jMIkx5wpcZQOHTiWQG7snuYC5dJdYS4+Bhk9WyV6UXZW+07LNJU6Y/wQkRSJWNPQvN6AErckwvgTc2K1jZAIlIp7beGpeItPqSgVI1ce+6CcRTlxi4Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HzaJK8xg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qNFB6Obw; arc=none smtp.client-ip=103.168.172.159
+	s=arc-20240116; t=1728908733; c=relaxed/simple;
+	bh=5FczyTle7q+inbGeQYo45+1YtgN4CSNj8WOupa+HqsM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qdx1HInf2y8V5XOkAYfyUd9A/B915vSQG0TUa0i5SjYaMkdDuyje4WlqThtwZvaTHPRCbZor2azGKrr6c2qB7ytCZZfgQApuDY2unylq/P8XfSc8wFRje61ZRp+b0oIo4HlHl4hYMKeHAz+iw7TLT0wWVvMKVDfAOfttd71fcXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NwRvUw6J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UZKGXDTA; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HzaJK8xg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qNFB6Obw"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 05B8911401EE
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:21:43 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Mon, 14 Oct 2024 08:21:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728908503; x=1728994903; bh=frPNzSFShv
-	Upg6kOQTiAPslU2HEDujTyZKdkJlbeRrU=; b=HzaJK8xgmzDD79J5c1gEo7rzkH
-	xBlKWEcrftAoO4UIcRzqgkPOpomcWu1stgQeXik+U2x9k52eWQWdfnL/dQwiwqcR
-	AUKaAQwxVmBPPVXtxtJlpi8LZsamVh+AwwOKIw41DsGcrFCDgAKc+xoo7dWEqFCg
-	MyfUMWZ1ZBzpDTuq4bnQGEADPTFTNriJi+bdUR4SYXOuJUDAarqXQkfCCQa0shAB
-	rDOGeVf3iVaU/wZ3g/1spYOTuMtalOGACu4az9FFqJt9JXvOO5BCQfF7SxiaV7B6
-	wrZWDc/88BlpBtHKRgFGBKbsNmlrC8juJNXDtQo0Pw+sq+ZUh7YirdgdoWHA==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NwRvUw6J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UZKGXDTA"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7D830114017D;
+	Mon, 14 Oct 2024 08:25:31 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 14 Oct 2024 08:25:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1728908731;
+	 x=1728995131; bh=OeB8JPbvOZpkWvZCEI5rgGK0WWq1DsRedKcYRHfCh9I=; b=
+	NwRvUw6JE3oLCDqUUPnvnU3GjeqGUPq/lyoWHCq5FXmWqbUTOkrcta53Qtvcgn9d
+	MYGh3jOc0l1xEmq3Pm/tzfO6h/zGPRyEPoopmda7RxodWdgp/ak5KaH/Al15jB8+
+	Tc5IOt63eN80zfeCHgh7zlHkRK1s1anE4HvVmg1N3VF0k6Kvzb/L1sj78Monv9Ut
+	2w71h3qs3qKYvwOZ00ZLIJRI9uFPsUd/LLdltRrpvC3E+VaxfwfMiBHykFf1Z6jT
+	5Au98YdhQ0l3HAAzZdngK9mITJteSN4QdLZgLLHlz37KDnPV+7NkPUX4jX3jNKPU
+	xKceyeYV/c0WZOadNmMh0g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728908503; x=1728994903; bh=frPNzSFShvUpg6kOQTiAPslU2HED
-	ujTyZKdkJlbeRrU=; b=qNFB6ObwuuqUGoWBWPEbfitRyziMdTMFQ2/aVu6RJbao
-	QAtUBPHvnx4lYDWQoTvV4fO9BokuC23j4/E97KQ/800SuKwohPpORyQ7oG6tHFj6
-	OVi1TmMERXdMowqj5t50GlqqpoTQcnQgYA1UzkFDGF/MYlDcQeg9qJQysRnlv5py
-	nrLebonXO1Ecy+nClljwgiSuXILrcuLAdsU66H6+jWuQL38hxRknVSfnFWoukyxY
-	eihntQJP6edB1dwEIMq4SvGXNER34pzFL8Y+Stpt/pnZXjWunldyze0NbxsWJxxD
-	2fjdz48egqiRpH58D7IyplLM2+wB4NOZtXtWeTthoQ==
-X-ME-Sender: <xms:1gwNZ-J3Kp1ftwbqOTuZvDgURHvI1CgMrnNCetlhGuAAJZQMrqF14Q>
-    <xme:1gwNZ2IzGNt_qF3xjCaD74twgly1Y-c26EHjUMLw7u-Tttb6gUC-wUAddylCDSEio
-    Tpn8c_N-l-yHMes9g>
-X-ME-Received: <xmr:1gwNZ-tEMFl0LOSZrNlQqxjsdqY4WVrCb4kxCOZsReC2PI4bG_l3TPmt-Qjv7EIOCEwhWXt1moXA6uHy_aaXHsO9_aMWSx1NmR-QH9haOMTnRg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedghedtucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728908731; x=
+	1728995131; bh=OeB8JPbvOZpkWvZCEI5rgGK0WWq1DsRedKcYRHfCh9I=; b=U
+	ZKGXDTAtMc72anPWp31e2Ky2TGdywfmIgcHmG4Zqc7XjUbU8lDBeDqZa2tunV8Z+
+	EXlElTQDUIDvaa1UMjhRUMeG6E9rJHxFSClq/xiwbOveCL8jOPv3z9UYWWuug2GJ
+	pj9PYljBqn7bXlhs25wXgm04i6KB6pwPdMtNGJBlMBr2ie5EFVM7ErsBXLFmbwIh
+	BuLN8vzga26Z8rANmY1R5lSE6DzHArf56hgalM3uC8cyjQXyuNAOAeZR6Q49ubAD
+	OcbS2skpBEMe5ltw+KcYnpWV0N5LPQ1yJfqJ9rtqEJ4nIxP5pIx52d7vd317+vGQ
+	5am8lZyuCQ3H50JD+eWjw==
+X-ME-Sender: <xms:uw0NZ41PK0uMgHMzR06xTJ6xygU8AtMBFxBHJB54idEv8hJT0cjzFw>
+    <xme:uw0NZzGp284IVEjOnwwEv7VBdRqengM29cLBXGUTNxwHcZuFHXoIqmv9TdQs_J9gt
+    taBZav4XpOT54uC0w>
+X-ME-Received: <xmr:uw0NZw5oFdwGsDEi18hEiF49alrgUJg1K6XaGe_7ciiD4Og8tOVFCX4Z6LL4O7UnFULXRkm7YuNE2tCVO8mfjo5hvfJ9FNIym03MPIIQGqxFyg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
-    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
-    egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
-    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:1gwNZzbm_-7Ra_VzQugH8gK5GVYJwarqxy7HE0SVOeWF6i9YCIunrA>
-    <xmx:1gwNZ1ZN1fXFntPaOpE1P4ARGZoyekg-GtkaB-3w23BvE-fz299ORA>
-    <xmx:1gwNZ_DNe689WLugZCbJkHAkl-c6MhewmnEwVAessZbVOD_WjL_bNg>
-    <xmx:1gwNZ7bgmV7Dz7IecgoakRjhFqviL-n-LfldTSHrRrGkM6QALti-oA>
-    <xmx:1gwNZ0xCHapfUzsOxsASpj9_TSc-ZiyC3_I5T5lOmcvktDubP6ZMhRc1>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
+    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghr
+    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhnuhgvthiiihesgh
+    hmrghilhdrtghomh
+X-ME-Proxy: <xmx:uw0NZx1OZUaxOytIUezgoZM3Y3rjBbyQDK_vquBN2qjC7KCYF8yWyA>
+    <xmx:uw0NZ7EUUGKSJImpQXSIWajEChqIM6IeenD1-KTFq2u8BEPmaKCdJA>
+    <xmx:uw0NZ69xwuADXIsQH6npbu6M6AXDBaIHghRp2CUuv7D1lobWzb6Wvw>
+    <xmx:uw0NZwkz32Zz5Fk7fXk3tj5q09BeHxgyG5J7GfClSBChhL9e7_KWHw>
+    <xmx:uw0NZ_i5ti-8iPRevcS1akWz3qTK7fWLkKk18Q2IoskUbeEl3rUv2OBb>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 14 Oct 2024 08:21:42 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Oct 2024 08:25:30 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 22e98d20 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Mon, 14 Oct 2024 12:20:28 +0000 (UTC)
-Date: Mon, 14 Oct 2024 14:21:39 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 205c60c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 14 Oct 2024 12:24:16 +0000 (UTC)
+Date: Mon, 14 Oct 2024 14:25:27 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 10/10] http: fix build error on FreeBSD
-Message-ID: <deb30e12a5861410b6c3b7385fe09599ddd0394b.1728906490.git.ps@pks.im>
-References: <cover.1728906490.git.ps@pks.im>
+To: Gabriel =?utf-8?B?TsO8dHpp?= <gnuetzi@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: Bug: `git init` with hook `reference-transaction` running `git
+ rev-parse --git-dir` fails
+Message-ID: <Zw0NskRJUSmpNxLe@pks.im>
+References: <ZwZ01-mtwm9Gcjub@pks.im>
+ <B0631C6D-0914-4C25-AAF7-E742129836FC@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1728906490.git.ps@pks.im>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <B0631C6D-0914-4C25-AAF7-E742129836FC@gmail.com>
 
-The `result` parameter passed to `http_request_reauth()` may either
-point to a `struct strbuf` or a `FILE *`, where the `target` parameter
-tells us which of either it actually is. To accommodate for both types
-the pointer is a `void *`, which we then pass directly to functions
-without doing a cast.
+On Fri, Oct 11, 2024 at 12:09:18PM +0200, Gabriel Nützi wrote:
+> > namely by checking whether the HEAD file exists in the Git directory. 
+> 
+> The problem here is the chicken-egg problem: How do I know inside a
+> hook where to look for HEAD, so the non. env. way of doing this would
+> be 'git rev-parse —git-dir' which crahshes… So there should be cleary
+> some better way of knowing if a Git repo is on the way of beeing
+> created, and when it is fully initialized. What about
+> GIT_DIR_INITIALIZING and this variable does not exist once it is done
+> or whats about making ‚git rev-parse —git-dir‘ not panic if the env.
+> variables are defined. I guess for a good solution we need both?
 
-This is fine on most platforms, but it breaks on FreeBSD because
-`fileno()` is implemented as a macro that tries to directly access the
-`FILE *` structure.
+Our documentation in githooks(5) says that the GIT_DIR environment
+variable is always set so that the hook can identify the location of the
+Git repository. So I'd argue that using git-rev-parse(1) is unnecessary
+in the first place. Or am I missing something?
 
-Fix this issue by storing the `FILE *` in a local variable before we
-pass it on to other functions.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- http.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/http.c b/http.c
-index d59e59f66b1..72973175a85 100644
---- a/http.c
-+++ b/http.c
-@@ -2290,17 +2290,19 @@ static int http_request_reauth(const char *url,
- 		case HTTP_REQUEST_STRBUF:
- 			strbuf_reset(result);
- 			break;
--		case HTTP_REQUEST_FILE:
--			if (fflush(result)) {
-+		case HTTP_REQUEST_FILE: {
-+			FILE *f = result;
-+			if (fflush(f)) {
- 				error_errno("unable to flush a file");
- 				return HTTP_START_FAILED;
- 			}
--			rewind(result);
--			if (ftruncate(fileno(result), 0) < 0) {
-+			rewind(f);
-+			if (ftruncate(fileno(f), 0) < 0) {
- 				error_errno("unable to truncate a file");
- 				return HTTP_START_FAILED;
- 			}
- 			break;
-+		}
- 		default:
- 			BUG("Unknown http_request target");
- 		}
--- 
-2.47.0.dirty
-
+Patrick
