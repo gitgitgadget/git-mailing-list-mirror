@@ -1,423 +1,105 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AADA171671
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 15:28:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6241AE863
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 15:56:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728919687; cv=none; b=igDqeHsFrn7yJQQMKkP8wxd/27YhdB3HGyBsn4oGf/LtIrzc7rw26JxCgnlWZiKSnHoaDNblgtHl7pIx89htSbpsypmve3jz6wLeVKq2Rtt16RHxvPIjDfz1PvnIkSonlE/MjczBRseagVryo5qRa+mY94nL9yWLy6Uj+5dzI2A=
+	t=1728921404; cv=none; b=VlaNvnfMKBM1keB1i4ELwfmpmH20wmamQBTjCuoANyAznQIPihLX0PfTkRVR0yR9fjwCxxN8UThBVI75esIqEscFNtdqzai3g97dnhK28CY1QL8q1u3saZaIPNlWXyO9oO3JBksUAKNssRWjiLqNCVu08resKn/y+vy2siku+t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728919687; c=relaxed/simple;
-	bh=dnxRcfPSCrZ5s4y9rof4ZgIaL+nMn/wcYedD949/EXg=;
+	s=arc-20240116; t=1728921404; c=relaxed/simple;
+	bh=LtAOT/fdTUrGjxQbvOXS9XnWRYVJ1U5fM+7RSJsh1ok=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hYCltNHgNVdUzhp6rM1l6M8e/+V5L56lj8Sd8qQUfWvQ/sgeE+pu7mkDdO6hNf9OSnOHFXBE34eof4bTd2HApn5ez4pfmtR2GHujOgOHYwaEOPT+CQqFh01QTDDM35m+1Cn9ofIfdQukrCC+n4Rzkxxf+WC7zv0Qx+y+gvUfPIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OYKF0Uoz; arc=none smtp.client-ip=209.85.218.45
+	 To:Cc:Content-Type; b=VEw3B9DbuDbYXoVED9Rms39v7cOP2cc8yzUtilG9UOg/tlx3ggwbMVFbTXZ/1Mz94FOA1MSZsiRjIreJSG0N/T/VLABGSef1T9nl9OgwzWYch9K101g99nH6uZNcVTXMN3pIbGFtzcPzthCQC3pQtCE1Ox5CVnqcGOHw5+qPNtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AE57vSiq; arc=none smtp.client-ip=209.85.217.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OYKF0Uoz"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a99ffeea60bso234758166b.3
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:28:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AE57vSiq"
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-4a47fff85d2so434600137.0
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:56:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728919683; x=1729524483; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DeyleClZDna2EKX7Qw2DEfpeAA3dNFksrQmxUaKp5Zs=;
-        b=OYKF0Uoz1XNpz+uL9+rapydfpVTP6kclDtI1Gz73rLhCheu0z+SUr4YGcCWKmLGdLH
-         6Mt9bSqiGUa4uWaLh+AqORjml5yamQdit8paeHcH8sB9dLpTvGbhH3Hw3O5yziY90Vu6
-         jfhIcenV/CeK3m62i2Kr/+gUKskflKqvDIkVKz5AIcRdbf8ikU+RNqxqvE/hsCYUS0qg
-         4f+RGby3zNbK/NQqkIEUpez3FTo/t/hpfRt7QWCorVmpFMpgbJKXk2ev2eyuFbbJy8OH
-         pbRdWPbAXx2fV0mMwriTqRvelrp/JCJh4byK94nrkOdcKlizHPr7Tf6C4pRunIibXmJo
-         LHhQ==
+        d=gmail.com; s=20230601; t=1728921401; x=1729526201; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pnX5wqsQnuV0vArzPIJlUCNhdIGRGid05GGrp6gBsaU=;
+        b=AE57vSiq2u2KHid/l76bnZinK7stmCtPWXh0gOyLQxq96CP3Fgz+Q/pSCTpDH2BDjr
+         pFUsTuhw4474uIggtG/5N6ou6nCFIeI8IpfvEJEdyNKmi5zTKtmdVbsWZSjGHHwXVt6H
+         HTSoaRmtnPUGaCWUW91VVravIOo3Z3x6U2UXTgsRV/YAudnE2+clwh0wLHPI1EgRcsL7
+         M5O/lhkRvRVrPJjwpzqd2mdCLwNpFk9L3D0rRepWeFcuq05tsrMVkUZV0ATyayA0SLNI
+         YYb/y1WDyEmznnOfKdT2bZA0EW9Ou9a3687blVbZ8kc/Irm4FhSWQwu/pRy6mKvWSYa2
+         v9yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728919683; x=1729524483;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DeyleClZDna2EKX7Qw2DEfpeAA3dNFksrQmxUaKp5Zs=;
-        b=E6+CpIhg3vlWW8jUI3BWOyAzFLnbHc+KcOPQkvEN91+55ZhaEaVXkBaxYvNcxsoKNP
-         nYX+hCTqSHf4P405xg/WNKT1nkaRR30Kl9oYA4c+R5gqpAkNCvpph8IM6ib1CUuwUxs6
-         M0aZQlIzCa6b5J8CiKtTE+ygyKdJEchBvn7K/aPWDZSfUKP+RN4Xs0blh5z6vdQ0EURV
-         aP0Jb5e6JWQU7+ZqGJr0evt8cTwaVf/7kRno0KC5plL47Wb/6ro+rFwvoAWqFWP09geX
-         zxqMX3iapJFH1v9eduHDVuz57rva9qOwh/YTxjBpOCMIKt01NrHeGJ7m3KfWDlTormt5
-         g80Q==
-X-Gm-Message-State: AOJu0Yy8lgIgMd831r41GpjWKNyKWR4gCUvUKhduVPtID7FaOW+7X069
-	92xzM8NTJtRA6PO/Bt81zyz692u+fpj+mlE71pjR/mBxi0I/xuTdMfRXvy5+W+PGirRp5CwtwO4
-	68KaTqjiJzcxBnwynaYAaGUEO
-X-Google-Smtp-Source: AGHT+IHv6eB4J+dAXX0nZloM5EscP1S+Jhm3tj1s2dLWBXZtPWICFoFbx+DC5+75pZIwCqcpPDhkei+9vLgsn8Umsco=
-X-Received: by 2002:a17:907:9488:b0:a9a:791:fb86 with SMTP id
- a640c23a62f3a-a9a0792046fmr461649166b.64.1728919683013; Mon, 14 Oct 2024
- 08:28:03 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728921401; x=1729526201;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pnX5wqsQnuV0vArzPIJlUCNhdIGRGid05GGrp6gBsaU=;
+        b=AqFSozssHDmQ7u9+NdyOG6MzapSdffCHSV8i6KLTWBZlDc6HDWMmmtyV+fR7pReLn8
+         lFP0hmmQvJsHuUWHu3yI6Hwnd8JZRJvQFTMptkdH1q9dAcGetQdCBCQ3sf+KrqLs/BvI
+         VAO52K2Dtgp2Y6Y/4mcrCjmHgJD4bIRsTjHERPxuz4jseoOJJ+zmEOBJGm0JcoNr8h64
+         DRFJszy8qk6IAbCRG3J/oVtAPfL5+nPUeO623sqA4gy0zvcBfn43+5xRQOPeBdNEUuhh
+         62zWr+K5uiRoGFU2hNudCPFQWvvZuk9s8WYwKzGdghMZZlEeOMYEsF3Dhi5KFSzMTsQe
+         lGnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXsHCwMNy4xHnexKUAtjvVehNzf2PDcc6EcSjDwdChYq1deSloOV9EpaLTlc3zVnXlkKmc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyGWtr10zMcjo+3ZQUsPpA7Tqz8sasSHtDVR5M9fKpSzR/ANiu4
+	tpM/vbxZFPGcumUNP0qmPU7RwCvMpQDD+NCt25D8tX0voXznoZ9+8/bULLp0HPC9gmdwj+fei57
+	iq2Do+YICceXEWxSR+L+QcKYxC9A=
+X-Google-Smtp-Source: AGHT+IH/+gR2Lb81g9mL4Kz0alwiYzn9yHQ0l8sVOUhQcyRQUaAPGaYp5KJhSX9C2aZimar74/EYdnHibppwpbn7tXU=
+X-Received: by 2002:a05:6102:90f:b0:4a4:781f:1659 with SMTP id
+ ada2fe7eead31-4a4781f1ff2mr4058293137.24.1728921401631; Mon, 14 Oct 2024
+ 08:56:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241011235959.596136-1-chizobajames21@gmail.com>
- <20241012062126.603967-1-chizobajames21@gmail.com> <879cac32-f59c-4adb-973e-4a8fc1770f8e@gmail.com>
-In-Reply-To: <879cac32-f59c-4adb-973e-4a8fc1770f8e@gmail.com>
-From: Chizoba ODINAKA <chizobajames21@gmail.com>
-Date: Mon, 14 Oct 2024 16:27:41 +0100
-Message-ID: <CACwP9aq-F=-y32h2-maiEtJ4rJgG0k5VdzVodnjFrCvKJLEuGQ@mail.gmail.com>
-Subject: Re: [Outreachy][PATCH v5] t6050: avoid pipes with upstream Git commands
+References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
+ <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
+ <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com> <14db295a-0049-434b-8747-09f82e511bb9@gmail.com>
+In-Reply-To: <14db295a-0049-434b-8747-09f82e511bb9@gmail.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Mon, 14 Oct 2024 15:56:30 +0000
+Message-ID: <CAPSxiM-i3EmmXM6BuPb80q51Lmud0PfnZ_WQfSJfvq1nYynnLQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and strtol_i()
 To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im, sunshine@sunshineco.com
+Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 14 Oct 2024 at 15:00, Phillip Wood <phillip.wood123@gmail.com> wrote:
+On Mon, Oct 14, 2024 at 9:00=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
-> Hi Chizoba
+> Hi Usman
 >
-> On 12/10/2024 07:21, chizobajames21@gmail.com wrote:
-> > From: Chizoba ODINAKA <chizobajames21@gmail.com>
+> On 13/10/2024 10:42, Usman Akinyemi wrote:
+> > On Sat, Oct 12, 2024 at 11:09=E2=80=AFPM Usman Akinyemi via GitGitGadge=
+t
 > >
-> > In pipes, the exit code of a chain of commands is determined by
-> > the final command. In order not to miss the exit code of a failed
-> > Git command, avoid pipes instead write output of Git commands
-> > into a file.
-> > For better debugging experience, instances of "grep" were changed
-> > to "test_grep". "test_grep" provides more context in case of a
-> > failed "grep".
-> >
-> > Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
-> > Changes in v5:
-> > - replace 'sort -o' which might not be supported by some platforms
-> >    to the more conventional output redirection, > .
+> > I also want to ask if this is the right way to send another patch as I
+> > noticed that it is showing my previous patch which is not related to
+> > this. Thank you.
 >
-> It's really helpful to list the changes like this, but please do so
-> below the "---" line so it does not become part of the commit message
-Fixed.
-
-> when the patch is applied. The range-diff looks good, with a fixed up
-> commit message I think we can declare victory for this microproject.
+> When you start working on a new patch series you should create a new
+> branch from origin/master with
+>
+>      git switch -c my-new-branch origin/master
+>
+> that way your new work will be based on Junio's master branch rather
+> than your other patch series. You can use
+>
+>      git branch --set-upstream-to origin/master
+>      git rebase HEAD^
+>
+> to drop the first two patches and set the correct upstream for your branc=
+h.
 >
 > Best Wishes
 >
 > Phillip
 >
-Thanks Philip
-
-> > ---
-> > Range-diff against v4:
-> > 1:  28cab4c752 ! 1:  b339b1f550 t6050: avoid pipes with upstream Git commands
-> >      @@ Commit message
-> >           failed "grep".
-> >
-> >           Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
-> >      -    Changes in v4:
-> >      -    - Correct the subject
-> >      -    - fixed some ommitted output option in sorts that where writing to
-> >      -      stdout
-> >      +    Changes in v5:
-> >      +    - replace 'sort -o' which might not be supported by some platforms
-> >      +      to the more conventional output redirection, > .
-> >
-> >        ## t/t6050-replace.sh ##
-> >       @@ t/t6050-replace.sh: test_expect_success 'set up buggy branch' '
-> >      @@ t/t6050-replace.sh: test_expect_success 'test --format medium' '
-> >                       echo "$MYTAG -> $HASH1"
-> >               } | sort >expected &&
-> >       -       git replace -l --format medium | sort >actual &&
-> >      -+       git replace -l --format medium >actual &&
-> >      -+       sort actual -o actual &&
-> >      ++       git replace -l --format medium >output &&
-> >      ++       sort output >actual &&
-> >               test_cmp expected actual
-> >        '
-> >
-> >      @@ t/t6050-replace.sh: test_expect_success 'test --format long' '
-> >                       echo "$MYTAG (tag) -> $HASH1 (commit)"
-> >               } | sort >expected &&
-> >       -       git replace --format=long | sort >actual &&
-> >      -+       git replace --format=long >actual &&
-> >      -+       sort actual -o actual &&
-> >      ++       git replace --format=long >output &&
-> >      ++       sort output >actual &&
-> >               test_cmp expected actual
-> >        '
-> >
-> >
-> >   t/t6050-replace.sh | 133 +++++++++++++++++++++++++++++----------------
-> >   1 file changed, 86 insertions(+), 47 deletions(-)
-> >
-> > diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-> > index d7702fc756..37cb6547b6 100755
-> > --- a/t/t6050-replace.sh
-> > +++ b/t/t6050-replace.sh
-> > @@ -98,30 +98,42 @@ test_expect_success 'set up buggy branch' '
-> >   '
-> >
-> >   test_expect_success 'replace the author' '
-> > -     git cat-file commit $HASH2 | grep "author A U Thor" &&
-> > -     R=$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
-> > -     git cat-file commit $R | grep "author O Thor" &&
-> > +     git cat-file commit $HASH2 >actual &&
-> > +     test_grep "author A U Thor" actual &&
-> > +     R=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
-> > +     git cat-file commit $R >actual &&
-> > +     test_grep "author O Thor" actual &&
-> >       git update-ref refs/replace/$HASH2 $R &&
-> > -     git show HEAD~5 | grep "O Thor" &&
-> > -     git show $HASH2 | grep "O Thor"
-> > +     git show HEAD~5 >actual &&
-> > +     test_grep "O Thor" actual &&
-> > +     git show $HASH2 >actual &&
-> > +     test_grep "O Thor" actual
-> >   '
-> >
-> >   test_expect_success 'test --no-replace-objects option' '
-> > -     git cat-file commit $HASH2 | grep "author O Thor" &&
-> > -     git --no-replace-objects cat-file commit $HASH2 | grep "author A U Thor" &&
-> > -     git show $HASH2 | grep "O Thor" &&
-> > -     git --no-replace-objects show $HASH2 | grep "A U Thor"
-> > +     git cat-file commit $HASH2 >actual &&
-> > +     test_grep "author O Thor" actual &&
-> > +     git --no-replace-objects cat-file commit $HASH2 >actual &&
-> > +     test_grep "author A U Thor" actual &&
-> > +     git show $HASH2 >actual &&
-> > +     test_grep "O Thor" actual &&
-> > +     git --no-replace-objects show $HASH2 >actual &&
-> > +     test_grep "A U Thor" actual
-> >   '
-> >
-> >   test_expect_success 'test GIT_NO_REPLACE_OBJECTS env variable' '
-> > -     GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
-> > -     GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
-> > +     GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 >actual &&
-> > +     test_grep "author A U Thor"  actual &&
-> > +     GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 >actual &&
-> > +     test_grep "A U Thor" actual
-> >   '
-> >
-> >   test_expect_success 'test core.usereplacerefs config option' '
-> >       test_config core.usereplacerefs false &&
-> > -     git cat-file commit $HASH2 | grep "author A U Thor" &&
-> > -     git show $HASH2 | grep "A U Thor"
-> > +     git cat-file commit $HASH2 >actual &&
-> > +     test_grep "author A U Thor" actual &&
-> > +     git show $HASH2 >actual &&
-> > +     test_grep "A U Thor" actual
-> >   '
-> >
-> >   cat >tag.sig <<EOF
-> > @@ -148,14 +160,18 @@ test_expect_success 'repack, clone and fetch work' '
-> >       git clone --no-hardlinks . clone_dir &&
-> >       (
-> >               cd clone_dir &&
-> > -             git show HEAD~5 | grep "A U Thor" &&
-> > -             git show $HASH2 | grep "A U Thor" &&
-> > +             git show HEAD~5 >actual &&
-> > +             test_grep "A U Thor" actual &&
-> > +             git show $HASH2 >actual &&
-> > +             test_grep "A U Thor" actual &&
-> >               git cat-file commit $R &&
-> >               git repack -a -d &&
-> >               test_must_fail git cat-file commit $R &&
-> >               git fetch ../ "refs/replace/*:refs/replace/*" &&
-> > -             git show HEAD~5 | grep "O Thor" &&
-> > -             git show $HASH2 | grep "O Thor" &&
-> > +             git show HEAD~5 >actual &&
-> > +             test_grep "O Thor" actual &&
-> > +             git show $HASH2 >actual &&
-> > +             test_grep "O Thor" actual &&
-> >               git cat-file commit $R
-> >       )
-> >   '
-> > @@ -169,13 +185,15 @@ test_expect_success '"git replace" listing and deleting' '
-> >       test_must_fail git replace --delete &&
-> >       test_must_fail git replace -l -d $HASH2 &&
-> >       git replace -d $HASH2 &&
-> > -     git show $HASH2 | grep "A U Thor" &&
-> > +     git show $HASH2 >actual &&
-> > +     test_grep "A U Thor" actual &&
-> >       test -z "$(git replace -l)"
-> >   '
-> >
-> >   test_expect_success '"git replace" replacing' '
-> >       git replace $HASH2 $R &&
-> > -     git show $HASH2 | grep "O Thor" &&
-> > +     git show $HASH2 >actual &&
-> > +     test_grep "O Thor" actual &&
-> >       test_must_fail git replace $HASH2 $R &&
-> >       git replace -f $HASH2 $R &&
-> >       test_must_fail git replace -f &&
-> > @@ -186,7 +204,8 @@ test_expect_success '"git replace" resolves sha1' '
-> >       SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
-> >       git replace -d $SHORTHASH2 &&
-> >       git replace $SHORTHASH2 $R &&
-> > -     git show $HASH2 | grep "O Thor" &&
-> > +     git show $HASH2 >actual &&
-> > +     test_grep "O Thor" actual &&
-> >       test_must_fail git replace $HASH2 $R &&
-> >       git replace -f $HASH2 $R &&
-> >       test_must_fail git replace --force &&
-> > @@ -209,10 +228,12 @@ test_expect_success '"git replace" resolves sha1' '
-> >   #
-> >   test_expect_success 'create parallel branch without the bug' '
-> >       git replace -d $HASH2 &&
-> > -     git show $HASH2 | grep "A U Thor" &&
-> > +     git show $HASH2 >actual &&
-> > +     test_grep "A U Thor" actual &&
-> >       git checkout $HASH1 &&
-> >       git cherry-pick $HASH2 &&
-> > -     git show $HASH5 | git apply &&
-> > +     git show $HASH5 >actual &&
-> > +     git apply actual &&
-> >       git commit --amend -m "hello: 4 more lines WITHOUT the bug" hello &&
-> >       PARA2=$(git rev-parse --verify HEAD) &&
-> >       git cherry-pick $HASH3 &&
-> > @@ -225,7 +246,8 @@ test_expect_success 'create parallel branch without the bug' '
-> >       git checkout main &&
-> >       cur=$(git rev-parse --verify HEAD) &&
-> >       test "$cur" = "$HASH7" &&
-> > -     git log --pretty=oneline | grep $PARA2 &&
-> > +     git log --pretty=oneline >actual &&
-> > +     test_grep $PARA2 actual &&
-> >       git remote add cloned ./clone_dir
-> >   '
-> >
-> > @@ -234,23 +256,30 @@ test_expect_success 'push to cloned repo' '
-> >       (
-> >               cd clone_dir &&
-> >               git checkout parallel &&
-> > -             git log --pretty=oneline | grep $PARA2
-> > +             git log --pretty=oneline >actual &&
-> > +             test_grep $PARA2 actual
-> >       )
-> >   '
-> >
-> >   test_expect_success 'push branch with replacement' '
-> > -     git cat-file commit $PARA3 | grep "author A U Thor" &&
-> > -     S=$(git cat-file commit $PARA3 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
-> > -     git cat-file commit $S | grep "author O Thor" &&
-> > +     git cat-file commit $PARA3 >actual &&
-> > +     test_grep "author A U Thor" actual &&
-> > +     S=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
-> > +     git cat-file commit $S >actual &&
-> > +     test_grep "author O Thor" actual &&
-> >       git replace $PARA3 $S &&
-> > -     git show $HASH6~2 | grep "O Thor" &&
-> > -     git show $PARA3 | grep "O Thor" &&
-> > +     git show $HASH6~2 >actual &&
-> > +     test_grep "O Thor" actual &&
-> > +     git show $PARA3 >actual &&
-> > +     test_grep "O Thor" actual &&
-> >       git push cloned $HASH6^:refs/heads/parallel2 &&
-> >       (
-> >               cd clone_dir &&
-> >               git checkout parallel2 &&
-> > -             git log --pretty=oneline | grep $PARA3 &&
-> > -             git show $PARA3 | grep "A U Thor"
-> > +             git log --pretty=oneline >actual &&
-> > +             test_grep $PARA3 actual &&
-> > +             git show $PARA3 >actual &&
-> > +             test_grep "A U Thor" actual
-> >       )
-> >   '
-> >
-> > @@ -260,14 +289,14 @@ test_expect_success 'fetch branch with replacement' '
-> >               cd clone_dir &&
-> >               git fetch origin refs/heads/tofetch:refs/heads/parallel3 &&
-> >               git log --pretty=oneline parallel3 >output.txt &&
-> > -             ! grep $PARA3 output.txt &&
-> > +             test_grep ! $PARA3 output.txt &&
-> >               git show $PARA3 >para3.txt &&
-> > -             grep "A U Thor" para3.txt &&
-> > +             test_grep "A U Thor" para3.txt &&
-> >               git fetch origin "refs/replace/*:refs/replace/*" &&
-> >               git log --pretty=oneline parallel3 >output.txt &&
-> > -             grep $PARA3 output.txt &&
-> > +             test_grep $PARA3 output.txt &&
-> >               git show $PARA3 >para3.txt &&
-> > -             grep "O Thor" para3.txt
-> > +             test_grep "O Thor" para3.txt
-> >       )
-> >   '
-> >
-> > @@ -284,8 +313,8 @@ test_expect_success 'bisect and replacements' '
-> >   '
-> >
-> >   test_expect_success 'index-pack and replacements' '
-> > -     git --no-replace-objects rev-list --objects HEAD |
-> > -     git --no-replace-objects pack-objects test- &&
-> > +     git --no-replace-objects rev-list --objects HEAD >actual &&
-> > +     git --no-replace-objects pack-objects test- <actual &&
-> >       git index-pack test-*.pack
-> >   '
-> >
-> > @@ -319,7 +348,8 @@ test_expect_success '-f option bypasses the type check' '
-> >   '
-> >
-> >   test_expect_success 'git cat-file --batch works on replace objects' '
-> > -     git replace | grep $PARA3 &&
-> > +     git replace >actual &&
-> > +     test_grep $PARA3 actual &&
-> >       echo $PARA3 | git cat-file --batch
-> >   '
-> >
-> > @@ -344,7 +374,8 @@ test_expect_success 'test --format medium' '
-> >               echo "$PARA3 -> $S" &&
-> >               echo "$MYTAG -> $HASH1"
-> >       } | sort >expected &&
-> > -     git replace -l --format medium | sort >actual &&
-> > +     git replace -l --format medium >output &&
-> > +     sort output >actual &&
-> >       test_cmp expected actual
-> >   '
-> >
-> > @@ -356,7 +387,8 @@ test_expect_success 'test --format long' '
-> >               echo "$PARA3 (commit) -> $S (commit)" &&
-> >               echo "$MYTAG (tag) -> $HASH1 (commit)"
-> >       } | sort >expected &&
-> > -     git replace --format=long | sort >actual &&
-> > +     git replace --format=long >output &&
-> > +     sort output >actual &&
-> >       test_cmp expected actual
-> >   '
-> >
-> > @@ -374,12 +406,16 @@ test_expect_success 'setup fake editors' '
-> >   test_expect_success '--edit with and without already replaced object' '
-> >       test_must_fail env GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
-> >       GIT_EDITOR=./fakeeditor git replace --force --edit "$PARA3" &&
-> > -     git replace -l | grep "$PARA3" &&
-> > -     git cat-file commit "$PARA3" | grep "A fake Thor" &&
-> > +     git replace -l >actual &&
-> > +     test_grep "$PARA3" actual &&
-> > +     git cat-file commit "$PARA3" >actual &&
-> > +     test_grep "A fake Thor" actual &&
-> >       git replace -d "$PARA3" &&
-> >       GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
-> > -     git replace -l | grep "$PARA3" &&
-> > -     git cat-file commit "$PARA3" | grep "A fake Thor"
-> > +     git replace -l >actual &&
-> > +     test_grep "$PARA3" actual &&
-> > +     git cat-file commit "$PARA3" >actual &&
-> > +     test_grep "A fake Thor" actual
-> >   '
-> >
-> >   test_expect_success '--edit and change nothing or command failed' '
-> > @@ -387,8 +423,10 @@ test_expect_success '--edit and change nothing or command failed' '
-> >       test_must_fail env GIT_EDITOR=true git replace --edit "$PARA3" &&
-> >       test_must_fail env GIT_EDITOR="./failingfakeeditor" git replace --edit "$PARA3" &&
-> >       GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
-> > -     git replace -l | grep "$PARA3" &&
-> > -     git cat-file commit "$PARA3" | grep "A fake Thor"
-> > +     git replace -l >actual &&
-> > +     test_grep "$PARA3" actual &&
-> > +     git cat-file commit "$PARA3" >actual &&
-> > +     test_grep "A fake Thor" actual
-> >   '
-> >
-> >   test_expect_success 'replace ref cleanup' '
-> > @@ -468,7 +506,8 @@ test_expect_success GPG 'set up a merge commit with a mergetag' '
-> >       git checkout main &&
-> >       git merge -s ours test_tag &&
-> >       HASH10=$(git rev-parse --verify HEAD) &&
-> > -     git cat-file commit $HASH10 | grep "^mergetag object"
-> > +     git cat-file commit $HASH10 >actual &&
-> > +     test_grep "^mergetag object" actual
-> >   '
-> >
-> >   test_expect_success GPG '--graft on a commit with a mergetag' '
->
+Thanks Philip, I actually created another branch but I was really
+confused if to base the new branch on master or the branch which has
+the previous commits. Thanks for clarifying this.
