@@ -1,120 +1,117 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2716A4683
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 21:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555791D0B9B
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 21:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728940377; cv=none; b=EoiwSNw9KKJhXRk+Of8egHprz6+gHAmAyZVamG0S3ANZ9KbAFThqfHsqoaNN+lt5dHm+Fm73W1YitJwsLOT0dt/eXwplRw1oDgYmOJzxxfrUscQTUs856Usdp+CPGSKVIaZqVxtfPp7dks9D6IqJTaIpXhPwKiahJqgTS5AQmBY=
+	t=1728940463; cv=none; b=EiOZJKyPR7d+sl0AZOuczCTcM7rxjbqSoRFEyBdKWxZX7hZz3CumTmdRJb1q/VrIhgRBUzmZM2V9W/iGxFGX5pLzg8G50PV7VbLILPl+Ix5nhw5bymxWNliQazrCJjxUrcTxKKSKX8B32RBwmhvTf3z/68o9/3kI74SfgrNHvG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728940377; c=relaxed/simple;
-	bh=pbIKl5Vzo+6r5WIorcPlA8ZcRnfZ1iIKfuaDnx5wWuc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p8H2Gkuz+JQQNAtafY9ikEhJ+PnNZdm7D7hhIAREhGzHTs5JJHmden2fBHr6B1aY2sbX4J7au+wNHie63oSEA1YaWF45m6KcZ5qRRmLtvpFimB2nhI5cLTy2F2udZsaaDcbly5VJu/v+tzcgCabjwMo+bAWtlFZcxUudo5Py1Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UdvXcVyD; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1728940463; c=relaxed/simple;
+	bh=k1KheMtXpSLndC0+UTD5W7w5GH5qyqHxJh2uNU109pw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OR4AuLpIMVvmGcsLxsE/38sv1sEjClG0zCRLtfelRm2DAl0qTOWJqZlyJx9KkhVyepn8pzFSwIbEGv2Qx1xnJGbrsfvvQaoM0aFrmI4H2sCmksGjh13ZYUlI6KGnW25SCrm5vporrEofrAwvSEDMqQ6IHEzhfAdTHGmpudqpSQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=q4BPro3h; arc=none smtp.client-ip=209.85.219.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UdvXcVyD"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a9a2209bd7fso64523266b.2
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 14:12:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="q4BPro3h"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e292926104bso2549940276.0
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 14:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1728940374; x=1729545174; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Fq9ofcpHqvcFeygRYC0OmrJ1un3eOq//tKp53UXxbIo=;
-        b=UdvXcVyDoifwh6GIEeICrrmOETBYs7tb9sYas3OH+5zEmtoTgJy5uSydrwIrMQ7RJl
-         RbVY/bn6mRIsWy3f4DQihUsEcCtcdI7zzRQsVLKZr5eA/02eZo8XBsj6nO1hIyoYCJNY
-         VwJischlkiu9lc5IkTNng333AAps8WXEFN0P1XyDBEaT+jI9N+P6BGXRhvAUm2yHne3W
-         3MgfN1unkq8nO+97bA8/AsJC5lkTjlLcZGu5ktV4E2nCnWjkDte8YrcApkvp2bAVPR99
-         gCOs3w8umrus51A95S3Ai/jP4AoXr4eMbsBqs8fwj2nfj8ykruZBh7i30G/LH2yzm2DS
-         STWg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1728940461; x=1729545261; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZULkQJeENkh24tMn442cgXmsZxFMXeUppuKbrZhZWiw=;
+        b=q4BPro3h2R7XyxgHbMORjjkGqLYhbvj2Nv3ImUm6PLP5X1YkXlaUAwDZq+PzXNtZVA
+         QK6PmVePYarbRzA6ENUTnMreOi4ta7EN/bXSGZmYTxmWEfyAbcV8h9qtgs8dSPWjaknK
+         NAtSB7JGJpWZ5JeyNj7ZqKirk881z1JSb05reQ4cBoLfOoTUBpUOo7YykwiqJsJIUBsR
+         WE0svadiFg4+U7s7Cl4wOTif8XDslpK2e7DOX72I2RptUa6jpCDie1/8VbY8JKjgDRHJ
+         slk4Vr3nHQ2Qt71hHK8vp8ar5eyNTJdyK1KZ2w0LitwNVaHmxDzuGkKP6p5ylUo5cjO/
+         1vww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728940374; x=1729545174;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Fq9ofcpHqvcFeygRYC0OmrJ1un3eOq//tKp53UXxbIo=;
-        b=eIVawoEulwRCNQCF8h6mpjDaaqwX3B4KGJmFSHbNuqPoagcCQy4dUTvZvFwR83KJQF
-         WEQZhpO6U4biDxHMvAsb8tOvJY1G8ZNbd2YVDCnPlXqSB/PyFxw5bZ1abP6Y5ailGBRe
-         bjLejkO8VWjRkp2f5OeNyoQF1z0qFQS3QLKu+NtHLzSrUzJ6x8TD5xzAysKQ72MivDgC
-         w56fLPf+P2JVl7vm/INTv4m6FpgRgO7sNu6vf+2PhHSrgZJrJY6zi3MTdfkROYTcWQX3
-         ave4ARd40UP6RV4idt1mYGRq5HowIrMxk+wassc4GRodAitFN5eJ7Uso6WGnWVqOaeeM
-         QRew==
-X-Gm-Message-State: AOJu0YzDxkn0OEsSLxn6OMwIKl4sVhCRrYsiYD8nLhF5ysPBI6YQhpjw
-	j2ZwkQjQQYjOkLlBfZicZCZ+RksYshIrTqCgHq8nPB9WYjPw89OuQzXvfE1G1Jg5U+fcV/LrNGI
-	9D21WtHhhtMbDwHYZLtBuyy/JdK5tg4k2gMTgCFayRhRpQEeIRet5
-X-Google-Smtp-Source: AGHT+IFsdE8hlMabkEXT/18avlID2Qb7yx7KH7HluXqOtNEc4LqNu67p5urJ+XoDapxwVuNFLZPgKKbz3kXYpkkNE+g=
-X-Received: by 2002:a17:907:9810:b0:a9a:ad8:fc56 with SMTP id
- a640c23a62f3a-a9a0ad93126mr497774766b.44.1728940374199; Mon, 14 Oct 2024
- 14:12:54 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728940461; x=1729545261;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZULkQJeENkh24tMn442cgXmsZxFMXeUppuKbrZhZWiw=;
+        b=aand7c/YzJOiypwDdz5Wc/5x1xjf0Upi2sWVF+5NBl98oycMdwQGXUsAx35HTIci0Z
+         QdedFOw7jLQ9Us6mItFBc1U5e3mv5lOenTo9xGEEJeCzgOc++yorgIOo0aNvk544tKti
+         EMP6XAP4UjGehEc7QCbcvzfSO3+ffhuOwM6fHfHu/f/zSVG1xwoQqVjl4BFPF3Hsz5Pl
+         tKsxr448cCYuYV84lsqFbgPMgp92leMKZUQdYhKX4inbQvAdBlKjBJ4KOcLxKQaoX5Ff
+         bgGES3LcTgcWqUbtD6d+YPO6n47Xr4eGgCbU99rtYTdWyDSovFHcoHmyBAp6/uIEvZIm
+         fJkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUzN5fBah4Mpih0wAK9OP9d94Rd7SJhn14YEr8HqVdRlzIkJduVVxSamxmxam+HiVfnahI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyj2g9Hh9CA2pRbklCcM38uWp1oCcP95g1e8VGg9607MpBfbPeu
+	jwLYXTpAYhMvziqwBNbV21hGvqEcG0VqSjwa3NujCzzyrzcszyjjnkwibJQdtWU=
+X-Google-Smtp-Source: AGHT+IF5LR2WlNDMXDGpVyDQ81zbYhb8uS5EfKKwWTDKAIXSph6kirUk5B3Yn15McpZtX+uRKAFRBg==
+X-Received: by 2002:a05:6902:1611:b0:e26:1422:4006 with SMTP id 3f1490d57ef6-e2919fefd0fmr10164873276.54.1728940461195;
+        Mon, 14 Oct 2024 14:14:21 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2940b543dasm1443904276.32.2024.10.14.14.14.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Oct 2024 14:14:20 -0700 (PDT)
+Date: Mon, 14 Oct 2024 17:14:19 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, jltobler@gmail.com, johannes.schindelin@gmx.de,
+	spectral@google.com
+Subject: Re: [PATCH v3 1/3] clang-format: re-adjust line break penalties
+Message-ID: <Zw2Jq0cGPrRn6GAO@nand.local>
+References: <cover.1728697428.git.karthik.188@gmail.com>
+ <74bbd2f9db1ddfd5210be8fde2db84f67acff27d.1728697428.git.karthik.188@gmail.com>
+ <871q0jrr02.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1728697428.git.karthik.188@gmail.com> <1586d5376915a4662c92b8c0881596952c4500bb.1728697428.git.karthik.188@gmail.com>
-In-Reply-To: <1586d5376915a4662c92b8c0881596952c4500bb.1728697428.git.karthik.188@gmail.com>
-From: Kyle Lippincott <spectral@google.com>
-Date: Mon, 14 Oct 2024 14:12:42 -0700
-Message-ID: <CAO_smVhS8zw_Hk1OrsTg==4spziQOiQtOt+Hg8x-rEQVR+66rw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] clang-format: align consecutive macro definitions
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com, toon@iotcl.com, 
-	johannes.schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <871q0jrr02.fsf@iotcl.com>
 
-On Fri, Oct 11, 2024 at 6:50=E2=80=AFPM Karthik Nayak <karthik.188@gmail.co=
-m> wrote:
+On Mon, Oct 14, 2024 at 11:08:29AM +0200, Toon Claes wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> We generally align consecutive macro definitions for better readability:
+> [snip]
 >
->   #define OUTPUT_ANNOTATE_COMPAT      (1U<<0)
->   #define OUTPUT_LONG_OBJECT_NAME     (1U<<1)
->   #define OUTPUT_RAW_TIMESTAMP        (1U<<2)
->   #define OUTPUT_PORCELAIN            (1U<<3)
+> > This avoids weird formatting like:
+> >
+> >    static const struct strbuf *
+> >           a_really_really_large_function_name(struct strbuf resolved,
+> >           const char *path, int flags)
+> >
+> > or
+> >
+> >    static const struct strbuf *a_really_really_large_function_name(
+> >    	    struct strbuf resolved, const char *path, int flags)
+> >
+> > to instead have something more readable like:
+> >
+> >    static const struct strbuf *a_really_really_large_function_name(struct strbuf resolved,
+> >           const char *path, int flags)
+> >
+> > This is done by bumping the values of 'PenaltyReturnTypeOnItsOwnLine'
+> > and 'PenaltyBreakOpenParenthesis' to 300. This is so that we can allow a
+> > few characters above the 80 column limit to make code more readable.
+>
+> I'm really liking the idea of penalties, but I feel we're relying too
+> much on guestimation of these values. What do you think about adding
+> example files to our codebase? Having concrete examples at hand will
+> allow us to tweak the values in the future, while preserving behavior
+> for existing cases. Or when we decide to change them, we understand
+> what and when.
 
-I like this change, thanks. Is there a way of apply clang-format for
-*only* one rule/aspect? i.e. can we apply *only* this, and preserve
-every other line? At first glance, I don't see a way of doing it. If
-there was, I might recommend a whole series just to applying these
-changes, but with how out of compliance much of the codebase is today,
-that's not going to be feasible; we'd need to format it in a way that
-we might not want (the current style), and then fix it, and that seems
-counterproductive.
+I am not sure I see it the same way.
 
->
-> over
->
->   #define OUTPUT_ANNOTATE_COMPAT (1U<<0)
->   #define OUTPUT_LONG_OBJECT_NAME (1U<<1)
->   #define OUTPUT_RAW_TIMESTAMP (1U<<2)
->   #define OUTPUT_PORCELAIN (1U<<3)
->
-> So let's add the rule in clang-format to follow this.
->
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  .clang-format | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/.clang-format b/.clang-format
-> index 66a2360ae5..9547fe1b77 100644
-> --- a/.clang-format
-> +++ b/.clang-format
-> @@ -32,6 +32,9 @@ AlignConsecutiveAssignments: false
->  # double b =3D 3.14;
->  AlignConsecutiveDeclarations: false
->
-> +# Align consecutive macro definitions.
-> +AlignConsecutiveMacros: true
-> +
->  # Align escaped newlines as far left as possible
->  # #define A   \
->  #   int aaaa; \
-> --
-> 2.47.0
->
+I might just be ill-informed or not experienced with these clang-format
+rules, but having these penalties be defined as such makes it difficult
+to reason about what lines will and won't be re-wrapped as a result of
+running the formatter.
+
+What is the purpose of these penalties?
+
+Thanks,
+Taylor
