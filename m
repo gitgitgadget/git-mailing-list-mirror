@@ -1,119 +1,207 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E664683
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 21:00:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057E64683
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 21:04:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728939643; cv=none; b=SuiijSL59R2nR0MfPYDeFbmwtu8sQ0UqCFph+gVZupKOyUisDaAG+FV4zE5pTdRutkQwdtfvUvbFI7zUz76dM+7Lj9xs6Gy93Q3h5cfyeO8aYwmqa6PSZrA+wmFnZ2CpMffx/hWtf/Sn9NWrf62hhyBLdJeP4itBnlu0FQGK0Lo=
+	t=1728939854; cv=none; b=Pv6Q4q5FctOWSqPIpCyemjsakodu1O2eH9G5ZSBZ+vytVNr8rnOToXY/6l+s3s1wRA5JIoWClHHc1/zFIqFAzUjeuP37N7PzY4S6freEX47frOGXiqnxUHD33ULi544Sak7I6sUSdcNZNgSJKa0QVkxJmMR04JneYsTf8wC7Em0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728939643; c=relaxed/simple;
-	bh=0rBz+WCGt21dA4kO2Fu0nZo/LLB3AfKwMsniJwuuCQw=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=OZVKKy1+zdphQ8qctShNdR6GffyAo6UMLxqt8A9NATf7crUVpB6xBioIM+fvlqMTUUZrjjRpro61OdviiVnqldYenoedT8MjXyS7OlVdLbH2rpV9jnlx5gExv2fCYJHdFCXOWED5Y+oDysiPhV0+kTxiip4PpHVxyAHbtanrTM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ShXnzLT8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h5sa4HDH; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1728939854; c=relaxed/simple;
+	bh=fSnn05KgfT3k7qgeWN9WBrArTHwqbqYP39ymNfnmvLI=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=t9Po+DcGlKwjl8bgVkgAsbSph+D1bNNRaxSnv0KjRCxPSjYVJdbiD6zEmeRbfLGh/1QaCoTfQoiHVF7jt1ATHWlmuOWGeS40es3GQ+QZAgbxCv+D2XAT0DjuZ8r9BbI9O4QcAnZs09Hl0qoF7XUM3DsskjUWRh3sZx8xf4MMPdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4YE50ZoP; arc=none smtp.client-ip=209.85.219.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ShXnzLT8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h5sa4HDH"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id A36CA1380295;
-	Mon, 14 Oct 2024 17:00:40 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 14 Oct 2024 17:00:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1728939640; x=1729026040; bh=dK6g++5G6p9f0mntRbPGMV77aGEoF2Ne
-	V0Rkr2xT+ko=; b=ShXnzLT8Dm9RQCwIM8nhw2/W96EOp0+XH2XVHxQ6CNdHbvDe
-	W+aojtHLEPSkdBCjIw4i46gZWQTcNkA6nV29WOOGv2oWqtP+grpsY6MNh+rIAGOB
-	BX3rkZkJTqyd2jYPxiInBIWhWgXO/mpl07ffQb+knvbSkcyli/0f7qiUrhEP/Hy9
-	IQLBG7KHR7YFFjLSgswmlRAtbSiiOZ9oaWlxXYQquwqMu97o/inl30qxyCct6p+k
-	kf3f5Zy27n2REW0fPeIXUvyqb37k0orQ5pfX0yXFurT0JbbjCP42UIkBg69Mxy6F
-	bJ0LHkm3zDWyjzmRzQX/7U+q7qb7Zw4IfnvTUw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728939640; x=
-	1729026040; bh=dK6g++5G6p9f0mntRbPGMV77aGEoF2NeV0Rkr2xT+ko=; b=h
-	5sa4HDHpg5LugXX6fGhDYSEAHvKEuTKJb9yiZDIPN4Hber92d4yTEfuomZz1pdVV
-	QgyDH1qdq/11Z+UoHPHIfKLn8SJNI/bVtcqnZXJgd/JdEKOeNspGqLi1My4P4Fc6
-	WrJQcQIoscN6vCdTKdg9Z2gVM1WLfrGHaXOniJFHfWaRPQ2K+TOXuO0pV/9uXiKY
-	eGupc6nHeAehljQjN+5k6mGcNaOQf5JrrTdw72SeWU3ufHfqHEXZXsH+e7wZGiid
-	cLFgY15XkMluVJ2QSghLcz0C1sT5bTKRKA5ss0O/v6xQHDMqqk5h1JxBi5zfRFW6
-	Gw1DAbji8SDUpPMJDUImQ==
-X-ME-Sender: <xms:d4YNZ9ef3QxlUbp-6UObLi2X40o1K-Yp8RzKcoc7lCWDWuWzUN3xeCA>
-    <xme:d4YNZ7NUIqzTPwYVLMkBDpTriixKtUeCTApNH7bsIj1Wt9iKwwiqmZZ3IaOeDsWF4
-    aoc1MlgC1CSM6s_SA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgudehjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghoug
-    gvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpefggfeuteek
-    jedutefffedtgfetveelledtheffhfegueduieeuhfekheffueefhfenucffohhmrghinh
-    epkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
-    rghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggprhgtph
-    htthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdif
-    ohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopegrsghhihhjvggvthdtge
-    dtgedtfeesghhmrghilhdrtghomhdprhgtphhtthhopegrsghhihhjvggvthhsihhnghhh
-    rdhgihhthhhusgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggugh
-    gvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhg
-X-ME-Proxy: <xmx:d4YNZ2g6G2mAvQMOjIFYqf_a4e6D5fj1qfnnaQBmLNHA7WeBf6KzQg>
-    <xmx:d4YNZ2-61IOYDZidwpx3Q8MQnMq24tCP40ezmGmYBzRrif3jI3PoJQ>
-    <xmx:d4YNZ5vfqp1XawUXOi92nDpdVNvn4nwuF1KaZbEpCWJ086aIzoxy8A>
-    <xmx:d4YNZ1ETcbSsqMxSZeVd8Qp5X83KpOBydoIJ3ocksbGJOF_5_CGDWA>
-    <xmx:eIYNZzIdbZy1iUP-Ot7DawEeAqw_I3UagC4C3q0o5j74nQMvMTxiOqdV>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id BB4B8780068; Mon, 14 Oct 2024 17:00:39 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4YE50ZoP"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-e2904d0cad0so7167512276.1
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 14:04:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1728939852; x=1729544652; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fQYj2/ASg+MLFTG1ljUfrV5FOwzhtwtLmlcc+T1afvY=;
+        b=4YE50ZoPcZ3y72nUHoLcNVD3U3OGc7xkRTWzZGSCZ9S7dg925z+g2LScbyMoGhAuv6
+         eq1UrGy30pbK4T/EwoVZS6OYXZf+XCcbHtF160EciBOKLN5BjLSVOlVc4VSyF52UBrsI
+         GNtnrsN5TbuMlMmgeE1CkjjByixmvuaNAMDQ7NLN1jJYDXS4X6A4csIcnddX2etvTBm2
+         VwY6931txN60MG1NvlzG8xk445lg6COqr4l8PI3Z+zUeMsUZiCmMA6MKqcd90qcySXpE
+         d7Ph9sZ0Hi4gck799IYlTWkPkJPHIiWrWfdtlxt6COmDdljj+SWjXcmyhMjOYEtjPfxI
+         TyOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728939852; x=1729544652;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fQYj2/ASg+MLFTG1ljUfrV5FOwzhtwtLmlcc+T1afvY=;
+        b=lM+diqnea0b/u2VvXOeIvW+W4nATA98BmVBGwC2kCQIAqKZe9DlU3Dc8MhkbvTLgi4
+         90vzqjnaOPjenLIx+6+hrbICL/8UbA+38FNyAukSlj8fsEvZkGYHAFHx42SkREXQURLJ
+         kl3gqFK5oqVt0MCjS+6KO/GHFaKu6uDH0QQ2WiFwkP/V8Gk32K1mQirYL0/slQFWdagZ
+         a7/rJsK2azuHFDfxaQW8+WKyHaZ2QzI24p6ndF7d7DKrQ7uTTQ+kG2IOcIJBpctotMnP
+         OP7wZHik6Zztm5lAgoUjmp1TfgstdNTtLpgmLywQCmSVFOZasDmq+5uL5blIb86GAzok
+         6j/Q==
+X-Gm-Message-State: AOJu0YwSMZuYVeL6cClE9syNL7R/O1vXDep+Qv2KAw/7TqG9ETfYuGU4
+	wpUCtY4YMFBOvU8HCWSpVdnbBGAH375wLAHAC1TNkGKubUbye+uWb9j/+KByhcdWuGTV6YxgY0h
+	xK/ITuZGmoxLyaKHaZwg4PbBHsax3GFiVHLEZCMspZ55YzwTQwEfoe6BiJXYX+55IqAqzbjkmcF
+	d6/FtZ+C7X1WxEoVSMsgmfWX0K4KAdFBvGRv2ME70=
+X-Google-Smtp-Source: AGHT+IEDMWVWONyV4T4Tuz4Tf2t+VvbzQ5ATAFgGxoQkjJY+xAfUs9Het4lY5F52WRIXMyz5vv68C4mbT0LJpg==
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:2a9b:d27f:d626:2e54])
+ (user=steadmon job=sendgmr) by 2002:a25:ff1a:0:b0:e29:68a9:8612 with SMTP id
+ 3f1490d57ef6-e2968a98839mr8779276.4.1728939851740; Mon, 14 Oct 2024 14:04:11
+ -0700 (PDT)
+Date: Mon, 14 Oct 2024 14:04:07 -0700
+In-Reply-To: <cover.1728594659.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Mon, 14 Oct 2024 23:00:19 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "Abhijeetsingh Meena" <abhijeetsingh.github@gmail.com>,
- "Abhijeetsingh Meena" <abhijeet040403@gmail.com>
-Message-Id: <a4261533-33b3-49f6-861b-3571c2666c81@app.fastmail.com>
-In-Reply-To: <98261da2-c8a6-4ae2-b62d-323093f94bfb@gmail.com>
-References: <pull.1809.git.1728370892696.gitgitgadget@gmail.com>
- <pull.1809.v2.git.1728707867.gitgitgadget@gmail.com>
- <4ed930cab1b7f5e9738e73c7b9374d927a8acd94.1728707867.git.gitgitgadget@gmail.com>
- <4f835282-d921-4cd3-9680-d8522bef7b39@app.fastmail.com>
- <98261da2-c8a6-4ae2-b62d-323093f94bfb@gmail.com>
-Subject: Re: [PATCH v2 1/2] blame: respect .git-blame-ignore-revs automatically
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <cover.1728594659.git.steadmon@google.com>
+X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
+Message-ID: <cover.1728939687.git.steadmon@google.com>
+Subject: [PATCH v2 0/3] fuzz: port OSS-Fuzz tests back to Git
+From: Josh Steadmon <steadmon@google.com>
+To: git@vger.kernel.org
+Cc: eric.sesterhenn@x41-dsec.de, jarlob@gmail.com, oswald.buddenhagen@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Oct 13, 2024, at 17:25, Phillip Wood wrote:
-> Hi Kristoffer
->> [=E2=80=A6]
->
-> See https://lore.kernel.org/git/xmqqr1f5hszw.fsf@gitster.g/ for some
-> discussion about this
->
-> Best Wishes
->
-> Phillip
+Git's fuzz tests are run continuously as part of OSS-Fuzz [1]. Several
+additional fuzz tests have been contributed directly to OSS-Fuzz;
+however, these tests are vulnerable to bitrot because they are not built
+during Git's CI runs, and thus breaking changes are much less likely to
+be noticed by Git contributors.
 
-Thanks!  That was an interesting read.  And an interesting idea.
+OSS-Fuzz's recommended setup is for tests to live in the repository of
+the code they test and to be built along with other tests [1].
 
-And then today we got this:
+Port some of these tests back to the Git project, so that they can be
+built and tested during our normal development workflow and CI, and as
+such avoid future bitrot.
 
-https://lore.kernel.org/git/xmqq5ywehb69.fsf@gitster.g/T/#mce170a493a7b3=
-24c585124a9124356a0f87c77a6
+[1] https://google.github.io/oss-fuzz/advanced-topics/ideal-integration/
 
---=20
-Kristoffer
+Changes in V2:
+* Remove an errant `echo` in ci/run-build-and-minimal-fuzzers.sh
+* Fix some style nits in ci/run-build-and-minimal-fuzzers.sh
+* Fix whitespace errors in attr.{h,c}
+
+
+Eric Sesterhenn (3):
+  fuzz: port fuzz-credential-from-url-gently from OSS-Fuzz
+  fuzz: port fuzz-parse-attr-line from OSS-Fuzz
+  fuzz: port fuzz-url-decode-mem from OSS-Fuzz
+
+ Makefile                                   |  3 ++
+ attr.c                                     | 40 +-------------------
+ attr.h                                     | 43 ++++++++++++++++++++++
+ ci/run-build-and-minimal-fuzzers.sh        | 13 ++++++-
+ oss-fuzz/.gitignore                        |  3 ++
+ oss-fuzz/fuzz-credential-from-url-gently.c | 32 ++++++++++++++++
+ oss-fuzz/fuzz-parse-attr-line.c            | 39 ++++++++++++++++++++
+ oss-fuzz/fuzz-url-decode-mem.c             | 43 ++++++++++++++++++++++
+ 8 files changed, 177 insertions(+), 39 deletions(-)
+ create mode 100644 oss-fuzz/fuzz-credential-from-url-gently.c
+ create mode 100644 oss-fuzz/fuzz-parse-attr-line.c
+ create mode 100644 oss-fuzz/fuzz-url-decode-mem.c
+
+Range-diff against v1:
+1:  625b8d607e ! 1:  04225dd421 fuzz: port fuzz-credential-from-url-gently from OSS-Fuzz
+    @@ ci/run-build-and-minimal-fuzzers.sh: group "Build fuzzers" make \
+      
+     -for fuzzer in commit-graph config date pack-headers pack-idx ; do
+     +fuzzers="
+    -+commit-graph \
+    -+config \
+    -+credential-from-url-gently \
+    -+date \
+    -+pack-headers \
+    -+pack-idx \
+    ++commit-graph
+    ++config
+    ++credential-from-url-gently
+    ++date
+    ++pack-headers
+    ++pack-idx
+     +"
+     +
+    -+for fuzzer in $fuzzers ; do
+    ++for fuzzer in $fuzzers; do
+      	begin_group "fuzz-$fuzzer"
+    --	./oss-fuzz/fuzz-$fuzzer -verbosity=0 -runs=1 || exit 1
+    -+	echo ./oss-fuzz/fuzz-$fuzzer -verbosity=0 -runs=1 || exit 1
+    + 	./oss-fuzz/fuzz-$fuzzer -verbosity=0 -runs=1 || exit 1
+      	end_group "fuzz-$fuzzer"
+    - done
+     
+      ## oss-fuzz/.gitignore ##
+     @@
+2:  770fe27c67 ! 2:  16c6573190 fuzz: port fuzz-parse-attr-line from OSS-Fuzz
+    @@ attr.c: static const char *parse_attr(const char *src, int lineno, const char *c
+      }
+      
+     -static struct match_attr *parse_attr_line(const char *line, const char *src,
+    +-					  int lineno, unsigned flags)
+     +struct match_attr *parse_attr_line(const char *line, const char *src,
+    - 					  int lineno, unsigned flags)
+    ++				   int lineno, unsigned flags)
+      {
+      	size_t namelen, num_attr, i;
+    + 	const char *cp, *name, *states;
+     
+      ## attr.h ##
+     @@ attr.h: int git_attr_system_is_enabled(void);
+    @@ attr.h: int git_attr_system_is_enabled(void);
+     +};
+     +
+     +struct match_attr *parse_attr_line(const char *line, const char *src,
+    -+					  int lineno, unsigned flags);
+    ++				   int lineno, unsigned flags);
+     +
+      #endif /* ATTR_H */
+     
+      ## ci/run-build-and-minimal-fuzzers.sh ##
+    -@@ ci/run-build-and-minimal-fuzzers.sh: credential-from-url-gently \
+    - date \
+    - pack-headers \
+    - pack-idx \
+    -+parse-attr-line \
+    +@@ ci/run-build-and-minimal-fuzzers.sh: credential-from-url-gently
+    + date
+    + pack-headers
+    + pack-idx
+    ++parse-attr-line
+      "
+      
+    - for fuzzer in $fuzzers ; do
+    + for fuzzer in $fuzzers; do
+     
+      ## oss-fuzz/.gitignore ##
+     @@ oss-fuzz/.gitignore: fuzz-credential-from-url-gently
+3:  4c9813313c ! 3:  ec6b5eed71 fuzz: port fuzz-url-decode-mem from OSS-Fuzz
+    @@ Makefile: FUZZ_OBJS += oss-fuzz/fuzz-date.o
+      
+     
+      ## ci/run-build-and-minimal-fuzzers.sh ##
+    -@@ ci/run-build-and-minimal-fuzzers.sh: date \
+    - pack-headers \
+    - pack-idx \
+    - parse-attr-line \
+    -+url-decode-mem \
+    +@@ ci/run-build-and-minimal-fuzzers.sh: date
+    + pack-headers
+    + pack-idx
+    + parse-attr-line
+    ++url-decode-mem
+      "
+      
+    - for fuzzer in $fuzzers ; do
+    + for fuzzer in $fuzzers; do
+     
+      ## oss-fuzz/.gitignore ##
+     @@ oss-fuzz/.gitignore: fuzz-date
+
+base-commit: 159f2d50e75c17382c9f4eb7cbda671a6fa612d1
+-- 
+2.47.0.rc1.288.g06298d1525-goog
 
