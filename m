@@ -1,53 +1,53 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6009819CD0E
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4045819CD0E
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728910954; cv=none; b=iXxjcOGqKRHzv8ZCwakEF7NnlbB7Aq7H7opU98EupXkz4kF/tTXwB6L+wN7L132uykoDA/O96JwiseKF5orsFa3vCkmOnsLgffsqJVIv3WVY8C9H82n4Jd2JCaNn6fImTiO9yOyTDIp9GdZWj5YbK/3jjkPOEtMnL7SRka5ZH2I=
+	t=1728910958; cv=none; b=ZI9gMx22cf/3xm3KfcOodGVld+4X88vmaNcizvilzUzB4JrSnUCAIm1w7cG4jbR80i0Qd43dEA/FCfi9DoImaJ/mRlao8KtOffPrDfZzEXTLqMb+v5SL6e6rhzpkGWl2lg106vyYH3NLnEWSURxBlAEymFuehpW8CCcGdk/kcKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728910954; c=relaxed/simple;
-	bh=kPkCQk+fawCU0UZwSQVpvghBi8x4awlhmCSIL9NMqLs=;
+	s=arc-20240116; t=1728910958; c=relaxed/simple;
+	bh=KRoqMJf95O7A8DBRS/IU7dGTn6+gsnhidrg9zhDwnHo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NegTG27TbIaBn0WHTwBeS3KEYc8HijwpwteRC1/iIPAcn5cU7+UOHs/bhTU+kt+AqSttJDDXVZNnHKlzOOOTQZhxRaWTmxSrHhGx8cbotEtgee/d52bZd1imm2VWkObGwq6j8h11pLJls2TJVyerZbnsNaVx5bmHYhvCa4yboBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VnhFstz7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PGFyR0kq; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=hGlnB+tt2tZkXwpe7y2dfzRb6O7tOhaizm69fFAHPEFiFWHdYV5bu+3MxkU6cmugOBNkIWAnoE/kzI3ZJRP/A9+vtxRC8Ah4N96U7dbEJ2iz8OjjEcClI2omMqQ/pnw0HO8fjfeRyM8ez0OhhnGT0LXqoZZrwRV/jvfXIfrlRiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ATLjXyb9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ClrYjDFi; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VnhFstz7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PGFyR0kq"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 66676138039F;
-	Mon, 14 Oct 2024 09:02:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ATLjXyb9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ClrYjDFi"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5F96513800C9;
+	Mon, 14 Oct 2024 09:02:35 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 14 Oct 2024 09:02:31 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 14 Oct 2024 09:02:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728910951; x=1728997351; bh=t+/0ZzPjHW
-	xKXszze5i43kTrICWafoFY/ZCuQOGx4E0=; b=VnhFstz71wMfVXVFaB4nH930/m
-	kNGazUfoiIWlGoo76CzFX773g6SHc0SZhP6p6k7TQ8OKgoddZq9b0+qqfj9RNJaU
-	NfI6JLl8GimCFy1ZlRT0lEn7VAqhnIsR1mtX+2lGpDTaVBbhPIpM0x1vFv3ZFa31
-	jfZw37lwTxYtBgF8glshNtLpt3aSRS01oQXIR5uJmeLf2ePCBvkWX7EAoA99U3b8
-	P5FUh54KisI2Tk8gP/ZHfnqvoteIaM6XGDFvuMdnTqP49+aop3jLybZC/dFxzX6W
-	cwucLMqlWtToC6wRwvKrxltvjhERgegEo/mFjjRmMRSnzupVx4ItmocVn/DQ==
+	:subject:to:to; s=fm2; t=1728910955; x=1728997355; bh=5SO4vuNtOJ
+	4c+3W+wiijG1N9UBZAy5aGXSP35Kp7FKw=; b=ATLjXyb9bGQ3xj1CeoGYxMC6Ln
+	t13djidu4GCRiAMUAcORFtKeB8K2fub6pUCNg3W3QThCBFqmgEG7Qxm2le/BEZgr
+	DKyvddqXQPmj57cofoP+vA8ypgEKMFuSR2p5Bznpuu1rUOls3t1u5lukP5QMYVc6
+	ri/DGGnT9rdeOhqjnlS9o8BP4giGi3nTLiaW7d2C2HMZ1lWpmaABj2cknCp+Fl/p
+	vrvkUdC2vX/ZakJ/yey4/syprI6ZaYn5ZA0H2ogyN0UlgyIKW0Ufuiseqs5VyczJ
+	btt5QGUobWS2mvUMCL5r3cpnBPwq8igI4VZBiVM8CzxFHXOQWWwzn3bPJ/oA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728910951; x=1728997351; bh=t+/0ZzPjHWxKXszze5i43kTrICWa
-	foFY/ZCuQOGx4E0=; b=PGFyR0kqEVX/AsASRkBiyLZ6vMIiurnyd4zlLr+N6fBx
-	fl0yz6n5I2DxGqfQOV45ygWdv1t1SO1nIVYOJ4kzw7GiAWu9boSDkIfJPcNk7GGS
-	/D3O3pshkzcge3BdbPwUq8x/JgTk1vx8e2zIU19wPqzlHyRbBruDAsf06FAYtm+s
-	g4lCfiZHVQ76AwJVeVP/XgoF2MudL1fo2H7VNRaWbAe+YvfOFC1dYz4rO2mrL8vj
-	T/ce1N6fubjc9R/UDr1JgRWkoz8fjmvA+lUTagKx/f51foa4bGmJpSy4eeyoIexI
-	eZE4ZpxCxYEGin7+85+vcknqE9m7nkQpugYRZrc6dQ==
-X-ME-Sender: <xms:ZxYNZ0qDYQOezzvQOA1hrsWy00-vOQJRGb6-J5fA-otVMZtOSGE-Og>
-    <xme:ZxYNZ6p-p4gf9DmANckPSVQurEmsRMkD4OgrMCNsaQ_N8JyXTabp1jdxOyt5NpSHZ
-    N0lIGnv_eTbAApe3Q>
-X-ME-Received: <xmr:ZxYNZ5MCNtNmc0FyhY_oYbn_jKD9SpaEkv6r10UXbVsFnUEQj-vAkBcunuRfP_h35SrhWYm8sWlr54lUBAUyasE7DH4L778C4OnNMUq2G5TUvQ>
+	fm2; t=1728910955; x=1728997355; bh=5SO4vuNtOJ4c+3W+wiijG1N9UBZA
+	y5aGXSP35Kp7FKw=; b=ClrYjDFiy5JzjBnptk7xpatEXOtgj+fez++0KNT4Fofr
+	0eqQ+WOLzfkWTxan5NQuHhljVz12fQLqtPz5E+ua4qSBIA+RHgoKpFeo9EVG5lz9
+	mbwMjSbdtn7Xq90Pd0d//lJKBSU/iRNsSbQcOC16MGTGaZzSSW0DjQ7P/4bFogAr
+	5/EpW+tOQ7RIgXoCofo3DA7UvapTyiRPonEmCp5wORzIrYy90atmZvzGOjDWGpOO
+	uQkNZ7k4V3QFfaxWuavHyDfJil3FDxWrJroEkKLQpPqsiPgIvVPwKXR8U4j4M7nc
+	QLDzRXItherRdcMv4VuRFpkwNmE5kDwuq0e9fIyTKQ==
+X-ME-Sender: <xms:axYNZ-VnQQ-Jw_yUjRC5KjPyZt-htM2E1WMCd9shuSiUkYrjuKn8gA>
+    <xme:axYNZ6kWQ-c4yO4X7OD-0eLzhFHIE7nXMLQ59eztiKW-xU4Q2_o3JBZnZVuyhtvAY
+    RATvtEBIpQmaXrZkQ>
+X-ME-Received: <xmr:axYNZybUGCf6pRW-zdKqVa_mZhIBcqojlO4gzeCg0wP8E-oi7961d6U-F1qm8WxKXpr-CcsJOoc3xAiMUMQ2KBImwobmeMf5LcYMrpEHVFohdw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgheekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -59,25 +59,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgheekucetufdoteggod
     mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
     dprhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdp
     rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:ZxYNZ76WtpIPImY7biDXUMiRNlG76o6_sojnjJC4QlRFbckRLQEUPQ>
-    <xmx:ZxYNZz6nmHqt7riQKYWcfZMGdxrOnFXjUKfj-SmLXtV-aqwV6_HCog>
-    <xmx:ZxYNZ7iFT8tp8ut9YCqJ0wbuqKdTaMF5ZMNnX2jFS1wEya2ruVbI8w>
-    <xmx:ZxYNZ97QPEskBDwAXNsQbfH4geQyfYb1yE_jXFT8fKCzojvb0qb0HA>
-    <xmx:ZxYNZ1nqjRoLfS20WAOl9vwc97LIRgDynk6ZKYciL6P_OzR5Ize_A3dj>
+X-ME-Proxy: <xmx:axYNZ1XkF8Aoftp2fDIm-ab8dIIlhyu31uyrAQ4zHRsYy2mRERvXqA>
+    <xmx:axYNZ4la8LHj3zHRVZVe3Cc71P8kgsAv_BZAYznnbXbJ8RE0qzGscw>
+    <xmx:axYNZ6c-4HlhZw9XtN5K2m1Q0T_EEL0L_H3oIrgknZntZU5xCFWgWw>
+    <xmx:axYNZ6FIVmMlH1fVbU0n8PtzM4EEoxtvgUhMrCPHM_JRkPYB-9YEig>
+    <xmx:axYNZygynaks8OfPVluIedVpBrbRVfGU9RKrLVUi3RU8SbO8j9v31Chd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Oct 2024 09:02:30 -0400 (EDT)
+ 14 Oct 2024 09:02:34 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 702d17a0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 14 Oct 2024 13:01:13 +0000 (UTC)
-Date: Mon, 14 Oct 2024 15:02:24 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 66eee15f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 14 Oct 2024 13:01:21 +0000 (UTC)
+Date: Mon, 14 Oct 2024 15:02:29 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>,
 	karthik nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 03/10] reftable/basics: provide new `reftable_buf`
- interface
-Message-ID: <0ddc8c0c896a006e4cc094390125efcec0b3cdff.1728910727.git.ps@pks.im>
+Subject: [PATCH v2 05/10] reftable/blocksource: adapt interface name
+Message-ID: <fe8c9ace4633ba5609741f657a7bb298e9f0dedd.1728910727.git.ps@pks.im>
 References: <cover.1728629612.git.ps@pks.im>
  <cover.1728910726.git.ps@pks.im>
 Precedence: bulk
@@ -90,191 +89,299 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728910726.git.ps@pks.im>
 
-Implement a new `reftable_buf` interface that will replace Git's own
-`strbuf` interface. This is done due to three reasons:
-
-  - The `strbuf` interfaces do not handle memory allocation failures and
-    instead causes us to die. This is okay in the context of Git, but is
-    not in the context of the reftable library, which is supposed to be
-    usable by third-party applications.
-
-  - The `strbuf` interface is quite deeply tied into Git, which makes it
-    hard to use the reftable library as a standalone library. Any
-    dependent would have to carefully extract the relevant parts of it
-    to make things work, which is not all that sensible.
-
-  - The `strbuf` interface does not use the pluggable allocators that
-    can be set up via `refatble_set_alloc()`.
-
-So we have good reasons to use our own type, and the implementation is
-rather trivial. Implement our own type. Conversion of the reftable
-library will be handled in subsequent commits.
+Adapt the name of the `strbuf` block source to no longer relate to this
+interface, but instead to the `reftable_buf` interface.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics.c | 74 +++++++++++++++++++++++++++++++++++++++++++++++
- reftable/basics.h | 56 +++++++++++++++++++++++++++++++++++
- 2 files changed, 130 insertions(+)
+ reftable/blocksource.c              | 26 +++++++++++++-------------
+ reftable/blocksource.h              |  4 ++--
+ t/unit-tests/t-reftable-block.c     |  8 ++++----
+ t/unit-tests/t-reftable-merged.c    |  6 +++---
+ t/unit-tests/t-reftable-reader.c    |  4 ++--
+ t/unit-tests/t-reftable-readwrite.c | 24 ++++++++++++------------
+ 6 files changed, 36 insertions(+), 36 deletions(-)
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index 9a949e5cf80..65ad761da0b 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -9,6 +9,7 @@ license that can be found in the LICENSE file or at
- #define REFTABLE_ALLOW_BANNED_ALLOCATORS
- #include "basics.h"
- #include "reftable-basics.h"
-+#include "reftable-error.h"
+diff --git a/reftable/blocksource.c b/reftable/blocksource.c
+index d6242d67900..52e0915a67b 100644
+--- a/reftable/blocksource.c
++++ b/reftable/blocksource.c
+@@ -13,19 +13,19 @@ license that can be found in the LICENSE file or at
+ #include "reftable-blocksource.h"
+ #include "reftable-error.h"
  
- static void *(*reftable_malloc_ptr)(size_t sz);
- static void *(*reftable_realloc_ptr)(void *, size_t);
-@@ -69,6 +70,79 @@ void reftable_set_alloc(void *(*malloc)(size_t),
- 	reftable_free_ptr = free;
+-static void strbuf_return_block(void *b UNUSED, struct reftable_block *dest)
++static void reftable_buf_return_block(void *b UNUSED, struct reftable_block *dest)
+ {
+ 	if (dest->len)
+ 		memset(dest->data, 0xff, dest->len);
+ 	reftable_free(dest->data);
  }
  
-+void reftable_buf_init(struct reftable_buf *buf)
-+{
-+	struct reftable_buf empty = REFTABLE_BUF_INIT;
-+	*buf = empty;
-+}
-+
-+void reftable_buf_release(struct reftable_buf *buf)
-+{
-+	reftable_free(buf->buf);
-+	reftable_buf_init(buf);
-+}
-+
-+void reftable_buf_reset(struct reftable_buf *buf)
-+{
-+	if (buf->alloc) {
-+		buf->len = 0;
-+		buf->buf[0] = '\0';
-+	}
-+}
-+
-+int reftable_buf_setlen(struct reftable_buf *buf, size_t len)
-+{
-+	if (len > buf->len)
-+		return -1;
-+	if (len == buf->len)
-+		return 0;
-+	buf->buf[len] = '\0';
-+	buf->len = len;
-+	return 0;
-+}
-+
-+int reftable_buf_cmp(const struct reftable_buf *a, const struct reftable_buf *b)
-+{
-+	size_t len = a->len < b->len ? a->len : b->len;
-+	if (len) {
-+		int cmp = memcmp(a->buf, b->buf, len);
-+		if (cmp)
-+			return cmp;
-+	}
-+	return a->len < b->len ? -1 : a->len != b->len;
-+}
-+
-+int reftable_buf_add(struct reftable_buf *buf, const void *data, size_t len)
-+{
-+	size_t newlen = buf->len + len;
-+
-+	if (newlen + 1 > buf->alloc) {
-+		char *reallocated = buf->buf;
-+		REFTABLE_ALLOC_GROW(reallocated, newlen + 1, buf->alloc);
-+		if (!reallocated)
-+			return REFTABLE_OUT_OF_MEMORY_ERROR;
-+		buf->buf = reallocated;
-+	}
-+
-+	memcpy(buf->buf + buf->len, data, len);
-+	buf->buf[newlen] = '\0';
-+	buf->len = newlen;
-+
-+	return 0;
-+}
-+
-+int reftable_buf_addstr(struct reftable_buf *buf, const char *s)
-+{
-+	return reftable_buf_add(buf, s, strlen(s));
-+}
-+
-+char *reftable_buf_detach(struct reftable_buf *buf)
-+{
-+	char *result = buf->buf;
-+	reftable_buf_init(buf);
-+	return result;
-+}
-+
- void put_be24(uint8_t *out, uint32_t i)
+-static void strbuf_close(void *b UNUSED)
++static void reftable_buf_close(void *b UNUSED)
  {
- 	out[0] = (uint8_t)((i >> 16) & 0xff);
-diff --git a/reftable/basics.h b/reftable/basics.h
-index 4c9ef0fe6c5..bd33c34deae 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -16,6 +16,62 @@ license that can be found in the LICENSE file or at
- #include "system.h"
- #include "reftable-basics.h"
+ }
  
-+struct reftable_buf {
-+	size_t alloc;
-+	size_t len;
-+	char *buf;
-+};
-+#define REFTABLE_BUF_INIT { 0 }
-+
-+/*
-+ * Initialize the buffer such that it is ready for use. This is equivalent to
-+ * using REFTABLE_BUF_INIT for stack-allocated variables.
-+ */
-+void reftable_buf_init(struct reftable_buf *buf);
-+
-+/*
-+ * Release memory associated with the buffer. The buffer is reinitialized such
-+ * that it can be reused for subsequent operations.
-+ */
-+void reftable_buf_release(struct reftable_buf *buf);
-+
-+/*
-+ * Reset the buffer such that it is effectively empty, without releasing the
-+ * memory that this structure holds on to. This is equivalent to calling
-+ * `reftable_buf_setlen(buf, 0)`.
-+ */
-+void reftable_buf_reset(struct reftable_buf *buf);
-+
-+/*
-+ * Trim the buffer to a shorter length by updating the `len` member and writing
-+ * a NUL byte to `buf[len]`. Returns 0 on success, -1 when `len` points outside
-+ * of the array.
-+ */
-+int reftable_buf_setlen(struct reftable_buf *buf, size_t len);
-+
-+/*
-+ * Lexicographically compare the two buffers. Returns 0 when both buffers have
-+ * the same contents, -1 when `a` is lexicographically smaller than `b`, and 1
-+ * otherwise.
-+ */
-+int reftable_buf_cmp(const struct reftable_buf *a, const struct reftable_buf *b);
-+
-+/*
-+ * Add the given bytes to the buffer. Returns 0 on success,
-+ * REFTABLE_OUT_OF_MEMORY_ERROR on allocation failure.
-+ */
-+int reftable_buf_add(struct reftable_buf *buf, const void *data, size_t len);
-+
-+/* Equivalent to `reftable_buf_add(buf, s, strlen(s))`. */
-+int reftable_buf_addstr(struct reftable_buf *buf, const char *s);
-+
-+/*
-+ * Detach the buffer from the structure such that the underlying memory is now
-+ * owned by the caller. The buffer is reinitialized such that it can be reused
-+ * for subsequent operations.
-+ */
-+char *reftable_buf_detach(struct reftable_buf *buf);
-+
- /* Bigendian en/decoding of integers */
+-static int strbuf_read_block(void *v, struct reftable_block *dest, uint64_t off,
+-			     uint32_t size)
++static int reftable_buf_read_block(void *v, struct reftable_block *dest,
++				   uint64_t off, uint32_t size)
+ {
+ 	struct reftable_buf *b = v;
+ 	assert(off + size <= b->len);
+@@ -37,23 +37,23 @@ static int strbuf_read_block(void *v, struct reftable_block *dest, uint64_t off,
+ 	return size;
+ }
  
- void put_be24(uint8_t *out, uint32_t i);
+-static uint64_t strbuf_size(void *b)
++static uint64_t reftable_buf_size(void *b)
+ {
+ 	return ((struct reftable_buf *)b)->len;
+ }
+ 
+-static struct reftable_block_source_vtable strbuf_vtable = {
+-	.size = &strbuf_size,
+-	.read_block = &strbuf_read_block,
+-	.return_block = &strbuf_return_block,
+-	.close = &strbuf_close,
++static struct reftable_block_source_vtable reftable_buf_vtable = {
++	.size = &reftable_buf_size,
++	.read_block = &reftable_buf_read_block,
++	.return_block = &reftable_buf_return_block,
++	.close = &reftable_buf_close,
+ };
+ 
+-void block_source_from_strbuf(struct reftable_block_source *bs,
+-			      struct reftable_buf *buf)
++void block_source_from_buf(struct reftable_block_source *bs,
++			   struct reftable_buf *buf)
+ {
+ 	assert(!bs->ops);
+-	bs->ops = &strbuf_vtable;
++	bs->ops = &reftable_buf_vtable;
+ 	bs->arg = buf;
+ }
+ 
+diff --git a/reftable/blocksource.h b/reftable/blocksource.h
+index ee3647c6531..a84a3ccd891 100644
+--- a/reftable/blocksource.h
++++ b/reftable/blocksource.h
+@@ -15,7 +15,7 @@ struct reftable_block_source;
+ struct reftable_buf;
+ 
+ /* Create an in-memory block source for reading reftables */
+-void block_source_from_strbuf(struct reftable_block_source *bs,
+-			      struct reftable_buf *buf);
++void block_source_from_buf(struct reftable_block_source *bs,
++			   struct reftable_buf *buf);
+ 
+ #endif
+diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
+index 56514b43630..df1d45fe8e4 100644
+--- a/t/unit-tests/t-reftable-block.c
++++ b/t/unit-tests/t-reftable-block.c
+@@ -34,7 +34,7 @@ static void t_ref_block_read_write(void)
+ 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+ 	check(block.data != NULL);
+ 	block.len = block_size;
+-	block_source_from_strbuf(&block.source ,&buf);
++	block_source_from_buf(&block.source ,&buf);
+ 	ret = block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
+ 				header_off, hash_size(GIT_SHA1_FORMAT_ID));
+ 	check(!ret);
+@@ -128,7 +128,7 @@ static void t_log_block_read_write(void)
+ 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+ 	check(block.data != NULL);
+ 	block.len = block_size;
+-	block_source_from_strbuf(&block.source ,&buf);
++	block_source_from_buf(&block.source ,&buf);
+ 	ret = block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
+ 				header_off, hash_size(GIT_SHA1_FORMAT_ID));
+ 	check(!ret);
+@@ -218,7 +218,7 @@ static void t_obj_block_read_write(void)
+ 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+ 	check(block.data != NULL);
+ 	block.len = block_size;
+-	block_source_from_strbuf(&block.source, &buf);
++	block_source_from_buf(&block.source, &buf);
+ 	ret = block_writer_init(&bw, BLOCK_TYPE_OBJ, block.data, block_size,
+ 				header_off, hash_size(GIT_SHA1_FORMAT_ID));
+ 	check(!ret);
+@@ -302,7 +302,7 @@ static void t_index_block_read_write(void)
+ 	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+ 	check(block.data != NULL);
+ 	block.len = block_size;
+-	block_source_from_strbuf(&block.source, &buf);
++	block_source_from_buf(&block.source, &buf);
+ 	ret = block_writer_init(&bw, BLOCK_TYPE_INDEX, block.data, block_size,
+ 				header_off, hash_size(GIT_SHA1_FORMAT_ID));
+ 	check(!ret);
+diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
+index 9b0162a4b32..484c18251f3 100644
+--- a/t/unit-tests/t-reftable-merged.c
++++ b/t/unit-tests/t-reftable-merged.c
+@@ -35,7 +35,7 @@ merged_table_from_records(struct reftable_ref_record **refs,
+ 
+ 	for (size_t i = 0; i < n; i++) {
+ 		t_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0, &opts);
+-		block_source_from_strbuf(&(*source)[i], &buf[i]);
++		block_source_from_buf(&(*source)[i], &buf[i]);
+ 
+ 		err = reftable_reader_new(&(*readers)[i], &(*source)[i],
+ 					  "name");
+@@ -293,7 +293,7 @@ merged_table_from_log_records(struct reftable_log_record **logs,
+ 
+ 	for (size_t i = 0; i < n; i++) {
+ 		t_reftable_write_to_buf(&buf[i], NULL, 0, logs[i], sizes[i], &opts);
+-		block_source_from_strbuf(&(*source)[i], &buf[i]);
++		block_source_from_buf(&(*source)[i], &buf[i]);
+ 
+ 		err = reftable_reader_new(&(*readers)[i], &(*source)[i],
+ 					  "name");
+@@ -442,7 +442,7 @@ static void t_default_write_opts(void)
+ 	check(!err);
+ 	reftable_writer_free(w);
+ 
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 
+ 	err = reftable_reader_new(&rd, &source, "filename");
+ 	check(!err);
+diff --git a/t/unit-tests/t-reftable-reader.c b/t/unit-tests/t-reftable-reader.c
+index 8a18d7f9be4..19cb53b6415 100644
+--- a/t/unit-tests/t-reftable-reader.c
++++ b/t/unit-tests/t-reftable-reader.c
+@@ -20,7 +20,7 @@ static int t_reader_seek_once(void)
+ 	int ret;
+ 
+ 	t_reftable_write_to_buf(&buf, records, ARRAY_SIZE(records), NULL, 0, NULL);
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 
+ 	ret = reftable_reader_new(&reader, &source, "name");
+ 	check(!ret);
+@@ -61,7 +61,7 @@ static int t_reader_reseek(void)
+ 	int ret;
+ 
+ 	t_reftable_write_to_buf(&buf, records, ARRAY_SIZE(records), NULL, 0, NULL);
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 
+ 	ret = reftable_reader_new(&reader, &source, "name");
+ 	check(!ret);
+diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
+index c56a33f1a1e..7c7c72bb162 100644
+--- a/t/unit-tests/t-reftable-readwrite.c
++++ b/t/unit-tests/t-reftable-readwrite.c
+@@ -24,7 +24,7 @@ static void t_buffer(void)
+ 	int n;
+ 	uint8_t in[] = "hello";
+ 	reftable_buf_add(&buf, in, sizeof(in));
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 	check_int(block_source_size(&source), ==, 6);
+ 	n = block_source_read_block(&source, &out, 0, sizeof(in));
+ 	check_int(n, ==, sizeof(in));
+@@ -207,7 +207,7 @@ static void t_log_write_read(void)
+ 	reftable_writer_free(w);
+ 	w = NULL;
+ 
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 
+ 	err = reftable_reader_new(&reader, &source, "file.log");
+ 	check(!err);
+@@ -298,7 +298,7 @@ static void t_log_zlib_corruption(void)
+ 	/* corrupt the data. */
+ 	buf.buf[50] ^= 0x99;
+ 
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 
+ 	err = reftable_reader_new(&reader, &source, "file.log");
+ 	check(!err);
+@@ -328,7 +328,7 @@ static void t_table_read_write_sequential(void)
+ 
+ 	write_table(&names, &buf, N, 256, GIT_SHA1_FORMAT_ID);
+ 
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 
+ 	err = reftable_reader_new(&reader, &source, "file.ref");
+ 	check(!err);
+@@ -380,7 +380,7 @@ static void t_table_read_api(void)
+ 
+ 	write_table(&names, &buf, N, 256, GIT_SHA1_FORMAT_ID);
+ 
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 
+ 	err = reftable_reader_new(&reader, &source, "file.ref");
+ 	check(!err);
+@@ -416,7 +416,7 @@ static void t_table_read_write_seek(int index, int hash_id)
+ 
+ 	write_table(&names, &buf, N, 256, hash_id);
+ 
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 
+ 	err = reftable_reader_new(&reader, &source, "file.ref");
+ 	check(!err);
+@@ -538,7 +538,7 @@ static void t_table_refs_for(int indexed)
+ 	reftable_writer_free(w);
+ 	w = NULL;
+ 
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 
+ 	err = reftable_reader_new(&reader, &source, "file.ref");
+ 	check(!err);
+@@ -600,7 +600,7 @@ static void t_write_empty_table(void)
+ 
+ 	check_int(buf.len, ==, header_size(1) + footer_size(1));
+ 
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 
+ 	err = reftable_reader_new(&rd, &source, "filename");
+ 	check(!err);
+@@ -806,7 +806,7 @@ static void t_write_multiple_indices(void)
+ 	check_int(stats->obj_stats.index_offset, >, 0);
+ 	check_int(stats->log_stats.index_offset, >, 0);
+ 
+-	block_source_from_strbuf(&source, &writer_buf);
++	block_source_from_buf(&source, &writer_buf);
+ 	err = reftable_reader_new(&reader, &source, "filename");
+ 	check(!err);
+ 
+@@ -863,7 +863,7 @@ static void t_write_multi_level_index(void)
+ 	stats = reftable_writer_stats(writer);
+ 	check_int(stats->ref_stats.max_index_level, ==, 2);
+ 
+-	block_source_from_strbuf(&source, &writer_buf);
++	block_source_from_buf(&source, &writer_buf);
+ 	err = reftable_reader_new(&reader, &source, "filename");
+ 	check(!err);
+ 
+@@ -889,7 +889,7 @@ static void t_corrupt_table_empty(void)
+ 	struct reftable_reader *reader;
+ 	int err;
+ 
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 	err = reftable_reader_new(&reader, &source, "file.log");
+ 	check_int(err, ==, REFTABLE_FORMAT_ERROR);
+ }
+@@ -903,7 +903,7 @@ static void t_corrupt_table(void)
+ 	int err;
+ 	reftable_buf_add(&buf, zeros, sizeof(zeros));
+ 
+-	block_source_from_strbuf(&source, &buf);
++	block_source_from_buf(&source, &buf);
+ 	err = reftable_reader_new(&reader, &source, "file.log");
+ 	check_int(err, ==, REFTABLE_FORMAT_ERROR);
+ 
 -- 
 2.47.0.dirty
 
