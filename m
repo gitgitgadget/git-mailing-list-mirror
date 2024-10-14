@@ -1,158 +1,194 @@
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7441ADFEB
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 16:26:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FAD1C2327
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 17:02:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728923191; cv=none; b=hP9stp/qiIJgmfBFjBnOJhdkGRdb98B7KxFXbL+DkQ3TkjKcSqNBFVU/nYwd8swv95w9MeklqS2FdIC+akEvf++LsCXiHjuRczabQhFxUC23H3WBpCrsPcFVrMEcJ7Xv6M6d/p5A4Ve/O2snF0uwkrD60UYlO3etEXEcVmRoTR8=
+	t=1728925338; cv=none; b=jenmB2mlKqKyjv1xPjCyxbHO360b04lsdAev+fy3Cj8MKpv7bM1gaKbQ+w0kKuoZSWnhZMpdn3pF7FoE8np9LHessFyIFqaJjChd910JQ72lVJUCB9eQhDs8cAB35eOcjkM+mY14ij0djUqQ2ieBha41wwDpx/KnrCwZmnonfJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728923191; c=relaxed/simple;
-	bh=oSxmpOvFKqV4i49MhDfQ2jMSDEmjUOg7LMNviNOOWXs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IP9z9XpbUc0S7IkwaaPiYrDZ+CrdBBZpDZqPIzTrFM4lRc+yWcCR0M7V8KA2uULub19k6LNvHQ6KbB3ShD31xvGEofHKYRfnc3VzThKvHVvyttKfQbnb2/vcOZ5avmSlqHJwfxJXfHCtTAl0PL7aWfP5wf2f0QiaukmyQAsGCtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eH0G0r4M; arc=none smtp.client-ip=209.85.217.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728925338; c=relaxed/simple;
+	bh=t93Q5XpSlkCLefcX/Sk63MYT9zXsXbywkF8s02QLVgo=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=ae2tcCBKbKoFeXvwzwacx7WbhRQ37RamIC5J4SqNOLmXkAO3dicuQYej5tZl4K6da3OSVujtBNGtcuCthhGiWvgxNfB1D8bA2CtM7TeoGwS26Ot4E6+9CZFPXpH8k8dbLE4HTICqAq+1fpGfT10HJRCWjUvYi3FtcTqhO7MLYgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=S0psA/n8; arc=none smtp.client-ip=212.159.14.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eH0G0r4M"
-Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-4a46fc2d520so740164137.3
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 09:26:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728923188; x=1729527988; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VMxUptVU4DGEFrqaaEOrd8FCFBKL7Uep8+HmYswgiXM=;
-        b=eH0G0r4MhfVXeaIfTUPjQjgNB27O4rEaWZqWRyZlW1V8k2VlOwrHBpCoCxvbdNkHVy
-         tphAA3nnk5GJuGQIqxkSbbNmhYqC2wBKubJ0IFNLs+7K1rcb6TWGaFPFOaYHZ2YP+UyH
-         IslauhRkMu+pNdUBLd6Du5Ecr/Wzp5aH1aY+tKSxVmneDpulpbrHjQC7hR8y46DX8vlV
-         0UHGkofZ9scXixo9olXPR9AuQKOq+Dy6Z44HiqLKbsHABIqnHu7BYD6QypC2iIHouPmp
-         8+rmffnA9UsSL5dTRdkFOk42H5CgvE3zcV4ZRtT9Ra1MGq4cRVABY2J5Qb7dhZhqM0nc
-         xKdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728923188; x=1729527988;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VMxUptVU4DGEFrqaaEOrd8FCFBKL7Uep8+HmYswgiXM=;
-        b=DilXTqBabI/pajQAEoE6jP8GfTlgJWx9w4PfU34zchbXWjPbhYtOu7SxR/q0p2nNt9
-         in+JfNKbtWXfQLX36pUCduCb/jRKRRLe5G18oJZa88I4l3pAOt0rzo4VLyLq6yYRYYwa
-         2pHiNg8ObdQecEWHl6izejiVLlHeuswuzcDrd8wMzyItXw6I7DwhSTfjK6YqMwYGvfDj
-         kp5yrqiWCYeLxIfeH2jFnFDQPh6h9b+KtauAzYuUFfkaYopkvpIQmBocgIib/zZecHgG
-         wRcaFdDMfHvTv/uVQ2Zh29MMtU+/kqI8mDCKlg7+bLr1UvOUUSqTpQp/c2Cskq9KU7Uj
-         URmA==
-X-Forwarded-Encrypted: i=1; AJvYcCXZSVM06F+h2jQ6X+pD3njt4ggkcw6Oxodk9iBFhBE6yqKNlpbGHH/xIAxkbthKM/yUmvs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMvUC2CemK1uhBya5YU8zXW9/xp914Hf+mraMP5LAN4MiE0ssZ
-	g8gFb4GOgQ09Z/UG3wnUIoDICgvC6WcT7Sy8wH11LHt9hZLr7YKs6qx79JSwkaevS78eNWDyxMY
-	nQvkGuKEtQmBbyoYk9Oe4u0o225M=
-X-Google-Smtp-Source: AGHT+IEEVo1DpC2P0VmL9TTOdAZ8hfj/qUFb5+BLNvrRIwQDKgr0Tj29kgOyP0VDRp8z1Gp2gvJaS7YeSOaJI2n8x8E=
-X-Received: by 2002:a05:6102:2ac6:b0:4a4:8fc3:9b7 with SMTP id
- ada2fe7eead31-4a48fc318eamr1963575137.14.1728923188075; Mon, 14 Oct 2024
- 09:26:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="S0psA/n8"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 0OPPtZcBdxile0OPRt8Y6j; Mon, 14 Oct 2024 17:59:05 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1728925145; bh=B3ddF20wIHigd9wM7JoLxZqWt372GLMWhkNCts11rJE=;
+	h=Date:To:Cc:From:Subject;
+	b=S0psA/n8wLa6cwbraZGGoQv67T6Yp6P4rrv/SjREuYZ20w8lJaR+d3jE2oh7KDZ43
+	 GQ416SXhEdA0J+kpZ6l9sYo7WPlVS2gkYOpb9Boy7cueVNSTixB/Fxk76c0cKYB7b9
+	 J4NT07lgfkS0tW2ZJvqb3Y6Q5tmVDFDvuvr9+um6uGsn3fWTbk4YSqJb1g3PeqfySk
+	 HJWO8drjIXk4ukF4yY3qEauWH41RW8HIJwVIopva2YhKsetH9mnHWcRLMgG8fKXsqb
+	 IYF5dpJkIAOHXiS2L6w5CJs3+lmQx9xCm7SAouDe19jBSsVJXJofXgDMEsvH4eImAp
+	 w+CRcVeGIBEvg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=VaJUP0p9 c=1 sm=1 tr=0 ts=670d4dd9
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=IdNtSy1A9SiqmdPCT3cA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <28e13e74-d4a4-4be5-8555-27a69c5c5787@ramsayjones.plus.com>
+Date: Mon, 14 Oct 2024 17:59:03 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
- <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
- <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com>
- <Zwz4B4osJnYJw6pd@pks.im> <2a937b6f-a3fb-4f2a-997b-5508f0e20e65@gmail.com>
- <Zw0kGLZ-mcYjb6Je@pks.im> <2160f8ea-5f00-49d9-8e02-d71d4d827d39@gmail.com> <CAPSxiM9ncwaZ3HF72wsRwmen7joWk3mjipsu78WxKEzLX607sw@mail.gmail.com>
-In-Reply-To: <CAPSxiM9ncwaZ3HF72wsRwmen7joWk3mjipsu78WxKEzLX607sw@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Mon, 14 Oct 2024 16:26:17 +0000
-Message-ID: <CAPSxiM-aptyjesMX1H-P5QJjA-6CUonA01Bo84cq2_t==TqFgw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and strtol_i()
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Patrick Steinhardt <ps@pks.im>
+Cc: GIT Mailing-list <git@vger.kernel.org>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Modernize the build system v2 problem
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfO4SOdipDSMLGPo+ZY7KFEQ6h8llH6Nb9YefD/XietOCakjeZGlB+Hl8M6oW2Vn/J62Ie9DPSdGKF6XOVfTS3Vl6zhlVsA55WkiE/IbKQLi21oExaTIR
+ 9/G5E4klmYBUv+62v9NZHYYu52Tb5IVSTcGzr6QH+0HV6yXyjIwAe7c4RNvwsB1MhDrfeSpXu+2WVRX4hMGf1I51MXt6rXLSssU=
 
-On Mon, Oct 14, 2024 at 4:13=E2=80=AFPM Usman Akinyemi
-<usmanakinyemi202@gmail.com> wrote:
->
-> On Mon, Oct 14, 2024 at 2:55=E2=80=AFPM Phillip Wood <phillip.wood123@gma=
-il.com> wrote:
-> >
-> > On 14/10/2024 15:00, Patrick Steinhardt wrote:
-> > > On Mon, Oct 14, 2024 at 02:57:13PM +0100, Phillip Wood wrote:
-> > >> On 14/10/2024 11:53, Patrick Steinhardt wrote:
-> > >>> On Sun, Oct 13, 2024 at 09:42:41AM +0000, Usman Akinyemi wrote:
-> > >>>> On Sat, Oct 12, 2024 at 11:09=E2=80=AFPM Usman Akinyemi via GitGit=
-Gadget
-> > >>>> <gitgitgadget@gmail.com> wrote:
-> > >>>>>
-> > >>>>> From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> > >>>>>
-> > >>>>> Replace unsafe uses of atoi() with strtoul_ui() for unsigned inte=
-gers
-> > >>>>> and strtol_i() for signed integers across multiple files. This ch=
-ange
-> > >>>>> improves error handling and prevents potential integer overflow i=
-ssues.
-> > >>>>>
-> > >>>>> The following files were updated:
-> > >>>>> - daemon.c: Update parsing of --timeout, --init-timeout, and
-> > >>>>>     --max-connections
-> > >>>>> - imap-send.c: Improve parsing of UIDVALIDITY, UIDNEXT, APPENDUID=
-, and
-> > >>>>>     tags
-> > >>>>> - merge-ll.c: Enhance parsing of marker size in ll_merge and
-> > >>>>>     ll_merge_marker_size
-> > >>>
-> > >>> To me it's always an indicator that something should be split up ac=
-ross
-> > >>> multiple commits once you have a bulleted list of changes in your c=
-ommit
-> > >>> message.
-> > >>
-> > >> Agreed, but I think in this case there is a common theme (converting=
- atoi()
-> > >> to a safer alternative) and the problem is with the commit message l=
-isting
-> > >> which files have changed rather than unrelated code changes being gr=
-ouped
-> > >> together. This patch could be split up and if there were many more a=
-toi()
-> > >> conversions it would need to be split to prevent it being too long b=
-ut I
-> > >> don't think its essential to do so.
-> > >
-> > > In theory I agree. In practice I think we should have better
-> > > explanations why the respective conversions are fine and whether this=
- is
-> > > fixing a bug or not. And if it is fixing bugs I'd also like to see te=
-sts
-> > > added to the tree.
-> >
-> > I'm not sure if I would describe any of the changes as fixing bugs. The
-> > option and config parsing code becomes stricter so I guess you could sa=
-y
-> > it was a bug to accept any old rubbish and treat it as zero before. The
-> > imap code that's changed all rejected zero anyway apart from the tag
-> > parsing so maybe accepting the changes to the tag parsing are fixing a =
-bug.
-> >
-> > > And by the time we got there it makes sense to split up commits.
-> >
-> > Yes if we start adding tests then it is worth splitting them up, I'm no=
-t
-> > sure we have anyway of testing the imap changes but it would be worth
-> > testing the other changes though.
-> >
-> > Phillip
-> >
-> > > Patrick
-> > >
-> >
-> I got this from a leftoverbit which the main issue was reported as
-> bug. https://public-inbox.org/git/CAC4O8c-nuOTS=3Da0sVp1603KaM2bZjs+yNZzd=
-Aaa5CGTNGFE7hQ@mail.gmail.com/
->
-> For the test, I should have the test as another patch right ?
-> Thanks.
-Also, do I need to add the reference which mentions the leftoverbit in
-the commit message?
+Hi Patrick,
+
+I took your 'Modernize the build system' v2 series, from 2024-10-09, as patches
+from the mailing list and put them on top of master@ef8ce8f3d4 ("Start the 2.48
+cycle", 2024-10-10). I had to hand edit the 14th patch to change the version
+number from DEF_VER=v2.47.0 to DEF_VER=v2.47.GIT, because of the change of base.
+(It would probably have been easier to just base it on v2.47.0, but what would
+be the fun in that! :) ).
+
+In order to fix the 'dependency loop' error/warning from make, I applied the
+following change:
+
+    diff --git a/Makefile b/Makefile
+    index dc60b2581d..c7b28975ac 100644
+    --- a/Makefile
+    +++ b/Makefile
+    @@ -3219,7 +3219,7 @@ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(
+     
+     all:: $(TEST_PROGRAMS) $(test_bindir_programs) $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG)
+     
+    -bin-wrappers/%: bin-wrappers/wrap-for-bin.sh
+    +$(test_bindir_programs): bin-wrappers/wrap-for-bin.sh
+     	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+     	     -e 's|@BUILD_DIR@|$(shell pwd)|' \
+     	     -e 's|@GIT_TEXTDOMAINDIR@|$(shell pwd)/po/build/locale|' \
+
+There are several ways to fix it, but this seemed like the easiest. I suspect
+that you have already fixed this.
+
+Having determined that the 'make' build procedure seemed to be unaffected,
+I now tried the meson build. I had to install meson at this point (ninja
+came along for the ride). I have never used meson or ninja before.
+
+At this point I had to fix another fallout from changing the base:
+
+    diff --git a/meson.build b/meson.build
+    index 338d472bc6..54557eee03 100644
+    --- a/meson.build
+    +++ b/meson.build
+    @@ -194,7 +194,6 @@ libgit_sources = [
+       'reftable/block.c',
+       'reftable/blocksource.c',
+       'reftable/iter.c',
+    -  'reftable/publicbasics.c',
+       'reftable/merged.c',
+       'reftable/pq.c',
+       'reftable/reader.c',
+
+Everything seemed to go without a hitch after that, as far as the build is
+concerned, but when I did a 'ninja test' I ended up with three failures:
+
+  Summary of Failures:
+  
+   979/1028 t9500-gitweb-standalone-no-errors              FAIL           12.36s   exit status 1
+   980/1028 t9501-gitweb-standalone-http-status            FAIL            2.19s   exit status 1
+   981/1028 t9502-gitweb-standalone-parse-output           FAIL            2.22s   exit status 1
+  
+  Ok:                 1025
+  Expected Fail:      0   
+  Fail:               3   
+  Unexpected Pass:    0   
+  Skipped:            0   
+  Timeout:            0   
+  
+  Full log written to /home/ramsay/git/build/meson-logs/testlog.txt
+  FAILED: meson-internal__test 
+  /usr/bin/meson test --no-rebuild --print-errorlogs
+  ninja: build stopped: subcommand failed.
+
+The failure is caused by an (apparently) mangled 'gitweb.cgi' file. Since I
+still had the make build file, I could directly compare the files:
+
+  $ diff ../gitweb/gitweb.cgi gitweb/gitweb.cgi | wc -l
+  160
+  $ 
+
+I won't bore you with the whole diff, but it begins like so:
+
+  $ diff ../gitweb/gitweb.cgi gitweb/gitweb.cgi
+  83c83
+  < our $GIT = "/home/ramsay/bin/git";
+  ---
+  > our $GIT = "/usr/local/bin/git";
+  91c91
+  < our $project_maxdepth = 2007;
+  ---
+  > our $project_maxdepth = "2007";
+  2497c2497
+  < 		{ regexp => qr/^\@\@{$num_sign} /, class => "chunk_header"},
+  ---
+  > 		{ regexp => qr/^@@{$num_sign} /, class => "chunk_header"},
+  2521c2521
+  < 		$line =~ m/^\@{2} (-(\d+)(?:,(\d+))?) (\+(\d+)(?:,(\d+))?) \@{2}(.*)$/;
+  ---
+  > 		$line =~ m/^@{2} (-(\d+)(?:,(\d+))?) (\+(\d+)(?:,(\d+))?) @{2}(.*)$/;
+
+  ...
+
+  $ 
+
+Note that, after the 'template variables' have been substituted, many (all?)
+character pairs \@ are replaced with @ (ie the backslashes have gone walkabout).
+This results in compilation errors in the 'gitweb.log' file, for example the
+log file for the t9500-*.sh test, looks like:
+
+  $ cat gitweb.log
+  [Mon Oct 14 15:12:33 2024] gitweb.cgi: Possible unintended interpolation of @2 in string at /home/ramsay/git/build/gitweb/gitweb.cgi line 2521.
+  [Mon Oct 14 15:12:33 2024] gitweb.cgi: Possible unintended interpolation of @3 in string at /home/ramsay/git/build/gitweb/gitweb.cgi line 2593.
+  [Mon Oct 14 15:12:33 2024] gitweb.cgi: Possible unintended interpolation of @vrfy in string at /home/ramsay/git/build/gitweb/gitweb.cgi line 4212.
+  [Mon Oct 14 15:12:33 2024] gitweb.cgi: Global symbol "@vrfy" requires explicit package name (did you forget to declare "my @vrfy"?) at /home/ramsay/git/build/gitweb/gitweb.cgi line 4212.
+  [Mon Oct 14 15:12:33 2024] gitweb.cgi: Execution of /home/ramsay/git/build/gitweb/gitweb.cgi aborted due to compilation errors.
+  $ 
+ 
+So, keeping in mind that I know absolutely nothing about meson, it seems that
+the 'configure_file' function is mangling the 'gitweb.perl' file. I assume
+that you are not seeing this, so I suspect that you are using a newer (fixed)
+version than me. :(
+
+  $ meson --version
+  1.3.2
+  $ ninja --version
+  1.11.1
+  $ 
+
+This is on Linux Mint 22.1, which is based on Ubuntu LTS, so not that old!
+
+I am about to try converting the Makefile 'procedure' into a shell script
+to use in both the Makefile and in the meson.build file (I see that the
+'configure_file' procedure can take a 'command' to generate the file).
+
+Note that '$project_maxdepth' is a snowflake in the make procedure! :)
+
+Any thoughts?
+
+Thanks.
+
+ATB,
+Ramsay Jones
+
+ 
