@@ -1,78 +1,102 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7230E1A4F20
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:29:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D09D1514CB
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 13:34:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728912549; cv=none; b=NhRSYj2rZorGiSAJTx4r2h6d6DjnroqwsD/UoQGPOwVss2zitr2GwAhvoY0tWTAC9x3cbNLXT/o8XxdjDnMoqzv/Mrk9EZYc4EqH6d6JTsZjU58ReWu+qFml2UJPxeR8o2lLwqBaAWwT6PtpaAMOJ+eB8nUsFhdB70brbrSHzWY=
+	t=1728912858; cv=none; b=AWpdTyz1PSXYpxcoeSuTx97anRBubarH9aetGy4235dP3jnRn9srsW1uas4YlMgmj1ETl9Wx7J1Nke/hdD+q236aZP7bF92Ym8HqwKgbos3uTvZ6BQxBBG5U3abvEXUiIAKgbpB3rDdMOBFjFY8tdjcPnOoC3/l4UkjS69rYwDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728912549; c=relaxed/simple;
-	bh=JNxTN5ZiF8PX0nNzMF44n/BFwByboOj2RH313HRfq2M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8E9TzuiO9HKh26h/OU/rFewA9wmbNXiXP/3bwT4kVmYTweDFOTeWp8KaJ5OeuC+B/YG7RCZV/qyocDntfaaT2bElc5BTYD1T4XKgh4xA/RT2BU/Tl3kLFg/EFSV0zVijNociSwFqa+AEqA6gLHV5rPUKHJb8sUT9jx4J+iw+n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=eCfaKVkn; arc=none smtp.client-ip=18.9.28.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
+	s=arc-20240116; t=1728912858; c=relaxed/simple;
+	bh=DSkbDEKJE7bI5tlEaQG3xMHyzDv8OEbiPUU0CmLrkHw=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:Cc:To; b=KChVRB3E1ViJgqPKwB+siYC07BTdg/tZHWeYTf0KHmldxy1gAHe2DFquLntp2bOyeGJ+vw58NiDkCWchX7mTerzKyLGs1QU47P0/fBl57yf8GaKuReKs+lrCfiVua+fVMvyVTk42AlUzHJnh45B0A446bNV/1i2we5O84M7SC8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigma-star.at; spf=pass smtp.mailfrom=sigma-star.at; dkim=pass (2048-bit key) header.d=sigma-star.at header.i=@sigma-star.at header.b=ujqe6h1A; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigma-star.at
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sigma-star.at
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="eCfaKVkn"
-Received: from localhost (CSAIL-SQUARED.MIT.EDU [18.9.64.19])
-	(authenticated bits=0)
-        (User authenticated as asedeno@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 49EDSu9c010558;
-	Mon, 14 Oct 2024 09:28:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1728912538; bh=aXgFKuWCMW3VB94sE8owU7btJ77uhxCD0NOlvt5Kyrg=;
-	h=From:Subject:Date:Message-ID:MIME-Version;
-	b=eCfaKVkn5DUTUXS5r2IbODQP7lHZgPo3BxR98TAFf1GmEralGHyII7GfhiMTOsHq0
-	 Bqlv2QrKrQh43k0HpfyWOyu3QJ7ffmluaTzJvBZlzJOaVPzsls7mGyRzGnKDR8fRw/
-	 lmcKno8ckHwIb4l/knjeXfUYuSyNyjny8xE0Dfb5FrvXrrs2x0vIw2iSQ+qg4o9gzj
-	 fdaJKHHhjr4DKGacn05HdNIKRfGzt+qQHm3SCHk6FWir5mkqnSv6H06yB7lW/eDcLm
-	 taE8nAChd2a9bIPJMfs37lFMK6CVzTP6WGaCgM6umIpQKh4bKMX5r0pWsS+/kqNUmF
-	 scAU4wEE9Ikmg==
-From: =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@mit.edu>
-To: sandals@crustytoothpaste.net
-Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-Subject: Re: [PATCH 00/13] Update versions of libcurl and Perl
-Date: Mon, 14 Oct 2024 09:28:56 -0400
-Message-ID: <20241014132856.3558224-1-asedeno@mit.edu>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241010235621.738239-1-sandals@crustytoothpaste.net>
-References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=sigma-star.at header.i=@sigma-star.at header.b="ujqe6h1A"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-37d518f9abcso2312622f8f.2
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 06:34:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sigma-star.at; s=google; t=1728912853; x=1729517653; darn=vger.kernel.org;
+        h=to:cc:date:message-id:subject:mime-version
+         :content-transfer-encoding:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DSkbDEKJE7bI5tlEaQG3xMHyzDv8OEbiPUU0CmLrkHw=;
+        b=ujqe6h1AxCzfKjfDwspk+vMMm/yveySlxTonJFTsIWkcV+dkh4n8Q0GyofzBZz2Y2O
+         Ms4Z9SwvZGKrPPcAK01RFbSjUEBMHYo3d9AXmgldHKZdm/kss8gsPFD/eOEqpDQqLoEV
+         yHMOkDUKblinaMtrHylOHVl5HnmcsxcAezvIIqSMNui+biEumUBZ90CZf89XjLwa7abk
+         NKE0+JIp6xe9427oCrbe8XBR1G+TPax0fJ1o8QCM8IY7yuxNo8J/ZKx4X4fc4nuGwwk0
+         eYvZnnqVbdMqQR4WJvV1pjI1ucSuWubW+D9+L9Z3MaZ5d7rSc9bIyLAk3VFn1xMcbGzK
+         KEaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728912853; x=1729517653;
+        h=to:cc:date:message-id:subject:mime-version
+         :content-transfer-encoding:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DSkbDEKJE7bI5tlEaQG3xMHyzDv8OEbiPUU0CmLrkHw=;
+        b=X3m10k/u5v0EBuzmwQZRy1PEamjWqh8Y4NlosJGaoditvrBgO7UMXQCq1wyrhurOAm
+         ToEFAB/l6mF52gm+ax4RHJHMj0muj2XUASWfxbpy8ySISjmi+0nEXczUj+RAEC6+f2FP
+         Hxg00RJAP+ifMGFm7Bmkp6Ok5LqTPwhYt3siKRNnq3O3d/VwiHZfoGsogaFM7eOs+tQ/
+         tWoBKJ3SmLCBZUlAzkU90fUR0K9ahT0jeEdptnS3DC3iNZWydcMMrIDnn/xjBO3eQhu4
+         agZKQXsb+LNA/wT748aHS27Z8bRYrq+EI1ZLj9cnnWBiC42LOEE1vwHF5RAMyNSKwUAV
+         5SIg==
+X-Gm-Message-State: AOJu0YxDX41hPKdUjKc3GeMDvVw2zMStGvHBz8OZTJBY2fwSnyKda6Bk
+	tpp8LeEbfpF2OjWEXmucEHPlQvrp6+PoAD9wR9mEbDWKFoyOKwxl+mNhmKT3nMir39dz3LT2sm7
+	I
+X-Google-Smtp-Source: AGHT+IGjXTwQ39Aq+SG8VohJ+msJIqEkzbmVdjRKIMWiKmWLLA88En6aV0IIyUxdisHNzVDJ8BrQrA==
+X-Received: by 2002:a05:6000:10c5:b0:37d:4fab:c194 with SMTP id ffacd0b85a97d-37d551ed80fmr6701730f8f.25.1728912853093;
+        Mon, 14 Oct 2024 06:34:13 -0700 (PDT)
+Received: from smtpclient.apple ([82.150.214.1])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d4b7ef213sm11366152f8f.99.2024.10.14.06.34.12
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 Oct 2024 06:34:12 -0700 (PDT)
+From: David Gstir <david@sigma-star.at>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.1\))
+Subject: git grep does not find all occurrences on macOS
+Message-Id: <771C9C4E-45F1-4F71-B3A9-4E8E4A9CAC1F@sigma-star.at>
+Date: Mon, 14 Oct 2024 15:34:02 +0200
+Cc: Richard Weinberger <richard@sigma-star.at>
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3776.700.51.11.1)
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Hi!
 
-> The Perl changes are a huge upgrade.  5.8.1, our former supported
-> version, was from 2003.  5.26 has substantially improved Unicode support
-> (including Unicode strings), s///r (to allow returning a modified value
-> instead of modifying it in place), postderef syntax (which also provides
-> better interpolation for complex expressions), and subroutine signatures
-> (although these are experimental until 5.36).  These allow us much more
-> readable, modern Perl.
+I encountered rather subtle issue on in git 2.47.0 on macOS 14.7 =
+(installed from Homebrew):
 
-This sounds compelling, however...
+git grep will not find all occurrences of string patterns containing a =
+=E2=80=9C.=E2=80=9D under some
+conditions. In my case I have an ISO-8859 encoded text file which =
+contains umlauts.
+If the string I=E2=80=99m grepping for occurs after a non-ASCII =
+character in this file, git grep
+will not find it.
 
-> The final commit introduces a small but useful change that we can now
-> take advantage of with our newly updated Perl dependency as an example
-> of why this is a generally beneficial change.  It can be omitted without
-> problem if it is judged to be too noisy.
+I=E2=80=99ve put up a reproducer here =
+https://github.com/iokill/repro-git-grep-issue, but the gist
+of it is "git grep quz.baz" on the ISO-8859-encoded file below will not =
+return anything,
+when it should return the line "quz.baz=3D3":
 
-The change being made to illustrate the point is not at all compelling
-to me.  This appears to be an update for the sake of an update, with
-very minor benefit at great compatibility cost.
+-->8-------------
+foo=3Dbar
+umlauts=3D=C3=A4=C3=B6=C3=BC
+quz.baz=3D3=20
+--8<-------------
 
-I'm especially opposed to the change in gitweb/gitweb.perl, as that
-script is the one that is most likely to be used in a web-hosting
-environment where the user does not have control over the version of
-perl being used. And yes, those users would be better off hosting on
-a newer platform, but that's not a good reason to break them with no
-real gain for git.
+=46rom what I=E2=80=99ve found so far, this occurs on macOS, but not on =
+Linux and it has to be connected
+to the regex matching code, because the issue does not occur with =
+--fixed-strings or --perl-regexp.
 
--Alejandro
+Thanks!
+- David=
