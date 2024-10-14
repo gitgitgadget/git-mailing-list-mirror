@@ -1,145 +1,131 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCD014A0B5
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFE61547F2
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 08:48:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728895143; cv=none; b=CLLkXQREsOLuDRFj7SrQK+MpcaNEiQTnDg3wG0zcy8ZSi47SouZ1EXcMXm6Kps9vuMnpgF5aChJKf3VAigUd0P3irfwJOqcjMays+sTelbUnsJTyHMFbfe1mJEPszmVTtJTsAgUoPOB6fxFwd7mu3B9ZkCbBYUb7HuzCukTMpHc=
+	t=1728895700; cv=none; b=AoqXa8jaYfu6myMwanDB1NqIg9ftMmqML2qTVypAc5v5dE4UJJIRUXmxm5w8OeVXFXQth8gG8pm4E+ZTN3fRa+FYwlD4gxAbzzHfZ8DQ5+YdFvbrV4skqOKDHKkrV1u6XLVVXqI3JzIdzx188G1IauGv5ixYevLWrnSNF/CEB6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728895143; c=relaxed/simple;
-	bh=ru69hBNlqqkLbuPrTsYP6k7scZG+2pDnhPepq4PeNeQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XTBf3WLAaOzr/xRhnBeWfZK1tFPgKqkDEtivaOowu/IvDXGMZu32sYGl9B2G4ypgVi5OuOs284l3h8sTpK9V2SO1TgcxJNzVlTAH0HISVcG6fBBMJuCIYQrekw3M9Zf96mW/3WnlIqyAQyP5E1y45yA+6G2VEeop6MJ0bstOhVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eT4sXc9e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NF52Q+WR; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728895700; c=relaxed/simple;
+	bh=IS2W+5ygGrLOo48UBNvfnplKSAw8e6YZqu58sFAG/yo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gnaE91Pw/qz53fsHvYW8s9UsQgOCbQlWoOrAftFIE7ze8mRq7kHGcaXu5/7szzp+j2C75RltusfFaXV9X3XYpe7yZHzTCgrboxpjdlSXOExhyj7in5X8qclgwGzDlK6/3npM9/WvWNgmPuefjtfpAIFOvBcsIrA52UlZZZPOS90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RPXh/GPn; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eT4sXc9e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NF52Q+WR"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3303111401CD;
-	Mon, 14 Oct 2024 04:38:59 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 14 Oct 2024 04:38:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728895139;
-	 x=1728981539; bh=Bm3BZN+IP1P8N1lyHnPfnVm5B3zsPryt3t6uURSawYw=; b=
-	eT4sXc9ePhuNZIdJNmWNrO3wEUgKIZQep95zOqad8GiI5gJFqtqo/yUudz/ovO7i
-	nHlpBK56PAqVm4hd4RtY3HxJhFLuatJ9Km9UfJCpO8W+HdrymikRdorT2xV29CRP
-	dgwLPoziLLX+qgOl1fAGL7Ey+taJoUjLxM6EQwYw8/8RAhMFT5YSjQQRkiqHCrVG
-	44ttnm6ufNq2/nyYvNHKZsCBvqDKnVy6weFjGwAz4VEVQ9wub0M8mCfQWbu64PLk
-	G13C9/HWCohvd4i+fg+UB4RfyJnY6ssxdMdwPVz1OFwybhhD2y+InXVmubj1+Dve
-	nExQgm63K79NMXHAKzsA7g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728895139; x=
-	1728981539; bh=Bm3BZN+IP1P8N1lyHnPfnVm5B3zsPryt3t6uURSawYw=; b=N
-	F52Q+WRv5fN91DaDeLT6UeguQxutNBAXkiV7UAHc8Sc9Sji6vd+sZfvUaMMjRBKD
-	uD+uAAbT+6nh+vKQmKas5i1HdYKah4dnjmtCFOoYL2p4Mw6zjvSQwmnmf6+2FuRk
-	JdhBF+308JJAPM4eup2wjG8oxBq1iFLNV5NJV8U231eHlwJPUNETjA2m55/zhgOT
-	8ZU6lhmM1pZgsL/smAOJY80GBQ0sFGMLJgwscLcR1C6OKSY6/UWPFaYtpYABzb6N
-	Wpj2q3qHcny54+Ya0JBGJ5yt4dG9ORZyvPSLRphj2hUjZdQ4vZR5CV75FYbbIq/f
-	AjF7NTsQJ2k1mpGIGuJbg==
-X-ME-Sender: <xms:otgMZ7Y4fM3rTCVlTvE7Bur-iCU7YVC78S-h7u7xShNvb19p-8SZKg>
-    <xme:otgMZ6bFlXxGjpAkB_fbWv-0_iOwPbUzldKq2re-VLUMQCRHxMUscjUvri3YRwAeE
-    mymjJOe3VBEsfgFNQ>
-X-ME-Received: <xmr:otgMZ9-jwLtBbjznCcbNf4jDLRiB_5ZgNuJxwlbsF1jk6vU0s2Y2CH-30EloXvpbw1y-QQILB518iw9bxM-oy9JvvSnrAGC0T2mgtm7XgKWe_w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeghedgtdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeefheffgeeflefgieduleehueeugfeifeevjeejveel
-    heetvdegjefgkeeguefgtdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehshhhusghhrghmrdhkrghn
-    ohguihgruddtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:otgMZxqMt7y3J9iiquNNa-b6611K0vmIbnBNacPnigrHyW_en1HMoA>
-    <xmx:otgMZ2rHQTKRr7_SaQldwN4hw6wsBpZIP5k5sSIY9hcy0SUrvuK4AQ>
-    <xmx:otgMZ3TAycHWkYmqtt4DeT7T41KPF5CQEFkwmqXSWTyM13h73MHjJQ>
-    <xmx:otgMZ-q6XDuSs_6a2Y3QhRaQHBY7fbtZrjPvKdfsMEuX5q0Pkh47GQ>
-    <xmx:o9gMZ5VA9gvncmEbUdUsTa_5ojIA31fXhOGmsCmUu2YXdM6f2aAN9dqW>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Oct 2024 04:38:57 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7145b2ca (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 14 Oct 2024 08:37:43 +0000 (UTC)
-Date: Mon, 14 Oct 2024 10:38:43 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Shubham Kanodia <shubham.kanodia10@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3] builtin/gc: fix crash when running `git maintenance
- start`
-Message-ID: <ZwzYk9dq1H9QGXBG@pks.im>
-References: <CAG=Um+0mJW-oAH+YLC3dWEU64JwS-zMkkTiFWYBe4g6HMbe-iA@mail.gmail.com>
- <a5b1433abfd84cb627efc17f52e0d644ee207bb0.1728538282.git.ps@pks.im>
- <xmqqcyk7lwa4.fsf@gitster.g>
- <CAG=Um+3=SQ7bZYvr4BNxWgMBNreQHgfs-0VQwkzBq=HW8Zxf=Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RPXh/GPn"
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-539f84907caso637303e87.3
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 01:48:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728895695; x=1729500495; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=xRX7qIx3eLyGef671/z/yND4kjbK1jJUtkwjNB2aWmA=;
+        b=RPXh/GPnzqfq22QXtxliG4wI2c1ZKzCed9S/TCQEkjvds6kKX4Cy6Kys7XbZvM7r66
+         jKmETa1B3S4EotWMHsX8Cay2bDohadfsl6O1/ny8tqyN7+ZpiRVrCFGzYN50IvN+PkXb
+         HONZvxqOXQgHEmUDOxKZKEjOzkA80Ef/KcZlFqpPGPAaIqJkrw1rQnA02bYCkdM6+hR6
+         5Q7Er9qcjbq/s063eqvzxgaiA1qfnvFNIH2Zze+1XY4NDsSaD2mCvlOIe9CssaC0Rs4J
+         gIHAYxAgkk5KTfdRfL65/o+dC6paVQkcZfvfzTdKDW0+gWkDRF0Wa6FPaUuoFoT26M3D
+         z6vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728895695; x=1729500495;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xRX7qIx3eLyGef671/z/yND4kjbK1jJUtkwjNB2aWmA=;
+        b=PIpPiVJQHSxx2l39OjtheUX87R8jrb1SmGguLUgjDYxzdLsBRvyjrkaRVitP1qEaao
+         PdUTQVHuSyZRgBfyZPnKVqWvbkVpbUbYA6e1W5fL5d6sqL6Nk9Ilt3ybUPyh+pMYbg15
+         go4I5XEbO8D1RWIvuiXEeXXAdCCufOY0tIWAil2AucJiqMHim01lzS9EjGvMaLGJtTs1
+         79PBkSt/AQRO1suqW27qjXOrRxUasLpB73vd8PESW0UPttBBsE21/TsMU6meKiOac0sE
+         puHgqip03yMU815Tx8fAojogNxK8abGz6HlCbQxLNe9z8yaVLGJk1O5TvAPVuSU5Mxhg
+         lumg==
+X-Forwarded-Encrypted: i=1; AJvYcCVUPyrIg+9jVzUe0mgV/qg+TKf4e1nzmGOHQuhXDxBYGbWL6SCmfVFI3/uZuKNp0P5P0uk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwE/2nkemvlSt3lPmE8Mxl2r/Ush5zG36Id8Tph0Js+oc1CtTbp
+	IxlzSB1fOpQqT+jBZYLo3KMRzEstCbNGOtk5kCL2x8XHxnlApwEP
+X-Google-Smtp-Source: AGHT+IFdRdCP2hnKIhUmakebZ3XOftc5tEriTCeFI02wBGpKqn3FJg1Gx9pDYM2wT1cuURHjMLEtBw==
+X-Received: by 2002:a05:6512:33cb:b0:539:f65b:3d1 with SMTP id 2adb3069b0e04-539f65b0552mr1265392e87.21.1728895694948;
+        Mon, 14 Oct 2024 01:48:14 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-430ccf4b1a0sm144701195e9.14.2024.10.14.01.48.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Oct 2024 01:48:14 -0700 (PDT)
+Message-ID: <509dffdb-ea4a-4fbc-8769-0b2e181c952b@gmail.com>
+Date: Mon, 14 Oct 2024 09:48:10 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAG=Um+3=SQ7bZYvr4BNxWgMBNreQHgfs-0VQwkzBq=HW8Zxf=Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v7 4/6] refs: add TRANSACTION_CREATE_EXISTS error
+To: Bence Ferdinandy <bence@ferdinandy.com>, phillip.wood@dunelm.org.uk,
+ git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?=
+ <l.s.r@web.de>, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>
+References: <20241010133022.1733542-1-bence@ferdinandy.com>
+ <20241012230428.3259229-1-bence@ferdinandy.com>
+ <20241012230428.3259229-4-bence@ferdinandy.com>
+ <cf7c4831-a766-430c-aac6-5cd5c2ceabed@gmail.com>
+ <D4UZ5DJWM3WM.MYD9YL6SLE@ferdinandy.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <D4UZ5DJWM3WM.MYD9YL6SLE@ferdinandy.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 14, 2024 at 10:14:53AM +0530, Shubham Kanodia wrote:
-> On Thu, Oct 10, 2024 at 10:39 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Patrick Steinhardt <ps@pks.im> writes:
-> >
-> > > +     write_script script/systemctl <<-\EOF &&
-> > > +     echo "$*" >>../systemctl.log
-> > > +     EOF
-> >
-> > Ah, for the purpose of this test, we _know_ in which directory the
-> > "systemctl" will be spawned, so this is good enough for us, of
-> > course.
-> >
-> > > +     git init repo &&
-> > > +     (
-> > > +             cd repo &&
-> > > +             sane_unset GIT_TEST_MAINT_SCHEDULER &&
-> > > +             PATH="$PWD/../script:$PATH" git maintenance start --scheduler=systemd
-> >
-> > I suspect we can use the same idea and add a relative path in $PATH
-> > for the test, perhaps, even though it is not a good coding
-> > discipline.  If $PWD, instead of $(pwd), works, it is perfectly OK.
-> >
-> > Will queue.  Thanks.
-> 
-> Appreciate for the quick fix, Patrick.
-> 
-> Homebrew upgraded their formulas to 2.47 rather quickly (the next day
-> after release) —
-> https://github.com/Homebrew/homebrew-core/commit/0435f258701abd3acb9e2f4cd758cc13aa93997c
-> 
-> Mac users who do a `brew install git` would now install versions with
-> a broken maintenance command.
-> Fortunately, `brew` auto-updates the world every time a user installs
-> anything so it's likely they get to a 2.47.1 in the future,
-> but that still might be a while away from when they install the
-> current latest (2.47.0).
-> 
-> I'm not sure if Git has a hotfix workflow, but it might make sense to
-> prevent more users from getting onto the buggy version
-> (especially since repo admins usually set up maintenance in the
-> background and the error might not be evident to users).
+Hi Bence
 
-I'm not sure around the timeline for Git v2.47.1, and Junio is going to
-be out of office for two weeks, so it may take a while. I'd recommend to
-backport the patch for now.
+On 13/10/2024 21:52, Bence Ferdinandy wrote:
+> On Sun Oct 13, 2024 at 16:03, Phillip Wood <phillip.wood123@gmail.com> wrote:
 
-Patrick
+>>> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+>>> index 3c96fbf66f..ebf8e57fbc 100644
+>>> --- a/refs/reftable-backend.c
+>>> +++ b/refs/reftable-backend.c
+>>> @@ -1206,10 +1206,13 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+>>>    				goto done;
+>>>    			}
+>>>    		} else if ((u->flags & REF_HAVE_OLD) && !oideq(&current_oid, &u->old_oid)) {
+>>> -			if (is_null_oid(&u->old_oid))
+>>> +			ret = TRANSACTION_NAME_CONFLICT;
+>>> +			if (is_null_oid(&u->old_oid)) {
+>>>    				strbuf_addf(err, _("cannot lock ref '%s': "
+>>>    						   "reference already exists"),
+>>>    					    ref_update_original_update_refname(u));
+>>> +				ret = TRANSACTION_CREATE_EXISTS;
+>>> +			}
+>>>    			else if (is_null_oid(&current_oid))
+>>>    				strbuf_addf(err, _("cannot lock ref '%s': "
+>>>    						   "reference is missing but expected %s"),
+>>> @@ -1221,7 +1224,6 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+>>>    					    ref_update_original_update_refname(u),
+>>>    					    oid_to_hex(&current_oid),
+>>>    					    oid_to_hex(&u->old_oid));
+>>> -			ret = -1;
+>>>    			goto done;
+>>>    		}
+>>>    
+> 
+> This originally returned -1, and it still returns that if it doesn't return -2,
+> I just used the named variable instead of the integer itself. It might still be
+> that this should be -3 GENERIC_ERROR, but if that is the case I think fixing
+> that should be a different patch? I didn't check if changing that -1 to
+> something else breaks anything or not.
+
+Oh sorry I was confused and thought TRANSACTION_GENERIC_ERROR was -1.
+
+Best Wishes
+
+Phillip
+
+> Best,
+> Bence
+> 
+
