@@ -1,128 +1,105 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344631BC2A
-	for <git@vger.kernel.org>; Mon, 14 Oct 2024 02:07:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4650A93D
+	for <git@vger.kernel.org>; Mon, 14 Oct 2024 03:25:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728871635; cv=none; b=een+wcrXK+50TqGDLB7YFxryMo+XFlS2CvYzM0TE9pGcihK5d34lokz5jBIlqqixea+oHuhtcuPChANRMB6dtofFoBhXyJoMcBV+UTSAREJm4h+D6kCFbZQzhQlyulyDupQT/R64wcv9F3Umw9MaF9GpNdCzhWE6jGDU5rQd2wo=
+	t=1728876358; cv=none; b=g5v2xyz/55bVmnnc2jKcOhO1OGHD69iDag2WAiiblsQWRs2U47aELJfhWSd0bntPXJdmDDzodTNDEMWsg/916KjF+6gwDFvK3N7dEGqg2gvnDo6fgZLZAkgAFPc/GMmumb6+8N9Uw8Cosmd0zRDWtXFWduFQJUlNZGTRZh+Ic4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728871635; c=relaxed/simple;
-	bh=bYOCfS4upCm1RAvjVmxjzJN16+sSE3Mpv3vVG9Uz800=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O+Pu4b+MqmIGc1sFjsD5OMHUS67Oo9ol8Hp8jtt1+4kDCqbLPJDhOh9VVvkfIidsdw0HZbfYPqVftFRusa3JqitrKAWXq5eh+F6msVYYcnh+YqAJpJhAzzCYIoHc+i+YWVzGJCtz9oTNjm/bQ2eUNCaMARZIQGJiCC9oyUOe4ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Message-ID: <e4c99594-08a1-4b5d-b862-bf51efae410e@gentoo.org>
-Date: Sun, 13 Oct 2024 22:07:10 -0400
+	s=arc-20240116; t=1728876358; c=relaxed/simple;
+	bh=2oNKrNTCVeIihEfpovzymO7xK+x4/CUZQ3CfnJ8iUz0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=YfeB5d7uQAno45L0c2/fqddHv0xL2xSntqrRi6KMXvqSZP1FuuOZEMEqKc6qEUsVgS6u6QJFiMSO3b/muV8EUtX8MYFHUO6kdccznydLMV1CPh7PgS1qpTg572d0+USn38GI9/Fob0JniEOmmal9QVXerC2YMjcK+lIjbRCWh5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=jzbqqNya; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="jzbqqNya"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2e2dcf4b153so2324811a91.1
+        for <git@vger.kernel.org>; Sun, 13 Oct 2024 20:25:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1728876354; x=1729481154; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ofKGMkL87F9IbflS/AiX1GwD+rXJCJ0oezqqCqajLvA=;
+        b=jzbqqNyavG4pKMP1H8I1XMOpG7TNxkq+4rRJ+nRh//hFUuHdKMCqI/LrDFUWybgKRe
+         kw+y16gpq+ICKZ58Yv7E4WvVcV++NrtvVubLPEcR7jJVqq5UmjswE3v1C6agJKkCkEF6
+         wJDNxM+sFTvEhZiWYWx0Im4zEkUnX7XJwKDxBABIlHD84qHCPwOIDitOopxFhNHcapAr
+         ZTFqEf+RUdftwjpcxct5h+JiNSTfV9gBzF0A2kE8M7rEamRqv/EhQm9QaF47xZdXnft5
+         RRpWZaBwz1O5wNEF6ii8jyWF9SmHoA3Ze0Kt3C4w+9y9NMgrL0xCMXhVXAdvds0hzJjs
+         ytXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728876354; x=1729481154;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ofKGMkL87F9IbflS/AiX1GwD+rXJCJ0oezqqCqajLvA=;
+        b=kdEUpBfd4UiQnu6cynVJL6GxSv4fqUvsjN7zzt6Rx0TiZIO6P20ZCvd0KS+9bTRm/K
+         Uo8Hdr2VSQ/c33NW4wFPFGs+dIS1gpnGBOcVLKE+pPXwi31o+7ZjKcnglsjS6Dbrxv91
+         BxxvUZ/c/m5gyUkuQ6RIXj/p2Lu6N1OnteWPOIuPYGvjYts/mG2mv0PbIOa3O2gAkiLl
+         j8Osh8CO/A3ZaBIsJVlFBwtg9gR7Ww5q0pZ6J/cBsYVi+pSQPDEPaRdNHmKJoJjExT4F
+         8FC2F9rgGiuAEP7KCzACkrgqr4JyNf8J34bqWK1aHyJVrZjDh5i1JOSThvD/Sqme5SeQ
+         iMpg==
+X-Gm-Message-State: AOJu0YyKu8nHx+9H2+e8IkGLaZzoBXGeyO7ZKVS9lGDQsd+iNbZALpUF
+	L8Y/5CmJQzyfg5Qp/Ds5KKp/oefICnfrqunON7gmJ8L2qgT1rKCZ9BT6uBCAckQfu27VBbtwesy
+	G
+X-Google-Smtp-Source: AGHT+IFSP3OAVeCD7/jahkberYp3iPI4qHVpVXyNshhPRrpHMjVXL3luOBaG8GFef2Au8R6tAy89sg==
+X-Received: by 2002:a17:90b:4a0b:b0:2e0:7560:9334 with SMTP id 98e67ed59e1d1-2e2f0d9a513mr13348155a91.36.1728876354424;
+        Sun, 13 Oct 2024 20:25:54 -0700 (PDT)
+Received: from localhost.localdomain ([63.216.146.178])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2ea9d4145sm6256480a91.18.2024.10.13.20.25.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 13 Oct 2024 20:25:53 -0700 (PDT)
+From: Han Young <hanyang.tony@bytedance.com>
+To: git@vger.kernel.org
+Cc: calvinwan@google.com,
+	jonathantanmy@google.com,
+	sokcevic@google.com,
+	gitster@pobox.com,
+	phillip.wood123@gmail.com,
+	Han Young <hanyang.tony@bytedance.com>
+Subject: [PATCH v4 0/3] repack: pack everything into promisor packfile in partial repos
+Date: Mon, 14 Oct 2024 11:25:42 +0800
+Message-ID: <20241014032546.68427-1-hanyang.tony@bytedance.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240802073143.56731-1-hanyang.tony@bytedance.com>
+References: <20240802073143.56731-1-hanyang.tony@bytedance.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 24/24] Introduce support for the Meson build system
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <cover.1727881164.git.ps@pks.im> <cover.1728485139.git.ps@pks.im>
- <724232b0fad2cbd5602ac1e900fd5dafff666012.1728485139.git.ps@pks.im>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <724232b0fad2cbd5602ac1e900fd5dafff666012.1728485139.git.ps@pks.im>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------N7Z0XJeazpUvIaXKEV00bnxW"
+Content-Transfer-Encoding: 8bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------N7Z0XJeazpUvIaXKEV00bnxW
-Content-Type: multipart/mixed; boundary="------------wZeJStBx2GZv63ZICwSBsvLH";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Message-ID: <e4c99594-08a1-4b5d-b862-bf51efae410e@gentoo.org>
-Subject: Re: [RFC PATCH v2 24/24] Introduce support for the Meson build system
-References: <cover.1727881164.git.ps@pks.im> <cover.1728485139.git.ps@pks.im>
- <724232b0fad2cbd5602ac1e900fd5dafff666012.1728485139.git.ps@pks.im>
-In-Reply-To: <724232b0fad2cbd5602ac1e900fd5dafff666012.1728485139.git.ps@pks.im>
+Changes from v3:
+- rebased to master: ef8ce8f3d4 (Start the 2.48 cycle, 2024-10-10)
 
---------------wZeJStBx2GZv63ZICwSBsvLH
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Note that this series breaks tests on branch seen, the test introduced by
+bc0c4e1637 (promisor-remote: check advertised name or URL, 2024-09-10)
+relies on the current repack behavior. I will provide an additional patch
+if both land in master.
 
-On 10/9/24 10:57 AM, Patrick Steinhardt wrote:
-> +script_environment =3D environment()
-> +foreach tool : ['cat', 'cut', 'grep', 'sed', 'sort', 'tr', 'uname']
-> +  program =3D find_program(tool)
-> +  script_environment.prepend('PATH', fs.parent(program.full_path()))
-> +endforeach
-> +
-> +libgit_sources +=3D custom_target(
-> +  'command-list.h',
-> +  input: 'command-list.txt',
-> +  output: 'command-list.h',
-> +  command: [shell, meson.current_source_dir() + '/generate-cmdlist.sh'=
-, meson.current_source_dir(), '@OUTPUT@'],
-> +  env: script_environment,
-> +)
+This series doesn't address the underlying problem with promisor objects,
+but rather mitigates the "repack removes local objects" problem.
+Until a satisfiable solution can be found[1], this would at least prevent
+more promisor repos from becoming corrupted.
 
+[1] https://lore.kernel.org/git/20241001191811.1934900-1-calvinwan@google.com/
 
-Maybe I am missing something about the necessity of this setting up of
-PATH? Should these programs not already be on PATH -- how does meson
-find them?
+Han Young (3):
+  repack: pack everything into packfile
+  t0410: adapt tests to repack changes
+  partial-clone: update doc
 
-> +zlib =3D dependency('zlib', default_options: ['default_library=3Dstati=
-c', 'tests=3Ddisabled'])
-> +if zlib.type_name() !=3D 'internal' and not compiler.has_function('def=
-lateBound',
-> +  prefix: '#include <zlib.h>',
-> +  dependencies: zlib,
-> +)
-> +  libgit_c_args +=3D '-DNO_DEFLATE_BOUND'
-> +endif
+ Documentation/technical/partial-clone.txt | 16 ++++--
+ builtin/repack.c                          | 46 ++++++++++++---
+ t/t0410-partial-clone.sh                  | 68 +----------------------
+ t/t5616-partial-clone.sh                  |  9 +--
+ 4 files changed, 53 insertions(+), 86 deletions(-)
 
+-- 
+2.46.0
 
-Probably should have mentioned this earlier on, but.
-
-What about
-
-if zlib.version().version_compare('>=3D1.2.0')
-    libgit_c_args +=3D '-DNO_DEFLATE_BOUND'
-endif
-
-
-since that is when that function was added.
-
-
---=20
-Eli Schwartz
-
---------------wZeJStBx2GZv63ZICwSBsvLH--
-
---------------N7Z0XJeazpUvIaXKEV00bnxW
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZwx8zgUDAAAAAAAKCRCEp9ErcA0vV5PE
-AQCrw5k6gsohUuwroMIi91HBEKdJGhyUSU1wkwsS5PkjqgEA0qbDX6n2LrsdGl8dY+UbiXXem2cX
-IoA1xofiFjM8Wgc=
-=zbxw
------END PGP SIGNATURE-----
-
---------------N7Z0XJeazpUvIaXKEV00bnxW--
