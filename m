@@ -1,69 +1,66 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816A61B6CFA
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 19:22:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5325F1F80A9
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 19:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729020162; cv=none; b=NVHtgW27sc+0O3kt9eLN9/5q2ao9gnHCFBLHYH7Wv3TB6cO6//uWpQ7cWn8QoNofgix+R6l3wUkX5oXlB2vHYC/zDrEFL3QjyMGn8nDfojdjMDUs95ugRIsIxASDh2Q1idj0csvKsZ8TMGzYNeOM75BuBHYA7ZQgcWnc19edrUE=
+	t=1729020260; cv=none; b=mVU2JLWT0B5xeF0Jvw2S72Twy0/WJhodz1ms/0MSrIfmNYtRMBWNodZnAclW5QqwnRfcevWGY0Etk5sdok0X2DmlDUcEwy2zJjNfvlg4tsC/XPeVvSqFDE/aMBAZ6WUMDdDgRqP9xv9njavjGIws0nFoCC0ZAKk7PwEnGGqdpMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729020162; c=relaxed/simple;
-	bh=EaGTPonfiGfnwSftOdjeta5Vd8vBvqaUa4sFncaC3so=;
+	s=arc-20240116; t=1729020260; c=relaxed/simple;
+	bh=Od4J7m8Y9HldjWT39GmMEj06BeJbZ9u/gRtFUrvnevI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nFd0kB1hOnD0ZYJGbLWdhN/d8M5N6e8tbqxLG1/zlWGjU6vH+OCVlRyDvQtUu7nh1uvpZiXLxPIoxcMEd1wLojlnsd9Vx6Yf99M6Us5X8E7wpsqq6ppJID+nyCzqSCLTULlAV+wgx9gKADeMigNAyVdDL2GHW8Vdw+tlrGOe0RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=kaxp1m8u; arc=none smtp.client-ip=209.85.160.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=bF5bxhd1bAjL6HfRkqb6EFOTQlWlhDPH3CEa9byV3xev0b/ihwbIzMQSym0PJdHoI+QMZNiYX5oQN7gIuztF+CptqqsIEWlTNHlswpCpuX6XBd1+k0XbRqB9ThAhLdpT/v7iIPJvkCtRQd1NR/kwXqOcTHlYCEXzBw04ejFMdpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=wmBUlCjr; arc=none smtp.client-ip=209.85.128.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kaxp1m8u"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-4603f64ef17so1728951cf.0
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 12:22:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="wmBUlCjr"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6e2e427b07dso42226277b3.1
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 12:24:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729020159; x=1729624959; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=EaGTPonfiGfnwSftOdjeta5Vd8vBvqaUa4sFncaC3so=;
-        b=kaxp1m8u/gMsfjm4GaR9soVpO/BwwNhFwS8TqCtLFxQKp0ZbEe6GOn9UTtMrOtZtU9
-         oyjdIsX5KzhRvb5cIIZFvpDT0hvvLsdagbjYP+Uyi1EqssTVhs/CpHbyVwHILSqnYtl0
-         wzhUCSU4YuTFsBZ6hZkK1qBJwdv8ZNsyZ8D9YkSFtzQPNFk/RptJ3kR6SJTN2SAHXBwt
-         Sh3kxbuhwe3I/x1rAXxVyU2mDFAUiSUm4pGMASMQMZmbMWa89mXzkeNQd4cthpE1QEb/
-         xfI0i2Ywkt8LPdXEDOalHd9IXLQQ7OW+WJkkuc3UkhSVmA70ZnrjncCEr7kkEUoLjAg8
-         pjyw==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729020258; x=1729625058; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BcOFQdRTMA5EuXOmAla+zIOj8XQBrcBlgElYX4Wr/EA=;
+        b=wmBUlCjr+ohD5lSOKjvOZzEFsnmBhUzmyi4gqIe3EZiER7ZEQ0sugkSs/Bnq9w7Z2C
+         Ql0f/lv3o1Ly/eB7Zdg53M6adOtJQ+z1vNuu//qytOPzh7Npnqgjoa3j8jJLRTH2DO8S
+         Z6keW+/xEE1A5FETy8j+Xu+woFFWd8+GqUKP5x3D8ip9fQU89PEKkNo8+P++rPpekdxt
+         FcFrfcVq+G+CAkOUB2HhsBasiwjwj5aJH4wAwpHYOuVUXMISDVPqlemkAxfOSrxObt2h
+         u+DacjSejt3h5zxbPRdLGi/P7ypVp0wi/dHFdAzW3WGY8AAvcz5XK3VLe+vuH6DMyv+U
+         B1YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729020159; x=1729624959;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EaGTPonfiGfnwSftOdjeta5Vd8vBvqaUa4sFncaC3so=;
-        b=E8JRvE2Iic5ukTrWsQdszeMKuMFDt9Ont/Jad/gOM2gxrMCqEokJEFx3kNFwjsbs3p
-         MV60hy09nSGofzJYoMrs7A+37WyLM0EN5/0iPn9IG3PU/01UPqpHXFvYemIIpHYq3P7c
-         U8T+AGtSgqyAjP7nXwg9fIgiaq00zdlId+VfDHdzAOP8zJQoaOZ5as5lqJ10793j70kn
-         dPW2i/38Gx2Lz4OAsrN1uuyQ9aMG8ubOykCgsxTPX2sHbJjK0iBR8HgMNTu509oKBHUJ
-         UXUYQHoRwry3zUC9dMGsq3sKnm5SLtcTVRYwR9ILkGacipMnqAdy5uvGG+0G0Zeh+x56
-         X8Jg==
-X-Forwarded-Encrypted: i=1; AJvYcCXzOI2+yyGk3WzbVHsrE3bsMReWvZxA8CFvancnB9Ade/hLvyjNXVYE2tEplBIICUsXbMU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw52NKLo+FUZGM43F/wloC0vh+QwXVNnc5Hvpfit5nOctLEO49L
-	3Y/q62p0KJvJYWmOUAXncwCVzlDK50hFDvRQehefDY1g/jBAxoN2dz38112xFuI=
-X-Google-Smtp-Source: AGHT+IE2/Ue9VH/zsKqRyl0VzD9vx+lRdDRPY4q7w4h1E8xqawIS1P+g/yZ/xZ2cbppCpOI05sxfFQ==
-X-Received: by 2002:ac8:5851:0:b0:45d:793f:e18b with SMTP id d75a77b69052e-4604b32127bmr283546471cf.27.1729020159362;
-        Tue, 15 Oct 2024 12:22:39 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729020258; x=1729625058;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BcOFQdRTMA5EuXOmAla+zIOj8XQBrcBlgElYX4Wr/EA=;
+        b=svKGcdrtAnqwxKEHIOba5/Y3vzLQkHYCG1WNKB5srRruCxVHFD9tzsRNc49Yl142pa
+         KNxKE2iZVToXgEVWcLx4Uzqw6FMx9Aoif2OyYbkYrDd5A3hSJDfYuT05svyiXNBmYuJ1
+         VcdJj7yQhSKLo7UE0POfl1fATzQTYosA0t/71ANdyiMuRGRe89zQY9yhwb+39AWXwhTT
+         iUjtqULss92o7Cj0TBztimcYC5nbqPN8VXAL2S5+QkTx1VSrfypJBoR8ee18n+vM+dOa
+         rBKTvuW3/FYaRR7MSBGniSYBAesiaN+wO3uX3/EMJ0UqueGlbmM5QMr/X7TelfCDDWYX
+         aL/w==
+X-Gm-Message-State: AOJu0YwwHntesB5ivfETUkP2ltpYvsm85haCVSK/9DzR0HnXe9zwOA/W
+	+/1AJh1RgJkIFRm6T6iYqG3RlWAY16D9rHOU6KRJ9R+OiGdYAt3yjAal2czvAaE=
+X-Google-Smtp-Source: AGHT+IHoFxe9eHpLJf6EkneUOhcd6iDAUJMrDg2wSqEYrIrTrAJtER+Qm3xpCyCvRmfRj+3P2pfJmQ==
+X-Received: by 2002:a05:690c:6305:b0:6e3:3a22:7205 with SMTP id 00721157ae682-6e3644c0082mr113072597b3.44.1729020258009;
+        Tue, 15 Oct 2024 12:24:18 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4607b0e4152sm9760911cf.36.2024.10.15.12.22.38
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5ae32d8sm4119867b3.4.2024.10.15.12.24.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2024 12:22:39 -0700 (PDT)
-Date: Tue, 15 Oct 2024 15:22:37 -0400
+        Tue, 15 Oct 2024 12:24:16 -0700 (PDT)
+Date: Tue, 15 Oct 2024 15:24:15 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>,
-	git@vger.kernel.org, sandals@crustytoothpaste.net,
-	asedeno@google.com
-Subject: Re: [PATCH 0/2] Restore support for older libcurl and fix some typos
-Message-ID: <Zw7A/UASAFNsfmPF@nand.local>
-References: <20241014131346.3556163-1-asedeno@mit.edu>
- <Zw23K4zPN9e+JyNA@nand.local>
- <CAOO-Oz3eQ+fpWU3qLHtF5oCxj2ieoc6P4R+iKJTG3DoWrb6W3g@mail.gmail.com>
- <CAPig+cRENnd9cV5yFfVVwbuux84k10_vcht-TTtKGJmRNYEttA@mail.gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Ed Reel <edreel@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/3] Makefile: extract script to generate clar
+ declarations
+Message-ID: <Zw7BX0BEzC07DRby@nand.local>
+References: <CAGjHeYfyH+cOMYYYHnFR+Vu9T+RbmzO1SpB_-kbmBSf1DitJhA@mail.gmail.com>
+ <cover.1728985514.git.ps@pks.im>
+ <7a619677c7af6ba8213a36208e20ab75c4318e38.1728985514.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,42 +69,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cRENnd9cV5yFfVVwbuux84k10_vcht-TTtKGJmRNYEttA@mail.gmail.com>
+In-Reply-To: <7a619677c7af6ba8213a36208e20ab75c4318e38.1728985514.git.ps@pks.im>
 
-On Tue, Oct 15, 2024 at 02:29:33AM -0400, Eric Sunshine wrote:
-> On Mon, Oct 14, 2024 at 8:51 PM Alejandro R. Sedeño <asedeno@mit.edu> wrote:
-> > On Mon, Oct 14, 2024 at 8:28 PM Taylor Blau <me@ttaylorr.com> wrote:
-> > > On Mon, Oct 14, 2024 at 09:13:44AM -0400, Alejandro R. Sedeño wrote:
-> > > > This is presented as an alternative to the patch series from
-> > > > brian m. carlson that bumps the minimum version of libcurl
-> > > > to 7.61.0 [3].
-> > >
-> > > This conflicts with brian's series as you mention, so I haven't picked
-> > > this one up in 'seen' yet.
-> > >
-> > > Could you summarize why you think this series is a better approach than
-> > > what brian has posted? On its own, I do not understand the motivation.
-> >
-> > It's a question of preserving compatibility vs ratcheting up minimum
-> > requirements. Both have their merits. I sent in this patch set after
-> > seeing some mild pushback to brian's series, just to present an
-> > alternative. Maintaining compatibility with older versions can be a
-> > burden to the project, though I think given this patch series, it's
-> > not a very big one. Ratcheting up the minimum requirements can be a
-> > burden to users stuck on (or choosing to try and support) older
-> > platforms. At some point the burden on the project outweighs the
-> > desire to support those older platforms. Where that tipping point is
-> > is for the community to decide.
->
-> For reference, I'm the one who pushed back on brian's series. The
-> "push-back" subthread starts at [1].
->
-> [1]: https://lore.kernel.org/git/20241014132856.3558224-1-asedeno@mit.edu/T/#mc1180f00cf52de4e9bae334c2cd5abd9a160dbbe
+On Tue, Oct 15, 2024 at 11:46:11AM +0200, Patrick Steinhardt wrote:
+> +for suite in "$@"
+> +do
+> +	sed -ne "s/^\(void test_$suite__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$\)/extern \1;/p" "$suite" ||
+> +	exit 1
+> +done >"$OUTPUT"
 
-OK. Junio had brian's series in 'seen' when I picked up the integration
-branches on Friday evening. Let's keep it that way for now while we wait
-to see what approach between the two is preferred.
+Much cleaner, thanks.
+
+> 2.47.0.72.gef8ce8f3d4.dirty
 
 Thanks,
 Taylor
