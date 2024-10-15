@@ -1,84 +1,82 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0901E8855
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99A01EABAB
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992719; cv=none; b=if2N3iydNC1hK0jTQHCeKNoeLs5HVip2xf6pYB5IKzDAQbMzs8shdeKEnH7Dw62DmXM1cwUzmA0T0ittBIyg7DRK+OFnIbVwSrbXdUSQsfhEw0GaGtDj/H78F8SaW77EooHHV8ZoSo02swgecAVHaSOjVH0f0SR/b8UwojA6NWQ=
+	t=1728992720; cv=none; b=rni95HEa+LjVyozSLkoFSNlA37dYDUglJqj/3QwIB8SWw9ZmnpEOYFoQuaxY3PJKRIpNxs/MvwBM/Lh1sX/MKAmK0M89A9F3XJjhRUPHX98SsqWLM2wR2x3BJ/6/EngQaG/qWoae2OpEcNE7+iwpPsElj2FjBUReyIrJGTdOVF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992719; c=relaxed/simple;
-	bh=tCMFGKPSZdkWQK0SJaLVWl2ybK5qhqtMlQvbjVzHMDw=;
+	s=arc-20240116; t=1728992720; c=relaxed/simple;
+	bh=n0A7Jc9eGhxSM4IzpqM4TS3JdMe3whp3xtYH79sSuFQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hul9K6kVOocGD5FNB6FCL3mBUgNbL8XUpNfyrv+UAU3E3v7TnzSEzZ4Ojc3FsJw0TqaVxV7w1wvEVBrE/85pzTpz7prXijmKSQ7T3oZRWzAJkBrC1AbVBSul1lJvh7RZ+7PSMCeEhHMSRospu1629dI5GwtueVgUo4gV/WCKPQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Kigd676z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hG2CmsEO; arc=none smtp.client-ip=202.12.124.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=fAUFlJB660r2dWneSzoxcXoX96mXgaT6KfVM+hyb5UWovCqL06+1Zc4vicHpkF5eSkDVH78WiQXorTr9RPK21g2tQGYJTBnUKYUn8Nl1G3Wr7dj5UrSWYgeVuceP1vOmu5MDm7BJNtpmZl/1oRsTfOK130SLi3WjhoGOOZREH+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P5Nv9hHA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zcl3JKng; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Kigd676z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hG2CmsEO"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 10B8C11400B7;
-	Tue, 15 Oct 2024 07:45:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P5Nv9hHA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zcl3JKng"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8EE9111400B9;
+	Tue, 15 Oct 2024 07:45:17 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Tue, 15 Oct 2024 07:45:15 -0400
+  by phl-compute-11.internal (MEProxy); Tue, 15 Oct 2024 07:45:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728992714;
-	 x=1729079114; bh=+r12wr5bK83886nFtiTx2f+GJ8ZCdVgNd+DFGQh2T4o=; b=
-	Kigd676zEG1sw3I6wrX/B6Gp+cDVzlO2WIuOLls/E9Jw6EW7eNkHLBAdgYPES1ZO
-	UrsIubyU8cXFlK5BzuqxrP9Z7eVwcC9w7eUI30Np2W08i6USS/TF8kByoN26fwYy
-	LemG5J+JKN07xVcSJ6U1h/gbb6Pjtjf8ytC0k0+s8jUAs4ae3HzxkE8XmxHNhGEr
-	tVpQMnz4wxfSP0pWTN5yhpoGJ/q95Y9h5nLNLzVUJKrckQ5aFNFbipKrgtrOBVnG
-	KH/ZLypjyxJk5Q0sEV5N4EAo9wxEHOHEHuvE87Oid+MjFsYJ19JLEeH9TLMFCgBL
-	YxEa1kf2hyOMXfpOoCj0kw==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1728992717; x=1729079117; bh=Y3q+0LDusJ
+	XB3OB3K5AJ3qj6qWUbRw1RNRQDnKGedRE=; b=P5Nv9hHA3LKDv3mlWwe9aMKxnb
+	6mUPxbaXKJj4gxE8Jd1zpJ/nL7FlOouqrefUjrK3KsEGUk/Rbn6Qk61SC9FjfHpl
+	b0Bq2kASheehiLEZDQOhu5MWmyJpimKLBj0zBVP+PyJ5AtTYODQ050EhcRjZ1abU
+	QfER3OSfpLeDhmpgXkMqEory3+Urinyp8G1grODAdJYEDHIznS1ipqfquNgiJ3R4
+	Usw2Dn/Tw43aotIY2zorN13CtJQlSLdwRPT9YqyC0gBo2BDSbPFHIAsfmqgphfRq
+	4bKe2uCDpAOIDBnMLsJ9jz7kHq9yXnDI5RDqrDyDf2+DsKa/z6miZuTiP4JA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728992714; x=
-	1729079114; bh=+r12wr5bK83886nFtiTx2f+GJ8ZCdVgNd+DFGQh2T4o=; b=h
-	G2CmsEOxDtLUtL/aJUnXtvImsbDAQUqdJohJJjIdLFJSSvVez5nm2sJSPioAOvkF
-	NNEFSIMkd1oTU6aCVsoSrIMl5AbXzwP/F1paHhjfSlLTpCXaf/yA4+1cK+xyVIrS
-	vcU//+S5utxnx3P/IanXy+3lvjEzuzGlxYyaBoEx82CVpRLiAMdtyPMDq5xATM6e
-	VanDPYUaA1FDbMLJZQniGG1M3QP5eD3ZZVbLtmILeCk+j2lOH2SZJWODo4lqQoFy
-	WISQmfPIbuVONs7DenU+R14ymiaRp1Zymb5GSFGsURol9hwFAdbQdjT3bv47D2nF
-	dX+Gs8ekWuZV+J7pnEbWQ==
-X-ME-Sender: <xms:ylUOZ0i8gCsKefTKinF-QgpkpfwN0GCy84A2tpEzPKzGckO6tavmyg>
-    <xme:ylUOZ9D2Tnn1256Ti_zjkeXcpdgfrdaTQW7KdscqCrtLXkwGMP7jdbKyQSYK4-Q5Q
-    O1oJr15uzu23u2o0w>
-X-ME-Received: <xmr:ylUOZ8FOfndpYF4Lfb0qMaYuut8Bq6tk7WM6R29Xcb3K0dLz8UpuksABVZSleUDqvHGUTZEhLqPCEARzbd5k-BF9X0Mquvy9MisTYg1XpRyk3A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedggeegucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1728992717; x=1729079117; bh=Y3q+0LDusJXB3OB3K5AJ3qj6qWUb
+	Rw1RNRQDnKGedRE=; b=Zcl3JKnguf67gdVLUopdBamtvjG1y0KhwNtym2vo/TyJ
+	cel6nriHVAWkDz9G3+565gOoT4tbX4siMToiMtBOUE/RDRmpWhFwjcNTjgkoJPBC
+	+OmULD0E7TDXTue9YBM747OLGDPRTKQuveX0iBaubGnI5slR2zmwI6RzBmAsaWTY
+	BtGnHiWqUUQdk7wDCqawi6VPz+m3ssDGGybaQYBi0Sa0aKKjbQd1B4139FNd47mp
+	3Xx888vkOT9lBvqFULQnmzNgCATO0rEY8TDRSHUJB2W1yQQtfJYh7TfDkzUVnomZ
+	M6s+H9WMYb9Z2g+ryfG0KMdUXP/mIWdpBeg2+9xyEg==
+X-ME-Sender: <xms:zVUOZ6wh1g6lLd8Y29L5_3Db70jA1r2PM_d9qv4CwU8VUZTvabu78w>
+    <xme:zVUOZ2T68i2SvlidYAfA2oDf-vRn7smlsDSkQFFCCAnsyeowKuOj0OALcXUsy2Zi5
+    I0NgiSFgwywf8mzPA>
+X-ME-Received: <xmr:zVUOZ8XM-mBB6l5Rc3Civ22NHsGN7lVlTJFTxzZWsADMm9ybXAdqtJHynwEHw1PTP3I5DuykD6Yovz0tMvU51YKhf6Qa1ZSp28HZJKEVOfBnxg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedggeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeegiefhuefhkeetueeijeehheejveetveefvdfhleel
-    hfeigeejtdfgtefhieeiteenucffohhmrghinhephhhtthhpqdhfvghttghhqdguuhhmsg
-    drshhhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    phhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpd
-    hrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphht
-    thhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:ylUOZ1RaWJgPCx4_sz24piUejp4VjOb2NkEFdD7C_ZRhKTImbjsaZw>
-    <xmx:ylUOZxyyeZh0hLMdV3jATyYtuR7vBfmKVRrfgghhU8RgKmh_WUxOSw>
-    <xmx:ylUOZz6ajDwdXHfDPtl6vDPY3m_6KlXMGqtFHOzD7IGNyQbmbUDKYg>
-    <xmx:ylUOZ-zxNoLqROocRNWbjUUjAH13A9_Psu66xnp_zD0ZFiK1GgyNAA>
-    <xmx:ylUOZ5_JitTvb9hPpLL8CKNHJ_a-GBIt6Pb9GC32UPjYG_9F6YxQVWCW>
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhi
+    nhgvsehsuhhnshhhihhnvggtohdrtghomh
+X-ME-Proxy: <xmx:zVUOZwiaQX8z1_LGveFmITFT-SX3Vipc6huZsMnrxLkg-lSe4cHBNQ>
+    <xmx:zVUOZ8CJ9Uqtd6qLQepwvtC8FuLhi8vfNZ1Yd4sKV9yNL_8gaZq65Q>
+    <xmx:zVUOZxLDNIJFc7OdAC9WclDXgVtmO4ZjWRxb494s6mRQMZJefZY78w>
+    <xmx:zVUOZzDM7rpOapTqzJbsJwIGsgWphDeFmU-2LqpCKFdDXQ71cRR8Kw>
+    <xmx:zVUOZ_O4N9PCWNSA84KX5dZb8rpPT5PxaBGwV5B1b6RfjpSECSIb_Wk1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Oct 2024 07:45:13 -0400 (EDT)
+ 15 Oct 2024 07:45:16 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e86f0e79 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 15 Oct 2024 11:43:58 +0000 (UTC)
-Date: Tue, 15 Oct 2024 13:45:11 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 07251505 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 15 Oct 2024 11:44:01 +0000 (UTC)
+Date: Tue, 15 Oct 2024 13:45:14 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 02/10] t/test-lib: wire up NO_ICONV prerequisite
-Message-ID: <f6a8582c34a7b77aa3e2e45298208050333c384a.1728992306.git.ps@pks.im>
+Subject: [PATCH v2 03/10] t/lib-gitweb: test against the build version of
+ gitweb
+Message-ID: <2e2d208ef1b64e87795e91cf8cf1e4376067ccd4.1728992306.git.ps@pks.im>
 References: <cover.1728906490.git.ps@pks.im>
  <cover.1728992306.git.ps@pks.im>
 Precedence: bulk
@@ -87,957 +85,53 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1728992306.git.ps@pks.im>
 
-The iconv library is used by Git to reencode files, commit messages and
-other things. As such it is a rather integral part, but given that many
-platforms nowadays use UTF-8 everywhere you can live without support for
-reencoding in many situations. It is thus optional to build Git with
-iconv, and some of our platforms wired up in "config.mak.uname" disable
-it. But while we support building without it, running our test suite
-with "NO_ICONV=Yes" causes many test failures.
+When testing gitweb we set up the CGI script as "gitweb.perl", which is
+the source file of the build target "gitweb.cgi". This file doesn't have
+a patched shebang and still contains `++REPLACEMENT++` markers, but
+things generally work because we replace the configuration with our own
+test configuration.
 
-Wire up a new test prerequisite ICONV that gets populated via our
-GIT-BUILD-OPTIONS. Annotate failing tests accordingly.
+But this only works as long as "$GIT_BUILD_DIR" actually points to the
+source tree, because "gitweb.cgi" and "gitweb.perl" happen to sit next
+to each other. This is not the case though once you have out-of-tree
+builds like with CMake, where the source and built versions live in
+different directories. Consequently, "$GIT_BUILD_DIR/gitweb/gitweb.perl"
+won't exist there.
 
-Note that this commit does not do a deep dive into every single test to
-assess whether the failure is expected or not. Most of the tests do
-smell like the expected kind of failure though.
+While we could ask build systems with out-of-tree builds to instead set
+up GITWEB_TEST_INSTALLED, which allows us to override the location of
+the script, it goes against the spirit of this environment variable. We
+_don't_ want to test against an installed version, we want to use the
+version we have just built.
 
-Further note that there are several "!MINGW" conditions in t4201, and
-all of these fail due to iconv-related errors. This is quite likely a
-leftover from times before dce7d29551 (msvc: support building Git using
-MS Visual C++, 2019-06-25), which switched Windows-based builds over
-from "NO_ICONV=YesPlease" to "NEEDS_LIBICONV=YesPlease". Consequently,
-adapt those tests to also use the new ICONV prerequisite.
+Fix this by using "gitweb.cgi" instead. This means that you cannot run
+test scripts without building that file, but in general we do expect
+developers to build stuff before they test it anyway.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile                                     |   1 +
- contrib/buildsystems/CMakeLists.txt          |   6 ++
- t/t0028-working-tree-encoding.sh             |   6 ++
- t/t2082-parallel-checkout-attributes.sh      |   2 +-
- t/t3434-rebase-i18n.sh                       |   6 ++
- t/t3900-i18n-commit.sh                       |   6 ++
- t/t3901-i18n-patch.sh                        |   6 ++
- t/t4041-diff-submodule-option.sh             |  16 ++-
- t/t4059-diff-submodule-not-initialized.sh    |  16 ++-
- t/t4060-diff-submodule-option-diff-format.sh |  17 ++--
- t/t4201-shortlog.sh                          |   8 +-
- t/t4205-log-pretty-formats.sh                | 102 +++++++++++--------
- t/t4210-log-i18n.sh                          |   6 ++
- t/t4254-am-corrupt.sh                        |   6 ++
- t/t5100-mailinfo.sh                          |  14 ++-
- t/t5550-http-fetch-dumb.sh                   |   4 +-
- t/t6006-rev-list-format.sh                   |  54 ++++++----
- t/t7102-reset.sh                             |  40 +++++---
- t/t8005-blame-i18n.sh                        |   6 ++
- t/t9300-fast-import.sh                       |   2 +-
- t/t9350-fast-export.sh                       |  10 +-
- t/test-lib.sh                                |   1 +
- 22 files changed, 229 insertions(+), 106 deletions(-)
+ t/lib-gitweb.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index feeed6f9321..5db10347341 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3171,6 +3171,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo PYTHON_PATH=\''$(subst ','\'',$(PYTHON_PATH_SQ))'\' >>$@+
- 	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@+
- 	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@+
-+	@echo NO_ICONV=\''$(subst ','\'',$(subst ','\'',$(NO_ICONV)))'\' >>$@+
- 	@echo NO_EXPAT=\''$(subst ','\'',$(subst ','\'',$(NO_EXPAT)))'\' >>$@+
- 	@echo USE_LIBPCRE2=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE2)))'\' >>$@+
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 62af7b33d2f..1384c0eb6d3 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1109,6 +1109,7 @@ set(DIFF diff)
- set(PYTHON_PATH /usr/bin/python)
- set(TAR tar)
- set(NO_CURL )
-+set(NO_ICONV )
- set(NO_EXPAT )
- set(USE_LIBPCRE2 )
- set(NO_PERL )
-@@ -1122,6 +1123,10 @@ if(NOT CURL_FOUND)
- 	set(NO_CURL 1)
- endif()
- 
-+if(NOT Iconv_FOUND)
-+	SET(NO_ICONV 1)
-+endif()
-+
- if(NOT EXPAT_FOUND)
- 	set(NO_EXPAT 1)
- endif()
-@@ -1145,6 +1150,7 @@ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "DIFF='${DIFF}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PYTHON_PATH='${PYTHON_PATH}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "TAR='${TAR}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_CURL='${NO_CURL}'\n")
-+file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_ICONV='${NO_ICONV}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_EXPAT='${NO_EXPAT}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PERL='${NO_PERL}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PTHREADS='${NO_PTHREADS}'\n")
-diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-index ad151a34670..510da4ca12d 100755
---- a/t/t0028-working-tree-encoding.sh
-+++ b/t/t0028-working-tree-encoding.sh
-@@ -12,6 +12,12 @@ TEST_CREATE_REPO_NO_TEMPLATE=1
- 
- GIT_TRACE_WORKING_TREE_ENCODING=1 && export GIT_TRACE_WORKING_TREE_ENCODING
- 
-+if ! test_have_prereq ICONV
-+then
-+	skip_all='skipping working tree encoding tests; iconv not available'
-+	test_done
-+fi
-+
- test_expect_success 'setup test files' '
- 	git config core.eol lf &&
- 
-diff --git a/t/t2082-parallel-checkout-attributes.sh b/t/t2082-parallel-checkout-attributes.sh
-index aec55496eb1..a040aa54cee 100755
---- a/t/t2082-parallel-checkout-attributes.sh
-+++ b/t/t2082-parallel-checkout-attributes.sh
-@@ -34,7 +34,7 @@ test_expect_success 'parallel-checkout with ident' '
- 	)
- '
- 
--test_expect_success 'parallel-checkout with re-encoding' '
-+test_expect_success ICONV 'parallel-checkout with re-encoding' '
- 	set_checkout_config 2 0 &&
- 	git init encoding &&
- 	(
-diff --git a/t/t3434-rebase-i18n.sh b/t/t3434-rebase-i18n.sh
-index 26a48d6b103..97fc9a23f21 100755
---- a/t/t3434-rebase-i18n.sh
-+++ b/t/t3434-rebase-i18n.sh
-@@ -20,6 +20,12 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
-+if ! test_have_prereq ICONV
-+then
-+	skip_all='skipping rebase i18n tests; iconv not available'
-+	test_done
-+fi
-+
- compare_msg () {
- 	iconv -f "$2" -t "$3" "$TEST_DIRECTORY/t3434/$1" >expect &&
- 	git cat-file commit HEAD >raw &&
-diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index db7b403bc15..9d4b5ab1f95 100755
---- a/t/t3900-i18n-commit.sh
-+++ b/t/t3900-i18n-commit.sh
-@@ -8,6 +8,12 @@ test_description='commit and log output encodings'
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
-+if ! test_have_prereq ICONV
-+then
-+	skip_all='skipping commit i18n tests; iconv not available'
-+	test_done
-+fi
-+
- compare_with () {
- 	git show -s $1 | sed -e '1,/^$/d' -e 's/^    //' >current &&
- 	case "$3" in
-diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
-index 5f0b9afc3fa..e0659c92935 100755
---- a/t/t3901-i18n-patch.sh
-+++ b/t/t3901-i18n-patch.sh
-@@ -11,6 +11,12 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
-+if ! test_have_prereq ICONV
-+then
-+	skip_all='skipping patch i18n tests; iconv not available'
-+	test_done
-+fi
-+
- check_encoding () {
- 	# Make sure characters are not corrupted
- 	cnt="$1" header="$2" i=1 j=0
-diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-index 8fc40e75eb3..aa149e0085e 100755
---- a/t/t4041-diff-submodule-option.sh
-+++ b/t/t4041-diff-submodule-option.sh
-@@ -15,12 +15,18 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
--# Tested non-UTF-8 encoding
--test_encoding="ISO8859-1"
-+# Test non-UTF-8 encoding in case iconv is available.
-+if test_have_prereq ICONV
-+then
-+	test_encoding="ISO8859-1"
-+	# String "added" in German (translated with Google Translate), encoded in UTF-8,
-+	# used in sample commit log messages in add_file() function below.
-+	added=$(printf "hinzugef\303\274gt")
-+else
-+	test_encoding="UTF-8"
-+	added="added"
-+fi
- 
--# String "added" in German (translated with Google Translate), encoded in UTF-8,
--# used in sample commit log messages in add_file() function below.
--added=$(printf "hinzugef\303\274gt")
- add_file () {
- 	(
- 		cd "$1" &&
-diff --git a/t/t4059-diff-submodule-not-initialized.sh b/t/t4059-diff-submodule-not-initialized.sh
-index 668f5263038..28fd3cdb154 100755
---- a/t/t4059-diff-submodule-not-initialized.sh
-+++ b/t/t4059-diff-submodule-not-initialized.sh
-@@ -12,12 +12,18 @@ initialized previously but the checkout has since been removed.
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
--# Tested non-UTF-8 encoding
--test_encoding="ISO8859-1"
- 
--# String "added" in German (translated with Google Translate), encoded in UTF-8,
--# used in sample commit log messages in add_file() function below.
--added=$(printf "hinzugef\303\274gt")
-+# Test non-UTF-8 encoding in case iconv is available.
-+if test_have_prereq ICONV
-+then
-+	test_encoding="ISO8859-1"
-+	# String "added" in German (translated with Google Translate), encoded in UTF-8,
-+	# used in sample commit log messages in add_file() function below.
-+	added=$(printf "hinzugef\303\274gt")
-+else
-+	test_encoding="UTF-8"
-+	added="added"
-+fi
- 
- add_file () {
- 	(
-diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
-index 8ce67442d96..918334fa4c8 100755
---- a/t/t4060-diff-submodule-option-diff-format.sh
-+++ b/t/t4060-diff-submodule-option-diff-format.sh
-@@ -13,12 +13,17 @@ This test tries to verify the sanity of --submodule=diff option of git diff.
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
--# Tested non-UTF-8 encoding
--test_encoding="ISO8859-1"
--
--# String "added" in German (translated with Google Translate), encoded in UTF-8,
--# used in sample commit log messages in add_file() function below.
--added=$(printf "hinzugef\303\274gt")
-+# Test non-UTF-8 encoding in case iconv is available.
-+if test_have_prereq ICONV
-+then
-+	test_encoding="ISO8859-1"
-+	# String "added" in German (translated with Google Translate), encoded in UTF-8,
-+	# used in sample commit log messages in add_file() function below.
-+	added=$(printf "hinzugef\303\274gt")
-+else
-+	test_encoding="UTF-8"
-+	added="added"
-+fi
- 
- add_file () {
- 	(
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index c20c8857244..680e707ba1e 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -105,7 +105,7 @@ test_expect_success 'output from user-defined format is re-wrapped' '
- 	test_cmp expect log.predictable
- '
- 
--test_expect_success !MINGW 'shortlog wrapping' '
-+test_expect_success ICONV 'shortlog wrapping' '
- 	cat >expect <<\EOF &&
- A U Thor (5):
-       Test
-@@ -126,13 +126,13 @@ EOF
- 	test_cmp expect out
- '
- 
--test_expect_success !MINGW 'shortlog from non-git directory' '
-+test_expect_success ICONV 'shortlog from non-git directory' '
- 	git log --no-expand-tabs HEAD >log &&
- 	GIT_DIR=non-existing git shortlog -w <log >out &&
- 	test_cmp expect out
- '
- 
--test_expect_success !MINGW 'shortlog can read --format=raw output' '
-+test_expect_success ICONV 'shortlog can read --format=raw output' '
- 	git log --format=raw HEAD >log &&
- 	GIT_DIR=non-existing git shortlog -w <log >out &&
- 	test_cmp expect out
-@@ -182,7 +182,7 @@ $DSCHO (2):
- 
- EOF
- 
--test_expect_success !MINGW 'shortlog encoding' '
-+test_expect_success ICONV 'shortlog encoding' '
- 	git reset --hard "$commit" &&
- 	git config --unset i18n.commitencoding &&
- 	echo 2 > a1 &&
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index eb63ce011fa..dbbd6125510 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -114,19 +114,19 @@ test_expect_success 'alias loop' '
- 	test_must_fail git log --pretty=test-foo
- '
- 
--test_expect_success 'NUL separation' '
-+test_expect_success ICONV 'NUL separation' '
- 	printf "add bar\0$(commit_msg)" >expected &&
- 	git log -z --pretty="format:%s" >actual &&
- 	test_cmp expected actual
- '
- 
--test_expect_success 'NUL termination' '
-+test_expect_success ICONV 'NUL termination' '
- 	printf "add bar\0$(commit_msg)\0" >expected &&
- 	git log -z --pretty="tformat:%s" >actual &&
- 	test_cmp expected actual
- '
- 
--test_expect_success 'NUL separation with --stat' '
-+test_expect_success ICONV 'NUL separation with --stat' '
- 	stat0_part=$(git diff --stat HEAD^ HEAD) &&
- 	stat1_part=$(git diff-tree --no-commit-id --stat --root HEAD^) &&
- 	printf "add bar\n$stat0_part\n\0$(commit_msg)\n$stat1_part\n" >expected &&
-@@ -181,7 +181,7 @@ test_expect_success 'setup more commits' '
- 	head4=$(git rev-parse --verify --short HEAD~3)
- '
- 
--test_expect_success 'left alignment formatting' '
-+test_expect_success ICONV 'left alignment formatting' '
- 	git log --pretty="tformat:%<(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF >expected &&
- 	message two                            Z
-@@ -192,7 +192,7 @@ test_expect_success 'left alignment formatting' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'left alignment formatting. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	message two                            Z
-@@ -203,7 +203,7 @@ test_expect_success 'left alignment formatting. i18n.logOutputEncoding' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting at the nth column' '
-+test_expect_success ICONV 'left alignment formatting at the nth column' '
- 	git log --pretty="tformat:%h %<|(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF >expected &&
- 	$head1 message two                    Z
-@@ -214,7 +214,7 @@ test_expect_success 'left alignment formatting at the nth column' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting at the nth column' '
-+test_expect_success ICONV 'left alignment formatting at the nth column' '
- 	COLUMNS=50 git log --pretty="tformat:%h %<|(-10)%s" >actual &&
- 	qz_to_tab_space <<-EOF >expected &&
- 	$head1 message two                    Z
-@@ -225,7 +225,7 @@ test_expect_success 'left alignment formatting at the nth column' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting at the nth column. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'left alignment formatting at the nth column. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%h %<|(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	$head1 message two                    Z
-@@ -236,7 +236,7 @@ test_expect_success 'left alignment formatting at the nth column. i18n.logOutput
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting with no padding' '
-+test_expect_success ICONV 'left alignment formatting with no padding' '
- 	git log --pretty="tformat:%<(1)%s" >actual &&
- 	cat <<-EOF >expected &&
- 	message two
-@@ -258,7 +258,7 @@ test_expect_success 'left alignment formatting with no padding. i18n.logOutputEn
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting with trunc' '
-+test_expect_success ICONV 'left alignment formatting with trunc' '
- 	git log --pretty="tformat:%<(10,trunc)%s" >actual &&
- 	qz_to_tab_space <<-\EOF >expected &&
- 	message ..
-@@ -269,7 +269,7 @@ test_expect_success 'left alignment formatting with trunc' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting with trunc. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'left alignment formatting with trunc. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(10,trunc)%s" >actual &&
- 	qz_to_tab_space <<-\EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	message ..
-@@ -280,7 +280,7 @@ test_expect_success 'left alignment formatting with trunc. i18n.logOutputEncodin
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting with ltrunc' '
-+test_expect_success ICONV 'left alignment formatting with ltrunc' '
- 	git log --pretty="tformat:%<(10,ltrunc)%s" >actual &&
- 	qz_to_tab_space <<-EOF >expected &&
- 	..sage two
-@@ -291,7 +291,7 @@ test_expect_success 'left alignment formatting with ltrunc' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting with ltrunc. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'left alignment formatting with ltrunc. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(10,ltrunc)%s" >actual &&
- 	qz_to_tab_space <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	..sage two
-@@ -302,7 +302,7 @@ test_expect_success 'left alignment formatting with ltrunc. i18n.logOutputEncodi
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting with mtrunc' '
-+test_expect_success ICONV 'left alignment formatting with mtrunc' '
- 	git log --pretty="tformat:%<(10,mtrunc)%s" >actual &&
- 	qz_to_tab_space <<-\EOF >expected &&
- 	mess.. two
-@@ -313,7 +313,7 @@ test_expect_success 'left alignment formatting with mtrunc' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left alignment formatting with mtrunc. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'left alignment formatting with mtrunc. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(10,mtrunc)%s" >actual &&
- 	qz_to_tab_space <<-\EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	mess.. two
-@@ -324,7 +324,7 @@ test_expect_success 'left alignment formatting with mtrunc. i18n.logOutputEncodi
- 	test_cmp expected actual
- '
- 
--test_expect_success 'right alignment formatting' '
-+test_expect_success ICONV 'right alignment formatting' '
- 	git log --pretty="tformat:%>(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF >expected &&
- 	Z                            message two
-@@ -335,7 +335,7 @@ test_expect_success 'right alignment formatting' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'right alignment formatting. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'right alignment formatting. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%>(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	Z                            message two
-@@ -346,7 +346,7 @@ test_expect_success 'right alignment formatting. i18n.logOutputEncoding' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'right alignment formatting at the nth column' '
-+test_expect_success ICONV 'right alignment formatting at the nth column' '
- 	git log --pretty="tformat:%h %>|(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF >expected &&
- 	$head1                      message two
-@@ -357,7 +357,7 @@ test_expect_success 'right alignment formatting at the nth column' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'right alignment formatting at the nth column' '
-+test_expect_success ICONV 'right alignment formatting at the nth column' '
- 	COLUMNS=50 git log --pretty="tformat:%h %>|(-10)%s" >actual &&
- 	qz_to_tab_space <<-EOF >expected &&
- 	$head1                      message two
-@@ -368,7 +368,7 @@ test_expect_success 'right alignment formatting at the nth column' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'right alignment formatting at the nth column. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'right alignment formatting at the nth column. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%h %>|(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	$head1                      message two
-@@ -381,7 +381,7 @@ test_expect_success 'right alignment formatting at the nth column. i18n.logOutpu
- 
- # Note: Space between 'message' and 'two' should be in the same column
- # as in previous test.
--test_expect_success 'right alignment formatting at the nth column with --graph. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'right alignment formatting at the nth column with --graph. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --graph --pretty="tformat:%h %>|(40)%s" >actual &&
- 	iconv -f utf-8 -t $test_encoding >expected <<-EOF &&
- 	* $head1                    message two
-@@ -392,7 +392,7 @@ test_expect_success 'right alignment formatting at the nth column with --graph.
- 	test_cmp expected actual
- '
- 
--test_expect_success 'right alignment formatting with no padding' '
-+test_expect_success ICONV 'right alignment formatting with no padding' '
- 	git log --pretty="tformat:%>(1)%s" >actual &&
- 	cat <<-EOF >expected &&
- 	message two
-@@ -403,7 +403,7 @@ test_expect_success 'right alignment formatting with no padding' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'right alignment formatting with no padding and with --graph' '
-+test_expect_success ICONV 'right alignment formatting with no padding and with --graph' '
- 	git log --graph --pretty="tformat:%>(1)%s" >actual &&
- 	cat <<-EOF >expected &&
- 	* message two
-@@ -414,7 +414,7 @@ test_expect_success 'right alignment formatting with no padding and with --graph
- 	test_cmp expected actual
- '
- 
--test_expect_success 'right alignment formatting with no padding. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'right alignment formatting with no padding. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%>(1)%s" >actual &&
- 	cat <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	message two
-@@ -425,7 +425,7 @@ test_expect_success 'right alignment formatting with no padding. i18n.logOutputE
- 	test_cmp expected actual
- '
- 
--test_expect_success 'center alignment formatting' '
-+test_expect_success ICONV 'center alignment formatting' '
- 	git log --pretty="tformat:%><(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF >expected &&
- 	Z             message two              Z
-@@ -436,7 +436,7 @@ test_expect_success 'center alignment formatting' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'center alignment formatting. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'center alignment formatting. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%><(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	Z             message two              Z
-@@ -446,7 +446,7 @@ test_expect_success 'center alignment formatting. i18n.logOutputEncoding' '
- 	EOF
- 	test_cmp expected actual
- '
--test_expect_success 'center alignment formatting at the nth column' '
-+test_expect_success ICONV 'center alignment formatting at the nth column' '
- 	git log --pretty="tformat:%h %><|(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF >expected &&
- 	$head1           message two          Z
-@@ -457,7 +457,7 @@ test_expect_success 'center alignment formatting at the nth column' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'center alignment formatting at the nth column' '
-+test_expect_success ICONV 'center alignment formatting at the nth column' '
- 	COLUMNS=70 git log --pretty="tformat:%h %><|(-30)%s" >actual &&
- 	qz_to_tab_space <<-EOF >expected &&
- 	$head1           message two          Z
-@@ -468,7 +468,7 @@ test_expect_success 'center alignment formatting at the nth column' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'center alignment formatting at the nth column. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'center alignment formatting at the nth column. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%h %><|(40)%s" >actual &&
- 	qz_to_tab_space <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	$head1           message two          Z
-@@ -479,7 +479,7 @@ test_expect_success 'center alignment formatting at the nth column. i18n.logOutp
- 	test_cmp expected actual
- '
- 
--test_expect_success 'center alignment formatting with no padding' '
-+test_expect_success ICONV 'center alignment formatting with no padding' '
- 	git log --pretty="tformat:%><(1)%s" >actual &&
- 	cat <<-EOF >expected &&
- 	message two
-@@ -493,7 +493,7 @@ test_expect_success 'center alignment formatting with no padding' '
- # save HEAD's SHA-1 digest (with no abbreviations) to use it below
- # as far as the next test amends HEAD
- old_head1=$(git rev-parse --verify HEAD~0)
--test_expect_success 'center alignment formatting with no padding. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'center alignment formatting with no padding. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%><(1)%s" >actual &&
- 	cat <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	message two
-@@ -504,7 +504,7 @@ test_expect_success 'center alignment formatting with no padding. i18n.logOutput
- 	test_cmp expected actual
- '
- 
--test_expect_success 'left/right alignment formatting with stealing' '
-+test_expect_success ICONV 'left/right alignment formatting with stealing' '
- 	git commit --amend -m short --author "long long long <long@me.com>" &&
- 	git log --pretty="tformat:%<(10,trunc)%s%>>(10,ltrunc)% an" >actual &&
- 	cat <<-\EOF >expected &&
-@@ -515,7 +515,7 @@ test_expect_success 'left/right alignment formatting with stealing' '
- 	EOF
- 	test_cmp expected actual
- '
--test_expect_success 'left/right alignment formatting with stealing. i18n.logOutputEncoding' '
-+test_expect_success ICONV 'left/right alignment formatting with stealing. i18n.logOutputEncoding' '
- 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(10,trunc)%s%>>(10,ltrunc)% an" >actual &&
- 	cat <<-\EOF | iconv -f utf-8 -t $test_encoding >expected &&
- 	short long  long long
-@@ -564,22 +564,38 @@ test_expect_success 'log decoration properly follows tag chain' '
- 	git tag -d tag1 &&
- 	git commit --amend -m shorter &&
- 	git log --no-walk --tags --pretty="%H %d" --decorate=full >actual &&
--	cat <<-EOF >expected &&
--	$head2  (tag: refs/tags/message-one)
--	$old_head1  (tag: refs/tags/message-two)
--	$head1  (tag: refs/tags/tag2)
--	EOF
-+	if test_have_prereq ICONV
-+	then
-+		cat <<-EOF >expected
-+		$head2  (tag: refs/tags/message-one)
-+		$old_head1  (tag: refs/tags/message-two)
-+		$head1  (tag: refs/tags/tag2)
-+		EOF
-+	else
-+		cat <<-EOF >expected
-+		$head2  (tag: refs/tags/message-one)
-+		$old_head1  (tag: refs/tags/tag2, tag: refs/tags/message-two)
-+		EOF
-+	fi &&
- 	sort -k3 actual >actual1 &&
- 	test_cmp expected actual1
- '
- 
- test_expect_success 'clean log decoration' '
- 	git log --no-walk --tags --pretty="%H %D" --decorate=full >actual &&
--	cat >expected <<-EOF &&
--	$head2 tag: refs/tags/message-one
--	$old_head1 tag: refs/tags/message-two
--	$head1 tag: refs/tags/tag2
--	EOF
-+	if test_have_prereq ICONV
-+	then
-+		cat <<-EOF >expected
-+		$head2 tag: refs/tags/message-one
-+		$old_head1 tag: refs/tags/message-two
-+		$head1 tag: refs/tags/tag2
-+		EOF
-+	else
-+		cat <<-EOF >expected
-+		$head2 tag: refs/tags/message-one
-+		$old_head1 tag: refs/tags/tag2, tag: refs/tags/message-two
-+		EOF
-+	fi &&
- 	sort -k3 actual >actual1 &&
- 	test_cmp expected actual1
- '
-diff --git a/t/t4210-log-i18n.sh b/t/t4210-log-i18n.sh
-index 7120030b5c6..4a12b2b4979 100755
---- a/t/t4210-log-i18n.sh
-+++ b/t/t4210-log-i18n.sh
-@@ -5,6 +5,12 @@ test_description='test log with i18n features'
- TEST_PASSES_SANITIZE_LEAK=true
- . ./lib-gettext.sh
- 
-+if ! test_have_prereq ICONV
-+then
-+	skip_all='skipping log i18n tests; iconv not available'
-+	test_done
-+fi
-+
- # two forms of é
- utf8_e=$(printf '\303\251')
- latin1_e=$(printf '\351')
-diff --git a/t/t4254-am-corrupt.sh b/t/t4254-am-corrupt.sh
-index 661feb60709..cb03522d021 100755
---- a/t/t4254-am-corrupt.sh
-+++ b/t/t4254-am-corrupt.sh
-@@ -5,6 +5,12 @@ test_description='git am with corrupt input'
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
-+if ! test_have_prereq ICONV
-+then
-+	skip_all='skipping am encoding corruption tests; iconv not available'
-+	test_done
-+fi
-+
- make_mbox_with_nul () {
- 	space=' '
- 	q_nul_in_subject=
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index 065156c1f39..23b2f218725 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -28,7 +28,12 @@ check_mailinfo () {
- 
- for mail in 00*
- do
--	test_expect_success "mailinfo $mail" '
-+	case "$mail" in
-+	0004)
-+		prereq=ICONV;;
-+	esac
-+
-+	test_expect_success $prereq "mailinfo $mail" '
- 		check_mailinfo "$mail" "" &&
- 		if test -f "$DATA/msg$mail--scissors"
- 		then
-@@ -56,7 +61,12 @@ test_expect_success 'split box with rfc2047 samples' \
- 
- for mail in rfc2047/00*
- do
--	test_expect_success "mailinfo $mail" '
-+	case "$mail" in
-+	rfc2047/0001)
-+		prereq=ICONV;;
-+	esac
-+
-+	test_expect_success $prereq "mailinfo $mail" '
- 		git mailinfo -u "$mail-msg" "$mail-patch" <"$mail" >"$mail-info" &&
- 		echo msg &&
- 		test_cmp "$DATA/empty" "$mail-msg" &&
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 58189c9f7dc..3c873de17ec 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -344,12 +344,12 @@ test_expect_success 'git client shows text/plain with a charset' '
- 	grep "this is the error message" stderr
- '
- 
--test_expect_success 'http error messages are reencoded' '
-+test_expect_success ICONV 'http error messages are reencoded' '
- 	test_must_fail git clone "$HTTPD_URL/error/utf16" 2>stderr &&
- 	grep "this is the error message" stderr
- '
- 
--test_expect_success 'reencoding is robust to whitespace oddities' '
-+test_expect_success ICONV 'reencoding is robust to whitespace oddities' '
- 	test_must_fail git clone "$HTTPD_URL/error/odd-spacing" 2>stderr &&
- 	grep "this is the error message" stderr
- '
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index f1623b1c06d..2a01a62a2f3 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -13,21 +13,41 @@ TEST_PASSES_SANITIZE_LEAK=true
- . "$TEST_DIRECTORY"/lib-terminal.sh
- 
- test_tick
--# Tested non-UTF-8 encoding
--test_encoding="ISO8859-1"
--
--# String "added" in German
--# (translated with Google Translate),
--# encoded in UTF-8, used as a commit log message below.
--added_utf8_part=$(printf "\303\274")
--added_utf8_part_iso88591=$(echo "$added_utf8_part" | iconv -f utf-8 -t $test_encoding)
--added=$(printf "added (hinzugef${added_utf8_part}gt) foo")
--added_iso88591=$(echo "$added" | iconv -f utf-8 -t $test_encoding)
--# same but "changed"
--changed_utf8_part=$(printf "\303\244")
--changed_utf8_part_iso88591=$(echo "$changed_utf8_part" | iconv -f utf-8 -t $test_encoding)
--changed=$(printf "changed (ge${changed_utf8_part}ndert) foo")
--changed_iso88591=$(echo "$changed" | iconv -f utf-8 -t $test_encoding)
-+
-+if test_have_prereq ICONV
-+then
-+	# Tested non-UTF-8 encoding
-+	test_encoding="ISO8859-1"
-+
-+	# String "added" in German
-+	# (translated with Google Translate),
-+	# encoded in UTF-8, used as a commit log message below.
-+	added_utf8_part=$(printf "\303\274")
-+	added_utf8_part_iso88591=$(echo "$added_utf8_part" | iconv -f utf-8 -t $test_encoding)
-+	added=$(printf "added (hinzugef${added_utf8_part}gt) foo")
-+	added_iso88591=$(echo "$added" | iconv -f utf-8 -t $test_encoding)
-+	# same but "changed"
-+	changed_utf8_part=$(printf "\303\244")
-+	changed_utf8_part_iso88591=$(echo "$changed_utf8_part" | iconv -f utf-8 -t $test_encoding)
-+	changed=$(printf "changed (ge${changed_utf8_part}ndert) foo")
-+	changed_iso88591=$(echo "$changed" | iconv -f utf-8 -t $test_encoding)
-+else
-+	# Tested non-UTF-8 encoding
-+	test_encoding="UTF-8"
-+
-+	# String "added" in German
-+	# (translated with Google Translate),
-+	# encoded in UTF-8, used as a commit log message below.
-+	added_utf8_part="u"
-+	added_utf8_part_iso88591="u"
-+	added=$(printf "added (hinzugef${added_utf8_part}gt) foo")
-+	added_iso88591="$added"
-+	# same but "changed"
-+	changed_utf8_part="a"
-+	changed_utf8_part_iso88591="a"
-+	changed=$(printf "changed (ge${changed_utf8_part}ndert) foo")
-+	changed_iso88591="$changed"
-+fi
- 
- # Count of char to truncate
- # Number is chosen so, that non-ACSII characters
-@@ -198,7 +218,7 @@ Thu, 7 Apr 2005 15:13:13 -0700
- 1112911993
- EOF
- 
--test_format encoding %e <<EOF
-+test_format ICONV encoding %e <<EOF
- commit $head2
- $test_encoding
- commit $head1
-@@ -374,7 +394,7 @@ test_expect_success 'setup complex body' '
- 	head3_short=$(git rev-parse --short $head3)
- '
- 
--test_format complex-encoding %e <<EOF
-+test_format ICONV complex-encoding %e <<EOF
- commit $head3
- $test_encoding
- commit $head2
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index 2add26d7684..e9a6cc72658 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -13,21 +13,31 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
--commit_msg () {
--	# String "modify 2nd file (changed)" partly in German
--	# (translated with Google Translate),
--	# encoded in UTF-8, used as a commit log message below.
--	msg="modify 2nd file (ge\303\244ndert)\n"
--	if test -n "$1"
--	then
--		printf "$msg" | iconv -f utf-8 -t "$1"
--	else
--		printf "$msg"
--	fi
--}
--
--# Tested non-UTF-8 encoding
--test_encoding="ISO8859-1"
-+if test_have_prereq ICONV
-+then
-+	commit_msg () {
-+		# String "modify 2nd file (changed)" partly in German
-+		# (translated with Google Translate),
-+		# encoded in UTF-8, used as a commit log message below.
-+		msg="modify 2nd file (ge\303\244ndert)\n"
-+		if test -n "$1"
-+		then
-+			printf "$msg" | iconv -f utf-8 -t "$1"
-+		else
-+			printf "$msg"
-+		fi
-+	}
-+
-+	# Tested non-UTF-8 encoding
-+	test_encoding="ISO8859-1"
-+else
-+	commit_msg () {
-+		echo "modify 2nd file (geandert)"
-+	}
-+
-+	# Tested non-UTF-8 encoding
-+	test_encoding="UTF-8"
-+fi
- 
- test_expect_success 'creating initial files and commits' '
- 	test_tick &&
-diff --git a/t/t8005-blame-i18n.sh b/t/t8005-blame-i18n.sh
-index 75da219ed1b..7a1f581c240 100755
---- a/t/t8005-blame-i18n.sh
-+++ b/t/t8005-blame-i18n.sh
-@@ -3,6 +3,12 @@
- test_description='git blame encoding conversion'
- . ./test-lib.sh
- 
-+if ! test_have_prereq ICONV
-+then
-+	skip_all='skipping blame i18n tests; iconv not available'
-+	test_done
-+fi
-+
- . "$TEST_DIRECTORY"/t8005/utf8.txt
- . "$TEST_DIRECTORY"/t8005/euc-japan.txt
- . "$TEST_DIRECTORY"/t8005/sjis.txt
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 3b3c371740a..6224f54d4d2 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -3676,7 +3676,7 @@ test_expect_success !MINGW 'W: get-mark & empty orphan commit with erroneous thi
- ### series X (other new features)
- ###
- 
--test_expect_success 'X: handling encoding' '
-+test_expect_success ICONV 'X: handling encoding' '
- 	test_tick &&
- 	cat >input <<-INPUT_END &&
- 	commit refs/heads/encoding
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 2bdc02b4599..9595dfef2ee 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -125,7 +125,7 @@ test_expect_success 'fast-export --show-original-ids | git fast-import' '
- 	test $MUSS = $(git rev-parse --verify refs/tags/muss)
- '
- 
--test_expect_success 'reencoding iso-8859-7' '
-+test_expect_success ICONV 'reencoding iso-8859-7' '
- 
- 	test_when_finished "git reset --hard HEAD~1" &&
- 	test_config i18n.commitencoding iso-8859-7 &&
-@@ -421,7 +421,7 @@ M 100644 :1 there
- 
- EOF
- 
--test_expect_success 'dropping tag of filtered out object' '
-+test_expect_success ICONV 'dropping tag of filtered out object' '
- (
- 	cd limit-by-paths &&
- 	git fast-export --tag-of-filtered-object=drop mytag -- there > output &&
-@@ -438,7 +438,7 @@ msg
- 
- EOF
- 
--test_expect_success 'rewriting tag of filtered out object' '
-+test_expect_success ICONV 'rewriting tag of filtered out object' '
- (
- 	cd limit-by-paths &&
- 	git fast-export --tag-of-filtered-object=rewrite mytag -- there > output &&
-@@ -667,7 +667,7 @@ M 100644 :13 file
- 
- EOF
- 
--test_expect_success 'avoid uninteresting refs' '
-+test_expect_success ICONV 'avoid uninteresting refs' '
- 	> tmp-marks &&
- 	git fast-export --import-marks=tmp-marks \
- 		--export-marks=tmp-marks main > /dev/null &&
-@@ -686,7 +686,7 @@ from :14
- 
- EOF
- 
--test_expect_success 'refs are updated even if no commits need to be exported' '
-+test_expect_success ICONV 'refs are updated even if no commits need to be exported' '
- 	> tmp-marks &&
- 	git fast-export --import-marks=tmp-marks \
- 		--export-marks=tmp-marks main > /dev/null &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 241198ba95f..a278181a056 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1743,6 +1743,7 @@ esac
- 
- ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
- test -z "$NO_CURL" && test_set_prereq LIBCURL
-+test -z "$NO_ICONV" && test_set_prereq ICONV
- test -z "$NO_PERL" && test_set_prereq PERL
- test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
- test -z "$NO_PYTHON" && test_set_prereq PYTHON
+diff --git a/t/lib-gitweb.sh b/t/lib-gitweb.sh
+index 1f32ca66ea5..7f9808ec202 100644
+--- a/t/lib-gitweb.sh
++++ b/t/lib-gitweb.sh
+@@ -48,8 +48,8 @@ EOF
+ 		test -f "$SCRIPT_NAME" ||
+ 		error "Cannot find gitweb at $GITWEB_TEST_INSTALLED."
+ 		say "# Testing $SCRIPT_NAME"
+-	else # normal case, use source version of gitweb
+-		SCRIPT_NAME="$GIT_BUILD_DIR/gitweb/gitweb.perl"
++	else # normal case, use built version of gitweb
++		SCRIPT_NAME="$GIT_BUILD_DIR/gitweb/gitweb.cgi"
+ 	fi
+ 	export SCRIPT_NAME
+ }
 -- 
 2.47.0.72.gef8ce8f3d4.dirty
 
