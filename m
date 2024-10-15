@@ -1,55 +1,55 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DCFF1F80CC
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 19:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7674F1F80D6
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 19:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729019115; cv=none; b=Z+9NblTeGylJs8iE769lWsPQkkjWDNUIr/X6e+c2cqq4qqHKhTBMB/B4NZbU807fMBvc+Tyj+V6MnvJt0Fe14JspH5K7F/tpgcz/br9ur2VPyxUYVOOYO0dbHl5T/mXPTIrMghz9u2zb8VsnSBVuX4gO0J/uNXI/Kde19li22Ns=
+	t=1729019118; cv=none; b=GpD8JMPjHlHhVOf34gw1zKEJwIh7+CXxvkwrd20YsAMXIQYRSFPlaILjNrMSbYL5PNADe7WPrpimbffj+xWDGx4NlnQZlCc6Hx0dWiu9jDHX2E0DseAAJjDymGXl+HDygxxIceUwta8alS5A/Drwny0NYAheSP9I2OxSPnaZoXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729019115; c=relaxed/simple;
-	bh=mQWXbJCo3ZthSAMX1YkIYlCRwPG5xAphUX33efYRg00=;
+	s=arc-20240116; t=1729019118; c=relaxed/simple;
+	bh=XH03Q/6S5f3+U1XDnnPSNOAJM2a3z899KznDiJkvdnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jQLJUkgMh1N5aDZb1wGmM02vA9u1wSJQMqNx+qezg59uBnMhjUlTgoIJWaFQW99jZJZMLDttGZLXHpFXEbu6prmpZrqv8Kp9c/xrA4vjQC8/DTIJZeZwcRROlk0OvIAIZSj6TH1NjQiHmXcjruH3++tATJAEotU0GFsO5oMrq1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LYU3L5xU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oKafn06U; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=She/S6dI3O8p576412Lwexg+ghwf8DELcUsMdhR0tCwk42mpIBG4awPwDlQxEzPRcXa8glM0/6vzdyCZsGAvLwLYY8perGdc7QIkkzuK8c6aGbudMXg5WSWTvXMe3jyqKeipzDG3FHvFd6PCvfki1rvI6g3+2Mkt7QGQNJAPsLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=pxQztXoF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JsfcLQDf; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LYU3L5xU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oKafn06U"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9093A138010C;
-	Tue, 15 Oct 2024 15:05:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="pxQztXoF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JsfcLQDf"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id AB177138010C;
+	Tue, 15 Oct 2024 15:05:15 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Tue, 15 Oct 2024 15:05:12 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 15 Oct 2024 15:05:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1729019112;
-	 x=1729105512; bh=8npD8EdiYf6ydygU9OnYqaJXF5OLp1GzMK34kNOvddw=; b=
-	LYU3L5xUChjimRr5ZYFNkwVoHSsGXa+xR2iRUye8VIfMNEVF7kOHtqaFWCnWSyMk
-	tihj7c/0dnmNN7Tp6bcCbmq+w2V18T5m4NszEQ6Fd7de0yE+gbMeWF3PQxqvqa/Q
-	Nh8G6Q2i5qWMLgAUtDOfjS5xgi8CT9t8MJ9kvC/tFDSfmYfH6fTDFiibnsHYKaYD
-	5iRpIqGSaT/r24UajNLBuLVwx8jnRod1BktTJkweibntlzfgz+e0ZU4zES54ars4
-	AyT4zL4CnHeV0ZO/jufcjTsLeS+ryRob56kYUx07TVy0mdJLVhY0VhOLEK/wvSrN
-	uaStBmHEUZJs4QiMWXZE9Q==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1729019115;
+	 x=1729105515; bh=feCi2vp98FKxMXpE9+R2KruHO6AoQLoZqk3bBDpY0xg=; b=
+	pxQztXoF9h0RJP1q/gTPUZi7esuH1I+ubje3dp26Qhtzgl3EXzBGqj5JkGAQ8VTt
+	umlBobkTp4BCPFnuyHadfJxg8CcX6ETxbXD02VAW/GDDZwKxsJDpDckIjS0BT+V3
+	/Wgo+zVcLFnvSVOjll6yIrTKZU6WY/uRkzeawkfwjwjg3TWP+O0CIHg9+S2a0ifI
+	4O4zjt1E98FD2pFpAAh7BkXmCVsQRYN5/O1/Rc7LLZlkDOuV2NxOa0gci7z+MvBW
+	2dnFtxVg5Sj0GEAO6W4E21FzkeGFiYxX9GyZu0gbxUsmlQim3tNcvBH1tS54NmZa
+	kNSgsVkyRHAkACvGUT2ZcQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729019112; x=
-	1729105512; bh=8npD8EdiYf6ydygU9OnYqaJXF5OLp1GzMK34kNOvddw=; b=o
-	Kafn06ULqp6/5DU2MAK4ZFCoWI3PLENWNdi2nAhJ7HqTJCXAHaK3hopC3udSFY31
-	4Bv3U9gVcnmCq1M+FL2Ed40Q1DDQrunKave9nqnT2s495GBpqu6fWVI2HUF3zalb
-	trja54FNms2anHNMFrHp2y1PX4jTUgzozA/JW+HWyQ4520q8foJByoxxVtlNZ5G7
-	sc/5v8jjWDEPMV7Py29YM3VWXSd6JL1pMSfTrrnRz9FcmKHc/GVp+/YczDMk/sEn
-	Foac/hSOakHxIbTeginB9qleWKxEHJQUSUoTP3aMSxCwXaFMgo6BLJ28ARwKeOh9
-	WB4QlKo0f2307W+/AkFsg==
-X-ME-Sender: <xms:6LwOZ_FKSX9vbTQ94AL5WImxtBNloUb4yJ9AUs_0eQBAYeRp6-AZ5Y4>
-    <xme:6LwOZ8WKq2eOMmz_BsUR9Cw-0tnt3WWbFGuo0aLW6wpAu02GWb5HfYBQgBToqVc5D
-    BcPcRbFCPgIlLk2nA>
-X-ME-Received: <xmr:6LwOZxJss_30ReqlxPUMUPNPaAl7PNF7epvtBUmwXTQxuz6Ng38cxFalZYoYe5eab-uQgTzkU3iCLB48xeO1S--YRHl4mv-KthKOCVKRIw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729019115; x=
+	1729105515; bh=feCi2vp98FKxMXpE9+R2KruHO6AoQLoZqk3bBDpY0xg=; b=J
+	sfcLQDf9FK+fJ7uHB2i8At0FDI7xqGNI/mxylnG+y4S3DQWIXmoGRUDv51WJ9jXT
+	FXoMNS9gy+5HNkPLv27VIg7xD2ud6xQG76lv+OyR7A3iewjvZ/xkN2q+vYzvuy0G
+	Tgvecdz8yrkBn+oA6NiJfnYdIPvJS9uKV8PC0SxHi11FwuufQZn8ttWSo0cA3m8K
+	fi4a10ad/zVFuJdX/khVFSKVIONM/AyQ2dUp1+9pBlNn43p7ao49QUkpL07KB+UW
+	Wo1hZ4F10XY/7ZCnT5sWB72err5EA2pHmkjv7i+/rK05UdP+CHdgq59et4XqSmBY
+	BFIwcIA/MoWxEG1K2oRCg==
+X-ME-Sender: <xms:67wOZ5480YLAyhrPKcDUupgz9-1bxAq6Q2PCGy9oui1eZ0mkgRR9DTs>
+    <xme:67wOZ27fKt0WkoBE1i8l1bZn5Rzbt7XxFaR0RveXCF6dFRbhyOctyda0qmFRqIZtc
+    k46lznqcL9ftOrsEw>
+X-ME-Received: <xmr:67wOZwdOxgRbENyZFCwMLqAzweRAiTRjkOLoXblJ1WsAFCJd_5R5BfP41JUOoqZHPSak9jSmh_baffo2avPkh7D5DvQooHNv_VbIQ_vvrA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedgudefvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
@@ -64,14 +64,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedgudefvdcutefuodetgg
     gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsggvnhgt
     vgesfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekke
     esghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:6LwOZ9Gb-LkAO7eR2aT4MjX37jfhRR0KKadOOkApXuV0zopa6WOdSg>
-    <xmx:6LwOZ1Xix6lFx8vM29R4w9ZkCySO_OCNb5S7HoQYfYsJVn294Nm8vg>
-    <xmx:6LwOZ4NYtrxIHfgiNrbQjnNJxP0X7OKaL2f3vZUHabx7YJS-9K3Pew>
-    <xmx:6LwOZ03zitLANGV68RmMvAZ-DIwWR_m45wYQC4gN2cHBmg5GP5Sd4g>
-    <xmx:6LwOZ3JO0-RxgvnSCCM-emjOGMeCw8-IiPmXuDGSEL_3Y0NhBjz_Y5WH>
+X-ME-Proxy: <xmx:67wOZyLv4HeuEbwfZoP51ErV-CaiHfRIBMp6zgHdkrgfmuPViNSe9Q>
+    <xmx:67wOZ9IhOk1sh86uiidKTai0lhQQ6YS2snosTPy3vNmbsO9CySKg2w>
+    <xmx:67wOZ7yuoebSLCrbAQqRD_KCMUmiEm4YCSdOIyb46sovuBTXZDULCg>
+    <xmx:67wOZ5LfwQVNwJq_fOJDmlN_StozQhJTO5ZyPIekQsnPPPZ9jyE9LA>
+    <xmx:67wOZ18Fnzw89nC2e2TEgnpWPXHH2rrU33RqKMHPgzhbR3CbuW3xs_Kz>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Oct 2024 15:05:11 -0400 (EDT)
+ 15 Oct 2024 15:05:14 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -79,9 +79,9 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	gitster@pobox.com,
 	bence@ferdinandy.com,
 	karthik.188@gmail.com
-Subject: [PATCH 3/6] doc: update-ref: demote symlink to last section
-Date: Tue, 15 Oct 2024 21:03:12 +0200
-Message-ID: <3f43ddfed24e89ab9931b83e549f0eb8bc829928.1729017728.git.code@khaugsbakk.name>
+Subject: [PATCH 4/6] doc: update-ref: remove confusing paragraph
+Date: Tue, 15 Oct 2024 21:03:13 +0200
+Message-ID: <dec48e2d37cc4edafb51476284ce3fece4718ce7.1729017728.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
 In-Reply-To: <cover.1729017728.git.code@khaugsbakk.name>
 References: <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com> <cover.1729017728.git.code@khaugsbakk.name>
@@ -92,58 +92,46 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Commit-Hash: 3f43ddfed24e89ab9931b83e549f0eb8bc829928
+X-Commit-Hash: dec48e2d37cc4edafb51476284ce3fece4718ce7
 Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Move the discussion of file system symbolic links to a new “Notes”
-section (inspired by the one in git-symbolic-ref(1)) since this is
-mostly of historical note at this point, not something that is needed in
-the main section of the documentation.
+This paragraph interrupts the flow of this section by going into detail
+about what a symbolic ref file is and how it is implemented.  It is not
+clear what the purpose is since symbolic refs were already mentioned
+prior (“possibly dereferencing the symbolic refs”).  Worse, it can
+confuse the reader about what argument can be a symbolic ref since it
+just says “it” and not which of the parameters; in turn the reader can
+be lead to try `<new-oid>` and then get a confusing error since
+update-ref will just say that it is not a valid SHA1.
 
+Reported-by: Bence Ferdinandy <bence@ferdinandy.com>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/git-update-ref.txt | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+
+Notes (series):
+    This paragraph is also from the initial documentation: 129056370ab (Add
+    missing documentation., 2005-10-04).
+
+ Documentation/git-update-ref.txt | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
-index ec268b1426d..c03e65404e8 100644
+index c03e65404e8..4bb3389cc7c 100644
 --- a/Documentation/git-update-ref.txt
 +++ b/Documentation/git-update-ref.txt
-@@ -29,14 +29,6 @@ It also allows a "ref" file to be a symbolic pointer to another
- ref file by starting with the four-byte header sequence of
- "ref:".
+@@ -25,10 +25,6 @@ value is <old-oid>.  You can specify 40 "0" or an empty string
+ as <old-oid> to make sure that the ref you are creating does
+ not exist.
  
--More importantly, it allows the update of a ref file to follow
--these symbolic pointers, whether they are symlinks or these
--"regular file symbolic refs".  It follows *real* symlinks only
--if they start with "refs/": otherwise it will just try to read
--them and update them as a regular file (i.e. it will allow the
--filesystem to follow them, but will overwrite such a symlink to
--somewhere else with a regular filename).
+-It also allows a "ref" file to be a symbolic pointer to another
+-ref file by starting with the four-byte header sequence of
+-"ref:".
 -
  If --no-deref is given, <ref> itself is overwritten, rather than
  the result of following the symbolic pointers.
  
-@@ -185,6 +177,17 @@ An update will fail (without changing <ref>) if the current user is
- unable to create a new log file, append to the existing log file
- or does not have committer information available.
- 
-+NOTES
-+-----
-+
-+Symbolic refs were initially implemented using symbolic links.  This is
-+now deprecated since not all filesystems support symbolic links.
-+
-+This command follows *real* symlinks only if they start with "refs/":
-+otherwise it will just try to read them and update them as a regular
-+file (i.e. it will allow the filesystem to follow them, but will
-+overwrite such a symlink to somewhere else with a regular filename).
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
 -- 
 2.46.1.641.g54e7913fcb6
 
