@@ -1,120 +1,97 @@
-Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A29F1AF0A3
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 16:31:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86631D514C
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 17:20:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729009908; cv=none; b=OqH6OeOgvAIjY1Mj85RU8v9jwvZjip4AwgipQQ9wk64cIBNexqP5oUk0q9sFfD39PccpGX3EvYeGDJES04jmoLTYAGyoeJfMhh7dKdwtsFSeoKJxvscsXek/s4SuW/wS9jddcj94k2rdGI/q11sSct5X9mFgU7UOVa4/tiSaXeQ=
+	t=1729012835; cv=none; b=sw2VExW1y3pLIMZoq2SwEwL+3f6iIbpJdfEC4UzNThezilPPQQk+Bw3Waq6OnNsS5T1SJVV0PQH6nPnObwTj9zRmgV+OVsBEKRYDlIDmvr5yjWYgAlJIJBeL80nfA4kxkSGChffQUeOwfinXiPC+nzSthgpB5CnITCgoM7LXpbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729009908; c=relaxed/simple;
-	bh=TqEUJrzCN7gp1Tezm4HN+MwQqZYfikYAWJ5W89K6VWQ=;
-	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
-	 References:In-reply-to; b=sDyoyfQ7kZ7OX6gHRXejXcuAIChREZ0hqS5vXY/8u5ZF0/Zjz5UqsR6XoKbfraL4VOwMYQYPPTQ97CkQuJxyZdEarpFRs4JXRyEUY2tHCD8LPW9mXJ3MoTcGB5GGgk9F7gkOzFVKBrnOYFToMF9RViG6ydFVO9meB4t3Y186PJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=ZFZw8FEr; arc=none smtp.client-ip=192.29.178.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="ZFZw8FEr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=vuPbolYzQoMWb655GW1ALLIGNK7wC8T0FeW5q+6lE8I=;
- b=ZFZw8FErXumh8xraIDwcC0xn5YJdl875m18xKtXhv0MsV05ROO3ZtG6d97ApmvjnKiNKscGadjUB
-   VDaOwj7co7AjQsP+e8H8GOHfe1op9JxEJeIUQpR69DvADKxyBFe3fI/B5xTfuurE5e7HJYB/zJv1
-   O+YA8h/qs/qPMfW74VGQC32L7Utn2iM57+sq85jiO7SGDTeHrklsDrFLSrlVpzRGXgFjPABLUHWB
-   xvCIaWR1X/k3905XJ0mm/2Q+myWuHPl5OFPfSi582pcKAVu4dXMrhZ+mbovDSpkqUKQzLLbf6Wh/
-   W41sNP6T2+x+SnngBXyHlphPB/6zX16Wv9hzBA==
-Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SLE00A8IOKXAH60@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Tue, 15 Oct 2024 16:31:45 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	s=arc-20240116; t=1729012835; c=relaxed/simple;
+	bh=e0YcnDkxGqMbRr3kig0GDgvEjDvyCLZGnn7jKGn7Gtc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OOkW7pGSQ+X2Ytl9FzZ8gHNfzmVIMoxRfHvpWHHBQrolVRBK/XknUPgI9Jprm/mD6TIGJ2t2Orm6J8rLFJz9GHQ9DvmYWcmyfE0wMElQJpiRHhb2vuA4Rt5/EXC5AIwJLKeu/bVoX15MGW5mr6PNVMqogi0WHVsQ1UnUAj1w4Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6cbe7374e74so9246706d6.1
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 10:20:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729012832; x=1729617632;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+wWqHMwqgYFtyd96K2rucMa/mHcbZMyymnKbQExxs3o=;
+        b=m//GBp5FDMTobvF1FIsseDXJ+WUTOg+QD5HRE6+uClCAk85gby1OYOo3Fx49vXJxKp
+         KEjB1iGTW48zqw9ksna+EjlFCPm747sRH4xIfq5IQC35rSEW5mChsbGSbSM4Z5fgj8vV
+         byVA4Vqpk//d57XLWRUkhivK0nj2jWBVzj5NP0enJHoUAm86cRYBkJrv42SFZNaveT/E
+         RQeIyIoKGStIgxj65YFM87lXNT8SMNLA89QoB4VmHal6wrPjO58pkFAMUEAug8ubnZMz
+         kLV9WPJ6dZguYdqsznPdVZoLfvTGUuhzGJYBoKdSo9uBS2TwmHy9aMH5SwSuIh4XlH1w
+         g0Hw==
+X-Gm-Message-State: AOJu0YxBdAmR9IEvM/UegjYZrjGGDgASs1oJ5vhdPROGRa146Ejd8wHH
+	AhndTM34q0Q6dRdudCX1LCKpl48pm2eCoY1b9ItoHizmg+nlMvo9qeeAg+Fp1XB30ZjgTuu0ul7
+	JXfs5zbUABeeMCiRkDWWUDqt9qT7YbWEs
+X-Google-Smtp-Source: AGHT+IFtdANcBtkG524NbxQvU1fklzmQLM4gaIV3cvk+AlY6fnQjsmxXZtNlQRrhb01xLuoyoLNpMPWV22sVlbrt+To=
+X-Received: by 2002:ad4:5966:0:b0:6cb:e610:f8 with SMTP id 6a1803df08f44-6cbf00445fdmr93780496d6.12.1729012831746;
+ Tue, 15 Oct 2024 10:20:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Tue, 15 Oct 2024 18:31:02 +0200
-Message-id: <D4WIUDMT92X8.31YFOS47V1B4E@ferdinandy.com>
-Subject: Re: [PATCH v8 3/6] remote set-head: better output for --auto
-Cc: <phillip.wood@dunelm.org.uk>, "Taylor Blau" <me@ttaylorr.com>,
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>
-To: "karthik nayak" <karthik.188@gmail.com>, <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-References: <20241012230428.3259229-1-bence@ferdinandy.com>
- <20241014225431.1394565-1-bence@ferdinandy.com>
- <20241014225431.1394565-4-bence@ferdinandy.com>
- <CAOLa=ZT_m=H8pW9qkoOf+b0bLnzvT-3taQYFu+J6WT3DRi=6sQ@mail.gmail.com>
-In-reply-to:
- <CAOLa=ZT_m=H8pW9qkoOf+b0bLnzvT-3taQYFu+J6WT3DRi=6sQ@mail.gmail.com>
-Reporting-Meta:
- AAFCPtQWsvrvBUFHjZYINY6vpOcMsYrCgOcwz+OOugXhI2ID3H3c4Vtnzt5NeJR/
- kU9z0bg6ORCrC1GUIBOTIc89+AoyL5MyAbSGRSBLOS5erryOJtWDj4BTNY4L76Ys
- MioshZCXhPF9MmAh2WpyxChs0TjK+b49r+5zpDrIVSP+le4gGH7qpoJCG3U7Dgu3
- H3htv+ER/yAO0RmzGdqfbKe/o3D3sJNAXzTnjs/2c8gx7NjMqqk4SgW/AwQgal2+
- PrkGY3Rut2YWlZAMQKGU5Ffb9g1cUOx/4sM1BwgbXg/Zhsm7ulFp6JsWu8JC6rU0
- G5rZucP3GNXBCftXOrXrr9k78TxwfyxeNhbgEDIfxa/j40bTcW8F4alUXx6Kpsyt
- besEqR9C4Q+6uEUGuTSaxIRkEKIDjtJT3WH2W3njvnRQ1siz+fUtK+/ScgR8qle4
- CD3auuvmeMpbJmWoKV7llT+SEw1RsD0boTEAtRAFdNYQroTrRiRap9hR
+MIME-Version: 1.0
+References: <20241011183445.229228-1-wolf@oriole.systems> <20241015114826.715158-1-wolf@oriole.systems>
+In-Reply-To: <20241015114826.715158-1-wolf@oriole.systems>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 15 Oct 2024 13:20:20 -0400
+Message-ID: <CAPig+cSGzgfa+0MbRD10vktmx3O3v3q_TremWs7dANrwALf2Fg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2] builtin/shortlog: explicitly set hash algo when
+ there is no repo
+To: =?UTF-8?Q?Wolfgang_M=C3=BCller?= <wolf@oriole.systems>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On Tue Oct 15, 2024 at 09:47, karthik nayak <karthik.188@gmail.com> wrote:
-> Bence Ferdinandy <bence@ferdinandy.com> writes:
+On Tue, Oct 15, 2024 at 7:48=E2=80=AFAM Wolfgang M=C3=BCller <wolf@oriole.s=
+ystems> wrote:
+> Whilst git-shortlog(1) does not explicitly need any repository
+> information when run without reference to one, it still parses some of
+> its arguments with parse_revision_opt() which assumes that the hash
+> algorithm is set. However, in c8aed5e8da (repository: stop setting SHA1
+> as the default object hash, 2024-05-07) we stopped setting up a default
+> hash algorithm and instead require commands to set it up explicitly.
 >
-> [snip]
+> This was done for most other commands like in ab274909d4 (builtin/diff:
+> explicitly set hash algo when there is no repo, 2024-05-07) but was
+> missed for builtin/shortlog, making git-shortlog(1) segfault outside of
+> a repository when given arguments like --author that trigger a call to
+> parse_revision_opt().
 >
->> +static void report_set_head_auto(const char *remote, const char *head_n=
-ame,
->> +			struct strbuf *buf_prev) {
->> +	struct strbuf buf_prefix =3D STRBUF_INIT;
->> +	const char *prev_head =3D NULL;
->> +
->> +	strbuf_addf(&buf_prefix, "refs/remotes/%s/", remote);
->> +	skip_prefix(buf_prev->buf, buf_prefix.buf, &prev_head);
->> +
->> +	if (prev_head && !strcmp(prev_head, head_name))
->> +		printf("'%s/HEAD' is unchanged and points to '%s'\n",
->> +			remote, head_name);
->> +	else if (prev_head)
->> +		printf("'%s/HEAD' has changed from '%s' and now points to '%s'\n",
->> +			remote, prev_head, head_name);
->> +	else if (!buf_prev->len)
->> +		printf("'%s/HEAD' is now created and points to '%s'\n",
->> +			remote, head_name);
->> +	else
->> +		printf("'%s/HEAD' used to point to '%s' "
->> +			"(which is not a remote branch), but now points to '%s'\n",
->> +			remote, buf_prev->buf, head_name);
->> +	strbuf_release(&buf_prefix);
->> +}
->> +
+> Fix this for now by explicitly setting the hash algorithm to SHA1. Also
+> add a regression test for the segfault.
 >
-> Shouldn't the messages above be marked for translation too? using `_()`?
+> Signed-off-by: Wolfgang M=C3=BCller <wolf@oriole.systems>
 
-I guess it is unlikely to fall under the "should be machine readable" categ=
-ory.
-I'll fix that up as well.
+Cc:'ing Patrick since I believe he's been patching similar cases.
 
->
->>  static int set_head(int argc, const char **argv, const char *prefix)
->>  {
->>  	int i, opt_a =3D 0, opt_d =3D 0, result =3D 0;
->> -	struct strbuf buf =3D STRBUF_INIT, buf2 =3D STRBUF_INIT;
->> +	struct strbuf buf =3D STRBUF_INIT, buf2 =3D STRBUF_INIT,
->> +		buf_prev =3D STRBUF_INIT;
->
-> Nit: these names could definitely be better.
+> diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+> @@ -143,6 +143,11 @@ fuzz()
+> +test_expect_success 'shortlog --author from non-git directory does not s=
+egfault' '
+> +       git log --no-expand-tabs HEAD >log &&
+> +       env GIT_DIR=3Dnon-existing git shortlog --author=3Dauthor <log 2>=
+out
+> +'
 
-Indeed ... The second patch is a refactor of remote set-head, I could inclu=
-de
-a variable rename refactor there as well, and use the same names I used in =
-the
-last patch when adding the similar calls to fetch's set_head.
+t/test-lib-functions.sh has a handy nongit() function for running a
+command in a non-Git directory:
 
+    nongit git shortlog --author=3Dauthor <log 2>out
+
+By the way, what is the purpose of capturing output to file "out"?
+That file is never consulted.
+
+Also, can the original crash be reproduced without having to invoke
+the additional `git log`? In my tests, this is sufficient:
+
+    echo | nongit git shortlog --author=3Dauthor
