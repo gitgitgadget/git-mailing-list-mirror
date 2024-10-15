@@ -1,93 +1,97 @@
-Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837B31CB9FC
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 16:18:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D763C158DD8
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 16:19:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729009090; cv=none; b=HOieIxuQG3mt7MPrdukYPtiBMJzYxvmDIk89vn1Setfbzr8VCTham4IcGzgafWU5tulH9R05cwGDGkvBgnanbU+a/kBCzcnjHuCj5G+se6NkS+lAofmAaxpB5eX4BSSda9aJTkfqP2yF37tWjgyWlQSSCt4HJTIjnplsrI84Ysk=
+	t=1729009198; cv=none; b=UNUffhUZCTdzR2cQenJS52vslBN/Ng5+YWNfx/CBgZupn/SAoEwqgiZ44pMYKhUKdkfW56R4290Y9RiWc/fdi6g125Mv6mslaJHaWa6M5mbnLojFkJBqkC9RGNLk0fswzsQO+BMjN8GBM8T8+lM2PY+xwOPy19mzKbiXtx9+s+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729009090; c=relaxed/simple;
-	bh=+9Hl/UPv49HgDEWJoc85eQtTeg7HT5aG387UN/zWsUA=;
-	h=MIME-version:Content-type:Date:Message-id:To:From:Subject:Cc:
-	 References:In-reply-to; b=MuL+Az6l+CWBGEQYmx7e0wflcQX/lzAjPFuMTzcSHCNIvoIETQ9LhfaLQUBJD9hFnTG2ZSyVCxQ0K8pOMLB/c+EBOFyi3qf+ezGXlXNTVVmQsg19QfKYb70Pw4UUzlpdNvZvLnPVDrB8Ra7e+yHr7TcjaQKL7KATFOlrIdNnNFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=IvFAMmxD; arc=none smtp.client-ip=192.29.178.126
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1729009198; c=relaxed/simple;
+	bh=KNoEkqR+NKEhOcKtY9E7aZcsnZLuUGww3iP2WDB1yMU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mq7ssYnAxNsqzhX5EOEnxynLyuxHJRd6BBLZ8gijqRYsO9MkfU7YqNzohngo/2JhVOtMe7evDD733FN0UPeKR828kPU/2ctXMNZbu186xxCnDmxth2f7474Y3Dmi36xpWdt0KVYO8JFzX3HHEMMaVtzsKQbpY7N7v6VvMaPgIN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=2vNN6fhl; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="IvFAMmxD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=+9Hl/UPv49HgDEWJoc85eQtTeg7HT5aG387UN/zWsUA=;
- b=IvFAMmxDcGZDG/BrT0nKvHyxvjtHPReXdzy/+nPCLGrtQKOuoJnZFoX9/TYqFC1Dfj7fTIFS+z3M
-   8TaWd+xji+805ZQhKrAoR9dom4LVHLWNiaG23AH52bOOLtOSgTg+ZwccTlZq0/EnsgKrWTWMgDVH
-   nfvRyvekkqjvbKTZXb8zGpfzh2hVqfrsgWMBv7IXAx3L3c35mBxbFXo1oJESoFVcggCofc7bx3/j
-   aU1x6dx1uR5wdQTNCvF21AA74s/g4uMeA05dgyo6GPY/9OKCAZGN2ZVNiuapbbl7CyKIbFiecfOr
-   2mQIQNrqKpliTna7ccAXw5T3aTIbT39tV/eBoA==
-Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SLE00IH6NY1TF40@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Tue, 15 Oct 2024 16:18:01 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="2vNN6fhl"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6e232e260c2so45577727b3.0
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 09:19:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729009196; x=1729613996; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kl8bw4CcKEyBZxfB8qqNA0V7ojcs1xyCz3ZIgHI3icw=;
+        b=2vNN6fhlMb5EMDx8qCXqg+lnbd6sbVrNswKIU2BKZCF2mvMFkNXB+I+P8orFQ2syj/
+         2UsAmcFpR1dfy8EwtiaV0wuHsGU5ooGaJSwDo7HKoA0KeAtKJWUftiBygOAlbfM0Heo7
+         ifG1f+rAGx2xdvN00hxQcNF+k9eSW5anfOIsSAoq9bj0Bq+STNHtAhfJfDJi5BRXTR02
+         c2iTNU6h3BawiBf0I5VexqxVCsTB4bDaqTQbr2yJPGIHlMztSh0fjFYIUrTO/8F91Ylo
+         DAAQ4lmZhGYAG9rDNwNSaCu3Rbc+/DZuxkdTvp/JAI+atfzCpnPoaFDxEHR87E+KRx6I
+         rhsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729009196; x=1729613996;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kl8bw4CcKEyBZxfB8qqNA0V7ojcs1xyCz3ZIgHI3icw=;
+        b=mJtrGgCni+ZxR7cU2AwWMi7D02/MpYl+hBzvmlcHFtEws2p1ZLJberIENoi+E8byqT
+         eGmw4eAHv3fwkeadpAcDobZTIZNcvgyVykvFqKqGoci+Y1pWUUf6DSXSWguHKL6hiwlh
+         SQ80+cgCWiQJ50Nvffbhfzmsc2yDre5hcrMyyzE7lXjLcZCqG9wKgS+8Bc6BEnOSXo7l
+         nOeQ3ABJRGHpGgYnD+Yczc2jnID7ztr9gLCPmwMSBxG4+93xE+EUanILlMHbnirUgKqy
+         uh+ZhCyTCgv6VIQ11Lr6s6ysuAFAJaCbxudssYe2DnsvH4lTzhK93DmCEheLYiwaXPMT
+         G85w==
+X-Forwarded-Encrypted: i=1; AJvYcCUMRbAoUx3T7R51w2G65Qi8QBVFHP8ZgTNKWXTLkWYL0n45T05GtHMZMRpKXpMDFPWwm/Y=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNbo4IUeWd4zHzZ1Bz412sx7ip/5y+cueWDSJFR5/12Yyu0JQ1
+	LVj3tgg/rt+8I/yWT1qBEinJXH0n7ZuQNunaHkDic48g+h32L4fe3AJJKQipx6g=
+X-Google-Smtp-Source: AGHT+IFgRuGdoLvyJ/v+X7+kaGQB44fiwL5SpjRdIypXdQmmOLKKXakRILiKAcTzEAG1pp4pzdS1RA==
+X-Received: by 2002:a05:690c:4b13:b0:6e3:16da:e74 with SMTP id 00721157ae682-6e36414075emr100842287b3.16.1729009195750;
+        Tue, 15 Oct 2024 09:19:55 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5cbdc3esm3344127b3.78.2024.10.15.09.19.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2024 09:19:55 -0700 (PDT)
+Date: Tue, 15 Oct 2024 12:19:54 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>,
+	Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and
+ strtol_i()
+Message-ID: <Zw6WKuhUufWeSipU@nand.local>
+References: <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
+ <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com>
+ <Zwz4B4osJnYJw6pd@pks.im>
+ <2a937b6f-a3fb-4f2a-997b-5508f0e20e65@gmail.com>
+ <Zw0kGLZ-mcYjb6Je@pks.im>
+ <2160f8ea-5f00-49d9-8e02-d71d4d827d39@gmail.com>
+ <CAPSxiM9ncwaZ3HF72wsRwmen7joWk3mjipsu78WxKEzLX607sw@mail.gmail.com>
+ <CAPSxiM-aptyjesMX1H-P5QJjA-6CUonA01Bo84cq2_t==TqFgw@mail.gmail.com>
+ <84dbe9f1-976d-45f8-a49a-d0f942906686@gmail.com>
+ <CAPSxiM8-C6DAE3nYqMUCs+UgHN1R41grwVE+S-cSi6gZGvCpYw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Tue, 15 Oct 2024 18:17:26 +0200
-Message-id: <D4WIJYJHI6MX.1GVDAHVOLKGO7@ferdinandy.com>
-To: <phillip.wood@dunelm.org.uk>, "karthik nayak" <karthik.188@gmail.com>,
- <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Subject: Re: [PATCH v6 3/6] set-head: better output for --auto
-Cc: "Taylor Blau" <me@ttaylorr.com>,
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>
-References: <xmqqzfndndfm.fsf@gitster.g>
- <20241010133022.1733542-1-bence@ferdinandy.com>
- <20241010133022.1733542-3-bence@ferdinandy.com>
- <CAOLa=ZSV50OkDC2p5AHHW0u+fAtLMcCX36W1SuT8AnTkX7HNZg@mail.gmail.com>
- <D4SUTJDV0Y04.3Q8YED2MVOKBL@ferdinandy.com>
- <CAOLa=ZQY_a_dEZQ2EcLVfE_5Kjy7b2R3OFbQHQbkzH0o9-q1JA@mail.gmail.com>
- <D4U6L3C2GHZG.2SN8P0C7ZH33M@ferdinandy.com>
- <CAOLa=ZRfku-J2HO8MOqu-dZspmCZDV1S56TD1X-zUy5=9+XSUQ@mail.gmail.com>
- <65dd8e08-d8b2-4abb-a141-002d8f0b0401@gmail.com>
-In-reply-to: <65dd8e08-d8b2-4abb-a141-002d8f0b0401@gmail.com>
-Reporting-Meta:
- AAHy/uc8uN8voQiyeo7613PurlkZsvS1VzZ5t+dLuoLcQXeqeyIO5hNN+SoUzfVl
- vTp/4LptntSiUZLiLDmHuC6L6ZNDUa5oygaVuyFlr5RHtr7rZb3UuGK9SAmypZah
- Kt+YZG2kgL6PY/mE69fH47D00UisXj6BpknP3HRJ2KP2Omz6HWni3iWChIyRW2Ib
- w5yNBl0sKD1doGLPWYhgzCeos2ALHU2RSMrDEa8x/ZGL3VkGe3dSdQtesJ/VYEoW
- 6vp9jZd3YVHsOSUCAI3bWIlUxWR+LW6z5N2MGKyr3lClj0sEYGGcWU1bLapMnkv6
- Y/lskJn3zLzjplN3N5aSLzHmhpUipOTeOEz7jKw0LFXpYtbw1n5s+4kqAfyXeLY3
- Idh+cG1d0AksFNCyxh4+gH4URJjXn+J0GeSj6WE0Mz6DNcYXuW5nP2p/Qtwg/oFc
- /POXBPLJkA+mvB2kqDhS3JVWa+BW86ZNOvGZHAzYIQ38F+9EkntzkVox
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPSxiM8-C6DAE3nYqMUCs+UgHN1R41grwVE+S-cSi6gZGvCpYw@mail.gmail.com>
 
+On Tue, Oct 15, 2024 at 03:17:05PM +0000, Usman Akinyemi wrote:
+> Also, for the daemon.c I am finding
+> it hard to get the exact test file to add the new test.
 
-On Tue Oct 15, 2024 at 16:10, Phillip Wood <phillip.wood123@gmail.com> wrot=
-e:
-> On 15/10/2024 08:51, karthik nayak wrote:
->> "Bence Ferdinandy" <bence@ferdinandy.com> writes:
->>> On Fri Oct 11, 2024 at 22:43, karthik nayak <karthik.188@gmail.com> wro=
-te:
->>=20
->> I'm not sure I entirely agree with this sentiment. Consistency is a
->> great goal to target, but it shouldn't hinder changes that are
->> beneficial.
->
-> Exactly - if we wait for an entire test file to be modernized before=20
-> using our modern test idioms in it we'll be waiting forever. It is much=
-=20
-> better to introduce the use of things like ${SQ} that improve=20
-> readability as we add new tests or modify existing ones.
+t5570-git-daemon.sh is the test file I usually think of for adding the
+most direct tests exercising git-daemon.
 
-Ok, I'll change the patch to use SQ. As I gather, it would be preferred if
-_all_ the tests would use ${SQ}? If this patch series is finally resolved I=
- can
-send a patch for this style change, shouldn't be too complicated.
+If you're ever unsure, I find it useful to grep through the filenames of
+scripts in t, like so:
+
+    $ ls t/t????-*.sh | grep daemon
+    t/t5570-git-daemon.sh
+
+Thanks,
+Taylor
