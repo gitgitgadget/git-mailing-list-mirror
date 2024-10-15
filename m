@@ -1,139 +1,161 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from coleridge.oriole.systems (coleridge.oriole.systems [89.238.76.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47061EF0B6
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:45:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29591E764B
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:48:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.238.76.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992743; cv=none; b=f8RE7hiwETga/8DtcAaFxnsWdHuFPVuJzXJu1dQdWbSZTJVjD5eB3oMoPSN58Ey+hcm3HuTxZnem1JdvoVh3Wuo/0/g8ZGwcsFMctzd5fMoM2CUZC3HFnUxClFH1hvp1kxhQB3Comh6PAVUFT89JeIhBfHXgRE+2N6hUuEY1Fw0=
+	t=1728992927; cv=none; b=nsePSd67k1ukEO46XQqt8p6ECiGKGDbUG3I6h7V86Ht8uHBcnezHrYZxmotqhBPzuuof9CkoGaNRXKJqUmP1G803Jr5MPwaOr/Q9J8/NyuBYBgRIJgfHajP+sN+C5BL1ssYVjheXVkeXscg8lak8gMqSTgzkxlV+FA8v+QGW6PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992743; c=relaxed/simple;
-	bh=l3xYCrq9sa8N1wr7lgRlrBuA0pgklwmFnpVOuzSOvck=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ag8EFIxyDnLQmRsek8Oasc1iE0xitVwHySRKm5uFxEYH2nBRWalm13+0NjkMwwtna+tOPS+MfLadQA0runZPQrYxsFZR25qQJn5lq1o0k23EMqwOS1ErLUCM0hkv35Eu16+3Xi0Hfyjm8x5GV6cenP4KCBBaU+CbLj+ilv2CJ7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A1NtjUl/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f/Rs3O+O; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728992927; c=relaxed/simple;
+	bh=ukFjx/zbmU61JCfM9BuTtN28KRVmnlsZ3topqv6aUlw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dTopl8UB5N1bHCWnl+25GVkroEJsOSD80DXa1GkMYeWkzsGhMrIbwnT4FaKBFIwJj+xPGKLHj/n4Q1D6tBOJSB0vqwy1/xq4XWcNbyiLLggUgVCW3bSDklLAmx2m138rj770f2tLKz/4tB7kUeSpWiOaTTWQCQ5X+R5avqsRV1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oriole.systems; spf=pass smtp.mailfrom=oriole.systems; dkim=pass (2048-bit key) header.d=oriole.systems header.i=@oriole.systems header.b=KJBVdpLP; arc=none smtp.client-ip=89.238.76.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oriole.systems
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oriole.systems
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A1NtjUl/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f/Rs3O+O"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id E722211400B7;
-	Tue, 15 Oct 2024 07:45:40 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Tue, 15 Oct 2024 07:45:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728992740; x=1729079140; bh=UgXRcLeHVC
-	4VVMna5Jzrkg9TsA9+N54tfntKt7NIIDs=; b=A1NtjUl/W9O2DkcJYRkjCHS9It
-	Orm8YZf3rzn/R0qxgfQfqoN/GrTA6gu+mykNy3Ge1OhM5HsEns9VIOJ5G87CCvXp
-	MuyInSaZP9eVW7fL1dUHyzcYYGOd/y7v4AD7U9RUfTjmznKdEXWa75vyAW1TTLNr
-	KJ/pxiqNMlmn8l0Aq6I3pY5065luLXQyAoGolTYvu1Khr8GzeBqJ5WfsGIiNFsaI
-	UuvsfWIOFybI8emIMFRAOMzRYj3lpv0y/LDGWLADx/vZR9ZAMW7TFS1E/28H5458
-	IN0YpAdEuXUxDd0NQbZtMOsyb3rMgOy0rEihFuKIruy3/cgfXXgvrqg2CZdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728992740; x=1729079140; bh=UgXRcLeHVC4VVMna5Jzrkg9TsA9+
-	N54tfntKt7NIIDs=; b=f/Rs3O+O2uZinwrSZMFhwM3ZENzInEEHOBaE0DsV/xiK
-	6r4jlvNVXB2DMLyN2woWauV3COLrGsjOz4A3mQBl41JL0rG3TV/b2evUJgq2tWnB
-	Z2Hxi47puhq18hTh8E2mFFewf5WaTZs4Dr5FFOxumuOiyo+YeDjACvpQg07rSom0
-	mtoYhA+XIaAXKzBangC8QqbSTSmBMBStP1rWnLsx8n4jkgsDNZ2PhB4TPdBj5vZ3
-	ykD6aRm9Fyp34DdJOm5tPT6a9/c5Zmg+3fjoL1X5X28kgh3D6Az47bdNg86pFJEs
-	zP6iXNdlItMw5ppjmViX4jbdIkY16igS8VbWmSDqZQ==
-X-ME-Sender: <xms:5FUOZ5EVN2LKJra9c8hAtGfecwfDuoBwsS9aMsncmSQGFnfCP7ExMQ>
-    <xme:5FUOZ-WQdjbiyeoBPkNVU3dQq3FZ_LvQXDjg0_TXMTGZEpy3ENVZmXoOL3AAc_7ZF
-    mlKXFH2lkGPhtXTLQ>
-X-ME-Received: <xmr:5FUOZ7LHJdeFrv9Z9p2IA5aWp251jckDaKUjd3CgGTcu37-y1NA27NCkpBWVnPc_vxczkZ6NNf9icVH-7kYdOGRK57Rntu-BDupMonRhY3oedg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedggeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhi
-    nhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:5FUOZ_Fee0WzipjI8vWEhcUHSn3Z-OUVhNV8poV6GAFnNiqltRmCCw>
-    <xmx:5FUOZ_W2Qy07etoUyXZVRRsJz8SqSX7K3QhgBbznwsOm2-Ek9Ak-jA>
-    <xmx:5FUOZ6Og97yohCZ13xqsKBm4Xm-cXrzc2dxfMNmIPRqsMr-zDVHJ8g>
-    <xmx:5FUOZ-1oo9LH1bCLdYYePWxYAwENiwptyrSwdUOY-OqswEAmVzKWkQ>
-    <xmx:5FUOZ6RX6IInRBmwsH9azPqju8m_0-_ZdRpykW_pWYTRPi1ioB0aUpid>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Oct 2024 07:45:39 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f9a88d9c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 15 Oct 2024 11:44:25 +0000 (UTC)
-Date: Tue, 15 Oct 2024 13:45:37 +0200
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=oriole.systems header.i=@oriole.systems header.b="KJBVdpLP"
+From: =?UTF-8?q?Wolfgang=20M=C3=BCller?= <wolf@oriole.systems>
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=oriole.systems;
+	s=canary-202303; t=1728992923;
+	bh=ukFjx/zbmU61JCfM9BuTtN28KRVmnlsZ3topqv6aUlw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:From:Sender:
+	 Reply-To:Subject:Date:Message-Id:To:Cc:Mime-Version:Content-Type:
+	 Content-Transfer-Encoding:In-Reply-To:References;
+	b=KJBVdpLPY+1Gam8bf6ksJZTRJJZJUtmT+RUrJ4pfHM/CAPxmn0vcM8852kuRjURFC
+	 2YocGw5TsOxf6EfTY6XnR7fABVanjo35YgpZGD4P5igvpJEz23kQvKO3HtNtmHmtMn
+	 nRWFA659eToZpXjeeio9p6zV6A4AdDDT46Lj95GIXyQdn91T2Hw/a24y/YPtWmxWLG
+	 pgqRFXkA5WRVIhzNx7vhndhQDIBjcwC2NOVD5iSsX2Whu5H+b0M0cHKOeiW1/tGVEo
+	 0tcj2/KEqaADkSgx5XAfSnSGCTPITNzEGNvjMI5TN8jbdephMReR1b3vFVe706eAxN
+	 YaZ3V3xsYGV/A==
 To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 10/10] http: fix build error on FreeBSD
-Message-ID: <9963dc73988864b58e5d45e2c1039395f79fca57.1728992306.git.ps@pks.im>
-References: <cover.1728906490.git.ps@pks.im>
- <cover.1728992306.git.ps@pks.im>
+Cc: =?UTF-8?q?Wolfgang=20M=C3=BCller?= <wolf@oriole.systems>
+Subject: [RFC PATCH v2] builtin/shortlog: explicitly set hash algo when there is no repo
+Date: Tue, 15 Oct 2024 13:48:26 +0200
+Message-ID: <20241015114826.715158-1-wolf@oriole.systems>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241011183445.229228-1-wolf@oriole.systems>
+References: <20241011183445.229228-1-wolf@oriole.systems>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1728992306.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The `result` parameter passed to `http_request_reauth()` may either
-point to a `struct strbuf` or a `FILE *`, where the `target` parameter
-tells us which of either it actually is. To accommodate for both types
-the pointer is a `void *`, which we then pass directly to functions
-without doing a cast.
+Whilst git-shortlog(1) does not explicitly need any repository
+information when run without reference to one, it still parses some of
+its arguments with parse_revision_opt() which assumes that the hash
+algorithm is set. However, in c8aed5e8da (repository: stop setting SHA1
+as the default object hash, 2024-05-07) we stopped setting up a default
+hash algorithm and instead require commands to set it up explicitly.
 
-This is fine on most platforms, but it breaks on FreeBSD because
-`fileno()` is implemented as a macro that tries to directly access the
-`FILE *` structure.
+This was done for most other commands like in ab274909d4 (builtin/diff:
+explicitly set hash algo when there is no repo, 2024-05-07) but was
+missed for builtin/shortlog, making git-shortlog(1) segfault outside of
+a repository when given arguments like --author that trigger a call to
+parse_revision_opt().
 
-Fix this issue by storing the `FILE *` in a local variable before we
-pass it on to other functions.
+Fix this for now by explicitly setting the hash algorithm to SHA1. Also
+add a regression test for the segfault.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Wolfgang Müller <wolf@oriole.systems>
 ---
- http.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ builtin/shortlog.c  | 12 ++++++++++++
+ t/t4201-shortlog.sh |  5 +++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/http.c b/http.c
-index d59e59f66b1..72973175a85 100644
---- a/http.c
-+++ b/http.c
-@@ -2290,17 +2290,19 @@ static int http_request_reauth(const char *url,
- 		case HTTP_REQUEST_STRBUF:
- 			strbuf_reset(result);
- 			break;
--		case HTTP_REQUEST_FILE:
--			if (fflush(result)) {
-+		case HTTP_REQUEST_FILE: {
-+			FILE *f = result;
-+			if (fflush(f)) {
- 				error_errno("unable to flush a file");
- 				return HTTP_START_FAILED;
- 			}
--			rewind(result);
--			if (ftruncate(fileno(result), 0) < 0) {
-+			rewind(f);
-+			if (ftruncate(fileno(f), 0) < 0) {
- 				error_errno("unable to truncate a file");
- 				return HTTP_START_FAILED;
- 			}
- 			break;
-+		}
- 		default:
- 			BUG("Unknown http_request target");
- 		}
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 3ed5c46078..0fa35202ed 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -387,6 +387,18 @@ int cmd_shortlog(int argc,
+ 	struct rev_info rev;
+ 	int nongit = !startup_info->have_repository;
+ 
++	/*
++	 * NEEDSWORK: Later on we'll call parse_revision_opt which relies on
++	 * the hash algorithm being set but since we are operating outside of a
++	 * Git repository we cannot determine one. This is only needed because
++	 * parse_revision_opt expects hexsz for --abbrev which is irrelevant
++	 * for shortlog outside of a git repository. For now explicitly set
++	 * SHA1, but ideally the parsing machinery would be split between
++	 * git/nongit so that we do not have to do this.
++	 */
++	if (nongit && !the_hash_algo)
++		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
++
+ 	const struct option options[] = {
+ 		OPT_BIT('c', "committer", &log.groups,
+ 			N_("group by committer rather than author"),
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index c20c885724..ed39c67ba1 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -143,6 +143,11 @@ fuzz()
+ 	test_grep "too many arguments" out
+ '
+ 
++test_expect_success 'shortlog --author from non-git directory does not segfault' '
++	git log --no-expand-tabs HEAD >log &&
++	env GIT_DIR=non-existing git shortlog --author=author <log 2>out
++'
++
+ test_expect_success 'shortlog should add newline when input line matches wraplen' '
+ 	cat >expect <<\EOF &&
+ A U Thor (2):
+
+Range-diff against v1:
+1:  42516cc02d ! 1:  d3047a0291 builtin/shortlog: explicitly set hash algo when there is no repo
+    @@ Commit message
+         a repository when given arguments like --author that trigger a call to
+         parse_revision_opt().
+     
+    -    Fix this for now by explicitly setting the hash algorithm to SHA1.
+    +    Fix this for now by explicitly setting the hash algorithm to SHA1. Also
+    +    add a regression test for the segfault.
+     
+         Signed-off-by: Wolfgang Müller <wolf@oriole.systems>
+     
+    @@ builtin/shortlog.c: int cmd_shortlog(int argc,
+      	int nongit = !startup_info->have_repository;
+      
+     +	/*
+    -+	 * Later on we'll call parse_revision_opt which relies on the hash
+    -+	 * algorithm being set but since we are operating outside of a Git
+    -+	 * repository we cannot determine one. For now default to SHA1.
+    ++	 * NEEDSWORK: Later on we'll call parse_revision_opt which relies on
+    ++	 * the hash algorithm being set but since we are operating outside of a
+    ++	 * Git repository we cannot determine one. This is only needed because
+    ++	 * parse_revision_opt expects hexsz for --abbrev which is irrelevant
+    ++	 * for shortlog outside of a git repository. For now explicitly set
+    ++	 * SHA1, but ideally the parsing machinery would be split between
+    ++	 * git/nongit so that we do not have to do this.
+     +	 */
+     +	if (nongit && !the_hash_algo)
+     +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+    @@ builtin/shortlog.c: int cmd_shortlog(int argc,
+      	const struct option options[] = {
+      		OPT_BIT('c', "committer", &log.groups,
+      			N_("group by committer rather than author"),
+    +
+    + ## t/t4201-shortlog.sh ##
+    +@@ t/t4201-shortlog.sh: fuzz()
+    + 	test_grep "too many arguments" out
+    + '
+    + 
+    ++test_expect_success 'shortlog --author from non-git directory does not segfault' '
+    ++	git log --no-expand-tabs HEAD >log &&
+    ++	env GIT_DIR=non-existing git shortlog --author=author <log 2>out
+    ++'
+    ++
+    + test_expect_success 'shortlog should add newline when input line matches wraplen' '
+    + 	cat >expect <<\EOF &&
+    + A U Thor (2):
 -- 
-2.47.0.72.gef8ce8f3d4.dirty
+2.47.0
 
