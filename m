@@ -1,128 +1,107 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F282140E50
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:02:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9301D61BB
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:08:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728990159; cv=none; b=nsAJ2eLyknQc9S33Bbnvtok2V+Vuwq6e3pDG9G23Nnq48owdYAGELsPjtiu3KJEL+1nIJ2lkxZQkScf2ujRSvUnsN0nZWB1Wi3dV4WbNbZJFj1hKMFpzoaHg9bvRE1nq6Z3c2uYkzvzuN6V2qZbrxFikcvcrzrWQWNL/nIOeKeI=
+	t=1728990491; cv=none; b=AR8NcNM5pNUDCPQMHrcMRBh7LN4xNeBccYX2GGvw3NaYwtuQoDGUNVjfEoOgYyPcdfKWnQgPQL9PPWU/SP/ljMnTktX4kaJZacaENvCDjjbKILcGqfb4GYGFZkdo+lo3RzsX1lVzZlgg5lIOym9Z758kGvtv68BremvpRN/ChMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728990159; c=relaxed/simple;
-	bh=fOqcoPCW2JrUNr6CuZn1qlKA8XCnHcDrhIKEqAF7Jhs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=py8jbhexFxf15AkfRk/YIARSPgZjJ25x5Z4KFhus9L0ljxWM4gDd18CwyleyooST2HJYnF3W09mAl0I8RHoLqTgPi9w6j8rWpTZO6h2HOXl4FvtKuJLb098/MyvTFliMF/vaLZJqVtYTpYE3aYOWQ04bx1grv1jqIbNKRpA3fTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=izc/Dzpm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UFrJFlAm; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1728990491; c=relaxed/simple;
+	bh=AlOLvZzxg4WeAIrlbJgnzQx7DnhMj5pgkxd51RzDmPk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sPuoVz63Zi+nNXIiSVSRoVPVi7CC8p7OXCEOd5ol/1wTdYczdAh/6ttc1/DYTXlM/m8skgbD+6zsOBHG+4+4R4bAxXKTA9cnAZLXR+tz2QKKpdEfCMbucP0OkVhuJFy23Scl3sbyiF+H824Lovm/kdJhrszf9GGPUESgHfc5VuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P029OuaU; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="izc/Dzpm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UFrJFlAm"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3D8D911400B8;
-	Tue, 15 Oct 2024 07:02:36 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 15 Oct 2024 07:02:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1728990156;
-	 x=1729076556; bh=furQefetPfdFO0e7FwnsolpmjOcIaBoC0X3I2EatYjA=; b=
-	izc/DzpmJuulGgOqSYVWMCZAFm8Bx1Y3vOmhbebVYIlK1Xn7qAKzdq6GYYC15IDX
-	PvfW4OOgkBaD3/aIINlySO2L4oLuUZELD1L1XwY+CPpRm4LleLGQRtc5UA+XTuYM
-	MbBvTxHVffkR47Es4+7CeUMjoaNA3oxfFrm0ZiNzu97cHZJMCtaS9yv8+tgUJvEn
-	CoNMZ38iCuj/IB1HB0+Vj0UJ0dc4uNdWP4sz20QQmnyWNyZubGJQHAN+p24bVdKe
-	JV606S6c8eGUElL3xPaCKE3l4Cm3fiTbOh6T93CTfGO5U4MDjXuNiJUUY/jMFhOL
-	KtWbwr+2ZAE8w25CGy8Csg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728990156; x=
-	1729076556; bh=furQefetPfdFO0e7FwnsolpmjOcIaBoC0X3I2EatYjA=; b=U
-	FrJFlAmRdL2dxZwRNXwi+/fL2voxpjfAQePt95gNz8Hp4eAQcVXGqw8PfBoJm/kV
-	Og47pOc3yhxCTEdlAQj3JYwTpfWinleoxBGlmf0ctdearZCUDDcRHUlS4c45ggyB
-	j2aKnPpnc8sjFiXUnZskEHw3akw+V0+du8WSz/ymWs09YRiA7Lk0e8Vgd0ASwxbo
-	RqMrS08bdZlWGkZxbX+AFuBgdIyyO+h+4xiqTBJCxftoz2kV9ygBgTr4FRhGqX/6
-	bXTBMi/9JNyrFUSphTlkJX7IOWTyg34D2osl/2VibL7Djy98dlhhl2ZU8r8v2F7Q
-	nYjXRXPf3rz9ubbVJeJIg==
-X-ME-Sender: <xms:y0sOZ3LlfVjcn__ZgYtc7WN6CqtmmjpLY9qkeoBzdExmjc-48Q-73g>
-    <xme:y0sOZ7I5zXJ2GCE0jt-bNnAn4jI-W1W_aPx2VQ2CMxPQAtBWnyUe4sNFUKl5E0QUy
-    wymzKIvHPL6EBUxcg>
-X-ME-Received: <xmr:y0sOZ_vUr8bN3cS6VHOhNMfOkQq5Gfq0zPkczW8uydAIgBqT_rAsd_4M3NUMKytK0bBbh_vH4UsWwoe6QHKH1Aof0B5AFNsKc0gkeE-eK6o8-A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedgfeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
-    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepmhhfihgtkhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehluhgtrgdrmhhilhgrnhgvshhiohesgh
-    hmrghilhdrtghomh
-X-ME-Proxy: <xmx:y0sOZwadftgEYmpMqb6sHBBQGYAhakQdMKH-zONkImHxJrlxq5m0nw>
-    <xmx:y0sOZ-YDyCCesDVOlwVzlix5bwkpqLfXzzUfJRA7QcYXhfCUaaG3bg>
-    <xmx:y0sOZ0DpmDUzZchsHbNNT_oo3SRohttS1jNSS1LUdMXE-EXJRw8Bpw>
-    <xmx:y0sOZ8ZhSC1GIb3TDmJzDL4Q63YnMUdd_Z7HLJSVPfxLk1PYd8OrDQ>
-    <xmx:zEsOZ1UjnjuJNF_ytSxXrTDq1wVEYhU9-4cgQkq-WsCDQ-8cGCeS0K4E>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Oct 2024 07:02:34 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e7aca970 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 15 Oct 2024 11:01:17 +0000 (UTC)
-Date: Tue, 15 Oct 2024 13:02:29 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Luca Milanesio <luca.milanesio@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Martin Fick <mfick@nvidia.com>
-Subject: Re: Should object repacking only update server-info for packs
- instead of doing it for refs?
-Message-ID: <Zw5LwB2ap1QnmG6L@pks.im>
-References: <LV8PR12MB9407CB282D1FD4998C659D29C2442@LV8PR12MB9407.namprd12.prod.outlook.com>
- <569E3AEA-AC68-4186-B38C-2E47DAB9890E@gmail.com>
- <Zw2MVqi0FLcMuR8Z@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P029OuaU"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a99650da839so896951066b.2
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 04:08:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728990488; x=1729595288; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0ica/9qeER/onhhf6ngDuds9iqIqY7ud90ZcNOkdSvc=;
+        b=P029OuaU7p1hP54ZoMxUTZ7hoHsjacqF2Fb0UsUg54zkSabh0IWNQH+zFmtaMAHFYa
+         2k/JdWAB4IE8Fi7KDZRWll5oJ3Fr2U74fGIQ5oixTHgCBJur6W4IW120Kvnly8FBeBI0
+         xI78PFRIkNv0sh4oVH+ZS3MkBeLy/0aQTYePQlhtnba3rg+zv092mPcm4I1zvAzUYuyv
+         SFvfhs1MmWc+1goWcGaWTAGaGkDSE4DVNbYA2UppEUxuLsX59JjTxVVmVApCrXWmHzFW
+         2ln1iPQFydj4ZHrHFA3oeloVLCfShiNOgRXsCIqM3Jqv1TenpkRCNQ5qkX+gopRRboeG
+         noSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728990488; x=1729595288;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0ica/9qeER/onhhf6ngDuds9iqIqY7ud90ZcNOkdSvc=;
+        b=Xg+WSmDQ9PV4++xgY6ggnrAWtqe5kiuldXYdlNdp1ld06Zy9FmL8pjBcSk5F/DNJUE
+         ZOAlAjCYeBRCaFTAFiHObPFLmZmQh73kfH64B+3h2ttPPmplBOlUnp3UP0/pfu7wUrJ+
+         SfKT8RRqpgtWnWGomzFsvugVx8+LcbR6LbvQD32gJf4mmDkDbrL2ISpXujFd0M4a8Tle
+         HMeSU5zHEf+fBSD06uRzb+bEWiFTKQG79ZgTAG777rq91i8OPGfALUmQ9RXIw+jeTQT6
+         TjPo9bTvqrpaQbnMPhOwnvtzb4iSjeuqRMKNrASAdzfTda98zX2n/meNR0k9d2bexXmr
+         AjkA==
+X-Gm-Message-State: AOJu0YyGnF6cfnTwnSijBm/TjrhRVMoUzXFB1byGbqKXUaw3oEHwjnr8
+	9IFZZeSS+s3LpDloawW5DpGnsbndBPrNnGZTQqk3iQYRHFKOQ8ObAYsHMsBrZKsLKgN9Fx1SyO9
+	q8mBZCRWWm5eb+0Qr6mnrbb6N
+X-Google-Smtp-Source: AGHT+IHtR3ElSPisYR2o/1neXhEaD6X2s4EVZpb0O2bNd2yknXz2wfjs21kpuppknC/YWIiMAibsuR8DC5VPuut2PgE=
+X-Received: by 2002:a17:907:848:b0:a99:d587:6045 with SMTP id
+ a640c23a62f3a-a99e3b319efmr1211270866b.19.1728990487315; Tue, 15 Oct 2024
+ 04:08:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zw2MVqi0FLcMuR8Z@nand.local>
+References: <20241012062126.603967-1-chizobajames21@gmail.com>
+ <20241014152411.11052-1-chizobajames21@gmail.com> <Zw2T3PmdbgRGrIdF@nand.local>
+In-Reply-To: <Zw2T3PmdbgRGrIdF@nand.local>
+From: Chizoba ODINAKA <chizobajames21@gmail.com>
+Date: Tue, 15 Oct 2024 12:07:55 +0100
+Message-ID: <CACwP9aqecUKmN37JYW2qYRhe6nw-Owp5Cp-6Xjb1k7=_zaYmbQ@mail.gmail.com>
+Subject: Re: [Outreachy][PATCH v6] t6050: avoid pipes with upstream Git commands
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, phillip.wood@dunelm.org.uk, 
+	ps@pks.im, sunshine@sunshineco.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 14, 2024 at 05:25:42PM -0400, Taylor Blau wrote:
-> On Mon, Oct 14, 2024 at 09:33:17PM +0100, Luca Milanesio wrote:
-> > > It seems counterintuitive that an operation designed to repack
-> > > objects would be performing maintenance of any sort on refs?
+Hi Taylor
+
+On Mon, 14 Oct 2024 at 22:57, Taylor Blau <me@ttaylorr.com> wrote:
+>
+> On Mon, Oct 14, 2024 at 04:24:11PM +0100, chizobajames21@gmail.com wrote:
+> >  test_expect_success 'test GIT_NO_REPLACE_OBJECTS env variable' '
+> > -     GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
+> > -     GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
+> > +     GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 >actual &&
+> > +     test_grep "author A U Thor"  actual &&
+>
+> Nit: it looks like there is an extra space between the closing '"' quote
+> character and the filename 'actual'.
+>
+Thanks for spotting this out. I will fix this up in the next patch.
+> > @@ -284,8 +313,8 @@ test_expect_success 'bisect and replacements' '
+> >  '
 > >
-> > True, it should not touch info/refs IMHO, as you’re really not
-> > changing any refs.
-> 
-> Right. I don't think that the current behavior is a bug, but just that
-> it's doing unnecessary work from within 'git repack' to update the
-> info/refs file when it's known ahead of time that the refs haven't
-> changed.
-> 
-> I think it's reasonable to skip this step when repacking, but of course
-> we would still want to update info/packs (assuming that the repack
-> wasn't a noop, of course).
-
-It certainly may be reasonable. But in my opinion, it would be even more
-reasonable to not use the dumb HTTP transport at all. If you don't there
-is no reason to run git-update-server-info(1) in the first place, so
-you'd neither generate info/refs nor info/packs.
-
-We have been discussing in the past whether the dumb HTTP protocol
-should be deprecated, and in the context of that discussion we were also
-wondering whether we should start disabling git-update-server-info(1) by
-default. Users don't generally need this, and most server operators
-don't need this nowadays, either. So why generate data that is useless
-in almost all cases?
-
-Patrick
+> >  test_expect_success 'index-pack and replacements' '
+> > -     git --no-replace-objects rev-list --objects HEAD |
+> > -     git --no-replace-objects pack-objects test- &&
+> > +     git --no-replace-objects rev-list --objects HEAD >actual &&
+> > +     git --no-replace-objects pack-objects test- <actual &&
+> >       git index-pack test-*.pack
+> >  '
+>
+> Hmm. In other instances, actual seems like an OK name choice, but here I
+> wonder if 'in' would be more appropriate, since we're feeding it as
+> input to another Git command.
+>
+Given that it's actually (puns intended) an output from the Git command in the
+preceding line, isn't a neutral name, like 'actual' a better choice than 'in'.
+> Other than those couple of comments, these all look pretty reasonable to
+> me.
+>
+> Thanks,
+> Taylor
+Thanks for the comments.
+Chizoba
