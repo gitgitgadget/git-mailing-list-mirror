@@ -1,144 +1,138 @@
-Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D54189BB2
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78831189BB2
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:24:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728991224; cv=none; b=TjHXgiO2K15gcYQd9OlX9fA4O1Ch7j46WOw/wy8PdhzcLeT42JMn8ahNCTWK0EsCk/mv3IZH0o86ssM//AYnxGuGmucgCQLjZWWwcShtJO38TRK07zWSOWgrkMwxR8rKhE4Km4yAhfqtUAjNlZv0v9/Wl75ZZSfWraYpwBJLE4E=
+	t=1728991442; cv=none; b=py/dLU587tSRS3gJ/D0gWv+nq8vQQqYJzJFTgvmnX1btjbjvAMybxteuur5kwmQ6IpSCoeO780ucsvGsBADcGrTOVxx2NfUhqp/3D/BoiRRTbf994HzUsPO5yjdy+rd5/AHSZnjGhrShzdWf+rqCGeZWGLY4bSONPhvSoiQjBXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728991224; c=relaxed/simple;
-	bh=ibBMYbni6YBD2gGVWZv45tlD/2wiYzpc0/nROw2iYps=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ftoX4lZvlOi3F9yMY3GbfIpolJ47UeFmcYKOs3MH7P9lJtia3ivy4bTWPJ97QVsAYRtKpTc4BKy6F+xAQiXpRKPvCZaJdmwZ/Fx5geffGd8/wk0uCU/kv9ARW4KkyEDMCx9eI1DjYgbOhhb/fURvLC5FZes4iRQxu7X1oeKUdH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZIXVWuub; arc=none smtp.client-ip=209.85.222.52
+	s=arc-20240116; t=1728991442; c=relaxed/simple;
+	bh=7tamI2GL+PwiiXZ5F5/rpneBQ1vhYhZziLhsrCteSoA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=H90oaDq0ZCu+LnJ8Lw3/n/jVe9cazzTI7mQjK0lgpCNrKSR2MoWq/+MfBB8ui1gDkG8+R2pTeo0Rz0+63mvh556sM8ANsmHhLiqxGcXLEylHpnNcI4md7uX8A5y/bODuY0QmZw3OF3Bki1CClVgqIrOmOBS556R2L0b0WBX+jxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J2Borno5; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZIXVWuub"
-Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-84fe06fbdc6so1245004241.0
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 04:20:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J2Borno5"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-208cf673b8dso55090855ad.3
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 04:24:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728991222; x=1729596022; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EhuKFsUnoP/6IkwNeF4SIB12PWubSUuFsxbYW9FUqYE=;
-        b=ZIXVWuub5//qKSpj56N3ni2ii9gc4y9tzRW2eNEZqlyAot/x0I/FdibZYf5+rzOm4J
-         XFmKgV99G62p/k/aas3mIuC6eWOYxCR6dUbfNSm1H/+Kq1+Rw+GBLkmlPOjUH1rkvIsN
-         uZoJTojbji2kw7zXo2k2bOE2E0XtIrgrh8RuRETV4y1DrS/fWFV7+vLfYDDSBOqisbY5
-         EYRqewkbJnGQPvlovGCEpkGhABEU4s0g5NxpiD3M8FV/eQgZCiEtypaPuMUjMtqxoiw+
-         3SBJwKOMg+YOTlazkw/6ifxFPXv2vzwaIokydU1K56mG8jjTO4eUPETwkosN7nZU8AFg
-         /XRw==
+        d=gmail.com; s=20230601; t=1728991441; x=1729596241; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ySN/DyTFuJ4y9+QDNH5YOvOtsUUmRF+7VacJjvJT1fc=;
+        b=J2Borno50uUrb+asUrG2m3jwek+pCjLu82zLNpR48j7Wayww0lqdPX1GuwKJAFTRdC
+         KsW3XxHJsEQSIU5cJdCdY4+iHs/3Cd4/or6ZQ5ubmzPhTBZFabdl/60rGfmdLNmakj9D
+         uF1Bw25dMTYPbQrEYg5WzXm6PYCMdrVQTTzIJ3Qk8fEHn+0W5zA46iRtKFxzRcB7bzrZ
+         iPFlKI6f1kKSPLTInREwC+u76osAC/Yxtq88d67U9vbqDUVwKwKnrumOgYOMwSADZkGG
+         E9bxN7Jlpenb3kbZBd7ULLFQhiWSSzG3TjERDWobLdh0DwB3C760ys0jNAEcJ2XtLyvT
+         /vxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728991222; x=1729596022;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EhuKFsUnoP/6IkwNeF4SIB12PWubSUuFsxbYW9FUqYE=;
-        b=lPcslQ1OgoNanHVREETqBhRg3fzJXGX0YRDZ/lJo8mbqE9lZmCigoxCVG1h3o8p9su
-         7GmSXuhke9TvCBFqG3+fxsdvDwveAm3LP21pNowYe3EupNqRoHcmE9kSEEp3/q9yZk2j
-         obujYr7gVJ+lHprQwv6/DzTZA2nkzunO1Rc93DX8SLVzKI/QpItrvYzYLAdXT7opWeAs
-         s2Rb0dTq7ORqilssl6HzLoN59bbnusf1b+fHnnBdJi+Jt2/0NXz7iME3bXuerZjFBqnd
-         KOqceQSQY0MKPvHNFqJLquLBbFdNpwe3LZco+p65xjytLYD0Zbj9Gufl3+/QzvuRD+b1
-         9ZwA==
-X-Gm-Message-State: AOJu0YzsCpHLVm7+rUNpqx7YJR3tIGrboml5CNOi+X8OJKCVgpqMoVb0
-	ifosbDGsxA5eO5tQhUf8exdwTxB94ZMxO00i1ZyfnpjW1Qcd0cIjscHP7E+dIUkkMLbAcy8FUiz
-	j70VtgPTP9Tj5ezJGU5ADAtmzByHkq6ih
-X-Google-Smtp-Source: AGHT+IE2+7ZIgf3GGXF7dlljZNOjgOgGsPE4HceOrvbyk/0lx2iGN7P/QcEbr6KzZ1ftLJomakHlXdSRXOGsAA4SN7I=
-X-Received: by 2002:a05:6102:41ab:b0:4a5:6f41:211a with SMTP id
- ada2fe7eead31-4a56f412d7dmr3033468137.25.1728991221800; Tue, 15 Oct 2024
- 04:20:21 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 15 Oct 2024 04:20:19 -0700
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <871q0jrr02.fsf@iotcl.com>
-References: <cover.1728697428.git.karthik.188@gmail.com> <74bbd2f9db1ddfd5210be8fde2db84f67acff27d.1728697428.git.karthik.188@gmail.com>
- <871q0jrr02.fsf@iotcl.com>
+        d=1e100.net; s=20230601; t=1728991441; x=1729596241;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ySN/DyTFuJ4y9+QDNH5YOvOtsUUmRF+7VacJjvJT1fc=;
+        b=VpM0zpvC0Ug3PCegDU8nAAVU9csB9TrQlaidkwASbjJUmQaGhJIKJxP+MISr8W0tac
+         +lyDzLhEzXUl8Yammt72QjJovswcasuREMxqC+Sy4nK4pVpP/ipOGpfFrgij46QNqAH/
+         +J4MTKfllUPWbsh+CZnj0fK+80M4nwjkbV7TiXoC231jyw0+eY0Iueru98uDRTiiHrhv
+         90f5TeoS/57/zbhHdC/85aysDOvogxcL5vR2DnVZ+auvOlaeVLUPxSRmwBUrhCV2jQzf
+         zfN5gJ48tOwfksNg2OwonqRgK3Bw4eCUAzp7adaTfUVEq8+lP7kbvkqkP6gIQopeIVL/
+         uWDg==
+X-Forwarded-Encrypted: i=1; AJvYcCWFzuETiQqWhJnx99L/YTbGzFe2//mgCYpWbAV0L3ePxh5rgdmbWKaVnS+hrTM9XL3Lijw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWCuCxLJGAbL0nfjlM+Rv45B02rMeESwBZeXjuFqwnmckULURN
+	OFDcWAmGmlP41FVN5QCTE4QolRsPPTdgKmcVhNQwiEtt3s1Eb5k4
+X-Google-Smtp-Source: AGHT+IFVZxa1l6gvlxyhjG3t+b55xRRjMcCZkYAQfEtRL8qZvdFETLz80vD1nO93gmY/FgM4qPxM3w==
+X-Received: by 2002:a17:902:ec85:b0:20c:774b:5ae5 with SMTP id d9443c01a7336-20ca1429920mr233694735ad.9.1728991440633;
+        Tue, 15 Oct 2024 04:24:00 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20d17f84e16sm9940555ad.61.2024.10.15.04.23.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2024 04:23:59 -0700 (PDT)
+Date: Tue, 15 Oct 2024 19:23:58 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Edward Thomson <ethomson@edwardthomson.com>,
+	karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 00/10] reftable: stop using `struct strbuf`
+Message-ID: <Zw5QzmtOrDOXAavV@ArchLinux>
+References: <cover.1728629612.git.ps@pks.im>
+ <cover.1728910726.git.ps@pks.im>
+ <Zw2e0w5bkDO4l/Qs@nand.local>
+ <Zw3xkX_a4KyrSNq9@pks.im>
+ <Zw5E8d3AotDBYKSA@ArchLinux>
+ <Zw5HntIyk_DLWESC@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 15 Oct 2024 04:20:19 -0700
-Message-ID: <CAOLa=ZRFqgXuJQCMphwSX0d_saT4zzv8VNdXNkT_RhkfSHVPEA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] clang-format: re-adjust line break penalties
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com, 
-	johannes.schindelin@gmx.de, spectral@google.com
-Content-Type: multipart/mixed; boundary="0000000000009884bb0624822392"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zw5HntIyk_DLWESC@pks.im>
 
---0000000000009884bb0624822392
-Content-Type: text/plain; charset="UTF-8"
+On Tue, Oct 15, 2024 at 12:44:53PM +0200, Patrick Steinhardt wrote:
 
-Toon Claes <toon@iotcl.com> writes:
+[snip]
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
-> [snip]
->
->> This avoids weird formatting like:
->>
->>    static const struct strbuf *
->>           a_really_really_large_function_name(struct strbuf resolved,
->>           const char *path, int flags)
->>
->> or
->>
->>    static const struct strbuf *a_really_really_large_function_name(
->>    	    struct strbuf resolved, const char *path, int flags)
->>
->> to instead have something more readable like:
->>
->>    static const struct strbuf *a_really_really_large_function_name(struct strbuf resolved,
->>           const char *path, int flags)
->>
->> This is done by bumping the values of 'PenaltyReturnTypeOnItsOwnLine'
->> and 'PenaltyBreakOpenParenthesis' to 300. This is so that we can allow a
->> few characters above the 80 column limit to make code more readable.
->
-> I'm really liking the idea of penalties, but I feel we're relying too
-> much on guestimation of these values. What do you think about adding
+> > I have read some patches yesterday, I feel quite strange that we need to
+> > make repetition. Could we provide a header file which requires the users
+> > who need to use the reftable library to implement the interfaces?
+> > 
+> >     reftable_strbuf_addf(void *buf, char *fmt, va_list ap);
+> > 
+> > Thus, we could reuse "strbuf_addf" to implement this interface in Git.
+> > As for libgit2, could we let it implement these interfaces? Although I
+> > have never read the source code of libgit2, I think there should be some
+> > code which could be reuse to implement these interfaces?
+> > 
+> > However, I do not know the context. Maybe the above is totally wrong. If
+> > so, please ignore.
+> 
+> The thing is that we'll have repetition regardless of what we end up
+> doing:
+> 
+>   - We could either have repetition once in the reftable library,
+>     reimplementing `struct strbuf`. This can then be reused by every
+>     single user of the reftable library.
+> 
+>   - Or we can have repetition for every single user of the reftable
+>     library. For now that'd only be Git and libgit2, but we'd still have
+>     repetition.
+> 
+> The second kind of repetition is way worse though, because now every
+> user of the reftable library has a different implementation of a type
+> that is as basic as a buffer. These _must_ behave the exact same across
+> implementations or we will hit issues. So I'd rather have the repetition
+> a single time in the reftable library such that all users of the library
+> will behave the same rather than having downstream users copy the
+> implementation of `struct strbuf` and making it work for their library.
+> 
 
-That is true indeed. There is a bit of guestimation done here, I had to
-try various values to find the ones which worked well. I wish there was
-a more formal way to do this...
+Yes. I agree with you it is worse to let every downstream to implement
+the interfaces. I know the motivation here, we want to make the whole
+reftable library be independent of the Git which allows the downstream
+to easily use the reftable library.
 
-> example files to our codebase? Having concrete examples at hand will
-> allow us to tweak the values in the future, while preserving behavior
-> for existing cases. Or when we decide to change them, we understand
-> what and when.
->
-> Now, I'm not sure where to put such files. I think I would suggest
-> something like t/style-lint or t/clang-format. Anyway, for our tooling
-> it doesn't seem to matter, because both `make style` and
-> `ci/run-style-check.sh` pick up all .c and .h files anywhere in the
-> source tree. Adding a README to that directory will help people
-> understand why the files are there.
->
+> Also, due to the nature of `struct strbuf` not allowing for allocation
+> failures we'd already have diverging behaviour. In Git you would never
+> hit error code paths for allocation failures, whereas every library user
+> potentially can.
+> 
+> So we really have to treat the reftable code base special. If we want to
+> be a good citizen and be a proper upstream for projects like libgit2 we
+> don't really have much of a choice than to detangle it from libgit.a. If
+> we don't we may be saving 20 lines of code, but we make everybody elses
+> life harder.
+> 
 
-I'm not too keen on adding examples, for the mere facts that:
-1. They will be outdated each time we change rules.
-2. The commit message already has the information around each rule.
+Yes. And I do not think this is a problem right now. Thanks for this
+wonderful explanation.
 
-Karthik
+> Patrick
 
---0000000000009884bb0624822392
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 6677977e783e19e0_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jT1QvRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL3dKQy85ZklhMXllZlZyT2dlaFJiZDVNRlhvRUVMNgpaSE50R0xzT3Vj
-MStaN2psYlBMczl5a2VBeS9yTnBTWWtBVmNTQmdSSGtLR2E1SEJQQ0RqNFZhOWpici9maytICkdI
-UVRMYVU3dUdqbmVxa0w1bnh2czh6L1gwNjdaZkVCUzRiR1hiTFpzazJ3bmRYb2tPMFJudTRsU0Fw
-L2xIYmEKRTFaQUZpaVpvc09waDBQWnpaRWczNDZJd2M2TVF5SHlPdGV4THgza3FBMWlrcWlmUktU
-V21kalBBbUg1Z2VjSQoxRmUvNXRpVmpoN2l5TmtWdTJNRG11bThsb2w1UFB0ZHVtdHlxdWFhSGN6
-dkNSQllQZUcxODlReW9LaDVRVWFJCi9IMStZZDhqVGw4T0FkMm5lVWdIZXBWQi8xZ0ozUmNmUXFR
-K05BUW15R0JaK3FEM2lLTkRSMUhMUGJDdjQ3ZHcKZktFNkJiZ0JRMEhDZFYwK3lFTmRnZE9Uai9P
-T1JnNVlMMjkvbkUwdmZkSVV6NmVjeWdDdDFFZW1xOHpmV3JZVgo3V1pFTEIrRDNpaGMyYXNEblVL
-N3NMdlFkdVZhNmZTR01pcnhNVExqV2IzdkdVTDdyNW9Dd0JrdDhnbUpCQkdyCk1WZjJFa2twUnZr
-cFdaRUIzS1gycUErYnNTd0pORmRXaHFNc2d4ST0KPVBNSU8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000009884bb0624822392--
+Jialuo
