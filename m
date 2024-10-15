@@ -1,190 +1,144 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2A916EBEE
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 03:28:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD5446B8
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 03:49:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728962884; cv=none; b=tQpS7uic1qZ8/Hw7kYReohNuK73ps0ftbKySK1EmGXx8x9avDTZ61crYpnxVnrHq8z4MUqHUEN4cJr0N7nCBqA8lqO0Mg0PDaNbVj7ZlxE++fPAXY+7Ej2IEzGwdhc0G7WXd+UYzsJ438mrm+FoTxv/rIyP3G5ZLwsG5hTHU3t4=
+	t=1728964181; cv=none; b=bB8wqnxZgiGZRn9uLwtk+7YJtmMDRaExR7B3zXy2Rih4/muwelhYhRfp/JFVJGYbivvv2+IkuJOJTcwJRq+Da/KtAVCsuHKEl7lj/ERQT8BPaASuXfE2fY1hJIs8xt5yKhu8SMuTs7+LYt/XKdDokaBBQ77u4qKaUqsNK2Hh118=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728962884; c=relaxed/simple;
-	bh=EQPL9hhy3Iin5rq05msozm6f5grxqnWQwKMf3CJ6850=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=K4xMbScer53R00GpM6w7Z6KV3K2PPBUJR2XHIHGgsH6hIobGNQsBrSBFeBIk5/zquovth/4evM2ZiSxHGCALwV5Jpc5ZeGkqp4tfuqw2kBvR1OkNR+oIoHglE200WKxfGLLdB+TsnhjlcYxXkS3XQ92kyVhlMRd0cG4AWM+yRJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PHFggaTt; arc=none smtp.client-ip=209.85.218.49
+	s=arc-20240116; t=1728964181; c=relaxed/simple;
+	bh=G37HtJK/MQUHZTObtWcYdTs2rFXKysijQ9IqTiGPtzE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gUEMuG5v7PXn1PBMt46T/SCh7CI+fpUhew4ZfnAyTi8LunILDRIQwKTfWqYmmtnScmLYKtNRSn5J70W08Rxl78kdLSgU8EpeZQsTY3VRdd8VVTN2YvICf6Tqi5lbxti1vL7ctosV3K5J1uDg+4xMjHpaW7I/RekwVp0FxUvuIz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hHnhSvJe; arc=none smtp.client-ip=209.85.221.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PHFggaTt"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a99c0beaaa2so623262466b.1
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 20:28:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hHnhSvJe"
+Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-50d4780a24eso672013e0c.3
+        for <git@vger.kernel.org>; Mon, 14 Oct 2024 20:49:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728962880; x=1729567680; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4JoUOYTi6ysrMqsURFCWSEi1+h2tJtGaKeTe2GAfypY=;
-        b=PHFggaTtJ3wUXqA8I4daodD1+50+bAcLhU1fHImbkzJkyNhn4mGZC+oJ74HjnGgsWO
-         XlLV9qNIu8djltpappAdjkZFnKGDTN+69uWC/nsO+TCsnNSvqtfD2tP0HFbf62vVVjDf
-         coBg4+/DC3xtaeRqgaXuAe2YtDvWKY7lpQeIeRxt4AroRzyKEOw/whLBBdS7oFOQ8SbB
-         EYVo5cCC/jSn3HeQePxtvvM0sJWDjGUpsWFJFqWmUv1jJpEU9l5b8sO5K+RxJK2mhvPl
-         zKSzChTfr8PvnNKDVwht/z3WA2HkIiXmdqjhLY9phclXMBTIbPczVqEBSd0m4QM/WmOL
-         MCgQ==
+        d=gmail.com; s=20230601; t=1728964179; x=1729568979; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pDBjG1t6IjEbIkqwoSZzlVGWj9TCUHhKLoQndT8CuXs=;
+        b=hHnhSvJeR6U6+R3J3ANoefC0CtNKvgB/4mMw8bQ1l0beUv7gz9fjtqFqS4oyw1CJpK
+         r8Vz1y41z6LgwWDeyzt1Ahc4nvY0s9bHpcIARH+cnOKtLEUT6tQHconnq5cfBgnV4oVu
+         Y9KMVjBOSUxuQKnWPOPHT7b+9trNPrzyr9pNUWWmpAhrPQCPWgDHIkSjMknqKnyzPxwt
+         /riNnTHFuGeqhnUBLNKKiJmRMzj8Mh4/vrqTmxzqtPk1eaQGeluAbkxCsI79Li3wbD7X
+         9DMZMZq07RVIf/AMXBmCjoSkmMnvZyrrjXOaafWIdZJ/KKb3N4rFiYMbEGJwichDi+4G
+         vffg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728962880; x=1729567680;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4JoUOYTi6ysrMqsURFCWSEi1+h2tJtGaKeTe2GAfypY=;
-        b=dYVU1S7j4ooK0D3QGUvu1JUL1NSc45/d2BmupR2yn3rFvsWe44xM/ydu13jAh0Pskq
-         795wZdVZou4xE+7fRJyzw54UGIjJcpJQEnThyj1/N4jdc6DEJSSrTk6vg0XOQU0/HLKy
-         ETV3QE37ETlQW9fyHZm0UrhLJNConoprC5rOwB4EOHxcSE81DGX80K8mL/1jZVgC2wit
-         Vd8j14UTU/mEc1twZbHe+B2Ek2mQxg2XDTpMLgK/bfnzKP2qxoGxAIgg3gPwJDRw5ghB
-         r4oS6e/lWwvJd7J6wkXPSMofNsfx5W6nvHPhPKFpZ5JdHgCbHYoLVU1QjiDGiv36WR0s
-         zXRw==
-X-Gm-Message-State: AOJu0YwlbOMoAYLHRiK/DwP6cq+wLICCCeS4R7uHLd1OeLdnGHdrphqu
-	d7uOaVBixHTOZRtQvy4/y57Dn17tu7ONrBcj1npUB7Xr7Etsa+wpUms2aQ==
-X-Google-Smtp-Source: AGHT+IEqqM8N7xda58Phq0ycOfh6u0EfOO052BHQoEjkpTeB/0CZEWGzcWvaXeOF9Smpd+gX5P8Oeg==
-X-Received: by 2002:a17:907:3ea8:b0:a99:fd32:11dc with SMTP id a640c23a62f3a-a99fd321240mr559429566b.24.1728962879828;
-        Mon, 14 Oct 2024 20:27:59 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c98d503447sm205758a12.39.2024.10.14.20.27.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Oct 2024 20:27:59 -0700 (PDT)
-Message-Id: <pull.1812.git.git.1728962878717.gitgitgadget@gmail.com>
-From: "Liu Zhongbo via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 15 Oct 2024 03:27:58 +0000
-Subject: [PATCH] builtin/fetch: iterate symrefs instead of all when checking
- dangling refs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1728964179; x=1729568979;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pDBjG1t6IjEbIkqwoSZzlVGWj9TCUHhKLoQndT8CuXs=;
+        b=jPan3/5jal8kdXc3wi23VlUTw+eqPS795UQDnMDa17XaZnGgDJsJkDgMq0yAQC9mpn
+         Sa+H5iC1uLaUbDfCxfH12A9uDaz6PYLjSTIybgQitoMZNBzqo072igNiiTR+iTlbjCk+
+         CkbVz6Qy6POQF+ODbyswjqtzrpzJAqgCWTW0uSXjUQMzpakaRLZHxw1HqUOWYIl+s2Bh
+         jCoH2SyxS8XauK8uw37DnhQnXa56kpkW385mqcRDMUNL73yM3dbO0OYutASrGulaEP4n
+         PIwTHxUu7aSptIjedi1iNfXjrkIp51jzQo5CT/iOV41aoXSJ/v8wWLhlBuxcgDKf+tn8
+         TWQQ==
+X-Gm-Message-State: AOJu0Yx6rg4+tpRr43JH+SXrl2ZX1T4rrqAz66h2KAYGMWRKN85cNyfB
+	/q5ney5BYfiNgo/x+y1TYpSisClg+szBsvgdKHNPluZIfhbLoghSfSTl/1pexnRsSEq/fndYzak
+	hYfKv1KOlyQS5eXuPtsmq9z4Huss=
+X-Google-Smtp-Source: AGHT+IEtJLRGxYAOS7em28rOD0cvgnNjWR6BLgdhkfAkv7no8aAUV8rrOgdrCL9qvOL8KemBEBbLbx2xpprprcMIrBM=
+X-Received: by 2002:a05:6122:2189:b0:509:e5b5:d133 with SMTP id
+ 71dfb90a1353d-50d376b651emr5250157e0c.6.1728964178692; Mon, 14 Oct 2024
+ 20:49:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Liu Zhongbo <liuzhongbo.gg@gmail.com>,
-    Liu Zhongbo <liuzhongbo.6666@bytedance.com>
+References: <CAPSxiM9FoGBhsnBE4E0Fvq-x_HvyFGGkkhaLNoRdVkvE6CpaZw@mail.gmail.com>
+ <ZwqcHDzaR2U2JNu0@nand.local> <CAPSxiM_U5ffBCsTrbBqsJK0jUZtAuWSLook8CLKat46CX0QC7g@mail.gmail.com>
+ <Zw26bU17+2SRfv8L@nand.local>
+In-Reply-To: <Zw26bU17+2SRfv8L@nand.local>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Tue, 15 Oct 2024 03:49:28 +0000
+Message-ID: <CAPSxiM9jHn-RQ3FXJRQNKAE9xPr_4yJbWB--oWgQeKhEMLmE4Q@mail.gmail.com>
+Subject: Re: [RFC Outreachy] Leftoverbits, which involve replacing atoi with
+ strtol or strtol_i or equivalent.
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>, 
+	phillip.wood123@gmail.com, Christian Couder <christian.couder@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Liu Zhongbo <liuzhongbo.6666@bytedance.com>
+On Tue, Oct 15, 2024 at 12:42=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrot=
+e:
+>
+> On Sun, Oct 13, 2024 at 03:46:05AM +0000, Usman Akinyemi wrote:
+> > On Sat, Oct 12, 2024 at 3:56=E2=80=AFPM Taylor Blau <me@ttaylorr.com> w=
+rote:
+> > >
+> > > Hi Usman,
+> > >
+> > > On Sat, Oct 12, 2024 at 11:21:13AM +0000, Usman Akinyemi wrote:
+> > > > Hello,
+> > > >
+> > > > I was looking at some #leftoverbits which I can work on and I came
+> > > > across this conversation.
+> > > > https://public-inbox.org/git/CAC4O8c-nuOTS=3Da0sVp1603KaM2bZjs+yNZz=
+dAaa5CGTNGFE7hQ@mail.gmail.com/
+> > > >
+> > > > I followed the conversation and came accross
+> > > > three instances where I think atoi can be
+> > > > converted to strtol or strtol_i or parse_timestamp().
+> > > > These are the three files which I think the atoi can be
+> > > > replaced with.
+> > >
+> > > This seems like a good #leftoverbits to use as an Outreachy
+> > > contribution. From a brief skim, it looks like this is going in the
+> > > right direction.
+> > >
+> > > But to get help from the rest of the list, please submit this change =
+as
+> > > a patch or patch series, following the instructions in:
+> > >
+> > >   - Documentation/MyFirstContribution.txt, and
+> > >   - Documentation/SubmittingPatches
+> > >
+> > Thanks Taylor, I already went through these as I already sent my first
+> > patch before.  Also, I already sent a patch as you suggested. Thank
+> > you very much.
+> > Usman Akinyemi.
+>
+> I must be missing something... I don't see any patches from you that
+> touch e.g., merge-ll.c, which is the first file you mention in this
+> thread.
+>
+> Try searching the list archive for:
+>
+>   f:'Usman Akinyemi' dfn:merge-ll.c
+>
+> Is this different from the other patches you have sent to the list? My
+> apologies if I am missing something here.
+>
+> Thanks,
+> Taylor
+Hi, Taylor
 
-refs_warn_dangling_symref() traverse all references to check if there are
-any dangling symbolic references. The complexity is
-O(number of deleted references * total number of references).
-It will take a lot of time if there are tens of thousands of branches in
-monorepo.
+Thanks for the reply. There is a little confusion going on.
 
-So I first identified all the symbolic references, and then only traverse
-in these references. The complexity is
-O (number of deleted references * number of symbolic references).
-
-Due to the infrequent use of symbolic references, there will be significant
-performance improvements here. In my case, the prune_refs() time has been
-reduced from 20 seconds to 4 seconds.
-
-Signed-off-by: Liu Zhongbo <liuzhongbo.6666@bytedance.com>
----
-    builtin/fetch: iterate symrefs instead of all refs
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1812%2Flzb6666%2Fspeed_up_prune_refs-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1812/lzb6666/speed_up_prune_refs-v1
-Pull-Request: https://github.com/git/git/pull/1812
-
- builtin/fetch.c |  7 +++++--
- refs.c          | 35 ++++++++++++++++++++++++++---------
- refs.h          |  4 +++-
- 3 files changed, 34 insertions(+), 12 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 80a64d0d269..ec4be60cfeb 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1412,15 +1412,18 @@ static int prune_refs(struct display_state *display_state,
- 
- 	if (verbosity >= 0) {
- 		int summary_width = transport_summary_width(stale_refs);
-+	    struct string_list symrefs = STRING_LIST_INIT_NODUP;
-+	    refs_get_symrefs(get_main_ref_store(the_repository), &symrefs);
- 
- 		for (ref = stale_refs; ref; ref = ref->next) {
- 			display_ref_update(display_state, '-', _("[deleted]"), NULL,
- 					   _("(none)"), ref->name,
- 					   &ref->new_oid, &ref->old_oid,
- 					   summary_width);
--			refs_warn_dangling_symref(get_main_ref_store(the_repository),
--						  stderr, dangling_msg, ref->name);
-+	        refs_warn_dangling_symref(get_main_ref_store(the_repository), stderr,
-+				      dangling_msg, ref->name, &symrefs);
- 		}
-+	    string_list_clear(&symrefs, 0);
- 	}
- 
- cleanup:
-diff --git a/refs.c b/refs.c
-index 5f729ed4124..8dd480a7a91 100644
---- a/refs.c
-+++ b/refs.c
-@@ -463,16 +463,33 @@ static int warn_if_dangling_symref(const char *refname, const char *referent UNU
- 	return 0;
- }
- 
--void refs_warn_dangling_symref(struct ref_store *refs, FILE *fp,
--			       const char *msg_fmt, const char *refname)
-+static int append_symref(const char *refname, const char *referent UNUSED,
-+			 const struct object_id *oid UNUSED,
-+			 int flags, void *cb_data) {
-+    struct string_list *d = cb_data;
-+    if ((flags & REF_ISSYMREF)){
-+        string_list_append(d, refname);
-+    }
-+    return 0;
-+}
-+
-+void refs_get_symrefs(struct ref_store *refs, struct string_list *refnames)
- {
--	struct warn_if_dangling_data data = {
--		.refs = refs,
--		.fp = fp,
--		.refname = refname,
--		.msg_fmt = msg_fmt,
--	};
--	refs_for_each_rawref(refs, warn_if_dangling_symref, &data);
-+	refs_for_each_rawref(refs, append_symref, refnames);
-+}
-+
-+void refs_warn_dangling_symref(struct ref_store *refs, FILE *fp,
-+                               const char *msg_fmt, const char *refname, struct string_list *symrefs) {
-+    const char *resolves_to;
-+    struct string_list_item *symref;
-+    for_each_string_list_item(symref, symrefs) {
-+        resolves_to = refs_resolve_ref_unsafe(refs, symref->string,
-+                                              0, NULL, NULL);
-+        if (resolves_to && strcmp(resolves_to, refname) == 0) {
-+            fprintf(fp, msg_fmt, symref->string);
-+            fputc('\n', fp);
-+        }
-+    }
- }
- 
- void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
-diff --git a/refs.h b/refs.h
-index 108dfc93b34..d3b65564561 100644
---- a/refs.h
-+++ b/refs.h
-@@ -394,8 +394,10 @@ static inline const char *has_glob_specials(const char *pattern)
- 	return strpbrk(pattern, "?*[");
- }
- 
-+void refs_get_symrefs(struct ref_store *refs, struct string_list *refnames);
-+
- void refs_warn_dangling_symref(struct ref_store *refs, FILE *fp,
--			       const char *msg_fmt, const char *refname);
-+			       const char *msg_fmt, const char *refname, struct string_list *symrefs);
- void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
- 				const char *msg_fmt, const struct string_list *refnames);
- 
-
-base-commit: ef8ce8f3d4344fd3af049c17eeba5cd20d98b69f
--- 
-gitgitgadget
+This is what happened. I had two patches which are entirely different
+from this leftoverbit. Both has been reviewed by other maintainer and
+integrated into seen by Junio through
+https://github.com/git/git/commit/4dae47e02757333b7d6a6508e36ccb5463b6ad92
+ and https://github.com/git/git/commit/dfdc6a71e76c7a1dab22fc9d9e437c858cfe=
+a6dc.
+I submitted this leftoverbit patch but I made the mistake of basing it
+on top of the previous branch which I use for the two above commits.
+This is the commit which has the leftoverbit and the previous two
+commits which have already been integrated into seen.
+https://public-inbox.org/git/pull.1810.git.git.1728774574.gitgitgadget@gmai=
+l.com/T/#t
+That is the reason why you saw it again. Also, I noticed you also
+integrated the two patches again into seen and gave some comments. I
+think that might not be needed again. Thank you.
