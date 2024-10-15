@@ -1,93 +1,128 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4551E907D
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 10:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F282140E50
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:02:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728989999; cv=none; b=UZV6uXB2Fvm2Y4ecQ69OeO/eVriXf/HUkXWGFkwwy9Vx1YbYVu8dYCNg6Pb4tj2Jryvgx39EABx0TpsOaYRpf5AUhU1tlmIOps02yAAYHKpLb5vye2yYD0DqZ3vHXqwDy9yC2nQvGeMDHX9XeqgN5r49sXn02Rtz8EALGNzySm4=
+	t=1728990159; cv=none; b=nsAJ2eLyknQc9S33Bbnvtok2V+Vuwq6e3pDG9G23Nnq48owdYAGELsPjtiu3KJEL+1nIJ2lkxZQkScf2ujRSvUnsN0nZWB1Wi3dV4WbNbZJFj1hKMFpzoaHg9bvRE1nq6Z3c2uYkzvzuN6V2qZbrxFikcvcrzrWQWNL/nIOeKeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728989999; c=relaxed/simple;
-	bh=GJXiYHqq5/AWqL+eXnKnxlc8aufidyzT6DJrwr7XVnw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=T+DkrDKXLaPXJViI+iG9MJa3J7gIFf6I5CC1rMvq/Z/AVxWKt3i5L41dxOImFVK9gOS7y+/dbtAUpo8pJR5BdC7uL3+tq7z8Lg0GVSmXXJQt0Pgju/ALmqkgebyhn4B2/aLZJ9dM3Fz/SmslC1gjlXMV+1AEfBxgb0nQ186A5i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FBKQ2Lq8; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1728990159; c=relaxed/simple;
+	bh=fOqcoPCW2JrUNr6CuZn1qlKA8XCnHcDrhIKEqAF7Jhs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=py8jbhexFxf15AkfRk/YIARSPgZjJ25x5Z4KFhus9L0ljxWM4gDd18CwyleyooST2HJYnF3W09mAl0I8RHoLqTgPi9w6j8rWpTZO6h2HOXl4FvtKuJLb098/MyvTFliMF/vaLZJqVtYTpYE3aYOWQ04bx1grv1jqIbNKRpA3fTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=izc/Dzpm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UFrJFlAm; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FBKQ2Lq8"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5c973697b52so2998587a12.0
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 03:59:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728989996; x=1729594796; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GJXiYHqq5/AWqL+eXnKnxlc8aufidyzT6DJrwr7XVnw=;
-        b=FBKQ2Lq8G8zwB18OWIkb6n4+CKxD8QOmJEnHee4HQuXVwN4MF11KM/mgO7wGDD3GD6
-         klMsPVB9322RzMn36D08b/kP3hZIxE6U3EOI5KHQ+gqgKxRxFTblEjlpJt3RPvryziE9
-         vkAoCbg9ySJRR4f0gFiU186kSCSZ5M423ybWokr55lWyg3o4gxHup4o9hgUrbmcwBSL7
-         TW0o/H3k1LPPfBEVfXZnBmkO3af1OmYFTAUXhWSSLgNifk1MmlD2EBgg/PYQm1kKQfI1
-         IMxguPqNzScHrKZ6P2q8XDhjedTpoTZlfQGjYcysMmyYA3cyXehgy5mje4HfILLMX806
-         wPjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728989996; x=1729594796;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GJXiYHqq5/AWqL+eXnKnxlc8aufidyzT6DJrwr7XVnw=;
-        b=Hy0Ji85EVaDvqbg7ig0/8D+YkechkueXRs4EyDnCckgUfwuaJJUSPewFHjITq8NxU6
-         NBGytuNTGwhDdpbtH/gM3sMaE7wQY5h8LP0ip+DndFcSPNJMFyNLs3LYsRHG2Hd/E7ss
-         Oli6kPhjByBNoYO5z1UT88aqbomaS5G319gIq7LpBni6QApMj/tN9jFLBt4Vy3/pxkto
-         K6XfnVOn0sNqehKsy4M9jtmlDwEp6pYeWajAH0ZuPBKP5WqK5xTvLLPvLpEwfnyr6mC2
-         aS+d343/KuP3rSFtT0/PUUYmRWX6eF+JbyvviSOF5xoAL8FwD6ecQY/c+gRJsZv+cRGk
-         sayw==
-X-Gm-Message-State: AOJu0Yw3u2CU5iEtQ77f79NmaK/8v9X9WKkh1weeWNtnU2nT8AgTdxn7
-	LFi49dROyZ4EeWXziGepYvTUPYkBODro1fo84ivt50cE4E/od6I1r2syEeBrofEwKVh0K9GF9hq
-	3hri1ug8Ui2y5HPt09JBggpQmgUnBujkts1c=
-X-Google-Smtp-Source: AGHT+IHuwC62y/eHOj6v27qNyKHn9oC4U7c0leTmqm2gPUIqm2j0Ut9CiRV9vN6dAzATef1EQl+qDqwUujG+3d35sEk=
-X-Received: by 2002:a17:907:3f15:b0:a9a:76d:e86c with SMTP id
- a640c23a62f3a-a9a076dec5dmr707160766b.49.1728989995972; Tue, 15 Oct 2024
- 03:59:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="izc/Dzpm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UFrJFlAm"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3D8D911400B8;
+	Tue, 15 Oct 2024 07:02:36 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Tue, 15 Oct 2024 07:02:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1728990156;
+	 x=1729076556; bh=furQefetPfdFO0e7FwnsolpmjOcIaBoC0X3I2EatYjA=; b=
+	izc/DzpmJuulGgOqSYVWMCZAFm8Bx1Y3vOmhbebVYIlK1Xn7qAKzdq6GYYC15IDX
+	PvfW4OOgkBaD3/aIINlySO2L4oLuUZELD1L1XwY+CPpRm4LleLGQRtc5UA+XTuYM
+	MbBvTxHVffkR47Es4+7CeUMjoaNA3oxfFrm0ZiNzu97cHZJMCtaS9yv8+tgUJvEn
+	CoNMZ38iCuj/IB1HB0+Vj0UJ0dc4uNdWP4sz20QQmnyWNyZubGJQHAN+p24bVdKe
+	JV606S6c8eGUElL3xPaCKE3l4Cm3fiTbOh6T93CTfGO5U4MDjXuNiJUUY/jMFhOL
+	KtWbwr+2ZAE8w25CGy8Csg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1728990156; x=
+	1729076556; bh=furQefetPfdFO0e7FwnsolpmjOcIaBoC0X3I2EatYjA=; b=U
+	FrJFlAmRdL2dxZwRNXwi+/fL2voxpjfAQePt95gNz8Hp4eAQcVXGqw8PfBoJm/kV
+	Og47pOc3yhxCTEdlAQj3JYwTpfWinleoxBGlmf0ctdearZCUDDcRHUlS4c45ggyB
+	j2aKnPpnc8sjFiXUnZskEHw3akw+V0+du8WSz/ymWs09YRiA7Lk0e8Vgd0ASwxbo
+	RqMrS08bdZlWGkZxbX+AFuBgdIyyO+h+4xiqTBJCxftoz2kV9ygBgTr4FRhGqX/6
+	bXTBMi/9JNyrFUSphTlkJX7IOWTyg34D2osl/2VibL7Djy98dlhhl2ZU8r8v2F7Q
+	nYjXRXPf3rz9ubbVJeJIg==
+X-ME-Sender: <xms:y0sOZ3LlfVjcn__ZgYtc7WN6CqtmmjpLY9qkeoBzdExmjc-48Q-73g>
+    <xme:y0sOZ7I5zXJ2GCE0jt-bNnAn4jI-W1W_aPx2VQ2CMxPQAtBWnyUe4sNFUKl5E0QUy
+    wymzKIvHPL6EBUxcg>
+X-ME-Received: <xmr:y0sOZ_vUr8bN3cS6VHOhNMfOkQq5Gfq0zPkczW8uydAIgBqT_rAsd_4M3NUMKytK0bBbh_vH4UsWwoe6QHKH1Aof0B5AFNsKc0gkeE-eK6o8-A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedgfeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
+    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepmhhfihgtkhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepmhgvseht
+    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehluhgtrgdrmhhilhgrnhgvshhiohesgh
+    hmrghilhdrtghomh
+X-ME-Proxy: <xmx:y0sOZwadftgEYmpMqb6sHBBQGYAhakQdMKH-zONkImHxJrlxq5m0nw>
+    <xmx:y0sOZ-YDyCCesDVOlwVzlix5bwkpqLfXzzUfJRA7QcYXhfCUaaG3bg>
+    <xmx:y0sOZ0DpmDUzZchsHbNNT_oo3SRohttS1jNSS1LUdMXE-EXJRw8Bpw>
+    <xmx:y0sOZ8ZhSC1GIb3TDmJzDL4Q63YnMUdd_Z7HLJSVPfxLk1PYd8OrDQ>
+    <xmx:zEsOZ1UjnjuJNF_ytSxXrTDq1wVEYhU9-4cgQkq-WsCDQ-8cGCeS0K4E>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Oct 2024 07:02:34 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e7aca970 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 15 Oct 2024 11:01:17 +0000 (UTC)
+Date: Tue, 15 Oct 2024 13:02:29 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Luca Milanesio <luca.milanesio@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Martin Fick <mfick@nvidia.com>
+Subject: Re: Should object repacking only update server-info for packs
+ instead of doing it for refs?
+Message-ID: <Zw5LwB2ap1QnmG6L@pks.im>
+References: <LV8PR12MB9407CB282D1FD4998C659D29C2442@LV8PR12MB9407.namprd12.prod.outlook.com>
+ <569E3AEA-AC68-4186-B38C-2E47DAB9890E@gmail.com>
+ <Zw2MVqi0FLcMuR8Z@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Prince Roshan <princekrroshan01@gmail.com>
-Date: Tue, 15 Oct 2024 16:29:44 +0530
-Message-ID: <CAP3G6frW_B2pBN0S4H5fsJZgoGtPxC1+_dAzNRhQ9z8ERWZSVg@mail.gmail.com>
-Subject: Feature Proposal: Adding Command for Configuration Diff Between Commits
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zw2MVqi0FLcMuR8Z@nand.local>
 
-Hi Git Community,
+On Mon, Oct 14, 2024 at 05:25:42PM -0400, Taylor Blau wrote:
+> On Mon, Oct 14, 2024 at 09:33:17PM +0100, Luca Milanesio wrote:
+> > > It seems counterintuitive that an operation designed to repack
+> > > objects would be performing maintenance of any sort on refs?
+> >
+> > True, it should not touch info/refs IMHO, as you’re really not
+> > changing any refs.
+> 
+> Right. I don't think that the current behavior is a bug, but just that
+> it's doing unnecessary work from within 'git repack' to update the
+> info/refs file when it's known ahead of time that the refs haven't
+> changed.
+> 
+> I think it's reasonable to skip this step when repacking, but of course
+> we would still want to update info/packs (assuming that the repack
+> wasn't a noop, of course).
 
-I wanted to propose a new feature for Git that I believe would be
-beneficial for repository maintainers and developers alike. What do
-you think of adding a command like git config diff commit1 commit2 to
-show the configuration differences between two commits?
+It certainly may be reasonable. But in my opinion, it would be even more
+reasonable to not use the dumb HTTP transport at all. If you don't there
+is no reason to run git-update-server-info(1) in the first place, so
+you'd neither generate info/refs nor info/packs.
 
-This command could display differences in repository configurations
-(such as .git/config or submodule configuration) across two specific
-commits. I see this being particularly useful in scenarios like:
+We have been discussing in the past whether the dumb HTTP protocol
+should be deprecated, and in the context of that discussion we were also
+wondering whether we should start disabling git-update-server-info(1) by
+default. Users don't generally need this, and most server operators
+don't need this nowadays, either. So why generate data that is useless
+in almost all cases?
 
-When a submodule is added or updated between two commits, helping to
-easily track and compare the submodule's configuration changes.
-Identifying configuration changes (e.g., repository settings) made
-between different commits without having to manually examine each
-commit=E2=80=99s changes.
-Comparing various configuration-related changes in large repositories.
-
-For example, when managing repositories with submodules, this feature
-could quickly highlight differences in submodule references, paths, or
-URLs, saving time and providing better traceability.
-
-I believe adding such functionality would enhance Git's usability in
-managing complex repository structures and configurations.
-
-Looking forward to hearing your feedback and thoughts on this proposal.
-
-Best regards,
-Prince Roshan
-princekrroshan01@gmail.com
+Patrick
