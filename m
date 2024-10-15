@@ -1,82 +1,81 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99A01EABAB
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307451EBFE6
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992720; cv=none; b=rni95HEa+LjVyozSLkoFSNlA37dYDUglJqj/3QwIB8SWw9ZmnpEOYFoQuaxY3PJKRIpNxs/MvwBM/Lh1sX/MKAmK0M89A9F3XJjhRUPHX98SsqWLM2wR2x3BJ/6/EngQaG/qWoae2OpEcNE7+iwpPsElj2FjBUReyIrJGTdOVF8=
+	t=1728992722; cv=none; b=rMLs+sprHFtnpD30MDcAd/uHEofQg698BLB1Y4yUtw9hU3aZ1k0L3hpuI+Wu3jaVQxxVRPqqwg27OAxIjEYEpoSMAJBtgQTZQRzn26P7YPgLTMCbEYuWMj0E5k/CAGg7up4Xaf4ISdJkDXPDm9plThGRJUuuCsTgLSjjA8XqT7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992720; c=relaxed/simple;
-	bh=n0A7Jc9eGhxSM4IzpqM4TS3JdMe3whp3xtYH79sSuFQ=;
+	s=arc-20240116; t=1728992722; c=relaxed/simple;
+	bh=Nqjg2a5IkK6/ZlCxiwMUNx1Yb5gNfNmFkFqUFzpma6U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fAUFlJB660r2dWneSzoxcXoX96mXgaT6KfVM+hyb5UWovCqL06+1Zc4vicHpkF5eSkDVH78WiQXorTr9RPK21g2tQGYJTBnUKYUn8Nl1G3Wr7dj5UrSWYgeVuceP1vOmu5MDm7BJNtpmZl/1oRsTfOK130SLi3WjhoGOOZREH+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P5Nv9hHA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zcl3JKng; arc=none smtp.client-ip=202.12.124.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=GxPL2CZ92pGGmDrVKDJ6NvVIjJkDuGa3qgUbeWdDR4vpydhgmtCC9ogrBet3hpJmKnnWTb2RF+5TR+0+suZLUGq9hH21HxJKg2orcC9LKSk4HCXbI/C9xUfqjSuqPZC256ngjyFMYzBx7ghmORtCM9Z7EovgCZ6VZWk5RFxSQ5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CxJ5S1UM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aA8/VN/f; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P5Nv9hHA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zcl3JKng"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CxJ5S1UM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aA8/VN/f"
 Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8EE9111400B9;
-	Tue, 15 Oct 2024 07:45:17 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 0AFF111400BA;
+	Tue, 15 Oct 2024 07:45:20 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Tue, 15 Oct 2024 07:45:17 -0400
+  by phl-compute-11.internal (MEProxy); Tue, 15 Oct 2024 07:45:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728992717; x=1729079117; bh=Y3q+0LDusJ
-	XB3OB3K5AJ3qj6qWUbRw1RNRQDnKGedRE=; b=P5Nv9hHA3LKDv3mlWwe9aMKxnb
-	6mUPxbaXKJj4gxE8Jd1zpJ/nL7FlOouqrefUjrK3KsEGUk/Rbn6Qk61SC9FjfHpl
-	b0Bq2kASheehiLEZDQOhu5MWmyJpimKLBj0zBVP+PyJ5AtTYODQ050EhcRjZ1abU
-	QfER3OSfpLeDhmpgXkMqEory3+Urinyp8G1grODAdJYEDHIznS1ipqfquNgiJ3R4
-	Usw2Dn/Tw43aotIY2zorN13CtJQlSLdwRPT9YqyC0gBo2BDSbPFHIAsfmqgphfRq
-	4bKe2uCDpAOIDBnMLsJ9jz7kHq9yXnDI5RDqrDyDf2+DsKa/z6miZuTiP4JA==
+	:subject:to:to; s=fm2; t=1728992719; x=1729079119; bh=tyn/Jj7fgo
+	8+SLdCu9RDXNInfdUUAuCS0IFtRuJQuo8=; b=CxJ5S1UMUhimpVrilu1A17QeUv
+	LrjcVIMl9A7scibbgZDo071wy9ZjJwqcMkY319I/FVLZYLbdbn4mSxb9oyg7nCB+
+	YzKfsF/eqZVGgSPC9HNibQ8YHcu44iSc1h+UU0R9KGVb2/x3z2+Wiqc2e0ZecXqO
+	D+WzNEyYjAISZ1KTfukb21Vu0geB9eKoZ9CtDNS3OeDDaeGqUcHya19cnFC+HEhI
+	MnHIy+oqQBHHeGsiNeHBL+zjXPY9Bh6Of3AJv+HGGiuvdeQe57hU2cu3WWxdO08w
+	cfhGsKNZGPITS9121vzbBGr0ATVO6BXTusKG9StAWoSpjXF+M1l4fAYn7TNw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728992717; x=1729079117; bh=Y3q+0LDusJXB3OB3K5AJ3qj6qWUb
-	Rw1RNRQDnKGedRE=; b=Zcl3JKnguf67gdVLUopdBamtvjG1y0KhwNtym2vo/TyJ
-	cel6nriHVAWkDz9G3+565gOoT4tbX4siMToiMtBOUE/RDRmpWhFwjcNTjgkoJPBC
-	+OmULD0E7TDXTue9YBM747OLGDPRTKQuveX0iBaubGnI5slR2zmwI6RzBmAsaWTY
-	BtGnHiWqUUQdk7wDCqawi6VPz+m3ssDGGybaQYBi0Sa0aKKjbQd1B4139FNd47mp
-	3Xx888vkOT9lBvqFULQnmzNgCATO0rEY8TDRSHUJB2W1yQQtfJYh7TfDkzUVnomZ
-	M6s+H9WMYb9Z2g+ryfG0KMdUXP/mIWdpBeg2+9xyEg==
-X-ME-Sender: <xms:zVUOZ6wh1g6lLd8Y29L5_3Db70jA1r2PM_d9qv4CwU8VUZTvabu78w>
-    <xme:zVUOZ2T68i2SvlidYAfA2oDf-vRn7smlsDSkQFFCCAnsyeowKuOj0OALcXUsy2Zi5
-    I0NgiSFgwywf8mzPA>
-X-ME-Received: <xmr:zVUOZ8XM-mBB6l5Rc3Civ22NHsGN7lVlTJFTxzZWsADMm9ybXAdqtJHynwEHw1PTP3I5DuykD6Yovz0tMvU51YKhf6Qa1ZSp28HZJKEVOfBnxg>
+	fm2; t=1728992719; x=1729079119; bh=tyn/Jj7fgo8+SLdCu9RDXNInfdUU
+	AuCS0IFtRuJQuo8=; b=aA8/VN/fpSUPUUTYfbgEJaPVV/XrFgwYRHZAa9mzxuKc
+	96EPr/TG1S6+LPjQi+bTZmnNe6q/fEyFrZ51LbbRBwv5jplMCr8MlAqXJ2sGGwQN
+	CGZ+geX44ocX26Md9LomuoNa/JJYkQgBCdi0VTM9j4u63hxG295v0ujXlEsUDAJ0
+	vx5XnsH8pH1mchI6EMxAI/xs2mROiXhZndf0dcqoX9eeJjy1bRrYZQH7SGs7k3jo
+	gm1Cgew9lI9f+PkoB9VMHff9PyKnLMTJyNyRyjMTsnRACCuzKn6f42ZLhPoZJflI
+	6zmXTNuJnYvFF/y+VKQDKM5XGVsG7tvxVpv6LpBwPA==
+X-ME-Sender: <xms:z1UOZ-z4EWX0I-WmFwLVNe-VBDx27cDV4RNleCx6SXB-0QIADWaYQQ>
+    <xme:z1UOZ6Qg0ZdUT3hG_lybqk4IUY0Rnf3cA5UE-YdCzf8tKcCuZySkOgkjWXMMmZVMf
+    ThK0UQ6oSCf23L1EQ>
+X-ME-Received: <xmr:z1UOZwWW7s10tlTqZCQIw6e04G-RCJ517DfPnfVdAIDAsMzAVkVpzv8rQM9mKmkPFpraFjC16bhcB6r302C7Wr8MxP4bBTujQS6W7AWoV6eNsw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedggeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhi
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepshhunhhshhhi
     nhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:zVUOZwiaQX8z1_LGveFmITFT-SX3Vipc6huZsMnrxLkg-lSe4cHBNQ>
-    <xmx:zVUOZ8CJ9Uqtd6qLQepwvtC8FuLhi8vfNZ1Yd4sKV9yNL_8gaZq65Q>
-    <xmx:zVUOZxLDNIJFc7OdAC9WclDXgVtmO4ZjWRxb494s6mRQMZJefZY78w>
-    <xmx:zVUOZzDM7rpOapTqzJbsJwIGsgWphDeFmU-2LqpCKFdDXQ71cRR8Kw>
-    <xmx:zVUOZ_O4N9PCWNSA84KX5dZb8rpPT5PxaBGwV5B1b6RfjpSECSIb_Wk1>
+X-ME-Proxy: <xmx:z1UOZ0jK3fCP-puGd9c_pdEYaTl46xzvarHJ5cf24vbiYtMDUg8HvA>
+    <xmx:z1UOZwCVz_htLS10yEKKtfI3Z-78rBGO3rJXRV14icEZFlEuHKOdHA>
+    <xmx:z1UOZ1INJ00f0P19mXebs5qB8QJjmAfTv2KUpARCKsY1dlq0-qau8w>
+    <xmx:z1UOZ3DpzcVTVltgcAIeIvI3bqdvjJzIY3Pvy55539l1LLd16ucOrw>
+    <xmx:z1UOZzML0fN3doLxyk6BuPISyjb55F1RSClBIdd0Y_ymEYzqENQ67Rj1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Oct 2024 07:45:16 -0400 (EDT)
+ 15 Oct 2024 07:45:18 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 07251505 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 15 Oct 2024 11:44:01 +0000 (UTC)
-Date: Tue, 15 Oct 2024 13:45:14 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id f8a863f8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 15 Oct 2024 11:44:04 +0000 (UTC)
+Date: Tue, 15 Oct 2024 13:45:17 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 03/10] t/lib-gitweb: test against the build version of
- gitweb
-Message-ID: <2e2d208ef1b64e87795e91cf8cf1e4376067ccd4.1728992306.git.ps@pks.im>
+Subject: [PATCH v2 04/10] t/lib-gpg: fix setup of GNUPGHOME in MinGW
+Message-ID: <cc94f6fa64805e0bc45fc18445c3e99d2f5ca9ed.1728992306.git.ps@pks.im>
 References: <cover.1728906490.git.ps@pks.im>
  <cover.1728992306.git.ps@pks.im>
 Precedence: bulk
@@ -89,49 +88,37 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728992306.git.ps@pks.im>
 
-When testing gitweb we set up the CGI script as "gitweb.perl", which is
-the source file of the build target "gitweb.cgi". This file doesn't have
-a patched shebang and still contains `++REPLACEMENT++` markers, but
-things generally work because we replace the configuration with our own
-test configuration.
+In "t/lib-gpg.sh" we set up the "GNUPGHOME" environment variable to
+point to a test-specific directory. This is done by using "$PWD/gpghome"
+as value, where "$PWD" is the current test's trash directory.
 
-But this only works as long as "$GIT_BUILD_DIR" actually points to the
-source tree, because "gitweb.cgi" and "gitweb.perl" happen to sit next
-to each other. This is not the case though once you have out-of-tree
-builds like with CMake, where the source and built versions live in
-different directories. Consequently, "$GIT_BUILD_DIR/gitweb/gitweb.perl"
-won't exist there.
+This is broken for MinGW though because "$PWD" will use Windows-style
+paths that contain drive letters. What we really want in this context is
+a Unix-style path, which we can get by using `$(pwd)` instead. It is
+somewhat puzzling that nobody ever hit this issue, but it may easily be
+that nobody ever tests on Windows with GnuPG installed, which would make
+us skip those tests.
 
-While we could ask build systems with out-of-tree builds to instead set
-up GITWEB_TEST_INSTALLED, which allows us to override the location of
-the script, it goes against the spirit of this environment variable. We
-_don't_ want to test against an installed version, we want to use the
-version we have just built.
-
-Fix this by using "gitweb.cgi" instead. This means that you cannot run
-test scripts without building that file, but in general we do expect
-developers to build stuff before they test it anyway.
+Adapt the code accordingly to fix tests using this library.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/lib-gitweb.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/lib-gpg.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/lib-gitweb.sh b/t/lib-gitweb.sh
-index 1f32ca66ea5..7f9808ec202 100644
---- a/t/lib-gitweb.sh
-+++ b/t/lib-gitweb.sh
-@@ -48,8 +48,8 @@ EOF
- 		test -f "$SCRIPT_NAME" ||
- 		error "Cannot find gitweb at $GITWEB_TEST_INSTALLED."
- 		say "# Testing $SCRIPT_NAME"
--	else # normal case, use source version of gitweb
--		SCRIPT_NAME="$GIT_BUILD_DIR/gitweb/gitweb.perl"
-+	else # normal case, use built version of gitweb
-+		SCRIPT_NAME="$GIT_BUILD_DIR/gitweb/gitweb.cgi"
- 	fi
- 	export SCRIPT_NAME
- }
+diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+index add11e88fc0..3845b6ac449 100644
+--- a/t/lib-gpg.sh
++++ b/t/lib-gpg.sh
+@@ -6,7 +6,7 @@
+ #   executed in an eval'ed subshell that changes the working directory to a
+ #   temporary one.
+ 
+-GNUPGHOME="$PWD/gpghome"
++GNUPGHOME="$(pwd)/gpghome"
+ export GNUPGHOME
+ 
+ test_lazy_prereq GPG '
 -- 
 2.47.0.72.gef8ce8f3d4.dirty
 
