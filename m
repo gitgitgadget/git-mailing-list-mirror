@@ -1,164 +1,100 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail.hq6.me (hq6.me [104.236.142.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D373C2036E2
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 18:43:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.236.142.227
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1729017819; cv=none; b=L8ecTgHck45HSKZKwkzkTFxMxmNTL8ONw/NNug3jYjzdnFiGiM34OtUWRVhykPMmqug1dSATt0W9BjoFPFuOWp7kY/GV6wRtjAOeLW9Jb9eQrI4gSOSc3E5hr54iFhzuUKXxWbfLLj9DrlEpiGzg7fqy3edQgJgosa1eVLkeWDI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1729017819; c=relaxed/simple;
+	bh=eWILzSHCjLsudxRTlkMwqu1HwLW+6elOKOFU7QmfGPE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gCje0XMX2tSIovutRer1Sg+Bh/uTE8lToE93xnuZkvOuRXwynMmDaBU0bni6fwh9256ikd7B7q4Xvwm9rUk7l18pnxlLKmembWaETtKyfltymcufDSDhrDGAcICD55Cj1k/mERb+pLC7ox2EBRf6dPHxaPaYlJniUT8+QoeNfSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hq6.me; spf=pass smtp.mailfrom=hq6.me; dkim=pass (2048-bit key) header.d=hq6.me header.i=@hq6.me header.b=QupY2zmV; arc=none smtp.client-ip=104.236.142.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hq6.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hq6.me
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=hq6.me header.i=@hq6.me header.b="QupY2zmV"
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3031FBF70
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 18:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729016906; cv=none; b=T66bD3u8c/Ace6JOZEFcNU9MtRP6itGSLSaFz+1+jfX/O3RSeOBqip3GGZ5d6j3eqwRO1uq9cU+fRJInQB+XLcH1nBOntQBG1PxsD63qydlmSuzg5fsh0lCidAxv6cOlLCc4b77jEExPUIljTJbMnGTE7NZn53C/3IiIWdb/56g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729016906; c=relaxed/simple;
-	bh=mRpt8bCfIUUig6+bbymEl6qXD3zI9B/bRzrDLj5Wh+Y=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=IvJlgrCkRPjzPMUlDzCtzdV76EEwvzPRH14+dO7/Z5T0gqcn36x9X8pH2+NBmey6WxpPaKSEVHqAGobvZDW0IfscEcvJ35EPnjkfKBlJaCzKpml3gE3FcpyNphkvpuPUveJMilCOivRUNcZ0BUpuW5Fm8jYbmt6DxYT7jCv4bBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MZu5P8nS; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MZu5P8nS"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-431481433bdso5777385e9.3
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:28:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729016903; x=1729621703; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=430+WFZiHWPuXxjm+escTApMbCD0ja4Owv/s2LM89bw=;
-        b=MZu5P8nSqCBp1ZSMQTPEJkp3qM1aV5BpO8uZrYQ7kHOd4W9/1+RA4drK44SvZgR9jK
-         L53g8pOKaIeSQAPojB6ZJbxsy7QkysVYMrmfIR0YB0f9YxtW7pAd3RfklPOQUUFsD8jh
-         Md91XsHs8GszhElUUJCeinpYhEWOm0wgk+RC1XVtITOwkfb3ILnbJQmihN7cJvbNCByH
-         NIJSG4TBGaiBKb4P8NdMl8zQUGbD/O4zRtMOwrAjoIvdWi5pyvhsCltY0uYpFQhydEL+
-         voqugDcLu9IgrTpAOT74bqVl/ZubmjYyG3/bdvzqekG2g2ToN1CeNhnrC6XJB7ABZ/LA
-         YLNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729016903; x=1729621703;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=430+WFZiHWPuXxjm+escTApMbCD0ja4Owv/s2LM89bw=;
-        b=mbLmLDYul3ke1dVOvR//lTXE7gsWc2zAt0lyhqTa6zrfpLg/sc/GqpnoG5AfHhRxFE
-         dV4HlpA0IeFNoXBfygwOrrDdf+Cnb2MQX4u5dRRvQobs4+58euKb7htXifXf5M2ux7WE
-         TcgmhtdWIe8/sOkh2iIJrLtNl3XdGlg7a39+SYWIhgizuqSAKhbhrpYxZ8S583d5/Tm+
-         +V5ivC3UhfxpQGNPjaUv7ZDCSok4o1TlgkUoKsLwDWmlrU2z+MnfbSsjFQYxIY3I47nE
-         JEQXRRhAfLuaUdojsPAWne1NX7eL9GYRpx+V0euY5GMOaL2E2haAUToSKm6pRqhh7zY2
-         KxtA==
-X-Forwarded-Encrypted: i=1; AJvYcCX7+Xmbk+6hd0ZViJxKIFsFFPuBSmT0FTjJdu9WTS1HinXahQwBo/YFfCSX+ho+PZqdR10=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOvJ1kr5OVYKqq/oI7xejaw9Ge7KR7XDJTKNnr4N6SWzoTNrXa
-	S+oJ2jOz371TH/zr7m4hvY/oUajd/d6rj4JQ+40BnUVXwbADpobv
-X-Google-Smtp-Source: AGHT+IEAYGZxfbfN3Ekk7oxeOwHcL4ef6xcCxXvfGymEhLQETCJ1vhsfEXmafeA05H5b3vS1VPdOpw==
-X-Received: by 2002:a05:600c:3581:b0:430:5887:c238 with SMTP id 5b1f17b1804b1-4311decab1fmr143100455e9.11.1729016902954;
-        Tue, 15 Oct 2024 11:28:22 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4313f6b3224sm25211055e9.32.2024.10.15.11.28.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Oct 2024 11:28:22 -0700 (PDT)
-Message-ID: <9952b3a7-0ebc-4555-b8b3-f50f6f383704@gmail.com>
-Date: Tue, 15 Oct 2024 19:28:20 +0100
+	by mail.hq6.me (Postfix) with ESMTPSA id 2245F120A37
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:43:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=hq6.me; s=mail;
+	t=1729017817; bh=eWILzSHCjLsudxRTlkMwqu1HwLW+6elOKOFU7QmfGPE=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=QupY2zmVr0K320K8D5Jandam5oPeM1A9W69YJ/Lew0SA8+es2ZZACXDzeJNj0m8NR
+	 BVMWT4MauQSYm9I+///rlQ6TI7sUBpLyMokWwptdEwSTagkl3UjcRHqVv3NxVdGt7x
+	 vAfyPaKzwfyqwxU35x11sV/oseRbBkVlZmugQi2nOtc0C+csOXs7M2dWHUnKVyOREF
+	 K5RVunmZ5zNdDvQQuLmoU2qnj+v0cIVOiO+OiS3bTvW5XeIwfL9O8Rpfa1DiFUYLLw
+	 C1UZfyGS2PmwNA1w7jwGw5L7wgHx+ThBXLjD0yttb1tg+jAP4fz9EkxcglLjcX/Ppz
+	 OAsZnoXyeAOLw==
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-288a5765bb9so68648fac.3
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:43:37 -0700 (PDT)
+X-Gm-Message-State: AOJu0YwUeH0gCFck8J4ccLGc1CDr+lQr6bOLSPtUHe4fJVQQqoGuPB6S
+	AtUY3CfxtBCv+S+KN2NTrXfOWQilJ+0PKzoNW3I3rMHZoTEYFqYlRJVtfYX+y0BcnOms3fdoVVg
+	VEhKMFlldR3E5oc6qBd3G90g0K8k=
+X-Google-Smtp-Source: AGHT+IH42gLbGlktyxroWVWYfrfsFaT9PG35qJGfzoFUBTAJF1mj76YNgdGVeNEoCI6EEAXIv082SOQw1WkyqizWTt0=
+X-Received: by 2002:a05:6871:5224:b0:285:82b3:6313 with SMTP id
+ 586e51a60fabf-288f402566cmr46254fac.6.1729017816577; Tue, 15 Oct 2024
+ 11:43:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and
- strtol_i()
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>,
- Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
- <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
- <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com>
- <Zwz4B4osJnYJw6pd@pks.im> <2a937b6f-a3fb-4f2a-997b-5508f0e20e65@gmail.com>
- <Zw0kGLZ-mcYjb6Je@pks.im> <2160f8ea-5f00-49d9-8e02-d71d4d827d39@gmail.com>
- <CAPSxiM9ncwaZ3HF72wsRwmen7joWk3mjipsu78WxKEzLX607sw@mail.gmail.com>
- <CAPSxiM-aptyjesMX1H-P5QJjA-6CUonA01Bo84cq2_t==TqFgw@mail.gmail.com>
- <84dbe9f1-976d-45f8-a49a-d0f942906686@gmail.com>
- <CAPSxiM8-C6DAE3nYqMUCs+UgHN1R41grwVE+S-cSi6gZGvCpYw@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAPSxiM8-C6DAE3nYqMUCs+UgHN1R41grwVE+S-cSi6gZGvCpYw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <CAO8bsPCWkqDFSqWwJ3gQt7O2g1okodb_Q-NbbkTq9bc7M=zU1A@mail.gmail.com>
+ <22391e5d-c6fa-4b33-a12a-b63bbb979d81@app.fastmail.com>
+In-Reply-To: <22391e5d-c6fa-4b33-a12a-b63bbb979d81@app.fastmail.com>
+From: Henry Qin <root@hq6.me>
+Date: Tue, 15 Oct 2024 11:43:10 -0700
+X-Gmail-Original-Message-ID: <CAO8bsPDiVLei4uc96jv2BnhQapo2NaFLu-MbdBMmdCKVtFuyZA@mail.gmail.com>
+Message-ID: <CAO8bsPDiVLei4uc96jv2BnhQapo2NaFLu-MbdBMmdCKVtFuyZA@mail.gmail.com>
+Subject: Re: Feature Request: Document the log format string equivalent of
+ built-in formats
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Usman
+Thanks for backlinking!
+I had intended to link my SO question and then forgot.
 
-On 15/10/2024 16:17, Usman Akinyemi wrote:
-> On Mon, Oct 14, 2024 at 6:36 PM <phillip.wood123@gmail.com> wrote:
->>
->> On 14/10/2024 17:26, Usman Akinyemi wrote:
->>> On Mon, Oct 14, 2024 at 4:13 PM Usman Akinyemi
->>>> On Mon, Oct 14, 2024 at 2:55 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>>> I got this from a leftoverbit which the main issue was reported as
->>>> bug. https://public-inbox.org/git/CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com/
->>>> For the test, I should have the test as another patch right ?
->>
->> In general you should add tests in the same commit as the code changes
->> that they test. In this instance I think you want to split this patch
->> into three, one patch for git-daemon, one for imap-send and one for the
->> merge marker config changes. Each patch should have a commit message
->> explaining the changes and whether they change the behavior of the code
->> (for example rejecting non-numbers) and add some tests. Note that I
->> don't think it is possible to test the imap-send changes but the other
->> two should be easy enough. The tests should be added to one of the
->> existing test files that are testing the code being changed.
->>
-> Hello, thanks for this, I was working on this and I need help. For the
-> merge-ll.c,
-> I noticed that the check->items[0].value were already checked to
-> ensure they do not contain letters in them.
->          if (check->items[1].value) {
->                  marker_size = atoi(check->items[1].value);
->                  if (strtol_i(check->items[1].value, 10, &marker_size))
->                          die("invalid marker-size expecting an integer");
->                  if (marker_size <= 0)
->                          marker_size = DEFAULT_CONFLICT_MARKER_SIZE
-> 
-> error: option `marker-size' expects a numerical value
-> not ok 38 - merge without conflict wrong marker-size
-> #
-> # cp new1.txt test.txt &&
-> # test_must_fail git merge-file -p --marker-size=1a test.txt orig.txt
-> new2.txt 2>error &&
-> # cat error &&
-> #     grep "invalid" error
+That matches what I saw from reading the code as well.
+As far as I could tell, the `pretty_print_commit` function only calls
+`repo_format_commit_message` when `pp->fmt =3D=3D CMIT_FMT_USERFORMAT`,
+and not at all the built-in formats.
 
-It would be better to check for the error message with test_cmp or at 
-least grep for a longer phrase so we're sure the error message is the 
-one we think we should be getting.
+Thus, we cannot infer the correct format string equivalent by simply
+reading the code, which is another reason why I think it's worth
+documenting the closest format string equivalent and its limitations.
+Ideally, the format string is powerful enough to replicate the
+built-in formats, but if it is not, then that is also worth
+documenting explicitly.
 
-> #
-> I grepped the error message and I noticed that the message is gotten
-> from parse-options.c and it ensures that the arg is negative. How to
-> proceed in such a case ?
+References:
+https://github.com/git/git/blob/ef8ce8f3d4344fd3af049c17eeba5cd20d98b69f/pr=
+etty.c#L2282
+https://github.com/git/git/blob/ef8ce8f3d4344fd3af049c17eeba5cd20d98b69f/pr=
+etty.c#L2294
 
-The code you're changing parses the conflict-marker-size attribute so 
-you need to set up a .gitattributes file with an invalid marker size and 
-then run "git merge" or "git cherry-pick"
-
-Best Wishes
-
-Phillip
-
-> Also, for the daemon.c I am finding
-> it hard to get the exact test file to add the new test.
-> 
-> Thank you.
-> Usman Akinyemi
-> 
-> 
->>>> Thanks.
->>> Also, do I need to add the reference which mentions the leftoverbit in
->>> the commit message?
->>
->> I'm not sure that's necessary so long as you explain the reason for the
->> changes in the commit message.
->>
->>
->> Best Wishes
->>
->> Phillip
->>
->>
-
+On Tue, Oct 15, 2024 at 11:06=E2=80=AFAM Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
+>
+> Backlink:
+>
+> https://stackoverflow.com/questions/79089206/is-it-possible-to-fully-repl=
+icate-the-default-behavior-of-git-log-with-a-format
+>
+> I took a look at the code before today with search terms like
+>
+>     CMIT_FMT_DEFAULT
+>     CMIT_FMT_MEDIUM,
+>
+> And it looked to me that at least parts of it were implemented using
+> regular code branching.  I was thinking that maybe the built-in formats
+> were defined just using the formatting primitives.  But it didn=E2=80=99t=
+ look
+> like that to me.
