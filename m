@@ -1,161 +1,133 @@
-Received: from coleridge.oriole.systems (coleridge.oriole.systems [89.238.76.34])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29591E764B
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:48:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.238.76.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE30E19B3FF
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:52:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992927; cv=none; b=nsePSd67k1ukEO46XQqt8p6ECiGKGDbUG3I6h7V86Ht8uHBcnezHrYZxmotqhBPzuuof9CkoGaNRXKJqUmP1G803Jr5MPwaOr/Q9J8/NyuBYBgRIJgfHajP+sN+C5BL1ssYVjheXVkeXscg8lak8gMqSTgzkxlV+FA8v+QGW6PY=
+	t=1728993147; cv=none; b=UO91QoJfG5MXAD/SV4PxG/+RksRWGZ8tKX9wxsMyhtj9mTK3V/cky09nl/BiMl1tD7+HrcZ1wJwtdgcDMLDs1zx5ctmDgt1KZRildCspL04AXWNbTtyTzCAQnQ0wxaOKJlTZsGv4ufEkWUBfDVHG2Jq/v7i763nkrUDKjG27Xds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992927; c=relaxed/simple;
-	bh=ukFjx/zbmU61JCfM9BuTtN28KRVmnlsZ3topqv6aUlw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dTopl8UB5N1bHCWnl+25GVkroEJsOSD80DXa1GkMYeWkzsGhMrIbwnT4FaKBFIwJj+xPGKLHj/n4Q1D6tBOJSB0vqwy1/xq4XWcNbyiLLggUgVCW3bSDklLAmx2m138rj770f2tLKz/4tB7kUeSpWiOaTTWQCQ5X+R5avqsRV1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oriole.systems; spf=pass smtp.mailfrom=oriole.systems; dkim=pass (2048-bit key) header.d=oriole.systems header.i=@oriole.systems header.b=KJBVdpLP; arc=none smtp.client-ip=89.238.76.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oriole.systems
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oriole.systems
+	s=arc-20240116; t=1728993147; c=relaxed/simple;
+	bh=zFWB1YosRikiWWsdvW+ZcAMi38CW+sv/QdUugdMene0=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=Ahe98ueRJFR6G/91ofZMjYAWlxs8bBliGEP3aUGa1uasOcNax+eav5Hg/YLlXxF1wkiOrCb2yxap1XWKcad+H3/H8ztcBOPljHb0XI9H4w9fFuPWN1M6XHtp/z+97ytwm5iYLrKKrfe8Sg0M0MiILyLosRQzeZKC9h4hcqZAxI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G6+5ieqU; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oriole.systems header.i=@oriole.systems header.b="KJBVdpLP"
-From: =?UTF-8?q?Wolfgang=20M=C3=BCller?= <wolf@oriole.systems>
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=oriole.systems;
-	s=canary-202303; t=1728992923;
-	bh=ukFjx/zbmU61JCfM9BuTtN28KRVmnlsZ3topqv6aUlw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:From:Sender:
-	 Reply-To:Subject:Date:Message-Id:To:Cc:Mime-Version:Content-Type:
-	 Content-Transfer-Encoding:In-Reply-To:References;
-	b=KJBVdpLPY+1Gam8bf6ksJZTRJJZJUtmT+RUrJ4pfHM/CAPxmn0vcM8852kuRjURFC
-	 2YocGw5TsOxf6EfTY6XnR7fABVanjo35YgpZGD4P5igvpJEz23kQvKO3HtNtmHmtMn
-	 nRWFA659eToZpXjeeio9p6zV6A4AdDDT46Lj95GIXyQdn91T2Hw/a24y/YPtWmxWLG
-	 pgqRFXkA5WRVIhzNx7vhndhQDIBjcwC2NOVD5iSsX2Whu5H+b0M0cHKOeiW1/tGVEo
-	 0tcj2/KEqaADkSgx5XAfSnSGCTPITNzEGNvjMI5TN8jbdephMReR1b3vFVe706eAxN
-	 YaZ3V3xsYGV/A==
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?Wolfgang=20M=C3=BCller?= <wolf@oriole.systems>
-Subject: [RFC PATCH v2] builtin/shortlog: explicitly set hash algo when there is no repo
-Date: Tue, 15 Oct 2024 13:48:26 +0200
-Message-ID: <20241015114826.715158-1-wolf@oriole.systems>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241011183445.229228-1-wolf@oriole.systems>
-References: <20241011183445.229228-1-wolf@oriole.systems>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G6+5ieqU"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-37d4ba20075so3470053f8f.0
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 04:52:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728993144; x=1729597944; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zFWB1YosRikiWWsdvW+ZcAMi38CW+sv/QdUugdMene0=;
+        b=G6+5ieqULsPG4LceBtr3f/sXZRmLBJCm6QLJ8szk9Un4QtzVWDMx3TG4uANgEQ6E32
+         pJsIm3KNtwPfGkO1NC8nBduqyX1WOrBWWawI1tkcPG/d4UY/1kBitWc/VxZP7CS+PviJ
+         R1l29C9ux1n1KDK8V+phwCuQt43Pu5sQgsMPwkskKj29490lDPC0ev4xx6caDKF+lb4D
+         /aDNMv3LiFI3vqdMrZyOPN4nQrPe66if8H97KwSNlKhffOufqMdoAdGycB+u+3+hYGxR
+         yA6FlT7i6P4VkGRs1hT24cE+yb4HN8607XUDY7WHiRJ7tEdqoPbWPaoFmgM2X7jycAHo
+         gY3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728993144; x=1729597944;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zFWB1YosRikiWWsdvW+ZcAMi38CW+sv/QdUugdMene0=;
+        b=ST1Rs58NZLn11bNrEVnyVtZkgp4rjOy8qhJFddwEHN+YEBrbew5yk0bhsDXyrkPg8V
+         33ehVdjylLx0XyJPFj04g2gnAQMcr469WGfXbRcAwvcauqARiFjIyrj6aLtFX87oPCaj
+         gsumz6fr2X3PrhugFnfk+4l1xIMT2XR5vc0A+316NEqgthKoYZBxqET03nMEsI2yqjKR
+         iv2dVyQNvB7DpToawgEVhQNH93VfFuJht2XcMuTGaeWsM/sCppOzLjaEov1FMTUp2Yi1
+         Zy7E2+NQorS4CEUgJbhRHq4mEhelpqvlubN7HePyNStgkB++ZIstEEgzp2Be4s9/stlD
+         d57w==
+X-Gm-Message-State: AOJu0Yz4kPUxEzs5eGHKKiY0/jgoZ3+wL6IwknsBbxjTbXbU6JRkpsxS
+	SBNQOeFjT4jP9rj4p8OyCSv11gkrOw3b24zYiyVj2aewzaaCsf0fj9eVvOzV
+X-Google-Smtp-Source: AGHT+IEpkEib9vxM/h4UQqnOgWTxW6qGk1mbivkx2JhAxWGx+CdSeBNE6xrKELSpk+UPhtYsSuk+EA==
+X-Received: by 2002:a05:6000:194f:b0:37d:4afe:8c98 with SMTP id ffacd0b85a97d-37d551fb5acmr9941204f8f.26.1728993143731;
+        Tue, 15 Oct 2024 04:52:23 -0700 (PDT)
+Received: from smtpclient.apple ([212.36.34.238])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d7fa7a1c8sm1377277f8f.21.2024.10.15.04.52.23
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Oct 2024 04:52:23 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
+Subject: Re: Should object repacking only update server-info for packs instead
+ of doing it for refs?
+From: Luca Milanesio <luca.milanesio@gmail.com>
+In-Reply-To: <Zw5LwB2ap1QnmG6L@pks.im>
+Date: Tue, 15 Oct 2024 12:52:12 +0100
+Cc: Luca Milanesio <luca.milanesio@gmail.com>,
+ Taylor Blau <me@ttaylorr.com>,
+ Martin Fick <mfick@nvidia.com>,
+ Patrick Steinhardt <ps@pks.im>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <428B24FB-A648-43BA-9381-1B46D99E2F37@gmail.com>
+References: <LV8PR12MB9407CB282D1FD4998C659D29C2442@LV8PR12MB9407.namprd12.prod.outlook.com>
+ <569E3AEA-AC68-4186-B38C-2E47DAB9890E@gmail.com>
+ <Zw2MVqi0FLcMuR8Z@nand.local> <Zw5LwB2ap1QnmG6L@pks.im>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3774.300.61.1.2)
 
-Whilst git-shortlog(1) does not explicitly need any repository
-information when run without reference to one, it still parses some of
-its arguments with parse_revision_opt() which assumes that the hash
-algorithm is set. However, in c8aed5e8da (repository: stop setting SHA1
-as the default object hash, 2024-05-07) we stopped setting up a default
-hash algorithm and instead require commands to set it up explicitly.
 
-This was done for most other commands like in ab274909d4 (builtin/diff:
-explicitly set hash algo when there is no repo, 2024-05-07) but was
-missed for builtin/shortlog, making git-shortlog(1) segfault outside of
-a repository when given arguments like --author that trigger a call to
-parse_revision_opt().
 
-Fix this for now by explicitly setting the hash algorithm to SHA1. Also
-add a regression test for the segfault.
+> On 15 Oct 2024, at 12:02, Patrick Steinhardt <ps@pks.im> wrote:
+>=20
+> On Mon, Oct 14, 2024 at 05:25:42PM -0400, Taylor Blau wrote:
+>> On Mon, Oct 14, 2024 at 09:33:17PM +0100, Luca Milanesio wrote:
+>>>> It seems counterintuitive that an operation designed to repack
+>>>> objects would be performing maintenance of any sort on refs?
+>>>=20
+>>> True, it should not touch info/refs IMHO, as you=E2=80=99re really =
+not
+>>> changing any refs.
+>>=20
+>> Right. I don't think that the current behavior is a bug, but just =
+that
+>> it's doing unnecessary work from within 'git repack' to update the
+>> info/refs file when it's known ahead of time that the refs haven't
+>> changed.
+>>=20
+>> I think it's reasonable to skip this step when repacking, but of =
+course
+>> we would still want to update info/packs (assuming that the repack
+>> wasn't a noop, of course).
+>=20
+> It certainly may be reasonable. But in my opinion, it would be even =
+more
+> reasonable to not use the dumb HTTP transport at all. If you don't =
+there
+> is no reason to run git-update-server-info(1) in the first place, so
+> you'd neither generate info/refs nor info/packs.
 
-Signed-off-by: Wolfgang Müller <wolf@oriole.systems>
----
- builtin/shortlog.c  | 12 ++++++++++++
- t/t4201-shortlog.sh |  5 +++++
- 2 files changed, 17 insertions(+)
+I don=E2=80=99t believe anyone uses it anymore, but someone *may* still =
+use it, and therefore, Git should update the info/packs during geometric =
+repacking.
+However, why not introduce a =E2=80=9Ckill switch=E2=80=9D in git config =
+to disable it so that all tools can automatically skip the expensive =
+info/packs (and info/refs) updates?
 
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 3ed5c46078..0fa35202ed 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -387,6 +387,18 @@ int cmd_shortlog(int argc,
- 	struct rev_info rev;
- 	int nongit = !startup_info->have_repository;
- 
-+	/*
-+	 * NEEDSWORK: Later on we'll call parse_revision_opt which relies on
-+	 * the hash algorithm being set but since we are operating outside of a
-+	 * Git repository we cannot determine one. This is only needed because
-+	 * parse_revision_opt expects hexsz for --abbrev which is irrelevant
-+	 * for shortlog outside of a git repository. For now explicitly set
-+	 * SHA1, but ideally the parsing machinery would be split between
-+	 * git/nongit so that we do not have to do this.
-+	 */
-+	if (nongit && !the_hash_algo)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	const struct option options[] = {
- 		OPT_BIT('c', "committer", &log.groups,
- 			N_("group by committer rather than author"),
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index c20c885724..ed39c67ba1 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -143,6 +143,11 @@ fuzz()
- 	test_grep "too many arguments" out
- '
- 
-+test_expect_success 'shortlog --author from non-git directory does not segfault' '
-+	git log --no-expand-tabs HEAD >log &&
-+	env GIT_DIR=non-existing git shortlog --author=author <log 2>out
-+'
-+
- test_expect_success 'shortlog should add newline when input line matches wraplen' '
- 	cat >expect <<\EOF &&
- A U Thor (2):
+> We have been discussing in the past whether the dumb HTTP protocol
+> should be deprecated, and in the context of that discussion we were =
+also
+> wondering whether we should start disabling git-update-server-info(1) =
+by
+> default.
 
-Range-diff against v1:
-1:  42516cc02d ! 1:  d3047a0291 builtin/shortlog: explicitly set hash algo when there is no repo
-    @@ Commit message
-         a repository when given arguments like --author that trigger a call to
-         parse_revision_opt().
-     
-    -    Fix this for now by explicitly setting the hash algorithm to SHA1.
-    +    Fix this for now by explicitly setting the hash algorithm to SHA1. Also
-    +    add a regression test for the segfault.
-     
-         Signed-off-by: Wolfgang Müller <wolf@oriole.systems>
-     
-    @@ builtin/shortlog.c: int cmd_shortlog(int argc,
-      	int nongit = !startup_info->have_repository;
-      
-     +	/*
-    -+	 * Later on we'll call parse_revision_opt which relies on the hash
-    -+	 * algorithm being set but since we are operating outside of a Git
-    -+	 * repository we cannot determine one. For now default to SHA1.
-    ++	 * NEEDSWORK: Later on we'll call parse_revision_opt which relies on
-    ++	 * the hash algorithm being set but since we are operating outside of a
-    ++	 * Git repository we cannot determine one. This is only needed because
-    ++	 * parse_revision_opt expects hexsz for --abbrev which is irrelevant
-    ++	 * for shortlog outside of a git repository. For now explicitly set
-    ++	 * SHA1, but ideally the parsing machinery would be split between
-    ++	 * git/nongit so that we do not have to do this.
-     +	 */
-     +	if (nongit && !the_hash_algo)
-     +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-    @@ builtin/shortlog.c: int cmd_shortlog(int argc,
-      	const struct option options[] = {
-      		OPT_BIT('c', "committer", &log.groups,
-      			N_("group by committer rather than author"),
-    +
-    + ## t/t4201-shortlog.sh ##
-    +@@ t/t4201-shortlog.sh: fuzz()
-    + 	test_grep "too many arguments" out
-    + '
-    + 
-    ++test_expect_success 'shortlog --author from non-git directory does not segfault' '
-    ++	git log --no-expand-tabs HEAD >log &&
-    ++	env GIT_DIR=non-existing git shortlog --author=author <log 2>out
-    ++'
-    ++
-    + test_expect_success 'shortlog should add newline when input line matches wraplen' '
-    + 	cat >expect <<\EOF &&
-    + A U Thor (2):
--- 
-2.47.0
++1 from me.
+
+> Users don't generally need this, and most server operators
+> don't need this nowadays, either. So why generate data that is useless
+> in almost all cases?
+
+Certainly not IMHO.
+
+Luca.
 
