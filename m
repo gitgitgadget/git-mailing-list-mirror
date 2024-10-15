@@ -1,140 +1,169 @@
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B76F1CBA0E
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 15:17:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7A01CB9EB
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 16:05:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729005438; cv=none; b=W36p9yeuNaErMHOGyeebUE/eQYraO1rZd/SkqMvLrcAJiUgnUhPp5Wev8jkqkCHsq6FKCLUQ84jry6q4PEPmMi+uGD4H27eAM5t0FaZnazVgKbC0Y7zg3EcgxKJ85IOI+MZ1GJdGe8vtOAGQ8/YqZhrbpHu6DFVjnUvV+/7ames=
+	t=1729008309; cv=none; b=gEWNgsSkWkNN8U+rNP9TP8sxo9WqMPLMJL/luWDNHF0YudWKBm4tiqHs8EgSkYTCHtQ4vx2xzvSEU8yBMs1pKu9NYLuc6r1Rlq+E2QRH4/0FgT6Q+ejbka8g632eiWihlT6Z59UVU3MXqz0K/ACeyU+IbknDGBOWV+EcM+J8IAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729005438; c=relaxed/simple;
-	bh=lyzhFHnQRLgZv5h9LLJrebPiKCr3IeX9Zykf7vpZt2Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jLtXRIBbV6MazhnTM/4IfIZze5tVca6QPWLgTGpDtuhzqKx5hWE3zMw0FeeiZGYKl17e5ki5Yvj5F+2MkOYSMVZVF2lAVvkKWd3s2myeaI1yGdBJX3GYJ4TNRfHKl9KfjkQNm4yn0bD+e8/duL8CRm6fz1D8Zct8VTLhsMZa09I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fcowZdS4; arc=none smtp.client-ip=209.85.161.41
+	s=arc-20240116; t=1729008309; c=relaxed/simple;
+	bh=QOEwvzQ4kKxT2MmUW/0NrVFOhhJ1BnwRkweH/tIOLUE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L84o/eqRdLIUXJWIpVXQdek9ds9eIDDnYR0PkgCtzq+Emhyn3JSGRfaRbhFNMjhJrkoN9M7pzH/pQsg1xR/PLKDqFB9Hjj1fZ3Ei2Ud+XIiSjMRjD3bEP2LBqURPAzA+F3s856XpzBkojaZeF/NCMN6s9PQDGCcYneci2x5bH9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bS1yTgXo; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fcowZdS4"
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-5e98bfea0ceso2661301eaf.0
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 08:17:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bS1yTgXo"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-71e67d505ceso1470980b3a.1
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 09:05:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729005436; x=1729610236; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CWwF45Z+8SzgpySphQot0AXTlYq4SN9Jq0/+oj9RsZk=;
-        b=fcowZdS4YLc/OZtuqxMbtpv2fvYZtqYn68wiMi0ej3YQZKPUoplYC1tO0mb+k9p2vj
-         9FPrKso9hVMQqBLwxF9G1LQ6ejrz0fFMv0qyVeG+FHt4/RrbdJraxgPZ66xm+xevmyCd
-         1r4pqbX5djqLo2EhF0Kw9+lgjsr0+Ye3NQ+j3DkQJOF42LF2AcHLt7iJTqPzUmGpaJOb
-         D0VyJhU06oVOnu4W9/5sHs+ig8i8+ZcigJniP6pQw25guBIkulCGxeCMgwZh8dlEbWu4
-         KDLZcEftO+3K1flTPkyoZcnDsHZFAPRlus5VSjKxOMMJJbmt4nGpWkJ2HbhrKVvk0r1s
-         Q2Ig==
+        d=gmail.com; s=20230601; t=1729008307; x=1729613107; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2xC/Ew+Jzbafkk1pCYxE8cH/RGk4Q2KiNqqbHM0kEg4=;
+        b=bS1yTgXopVGvEg4OkguI9tcL6Ta5LUPVRqulIplzTMvBjQR6Rip4JwNrT5Ga8+ar7z
+         aRaG1XKKn+ueQi7sVDYqXciH8eOUoBx0qOkyur1PlA+t++8PoL5vrb9jBDea2PGXbb/M
+         1/KJLcSjHo4g/GkG1Z5VRT8crMfsbPm5daJd/0h5YKQe2ezyLTccTthZiUYFhpYWAhkB
+         jKW8iSaSGyYWlP9z7L8s8WWUARLm55Ebx+R5aeKY7uLePJ0VePgfN8bvU0HyAk5EvJFT
+         KkSuy0I71F0AnvqPVk4oLIxfrOUfRDC0y2rx4LFCD3fpBMFY2v966yYi4a/O0t8w9YXs
+         LcoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729005436; x=1729610236;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CWwF45Z+8SzgpySphQot0AXTlYq4SN9Jq0/+oj9RsZk=;
-        b=tNKLQQ0N2HkjjZFq3EdpENz9ofEHwvf5xumyjn/0z/2IcdhGcQzNJEEiij4iDtGxlz
-         dgCBhul/c7HB8DzcGWSVFGticRTabkK9QQSpWCKxZ0lF3tG5kX8j5VUBKMwVtNnpMZ3A
-         X6gASCiBuwIwjJRPGTpZN1472HBdabkB7nP4AY2URhF3m2LMwRp46bQPKFEdW3OTJ9G+
-         1+3NlbUq6+sC8a/ij/oMSyluYSZF4wm3hQ/L1gnY92ohrSTKhKQglAQAXcWqejzUU3IB
-         ZqeVBqO1QkkIbjdMRtsVMV6+/PoWrhkBfD+vUp99B+11wRVlkdB9N6esYn1ayksalXn+
-         rjaA==
-X-Forwarded-Encrypted: i=1; AJvYcCXrcxncVUtIlaPyZUtpKrpbS52iGf+U4BEAqmGGMzc05u5w83up8NnfiALRgrtXNIFh5s0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/5Ucuuqtk4x5i9c5CupKuaqa8hA0IsA9K+E6FhU++5nRh15aj
-	aViC/TQSP12AjlbIZnv2Q5AYFlgMbGSqU2I+nZqyw8JrDroflLfXWPAKEtaYeIrcslT93G+Xg4s
-	mqTfRMnzpQ3aOkTA2/UVLCFgLMrU=
-X-Google-Smtp-Source: AGHT+IFwmvSWFX9gud6OhBB7D3gIA1a6rNQtF2DdnVjzsXi3EDu5iOhrN9rWIqibkt7iC9KIcAYXzM5sODdiv6swJUg=
-X-Received: by 2002:a05:6358:311c:b0:1c3:77fc:3bb6 with SMTP id
- e5c5f4694b2df-1c377fc410dmr123729755d.21.1729005436108; Tue, 15 Oct 2024
- 08:17:16 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729008307; x=1729613107;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2xC/Ew+Jzbafkk1pCYxE8cH/RGk4Q2KiNqqbHM0kEg4=;
+        b=ZninqCPgQPIgVImi6ni7+SGgWbQQHo7ZaBCeQpDP9RQtKpasSNqTszn3FFJ9zYcOOe
+         elGNsXvgvg7aNIY2yycXFbPHZiT5ITPyvxqHmDNM3DI3pts/1EKB/IlleNUQ9iJ6hhMg
+         2rGQxwuzkdyMBXRJ33sAMlineyo53Fe/8elBGmSF2xPN9UYuiBP+u4OXsDb/Ok+ffzkR
+         dwRmbt16nzhB/4LLM4rQUsa2AqKLwnNiWpbfEC7ES84AfiBFk/cytcuFusyE1w0MxAL6
+         o1CFwNEB4oiZ54vKgoEngRrbmzfyXygl3EuHnLQAVVYXVl6VVuezDasL+pYI/paw5xb4
+         Lnlg==
+X-Gm-Message-State: AOJu0Yzyav1/xMYsADWnl2ge3fsaVjaHEsijZboG1XX0oLfasSHzfgsX
+	Q33+Pq+BxO41f23D7AI4ZNaKCt2y+Fq5xQ2XrNOziccNy6ngZWgl
+X-Google-Smtp-Source: AGHT+IFaypqgH4pFi/ph+kOZPyQHoqXLa5TLZh3Y0ZO751Vrkk1WGLw7czA/lYBDQ0eExW2YUdmnWw==
+X-Received: by 2002:a05:6a00:148b:b0:71d:f2e3:a878 with SMTP id d2e1a72fcca58-71e4c13dd50mr18604075b3a.5.1729008307059;
+        Tue, 15 Oct 2024 09:05:07 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71e77518a5fsm1420227b3a.214.2024.10.15.09.05.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2024 09:05:06 -0700 (PDT)
+Date: Wed, 16 Oct 2024 00:05:05 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Kousik Sanagavarapu <five231003@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/3] repository: move git_*_encoding configs to repo scope
+Message-ID: <Zw6SsUyZ0oA0XqMK@ArchLinux>
+References: <20241015144935.4059-1-five231003@gmail.com>
+ <20241015144935.4059-2-five231003@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
- <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
- <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com>
- <Zwz4B4osJnYJw6pd@pks.im> <2a937b6f-a3fb-4f2a-997b-5508f0e20e65@gmail.com>
- <Zw0kGLZ-mcYjb6Je@pks.im> <2160f8ea-5f00-49d9-8e02-d71d4d827d39@gmail.com>
- <CAPSxiM9ncwaZ3HF72wsRwmen7joWk3mjipsu78WxKEzLX607sw@mail.gmail.com>
- <CAPSxiM-aptyjesMX1H-P5QJjA-6CUonA01Bo84cq2_t==TqFgw@mail.gmail.com> <84dbe9f1-976d-45f8-a49a-d0f942906686@gmail.com>
-In-Reply-To: <84dbe9f1-976d-45f8-a49a-d0f942906686@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Tue, 15 Oct 2024 15:17:05 +0000
-Message-ID: <CAPSxiM8-C6DAE3nYqMUCs+UgHN1R41grwVE+S-cSi6gZGvCpYw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and strtol_i()
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241015144935.4059-2-five231003@gmail.com>
 
-On Mon, Oct 14, 2024 at 6:36=E2=80=AFPM <phillip.wood123@gmail.com> wrote:
->
-> On 14/10/2024 17:26, Usman Akinyemi wrote:
-> > On Mon, Oct 14, 2024 at 4:13=E2=80=AFPM Usman Akinyemi
-> >> On Mon, Oct 14, 2024 at 2:55=E2=80=AFPM Phillip Wood <phillip.wood123@=
-gmail.com> wrote:
-> >> I got this from a leftoverbit which the main issue was reported as
-> >> bug. https://public-inbox.org/git/CAC4O8c-nuOTS=3Da0sVp1603KaM2bZjs+yN=
-ZzdAaa5CGTNGFE7hQ@mail.gmail.com/
-> >> For the test, I should have the test as another patch right ?
->
-> In general you should add tests in the same commit as the code changes
-> that they test. In this instance I think you want to split this patch
-> into three, one patch for git-daemon, one for imap-send and one for the
-> merge marker config changes. Each patch should have a commit message
-> explaining the changes and whether they change the behavior of the code
-> (for example rejecting non-numbers) and add some tests. Note that I
-> don't think it is possible to test the imap-send changes but the other
-> two should be easy enough. The tests should be added to one of the
-> existing test files that are testing the code being changed.
->
-Hello, thanks for this, I was working on this and I need help. For the
-merge-ll.c,
-I noticed that the check->items[0].value were already checked to
-ensure they do not contain letters in them.
-        if (check->items[1].value) {
-                marker_size =3D atoi(check->items[1].value);
-                if (strtol_i(check->items[1].value, 10, &marker_size))
-                        die("invalid marker-size expecting an integer");
-                if (marker_size <=3D 0)
-                        marker_size =3D DEFAULT_CONFLICT_MARKER_SIZE
+On Tue, Oct 15, 2024 at 08:01:22PM +0530, Kousik Sanagavarapu wrote:
+> Move "git_commit_encoding" and "git_log_output_encoding" to "struct
+> repository" and amend the functions associated with peeking at these
+> values so that now they take a "struct repository *" argument
+> accordingly.  While at it, rename the functions to repo_*() following
+> our usual convention.
+> 
+> Doing so removes the implicit dependency of these variables on
+> "the_repository", which is better because we now populate these
+> variables per repository.
+> 
+> Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
+> ---
+>  builtin/am.c       |  6 ++++--
+>  builtin/blame.c    |  2 +-
+>  builtin/commit.c   |  8 +++++---
+>  builtin/log.c      |  3 ++-
+>  builtin/mailinfo.c |  3 ++-
+>  builtin/replay.c   |  3 ++-
+>  builtin/rev-list.c |  2 +-
+>  builtin/shortlog.c |  2 +-
+>  bundle.c           |  2 +-
+>  commit.c           |  9 ++++++---
+>  config.c           | 10 ++++++----
+>  environment.c      | 13 -------------
+>  environment.h      |  6 ------
+>  log-tree.c         |  4 ++--
+>  pretty.c           |  2 +-
+>  remote-curl.c      |  4 +++-
+>  repository.c       | 13 +++++++++++++
+>  repository.h       |  6 ++++++
+>  revision.c         | 10 +++++-----
+>  sequencer.c        | 17 +++++++++--------
+>  submodule.c        |  2 +-
+>  21 files changed, 71 insertions(+), 56 deletions(-)
 
-error: option `marker-size' expects a numerical value
-not ok 38 - merge without conflict wrong marker-size
-#
-# cp new1.txt test.txt &&
-# test_must_fail git merge-file -p --marker-size=3D1a test.txt orig.txt
-new2.txt 2>error &&
-# cat error &&
-#     grep "invalid" error
-#
-I grepped the error message and I noticed that the message is gotten
-from parse-options.c and it ensures that the arg is negative. How to
-proceed in such a case ?
+For "git-mailinfo(1)" and "git-shortlog(1)", these two commands could
+run outside of the repository. If we incorporate these two configs into
+the "struct repository", we will have trouble when we remove the
+"the_repository" global variable.
 
-Also, for the daemon.c I am finding
-it hard to get the exact test file to add the new test.
+The patch in [1] will pass a NULL pointer for builtins with
+"RUN_SETUP_GENTLY" flag.
 
-Thank you.
-Usman Akinyemi
+[1] <d59b85b529865793c652d983d71a9fbb7e16b3e3.1728594828.git.gitgitgadget@gmail.com>
 
+> diff --git a/config.c b/config.c
+> index a11bb85da3..656748692d 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1690,13 +1690,15 @@ static int git_default_sparse_config(const char *var, const char *value)
+>  static int git_default_i18n_config(const char *var, const char *value)
+>  {
+>  	if (!strcmp(var, "i18n.commitencoding")) {
+> -		FREE_AND_NULL(git_commit_encoding);
+> -		return git_config_string(&git_commit_encoding, var, value);
+> +		FREE_AND_NULL(the_repository->git_commit_encoding);
+> +		return git_config_string(&the_repository->git_commit_encoding,
+> +					 var, value);
+>  	}
+>  
+>  	if (!strcmp(var, "i18n.logoutputencoding")) {
+> -		FREE_AND_NULL(git_log_output_encoding);
+> -		return git_config_string(&git_log_output_encoding, var, value);
+> +		FREE_AND_NULL(the_repository->git_log_output_encoding);
+> +		return git_config_string(&the_repository->git_log_output_encoding,
+> +					 var, value);
+>  	}
 
-> >> Thanks.
-> > Also, do I need to add the reference which mentions the leftoverbit in
-> > the commit message?
->
-> I'm not sure that's necessary so long as you explain the reason for the
-> changes in the commit message.
->
->
-> Best Wishes
->
-> Phillip
->
->
+There are many builtins will execute this config setups by calling
+"config.c::git_default_config" and then "git_default_i18n_config". If we
+need to use "repo" pointer, we may need to wrap this pointer. (This is
+not the problem and it is not hard).
+
+But what if the "repo" pointer is NULL? We still need to set the value
+of these environment variables. Because when using "git-mailinfo(1)"
+outside of the repo, we still need to set "git_commit_encoding"
+according to the user's config.
+
+So, from this perspective, I don't think it's a good idea to put these
+two configs into "struct repository". Because we can use these two
+configs outside of the repo, if we put them into "struct repository", it
+is strange.
+
+However, I either don't know which way we would apply. So, I cannot give
+accurate answer here.
+
+---
+
+Patrick, I wanna ask you a question here. What's your envision here in
+above situation. As you can see, if we put some configs into "struct
+repository" and we run the builtins outside of the repo where we need to
+set up configs, the "repo" is NULL. And we will get into trouble.
+
+My idea is that if a config could be used outside of the repo, then we
+should not put it into "struct repository".
+
+Thanks,
+Jialuo
