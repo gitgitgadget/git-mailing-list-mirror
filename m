@@ -1,54 +1,54 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739FD1EC006
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9481CFEA9
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992725; cv=none; b=tCkXHROkYMH8zw2Msi/MWTPSEJJbODRGRGJz2KElI6ZPBICB7E4Qxxz1GFy8N1XIZuwVy76QZsbuJEvFKsln99qPVcayxh+19sWDz3l6Rso7n9uZDsZurHNrvH5raBKGJBzS7GGAE6lT60slBiabVnm6YZ/gXFucqfGLUwkR000=
+	t=1728992730; cv=none; b=LRJuUihmn51gbNc5CmoIh4Q36mGVsHrQlyiYC08D0105UlywF0/RkM2AHLHLp8g0QN9JWU5mwm8no/Q5J1VoKsw5OsEmgFJAA7bv0azN1NJv1RVPKsb4bve43TaFh/F7PWJs9G8FgSNT3kh7+ITXW7E/nNNwPJ0htBKHjFlh1SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992725; c=relaxed/simple;
-	bh=6wCUDR2uWwl4w7N5YG2d3RdZ2ut+HDil49fwgmEGuoo=;
+	s=arc-20240116; t=1728992730; c=relaxed/simple;
+	bh=Jy5H8rd/HsHj6nvgVLd3dUgL5Y3/moeUXfdhK3b1uEk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=diGWtoqgtVkjaibRTpwBjRdQyT8r2LqM2y37MsMyyNXM+rvRypEllSXOsHpvLwGKi/TXuQEl2PLznlLXCqtd0+XaEXKG1x0IBtIeP7piKojU9ypNCAuj+TvHgR4ZjBssSB8dOvWO6p0K3BVG+He2Z/oQ+8bnQNoIMcVfsEe7g50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ESrrGP5g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=auGrdijo; arc=none smtp.client-ip=202.12.124.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=LOY9vY5evj1dKt9a2xCg31YfLlVBO9GI1voc6pVQuSavGIL8vnuo92V6DCrz/OsIZsQLFh0BhNwMpqn3T7I4Rxeo0xp0Ni8S8/owgWWoRqyLws+9ZipV0M5tXp3dvXW5usr6M4dWRuAxXvCB/d6OmtjiaElMDuL1kYthQ2pGju8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ajumpqXe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SezRGqy4; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ESrrGP5g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="auGrdijo"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 797DC11400B9;
-	Tue, 15 Oct 2024 07:45:23 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ajumpqXe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SezRGqy4"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1293A11400B7;
+	Tue, 15 Oct 2024 07:45:28 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 15 Oct 2024 07:45:23 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 15 Oct 2024 07:45:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1728992723; x=1729079123; bh=jLJmF5/uZk
-	1UixwX0/0kRWJ9Rhewqx2nglz2///Euug=; b=ESrrGP5gXdya3CjogNOtvqGVd2
-	PdlBW8MojNhMj4c+NibapvVK8ul2j6SSjSjrV1pMcS4riPGfIjjZ3P6pK866MK61
-	t48VJllNfel0j/ThOx0qkV9+2WjkGRIyfsiz2MkizeglgDqQeCWInW+AiPJvVfq4
-	XcwrrL8pTKwzf5h+w213C+55ChU/oLJYP2+3voK3pJwO5mVRL5/8UOq99d1f34cp
-	0XlyTiZzTH6RNeyVr/NuNduoAXSNXjPhNZcAwdzBofSj7fFc+3gvPlGFQJHJmuDw
-	F0G3OrIGmqcY/mnJ+ZejssZxa6e/xsi8CgHm9HoO1iW0DstFVGRCpoD/wc4g==
+	:subject:to:to; s=fm2; t=1728992727; x=1729079127; bh=+Pe2v1qzcY
+	1ZGDdQ+1cWhvEwUASL9kaRlE/RiwKSBV8=; b=ajumpqXe+i7v2UGS+H9mokbFGB
+	ZehEwG5ClZZ2IPrcf42mtxYIGVzTxNNH7WpbV1ozrfPtWIFDM4rM9gfPxam3jZkB
+	ATPAIMRHxOGW+83IPdZQl8FPqyy9EF3hLq7J/jBKZxqorEjSnkC4PUR0v8LYZoj3
+	tQk6rxoTvU7WeKAf3pCfObvQxQRsgmSbOwD+T3QlW6kEAvN+T/QUljNAWx2f4AMn
+	NTUv9hZjxH1NC2p/jMvcsYqvgufi/iE4VhPq84YpvBp7SeBnaIUEvveh+UCLHfYp
+	ez1zxT7YBwB5q9LC3KfBYrDTHJ3qShL6ea7nB8BX2WODDFl8BqZw03DqO4QA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1728992723; x=1729079123; bh=jLJmF5/uZk1UixwX0/0kRWJ9Rhew
-	qx2nglz2///Euug=; b=auGrdijo8YzAwpzudyRfGwlxyoyOvZIhg2RD+Qo/sxXY
-	kDhWkwvAJ02jIgpfCzMVBgZiLnl/ENY6T04f9lN7Xyk3a5G5w6R0PvB4XUKWTfBw
-	hH5tMO7fmiPM6duK01A2uQo7E+Z9yJqJN41ncIVFi73Si3IzxEYfoJIWLvpuQB7a
-	f3PQ91tCYQcuI4DgH97+AsUOFo9fhMVQElf2naMFyAZkk6Bh4GvJl0Zbg8N6oB/y
-	NvMGVhstlggJWIUVEL4j1zfa6PwwtRlYtiVaVqZ/fwiUN7Lv6xhD5l3DrBZ17QY4
-	PsmNj+BES9sglLVEFc19jMfeyyxpNRhTzRFqhIglDA==
-X-ME-Sender: <xms:01UOZ4B4L7LNBcuys45FPAllfk9VolSnGybcH4PcnOBVGlpvDaLdNA>
-    <xme:01UOZ6hqb-LGpY9cPtZailNwaz0zSgM5CmdBHb5Xw06rikkgrQ7KVMK5sEVWYnt_o
-    IDYJVVEIiigMDJUeQ>
-X-ME-Received: <xmr:01UOZ7mxg33hLcYfjR2IcRU2CUy6aCu0HZEgEM1A4DJEtBBgyZZ4C2pMoWYk4Z6109IFzVON_BKwZhxneA027nblceClC1MMGMFTZuquo6dzMA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedggeegucetufdoteggodetrfdotf
+	fm2; t=1728992727; x=1729079127; bh=+Pe2v1qzcY1ZGDdQ+1cWhvEwUASL
+	9kaRlE/RiwKSBV8=; b=SezRGqy47gxs4IqDO7Q4DZQNJSjBIoO3vCjVsEm5/cFs
+	YkVGUPQBsL+Np+mvtZkeSqEYUq1HNu0YATxw/CjWFbxjid+6elKrEcza9cyfTDx9
+	WEmtn+eZ32qx8rQbcYC50Xr7Gtzol+SndKQI0qag10Io5SVJQpmh8TR2ZHEqtItP
+	zfSw/+SMaf3Cdxawl+IsNMX6RFbEZHWSkM1LdRMXnhJNe+pQuhbdjA/Cp+N53QXi
+	qnyz34QrrsuxTW3UAb+lZH13Ti7w22o/dIECCrCWt6wmBADLS5CIxtjCedZgl/7o
+	OLRsm3C+PC1OFBIByXLYvx63fSJ195L9ifwrC1WVAQ==
+X-ME-Sender: <xms:11UOZ9ALlzkmYe-w3ivtvdHzuswdn_lHRh8HMqBlvC1sYxFdnbE_lA>
+    <xme:11UOZ7gDo8Uq0ZQs_uJnm0cn_U0pYHE-sqU9G4uPzOT16SOT-Xd4diFsONVZNJUJD
+    lKAR7SuHMcJbvVI3Q>
+X-ME-Received: <xmr:11UOZ4k9wJA3rXf6to6zoSZioXICmbqedlRckCrpzORKq0TQBQmmHu7dnLhMGmbKRewCm4K--3pY9NqG0486BmFB4GrDhBKvQ7zOYRa1I4t8HA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedggeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -59,24 +59,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedggeegucetufdoteggod
     mhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
     homhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhi
     thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:01UOZ-xNLkyTatQoEjsL7bNkJT0Tdbz9-HJFdDTgn7s8ECXvEyCvVQ>
-    <xmx:01UOZ9T5jMPXLeL8hHYtiJAxiz3kusGcTf07sS2w0aYjHRGLKgIWBA>
-    <xmx:01UOZ5Zz0ZNSyVzUExZ5kaFGv4Af8XNi5PObwdVFaQGaQ47nlPTziQ>
-    <xmx:01UOZ2SM7DIc-4dh7PsbXZrCHedP-qAbFZq6Wd8q6z_WoBtBNnxDSQ>
-    <xmx:01UOZ_d1IOk1X6V1VaqGCSG087rhEUImwZAmHPeLivekoJCyR69YESLd>
+X-ME-Proxy: <xmx:11UOZ3y1UiavRu9fQcrqJMb2TTfRD_ivKKduKDhBR4bbVd7EnE1akg>
+    <xmx:11UOZyRy2LJU2mkw-yI0ADW1neUrG_weTLVVzSxi6sx2eaKZEVXZ0w>
+    <xmx:11UOZ6aNy442HLynrNGnsQnD216OLFrNNK-XonJYm9Xem_lag4KPFg>
+    <xmx:11UOZzQFlKnbDycH1Cf65nwyyoBGJAmCsa2yc_Vpjdj-PFCbkxx5OQ>
+    <xmx:11UOZwfC3U1D0EmQ8sdR9rEsT87HAn20V1KQkNPyuMtUWF65hqLhlnd1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Oct 2024 07:45:22 -0400 (EDT)
+ 15 Oct 2024 07:45:26 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 126f112d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 15 Oct 2024 11:44:07 +0000 (UTC)
-Date: Tue, 15 Oct 2024 13:45:20 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8f4c07e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 15 Oct 2024 11:44:12 +0000 (UTC)
+Date: Tue, 15 Oct 2024 13:45:23 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 05/10] t1401: make invocation of tar(1) work with
- Win32-provided one
-Message-ID: <58691dd652b23f2c630eba71bb9b93700ab66a09.1728992306.git.ps@pks.im>
+Subject: [PATCH v2 06/10] t3404: work around platform-specific behaviour on
+ macOS 10.15
+Message-ID: <1daadd82766a59577580dc386b91a942b0df6e15.1728992306.git.ps@pks.im>
 References: <cover.1728906490.git.ps@pks.im>
  <cover.1728992306.git.ps@pks.im>
 Precedence: bulk
@@ -89,32 +89,76 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1728992306.git.ps@pks.im>
 
-Windows nowadays provides a tar(1) binary in "C:\Windows\system32". This
-version of tar(1) doesn't seem to handle the case where directory paths
-end with a trailing forward slash. And as we do that in t1401 the result
-is that the test fails.
+Two of our tests in t3404 use indented HERE docs where leading tabs on
+some of the lines are actually relevant. The tabs do get removed though,
+and we try to fix this up by using sed(1) to replace leading tabs in the
+actual output, as well. But macOS 10.15 uses an oldish version of sed(1)
+that has BSD lineage, which does not understand "\t", and thus we fail
+to strip those leading tabs and fail the test.
 
-Drop the trailing slash. Other tests that use tar(1) work alright, this
-is the only instance where it has been failing.
+Address this issue by using `q_to_tab` such that we do not have to strip
+leading tabs from the actual output.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t1401-symbolic-ref.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t3404-rebase-interactive.sh | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index 5c60d6f812d..90af3f955c0 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -16,7 +16,7 @@ reset_to_sane() {
- test_expect_success 'setup' '
- 	git symbolic-ref HEAD refs/heads/foo &&
- 	test_commit file &&
--	"$TAR" cf .git.tar .git/
-+	"$TAR" cf .git.tar .git
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index f171af3061d..7ce75237803 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1917,18 +1917,17 @@ test_expect_success '--update-refs updates refs correctly' '
+ 	test_cmp_rev HEAD~1 refs/heads/third &&
+ 	test_cmp_rev HEAD refs/heads/no-conflict-branch &&
+ 
+-	cat >expect <<-\EOF &&
++	q_to_tab >expect <<-\EOF &&
+ 	Successfully rebased and updated refs/heads/update-refs.
+ 	Updated the following refs with --update-refs:
+-		refs/heads/first
+-		refs/heads/no-conflict-branch
+-		refs/heads/second
+-		refs/heads/third
++	Qrefs/heads/first
++	Qrefs/heads/no-conflict-branch
++	Qrefs/heads/second
++	Qrefs/heads/third
+ 	EOF
+ 
+ 	# Clear "Rebasing (X/Y)" progress lines and drop leading tabs.
+-	sed -e "s/Rebasing.*Successfully/Successfully/g" -e "s/^\t//g" \
+-		<err >err.trimmed &&
++	sed "s/Rebasing.*Successfully/Successfully/g" <err >err.trimmed &&
+ 	test_cmp expect err.trimmed
  '
  
- test_expect_success 'symbolic-ref read/write roundtrip' '
+@@ -2178,19 +2177,18 @@ test_expect_success '--update-refs: check failed ref update' '
+ 	test_must_fail git rebase --continue 2>err &&
+ 	grep "update_ref failed for ref '\''refs/heads/second'\''" err &&
+ 
+-	cat >expect <<-\EOF &&
++	q_to_tab >expect <<-\EOF &&
+ 	Updated the following refs with --update-refs:
+-		refs/heads/first
+-		refs/heads/no-conflict-branch
+-		refs/heads/third
++	Qrefs/heads/first
++	Qrefs/heads/no-conflict-branch
++	Qrefs/heads/third
+ 	Failed to update the following refs with --update-refs:
+-		refs/heads/second
++	Qrefs/heads/second
+ 	EOF
+ 
+ 	# Clear "Rebasing (X/Y)" progress lines and drop leading tabs.
+ 	tail -n 6 err >err.last &&
+-	sed -e "s/Rebasing.*Successfully/Successfully/g" -e "s/^\t//g" \
+-		<err.last >err.trimmed &&
++	sed "s/Rebasing.*Successfully/Successfully/g" <err.last >err.trimmed &&
+ 	test_cmp expect err.trimmed
+ '
+ 
 -- 
 2.47.0.72.gef8ce8f3d4.dirty
 
