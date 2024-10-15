@@ -1,55 +1,55 @@
 Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE95146A9B
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 22:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E80B1B6D07
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 22:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729032664; cv=none; b=XmYzoPBg/o95xApBp/UiBWKZHg+7X9dCqez50qGyYBuEzXqRu4UXZfEqAE8kGN6VXMxFDCBN3Mp0lXjtGeUo+IjR1NlnKdkDft7ZpANecsRbIO0vx+bvQbh2vljgII6uRlJI3eZJoOuszolPZae1K6+7ReDV7kEJzZR6k8qb2ec=
+	t=1729032666; cv=none; b=BIQ/9SBWtPmQA2ik9oL07AXyK9qUX1EY8Oa4OQ4TqHeOCgnFxrxUbDwpQ+1IJQcBxOPIo49p89RqORkDazcFQjORSwUL/qtHEh2jaloU0pzo3ecfYHKvz0uR4piTS4Npk/b1KYbHjrHAo37M6IwXITlOY89ew1/TVBnF00W0zvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729032664; c=relaxed/simple;
-	bh=rJ38VFT2D+udVO01/6eDBewRt76MR3Z3WL3AskgaqrA=;
+	s=arc-20240116; t=1729032666; c=relaxed/simple;
+	bh=QyLUGZVKHwBwxRa4BwFWnKoAh34+Tfnch8atxHP7FuE=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=YwpgAMvJxLdjPZjeDJYfSH/eL8AL0BqTClzfKwOHKltyPIsega22PJtqeqbNRQQIagW+/qVR/Hjdu85aXHEvdIMWUu6ndezwpTrMuAXWZppkyHzKVz69fakVo1lzHPtkgPB5UNUB/zmRB+VUAAJ8+PpZ/4u7ApvFe5zoFwAaBi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=x9I7ko6r; arc=none smtp.client-ip=209.85.219.202
+	 To:Cc:Content-Type; b=MojBPy8lyYDJusIBJfmgnPJfSYq6hXBJ9Tq9JTFNLdrNNq59TXYd74skrr0q19tH5tKl5z+ZmLLlqJsXPGBYCOgWbr7BcMdSkgL3p29ZLytsKhxrEjsofdx5p5punhRzj4vcU8c1C8ICiwP8RIG3iRt/UdgQEOdGcA1YJ5Iw6sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=f6Xvhv2D; arc=none smtp.client-ip=209.85.219.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="x9I7ko6r"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e2954ada861so3805923276.3
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 15:51:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="f6Xvhv2D"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e291ac8dcf3so6626239276.3
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 15:51:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1729032661; x=1729637461; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1729032663; x=1729637463; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=L6P657FsvzoBA1eCjzW11XuMebINTa525UA19qDtlb4=;
-        b=x9I7ko6r49MlFlOkyqfwkDgpXKE3yp/ZboPe6nmb35BqKwUPyYwoJkawbA07gOiTx3
-         6+HQwTyvKSI/MdFMCSbh0E5oUtdUcRz8pVgKtRg1oT09hCcEq93Uh/5nTgYR0gyYSoRz
-         oKyJ+9ba2kj3sYrEiC7LXDB+eheR6DEZLVFm6LMbQhFice1GDxlPq8UZUXfyLZyeEu1Q
-         JEtMBgfdWwFR3upCVHs/y59RjZLTpaTIaAqfaF2zQEf3Wh1R0Q6hHM32+UXhW4GbC8nb
-         PsTjz9wh9BkouK69ZPlilV9dmd5INZ7a0BmRPmh+OZbUuvQeQatiynyFrvF4ogCBONfS
-         Hi8w==
+        bh=jhQqqYPIzzC2MYXnXMmrKAu3jWw8QvhgXPhNzt5Q4+c=;
+        b=f6Xvhv2D34+LOgWk57EjschadpzOhdTmjZJ5r7iR6pp0O/T88wBcNzIoh/+tW2+tFw
+         GAUeC+ag+27tJP2mpcxM0GvaaXafslmNobEyX5M41UHkdvAgz7670L831LXnvgrZZ7V4
+         q2Xo5u4rhM+MfDyJ4JFQNAQ2OMklyDyPwpV0rBtVHM2QVnfAVES9ay63RBfrcy+T1vjD
+         CdjyN5PZef9NtGUCz/jqwVK5Duou2rCVr4awH3mLi50QXQYCEOtlw+HpqmHfemQJqV6e
+         49tjr27Sf3ZVZRsK5vOaKmqxywEKCR5A0O1ThpE9uGDSp/0W5wlxq4XNDUFEB3OCSYJG
+         8DIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729032661; x=1729637461;
+        d=1e100.net; s=20230601; t=1729032663; x=1729637463;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L6P657FsvzoBA1eCjzW11XuMebINTa525UA19qDtlb4=;
-        b=JautISZM59wDMmOAQfFCuVdQF/Y/NwXDJGB7qWvY5JjgJdghQCj9h510g4cNuwcIuJ
-         9DTrVSw6UmE4akRHGxnhoaqFd/lVuWrtJdSFU2hJt22iVa1TfHd6GaWdhyT2O7KTmN94
-         FSQuguMfTcpCUzCKjL7FN1nvCtCd054In7lBamlPeMT0tjAJ6wd7RysKeiiWQ+RRA5z1
-         q6tdAu/NpQt3nmrLTw9mOO/zX+mYp5gnfQBr9u73McBYqAnuCJbl1l4a0qvuo+wowB1b
-         vbbmeypwQ8TJMUBgso4F2j58eM8uZ1Nq7mCWB18C0CqT1rUFHxeRhSFBEAoY4d8Y7TeN
-         hVOQ==
-X-Gm-Message-State: AOJu0YyzNlBIlqwA6s2qFK32FscLf5xuu1bKNyidltcH8CmfhoW596Oa
-	F4nqsgtdd9I7mYMPzyO+4Wapo/vpxkFuDWur7uMgNAkYrVeWCXhau+sZlNZ+XqfyxHtzM5tmaKx
-	vN06awfxYm+UAD0F/1jSyPog/i6DVnjlhH026ueEHj6avCOXXFvYyhSSI9lu4mk6N1ltoy1vVqU
-	GiqpuwaMYwgYmWLw/KfUs8FZLaTNZszvHSE1aBzNg=
-X-Google-Smtp-Source: AGHT+IEcR4CGp7IRk/K+R8WNn0oQrk9OYQce05a/Y3JOK1JU6uOTBlQjjFqlLWno28cDL1gbJK4kvVk5QKkn6A==
+        bh=jhQqqYPIzzC2MYXnXMmrKAu3jWw8QvhgXPhNzt5Q4+c=;
+        b=AkbCNwyY4ugwymmBAu6pT1xbNHgv6TF+iQA4EmwKCryFP7g5e5vv8HFohyWHU/QZZR
+         dgYgOcZq229gmbs5TJEIyJf58d5SH3z0+PR9GkigUY5djens2KOr/UDB0xXsxBYGwFVd
+         Q/+K48RrTrF7b4i4p7gZzYCkLnn8IWzOK3DoXC7Bb61DrIgkalH7qNmclt/jDlYdrEPa
+         pHCqJGQ7OMqTTOcw6avsXOT6dAPcxnZqJH8ogUU4HAkOdaf8tpY8B3eJImkrDtMy/mTP
+         9W0F8agEZG39t0J5XcxQdXtoo++fybsDCGX+foeXe0OTZmoG0whatX0t+yUBjazl0fyW
+         FJOg==
+X-Gm-Message-State: AOJu0YzCESS8Cz92W12LX4mYc0yvovWtZo69tK11vcElVEApj3jBfWea
+	i9dbxizkncH9tVKq+PzjTEpxb5Y+xmWhFfpAWaamJrh/ZKstdr27FD+D5ic6wXovrUPMrBG7zg+
+	xUJUc6s2gqTPkWy1Wy/+5tTv7/vsWnBCVzCKR6348HjBprD7cLyx2zdRJ9NH3bGoKD/NyQGNEKE
+	QFVN+qapn5QzdZ1D6h7L82zFpU7eqFS9s8IOqnsCs=
+X-Google-Smtp-Source: AGHT+IFv/SUj/nIUPLPZ0s3flsJnx/eBdcNO4JlrTv7rOHQ6ByKUudjne7Kc1/Y2cBdC2cSrpEaMNSNf4U0tDQ==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:ddcc:6d3c:e4d6:3076])
- (user=steadmon job=sendgmr) by 2002:a5b:f8d:0:b0:e28:fc1c:eb4d with SMTP id
- 3f1490d57ef6-e29782b2e7cmr2090276.1.1729032661278; Tue, 15 Oct 2024 15:51:01
+ (user=steadmon job=sendgmr) by 2002:a25:6b43:0:b0:e1d:2043:da46 with SMTP id
+ 3f1490d57ef6-e29782f3106mr1560276.3.1729032662888; Tue, 15 Oct 2024 15:51:02
  -0700 (PDT)
-Date: Tue, 15 Oct 2024 15:50:53 -0700
+Date: Tue, 15 Oct 2024 15:50:54 -0700
 In-Reply-To: <cover.1729032373.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,8 +59,8 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1723054623.git.steadmon@google.com> <cover.1729032373.git.steadmon@google.com>
 X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
-Message-ID: <1ae14207f69af3d1c6fe19dfd779062a69f16122.1729032373.git.steadmon@google.com>
-Subject: [PATCH v5 1/5] common-main: split init and exit code into new files
+Message-ID: <1ed010c37852255e646b6dbb4beeac9c75c4cdde.1729032373.git.steadmon@google.com>
+Subject: [PATCH v5 2/5] libgit-sys: introduce Rust wrapper for libgit.a
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: calvinwan@google.com, emrass@google.com, gitster@pobox.com, 
@@ -69,267 +69,353 @@ Cc: calvinwan@google.com, emrass@google.com, gitster@pobox.com,
 	rsbecker@nexbridge.com
 Content-Type: text/plain; charset="UTF-8"
 
-Currently, object files in libgit.a reference common_exit(), which is
-contained in common-main.o. However, common-main.o also includes main(),
-which references cmd_main() in git.o, which in turn depends on all the
-builtin/*.o objects.
+Introduce libgit-sys, a Rust wrapper crate that allows Rust code to call
+functions in libgit.a. This initial patch defines build rules and an
+interface that exposes user agent string getter functions as a proof of
+concept. This library can be tested with `cargo test`. In later commits,
+a higher-level library containing a more Rust-friendly interface will be
+added at `contrib/libgit-rs`.
 
-We would like to allow external users to link libgit.a without needing
-to include so many extra objects. Enable this by splitting common_exit()
-and check_bug_if_BUG() into a new file common-exit.c, and add
-common-exit.o to LIB_OBJS so that these are included in libgit.a.
+Symbols in libgit can collide with symbols from other libraries such as
+libgit2. We avoid this by first exposing library symbols in
+public_symbol_export.[ch]. These symbols are prepended with "libgit_" to
+avoid collisions and set to visible using a visibility pragma. In
+build.rs, Rust builds contrib/libgit-rs/libgit-sys/libgitpub.a, which also
+contains libgit.a and other dependent libraries, with
+-fvisibility=hidden to hide all symbols within those libraries that
+haven't been exposed with a visibility pragma.
 
-This split has previously been proposed ([1], [2]) to support fuzz tests
-and unit tests by avoiding conflicting definitions for main(). However,
-both of those issues were resolved by other methods of avoiding symbol
-conflicts. Now we are trying to make libgit.a more self-contained, so
-hopefully we can revisit this approach.
-
-Additionally, move the initialization code out of main() into a new
-init_git() function in its own file. Include this in libgit.a as well,
-so that external users can share our setup code without calling our
-main().
-
-[1] https://lore.kernel.org/git/Yp+wjCPhqieTku3X@google.com/
-[2] https://lore.kernel.org/git/20230517-unit-tests-v2-v2-1-21b5b60f4b32@google.com/
-
+Co-authored-by: Kyle Lippincott <spectral@google.com>
+Co-authored-by: Calvin Wan <calvinwan@google.com>
+Signed-off-by: Calvin Wan <calvinwan@google.com>
+Signed-off-by: Kyle Lippincott <spectral@google.com>
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- Makefile      |  2 ++
- common-exit.c | 26 ++++++++++++++++
- common-init.c | 63 ++++++++++++++++++++++++++++++++++++++
- common-init.h |  6 ++++
- common-main.c | 83 ++-------------------------------------------------
- 5 files changed, 99 insertions(+), 81 deletions(-)
- create mode 100644 common-exit.c
- create mode 100644 common-init.c
- create mode 100644 common-init.h
+ .gitignore                                    |  1 +
+ Makefile                                      | 16 +++++
+ contrib/libgit-rs/libgit-sys/Cargo.lock       | 69 +++++++++++++++++++
+ contrib/libgit-rs/libgit-sys/Cargo.toml       | 17 +++++
+ contrib/libgit-rs/libgit-sys/README.md        | 15 ++++
+ contrib/libgit-rs/libgit-sys/build.rs         | 35 ++++++++++
+ .../libgit-sys/public_symbol_export.c         | 21 ++++++
+ .../libgit-sys/public_symbol_export.h         |  8 +++
+ contrib/libgit-rs/libgit-sys/src/lib.rs       | 46 +++++++++++++
+ 9 files changed, 228 insertions(+)
+ create mode 100644 contrib/libgit-rs/libgit-sys/Cargo.lock
+ create mode 100644 contrib/libgit-rs/libgit-sys/Cargo.toml
+ create mode 100644 contrib/libgit-rs/libgit-sys/README.md
+ create mode 100644 contrib/libgit-rs/libgit-sys/build.rs
+ create mode 100644 contrib/libgit-rs/libgit-sys/public_symbol_export.c
+ create mode 100644 contrib/libgit-rs/libgit-sys/public_symbol_export.h
+ create mode 100644 contrib/libgit-rs/libgit-sys/src/lib.rs
 
+diff --git a/.gitignore b/.gitignore
+index 8caf3700c2..dfd72820fb 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -248,3 +248,4 @@ Release/
+ /git.VC.db
+ *.dSYM
+ /contrib/buildsystems/out
++/contrib/libgit-rs/libgit-sys/target
 diff --git a/Makefile b/Makefile
-index 3eab701b10..7caeb3c872 100644
+index 7caeb3c872..4f7467a8c2 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -979,6 +979,8 @@ LIB_OBJS += combine-diff.o
- LIB_OBJS += commit-graph.o
- LIB_OBJS += commit-reach.o
- LIB_OBJS += commit.o
-+LIB_OBJS += common-exit.o
-+LIB_OBJS += common-init.o
- LIB_OBJS += compat/nonblock.o
- LIB_OBJS += compat/obstack.o
- LIB_OBJS += compat/terminal.o
-diff --git a/common-exit.c b/common-exit.c
+@@ -653,6 +653,8 @@ CURL_CONFIG = curl-config
+ GCOV = gcov
+ STRIP = strip
+ SPATCH = spatch
++LD = ld
++OBJCOPY = objcopy
+ 
+ export TCL_PATH TCLTK_PATH
+ 
+@@ -2713,6 +2715,7 @@ OBJECTS += $(XDIFF_OBJS)
+ OBJECTS += $(FUZZ_OBJS)
+ OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
+ OBJECTS += $(UNIT_TEST_OBJS)
++OBJECTS += contrib/libgit-rs/libgit-sys/public_symbol_export.o
+ 
+ ifndef NO_CURL
+ 	OBJECTS += http.o http-walker.o remote-curl.o
+@@ -3720,6 +3723,10 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+ 	$(MAKE) -C Documentation/ clean
+ 	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
++	$(RM) -r contrib/libgit-rs/libgit-sys/target
++	$(RM) -r contrib/libgit-rs/libgit-sys/partial_symbol_export.o
++	$(RM) -r contrib/libgit-rs/libgit-sys/hidden_symbol_export.o
++	$(RM) -r contrib/libgit-rs/libgit-sys/libgitpub.a
+ ifndef NO_PERL
+ 	$(RM) -r perl/build/
+ endif
+@@ -3865,3 +3872,12 @@ $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o \
+ build-unit-tests: $(UNIT_TEST_PROGS)
+ unit-tests: $(UNIT_TEST_PROGS) t/helper/test-tool$X
+ 	$(MAKE) -C t/ unit-tests
++
++contrib/libgit-rs/libgit-sys/partial_symbol_export.o: contrib/libgit-rs/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
++	$(LD) -r $^ -o $@
++
++contrib/libgit-rs/libgit-sys/hidden_symbol_export.o: contrib/libgit-rs/libgit-sys/partial_symbol_export.o
++	$(OBJCOPY) --localize-hidden $^ $@
++
++contrib/libgit-rs/libgit-sys/libgitpub.a: contrib/libgit-rs/libgit-sys/hidden_symbol_export.o
++	$(AR) $(ARFLAGS) $@ $^
+diff --git a/contrib/libgit-rs/libgit-sys/Cargo.lock b/contrib/libgit-rs/libgit-sys/Cargo.lock
 new file mode 100644
-index 0000000000..1aaa538be3
+index 0000000000..427a4c66b7
 --- /dev/null
-+++ b/common-exit.c
-@@ -0,0 +1,26 @@
++++ b/contrib/libgit-rs/libgit-sys/Cargo.lock
+@@ -0,0 +1,69 @@
++# This file is automatically @generated by Cargo.
++# It is not intended for manual editing.
++version = 3
++
++[[package]]
++name = "autocfg"
++version = "1.4.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "ace50bade8e6234aa140d9a2f552bbee1db4d353f69b8217bc503490fc1a9f26"
++
++[[package]]
++name = "cc"
++version = "1.1.15"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "57b6a275aa2903740dc87da01c62040406b8812552e97129a63ea8850a17c6e6"
++dependencies = [
++ "shlex",
++]
++
++[[package]]
++name = "libc"
++version = "0.2.158"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "d8adc4bb1803a324070e64a98ae98f38934d91957a99cfb3a43dcbc01bc56439"
++
++[[package]]
++name = "libgit-sys"
++version = "0.1.0"
++dependencies = [
++ "autocfg",
++ "libz-sys",
++ "make-cmd",
++]
++
++[[package]]
++name = "libz-sys"
++version = "1.1.20"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "d2d16453e800a8cf6dd2fc3eb4bc99b786a9b90c663b8559a5b1a041bf89e472"
++dependencies = [
++ "cc",
++ "libc",
++ "pkg-config",
++ "vcpkg",
++]
++
++[[package]]
++name = "make-cmd"
++version = "0.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "a8ca8afbe8af1785e09636acb5a41e08a765f5f0340568716c18a8700ba3c0d3"
++
++[[package]]
++name = "pkg-config"
++version = "0.3.30"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "d231b230927b5e4ad203db57bbcbee2802f6bce620b1e4a9024a07d94e2907ec"
++
++[[package]]
++name = "shlex"
++version = "1.3.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
++
++[[package]]
++name = "vcpkg"
++version = "0.2.15"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "accd4ea62f7bb7a82fe23066fb0957d48ef677f6eeb8215f372f52e48bb32426"
+diff --git a/contrib/libgit-rs/libgit-sys/Cargo.toml b/contrib/libgit-rs/libgit-sys/Cargo.toml
+new file mode 100644
+index 0000000000..7a230a4437
+--- /dev/null
++++ b/contrib/libgit-rs/libgit-sys/Cargo.toml
+@@ -0,0 +1,17 @@
++[package]
++name = "libgit-sys"
++version = "0.1.0"
++edition = "2021"
++build = "build.rs"
++links = "gitpub"
++rust-version = "1.63"
++
++[lib]
++path = "src/lib.rs"
++
++[dependencies]
++libz-sys = "1.1.19"
++
++[build-dependencies]
++autocfg = "1.4.0"
++make-cmd = "0.1.0"
+diff --git a/contrib/libgit-rs/libgit-sys/README.md b/contrib/libgit-rs/libgit-sys/README.md
+new file mode 100644
+index 0000000000..7a59602c30
+--- /dev/null
++++ b/contrib/libgit-rs/libgit-sys/README.md
+@@ -0,0 +1,15 @@
++# cgit-info
++
++A small hacky proof-of-concept showing how to provide a Rust FFI for the Git
++library.
++
++## Building
++
++`cargo build` automatically builds and picks up on changes made to both
++the Rust wrapper and git.git code so there is no need to run `make`
++beforehand.
++
++## Running
++
++Assuming you don't make any changes to the Git source, you can just work from
++`contrib/cgit-rs` and use `cargo build` or `cargo run` as usual.
+diff --git a/contrib/libgit-rs/libgit-sys/build.rs b/contrib/libgit-rs/libgit-sys/build.rs
+new file mode 100644
+index 0000000000..8d74120191
+--- /dev/null
++++ b/contrib/libgit-rs/libgit-sys/build.rs
+@@ -0,0 +1,35 @@
++use std::env;
++use std::path::PathBuf;
++
++pub fn main() -> std::io::Result<()> {
++    let ac = autocfg::new();
++    ac.emit_has_path("std::ffi::c_char");
++
++    let crate_root = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
++    let git_root = crate_root.join("../../..");
++    let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
++
++    let make_output = make_cmd::gnu_make()
++        .env("DEVELOPER", "1")
++        .env_remove("PROFILE")
++        .current_dir(git_root.clone())
++        .args([
++            "CFLAGS=-fvisibility=hidden",
++            "contrib/libgit-rs/libgit-sys/libgitpub.a",
++        ])
++        .output()
++        .expect("Make failed to run");
++    if !make_output.status.success() {
++        panic!(
++            "Make failed:\n  stdout = {}\n  stderr = {}\n",
++            String::from_utf8(make_output.stdout).unwrap(),
++            String::from_utf8(make_output.stderr).unwrap()
++        );
++    }
++    std::fs::copy(crate_root.join("libgitpub.a"), dst.join("libgitpub.a"))?;
++    println!("cargo:rustc-link-search=native={}", dst.display());
++    println!("cargo:rustc-link-lib=gitpub");
++    println!("cargo:rerun-if-changed={}", git_root.display());
++
++    Ok(())
++}
+diff --git a/contrib/libgit-rs/libgit-sys/public_symbol_export.c b/contrib/libgit-rs/libgit-sys/public_symbol_export.c
+new file mode 100644
+index 0000000000..8e4b94d821
+--- /dev/null
++++ b/contrib/libgit-rs/libgit-sys/public_symbol_export.c
+@@ -0,0 +1,21 @@
++// Shim to publicly export Git symbols. These must be renamed so that the
++// original symbols can be hidden. Renaming these with a "libgit_" prefix also
++// avoids conflicts with other libraries such as libgit2.
++
 +#include "git-compat-util.h"
-+#include "trace2.h"
++#include "contrib/libgit-rs/libgit-sys/public_symbol_export.h"
++#include "version.h"
 +
-+static void check_bug_if_BUG(void)
++#pragma GCC visibility push(default)
++
++const char *libgit_user_agent(void)
 +{
-+	if (!bug_called_must_BUG)
-+		return;
-+	BUG("on exit(): had bug() call(s) in this process without explicit BUG_if_bug()");
++	return git_user_agent();
 +}
 +
-+/* We wrap exit() to call common_exit() in git-compat-util.h */
-+int common_exit(const char *file, int line, int code)
++const char *libgit_user_agent_sanitized(void)
 +{
-+	/*
-+	 * For non-POSIX systems: Take the lowest 8 bits of the "code"
-+	 * to e.g. turn -1 into 255. On a POSIX system this is
-+	 * redundant, see exit(3) and wait(2), but as it doesn't harm
-+	 * anything there we don't need to guard this with an "ifdef".
-+	 */
-+	code &= 0xff;
-+
-+	check_bug_if_BUG();
-+	trace2_cmd_exit_fl(file, line, code);
-+
-+	return code;
++	return git_user_agent_sanitized();
 +}
-diff --git a/common-init.c b/common-init.c
++
++#pragma GCC visibility pop
+diff --git a/contrib/libgit-rs/libgit-sys/public_symbol_export.h b/contrib/libgit-rs/libgit-sys/public_symbol_export.h
 new file mode 100644
-index 0000000000..5cc73f058c
+index 0000000000..a3372f93fa
 --- /dev/null
-+++ b/common-init.c
-@@ -0,0 +1,63 @@
-+#define USE_THE_REPOSITORY_VARIABLE
++++ b/contrib/libgit-rs/libgit-sys/public_symbol_export.h
+@@ -0,0 +1,8 @@
++#ifndef PUBLIC_SYMBOL_EXPORT_H
++#define PUBLIC_SYMBOL_EXPORT_H
 +
-+#include "git-compat-util.h"
-+#include "common-init.h"
-+#include "exec-cmd.h"
-+#include "gettext.h"
-+#include "attr.h"
-+#include "repository.h"
-+#include "setup.h"
-+#include "strbuf.h"
-+#include "trace2.h"
++const char *libgit_user_agent(void);
 +
-+/*
-+ * Many parts of Git have subprograms communicate via pipe, expect the
-+ * upstream of a pipe to die with SIGPIPE when the downstream of a
-+ * pipe does not need to read all that is written.  Some third-party
-+ * programs that ignore or block SIGPIPE for their own reason forget
-+ * to restore SIGPIPE handling to the default before spawning Git and
-+ * break this carefully orchestrated machinery.
-+ *
-+ * Restore the way SIGPIPE is handled to default, which is what we
-+ * expect.
-+ */
-+static void restore_sigpipe_to_default(void)
-+{
-+	sigset_t unblock;
++const char *libgit_user_agent_sanitized(void);
 +
-+	sigemptyset(&unblock);
-+	sigaddset(&unblock, SIGPIPE);
-+	sigprocmask(SIG_UNBLOCK, &unblock, NULL);
-+	signal(SIGPIPE, SIG_DFL);
-+}
-+
-+void init_git(const char **argv)
-+{
-+	struct strbuf tmp = STRBUF_INIT;
-+
-+	trace2_initialize_clock();
-+
-+	/*
-+	 * Always open file descriptors 0/1/2 to avoid clobbering files
-+	 * in die().  It also avoids messing up when the pipes are dup'ed
-+	 * onto stdin/stdout/stderr in the child processes we spawn.
-+	 */
-+	sanitize_stdfds();
-+	restore_sigpipe_to_default();
-+
-+	git_resolve_executable_dir(argv[0]);
-+
-+	setlocale(LC_CTYPE, "");
-+	git_setup_gettext();
-+
-+	initialize_repository(the_repository);
-+
-+	attr_start();
-+
-+	trace2_initialize();
-+	trace2_cmd_start(argv);
-+	trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
-+
-+	if (!strbuf_getcwd(&tmp))
-+		tmp_original_cwd = strbuf_detach(&tmp, NULL);
-+}
-diff --git a/common-init.h b/common-init.h
++#endif /* PUBLIC_SYMBOL_EXPORT_H */
+diff --git a/contrib/libgit-rs/libgit-sys/src/lib.rs b/contrib/libgit-rs/libgit-sys/src/lib.rs
 new file mode 100644
-index 0000000000..3e6db20cae
+index 0000000000..d4853f3074
 --- /dev/null
-+++ b/common-init.h
-@@ -0,0 +1,6 @@
-+#ifndef COMMON_INIT_H
-+#define COMMON_INIT_H
++++ b/contrib/libgit-rs/libgit-sys/src/lib.rs
+@@ -0,0 +1,46 @@
++#[cfg(has_std__ffi__c_char)]
++use std::ffi::c_char;
 +
-+void init_git(const char **argv);
++#[cfg(not(has_std__ffi__c_char))]
++#[allow(non_camel_case_types)]
++pub type c_char = i8;
 +
-+#endif /* COMMON_INIT_H */
-diff --git a/common-main.c b/common-main.c
-index 8e68ac9e42..6b7ab077b0 100644
---- a/common-main.c
-+++ b/common-main.c
-@@ -1,92 +1,13 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
--#include "exec-cmd.h"
--#include "gettext.h"
--#include "attr.h"
--#include "repository.h"
--#include "setup.h"
--#include "strbuf.h"
--#include "trace2.h"
--
--/*
-- * Many parts of Git have subprograms communicate via pipe, expect the
-- * upstream of a pipe to die with SIGPIPE when the downstream of a
-- * pipe does not need to read all that is written.  Some third-party
-- * programs that ignore or block SIGPIPE for their own reason forget
-- * to restore SIGPIPE handling to the default before spawning Git and
-- * break this carefully orchestrated machinery.
-- *
-- * Restore the way SIGPIPE is handled to default, which is what we
-- * expect.
-- */
--static void restore_sigpipe_to_default(void)
--{
--	sigset_t unblock;
--
--	sigemptyset(&unblock);
--	sigaddset(&unblock, SIGPIPE);
--	sigprocmask(SIG_UNBLOCK, &unblock, NULL);
--	signal(SIGPIPE, SIG_DFL);
--}
-+#include "common-init.h"
- 
- int main(int argc, const char **argv)
- {
- 	int result;
--	struct strbuf tmp = STRBUF_INIT;
--
--	trace2_initialize_clock();
--
--	/*
--	 * Always open file descriptors 0/1/2 to avoid clobbering files
--	 * in die().  It also avoids messing up when the pipes are dup'ed
--	 * onto stdin/stdout/stderr in the child processes we spawn.
--	 */
--	sanitize_stdfds();
--	restore_sigpipe_to_default();
--
--	git_resolve_executable_dir(argv[0]);
--
--	setlocale(LC_CTYPE, "");
--	git_setup_gettext();
--
--	initialize_repository(the_repository);
--
--	attr_start();
--
--	trace2_initialize();
--	trace2_cmd_start(argv);
--	trace2_collect_process_info(TRACE2_PROCESS_INFO_STARTUP);
--
--	if (!strbuf_getcwd(&tmp))
--		tmp_original_cwd = strbuf_detach(&tmp, NULL);
- 
-+	init_git(argv);
- 	result = cmd_main(argc, argv);
- 
- 	/* Not exit(3), but a wrapper calling our common_exit() */
- 	exit(result);
- }
--
--static void check_bug_if_BUG(void)
--{
--	if (!bug_called_must_BUG)
--		return;
--	BUG("on exit(): had bug() call(s) in this process without explicit BUG_if_bug()");
--}
--
--/* We wrap exit() to call common_exit() in git-compat-util.h */
--int common_exit(const char *file, int line, int code)
--{
--	/*
--	 * For non-POSIX systems: Take the lowest 8 bits of the "code"
--	 * to e.g. turn -1 into 255. On a POSIX system this is
--	 * redundant, see exit(3) and wait(2), but as it doesn't harm
--	 * anything there we don't need to guard this with an "ifdef".
--	 */
--	code &= 0xff;
--
--	check_bug_if_BUG();
--	trace2_cmd_exit_fl(file, line, code);
--
--	return code;
--}
++extern crate libz_sys;
++
++extern "C" {
++    pub fn libgit_user_agent() -> *const c_char;
++    pub fn libgit_user_agent_sanitized() -> *const c_char;
++}
++
++#[cfg(test)]
++mod tests {
++    use std::ffi::CStr;
++
++    use super::*;
++
++    #[test]
++    fn user_agent_starts_with_git() {
++        let c_str = unsafe { CStr::from_ptr(libgit_user_agent()) };
++        let agent = c_str
++            .to_str()
++            .expect("User agent contains invalid UTF-8 data");
++        assert!(
++            agent.starts_with("git/"),
++            r#"Expected user agent to start with "git/", got: {}"#,
++            agent
++        );
++    }
++
++    #[test]
++    fn sanitized_user_agent_starts_with_git() {
++        let c_str = unsafe { CStr::from_ptr(libgit_user_agent_sanitized()) };
++        let agent = c_str
++            .to_str()
++            .expect("Sanitized user agent contains invalid UTF-8 data");
++        assert!(
++            agent.starts_with("git/"),
++            r#"Expected user agent to start with "git/", got: {}"#,
++            agent
++        );
++    }
++}
 -- 
 2.47.0.rc1.288.g06298d1525-goog
 
