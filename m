@@ -1,180 +1,115 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B211B6CEE
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 22:51:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6087221E3BC
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 23:28:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729032672; cv=none; b=rl/mRq0AEhkzcYWyigrY7UgjVydLJkuBfv1EEEGeIKR5WjkkrvlppCboeEmYvHehJMzlNa9lI56awArqqYviNBTCws34YwYq4/JY8TGjUvPW9de3GiuMWD/nVIMhIFykH3Lrn1ibnpLvl+9CNacAxJ5OZwyp2eSt3rSk1d+16PY=
+	t=1729034895; cv=none; b=lF79TMrVS4wir7gW98LkwWVu3X5rbGKqD/TPrreBcYuw3KkVhAStZWX31Gg5xl8QM8/MOSNSU44CAf12O7GYin45BcQBL+JkWC2UqCe01SPOfqPtxPLi03Kt6ebEijpmSBVzJwR9FNWT0z8Didp28D7REJO8C7xsaEozBFAMMvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729032672; c=relaxed/simple;
-	bh=5oOdSD4Q1+6jV5rEDdFE+B0q0ZJyFB+3y4Fxjzp9r/8=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=PMY5CIPcLHR8TW5SG+wcdov/tjVqUf/WaF7ybOSvRM1/kzIeyfkb9NHsCe6rE/+9Hicn7rRpW+tv7TDMzBf0PjjruONhfd4k2/VU10N2TxKHzK8rVj7DNkZoeBEOKRXD17v2JDzyZkYFIDz/zbw6QVgAf0OAGts809vwTL+E3vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QIvRp/1A; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
+	s=arc-20240116; t=1729034895; c=relaxed/simple;
+	bh=RDW2iQWwzHFH3F+ey1eWZyfYBoexbK0T9+nSchj6Dn8=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mPNVrPSFqlSsr25JOBUPC/9kbFtCOJcoT6wPgA+8Ykz1Fy+INyQPAfSJtUqHPLINKr/oQPD/uycoTcGDT7i7igxjgHw0w63EJkPjjxb6O/pYYGAu14QIhVzf0X4wXQMH3OdMuYIGTNIH/rwyk5uQGQII0kezMzx+LsUOfzSjca8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=FQd291wM; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QIvRp/1A"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e1159159528so548714276.1
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 15:51:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="FQd291wM"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6e34339d41bso41704607b3.0
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 16:28:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1729032669; x=1729637469; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8OCxwM4M+ooQN/ssD4sIZCmHX2H5Z5zktY4rJthYT9U=;
-        b=QIvRp/1AoU21N7v2W3nylhp5xO4qQPl5vAGSemZXWJW/5haDvKMZgvCFR8wSP0rhnc
-         27i6MJODiLA96Qv3LNSFBAvbRAErECyulBKl64GI4kJ3A8Kvb/S0kv1k6XbDEnFtKDay
-         sLUimcC9KBagvjjwji1fuTGEu5WErgMeK23INcPEFV7cPK4OsKaMmzEe5xqLGA8kS6dN
-         fJIe4pJdxzJFmRkxT7JWLP43cxT/9a3S+QX7+3gSmRTe+RNPnSa2WZ2SF0bXq7JnlhgQ
-         ZYBG0qylTcFM9YpjrfENooUhTJua1UgVO93fZ5Aa5/BSd2UfFVxaR9Hpm2otqgDgN18Z
-         6pTg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729034892; x=1729639692; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RDW2iQWwzHFH3F+ey1eWZyfYBoexbK0T9+nSchj6Dn8=;
+        b=FQd291wMTt+mmBY7f5VrcJ5E36JZ8FQu8ZbrIrxc2HvVkVa3GAJaF0EC9kLNLoh3NU
+         BGFWJDHUcMG2xclyI7a7v7aPVhcX2ZV2kl5E5uJdT5mgejesQeE7++p25c1moC4i5ArF
+         /whBEi1rPoLnwLZVey+LCaBx7zDebX+jvmWbts6qgcLtXkqHdRMLxnf3qzX5aE71imrb
+         OHgX8cMUdSB0YUf6ZAWEVsCUMr94cmcrlsaCniZDG0+zw4hGhnBZJcs533ZJXdz8byx3
+         x0eBYxs38jgVTaYX8iuZo3eeT9J/yJjnXzlRfKnn/uUMZnQBRh0WypX2m7LYRcUBoh/G
+         xySA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729032669; x=1729637469;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8OCxwM4M+ooQN/ssD4sIZCmHX2H5Z5zktY4rJthYT9U=;
-        b=DEhYpUkNPEQqRypx3v1Sb6RYIyam1tQolapiS25AkUr++Uimu2aLHCmXrP9t3lyTR+
-         Uv7SSJRThuDXAfZ3pDceYOSFme2+69LTR1wHK8v0nI7aLR7/CjQrpcelHfVNk8Hdt1S8
-         oJaXucNW0cyXMdU0FYxloxlKs2QfibFLW8J98zbOPqip5trKF8tkwtIiAaGIqra/aDlP
-         e8q/P6b0z1IX1gp6Rh4USyblMYUvDjkRYiSTzH0fjkNY//RdPFblE8UFVBHwznfogO7i
-         nB1tf50CwqS5r6Tx1pngIAT2dr8/39/NEPiCkGbyi4Z4ppQHCJ5aXb/S1P732tW4zKUu
-         U1mA==
-X-Gm-Message-State: AOJu0YxONCp/bKORilUCJAVrNF75Yrr0dXFY5/1OPLFi/D2/RqLvbUWe
-	GBVnyhBOOh5E4Aj2Wr8cTuFrULmPIaGG2SxqHreoDuky0Wyrqc4avhV5nL9Do9YnEcXIR8VT7rE
-	bYuCbv6owiTlMyh8Ti6rfsDjt2S1w+QFphrKXNWUnHD+zsbwA54RHHLo6GBNCBFM2hx2SdMC61u
-	l8HIyxJ8bR8VhNsIx6zqKKqwVY5VfFpxZRxhNgDMw=
-X-Google-Smtp-Source: AGHT+IGGspnFbl1YrP4f2VlglnZ2MhgIjkfGP6lq7TtuTf3vhoM6E4M95oftfysUi4/3k8jxFA5IfqPydZAang==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:ddcc:6d3c:e4d6:3076])
- (user=steadmon job=sendgmr) by 2002:a25:eb01:0:b0:e24:b971:c4cb with SMTP id
- 3f1490d57ef6-e29772b8abcmr7292276.2.1729032668827; Tue, 15 Oct 2024 15:51:08
- -0700 (PDT)
-Date: Tue, 15 Oct 2024 15:50:57 -0700
-In-Reply-To: <cover.1729032373.git.steadmon@google.com>
+        d=1e100.net; s=20230601; t=1729034892; x=1729639692;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RDW2iQWwzHFH3F+ey1eWZyfYBoexbK0T9+nSchj6Dn8=;
+        b=r0wFlINtZCxmflwScaJ2Mi8s4x7gQnyvkBkQbcSpZ4dB+hAxZB1QDz1oEBJnfaLSUa
+         Z6GAeI7MTIzQDdGW9i0kCFxYERXj0lJ9L49g//JyzzYpl/Wso4CTZ2CuqFLh/a4dB9fF
+         Wo/CF4q+GJ4/DgN9qB6gZsqAnj3yUtYhB9w3z5/xzH4BRUt2yowtIUHMi60Xv0yZsyVj
+         2cLtXiCXbXWx09gUeTlJO00LgFJsaKjzMaLOmVgThaROxdIFsrGKR1kzCO6oQwHhehDl
+         bAWf3GJLeV8puTOg2HV7KyvB4FfkAHEyWLKLSM0wPf05/KFhgIxcIqylyeh0Qose4SrV
+         4Qfg==
+X-Gm-Message-State: AOJu0YyC7Eo6yOOyTvXHSw1qiYyS+N+jDkVDrYSP1K0jnN3C8vEpbPBP
+	/Iil+qy8ZFu+JRcvdqC1KjoZo466L1PD/tCnfV+NdfYVmv/RPka2ngsR6V0ouBpc/9IJEXIQjCb
+	c
+X-Google-Smtp-Source: AGHT+IHhrocbbuswFm7Rsh9b5Ph+agj0cQ7HKnWNOuFTLkG6SrUtmAx6dImQBAADD0r4+mKA8+0o4g==
+X-Received: by 2002:a05:690c:7004:b0:6dd:76ce:d6c9 with SMTP id 00721157ae682-6e3d41e8da5mr25248787b3.42.1729034891664;
+        Tue, 15 Oct 2024 16:28:11 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5b86de7sm4873197b3.59.2024.10.15.16.28.10
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2024 16:28:10 -0700 (PDT)
+Date: Tue, 15 Oct 2024 19:28:09 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Subject: Re: [RFC PATCH] builtin/shortlog: explicitly set hash algo when
+ there is no repo
+Message-ID: <Zw76iYXJQq9gJCj8@nand.local>
+References: <20241011183445.229228-1-wolf@oriole.systems>
+ <r4btv3hmwv6haflwhmjbjshova4wnth5mkbknsuuqcvose5lix@bvy5e6gxnit6>
+ <Zw7IiwK5mi1rmqFN@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <cover.1723054623.git.steadmon@google.com> <cover.1729032373.git.steadmon@google.com>
-X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
-Message-ID: <15ce989de8bff1080a018fd9dee678856180a45f.1729032373.git.steadmon@google.com>
-Subject: [PATCH v5 5/5] Makefile: add option to build and test libgit-rs and libgit-rs-sys
-From: Josh Steadmon <steadmon@google.com>
-To: git@vger.kernel.org
-Cc: calvinwan@google.com, emrass@google.com, gitster@pobox.com, 
-	mh@glandium.org, sandals@crustytoothpaste.net, ps@pks.im, 
-	sunshine@sunshineco.com, phillip.wood123@gmail.com, allred.sean@gmail.com, 
-	rsbecker@nexbridge.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zw7IiwK5mi1rmqFN@nand.local>
 
-From: Calvin Wan <calvinwan@google.com>
+On Tue, Oct 15, 2024 at 03:54:51PM -0400, Taylor Blau wrote:
+> On Tue, Oct 15, 2024 at 11:33:35AM +0200, Wolfgang Müller wrote:
+> > On 2024-10-11 20:34, Wolfgang Müller wrote:
+> > > Whilst git-shortlog(1) does not explicitly need any repository
+> > > information when run without reference to one, it still parses some of
+> > > its arguments with parse_revision_opt() which assumes that the hash
+> > > algorithm is set. However, in c8aed5e8da (repository: stop setting SHA1
+> > > as the default object hash, 2024-05-07) we stopped setting up a default
+> > > hash algorithm and instead require commands to set it up explicitly.
+> > >
+> > > This was done for most other commands like in ab274909d4 (builtin/diff:
+> > > explicitly set hash algo when there is no repo, 2024-05-07) but was
+> > > missed for builtin/shortlog, making git-shortlog(1) segfault outside of
+> > > a repository when given arguments like --author that trigger a call to
+> > > parse_revision_opt().
+> > >
+> > > Fix this for now by explicitly setting the hash algorithm to SHA1.
+> > >
+> > > Signed-off-by: Wolfgang Müller <wolf@oriole.systems>
+> > > ---
+> > > I think there is a much cleaner patch here if one would look at
+> > > disentangling the parsing machinery split between cmd_shortlog() and
+> > > parse_revision_opt() such that the latter is only called if there is an
+> > > actual repository, but I'm not at all familiar enough with the codebase
+> > > to do that. Like the commit says some other commands were fixed like
+> > > this as well, so I thought to send this patch your way.
+> >
+> > Was this topic maybe missed? It's not a critical fix but would solve a
+> > segfault that is pretty easy for a user to trigger.
+>
+> Yeah. It looks like this was sent out on Friday, which was Junio's last
+> working day before vacation. I think we probably both assumed the other
+> picked it up ;-).
 
-Add libgitrs, libgitrs-sys, libgitrs-test, and libgitrs-sys-test targets
-to their respective Makefiles so they can be built and tested without
-having to run cargo build/test.
+I picked this up today and applied it to 'seen', but ejected it before
+pushing the result out, as this appears to break CI, presumably due to
+the mixed declaration and code in the patch.
 
-Add build variable, INCLUDE_LIBGIT_RS, that when set, automatically
-builds and tests libgit-rs and libgit-rs-sys when `make all` is run.
-
-Co-authored-by: Josh Steadmon <steadmon@google.com>
-Signed-off-by: Calvin Wan <calvinwan@google.com>
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- Makefile                              | 26 ++++++++++++++++++++++++++
- contrib/libgit-rs/libgit-sys/build.rs |  2 +-
- t/Makefile                            | 16 ++++++++++++++++
- 3 files changed, 43 insertions(+), 1 deletion(-)
-
-diff --git a/Makefile b/Makefile
-index 1790c737bd..f191ee32bb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -412,6 +412,9 @@ include shared.mak
- # Define LINK_FUZZ_PROGRAMS if you want `make all` to also build the fuzz test
- # programs in oss-fuzz/.
- #
-+# Define INCLUDE_LIBGIT_RS if you want `make all` and `make test` to build and
-+# test the Rust crates in contrib/libgit-rs/ and contrib/libgit-rs/libgit-sys/.
-+#
- # === Optional library: libintl ===
- #
- # Define NO_GETTEXT if you don't want Git output to be translated.
-@@ -2181,6 +2184,13 @@ ifdef FSMONITOR_OS_SETTINGS
- 	COMPAT_OBJS += compat/fsmonitor/fsm-path-utils-$(FSMONITOR_OS_SETTINGS).o
- endif
- 
-+ifdef INCLUDE_LIBGIT_RS
-+	# Enable symbol hiding in contrib/libgit-rs/libgit-sys/libgitpub.a
-+	# without making us rebuild the whole tree every time we run a Rust
-+	# build.
-+	BASIC_CFLAGS += -fvisibility=hidden
-+endif
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-@@ -3873,6 +3883,22 @@ build-unit-tests: $(UNIT_TEST_PROGS)
- unit-tests: $(UNIT_TEST_PROGS) t/helper/test-tool$X
- 	$(MAKE) -C t/ unit-tests
- 
-+.PHONY: libgitrs-sys
-+libgitrs-sys:
-+	$(QUIET)(\
-+		cd contrib/libgit-rs/libgit-sys && \
-+		cargo build \
-+	)
-+.PHONY: libgitrs
-+libgitrs:
-+	$(QUIET)(\
-+		cd contrib/libgit-rs && \
-+		cargo build \
-+	)
-+ifdef INCLUDE_LIBGIT_RS
-+all:: libgitrs
-+endif
-+
- contrib/libgit-rs/libgit-sys/partial_symbol_export.o: contrib/libgit-rs/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
- 	$(LD) -r $^ -o $@
- 
-diff --git a/contrib/libgit-rs/libgit-sys/build.rs b/contrib/libgit-rs/libgit-sys/build.rs
-index 8d74120191..d6d6210ab2 100644
---- a/contrib/libgit-rs/libgit-sys/build.rs
-+++ b/contrib/libgit-rs/libgit-sys/build.rs
-@@ -14,7 +14,7 @@ pub fn main() -> std::io::Result<()> {
-         .env_remove("PROFILE")
-         .current_dir(git_root.clone())
-         .args([
--            "CFLAGS=-fvisibility=hidden",
-+            "INCLUDE_LIBGIT_RS=YesPlease",
-             "contrib/libgit-rs/libgit-sys/libgitpub.a",
-         ])
-         .output()
-diff --git a/t/Makefile b/t/Makefile
-index b2eb9f770b..066cb5c2b4 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -169,3 +169,19 @@ perf:
- 
- .PHONY: pre-clean $(T) aggregate-results clean valgrind perf \
- 	check-chainlint clean-chainlint test-chainlint $(UNIT_TESTS)
-+
-+.PHONY: libgitrs-sys-test
-+libgitrs-sys-test:
-+	$(QUIET)(\
-+		cd ../contrib/libgit-rs/libgit-sys && \
-+		cargo test \
-+	)
-+.PHONY: libgitrs-test
-+libgitrs-test:
-+	$(QUIET)(\
-+		cd ../contrib/libgit-rs && \
-+		cargo test \
-+	)
-+ifdef INCLUDE_LIBGIT_RS
-+all:: libgitrs-sys-test libgitrs-test
-+endif
--- 
-2.47.0.rc1.288.g06298d1525-goog
-
+Thanks,
+Taylor
