@@ -1,67 +1,64 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6087221E3BC
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 23:28:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597C621E3D9
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 23:53:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729034895; cv=none; b=lF79TMrVS4wir7gW98LkwWVu3X5rbGKqD/TPrreBcYuw3KkVhAStZWX31Gg5xl8QM8/MOSNSU44CAf12O7GYin45BcQBL+JkWC2UqCe01SPOfqPtxPLi03Kt6ebEijpmSBVzJwR9FNWT0z8Didp28D7REJO8C7xsaEozBFAMMvI=
+	t=1729036401; cv=none; b=JKuNumg6TtTlBxgeDrQbCNCBFi8cka2k3QH1V98vsSDmJy+OsaGFZ6ffJoNmg8tnifvcw1K9yCGZN42m+daotAi9xrIA2LZvuur1tdiffGFJWeYx8PmWifDPcNTE2stE8wvrfUgP+CgjWqHLZfql1DRc59XMU5lyQ5SxVpgtGwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729034895; c=relaxed/simple;
-	bh=RDW2iQWwzHFH3F+ey1eWZyfYBoexbK0T9+nSchj6Dn8=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mPNVrPSFqlSsr25JOBUPC/9kbFtCOJcoT6wPgA+8Ykz1Fy+INyQPAfSJtUqHPLINKr/oQPD/uycoTcGDT7i7igxjgHw0w63EJkPjjxb6O/pYYGAu14QIhVzf0X4wXQMH3OdMuYIGTNIH/rwyk5uQGQII0kezMzx+LsUOfzSjca8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=FQd291wM; arc=none smtp.client-ip=209.85.128.178
+	s=arc-20240116; t=1729036401; c=relaxed/simple;
+	bh=2jrcxZjYGy8sgjENArLecMS8piik6ZFqMn+CF9yyL6Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FA4b+FBQ6hVHvUnpeevgEOo30wS9Ze/kmJgAHXZnCZKdHi6Z11sPVSyZEm/CI8vNrq5k9ws+PbWjjvDsX0ZDV46QdXVwqdJNbJxj8sCtM8G7EAEtNJqKDTZ+w/hCPe5EXBG95ZxgIchFxBoP/TWlSjGQyHcDj4PFGln2MpjUrEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Ff2Oayvm; arc=none smtp.client-ip=209.85.219.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="FQd291wM"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6e34339d41bso41704607b3.0
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 16:28:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Ff2Oayvm"
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e2972abc807so1078429276.3
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 16:53:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729034892; x=1729639692; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RDW2iQWwzHFH3F+ey1eWZyfYBoexbK0T9+nSchj6Dn8=;
-        b=FQd291wMTt+mmBY7f5VrcJ5E36JZ8FQu8ZbrIrxc2HvVkVa3GAJaF0EC9kLNLoh3NU
-         BGFWJDHUcMG2xclyI7a7v7aPVhcX2ZV2kl5E5uJdT5mgejesQeE7++p25c1moC4i5ArF
-         /whBEi1rPoLnwLZVey+LCaBx7zDebX+jvmWbts6qgcLtXkqHdRMLxnf3qzX5aE71imrb
-         OHgX8cMUdSB0YUf6ZAWEVsCUMr94cmcrlsaCniZDG0+zw4hGhnBZJcs533ZJXdz8byx3
-         x0eBYxs38jgVTaYX8iuZo3eeT9J/yJjnXzlRfKnn/uUMZnQBRh0WypX2m7LYRcUBoh/G
-         xySA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729036399; x=1729641199; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3ZLlmee3ProURbkuHxCp6Sr2YDoQZnLi9Xe9who7888=;
+        b=Ff2Oayvmq0UHLyGCJYrp/orsCgV3PFQC//Ai3cz0QuUfRVLv1O7uPn1XcuHVipeiRG
+         bKzZcB4mX+rLzjvE5ErlIsjU/GthiZlwDurVqM058PMZljHEN3t6fE3nDlGnugqmpPq2
+         lIwSxGqoZ4Kw0oQ2wcHGwpGl6PgtWWa85uzoT3JJf6DmLoF01ULuQ0DAx/6REIu7ay39
+         w2Iknv5dSZpdB2iGEoWXG4rnjKRTTY5xX2QcInqvF1/9i1p+OlECslTnh5eWhkvgQyLv
+         NcNt16Dq1IXVhWRDNf1oQ3JSnpDueS2ze/Na20/9VWx9gE0Rr39JRKmritLEn+tz0j99
+         pa9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729034892; x=1729639692;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RDW2iQWwzHFH3F+ey1eWZyfYBoexbK0T9+nSchj6Dn8=;
-        b=r0wFlINtZCxmflwScaJ2Mi8s4x7gQnyvkBkQbcSpZ4dB+hAxZB1QDz1oEBJnfaLSUa
-         Z6GAeI7MTIzQDdGW9i0kCFxYERXj0lJ9L49g//JyzzYpl/Wso4CTZ2CuqFLh/a4dB9fF
-         Wo/CF4q+GJ4/DgN9qB6gZsqAnj3yUtYhB9w3z5/xzH4BRUt2yowtIUHMi60Xv0yZsyVj
-         2cLtXiCXbXWx09gUeTlJO00LgFJsaKjzMaLOmVgThaROxdIFsrGKR1kzCO6oQwHhehDl
-         bAWf3GJLeV8puTOg2HV7KyvB4FfkAHEyWLKLSM0wPf05/KFhgIxcIqylyeh0Qose4SrV
-         4Qfg==
-X-Gm-Message-State: AOJu0YyC7Eo6yOOyTvXHSw1qiYyS+N+jDkVDrYSP1K0jnN3C8vEpbPBP
-	/Iil+qy8ZFu+JRcvdqC1KjoZo466L1PD/tCnfV+NdfYVmv/RPka2ngsR6V0ouBpc/9IJEXIQjCb
-	c
-X-Google-Smtp-Source: AGHT+IHhrocbbuswFm7Rsh9b5Ph+agj0cQ7HKnWNOuFTLkG6SrUtmAx6dImQBAADD0r4+mKA8+0o4g==
-X-Received: by 2002:a05:690c:7004:b0:6dd:76ce:d6c9 with SMTP id 00721157ae682-6e3d41e8da5mr25248787b3.42.1729034891664;
-        Tue, 15 Oct 2024 16:28:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729036399; x=1729641199;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3ZLlmee3ProURbkuHxCp6Sr2YDoQZnLi9Xe9who7888=;
+        b=WeEPLL+oEU/ryhWL+isDjUeztPawy2ioz0lFc4Dpylfuypla+/u+gj+2xVU352h3m5
+         +PMsLU0EkUrrN8LMmomBNHSEKccq4gWhIMXvdUM7bNmcs/HgL0JpSBgNc5Qz6GooYJEN
+         w+QGMRGFiMioj0FP9E4knvKUX47+EPS5PwIk51Q9XUaQv6bMUlS7y0XHi2qb8ah44Bw5
+         d9JJVwhWgLKV/5NxpxONltQusek24QnJHJeG9wYaXeRuLTApRxgtjZEM5PXfa3JnDSbn
+         S3/yPz5r2CKBDAVKRVvPgOEd7RTQvMLCcpdpuwvv9xOZqMnnEhN1ABdAFMVpQ/jaKFiu
+         mJ/g==
+X-Gm-Message-State: AOJu0Ywb8pvl+VI6Bz1Id/PmbSB8sFilrEcLdIJm2+61Y07Zeq4DshO0
+	l/eoTmijHi5Y7pJ5eS4hVrSHOa4Fg2MNH0JjUzyJt/RMLf87r+VROAUyYgqiCBM=
+X-Google-Smtp-Source: AGHT+IFIRRkhDqwR78Uy+wUzGfgLYsPU42o2TpchjSTgdPMlaUxeuVkERTxwGHFDNbLh87b1e37/kA==
+X-Received: by 2002:a05:6902:15c5:b0:e29:41af:e1a with SMTP id 3f1490d57ef6-e29782b77f5mr2346055276.4.1729036399180;
+        Tue, 15 Oct 2024 16:53:19 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5b86de7sm4873197b3.59.2024.10.15.16.28.10
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e296cbfb8c5sm403522276.3.2024.10.15.16.53.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2024 16:28:10 -0700 (PDT)
-Date: Tue, 15 Oct 2024 19:28:09 -0400
+        Tue, 15 Oct 2024 16:53:18 -0700 (PDT)
+Date: Tue, 15 Oct 2024 19:53:12 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Subject: Re: [RFC PATCH] builtin/shortlog: explicitly set hash algo when
- there is no repo
-Message-ID: <Zw76iYXJQq9gJCj8@nand.local>
-References: <20241011183445.229228-1-wolf@oriole.systems>
- <r4btv3hmwv6haflwhmjbjshova4wnth5mkbknsuuqcvose5lix@bvy5e6gxnit6>
- <Zw7IiwK5mi1rmqFN@nand.local>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 02/10] t/test-lib: wire up NO_ICONV prerequisite
+Message-ID: <Zw8AaF4VOaQO+P2M@nand.local>
+References: <cover.1728906490.git.ps@pks.im>
+ <cover.1728992306.git.ps@pks.im>
+ <f6a8582c34a7b77aa3e2e45298208050333c384a.1728992306.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,46 +67,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zw7IiwK5mi1rmqFN@nand.local>
+In-Reply-To: <f6a8582c34a7b77aa3e2e45298208050333c384a.1728992306.git.ps@pks.im>
 
-On Tue, Oct 15, 2024 at 03:54:51PM -0400, Taylor Blau wrote:
-> On Tue, Oct 15, 2024 at 11:33:35AM +0200, Wolfgang Müller wrote:
-> > On 2024-10-11 20:34, Wolfgang Müller wrote:
-> > > Whilst git-shortlog(1) does not explicitly need any repository
-> > > information when run without reference to one, it still parses some of
-> > > its arguments with parse_revision_opt() which assumes that the hash
-> > > algorithm is set. However, in c8aed5e8da (repository: stop setting SHA1
-> > > as the default object hash, 2024-05-07) we stopped setting up a default
-> > > hash algorithm and instead require commands to set it up explicitly.
-> > >
-> > > This was done for most other commands like in ab274909d4 (builtin/diff:
-> > > explicitly set hash algo when there is no repo, 2024-05-07) but was
-> > > missed for builtin/shortlog, making git-shortlog(1) segfault outside of
-> > > a repository when given arguments like --author that trigger a call to
-> > > parse_revision_opt().
-> > >
-> > > Fix this for now by explicitly setting the hash algorithm to SHA1.
-> > >
-> > > Signed-off-by: Wolfgang Müller <wolf@oriole.systems>
-> > > ---
-> > > I think there is a much cleaner patch here if one would look at
-> > > disentangling the parsing machinery split between cmd_shortlog() and
-> > > parse_revision_opt() such that the latter is only called if there is an
-> > > actual repository, but I'm not at all familiar enough with the codebase
-> > > to do that. Like the commit says some other commands were fixed like
-> > > this as well, so I thought to send this patch your way.
-> >
-> > Was this topic maybe missed? It's not a critical fix but would solve a
-> > segfault that is pretty easy for a user to trigger.
->
-> Yeah. It looks like this was sent out on Friday, which was Junio's last
-> working day before vacation. I think we probably both assumed the other
-> picked it up ;-).
+On Tue, Oct 15, 2024 at 01:45:11PM +0200, Patrick Steinhardt wrote:
+> Further note that there are several "!MINGW" conditions in t4201, and
+> all of these fail due to iconv-related errors. This is quite likely a
+> leftover from times before dce7d29551 (msvc: support building Git using
+> MS Visual C++, 2019-06-25), which switched Windows-based builds over
+> from "NO_ICONV=YesPlease" to "NEEDS_LIBICONV=YesPlease". Consequently,
+> adapt those tests to also use the new ICONV prerequisite.
 
-I picked this up today and applied it to 'seen', but ejected it before
-pushing the result out, as this appears to break CI, presumably due to
-the mixed declaration and code in the patch.
+This appears to break CI on Windows when I merged this into 'jch':
+
+    https://github.com/ttaylorr/git/actions/runs/11355564982/job/31585450667
+
+I'm going to temporarily eject this from 'jch' and 'seen' until we can
+properly deal with this.
 
 Thanks,
 Taylor
