@@ -1,89 +1,92 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137A6173320
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 06:29:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CD11714B4
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 07:11:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728973787; cv=none; b=DBBKkut68QiI0lGr9dhmVoX2GzQKZdPZMXvU7HGqKR2Uj02gArvzfMj9ZmPTwnufutsTSrb1bSzQZlm+Wt++QPGGiRyEjO2dSSvw3JEMHynOBEB7CFJr6fAeLYmgPy1A1cl/w3gCwllkJqF9iTpd70ByGDaq0j9K3a1kahocQWo=
+	t=1728976303; cv=none; b=CpL7wxVfS9bl6kgIxUf96VcZrrKaA1Qx3YweDIoY3VvL8rRP32KC1ZTXJzz3CxePlPhh33eFhsLF8GnntWlXQlgUbmCvNdG5N9rchivtyDpen0GrLxzYl6+3b/HGWGL9Tu05wupOc6owR0TgpuZK5LnAg+p2ztdU++kcs/eygzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728973787; c=relaxed/simple;
-	bh=fQL120b/O8JbGI6muwqpaBRUTxwbdaMEikvRGsgFIhk=;
+	s=arc-20240116; t=1728976303; c=relaxed/simple;
+	bh=qsxCs5Gub6mehjAZx5kYpT12+jq3lvUJuCnWbZy13us=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GtrX43xUvigHpQHolRu2hFKk/2XvZJNTI7WWS+yNYu7jHTqvvhHjaqbG4ril+6JEA+JnZzYqJb79eOxBiOKAt2Z5KI3lEcsakog2DshyB0e1zZ3OxmJ9SxYFWEuZBB1TzxvqpJrIu1bp0xys8vIUFMochz+JyrQ+th9J30TmRQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.45
+	 To:Cc:Content-Type; b=YgiA9Z5YckDcgUVUo5lBHbK/DlhIQdKNDlwOJMouONSd94o21lkz/GcPzWAjk5bupa8CvVmBxvRhTcpR7Xvc/mUro0Vj9f2r+lpulxXQciBahjksBtRmqDrwVz2bJyMwECuNkEtRrLnXOMXxnm21DCsm7/NlWvIqJQz2V5cre6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6cbd12cfd7aso9440506d6.1
-        for <git@vger.kernel.org>; Mon, 14 Oct 2024 23:29:44 -0700 (PDT)
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2e2b71fd16fso899396a91.3
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 00:11:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728973784; x=1729578584;
+        d=1e100.net; s=20230601; t=1728976301; x=1729581101;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fQL120b/O8JbGI6muwqpaBRUTxwbdaMEikvRGsgFIhk=;
-        b=VsiTtuPmQdPLSDm2E8cfvAtf7ZGtAqp3FReGgyOCTvGJy9XqnSp4bgEy31go1J+SDt
-         Zo8713gUMEACyKyTQ6Fu4v49W03InPhSrqK38xgVn5+AdV+Sh2/QaXdQN3PuDIRGzzHd
-         35bbP86m6ECz3IJwPW13bSVtibiDbgvhtV6CUqpm8V8R0LyttpD+YckgSrwsUwIv+Q+f
-         ep/osJPWHw2KcdQ8IwkSXrBqveXTrAXUvpzhd/AevFEd0Q4hn06qwAJZtO1UlxqZJ6bJ
-         A/NkUXwafS6+ygLOfgiZqVW2cQdxCLCgx9nalaexGQEEhJNNdzhRban1oXiCUkTXBTIu
-         yUvA==
-X-Forwarded-Encrypted: i=1; AJvYcCUoMQuHc4+cUr7/vR5W1Zpl9eokXmrGLQGRjWXVc/B9YxbW4z/Y8Ao4ibO2chdmyytwgR8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwhuAfYe/L69XQ5EcQ9oUh4NhaDGpo9wcxdfa2C+hklGdFxwQvJ
-	ctpGfN7oNAt9gj9kE+VyN91eAMVfF2LcEVPLAMGa242p2U+EAwk+nnXcOKpv5mmEZ4UM6Mge6SG
-	+lxY8H9j2aZ3bQ1g+QT/LbJ2jO8p0Mj2P
-X-Google-Smtp-Source: AGHT+IEPHnx+gt8NgeQoFpHF8atY3qycCh1H5bSyTA3jGREJFcBC+c1r4E0ZdJAnMnVRk9TNvgEJOmEgmCHcp7M+nPc=
-X-Received: by 2002:a05:6214:1c88:b0:6cb:2eb2:1fbe with SMTP id
- 6a1803df08f44-6cbeff7324amr85811536d6.1.1728973783969; Mon, 14 Oct 2024
- 23:29:43 -0700 (PDT)
+        bh=BwChYTy/fA8ZcNdM1PJ4qTmlR2c3XKIYKYj59YdPYI0=;
+        b=XxObiRkxEDAVXG2W+q6sLzB1nJKT3UBpLNJ3/gOKR+21N6IeRgp1kB0asabmw2jIp8
+         tE6HWHyhaFx8R9J0mBRSGYEFh9WvJQNMgqxNBVdeym19d5D2uJ8uDxRngoW++nuGhOyp
+         pKaGum+kuf5lfTaH0Bj5vAIeHsotXhovNOjkJiWLY2dz4f2tEySakM/pkUm6sNw46wAZ
+         zqPDYqlJvNIKJnUv7oa20mvhOpS7S1OryaWoHI6tpH+i7zVUmqc6xlco+xRsSZSpRIvN
+         lvkPuP0jhnYVwi/tigMHVcDRuhmUfo8+3R1v26cqli+YuPG6UBdnqrBcUJDz41A45Rx8
+         Gs8w==
+X-Forwarded-Encrypted: i=1; AJvYcCVBcoUfkxzYPdJaqvB/iQ7tMnWAEQYBSzitPay9pgLj2Gl8UvEA4HpmunY/XNvezO+m1SA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzbeOmiQ23yQ6fWemfjVxJXoWEbqNjkMHVHIM7KdUCQyjy2eYJr
+	KR2tfwEdZyCqZBlYnNl2pR42PvsYHJNiB99M2U2KyDU2ON5ZXQixGqsAmnk0o/5cKrWbtoaFGne
+	CBe/ObPAr36oVGK8u1y2Slm3gcHnbvEhN
+X-Google-Smtp-Source: AGHT+IFbuWo3crhTrqV68VsByH2QOWpssLXApy8OfnlCrlFbjgdrO1cstwWcGY+VNceHd0bDrdlQtr03oFQsM12x9Ak=
+X-Received: by 2002:a05:6214:76f:b0:6cb:4fad:5215 with SMTP id
+ 6a1803df08f44-6cbeff37f40mr91347956d6.2.1728976290094; Tue, 15 Oct 2024
+ 00:11:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241014131346.3556163-1-asedeno@mit.edu> <Zw23K4zPN9e+JyNA@nand.local>
- <CAOO-Oz3eQ+fpWU3qLHtF5oCxj2ieoc6P4R+iKJTG3DoWrb6W3g@mail.gmail.com>
-In-Reply-To: <CAOO-Oz3eQ+fpWU3qLHtF5oCxj2ieoc6P4R+iKJTG3DoWrb6W3g@mail.gmail.com>
+References: <CAL2+Miudq0UXAb=R24v+ftZVkHy2We1CFsFAt__tCYMWtCfOow@mail.gmail.com>
+ <Zw2K5xJAOGWitfXr@nand.local>
+In-Reply-To: <Zw2K5xJAOGWitfXr@nand.local>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 15 Oct 2024 02:29:33 -0400
-Message-ID: <CAPig+cRENnd9cV5yFfVVwbuux84k10_vcht-TTtKGJmRNYEttA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Restore support for older libcurl and fix some typos
-To: =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, sandals@crustytoothpaste.net, 
-	asedeno@google.com
+Date: Tue, 15 Oct 2024 03:11:18 -0400
+Message-ID: <CAPig+cQZoO8tMZ1Gip-at8-9n_tk4axctkX=WbaO1==JRru39A@mail.gmail.com>
+Subject: Re: git rebase exec make -C in worktree confuses repo root dir
+To: Taylor Blau <me@ttaylorr.com>
+Cc: David Moberg <kaddkaka@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 14, 2024 at 8:51=E2=80=AFPM Alejandro R. Sede=C3=B1o <asedeno@m=
-it.edu> wrote:
-> On Mon, Oct 14, 2024 at 8:28=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wro=
-te:
-> > On Mon, Oct 14, 2024 at 09:13:44AM -0400, Alejandro R. Sede=C3=B1o wrot=
-e:
-> > > This is presented as an alternative to the patch series from
-> > > brian m. carlson that bumps the minimum version of libcurl
-> > > to 7.61.0 [3].
+On Mon, Oct 14, 2024 at 5:19=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+> On Mon, Oct 14, 2024 at 10:46:45PM +0200, David Moberg wrote:
+> > 1. This command should return the worktree toplevel, not a subdirectory
+> >   $ git rev-parse --show-toplevel
+> >   /tmp/tmp.DUUAVQCIKe/repo2
 > >
-> > This conflicts with brian's series as you mention, so I haven't picked
-> > this one up in 'seen' yet.
-> >
-> > Could you summarize why you think this series is a better approach than
-> > what brian has posted? On its own, I do not understand the motivation.
+> > 2. And the git grep command should return the match from dir/Makefile,
+> > not Fatal Error
+> >   $ git grep banana
+> >   Makefile:       git grep "banana" -- "$$BANANA"
 >
-> It's a question of preserving compatibility vs ratcheting up minimum
-> requirements. Both have their merits. I sent in this patch set after
-> seeing some mild pushback to brian's series, just to present an
-> alternative. Maintaining compatibility with older versions can be a
-> burden to the project, though I think given this patch series, it's
-> not a very big one. Ratcheting up the minimum requirements can be a
-> burden to users stuck on (or choosing to try and support) older
-> platforms. At some point the burden on the project outweighs the
-> desire to support those older platforms. Where that tipping point is
-> is for the community to decide.
+> I am not sure if this is expected behavior or not, but it feels
+> unintentional to me. Perhaps I am missing something funky in your
+> example that is causing it to behave this way.
 
-For reference, I'm the one who pushed back on brian's series. The
-"push-back" subthread starts at [1].
+This looks like unintentional behavior; probably a bug. It seems to be
+triggered by `git rebase -i` setting GIT_DIR. Here's an even simpler
+reproduction recipe:
 
-[1]: https://lore.kernel.org/git/20241014132856.3558224-1-asedeno@mit.edu/T=
-/#mc1180f00cf52de4e9bae334c2cd5abd9a160dbbe
+    % git init foo
+    % cd foo
+    % mkdir dir
+    % echo foo >dir/file
+    % git add dir/file
+    % git commit -m foo
+    % git worktree add ../bar
+    % cd ../bar
+    % git -C dir rev-parse --show-toplevel
+    /.../bar
+    % GIT_DIR=3D../../foo/.git/worktrees/bar \
+        git -C dir rev-parse --show-toplevel
+    /.../bar/dir
+
+The `git rev-parse --show-toplevel` invocation with GIT_DIR set is
+incorrectly returning `/.../bar/dir` rather than `/.../bar`.
