@@ -1,114 +1,134 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9911B6D0E
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 18:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827C51F80C0
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 19:05:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729018537; cv=none; b=C+Fa5a7DGuWyj8DIHvZUmtPUjR4etsOGaIrDnNAQsZTJ7jwrLoBzatCfLhiKdd/Fa8FCf/5aiHV6bMsi8x/L6YcbNEjKw2LGh5MJbaL6GgV/X9B7+PvbzrN2Xf309JLq7Xr0NMa6ZWEqUjYVMFoMtAxja5SNd9/qmykNGMGSyMo=
+	t=1729019103; cv=none; b=gzZVwnfsuyTJ2qVnH13IjAJbZV0la37tCKW2LtkTYN8xDZ3FKeJFpH89HdS0bZhoXQxgc4EA0565WBaLTZOj8bNpvN79+n4CLN+hz6v8xMikr6bTfnKJCp5d5df9G+7zSWvfh6AAuvdnFhAXrSLafk7oy5/wVK4MSiQLjq2kJRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729018537; c=relaxed/simple;
-	bh=0bx46HEEgntSDBpqhdS+YkYU9PWdUUEuwKAMtuegzsw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Mec7D9kwXUqbbj8xIVLXvpvKvmzlmcfqZ2y8flidN9LAFlJFSunXcZjwXJ5e48N32a1HMC2V1qRTWoCkaJGS5IZ+bcKYkgYml2cdUVdbgZXB8Z5P3mYz9BHFu/2/txDi7jyEunLJNxovhyFYsereX8kZBwWnO62H+KCa+YoYlKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GqMcvwQY; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729019103; c=relaxed/simple;
+	bh=FeMYzUpbRpaocb0tXElv6kfsdLU+OzNXwHWbCMHomMU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jCMkyN2DrCdSBSf0K+GgCea+0RzPvVHEVdDuiGaDnmRwBkMZ8KSsGSQtA4U/3k4viaQBaND3bwXrX1dpk4C98p2xW9F4MRYrF8x78n9lxF3LIY0rBrU4xRt8Ug9WhYWhpSmAvf0/WkFcK0mdKaqC6BusBqfa6ZTgFHMENPk5LOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=DliYIVVj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W8QO2OQt; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GqMcvwQY"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5c96936065dso3970261a12.3
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 11:55:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729018534; x=1729623334; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BIz4f9fYv4rK0zMNoHhMGAuo4KV/Ie992nLCoRn8WbI=;
-        b=GqMcvwQYvI+fJhtJwJudq5Wx8H4KvD7syeVigoFUAJ73ZbS3O+lQsCQEeN8UjLuiDf
-         /G+3M6fhIO8+ESjxbNVhf9z6lSyPaBCfAbfJXqTmbHv8rAa8VxZcoeAMDRQdMj1sY0Na
-         013+4j1E+eYT9WzVUTlFY0v31yDSobmRoPJf6d5jC709FHzphMW9E0mUtgqrMsm4uGy6
-         Uh848ZweLFOzAXECWFWvMG1jru4OoDWDvYf6aeooYd61euLUUGt1Ro8tZbiskNo9OqSU
-         49Z0DW9eon8UU93QNKkHqOBwnkD3WsPxS5s6ADrUoZjx3ibiMoZNngyRimZj3U5DplxV
-         m20g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729018534; x=1729623334;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BIz4f9fYv4rK0zMNoHhMGAuo4KV/Ie992nLCoRn8WbI=;
-        b=vRgxd7iUqv1qg9RYEv0CRl87vbEPMx2rlBBOMm5kY9+vUwZXzZ6iqjPMJrbnIYji+S
-         HJWc8Bbt0EIIIpFFO5O5nSEtJvKXMWQsQmd/kIxCDIry5/6D/XMgaxW4RzXnFvWN75N6
-         /Sh/l1FlFlHlVJG3iLLeUjMws/80R8JbZh88OWMhHEAW/m90/FEA3V1Jb16xAudxzd5z
-         /e4Si+a/O/8eDD/iemiIPKNgyhaigWHYiu0tf0muxy1KCZ77IMeN89Pn5jjg0TaKQ6cx
-         lVqLbhPGJNFFvrTH1CFgHgaszXTUW8n7lVLBjkaCPLYx4RYAa7j5aQN9QxEj++f61DNe
-         iz4g==
-X-Forwarded-Encrypted: i=1; AJvYcCWFUxGLE4csEWuTn0v4unZ7LIw0WXDcDPlKgg8YjdlfuIs3eVopj0a3hH2dbDugBFu4jCQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzn2TDWzs59F0X3nU4t2Fn1ac16d+jnmTiMy4GbyPR/9oebmjT5
-	U2osEeCFb617L3m2IH7PQz3N9s8PQ2vwZ9X9KVuHlnsZG4KZBRmYBNh2x7OKb9zFsbt2JRnDZHr
-	blS/5Vfb/aHrm1MjoyL2BeKvqYWxp5uAt
-X-Google-Smtp-Source: AGHT+IHfn3JgBLG4ObXUNOGX0poQDF0TA/pjHwEyQfiODDTHbvWQAEBdP4X5ki2ezY8ru0Cd6mq8Mhf6ywTp2y7v1aI=
-X-Received: by 2002:a05:6402:42d4:b0:5c5:c4b9:e68f with SMTP id
- 4fb4d7f45d1cf-5c948c8832bmr14427939a12.5.1729018533954; Tue, 15 Oct 2024
- 11:55:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="DliYIVVj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W8QO2OQt"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9083A1140174;
+	Tue, 15 Oct 2024 15:05:00 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 15 Oct 2024 15:05:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1729019100;
+	 x=1729105500; bh=8QIstgB05ES8peD/DRguoGz5ZojjkL6h8uoXk3j+Pl8=; b=
+	DliYIVVjuz/yP1K1QMIzyTyX3lihZ0V1tEJIMhJz2c2y/99U5E9b9OZnMu1QKgtX
+	wwk2PDAf4GuFcxLPSQh+WUrz+i1EWhWXoCdrRHAciZ07Z4VgbMTrT0Ta6fk7Lscz
+	AfAKa7GEL7ZmOsl0uMjyIupiaurD9GWR+kNaSA/zqU2Ox9rWU2UKEk+UQ2IZvib6
+	gapsSPKAcb1626jdEw3wzpaRUvhrqyMUxIBHI36zNi9VHNGh2av8C+FBr9wRkxIW
+	O1rgaSEbV1oKl4sYXmJdvybHHqbXSm3PQO838ZvTyCq0CmHAne75IBIJg5zNDqAF
+	7Rxv6FFxjXt56zwkjoSUoQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729019100; x=
+	1729105500; bh=8QIstgB05ES8peD/DRguoGz5ZojjkL6h8uoXk3j+Pl8=; b=W
+	8QO2OQt/0MzH0V1vfasy7yo8eosA1RSceJWlVBiSvkYhajPvScGLg4IukVPa8/zA
+	BnGksvxS5yCdtw8k0xHbQjTJXqHp35u9PwN4Mv9IfJd5khR7SRIqG4PxaC5fgvzp
+	nePRIU+bFkhz713kY6zCzaQ2VQy7IKzOpIkTcf9FdaDKwniZ3bWlOkJ7+3kWwqv1
+	6qFHrSQszE6IQW9H3bk0jWNnZhk7xK/7K24urbi8tUYLHm8dipk5Olye8fQt7mFv
+	kNuCE96iz6YfExL6zMSCW8Zf9d396mQjEvNcg5eiKK08mE4KApB8Js82qB8d04Wk
+	AotOOLHMJHjmw1EZttNBg==
+X-ME-Sender: <xms:27wOZ9TGLonP5apk_iaVnzYyTblC_O1ho_-LVQ-4uasmqU542oNrtZ0>
+    <xme:27wOZ2w889okzMq3dhSeiw4gIb7KL-aKurctS1jUxP2OOWxY0eu7H1PYDcs82EeGn
+    -OrVknI8CHH4SFtlg>
+X-ME-Received: <xmr:27wOZy0ayhQK44kVX6DYzFg6PIFmKyHZVzEo_T3KVyZ3Cf6bjn_3BAD04Gc9s-rlsmt21Y4Xyn-2KCqHVuKHuzB7ArCV4NehJqRplJa_pQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegjedgudefvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhh
+    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpefhgf
+    eglefhjeekgfetleetjefhteeiheegfedtudduffegjefhkeetudeggffhkeenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffh
+    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohep
+    iedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdp
+    rhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsggvnhgt
+    vgesfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekke
+    esghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:27wOZ1D_8NnOLpiky73qifcvuY01CdIkSC62WWOQzg_gBtMNczkk1g>
+    <xmx:27wOZ2hZAkvFh5mqZL_krx5DVGw-640eAcbW3-xP9jHx5qr2tmvsPg>
+    <xmx:27wOZ5odGilA6MRa1NaOXuEPGJZJ_9wpGOi7nWGNgRFMSQen63Q2uQ>
+    <xmx:27wOZxiITD9PPmn0xiFZLA3K3BBPlpoErTGkw7wEMhCiqWfx8dPK_A>
+    <xmx:3LwOZxWJ63UkcxcZSIMcXUP3z8P0t9JAP-aimzeef8n4230xADIqV1Z8>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Oct 2024 15:04:58 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	phillip.wood@dunelm.org.uk,
+	gitster@pobox.com,
+	bence@ferdinandy.com,
+	karthik.188@gmail.com
+Subject: [PATCH 0/6] doc: update-ref: amend old material and discuss symrefs
+Date: Tue, 15 Oct 2024 21:03:09 +0200
+Message-ID: <cover.1729017728.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
+In-Reply-To: <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
+References: <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAL2+Miudq0UXAb=R24v+ftZVkHy2We1CFsFAt__tCYMWtCfOow@mail.gmail.com>
- <Zw2K5xJAOGWitfXr@nand.local> <CAPig+cQZoO8tMZ1Gip-at8-9n_tk4axctkX=WbaO1==JRru39A@mail.gmail.com>
-In-Reply-To: <CAPig+cQZoO8tMZ1Gip-at8-9n_tk4axctkX=WbaO1==JRru39A@mail.gmail.com>
-From: David Moberg <kaddkaka@gmail.com>
-Date: Tue, 15 Oct 2024 20:55:22 +0200
-Message-ID: <CAL2+MivOu=_HYg+2KoMKMUtz+=q2jv-K9u9Zxrhe3OuHLCmwFA@mail.gmail.com>
-Subject: Re: git rebase exec make -C in worktree confuses repo root dir
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Taylor Blau <me@ttaylorr.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+X-Commit-Hash: 9e775a65eb3ff49ded231aeeeddd59ccdce3c8a8
+Content-Transfer-Encoding: 8bit
 
-Thanks, that is indeed a much smaller example and it seems to exhibit
-the same issue. Can we figure out how to fix it?
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Den tis 15 okt. 2024 kl 09:11 skrev Eric Sunshine <sunshine@sunshineco.com>=
-:
->
-> On Mon, Oct 14, 2024 at 5:19=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wro=
-te:
-> > On Mon, Oct 14, 2024 at 10:46:45PM +0200, David Moberg wrote:
-> > > 1. This command should return the worktree toplevel, not a subdirecto=
-ry
-> > >   $ git rev-parse --show-toplevel
-> > >   /tmp/tmp.DUUAVQCIKe/repo2
-> > >
-> > > 2. And the git grep command should return the match from dir/Makefile=
-,
-> > > not Fatal Error
-> > >   $ git grep banana
-> > >   Makefile:       git grep "banana" -- "$$BANANA"
-> >
-> > I am not sure if this is expected behavior or not, but it feels
-> > unintentional to me. Perhaps I am missing something funky in your
-> > example that is causing it to behave this way.
->
-> This looks like unintentional behavior; probably a bug. It seems to be
-> triggered by `git rebase -i` setting GIT_DIR. Here's an even simpler
-> reproduction recipe:
->
->     % git init foo
->     % cd foo
->     % mkdir dir
->     % echo foo >dir/file
->     % git add dir/file
->     % git commit -m foo
->     % git worktree add ../bar
->     % cd ../bar
->     % git -C dir rev-parse --show-toplevel
->     /.../bar
->     % GIT_DIR=3D../../foo/.git/worktrees/bar \
->         git -C dir rev-parse --show-toplevel
->     /.../bar/dir
->
-> The `git rev-parse --show-toplevel` invocation with GIT_DIR set is
-> incorrectly returning `/.../bar/dir` rather than `/.../bar`.
+(See the previous email for the context)
+
+This series removes or moves some old material in the update-ref doc and
+improves the discussion of symrefs, opting for a high-level description
+with some redundancy (see patch 5/6) in order to avoid a reported
+mistake/confusion.
+
+The end goal (after all patches are applied):
+
+• First paragraph (in Description) describes the first form
+• Second paragraph the second form
+• Third paragraph mentions symrefs and explains why `--stdin` supports
+  them
+• A new section whither the symlink (FS) vs. symrefs (`ref: ` files… or
+  strings nowadays with the different formats that refs can have?)
+  discussion is moved
+• Link update-ref to symbolic-ref and vice versa
+
+Kristoffer Haugsbakk (6):
+  doc: update-ref: drop “flag”
+  doc: update-ref: remove safety paragraphs
+  doc: update-ref: demote symlink to last section
+  doc: update-ref: remove confusing paragraph
+  doc: update-ref: discuss symbolic links
+  doc: mutually link update-ref and symbolic-ref
+
+ Documentation/git-symbolic-ref.txt |  4 +++
+ Documentation/git-update-ref.txt   | 48 +++++++++++++-----------------
+ 2 files changed, 25 insertions(+), 27 deletions(-)
+
+
+base-commit: ef8ce8f3d4344fd3af049c17eeba5cd20d98b69f
+-- 
+2.46.1.641.g54e7913fcb6
+
