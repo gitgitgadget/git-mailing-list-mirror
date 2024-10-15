@@ -1,136 +1,118 @@
-Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2337914F117
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 16:24:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAED14F117
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 16:25:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729009492; cv=none; b=OCMqcYXfsL1ialIpncASJC8stCt5plwXsuSATp0q5TxF4Z9vwpUwrjilZdlT78xR8B2dsQLFD7Vw3ArORNhzntpFEyxyBCanpVewjKD/zJkNNvfS7NFNDk8zPlkUCUtyf7RxY7eC8ltTiCT7o3FvCgL5gVs11nipnHfb8pTZbWg=
+	t=1729009542; cv=none; b=H3A6WUl/16Ix+VJ67n70g/iv6F0C2AZepulZUYLrgHmDSaJhVV+iSAjqtXjCBsYTipwKTONzvDL57z554pvgNS+4x4cf1q7p3FZdjdXo/g7/XlyATtYYb3LLJTo4ECidN20DlMHV2AIOkQcauNrBKA68mLSe7L8QGGU50zJ2gy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729009492; c=relaxed/simple;
-	bh=+Higey/vouXcnH3ydi/g5RoOaj2SwP0lE+CCME4XHGA=;
-	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
-	 References:In-reply-to; b=gw7Np2mHWXGO0xbPS6sJQtoVjbjgDwfwfgI1Uacys/4HTERRUqOvih21GL1ySrc8+a/eE2aJ1t+wGpYCfE3t4NCW6VULTg57PUhuQwqOD5bsbNm3ABRkNFEIINa0NV8Iv6kMV4IZqZ7rLw6sBm7SKCtJU+bcf1+WpUBqfISyhtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=JMzFkXoQ; arc=none smtp.client-ip=192.29.178.126
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1729009542; c=relaxed/simple;
+	bh=l0sox3m+IGSGbsGZiAxh3zYqtVQat9jgdlZ0t5ossyM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PGO6xWPRwmNvOmFLPw7u0y28AfyMshyD8sj6ExG1Db/7MZnwvZZ8y22cQQO4U63d4QPyECc/BFVum1XdgTvn3sIy1laEq7GW8Aam+hA28qA7ioH01SGrW0MQ10ut8Tz2tU4koB4rLq5kq4Uo9RInhlqmYJO1RO18IQJ2GIzHywk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=fNKt8VI+; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="JMzFkXoQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=qkQwRbApyUqA91ngB5zuK/C6UhYsxWgsQR14TUWhWm0=;
- b=JMzFkXoQdahOkojYf3J6J7QokZ1xLZCSFlmx/P63CDWHY9/MD+pQ5nXwfGcPRS4ZCQPbWww8oQmo
-   Vc6dLHFcFXz4JkgE/ER+OWH3HS3M/v+kB3c4DpncULjJoq9+2IBtSVXVXuzCLDqhZzUU/Rr2B888
-   hcAwKT6XQvYMoqkPRvOjlq0PSpLTJEXCpXtqjNazoCzNsNfXGMkVqv525RgwP7LvrdosWgNUJmjp
-   a3ta7AyYE7vLP2wEd2OjDfRF6asxEj+HEXm2Rger0yktyytyo224XqIqsi0UJjEraobVLI8PCfrg
-   1/jS/GWq+z37w2n/RUhUV7y3NGpHDdm2YwUc7A==
-Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SLE00IKXO9DTF40@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Tue, 15 Oct 2024 16:24:49 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="fNKt8VI+"
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e28fe3b02ffso4896718276.3
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 09:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729009540; x=1729614340; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=l1QkVW5Q5vp20MChvoE/sNkvk4ke2RgnuJM5MOtiVXI=;
+        b=fNKt8VI+gD4fXm+KsCyrAiJuDcsEhZTZdIvoa7qM0dx7nkVjaPnlo7pxe82w9AqXSG
+         kHP47Dd+10VC5H9tXEMop9a6ZFpuWiqiV47tkSSz092hAQOQMH6K6WzAr8pqqZts0Jrg
+         zfwpgrSjEL/j7IUrOYKdKNKEJnSGTsqms+Jf4rSKEr7kRqx0C4J9QsoxgFk60v4889CY
+         L682GmvVdvj6Ab6pqidngd8OJlEwitb7oAen0jOm6fEgxweR8FN2chAXZX89K79xpQSy
+         5LhVkNCSGu05SRW8szkXc/WxDw/SjU//EInLoNefoSTRF3iRg6NU0Vj1Ll9CAljIU5pa
+         FO+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729009540; x=1729614340;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l1QkVW5Q5vp20MChvoE/sNkvk4ke2RgnuJM5MOtiVXI=;
+        b=VoC0xmN4gA6/+uVohuMpBEvPTqFnB4IewBpBLmxG1lO9SrSS+zU2jVi/4Zw0gyUMU1
+         Caz1j1zhqwrbFCza9FEgNk0/OktCCuyuRSoX8FnRZ5UhODXtMQYvQkeEMqwN1rEGvHqb
+         mIuvZdVKuw2wrRwJP78Gwtz/gI8kOexkdz7sHiIu2gKbbPhbVd3HFa2sGtXMu7QoyrRE
+         XvDR/7TsaITir06qL860dN4j9zX9g4bD/o5EWWtCD5V96EI4ZHvWpSUajCVxkj9iNKSu
+         T5TS9SbVx1FVQbnuWhRmXQy24C2Vt/aUyuf7fhzZQE0XuUxxbO9dqnTuas2AjDCkqFqI
+         Onqg==
+X-Gm-Message-State: AOJu0YxdVW5PPT43JeNDMppRCzJVdDU1HUtnp2pIXEJgLmbXIvh46fJZ
+	8i3dnf75vSUXsupLGiobTlJw+UdMy4iTSe3TyKgz6Bd8FvGgiBIwCmWD3giOleMrvo+D30uJdFt
+	H
+X-Google-Smtp-Source: AGHT+IErPIjJHHj0x6fZlcgt+4SXQTRnJSaXS86bU7S8ZEvHyJLmpt+vz2xs2pjvjT+19Ycn+W0NIw==
+X-Received: by 2002:a05:690c:3508:b0:6e2:5d2:3421 with SMTP id 00721157ae682-6e3479b8a14mr132041507b3.10.1729009539608;
+        Tue, 15 Oct 2024 09:25:39 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5d1faacsm3348977b3.111.2024.10.15.09.25.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2024 09:25:39 -0700 (PDT)
+Date: Tue, 15 Oct 2024 12:25:38 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Prince Roshan <princekrroshan01@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Feature Proposal: Adding Command for Configuration Diff Between
+ Commits
+Message-ID: <Zw6XgpPZBDrq5QuO@nand.local>
+References: <CAP3G6frW_B2pBN0S4H5fsJZgoGtPxC1+_dAzNRhQ9z8ERWZSVg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Tue, 15 Oct 2024 18:24:10 +0200
-Message-id: <D4WIP42OSINN.VGZI7YIMMK8S@ferdinandy.com>
-Subject: Re: [PATCH v8 1/6] refs: atomically record overwritten ref in
- update_symref
-Cc: <phillip.wood@dunelm.org.uk>, "Taylor Blau" <me@ttaylorr.com>,
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>
-To: "karthik nayak" <karthik.188@gmail.com>, <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-References: <20241012230428.3259229-1-bence@ferdinandy.com>
- <20241014225431.1394565-1-bence@ferdinandy.com>
- <20241014225431.1394565-2-bence@ferdinandy.com>
- <CAOLa=ZTMzz-9XE8AY8vk7Gpbm+U0T-5jWNJzKLyd621_URiDEA@mail.gmail.com>
-In-reply-to:
- <CAOLa=ZTMzz-9XE8AY8vk7Gpbm+U0T-5jWNJzKLyd621_URiDEA@mail.gmail.com>
-Reporting-Meta:
- AAFCPtQWsvrvBUFHjZYINY6vpOcMsYrCgOcwz+OOugXhI2ID3H3c4Vtnzt5NeJR/
- kU9z0bg6ORCrC1GUIBP+Hs89+AoyL5MyAbTPsFHBq19hBMmigKQeWy0VgyzqFtR1
- SYuh81kv+Ptw0I5MaPDgIWTpsA8gxfGs6s9zhpOjOAUa6nj+j+TeX2/hmPqaAuvm
- RPJq7+QOpzvGHxtLkEjbnrQVVLhAAqDw88RzAMtQ0UOyVm1o1f7QkCTFKF+3quhN
- e4tWXNcHccaLPo8BPHn7sHTG61mR9uNsarLKemP/yit3BLUjS5vWh6RtnXxz9S88
- a/l8FIKZnAZxn1qmr5vERzTTHBdj1hbjuwCerjcefPPKEvomNv9CbMKE4Fl3hu+j
- pevo+P2ImyeZoB9pgKgSlhPQMKI5LAejVCiiyHKBaxzy6PWgul0LsBp4TCGt70Ph
- 8J12qrK35Ra4ESfrtWgskb9Pjiti66mnSluBlZyYus4uScRshODqNj+tzQ==
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAP3G6frW_B2pBN0S4H5fsJZgoGtPxC1+_dAzNRhQ9z8ERWZSVg@mail.gmail.com>
 
-
-On Tue Oct 15, 2024 at 09:41, karthik nayak <karthik.188@gmail.com> wrote:
-> Bence Ferdinandy <bence@ferdinandy.com> writes:
+On Tue, Oct 15, 2024 at 04:29:44PM +0530, Prince Roshan wrote:
+> Hi Git Community,
 >
-> [snip]
+> I wanted to propose a new feature for Git that I believe would be
+> beneficial for repository maintainers and developers alike. What do
+> you think of adding a command like git config diff commit1 commit2 to
+> show the configuration differences between two commits?
 >
->> diff --git a/refs.c b/refs.c
->> index 5f729ed412..b964ac44d0 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -2114,7 +2114,8 @@ int peel_iterated_oid(struct repository *r, const =
-struct object_id *base, struct
->>  }
->>
->>  int refs_update_symref(struct ref_store *refs, const char *ref,
->> -		       const char *target, const char *logmsg)
->> +		       const char *target, const char *logmsg,
->> +		       struct strbuf *referent)
->>  {
->>  	struct ref_transaction *transaction;
->>  	struct strbuf err =3D STRBUF_INIT;
->> @@ -2122,17 +2123,23 @@ int refs_update_symref(struct ref_store *refs, c=
-onst char *ref,
->>
->>  	transaction =3D ref_store_transaction_begin(refs, &err);
->>  	if (!transaction ||
->> -	    ref_transaction_update(transaction, ref, NULL, NULL,
->> +		ref_transaction_update(transaction, ref, NULL, NULL,
->>  				   target, NULL, REF_NO_DEREF,
->>  				   logmsg, &err) ||
->> -	    ref_transaction_commit(transaction, &err)) {
->> +		ref_transaction_prepare(transaction, &err)) {
->>  		ret =3D error("%s", err.buf);
->> +		goto cleanup;
->>  	}
->> +	if (referent)
->> +		refs_read_symbolic_ref(refs, ref, referent);
->
-> Shouldn't we also check the return value here?
+> This command could display differences in repository configurations
+> (such as .git/config or submodule configuration) across two specific
+> commits. I see this being particularly useful in scenarios like:
 
-My reasoning was that if this fails referent will just look like as if it d=
-id
-not exist. Since this is an addition to set-head and fetch failing to set t=
-he
-HEAD in a case which would have previously worked I did not think it pruden=
-t to
-now fail on this for any reason.
+Submodule configuration is already diff-able since the state of
+submodules is stored in .gitmodules (as you note in your reply to this
+email further down in this thread).
 
->
->> +
->> +	if (ref_transaction_commit(transaction, &err))
->> +		ret =3D error("%s", err.buf);
->>
->> +cleanup:
->>  	strbuf_release(&err);
->>  	if (transaction)
->>  		ref_transaction_free(transaction);
->> -
->>
->
-> Why remove this whiteline?
+But just computing the diff between two commits and focusing on the
+.gitmodules file alone doesn't necessarily have all of the information
+you're looking for, either. For example, Git's own .gitmodules file has
+the following contents:
 
-Looks like a mistake made during rebase.
+    $ cat .gitmodules
+    [submodule "sha1collisiondetection"]
+      path = sha1collisiondetection
+      url = https://github.com/cr-marcstevens/sha1collisiondetection.git
+      branch = master
 
+Here we're using submodule.<url>.branch to specify the branch that we
+want to check out. So it's impossible to reconstruct the exact SHA-1 we
+checked out, since it depends on the state of the remote repository as
+well as our own .gitmodules file.
 
+On the configuration front, there isn't really a perfect answer either,
+because Git configuration is not tracked within the repository. You
+could consider a workflow where you store the configuration within the
+repository and then automatically "install" that configuration when
+updating the working copy.
 
---=20
-bence.ferdinandy.com
+But that is not without risk, since Git executes arbitrary code based on
+certain configuration options (e.g., more esoteric options like
+core.sshCommand and core.alternateRefsCommand, as well as more common
+ones like core.editor). So you would have to be careful about when you
+install arbitrary configuration, who it is coming from, whether you
+trust that person, etc.
 
+Thanks,
+Taylor
