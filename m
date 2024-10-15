@@ -1,66 +1,64 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5325F1F80A9
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 19:24:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D567A1F80A2
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 19:25:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729020260; cv=none; b=mVU2JLWT0B5xeF0Jvw2S72Twy0/WJhodz1ms/0MSrIfmNYtRMBWNodZnAclW5QqwnRfcevWGY0Etk5sdok0X2DmlDUcEwy2zJjNfvlg4tsC/XPeVvSqFDE/aMBAZ6WUMDdDgRqP9xv9njavjGIws0nFoCC0ZAKk7PwEnGGqdpMQ=
+	t=1729020331; cv=none; b=lYBapUn30mxCohlGqBjDxQ39zqj241UpkNYy1c+e3VKzBLisZoReXOdUfeu94SudxDN1AxjBFXxj5Y1Z7a+SnN60UsNyUtn/l5aoNe8t+QdL5rUri5hWnrkSHCH5buaxis0n7PuKXehPf7xx7KzeWYcLI5YFAKJY/0O/To6yN7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729020260; c=relaxed/simple;
-	bh=Od4J7m8Y9HldjWT39GmMEj06BeJbZ9u/gRtFUrvnevI=;
+	s=arc-20240116; t=1729020331; c=relaxed/simple;
+	bh=GfsfeA0fHiGtONuiVXoFrcDmZQmUGsPcaRFiz+aSW64=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bF5bxhd1bAjL6HfRkqb6EFOTQlWlhDPH3CEa9byV3xev0b/ihwbIzMQSym0PJdHoI+QMZNiYX5oQN7gIuztF+CptqqsIEWlTNHlswpCpuX6XBd1+k0XbRqB9ThAhLdpT/v7iIPJvkCtRQd1NR/kwXqOcTHlYCEXzBw04ejFMdpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=wmBUlCjr; arc=none smtp.client-ip=209.85.128.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=RRST19jauHRx7Pzr3gRfBwIf7+fsCaxHD/Doc0/jobN8b8+atenhzXt06KfIoOrK/P9xmoNP+CkJwm8LY+YFCDNbIm9O1t5djyTI7wqI4arMkz/mMDP41wKtGV7b8cgc2P1k5UuCzMLYH6/m/TaVRjcDyuh6Aru1U5H93U4bb90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZNSHZi7q; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="wmBUlCjr"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6e2e427b07dso42226277b3.1
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 12:24:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZNSHZi7q"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6e38fa1f82fso20619107b3.1
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 12:25:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729020258; x=1729625058; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729020329; x=1729625129; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BcOFQdRTMA5EuXOmAla+zIOj8XQBrcBlgElYX4Wr/EA=;
-        b=wmBUlCjr+ohD5lSOKjvOZzEFsnmBhUzmyi4gqIe3EZiER7ZEQ0sugkSs/Bnq9w7Z2C
-         Ql0f/lv3o1Ly/eB7Zdg53M6adOtJQ+z1vNuu//qytOPzh7Npnqgjoa3j8jJLRTH2DO8S
-         Z6keW+/xEE1A5FETy8j+Xu+woFFWd8+GqUKP5x3D8ip9fQU89PEKkNo8+P++rPpekdxt
-         FcFrfcVq+G+CAkOUB2HhsBasiwjwj5aJH4wAwpHYOuVUXMISDVPqlemkAxfOSrxObt2h
-         u+DacjSejt3h5zxbPRdLGi/P7ypVp0wi/dHFdAzW3WGY8AAvcz5XK3VLe+vuH6DMyv+U
-         B1YQ==
+        bh=L+0AvjXk/gAb8WFZQDlryut7It4XsfBTIInBXaOMm6c=;
+        b=ZNSHZi7q8oDiX+sRDcmo3SimKz6WL0cyi5awHAA8dnrp9N4X6j7lzHYfyQDKGf65B6
+         cQVz4124dgXDmFDWrpBBexKvTcip3Bka42C95fv6JR//328oSVW8oNmdYgfK/NRu2k83
+         I8Yk+eZs0uj8IriolcsrILye/BKy9uKDdFoZCSQqyJAPlkkpOTkAwNphbJsIDVRanpLW
+         rHVMcNurDq6shWAa/xLCYvFVBpAYcE8AEEXZ7gYtDGR2yfJmxb6orw1LzCivj1tIsBem
+         Ct4CeNevLDr8J3bvSFTRwexCdvE7rsC0xG5UIhqAK3mac2RzbdDfX6R0DRUhZ8JdjQGD
+         JbPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729020258; x=1729625058;
+        d=1e100.net; s=20230601; t=1729020329; x=1729625129;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BcOFQdRTMA5EuXOmAla+zIOj8XQBrcBlgElYX4Wr/EA=;
-        b=svKGcdrtAnqwxKEHIOba5/Y3vzLQkHYCG1WNKB5srRruCxVHFD9tzsRNc49Yl142pa
-         KNxKE2iZVToXgEVWcLx4Uzqw6FMx9Aoif2OyYbkYrDd5A3hSJDfYuT05svyiXNBmYuJ1
-         VcdJj7yQhSKLo7UE0POfl1fATzQTYosA0t/71ANdyiMuRGRe89zQY9yhwb+39AWXwhTT
-         iUjtqULss92o7Cj0TBztimcYC5nbqPN8VXAL2S5+QkTx1VSrfypJBoR8ee18n+vM+dOa
-         rBKTvuW3/FYaRR7MSBGniSYBAesiaN+wO3uX3/EMJ0UqueGlbmM5QMr/X7TelfCDDWYX
-         aL/w==
-X-Gm-Message-State: AOJu0YwwHntesB5ivfETUkP2ltpYvsm85haCVSK/9DzR0HnXe9zwOA/W
-	+/1AJh1RgJkIFRm6T6iYqG3RlWAY16D9rHOU6KRJ9R+OiGdYAt3yjAal2czvAaE=
-X-Google-Smtp-Source: AGHT+IHoFxe9eHpLJf6EkneUOhcd6iDAUJMrDg2wSqEYrIrTrAJtER+Qm3xpCyCvRmfRj+3P2pfJmQ==
-X-Received: by 2002:a05:690c:6305:b0:6e3:3a22:7205 with SMTP id 00721157ae682-6e3644c0082mr113072597b3.44.1729020258009;
-        Tue, 15 Oct 2024 12:24:18 -0700 (PDT)
+        bh=L+0AvjXk/gAb8WFZQDlryut7It4XsfBTIInBXaOMm6c=;
+        b=SMOE+vrAARHG14mS7JReW7MfQBb54qiy04AUtT+auT1Ji3eMZF7Sf8RDu5pfR9NknP
+         SB7FGUsa3UJ2QfNRzIeZxn2j1KG8MvamrdSDeXxcHcrsRgiEVKUPdAk31xSw6JLWZLiM
+         8Tei1BJ3SUcerWTBCpzl1eaTNN0/4yth1ywqShLH2KrAVI0ICHrJXldbMcL56DXK8BDC
+         SnOIxSXFUrF8JFtvREgDCcULpjsU7+PUCdvQ+bWORbmUCgFN5vUmX0U7ogJJ/WX/mnac
+         91dMzaHsl7zPSzWixTU09oQBMoVp+evNZiJY0v97OUC7dU8xr8VBFlevUWUkpHUgw/es
+         OqPw==
+X-Gm-Message-State: AOJu0YwoflURXZImwvg/+XwbdC+4LIANCP3sdkZUInS7s9REX9R517zL
+	BSkREKmCvIQnX8kb1YnAfl2zET/DjxdvMGU3JYqjTNxCkqeA9PmgHR7R+2Woh5Q=
+X-Google-Smtp-Source: AGHT+IGdyDrWN/6nvKDEfz95uxF57vxqZVkat516fro7c4/GqGsjvWC2OubKPnI42FQHH/AOjHoQDA==
+X-Received: by 2002:a05:690c:63c8:b0:6e3:156e:a917 with SMTP id 00721157ae682-6e3d409ab97mr21297937b3.14.1729020328759;
+        Tue, 15 Oct 2024 12:25:28 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5ae32d8sm4119867b3.4.2024.10.15.12.24.16
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5add13esm4017227b3.21.2024.10.15.12.25.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2024 12:24:16 -0700 (PDT)
-Date: Tue, 15 Oct 2024 15:24:15 -0400
+        Tue, 15 Oct 2024 12:25:28 -0700 (PDT)
+Date: Tue, 15 Oct 2024 15:25:27 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Ed Reel <edreel@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/3] Makefile: extract script to generate clar
- declarations
-Message-ID: <Zw7BX0BEzC07DRby@nand.local>
+Subject: Re: [PATCH v2 0/3] cmake: fix autogenerated clar headers
+Message-ID: <Zw7BpycbbZDjX6Gt@nand.local>
 References: <CAGjHeYfyH+cOMYYYHnFR+Vu9T+RbmzO1SpB_-kbmBSf1DitJhA@mail.gmail.com>
  <cover.1728985514.git.ps@pks.im>
- <7a619677c7af6ba8213a36208e20ab75c4318e38.1728985514.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,18 +67,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7a619677c7af6ba8213a36208e20ab75c4318e38.1728985514.git.ps@pks.im>
+In-Reply-To: <cover.1728985514.git.ps@pks.im>
 
-On Tue, Oct 15, 2024 at 11:46:11AM +0200, Patrick Steinhardt wrote:
-> +for suite in "$@"
-> +do
-> +	sed -ne "s/^\(void test_$suite__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$\)/extern \1;/p" "$suite" ||
-> +	exit 1
-> +done >"$OUTPUT"
+On Tue, Oct 15, 2024 at 11:46:08AM +0200, Patrick Steinhardt wrote:
+> Patrick Steinhardt (3):
+>   Makefile: extract script to generate clar declarations
+>   cmake: fix compilation of clar-based unit tests
+>   cmake: set up proper dependencies for generated clar headers
 
-Much cleaner, thanks.
-
-> 2.47.0.72.gef8ce8f3d4.dirty
+Thanks; will queue.
 
 Thanks,
 Taylor
