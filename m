@@ -1,122 +1,126 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5601914D439
-	for <git@vger.kernel.org>; Tue, 15 Oct 2024 14:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F001C4A21
+	for <git@vger.kernel.org>; Tue, 15 Oct 2024 14:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729001407; cv=none; b=Zmema643Zc31XzJij2JjV0SZu18UQh9eJyrUWudPQCVAbyq/2MbL3ZE6h+eoh6kfnJVQtnd3K7aTHupkt4k2bAxhLOaCfofgfI69S4c+r7ZBlUZvUya9d+zMFp7IHBUYpQV2NFstqEdwKTJXjEXa7Txhu/BcYbf7aQB0gOmpOyI=
+	t=1729003794; cv=none; b=ArfoFzseAOqjtcv/EcOuetVX/gu8S6eMLk8DLVo1smc4brr7HNxwV1lssSun30MpJICwrv5Gae0JxXBSKUSJCrWwwt8sMFCqbkRSsu0lyfLTK39LjqW/+w41EG6NMQywpSz1tGMljSEZfqxEd2vlx3Z5LGXJAbIvnKlM4l9h/fM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729001407; c=relaxed/simple;
-	bh=BESwIDkYVdmQHKFuUQhRkvUb7LM4ujDMaOyK4ZoEWeo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I/XE4evNYBGiaSvi/7KtW2EyWe/HB+rFl4JZucjunmq5WgMTfZap0uDchiZlxM5nGzrjVTy/Fm4ZctPwf0VcbBiXwZIVz/Ni5Y83VCAvbPn/TyrazJ/KEdpsvfgiA0Rgvu9R7y2g2Rs7b3JwlAKbYPbblyU8AmPs5bcp3m9A0Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M/005Q0V; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1729003794; c=relaxed/simple;
+	bh=HX3xTTqa5GEIu2c4NXP6eG8U0jvTUHxaR/cvq0MFIOY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rJh4ee9lZUuGrI9nIw1uZG6dfUhdVlpEap7IRX22joXDWOWQKm/dQBUuLAOsCsKgF1x1ack1tE8RZcEVVPLX8naCY+0KMez3ZoHmqMB60gbftzo5OH93fBbNjc2A6djQpPsC9g+WjUPrI2sWdkpYB+AsiDuCGa8ig73SPerqLC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Say8Ykt/; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M/005Q0V"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4314c452180so324075e9.0
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 07:10:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Say8Ykt/"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-656d8b346d2so3526573a12.2
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 07:49:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729001404; x=1729606204; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=SsRyEv7jHGIG2v+G5oEiwySJo8CPwEIBtCYVk2WNkOw=;
-        b=M/005Q0V20KmKF9YTP82vNgVOwWoGgY8o+eNasJU/7swj4Of2nrvlAhpNW26D4X/y0
-         vvffxZCjoJdqK0hQ2GlXkHau8GAGlWm6awo4u6I/IO7abnWUY0SJW4jenmIq6O02c/r3
-         MzauFW+ngDjuq+QOFJGCS3zhLAVrHXBy/oGrwxtgTGY6NehCwGE6Uso/i+xbhpwpHi3R
-         ENZ/mzak1qaezv19rFDTmTI660Ax7dW8Ox3jFCp8WPt/P6uPVusHa4OkTmoBxh+t0COE
-         nnrBxSNpX25ZMmFIaRyGZnW5HYoqn7WiIyqxO6IlLXtUduCpedx4ARDJwG7xh6N+HCJT
-         TLFw==
+        d=gmail.com; s=20230601; t=1729003792; x=1729608592; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1gqH5qVZhB9rQ0ZyLJMPKdr/iLzAd1LTvRnMEWWj670=;
+        b=Say8Ykt/3/1otaKbm8pAjPQxGJVzVCqukxVOaqYP0OwrEVoSsx3BnXem4E9TduWhGG
+         amg2bPXr6j1FFJY57Z/CLZDOfmn6YXaMNN2hei6ggiWT6ZYPzoRTXe4xqV/plh5bEnQH
+         Dtf4x4ES6haMStb+zmvZk7FgYyJ6C75YfiVnZ6xEFrBVTIhAPJ0ENiRK4JTv6JPti77k
+         W8nw7VoKmnkT/dej259+vw+JHXWDKvjIO9hoB3guOiR1o8nqf/24WWydZAy3fxX52d18
+         /aWDwpuYHcJhwVGLlT2/eNbxj3puvrAfA0HX6XPgg+UMel5KlIyh+VnY1Kfmo6gN4nXR
+         46fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729001404; x=1729606204;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1729003792; x=1729608592;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SsRyEv7jHGIG2v+G5oEiwySJo8CPwEIBtCYVk2WNkOw=;
-        b=Dmisu18bSqLxfByyV69fKZsXD3vhAxEembc/ohk96Mo9s7XLTts5qtPYhe2dIwkbmL
-         QHrhdMQmmGXdCza98jHcJdTDJVLdoqX8tvHAzomNBq9OwCmjhP21X+D7+5D0yVLEaRdh
-         1r/ABLfVkZnltgS9Lnptie6ntSH0oObfhnPdMQXoBTHa2x5dfBbqKmDH8bYs+4GBvFM0
-         wSFM7roF9+7NxnVQEhx27xL+cMDI+/ObaZT4JM6JAocIjiDVth8tBxt2R+LSnGmJCUaG
-         73DbjBG6jF5YdIxirg1U8Zfj5qAVQ8vnZCJAxP0tVow+KgiX05KN4fIemy9Z9WF63qTE
-         TuEA==
-X-Forwarded-Encrypted: i=1; AJvYcCXYu/hlIBsZoE8XvF8uhnUexcQYV+9coZF2mCYchy3XHlq+8yhxSXt9MDtQXZ6S1NWXoc4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxjoKB6lrCHyz0nws0baQajLR92rzbhHnhBtmNR6KMpgS7ROvsC
-	kHVI6ip4AHjfopB7VBg208Aoog6wuawdlSkz/WSnHrl00EzaNP+G
-X-Google-Smtp-Source: AGHT+IFXrfQmek+DlXrbyChy0XiQQ1aBfu7zo8taAmH4mwc12Cz4PE3phmQKwlVhBvG4nbXyOHUjSw==
-X-Received: by 2002:a05:600c:3509:b0:42c:b54c:a6d7 with SMTP id 5b1f17b1804b1-4314a381fdemr6682445e9.14.1729001403416;
-        Tue, 15 Oct 2024 07:10:03 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4313f55e054sm19376675e9.4.2024.10.15.07.10.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Oct 2024 07:10:03 -0700 (PDT)
-Message-ID: <65dd8e08-d8b2-4abb-a141-002d8f0b0401@gmail.com>
-Date: Tue, 15 Oct 2024 15:10:02 +0100
+        bh=1gqH5qVZhB9rQ0ZyLJMPKdr/iLzAd1LTvRnMEWWj670=;
+        b=e1oC/cuLCaP2Cz9jVbSnbnecrfsuY6jOqZ25ascKwkdiXV3AprMWqZCNOpq43lPAkA
+         D44/dyZbyWBUR/G5+hHz1wkQGU1HPV1Tf1ZYVEayOvyd6dM3I2P3jJ7K19VBsrzAqkiQ
+         ad2ru6Hj/vm6Kr03T9B4xVhp3EZ4pTNDdxS9pIWTAycBvuImRQUE9r2QVRpNJuVhCI5m
+         9kGj6VeuFmcOTIUkh4PO1D//BRKnj5nS7UrtnFP9QnhUzXCB5K4aQ3QFKvLqCzmaJ/Ij
+         ordw89E3iXGRW8OKeNtta7eLrKX4ZmV3KTKrUCxGMHQCjiD46A+Xh6H3+C/2baJtyPcS
+         o6SA==
+X-Gm-Message-State: AOJu0YxH6uLetOmRXEqr9YvI36ppZUqsds5PHkblJSKRXdMVyTSu+dMB
+	Y2l8/2oS/yaoAOLZ+fphrPDcJZfr8EjpYvdW/qvJFG4nnuBHHRPH/rXbxQ==
+X-Google-Smtp-Source: AGHT+IHSSkPUhVocyFqGtghQMV480hEknLQEwovMzlsM/RrNLfBhvZTIQkjU7rhgRA+dX2w9TnpsCw==
+X-Received: by 2002:a05:6a20:d50d:b0:1d9:4cf:719d with SMTP id adf61e73a8af0-1d904cfb5d1mr1212410637.21.1729003792423;
+        Tue, 15 Oct 2024 07:49:52 -0700 (PDT)
+Received: from kousik.local ([2405:201:c006:3236:51ac:756c:f3be:7ccc])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71e7753420asm1328000b3a.205.2024.10.15.07.49.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2024 07:49:52 -0700 (PDT)
+From: Kousik Sanagavarapu <five231003@gmail.com>
+To: git@vger.kernel.org
+Cc: Kousik Sanagavarapu <five231003@gmail.com>
+Subject: [RFC PATCH 0/3] pretty, builtin/mailinfo: don't rely on the_repository
+Date: Tue, 15 Oct 2024 20:01:21 +0530
+Message-ID: <20241015144935.4059-1-five231003@gmail.com>
+X-Mailer: git-send-email 2.47.0.73.g7a80afd5fd.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 3/6] set-head: better output for --auto
-To: karthik nayak <karthik.188@gmail.com>,
- Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk, Taylor Blau <me@ttaylorr.com>,
- =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>
-References: <xmqqzfndndfm.fsf@gitster.g>
- <20241010133022.1733542-1-bence@ferdinandy.com>
- <20241010133022.1733542-3-bence@ferdinandy.com>
- <CAOLa=ZSV50OkDC2p5AHHW0u+fAtLMcCX36W1SuT8AnTkX7HNZg@mail.gmail.com>
- <D4SUTJDV0Y04.3Q8YED2MVOKBL@ferdinandy.com>
- <CAOLa=ZQY_a_dEZQ2EcLVfE_5Kjy7b2R3OFbQHQbkzH0o9-q1JA@mail.gmail.com>
- <D4U6L3C2GHZG.2SN8P0C7ZH33M@ferdinandy.com>
- <CAOLa=ZRfku-J2HO8MOqu-dZspmCZDV1S56TD1X-zUy5=9+XSUQ@mail.gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAOLa=ZRfku-J2HO8MOqu-dZspmCZDV1S56TD1X-zUy5=9+XSUQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 15/10/2024 08:51, karthik nayak wrote:
-> "Bence Ferdinandy" <bence@ferdinandy.com> writes:
->> On Fri Oct 11, 2024 at 22:43, karthik nayak <karthik.188@gmail.com> wrote:
->>> "Bence Ferdinandy" <bence@ferdinandy.com> writes:
->>> I mean simply this
->>>
->>>      git remote set-head --auto origin >output &&
->>>      echo "${SQ}origin/HEAD${SQ} is now created and points to
->>> ${SQ}main${SQ}" >expect &&
->>
->> Ah, I see in other tests this is used, but not in this particular test file.
->> It's a bit hard to decide which is more cryptic, but ${SQ} is nicer on the
->> eyes. On the other hand I would either switch the entire file in a separate
->> patch or leave in the '\'' here as well. Or I guess one could go through the
->> entire test base and switch everything to either one or the other for
->> consistency.
-> 
-> I'm not sure I entirely agree with this sentiment. Consistency is a
-> great goal to target, but it shouldn't hinder changes that are
-> beneficial.
+Hi,
+Just a brief summary -
 
-Exactly - if we wait for an entire test file to be modernized before 
-using our modern test idioms in it we'll be waiting forever. It is much 
-better to introduce the use of things like ${SQ} that improve 
-readability as we add new tests or modify existing ones.
+1/3 - the main changes are in environment.[ch] and repository.[ch], all
+      the others are just changes due to this change.
 
-Best Wishes
+2/3 - the main changes are in pretty.[ch], all the other changes are due
+      to this change.
 
-Phillip
+3/3 - This is pretty straight-forward.
 
-  In our case, if you make the first change, there is now
-> reason for upcoming changes to the same file to also use '${SQ}' and
-> eventually we can reach consistency of using '${SQ}' throughout the file.
-> 
-> - Karthik
+One may notice that there are more "the_repository" occurences now than
+before this change - which is good since it means that we have now made
+the respective dependencies explicit (these were previously implicit).
+
+The change in 1/3 is marked RFC since I was kind of skeptical about the
+"repo" check in the repo_*() functions being done at _that_ level.
+Since every other change in this series depends on this, I've marked all
+the other RFC as well.
+
+Thanks
+
+Kousik Sanagavarapu (3):
+  repository: move git_*_encoding configs to repo scope
+  pretty: don't rely on "the_repository"
+  builtin/mailinfo: don't rely on "the_repository"
+
+ builtin/am.c          |  6 +++--
+ builtin/blame.c       |  2 +-
+ builtin/checkout.c    |  6 +++--
+ builtin/commit.c      |  8 +++---
+ builtin/log.c         |  7 ++---
+ builtin/mailinfo.c    |  5 ++--
+ builtin/merge.c       |  2 +-
+ builtin/replay.c      |  3 ++-
+ builtin/reset.c       |  2 +-
+ builtin/rev-list.c    |  4 +--
+ builtin/shortlog.c    |  5 ++--
+ builtin/show-branch.c |  3 ++-
+ builtin/stash.c       |  2 +-
+ bundle.c              |  4 +--
+ commit.c              |  9 ++++---
+ config.c              | 10 ++++---
+ environment.c         | 13 ---------
+ environment.h         |  6 -----
+ log-tree.c            |  6 ++---
+ pretty.c              | 63 ++++++++++++++++++++++++-------------------
+ pretty.h              | 14 +++++-----
+ range-diff.c          |  2 +-
+ remote-curl.c         |  4 ++-
+ repository.c          | 13 +++++++++
+ repository.h          |  6 +++++
+ revision.c            | 16 +++++------
+ sequencer.c           | 28 ++++++++++---------
+ submodule.c           |  2 +-
+ 28 files changed, 139 insertions(+), 112 deletions(-)
+
+-- 
+2.47.0.73.g7a80afd5fd.dirty
 
