@@ -1,120 +1,134 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCD51862AE
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 08:27:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0C41F80DC
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 08:42:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729067234; cv=none; b=no2+xeKXKurMZoFIL9bK2L4oguNiplqZO5Sg13lJHN1zyIRXIo2QBkyLp0DErsSaYyiICkhPgebPqIp58i/hTZACkn3kxqfNQbPzEvPK3OyPW6qL94C2fRbrIjhUsEOdp4qt2F8GdMqKVQF27jSnmwJs+88/c6f4v9qYZ+9P3CU=
+	t=1729068172; cv=none; b=khyOOKbj3AWWCGz1ShxQc61q0ns+PfcFOIJ4ErSxxs9bKdy2EeK+J1Xw1aF3V7DmJJ30DStZu2Q/wUUMESW6WcjagISTBz5mD/YDSi1xSl222Pa19PBgfNgJeK1eVgpJGjoOXGyd6aYEndMM1HIhiNCW8mC9GJV6Y0TfYYcFp5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729067234; c=relaxed/simple;
-	bh=9/+OUuUs26/we6yxsoocdKqKNq3tFgvo+W/fUmoYsKI=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=s2tDJXlyTtIahmzxP2FYKhG6hViYt2Yg+9+sOiE/u8ivA5ep0ufQXnxX7safv38TDAGEp48ejLW8BT8nh+fWSTyMjGHX8LbVCxRiFE2ldCODB4lLFOxO5ySVPIYWH0DswukcMWUNQB1YocBNL5p3Eczw6O/GrD3DYm4VCJMxJfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io; spf=pass smtp.mailfrom=jamesliu.io; dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b=dD1V582X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QYce9mOI; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jamesliu.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jamesliu.io
+	s=arc-20240116; t=1729068172; c=relaxed/simple;
+	bh=y/dmwPsNTb/CZTx4bweiYZlIyjHU1tw77MGlXjet/Zw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hM21DwGsmmjUZH+X7Ql/Bx5X1cTmiq+QbZa8qbyEZ3SxUauB9YPwi/r6NVtDlhEjnMtl7n/FndJHbKhinFTidtPjGQ8F1tdtRG63pkSm5ZR0p8p1rCXoidCYgIbS3SvIwLy3UIpBL+K+of9Q5+YQsOhVLuTZAqfz7t8/atuyrx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Qwllpa3g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E9yxow5o; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jamesliu.io header.i=@jamesliu.io header.b="dD1V582X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QYce9mOI"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id D3A3E13801DB;
-	Wed, 16 Oct 2024 04:27:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qwllpa3g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E9yxow5o"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 47E241140088;
+	Wed, 16 Oct 2024 04:42:49 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 16 Oct 2024 04:27:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jamesliu.io; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729067230;
-	 x=1729153630; bh=9/+OUuUs26/we6yxsoocdKqKNq3tFgvo+W/fUmoYsKI=; b=
-	dD1V582XVPSxYZ1APLCzf5yFBGvBqEpHrlQaCfWVSWSkt6C3b7PtWq230H49b1xA
-	39HYhuLi+0MydHyDKQz0HoYQU9Wl1raLwZav0k/BYuuGGlKBzDvKOy9bSEYIY1sI
-	CZNjR6QSSP0WiiwxxqYM+PyOxT9sMPg9fMO1ditySFuv0qBn9nYalmPYDLz+I/U/
-	8O/WSQVW0eIYwbNFodhjCjndQoT6UFSlx/5EAeOg1T2j604+qKJ0YdOJGteAG0jZ
-	lFFaR/HleyT8ZEX4Au6SIH8/mSRa48+UI8zgbVEEZOPtIsCmoWdJvhtduatkkaJH
-	Wl/FqP5FUadqbMXVfkFxZg==
+  by phl-compute-01.internal (MEProxy); Wed, 16 Oct 2024 04:42:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1729068169;
+	 x=1729154569; bh=JEZoq+XHl77UTBMj3ssrVl7n2/sciHfhNP5GD48mt5A=; b=
+	Qwllpa3geTVRY62d8A24eAZ2QI01DHZgGSWWN342jf+DToxqNQPvB9bf4VBA+wW2
+	UkRBc23Mv8xKLQTjemOJuniQl5OSDYxhD1gPY8kxZgZdDDVRtA6U70GQsubGwpFY
+	5GoEUeLXVSWD4lLKqvO1igedam5mny9uts3G2+td0Gf9uWJiOpkxdZhD8sZqJIr6
+	fU7yAQCxaNPnEe3m0WUAMN+9PigeBTagfLHJhZ5FC8HS+rzl8mVKhvuPxU8kYbFT
+	PQS/5MYLZ7FD1OtGfRIiiDDV8pfWRKnfUV0m8gc7JcyT272TT2wIyUYJiJv1Jmzo
+	/q56uiws73QjGSe206l9QA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729067230; x=
-	1729153630; bh=9/+OUuUs26/we6yxsoocdKqKNq3tFgvo+W/fUmoYsKI=; b=Q
-	Yce9mOIA1+KBcRG+wEJScfBhuD235983hx4b7O+LwHqTNc/bDUkZjb+Jj+wUePcD
-	chp0+y6A+JNoI4jmDptkQijCy95dn8WK1STpGQGYPO2c8SGz8pOoxhoiJv91AaFv
-	A1ZRJ7dAPpqPWXJXG7b2EePsnKM946a4t3di9fen+Uctm47MSc2gnqja+PNiazx3
-	OhV/0naFJWZnGrNqa8FzlqPKeyHzD8DLd/szKR9RfR4s+rnAYempgAVWntYW+0QK
-	zMO62yaDABJuDks/F5BvXex3DbGg8T/0t8RW2ukT8jhMQJYr50wRORXpBtMIS0sF
-	pb0Q5WSLl/uzQgc/+SNvw==
-X-ME-Sender: <xms:3ngPZwfQ-FF1oNt4M-dly60ebIsgCgSu3O_t5RmGGmBnEDrRBty2xA>
-    <xme:3ngPZyP5QJICnNBzIFQFR-pITczagh_zPV0zR_wg77eqb2h2VCurFqLDtYsWc6G1t
-    e5pJ0sKAUibMJy1Iw>
-X-ME-Received: <xmr:3ngPZxjeI6N9CGRNdQBJWbXlhns8Bf_USpgAqW7VEEP3TtYt0jiHzFS-CDb7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegledgtdegucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729068169; x=
+	1729154569; bh=JEZoq+XHl77UTBMj3ssrVl7n2/sciHfhNP5GD48mt5A=; b=E
+	9yxow5o514qebRTfSAg7ZVZJgkmcb2koZHXMMVdP/twikDd/CYaXHLQ1wbnLUj0Z
+	Lro0S9dsHCRg464Qgn/P30yx2lgnKv5cED3rOESoRMrB24YdhlagX7bRG5qKvt9D
+	4HYemzrb63y3JG87JfucGhelWQznjV0zzKX8qPf3s+XrqNesPnkFmGOrxNTRzot3
+	Ri08i0Ls2PcmKy0as6TSYb11KJQHVvjv7SZL2eovrnq7bItk96TMlaAHBvdjWS6B
+	e3DCK97S62HLBjA+BzRNk/Ja/vM83ewzWerSbeay35RPqD+/vOJ6EjM7DzG1tkba
+	ZYLIOm50tvznvTjLQuS1Q==
+X-ME-Sender: <xms:iXwPZxSh67AY1VOC6nFIT2Z_lLinXSeg-oA65Kfcq_JSxqw83RYH0A>
+    <xme:iXwPZ6ypcSX1dz8U5Xq6Aie6bbA-VJiayWEpjBCAAaFMld69eVIBTVrn9MxPadLjF
+    HqV7OljH9P30gR-SQ>
+X-ME-Received: <xmr:iXwPZ20expmsu5zEDpOXA6ywIv_12ymLqDy87EaJ4yTM6Doh9A-OzCfHt1_izt2fmYl_gDoqytVW36UmIwVYfMKJj5GWNlGO1bGLII0DZ336Ug>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegledgtdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepggfgtgffkffhvfevuffofhgjsehtqhertdertdej
-    necuhfhrohhmpedflfgrmhgvshcunfhiuhdfuceojhgrmhgvshesjhgrmhgvshhlihhurd
-    hioheqnecuggftrfgrthhtvghrnhepfeefgfduveegfeduveevveekieffhfetffeukeff
-    fffhgeelueekieffhedtveffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepjhgrmhgvshesjhgrmhgvshhlihhurdhiohdpnhgspghrtghpthht
-    ohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrmhgvshesjhgrmhgvsh
-    hlihhurdhiohdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrd
-    gtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:3ngPZ1-M0oKTdfHv2g_UM5FzFZtgeyIau8DG7YvGUAenmDL4DldnMw>
-    <xmx:3ngPZ8vimuMMDA5a7HPiQ71X9cV-Uc3Sufik1WwDGb2_x5Gh2p_5LQ>
-    <xmx:3ngPZ8GOv67mRNmES7HZLPG9J9wqyXj5twc1dqj-rzMouKnMyumUFA>
-    <xmx:3ngPZ7O_Wuz7E-pPCH6lkRxx9-FF4zrpqeQhEyImcsMz9n3LvtUduQ>
-    <xmx:3ngPZ2V_uZL-qD5u5G5ZjYARM5ms7Z8m78OXofb0WbNjBZMqyPD6_AMz>
-Feedback-ID: i93f149ec:Fastmail
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
+    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
+    gtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
+    phhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvseht
+    thgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:iXwPZ5BOEFCYLj8zsaxdBO8Yn7oBk_nFnp8TsqrKfpNF8QXf_K4bsA>
+    <xmx:iXwPZ6iXika__F26ZSdkgZRY-bfbtlp2WcrsEyeYOOvNyuYfGSgu5g>
+    <xmx:iXwPZ9oeCo0PXhIaWzGtLY9h0RWLwyoIBGLHcNz-eV8uiMCgCMJ2ww>
+    <xmx:iXwPZ1iQnBQKYtlJ0VHI3ho8nAOZR1uOwg69et6KKDsntbe3lZmTGw>
+    <xmx:iXwPZ8Z6Czx1aWoFx3M9BFvwhgc0IX8M_-48c2cZlQSR6WGXkZ6gG_zA>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Oct 2024 04:27:08 -0400 (EDT)
+ 16 Oct 2024 04:42:47 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id c2363c12 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 16 Oct 2024 08:41:30 +0000 (UTC)
+Date: Wed, 16 Oct 2024 10:42:44 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Edward Thomson <ethomson@edwardthomson.com>,
+	karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 03/10] reftable/basics: provide new `reftable_buf`
+ interface
+Message-ID: <Zw98hKZc1pjBGGcU@pks.im>
+References: <cover.1728629612.git.ps@pks.im>
+ <cover.1728910726.git.ps@pks.im>
+ <0ddc8c0c896a006e4cc094390125efcec0b3cdff.1728910727.git.ps@pks.im>
+ <Zw2cjxpDf6MowCP+@nand.local>
+ <Zw3xhwLFlznU_JvK@pks.im>
+ <CAPig+cSXJaETg4Sq3Zw8=37M15CdLEUkdMb2U2X4NPSOAFwmyw@mail.gmail.com>
+ <Zw7CIRoXrLr5pd5A@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 16 Oct 2024 19:27:06 +1100
-Message-Id: <D4X36E9VX8YW.EGVWW94QFFCU@jamesliu.io>
-From: "James Liu" <james@jamesliu.io>
-To: "James Liu" <james@jamesliu.io>, "Patrick Steinhardt" <ps@pks.im>,
- <git@vger.kernel.org>
-Cc: "Taylor Blau" <me@ttaylorr.com>, "Eric Sunshine"
- <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 08/10] t7300: work around platform-specific behaviour
- with long paths on MinGW
-X-Mailer: aerc 0.18.2
-References: <cover.1728906490.git.ps@pks.im>
- <cover.1728992306.git.ps@pks.im>
- <13c06a8129b13a672d3b8329db83db103607787b.1728992306.git.ps@pks.im>
- <D4X0SYYSUPWO.CFCUEN5B3MOQ@jamesliu.io>
-In-Reply-To: <D4X0SYYSUPWO.CFCUEN5B3MOQ@jamesliu.io>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zw7CIRoXrLr5pd5A@nand.local>
 
-On Wed Oct 16, 2024 at 5:35 PM AEDT, James Liu wrote:
-> On Tue Oct 15, 2024 at 10:45 PM AEDT, Patrick Steinhardt wrote:
-> > Windows by default has a restriction in place to only allow paths up to
-> > 260 characters. This restriction can nowadays be lifted by setting a
-> > registry key, but is still active by default.
+On Tue, Oct 15, 2024 at 03:27:29PM -0400, Taylor Blau wrote:
+> On Tue, Oct 15, 2024 at 01:10:59AM -0400, Eric Sunshine wrote:
+> > On Tue, Oct 15, 2024 at 12:38 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > > On Mon, Oct 14, 2024 at 06:34:55PM -0400, Taylor Blau wrote:
+> > > > On Mon, Oct 14, 2024 at 03:02:24PM +0200, Patrick Steinhardt wrote:
+> > > > > +/*
+> > > > > + * Add the given bytes to the buffer. Returns 0 on success,
+> > > > > + * REFTABLE_OUT_OF_MEMORY_ERROR on allocation failure.
+> > > > > + */
+> > > > > +int reftable_buf_add(struct reftable_buf *buf, const void *data, size_t len);
+> > > >
+> > > > Is there a reason that data is a void-pointer here and not a const char
+> > > > *?
+> > >
+> > > Only that it emulates `strbuf_add()`, which also uses a void pointer.
 > >
-> > In t7300 we have one test that exercises the behaviour of git-clean(1)
-> > with such long paths. Interestingly enough, this test fails on my syste=
-m
-> > that uses Windows 10 with mingw-w64 installed via MSYS2: instead of
-> > observing ENAMETOOLONG, we observe ENOENT. This behaviour is consistent
-> > across multiple different environments I have tried.
-> >
-> > I cannot say why exactly we observe a different error here, but I would
-> > not be surprised if this was either dependent on the Windows version,
-> > the version of MinGW, the current working directory of Git or any kind
-> > of combination of these.
->
-> That's very strange. I'll try it on my Windows 11 23H2 system to see if
-> I can observe the same behaviour.
+> > The reason for that is because strbuf is a generic byte-array which
+> > may contain embedded NULs, and the `const void *` plus `len`
+> > emphasizes this property, whereas `const char *` would imply a
+> > C-string with no embedded NULs.
+> 
+> Thanks, that was the explanation I was missing. Perhaps it is worth
+> re-stating in the commit message here to avoid confusing readers like I
+> was when I first read Patrick's patch ;-).
 
-Hmm maybe not. MSYS2 on ARM64 isn't fully baked, and I don't have an x86
-Windows machine handy.
+Does it make sense to explicitly state how the interfaces look like
+though? I don't do that for the other functions either, and for most of
+the part I just reuse the exact same function arguments as we had with
+the strbuf interface.
 
+Patrick
