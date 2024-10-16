@@ -1,152 +1,148 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DFC20966A
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 14:21:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D2720821C
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 14:55:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729088507; cv=none; b=HCGG9eibz/Np/BjOJQVaZvySzwgIGN2NNfiXsYogef94KCT0i9MWG6siagB631bi13NoE4Q5DBudAATc52wOQiKp+lqT9y2gZrr48qttn4aDNzEN0uWMwj9lfdFHbJnO202rPnRFUShHTCIvVqvyRKkt8p0Mr2IZn3I3OMQR+2I=
+	t=1729090551; cv=none; b=PncmW6ldEYHyUDw7DhbUlBkTdc2wNzD/LyRGiuuazxbG2E5PnPsWRoA5faNhAAhrws+WeoTihmeU/tJW6KxRHKTbMSgOsTH6J/zWGiLhHQhbwR1BXoIl0pD9/v0+gEuN/6A+LEFV+nEQwThZAiDHngIQ/VA9UIpxOuhuI9uBTTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729088507; c=relaxed/simple;
-	bh=QyLxh9+HLCDv1dOZiyI3fsA7uow5pkRLgml+yq010Vg=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=oEy2o69C9NFpT6NRZvKxkNIZbegDqYkCR4TkZtqSKVRni+cRVk/Poq4Ry8KmBPyOR1ZHnCgupQ8Tg30XXn+ZhDWJfSznl4HnmLIb8JSE1x6mUlsdrrtj+7pF3RpHtyJx7uvPHM2EOzwGANkVAwoUk/zJts1BP69zKdJk2oxjWOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=COJH0pRL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C92PCWqc; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1729090551; c=relaxed/simple;
+	bh=/bDFCJ4boy725LIpq6V1FxzySGrx0W/tRXdR40qVP7k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WBVeQfEavSGJsu3XwLE6l4FEzzk+2xdYzGhrjb5U9JVwvkdo2z6kb2fue/pv01zKJIupwWeCHaaP/m1hqyy92r+LjfleUg5BTED7moq6II4zN4aeAe6kYUdJ+aLe/jaW+WpDKPlsdnNi+18XYjcdk0xjw6FmKNv0P60fk49mD5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=doqMBJAF; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="COJH0pRL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C92PCWqc"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 06FA613801AB;
-	Wed, 16 Oct 2024 10:21:44 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Wed, 16 Oct 2024 10:21:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1729088504; x=1729174904; bh=WFWu2vkBZYx/tyKfVpyMxJ6Lbq4LQRJ7
-	B56H/AjKZ9k=; b=COJH0pRLBTzKdnRtSv+PW+yI+t2uTUybCYxONF8Wpmg9iEIZ
-	k2fjAlDX1MZXm0JbFpm1t+1Z51my0lFFWbSYzw5pQ9IgPBxhaC5UN3C7/xaonHX+
-	SMrLRqqdZBQIY379gKGIWp3jD7fCOkJvnJHXYP7jE12wLXOHDp7LU4RVY9KfEOj+
-	xVayaTio+HJ5XvXnyUoSkTo8U7UF4c2ZioazTGiXU2gJxdTMRqeOh+vGocKBthiR
-	PJmfCUPNab2rJaqy6z14upc5jX3FIpSONIFbqM7a9LDe54vms3p2djMm0gS2OIyB
-	jJNr2oi/nzkJYmtjcIHy03zHXi415kSKvrdS3Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1729088504; x=1729174904; bh=WFWu2vkBZYx/tyKfVpyMxJ6Lbq4LQRJ7B56
-	H/AjKZ9k=; b=C92PCWqciZ4XA8ToYBouAeFPThCIIGWCnxtXBWXO9dccIQ/8ETf
-	bUbnaLn6Kvmd6Opsrq6CbjdSzQmpOgbP2d36xAcEg0asz5/8R9XJ3SnTRxg3o5fS
-	zMSjCSzkPKWOJ+wCBI3DIpKihCfow38EMuGI56zubDm3x93nZeiMpAL58Ye3S5bW
-	66XcI4jdMq57BKSZFUVpBS77koVZ2QaJ0h71FyDzUAMyhQ+69diajjm78fV89VsB
-	vxoVE0FV5LAY+kYcLCavMoVMX4MvIQdaMHfb9iUtr0EhQ7QOYQ1dsaHA8NpOsvzi
-	uv1UOaohfZsYxaushkPqzHGosjlxlj0bZbg==
-X-ME-Sender: <xms:98sPZ0P1nBTWCfLXPx59oy1nU8gBnZiGI3NStaSmfhqLX0uiatfyyA>
-    <xme:98sPZ6-76EboyAhASCJ3gu7_YBsdJPrMZAxkFJpQWpeIH1WA5804lPeKlmhYe1ydr
-    6eWF5yyz0sbBGQrMw>
-X-ME-Received: <xmr:98sPZ7R7awgIcf4sAp5mkN-Cju-K17zDX8wxr5_wDlQv2wxcsdGqhSd2hxg3TsvYIvHa1yb2VcCT-8iqIcQDgDpxS3QibnxCJESit9RkWg4LJQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegledgjeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkgggtugesthdtredttddtvdenucfh
-    rhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqne
-    cuggftrfgrthhtvghrnhepjeeggfekffeuffevkedvgeelkedufeehtdeijeefgfffffdu
-    iedvveeuueethfdtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
-    sggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopegruggrmhesughinhifohhoughivgdrohhrgh
-X-ME-Proxy: <xmx:98sPZ8vPuo1yiXNws1He6rc4fU2vh0PBivHwrq83TBWmIn1uJZKSVg>
-    <xmx:98sPZ8efogR7UVHVBbzoQWRmKn8FRuO6ZpA-FfNcpXvgE6W1o7iibw>
-    <xmx:98sPZw1uJXNb3bwIcMD5bCby3AAdpBKsnthkYFumfOgOMLSrED3afg>
-    <xmx:98sPZw8badTZW2oh6heD00_EgeueGvbigMOPxJYx9Er3s_LgcuZ9xw>
-    <xmx:98sPZ06otve1noA8LHWbwVn-MDZd3qpOSrQk6AQ1S9ukVHeL9pJU2IOb>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Oct 2024 10:21:42 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fe6579c0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 16 Oct 2024 14:20:21 +0000 (UTC)
-Date: Wed, 16 Oct 2024 16:21:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Adam Dinwoodie <adam@dinwoodie.org>, Jeff King <peff@peff.net>
-Subject: [PATCH] builtin/credential-cache--daemon: fix error when "exit"ing
- on Cygwin
-Message-ID: <a4472d6d1551e7c25540c4c8361bcb6b1c9f92ff.1729084997.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="doqMBJAF"
+Received: (qmail 20561 invoked by uid 109); 16 Oct 2024 14:55:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/bDFCJ4boy725LIpq6V1FxzySGrx0W/tRXdR40qVP7k=; b=doqMBJAF5GszqtPRLSZCk9zBYMCuWrBD0Uq0pp/iATbgEESRkq1WHLwNwN7LVhybi1i6ePgn9o5eEZPU+sylRENew6P+GRqPEgFFgbBvZ86wbAjyxXY4iNfVNZ1mU92d4dus5J2YknAwoCxJ0Ym7mjpDJRLix1Ng+lHYxSXLOSJhPLy2Z0RrNtYj12T7oGAV5TsgnnPd31O+WAfsKHhmbzrIaw284ef2RrcqV1/5rBlDmKOaZuDNnEr6AVtPXMYQ/7V+bp6CdfluzBl7g8hPyp4EWbj1Cv7nE1xUE6PdoTti3SSybqVNbYG8dtcWapPskq+DrdsHfWxnSjrGu/fQpg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 16 Oct 2024 14:55:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19749 invoked by uid 111); 16 Oct 2024 14:55:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 16 Oct 2024 10:55:40 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 16 Oct 2024 10:55:39 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Re: [PATCH] builtin/credential-cache--daemon: fix error when
+ "exit"ing on Cygwin
+Message-ID: <20241016145539.GA703747@coredump.intra.peff.net>
+References: <a4472d6d1551e7c25540c4c8361bcb6b1c9f92ff.1729084997.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <a4472d6d1551e7c25540c4c8361bcb6b1c9f92ff.1729084997.git.ps@pks.im>
 
-Clients can signal the git-credential-cache(1) daemon that it is
-supposed to exit by sending it an "exit" command. The details around
-how exactly the daemon exits seem to be rather intricate as spelt out by
-a comment surrounding our call to exit(3p), as we need to be mindful
-around closing the client streams before we signal the client.
+On Wed, Oct 16, 2024 at 04:21:36PM +0200, Patrick Steinhardt wrote:
 
-The logic is broken on Cygwin though: when a client asks the daemon to
-exit, they won't see the EOF and will instead get an error message:
+> diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
+> index bc22f5c6d24..5a09df5c167 100644
+> --- a/builtin/credential-cache--daemon.c
+> +++ b/builtin/credential-cache--daemon.c
+> @@ -156,13 +156,11 @@ static void serve_one_client(FILE *in, FILE *out)
+>  	}
+>  	else if (!strcmp(action.buf, "exit")) {
+>  		/*
+> -		 * It's important that we clean up our socket first, and then
+> -		 * signal the client only once we have finished the cleanup.
+> -		 * Calling exit() directly does this, because we clean up in
+> -		 * our atexit() handler, and then signal the client when our
+> -		 * process actually ends, which closes the socket and gives
+> -		 * them EOF.
+> +		 * We must close our file handles before we exit such that the
+> +		 * client will receive an EOF.
+>  		 */
+> +		fclose(in);
+> +		fclose(out);
+>  		exit(0);
+>  	}
 
-  fatal: read error from cache daemon: Software caused connection abort
+This breaks the thing the comment was trying to protect against. We want
+to unlink() the socket file before closing the descriptors.
 
-This issue is known in Cygwin, see for example [1], but the exact root
-cause is not known.
+From 7d5e9c9849 (which you can find with blame or "git log --follow
+-Satexit builtin/credential-cache--daemon.c"):
 
-As it turns out, we can avoid the issue by explicitly closing the client
-streams via fclose(3p). I'm not sure at all where the claimed atexit(3p)
-handler mentioned in the comment is supposed to live, but from all I can
-see we do not have any installed that would close the sockets for us. So
-this leaves me with a bit of a sour taste overall.
+    credential-cache--daemon: clarify "exit" action semantics
 
-That being said, I couldn't spot anything obviously wrong with closing
-the streams ourselves, and it does fix the issue on Cygwin without any
-regressions on other platforms as far as I can see. So let's go for this
-fix, even though I cannot properly explain it.
+    When this code was originally written, there wasn't much
+    thought given to the timing between a client asking for
+    "exit", the daemon signaling that the action is done (with
+    EOF), and the actual cleanup of the socket.
 
-[1]: https://github.com/cygporter/git/issues/51
+    However, we need to care about this so that our test scripts
+    do not end up racy (e.g., by asking for an exit and checking
+    that the socket was cleaned up). The code that is already
+    there happens to behave very reasonably; let's add a comment
+    to make it clear that any changes should retain the same
+    behavior.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
+So with the proposed change, t0301 will now fail racily. We need that
+unlink() to happen before the fclose(). Just calling exit() does things
+in the right order, but it should also be OK to do an explicit:
 
-I've Cc'd Adam, who is the maintainer of the Git package in Cygwin, as
-well as Peff, who is the original author of the below comment. I'd be
-really happy if one of you could enlighten me here :)
+  delete_tempfile(&socket_file);
+  fclose(in);
+  fclose(out);
 
-Patrick
+That would probably require making socket_file a global variable. (You
+can't just return out of the serving loop, since that closes the sockets
+first before deleting the tempfile).
 
- builtin/credential-cache--daemon.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+> Clients can signal the git-credential-cache(1) daemon that it is
+> supposed to exit by sending it an "exit" command. The details around
+> how exactly the daemon exits seem to be rather intricate as spelt out by
+> a comment surrounding our call to exit(3p), as we need to be mindful
+> around closing the client streams before we signal the client.
+> 
+> The logic is broken on Cygwin though: when a client asks the daemon to
+> exit, they won't see the EOF and will instead get an error message:
+> 
+>   fatal: read error from cache daemon: Software caused connection abort
+> 
+> This issue is known in Cygwin, see for example [1], but the exact root
+> cause is not known.
+> [...]
+> [1]: https://github.com/cygporter/git/issues/51
 
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index bc22f5c6d24..5a09df5c167 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -156,13 +156,11 @@ static void serve_one_client(FILE *in, FILE *out)
- 	}
- 	else if (!strcmp(action.buf, "exit")) {
- 		/*
--		 * It's important that we clean up our socket first, and then
--		 * signal the client only once we have finished the cleanup.
--		 * Calling exit() directly does this, because we clean up in
--		 * our atexit() handler, and then signal the client when our
--		 * process actually ends, which closes the socket and gives
--		 * them EOF.
-+		 * We must close our file handles before we exit such that the
-+		 * client will receive an EOF.
- 		 */
-+		fclose(in);
-+		fclose(out);
- 		exit(0);
- 	}
- 	else if (!strcmp(action.buf, "erase"))
--- 
-2.47.0.72.gef8ce8f3d4.dirty
+I don't see any details at that issue, but I'm not sure how it would fix
+things. From the client's perspective, they are going to see the
+descriptor either way. Unless there is some magic that fclose() does
+that a normal descriptor-close-on-exit does not do.
 
+That "Software caused connection abort" thing seems like a weird
+not-standard-Unix errno value. Searching for it mostly yields people
+complaining about getting it from ssh under cygwin. :)
+
+If the magic that cygwin needs is actually "fclose before unlink", then
+that is in opposition to other platforms (and I suspect would make t0301
+racy there).
+
+> As it turns out, we can avoid the issue by explicitly closing the client
+> streams via fclose(3p). I'm not sure at all where the claimed atexit(3p)
+> handler mentioned in the comment is supposed to live, but from all I can
+> see we do not have any installed that would close the sockets for us. So
+> this leaves me with a bit of a sour taste overall.
+
+The mention of atexit is a little oblique these days. We moved from a
+manual atexit handler to using the tempfile.c handler in 9e9033166b
+(credential-cache--daemon: use tempfile module, 2015-08-10).
+
+> That being said, I couldn't spot anything obviously wrong with closing
+> the streams ourselves, and it does fix the issue on Cygwin without any
+> regressions on other platforms as far as I can see. So let's go for this
+> fix, even though I cannot properly explain it.
+
+Running t0301 with --stress on Linux failed for me after a minute or so.
+
+-Peff
