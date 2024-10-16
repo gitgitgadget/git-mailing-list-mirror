@@ -1,138 +1,105 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9A9187872
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 18:49:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3252A16E86F
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 18:53:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729104556; cv=none; b=CUjDQgBDKCDQqrakGtmbZZT6LjPPAa+37nbeDF51v186rGteYrprA4Et0rbvVW/ZuTxGGJda/AWyNHqC6zztPeH3lUjZGfIcEhonNVenKMqTQjGTNU2IRWLvMZf6eoJFldLxpAlDk/QTt8V+6vhQkREXMweJH+yCoE0vF8G8AEQ=
+	t=1729104782; cv=none; b=quHQf+TRgvd1mzC8DN5ykL9O4SCK2qVAGfTzb4XhfusebVeAypu517WIccA7GY/MD7t3ghz7qAjiZeoUzWB3YHbQBLk9fV6tkMvwKk+X6nF6U62r4A8qzMb9Gg/qJ7eSxBoZ1Spp4HhA+ci4MaFh6uQGiO/TLt971R0kflcDzQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729104556; c=relaxed/simple;
-	bh=ZD4KX+w4wHRcYXvGYI0sF1jjJ7w1flytbaTzPbgUIR8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=SDbwjXqqGDVd41DNAvp33IdkIhysPPFhfaU43arF8KfmgAT+f6Su0ICcRY9MPl4jmkZtKcKxvsH/q3QZ6USHHhbv3w33vVBTLZvsteXD7fvt/v2DNFHEf7i44awXQpGhkwo+WMzbi+Nx0mP4L0KnCkvdhFXOzGJp0a7l1Fb4m/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TpML3xsu; arc=none smtp.client-ip=209.85.221.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729104782; c=relaxed/simple;
+	bh=/LjYx/lp+VQxDGoNyPymOoD4dN+nLLT2gCr8e8e3Ktk=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EPNMue0+uR3s3oY+LEaqkNy9w25ikR3+XINf+a7dHgKSaUMtVd+N4OnjLYW9rQtdIHioTM/QPrWTK8Apo6UZozFkfN+/M2w/qlFCARgzuvnAJEa/kXBV2neDEfJomIWfKghazUHxDeOH9ZcmnuJ4fi3ypuTaM4r4ZGfb79/+/Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=RLROq9HB; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TpML3xsu"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-50d2d300718so71719e0c.1
-        for <git@vger.kernel.org>; Wed, 16 Oct 2024 11:49:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="RLROq9HB"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6cc03b649f2so1008166d6.3
+        for <git@vger.kernel.org>; Wed, 16 Oct 2024 11:53:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729104554; x=1729709354; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZD4KX+w4wHRcYXvGYI0sF1jjJ7w1flytbaTzPbgUIR8=;
-        b=TpML3xsugwnpNqu/yucYOi6lgFnL0epKCvKrybciB3xjaCcMWZeYszYr0Di0E6+Zde
-         YOzGdaV7u9FriD7fg9pR1EwtKfbs4b/1tTgZx7QXhU9EkNqjUIzfBI9rhIOoz2SibYoS
-         uVi6hic2ED2/e6uOoIcokqO7k8tryZ2/Wi95lJ195c5Kzylybgy4aJkQIR8fhlplqfPq
-         j1lzGqPm8mkcTLlEaWw5mv11HA+eFiFsQpIBpvJ1njCGB0tT8M1YGvDwBM24rOgnlq0k
-         TPCLBqzBBrWsZ99Mh9uxtiHNm4CDhy/seSEXMPkgIqKcpT7R3EwRvgsixM5hX6EnDz2H
-         PY9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729104554; x=1729709354;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729104780; x=1729709580; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZD4KX+w4wHRcYXvGYI0sF1jjJ7w1flytbaTzPbgUIR8=;
-        b=Wr4Q6Dyf7+919DLLL0p9F5Ex7NBVIMOj52yY1LcLVoGCrw38/F4GCEsIfDHykjjA2O
-         EM3TkQ5Uu4AXnObLlFUa8zuSB3Z99JszmTNhEppDkuGv+GhHSWEnW/LQifTTjZOvgbvD
-         RIDiebFSZulIbTzSym72DUFSmHURQQ8stkz6M05iOsWaWReTNrv/z4hprtTbKqxtjvPs
-         mhfIrxOPu3re+GqHLkjL3vgOZa3Jw3CGss4IxxAcb9DOwNDh9NfeMkxNDL1GR+1sXLbd
-         R+eXxjETTvWfcnYivThTTp0lXHEZ/nVvF8xztvS0oEFhd4zLqCKn0tlgnIQGv9h7W8mx
-         nCNg==
-X-Gm-Message-State: AOJu0Yw5IhGDZLXIWeMLCQLekXN3cPwlJFaeGoFke5di7O+v6+LlzjtR
-	h4JGnHCINhi0vddGa6An3cjNE6hbt2J4OJMo9T62N6JxK/w5pfPrzDB7kumxgaDc6OgHkrgsSEP
-	AMEVlg9s+869uS1PRHaACQ/x6GsMQMoFDo24=
-X-Google-Smtp-Source: AGHT+IFKDm5onNrQ1B+N7WdvDQKvsOn4JRrt9pORuAGjSUe5rcByzz4sdifxiyEy1KdluMn72r+WDdjUKknxTKHulXQ=
-X-Received: by 2002:a05:6122:a27:b0:50d:2df1:4c47 with SMTP id
- 71dfb90a1353d-50d3774a163mr9905572e0c.13.1729104554051; Wed, 16 Oct 2024
- 11:49:14 -0700 (PDT)
+        bh=/LjYx/lp+VQxDGoNyPymOoD4dN+nLLT2gCr8e8e3Ktk=;
+        b=RLROq9HBZ4jx+QRnZRnRksn2xgJkOVEWbNJk3EW57eJekuwO+74rmHmRFUPjbXQE+x
+         xOn5Rd9V1L4oMcz3jnapSbYI7vuRa2P/KhXseYSsPeyf3Ho9TTRTm5hC296YAKtlb2if
+         48NYW8ALHSDeYrvvxC0mFmHaD2fEduXI7w3Bex1z/tnWrciZu0h2dOybgZkNBNiM7C18
+         QcqKY3FYcvoLIQMEkBKP4LSd8fCuxcQC5XpxAgOVgXb5d5BqX84W6k3zLa8jvdYzONjC
+         h3ZvVIgz8gp/EtNVc4VmiCkz4/DSBSWAK9QzQP39V9++VkI7Q6O8aRFxnzQCYZLxaBfe
+         FT2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729104780; x=1729709580;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/LjYx/lp+VQxDGoNyPymOoD4dN+nLLT2gCr8e8e3Ktk=;
+        b=jUjQTfTBr8sYXTWt7K4ZmTQ856RiJyjV4qHsZcz9bOCb3sx/5eWyqDuqYiKgGUf/BO
+         1m5N+QNqz+pwZFncyj6uEQ4iEKJ2oBd+qiWRINqT3UtC97NRj62raqMaI6hs5dIUCJ+c
+         2f1s/TGxAM8uSGnKHOXK25YX/2YNRdsL5945q9jIohItqr20wpdbN9bWRDz6Z/Vr7bP6
+         7JANr/bjmBKJzqXZlirIRza7xwT6AGeG1RpgnMvX2XGki/BKN4YQn/RTFkz1P4u46Lzw
+         PvFxiK2AhXTgJukZG+Im0athLMCIMVpIrAFvDuQWu/lNp1PmAi3DXNchuSMn0KTcUMSf
+         n+ww==
+X-Forwarded-Encrypted: i=1; AJvYcCUb27dj1hgI9pRseAd+R1RvV/8yVIcd8wxa2gHrxiJ5zzkhOthrjAPgA+dFtYXNFGdJ4eA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdhgrywTEJPG+ksLsm5eXqQkWnkPOJvYvTjwpSwYvEts5Lz36m
+	q/j3+9zMjytyr5RwmoapmtFRbqGHvlH3YJf2+3k+8Tibyg+c2bpxdWnKJESkOIyOS6CAcYQCIWg
+	M
+X-Google-Smtp-Source: AGHT+IGH3oju7/tZvwCMHXM9EKCtum4JAwXbJv5WekewwE35t8p1IubvHiBg3NMLaAPfrTa8Z8bKfg==
+X-Received: by 2002:a05:6214:4804:b0:6cb:ce15:dc4e with SMTP id 6a1803df08f44-6cbeff74b98mr336411226d6.8.1729104779993;
+        Wed, 16 Oct 2024 11:52:59 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cc2291d9f4sm20783736d6.43.2024.10.16.11.52.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Oct 2024 11:52:59 -0700 (PDT)
+Date: Wed, 16 Oct 2024 14:52:56 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [RFC PATCH v2] builtin/shortlog: explicitly set hash algo when
+ there is no repo
+Message-ID: <ZxALiDHkkq4yIP8R@nand.local>
+References: <20241011183445.229228-1-wolf@oriole.systems>
+ <20241015114826.715158-1-wolf@oriole.systems>
+ <Zw9P90_QtiAAH3yz@pks.im>
+ <gtdjnvonjodr435wuv2pofnww2pdcd33s22xxz5ypwkpvdythc@vrajz5ttkjbz>
+ <Zw9_46fbvbGhjmYw@pks.im>
+ <yxfpbmwy5bhtjwmffzrfoagugs4rsxw7wn2cvve5ygzcnlolpu@lhjgpz4riogd>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAH08wShkp6Mnz5itcbT=GyCY7_dW5eQWLy0yBFS8njUHumpQZw@mail.gmail.com>
-In-Reply-To: <CAH08wShkp6Mnz5itcbT=GyCY7_dW5eQWLy0yBFS8njUHumpQZw@mail.gmail.com>
-From: =?UTF-8?Q?Germ=C3=A1n_Ferrero?= <ferrero.gf@gmail.com>
-Date: Wed, 16 Oct 2024 15:49:02 -0300
-Message-ID: <CAH08wSh7Jzn-RoziaEM3mDcEEQqcnKpnrSZKPTD9yn9BmZgQxw@mail.gmail.com>
-Subject: Re: git submodule update --init breaks if run twice in parallel
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <yxfpbmwy5bhtjwmffzrfoagugs4rsxw7wn2cvve5ygzcnlolpu@lhjgpz4riogd>
 
-Sorry, it also happens on version 2.44.1, It just seems less likely.
-But if you try enough times you will get the same error.
+On Wed, Oct 16, 2024 at 11:07:02AM +0200, Wolfgang Müller wrote:
+> On 2024-10-16 10:57, Patrick Steinhardt wrote:
+> > Given that we do set `log.abbrev` I think we should be hitting code
+> > paths in git-shortlog(1) that use it. `git shortlog --format=%h` for
+> > example would use `log.abbrev`, wouldn't it? It would be nice to figure
+> > out whether this can be made to misbehave based on which object hash we
+> > have in the input.
+>
+> I did try this, but like I said, --format seems not supported when
+> git-shortlog(1) is reading from stdin. It always outputs the same
+> summary format, either grouped on authors or committers. This is not
+> explicitly documented anywhere - the manual only says that "git shortlog
+> will output a summary of the log read from standard input" and then goes
+> on to document all the options with no mention of a difference in
+> behaviour when reading from stdin. So I'm still not entirely convinced
+> that this is impossible to trigger (also given the complexity of the
+> argument parsing machinery), but I have not been able to find a way.
 
-I guess this is just the way it's supposed to work, and there's nothing to =
-fix.
+Yeah, I think this is correct. For the purposes of this series, I think
+that what Woflgang has done is sufficient on the testing front.
 
-On Wed, Oct 16, 2024 at 10:07=E2=80=AFAM Germ=C3=A1n Ferrero <ferrero.gf@gm=
-ail.com> wrote:
->
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> git submodule update --init & git submodule update --init
->
-> What did you expect to happen? (Expected behavior)
-> Something like:
-> [1] 334031
-> [1]+ Done git submodule update --init
->
-> What happened instead? (Actual behavior)
-> [1] 333889
-> error: could not lock config file
-> /path/to/my/repo/.git/modules/path/to/my/module/config: File exists
-> fatal: could not set 'core.worktree' to '../../../../modules/path/to/my/m=
-odule'
->
-> What's different between what you expected and what actually happened?
-> The difference is that in the expected behavior (working up to git
-> 2.44.1 at least),
-> I got no error by running in parallel git submodules update --init.
->
-> Anything else you want to add:
-> In our scenario git submodules update --init is command run by tasks
-> that are schedulled
-> potentially in parallel.
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
->
->
-> [System Info]
-> git version:
-> git version 2.46.0
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /nix/store/izpf49b74i15pcr9708s3xdwyqs4jxwl-bash-5.2p32/bin/b=
-ash
-> libcurl: 8.9.1
-> OpenSSL: OpenSSL 3.0.14 4 Jun 2024
-> zlib: 1.3.1
-> uname: Linux 6.8.4-2-pve #1 SMP PREEMPT_DYNAMIC PMX 6.8.4-2
-> (2024-04-10T17:36Z) x86_64
-> compiler info: gnuc: 13.3
-> libc info: glibc: 2.39
-> $SHELL (typically, interactive shell):
-> /nix/store/izpf49b74i15pcr9708s3xdwyqs4jxwl-bash-5.2p32/bin/bash
->
->
-> [Enabled Hooks]
->
->
-> --
-> Germ=C3=A1n Francisco Ferrero.
+As a nice piece of #leftoverbits, it would be appreciated to have a
+patch that amends git-shortlog(1) to indicate that '--format' is ignored
+when reading input from stdin.
 
-
-
---=20
-Germ=C3=A1n Francisco Ferrero.
+Thanks,
+Taylor
