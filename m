@@ -1,133 +1,115 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B235C18F2F9
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 21:00:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D45E125B9
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 21:03:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729112454; cv=none; b=e9+c0J0YGoIeq2D3Ir8ja5QrffDEkMlDccYltE75Du63/f8FBdLqaVxHAx8wsH83g7A0xtawILCjXq0VGingxxLuia1aAA8KDR5mcEGwuuAAJf2taN5yjH14HCRrQFNEMTSmHNRD/vR7dRLK2QdYmiwIfJwOBdFKQCC+q+hTw/Q=
+	t=1729112584; cv=none; b=FttJoNtnSUt6oA325YUGu4obZOEilyeNDGNJi5yjnhUjuncDzmEed0zGL8bHbJLnt9f/bR1UCGqSbezONsPVEgROd528z6fcOx1fEp54xcvPDVI4gz/QBgMiAKaYo4OTsDZR8jntOqnEneuUcwl21xhs2+Wfi3rGikW5vU1GSLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729112454; c=relaxed/simple;
-	bh=SQtwddg6XUVeAzMrqSx2F8D6mUVD2wPKV0H/03XgX88=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=VKdHSnJkfw8y7AUkJr8ffClss8OOVCQ/jZ5BlYaBxPCKz06AGWR0H5NuNcdp5ZAATqr12nlwYX+uYSDtKF4557m6VP2RGKjjIfGi+PnAHWTPx0iA3rCZRR1ygvd9X6gD8Jp/11mUbJrjdDrrT0seTlgX3a2YycATlGdepmXEf80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ECl8PeVa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SMkT0ys4; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729112584; c=relaxed/simple;
+	bh=jjqes4DVvohkaQWnpJI31rT2/9Y33EcUptjZJ10inv4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LPIFuh1z3gVeyKSNsEHNSiN5uof9ZuEfrcH6QBbXBT03bYovlv96fAiTF3HMAxhEYR9ngsXfD015nK5qzy4+51rQ0SFR5jwd3rp5pQJWyQIK9cKCC0MQis4vD/OUzgNjI1uZ3sidXt/ddEGjTBnMDRS87ckGOhCWVR9yLmEI75U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Kyzm52rR; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ECl8PeVa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SMkT0ys4"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CE76911401F1;
-	Wed, 16 Oct 2024 17:00:51 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 16 Oct 2024 17:00:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1729112451;
-	 x=1729198851; bh=tUsXPQ1DZx9qlHAfGDcwCWOCWMH2jJ9dmt8gSTeqNec=; b=
-	ECl8PeVaxZCt3syXsV1db7V5sLoAqwVi9pwZmI7JtwdOyaGIEdkm23/L2YEFZ22w
-	f7SPWL5rILkA80RmORDcWo6z1YwAoqNWq/z3sgRc6sYJ0H7PoeHp3GXPwpcMuJzr
-	RZWDQieobj7actjuZqwxHQ0xJwQYg2xEsOIhP9tSwjofDc+Ruw4vD5FupWvODJQy
-	JZ43OMZT+EHSHUH97klY4Qu96fdyNuGFw8wYPCMXJhEobrJmjJ1dxhX9ktqOl5uH
-	00hqe8xOa3Pi+g5ml5PDRKp/s+0x34sdnqqIlfm35nv1oQ92dl4hzYMMX2b64Odd
-	7yREgbOQ019x2ez7XYFX9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729112451; x=
-	1729198851; bh=tUsXPQ1DZx9qlHAfGDcwCWOCWMH2jJ9dmt8gSTeqNec=; b=S
-	MkT0ys4doPTpFe3x368c7IKBNj64p5fQgHvdg/aN9IkvsUgPpCyBw6Hg/pysCh27
-	dCXloJKaIyfSU/GqAEA9wEy0aIVjUhUWKEzaupq9M9GH4ae8a0/7cdrONiMM78cS
-	AwCK7Jp6wE6eRSoOVKqieYUm9edg256pcagIbDQ6XF9dy79IlJABmIn4audB7ZEd
-	FJ7htt4G/jS/OJ3T3np8srnOqm7ddWIy9rDtvRq0A5ZcQChm0gI/80JcB6xiykjO
-	URQAAlS56VtIVVSV91nlVa1QxY02vSNpkEF6+6Ts7NLqvYDzXWxuLPhAa0A3bO62
-	so+zhP3hRLiepAIpFrmhA==
-X-ME-Sender: <xms:gykQZ2Nwmdm9NB_EooOCdNK-4_qginx0ovkELY-L6xMnkEzn9m2ZYAs>
-    <xme:gykQZ0_ohz6LT-aN3r7urZ7pFkk8FEQC1HMb1ly4hCfLedqcGcdEoGk_vX7SG2aXT
-    Oi35wM6ziNGAXCspQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegledgudehjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
-    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
-    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
-    gspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhl
-    lhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepsggvnhgtvg
-    esfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkees
-    ghhmrghilhdrtghomhdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrg
-    hmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
-    mhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhg
-X-ME-Proxy: <xmx:gykQZ9Q7yVyZuCT3jniCvzkBkRrmrZ0otjP3TuFro7MsWJKB_8mGEQ>
-    <xmx:gykQZ2tdwpF7-AgzgvYJZuse4Zb3v2RLdmyRNJ0FZ0H7CaX92RWgFg>
-    <xmx:gykQZ-esl9SFRvESUCG91pFmFWXWxYgGztCA2HepKKGNlFgCEGzkJw>
-    <xmx:gykQZ63ExgHjZWWkUXZkYMiuG9a8JvDbvzD3kI7XWkcb6DJTrkretg>
-    <xmx:gykQZ2S0Hytp6rjTg7NiWKPXhXmCekMiSy2GAAnDN1fS00hRmMjkzTf0>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 534CD780068; Wed, 16 Oct 2024 17:00:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Kyzm52rR"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6e59a9496f9so4285697b3.0
+        for <git@vger.kernel.org>; Wed, 16 Oct 2024 14:03:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729112582; x=1729717382; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DRJq1WaUVauaH0NrxFRv+N+/t6YeVkCcykKZIPJGKYo=;
+        b=Kyzm52rRMyLAUnw4PveiMzywaQL9oU3OWqFeBMEpvMmStwUJyAANmgcsWwUpQ+xum4
+         Ei+6K45+XxIkBo9FrzREv5KJ7HFYZ4HwtVlmxq1gOW1iCjWc52ZwYuFrIkCECZgWa1yh
+         oXtCUV4BIcCpYnJy1tNAVt3MxeQy0vO3mR5b201mBwPgCdtZsUN3XipNsL4A1W4YUCj6
+         Gxg67DffJ0EM4CuWtjPApT0KQbb3wNxs8CLwCZJp9eMnYBMIIgctbAv6+BEXaeSE5UC+
+         7ZPF/TmN+EWah8+YhpRcmJUD45IrsDfp/zbJdwEZ5q8tjFPnevUpwLfnZv3U4lz+hPgW
+         sM2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729112582; x=1729717382;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DRJq1WaUVauaH0NrxFRv+N+/t6YeVkCcykKZIPJGKYo=;
+        b=FoNwn3zLdRTntke8MbvYDaOoNUskhQOQT8tp8yaeT6PGSKgZceQ8OtDagJWEchgaXN
+         Pr5xZikVvb7Iu/mLrYw+FebDaHqcIReWGsQ9WJ6beIQ9qVTAf/mNjdV8E8+LgXkx+wBz
+         +6e8BeTsvgc+JLhhJdW2j2wCVe3qaRWUlh2Y2hx6FrDtyC2zJKY6dVgXVCK3q8ziLg4n
+         7tupcEAYY9/TTJBBnxhmxZADKnrdd4mYDyBzyeMeL1ExIPMKWD8kWeRQgObQ2kVVoexO
+         bhuQ/ouV5wMFglgiT2uia2JVNUw9sPZmTIhC0oce1qNSFmGxVaaeZ2k4k67DpjuMiDoh
+         /Vvw==
+X-Gm-Message-State: AOJu0YxXGtgDzeTX5GKf7LX5w9/8K5/fPQsBsK0eIqHuJsv0JpyOUjjA
+	au8ZF1ubB9/9mJeM4xFvXeYh3TzZr4btYefPFJmL+VEEaGSj8+ZMk1P0ePJMumY=
+X-Google-Smtp-Source: AGHT+IHT1PvGwMj35bY13xghB7Q96CW1ee9AFD3pa1zeFdPsQrEW8z2tmExCnf3XpFJtcu30k7odZw==
+X-Received: by 2002:a05:690c:3686:b0:6e3:3357:9106 with SMTP id 00721157ae682-6e3479b967fmr184887147b3.15.1729112582285;
+        Wed, 16 Oct 2024 14:03:02 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5ae8752sm8709197b3.7.2024.10.16.14.03.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Oct 2024 14:03:01 -0700 (PDT)
+Date: Wed, 16 Oct 2024 17:02:59 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 02/10] t/test-lib: wire up NO_ICONV prerequisite
+Message-ID: <ZxAqA+iyz8EIOeNC@nand.local>
+References: <cover.1728906490.git.ps@pks.im>
+ <cover.1728992306.git.ps@pks.im>
+ <f6a8582c34a7b77aa3e2e45298208050333c384a.1728992306.git.ps@pks.im>
+ <Zw8AaF4VOaQO+P2M@nand.local>
+ <Zw85joY3Hqzx23xc@pks.im>
+ <ZxApLn9Qf4hdAlBL@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 16 Oct 2024 23:00:30 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Taylor Blau" <me@ttaylorr.com>
-Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Junio C Hamano" <gitster@pobox.com>,
- "Bence Ferdinandy" <bence@ferdinandy.com>,
- "Karthik Nayak" <karthik.188@gmail.com>
-Message-Id: <9b8925d3-3f2b-4396-a0b0-3b72bba5e53b@app.fastmail.com>
-In-Reply-To: <ZxAoFUDmdfZ8rlLs@nand.local>
-References: 
- <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
- <cover.1729017728.git.code@khaugsbakk.name> <ZxAoFUDmdfZ8rlLs@nand.local>
-Subject: Re: [PATCH 0/6] doc: update-ref: amend old material and discuss symrefs
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <ZxApLn9Qf4hdAlBL@nand.local>
 
-On Wed, Oct 16, 2024, at 22:54, Taylor Blau wrote:
-> Thanks for working on this. These changes generally looked good to me
-> (although seeing smart-quotes in the commit messages was a little
-> surprising ;-)).
+On Wed, Oct 16, 2024 at 04:59:26PM -0400, Taylor Blau wrote:
+> On Wed, Oct 16, 2024 at 05:57:10AM +0200, Patrick Steinhardt wrote:
+> > On Tue, Oct 15, 2024 at 07:53:12PM -0400, Taylor Blau wrote:
+> > > On Tue, Oct 15, 2024 at 01:45:11PM +0200, Patrick Steinhardt wrote:
+> > > > Further note that there are several "!MINGW" conditions in t4201, and
+> > > > all of these fail due to iconv-related errors. This is quite likely a
+> > > > leftover from times before dce7d29551 (msvc: support building Git using
+> > > > MS Visual C++, 2019-06-25), which switched Windows-based builds over
+> > > > from "NO_ICONV=YesPlease" to "NEEDS_LIBICONV=YesPlease". Consequently,
+> > > > adapt those tests to also use the new ICONV prerequisite.
+> > >
+> > > This appears to break CI on Windows when I merged this into 'jch':
+> > >
+> > >     https://github.com/ttaylorr/git/actions/runs/11355564982/job/31585450667
+> > >
+> > > I'm going to temporarily eject this from 'jch' and 'seen' until we can
+> > > properly deal with this.
+> >
+> > Ugh, I'm looking forward to the Windows jobs for GitLab CI being merged
+> > down to next so that I can finally see such regressions before they hit
+> > our trees. Anyway, thanks for the heads up, will have a look.
 >
-> I'm making a note for the next WC report to expect a new round that
-> corrects the subject line of the penultimate patch "doc: update-ref:
-> discuss symbolic links".
+> It's OK. Ejecting a topic out of 'seen' is relatively easy as it
+> requires the following (after removing the line out of Meta/redo-seen.sh):
 >
-> As a general note, prefixing commits with "doc: update-ref: " is a
-> little strange to me. I think I might have instead written:
+>     git checkout -B seen jch
+>     sh Meta/redo-seen.sh
 >
->     Documentation/git-update-ref.txt: remove safety paragraphs
->
-> , and so on. I left a couple of other small notes, but I don't think a=
-ny
-> of them are urgent to address, though it would be nice.
->
-> Thanks for working on this and improving Git's documentation.
->
-> Thanks,
-> Taylor
+> I was mostly confused why my build of 'seen' passed 'make test' locally,
+> but failed CI when pushed to GitHub. Of course, I'm not testing on a
+> Windows machine, and you didn't have easy access to Windows CI runs on
+> GitLab (for now), so the result makes sense.
 
-Thanks for the review overview.  I=E2=80=99ll change the subjects/area p=
-arts in
-the next round.
+Speaking of... I have 'ps/ci-gitlab-windows' tagged for 'next' in the
+next integration round. There is some duplication of patches between
+that topic and this one (as well as ps/build).
 
-I looked through the commit subjects for `Documentation` in the past
-and, seeing several different styles, landed on one of the shorter ones.
-According to my recollection.
+How do you want me to handle the dependency?
 
---=20
-Kristoffer Haugsbakk
-
+Thanks,
+Taylor
