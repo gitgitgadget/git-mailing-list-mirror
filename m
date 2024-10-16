@@ -1,111 +1,133 @@
-Received: from avasout-peh-003.plus.net (avasout-peh-003.plus.net [212.159.14.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D76C54F95
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 15:43:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B604616FF5F
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 16:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729093393; cv=none; b=CEDZ6QGTeGangyA2nD/L8kec+JfhqnWxWfHs+pZdOSEpmMGDMgqWoqAKefMMen0/aAzBOovY8B5wnGL+60hJRyQYjZcrKV7DAAXy0pz9BM7G+vCqCNLdoC5LiRHsJcVs+N7k5t1tY/ytAlKjJDEXBzZyLef3EJDw/VB0WDYVs/8=
+	t=1729096306; cv=none; b=Vp+2I2hETNCyq7r675jhRrYbD11NYsKukg8gOy23gGP04NxEMUlm+W9yGdD3obGKYu5gDoVKv6M7G5eG+Hb2DynzgpLdrwe6dW/2AwO83lDUk8939A0nXMK84uHfHhpxGXpb+eFJ0sMsXOScZxc3jK/dgOdZPnZomGoQaLuTEdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729093393; c=relaxed/simple;
-	bh=Zb95AdUiDLb9mSeACFHwNl3mhc4eakSHNNTy/QsuhRo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PN5Y741GXJF8RkwEM/3nnJLn9AY1j+17gLuV5JSmjubz3UmSor6gZ+JDTCNhk/fOgYBe1ZSKR1UrxBr5TZs/HIeNAHgmgVa9WHtkqZ3RxgzmqbmEjQxEDawDFuW0Y33GTpkyqdplNWFhByE0/ewczvN4I25SMGJ4PtGFUWst6UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=ZEEN2SZ0; arc=none smtp.client-ip=212.159.14.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1729096306; c=relaxed/simple;
+	bh=nm7fXZPp2niaPZnYsVA2dnBSHJjfGWyPw+dZeegfoE4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EXzp7NXpvLK2DbUa02dIaQwzryJEAoM1TZ2gcyD++dANEnZ+Q+OM8dOGL7N/lu9ge6COso/LVjI/45RiSLMVUubVCDgJtr8BDmr8zF71KD8QrlL9hSh01JQN0447OLWjBeoByBECOdExrvV53AdHWZmZ036jutafqKd872T6YNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KmWntVLe; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="ZEEN2SZ0"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id 167ytCFJyAMas1680tdAdv; Wed, 16 Oct 2024 16:40:00 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1729093200; bh=Ulj4m6tMb2xqKqUfpdFZwO88ChQcNhgWH2Xtia0Vj7w=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=ZEEN2SZ0tiSUuw/TvR83xRCWIntgLkFiRNJDVpUojb0t3z5u8HofBIvMT+6XM5T3c
-	 02ntmludmNYZK86g1U4ZH6VwFQa4qA+hBBDYvytrmBGKvDw5ZW0cXKdt+p5chDdi+w
-	 sT4Y0Sw29qqvyilMvtdwsTDmteGVOMlja6YO2VemDwffa9r4nkdtiallX73S7Cqy9D
-	 lgih0uD50KXuTKXxjJHkE/c9s4qVPw6rQTltMDNGgGF+V2C5iA5T9vT8PTkOiFXfDp
-	 /yIgo86coj147cYB/yVPoTrJNTLdAixPDJG5R5hp9wL/nmRNPUC5tz/jWLEqFyDn01
-	 hHQpfP6PoMBvQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=JP6YsNKb c=1 sm=1 tr=0 ts=670fde50
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8 a=EBOSESyhAAAA:8
- a=tc2-vZgwHu0GPeYY48YA:9 a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <5056cadb-b8c8-4704-a508-1c7036559526@ramsayjones.plus.com>
-Date: Wed, 16 Oct 2024 16:39:58 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KmWntVLe"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-7163489149eso5645268a12.1
+        for <git@vger.kernel.org>; Wed, 16 Oct 2024 09:31:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729096304; x=1729701104; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y/ydC6Vy7E4zLrnjs15Nkg7oP/9KdLynwrKcUFsbhWQ=;
+        b=KmWntVLeSnBqmOa4QUSN6p5iFjQGIgNKN93lzph626C14sq9M26ceDeTR0ASnv4LVi
+         0k+aXl0umKQqQk5ggjr+EPRZcq5sPhS++/bJHeDtRFiK3ugPQf3mb6rKCKfmYW6domuv
+         BAr6zR1QIVMf6SboKSxtb/pqYxI/pYsqShR31TdjA4xLiV3i64r+pZhBUlcF6lvVRnON
+         EcNaFxS2Yxqq6u5OmS1VzhoQ/Dn6uqpFl79Hb0vkRLE85R55aBCR2b0Yq8+lbdX2PQ5b
+         5dWmPoHv+DB6sCe2E5ikjtNRSJmo+qMeC/RB9g40I+SYmjL+8lNWUcuUwh3Uz/tXA71b
+         3tCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729096304; x=1729701104;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Y/ydC6Vy7E4zLrnjs15Nkg7oP/9KdLynwrKcUFsbhWQ=;
+        b=Dl5WMxcZwV9yPv6nP0D1vBPG2V60m7ipFugWe+wX5UMGmBst/2IQiqwJHeyl2X2Kfb
+         y+Voflv4F84+7FzEaQueRSC3lGfKPwyW0XVFgWh1E7I/EAgLO/hx/ReC7c2YRWxWbatM
+         dRhzuHenf8ld4i/k7h3j/cmD5Vtf6gNNNRBKYfSEZhE+hiO1ybAPqBQ/ZSItDuOA+u3p
+         hS/dwxq6N7SYTxB4SkqjB8tn+0YUlpchxzI3S8G9/nyiXphRVXbTsy0gD6j4eG2fvKqq
+         hY1ItA01RYzon58Tcc3aaRLQb3oyG5Tf16X+dzzrtWroGbim9wn3FWfd2AKtY+wv2oC1
+         Ah6g==
+X-Gm-Message-State: AOJu0YxuLDVRwnaPQYXSBsj1hoa75Ncl4IFOsweP4juDPnVn+w/OAaYp
+	o/AOp8C073oTm1JBH0tubzAIiaIvvn3LnwGrin+PvVi+Dyt6oKcf
+X-Google-Smtp-Source: AGHT+IFEl85I0mmv4KsNjZAo4StcmE0A5kL+Bm4rm5BDbkLN6r+IQ8P9qsx4I7+C/kDak+arSH4rhg==
+X-Received: by 2002:a05:6a21:3511:b0:1d8:fc17:ab02 with SMTP id adf61e73a8af0-1d8fc17ad21mr7749823637.33.1729096303768;
+        Wed, 16 Oct 2024 09:31:43 -0700 (PDT)
+Received: from five231003 ([2405:201:c006:3236:dcc1:5355:4129:c7c3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71e774a41d5sm3252874b3a.129.2024.10.16.09.31.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Oct 2024 09:31:43 -0700 (PDT)
+Date: Wed, 16 Oct 2024 22:01:38 +0530
+From: Kousik Sanagavarapu <five231003@gmail.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 1/3] repository: move git_*_encoding configs to repo scope
+Message-ID: <Zw/qan9tu/SqKbPf@five231003>
+References: <20241015144935.4059-1-five231003@gmail.com>
+ <20241015144935.4059-2-five231003@gmail.com>
+ <Zw6SsUyZ0oA0XqMK@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] builtin/credential-cache--daemon: fix error when
- "exit"ing on Cygwin
-To: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>
-References: <a4472d6d1551e7c25540c4c8361bcb6b1c9f92ff.1729084997.git.ps@pks.im>
- <20241016145539.GA703747@coredump.intra.peff.net>
- <20241016150922.GA1848210@coredump.intra.peff.net>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <20241016150922.GA1848210@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfEh896ZBY+yKJ+SiADuT3Wy8/5vkL9XA8H5dqYlyeEQ0p0Wgp6cihw0HQ9E4e0kR6+KNIhOd9ereZPd2DBhrfXpSXHtMRF/Ez7tBImvfruLbnoer3ff4
- pfgriVNL7ZqY3xOGbF6ey/pbglLV1KtAbHaCTJTWBOBMBX/icz63MmYpACD2OOBE02qBXfd8yegaInz2OevaKB7eytwwjLVl5rw=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Zw6SsUyZ0oA0XqMK@ArchLinux>
 
-
-
-On 16/10/2024 16:09, Jeff King wrote:
-> On Wed, Oct 16, 2024 at 10:55:40AM -0400, Jeff King wrote:
+On Wed, Oct 16, 2024 at 12:05:05AM +0800, shejialuo wrote:
+> On Tue, Oct 15, 2024 at 08:01:22PM +0530, Kousik Sanagavarapu wrote:
+> > Move "git_commit_encoding" and "git_log_output_encoding" to "struct
+> > repository" and amend the functions associated with peeking at these
+> > values so that now they take a "struct repository *" argument
+> > accordingly.  While at it, rename the functions to repo_*() following
+> > our usual convention.
+> > 
+> > Doing so removes the implicit dependency of these variables on
+> > "the_repository", which is better because we now populate these
+> > variables per repository.
+> > 
+> > Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
+> > 
+> > [...]
+> > 
+> > diff --git a/config.c b/config.c
+> > index a11bb85da3..656748692d 100644
+> > --- a/config.c
+> > +++ b/config.c
+> > @@ -1690,13 +1690,15 @@ static int git_default_sparse_config(const char *var, const char *value)
+> >  static int git_default_i18n_config(const char *var, const char *value)
+> >  {
+> >  	if (!strcmp(var, "i18n.commitencoding")) {
+> > -		FREE_AND_NULL(git_commit_encoding);
+> > -		return git_config_string(&git_commit_encoding, var, value);
+> > +		FREE_AND_NULL(the_repository->git_commit_encoding);
+> > +		return git_config_string(&the_repository->git_commit_encoding,
+> > +					 var, value);
+> >  	}
+> >  
+> >  	if (!strcmp(var, "i18n.logoutputencoding")) {
+> > -		FREE_AND_NULL(git_log_output_encoding);
+> > -		return git_config_string(&git_log_output_encoding, var, value);
+> > +		FREE_AND_NULL(the_repository->git_log_output_encoding);
+> > +		return git_config_string(&the_repository->git_log_output_encoding,
+> > +					 var, value);
+> >  	}
 > 
->>> The logic is broken on Cygwin though: when a client asks the daemon to
->>> exit, they won't see the EOF and will instead get an error message:
->>>
->>>   fatal: read error from cache daemon: Software caused connection abort
->>>
->>> This issue is known in Cygwin, see for example [1], but the exact root
->>> cause is not known.
->>> [...]
->>> [1]: https://github.com/cygporter/git/issues/51
->>
->> I don't see any details at that issue, but I'm not sure how it would fix
->> things. From the client's perspective, they are going to see the
->> descriptor either way. Unless there is some magic that fclose() does
->> that a normal descriptor-close-on-exit does not do.
->>
->> That "Software caused connection abort" thing seems like a weird
->> not-standard-Unix errno value. Searching for it mostly yields people
->> complaining about getting it from ssh under cygwin. :)
->>
->> If the magic that cygwin needs is actually "fclose before unlink", then
->> that is in opposition to other platforms (and I suspect would make t0301
->> racy there).
+> There are many builtins will execute this config setups by calling
+> "config.c::git_default_config" and then "git_default_i18n_config". If we
+> need to use "repo" pointer, we may need to wrap this pointer. (This is
+> not the problem and it is not hard).
 > 
-> This all seemed eerily familiar. Try this thread:
+> But what if the "repo" pointer is NULL? We still need to set the value
+> of these environment variables. Because when using "git-mailinfo(1)"
+> outside of the repo, we still need to set "git_commit_encoding"
+> according to the user's config.
 > 
->   https://lore.kernel.org/git/9dc3e85f-a532-6cff-de11-1dfb2e4bc6b6@ramsayjones.plus.com/
-> 
-> It looks like the conclusion was that we should adjust errno handling on
-> the client side, but nobody ever followed up with an actual patch.
+> So, from this perspective, I don't think it's a good idea to put these
+> two configs into "struct repository". Because we can use these two
+> configs outside of the repo, if we put them into "struct repository", it
+> is strange.
 
-Heh, our emails crossed. Yes, I was hoping that, given that Adam had identified
-the cygwin commit that caused the regression, some resolution on the cygwin
-side would fix things up. I waited ... and then put it on my TODO list! :)
+Makes sense.  Now that I've read this, it does indeed feel strange to
+put these configs in "struct repository".
 
-I did look at the cygwin commit and it wasn't at all obvious what happened.
-In fact there was a comment about making sure that errno values didn't
-change as a side-effect!
-
-Sorry for being tardy, again ...
-
-ATB,
-Ramsay Jones
-
-
-
+It also raises the question of how correct would it then be that these
+configs and the configs similar to this are guarded by
+USE_THE_REPOSITORY_VARIABLE macro - since they may not necessarily
+depend on "the_repository" too - ie in cases when we are running outside
+of any repo.
