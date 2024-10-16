@@ -1,178 +1,840 @@
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD5542AA4
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 01:25:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5872E139D1B
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 01:37:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729041960; cv=none; b=TlyCPMvF3c6kFr9m6TVDP6uZUvZL0hARx10/P05wox2PSGxpjHm93c/tEIt/Bioo3y2uWj1oE/hgVP0SbnedqmoQgr3Xt8KGL3ReTdw5PPY7zfJ5xfx1LUt94X/AokCoPI01SEtrMnXmVi9B+IVnbSKa/XEOH2TGc+m6CThyMUI=
+	t=1729042625; cv=none; b=aPVwXebP+a7HlHr5EUxuMJpho3gAr5fZkhd+HjhDu2HmlP4fF5dfQ6JG+OKwHdiST5I9RnqB+znHMNmt1okL9qzdVOURkVgJ4N/13Ern+byUeTkLhHRBQPLpnomyKWbSQYmAhQ88Y5CE4Rq+4FBrKRqmJkaq6Ey/O+Lm2LQ7osE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729041960; c=relaxed/simple;
-	bh=lxYbFgr78jA7u2rVjofHGm97Olu4SSYSfLOuJb4JVHc=;
+	s=arc-20240116; t=1729042625; c=relaxed/simple;
+	bh=lB/VfTkDg2ZFoodVUGBzX+riBEHMFdIPCZVaSFz4hFg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=je7dwnG0UvDSz+dT/xQeAYFW/50inDSCKBPWSVeZ097TDSbbglKMtPGC0SjFw2FKnR0DcXYQCIIkj8P/+2QKwUcXK0Mvtikyo/sWzVh228uf29ZyB4gmrYFJ5JHmTVyvys6CF5PGmyVlOWGl6XEQRk1Oq+3kt6Z25krC1o00Z6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hK3XXFGV; arc=none smtp.client-ip=209.85.221.178
+	 To:Cc:Content-Type; b=L1iAl1laOnTA2tObvnVcRfD6cv8DIWOR9K8GCmN4vXI2oJUCBw0SPY+nWM4mDFn4m1YRfi9q8FhhLMc+9ksS14P1os7+RzFLdWjoZLliHKBWHJmA+8kUxzBuDd2jsHfXuvdWD2P4/+JnYhOoQhHXby64M3x0Wk7CCLA4y0GCE4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SM5qG73e; arc=none smtp.client-ip=209.85.217.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hK3XXFGV"
-Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-50d4797098dso1157768e0c.3
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 18:25:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SM5qG73e"
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-4a47f8a9168so1302232137.0
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 18:37:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729041958; x=1729646758; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729042621; x=1729647421; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SAsrIHelVUcr/D3PZbBHd/+01tMKgEVGb+xrkT9beuU=;
-        b=hK3XXFGVXmo49ZgWSLx+Jpq6cDp4xnBekn+YIear4UVY6DL+1hQWxnTR3s+YFvPqC6
-         16L5qlXvQyjcn0BwRZdRptNWySFJusJfUBYXJehiFQDHtcVoZ0xjhYZUn5iZOKYDOcJu
-         uuGEpf0B1z6V1ZezXS8/yaIPTT9rPPUq71ZiorKTEyp2/AATwbTtxRn1sndd3ZMdjEIQ
-         V6mC5tJtZw/++QX9VglH0J5dz6QZykuBOwW5FikStHcWYBDqQQzTO6ST/RT1VcqDfJ/b
-         0f4dpTF42Nrw0uZMleDIKz5K2vdxQrS7eXbVVauiMTUnv4eubUsfV0mpGMqxeltnpb67
-         qehg==
+        bh=lpC/vZ8DqRzoS9VO7JKeKYXtX3ROQzriXGcCeqmEDiU=;
+        b=SM5qG73eexUcICUk+9FowJl+YS3E5mdZMphwPYWjYGuQ2MuiLXkguc2/bvAriV/WwK
+         XsTCmFfU8y311XRfrprSONPCeNC7uzfRGTZNUjeT9yF9hHPPyeQdESVwf6Ig+0yf6UKt
+         U+FMjWcwWpYe70I4yFHTNz5Vj+3Vg7yw61XwlNHnYrrO67ZXEwuzr4rxn6ypQH0RIEl8
+         h6E6s0hgf/130HtSWc4qXh66CNb/4xCWfkvfvfB/PnwMaOoagdUuIfzF9If9GvRUcbSi
+         +cffikM1Co2YRjbfKMyMUGnGt16vCtaN2PNEcTYv1t3jOqbkCMheALmhQMAkvtk0YwqY
+         yN+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729041958; x=1729646758;
+        d=1e100.net; s=20230601; t=1729042621; x=1729647421;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SAsrIHelVUcr/D3PZbBHd/+01tMKgEVGb+xrkT9beuU=;
-        b=ZZ+9wugM9+Kj8MJdoMSjmadcxJGQCkJvMLVihbBnr0r/uL7AP1y+erDzhALX+jmD2C
-         Z/2nyDr0ouJNU3ynxz4dJyrDbY/acXiCjpPalpjzejfp70XBwIPdm1FB9KxQFpTkgCuk
-         FXukJolD8wzH9oyaXzhCrWNYfxj3/wlEwp1Fc1wbPkogVEjS7wzvIDWonqQ4beZlIX6e
-         8D3NM8S/kgPYzz0/2kaaQyuP2KUYqhyYf4vymEVlXrxYAeqF/SxMSIIB3ttdJzNnfORV
-         SfIOgxhiPbSTeF0AacN4s85bB2Gbnmsp1yPZUrb+QRDFYCOTXsGCbtX5oAo68EMYmGTz
-         e/+w==
-X-Gm-Message-State: AOJu0YxHnhOisaqy76ciZxKe5EZLQFU1MBp8TT/3Bzo3OFltJPZ6mOxD
-	0CaevMbouqHX/Yu4bzgjXxyDy+C/+0G/xabcOxIwEz4SBDnSGRALDiXYACsJ43SoRUJJuEyV5K8
-	TVhKbQvmoc+EUGxtrVTscxEZGfHo=
-X-Google-Smtp-Source: AGHT+IE1yvcvNvfl2K1D3g1AFfWN2czppMAOaG4J2+QhB07gGCP2UerkS/eStyrAAjSy+9fy6gYG8uPgzHX3CRHfMgI=
-X-Received: by 2002:a05:6122:ca0:b0:50c:4efb:835a with SMTP id
- 71dfb90a1353d-50d8d1cc926mr2442821e0c.1.1729041957774; Tue, 15 Oct 2024
- 18:25:57 -0700 (PDT)
+        bh=lpC/vZ8DqRzoS9VO7JKeKYXtX3ROQzriXGcCeqmEDiU=;
+        b=dfORE3pvXTA6altFk4OSMCyeTJjD9mLtk1JD4Z2e/OR/ZQzDpY3UITUkOjJEdwULrO
+         PU9m4Y9taUxEdDRs7wFWCN0bPB27JwNMBrSZfGvWoThBcXHTsNQ9vmRtec5uo+aNpUa5
+         KxFGDcnts/IvZcw7uW9lmDX2s+gaRTxk7CpzGzMFSXzA5hywV09eOYJmJ3vNc8exh3mK
+         +GuoyBDJH+dW591PIA9cTpMO3N3Bu+GLucwExEHLDXFjTedf3RG0lpXgBWNRPKkuiARR
+         3urpsDN2c43XMPj4hC9YWsLEN+53Co4KWDJmnNDFP2GCiQyaDvTKP1M9WatCNyd7d4iu
+         HFQw==
+X-Gm-Message-State: AOJu0YwdDV4uZJ1rPfn7NWIDZZLdtWXeftmy+2VE9OcXcIsMQQmNqHW0
+	1/m0HvlDh7BXIBuH6KMuI1GIwEO6NIBNWLr4QFtV0mj5OcBdlUkce1uPlCL2GP8q5Fac1HHRl/L
+	zqDQUTX0uwXT+7iCjrEMP5c6iqOIQNXvx+BN8eg==
+X-Google-Smtp-Source: AGHT+IF4h9Ulrv/BL+sjiQYGRAK9DhIOXVqKaampP9F4mxoIZr3dj3mGcFcIsVQoDOY6ZyCPKQsxcN0jypIm+mpYVCA=
+X-Received: by 2002:a05:6102:290c:b0:4a5:afbc:48a9 with SMTP id
+ ada2fe7eead31-4a5afbc5051mr3838521137.8.1729042620822; Tue, 15 Oct 2024
+ 18:37:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPSxiM9FoGBhsnBE4E0Fvq-x_HvyFGGkkhaLNoRdVkvE6CpaZw@mail.gmail.com>
- <ZwqcHDzaR2U2JNu0@nand.local> <CAPSxiM_U5ffBCsTrbBqsJK0jUZtAuWSLook8CLKat46CX0QC7g@mail.gmail.com>
- <Zw26bU17+2SRfv8L@nand.local> <CAPSxiM9jHn-RQ3FXJRQNKAE9xPr_4yJbWB--oWgQeKhEMLmE4Q@mail.gmail.com>
- <CAPSxiM_qw0akVoG5cJRgwk6oP1q519zBp2m6GmFYGmrrc3jXfg@mail.gmail.com> <CAPSxiM-voyrHf0M2ELD6OmJr_ECQMd=+si0wd6_boy7VJCQzyw@mail.gmail.com>
-In-Reply-To: <CAPSxiM-voyrHf0M2ELD6OmJr_ECQMd=+si0wd6_boy7VJCQzyw@mail.gmail.com>
+References: <Zw8JFB/SUN0WlwNk@nand.local>
+In-Reply-To: <Zw8JFB/SUN0WlwNk@nand.local>
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 16 Oct 2024 01:25:46 +0000
-Message-ID: <CAPSxiM-Cn8ZSC+LzRfeyY+Z_Vfj=DguweQ+ZjC4dau-Z64dnWg@mail.gmail.com>
-Subject: Re: [RFC Outreachy] Leftoverbits, which involve replacing atoi with
- strtol or strtol_i or equivalent.
+Date: Wed, 16 Oct 2024 01:36:49 +0000
+Message-ID: <CAPSxiM_=9qjcrJRiwsSCOy-DvkmZH1ooNqLE-DGJJmtfYbVs9A@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2024, #08; Tue, 15)
 To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, Patrick Steinhardt <ps@pks.im>, 
-	phillip.wood123@gmail.com, Christian Couder <christian.couder@gmail.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 15, 2024 at 4:04=E2=80=AFAM Usman Akinyemi
-<usmanakinyemi202@gmail.com> wrote:
+On Wed, Oct 16, 2024 at 12:30=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrot=
+e:
 >
-> On Tue, Oct 15, 2024 at 3:54=E2=80=AFAM Usman Akinyemi
-> <usmanakinyemi202@gmail.com> wrote:
-> >
-> > On Tue, Oct 15, 2024 at 3:49=E2=80=AFAM Usman Akinyemi
-> > <usmanakinyemi202@gmail.com> wrote:
-> > >
-> > > On Tue, Oct 15, 2024 at 12:42=E2=80=AFAM Taylor Blau <me@ttaylorr.com=
-> wrote:
-> > > >
-> > > > On Sun, Oct 13, 2024 at 03:46:05AM +0000, Usman Akinyemi wrote:
-> > > > > On Sat, Oct 12, 2024 at 3:56=E2=80=AFPM Taylor Blau <me@ttaylorr.=
-com> wrote:
-> > > > > >
-> > > > > > Hi Usman,
-> > > > > >
-> > > > > > On Sat, Oct 12, 2024 at 11:21:13AM +0000, Usman Akinyemi wrote:
-> > > > > > > Hello,
-> > > > > > >
-> > > > > > > I was looking at some #leftoverbits which I can work on and I=
- came
-> > > > > > > across this conversation.
-> > > > > > > https://public-inbox.org/git/CAC4O8c-nuOTS=3Da0sVp1603KaM2bZj=
-s+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com/
-> > > > > > >
-> > > > > > > I followed the conversation and came accross
-> > > > > > > three instances where I think atoi can be
-> > > > > > > converted to strtol or strtol_i or parse_timestamp().
-> > > > > > > These are the three files which I think the atoi can be
-> > > > > > > replaced with.
-> > > > > >
-> > > > > > This seems like a good #leftoverbits to use as an Outreachy
-> > > > > > contribution. From a brief skim, it looks like this is going in=
- the
-> > > > > > right direction.
-> > > > > >
-> > > > > > But to get help from the rest of the list, please submit this c=
-hange as
-> > > > > > a patch or patch series, following the instructions in:
-> > > > > >
-> > > > > >   - Documentation/MyFirstContribution.txt, and
-> > > > > >   - Documentation/SubmittingPatches
-> > > > > >
-> > > > > Thanks Taylor, I already went through these as I already sent my =
-first
-> > > > > patch before.  Also, I already sent a patch as you suggested. Tha=
-nk
-> > > > > you very much.
-> > > > > Usman Akinyemi.
-> > > >
-> > > > I must be missing something... I don't see any patches from you tha=
-t
-> > > > touch e.g., merge-ll.c, which is the first file you mention in this
-> > > > thread.
-> > > >
-> > > > Try searching the list archive for:
-> > > >
-> > > >   f:'Usman Akinyemi' dfn:merge-ll.c
-> > > >
-> > > > Is this different from the other patches you have sent to the list?=
- My
-> > > > apologies if I am missing something here.
-> > > >
-> > > > Thanks,
-> > > > Taylor
-> > > Hi, Taylor
-> > >
-> > > Thanks for the reply. There is a little confusion going on.
-> > >
-> > > This is what happened. I had two patches which are entirely different
-> > > from this leftoverbit. Both has been reviewed by other maintainer and
-> > > integrated into seen by Junio through
-> > > https://github.com/git/git/commit/4dae47e02757333b7d6a6508e36ccb5463b=
-6ad92
-> > >  and https://github.com/git/git/commit/dfdc6a71e76c7a1dab22fc9d9e437c=
-858cfea6dc.
-> > > I submitted this leftoverbit patch but I made the mistake of basing i=
-t
-> > > on top of the previous branch which I use for the two above commits.
-> > > This is the commit which has the leftoverbit and the previous two
-> > > commits which have already been integrated into seen.
-> > > https://public-inbox.org/git/pull.1810.git.git.1728774574.gitgitgadge=
-t@gmail.com/T/#t
-> > > That is the reason why you saw it again. Also, I noticed you also
-> > > integrated the two patches again into seen and gave some comments. I
-> > > think that might not be needed again. Thank you.
-> > I meant for those particular two patches, since it is integrated into
-> > seen already,
-> > I can probably wait for it to be merged then work on the review which
-> > you gave or what do you think should be done ?
-> > Thank you.
-> Hi Taylor,
+> What's cooking in git.git (Oct 2024, #08; Tue, 15)
+> --------------------------------------------------
 >
-> I went through your comment for the two previous patches, some of them
-> have already been addressed in the original thread
-> https://public-inbox.org/git/CAPSxiM8cpX9NYB02fAPA7WbLsLrvmFfsE2=3DVN=3DN=
-cguif7mQN9Q@mail.gmail.com/.
-> I am really sorry for confusing you.
-> Thank you.
-Hi Taylor,
-
-I am bringing your attention to this. Thank you.
+> Here are the topics that have been cooking in my tree.  Commits
+> prefixed with '+' are in 'next' (being in 'next' is a sign that a
+> topic is stable enough to be used and are candidate to be in a
+> future release).  Commits prefixed with '-' are only in 'seen', and
+> aren't considered "accepted" at all and may be annotated with an URL
+> to a message that raises issues but they are no means exhaustive.  A
+> topic without enough support may be discarded after a long period of
+> no activity (of course they can be resubmit when new interests
+> arise).
+>
+> This is the first pushout from the interim maintainer. A handful of
+> topics which were marked as "Will merge to 'master'" have done so, and
+> 'next' does not contain any new topics. I'll plan on doing another
+> integration cycle towards the end of this week that will graduate some
+> more topics to 'master', as well as add new topics to 'next'.
+>
+> Please take a close look through the report below, and make sure that
+> the various integration branches look OK. I spent quite a bit of time
+> refreshing my memory on how Junio's scripts work, but there is still
+> room for error. If you see something that looks wrong, please let me
+> know.
+>
+> Copies of the source code to Git live in many repositories, and the
+> following is a list of the ones I push into or their mirrors.  Some
+> repositories have only a subset of branches.
+>
+> With maint, master, next, seen, todo:
+>
+>         git://git.kernel.org/pub/scm/git/git.git/
+>         git://repo.or.cz/alt-git.git/
+>         https://kernel.googlesource.com/pub/scm/git/git/
+>         https://github.com/git/git/
+>         https://gitlab.com/git-scm/git/
+>
+> With all the integration branches and topics broken out:
+>
+>         https://github.com/gitster/git/
+>
+> Even though the preformatted documentation in HTML and man format
+> are not sources, they are published in these repositories for
+> convenience (replace "htmldocs" with "manpages" for the manual
+> pages):
+>
+>         git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+>         https://github.com/gitster/git-htmldocs.git/
+>
+> Release tarballs are available at:
+>
+>         https://www.kernel.org/pub/software/scm/git/
+>
+> --------------------------------------------------
+> [Graduated to 'master']
+>
+> * jh/config-unset-doc-fix (2024-10-08) 1 commit
+>   (merged to 'next' on 2024-10-10 at a87ffb09b6)
+>  + git-config.1: remove value from positional args in unset usage
+>
+>  Docfix.
+>
+>  source: <20241008142920.570244-2-joshiheinrichs@gmail.com>
+>
+>
+> * jk/fsmonitor-event-listener-race-fix (2024-10-08) 2 commits
+>   (merged to 'next' on 2024-10-10 at 0c40f5c971)
+>  + fsmonitor: initialize fs event listener before accepting clients
+>  + simple-ipc: split async server initialization and running
+>
+>  On macOS, fsmonitor can fall into a race condition that results in
+>  a client waiting forever to be notified for an event that have
+>  already happened.  This problem has been corrected.
+>
+>  source: <20241008083121.GA676391@coredump.intra.peff.net>
+>
+>
+> * js/doc-platform-support-link-fix (2024-10-07) 1 commit
+>   (merged to 'next' on 2024-10-10 at 55316158e7)
+>  + docs: fix the `maintain-git` links in `technical/platform-support`
+>
+>  Docfix.
+>
+>  source: <pull.1812.git.1728337764963.gitgitgadget@gmail.com>
+>
+>
+> * xx/remote-server-option-config (2024-10-08) 5 commits
+>   (merged to 'next' on 2024-10-10 at 0e38c7f8c5)
+>  + ls-remote: leakfix for not clearing server_options
+>  + fetch: respect --server-option when fetching multiple remotes
+>  + transport.c::handshake: make use of server options from remote
+>  + remote: introduce remote.<name>.serverOption configuration
+>  + transport: introduce parse_transport_option() method
+>
+>  A new configuration variable remote.<name>.serverOption makes the
+>  transport layer act as if the --serverOption=3D<value> option is
+>  given from the command line.
+>
+>  source: <pull.1776.v3.git.git.1728358699.gitgitgadget@gmail.com>
+>
+> --------------------------------------------------
+> [New Topics]
+>
+> * am/git-blame-ignore-revs-by-default (2024-10-14) 2 commits
+>  - blame: introduce --override-ignore-revs to bypass ignore revisions lis=
+t
+>  - blame: respect .git-blame-ignore-revs automatically
+>
+>  Teaches 'git blame' to treat '.git-blame-ignore-revs' as if it were
+>  passed as '--ignore-revs-file' by default.
+>
+>  source: <pull.1809.v2.git.1728707867.gitgitgadget@gmail.com>
+>
+>
+> * jh/optional-path (2024-10-14) 3 commits
+>  - parseopt: values of pathname type can be prefixed with :(optional)
+>  - config: values of pathname type can be prefixed with :(optional)
+>  - t7500: make each piece more independent
+>
+>  Teaches the configuration mechanism that values of type pathname may
+>  be prefixed with ':(optional)' to be treated as such.
+>
+>  source: <20241014204427.1712182-1-gitster@pobox.com>
+>
+>
+> * kn/ci-clang-format-tidy (2024-10-14) 3 commits
+>  - clang-format: don't align expressions after linebreaks
+>  - clang-format: align consecutive macro definitions
+>  - clang-format: re-adjust line break penalties
+>
+>  Updates the '.clang-format' to match project conventions.
+>
+>  source: <cover.1728697428.git.karthik.188@gmail.com>
+>
+>
+> * la/trailer-info (2024-10-14) 1 commit
+>  - trailer: spread usage of "trailer_block" language
+>
+>  Refactoring.
+>
+>  source: <pull.1811.git.git.1728820722580.gitgitgadget@gmail.com>
+>
+>
+> * ps/cmake-clar (2024-10-15) 3 commits
+>  - cmake: set up proper dependencies for generated clar headers
+>  - cmake: fix compilation of clar-based unit tests
+>  - Makefile: extract script to generate clar declarations
+>
+>  Buildfix for unit tests when using CMake.
+>
+>  source: <cover.1728985514.git.ps@pks.im>
+>
+>
+> * ps/platform-compat-fixes (2024-10-15) 10 commits
+>  - http: fix build error on FreeBSD
+>  - builtin/credential-cache: fix missing parameter for stub function
+>  - t7300: work around platform-specific behaviour with long paths on MinG=
+W
+>  - t5500, t5601: skip tests which exercise paths with '[::1]' on Cygwin
+>  - t3404: work around platform-specific behaviour on macOS 10.15
+>  - t1401: make invocation of tar(1) work with Win32-provided one
+>  - t/lib-gpg: fix setup of GNUPGHOME in MinGW
+>  - t/lib-gitweb: test against the build version of gitweb
+>  - t/test-lib: wire up NO_ICONV prerequisite
+>  - t/test-lib: fix quoting of TEST_RESULTS_SAN_FILE
+>
+>  Various platform compatibility fixes split out of the larger effort
+>  to use Meson as the primary build tool.
+>
+>  Appears to break CI on Windows.
+>  cf. <Zw8AaF4VOaQO+P2M@nand.local>
+>  source: <cover.1728992306.git.ps@pks.im>
+>
+>
+> * ps/reftable-strbuf (2024-10-14) 10 commits
+>  - reftable: handle trivial `reftable_buf` errors
+>  - reftable/stack: adapt `stack_filename()` to handle allocation failures
+>  - reftable/record: adapt `reftable_record_key()` to handle allocation fa=
+ilures
+>  - reftable/stack: adapt `format_name()` to handle allocation failures
+>  - t/unit-tests: check for `reftable_buf` allocation errors
+>  - reftable/blocksource: adapt interface name
+>  - reftable: convert from `strbuf` to `reftable_buf`
+>  - reftable/basics: provide new `reftable_buf` interface
+>  - reftable: stop using `strbuf_addf()`
+>  - reftable: stop using `strbuf_addbuf()`
+>
+>  Implements a new reftable-specific strbuf replacement to reduce
+>  reftable's dependency on Git-specific data structures.
+>
+>  source: <cover.1728910726.git.ps@pks.im>
+>
+>
+> * ps/upgrade-clar (2024-10-14) 2 commits
+>  - Makefile: adjust sed command for generating "clar-decls.h"
+>  - t/unit-tests: update clar to 0810a36
+>
+>  Buildfix and upgrade of Clar to a newer version.
+>
+>  source: <cover.1728903464.git.ps@pks.im>
+>
+>
+> * wf/diff-highlight-install (2024-10-14) 1 commit
+>  - diff-highlight: make install link into DESTDIR
+>
+>  Adds an 'install' recipe to diff-highlight's Makefile.
+>
+>  source: <pull.938.v3.git.git.1728764613835.gitgitgadget@gmail.com>
+>
+>
+> * wm/shortlog-hash (2024-10-15) 1 commit
+>  - builtin/shortlog: explicitly set hash algo when there is no repo
+>
+>  Teaches 'shortlog' to explicitly use SHA-1 when operating outside of
+>  a repository.
+>
+>  Breaks CI.
+>  source: <20241015114826.715158-1-wolf@oriole.systems>
+>
+> --------------------------------------------------
+> [Cooking]
+>
+> * bc/drop-ancient-libcurl-and-perl (2024-10-11) 13 commits
+>  - gitweb: make use of s///r
+>  - INSTALL: require Perl 5.26.0
+>  - Require Perl 5.26.0
+>  - INSTALL: document requirement for libcurl 7.61.0
+>  - git-curl-compat: remove check for curl 7.56.0
+>  - git-curl-compat: remove check for curl 7.53.0
+>  - git-curl-compat: remove check for curl 7.52.0
+>  - git-curl-compat: remove check for curl 7.44.0
+>  - git-curl-compat: remove check for curl 7.43.0
+>  - git-curl-compat: remove check for curl 7.39.0
+>  - git-curl-compat: remove check for curl 7.34.0
+>  - git-curl-compat: remove check for curl 7.25.0
+>  - git-curl-compat: remove check for curl 7.21.5
+>
+>  Drop support for older libcURL and Perl.
+>
+>  Under discussion.
+>  source: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+>
+>
+> * co/t6050-pipefix (2024-10-15) 1 commit
+>  - t6050: avoid pipes with upstream Git commands
+>
+>  Avoid losing exit status by having Git command being tested on the
+>  upstream side of a pipe.
+>
+>  Needs review.
+>  There is at least one known broken conversion.
+>  cf. <CAPig+cRLdzAEA-G=3DL81yR9dmm8Y-5VEU7ybyohKmbq9=3D0bDUaQ@mail.gmail.=
+com>
+>  source: <20241015112645.415955-1-chizobajames21@gmail.com>
+>
+>
+> * es/oss-fuzz (2024-10-15) 3 commits
+>  - fuzz: port fuzz-url-decode-mem from OSS-Fuzz
+>  - fuzz: port fuzz-parse-attr-line from OSS-Fuzz
+>  - fuzz: port fuzz-credential-from-url-gently from OSS-Fuzz
+>
+>  Backport oss-fuzz tests for us to our codebase.
+>
+>  Needs review.
+>  source: <cover.1728939687.git.steadmon@google.com>
+>
+>
+> * tb/cross-pack-delta-reuse (2024-10-11) 11 commits
+>  . pack-bitmap: enable reusing deltas with base objects in 'haves' bitmap
+>  . pack-bitmap.c: record whether the result was filtered
+>  . pack-bitmap: enable cross-pack delta reuse
+>  . t5332: enable OFS_DELTAs via test_pack_objects_reused
+>  . write_reused_pack_one(): translate bit positions directly
+>  . pack-bitmap: drop `from_midx` field from `bitmapped_pack`
+>  . pack-bitmap.c: extract `find_base_bitmap_pos()`
+>  . pack-bitmap.c: compare `base_offset` to `delta_obj_offset`
+>  . pack-bitmap.c: delay calling 'offset_to_pack_pos()'
+>  . pack-bitmap.c: avoid unnecessary `offset_to_pack_pos()`
+>  . pack-bitmap.c: do not pass `pack_pos` to `try_partial_reuse()`
+>
+>  Allow pack-objects to reuse an existing delta in a packfile, when
+>  it ends up sending the base object from a different packfile.
+>
+>  It seems to break the tests when merged to 'seen'.
+>  source: <cover.1728505840.git.me@ttaylorr.com>
+>
+>
+> * bf/t-readme-mention-reftable (2024-10-11) 1 commit
+>  - t/README: add missing value for GIT_TEST_DEFAULT_REF_FORMAT
+>
+>  Doc update.
+>
+>  Will merge to 'next'.
+>  source: <20241011191150.825255-1-bence@ferdinandy.com>
+>
+>
+> * aa/t7300-modernize (2024-10-09) 1 commit
+>   (merged to 'next' on 2024-10-11 at e3a8d7f6c4)
+>  + t7300-clean.sh: use test_path_* helper functions for error logging
+>
+>  Test modernization.
+>
+>  Will merge to 'master'.
+>  source: <pull.1811.v4.git.1728498122419.gitgitgadget@gmail.com>
+>
+>
+> * bf/set-head-symref (2024-10-15) 6 commits
+>  - fetch: set remote/HEAD if it does not exist
+>  - refs: add create_only option to refs_update_symref
+>  - refs: add TRANSACTION_CREATE_EXISTS error
+>  - remote set-head: better output for --auto
+>  - remote set-head: add new variable for readability
+>  - refs: atomically record overwritten ref in update_symref
+>
+>  When "git fetch $remote" notices that refs/remotes/$remote/HEAD is
+>  missing and discovers what branch the other side points with its
+>  HEAD, refs/remotes/$remote/HEAD is updated to point to it.
+>
+>  Needs to shed files backend dependency a bit more.
+>  Breaks CI.
+>  cf. <Zw8IKyPkG0Hr6/5t@nand.local>
+>  cf. <D4SUTJDV0Y04.3Q8YED2MVOKBL@ferdinandy.com>
+>  source: <20241014225431.1394565-1-bence@ferdinandy.com>
+>
+>
+> * db/submodule-fetch-with-remote-name-fix (2024-10-09) 1 commit
+>  - submodule: correct remote name with fetch
+>
+>  A "git fetch" from the superproject going down to a submodule used
+>  a wrong remote when the default remote names are set differently
+>  between them.
+>
+>  Will merge to 'next'?
+>  source: <20241009033257.1316690-1-daniel@mariadb.org>
+>
+>
+> * jc/doc-refspec-syntax (2024-10-09) 1 commit
+>   (merged to 'next' on 2024-10-11 at 912ed5fae8)
+>  + doc: clarify <src> in refspec syntax
+>
+>  Doc updates.
+>
+>  Will merge to 'master'.
+>  source: <xmqqy137wtyz.fsf@gitster.g>
+>
+>
+> * kh/checkout-ignore-other-docfix (2024-10-10) 1 commit
+>   (merged to 'next' on 2024-10-11 at ed66b60f52)
+>  + checkout: refer to other-worktree branch, not ref
+>
+>  Doc updates.
+>
+>  Will merge to 'master'.
+>  source: <fcfbcd3868bda75dd0463e04739047e74d239d32.1728585467.git.code@kh=
+augsbakk.name>
+>
+>
+> * kn/loose-object-layer-wo-global-hash (2024-10-09) 1 commit
+>   (merged to 'next' on 2024-10-11 at 99252fb6cc)
+>  + loose: don't rely on repository global state
+>
+>  Code clean-up.
+>
+>  Will merge to 'master'.
+>  source: <CAOLa=3DZRMaw-PAsZ9s0zJ2zp_suMppi=3DZrT67B__LU1tWZSvuUQ@mail.gm=
+ail.com>
+>
+>
+> * ng/rebase-merges-branch-name-as-label (2024-10-09) 3 commits
+>   (merged to 'next' on 2024-10-11 at a5785fd206)
+>  + rebase-merges: try and use branch names as labels
+>  + rebase-update-refs: extract load_branch_decorations
+>  + load_branch_decorations: fix memory leak with non-static filters
+>
+>  "git rebase --rebase-merges" now uses branch names as labels when
+>  able.
+>
+>  Will merge to 'master'.
+>  source: <pull.1784.v3.git.git.1728460700.gitgitgadget@gmail.com>
+>
+>
+> * ps/build (2024-10-09) 24 commits
+>  . Introduce support for the Meson build system
+>  . Documentation: add comparison of build systems
+>  . t: allow overriding build dir
+>  . t: better support for out-of-tree builds
+>  . Makefile: simplify building of templates
+>  . Makefile: allow "bin-wrappers/" directory to exist
+>  . Makefile: consistently use PERL_PATH
+>  . Makefile: consistently use @PLACEHOLDER@ to substitute
+>  . Makefile: use common template for GIT-BUILD-OPTIONS
+>  . Makefile: refactor generators to be PWD-independent
+>  . Makefile: refactor GIT-VERSION-GEN to be reusable
+>  . Makefile: extract script to massage Perl scripts
+>  . Makefile: extract script to generate clar declarations
+>  . http: fix build error on FreeBSD
+>  . builtin/credential-cache: fix missing parameter for stub function
+>  . t/unit-tests: update clar unit test framework
+>  . t7300: work around platform-specific behaviour with long paths on MinG=
+W
+>  . t5500, t5601: skip tests which exercise paths with '[::1]' on Cygwin
+>  . t3404: work around platform-specific behaviour on macOS 10.15
+>  . t1401: make invocation of tar(1) work with Win32-provided one
+>  . t/lib-gpg: fix setup of GNUPGHOME in MinGW
+>  . t/lib-gitweb: test against the build version of gitweb
+>  . t/test-lib: wire up NO_ICONV prerequisite
+>  . t/test-lib: fix quoting of TEST_RESULTS_SAN_FILE
+>
+>  Build procedure update plus introduction of Mason based builds
+>
+>  Needs review.
+>  Tentatively dropped from 'seen', for a circular dependency.
+>  cf. https://github.com/git/git/actions/runs/11299216196
+>  source: <cover.1728485139.git.ps@pks.im>
+>
+>
+> * ps/ci-gitlab-windows (2024-10-09) 5 commits
+>  - gitlab-ci: exercise Git on Windows
+>  - gitlab-ci: introduce stages and dependencies
+>  - ci: handle Windows-based CI jobs in GitLab CI
+>  - ci: create script to set up Git for Windows SDK
+>  - t7300: work around platform-specific behaviour with long paths on MinG=
+W
+>
+>  Enable Windows-based CI in GitLab.
+>
+>  WIll merge to 'next'.
+>  source: <cover.1728480039.git.ps@pks.im>
+>
+>
+> * ak/typofixes (2024-10-10) 6 commits
+>  - t: fix typos
+>  - t/helper: fix a typo
+>  - t/perf: fix typos
+>  - t/unit-tests: fix typos
+>  - contrib: fix typos
+>  - compat: fix typos
+>
+>  Typofixes.
+>
+>  Will merge to 'next'?
+>  git-gui part was ejected--it should be routed via git-gui maintainer
+>  source: <20241010151223.311719-1-algonell@gmail.com>
+>
+>
+> * tc/bundle-uri-leakfix (2024-10-10) 1 commit
+>   (merged to 'next' on 2024-10-11 at 07ac214952)
+>  + bundle-uri: plug leak in unbundle_from_file()
+>
+>  Leakfix.
+>
+>  Will merge to 'master'.
+>  source: <20241010091249.1895960-1-toon@iotcl.com>
+>
+>
+> * xx/protocol-v2-doc-markup-fix (2024-10-10) 1 commit
+>   (merged to 'next' on 2024-10-11 at 37932adca4)
+>  + Documentation/gitprotocol-v2.txt: fix a slight inconsistency in format
+>
+>  Docfix.
+>
+>  Will merge to 'master'.
+>  source: <pull.1807.git.git.1728566443089.gitgitgadget@gmail.com>
+>
+>
+> * cw/worktree-relative (2024-10-08) 4 commits
+>  + worktree: add test for path handling in linked worktrees
+>  + worktree: link worktrees with relative paths
+>  + worktree: refactor infer_backlink() to use *strbuf
+>  + Merge branch 'es/worktree-repair-copied' into cw/worktrees-relative
+>  (this branch uses es/worktree-repair-copied.)
+>
+>  An extra worktree attached to a repository points at each other to
+>  allow finding the repository from the worktree and vice versa
+>  possible.  Turn this linkage to relative paths.
+>
+>  Will merge to 'next'?
+>  source: <20241007-wt_relative_paths-v3-0-622cf18c45eb@pm.me>
+>
+>
+> * ds/path-walk (2024-10-08) 17 commits
+>  - pack-objects: thread the path-based compression
+>  - pack-objects: refactor path-walk delta phase
+>  - scalar: enable path-walk during push via config
+>  - pack-objects: enable --path-walk via config
+>  - repack: update usage to match docs
+>  - repack: add --path-walk option
+>  - pack-objects: introduce GIT_TEST_PACK_PATH_WALK
+>  - p5313: add performance tests for --path-walk
+>  - pack-objects: update usage to match docs
+>  - pack-objects: add --path-walk option
+>  - pack-objects: extract should_attempt_deltas()
+>  - path-walk: add prune_all_uninteresting option
+>  - revision: create mark_trees_uninteresting_dense()
+>  - path-walk: allow visiting tags
+>  - path-walk: allow consumer to specify object types
+>  - t6601: add helper for testing path-walk API
+>  - path-walk: introduce an object walk by path
+>
+>  A new algorithm for object graph traversal to favor visiting the
+>  objects at the same tree path in succession (as opposed to visiting
+>  objects that are different between trees as we walk commit
+>  histories) is introduced to optimize object packing.
+>
+>  Needs review.
+>  source: <pull.1813.git.1728396723.gitgitgadget@gmail.com>
+>
+>
+> * hy/partial-repack-fix (2024-10-15) 3 commits
+>  - partial-clone: update doc
+>  - t0410: adapt tests to repack changes
+>  - repack: pack everything into packfile
+>
+>  "git repack" avoids losing local objects that are reachable from
+>  objects in a packfile fetched from a promisor remote.
+>
+>  Expecting a reroll.
+>  cf. <xmqqa5faec4x.fsf@gitster.g>
+>  Breaks CI.
+>  cf. <xmqqzfnexlku.fsf@gitster.g>
+>  source: <20241014032546.68427-1-hanyang.tony@bytedance.com>
+>
+>
+> * kh/merge-tree-doc (2024-10-09) 1 commit
+>   (merged to 'next' on 2024-10-11 at b22c213d6c)
+>  + doc: merge-tree: improve example script
+>
+>  Docfix.
+>
+>  Will merge to 'master'.
+>  cf. <CABPp-BE=3DJfoZp19Va-1oF60ADBUibGDwDkFX-Zytx7A3uJ__gg@mail.gmail.co=
+m>
+>  source: <c7e0d76e71eef56c6279e0f7e82a2d194f78d2a4.1728492617.git.code@kh=
+augsbakk.name>
+>
+>
+> * pb/clar-build-fix (2024-10-11) 1 commit
+>  - Makefile: fix dependency for $(UNIT_TEST_DIR)/clar/clar.o
+>
+>  Build fix.
+>
+>  Will merge to 'next'.
+>  source: <pull.1810.v2.git.1728667787227.gitgitgadget@gmail.com>
+>
+>
+> * ps/cache-tree-w-broken-index-entry (2024-10-07) 3 commits
+>  + unpack-trees: detect mismatching number of cache-tree/index entries
+>  + cache-tree: detect mismatching number of index entries
+>  + cache-tree: refactor verification to return error codes
+>
+>  Fail gracefully instead of crashing when attempting to write the
+>  contents of a corrupt in-core index as a tree object.
+>
+>  Will merge to 'next'?
+>  source: <cover.1728275640.git.ps@pks.im>
+>
+>
+> * ps/maintenance-start-crash-fix (2024-10-10) 1 commit
+>   (merged to 'next' on 2024-10-11 at c54df41815)
+>  + builtin/gc: fix crash when running `git maintenance start`
+>
+>  "git maintenance start" crashed due to an uninitialized variable
+>  reference, which has been corrected.
+>
+>  Will merge to 'master'.
+>  source: <a5b1433abfd84cb627efc17f52e0d644ee207bb0.1728538282.git.ps@pks.=
+im>
+>
+>
+> * ua/t3404-cleanup (2024-10-14) 3 commits
+>  - parse: replace atoi() with strtoul_ui() and strtol_i()
+>  - t3404: replace test with test_line_count()
+>  - t3404: avoid losing exit status with focus on `git show` and `git cat-=
+file`
+Hi Taylor, I sent a message regarding this.
+https://public-inbox.org/git/CAPSxiM-Cn8ZSC+LzRfeyY+Z_Vfj=3DDguweQ+ZjC4dau-=
+Z64dnWg@mail.gmail.com/T/#t,
+kindly check. Thank you
+>
+>  Test update.
+>
+>  Will merge to 'next'?
+>  source: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
+>
+>
+> * jc/a-commands-without-the-repo (2024-10-11) 3 commits
+>  - archive: remove the_repository global variable
+>  - annotate: remove usage of the_repository global
+>  - git: pass in repo to builtin based on setup_git_directory_gently
+>
+>  Commands that can also work outside Git have learned to take the
+>  repository instance "repo" when we know we are in a repository, and
+>  NULL when we are not, in a parameter.  The uses of the_repository
+>  variable in a few of them have been removed using the new calling
+>  convention.
+>
+>  Will merge to 'next'?
+>  source: <pull.1788.v4.git.git.1728594828.gitgitgadget@gmail.com>
+>
+>
+> * ej/cat-file-remote-object-info (2024-09-27) 6 commits
+>  - cat-file: add remote-object-info to batch-command
+>  - cat-file: add declaration of variable i inside its for loop
+>  - transport: add client support for object-info
+>  - serve: advertise object-info feature
+>  - fetch-pack: move fetch initialization
+>  - fetch-pack: refactor packet writing
+>
+>  "git cat-file --batch" and friends can optionally ask a remote
+>  server about objects it does not have.
+>
+>  Needs review.
+>  source: <20240926013856.35527-1-eric.peijian@gmail.com>
+>
+>
+> * es/worktree-repair-copied (2024-09-23) 1 commit
+>  + worktree: repair copied repository and linked worktrees
+>  (this branch is used by cw/worktree-relative.)
+>
+>  The heuristics in "git worktree repair" can be confused when a
+>  worktree and its repository are copied and break correctly
+>  configured worktree and repository that point at each other, which
+>  has been corrected.
+>
+>  Needs review.
+>  source: <20240923075416.54289-1-ericsunshine@charter.net>
+>
+>
+> * cw/fix-reachable-in-repo-with-promisor (2024-09-19) 2 commits
+>  - fetch-pack.c: do not declare local commits as "have" in partial repos
+>  - packfile: split promisor objects oidset into two
+>
+>  "git gc" in a partial clone (i.e. lacking objects that can be
+>  lazily fetched from promisor remotes) collected more than objects
+>  that promisor-remote can give.
+>
+>  Needs review.
+>  source: <20240802073143.56731-1-hanyang.tony@bytedance.com>
+>
+>
+> * jc/breaking-changes-early-adopter-option (2024-10-11) 1 commit
+>  - BreakingChanges: early adopter option
+>
+>  Describe the policy to introduce breaking changes.
+>
+>  Needs review.
+>  source: <xmqq1q0mcnt8.fsf@gitster.g>
+>
+>
+> * jc/strbuf-commented-something (2024-09-12) 2 commits
+>  - strbuf: retire strbuf_commented_lines()
+>  - strbuf: retire strbuf_commented_addf()
+>
+>  Update two functions whose callers always pass the same global
+>  variable to omit the redundant parameter and use the global in the
+>  callee themselves.
+>
+>  On hold.
+>  source: <20240912205301.1809355-1-gitster@pobox.com>
+>
+>
+> * cc/promisor-remote-capability (2024-09-10) 4 commits
+>  - promisor-remote: check advertised name or URL
+>  - Add 'promisor-remote' capability to protocol v2
+>  - strbuf: refactor strbuf_trim_trailing_ch()
+>  - version: refactor strbuf_sanitize()
+>
+>  The v2 protocol learned to allow the server to advertise possible
+>  promisor remotes, and the client to respond with what promissor
+>  remotes it uses, so that the server side can omit objects that the
+>  client can lazily obtain from these other promissor remotes.
+>
+>  Comments?  I got an impression that this is premature without
+>  finishing the discussion on a larger picture.
+>  cf. <ZvpZv_fed_su4w2-@pks.im>
+>  source: <20240910163000.1985723-1-christian.couder@gmail.com>
+>
+>
+> * sj/ref-contents-check (2024-09-30) 9 commits
+>  - ref: add symlink ref content check for files backend
+>  - t0602: add ref content checks for worktrees
+>  - ref: enhance escape situation for worktrees
+>  - ref: add escape check for the referent of symref
+>  - ref: add basic symref content check for files backend
+>  - ref: add more strict checks for regular refs
+>  - ref: port git-fsck(1) regular refs check for files backend
+>  - builtin/refs: support multiple worktrees check for refs.
+>  - ref: initialize "fsck_ref_report" with zero
+>
+>  "git fsck" learned to issue warnings on "curiously formatted" ref
+>  contents that have always been taken valid but something Git
+>  wouldn't have written itself (e.g., missing terminating end-of-line
+>  after the full object name).
+>
+>  Needs review.
+>  cf. <xmqqikud6kc0.fsf@gitster.g>
+>  source: <Zvj-DgHqtC30KjJe@ArchLinux>
+>
+>
+> * tb/incremental-midx-part-2 (2024-10-04) 17 commits
+>  - fixup! pack-bitmap.c: open and store incremental bitmap layers
+>  - fixup! midx: implement writing incremental MIDX bitmaps
+>  - midx: implement writing incremental MIDX bitmaps
+>  - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
+>  - pack-bitmap.c: keep track of each layer's type bitmaps
+>  - ewah: implement `struct ewah_or_iterator`
+>  - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
+>  - pack-bitmap.c: compute disk-usage with incremental MIDXs
+>  - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
+>  - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
+>  - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
+>  - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
+>  - pack-bitmap.c: open and store incremental bitmap layers
+>  - pack-revindex: prepare for incremental MIDX bitmaps
+>  - Documentation: describe incremental MIDX bitmaps
+>  - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-p=
+art-2
+>  - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-par=
+t-2
+>
+>  Incremental updates of multi-pack index files.
+>
+>  Needs review.
+>  source: <cover.1723760847.git.me@ttaylorr.com>
+>  source: <ZwBsbW5jsFw0mxKk@nand.local>
+>
+>
+> * js/libgit-rust (2024-10-08) 5 commits
+>  - Makefile: add option to build and test libgit-rs and libgit-rs-sys
+>  - libgit: add higher-level libgit crate
+>  - libgit-sys: also export some config_set functions
+>  - libgit-sys: introduce Rust wrapper for libgit.a
+>  - common-main: split init and exit code into new files
+>
+>  An rust binding to libgit.a functions has been introduced.
+>
+>  Needs review.
+>  source: <cover.1728429158.git.steadmon@google.com>
+>
+>
+> * jc/too-many-arguments (2024-08-06) 4 commits
+>  - miscellaneous: avoid "too many arguments"
+>  - notes: avoid "too many arguments"
+>  - cat-file: avoid "too many arguments"
+>  - refs: avoid "too many arguments"
+>
+>  Error message clarification.
+>
+>  On hold.
+>  source: <20240806003539.3292562-1-gitster@pobox.com>
+>
+>
+> * ew/cat-file-optim (2024-08-25) 10 commits
+>  - cat-file: use writev(2) if available
+>  - cat-file: batch_write: use size_t for length
+>  - cat-file: batch-command uses content_limit
+>  - object_info: content_limit only applies to blobs
+>  - packfile: packed_object_info avoids packed_to_object_type
+>  - cat-file: use delta_base_cache entries directly
+>  - packfile: inline cache_or_unpack_entry
+>  - packfile: fix off-by-one in content_limit comparison
+>  - packfile: allow content-limit for cat-file
+>  - packfile: move sizep computation
+>
+>  "git cat-file --batch" has been optimized.
+>
+>  Waiting for review responses.
+>  source: <20240823224630.1180772-1-e@80x24.org>
+>
