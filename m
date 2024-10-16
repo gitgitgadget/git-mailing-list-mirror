@@ -1,358 +1,117 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAFE13AF2
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 01:38:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3758A13B298
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 02:00:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729042717; cv=none; b=lF4+axna+W8Ezcflt6Ya2zUx0ZzEYl3XxJghG/yBljfLsGSRmKGg4/eo5Kv3q1OLwH37sf36NUHOaz7morYj6E9MHm8njIuru1pLOuAiuSimR/e33YIl5Vmbt6bwOPiHZMeQGFKqLtl61rbQ5uBLZIJc1v0k1CVaRVAourwOhuc=
+	t=1729044029; cv=none; b=osWKnzLMc7wC/9zrTxI0W1ieTsHsHP3BR3tDPT8Jh9J3YEoi+zmueR/tuhZ2+pTE90RONGW0UIHSBRDSWZKGdX6gQGegGAUGpMDjpjAViqcYIgiFCifdTCoeKpaxhj9jsj9sMWOc3lEsp/nb4KZttvDkbipwdNbqES3+q7IPJpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729042717; c=relaxed/simple;
-	bh=/VRYVcU1otzmsy33TngLH5hapeSKte1Y+ehVuTHlmYc=;
+	s=arc-20240116; t=1729044029; c=relaxed/simple;
+	bh=ZfNcSyrBJHEzj+mcDMX832QpZCT5hqMZb7Z70Yj3FeI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZI9dyb9agLXwONJMroEIAWlKciLUX28XMCQf25ScrHP9IwCLcPw/6aQd+DkxOPiW1+mi8RfupiFJKNKyqZvzhzfsVoEoC2ZBwC4TAD/v+gM6oq0zXGBknNtBBiSpDhNbpC5sd84GFYwmPanPsMhp5Suw6yVZ7OgmbElWL6wtLBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LCpxbclT; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LCpxbclT"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5c94dd7e1c0so6466809a12.0
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 18:38:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1729042713; x=1729647513; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QkuZh8GH5A2NX6Fs7jO5g3oD9qnSSu1e9yWEIxCZUpU=;
-        b=LCpxbclTUctuCydugpDtUVIuLr8SIIkClHpMQ9pZmOS2RjfyTXGVCSnT5YKpehdbDt
-         UFsdXoMdwSGiMifrw2ibkur1g0GZa/EU2QznllD0HwL3v9qLc8GjdR8Bnb2UWundO8Tu
-         ihJ1f1Q3qAFNef4QVFfIFXSN3QM1IPVLKH0alZIJGxudssR1OP2X240C+BUyX9SAePoj
-         /4xQfLdKwfVP0hW+ce/gfpmXfYT8N+MWhSXI18vWWyxcmJwtdUH5YYdGKUGYmqYGZ/j+
-         la4SIxmercV3t16Ui3XldflaRVRJR1aSRMjofdSquY9RO4NRLoebGKnbiBPQGxsGMfSx
-         PgnQ==
+	 To:Cc:Content-Type; b=dEk2UNJ2ISfbGdH6ToA8oPXucgbcXjBW8ak626KyE/MA6Xnon5BjZYYG0exj/4RaNoNT4zyv2+LPwVnwVrDAkg6GBj5FpyL7xz81tS1YtqwBnNsAbd0yzBiyN7D1xNy4mYFwTgBUNC/hmCyEw3p0L0WFz67EAgfXDLfJvU67Oj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e29327636f3so3171022276.2
+        for <git@vger.kernel.org>; Tue, 15 Oct 2024 19:00:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729042713; x=1729647513;
+        d=1e100.net; s=20230601; t=1729044025; x=1729648825;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QkuZh8GH5A2NX6Fs7jO5g3oD9qnSSu1e9yWEIxCZUpU=;
-        b=wkgObqYUvJ6U/4QcGZpAWQiwNhatLcHds5EyTuo641YlToduZ1bcSc3Y6JqwpqcI94
-         4q4W+4hbdwZ09VvKE/9G6SMesJSEDj/iPRER0AQloDLhPyzAuhd70IuGzMRbRoxR9L5b
-         MZIa26SkzW6xxzXTDfpUU7q5GlClhDfUWJHspu3EMJpGn3wG51LiZVs595tx6MXwHp0p
-         N2XaLTR2bKTsdydLQnhX3Myx0Za/7vRXU2h5ha4U2ZDclbsYAvks/e7iEsKp9L5/N27d
-         EWu5kedt2tijOm/t4lVyjV5s8vmwSUrkvR8tSgycE3X3drB24VIidj3mkO+h7QqJFyCL
-         Vjvw==
-X-Gm-Message-State: AOJu0YwLvwXLxV9vP1tY1hXCAXDZp4S3q+Ih/45PL+JPat53nNXxdNTf
-	bphDnhwfLIeuGF2EoeBFl6eia1dZHIRu1trA0j5t9KWbsXes2k51JcUFlSNWWQC7AL5gwdN7/8V
-	XR9K1KiDdT8hY/cutdncVfzkwC3HkiQfDMGJ/
-X-Google-Smtp-Source: AGHT+IELzHcAM6LuBbJZD14chAaZUDgGpfhkIJtvRTGDAr7X6yjU+moAthAABE5ze/vELegxSpZhJQ7BIWq3igbkZRY=
-X-Received: by 2002:a17:907:3da3:b0:a99:5ad9:b672 with SMTP id
- a640c23a62f3a-a99e3b20bfcmr1429843966b.10.1729042712711; Tue, 15 Oct 2024
- 18:38:32 -0700 (PDT)
+        bh=EYYFN2gCx4lo8sj5DPEckCMUyJHN/ETEGHRly/tV/NA=;
+        b=eE7FjdXqSMf8Rx5IrCxKwoiYlVyv+Nc14Ky/qVtx+VnqId6AZEPCYSHj4o/DmokbBV
+         hNt4usoAxG4TWeTptUAJGIM6mUv8lkX9rloOLHI/PxFIHGV8iZsTejXOEkA0RrUVYcwN
+         alPVUd1P1/oFiiTuWdcN7K41zNXV08D3vjGVmCh57lNz7/N9ZO8jOmkJiaaiUeFP+w6/
+         0fLEclrx43rZDFC7BpDYEv2aJd2f04z3OhimCpY1qega+kW8Y449EIj8bJ5gHNDJuX5j
+         arqex+4EPlbt9rHpGXBOiOqfQWSnaaNPlF5BL0ScRyNLaO33XGPWNVzUK/svr80yMAFl
+         o8xw==
+X-Forwarded-Encrypted: i=1; AJvYcCW77yTjOIqs5ubL8ooRXwZsltplB3Bl+B7fwmPO2uk4SDfp4iRJtZDJ7Fb1jK3dqjSl4aM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwPhnERldfqogaWdPifMOJNXmPeGWTwgMLCopMb5WQV7qplPpml
+	31a+OMlBevYa/C+emOq614SLK6bYi4n7Bktd0gnsog0/FiIJZy8Hkx3S8hAzPbwZqcWaYBOtQhN
+	cQaR7hcsrBYyuuldJM/Nyun9QZOw=
+X-Google-Smtp-Source: AGHT+IEpS3yal9J4gPjFJE7RVVNFoFYEDPmiWc0gfLssKRyG0Vi1wO+v1fyflNf6Gw9u0GzleCZ6aJOnCuZ4lJBV0UQ=
+X-Received: by 2002:a05:6902:f81:b0:e1d:2639:66be with SMTP id
+ 3f1490d57ef6-e2931bd76f1mr10610854276.43.1729044024893; Tue, 15 Oct 2024
+ 19:00:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1728697428.git.karthik.188@gmail.com> <74bbd2f9db1ddfd5210be8fde2db84f67acff27d.1728697428.git.karthik.188@gmail.com>
- <CAO_smViSU5KohOqVXp2L_cM3G-jrOGQY=J=qf=-GbiGsOYd9TQ@mail.gmail.com> <CAOLa=ZT0qsG7cnnzwg7GDkBuTqZO_e+C5HwT5o9kWZ1Cto=0kg@mail.gmail.com>
-In-Reply-To: <CAOLa=ZT0qsG7cnnzwg7GDkBuTqZO_e+C5HwT5o9kWZ1Cto=0kg@mail.gmail.com>
-From: Kyle Lippincott <spectral@google.com>
-Date: Tue, 15 Oct 2024 18:38:17 -0700
-Message-ID: <CAO_smVjXkpaJOKyvg_mVqxpoK5C=kVpcfGWEH5qC4vfQS=rTgg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] clang-format: re-adjust line break penalties
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, jltobler@gmail.com, toon@iotcl.com, 
-	johannes.schindelin@gmx.de
+References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+ <20241011074022.GC18010@coredump.intra.peff.net> <CAPig+cRmyZhq1qtomTFP7p7XMqrCP8-u7ah8D2+yUtrL880y7g@mail.gmail.com>
+ <ZwmEDt7ftJabvMUH@tapette.crustytoothpaste.net> <CAPig+cS0vkTXeZX7qt6oOq3QpkWovfJnXuH7c3JtyAKOfnq1Ww@mail.gmail.com>
+ <Zw7AVzBORjvxrvKh@nand.local> <Zw8BMEYHaH2ImMmY@tapette.crustytoothpaste.net>
+In-Reply-To: <Zw8BMEYHaH2ImMmY@tapette.crustytoothpaste.net>
+From: =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
+Date: Tue, 15 Oct 2024 22:00:09 -0400
+Message-ID: <CAOO-Oz0t8V28P7VEACAu69_dD47ZuPPazN9vy_c1dLCeAU5N_Q@mail.gmail.com>
+Subject: Re: [PATCH 00/13] Update versions of libcurl and Perlg
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 15, 2024 at 5:37=E2=80=AFAM karthik nayak <karthik.188@gmail.co=
-m> wrote:
+On Tue, Oct 15, 2024 at 7:57=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> Nobody, outside of the FreeBSD maintainer, has even bothered to set up
+> CI for a platform other than the three major ones.  The patches to fix
+> SunOS 5.10 also don't include any tests or CI.  I don't think it's
+> reasonable for us to go out of our way to support these systems if
+> nobody using those platforms has bothered to provide even the most
+> rudimentary check that they work.  How can we expect developers who
+> don't use these systems to even know if they work without some basic
+> tests, even if it's for only one architecture, especially given that in
+> many cases it involves adding just three lines to the workflow file?
 >
-> Kyle Lippincott <spectral@google.com> writes:
->
-> > On Fri, Oct 11, 2024 at 6:50=E2=80=AFPM Karthik Nayak <karthik.188@gmai=
-l.com> wrote:
-> >>
-> >> In 42efde4c29 (clang-format: adjust line break penalties, 2017-09-29) =
-we
-> >> adjusted the line break penalties to really fine tune what we care abo=
-ut
-> >> while doing line breaks. Modify some of those to be more inline with
-> >> what we care about in the Git project now.
-> >>
-> >> We need to understand that the values set to penalties in
-> >> '.clang-format' are relative to each other and do not hold any absolut=
-e
-> >> value. The penalty arguments take an 'Unsigned' value, so we have some
-> >> liberty over the values we can set.
-> >>
-> >> First, in that commit, we decided, that under no circumstances do we
-> >> want to exceed 80 characters. This seems a bit too strict. We do
-> >> overshoot this limit from time to time to prioritize readability.
-> >
-> > I think that attempting to get the weights right so as to avoid cases
-> > where there was an intentional affordance for readability is going to
-> > be essentially impossible. Areas where there's an intentional
-> > disregard for the clang-format-generated formatting should disable the
-> > formatter for that line/region, instead of trying to find a way to
-> > adjust the rules to produce something that's going to end up being
-> > context dependent.
-> >
->
-> To some extent I agree. But the issue is that clang-format is still not
-> enforced within the code base. So expecting users to add:
->     // clang-format off
-> will not hold, at least for _now_.
->
-> So the next best thing we can do is to get the format rules as close as
-> we can to the current styling, so the actual errors thrown by the CI job
-> is something we can look at without containing too many false positives.
->
-> > Example: In ref-filter.c, there's 13 lines when initializing the
-> > `valid_atom` array that are >80 characters, and 20 lines that are >80
-> > columns (when using 8-space tabs). Line breaking in that block of code
-> > may be undesirable, so just disable clang-format there. I don't think
-> > there's a consistent set of penalties you could establish that would
-> > handle that well without mishandling some other section of code.
->
-> While true, we can quantify if it is better or not:
->
->       =E2=9D=AF ci/run-style-check.sh @~50 | wc -l
->       4718 (master)
->
->       =E2=9D=AF ci/run-style-check.sh @~53 | wc -l
->       4475 (with these patches)
->
-> And looking through the other changes, those look like violations which
-> should have been fixed.
->
-> > It's also not clear what the reason for the overshoot is in many cases.
-> > - difference between "80 characters" and "80 columns"?
-> >     - (1394 >80char lines in *.{h,c}, 4849 >80col lines in the same fil=
-es)
-> > - intentional for readability?
-> > - refactorings pushed originally compliant lines out of compliance?
-> > - no one caught it and it was just added without any intentional decisi=
-on?
-> >
->
-> I agree with your inference here, but I'm not sure there is a smooth way
-> to have this information. Either we go full in and say we enable the
-> formatting and every patch must conform to it, or we simply keep the
-> clang-format as a warning system. Currently we do neither. I'd say we
-> should be in a state to reach the latter and then we can gradually think
-> of how to move to the former.
->
-> >> So
-> >> let's reduce the value for 'PenaltyExcessCharacter' to 10. This means =
-we
-> >> that we add a penalty of 10 for each character that exceeds the column
-> >> limit. By itself this is enough to restrict to column limit. Tuning
-> >> other penalties in relation to this is what is important.
-> >>
-> >> The penalty `PenaltyBreakAssignment` talks about the penalty for
-> >> breaking an assignment operator on to the next line. In our project, w=
-e
-> >> are okay with this, so giving a value of 5, which is below the value f=
-or
-> >> 'PenaltyExcessCharacter' ensures that in the end, even 1 character ove=
-r
-> >> the column limit is not worth keeping an assignment on the same line.
-> >>
-> >> Similarly set the penalty for breaking before the first call parameter
-> >> 'PenaltyBreakBeforeFirstCallParameter' and the penalty for breaking
-> >> comments 'PenaltyBreakComment' and the penalty for breaking string
-> >> literals 'PenaltyBreakString' also to 5.
-> >>
-> >> Finally, we really care about not breaking the return type into its ow=
-n
-> >> line and we really care about not breaking before an open parenthesis.
-> >> This avoids weird formatting like:
-> >>
-> >>    static const struct strbuf *
-> >>           a_really_really_large_function_name(struct strbuf resolved,
-> >>           const char *path, int flags)
-> >
-> > Is this how it'd be indented without the penalties, or would it do
-> > this, with the function name indented the same amount as the return
-> > type (which is, in C, probably going to be the 0th column most times):
-> >
-> > static const struct strbuf *
-> > a_really_really_large_function_name(struct strbuf resolved,
-> >         const char *path, int flags)
-> >
->
-> It will be indented, so not the 0th column.
+> I think the answer is that we can't.  Since we don't have anyone who has
+> demonstrated that there's basic interest in helping the contributors
+> support their platform by setting up tests or volunteering to be the
+> maintainer, we can't support those platforms specifically and we're
+> essentially left with just honouring the policy that we've set, which is
+> what I'm doing here.
 
-I'm not getting that behavior when I try it. Is this only indented
-with your updated penalties?
+The machine I use to build for SunOS takes, let's be generous and
+say an hour to build git from a fresh checkout. If I'm iterating
+on trying to fix something, run make, and see that it's building
+daemon.o, I know I've got another hour or so before I find out if
+my change worked, and maybe discover what the *next* new issue
+is. There are faster SunOS machines, but not the one I happen to
+have available. You would not want this machine in any sort of CI
+system. That said, until sometime this summer, I was building
+every release of git on that machine within days, often hours, of
+it being tagged, for *nearly 15 years*. If something broke, I'd
+fix it, test the build (which could take hours if I had to
+iterate), and submit a patch. You can find them in the logs. It
+was, fortunately, not that often, which is a testament to git
+remaining portable. Thank you all for that.
 
-Currently on ef8ce8f3d4344fd3af049c17eeba5cd20d98b69f, git status is
-clean, added this line (no line breaks, just in case my email client
-makes a mess of this) to top of path.h (chosen arbitrarily):
+As I mentioned in my report regarding the SunOS build, I'm
+personally ready to abandon that particular use of my time,
+though if it's fixed, it'll go back onto my semi-automated build
+scripts for git releases, and I'll continue to submit patches as
+needed. It's not a CI, and no, I don't have notifications for and
+don't build RCs, but it's something.
 
-static const struct strbuf *a_really_really_large_function_name(struct
-strbuf resolved, const char *path, int flags);
+> It's also reasonably easy to build new versions of Perl with things like
+> perlbrew or other toolchain tools, and those are the common suggestion
+> that people use when they have a toolchain that's out of date.  I've
+> worked at a company which did some very unusual things with Perl
+> (specifically compiling it to C for performance) and who I think had at
+> one point used the oldest Perl I'm aware of being used at a Perl shop
+> (at the time, 5.6) for major development, and I know they're now using a
+> modern Perl and wouldn't be affected.  In fact, people doing Perl
+> development professionally are overwhelmingly using very modern Perl, so
+> the practical implication is that we only need to consider the distro
+> Perl here, since everyone will be using something at least that new (or
+> will have an easy way to build such a version).
 
-and ran `clang-format path.h | head -n20` and got this (where `int
-flags` is indented to align with the opening `(`, but tabs cause
-problems yet again):
+Building a new perl is easy. Telling the system-controlled apache
+mod_perl to trust me and use my perl, less easy. (gitweb.perl.)
 
-static const struct strbuf *
-a_really_really_large_function_name(struct strbuf resolved, const char *pat=
-h,
-    int flags);
-
-`clang-format --version` shows it's a google-internal build, but it
-still respects the .clang-format file, so this shouldn't matter? I'm
-assuming it's a relatively recent (within the past 1 month) commit
-that it's based off of.
-
->
-> >>
-> >> or
-> >>
-> >>    static const struct strbuf *a_really_really_large_function_name(
-> >>             struct strbuf resolved, const char *path, int flags)
-> >
-> > Personal opinion: I prefer this over the version that has a single
-> > argument on the first line. My preference for reading functions is:
-> >
-> > return_type func_name(arg1, arg2,
-> >                       arg3, arg4,
-> >                       arg5, arg6, ...);
-> >
-> > Or
-> >
-> > return_type func_name(
-> >         arg1, arg2, arg3, arg4,
-> >         arg5, arg6, ...);
-> >
->
-> I'm mostly basing my changes on the current state of the 'clang-format'
-> and our code base. I'm happy to change it if everyone agrees on this :)
-
-I'm wondering if tabs have caused some confusion here... [thought
-continued below]
-
->
-> > or, in some cases, putting every argument on their own line (typically
-> > when the majority of the arguments are already on their own line, not
-> > having one "hiding" somewhere is preferable, but at this point if
-> > that's not what my formatter does, I don't fight it).
-> >
-> > For functions that accept an obvious first parameter, such as
-> > `strbuf_add`, maybe having the first parameter on the first line is
-> > acceptable/desirable, since it's "obvious" what it is/does. But for
-> > many functions that's not the case, and needing to read the end of the
-> > first line, potentially beyond the 80th column, feels weird.
-> >
-> >>
-> >> to instead have something more readable like:
-> >>
-> >>    static const struct strbuf *a_really_really_large_function_name(str=
-uct strbuf resolved,
-> >>           const char *path, int flags)
-
-Does this have `const char *path` aligned with the opening `(`? if so,
-then that matches my first example and I'm fine with it. If this is
-truly "first argument immediately after (, other arguments indented
-one indentation level", then my original comment stands: I don't find
-this readable at all, and I don't see evidence of this being an
-acceptable format according to our CodingGuidelines document.
-
-I also don't understand how the penalties would produce t
-
-
-> >>
-> >> This is done by bumping the values of 'PenaltyReturnTypeOnItsOwnLine'
-> >> and 'PenaltyBreakOpenParenthesis' to 300. This is so that we can allow=
- a
-> >> few characters above the 80 column limit to make code more readable.
-> >
-> > A few examples, such as by formatting the code using the current rules
-> > (since much of the codebase does not currently comply), and then
-> > changing the penalties and seeing what changes, might be nice?
-> >
->
-> You mean apart from the example above?
-
-The example above is hypothetical, but I think I was thinking about
-this incorrectly. Our existing codebase isn't formatted with
-clang-format, and formatting it first and then adjusting the penalties
-doesn't really provide much useful information.
-
-Setting the penalties as you have them in this patch, and running it
-on a copy of the line you have there, produces this for me:
-
-static const struct strbuf *
-a_really_really_large_function_name(struct strbuf resolved, const char *pat=
-h,
-                                    int flags);
-
-The 80 column limit is still _strictly_ adhered to, it won't even go
-over by 1 character:
-
-static const struct strbuf *
-a_really_really_large_function_named_Ed(struct strbuf resolved,
-                                        const char *path, int flags);
-
-(note: switched tabs to spaces because tabs are difficult to use
-during discussions like this)
-
-Specifically:
-- 80 column hard limit applied
-- return type on its own line
-- continuation arguments are aligned on the next line (which is
-expected since we have AlignAfterOpenBracket set).
-
->
-> >
-> >>
-> >> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> >> ---
-> >>  .clang-format | 13 +++++++------
-> >>  1 file changed, 7 insertions(+), 6 deletions(-)
-> >>
-> >> diff --git a/.clang-format b/.clang-format
-> >> index 41969eca4b..66a2360ae5 100644
-> >> --- a/.clang-format
-> >> +++ b/.clang-format
-> >> @@ -209,13 +209,14 @@ KeepEmptyLinesAtTheStartOfBlocks: false
-> >>
-> >>  # Penalties
-> >>  # This decides what order things should be done if a line is too long
-> >> -PenaltyBreakAssignment: 10
-> >> -PenaltyBreakBeforeFirstCallParameter: 30
-> >> -PenaltyBreakComment: 10
-> >> +PenaltyBreakAssignment: 5
-> >> +PenaltyBreakBeforeFirstCallParameter: 5
-> >> +PenaltyBreakComment: 5
-> >>  PenaltyBreakFirstLessLess: 0
-> >> -PenaltyBreakString: 10
-> >> -PenaltyExcessCharacter: 100
-> >> -PenaltyReturnTypeOnItsOwnLine: 60
-> >> +PenaltyBreakOpenParenthesis: 300
-> >
-> > How does this interact with PenaltyBreakBeforeFirstCallParameter? Does
-> > one override the other?
-> >
->
-> From my understanding PenaltyBreakOpenParenthesis seems to apply more
-> generally and is the more preferred value.
->
-> [1]: https://github.com/llvm/llvm-project/blob/a4367d2d136420f562f64e7731=
-b9393fb609f3fc/clang/lib/Format/TokenAnnotator.cpp#L4322
->
-> >> +PenaltyBreakString: 5
-> >> +PenaltyExcessCharacter: 10
-> >> +PenaltyReturnTypeOnItsOwnLine: 300
-> >>
-> >>  # Don't sort #include's
-> >>  SortIncludes: false
-> >> --
-> >> 2.47.0
-> >>
+-Alejandro
