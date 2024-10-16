@@ -1,71 +1,69 @@
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45CA18CBF2
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 20:36:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA704409
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 20:46:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729110997; cv=none; b=nYVZkwW5k3e42I0c4m/A2JmSeuBaxaFa7C63wcI6YtEZH3c6Tjy7RYC//jYOmXQM8RwqIW4EKR7z94FslfbDUl/X/S9kJkuj3kmgAQ5kFc/PoTtqjxIxYHP57pim5Glf5PnMbIGwZDHi+kIWceHV00M2epcM4U5r9U/gniAnNXY=
+	t=1729111565; cv=none; b=csfBBTetaA7t38+kunboyZxEVW4RFa52oXbEACwNccMjH6lfW7A8PzxOzHfW9hqCql+w9z1Vflkil1Cc630UNwND0buAY3QeV2cUmUD5qnPs8aJV0SRealX7KtHtg6oYbxUIsoJaR7jizDpX7fd/VRF+XOMnZtGkwl/SNAAcuo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729110997; c=relaxed/simple;
-	bh=rijqGDEZJ5Ksx1zOgle1SaD+4w5iGta2eiVE8IrEBJU=;
+	s=arc-20240116; t=1729111565; c=relaxed/simple;
+	bh=+MaMry+UwWKPiMCLby8+m4m1m8tVjmvEjmdD7CmmarU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kkJuXPO6DwMCLnIAU90kPenTVyMnAGiNsd81AdJdv2vreNQ0P1HRtVmcrjt9j6VH/FPnvgJBrB2O3uJ7BvtUaooUlKG9Pw4zGT/eB4Dmz/TVGQgqgxeQtxoY0Y4fbykhuCDLetgjsdzcMMEO8luFhdDUG8a27iOn9KhPc1TvEMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=wAXQ64DM; arc=none smtp.client-ip=209.85.219.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yr0KYCdNzAnHuddcG/XHd+TyG7+4UhOgFepgOY5apLXublLCaebJU2gsfvzQths0YOmBiUzslB2gKNEs9sDy5Dw5RIYRt6NIUto+/s+sgIP+yUr8Cx2AKYjBITXctvrk97/C7sltzhPX8Jr01Yie9uho7EiiGVMhwDsUv4VM2i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=DEGhzDI+; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="wAXQ64DM"
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e29756dc019so210250276.3
-        for <git@vger.kernel.org>; Wed, 16 Oct 2024 13:36:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="DEGhzDI+"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6e38fc62b9fso3591167b3.2
+        for <git@vger.kernel.org>; Wed, 16 Oct 2024 13:46:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729110994; x=1729715794; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729111561; x=1729716361; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=EHiZ+D5gMvmLoq4xmme7DBnJRRCsEpHCfusm6W85DX4=;
-        b=wAXQ64DMUF0nc/EGT3kdJYTzHYGl4jXIkgaG+vgbofGKVoz10J+hDSN9VGLP7tmIpy
-         DvzgG9vDZb7fTCn8NKtTdEU5gky5yzr9WdqU40OWcNnL32EBOJXeKHHuKVZLsMbKIRQi
-         32GKpIRIyO8Qeof3v5jeuQ7ZQMLGfFZui6hgSLq0yUU0QUUg6LpJO8lc8RWbwAo+Rvvx
-         zWnOoMw2EgTyWruRDAlAidITGNpwqgK059tbDTNgui6htB/Mlgzow9IBMOsV0iOgbZSf
-         AoAP9NOUfk0NhlG3sDcg+cNHIv6mvKZ1kasSEn9VBMuXkYX0vZ1TiXrfuj2PqIN6a1N9
-         bzXQ==
+        bh=HGG38w/6XL7eCEhJYfaBdXpQ1NDhvjAkgS23ptqkDa0=;
+        b=DEGhzDI+I7wgSxPkHTfMyqv68EoDpWuSVuiKEpVt+fV0YFb5yFx3CfjJU4dDIrwATe
+         ZiURhLjmyDrSi7kRjf2P5Z5WCB61OEcSt3uutFwq8l1pX0XXa30HqXZlpRvm0uNFFKK5
+         i6UIWdiXVcZ2iwvIEi+lH64Jvuybs2+p1Zu8RGomDgHHY/UJkJDMFbheFTxmzjrNrBR/
+         4EBmAlnDF1j5QyUsVVaIXD0VZl4G7AlDqtGW+X+Z23dGyvBU+dFmotiH9FlTTmfkUSyV
+         U0PmQvO+QOZfIf7aQ2bBUt/pPmXSL7+y5rvFEZc8qjm8mc2kQ7SVxPnHv7q8gts4kVpX
+         rvDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729110994; x=1729715794;
+        d=1e100.net; s=20230601; t=1729111561; x=1729716361;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EHiZ+D5gMvmLoq4xmme7DBnJRRCsEpHCfusm6W85DX4=;
-        b=oZ8r7ptAr1EKlitXhRGocpy7EYRhUFgaRvhkkyX1z0YM3SJyjhhqHAxQf7lfTgQlja
-         NZL5ACg5LAGn/7jOsomKO2lF5jbkcEth9zZnMm1/yYZOijMCvZdX6e+zF7CzsgP5cDch
-         EuSWunMsv8rgl1EshKWQ6Z/x+kXncZqbPN7095819cJvDWoqc5XXSgqrY7z31mQj8ovK
-         NDycRHVC/BwF7ZF2cAdrU34U8IIlnfhS6ftO6mJIqfxJVF3Y4WicwvZcYTNtLK8TzfcY
-         qhb5mtSkkt2V1fcBnrgvL5/DRu+VQAolKdZuVzpoq+u+88grX262TG//ZVRmZwj913eA
-         3bEA==
-X-Forwarded-Encrypted: i=1; AJvYcCX7nyIDKRMv6tZ3Ta0oX6L3gmJZbKrfsq3BmUjHey4zRT2t8KrlXNebsIcPSPszL/CbERA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxh+vzr0QEMG3nIKU2azR5rzoaaEz4LcoHBAaBsyoyz6MkmKhoc
-	Um8XNdquc6yOw9Y25wylz7BAf8TrkxUszRc2nuWbzaUrCO3ED7WEIx4BkcGJGh0=
-X-Google-Smtp-Source: AGHT+IE7q28cKe3NS3dSJ10vxoJZydTtC5AKYAo21irgCy2siHN1PPL4T7fN1dThwSLkzga3doOCYA==
-X-Received: by 2002:a05:690c:6c82:b0:6dd:d06a:b840 with SMTP id 00721157ae682-6e3d41e504cmr62230747b3.39.1729110994570;
-        Wed, 16 Oct 2024 13:36:34 -0700 (PDT)
+        bh=HGG38w/6XL7eCEhJYfaBdXpQ1NDhvjAkgS23ptqkDa0=;
+        b=wlsFELemRP0F15AKNJJ71xUvYgBeVLQd5thEXGFWcmYoZbNoZhffvgESfkR+3D1h1T
+         bFLKZXx0JUgbqiQRLHv5Udm0UK7JNZfOIt+pLEbxxM1s1tzzUfDRhC4rxJZPK9OAWXtM
+         zjKsaD+W06PB2VzhAZRrwrB85PhNeQXCM/riJJvurcLas8/rg+k38ylR4t8+yFd785gx
+         WU1/t0vaes7wikpdmnbjxjIBoVMy9fEHGPmnKBgYki/MJ7grK9GFLkddNCZoqZiLmFac
+         ueZkGxvRZCUxnl2laSyeMQb89HLFF+xcOSoXcDMNXIeGltuNLOGx4km79GxbmfYpndJA
+         52kg==
+X-Gm-Message-State: AOJu0YyZJicMB6L2oNgKtY/U2DzgndjsrpZwCGOhDSd3kvpDYpaeBK8Q
+	exy1cCgquVCPYcd5v7U7uCT/eP8sDoPQUDltxN6xmVxYj6HHCuQKRsIhPJT49kYypR8MSYq9ReL
+	n
+X-Google-Smtp-Source: AGHT+IGP6XKs1apXm7B8Jn6gIF+Pd7qtJZ1WZSgAkr6bH1eZWyQydZQDogBBdegRq3LrzXs61WdV2g==
+X-Received: by 2002:a05:690c:dc7:b0:6dd:ce14:a245 with SMTP id 00721157ae682-6e364100635mr146035637b3.6.1729111561369;
+        Wed, 16 Oct 2024 13:46:01 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5cbdde0sm8472907b3.97.2024.10.16.13.36.33
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5d4a505sm8447337b3.132.2024.10.16.13.46.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2024 13:36:33 -0700 (PDT)
-Date: Wed, 16 Oct 2024 16:36:31 -0400
+        Wed, 16 Oct 2024 13:46:00 -0700 (PDT)
+Date: Wed, 16 Oct 2024 16:45:58 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: phillip.wood@dunelm.org.uk
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	David Moberg <kaddkaka@gmail.com>, Elijah Newren <newren@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git rebase exec make -C in worktree confuses repo root dir
-Message-ID: <ZxAjz28QLwWlDVg1@nand.local>
-References: <CAL2+Miudq0UXAb=R24v+ftZVkHy2We1CFsFAt__tCYMWtCfOow@mail.gmail.com>
- <Zw2K5xJAOGWitfXr@nand.local>
- <CAPig+cQZoO8tMZ1Gip-at8-9n_tk4axctkX=WbaO1==JRru39A@mail.gmail.com>
- <CAL2+MivOu=_HYg+2KoMKMUtz+=q2jv-K9u9Zxrhe3OuHLCmwFA@mail.gmail.com>
- <CAPig+cQ6=HDD447xTHQ84hmsF3SMbC5nH_PXf3rZWvTWmp18ug@mail.gmail.com>
- <1dc91aa7-04da-4023-bbd5-5b12539477ba@gmail.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	phillip.wood@dunelm.org.uk, gitster@pobox.com, bence@ferdinandy.com,
+	karthik.188@gmail.com
+Subject: Re: [PATCH 1/6] doc: =?utf-8?Q?update-ref?=
+ =?utf-8?B?OiBkcm9wIOKAnGZsYWfigJ0=?=
+Message-ID: <ZxAmBsZzwBuEGN3N@nand.local>
+References: <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
+ <cover.1729017728.git.code@khaugsbakk.name>
+ <ad9ee00a2a971522968f95dd413deae24839ef71.1729017728.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,51 +73,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1dc91aa7-04da-4023-bbd5-5b12539477ba@gmail.com>
+In-Reply-To: <ad9ee00a2a971522968f95dd413deae24839ef71.1729017728.git.code@khaugsbakk.name>
 
-On Wed, Oct 16, 2024 at 10:15:49AM +0100, Phillip Wood wrote:
-> On 15/10/2024 21:01, Eric Sunshine wrote:
-> > On Tue, Oct 15, 2024 at 2:55 PM David Moberg <kaddkaka@gmail.com> wrote:
-> > > Den tis 15 okt. 2024 kl 09:11 skrev Eric Sunshine <sunshine@sunshineco.com>:
-> > > > This looks like unintentional behavior; probably a bug. It seems to be
-> > > > triggered by `git rebase -i` setting GIT_DIR. Here's an even simpler
-> > > > reproduction recipe:
-> > > >
-> > > >      % git init foo
-> > > >      % cd foo
-> > > >      % mkdir dir
-> > > >      % echo foo >dir/file
-> > > >      % git add dir/file
-> > > >      % git commit -m foo
-> > > >      % git worktree add ../bar
-> > > >      % cd ../bar
-> > > >      % git -C dir rev-parse --show-toplevel
-> > > >      /.../bar
-> > > >      % GIT_DIR=../../foo/.git/worktrees/bar \
-> > > >          git -C dir rev-parse --show-toplevel
-> > > >      /.../bar/dir
-> > > >
-> > > > The `git rev-parse --show-toplevel` invocation with GIT_DIR set is
-> > > > incorrectly returning `/.../bar/dir` rather than `/.../bar`.
-> > >
-> > > Thanks, that is indeed a much smaller example and it seems to exhibit
-> > > the same issue. Can we figure out how to fix it?
-> >
-> > Someone is going to have to dig into the code, but my Git time is very
-> > limited right now, so perhaps someone else can do the digging.
+On Tue, Oct 15, 2024 at 09:03:10PM +0200, kristofferhaugsbakk@fastmail.com wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> I'm about to go off the list until the 29th so I wont be working on it soon
-> either but I think the problem is that git sets $GIT_DIR when it is run from
-> a linked worktree. I've reproduced the commit message from ff5b7913f0a
-> (sequencer, stash: fix running from worktree subdir, 2022-01-26) below which
-> I think explains the problem we're seeing here. Unfortunately the approach
-> of setting $GIT_WORK_TREE used in that commit won't work for exec commands
-> as they may be run in a different worktree. Naively I feel that if
-> setup_git_directory() has found ".git" then any git subprocesses run in the
-> worktree should also be able to find ".git" and so it should not be setting
-> $GIT_DIR but there maybe there is some subtlety I'm missing
+> The other paragraphs on options say `With <option>,`.  Let’s be uniform.
+>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
+>  Documentation/git-update-ref.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
+> index afcf33cf608..fe5967234e9 100644
+> --- a/Documentation/git-update-ref.txt
+> +++ b/Documentation/git-update-ref.txt
+> @@ -55,7 +55,7 @@ for reading but not for writing (so we'll never write through a
+>  ref symlink to some other tree, if you have copied a whole
+>  archive by creating a symlink tree).
+>
+> -With `-d` flag, it deletes the named <ref> after verifying it
+> +With `-d`, it deletes the named <ref> after verifying it
+>  still contains <old-oid>.
 
-Let's see if that commit's author Elijah (CC'd) has any other thoughts.
+It looks like we may want to re-wrap this paragraph after tweaking the
+wording on the first line.
 
 Thanks,
 Taylor
