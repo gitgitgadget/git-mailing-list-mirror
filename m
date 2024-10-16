@@ -1,95 +1,45 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from coleridge.oriole.systems (coleridge.oriole.systems [89.238.76.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0C41F80DC
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 08:42:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C98F204F89
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 08:47:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.238.76.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729068172; cv=none; b=khyOOKbj3AWWCGz1ShxQc61q0ns+PfcFOIJ4ErSxxs9bKdy2EeK+J1Xw1aF3V7DmJJ30DStZu2Q/wUUMESW6WcjagISTBz5mD/YDSi1xSl222Pa19PBgfNgJeK1eVgpJGjoOXGyd6aYEndMM1HIhiNCW8mC9GJV6Y0TfYYcFp5Y=
+	t=1729068428; cv=none; b=pdRRP0u64OfoiXbyXyS1VE3qEMMQ5LVeVM3z3/nMnVOvIZBw17FHTHpoYilMbfPQpp/G0bh+O5VawyVP8G0b9Q6m2lOCQpOLilLC3VR4X6WhlBbrQc0qXD8onQIpcpL4fefiEzbdE51DLZoasuS8arsd1OLUz+pRQSBtE7NQgp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729068172; c=relaxed/simple;
-	bh=y/dmwPsNTb/CZTx4bweiYZlIyjHU1tw77MGlXjet/Zw=;
+	s=arc-20240116; t=1729068428; c=relaxed/simple;
+	bh=p6tV2VTJjtYqMLkZLqkk10MNLHoxaCCYWsAj0oi1uXA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hM21DwGsmmjUZH+X7Ql/Bx5X1cTmiq+QbZa8qbyEZ3SxUauB9YPwi/r6NVtDlhEjnMtl7n/FndJHbKhinFTidtPjGQ8F1tdtRG63pkSm5ZR0p8p1rCXoidCYgIbS3SvIwLy3UIpBL+K+of9Q5+YQsOhVLuTZAqfz7t8/atuyrx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Qwllpa3g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E9yxow5o; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZyEQQca6dA+k0NGIHWvrI7J4C3eiZ8Jx8KGpMompaRmmnJo7R1KRFNhT0yDqUPDvJv1C85TXFXDVExLKyZL4vU3sLKa9RyrqiP2yEsotKWqwQlUITpfmtSzbHRI3PtPc18HHyWgnkAk674+ansDF33oerIBXBqk1pPI4ZRq1w3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oriole.systems; spf=pass smtp.mailfrom=oriole.systems; dkim=pass (2048-bit key) header.d=oriole.systems header.i=@oriole.systems header.b=WeiVjYMP; arc=none smtp.client-ip=89.238.76.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oriole.systems
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oriole.systems
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qwllpa3g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E9yxow5o"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 47E241140088;
-	Wed, 16 Oct 2024 04:42:49 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 16 Oct 2024 04:42:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1729068169;
-	 x=1729154569; bh=JEZoq+XHl77UTBMj3ssrVl7n2/sciHfhNP5GD48mt5A=; b=
-	Qwllpa3geTVRY62d8A24eAZ2QI01DHZgGSWWN342jf+DToxqNQPvB9bf4VBA+wW2
-	UkRBc23Mv8xKLQTjemOJuniQl5OSDYxhD1gPY8kxZgZdDDVRtA6U70GQsubGwpFY
-	5GoEUeLXVSWD4lLKqvO1igedam5mny9uts3G2+td0Gf9uWJiOpkxdZhD8sZqJIr6
-	fU7yAQCxaNPnEe3m0WUAMN+9PigeBTagfLHJhZ5FC8HS+rzl8mVKhvuPxU8kYbFT
-	PQS/5MYLZ7FD1OtGfRIiiDDV8pfWRKnfUV0m8gc7JcyT272TT2wIyUYJiJv1Jmzo
-	/q56uiws73QjGSe206l9QA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729068169; x=
-	1729154569; bh=JEZoq+XHl77UTBMj3ssrVl7n2/sciHfhNP5GD48mt5A=; b=E
-	9yxow5o514qebRTfSAg7ZVZJgkmcb2koZHXMMVdP/twikDd/CYaXHLQ1wbnLUj0Z
-	Lro0S9dsHCRg464Qgn/P30yx2lgnKv5cED3rOESoRMrB24YdhlagX7bRG5qKvt9D
-	4HYemzrb63y3JG87JfucGhelWQznjV0zzKX8qPf3s+XrqNesPnkFmGOrxNTRzot3
-	Ri08i0Ls2PcmKy0as6TSYb11KJQHVvjv7SZL2eovrnq7bItk96TMlaAHBvdjWS6B
-	e3DCK97S62HLBjA+BzRNk/Ja/vM83ewzWerSbeay35RPqD+/vOJ6EjM7DzG1tkba
-	ZYLIOm50tvznvTjLQuS1Q==
-X-ME-Sender: <xms:iXwPZxSh67AY1VOC6nFIT2Z_lLinXSeg-oA65Kfcq_JSxqw83RYH0A>
-    <xme:iXwPZ6ypcSX1dz8U5Xq6Aie6bbA-VJiayWEpjBCAAaFMld69eVIBTVrn9MxPadLjF
-    HqV7OljH9P30gR-SQ>
-X-ME-Received: <xmr:iXwPZ20expmsu5zEDpOXA6ywIv_12ymLqDy87EaJ4yTM6Doh9A-OzCfHt1_izt2fmYl_gDoqytVW36UmIwVYfMKJj5GWNlGO1bGLII0DZ336Ug>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegledgtdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
-    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
-    gtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
-    phhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:iXwPZ5BOEFCYLj8zsaxdBO8Yn7oBk_nFnp8TsqrKfpNF8QXf_K4bsA>
-    <xmx:iXwPZ6iXika__F26ZSdkgZRY-bfbtlp2WcrsEyeYOOvNyuYfGSgu5g>
-    <xmx:iXwPZ9oeCo0PXhIaWzGtLY9h0RWLwyoIBGLHcNz-eV8uiMCgCMJ2ww>
-    <xmx:iXwPZ1iQnBQKYtlJ0VHI3ho8nAOZR1uOwg69et6KKDsntbe3lZmTGw>
-    <xmx:iXwPZ8Z6Czx1aWoFx3M9BFvwhgc0IX8M_-48c2cZlQSR6WGXkZ6gG_zA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Oct 2024 04:42:47 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c2363c12 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 16 Oct 2024 08:41:30 +0000 (UTC)
-Date: Wed, 16 Oct 2024 10:42:44 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-	Edward Thomson <ethomson@edwardthomson.com>,
-	karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 03/10] reftable/basics: provide new `reftable_buf`
- interface
-Message-ID: <Zw98hKZc1pjBGGcU@pks.im>
-References: <cover.1728629612.git.ps@pks.im>
- <cover.1728910726.git.ps@pks.im>
- <0ddc8c0c896a006e4cc094390125efcec0b3cdff.1728910727.git.ps@pks.im>
- <Zw2cjxpDf6MowCP+@nand.local>
- <Zw3xhwLFlznU_JvK@pks.im>
- <CAPig+cSXJaETg4Sq3Zw8=37M15CdLEUkdMb2U2X4NPSOAFwmyw@mail.gmail.com>
- <Zw7CIRoXrLr5pd5A@nand.local>
+	dkim=pass (2048-bit key) header.d=oriole.systems header.i=@oriole.systems header.b="WeiVjYMP"
+Date: Wed, 16 Oct 2024 10:47:03 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=oriole.systems;
+	s=canary-202303; t=1729068424;
+	bh=p6tV2VTJjtYqMLkZLqkk10MNLHoxaCCYWsAj0oi1uXA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:In-Reply-To:From:Sender:
+	 Reply-To:Subject:Date:Message-Id:To:Cc:Mime-Version:Content-Type:
+	 Content-Transfer-Encoding:In-Reply-To:References;
+	b=WeiVjYMPWi+yjCeb5P2XmRc68F8UbsrMpEW1/T9queulfFjyG1Oa99Jm4djA0oFCB
+	 Hvok9atQq7CpU5xa1CPUxHkSPkwcFCy2+ALkACdRcCzlODC0ZOmtGgQAd/Il3xJflv
+	 SSpAG1vyB5xbEDBXJzDp8yUmmAbXTH2qJksAvJuA+ShXU2MlwgW8WQsGElKK7mHtwn
+	 0ICVATTgi/wcRE/5XcWzxy4zuoCmP3kvT03bjq58VTgR0zNqlVPcQUHicvMz+ca2r7
+	 y5qim5He+4f0ZqlvVVacRt6q+hjh1z47NFXPut9YYtjq5mCtIBMp7omtyNiYnYIDn1
+	 QEn2kifKAnwQg==
+From: Wolfgang =?utf-8?Q?M=C3=BCller?= <wolf@oriole.systems>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC PATCH v2] builtin/shortlog: explicitly set hash algo when
+ there is no repo
+Message-ID: <gtdjnvonjodr435wuv2pofnww2pdcd33s22xxz5ypwkpvdythc@vrajz5ttkjbz>
+Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20241011183445.229228-1-wolf@oriole.systems>
+ <20241015114826.715158-1-wolf@oriole.systems>
+ <Zw9P90_QtiAAH3yz@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -99,36 +49,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zw7CIRoXrLr5pd5A@nand.local>
+In-Reply-To: <Zw9P90_QtiAAH3yz@pks.im>
 
-On Tue, Oct 15, 2024 at 03:27:29PM -0400, Taylor Blau wrote:
-> On Tue, Oct 15, 2024 at 01:10:59AM -0400, Eric Sunshine wrote:
-> > On Tue, Oct 15, 2024 at 12:38 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > > On Mon, Oct 14, 2024 at 06:34:55PM -0400, Taylor Blau wrote:
-> > > > On Mon, Oct 14, 2024 at 03:02:24PM +0200, Patrick Steinhardt wrote:
-> > > > > +/*
-> > > > > + * Add the given bytes to the buffer. Returns 0 on success,
-> > > > > + * REFTABLE_OUT_OF_MEMORY_ERROR on allocation failure.
-> > > > > + */
-> > > > > +int reftable_buf_add(struct reftable_buf *buf, const void *data, size_t len);
-> > > >
-> > > > Is there a reason that data is a void-pointer here and not a const char
-> > > > *?
-> > >
-> > > Only that it emulates `strbuf_add()`, which also uses a void pointer.
-> >
-> > The reason for that is because strbuf is a generic byte-array which
-> > may contain embedded NULs, and the `const void *` plus `len`
-> > emphasizes this property, whereas `const char *` would imply a
-> > C-string with no embedded NULs.
+On 2024-10-16 07:32, Patrick Steinhardt wrote:
+> On Tue, Oct 15, 2024 at 01:48:26PM +0200, Wolfgang Müller wrote:
+> > diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+> > index c20c885724..ed39c67ba1 100755
+> > --- a/t/t4201-shortlog.sh
+> > +++ b/t/t4201-shortlog.sh
+> > @@ -143,6 +143,11 @@ fuzz()
+> >  	test_grep "too many arguments" out
+> >  '
+> >  
+> > +test_expect_success 'shortlog --author from non-git directory does not segfault' '
+> > +	git log --no-expand-tabs HEAD >log &&
+> > +	env GIT_DIR=non-existing git shortlog --author=author <log 2>out
+> > +'
+> > +
 > 
-> Thanks, that was the explanation I was missing. Perhaps it is worth
-> re-stating in the commit message here to avoid confusing readers like I
-> was when I first read Patrick's patch ;-).
+> I'd like to see another testcase added that exercises behaviour when
+> git-shortlog(1) is passed SHA256 output outside of a repo, as I'm
+> curious how it'll behave in that scenario.
 
-Does it make sense to explicitly state how the interfaces look like
-though? I don't do that for the other functions either, and for most of
-the part I just reuse the exact same function arguments as we had with
-the strbuf interface.
+I had a look at this in builtin/shortlog.c's read_from_stdin() and am
+pretty sure that git-shortlog(1), when reading from stdin, simply
+ignores anything but either the "Author:" or "Commit:" lines, depending
+on the value given by --group. The --group=format: option is not
+supported when reading from stdin. Neither is --format handled at all.
 
-Patrick
+So I don't think there is actually a way to make git-shortlog(1)
+encounter and handle a commit hash when reading from stdin; the hash
+algorithm seems completely meaningless for its user-facing behaviour. As
+far as I have seen the closest it comes to getting into contact with a
+hash (or more specifically, hexsz) is when cmd_shortlog() sets:
+
+	log.abbrev = rev.abbrev;
+
+This relies on the parsing machinery in parse_revision_opt() - the one
+this patch is for. Technically --abbrev is honored by git-shortlog(1)
+when reading from stdin, but its value goes unused because of the
+difference in code paths when reading from stdin. Do take this with a
+grain of salt, however, this is my first look at the inner workings of
+git-shortlog(1).
+
+As for the test, I'd be happy to provide one if this is still deemed
+necessary after considering the above. There's two questions I have:
+
+1) Is this already covered by GIT_TEST_DEFAULT_HASH=sha256? Running the
+t4201-shortlog testsuite with that passes.
+
+2) I've already experimented with setting up a test for this and am
+unsure how to cleanly set up a sha256 repository. Ordinarily it should
+be a simple init/add (perhaps with test_commit), but t4201-shortlog is
+already running within a git repository if I understand the setup step
+correctly. Is there a clean way to escape from there, or would it simply
+be fine creating another repository within that one?
+
+Thanks!
+
+-- 
+Wolf
