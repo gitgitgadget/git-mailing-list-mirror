@@ -1,211 +1,144 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8B6187855
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 06:07:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023A960B8A
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 06:15:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729058862; cv=none; b=fDpqc4/j3SOngO6lZ2SM5+9BNDiKe/QEB/PzR9y2EzCFlS+jF79mzxQrvpbjc48mityvRYYWtiF0nxuNBMOp3BzwTv9KIbpQydTNRo+EYkQn1yOWbtR77WVRd9V5qOrVL5gIUNgNCPcjm8i4ABY8vcOqsEtkOqW3nxnfyAJTO+Q=
+	t=1729059343; cv=none; b=sWFo4k0LHLApqErZhnJtfA6eYw3KUTJU8kyEENWixQa2LRqCPZzSfg0xjPbHk/8wK7teC/4bRkZ8JiaPOUbRfpO+MSnSL0qLhULAQNUIZl5dJCNXIZdGpg6F9WMe59pzEjkUhvQZaA/3R5o/j9w5pGZFeaOjp0QJ8FiObKTiOnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729058862; c=relaxed/simple;
-	bh=2XkUJpwbAquRhj1uiCiISmzpFqOlXCBVZyCqo4Zon1w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OClE1/lQUDUPsAFNe9TnkPuRAVD0Rj4yaHxNNsCdVU3e7L3vtp/MHkfA6lTAGUhhukacbCFkSVCDDGiA4CccLJAR4qQ24lzi4USvtDo0zPIn5uhmmL9JZ6FAAz3f7VD2nzb3DYx5SRDcVbKf6grD9mXo0xiXNCkT/qylKkm9pzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eoe7PTlu; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729059343; c=relaxed/simple;
+	bh=DfGmrpYBNuZ8RsV9p0Dcft/WUldzJRvg3zHIvQsp+8U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aP48de3iKDbQo+4tD7lpq4msSW9TTG3ibmtQZXrfNsbhf/pBzYVa5tr1p5xr1uuNGCTzhRfiSocGSmg9el8Pdlf5RjOpVl3PkpYWShwk2lWVK0AqTWVjNLYEM3Loj0W4QUoOcwGqStYNHjXPucKR4cmaR576br7EmK081WSS11Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hFSLzJjn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IsNWc/t5; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eoe7PTlu"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2f7657f9f62so60920451fa.3
-        for <git@vger.kernel.org>; Tue, 15 Oct 2024 23:07:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729058859; x=1729663659; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Lnm1vkoGT1tgXy6QN4cOlFVErwLGO0JdJ7tKKuImAFE=;
-        b=eoe7PTlu9fTbHDwqWc8cVW4AD9hYc8/GnJX1559jppxylC/Uq1mROn4wLnIVtMYOSA
-         wDm+CCwsvH1m4aaJXDDWVvqNli+tacp21KE4WiUbMprTHFC65NOSxvJVgSXbGj/7h5tG
-         cjMFF1xkGW/qnyJ9CIfn1SEHq4rUXPW3EFqxXB8dwxArHpbq+eKGvJCM3KUfn5hKR22A
-         4w55dr02fZd3E1suJfX4CkQXoDKONODe08XDnM1sAcdGfyzNUtg3jiXO8DLLIcLOojoY
-         IeFd0NEgC35JqRot0AyE/IX7QKYQq//HTHAaMkjEsMDT4mkshT8VkMXO4YAXC4Eki/oS
-         xudg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729058859; x=1729663659;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Lnm1vkoGT1tgXy6QN4cOlFVErwLGO0JdJ7tKKuImAFE=;
-        b=Vy8FpXbaqEkdfjMEzL3t3cR1Na4mMGpBoxxFgWL1FkNCe1ZKi8ei8s5ceJ3UtB+BHJ
-         EtFPHiet9lwX+oLEohcjtzCd4JoybfxbNUcw03IKX2ujTbEb9bT3RA18MQlrf8/FNqDk
-         f//YBwhy27nprcNOFwNNjJx8EoGbFz5SLA1VTT/l06SYGyF8nepjZcpQi+ViBVieEeIL
-         AMTBZ6j6DN6f7gvg6LLygG5taLwwH1Tn2ihu6qWl5oa7Jrjy6vAt8YUCOzDUwuKYDmLb
-         1oJTs2+JbCDUtPv+0IfF4HwjCf96FvSIHnIz8WFkG2GCW4GPV0lPPbxAusmqIKaYQQPg
-         BrJw==
-X-Forwarded-Encrypted: i=1; AJvYcCWBFNVIJVBkNp1MdvF/3gtqLyvxq7OmPz0dbp9htif213VdYFfJlMksqfBH++vyCyHBHmc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSg8SCBHPp5PZiKAqZiEzHyVW6mdjAUdNHhH9LoryjN3p259BF
-	qSRwVPrwvF4bvA15WKTPaanAsMagdgkDsxexDbRqQqYzjmdSDCp4rlDa63WSV8AWmLYUVAZLFNK
-	Woem5BMKoRZ5pIyAxQOObhcIgl0U=
-X-Google-Smtp-Source: AGHT+IEo8OQlPUIFO9HfgLjquIgrstSaTktstIp2OBqMdAd+PBeEEIRwReEQQ+hCpcvblxjo6OyqM5vdwgQf0Z4aEdo=
-X-Received: by 2002:a2e:b88d:0:b0:2fa:cc86:f217 with SMTP id
- 38308e7fff4ca-2fb61bada51mr17378541fa.35.1729058858865; Tue, 15 Oct 2024
- 23:07:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hFSLzJjn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IsNWc/t5"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id EB36913801DF;
+	Wed, 16 Oct 2024 02:15:40 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Wed, 16 Oct 2024 02:15:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1729059340; x=1729145740; bh=z1enpIoo6a
+	8NqW8s3BSfIHrYqlKxDqYYH53xy8A5fos=; b=hFSLzJjnqULaWXNdX7sgKfeIjJ
+	iDlKn1TtyxWUkxi9JucNxtd6vHvu+DRScV+hWiJhFezA6da9dxikpQVAI0AWBi7s
+	UDFUxcCm+pF5BBCXHz2St+CtBSD6C5rr7DwDEUHt1tHiQ2TzV6JXDogPUksnIlCz
+	vvFgPZmNa9tXiBEvjHDJ2CGloSOwiux/z307SbEbhpiL9Gv92R/spMRzeUBdQnb4
+	X4kGdh1FG+uPlaGoYu50ZPzmLXNPHxkSulj3KjhwuzxeEmfw+uyXyokqxFAoHOK7
+	vNTnqMsRNXsI/p7PEDWNz4wKnllunoym4BtxhQcBekr/wnjf8jSDBV860xtw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1729059340; x=1729145740; bh=z1enpIoo6a8NqW8s3BSfIHrYqlKx
+	DqYYH53xy8A5fos=; b=IsNWc/t5sH9bUBG44eiov292OT4y5SW9WMhE8vjXHyWI
+	hjlOyf34BgGBeCHAdt4N/ktWJ4Mu6I5s9fkx0WVAt9GfEydCxlIbnLOGZ9Ct+qag
+	lf6p0Rc55Nrtx2PfM7OKQO1Rof+xgtZ4mAQZgMDvlS5QYQPWSpEx0Krb5MIwk+om
+	ooFLt8ru4TgThjsfjYVte6iZhcGKmuzZWIEd7ow+HNAq8RVXGtzFIENkiXssQPxP
+	0duicqNOo6JYv4xMrkZY7M18uFzO2te1S9UNr5oykSBJWsqXHRmX6W0WN/KQ83Og
+	5R4vdVdQrBPH5wAMhF/mfsEEx9fV4tiPZOvCXPGbrg==
+X-ME-Sender: <xms:DFoPZ3TyDcJ5HqlbYqweGFGJjphsAJAsHMIMFuZeg4qIPT6UJdYA5A>
+    <xme:DFoPZ4yPqorfodKHmN4XvzrU96bxk5vS4GhemNnDyc7lE-Vg1NOZj4vZW4v42LwXS
+    Tm_xyGZVGjIIhmwiQ>
+X-ME-Received: <xmr:DFoPZ80-B_wAf630vUGFXZ_9Z8l2Qdi8AJbyuPGwkbDdscbbtdXwcU2vnPlgknWEdyIp4p66Hmv86_gIG2Jo4MOtlXW-i_X-nJz-kWRxiDl55Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegkedguddtjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
+    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhvghj
+    ihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehfihhvvgdvfedutddtfeesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:DFoPZ3BXYcGvsS7H8d6ayUzC2fIMeSDNxRdHw_6T-cCgCGF4zCTiIw>
+    <xmx:DFoPZwifhMI9bypIzQxJG28u_VPAayKlLaa2GbDHFYHw1GJ2psNwow>
+    <xmx:DFoPZ7qCnwXlysNXW0MH94W31U0byDzycuBAi-nJsMwoiydF2uIiPQ>
+    <xmx:DFoPZ7hWc_bvfLMJ3w21gSgEN0Yu99HrG2K0JISSVvzyB_bjnbpYVQ>
+    <xmx:DFoPZ5vFSxzdEHLzUeP6x_48kMqEJrIen9BRLlR3BC3zcuUufk29o_Xi>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 16 Oct 2024 02:15:39 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3b220d33 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 16 Oct 2024 06:14:21 +0000 (UTC)
+Date: Wed, 16 Oct 2024 08:15:37 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: shejialuo <shejialuo@gmail.com>
+Cc: Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] repository: move git_*_encoding configs to repo scope
+Message-ID: <Zw9Z_xcHKcjKVUB4@pks.im>
+References: <20241015144935.4059-1-five231003@gmail.com>
+ <20241015144935.4059-2-five231003@gmail.com>
+ <Zw6SsUyZ0oA0XqMK@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1809.git.1728370892696.gitgitgadget@gmail.com>
- <pull.1809.v2.git.1728707867.gitgitgadget@gmail.com> <4ed930cab1b7f5e9738e73c7b9374d927a8acd94.1728707867.git.gitgitgadget@gmail.com>
- <0ac9d9a1-cb91-4b1c-bba1-022ecc485684@gmail.com>
-In-Reply-To: <0ac9d9a1-cb91-4b1c-bba1-022ecc485684@gmail.com>
-From: Abhijeetsingh Meena <abhijeetsingh.github@gmail.com>
-Date: Wed, 16 Oct 2024 11:37:27 +0530
-Message-ID: <CAAirc3hkiQ95kzniP4Ws_op8nWuY4tdNrCjrPXMDShq3KX_h+g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] blame: respect .git-blame-ignore-revs automatically
-To: phillip.wood@dunelm.org.uk
-Cc: Abhijeetsingh Meena via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>, Abhijeetsingh Meena <abhijeet040403@gmail.com>, 
-	"me@ttaylorr.com" <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zw6SsUyZ0oA0XqMK@ArchLinux>
 
-Hi Phillip,
-Thank you for reviewing the patch and providing valuable feedback.
-I=E2=80=99d like to address some of your points below:
+On Wed, Oct 16, 2024 at 12:05:05AM +0800, shejialuo wrote:
+> There are many builtins will execute this config setups by calling
+> "config.c::git_default_config" and then "git_default_i18n_config". If we
+> need to use "repo" pointer, we may need to wrap this pointer. (This is
+> not the problem and it is not hard).
+> 
+> But what if the "repo" pointer is NULL? We still need to set the value
+> of these environment variables. Because when using "git-mailinfo(1)"
+> outside of the repo, we still need to set "git_commit_encoding"
+> according to the user's config.
+> 
+> So, from this perspective, I don't think it's a good idea to put these
+> two configs into "struct repository". Because we can use these two
+> configs outside of the repo, if we put them into "struct repository", it
+> is strange.
+> 
+> However, I either don't know which way we would apply. So, I cannot give
+> accurate answer here.
+> 
+> ---
+> 
+> Patrick, I wanna ask you a question here. What's your envision here in
+> above situation. As you can see, if we put some configs into "struct
+> repository" and we run the builtins outside of the repo where we need to
+> set up configs, the "repo" is NULL. And we will get into trouble.
+> 
+> My idea is that if a config could be used outside of the repo, then we
+> should not put it into "struct repository".
 
+I guess it would be nice to have a set of convenice functions in our
+config code that know to handle the case where the passed-in repository
+is `NULL`. If so, they'd only parse the global- and system-level config.
+If it is set, it would parse all three of them.
 
-> Supporting a default file in addition to the files listed in
-> blame.ignoreRevsFile config setting leaves us in an odd position
-> compared to other settings which use a fixed name like .gitignore
-> or have a default that can be overridden by a config setting like
-> core.excludesFile or require a config setting to enable the feature
-> like diff.orderFile.
+I also kind of agree that it should likely not be put into the `struct
+repository` in that case. I think where exactly to put things will
+always depend on the current usecase. I bet that in most cases, we
+should be able to get away with not storing the value anywhere global at
+all, which would be the best solution in my opinion:
 
-Yes, I now understand that we can solve this by using the existing method f=
-or
-interacting with configurations, as suggested by you and Kristoffer. We can=
- work
-with the existing configuration method like git_config_set to set ignore
-revisions file. This (I hope) will also keep it consistent with how
-other settings like .gitignore
-and core.excludesFile work, making the interaction more predictable for use=
-rs.
+  - It can either be stored on the stack if we don't have to pass it
+    around everywhere.
 
+  - It can be passed around in a specific structure if we pass the value
+    within in a certain subsystem, only.
 
-> I've left a couple of code comments below but really
-> the most important things are to come up with a convincing
-> reason for changing the behavior and figuring out how
-> the default file should interact with the config setting.
+  - Or we can parse it on an as-needed basis if it happens deep down in
+    the calling stack when it's used essentially everwhere.
 
-I agree. After revisiting the use case and the flow, I see now that
-the solution can be
-more straightforward with git_config_set than my previous approach. This
-behavior allows for interaction through the configuration system
-without the need to
-introduce new options. Kristoffer=E2=80=99s suggestion clarified that handl=
-ing
-.git-blame-ignore-revs
- a default file and allowing it to be overridden or disabled via
---no-ignore-revs-file is sufficient.
+Now there will be situations where we used to store things globally as a
+caching mechanism, and not caching it may have performance impacts. But
+I guess that most cases do not fall into this category.
 
-
-> As Kristoffer has pointed out --no-ignore-revs-file should
-> be sufficient to disable the default file. If it isn't we
-> should fix it so that it is, not add a new option.
-
-Absolutely, you're right. After revisiting my earlier testing issues,
-I realized that the
---no-ignore-revs-file and --no-ignore-rev flag works as intended. My
-previous confusion was due to a mistake in my test setup. I agree with your
-suggestion that we should not add a new option and instead focus on ensurin=
-g
- that the current flag behavior is clear and functions correctly.
-
-
-Thanks again for your review. I hope this approach is better than my
-previous approach.
-I=E2=80=99ll make sure the changes are implemented correctly in v3
-and test the interaction between the default file and config settings
-more thoroughly.
-Looking forward to your further thoughts!
-
-Best regards,
-Abhijeetsingh
-
-On Sun, Oct 13, 2024 at 8:48=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> Hi Abhijeetsingh
->
-> On 12/10/2024 05:37, Abhijeetsingh Meena via GitGitGadget wrote:
-> > From: Abhijeetsingh Meena <abhijeet040403@gmail.com>
-> >
-> > git-blame(1) can ignore a list of commits with `--ignore-revs-file`.
-> > This is useful for marking uninteresting commits like formatting
-> > changes, refactors and whatever else should not be =E2=80=9Cblamed=E2=
-=80=9D.  Some
-> > projects even version control this file so that all contributors can
-> > use it; the conventional name is `.git-blame-ignore-revs`.
-> >
-> > But each user still has to opt-in to the standard ignore list,
-> > either with this option or with the config `blame.ignoreRevsFile`.
-> > Let=E2=80=99s teach git-blame(1) to respect this conventional file in o=
-rder
-> > to streamline the process.
->
-> It's good that the commit message now mentions the config setting. It
-> would be helpful to explain why the original implementation deliberately
-> decided not to implement a default file and explain why it is now a good
-> idea to do so. Supporting a default file in addition to the files listed
-> in blame.ignoreRevsFile config setting leaves us in an odd position
-> compared to other settings which use a fixed name like .gitignore or
-> have a default that can be overridden by a config setting like
-> core.excludesFile or require a config setting to enable the feature like
-> diff.orderFile.
->
-> I've left a couple of code comments below but really the most important
-> things are to come up with a convincing reason for changing the behavior
-> and figuring out how the default file should interact with the config
-> setting.
->
-> > +     /*
-> > +     * By default, add .git-blame-ignore-revs to the list of files
-> > +     * containing revisions to ignore if it exists.
-> > +     */
-> > +     if (access(".git-blame-ignore-revs", F_OK) =3D=3D 0) {
->
-> There are some uses of "access(.., F_OK)" in our code base but it is
-> more usual to call file_exists() these days.
->
-> > +             string_list_append(&ignore_revs_file_list, ".git-blame-ig=
-nore-revs");
->
-> If the user already has this path in their config we'll waste time
-> parsing it twice. We could avoid that by using a "struct strset" rather
-> than a "struct string_list". I don't think we have OPT_STRSET but it
-> should be easy to add one by copying OPT_STRING_LIST.
->
-> > +    echo world >>hello.txt &&
-> > +    test_commit second-commit hello.txt &&
->
-> test_commit overwrites the file it is committing so you need to use the
-> --printf option
->
->         test_commit --printf second-commit hello.txt "hello\nworld\n"
->
-> > +    git rev-parse HEAD >ignored-file &&
-> > +    git blame --ignore-revs-file=3Dignored-file hello.txt >expect &&
-> > +    git rev-parse HEAD >.git-blame-ignore-revs &&
-> > +    git blame hello.txt >actual &&
-> > +    test_cmp expect actual
->
-> I have mixed feelings about this sort of differential testing, comparing
-> the actual output of git blame to what we expect makes it unambiguous
-> that the test is checking what we want it to.
->
-> Best Wishes
->
-> Phillip
->
+Patrick
