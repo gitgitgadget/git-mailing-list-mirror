@@ -1,67 +1,69 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D45E125B9
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 21:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B27125B9
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 21:05:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729112584; cv=none; b=FttJoNtnSUt6oA325YUGu4obZOEilyeNDGNJi5yjnhUjuncDzmEed0zGL8bHbJLnt9f/bR1UCGqSbezONsPVEgROd528z6fcOx1fEp54xcvPDVI4gz/QBgMiAKaYo4OTsDZR8jntOqnEneuUcwl21xhs2+Wfi3rGikW5vU1GSLQ=
+	t=1729112715; cv=none; b=bQEsw3N1IrUjA3ELyq55TQdXm5uS7jvFRCBSA0yNreMZn3HQoex8+sUuEtUs++60pGCm/+q3aOEIKMZ6eoGXCTjQGEo86i6jF2HiUDmF6psY1WffR4lxkyGb7C/3a3dNsVcoh0yO0DT4Fe/tfOGl5ElI36L2ripcYSBGYEZghYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729112584; c=relaxed/simple;
-	bh=jjqes4DVvohkaQWnpJI31rT2/9Y33EcUptjZJ10inv4=;
+	s=arc-20240116; t=1729112715; c=relaxed/simple;
+	bh=ZXJ4yP+n3IQsDd2YPppWukHX9cSfkVs16gI/Hp+HwL8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LPIFuh1z3gVeyKSNsEHNSiN5uof9ZuEfrcH6QBbXBT03bYovlv96fAiTF3HMAxhEYR9ngsXfD015nK5qzy4+51rQ0SFR5jwd3rp5pQJWyQIK9cKCC0MQis4vD/OUzgNjI1uZ3sidXt/ddEGjTBnMDRS87ckGOhCWVR9yLmEI75U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Kyzm52rR; arc=none smtp.client-ip=209.85.128.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=qBiji0+I9qkY0EZ+H444yo/h3FYMDmmskXcT/QtPuXLTAGH7Q9kMnalSCHucwBkbxIZDDuNVvB8m1ckNOVF39aJecDjpBYC+BrlP4KMH1Scgr1QdakOi/xbx7WljjDHsTcc1lytMkGmSvvElAUlxxWp9GMOcQr/rdhgwjHJqKE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=0FBPezsZ; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Kyzm52rR"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6e59a9496f9so4285697b3.0
-        for <git@vger.kernel.org>; Wed, 16 Oct 2024 14:03:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="0FBPezsZ"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6e396a69062so3179367b3.0
+        for <git@vger.kernel.org>; Wed, 16 Oct 2024 14:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729112582; x=1729717382; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729112713; x=1729717513; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DRJq1WaUVauaH0NrxFRv+N+/t6YeVkCcykKZIPJGKYo=;
-        b=Kyzm52rRMyLAUnw4PveiMzywaQL9oU3OWqFeBMEpvMmStwUJyAANmgcsWwUpQ+xum4
-         Ei+6K45+XxIkBo9FrzREv5KJ7HFYZ4HwtVlmxq1gOW1iCjWc52ZwYuFrIkCECZgWa1yh
-         oXtCUV4BIcCpYnJy1tNAVt3MxeQy0vO3mR5b201mBwPgCdtZsUN3XipNsL4A1W4YUCj6
-         Gxg67DffJ0EM4CuWtjPApT0KQbb3wNxs8CLwCZJp9eMnYBMIIgctbAv6+BEXaeSE5UC+
-         7ZPF/TmN+EWah8+YhpRcmJUD45IrsDfp/zbJdwEZ5q8tjFPnevUpwLfnZv3U4lz+hPgW
-         sM2w==
+        bh=wb/eoj6xvBIIkQyhbo8nGbUfT7NyZY6aLlWwYM9/A9A=;
+        b=0FBPezsZh3243yLF3gLPbN/J93+T2430D4SATFMpqWI+N1p/pRHTd4SH2IwHEpjWwz
+         Ba8+s4vKRkyC5RWMM6gnRyyYKY5Lxqud0SFonk6WmGc1I02q9qjcLv74xAcNKpyrN7aX
+         2dSDf4AYpPJB0MIc0GiLqmsWvU4xWr5Yi6rHoyaljdyuL2YeJ9Z63rDZpkFeu3/bCIOw
+         F0zdR9m1WKjqlDn/L7Ct0JnpHP5i4iCCES0mtxXxzld805MamNKc29apzA9wHivHcHqf
+         YeWyPdArM746J/omXJRKeEp72RzqbFkRLNfw37Z7k232fh1oV+UQ4kW8iJOXE9AlLz2e
+         MmYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729112582; x=1729717382;
+        d=1e100.net; s=20230601; t=1729112713; x=1729717513;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DRJq1WaUVauaH0NrxFRv+N+/t6YeVkCcykKZIPJGKYo=;
-        b=FoNwn3zLdRTntke8MbvYDaOoNUskhQOQT8tp8yaeT6PGSKgZceQ8OtDagJWEchgaXN
-         Pr5xZikVvb7Iu/mLrYw+FebDaHqcIReWGsQ9WJ6beIQ9qVTAf/mNjdV8E8+LgXkx+wBz
-         +6e8BeTsvgc+JLhhJdW2j2wCVe3qaRWUlh2Y2hx6FrDtyC2zJKY6dVgXVCK3q8ziLg4n
-         7tupcEAYY9/TTJBBnxhmxZADKnrdd4mYDyBzyeMeL1ExIPMKWD8kWeRQgObQ2kVVoexO
-         bhuQ/ouV5wMFglgiT2uia2JVNUw9sPZmTIhC0oce1qNSFmGxVaaeZ2k4k67DpjuMiDoh
-         /Vvw==
-X-Gm-Message-State: AOJu0YxXGtgDzeTX5GKf7LX5w9/8K5/fPQsBsK0eIqHuJsv0JpyOUjjA
-	au8ZF1ubB9/9mJeM4xFvXeYh3TzZr4btYefPFJmL+VEEaGSj8+ZMk1P0ePJMumY=
-X-Google-Smtp-Source: AGHT+IHT1PvGwMj35bY13xghB7Q96CW1ee9AFD3pa1zeFdPsQrEW8z2tmExCnf3XpFJtcu30k7odZw==
-X-Received: by 2002:a05:690c:3686:b0:6e3:3357:9106 with SMTP id 00721157ae682-6e3479b967fmr184887147b3.15.1729112582285;
-        Wed, 16 Oct 2024 14:03:02 -0700 (PDT)
+        bh=wb/eoj6xvBIIkQyhbo8nGbUfT7NyZY6aLlWwYM9/A9A=;
+        b=Ymv2lXgLKxmqqvviPE4xwuZqPMCZFjnzgN8y090KGjZ+aM3SxJa9xw/IxvGccKEqzr
+         u6vF6J47rpkv5gohe5SJ+rTJP0soBD70jSNFOPd1e4NakT8MAkmqzesbUK2wQ6xfy+xL
+         0pOcsgms8AtfM5SJiVBMoB6Qj9W/nea0IXmvepfepBTHFon4idiBJShwCfuNmFNr3Bg7
+         HbW/k4Rk7xUnGeNZQ531ZKiBpTz7z6CuKeUm7N213Zve2yHmD1Jz0HlrHPr5r/3jZsFP
+         kKsHWKGkCcWLlEwXV6svLQ4Ib65gbmKH/jm4BSTQelL+0UCHHUhedKRbTgmBJH1a72/B
+         4uTQ==
+X-Gm-Message-State: AOJu0Yzj0C0bxnP1r6x9I8SgaF3LwuY9YKEu/alza2sop1tizF1d2Hie
+	3dGB/xbF8iwxEee2h9NKMbL23gzi9cu1XTFF1NVEMAnjxsLWLBAV7R2XMDdWAKo=
+X-Google-Smtp-Source: AGHT+IH5pJh7g+g+QZJNG8e6Mrp2OIfJ3ANrSkyotu5kzYI/3yOT4k8HjpruLdjOl3ZzVM2cblNbbg==
+X-Received: by 2002:a05:690c:3308:b0:6a9:4fdd:94e5 with SMTP id 00721157ae682-6e3479b990amr130222437b3.13.1729112713087;
+        Wed, 16 Oct 2024 14:05:13 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5ae8752sm8709197b3.7.2024.10.16.14.03.01
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5ae2c58sm8578027b3.10.2024.10.16.14.05.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2024 14:03:01 -0700 (PDT)
-Date: Wed, 16 Oct 2024 17:02:59 -0400
+        Wed, 16 Oct 2024 14:05:12 -0700 (PDT)
+Date: Wed, 16 Oct 2024 17:05:10 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 02/10] t/test-lib: wire up NO_ICONV prerequisite
-Message-ID: <ZxAqA+iyz8EIOeNC@nand.local>
-References: <cover.1728906490.git.ps@pks.im>
- <cover.1728992306.git.ps@pks.im>
- <f6a8582c34a7b77aa3e2e45298208050333c384a.1728992306.git.ps@pks.im>
- <Zw8AaF4VOaQO+P2M@nand.local>
- <Zw85joY3Hqzx23xc@pks.im>
- <ZxApLn9Qf4hdAlBL@nand.local>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, karthik.188@gmail.com
+Subject: Re: [PATCH v8 0/6] set-head/fetch remote/HEAD updates, small change
+ from v7
+Message-ID: <ZxAqhqHwomsRq2Ck@nand.local>
+References: <20241012230428.3259229-1-bence@ferdinandy.com>
+ <20241014225431.1394565-1-bence@ferdinandy.com>
+ <Zw8IKyPkG0Hr6/5t@nand.local>
+ <D4X2ZZAT5LKS.1FZ375SIMBV2F@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,46 +72,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZxApLn9Qf4hdAlBL@nand.local>
+In-Reply-To: <D4X2ZZAT5LKS.1FZ375SIMBV2F@ferdinandy.com>
 
-On Wed, Oct 16, 2024 at 04:59:26PM -0400, Taylor Blau wrote:
-> On Wed, Oct 16, 2024 at 05:57:10AM +0200, Patrick Steinhardt wrote:
-> > On Tue, Oct 15, 2024 at 07:53:12PM -0400, Taylor Blau wrote:
-> > > On Tue, Oct 15, 2024 at 01:45:11PM +0200, Patrick Steinhardt wrote:
-> > > > Further note that there are several "!MINGW" conditions in t4201, and
-> > > > all of these fail due to iconv-related errors. This is quite likely a
-> > > > leftover from times before dce7d29551 (msvc: support building Git using
-> > > > MS Visual C++, 2019-06-25), which switched Windows-based builds over
-> > > > from "NO_ICONV=YesPlease" to "NEEDS_LIBICONV=YesPlease". Consequently,
-> > > > adapt those tests to also use the new ICONV prerequisite.
-> > >
-> > > This appears to break CI on Windows when I merged this into 'jch':
-> > >
-> > >     https://github.com/ttaylorr/git/actions/runs/11355564982/job/31585450667
-> > >
-> > > I'm going to temporarily eject this from 'jch' and 'seen' until we can
-> > > properly deal with this.
+On Wed, Oct 16, 2024 at 10:18:44AM +0200, Bence Ferdinandy wrote:
+>
+> On Wed Oct 16, 2024 at 02:26, Taylor Blau <me@ttaylorr.com> wrote:
+> > On Tue, Oct 15, 2024 at 12:53:09AM +0200, Bence Ferdinandy wrote:
+> >> Bence Ferdinandy (6):
+> >>   refs: atomically record overwritten ref in update_symref
+> >>   remote set-head: add new variable for readability
+> >>   remote set-head: better output for --auto
+> >>   refs: add TRANSACTION_CREATE_EXISTS error
+> >>   refs: add create_only option to refs_update_symref
+> >>   fetch: set remote/HEAD if it does not exist
 > >
-> > Ugh, I'm looking forward to the Windows jobs for GitLab CI being merged
-> > down to next so that I can finally see such regressions before they hit
-> > our trees. Anyway, thanks for the heads up, will have a look.
+> > I integrated this new round into my copy of 'seen' today and noticed
+> > some test breakage in t5505 here:
+> >
+> >     https://github.com/ttaylorr/git/actions/runs/11356267070
+> >
+> > I'm going to temporarily eject this topic out of 'seen' until we can get
+> > an analysis of what's going on here.
 >
-> It's OK. Ejecting a topic out of 'seen' is relatively easy as it
-> requires the following (after removing the line out of Meta/redo-seen.sh):
->
->     git checkout -B seen jch
->     sh Meta/redo-seen.sh
->
-> I was mostly confused why my build of 'seen' passed 'make test' locally,
-> but failed CI when pushed to GitHub. Of course, I'm not testing on a
-> Windows machine, and you didn't have easy access to Windows CI runs on
-> GitLab (for now), so the result makes sense.
+> Thanks for the heads up! I see that indeed the failing output is different than
+> what I have locally (e.g. no "apis/HEAD -> apis/main" in any of the test files
+> I have). On the other hand I can't reproduce it so I will need some help with
+> this I think.
 
-Speaking of... I have 'ps/ci-gitlab-windows' tagged for 'next' in the
-next integration round. There is some duplication of patches between
-that topic and this one (as well as ps/build).
+I similarly could not reproduce it (I ran 'make test' on this topic
+before integrating it into 'seen', and it passed, otherwise I wouldn't
+have picked it up).
 
-How do you want me to handle the dependency?
+I am not sure what the differences are. The 'ci' directory has some more
+bits on how the various suites are run, and the '.github/workflows'
+directory has some more bits still.
 
 Thanks,
 Taylor
