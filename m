@@ -1,109 +1,96 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D91212EF1
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 17:49:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E946E206E86
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 17:58:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729101000; cv=none; b=Aw1Dhf3Nrih58aMPYjn7FO7VrEDY4dl030cQFzPKFxAqWG5rTVfY18BOqoPP0Mkbk6999kYE/NuqWv2ZVonTwkakS6FWtltPgCbJ4wIAv657mrQ3uxoOum+hc/sAZhRQDMbM1VSWmDmbprKxvOEEanhcEiNSqE6EghS16mqsUd8=
+	t=1729101504; cv=none; b=N3LHd+7b5s+vn/tWPMjUwBaRZSKYPIb0uRlE+Q5oEVBLIi4HavagfF3oE1YobdIsicf+rexZz8Vj0wuH+D/drxNEEsE9+8yaDx0Hrt8BdGt/ewXHgYrM6m8m1p6CwGYvkD32RvnOOLFZalh4Z/VQIih3BqMIOcBMUavMO+iM77Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729101000; c=relaxed/simple;
-	bh=WyqF82jGvdl2Bti+pE1rl86xyQ8XU1HsD/Kef9THpNY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y0vEREHX65EsXzc731+zlz55UvHdzQ0GvPPmaVotWQKEQVg5Uas71mAda0wqgLusT3p+c4dZiJ5acn7YKyY5ePZOhwR6+ldzrSjqHfItTenaBaHbrS+MTqYZ7Hn49RuaguBKz4lOtWu6ZG8m0gR69F1YWD4j27YTf7lxVirwmTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YGgbe1Na; arc=none smtp.client-ip=209.85.214.176
+	s=arc-20240116; t=1729101504; c=relaxed/simple;
+	bh=GCEJ+kPCwHUQJ+rRKN69iyC8+FDvwV01zm3Bg9r116E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AEo0eJxm0hjjwUra0QYL6xsP+NXIwNPxWoI7BA8VcUrR0FBE+Xor3Rxp/gHce5KncLSmcSFQKXyTwqRuMtt3YDVZyLezAvj60M87n7j8fpvxXf5R8y6x6uCvk/8b9mXeVAaWypHUHu65HT1AyIQXhadOLz2uZsrKCcq1WtGpSHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bAc2+9+h; arc=none smtp.client-ip=209.85.217.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YGgbe1Na"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-20caea61132so565365ad.2
-        for <git@vger.kernel.org>; Wed, 16 Oct 2024 10:49:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bAc2+9+h"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4a482407e84so14640137.0
+        for <git@vger.kernel.org>; Wed, 16 Oct 2024 10:58:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729100998; x=1729705798; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EFPru5gw2HSHOyP8JaDk9zlv+foNhMgpkfv8Q4Tg89w=;
-        b=YGgbe1NaNEuA7SISdsqiPiUZjS4usHbfTnK2UHY8QJNyiVsGiAGS5P5uwZLjruGJat
-         +lXy5t180fy4uQYQY8Wn8brk6ooxkoLLDiAWNnDYxfP1NcSdFgS6rUlZRiY7n7cm/RFG
-         CQzhftqRRifqq3uHItcmSISez3w7utNPi6PLzHfYzGss8pw2o7USGaSjqSNamTwEA6Y6
-         mWd49ruQK3UWgbbkNO7sJJQGJbQEFxiozq4SAhuvULCUUET/kGRVi5VFLJMCWncdR7H4
-         YXcZibME98uj33LdtVBoB44kOjLJeHeAacf539rZw02RSLM/8OvnuYLtld3Z11FdwOFa
-         oYRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729100998; x=1729705798;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1729101502; x=1729706302; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EFPru5gw2HSHOyP8JaDk9zlv+foNhMgpkfv8Q4Tg89w=;
-        b=DbrQ7JAv5LGoOc5SQTujqrzZHW4Upl6lD5xbDR2HiB+VVPMJTnnOngqrDJ6KSG2cSq
-         ZYz8h4mw9XBcCNGaTPtb2aREwJ3igdY+SMJ7x8pjezeH2kuTc8R+FJONffrWFEuxNTpw
-         ZHCE4WZrNd7eQuZVkeqK9709mfrS6T6Jl8TfHu3LXTEQLZYDV8uu/SRbaQ80wI21qDXK
-         5XEI4X97HhZWT0eGMDLAtV/zSwFFxfLXDxfunTbNCpbUFxRSlt2FyjYT+QqO2/21f0yC
-         f0r0gxr5i6CflRKOS9TVvPYHR5XabtjlYVWWltu05GoEDaz5ublztu/Qsu0BvSW6vMgb
-         Cz1w==
-X-Gm-Message-State: AOJu0Yz8HEhees93aUu2p5PANkgF2nE16EcnMQrgIcjJustti6cI3iMK
-	ML6m5pOgb7iNoQl/8V5d3YvaN82k5HJio+9plNywKrzHdhSGP0nGQrL5MTQU
-X-Google-Smtp-Source: AGHT+IExDTee3TT/RSJWgFJdz6KpBMngK203uxf+l4sOHECW2Da0WJb8XbXGmEPTtxQ9oPNJM8bzNA==
-X-Received: by 2002:a17:902:ce87:b0:20c:8b10:9660 with SMTP id d9443c01a7336-20cbb2845dcmr266883735ad.44.1729100997405;
-        Wed, 16 Oct 2024 10:49:57 -0700 (PDT)
-Received: from five231003 ([2405:201:c006:3236:dcc1:5355:4129:c7c3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e3e09280bdsm44967a91.45.2024.10.16.10.49.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2024 10:49:56 -0700 (PDT)
-Date: Wed, 16 Oct 2024 23:19:53 +0530
-From: Kousik Sanagavarapu <five231003@gmail.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/3] pretty, builtin/mailinfo: don't rely on
- the_repository
-Message-ID: <Zw/8wYmsPsmynYh0@five231003>
-References: <20241015144935.4059-1-five231003@gmail.com>
- <Zw7Hy12qHhd5BhGh@nand.local>
+        bh=eG9mLBg1a+CwWtPvW0vmSFqp/JDXif0hFxJyaVVxj/s=;
+        b=bAc2+9+h8LoPQ365mx9EbUwCYgKuSo+6pEwkOnB6l/AE5hnLiCsWe9kKalV8HNYKER
+         8gqsLFpOQH9Y7AdDKkgiK5K4+BusxX54tOXsT0k2W0bR4xuMWfjwaHE+ATpurthGTO+s
+         JZde5Gb1D3CYW/QDaP2R8XieyRftTFp0pfAMhy1hA8hV5eB/Iy1uw8MGAZgk24bPFbwJ
+         7dRAC7QJ7lkSIoS8ff8jXklxmxBj9lADQVnPrt4l8yHFH0L9QQoro6c+6RySXJqtd56v
+         1WRNs7W5Xn304tDSuNYtz59leLpebIQGSAgctB/0wKPSkyK8mhPojc1dIMFbbiJXwc03
+         KvTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729101502; x=1729706302;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eG9mLBg1a+CwWtPvW0vmSFqp/JDXif0hFxJyaVVxj/s=;
+        b=ZSRL+itbdaPv8gRYQDfASSVwRvv0pL02vz6ObncN+x8u86tvSEyXWDbHnh/QgyGBPt
+         eqI9ewPWoO4EGe9qpPUDpKZNxy+xXxq4g7p07uNqViPzEzb8p8L8Aq0uCpdwooFWGb6P
+         dSagdBnhAwkYzw6r9Nk/ZoU/ZOp6AqA2J/Dzm3YI56mlmbWNye8Fn5MpKgPDwV9lwafQ
+         s8m+n0ywlYGrX7hlZhHejZ+Fha8dsDga+IVEOdh80qfHajC3cTeyB3HfNNyBhDS5L1NP
+         QYKNEH2+NLdfNVs/5Bsk8sbfZqaKj2ICzCd9tVlfo6ev+UnXGL1jpxSoC72qm5GP7ez7
+         KjOw==
+X-Forwarded-Encrypted: i=1; AJvYcCVxRv3KeO65XPMS1yUWaqpCiLunl+nSb03dF/ovUwSENRo61G6fMHPp6ZgC2Q6zZCzTqfE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwmEwZIqZ7U/V9f7IHRJPjzWsHLPMil+ZR/wb1ge+f0fdxINVXD
+	sjntsCw0bkkr/oqwzvcEANap51FepqnpxkYelwFaoVoiZ84uzhyHnVVDM8Ph9ZSlIzXTY/xxD9T
+	dlYFW03/9oQtjXzW+ruDtFZxkfxc=
+X-Google-Smtp-Source: AGHT+IFMnyuOB7siSFM27Oh5DfVAWSzkQtQAazHtB98FyBITBvsg5IVbnPvH++SHTx1qoHasBuI+0fS1tvbALr1e4XM=
+X-Received: by 2002:a05:6102:160a:b0:4a4:8b30:52f with SMTP id
+ ada2fe7eead31-4a5b5939277mr5153196137.5.1729101502029; Wed, 16 Oct 2024
+ 10:58:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Zw7Hy12qHhd5BhGh@nand.local>
+References: <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
+ <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com>
+ <Zwz4B4osJnYJw6pd@pks.im> <2a937b6f-a3fb-4f2a-997b-5508f0e20e65@gmail.com>
+ <Zw0kGLZ-mcYjb6Je@pks.im> <2160f8ea-5f00-49d9-8e02-d71d4d827d39@gmail.com>
+ <CAPSxiM9ncwaZ3HF72wsRwmen7joWk3mjipsu78WxKEzLX607sw@mail.gmail.com>
+ <CAPSxiM-aptyjesMX1H-P5QJjA-6CUonA01Bo84cq2_t==TqFgw@mail.gmail.com>
+ <84dbe9f1-976d-45f8-a49a-d0f942906686@gmail.com> <CAPSxiM8-C6DAE3nYqMUCs+UgHN1R41grwVE+S-cSi6gZGvCpYw@mail.gmail.com>
+ <Zw6WKuhUufWeSipU@nand.local>
+In-Reply-To: <Zw6WKuhUufWeSipU@nand.local>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Wed, 16 Oct 2024 17:58:10 +0000
+Message-ID: <CAPSxiM_GJTVvm61Y-bzTms_DT_9Xg=L8zDnMtRP5up7DRq=72w@mail.gmail.com>
+Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and strtol_i()
+To: Taylor Blau <me@ttaylorr.com>
+Cc: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>, 
+	Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 15, 2024 at 03:51:39PM -0400, Taylor Blau wrote:
-> On Tue, Oct 15, 2024 at 08:01:21PM +0530, Kousik Sanagavarapu wrote:
-> > Hi,
-> > Just a brief summary -
-> >
-> > 1/3 - the main changes are in environment.[ch] and repository.[ch], all
-> >       the others are just changes due to this change.
-> >
-> > 2/3 - the main changes are in pretty.[ch], all the other changes are due
-> >       to this change.
-> >
-> > 3/3 - This is pretty straight-forward.
-> >
-> > One may notice that there are more "the_repository" occurences now than
-> > before this change - which is good since it means that we have now made
-> > the respective dependencies explicit (these were previously implicit).
-> >
-> > The change in 1/3 is marked RFC since I was kind of skeptical about the
-> > "repo" check in the repo_*() functions being done at _that_ level.
-> > Since every other change in this series depends on this, I've marked all
-> > the other RFC as well.
-> 
-> I share the concern that others have raised in this thread about not
-> having the_repository when one of the affected commands is ran outside
-> of the repository.
-> 
-> I'll bring these patches into my tree, but let's hold off on queueing
-> them into 'seen' for now.
-> 
-> In the meantime, as a style suggestion, it might be nice to provide a
-> wrapper for function foo() -> repo_foo(), where the former still exists,
-> but is a wrapper for repo_foo(the_repository) like we have done in
-> other similar transitions.
-
-Noted.  I'm thinking of waiting a bit more before re-rolling though -
-I'll include this change there as well.
-
-Thanks!
+On Tue, Oct 15, 2024 at 4:19=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> On Tue, Oct 15, 2024 at 03:17:05PM +0000, Usman Akinyemi wrote:
+> > Also, for the daemon.c I am finding
+> > it hard to get the exact test file to add the new test.
+>
+> t5570-git-daemon.sh is the test file I usually think of for adding the
+> most direct tests exercising git-daemon.
+>
+> If you're ever unsure, I find it useful to grep through the filenames of
+> scripts in t, like so:
+>
+>     $ ls t/t????-*.sh | grep daemon
+>     t/t5570-git-daemon.sh
+>
+> Thanks,
+> Taylor
+Thanks for this, I really appreciate it.
