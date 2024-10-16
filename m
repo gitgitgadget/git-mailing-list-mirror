@@ -1,144 +1,102 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023A960B8A
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 06:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B214160B8A
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 06:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729059343; cv=none; b=sWFo4k0LHLApqErZhnJtfA6eYw3KUTJU8kyEENWixQa2LRqCPZzSfg0xjPbHk/8wK7teC/4bRkZ8JiaPOUbRfpO+MSnSL0qLhULAQNUIZl5dJCNXIZdGpg6F9WMe59pzEjkUhvQZaA/3R5o/j9w5pGZFeaOjp0QJ8FiObKTiOnU=
+	t=1729059987; cv=none; b=AafDHMoQYe35X4fZZhiwYHmTgYCf+qYNt1NOHrah2T5C/HKNMHhlyq+ujWpa6xyizQzu5x7lBkrIlkgAZwZkKBgl0sfz88Aq3zMzjKAnm+UKwTc4IX7OP6Hko+uw407UV617dTT0dnnaRSHAXqjGO7UhiUyVugEtiDZKB+55iMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729059343; c=relaxed/simple;
-	bh=DfGmrpYBNuZ8RsV9p0Dcft/WUldzJRvg3zHIvQsp+8U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aP48de3iKDbQo+4tD7lpq4msSW9TTG3ibmtQZXrfNsbhf/pBzYVa5tr1p5xr1uuNGCTzhRfiSocGSmg9el8Pdlf5RjOpVl3PkpYWShwk2lWVK0AqTWVjNLYEM3Loj0W4QUoOcwGqStYNHjXPucKR4cmaR576br7EmK081WSS11Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hFSLzJjn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IsNWc/t5; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1729059987; c=relaxed/simple;
+	bh=Ay9eev1JUJB+82twREGdCthYGXvuX2p6XVzEBrD/Yuk=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=W6BbamN8qJtQYbRPEfSBfyO3Z6aLGj33zBqXiGyJeWInyNUPCrOFjqmtH2qx4cUzaNsUVBO/7YKCTmyl8bp+8UiQFZIypxPRoOTG66k+22q/ex91kexFKUklKTyf4YX6hdyteLAqaW2WYJv7DmIAJEVi85LKmnrWZQcpuhXluQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rwsh.org; spf=pass smtp.mailfrom=rwsh.org; dkim=pass (2048-bit key) header.d=rwsh.org header.i=@rwsh.org header.b=cLSlEE+y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zw4eKPOX; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rwsh.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rwsh.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hFSLzJjn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IsNWc/t5"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id EB36913801DF;
-	Wed, 16 Oct 2024 02:15:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=rwsh.org header.i=@rwsh.org header.b="cLSlEE+y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zw4eKPOX"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8F8B9138017C;
+	Wed, 16 Oct 2024 02:26:23 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Wed, 16 Oct 2024 02:15:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1729059340; x=1729145740; bh=z1enpIoo6a
-	8NqW8s3BSfIHrYqlKxDqYYH53xy8A5fos=; b=hFSLzJjnqULaWXNdX7sgKfeIjJ
-	iDlKn1TtyxWUkxi9JucNxtd6vHvu+DRScV+hWiJhFezA6da9dxikpQVAI0AWBi7s
-	UDFUxcCm+pF5BBCXHz2St+CtBSD6C5rr7DwDEUHt1tHiQ2TzV6JXDogPUksnIlCz
-	vvFgPZmNa9tXiBEvjHDJ2CGloSOwiux/z307SbEbhpiL9Gv92R/spMRzeUBdQnb4
-	X4kGdh1FG+uPlaGoYu50ZPzmLXNPHxkSulj3KjhwuzxeEmfw+uyXyokqxFAoHOK7
-	vNTnqMsRNXsI/p7PEDWNz4wKnllunoym4BtxhQcBekr/wnjf8jSDBV860xtw==
+  by phl-compute-12.internal (MEProxy); Wed, 16 Oct 2024 02:26:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rwsh.org; h=cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1729059983; x=1729146383; bh=Ay9eev1JUJ
+	B+82twREGdCthYGXvuX2p6XVzEBrD/Yuk=; b=cLSlEE+yKCmRJZYes5PSQkOOtR
+	tmeqjqLQ7p2QJ1oj/8eLTpFebCp+mIe/Rol9vtpiegetuO49NuofBN7Bo9f3ReuN
+	A//gtBLwte82kq4JDci174vxXHU9Jz9Wy7b7TTY2VAkw3vXQAMHfJwwifmHdzcG7
+	SldC6RLITp5wlQ/0uz0l/GDb9PbSOXT+c6SuFYlB1VizpanNLLCrmaSTv4g9XERK
+	VtLt+pafD+8tf0ct0kwwHJlk7PMFkoyDox+8BlLXTfAO69ZXmavvoZ/jUqQHTVEQ
+	uV72lJ584443m57pB/dT2v4vk5bS/0coL9W0kTtwQCe2yxZ3/sNlRSuSU9cQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1729059340; x=1729145740; bh=z1enpIoo6a8NqW8s3BSfIHrYqlKx
-	DqYYH53xy8A5fos=; b=IsNWc/t5sH9bUBG44eiov292OT4y5SW9WMhE8vjXHyWI
-	hjlOyf34BgGBeCHAdt4N/ktWJ4Mu6I5s9fkx0WVAt9GfEydCxlIbnLOGZ9Ct+qag
-	lf6p0Rc55Nrtx2PfM7OKQO1Rof+xgtZ4mAQZgMDvlS5QYQPWSpEx0Krb5MIwk+om
-	ooFLt8ru4TgThjsfjYVte6iZhcGKmuzZWIEd7ow+HNAq8RVXGtzFIENkiXssQPxP
-	0duicqNOo6JYv4xMrkZY7M18uFzO2te1S9UNr5oykSBJWsqXHRmX6W0WN/KQ83Og
-	5R4vdVdQrBPH5wAMhF/mfsEEx9fV4tiPZOvCXPGbrg==
-X-ME-Sender: <xms:DFoPZ3TyDcJ5HqlbYqweGFGJjphsAJAsHMIMFuZeg4qIPT6UJdYA5A>
-    <xme:DFoPZ4yPqorfodKHmN4XvzrU96bxk5vS4GhemNnDyc7lE-Vg1NOZj4vZW4v42LwXS
-    Tm_xyGZVGjIIhmwiQ>
-X-ME-Received: <xmr:DFoPZ80-B_wAf630vUGFXZ_9Z8l2Qdi8AJbyuPGwkbDdscbbtdXwcU2vnPlgknWEdyIp4p66Hmv86_gIG2Jo4MOtlXW-i_X-nJz-kWRxiDl55Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegkedguddtjecutefuodetggdotefrod
+	fm2; t=1729059983; x=1729146383; bh=Ay9eev1JUJB+82twREGdCthYGXvu
+	X2p6XVzEBrD/Yuk=; b=Zw4eKPOX1BqD7i/uMshvTQ9K5K+XGZKj92Eu3t6gL3so
+	yz3bHqrVmAcMrqMR7idm/6ieBhn12nh+X+nHwjZy+ma7rsXzjAe3Es6SNmGGHrfE
+	ynAuWgT3FK4t8F1ND0Ui1KyHkgi7YQ2PdmOgsFVspX/DCW2Jvfek50oEtd2VW176
+	EEPSHguX2zE3KWBUvWtCPQR0TozaqgOmUI2XZ5BN60n+n6ErvXeLP4KRaoVtRDvK
+	Cnka5m/MDMokJ13KMYd89N7scO6P9OVLENUow+RZog4Q19UrvU1huqgJwoezK7u/
+	Mq36q+0PngZiHKi53jqJkukrDKAZRZnv/5UHQe2AJg==
+X-ME-Sender: <xms:j1wPZ9XQkK3LXWLM_CS-e5U-IPkKPOBaF4Yb5459xOzjnYDy-mifNA>
+    <xme:j1wPZ9lkmoRvsnJvUIxpS6nbYTTV3etemqDxyYmooMGM14aGyF61tXhS_oRRkOLac
+    2kx1jh-cx-jiAq17EA>
+X-ME-Received: <xmr:j1wPZ5Y-xEmvtJl2nBVEK7pKCcicF_NaKlhPJ5C5e3Zzm321sz8neib1nlJXy2IJY8npDzYkU6ifnLPVFU6fjdNRbg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdegkedguddtlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhvghj
-    ihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehfihhvvgdvfedutddtfeesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:DFoPZ3BXYcGvsS7H8d6ayUzC2fIMeSDNxRdHw_6T-cCgCGF4zCTiIw>
-    <xmx:DFoPZwifhMI9bypIzQxJG28u_VPAayKlLaa2GbDHFYHw1GJ2psNwow>
-    <xmx:DFoPZ7qCnwXlysNXW0MH94W31U0byDzycuBAi-nJsMwoiydF2uIiPQ>
-    <xmx:DFoPZ7hWc_bvfLMJ3w21gSgEN0Yu99HrG2K0JISSVvzyB_bjnbpYVQ>
-    <xmx:DFoPZ5vFSxzdEHLzUeP6x_48kMqEJrIen9BRLlR3BC3zcuUufk29o_Xi>
-Feedback-ID: i197146af:Fastmail
+    fukffogggtgfesthhqfedtredtvdenucfhrhhomhepufgrmhcupfgvfigsohhlugcuoehs
+    rghmsehrfihshhdrohhrgheqnecuggftrfgrthhtvghrnhepleejveefleduffekheelge
+    duveevfeehgeegleefledtheetteetvdelvddvfedvnecuvehluhhsthgvrhfuihiivgep
+    tdenucfrrghrrghmpehmrghilhhfrhhomhepshgrmhesrhifshhhrdhorhhgpdhnsggprh
+    gtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrmhdrnhgvfigsohhlugesghhush
+    htohdrtghomh
+X-ME-Proxy: <xmx:j1wPZwXW9MNa9t90sHy7GsbbtvNzSPOsEHIjYsAZguLWI8E__Zq0Vg>
+    <xmx:j1wPZ3liZ0YmWS8R_lBsMe81zJUzIRU9Hn1C_NGT8caw458oViVUeQ>
+    <xmx:j1wPZ9c_8BLZYgfJplGvrtL8VExFOK-jUVQz1TH0jmQ5MR-voq8q1w>
+    <xmx:j1wPZxHqd6hR96ME4D_6RQBiseMsyIL7NxcoPwrrJu3GKeacemt1aQ>
+    <xmx:j1wPZ8zlxGjMXwggTfdUbxgpbE1jnkJsgxOU12I3RBWj01LCeEX-bJ60>
+Feedback-ID: ie52944fa:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Oct 2024 02:15:39 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3b220d33 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 16 Oct 2024 06:14:21 +0000 (UTC)
-Date: Wed, 16 Oct 2024 08:15:37 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] repository: move git_*_encoding configs to repo scope
-Message-ID: <Zw9Z_xcHKcjKVUB4@pks.im>
-References: <20241015144935.4059-1-five231003@gmail.com>
- <20241015144935.4059-2-five231003@gmail.com>
- <Zw6SsUyZ0oA0XqMK@ArchLinux>
+ 16 Oct 2024 02:26:23 -0400 (EDT)
+Date: Wed, 16 Oct 2024 02:26:13 -0400
+From: Sam Newbold <sam@rwsh.org>
+To: git@vger.kernel.org
+Subject: core.hooksPath cannot revert to the default locally
+Message-ID: <20241016022613.37813826@scaldcrow>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zw6SsUyZ0oA0XqMK@ArchLinux>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 16, 2024 at 12:05:05AM +0800, shejialuo wrote:
-> There are many builtins will execute this config setups by calling
-> "config.c::git_default_config" and then "git_default_i18n_config". If we
-> need to use "repo" pointer, we may need to wrap this pointer. (This is
-> not the problem and it is not hard).
-> 
-> But what if the "repo" pointer is NULL? We still need to set the value
-> of these environment variables. Because when using "git-mailinfo(1)"
-> outside of the repo, we still need to set "git_commit_encoding"
-> according to the user's config.
-> 
-> So, from this perspective, I don't think it's a good idea to put these
-> two configs into "struct repository". Because we can use these two
-> configs outside of the repo, if we put them into "struct repository", it
-> is strange.
-> 
-> However, I either don't know which way we would apply. So, I cannot give
-> accurate answer here.
-> 
-> ---
-> 
-> Patrick, I wanna ask you a question here. What's your envision here in
-> above situation. As you can see, if we put some configs into "struct
-> repository" and we run the builtins outside of the repo where we need to
-> set up configs, the "repo" is NULL. And we will get into trouble.
-> 
-> My idea is that if a config could be used outside of the repo, then we
-> should not put it into "struct repository".
+=46rom my testing, reading the documentation and hunting through the
+source code, it appears that if a system administrator sets the
+--system core.hooksPath or a script over which you have limited control
+sets the --global core.hooksPath, then there is no way for an
+individual repository to configure --local core.hooksPath to get the
+default behavior. The naive solution of setting core.hooksPath to be
+.git/hooks breaks in the case of worktrees.
 
-I guess it would be nice to have a set of convenice functions in our
-config code that know to handle the case where the passed-in repository
-is `NULL`. If so, they'd only parse the global- and system-level config.
-If it is set, it would parse all three of them.
+I would be happy to code a patch for this if I knew how it should be
+configured. Obviously, no local setting for a config variable is meant
+to inherit the global or system value. We can go all "set of the null
+set" by making the empty string mean "revert to default". We could go
+fancy "I know what you really mean" by interpreting ".git/hooks" (or
+perhaps any path beginning with ".git") not literally in the case of
+worktrees, but as relative to GIT_DIR. Or there could be another
+setting set on a local repository to ignore global and system values of
+core.hooksPath.
 
-I also kind of agree that it should likely not be put into the `struct
-repository` in that case. I think where exactly to put things will
-always depend on the current usecase. I bet that in most cases, we
-should be able to get away with not storing the value anywhere global at
-all, which would be the best solution in my opinion:
-
-  - It can either be stored on the stack if we don't have to pass it
-    around everywhere.
-
-  - It can be passed around in a specific structure if we pass the value
-    within in a certain subsystem, only.
-
-  - Or we can parse it on an as-needed basis if it happens deep down in
-    the calling stack when it's used essentially everwhere.
-
-Now there will be situations where we used to store things globally as a
-caching mechanism, and not caching it may have performance impacts. But
-I guess that most cases do not fall into this category.
-
-Patrick
+Thank you,
+Sam Newbold
