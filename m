@@ -1,67 +1,69 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C06918CBF2
-	for <git@vger.kernel.org>; Wed, 16 Oct 2024 20:51:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EC418CBF2
+	for <git@vger.kernel.org>; Wed, 16 Oct 2024 20:52:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729111873; cv=none; b=dWqCmZ8xZyb0wwThi+3VCAOT1CVHTCE5RfRusxOQYK4xZbrbMMQ6qhY99X6R+9RvRd+bbPFWPTquM2sfzJSJ8fCH3MnwXQko3F1aNIJb7XPNa9BXXLPug2pVNUDMqDX0wszWFTc9tBWnS7etBvFCT1Q7MfY4bh7pTJTMM1AqUHY=
+	t=1729111931; cv=none; b=RsVf/TENaDGS4Mv3qsuc53tWdexuz+ai4jo8y/2e0AG5bMQrkBsovRIShNWlS1bwNTNMJeaKtrcfs2sHdcny7hS6WYXPxX6BmfDQUMF3EIqEWt10XbRQ1pR7j53XiwB+QQQZ1pg02YJTjEX+SLb4jz+camakF2ea2RotG78YLOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729111873; c=relaxed/simple;
-	bh=Ky9kSyyLcGGVE9XaQjwVR5S2j4i7k4GWchQw8S5aHgc=;
+	s=arc-20240116; t=1729111931; c=relaxed/simple;
+	bh=A305IoZHForkVjRVk2jRrPOL9Oft+mzyb5jCLFoJtzM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r4O0SC3mdc21PlVmRBIGkOCmoo3iC5Mk+CzKpjNpVCjRc8sw3Jj9BgDqNl9OMqGGdAcSWIL4Yb8KPtDgH0OStdV/FNoQofJ9ms00UD41XgkLQo8ExRs62pUj8UV3iAB4GoyqE/gkeFgazNo426HsgZkmzaWhd/hgzR03rNPb4Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=mov45yOU; arc=none smtp.client-ip=209.85.219.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ki1Fq5KoqROnggsWSxvvYCWYCA3KlEH7OdevKcsUrMZs9Iv4l4Rw9mggGyh5hMGuRaOcJmip3iFIDcgVk5cbIXwKSzslMqoN5gjudBAt5uN0ArtOd8S9DItxoapyJvFVVkMNYdV8B43m2toUBIfjXqjcqeY8xQfVDJwo3K1g7KQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=s4pZqz5t; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="mov45yOU"
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e29267b4dc4so261057276.0
-        for <git@vger.kernel.org>; Wed, 16 Oct 2024 13:51:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="s4pZqz5t"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e314136467so2658167b3.0
+        for <git@vger.kernel.org>; Wed, 16 Oct 2024 13:52:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729111870; x=1729716670; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729111929; x=1729716729; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=45KgiKnP+UjTRBPiJxV/knrRx/x1lN16UlNNyiO3/R0=;
-        b=mov45yOUqP2mWg7L58Gc9cELY8+gThVys7R8ZFif/4xKs1CWbxHlrjHys9VK252DWw
-         R1Fi3/7okoJ0fYUmtKLPW9TPeYCjngrdFTXcuctIURY8Qm13fNtWM4bsRp+9RYCbkJGD
-         9RxhRRc/KgFmx0Qmo4Yell9FDEPvCbMLJhAFmXgXC9flKN828e0Fp5B+GJYUbXIRwKTc
-         bL81v0hZAM6ZSbqKwx7y7DtiCQtuOJJ1fs3ktJk8Peb1nMhiGKZjlTWiRYjap2K/2UE7
-         6n7+Bse/iTqv49ZbQJsEWtOHsgelSJS5o1mGMPkyFTE92dZlZ/fkE55XWaKjwnZy+Wc+
-         oEyA==
+        bh=A305IoZHForkVjRVk2jRrPOL9Oft+mzyb5jCLFoJtzM=;
+        b=s4pZqz5tsPv/IANWVgfqGOAAAEYLSXlLDieEIw5HNVBCSu77LiUnizUi/7M6lLgLFp
+         TUnd8NBMgm086nhnABbwZcHgz7M5lDUbC3iZU7hVR8GUZx+KjgE9QKzKwfCOeSv+eC2C
+         EU0hib6dWPQ06pWctYeUpnAMLcgG64JSvxpKk91o1CChzxi0Xeb/yIF7lu2CaGk8RV+G
+         pnfcS0u8wGF19e7o1KRnqOXs+vihj8Em11ST9WX2xh6+7kt5ab57Xqbk3vmHoRYPt0Vb
+         vU0UG4RZcRRuPxxC2UgvtHdsKfZak4NKsta1x8kitNyN/Q5EIwaKv7TEjp3yJWlDhSQW
+         rx9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729111870; x=1729716670;
+        d=1e100.net; s=20230601; t=1729111929; x=1729716729;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=45KgiKnP+UjTRBPiJxV/knrRx/x1lN16UlNNyiO3/R0=;
-        b=asiGViAv+xvSWmu14Pc5RiQJruLRwKhJ9G4tomlIuh/S1EM03X4UBsfW5JkbdSLCUs
-         L4z9iH+e+QE+uRztpu68KeIpRVASaFIR6Lk30ejhaYghBiPeVmub3Iv60yGuT2pHlvEk
-         HmcXHxmtAWhGlsODIYGolBCdXkLdy2gbnqCRcUBZswht1TfqsbcTkxa2EZNJ8VQZmmif
-         wIdZRqIXbaV+Aub0RZfLYinjiUxjCVIahOTsEzJjgAyisVvUgCOMOzu+KKjZkKwlHtlZ
-         3avXevcHBElgpkvCw5AHfatf8gXDihZAcIJdtKqYu/bgpLj3JqSKf4YHbntoEuhYWupp
-         47sg==
-X-Gm-Message-State: AOJu0Yym+wOSJfFsDM6Tay3o1tQJ7UcIkjVIux0bbn1vMUOze3dMvHg+
-	84QuL40E1+oObVBW5j3DhITMYlZaBF/J0wZ40wkeb9N7vlhlQeSOnDBpxsXI39E=
-X-Google-Smtp-Source: AGHT+IGfJWhphxqjSmHRvY9lf+dY9oKfhVm7BhdYL8dybV/QXoQmE//0Kdw0QEI7z8pPub7+/RDODg==
-X-Received: by 2002:a05:6902:2404:b0:e29:2a45:1e83 with SMTP id 3f1490d57ef6-e2931b62da2mr12497519276.31.1729111870553;
-        Wed, 16 Oct 2024 13:51:10 -0700 (PDT)
+        bh=A305IoZHForkVjRVk2jRrPOL9Oft+mzyb5jCLFoJtzM=;
+        b=wl5kQ6yoWOTIHhluWFFQsVYNnyVza+KCDLR+QNEAgHCw20ct9whConecBGK084Cq3i
+         PQFahjKauPPdeyhB/h8BleifCCn8Zr0NOgybJMqKbtk+3oWhIE6/8u/bkQSPhbBHD3d4
+         2ycGaB88qpXCV3q/WXD7JKh+sDgSqAHqbKQzoogI048UMPPNxt7VEnl8aakTIlXs+U8r
+         c4vUlVd9LbIevlf0WyNUXLoDS5MEXN45nqIwDWH7PsEX8g/Djfv7Gfkk69FBB/rBGR4C
+         6PNzxs6VIjwMePYteW0RdCLt40XVSVlWueUufR0ZptcPOmHxOR58ntsE+qsgkVVakIpD
+         4rqg==
+X-Gm-Message-State: AOJu0YzZ8vXDjj3JRwkJzBmVN0isrmoQ4PY4uo/pzEUEniagtyRG6PjI
+	fPbDmrtWQ+8/rScn4o9hksqKHUDQYdkyqVzx+1Z0bEtE1wAXUA+wodfxY4bxE+8=
+X-Google-Smtp-Source: AGHT+IEG44/57SdhTod8+7EIE12zXWd5B1avxQkOGKB1NjdcDsXSzt+nXpHfs74mqxISnf/ihju5aw==
+X-Received: by 2002:a05:690c:4911:b0:6e3:1d8c:1224 with SMTP id 00721157ae682-6e5a3f05fd3mr8830017b3.20.1729111929404;
+        Wed, 16 Oct 2024 13:52:09 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e296cbfd3f1sm746437276.13.2024.10.16.13.51.09
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5d1f5b4sm8487167b3.112.2024.10.16.13.52.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2024 13:51:09 -0700 (PDT)
-Date: Wed, 16 Oct 2024 16:51:07 -0400
+        Wed, 16 Oct 2024 13:52:09 -0700 (PDT)
+Date: Wed, 16 Oct 2024 16:52:06 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	phillip.wood@dunelm.org.uk, gitster@pobox.com, bence@ferdinandy.com,
-	karthik.188@gmail.com
-Subject: Re: [PATCH 4/6] doc: update-ref: remove confusing paragraph
-Message-ID: <ZxAnO5zH1vtgRvLk@nand.local>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Bence Ferdinandy <bence@ferdinandy.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 5/6] doc: update-ref: discuss symbolic links
+Message-ID: <ZxAndtRZ7oOHndU6@nand.local>
 References: <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
  <cover.1729017728.git.code@khaugsbakk.name>
- <dec48e2d37cc4edafb51476284ce3fece4718ce7.1729017728.git.code@khaugsbakk.name>
+ <3575fb48c932f50b2a3f6fb0e582b3c2a9b087af.1729017728.git.code@khaugsbakk.name>
+ <8e644cf2-f903-4089-960c-2fe7eff30834@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,31 +73,15 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <dec48e2d37cc4edafb51476284ce3fece4718ce7.1729017728.git.code@khaugsbakk.name>
+In-Reply-To: <8e644cf2-f903-4089-960c-2fe7eff30834@app.fastmail.com>
 
-On Tue, Oct 15, 2024 at 09:03:13PM +0200, kristofferhaugsbakk@fastmail.com wrote:
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Tue, Oct 15, 2024 at 09:08:29PM +0200, Kristoffer Haugsbakk wrote:
+> On Tue, Oct 15, 2024, at 21:03, kristofferhaugsbakk@fastmail.com wrote:
+> > From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> This paragraph interrupts the flow of this section by going into detail
-> about what a symbolic ref file is and how it is implemented.  It is not
-> clear what the purpose is since symbolic refs were already mentioned
-> prior (“possibly dereferencing the symbolic refs”).  Worse, it can
-> confuse the reader about what argument can be a symbolic ref since it
-> just says “it” and not which of the parameters; in turn the reader can
-> be lead to try `<new-oid>` and then get a confusing error since
-> update-ref will just say that it is not a valid SHA1.
+> Tsk. Subject should have been “discuss symbolic refs”.
 
-I think that it is worth saying that this concept is explained well
-throughout other parts of the documentation, including other parts of
-'git-update-ref(1)', as well as the glossary content.
-
-I don't think that you necessarily need to mention that here. But at
-least I was initially confused thinking that this patch proposed
-removing the only mention of the special "ref:" syntax for symbolic
-references.
-
-But it does not, so I think that this patch as you wrote it is good.
-Let's keep reading...
+Agreed.
 
 Thanks,
 Taylor
