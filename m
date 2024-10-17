@@ -1,89 +1,98 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35011DC1A2
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 11:58:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA9E1D5153
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 12:02:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729166303; cv=none; b=Sdq8TqJwj3LdijM7L6WHwHk5XL7dM4dKNAu2kBBGAQRD5rFNgTCzv4UsGRJzBx2On9OI4hysFEQRXAS/+JHH1w0E5iRYdnX6/Ec+4lARkYk1WCvdjfk2Nhds1r1OqHUIi3eZyJKUUmPYN9KSkA484UDkFqGQm4kna1t3Yz12+Jo=
+	t=1729166577; cv=none; b=okSm0k/jVin37pqBzjQmh1kZQk86goydO5qW8bBF5zC+qrQ2ZgaHaqYK5lOApPo1PlibYUcdsWXGCvU6eiXSkLwvtZdXz5elYjfrXAu3nJrVa6k4aqDl9mar1oPoIcfsJh4x1Nv/Kp/R+R0ERBfsWqKMM/ERt57sNNUYyDmP2RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729166303; c=relaxed/simple;
-	bh=aI865skXIkg+X94VEjod4C3uMsvXajS64SsYj97ac7E=;
+	s=arc-20240116; t=1729166577; c=relaxed/simple;
+	bh=/4YiDdIhf57EHuVWm5bPxCBNYriEhRAsY6fmVmjTLTU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O6A1aPNmn3wPTlzC4LIO1i9Te5ZWo+OMwX4Onx+l6rhz4ZeBA3Gpc+681RiQhN0tLC/40VEeQ+1wKqNCS/NqL9DjX1LKgA+4JBL17NGqF05ADhDS/2COnHTE4fcJaW48Tw5ZCJxsG/Db9kUgovILKTt7Z7h6YoGv3pFETZd7Z8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LNX60f8t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a4sQC92f; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=MiuQLpUijJfgPJqK0L1D3tg1/B16ImHw3FXm6rUvASrIsbCQvUptSkBJ4GPDVX05JwXfk5I74Dq5GuKakHmt5F0mmWVYWQJPum2tFRNloj2m2oCn+9+OPHyELxyFii3lJk8zpREujrxhlgleG/0pyc0ksGeaNn+DavUzAQ7jykI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kLsa0vTn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F4dw13dP; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LNX60f8t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a4sQC92f"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id BF18211400B8;
-	Thu, 17 Oct 2024 07:58:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kLsa0vTn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F4dw13dP"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 62F60254007F;
+	Thu, 17 Oct 2024 08:02:53 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 17 Oct 2024 07:58:17 -0400
+  by phl-compute-10.internal (MEProxy); Thu, 17 Oct 2024 08:02:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1729166297;
-	 x=1729252697; bh=MXeo/P0mQVXNSkGNkQ362uf5BRwWKB22GjfE8FSiDtU=; b=
-	LNX60f8tQVWXCqE73aTKPc5hXwt2mcskf/+CN10n00VmzVAp9P5Zm/QRtesXjizA
-	bb9RpbDBtxwp16GRuuYsIw+75sL7aEd4uNmAi5VJEw9pFUC6iBtlJhtJDx4rGK0/
-	aY84OIYIaDIRs5/G4jPBWXNl0jmGNXaoJJ5Wl/u6KRw5aKZVfwxOG2DWifbXLPY1
-	QKtFDiH8XGnYN3Os3JPUs5FpFbAa/1T4jKAWM7GxtCh63Rj0nXjTziVG5vGp3s5T
-	SZPgO7riT9EhBNa9UO3HZZT3F4wuRIyTlUv+UbxO5pspcc1EEab9pYVNqlFih3fh
-	3e6QqNHkvnhdoLvHZNuGew==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1729166573;
+	 x=1729252973; bh=tjl5k7xKLdafaaroJ6a5Uao4Kx7oxxEIjKDTcnftIFU=; b=
+	kLsa0vTn7YTFiFWZ5yHqF1a1NOxCgf3ofF7lx1yd0ZtVmTsxW3Og3OSATG+RTiQJ
+	V/0ol8Db5nZi1qdZ1DlYm17MaHc1U5jBvmzqwSortKC2Hmae71oHTGzJvn9e699j
+	jE83FF8S9PDT2eBaOLsGcjKJ/YxsVpfBv1WCgc7weGJBgGZoMy3FFApg4P3VliVw
+	ZoKMnGWQiMiiFiwul8pVoNVFgxOEICgWXsrKoEmlg/GGmTXW1Tbfp2ekiXj4nf3r
+	RLbkhPIm6cZ5hb/lPoD8XrexMT8MmlaIEZr7F/zEXG0+xYMUkfIegn7qgw38ItnC
+	ATLt1Gd9CCbxH2KlRKeWIA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729166297; x=
-	1729252697; bh=MXeo/P0mQVXNSkGNkQ362uf5BRwWKB22GjfE8FSiDtU=; b=a
-	4sQC92f/um38ywgFev0eIH5zk/G03K1BbHNCeiI8hNT9mM6l/yHVl+HZF9kiVfbU
-	UCY4GzxS1dT112Ey+HVB3HOj3Utue0FVfZkX1od/P1GjYnlzq4lWPoZx9QZ/sFmz
-	WABXqDggCM3rtwbSHgcTVNrVRaVCkWMaBzLdm98/GWsvpt8i0ReqhNNY24ciyRzA
-	IYtaHQ7eePs5stQIbG3DiuAnNuf7VJJ3vwTeV97YIyVWAIQANPr2ZFsF4JyrvrG7
-	1aK84PU6jRMUUlqmM/W84Nh2j7MhxyWLdub60+t6xHr8LKxUhKlWjnRZhGqBqYJz
-	dOVPHQIkNsz/N+/bjGEBw==
-X-ME-Sender: <xms:2fsQZ-bswZ6ghr8a8izJu_JmiWb2HOF3PNe2qeEgH3q96-zRzZydRg>
-    <xme:2fsQZxaeZvP0lQnyvgFRcgUU7fpadYaJJ5m9nYhs5Olp6U70dZ5XZ6ABveyYvAre-
-    WRPtJyifbbINolQ9Q>
-X-ME-Received: <xmr:2fsQZ49rYZyrKz9ynRD8GJ-wYXey3lgxDhQWa_SrQS1O6i8q4tfy-vqXiZqJSOkFx-Qcet54BGgeiWctUIkxmM5uhUEQ2mt5I6sjm1reZINHUQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehuddggeejucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729166573; x=
+	1729252973; bh=tjl5k7xKLdafaaroJ6a5Uao4Kx7oxxEIjKDTcnftIFU=; b=F
+	4dw13dPXGKvD6iMrauABxUeN2HbFT5rPWv/+fh/VvGZxn/480KaHcS4wmClgKFTP
+	N294qjZmCffhRM/U+iumkvrLAAEsXTNbMSzAr22RHK0ZFDgFZZQdBIGRAW62bzYq
+	PhRGWsHiTIybMqx6M7Orid421lG9cGVJURRT20nPQUcS29QoKgUEGDqloACH+Lo5
+	mv29MS528GpClxCrsTt3eMbB17qME9JtdaiMMqJ1lGX4FYVw1NyqAyM0Bogc5Q7C
+	WC905UodsU0C8a8M6v+yapbd1YE3YIz++uXK/bvylzExbOEeMd/KmqSR2UoWQ5Ij
+	rJhEkmXzSLEW3vSbYae5Q==
+X-ME-Sender: <xms:7PwQZyGbt3rMbD2Vvb2w4lg8RjKxENPnpccUAieCu7N-pqifV0R_0g>
+    <xme:7PwQZzXP7h3mt5IEZnQVTduJECVS0Cw5Z7KBxG5tdQ0YPsnk_9Y8CG0V24z6mZHV2
+    5ZOdAhIYqi5OEivrA>
+X-ME-Received: <xmr:7PwQZ8IvFD9rh5pAmN51vPf4DnHVqxP4vFik8qOjSiF3aksabYqQaWmLFDDrPiyGWenDI9SJpdKQsHEccTv_NyFhFR2YD0EMsnfqL0rMK_13BA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehuddggeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
-    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepfiholhhfsehorhhiohhlvgdrshihshhtvghmshdprhgtphhtthhopehm
-    vgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:2fsQZwqy1IqK8PIEmsMaczL5_Stvju43BgkZojcHQPm1e-TeCidcww>
-    <xmx:2fsQZ5qOAD55BttEHeuCMyTXMaMcG2CCsAgJLThRnLEqF6o5q6ni6Q>
-    <xmx:2fsQZ-SvOWmcpFlvGNkbQkGNOVAfzN3cLdN6Q_7dFEY5XhTWnbk8gA>
-    <xmx:2fsQZ5pNZPIEDkp-ySC3OeZULmoEvw4Do0Ns8rSi4tIAQV2lt-v3JQ>
-    <xmx:2fsQZwWuSlKI6LcHquE0icZi_asO_0jo9GFPp0Prn77qRqMmfPgayKdd>
+    hmqeenucggtffrrghtthgvrhhnpeeileelleduudeuffdtheeugeduhfevleethfdtudeg
+    veeitefghffhgfetheeihfenucffohhmrghinhepphhusghlihgtqdhinhgsohigrdhorh
+    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhs
+    sehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtg
+    hpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    phhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehushhmrghnrghkihhn
+    higvmhhivddtvdesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:7PwQZ8ENPIYfT7-qSYs-8MPxQ5buqk8xuRIFcH69QQvle88Ya4jW9A>
+    <xmx:7PwQZ4UFHWRzl8NboUYXScJxw1N40iZp2Fjc1FfPxjkwKnM6qZCrKg>
+    <xmx:7PwQZ_Nz06DZku4mHArDivEQUDjDvsav6PS7YKwYqH2crcKDPgOdZQ>
+    <xmx:7PwQZ_1B1oT2eSt_SqpVjogK8A94h-s5YyqkSV5eD6-pvbPY47KYaA>
+    <xmx:7fwQZ2wzHTR0sudUG5Pz77YycwRiZWIxngTAShvRMf9tturoLaetM7W6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Oct 2024 07:58:16 -0400 (EDT)
+ 17 Oct 2024 08:02:51 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 577de63c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 17 Oct 2024 11:56:52 +0000 (UTC)
-Date: Thu, 17 Oct 2024 13:58:11 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id c9413217 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 17 Oct 2024 12:01:31 +0000 (UTC)
+Date: Thu, 17 Oct 2024 14:02:49 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Wolfgang =?utf-8?Q?M=C3=BCller?= <wolf@oriole.systems>,
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: phillip.wood@dunelm.org.uk,
+	Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>,
 	git@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] builtin/shortlog: explicitly set hash algo when
- there is no repo
-Message-ID: <ZxD7j-ciyAGHrGwM@pks.im>
-References: <20241011183445.229228-1-wolf@oriole.systems>
- <20241016182124.48148-1-wolf@oriole.systems>
- <20241016182124.48148-2-wolf@oriole.systems>
- <ZxASXLz4lA+E9MuQ@nand.local>
+Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and
+ strtol_i()
+Message-ID: <ZxD84l-tcU0TrX1K@pks.im>
+References: <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
+ <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com>
+ <Zwz4B4osJnYJw6pd@pks.im>
+ <2a937b6f-a3fb-4f2a-997b-5508f0e20e65@gmail.com>
+ <Zw0kGLZ-mcYjb6Je@pks.im>
+ <2160f8ea-5f00-49d9-8e02-d71d4d827d39@gmail.com>
+ <CAPSxiM9ncwaZ3HF72wsRwmen7joWk3mjipsu78WxKEzLX607sw@mail.gmail.com>
+ <CAPSxiM-aptyjesMX1H-P5QJjA-6CUonA01Bo84cq2_t==TqFgw@mail.gmail.com>
+ <84dbe9f1-976d-45f8-a49a-d0f942906686@gmail.com>
+ <CAPSxiM-Yw2H65+EHoDckU2N2hr+UrXRu5Y2JjXc+TEwEUKJT0Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,39 +102,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZxASXLz4lA+E9MuQ@nand.local>
+In-Reply-To: <CAPSxiM-Yw2H65+EHoDckU2N2hr+UrXRu5Y2JjXc+TEwEUKJT0Q@mail.gmail.com>
 
-On Wed, Oct 16, 2024 at 03:22:04PM -0400, Taylor Blau wrote:
-> On Wed, Oct 16, 2024 at 08:21:23PM +0200, Wolfgang Müller wrote:
-> > Whilst git-shortlog(1) does not explicitly need any repository
-> > information when run without reference to one, it still parses some of
-> > its arguments with parse_revision_opt() which assumes that the hash
-> > algorithm is set. However, in c8aed5e8da (repository: stop setting SHA1
-> > as the default object hash, 2024-05-07) we stopped setting up a default
-> > hash algorithm and instead require commands to set it up explicitly.
+On Thu, Oct 17, 2024 at 11:56:33AM +0000, Usman Akinyemi wrote:
+> On Mon, Oct 14, 2024 at 6:36 PM <phillip.wood123@gmail.com> wrote:
 > >
-> > This was done for most other commands like in ab274909d4 (builtin/diff:
-> > explicitly set hash algo when there is no repo, 2024-05-07) but was
-> > missed for builtin/shortlog, making git-shortlog(1) segfault outside of
-> > a repository when given arguments like --author that trigger a call to
-> > parse_revision_opt().
-> 
-> Good analysis.
-> 
-> > Fix this for now by explicitly setting the hash algorithm to SHA1. Also
-> > add a regression test for the segfault.
-> 
-> Makes sense.
-> 
-> > Signed-off-by: Wolfgang Müller <wolf@oriole.systems>
-> > Thanks-to: Eric Sunshine <sunshine@sunshineco.com>
-> 
-> In the future, please ensure that your Signed-off-by is the last trailer
-> in the section to indicate that you have certified everything above it
-> (which in that case would include your Thanks-to here).
+> > On 14/10/2024 17:26, Usman Akinyemi wrote:
+> > > On Mon, Oct 14, 2024 at 4:13 PM Usman Akinyemi
+> > >> On Mon, Oct 14, 2024 at 2:55 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> > >> I got this from a leftoverbit which the main issue was reported as
+> > >> bug. https://public-inbox.org/git/CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com/
+> > >> For the test, I should have the test as another patch right ?
+> >
+> > In general you should add tests in the same commit as the code changes
+> > that they test. In this instance I think you want to split this patch
+> > into three, one patch for git-daemon, one for imap-send and one for the
+> > merge marker config changes. Each patch should have a commit message
+> > explaining the changes and whether they change the behavior of the code
+> > (for example rejecting non-numbers) and add some tests. Note that I
+> > don't think it is possible to test the imap-send changes but the other
+> > two should be easy enough. The tests should be added to one of the
+> > existing test files that are testing the code being changed.
+> Hello,
+> I am currently facing some issues while trying to write the test for
+> daemon.c, I need some help on it.
+> The start_git_daemon function inside lib-git-daemon.sh is made to
+> allow --init-timeout, --max-connections and
+> timeout as well as other arguments. The start_git_daemon function in
+> lib-git-daemon.sh is used at t5570-git-daemon.sh.
+> Basically this is my changes
+>                 if (skip_prefix(arg, "--timeout=", &v)) {
+> -                       timeout = atoi(v);
+> +                       if (strtoul_ui(v, 10, &timeout))
+> +                               die("invalid timeout '%s', expecting a
+> non-negative integer", v);
+>                         continue;
+>                 }
+>                 if (skip_prefix(arg, "--init-timeout=", &v)) {
+> -                       init_timeout = atoi(v);
+> +                       if (strtoul_ui(v, 10, &init_timeout))
+> +                               die("invalid init-timeout '%s',
+> expecting a non-negative integer", v);
+>                         continue;
+>                 }
+>                 if (skip_prefix(arg, "--max-connections=", &v)) {
+> -                       max_connections = atoi(v);
+> +                       if (strtol_i(v, 10, &max_connections))
+> +                               die("invalid '--max-connections' '%s',
+> expecting an integer", v);
+>                         if (max_connections < 0)
+> -                               max_connections = 0;            /* unlimited */
+> +                               max_connections = 0;  /* unlimited */
+>                         continue;
+>                 }
+> What happened is that the start_git_daemon will already fail and will
+> prevent the
+> t5570-git-daemon.sh from starting if there is any wrong starting
+> condition such as the new
+> changes I added. I am finding it hard to come up with an approach to
+> test the new change.
 
-I think it's also more common to use "Helped-by" instead of "Thanks-to".
-I see you have the same trailer in v4, but don't necessarily think that
-it is a good-enough reason to reroll.
+I'd just not use `start_git_daemon ()` in the first place. Instead, I'd
+invoke git-daemon(1) directly with invalid options and then observe that
+it fails to start up with the expected error message.
 
 Patrick
