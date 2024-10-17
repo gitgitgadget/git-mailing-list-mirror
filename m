@@ -1,86 +1,225 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout2.freenet.de (mout2.freenet.de [195.4.92.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FB51DED57
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 16:31:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA951DE2BB
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 17:23:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.4.92.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729182705; cv=none; b=MwM9k0Il8jd14BIY06yEg+kbHUo8EEDePC4X+JYlJ5eG20nW5CBsNG1x7fWiblw3nzhIwkrRnIYRsX3fzgeKnf0ft3HKj49jsE8GUEujZfUgpplqk2umd+6kWglQDYGk9UCAzKVKbPpQXBzgtW9x9GeQBJ6Fvy7YVWaxTdD7YRM=
+	t=1729185836; cv=none; b=O63taWSFVmsHHqC+Cmh6H+esGLftlrG45BE2nYMKY+w+VF960B8HUjBSUmdM4wuVY+a5zEOHAEG7UE2cYsg5hJJk26MFSswWyy2gFReacovfPigrfpK+jnRI5T39v459HjItY27hum/v0voNgd7cx98FVhhFhWPtSl8ucW37fk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729182705; c=relaxed/simple;
-	bh=kFYGAw+GkvSH20rOvUfzHWCegLe0U+D2DIoQFPTW39A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C9k+XBPCP3xpRugKb3wjQiVX7mnCimS+GrG0Dh5Bw/i971hWWz0symWbxZZzBQuzWNqRvrKamlTSiwRzlHWEZXJ3rrjt+vo9w3cYZDL5+0oeEWQdJbI8PjSaYvyuRzUYGDd9vjwWdruo33ZX0cKzEqYwr36KlgKxozvVRMR/ayM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6cbdd42bdf3so962316d6.1
-        for <git@vger.kernel.org>; Thu, 17 Oct 2024 09:31:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729182699; x=1729787499;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0VwFOfaEG/Wxhyv7p/KwavrqmTAKMafX712XDeZbCZY=;
-        b=qfE9z1KGVGlvvN37iwcK3rpY/OWTZH3ByYHlGdp7zDTtxa9eqZczWIlF8zqtzf262A
-         UJA9vbQpvJuEYkh4cG48pt/qv3k/b6d3Yh0l29Q5x0z1h0BjruTMO1SH8wjgk+xp3yAL
-         vZ3Bytq/TXoHMhxZMNodT5vKxYxKKabpx8I3GKcp6u7LCxVIZov2A68t5fC0NpSwM+5s
-         LyXVAZRLMlDwm8lo7bzn+3V75jna2tt0/11esfH4FbWTTMUqUKPddsu+c8iG6fexgzRo
-         GDFTzVFkYZ7+sr/YBuuIhLVcHMGvdrlUd/jmdOwhE1VwAWFZgszoUBYV+pmvtwEUKVgN
-         ORSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXrBb8v0kXhspDZ5Kc+E0BkzL7LOVgJrjr7S2YoS8y0olalUi43REpVzA1eY+MigKjhQkY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyxv+JLyj6bt098Rl/gvWxCiciZRZeNcQQO+zy0UxgLBDIdcEdV
-	G1LBWJWzfxCeKFd8uYA48RGxYRK8WQvfQ6hLyfBR/BhnPvZsM1i99tNAM2UagkDWPWMB2GrvnKV
-	g4hvl9QvRTQZc8sO2bHyI2yx9Z84=
-X-Google-Smtp-Source: AGHT+IEOTYyyq+kkajt6s3R9B3k/5Otufh9tApcZLSs8kdGB6Ek47avkU9xKb9ahyIkIInxWbi5NqltAIsFNFZ/ywtw=
-X-Received: by 2002:a05:6214:1bcb:b0:6c3:5dbd:449c with SMTP id
- 6a1803df08f44-6cc37a2fae0mr23618366d6.1.1729182698983; Thu, 17 Oct 2024
- 09:31:38 -0700 (PDT)
+	s=arc-20240116; t=1729185836; c=relaxed/simple;
+	bh=+WXczDyXwCQO/XVJQIbjKCxlMI9eJLmtoWUdaPsqcD0=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GVi37pleIL/+gRjiFf4EVzi1EYlKdnngmREIPl7aBKc7JMpNQkgSF5PvfAX1BZWsXI+udY4xYQDWdZItrBtlYQElt/PnM0+3v+Ug9KiI6WMWhZE1Bw+qhrLOROWgoXfJbzz3ESJkAOG19p7Stts4Zs3QH3sJsnOUeteXVHqaU94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de; spf=pass smtp.mailfrom=freenet.de; dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b=UEmNCtjQ; arc=none smtp.client-ip=195.4.92.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="UEmNCtjQ"
+Received: from [195.4.92.121] (helo=sub2.freenet.de)
+	by mout2.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
+	id 1t1U8t-00CHws-Kw; Thu, 17 Oct 2024 19:18:31 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
+	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
+	References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=VHtrWduWnU21lNPny3QS8OSDxuE1eybMglMhPqW9Sco=; b=UEmNCtjQHW2P1M94FBnsqDZOCE
+	NiSsxQ8/PzUelGYP1BXoWsUXaKCqp7Y53LGtYX/u/rjvSmljH7XvPROKLQPrncNCeFzw1ajDBKfTu
+	PxrmJI4+GwGkJhQLx+4JrLEretVOvv14UaZbOo2rnclTW4/eKaJgc9eUxHXgL88mOZ7QPN9HVBsgP
+	cw/SWuKRMMflzia6FK3mo4+oaCjUcJrFiYWXi+KEvRSpQQU5Y5RZl19iLbt4mR4EOyQXT/A9e+rXi
+	jNuS/7x1gQCQ7LE3DvmejxyXk9NdRkFqvrLi+jnpVUPXgm4qG+76tCYczYOqW/uB+e5qAMR7d4M7G
+	WxIItAlg==;
+Received: from p200300e2e7083000dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e708:3000:dacb:8aff:fee0:ca63]:54334 helo=soren-pc.lan)
+	by sub2.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
+	id 1t1U8t-000sre-Az; Thu, 17 Oct 2024 19:18:31 +0200
+From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+To: git@vger.kernel.org
+Cc: tboegi@web.de,
+	phillip.wood@dunelm.org.uk,
+	gitster@pobox.com,
+	me@ttaylorr.com,
+	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+Subject: [PATCH 1/1] [PATCH] mingw.c: Fix complier warnings for a 64 bit msvc
+Date: Thu, 17 Oct 2024 19:18:20 +0200
+Message-Id: <20241017171820.2679-2-soekkle@freenet.de>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241017171820.2679-1-soekkle@freenet.de>
+References: <ZxAgmvoyxZNnY1nQ@nand.local>
+ <20241017171820.2679-1-soekkle@freenet.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
- <cover.1729017728.git.code@khaugsbakk.name> <ad9ee00a2a971522968f95dd413deae24839ef71.1729017728.git.code@khaugsbakk.name>
- <ZxAmBsZzwBuEGN3N@nand.local> <CAPig+cSuQwu4YeZ5cs-g0oAnhCf1LMS1SSywyPc_vBExh85ahw@mail.gmail.com>
- <ZxA5ni7McD1c1yuf@nand.local> <24297144-c08f-4bc4-89dc-c3d8c12523de@app.fastmail.com>
-In-Reply-To: <24297144-c08f-4bc4-89dc-c3d8c12523de@app.fastmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 17 Oct 2024 12:31:26 -0400
-Message-ID: <CAPig+cTPyFXYxm-YO7xTqmeL1KZKT0vApvaD633Y4=q8=k-2rQ@mail.gmail.com>
-Subject: =?UTF-8?B?UmU6IFtQQVRDSCAxLzZdIGRvYzogdXBkYXRlLXJlZjogZHJvcCDigJxmbGFn4oCd?=
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>, Junio C Hamano <gitster@pobox.com>, 
-	Bence Ferdinandy <bence@ferdinandy.com>, Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-FN-MUUID: 1729185511B2AC89895180O
+X-Originated-At: 2003:e2:e708:3000:dacb:8aff:fee0:ca63!54334
+X-Scan-TS: Thu, 17 Oct 2024 19:18:31 +0200
 
-On Thu, Oct 17, 2024 at 11:30=E2=80=AFAM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
-> On Thu, Oct 17, 2024, at 00:09, Taylor Blau wrote:
-> > On Wed, Oct 16, 2024 at 06:08:05PM -0400, Eric Sunshine wrote:
-> >> I think we typically avoid rewrapping after minor edits like this
-> >> since rewrapping introduces unnecessary noise which makes it more
-> >> difficult for reviewers to identify the important (actual) change.
->
-> I was skeptical at first.  But I saw that this line is only 55
-> characters long.  So I think (like Taylor) that rewrap is in order.
->
-> What if I make a commit with just that word drop and then an immediate
-> fixup! commit which wraps the paragraph?  That way the review is still
-> straightforward.  And hopefully the integration part is not complicated
-> further.
+Remove some complier warnings from msvc in compat/mingw.c for value
+truncation from 64 bit to 32 bit integers.
 
-Don't bother. That's even more work for yourself, for reviewers, and
-for the integrator, and it increases the cognitive load for everyone.
+Compiling compat/mingw.c under a 64 bit version of msvc produces
+warnings. An "int" is 32 bit, and ssize_t or size_t should be 64 bit
+long. Prepare compat/vcbuild/include/unistd.h to have a 64 bit type
+_ssize_t, when _WIN64 is defined and 32 bit otherwise.
 
-There are far fewer reviewers than there are people submitting patches
-to this project, so it is helpful for submitters to do what they can
-to make life easier for reviewers, and foregoing re-wrapping of lines,
-in general, is one such way to do so. However, this is such a minor
-change that it isn't going to matter one way or the other, especially
-if Taylor, as interim maintainer, is willing to accept the extra noise
-caused by re-wrapping.
+Further down in this include file, as before, ssize_t is defined as
+_ssize_t, if needed.
+
+Use size_t instead of int for all variables that hold the result of
+strlen() or wcslen() (which cannot be negative).
+
+Use ssize_t to hold the return value of read().
+
+Signed-off-by: Sören Krecker <soekkle@freenet.de>
+---
+ compat/compiler.h               |  4 ++--
+ compat/mingw.c                  | 25 +++++++++++++++----------
+ compat/vcbuild/include/unistd.h |  4 ++++
+ 3 files changed, 21 insertions(+), 12 deletions(-)
+
+diff --git a/compat/compiler.h b/compat/compiler.h
+index e9ad9db84f..e12e426404 100644
+--- a/compat/compiler.h
++++ b/compat/compiler.h
+@@ -9,7 +9,7 @@
+ 
+ static inline void get_compiler_info(struct strbuf *info)
+ {
+-	int len = info->len;
++	size_t len = info->len;
+ #ifdef __clang__
+ 	strbuf_addf(info, "clang: %s\n", __clang_version__);
+ #elif defined(__GNUC__)
+@@ -27,7 +27,7 @@ static inline void get_compiler_info(struct strbuf *info)
+ 
+ static inline void get_libc_info(struct strbuf *info)
+ {
+-	int len = info->len;
++	size_t len = info->len;
+ 
+ #ifdef __GLIBC__
+ 	strbuf_addf(info, "glibc: %s\n", gnu_get_libc_version());
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 0e851ecae2..0ff550cef3 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -782,7 +782,7 @@ static inline void filetime_to_timespec(const FILETIME *ft, struct timespec *ts)
+  */
+ static int has_valid_directory_prefix(wchar_t *wfilename)
+ {
+-	int n = wcslen(wfilename);
++	size_t n = wcslen(wfilename);
+ 
+ 	while (n > 0) {
+ 		wchar_t c = wfilename[--n];
+@@ -891,7 +891,7 @@ static int do_lstat(int follow, const char *file_name, struct stat *buf)
+  */
+ static int do_stat_internal(int follow, const char *file_name, struct stat *buf)
+ {
+-	int namelen;
++	size_t namelen;
+ 	char alt_name[PATH_MAX];
+ 
+ 	if (!do_lstat(follow, file_name, buf))
+@@ -1274,7 +1274,8 @@ static const char *parse_interpreter(const char *cmd)
+ {
+ 	static char buf[100];
+ 	char *p, *opt;
+-	int n, fd;
++	ssize_t n; /* read() can return negative values */
++	int fd;
+ 
+ 	/* don't even try a .exe */
+ 	n = strlen(cmd);
+@@ -1339,7 +1340,7 @@ static char *path_lookup(const char *cmd, int exe_only)
+ {
+ 	const char *path;
+ 	char *prog = NULL;
+-	int len = strlen(cmd);
++	size_t len = strlen(cmd);
+ 	int isexe = len >= 4 && !strcasecmp(cmd+len-4, ".exe");
+ 
+ 	if (strpbrk(cmd, "/\\"))
+@@ -1956,7 +1957,7 @@ char *mingw_getenv(const char *name)
+ #define GETENV_MAX_RETAIN 64
+ 	static char *values[GETENV_MAX_RETAIN];
+ 	static int value_counter;
+-	int len_key, len_value;
++	size_t len_key, len_value;
+ 	wchar_t *w_key;
+ 	char *value;
+ 	wchar_t w_value[32768];
+@@ -1968,7 +1969,8 @@ char *mingw_getenv(const char *name)
+ 	/* We cannot use xcalloc() here because that uses getenv() itself */
+ 	w_key = calloc(len_key, sizeof(wchar_t));
+ 	if (!w_key)
+-		die("Out of memory, (tried to allocate %u wchar_t's)", len_key);
++		die("Out of memory, (tried to allocate %"PRIuMAX" wchar_t's)",
++			(uintmax_t)len_key);
+ 	xutftowcs(w_key, name, len_key);
+ 	/* GetEnvironmentVariableW() only sets the last error upon failure */
+ 	SetLastError(ERROR_SUCCESS);
+@@ -1983,7 +1985,8 @@ char *mingw_getenv(const char *name)
+ 	/* We cannot use xcalloc() here because that uses getenv() itself */
+ 	value = calloc(len_value, sizeof(char));
+ 	if (!value)
+-		die("Out of memory, (tried to allocate %u bytes)", len_value);
++		die("Out of memory, (tried to allocate %"PRIuMAX" bytes)",
++			(uintmax_t)len_value);
+ 	xwcstoutf(value, w_value, len_value);
+ 
+ 	/*
+@@ -2001,7 +2004,7 @@ char *mingw_getenv(const char *name)
+ 
+ int mingw_putenv(const char *namevalue)
+ {
+-	int size;
++	size_t size;
+ 	wchar_t *wide, *equal;
+ 	BOOL result;
+ 
+@@ -2011,7 +2014,8 @@ int mingw_putenv(const char *namevalue)
+ 	size = strlen(namevalue) * 2 + 1;
+ 	wide = calloc(size, sizeof(wchar_t));
+ 	if (!wide)
+-		die("Out of memory, (tried to allocate %u wchar_t's)", size);
++		die("Out of memory, (tried to allocate %" PRIuMAX " wchar_t's)",
++		    (uintmax_t)size);
+ 	xutftowcs(wide, namevalue, size);
+ 	equal = wcschr(wide, L'=');
+ 	if (!equal)
+@@ -3085,7 +3089,8 @@ static void maybe_redirect_std_handles(void)
+  */
+ int wmain(int argc, const wchar_t **wargv)
+ {
+-	int i, maxlen, exit_status;
++	int i, exit_status;
++	size_t maxlen;
+ 	char *buffer, **save;
+ 	const char **argv;
+ 
+diff --git a/compat/vcbuild/include/unistd.h b/compat/vcbuild/include/unistd.h
+index 3a959d124c..a261a925b7 100644
+--- a/compat/vcbuild/include/unistd.h
++++ b/compat/vcbuild/include/unistd.h
+@@ -14,7 +14,11 @@ typedef _mode_t	mode_t;
+ 
+ #ifndef _SSIZE_T_
+ #define _SSIZE_T_
++#ifdef _WIN64
++typedef __int64 _ssize_t;
++#else
+ typedef long _ssize_t;
++#endif /* _WIN64 */
+ 
+ #ifndef	_OFF_T_
+ #define	_OFF_T_
+-- 
+2.39.5
+
