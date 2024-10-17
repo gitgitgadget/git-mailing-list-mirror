@@ -1,152 +1,202 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2089.outbound.protection.outlook.com [40.107.21.89])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E439D1DD0E5
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 12:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729167224; cv=none; b=YFVWegnLw1zMDDmSkXWo1mXZOVdW2SNA9ULJKzKUftPxXAEDJIFXXHPjs0lghpJoobtHtrv7sAXP2ExccLyx9w+98FcpGRed3JinhOWVg5okRffjzA4ZTKg62BvrqHtXB93fVM5s8BB3LysVWc4R+wkr1rPcpUMXPUpMYk7t95U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729167224; c=relaxed/simple;
-	bh=QZYALGwxvgQVgT+uJQcUNIafFYBmw/ciabkUzem7XI0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XzNsZuxyeqzmfRFlEwMuDqxl+h5gvokS96iTX8h2G6XSADPeYJJlhJFZHK2+uh1DzPrL5jprPRum4E7psF2kZwhT9eWbq7+20yczVx1N8hGjBBKNZiKhRsmODjf27ofuWS9Oa09lTWgPSwC4L8fKv7s3YUuQ3SJPxDF5joRRi7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J/193Plw; arc=none smtp.client-ip=209.85.217.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACC21D8E01
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 12:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.21.89
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1729169336; cv=fail; b=UZcJW4IdtyYgfSxU7a6Ep3eDVWTT63Evx594ARzXI37DCJapiPRLJYaqBLwBV6pO1SpnubYpoUV9Xna5FliQh33mEe8soUeQk/ivSL4TmCfeEg1b21TNt4jOEaetVv4kblsW/hETje5g9ysY9I2b4ctltkwV0yKN3OKMO9npxfY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1729169336; c=relaxed/simple;
+	bh=wNRYO+YXJScv4i7zcnrqTBovpbdDxy4aCS5g9av5clc=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=glarhcJh3zdi9RDIESR1MhMLDEjGJQ4StieD6f1QNmyMQphJ6m1T2Sw5gFhJ+CE4nxGW1poLoWECdVV+e6yVwGmwZ5DkHDZD326Qwc1/SbV9xPYNncJ8C0ymSF2EzmGPDrxT0L0WQdlS80J0PVXRCVcvt+mEbr3o3WOoWtSzZVA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=electrolux.com; spf=pass smtp.mailfrom=electrolux.com; dkim=pass (1024-bit key) header.d=electrolux.com header.i=@electrolux.com header.b=I/rktdVM; arc=fail smtp.client-ip=40.107.21.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=electrolux.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=electrolux.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J/193Plw"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-4a5ad828a0fso258312137.2
-        for <git@vger.kernel.org>; Thu, 17 Oct 2024 05:13:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729167220; x=1729772020; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NtENlwk/Wi0JuhU09adVb7DxQFTpVR/zBjiPvteaRA8=;
-        b=J/193PlwRo5Z8jnDeA/yzRNM6Ep8SKg7mguIKatelbocVFJxm5xm6G2nJBqWLWjAzp
-         j+kh/fC1LwH2TSrNyh9VA+/6LgwR4H81xTB45da90QpZJaPXzQ922GcM+1ScX6reGObn
-         9yfoomqVwZtzwKP0I0xMSyT8hmk4d0ftXe+CRm+QRzu0oKbgcyZcjNd0GpNZgGpy7MZU
-         JbV9yUn6gtVIhOWq2yBt5LXQJ2WaL17/sJoXUKUgnSa1FmCfmgLGlQ3+2YEiok6RK5q+
-         B0yylsPIs5MK7c4vG+ULn0vyKXHBBU+VNUsvx1+lBprS9hVkadnrUeGKcozyG1Wm0opa
-         lkdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729167220; x=1729772020;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NtENlwk/Wi0JuhU09adVb7DxQFTpVR/zBjiPvteaRA8=;
-        b=TnEKW23UgO3AJAvhixlQzEjv1Nj1nBbNlrHdimmanZMtI4VecsgROYgH6irE7uLd22
-         /Xbz+qrQlSYmKMy8artSTMtsEafZnwWkNFilQSvPt1JRrEZXcALRwq9hgUrCj/Xt5HAl
-         NhQlBS+/FEWYdBKyDZ4esYTqyLahx5Qj4QcxaSnY7jkBKO72tmqV+LFRRzMxvc4R2chH
-         42zBtoHS54HczPwjddvLzlhNGSK0Wu1g26rAy5NEDKIXkx5Wou5D1vrRwVmuE6pVM1r4
-         8MwGUmHeE+F4PEbPmrX5tybtPI+7Sb/h9b0d0Yw0fCLFjS+d+qgYwWmqmxqzVBz/0cHH
-         JcaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX/C02GtenukqkLMNuRhay8kDw4fXjteYRRgFzgH9wfbQYODiGaj9mpvml10z+HDU3WWmk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YygZiQ5WfyL/Fpx4QM6joX7wUNTYqdiiKiEx6UFlUmrhrlhRjrc
-	YGwcd7ABTvmMCsprQLH9+TdTLkzOp3FdINBjP/WYIeT5irI0FnCuTsaueMhosOCVPdv5NqVxw7P
-	S6TSYy6UwOdsijPE8VvaIyM6vhJQ=
-X-Google-Smtp-Source: AGHT+IGZdIfCxgQ5V4fbiql5Ks/6Lv7+zZGTz6HIg6taSw6gMvM1w8XOnTU1VD+5vL7YAO8fYaUeuHdx953zYn0PTNQ=
-X-Received: by 2002:a05:6122:2916:b0:50d:4257:5bde with SMTP id
- 71dfb90a1353d-50d8d2595famr5418510e0c.5.1729167219700; Thu, 17 Oct 2024
- 05:13:39 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=electrolux.com header.i=@electrolux.com header.b="I/rktdVM"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gLz91Mm4J02320BgZdQdMFBp2mFYT+3lHyozh+pyv3qyFgLCeUyxsYiEC7EBtOo67VaNyUTdg5ZVA2/aDo+uul8njVK/1u1IJ8IqWyvyGb2MsPLzus7zMiBc4FgCYedsDfljhioXu7iRoQrULQir6aGZXCstl7tVUPUkpggHJs5+L746eYpK9UpDPi15Q3tNKX9+Nlk4PnoUwshB/Ul4puTTGLWVJEfKZ/BhetTvJNUU+tayTzbl9kob1M2lcCnvkrJ/FqK3ZxDktcucnEiE8XCLFoDasTRStuzEZw9Bur/7IiZDPnCUhcZxoUKebhUcNNVqUBwXj5g7MHn599t4FA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wNRYO+YXJScv4i7zcnrqTBovpbdDxy4aCS5g9av5clc=;
+ b=eoztA7iyZzjVGdMVMuZx081+EBcpdIVwc2IyTmpQL/kMpaD8oLFWnAdzvah6+BGrzaFWpA6XW4SAPWZVr7p0OmKn04o+jruyVcVyBPcgYCqIoXyyhT2EatPoPvgTeaJj4aVgBQmuc77jhrohle6OeXdks1MHIijfPSTBGOP3u5QsXtU7dcBjEQxIggBu7PKhUg1rEgx6a6IrCyS9sYy98z/MMJmbjFv+cwPquec/j9x1zIt1jSWmt1Q4dEx6E8H0Gx3rXsl+wEacwpm95IhT+hWauJ1U7EQl3t3UW60Y0sQ9nvShcW2j8w2MksB4zYGpHQblP0BFigcSNxbBXpTcmA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=electrolux.com; dmarc=pass action=none
+ header.from=electrolux.com; dkim=pass header.d=electrolux.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=electrolux.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wNRYO+YXJScv4i7zcnrqTBovpbdDxy4aCS5g9av5clc=;
+ b=I/rktdVMTseWYVPfsCZbY3H8l5C9loVXy76sSwYSQScOl73f31VJbHS+OralucEy/N+qvBIfICxyrxl2KxrC2f9PvNx8itQ7oe+SXK0fwa1hNW0/MUBhfOKZZqgwpp4YRUeAoybb3EfUFjOZiKaclg36pRhpeL1MsXq3j/f10Gs=
+Received: from VE1PR06MB7070.eurprd06.prod.outlook.com (2603:10a6:800:1a1::7)
+ by DBAPR06MB7015.eurprd06.prod.outlook.com (2603:10a6:10:1ad::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.18; Thu, 17 Oct
+ 2024 12:48:49 +0000
+Received: from VE1PR06MB7070.eurprd06.prod.outlook.com
+ ([fe80::e921:fd86:a964:53a]) by VE1PR06MB7070.eurprd06.prod.outlook.com
+ ([fe80::e921:fd86:a964:53a%6]) with mapi id 15.20.8069.016; Thu, 17 Oct 2024
+ 12:48:49 +0000
+From: Dario Esposito <dario.esposito@electrolux.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: fetch and pull commands not working with latest git version +
+ BitBucket
+Thread-Topic: fetch and pull commands not working with latest git version +
+ BitBucket
+Thread-Index: AdsgkuIRs8FkeoySTxWzjkKEb8zsvA==
+Date: Thu, 17 Oct 2024 12:48:49 +0000
+Message-ID:
+ <VE1PR06MB707063B6C98798EF8AD9EF00E5472@VE1PR06MB7070.eurprd06.prod.outlook.com>
+Accept-Language: it-IT, en-US
+Content-Language: it-IT
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_477eab6e-04c6-4822-9252-98ab9f25736b_ActionId=e27e049c-e432-498d-90f1-5b4f8397f753;MSIP_Label_477eab6e-04c6-4822-9252-98ab9f25736b_ContentBits=0;MSIP_Label_477eab6e-04c6-4822-9252-98ab9f25736b_Enabled=true;MSIP_Label_477eab6e-04c6-4822-9252-98ab9f25736b_Method=Standard;MSIP_Label_477eab6e-04c6-4822-9252-98ab9f25736b_Name=477eab6e-04c6-4822-9252-98ab9f25736b;MSIP_Label_477eab6e-04c6-4822-9252-98ab9f25736b_SetDate=2024-10-17T12:43:39Z;MSIP_Label_477eab6e-04c6-4822-9252-98ab9f25736b_SiteId=d2007bef-127d-4591-97ac-10d72fe28031;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=electrolux.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: VE1PR06MB7070:EE_|DBAPR06MB7015:EE_
+x-ms-office365-filtering-correlation-id: 84178857-b560-4d64-602d-08dceeaa0c3c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|376014|366016|1800799024|38070700018;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?757CFvuzln76+tlL8n5+xpwfV8dcLCQSKZwEped5tWcgDCrj2udEiY1RxZdj?=
+ =?us-ascii?Q?EDvoTJ+iedNd6fdBwbczSir+C/aQjc23VgMIRYUkjoC8N70IsrAxRkEojixF?=
+ =?us-ascii?Q?jpqLO2qcdaQqiwwjM1nYT29aRkuFA7pZoQmXvehkNr+X00gxg1JK8wEklMzI?=
+ =?us-ascii?Q?NDT/Skjz90e+ozJID/7OihFhLzL4EtxnOzHAE68FxWO9SLVkkWSHx57Lvhe0?=
+ =?us-ascii?Q?bUZdY6BIT9og6botvl0KNTGI8XMWGJQxu8gy9VwTSxWM0hJw97U38F4C7GWX?=
+ =?us-ascii?Q?y5I4gaRZmMG+dySaen5XvQfOwd6WKdfQmQH4dSPHEohdC6kamhipnqg+fB97?=
+ =?us-ascii?Q?wTUcjdYzJeRBKjhUxS2I+LOeWNL/iJmwiXtuxU/vd44XH8h3YANcylzbbFWV?=
+ =?us-ascii?Q?7gtghnDp5h1ls92JOaoAbybEQtRjozack8oQRs0ElYfQe+opX6fqVerQ+P3N?=
+ =?us-ascii?Q?BZt8HLXEWV306aVbKXPi4UWtS5bYJR/ELTBA5mG0P4BxRc+GfN2Rf56vjT6p?=
+ =?us-ascii?Q?C9GhH/O2VMgCKGqhcFGTOYfIE0QVa2aO5NUJxoNAN2F0hTQOL8GEXoWEiOFT?=
+ =?us-ascii?Q?hL86UfveRY0ZrdDDX7kQ7EHgKvVKuL7qgGXhh0/d0NmsVMb1As6Y4h2ICNWp?=
+ =?us-ascii?Q?wMCU7U6ZgFGsz8ay7d0MjbjmNfAv6P/6uYYkGQvg+0rGs4sM/RDaEkT3gGWI?=
+ =?us-ascii?Q?MyPkb+nQy5ps++KbsPwGTvR16Dc/mbRfW3piNDV9Nx8OTg7ui+17gbyAZTNe?=
+ =?us-ascii?Q?fiCXFIGYCcokskpBvLW1XR4zf7DRqoMO2KJn+cx8U+jVOOyacDmcwReYLFiW?=
+ =?us-ascii?Q?hyBTUNJNOJt29JOmdLiEZEB3ZHVB1YRvhCV0utItX5M96J7qO0ZKx5LuS2l7?=
+ =?us-ascii?Q?J0h8L+V881X2cWedq7fkMw544LWknOMCT9hSjqK5HVy/pLYm2ArarkVkatZ+?=
+ =?us-ascii?Q?TElq21f7Je1pk/ASZ+kPCtWPWSKwz3Wul0iQqnQrGssBvgmwampc3cSsX9c1?=
+ =?us-ascii?Q?AmpN8U3UmzvCeYXPdagvwsiRHwi7s9zKFbukriKQkxz8XEzLV7ZkNlzdLc1H?=
+ =?us-ascii?Q?/TIQdwqZKMAG9uOMoRuy/LRLbeAMawqbhU64OYbstKONTGv8qAntcQnsiteA?=
+ =?us-ascii?Q?OB2/7hzm/ZLRUa3EOpPXun+GDu8EFYEegMahlwd+P7LcBuSSUo1Kz9r9b2TD?=
+ =?us-ascii?Q?VNBxPWYPl/mFrvc+ZpySaGCJ46VdULpyZouYOY/c27q3kqY6TCHHu9Mjbqk7?=
+ =?us-ascii?Q?QIpkwPFXd8uQTUs4yVYoQorhVG8csB5UH9Ul/5z+goywUnqOxsHSAZJXHwc9?=
+ =?us-ascii?Q?aZMNPNfNuGYQ93kVdrO/fKcv5dNjNHTA/z5F0vSbtEskbjAV5KkKlV3e98xZ?=
+ =?us-ascii?Q?a2LMEs/ohGl/6yOpoI+PkItewUsz?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VE1PR06MB7070.eurprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?g2L1zpipI/O7cbpPLW74EvkbTgYidFuNtheay3hwp9AaIu9EefELOCHL5Kd/?=
+ =?us-ascii?Q?of+/7Bl5/LHKFUgwLiHhXGBT7wqTAgkHQo6q5qYzXFRRLjLdq+BAxT7RWsLj?=
+ =?us-ascii?Q?Fp/zcTZVgHiwRNPoDnON9kaHNIFGIGoWzjhVowh8JVOVvIlVzQvPEVGMzWVI?=
+ =?us-ascii?Q?Z+QR7TBLNsLbnjN9SBOUbxdRNMuJSpXi2C+ZNyQtsSaO/T70r+byRuCeddy4?=
+ =?us-ascii?Q?pU918AmXIHsi1Hnpnenr5eO8LZntfmEq07drkBkohq12HC96E8ngoB10XMT+?=
+ =?us-ascii?Q?a1CpxvQbXGFr5hJ+ZW3f/Gbcm1IymJiOo/WUNDT3N072uFgq2hhPRcB85E5W?=
+ =?us-ascii?Q?SOmNMq5TDSAku+FTWjqWFy+JuH6oK5dHrE8PxQPPTwYFVLVAUoZ7ZLZRRamN?=
+ =?us-ascii?Q?iwiAZ9oP0dAkM7Cqd8cMUBdd+269T4v9Q8jB7OUzqBiTSp/vOkqoiSIqom/R?=
+ =?us-ascii?Q?waCmmOozKtf3rEUSNKyhIkjxmH+hzUPyu8UHIRd4jmYBuOGHJod5R4NV3d5u?=
+ =?us-ascii?Q?K4WzpjtwcBkjjgjom5noM5sNBl/gSZhsaMSOEyiZsk5EdNVu2U3PbRw8TY5E?=
+ =?us-ascii?Q?TFVZwyCm8DBSShFvVprIP6KsnVremfw0wIg+kQsKAmE5I7K4lIKrtUyqCEKH?=
+ =?us-ascii?Q?5kKjX8IRJfDjlhhUrzbnl/+1Z/8UAjnwhleleAilQL/8MOb25Wfps080aQas?=
+ =?us-ascii?Q?m+g0pHY9Bedoz+JP0n/4t7dpwXmOf5D2ZSl59MI0tQX5lB7eLBew0darTYaP?=
+ =?us-ascii?Q?awmvK3oeNSPQdUfrsJtaTDaPk5TsbjBafLj8/+6r3XVs2jdqD78GPyzSsxao?=
+ =?us-ascii?Q?iA0zUh/3R4TIB30oIs/vcAGsSox02Q6j6hN7NtSvKAlRRu53c8bS5ZEExFg5?=
+ =?us-ascii?Q?a20zX+7AOT/tM4ukxIxUL8H66/dhqa+lUHac6owhFMh2zLvesHiiSeYbruZP?=
+ =?us-ascii?Q?IqmiyJOrtwnqRir2s9Ih/lxVjFIEtznWEvVURZCTPlQ7LcaJbDUVMB9MyDQa?=
+ =?us-ascii?Q?w/spJhWdnFq17shTuecHKnePhOnMOaBU8b8BnuQ2IqWU2fzI1MzHza8renE/?=
+ =?us-ascii?Q?8/di8npgMfg+FwZa12uMWz4UcSx9iG1yP+JgxEmb/+6dBZUeDFqeczsd3fOl?=
+ =?us-ascii?Q?jxVZf7ZDuvXR7eDFm0Ftv2+8bAAsGlK10O3rBiKoCvUXFQI9LqxeSOU7ZJ9u?=
+ =?us-ascii?Q?dUTMizeqzMTJYS0AQgHU+VeREfwLU+K7NlDkul18mGFAWmAwPfVSfVbOXL4+?=
+ =?us-ascii?Q?0qBFgMqDGEwzkSoumgTXT7bqfi3XAdou5fzfxBkV1harXIPLEovmZq4OkDxq?=
+ =?us-ascii?Q?9xzadXHH7ThEu7hbn7HQ9Xrzpwu+m32ILi6yfa+kqrbDRpexL98WI3qgxSzw?=
+ =?us-ascii?Q?Z7eM16QU5h+ixTPJCW/qNFbGupzjQ0ljyHmcnZPYbR44FU5lpRd+4JjZ+doH?=
+ =?us-ascii?Q?mbntvVnRqjTRfKrBYcIl2NVPMjg9OlcWh1yGU278G3osx9MgdsZkEuVYq/Ti?=
+ =?us-ascii?Q?JT74AGpcVgfR/92S4yXRBotqKp583uYuKYxFwN+7qyMEUjO2p43uzUOEHLq7?=
+ =?us-ascii?Q?TZapqjBMue8xfs3pdMgb+6MQTtqJ9ii/Q6emFBZDORHYTv0MXGZZcMctigQK?=
+ =?us-ascii?Q?zw=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
- <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com>
- <Zwz4B4osJnYJw6pd@pks.im> <2a937b6f-a3fb-4f2a-997b-5508f0e20e65@gmail.com>
- <Zw0kGLZ-mcYjb6Je@pks.im> <2160f8ea-5f00-49d9-8e02-d71d4d827d39@gmail.com>
- <CAPSxiM9ncwaZ3HF72wsRwmen7joWk3mjipsu78WxKEzLX607sw@mail.gmail.com>
- <CAPSxiM-aptyjesMX1H-P5QJjA-6CUonA01Bo84cq2_t==TqFgw@mail.gmail.com>
- <84dbe9f1-976d-45f8-a49a-d0f942906686@gmail.com> <CAPSxiM-Yw2H65+EHoDckU2N2hr+UrXRu5Y2JjXc+TEwEUKJT0Q@mail.gmail.com>
- <ZxD84l-tcU0TrX1K@pks.im>
-In-Reply-To: <ZxD84l-tcU0TrX1K@pks.im>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Thu, 17 Oct 2024 12:13:28 +0000
-Message-ID: <CAPSxiM99x8vEQSnDHCfKrQKuxE0dzenj5O4jrR0+jE62KAxErw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and strtol_i()
-To: Patrick Steinhardt <ps@pks.im>
-Cc: phillip.wood@dunelm.org.uk, 
-	Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: electrolux.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: VE1PR06MB7070.eurprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 84178857-b560-4d64-602d-08dceeaa0c3c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Oct 2024 12:48:49.6771
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: d2007bef-127d-4591-97ac-10d72fe28031
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: T4yNCwrbeyF8cBxHnCsVkjXQpjGlYV52WQQR4rf1njOgnDRTqZd2h6dgOO0cnZ66nOHeLeU3MIP6JTxphvV1Y3uqV1YmR3MBw3s5TQ2E8QA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR06MB7015
 
-On Thu, Oct 17, 2024 at 12:02=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
-te:
->
-> On Thu, Oct 17, 2024 at 11:56:33AM +0000, Usman Akinyemi wrote:
-> > On Mon, Oct 14, 2024 at 6:36=E2=80=AFPM <phillip.wood123@gmail.com> wro=
-te:
-> > >
-> > > On 14/10/2024 17:26, Usman Akinyemi wrote:
-> > > > On Mon, Oct 14, 2024 at 4:13=E2=80=AFPM Usman Akinyemi
-> > > >> On Mon, Oct 14, 2024 at 2:55=E2=80=AFPM Phillip Wood <phillip.wood=
-123@gmail.com> wrote:
-> > > >> I got this from a leftoverbit which the main issue was reported as
-> > > >> bug. https://public-inbox.org/git/CAC4O8c-nuOTS=3Da0sVp1603KaM2bZj=
-s+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com/
-> > > >> For the test, I should have the test as another patch right ?
-> > >
-> > > In general you should add tests in the same commit as the code change=
-s
-> > > that they test. In this instance I think you want to split this patch
-> > > into three, one patch for git-daemon, one for imap-send and one for t=
-he
-> > > merge marker config changes. Each patch should have a commit message
-> > > explaining the changes and whether they change the behavior of the co=
-de
-> > > (for example rejecting non-numbers) and add some tests. Note that I
-> > > don't think it is possible to test the imap-send changes but the othe=
-r
-> > > two should be easy enough. The tests should be added to one of the
-> > > existing test files that are testing the code being changed.
-> > Hello,
-> > I am currently facing some issues while trying to write the test for
-> > daemon.c, I need some help on it.
-> > The start_git_daemon function inside lib-git-daemon.sh is made to
-> > allow --init-timeout, --max-connections and
-> > timeout as well as other arguments. The start_git_daemon function in
-> > lib-git-daemon.sh is used at t5570-git-daemon.sh.
-> > Basically this is my changes
-> >                 if (skip_prefix(arg, "--timeout=3D", &v)) {
-> > -                       timeout =3D atoi(v);
-> > +                       if (strtoul_ui(v, 10, &timeout))
-> > +                               die("invalid timeout '%s', expecting a
-> > non-negative integer", v);
-> >                         continue;
-> >                 }
-> >                 if (skip_prefix(arg, "--init-timeout=3D", &v)) {
-> > -                       init_timeout =3D atoi(v);
-> > +                       if (strtoul_ui(v, 10, &init_timeout))
-> > +                               die("invalid init-timeout '%s',
-> > expecting a non-negative integer", v);
-> >                         continue;
-> >                 }
-> >                 if (skip_prefix(arg, "--max-connections=3D", &v)) {
-> > -                       max_connections =3D atoi(v);
-> > +                       if (strtol_i(v, 10, &max_connections))
-> > +                               die("invalid '--max-connections' '%s',
-> > expecting an integer", v);
-> >                         if (max_connections < 0)
-> > -                               max_connections =3D 0;            /* un=
-limited */
-> > +                               max_connections =3D 0;  /* unlimited */
-> >                         continue;
-> >                 }
-> > What happened is that the start_git_daemon will already fail and will
-> > prevent the
-> > t5570-git-daemon.sh from starting if there is any wrong starting
-> > condition such as the new
-> > changes I added. I am finding it hard to come up with an approach to
-> > test the new change.
->
-> I'd just not use `start_git_daemon ()` in the first place. Instead, I'd
-> invoke git-daemon(1) directly with invalid options and then observe that
-> it fails to start up with the expected error message.
->
-> Patrick
-Hello Patrick, thanks for the reply. that works, I really appreciate it.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened?
+I updated from git version 2.46.2 to version 2.47.0.
+
+What did you expect to happen?
+I expected git fetch and pull commands to work as usual.
+
+What happened instead?
+Git fetch and pull commands get stuck and never complete.
+
+What's different between what you expected and what actually happened?
+I expected the commands to work as before updating git.
+
+Anything else you want to add:
+After reverting to git 2.46.2, fetch and pull commands are working again.
+Our remote repositories are on an Atlassian BitBucket server on premise ver=
+sion v8.5.1.
+I use SSH with ED25519 cypher.
+It seems others have the same issue when using git latest version with BitB=
+ucket, see https://jira.atlassian.com/browse/BSERV-19682
+
+[System Info]
+git version:
+git version 2.47.0.windows.1
+cpu: x86_64
+built from commit: d53e4648cb65eb75dd8d8a093d17400a18a9a15d
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.10.1
+OpenSSL: OpenSSL 3.2.3 3 Sep 2024
+zlib: 1.3.1
+uname: Windows 10.0 22631
+compiler info: gnuc: 14.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.ex=
+e
+
+
+[Enabled Hooks]
+This email and any attached files are for the attention of the intended rec=
+ipient. The email and any attachments may contain material that is confiden=
+tial, privileged and/or attorney work product. If you are not the intended =
+recipient: (a) contact the sender immediately and delete from your system, =
+all copies of the email including any attachments. (b) do not read, print, =
+retain, copy or disseminate this message or any part of it. Any such unauth=
+orized use may be unlawful. Email transmission cannot be guaranteed to be s=
+ecure or error-free as information could be intercepted, corrupted, lost, d=
+estroyed, arrive late or incomplete, or contain viruses. The sender therefo=
+re cannot accept liability for any errors or omissions in the contents of t=
+his message, which arise as a result of email transmission. If verification=
+ is required, please request a hard-copy version. The protection of your pe=
+rsonal data matters to us. Please find relevant information relating to Art=
+. 13 GDPR on https://www.electroluxgroup.com/privacy/en/. The Electrolux Gr=
+oup www.electroluxgroup.com
+
+Classified as Internal
