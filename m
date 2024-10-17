@@ -1,129 +1,119 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC23CB660
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 00:36:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48D6111AD
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 01:10:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729125393; cv=none; b=WBXvhRDBHM0mdJStBuCzllfHfsr7P7knS4A6jaMlkjl1s432wwjcRKbQno9/xq+/vSfBqjXJZKkXim511xuhhl3W79t7Z3fh4ROK8i6Qr9yoD5YzrlmXlPyNCeli71tdvQiG9qOgUW0bH8/urQB3nw9BcTlg+8SJQ5Ctr0UiXJs=
+	t=1729127431; cv=none; b=BQ2boDe18edkW4rdVL8Dl3aetDg/0E6k+JOAMCLO0bXiEvkp/HZc3J/8z2kt9loCog54V7Qv8FEV/H9gxaOh4h483S+Cx82iq8S2eHEZ1ndvacxeksLaoxPe7LfOhk7DQHiuFbCu//i6/GsKFpN6OFmTNw2iQES8stfufP3T1dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729125393; c=relaxed/simple;
-	bh=4zOfEYtUPoBLzqReFM69SG5eJzQ2SqBxsFalbpNyZqk=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=dkjJsjbm+lrywP5hko1EIJDAA4f9wwB+4acPlQ8PhuH3HX0eUyKUkT99V1kxSiMUxbzeZqoEfgS81JYMPMh2F78KiHrUreLVEV/mUgK9dGo3TFmWYt7DKdr02jjokgyYp9l0tkXIES9iOlj69jI/s7mx0j8klNH7o2ezso0l6eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rwsh.org; spf=pass smtp.mailfrom=rwsh.org; dkim=pass (2048-bit key) header.d=rwsh.org header.i=@rwsh.org header.b=RkgoqQcV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bkGcb8Jd; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rwsh.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rwsh.org
+	s=arc-20240116; t=1729127431; c=relaxed/simple;
+	bh=WtwLZfzYTy8u2koNMdRMvF7rCvuvtD9QzHrVqfVyOmg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PZqTtFRRfQDFrGEGDQ/BT8Dc2QzZIYkq8PQjfF70F0SBm7EpO/w1lXt1mXDG0zAYbg61yJ2zEwTetcRVCKJ3eS8HL4c/iiZiwOVk0LLHnrI0zTu3omBo4xxDN7sxDlWLrG/B+pqULK0JHOMF4hgHVMIaudQf4dgauyFK4m5IlRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zwEA8Nb4; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rwsh.org header.i=@rwsh.org header.b="RkgoqQcV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bkGcb8Jd"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B601F2540095;
-	Wed, 16 Oct 2024 20:36:29 -0400 (EDT)
-Received: from phl-imap-04 ([10.202.2.82])
-  by phl-compute-05.internal (MEProxy); Wed, 16 Oct 2024 20:36:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rwsh.org; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1729125389;
-	 x=1729211789; bh=tVeGydmxaS1hXogXR0aPRhQ1SEa8Ayi+iSud4JC/0Sw=; b=
-	RkgoqQcV4wNH6yUBbp+tfXN8j2WyRi9YvuJX0O3x+ZbCZQyPuBBT74tw2dBp/JWu
-	RwQsnYt4CysPhht6CJKt5+CvgEzl3vSNNZi64l+vSF/7zRZO7G7BiAYpvIEpu9v4
-	+t1XVHyB/eopIhJOmgRXQOvhAaVc4bJw955v2qSa1kKFxQYmN/feiLiAbXgQt39q
-	/AchSMKH7k7+riVHg/BMy2RYJd1/TdsoHcQ113WUPVJGTDPV3o2b+Sm0EYu9piDF
-	rEdsNa+jUGJBf7XFptEdB58hZzZi14aJ8ajLa3TecSiRt+UOapLaXXDqF1rEJZND
-	0HHGimk3W4LQV6OeFo6ATg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729125389; x=
-	1729211789; bh=tVeGydmxaS1hXogXR0aPRhQ1SEa8Ayi+iSud4JC/0Sw=; b=b
-	kGcb8JdpxF/W7Ka5RTHYw3wfUCC/mas0/334q1meD3AlkUwHFa54r7gcCdLYJh0K
-	ka2I/8pcJDF/bFGGdP2KgAyhI6DOrP/gQHP3TRqtmrKgmor02I9nZVhYVf9Vo6sH
-	QsRHXOWHNMb+A3Gvf2U1UKQlmKBfT4cwO9WuZwomOBQ6P0aywrUUyq+hdI7NpGlj
-	+0XTyGudqtQ5kXwBKKeJC5n5SJOIqZHbcFEOAIXW/MPc/Dn/9Dj9skddcMsyMVF9
-	cZW0VK15QowtM6su8sYueDrh3uDlSTWNqE2/+4qa7Mu0vWD7vqTHJvp8tlv37Tif
-	1ps9lsHRbwr1iSW+VWbNg==
-X-ME-Sender: <xms:DVwQZ9KOUMY-5w_teDMTNi-ttfnVOSZ92CKMjT1dJaUxVBd1TB-M-w>
-    <xme:DVwQZ5KXK97ajpp9X1RAQJPWS7sWy4jqHFwlR5J12RvsudWUIj_hfxj-qjlxH2Ufj
-    h-iUnkkmucVluU3lTo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehtddgfeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
-    fvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfurghmucfpvgifsgholhgu
-    fdcuoehsrghmsehrfihshhdrohhrgheqnecuggftrfgrthhtvghrnhepuedttdelleeute
-    evfeejhefguedthefgjeevtefggfehudeglefhudeggfdujefhnecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepshgrmhesrhifshhhrdhorhhgpd
-    hnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhi
-    lhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehsthhorh
-    hmtghrohifsehprhhivhgrthgvrdhpshgvnhgvmhhoshdrnhhupdhrtghpthhtohepmhgv
-    sehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhg
-X-ME-Proxy: <xmx:DVwQZ1sNtRCB0oo6Bv6-1OPx4boX5mPBwKLGZlBPVHV-UcaCZQZtHg>
-    <xmx:DVwQZ-bd3UXTMKHn5EmyH4DPSKLy0El-dPY9oWa71Mv6Bn3oIe6l3g>
-    <xmx:DVwQZ0bjH1XWmKOFsl_lWkE6H-I0JFyGcUPznbeAjklBKLi0NsbSLw>
-    <xmx:DVwQZyBFM57ViljYzVARnX615rlIY4wBuhbBctVylilC1NIP5TszOQ>
-    <xmx:DVwQZ8Eu0_96nWbStbbe7wOihZGgTokZCgfeoIc2Ylf3pYWnla720RS7>
-Feedback-ID: ie52944fa:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 19F852E60084; Wed, 16 Oct 2024 20:36:29 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zwEA8Nb4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1729127421;
+	bh=WtwLZfzYTy8u2koNMdRMvF7rCvuvtD9QzHrVqfVyOmg=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=zwEA8Nb4SYI2QJr9wevBa71B1ocdGFtrDsOhmLgdj+X59VEdlsKXlwAHEiYl6I7tq
+	 0I+QYdAJ91f5UzoI6ip6Dh5GbL807CHIH22LFI8C4M8T1bVPg1NnWExM+xxWoOBxUe
+	 ZKNbdL7vO3t7ItmSEWEeZaKCuuYTIx36rMy3uTrqWM8PEo/58dQXFVNqUO0TBGWfOz
+	 pXlPpXetr8z/SX9ma0z8hVp9ISEd5kP7EtuwoF9vinzTgO6pTqowp4nvQwTDWKus5I
+	 HPXe5W6XaL5L9vY6oKr1mWaBPNXyGDdrPKZG9jEd5SiAN1vbwEjm5kblI1sNHGCBet
+	 YE29YxlPXuRVoAmt/LxY4C79y8nCzHNSWHsAu/43O2sJ6/sBr7TyrVU5J/e4TBgN35
+	 TZE2LcbdLYUgUm4vA3sJq1X6KEzy/L8LVhhHNNcmjSf5gqTU7KKK6yEqk5dw3+giUC
+	 Ct8Rt4GLpye6oSxmL5XQ8jxb7uXLzKaGpPvI1V3Cg6wKCmeYLu/
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CDE01200B3;
+	Thu, 17 Oct 2024 01:10:20 +0000 (UTC)
+Date: Thu, 17 Oct 2024 01:10:17 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 02/10] t/test-lib: wire up NO_ICONV prerequisite
+Message-ID: <ZxBj-VEU6M2TVL2W@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+References: <cover.1728906490.git.ps@pks.im>
+ <cover.1729060405.git.ps@pks.im>
+ <c046e5f03bf9e3eeda803133b88c3ae414fd0c69.1729060405.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 16 Oct 2024 20:36:08 -0400
-From: "Sam Newbold" <sam@rwsh.org>
-To: "Taylor Blau" <me@ttaylorr.com>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org
-Message-Id: <38af2f33-f793-46f8-a0a0-c63ab70e764e@app.fastmail.com>
-In-Reply-To: <ZxAjLrrqM5i2kdBz@nand.local>
-References: <20241016022613.37813826@scaldcrow>
- <dea863c3-7b54-4f8d-b6b0-6087b4cb1abe@gmail.com>
- <932d1aab-26e8-4c27-a3dd-a7191e8e71dd@gmail.com>
- <ZxAjLrrqM5i2kdBz@nand.local>
-Subject: Re: core.hooksPath cannot revert to the default locally
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="8mNAVvSuKv3qzi/K"
+Content-Disposition: inline
+In-Reply-To: <c046e5f03bf9e3eeda803133b88c3ae414fd0c69.1729060405.git.ps@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Great! I'll reply to this thread when I have some code to be reviewed.
 
-On Wed, Oct 16, 2024, at 16:33, Taylor Blau wrote:
-> On Wed, Oct 16, 2024 at 02:42:57PM +0100, Phillip Wood wrote:
->> On 16/10/2024 10:03, Phillip Wood wrote:
->> > I'm pretty sure I've used "git -c core.hookspath=/dev/null ..."
->>
->> Looking at the code that will unfortunately disable all hooks including
->> the ones in .git/hooks. It would make sense to allow an empty
->> core.hooksPath mean "use .git/hooks". If you're interested in working
->> on this then I think doing something like
->
-> Thanks for providing a helpful suggestion.
->
-> I agree that the behavior you suggested here when specifying an empty
-> value for 'core.hooksPath' would be an improvement here as a means to
-> override system/global-level configuration.
->
->> diff --git a/config.c b/config.c
->> index a11bb85da30..91f190a1ce1 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -1437,7 +1437,10 @@ static int git_default_core_config(const char *var, const char *value,
->>          if (!strcmp(var, "core.hookspath")) {
->>                  FREE_AND_NULL(git_hooks_path);
->> -                return git_config_pathname(&git_hooks_path, var, value);
->> +                if (value)
->
-> I think this should read "if (value && *value)" instead, to ensure that
-> things like:
->
->     git -c core.hooksPath= ...
->
-> work as expected.
->
-> Thanks,
-> Taylor
+--8mNAVvSuKv3qzi/K
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2024-10-16 at 08:12:53, Patrick Steinhardt wrote:
+> The iconv library is used by Git to reencode files, commit messages and
+> other things. As such it is a rather integral part, but given that many
+> platforms nowadays use UTF-8 everywhere you can live without support for
+> reencoding in many situations. It is thus optional to build Git with
+> iconv, and some of our platforms wired up in "config.mak.uname" disable
+> it. But while we support building without it, running our test suite
+> with "NO_ICONV=3DYes" causes many test failures.
+>=20
+> Wire up a new test prerequisite ICONV that gets populated via our
+> GIT-BUILD-OPTIONS. Annotate failing tests accordingly.
+
+I don't really have a strong opinion on this patch, but this has been a
+part of POSIX since the 2001 revision, so everyone except Windows should
+have it by default (and Git for Windows ships with their own version).
+Perhaps if people are not seeing the tests fail, that's because everyone
+is building with iconv enabled?
+
+I will also add that as much as we might like people to be using UTF-8
+everywhere (and to be clear, I very much would), many repositories still
+have commits encoded in older ways (such as the Linux kernel) and there
+are unfortunately many people using working-tree-encoding to convert to
+UTF-16LE-BOM for compatibility with legacy Windows software, so in
+general, only users in highly restricted Unix-only environments would be
+able to confidently run without support for more encodings than UTF-8.
+
+I think this patch is fine for now, but given what I mentioned above,
+maybe we want to add a weather balloon in a future series to see if
+anyone is compiling with NO_ICONV.  After all, if everybody has easy
+access to iconv(3), then we might be able to drop support for NO_ICONV
+and the work maintaining it entails without negatively impacting anyone.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--8mNAVvSuKv3qzi/K
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZxBj+AAKCRB8DEliiIei
+ge4vAQCr/+UXKmy1f/6K24l4KGau6D+0UCcNFoHt6IVdqWhv5gD9Hzbb1QYEmRcC
+FPNENWsm9RR13VsnZPJfqKiaGYDBBAU=
+=Yp2t
+-----END PGP SIGNATURE-----
+
+--8mNAVvSuKv3qzi/K--
