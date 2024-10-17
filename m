@@ -1,141 +1,101 @@
-Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C4E143895
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 20:47:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2D6168BD
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 20:50:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729198027; cv=none; b=cxa6G1hrm6gWKeAFb34XsWCfgOcCSsp/6HQ3Eu+1lOrfqkLTtxYrMZSp/sRCv+F/r70+uOQRf6M5x1SzkpmRie/ATQL2r50NnH2uKjCZeSxb9y+5Dg+wtkmYIUn33dSYVlJUvygYTMrGqQQaJqY9zHpDE8sr4DL93pWqD/BRoy8=
+	t=1729198257; cv=none; b=Cggvfky4Sglx8ameX7pkODeOTAAQ5LET6fWbe/W44kVrlUNBihcGbu+64qdbsEXgm7W38WUzhUjw3AqlegyPJLvLfTSfO1SJPL6FKPdCUiVWCYyi3mklpXtfX5AQ3mz1lw7Fw2KhmUKpWCjeiFu4zXZnyk84AVm6c7C0WyWxFeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729198027; c=relaxed/simple;
-	bh=UoQGA0yQp0fmfyjaXcEG+yT6uUCOJE2KuxjGKNFe0Kc=;
-	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From; b=eU4otAS9H33P4Gfce5Rdk4VFib5EDgYc+foO3QjPb62SiWHvcbcLVyXWech6JZCq3v+I3KmqbAtBgyxAlDeKIhOMx3u3nxJPdbuSKwYwAqxYDl5jws8CqIMcnQY/KnWOpQXmu21tYvlbxNe2d0eIDArWy21/OMD5gcrHdj20/x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=mHIx8OoK; arc=none smtp.client-ip=192.29.178.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1729198257; c=relaxed/simple;
+	bh=44BJse/625C2f0QPl9OtL4dBQLxWV9Hm3BGBe4E4E4E=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=Clz7Nf/mkFEZgnP0t3QJbNVi7nrWrN8bicPcSTjXGCWQFsqOXHn+UvMATuIKWWqzTTERNrrJB8sGfjMUo0VvFyIPvGzlcYpvLAJRGQX62C44CL1a+ynVhgesbTo9xDXxdpBELj2HKkWpDXP2cFmNuJmjsII9YN5PmVQnW0/c4ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AwNIgKaW; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="mHIx8OoK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=oqGHjEf8hIDhUoTaiyXJ1v5/7CPmaUHE3Sd0t9kfyCQ=;
- b=mHIx8OoKvC6GLdDiRsoVkoODdbgittsn98msDPAdEhj6Z0CaI7YgYNutp6JcK/klwAP749I+1aUn
-   t6Ts2RT4/r0+qY+njOzuodsPl0W2HMucD0J+NfhSGFfoXSe2Yk6LWSCqOod+XFeaIPudjAtcOApr
-   GmPiV7ZiRo+pcr3ZPMwPt5AWO4JybRGU+93Z5qi+i+IM/eccc3/bJ7tSLJZziKA3u7plCBaO28Lz
-   U5prlfh903mC6Ci/NJJBbKltWrJnVz+aVGg+RcHpv52EFfpUQDvH2df3yJqzcJIaY27cxELWS+UX
-   5zULDpQxW68pzHCPVvKJQy1bPiYesNMpenkYIA==
-Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SLI002JSPQ6UD20@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Thu, 17 Oct 2024 20:46:54 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AwNIgKaW"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-539f72c913aso1790514e87.1
+        for <git@vger.kernel.org>; Thu, 17 Oct 2024 13:50:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729198251; x=1729803051; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CJEC0a7in6ZPEKFGvtfyCVxRh4+6Zvajyj6Tkk5LoYA=;
+        b=AwNIgKaWT+aPph+xsEZhBbTxZfJ+koP09jObfUFJCZd3m4Xone8a7zYg7OTRbc5Ttr
+         BNaH05mgx0hfTJeMylvtsoXpmdHN/SMGkpoO8jeL3+uxN1Q5mdUtKSoWRU0TDonz6LMY
+         iFPQ3U9MLs2TebABWEdv+XzweYh1rruFpQiBrX3TJCE5TjU6JdLefx1j89aRqODydd6g
+         4TKdW+2sVMEUsu6pVDAglUH8abHk/NkRfsLAsKe8oR9vSp9GEgl9o1ZhUVw+0rvEgbhY
+         0dVSuBB6YzVP7uOq4i63qoRgMs1A/bvbEfPAgVJqL1ICoRtSGb3PSa5HxdFuVa6M2Wd1
+         zh3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729198251; x=1729803051;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CJEC0a7in6ZPEKFGvtfyCVxRh4+6Zvajyj6Tkk5LoYA=;
+        b=HGI7n+yohKxXwL0C3/neHMV646P2KJdupF0oRUooOm6HsgyS68KdBdKQLvzoMaNGBz
+         3evB1Aexht0Oh7XIgz7mOVyIbfENXfWzYyAyLO8gnF/+86we6E3iGq6wcTu7tCJ9A8YW
+         M4IJVQPL31bUI62ifDgI79th1nXB2p6QjxAvH6jhbLIxPpTl604fgOb7uWUZeVvt6xkm
+         eU/frsxV8Uv6XmKB7qbxSfGTNkskKRqJRKXPZVYGlkKbhksdN/kfCP6hnd1B4pMzj9hd
+         7ulTaO2k7dTG86n3RyjV6wlY9fgk3R3N5PcFlGxX64pSyC/PHmof9HunviF6fKkUdFRE
+         5PHA==
+X-Forwarded-Encrypted: i=1; AJvYcCW2QJERpcUnNNYHda3VxMNRsbzfF1V5cE8dhatAOF45dOx7MMbQ0dxU926lYLgkGgMvHIo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyFDQ8H78qcRNb4hLJInQ9Zd6wtczjWlVYHzDqhtQf5+RWkfWxa
+	xrRDj1SabBdLI4dAzuCHSIC5j1F4b0MbclzEkNQHLk2ZZTaHwvCsaQlKWbPgll0=
+X-Google-Smtp-Source: AGHT+IH0Oc4G7ZL0AxamsPAl4Ee7StsoDmy4r76mEal+D71xgFclLneyyo4BPbPHN2GW9QgjlTJB4Q==
+X-Received: by 2002:a05:6512:31c6:b0:536:53c2:8179 with SMTP id 2adb3069b0e04-53a15449499mr143035e87.37.1729198250238;
+        Thu, 17 Oct 2024 13:50:50 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a151f0e1fsm24274e87.170.2024.10.17.13.50.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2024 13:50:49 -0700 (PDT)
+From: Sergey Organov <sorganov@gmail.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>,  git@vger.kernel.org
+Subject: Re: Why is pushing to stash not allowed without an initial commit?
+References: <bab5a7a9-f006-4a1f-ae38-2dec817c5a82@gmail.com>
+	<ZxFe/cEI0SzFMSi0@nand.local>
+Date: Thu, 17 Oct 2024 23:50:49 +0300
+In-Reply-To: <ZxFe/cEI0SzFMSi0@nand.local> (Taylor Blau's message of "Thu, 17
+	Oct 2024 15:01:17 -0400")
+Message-ID: <87msj2a1xy.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Thu, 17 Oct 2024 22:45:58 +0200
-Message-id: <D4YDINQ682QL.N0FD2J9C1O22@ferdinandy.com>
-Subject: CI behaving differently from local tests
-Cc: "Taylor Blau" <me@ttaylorr.com>,
- "Johannes Schindelin" <johannes.schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>
-To: <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Reporting-Meta:
- AAH/DTXKLQGnvjdtWLRf3yWhDMsYN9QIRUhd41bV/O48qhCpiauV+MvpLfL85ASu
- DMuObgu9yvIwYJm1HCbAVNBD1RF2TkRYJPU9D3eLQsut3chk3MpExfhIVaF2bveY
- 27fK7mD4o4tQLJ5A4yWaIi2jlN0IWWHogACohUVUYTxPGuGCN7vSYufPrNnUUDjc
- 1Ok632hA8OX0xaY3DAS/ckEdmWK+oO8ODnLMMBwvK9m9QiB+Ei3yXydkspVWRi/a
- PTdVgrNR3yt/NCThWyVs5lMn+xbPb9nmzNyukd1n8j5pQLtFEe8qpIDjYbc604d3
- ns7bZCda4aaLkxUiEvaxdCnMyZmwfPbsAnH4T0yEPBLWHGC76uHhF4IfbruzW8E4
- VMPsUjNr/g7UL4ijrppII8ccB5m4h9DpWuTJ9zyw4UyVaqXNCNJRshIkR6Ypx6et
- Nvx78DWV8fbtL4+E8AXMvTukmRYs+xgrFTYy6+R2FZ/KmYeZSmotrBeo
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Hi,
+Taylor Blau <me@ttaylorr.com> writes:
 
-I'm looking at why the set-head series (cf.:
-https://lore.kernel.org/git/20241014225431.1394565-1-bence@ferdinandy.com/)
-breaks the CI. The problem stems from the local test repositories being set=
- up
-differently from that of the CI.
+> On Thu, Oct 17, 2024 at 08:51:29PM +0530, Abhijeet Sonar wrote:
+>> I see that the stash commit has two parents: the initial commit and the
+>> commit that actually holds the files that were stashed.
+>>
+>> If git were to allow a stash entry with no initial commit, it would have to
+>> create a stash commit with only one parent (i.e. the commit labeled with
+>> 'index on <branch>'). I wonder if there is a reason this would be bad and
+>> therefore not allowed?
+>
+> Right, each stash entry has two parents:
+>
+>   - The first parent is the state of HEAD in your repository when you
+>     created the stash entry,
+>
+>   - The second parent is the state of the index at the same point
+>
+> So there would be no reasonable value to substitute in for the first
+> parent in the case where your repository does not yet have any
+> commits.
 
-I ran both the CI and a local test on current master with the following pat=
-ch
-applied on top, i.e. I print all remote refs and intentionally break the te=
-st
-so that the result is easy to get from the CI:
+I still wonder why Git has no concept of the ultimate null-commit from
+which all the Git world descends? Looks like it'd help to have one to
+handle such corner cases gracefully. Was it just an oversight of
+original design that isn't worth fixing already?
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 532035933f..d625a3a8b6 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -724,8 +724,11 @@ test_expect_success 'update' '
- 		cd one &&
- 		git remote add drosophila ../two &&
- 		git remote add apis ../mirror &&
-+		git ls-remote drosophila &&
-+		git ls-remote apis &&
- 		git remote update &&
- 		git branch -r >output &&
-+		echo "force error" >output &&
- 		test_cmp expect output
- 	)
- '
-
-The CI gives the following output:
-https://github.com/ferdinandyb/git/actions/runs/11392309625/job/31698105287
-
-
-    + git ls-remote drosophila
-    9d34b142e42f6b3dbab46dd4b9bc515e0ab16101       HEAD
-    9d34b142e42f6b3dbab46dd4b9bc515e0ab16101       refs/heads/another
-    9d34b142e42f6b3dbab46dd4b9bc515e0ab16101       refs/heads/main
-    2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f       refs/heads/side
-    + git ls-remote apis
-    6329a3ca5268a0b28a1dc29b602e8b72a0bc1b37       HEAD
-    6329a3ca5268a0b28a1dc29b602e8b72a0bc1b37       refs/heads/main
-    2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f       refs/heads/side
-
-
-While from ./t5505-remote.sh -v I get:
-
-    9d34b142e42f6b3dbab46dd4b9bc515e0ab16101        HEAD
-    9d34b142e42f6b3dbab46dd4b9bc515e0ab16101        refs/heads/another
-    9d34b142e42f6b3dbab46dd4b9bc515e0ab16101        refs/heads/main
-    2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f        refs/heads/side
-    6329a3ca5268a0b28a1dc29b602e8b72a0bc1b37        refs/heads/main
-    2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f        refs/heads/side
-
-Since `git remote update` here is essentially running `git fetch --multiple=
- --all`,
-with the set-head series applied we're attempting to set HEAD for both
-remotes. Obviously, this fails locally and succeeds in the CI, which is
-actually the patch series behaving as intended, but obviously a drift betwe=
-en
-the local and the CI testing environments.
-
-I'm probably too tired right now, but I don't see how or what could make th=
-e
-mirror repo be different depending on having it locally or in the CI ... At
-least I know it's definitely not my patch series :) Does anyone have an ide=
-a
-what to try and look into?
-
-I guess ideally the fix for this would be added to the beginning of the ser=
-ies
-so we can continue with both local and CI tests working. (Although it could=
- be
-marked as a know breakage as well, not so elegant).
-
-Thanks,
-Bence
-
-
---=20
-bence.ferdinandy.com
-
+-- 
+Sergey
