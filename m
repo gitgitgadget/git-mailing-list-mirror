@@ -1,41 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E250A1F60A
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 02:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18220101F2
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 02:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729132659; cv=none; b=GKd449l3GCfzaybifvOQq9KPCsYhY+3c/PhEY4Z4Hl03068SeW85tr/0NWm3+ipyah60WhiV5XFzqCM20gPXU2Gxf/2a3uLZBTlGoqieF63Tg6prbG5rEd8W35kr2YETX/X7yYKmWNUuE0Tiq5LAXZAuRL3fQ4w5o+Oel+hmFvk=
+	t=1729133311; cv=none; b=H5axs1Lj9kBYnoSCK5Cwoiknh6pWd0LMp909BbocKAKGMwLZU0fCLVmqbq0p3f0LBmqvNYKEzM5W4rybxDj8nn7bHfx0IAL5H60aQGIvTUWSOedcFicqHefThxIsetgRodyxawjyeomS0v8q0FodpbUHT1Jj/q/K56fhnltFSZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729132659; c=relaxed/simple;
-	bh=gmeadvseD2zHTXl7ajHjboVZ7NNGZHJB+RL3roWky8E=;
+	s=arc-20240116; t=1729133311; c=relaxed/simple;
+	bh=TAjKMPvwgguj+3kPML+oF3fFTZy7qZl2iJZvRtxlDUU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b+3lPA+mpehToPnANgJxd4UjFGrOjfsf/9IjHnroi+V25LDXjyL8ooMsSmv1S+LYEjM/uZU/VMr+IdBf7muIL6gBrEtCvCtzE6zVleTiyJbMcukL5jV3RAYmr45fYKkiLlrCodYcC1Hpx9qccNFFeSfWL0+G2JlvHTapIPySEVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Lx4LvFMS; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=qnzpg7rgDezSUQ/ObgsJbcQINjtp/P8Kr6VaP4w45MuwwHk7wsmP51LyITxgQyZP0NVCERTUzhCR65QP2JWMkawToF9Qe7xLZ+OG4VtXIJVVe74nZtOQt1ULE0doAJTQxwJoZyD1Bmwbsk6h/hEIeEuW/qdGEOs8CFNhgw+cncc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NVkaDvUz; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Lx4LvFMS"
-Received: (qmail 22923 invoked by uid 109); 17 Oct 2024 02:37:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=gmeadvseD2zHTXl7ajHjboVZ7NNGZHJB+RL3roWky8E=; b=Lx4LvFMSh3vTQAb/nNRiRsmVNGUkI3mK13dbnPwzkAvZXs9E5o4eI10p/5TDIclNAmNr15BIn4sjYMbG/NaHGKdGtqJ2FlnO3q0hnOcAE4/sTmGwkzQQ5BA4Kb0Adbb/KI2DnZ4Kv4SE+dwPgoY/0abTrh1F4OZHybJYOCNV921YgNX+MC4Eny/33suBpi4OgzX7V7YT86esVVPlVqHvOZGSx8A478z7eDwvEtCUzkrxjqbGfUo1GBNbINC9NLQH8cJbKsu0RgKXdhjeGn5vfUS0o21JJnytbSC7KGr01uJ3BcMz+SbTVAGYSh+qqw7K6ceCQ260RuyMcojGmp8HuQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NVkaDvUz"
+Received: (qmail 22971 invoked by uid 109); 17 Oct 2024 02:48:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=TAjKMPvwgguj+3kPML+oF3fFTZy7qZl2iJZvRtxlDUU=; b=NVkaDvUzxXk6MM7K7HZ6SSlyG48VgqNK1LmjssHyzfioC+NaxoI+blExwQ5daIlf9w9SYYNma7R57oqsXmcosTmoRX8ShxGc1oxihCB6tv0DSyCvGgTmdDT9lWBrv0VgNdjEDa8r1T4v/A/2oEnZsDwU3P9VRKsSxmw8D73fXkhM54hFnPPOyGmtMXShse5UESHiHXl1iv4zIKFhek4GejqS4WjlxXfs1HQQeEcQSGPCusKxgBazV55EysAvQ+4VCFo5HURRS2poBkdelTl9f7RIQpBAsKD58AK0142B/TmwHSgEHduSnPFEM5i3UZ+KRApDNGA6q4OyI6U+3YxxNg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 17 Oct 2024 02:37:37 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 17 Oct 2024 02:48:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27289 invoked by uid 111); 17 Oct 2024 02:37:36 -0000
+Received: (qmail 27476 invoked by uid 111); 17 Oct 2024 02:48:28 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 16 Oct 2024 22:37:36 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 16 Oct 2024 22:48:28 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 16 Oct 2024 22:37:35 -0400
+Date: Wed, 16 Oct 2024 22:48:28 -0400
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
-Cc: Piotr Szlazak via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	David Turner <dturner@twosigma.com>,
-	Piotr Szlazak <piotr.szlazak@gmail.com>
-Subject: Re: [PATCH] upload-pack: fix how ALLOW_ANY_SHA1 flag is disabled
-Message-ID: <20241017023735.GB1858436@coredump.intra.peff.net>
-References: <pull.1814.git.git.1729112794671.gitgitgadget@gmail.com>
- <ZxAttC1dQUllR76m@nand.local>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] ref-filter: format iteratively with lexicographic
+ refname sorting
+Message-ID: <20241017024828.GC1858436@coredump.intra.peff.net>
+References: <a873ed828ccae426214cc8f87610df97ff9a269e.1729055871.git.ps@pks.im>
+ <ZxA6I67FfPe4fV2F@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,68 +43,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZxAttC1dQUllR76m@nand.local>
+In-Reply-To: <ZxA6I67FfPe4fV2F@nand.local>
 
-On Wed, Oct 16, 2024 at 05:18:44PM -0400, Taylor Blau wrote:
+On Wed, Oct 16, 2024 at 06:11:47PM -0400, Taylor Blau wrote:
 
-> > diff --git a/upload-pack.c b/upload-pack.c
-> > index 6d6e0f9f980..cf99b228719 100644
-> > --- a/upload-pack.c
-> > +++ b/upload-pack.c
-> > @@ -53,6 +53,7 @@ enum allow_uor {
-> >  	/* Allow request of a sha1 if it is reachable from a ref (possibly hidden ref). */
-> >  	ALLOW_REACHABLE_SHA1 = 0x02,
-> >  	/* Allow request of any sha1. Implies ALLOW_TIP_SHA1 and ALLOW_REACHABLE_SHA1. */
-> > +	/* As this flag implies other two flags, be careful when it must be disabled. */
-> >  	ALLOW_ANY_SHA1 = 0x07
-> >  };
+> On Wed, Oct 16, 2024 at 08:00:30AM +0200, Patrick Steinhardt wrote:
+> > But there is one exception here where we _can_ get away with sorting
+> > refs while streaming: ref backends sort references returned by their
+> > iterators in lexicographic order. So if the following conditions are all
+> > true we can do iterative streaming:
 > >
-> > @@ -1368,7 +1369,7 @@ static int upload_pack_config(const char *var, const char *value,
-> >  		if (git_config_bool(var, value))
-> >  			data->allow_uor |= ALLOW_ANY_SHA1;
-> >  		else
-> > -			data->allow_uor &= ~ALLOW_ANY_SHA1;
-> > +			data->allow_uor &= ~(ALLOW_ANY_SHA1 -(ALLOW_TIP_SHA1|ALLOW_REACHABLE_SHA1));
+> >   - The caller uses at most a single name pattern. Otherwise we'd have
+> >     to sort results from multiple invocations of the iterator.
+> >
+> >   - There must be at most a single sorting specification, as otherwise
+> >     we're not using plain lexicographic ordering.
+> >
+> >   - The sorting specification must use the "refname".
+> >
+> >   - The sorting specification must not be using any flags, like
+> >     case-insensitive sorting.
 > 
-> Subtracting the result of a bitwise-OR feels a little odd to me.
-> 
-> Since ALLOW_TIP_SHA1 and ALLOW_REACHABLE_SHA1 are defined as 0x1 and
-> 0x2, respectively, I think the end result is as you described it, but
-> the route to get there feels a little odd to me.
-> 
-> I think it would probably make more sense to write this as:
-> 
->     data->allow_uor &= ~(ALLOW_ANY_SHA1 ^ (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
+> Perhaps a niche case, but what about ancient packed-refs files that were
+> written before the 'sorted' capability was introduced?
 
-I think we have to treat them as a complete unit, as we don't know which
-bits were set by independent config lines and which were OR-ed in by
-ALLOW_ANY.
+We should be OK there. In that case we actually read in and sort the
+packed-refs entries ourselves. We have to, since we do an in-order merge
+with the loose refs while iterating.
 
-So this case:
+I do think this optimization is worth doing, and not a problem with our
+current backends. The biggest worries would be:
 
-> Stepping back a moment, I suppose this is handling the case where a user
-> writes:
-> 
->     [uploadpack]
->         allowTipSHA1InWant = true
->         allowReachableSHA1InWant = true
->         allowAnySHA1InWant = false
-> 
-> and is surprised when the final "uploadPack.allowAnySHA1InWant" unsets
-> the previous two options.
+  1. Some new ref backend that doesn't return sorted results. I find
+     this unlikely, and anyway it's easily caught by having coverage in
+     the test suite (which I assume we already have, but I didn't look).
 
-is the one that Piotr is thinking about. But what about:
+  2. Some new flag combination that requires disabling the optimization,
+     and which must be dealt with in the code. This seems unlikely to me
+     but not impossible. I think enabling the optimization is worth it,
+     though.
 
-  [uploadpack]
-  allowAnySHA1InWant = true
-  allowAnySHA1InWant = false
+> >   - The caller uses at most a single name pattern. Otherwise we'd have
+> >     to sort results from multiple invocations of the iterator.
 
-Right now that pair is a noop, which is what I'd expect. But after the
-proposed patch, it quietly enables ALLOW_TIP_SHA1 and
-ALLOW_REACHABLE_SHA1.
+I think this part is erring on the cautious side, as we can often
+collapse these into a single iteration due to the ref-prefix work. It
+may be OK to keep using the slower code here if multiple patterns aren't
+commonly used, but I'd suspect that:
 
-So I think the code has to stay the same, but we perhaps should document
-that "allow any" has the user-visible side effect of enabling/disabling
-the other two.
+  git for-each-ref --sort=refname refs/heads refs/tags
+
+could benefit.
 
 -Peff
