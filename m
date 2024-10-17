@@ -1,80 +1,77 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pine.sfconservancy.org (pine.sfconservancy.org [192.237.253.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0D01D1305
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 21:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896143DABF2
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 21:16:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.237.253.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729198848; cv=none; b=pUADxo4opUo1QyeexlN2R6pWGCNcOQb6lzkVA6Y4aX4h4+gVMfB8Kiu8Fv56aWJHNCVRCSuwVq11dYdB4Y5cFNY2MklbCz5qdon+gvCJmbhjbL/OXVKcatrLqAhiFyQ2HBUPZPSyj+BQSbDsLx9wmpBD60FmXtC7hKcvglDN6b4=
+	t=1729199793; cv=none; b=B7ZOyZIFb8UulXs4l6lCUOQLobkfYzKuWA2rXOeSYxcGmiSMX0APX/P/V7ascGALFUgCbUo1Qy5zbhn2KC3YOjJ+/mtng69XlZ4ldQqnfla7J0UtiVc5E0/aggQcBcLY30ccJEn+Qz9+TZrE+QnbntMIGtkS/+67k2Vt9Pd0N7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729198848; c=relaxed/simple;
-	bh=F7OnDiGZr66308y4lkM3VkqTf5qiWt9Se7bScrrK07A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qD0qcdRk9WwHQLyysoR15WMa8nrdEBdJ9cgcwUERscjXktYieMthcB6JpnqeVPZ9MIh5eZtXBHvbhzvBWX5KV3DLC/tIHkCySM95tDxVDi7xNi/WVi34RH6QC0Q/mHhD2Dk3NynqArZ6HfZ4PQk3WYo+M0JMMyuthj4jQ3UWf5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Z0idnEgE; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1729199793; c=relaxed/simple;
+	bh=dKhPtkzPzEFA1wN0OOefGVsWgbuB0m07yT2YSzg9JkY=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=sfp2Y0K8Wp2Mw8myV2W1ol+73iEJwcHOYEguwnuw4qaYf5hC/ptbCkriM3eIiXQb0X9TsM6DHzEvc74adWoPf5XQRrKGkychZBKJvmT4a9UXrMUhsA4mQuwIxIgFxOyS3UBkcQTMYWEtD8yFX4mHaVbHgnNyADVscgIWq0njBrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sfconservancy.org; spf=pass smtp.mailfrom=sfconservancy.org; dkim=pass (2048-bit key) header.d=sfconservancy.org header.i=@sfconservancy.org header.b=GDH1cB4v; arc=none smtp.client-ip=192.237.253.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sfconservancy.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sfconservancy.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Z0idnEgE"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e290d6d286eso1188054276.3
-        for <git@vger.kernel.org>; Thu, 17 Oct 2024 14:00:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729198846; x=1729803646; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=F7OnDiGZr66308y4lkM3VkqTf5qiWt9Se7bScrrK07A=;
-        b=Z0idnEgE3EtB5RWrmXDldgMjNPlndafhNF2Gsiy55H/2HeAkYw5BIzzbHuaIN1fv8r
-         0IBiHDv6ZgM7lyrucIS65DJJOVHYNkIN2hRPY5JaRlnSCSVMrQvJ0bkAxw16oWmL708Z
-         S12PBGfWULxcnor4aJmHeKCgvYjn23tCb2xTYafv8lwkm2wMtFGrWvldRH757AzIGCwA
-         pF5GQVJ0aQkRa96K/uXIv3WwxvrFj7FGibf9V+MLeyvsWW+gptwDkMP5B9i2uwEW4TbT
-         ekzD4VwePsNmWXiF7K5fQRfvNOTOyxzSnJHBoFF6rmbfyUNv6slXlLZnARMrK6E1vsmr
-         u3RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729198846; x=1729803646;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F7OnDiGZr66308y4lkM3VkqTf5qiWt9Se7bScrrK07A=;
-        b=Y+kJgVL9TUiDROn9zIEFCx4G17qmA5Bhrs4UclCqVU/lABRfPXuG56cr4P+jaEF93q
-         /eLpAS92RrH/Cu+7ja2M/PzeujpbFn4UIkYIeIQA5CxM/ygShyWTAgZkDOhzazCfH7Rv
-         e759WbMD2GyRecSemYgH60JTnLivHcgMjetMXc2WTMiqOklh9hNYqDZnnIJ+6BCzmjY2
-         QFrLnCX5ykU//fmOykhKX8wWsrWLmI2wo3hOIzSsYg3wjzy7uMrUOFbpWkIvb5pSUs7j
-         XV8ljMFo/xJpsG+VwC/Cq8jMLu6P7bQEo374n2BiKC1sqMKpjJ+aY+0udyQmxsvD7EIO
-         hvLA==
-X-Gm-Message-State: AOJu0Yx7q3vLh79rTKTHTMvBU7iumCauLIFCpk+RCxTWxOs8V6OFLAH4
-	KoiN7RjNXQ5gVPCTwqhBwQ/tV8ar1ceLeQXFMh1YZGYHrwonMrw0Z48kravuHOI=
-X-Google-Smtp-Source: AGHT+IFmz9hKY670IHd9JN6skZNp2HUdvMln/MhYtIOy0JLB4d6x0gk3fvAJpyU/WtnGp4biHRsJUg==
-X-Received: by 2002:a05:6902:c0c:b0:e29:48ad:b845 with SMTP id 3f1490d57ef6-e2bb12efac4mr247485276.22.1729198845853;
-        Thu, 17 Oct 2024 14:00:45 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bb0205362sm50793276.14.2024.10.17.14.00.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2024 14:00:45 -0700 (PDT)
-Date: Thu, 17 Oct 2024 17:00:43 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>,
-	karthik nayak <karthik.188@gmail.com>,
-	shejialuo <shejialuo@gmail.com>
-Subject: Re: [PATCH v3 00/10] reftable: stop using `struct strbuf`
-Message-ID: <ZxF6+ze67duAO8fn@nand.local>
-References: <cover.1728629612.git.ps@pks.im>
- <cover.1729140565.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=sfconservancy.org header.i=@sfconservancy.org header.b="GDH1cB4v"
+Received: from localhost.localdomain (c-73-25-52-37.hsd1.or.comcast.net [73.25.52.37])
+	(Authenticated sender: pono)
+	by pine.sfconservancy.org (Postfix) with ESMTPSA id 1FD37E82B
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 21:10:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=sfconservancy.org;
+	s=pine; t=1729199448;
+	bh=dKhPtkzPzEFA1wN0OOefGVsWgbuB0m07yT2YSzg9JkY=;
+	h=Date:From:To:Subject:From;
+	b=GDH1cB4vDkNUb2Y5ChvTiM8Yzy5hnWOg64K/JBOjl4SMy71zaJmXmFbVneOGCCMgy
+	 vjVnm98siBYAANPpEVWZc0G/v6BPeGhSkCBn819iM/5Bpwjoy9Xus333n4bK0+GDaC
+	 WezTGR+tQ+REJzMWm6vSxm22MNthEC4Hjc2hPa0HMS3ENqOx7IKGzGmfD7U+kMKolv
+	 2gk4LBF3+1dvY7QDcXYnG4nR7FpTa3+lwc1JIVJtmEds684HRpieTqNDhXHMPiWWJ0
+	 XDRzkJ1RUwQqcDDcj1fEtZrgjYchK6lcQLPZOxr3v4/bGTcafnNEOJgr1ysDAkxAA+
+	 CoCiw+DgRqQ4A==
+Date: Thu, 17 Oct 2024 14:11:41 -0700
+From: Daniel Pono Takamori <pono@sfconservancy.org>
+To: git@vger.kernel.org
+Subject: Seeking your thoughts on LLM-generated contributions
+Message-ID: <ZxF9jawbd8eIeb4-@localhost.localdomain>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1729140565.git.ps@pks.im>
 
-On Thu, Oct 17, 2024 at 06:53:42AM +0200, Patrick Steinhardt wrote:
-> Range-diff against v2:
+Heya git developers,
 
-The range-diff looks like we're getting close here, or are already
-there. Do others agree that this is ready to start merging down?
+We at Software Freedom Conservancy have been hearing from member
+projects that people are asking whether they can submit code to these
+projects that was generated by large language models (LLMs), sometimes
+called AI coding assistants.  We'd like to better understand the nature
+of these requests, how much LLM-generated code has been offered to these
+projects, and generally how you're feeling about the situation.
+
+To do this, we will be holding three different sessions, where you are
+welcome to join and share your thoughts and any details so far on these
+types of contributions.  The sessions will all be run in the same way
+with the same topic - we are running three in order to hopefully allow
+as many people from around the world to attend as possible.
+
+Our Director of Compliance, Denver Gingerich, will be hosting some sessions
+at the times below for all our member projects to discuss the issue.
+
+date -d "2024-10-29 20:00 UTC"
+date -d "2024-11-01 14:00 UTC"
+date -d "2024-11-06 04:00 UTC"
+
+We'll be meeting in this room for the sessions:
+
+  https://bbb.sfconservancy.org/b/oss-nnj-obi-jea
+
+We are excited to see some of you there and are looking forward to
+drafting appropriate recommendations based on what we hear!
 
 Thanks,
-Taylor
+-Pono at Software Freedom Conservancy
