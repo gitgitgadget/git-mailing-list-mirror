@@ -1,309 +1,245 @@
-Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21361DA612
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 11:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584B41DC1A5
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 11:28:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729163821; cv=none; b=D5alLDFb2nQeymn/lhzOd+EM9aiImkFcd4Cl6TxAAl6uIGX4kaZsAsgOkwUZKvJyHVyg0k4Ka2mfxuFI2EeMwpLfxW074zk3Kqen10hrGztyIkc6GdU4XjbIjh1t4eVXVuVt+jTE7xcpP+cHayn1Fdac32Fr+6JYGTkypZ2EpxU=
+	t=1729164526; cv=none; b=LKhlnteSOnvQSOZCZSKRnevqlJKyP+GV5v7Znaj5JZCMSn4VmFRDHv4c1ThShq2olCLwTOAoD/IpvUJgEJX/ugX6qJJPfYaHZqsO4KRNYyVN9CucxMb1yQsqkPb4i5PAKoWXDDeHt5Y3GGiAv1cHp06gkuy2nasrFXcFkx4xBBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729163821; c=relaxed/simple;
-	bh=+h9OmuKIh6v5nEWoge+bQKfWVP6eAhweBcWRAsUkX9U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CdmsuI/ODBhg8s/xBlkafHbRYqnMVcN3ZaECF1SNduPzAxIMgolbrgpo5iYUD1CWi2dKGZl24Bik3v9o6LDPqfafLb1zSzHhU8FV89ZV7RIxDWVc90wD0MSgOuf7plaBcPdE6bb7XeHl4UGCgWZa0VXexzV59UMk4IIQSvLFz4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nnQbJx7Q; arc=none smtp.client-ip=209.85.217.41
+	s=arc-20240116; t=1729164526; c=relaxed/simple;
+	bh=pdftGWR2wkDueuSEPFxImY0oQ0rI771Kxqcqh8gGNOk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=QBLviPXYVB1F8C82v+0bsqXYaQyLsLkO6ZnKBRLrOWyd//aHEV+AULfpSRUIvsaHzj7AFt/6TVAit5kbZicdDFtB8QHXf32p9yb8ZXaRHdkf2H3N2qpWmzLgJc+XwK4QzbNjaAhMPXQAQKCWYeUYUt5hUzLAzG00ft252ccUJdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KcY6nGNj; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nnQbJx7Q"
-Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4a47cdaf158so275201137.0
-        for <git@vger.kernel.org>; Thu, 17 Oct 2024 04:16:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KcY6nGNj"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4314b316495so8406915e9.2
+        for <git@vger.kernel.org>; Thu, 17 Oct 2024 04:28:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729163817; x=1729768617; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e5b/lCt/Od3n8XIe19Jowv/ozuDnIe2pSozI9guk3lo=;
-        b=nnQbJx7Q59ogH41Dnx3JpQLcknKaJx8jfOnzGwTGDKVUhr3WGdCA5kCBTiMDAWii7i
-         MeNra6dOsTdywpu61RJk56m3eZZXUFz9xVWde4hVrE8fTQJIMzDTAUcpQl4PBJs20M7E
-         dAdmPH3hSPZ9xi/mMH/Si5KnGPHcyGcNe0ze3MElNQT011NuIPXyC3pyyTmEE5DlBYUz
-         5QBwYowk3xYdbEK2OKjCpzr3zcEcba1IAsLKzkT8BgwB/7UzAQ8bpPUezJisEtl9ZXOb
-         5xwbSxhKHxUlGADrPyr30kXiiFptQqSmhzmiVjMpq4SfV3o6YzvUoU4x983tPiCbyOs1
-         YBIw==
+        d=gmail.com; s=20230601; t=1729164520; x=1729769320; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NKfhZhurT9AMbToSk/jgVuwJpNW9Sk0jXXNaQtmczto=;
+        b=KcY6nGNjp2fOUprIzSH+Zie/XxG7jTttnxv1XzrQyyEHi0OPUUCrI+7vEjd2m/37fx
+         I72WAhPMKyAF62BBSns4ssOSre8gTMxT0RpRn/dol6y56abPqA1f9b7APfB5I6HAZ+4H
+         4itCQWX0JN80tajbog+7LIDHssWyxKxIxU/qdDWzmdSMwvfsfbSOwZv6i3itDLx6KS8j
+         A9b3et2QvIOehedZfmwcEiRv10FhFQGVaPzNnpcHgSWTSqRkp8jZhVPqJ1/+q19rMYDv
+         VNbfjGtm7Cfqb3CKTgcwu/74R7jQlUQKFFoz9UAND369VS2px0yuSbKRYzas1Do1JRnn
+         1qiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729163817; x=1729768617;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e5b/lCt/Od3n8XIe19Jowv/ozuDnIe2pSozI9guk3lo=;
-        b=QNhWIXALV5E8zmIOBCs5yEJqkNNtf2Gn7OJFEReZXGrIx/cgBbAH1HMrmRMFszv2BO
-         fkqaMLXBGS1lVanoYwvVaPRdAzXlCEJ/sAZiFib1Hcr6h2H0khDmIWCWx/caRBpbIbST
-         nW2Lsx5CmVx/I9tGlO8uWiVhjBn607CFQ6Mv4x5k/oFTUubXePRkDlp1H0yMi1raAk4n
-         J/+yadqgcmofZvxj0v0VZNTBgEm7w6YfKAyDSD1okdYdg7GzOL7jjfq1VL/qm8W/k5MU
-         gREIigsHlSN0bBTGDPxufNZtMxGUDQ93372dwjvvDODOW7FYLNuN1VBBK/+REoLAnS0A
-         1H6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX1CkpPVtrAZwtpzAl8RWPnGbb5OykDwBGTNE8j7lHpEPV4ZQ8sjy/w3+bEnwM4kROGt2w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxZWyns7dd7ESE84/gDF1AnJyOW/jADUsgWJO4g5ciA5oY36Di1
-	DQ3HwQI8s3I0vaOtz9FVNA/I8hYmrLYc6LyHkNMcnZ+ZcOByxX4K1ymhyh5w0rekPs/v+oB3rPX
-	fm888ccjo5U6P0M+5LuhHa0FvKGNsXrT/YIk=
-X-Google-Smtp-Source: AGHT+IHJEP5NjJDVaL0StsspvFg7dp0w/1RJnPHJyTX3a2q1Z5IYcR6uJ7PlWeFAM3mr8LMJagIp5cD8Ng5IA303iMI=
-X-Received: by 2002:a05:6102:304c:b0:4a4:6cf4:3158 with SMTP id
- ada2fe7eead31-4a475f12a21mr14033395137.3.1729163816623; Thu, 17 Oct 2024
- 04:16:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729164520; x=1729769320;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NKfhZhurT9AMbToSk/jgVuwJpNW9Sk0jXXNaQtmczto=;
+        b=YU2HIEXVTgHmqlF+pnc9YRK0uAtvvCUGWPzRbWWRmk1JIiikT9arsyh8bRpqDuSU8t
+         Nb1EBBKetjYgv6w87ZUTHBap7TK3aR72/R01CnBnZzJRlf39yVNqWFu+i7/33h8aXW0C
+         5ezITKCCU2/z7k+Lrz7fsDaRoG7Z2N/+mDIgY+9mon/hZlNroNRRKukfgwx5PPjadTLg
+         la192id8XuZi8ThjMoWVriFLM1oFoGTf+Sl9IPyhilwCYlEZyiV3tElf1SGhtRPELup2
+         YhkDW6sjIoUz3mq48y0xTFqBmxek8ffHn2FW8n6N+1nu8gGl7ICpvb9DO9y/PMbjJlkt
+         d+Gg==
+X-Gm-Message-State: AOJu0Yy7r1YlR0uCVcgq1h6e/Du1UQqGfGvEk7m3EoIPy0jTMQTZfx+K
+	WTxnjXgSASgGkkodWSqhvdrEGozMkRc5PmjOv9+PVT1DiIdwUhG0yNQPDw==
+X-Google-Smtp-Source: AGHT+IHQcFoqk9TMyyxaupRUskNXQeylegm3B0bOBDvaXnx1FLkU3a94FKy/TUtwUTlLe4e114IccQ==
+X-Received: by 2002:a7b:cd8d:0:b0:431:5194:1687 with SMTP id 5b1f17b1804b1-4315194172dmr42903255e9.18.1729164519819;
+        Thu, 17 Oct 2024 04:28:39 -0700 (PDT)
+Received: from void.void ([141.226.9.185])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43158c39c78sm23324685e9.20.2024.10.17.04.28.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2024 04:28:39 -0700 (PDT)
+From: Andrew Kreimer <algonell@gmail.com>
+To: git@vger.kernel.org
+Cc: Andrew Kreimer <algonell@gmail.com>
+Subject: [PATCH] t: fix typos
+Date: Thu, 17 Oct 2024 14:28:35 +0300
+Message-Id: <20241017112835.10100-1-algonell@gmail.com>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
- <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
- <6875cb49-becc-4562-ace8-9f07848a345c@gmail.com>
-In-Reply-To: <6875cb49-becc-4562-ace8-9f07848a345c@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Thu, 17 Oct 2024 11:16:45 +0000
-Message-ID: <CAPSxiM9j50ksZsdd+mVYt7p5=5GQDjA3eXSgryGCF7QsDNEE1w@mail.gmail.com>
-Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and strtol_i()
-To: phillip.wood@dunelm.org.uk
-Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 14, 2024 at 9:49=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> Hi Usman
->
-> On 13/10/2024 00:09, Usman Akinyemi via GitGitGadget wrote:
-> > From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> >
-> > Replace unsafe uses of atoi() with strtoul_ui() for unsigned integers
-> > and strtol_i() for signed integers across multiple files. This change
-> > improves error handling and prevents potential integer overflow issues.
->
-> This paragraph is good as it explains why you are making this change
->
-> > The following files were updated:
-> > - daemon.c: Update parsing of --timeout, --init-timeout, and
-> >    --max-connections
-> > - imap-send.c: Improve parsing of UIDVALIDITY, UIDNEXT, APPENDUID, and
-> >    tags
-> > - merge-ll.c: Enhance parsing of marker size in ll_merge and
-> >    ll_merge_marker_size
->
-> This information is not really needed in the commit message as it is
-> shown in the diff.
->
-> > This change allows for better error detection when parsing integer
-> > values from command-line arguments and IMAP responses, making the code
-> > more robust and secure.
->
-> Great
->
-> > This is a #leftoverbit discussed here:
-> >   https://public-inbox.org/git/CAC4O8c-nuOTS=3Da0sVp1603KaM2bZjs+yNZzdA=
-aa5CGTNGFE7hQ@mail.gmail.com/
-> >
-> > Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> >
-> > Cc: gitster@pobox.com
-> > Cc: Patrick Steinhardt <ps@pks.im>
-> > Cc: phillip.wood123@gmail.com
-> > Cc: Christian Couder <christian.couder@gmail.com>
-> > Cc: Eric Sunshine <sunshine@sunshineco.com>
-> > Cc: Taylor Blau <me@ttaylorr.com>
->
-> We do not tend to use Cc: footers on this list. Also note that as there
-> is a blank line between the Signed-off-by: line and this paragraph the
-> Signed-off-by: will be ignored by git-interpret-trailers.
->
-> > ---
-> >   daemon.c    | 14 +++++++++-----
-> >   imap-send.c | 13 ++++++++-----
-> >   merge-ll.c  |  6 ++----
-> >   3 files changed, 19 insertions(+), 14 deletions(-)
-> >
-> > diff --git a/daemon.c b/daemon.c
-> > index cb946e3c95f..3fdb6e83c40 100644
-> > --- a/daemon.c
-> > +++ b/daemon.c
-> > @@ -1308,17 +1308,21 @@ int cmd_main(int argc, const char **argv)
-> >                       continue;
-> >               }
-> >               if (skip_prefix(arg, "--timeout=3D", &v)) {
-> > -                     timeout =3D atoi(v);
-> > +                     if (strtoul_ui(v, 10, &timeout) < 0) {
->
-> For functions that return 0 or -1 to indicate success or error
-> respectively we use "if (func(args))" to check for errors.
->
-> > +                             die("'%s': not a valid integer for --time=
-out", v);
->
-> "-1" is a valid integer but it is not a valid timeout, maybe we could
-> say something like "invalid timeout '%s', expecting a non-negative intege=
-r".
->
-> > +                     }
-> >                       continue;
-> >               }
-> >               if (skip_prefix(arg, "--init-timeout=3D", &v)) {
-> > -                     init_timeout =3D atoi(v);
-> > +                     if (strtoul_ui(v, 10, &init_timeout) < 0) {
-> > +                             die("'%s': not a valid integer for --init=
--timeout", v);
->
-> The comments for --timeout apply here as well
->
-> > +                     }
-> >                       continue;
-> >               }
-> >               if (skip_prefix(arg, "--max-connections=3D", &v)) {
-> > -                     max_connections =3D atoi(v);
-> > -                     if (max_connections < 0)
-> > -                             max_connections =3D 0;            /* unli=
-mited */
-> > +                     if (strtol_i(v, 10, &max_connections) !=3D 0 || m=
-ax_connections < 0) {
->
-> This is a faithful translation but if the aim of this series is to
-> detect errors then I think we want to do something like
->
->         if (strtol_i(v, 10, &max_connections))
->                 die(...)
->         if (max_connections < 0)
->                 max_connections =3D 0; /* unlimited */
->
-> > +                             max_connections =3D 0;  /* unlimited */
-> > +                     }
-> >                       continue;
-> >               }
-> >               if (!strcmp(arg, "--strict-paths")) {
-> > diff --git a/imap-send.c b/imap-send.c
-> > index ec68a066877..33b74dfded7 100644
-> > --- a/imap-send.c
-> > +++ b/imap-send.c
-> > @@ -668,12 +668,12 @@ static int parse_response_code(struct imap_store =
-*ctx, struct imap_cmd_cb *cb,
-> >               return RESP_BAD;
-> >       }
-> >       if (!strcmp("UIDVALIDITY", arg)) {
-> > -             if (!(arg =3D next_arg(&s)) || !(ctx->uidvalidity =3D ato=
-i(arg))) {
-> > +             if (!(arg =3D next_arg(&s)) || strtol_i(arg, 10, &ctx->ui=
-dvalidity) !=3D 0) {
->
-> The original is checking for a zero return from atoi() which indicates
-> an error or that the parsed value was zero. To do that with strtol_i()
-> we need to do
->
->         || (strtol_i(arg, 10, &ctx->uidvalidity) || !ctx->uidvalidity)
->
-> The IMAP RFC[1] specifies that UIDVALIDITY should be a non-zero,
-> non-negative 32bit integer but I'm not sure we want to start change it's
-> type and using strtoul_ui here.
-Hello, regarding this. I used strtol_i here as ctx->uidvalidity
-was declared to be int so, the strtoul_ui complained as it was
-expecting an unsigned int.
-My suggestion will be to leave it as strol_i and use this comparison
-(strtol_i(arg, 10, &ctx->uidvalidity) || !ctx->uidvalidity), what do you th=
-ink ?
->
-> [1] https://www.rfc-editor.org/rfc/rfc3501#section-2.3.1.1
->
-> >                       fprintf(stderr, "IMAP error: malformed UIDVALIDIT=
-Y status\n");
-> >                       return RESP_BAD;
-> >               }
-> >       } else if (!strcmp("UIDNEXT", arg)) {
-> > -             if (!(arg =3D next_arg(&s)) || !(imap->uidnext =3D atoi(a=
-rg))) {
-> > +             if (!(arg =3D next_arg(&s)) || strtol_i(arg, 10, &imap->u=
-idnext) !=3D 0) {
->
-> The comments above apply here
->
-> >                       fprintf(stderr, "IMAP error: malformed NEXTUID st=
-atus\n");
-> >                       return RESP_BAD;
-> >               }
-> > @@ -686,8 +686,8 @@ static int parse_response_code(struct imap_store *c=
-tx, struct imap_cmd_cb *cb,
-> >               for (; isspace((unsigned char)*p); p++);
-> >               fprintf(stderr, "*** IMAP ALERT *** %s\n", p);
-> >       } else if (cb && cb->ctx && !strcmp("APPENDUID", arg)) {
-> > -             if (!(arg =3D next_arg(&s)) || !(ctx->uidvalidity =3D ato=
-i(arg)) ||
-> > -                 !(arg =3D next_arg(&s)) || !(*(int *)cb->ctx =3D atoi=
-(arg))) {
-> > +             if (!(arg =3D next_arg(&s)) || (strtol_i(arg, 10, &ctx->u=
-idvalidity) !=3D 0) ||
-> > +                     !(arg =3D next_arg(&s)) || (strtol_i(arg, 10, (in=
-t *)cb->ctx) !=3D 0)) {
->
-> And here
->
-> >                       fprintf(stderr, "IMAP error: malformed APPENDUID =
-status\n");
-> >                       return RESP_BAD;
-> >               }
-> > @@ -773,7 +773,10 @@ static int get_cmd_result(struct imap_store *ctx, =
-struct imap_cmd *tcmd)
-> >                       if (!tcmd)
-> >                               return DRV_OK;
-> >               } else {
-> > -                     tag =3D atoi(arg);
-> > +                     if (strtol_i(arg, 10, &tag) !=3D 0) {
->
-> To check for an error just use (strtol_i(arg, 10, &tag))
->
-> > +                             fprintf(stderr, "IMAP error: malformed ta=
-g %s\n", arg);
-> > +                             return RESP_BAD;
->
-> This matches the error below so I assume it's good.
->
-> > +                     }
-> >                       for (pcmdp =3D &imap->in_progress; (cmdp =3D *pcm=
-dp); pcmdp =3D &cmdp->next)
-> >                               if (cmdp->tag =3D=3D tag)
-> >                                       goto gottag;
-> > diff --git a/merge-ll.c b/merge-ll.c
-> > index 8e63071922b..2bfee0f2c6b 100644
-> > --- a/merge-ll.c
-> > +++ b/merge-ll.c
-> > @@ -427,8 +427,7 @@ enum ll_merge_result ll_merge(mmbuffer_t *result_bu=
-f,
-> >       git_check_attr(istate, path, check);
-> >       ll_driver_name =3D check->items[0].value;
-> >       if (check->items[1].value) {
-> > -             marker_size =3D atoi(check->items[1].value);
-> > -             if (marker_size <=3D 0)
-> > +             if (strtol_i(check->items[1].value, 10, &marker_size) !=
-=3D 0 || marker_size <=3D 0)
->
-> Here I think we want to return an error if we cannot parse the marker
-> size and then set the default if the marker size is <=3D 0 like we do for
-> the max_connections code in daemon.c above.
->
-> >                       marker_size =3D DEFAULT_CONFLICT_MARKER_SIZE;
-> >       }
-> >       driver =3D find_ll_merge_driver(ll_driver_name);
-> > @@ -454,8 +453,7 @@ int ll_merge_marker_size(struct index_state *istate=
-, const char *path)
-> >               check =3D attr_check_initl("conflict-marker-size", NULL);
-> >       git_check_attr(istate, path, check);
-> >       if (check->items[0].value) {
-> > -             marker_size =3D atoi(check->items[0].value);
-> > -             if (marker_size <=3D 0)
-> > +             if (strtol_i(check->items[0].value, 10, &marker_size) !=
-=3D 0 || marker_size <=3D 0)
->
-> And the same here
->
-> Thanks for working on this, it will be a useful improvement to our
-> integer parsing. I think you've got the basic idea, it just needs a bit
-> of polish
->
-> Phillip
->
+Fix typos in documentation, comments, etc.
+
+Via codespell.
+
+Signed-off-by: Andrew Kreimer <algonell@gmail.com>
+---
+Synced with:
+  - Merge branch 'la/trailer-info' into seen.
+
+Tested:
+  - ubuntu-latest, GitHub Actions.
+
+ t/t0000-basic.sh                         | 4 ++--
+ t/t0021-conversion.sh                    | 4 ++--
+ t/t0212/parse_events.perl                | 2 +-
+ t/t0600-reffiles-backend.sh              | 2 +-
+ t/t1016-compatObjectFormat.sh            | 2 +-
+ t/t1092-sparse-checkout-compatibility.sh | 6 +++---
+ t/t1400-update-ref.sh                    | 4 ++--
+ t/t1506-rev-parse-diagnosis.sh           | 2 +-
+ t/t2082-parallel-checkout-attributes.sh  | 2 +-
+ 9 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 98b81e4d63..35c5c2b4f9 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -684,7 +684,7 @@ test_expect_success 'subtest: tests respect lazy prerequisites' '
+ 	write_and_run_sub_test_lib_test lazy-prereqs <<-\EOF &&
+ 
+ 	test_lazy_prereq LAZY_TRUE true
+-	test_expect_success LAZY_TRUE "lazy prereq is satisifed" "true"
++	test_expect_success LAZY_TRUE "lazy prereq is satisfied" "true"
+ 	test_expect_success !LAZY_TRUE "negative lazy prereq" "false"
+ 
+ 	test_lazy_prereq LAZY_FALSE false
+@@ -695,7 +695,7 @@ test_expect_success 'subtest: tests respect lazy prerequisites' '
+ 	EOF
+ 
+ 	check_sub_test_lib_test lazy-prereqs <<-\EOF
+-	ok 1 - lazy prereq is satisifed
++	ok 1 - lazy prereq is satisfied
+ 	ok 2 # skip negative lazy prereq (missing !LAZY_TRUE)
+ 	ok 3 # skip lazy prereq not satisfied (missing LAZY_FALSE)
+ 	ok 4 - negative false prereq
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index eeb2714d9d..9e6c6ee0d4 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -1116,11 +1116,11 @@ do
+ 		test_delayed_checkout_progress test_terminal git checkout $opt
+ 	'
+ 
+-	test_expect_success PERL "delayed checkout ommits progress on non-tty ($mode checkout)" '
++	test_expect_success PERL "delayed checkout omits progress on non-tty ($mode checkout)" '
+ 		test_delayed_checkout_progress ! git checkout $opt
+ 	'
+ 
+-	test_expect_success PERL,TTY "delayed checkout ommits progress with --quiet ($mode checkout)" '
++	test_expect_success PERL,TTY "delayed checkout omits progress with --quiet ($mode checkout)" '
+ 		test_delayed_checkout_progress ! test_terminal git checkout --quiet $opt
+ 	'
+ 
+diff --git a/t/t0212/parse_events.perl b/t/t0212/parse_events.perl
+index 30a9f51e9f..7146476c69 100644
+--- a/t/t0212/parse_events.perl
++++ b/t/t0212/parse_events.perl
+@@ -204,7 +204,7 @@
+     }
+ 
+     # A series of potentially nested and threaded region and data events
+-    # is fundamentally incompatibile with the type of summary record we
++    # is fundamentally incompatible with the type of summary record we
+     # are building in this script.  Since they are intended for
+     # perf-trace-like analysis rather than a result summary, we ignore
+     # most of them here.
+diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
+index 20df336cc3..bef2b70871 100755
+--- a/t/t0600-reffiles-backend.sh
++++ b/t/t0600-reffiles-backend.sh
+@@ -271,7 +271,7 @@ test_expect_success 'setup worktree' '
+ # Some refs (refs/bisect/*, pseudorefs) are kept per worktree, so they should
+ # only appear in the for-each-reflog output if it is called from the correct
+ # worktree, which is exercised in this test. This test is poorly written for
+-# mulitple reasons: 1) it creates invalidly formatted log entres. 2) it uses
++# multiple reasons: 1) it creates invalidly formatted log entries. 2) it uses
+ # direct FS access for creating the reflogs. 3) PSEUDO-WT and refs/bisect/random
+ # do not create reflogs by default, so it is not testing a realistic scenario.
+ test_expect_success 'for_each_reflog()' '
+diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
+index be3206a16f..92024fe51d 100755
+--- a/t/t1016-compatObjectFormat.sh
++++ b/t/t1016-compatObjectFormat.sh
+@@ -117,7 +117,7 @@ do
+ 		git config extensions.objectformat $hash &&
+ 		git config extensions.compatobjectformat $(compat_hash $hash) &&
+ 		git config gpg.program $TEST_DIRECTORY/t1016/gpg &&
+-		echo "Hellow World!" > hello &&
++		echo "Hello World!" > hello &&
+ 		eval hello_${hash}_oid=$(git hash-object hello) &&
+ 		git update-index --add hello &&
+ 		git commit -m "Initial commit" &&
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 3d44bd7643..2157f37da3 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -708,7 +708,7 @@ test_expect_success 'reset with wildcard pathspec' '
+ 	test_all_match git ls-files -s -- deep &&
+ 
+ 	# The following `git reset`s result in updating the index on files with
+-	# `skip-worktree` enabled. To avoid failing due to discrepencies in reported
++	# `skip-worktree` enabled. To avoid failing due to discrepancies in reported
+ 	# "modified" files, `test_sparse_match` reset is performed separately from
+ 	# "full-checkout" reset, then the index contents of all repos are verified.
+ 
+@@ -824,7 +824,7 @@ test_expect_success 'update-index --remove outside sparse definition' '
+ 	# Reset the state
+ 	test_all_match git reset --hard &&
+ 
+-	# --force-remove supercedes --ignore-skip-worktree-entries, removing
++	# --force-remove supersedes --ignore-skip-worktree-entries, removing
+ 	# a skip-worktree file from the index (and disk) when both are specified
+ 	# with --remove
+ 	test_sparse_match git update-index --force-remove --ignore-skip-worktree-entries folder1/a &&
+@@ -2081,7 +2081,7 @@ test_expect_success 'grep is not expanded' '
+ test_expect_failure 'grep within submodules is not expanded' '
+ 	init_repos_as_submodules &&
+ 
+-	# do not use ensure_not_expanded() here, becasue `grep` should be
++	# do not use ensure_not_expanded() here, because `grep` should be
+ 	# run in the superproject, not in "./sparse-index"
+ 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
+ 	git grep --cached --recurse-submodules a -- "*/folder1/*" &&
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index eb1691860d..bb057596f1 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -1838,10 +1838,10 @@ do
+ 
+ 	test_expect_success "stdin $type create dangling symref ref works" '
+ 		test_when_finished "git symbolic-ref -d refs/heads/symref" &&
+-		format_command $type "symref-create refs/heads/symref" "refs/heads/unkown" >stdin &&
++		format_command $type "symref-create refs/heads/symref" "refs/heads/unknown" >stdin &&
+ 		git update-ref --stdin $type --no-deref <stdin &&
+ 		git symbolic-ref refs/heads/symref >expect &&
+-		echo refs/heads/unkown >actual &&
++		echo refs/heads/unknown >actual &&
+ 		test_cmp expect actual
+ 	'
+ 
+diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
+index ef40511d89..a3464976e3 100755
+--- a/t/t1506-rev-parse-diagnosis.sh
++++ b/t/t1506-rev-parse-diagnosis.sh
+@@ -195,7 +195,7 @@ test_expect_success 'dotdot is not an empty set' '
+ '
+ 
+ test_expect_success 'dotdot does not peel endpoints' '
+-	git tag -a -m "annote" annotated HEAD &&
++	git tag -a -m "annotate" annotated HEAD &&
+ 	A=$(git rev-parse annotated) &&
+ 	H=$(git rev-parse annotated^0) &&
+ 	{
+diff --git a/t/t2082-parallel-checkout-attributes.sh b/t/t2082-parallel-checkout-attributes.sh
+index aec55496eb..da06cafad7 100755
+--- a/t/t2082-parallel-checkout-attributes.sh
++++ b/t/t2082-parallel-checkout-attributes.sh
+@@ -91,7 +91,7 @@ test_expect_success 'parallel-checkout with eol conversions' '
+ 
+ # Entries that require an external filter are not eligible for parallel
+ # checkout. Check that both the parallel-eligible and non-eligible entries are
+-# properly writen in a single checkout operation.
++# properly written in a single checkout operation.
+ #
+ test_expect_success 'parallel-checkout and external filter' '
+ 	set_checkout_config 2 0 &&
+-- 
+2.39.5
+
