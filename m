@@ -1,65 +1,76 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEA9168BD
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 20:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34621168BD
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 20:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729198667; cv=none; b=uOym7Qkc7h9Z437tLUrsx4V/Kj+6AMMot2vooaWtH1J5h6mDVj8toXJKql0shYOFNPK57krUCaEoDHbZVtx//MWhSuzNaAOF8G9mMwqXAEPc4hEyTFXzG7t3rgstLGaXfCRe/eWXX24J64PGRT98GNtcKUYikGSqu3oIydzoyzU=
+	t=1729198762; cv=none; b=pY8vAYsaGOGrsx1eA7gTHJbsDnAnxZfqCuVTL5mzATn9bSZUinZNYtaX8u/EiCDw2ndAjsdrshZR43S2ehrNgiSK2tC1VAdOnhvSCq5FBYxLLozoSA6NMVqz9dtT4KBYCSCEXazaVsgXkRzfhgxJkQ+t2+RmSTpU6gxjUlxWVxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729198667; c=relaxed/simple;
-	bh=Ja+bGwkmNb45DkFAFPEJcOu8dXJQxLV0ygygHOgxQSc=;
+	s=arc-20240116; t=1729198762; c=relaxed/simple;
+	bh=Da3YlrYjwi9Sp+NUGXfehs+XTERopPAfOCshqeXprW0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ni8+SvuCUwP1/BIdBNMn2fFUmEY9974bbElrxGzC4v1B2m+aQlRbddOSQAoi1Hjwlg3w9aVaLrLiFd877Gl4v6ycAR9y1KMfWaKhGDwBkz/uRdUiH7TP0bzIVytPeBN58d2O+l/zaj/iRjtmFFUWvs6GbGLDfDkxPdls8wLnb4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=MWGlJRp8; arc=none smtp.client-ip=209.85.128.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=AEK+AWhVQdbHYyjmFwnNKmpvMeC9FV/lvsOBlsxX+UmaXsLwWlrvBNR6oBhD5ACG5FgqF20bNV672ANzk6AtaK++U0pDEK1HNBxXcztL7ljNtAc4vDEZQWS4HpOK2vA/WFFAt+GUkABkRT0uGlckv4EKJ/0WimN60SQPJucpHEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=CTmk+meE; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="MWGlJRp8"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6e305c2987bso14299677b3.0
-        for <git@vger.kernel.org>; Thu, 17 Oct 2024 13:57:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="CTmk+meE"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6e2e41bd08bso17607117b3.2
+        for <git@vger.kernel.org>; Thu, 17 Oct 2024 13:59:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729198665; x=1729803465; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729198760; x=1729803560; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PELEnmu0WohVBsPSpQoln9ucGxcTSIw5BcPs+lD3ygs=;
-        b=MWGlJRp8acwXJM5kJxzeU3GxhpIo+lhxZpVY4eEilw9VGeM9Pn0ah8D9ReExC3Pg1h
-         it8GiK57T0rUy2L/VcrHqsjM9FiKlsq54S8lznYPZLPc8LMxIFUMZeVuVmqK46XHEk2l
-         F7IJ1NvNc0i5R/2a4uBwDCoCSySEJnhD5ZX55Le3LCHxV/3OuiHjv+Ofa93FilbQkcBj
-         ampyTqWqY0tteaj04/kQPTbG4Rl9u25aOGMQBB/XFDSqAzZ7Ryo0KBXqZ8sKRNqSiNDr
-         C5xQWvHkR8yq9PHbKxTzFLBe0mXWniGbWxgRzKdZDLmBdR421/N60YPlgiMLNj8tvbZZ
-         2NHQ==
+        bh=yIzcI0ZbSbEIbJcrEjwoNpCB5KyyHtYjpos8g3BG19U=;
+        b=CTmk+meEOqcLYxxYWE94fEWrtcqWcyuuJQgl7V3nLHotyWq9MVWszBTYO9/YEPfY2C
+         4HJZmnv+CGvKDKfeqxgxxiL+D0Y+IszhG9udjNWYKUOd9WARZP9GfEXViy7cK79d/y+a
+         zC378YMksjbjzcu23MVPHNoO0/FpvF/g6mwGz5YdFlnkuuFR890q7ymCPbfPN7hCOiqw
+         26/hjHPEgcLzkLNxVA4UbfI8sNu4y2EAtaUZrfwrPGpMha9ixMV135OQ+rWANORgYu8C
+         9uMn5Np9RC7MD9epYYfWSQNq3vlS1pMwPLCH023GWRQshvzlTMMr3Uxngd8UbCnDjE/A
+         SbHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729198665; x=1729803465;
+        d=1e100.net; s=20230601; t=1729198760; x=1729803560;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PELEnmu0WohVBsPSpQoln9ucGxcTSIw5BcPs+lD3ygs=;
-        b=FJUtRAz11sakglL4GUIOgkKFGMdU2KrzDM+oeXwbDZM9EXWDtLxF6zAEGMm9S4cW/A
-         i/NLKONrMbthGIdy8X4I0b1TOzhPbX3OjuRg2XHnvpHtJyl9dKQw55eo6WEidXgTJ4fB
-         TE3cKjr9oYpucwPam+dpJ3M6QGjub9EBHKIMQpBmEX86t39N9hGRyFEwYShUuWMg2qDy
-         9UL+N33dQdQnSBHOm8TipjSz1uqf0XGOoF8I2DGSNMKfCk8XyDQAhrEyTDZv2l+LX3tY
-         tMxcYnAUqfKrgSGjvnAB4b5i7xdwxpfv7U2KZqWl9AW47uL9bIrmO3sndtWceCvoF70S
-         ptOQ==
-X-Gm-Message-State: AOJu0YxkKGBT61EGWhbS6mJCAK+/tBKErmLEJiOMBOF3cCKlXgS5r9/6
-	sE0akzZCj5Uold4npGvmvOjWuAv10zPHS5X3p/LiltnhlxCw2nashG9Bjhl9qz+M3GAr0gbQ5ed
-	K
-X-Google-Smtp-Source: AGHT+IFpvcKNZT8K59+fdMPM28b8/hn6dChN1X9kuICbyR0JkUh35aD1Iw0m8oULHi7ikq8KNYoj9Q==
-X-Received: by 2002:a05:690c:26ca:b0:6e3:d8ca:f00 with SMTP id 00721157ae682-6e5bfd4bdbamr2605937b3.44.1729198664753;
-        Thu, 17 Oct 2024 13:57:44 -0700 (PDT)
+        bh=yIzcI0ZbSbEIbJcrEjwoNpCB5KyyHtYjpos8g3BG19U=;
+        b=fX/jE7C/zKC4k6/3qY97eNBgwYf874ZnrG6kMTqlVWd+i1njihkEvTE4lvYM6a+KVd
+         mFtskohJUNSTuGfm2UDkVYjVacGH3qcV+6t/9QdnvrWWd/nwxD81lfDaWJURxGBNHlTb
+         PAKBohEzW7J7Yl98VLZHAbQcxEOqMHQIUVFDtp8QJ8rdUvfWm3v3F5dEsS9L/x1qwmpO
+         Cn9xPeOunWB2gACZ8XjaVdGLaf50Nk/Y2KF82zyzfBfRdXWciYRFrm/PYR8DtM9/dwXT
+         9DMa6ITvJxAhc4ndfE1CpnLOYneGgcHhBuDtUTbFTS9H6YwjsQ4tuJ71haEGnsl8SpMc
+         vIVA==
+X-Forwarded-Encrypted: i=1; AJvYcCVR7p8G9MImF2CdrjJ4xnyf8Ew9AQB1CXHGvU3o9GMmc5DCbtIwbjkl3yYNA6TZh9bR0ZE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz67Iz7/6n7lj0zY5i1jESl/9tUIP7+HC4QQxHvZy4BeDxzeFIP
+	H4HRiUAgoJ/AsvVZsxzQfQAuv28iB/G7hwc33b0PSrJAFL9/sBtvvvTmACAdk7/D2pkKL9eOn1p
+	l
+X-Google-Smtp-Source: AGHT+IEGGtLkvQMaflD4c5nrP4IOSmqDKpYo2b3Nv30wEMGryigwNUSBA/CaPmJ+zP72fRiQAla+oA==
+X-Received: by 2002:a05:690c:93:b0:6e3:3dbc:ca60 with SMTP id 00721157ae682-6e5bf735420mr3408127b3.8.1729198760122;
+        Thu, 17 Oct 2024 13:59:20 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5c00deccbsm361947b3.33.2024.10.17.13.57.44
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5c011518asm364447b3.71.2024.10.17.13.59.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2024 13:57:44 -0700 (PDT)
-Date: Thu, 17 Oct 2024 16:57:42 -0400
+        Thu, 17 Oct 2024 13:59:19 -0700 (PDT)
+Date: Thu, 17 Oct 2024 16:59:17 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] ref-filter: format iteratively with lexicographic
- refname sorting
-Message-ID: <ZxF6RkjnZwObHbRb@nand.local>
-References: <a873ed828ccae426214cc8f87610df97ff9a269e.1729055871.git.ps@pks.im>
- <e0daa6a2eac97c2b18a53399b7c124fc8d3d238d.1729141657.git.ps@pks.im>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+	Edward Thomson <ethomson@edwardthomson.com>,
+	karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 03/10] reftable/basics: provide new `reftable_buf`
+ interface
+Message-ID: <ZxF6pQpsnjLmTZ9H@nand.local>
+References: <cover.1728629612.git.ps@pks.im>
+ <cover.1728910726.git.ps@pks.im>
+ <0ddc8c0c896a006e4cc094390125efcec0b3cdff.1728910727.git.ps@pks.im>
+ <Zw2cjxpDf6MowCP+@nand.local>
+ <Zw3xhwLFlznU_JvK@pks.im>
+ <CAPig+cSXJaETg4Sq3Zw8=37M15CdLEUkdMb2U2X4NPSOAFwmyw@mail.gmail.com>
+ <Zw7CIRoXrLr5pd5A@nand.local>
+ <Zw98hKZc1pjBGGcU@pks.im>
+ <ZxAolGGcndQzApPJ@nand.local>
+ <ZxCYk99oZLUaCkrd@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,14 +79,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e0daa6a2eac97c2b18a53399b7c124fc8d3d238d.1729141657.git.ps@pks.im>
+In-Reply-To: <ZxCYk99oZLUaCkrd@pks.im>
 
-On Thu, Oct 17, 2024 at 07:09:51AM +0200, Patrick Steinhardt wrote:
->  ref-filter.c | 28 +++++++++++++++++++++-------
->  1 file changed, 21 insertions(+), 7 deletions(-)
+On Thu, Oct 17, 2024 at 06:54:51AM +0200, Patrick Steinhardt wrote:
+> > I don't feel very strongly about it, but I had suggested it because my
+> > initial read of this patch confused me, and I had wondered if others may
+> > be similarly confused.
+> >
+> > For what it's worth, I was thinking something on the order of the
+> > following added to the patch message:
+> >
+> >     Note that the reftable_buf_add() function intentionally takes a "const
+> >     void *" instead of a "const char *" (as does its strbuf counterpart,
+> >     strbuf_add()) to emphasize that the buffer may contain NUL characters.
+> >
+> > But, as I said, I don't feel very strongly about it.
+>
+> You know: let me amend the function documentation itself. That feels way
+> less out of place compared to putting this info into the commit message
+> and has the benefit that a future reader of the code will know why we
+> have types without digging into the commit history.
 
-Looking good. Let's see if Peff has any further comments, otherwise I
-think we can start merging this one down.
+Good idea, thanks.
 
 Thanks,
 Taylor
