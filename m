@@ -1,66 +1,83 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4731DA112
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 13:06:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136B51DD865
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 13:33:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729170365; cv=none; b=WP6mHa6RnVCUpjvUf3BFHzlYN73qH9yLaRnrJYugHsoqojyBqb0LHJP19nbDHB3GAD0ln2Uaj3WmRGfyvvUYFy4Po1hkLveBlDLliCtQcSQ3xiCqYArguWSmHVeWB/ti2s+LZqJuJzDt/aGYnU9fcDP5w6vmF3zB7KHMVYShE4U=
+	t=1729172042; cv=none; b=cuTaK0r1bokhvXyb2PMR819/CYIrEZNVkQv5O4O5Q4RM5gBC+kQnLN3R744JbCqPin3E+xpGKmkG2iynlmwzX2Coz6YgFUdMYnORh3e9Ff6ShfP8d85jc3ydYdSbW7l9NkQglGkYQPqZaWgyRGdmVIXYJGGBE3Iie86zvv+1KAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729170365; c=relaxed/simple;
-	bh=CGHXSsTILZXfSwkw0Goq2T2D8CX+Y9AGwMbkNaCqbZI=;
+	s=arc-20240116; t=1729172042; c=relaxed/simple;
+	bh=USSW0d5pK64af2JNf9EG5nd8mm4VAHlAEUPQqkK92JM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ql5Ywr68t2W/BwwelcR40swVADhNbhEDiKgVVqiCpmk+u+ETtsXob8+XueeiKk7zRCnqHWWowOVIzPpp7dUcdV/HlSTGfr+gAq4oZJN68na9iRPi0HmQS4VDSSUmLTSxqpFFkbfPuwn0txFBsdsAFEMvyrLMZqAd3jGVq0cupUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CJwwWvU5; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=srM543FSHR5es8GrPkVmAc88kd3gr21t5Pmm8H70XAFXpjFC2P2L2/gNvItUfG3LEuQ2gD3Dv3lXNqSc0Ge74UlfAZdvnRdrlnlLe+SWoRG3zNUD44YO2UmEXozmzr2ybSV8n1f0B4hjyNma1CcsRtINlAeBMKfBgP9Rrl483js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=etZUYJr8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LeGVHd0D; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CJwwWvU5"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-20cceb8d8b4so5713215ad.1
-        for <git@vger.kernel.org>; Thu, 17 Oct 2024 06:06:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729170364; x=1729775164; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lEL1NHQ3jk0W8nwijM1R1mlyQ9JTZlbz3c/4YdFiSfo=;
-        b=CJwwWvU5pCyGD/Ws1LlH2fDB01YEJTpOTCg6lR29rVOWisY/LxPLF5BMEiE//r256i
-         llCvACLS/kPpgm7+Qljqt6JpWCtTGAx3OsXjZXWdc0CrMbHZ6cL5PhLR+DU7ejjx4ue4
-         YcQkaahgaXC7O80NMSEzO/JEOtVuqUBySqH0SKzPTn0YQqbn8meYwiM+SptliC7e8Ony
-         NSCcoE4Zg6JLyXkKF+qz6WfDZAyYV+BUJiHDwxzrJAq5wSBVViz3YtRUaWS3AwKeR4mh
-         4aOKtadcRp34tBKLFLKwcdIm3Qf/F1L0sqeyh49Zx0RkkZnXlGB9KeytJ/OhdRMmUlK5
-         ogNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729170364; x=1729775164;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lEL1NHQ3jk0W8nwijM1R1mlyQ9JTZlbz3c/4YdFiSfo=;
-        b=W9tRSuuQ4xVSd8ZJ3kGoOD5RJAVvCmJKvhRGJFPTwN8P1OJ2E9v2qMN15OHpPiX7vg
-         sNC+d6kkFNwBYrODUA/BA3uf2ixO2CXapbx6RB0GS5E0qxJkHAN6SShQCAvcicdDY/F5
-         8QidA6FF/ZTe2yE/4OLyQQZkCK+FnmYrIWEYQ6VLBFwAoyNac228Mfl2jZQ61jsm2QRd
-         7CZGDertb/Q+YjPuOB/W1rET/pMPjcw/q+PF+zsfcQljL0m6mFGALPmtrnQU3TiYwTn5
-         ErBH87it+1E0MnEEQFLXfgVBc3JYvnMIxDLS1i/PS9fOsJQMbroBGYQD/ddRdW0EB2hC
-         cABQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVsoSUpc3puaW2oAxcUTr8viRVLXDaQsr2h+dsMepAIHJJDwWWi1IE/46v/b9DqwNKQPqA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIUafx3TLW1nF3+/0CKtERq33oHwjy0002907cP9w8bsYofIJP
-	dtLpki138E9LK6WWSr3Flj8Ct13vUV/+Kax48rrN5vNI5U7E094m
-X-Google-Smtp-Source: AGHT+IFveBJRvilbVhiPPEHtMhiDGQda8Ggm/guCAsU77rnrS9QL/csTTFlKLFAjKfTRCZQkslcUZQ==
-X-Received: by 2002:a17:902:d50a:b0:20b:a41f:6e4d with SMTP id d9443c01a7336-20d47923adamr53957625ad.15.1729170363481;
-        Thu, 17 Oct 2024 06:06:03 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20d1804b706sm43756595ad.217.2024.10.17.06.06.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2024 06:06:02 -0700 (PDT)
-Date: Thu, 17 Oct 2024 21:06:02 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] repository: move git_*_encoding configs to repo scope
-Message-ID: <ZxELulPlLQIs0sh0@ArchLinux>
-References: <20241015144935.4059-1-five231003@gmail.com>
- <20241015144935.4059-2-five231003@gmail.com>
- <Zw6SsUyZ0oA0XqMK@ArchLinux>
- <Zw9Z_xcHKcjKVUB4@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="etZUYJr8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LeGVHd0D"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id E74D811400A2;
+	Thu, 17 Oct 2024 09:33:58 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Thu, 17 Oct 2024 09:33:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1729172038; x=1729258438; bh=/LjqfBtGCv
+	wfrtdSzkdkw3qIQgSVQKj4htdDaNPNe6c=; b=etZUYJr84AahkdOr6JPMYGwVwO
+	xs35Y2EMQED/NfDIeGftEf3CgfxkDk8twoahAFwLnKTfOKRyFQt47BAxz4S4i1lZ
+	TXMWuEuJzul3aCIbDq37H3/C8Mc1GOjIeq2r4pIE3QuE2utyi3ThDaYtAUYaoiUu
+	M+Hkg3qQcC502ah/NbYKmuycEGh4skIeaYjzQyAgFQwP0mP6ArXSZ3tLWomPUnEb
+	3pGa39dtVmFYYvopCe8MfZRRAU1HtZCTkf+1QcvwxM/hcSGq0BUgW8db6OMp+bz0
+	QvCa/awifykVJ0SbpvJGyZI4WjV0DHJVV+n+/aTeGNcEY6kFfZkjCS1idJ6Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1729172038; x=1729258438; bh=/LjqfBtGCvwfrtdSzkdkw3qIQgSV
+	QKj4htdDaNPNe6c=; b=LeGVHd0DwrmVz8ZfIJFIS9gh4fyuj2k5OQ00SOs0tLH+
+	atM7tvLJtIRZnF1fV4ChXes2ZroqHOJBZz4NWTHpnxRrLlmlGcy0uEvHQ5DmQQAo
+	tUEy6I/u3s7LNWdY9XWuYhw3vBpJApH8Tlt5Zx5mjwThwDe6qgWiMLy86TkfF3Ow
+	ktLS0rRvQEiKX8Xn6CXq13gkmhZ7EcX4j7eK6okypx9Vv2cHHSBAFWKQ0UwlukzD
+	xnh3vCRY2I3el/3U/DgUEWLJDN0BHtBB1uy6M9GfLE0XEuWbF1mz1esEoen/5gP2
+	OEDv/OlyNVowljeaT1wkinC1GGZA8FSglxSzrV7bvQ==
+X-ME-Sender: <xms:RhIRZ1u-0GA4JSfLEMpauWk0yHSXNCwnS-gX4J79FKIX1PQRDlffAg>
+    <xme:RhIRZ-fqwHEZls7K7HiC8bezKePoqnaRD_4SGl652uXh1YZ4o0ac6MyL76T7A_n4G
+    ca8NMduSBG0UMtO0w>
+X-ME-Received: <xmr:RhIRZ4zmg5jY0adizJGtBNBavMl69a2zflmd0g3zx4aumn35WUPQXKoPaJYoaLG7pysVbhDn9jTQ0ycMunkZA5OSABM_-PoEpUvE02kPYaHHKQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehuddgieejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
+    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomhdprhgtphhtthhopegsrghgrghsughothhmvgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:RhIRZ8NdPqfMMeKqdFzI7cU0tw7Gh9Py9lqT2l2t9hCgS8m96aC2Qw>
+    <xmx:RhIRZ1_i0gOEOlPUO1MEtZF4wPUrI-qCByj61vg-C9K6Xw8Z7OnJBw>
+    <xmx:RhIRZ8VYpqqWv1y250dyfNg8E77orHLYcAyNTWd-D4mVDplo5IGaHQ>
+    <xmx:RhIRZ2dbzjpftQTX5kfGPX2VXXWsUcz-ivOJu2DbPIvsRvb9nGCoow>
+    <xmx:RhIRZxZQM0NJQiitTobKw-OWGvf18TbQdb0R37_nO5az_Ik-2o6kRSIL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Oct 2024 09:33:57 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 198543e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 17 Oct 2024 13:32:34 +0000 (UTC)
+Date: Thu, 17 Oct 2024 15:33:51 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: clar unit testing framework FTBFS on uclibc systems (wchar_t
+ unsupported)
+Message-ID: <ZxESP0xHV4cK64i0@pks.im>
+References: <ZxCJqe4-rsRo1yHg@archie.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,69 +86,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zw9Z_xcHKcjKVUB4@pks.im>
+In-Reply-To: <ZxCJqe4-rsRo1yHg@archie.me>
 
-On Wed, Oct 16, 2024 at 08:15:37AM +0200, Patrick Steinhardt wrote:
-> On Wed, Oct 16, 2024 at 12:05:05AM +0800, shejialuo wrote:
-> > There are many builtins will execute this config setups by calling
-> > "config.c::git_default_config" and then "git_default_i18n_config". If we
-> > need to use "repo" pointer, we may need to wrap this pointer. (This is
-> > not the problem and it is not hard).
-> > 
-> > But what if the "repo" pointer is NULL? We still need to set the value
-> > of these environment variables. Because when using "git-mailinfo(1)"
-> > outside of the repo, we still need to set "git_commit_encoding"
-> > according to the user's config.
-> > 
-> > So, from this perspective, I don't think it's a good idea to put these
-> > two configs into "struct repository". Because we can use these two
-> > configs outside of the repo, if we put them into "struct repository", it
-> > is strange.
-> > 
-> > However, I either don't know which way we would apply. So, I cannot give
-> > accurate answer here.
-> > 
-> > ---
-> > 
-> > Patrick, I wanna ask you a question here. What's your envision here in
-> > above situation. As you can see, if we put some configs into "struct
-> > repository" and we run the builtins outside of the repo where we need to
-> > set up configs, the "repo" is NULL. And we will get into trouble.
-> > 
-> > My idea is that if a config could be used outside of the repo, then we
-> > should not put it into "struct repository".
+On Thu, Oct 17, 2024 at 10:51:05AM +0700, Bagas Sanjaya wrote:
+> Hi,
 > 
-> I guess it would be nice to have a set of convenice functions in our
-> config code that know to handle the case where the passed-in repository
-> is `NULL`. If so, they'd only parse the global- and system-level config.
-> If it is set, it would parse all three of them.
-> 
-> I also kind of agree that it should likely not be put into the `struct
-> repository` in that case. I think where exactly to put things will
-> always depend on the current usecase. I bet that in most cases, we
-> should be able to get away with not storing the value anywhere global at
-> all, which would be the best solution in my opinion:
-> 
->   - It can either be stored on the stack if we don't have to pass it
->     around everywhere.
-> 
->   - It can be passed around in a specific structure if we pass the value
->     within in a certain subsystem, only.
-> 
->   - Or we can parse it on an as-needed basis if it happens deep down in
->     the calling stack when it's used essentially everwhere.
-> 
-> Now there will be situations where we used to store things globally as a
-> caching mechanism, and not caching it may have performance impacts. But
-> I guess that most cases do not fall into this category.
-> 
+> Since clar unit testing framework was imported by commit 9b7caa2809cb (t:
+> import the clar unit testing framework, 2024-09-04), Git FTBFS on uclibc
+> systems built by Buildroot:
 
-Thanks for the direction. I will dive into code to think about how we
-could do this. Actually, I have tried to refactor "git-apply(1)" to
-remove "the_repository". And I found it hard to remove dependency
-"environment.c". It's a long journey.
+Wait a second, that doesn't sound right to me. `wchar_t` is part of ISO
+C90, so any system not supporting it would basically be unsupported by
+us from my point of view. And indeed, uclibc _does_ support that type
+alright. I guess the issue is rather that we're relying on some kind of
+platform-specific behaviour and thus don't include the correct header.
 
-> Patrick
+I'll have a look, thanks for the report!
 
-Thanks,
-Jialuo
+Patrick
