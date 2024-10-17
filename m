@@ -1,70 +1,76 @@
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2934B2170CD
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 18:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB071D86E4
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 18:50:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729190810; cv=none; b=nEc6No65Wx4R+AwpiFWx3mcOqiJLA0QYEWqfHbVNRNOnYIQUSxQtY6pUg8qYFjz15ryGPwe1V7c8FLyX+4tOPiwU1eHSI0+6pGrs/QgDkRlhfUXgWeyvVAzsuX+CAlS0lS481CULeBygXMftTiglXLjLZGSm4wVchaoq4JsTFN0=
+	t=1729191012; cv=none; b=KbMf+kmUAeEhokQ1jWX/9cYGwl2fhrWghAIM8gAaiqpZ0/c6R2gU0sIT94dZv0UU06DVMpUDGiKn54GFwWmnCi4yJm3TevHtSk1cjHu4almrHnfW2ShPfosbEqwttOaVKmXdwJIxPTBSJoIiIAHSLP4dYUtFkyQzRKnDePMlu08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729190810; c=relaxed/simple;
-	bh=7+Wd6bBAxn6hsr6IgHaP6ECQPsO3udxrw+4T85yETY8=;
+	s=arc-20240116; t=1729191012; c=relaxed/simple;
+	bh=IQY2x1LI26+/83ky/t5i8Dbyz3lBuoBTy4QmpxyJwmc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SQ4/WBgKTl80/dWqlfNx0HQzjzfNPISNqOnXPKaW3rEbxOkLMGvdyGcXNfNnBj/hsjb83y6dNg2QYgO8J6uB5fsr8hNexKTriScaQ22M8On3yfjgBrVb06beWUoxmD0w3JoFQqfE+RtXOs/gLy56FOoEwcNe5nfVc/DE+VfjeC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=mKO6STgP; arc=none smtp.client-ip=209.85.219.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=aCDMhi1fbjrHMgFuugbNynsyJqZV9ckb63NK9NgjZNd4vuCnwQXKWttibeazjDfq8MPGP3JSJ5SYLtgb+k/sf/ftIrCh6fNDV6FB1wR7sGxppR6gzpXQECbguXhCY7e8YVmKRlnJH5aTTuULLYbNKnjVYnEE9r5JipyOoVaQqf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=khlRZ3xo; arc=none smtp.client-ip=209.85.128.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="mKO6STgP"
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e29047bec8fso1987411276.0
-        for <git@vger.kernel.org>; Thu, 17 Oct 2024 11:46:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="khlRZ3xo"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6e314136467so12379137b3.0
+        for <git@vger.kernel.org>; Thu, 17 Oct 2024 11:50:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729190808; x=1729795608; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xWsn1KyNyE1MnoRAvXSlZW4Qz3hrzFfKFB4LMg1ogeg=;
-        b=mKO6STgPiHSX0dvVkXH9JRxzJeR7uYhir4Xdz71cexYQ4qHIus25CdsJR5OG99Oiz2
-         CN2LCBOKf+jFTt7qCbEje3PDWRgHJ7sdxdZuwlaY1j5hz9RWO/F3nM5gjYshCMeG7SjY
-         19udQrEFawnF4/FAP7Lf7gONFi1zKqiHubwt+XwKfy0ECfcbA2y8NUsKn8XItHZeAvFl
-         Fv39S0WzM8xId1hTfIZSs761eZUSU+zEi1mLgwKlHwek7w3505CU/QdoenWnD8yi+f3P
-         Vnp49JSjY4QVQjk4t2S5VjRsQI+sVbQFL+JwevBEyykH1pa/T60gXOYuFhc4lE6DrOFR
-         BuTg==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729191006; x=1729795806; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=b0FWEVsjU201ZNzQZ+2JXKfZ2zySkx7YqMFClzbZ5JY=;
+        b=khlRZ3xohNw8pzLVx8HUWYqST3RTcSrjtyp644rMdI1RgwY69w+zYenE7iyavZBuTC
+         VFYHJ+Q9qrWIcE9dykgN2KBNkWAgIq9SaV8YQkmzUSFJkYrvBDMhzOFPAttla5EbMtFi
+         eHNBRr37YC5NmRghAEMad6xU2OTgKE3KiAo51cTzEqT5YzgOkEOsJE0CVUU4BmWRkbMn
+         zDwyHbbZ0PaO1Bn3E3KFXPTPH/n/RxF3Jz0jDIDwWPzCaotHpPkya4jvNsR/0/SJNpNj
+         FqAIL6845XmQm2lGTWKhKi2eYdjSDamU3s8FC35G59pCNiunlH6TX7NIqlaTJgDHw9D2
+         YRDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729190808; x=1729795608;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xWsn1KyNyE1MnoRAvXSlZW4Qz3hrzFfKFB4LMg1ogeg=;
-        b=Qn/e5LeeiPm9Ld13TL4f+YwcC+PORgRBsR3edK5OMzV85ZQYVOshBrvVSmfbb6yVkA
-         IjktAE1AuuXYcffU8a+XVwBhkbV4PrGgf2+sphCNppXa3m5ZULxcY5tOsy6TaEf+UYR3
-         bYrGsrPSyX4I8OxEL3ZeuwMKKL0ZdTW7edVd9woFpG9R/adhwsZ4jt7ic/xN31PFSR8H
-         QM/wbNsZnBSELYmSaSbpMT+XU00CPJzTfw7lNus41MoHI9aRPLS6f43JH6gT74noiNCW
-         tb4MiuZCVqVw/xFNe6oVdLyNoKrSgahjFGErngtotSc5Ju8Ji/mxv76S0Wd1h0UEywi1
-         es0w==
-X-Forwarded-Encrypted: i=1; AJvYcCUpvKSgkLNTjggBCeguP1k4ZZhN39AfzYNnt+uzrUBUJ1Z6nBP249joCY7Akth3sBOGh74=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwXIb/BlDlKjtsuKBTm1wnjgJaxlDwBUaQEwyChLr/86axUCD2O
-	/f5hyu4pb3l+ucQkARqM57wDgJgmKZwlmGeD3QKqHzhyKEy0NM/c+oi7if1Wz8g=
-X-Google-Smtp-Source: AGHT+IE5+d2z8ydtam32K98kLBJtqTwfzOE/G5U+UduJY7j9XhkIjyFEVeg3uuuP35Ag7jALqtamlA==
-X-Received: by 2002:a05:690c:7090:b0:6db:d02f:b2c4 with SMTP id 00721157ae682-6e5a3d5b9f1mr39327987b3.7.1729190808064;
-        Thu, 17 Oct 2024 11:46:48 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729191006; x=1729795806;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=b0FWEVsjU201ZNzQZ+2JXKfZ2zySkx7YqMFClzbZ5JY=;
+        b=SYLRWdSlSlAcs+6OP7xY6/cRASWz22CytoQQFM1U2xygZZkUQWs+GZuuvgZG41fIuM
+         6peeXb/QP2EzbTpnHSO3Ju5fd06+HEXi12LH1UCCbm07B6mQX8ie5v0gnAVTcDhvEIr8
+         pXKzSJ1HvnctBMvLDBA4gsvrMx4QKGLkgu26zHVaLudQJAOhwwld57n8eyHwlakT1zNR
+         HjFgLYJsEbRxfFDjq4/gU9D8dIQwoEesGo7rLq7jtaMINzQ+o6iKEe7PrZC982rdB0ea
+         cRe7hng6MeBeLoqYxzdqCwPeJebs796TbGtQTYFYLH/Ebjf5uARqZ4uJcdLUusaswMsu
+         o49A==
+X-Forwarded-Encrypted: i=1; AJvYcCW3t809KqAoA2a0oQKyV0B7hrP2vh47pU+jK34r6AX5GW7NVgPlpsfJgRB5hXPOpgudpac=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVkYN2JaJaaV7P0OG3xrTKEH/M1eiO8E05xNTWJ8wbX7izyJ22
+	aicjPg5HmWKsTxhqFVJLWnN1IOw8HDm230dJdMHiyRX8a/1wkVgUdmI3Bb6/Vls=
+X-Google-Smtp-Source: AGHT+IF31cGaK+/E1KC3E6mWdiR1a+xwSpxzYuzwCOHwPrR2+8SNlksARN7LJFB0q723Qx1k8ePd0A==
+X-Received: by 2002:a05:690c:62c2:b0:6e3:6a76:ce45 with SMTP id 00721157ae682-6e5a3d808femr37096327b3.13.1729191005955;
+        Thu, 17 Oct 2024 11:50:05 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5cbdc3esm12478447b3.78.2024.10.17.11.46.47
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e3c5b875b5sm12512797b3.72.2024.10.17.11.50.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2024 11:46:47 -0700 (PDT)
-Date: Thu, 17 Oct 2024 14:46:45 -0400
+        Thu, 17 Oct 2024 11:50:05 -0700 (PDT)
+Date: Thu, 17 Oct 2024 14:50:03 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Piotr Szlazak <piotr.szlazak@gmail.com>
-Cc: Jeff King <peff@peff.net>,
-	Piotr Szlazak via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	David Turner <dturner@twosigma.com>
-Subject: Re: [PATCH] upload-pack: fix how ALLOW_ANY_SHA1 flag is disabled
-Message-ID: <ZxFblRri8Xo/lGsK@nand.local>
-References: <pull.1814.git.git.1729112794671.gitgitgadget@gmail.com>
- <ZxAttC1dQUllR76m@nand.local>
- <20241017023735.GB1858436@coredump.intra.peff.net>
- <ZxEr4+sb4DfmtrKv@nand.local>
- <a328b6d5-e604-4517-b041-59db19e1f66c@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Bence Ferdinandy <bence@ferdinandy.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 1/6] doc: =?utf-8?Q?update-ref?=
+ =?utf-8?B?OiBkcm9wIOKAnGZsYWfigJ0=?=
+Message-ID: <ZxFcWy7clKQyw1xq@nand.local>
+References: <CAOLa=ZQJy1ZkQqBoWwJJvL0f+NCP=3SAfyeSNuztgApzNH1mGg@mail.gmail.com>
+ <cover.1729017728.git.code@khaugsbakk.name>
+ <ad9ee00a2a971522968f95dd413deae24839ef71.1729017728.git.code@khaugsbakk.name>
+ <ZxAmBsZzwBuEGN3N@nand.local>
+ <CAPig+cSuQwu4YeZ5cs-g0oAnhCf1LMS1SSywyPc_vBExh85ahw@mail.gmail.com>
+ <ZxA5ni7McD1c1yuf@nand.local>
+ <24297144-c08f-4bc4-89dc-c3d8c12523de@app.fastmail.com>
+ <CAPig+cTPyFXYxm-YO7xTqmeL1KZKT0vApvaD633Y4=q8=k-2rQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,64 +79,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a328b6d5-e604-4517-b041-59db19e1f66c@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cTPyFXYxm-YO7xTqmeL1KZKT0vApvaD633Y4=q8=k-2rQ@mail.gmail.com>
 
-On Thu, Oct 17, 2024 at 05:59:46PM +0200, Piotr Szlazak wrote:
-> On 17.10.2024 17:23, Taylor Blau wrote:
-> > On Wed, Oct 16, 2024 at 10:37:35PM -0400, Jeff King wrote:
-> > > > I think it would probably make more sense to write this as:
-> > > >
-> > > >      data->allow_uor &= ~(ALLOW_ANY_SHA1 ^ (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
->
-> Much better! :-)
->
-> > > I think we have to treat them as a complete unit, as we don't know which
-> > > bits were set by independent config lines and which were OR-ed in by
-> > > ALLOW_ANY.
-> > >
-> > > So this case:
-> > >
-> > > > Stepping back a moment, I suppose this is handling the case where a user
-> > > > writes:
-> > > >
-> > > >      [uploadpack]
-> > > >          allowTipSHA1InWant = true
-> > > >          allowReachableSHA1InWant = true
-> > > >          allowAnySHA1InWant = false
-> > > >
-> > > > and is surprised when the final "uploadPack.allowAnySHA1InWant" unsets
-> > > > the previous two options.
-> > Yeah, I think that you and I are in agreement here.
+On Thu, Oct 17, 2024 at 12:31:26PM -0400, Eric Sunshine wrote:
+> On Thu, Oct 17, 2024 at 11:30 AM Kristoffer Haugsbakk
+> <kristofferhaugsbakk@fastmail.com> wrote:
+> > On Thu, Oct 17, 2024, at 00:09, Taylor Blau wrote:
+> > > On Wed, Oct 16, 2024 at 06:08:05PM -0400, Eric Sunshine wrote:
+> > >> I think we typically avoid rewrapping after minor edits like this
+> > >> since rewrapping introduces unnecessary noise which makes it more
+> > >> difficult for reviewers to identify the important (actual) change.
 > >
-> > > is the one that Piotr is thinking about. But what about:
-> > >
-> > >    [uploadpack]
-> > >    allowAnySHA1InWant = true
-> > >    allowAnySHA1InWant = false
-> > >
-> > > Right now that pair is a noop, which is what I'd expect. But after the
-> > > proposed patch, it quietly enables ALLOW_TIP_SHA1 and
-> > > ALLOW_REACHABLE_SHA1.
+> > I was skeptical at first.  But I saw that this line is only 55
+> > characters long.  So I think (like Taylor) that rewrap is in order.
+> >
+> > What if I make a commit with just that word drop and then an immediate
+> > fixup! commit which wraps the paragraph?  That way the review is still
+> > straightforward.  And hopefully the integration part is not complicated
+> > further.
 >
-> Rather not as config file is parsed only once:
+> Don't bother. That's even more work for yourself, for reviewers, and
+> for the integrator, and it increases the cognitive load for everyone.
 >
-> https://github.com/git/git/blob/15030f9556f545b167b1879b877a5d780252dc16/upload-pack.c#L1368
+> There are far fewer reviewers than there are people submitting patches
+> to this project, so it is helpful for submitters to do what they can
+> to make life easier for reviewers, and foregoing re-wrapping of lines,
+> in general, is one such way to do so. However, this is such a minor
+> change that it isn't going to matter one way or the other, especially
+> if Taylor, as interim maintainer, is willing to accept the extra noise
+> caused by re-wrapping.
 
-I am not sure I follow... upload_pack_config() is invoked on every
-configuration line that we see. So the first time when we read
-"allowAnySHA1InWant = true", we take the first path through that
-function you linked. The second time, we take the else branch, and
-correspondingly unset the bits from ALLOW_ANY_SHA1.
-
-So today that is doing the right thing (it will end with the same bits
-set that we started with). But under the proposed patch that behavior
-would change, and the lower two bits would still be set.
-
-> So as suggested I will prepare a patch for documentation, so it will be also
-> clear for others. Should it be done using same thread or new one should be
-> created?
-
-Either is fine.
+I agree with everything Eric wrote here. If you want to send a new round
+that re-wraps the text, please do so in this patch (that is, make patch
+1/6 in your new round apply the changes from this version *and* rewrap
+the containing paragraph). Please do not send fixup! patches or other
+such things.
 
 Thanks,
 Taylor
