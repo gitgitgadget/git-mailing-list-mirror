@@ -1,287 +1,184 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F61259C
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 05:09:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0E318800D
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 06:48:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729141800; cv=none; b=Fx5Wh3FJctfCqabaPFq+Kq/4c10Djwmp5zVfrWDF5U9oJMwXdVimiwYiTvjUx3SHpuN+yaLa9+87egT2307CU8EORSQRIKLZYR8tLapLjD/SnwIu4Kg0ZMeHBApYhHbpczZX0+y11iGjij423bcJYni9RgeLkLLhiIUqIMZ/Dcw=
+	t=1729147724; cv=none; b=Aay/kU5K/o89kg1ByeZQjjc2WBFVsPB3S1INSwnfC4RYEcU+NZYXJZUrrmMnkZArnaa3iOvOiZjkU1nsIDtpvqX72bDlA9fGe22x/AmMv36VPlJrBQxKtuhJi1s67r/0jynpQCNKlQt8R8EicgaRI5Iaen//0DG+gAmd4Qmg+/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729141800; c=relaxed/simple;
-	bh=OkMdvKWAbOokzU0CnLo/lAXUQoF3O3JILdZg06S+5Y0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XvhLIAIgIes+Jfc13IJo/xBhfLLrEcG7FVuRQu6l24FmvbSM4S8S+fnFvrfQSEvs4AVG+CZW4OK5zTiFzEDMypHZG0P6A/q48a6J7mlcidkK7BdGCtKhWkBR06XwYp6gJwOUeDgrWV20AJFAb9KErNiVQyHzyf/wChFBuML/kPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PC62n+fV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n+lPrNVa; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1729147724; c=relaxed/simple;
+	bh=U+LIhS8co2LabY+BfCTEfKcbUF+zgFbueuC/YFugIQQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ipIbOhhcOzO8aJ/vIJXgZtGwTMn3UJWZRo8AviOTiy7ZpSxEL/00TmnfUglljMdwoj+EU7Hx+zhXVCoDph3fQkdpJSQe58FJg6YoM2QljvBy9Q/JOwIICtNNjynWiUIHVTLj6QujJReUSt3CukHmySCOjHhYo6LYMOFXUMlgIlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U6zX8xmj; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PC62n+fV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n+lPrNVa"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 35F1E13801F7;
-	Thu, 17 Oct 2024 01:09:56 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Thu, 17 Oct 2024 01:09:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1729141796;
-	 x=1729228196; bh=ql7UPeMvBbpD78xEEPHOJVvBvkyV6PbTPwHvIdUH7cQ=; b=
-	PC62n+fVxIIjyr27lHH97mKkfcYNVlJPCzZHHgHr+8LkyAPwi39/a6WLG6DapGPI
-	apXWvTelOq9xYLRWnO4/fulvLeCUE563NfhWs22qpRGaP3CcAzEa5yOcXjRHT5G/
-	7JkR5tVr9uQg0yNnhCbdQi/VLjS5KjqnbFUte6NyGZaUc5hkugZemLE0k6QBgzI4
-	GxrgJLBgU4t6fjOpI4dmUHcWFdh25DcmAae6ml09NdeQ9U4uTvmTyQVdkSxQOw5I
-	R0eWQcZMiP6S/HKWohZnSJHDyYd0fFYQHlnCFQpE9pyxf5JCQClMv4Nsgk5NE1CD
-	yrUyFoOrn8mlg8YElywz3Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729141796; x=
-	1729228196; bh=ql7UPeMvBbpD78xEEPHOJVvBvkyV6PbTPwHvIdUH7cQ=; b=n
-	+lPrNVa4GML/+0u4xAQ6gf2nXJmUMBT9N0AQ8eI0T56fxAdfjPdUVObL9lee5//+
-	AUM63ldOj6OY2eNtgBNXBLk1gSPGIipnzT2jUYr6/TGEz+Dsw0KcAwUOzWnV86xc
-	yrq0C2Q1gVd8NN5P43HIDXQbPPxyf7DurnVVXwSK11V/G7HhzE98yppc1ctJ4cuA
-	tFnERfU/hyxWv5+QQgAsB1DFlhr/MHAaxLO9Hc7D0p1+oelYeRLepBCYfPR45Av/
-	UzGJoK3G+9GL4OGlBCGAERZUVTGynE0MVJOUZ/wYfCsVqPgsN7rtJNuSYJKYI7K7
-	/zR4IQlwWFgd7RbXy6ZjA==
-X-ME-Sender: <xms:I5wQZ70QwFwLQOjoJPXoPlPVKmgzV8W9G3nhLtlPwAO3ePLXUuuMdg>
-    <xme:I5wQZ6EKA6ldGCCIQsR4FELvXJR6Ms483_pkxnmswzeH0M5ZW-pgJQN1NpFECxQsr
-    rubbF98_d2ydCCxJg>
-X-ME-Received: <xmr:I5wQZ76EpBMsyJ7Cq6WOCy6tQ-oqSqoe7xQlyptAyeB1SkArQI2-YHDOtqZcVF1DlGHjI-tjYPQsr1OIaKwjWnprCZ-hSUiCjNFFEBBhJbFpBA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehtddgleduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitd
-    etleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:JJwQZw2lWpRpi7_bStldd09iaREeuWgOtnWqtrC5kLbEvfn9GZDYBQ>
-    <xmx:JJwQZ-G4IUXB2vP28OdVXqkiS9v7Li3FtOFeQBvc-agviEBFkMywdw>
-    <xmx:JJwQZx96yMn_Dc27qlUSbm24YgZe2hlBEs2LQ_yBU8IlBBcfz41MNg>
-    <xmx:JJwQZ7lqRfEe8_VlbJQ4HV66ZM5KAVSOZpXHF4fZqs43X75M_X4zzA>
-    <xmx:JJwQZ6Bk1FMrtSR9hrCi2JrQKjU2p24bMcR7H5nHYB_uj1i8rF71s0dz>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Oct 2024 01:09:55 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 34cf2c10 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 17 Oct 2024 05:08:34 +0000 (UTC)
-Date: Thu, 17 Oct 2024 07:09:51 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2] ref-filter: format iteratively with lexicographic refname
- sorting
-Message-ID: <e0daa6a2eac97c2b18a53399b7c124fc8d3d238d.1729141657.git.ps@pks.im>
-References: <a873ed828ccae426214cc8f87610df97ff9a269e.1729055871.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U6zX8xmj"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-716a5b9ee6fso313951a34.2
+        for <git@vger.kernel.org>; Wed, 16 Oct 2024 23:48:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729147722; x=1729752522; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=F883adaO80qHQey3OG37vez5tI0uiFzY8QxSVaV23cY=;
+        b=U6zX8xmjmW1FaFANF7CowN/g5SpSyloKcMe7D0DoqSM5Y5qaAC/URiK8CsXIzpfWhn
+         GOUX/+5TkuX14YcVT3TGlZzXilsRqo2O8996lU9jZRD+yqIRxWNxQvNNIsMtSTwD0e3V
+         ru3isIEODFgF6ndECmSXMqKazdGcUp9fMas1tpHkOfF05SJ+RELsF+DdQorgV0UyrMif
+         KFFUGvBZFcIcT7x0Jo0SULOiBnk3l2wvqdxe+EwR77aleQxlMpMSqeZFpEq8xVS4skfE
+         ZMiW+QegibtrXdTOCHtH1DHmITSaH1aR9VlyYKjZARPf+asrnuxP6Q6l3icLCHRm0vTK
+         IBmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729147722; x=1729752522;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=F883adaO80qHQey3OG37vez5tI0uiFzY8QxSVaV23cY=;
+        b=abzc26fe/jpZ571CjE+om8kTaq6VOKamQpvnEbexGMs0K5i9wobWi9w84KH8IaOrLD
+         H0ESOzIsO4iIf+xBgJEbPFISKZAH0FgEOnYLpcemrWP70ApRBwFaLh0Bk3lp3DUf3Rz8
+         ClynnFU7zJ8/QqZg1C1Ei3ol5j1XMm98mmlvakFdUnQnWVjtpsc3tvcNhCtpDILvthOT
+         g19grtizueLq7dHi4NWjAa2ptL3Bv1XdkXK3f+05U8geTLaZBwLcrGS7OH8cDdwGIfOe
+         zwXI72bm2o7on8kAQ2LEzkbsaaIriGcv+fg+qOQWE5k8X7bTK1BFJjO9rSWryi9fFKqV
+         dcYg==
+X-Gm-Message-State: AOJu0YyRuaGqDmnWOMSwmI1bVMkY7r3y4L4vX7xXOROZsW5ADiyZMoGu
+	D8k/ooPLRAiEylDToJt9OCJa2wPxHrFFtBRK4eH9dmhWSoS8+XL1oFmd7ZRA5S1XkYjYWlyL/Wd
+	YTbT8bNTjCFviF9ECuxscS1CblOgo0Ov3
+X-Google-Smtp-Source: AGHT+IE4lKvYzM/7yNwcAde9QZ1h8hXMuWGhkAVflW0KZXyOFB0k3rEreVOEQtoLo/setVilpqBhsnXIPNJwDAKYfJU=
+X-Received: by 2002:a05:6358:618a:b0:197:df0e:f23c with SMTP id
+ e5c5f4694b2df-1c3783fe0bfmr503019855d.11.1729147721762; Wed, 16 Oct 2024
+ 23:48:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a873ed828ccae426214cc8f87610df97ff9a269e.1729055871.git.ps@pks.im>
+From: Dima Tisnek <dimaqq@gmail.com>
+Date: Thu, 17 Oct 2024 15:48:30 +0900
+Message-ID: <CAGGBzXLN6eFZmgEE=KBp9vbcgYGGEbDJDUrfyVeYjuCrRiYcXA@mail.gmail.com>
+Subject: Unitialised pointer free in is_crontab_available
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-In bd98f9774e (ref-filter.c: filter & format refs in the same callback,
-2023-11-14), we have introduced logic into the ref-filter subsystem that
-determines whether or not we can output references iteratively instead
-of first collecting all references, post-processing them and printing
-them once done. This has the advantage that we don't have to store all
-refs in memory and, when used with e.g. `--count=1`, that we don't have
-to read all refs in the first place.
+Here's the code:
 
-One restriction we have in place for that is that caller must not ask
-for sorted refs, because there is no way to sort the refs without first
-reading them all into an array. So the benefits can only be reaped when
-explicitly asking for output not to be sorted.
+static int is_crontab_available(void)
+{
+char *cmd;
+int is_available;
+int ret;
 
-But there is one exception here where we _can_ get away with sorting
-refs while streaming: ref backends sort references returned by their
-iterators in lexicographic order. So if the following conditions are all
-true we can do iterative streaming:
+if (get_schedule_cmd("crontab", &is_available, &cmd)) {
+ret = is_available;
+goto out;
+}
 
-  - There must be at most a single sorting specification, as otherwise
-    we're not using plain lexicographic ordering.
+#ifdef __APPLE__
+/*
+* macOS has cron, but it requires special permissions and will
+* create a UI alert when attempting to run this command.
+*/
+ret = 0;
+#else
+ret = check_crontab_process(cmd);
+#endif
 
-  - The sorting specification must use the "refname".
+out:
+free(cmd);
+return ret;
+}
 
-  - The sorting specification must not be using any flags, like
-    case-insensitive sorting.
 
-Now the resulting logic does feel quite fragile overall, which makes me
-a bit uneasy. But after thinking about this for a while I couldn't find
-any obvious gaps in my reasoning. Furthermore, given that lexicographic
-sorting order is the default in git-for-each-ref(1), this is likely to
-benefit a whole lot of usecases out there.
+This code will try to `free(cmd)` even if get_schedule_cmd returned 0,
+when it's safe to assume that &cmd was not allocated.
 
-The following benchmark executes git-for-each-ref(1) in a crafted repo
-with 1 million references:
 
-  Benchmark 1: git for-each-ref (revision = HEAD~)
-    Time (mean ± σ):      6.756 s ±  0.014 s    [User: 3.004 s, System: 3.541 s]
-    Range (min … max):    6.738 s …  6.784 s    10 runs
+static int get_schedule_cmd(const char *cmd, int *is_available, char **out)
+{
+char *testing = xstrdup_or_null(getenv("GIT_TEST_MAINT_SCHEDULER"));
+struct string_list_item *item;
+struct string_list list = STRING_LIST_INIT_NODUP;
 
-  Benchmark 2: git for-each-ref (revision = HEAD)
-    Time (mean ± σ):      6.479 s ±  0.017 s    [User: 2.858 s, System: 3.422 s]
-    Range (min … max):    6.450 s …  6.519 s    10 runs
+if (!testing)
+return 0;
 
-  Summary
-    git for-each-ref (revision = HEAD)
-      1.04 ± 0.00 times faster than git for-each-ref (revision = HEAD~)
+[rest snipped]
 
-The change results in a slight performance improvement, but nothing that
-would really stand out. Something that cannot be seen in the benchmark
-though is peak memory usage, which went from 404.5MB to 68.96kB.
 
-A more interesting benchmark is printing a single referenence with
-`--count=1`:
+If I read this right, as long as the special env var is not set, this
+function returns 0 and does not populate *out.
 
-  Benchmark 1: git for-each-ref --count=1 (revision = HEAD~)
-    Time (mean ± σ):      6.655 s ±  0.018 s    [User: 2.865 s, System: 3.576 s]
-    Range (min … max):    6.630 s …  6.680 s    10 runs
 
-  Benchmark 2: git for-each-ref --count=1 (revision = HEAD)
-    Time (mean ± σ):       8.6 ms ±   1.3 ms    [User: 2.3 ms, System: 6.1 ms]
-    Range (min … max):     6.7 ms …  14.4 ms    266 runs
+Reproduce:
+run `git maintenance start` on a mac in some git repo
 
-  Summary
-    git git for-each-ref --count=1 (revision = HEAD)
-    770.58 ± 116.19 times faster than git for-each-ref --count=1 (revision = HEAD~)
+Tested with:
+macos Darwin 24.0.0
+arm64
+homebrew git 2.47.0
 
-Whereas we scaled with the number of references before, we now print the
-first reference and exit immediately, which provides a massive win.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
 
-There's only a single change compared to v1, namely that we don't
-disable the optimization with multiple name patterns anymore. See also
-the range-diff at the end.
-
-Thanks!
-
-Patrick
-
- ref-filter.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index dd195007ce1..424a9cb50ae 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -3244,10 +3244,31 @@ int filter_refs(struct ref_array *array, struct ref_filter *filter, unsigned int
- 	return ret;
- }
- 
-+struct ref_sorting {
-+	struct ref_sorting *next;
-+	int atom; /* index into used_atom array (internal) */
-+	enum ref_sorting_order sort_flags;
-+};
-+
- static inline int can_do_iterative_format(struct ref_filter *filter,
- 					  struct ref_sorting *sorting,
- 					  struct ref_format *format)
- {
-+	/*
-+	 * Reference backends sort patterns lexicographically by refname, so if
-+	 * the sorting options ask for exactly that we are able to do iterative
-+	 * formatting.
-+	 *
-+	 * Note that we do not have to worry about multiple name patterns,
-+	 * either. Those get sorted and deduplicated eventually in
-+	 * `refs_for_each_fullref_in_prefixes()`, so we return names in the
-+	 * correct ordering here, too.
-+	 */
-+	if (sorting && (sorting->next ||
-+			sorting->sort_flags ||
-+			used_atom[sorting->atom].atom_type != ATOM_REFNAME))
-+		return 0;
-+
- 	/*
- 	 * Filtering & formatting results within a single ref iteration
- 	 * callback is not compatible with options that require
-@@ -3258,7 +3279,6 @@ static inline int can_do_iterative_format(struct ref_filter *filter,
- 	 */
- 	return !(filter->reachable_from ||
- 		 filter->unreachable_from ||
--		 sorting ||
- 		 format->bases.nr ||
- 		 format->is_base_tips.nr);
- }
-@@ -3316,12 +3336,6 @@ static int memcasecmp(const void *vs1, const void *vs2, size_t n)
- 	return 0;
- }
- 
--struct ref_sorting {
--	struct ref_sorting *next;
--	int atom; /* index into used_atom array (internal) */
--	enum ref_sorting_order sort_flags;
--};
--
- static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, struct ref_array_item *b)
- {
- 	struct atom_value *va, *vb;
-
-Range-diff against v1:
-1:  93e0b80c990 ! 1:  e0daa6a2eac ref-filter: format iteratively with lexicographic refname sorting
-    @@ Commit message
-         iterators in lexicographic order. So if the following conditions are all
-         true we can do iterative streaming:
-     
-    -      - The caller uses at most a single name pattern. Otherwise we'd have
-    -        to sort results from multiple invocations of the iterator.
-    -
-           - There must be at most a single sorting specification, as otherwise
-             we're not using plain lexicographic ordering.
-     
-    @@ ref-filter.c: int filter_refs(struct ref_array *array, struct ref_filter *filter
-      {
-     +	/*
-     +	 * Reference backends sort patterns lexicographically by refname, so if
-    -+	 * the sorting options ask for exactly that we may be able to do
-    -+	 * iterative formatting.
-    ++	 * the sorting options ask for exactly that we are able to do iterative
-    ++	 * formatting.
-    ++	 *
-    ++	 * Note that we do not have to worry about multiple name patterns,
-    ++	 * either. Those get sorted and deduplicated eventually in
-    ++	 * `refs_for_each_fullref_in_prefixes()`, so we return names in the
-    ++	 * correct ordering here, too.
-     +	 */
-    -+	if (sorting) {
-    -+		size_t n = 0;
-    -+
-    -+		/*
-    -+		 * There must be a single sorting filter that uses
-    -+		 * lexicographic sorting of the refname.
-    -+		 */
-    -+		if (sorting->next ||
-    -+		    sorting->sort_flags ||
-    -+		    used_atom[sorting->atom].atom_type != ATOM_REFNAME)
-    -+			return 0;
-    -+
-    -+		/* And there must be at most a single name pattern. */
-    -+		while (filter->name_patterns && filter->name_patterns[n] && n < 2)
-    -+			n++;
-    -+		if (n > 1)
-    -+			return 0;
-    -+	}
-    ++	if (sorting && (sorting->next ||
-    ++			sorting->sort_flags ||
-    ++			used_atom[sorting->atom].atom_type != ATOM_REFNAME))
-    ++		return 0;
-     +
-      	/*
-      	 * Filtering & formatting results within a single ref iteration
--- 
-2.47.0.72.gef8ce8f3d4.dirty
-
+c/cpython (main)> lldb (which git)
+(lldb) target create "/opt/homebrew/bin/git"
+Current executable set to '/opt/homebrew/bin/git' (arm64).
+(lldb) b malloc_error_break
+Breakpoint 1: where = libsystem_malloc.dylib`malloc_error_break,
+address = 0x00000001802861bc
+(lldb) run maintenance start
+Process 35052 launched: '/opt/homebrew/bin/git' (arm64)
+git(35052,0x1ec22b240) malloc: *** error for object 0x1: pointer being
+freed was not allocated
+git(35052,0x1ec22b240) malloc: *** set a breakpoint in
+malloc_error_break to debug
+Process 35052 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 1.1
+    frame #0: 0x00000001879221bc libsystem_malloc.dylib`malloc_error_break
+libsystem_malloc.dylib`malloc_error_break:
+->  0x1879221bc <+0>:  pacibsp
+    0x1879221c0 <+4>:  stp    x29, x30, [sp, #-0x10]!
+    0x1879221c4 <+8>:  mov    x29, sp
+    0x1879221c8 <+12>: nop
+Target 0: (git) stopped.
+(lldb) bt
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 1.1
+  * frame #0: 0x00000001879221bc libsystem_malloc.dylib`malloc_error_break
+    frame #1: 0x00000001879015e8 libsystem_malloc.dylib`malloc_vreport + 748
+    frame #2: 0x000000018790523c libsystem_malloc.dylib`malloc_report + 64
+    frame #3: 0x000000018792326c libsystem_malloc.dylib`find_zone_and_free + 528
+    frame #4: 0x000000010004fa78 git`is_crontab_available + 56
+    frame #5: 0x000000010004f974 git`update_background_schedule + 168
+    frame #6: 0x000000010004e1dc git`maintenance_start + 248
+    frame #7: 0x000000010004d9b4 git`cmd_maintenance + 336
+    frame #8: 0x0000000100005678 git`run_builtin + 396
+    frame #9: 0x0000000100004b48 git`handle_builtin + 324
+    frame #10: 0x00000001000043c0 git`cmd_main + 788
+    frame #11: 0x00000001000c141c git`main + 236
+    frame #12: 0x0000000187768274 dyld`start + 2840
+(lldb) frame select 4
+frame #4: 0x000000010004fa78 git`is_crontab_available + 56
+git`is_crontab_available:
+->  0x10004fa78 <+56>: mov    x0, x19
+    0x10004fa7c <+60>: ldp    x29, x30, [sp, #0x20]
+    0x10004fa80 <+64>: ldp    x20, x19, [sp, #0x10]
+    0x10004fa84 <+68>: add    sp, sp, #0x30
+(lldb) disassemble -n is_crontab_available
+git`is_crontab_available:
+    0x10004fa40 <+0>:  sub    sp, sp, #0x30
+    0x10004fa44 <+4>:  stp    x20, x19, [sp, #0x10]
+    0x10004fa48 <+8>:  stp    x29, x30, [sp, #0x20]
+    0x10004fa4c <+12>: add    x29, sp, #0x20
+    0x10004fa50 <+16>: adrp   x0, 535
+    0x10004fa54 <+20>: add    x0, x0, #0x3f ; "crontab"
+    0x10004fa58 <+24>: add    x1, sp, #0x4
+    0x10004fa5c <+28>: add    x2, sp, #0x8
+    0x10004fa60 <+32>: bl     0x100050300    ; get_schedule_cmd
+    0x10004fa64 <+36>: ldr    w8, [sp, #0x4]
+    0x10004fa68 <+40>: cmp    w0, #0x0
+    0x10004fa6c <+44>: csel   w19, wzr, w8, eq
+    0x10004fa70 <+48>: ldr    x0, [sp, #0x8]
+    0x10004fa74 <+52>: bl     0x100249170    ; symbol stub for: free
+->  0x10004fa78 <+56>: mov    x0, x19
+    0x10004fa7c <+60>: ldp    x29, x30, [sp, #0x20]
+    0x10004fa80 <+64>: ldp    x20, x19, [sp, #0x10]
+    0x10004fa84 <+68>: add    sp, sp, #0x30
+    0x10004fa88 <+72>: ret
