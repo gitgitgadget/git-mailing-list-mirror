@@ -1,82 +1,57 @@
-Received: from mout2.freenet.de (mout2.freenet.de [195.4.92.92])
+Received: from mail.hq6.me (hq6.me [104.236.142.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B79C1DF72F
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 17:23:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.4.92.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8A61DAC9D
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 17:46:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.236.142.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729185837; cv=none; b=cCNlMzby2BQ5e+/Dgq72LF9ZGhHVGbjW+6c075eQWlPtvgOvP20bIQUhyN5ObV+yEsd0fd0wa8vow4RNKXJ1RWiKXEi839kpA5VpTcUaljHuGIEwpwBbUQk/vr+KS2AVUkuV6JwqAiTwtWp0kAsen4C4Dm41NpCMxUEIgNJCt2E=
+	t=1729187216; cv=none; b=AjLK5pYKJiJST3XabuzRQm9xnZk/h58r2nWpRnJak9Du/UoF1TegC/Zgs6hM6F9t94mkLhCqaD53hetE1za5//Sp7p/qgiSjME/YCkmmYtYK1xLDKIymYwTCO1LcmM2ANP5quGKSIw9cKrUEKlNo9GynBX+CkVSCoNiFL5+PhtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729185837; c=relaxed/simple;
-	bh=ckIEo7i5mtMCeaKWIP3nBd2R0VtJ3FK/fBVTP2gmVoo=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EY17tx+JogcXKUxOy2GmS6yORpklZwNBQrPxNNxRQ3YKzo1GEtyiYSv23OWzIgIeAoet8+DwldQ8Xl6Em5pfHTM1P7fnLFXgY927VxZTLFgBLg6pd7vyFJa6xrf15JnSTRdvW3JWRbZx1+F4MJAdM4XD63XV3ky7eoSrrW/g2pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de; spf=pass smtp.mailfrom=freenet.de; dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b=f7dkaCgP; arc=none smtp.client-ip=195.4.92.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
+	s=arc-20240116; t=1729187216; c=relaxed/simple;
+	bh=9oDy2EbER/Kf80k5bTxw7TMU/WGNBF8MfqxTZQfc/VQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=lR4SxkLHz4Cat7JsPctsWdsZgiaQpYU1jUyuyx343tLGYH6vHRjK5wAA/d19kdTwwPpSJA5tGnKWsuLl9hi2wg0wRtQGHNbi/i05cwtJ8DgniytSh9B8Q1xY1L9fMabD4Vdjx6gbyTlkg0U7o7aArJ5dzHYoQREkA01GQMoSAAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hq6.me; spf=pass smtp.mailfrom=hq6.me; dkim=pass (2048-bit key) header.d=hq6.me header.i=@hq6.me header.b=S7nEfuWL; arc=none smtp.client-ip=104.236.142.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hq6.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hq6.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="f7dkaCgP"
-Received: from [195.4.92.121] (helo=sub2.freenet.de)
-	by mout2.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
-	id 1t1U8r-00CHtz-Df; Thu, 17 Oct 2024 19:18:29 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
-	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
-	References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=8QEX18nlkg1ulQpu51cYf9NO6yGueMXroHyN6dq95wg=; b=f7dkaCgPcMh2D4wYWnb9WzjoM1
-	acDHOhaRa99kCREu1eIuF4bXcg4PFGzFgOZupVkygTtRe5imot1qqXLgToxSPDwY3FO7waSEwJoiR
-	3SvoTwhlrmQsZzrWaj5GagR7uSp7ILFfCc7FB9ojyzVaApK9z+ptgkXbRMHo4xDywv/T6wfpVWE7f
-	MzWBaOFS7ZyNF5Z5nBpmqGgR2pWSc+k7CnTYTwz6HUM2x4nud9kvPLz8pUum0ekJOabkKkvVWWhgt
-	u0FUMAPD3LXmUDVrMahqxeOCKg6Ik1R/5i9QjWvvo7QIHueDtUjmCp3Q7vV0inmQQcfE8FoKQddxo
-	06Z+NOWg==;
-Received: from p200300e2e7083000dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e708:3000:dacb:8aff:fee0:ca63]:54334 helo=soren-pc.lan)
-	by sub2.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
-	id 1t1U8r-000sre-2r; Thu, 17 Oct 2024 19:18:29 +0200
-From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-To: git@vger.kernel.org
-Cc: tboegi@web.de,
-	phillip.wood@dunelm.org.uk,
-	gitster@pobox.com,
-	me@ttaylorr.com,
-	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-Subject: [PATCH v5 0/1] mingw.c: Fix complier warnings for a 64 bit msvc
-Date: Thu, 17 Oct 2024 19:18:19 +0200
-Message-Id: <20241017171820.2679-1-soekkle@freenet.de>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <ZxAgmvoyxZNnY1nQ@nand.local>
-References: <ZxAgmvoyxZNnY1nQ@nand.local>
+	dkim=pass (2048-bit key) header.d=hq6.me header.i=@hq6.me header.b="S7nEfuWL"
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by mail.hq6.me (Postfix) with ESMTPSA id 1B7A7120986
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 10:46:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=hq6.me; s=mail;
+	t=1729187205; bh=9oDy2EbER/Kf80k5bTxw7TMU/WGNBF8MfqxTZQfc/VQ=;
+	h=From:Date:Subject:To:From;
+	b=S7nEfuWLzrJZZ7eTuxSWgMyurp9MyriFz8+bSG4YtKOqv8oPrg3d6l0yaPO+Pt58j
+	 r/LWvt20e0TBl0QbFGkVMLLrsPP6N0mXJ14CAJ9SQ31fBvfpGfnHvc1DUil+NcT/36
+	 bSeuHs63E6VqM0FMqOPV44MWP1ElMg305gFnwRka0ZC4BLYzaW/nCeCq+qLQgsikQH
+	 Pc/tZICoZ9p38chzB9fv5oygfTlsK9cjrUxsx835OwErwHF/J9xIQQMD4eZ43xs3hY
+	 bVTLsvuQAis9GOS5hV63y5k6C/JFZVEUh6oxAj8qQ89yiC4jfN6FfRSf+QRnJK2lbU
+	 aRzO0FOQfICnw==
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-2888bcc0f15so148898fac.0
+        for <git@vger.kernel.org>; Thu, 17 Oct 2024 10:46:45 -0700 (PDT)
+X-Gm-Message-State: AOJu0YxDVhtYBg8cpNK38bJbqUd4OGDES3j6EiAJSE60veUlOOfLgmXA
+	/o6v8UBSOTrudto0Hf/Y3vvXaeHnBJM/p5OSqhLUvz9PsuKP4sPIhA1jTjt/GudnO4JRABnTTUG
+	PvF/xmVkvmBN9wsA9sTmBYAY8sWY=
+X-Google-Smtp-Source: AGHT+IG13n7XLMuxfPQrppoXCR38FxgBp1hFyoR4cf4XmZSZMhTIOlCH94pYLX6WU5WZBfMMGnHiM89PX8AXD+S0Ua8=
+X-Received: by 2002:a05:6870:c081:b0:278:2e89:18ef with SMTP id
+ 586e51a60fabf-2890c7e72f1mr1107261fac.10.1729187204412; Thu, 17 Oct 2024
+ 10:46:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-FN-MUUID: 17291855093252F07C196CO
-X-Originated-At: 2003:e2:e708:3000:dacb:8aff:fee0:ca63!54334
-X-Scan-TS: Thu, 17 Oct 2024 19:18:29 +0200
+From: Henry Qin <root@hq6.me>
+Date: Thu, 17 Oct 2024 10:46:17 -0700
+X-Gmail-Original-Message-ID: <CAO8bsPASzxoEwiYd7ABf4YZuyTexFnf2B2DXap6xsA6d98DAAw@mail.gmail.com>
+Message-ID: <CAO8bsPASzxoEwiYd7ABf4YZuyTexFnf2B2DXap6xsA6d98DAAw@mail.gmail.com>
+Subject: Why is git log on large repos slower when outputting to tty?
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi everyone,
+Details in my Stackoverflow question:
 
-I fix the missing space in the commit message.
-
-Best regards,
-
-Sören
-
-Sören Krecker (1):
-  mingw.c: Fix complier warnings for a 64 bit msvc
-
- compat/compiler.h               |  4 ++--
- compat/mingw.c                  | 25 +++++++++++++++----------
- compat/vcbuild/include/unistd.h |  4 ++++
- 3 files changed, 21 insertions(+), 12 deletions(-)
-
-
-base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
--- 
-2.39.5
-
+https://stackoverflow.com/questions/79099095/why-is-git-log-significantly-slower-when-outputting-to-a-tty
