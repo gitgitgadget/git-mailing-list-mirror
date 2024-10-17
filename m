@@ -1,155 +1,112 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7974C13AD29
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 03:51:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F133D433DF
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 04:03:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729137073; cv=none; b=YaybsM23ep+t1Q/m6z6f65bLJrR5/jymgUycT0qYNgDMFT9pCNVXHl7/rYzIskaWUKeQT13Q/gKe1vAbaEr/vwV3tqMeB8OSBRE2eRDykIRLKPRjRpbs1bkrjrlQYlfkWxS+Rxy8NTksIn5QwCNF2VQSnogG1TmfoCzx3o0EpmU=
+	t=1729137822; cv=none; b=uOwfnsAKarrpYdo5itC4mq4CWHIlS39O2NTz8/LuZkmwn5/KhYdEVRXOPxsgcLLzAzXF+DECv2dmQNadC389skkyGONgzdPd195mEpM9gvOrhAxBLXsHzdopOREOzu4w9c10MmdfLcVndDeGbTz6wmyp/EI79VsCRsjVFm6D9Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729137073; c=relaxed/simple;
-	bh=Pm33O2Q2PO6/o8SIVpRaIJkXfOnRLViN8n1K8aBWcMM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=ivwyJcEZyj+CGhusATWN+P5ihhwpHrzhjF4tUSZg/9PQ7og04dBA0EflogemdykNSekVTT7rCarT5AJ7EvJmTv3jaf4WEve7itcqtOv+cHaXuX59Vo3iUPrbJbYN9g4Hmcf09DTacjLBEpU/HWo6HdU2XEGjP5v/ZUDy622uthY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lHVAMJID; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729137822; c=relaxed/simple;
+	bh=VHkAXt6xU/DV0rav7niV+8U5K/Ng8TjbQRWS1zCMCXg=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=r33TTzIEVgnJQOMWaOOb2DzI1PKlIipM/j/fqday3K/aHINWfJ5QrEbaZsf7pxJhKzliNIlhIIw9Z1/8Kt4zTP3dACfaQnbFbaYvCYq9rQUOUy8BO9cMdD3SXnqem0vlrgFHPK1eU0QLfP47J5a64CrxdIw1Cla97xsW+edZYH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dD4fgDuT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y5+twXFt; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lHVAMJID"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2e0d9b70455so384556a91.3
-        for <git@vger.kernel.org>; Wed, 16 Oct 2024 20:51:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729137070; x=1729741870; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wUyUAqblHJRgb4Ds5xzmYy6uButrEvWsOs4DcDPItRM=;
-        b=lHVAMJIDOIo+bGJSOx5cZMBW8w8C9PvSuv7lOqoRyKkFyE921W9hJKuv+89VisUW+4
-         DF+2oOW7ndwTTcEb0/OFYWgkq5Ut+lDccBa/xT02pk8gjAaB3Lps6IS6Q9FKCfeUrQg0
-         zCwBPcn4FaNHAikkKAcm2H6ybwY4nl6CZV8ytQYjTUQJ/eTu986M5bgIrp873Qa/8hG2
-         iETmRUQvXXN282ip6FYZTLgOmJf8GWbbr3z1o475FbIF9dMn48soH6ug+btc2pHPKlX7
-         k274B5X0v6zdTSthTw3BBxOUaHS5gvCUWwWxievHc3yNSluTVwFDvRMtii/d1XuvI9fU
-         vtXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729137070; x=1729741870;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wUyUAqblHJRgb4Ds5xzmYy6uButrEvWsOs4DcDPItRM=;
-        b=CAvXqMEQe2UHZw6O66yudExkJs7OlIK+bn6Yr7k780q2mmlrMYDuAYwU6x/7iqYjU2
-         BEaFAEpJCWBm/rq8oBFkt9xhx95fXwGW7esc3avcYt5eIrCqhn7qEuIv29KvbhonjPpD
-         GaQjr7wiJlN75hmEB0w1z19F9AJd5OIizERIuLZxE4Sjl688friS+4CozvGMQLQTIm7M
-         JP/eJgcJcVW064t9gkRbxcAckWnTIAkXOY/a7bzKJNhIeOuuCMM7Me9JOcSGp0HgEk+5
-         6mxDx5xAm9qVLo+XvpMxEUjvgBKFFmZfDdLsP/ZfIjRE7oyN91TIim4fnNYbUiiDUh9W
-         1JPA==
-X-Gm-Message-State: AOJu0YyrJ0s1RONgplQJxWmsOE/83bU9KtppCPjekak0l6whkCDtjSnK
-	2vf8H2/UpDjYhjyxB5hjZnW5m2OMwAFIdnxpaVu0MAfMX99e8Pkp
-X-Google-Smtp-Source: AGHT+IHp5x4Rfhaf1xOL/Q8GXdJsnluJCvhRcx0uhK95YVEy6Zk2u/yOCY+c5Ql/B1sdtX+lQA0ijg==
-X-Received: by 2002:a17:90a:bf09:b0:2e0:d1fa:fdd7 with SMTP id 98e67ed59e1d1-2e2f0d8dd21mr23573108a91.27.1729137069664;
-        Wed, 16 Oct 2024 20:51:09 -0700 (PDT)
-Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e3e0924a40sm692233a91.41.2024.10.16.20.51.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2024 20:51:08 -0700 (PDT)
-Received: by archie.me (Postfix, from userid 1000)
-	id B6ED241A3B24; Thu, 17 Oct 2024 10:51:05 +0700 (WIB)
-Date: Thu, 17 Oct 2024 10:51:05 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: clar unit testing framework FTBFS on uclibc systems (wchar_t
- unsupported)
-Message-ID: <ZxCJqe4-rsRo1yHg@archie.me>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dD4fgDuT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y5+twXFt"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 73AE213802BF;
+	Thu, 17 Oct 2024 00:03:38 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Thu, 17 Oct 2024 00:03:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1729137818; x=1729224218; bh=/BhFD19NOs
+	SCnF4jAWhvZUQgFlEz+12YqYaITgV3MhI=; b=dD4fgDuTSwAeyMu1yF74///sZF
+	+yHtb/Dzq/5DjWEOC/sr93DQCcU4BS9oLrFpjYwgTKy8sf77kgsTEXLEFN38cwRw
+	XATW1Bd4UqFHJa/izhuwpQ8RTI28PDQObnv0w06Z6BrJAdFb3fMsEha3Mwkra9mw
+	zlN+A7tXk4/rF4y+9aseJIvpaSq5Mw4Yc4JD1C8LTy9GbJLodD1BosxkudGDQlrJ
+	CWw30FvLoITLjA2MQT8MnZ8SxDuTMYM1/rr3w8jKTHgFm7y8ExtEZdbCnwcuS0Ta
+	ucrZJaoEKAk2RCtm+HxtO0O19u4bYh1uoKu5kTDtfh/+pfdQo1z9D/0H293Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1729137818; x=1729224218; bh=/BhFD19NOsSCnF4jAWhvZUQgFlEz
+	+12YqYaITgV3MhI=; b=Y5+twXFtSDSKLDGKGSU0ICewYrD71JdTmazWZwHc3Ov1
+	i3QzCfzMdCV/4BS59xa7uAoKxtTg8D/u5ST74NCkITG6ZFqVbQxWpU8o3pnnhHin
+	sejsYil5KRBYmUk5qS/lXgzJKh4FOiOQohZn5cyaV0RiaF0o4/wJEkDXnNHEieSJ
+	w8c4GgI8d2hpaGr6tUQ9yjdhE5X4J78dDhFAFDNnsIG3aS/5pJHr5JfOgVXiymnr
+	muvJxT5LJnEkjYrQyGPRU7p1Wew9lmANugRfG/7QBNqUY7+YksLojbXXqn9b/A6L
+	dlsexmsCR5QSnLOJd1yDwM9ER6GeUELlQ+O/W3hcKg==
+X-ME-Sender: <xms:mYwQZ0P6Sg7rURne_sD5QVOq6f_4slEKSEDJ6wsr3OoVafcogPGZMw>
+    <xme:mYwQZ6_cforzMUdEH6t-SCU2kDB60A-v89Nf0VNOh0oYfFhi4aZ3PSWgMy39MVuVY
+    psMy62KvI_ZdjJQOg>
+X-ME-Received: <xmr:mYwQZ7SI_Rzn77pD_HcBhTGRTAsKZpKK8i0l4tkBJvDZpBrfU5-xc_WAq9YVKY_shQa8A8RyfJwIc5atA94eTf5mbCLdUYXww_X-BHMrcSDQGg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehtddgjeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeehkeeffeeggedvgedvfeefheettddtffejuefflefggfeh
+    feelffeljedvfeehieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtth
+    hopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:mowQZ8tYmIPwzGxD9IG4st233-ofQ9eSgpk4Hu-3IquOv9K3cj4yTw>
+    <xmx:mowQZ8f0Cwm8tH5K9z_ebn_uGGrTJhPuvNp1Fcuy0qJhl0TT10Lcxw>
+    <xmx:mowQZw2fXFKXl9BSCa6t4pLMmI1gSIwslUrtbebKYALd4inOIJXPRQ>
+    <xmx:mowQZw_47qD3B-O4Slb9o3CGGszt7KIOeyMnL3RsqBGmRCO5hVp_5g>
+    <xmx:mowQZ77Z-6pXh6jIw-QrjN6HxpqFgKEwiXnz8FBrCGiOj8Yhxptq0l3m>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Oct 2024 00:03:36 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id af7117ff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 17 Oct 2024 04:02:15 +0000 (UTC)
+Date: Thu, 17 Oct 2024 06:03:32 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 02/10] t/test-lib: wire up NO_ICONV prerequisite
+Message-ID: <ZxCMj2C0G_zkWuON@pks.im>
+References: <cover.1728906490.git.ps@pks.im>
+ <cover.1729060405.git.ps@pks.im>
+ <c046e5f03bf9e3eeda803133b88c3ae414fd0c69.1729060405.git.ps@pks.im>
+ <ZxBj-VEU6M2TVL2W@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="N2V9m5+EoySDaDxH"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <ZxBj-VEU6M2TVL2W@tapette.crustytoothpaste.net>
 
+On Thu, Oct 17, 2024 at 01:10:17AM +0000, brian m. carlson wrote:
+> I think this patch is fine for now, but given what I mentioned above,
+> maybe we want to add a weather balloon in a future series to see if
+> anyone is compiling with NO_ICONV.  After all, if everybody has easy
+> access to iconv(3), then we might be able to drop support for NO_ICONV
+> and the work maintaining it entails without negatively impacting anyone.
 
---N2V9m5+EoySDaDxH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+As you say, for now I'd want this patch to land in our tree to unbreak
+our test suite with NO_ICONV. It fixes the status quo, and whether or
+not we want to drop NO_ICONV certainly is a bigger discussion.
 
-Hi,
+We do have one platform that doesn't have iconv, namely QNX. I rather
+doubt that anybody has access to that platform, or that anybody really
+uses it. So having a test balloon out there could help us figure out
+whether there are any users of NO_ICONV left. But when it is used I
+don't mind that flag staying around.
 
-Since clar unit testing framework was imported by commit 9b7caa2809cb (t:
-import the clar unit testing framework, 2024-09-04), Git FTBFS on uclibc
-systems built by Buildroot:
-
-```
-    CC t/unit-tests/unit-test.o
-t/unit-tests/clar/clar.c: In function 'clar__assert_equal':
-t/unit-tests/clar/clar.c:767:23: error: unknown type name 'wchar_t'
-  767 |                 const wchar_t *wcs1 =3D va_arg(args, const wchar_t =
-*);
-      |                       ^~~~~~~
-In file included from t/unit-tests/clar/clar.c:13:
-t/unit-tests/clar/clar.c:767:58: error: unknown type name 'wchar_t'
-  767 |                 const wchar_t *wcs1 =3D va_arg(args, const wchar_t =
-*);
-      |                                                          ^~~~~~~
-t/unit-tests/clar/clar.c:768:23: error: unknown type name 'wchar_t'
-  768 |                 const wchar_t *wcs2 =3D va_arg(args, const wchar_t =
-*);
-      |                       ^~~~~~~
-t/unit-tests/clar/clar.c:768:58: error: unknown type name 'wchar_t'
-  768 |                 const wchar_t *wcs2 =3D va_arg(args, const wchar_t =
-*);
-      |                                                          ^~~~~~~
-t/unit-tests/clar/clar.c:769:65: warning: implicit declaration of function =
-'wcscmp' [-Wimplicit-function-declaration]
-  769 |                 is_equal =3D (!wcs1 || !wcs2) ? (wcs1 =3D=3D wcs2) =
-: !wcscmp(wcs1, wcs2);
-      |                                                                 ^~~=
-~~~
-t/unit-tests/clar/clar.c:784:23: error: unknown type name 'wchar_t'
-  784 |                 const wchar_t *wcs1 =3D va_arg(args, const wchar_t =
-*);
-      |                       ^~~~~~~
-t/unit-tests/clar/clar.c:784:58: error: unknown type name 'wchar_t'
-  784 |                 const wchar_t *wcs1 =3D va_arg(args, const wchar_t =
-*);
-      |                                                          ^~~~~~~
-t/unit-tests/clar/clar.c:785:23: error: unknown type name 'wchar_t'
-  785 |                 const wchar_t *wcs2 =3D va_arg(args, const wchar_t =
-*);
-      |                       ^~~~~~~
-t/unit-tests/clar/clar.c:785:58: error: unknown type name 'wchar_t'
-  785 |                 const wchar_t *wcs2 =3D va_arg(args, const wchar_t =
-*);
-      |                                                          ^~~~~~~
-t/unit-tests/clar/clar.c:787:65: warning: implicit declaration of function =
-'wcsncmp' [-Wimplicit-function-declaration]
-  787 |                 is_equal =3D (!wcs1 || !wcs2) ? (wcs1 =3D=3D wcs2) =
-: !wcsncmp(wcs1, wcs2, len);
-      |                                                                 ^~~=
-~~~~
-make[1]: *** [Makefile:2795: t/unit-tests/clar/clar.o] Error 1
-```
-
-See [1] for the full build log.
-
-Thanks.
-
-[1]: https://autobuild.buildroot.org/results/8cc9795dc18277926dd386eb1cb9f8=
-c9b65b0042/build-end.log
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---N2V9m5+EoySDaDxH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZxCJogAKCRB7tWyQc2rT
-CNeJAP9vZ/zYLaQQJdKR2o+qz0ZDVxcCMaz3Z0/VHgOWJ8/FvQD9EMkC3pEsYbdi
-eTmcXte4lBlosPRLLIn+I4Gft9Cm8gQ=
-=ReFq
------END PGP SIGNATURE-----
-
---N2V9m5+EoySDaDxH--
+Patrick
