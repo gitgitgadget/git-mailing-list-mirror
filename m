@@ -1,169 +1,128 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA9E1D5153
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 12:02:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443CA1D88D7
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 12:07:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729166577; cv=none; b=okSm0k/jVin37pqBzjQmh1kZQk86goydO5qW8bBF5zC+qrQ2ZgaHaqYK5lOApPo1PlibYUcdsWXGCvU6eiXSkLwvtZdXz5elYjfrXAu3nJrVa6k4aqDl9mar1oPoIcfsJh4x1Nv/Kp/R+R0ERBfsWqKMM/ERt57sNNUYyDmP2RU=
+	t=1729166883; cv=none; b=BWv8BL8PPbKoqx842Xr1jvhUzVKPAQBJWIgTakKd9n5kRASbfKhf42a3jhYHiAAXBZbwBTXP120LU0hsclE0OLu07Dj3jq6YXRLVtiqw5C1SVCmx+4AXT294ZPaLatFAy2XAeobUe3aFWYs1soMFMXS7mZ4FgPWAxF3tviE8ea0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729166577; c=relaxed/simple;
-	bh=/4YiDdIhf57EHuVWm5bPxCBNYriEhRAsY6fmVmjTLTU=;
+	s=arc-20240116; t=1729166883; c=relaxed/simple;
+	bh=X7D8CA6HPXratxRVjI12SoLK4nJ5PujGKdNL/PRPV5M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MiuQLpUijJfgPJqK0L1D3tg1/B16ImHw3FXm6rUvASrIsbCQvUptSkBJ4GPDVX05JwXfk5I74Dq5GuKakHmt5F0mmWVYWQJPum2tFRNloj2m2oCn+9+OPHyELxyFii3lJk8zpREujrxhlgleG/0pyc0ksGeaNn+DavUzAQ7jykI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kLsa0vTn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F4dw13dP; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=L15OY9CbY+AhCS7hOHsrJeqxoTJc4M3DwFJGbzSpIVWGL1+K8S97o82t61+N/oOvjSncX9Zt5sIkHESouPgWheAN+svpLKQOh3Gxdf6p30h7eolhgvpTqb3puW8QqoWYJIONjROD2Czc/prWLlzAQor54e+hvYhExnGSLhbryUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DuV3x9ar; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZpxMklLo; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kLsa0vTn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F4dw13dP"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 62F60254007F;
-	Thu, 17 Oct 2024 08:02:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DuV3x9ar";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZpxMklLo"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4F5E311400B9;
+	Thu, 17 Oct 2024 08:07:58 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Thu, 17 Oct 2024 08:02:53 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 17 Oct 2024 08:07:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1729166573;
-	 x=1729252973; bh=tjl5k7xKLdafaaroJ6a5Uao4Kx7oxxEIjKDTcnftIFU=; b=
-	kLsa0vTn7YTFiFWZ5yHqF1a1NOxCgf3ofF7lx1yd0ZtVmTsxW3Og3OSATG+RTiQJ
-	V/0ol8Db5nZi1qdZ1DlYm17MaHc1U5jBvmzqwSortKC2Hmae71oHTGzJvn9e699j
-	jE83FF8S9PDT2eBaOLsGcjKJ/YxsVpfBv1WCgc7weGJBgGZoMy3FFApg4P3VliVw
-	ZoKMnGWQiMiiFiwul8pVoNVFgxOEICgWXsrKoEmlg/GGmTXW1Tbfp2ekiXj4nf3r
-	RLbkhPIm6cZ5hb/lPoD8XrexMT8MmlaIEZr7F/zEXG0+xYMUkfIegn7qgw38ItnC
-	ATLt1Gd9CCbxH2KlRKeWIA==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1729166878; x=1729253278; bh=FclpPtpqbi
+	vTJwr6FORwla8jH4I/nvors8ieLDuVTtQ=; b=DuV3x9arIjW2f9n6EnHMGvkGkL
+	vfrbJc1ERmS+OFiEJ1ZTzMiUeloOU5yQeAxQSGKfR45EgkyK1jCPMQt6XoJmcSBh
+	p3WLGXjphGk362rnApFXEAXQmYGM/2GUgtIM6McRO5fuvv/PsSfbkXg7XDXF4XYI
+	t9T50vd53DsmVrs+RRTgIf/NG7LAe0HLcGEXNFKpiKwpY8HPVxSxHuMu3Oam1JgX
+	Lo/i3WErcRUMmn4siRtBwARu4qAzVVw2TE2Pf1mMSPLfX/dmEowVdxie6Qllh/Aa
+	9xVPomxlGZKUOKZH4pjQvFcqe7GQbfoFr/iugsUf4GTgOb5BeKZem7VV3xVw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729166573; x=
-	1729252973; bh=tjl5k7xKLdafaaroJ6a5Uao4Kx7oxxEIjKDTcnftIFU=; b=F
-	4dw13dPXGKvD6iMrauABxUeN2HbFT5rPWv/+fh/VvGZxn/480KaHcS4wmClgKFTP
-	N294qjZmCffhRM/U+iumkvrLAAEsXTNbMSzAr22RHK0ZFDgFZZQdBIGRAW62bzYq
-	PhRGWsHiTIybMqx6M7Orid421lG9cGVJURRT20nPQUcS29QoKgUEGDqloACH+Lo5
-	mv29MS528GpClxCrsTt3eMbB17qME9JtdaiMMqJ1lGX4FYVw1NyqAyM0Bogc5Q7C
-	WC905UodsU0C8a8M6v+yapbd1YE3YIz++uXK/bvylzExbOEeMd/KmqSR2UoWQ5Ij
-	rJhEkmXzSLEW3vSbYae5Q==
-X-ME-Sender: <xms:7PwQZyGbt3rMbD2Vvb2w4lg8RjKxENPnpccUAieCu7N-pqifV0R_0g>
-    <xme:7PwQZzXP7h3mt5IEZnQVTduJECVS0Cw5Z7KBxG5tdQ0YPsnk_9Y8CG0V24z6mZHV2
-    5ZOdAhIYqi5OEivrA>
-X-ME-Received: <xmr:7PwQZ8IvFD9rh5pAmN51vPf4DnHVqxP4vFik8qOjSiF3aksabYqQaWmLFDDrPiyGWenDI9SJpdKQsHEccTv_NyFhFR2YD0EMsnfqL0rMK_13BA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehuddggeekucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1729166878; x=1729253278; bh=FclpPtpqbivTJwr6FORwla8jH4I/
+	nvors8ieLDuVTtQ=; b=ZpxMklLok8ZlqK42rw16ztc1TooLn96u6pTM5JnhUZ8z
+	m0FWdeJ22GgpWv8UPgH4YstZlgxbp4D7jySLOgK/bTfvxTs7iIj2L6oZjMoOj6r+
+	TXUsYRaGizHZ9WvgmGfPoWZ0Qd8/hdZOledlrrbhzQSrOH+2zpcnf2NPK1qjV8bu
+	fx0a5u85P5Hp6sGaGBQ8e4lSr6Ut4zdvxdW3jc7tZGs6XgVc6U+CYcoi+cUmcOcw
+	ZD9haPNt2Ww7V+IdZ1MYV5mttHiXeF1kAzGulrKbHQBQJv2pVMLWwGSjBTsvh7Nn
+	a4eljYzKqvTuJCXT7TCnrc6m5pcuFsWb4U0FkK9WUA==
+X-ME-Sender: <xms:Hf4QZ5BgTQVRNbA1KqM1ezTnguktvdxV6wmoVDTcxvofrwiPhJJ1ZQ>
+    <xme:Hf4QZ3iZafO0IsynV8iTeMxonyb6D9jUwAcKWwQIaJ7vMVNaDuON6scXfReUS_F3h
+    3jNmxQVDUysa2vqDA>
+X-ME-Received: <xmr:Hf4QZ0mA2AWwvYfhUOEUkTF6Q4xkJbABnV2ubq6G8cf62PE4xGwcRWg94F7QInFFlYmTJDf-hjimTNJkMbr2EfeqtDjlVDdoU6klKvc6MGjTgQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehuddggeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeeileelleduudeuffdtheeugeduhfevleethfdtudeg
-    veeitefghffhgfetheeihfenucffohhmrghinhepphhusghlihgtqdhinhgsohigrdhorh
-    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhs
-    sehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    phhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehushhmrghnrghkihhn
-    higvmhhivddtvdesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:7PwQZ8ENPIYfT7-qSYs-8MPxQ5buqk8xuRIFcH69QQvle88Ya4jW9A>
-    <xmx:7PwQZ4UFHWRzl8NboUYXScJxw1N40iZp2Fjc1FfPxjkwKnM6qZCrKg>
-    <xmx:7PwQZ_Nz06DZku4mHArDivEQUDjDvsav6PS7YKwYqH2crcKDPgOdZQ>
-    <xmx:7PwQZ_1B1oT2eSt_SqpVjogK8A94h-s5YyqkSV5eD6-pvbPY47KYaA>
-    <xmx:7fwQZ2wzHTR0sudUG5Pz77YycwRiZWIxngTAShvRMf9tturoLaetM7W6>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpedvfeeivdevtd
+    eigfdttdetgefgffehveeugeeukeffleeugfelffffvdetkeehhfenucffohhmrghinhep
+    phhusghlihgtqdhinhgsohigrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrmhhmhihmohhrvgehtdesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilh
+    hlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukh
+X-ME-Proxy: <xmx:Hf4QZzyhn9anGD2v8JrayLWtSZ3H1jqxND15Yw0rZ-NhZfgPdLkGLA>
+    <xmx:Hv4QZ-RSZ7QI_cpfGiKnUOqAAXVM1508N7k7cAgr42EB0Ka2WOulXg>
+    <xmx:Hv4QZ2a_jUeNxUbchoj9HNPsEE6DVJ8H7jwbK-3PHNxuCsC-HVLiLA>
+    <xmx:Hv4QZ_Sz9SkgcmYInw4QutWw4mUE8h298i8zh_GHwLeozmfZXXuvVw>
+    <xmx:Hv4QZ0NNpuaNH0-fRDSVhE4xQWM9md1JNmGoX7z93v61nN5yUA_ywSqo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Oct 2024 08:02:51 -0400 (EDT)
+ 17 Oct 2024 08:07:56 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c9413217 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 17 Oct 2024 12:01:31 +0000 (UTC)
-Date: Thu, 17 Oct 2024 14:02:49 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id de2677e4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 17 Oct 2024 12:06:35 +0000 (UTC)
+Date: Thu, 17 Oct 2024 14:07:53 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,
-	Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 3/3] parse: replace atoi() with strtoul_ui() and
- strtol_i()
-Message-ID: <ZxD84l-tcU0TrX1K@pks.im>
-References: <c93bc2d81ffb33a2a61dda2878fa3b9987545e0b.1728774574.git.gitgitgadget@gmail.com>
- <CAPSxiM-V1qOB9QXUY3aDh+_nGdDHBWXJZ54U9p_XxKfHoODu7A@mail.gmail.com>
- <Zwz4B4osJnYJw6pd@pks.im>
- <2a937b6f-a3fb-4f2a-997b-5508f0e20e65@gmail.com>
- <Zw0kGLZ-mcYjb6Je@pks.im>
- <2160f8ea-5f00-49d9-8e02-d71d4d827d39@gmail.com>
- <CAPSxiM9ncwaZ3HF72wsRwmen7joWk3mjipsu78WxKEzLX607sw@mail.gmail.com>
- <CAPSxiM-aptyjesMX1H-P5QJjA-6CUonA01Bo84cq2_t==TqFgw@mail.gmail.com>
- <84dbe9f1-976d-45f8-a49a-d0f942906686@gmail.com>
- <CAPSxiM-Yw2H65+EHoDckU2N2hr+UrXRu5Y2JjXc+TEwEUKJT0Q@mail.gmail.com>
+To: Abraham Samuel <sammymore50@gmail.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk,
+	"gitster@pobox.com" <gitster@pobox.com>
+Subject: Re: [Outreachy][RFC]: teach the '-e' option for git notes sub command
+Message-ID: <ZxD-FCW9drBpC4c5@pks.im>
+References: <CAO1n886ZRRD6m_GQsYz-AGwpbkDB4S+0+hRx-9mmN=6iJ1o7Mg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPSxiM-Yw2H65+EHoDckU2N2hr+UrXRu5Y2JjXc+TEwEUKJT0Q@mail.gmail.com>
+In-Reply-To: <CAO1n886ZRRD6m_GQsYz-AGwpbkDB4S+0+hRx-9mmN=6iJ1o7Mg@mail.gmail.com>
 
-On Thu, Oct 17, 2024 at 11:56:33AM +0000, Usman Akinyemi wrote:
-> On Mon, Oct 14, 2024 at 6:36 PM <phillip.wood123@gmail.com> wrote:
-> >
-> > On 14/10/2024 17:26, Usman Akinyemi wrote:
-> > > On Mon, Oct 14, 2024 at 4:13 PM Usman Akinyemi
-> > >> On Mon, Oct 14, 2024 at 2:55 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> > >> I got this from a leftoverbit which the main issue was reported as
-> > >> bug. https://public-inbox.org/git/CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com/
-> > >> For the test, I should have the test as another patch right ?
-> >
-> > In general you should add tests in the same commit as the code changes
-> > that they test. In this instance I think you want to split this patch
-> > into three, one patch for git-daemon, one for imap-send and one for the
-> > merge marker config changes. Each patch should have a commit message
-> > explaining the changes and whether they change the behavior of the code
-> > (for example rejecting non-numbers) and add some tests. Note that I
-> > don't think it is possible to test the imap-send changes but the other
-> > two should be easy enough. The tests should be added to one of the
-> > existing test files that are testing the code being changed.
+On Thu, Oct 17, 2024 at 10:43:56AM +0100, Abraham Samuel wrote:
 > Hello,
-> I am currently facing some issues while trying to write the test for
-> daemon.c, I need some help on it.
-> The start_git_daemon function inside lib-git-daemon.sh is made to
-> allow --init-timeout, --max-connections and
-> timeout as well as other arguments. The start_git_daemon function in
-> lib-git-daemon.sh is used at t5570-git-daemon.sh.
-> Basically this is my changes
->                 if (skip_prefix(arg, "--timeout=", &v)) {
-> -                       timeout = atoi(v);
-> +                       if (strtoul_ui(v, 10, &timeout))
-> +                               die("invalid timeout '%s', expecting a
-> non-negative integer", v);
->                         continue;
->                 }
->                 if (skip_prefix(arg, "--init-timeout=", &v)) {
-> -                       init_timeout = atoi(v);
-> +                       if (strtoul_ui(v, 10, &init_timeout))
-> +                               die("invalid init-timeout '%s',
-> expecting a non-negative integer", v);
->                         continue;
->                 }
->                 if (skip_prefix(arg, "--max-connections=", &v)) {
-> -                       max_connections = atoi(v);
-> +                       if (strtol_i(v, 10, &max_connections))
-> +                               die("invalid '--max-connections' '%s',
-> expecting an integer", v);
->                         if (max_connections < 0)
-> -                               max_connections = 0;            /* unlimited */
-> +                               max_connections = 0;  /* unlimited */
->                         continue;
->                 }
-> What happened is that the start_git_daemon will already fail and will
-> prevent the
-> t5570-git-daemon.sh from starting if there is any wrong starting
-> condition such as the new
-> changes I added. I am finding it hard to come up with an approach to
-> test the new change.
+> 
+> I was searching through the list for a #leftoverbits project that I could do.
+> I then came across this conversation
+> 
+> https://public-inbox.org/git/xmqqed7bhobk.fsf@gitster.g/.
+> 
+> The suggestion was made to make messages seeded with -m/-F to the "git
+> notes add" subcommand be editable when the "-e" option is passed to
+> it. This allows modifying the message by opening the default editor to
+> enable the message to be edited before adding the note.
+> 
+> I have checked the current version of git and there is no "-e" option
+> implemented.
+> I am also studying similar implementations for git commit and git tag
+> to help me understand the implementation.
+> However, I would like to know if I am permitted to go ahead and if
+> yes, I would appreciate pointers to other resources to aid me in
+> implementing it.
 
-I'd just not use `start_git_daemon ()` in the first place. Instead, I'd
-invoke git-daemon(1) directly with invalid options and then observe that
-it fails to start up with the expected error message.
+You don't have to ask for permission in order to fix issues. So please,
+feel free to go ahead.
+
+I assume you've already read through the common documents that we have
+in Documentation/, like MyFirstContribution.txt et al. Other than that
+I'd recommend to have a look at how this is implemented in preexisting
+commands, but you already had that idea yourself. You could also dig
+into the history of how those `-e` options have been introduced for
+these commands, which might give you an idea what was required to be
+done for them, and you'll likely have to do something similar for `git
+notes add`.
+
+I don't really think we have any other resources that would be helpful
+in this context.
 
 Patrick
