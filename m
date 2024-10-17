@@ -1,77 +1,132 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE842111AD
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 15:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC86E111AD
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 15:23:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729178501; cv=none; b=tQEkl7FTconRjRafjwZg5Z9l/e30iNG197PZvjpX1qdwpY0Npncm6ZSEAThTJxfYZWVYv1HGqxmiG9OmRumX5ZzfTXwlsDEjJ6FU3pYoCwJ1oCUnWJh5oYyL5PE7ntwtWb2Ik6s1UZ3NbfL+HadLGKS5yLd+cUOZyvVDIvjluec=
+	t=1729178602; cv=none; b=qkZXJ4/IekujBgCSKfIk5LZ0gghX49u0/LOOAlroi+64nWgRD3E5FkoQR0+E+H8zC8Ds+BF+6SxAvhEpAxVwPOsgnos6vlBPTHP+Ucjd2mHEUxjN7XwjS/KQFqFUxRcrmHW4oChif/WnLWaSu1nj5xlswMzkDo74y+lebNE841M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729178501; c=relaxed/simple;
-	bh=yncHc+iSTueMhNZ0klAMF4cvLOXLHz1LtF0GTqBQico=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=ZXylloAGyjbY9gvb2EfbzfeMIKsA9LPqwgxKeJ+YEw7NNLS8FSetinKLilsNbaXyD+/4gSxvB9712b1DjeJ57QeVRPc7rXPGsbkS7lgwG7d0LYQY5vZoCDy8cSobJSZAJlK/S4xez95xOBDtiIurCS+71rhO8bjrzpTDrIlkNnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mxw2aGj1; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729178602; c=relaxed/simple;
+	bh=VRHVzZquw4Blzv3OCKBdxZHBgQJmX+u1qSkN+D/uhX0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dePpyDzXZD4L23b2fWl7KXBNJQVE2bcyADPCKYYzzV0sa2MhjII5MVa6oBgw8VQdMv504/ECLdelL7hT3qUbOjTPeR7xK0zx/JbwoWWwNAO33jZpEPBxbU5JL1+LLki8LlYMZQ+RTbrUhvcqlNbx6dOg1L6H4TpLl/DG4yJc62Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Vj0m9bNa; arc=none smtp.client-ip=209.85.219.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mxw2aGj1"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4315baa51d8so7592435e9.0
-        for <git@vger.kernel.org>; Thu, 17 Oct 2024 08:21:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Vj0m9bNa"
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e29218d34f8so823971276.1
+        for <git@vger.kernel.org>; Thu, 17 Oct 2024 08:23:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729178498; x=1729783298; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:to:from:content-language:reply-to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gAkyf6AT8hzwJAdhVn3oOJDpsRWBdNXYYz5tY+gk00U=;
-        b=Mxw2aGj1orm0JCFFvR+rs8LfJPputxk5Eo73VXfhq8+cYizd6qE07WKnj4rUUHr6Yt
-         ZXQuuFW+Gj1PK11WfMV23p63mJOIwpcs27LwePoDqsPojPBNI92fD+8tFNKQ72UwZvNl
-         BJrjpssA+xToIUajHzgBlHtgLj6xjdMt53iUsTmjI87x6lv5P6Xz/VNsg92c27wELHnI
-         IqihrQe8q3VZGs3R5GNLhoJA88eubmnp754Sau36hN/tPUly7pB1gcb5znm5UKx4FUCT
-         5QvOfbAY1K08NSLr5caIHUPpNwteBJpXMxFpEYWtoxG1JV3CZPxyAwNBl/FOIff4iZM/
-         W/0g==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729178600; x=1729783400; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3TLgJzMrQAdkVC3zEjS3yz3AHaCJFihSJ0e8wHHqNjA=;
+        b=Vj0m9bNaBi687RiEpgreF4RVyee5WEK8Iphgy/LXao1vqUOO48fsUUQ41WFFGm/ALF
+         RQu2mcHznhVQT7jFFxK8xBsD9r2/nNDl00cYprb3Yk1JcnmSboiIIr+/TyAx/EFogGbU
+         E6eP3oiMwPyAUmF/lPTUMY3P/4PQPXbeNcgF9J/Qdln283ZpzvQ/DN1z1f8eoDkMaKFG
+         ApRzC39WHhfszxjyg26Gia7hi5dZ9QF78HdoFNFNOy67QC80/ZfrQMzkI4VYfxy/Kphs
+         dAsN/jSBMlvpSF8gyHycBGqRgON6xcjHcVyWhqn43FtRIP5PBih3zkk8rp9IOI7UDsYP
+         oU/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729178498; x=1729783298;
-        h=content-transfer-encoding:subject:to:from:content-language:reply-to
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=gAkyf6AT8hzwJAdhVn3oOJDpsRWBdNXYYz5tY+gk00U=;
-        b=aumwFLhxZ9FoV+pEdwxKoorJlJklTo9W+UEGbr1WlOoRs7xUd7ICdz0uCIFQQrAyVR
-         1jQdrrH1/RLY5e9l5+XpFB18craYsdCkb7xHd+2+uaN4ZHoSciPkwfuLA9Hn3YquamxR
-         KCaxcIy3cuu38vL6GWy6K91qm//1KVfdYEH/fKURJAhVA8OP+tJ2xpOnEFweCo0PKyL5
-         bM6U0rzFtLSr3lC2zZ7xobohT7eKUVypJ+Fc0GN3PeyQl80cE+1J+ieWlnQY9ile1C1i
-         cFYdilKvIeAG2TEzcvkqM4hNM2hExnAeVc/LODtyAVkkAz8yu5JRfJRxhJXRVQznv02N
-         uNuQ==
-X-Gm-Message-State: AOJu0YywISmT5VPj/X8FRS48Ebxfk4kCgL0Jm5RIMuN2i0eRSkW8ki8F
-	jEfMjmyZ6ShgufLGcUuAOtBkyrLAmcdrGBFlgJDnQ6k0sLqUIHV7ErU98Q==
-X-Google-Smtp-Source: AGHT+IHpzoEK/UfISeO84ANRaxy1iWrTEWY4s/T6PTt9Rvem1ttg1NSDdxYg5wfz4Vedx9m1rHr3tw==
-X-Received: by 2002:a05:600c:5248:b0:42c:b5f1:44ff with SMTP id 5b1f17b1804b1-4311df56fc6mr218103715e9.24.1729178498029;
-        Thu, 17 Oct 2024 08:21:38 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43158c516b0sm28574645e9.46.2024.10.17.08.21.36
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Oct 2024 08:21:37 -0700 (PDT)
-Message-ID: <1b2eae40-0606-4dc9-9272-c145b5b8693a@gmail.com>
-Date: Thu, 17 Oct 2024 16:21:37 +0100
+        d=1e100.net; s=20230601; t=1729178600; x=1729783400;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3TLgJzMrQAdkVC3zEjS3yz3AHaCJFihSJ0e8wHHqNjA=;
+        b=cBLli4J5TBEHNIEAPXu+G3fk03n5FDwZ2KlE3JTKkzk1JT4+0x6fQNHPw8oh1kKtr8
+         5k93dWRXyD+n29YubdBQpHZ7GB30Jj+yXkVuc96ec+ixLIrXDE2ekxK4BoQJ2bhs/kXr
+         L3jhDLP38AtYNaCBoc1tSdWPMGGwx8RbgighF36hVxIIlZQ73p2UyRPKDPs+nBSqZCyl
+         YERu0IvJZLWBBPkYyIpMzgsHiD4irJsTJB5cwPnxZxiuSVS1Pbn2qJS5I5MMKj1Ycgmu
+         ZpzJpZweHnjTUPjH5zjWDvI5BkapykmRu/P8byBTd3Mgf9164xhM4uNFFxZWCJGYZcYA
+         mciw==
+X-Forwarded-Encrypted: i=1; AJvYcCXoCOkHlhSUM/g5CqSSDtp+O5MaHwqIoAaelnpVC/kcHH+5TThwn6/cjCyjMaXurQhup2M=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+ClQIBkj1iDCNtdXlNk4g4UzMnAAP51YRtBgv5Lrm9D/7Z6sB
+	sIWLmCZvUGbdS1oA1xxhifM4fvZF3iIgIGCRhlJ0km/Lf3KGs2g8CPKR5e/RRBvUf84FE5n1OwP
+	R
+X-Google-Smtp-Source: AGHT+IF/VxdTdaSwnR56nALFpy2SvOw6YxQRla+pSJ0/+xCXWbNG38UegXRv7uikIXM+I2jhLUVukw==
+X-Received: by 2002:a05:6902:a03:b0:e29:3e9b:51db with SMTP id 3f1490d57ef6-e2b9cfb1e96mr2971110276.20.1729178599741;
+        Thu, 17 Oct 2024 08:23:19 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e296d050905sm969917276.45.2024.10.17.08.23.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2024 08:23:18 -0700 (PDT)
+Date: Thu, 17 Oct 2024 11:23:15 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: Piotr Szlazak via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	David Turner <dturner@twosigma.com>,
+	Piotr Szlazak <piotr.szlazak@gmail.com>
+Subject: Re: [PATCH] upload-pack: fix how ALLOW_ANY_SHA1 flag is disabled
+Message-ID: <ZxEr4+sb4DfmtrKv@nand.local>
+References: <pull.1814.git.git.1729112794671.gitgitgadget@gmail.com>
+ <ZxAttC1dQUllR76m@nand.local>
+ <20241017023735.GB1858436@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-Subject: [OUTREACHY] Mentor Absence
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241017023735.GB1858436@coredump.intra.peff.net>
 
-Just to let everyone knew I'm going to be offline from today until the 
-29th Oct. If you have any questions and queries in that time I'm sure 
-someone else on the mailing list will be happy to help you.
+On Wed, Oct 16, 2024 at 10:37:35PM -0400, Jeff King wrote:
+> > I think it would probably make more sense to write this as:
+> >
+> >     data->allow_uor &= ~(ALLOW_ANY_SHA1 ^ (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
+>
+> I think we have to treat them as a complete unit, as we don't know which
+> bits were set by independent config lines and which were OR-ed in by
+> ALLOW_ANY.
+>
+> So this case:
+>
+> > Stepping back a moment, I suppose this is handling the case where a user
+> > writes:
+> >
+> >     [uploadpack]
+> >         allowTipSHA1InWant = true
+> >         allowReachableSHA1InWant = true
+> >         allowAnySHA1InWant = false
+> >
+> > and is surprised when the final "uploadPack.allowAnySHA1InWant" unsets
+> > the previous two options.
 
-Best Wishes
+Yeah, I think that you and I are in agreement here.
 
-Phillip
+> is the one that Piotr is thinking about. But what about:
+>
+>   [uploadpack]
+>   allowAnySHA1InWant = true
+>   allowAnySHA1InWant = false
+>
+> Right now that pair is a noop, which is what I'd expect. But after the
+> proposed patch, it quietly enables ALLOW_TIP_SHA1 and
+> ALLOW_REACHABLE_SHA1.
+
+That's an even clearer example of a new gotcha that would occur with
+this proposed patch, IMHO. I don't think in general that successive
+
+    $ git config core.foo true
+    $ git config core.foo false
+
+should have any user-visible effect, as the latter should nullify the
+former.
+
+> So I think the code has to stay the same, but we perhaps should document
+> that "allow any" has the user-visible side effect of enabling/disabling
+> the other two.
+
+That would be a useful direction, I think. Double checking
+git-config(1), there is in deed no mention of allowAnySHA1InWant
+implying the other two options, which seems like a gap that would be
+good to address.
+
+Piotr: what do you think?
+
+Thanks,
+Taylor
