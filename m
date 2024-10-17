@@ -1,98 +1,155 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18220101F2
-	for <git@vger.kernel.org>; Thu, 17 Oct 2024 02:48:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7974C13AD29
+	for <git@vger.kernel.org>; Thu, 17 Oct 2024 03:51:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729133311; cv=none; b=H5axs1Lj9kBYnoSCK5Cwoiknh6pWd0LMp909BbocKAKGMwLZU0fCLVmqbq0p3f0LBmqvNYKEzM5W4rybxDj8nn7bHfx0IAL5H60aQGIvTUWSOedcFicqHefThxIsetgRodyxawjyeomS0v8q0FodpbUHT1Jj/q/K56fhnltFSZ0=
+	t=1729137073; cv=none; b=YaybsM23ep+t1Q/m6z6f65bLJrR5/jymgUycT0qYNgDMFT9pCNVXHl7/rYzIskaWUKeQT13Q/gKe1vAbaEr/vwV3tqMeB8OSBRE2eRDykIRLKPRjRpbs1bkrjrlQYlfkWxS+Rxy8NTksIn5QwCNF2VQSnogG1TmfoCzx3o0EpmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729133311; c=relaxed/simple;
-	bh=TAjKMPvwgguj+3kPML+oF3fFTZy7qZl2iJZvRtxlDUU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qnzpg7rgDezSUQ/ObgsJbcQINjtp/P8Kr6VaP4w45MuwwHk7wsmP51LyITxgQyZP0NVCERTUzhCR65QP2JWMkawToF9Qe7xLZ+OG4VtXIJVVe74nZtOQt1ULE0doAJTQxwJoZyD1Bmwbsk6h/hEIeEuW/qdGEOs8CFNhgw+cncc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NVkaDvUz; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1729137073; c=relaxed/simple;
+	bh=Pm33O2Q2PO6/o8SIVpRaIJkXfOnRLViN8n1K8aBWcMM=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=ivwyJcEZyj+CGhusATWN+P5ihhwpHrzhjF4tUSZg/9PQ7og04dBA0EflogemdykNSekVTT7rCarT5AJ7EvJmTv3jaf4WEve7itcqtOv+cHaXuX59Vo3iUPrbJbYN9g4Hmcf09DTacjLBEpU/HWo6HdU2XEGjP5v/ZUDy622uthY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lHVAMJID; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NVkaDvUz"
-Received: (qmail 22971 invoked by uid 109); 17 Oct 2024 02:48:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=TAjKMPvwgguj+3kPML+oF3fFTZy7qZl2iJZvRtxlDUU=; b=NVkaDvUzxXk6MM7K7HZ6SSlyG48VgqNK1LmjssHyzfioC+NaxoI+blExwQ5daIlf9w9SYYNma7R57oqsXmcosTmoRX8ShxGc1oxihCB6tv0DSyCvGgTmdDT9lWBrv0VgNdjEDa8r1T4v/A/2oEnZsDwU3P9VRKsSxmw8D73fXkhM54hFnPPOyGmtMXShse5UESHiHXl1iv4zIKFhek4GejqS4WjlxXfs1HQQeEcQSGPCusKxgBazV55EysAvQ+4VCFo5HURRS2poBkdelTl9f7RIQpBAsKD58AK0142B/TmwHSgEHduSnPFEM5i3UZ+KRApDNGA6q4OyI6U+3YxxNg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 17 Oct 2024 02:48:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27476 invoked by uid 111); 17 Oct 2024 02:48:28 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 16 Oct 2024 22:48:28 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 16 Oct 2024 22:48:28 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] ref-filter: format iteratively with lexicographic
- refname sorting
-Message-ID: <20241017024828.GC1858436@coredump.intra.peff.net>
-References: <a873ed828ccae426214cc8f87610df97ff9a269e.1729055871.git.ps@pks.im>
- <ZxA6I67FfPe4fV2F@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lHVAMJID"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2e0d9b70455so384556a91.3
+        for <git@vger.kernel.org>; Wed, 16 Oct 2024 20:51:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729137070; x=1729741870; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wUyUAqblHJRgb4Ds5xzmYy6uButrEvWsOs4DcDPItRM=;
+        b=lHVAMJIDOIo+bGJSOx5cZMBW8w8C9PvSuv7lOqoRyKkFyE921W9hJKuv+89VisUW+4
+         DF+2oOW7ndwTTcEb0/OFYWgkq5Ut+lDccBa/xT02pk8gjAaB3Lps6IS6Q9FKCfeUrQg0
+         zCwBPcn4FaNHAikkKAcm2H6ybwY4nl6CZV8ytQYjTUQJ/eTu986M5bgIrp873Qa/8hG2
+         iETmRUQvXXN282ip6FYZTLgOmJf8GWbbr3z1o475FbIF9dMn48soH6ug+btc2pHPKlX7
+         k274B5X0v6zdTSthTw3BBxOUaHS5gvCUWwWxievHc3yNSluTVwFDvRMtii/d1XuvI9fU
+         vtXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729137070; x=1729741870;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wUyUAqblHJRgb4Ds5xzmYy6uButrEvWsOs4DcDPItRM=;
+        b=CAvXqMEQe2UHZw6O66yudExkJs7OlIK+bn6Yr7k780q2mmlrMYDuAYwU6x/7iqYjU2
+         BEaFAEpJCWBm/rq8oBFkt9xhx95fXwGW7esc3avcYt5eIrCqhn7qEuIv29KvbhonjPpD
+         GaQjr7wiJlN75hmEB0w1z19F9AJd5OIizERIuLZxE4Sjl688friS+4CozvGMQLQTIm7M
+         JP/eJgcJcVW064t9gkRbxcAckWnTIAkXOY/a7bzKJNhIeOuuCMM7Me9JOcSGp0HgEk+5
+         6mxDx5xAm9qVLo+XvpMxEUjvgBKFFmZfDdLsP/ZfIjRE7oyN91TIim4fnNYbUiiDUh9W
+         1JPA==
+X-Gm-Message-State: AOJu0YyrJ0s1RONgplQJxWmsOE/83bU9KtppCPjekak0l6whkCDtjSnK
+	2vf8H2/UpDjYhjyxB5hjZnW5m2OMwAFIdnxpaVu0MAfMX99e8Pkp
+X-Google-Smtp-Source: AGHT+IHp5x4Rfhaf1xOL/Q8GXdJsnluJCvhRcx0uhK95YVEy6Zk2u/yOCY+c5Ql/B1sdtX+lQA0ijg==
+X-Received: by 2002:a17:90a:bf09:b0:2e0:d1fa:fdd7 with SMTP id 98e67ed59e1d1-2e2f0d8dd21mr23573108a91.27.1729137069664;
+        Wed, 16 Oct 2024 20:51:09 -0700 (PDT)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e3e0924a40sm692233a91.41.2024.10.16.20.51.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Oct 2024 20:51:08 -0700 (PDT)
+Received: by archie.me (Postfix, from userid 1000)
+	id B6ED241A3B24; Thu, 17 Oct 2024 10:51:05 +0700 (WIB)
+Date: Thu, 17 Oct 2024 10:51:05 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Subject: clar unit testing framework FTBFS on uclibc systems (wchar_t
+ unsupported)
+Message-ID: <ZxCJqe4-rsRo1yHg@archie.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="N2V9m5+EoySDaDxH"
+Content-Disposition: inline
+
+
+--N2V9m5+EoySDaDxH
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZxA6I67FfPe4fV2F@nand.local>
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 16, 2024 at 06:11:47PM -0400, Taylor Blau wrote:
+Hi,
 
-> On Wed, Oct 16, 2024 at 08:00:30AM +0200, Patrick Steinhardt wrote:
-> > But there is one exception here where we _can_ get away with sorting
-> > refs while streaming: ref backends sort references returned by their
-> > iterators in lexicographic order. So if the following conditions are all
-> > true we can do iterative streaming:
-> >
-> >   - The caller uses at most a single name pattern. Otherwise we'd have
-> >     to sort results from multiple invocations of the iterator.
-> >
-> >   - There must be at most a single sorting specification, as otherwise
-> >     we're not using plain lexicographic ordering.
-> >
-> >   - The sorting specification must use the "refname".
-> >
-> >   - The sorting specification must not be using any flags, like
-> >     case-insensitive sorting.
-> 
-> Perhaps a niche case, but what about ancient packed-refs files that were
-> written before the 'sorted' capability was introduced?
+Since clar unit testing framework was imported by commit 9b7caa2809cb (t:
+import the clar unit testing framework, 2024-09-04), Git FTBFS on uclibc
+systems built by Buildroot:
 
-We should be OK there. In that case we actually read in and sort the
-packed-refs entries ourselves. We have to, since we do an in-order merge
-with the loose refs while iterating.
+```
+    CC t/unit-tests/unit-test.o
+t/unit-tests/clar/clar.c: In function 'clar__assert_equal':
+t/unit-tests/clar/clar.c:767:23: error: unknown type name 'wchar_t'
+  767 |                 const wchar_t *wcs1 =3D va_arg(args, const wchar_t =
+*);
+      |                       ^~~~~~~
+In file included from t/unit-tests/clar/clar.c:13:
+t/unit-tests/clar/clar.c:767:58: error: unknown type name 'wchar_t'
+  767 |                 const wchar_t *wcs1 =3D va_arg(args, const wchar_t =
+*);
+      |                                                          ^~~~~~~
+t/unit-tests/clar/clar.c:768:23: error: unknown type name 'wchar_t'
+  768 |                 const wchar_t *wcs2 =3D va_arg(args, const wchar_t =
+*);
+      |                       ^~~~~~~
+t/unit-tests/clar/clar.c:768:58: error: unknown type name 'wchar_t'
+  768 |                 const wchar_t *wcs2 =3D va_arg(args, const wchar_t =
+*);
+      |                                                          ^~~~~~~
+t/unit-tests/clar/clar.c:769:65: warning: implicit declaration of function =
+'wcscmp' [-Wimplicit-function-declaration]
+  769 |                 is_equal =3D (!wcs1 || !wcs2) ? (wcs1 =3D=3D wcs2) =
+: !wcscmp(wcs1, wcs2);
+      |                                                                 ^~~=
+~~~
+t/unit-tests/clar/clar.c:784:23: error: unknown type name 'wchar_t'
+  784 |                 const wchar_t *wcs1 =3D va_arg(args, const wchar_t =
+*);
+      |                       ^~~~~~~
+t/unit-tests/clar/clar.c:784:58: error: unknown type name 'wchar_t'
+  784 |                 const wchar_t *wcs1 =3D va_arg(args, const wchar_t =
+*);
+      |                                                          ^~~~~~~
+t/unit-tests/clar/clar.c:785:23: error: unknown type name 'wchar_t'
+  785 |                 const wchar_t *wcs2 =3D va_arg(args, const wchar_t =
+*);
+      |                       ^~~~~~~
+t/unit-tests/clar/clar.c:785:58: error: unknown type name 'wchar_t'
+  785 |                 const wchar_t *wcs2 =3D va_arg(args, const wchar_t =
+*);
+      |                                                          ^~~~~~~
+t/unit-tests/clar/clar.c:787:65: warning: implicit declaration of function =
+'wcsncmp' [-Wimplicit-function-declaration]
+  787 |                 is_equal =3D (!wcs1 || !wcs2) ? (wcs1 =3D=3D wcs2) =
+: !wcsncmp(wcs1, wcs2, len);
+      |                                                                 ^~~=
+~~~~
+make[1]: *** [Makefile:2795: t/unit-tests/clar/clar.o] Error 1
+```
 
-I do think this optimization is worth doing, and not a problem with our
-current backends. The biggest worries would be:
+See [1] for the full build log.
 
-  1. Some new ref backend that doesn't return sorted results. I find
-     this unlikely, and anyway it's easily caught by having coverage in
-     the test suite (which I assume we already have, but I didn't look).
+Thanks.
 
-  2. Some new flag combination that requires disabling the optimization,
-     and which must be dealt with in the code. This seems unlikely to me
-     but not impossible. I think enabling the optimization is worth it,
-     though.
+[1]: https://autobuild.buildroot.org/results/8cc9795dc18277926dd386eb1cb9f8=
+c9b65b0042/build-end.log
 
-> >   - The caller uses at most a single name pattern. Otherwise we'd have
-> >     to sort results from multiple invocations of the iterator.
+--=20
+An old man doll... just what I always wanted! - Clara
 
-I think this part is erring on the cautious side, as we can often
-collapse these into a single iteration due to the ref-prefix work. It
-may be OK to keep using the slower code here if multiple patterns aren't
-commonly used, but I'd suspect that:
+--N2V9m5+EoySDaDxH
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  git for-each-ref --sort=refname refs/heads refs/tags
+-----BEGIN PGP SIGNATURE-----
 
-could benefit.
+iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZxCJogAKCRB7tWyQc2rT
+CNeJAP9vZ/zYLaQQJdKR2o+qz0ZDVxcCMaz3Z0/VHgOWJ8/FvQD9EMkC3pEsYbdi
+eTmcXte4lBlosPRLLIn+I4Gft9Cm8gQ=
+=ReFq
+-----END PGP SIGNATURE-----
 
--Peff
+--N2V9m5+EoySDaDxH--
