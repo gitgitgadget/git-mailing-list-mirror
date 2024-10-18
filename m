@@ -1,130 +1,162 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013F91EE03D
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 13:53:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF8E1D4161
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729259588; cv=none; b=CfjAtZXIZk8oO+C9zmCYWmzS9nrx6Cp2zqeAwtnn3flrMX2hL4jHss5IzxNYPapiPLMBuNKFZNftl1tfaufeOTSJnLhK/uJ8iAmx1wjM/7mi+dEKH5b/YjVlN5iFtkZubWq35YoLUYyz7Rr+CAtOA1ugL5URXyUNZPB1dHKHJek=
+	t=1729261273; cv=none; b=J72IHYXBUpHWqkMXF9/pSpTS6xhOc29/nj+tRzo08h9Lpw1Fk4YS5nbJCBujp54lmJRFaYuI9sXnIZJGFnh0CAqEudi1m4WsVhBEIxAuet2vW4J24BoShS/nHl7ywQPtmEWiTJmuZirFuh1Mfkib4dqY7FHH1K/ungge91xDGM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729259588; c=relaxed/simple;
-	bh=sKWsnbOYV+1FPRwrCVpviSK03dCOXSFdSaWRp0HT+rI=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=pSlZG+9VHiWIDnbWITWIbrP8jNTajojLREfFoJr2Y1GT69ALw8BIc0jj8O9yUipDFiZL9Ng/pJa2iOLHw7rM0yUAFi4QU8k1hrxl6a+icSVrjaGDMxfTy1xaOGutOvZ6eyp+SyI/fmG++HXUph6dCsVnUe+WDXGAjGN8FyOvFoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Iw54PTWG; arc=none smtp.client-ip=209.85.218.54
+	s=arc-20240116; t=1729261273; c=relaxed/simple;
+	bh=lTtPPd7FCUYomd0PADIHFkmP5cLpLt0qkJWtze/nv30=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UZuZiMk4+zVL1VP7vbtfatSLlKP85DVnGLTBCdbRTJgpMEYfw5xJCI/C65EUYnhS8nwZAJHvkoxYIbU9tzkmLG8fhbbqzxcaNTDezI0aqLOr3sn0V0jrDvQ5jBAh7U/EswqjGoCPI2IuTxXlBdf4cMWEaCKFmBfphJRnZdFvedU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DwvnJEVE; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iw54PTWG"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a9a2209bd7fso261069966b.2
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 06:53:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DwvnJEVE"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-20c7edf2872so25552375ad.1
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 07:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729259584; x=1729864384; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NhwAPeMCPwsKMWp/iXaVKrWIcarxNsNe6c4GuExN1yE=;
-        b=Iw54PTWGSTjty9wCIpwg51lZUlYkjvzpzfcvm/6ULiFO6Aj/b1jKh3ztTFik7R2jns
-         WmfhRAhl4zx9Hh395TEJBCor9WPa0uY/OG9L5/2YsXQl72Dgi2MsF7OMRK2j1PqO09BB
-         4BEDFWysypcCuk1DUFrl+W3ZNOdwPWnojIokJNV3wvZUploMKu+V7Y47ad4SvVQybmRq
-         Abj3Ulz/nEl/KpcFi+kaAEKH6h3fRbmaCY7QbPViHCOWk2rYGSaUy+TBwOHs3aEZlOeB
-         7j0sf9qCU6ZUxrI278Js3SXBh3faQV/b6XSFtuY42DAXCRjuRfSbkWDuJIgHJYIaqffA
-         dZRA==
+        d=gmail.com; s=20230601; t=1729261271; x=1729866071; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QbQSr7d1gLzWgFk5wYrlP5ZQ7VlyH796JOR6NQ00BTE=;
+        b=DwvnJEVERg7c8/mGSQIHw5U/v73YPvUW/ZV6c6+C12DqXHo6/93WoDAoQ0gv7xqUA4
+         9VCxCTrTnHeha/ISljW4xCjo7GPKtidtONBImb7laOIY8KFBvOZeXyfUj4hDSjwisXZo
+         EGZkKDkg3a0kXibcZ+a5EdNhBju5lCYwmvC74MJ33sOAUiz3iyTckhSqQmlNFfHN3H+J
+         SQd/QMadQSaGbpKHORWoSzJXyK/7TkXnuL4kqefocGtbm4dLZd4x0K9guQLaf2KuEvol
+         0wbW9wMqkEncYZw9tBTyrRKx1H88kAHiJdLXoaLL/9JjSHdbNOwD1VP2+aWC+BoVYosD
+         3cfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729259584; x=1729864384;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NhwAPeMCPwsKMWp/iXaVKrWIcarxNsNe6c4GuExN1yE=;
-        b=Ru9YMskA99DlsNTYQnByngCq44GdmNvu/lL216chUYyG8rkImdrdV2UlPb9bs/x/WF
-         ctQc7t7vvM+OvLVTKduUNoiUPR5oudscOX/HbHb2YSI0dT/+rVIRcgP1x/Ybx+FhDrl9
-         jcTAFkNXJXXtiDbQHNvhlQhQSvSLozDotxF6lBBJOKXrmyx4BEF6O+8nvlKckmR1O/Sa
-         SdXDhjzmFaL+A7Gdd7N4Qwtzw2X+ur8jVovZe0Q4birniU6osnzqL/8aiWnrutNiJxj+
-         +Y2mQV2JajHHLyW0ESCeRHQlHzp3hP/91Htr62+a6t0nZf8aEok6Gw5Zvo016gadrepU
-         51Ww==
-X-Gm-Message-State: AOJu0YzmBoke6fEa1uk2KzG5a3vQBuIXzLz/mLCO/NpRQMKHSxOa1Fkj
-	yKEUCIKbouD47yDy1DoopXCYbsA2U05Dz6VuUQW3GerSiJ4SWs5OgoXYpg==
-X-Google-Smtp-Source: AGHT+IH9T3s7BeQBStJU02mC7ZtckYeU07UtUIO/foGwhX6SsR+CTtUUIoEIbwNE0HxciK38QPxOHg==
-X-Received: by 2002:a17:907:7d9e:b0:a99:f8e2:edec with SMTP id a640c23a62f3a-a9a69a7dc95mr234816066b.21.1729259583500;
-        Fri, 18 Oct 2024 06:53:03 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a68bf621csm99034466b.165.2024.10.18.06.53.03
+        d=1e100.net; s=20230601; t=1729261271; x=1729866071;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QbQSr7d1gLzWgFk5wYrlP5ZQ7VlyH796JOR6NQ00BTE=;
+        b=pV0HvZ6b/7idLBykhgYcb2eyDxuL0C2BXh4WLlUbaStw5EgvsZJFXdPrQetcHLndWJ
+         f7Q7KAFbSVGQqUz/isr2iMjn2hD+njmGAdVU6IPkcJmaSWW2vz+ErneLutOJXhgS6NCA
+         GRT08uMaHAPoHpaDe87uGCC2KcB9g049bfvPBUEGudjWIP7UxfXh6CwKepwVq/puJhBc
+         vm2Ssu1iwsW1sDyxg35zsC0uau8S3l20fVVvAkdeCeZWD3waGwzqe6VoJJsxNqGSsheW
+         ehRiN2DHcvhB83UBcPzb8gDv7T1ipb5ECcXzwp9YLMvVpsGeDHfHKIE9ifbxrMUHTYpo
+         /B6A==
+X-Gm-Message-State: AOJu0YwrhyuIwEFlsUTAZXiQtMq5lugsSGzfR+XhCi400cgucAV7hkaR
+	VgKZCcC81qJuAi//YMzIPNsfOaM2kTdxhOpV4drxsrLADv/uGNay
+X-Google-Smtp-Source: AGHT+IELSfEnu2ERr5wb/roEYtboZRBK6P/1VOHF63wDpZOy9w9yXEazSnxBDWIGZ98pg9diVCgAGA==
+X-Received: by 2002:a17:902:daca:b0:205:8763:6c2d with SMTP id d9443c01a7336-20e5c10c9a5mr39178205ad.9.1729261271177;
+        Fri, 18 Oct 2024 07:21:11 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20e5a925fd0sm12943125ad.300.2024.10.18.07.21.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 06:53:03 -0700 (PDT)
-Message-Id: <c09c7b3df0d7eac3069cee45cddc49a76da2503e.1729259580.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
-	<pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
-From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 18 Oct 2024 13:53:00 +0000
-Subject: [PATCH v2 3/3] imap: replace atoi() with strtol_i() for UIDVALIDITY
- and UIDNEXT parsing
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Fri, 18 Oct 2024 07:21:10 -0700 (PDT)
+Date: Fri, 18 Oct 2024 22:21:11 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] object-name: don't allow @ as a branch name
+Message-ID: <ZxJu13wpSiJ_kDdB@ArchLinux>
+References: <cover.1728331771.git.code@khaugsbakk.name>
+ <ZwUxdz_HobRGF9yq@ArchLinux>
+ <3af78a3c-afb9-4ce7-aea0-a5bbddd4f34a@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3af78a3c-afb9-4ce7-aea0-a5bbddd4f34a@app.fastmail.com>
 
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+On Tue, Oct 08, 2024 at 04:19:10PM +0200, Kristoffer Haugsbakk wrote:
+> On Tue, Oct 8, 2024, at 15:19, shejialuo wrote:
+> > On Mon, Oct 07, 2024 at 10:15:16PM +0200, Kristoffer Haugsbakk wrote:
+> >
+> > [snip]
+> >
+> >>   §2 Disallow `HEAD` as a branch name
+> >> 
+> >> This was done later in 2017:
+> >> 
+> >> https://lore.kernel.org/git/20171114114259.8937-1-kaartic.sivaraam@gmail.com/
+> >> 
+> >>   §2 `refs/heads/@` is apparently disallowed by git-refs(1)
+> >> 
+> >> See `t/t1508-at-combinations.sh`:
+> >> 
+> >> ```
+> >> error: refs/heads/@: badRefName: invalid refname format
+> >> ```
+> >> 
+> >
+> > It's true that using "git refs verify" will report "refs/heads/@" is a
+> > bad refname.
+> >
+> > From the man page of the "git-check-ref-format(1)", it is clear that
+> >
+> >     9. They cannot be the single character @.
+> >
+> > Because I am interesting in this patch which is highly relevant with my
+> > recent work, so I try somethings here and find some interesting results
+> > as below shows.
+> >
+> >     $ git check-ref-format refs/heads/@
+> >     $ echo $? # will be 0
+> >     # git check-ref-format --allow-onelevel @
+> >     # echo $? # will be 1
+> >
+> > The reason why "git refs verify" will report this error is that in the
+> > code implementation, I have to iterate every file in the filesystem. So
+> > it's convenient for me to do the following:
+> >
+> >     if (check_refname_format(iter->basename, REFNAME_ALLOW_ONELEVEL)) {
+> >         ret = fsck_report(...);
+> >     }
+> >
+> > Because I specify "REFNAME_ALLOW_ONELEVEL" here, so it will follow the
+> > "git check-ref-format --allow-onelevel" command thus reporting an error
+> > to the user.
+> >
+> > I am curious why "git check-ref-format refs/heads/@" will succeed, so I
+> > try to use "git symbolic-ref" and "git update-ref" to verify to test the
+> > behavior.
+> >
+> >     $ git symbolic-ref refs/heads/@ refs/heads/master
+> >     error: cannot lock ref 'refs/heads/@': unable to resolve reference 
+> > 'refs/heads/@': reference broken
+> >     $ git update-ref refs/heads/@ refs/heads/master
+> >     fatal: update_ref failed for ref 'refs/heads/@': cannot lock ref 
+> > 'refs/heads/@': unable to resolve reference 'refs/heads/@': reference 
+> > broken
+> >
+> > So, we are not consistent here. I guess the reason why "git
+> > check-ref-format refs/heads/@" will succeed is that we allow user create
+> > this kind of branch.
+> >
+> > If we decide to not allow user to create such refs. We should also
+> > change the behavior of the "check_refname_format" function. (I am not
+> > familiar with the internal implementation, this is my guess)
+> >
+> > Thanks,
+> > Jialuo
+> 
+> Thanks for the careful analysis.
 
-Replaced unsafe uses of atoi() with strtol_i() to improve error handling
-when parsing UIDVALIDITY, UIDNEXT, and APPENDUID in IMAP commands.
-Invalid values, such as those with letters,
-now trigger error messages and prevent malformed status responses.
+Please ignore the above analysis which is not true. (Today I am writing
+code for my work). Currently, we truly allow "refs/heads/@" as the refname.
+And also for "git check-ref-format", "git update-ref" and "git symbolic-ref"
 
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- imap-send.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+When I did the experiments above, I forgot to clear the state which
+makes the "git update-ref" and "git symbolic-ref" fail. So, there are
+some faults in "git refs verify". I will fix in my current work.
 
-diff --git a/imap-send.c b/imap-send.c
-index ec68a066877..8214df128e5 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -668,12 +668,12 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
- 		return RESP_BAD;
- 	}
- 	if (!strcmp("UIDVALIDITY", arg)) {
--		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg))) {
-+		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &ctx->uidvalidity) || !ctx->uidvalidity) {
- 			fprintf(stderr, "IMAP error: malformed UIDVALIDITY status\n");
- 			return RESP_BAD;
- 		}
- 	} else if (!strcmp("UIDNEXT", arg)) {
--		if (!(arg = next_arg(&s)) || !(imap->uidnext = atoi(arg))) {
-+		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &imap->uidnext) || !imap->uidnext) {
- 			fprintf(stderr, "IMAP error: malformed NEXTUID status\n");
- 			return RESP_BAD;
- 		}
-@@ -686,8 +686,8 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
- 		for (; isspace((unsigned char)*p); p++);
- 		fprintf(stderr, "*** IMAP ALERT *** %s\n", p);
- 	} else if (cb && cb->ctx && !strcmp("APPENDUID", arg)) {
--		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg)) ||
--		    !(arg = next_arg(&s)) || !(*(int *)cb->ctx = atoi(arg))) {
-+		if (!(arg = next_arg(&s)) || (strtol_i(arg, 10, &ctx->uidvalidity) || !ctx->uidvalidity) ||
-+			!(arg = next_arg(&s)) || (strtol_i(arg, 10, (int *)cb->ctx) || !cb->ctx)) {
- 			fprintf(stderr, "IMAP error: malformed APPENDUID status\n");
- 			return RESP_BAD;
- 		}
-@@ -773,7 +773,10 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
- 			if (!tcmd)
- 				return DRV_OK;
- 		} else {
--			tag = atoi(arg);
-+			if (strtol_i(arg, 10, &tag)) {
-+				fprintf(stderr, "IMAP error: malformed tag %s\n", arg);
-+				return RESP_BAD;
-+			}
- 			for (pcmdp = &imap->in_progress; (cmdp = *pcmdp); pcmdp = &cmdp->next)
- 				if (cmdp->tag == tag)
- 					goto gottag;
--- 
-gitgitgadget
+So, if we decide to not allow "refs/heads/@", we should also update "git
+check-ref-format", "git update-ref" and "git symbolic-ref" to align with
+this behavior.
+
+Thanks,
+Jialuo
