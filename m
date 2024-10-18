@@ -1,138 +1,403 @@
-Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CEFD530
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 12:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AF5262A3
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 12:23:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729253074; cv=none; b=RoFuvw2CTKA2+CxuKIXUpKzGrUcUYhcJn5ZkcAD6sMXhmMmo+xwYK1v3rKkjWuJm0lVjfoJUg3Ixkc9aP1Pr2VTUMyJTTsw3+2NgVgpHmJnNR9nSgb98YSZ83qqMHWaR5cU6z2E28DvKg0BmczXbeeSIW9Y6bcBsQkq8dqGkca4=
+	t=1729254237; cv=none; b=X1eNlUrlnVY3E88hWhtrMiKrfFYllTObTHpvmvsBgcD5BMocP65VtuH+FLRiU0Mm1rV3WefxLV7T4OsFFvg52eGUaj4hpYFf2Lfn5+KIBbVYkuVv1ZPGKi4ba9GCJX45M5eLsQIYOl9HTqO43TXaSh04qRJtdqV2+Cvrrf1Oowo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729253074; c=relaxed/simple;
-	bh=tejBQ6ZwRJnsKrz/lGgLJjRPhS1mERStDvobybOcepc=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Yuh2tvWQ40v9YHHZCqjZf7wvY8KfxhKBcjceZqzMi/H9i3aPpwQJnxjeVqPvDqGsPk1bSyNLB3bHdEj39yJVqZxTdseNIM2/sTlvH76SUZ3jZXBtKFgHkDyA2VHmLZYovizJnne4unneShRph93RN2mCMKzEiWlrxAgikBJJISs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=aq8PkQsl; arc=none smtp.client-ip=95.215.58.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1729254237; c=relaxed/simple;
+	bh=Ac8bh7GI0myl0ntd7Kc4Sf417sFK1K/fwqXS12uTm5k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mR1AmmU2zypWU1TpJ9dih5W/gtz7qHAV8ijD/rdyUxzBzx2IT+7NnRbXyQoEvABuskFehuo40hUwNe3xOBH0RPA0Ycp6HUqYBZlozme2AfteQJlXCENyPhOJpSe3tOAGa1MNhyV0n6m70QNjNWfuyAoXdelj43LqTVTVxwYdH7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sAQ3ZCZC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XrWCgzoP; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="aq8PkQsl"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1729253070;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lWwy+bF/egUaQKD6JmL4j/1hJ8QzAMsdGOJc1Ei0NaE=;
-	b=aq8PkQsl8yK2Ba6CFX/REKbOXNkP9gtYnxl6HzM6v5NyeHp0S+7/p5BwOxoZuX+xWZ927J
-	ftHH1JaFVCMBlf05uR7gfSZ4pNyKcbYMR20AhkHaTrZI/GdlaYJqUCBnAki42kbRFcxxV0
-	UqcNsPao7xr+TPly/uvRLPg1tckcOjQ=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 21/21] list-objects-filter-options: work around reported
- leak on error
-In-Reply-To: <6a2baf0d3e538e5f450c45c22248fbc3fefd77af.1728624670.git.ps@pks.im>
-References: <cover.1728624670.git.ps@pks.im>
- <6a2baf0d3e538e5f450c45c22248fbc3fefd77af.1728624670.git.ps@pks.im>
-Date: Fri, 18 Oct 2024 14:04:18 +0200
-Message-ID: <875xppd3ct.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sAQ3ZCZC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XrWCgzoP"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 79EB525400BE;
+	Fri, 18 Oct 2024 08:23:53 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 18 Oct 2024 08:23:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1729254233; x=1729340633; bh=aJi4wPYBjV
+	oHNtfJSdX+7aHL0ES38qALzFmQ5wU6d3s=; b=sAQ3ZCZCFTyWpaPQZEVGxwsEk3
+	ec/nZi3+Rs8hRrYi4fZzMWvJbp18U65KCgC5PMtYKaft3+UHcpgD/C5NwTzARlsG
+	p4J0Hm2EFbezDh3oQgx6NtcHw/ynBHMFwHmaBjPp+j5B769ZDbZvPBfQxbqFp+2c
+	woq2Mtc0frB0JvJaoBt4KVMF3Apw2Wey15uEsPB41QrhaF8AAOmTkc+iCZ4FGck5
+	d341RLPeOBLOnka0WIwyzZJUubqwWEgcR/1TVjSG5a5f+yFxRrVfpePPw82hcmqd
+	PwEu4IPS/lVNGxDS5ND5vptVB6nntnOUsPlSuC2/QrYbI2Iz3YR2YrJDvD5A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1729254233; x=1729340633; bh=aJi4wPYBjVoHNtfJSdX+7aHL0ES3
+	8qALzFmQ5wU6d3s=; b=XrWCgzoPWcOPmDnuQayXyNbeyylvPAQ0754TX2fZKqG8
+	NU+g1jmOdVDAXRGKwJX0RlTUOb9vOjrkZGQufDWspMfhnbZlea8Suxo2QyJDU5fu
+	/JuTBkGAmXJRtfwuwGD/t5Qwc/YGKb4QiKkfWpn1oaSYqh6hmJvx2Xv7aSz0SSyM
+	Hh85eTnjs1KxYThsl2gSwDq0PfO+U+K521FqAyAL8x4ETS0T7mGyD/DRAYUbdqTK
+	XBjW301JxtASzX80gNupcSDdOarDT1TN5QLncpYAXu8MldX3j/Y4zJrciPAAndPK
+	w9dSbcdM6HNELrluCTNmxE/2aNd1VoQ1oq0xFDl+bw==
+X-ME-Sender: <xms:WFMSZxyxmMtMsldHWf-A527mPQe42P8mqsD62kwKnQfJtnEuW0i3eg>
+    <xme:WFMSZxSt6LQ8QV88h3KqDeJwb3anxgSqjesOupx2LMR4mivl5q7MdiB6OCVFJy1W-
+    AwXVYAwHnPU197-xA>
+X-ME-Received: <xmr:WFMSZ7UBYvD67gTZetFBdyXMs1ijMNL0o8xBiHsGqELcEG5dL9mgKIZKn_S8X4sTCqbSEwg4z_Q0RZFvME6l4k4B38ss2gFe_XrhhzMe6dRO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehfedggeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
+    homhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvg
+    hsrdhplhhushdrtghomh
+X-ME-Proxy: <xmx:WFMSZzjEAjWqxA-3DaiGhEgQuOh1_FRVCidipdQQZBS0sNbqfLZdiw>
+    <xmx:WFMSZzCgW748_YiidjlcEIZYLo7aG_C1id3fNop8LhbyZ16oFM659Q>
+    <xmx:WFMSZ8LwFCxAjqccI9aBeq8Htgn4TxXx4sE5Bt_UaCpn7Fpf5bgM9w>
+    <xmx:WFMSZyBgrjb1vpKqPMjiEDc9CHmw9Qeuc-OUQdV0aTLAQ037VAfu2Q>
+    <xmx:WVMSZ12VRE8keMBa6J1nddKkGYYLimtzBtsSEWFIipqY74Bc9KreBhLg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 18 Oct 2024 08:23:51 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e6b68de0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 18 Oct 2024 12:22:29 +0000 (UTC)
+Date: Fri, 18 Oct 2024 14:23:50 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Eli Schwartz <eschwartz@gentoo.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [RFC PATCH v3 01/15] Makefile: use common template for
+ GIT-BUILD-OPTIONS
+Message-ID: <800fb080f45f48e248e1ed9c7b3e40cdfc526115.1729254070.git.ps@pks.im>
+References: <cover.1727881164.git.ps@pks.im>
+ <cover.1729254070.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1729254070.git.ps@pks.im>
 
-Patrick Steinhardt <ps@pks.im> writes:
+The "GIT-BUILD-OPTIONS" file is generated by our build systems to
+propagate built-in features and paths to our tests. The generation is
+done ad-hoc, where both our Makefile and the CMake build instructions
+simply echo a bunch of strings into the file. This makes it very hard to
+figure out what variables are expected to exist and what format they
+have, and the written variables can easily get out of sync between build
+systems.
 
-> This one is a little bit more curious. In t6112, we have a test that
-> exercises the `git rev-list --filter` option with invalid filters. We
-> execute git-rev-list(1) via `test_must_fail`, which means that we check
-> for leaks even though Git exits with an error code. This causes the
-> following leak:
->
->     Direct leak of 27 byte(s) in 1 object(s) allocated from:
->         #0 0x5555555e6946 in realloc.part.0 lsan_interceptors.cpp.o
->         #1 0x5555558fb4b6 in xrealloc wrapper.c:137:8
->         #2 0x5555558b6e06 in strbuf_grow strbuf.c:112:2
->         #3 0x5555558b7550 in strbuf_add strbuf.c:311:2
->         #4 0x5555557c1a88 in strbuf_addstr strbuf.h:310:2
->         #5 0x5555557c1d4c in parse_list_objects_filter list-objects-filter-options.c:261:3
->         #6 0x555555885ead in handle_revision_pseudo_opt revision.c:2899:3
->         #7 0x555555884e20 in setup_revisions revision.c:3014:11
->         #8 0x5555556c4b42 in cmd_rev_list builtin/rev-list.c:588:9
->         #9 0x5555555ec5e3 in run_builtin git.c:483:11
->         #10 0x5555555eb1e4 in handle_builtin git.c:749:13
->         #11 0x5555555ec001 in run_argv git.c:819:4
->         #12 0x5555555eaf94 in cmd_main git.c:954:19
->         #13 0x5555556fd569 in main common-main.c:64:11
->         #14 0x7ffff7ca714d in __libc_start_call_main (.../lib/libc.so.6+0x2a14d)
->         #15 0x7ffff7ca7208 in __libc_start_main@GLIBC_2.2.5 (.../libc.so.6+0x2a208)
->         #16 0x5555555ad064 in _start (git+0x59064)
->
-> This leak is valid, as we call `die()` and do not clean up the memory at
-> all. But what's curious is that this is the only leak reported, because
-> we don't clean up any other allocated memory, either, and I have no idea
-> why the leak sanitizer treats this buffer specially.
->
-> In any case, we can work around the leak by shuffling things around a
-> bit. Instead of calling `gently_parse_list_objects_filter()` and dying
-> after we have modified the filter spec, we simply do so beforehand. Like
-> this we don't allocate the buffer in the error case, which makes the
-> reported leak go away.
->
-> It's not pretty, but it manages to make t6112 leak free.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  list-objects-filter-options.c       | 17 +++++++----------
->  t/t6112-rev-list-filters-objects.sh |  1 +
->  2 files changed, 8 insertions(+), 10 deletions(-)
->
-> diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-> index 00611107d20..fa72e81e4ad 100644
-> --- a/list-objects-filter-options.c
-> +++ b/list-objects-filter-options.c
-> @@ -252,16 +252,14 @@ void parse_list_objects_filter(
->  	const char *arg)
->  {
->  	struct strbuf errbuf = STRBUF_INIT;
-> -	int parse_error;
->  
->  	if (!filter_options->filter_spec.buf)
->  		BUG("filter_options not properly initialized");
->  
->  	if (!filter_options->choice) {
-> +		if (gently_parse_list_objects_filter(filter_options, arg, &errbuf))
-> +			die("%s", errbuf.buf);
->  		strbuf_addstr(&filter_options->filter_spec, arg);
-> -
-> -		parse_error = gently_parse_list_objects_filter(
-> -			filter_options, arg, &errbuf);
->  	} else {
->  		struct list_objects_filter_options *sub;
->  
-> @@ -271,18 +269,17 @@ void parse_list_objects_filter(
->  		 */
->  		transform_to_combine_type(filter_options);
->  
-> -		strbuf_addch(&filter_options->filter_spec, '+');
-> -		filter_spec_append_urlencode(filter_options, arg);
->  		ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
->  			      filter_options->sub_alloc);
->  		sub = &filter_options->sub[filter_options->sub_nr - 1];
->  
->  		list_objects_filter_init(sub);
-> -		parse_error = gently_parse_list_objects_filter(sub, arg,
-> -							       &errbuf);
-> +		if (gently_parse_list_objects_filter(sub, arg, &errbuf))
-> +			die("%s", errbuf.buf);
+Introduce a new "GIT-BUILD-OPTIONS.in" template to address this issue.
+This has multiple advantages:
 
-Do we actually have a test hitting this code path? I wanted to figure
-out why `filter_options->sub` wasn't leaky (I assume that's what you're
-talking about in your commit message), but I wasn't able to reproduce a
-scenario where we should die here.
+  - It demonstrates which built options exist in the first place.
 
---
-Toon
+  - It can serve as a spot to document the build options.
+
+  - Some build systems complain when not all variables could be
+    substituted, alerting us of mismatches. Others don't, but if we
+    forgot to substitute such variables we now have a bogus string that
+    will likely cause our tests to fail, if they have any meaning in the
+    first place.
+
+Backfill values that we didn't yet set in our CMake build instructions.
+While at it, remove the `SUPPORTS_SIMPLE_IPC` variable that we only set
+up in CMake as it isn't used anywhere.
+
+Note that this change requires us to move around the setup of
+TEST_OUTPUT_DIRECTORY in "test-lib.sh" such that it comes after sourcing
+the "GIT-BUILD-OPTIONS" file. This is the only instance I could find
+where we rely on ordering on variables.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ GIT-BUILD-OPTIONS.in                |  36 ++++++++++
+ Makefile                            | 108 ++++++++++------------------
+ contrib/buildsystems/CMakeLists.txt |  58 ++++++++++-----
+ t/test-lib.sh                       |  13 ++--
+ 4 files changed, 120 insertions(+), 95 deletions(-)
+ create mode 100644 GIT-BUILD-OPTIONS.in
+
+diff --git a/GIT-BUILD-OPTIONS.in b/GIT-BUILD-OPTIONS.in
+new file mode 100644
+index 00000000000..f0ca240493c
+--- /dev/null
++++ b/GIT-BUILD-OPTIONS.in
+@@ -0,0 +1,36 @@
++SHELL_PATH=@SHELL_PATH@
++TEST_SHELL_PATH=@TEST_SHELL_PATH@
++PERL_PATH=@PERL_PATH@
++DIFF=@DIFF@
++PYTHON_PATH=@PYTHON_PATH@
++TAR=@TAR@
++NO_CURL=@NO_CURL@
++NO_ICONV=@NO_ICONV@
++NO_EXPAT=@NO_EXPAT@
++USE_LIBPCRE2=@USE_LIBPCRE2@
++NO_PERL=@NO_PERL@
++NO_PTHREADS=@NO_PTHREADS@
++NO_PYTHON=@NO_PYTHON@
++NO_REGEX=@NO_REGEX@
++NO_UNIX_SOCKETS=@NO_UNIX_SOCKETS@
++PAGER_ENV=@PAGER_ENV@
++SANITIZE_LEAK=@SANITIZE_LEAK@
++SANITIZE_ADDRESS=@SANITIZE_ADDRESS@
++X=@X@
++FSMONITOR_DAEMON_BACKEND=@FSMONITOR_DAEMON_BACKEND@
++FSMONITOR_OS_SETTINGS=@FSMONITOR_OS_SETTINGS@
++TEST_OUTPUT_DIRECTORY=@TEST_OUTPUT_DIRECTORY@
++GIT_TEST_OPTS=@GIT_TEST_OPTS@
++GIT_TEST_CMP=@GIT_TEST_CMP@
++GIT_TEST_CMP_USE_COPIED_CONTEXT=@GIT_TEST_CMP_USE_COPIED_CONTEXT@
++GIT_TEST_UTF8_LOCALE=@GIT_TEST_UTF8_LOCALE@
++NO_GETTEXT=@NO_GETTEXT@
++GIT_PERF_REPEAT_COUNT=@GIT_PERF_REPEAT_COUNT@
++GIT_PERF_REPO=@GIT_PERF_REPO@
++GIT_PERF_LARGE_REPO=@GIT_PERF_LARGE_REPO@
++GIT_PERF_MAKE_OPTS=@GIT_PERF_MAKE_OPTS@
++GIT_PERF_MAKE_COMMAND=@GIT_PERF_MAKE_COMMAND@
++GIT_INTEROP_MAKE_OPTS=@GIT_INTEROP_MAKE_OPTS@
++GIT_TEST_INDEX_VERSION=@GIT_TEST_INDEX_VERSION@
++GIT_TEST_PERL_FATAL_WARNINGS=@GIT_TEST_PERL_FATAL_WARNINGS@
++RUNTIME_PREFIX=@RUNTIME_PREFIX@
+diff --git a/Makefile b/Makefile
+index 9fd84415d83..7d4b5f04a04 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3164,76 +3164,44 @@ GIT-LDFLAGS: FORCE
+ # that runs GIT-BUILD-OPTIONS, and then again to protect it
+ # and the first level quoting from the shell that runs "echo".
+ GIT-BUILD-OPTIONS: FORCE
+-	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@+
+-	@echo TEST_SHELL_PATH=\''$(subst ','\'',$(TEST_SHELL_PATH_SQ))'\' >>$@+
+-	@echo PERL_PATH=\''$(subst ','\'',$(PERL_PATH_SQ))'\' >>$@+
+-	@echo DIFF=\''$(subst ','\'',$(subst ','\'',$(DIFF)))'\' >>$@+
+-	@echo PYTHON_PATH=\''$(subst ','\'',$(PYTHON_PATH_SQ))'\' >>$@+
+-	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@+
+-	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@+
+-	@echo NO_ICONV=\''$(subst ','\'',$(subst ','\'',$(NO_ICONV)))'\' >>$@+
+-	@echo NO_EXPAT=\''$(subst ','\'',$(subst ','\'',$(NO_EXPAT)))'\' >>$@+
+-	@echo USE_LIBPCRE2=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE2)))'\' >>$@+
+-	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
+-	@echo NO_PTHREADS=\''$(subst ','\'',$(subst ','\'',$(NO_PTHREADS)))'\' >>$@+
+-	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
+-	@echo NO_REGEX=\''$(subst ','\'',$(subst ','\'',$(NO_REGEX)))'\' >>$@+
+-	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+-	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+-	@echo SANITIZE_LEAK=\''$(subst ','\'',$(subst ','\'',$(SANITIZE_LEAK)))'\' >>$@+
+-	@echo SANITIZE_ADDRESS=\''$(subst ','\'',$(subst ','\'',$(SANITIZE_ADDRESS)))'\' >>$@+
+-	@echo X=\'$(X)\' >>$@+
+-ifdef FSMONITOR_DAEMON_BACKEND
+-	@echo FSMONITOR_DAEMON_BACKEND=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_DAEMON_BACKEND)))'\' >>$@+
+-endif
+-ifdef FSMONITOR_OS_SETTINGS
+-	@echo FSMONITOR_OS_SETTINGS=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_OS_SETTINGS)))'\' >>$@+
+-endif
+-ifdef TEST_OUTPUT_DIRECTORY
+-	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
+-endif
+-ifdef GIT_TEST_OPTS
+-	@echo GIT_TEST_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_OPTS)))'\' >>$@+
+-endif
+-ifdef GIT_TEST_CMP
+-	@echo GIT_TEST_CMP=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_CMP)))'\' >>$@+
+-endif
+-ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
+-	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=YesPlease >>$@+
+-endif
+-ifdef GIT_TEST_UTF8_LOCALE
+-	@echo GIT_TEST_UTF8_LOCALE=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_UTF8_LOCALE)))'\' >>$@+
+-endif
+-	@echo NO_GETTEXT=\''$(subst ','\'',$(subst ','\'',$(NO_GETTEXT)))'\' >>$@+
+-ifdef GIT_PERF_REPEAT_COUNT
+-	@echo GIT_PERF_REPEAT_COUNT=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_REPEAT_COUNT)))'\' >>$@+
+-endif
+-ifdef GIT_PERF_REPO
+-	@echo GIT_PERF_REPO=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_REPO)))'\' >>$@+
+-endif
+-ifdef GIT_PERF_LARGE_REPO
+-	@echo GIT_PERF_LARGE_REPO=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_LARGE_REPO)))'\' >>$@+
+-endif
+-ifdef GIT_PERF_MAKE_OPTS
+-	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@+
+-endif
+-ifdef GIT_PERF_MAKE_COMMAND
+-	@echo GIT_PERF_MAKE_COMMAND=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_COMMAND)))'\' >>$@+
+-endif
+-ifdef GIT_INTEROP_MAKE_OPTS
+-	@echo GIT_INTEROP_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_INTEROP_MAKE_OPTS)))'\' >>$@+
+-endif
+-ifdef GIT_TEST_INDEX_VERSION
+-	@echo GIT_TEST_INDEX_VERSION=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_INDEX_VERSION)))'\' >>$@+
+-endif
+-ifdef GIT_TEST_PERL_FATAL_WARNINGS
+-	@echo GIT_TEST_PERL_FATAL_WARNINGS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_PERL_FATAL_WARNINGS)))'\' >>$@+
+-endif
+-ifdef RUNTIME_PREFIX
+-	@echo RUNTIME_PREFIX=\'true\' >>$@+
+-else
+-	@echo RUNTIME_PREFIX=\'false\' >>$@+
+-endif
++	@sed \
++		-e "s|@SHELL_PATH@|\'$(SHELL_PATH_SQ)\'|" \
++		-e "s|@TEST_SHELL_PATH@|\'$(TEST_SHELL_PATH_SQ)\'|" \
++		-e "s|@PERL_PATH@|\'$(PERL_PATH_SQ)\'|" \
++		-e "s|@DIFF@|\'$(DIFF)\'|" \
++		-e "s|@PYTHON_PATH@|\'$(PYTHON_PATH_SQ)\'|" \
++		-e "s|@TAR@|\'$(TAR)\'|" \
++		-e "s|@NO_CURL@|\'$(NO_CURL)\'|" \
++		-e "s|@NO_ICONV@|\'$(NO_ICONV)\'|" \
++		-e "s|@NO_EXPAT@|\'$(NO_EXPAT)\'|" \
++		-e "s|@USE_LIBPCRE2@|\'$(USE_LIBPCRE2)\'|" \
++		-e "s|@NO_PERL@|\'$(NO_PERL)\'|" \
++		-e "s|@NO_PTHREADS@|\'$(NO_PTHREADS)\'|" \
++		-e "s|@NO_PYTHON@|\'$(NO_PYTHON)\'|" \
++		-e "s|@NO_REGEX@|\'$(NO_REGEX)\'|" \
++		-e "s|@NO_UNIX_SOCKETS@|\'$(NO_UNIX_SOCKETS)\'|" \
++		-e "s|@PAGER_ENV@|\'$(PAGER_ENV)\'|" \
++		-e "s|@SANITIZE_LEAK@|\'$(SANITIZE_LEAK)\'|" \
++		-e "s|@SANITIZE_ADDRESS@|\'$(SANITIZE_ADDRESS)\'|" \
++		-e "s|@X@|\'$(X)\'|" \
++		-e "s|@FSMONITOR_DAEMON_BACKEND@|\'$(FSMONITOR_DAEMON_BACKEND)\'|" \
++		-e "s|@FSMONITOR_OS_SETTINGS@|\'$(FSMONITOR_OS_SETTINGS)\'|" \
++		-e "s|@TEST_OUTPUT_DIRECTORY@|\'$(TEST_OUTPUT_DIRECTORY)\'|" \
++		-e "s|@GIT_TEST_OPTS@|\'$(GIT_TEST_OPTS)\'|" \
++		-e "s|@GIT_TEST_CMP@|\'$(GIT_TEST_CMP)\'|" \
++		-e "s|@GIT_TEST_CMP_USE_COPIED_CONTEXT@|\'$(GIT_TEST_CMP_USE_COPIED_CONTEXT)\'|" \
++		-e "s|@GIT_TEST_UTF8_LOCALE@|\'$(GIT_TEST_UTF8_LOCALE)\'|" \
++		-e "s|@NO_GETTEXT@|\'$(NO_GETTEXT)\'|" \
++		-e "s|@GIT_PERF_REPEAT_COUNT@|\'$(GIT_PERF_REPEAT_COUNT)\'|" \
++		-e "s|@GIT_PERF_REPO@|\'$(GIT_PERF_REPO)\'|" \
++		-e "s|@GIT_PERF_LARGE_REPO@|\'$(GIT_PERF_LARGE_REPO)\'|" \
++		-e "s|@GIT_PERF_MAKE_OPTS@|\'$(GIT_PERF_MAKE_OPTS)\'|" \
++		-e "s|@GIT_PERF_MAKE_COMMAND@|\'$(GIT_PERF_MAKE_COMMAND)\'|" \
++		-e "s|@GIT_INTEROP_MAKE_OPTS@|\'$(GIT_INTEROP_MAKE_OPTS)\'|" \
++		-e "s|@GIT_TEST_INDEX_VERSION@|\'$(GIT_TEST_INDEX_VERSION)\'|" \
++		-e "s|@GIT_TEST_PERL_FATAL_WARNINGS@|\'$(GIT_TEST_PERL_FATAL_WARNINGS)\'|" \
++		-e "s|@RUNTIME_PREFIX@|\'$(RUNTIME_PREFIX)\'|" \
++		GIT-BUILD-OPTIONS.in >$@+
+ 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+ 	@if test -f GIT-BUILD-DIR; then rm GIT-BUILD-DIR; fi
+ 
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 8974bb9fa20..680e5b3c8b0 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -1117,27 +1117,47 @@ if(NOT PYTHON_TESTS)
+ 	set(NO_PYTHON 1)
+ endif()
+ 
+-file(WRITE ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "SHELL_PATH='${SHELL_PATH}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "TEST_SHELL_PATH='${TEST_SHELL_PATH}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PERL_PATH='${PERL_PATH}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "DIFF='${DIFF}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PYTHON_PATH='${PYTHON_PATH}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "TAR='${TAR}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_CURL='${NO_CURL}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_ICONV='${NO_ICONV}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_EXPAT='${NO_EXPAT}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PERL='${NO_PERL}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PTHREADS='${NO_PTHREADS}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_UNIX_SOCKETS='${NO_UNIX_SOCKETS}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PAGER_ENV='${PAGER_ENV}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "X='${EXE_EXTENSION}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT='${NO_GETTEXT}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX='${RUNTIME_PREFIX}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
+-file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "SUPPORTS_SIMPLE_IPC='${SUPPORTS_SIMPLE_IPC}'\n")
++file(STRINGS ${CMAKE_SOURCE_DIR}/GIT-BUILD-OPTIONS.in git_build_options NEWLINE_CONSUME)
++string(REPLACE "@SHELL_PATH@" "${SHELL_PATH}" git_build_options "${git_build_options}")
++string(REPLACE "@TEST_SHELL_PATH@" "${TEST_SHELL_PATH}" git_build_options "${git_build_options}")
++string(REPLACE "@PERL_PATH@" "${PERL_PATH}" git_build_options "${git_build_options}")
++string(REPLACE "@DIFF@" "${DIFF}" git_build_options "${git_build_options}")
++string(REPLACE "@PYTHON_PATH@" "${PYTHON_PATH}" git_build_options "${git_build_options}")
++string(REPLACE "@TAR@" "${TAR}" git_build_options "${git_build_options}")
++string(REPLACE "@NO_CURL@" "${NO_CURL}" git_build_options "${git_build_options}")
++string(REPLACE "@NO_ICONV@" "${NO_ICONV}" git_build_options "${git_build_options}")
++string(REPLACE "@NO_EXPAT@" "${NO_EXPAT}" git_build_options "${git_build_options}")
++string(REPLACE "@USE_LIBPCRE2@" "" git_build_options "${git_build_options}")
++string(REPLACE "@NO_PERL@" "${NO_PERL}" git_build_options "${git_build_options}")
++string(REPLACE "@NO_PTHREADS@" "${NO_PTHREADS}" git_build_options "${git_build_options}")
++string(REPLACE "@NO_PYTHON@" "${NO_PYTHON}" git_build_options "${git_build_options}")
++string(REPLACE "@NO_REGEX@" "" git_build_options "${git_build_options}")
++string(REPLACE "@NO_UNIX_SOCKETS@" "${NO_UNIX_SOCKETS}" git_build_options "${git_build_options}")
++string(REPLACE "@PAGER_ENV@" "${PAGER_ENV}" git_build_options "${git_build_options}")
++string(REPLACE "@SANITIZE_LEAK@" "" git_build_options "${git_build_options}")
++string(REPLACE "@SANITIZE_ADDRESS@" "" git_build_options "${git_build_options}")
++string(REPLACE "@X@" "${EXE_EXTENSION}" git_build_options "${git_build_options}")
++string(REPLACE "@FSMONITOR_DAEMON_BACKEND@" "win32" git_build_options "${git_build_options}")
++string(REPLACE "@FSMONITOR_OS_SETTINGS@" "win32" git_build_options "${git_build_options}")
++string(REPLACE "@TEST_OUTPUT_DIRECTORY@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_OPTS@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_CMP@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_CMP_USE_COPIED_CONTEXT@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_UTF8_LOCALE@" "" git_build_options "${git_build_options}")
++string(REPLACE "@NO_GETTEXT@" "${NO_GETTEXT}" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_PERF_REPEAT_COUNT@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_PERF_REPO@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_PERF_LARGE_REPO@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_PERF_MAKE_OPTS@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_PERF_MAKE_COMMAND@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_INTEROP_MAKE_OPTS@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_INDEX_VERSION@" "" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_PERL_FATAL_WARNINGS@" "" git_build_options "${git_build_options}")
++string(REPLACE "@RUNTIME_PREFIX@" "${RUNTIME_PREFIX}" git_build_options "${git_build_options}")
+ if(USE_VCPKG)
+-	file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
++	string(APPEND git_build_options "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
+ endif()
++file(WRITE ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS ${git_build_options})
+ 
+ #Make the tests work when building out of the source tree
+ get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMakeCache.txt ABSOLUTE)
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index a278181a056..4dd641baefe 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -35,12 +35,6 @@ else
+ 	# needing to exist.
+ 	TEST_DIRECTORY=$(cd "$TEST_DIRECTORY" && pwd) || exit 1
+ fi
+-if test -z "$TEST_OUTPUT_DIRECTORY"
+-then
+-	# Similarly, override this to store the test-results subdir
+-	# elsewhere
+-	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
+-fi
+ GIT_BUILD_DIR="${TEST_DIRECTORY%/t}"
+ if test "$TEST_DIRECTORY" = "$GIT_BUILD_DIR"
+ then
+@@ -100,6 +94,13 @@ fi
+ . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
+ export PERL_PATH SHELL_PATH
+ 
++if test -z "$TEST_OUTPUT_DIRECTORY"
++then
++	# Similarly, override this to store the test-results subdir
++	# elsewhere
++	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
++fi
++
+ # In t0000, we need to override test directories of nested testcases. In case
+ # the developer has TEST_OUTPUT_DIRECTORY part of his build options, then we'd
+ # reset this value to instead contain what the developer has specified. We thus
+-- 
+2.47.0.72.gef8ce8f3d4.dirty
+
