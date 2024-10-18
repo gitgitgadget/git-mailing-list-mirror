@@ -1,208 +1,243 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82AFAF9E6
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 13:49:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90B71D7E57
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 13:53:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729259396; cv=none; b=K7mUSoXtoTEzGp2ZtbDnzaE6zLiSXLgPibVFlZKe7/UWyTbgkJr/6gsoaTGH9Rz9F3I9M39kxU7mm1LvyueI0AOpn8GdJUOuvZuaLlphLAuh+zVpZnDSxhvIvc6Yq3f1wAI0eB/ljIvT7WaNENHYIfOX2Wx1Z77BrlrqmBsTpb0=
+	t=1729259586; cv=none; b=i8giF4x7mBHZ+a6d4XYcbfWv8q/IqQrxJMuOjjpQReXl53eVuXdcdxQEZ5ctyXGo9AKBM4ltg9g84CPjQcMDHLyNOcHjUor4OP8WWq1u+RoJsaqLvOMRB7bfdoUJlb3fBnJ3folkLi3WM2ksWNUW9DaggTds1yQGpdo33ASoTbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729259396; c=relaxed/simple;
-	bh=ZGQBvEM43ddZqLnCvue0gJMh2pnVErPUM82U0Prm+60=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h7Lg0/wdSR2d4pwfJj4ScairIK+fMUKRCX7l0bVfd4hgaPc8Dx1yWxUWCsePXb8yekXOA+5YTN7NuDO3WBnNPGJ9Dii78xMbRzOdr2m/9k4G+c8eZUgc/9X8YDschJoyzw4+AolMfDb5Pc8Dv7CTyeadWF7CsIxlWvaLdqdhSY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nPWA8wiS; arc=none smtp.client-ip=209.85.210.175
+	s=arc-20240116; t=1729259586; c=relaxed/simple;
+	bh=o+/wVG2kY5KkOghYuVBxS8GeWvs0yXMjfyfS36SB++0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=kKqUcWmnrMSlxbeNA7vWHuHauTvTZpF9DELQUgn4K0GOQcaw674mJhOFN3Hk1x/TYIdouh7ct405GRTaLiE1fsOs/ess84SNp9S4Js1l38Nba60NfJDdfB+tyu6uz07RHux+oNiL1GEa1JJFGO7iwkvMuXBvQKMyt+mJlSDA3BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dz0ZFl8+; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nPWA8wiS"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-71e467c3996so1381440b3a.2
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 06:49:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dz0ZFl8+"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a99f629a7aaso372207366b.1
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 06:53:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729259394; x=1729864194; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lv6WomhkHTLPkpmOzeXBGWMi8d/9NgCBTjpswfg2Gxw=;
-        b=nPWA8wiS9ajuFaQE1QGNrsq+w+p3MOI5vcSnDBI3xHLWkGnJcEXsqJNoVmx7OzlXxC
-         HvyIDnvS1tvfGFZ5hP7ACqaFOkxWT6j/0y1tIxYDWo2staPL3ouTseOOXSug3YpkTNxu
-         GjWTJ3gkh+ZxO9EuaRf0XybuRqCMXrNI3rodh085RBIFLO3oOcljM7O7M7Yy0VH/OmFy
-         yk64c0UhL7nu5fu1kwCQw3CqX4s94HHyxPCpepV4shW2UmSNJdYrFVqEURFGhhTM2rjX
-         DmLwIVUFchDr4nNupoCUIirNj+V9ZHTwHdfZ3LKFUcTb6WU12pNgGAkfXQ49agRefwly
-         EMSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729259394; x=1729864194;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1729259581; x=1729864381; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Lv6WomhkHTLPkpmOzeXBGWMi8d/9NgCBTjpswfg2Gxw=;
-        b=F8U+V1oys/2r+wKo1EFpwBBJp/+QADYpjcJeMfJ2e4Umt1YHco17SEmRYIi1FQTZ3+
-         STngv51vP1k+HpFsMDlSUDbN+WYrb8KVWoEBW/v/adUPr5Q3SpGYUBaTwEmYvYQ+oR23
-         FC76dEC7GCDaKcALhM0ojXUqQe4Z9ocXHah+IG8zz8rca4W25n50vnBhexuWQSxj4X7U
-         GvAKjgJ2blFNGJBfI/PM5rP+sWbLsM8hTDCitVAxyxwIauLZ8g8/kvW8GSaVg4zVkfo5
-         IoPxXJLWvYpj0bNyfAO0KBXBUidrPDO3/hniJsYk5w2SEI7FQ25Bja9diO9nwUL/tkIm
-         MDaw==
-X-Gm-Message-State: AOJu0YzahABftew8Z4GkBMyBbv4UMMP5Ck3KWS6UAPmE+Vgyr26iE36s
-	fjSc7sWInZ57s86jlZUh35oBOE61UeScAo9uvikyBJydnQejDjn/
-X-Google-Smtp-Source: AGHT+IHKoWMkD9bny/jO1DZVAenTjFjBowsTTU2XxpHJbIkRLC3mQaOZ3eRU5iBHU/F+d58n/3YTxA==
-X-Received: by 2002:a05:6a21:78b:b0:1cf:ff65:22f4 with SMTP id adf61e73a8af0-1d92c5ac004mr3373473637.41.1729259393509;
-        Fri, 18 Oct 2024 06:49:53 -0700 (PDT)
-Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71ea34b36f3sm1429162b3a.212.2024.10.18.06.49.52
+        bh=Fi8J4xiTreKAqylJFuVqP+WfOwNczEVRUItXMIglfzc=;
+        b=Dz0ZFl8+b8/xf4tZzi3poDknSjCV77dwqE1XmptGNxSad3JrxXSFmsDGBHovZQKMgS
+         FHpNm9suOT0f7JUuUHC2o16t2rtoYLhHFzA6RmqUJ1YOOVrDi8RVVro/xG/Ss1o7lyHi
+         DsNhh7sPed0zBdOAAIQAg/2iVrc3Yk39xx/WzEHIn+OTD3TSxlbvSL6HLy67UcomGwak
+         p8+BVCU/fykq5HI/Fp6IAXhLCy21pQy12s4dBPfLz526/GMzdnHL6pyksRs21QW01Ckv
+         7azAK5EHOBsWz7rHeYygF2wraZLkERBU75jYXLQxt3j0AjsvTuPjuCraWLy/4LZiA9ka
+         0zLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729259581; x=1729864381;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Fi8J4xiTreKAqylJFuVqP+WfOwNczEVRUItXMIglfzc=;
+        b=VNZGA7FsBZysu050jBWSCOGuBQyeM4wljf86oQ3DDn93q9RHonjlyUwZ+ukKpLRXOY
+         5boNdcGBEnQH7lKnVyyhqL4HOiuI4tZnqFWmTeORsWAbfDjtP8Q8EUtqmPP1CTD9RihE
+         1OvDm3IaeMNzfjjA3EvhnJP0hUdQkggO589oTRLb0e5Jj72MZrEEW75Dvxsu6EjssSGX
+         i/WlfH2Wd5vrGbN/SYh6r+teY632eHsizpxC344IEQC0pxWmGhGKFrUXjLZOOwNgiyHv
+         MdCH7Bu+K5Vibp7wNCNuqx6wuZT7qpTrP1BnF7+COf6BIckbz4Q6UYXPboSxbJWxr3Na
+         JX4A==
+X-Gm-Message-State: AOJu0YxwyUMw+zcYa4Yfu3sO1rCG2d/IzH+O/iR9OgQWHSUlgBSPZNjd
+	fJtZE48DI+ZWKh+cBN2OnL5Zl+Uvsw33bjvAGghdqd3xFBDrZOnsWve+Zw==
+X-Google-Smtp-Source: AGHT+IEio1YHiuwlRm8QpvTubW1E4kkM4n0cJozTfepHXWPteAkY45KG4JTN8aHJjvA1JmHdlkW5Kw==
+X-Received: by 2002:a17:906:c115:b0:a9a:49a8:35b2 with SMTP id a640c23a62f3a-a9a4cc3c062mr770081566b.20.1729259581449;
+        Fri, 18 Oct 2024 06:53:01 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a68bf60c9sm98991766b.162.2024.10.18.06.53.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 06:49:52 -0700 (PDT)
-Received: by archie.me (Postfix, from userid 1000)
-	id 568274433457; Fri, 18 Oct 2024 20:49:49 +0700 (WIB)
-Date: Fri, 18 Oct 2024 20:49:49 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>, Edgar Bonet <bonet@grenoble.cnrs.fr>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: clar unit testing framework FTBFS on uclibc systems (wchar_t
- unsupported)
-Message-ID: <ZxJnfYtuxnAEBc1E@archie.me>
-References: <ZxCJqe4-rsRo1yHg@archie.me>
- <ZxESP0xHV4cK64i0@pks.im>
- <ZxEXFI80i4Q_4NJT@pks.im>
+        Fri, 18 Oct 2024 06:53:01 -0700 (PDT)
+Message-Id: <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
+References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
+From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 18 Oct 2024 13:52:57 +0000
+Subject: [PATCH v2 0/3] parse: replace atoi() with strtoul_ui() and strtol_i()
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LaxtlXrEIYgXMuMy"
-Content-Disposition: inline
-In-Reply-To: <ZxEXFI80i4Q_4NJT@pks.im>
+To: git@vger.kernel.org
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>
+
+Changes from Version 1:
+
+ * In my initial commit, I mistakenly included changes from a different
+   patch and commit. This issue has now been resolved.
+ * I have split the original commit into three separate patches for better
+   clarity and organization.
+ * I added corresponding tests for each of the changes to ensure proper
+   functionality.
+ * In the first version, I used the following logic: if (strtoul_ui(v, 10,
+   &timeout) == 0) Based on feedback from my mentor, I improved it to:
+   (strtoul_ui(v, 10, &timeout)) and similar cases.
+
+Usman Akinyemi (3):
+  daemon: replace atoi() with strtoul_ui() and strtol_i()
+  merge: replace atoi() with strtol_i() for marker size validation
+  imap: replace atoi() with strtol_i() for UIDVALIDITY and UIDNEXT
+    parsing
+
+ daemon.c              | 11 +++++++----
+ imap-send.c           | 13 ++++++++-----
+ merge-ll.c            |  6 ++++--
+ t/t5570-git-daemon.sh | 27 ++++++++++++++++++++++++++-
+ t/t6406-merge-attr.sh |  7 +++++++
+ 5 files changed, 52 insertions(+), 12 deletions(-)
 
 
---LaxtlXrEIYgXMuMy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+base-commit: 90fe3800b92a49173530828c0a17951abd30f0e1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1810%2FUnique-Usman%2Fr_atoi-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1810/Unique-Usman/r_atoi-v2
+Pull-Request: https://github.com/git/git/pull/1810
 
-On Thu, Oct 17, 2024 at 03:54:28PM +0200, Patrick Steinhardt wrote:
-> Okay, uclibc indeed has _optional_ support for `wchar_t`. But what
-> really throws me off: "include/wchar.h" from uclibc has the following
-> snippet right at the top:
->=20
->     #ifndef __UCLIBC_HAS_WCHAR__
->     #error Attempted to include wchar.h when uClibc built without wide ch=
-ar support.
->     #endif
->=20
-> We unconditionally include <wchar.h>, and your system does not seem to
-> have support for it built in. So why doesn't the `#error` trigger? It's
-> also not like this is a recent error, it has been added with 581deed72
-> (The obligatory forgotten files..., 2002-05-06).
->=20
-> We can do something like the below patch in clar, but I'd first like to
-> understand why your platform seems to be broken in such a way.
->=20
-> Patrick
->=20
-> diff --git a/clar.c b/clar.c
-> index 64879cf..06fe3d1 100644
-> --- a/clar.c
-> +++ b/clar.c
-> @@ -9,6 +9,11 @@
->  #define _DARWIN_C_SOURCE
->  #define _DEFAULT_SOURCE
-> =20
-> +#if defined(__UCLIBC__) && ! defined(__UCLIBC_HAS_WCHAR__)
-> +#else
-> +#	define HAVE_WCHAR
-> +#endif
-> +
->  #include <errno.h>
->  #include <setjmp.h>
->  #include <stdlib.h>
-> @@ -16,7 +21,9 @@
->  #include <string.h>
->  #include <math.h>
->  #include <stdarg.h>
-> +#ifdef HAVE_WCHAR
->  #include <wchar.h>
-> +#endif
->  #include <time.h>
->  #include <inttypes.h>
-> =20
-> @@ -766,6 +773,7 @@ void clar__assert_equal(
->  			}
->  		}
->  	}
-> +#ifdef HAVE_WCHAR
->  	else if (!strcmp("%ls", fmt)) {
->  		const wchar_t *wcs1 =3D va_arg(args, const wchar_t *);
->  		const wchar_t *wcs2 =3D va_arg(args, const wchar_t *);
-> @@ -801,6 +809,7 @@ void clar__assert_equal(
->  			}
->  		}
->  	}
-> +#endif // HAVE_WCHAR
->  	else if (!strcmp("%"PRIuMAX, fmt) || !strcmp("%"PRIxMAX, fmt)) {
->  		uintmax_t sz1 =3D va_arg(args, uintmax_t), sz2 =3D va_arg(args, uintma=
-x_t);
->  		is_equal =3D (sz1 =3D=3D sz2);
->=20
+Range-diff vs v1:
 
-Hi,
+ 1:  bfff7937cd2 < -:  ----------- t3404: avoid losing exit status with focus on `git show` and `git cat-file`
+ 2:  e2cae7f3a51 < -:  ----------- t3404: replace test with test_line_count()
+ -:  ----------- > 1:  a333d8a4013 daemon: replace atoi() with strtoul_ui() and strtol_i()
+ -:  ----------- > 2:  5d58c150efb merge: replace atoi() with strtol_i() for marker size validation
+ 3:  c93bc2d81ff ! 3:  c09c7b3df0d parse: replace atoi() with strtoul_ui() and strtol_i()
+     @@ Metadata
+      Author: Usman Akinyemi <usmanakinyemi202@gmail.com>
+      
+       ## Commit message ##
+     -    parse: replace atoi() with strtoul_ui() and strtol_i()
+     +    imap: replace atoi() with strtol_i() for UIDVALIDITY and UIDNEXT parsing
+      
+     -    Replace unsafe uses of atoi() with strtoul_ui() for unsigned integers
+     -    and strtol_i() for signed integers across multiple files. This change
+     -    improves error handling and prevents potential integer overflow issues.
+     -
+     -    The following files were updated:
+     -    - daemon.c: Update parsing of --timeout, --init-timeout, and
+     -      --max-connections
+     -    - imap-send.c: Improve parsing of UIDVALIDITY, UIDNEXT, APPENDUID, and
+     -      tags
+     -    - merge-ll.c: Enhance parsing of marker size in ll_merge and
+     -      ll_merge_marker_size
+     -
+     -    This change allows for better error detection when parsing integer
+     -    values from command-line arguments and IMAP responses, making the code
+     -    more robust and secure.
+     -
+     -    This is a #leftoverbit discussed here:
+     -     https://public-inbox.org/git/CAC4O8c-nuOTS=a0sVp1603KaM2bZjs+yNZzdAaa5CGTNGFE7hQ@mail.gmail.com/
+     +    Replaced unsafe uses of atoi() with strtol_i() to improve error handling
+     +    when parsing UIDVALIDITY, UIDNEXT, and APPENDUID in IMAP commands.
+     +    Invalid values, such as those with letters,
+     +    now trigger error messages and prevent malformed status responses.
+      
+          Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+      
+     -    Cc: gitster@pobox.com
+     -    Cc: Patrick Steinhardt <ps@pks.im>
+     -    Cc: phillip.wood123@gmail.com
+     -    Cc: Christian Couder <christian.couder@gmail.com>
+     -    Cc: Eric Sunshine <sunshine@sunshineco.com>
+     -    Cc: Taylor Blau <me@ttaylorr.com>
+     -
+     - ## daemon.c ##
+     -@@ daemon.c: int cmd_main(int argc, const char **argv)
+     - 			continue;
+     - 		}
+     - 		if (skip_prefix(arg, "--timeout=", &v)) {
+     --			timeout = atoi(v);
+     -+			if (strtoul_ui(v, 10, &timeout) < 0) {
+     -+				die("'%s': not a valid integer for --timeout", v);
+     -+			}
+     - 			continue;
+     - 		}
+     - 		if (skip_prefix(arg, "--init-timeout=", &v)) {
+     --			init_timeout = atoi(v);
+     -+			if (strtoul_ui(v, 10, &init_timeout) < 0) {
+     -+				die("'%s': not a valid integer for --init-timeout", v);
+     -+			}
+     - 			continue;
+     - 		}
+     - 		if (skip_prefix(arg, "--max-connections=", &v)) {
+     --			max_connections = atoi(v);
+     --			if (max_connections < 0)
+     --				max_connections = 0;	        /* unlimited */
+     -+			if (strtol_i(v, 10, &max_connections) != 0 || max_connections < 0) {
+     -+				max_connections = 0;  /* unlimited */
+     -+			}
+     - 			continue;
+     - 		}
+     - 		if (!strcmp(arg, "--strict-paths")) {
+     -
+       ## imap-send.c ##
+      @@ imap-send.c: static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
+       		return RESP_BAD;
+       	}
+       	if (!strcmp("UIDVALIDITY", arg)) {
+      -		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg))) {
+     -+		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &ctx->uidvalidity) != 0) {
+     ++		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &ctx->uidvalidity) || !ctx->uidvalidity) {
+       			fprintf(stderr, "IMAP error: malformed UIDVALIDITY status\n");
+       			return RESP_BAD;
+       		}
+       	} else if (!strcmp("UIDNEXT", arg)) {
+      -		if (!(arg = next_arg(&s)) || !(imap->uidnext = atoi(arg))) {
+     -+		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &imap->uidnext) != 0) {
+     ++		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &imap->uidnext) || !imap->uidnext) {
+       			fprintf(stderr, "IMAP error: malformed NEXTUID status\n");
+       			return RESP_BAD;
+       		}
+     @@ imap-send.c: static int parse_response_code(struct imap_store *ctx, struct imap_
+       	} else if (cb && cb->ctx && !strcmp("APPENDUID", arg)) {
+      -		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg)) ||
+      -		    !(arg = next_arg(&s)) || !(*(int *)cb->ctx = atoi(arg))) {
+     -+		if (!(arg = next_arg(&s)) || (strtol_i(arg, 10, &ctx->uidvalidity) != 0) ||
+     -+			!(arg = next_arg(&s)) || (strtol_i(arg, 10, (int *)cb->ctx) != 0)) {
+     ++		if (!(arg = next_arg(&s)) || (strtol_i(arg, 10, &ctx->uidvalidity) || !ctx->uidvalidity) ||
+     ++			!(arg = next_arg(&s)) || (strtol_i(arg, 10, (int *)cb->ctx) || !cb->ctx)) {
+       			fprintf(stderr, "IMAP error: malformed APPENDUID status\n");
+       			return RESP_BAD;
+       		}
+     @@ imap-send.c: static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *
+       				return DRV_OK;
+       		} else {
+      -			tag = atoi(arg);
+     -+			if (strtol_i(arg, 10, &tag) != 0) {
+     ++			if (strtol_i(arg, 10, &tag)) {
+      +				fprintf(stderr, "IMAP error: malformed tag %s\n", arg);
+      +				return RESP_BAD;
+      +			}
+       			for (pcmdp = &imap->in_progress; (cmdp = *pcmdp); pcmdp = &cmdp->next)
+       				if (cmdp->tag == tag)
+       					goto gottag;
+     -
+     - ## merge-ll.c ##
+     -@@ merge-ll.c: enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
+     - 	git_check_attr(istate, path, check);
+     - 	ll_driver_name = check->items[0].value;
+     - 	if (check->items[1].value) {
+     --		marker_size = atoi(check->items[1].value);
+     --		if (marker_size <= 0)
+     -+		if (strtol_i(check->items[1].value, 10, &marker_size) != 0 || marker_size <= 0)
+     - 			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+     - 	}
+     - 	driver = find_ll_merge_driver(ll_driver_name);
+     -@@ merge-ll.c: int ll_merge_marker_size(struct index_state *istate, const char *path)
+     - 		check = attr_check_initl("conflict-marker-size", NULL);
+     - 	git_check_attr(istate, path, check);
+     - 	if (check->items[0].value) {
+     --		marker_size = atoi(check->items[0].value);
+     --		if (marker_size <= 0)
+     -+		if (strtol_i(check->items[0].value, 10, &marker_size) != 0 || marker_size <= 0)
+     - 			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+     - 	}
+     - 	return marker_size;
 
-On Buildroot site, Edgar Bonet (Cc:'ed) suggests to improve your patch by
-wrapping strcmps [1]:
-
----- >8 ----
-diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
-index cef0f023c2..6de0b415b1 100644
---- a/t/unit-tests/clar/clar.c
-+++ b/t/unit-tests/clar/clar.c
-@@ -18,6 +18,13 @@
- #include <sys/types.h>
- #include <sys/stat.h>
-=20
-+#if defined(__UCLIBC__) && ! defined(__UCLIBC_HAS_WCHAR__)
-+   /* uClibc can be built without wchar support, in which case the
-+      installed <wchar.h> is a stub that does not define wchar_t. */
-+#else
-+#  define HAVE_WCHAR
-+#endif
-+
- #ifdef _WIN32
- #	define WIN32_LEAN_AND_MEAN
- #	include <windows.h>
-@@ -763,6 +770,7 @@ void clar__assert_equal(
- 			}
- 		}
- 	}
-+#ifdef HAVE_WCHAR
- 	else if (!strcmp("%ls", fmt)) {
- 		const wchar_t *wcs1 =3D va_arg(args, const wchar_t *);
- 		const wchar_t *wcs2 =3D va_arg(args, const wchar_t *);
-@@ -798,6 +806,7 @@ void clar__assert_equal(
- 			}
- 		}
- 	}
-+#endif // HAVE_WCHAR
- 	else if (!strcmp("%"PRIuZ, fmt) || !strcmp("%"PRIxZ, fmt)) {
- 		size_t sz1 =3D va_arg(args, size_t), sz2 =3D va_arg(args, size_t);
- 		is_equal =3D (sz1 =3D=3D sz2);
-
-Thanks.
-
-[1]: https://lore.kernel.org/buildroot/f517190c-6fcd-4101-afa6-f6ea521feb9e=
-@grenoble.cnrs.fr/
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---LaxtlXrEIYgXMuMy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZxJndQAKCRB7tWyQc2rT
-CB/LAP9FnY346y/Db8Q+6WIdP8mUFQSpA/UMQh8vy2WPoOULmQEAxiXl7ghCqzNv
-m/T8FvoU/Vl3wqBPajSZ9IyDqTU5NQM=
-=jzNR
------END PGP SIGNATURE-----
-
---LaxtlXrEIYgXMuMy--
+-- 
+gitgitgadget
