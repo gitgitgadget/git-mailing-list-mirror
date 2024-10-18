@@ -1,69 +1,70 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24A713541B
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:05:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F3B13541B
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:06:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729285525; cv=none; b=AlCYb+hetSHTgVFGPup5NDzYIEWY4LZ0/lR4QxTxYKsLtKJqbKbJxSD7rfo2JkptdID20xUqGewZ9wZV2Nc/CEiLHbfFhF4z6JgnXXM6VuLv8SnTDf56xlsVmfUrbcBGGB8GYw1JZqaOq5NbKOWC4E4mZYWfUh94dmHIHPi/55M=
+	t=1729285592; cv=none; b=c1/QzN5sSzrEBbxqiSlLlSf97kuN+SAoqouRD7yzTJ4I5D34W9iHwQy30tT3CGeBKVv26V1R9ANyKUs5h1cagkNyuV9uFw+2jPh2w73tvT8WVTyxTbdBPIRWHV58p9525eSCD8T40tjHJGaLhNpQ5rGMR8aQyfqIRYyeuqyw2tA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729285525; c=relaxed/simple;
-	bh=68Ok0/jc+VY08VpYG/piODC6ojazBS1/GnJmshBiLFA=;
+	s=arc-20240116; t=1729285592; c=relaxed/simple;
+	bh=DYHWeAtBRPgOmZs/dw+qzreon6xYIipeZElrKjH0itw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hJWUWxQP5zySbnBQOxijJ0ytozZJw0AZLsJ80rA6COhKgnI9+5J4vBfA0lXyKTbaZsMXEd9vNuDEjaH/DDIEPN+xwaww2ZM8JDIbLo8a3Kbg54EanRq21Ww68Ioe/gr08xBX/4Dw2I8EbsUZypddnm79cS5x7sI2RV/jkK8R8VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=fUDEIHni; arc=none smtp.client-ip=209.85.219.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=r/ZFevO772bq8uJekJB9k70Yrog09y/FU/SjDMqzLcvwDxhH/OjLmeIyFsvLCKExO+F3m+toZkWG0JFaHDSDIvKkUm7vxXQbv1PdDW/GPEeJ1d31GbDc0tEC5Nlnd9euv9Ja5syywOes7ifRLzrIA5acuhW/1FTsQsPLR3KRQeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=DG80Fl54; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="fUDEIHni"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e29687f4cc6so2607294276.2
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:05:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="DG80Fl54"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6e2e508bd28so20341187b3.2
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:06:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729285522; x=1729890322; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729285589; x=1729890389; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=VAdpzG3RySzRR+BpDXRIBKWbJWwnYxQ+QKCARLrraoQ=;
-        b=fUDEIHnifLkQ+Uf/mRyYhgzbm490b5iydWPpPo3elaitTvbSnkZvBt8EGh5mN2NOki
-         3MKAgZzfOkGwWLb/dlstPNRcd9UNmkOt8wAB9atGuFtUJKc5119nPNhNpkS9BgqCGrVc
-         rXoSX2rhIF85GVK360CBb60q/nn4VfK61GeBEptn9h/lzweh4xtrRlNMi0YkeZ12w3l0
-         50wFlAdsjLQjjBpqUW+fsgIKdr+Bzf1zg2sbIwWptAkHCNNvNCeG6kRilksiFhkl0j5Y
-         OJWBkwT4BKCiYwpRikmCJEGa1OYKxIQ0tiHXS7tTEB6CLeugQPk2kuZaIDzUp15vft7c
-         1Ynw==
+        bh=5isbZ9/4X7YJ2BbaCCxET21yD5wyehB+g0kQJJ/qSfc=;
+        b=DG80Fl54IUVjSeYtIkLwLeyuOaF6mSQ4hm1X4R5LLmd9jdd1Rua9sxvMPkwXbabsNa
+         NeCAsMziI505br/JIyYn41tlZLkb5HYHAblpFat6TkIIuKAGGz04kd2bPjheEowf8zkA
+         jS4WYN4UtKFY1M1TSm467ho8oezcdNvyC/it5I2/WV3G4l7HOxkp020HZgdurAZef13S
+         UmHrpJF1nAtPcdVFLgvJaRsnM8TfN2iLaHZaDSLouolB8HYJWTjuB1r7yKVhsgQam0ns
+         R2ykI2R3D5yMxcBPIaBAKXdUl7v8YrfpV0XypNnyocw4MxWc0EKzdgv1tbrFVraeJpup
+         wVzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729285522; x=1729890322;
+        d=1e100.net; s=20230601; t=1729285589; x=1729890389;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VAdpzG3RySzRR+BpDXRIBKWbJWwnYxQ+QKCARLrraoQ=;
-        b=Dmuuhk/pJqQUs+nyba2n9FWm3eS3e+tzCTqwNcWvoko84MwPbu2sW/Mm/V/aoHrj2p
-         MKyaLVL+/mHi2LGePCnl5BINtJpPIgTn6K4h0YL1pGLD+tlRPIwVAliqayx/eikhjQU/
-         4kgw0xH6f6pcwLIExyzhxrsXx7fvzE+5incJ6AUSkDd3DHIdp3AH5gdu030aAcJoObVt
-         F84lbxLqexGcXEvDC5nA9cAvkRTBSwHatLZuw1k9E/rUgx8gzrW4Mejg66JIAPjvhnna
-         8dHbA6dPLKZPqfTx2EJlu5379dbqBRUgemJdb68PHJASSVlAP3cowJS7TqINUumxv4tE
-         sRoA==
-X-Forwarded-Encrypted: i=1; AJvYcCUwoGplYHKISZa9YlgpaDXYPo7cEsPc+9PC0VIwmiB5IaS0ns4lXVMMoVhBXI+uhkQB1JY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YytW0lL9d3O1wBVhRUPI9t1Olxuw8wO//1Ouo3NxB/jaQhGv+mv
-	yIvXtF0yDSOxTUKHB5Aq6r5ObsuanjQq5uToisayt/X2kJSH839yRMCLSxea6CQ=
-X-Google-Smtp-Source: AGHT+IGa6ORfNB9hwxNrBewJTnIoQXLrqrhWqAP+7bpIv/7GRc13aVOUbY50sjjUSGhi95oXa4Kf+A==
-X-Received: by 2002:a05:6902:12c5:b0:e29:f50:f69d with SMTP id 3f1490d57ef6-e2bb12ef9bcmr3918689276.23.1729285522546;
-        Fri, 18 Oct 2024 14:05:22 -0700 (PDT)
+        bh=5isbZ9/4X7YJ2BbaCCxET21yD5wyehB+g0kQJJ/qSfc=;
+        b=cu5XdPc/hnMwkUA5g3vW4qJx8/l9qAsarkPNU8/1tJHHXs2vwjs70XQl97lbPbeD/t
+         XctwTMCuGg8nPGMNTCFarQDrGHLVX42fscjF+r5pBB6yH/i8fBuTAnKCtpEgvJDMXnEP
+         4dd8HbIpmK4i/3X+ytvh/tu60rQEsyEFnCpksdUue78J9cwC0wY05BapJFCvTFKxOpNc
+         X6K3Gk7nuLKTwC0jEwzkzClFpx3aaaxapgGpFrZKbtmiSCFDmEdLp3+ad9DIMhzW9Qss
+         5CervETgQZ9fRO2xnu3n+xJuJKvHdBGoBfVcmrXJYVkqAAS+91j02snUTRBwVjZqy39M
+         HUXA==
+X-Forwarded-Encrypted: i=1; AJvYcCWJkYoheWuedri2XQxNsOtpUwdF/TEC7WkIZJ8QXTqA0Yx1zZh1eYDzxOwIItd9zaXlNWU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YycsvMG/Xi0yP9GK4DvQcsV1SD6wyQVkbK9OB/2S/rMhl1Qq60v
+	NKVzXVxsvcoI+km4HYHycWkkb60afqVhPP9pLM7fNKNzbQcrHCsDNTi8TIKtbe4=
+X-Google-Smtp-Source: AGHT+IFl3XAc0kQOQT2t0Lrfe/Lg4/BsVzcGZUivZxFFQuQAsvsjz1beEPExyiovZ6bWXywe0v9JiA==
+X-Received: by 2002:a05:690c:3001:b0:6e3:e1f:2434 with SMTP id 00721157ae682-6e5bfc26e7amr40823297b3.12.1729285589253;
+        Fri, 18 Oct 2024 14:06:29 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bb03eab78sm450917276.60.2024.10.18.14.05.21
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5c1453909sm4476327b3.89.2024.10.18.14.06.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 14:05:22 -0700 (PDT)
-Date: Fri, 18 Oct 2024 17:05:19 -0400
+        Fri, 18 Oct 2024 14:06:28 -0700 (PDT)
+Date: Fri, 18 Oct 2024 17:06:26 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Andrew Kreimer <algonell@gmail.com>
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	git@vger.kernel.org
 Subject: Re: [PATCH] t: fix typos
-Message-ID: <ZxLNj59mKfZubiY/@nand.local>
+Message-ID: <ZxLN0u5r88hQsY+c@nand.local>
 References: <20241017112835.10100-1-algonell@gmail.com>
  <ZxFyKXDCJkRZYYQY@nand.local>
  <ZxKSFBl_pV2r99dY@void.void>
  <be0c95ee-1d9f-4e97-9710-0ceba9c3aaed@app.fastmail.com>
  <ZxKi7qn6tEWyBXsd@void.void>
+ <ZxLNj59mKfZubiY/@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,21 +74,24 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZxKi7qn6tEWyBXsd@void.void>
+In-Reply-To: <ZxLNj59mKfZubiY/@nand.local>
 
-On Fri, Oct 18, 2024 at 09:03:26PM +0300, Andrew Kreimer wrote:
-> On Fri, Oct 18, 2024 at 06:58:48PM +0200, Kristoffer Haugsbakk wrote:
-> > The code style says that redirection operators should have no space
-> > after them.  See Documentation/CodingGuidelines at “Redirection
-> > operators”.
+On Fri, Oct 18, 2024 at 05:05:19PM -0400, Taylor Blau wrote:
+> On Fri, Oct 18, 2024 at 09:03:26PM +0300, Andrew Kreimer wrote:
+> > On Fri, Oct 18, 2024 at 06:58:48PM +0200, Kristoffer Haugsbakk wrote:
+> > > The code style says that redirection operators should have no space
+> > > after them.  See Documentation/CodingGuidelines at “Redirection
+> > > operators”.
+> > >
+> > > --
+> > > Kristoffer Haugsbakk
 > >
-> > --
-> > Kristoffer Haugsbakk
+> > Thanks for the clarification, will address this one as well.
 >
-> Thanks for the clarification, will address this one as well.
+> Thanks, both. Kristoffer -- it's fine to do this in the same, or a
+> separate patch in the new round. Thanks.
 
-Thanks, both. Kristoffer -- it's fine to do this in the same, or a
-separate patch in the new round. Thanks.
+Oops, I meant s/Kristoffer/Andrew/ here. Sorry about that.
 
 Thanks,
 Taylor
