@@ -1,53 +1,53 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA6418028
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 12:24:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E941D9686
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 12:24:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729254254; cv=none; b=r3GVzYiMAdhrR6LvrsURoANL36+Li7Qn/gwyk2AL5F2HEFXSmjzB2H3R0y4wylZtpnlZl3zBbp3MNx/3DHY9ORx8bjChaROcZZ//p/clLuBMPeoBi2t4K545RPB9xWPHofDPiD/gSBg1CzelGbnAIw0B3XlIVXp7GyPN21gNnBA=
+	t=1729254257; cv=none; b=YqvdMcCymLyq+XEmFrh6kYtjs22ZpxOZ9Rk7Gm3BB59FoBNyep5kh6q9dTTxlmqEjwFXKBRMWha5gOGZ1wjDscCsjxJ1rh0zjlnxxM/E111Z534bByrnT7qMfZNJkNJNGIi8HvFDA/oUKwX2vKjDOFFgsRZlix2zobp1W9JteCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729254254; c=relaxed/simple;
-	bh=H4gr5Nk+Tl/nOQX1AgYoH9aNHr8cuRpSjzOCaJOq7Us=;
+	s=arc-20240116; t=1729254257; c=relaxed/simple;
+	bh=Xw+/GFz8NRyKCO2bU7zQEHrM8bCvnPDUcAe70az+4Y4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VZIYOx8ZMUwlfjI/Wjv18I9OwQs5sq7tQ1qPxFO3lt5GtSPpxsvOnTINNjIgVCXHTV4rd2tNPUHRVyEHnkadGvEmsqrIOTrrOAPk1L5AQVH88QR11kcdTRAWSrvbpesw7gtUFNWGQj1PnhocAPD2SUYTT2Oj+yoLEnmceCb89co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JG7ZfiLx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gKYqVSJr; arc=none smtp.client-ip=202.12.124.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=g6QUmvlZuihENKA09y6UDvCWIzh3nnwjHgdvNG0k16LHrcoM/CaW29JN1a7TzWKLrvUokrQT0kvn6CKjuzNhDu27NxYlHjGyPSXjysPBrRD0DwYIkzaV6hQszXt66sZnkq4DOqV+4dzRCqYOjuYQcOGeLFI0wXNryaizSWgGg20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HQS0c7AO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aHffmltZ; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JG7ZfiLx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gKYqVSJr"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id A249811400CC;
-	Fri, 18 Oct 2024 08:24:11 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HQS0c7AO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aHffmltZ"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B15C525400BE;
+	Fri, 18 Oct 2024 08:24:14 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 18 Oct 2024 08:24:11 -0400
+  by phl-compute-08.internal (MEProxy); Fri, 18 Oct 2024 08:24:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1729254251; x=1729340651; bh=l9hAnh3QVH
-	D6wATMsKhsMp4nedvIrr1DtYsvm4AvACY=; b=JG7ZfiLxRITs8EjaaICdf5G7Ab
-	qt6Am/qqnRePhxK/PG96NXJPFiHDsUjiXf72iS1cJunhO03/4g5K++Eunp35eBpX
-	wk5YEAVnyZPY7djLJCTztX9OeoWSROJCyUc7JCo06Yw1ONe0jlnaxA+FkMUCxGpI
-	X8mAr5pTyL7FnsJsJ/hQDneszfl4412IOkBfDC0swewTehW/7Kc/KQRWQu2oqZ+/
-	b3Fz1y1N4OmU/oQ9S4cRn11PFFQPwsoY4KtMqPMbrerAxYhIhnu0akQrxC9fHlLW
-	WYayHnO5JCKpbXytDWTjETAYaM5YH/pUn4ueQZ8C+ly4EAi/LXLcaaaB/jQw==
+	:subject:to:to; s=fm2; t=1729254254; x=1729340654; bh=uYRA+UhiIZ
+	2meGKF3pCaG3C02HgAmJstFAMwj5fAgI4=; b=HQS0c7AOzA4FbS3RS5FuohQgaY
+	X3EJ7z/ztBhv8EWI62zlLB/ts0FQTca6BY0LtNXy4khhPihSeRcgSY2BOBOPj8E4
+	QLSUK2miXD+CNAfqh4H8Ph2U3fnur/k1drhfmhDBBpURRLaLMyl+4rIkjkGitjaY
+	nv//7DS0GJrZtFlerDou0JdEeN+ykGUIWCu1Qi90PLi22QS8HtHyM9VcYKIMimrM
+	H5y3oYXW9gxb2fX2qkJyAlYTW0a9EQsssWss7sdLgWi5IJibkn2OGe/HY6gYILOF
+	2UB+x6TEKcB9rOvlOd/wAeEd76VOd3sxjxp5pCfvG3Ko+impMsLFrs6lYk9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1729254251; x=1729340651; bh=l9hAnh3QVHD6wATMsKhsMp4nedvI
-	rr1DtYsvm4AvACY=; b=gKYqVSJr59OcdAskoUWwEB2XPg6QVhKocbwU2zuI9gq1
-	8HcHmubc9CJyrh3iaC+Gkw1TDvnLyzRbAr4ZjcMxcmD73WhCnDqd2dl7IEXZE22r
-	dBrmo2ZZDNnoLuFRPFBhF/gCsQXPSuszGZgplc358xmx8g9Lpq4i3peBjIimBFqj
-	s84hggZB59m43codz6S1hyEAu1iRCuQRkQHkRrBHKcFliABB6AiLkHDUrIKElNAG
-	aj7bns65Ax+iMHj1tEbP4MkRxzQVbHx0mDyrV2dHX2CHuA0sbjLYRihjHbFy3+oO
-	qPPG0hqTIYcJ3kX//Z3C89X7D0OAGvnKzEQrS69Fdw==
-X-ME-Sender: <xms:a1MSZ24PblkgXvxW54ZCgbghvkAButtak86rqmDwd9I5ZFpJBqlVlg>
-    <xme:a1MSZ_6BF9uxT5xg-kfk9PqCH4SmzJBAGKI0J5k9PvU3tcSfBYtprbCjz1qcaThbe
-    zAdTIGy8fKxX6dhQA>
-X-ME-Received: <xmr:a1MSZ1flVHmCWMkl9yuDvXT7_8b4cDIw9BXRkOcrHfhis_LHC2aSdPtcSwpm1VAr9Cos5Umy3_KZsb--Qb26ZwzgsI7uCq-bjx9-yUmhbCZr>
+	fm2; t=1729254254; x=1729340654; bh=uYRA+UhiIZ2meGKF3pCaG3C02HgA
+	mJstFAMwj5fAgI4=; b=aHffmltZIB4iUKPbrXv0Mv9YOFgfv/+rmibozNS+u/EU
+	FHl1qUvURTBEFwsps6mGA13q0MLvFtC4i1eCxbQDGqq/A/1fDZApVSWOCpjOEpLI
+	6Rtg+PVvufDW32I0ttADsNLsMzqGTz2a762p527BgrJrP9tUmgDij0z3IQNZeJfl
+	OhsFPZgTO/XusFnqJllHFnycvLYi9Ny8Lj17st1afzNFt2GDc+nt1tJlhYPYRMmy
+	t+GEIyUttZhGBW8mMHXb8hyvzlrAwZNIg/2FjnqUL7nX4zjQHb8Lqg+MD5kI/RlX
+	2ORtHDgNO1Rty+eZ3j5BOVjBZenjS7W7ciAO10D1Tg==
+X-ME-Sender: <xms:blMSZ--ZHZ45fzBCVkVB1P1HZ4ncn-6eVq1KZBOtYOLkz9jm6eDXQg>
+    <xme:blMSZ-tgMV1Ygq9jBcXunxReUFtAGZfZ02P4pIUSrp3MidWxoyN6w0Fclju_DcGt7
+    zFRe4fSFb4yHf1wkg>
+X-ME-Received: <xmr:blMSZ0C-HSVxfMt1tFOFEdT4YzFquZAYTEWmUoXJG8NmO5RZiXmVlMJGkjPevr2Upv48eWeWPL1jzXNrt6pEH715HaebSe9PjHS57kA5SKxk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehfedggeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,24 +56,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehfedggeelucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhgrmhhs
-    rgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehphhhilh
-    hlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigr
-    rhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnsh
-    hhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:a1MSZzI8SRIWAEhLBeC5lwNtKmq52G0y2VjjwSKoSjO8Uca4CRXpyw>
-    <xmx:a1MSZ6JRn6vX8aZGpZNM0O3rrsPbEAy8SmoflxS-MOpTMD-EGfddHQ>
-    <xmx:a1MSZ0zqa3TPxCfHNzIOeP_QqCnYWCSyp06nB_7pF0mlcHBICEYHZw>
-    <xmx:a1MSZ-KbIN--ZidkhqF6WivUz_MZEpv9xbbmymXXB4UFxR0ufo8rOw>
-    <xmx:a1MSZy8sVnq80YPEzQkOqGnuNbulpt2vTjUMsNiSfgiv15E3BCQKpSng>
+    mhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplh
+    hushdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtph
+    htthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehsuhhn
+    shhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:blMSZ2fteq4l-PF5-LeuxKiYAUcqH0RS5wHpIBaakuxpUmQpJAVMdw>
+    <xmx:blMSZzNj2SQne8WCCx_pZagAR5XFYnivIF6zkrMumVu7vwYi41mRkw>
+    <xmx:blMSZwmrmS1gWHLjxjfvJxa6wQ-B_JLRjrwkQh95Q9LQCF0P75wFcg>
+    <xmx:blMSZ1t6AWd3AKCwrQIiVAlUyOPuAwa07FLG19piV1jSM_J1eL9ARA>
+    <xmx:blMSZ_BYcWwjN65tnnsXFFY7HRVEuhZIO308gpQFwyY7ObyTMdjYtLe5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 18 Oct 2024 08:24:10 -0400 (EDT)
+ 18 Oct 2024 08:24:13 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e3219d0e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 18 Oct 2024 12:22:48 +0000 (UTC)
-Date: Fri, 18 Oct 2024 14:24:09 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 67b76630 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 18 Oct 2024 12:22:51 +0000 (UTC)
+Date: Fri, 18 Oct 2024 14:24:12 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eli Schwartz <eschwartz@gentoo.org>,
@@ -81,9 +81,8 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [RFC PATCH v3 06/15] Makefile: extract script to massage Shell
- scripts
-Message-ID: <c13ce99be3a0b57ab37bdcc8fb9a963d69c70759.1729254070.git.ps@pks.im>
+Subject: [RFC PATCH v3 07/15] Makefile: extract script to generate gitweb.cgi
+Message-ID: <ebffd855836f1ba00ae8819a48bad7b9ce4141b2.1729254070.git.ps@pks.im>
 References: <cover.1727881164.git.ps@pks.im>
  <cover.1729254070.git.ps@pks.im>
 Precedence: bulk
@@ -96,187 +95,205 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1729254070.git.ps@pks.im>
 
-Same as in the preceding commits, extract a script that allows us to
-unify how we massage shell scripts.
+In order to generate "gitweb.cgi" we have to replace various different
+placeholders. This is done ad-hoc and is thus not easily reusable across
+different build systems.
+
+Introduce a new GITWEB-BUILD-OPTIONS.in template that we populate at
+configuration time with the expected options. This script is then used
+as input for a new "generate-gitweb.sh" script that generates the final
+"gitweb.cgi" file. While this requires us to repeat the options multiple
+times, it is in line to how we generate other build options like our
+GIT-BUILD-OPTIONS file.
+
+While at it, refactor how we replace the GITWEB_PROJECT_MAXDEPTH. Even
+though this variable is supposed to be an integer, the source file has
+the value quoted. The quotes are eventually stripped via sed(1), which
+replaces `"@GITWEB_PROJECT_MAXDEPTH@"` with the actual value, which is
+rather nonsensical. This is made clearer by just dropping the quotes in
+the source file.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- GIT-BUILD-OPTIONS.in                |  4 ++++
- Makefile                            | 34 +++++++++--------------------
- contrib/buildsystems/CMakeLists.txt | 30 +++++++++++++++----------
- generate-script.sh                  | 34 +++++++++++++++++++++++++++++
- 4 files changed, 67 insertions(+), 35 deletions(-)
- create mode 100755 generate-script.sh
+ gitweb/GITWEB-BUILD-OPTIONS.in | 25 +++++++++++++++
+ gitweb/Makefile                | 58 ++++++++++++++++------------------
+ gitweb/generate-gitweb.sh      | 45 ++++++++++++++++++++++++++
+ gitweb/gitweb.perl             |  2 +-
+ 4 files changed, 99 insertions(+), 31 deletions(-)
+ create mode 100644 gitweb/GITWEB-BUILD-OPTIONS.in
+ create mode 100755 gitweb/generate-gitweb.sh
 
-diff --git a/GIT-BUILD-OPTIONS.in b/GIT-BUILD-OPTIONS.in
-index 050432f9fc4..9b95a6b3eee 100644
---- a/GIT-BUILD-OPTIONS.in
-+++ b/GIT-BUILD-OPTIONS.in
-@@ -36,3 +36,7 @@ GIT_INTEROP_MAKE_OPTS=@GIT_INTEROP_MAKE_OPTS@
- GIT_TEST_INDEX_VERSION=@GIT_TEST_INDEX_VERSION@
- GIT_TEST_PERL_FATAL_WARNINGS=@GIT_TEST_PERL_FATAL_WARNINGS@
- RUNTIME_PREFIX=@RUNTIME_PREFIX@
-+GITWEBDIR=@GITWEBDIR@
-+USE_GETTEXT_SCHEME=@USE_GETTEXT_SCHEME@
-+LOCALEDIR=@LOCALEDIR@
-+BROKEN_PATH_FIX=@BROKEN_PATH_FIX@
-diff --git a/Makefile b/Makefile
-index 770ad830292..85877b25bab 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1555,10 +1555,10 @@ endif
- 
- ifdef SANE_TOOL_PATH
- SANE_TOOL_PATH_SQ = $(subst ','\'',$(SANE_TOOL_PATH))
--BROKEN_PATH_FIX = 's|^\# @BROKEN_PATH_FIX@$$|git_broken_path_fix "$(SANE_TOOL_PATH_SQ)"|'
-+BROKEN_PATH_FIX = s|^\# @BROKEN_PATH_FIX@$$|git_broken_path_fix "$(SANE_TOOL_PATH_SQ)"|
- PATH := $(SANE_TOOL_PATH):${PATH}
- else
--BROKEN_PATH_FIX = '/^\# @BROKEN_PATH_FIX@$$/d'
-+BROKEN_PATH_FIX = /^\# @BROKEN_PATH_FIX@$$/d
- endif
- 
- ifeq (,$(HOST_CPU))
-@@ -2545,26 +2545,8 @@ GIT-SCRIPT-DEFINES: FORCE
- 		echo "$$FLAGS" >$@; \
-             fi
- 
--define cmd_munge_script
--sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
--    -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
--    -e 's|@DIFF@|$(DIFF_SQ)|' \
--    -e 's|@LOCALEDIR@|$(localedir_SQ)|g' \
--    -e 's/@USE_GETTEXT_SCHEME@/$(USE_GETTEXT_SCHEME)/g' \
--    -e $(BROKEN_PATH_FIX) \
--    -e 's|@GITWEBDIR@|$(gitwebdir_SQ)|g' \
--    -e 's|@PERL_PATH@|$(PERL_PATH_SQ)|g' \
--    -e 's|@PAGER_ENV@|$(PAGER_ENV_SQ)|g' \
--    $@.sh >$@+
--endef
--
--$(SCRIPT_SH_GEN) : % : %.sh GIT-SCRIPT-DEFINES
--	$(QUIET_GEN)$(cmd_munge_script) && \
--	chmod +x $@+ && \
--	mv $@+ $@
--
--$(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
--	$(QUIET_GEN)$(cmd_munge_script) && \
-+$(SCRIPT_SH_GEN) $(SCRIPT_LIB) : % : %.sh generate-script.sh GIT-BUILD-OPTIONS GIT-SCRIPT-DEFINES
-+	$(QUIET_GEN)./generate-script.sh "$<" "$@+" ./GIT-BUILD-OPTIONS && \
- 	mv $@+ $@
- 
- git.res: git.rc GIT-VERSION-FILE GIT-PREFIX
-@@ -2633,8 +2615,8 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
- perllibdir:
- 	@echo '$(perllibdir_SQ)'
- 
--git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
--	$(QUIET_GEN)$(cmd_munge_script) && \
-+git-instaweb: git-instaweb.sh generate-script.sh GIT-BUILD-OPTIONS GIT-SCRIPT-DEFINES
-+	$(QUIET_GEN)./generate-script.sh "$<" "$@+" ./GIT-BUILD-OPTIONS && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
- else # NO_PERL
-@@ -3191,6 +3173,10 @@ GIT-BUILD-OPTIONS: FORCE
- 		-e "s|@GIT_TEST_INDEX_VERSION@|\'$(GIT_TEST_INDEX_VERSION)\'|" \
- 		-e "s|@GIT_TEST_PERL_FATAL_WARNINGS@|\'$(GIT_TEST_PERL_FATAL_WARNINGS)\'|" \
- 		-e "s|@RUNTIME_PREFIX@|\'$(RUNTIME_PREFIX)\'|" \
-+		-e "s|@GITWEBDIR@|\'$(gitwebdir_SQ)\'|" \
-+		-e "s|@USE_GETTEXT_SCHEME@|\'$(USE_GETTEXT_SCHEME)\'|" \
-+		-e "s|@LOCALEDIR@|\'$(localedir_SQ)\'|" \
-+		-e "s|@BROKEN_PATH_FIX@|\'$(BROKEN_PATH_FIX)\'|" \
- 		GIT-BUILD-OPTIONS.in >$@+
- 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
- 	@if test -f GIT-BUILD-DIR; then rm GIT-BUILD-DIR; fi
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index ddf39dc90e7..2e22e87d188 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -834,18 +834,22 @@ set(git_shell_scripts
- 	${git_sh_scripts} ${git_shlib_scripts} git-instaweb)
- 
- foreach(script ${git_shell_scripts})
--	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.sh content NEWLINE_CONSUME)
--	string(REPLACE "@SHELL_PATH@" "${SHELL_PATH}" content "${content}")
--	string(REPLACE "@DIFF@" "diff" content "${content}")
--	string(REPLACE "@LOCALEDIR@" "${LOCALEDIR}" content "${content}")
--	string(REPLACE "@GITWEBDIR@" "${GITWEBDIR}" content "${content}")
--	string(REPLACE "@NO_CURL@" "" content "${content}")
--	string(REPLACE "@USE_GETTEXT_SCHEME@" "" content "${content}")
--	string(REPLACE "# @BROKEN_PATH_FIX@" "" content "${content}")
--	string(REPLACE "@PERL_PATH@" "${PERL_PATH}" content "${content}")
--	string(REPLACE "@PAGER_ENV@" "LESS=FRX LV=-c" content "${content}")
--	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
-+	if ("${script}" IN_LIST git_sh_scripts)
-+		string(REPLACE ".sh" "" shell_gen_path "${script}")
-+	else()
-+		set(shell_gen_path "${script}")
-+	endif()
-+
-+	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/${shell_gen_path}
-+		COMMAND ${CMAKE_SOURCE_DIR}/generate-script.sh
-+			${CMAKE_SOURCE_DIR}/${script}.sh
-+			${CMAKE_BINARY_DIR}/${shell_gen_path}
-+			${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS
-+		DEPENDS ${CMAKE_SOURCE_DIR}/generate-script.sh
-+			${CMAKE_SOURCE_DIR}/${script}.sh)
-+	list(APPEND shell_gen ${CMAKE_BINARY_DIR}/${shell_gen_path})
- endforeach()
-+add_custom_target(shell-gen ALL DEPENDS ${shell_gen})
- 
- #perl scripts
- parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" "")
-@@ -1156,6 +1160,10 @@ string(REPLACE "@GIT_INTEROP_MAKE_OPTS@" "" git_build_options "${git_build_optio
- string(REPLACE "@GIT_TEST_INDEX_VERSION@" "" git_build_options "${git_build_options}")
- string(REPLACE "@GIT_TEST_PERL_FATAL_WARNINGS@" "" git_build_options "${git_build_options}")
- string(REPLACE "@RUNTIME_PREFIX@" "${RUNTIME_PREFIX}" git_build_options "${git_build_options}")
-+string(REPLACE "@GITWEBDIR@" "${GITWEBDIR}" git_build_options "${git_build_options}")
-+string(REPLACE "@USE_GETTEXT_SCHEME@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@LOCALEDIR@" "LOCALEDIR" git_build_options "${git_build_options}")
-+string(REPLACE "@BROKEN_PATH_FIX@" "" git_build_options "${git_build_options}")
- if(USE_VCPKG)
- 	string(APPEND git_build_options "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
- endif()
-diff --git a/generate-script.sh b/generate-script.sh
-new file mode 100755
-index 00000000000..d001e43d7bf
+diff --git a/gitweb/GITWEB-BUILD-OPTIONS.in b/gitweb/GITWEB-BUILD-OPTIONS.in
+new file mode 100644
+index 00000000000..20a6487796f
 --- /dev/null
-+++ b/generate-script.sh
-@@ -0,0 +1,34 @@
++++ b/gitweb/GITWEB-BUILD-OPTIONS.in
+@@ -0,0 +1,25 @@
++PERL_PATH=@PERL_PATH@
++JSMIN=@JSMIN@
++CSSMIN=@CSSMIN@
++GIT_VERSION=@GIT_VERSION@
++GIT_BINDIR=@GIT_BINDIR@
++GITWEB_CONFIG=@GITWEB_CONFIG@
++GITWEB_CONFIG_SYSTEM=@GITWEB_CONFIG_SYSTEM@
++GITWEB_CONFIG_COMMON=@GITWEB_CONFIG_COMMON@
++GITWEB_HOME_LINK_STR=@GITWEB_HOME_LINK_STR@
++GITWEB_SITENAME=@GITWEB_SITENAME@
++GITWEB_PROJECTROOT=@GITWEB_PROJECTROOT@
++GITWEB_PROJECT_MAXDEPTH=@GITWEB_PROJECT_MAXDEPTH@
++GITWEB_EXPORT_OK=@GITWEB_EXPORT_OK@
++GITWEB_STRICT_EXPORT=@GITWEB_STRICT_EXPORT@
++GITWEB_BASE_URL=@GITWEB_BASE_URL@
++GITWEB_LIST=@GITWEB_LIST@
++GITWEB_HOMETEXT=@GITWEB_HOMETEXT@
++GITWEB_CSS=@GITWEB_CSS@
++GITWEB_LOGO=@GITWEB_LOGO@
++GITWEB_FAVICON=@GITWEB_FAVICON@
++GITWEB_JS=@GITWEB_JS@
++GITWEB_SITE_HTML_HEAD_STRING=@GITWEB_SITE_HTML_HEAD_STRING@
++GITWEB_SITE_HEADER=@GITWEB_SITE_HEADER@
++GITWEB_SITE_FOOTER=@GITWEB_SITE_FOOTER@
++HIGHLIGHT_BIN=@HIGHLIGHT_BIN@
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index 164c8d53757..48c3958bc66 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -77,43 +77,41 @@ GITWEB_JSLIB_FILES += static/js/javascript-detection.js
+ GITWEB_JSLIB_FILES += static/js/adjust-timezone.js
+ GITWEB_JSLIB_FILES += static/js/blame_incremental.js
+ 
+-
+-GITWEB_REPLACE = \
+-	-e 's|@GIT_VERSION@|$(GIT_VERSION)|g' \
+-	-e 's|@GIT_BINDIR@|$(bindir)|g' \
+-	-e 's|@GITWEB_CONFIG@|$(GITWEB_CONFIG)|g' \
+-	-e 's|@GITWEB_CONFIG_SYSTEM@|$(GITWEB_CONFIG_SYSTEM)|g' \
+-	-e 's|@GITWEB_CONFIG_COMMON@|$(GITWEB_CONFIG_COMMON)|g' \
+-	-e 's|@GITWEB_HOME_LINK_STR@|$(GITWEB_HOME_LINK_STR)|g' \
+-	-e 's|@GITWEB_SITENAME@|$(GITWEB_SITENAME)|g' \
+-	-e 's|@GITWEB_PROJECTROOT@|$(GITWEB_PROJECTROOT)|g' \
+-	-e 's|"@GITWEB_PROJECT_MAXDEPTH@"|$(GITWEB_PROJECT_MAXDEPTH)|g' \
+-	-e 's|@GITWEB_EXPORT_OK@|$(GITWEB_EXPORT_OK)|g' \
+-	-e 's|@GITWEB_STRICT_EXPORT@|$(GITWEB_STRICT_EXPORT)|g' \
+-	-e 's|@GITWEB_BASE_URL@|$(GITWEB_BASE_URL)|g' \
+-	-e 's|@GITWEB_LIST@|$(GITWEB_LIST)|g' \
+-	-e 's|@GITWEB_HOMETEXT@|$(GITWEB_HOMETEXT)|g' \
+-	-e 's|@GITWEB_CSS@|$(GITWEB_CSS)|g' \
+-	-e 's|@GITWEB_LOGO@|$(GITWEB_LOGO)|g' \
+-	-e 's|@GITWEB_FAVICON@|$(GITWEB_FAVICON)|g' \
+-	-e 's|@GITWEB_JS@|$(GITWEB_JS)|g' \
+-	-e 's|@GITWEB_SITE_HTML_HEAD_STRING@|$(GITWEB_SITE_HTML_HEAD_STRING)|g' \
+-	-e 's|@GITWEB_SITE_HEADER@|$(GITWEB_SITE_HEADER)|g' \
+-	-e 's|@GITWEB_SITE_FOOTER@|$(GITWEB_SITE_FOOTER)|g' \
+-	-e 's|@HIGHLIGHT_BIN@|$(HIGHLIGHT_BIN)|g'
+-
+ .PHONY: FORCE
+ $(MAK_DIR_GITWEB)GITWEB-BUILD-OPTIONS: FORCE
+-	@rm -f $@+
+-	@echo "x" '$(PERL_PATH_SQ)' $(GITWEB_REPLACE) "$(JSMIN)|$(CSSMIN)" >$@+
++	@sed -e 's|@PERL_PATH@|$(PERL_PATH_SQ)|' \
++	     -e 's|@JSMIN@|$(JSMIN)|' \
++	     -e 's|@CSSMIN@|$(CSSMIN)|' \
++	     -e 's|@GIT_VERSION@|$(GIT_VERSION)|' \
++	     -e 's|@GIT_BINDIR@|$(bindir)|' \
++	     -e 's|@GITWEB_CONFIG@|$(GITWEB_CONFIG)|' \
++	     -e 's|@GITWEB_CONFIG_SYSTEM@|$(GITWEB_CONFIG_SYSTEM)|' \
++	     -e 's|@GITWEB_CONFIG_COMMON@|$(GITWEB_CONFIG_COMMON)|' \
++	     -e 's|@GITWEB_HOME_LINK_STR@|$(GITWEB_HOME_LINK_STR)|' \
++	     -e 's|@GITWEB_SITENAME@|$(GITWEB_SITENAME)|' \
++	     -e 's|@GITWEB_PROJECTROOT@|$(GITWEB_PROJECTROOT)|' \
++	     -e 's|@GITWEB_PROJECT_MAXDEPTH@|$(GITWEB_PROJECT_MAXDEPTH)|' \
++	     -e 's|@GITWEB_EXPORT_OK@|$(GITWEB_EXPORT_OK)|' \
++	     -e 's|@GITWEB_STRICT_EXPORT@|$(GITWEB_STRICT_EXPORT)|' \
++	     -e 's|@GITWEB_BASE_URL@|$(GITWEB_BASE_URL)|' \
++	     -e 's|@GITWEB_LIST@|$(GITWEB_LIST)|' \
++	     -e 's|@GITWEB_HOMETEXT@|$(GITWEB_HOMETEXT)|' \
++	     -e 's|@GITWEB_CSS@|$(GITWEB_CSS)|' \
++	     -e 's|@GITWEB_LOGO@|$(GITWEB_LOGO)|' \
++	     -e 's|@GITWEB_FAVICON@|$(GITWEB_FAVICON)|' \
++	     -e 's|@GITWEB_JS@|$(GITWEB_JS)|' \
++	     -e 's|@GITWEB_SITE_HTML_HEAD_STRING@|$(GITWEB_SITE_HTML_HEAD_STRING)|' \
++	     -e 's|@GITWEB_SITE_HEADER@|$(GITWEB_SITE_HEADER)|' \
++	     -e 's|@GITWEB_SITE_FOOTER@|$(GITWEB_SITE_FOOTER)|' \
++	     -e 's|@HIGHLIGHT_BIN@|$(HIGHLIGHT_BIN)|' \
++	     $(MAK_DIR_GITWEB)GITWEB-BUILD-OPTIONS.in >"$@+"
+ 	@cmp -s $@+ $@ && rm -f $@+ || mv -f $@+ $@
+ 
++$(MAK_DIR_GITWEB)gitweb.cgi: $(MAK_DIR_GITWEB)generate-gitweb.sh
+ $(MAK_DIR_GITWEB)gitweb.cgi: $(MAK_DIR_GITWEB)GITWEB-BUILD-OPTIONS
+ $(MAK_DIR_GITWEB)gitweb.cgi: $(MAK_DIR_GITWEB)gitweb.perl
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	sed -e '1s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+-		$(GITWEB_REPLACE) $< >$@+ && \
+-	chmod +x $@+ && \
++	$(MAK_DIR_GITWEB)generate-gitweb.sh $(MAK_DIR_GITWEB)/GITWEB-BUILD-OPTIONS $< $@+ && \
+ 	mv $@+ $@
+ 
+ $(MAK_DIR_GITWEB)static/gitweb.js: $(addprefix $(MAK_DIR_GITWEB),$(GITWEB_JSLIB_FILES))
+diff --git a/gitweb/generate-gitweb.sh b/gitweb/generate-gitweb.sh
+new file mode 100755
+index 00000000000..b47ea6e599e
+--- /dev/null
++++ b/gitweb/generate-gitweb.sh
+@@ -0,0 +1,45 @@
 +#!/bin/sh
 +
 +set -e
 +
 +if test $# -ne 3
 +then
-+	echo "USAGE: $0 <INPUT> <OUTPUT> <GIT-BUILD-OPTIONS>" >&2
++	echo "USAGE: $0 <GITWEB-BUILD-OPTIONS> <INPUT> <OUTPUT>" >&2
 +	exit 1
 +fi
 +
-+INPUT="$1"
-+OUTPUT="$2"
-+BUILD_OPTIONS="$3"
++GITWEB_BUILD_OPTIONS="$1"
++INPUT="$2"
++OUTPUT="$3"
 +
-+. "$BUILD_OPTIONS"
++. "$GITWEB_BUILD_OPTIONS"
 +
-+sed -e "1s|#!.*/sh|#!$SHELL_PATH|" \
-+    -e "s|@SHELL_PATH@|$SHELL_PATH|" \
-+    -e "s|@DIFF@|$DIFF|" \
-+    -e "s|@LOCALEDIR@|$LOCALEDIR|g" \
-+    -e "s/@USE_GETTEXT_SCHEME@/$USE_GETTEXT_SCHEME/g" \
-+    -e "$BROKEN_PATH_FIX" \
-+    -e "s|@GITWEBDIR@|$GITWEBDIR|g" \
-+    -e "s|@PERL_PATH@|$PERL_PATH|g" \
-+    -e "s|@PAGER_ENV@|$PAGER_ENV|g" \
++sed -e "1s|#!/usr/bin/perl|#!$PERL_PATH|" \
++    -e "s|@PERL_PATH@|$PERL_PATH|" \
++    -e "s|@JSMIN@|$JSMIN|" \
++    -e "s|@CSSMIN@|$CSSMIN|" \
++    -e "s|@GIT_VERSION@|$GIT_VERSION|" \
++    -e "s|@GIT_BINDIR@|$GIT_BINDIR|" \
++    -e "s|@GITWEB_CONFIG@|$GITWEB_CONFIG|" \
++    -e "s|@GITWEB_CONFIG_SYSTEM@|$GITWEB_CONFIG_SYSTEM|" \
++    -e "s|@GITWEB_CONFIG_COMMON@|$GITWEB_CONFIG_COMMON|" \
++    -e "s|@GITWEB_HOME_LINK_STR@|$GITWEB_HOME_LINK_STR|" \
++    -e "s|@GITWEB_SITENAME@|$GITWEB_SITENAME|" \
++    -e "s|@GITWEB_PROJECTROOT@|$GITWEB_PROJECTROOT|" \
++    -e "s|@GITWEB_PROJECT_MAXDEPTH@|$GITWEB_PROJECT_MAXDEPTH|" \
++    -e "s|@GITWEB_EXPORT_OK@|$GITWEB_EXPORT_OK|" \
++    -e "s|@GITWEB_STRICT_EXPORT@|$GITWEB_STRICT_EXPORT|" \
++    -e "s|@GITWEB_BASE_URL@|$GITWEB_BASE_URL|" \
++    -e "s|@GITWEB_LIST@|$GITWEB_LIST|" \
++    -e "s|@GITWEB_HOMETEXT@|$GITWEB_HOMETEXT|" \
++    -e "s|@GITWEB_CSS@|$GITWEB_CSS|" \
++    -e "s|@GITWEB_LOGO@|$GITWEB_LOGO|" \
++    -e "s|@GITWEB_FAVICON@|$GITWEB_FAVICON|" \
++    -e "s|@GITWEB_JS@|$GITWEB_JS|" \
++    -e "s|@GITWEB_SITE_HTML_HEAD_STRING@|$GITWEB_SITE_HTML_HEAD_STRING|" \
++    -e "s|@GITWEB_SITE_HEADER@|$GITWEB_SITE_HEADER|" \
++    -e "s|@GITWEB_SITE_FOOTER@|$GITWEB_SITE_FOOTER|" \
++    -e "s|@HIGHLIGHT_BIN@|$HIGHLIGHT_BIN|" \
 +    "$INPUT" >"$OUTPUT"
 +
-+case "$(basename "$INPUT")" in
-+git-mergetool--lib.sh|git-sh-i18n.sh|git-sh-setup.sh)
-+	;;
-+*)
-+	chmod a+x "$OUTPUT"
-+	;;
-+esac
++chmod a+x "$OUTPUT"
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 76e1f4e244f..41bc64ec73f 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -88,7 +88,7 @@ sub evaluate_uri {
+ 
+ # fs traversing limit for getting project list
+ # the number is relative to the projectroot
+-our $project_maxdepth = "@GITWEB_PROJECT_MAXDEPTH@";
++our $project_maxdepth = @GITWEB_PROJECT_MAXDEPTH@;
+ 
+ # string of the home link on top of all pages
+ our $home_link_str = "@GITWEB_HOME_LINK_STR@";
 -- 
 2.47.0.72.gef8ce8f3d4.dirty
 
