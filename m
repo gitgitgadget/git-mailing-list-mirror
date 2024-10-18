@@ -1,244 +1,149 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D2820604B
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 20:05:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A7B20CCDE
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 20:07:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729281935; cv=none; b=BS+NcyGvPcwo15nrm55XcVjZX46FTTlK404WnU2FcP1yYIvCPq+MJTqLXQXb55H5ByCVApQIyeEy+lOJv2Zz3ogSi+2e3WErKRXIA0meSKBCPjJkGRbowojdLEYvjTONkY1jZWKvRtHLeQwvx5TVNyy3rrM9MZwrpEqsiaqzwrI=
+	t=1729282064; cv=none; b=kIbf3CO0UDLYcdQEB8Rn1QnEW+WJDLFPVG544G7Wqjn8Vh9gqaZxVpMwX/CPCOx6cmM+HjZJ/iVBUtHl1GL9TiFz0/ah1TgjVJZwtlB6+QxjBzm5lziDbLExNCxYGCrUgm4+/fCTxvsCZz4xb3i/zvz476cp80oG2kbygAv4l20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729281935; c=relaxed/simple;
-	bh=ksLAQdmo+17Oro65LYYrnNzTaruq0ytRq47ViXBVjj4=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=W0OeV29ShV05CC5Hp0TB054V6wsXHcsMxRtl0Qeh/eYWkIt5ezSPUsUKIsAzpGEKHMKFD7jecA5Zn4j2ObJOiNl+3gjzOjQb2XdeFOEFpOzVdksxj5JuPi7CR1ERqAJ6CtGwKHEciIymvSUxNnefT810oStGoBNqbwCys6fTYzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=V4YM2/bP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fK7C/ITX; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729282064; c=relaxed/simple;
+	bh=s0o/7SFhu2F7CWeZeM/U0Gi81nO4zkrNOiJwgyZdmBg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A2VuMWVj7LLTRIBIKkjiovWYCT3Mh2gMoJL1iY47kkYZ9RrQmPNWKl3EGJ7tza5k4tGEcLFtul8jEjox7CxVwmjNSskBY2+n06yKo7h/G5pm37iRJHvNB85oGGE+ZPtmXAaMTPxk64IQ3w/qNaU++VWNX0icAh5LvtTPrnvaEq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=yPLDQkjd; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="V4YM2/bP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fK7C/ITX"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C3B9025400F5;
-	Fri, 18 Oct 2024 16:05:30 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Fri, 18 Oct 2024 16:05:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1729281930;
-	 x=1729368330; bh=EexUfDAWkV5GbsS43EhzS+25qpA6oWNDKDzw92WiAmM=; b=
-	V4YM2/bPOq6st4V5A2yuz2fzgCktWRMI+bq4wODiQwdY0en14soG98Ms3kwt54I9
-	7KXYGB8JU/9lvftS9kSP6qR6L1tWr4RVrQ7PBJM5LcGJBXfv0YGtmH/vJtgzmWTW
-	BpAgjIcRZSsMLB8NuJxS8omg92jBHHxVDx1bq/LsmomIHYCiKQIFdLfjLXhe10Lt
-	CNblzvJ9iw7z7jucfVbbPBssFrziBtkMSXNUQeFoapklC4e3kgFNXZz0vTN3zUMi
-	m6Zwtkq/rhbuDljftW/mIFaq4zb1Ycs6RVW2bsgMvx5ch4382UhIaifBnTn8vs7A
-	PFyIofo+X2r2XZLkPsfvrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729281930; x=
-	1729368330; bh=EexUfDAWkV5GbsS43EhzS+25qpA6oWNDKDzw92WiAmM=; b=f
-	K7C/ITXpbKnbFq76tDHdwRPu++dgxR8r4Kt6j1RWeH49Lr6AWfdQBHT6kQlUF9JC
-	+k8hdaxMVBimcqie4r7eb6Ti3IAalyhthlNJMzqk1MPkM2zhhjqDe+xUJCqFd7tP
-	K1d/JwQrjZ34HeyAqrs8CB8sh20JoNwX1mQK7XNbOAw9UZcmmoSXmbQpVwrxEWzi
-	Hf+GB/2E1DSaG7xw7n6RoaJ72dlqCSB4/BHPrTEbRGppI0nARpwaVX5/14mllOqX
-	vIoG5QaVZNEFtRMKEPsm2cCYalfj4gM7Z3pTXFfyGjg9s3sY2oUb2JoQYhDAgP9R
-	9+9s8VDkfA4WrypMyqtNw==
-X-ME-Sender: <xms:ib8SZ1hYMbf7FvCl0p7_Rj1mGYK5pmsggvl8OOZSh3eHM0bAT2HlyTc>
-    <xme:ib8SZ6DJd15Tu4jV8uVvBQ6rEJivy4LthLqQTC1z1dS12za9Tknlhkc_yqyIQi_nK
-    PGN_52ljymyupMLDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehfedgudeggecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
-    rghtthgvrhhnpeehudfgvefgfefgffdvhfffvdevveegheehudetvdfgueffjeevjeduge
-    evfedvfeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihii
-    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgsh
-    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrd
-    horhhgrdhukhdprhgtphhtthhopehkuhhfohhrihhjihelkeesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:ib8SZ1HxBm-1fLOeNbdFiIQyWpLpwvU6Swoqfweok0y5SWtn1u6sPw>
-    <xmx:ib8SZ6TxUnwhVElv-vNj_EmaJ7nQr84d1bcmxNwfMEpS-7SikqS_IQ>
-    <xmx:ib8SZyz_3aufZ932zqPg6aT3bRZ8a9NuPqx2nXNhl6rB2Ye6qjCGwQ>
-    <xmx:ib8SZw7KPYa-2hF1RLvlfN49GnHp36dQdGXAnolUl3r-PmyF2AOUlQ>
-    <xmx:ir8SZ28jJHq7eyd7VG8_4Nb6MOHqHO1TkrAHol1raF1dIzlUHmFpZ-6W>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id C465B780068; Fri, 18 Oct 2024 16:05:29 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="yPLDQkjd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1729282060;
+	bh=s0o/7SFhu2F7CWeZeM/U0Gi81nO4zkrNOiJwgyZdmBg=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=yPLDQkjd4dywrjSvkLJGLU/+Ax+xoSiuMWPQn0+YQ1JaoJNL6KP1fqQkJZOYEewv1
+	 IWphXJLF2qiT2OJsX4ntADuh7I9ng4xwTc2BurQIP8/SxYtD1qwVNQy9YEVjlz7RXU
+	 gTStxktIVMJxLf6Z0soTJXrwQTs1vuS2Oc2F7RsJP1TzHj8lW8E23f/4zKqG4f7HNx
+	 VLlE7vRUj5N9S6ro0IUhoi+mWpDxS/yLsZ+Oxnphe3+DwyNCKBPH/QdZtWefmqDaot
+	 r9i2zga+o2H76hfsGPJBlXtPjnuaygPEb2xY5HJIWwkBZOZ7gdmTLpNghE6tZOCwUD
+	 ++FEgUKjIjbs7Ik3JerTZ5GSC4CZrm4cZ3jB0t4goYpNTvpp44H9MDXojvZNWz2P2Z
+	 0g5d7DmAusuXCimrOkac1KIT319TMdy3yFq+INaEOKX4K5XxUCy7/QRdetR404iBNP
+	 1fKRoX3g52qfEZ1tFucKopNf5S3n4quT7Yt3QzV6xcP8/MYlr7l
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 6455C200B1;
+	Fri, 18 Oct 2024 20:07:40 +0000 (UTC)
+Date: Fri, 18 Oct 2024 20:07:39 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>, Bagas Sanjaya <bagasdotme@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: clar unit testing framework FTBFS on uclibc systems (wchar_t
+ unsupported)
+Message-ID: <ZxLAC-c4y7_sQqzw@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+References: <ZxCJqe4-rsRo1yHg@archie.me>
+ <ZxESP0xHV4cK64i0@pks.im>
+ <ZxEXFI80i4Q_4NJT@pks.im>
+ <ZxGN9zzt55GcL4Qj@tapette.crustytoothpaste.net>
+ <20241018045155.GC2408674@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 18 Oct 2024 22:04:43 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Seyi Kuforiji" <kuforiji98@gmail.com>, git@vger.kernel.org
-Cc: "Patrick Steinhardt" <ps@pks.im>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Message-Id: <b005084c-2710-4567-9217-27f34c2bbc95@app.fastmail.com>
-In-Reply-To: <20241018191744.209746-1-kuforiji98@gmail.com>
-References: <20241018191744.209746-1-kuforiji98@gmail.com>
-Subject: Re: [[PATCH][Outreachy]] t7011-skip-worktree-reading.sh: ensure no whitespace
- after redirect operators
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="GWE5CknlruRED9kD"
+Content-Disposition: inline
+In-Reply-To: <20241018045155.GC2408674@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--GWE5CknlruRED9kD
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hiya
+On 2024-10-18 at 04:51:55, Jeff King wrote:
+> Perhaps, but...don't the current releases of Git work just fine on such
+> a wchar-less uclibc system now? We don't use wchar or include wchar.h
+> ourselves, except on Windows or via compat/regex (though it is even
+> conditional there). This is a new portability problem introduced by the
+> clar test harness. And even there I doubt it is something we care about
+> (it looks like it's for allowing "%ls" in assertions).
+>=20
+> Our approach to portability has traditionally been a cost/benefit for
+> individual features. Standards are a nice guideline, but the real world
+> does not always follow them. Sometimes accommodating platforms that
+> don't strictly follow the standard is cheap enough that it's worth
+> doing.
+>=20
+> I think more recent discussions have trended to looking at standards in
+> a bit stronger way: giving minimum requirements and sticking to them.
+> Certainly I'm sympathetic to that viewpoint, as it can reduce noise.
 
-> [[PATCH][Outreachy]]
+I think there's a tradeoff here in what is reasonable to support.  For
+example, we know FreeBSD and NetBSD return something than the
+POSIX-mandated ELOOP for an open(2) on a symlink with O_NOFOLLOW.  This
+is really minor to work around, and overall, both operating systems
+overwhelmingly are easy to support and run almost all POSIX-compatible
+software with ease and support a modern POSIX version.
 
-Apparently you can=E2=80=99t nest brackets like this according to git-am=
-(1).  I
-got this:
+And then we have uclibc, which has decided to optionally fail to
+implement obligatory functionality that has been around for 35 years,
+which is longer than some of my colleagues have been alive.  This isn't
+even that it doesn't implement all of the POSIX functionality, but that
+it doesn't even support what was standardized in C89=E2=80=94not C17, or C1=
+1, or
+C99, but C89.
 
-    ] t7011-skip-worktree-reading.sh: ensure no whitespace after redirec=
-t operators
+I should point out that the entirety of musl, a competing libc which
+does ship with fully functional wide character support, is less than 800
+KiB in shared object form, so there's really no defensible reason for
+this option to even exist.  Nobody is shipping even embedded Linux
+systems with so little storage or memory that this option matters
+(because you need a decent amount of space for the kernel as well),
+especially considering that flash can be cheaper than CAD 0.06 per GB.
 
-Doesn=E2=80=99t really matter though.  I suspect `[PATCH Outreachy]` wou=
-ld work.
+The difference is one set of systems has a minor incompatibility that
+requires little work to work around and has few practical effects, and
+the other tried to exclude major functionality from a tiny, ancient
+standard, the result of which is a wide variety of software that's
+broken.  (For example, ncurses normally builds a wide character
+version of the shared library in addition to the byte-based version.)
 
-On Fri, Oct 18, 2024, at 21:17, Seyi Kuforiji wrote:
-> As discussed in the thread on lore.kernel.org (link below), it is impo=
-rtant
-
-This is documented in Documentation/CodingGuidelines at =E2=80=9CRedirec=
-tion
-operators=E2=80=9D.  That=E2=80=99s a more straightforward reference.
-
-> to ensure there is no whitespace after redirect operators. This change=
- updates
-> the script to conform to this standard, changing instances like:
->
->     foo > actual &&
->
-> to:
->
->     foo >actual &&
-
-We can see that from the patch.  Saying what it does is redundant in
-this case in my opinion. :)
-
-I think it suffices to say that you are fixing the code style.  If so
-this would have been enough:
-
-> As discussed in the thread on lore.kernel.org (link below), it is impo=
-rtant
-> to ensure there is no whitespace after redirect operators.
-
-...
-
-You seem to be wrapping the lines at 80 columns.  72 columns is more
-common here.  The idea is (I think) that you add some slack for things
-like commit message indentation in git-log(1), multiple levels of email
-quoting and so on.
-
-It=E2=80=99s kind of indirectly mentioned in Documentation/MyFirstContri=
-bution.
-I also found this:
-
-https://lore.kernel.org/git/ZrCdDHqKfwWbr_Zn@tanuki/
-
->
-> Reference:
-> https://lore.kernel.org/git/CAPig+cQpUu2UO-+jWn1nTaDykWnxwuEitzVB7PnW2=
-SS_b7V8Hg@mail.gmail.com/
->
-> Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
-> ---
->  t/t7011-skip-worktree-reading.sh | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
->
-> diff --git a/t/t7011-skip-worktree-reading.sh b/t/t7011-skip-worktree-=
-reading.sh
-> index 4adac5acd5..c86abd99bf 100755
-> --- a/t/t7011-skip-worktree-reading.sh
-> +++ b/t/t7011-skip-worktree-reading.sh
-> @@ -32,24 +32,24 @@ setup_absent() {
->  }
->
->  test_absent() {
-> -	echo "100644 $EMPTY_BLOB 0	1" > expected &&
-> -	git ls-files --stage 1 > result &&
-> +	echo "100644 $EMPTY_BLOB 0	1" >expected &&
-> +	git ls-files --stage 1 >result &&
->  	test_cmp expected result &&
->  	test ! -f 1
->  }
->
->  setup_dirty() {
->  	git update-index --force-remove 1 &&
-> -	echo dirty > 1 &&
-> +	echo dirty >1 &&
->  	git update-index --add --cacheinfo 100644 $EMPTY_BLOB 1 &&
->  	git update-index --skip-worktree 1
->  }
->
->  test_dirty() {
-> -	echo "100644 $EMPTY_BLOB 0	1" > expected &&
-> -	git ls-files --stage 1 > result &&
-> +	echo "100644 $EMPTY_BLOB 0	1" >expected &&
-> +	git ls-files --stage 1 >result &&
->  	test_cmp expected result &&
-> -	echo dirty > expected
-> +	echo dirty >expected
->  	test_cmp expected 1
->  }
->
-> @@ -59,7 +59,7 @@ test_expect_success 'setup' '
->  	touch ./1 ./2 sub/1 sub/2 &&
->  	git add 1 2 sub/1 sub/2 &&
->  	git update-index --skip-worktree 1 sub/1 &&
-> -	git ls-files -t > result &&
-> +	git ls-files -t >result &&
->  	test_cmp expect.skip result
->  '
->
-> @@ -86,7 +86,7 @@ test_expect_success 'update-index --remove' '
->  	setup_dirty &&
->  	git update-index --remove 1 &&
->  	test -z "$(git ls-files 1)" &&
-> -	echo dirty > expected &&
-> +	echo dirty >expected &&
->  	test_cmp expected 1
->  '
->
-> @@ -110,16 +110,16 @@ test_expect_success 'ls-files --modified' '
->  	test -z "$(git ls-files -m)"
->  '
->
-> -echo ":000000 100644 $ZERO_OID $EMPTY_BLOB A	1" > expected
-> +echo ":000000 100644 $ZERO_OID $EMPTY_BLOB A	1" >expected
->  test_expect_success 'diff-index does not examine skip-worktree absent
-> entries' '
->  	setup_absent &&
-> -	git diff-index HEAD -- 1 > result &&
-> +	git diff-index HEAD -- 1 >result &&
->  	test_cmp expected result
->  '
->
->  test_expect_success 'diff-index does not examine skip-worktree dirty =
-entries' '
->  	setup_dirty &&
-> -	git diff-index HEAD -- 1 > result &&
-> +	git diff-index HEAD -- 1 >result &&
->  	test_cmp expected result
->  '
->
-> --
-> 2.47.0.86.g15030f9556
-
-The diff here is clean.  It only does what you describe in the commit
-message.  Good.
-
-I checked the file and I can=E2=80=99t find any missed instances.  Nice!
-
+So I agree that we should allow minor variances for nonconformance,
+because very few systems practically comply with all of the standards
+(Linux, for example, does not).  That's a prudent and sensible thing to
+do, and we should definitely continue to do that in the future.  But
+given that this is major core functionality in the standard and there's
+actually an option to include it which this distributor has just chosen
+not to enable, I think it's fine for us to tell the distributor to just
+use the appropriate compile-time option for their libc.
 --=20
-Kristoffer Haugsbakk
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--GWE5CknlruRED9kD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZxLACgAKCRB8DEliiIei
+gRKMAQCeH7dzHmtkmBsMVPXn1KcXelXI6gWFNTtNdrAqaOhUlAD/c8pzg3Iyl7cx
+xiFUL2/UTkRHHcGi9EWmRUL7gx1niww=
+=hlo3
+-----END PGP SIGNATURE-----
+
+--GWE5CknlruRED9kD--
