@@ -1,94 +1,157 @@
-Received: from sonic308-9.consmr.mail.ne1.yahoo.com (sonic308-9.consmr.mail.ne1.yahoo.com [66.163.187.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CF3811F7
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 15:46:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.163.187.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CD8202F7D
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 16:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729266403; cv=none; b=OPrhHthmRDsfT/qemTZK2OG2MJzEj+3/QyHwmKA4EXK0/nDH9qMBId965O0JeCDrNhka+J5mCPMP1JGVyfyewxrS6PsgWpQ2r/rwnoX9SCdCNZzF+C4pGS9mtE1ZHJOLN/g9dvb0Bx39IYbgBZoxUUt+r2tPAImR0OidhrTtaDg=
+	t=1729267731; cv=none; b=sSKBpCem/MamGxXVRY0iy0n7PAAF0xvhGFAMdl2oLrTef7xuyMxlrZEtLifyEzvOFp87vMGYZkwVMEbMP0Ge+Df313HEzU2epwJuzMZo/KXMW619Gkk4S+D+SE+CQ5zfC5mtO8ePlmpLZPaJVb9vmK4fqRYYmVZbLXVS9WLANaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729266403; c=relaxed/simple;
-	bh=lwVaWl01gzArPy1sHlehjcdC+GZ2eOe8mRBrbrbou4o=;
-	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type:
-	 References; b=WJ0HXLtTOIc4Sg24DxfpjpF/MsTqvhaysMvBZ1O5xGl6aqYH6nmForaiZ8M7hvkCdfxeVciSkOzI/SBGUAjVtNJebA0epemUyOWCWaDUGFGGROo74kIPeQQESRN0HwntBA0Jr3ZG6Achx9lI7nbf0zfOTLv6ub3nltGVJdO8M0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=DX4vunuB; arc=none smtp.client-ip=66.163.187.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1729267731; c=relaxed/simple;
+	bh=v6tsWsbVZhXwjyNVxn4XLQq5ZXbHLbxUR3x+DfV1scQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hLYoxs/AshC65TEUilEmCjnnegltA7I6qaU65GI1yCHu+1p0V1Uz2u4aLde9u12ks0DTIcTs5FqROzLtHWlIHM3T4QqaLFWULS9OzGvstVbXq50Cd+KpgkoJJckluRtxmxT7vn7iOF38BP518SEuRnir5I/AYEqCASnMz9qtQRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=JwGW+BRG; arc=none smtp.client-ip=84.93.230.250
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="DX4vunuB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1729266400; bh=lwVaWl01gzArPy1sHlehjcdC+GZ2eOe8mRBrbrbou4o=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=DX4vunuBUGkeKQfhTvGAtSev96GHlLaGaKYjIDqmqm3jhWg1WM5nttwv5ZcsDzeoNOiZcCHtDMhiMocP7tcM9a5kryHHvnIJErqxKq0gHGowpwsyZtlAcXJ8q0TtJTPMYkRb2XjtUQsv7BEAT0z1U58k/7mt1SRtJBsCLPb20tABxs13kvoqChG+pbTGzy5MK8Ja0QGuhNCQ32Hf9vaKO+cuzoP/QbNCnpil5fquTgknhfN2IxKKJzOFw5FxySFjAT3UcIRJkUZwUuu7UPBoWPCpUTo9xr6dVv0JUpKFnvrElAvmiRSEIfA1mROoXzwzZEkl29AcfWMKo8e7tsECrQ==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1729266400; bh=zbQLsjB7CGIaY+HKgD/1gwtQhk1ZURIktBMpyRQq321=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=bN0l1JvxLIxAubylWzdwQqSNdSNbXmIfvLKZx6EXNxUuYluiRqd5pZN5n4avhUxbrD1qpcZuT5/dvrLIOqLnLrnQcBLXDNMJ5P2ssyt/eIKZi9ubPjV1b9TRb8zXJAf3Prh7588lujyyQsTlu4RpUcLadFHNRQH8IKwh15nHTuUDZP3EFjXfRCnhgOQfgePCguwWhRS5vkhJOU7C/32TRn1haqYL9SBspkZjg/ty5+89L+rtcUEwPnYR9BZ8Z68j1sCJtQfaUTVzDVaz9ozefv4CgOmXMTI2hg37o+dPPfgVsn5U2CVRMwsO69sHlRNXLqX4fpenfk7A3OKfXd0QPA==
-X-YMail-OSG: CK4euDQVM1nFW34vMMK_XV9yAJEhaIP8FgCHSM3Q.nODGDugjdiv3DqN.vOY6P2
- eheBC5YSzteA2dOnlSxPhmf4tOagbkqcT6LakiGl4eUh4WHEQaM9g6QnxrvLWCz_z6CRNSt4OPW8
- 2A88KP0kOx.yhw7tUjvxcXDn3RWNmu8Tvp17EImvefW.JkWEH53GuRgtYIbwL4iNAFHgbotyNyEA
- RbgZxSebxdLLRZYPchz4xNjdHQNG.SZc0hQQldJr3YLGqVXqw5vo3cUKGPMXD._RHotMO5_cDRrK
- Pyw1AkjELN0yetdUQUby8H7CKvAXSC_q97ZsSkfPLrOB4gLuENh75tEkhfZWawlPKdOS3k0twAO2
- hY_JPGt7tphAqCUluNwX6OaD1F64gc19CwdUN38hpp0izIv_B5a7TU5CKjY9Aao_R1aJTUrcittn
- 32BT2ZZ9cDbTbQo5vNjICj.mWIXZRiUUxjAdg2paAjkKV4zuVK2Am57ipeUNrwOPglSG5qp1aJGp
- 9Exg.bE_ngTK.X5wfXkLGXLX8HhykiIIOli13succ5KFAhFWI2Hop0G37RT2QcNdkpAOCSW70XQ5
- nFbnGak7NLU1PRyGCRllL1HBv4FpecZf3Xxx_f0NOpKDr6hE4VXtujH7n5fNJ39Pkd0ao1Taeqte
- Dsfs.CtgWg.9xbdKdii.p5BDg_Ykq0O5B6R7RWrqK_tJjZ.cpU3UIVQ0_2nreNfBrZoUkzmhVwbO
- lQZtpcTPK.zZ0p6VW7iBOZowR4v4bN2ebknXVntd9WUOS.DOtOTxA3cCSMjKVbPvgXncGWMVUyDk
- 7tlroXu5EwbN2vHeFkKAYilbnBS4ZL_K2.7bp1iG2vIcXLzB8XLgWo5WHfnbgpf0wi7X.OcsBjKO
- HJMIOfaKcxgi6wmOYn8U1Td0euCxRmtaz1hvT8TlmLS63srMPzG8i5vMEUby0EgTTIPWYmOtBUUz
- mmzms050PKELQnrxuFE3Uz.W86thfJRjSb.DHULNGWA2qGX3OLoYys2Yn3s0Kdd5nag_t8wlUBFv
- DxJzOiPOI7RhR2A7n4vPNUtNHobcqKiasn.9k5PWEEaYSQ0uZNUNVxtK50qv2ArD688nBQWf4GRx
- ngMxcPOQ.VRoLCr3Pu9fLKTI3ifIb8iGG_AAfwj7wfSMFUGtdku6XDcYj9ZbJdNaE7AOAu71afQm
- H3jKrT0WSGIuGiKwD4tnlOLEirCKcXg9a2clYgrAf8mv_JT860lG_dppSrVnzWULD27B1wbwiO6m
- sjp5Ob_4xQEuFSez.WdKRVtPYx3rXkxbM1Ou29Bi7mvPoLZqXSIZ8XQ577Ubgw0PnxNM.jVuqWdh
- LnAVM2a9mKGuisC25qbsyHZqXY7zI9jx82SrKcUXM66vSKr_Mz_JfsqIjKSMEgkGYQ.iGINDFZB7
- kPdxjrY5HfUjll86FvXMDEWflGhnqBxn8im4teX9Uc3RgZqfYPtFTQqvysVsaGRxfWQQkWvB5mjG
- TbAXOed0UOXXCRYzpJlsyvARlc2htZuFIDVTrdOte4ugAWtBd76sPTmImkrlsUCJtfAqPbg1N8Zi
- ucVeY_xxthsPQgKVnMm_R_du6ybrJNNdmvSXGrD8bRmZ2Xgq9cOwG1m8fQWLpJ89.LIX3ZzC0y0T
- xjTh_v2gsDkJtG14f6cpVNWhu.WZR0EiwViLeeycDaB82kTOVeJLvVPZVWBW3xaRNRXcprD4B6eN
- Qrro9Y6y9q0WMXcJhQur58TQxyk5uaue5ZOJdGJrnnD8q7SwpsHc8r2o4zy6.GI6wM9QOiYgfhVf
- M6o51E9mWlZwIaLHghRHCSkoNb.V3ZXSkGdELxzU7ywR6mN0dQdJLsxR6dM1EICH3ZknWVQorbcr
- xexitoFfv8IDixOCJvOzSyzDud9RftVMGgJt2xTwz6fGovtpY78gXpuW9t6oyO889fqx76olxvaX
- DH6X4FTX90HkyDAvyVUkqr09SyxAoBDQG0uBsKqVMT0mTx58lybZ_5UginFrrqh.I4k11WrdhJ4X
- wdglMPlDGO8S9g86qgKSHUvPDWKnv99Wbad7_QMjkkWasHE6Ge.SwD5BoGz.HNk.EixtHT6g9Bi6
- KzEnIxW4OORo6Rl7p4qN4cjoFZ92uaw.Xei4mkLqZfQ2msvuGyEGnMMCwxnqTgaAlV6PamnmUGWs
- m1ato33ETgFZhLGTELRJYlWoCA2KvxI91O5WkuwAeEkVsX7D6n4cdAeKxZjh0w7XrdzYNM84Tt_x
- brvaNLwTEwLGehZlogdz_7R_3Gq9J5jYAZL2iXBMRxPJH2f_UN3V3CCbr
-X-Sonic-MF: <shamimkhanum@yahoo.com>
-X-Sonic-ID: a2bb2b64-ed71-476e-9537-143dcc68e0bf
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic308.consmr.mail.ne1.yahoo.com with HTTP; Fri, 18 Oct 2024 15:46:40 +0000
-Date: Fri, 18 Oct 2024 15:26:21 +0000 (UTC)
-From: "shamimkhanum@yahoo.com" <shamimkhanum@yahoo.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <705912536.3510460.1729265181938@mail.yahoo.com>
-Subject: Oureachy: Microproject (Modernizing a Test Script in Clar
- Framework)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="JwGW+BRG"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 1pWrtadXTvENU1pWttE2i4; Fri, 18 Oct 2024 17:08:45 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1729267725; bh=tNf1qFLR7BhvhtfDisf3cWhYHLIznb2NTNkENvYUWZg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=JwGW+BRGbgjbmhapA0MHo7WGOGstKnsQdjQRskYqmOnPh1ka1ou6QDXVh9wMK//Rx
+	 EusxFmA03E9dYYaivMdrjCIBcbANaV0QgiqFuiKDi0buFX3oj0K4VfciShWZxcVlHQ
+	 G01fP9LWUoS4geZnleP+lmYbLSGXNCKXJ/O3tg68a6awCdu6ZNuV6erjfKV946/lqU
+	 oes6iNXsx8b7MIfxNvz4Dv0bFbsBZuuHycsT+Kmha4dZYYqUocDWnvHlDb9ZOAkCwS
+	 AEp9wKYGiFGTuaEGL3doqtVPYmovIK5u3MChH6vDEl6gKYIaqFgVA5OkTXw2JeOmv/
+	 7XkRWAhpnm7tA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=T9svTOKQ c=1 sm=1 tr=0 ts=6712880d
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=P3QaAUlGTxtmQc9QaUIA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
+Date: Fri, 18 Oct 2024 17:08:41 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Eli Schwartz <eschwartz@gentoo.org>,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <cover.1729254070.git.ps@pks.im>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-References: <705912536.3510460.1729265181938.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.22806 YMailNorrin
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfERyYFAe2mxH7Y3RnVDns8B8wYC0PEBHQu8RrfBAY8kt5qe7d3Dv0BB61JQ2wQ9jY1lYV0KYhcKGawFvQe4wqBfxEsvHygdRiXvfgJ0mmkOIk5wE+tG2
+ Tfj8TgacJUuwk5VFhtbGkZpS+PVFI1PlkzF7GFdVTEAMKiF61vvPNpBEkCVmkK0W5i7OZfLcwDJT1vTQZ7TAAS0vf5ajN8htDmw=
 
-Dear Git Community,=C2=A0
 
-I hope this message finds you well. My name=C2=A0is=C2=A0Shamim Khanum,=C2=
-=A0and=C2=A0I am a C programmer=C2=A0with=C2=A0a keen interest=C2=A0in=C2=
-=A0open-source development=C2=A0and=C2=A0version control systems.=C2=A0
-I am writing=C2=A0to=C2=A0express my interest=C2=A0in=C2=A0working=C2=A0on=
-=C2=A0a microproject related=C2=A0to=C2=A0Git, specifically focusing=C2=A0o=
-n=C2=A0improving the Modernizing a Test Script=C2=A0in=C2=A0Clar Framework.=
- My proposed approach involves a thorough review=C2=A0of=C2=A0the existing =
-test scripts=C2=A0to=C2=A0understand their=C2=A0structure=C2=A0and=C2=A0add=
- a small enhancement. My background=C2=A0is=C2=A0as=C2=A0an MPhil computer =
-science student at the University=C2=A0of=C2=A0Punjab. I am currently=C2=A0=
-in=C2=A0the Outreachy contribution phase=C2=A0for=C2=A0choosing this projec=
-t. I am passionate about contributing=C2=A0to=C2=A0open-source projects,=C2=
-=A0and=C2=A0I believe that my skills=C2=A0and=C2=A0enthusiasm would make=C2=
-=A0me=C2=A0a valuable addition=C2=A0to=C2=A0the Git community.=C2=A0
-Thank you=C2=A0for=C2=A0considering my proposal. I look forward=C2=A0to=C2=
-=A0your feedback=C2=A0and=C2=A0hope=C2=A0to=C2=A0engage=C2=A0with=C2=A0the =
-community=C2=A0to=C2=A0make a positive impact.=C2=A0
 
-Best regards,=C2=A0
-Shamim Khanum=C2=A0
-shamimkhanum@yahoo.com
+On 18/10/2024 13:23, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this is the third version of my patch series that aims to modernize our
+> build system infrastructure. It refactors our existing build infra to be
+> ready for out-of-tree builds and then wires up Meson.
+> 
+> Changes compared to v2:
+> 
+>   - I have split out semi-related changes like the platform
+>     compatibility fixes into separate series. More on that further down
+>     below, where I explain the current base.
+> 
+>   - I have polished the CMake-related changes I've been doing as prereqs
+>     while refactoring our build system. Some of the changes weren't
+>     tested before, but now CMake works as expected.
+
+Just curious, does the cmake build system work on Linux now?
+
+(cmake is another system that I don't really know, except in a
+'monkey-see monkey-do' kinda way)
+
+> 
+>   - Fixed up some dependencies in our Makefile, as I didn't amend them
+>     to depend on the new generator scripts.
+> 
+>   - I have extracted some more scripts to massage our Perl library code,
+>     shells cripts and gitweb.cgi such that they can be used by Make,
+>     CMake and Meson. This also fixes generation of "gitweb.cgi" on
+>     Meson as reported by Ramsay.
+
+I haven't had time to test this yet (I haven't even properly read the
+patches), but from a quick squint, this looks similar to my attempts
+to do the same thing the other night (minus the cmake stuff, of course).
+
+However, I didn't notice anything in the commit message about changing
+the format of the GITWEB-BUILD-OPTIONS file, which already exists before
+that commit. I did the same, btw, but it seems that file was only used to
+'notice' when the configuration changed to enable the re-build of gitweb.cgi.
+In which case, the change in format (rather than content) was not an issue.
+
+> 
+>   - I have fixed the cyclic dependency in our Makefile that I have
+>     introduced with v2.
+> 
+>   - I have addressed some feedback regarding "build-systems.txt".
+> 
+>   - I have made things work with OpenBSD 7.6.
+> 
+>   - Things now work on Cygwin and MinGW64 as expected, no more test
+>     failures except for t9700, which also fails with our Makefile.
+
+This caused me some concern for a little while, since I don't recall
+that the t9700 test has ever failed for me on cygwin. I have the test
+output files for all versions of git (each rc and rel) from v2.12.0-rc0
+(5th Feb 2017) to today (all 143 of them) and none of them show that
+test failing. (I remove files from that directory on occasion when it
+takes up too much disk space).
+
+However, you qualify that statement in the commit message to make clear
+that it works on cygwin, but fails on other windows 'targets'. phew! :)
+
+>   - I have improved how we set up the required tooling on Windows such
+>     that we detect Git for Windows-provided tools as we do with CMake.
+>     Like this, VS Code can now trivially import the Meson project and
+>     configure it. Furthermore, generation of the Visual Studio solution
+>     is trivial as well. So overall, things work fine now on all the
+>     important Windows environments that I'm aware of.
+> 
+>   - Several smaller fixes all over the place.
+> 
+> I've included a range-diff, but it's quite crowded overall.
+> 
+> In general I think that this is in a pretty good shape now. I have
+> tested things on NixOS, macOS 10.15, OpenBSD 7.6, FreeBSD 14.1, Windows
+> 10 with MSVC, VS Code, MinGW and Cygwin, and things are generally smooth
+> and just work. I'm sure there's still going to be weirdnesses on some
+> platforms regardless of that.
+
+I had a very quick attempt on cygwin the other night, and it behaved
+differently at the 'ninja test' stage. It printed something like
+'[0/1] all tests' and then seemed to do nothing, except 'python3.9'
+was hovering up all cycles (well over 75% anyway) with no indication
+of any progress. This was nothing like the behaviour on Linux (which
+also looked a bit strange, but at least showed progress on each test
+as it ran).
+
+I ^C-ed it, since I didn't want to wait 6 hours before it (hopefully)
+finished running.
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+
