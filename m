@@ -1,157 +1,118 @@
-Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CD8202F7D
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 16:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AC6188CB1
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 16:16:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729267731; cv=none; b=sSKBpCem/MamGxXVRY0iy0n7PAAF0xvhGFAMdl2oLrTef7xuyMxlrZEtLifyEzvOFp87vMGYZkwVMEbMP0Ge+Df313HEzU2epwJuzMZo/KXMW619Gkk4S+D+SE+CQ5zfC5mtO8ePlmpLZPaJVb9vmK4fqRYYmVZbLXVS9WLANaA=
+	t=1729268169; cv=none; b=Qh1pWJFZ5dHOsh/lLd+p9Ushf+WMo6Qi5ewKhn/PmLnOO7xfYSUR+LXbDiAMM06OITaRXRQW8nbmSTXA2feKILnvUa5xA2kjd2DOZioMu5PIN2LTleG/5CpwUDUzwUFfiuKlDKuCs7kY2uX24W2DJAhu7WMJoAogGk1NVuu/xJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729267731; c=relaxed/simple;
-	bh=v6tsWsbVZhXwjyNVxn4XLQq5ZXbHLbxUR3x+DfV1scQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hLYoxs/AshC65TEUilEmCjnnegltA7I6qaU65GI1yCHu+1p0V1Uz2u4aLde9u12ks0DTIcTs5FqROzLtHWlIHM3T4QqaLFWULS9OzGvstVbXq50Cd+KpgkoJJckluRtxmxT7vn7iOF38BP518SEuRnir5I/AYEqCASnMz9qtQRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=JwGW+BRG; arc=none smtp.client-ip=84.93.230.250
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1729268169; c=relaxed/simple;
+	bh=KKeIPZ2MFKA9UTrsHDegO1sYLhjXsxo5MRWXsajK53g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=I0JORQxTf4E4GFACdqUFipDbfN2dtNwsi8YdjI8DGRVppfolcMNqo/EL09EHsCt0VzvvBJI8Il2hYT35Y3cStt2H1BW7fIErwgWGEI0oSPFapENpzHi+vluD9Y5WfUeizGPdhGNEKUKbVrL9Uy1Q3JvuEHUaCOiFa6Ub/W8Xi5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SC6IfYyf; arc=none smtp.client-ip=209.85.167.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="JwGW+BRG"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id 1pWrtadXTvENU1pWttE2i4; Fri, 18 Oct 2024 17:08:45 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1729267725; bh=tNf1qFLR7BhvhtfDisf3cWhYHLIznb2NTNkENvYUWZg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=JwGW+BRGbgjbmhapA0MHo7WGOGstKnsQdjQRskYqmOnPh1ka1ou6QDXVh9wMK//Rx
-	 EusxFmA03E9dYYaivMdrjCIBcbANaV0QgiqFuiKDi0buFX3oj0K4VfciShWZxcVlHQ
-	 G01fP9LWUoS4geZnleP+lmYbLSGXNCKXJ/O3tg68a6awCdu6ZNuV6erjfKV946/lqU
-	 oes6iNXsx8b7MIfxNvz4Dv0bFbsBZuuHycsT+Kmha4dZYYqUocDWnvHlDb9ZOAkCwS
-	 AEp9wKYGiFGTuaEGL3doqtVPYmovIK5u3MChH6vDEl6gKYIaqFgVA5OkTXw2JeOmv/
-	 7XkRWAhpnm7tA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=T9svTOKQ c=1 sm=1 tr=0 ts=6712880d
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=P3QaAUlGTxtmQc9QaUIA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
-Date: Fri, 18 Oct 2024 17:08:41 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SC6IfYyf"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3e602994635so549633b6e.0
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 09:16:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729268167; x=1729872967; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KKeIPZ2MFKA9UTrsHDegO1sYLhjXsxo5MRWXsajK53g=;
+        b=SC6IfYyfj9Cs4x5RQShReK9h6Oz/JTxnnObj41HoTZJl9Ek+PUD7JNwjEGd7XZWAx8
+         zFIVrLtPvkqL9jt7k1bzeZWxx0WYGN2J0wERD1hH9IPLJcXR4+wDQbbDiMUkcXmNnnMk
+         WkITLD1rHyiZvmGJarbCM8TbsIZTug5WWxaKfllIrcrG1+eMYMNYbQIHXGolvLVnyVcL
+         9FudtcROUYEbv3a1IMj9a4fNVtX0gPdSyJHgI0dWf3F1oOIXIWuvX+wq895wkHx9uoMr
+         0x3EM/21O09C9bCco759G3Ai/apix7pNUFOWT/c+zVmwTJxJOY98WEQ/oA6m9g3okCfe
+         sg/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729268167; x=1729872967;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KKeIPZ2MFKA9UTrsHDegO1sYLhjXsxo5MRWXsajK53g=;
+        b=I06k2Igj4nOCfFbTnLyc/2m9tsqnGc/m1LqX8T494Dmr3oQKYk5aFViwZ6hvEx6MQ/
+         oUB2G87gXf0TD4/Z2w0kUcu0GujmRTHt8VjnuoHd+3F9CNoyD4R5gQDDk/YHr2rJ/7V4
+         IbRtA6Ad6KK5hOFQpfq2XkF/rLx3W7C/Lqtse97tXDi17A5b+SVM6+O/3Mq5VqE0N3f3
+         dgN//GKzoRx005OHjEv9INl8la6tq93XNLx54H30sAcPZpx9EJFsjabz8itcPvVl7JHX
+         i8DMl+vVEVjIWPABGjmEQy81bYbmoU1m+nim7YXgTn798eewaSA7b5pMTIYcKcyYIOcI
+         JZLg==
+X-Gm-Message-State: AOJu0YydpZ2MDOssizCgWiAftXnBO6Cwy9r/e2o3TmA65lXFTqVfS1XE
+	6cZNR9DdTFonO/LcC2WGtCndXhAflaS7EzkrpF0p1spT/eo86Uo5OhQa/+6+HUWOJ0KBcn8FCFF
+	APRcKrn0MYuscqzHnBzrN9Td71TihfjjC
+X-Google-Smtp-Source: AGHT+IEbADcvCYmucxVGydpXmr3wKUhllJWTjWbN+dZ+/CbbchTLmf5FoNaMwmw+ddGOmddFTo8/T7o8zsd+9RaCDho=
+X-Received: by 2002:a05:6808:15a6:b0:3e0:4558:612f with SMTP id
+ 5614622812f47-3e602da2a25mr3490074b6e.36.1729268166809; Fri, 18 Oct 2024
+ 09:16:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Eli Schwartz <eschwartz@gentoo.org>,
- Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <cover.1729254070.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfERyYFAe2mxH7Y3RnVDns8B8wYC0PEBHQu8RrfBAY8kt5qe7d3Dv0BB61JQ2wQ9jY1lYV0KYhcKGawFvQe4wqBfxEsvHygdRiXvfgJ0mmkOIk5wE+tG2
- Tfj8TgacJUuwk5VFhtbGkZpS+PVFI1PlkzF7GFdVTEAMKiF61vvPNpBEkCVmkK0W5i7OZfLcwDJT1vTQZ7TAAS0vf5ajN8htDmw=
+References: <705912536.3510460.1729265181938.ref@mail.yahoo.com> <705912536.3510460.1729265181938@mail.yahoo.com>
+In-Reply-To: <705912536.3510460.1729265181938@mail.yahoo.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Fri, 18 Oct 2024 16:15:54 +0000
+Message-ID: <CAPSxiM9cSQnrcKPdkJwGdMT+B-YSWr8deX1=uXsYa4xk1mHexA@mail.gmail.com>
+Subject: Re: Oureachy: Microproject (Modernizing a Test Script in Clar Framework)
+To: shamimkhanum@yahoo.com
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Oct 18, 2024, 9:16 PM shamimkhanum@yahoo.com
+<shamimkhanum@yahoo.com> wrote:
+>
+> Dear Git Community,
+>
+> I hope this message finds you well. My name is Shamim Khanum, and I am a =
+C programmer with a keen interest in open-source development and version co=
+ntrol systems.
+> I am writing to express my interest in working on a microproject related =
+to Git, specifically focusing on improving the Modernizing a Test Script in=
+ Clar Framework. My proposed approach involves a thorough review of the exi=
+sting test scripts to understand their structure and add a small enhancemen=
+t. My background is as an MPhil computer science student at the University =
+of Punjab. I am currently in the Outreachy contribution phase for choosing =
+this project. I am passionate about contributing to open-source projects, a=
+nd I believe that my skills and enthusiasm would make me a valuable additio=
+n to the Git community.
+> Thank you for considering my proposal. I look forward to your feedback an=
+d hope to engage with the community to make a positive impact.
+>
+> Best regards,
+> Shamim Khanum
+> shamimkhanum@yahoo.com
+
+Hi Shamim,
+
+Nice having you here, I am Usman, an Outreachy contributor like you.
+
+Below is the extract of the statement from one of the mentors Patrick
+which can get you started.
+
+=3D=3D=3D=3D=3D
+I would strongly recommend reading through [1] and [2]. They should give
+you some ideas for how the Outreachy application process is designed to
+work in the Git project and lays out the expectation of us mentors.
+
+Patrick
+
+[1]: https://git.github.io/Mentoring-Program-Guide/
+[2]: https://git.github.io/General-Microproject-Information/
+=3D=3D=3D=3D=3D
+
+While going through all this, you should get additional guidance from
+the mentors also.
+
+Thank you.
+Usman Akinyemi.
 
 
-
-On 18/10/2024 13:23, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this is the third version of my patch series that aims to modernize our
-> build system infrastructure. It refactors our existing build infra to be
-> ready for out-of-tree builds and then wires up Meson.
-> 
-> Changes compared to v2:
-> 
->   - I have split out semi-related changes like the platform
->     compatibility fixes into separate series. More on that further down
->     below, where I explain the current base.
-> 
->   - I have polished the CMake-related changes I've been doing as prereqs
->     while refactoring our build system. Some of the changes weren't
->     tested before, but now CMake works as expected.
-
-Just curious, does the cmake build system work on Linux now?
-
-(cmake is another system that I don't really know, except in a
-'monkey-see monkey-do' kinda way)
-
-> 
->   - Fixed up some dependencies in our Makefile, as I didn't amend them
->     to depend on the new generator scripts.
-> 
->   - I have extracted some more scripts to massage our Perl library code,
->     shells cripts and gitweb.cgi such that they can be used by Make,
->     CMake and Meson. This also fixes generation of "gitweb.cgi" on
->     Meson as reported by Ramsay.
-
-I haven't had time to test this yet (I haven't even properly read the
-patches), but from a quick squint, this looks similar to my attempts
-to do the same thing the other night (minus the cmake stuff, of course).
-
-However, I didn't notice anything in the commit message about changing
-the format of the GITWEB-BUILD-OPTIONS file, which already exists before
-that commit. I did the same, btw, but it seems that file was only used to
-'notice' when the configuration changed to enable the re-build of gitweb.cgi.
-In which case, the change in format (rather than content) was not an issue.
-
-> 
->   - I have fixed the cyclic dependency in our Makefile that I have
->     introduced with v2.
-> 
->   - I have addressed some feedback regarding "build-systems.txt".
-> 
->   - I have made things work with OpenBSD 7.6.
-> 
->   - Things now work on Cygwin and MinGW64 as expected, no more test
->     failures except for t9700, which also fails with our Makefile.
-
-This caused me some concern for a little while, since I don't recall
-that the t9700 test has ever failed for me on cygwin. I have the test
-output files for all versions of git (each rc and rel) from v2.12.0-rc0
-(5th Feb 2017) to today (all 143 of them) and none of them show that
-test failing. (I remove files from that directory on occasion when it
-takes up too much disk space).
-
-However, you qualify that statement in the commit message to make clear
-that it works on cygwin, but fails on other windows 'targets'. phew! :)
-
->   - I have improved how we set up the required tooling on Windows such
->     that we detect Git for Windows-provided tools as we do with CMake.
->     Like this, VS Code can now trivially import the Meson project and
->     configure it. Furthermore, generation of the Visual Studio solution
->     is trivial as well. So overall, things work fine now on all the
->     important Windows environments that I'm aware of.
-> 
->   - Several smaller fixes all over the place.
-> 
-> I've included a range-diff, but it's quite crowded overall.
-> 
-> In general I think that this is in a pretty good shape now. I have
-> tested things on NixOS, macOS 10.15, OpenBSD 7.6, FreeBSD 14.1, Windows
-> 10 with MSVC, VS Code, MinGW and Cygwin, and things are generally smooth
-> and just work. I'm sure there's still going to be weirdnesses on some
-> platforms regardless of that.
-
-I had a very quick attempt on cygwin the other night, and it behaved
-differently at the 'ninja test' stage. It printed something like
-'[0/1] all tests' and then seemed to do nothing, except 'python3.9'
-was hovering up all cycles (well over 75% anyway) with no indication
-of any progress. This was nothing like the behaviour on Linux (which
-also looked a bit strange, but at least showed progress on each test
-as it ran).
-
-I ^C-ed it, since I didn't want to wait 6 hours before it (hopefully)
-finished running.
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
-
+>
