@@ -1,108 +1,121 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CF6188CBE
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 07:46:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3279418EFDC
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 08:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729237566; cv=none; b=EBe1s/bfCGJpFoRON+J8yEPsll0VDJpY6bS70aw5jwGMaGqTxl8VT52ld1BXdT32KHtfDS2awxE9GT+Wyq4rHpHEB79mwjgaQxOzt/x7oT2dWknspPfmVu5XD/TWrjAvUiMXQCwxJkT7FnBPXJ/GozAw9gvui9C8rrUbfeh2mok=
+	t=1729241212; cv=none; b=KCSEa7TwBY997QbS8//dxPuXz64JVrvWm5r5bAxUGtAdgy1hYoF013SCXCH/wvuj8tCx2zXZ7A34i9NLv1U1xicP6NZAYaBw40ErTAKYfrkuDrkdoSpo49WVlF8XP9yJV5qERh4tYD1tEXZhOxOj1NTOdf1kEcs5F5iqtN9DaJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729237566; c=relaxed/simple;
-	bh=zfrC6vYDIH652elBjwOpwsgoROEobMpzS9JV3Rdj+JM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Balaa5+XZzOiqwSX8fZpYAVDr6Nae2G/NO7/sQ4aEQRG1sqAP6jxQrJE2y3TEYKcSHNDZv7DmmlAI4quhz+jv8qa/Of/tc8OIe60qTjygnQH/I/Uaamy8Tqa+r0XMUuiRrpCBxqpADcUCqvE0MJCYvKaczcSMj0WwvW7Xz9Pguk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jX6QS6Yc; arc=none smtp.client-ip=209.85.217.48
+	s=arc-20240116; t=1729241212; c=relaxed/simple;
+	bh=ySZHEziCwma4aHXM01WWWZ5ees6nxtwmHvr+SrQyBqA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jtx7t7BdBIL/ik8E+H/uof9kyRCG/EGVJHPcoSS8k+cEVKOt+3pOwlGjFuLsReErQcrVObLgJOpXgTlCuHnJyXPYumQCFqBACK9nQ5fxhxY8slUiS3q1I71GgxoZGadTPAeZHSoaOdc40hqyyRu5RMpJNGkld23nCVjXObqpcek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GNIYGxjT; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jX6QS6Yc"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-4a482cb53bdso658439137.3
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 00:46:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GNIYGxjT"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a99eb8b607aso184370966b.2
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 01:46:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729237563; x=1729842363; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zfrC6vYDIH652elBjwOpwsgoROEobMpzS9JV3Rdj+JM=;
-        b=jX6QS6YcJo0bQXuWha+sRNNgfFgdIKxPFu9nGK8S2NDlgEDF2E0Hj7GLhkDs65xNrt
-         D8ZPqYFZjTqwsMkhfWOwW0v64jWwfRGBmWe7iVD6TLIXZVluL+cKmkR7JBTkVXV+BBKU
-         o0Alz7VE0ZsoW5BgR4tm3yYtieCWrplW7W3lbN6K/kuTyrtc22TqPbZN88OB3kGfECg7
-         N8Qlp17liva5trq8pUmZBwqhfGbjeUbisgbMD4+dC543CqqhGs0iq1IddpxVStKs1chk
-         5gWq++gxRbVJy48G9AZ11iMJppXXM8n1xFF8B62SsAE0ofmQpPS8WU0mjkZIYSwlsGGX
-         2mpw==
+        d=gmail.com; s=20230601; t=1729241209; x=1729846009; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5EbOgfYeEw+0ZUKV/EWdPP30oYeTwvFwi6cwRiK9b+E=;
+        b=GNIYGxjT7BRhzY/qTBZmCekCrMj5BDa2jb64PEVfs8FHT3Tdwhzr/aUdBZKZD/ai+8
+         Cfjve3wTYdEdTOIJAUu2dVF5bwFtccAjpR3Me7FfVUxPKhP674wY8A3bh/lfSk1RQh8W
+         gfXb8Z/kboi5Rh+GgPslRy5p0FswIVE6S5q6DurOKKvMVQffKVPr7dKMvKvPqpy0VU+2
+         hcenN9Dl/4HK4dYX7lHtlbpmFWuOOr25R5ibY7V/a1CsmqBNHf7jFdo0r07wCEENyq9O
+         AnTLsw+YMiQsuhrcllLQtqXvFRL++CbhzcZdYxTVsEXyHW5/uuwWVuElEdk7QHRwDzt4
+         /GhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729237563; x=1729842363;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zfrC6vYDIH652elBjwOpwsgoROEobMpzS9JV3Rdj+JM=;
-        b=Hyg5BrbOkYZr/y+cuOWeKlDO6kN2v4opn9ntueLzXrjzrGZGxEEBJIBPOznuSKRZ14
-         hCd8+0vyplXkn4sVK+EXF60tDLHOby5odvodbmIncAlLG6LoTmuxO+PLNV2DleaG2eBm
-         NNOYVNVSrL4MzdVi88tm5aF1jZ1GkK1dlIPqA2r9G7alw+YeAqR7pFrR0WrNRmInAVSP
-         vUe5aZ1cnHJyuiStclIcWlHp61lVfcQWrVOPFZWPTJQefAw9kkf1WCDV/FCGKIWfkhW2
-         fO3De6PA7lfil+Q9R+EeI34wpSJteBdhnVaWseezSo6F5jq8cCFwiSfz1MIyUmyIoks5
-         9DzQ==
-X-Gm-Message-State: AOJu0Yzr4q8Te04wwb308uRCzQJNi1PSMBkY/QTai3ljdsRBDx1KaGG/
-	eUzuCCwJS4A0rWv0VWwjFuFVDxg7vcasRikLE+KT+glwYtK1/FgNdnUK9RIm2k6v5w3c0ir5DYJ
-	bQJ3gpexIFUwlk3wXPAhPqxk4AyxoATRX
-X-Google-Smtp-Source: AGHT+IF+3aqh5SXCHOzcpEyL51FYvD8RKxJQqS4dX/936slInAY6gQhAhlV3GWGeX7vwa/wV7wt7+PfKewEMaRQAPTU=
-X-Received: by 2002:a05:6102:b07:b0:4a3:d4bd:257a with SMTP id
- ada2fe7eead31-4a5d6bb7119mr1254086137.23.1729237563403; Fri, 18 Oct 2024
- 00:46:03 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 18 Oct 2024 00:46:02 -0700
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <ZxF6+ze67duAO8fn@nand.local>
-References: <cover.1728629612.git.ps@pks.im> <cover.1729140565.git.ps@pks.im> <ZxF6+ze67duAO8fn@nand.local>
+        d=1e100.net; s=20230601; t=1729241209; x=1729846009;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5EbOgfYeEw+0ZUKV/EWdPP30oYeTwvFwi6cwRiK9b+E=;
+        b=fjNVSQXGRamZsiI8+qvjcPiL5J+Aecj3AQSeSzv0wBsDN47SjKToVHMokB4/Q47e8G
+         6t74aJy8TrQ9Wp5SCxg/4HPE8kIdUqqhXb1SxbTBTkN9V3kbyRq4IoIQ+I6ZPZ12jqyB
+         2xjqZUMLrmYGh2EhGYibxAaRNJBBpa+JAuJrQn72R97pHqY3ezectRfllcLvdZqrIg9r
+         nDnZKkKcmlwAU/UtYU+2x4jqxHbG+WxjxiIcP20JZdZhi2pGcrwPQkUfidtURd2ISKEG
+         4DO+NfAcICDefsLLA/J95uYP6mTCX3V/Yun9kFafXFqSrj087mS8hITggjhsFj9NxqmN
+         T9Aw==
+X-Gm-Message-State: AOJu0YyO+W/Ga1l6QKYx49jH4OM/B12kvNjuVYyeCxbcGNTHvauU18s3
+	z8tTEPn/cqgXE5ljUm+zcxH9kgk/NuiJbRqJ+RuBIls6ETaL3dHkWmauWjGy
+X-Google-Smtp-Source: AGHT+IH3woHieT+tQ9zFkh7RSEA8MYt5z4ta8TOCKfSJGRvp7DoZfxa+F4QZebYuKNSi3DcH63yDNg==
+X-Received: by 2002:a17:907:94c9:b0:a9a:1e4d:856d with SMTP id a640c23a62f3a-a9a69a67e75mr126913766b.22.1729241209172;
+        Fri, 18 Oct 2024 01:46:49 -0700 (PDT)
+Received: from archlinux.fritz.box ([2a02:2455:825d:6a00:6bb4:436f:5699:ff21])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a68a8d9d9sm65596366b.44.2024.10.18.01.46.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Oct 2024 01:46:48 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: karthik.188@gmail.com
+Cc: git@vger.kernel.org,
+	jltobler@gmail.com,
+	toon@iotcl.com,
+	spectral@google.com
+Subject: [PATCH v4 0/2] Subject: clang-format: fix rules to make the CI job cleaner
+Date: Fri, 18 Oct 2024 10:46:44 +0200
+Message-ID: <cover.1729241030.git.karthik.188@gmail.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <CAOLa=ZRvFBhageS65uE5enzLBz7H_CAvvnEcPsi_QAi0exRx2w@mail.gmail.com>
+References: <CAOLa=ZRvFBhageS65uE5enzLBz7H_CAvvnEcPsi_QAi0exRx2w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 18 Oct 2024 00:46:02 -0700
-Message-ID: <CAOLa=ZStxERhENJ_3osJCWR7u6Pr1YeMjCf3UvTxnce9SDReLA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/10] reftable: stop using `struct strbuf`
-To: Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>, 
-	shejialuo <shejialuo@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000b31c170624bb7e20"
+Content-Transfer-Encoding: 8bit
 
---000000000000b31c170624bb7e20
-Content-Type: text/plain; charset="UTF-8"
+The clang-format CI job is currently cluttered due to too many errors being
+reported. See some of the examples here:
 
-Taylor Blau <me@ttaylorr.com> writes:
+* https://gitlab.com/gitlab-org/git/-/jobs/7854601948
+* https://gitlab.com/gitlab-org/git/-/jobs/7843131109
 
-> On Thu, Oct 17, 2024 at 06:53:42AM +0200, Patrick Steinhardt wrote:
->> Range-diff against v2:
->
-> The range-diff looks like we're getting close here, or are already
-> there. Do others agree that this is ready to start merging down?
->
-> Thanks,
-> Taylor
+So modify the clang-format with the following changes:
+1. Modify the penalties for linebreaks to be more considerate towards
+readability. The commit goes into detail explaining how/why.  
+2. Align the macro definitions. This is something we follow to keep the macros
+readable. 
 
-I had already reviewed version 1, having a look at the range-diff now,
-seems like it is ready to be merged!
+I will still keep monitoring the jobs from time to time to ensure we can fine
+tune more as needed, if someone see's something odd, do keep me in the loop.
 
-Thanks,
-Karthik
+Thanks
 
---000000000000b31c170624bb7e20
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 6342e6ea2bdd144b_0.1
+Changes over the previous version:
+1. I made the example in the first commit message a bit clearer so it is easier
+to understand.
+2. Removed the third commit, since I was convinced that it is good as-is for now. 
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jU0VqY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMUdrQy85eU5mWTR3K0tyM0k3RE1tcTc4QU5OTkZ0ZQpxUjYwTktvMFpi
-Q052Vytsd0F1YTYrU2cxdmVlZ0VmVWNyZU9lYXF6bW5VVXRUdmJDVDcrY0daWFpCdTlXWlhOCmJu
-M21EUTcwNy9tMUFPRUNzMjVYK3ZPclJLa09idURCSlV2dkxERTBndmVoUDAza0FYbk9ldnhRdGtn
-UzJ6dUQKa3I5eWpkc0JnOHlrY2RDQzgwRS9TaitpQjFlM0UxRUx3RGlZckVleUFoU21MYmM5OW1j
-V1ZYWHFTcFVRWlhvagpqZy9rVHc3U1FIWTEvREtTS1M0OWc2eVArNE11Y2VHYnZxUUtPVFEzek5H
-SmNjWXkrcld5VEUyWlVFZnpYNnplCno2bEZWZWtWTXhFM0ZBd05ZQ2hnVzZadzVOUFFyekdIaTRz
-WnVuaDJpZ1JwNzVKU0JGTHIrQ2d6SVFicEFBRU4KQVVzYmVaNm5XMjFVOW0zUHpQbjhKQUpRVEJV
-bVFLaDU2WmZGcnBBOUU0S3RwbTFQLzFZMGNZQk1lQWJPekxhMApQV3dVRThQanlNVjFNWmxmZkpu
-MXBIblF2UmJUZ00wbWFxSTRWS0hCdk5tSks1TVE4M0VxZW1Va1hZVkt4c3ZSCnI5TWE1TUEvQ2Ev
-Y1ZORDdKc3ZubXdrNUlWdHZ2ZStESUFmOFJ4Yz0KPURoK28KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000b31c170624bb7e20--
+Karthik Nayak (2):
+  clang-format: re-adjust line break penalties
+  clang-format: align consecutive macro definitions
+
+ .clang-format | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
+
+Range-diff against v3:
+1:  74bbd2f9db ! 1:  a8c8df5d95 clang-format: re-adjust line break penalties
+    @@ Commit message
+         to instead have something more readable like:
+     
+            static const struct strbuf *a_really_really_large_function_name(struct strbuf resolved,
+    -              const char *path, int flags)
+    +                                                                       const char *path,
+    +                                                                       int flags)
+    +
+    +    (note: the tabs here have been replaced by spaces for easier reading)
+     
+         This is done by bumping the values of 'PenaltyReturnTypeOnItsOwnLine'
+         and 'PenaltyBreakOpenParenthesis' to 300. This is so that we can allow a
+2:  1586d53769 = 2:  fcf965ac74 clang-format: align consecutive macro definitions
+3:  36a53299c1 < -:  ---------- clang-format: don't align expressions after linebreaks
+-- 
+2.47.0
+
