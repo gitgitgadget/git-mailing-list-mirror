@@ -1,137 +1,102 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DD7186E39
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:15:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5590917C22B
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:17:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729286123; cv=none; b=AMV2L7E1mG+1gdg/seVPOSAFCkV02MfZ47YkflFSBISaCMNwzVdBMFTgDxYYzKUA1yX1olkMGpUV5lSG3BTuTtHvsZBWLEpCKLyb4VB1aX8DhTLzeLBTiH3OZv10X/ad8CS4x3XfdosOleTCsoQuocIFy82fjb5tDOkwRTD2FQw=
+	t=1729286263; cv=none; b=Qi1f8WS3X0fGj5UoYkXoGUx3K7/GnMxt922luiCRB0sV5u3p7mYZNkppavIsDiuoCAN/VnRAehDzBzver6R5BYnlm9TbqcJW/XhuyrJr8dGe3ni5F1WJ6f/by/tq9XYwEf/a/FptqxA07x2V54fH7YJFGP8uljC6hOIlVcVahFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729286123; c=relaxed/simple;
-	bh=cp8yM3uJ7jT8Wi/WRjXT+JkEQJak6te9hlHkqa5LIuM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=tV5SYfY7tL/ipx6OkHS/kUqm3S9Bvtv1wUFE0oc3beA2NRdna5TawqCyu5NObO+yCO9HD3uyWIzjEXXcwV7Ra1x2930/zMqs3HwWROXXMAZZbIawWJU/d/hXCELgYUhFBJ2HVfilesB98ym/VbBXidyBrVijxdrbaUXnB4xfklc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BymE7YOf; arc=none smtp.client-ip=209.85.221.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729286263; c=relaxed/simple;
+	bh=7z9kTxeW8lmwCF8Pn9eKZGOfHYgNHTAeTLrtu4bx/eI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F0xccCD6sdEBqeFBbdOxnYszgSLhlkCKLC/YZdB/FdLpce2WKWfEx3XZ/fr54/x8KiSoZfvwFzjcYi/e2Gh1Za1rBY8ul3MhQDvWyov9sMO7TEQVXmkIpnvlIL/NtuK1G4Y8HzaSzunaJbfutDrNOFsa8wFjoMzxcKPP8glyrKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=VckqfoEA; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BymE7YOf"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-50d32d82bd8so593347e0c.1
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:15:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="VckqfoEA"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6e3d7e6f832so25921927b3.0
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:17:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729286120; x=1729890920; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cp8yM3uJ7jT8Wi/WRjXT+JkEQJak6te9hlHkqa5LIuM=;
-        b=BymE7YOfh8fD93tZZ4s1XhqZJvgf83zF1tXA8w9fyucmK/o14riW4Ehsbn3sNMGaIn
-         KRHQJxsfQwF5CVQBPCobEuiA2uCze5O8lbBu1v1HXVn/nfkM2dBee6v6oUkzMNXp/GyH
-         yCgR8mCDhmnA8b15byT/JRVdsehGsaz5gV0FwTq8VxwmPfyFrOp0qmrSxH6frZoUeyub
-         c/ZerrwSaekgpQD6rdZZgbDqN/s4kn+kflLksL1tqessnvVotnO62YoRnAGp+bkw8RzX
-         O6D3d3q6/qNj3OO5UzycaySFVc900pn3M+OvO69QlfANmUwLtie26P3osHc8sJYtjKo9
-         c4MA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729286260; x=1729891060; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7z9kTxeW8lmwCF8Pn9eKZGOfHYgNHTAeTLrtu4bx/eI=;
+        b=VckqfoEA9eeY2DQukOs/B2ksDlNfijOKtJT/YqmOe82O66ojS1/peP33ZSBN3YDnPM
+         6FlqNOGepk4VnnOoERlkt3IQOTsQL92y+Gj76KKoakadnCpulwgS3hNHApOAv499933V
+         3XLVdfSvR/r6Y49xsLDvvJgKzyC4XaTbL6Xp43+X7AEPBJkWVMHh2gs10GP5vKzKbkrk
+         Hi7XbV1bvL+e1x/AuQfXZUw3w4DKNxdnbvBc4lFXGgX66H6QOsqcssc1qExIwdY7GB6q
+         ID7MS+6HRedVrduHgZ2q8AfWDT3NXvYRB+4xUpTHVNHAtIrpptcKiLQi2ltt6NBh6C48
+         1YPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729286120; x=1729890920;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cp8yM3uJ7jT8Wi/WRjXT+JkEQJak6te9hlHkqa5LIuM=;
-        b=ix/cEimgKLGuOGz6inLwaVXeaHBfPp8MEa5glP5KrShfhMp8Uvs+alR/7OtZoq5yuA
-         2Jvg7fe2MJp7kQ0LT+xAfXvnAyO9JXDrw9vao0q98L1BLMvHcJz4+3bt2sOswxokgaUd
-         qbfU1X8AlFatU2IPsXihkvJulrD9m6MMEWWcxTZu9rcc6cPhWsj5TZtIKmieFbTITI0S
-         2BjAGqEKuqKD3VF9yvyFxySWFqKA3nXRE5q3MhpJeOY5KeIU0MqH34LBljNejf76hJTM
-         Y0eLwAnbiONMXaKDeBg1EYrxEiTvytZ+OKwf4Bc3xQz7mXslJJRDkgPMHrYVZ5cBe5bo
-         9jdg==
-X-Forwarded-Encrypted: i=1; AJvYcCVTKTGJj5JnVyW1F0UQl/X3reENxqHJIn9bPM/QwaNipLhsUkYfOOIy2fJ5sDOtJN/Z3QI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxhic72gD9OqTpfLjid1QhmiaWnCXdsy/1gderO5gKWLKL6w1aQ
-	odMjTyum6pEY3f0Ta64w++kWXMopZPvbWI23CRwS6kkb8rYl2kcp+g+fL1hyiGz7mvY/PtgDMjr
-	lAIteZOJBLfG/+oCOPxkxBBRa5Z0=
-X-Google-Smtp-Source: AGHT+IFXRx1D1lbYl7gH+UKvDH+F8kWYPXwrAyqUO8QQbNoObOAkmx/2RQ8hHCSC78a3QpOtvKXcK6QtdzsepxLi4Cw=
-X-Received: by 2002:a05:6122:90c:b0:50d:a31c:678c with SMTP id
- 71dfb90a1353d-50dda12e43fmr4346717e0c.2.1729286120190; Fri, 18 Oct 2024
- 14:15:20 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729286260; x=1729891060;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7z9kTxeW8lmwCF8Pn9eKZGOfHYgNHTAeTLrtu4bx/eI=;
+        b=HaWDbzt6hgHcqkzQ6cWXc9/vRe7d31frQyhbyR3qxRqDC8Ww2lhCeoN7nvF7m0iEvZ
+         u4GWQ5bRqLXuK2jUxOq9alyXbQdS2XSKptJTqSf3VgTjIRZFSvHasWs58mNWbLslwArx
+         /COf/dHH+Q32z2O4a/PsQyy3DdRSmEuZvXmHVosd9eExO5UI52idFB3VpODktcTlW/1t
+         S86SkuM9Qwt4vCD6kU62vi0wuxnA3m98xpuvRwK/1hY8p3IYwQBjntKoH59r2FagRVM5
+         Mmd/WDGMduVECnATwRJuSOW+bEx8EsNG6djUHEx8qQqxXU50d8oQS5/D+XoK/wSiI1YS
+         T7zQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUKh9+qSJw4sTA6gDuB0g5dyWw08FpGeg8bz4afSoO4tP0sh0uTEH4NRCvEOErqK6E9+PQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUnnc/lyj0fvSIW9nzUCVsf248RKbZ4FLNKreGAXostpMrxHTM
+	wIe+INyHAK+z/9BUsaK95IdMTtVKAy1ZbvRT9mfG0Ko180ueN/mBLm868SK9RoU=
+X-Google-Smtp-Source: AGHT+IHAxt4Cc4D/WQb311UuqV4vPj05J2qf6amdtG/8+2a/ccrviOthJ5/ytgfkgMLV58fFlWorOg==
+X-Received: by 2002:a05:690c:f07:b0:6e3:39c1:1678 with SMTP id 00721157ae682-6e5bf6327f9mr41791037b3.3.1729286260214;
+        Fri, 18 Oct 2024 14:17:40 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5c00e3cf4sm4773267b3.48.2024.10.18.14.17.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Oct 2024 14:17:39 -0700 (PDT)
+Date: Fri, 18 Oct 2024 17:17:37 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org, Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Re: [PATCH] credential-cache: treat ECONNABORTED like ECONNRESET
+Message-ID: <ZxLQcekbHEg5YLBH@nand.local>
+References: <a4472d6d1551e7c25540c4c8361bcb6b1c9f92ff.1729084997.git.ps@pks.im>
+ <658fe4fa540a0a5316e11ed43f9139d5ef818ee5.1729226155.git.ps@pks.im>
+ <20241018052952.GE2408674@coredump.intra.peff.net>
+ <8c4b513a-aa6e-4015-a6c2-e153b6c94491@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <705912536.3510460.1729265181938.ref@mail.yahoo.com>
- <705912536.3510460.1729265181938@mail.yahoo.com> <CAPSxiM_4nBcB53+pfvC4YUsVz5wtJYgFEVuWQdCdo=2VWLj=Tw@mail.gmail.com>
- <1075918304.3566148.1729271777281@mail.yahoo.com>
-In-Reply-To: <1075918304.3566148.1729271777281@mail.yahoo.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Fri, 18 Oct 2024 21:15:08 +0000
-Message-ID: <CAPSxiM8sXud=J9pQro28=F9UCbf-PR_gmEp=uyp6d6prCHHxzw@mail.gmail.com>
-Subject: Re: Oureachy: Microproject (Modernizing a Test Script in Clar Framework)
-To: "shamimkhanum@yahoo.com" <shamimkhanum@yahoo.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8c4b513a-aa6e-4015-a6c2-e153b6c94491@ramsayjones.plus.com>
 
-On Fri, Oct 18, 2024 at 5:16=E2=80=AFPM shamimkhanum@yahoo.com
-<shamimkhanum@yahoo.com> wrote:
->
-> I am reading all helping material and also contact with mentors.
->
-> Thanks for replying to me. Can you please tell me if you are working with=
- the Git microproject? Which idea are you choosing? Also, have you submitte=
-d the final application or not?"
-Yeah, I worked on a Git Microproject. The final application deadline
-is by Oct 29. For the project, I will advise you to search through the
-mailing list using outreachy as the filter. You will see all of the
-microproject that have been worked on by other outreachy applicants.
-You can look between 0ct 1st till now to get the idea of what other
-microproject the applicants are working on. Thank you.
+On Fri, Oct 18, 2024 at 04:33:13PM +0100, Ramsay Jones wrote:
 >
 >
->
->
->
-> On Fri, Oct 18, 2024, 9:16 PM shamimkhanum@yahoo.com <shamimkhanum@yahoo.=
-com> wrote:
-> > Dear Git Community,
+> On 18/10/2024 06:29, Jeff King wrote:
+> > On Fri, Oct 18, 2024 at 06:36:11AM +0200, Patrick Steinhardt wrote:
 > >
-> > I hope this message finds you well. My name is Shamim Khanum, and I am =
-a C programmer with a keen interest in open-source development and version =
-control systems.
-> > I am writing to express my interest in working on a microproject relate=
-d to Git, specifically focusing on improving the Modernizing a Test Script =
-in Clar Framework. My proposed approach involves a thorough review of the e=
-xisting test scripts to understand their structure and add a small enhancem=
-ent. My background is as an MPhil computer science student at the Universit=
-y of Punjab. I am currently in the Outreachy contribution phase for choosin=
-g this project. I am passionate about contributing to open-source projects,=
- and I believe that my skills and enthusiasm would make me a valuable addit=
-ion to the Git community.
-> > Thank you for considering my proposal. I look forward to your feedback =
-and hope to engage with the community to make a positive impact.
+> >> Subject: builtin/credential-cache--daemon: fix error when "exit"ing on Cygwin
 > >
-> > Best regards,
-> > Shamim Khanum
-> > shamimkhanum@yahoo.com
-> Hi Shamim,
->
-> Nice having you here, I am Usman an Outreachy contributor like you.
->
-> Bellow is the extract of the statement from one of the mentors Patrick wh=
-ich can get you started.
->
->
-> I would strongly recommend reading through [1] and [2]. They should give
-> you some ideas for how the Outreachy application process is designed to
-> work in the Git project and lays out the expectation of us mentors.
->
-> Patrick
->
-> [1]: https://git.github.io/Mentoring-Program-Guide/
-> [2]: https://git.github.io/General-Microproject-Information/
->
-> While going through all this, you should get additional guidance from the=
- mentors also.
->
-> Thank you.
-> Usman Akinyemi.
+> > I think this commit message has a few unclear or inaccurate bits,
+> > because it's based on the earlier attempt. E.g., the change is now on
+> > the client side, not in credential-cache--daemon.
 > >
+> > And I think rather than say "the daemon exit rules are intricate", we
+> > can actually outline the rules. :)
 > >
-> >
+> > So here's what I had written after reading through the old thread. It
+> > would preferably get Ramsay's Signed-off-by before being applied.
 >
+> Oh Wow, this is (no surprise) a masterpiece! :)
+>
+> I would very happily add:
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+
+Thanks, all.
+
+Thanks,
+Taylor
