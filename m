@@ -1,90 +1,137 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F9218C93F
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:14:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DD7186E39
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:15:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729286086; cv=none; b=XKkv5Df3iCfMRUo4ZTSLms0bkFC32kpGc4x1iOekiLGMTTLAVkflSuhu9tC1FqWH83P0esk91BzuUPqtWlM0SokzAN9s3Zb6nJ3PTy4l2NPQpSaJZL1s7xBPIPZnpDtl7TK9wPiLL0nvGHOAeeC1xLZtsFCIEX0gDW4vXUA1Oqs=
+	t=1729286123; cv=none; b=AMV2L7E1mG+1gdg/seVPOSAFCkV02MfZ47YkflFSBISaCMNwzVdBMFTgDxYYzKUA1yX1olkMGpUV5lSG3BTuTtHvsZBWLEpCKLyb4VB1aX8DhTLzeLBTiH3OZv10X/ad8CS4x3XfdosOleTCsoQuocIFy82fjb5tDOkwRTD2FQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729286086; c=relaxed/simple;
-	bh=aB+ojP+yFLBd7b2KsM2qKu8044qObPPF2J7FIom23sg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IpO/riCto/hYGXpEB45GZZ0Wt8YtVMzpMOtiEdCZZw6WJ/rrkR7UNCSGOX2k7b41glCZOPBdPtc0KLXkqBI6SqUilOoBoThl7aQkwK1Y+XiGCEKl2oJ2oFhxZdeGZL29nmmjWryJRQPpS2jjMoyZrofONjQbjFmXia8KY/2ZQec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=JWmyf6VQ; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1729286123; c=relaxed/simple;
+	bh=cp8yM3uJ7jT8Wi/WRjXT+JkEQJak6te9hlHkqa5LIuM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=tV5SYfY7tL/ipx6OkHS/kUqm3S9Bvtv1wUFE0oc3beA2NRdna5TawqCyu5NObO+yCO9HD3uyWIzjEXXcwV7Ra1x2930/zMqs3HwWROXXMAZZbIawWJU/d/hXCELgYUhFBJ2HVfilesB98ym/VbBXidyBrVijxdrbaUXnB4xfklc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BymE7YOf; arc=none smtp.client-ip=209.85.221.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="JWmyf6VQ"
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e2972a311c1so2641358276.0
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:14:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BymE7YOf"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-50d32d82bd8so593347e0c.1
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729286083; x=1729890883; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kfGzPPViqOzRNBNKKNze1OulIbiEj0IN1S8X0iMmSpE=;
-        b=JWmyf6VQtcj4okEOcTsMSQASMk6fdYz38XPmmWRgSePPpeWNcOlg9HtxXghwnh4/F5
-         BmnCMUjNfCzE1zB3ndZGG+UYxCoOfcpa9YarYXH3UWRjI409F88b0oBKM7SVVa5IZCVD
-         eta9t5l+tiaAs7lUtjmbsjTlkcUTfP8DoDpEHpfIjZhtDH8qblVWAGIAxizJ7LGQrXk8
-         oYzniMjKkT0CjDVkvYpOuG+9gtYpzRdH/YiCYgxH7MpXjk69EcC/pbN04xkQyJsdS0yh
-         rjIGkrtVmgZDTCj1evLcLvTv3uSREF7OhyVyM6ZgS/vH2s/fPaSAXna30Dot/i8Xyzt2
-         OQMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729286083; x=1729890883;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1729286120; x=1729890920; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kfGzPPViqOzRNBNKKNze1OulIbiEj0IN1S8X0iMmSpE=;
-        b=fpsLHtLCgo6yEOUIAvviKOZx8t+DQHnuIhFCZAQkReGHAg/iCQo4aLlAusuaOlzNlt
-         ezAOjB68jm2QYPP/tEOTRErDCVt6/6Bh7C0nDCnzkeR8sxOGA4rUYDd8ekKmaW/7QhyD
-         J7Yvb5ih5jxAfDTvAsr3nBxw6Aqfje1g0r/XvUs6ZsSRPFn6GppwfyxaulQYFmix2KB2
-         0Hbf72k0SQ4wOxM5hTiW3vQjaKwD6ByjuqE1UWp4Ju5Yge/Pet2rAzZ4QWsf+PlDmu9i
-         NY4C8YAe+U7guJz/GZw7oYzWCDOtwaFXDZjyWCCFL/b3FWUIrrInpJcdTr/AtqcNoZAt
-         F0Gw==
-X-Forwarded-Encrypted: i=1; AJvYcCXGbSeBlAHHuCZVu36e7NP1u4O9mV5MP635YjxLXn3N/9rRLoNbDcwz+Izsja8+BuLj7gw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIXWqenqG6S/Yh/Pxz7fnLO2YjV9y/dIPRWaXFT5PFtM/4+qAU
-	sKIEFoj/zga1A9X+twgqTLj9ULv9FiU6T6XWIzFRlgnwa1TtXd5ow8tMICDeIlk=
-X-Google-Smtp-Source: AGHT+IG90OXO8lxZqUPbmr4QinjYxffFL5K06TG8YazG36ZXJ5rZ9Cm8p4TYPMz56s1JinwrzTNvfQ==
-X-Received: by 2002:a05:690c:89:b0:6db:d217:895e with SMTP id 00721157ae682-6e5bfd5cbbdmr37690637b3.36.1729286083073;
-        Fri, 18 Oct 2024 14:14:43 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5c00e4d90sm4765197b3.53.2024.10.18.14.14.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 14:14:42 -0700 (PDT)
-Date: Fri, 18 Oct 2024 17:14:40 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-Subject: Re: [PATCH 2/2] Makefile: adjust sed command for generating
- "clar-decls.h"
-Message-ID: <ZxLPwKdUywa7vlu/@nand.local>
-References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
- <cover.1728903464.git.ps@pks.im>
- <dda9b8e033c2e32e17dff73cad43211dd355d3ec.1728903464.git.ps@pks.im>
- <87y12lbeix.fsf@iotcl.com>
+        bh=cp8yM3uJ7jT8Wi/WRjXT+JkEQJak6te9hlHkqa5LIuM=;
+        b=BymE7YOfh8fD93tZZ4s1XhqZJvgf83zF1tXA8w9fyucmK/o14riW4Ehsbn3sNMGaIn
+         KRHQJxsfQwF5CVQBPCobEuiA2uCze5O8lbBu1v1HXVn/nfkM2dBee6v6oUkzMNXp/GyH
+         yCgR8mCDhmnA8b15byT/JRVdsehGsaz5gV0FwTq8VxwmPfyFrOp0qmrSxH6frZoUeyub
+         c/ZerrwSaekgpQD6rdZZgbDqN/s4kn+kflLksL1tqessnvVotnO62YoRnAGp+bkw8RzX
+         O6D3d3q6/qNj3OO5UzycaySFVc900pn3M+OvO69QlfANmUwLtie26P3osHc8sJYtjKo9
+         c4MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729286120; x=1729890920;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cp8yM3uJ7jT8Wi/WRjXT+JkEQJak6te9hlHkqa5LIuM=;
+        b=ix/cEimgKLGuOGz6inLwaVXeaHBfPp8MEa5glP5KrShfhMp8Uvs+alR/7OtZoq5yuA
+         2Jvg7fe2MJp7kQ0LT+xAfXvnAyO9JXDrw9vao0q98L1BLMvHcJz4+3bt2sOswxokgaUd
+         qbfU1X8AlFatU2IPsXihkvJulrD9m6MMEWWcxTZu9rcc6cPhWsj5TZtIKmieFbTITI0S
+         2BjAGqEKuqKD3VF9yvyFxySWFqKA3nXRE5q3MhpJeOY5KeIU0MqH34LBljNejf76hJTM
+         Y0eLwAnbiONMXaKDeBg1EYrxEiTvytZ+OKwf4Bc3xQz7mXslJJRDkgPMHrYVZ5cBe5bo
+         9jdg==
+X-Forwarded-Encrypted: i=1; AJvYcCVTKTGJj5JnVyW1F0UQl/X3reENxqHJIn9bPM/QwaNipLhsUkYfOOIy2fJ5sDOtJN/Z3QI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxhic72gD9OqTpfLjid1QhmiaWnCXdsy/1gderO5gKWLKL6w1aQ
+	odMjTyum6pEY3f0Ta64w++kWXMopZPvbWI23CRwS6kkb8rYl2kcp+g+fL1hyiGz7mvY/PtgDMjr
+	lAIteZOJBLfG/+oCOPxkxBBRa5Z0=
+X-Google-Smtp-Source: AGHT+IFXRx1D1lbYl7gH+UKvDH+F8kWYPXwrAyqUO8QQbNoObOAkmx/2RQ8hHCSC78a3QpOtvKXcK6QtdzsepxLi4Cw=
+X-Received: by 2002:a05:6122:90c:b0:50d:a31c:678c with SMTP id
+ 71dfb90a1353d-50dda12e43fmr4346717e0c.2.1729286120190; Fri, 18 Oct 2024
+ 14:15:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87y12lbeix.fsf@iotcl.com>
+References: <705912536.3510460.1729265181938.ref@mail.yahoo.com>
+ <705912536.3510460.1729265181938@mail.yahoo.com> <CAPSxiM_4nBcB53+pfvC4YUsVz5wtJYgFEVuWQdCdo=2VWLj=Tw@mail.gmail.com>
+ <1075918304.3566148.1729271777281@mail.yahoo.com>
+In-Reply-To: <1075918304.3566148.1729271777281@mail.yahoo.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Fri, 18 Oct 2024 21:15:08 +0000
+Message-ID: <CAPSxiM8sXud=J9pQro28=F9UCbf-PR_gmEp=uyp6d6prCHHxzw@mail.gmail.com>
+Subject: Re: Oureachy: Microproject (Modernizing a Test Script in Clar Framework)
+To: "shamimkhanum@yahoo.com" <shamimkhanum@yahoo.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 18, 2024 at 05:45:58PM +0200, Toon Claes wrote:
-> You're most likely aware, but this change needs to move when the patch
-> "Makefile: extract script to generate clar declarations" [1] is merged,
-> because this line then lives in t/unit-tests/generate-clar-decls.sh.
+On Fri, Oct 18, 2024 at 5:16=E2=80=AFPM shamimkhanum@yahoo.com
+<shamimkhanum@yahoo.com> wrote:
 >
-> [1]: https://lore.kernel.org/git/7a619677c7af6ba8213a36208e20ab75c4318e38.1728985514.git.ps@pks.im/
-
-I believe that is what Patrick suggested in:
-
-  https://lore.kernel.org/git/cover.1728914219.git.ps@pks.im/
-
-, no?
-
-Thanks,
-Taylor
+> I am reading all helping material and also contact with mentors.
+>
+> Thanks for replying to me. Can you please tell me if you are working with=
+ the Git microproject? Which idea are you choosing? Also, have you submitte=
+d the final application or not?"
+Yeah, I worked on a Git Microproject. The final application deadline
+is by Oct 29. For the project, I will advise you to search through the
+mailing list using outreachy as the filter. You will see all of the
+microproject that have been worked on by other outreachy applicants.
+You can look between 0ct 1st till now to get the idea of what other
+microproject the applicants are working on. Thank you.
+>
+>
+>
+>
+>
+> On Fri, Oct 18, 2024, 9:16 PM shamimkhanum@yahoo.com <shamimkhanum@yahoo.=
+com> wrote:
+> > Dear Git Community,
+> >
+> > I hope this message finds you well. My name is Shamim Khanum, and I am =
+a C programmer with a keen interest in open-source development and version =
+control systems.
+> > I am writing to express my interest in working on a microproject relate=
+d to Git, specifically focusing on improving the Modernizing a Test Script =
+in Clar Framework. My proposed approach involves a thorough review of the e=
+xisting test scripts to understand their structure and add a small enhancem=
+ent. My background is as an MPhil computer science student at the Universit=
+y of Punjab. I am currently in the Outreachy contribution phase for choosin=
+g this project. I am passionate about contributing to open-source projects,=
+ and I believe that my skills and enthusiasm would make me a valuable addit=
+ion to the Git community.
+> > Thank you for considering my proposal. I look forward to your feedback =
+and hope to engage with the community to make a positive impact.
+> >
+> > Best regards,
+> > Shamim Khanum
+> > shamimkhanum@yahoo.com
+> Hi Shamim,
+>
+> Nice having you here, I am Usman an Outreachy contributor like you.
+>
+> Bellow is the extract of the statement from one of the mentors Patrick wh=
+ich can get you started.
+>
+>
+> I would strongly recommend reading through [1] and [2]. They should give
+> you some ideas for how the Outreachy application process is designed to
+> work in the Git project and lays out the expectation of us mentors.
+>
+> Patrick
+>
+> [1]: https://git.github.io/Mentoring-Program-Guide/
+> [2]: https://git.github.io/General-Microproject-Information/
+>
+> While going through all this, you should get additional guidance from the=
+ mentors also.
+>
+> Thank you.
+> Usman Akinyemi.
+> >
+> >
+> >
+>
