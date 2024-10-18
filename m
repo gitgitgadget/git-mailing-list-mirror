@@ -1,196 +1,117 @@
-Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3F4187876
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 22:34:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C712118E354
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 23:07:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729290854; cv=none; b=Zz3MUCS+/zexhFa84P8jaJi4QryF3c+YWvf9aOntbUB3mGXepeHVYNwFuUeKl/Gzb3c3Z4sEvkbXCTIrjSrERJmExvyVwE6K2opBL2EWXqb1pMhxSBCBsaC21G3MYPHHiQQqz597gJHe/sBegTa5UbrnM8kOKvUzVxzof/ND3rM=
+	t=1729292873; cv=none; b=rZZsG+aSCOX5ju89PxmZHXFc20OkOId1jXjneWPV2BWzmYibPHAUKHXc+RjghsJOJ4Qj1XTGYpFlPi7DO4D08jVgB0bQcCVT+RNRuewoqjfz2gctQ9F+zDlzoYE/PkufxtE8rRkFZkSV/i8Ax2EH9zzb3/TdVnW+XggV5l3D414=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729290854; c=relaxed/simple;
-	bh=liN3KZMLxZvHbdDrugA4PnkJC9iGBJF2aKL1nlaMvvs=;
-	h=MIME-version:Content-type:Date:Message-id:To:From:Subject:Cc:
-	 References:In-reply-to; b=BBqRUYndeL7JLud7e5KNkaV/6jDzxJnmd5Rg22EOi+Jvki+NiJ+/SIimwJ5PuXlINR0qkFRH7yug3GZnJ/TLzbDa+xIDkUUa/YZ++UnLoCOdQrIVgAaSPiQnJx6O1SqMiTW/XqajmY7NKJr+8Ewr21xMh5q674no8Lg/ylVlzTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=Vk8tPqwY; arc=none smtp.client-ip=192.29.178.125
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1729292873; c=relaxed/simple;
+	bh=da8Mn2d27qJ9KH4mR/60Ds11r+1i81PFSoxlhr9nvg0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nvqfzg1Gwk7/CAHq9nr07ZJMS5WVssIgtqYOgPvRBack8nmbt+yIvDA4P9WnQJWGnwKZJJOsTXqnX5oNxYDGQVljXAVn64z/o7UJ4jyxDUY698XhvgpnW5g920+qKU/7oVS3ipVxsJirgc3TSww/Irs1jpdyb68JE2gwhvhjli4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=fMhFclU/; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="Vk8tPqwY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=mqXUrU/aLb2quuacvb8rNfYptiVlIljRiGvinELgn4Y=;
- b=Vk8tPqwYdy0rFwr91Fc64MOBghmopHPhNzCOylA0bChMi0nwJBZb5+jhNdzvkL7Cb/v1SVn+9uS1
-   GJ1HIskqLm7X95LkPZwKN5C/IOLjQGzlr/5rrdGP2/CeY2AoyfXt1g5tEBHewrLfKIm36vHT+zXw
-   7cjccYVRROU+NXkIrIP71HjRhBJhpMlTTYc3K7Oube0mRH7xHFZ2PNS2cmCHtB85XKEuNLI+IiK/
-   3OwfOk04fk8+bNKVgzd7hrStHgRVIqydga/EHTwAPjMBM7E0xdK0/4v+XjlO8S7v7ASxepmm7UVf
-   NwHVBySk/UKldtX4VGvxiXkwpfoAvYk79Bmbsg==
-Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SLK00F1XPCTU2A0@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Fri, 18 Oct 2024 22:34:05 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="fMhFclU/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1729292868;
+	bh=da8Mn2d27qJ9KH4mR/60Ds11r+1i81PFSoxlhr9nvg0=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=fMhFclU/n2chSNkgUNMWqKIplhwYEJoBznP1ER8TSRDAI0eY3cx2EKP1LaAtQ5L29
+	 2pZs2AwXXS1mPNL70QmTLcTRGZmX9ALPSygjPFdv/kuX9LLff5AhpVrXfrrAwYVZK0
+	 1Md7XgCVAPG54XMCGTq+WunyTG0ZkdZ6bhNahR/cuMb9NzadUcPunqvdbys/8NKaUP
+	 9Vc22bKLanS0zhZRRl9qnWP7gXJZgWlBPviOaZ6Jy/+hkx81h3lbzKpA1cfYesCs+g
+	 tq10wlYWUgxBTbfsEl9+3okzcJFaRegwO37KZbmzAcs8+GtNgQia+k5bAvqvnEYKod
+	 R4EySV2pAO2hzDRMxhRZeDB/NKg+jZUkw6bn02j3bXRp7Tqv9TAh6e4ewOXlnAL67H
+	 KxZapxKRwkMl8mjgW5P6fZCr6bF26V24d56LarYmnCzveLylV0Ex6qJAocKVJW27pc
+	 aPTUDf6m4fMv+COJ8glP04kD173EEi+mAp1J3RyKzi8ffyzQet8
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7833F200B1;
+	Fri, 18 Oct 2024 23:07:48 +0000 (UTC)
+Date: Fri, 18 Oct 2024 23:07:46 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Aswin Benny <aswinbenny.edu@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Feature Request : Get repo size without cloning
+Message-ID: <ZxLqQlNEPKT6CoGh@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Aswin Benny <aswinbenny.edu@gmail.com>, git@vger.kernel.org
+References: <CAHJ9C2JNVH6SmE5FoR7u7Z=5eynm8QfW4ZHMeA6dvP0FodxNWA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Sat, 19 Oct 2024 00:32:17 +0200
-Message-id: <D4ZAELFWJMKN.S88LJ6YK31LZ@ferdinandy.com>
-To: <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Subject: Re: CI behaving differently from local tests
-Cc: "Taylor Blau" <me@ttaylorr.com>,
- "Johannes Schindelin" <johannes.schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>
-References: <D4YDINQ682QL.N0FD2J9C1O22@ferdinandy.com>
-In-reply-to: <D4YDINQ682QL.N0FD2J9C1O22@ferdinandy.com>
-Reporting-Meta:
- AAE5R1CsOIZUV9vGsrRIjie7LSMXbFBGeKiwp0La8I85+6GmMIjp/Myt0SH5pONg
- DgPjvAsL2A1ieoQXWIFsQprY7EXCCZgC9Pq1YB0KClrjdQkSqKlYWBbF21ko0Kfw
- R0KQQGYtzzoXELV6yHmdesBo7eTULt/tr5tm4eDnAjGQcT0O/QfEqvKC/Yt74rUS
- tPBlmRPJwbr8g6C+kj/S3TWYxCnYqfCM60hTpb7OzKwIrhEvqkBub4eMO7dP1112
- /VF5t/KM8nEm9S+lpXUV7M8xiQMGA1q0YTVuONawidf+3fvvrfSHhVHWJDiwvOxB
- chO+BnZzgqMwNLeUf+iNLPzNK34kz6AjQ5/S3sIfC/pHpKZJWZPKR8ZnY6dXO3Rh
- m/CACEUGFfDxgODiG6FDNpPZZRZLECN49Rv9ldn76T8pi+IAiAqufPGNC/LEaPIs
- qCZQy4IrAKUO0EDIY33lb01hNjMo1Apkl7kkUsnT79UOz4B8ddoi/X5l
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="awDbY7qWaRBCGWJN"
+Content-Disposition: inline
+In-Reply-To: <CAHJ9C2JNVH6SmE5FoR7u7Z=5eynm8QfW4ZHMeA6dvP0FodxNWA@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-On Thu Oct 17, 2024 at 22:45, Bence Ferdinandy <bence@ferdinandy.com> wrote=
-:
-> Hi,
->
-> I'm looking at why the set-head series (cf.:
-> https://lore.kernel.org/git/20241014225431.1394565-1-bence@ferdinandy.com=
-/)
-> breaks the CI. The problem stems from the local test repositories being s=
-et up
-> differently from that of the CI.
->
-> I ran both the CI and a local test on current master with the following p=
-atch
-> applied on top, i.e. I print all remote refs and intentionally break the =
-test
-> so that the result is easy to get from the CI:
->
-> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-> index 532035933f..d625a3a8b6 100755
-> --- a/t/t5505-remote.sh
-> +++ b/t/t5505-remote.sh
-> @@ -724,8 +724,11 @@ test_expect_success 'update' '
->  		cd one &&
->  		git remote add drosophila ../two &&
->  		git remote add apis ../mirror &&
-> +		git ls-remote drosophila &&
-> +		git ls-remote apis &&
->  		git remote update &&
->  		git branch -r >output &&
-> +		echo "force error" >output &&
->  		test_cmp expect output
->  	)
->  '
->
-> The CI gives the following output:
-> https://github.com/ferdinandyb/git/actions/runs/11392309625/job/316981052=
-87
->
->
->     + git ls-remote drosophila
->     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101       HEAD
->     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101       refs/heads/another
->     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101       refs/heads/main
->     2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f       refs/heads/side
->     + git ls-remote apis
->     6329a3ca5268a0b28a1dc29b602e8b72a0bc1b37       HEAD
->     6329a3ca5268a0b28a1dc29b602e8b72a0bc1b37       refs/heads/main
->     2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f       refs/heads/side
->
->
-> While from ./t5505-remote.sh -v I get:
->
->     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101        HEAD
->     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101        refs/heads/another
->     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101        refs/heads/main
->     2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f        refs/heads/side
->     6329a3ca5268a0b28a1dc29b602e8b72a0bc1b37        refs/heads/main
->     2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f        refs/heads/side
->
-> Since `git remote update` here is essentially running `git fetch --multip=
-le --all`,
-> with the set-head series applied we're attempting to set HEAD for both
-> remotes. Obviously, this fails locally and succeeds in the CI, which is
-> actually the patch series behaving as intended, but obviously a drift bet=
-ween
-> the local and the CI testing environments.
->
-> I'm probably too tired right now, but I don't see how or what could make =
-the
-> mirror repo be different depending on having it locally or in the CI ... =
-At
-> least I know it's definitely not my patch series :) Does anyone have an i=
-dea
-> what to try and look into?
->
-> I guess ideally the fix for this would be added to the beginning of the s=
-eries
-> so we can continue with both local and CI tests working. (Although it cou=
-ld be
-> marked as a know breakage as well, not so elegant).
->
-> Thanks,
-> Bence
+--awDbY7qWaRBCGWJN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I found the issue. It comes down to the CI running with
+On 2024-10-18 at 09:50:00, Aswin Benny wrote:
+> I would like to request the following features to git :
+> 1. A command or feature to get the size of the repo without cloning it
+> to the system
+> 2. An option to know the size of objects that will be downloaded forehand.
 
-export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+These are actually really difficult to know without actually performing
+the operation.  For example, GitHub and many other forges store all of
+the objects in a repository network in a single alternate, but only a
+part of those objects (the ones in the repository you're cloning or
+fetching) are included.
 
-while this not being set in ./t5505-remote.sh.
+In addition, to know the size of the pack being generated, there's no
+more efficient way than generating the pack.  For example, a repository
+with identical structure but containing 500 MB of text files (source
+code, literature, etc.) will be much smaller than a repository with 500
+MB of random data because the former deltifies and compresses much
+better than the latter.  We don't know the size of the pack file being
+sent until we've actually compressed and deltified the objects.
 
-Now the bandaid here is adding this to t5505, but it may not be the solutio=
-n.
-The problem essentially is that `git remote add --mirror -f origin [somerep=
-o]`
-does not update HEAD in a bare repository.
+We can, of course, make estimations of this data based on what's on disk
+on the server side.  But, just like with GitHub's API, it's not always
+possible to know exactly, and some users will be unhappy with a value
+that's not exactly correct.  (I can confirm there are users who feel
+this way about GitHub's API functionality, and I understand their
+concerns.)
 
-Consider the following:
-	git config --global init.defaultBranch mypreference
-	mkdir one
-	cd one
-	git init -b notmypreference
-	git commit -m "initial commit" --allow-empty
-	cd ..
-	mkdir mirror
-	cd mirror
-	git init --bare
-	git remote add --mirror -f origin ../one
-	cat HEAD
-
-You'll see HEAD is ref: refs/heads/mypreference.
-
-Continuing
-	cd ..
-	mkdir r_one
-	cd r_one
-	git init
-	git remote add origin ../mirror
-	git ls-remote
-
-We arrive at a single reference pointing to refs/heads/notmypreference.
-
-If we do the same exercise, but instead setting up repo "one" with `git ini=
-t -b mypreference`=20
-running ls-remote "r_one" will actually also yield a HEAD reference.
-
-I'm not sure if it should or not, so for now I'll just make sure that
-./t5505-remote.sh uses "main" as the default branch.
-
-Best,
-Bence
-
+Given this, I'm not super excited about adding this feature to Git,
+because I think it will set us up for a lot of complaints when the data
+isn't exactly correct, especially when the data is far off from the
+actual value, and I don't think the utility is worth it.  But perhaps
+you or someone else can write a patch and it will be accepted, with the
+proviso that the data might not be correct, and users will still find it
+useful.
 --=20
-bence.ferdinandy.com
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
+--awDbY7qWaRBCGWJN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZxLqQQAKCRB8DEliiIei
+gVxZAP0VKq4eK8Aayt7V1e9kiRsaPuu0925NHR6eKIDlx7nBAwD/fMQKZ4K7gbyU
+KbY1EcHgPkiw2dNp5uVqYkx1vhei7A8=
+=H22O
+-----END PGP SIGNATURE-----
+
+--awDbY7qWaRBCGWJN--
