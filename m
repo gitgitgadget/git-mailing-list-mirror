@@ -1,141 +1,196 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4479116D4E6
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:46:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3F4187876
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 22:34:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729287966; cv=none; b=ZSnKorECTPBjQQqNeNpH7QLcKwXuKDHoM/pEY4ANjgi6PdKiYUEyqw2CVXuyCJkocPxonWuf+Rx9HmvPkufsUkBTyWugwABEKuLDrLyFvPcyua8lZz2WgceCyWZrqeEzbkAoxw+0ypNYkCC76sFt5dKowMjVq552rYMND8RytSk=
+	t=1729290854; cv=none; b=Zz3MUCS+/zexhFa84P8jaJi4QryF3c+YWvf9aOntbUB3mGXepeHVYNwFuUeKl/Gzb3c3Z4sEvkbXCTIrjSrERJmExvyVwE6K2opBL2EWXqb1pMhxSBCBsaC21G3MYPHHiQQqz597gJHe/sBegTa5UbrnM8kOKvUzVxzof/ND3rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729287966; c=relaxed/simple;
-	bh=wx8lbYVwWHbgV4ZpoW28PSXlLP6v3vzpncwixhsCsm0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VS7LYsUqbFZrahpgI3CXJskgJdUUPWhTJ+fdQhMMlUxutXiv5WgAu+tVff+SsEy9yUuTcXJB/14bAZCaPHvwAl7zn/bZcfpDuW8AZCEU1UJ7ZzN+yLAyWM8poxESJoZqqmR8v0NMItsnM+DRmpwSFySkmlF2cX007ZvIK86uIuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZiCLjf2S; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1729290854; c=relaxed/simple;
+	bh=liN3KZMLxZvHbdDrugA4PnkJC9iGBJF2aKL1nlaMvvs=;
+	h=MIME-version:Content-type:Date:Message-id:To:From:Subject:Cc:
+	 References:In-reply-to; b=BBqRUYndeL7JLud7e5KNkaV/6jDzxJnmd5Rg22EOi+Jvki+NiJ+/SIimwJ5PuXlINR0qkFRH7yug3GZnJ/TLzbDa+xIDkUUa/YZ++UnLoCOdQrIVgAaSPiQnJx6O1SqMiTW/XqajmY7NKJr+8Ewr21xMh5q674no8Lg/ylVlzTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=Vk8tPqwY; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZiCLjf2S"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6e3cdbc25a0so29724457b3.2
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:46:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729287963; x=1729892763; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ir2eeYMoQmdL+8vfrUrMrWEyfwON1dRgSdrNFrzL+QU=;
-        b=ZiCLjf2SHpmVf1sK3WADp5uppsPXumHkxdnQk7jWFOGQ7k7OT49u8s6titSazZKGKa
-         pczQvmaeFFCsh2HQk2zjHOBH38zxYnYkPqc5iIwbQZ/Row7wXooZdZbSb0ksiGzpF4qZ
-         hpRoUMEGD2UP1kKo3Bfh8bIa7MWlPlCKLPwbi/WFaIDHZy6/OqraUSMdKnel7hSs3rQi
-         ddRAIX0gLfofSiHIlZ1RKAn+z0sI3g6NUXSaDh294rme9IuLv8obRQWDcC2EXYblek4t
-         NRoQn3JeSaSlWBI+VBsJ3vZfSFDjY1+dwcwpBuh2/0qImdMPyqHp3b4lHHOsOMgLvyd1
-         5I4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729287963; x=1729892763;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ir2eeYMoQmdL+8vfrUrMrWEyfwON1dRgSdrNFrzL+QU=;
-        b=jH6IIub0nIwlpiiHyK/XxZXe7POFErrBBhjryZcGYG/j7F9YOWCyg2WcPl2mHApm4f
-         9s+g14bZTvYG6YFImZhvn5ViC1oBPOYQRN4E5PAr8Uoyq1ktdy3DgpsgrTwr7wh8iOEM
-         MTX4qbDZstpPFKhq/yS5vOUerqB5zX3tRX0FSlg4KwqbBw+FdI6I5oZeM8BJ8hy6y63n
-         /W5dCJFCLHbOli5VjRcMKQvhjChBbSaXaCdvRxP06hhc3aEZsRtsMxMlMHynEb3P/mM0
-         rVapTCJnKA7KNd//AwHNhNjpm0/IeFwGK8EqIPb/28cA4PKCDQQRZEu3uGoLufog9V9r
-         Rwqw==
-X-Forwarded-Encrypted: i=1; AJvYcCUeY/Q/edIroqRyl8l0I7CdCw+fay1rgcOdz8xvBcSJFKcr4E1N48565xBvggxD1pD/V7s=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx81WmyeQgDfdLrnlg+c8leg5OWVCafHlDvLGewIyglILnG3O58
-	8nm7nChFaJwjIr4Lba9572KN2OnjRyr1ZhvTG7oNrx/Q+jF325tiDsNdysY71p0=
-X-Google-Smtp-Source: AGHT+IGGsKPD3iQ7r71gsMyX0wHB7GBkNF2ghptrEpm7KcQhMGg+n1w4vZN4zw/oQ8oNdwGwvTmV7Q==
-X-Received: by 2002:a05:690c:6681:b0:6c3:7d68:b400 with SMTP id 00721157ae682-6e5bfc8c82amr44165797b3.10.1729287963175;
-        Fri, 18 Oct 2024 14:46:03 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5c00e4fc1sm4843157b3.41.2024.10.18.14.46.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 14:46:02 -0700 (PDT)
-Date: Fri, 18 Oct 2024 17:46:00 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: Piotr Szlazak <piotr.szlazak@gmail.com>,
-	Piotr Szlazak via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	David Turner <dturner@twosigma.com>
-Subject: Re: [PATCH] upload-pack: fix how ALLOW_ANY_SHA1 flag is disabled
-Message-ID: <ZxLXGG8+VUWydsle@nand.local>
-References: <pull.1814.git.git.1729112794671.gitgitgadget@gmail.com>
- <ZxAttC1dQUllR76m@nand.local>
- <20241017023735.GB1858436@coredump.intra.peff.net>
- <ZxEr4+sb4DfmtrKv@nand.local>
- <a328b6d5-e604-4517-b041-59db19e1f66c@gmail.com>
- <ZxFblRri8Xo/lGsK@nand.local>
- <20241018043306.GB2408674@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="Vk8tPqwY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=mqXUrU/aLb2quuacvb8rNfYptiVlIljRiGvinELgn4Y=;
+ b=Vk8tPqwYdy0rFwr91Fc64MOBghmopHPhNzCOylA0bChMi0nwJBZb5+jhNdzvkL7Cb/v1SVn+9uS1
+   GJ1HIskqLm7X95LkPZwKN5C/IOLjQGzlr/5rrdGP2/CeY2AoyfXt1g5tEBHewrLfKIm36vHT+zXw
+   7cjccYVRROU+NXkIrIP71HjRhBJhpMlTTYc3K7Oube0mRH7xHFZ2PNS2cmCHtB85XKEuNLI+IiK/
+   3OwfOk04fk8+bNKVgzd7hrStHgRVIqydga/EHTwAPjMBM7E0xdK0/4v+XjlO8S7v7ASxepmm7UVf
+   NwHVBySk/UKldtX4VGvxiXkwpfoAvYk79Bmbsg==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SLK00F1XPCTU2A0@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Fri, 18 Oct 2024 22:34:05 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241018043306.GB2408674@coredump.intra.peff.net>
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Sat, 19 Oct 2024 00:32:17 +0200
+Message-id: <D4ZAELFWJMKN.S88LJ6YK31LZ@ferdinandy.com>
+To: <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+Subject: Re: CI behaving differently from local tests
+Cc: "Taylor Blau" <me@ttaylorr.com>,
+ "Johannes Schindelin" <johannes.schindelin@gmx.de>,
+ "Junio C Hamano" <gitster@pobox.com>
+References: <D4YDINQ682QL.N0FD2J9C1O22@ferdinandy.com>
+In-reply-to: <D4YDINQ682QL.N0FD2J9C1O22@ferdinandy.com>
+Reporting-Meta:
+ AAE5R1CsOIZUV9vGsrRIjie7LSMXbFBGeKiwp0La8I85+6GmMIjp/Myt0SH5pONg
+ DgPjvAsL2A1ieoQXWIFsQprY7EXCCZgC9Pq1YB0KClrjdQkSqKlYWBbF21ko0Kfw
+ R0KQQGYtzzoXELV6yHmdesBo7eTULt/tr5tm4eDnAjGQcT0O/QfEqvKC/Yt74rUS
+ tPBlmRPJwbr8g6C+kj/S3TWYxCnYqfCM60hTpb7OzKwIrhEvqkBub4eMO7dP1112
+ /VF5t/KM8nEm9S+lpXUV7M8xiQMGA1q0YTVuONawidf+3fvvrfSHhVHWJDiwvOxB
+ chO+BnZzgqMwNLeUf+iNLPzNK34kz6AjQ5/S3sIfC/pHpKZJWZPKR8ZnY6dXO3Rh
+ m/CACEUGFfDxgODiG6FDNpPZZRZLECN49Rv9ldn76T8pi+IAiAqufPGNC/LEaPIs
+ qCZQy4IrAKUO0EDIY33lb01hNjMo1Apkl7kkUsnT79UOz4B8ddoi/X5l
 
-On Fri, Oct 18, 2024 at 12:33:06AM -0400, Jeff King wrote:
-> On Thu, Oct 17, 2024 at 02:46:45PM -0400, Taylor Blau wrote:
->
-> > > Rather not as config file is parsed only once:
-> > >
-> > > https://github.com/git/git/blob/15030f9556f545b167b1879b877a5d780252dc16/upload-pack.c#L1368
-> >
-> > I am not sure I follow... upload_pack_config() is invoked on every
-> > configuration line that we see. So the first time when we read
-> > "allowAnySHA1InWant = true", we take the first path through that
-> > function you linked. The second time, we take the else branch, and
-> > correspondingly unset the bits from ALLOW_ANY_SHA1.
-> >
-> > So today that is doing the right thing (it will end with the same bits
-> > set that we started with). But under the proposed patch that behavior
-> > would change, and the lower two bits would still be set.
->
-> Reading Piotr's response I wondered if upload-pack might be using the
-> configset API instead of a config callback. But no, it does look like a
-> config callback.
 
-Yeah... I was pretty sure that was the case thinking back to 6dd3456a8c
-(upload-pack.c: allow banning certain object filter(s), 2020-08-03),
-which somehow was already more than four years ago :-<.
-
-> But it does hint at a possible path if we wanted to process these
-> independently: we could read each of the config options separately,
-> resolving them in the usual last-one-wins way, and then turning the
-> result into a bitfield. Something like this, outside of the callback
-> (totally untested):
+On Thu Oct 17, 2024 at 22:45, Bence Ferdinandy <bence@ferdinandy.com> wrote=
+:
+> Hi,
 >
->   int v;
->   unsigned bits = 0;
+> I'm looking at why the set-head series (cf.:
+> https://lore.kernel.org/git/20241014225431.1394565-1-bence@ferdinandy.com=
+/)
+> breaks the CI. The problem stems from the local test repositories being s=
+et up
+> differently from that of the CI.
 >
->   if (!git_config_get_bool("uploadpack.allowtipsha1inwant", &v) && v)
-> 	bits |= ALLOW_TIP_SHA1;
->   if (!git_config_get_bool("uploadpack.allowreachablesha1inwant", &v) && v)
-> 	bits |= ALLOW_REACHABLE_SHA1;
->   if (!git_config_get_bool("uploadpack.allowanysha1inwant", &v) && v)
-> 	bits |= ALLOW_ANY_SHA1;
+> I ran both the CI and a local test on current master with the following p=
+atch
+> applied on top, i.e. I print all remote refs and intentionally break the =
+test
+> so that the result is easy to get from the CI:
 >
-> That makes the config flags independent. But the features themselves are
-> not really independent. If you do:
+> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> index 532035933f..d625a3a8b6 100755
+> --- a/t/t5505-remote.sh
+> +++ b/t/t5505-remote.sh
+> @@ -724,8 +724,11 @@ test_expect_success 'update' '
+>  		cd one &&
+>  		git remote add drosophila ../two &&
+>  		git remote add apis ../mirror &&
+> +		git ls-remote drosophila &&
+> +		git ls-remote apis &&
+>  		git remote update &&
+>  		git branch -r >output &&
+> +		echo "force error" >output &&
+>  		test_cmp expect output
+>  	)
+>  '
 >
->   [uploadpack]
->   allowAnySHA1InWant = true
->   allowTipSHA1InWant = false
+> The CI gives the following output:
+> https://github.com/ferdinandyb/git/actions/runs/11392309625/job/316981052=
+87
 >
-> it is still going to allow the "tip" flag, because it's a subset of the
-> "any" flag. And you can't escape that.
+>
+>     + git ls-remote drosophila
+>     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101       HEAD
+>     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101       refs/heads/another
+>     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101       refs/heads/main
+>     2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f       refs/heads/side
+>     + git ls-remote apis
+>     6329a3ca5268a0b28a1dc29b602e8b72a0bc1b37       HEAD
+>     6329a3ca5268a0b28a1dc29b602e8b72a0bc1b37       refs/heads/main
+>     2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f       refs/heads/side
+>
+>
+> While from ./t5505-remote.sh -v I get:
+>
+>     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101        HEAD
+>     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101        refs/heads/another
+>     9d34b142e42f6b3dbab46dd4b9bc515e0ab16101        refs/heads/main
+>     2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f        refs/heads/side
+>     6329a3ca5268a0b28a1dc29b602e8b72a0bc1b37        refs/heads/main
+>     2ce9c504874e3f0ce77f83c0bb0b1024c7a6387f        refs/heads/side
+>
+> Since `git remote update` here is essentially running `git fetch --multip=
+le --all`,
+> with the set-head series applied we're attempting to set HEAD for both
+> remotes. Obviously, this fails locally and succeeds in the CI, which is
+> actually the patch series behaving as intended, but obviously a drift bet=
+ween
+> the local and the CI testing environments.
+>
+> I'm probably too tired right now, but I don't see how or what could make =
+the
+> mirror repo be different depending on having it locally or in the CI ... =
+At
+> least I know it's definitely not my patch series :) Does anyone have an i=
+dea
+> what to try and look into?
+>
+> I guess ideally the fix for this would be added to the beginning of the s=
+eries
+> so we can continue with both local and CI tests working. (Although it cou=
+ld be
+> marked as a know breakage as well, not so elegant).
+>
+> Thanks,
+> Bence
 
-Yup.
+I found the issue. It comes down to the CI running with
 
-> So I still think we're better off to just document (and of course in the
-> long run all of these become less and less interesting as they are
-> v0-only options).
+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
 
-I agree completely. I think the consensus here seems to be that, if
-anything, we should update the documentation and move on :-).
+while this not being set in ./t5505-remote.sh.
 
-Thanks,
-Taylor
+Now the bandaid here is adding this to t5505, but it may not be the solutio=
+n.
+The problem essentially is that `git remote add --mirror -f origin [somerep=
+o]`
+does not update HEAD in a bare repository.
+
+Consider the following:
+	git config --global init.defaultBranch mypreference
+	mkdir one
+	cd one
+	git init -b notmypreference
+	git commit -m "initial commit" --allow-empty
+	cd ..
+	mkdir mirror
+	cd mirror
+	git init --bare
+	git remote add --mirror -f origin ../one
+	cat HEAD
+
+You'll see HEAD is ref: refs/heads/mypreference.
+
+Continuing
+	cd ..
+	mkdir r_one
+	cd r_one
+	git init
+	git remote add origin ../mirror
+	git ls-remote
+
+We arrive at a single reference pointing to refs/heads/notmypreference.
+
+If we do the same exercise, but instead setting up repo "one" with `git ini=
+t -b mypreference`=20
+running ls-remote "r_one" will actually also yield a HEAD reference.
+
+I'm not sure if it should or not, so for now I'll just make sure that
+./t5505-remote.sh uses "main" as the default branch.
+
+Best,
+Bence
+
+--=20
+bence.ferdinandy.com
+
