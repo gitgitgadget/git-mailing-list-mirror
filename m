@@ -1,108 +1,91 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34DA18D629
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:29:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B2276C61
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:30:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729286999; cv=none; b=dhuU4gSmn+0mk7IfVQJ165oO6sHBTZYJVtRtlRqVIwgqLMiXXMDsuP+9gF0r2TdxsGWNWsuSt6CM9NeatJ1nf/0llTrVwOkEd8gI4qnZKPgvpBx/VfKxA3MK/DSWrz1yOFm/DHrPf/urmEZL4gFq5nXDyDJ1lgBq72pCAHBd4QA=
+	t=1729287042; cv=none; b=Bu+Xp2pyNzjp+vpgaeYaE1ZsuzuKKhjSBrI1tmJY4ib0ghG2Lr4MWv5rAqTnEmzde09folJe+wFwsTuS5W2Fs2y4TxLpaSmIAo8U1vQCaDy3lQgpsL9n+9OgG7+BnMXh9OxOV0zsIie8q6P8Tc/Pc4tcSu0FqMMafvc0xT/1pTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729286999; c=relaxed/simple;
-	bh=LZXRxMqqaE1ppDue+5OKQKYWu+eT94zDwjdCtFR+bHE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ipROiBMVlNx8HIgMr72HbcqQNzt5w7cSg3uWJ8B1ONhMJQVGL9K6xTZmHvsirIj+iMaMEgiah6UjYExHORbl0zkChs/2Gy3btTCLdCmU0oz9HeJjIrqacNhZAC4VupCLfQUyYxPZN6hsXlRWGtndfrLSdyILD9Pj9n3gFXvPiZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L61FG+Js; arc=none smtp.client-ip=209.85.217.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729287042; c=relaxed/simple;
+	bh=nXGQMyOkVxhZcUO9+fR+VG00rAxOcHImnErgbUeGDyA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bStpNZqVW+IQ/uVGTRTccJVnJMb0HEefglHMPD8nNC5mSo8aHthbgcmWilLf56QJ4AYszfPyRq0WGdzeEntENwlbPUybC6ZhxoAxsQ2dW444bpno5h6KTRzLbFSWswHbGuJ5mQIeggia3K0aMuYPc/rljlXDqFn27aDQyc4SJKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=kvOdMXF7; arc=none smtp.client-ip=209.85.219.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L61FG+Js"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-4a47d70cd8aso758608137.1
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:29:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kvOdMXF7"
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e290e857d56so2688097276.1
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:30:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729286996; x=1729891796; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ys8B2eDXdc1jF2IriJ2QwdOoNkk9u6uj/gENyEO5IlA=;
-        b=L61FG+Js7urV38Kk6m5Wpz28VW6Q5oib8X11/hdJwzVryAOleGDf/q2D+At8wqxL5m
-         HddpV5CBdPPF6l42aLmkSwqSjcewjJaB0AMbbKQJdwRSa5Nq9bEG5ifc8ealyoxLMDPV
-         cVQsxwp57dONStxiRHur2doEIPRa7jxmX0Uu0DeLtYG0mO33z9AHXbGifmu9d/EJoKy7
-         J6VB5aT1hz30/2nFsIBjZ2XKe75jfcnFYi2okcWXA0LLYwmDB13B/ZNtdCGev0Ehinz0
-         Wi6+GaJQMjHupIE77r/kPSzFRaTat01cybad2hcsoAzVGY5HaWfgalz6cUnIPb6vCew5
-         lsTQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729287039; x=1729891839; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nXGQMyOkVxhZcUO9+fR+VG00rAxOcHImnErgbUeGDyA=;
+        b=kvOdMXF7kbrkcunv6HnI+lETKJ6cQp5WyYQx0whz0ojzM2evz6rgfyxe/YVrlan5V7
+         E8dhcKZ3temb6Thj010XFxFKY3jITapmkoavPr/+J5vphqO1cfyzBrczKfcqUAc8Fx7x
+         acpaZPFS51UbbHFv7abM7v7VTJ/dGCigrHNdYsceWXsFbcJGkvCu/qk6CRCplQD+MAsT
+         EuGfx4K+DEhz6BIqfQhvOWR6U5RY4/pcBGrmxR4DeV9IeesAWT//J/dfPYF4k+l+KMDi
+         lrlV+BzOu7FMqgE5WmMcHijrH33ljXIlZXl7QWk+2BqR6Tb9oLJYlbaZsOsZ5jMaLShk
+         16Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729286996; x=1729891796;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ys8B2eDXdc1jF2IriJ2QwdOoNkk9u6uj/gENyEO5IlA=;
-        b=GyIFzGMEaraiqM9NyymRdbhH4tzynTQKYX6F3PTsc6GB8QUnYoVMO872pvINJ/E3cH
-         s/oLoZQ9Qx1urocKO62ZJcTcuG+q2WZj5dS45rpJga0fkoYEj3W3SpnRiYyrfVr6dz9j
-         o1Gl6i6h3FDVdDzPAeQJPYRWCQRP21RvsuIUXym8LRcGB2bd7OyK3mkdoQhg5Qh+8qWY
-         uZPF9EbDrxUDZ+p6F3J5Gjys4aOfnZ94DVNV/HmT5DBhN76apQlOi9yj5lngdp++Jil7
-         ZnmtWhaSXJPKsBv97VfYn20CePDoeRqTo9d7xKRLFj9PaZy270u2WungtCdF1xdo0pmx
-         5N9w==
-X-Forwarded-Encrypted: i=1; AJvYcCWR5KfGFozPiQE8i7p7KWvsty0/uPZb/OwLpouLvpAOmCkqRUH3fwCnehIrtUTqZvYco7Q=@vger.kernel.org
-X-Gm-Message-State: AOJu0YztJRGtbDTBMaezMVdlQko2LRTWmVANcXm7OmU+n1e7U13+ElN3
-	R3r2wo+GnuYx+7MQIEQA6cRGoDib0m0Of2E0yEkQWbd93uzV2xx68vuX/xcUvdbtUL3A/Lt7xCl
-	mjCfhR14BCU9bwPtZmVHlQQJmSck=
-X-Google-Smtp-Source: AGHT+IFozrREFVb/U3pwCxlyqfiGAmIxzdihMokzbyAaLaKvE09YQz9meJrCtRgNqwWevRd/DLDRo5X36ytJWT4k5b8=
-X-Received: by 2002:a05:6102:41a0:b0:4a3:db98:4458 with SMTP id
- ada2fe7eead31-4a5d6bb52f5mr4452629137.18.1729286996597; Fri, 18 Oct 2024
- 14:29:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729287039; x=1729891839;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nXGQMyOkVxhZcUO9+fR+VG00rAxOcHImnErgbUeGDyA=;
+        b=BpeZeGQ44zyQCPnW+paW68mM8NQ2+htznyjjINNdN1E/oRNrHMu9dpsttQjSnwiQma
+         LEa6hf2BZvxvuOMHtBQhXfTSrItxydMUunLPgCBOHwIUp12TqK3LmIUeg9gb9SMq3AqU
+         jnsSO8S/GkwUF6orhBMy3Kw1gwOSprmgNig6kafwtYWHBpEmSSk87+u5/lTZRssDJA0W
+         biF1A+YLSpqIGq9XVrpEJ4AKGgJJe6z4GAmFQN42y0vNZ2KRpCCqI7XRyVKaXlNuTSKf
+         6cZnQqc5itLKieyooBuava9FkKpUxrRNPnZ2e9839AYwjG8Nc2f4c4cQqxO3WSobUR8S
+         U1Zw==
+X-Gm-Message-State: AOJu0Ywr+8wE7tIQhjikFQaQebb2i0TVRPL0IVPhBtFDAqjOWD5A7kzF
+	+W3VvDJRBLEjsH45tOsTT90Nfy6OxbgZsuHnvx30LrFUb+uqHKwK/xp9sLP/37ZBo/lPkUMO4sr
+	C
+X-Google-Smtp-Source: AGHT+IE/ekdSFnBzDFEE3vMiUn66ZYP8iL1xoAG+4ISRtpFb1zhQ9OmeYNKoTDBuXCxx2bNIwgbYtw==
+X-Received: by 2002:a05:690c:8111:b0:6d7:f32:735b with SMTP id 00721157ae682-6e5bfc9c4d6mr26385437b3.27.1729287039131;
+        Fri, 18 Oct 2024 14:30:39 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5c0207506sm4755507b3.91.2024.10.18.14.30.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Oct 2024 14:30:38 -0700 (PDT)
+Date: Fri, 18 Oct 2024 17:30:36 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/21] Memory leak fixes (pt.9)
+Message-ID: <ZxLTfBEIEpvgM376@nand.local>
+References: <cover.1728624670.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
- <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com> <ZxLRdu4cPDgPLpCz@nand.local>
-In-Reply-To: <ZxLRdu4cPDgPLpCz@nand.local>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Fri, 18 Oct 2024 21:29:44 +0000
-Message-ID: <CAPSxiM_dcpmpAsbo9wmXSDqGWXxU==QLfdVpowK5Xv-LW9iLCQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] parse: replace atoi() with strtoul_ui() and strtol_i()
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1728624670.git.ps@pks.im>
 
-On Fri, Oct 18, 2024 at 9:22=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
+On Fri, Oct 11, 2024 at 07:32:04AM +0200, Patrick Steinhardt wrote:
+> Hi,
 >
-> On Fri, Oct 18, 2024 at 01:52:57PM +0000, Usman Akinyemi via GitGitGadget=
- wrote:
-> > Changes from Version 1:
-> >
-> >  * In my initial commit, I mistakenly included changes from a different
-> >    patch and commit. This issue has now been resolved.
->
-> Should we treat this as a new series, then? Or is this a true reroll of
-> the previous round and should be kept together?
-Hello Taylor,
-Yeah, this should be treated as a new series different from the two below.
- - t3404: replace test with test_line_count()
- - t3404: avoid losing exit status with focus on `git show` and `git cat-fi=
-le`
-Thank you.
->
-> >  * I have split the original commit into three separate patches for bet=
-ter
-> >    clarity and organization.
-> >  * I added corresponding tests for each of the changes to ensure proper
-> >    functionality.
-> >  * In the first version, I used the following logic: if (strtoul_ui(v, =
-10,
-> >    &timeout) =3D=3D 0) Based on feedback from my mentor, I improved it =
-to:
-> >    (strtoul_ui(v, 10, &timeout)) and similar cases.
-> >
-> > Usman Akinyemi (3):
-> >   daemon: replace atoi() with strtoul_ui() and strtol_i()
-> >   merge: replace atoi() with strtol_i() for marker size validation
-> >   imap: replace atoi() with strtol_i() for UIDVALIDITY and UIDNEXT
-> >     parsing
->
-> Thanks,
-> Taylor
+> here's another round of memory leak fixes. With this series we're down
+> to 10 test suites which are failing with the leak sanitizer. There are
+> two patch series in flight [1][2] that fix three more test suites, so in
+> total we're down to 7 test suites that we'll still have to fix up. So:
+> we're almost done!
+
+I was just looking through Toon's responses lower down in the thread,
+and realized that I never picked this one up.
+
+I think that makes sense... since this came on 11 October, which is when
+Junio signed off for vacation. I think that we each assumed that the
+other would (or had) pick it up.
+
+In any case, this is now in my tree as 'ps/leakfixes-part-9'. Sorry for
+the wait.
+
+Thanks,
+Taylor
