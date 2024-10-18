@@ -1,66 +1,70 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4488518D640
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:37:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B8118D65C
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 21:41:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729287476; cv=none; b=UPpOp5GEN8vNNGH14ilnE+jndzvJ4A2hirM1WTj1np3N81j44tBQ8qz7Tqu6Unbv0zL8T3ANNDd2IC9OiVSGzIl6Fd37KFz0c2eyq/81b8BJe7pUiy8IsqpoDGABWkeDoY4HTeDzQmRZkBARoB+AxAMVASh3KgUGHurR3C1rFbk=
+	t=1729287688; cv=none; b=Q6/Gnzg4vKKwqKliPCepR9PsvvhEeJxo4zyJ+aCpxbzuUKtx3k5w9zCZDDxRBGYolWXj/ixhEJloxwVNRoDMBd0ypdGvDAZMHVI4QnFaXkIWLJECK0h6wjm/RQra9zIPvQgbtvTS05swDu0Qu+Deo8uBE5z2+2vgWVruc1f3yp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729287476; c=relaxed/simple;
-	bh=NvfgDMudrJ0ahy+xt/e2jknyXWW4MhqXVF4mUN9cEks=;
+	s=arc-20240116; t=1729287688; c=relaxed/simple;
+	bh=wr4gBQZpQDS6TK5hbAIXlNMGJ+fZf7nrJHptVpIkd18=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PdZY8sVgFZiLnOhDKBl6RnMXhbHDzvMvVZA7S26fPUiyjaRgvo7BqwoRNkBiAQybRqBydltl7KJBVlS1uPnMDqUjUU84kPJxYQWd/JL+g5LJOu1ODl+W19OqK3kJeh4BDr22HYXU8gyK4bOqmBehLgwFE5LIhxHrJrUA0eYgN/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=dSBJRMdE; arc=none smtp.client-ip=209.85.219.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=g6h5OEn1c4uKJjT00w8g215Q4rkGn+GpzmBTkRje0iGtdRwp9P2rbb9MNbkfOijcAaXuEl5H4EPT2Hd/1kFiCLeS/qE81UPkXkT0JPZCE2a0OhF+mh6Tp3449AfChLfL8aWGAsuWcQHqVB/CLOS6Yeqr0LRWS0dBG+1YZCCeDfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=OF7uP9g3; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="dSBJRMdE"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e2975deea98so2544859276.1
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:37:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="OF7uP9g3"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e297cc4b134so2624957276.2
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729287473; x=1729892273; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729287685; x=1729892485; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aXUVHevPv2xm0YbC70DUT4w9F0YWNFzyG3FXi4HnxIk=;
-        b=dSBJRMdE7O/Iyj0hscDLG7mkamXtd7laHwp2oNtFQQDAbe+AtfTuqMDMdm5QmyREh1
-         x43AkLScj4PaidAOzzHthZ/N/P+LkjzbZZwVF6SbRyPReNN8A8PGbQUXRabzSeAYhBOG
-         JeQfH0pr4oFqEdTFZuqEnERtm30ZkLlmOpQKBb6KD56uJ+RC7ckQJOBh0QyZX7DU2LeO
-         n0x66oyHTsdttazF2EQYLuk6im+rOuLDp040CBAr9dKxnTQ0mW5W6ns7SEcmDKxuKb9S
-         cmrElSP4aTlCD5qZ0ZERP4sMQFm3aOgJdPhfLJXg6TsHSx6Paaxt98U6IGrarjvAYmD6
-         XeCg==
+        bh=wr4gBQZpQDS6TK5hbAIXlNMGJ+fZf7nrJHptVpIkd18=;
+        b=OF7uP9g39Lrd6OM+vJ3SuLrvlHW0VIJ4uTnvFrteSLwr8o6RqoRIHMLbrHnLsp0LQh
+         lQs1yTVHjfd9XRsQu1lh+8q5dMqdKz7asOWfTuBz3ZkQWV0jbjP/RMT3kEAgHDUKgfEd
+         PQQw16OKaBXkY+2wngfKupdshHFmiATKiRGgZhq/Yl2dsJULCKS3eq6sBa5gVSkNGWB1
+         ER/186Sr2XJqD12o4XYJuFK6Z74COabQd9B7d+ok3T4gG6+K3Tz1JB6JTNkzw+xfpZY1
+         jtZxtgU0sCA2W8+sefdPaKI5w1bfbCWF0j+8QvRjyS8ZtSp9trMNT6apC8yeHbJRmuM6
+         XXig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729287473; x=1729892273;
+        d=1e100.net; s=20230601; t=1729287685; x=1729892485;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aXUVHevPv2xm0YbC70DUT4w9F0YWNFzyG3FXi4HnxIk=;
-        b=J+/uxBRTv2FeJ/Sf3cyAgYt+ICcRJsUFgEjCW9imJIDVp3H3EjbFw3ploOoFPmLVFd
-         RiOFsgCe8i8WYp1DaDLwVtFeTki4549+eVCBcUsGI40Qa19k/z/Vh0S99IdTSNOTTlvC
-         LbbGEsV2TK++7tmTNnQ8z6PJQMZR8nQOH2LwqKk1yUb8mtJm/ITvXDN2peCpZIEWmAK+
-         v9MPZJzU/N8lEcswamCcldQhGs8ZTcrF/nK3MhTlYzY+06pCr53AUx0Witld9sQ5Uiw5
-         5tSV3bfn01igQRJHNjCjjmE5Xi3lpXopuBgEeABD5uKRnKOyYuWXbe3D03ZWV2OsRY75
-         QOqA==
-X-Gm-Message-State: AOJu0Yzc07rc0EMAxKP2+fD28Y44KE9tCwt0h2VvRldeU2gL9CEGOnaz
-	6/8Ry7i2fmE5FXxH/rKOgtRnLUS7+yjLT44tMmJcMebJHiva/D+hC0tAubNeF2iZ5Jvm3Y71C/I
-	Q
-X-Google-Smtp-Source: AGHT+IFUXrUWmt1lRl9qLhvBZeKME5CbBOu096Hp1qKycX6eyFMzpfFlIwzy9IwZ4XfPakS7WQyUqQ==
-X-Received: by 2002:a05:6902:1b86:b0:e29:1627:d4d3 with SMTP id 3f1490d57ef6-e2bb168cc81mr3969093276.41.1729287473083;
-        Fri, 18 Oct 2024 14:37:53 -0700 (PDT)
+        bh=wr4gBQZpQDS6TK5hbAIXlNMGJ+fZf7nrJHptVpIkd18=;
+        b=D8+fCQNPhuUyKxhixTbJ0NbotDXOH1KC2UthVgRH5S+Wt6sdN7l8UQY//5NuG7jwai
+         BhiUPhFhejXmdcU5//zBha0ta38x78z2uRANF2HM+7MLJ9JgYaNwspBrQbXL3xLHdWqE
+         AL6Z4WrL9SzaX2JSs2Pmr73ShSkA1IYiqjC4O9hkYL3T+lAZWyiDcFqJsoho/B8GaDQ+
+         FjULn3KqK5p8EHAg+pWp6TTdMkUvogwvE3W+H6Qmtu/SCt7d4c9mQgp/iQuzA6RzpWrg
+         CkscvoRxRV+G4Y/K1xJ4XjQ7sdCrxWfZb5i1hBgb2seLvYLFrrfYR73weeOdIl6g/80o
+         LBgA==
+X-Forwarded-Encrypted: i=1; AJvYcCW3yvX0grH2PZka44eSjPZGRZY5bz+ajejM7vRkJav8OWDKVHHveiLgNG0VfulxRPMQnpA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx8GY4MMR3Wn2gNtv8R01oC7+MdP0Eb8qaRC/TiaOZPqBfz0CE/
+	TrLN0iP5vz0ZAL454lXXg34h2WqLXCQ0ee46IyEVkzDrzUVbleXFqCHN1Bf3fms=
+X-Google-Smtp-Source: AGHT+IG583ore+ZTXEKm8HYjuS3too15hbto8HhMggjNjhorcflLaRIX5aJuXmBpg+1G4DiZYX5kYw==
+X-Received: by 2002:a05:6902:2701:b0:e29:2d9d:7b93 with SMTP id 3f1490d57ef6-e2bb16910b8mr3709905276.41.1729287685396;
+        Fri, 18 Oct 2024 14:41:25 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bb0204f39sm485438276.17.2024.10.18.14.37.52
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bb0204f39sm486684276.17.2024.10.18.14.41.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 14:37:52 -0700 (PDT)
-Date: Fri, 18 Oct 2024 17:37:50 -0400
+        Fri, 18 Oct 2024 14:41:25 -0700 (PDT)
+Date: Fri, 18 Oct 2024 17:41:22 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, toon@iotcl.com,
-	spectral@google.com
-Subject: Re: [PATCH v4 0/2] Subject: clang-format: fix rules to make the CI
- job cleaner
-Message-ID: <ZxLVLiiEEj2A5Iws@nand.local>
-References: <CAOLa=ZRvFBhageS65uE5enzLBz7H_CAvvnEcPsi_QAi0exRx2w@mail.gmail.com>
- <cover.1729241030.git.karthik.188@gmail.com>
+To: Andrew Kreimer <algonell@gmail.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] t: fix typos
+Message-ID: <ZxLWAmXJORyVldip@nand.local>
+References: <20241017112835.10100-1-algonell@gmail.com>
+ <ZxFyKXDCJkRZYYQY@nand.local>
+ <ZxKSFBl_pV2r99dY@void.void>
+ <be0c95ee-1d9f-4e97-9710-0ceba9c3aaed@app.fastmail.com>
+ <ZxKi7qn6tEWyBXsd@void.void>
+ <ZxLNj59mKfZubiY/@nand.local>
+ <ZxLN0u5r88hQsY+c@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,17 +73,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1729241030.git.karthik.188@gmail.com>
+In-Reply-To: <ZxLN0u5r88hQsY+c@nand.local>
 
-On Fri, Oct 18, 2024 at 10:46:44AM +0200, Karthik Nayak wrote:
-> Karthik Nayak (2):
->   clang-format: re-adjust line break penalties
->   clang-format: align consecutive macro definitions
+On Fri, Oct 18, 2024 at 05:06:26PM -0400, Taylor Blau wrote:
+> > > Thanks for the clarification, will address this one as well.
+> >
+> > Thanks, both. Kristoffer -- it's fine to do this in the same, or a
+> > separate patch in the new round. Thanks.
 >
->  .clang-format | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
+> Oops, I meant s/Kristoffer/Andrew/ here. Sorry about that.
 
-Thanks, will queue. Are we ready to start merging this one down?
+Wow. It must be time for me to close my laptop for the day ;-).
+
+Since this topic is already on 'next', please submit any new patches in
+a separate topic so I can queue them independently. Thanks.
 
 Thanks,
 Taylor
