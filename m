@@ -1,162 +1,126 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF8E1D4161
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 14:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42211FF60E
+	for <git@vger.kernel.org>; Fri, 18 Oct 2024 15:21:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729261273; cv=none; b=J72IHYXBUpHWqkMXF9/pSpTS6xhOc29/nj+tRzo08h9Lpw1Fk4YS5nbJCBujp54lmJRFaYuI9sXnIZJGFnh0CAqEudi1m4WsVhBEIxAuet2vW4J24BoShS/nHl7ywQPtmEWiTJmuZirFuh1Mfkib4dqY7FHH1K/ungge91xDGM8=
+	t=1729264896; cv=none; b=XmmWvVoFWM7f0uIUZC09qlaPbjdwL2OQYUhOO2HdDBZCda41c5s9T5DpVT8ePIbNhCJY5ZLJvQrDFnYygldwaqu0rtSiaAibHuL+UH1aXjL/6SSBSChvqiERkspcOEhtmDpmLAGVhbAYGOo9oJGGlwy6pTES4NmTp0O7Yxke8W8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729261273; c=relaxed/simple;
-	bh=lTtPPd7FCUYomd0PADIHFkmP5cLpLt0qkJWtze/nv30=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UZuZiMk4+zVL1VP7vbtfatSLlKP85DVnGLTBCdbRTJgpMEYfw5xJCI/C65EUYnhS8nwZAJHvkoxYIbU9tzkmLG8fhbbqzxcaNTDezI0aqLOr3sn0V0jrDvQ5jBAh7U/EswqjGoCPI2IuTxXlBdf4cMWEaCKFmBfphJRnZdFvedU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DwvnJEVE; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729264896; c=relaxed/simple;
+	bh=iVyV7+bafZfGAFFT9uugnVlqBNLwmG8V/mEeGbvLC5M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U6nYmM/+lLUFO/JrVlrfdaGJY6V4Z0ArFWsD+69g1+YwRhBq9x0QW0POOMU7wUdBGifIuf6R2ANjqITK7SxYqGy2cGZ8gr/7/vkxNyU3m4OySyTGduNUl7izgsdV4UEGuDmdB1QyoDyaVcqlonT/Mstzj3iyAmcnzXnyHgxRUyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=kY4ryQax; arc=none smtp.client-ip=95.215.58.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DwvnJEVE"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-20c7edf2872so25552375ad.1
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 07:21:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729261271; x=1729866071; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QbQSr7d1gLzWgFk5wYrlP5ZQ7VlyH796JOR6NQ00BTE=;
-        b=DwvnJEVERg7c8/mGSQIHw5U/v73YPvUW/ZV6c6+C12DqXHo6/93WoDAoQ0gv7xqUA4
-         9VCxCTrTnHeha/ISljW4xCjo7GPKtidtONBImb7laOIY8KFBvOZeXyfUj4hDSjwisXZo
-         EGZkKDkg3a0kXibcZ+a5EdNhBju5lCYwmvC74MJ33sOAUiz3iyTckhSqQmlNFfHN3H+J
-         SQd/QMadQSaGbpKHORWoSzJXyK/7TkXnuL4kqefocGtbm4dLZd4x0K9guQLaf2KuEvol
-         0wbW9wMqkEncYZw9tBTyrRKx1H88kAHiJdLXoaLL/9JjSHdbNOwD1VP2+aWC+BoVYosD
-         3cfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729261271; x=1729866071;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QbQSr7d1gLzWgFk5wYrlP5ZQ7VlyH796JOR6NQ00BTE=;
-        b=pV0HvZ6b/7idLBykhgYcb2eyDxuL0C2BXh4WLlUbaStw5EgvsZJFXdPrQetcHLndWJ
-         f7Q7KAFbSVGQqUz/isr2iMjn2hD+njmGAdVU6IPkcJmaSWW2vz+ErneLutOJXhgS6NCA
-         GRT08uMaHAPoHpaDe87uGCC2KcB9g049bfvPBUEGudjWIP7UxfXh6CwKepwVq/puJhBc
-         vm2Ssu1iwsW1sDyxg35zsC0uau8S3l20fVVvAkdeCeZWD3waGwzqe6VoJJsxNqGSsheW
-         ehRiN2DHcvhB83UBcPzb8gDv7T1ipb5ECcXzwp9YLMvVpsGeDHfHKIE9ifbxrMUHTYpo
-         /B6A==
-X-Gm-Message-State: AOJu0YwrhyuIwEFlsUTAZXiQtMq5lugsSGzfR+XhCi400cgucAV7hkaR
-	VgKZCcC81qJuAi//YMzIPNsfOaM2kTdxhOpV4drxsrLADv/uGNay
-X-Google-Smtp-Source: AGHT+IELSfEnu2ERr5wb/roEYtboZRBK6P/1VOHF63wDpZOy9w9yXEazSnxBDWIGZ98pg9diVCgAGA==
-X-Received: by 2002:a17:902:daca:b0:205:8763:6c2d with SMTP id d9443c01a7336-20e5c10c9a5mr39178205ad.9.1729261271177;
-        Fri, 18 Oct 2024 07:21:11 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20e5a925fd0sm12943125ad.300.2024.10.18.07.21.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 07:21:10 -0700 (PDT)
-Date: Fri, 18 Oct 2024 22:21:11 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] object-name: don't allow @ as a branch name
-Message-ID: <ZxJu13wpSiJ_kDdB@ArchLinux>
-References: <cover.1728331771.git.code@khaugsbakk.name>
- <ZwUxdz_HobRGF9yq@ArchLinux>
- <3af78a3c-afb9-4ce7-aea0-a5bbddd4f34a@app.fastmail.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="kY4ryQax"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1729264889;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4QX+okrQl2F1PMNKRckuvcdeUgpqui6278bSwxLAyq4=;
+	b=kY4ryQaxCLXfpCW/E6a1vGH72DEOlDbCSH7WnSG3p9OmSRIILmAy0mCtF1VBwKQGsNQdgN
+	qqLJs7nyRCCdJHdQweiWTk4cbm6dkw8ZrL2Yg8HTYanB9okXwEbVkF4kdA5YZFMEUKYWhX
+	OjWy8ICdDReY2F4cf+yGNl8VLoFt5mo=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Ed Reel <edreel@gmail.com>, Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 1/3] Makefile: extract script to generate clar
+ declarations
+In-Reply-To: <7a619677c7af6ba8213a36208e20ab75c4318e38.1728985514.git.ps@pks.im>
+References: <CAGjHeYfyH+cOMYYYHnFR+Vu9T+RbmzO1SpB_-kbmBSf1DitJhA@mail.gmail.com>
+ <cover.1728985514.git.ps@pks.im>
+ <7a619677c7af6ba8213a36208e20ab75c4318e38.1728985514.git.ps@pks.im>
+Date: Fri, 18 Oct 2024 17:21:17 +0200
+Message-ID: <871q0dcu8i.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3af78a3c-afb9-4ce7-aea0-a5bbddd4f34a@app.fastmail.com>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Oct 08, 2024 at 04:19:10PM +0200, Kristoffer Haugsbakk wrote:
-> On Tue, Oct 8, 2024, at 15:19, shejialuo wrote:
-> > On Mon, Oct 07, 2024 at 10:15:16PM +0200, Kristoffer Haugsbakk wrote:
-> >
-> > [snip]
-> >
-> >>   §2 Disallow `HEAD` as a branch name
-> >> 
-> >> This was done later in 2017:
-> >> 
-> >> https://lore.kernel.org/git/20171114114259.8937-1-kaartic.sivaraam@gmail.com/
-> >> 
-> >>   §2 `refs/heads/@` is apparently disallowed by git-refs(1)
-> >> 
-> >> See `t/t1508-at-combinations.sh`:
-> >> 
-> >> ```
-> >> error: refs/heads/@: badRefName: invalid refname format
-> >> ```
-> >> 
-> >
-> > It's true that using "git refs verify" will report "refs/heads/@" is a
-> > bad refname.
-> >
-> > From the man page of the "git-check-ref-format(1)", it is clear that
-> >
-> >     9. They cannot be the single character @.
-> >
-> > Because I am interesting in this patch which is highly relevant with my
-> > recent work, so I try somethings here and find some interesting results
-> > as below shows.
-> >
-> >     $ git check-ref-format refs/heads/@
-> >     $ echo $? # will be 0
-> >     # git check-ref-format --allow-onelevel @
-> >     # echo $? # will be 1
-> >
-> > The reason why "git refs verify" will report this error is that in the
-> > code implementation, I have to iterate every file in the filesystem. So
-> > it's convenient for me to do the following:
-> >
-> >     if (check_refname_format(iter->basename, REFNAME_ALLOW_ONELEVEL)) {
-> >         ret = fsck_report(...);
-> >     }
-> >
-> > Because I specify "REFNAME_ALLOW_ONELEVEL" here, so it will follow the
-> > "git check-ref-format --allow-onelevel" command thus reporting an error
-> > to the user.
-> >
-> > I am curious why "git check-ref-format refs/heads/@" will succeed, so I
-> > try to use "git symbolic-ref" and "git update-ref" to verify to test the
-> > behavior.
-> >
-> >     $ git symbolic-ref refs/heads/@ refs/heads/master
-> >     error: cannot lock ref 'refs/heads/@': unable to resolve reference 
-> > 'refs/heads/@': reference broken
-> >     $ git update-ref refs/heads/@ refs/heads/master
-> >     fatal: update_ref failed for ref 'refs/heads/@': cannot lock ref 
-> > 'refs/heads/@': unable to resolve reference 'refs/heads/@': reference 
-> > broken
-> >
-> > So, we are not consistent here. I guess the reason why "git
-> > check-ref-format refs/heads/@" will succeed is that we allow user create
-> > this kind of branch.
-> >
-> > If we decide to not allow user to create such refs. We should also
-> > change the behavior of the "check_refname_format" function. (I am not
-> > familiar with the internal implementation, this is my guess)
-> >
-> > Thanks,
-> > Jialuo
-> 
-> Thanks for the careful analysis.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Please ignore the above analysis which is not true. (Today I am writing
-code for my work). Currently, we truly allow "refs/heads/@" as the refname.
-And also for "git check-ref-format", "git update-ref" and "git symbolic-ref"
+> Extract the script to generate function declarations for the clar unit
+> testing framework into a standalone script. This is done such that we
+> can reuse it in other build systems.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Makefile                            |  4 +---
+>  t/unit-tests/generate-clar-decls.sh | 16 ++++++++++++++++
+>  2 files changed, 17 insertions(+), 3 deletions(-)
+>  create mode 100755 t/unit-tests/generate-clar-decls.sh
+>
+> diff --git a/Makefile b/Makefile
+> index feeed6f9321..87b86c5be1a 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -3904,9 +3904,7 @@ GIT-TEST-SUITES: FORCE
+>              fi
+>  
+>  $(UNIT_TEST_DIR)/clar-decls.h: $(patsubst %,$(UNIT_TEST_DIR)/%.c,$(CLAR_TEST_SUITES)) GIT-TEST-SUITES
+> -	$(QUIET_GEN)for suite in $(CLAR_TEST_SUITES); do \
+> -		sed -ne "s/^\(void test_$${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$$\)/extern \1;/p" $(UNIT_TEST_DIR)/$$suite.c; \
+> -	done >$@
+> +	$(QUIET_GEN)$(SHELL_PATH) $(UNIT_TEST_DIR)/generate-clar-decls.sh "$@" $(patsubst %,$(UNIT_TEST_DIR)/%.c,$(CLAR_TEST_SUITES))
+>  $(UNIT_TEST_DIR)/clar.suite: $(UNIT_TEST_DIR)/clar-decls.h
+>  	$(QUIET_GEN)awk -f $(UNIT_TEST_DIR)/clar-generate.awk $< >$(UNIT_TEST_DIR)/clar.suite
+>  $(CLAR_TEST_OBJS): $(UNIT_TEST_DIR)/clar-decls.h
+> diff --git a/t/unit-tests/generate-clar-decls.sh b/t/unit-tests/generate-clar-decls.sh
+> new file mode 100755
+> index 00000000000..81da732917a
+> --- /dev/null
+> +++ b/t/unit-tests/generate-clar-decls.sh
+> @@ -0,0 +1,16 @@
+> +#!/bin/sh
+> +
+> +if test $# -lt 2
+> +then
+> +	echo "USAGE: $0 <OUTPUT> <SUITE>..." 2>&1
+> +	exit 1
+> +fi
+> +
+> +OUTPUT="$1"
+> +shift
+> +
+> +for suite in "$@"
+> +do
+> +	sed -ne "s/^\(void test_$suite__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$\)/extern \1;/p" "$suite" ||
 
-When I did the experiments above, I forgot to clear the state which
-makes the "git update-ref" and "git symbolic-ref" fail. So, there are
-some faults in "git refs verify". I will fix in my current work.
+In the Makefile the first `suite` was wrapped in curly braces. And I
+think we need to keep them in this script as well. I noticed because I
+was reviewing this code in my editor I've noticed it highlights
+"source__" as the variable name. You can see what happens if you add
+`set -x` to the top of the script:
 
-So, if we decide to not allow "refs/heads/@", we should also update "git
-check-ref-format", "git update-ref" and "git symbolic-ref" to align with
-this behavior.
+    $ make t/unit-tests/clar-decls.h V=1
+    /bin/sh t/unit-tests/generate-clar-decls.sh "t/unit-tests/clar-decls.h" t/unit-tests/ctype.c t/unit-tests/strvec.c
+    + test 3 -lt 2
+    + OUTPUT=t/unit-tests/clar-decls.h
+    + shift
+    + for suite in "$@"
+    + sed -ne 's/^\(void test_[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$\)/extern \1;/p' t/unit-tests/ctype.c
+    + for suite in "$@"
+    + sed -ne 's/^\(void test_[a-zA-Z_0-9][a-zA-Z_0-9]*(void)$\)/extern \1;/p' t/unit-tests/strvec.c
 
-Thanks,
-Jialuo
+So it seems the script currently works "by accident".
+
+You should replace the first $suite with something like:
+
+    $(basename $suite .c)
+
+One other suggestion, and feel free to disagree. What do you think about
+replacing the `$(patsubst ...)` in the recipe to `$(filter %.c,$^)`?
+
+--
+Toon
+
