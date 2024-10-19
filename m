@@ -1,117 +1,168 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C712118E354
-	for <git@vger.kernel.org>; Fri, 18 Oct 2024 23:07:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A78623
+	for <git@vger.kernel.org>; Sat, 19 Oct 2024 00:14:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729292873; cv=none; b=rZZsG+aSCOX5ju89PxmZHXFc20OkOId1jXjneWPV2BWzmYibPHAUKHXc+RjghsJOJ4Qj1XTGYpFlPi7DO4D08jVgB0bQcCVT+RNRuewoqjfz2gctQ9F+zDlzoYE/PkufxtE8rRkFZkSV/i8Ax2EH9zzb3/TdVnW+XggV5l3D414=
+	t=1729296859; cv=none; b=RNyOySTXTBUCUrrgIfQI4OOm1TBHaWJCuC4yv7QZosuJ4F4t9+UsglqTGP+SXf5/wx+napKaC8xvuf97JSS6KX+PdV/OuuMLNu6rKkjX/cjS43CmrnERMoSdW0o3laeP1Ptl3w/ou4TWXJh1wIvtJWFA34xmAWF8MS8VfLH1vIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729292873; c=relaxed/simple;
-	bh=da8Mn2d27qJ9KH4mR/60Ds11r+1i81PFSoxlhr9nvg0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nvqfzg1Gwk7/CAHq9nr07ZJMS5WVssIgtqYOgPvRBack8nmbt+yIvDA4P9WnQJWGnwKZJJOsTXqnX5oNxYDGQVljXAVn64z/o7UJ4jyxDUY698XhvgpnW5g920+qKU/7oVS3ipVxsJirgc3TSww/Irs1jpdyb68JE2gwhvhjli4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=fMhFclU/; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1729296859; c=relaxed/simple;
+	bh=zbxvuQ0bKz55iAhgmXaL/omEhjrVRozJz9gvvErAgj8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jwzW4aw5lz+iS3qoXGfYvHkUPgWib2eftHESZM1xXboI1Pa9LugA8O0+xvOSbTFDgOgeIBkqEBnrc/wcQ4+944IBdoRzoDRGFR4mtTCvo3qylCXEcPhpt+X5KXBhExTtHShLWEjax9/EqAnWVlnf/VVVLiaNkuXSwGJmEGtXqRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8znc6sc; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="fMhFclU/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1729292868;
-	bh=da8Mn2d27qJ9KH4mR/60Ds11r+1i81PFSoxlhr9nvg0=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=fMhFclU/n2chSNkgUNMWqKIplhwYEJoBznP1ER8TSRDAI0eY3cx2EKP1LaAtQ5L29
-	 2pZs2AwXXS1mPNL70QmTLcTRGZmX9ALPSygjPFdv/kuX9LLff5AhpVrXfrrAwYVZK0
-	 1Md7XgCVAPG54XMCGTq+WunyTG0ZkdZ6bhNahR/cuMb9NzadUcPunqvdbys/8NKaUP
-	 9Vc22bKLanS0zhZRRl9qnWP7gXJZgWlBPviOaZ6Jy/+hkx81h3lbzKpA1cfYesCs+g
-	 tq10wlYWUgxBTbfsEl9+3okzcJFaRegwO37KZbmzAcs8+GtNgQia+k5bAvqvnEYKod
-	 R4EySV2pAO2hzDRMxhRZeDB/NKg+jZUkw6bn02j3bXRp7Tqv9TAh6e4ewOXlnAL67H
-	 KxZapxKRwkMl8mjgW5P6fZCr6bF26V24d56LarYmnCzveLylV0Ex6qJAocKVJW27pc
-	 aPTUDf6m4fMv+COJ8glP04kD173EEi+mAp1J3RyKzi8ffyzQet8
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7833F200B1;
-	Fri, 18 Oct 2024 23:07:48 +0000 (UTC)
-Date: Fri, 18 Oct 2024 23:07:46 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Aswin Benny <aswinbenny.edu@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Feature Request : Get repo size without cloning
-Message-ID: <ZxLqQlNEPKT6CoGh@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Aswin Benny <aswinbenny.edu@gmail.com>, git@vger.kernel.org
-References: <CAHJ9C2JNVH6SmE5FoR7u7Z=5eynm8QfW4ZHMeA6dvP0FodxNWA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8znc6sc"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-37d58377339so2805958f8f.1
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 17:14:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729296855; x=1729901655; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=B0Th1+K0XpVOjJxLwI+sFxsFtO0rYXH1qm0YwBOBziI=;
+        b=D8znc6scZVyiwVdbio33d2HrQ+nxUa8FAkt4Uu9/nJ3Jyb2UvD0exuwBQUCN0nCZLf
+         20XDUC0EOif2LQO6QKFiAojY5M9HBUKWqUFSLFoepMg9frnyZ9B0KrfzJK6WH5WGkSQ/
+         FLusaQWnPTvrVQBZlU/GaNLuSaRr8XNREIUL4SfWo++H0nTeMCIzWqnrX3YgdIz6VXNM
+         nwlv5cHIpZUlhpQiE8rO4K7AnlAbBFiYyuyTeCP+4pKwAgAi34VnXJ1viaFsA5ZJ9qtQ
+         j5EiHM63eelezMXEmpAPYlFNS6UNn5IOpxpKIt2kt4lZY/rphYVLnUPA/OgxuIqyKv/6
+         HMiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729296855; x=1729901655;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B0Th1+K0XpVOjJxLwI+sFxsFtO0rYXH1qm0YwBOBziI=;
+        b=peZRPFYBtjFYvFKmVrjUdHvN+Uw0TfS0A5Z8uLgBRQzlsexQFg3qNI5aVgJIey3RO6
+         Lzluc+qXcj6Cs7bAVGyyRCR0HdVmS0siydWRy7WO2XA/tFiY16BJTw+BiHclz3WS/i0G
+         dVUBHGtV8MdA2p+kU6xMW5Kdutr69A+lD6Mx0u85xjpgPgfBBWZbtG8UtxnWfJTgooME
+         Q8oydAvYqNE16yvhM1QzrC/BlgChtdokvb0Et2orZCHc2uvgdV2wluR5VkuWJpbn9THa
+         lL/Cp0/QHi1fJCWTBjTra3UyAAmO8/7aKI/YsST88IY54938GriqPuKCKECmYVDZzbTU
+         fNaQ==
+X-Gm-Message-State: AOJu0YyBfiXsHpWu6vm/jyLgncPb5fvT4sTAENb2DBMqjAaDsbJ5qgLu
+	qKpYSUB50zndKuZaE8wO5vMKuanbstrSl15xK8sAAgVc7Th0E55x0fWpEQ==
+X-Google-Smtp-Source: AGHT+IHrHLBf/0nEL3YdlVloMR1TdTMLvBZJsfWbaO1/mWlLElFXdy4xzey0v4GPIDplf/BLG4GY7A==
+X-Received: by 2002:a05:6000:114b:b0:374:c658:706e with SMTP id ffacd0b85a97d-37eab755b4fmr4186920f8f.39.1729296854904;
+        Fri, 18 Oct 2024 17:14:14 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a68c2c51csm150602166b.218.2024.10.18.17.14.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Oct 2024 17:14:14 -0700 (PDT)
+Message-Id: <pull.1817.git.1729296853800.gitgitgadget@gmail.com>
+From: "Samuel Adekunle Abraham via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 19 Oct 2024 00:14:13 +0000
+Subject: [PATCH] notes: teach the -e option to edit messages in editor
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="awDbY7qWaRBCGWJN"
-Content-Disposition: inline
-In-Reply-To: <CAHJ9C2JNVH6SmE5FoR7u7Z=5eynm8QfW4ZHMeA6dvP0FodxNWA@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+To: git@vger.kernel.org
+Cc: Samuel Adekunle Abraham <abrahamadekunle50@gmail.com>,
+    Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 
+From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 
---awDbY7qWaRBCGWJN
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Notes can be added to a commit using the -m (message),
+-C (copy a note from a blob object) or
+-F (read the note from a file) options.
+When these options are used, Git does not open an editor,
+it simply takes the content provided via these options and
+attaches it to the commit as a note.
 
-On 2024-10-18 at 09:50:00, Aswin Benny wrote:
-> I would like to request the following features to git :
-> 1. A command or feature to get the size of the repo without cloning it
-> to the system
-> 2. An option to know the size of objects that will be downloaded forehand.
+Improve flexibility to fine-tune the note before finalizing it
+by allowing the messages to be prefilled in the editor and editted
+after the messages have been provided through -[mF].
 
-These are actually really difficult to know without actually performing
-the operation.  For example, GitHub and many other forges store all of
-the objects in a repository network in a single alternate, but only a
-part of those objects (the ones in the repository you're cloning or
-fetching) are included.
+Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+---
+    [Outreachy][RFC/PATCH] notes: teach the -e option to edit messages in
+    editor
+    
+    Notes can be added to a commit using the -m (message), -C (copy a note
+    from a blob object) or -F (read the note from a file) options. When
+    these options are used, Git does not open an editor, it simply takes the
+    content provided via these options and attaches it to the commit as a
+    note.
+    
+    Improve flexibility to fine-tune the note before finalizing it by
+    allowing the messages to be prefilled in the editor and edited after
+    they have been provided through -[mF].
 
-In addition, to know the size of the pack being generated, there's no
-more efficient way than generating the pack.  For example, a repository
-with identical structure but containing 500 MB of text files (source
-code, literature, etc.) will be much smaller than a repository with 500
-MB of random data because the former deltifies and compresses much
-better than the latter.  We don't know the size of the pack file being
-sent until we've actually compressed and deltified the objects.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1817%2Fdevdekunle%2Fnotes_add_e_option-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1817/devdekunle/notes_add_e_option-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1817
 
-We can, of course, make estimations of this data based on what's on disk
-on the server side.  But, just like with GitHub's API, it's not always
-possible to know exactly, and some users will be unhappy with a value
-that's not exactly correct.  (I can confirm there are users who feel
-this way about GitHub's API functionality, and I understand their
-concerns.)
+ builtin/notes.c  |  4 ++++
+ t/t3301-notes.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
 
-Given this, I'm not super excited about adding this feature to Git,
-because I think it will set us up for a lot of complaints when the data
-isn't exactly correct, especially when the data is far off from the
-actual value, and I don't think the utility is worth it.  But perhaps
-you or someone else can write a patch and it will be accepted, with the
-proviso that the data might not be correct, and users will still find it
-useful.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 8c26e455269..02cdfdf1c9d 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -489,6 +489,8 @@ static int add(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK_F('c', "reedit-message", &d, N_("object"),
+ 			N_("reuse and edit specified note object"), PARSE_OPT_NONEG,
+ 			parse_reedit_arg),
++		OPT_BOOL('e', "edit", &d.use_editor,
++			N_("edit note message in editor")),
+ 		OPT_CALLBACK_F('C', "reuse-message", &d, N_("object"),
+ 			N_("reuse specified note object"), PARSE_OPT_NONEG,
+ 			parse_reuse_arg),
+@@ -667,6 +669,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK_F('C', "reuse-message", &d, N_("object"),
+ 			N_("reuse specified note object"), PARSE_OPT_NONEG,
+ 			parse_reuse_arg),
++		OPT_BOOL('e', "edit", &d.use_editor,
++			N_("edit note message in editor")),
+ 		OPT_BOOL(0, "allow-empty", &allow_empty,
+ 			N_("allow storing empty note")),
+ 		OPT_CALLBACK_F(0, "separator", &separator,
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 99137fb2357..7f45a324faa 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -1567,4 +1567,33 @@ test_expect_success 'empty notes do not invoke the editor' '
+ 	git notes remove HEAD
+ '
+ 
++test_expect_success '"git notes add" with -m/-F invokes the editor with -e' '
++	test_commit 19th &&
++	GIT_EDITOR="true" git notes add -m "note message" -e &&
++	git notes remove HEAD &&
++	echo "message from file" >file_1 &&
++	GIT_EDITOR="true" git notes add -F file_1 -e &&
++	git notes remove HEAD
++'
++
++test_expect_success 'git notes append with -m/-F invokes editor with -e' '
++	test_commit 20th &&
++	GIT_EDITOR="true" git notes add -m "initial note" -e &&
++	GIT_EDITOR="true" git notes append -m "appended note" -e &&
++	git notes remove HEAD &&
++	echo  "initial note" >note_a &&
++	echo "appended note" >note_b &&
++	GIT_EDITOR="true" git notes add -F note_a -e &&
++	GIT_EDITOR="true" git notes append -F note_b -e &&
++	git notes remove HEAD
++'
++
++test_expect_success 'append note with multiple combinations of -m, -F and -e, invokes editor' '
++	test_commit 21st &&
++	echo "foo-file-1" >note_1 &&
++	echo "foo-file-2" >note_2 &&
++	GIT_EDITOR="true" git notes append -F note_1 -m "message-1" -F note_2 -m "message-2" -e &&
++	git notes remove HEAD
++'
++
+ test_done
 
---awDbY7qWaRBCGWJN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZxLqQQAKCRB8DEliiIei
-gVxZAP0VKq4eK8Aayt7V1e9kiRsaPuu0925NHR6eKIDlx7nBAwD/fMQKZ4K7gbyU
-KbY1EcHgPkiw2dNp5uVqYkx1vhei7A8=
-=H22O
------END PGP SIGNATURE-----
-
---awDbY7qWaRBCGWJN--
+base-commit: 15030f9556f545b167b1879b877a5d780252dc16
+-- 
+gitgitgadget
