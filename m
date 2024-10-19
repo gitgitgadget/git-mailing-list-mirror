@@ -1,173 +1,167 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5239C1925AA
-	for <git@vger.kernel.org>; Sat, 19 Oct 2024 00:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C5163C
+	for <git@vger.kernel.org>; Sat, 19 Oct 2024 03:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729298342; cv=none; b=ReQu+vIzSiCHZSGupuZTdKgGSvEx7FKybxhD3h/x2TvhoATgSOY09KrADkvIW/EjOU7CDjDVuUXaYnTxDG1pcl7PvLwJ+/biwbzo4zohf5gKcB7bTaoIu4lGBBMGMjVGJFtuUFjAtd7TghmXQHgo2V1op/kKp7fxAeWwjd8VS/Q=
+	t=1729309752; cv=none; b=GEhSj0WG6VexuxItBXZOxxGpEivXbiPtzWH091G+x6LD3ixbOycVSo5DtK7VkWa98euVX8Rp6jHNe2lgifNJRjRJM0cM0/CAQepE1S5hjJha2cXThyDg24FftKyR1sjEnvH/6oeM9zCCW4/W0zSCCgRUR0U4IXvWdp2YrM1TR/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729298342; c=relaxed/simple;
-	bh=BIoJLWhLEU9MNjYAcluT7r9EwCP8V2Xdo3Zifb5++pI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oAP58PvkluC/xebEVoPxUnIarZ8w/obrZbvxSdjf7vEpJZLvkk2123KmGytQid5ABbCF0TVIB0SmWfqRJqKVRRx3d7PkFL5hDXbp5oOtTg88FnKNGTaFsWIT12v/c3UoZ2wh5EsxKNqy6Pw/i01Dvvgo3BE7GR9k4pXegJLBl2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=AqPx29xi; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1729309752; c=relaxed/simple;
+	bh=uSUkTiD5EiMu+WZBIyyqaNROu5a2SgOpyL7NVvN8YLo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eCHnH9dRRUtvkzgFpD54cyp4beVgwklwdrd/Yn9kCn3SGlthf2Hw1fMXlUjWIQiqupwugEjy9tcgLq0WNPwWwtZW+ju5RpUjm4DYPHTVeiI9ZLkXpd6xqNe45sngHLOHcKngySh/6+D8qMvNfXViCKbjDPkCJAAA7wV2adwvEg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m6xgAOfO; arc=none smtp.client-ip=209.85.217.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="AqPx29xi"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1729298338;
-	bh=BIoJLWhLEU9MNjYAcluT7r9EwCP8V2Xdo3Zifb5++pI=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=AqPx29xiEdqN4APg41H7EUcX4CX8ur8ShoUA8A/8bydErHt+JDwM8bXWzrIgG5NMz
-	 aBqWMH92v8A733Ta/QEvSLW/1YmFu82Eea6WFm0i19t+GSRENsRfDD6iS8fFo0WvOp
-	 KulDg9WdiRsYUo2PGKjnKmpF4njLH2i6feX9PATL5Gq6KiiHREiCR/jb801bcQ6omG
-	 KZvvJO8sOae2ln63IORemxeu+rZ4BZSBJ3jwRGvHZPTqnlj6UfD2UHw3qR4W+OA3u7
-	 uNRuu0r01I9vI1vJXCMkI4q5Tm926rxv7kTiFvCxie6uxRCkjb0dkBiXvrbKpFhPgT
-	 DEZjBQZx/+NJMwkBjAn8o1bOFZWg7plnTE/FPvFB1X+4U8XcpaIICSpg+qn4Ysj6J6
-	 lhEbuIimibP7ef9kt//4/IYWQ+Ize3k7+QO3QEwG5vHW4Kto1sYf6FSuhTjtaLGcHx
-	 H2PB+EljDhRPRl8c8+gf8Vgrmg5YfvE3H+ge0ay3+Q89ucLPSlB
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 095D1200B3;
-	Sat, 19 Oct 2024 00:38:58 +0000 (UTC)
-Date: Sat, 19 Oct 2024 00:38:56 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Samuel Adekunle Abraham via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-	Samuel Adekunle Abraham <abrahamadekunle50@gmail.com>
-Subject: Re: [PATCH] notes: teach the -e option to edit messages in editor
-Message-ID: <ZxL_oAXN5KQ4FVMc@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Samuel Adekunle Abraham via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	Samuel Adekunle Abraham <abrahamadekunle50@gmail.com>
-References: <pull.1817.git.1729296853800.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6xgAOfO"
+Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-4a4789662c1so696679137.3
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 20:49:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729309749; x=1729914549; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uSUkTiD5EiMu+WZBIyyqaNROu5a2SgOpyL7NVvN8YLo=;
+        b=m6xgAOfO4sOW9Hq6IlY3UH46MLKNMlkt6vjoFW/OMYa9O7E0NVWEwqmSljxB25lBPa
+         zoVsfdPegv4ioT4ubN7AWyb/nxzkz79CaYlfrs3YoPqbZjW/T1K/YpuqvjY1AeroTzUf
+         P+vp7dKi/+h3MzpScQI+CffphYwvVYZdtPqM1WW3maeKlb5aGQF9oazMLYPFqz38mtVO
+         MTzWocKU1Mr9FG4vWwhk/XS0nmhjosY+pRyrr28qTlsv+RH6MPKiCKmW6embMEIxWRnw
+         I0dZKh5Fs+ObCDuzA1EyXQzYmZvaZlO+Com46v8BU7WRLTJc2Y0wdSJmo/GI7zfR5raQ
+         XfEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729309749; x=1729914549;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uSUkTiD5EiMu+WZBIyyqaNROu5a2SgOpyL7NVvN8YLo=;
+        b=a4dZR6Y/dwfaPz4mDUZNbMXbVmKUJ1Qr/VW58S1TD/TIqlUAk9FDpxS2L3bQMKaSs7
+         xLeL0xuXucqBv5SGqgewZvSRS5hOFIzAmep7CyNmfkT+DYG1WvyrLeHAbfoaPgiK0vnV
+         TdT563w7j9z2i2U7Dje5D/7dFyIeF2GNkILJDbnEI+w0+jjwWx2JxhFZPghmG/PzaPYZ
+         adYHjOJdAw43X7HNKmiZ2Fq9Nc0maweaRquorS6TA0C0pwYZqWSQHZ+7cu8Ik+m8TOQg
+         OA4caz0nmtFVuVVaeFYCc5qERTDz20x5Own2x8bugKejLlKMXOw82Lcs/k0rR2sB67zk
+         26+w==
+X-Gm-Message-State: AOJu0YzmiCkk2vWI2BT3JYKhG5PemqFbo0GmPsMZFSrUkr+MwVoDC1MP
+	ZMGLSUyjn2VcIH3vitDlB3W7rFGEPaqIrZhyG1jAGyOWatd4RiGO60A3BnbcqlTe6A8SLDcUC1F
+	RgA6/1y/J/fDwsYfxz0YxlakD9Hg=
+X-Google-Smtp-Source: AGHT+IEvoqmXZ7vYNuXFAOhEUGfqifLAsIGwposrw/hUiO23z9N6akSma2vz371blzJ4m0KsLlY+fHpRpDpvS1CBZgY=
+X-Received: by 2002:a05:6102:e13:b0:4a3:ccaf:203 with SMTP id
+ ada2fe7eead31-4a5d6a616b4mr5448923137.5.1729309749029; Fri, 18 Oct 2024
+ 20:49:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ODTylrDSde4H6mBA"
-Content-Disposition: inline
-In-Reply-To: <pull.1817.git.1729296853800.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---ODTylrDSde4H6mBA
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <705912536.3510460.1729265181938.ref@mail.yahoo.com>
+ <705912536.3510460.1729265181938@mail.yahoo.com> <CAPSxiM_4nBcB53+pfvC4YUsVz5wtJYgFEVuWQdCdo=2VWLj=Tw@mail.gmail.com>
+ <1075918304.3566148.1729271777281@mail.yahoo.com> <CAPSxiM8sXud=J9pQro28=F9UCbf-PR_gmEp=uyp6d6prCHHxzw@mail.gmail.com>
+ <1692736727.3717090.1729300501716@mail.yahoo.com>
+In-Reply-To: <1692736727.3717090.1729300501716@mail.yahoo.com>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Sat, 19 Oct 2024 03:48:58 +0000
+Message-ID: <CAPSxiM9=k8NQ1ExkRS49=1A6GwMn+A3wu-dkv+0R=2vOVDGvzw@mail.gmail.com>
+Subject: Re: Oureachy: Microproject (Modernizing a Test Script in Clar Framework)
+To: "shamimkhanum@yahoo.com" <shamimkhanum@yahoo.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-10-19 at 00:14:13, Samuel Adekunle Abraham via GitGitGadget wrote:
-> From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
->=20
-> Notes can be added to a commit using the -m (message),
-> -C (copy a note from a blob object) or
-> -F (read the note from a file) options.
-> When these options are used, Git does not open an editor,
-> it simply takes the content provided via these options and
-> attaches it to the commit as a note.
->=20
-> Improve flexibility to fine-tune the note before finalizing it
-> by allowing the messages to be prefilled in the editor and editted
-> after the messages have been provided through -[mF].
+On Sat, Oct 19, 2024 at 1:15=E2=80=AFAM shamimkhanum@yahoo.com
+<shamimkhanum@yahoo.com> wrote:
+>
+> Can you please share me little bit method how I can search previous micro=
+ project? I search it show me multiple folder. And you also tell me I choos=
+e this topic " Modernizing a Test Script in Clar Framework" can someone els=
+e work on it or not? Please verified this and guide me. And mentor show me =
+ideas link for micro project we choose those idea or new idea?
+> Pleasure for me if you guide me.
+Hi Shamim,
 
-I don't use the notes feature, but I definitely see how this is valuable
-there much as it is for `git commit`.
-
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index 8c26e455269..02cdfdf1c9d 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -489,6 +489,8 @@ static int add(int argc, const char **argv, const cha=
-r *prefix)
->  		OPT_CALLBACK_F('c', "reedit-message", &d, N_("object"),
->  			N_("reuse and edit specified note object"), PARSE_OPT_NONEG,
->  			parse_reedit_arg),
-> +		OPT_BOOL('e', "edit", &d.use_editor,
-> +			N_("edit note message in editor")),
->  		OPT_CALLBACK_F('C', "reuse-message", &d, N_("object"),
->  			N_("reuse specified note object"), PARSE_OPT_NONEG,
->  			parse_reuse_arg),
-> @@ -667,6 +669,8 @@ static int append_edit(int argc, const char **argv, c=
-onst char *prefix)
->  		OPT_CALLBACK_F('C', "reuse-message", &d, N_("object"),
->  			N_("reuse specified note object"), PARSE_OPT_NONEG,
->  			parse_reuse_arg),
-> +		OPT_BOOL('e', "edit", &d.use_editor,
-> +			N_("edit note message in editor")),
->  		OPT_BOOL(0, "allow-empty", &allow_empty,
->  			N_("allow storing empty note")),
->  		OPT_CALLBACK_F(0, "separator", &separator,
-> diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-> index 99137fb2357..7f45a324faa 100755
-> --- a/t/t3301-notes.sh
-> +++ b/t/t3301-notes.sh
-> @@ -1567,4 +1567,33 @@ test_expect_success 'empty notes do not invoke the=
- editor' '
->  	git notes remove HEAD
->  '
-> =20
-> +test_expect_success '"git notes add" with -m/-F invokes the editor with =
--e' '
-> +	test_commit 19th &&
-> +	GIT_EDITOR=3D"true" git notes add -m "note message" -e &&
-> +	git notes remove HEAD &&
-> +	echo "message from file" >file_1 &&
-> +	GIT_EDITOR=3D"true" git notes add -F file_1 -e &&
-> +	git notes remove HEAD
-> +'
-
-Maybe I don't understand what this is supposed to be testing (and if so,
-please correct me), but how are we verifying that the editor is being
-invoked?  If we're invoking `true`, then that doesn't change the message
-in any way, so if we suddenly stopped invoking the editor, I don't think
-this would fail.
-
-Maybe we could use something else as `GIT_EDITOR` instead.  For example,
-if we did `GIT_EDITOR=3D"perl -pi -e s/file/editor/" git notes add -F file_=
-1 -e`
-(with an appropriate PERL prerequisite), then we could test that the
-message after the fact was "message from editor", which would help us
-verify that both the `-F` and `-e` options were being honoured.
-(Similar things can be said about the tests you added below this as
-well.)
-
-I suggest Perl here because `sed -i` is nonstandard and not portable,
-but you could also set up a fake editor script as in t7004, which would
-avoid the need for the Perl dependency by using `sed` with a temporary
-file.  That might be more palatable to the project at large, but I'd be
-fine with either approach.
-
-Do you think there are any cases where testing the `--no-edit`
-functionality might be helpful?  For example, is `git notes edit` ever
-useful to invoke with such an option, like one might do with `git commit
-amend`?  (This isn't rhetorical, since the notes code is one of the areas
-of Git I'm least familiar with, so I ask both because I'm curious and if
-you think it's a useful thing to do, then tests might be a good idea.)
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---ODTylrDSde4H6mBA
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZxL/oAAKCRB8DEliiIei
-gd5WAP0TVw2/Jjw9Xi2Wf0q6MHky+yNO4rs6LND7yleaKe0ufwD/cxP/uPvEdmS1
-GCMRPni8LOZzHfwgtH0e3IBXFw/tcAA=
-=IALn
------END PGP SIGNATURE-----
-
---ODTylrDSde4H6mBA--
+This is a link to some microproject as shared by Patrick -
+https://git.github.io/SoC-2024-Microprojects/.
+If you want to search what other people have been working on, you have
+to go to the mailing list (https://public-inbox.org/git/)and filter it
+by outreachy. The results which contain the PATCH tag are the
+microproject that has been worked on by the other contributor. As I
+understand, no one is yet working on the topic, since it is what is
+supposed to be worked on during the internship.
+>
+>
+> Many thanks.
+>
+> Yahoo Mail: Search, Organize, Conquer
+>
+> On Sat, Oct 19, 2024 at 2:15 AM, Usman Akinyemi
+> <usmanakinyemi202@gmail.com> wrote:
+> On Fri, Oct 18, 2024 at 5:16=E2=80=AFPM shamimkhanum@yahoo.com
+> <shamimkhanum@yahoo.com> wrote:
+> >
+> > I am reading all helping material and also contact with mentors.
+> >
+> > Thanks for replying to me. Can you please tell me if you are working wi=
+th the Git microproject? Which idea are you choosing? Also, have you submit=
+ted the final application or not?"
+> Yeah, I worked on a Git Microproject. The final application deadline
+> is by Oct 29. For the project, I will advise you to search through the
+> mailing list using outreachy as the filter. You will see all of the
+> microproject that have been worked on by other outreachy applicants.
+> You can look between 0ct 1st till now to get the idea of what other
+> microproject the applicants are working on. Thank you.
+>
+> >
+> >
+> >
+> >
+> >
+> > On Fri, Oct 18, 2024, 9:16 PM shamimkhanum@yahoo.com <shamimkhanum@yaho=
+o.com> wrote:
+> > > Dear Git Community,
+> > >
+> > > I hope this message finds you well. My name is Shamim Khanum, and I a=
+m a C programmer with a keen interest in open-source development and versio=
+n control systems.
+> > > I am writing to express my interest in working on a microproject rela=
+ted to Git, specifically focusing on improving the Modernizing a Test Scrip=
+t in Clar Framework. My proposed approach involves a thorough review of the=
+ existing test scripts to understand their structure and add a small enhanc=
+ement. My background is as an MPhil computer science student at the Univers=
+ity of Punjab. I am currently in the Outreachy contribution phase for choos=
+ing this project. I am passionate about contributing to open-source project=
+s, and I believe that my skills and enthusiasm would make me a valuable add=
+ition to the Git community.
+> > > Thank you for considering my proposal. I look forward to your feedbac=
+k and hope to engage with the community to make a positive impact.
+> > >
+> > > Best regards,
+> > > Shamim Khanum
+> > > shamimkhanum@yahoo.com
+> > Hi Shamim,
+> >
+> > Nice having you here, I am Usman an Outreachy contributor like you.
+> >
+> > Bellow is the extract of the statement from one of the mentors Patrick =
+which can get you started.
+> >
+> >
+> > I would strongly recommend reading through [1] and [2]. They should giv=
+e
+> > you some ideas for how the Outreachy application process is designed to
+> > work in the Git project and lays out the expectation of us mentors.
+> >
+> > Patrick
+> >
+> > [1]: https://git.github.io/Mentoring-Program-Guide/
+> > [2]: https://git.github.io/General-Microproject-Information/
+> >
+> > While going through all this, you should get additional guidance from t=
+he mentors also.
+> >
+> > Thank you.
+> > Usman Akinyemi.
+> > >
+> > >
+> > >
+> >
