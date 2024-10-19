@@ -1,52 +1,52 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558A13207
-	for <git@vger.kernel.org>; Sat, 19 Oct 2024 05:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C1218872A
+	for <git@vger.kernel.org>; Sat, 19 Oct 2024 05:07:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729314060; cv=none; b=YswQxPlsCeT0XQ/CAnYavG3w0pYT3GQB8Pz9j+XFqleV+eYfp512tBAhSqbGL+Z8xoDnxpzWutd08KqfWZxQGnHmTbknOXy9emkOPMfFW8QVnuqQ/oYBq+dkCuICyVwZ1RSOYhsEfdbJw4x1oTJBRAFdHo1N6Es7BqLObHDvCUs=
+	t=1729314428; cv=none; b=p2q/x+1sfNSUtH24OYwLFItgm7b6U1oUwZNjeITIm3AfZgm9jp1Sr9mAIAJ0YGSxYyzGljWI67oDNHK0yugRPJoif67ePqBNsP4EA2JhlV8bKmvLN38Gap5KsRLoAykTTKiSKQOTIgPpdXQQsxmFDHt6Yxsrk1HmD62e3KO2O6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729314060; c=relaxed/simple;
-	bh=sZknpXWlE8vpuX4w4vWG6mhy7iSuGeEc5EKBdAh2yRA=;
+	s=arc-20240116; t=1729314428; c=relaxed/simple;
+	bh=DZ4w5IQUu2GX8UvBSMUHG77zRfDV/CmxzjIErnO4FQE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fsBQX27URSb3gGpr/TsnQIzzlLK9jIywmjTO5xrllQkT7i7SSYUeu2u0Lthd6YimZ8avh2XCATwYJhfFSZlCkOe5IEuZ8IVjOafwwxC1WtwHm/xZGkvT6zouHCJ8c+ST/QHSHMr1+1ausoGChz1Lum2JMacgHb1eDHo+nFWJpD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
+	 To:Cc:Content-Type; b=fQy/eydrgUQUiYJskc9DMSF40XjuCQjg5qwIgBIBcO44fzvAwLE6U4L6Xybr4V/QDkBd2fWxN6VtOgEyOPCBM4Gyg8bFFxRXXg5O7ajyq2TUPXVIhokh+AI5pMr3L2pzH1ETsf/0G7zCs2yd9LHpVw3Hyuze+SdhgQdDbf7M1BQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6cbf3f7272eso4752376d6.3
-        for <git@vger.kernel.org>; Fri, 18 Oct 2024 22:00:58 -0700 (PDT)
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6cbe53e370eso2735016d6.2
+        for <git@vger.kernel.org>; Fri, 18 Oct 2024 22:07:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729314057; x=1729918857;
+        d=1e100.net; s=20230601; t=1729314425; x=1729919225;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HsMZA5Cv91FU88/Q6DR4Ubi5mOQ3AoX2L7oBJMfbYSw=;
-        b=rl2c9++IBaVPAwTigVCOcARcEfezD7aCDZ2OdkPOuN9WBvzt0hisXDvpY8Ko15Q6AS
-         UVL7e2/fPm49+IKg05O2bR0fqjOC3+waAdQ+dZiQ9ugk7xSHU44gvGwfZTGpI8sjC4v4
-         cOlTOFrHCwyt0vM592x1pp6VrKGt97BItRJ6cdw7AtGlTYi3r+htoOIAS8h95TeYqB1k
-         u5/aAf+e13XKjBQiRGO9NwZnOw/tpW/RuZFTNKBxRI1bpjz1Gd1ycIQJXLcKS8VPQs6D
-         zCeoi3W3MyOgb3LuJUD8FUWh/PyoZ8fg4Qi4f6UjhiGO0FruNmdqQqAA13ddbl+jMOqs
-         kpPw==
-X-Gm-Message-State: AOJu0YxzpC+1pD8ispuEpzrVBrarK0DrboFOdgThzG9FPky5CsTM8Dkg
-	4oHARfqrtR+6hZ7u72ZrDezw+IVEXF215wGtqJ7a2O++yHA35Gomq82AnABt8QRD1uSTOMFNDbB
-	NAlVe5FfRbcdNxUh7ernuIjgJ74Y=
-X-Google-Smtp-Source: AGHT+IGjFWF9vdSdTU1wELsk6DVPRxk4l6KoHon4XW0m7ykmz4tni+JtiMhjaTH5wtu9akOUDd/K94eXFUJPx4rZu9s=
-X-Received: by 2002:a05:6214:4003:b0:6cb:4a88:8cf5 with SMTP id
- 6a1803df08f44-6cde14f83d7mr29691606d6.2.1729314057166; Fri, 18 Oct 2024
- 22:00:57 -0700 (PDT)
+        bh=DZ4w5IQUu2GX8UvBSMUHG77zRfDV/CmxzjIErnO4FQE=;
+        b=ngEP5bJ3BlCvrjHYQkD+Nu3EArv1iu44YZHjspZZoNQYakotMmoD4Nx8dOToQm8/NU
+         5rLjOUqOXWxOgruQEEHdOm3KJT4PDTluwK3mqlmqeOep+rumJAyRN71b68HZAdW5xadl
+         M2eJGS4Y/YdT5cqOg4W7TLZc5QDf9WPvoND2aXPKUMSf2bZki79C/zGnDpSL7Q+70ueK
+         zy1N5RQNFPJzt+9DSdLwggUTtvp58y2nXA6rB9o0y69ROXkXBb2XyykCnkrenJvVn1BO
+         tzS0wLMwLcdEuYISpK2ybl8eSCjaATNNXq/zk7f6smMrDZBI83UtOzdP2Rjn6V8d1x94
+         QmkA==
+X-Gm-Message-State: AOJu0YyzQArh2YaUkBOWLqs+ZRGD5FPA3GmuZwDWjWhLa3m16riqMj14
+	iryRLcJPh5WtHJRYAadURjKsKiCxoHOchaRozTMUBYS5rMhjieglBKsxAF4kz0fcb1ONP1xxXCj
+	yj4UbjdNmoc2Ra5vZF+0uKQbdh/zaaHwq
+X-Google-Smtp-Source: AGHT+IFU7gy7elgE90gnR3QbLY+SkSrvj9jHx9Pcp1iZwptsHUnFrOKnBBNyypgf96+6lNhbtkbVIWh+vLldPr11C6c=
+X-Received: by 2002:a05:6214:268e:b0:6cb:e981:d7d0 with SMTP id
+ 6a1803df08f44-6cde1604c77mr30964236d6.7.1729314424844; Fri, 18 Oct 2024
+ 22:07:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im> <800fb080f45f48e248e1ed9c7b3e40cdfc526115.1729254070.git.ps@pks.im>
-In-Reply-To: <800fb080f45f48e248e1ed9c7b3e40cdfc526115.1729254070.git.ps@pks.im>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im> <9be0719ce1b73a82310a06edbcf5de8890fdc220.1729254070.git.ps@pks.im>
+In-Reply-To: <9be0719ce1b73a82310a06edbcf5de8890fdc220.1729254070.git.ps@pks.im>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sat, 19 Oct 2024 01:00:46 -0400
-Message-ID: <CAPig+cR2QXmgFEpaQrvsAF1jV8nZavFjYQkMXp5zaYVER2CiSg@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 01/15] Makefile: use common template for GIT-BUILD-OPTIONS
+Date: Sat, 19 Oct 2024 01:06:54 -0400
+Message-ID: <CAPig+cTu5AQLq2XZwyX7yw6A=gJa_Z29STG8uOJ4NQheCJcT4Q@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 09/15] Makefile: refactor generators to be PWD-independent
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>, 
 	Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
@@ -54,27 +54,15 @@ Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 18, 2024 at 8:23=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+On Fri, Oct 18, 2024 at 8:24=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
 e:
-> Introduce a new "GIT-BUILD-OPTIONS.in" template to address this issue.
-> This has multiple advantages:
-> [...]
->   - Some build systems complain when not all variables could be
->     substituted, alerting us of mismatches. Others don't, but if we
->     forgot to substitute such variables we now have a bogus string that
->     will likely cause our tests to fail, if they have any meaning in the
->     first place.
+> We have multiple scripts that generate headers from other data. All of
+> these scripts have the assumption built-in that they are executed in the
+> current source directory, which makes them a bit unwieldy to use during
+> out-of-tree builds. This makes them a bit unwieldy to use. Refactor them
+> to instead take the source directory as well as the output file as
+> arguments.
 
-Regarding the above...
+Duplicate "makes them a bit unwieldy to use".
 
-> +       @sed \
-> +               -e "s|@SHELL_PATH@|\'$(SHELL_PATH_SQ)\'|" \
-> +               -e "s|@TEST_SHELL_PATH@|\'$(TEST_SHELL_PATH_SQ)\'|" \
-> +               [...]
-> +               GIT-BUILD-OPTIONS.in >$@+
->         @if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; f=
-i
->         @if test -f GIT-BUILD-DIR; then rm GIT-BUILD-DIR; fi
-
-... can't we `grep` whether any unsubstituted variables remain in $@+
-and complain if they do?
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
