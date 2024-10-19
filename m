@@ -1,180 +1,120 @@
-Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F1B1940A2
-	for <git@vger.kernel.org>; Sat, 19 Oct 2024 22:54:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D905193418
+	for <git@vger.kernel.org>; Sat, 19 Oct 2024 22:54:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729378474; cv=none; b=FnI+O9aSfiLVkTHgqDd6Z6Hob1p9Ote2Ok4ywNq9fXP9Kf21hoqYu8lzsLd/x7Om6rn7MvQwJraKReSnDfWG+bzf5HPUXTLVRoUHnPRCo+h/fi1j9ys4YpnGGCXguy02N0J1DrH3AudW61M3UPZ+i6I2PzlGRY1vaGLad137PEk=
+	t=1729378479; cv=none; b=IRFZ7iL5yjJTUxMclgBKRb2Re0vHKp6riJxu/f6p4mZlfynrrvMFfivpHbPklh8GqrWm15zYPAlHZah6F5/k2mQyz2M8q6L09mKTBWtWDhL+BSZTLLbQ5bpyGf8D5P0z9XR//dYkYSNunrO/a09r2PeiIqsTrwo2B74Pu5ZbYq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729378474; c=relaxed/simple;
-	bh=nIBZdbTmDta75HLB7imASrRBjK8rscD3+utPiyFJvWs=;
-	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
-	 MIME-version; b=M1qKS5j7OBL3DPt/9Q/HwrpyqN0neiJc79XsTDWqWfau1ZBxgeJikqZcvFIjeLx02IsLKSxpXMEkLe6A6qenBYek1TO35S513j7F8LgBOWmoNlVuKYtD7iqJXEEslvMcBqybZ19joY7Nafjs7OxiamJaoXsbeXBv99pSi6wThXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=VQvTrb+i; arc=none smtp.client-ip=192.29.178.124
+	s=arc-20240116; t=1729378479; c=relaxed/simple;
+	bh=u9FeoWzgTf3Tewz50R1yZsuNpI2tDy8WeSjhJFzHU0U=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=LpO+RlkDToKiy9IOI8n/OASl+u3hzJfeFc7lw+pEOWXHQt+113y66JbWhHg7X2hXiNgEcCr+r76My8UJVC7TlynTYYmneJ0gkDdPR5WRD7OWNZIlmvlCI/+XfbwZwnXK4hfin39SUfov0o6qKrcwbNufiBKMrRiONTplZZVUYKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=IVauBWgM; arc=none smtp.client-ip=192.29.178.125
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="VQvTrb+i"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="IVauBWgM"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=/xLMmhqlHjgLfu6faqE67RN52lpBLuFum7kcYNMBU/4=;
- b=VQvTrb+i9Q6Ync8sEP2ieDGZ5Oi9tEGnlUtin2de3/1LZTEUzuuvB3fLmpe+K6PPuXLck+wIwKIk
-   wWHHZKwtjWGqY7L0kq7vDoeTerEco6n4d4Jo0BmJDgSEhMKuAYqndyiDzDh4ZwQlH3qiayiAHAsk
-   l0qab+osGZlkZKZ9zKdVRSG1ihVqhKtw8xkYt64hJXdE4HV/tn9DoOCFi2b/v1qCJ1z9mCwUGy9O
-   8LVq+fbHEnhmlQRB4qI9wfcyQYob1mSv0RhJdnRltOqVqdFvSU1vPP0FQLilLkebC/Sn5oCzIAVM
-   Dnsw3egwIw3W9gy2FO71GfnQ53aKmHDEd/XHPA==
-Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ bh=u9FeoWzgTf3Tewz50R1yZsuNpI2tDy8WeSjhJFzHU0U=;
+ b=IVauBWgMVE0RjjE9bryd8h6N1cmzd1IEEwi4AqcZZinBo5y/8umTEDziL8/bdZBLbMhMtwanPi0H
+   HwjVmRZcDGQr+H9F/mmGlcCf1XhxclUkERAMQiSdB8xQ2Po41Op15jJbHOT/UitBbiFRN3+30EW2
+   TtCq6YtWlyflxLgsBAA3HoKRWJ7xEmsh9Uig8kdN/z0nAEsA6RyZIZMp7H4QT90R3zJvaHz78X/j
+   GYK3z34ENOBTFl4gP3J27276ovHNxdr6a5GqJfSfAiLalF80lUbpcDRil7gEpXwc2FjN2RxP0Rwj
+   kDWkhxlsyQ7JBpyvf/QhO0wPL4mhESAGHQvzFQ==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
  2024))
- with ESMTPS id <0SLM007H2KYNRJ10@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sat, 19 Oct 2024 22:54:23 +0000 (GMT)
+ with ESMTPS id <0SLM002RHKYZV990@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sat, 19 Oct 2024 22:54:35 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
-From: Bence Ferdinandy <bence@ferdinandy.com>
-To: git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,	karthik.188@gmail.com,
-	Taylor Blau <me@ttaylorr.com>,	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH v9 6/7] refs: add create_only option to
- refs_update_symref_extended
-Date: Sun, 20 Oct 2024 00:53:13 +0200
-Message-id: <20241019225330.4001477-7-bence@ferdinandy.com>
-In-reply-to: <20241019225330.4001477-1-bence@ferdinandy.com>
-References: <Zw8IKyPkG0Hr6/5t@nand.local>
- <20241019225330.4001477-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
-Content-transfer-encoding: 8bit
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Sun, 20 Oct 2024 00:53:58 +0200
+Message-id: <D505HR2RH3C4.1VODDQ0I8IGMQ@ferdinandy.com>
+Subject: Re: [PATCH v7 1/6] refs: atomically record overwritten ref in
+ update_symref
+Cc: "Taylor Blau" <me@ttaylorr.com>,
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ "Junio C Hamano" <gitster@pobox.com>
+To: <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <20241010133022.1733542-1-bence@ferdinandy.com>
+ <20241012230428.3259229-1-bence@ferdinandy.com>
+ <3c848f10-ac14-4cd7-8fbe-868da9599244@gmail.com>
+ <D4UZTVHXXL1X.2KBQI9FYTAU72@ferdinandy.com>
+ <a7cb48e5-d8ba-44c1-9dbe-d1e8f8a63e3c@gmail.com>
+ <D4WJZVALZYZ6.1FR78333KZBAL@ferdinandy.com>
+In-reply-to: <D4WJZVALZYZ6.1FR78333KZBAL@ferdinandy.com>
 Reporting-Meta:
  AAE2GdbF+mCcWjovfScOg+z3IZUY0hnhSpQctsQOhAOWKoxa7Cyuo8IjDh0hOxf1
- h7tysrbbirtWtpX0pL+YTOzCg+GfvzfDXgx4797R7uAKOZj3n9zzR1sOrMQGwXaA
- AWBtBNxvjm55kKKSpjQm5nmICmTxLiX6BxXuAZ6fX5sJTASlWl9/WtMX6Hi8005S
- I6l5PgCHQgcOTCtaYBLaB+1S9+yFwk0mye2NI+bdUEn+z51ciNTxH8WK48V1yf1k
- vZY54M4cAokAeDAVAtf9wchxgXpMCz/VviOK56c91gypeeRjWMmQJiHhOr+uabMV
- Ag0ytJNfK5BpTj36/R1dTgygnOReAtIqJ8RNuIMoDOzJ3ikS9+GsAIn1fRJKI7jx
- eAZZ5tA1SDTHm9Hpe4WeoaElusfQXtlx1XOO6cGzdU+xN+qKHL4AptyesjQPB2DM
- 2Iq0FQxoaGu+jtQcO3E3zCsKo4lDg2wWZDZQTRvEhRwepzJEGH1yArsA
+ h7tysrbbirtWtpX0pL+fTOzCg+GfvzfDXgzrDhoQePd5vx8auETY5iWBmR9PRhOU
+ +qS+o0pmPgRWdTzRjl1iGtCE84T0ee9KjJMLHXdAuQHVJcXULqTCuqZfRpOarB1A
+ d0+HIkOBZeio03rtnsTu4cfkBNI04/d7mIQpC1dhQM16EVRDdSdi2W4Iopo5Q6bb
+ 4TfeP6MztUbb4CTf2NwCT1nlNT+c+43qxrrEM7gO/MP0txJ7xnIki6eZnjI7xi+x
+ rWXfmdZTdYkI0KfyqLu6m++zZGYi53+pFZpODXmKM55WcM06fgFs1+MFl/shjGIJ
+ JxprnheNV/UTHZE5cijT8DytJ4bpQWzZiqH7YyUi+3/Z2Yp+3Nq9fUdmJiVevbdf
+ rxtq3+y/FUddV8sYSlfhf8e0DrM82aKg0Aw7+VemuQh5VKGjpitLuKPU
 
-Allow the caller to specify that it only wants to update the symref if
-it does not already exist. Silently ignore the error from the
-transaction API if the symref already exists.
 
-Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
----
+On Tue Oct 15, 2024 at 19:25, Bence Ferdinandy <bence@ferdinandy.com> wrote=
+:
+>
+> On Tue Oct 15, 2024 at 16:05, Phillip Wood <phillip.wood123@gmail.com> wr=
+ote:
+[snip]
+>>>>
+>>>> I'm also not sure about the proposed interface I would have thought it
+>>>> would be simpler to take a "char**" rather than an "struct strbuf*" if
+>>>> we do decide that it is useful for callers of refs_update_symref() to
+>>>> query the old value.
+>>>=20
+>>> refs_read_symbolic_ref requires a strbuf, so one would need to be creat=
+ed
+>>> anyway and I also sort of got the feeling that the project likes to han=
+dle refs
+>>> in strbufs (which may be wrong). Are there any downsides I'm not seeing=
+?
+>>
+>> It's true that refs_read_symbolic_ref takes and strbuf. I'd argue that's=
+=20
+>> a mistake for a function that is just returning a string in an "out"=20
+>> parameter as I think it is more continent for the caller not to have to=
+=20
+>> initialize an strbuf just to retrieve the target of a symbolic ref. I=20
+>> alse think that it is inconsistent with functions like=20
+>> refs_resolve_refdup() that return a string.
+>
+> Ok, I'll change this to use **char. On the other hand, if
+> refs_read_symbolic_ref is inconsistent would it make sense to change it t=
+o also
+> use a **char instead of strbuf? There's only four calls to it including t=
+he one
+> I just added. Although I might rather do that _after_ this series is reso=
+lved :)
 
-Notes:
-    v4: new patch
-    v5: no change
-    
-    v6: - switched from bool to int for create_only
-        - refactored logic in refs_update_symref with goto as layed out by
-          Junio
-    
-    v7: - change commit prefix to be more in line with project standards
-        - refactored code to accommodate changes in the first patch, but
-          otherwise no change
-    
-    v8: no change
-    
-    v9: - no change (except for following through the
-          refs_update_symref_extended refactoring)
+I started doing this change, but ran into two things which I would yet agai=
+n,
+bring up in defence of strbuf. So not only refs_read_symbolic_ref makes use=
+ of strbuf, but
 
- builtin/remote.c |  2 +-
- refs.c           | 32 +++++++++++++++++++++++---------
- refs.h           |  2 +-
- 3 files changed, 25 insertions(+), 11 deletions(-)
+a) I also use it in refs_update_symref[_extended] to check if the caller
+actually wants that referent or not (passing a NULL or a strbuf).
+b) the consumer, report_set_head_auto check for !buf->len
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 108f1271d3..b1eba75a2b 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1471,7 +1471,7 @@ static int set_head(int argc, const char **argv, const char *prefix)
- 		if (!refs_ref_exists(refs, b_remote_head.buf))
- 			result |= error(_("Not a valid ref: %s"), b_remote_head.buf);
- 		else if (refs_update_symref_extended(refs, b_head.buf, b_remote_head.buf,
--					"remote set-head", &b_local_head))
-+					"remote set-head", &b_local_head, 0))
- 			result |= error(_("Could not setup %s"), b_head.buf);
- 		else if (opt_a)
- 			report_set_head_auto(argv[0], head_name, &b_local_head);
-diff --git a/refs.c b/refs.c
-index 24a4172cd2..093ee11ab0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2116,31 +2116,45 @@ int peel_iterated_oid(struct repository *r, const struct object_id *base, struct
- int refs_update_symref(struct ref_store *refs, const char *ref,
- 		       const char *target, const char *logmsg)
- {
--	return refs_update_symref_extended(refs, ref, target, logmsg, NULL);
-+	return refs_update_symref_extended(refs, ref, target, logmsg, NULL, 0);
- }
- 
- int refs_update_symref_extended(struct ref_store *refs, const char *ref,
- 		       const char *target, const char *logmsg,
--		       struct strbuf *referent)
-+		       struct strbuf *referent, int create_only)
- {
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
--	int ret = 0;
-+	int ret = 0, prepret = 0;
- 
- 	transaction = ref_store_transaction_begin(refs, &err);
--	if (!transaction ||
--		ref_transaction_update(transaction, ref, NULL, NULL,
--				   target, NULL, REF_NO_DEREF,
--				   logmsg, &err) ||
--		ref_transaction_prepare(transaction, &err)) {
-+	if (!transaction) {
-+	error_return:
- 		ret = error("%s", err.buf);
- 		goto cleanup;
- 	}
-+	if (create_only) {
-+		if (ref_transaction_create(transaction, ref, NULL, target,
-+					   REF_NO_DEREF, logmsg, &err))
-+			goto error_return;
-+		prepret = ref_transaction_prepare(transaction, &err);
-+		if (prepret && prepret != TRANSACTION_CREATE_EXISTS)
-+			goto error_return;
-+	} else {
-+		if (ref_transaction_update(transaction, ref, NULL, NULL,
-+					   target, NULL, REF_NO_DEREF,
-+					   logmsg, &err) ||
-+			ref_transaction_prepare(transaction, &err))
-+			goto error_return;
-+	}
-+
- 	if (referent)
- 		refs_read_symbolic_ref(refs, ref, referent);
- 
-+	if (prepret == TRANSACTION_CREATE_EXISTS)
-+		goto cleanup;
- 	if (ref_transaction_commit(transaction, &err))
--		ret = error("%s", err.buf);
-+		goto error_return;
- 
- cleanup:
- 	strbuf_release(&err);
-diff --git a/refs.h b/refs.h
-index a5bc25442b..458582ebcf 100644
---- a/refs.h
-+++ b/refs.h
-@@ -575,7 +575,7 @@ int refs_update_symref(struct ref_store *refs, const char *refname,
- 
- int refs_update_symref_extended(struct ref_store *refs, const char *refname,
- 		       const char *target, const char *logmsg,
--		       struct strbuf *referent);
-+		       struct strbuf *referent, int create_only);
- 
- enum action_on_err {
- 	UPDATE_REFS_MSG_ON_ERR,
--- 
-2.47.0.92.g83fdbe24c3.dirty
+Both of these sound way more convenient with strbuf than with *char. Ofc I'=
+m
+not exactly a C guru so ... Anyhow, v9 does not have this change.
 
+Best,
+Bence
