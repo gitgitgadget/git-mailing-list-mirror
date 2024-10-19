@@ -1,111 +1,81 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7381F1922DB
-	for <git@vger.kernel.org>; Sat, 19 Oct 2024 20:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837A7191F62
+	for <git@vger.kernel.org>; Sat, 19 Oct 2024 21:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729371467; cv=none; b=OoUV+uj5wGnz1H4FO2M9UNORSnug38X43oFNHht7EO0LeayVRx/JS0dNuG+D/TuYy8RVwJeo2HFtGFUKR668duk5wlKp9BQVHj0bDbKyCp+no/4jllVJ5O6B/vKUAy0UpFQkwMZfgbbgIzxwRSvYoCImEGPi+9pU7XtlY/S4t3w=
+	t=1729372900; cv=none; b=kMdDuD7odpgtA3Nu+cwjvkZ64Jy4MBPPrbeAKMNGXlD/qGN74wAoh8zrN13phVtaiWlWMvlEtY+qJuMa2vK3ALLeMO1FH6ZAgfuTWK94dI32OdHW+qlBL53mHV6/HVgsElnXkwZKbrv8b0tONW1Wf8ovr4YCJspMaHLm2aw2IjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729371467; c=relaxed/simple;
-	bh=YkSymvWXTM/CRxJVrOkLEJlvJ1QK/sMJZNVDk60OILQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Q2MiPuz7ilYJSUTzWqP0Ga34IA4YxhZj2UaWoBr/X2Q1YlGFPH9zHm/3KZddrlyS3EMnuyJDc/H0sScybI/FKdbTeMLafuqGOE6muqH6oQnlfE0B2jG9Kr0Gv5yrESg0u/NeCzjuSJDDxcp+p5T0CMlchsaC9/IJ89prnEPc/Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Gc5OyA4h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l/0alUca; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729372900; c=relaxed/simple;
+	bh=1BA7cn5SOz26Vr2HAInhILOyHdl+D9wTvRBnNasaqLc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bVdTVd7IT2WEmOzVponGoT2rE3Y8kP0insYkrQfbg3WziK6gREPSOOFjZtDT7joKNzO/vED90r9UYv2WnXUN3s27aIuqmc49ZOdPy3E5eiYW6hR4iizTINhhGQ25Sckj/KDcxDJmStEdINtjjJXG4mtjflrlx/iLoI1tMAvbnRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JBrKW74n; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Gc5OyA4h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l/0alUca"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 67D1D2540086;
-	Sat, 19 Oct 2024 16:57:44 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Sat, 19 Oct 2024 16:57:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1729371464;
-	 x=1729457864; bh=K2kRtKPkp4Rmn1yUTv4cEPAzZfBMq4wBoIlxKfK3jPQ=; b=
-	Gc5OyA4h89OGHt4GSVRvFNF+xUVAJJe3Tv1FKvmJK6oirm6QbJfV/+JDtBCOnqC3
-	YtIHC5uF4ShJQo05Wm9sVB9hZAxew0fn9BdKHNoqgqypIh4Nz/Qb9ss1YLIvU8Wn
-	SnjaOMa2XWJ0rjf1eJUQKCIWOEzXWAyworqs4wflcM7lZzMiiJEEeSsQS2ZovFW/
-	t3kmdQ9LkaHSG3P4avfKVOlN6FknBrP8i1s0rmnlbIEm8hhKWnQ1+IJ1gSXbmv+a
-	tsFttaO1o7AB4TOAoxdz9U5YhE2+YgEAwM1nUDQ1yz7cdpEg+Q6YRUx2aTkE/O5E
-	3UIUTyeiAX/ZRgn/3rA6iw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729371464; x=
-	1729457864; bh=K2kRtKPkp4Rmn1yUTv4cEPAzZfBMq4wBoIlxKfK3jPQ=; b=l
-	/0alUcaEIcKwHFHtXOwhvEyRB3IbhoOqIver2kOTsMhbjMoWkSvAH4BN5i0xeVsa
-	MfdclR0QfJV96jMPH7Q1CHQ3aOX4kYH6rEG6/l6+v3vh1dq04jaXMgX2xxLz6ChI
-	NUa4gEkGIK1Bz0WGqDmVE6M1WVvxFVl3Zk0pudUyjcB3VkBXIZYkPXBlGZpMd9UL
-	Y7fKco4aWrDeli3ylGeLW8GtexxdWICAZr0ZUpwOATRonaIfn7Y+UloeMcJ3hcM2
-	vklpDqn+2NMp3kraq+OqGD7vNvSMvw6+crtavLAIc9PWFujxhfsz0Li7XF21aCVi
-	/cw/sWLNy31Ds0ty7SmXw==
-X-ME-Sender: <xms:SB0UZ1VOT2vQaDtPL42RS3xJIeoOCeJFwM1T7Ij67kDt3yUG4O3xJqQ>
-    <xme:SB0UZ1nUdiV-2gviYvNCKWmmOsE0yh-z7_-_Nc5TZBLLx1iSjxT4_TaJWbrDKDrrX
-    ovDdH7PZ35zLSOelg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehhedgudehkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
-    fhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghr
-    ucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdeg
-    jeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghk
-    khesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohephiehtgeglhefse
-    hprhhothhonhdrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    gh
-X-ME-Proxy: <xmx:SB0UZxa4zJ3n_qXIQLxHaaUpquj6KkSUwYXG46NxyYN27TS2_r3nbQ>
-    <xmx:SB0UZ4WRuSqxqvWbC6os1X3xXr7emZWTmkwiWwOgeK8miTcUjBbBTQ>
-    <xmx:SB0UZ_k3oKI1EmagfAoeiryEZNCXntEcvQqEmBVA1OqE_NpgcapcfA>
-    <xmx:SB0UZ1cn9Dh8PitlUD_pDcNbgyC1HCbV7-UgHe7zdqetzfnZ1wtzEQ>
-    <xmx:SB0UZ9iAI5rQR3NpyB0a_lqAZW3uLO6xDbr2oBtZkmL0gY7gGPqRvFrD>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id EF061780068; Sat, 19 Oct 2024 16:57:43 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JBrKW74n"
+Received: (qmail 16359 invoked by uid 109); 19 Oct 2024 21:21:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=1BA7cn5SOz26Vr2HAInhILOyHdl+D9wTvRBnNasaqLc=; b=JBrKW74nSo/9wIScqpvy6rzHaGXyvtuTUtb+YPyWOZTM927Mms3LrynaF3RJZIA0H93/WD2hpCTZYuaZVdevqlEN3XwEUe8nwEZTK9Lu7E30qaLaQ07/7LFpu22nlJDOeS+hB8BIILiW/JVDMYzQzBM/g7i023KoHy570icAnHxdq/c0VNwhqQWIInZMs4Kdv8odBRbugK4VAFb/6bNSTxPyqk8jI7TVKXtnBKld6VckX9vk8MB6u1QZC6Y5H89S3oHEAzdwi0n/rAULUUjfviIxVo4ni5frOyO/1CVKlrlPXIa3Sj7AJx1abLf+0Osng/5kptBQ89I7N+dflDumlA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 19 Oct 2024 21:21:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4557 invoked by uid 111); 19 Oct 2024 21:21:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 19 Oct 2024 17:21:35 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 19 Oct 2024 17:21:35 -0400
+From: Jeff King <peff@peff.net>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Adam Dinwoodie <adam@dinwoodie.org>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] credential-cache: treat ECONNABORTED like ECONNRESET
+Message-ID: <20241019212135.GB589728@coredump.intra.peff.net>
+References: <a4472d6d1551e7c25540c4c8361bcb6b1c9f92ff.1729084997.git.ps@pks.im>
+ <658fe4fa540a0a5316e11ed43f9139d5ef818ee5.1729226155.git.ps@pks.im>
+ <20241018052952.GE2408674@coredump.intra.peff.net>
+ <71e8e44e-dbf9-482e-a351-3a82aa1ca5dd@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 19 Oct 2024 22:57:09 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "Jeff King" <peff@peff.net>, Y5 <y5c4l3@proton.me>
-Message-Id: <348f4415-77cb-4893-8388-a2495a391a39@app.fastmail.com>
-In-Reply-To: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
-References: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
-Subject: Re: [PATCH] diff: setup pager only before diff contents truly ready
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <71e8e44e-dbf9-482e-a351-3a82aa1ca5dd@app.fastmail.com>
 
-On Sat, Oct 19, 2024, at 22:39, Y5 via GitGitGadget wrote:
-> From: y5c4l3 <y5c4l3@proton.me>
->
-> git-diff setups pager at an early stage in cmd_diff; running diff with
-> invalid options like git diff --invalid will unexpectedly starts a
+On Fri, Oct 18, 2024 at 11:27:50PM +0200, Kristoffer Haugsbakk wrote:
 
-s/starts a/start a/
+> On Fri, Oct 18, 2024, at 07:29, Jeff King wrote:
+> > [jk: commit message]
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>
+> 
+> Just curious.  Why this bracket comment (non-trailer line or whatever it
+> is called) and not a regular trailer?  All the bracket comments that
+> I’ve seen give some comment, often about tweaking the patch or the
+> commit message.  In this case though the whole commit message is written
+> by one person.
 
-> pager, which causes behavior inconsistency.
->
-> The pager setup routine should be moved right before the real diff
-> contents, in case there is any argv error.
+I assigned authorship to Ramsay, so my name is not otherwise mentioned,
+but appears in the signoff. So it was a way of mentioning what I
+contributed (both for credit, but also in case anybody has questions
+later).
 
-*Any* argv error?  Maybe =E2=80=9Can argv error=E2=80=9D?
+I guess "Commit-message-by:" would work, too. ;) I guess you could
+likewise argue that I'm a co-author.
 
-=E2=80=9Cany argv error=E2=80=9D looks like there isn=E2=80=99t an agree=
-ment on plural/singular.
+I think in the usual trailer order, it would be:
 
---=20
-Kristoffer Haugsbakk
+  Signed-off-by: Ramsay
+  [jk: add commit message]
+  Signed-off-by: me
 
+but I didn't want to forge his S-o-b without asking first.
+
+-Peff
