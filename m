@@ -1,193 +1,132 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD9A190688
-	for <git@vger.kernel.org>; Sat, 19 Oct 2024 11:25:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4966E1DEFDB
+	for <git@vger.kernel.org>; Sat, 19 Oct 2024 11:37:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729337108; cv=none; b=nxnKTm0sEmfewmvcTUwTL0Tb6JBEL4ElNhqDmGgzoWegXdv6JOhhRbEeMqPTOSWvhsKkkZKcMcuzR3iAGK0ZbKe4wClV1q86YOqj25dRWlFy5E+VA+cUTNn9X9Z+6uA1eO6AppOpTb8TeJb2dU+ExCKb3l5yyW6BNRzZNihIiJo=
+	t=1729337854; cv=none; b=NyaNhlz+WgSvNPNBzpa/AxuJDsLk8Yx45epr4ihNIIRWisBKWWg4UB38Cz9LI63H3YK0vY6o0Wty//vqrs6diW7DK2x9f1Rg5YRd+faPbG97SdOqSk4qQwaiHu4qfZjb+13mi/RYHsl5uGLAlHvnYQ25ybr9MGJLbfOUwvv4Zy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729337108; c=relaxed/simple;
-	bh=pdDRjp9XH5YYPqo6wMjp6Y9h7knquKj5YkHyb9M2DPk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RbRrdFtWDtt9RE2cWcgHOlEUJ034nuHqLOAtkQNQJ/JdbOot6RNTXtKCMgfOSLrzVlUBaeZKNmXFE5dCuQW2wi6xPR38P5X8d336ChjNVfRZuZHRZEn6T7BPjgRVX0/KN1oYljm+yycppe+n8EaXRTTjNpuEvR+qTzWsMB05Gz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DaAe6pwm; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729337854; c=relaxed/simple;
+	bh=1fjzWSG+xp9YCEHG1PIVSPqI5GRW631kpuQhH89JlFc=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=adVjnzyLLSwTLw305P/ewH9ktnxNCIQTTFgpCx6MlBjGP8E1cJrE8NHR3+lVuC5lyyGHqiHBVFMxpkiDnlP2RDCsMTmaKKkCzoCGt2ezLWHPXnq+YrPPoa3Jj+vF6fcfX5lsy6JpNXf2ILJS1TA2Pi7nSsgsL53rDY7wTaTdbDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=FkCyZy1p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GMqU/BCp; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DaAe6pwm"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-37d462c91a9so2075856f8f.2
-        for <git@vger.kernel.org>; Sat, 19 Oct 2024 04:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729337105; x=1729941905; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9mWzK9xU8hKq9J9Kty3ul365VnyBR2N7GhsieiOjmU8=;
-        b=DaAe6pwm5xNW5ulk+xBy90WbhXCL8n1p8pHwdpxUoirOVt/zir/o04GCxH7nWLIl8T
-         kdkKdOALYH28ImTDRbnNveEvp8xoH6gZ79M4129hgr1RomkhJ+X//QWvG007TKjPkDq3
-         YhE+Crv+WRz+Dk8d8JaVQGgILFTNNfAbY08HJQOwoVCwyLpExuyTilEZy4GfTAN7gzFW
-         1IU7syXDlNttr5Io786fCvVfWEuzAQlsQ3uKYFAd96oIoh4lN8nNcPvAignLhyw47C1m
-         5shCR+7EK73ep78uy1iMa8tNnafeLs8ZWCzIgJ5SBmsXDsnfI4RUk9vZP1+7fsBTxHAd
-         46rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729337105; x=1729941905;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9mWzK9xU8hKq9J9Kty3ul365VnyBR2N7GhsieiOjmU8=;
-        b=lL0ohQj9ykXva/y7AeUJuO4M1GxW/kuvEomsA0jZX0GrfffyyU1D90L7FVneZl3duJ
-         byOZMiFQ0ZeGSTZa1CZ2iN5KiWIAZ/WL0/uyhl+gy1iy8HTnNzi8xvoq11gMJfvIRid5
-         F1mBcEvFNCaqgCvw+nDoPEgzBWmNMB3KFgZVTPfikLVv5kSaiXo5GkDGIeW3NwCZpG6w
-         Rdb8LM1XtDqMWXGilem3KSAY3QpAp41YGeHxFsbpnolPaHJtxoiBL52u69Gh1DcymTal
-         kHB56Vyy4G0L4LF0dl0mpEP4detxZa/qptxt4aH1mhTxeIzd++mGeDV8+99Ho2QEUkgM
-         Rf6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUlpdsxSSLiyrIVkqLLwuj2lGiq7nEIOsuCoMnD2sRFoAoX0+v28SHozGPmPLCk4lEu0Gs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyl6Eaj/4EdAT/qIHBKw0RrwoIo8SjRZAH6P1BXQSjm4X5GOXWG
-	godAmmRgyzywL6C1ru5VK/xBD/JeYo0J9yepmXypqRuCP2NC6jl7eXSHq1vLQZJunIZQ/uwtVy5
-	gg6deloVj2ZFD1Z3O2GN4Jq7873Q=
-X-Google-Smtp-Source: AGHT+IE/rS3sLlAU3j70sxqrLyWRT3ev+5ASlO/Mxkp15UeGT/Yi3zOri3nrKxK//UqhgVXOAp424BzGE86VqWEwOIA=
-X-Received: by 2002:a5d:6b85:0:b0:37d:39aa:b9f4 with SMTP id
- ffacd0b85a97d-37eab6ee783mr3521905f8f.26.1729337104427; Sat, 19 Oct 2024
- 04:25:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="FkCyZy1p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GMqU/BCp"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 50EBA11400D5;
+	Sat, 19 Oct 2024 07:37:31 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sat, 19 Oct 2024 07:37:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1729337851;
+	 x=1729424251; bh=7qw0p9wRMdKBBRu8fFQoxKiJWuEr0WIcOf1IqZ6XwQ0=; b=
+	FkCyZy1pKzhAO5Y5xHmDC9YTxlCDvD+Ozjxtb/cyV/kIgIU9kjk2FeL1ADDBWwcN
+	VbADeEKPzKJS8c5nBiN3j7ntvIFA5O4GBKBhomXrCeNASKZhz1fuwdB9fs8VTgJu
+	mh2Gnq9+vqLMM406LgroVvDm1uZnOs9/J7D43Tpp07QyqnPq1C5qPt2FTqwPs/b+
+	TyQb3vWxutdNKTQrwSHe/IJiZ6zzcO1S7dtDWj6HayUFAx0tftbNcJ9/iH+betYm
+	J/goNg7//j3f2/8YJp8XW3HHQotZ3HN/WeSFWfw1OTxanH5Hs8FieJhxSrOJqBeS
+	5YjaHYrnYELN/KeDa+fP8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729337851; x=
+	1729424251; bh=7qw0p9wRMdKBBRu8fFQoxKiJWuEr0WIcOf1IqZ6XwQ0=; b=G
+	MqU/BCpTvzGbaVj0Aqa2ORrPYj9ZqsifpdzKpcIknYF45ueXAx2lXmCwDc3zEuzl
+	4cLjdX6VdmT0UCnWLiKOD7QPi8VkNva5zdmNm214E3YoaY4suB68+ZYkBqMbeGH6
+	HUXP3d1ibvCkVY0a34pqHWd4kr57G4Z5hinTrH2zn0Ccd23S988FStJP9UDrqUKC
+	NtfenVxyLrIxUlvFSTEdEwUE2//nwK3o2eQAS2hFx9M8cToXCNYtTy7Ai0tUEmru
+	/raht5D5708hNZeSSu/hlq8qgX/DwAxFf1jSwOLnnBjzL8f+ShfFB4HkUVO0Eg9f
+	RwSP48NVbOFpqVZWEWgSA==
+X-ME-Sender: <xms:-5kTZ06x8NVwtXHud9bMwaD4zGNY0-9sWZBf56xrLxegzLbMXN8Kp54>
+    <xme:-5kTZ16upbZnrySRFsLp4GUzZC268p7bjXD3voXtwjdKJJX3Tx936HHbvo1Oty_IY
+    H5k3-5HTdIhpyjEdw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehhedggeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddt
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnhepgedtjeeiteeghfeutdeutddtiefgvdegteektdeutddugfekleeugfelte
+    ffjeffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrsghrrghh
+    rghmrgguvghkuhhnlhgvhedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgih
+    htghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:-5kTZzcKPNkz3SD-cw_IraM83HIveEbba3qK_BCc0eKNjKZZT6_xcA>
+    <xmx:-5kTZ5IvVdFTumL5j-Rc9dCzkVBpiItfHayMK9FRTlBTsUMXsO3myA>
+    <xmx:-5kTZ4Ix3lwmStW6vpcDcUtoVXcKBUUaR7VRqG6XGiaypZiix7uxpg>
+    <xmx:-5kTZ6x81At8VUndR1OHWxQTbNv1j644NF3Ev8T8wUb61jxOWQvQbA>
+    <xmx:-5kTZ_Us-ZsyIw5P2N994BUFuvgZwgenTnJzQsZGkZtaQvqrku5UvWfC>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 16257780069; Sat, 19 Oct 2024 07:37:31 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Sat, 19 Oct 2024 13:36:32 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "Samuel Adekunle Abraham" <abrahamadekunle50@gmail.com>
+Message-Id: <0e393f0e-aa4b-479f-bedf-f4dad2256d02@app.fastmail.com>
+In-Reply-To: <pull.1817.git.1729296853800.gitgitgadget@gmail.com>
 References: <pull.1817.git.1729296853800.gitgitgadget@gmail.com>
- <ZxL_oAXN5KQ4FVMc@tapette.crustytoothpaste.net> <55176c6e-7ac1-46e6-affa-184307a0edf4@app.fastmail.com>
-In-Reply-To: <55176c6e-7ac1-46e6-affa-184307a0edf4@app.fastmail.com>
-From: Samuel Abraham <abrahamadekunle50@gmail.com>
-Date: Sat, 19 Oct 2024 12:24:55 +0100
-Message-ID: <CADYq+fY=f5tKJJb0wfmGwTNzzqkMnBNzFZedUxuHhuPNNSgNfQ@mail.gmail.com>
 Subject: Re: [PATCH] notes: teach the -e option to edit messages in editor
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Josh Soref <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Sat, Oct 19, 2024 at 12:04=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
->
-> Hi brian and Samuel
->
-> On Sat, Oct 19, 2024, at 02:38, brian m. carlson wrote:
-> > On 2024-10-19 at 00:14:13, Samuel Adekunle Abraham via GitGitGadget wro=
-te:
-> >> +test_expect_success '"git notes add" with -m/-F invokes the editor wi=
-th -e' '
-> >> +    test_commit 19th &&
-> >> +    GIT_EDITOR=3D"true" git notes add -m "note message" -e &&
-> >> +    git notes remove HEAD &&
-> >> +    echo "message from file" >file_1 &&
-> >> +    GIT_EDITOR=3D"true" git notes add -F file_1 -e &&
-> >> +    git notes remove HEAD
-> >> +'
-> >
-> > Maybe I don't understand what this is supposed to be testing (and if so=
-,
-> > please correct me), but how are we verifying that the editor is being
-> > invoked?  If we're invoking `true`, then that doesn't change the messag=
-e
-> > in any way, so if we suddenly stopped invoking the editor, I don't thin=
-k
-> > this would fail.
->
-> I also didn=E2=80=99t understand these tests.
->
-> There is this test in this file/test suite which tests the negative
-> case:
->
->     test_expect_success 'empty notes do not invoke the editor' '
->             test_commit 18th &&
->             GIT_EDITOR=3D"false" git notes add -C "$empty_blob" --allow-e=
-mpty &&
->             git notes remove HEAD &&
->             GIT_EDITOR=3D"false" git notes add -m "" --allow-empty &&
->             git notes remove HEAD &&
->             GIT_EDITOR=3D"false" git notes add -F /dev/null --allow-empty=
- &&
->             git notes remove HEAD
->     '
->
-Thank you Kristoffer,
+On Sat, Oct 19, 2024, at 02:14, Samuel Adekunle Abraham via GitGitGadget wrote:
+>  builtin/notes.c  |  4 ++++
+>  t/t3301-notes.sh | 29 +++++++++++++++++++++++++++++
+>  2 files changed, 33 insertions(+)
 
-Yes incorrectly used this as a reference and I have however look
-deeper into the implementation
-of the write_scripts function and the fake_editor file for better understan=
-ding.
+The documentation should be updated:
 
-> And this works because the commands would fail if the editor was invoked:
->
->     error: there was a problem with the editor 'false'
->
-> But this doesn=E2=80=99t work for `true`.
->
-> > Maybe we could use something else as `GIT_EDITOR` instead.  For example=
-,
-> > if we did `GIT_EDITOR=3D"perl -pi -e s/file/editor/" git notes add -F f=
-ile_1 -e`
-> > (with an appropriate PERL prerequisite), then we could test that the
-> > message after the fact was "message from editor", which would help us
-> > verify that both the `-F` and `-e` options were being honoured.
-> > (Similar things can be said about the tests you added below this as
-> > well.)
->
-> This file defines a `fake_editor`:[1]
->
->     write_script fake_editor <<\EOF
->     echo "$MSG" >"$1"
->     echo "$MSG" >&2
->     EOF
->     GIT_EDITOR=3D./fake_editor
->     export GIT_EDITOR
->
-> And it looks like this is how it is used:
->
->     test_expect_success 'create notes' '
->             MSG=3Db4 git notes add &&
->             test_path_is_missing .git/NOTES_EDITMSG &&
->             git ls-tree -r refs/notes/commits >actual &&
->             test_line_count =3D 1 actual &&
->             echo b4 >expect &&
->             git notes show >actual &&
->             test_cmp expect actual &&
->             git show HEAD^ &&
->             test_must_fail git notes show HEAD^
->     '
->
-> So it seems that the new tests here should use the `test_cmp expect
-> actual` style.
+    Documentation/git-notes.txt
 
-Thank you very much for the guide.
-I will correct them and send a modified patch.
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index 8c26e455269..02cdfdf1c9d 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+> @@ -489,6 +489,8 @@ static int add(int argc, const char **argv, const
+> char *prefix)
+>  		OPT_CALLBACK_F('c', "reedit-message", &d, N_("object"),
+>  			N_("reuse and edit specified note object"), PARSE_OPT_NONEG,
+>  			parse_reedit_arg),
+> +		OPT_BOOL('e', "edit", &d.use_editor,
+> +			N_("edit note message in editor")),
 
->
-> =E2=80=A0 1: The different test files use both `fake_editor`, `fake-edito=
-r`,
->     and `fakeeditor`.
->
-> > Do you think there are any cases where testing the `--no-edit`
-> > functionality might be helpful?  For example, is `git notes edit` ever
-> > useful to invoke with such an option, like one might do with `git commi=
-t
-> > amend`?  (This isn't rhetorical, since the notes code is one of the are=
-as
-> > of Git I'm least familiar with, so I ask both because I'm curious and i=
-f
-> > you think it's a useful thing to do, then tests might be a good idea.)
->
-> Yes, that is useful (both as a use-case and as a regression test[2]).
-> git-notes(1) is often used to programmatically add metadata:
->
->     git show todo:post-applypatch | grep -C5 refs/notes/amlog
->
-> (And this non-interactive example is not affected by this change since
-> `-e` is required in order to invoke the editor)
->
-> =E2=80=A0 2: I seem to recall a regression in how git-notes(1) chose to i=
-nvoke
->    the editor or not
+The `add` subcommand does what I expect it to after some testing.
+
+>  		OPT_CALLBACK_F('C', "reuse-message", &d, N_("object"),
+>  			N_("reuse specified note object"), PARSE_OPT_NONEG,
+>  			parse_reuse_arg),
+> @@ -667,6 +669,8 @@ static int append_edit(int argc, const char **argv,
+> const char *prefix)
+>  		OPT_CALLBACK_F('C', "reuse-message", &d, N_("object"),
+>  			N_("reuse specified note object"), PARSE_OPT_NONEG,
+>  			parse_reuse_arg),
+> +		OPT_BOOL('e', "edit", &d.use_editor,
+> +			N_("edit note message in editor")),
+>  		OPT_BOOL(0, "allow-empty", &allow_empty,
+>  			N_("allow storing empty note")),
+>  		OPT_CALLBACK_F(0, "separator", &separator,
+
+Likewise for the `append` subcommand.
+
+-- 
+Kristoffer Haugsbakk
+
