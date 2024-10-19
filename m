@@ -1,78 +1,79 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE871922D9
-	for <git@vger.kernel.org>; Sat, 19 Oct 2024 20:00:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196591917E8
+	for <git@vger.kernel.org>; Sat, 19 Oct 2024 20:00:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729368030; cv=none; b=GJbe9IFLqJCSSy8EP3t4u3GTBuNjvB63J+iXG5yCrp/ta/mbqjiqv0HtVd/+MX5Wn1R5qZJMsOAnjcjjHmLU1q0Fi78XjM9kLaeQrwgeLjGfJZuUrhtVZnyQk9R1zBCWA4LX9feR1Bq49ymOKQBHxBlnmMTpVp/mAx7/B0msWBo=
+	t=1729368035; cv=none; b=a+oXZ0yQaDRt/dPtH5AeAgKY9qtZti1ZNteblgBfD138OzLGukxrikhOorYAWoIqcI76flg49micX9H8S1Um53f03NXxotjDfLF4/vANHN7RLt53/PnEMiEuhESJ5HTIOJ21lF041U5MBe0Soy991KIGin0Q1aaQ1ae3avEKhGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729368030; c=relaxed/simple;
-	bh=CrPBbdyObAwKKRed52XrPZSUew5aoYGYz5S5H5y+hE8=;
+	s=arc-20240116; t=1729368035; c=relaxed/simple;
+	bh=uBt/QdSebGuCEXMGFRSOx4oqk6Mj+tzyTT4GQ+dnfeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ByeA4dmcekWktqp8QIPlOx5OlgwsbyCynjV7O+S5Zoh6e547S3nBalq5GRmSC97U8P3y7xfRGnqPirifL20KzyQ3UrcPiprqpsewsaa61I7JhncCRpuopBJlkhfRKknFbosB5iGbI+6iyIgy5F07HrSOq1H9BBGlRDS/tgqyKhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=pC6+XzGL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PgLGdXqR; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=fCAn3PJGyNh3cbdllE/T+JtUUy2NIPHKiKhUrymRmsUgt00uVCN8KRT+xyVP4TQdxc//gB6yQWiYhv0suV3FyAV87/Qmw+BugCiuiX+wJeAEFpDnMil1e4jpi89jnPleevWpb4zINyy+FdWvsk5d54ka0NglmckwM3TelcXLAjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=XmTt5mIy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cSiClN0S; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="pC6+XzGL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PgLGdXqR"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 98159254008D;
-	Sat, 19 Oct 2024 16:00:27 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="XmTt5mIy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cSiClN0S"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 299061140092;
+	Sat, 19 Oct 2024 16:00:32 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Sat, 19 Oct 2024 16:00:27 -0400
+  by phl-compute-08.internal (MEProxy); Sat, 19 Oct 2024 16:00:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1729368027;
-	 x=1729454427; bh=0aV/4BQF6BTXIVmGBI12bxjAlGPPQrqMqF6P1oS5tK8=; b=
-	pC6+XzGLK4QLp95i7E/4LpM7dlsOzTySXpYhhH/lhHWAMWAKsi8RtPu9CKmJxmFj
-	7A9aEBk0/7AnMULUgKdwm3CHiXVLh/wCG2S2+MCXjcGwJKr2LPFEXfm702qvbhSc
-	vlf50vUmW59DW59P9cvUOA0/4ij5dSMUB0HbxYWjeKcfmQyh2su2rDUnomziESqs
-	R1tU5+7p2K4SoV3T7f7/PBUf3EWWVYzHHE6VGhivVXpMzNfEWHyhPeqFl2mQKcAp
-	dpY1bM8+81T0+8QV5Dh+X1VNOGwrxDM6bCxxO/ywXUMdnTbxe+pG7mWZHVOPNnLE
-	t1Hmd9whhnHdT6NeYDDZIA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1729368032;
+	 x=1729454432; bh=Xei2KAtErhqQBZ8MQRHooWSLLxdUUUf2Z0PKPL3GZJg=; b=
+	XmTt5mIyxMi1z5zAxXduHont4jsqa+cZwBG8qXa8tpWVG9D90MS7saY5PcKI31bm
+	pAtSUhkCciv23T0FeBuyY1v6ZcRhP9lTlxmNCfglP2VcnUvO1IGShQYMGJXzum4T
+	Yys400WQI6OKDGSv6hO9bueHTvJNWI9bH4f8NZ7GSu9dXWR5tKTjDGjbJAJ2qpiK
+	f2Nh92Kpwtd0s4lKr41URv6oVj6Ga35zboxTX6lG6O1b6HzIIwBRVHaG1ZbxcC1m
+	jZwlXFSpNU9wdCz9EHeY16Q6nKlmmdz2AUKU4GjdQrn/PoqqnTJrA8Ms4ExJRUBE
+	qDT1QbZE+RqVCSlx7rGVPg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729368027; x=
-	1729454427; bh=0aV/4BQF6BTXIVmGBI12bxjAlGPPQrqMqF6P1oS5tK8=; b=P
-	gLGdXqRs98MvN+RhtHZWd7RjGrKEdWogNj8chYtl21gNxE+qvZl8G1CKSmGyoMQ4
-	MfVGuh3c9eCag7k9gnBGGTzZzk5yuKbfL4noeuKH+57G2mHQlf6A4rxXs+9pgoY6
-	MH+2rYfXRRYjqFOdVbOy7WGHqRaf/Lx5XY63l0X9uge+G/VZB2So0uWKVUhRyUC1
-	Kx4/8+5JRb8RUqPh9WqBZ9GGuuBjsevSFgs5BQfytw9gcY5IoWvPZQN70pgU4/H1
-	0/D3Q4R3mX/5x1rjNKgplGHtCDRxqPjQ7skWtAs17CDgp+AjexcXKJj7QymXQ/w+
-	w6eepFzGuwPVdo020GQlA==
-X-ME-Sender: <xms:2w8UZ6wr9MOtu0LOId_co5gvYoag1zOORaBZXw3gsyC7DznfhCiKS5w>
-    <xme:2w8UZ2Q8uYDT59h0FeZrdPUxWYT1KTJ3KOpJAwI55HOHzKDhI-75G7OSMJbZd_kKU
-    uNZKHQkhSRSBRAYQg>
-X-ME-Received: <xmr:2w8UZ8XmsJYDMv30nIVRRdlLCYiHuT0uDo6WbEcW6MNiON2SUGixwFlqHcBAc8FDDaZXPkO7jDJmtChqsOeuzU2FOiKxogBV8Qc8ceM07WvWH05pfnuG8ekmkQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehhedgudegjecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729368032; x=
+	1729454432; bh=Xei2KAtErhqQBZ8MQRHooWSLLxdUUUf2Z0PKPL3GZJg=; b=c
+	SiClN0SdRzORQLkMsM3qun1l/KfqpTPzsI8RzRQNxf720QImkkY/sR295XFBSGzf
+	qUN0OHyPKc/1RDT05kuco9YN1+EwJm+JccmiybUaE0539zmziUsphJIUvKjB25zL
+	O9hdnoYwJAcaYXLozULdpMUE6ZjL76/hP6u6dA/UhnUcs4+WkHyZGtcB5VKyDczw
+	QdzDbxpAQpwJVK+iYqOjpnokIyEsMtdCNBNcuMKumAeLTWeDCPKwGnTJoZk0ut8r
+	+r0WZl9Y2spZRzBKCV+6QjJE3dtjPphzRmku58GL7U1nvvxXXpeh9vBov2AowPvA
+	PQwK4LnRtm2lYpzz6cuQw==
+X-ME-Sender: <xms:3w8UZ9M7nbA_3tsXOge5kknJQ3uf8y2hokvvcI0f776ryAEuuvQiWt0>
+    <xme:3w8UZ_8mLN_kGJFPg9gP1M5qm7SqXlN_QIStr2lzZ_qMa-BIn1XTnTJI2i4gwcxrH
+    qvlKanV9w5jGhfHvQ>
+X-ME-Received: <xmr:3w8UZ8QMSr2jnztvBcRCI9GTlYjEApG7g0A2Fjn3lthEG6_8FwHlnLKvvGz0pr7HDQ_c3-XCBL6fBAzVn6_ZDCt9V-I4SHBtrp5pvdhQhrG_uNCL57DmPyBVgQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehhedgudegiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
     fufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhh
-    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpefhgf
-    eglefhjeekgfetleetjefhteeiheegfedtudduffegjefhkeetudeggffhkeenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffh
-    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohep
-    kedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdp
-    rhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsggvnhgt
-    vgesfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekke
-    esghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
-    tghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:2w8UZwisJvHg8MXToxrMMO14y55suu9-mtkP2nzrZBVsnzjPyhCymg>
-    <xmx:2w8UZ8Azqi9HhlFqFEOItxaZ41v1RIkRHqG7A7L8fEmYmjQiHHhHzA>
-    <xmx:2w8UZxIl3euXCaZP1wS5S6wk9-3UflJsTIwRR6VosuZ4IinouIArSA>
-    <xmx:2w8UZzCGrFenkOU4ebDWyH9pyyWd78TCxtbNpCGS5b9xGvyAZYGeVA>
-    <xmx:2w8UZ40Kq02FZFnkhjrywxZ3fgfUVgQZJatpPdF4f_PMWE7Tu07rUNRY>
+    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpedule
+    fgueeiueetkeelieefgedufeehteekhfejffekvdeuhedtvefhkeeikefhgfenucffohhm
+    rghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
+    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepphhhihhllhhiphdrfi
+    hoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomhdprhgtphhtthhopegsvghntggvsehfvghrughinhgrnhguhidrtghomh
+    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgessh
+    hunhhshhhinhgvtghordgtohhm
+X-ME-Proxy: <xmx:3w8UZ5vzkiHb6gkA5CDqUgJu04VanXrWrCKH9mLvDwHL4jkw5j7MOA>
+    <xmx:3w8UZ1e_lovGvviMwzpJ2tOjvBGzqC3oVMmY8rb8ONxt7yKvBwUKwQ>
+    <xmx:3w8UZ10-MjZoLiEceac_uBoYmH0NTLw44pXKeTgUmen3Pv8kBxORyw>
+    <xmx:3w8UZx-txc1PNJ00BMrOPecW3Q738MRzeFufV64AL3eGpVeOtFnnpw>
+    <xmx:3w8UZ0yuZSTRYTbhgQuiUg6tAUeRf2DGDu6rnbtweEupgAOhBoUYfvqg>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 19 Oct 2024 16:00:25 -0400 (EDT)
+ 19 Oct 2024 16:00:29 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -82,9 +83,9 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	karthik.188@gmail.com,
 	me@ttaylorr.com,
 	sunshine@sunshineco.com
-Subject: [PATCH v2 4/6] Documentation/git-update-ref.txt: remove confusing paragraph
-Date: Sat, 19 Oct 2024 21:59:21 +0200
-Message-ID: <769fd20945dad7ec60f1109525466d916afa97a8.1729367469.git.code@khaugsbakk.name>
+Subject: [PATCH v2 5/6] Documentation/git-update-ref.txt: discuss symbolic refs
+Date: Sat, 19 Oct 2024 21:59:22 +0200
+Message-ID: <ca5ece5336c85a47339537577a4c9131f8938cdc.1729367469.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
 In-Reply-To: <cover.1729367469.git.code@khaugsbakk.name>
 References: <cover.1729017728.git.code@khaugsbakk.name> <cover.1729367469.git.code@khaugsbakk.name>
@@ -94,50 +95,51 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-Commit-Hash: ca5ece5336c85a47339537577a4c9131f8938cdc
 Content-Type: text/plain; charset=UTF-8
-X-Commit-Hash: 769fd20945dad7ec60f1109525466d916afa97a8
 Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-This paragraph interrupts the flow of the section by going into detail
-about what a symbolic ref file is and how it is implemented.  It is not
-clear what the purpose is since symbolic refs were already mentioned
-prior (“possibly dereferencing the symbolic refs”).  Worse, it can
-confuse the reader about what argument can be a symbolic ref since it
-just says “it” and not which of the parameters; in turn the reader can
-be lead to try `<new-oid>` and then get a confusing error since
-update-ref will just say that it is not a valid SHA1.
+Add a paragraph which just emphasizes that the command without any
+options does not support refs in the final arguments.  This is clear
+already from the names `<new-oid>` and `<old-oid>` but the right balance
+of redundancy makes documentation robust against stray interpretation.
 
-gitglossary(7) already documents what a symref is, concretely, and quite
-well at that.
+This is also a good place to mention why `--stdin` has those `symref-*`
+commands.
 
-Reported-by: Bence Ferdinandy <bence@ferdinandy.com>
+Suggested-by: Bence Ferdinandy <bence@ferdinandy.com>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
     v2:
-    • Message: replace “this” with “the”, which avoids two “this” close to
-      each other
-    • Message: Mention that what a symref is (concretely) is covered
-      by gitglossary(7)
+    • Message: grammar: “robust against”
+    • Message: Apparently the first paragraph wasn’t wrapped properly
+    • Fix “the the”
+    • Credit Bence for this suggestion which I forgot to do in v1
+    
+      Link: https://lore.kernel.org/git/D4U30MD29CJT.3US5SBR598DVY@ferdinandy.com/
+    • Message: “symbolic refs”, not links
 
- Documentation/git-update-ref.txt | 4 ----
- 1 file changed, 4 deletions(-)
+ Documentation/git-update-ref.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
-index c03e65404e8..4bb3389cc7c 100644
+index 4bb3389cc7c..5866b6f2d37 100644
 --- a/Documentation/git-update-ref.txt
 +++ b/Documentation/git-update-ref.txt
-@@ -25,10 +25,6 @@ value is <old-oid>.  You can specify 40 "0" or an empty string
+@@ -25,6 +25,12 @@ value is <old-oid>.  You can specify 40 "0" or an empty string
  as <old-oid> to make sure that the ref you are creating does
  not exist.
  
--It also allows a "ref" file to be a symbolic pointer to another
--ref file by starting with the four-byte header sequence of
--"ref:".
--
++The final arguments are object names; this command without any options
++does not support updating a symbolic ref to point to another ref (see
++linkgit:git-symbolic-ref[1]).  But `git update-ref --stdin` does have
++the `symref-*` commands so that regular refs and symbolic refs can be
++committed in the same transaction.
++
  If --no-deref is given, <ref> itself is overwritten, rather than
  the result of following the symbolic pointers.
  
