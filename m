@@ -1,79 +1,108 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D143D2A8E5
-	for <git@vger.kernel.org>; Sat, 19 Oct 2024 21:26:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F169720E30B
+	for <git@vger.kernel.org>; Sat, 19 Oct 2024 22:54:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729373183; cv=none; b=bGoZxon8mPX8+2fS1kb8aO0OT7BtQdOxlCWzty8mWOrWkloyQOT0yVspvdHLMXbKD+G/NVySS6jAEF7TlYiPaHSqwQr6/mn8ti1Myeu70w13QrXhA8nC0cV+zPUuU4ki27uT4D2Q5QSqzN6/0OC3R1+o0kMRYB5f8n3lXyKhE54=
+	t=1729378457; cv=none; b=td7PRcma/7lp/kpB5uJ3Q8CjK8ZxdcKIFlweFAx1rjX8Ql9hCrrfwWn53Sft01bquYLLERRAMAipfVjZR+UWJ2EwppP7MifT2Im5aB1dchvLZq5dV11JZ4vVAv9HFwrxnX3W16aCn7DEUPS7x95jp0OJfMfAFjLRTYvV9svVgSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729373183; c=relaxed/simple;
-	bh=i/eTDnixc2zK6fPs4NBN7BaxW462mse6JeNCC8/AXVk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KtlggONJ9vzLdea6rU8kbjyq3UbjdV/kx3Xi4cdN5TjHa9e+dHE75j3aS1zSIBaCb18iJmk2hZqiuuB3veH71rshSGorjdK8C8pSQVpq0cpUUYEjwdVN16OJVhNT1cMlDHu4gkw4RAhjpaWfiQM9/7j3vxjZ9J6VbRT+7YCo6VU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PYIBv30v; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1729378457; c=relaxed/simple;
+	bh=lQoluUa3spQ8cjMDxYPKOY9PwPUL1gCxGr57+3ekUUs=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=gyA4cf+QE5oSWVuXqUy4sVfZO0Y/0mK0yiEkueN7W2eeL97MUARgXup4+IDDRIZf3QpnhAx44p73kHXr0t5Y2gpanfMguDvYVR0QmojwUn1HpJjLL2c4n8ZNql08ixVHwrix4f5YzdNt7K1RK8eyI9qXeou17qlxfiG1y+Vzdys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=J+2TzckO; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PYIBv30v"
-Received: (qmail 16342 invoked by uid 109); 19 Oct 2024 21:19:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=i/eTDnixc2zK6fPs4NBN7BaxW462mse6JeNCC8/AXVk=; b=PYIBv30vy70xp2YZMncXbaNujPQXJNj9fKlRYXHAyPeLAdEs2upJmvxOwb4uBRfuG+GFzlZyZ5sGyBp1VR8NEqo7eN2OlKSPgPmVKI/7HpJ3s993KR+NgBOptedQmr7enWCorivRfHrktBkqFolHTJdIF5LaEdsseb4PnnNae0xSDSWb2Wnzn0RSeejtzcx5amdWxMV7RKYqBJDvmlQERO7BymPsr2XH9jC085zfR4de6TIvcEtvqTRKhp/2hWhBNm9aSc4YLcUEUOOAlS+4pC2apxYzI1TlD9OdWntsZwL+eN3GxVSeqBxQptnri11nMYUn492yOawRWsIQJQE4nQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 19 Oct 2024 21:19:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4520 invoked by uid 111); 19 Oct 2024 21:19:39 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 19 Oct 2024 17:19:39 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 19 Oct 2024 17:19:38 -0400
-From: Jeff King <peff@peff.net>
-To: Y5 via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Y5 <y5c4l3@proton.me>
-Subject: Re: [PATCH] diff: setup pager only before diff contents truly ready
-Message-ID: <20241019211938.GA589728@coredump.intra.peff.net>
-References: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="J+2TzckO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=gxDK0EkjGJAvouRPKNgLauPI1ikjrwNrF2tuYpxZNFY=;
+ b=J+2TzckO+n9bc3eO1Ql4QqdhFtnGF9eSZPBqFCq97iO57inOXEh5eUyTtQTYcg0JGXkOblbtp2Ob
+   N95mN9PplJkl0qeDCKC8cxCvqGdXUcCblGZlLgR6TsYy8R2cZBxUp7v3l8THqYpw7UYfy9hrv8Zr
+   EPxoBz2SXUw+OO95vOOS11wZQtvwX945fArJU81VbX1SvWsktemHWW+tO+wikOrzTicDZYgT+uIS
+   xOsbb+Cv1fiCSpZ1bM4gLpl2eCzsZBPdjIjvqn9fQeiqWQibFJFgDndiu7SmIxAgZ3Wf9acL6mhB
+   Vm8QBJsSR4uFMxssAfxAvdGpbRWDqPiZVRvd5g==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SLM002QIKY7V990@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sat, 19 Oct 2024 22:54:07 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,	karthik.188@gmail.com,
+	Taylor Blau <me@ttaylorr.com>,	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH v9 1/7] t/t5505-remote: set default branch to main
+Date: Sun, 20 Oct 2024 00:53:08 +0200
+Message-id: <20241019225330.4001477-2-bence@ferdinandy.com>
+In-reply-to: <20241019225330.4001477-1-bence@ferdinandy.com>
+References: <Zw8IKyPkG0Hr6/5t@nand.local>
+ <20241019225330.4001477-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAHFb1MxOxZAb3dhaH7XFcSq8YxJFc7aIXeP7+waHOfFkHkx9UZQnVAEHJwh/6c2
+ bjYDgUfBMMPvyd0vtroEG4gVSsZtVDNTrrM9a/813BB9qLVMcVnAr3d5+YV1NE7p
+ omlMFXm37dBuVVupiJjPDAICuu86UHkqRtYk8FG1Jj6kxhKVLRbrN+jRRgAoex9f
+ At0gijLaTDG/zpJjuSy5wq/Ijn3d4CYfZTUAz/J9/P5wczRnEWvy/44lXldNKzdf
+ Mvi3QEJDG4g3Q7SmMzdsIMnY65imTdetPPq/7UFNk5BG7D26KdhEbhqd9io4m6Vz
+ 10X5NCg0w5cKCp9Da83XOrJ0cewh9LQLq606/e9lnsHfv0Qs2hUUCRCNvhKv+lyt
+ SAf/jSew/Ue15EyaiTnDGuL3DVPhmX9rTbVb94uDMxgzQDBmcXrh++Ow6o7rg7ZH
+ pg47Tp61Xte6njR70Eyqvh3YJo1jEWazaVORG9vHB5I0/LYbHp1a9oqI
 
-On Sat, Oct 19, 2024 at 08:39:50PM +0000, Y5 via GitGitGadget wrote:
+Consider the bare repository called "mirror" in the test.  Running `git
+remote add --mirror -f origin ../one` will not change HEAD, consequently
+if init.defaultBranch is not the same as what HEAD in the remote
+("one"), HEAD in "mirror" will be pointing to a non-existent reference.
+Hence if "mirror" is used as a remote by yet another repository,
+ls-remote will not show HEAD. On the other hand, if init.defaultBranch
+happens to match HEAD in "one", then ls-remote will show HEAD.
 
-> git-diff setups pager at an early stage in cmd_diff; running diff with
-> invalid options like git diff --invalid will unexpectedly starts a
-> pager, which causes behavior inconsistency.
+Since the CI globally exports GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main,
+there's a drift between how the test repositories are set up in the CI
+and during local testing. This issue does not manifest currently, as the
+test does not do any remote HEAD manipulation where this would come up,
+but should such things be added, a locally passing test would break the
+CI vice-versa.
 
-I do think the outcome is a little nicer for the user, but I'd hesitate
-to call it more inconsistent. Most of the rest of Git is setting up the
-pager in git.c, before we even call into the builtin. So any early
-errors will likewise go to the pager. E.g., try "git log --foo".
+Set GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main in the test to be
+consistent with the CI.
+---
 
-So I dunno. I'm not strictly opposed to making things nicer when we can
-do so easily.  But the endgame of this is probably getting rid of
-USE_PAGER entirely and asking each builtin to decide when to commit to
-using the pager (presumably after option parsing).
+Notes:
+    v9: - new patch
+        - a bandaid for the CI issue noticed by Taylor (cf:
+          https://lore.kernel.org/git/Zw8IKyPkG0Hr6%2F5t@nand.local/), but
+          see
+          https://lore.kernel.org/git/D4ZAELFWJMKN.S88LJ6YK31LZ@ferdinandy.com/ for the root cause in detail
 
-And even then, it wouldn't apply to commands implemented as an external
-process. And of course we can still die(), etc, after starting the
-pager. So it would never be totally consistent.
+ t/t5505-remote.sh | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> Signed-off-by: y5c4l3 <y5c4l3@proton.me>
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 532035933f..9b50276646 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -2,6 +2,9 @@
+ 
+ test_description='git remote porcelain-ish'
+ 
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+-- 
+2.47.0.92.g83fdbe24c3.dirty
 
-We usually ask for something approaching a legal name, as this sign-off
-is supposed to be certifying the DCO (see the "dco" section in
-Documentation/SubmittingPatches).
-
->  builtin/diff.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-
-The patch itself looks plausibly correct. The biggest regression risk
-would be missing a spot that needed a new setup_diff_pager() call, and I
-suspect we don't have good test coverage here. But going top-down from
-builtin_diff(), I don't see any paths you missed.
-
--Peff
