@@ -1,147 +1,154 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFD61922F3
-	for <git@vger.kernel.org>; Sat, 19 Oct 2024 20:00:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7781917E8
+	for <git@vger.kernel.org>; Sat, 19 Oct 2024 20:39:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729368038; cv=none; b=CvJQonlrgHS/aQEPFzvgW0pOCrQqKKMmV3NLJDicgw7932cShjiDIs/CIqjZZQbyeBslALdYF2OvQHe+JwTs3D0q8duH3biJe+OiORkahI8r3IcA94Ooj2ZRsc8KSOPNdw3NZmSYV2U5BstgCuZxUrmJJvGc020inCSkLVWkGEs=
+	t=1729370396; cv=none; b=rD65PuQgwdpUvR+EPCriUT3KfjzU9K/tOb4Rb4wRaHm/Gfo/1ZMyWl2MpiiXHKQLUwF9Kf5f88pV6gkR6mRmbf2SVtCmEmv4t7UtTxOXPsxi7IY9EqimzK4ZcQ9IEGmbFSDoEolG+CZ89CNJk27n0wJOKNw38rTgFnHSypMKWFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729368038; c=relaxed/simple;
-	bh=9r7SumsvYpExKTdHHP0hHDaJPD/KDwbWT11nP+8KHrE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ke4I2SliyTpByfGMZwtwGkzsAj4+WojkueCsebj8VhPU1LFyH+3ibYUC1lkVlkXb+3uR3cAEuT5uScEyDrIXemkKFj+ycMHH/LE31a72sqp1JwFChEjU+kZ8WTWLzGTcEcwe38HWmbNjxuo5BlnRvjlgakTdnnC06MWPdW2e9GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=F9PiRR4y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HccAU8QB; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729370396; c=relaxed/simple;
+	bh=JQGhNPoIxKKIiZ42x8/wDJiM6zqlSdZSXZtdmGPefBc=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=a0qDg4ND+gavMvw1+Kb7YMy5CnTiLp9v5Sdl8Aq/mtbwei8JsLQMEgxe6A1IIaSVB07ieRdaX2Dw+yIN0XjgzqfehUmndFevl8gDmcs9dGMmo+/d1PqhDIIeEWvJAAA8pqZnoR7LQ4d4WXEKj7uPO7pfOPyGV1cmpa53LPh+wb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bmopQ/yC; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="F9PiRR4y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HccAU8QB"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C64AE2540078;
-	Sat, 19 Oct 2024 16:00:35 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Sat, 19 Oct 2024 16:00:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1729368035; x=
-	1729454435; bh=hwKc7CnlziamuVIz7+hPUMiHzDp8SH1qQU0MPNOSzJs=; b=F
-	9PiRR4ySSLidQPF2i3vL1+Kt/FV/tc8dqdu0nYUWb7aF455AQvDz5Jajo4DdZ/A3
-	oDm/58B/LL6qpdZGP4XaWjvEHMIMiTV1c6LAKcGOcd6ja5WNpwYe1heqDOgRSrT8
-	uooBcXMfsBYgf9KaDYGFiVxDBbjvPRea1l9bcE6CJ2Z3jH9Z8mwJk+6P540EvI2D
-	GvTprbjb/0rAUIWjMl1527Q/L6pRyc4/TrXYWhLHo0si0swN8VEVyBEcOu+BD4cJ
-	m9IuvZVzUL7LJFBMTo6TThl2Q33CRuMxbQoSS2qYbI5Z0jxr/4YoLz3YqDc7YbRC
-	Pk9VIk2/7Da07RaZ/Souw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729368035; x=
-	1729454435; bh=hwKc7CnlziamuVIz7+hPUMiHzDp8SH1qQU0MPNOSzJs=; b=H
-	ccAU8QBhl4lAYQHYBDXaUDRWKxYxnd67d9/aRWNHWvkcx9bsBIP2aAxSTqvbUibX
-	mUt3dF/i4tyGPc0pNT3Db8Tps4KTGHR0VsF1bRNQZvzEwOBEPtqhtPgo6LRPZTCl
-	hblDY+HK0sJ4QHQp/It/ZrXeY2GjKDGQ56D/g/+BwS4CR+t4neRjhNXxyqlaVcV6
-	RsLh/Y2qH8zXtI29hisjKJFhHd3UK1PJAQyPWd2OFbikottIMTrlVzCyVIYYhB3B
-	qNsVsZ2z7n1zQRvpxs/JiuQNjgXe+Ndis/S/iUWJE6QOpiqDzR3DK7jdDTKUPAFX
-	xV4U8HkLzvEL87l4ExUZg==
-X-ME-Sender: <xms:4w8UZ8xgJWnNK0R4rrPOFpoVXPcV2y3jv1Dv-j6iNze6PNOAvD05IxM>
-    <xme:4w8UZwSb58WuZLSpVDUj3dpraDGKOUMzcjLHuLOLn3lEoJjD2RPYBo6A545BhveTl
-    d9M8SsmlS-jP6rBqg>
-X-ME-Received: <xmr:4w8UZ-Xw8q-i_y40fRF0EbzboL4PNGnrLn0vfBWQgvpalhwpSGVs1fiTgkhyOEF53AdypREgLs_16UHx6n2Sfdhu73jWS4fNQSo4XHH6zY1STBS7NQ933qtxaQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehhedgudegiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fufffkofgjfhgggfestdekredtredttdenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepfeehte
-    ekfedtieffvdejteeutefhuefgtefgtdevhefhveffuefftdehiedtfedunecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeek
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhr
-    tghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegsvghntggv
-    sehfvghrughinhgrnhguhidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeekse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
-    phhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
-X-ME-Proxy: <xmx:4w8UZ6i73RzJgE6zvWcbMCGhlLikc9YVrrqLbSS_C_vKibsX83frhg>
-    <xmx:4w8UZ-CaJWyxkO-FGpfaWhapmjDta29h3CjtFgUKdQjm0Jta2bwbMw>
-    <xmx:4w8UZ7LNjlxza_4Cozq3_AmtgkCK7FDlC7NyfRsxuZpDYsz8ABAaWg>
-    <xmx:4w8UZ1ASUSQd4H4ZxREsp7tdMeM4Xw8ye9dEjq8h0QECQ-qQUCmqxA>
-    <xmx:4w8UZ63cA9JEmSRFZDHFQP9C2KerMXcUyzVpE08Iqd15ZGHuz-7Qzvjf>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 19 Oct 2024 16:00:34 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	phillip.wood@dunelm.org.uk,
-	gitster@pobox.com,
-	bence@ferdinandy.com,
-	karthik.188@gmail.com,
-	me@ttaylorr.com,
-	sunshine@sunshineco.com
-Subject: [PATCH v2 6/6] Documentation: mutually link update-ref and symbolic-ref
-Date: Sat, 19 Oct 2024 21:59:23 +0200
-Message-ID: <fd3c7585a0f84b26debcc216b86dc09acb219799.1729367469.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
-In-Reply-To: <cover.1729367469.git.code@khaugsbakk.name>
-References: <cover.1729017728.git.code@khaugsbakk.name> <cover.1729367469.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bmopQ/yC"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5c9c28c1e63so3429057a12.0
+        for <git@vger.kernel.org>; Sat, 19 Oct 2024 13:39:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729370392; x=1729975192; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=PR/1Yi87AGQ7C3M3c4dDhaEHekjcX2fP4S3ZwxYSSH4=;
+        b=bmopQ/yCBGkJtdIMqeE7h0uqQICahdRldjUoHtfAmbFNIPSOd8jd0417357YGrfEas
+         jttDhk7Qe8UGYRDnvsd58OffZ66Le4DaDFlidj/EyUdOrjHN13zln2IRRLV2pMSRPLlZ
+         kWaa20q3YQ9zXOqhTTyT52QUptQS9ezsFD6ZdQ6Ve7vOZexp2QeJBCqhEHqNAZQoQcSe
+         vXUqHfWCnt/W2/Hv57i496YyyUq2CUBY5WKwO36GpfsQBCyzzJ9V+AC0Ohv7a9OUASj4
+         Dg/HsPeERZWZPZmLRJLjRc5oHH9RtbxBkbvLITr8SBHwy7JNK/aXSiKr045z8srkjWro
+         bWxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729370392; x=1729975192;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PR/1Yi87AGQ7C3M3c4dDhaEHekjcX2fP4S3ZwxYSSH4=;
+        b=ZOzIyllM8IV3HBXG6oAHac49/DzMiA6xcQ8uf5Wp1H3AwgFDxbSXqIj6oSwsheV3vv
+         rqSjHsG4aULQFR5KPoRPfDrzKZTHqpki1Wu0aFGz5lwaITHXw5xAJsHmLSjO4lsrMBZp
+         ErTFpzwvdBwi4G1IT/J29v7LnKK2chiqAXqZ2FuF/KgF+yul3Z/jaZEcSsciY+HYETru
+         sI/i0m/TImCSjbZDiRLI5eaS1CrJ/SlK4ILcSsEUv3HK6qsfB01x7DCrmXxgpEEo9TGW
+         wvmbb/jHrzep2vauQONc/AY3Sens6IgDIcjVK3CFjq/gSUgSHJsGtH8MkT/O+wx7zOrI
+         Uzzg==
+X-Gm-Message-State: AOJu0YzEJyfa3lF5ugsUBbbrcL7Ge/ODjx32l2kbcF8wPPb9/LXo+9Oc
+	M23+lCP3gWOyHd/so3v5YmDrfjKvKIGpeNfiz+omLMIz62XT+VVP0E87HA==
+X-Google-Smtp-Source: AGHT+IEzEv6BLN1H5AZzXIufX2AZRTdXzLGRUBiBRQpXbOSF5nQuwIYS62KVJmvaQZcLcONkJUrEHg==
+X-Received: by 2002:a05:6402:278e:b0:5c9:7cd8:7aef with SMTP id 4fb4d7f45d1cf-5ca0ac85080mr4495777a12.9.1729370391491;
+        Sat, 19 Oct 2024 13:39:51 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cb66a657bcsm138702a12.23.2024.10.19.13.39.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 19 Oct 2024 13:39:51 -0700 (PDT)
+Message-Id: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
+From: "Y5 via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 19 Oct 2024 20:39:50 +0000
+Subject: [PATCH] diff: setup pager only before diff contents truly ready
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Commit-Hash: fd3c7585a0f84b26debcc216b86dc09acb219799
-X-Previous-Commits: 9e775a65eb3ff49ded231aeeeddd59ccdce3c8a8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    Y5 <y5c4l3@proton.me>,
+    y5c4l3 <y5c4l3@proton.me>
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+From: y5c4l3 <y5c4l3@proton.me>
 
-These two commands are similar enough to acknowledge each other on their
-documentation pages.
+git-diff setups pager at an early stage in cmd_diff; running diff with
+invalid options like git diff --invalid will unexpectedly starts a
+pager, which causes behavior inconsistency.
 
-See the previous commit where we discussed that option-less update-ref
-does not support updating symbolic refs but symbolic-ref does.
+The pager setup routine should be moved right before the real diff
+contents, in case there is any argv error.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Signed-off-by: y5c4l3 <y5c4l3@proton.me>
 ---
- Documentation/git-symbolic-ref.txt | 4 ++++
- Documentation/git-update-ref.txt   | 4 ++++
- 2 files changed, 8 insertions(+)
+    diff: setup pager only before diff contents truly ready
 
-diff --git a/Documentation/git-symbolic-ref.txt b/Documentation/git-symbolic-ref.txt
-index 761b154bcbb..33ca381fde0 100644
---- a/Documentation/git-symbolic-ref.txt
-+++ b/Documentation/git-symbolic-ref.txt
-@@ -73,6 +73,10 @@ default.
- symbolic ref were printed correctly, with status 1 if the requested
- name is not a symbolic ref, or 128 if another error occurs.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1817%2Fy5c4l3%2Fdiff-invalid-argv-remove-pager-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1817/y5c4l3/diff-invalid-argv-remove-pager-v1
+Pull-Request: https://github.com/git/git/pull/1817
+
+ builtin/diff.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/diff.c b/builtin/diff.c
+index dca52d4221e..03340173700 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -105,6 +105,7 @@ static void builtin_diff_b_f(struct rev_info *revs,
+ 		     1, 0,
+ 		     blob[0]->path ? blob[0]->path : path,
+ 		     path);
++	setup_diff_pager(&revs->diffopt);
+ 	diffcore_std(&revs->diffopt);
+ 	diff_flush(&revs->diffopt);
+ }
+@@ -129,6 +130,7 @@ static void builtin_diff_blobs(struct rev_info *revs,
+ 		     &blob[0]->item->oid, &blob[1]->item->oid,
+ 		     1, 1,
+ 		     blob_path(blob[0]), blob_path(blob[1]));
++	setup_diff_pager(&revs->diffopt);
+ 	diffcore_std(&revs->diffopt);
+ 	diff_flush(&revs->diffopt);
+ }
+@@ -164,6 +166,7 @@ static void builtin_diff_index(struct rev_info *revs,
+ 	} else if (repo_read_index(the_repository) < 0) {
+ 		die_errno("repo_read_cache");
+ 	}
++	setup_diff_pager(&revs->diffopt);
+ 	run_diff_index(revs, option);
+ }
  
-+SEE ALSO
-+--------
-+linkgit:git-update-ref[1]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
-index 5866b6f2d37..c64d80f5a2d 100644
---- a/Documentation/git-update-ref.txt
-+++ b/Documentation/git-update-ref.txt
-@@ -190,6 +190,10 @@ otherwise it will just try to read them and update them as a regular
- file (i.e. it will allow the filesystem to follow them, but will
- overwrite such a symlink to somewhere else with a regular filename).
+@@ -201,6 +204,7 @@ static void builtin_diff_tree(struct rev_info *revs,
+ 		oid[swap] = &ent0->item->oid;
+ 		oid[1 - swap] = &ent1->item->oid;
+ 	}
++	setup_diff_pager(&revs->diffopt);
+ 	diff_tree_oid(oid[0], oid[1], "", &revs->diffopt);
+ 	log_tree_diff_flush(revs);
+ }
+@@ -227,6 +231,7 @@ static void builtin_diff_combined(struct rev_info *revs,
+ 		if (i != first_non_parent)
+ 			oid_array_append(&parents, &ent[i].item->oid);
+ 	}
++	setup_diff_pager(&revs->diffopt);
+ 	diff_tree_combined(&ent[first_non_parent].item->oid, &parents, revs);
+ 	oid_array_clear(&parents);
+ }
+@@ -283,6 +288,7 @@ static void builtin_diff_files(struct rev_info *revs, int argc, const char **arg
+ 				    0) < 0) {
+ 		die_errno("repo_read_index_preload");
+ 	}
++	setup_diff_pager(&revs->diffopt);
+ 	run_diff_files(revs, options);
+ }
  
-+SEE ALSO
-+--------
-+linkgit:git-symbolic-ref[1]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
+@@ -523,8 +529,6 @@ int cmd_diff(int argc,
+ 	rev.diffopt.flags.recursive = 1;
+ 	rev.diffopt.rotate_to_strict = 1;
+ 
+-	setup_diff_pager(&rev.diffopt);
+-
+ 	/*
+ 	 * Do we have --cached and not have a pending object, then
+ 	 * default to HEAD by hand.  Eek.
+
+base-commit: 15030f9556f545b167b1879b877a5d780252dc16
 -- 
-2.46.1.641.g54e7913fcb6
-
+gitgitgadget
