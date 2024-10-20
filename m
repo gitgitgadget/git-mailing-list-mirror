@@ -1,80 +1,109 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49AC1373
-	for <git@vger.kernel.org>; Sun, 20 Oct 2024 00:37:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDDC539A
+	for <git@vger.kernel.org>; Sun, 20 Oct 2024 00:54:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729384644; cv=none; b=KUJ1Ho8cVbqLmGXAO/PMLRmDISdpcPnWZfPdoQvwc2B2gWOFSi4qGLDv3KKM0Lg34+5W3TPNsU6Ul4B40tfH7+ACXLWwLXz8V70II8HH0kn/vsNcmyDpTw1ZatFIvynyY8HcEckDLTdtQ7ew/Nf8ktlyTur15nCM5H7K/kWwjVI=
+	t=1729385700; cv=none; b=kqUSlhuckZKur9VWfR2xwf8btvriKUpiOdbi0VvrdwSPMf/ETwiAKZdlfCbpEulfb9jP0vNkZiy4vy2wxlmCWdgzP9mqedUpE6HHNCK3KS8e67VuUCw/wZUmqntDI6Jz85x1YshcVe+BTadDoTqyrpJ7G74+D6Ry1mu98ixJz3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729384644; c=relaxed/simple;
-	bh=jG504OaeJ5PVcroc87rvEqw5xqF6vCIoqVRlVb7LgEY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vBIdG1ewJ3agU9xNuLgpvVt4rT6GxIxzTAF2VjnGr5HcjDiCLas/+9KkWMITMY2T/yXmUQexV1YtRQAKDn4/rH1+fMenGxmh+2Zg3smlMwrrobM9/4Bux2B0Z+08awyGbP6/PmqJq4hDDIXs2V8oH7/6I9s1c6LgJ+EJFREP0ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6cbe53e370eso3891956d6.2
-        for <git@vger.kernel.org>; Sat, 19 Oct 2024 17:37:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729384640; x=1729989440;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jG504OaeJ5PVcroc87rvEqw5xqF6vCIoqVRlVb7LgEY=;
-        b=f1rXUYBkmxKzXlnrL5m/KVH77mh561AYw2tQxvIWp7R68FgnkzVVauTSV3Ogk6JE/o
-         0JF+KI6ivkSsL/oNmLVpmOoX1WCG7MtkcYXr149FVlzKNdCm7n4jLBBD2FmMKTYt8k/f
-         tXKGZCjskm686nSeFGTmnHAncV4z0WsqhRVhwAAue8l7n27FQtUx7qOvFxNZ6MwqpT9A
-         PSHImUGOlBxjA7t8CN8EMw/DjL3q4fMuOM0J2HQOTjjXefgR/FSJUPMH0PJFmW/VZdrm
-         gSzLkubdZPAbrDX3HMlksAPXItAIRhgDKpRKKxVHGwh7Dajl8NZX+j5B7Ui4IprbR8Yx
-         k7WQ==
-X-Gm-Message-State: AOJu0YyluXZTCR7brOWYfEHUXgowsBKaXQegFH/FBYUbX2sVzlf6p+c+
-	pP7Y3RSIk8hB3cdh+N9/4F/MQZtIQc+dOTIgKqe9OnQsSTBtueewy80x5x5l3QZ5pe1RLEc0O1f
-	CUM2EZtq/JlQKsPUWzORbIvObjnI=
-X-Google-Smtp-Source: AGHT+IGDXJE3LncTvY/P+MoJuRIUMBGAudfzP29djarAQYVwRcygdT52Uj17X3J4k2QYgoQi+19giJV49cFX/dj+L0k=
-X-Received: by 2002:a05:6214:29e2:b0:6cb:e6c8:2ad0 with SMTP id
- 6a1803df08f44-6cde1537854mr49691226d6.5.1729384640529; Sat, 19 Oct 2024
- 17:37:20 -0700 (PDT)
+	s=arc-20240116; t=1729385700; c=relaxed/simple;
+	bh=ZDIEmLLr2xgwFppEPuXciC5BU3TlJa0E0FSfF2hkC54=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=kD1aKt2xPADKSY9IjHvm3s8d4Y5gpTgNz/uVCMzFlmGh/GfMmcjjgXrcAQ70Xb7V8L7rZpEotAPzeViT4JURUZJOsbhAHW6c5KYmgqO0XzNY+v/VGHeuCh86tDyma8qkz5pz2rjs4azRSpak9HsdjmfBF0CuRSNrDxijsWe6B00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Hpz0UfkC; arc=none smtp.client-ip=212.159.14.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Hpz0UfkC"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 2KDXt3Vkyx2dS2KDYt0Gzf; Sun, 20 Oct 2024 01:54:49 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1729385689; bh=/hatd6ZtkCwFgk28TRlZpE3ngbcHvQ51uFVnOz5zMzw=;
+	h=Date:To:Cc:From:Subject;
+	b=Hpz0UfkC94i5HbeIcWi/SZ7RhBT5u2vYycq4TsY9v+tHOv8PytBC/YWKVVirnnCJM
+	 R3OiV9zPFfJBnJnKLrpfuIOJM5VAkNDMVo2q40CWh16Yh9yk9Ldo5+aDfPTv9Cgppc
+	 O7HtaSuAq+lvj4/mwPK2Q59bHBZaXfVV31WQX3yasHRiXcUtSiQ6jobBfqdFa7t3Il
+	 QxqUnM9PB/Jh5GUvH1ZF6ODrWdeWPowhrKvHOHSq/z4OyePCXa6+rY5g9Z7aybJJcL
+	 Y8q3flAcQaTWvMobpmHuX1aboRSwgH++423nnjhfuwr/TNAljwHYB0pohG+peX/bpg
+	 fSSVPNZjohjGg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=GMarEfNK c=1 sm=1 tr=0 ts=671454d9
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=v6-bqVf9BjhajyIGLyMA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <12325bcd-fc3b-4d2a-9ec5-20fa2b50297b@ramsayjones.plus.com>
+Date: Sun, 20 Oct 2024 01:54:47 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <BA07EFA0-0793-420D-BED9-ACD7CEBE0112@townlong-yak.com>
-In-Reply-To: <BA07EFA0-0793-420D-BED9-ACD7CEBE0112@townlong-yak.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sat, 19 Oct 2024 20:37:08 -0400
-Message-ID: <CAPig+cRPAs85koyaQxN5eaV60-qyGka7HrDMuoMoWjT0CpS6SQ@mail.gmail.com>
-Subject: Re: Bug report: v2.47.0 cannot fetch version 1 pack indexes
-To: fox <fox.gbr@townlong-yak.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Taylor Blau <ttaylorr@github.com>, 
-	Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
+Cc: GIT Mailing-list <git@vger.kernel.org>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] meson: fix meson build on 'seen' branch
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfFPerl5E3tSoz8uFzqmDbIeMLOqGs7giXk2wazWimU3nLVqgIzH8MO73dGjWZ1+TlHXiD3Ly6LLXFPoKXJSF2VMiGpKKA5vqvGcvkFnARNpQU+YyygGU
+ KDygGF7s3QYTaWUrr4rCgeFCJN21srm+ez6JSNlCAS8KcoK8MIoN1tiwFCehbKsC5EXMgb/53AzHBMKmn+sk7QcASafZazcASIE=
 
-On Sat, Oct 19, 2024 at 7:31=E2=80=AFPM fox <fox.gbr@townlong-yak.com> wrot=
-e:
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 1. Run git clone https://www.townlong-yak.com/test.git
-> Cloning into 'test'...
-> error: files '/Users/me/test/.git/objects/pack/tmp_idx_WT81vv' and '/User=
-s/me/test/.git/objects/pack/pack-427331d91391b00844273eeb3879cb479ce2c995.i=
-dx' differ in contents
-> fatal: unable to rename temporary '*.idx' file to '/Users/me/test/.git/ob=
-jects/pack/pack-427331d91391b00844273eeb3879cb479ce2c995.idx'
-> error: Unable to find 6261a9d9f7704c02a5421ff733919ab18793aa7d under http=
-s://www.townlong-yak.com/test.git
-> Cannot obtain needed object 6261a9d9f7704c02a5421ff733919ab18793aa7d
-> error: fetch failed.
 
-I can reproduce this problem.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-> Running git-bisect identifies b1b8dfde6929ec9463eca0a858c4adb9786d7c93 as=
- the first bad commit,
-> suggesting that the .idx file downloaded from the remote is now expected =
-to be byte-for-byte
-> identical with a locally-generated version; due to format differences, th=
-ey are not.
+Hi Taylor, Patrick,
 
-Cc:'ing the authors of that commit.
+I tested the v3 patches on the base mentioned in the cover letter
+without issues. In the interim, I noticed that the v3 patches had
+been queued on the 'seen' branch. I tested with make, as usual, then
+with meson (on Linux). This patch was required to fix the meson build
+(just in case you weren't already aware, although I suspect you are!).
+
+ATB,
+Ramsay Jones
+
+ meson.build          | 3 +++
+ t/helper/meson.build | 1 +
+ 2 files changed, 4 insertions(+)
+
+diff --git a/meson.build b/meson.build
+index 7c7a59d7fb..c057039ec0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -65,6 +65,8 @@ libgit_sources = [
+   'commit-graph.c',
+   'commit-reach.c',
+   'commit.c',
++  'common-exit.c',
++  'common-init.c',
+   'compat/nonblock.c',
+   'compat/obstack.c',
+   'compat/terminal.c',
+@@ -178,6 +180,7 @@ libgit_sources = [
+   'patch-delta.c',
+   'patch-ids.c',
+   'path.c',
++  'path-walk.c',
+   'pathspec.c',
+   'pkt-line.c',
+   'preload-index.c',
+diff --git a/t/helper/meson.build b/t/helper/meson.build
+index 5e83884246..f502d1aaa3 100644
+--- a/t/helper/meson.build
++++ b/t/helper/meson.build
+@@ -40,6 +40,7 @@ test_tool_sources = [
+   'test-parse-pathspec-file.c',
+   'test-partial-clone.c',
+   'test-path-utils.c',
++  'test-path-walk.c',
+   'test-pcre2-config.c',
+   'test-pkt-line.c',
+   'test-proc-receive.c',
+-- 
+2.47.0
