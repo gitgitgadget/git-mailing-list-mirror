@@ -1,101 +1,123 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C8A2F43
-	for <git@vger.kernel.org>; Sun, 20 Oct 2024 21:29:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A401DFD1
+	for <git@vger.kernel.org>; Sun, 20 Oct 2024 21:43:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729459768; cv=none; b=hVDriivJd35BiIciWWb458QZnIoP5Wixqk/wlWDmJ/V2R/yZxuVyCZX6f8XzzmdCby0a+58VtJENdAk5b1/w3IReq3hfg5uki/Oo6+/qFPkOk5Qf9G7F+EYzTgKhxt0GfW7RcEnMqvCHJqaLFeX51ZM4oLw0GVRfleZWTirV88Q=
+	t=1729460623; cv=none; b=uW69wxstj207LSeF+H+rDkPfhQ8Zk5RYCGs0G4Bb6KP5Z2BTR9BmFRwXTmgXyUldK3H0Vyawby5t7IjiXV/fiEXNMUy62h+jWj1rSoUN4OJq21yhexe0jeY/RL5IaTXoXFVLQ5oxeJ019w6eHJhmq0BIoBN+iQwGDjIxk9pcBHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729459768; c=relaxed/simple;
-	bh=XjgN+Zg03SIdRaKJ2zKM5cZ57uO7VtIox8uzHnwkPRY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Osmck2ft002fm+CEnLfE5tjEd+nAnui4mOo6s5euHeJ/5AxK5wcXDZku1qOvh9LrZwjVygyNzcpWzBUqz7db/vpfwFA56Az8NgQ4+vFntuG246/IFsA2dM9+JAlHsaqjT8eOhIBfsJ7+FgATDv0zm1iGFJLGtgtMUJBqiQpi7LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PmRpVf3Z; arc=none smtp.client-ip=209.85.160.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729460623; c=relaxed/simple;
+	bh=oboY4kJtRg8mfJdCS6oAjtg3BfuT+ohhFQO9ZM0Ljjg=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:To:From:
+	 References:In-reply-to; b=XR8ka23sO4L/ZsOT5UwjCabqB41Z8N65p59su0RrOeXtADFcl1+jrxpi1BkCwO8D3T+NNF5Cos8sPJRakpWSpFib+N5D1NWy7GInHcCeV97eV8GGguSjdCepErB/2Wl2IsR4cOPamTiCQK3ELNOVkbV2OJe9H/j8xgXhiKXG1J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=b3Xj0shM; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PmRpVf3Z"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2887abeefbdso1951947fac.0
-        for <git@vger.kernel.org>; Sun, 20 Oct 2024 14:29:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729459766; x=1730064566; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=537naWBtYloByb+67M91Ir617WPNm26cOQ9WphsbFDo=;
-        b=PmRpVf3ZRCcCgPL2fsuFg5u9rCV0A2VYGGlc+yWmXyq/Ik1AqXfv5czHwbh5k6JvBW
-         rFCSx4mD5Tuxhprfvd9R2mcYmkJzIXq8LEZhZtpCYZbVq2SJYDuc1Hm9E/PN5oWsYFru
-         zOIz+RGa55kXQeaz72FeSSTIokaKmWymcQyvDpFwiQvZkaZFUUk6gETujpjs4bwjuxPU
-         gP6jCXkP/odr+C7SNdyTOPkrrI+m7LGXAYee3Rce1s68HBzTXynklceD+CAE7tbOOv84
-         JIpat/rvCojY8tKXpzBJF3GDFNOyL8jg3Jmi5WinQEwKeOs6GiEaMceidSd+yu8lGH3H
-         RsNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729459766; x=1730064566;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=537naWBtYloByb+67M91Ir617WPNm26cOQ9WphsbFDo=;
-        b=UEOAzNs1WWMdt1dIRVzXrHGyKF38S7CeFZCFhn01W/oahqdpA3K/WtPVsLbnQftLR2
-         L6s7lk/+r3ItPFUFR4ZarjnSwiT3m9PvPTVX6dTtU4cC05gFkMbOrWtCPYdG+tPa5xqo
-         QaHzmn6HyWKY6lHc3lkfIPw7Bv6dwhi2g6diGnc6Ca6VWFbr71gVK/++24Vf7cWPh+Fg
-         WOMfkgb6yJu2iZ+MAFoQCD6v1GL7D+i5Tbrv4Lv3vnE0NAZiS0lD6tWRMuBO8QNKWHvn
-         7Sw5J+T3HRs4YTlP/IkgDGYjSlnAeS5i/kSZMKO8nwLNYB+G0Kb49zXFGVyPJgiLmGid
-         ciYA==
-X-Gm-Message-State: AOJu0YzsjkT0F/ETRn1T0frHQrvIzwdjwYWiqFLwFaGGjOB449H/oLPV
-	3GyCHv1PFGMNpUPENRfNf8tjj+oTVgTZZdhiYxo5gsqDEQLJ7+aUbclOOQesik4+gMRTloZ5RWm
-	/diO1eD+U2M3Q6GmA8MrWWT2HV860ewc1
-X-Google-Smtp-Source: AGHT+IGkoC+fyjBrLXqTYB8O76C7/PHXIIF+LWtFSLl6gmmRw8mGFw3p4qLL1SY4ltZew9sgatPBl5Zy/4QNWURRQy8=
-X-Received: by 2002:a05:6871:724:b0:287:4904:7125 with SMTP id
- 586e51a60fabf-2892c302071mr6774743fac.14.1729459765965; Sun, 20 Oct 2024
- 14:29:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="b3Xj0shM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=D8XZgXJyUrtaj1igjvSuIEcM6y3IBdMTfOYMy87wGG8=;
+ b=b3Xj0shMqTxDYsXNzwNwzm+8PQGatyDzM8EFlp9tSiFV0t0b45FqG+UrGv25VJoTrk0SIeGoFbPt
+   fDnqWGmpQctNiSYBemArWw2DZ5IbiErlZBWfAp/vJYwwHxAGBy7Hm39sY+CLqveNxCAIHr4ZU1Dd
+   0x4jW1kj+6xE5QdtncMx6/uRGP+792f3EgZbZdpuso8A/bJWcl6io9sXDXQnH2pCBihG2b8EgRKK
+   pID7e1wnCgVaVKcu9LVpHO5FbcSMds/O3lGlIqPsbSrfHD9cVI9WZaPYVEpz5hoqWqwLAokbc47L
+   syJf6W+VYNd8dCv2uwBuHNd6/T2oo6RwboGe0A==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SLO00O4DCCH1240@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sun, 20 Oct 2024 21:43:29 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <d3a1ba01104da8496d52308c07c5c274fd30b0c2.1729443395.git.code@khaugsbakk.name>
-In-Reply-To: <d3a1ba01104da8496d52308c07c5c274fd30b0c2.1729443395.git.code@khaugsbakk.name>
-From: Josh Soref <jsoref@gmail.com>
-Date: Sun, 20 Oct 2024 17:29:14 -0400
-Message-ID: <CACZqfqBnqPpngxkYPhokOPdQN0T6tH4Zuzwv_wLgFCnY9FTXLA@mail.gmail.com>
-Subject: Re: [PATCH] SubmittingPatches: tags -> trailers
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Sun, 20 Oct 2024 23:42:38 +0200
+Message-id: <D50YLOBHJTLS.367TMAOLKL019@ferdinandy.com>
+Subject: Re: [RFC PATCH] object-name: add @{upstreamhead} shorthand
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+ <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <20241020202507.2596990-1-bence@ferdinandy.com>
+ <1c056d39-950c-4965-89d6-85f0c2c1bccd@app.fastmail.com>
+In-reply-to: <1c056d39-950c-4965-89d6-85f0c2c1bccd@app.fastmail.com>
+Reporting-Meta:
+ AAH3D2/l5r9c/iY69S+A4TX5yv9CZU9F8ev3mnv253ZGlKzn4RbnUBnZvZj8tBqi
+ FCQrEDGoTU02yhfoDnf/ulVZ+H6N11jVPz+rOsuZMD/mL0/XV0nVltC2j7GVwLT1
+ TPjCzbpKv01JVYxb5sK4/yRm6hysWBE8ceilLRFfuhsQsEuPwMCybniL+IF/2yZT
+ isB8wQD6r8ml3kYecZ5AB0yXp9Yf1Q4smg2yR89dmJ5QHI20XmxpKnRNOiJVWVAv
+ fKHaVeM0u55bZOa1hPEuk31dIhieLsR+zB2V4Q0azlAsvBExNEFpWgnYNZYll7HV
+ xdXi3JK90YU/9Zvonp6x/qB+kyBuzCeMImqEFfuWdNe41Wls7HMld/7uany7uChW
+ MKOI0DWn900iw4DpqhkYx1vvYPx9DfCLNKkiXS4c0e9x+VaThSMWpZD5xnEaU6qa
+ uoEClKROI3xzdWhj4wt/xM4kNpn6Djt6SreLQniTMsUVvovd75jzyG70tw==
 
-Kristoffer Haugsbakk wrote:
-> =E2=80=9CTrailer=E2=80=9D is the preferred nomenclature in this project. =
- Also add a
-> definite article where I think it makes sense.
->
-> As we can see the rest of the document already prefers this term.  This
-> just gets rid of the last stragglers.
->
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->
-> Notes (series):
->     Commit message:
->
->       =E2=80=9C =E2=80=9CTrailer=E2=80=9D is the preferred nomenclature i=
-n this project.
->
->     Must surely be true since git-interpret-trailers(1) does not even
->     contain the string =E2=80=9Ctag=E2=80=9D.
->
->     I did a grep in this directory:
->
->         git grep tags ':(exclude)RelNotes'
->
->     It didn=E2=80=99t look like there were any other mentions of =E2=80=
-=9Ctags=E2=80=9D in this
->     sense.  Of course it was difficult to look through.
->
->     +CC: Josh Soref <jsoref@gmail.com> based on
->     e.g. ac9fff2bf1c (SubmittingPatches: discourage new trailers,
->     2023-12-28)
 
-This change makes sense to me.
+On Sun Oct 20, 2024 at 22:40, Kristoffer Haugsbakk <kristofferhaugsbakk@fas=
+tmail.com> wrote:
+> Good evening
+>
+> On Sun, Oct 20, 2024, at 22:24, Bence Ferdinandy wrote:
+>> The HEAD of the remote is useful in many situations, but currently one
+>> would need to know the name of the remote to perform something like
+>> "git log origin/HEAD..", which makes writing remote agnostic aliases
+>> complicated. Introduce the new shorthand "@{upstreamhead}" which returns
+>> <remote>/HEAD for the same <remote> "@{upstream}" would yield.
+>>
+>> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+>> ---
+>>
+>> Notes:
+>>     RFC v1: Testing and documentation is completely missing, I'll add th=
+ose
+>>             in a v2 if people think the patch has merit.
+>
+> Do you have some concrete examples?  I=E2=80=99m not well versed in using
+> remote HEAD.
+
+N.b. I was intending to write s/many situations/some situations.
+
+I basically use it for two things:
+
+- variations of `git log remote/HEAD..` for which I currently have an alias
+  with "origin" hardcoded. E.g. I'm on a feature branch I'm reviewing and
+  I want to know what commits are new compared to origin/(master|main|trunk=
+),
+  but I use HEAD, because I never know (and don't really want to pay attent=
+ion
+  to) what project uses what. And although "origin" is usually ok, but not
+  always if there are forks in play, so @{upstreamhead} would make it agnos=
+tic
+  to the remote's name.
+- I also use remote/HEAD in CICD, i.e. with `git rev-list origin/HEAD..` yo=
+u
+  can run checks on a commit-by-commit bases instead of the end result of
+  a patch series or pull request. It's really useful to check have basic ch=
+ecks
+  for commit messages for example. In a CICD of course for a _specific_ pro=
+ject
+  you know what HEAD is, but still, using HEAD makes a step portable across
+  repos. And again of course, I think in CICD you almost certainly will alw=
+ays
+  end up with the remote being called "origin", so this change might not be
+  quite so useful there.
+
+But so the long story short here is that for
+(origin|upstream)/(master|main|trunk) we can already have agnostic code wit=
+h
+HEAD for the second part and with a patch like this we could have agnostic =
+code
+for the whole thing.
+
+Best,
+Bence
+
+--=20
+bence.ferdinandy.com
+
