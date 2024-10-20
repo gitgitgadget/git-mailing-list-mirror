@@ -1,81 +1,81 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DC926AC3
-	for <git@vger.kernel.org>; Sun, 20 Oct 2024 19:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D371E19580B
+	for <git@vger.kernel.org>; Sun, 20 Oct 2024 19:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729451735; cv=none; b=oYwhumNr3fn8pNfQksxSozpqvsoEAbBODbGWKOyeDnN44UkRZ7Z5PYIPiE0QVi1Z6S2MFUdX4r9SZi1mKwRG7coIHKtEw77YLUlYoRLT90tc+BVlvj7dJlopXIRbtYIw2Wp393cxTtIkXaiosjufP01Kb9otuu6cXGU7Ek/mttY=
+	t=1729451738; cv=none; b=hIQQo01vSBc5dkMipvZZ9aN5IbRlysl3Vq0dJNs7AJT3x1+L78xccaM3P84sRnVA8uKhXIfhZpm7lhy8t2rXoTe17ta9/RiodKLnEXs0wBnshnGdAfsfpUnsDLoamKyx7HSt3iUvt8XR1Sj36BifOGMG8D5koA7fnJFEZHqjENY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729451735; c=relaxed/simple;
-	bh=bBUJGfXqLApaJvISgfFs5lI3HvmB8BQFJXBKFxR1ShQ=;
+	s=arc-20240116; t=1729451738; c=relaxed/simple;
+	bh=0+BgZkjSmyjRFmxz89GrCNbGDxwZ4PpB6LR0GQzEsdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W1Fpi0mVdG4R+ZEpPhJCfG/pXhajJFT/O5cBW4/LZpejxTmMxC8VuZBt1Ppd0Dk3tWQer516YkCJyltI6vh2h56m/I+OyLfBoscYHWiEH4PU6XW8GuaPTuV+ZdQkpj5btf98edRlN+vvSo1JLCV2vY1Kna6vAKo/4772K/gb0Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=HWMgIUO5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m/sAez/C; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=BLehVb855B/QY18ycZDt5xCqRt5b4NpGoHQEkoZDt52EZrp1VsqTfpFTYFKBPYF/wxVGz8jCCB+rvhqQkn0U4bv4C7/DKelR+hrDAutiiV0AD6giKF80zIzSBecdikJdUzBqzLCajySfPs2pInHZay1WIuZU2fBq1Rn5eYHjo3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=U/c8tpGx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HsdUrvmo; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="HWMgIUO5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m/sAez/C"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="U/c8tpGx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HsdUrvmo"
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 76ECF1140145;
-	Sun, 20 Oct 2024 15:15:32 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E58E51140179;
+	Sun, 20 Oct 2024 15:15:35 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Sun, 20 Oct 2024 15:15:32 -0400
+  by phl-compute-06.internal (MEProxy); Sun, 20 Oct 2024 15:15:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729451732;
-	 x=1729538132; bh=kaiciUjgduZ3ceg7eCnFvGMa4CI8e9VIGRC729QtW8U=; b=
-	HWMgIUO5Zw6Tn4Fz/0vsedlR8NGTSaOiK2gAVue9JSTXYaz1DtrWCc0RsGIFb0BE
-	HkgCfo/pbir4znp8lxT8882Lc4wYacaDNX7LH3QfQK09bUruw1AgiUohIsxN903/
-	nDclbJ8T3uHq5aQ8iWqIAitOSmt2BxRugdKEZz/A5jZgaXmz9yn0T/e1zX1ds7Vl
-	D0+SHSVjQT/NpINFsHRWNLjMvOYS/Pw5/aXvgArQR/acTFU1wXKYPxdyqb0Ou0vv
-	N9blXuwnnxHCVKrMPRhjM0uEC7aEuXt4YrRq6/e9fZHg5YoYT6nq7HWGUzQDI78r
-	sGjb1YF7vWllIMA6hew4Mw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729451735;
+	 x=1729538135; bh=Ano7V7VIyEJBflUNcHh9rZN5tCZP/ksRYK3rcV9kJbA=; b=
+	U/c8tpGxG1Xe0Eq5MBsKiMcXQ4BbWTZULqorgnz8XQWYFeNtp4IBLs5TRElpcm0x
+	IQNwRBWhMD83oLJ4EeMRtg/eBrWNGU9I54b6tbAQCcbdMK7otSrsyYYP5hm7x8VO
+	DotthZambW5sr6E8K9gwEnAnAILNltLuKQ/Zj/lJgP7CA5HN8oi8XQGnqImkKx6h
+	N1OTBmIWH+v3gTH6cHJ4euh7F9p22NdGeNNe+/iBjhUwbVyyCEfaoI8Y1FMhdLBc
+	P7+4z66qGPerjLJtiXHnqDspKhg41AVubucOYphQpCske2xhgnk1VKc6EbT+ihxd
+	5HykjqoJZMYixCn9tl4VRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729451732; x=
-	1729538132; bh=kaiciUjgduZ3ceg7eCnFvGMa4CI8e9VIGRC729QtW8U=; b=m
-	/sAez/C2gAdlJ3/Wib9fZ+JHNbIaRzXWjThtT/+5SKEci9E3+WIkHA1UI5FQN+Al
-	i11/o641YJ9loMf6PTSuNdjEsUls69DAESKSp6kV9n26f3Knjr0vi0JkFz3HScHt
-	MMeTa0D6zXu70PhzedbMcTzq76AU369dWmQuLMllaYrhLa5c0UGSCYmofgewrOoY
-	kaGbOErMivZUeKZeV8PJ7iKmfxdYw+LTXUwMd7288+rV6I4e31EsUuFAbcxlxXBi
-	Ucep6/361dGAkNXIPZN92tAwgqT+/QkaDLfhMW7Z5q8WPGVTwn8U7nyRrK3fLFiw
-	G6WsNkAu50bdaQPT4PDtw==
-X-ME-Sender: <xms:1FYVZ-jvv4S28sLAfytzGP556gyb-LplY3-2arvrrjZ3l1aO1hcN86g>
-    <xme:1FYVZ_CxGZl5kGumUm9EgcFHVlz3TK9QD0IBj0yNQqE8Y_JzymErmt3V3DBT-oV7V
-    Af2Z9C5IDCKMk_org>
-X-ME-Received: <xmr:1FYVZ2G7bmY5GGxswarS7unUIqKhyFO-mI82QrztskgNCEg9DDfyxAcNrADPDwv9XsN6v9jz-K6pIsvD90bRm6NBEStjFsi60nNS5bUq8Lvz3HhDZr5b0dkgpw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729451735; x=
+	1729538135; bh=Ano7V7VIyEJBflUNcHh9rZN5tCZP/ksRYK3rcV9kJbA=; b=H
+	sdUrvmoyt0S3FVrp/iLQNKthJyfI93I+KR5hzCOEH3ghWY0maHO3aV73DfFqdVY4
+	EbHqch5dYxfrhcWAk3DicLvBGSTgmnkj66mRR+Diig3yvJOE/M+0LPAGQDyyNCpK
+	AOGn5n6qbA32vjSD4Onx2+uxJ71gRcNgnlsPiwGMVAnuUHSuREYLx1k4m+s3DfWU
+	WV7T3R+yLNanlEJ0xaBGoCBDXtYrZLalemGGzPDGZ+B+NHtRy9IOPVoB/f5Oc16Y
+	m44CIRUj1WprF4xZiszFLTg8wR3TsHtDUaEMhUC/Sg7GMQQRjhRJ8LqjWTw84oXA
+	yi3uY7/Sa6FHgvIsi1opQ==
+X-ME-Sender: <xms:11YVZ5eOI-If-mFfhMFQjm_NcgWWgJ5Jv5aF4z_F6__0WiSmOMO5v3s>
+    <xme:11YVZ3N8aejRqhouohKY4G5r520RxmDtuJ0Hynm-UaQCJq_lx_1MslrMXoTYzLHT9
+    0JP1j8mrNtVaZSEMQ>
+X-ME-Received: <xmr:11YVZyinHSas1p2MgJnwQbFw5ashL3h_N4Ii6fZQmRxnWS-XcjaRCQ9HliccMEXFlPhE-Jol6aMKcrAsDPw5Q8rq-Plv8ZRKtzFulFZJQWEGy2NsQntp4rdo2g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehjedgudefgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
     fufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhh
     rghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpefhgf
     eglefhjeekgfetleetjefhteeiheegfedtudduffegjefhkeetudeggffhkeenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffh
+    shhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffh
     gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohep
     fedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
     gvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdp
     rhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:1FYVZ3RazjknU3Jf5JLm8G6Jzo-UhZIgLbwmnFouc8x2Ov_qoAWfmw>
-    <xmx:1FYVZ7x_VDlyw7DMzzugHn-QW6DBS0XU40HRcKOhske8Xmpchs5OuQ>
-    <xmx:1FYVZ17n851-3NPEo-ArwElhXkOZzOVWrniPfzR9ovN5a3OJBe5E9Q>
-    <xmx:1FYVZ4yI_aOInvL0cP9D3Ox_HebXBmf5gECZvmFHe18ixWdyeuJ05A>
-    <xmx:1FYVZ7-aYpGHlAJVabEiafa_BhvRYN0TONey2EZL9VuC0V6WJeT46oRx>
+X-ME-Proxy: <xmx:11YVZy-IkezmOyv6YsKIDtsT3sHTgCzG3oG4rxHnHunbtGyE_3IRGA>
+    <xmx:11YVZ1v66AMvKpIAtPgJJQ_OgxSGuXjmayiGPLrMXpn619QRrCSGqw>
+    <xmx:11YVZxH36jGHePGzsLetApV5TGkVgnUDS769g8DpduLyunxlAgqKHQ>
+    <xmx:11YVZ8MJTk-Mqc9Dg3tzvFGL3nZ2WkrkP5ygeNue8qGR9kcdh92Xdw>
+    <xmx:11YVZ9LN2oiK-uTl3eVqByG7eLEhzoS5Cf-ovD4Vn2IX9kS56uERUtFh>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 20 Oct 2024 15:15:31 -0400 (EDT)
+ 20 Oct 2024 15:15:34 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	avarab@gmail.com
-Subject: [PATCH 3/4] Documentation/git-bundle.txt: mention --all in spec. refs
-Date: Sun, 20 Oct 2024 21:15:01 +0200
-Message-ID: <33980a47d132c9ea56238641031e72c5c7e2565a.1729451376.git.code@khaugsbakk.name>
+Subject: [PATCH 4/4] =?UTF-8?q?Documentation/git-bundle.txt:=20discuss=20n?= =?UTF-8?q?a=C3=AFve=20backups?=
+Date: Sun, 20 Oct 2024 21:15:02 +0200
+Message-ID: <63a431537b78e2d84a172b5c837adba6184a1f1b.1729451376.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
 In-Reply-To: <cover.1729451376.git.code@khaugsbakk.name>
 References: <cover.1729451376.git.code@khaugsbakk.name>
@@ -86,31 +86,49 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Commit-Hash: 33980a47d132c9ea56238641031e72c5c7e2565a
+X-Commit-Hash: 63a431537b78e2d84a172b5c837adba6184a1f1b
 Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Mention `--all` as an alternative in “Specifying References”.
+It might be naïve to think that those who need this education would end
+up here in the first place.  But I think it’s good to mention this
+high-level concept here on a command which provides a backup strategy.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/git-bundle.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Notes (series):
+    Correct mention of the section?  All-caps seems to be the convention.
+
+ Documentation/git-bundle.txt | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index bf0d448a736..cf25e6e8540 100644
+index cf25e6e8540..b5cc4746b45 100644
 --- a/Documentation/git-bundle.txt
 +++ b/Documentation/git-bundle.txt
-@@ -135,7 +135,7 @@ SPECIFYING REFERENCES
- ---------------------
+@@ -324,6 +324,20 @@ You can also see what references it offers:
+ $ git ls-remote mybundle
+ ----------------
  
- Revisions must be accompanied by reference names to be packaged in a
--bundle.
-+bundle.  Alternatively `--all` can be used to package all refs.
++DISCUSSION
++----------
++
++A naive way to make a full backup of a repository is to use something to
++the effect of `cp -a <repo> <destination>`.  This is discouraged since
++the repository could be written to during the copy operation.  In turn
++some files at `<destination>` could be corrupted.
++
++This is why it is recommended to use Git tooling for making repository
++backups, either with this command or with e.g. linkgit:git-clone[1].
++
++See also linkgit:gitfaq[1], section "TRANSFERS" for a discussion of the
++problems associated with file syncing across systems.
++
+ FILE FORMAT
+ -----------
  
- More than one reference may be packaged, and more than one set of prerequisite objects can
- be specified.  The objects packaged are those not contained in the
 -- 
 2.46.1.641.g54e7913fcb6
 
