@@ -1,81 +1,83 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2C317591
-	for <git@vger.kernel.org>; Sun, 20 Oct 2024 19:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BDA195FEA
+	for <git@vger.kernel.org>; Sun, 20 Oct 2024 19:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729451728; cv=none; b=YIHl/o+GeYClELqtMdROqaleShdq682FZJHcAD3HjI1mDKshq9yilT8Em6vczybzCyr6B5aTpJphSU/KHDo/SeC02x1yx65qmY+fycJ7foBNocyNwrPVvEr/rKbTJaYn4HkrThPaQ+blcQzbkzu0n6JCPa/kE5hsaqfurhXqbSs=
+	t=1729451732; cv=none; b=Yl6M1SVTi50ybLuBiM1jbz8UQSz31EubEpsAWL7zn8gPvs6xCD+9DKAhXvNl78F3GwgaCKdjiSxjJyHqm/ng+KjihwHJqfN5LQ8d2Gnli+EGw0n7mzMMcjMPMHh54MM8GNLHHbSlx4nAT6SvsBgOIZ1qLLhAtd8t40fC+b31aDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729451728; c=relaxed/simple;
-	bh=W0HRXv75Olog3VcXT5uniHF+hbeL7hD+14dbXjuZhPQ=;
+	s=arc-20240116; t=1729451732; c=relaxed/simple;
+	bh=Uj6T06+gVO8k5Z5Z/gK8PhutkLhd7UfbydIYheMMxFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TJTGriJaRWEd4zDeEtLexNvJEWKxLCZnQ47GQka5cXqp7gpR/Ck3GGjJePm5HPeuAj7sAvTdMG3IP9Yw22dLuAVNfs3ICuWNLLLzfVmIR8fyTF8z1HBtR4S+Z8BIZYljvkwv7nEub9eMzgIL2+KTQrG2CGAE0OD+DRCusR9SbuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mK69vg2a; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LsNFvR6t; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=eNhevF9YmOkHC6s74OVq8PUqKljuHjQQxMndGHwZ8ddVEoj0aOHFccrt2TqRNDtTKkG5san17aPFuxZdfT5JLefSD3rNIM7JUh+JilLJvwqe2GzO4fgeEE+BSKRywJz6P+/qrIHsx1kbOeBWp/LIzoBUnK5Zwm5BKlvySmNUuLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=NGTG1v8Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GJqx306t; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mK69vg2a";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LsNFvR6t"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id A77691380044;
-	Sun, 20 Oct 2024 15:15:25 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Sun, 20 Oct 2024 15:15:25 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="NGTG1v8Z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GJqx306t"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3482313801FA;
+	Sun, 20 Oct 2024 15:15:29 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Sun, 20 Oct 2024 15:15:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729451725;
-	 x=1729538125; bh=BCivB4Ny1UqIOLClQxgJJ5Kno0E0mrZTkUeFe5tQRc8=; b=
-	mK69vg2aC+HzIp7a+2j4HlcC4FqW8DDZUv7nECQ60V46c9wC7fXA9U2UJlAAoaf2
-	YTkzUPIgPdn5+2Lly83lRCCMstDOAxfV//anBc3ZRtBCrb7Y0zZYxazt0E6p+/xD
-	w0433tza/4wJDP8sEUDAzr2sLa3rccTR1n5HkVP9mYZ1jUMKfaRzSDgBGzVEPsbG
-	YIqjr7wn6+DJjpx4pp/sE+ppUB1wxKMFyhO+1BvbSRipknGUZQqJDc9DMJ3INU06
-	hz9nGtWYHw2T1Y+bgxRxsuS6Y9og5rQGCGmlwWsHnwHZyR4w41zfqtlTTG1pFT0F
-	X2OfbbF6yfWku606442Ujg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729451729;
+	 x=1729538129; bh=er+cTxxt30Rbzddm76yLWCIVuDvUNkel9hS38y/x4XI=; b=
+	NGTG1v8ZOCCKXQWlMySVMitVMRPFiSHLIHIYP8mKw8W0qzd4L3wJN0XUAuWcQq6L
+	THMZ7Zn5eM+fjx+YqEuTtGeI8Wugv0wYAIU3qs1oAHX39DOl2Pak2JKpT1IahT1f
+	rF9ODROX3eGc824mwak4HXl4GV3+WFFBBJT4Ag0dAYBM1sW/Lwb+5iozs72cno9X
+	gMUIGK8G7WIAZbo25QbJ/ndQN39psO2A2Pt+j+U5NIdWuwdT3ZHM2RdFuogfWaoP
+	icUCfQRATIrjNDBrix/rFVpxMwWSwhNFwlXJ5MR7TEumpNPIpU2ZSuuu73wImHKv
+	+wZOMkKinUSNdXRNwX0mKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729451725; x=
-	1729538125; bh=BCivB4Ny1UqIOLClQxgJJ5Kno0E0mrZTkUeFe5tQRc8=; b=L
-	sNFvR6t3HP473RbVkouf7IYzlIaD6DQhaCbgdOO4L9src69Fl6LFqkp36mihA7Cw
-	MabefIMTXyCVWQspkIQ9Hx5dvw3qvwqky2qgUJIk9Ore/jfbsVAHugNSpq6kQg6n
-	GN49mxp93u76SHWFhghqBT/AvSrAqKlUA1DKjW+F1qi6gmt+lHo11WJRouvHGudw
-	5A+SxSzyWH6TSmOok3z+PiJ5i3YJj/bQgcgQIspRKl5ldSgXJp5VC8FqgWZZM9Ln
-	uPKcn1TSCgSF69hg6uGYN8ubwQGe/GukVZntOe0QcERFqsInrOI1cqnjYvEOpNgP
-	gGjfvx+Y7su5OmZxwyCEg==
-X-ME-Sender: <xms:zVYVZ_bCZznpfaGqqWSscZBlMafPfm8kAt1mFp8IV1M_9mgpO9MfKKU>
-    <xme:zVYVZ-YiFQEefqSmEl4RlDKndXzFDJ63UyER1bBIzt13mJUIN3P8yQYunxPLHZb2i
-    4G2ZEAR28S0mHV6fQ>
-X-ME-Received: <xmr:zVYVZx_YwgqEqyp1Xz6vsiC0wnepmgswi05IvDP6ysoXeFKGXnPtw1KafQ81cK6IWicf5do7kRUBqv6zZ4CEU0gh30BmBP1zwNOco1Dcdsf0S9KW9SA3Vy5z8Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehjedgudeffecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729451729; x=
+	1729538129; bh=er+cTxxt30Rbzddm76yLWCIVuDvUNkel9hS38y/x4XI=; b=G
+	Jqx306toRuZL7UJ95FZv67UuSHiY/IkULWQxMmvnejogQGn7JtqwIzYiAVDEZiI1
+	KEVS/DXy2jqLzUODbXBuXQ5hV0W1rp77PEGdVn3jK3Kv8oD+CDS8epd/n8/+AhKU
+	bsmAbU/NE+e1Et2unV0/iX4JA4FdwtMOXI/18FMnV8jHRXTkbFYsCT62p6YWhP9H
+	4UA/QcKfrDZ2+Vf0RFXFBu+QKd3FcFK9XGXqcRJWwn0W3U81dz38jAoKdAa/pjAt
+	ilayDVQAnrH7jeks6RDIiXPGr3xOAhpau3V3LFaFI9Ok6LeZZGYfIx8nSeydwVHz
+	nbmBiV9IUu61+UwzeDdKg==
+X-ME-Sender: <xms:0VYVZ7kdQktVb3BjJ7_nskk9fGAKRsL3qzNtmhfkYWBtaV5Xpqf8_io>
+    <xme:0VYVZ-35XI7KpSdWtEIpuOWh0ZBao3CejCXIicZdjIWdOtdfsxIlfqCA2uNRKL6Ka
+    sZ3wbltNiXRoAQrRQ>
+X-ME-Received: <xmr:0VYVZxqw_QkcqLS5omUAWkk3TwhzPtRjQLM55Yx8u7wuD3F8OLJ56nZPt0F0JzQNZ3Uzx5Gc5PG-s7SuWVw7sF6ifeTV1M9-T29nA_3KufnntAbyJ_zNb_Rtvg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehjedgudefgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
     fufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhh
-    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpefhgf
-    eglefhjeekgfetleetjefhteeiheegfedtudduffegjefhkeetudeggffhkeenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffh
-    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohep
-    fedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdp
-    rhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:zVYVZ1pLmQbnzioINCyrDDD_TGkcZOf23VCdDv6Rtsmm-sAJhw0AuQ>
-    <xmx:zVYVZ6q1M0hsbvpRlhScmX6lWlMroW0YG7flnd42jTJ6Hbww9PtlWQ>
-    <xmx:zVYVZ7Sx2ZiIAlZng1XUrA3AxFCLF4f3MHyRA6n_scBdg5NfNLZurQ>
-    <xmx:zVYVZyrz5QYm_q7UFzIViXZtJ-nitkOAQqyRnfBdWZdWPkpebZzOvg>
-    <xmx:zVYVZ9UZG0pIcgw036tuYuU6TuzTkpYgECzh8DOZscYixfR0Z21HYmaB>
+    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpefhte
+    fftddtgeeifedvteefffekheeiledukeevieevleefueegjefhkeelteduueenucffohhm
+    rghinhepshhtrggtkhhovhgvrhhflhhofidrtghomhdptggrnhgrlhhsohhophgvrhgrth
+    gvohhnsghunhgulhgvfhhilhgvshdrihhtnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    eptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtoheprghvrghrrggs
+    sehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:0VYVZznDFlblc3SxEoMwESb5xrBAMcQaRRYYo5aIYoT-Q4fqFZigHw>
+    <xmx:0VYVZ50Z5r3RnOxCjZw6ruUWG8awHz5-1S8OIiP2hOHz8_oW90nv1A>
+    <xmx:0VYVZyuSntkXZmebQGqHuEQTCe-n2Ttdt7vKwaM4VtPtydWy-x7Lgw>
+    <xmx:0VYVZ9VvGJwI_oA88mCEzgf-eUV5OQtBjzxMQ3gHwylpSLWxdcelRQ>
+    <xmx:0VYVZyzyGEXta7PHVcGGj_JbMTZGPnpPH7vU4hEVgwbn7ROKpCaevUf5>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 20 Oct 2024 15:15:24 -0400 (EDT)
+ 20 Oct 2024 15:15:28 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	avarab@gmail.com
-Subject: [PATCH 1/4] Documentation/git-bundle.txt: mention --all in Synopsis
-Date: Sun, 20 Oct 2024 21:14:59 +0200
-Message-ID: <39bdc5941c7b53c432966984fa79b81fde978e86.1729451376.git.code@khaugsbakk.name>
+Subject: [PATCH 2/4] Documentation/git-bundle.txt: mention full backup example
+Date: Sun, 20 Oct 2024 21:15:00 +0200
+Message-ID: <f7d9aa89c953ca7d15b5047487b4347ef62e77a9.1729451376.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
 In-Reply-To: <cover.1729451376.git.code@khaugsbakk.name>
 References: <cover.1729451376.git.code@khaugsbakk.name>
@@ -86,52 +88,44 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Commit-Hash: 39bdc5941c7b53c432966984fa79b81fde978e86
+X-Commit-Hash: f7d9aa89c953ca7d15b5047487b4347ef62e77a9
 Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-`--all` is convenient for bundling all refs.  But it is only mentioned
-once, halfway through the doc, under the demure section “Object
-prerequisites”.  It deserves to be mentioned as an alternative to
-`<git-rev-list-args>`.
+Tell the user how to make a full backup of the repository right at the
+start of the doc.
+
+This is a requested use-case.[1]  But the doc is a bit unassuming
+about it:
+
+  “ If you want to match `git clone --mirror`, which would include your
+    refs such as `refs/remotes/*`, use `--all`.
+
+The user cannot be expected to formulate “I want a full backup” as “I
+want to match `git clone --mirror`” for a bundle file or something.
+
+🔗 1: https://stackoverflow.com/a/5578292/1725151
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
-
-Notes (series):
-    Long line in bundle.c now?
-
- Documentation/git-bundle.txt | 2 +-
- builtin/bundle.c             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-bundle.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 3ab42a19cae..7579dd309ac 100644
+index 7579dd309ac..bf0d448a736 100644
 --- a/Documentation/git-bundle.txt
 +++ b/Documentation/git-bundle.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git bundle' create [-q | --quiet | --progress]
--		    [--version=<version>] <file> <git-rev-list-args>
-+		    [--version=<version>] <file> (<git-rev-list-args> | --all)
- 'git bundle' verify [-q | --quiet] <file>
- 'git bundle' list-heads <file> [<refname>...]
- 'git bundle' unbundle [--progress] <file> [<refname>...]
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 127518c2a8d..6d610253575 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -17,7 +17,7 @@
+@@ -26,6 +26,9 @@ They can be used to create both incremental and full backups of a
+ repository, and to relay the state of the references in one repository
+ to another.
  
- #define BUILTIN_BUNDLE_CREATE_USAGE \
- 	N_("git bundle create [-q | --quiet | --progress]\n" \
--	   "                  [--version=<version>] <file> <git-rev-list-args>")
-+	   "                  [--version=<version>] <file> (<git-rev-list-args> | --all)")
- #define BUILTIN_BUNDLE_VERIFY_USAGE \
- 	N_("git bundle verify [-q | --quiet] <file>")
- #define BUILTIN_BUNDLE_LIST_HEADS_USAGE \
++You can use `git bundle create <file> --all` to create a full backup of
++your repository.
++
+ Git commands that fetch or otherwise "read" via protocols such as
+ `ssh://` and `https://` can also operate on bundle files. It is
+ possible linkgit:git-clone[1] a new repository from a bundle, to use
 -- 
 2.46.1.641.g54e7913fcb6
 
