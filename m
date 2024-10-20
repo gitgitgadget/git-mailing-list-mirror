@@ -1,154 +1,113 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from avasout-ptp-001.plus.net (avasout-ptp-001.plus.net [84.93.230.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC14B193436
-	for <git@vger.kernel.org>; Sun, 20 Oct 2024 16:13:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F941494D4
+	for <git@vger.kernel.org>; Sun, 20 Oct 2024 16:21:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729440794; cv=none; b=EZ1cbV9EnbbYQ27g7Q6Oi/j7F04CzsPmvysWuwFPtOLhLVakNIt+7y7ccvB7tWhg+UExME8EybWgdfkViiH0yNmb846uSVoa9QRPz/WBPTyTEv2TX0JAWoTMhcCwZDXFLPiybtV2ZWQmtTKKycPwctGUnpdfK83kZ4PO6htu2+M=
+	t=1729441316; cv=none; b=sQcfvG8/QYNJfjqd9DxL+2IggDr/mXYrdHXfLpXlr6sAg9MU87Kng33pACOsiH+pjpbucEGdml3Y1137zwTvUPoCmh8j++SQ0sMkdQ0C/Ur8Wm/PFxAflpT9mBHbJwR5ZzuCQWNK0t5DguqkHJOh2C5Ts5w5DQBx2mir3rkU+6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729440794; c=relaxed/simple;
-	bh=Iuk7rEniYZnHNOjoyH0jXMNbdQbKVu7dMC/tPBzJkc0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EjXIPhLUGZ1kFpUcxSXARDeCxz34FqfbX67eUaNFCvHUXRSJiTSfrKNKjpDMRIk0ELfJU0SIOQgdu2XFChXrYlkYXdA8dYbmFDCuzQpdWfiQWloq6rMlr8m6EoIGFBhre6chMazZ2bCajHgWmJ6TLvv/vUI65PFVznD4TxnEzIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Qkbch2Z9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lnp/7y/R; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729441316; c=relaxed/simple;
+	bh=K8YFpFPwesgK9uBu5XIMdjapdZ2P0FlFJIQxBPSmxVM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=h2zyy9VNnv7p5Fi6bKoHVL9YDGrEd1AtFLYNGrvnhzm+goz0xdX1gccOgwEh5zRUYM3JLT9UjsRkazeZXRd9KNR5YzftlYGYym4mv1Mwx+3VtaYX+wDwu2O66tKBL4QbyIRwEklORZUCPPPmjIPs8HtW2IJjn8PQWnNrjlF5q4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=BtBPaPWA; arc=none smtp.client-ip=84.93.230.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Qkbch2Z9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lnp/7y/R"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ED0F111400EB;
-	Sun, 20 Oct 2024 12:13:10 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Sun, 20 Oct 2024 12:13:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm3; t=1729440790; x=1729527190; bh=TF
-	WuL+knptseB+TKLkaN4oEuqvxxeXp38NMnMraNHkg=; b=Qkbch2Z9X1rHvIbvJk
-	WFnAxwFZop3d3VicLLXsnSVMnuL4ZSPG9HXS3dYk6oIVc/5vryJuCcxWM4iRGV53
-	FWNqgOXN+OSFxzkUmgaNmGkWcWTlCcN4SZeazMrWbhhTBzdoVk0JqN4eNp99trg6
-	WkZegbzv43kej4ydcRsk+rTMIljoNj2i8a138sEAxyHjYRGqHMdg8kkXDjnSMMVM
-	Kp3uv4djHLg2suczs1w8sG4MwQ2Y7bmjyP35FJ6XEskWEbaBHBb2RKZTAAGTCpyx
-	SiBdYaBcibPg/HTb54O24Wbg6Dv7RnHe4ieoqRo4DFlX+zFczAMXA/Mhmb6ESkxq
-	TTFA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1729440790; x=1729527190; bh=TFWuL+knptseB
-	+TKLkaN4oEuqvxxeXp38NMnMraNHkg=; b=Lnp/7y/RNPKSL3gcgu3oMp9LK1R4f
-	+3PswTjrisnyf4KhpLRo9lnn1i8qN0nOLTK2gwuXIbIHVG1TbDmMHN2UbOOLGJeO
-	ZEnLB5Uie5FO6bjZpNM1IpHilGR9d+BYpytuFcHVOxFVdEIvPSiEyBHzb3JUQxUB
-	53Ma5/KjAiU83F6Sr/TRkqpRF8m7uTT0a2X1o1mS6xZoM3NcBYNkqAgVRdQGNjjP
-	7AT+2M66nrWQINMlDdN6Ycyx/+7pgualC3364Vm62CNJYVYIIERqW2A05zCNwEMP
-	vzDqL36jbuBMX6zcUn8NRjiaG7cBkBWKTg//v6DbkbDW5lrmd2kQBBK1w==
-X-ME-Sender: <xms:FiwVZzmwNfJU-fMJlXy30IL3XxV5ajVmil9Y1JCpsES-UClDTpxa2ag>
-    <xme:FiwVZ21asYeROIZnJLMS5uV0fLZncVBMXG-im8GOBQK4caAh-c2xXALznembwc2fw
-    vBaN1TiKlz-7eNoYw>
-X-ME-Received: <xmr:FiwVZ5rGnffuZ9uoTCAs-2wlnDLu_6Kx6PTH5hehP5Q3JfExaJfuxc17KlKImTnulAxS0iK-hpSWdDGh4V_WAmcS4XEGbRgTj0P5mwYrnF1DD1OyI938p7H02w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehjedgleejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    ffkffogggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnheptefgkeejff
-    dufeefffegkeevgfevvdegffeujeejleegudfhtdffieekleefhffgnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhh
-    gruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:FiwVZ7lXdxVMdzMyzZYL0-4s1qG-UAT5mWuiwXBcEUqNEKDI3Ln0bw>
-    <xmx:FiwVZx1UcOXI-7XzMNxWAGA49Fmfv8fD7vy737zxN9wh9gAKGXZijA>
-    <xmx:FiwVZ6t6CM7C4Zkifm2YZGp20jTxdJM7AoPfMKoTqGgBLP44J-8UZw>
-    <xmx:FiwVZ1VuEypyoBdaqPAH_672MBPA9EExpoRUrM65g_7mTSIUvD1fDw>
-    <xmx:FiwVZ_DntD_cX5ngScbtBB3l_F_Rbe6wM4SUXFyPb7ILDkMjfAxuZ2rc>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 20 Oct 2024 12:13:09 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH] t1400: fix --no-create-reflog test and description
-Date: Sun, 20 Oct 2024 18:12:03 +0200
-Message-ID: <ab7d4c8d89c075de05bf04f1f9dc195145455964.1729439476.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="BtBPaPWA"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 2YgctChIky9pX2Ygdto0LZ; Sun, 20 Oct 2024 17:21:49 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1729441310; bh=QLc3vRs/lTONO/8T/iJ06nN+x94+/q7wLkSBNWIY+/A=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=BtBPaPWAE4j+hJYFXUX91ijeIa+nfARW5crgFzcmq9agl1goEdJR9jlJeYXd2YDBv
+	 TvrQ1lVdokCULH9LC90TtEh9Vdnl0BxPUnVxv0wgHMVGAlEJbPxOSjQhT1F/MgYtBt
+	 g3Wm7mwJRUDv2fJHrEEsLaUgN8MXTSr2+PywDZPIbkIwEb/2t2G6QGD4wiLbPUim39
+	 U3qw+HJxfCOpZva8vVNtHIfOikEWUsoanYST49ENH80gI8F2Od90+Qs4ZRii/s+3FV
+	 tc2GRyy0hTYaEPgEG/4RHiIgRL+sENfrYzYL3ZzRQ2djF8BTshwMJzH7XC8798LI1a
+	 Xx0eqxuBs3H+A==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=JYgfrlKV c=1 sm=1 tr=0 ts=67152e1e
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=NEAV23lmAAAA:8 a=5UPbssxmIogluvDTz-oA:9
+ a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <086ff955-bcdf-4aba-b6d4-c87f6fc6a724@ramsayjones.plus.com>
+Date: Sun, 20 Oct 2024 17:21:46 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] config: support remote name in includeIf.hasconfig
+ condition
+To: Ken Matsui <ken@kmatsui.me>, git@vger.kernel.org
+Cc: Matheus Tavares <matheus.tavb@gmail.com>, Glen Choo <glencbz@gmail.com>,
+ Elijah Newren <newren@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
+ =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+ Victoria Dye <vdye@github.com>, Patrick Steinhardt <ps@pks.im>,
+ Junio C Hamano <gitster@pobox.com>
+References: <20241020152323.90543-1-ken@kmatsui.me>
+ <20241020160143.92382-2-ken@kmatsui.me>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <20241020160143.92382-2-ken@kmatsui.me>
 Content-Type: text/plain; charset=UTF-8
-X-Commit-Hash: ab7d4c8d89c075de05bf04f1f9dc195145455964
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfFPO4+edw3LBy8T6lrVnVbofi8qHa+IiLQ0HKtLKLsW4v2z32HuA/jQZRI1sP3F1babkktTbirdc7VfIH0jZDnIUK9/0jPr8yKvItLv9hLngtJEHuW+V
+ fM2BzZ+P/eP0f+Sp+kkZITRe3hzO+TPhbZTh7AT/RSPmEdrwqeMuBVnlx3Ngi5DXfgrou+RRUj0EarCP1kC7dym/HYxOxKcq70k=
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-This test has had the wrong title since it was created.[1]  Use `always`
-like the description says and negate the expected outcome.
 
-The test works since `core.logAllRefUpdates` set to `true` does not
-create a reflog for that ref namespace.  So the test is testing the
-config variable, not the option.
+On 20/10/2024 17:01, Ken Matsui wrote:
+> Changes in v2:
+> 
+> * Updated the description based on Kristoffer's review.
+> 
+> -- >8 --
+> 
+> includeIf.hasconfig only accepts remote.*.url, making it difficult to
+> apply configuration based on a specific remote, especially in projects
+> with multiple remotes (e.g., GitHub and non-GitHub hosting).  This often
+> leads to undesired application of multiple config files.
+> 
+> For example, the following configuration:
+> 
+>   [remote "origin"]
+>     url = https://git.kernel.org/pub/scm/git/git.git
+>   [remote "github"]
+>     url = https://github.com/myfork/git.git
+> 
+>   [includeIf "hasconfig:remote.*.url:https://github.com/**"]
+>     path = github.inc
+>   [includeIf "hasconfig:remote.*.url:https://git.kernel.org/**"]
+>     path = git.inc
+> 
+> would apply both github.inc and git.inc, even when only one config is
+> intended for the repository.
+> 
+> Introduce support for specifying a remote name (e.g., origin) to enable
+> more precise configuration management:
+> 
+>   [includeIf "hasconfig:remote.origin.url:https://github.com/**"]
 
-The test itself is fine and does not hide a bug: `--no-create-reflog` is
-not supposed to override `core.logAllRefUpdates`.
+s/remote.origin.url/remote.github.url/ ?
 
-† 1: 341fb286212 (refs: add option core.logAllRefUpdates = always,
-    2017-01-27)
+I haven't actually read the patch, so take with a pinch of salt. :)
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+>     path = github.inc
+>   [includeIf "hasconfig:remote.origin.url:https://git.kernel.org/**"]
+>     path = git.inc
+> 
+> This ensures that only the intended config file is applied based on the
+> specific remote.
+> 
 
-Notes (series):
-    From the commit message:
-    
-      “ The test itself is fine and does not hide a bug:
-        `--no-create-reflog` is not supposed to override
-    
-    A source for that: roundabout through git-branch(1):
-    
-      “ The negated form --no-create-reflog only overrides an earlier
-        --create-reflog, but currently does not negate the setting of
-        core.logAllRefUpdates.
-    
-    I *suppose* that the same applies to update-ref since (I suppose) they
-    use the same underlying machinery.
-    
-    See also git-tag(1) which says the same thing.
-    
-    update-ref should document the same thing, then.  I have that marked as
-    a todo item.  The changes there are a bit too involved to implicate in
-    this submission.
-
- t/t1400-update-ref.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index eb1691860da..9bf87db4775 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -169,14 +169,14 @@ test_expect_success 'core.logAllRefUpdates=always creates reflog for ORIG_HEAD'
- 	git reflog exists ORIG_HEAD
- '
- 
--test_expect_success '--no-create-reflog overrides core.logAllRefUpdates=always' '
--	test_config core.logAllRefUpdates true &&
-+test_expect_success '--no-create-reflog does not override core.logAllRefUpdates=always' '
-+	test_config core.logAllRefUpdates always &&
- 	test_when_finished "git update-ref -d $outside" &&
- 	git update-ref --no-create-reflog $outside $A &&
- 	git rev-parse $A >expect &&
- 	git rev-parse $outside >actual &&
- 	test_cmp expect actual &&
--	test_must_fail git reflog exists $outside
-+	git reflog exists $outside
- '
- 
- test_expect_success "create $m (by HEAD)" '
-
-base-commit: 34b6ce9b30747131b6e781ff718a45328aa887d0
--- 
-2.46.1.641.g54e7913fcb6
+ATB,
+Ramsay Jones
 
