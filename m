@@ -1,109 +1,182 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF1D192D7E
-	for <git@vger.kernel.org>; Sun, 20 Oct 2024 19:34:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1991946B3
+	for <git@vger.kernel.org>; Sun, 20 Oct 2024 20:25:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729452843; cv=none; b=upfT+/Ahmm0ROvvSoMiUytaexRX5CmF0heGIJtaHOO9aU5zcKCK4QqaKmfTu/xIb6vff53FCJukZl/Ihc4K9j36ermNXfX7F1HWxV3r3b1AJuCrOVVb3JKICRMymK2ib36lLjaUMSW+Z5c08QiJh/MF1FSOKx4j0f1oTYpT+9+M=
+	t=1729455943; cv=none; b=EK0XBMTZBvZLMcap5s79sOIF1uuy2CQiWcwgqJsCWqxCQet5JcxI0ofwS0iAJlrlG1rMV/q5PyDyO3pseDFW9GfenjklVuRU0SoOQCUYU9LWoPzvb4hC8krcEZ5IExSEJmHUf13StRlMRqGB3O+dhy03tKlYQR4XhcX6R/YrSQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729452843; c=relaxed/simple;
-	bh=FdxWKYN0ofBMgBdQtyA7ncjdirWkxCoyog1puPf4/UE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=VPlFj0b5QhQh5dSdcmrCAl1vphguCQ4jxnPPWd4NbC/zh0fzXWOkh+oS6ha0meJd4fHvq9J6Nwpz6LdPfbcJlL9N8b1tQwo+8wF8NkRgbTLjSWp26lrpRwDb+9Y7qBo2X4tMOBl9fJzt4jrpkm09OnYksLbUqveabJEwR9o+f+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=aJqTLUsS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WgvON8lg; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729455943; c=relaxed/simple;
+	bh=ptSjux7QZfJGhTmzwwGwOb9tNSLv2CBo8YaNdkxkSfs=;
+	h=From:To:Cc:Subject:Date:Message-id:MIME-version; b=YoDW1JRWM5Rf6JD0+Ci+vomTiHp5WjzGnIGvEKedSBM0W2OQnMfrmAfyZtKtG/hgNHvWbbXe6a4hQCNp8xGemMJhykNvcaYynVNcE5lNwd/uweZlcCgEk/H/5sy5JoaAphcrqeCFv9yK2JZkVTyB20iIjAVGWVgPxbPgDVi94yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=Je0xmK7e; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="aJqTLUsS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WgvON8lg"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8D9E41140170;
-	Sun, 20 Oct 2024 15:34:00 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Sun, 20 Oct 2024 15:34:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729452840;
-	 x=1729539240; bh=maaR560uX6z8ik/9VPNHbdoWXraY9qGaDEPquCsYhfo=; b=
-	aJqTLUsSV09EwbLTRMF7f4MTZvVm6MkdwHAhGHsrwyt0wLXetn3r3L9USmEje2xp
-	nX7ZevdnIADA6JWgU8Xlho2pyxeHVwN2melzivULRHli0JRY16K1TxN+Oot+55vk
-	5IhLc5czwmMlnFw5/UsS7bZpVF0BS8tBhZ5s5p8SisGBYpvrHxNHOHZzr83gUZmt
-	XVl7Mbobqu0VtEERB74+6IcyS47NDB3iN+2yO+vVXwvnQXwAFfOCA3pdAS7eYbON
-	wpXYGGJ3aFU4qnU/0PNpvd8EvF4Vxmz0fAKXuFlymJhQ/m6nnF59manpAeR0I3I3
-	SHY904bQgozmAeyRE/NTvg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729452840; x=
-	1729539240; bh=maaR560uX6z8ik/9VPNHbdoWXraY9qGaDEPquCsYhfo=; b=W
-	gvON8lgdCTSX3pHdkVjqiomKFsLul7R+oaV3xJI1N7MFUshzwK5GHIXIK0Izjm+8
-	QtLejU8SjvcZYdkc0I4t0IxQxAzl/LN+ObZHxUdpHu8Y3LCMOOephGnqm5J0uB1d
-	cCyPTK98TiuxPMPUBthnWDj7k6lYoo/ZExy3IXajTjL6VQsI57IoYf9iFUEgeJn8
-	3FkkwVqpGUOZ3AMDQW6sqwMGfuzESvvhS+A0vAY0Md75Ewpu0V/K+dWSTUaXX9RW
-	hkHkQm09bkC9v8RDWHAb97AJDqM3ewFNAT5GxFLucWh/MFhEYHSmwt7hKL6kTcxI
-	6pFjCMz9W0L974jv/9Esg==
-X-ME-Sender: <xms:KFsVZ53Hygl3p7OggJ--MpKeGNzFXdbn-z8VVE4EzeGjNtUMx3bO7bo>
-    <xme:KFsVZwEoYM1Bz3xNdwsboQz9jwdNsoPj7R6aFVHC29jLaOQOuYP-V72A7YNWpTGkN
-    FlM-cId9E6bbdYN0g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehjedgudefkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
-    fhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghr
-    ucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdeg
-    jeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghk
-    khesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
-    thhmrghilhdrtghomhdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:KFsVZ55GLoy9xodxlEzW_GG8W99YWa4XJsEvbnOwCb1cAvee17PqoQ>
-    <xmx:KFsVZ21xsaXOsEPXXpgd3ptkEomRiDPLK7LSt6nMfGrZziod-GohKw>
-    <xmx:KFsVZ8H9NEvN2CBXmbZzX-4aBhdnOIlwVL5p0n_HVAIN9N05T2i41w>
-    <xmx:KFsVZ38NXm6NzDdHcKqdNFZtcZzM4CDRbtVlbdfIs4Xso7zb8cVnaQ>
-    <xmx:KFsVZxSiH-R-6lPWj-7sMVtB9RVPS7bPxoD5Yzh5KWuwaJgFJUsJYyQr>
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 52E65780068; Sun, 20 Oct 2024 15:34:00 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="Je0xmK7e"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=vShDr6nzSfAwQjeSFoJ9uxzbfHDzHXiW7B6yzkx9yjc=;
+ b=Je0xmK7e4jx6wc1j+11BFH4HbKqu9saMNm96edU7c5HMeegV6GbH9wigHBm/PMmaAA2A44NjHEwy
+   dw6l6zp2UKnGJokvzP11gxNCrFTcamMHpUFiwLQOK5R4EvY0ma700JpHX8JduzsHVFHsyZ4mOmHH
+   3RqObJkilhJKBtcUBaL2QA/HTdRpm/V2pwp7nq5KPLYbnOL1P70FRVPTL7lv99NxSE7dxPa6rac4
+   z/+VHkOEjvoTvrRJDn3e9xn70Vgx+Jilmp5gtze6jfLvX3qbZzoLGi4kjG3F+Slw/Qy4rUMraexw
+   s60qqAtz9E4EMn+3dG5csUwkkmKOq0eR18kOjA==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SLO0076C8QS7W30@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sun, 20 Oct 2024 20:25:40 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [RFC PATCH] object-name: add @{upstreamhead} shorthand
+Date: Sun, 20 Oct 2024 22:24:48 +0200
+Message-id: <20241020202507.2596990-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Sun, 20 Oct 2024 21:33:39 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>
-Message-Id: <0eb35890-6193-43e2-b3ac-7c26b2360a03@app.fastmail.com>
-In-Reply-To: 
- <39bdc5941c7b53c432966984fa79b81fde978e86.1729451376.git.code@khaugsbakk.name>
-References: <cover.1729451376.git.code@khaugsbakk.name>
- <39bdc5941c7b53c432966984fa79b81fde978e86.1729451376.git.code@khaugsbakk.name>
-Subject: Re: [PATCH 1/4] Documentation/git-bundle.txt: mention --all in Synopsis
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAH3D2/l5r9c/iY69S+A4TX5yv9CZU9F8ev3mnv253ZGlKzn4RbnUBnZvZj8tBqi
+ FCQrEDGoTU02yhfoDneholVZ+H6N11jVPz8j+RXd6AuYqelfT1qbmYAR20UtOeuH
+ p+UynsWIT5dMIwjwsnKwT5EkIj2/TqDJ2Tg245ByBoYfdMXG7iRmFJmbwtWZkUo3
+ CwqA9hlI8SbrD5jbPC7O7vpAxV5kQZj2cuaLSJEqskvEE+JUs/Hv+4Ei7ZCU6ZCj
+ sZKQkXl/Z05O84EFnTKesgI9gsIx7RXBDtTwaofO7iyFdGo2a6nj59t2xxwcUXBA
+ AWMW1FAl8bqTlSsZDb+V0Ka2uBQfgeOdKF7IICVvrcnib2QCPNfezDCNNo/hthPV
+ vKz+w/4rxcegZNse5Nhze28utzLDJYatfampIcJqD27TRA4SYGyOqTikWsHoDFzI
+ ESMhcYhCShIaYWMgSxa0ok/CCU/GdExqI2+znLGlsVTGC3blccER1pk=
 
-On Sun, Oct 20, 2024, at 21:14, kristofferhaugsbakk@fastmail.com wrote:
-> prerequisites=E2=80=9D.  It deserves to be mentioned as an alternative=
- to
-> `<git-rev-list-args>`.
+The HEAD of the remote is useful in many situations, but currently one
+would need to know the name of the remote to perform something like
+"git log origin/HEAD..", which makes writing remote agnostic aliases
+complicated. Introduce the new shorthand "@{upstreamhead}" which returns
+<remote>/HEAD for the same <remote> "@{upstream}" would yield.
 
-git-rev-list-args huh.
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+---
 
-git-rev-lists(1) has `--all`.  That must be were it comes from to begin
-with.
+Notes:
+    RFC v1: Testing and documentation is completely missing, I'll add those
+            in a v2 if people think the patch has merit.
 
-That=E2=80=99s why I kept looking for `--all` in all the wrong places.
+ object-name.c | 15 ++++++++++++++-
+ remote.c      | 36 ++++++++++++++++++++++++++++++++++++
+ remote.h      |  8 ++++++++
+ 3 files changed, 58 insertions(+), 1 deletion(-)
 
-This patch should be dropped.
+diff --git a/object-name.c b/object-name.c
+index c892fbe80a..f40a226a57 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -936,6 +936,12 @@ static inline int push_mark(const char *string, int len)
+ 	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
+ }
+ 
++static inline int upstream_head_mark(const char *string, int len)
++{
++	const char *suffix[] = { "@{upstreamhead}", "@{uh}" };
++	return at_mark(string, len, suffix, ARRAY_SIZE(suffix));
++}
++
+ static enum get_oid_result get_oid_1(struct repository *r, const char *name, int len, struct object_id *oid, unsigned lookup_flags);
+ static int interpret_nth_prior_checkout(struct repository *r, const char *name, int namelen, struct strbuf *buf);
+ 
+@@ -985,7 +991,8 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 					continue;
+ 				}
+ 				if (!upstream_mark(str + at, len - at) &&
+-				    !push_mark(str + at, len - at)) {
++				    !push_mark(str + at, len - at) &&
++				    !upstream_head_mark(str + at, len - at)) {
+ 					reflog_len = (len-1) - (at+2);
+ 					len = at;
+ 				}
+@@ -1729,6 +1736,12 @@ int repo_interpret_branch_name(struct repository *r,
+ 					    options);
+ 		if (len > 0)
+ 			return len;
++
++		len = interpret_branch_mark(r, name, namelen, at - name, buf,
++					    upstream_head_mark, branch_get_upstream_head,
++					    options);
++		if (len > 0)
++			return len;
+ 	}
+ 
+ 	return -1;
+diff --git a/remote.c b/remote.c
+index 10104d11e3..302f013a25 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1980,6 +1980,42 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err)
+ 	return branch->merge[0]->dst;
+ }
+ 
++const char *branch_get_upstream_head(struct branch *branch, struct strbuf *err)
++{
++	struct strbuf retval = STRBUF_INIT, refstring = STRBUF_INIT;
++	struct string_list l = STRING_LIST_INIT_DUP;
++
++	if (!branch)
++		return error_buf(err, _("HEAD does not point to a branch"));
++
++	if (!branch->merge || !branch->merge[0]) {
++		/*
++		 * no merge config; is it because the user didn't define any,
++		 * or because it is not a real branch, and get_branch
++		 * auto-vivified it?
++		 */
++		if (!refs_ref_exists(get_main_ref_store(the_repository), branch->refname))
++			return error_buf(err, _("no such branch: '%s'"),
++					 branch->name);
++		return error_buf(err,
++				 _("no upstream configured for branch '%s'"),
++				 branch->name);
++	}
++
++	if (!branch->merge[0]->dst)
++		return error_buf(err,
++				 _("upstream branch '%s' not stored as a remote-tracking branch"),
++				 branch->merge[0]->src);
++
++	string_list_split(&l, branch->merge[0]->dst, '/', -1);
++	strbuf_addf(&refstring, "refs/remotes/%s/HEAD", l.items[2].string);
++
++	if (refs_read_symbolic_ref(get_main_ref_store(the_repository), refstring.buf, &retval))
++			return error_buf(err, _("%s does not exist"), refstring.buf);
++
++	return retval.buf;
++}
++
+ static const char *tracking_for_push_dest(struct remote *remote,
+ 					  const char *refname,
+ 					  struct strbuf *err)
+diff --git a/remote.h b/remote.h
+index a7e5c4e07c..a1d0f44297 100644
+--- a/remote.h
++++ b/remote.h
+@@ -360,6 +360,14 @@ const char *branch_get_upstream(struct branch *branch, struct strbuf *err);
+  */
+ const char *branch_get_push(struct branch *branch, struct strbuf *err);
+ 
++/**
++ * Return the fully-qualified refname of the HEAD branch for the same remote
++ * that "branch@{upstream}" is on.
++ *
++ * The return value and `err` conventions match those of `branch_get_upstream`.
++ */
++const char *branch_get_upstream_head(struct branch *branch, struct strbuf *err);
++
+ /* Flags to match_refs. */
+ enum match_refs_flags {
+ 	MATCH_REFS_NONE		= 0,
+-- 
+2.47.0.94.gc947641c25
 
---=20
-  Kristoffer Haugsbakk
-  kristofferhaugsbakk@fastmail.com
