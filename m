@@ -1,75 +1,74 @@
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EF9746E
-	for <git@vger.kernel.org>; Sun, 20 Oct 2024 11:09:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677E118EFF8
+	for <git@vger.kernel.org>; Sun, 20 Oct 2024 11:13:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729422574; cv=none; b=GJ/F41VIZHtV4af2e3fEUrP3/ax84ll/+KfR6WMv/CC1IyqR7GyXfIqqQzz+hg4CGj+Gad8XLzLn+yjQokf+rmL8ONsA9/snzmxEb1gE2DHUnyRsW3HK/3vZlFfqj0WxgIM75FJIFjGTuFI3PQyOHXvuFVkc6Kf/tFs79lcLGrE=
+	t=1729422804; cv=none; b=JeMfNDbjq4rtTwSYPEydGmAvwXhH4A4dBUqbEVnjdW4X1FOF0Ql4drR/QCZ5mmtVcJ4p8kG4axuPuqzXjMnwUqJ56v3FLUm/Ru+Do1LBx45OUo8zAppxuI2goohr5Id0hQgrW3m5mRbDggbr6rEeqi7wM22Rlazhwc3U6MlxRyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729422574; c=relaxed/simple;
-	bh=JEzhuD+EmLX/UjslsdjqGOB5bK6Ht4NNy/4frJUiLnE=;
+	s=arc-20240116; t=1729422804; c=relaxed/simple;
+	bh=jftmWhUEu+CH7ZqgJxxWcn14i2l4k8YVE2i/Wtk14Sg=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=glVby8lJsYBMazfcaiZ9S6kyZy6+Uf/pv+xHGAUwhHJ9ZbJ3DDxsdOOoiZTUFHD1YoPlgpytp118cvtGF7n1CTCWItMrE9REhY3KjanLkrfpZdZjFoQDe3aiYjUBZ9EETcKluvyEMp45g3r3fm4llTq4IKnpCOxk5SzkoO6QDfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W+c9klm1; arc=none smtp.client-ip=209.85.217.45
+	 To:Cc:Content-Type; b=n2/IQpwuHU1ivsIv6hj3UtSiRsgWnEs471t7pxSU28ieX+nRi5kg5g9cu53c8iqj+pqowLJvmGIq2myvRYjfo9PN83f3CiDeF6Hkz8l3BE3AEqnSPx+AUD4EaoGWZVGEk++rofCsDxRr9cb0lq9DyUbgB3X5qxSgAW38QVomsMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aBDR05Kl; arc=none smtp.client-ip=209.85.217.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W+c9klm1"
-Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-4a47240d31aso845329137.3
-        for <git@vger.kernel.org>; Sun, 20 Oct 2024 04:09:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aBDR05Kl"
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-4a46f36158cso1052924137.2
+        for <git@vger.kernel.org>; Sun, 20 Oct 2024 04:13:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729422571; x=1730027371; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729422801; x=1730027601; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0wMM0t1Pe/vm5FvdnDJHgmi5gVceVoEQMim1KgxpXZI=;
-        b=W+c9klm1NI5pA4Y7+JdJxcpoEHPXun+zIaolZeW/pkz2mcOeaZvSNKcQtF+cvZSc98
-         9M1YKAYL8wbjIhH9jRTJ65cr5yfqKJToGmSMlqf3myK0TdxrxBk2Mzjg1RugL3Ff/LwZ
-         g+xg+6qmel6Nznp6NIMI03GBggMU4M2Ol27pdbKOWwP3kitnFw7bTRyjiLw8JrcUji2h
-         eOipEE4/PG6lX+M/LJdzjDJVWgXEUTiG4qFRUbgUqri8lqWhah349Agh1pfx7N+ELfFu
-         /3arol5juzT+Q4Smsj81ly8Dxy5PbcYHAx3wfius/HzPT6CDbSQEOAMLcu1UOZGB2Qxt
-         O5Uw==
+        bh=XKMPQyeCTSBF/OozzVXjYnAS3nqvA1MTAZ+2FXh8y0A=;
+        b=aBDR05KlaJOy8UMuLj19Xza19ufaqvo1js2pNN7voZgAhdrkp81FbpUcH95V9XjjGl
+         Sjbs4j86RWTRlHsVJdCmDTiP6IBa+yzEuwQqklHDkkfCGlIAunKbbqtVyyk5M5jGBVej
+         U431CJ0dCiK452xSgs2lXLoHALoR2yE+TnwSg9A3ZIJyDdjykL5cqg160lNeZaXpIlmj
+         zUNuDz2AHPGDbvfMSqzq1qhZiTznBgW2Jzb/YkIqIUj5PUO0d3B1bi24CrRadMfsmAi8
+         wsUQHkRv/NY22oZE8U1DxnPJ2fpf8odKGIn4pGVOiWbMHmEFTjMJl0Zto7mS9w91HTgz
+         9jWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729422571; x=1730027371;
+        d=1e100.net; s=20230601; t=1729422801; x=1730027601;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0wMM0t1Pe/vm5FvdnDJHgmi5gVceVoEQMim1KgxpXZI=;
-        b=XwwX6yiThXzWx9ciwf8ams85ETF9R2Voju25DbKYgEPsob0UrQuxqHQUjBoR+Fg6OX
-         mLIUTDAhgkCNa/k/gtP8dmSHbdLPr+tW1oHXECx1mJdggai+ClOVp6BTn56xNVwiNFzq
-         Rm037HZzPztu/o2HvAIeBM9K0maGvPzeMFuFNHAcUxDb4z/YBnKrjBQS2alzonymR7H8
-         k6qEAg6wvvuZwLsfBdmzBguuOZ8VTJt3MWCFJdsVoCWEMVVmb/bPldvYFFv7fFQ8ECOx
-         +45CWOJB2RwHzJg2+05RXL6SzR9lf5Cr6f0fNVdaUvMWTpP0YRjVdQJdP/WzhwmAjj7o
-         8O+g==
-X-Forwarded-Encrypted: i=1; AJvYcCWxsbeOjoMaikGtXXBqX69mVs27c3bhUH9stIqxAg1Fmtziu3SFeaEI4zBd73mZnTQ4seU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywpgy6iF8tLpe5gqBONVXMtx4u+pREOCFjsG1ACPN3xDO0os5U8
-	/XjEn5JRPryL6eU7bJivzH6+tp4UO8SZBfiNP2xrA2OCrx7rVZwcxtm6UNWZ88AIGlqvRKWJzru
-	kEyb9qlT4abfYL6COOg9/RGfz6Xo=
-X-Google-Smtp-Source: AGHT+IEGGO4kJgiH9Ka6S2J0TRBasn3vA/yfiJg1EuaXvQcslEpshw6Kc6L2wMzrXjWhDxAUGcYzcgqRsQ03Ev31rMM=
-X-Received: by 2002:a05:6102:e0d:b0:493:bcbd:4633 with SMTP id
- ada2fe7eead31-4a5d6a8c469mr6915696137.3.1729422570998; Sun, 20 Oct 2024
- 04:09:30 -0700 (PDT)
+        bh=XKMPQyeCTSBF/OozzVXjYnAS3nqvA1MTAZ+2FXh8y0A=;
+        b=byBBtA2fYSwBOIS5YXFtDFBIxViKk2ywX+rZqC6QRI8l4vvHb67TdhX1z1i9xXvSHd
+         ol6Uf8jDZIdvC0NtKGGyX96kYP3hiu/6J8EdOzeriNIaQljqgvqByAuY7T9dCQM0dPhC
+         3atBPfOF8ChOg6GkgR9oETe1NdO2WWdBw8nd6seVovJn0qwkS5i7MkebafH88ADKFc8I
+         fyTy22vwQz/TJcfFwgKMbwyBfH1+iiNwOTjRmE7Bqb8GPkFUhteLkDcEoof0c9kWaQqR
+         b/IipM7ThCuyfp5CIh8ZJznFRPS7XOlV0QTMo0Lv/N2UJs7LUkn3IgdUiULblpYHlrrI
+         Dctg==
+X-Forwarded-Encrypted: i=1; AJvYcCWYu95BedZypR0fpBy30fnB8KpbEPPtEhJfD0FaiRwG3HUXRTOzAV3VJSoaI+dS5gjYpwM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLo7g/Uon5PKhD33Fdyrb4iBlD7GACbhPP2lQHXM2Q+ZpMm7W8
+	fhnPRydLTTGVH3X7kCzQhfc6h/XFmrslzFnjc9g6D/P5/icd6avFJxRLTV2zwWRDa3kibccFy4K
+	DZzBFk4p38ppMP0frQbwonDFV8rA=
+X-Google-Smtp-Source: AGHT+IF0ej6yP4lERnohDF0elD+Dj8Ygp+a3vFMvqhQwErEy3Aix6r/p8ReDn/BeI/zF8RDTn+T0TTMn6bJibMo/SeI=
+X-Received: by 2002:a05:6102:32cc:b0:4a4:9541:e3a6 with SMTP id
+ ada2fe7eead31-4a5d6b8f1bbmr7487113137.21.1729422801245; Sun, 20 Oct 2024
+ 04:13:21 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 20 Oct 2024 11:09:30 +0000
+ HTTPREST; Sun, 20 Oct 2024 06:13:19 -0500
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <91c1cae32098e82033f9b20ead6d1bc8e315da22.1729367469.git.code@khaugsbakk.name>
+In-Reply-To: <71d1e6364a21767a8d80c96a30282e6557fec426.1729367469.git.code@khaugsbakk.name>
 References: <cover.1729017728.git.code@khaugsbakk.name> <cover.1729367469.git.code@khaugsbakk.name>
- <91c1cae32098e82033f9b20ead6d1bc8e315da22.1729367469.git.code@khaugsbakk.name>
+ <71d1e6364a21767a8d80c96a30282e6557fec426.1729367469.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 20 Oct 2024 11:09:30 +0000
-Message-ID: <CAOLa=ZTJqcEOQm8Ns58t6DxEXYn2ws__HDRRAaAhsBkJJFLXmg@mail.gmail.com>
-Subject: =?UTF-8?B?UmU6IFtQQVRDSCB2MiAxLzZdIERvY3VtZW50YXRpb24vZ2l0LXVwZGF0ZS1yZWYudHh0Og==?=
-	=?UTF-8?B?IGRyb3Ag4oCcZmxhZ+KAnQ==?=
+Date: Sun, 20 Oct 2024 06:13:19 -0500
+Message-ID: <CAOLa=ZRAGmgfSHjAx6-1q9qV-aJ_Ciw=RZ6kpygqbSO+yAUEeg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] Documentation/git-update-ref.txt: remove safety paragraphs
 To: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, phillip.wood@dunelm.org.uk, gitster@pobox.com, 
 	bence@ferdinandy.com, me@ttaylorr.com, sunshine@sunshineco.com
-Content-Type: multipart/mixed; boundary="00000000000002f3d30624e692a6"
+Content-Type: multipart/mixed; boundary="000000000000bc35210624e69f27"
 
---00000000000002f3d30624e692a6
+--000000000000bc35210624e69f27
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -77,66 +76,78 @@ kristofferhaugsbakk@fastmail.com writes:
 
 > From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> The other paragraphs on options say =E2=80=9CWith <option>,=E2=80=9D.  Le=
-t=E2=80=99s be uniform.
+> Remove paragraphs which explain that using this command is safer than
+> echoing the branch name into `HEAD`.
+>
+> These paragraphs have been part of the documentation since the
+> documentation was created in 129056370ab (Add missing documentation.,
+> 2005-10-04), back when the command synopsis was a lot simpler:
+>
+>     `git-update-ref` <ref> <newvalue> [<oldvalue>]
+>
+> These paragraphs don=E2=80=99t interrupt the flow of the document on that
+> revision since it is at the end.  Now though it is placed after the
+> description of `--no-deref` and before `-d` and `--stdin`.  Covering all
+> the options is more generally interesting than a safety note about a
+> na=C3=AFve `HEAD` management.
+>
+> Such a safety warning is also much less relevant now, considering that
+> everyone who isn=E2=80=99t intentionally poking at the internal implement=
+ation
+> is using porcelain commands to manage `HEAD`.
 >
 > Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 > ---
->
-> Notes (series):
->     v2:
->     =E2=80=A2 Message: tweak
->     =E2=80=A2 Not done: paragraph wrapping.  I found something else in th=
-is
->       paragraph: missing =E2=80=9Cthat=E2=80=9D: =E2=80=9Cafter verifying=
- *that*=E2=80=9D.  I will fix that
->       in an upcoming series since there were four other missing instances=
- of
->       this word and I did not want to add another patch to this series.
->
->  Documentation/git-update-ref.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  Documentation/git-update-ref.txt | 15 ---------------
+>  1 file changed, 15 deletions(-)
 >
 > diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-=
 ref.txt
-> index afcf33cf608..fe5967234e9 100644
+> index fe5967234e9..ec268b1426d 100644
 > --- a/Documentation/git-update-ref.txt
 > +++ b/Documentation/git-update-ref.txt
-> @@ -55,7 +55,7 @@ for reading but not for writing (so we'll never write t=
-hrough a
->  ref symlink to some other tree, if you have copied a whole
->  archive by creating a symlink tree).
+> @@ -40,21 +40,6 @@ somewhere else with a regular filename).
+>  If --no-deref is given, <ref> itself is overwritten, rather than
+>  the result of following the symbolic pointers.
 >
-> -With `-d` flag, it deletes the named <ref> after verifying it
-> +With `-d`, it deletes the named <ref> after verifying it
->  still contains <old-oid>.
->
+> -In general, using
+> -
+> -	git update-ref HEAD "$head"
+> -
+> -should be a _lot_ safer than doing
+> -
+> -	echo "$head" > "$GIT_DIR/HEAD"
+> -
+> -both from a symlink following standpoint *and* an error checking
+> -standpoint.  The "refs/" rule for symlinks means that symlinks
+> -that point to "outside" the tree are safe: they'll be followed
+> -for reading but not for writing (so we'll never write through a
+> -ref symlink to some other tree, if you have copied a whole
+> -archive by creating a symlink tree).
+> -
 
-So you mean it would read nicer as s/verifying/verifying that/. Which
-makes sense to me, I'd have preferred that this was fixed here and the
-others in a follow up patch like you mentioned, but that's okay!
+In the new reftable backend, HEAD would simply exist as a placeholder.
+So either we do as you did and remove this entirely or double down to
+say that writing to HEAD directly is not supported. I don't have a
+preference here, so this looks good!
 
->  With `--stdin`, update-ref reads instructions from standard input and
-> --
-> 2.46.1.641.g54e7913fcb6
-
---00000000000002f3d30624e692a6
+--000000000000bc35210624e69f27
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 52d1b6281ba8bd83_0.1
+X-Attachment-Id: c586cc11dcea69e8_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jVTVPY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN081Qy85ZEMyeTMxeUxvY0NXNEtaKzRNMkhzMUtkOQpoeUVQaDhxeEJq
-WmY4Q3RQV3hrbzRLa0lXNDVWS0dzSW40alJvdHlGS3hjbllaem1vN2lhVHhjL2oyOEE2bzVTCitL
-NFJaS0ZQWnNuOGcvRit4eE8yOWJMVHJoaHFEMmZjajd3eDJZR2R5M1AySnlBRE9VZDRBWUlFSWNj
-cnZGRlcKemE1TjU5QnhDb29IYzVLMzYvL1lnc0ZZaFJaNDJkRE02Tzc4NWpoWTRDc0dMcWJNWEhD
-VCtJZy9CWitjZkRRYgpvQU80V0hIN0FteFdRK3Y0ZU5GWENMdjZQOXkyK2hmWDkwcGY1NzZuSHUz
-NDU4YnIzOUQ0K3hVekdjUXVsUVl4CmxjZ1BPZTEvUytlb1dDd1Z3RERPV09XMnU1V3JSQkw1dXRC
-ME9YVWNpQTNCK0FnQlFLdGdtQ29FbFNvV2dFMm8KMUMzVzV2Y1dMeEVJVlZzWVNRa1RRTVBLbWJJ
-WDNBaGNrOVk0OWc3akIzQVJBZk1qeldCNzJFd2w2aHBnWk1hcAp3eElEVFJNS3lVZHhWdUtySTZz
-T3RnQ3hEWWJTTlp2cjdUNmhOYUp3L2MwREFxVXp6MGZVQmVwb3hlT1lJNy9BClp6T2JaTG84bkVR
-bDBsODVvb1RydEN0Y0NONWVwODVjYldFYzJmQT0KPU8yekwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jVTVjMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMlNPQy85OW9NQVR2S1NuNmZ3RTloYXpaMmN4WFN4MgpBUDgrNG9Xc055
+QW8wbVplUFZHd0ZTa3FsUUFWSEJGNzNLYmE2ZHlvZWRVMUdaV0s4bmlXUklvNmZHU005ZHdLCnJu
+YWUvejZRaUZ5TmI3azljY2FDS1AxVFAvTWhCZTJzakRzRm1Gc244VXVjejJ1VHJ6blo3d0g1VnlS
+Wko5M3oKclV2bVc0OUx5dVllWnp2alZrSHN4eGpwTXk4RHFrSjVxMnUyV1dBSEtlNU1jY1RnczJO
+R0RaaDJGdGNCTGludApKU0s0aytKeE9ranBwanFteHRhZ0c1eHRBamdDWFB5UWg4cCsxSmQwam5q
+OEJQQ2poWEFPczFNcGp6YlNYVmZaCnFRd3FNSTFETzNpMWQ3S1NnTTRaYzB0MGFiRGJROHNhSHcr
+dUI3NHFtQjg3T0pKTDh4SGRheC9tdy9nS25Ea3gKdE5HYU5ZMk95cUJRNFJMKzFKQmpFN3F1OFF6
+eG9BTnRhbFBESXpiNno0QnhrdWwzemgzbThPVFU4Si9YNWJseApXRjZTTlVuVVMzOXRSSmxVM3Ji
+MmpjVUQ1TmRuUEZEVFBsa2NKL3JHckNEZ2lteStjWTloRFNHcnh4Tk85Ty9BCjdFTTJGcFJOeHNt
+V3BJYlJYWlFiYk5kSjJvanVraUtxeG4xTE53Yz0KPTlIQU0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000002f3d30624e692a6--
+--000000000000bc35210624e69f27--
