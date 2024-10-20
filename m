@@ -1,63 +1,63 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE73193077
-	for <git@vger.kernel.org>; Sun, 20 Oct 2024 13:43:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A75A193419
+	for <git@vger.kernel.org>; Sun, 20 Oct 2024 13:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729431822; cv=none; b=kbj+S4uuQ2TpKQmdnJnVjQkUMGP0FgiIai0VUdZiJcoaSEAVquqU8kfA3uBgW1SGef08gz5l+He9gDYcYU4aWLNuNQdkgqT1V17C0oldPslXidUUvFIQlV/ou5JifWnu/P7bQP7WF1Sjhc4W/u1QifBm6CqvddzANpZWscJ1uU4=
+	t=1729431824; cv=none; b=seq98KiobLqEEsPeOEx7a1XSyEIf+zR0vZBEZg1+wnS0fwB0pX5R24npMC1Rag7l7MwtkIfoNe7EBg9UII3f2U9IZcYIgQY3UR53QFrDb44CAFPLZRlrjkPs4qNTptntUidWCAPCKRZ3cEUNIbLvDQfxyGBHuSsX4SIlTYBxLNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729431822; c=relaxed/simple;
-	bh=iOXhD57a3Gb9t8HGtSThCj2OpN1u1rmdzLlejJH0A4o=;
+	s=arc-20240116; t=1729431824; c=relaxed/simple;
+	bh=8/c/yA7Z4chcFAC86FyGgWEKtP39z4MIdZaXvM2xvd8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=YTygDgG+fcwJj07FveYBjqDNUpgwVu2RMKLWdGMi9/hLXqVG8e21a9K7KX7e2vryCMhGJRMsb9B+4udMXr4vaP82NRBPmAdATn+C+KTdzWqKSu0GnTMaPwmg/sT7HiK6FLf94n4JkqSqcEF0WJ3m8RCV2JU8U+EaQQPDklDOIzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O8srcwnp; arc=none smtp.client-ip=209.85.208.51
+	 MIME-Version:To:Cc; b=oGCcXxgy/stB3EWEvPWXHv/jsEM9jH2x/y7ULQTq/bh/8zCqgSHt591smvsvR/gX4K2vzDJeF5szcEDgzHoxgAu3CyrOvVFzRmtvCr5cvtrz5KcA1hsCDyL/ldHGgEJNSrTwAgjraaGM51CAXIiXjrOsGJs9imti/Pjrcot9BhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K0duO3aU; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O8srcwnp"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5c96936065dso3941978a12.3
-        for <git@vger.kernel.org>; Sun, 20 Oct 2024 06:43:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K0duO3aU"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5c984352742so3907300a12.1
+        for <git@vger.kernel.org>; Sun, 20 Oct 2024 06:43:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729431818; x=1730036618; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729431819; x=1730036619; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=boWyHHZyB9N5omC3+NSUZnQGb10fWVU7aHMWylJuAMk=;
-        b=O8srcwnpkwyA/r4h9BTanujrxOhyX7keHXUfOMrhOcDxNiTI36Yolq4qrwrENFCldW
-         4Xrx8BbnDMwJS2nSioq2fvBPwQwGAZbUT5aEDDmU4GzwEANgqGYKJO4H75HMKY1//mST
-         k0kk9TNuEKsvnNXc7yJVrJnRv5E237+vM5Hiky+80skd+kq0I7RA1r9gtQknZt5j/pHd
-         C7GiZaCBYydaQHg+WqFxoJro+16Yl3o45Rg2MAYsd2sDjjv8PRWBQtpCc/56oKiM8K6i
-         xLjpYWXhh4hwUs4IxloYd4CaY4AAnCD3aNAbGfbiTh9LusTbGmgYDIth4FuDWbb7xr/+
-         wJSA==
+        bh=CiRsSr9N+34ulobRz7mRSLnLQayzsrwlctft/WmYog0=;
+        b=K0duO3aU5PQnaJuD4wIXcD0Y2DnR1koU/iV5Tn70kVR4E13F/sfIVdrEadvSE0ZI1u
+         jm2iZH3yaJ/yV9osljGoFYoDPaw/pAyvYlgIgaJYyUmLtzM8Xe1eq53krLvMiOUth8WO
+         5hQIQlLiigQNh/qWc9+l7T9trrfRNyt8uXnMUzjVV8yxPh6Vijp7NjfVjuwooR8kkRAQ
+         WqblKUdviGT5DQQT8B5iuQER7m189ohSqNUq/feomiUPY642BVRv89l2Y0Jfdf76PsRh
+         YTcFOL+o96uKAlVSPyaWAKIGdJ9fBU2cwKp5nLVolFWUE+q8km6yrjkXjqirffmAaZPQ
+         Tz0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729431818; x=1730036618;
+        d=1e100.net; s=20230601; t=1729431819; x=1730036619;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=boWyHHZyB9N5omC3+NSUZnQGb10fWVU7aHMWylJuAMk=;
-        b=H5KSY2foaVa9zo4Iu/Z63RHZ0Ov6jzxqPKlF6+tFwmhdmDTFqvWqPgU+1wXfioy0uy
-         qCFm+9hAUJdMof3nwLkhZaOFsC0BykSRW08sKVt256LW57+XNyBPYBSmxvBWFJyRYPgQ
-         XZjVbOyjojtDgZOvch4QBTcHIyG5NtxiFWXghqHOu0Ec9q4UpBbFVabXL5jb6i7O/ihl
-         kfidjFlXtS13nLNsF1WWMSk7v9YLzOzmQAZCosHSMGYMn5cJPbjG4FV8mYTHG2KlNS+l
-         jF1F6q1nu+5s2FRSGR2r/KzgZuxjm3Ff5QWGSulobH9SipLz6LL8RzieGMeLvarOk5kK
-         iVEg==
-X-Gm-Message-State: AOJu0YxL+nBsm7vU/ixxlJiyzU4dc9WFZ+NmH0KwwpMWwNZ1vFNow4q8
-	lCpOG0YKWqAd10gVT/lMx5VDVZKixV+ByZy3bumOzL5l85kjfmqs6QbSHQ==
-X-Google-Smtp-Source: AGHT+IFQWX9gVQq+NO86/9nlD40A7lDJqrZCFAnsmzaV8H6IzHEv40uqOXf+h9BdIMYhd/e8pg/BEw==
-X-Received: by 2002:a17:907:9813:b0:a9a:3cec:b322 with SMTP id a640c23a62f3a-a9a69c9c659mr974453166b.45.1729431817334;
-        Sun, 20 Oct 2024 06:43:37 -0700 (PDT)
+        bh=CiRsSr9N+34ulobRz7mRSLnLQayzsrwlctft/WmYog0=;
+        b=JokU6oalk/gM1xxayOJjSRQ3fZiAIFlrgiyaNt+vMFyBUCJ/tRU/6I8NJQGjXlxWi2
+         pVrzbQl5Oq7XDFooDPcMqPSPXoKlX/8Pboj+ICb7POG781BSLcs0bZKNNw1zcJihnpYY
+         uW9HMEB8xk4yj703V9MxZloe/mUq1masgTzC/bd/x4HcZh9zquuJu7ZS0wxQQ5QgCRe0
+         hkcQ7hVhycghq3K89kN6lnMvdV2Ou0kgZFcK+cJMvqHfy/COiTEnu8hD/AaSv1O0/NJ6
+         wA1fZvMf41FvaAcDd8Rut1Rp7YVjRK0ChFtYEf3iKl4wrcDlPMFTYq0z8I0P4UCnuBsv
+         mx6w==
+X-Gm-Message-State: AOJu0YzY4nQMZni/dumLL9P0jI0BVux/p9+/8P8Hp5fFmcfou4SHba6j
+	HhsHxX5HMUqwcOJUf0LgL4kmu7PT4vDNAnSMiiwvnajy5dvHkMhlEavSNg==
+X-Google-Smtp-Source: AGHT+IEaI3ytqAcanX8jeQcydv19aO9rCXTIGzktbuDDSj5R/7eW9Gx7Q2rSNgF7MlDMwWNVR73Ftw==
+X-Received: by 2002:a05:6402:845:b0:5c8:a01c:e511 with SMTP id 4fb4d7f45d1cf-5ca0ac86021mr7627303a12.10.1729431819233;
+        Sun, 20 Oct 2024 06:43:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a915a5629sm91660066b.223.2024.10.20.06.43.36
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cb6696b53bsm897607a12.17.2024.10.20.06.43.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Oct 2024 06:43:36 -0700 (PDT)
-Message-Id: <c321f58c62d3205f00f3272ae5d560c7ccb79000.1729431810.git.gitgitgadget@gmail.com>
+        Sun, 20 Oct 2024 06:43:37 -0700 (PDT)
+Message-Id: <6e89fb219b55316c6c67a6a4b87b6928ff5b6f93.1729431810.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1813.v2.git.1729431810.gitgitgadget@gmail.com>
 References: <pull.1813.git.1728396723.gitgitgadget@gmail.com>
 	<pull.1813.v2.git.1729431810.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 20 Oct 2024 13:43:17 +0000
-Subject: [PATCH v2 04/17] path-walk: allow visiting tags
+Date: Sun, 20 Oct 2024 13:43:18 +0000
+Subject: [PATCH v2 05/17] revision: create mark_trees_uninteresting_dense()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,383 +82,65 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-In anticipation of using the path-walk API to analyze tags or include
-them in a pack-file, add the ability to walk the tags that were included
-in the revision walk.
+The sparse tree walk algorithm was created in d5d2e93577e (revision:
+implement sparse algorithm, 2019-01-16) and involves using the
+mark_trees_uninteresting_sparse() method. This method takes a repository
+and an oidset of tree IDs, some of which have the UNINTERESTING flag and
+some of which do not.
 
-When these tag objects point to blobs or trees, we need to make sure
-those objects are also visited. Treat tagged trees as root trees, but
-put the tagged blobs in their own category.
+Create a method that has an equivalent set of preconditions but uses a
+"dense" walk (recursively visits all reachable trees, as long as they
+have not previously been marked UNINTERESTING). This is an important
+difference from mark_tree_uninteresting(), which short-circuits if the
+given tree has the UNINTERESTING flag.
 
-Be careful about objects that are referred to by multiple references.
+A use of this method will be added in a later change, with a condition
+set whether the sparse or dense approach should be used.
 
-Co-authored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/technical/api-path-walk.txt |  2 +-
- path-walk.c                               | 78 +++++++++++++++++++++
- path-walk.h                               |  2 +
- t/helper/test-path-walk.c                 | 13 +++-
- t/t6601-path-walk.sh                      | 85 +++++++++++++++++++++--
- 5 files changed, 172 insertions(+), 8 deletions(-)
+ revision.c | 15 +++++++++++++++
+ revision.h |  1 +
+ 2 files changed, 16 insertions(+)
 
-diff --git a/Documentation/technical/api-path-walk.txt b/Documentation/technical/api-path-walk.txt
-index b7ae476ea0a..5fea1d1db17 100644
---- a/Documentation/technical/api-path-walk.txt
-+++ b/Documentation/technical/api-path-walk.txt
-@@ -48,7 +48,7 @@ If you want the path-walk API to emit `UNINTERESTING` objects based on the
- commit walk's boundary, be sure to set `revs.boundary` so the boundary
- commits are emitted.
+diff --git a/revision.c b/revision.c
+index 2d7ad2bddff..bdc312f1538 100644
+--- a/revision.c
++++ b/revision.c
+@@ -219,6 +219,21 @@ static void add_children_by_path(struct repository *r,
+ 	free_tree_buffer(tree);
+ }
  
--`commits`, `blobs`, `trees`::
-+`commits`, `blobs`, `trees`, `tags`::
- 	By default, these members are enabled and signal that the path-walk
- 	API should call the `path_fn` on objects of these types. Specialized
- 	applications could disable some options to make it simpler to walk
-diff --git a/path-walk.c b/path-walk.c
-index 22e1aa13f31..55758f50abd 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -13,6 +13,7 @@
- #include "revision.h"
- #include "string-list.h"
- #include "strmap.h"
-+#include "tag.h"
- #include "trace2.h"
- #include "tree.h"
- #include "tree-walk.h"
-@@ -204,13 +205,90 @@ int walk_objects_by_path(struct path_walk_info *info)
- 	CALLOC_ARRAY(commit_list, 1);
- 	commit_list->type = OBJ_COMMIT;
- 
-+	if (info->tags)
-+		info->revs->tag_objects = 1;
++void mark_trees_uninteresting_dense(struct repository *r,
++				    struct oidset *trees)
++{
++	struct object_id *oid;
++	struct oidset_iter iter;
 +
- 	/* Insert a single list for the root tree into the paths. */
- 	CALLOC_ARRAY(root_tree_list, 1);
- 	root_tree_list->type = OBJ_TREE;
- 	strmap_put(&ctx.paths_to_lists, root_path, root_tree_list);
++	oidset_iter_init(trees, &iter);
++	while ((oid = oidset_iter_next(&iter))) {
++		struct tree *tree = lookup_tree(r, oid);
 +
-+	/*
-+	 * Set these values before preparing the walk to catch
-+	 * lightweight tags pointing to non-commits.
-+	 */
-+	info->revs->blob_objects = info->blobs;
-+	info->revs->tree_objects = info->trees;
-+
- 	if (prepare_revision_walk(info->revs))
- 		die(_("failed to setup revision walk"));
- 
-+	info->revs->blob_objects = info->revs->tree_objects = 0;
-+
-+	if (info->tags) {
-+		struct oid_array tagged_blob_list = OID_ARRAY_INIT;
-+		struct oid_array tags = OID_ARRAY_INIT;
-+
-+		trace2_region_enter("path-walk", "tag-walk", info->revs->repo);
-+
-+		/*
-+		 * Walk any pending objects at this point, but they should only
-+		 * be tags.
-+		 */
-+		for (size_t i = 0; i < info->revs->pending.nr; i++) {
-+			struct object_array_entry *pending = info->revs->pending.objects + i;
-+			struct object *obj = pending->item;
-+
-+			if (obj->type == OBJ_COMMIT || obj->flags & SEEN)
-+				continue;
-+
-+			while (obj->type == OBJ_TAG) {
-+				struct tag *tag = lookup_tag(info->revs->repo,
-+							     &obj->oid);
-+				if (!(obj->flags & SEEN)) {
-+					obj->flags |= SEEN;
-+					oid_array_append(&tags, &obj->oid);
-+				}
-+				obj = tag->tagged;
-+			}
-+
-+			if ((obj->flags & SEEN))
-+				continue;
-+			obj->flags |= SEEN;
-+
-+			switch (obj->type) {
-+			case OBJ_TREE:
-+				if (info->trees)
-+					oid_array_append(&root_tree_list->oids, &obj->oid);
-+				break;
-+
-+			case OBJ_BLOB:
-+				if (info->blobs)
-+					oid_array_append(&tagged_blob_list, &obj->oid);
-+				break;
-+
-+			case OBJ_COMMIT:
-+				/* Make sure it is in the object walk */
-+				add_pending_object(info->revs, obj, "");
-+				break;
-+
-+			default:
-+				BUG("should not see any other type here");
-+			}
-+		}
-+
-+		info->path_fn("", &tags, OBJ_TAG, info->path_fn_data);
-+
-+		if (tagged_blob_list.nr && info->blobs)
-+			info->path_fn("/tagged-blobs", &tagged_blob_list, OBJ_BLOB,
-+				      info->path_fn_data);
-+
-+		trace2_data_intmax("path-walk", ctx.repo, "tags", tags.nr);
-+		trace2_region_leave("path-walk", "tag-walk", info->revs->repo);
-+		oid_array_clear(&tags);
-+		oid_array_clear(&tagged_blob_list);
++		if (tree && (tree->object.flags & UNINTERESTING))
++			mark_tree_contents_uninteresting(r, tree);
 +	}
++}
 +
- 	while ((c = get_revision(info->revs))) {
- 		struct object_id *oid;
- 		struct tree *t;
-diff --git a/path-walk.h b/path-walk.h
-index 6ef372d8942..3f3b63180ef 100644
---- a/path-walk.h
-+++ b/path-walk.h
-@@ -37,12 +37,14 @@ struct path_walk_info {
- 	int commits;
- 	int trees;
- 	int blobs;
-+	int tags;
- };
+ void mark_trees_uninteresting_sparse(struct repository *r,
+ 				     struct oidset *trees)
+ {
+diff --git a/revision.h b/revision.h
+index 71e984c452b..8938b2db112 100644
+--- a/revision.h
++++ b/revision.h
+@@ -487,6 +487,7 @@ void put_revision_mark(const struct rev_info *revs,
  
- #define PATH_WALK_INFO_INIT {   \
- 	.blobs = 1,		\
- 	.trees = 1,		\
- 	.commits = 1,		\
-+	.tags = 1,		\
- }
+ void mark_parents_uninteresting(struct rev_info *revs, struct commit *commit);
+ void mark_tree_uninteresting(struct repository *r, struct tree *tree);
++void mark_trees_uninteresting_dense(struct repository *r, struct oidset *trees);
+ void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *trees);
  
- /**
-diff --git a/t/helper/test-path-walk.c b/t/helper/test-path-walk.c
-index 37c5e3e31e8..c6c60d68749 100644
---- a/t/helper/test-path-walk.c
-+++ b/t/helper/test-path-walk.c
-@@ -21,6 +21,7 @@ struct path_walk_test_data {
- 	uintmax_t commit_nr;
- 	uintmax_t tree_nr;
- 	uintmax_t blob_nr;
-+	uintmax_t tag_nr;
- };
- 
- static int emit_block(const char *path, struct oid_array *oids,
-@@ -45,6 +46,11 @@ static int emit_block(const char *path, struct oid_array *oids,
- 		tdata->blob_nr += oids->nr;
- 		break;
- 
-+	case OBJ_TAG:
-+		typestr = "TAG";
-+		tdata->tag_nr += oids->nr;
-+		break;
-+
- 	default:
- 		BUG("we do not understand this type");
- 	}
-@@ -66,6 +72,8 @@ int cmd__path_walk(int argc, const char **argv)
- 			 N_("toggle inclusion of blob objects")),
- 		OPT_BOOL(0, "commits", &info.commits,
- 			 N_("toggle inclusion of commit objects")),
-+		OPT_BOOL(0, "tags", &info.tags,
-+			 N_("toggle inclusion of tag objects")),
- 		OPT_BOOL(0, "trees", &info.trees,
- 			 N_("toggle inclusion of tree objects")),
- 		OPT_END(),
-@@ -92,8 +100,9 @@ int cmd__path_walk(int argc, const char **argv)
- 
- 	printf("commits:%" PRIuMAX "\n"
- 	       "trees:%" PRIuMAX "\n"
--	       "blobs:%" PRIuMAX "\n",
--	       data.commit_nr, data.tree_nr, data.blob_nr);
-+	       "blobs:%" PRIuMAX "\n"
-+	       "tags:%" PRIuMAX "\n",
-+	       data.commit_nr, data.tree_nr, data.blob_nr, data.tag_nr);
- 
- 	return res;
- }
-diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-index e4788664f93..7758e2529ee 100755
---- a/t/t6601-path-walk.sh
-+++ b/t/t6601-path-walk.sh
-@@ -7,24 +7,55 @@ test_description='direct path-walk API tests'
- test_expect_success 'setup test repository' '
- 	git checkout -b base &&
- 
-+	# Make some objects that will only be reachable
-+	# via non-commit tags.
-+	mkdir child &&
-+	echo file >child/file &&
-+	git add child &&
-+	git commit -m "will abandon" &&
-+	git tag -a -m "tree" tree-tag HEAD^{tree} &&
-+	echo file2 >file2 &&
-+	git add file2 &&
-+	git commit --amend -m "will abandon" &&
-+	git tag tree-tag2 HEAD^{tree} &&
-+
-+	echo blob >file &&
-+	blob_oid=$(git hash-object -t blob -w --stdin <file) &&
-+	git tag -a -m "blob" blob-tag "$blob_oid" &&
-+	echo blob2 >file2 &&
-+	blob2_oid=$(git hash-object -t blob -w --stdin <file2) &&
-+	git tag blob-tag2 "$blob2_oid" &&
-+
-+	rm -fr child file file2 &&
-+
- 	mkdir left &&
- 	mkdir right &&
- 	echo a >a &&
- 	echo b >left/b &&
- 	echo c >right/c &&
- 	git add . &&
--	git commit -m "first" &&
-+	git commit --amend -m "first" &&
-+	git tag -m "first" first HEAD &&
- 
- 	echo d >right/d &&
- 	git add right &&
- 	git commit -m "second" &&
-+	git tag -a -m "second (under)" second.1 HEAD &&
-+	git tag -a -m "second (top)" second.2 second.1 &&
- 
-+	# Set up file/dir collision in history.
-+	rm a &&
-+	mkdir a &&
-+	echo a >a/a &&
- 	echo bb >left/b &&
--	git commit -a -m "third" &&
-+	git add a left &&
-+	git commit -m "third" &&
-+	git tag -a -m "third" third &&
- 
- 	git checkout -b topic HEAD~1 &&
- 	echo cc >right/c &&
--	git commit -a -m "topic"
-+	git commit -a -m "topic" &&
-+	git tag -a -m "fourth" fourth
- '
- 
- test_expect_success 'all' '
-@@ -40,19 +71,35 @@ test_expect_success 'all' '
- 	TREE::$(git rev-parse base^{tree})
- 	TREE::$(git rev-parse base~1^{tree})
- 	TREE::$(git rev-parse base~2^{tree})
-+	TREE::$(git rev-parse refs/tags/tree-tag^{})
-+	TREE::$(git rev-parse refs/tags/tree-tag2^{})
-+	TREE:a/:$(git rev-parse base:a)
- 	TREE:left/:$(git rev-parse base:left)
- 	TREE:left/:$(git rev-parse base~2:left)
- 	TREE:right/:$(git rev-parse topic:right)
- 	TREE:right/:$(git rev-parse base~1:right)
- 	TREE:right/:$(git rev-parse base~2:right)
--	trees:9
-+	TREE:child/:$(git rev-parse refs/tags/tree-tag^{}:child)
-+	trees:13
- 	BLOB:a:$(git rev-parse base~2:a)
-+	BLOB:file2:$(git rev-parse refs/tags/tree-tag2^{}:file2)
- 	BLOB:left/b:$(git rev-parse base~2:left/b)
- 	BLOB:left/b:$(git rev-parse base:left/b)
- 	BLOB:right/c:$(git rev-parse base~2:right/c)
- 	BLOB:right/c:$(git rev-parse topic:right/c)
- 	BLOB:right/d:$(git rev-parse base~1:right/d)
--	blobs:6
-+	BLOB:/tagged-blobs:$(git rev-parse refs/tags/blob-tag^{})
-+	BLOB:/tagged-blobs:$(git rev-parse refs/tags/blob-tag2^{})
-+	BLOB:child/file:$(git rev-parse refs/tags/tree-tag^{}:child/file)
-+	blobs:10
-+	TAG::$(git rev-parse refs/tags/first)
-+	TAG::$(git rev-parse refs/tags/second.1)
-+	TAG::$(git rev-parse refs/tags/second.2)
-+	TAG::$(git rev-parse refs/tags/third)
-+	TAG::$(git rev-parse refs/tags/fourth)
-+	TAG::$(git rev-parse refs/tags/tree-tag)
-+	TAG::$(git rev-parse refs/tags/blob-tag)
-+	tags:7
- 	EOF
- 
- 	sort expect >expect.sorted &&
-@@ -83,6 +130,7 @@ test_expect_success 'topic only' '
- 	BLOB:right/c:$(git rev-parse topic:right/c)
- 	BLOB:right/d:$(git rev-parse base~1:right/d)
- 	blobs:5
-+	tags:0
- 	EOF
- 
- 	sort expect >expect.sorted &&
-@@ -106,6 +154,7 @@ test_expect_success 'topic, not base' '
- 	BLOB:right/c:$(git rev-parse topic:right/c)
- 	BLOB:right/d:$(git rev-parse topic:right/d)
- 	blobs:4
-+	tags:0
- 	EOF
- 
- 	sort expect >expect.sorted &&
-@@ -126,6 +175,7 @@ test_expect_success 'topic, not base, only blobs' '
- 	BLOB:right/c:$(git rev-parse topic:right/c)
- 	BLOB:right/d:$(git rev-parse topic:right/d)
- 	blobs:4
-+	tags:0
- 	EOF
- 
- 	sort expect >expect.sorted &&
-@@ -145,6 +195,7 @@ test_expect_success 'topic, not base, only commits' '
- 	commits:1
- 	trees:0
- 	blobs:0
-+	tags:0
- 	EOF
- 
- 	sort expect >expect.sorted &&
-@@ -164,6 +215,7 @@ test_expect_success 'topic, not base, only trees' '
- 	TREE:right/:$(git rev-parse topic:right)
- 	trees:3
- 	blobs:0
-+	tags:0
- 	EOF
- 
- 	sort expect >expect.sorted &&
-@@ -191,6 +243,7 @@ test_expect_success 'topic, not base, boundary' '
- 	BLOB:right/c:$(git rev-parse topic:right/c)
- 	BLOB:right/d:$(git rev-parse base~1:right/d)
- 	blobs:5
-+	tags:0
- 	EOF
- 
- 	sort expect >expect.sorted &&
-@@ -199,4 +252,26 @@ test_expect_success 'topic, not base, boundary' '
- 	test_cmp expect.sorted out.sorted
- '
- 
-+test_expect_success 'trees are reported exactly once' '
-+	test_when_finished "rm -rf unique-trees" &&
-+	test_create_repo unique-trees &&
-+	(
-+		cd unique-trees &&
-+		mkdir initial &&
-+		test_commit initial/file &&
-+
-+		git switch -c move-to-top &&
-+		git mv initial/file.t ./ &&
-+		test_tick &&
-+		git commit -m moved &&
-+
-+		git update-ref refs/heads/other HEAD
-+	) &&
-+
-+	test-tool -C unique-trees path-walk -- --all >out &&
-+	tree=$(git -C unique-trees rev-parse HEAD:) &&
-+	grep "$tree" out >out-filtered &&
-+	test_line_count = 1 out-filtered
-+'
-+
- test_done
+ void show_object_with_name(FILE *, struct object *, const char *);
 -- 
 gitgitgadget
 
