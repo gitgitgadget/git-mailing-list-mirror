@@ -1,74 +1,73 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677E118EFF8
-	for <git@vger.kernel.org>; Sun, 20 Oct 2024 11:13:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149DA12E1E9
+	for <git@vger.kernel.org>; Sun, 20 Oct 2024 11:16:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729422804; cv=none; b=JeMfNDbjq4rtTwSYPEydGmAvwXhH4A4dBUqbEVnjdW4X1FOF0Ql4drR/QCZ5mmtVcJ4p8kG4axuPuqzXjMnwUqJ56v3FLUm/Ru+Do1LBx45OUo8zAppxuI2goohr5Id0hQgrW3m5mRbDggbr6rEeqi7wM22Rlazhwc3U6MlxRyA=
+	t=1729423010; cv=none; b=VboEo5bowAj6hFTj7PX+VvVnvXeEV9RbV3rCBqj3R5CVfn4UdkxU51mFzp37T+wKtF55ippoHpJXldTM4lJecxNNaot+N/BLYwgOAvO+dO9j8lIqNurdz5G+ZNvy27XUc0LdoAw/tvtatSFgFwIBMxSo1jAS9aX6i2P6x3VpIbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729422804; c=relaxed/simple;
-	bh=jftmWhUEu+CH7ZqgJxxWcn14i2l4k8YVE2i/Wtk14Sg=;
+	s=arc-20240116; t=1729423010; c=relaxed/simple;
+	bh=3NeHrpQ20FCOvWoAN+iVBbWYQCagx6CyaXwiUkfDw5k=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n2/IQpwuHU1ivsIv6hj3UtSiRsgWnEs471t7pxSU28ieX+nRi5kg5g9cu53c8iqj+pqowLJvmGIq2myvRYjfo9PN83f3CiDeF6Hkz8l3BE3AEqnSPx+AUD4EaoGWZVGEk++rofCsDxRr9cb0lq9DyUbgB3X5qxSgAW38QVomsMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aBDR05Kl; arc=none smtp.client-ip=209.85.217.44
+	 To:Cc:Content-Type; b=ejwM1M1vHq1dvZayMYaQEZ5ivU9ORBB6erpWplWLhYE+wVV0/7/Z6GBLw6T8sKODTbneq25HY+lfgRhEOGEAQqKWXlmTkC51cBM1AiLIWu1hS/Fz190CRhyekNmu/LndYkl+rNSRwpFmTBrZ53HHtyJCBmSZ+BEQLQjTUx5MmSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RjhNftyM; arc=none smtp.client-ip=209.85.222.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aBDR05Kl"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-4a46f36158cso1052924137.2
-        for <git@vger.kernel.org>; Sun, 20 Oct 2024 04:13:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RjhNftyM"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-84fe454176bso1114460241.1
+        for <git@vger.kernel.org>; Sun, 20 Oct 2024 04:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729422801; x=1730027601; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729423008; x=1730027808; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XKMPQyeCTSBF/OozzVXjYnAS3nqvA1MTAZ+2FXh8y0A=;
-        b=aBDR05KlaJOy8UMuLj19Xza19ufaqvo1js2pNN7voZgAhdrkp81FbpUcH95V9XjjGl
-         Sjbs4j86RWTRlHsVJdCmDTiP6IBa+yzEuwQqklHDkkfCGlIAunKbbqtVyyk5M5jGBVej
-         U431CJ0dCiK452xSgs2lXLoHALoR2yE+TnwSg9A3ZIJyDdjykL5cqg160lNeZaXpIlmj
-         zUNuDz2AHPGDbvfMSqzq1qhZiTznBgW2Jzb/YkIqIUj5PUO0d3B1bi24CrRadMfsmAi8
-         wsUQHkRv/NY22oZE8U1DxnPJ2fpf8odKGIn4pGVOiWbMHmEFTjMJl0Zto7mS9w91HTgz
-         9jWw==
+        bh=pUHJXapId9ek9UGZH1yDgaQHWbFbnAJMZ4qTRVfViWk=;
+        b=RjhNftyMtxNmXkFtTqGIZrenqiaW/+4VzhfyIL/VgYbL/2U/rIX5Hz095wyPJsk7SN
+         fc0PLXGSYFaVbSkWXX49cSQkSbyBsRis6Uhd6VpiECWqiXfto1Cjzt598/ZMwxfu4O2Z
+         9F1xg/T5OlaCyUS1IeT/HKQ4XKqBbx2K/bOzNYbJ/9uVFTY+JWbjaOhbnnLwTttSoYxF
+         YV2fE6yqQipZKI9LNjiPdXR36BPpH7PX6OXuqtxMU/hYHcHb00DZM7+cYZh8vMO7vxFg
+         kCxrGkPjej/8OSSiFNI51Ed3U0u5doofuIt7KTauoAZFbSUsQoa4tiU7kUhwEO78+oON
+         1IOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729422801; x=1730027601;
+        d=1e100.net; s=20230601; t=1729423008; x=1730027808;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XKMPQyeCTSBF/OozzVXjYnAS3nqvA1MTAZ+2FXh8y0A=;
-        b=byBBtA2fYSwBOIS5YXFtDFBIxViKk2ywX+rZqC6QRI8l4vvHb67TdhX1z1i9xXvSHd
-         ol6Uf8jDZIdvC0NtKGGyX96kYP3hiu/6J8EdOzeriNIaQljqgvqByAuY7T9dCQM0dPhC
-         3atBPfOF8ChOg6GkgR9oETe1NdO2WWdBw8nd6seVovJn0qwkS5i7MkebafH88ADKFc8I
-         fyTy22vwQz/TJcfFwgKMbwyBfH1+iiNwOTjRmE7Bqb8GPkFUhteLkDcEoof0c9kWaQqR
-         b/IipM7ThCuyfp5CIh8ZJznFRPS7XOlV0QTMo0Lv/N2UJs7LUkn3IgdUiULblpYHlrrI
-         Dctg==
-X-Forwarded-Encrypted: i=1; AJvYcCWYu95BedZypR0fpBy30fnB8KpbEPPtEhJfD0FaiRwG3HUXRTOzAV3VJSoaI+dS5gjYpwM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLo7g/Uon5PKhD33Fdyrb4iBlD7GACbhPP2lQHXM2Q+ZpMm7W8
-	fhnPRydLTTGVH3X7kCzQhfc6h/XFmrslzFnjc9g6D/P5/icd6avFJxRLTV2zwWRDa3kibccFy4K
-	DZzBFk4p38ppMP0frQbwonDFV8rA=
-X-Google-Smtp-Source: AGHT+IF0ej6yP4lERnohDF0elD+Dj8Ygp+a3vFMvqhQwErEy3Aix6r/p8ReDn/BeI/zF8RDTn+T0TTMn6bJibMo/SeI=
-X-Received: by 2002:a05:6102:32cc:b0:4a4:9541:e3a6 with SMTP id
- ada2fe7eead31-4a5d6b8f1bbmr7487113137.21.1729422801245; Sun, 20 Oct 2024
- 04:13:21 -0700 (PDT)
+        bh=pUHJXapId9ek9UGZH1yDgaQHWbFbnAJMZ4qTRVfViWk=;
+        b=apDd7tpkGgQ11HgM8pwyy9kvVag0uYJR1s7BLQ8+Wmus5GNTk1H7PqUg4rN0zgK+Su
+         nX9ej0knG8+8J+WiwztqRAFYt4oolPdHkyzfUWFng542EJu+ZJ7DvIHuSjfrylL3a+zs
+         DRQYhYfSJrP29XPKgPWSp6pHD44O1TqHKS7trAa5KGTb1qTMNgnG0sEd3aWaT94imK67
+         /UsntU4JVVkbjn/KjHQqKtEtPtjNHpjnO2BcgdiQkZgeTAYnGrUEorin7mA+9iI9LB26
+         sdV2IKR3lx+9jzi+dwS7tgHN7z74/N1lvZH4bC50JAHpKgzebMsV7SRSBm1CzmujrzgQ
+         HcFg==
+X-Forwarded-Encrypted: i=1; AJvYcCUSYD2f/VTyWspzxAUtGf7cJh+eI8UFo1M2w5xTc5TFURYXN8vJDiQU95k5tPWIgMs7OyA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yww+AsfY457ZGslqoSHde6U3fl63gVkCnlz0feIz0+f6+D8xkiF
+	4gFhgmrXlHNdMBSDSOhBM0gcjgvojgWtJ56GfjwhtCZbwVw87vEbE7ST7PVXcxbvfudffCCtYkm
+	N6H+Kn573G3vU6YvlRQWq28cMlCk=
+X-Google-Smtp-Source: AGHT+IH+BMn7kmG42T9WpKKSrZap5ND/KNteOPy5NdPJ1BVEhM3N4LcAoVvaziojXPDB82Df5tq9msQIq+fFyfHuh2A=
+X-Received: by 2002:a05:6122:d89:b0:50d:5be4:c39d with SMTP id
+ 71dfb90a1353d-50dd98f3ca0mr6722409e0c.0.1729423007893; Sun, 20 Oct 2024
+ 04:16:47 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 20 Oct 2024 06:13:19 -0500
+ HTTPREST; Sun, 20 Oct 2024 06:16:47 -0500
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <71d1e6364a21767a8d80c96a30282e6557fec426.1729367469.git.code@khaugsbakk.name>
+In-Reply-To: <cover.1729367469.git.code@khaugsbakk.name>
 References: <cover.1729017728.git.code@khaugsbakk.name> <cover.1729367469.git.code@khaugsbakk.name>
- <71d1e6364a21767a8d80c96a30282e6557fec426.1729367469.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 20 Oct 2024 06:13:19 -0500
-Message-ID: <CAOLa=ZRAGmgfSHjAx6-1q9qV-aJ_Ciw=RZ6kpygqbSO+yAUEeg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] Documentation/git-update-ref.txt: remove safety paragraphs
+Date: Sun, 20 Oct 2024 06:16:47 -0500
+Message-ID: <CAOLa=ZRAG82ZLZMWcHgF-==yhRENv1Kkg_LbrpWDbN1tL9S+yg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] doc: update-ref: amend old material and discuss symrefs
 To: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, phillip.wood@dunelm.org.uk, gitster@pobox.com, 
 	bence@ferdinandy.com, me@ttaylorr.com, sunshine@sunshineco.com
-Content-Type: multipart/mixed; boundary="000000000000bc35210624e69f27"
+Content-Type: multipart/mixed; boundary="0000000000000d82e30624e6accd"
 
---000000000000bc35210624e69f27
+--0000000000000d82e30624e6accd
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -76,78 +75,47 @@ kristofferhaugsbakk@fastmail.com writes:
 
 > From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> Remove paragraphs which explain that using this command is safer than
-> echoing the branch name into `HEAD`.
+> This series removes or moves some old material in the update-ref doc and
+> improves the discussion of symrefs, opting for a high-level description
+> with some redundancy (see patch 5/6) in order to avoid a reported
+> mistake/confusion.
 >
-> These paragraphs have been part of the documentation since the
-> documentation was created in 129056370ab (Add missing documentation.,
-> 2005-10-04), back when the command synopsis was a lot simpler:
+> The end goal (after all patches are applied):
 >
->     `git-update-ref` <ref> <newvalue> [<oldvalue>]
+> =E2=80=A2 First paragraph (in Description) describes the first form
+> =E2=80=A2 Second paragraph the second form
+> =E2=80=A2 Third paragraph mentions symrefs and explains why `--stdin` sup=
+ports
+>   them
+> =E2=80=A2 A new section whither the symlink (FS) vs. symrefs discussion i=
+s moved
+> =E2=80=A2 Link update-ref to symbolic-ref and vice versa
 >
-> These paragraphs don=E2=80=99t interrupt the flow of the document on that
-> revision since it is at the end.  Now though it is placed after the
-> description of `--no-deref` and before `-d` and `--stdin`.  Covering all
-> the options is more generally interesting than a safety note about a
-> na=C3=AFve `HEAD` management.
->
-> Such a safety warning is also much less relevant now, considering that
-> everyone who isn=E2=80=99t intentionally poking at the internal implement=
-ation
-> is using porcelain commands to manage `HEAD`.
->
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->  Documentation/git-update-ref.txt | 15 ---------------
->  1 file changed, 15 deletions(-)
->
-> diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-=
-ref.txt
-> index fe5967234e9..ec268b1426d 100644
-> --- a/Documentation/git-update-ref.txt
-> +++ b/Documentation/git-update-ref.txt
-> @@ -40,21 +40,6 @@ somewhere else with a regular filename).
->  If --no-deref is given, <ref> itself is overwritten, rather than
->  the result of following the symbolic pointers.
->
-> -In general, using
-> -
-> -	git update-ref HEAD "$head"
-> -
-> -should be a _lot_ safer than doing
-> -
-> -	echo "$head" > "$GIT_DIR/HEAD"
-> -
-> -both from a symlink following standpoint *and* an error checking
-> -standpoint.  The "refs/" rule for symlinks means that symlinks
-> -that point to "outside" the tree are safe: they'll be followed
-> -for reading but not for writing (so we'll never write through a
-> -ref symlink to some other tree, if you have copied a whole
-> -archive by creating a symlink tree).
-> -
 
-In the new reftable backend, HEAD would simply exist as a placeholder.
-So either we do as you did and remove this entirely or double down to
-say that writing to HEAD directly is not supported. I don't have a
-preference here, so this looks good!
+Thanks for working on this, I have gone through the patches, I think it
+is in a great state.
 
---000000000000bc35210624e69f27
+Karthik
+
+[snip]
+
+--0000000000000d82e30624e6accd
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: c586cc11dcea69e8_0.1
+X-Attachment-Id: 828f64c2740a8b42_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jVTVjMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMlNPQy85OW9NQVR2S1NuNmZ3RTloYXpaMmN4WFN4MgpBUDgrNG9Xc055
-QW8wbVplUFZHd0ZTa3FsUUFWSEJGNzNLYmE2ZHlvZWRVMUdaV0s4bmlXUklvNmZHU005ZHdLCnJu
-YWUvejZRaUZ5TmI3azljY2FDS1AxVFAvTWhCZTJzakRzRm1Gc244VXVjejJ1VHJ6blo3d0g1VnlS
-Wko5M3oKclV2bVc0OUx5dVllWnp2alZrSHN4eGpwTXk4RHFrSjVxMnUyV1dBSEtlNU1jY1RnczJO
-R0RaaDJGdGNCTGludApKU0s0aytKeE9ranBwanFteHRhZ0c1eHRBamdDWFB5UWg4cCsxSmQwam5q
-OEJQQ2poWEFPczFNcGp6YlNYVmZaCnFRd3FNSTFETzNpMWQ3S1NnTTRaYzB0MGFiRGJROHNhSHcr
-dUI3NHFtQjg3T0pKTDh4SGRheC9tdy9nS25Ea3gKdE5HYU5ZMk95cUJRNFJMKzFKQmpFN3F1OFF6
-eG9BTnRhbFBESXpiNno0QnhrdWwzemgzbThPVFU4Si9YNWJseApXRjZTTlVuVVMzOXRSSmxVM3Ji
-MmpjVUQ1TmRuUEZEVFBsa2NKL3JHckNEZ2lteStjWTloRFNHcnh4Tk85Ty9BCjdFTTJGcFJOeHNt
-V3BJYlJYWlFiYk5kSjJvanVraUtxeG4xTE53Yz0KPTlIQU0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jVTVwMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNStEREFDQUU4Z21wa1ZsSzJBZUM2V2hQOEtHSzlRVgo1aUZjUWNyNFRE
+RVNPYjJ6ZHlZaWdPWndNMXhVRDNrRGxBRW1uMzBJQWFmcnl0Q0VCNkpqSDBMV3Z6clMvdGsvCmJk
+WjVyRXBqUmQxbDRkSWZjbWkwditkOGZoM2xLelhLbWdZNEl4RlJTMWMxL1BRUGFmKzZXVktUbG5X
+R1V3OWQKN0kzeFZPdEcyTHR1azJoQjdrUEpUUFVDM3hmQXEybktoRTNkdlNTRzh5TDhSRDAycTFQ
+SjYxckYvWGUycHNlUQpqcTMvSzZmM2ttVnE2Um95UkZaSGloL2ZSQTZmdGxUTDBPclZkbndWNk91
+QnVBQk55THpQdUpFK3crSnpSM2Q5CkRHN3kxbjhxZDFWYm1WSVc5OUsvcXRlMHRMYU0yUzRycmZw
+bnZXYlN2ZU8vYTlyNmdLSk4vaTZWQU52K1djVVoKQ2N5RkVSQzVRNi9Gd0h5QmdKbmExUjhHNWJ5
+cG1MNVdzczBVTk1lSjVYUEluSklRSGE4eU1TejBWM3orcXppQQovMlNmQ0UzK3Z6b1RVYUNJY3Iv
+bVJ1STM2VWxrck5GcTdOR1Y1bGQweER4QnZ5WiszU2lES3BvWTlEYnBLb0pCCmErZlNXSUtxcW1N
+dTRVUDE2YjhWczNEMTU2Y0VNT3NqWkQyYUcxRT0KPUhyeE4KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000bc35210624e69f27--
+--0000000000000d82e30624e6accd--
