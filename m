@@ -1,164 +1,343 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246C21991B4
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 18:01:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FF81991AE
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 18:12:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729533670; cv=none; b=Ctk0FzTmlp5k0BaddItNfQk1K21XLkyzdepIe73VYpJaPJsuD1p+UL5mEsVzIP5gM3zAiNiTW0nRggoCX6xNJQ8JDKu3lc/aGi5hCUQgJuAbxrJg1gVlHnmCCEPJ5xyzTwPdL7weddq4mhRL6VrZA9kV1vLm8pE7D1LMfAIunHE=
+	t=1729534347; cv=none; b=Df6k6hW2rYnWP0U7jEvsR5jxBDPg0DmTBsTz4fUomrJfgY/JCYj2fpD0Ku1s91iExYNgfQJC2zd7TSjhP9EBYscYWoCJRr5LtqHyMgmqpHtz+Zffebj9gdZLcxRi8BSwnpxP1xK839tEiXa53gH5Wuwksal0briTSuIfjoWaqu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729533670; c=relaxed/simple;
-	bh=xYaVjb7Mhnea40CEHD57bNgOs028Lt8WF4mf9LQU8oQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RqVy7QaO20hMeLK/7RnuNJYth0yVfb1rGFJLEr2u0s020Xs/sGZwJkpBCUrkJ9bGCQA21NsWRsxIHCfRCcEpn5GXAqnTcGEYOBDOrsvi3YVF1LSRIoNUahvRToRoBF/V8RWWvmUuOAT/rxvAQaUao/m4ZMDi/wsIBzCB0KexUrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EC74fmMl; arc=none smtp.client-ip=209.85.221.170
+	s=arc-20240116; t=1729534347; c=relaxed/simple;
+	bh=Aa5r24NhLOfk6byL2gFageDFdAnDk2UWkV1AuJPAqss=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=nErtBIWmuhqyrHfV/yvsmN0z6SAq93SqOAP8Wr0crr7DTz1WPVGq1IViZtftd2o+BuIFQPopKGcUyXUgWHAv2FUjLGbA7o1WDnszGDBOk6gQRl1hbiO03TSf9mpC1f5aFzWWykCLnSWkYNeMslm771vXx2d/a33dAN/VNps+CnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O1izkV6N; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EC74fmMl"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-50d35639bfaso1560034e0c.2
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 11:01:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O1izkV6N"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5c9c28c1e63so5565186a12.0
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 11:12:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729533667; x=1730138467; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1729534343; x=1730139143; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8Wm+jqGZWXsXmXxPXBBhL4fZ+t5XHkaiG8TSAnqjMpk=;
-        b=EC74fmMl1vtUQFiLMiewytgiaEc8LorHNviBQxUrN8IhWSegQH8jQIH/dUE/Q7msW6
-         UlosyizCO84bDnkrffNjoscNF00tOXYXivXXAyNzIgH4TyzexxZpd9w6esEmtxAr+cHd
-         vANzN/pCoL07p6X7TdbKQk3bz+Y4YEmWd9Ud0RUR7qkrjmlvRbPBsl2eiEMRNnmg+uAx
-         KeOa8jjK9ZwKa3TQFMWPouLtdnvU1GddAT4kEtG5rx2KQYPiBv5U5W9ELDnmgiU0xKYN
-         yWCAh7F8DHv2fVogjbeQcXijyGuj7cR8XpbNjiJWC5yriBeltPk5cI8fOmbIhtULPKc7
-         ITtw==
+        bh=jZtMwm4Ks+uHzHLUwx34mECtThrSrm+bC8BqnojGXmY=;
+        b=O1izkV6Ni3oZ2Hq58vF0c0JkAKgvj1oQcF8F7aYkmjMdbnMvl2DnNdCssudspNbTke
+         9mQwEFP/kqN5zc3SYGi8ORzeHGZGgTWz0lueV63SgQ+b4AroinkYfbjDMdMIYNedpHAw
+         0r+vN9SrjkOhHwvMyBD6nGuLLTowtlOXGY+UPo0cptGxJDfgA+Z/O6VJs5rJs9zwdIPg
+         ApTkiguIVdcTPRG/pi/q+EgGEudgGw6D0eOpHuYBd4HFasf8SBNHB3VtJF7QV+jgms4G
+         0qj6JKxos1AfFKo5lvFapWEzgav+UO/ORza17bMb7zjfITTN9ZPVZneI3o2edw2/q2fY
+         6xCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729533667; x=1730138467;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1729534343; x=1730139143;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8Wm+jqGZWXsXmXxPXBBhL4fZ+t5XHkaiG8TSAnqjMpk=;
-        b=f2RYeGr5m6ZbCTdbcJ1t+/+ahKUWcwtIYojiD6tOjok11GAJ/eWge5JzRwj4+VkYk5
-         OfuqVAv5ZjS9qa6BNd5QbRoxIYuvSdIvzLp3GzaQ98imwz30gv/K4b+yrvnsdE2LDeau
-         DrxGmqF3H79wGnhiBPsutZAAHAOSySGmidJE5RH+qZiXVdi1wRsrgSUIkkZ9byHO7+Ik
-         3VXZJT1ec6yQw5gLF1gLh9WnwE2USaAOXGBJAJgZ8h02ezP2UhGqdrJ2eJWvpvFRW5Yl
-         WVbruNQMK9w5SqJfAIK4G0CNVp0nR3d1E3hvSv5pRXa10oTFVIeFYR9jnqEZooCiA19O
-         Cz2A==
-X-Forwarded-Encrypted: i=1; AJvYcCX79gw/ndVHuqZl/gbsu3cuUvrAESTCsFP88FWFdyDm4Ybn2xiVY7MRHmfaMLz/KUqmILk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRDErpXd7cfPJi9O451zp289OF5Re2fAdROTTW2LF7m96PBg2Z
-	jgbit714Kpsp9kS6Nr62EA0pu6yk1zSR5usoq59y0J8ZbnmZWh6ctKdPK3klfrfXmLBEh2kiodj
-	/EuYvdiWaQMLTgszQljebauuCRyo=
-X-Google-Smtp-Source: AGHT+IHwRZnbUZPnpzAFZqjkzOvAsUSf/11FB48orHW2utxW7HPLuuB4/MvCsPaP2N9M6roujurwf4J/FPa83C3Uev0=
-X-Received: by 2002:a05:6122:169e:b0:50d:8d89:9f4 with SMTP id
- 71dfb90a1353d-50fb2707490mr791529e0c.3.1729533666425; Mon, 21 Oct 2024
- 11:01:06 -0700 (PDT)
+        bh=jZtMwm4Ks+uHzHLUwx34mECtThrSrm+bC8BqnojGXmY=;
+        b=IxSvZ8uJYzb+tO5LdFdg+lNksFyLjHa+bo2YhuJsTrxfWNGldDswov61xJN3LlKlvh
+         ZxMipMVtqo3Yvh5aYhLqdNmfFlLPI8W0axUGHiCbMS1Or6zWn0ZAhelRBM/7lHo9r4Rh
+         rWfi4MZqTGF2miP+Uv4WUmn1M4Hpd+jDYyPLt30CmHcHtC1nGxG/WJjj4Wn3NvD+TASR
+         IIuY9w0rsqmkeN/Ou/m5wk/dzak688LOJqLMXgXjYhlsbmYxmaX643PUGBLA8ohcGZYq
+         aJLJIeFeQtGgg57mAd0bbq9Ui89GHMQRKNid6AuyoUXedjfQfyIxqaouJpqEV68XaWjS
+         tr9Q==
+X-Gm-Message-State: AOJu0YwZOIb7bUiK31vvc4K6Xk3gNYqG8TSfjAVba32+auUfUhV8d7Bl
+	zIGdO8/BNpIECerhKgVX7kMRNngcTMtGj0tOSrpCBCwGu6qd94AmGTFDSw==
+X-Google-Smtp-Source: AGHT+IHz8rwOgIKZpeOwgjfRvkalA46Lg4WE1ic6xQMlpoRQi6prne2FUW1Wrje/D8IRZmCOxpr7Tw==
+X-Received: by 2002:a17:906:7956:b0:a9a:61d:7084 with SMTP id a640c23a62f3a-a9a69c996famr1205277166b.50.1729534342317;
+        Mon, 21 Oct 2024 11:12:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a912f62cbsm238008666b.76.2024.10.21.11.12.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2024 11:12:22 -0700 (PDT)
+Message-Id: <pull.1817.v4.git.1729534340786.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1817.v3.git.1729521495497.gitgitgadget@gmail.com>
+References: <pull.1817.v3.git.1729521495497.gitgitgadget@gmail.com>
+From: "Samuel Adekunle Abraham via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 21 Oct 2024 18:12:20 +0000
+Subject: [PATCH v4] notes: teach the -e option to edit messages in editor
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
- <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com> <5d58c150efbed1a10e90dba10e18f8641d11a70f.1729259580.git.gitgitgadget@gmail.com>
- <ZxZHH-oHE7g09xIR@pks.im> <CAPSxiM_BCz2n-uOOSRk3AsVp-Y7R+1XNfVRt6dH6=fWVBZ6cBw@mail.gmail.com>
- <ZxaClmjrLAJiVxNJ@nand.local>
-In-Reply-To: <ZxaClmjrLAJiVxNJ@nand.local>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Mon, 21 Oct 2024 18:00:55 +0000
-Message-ID: <CAPSxiM9W+YcJqxnkFmOpBcHuHab6V_vn+ibwgq-vCNWZUXPw=w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] merge: replace atoi() with strtol_i() for marker
- size validation
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Patrick Steinhardt <ps@pks.im>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>,
+    Junio C Hamano <gitster@pobox.com>,
+    Taylor Blau <me@ttaylorr.com>,
+    Samuel Adekunle Abraham <abrahamadekunle50@gmail.com>,
+    Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 
-On Mon, Oct 21, 2024 at 4:34=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> On Mon, Oct 21, 2024 at 02:24:38PM +0000, Usman Akinyemi wrote:
-> > On Mon, Oct 21, 2024 at 2:01=E2=80=AFPM Patrick Steinhardt <ps@pks.im> =
-wrote:
-> > >
-> > > On Fri, Oct 18, 2024 at 01:52:59PM +0000, Usman Akinyemi via GitGitGa=
-dget wrote:
-> > > > From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> > > >
-> > > > Replaced atoi() with strtol_i() for parsing conflict-marker-size to
-> > > > improve error handling. Invalid values, such as those containing le=
-tters
-> > > > now trigger a clear error message.
-> > > > Updated the test to verify invalid input handling.
-> > >
-> > > When starting a new paragraph we typically have an empty line between
-> > > the paragraphs. We also tend to write commit messages as if instructi=
-ng
-> > > the code to change. So instead of "Replaced atoi() with..." you'd say
-> > > "Replace atoi() with", and instead of "Updated the test...", you'd sa=
-y
-> > > "Update the test ...".
-> > >
-> > > The same applies to your other commits, as well.
->
-> Thanks for noting, Patrick.
->
-> > > These are a bit curious. As your test demonstrates, we retrieve the
-> > > values from the "gitattributes" file. And given that the file tends t=
-o be
-> > > checked into the repository, you can now basically break somebody els=
-es
-> > > commands by having an invalid value in there.
-> > >
-> > > That makes me think that we likely shouldn't die here. We may print a
-> > > warning, but other than that we should likely continue and use the
-> > > DEFAULT_CONFLICT_MARKER_SIZE.
-> > >
-> >
-> > Ohh, I understand. Philip suggested this. For the warning, will I just
-> > use printf statement or what function to print the statement ?
-> > Also, how do I test the print warning statement ?
->
-> You can use warning() instead of die(), which will also print the
-> message to stderr. You can redirect stderr to a separate file in your
-> test, and then grep or test_grep that to ensure that you see the warning
-> message.
->
-> These messages should also be marked for translation (with `_()`), so
-> the result will look something like:
->
->     if (strtol_i(check->items[0].value, 10, &marker_size))
->             warning(_("invalid marker-size '%s', expecting an integer"),
->                     check->items[0].value);
-Hi Taylor, when I try to use this warning(_, I was getting some error
-In the editor
-warning(_("invalid marker-size '%s', expecting an integer"),
-check->items[1].value); Incompatible integer to pointer conversion
-passing 'int' to parameter of type 'const char *'
-while I tried run make
+From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 
-erge-ll.c: In function =E2=80=98ll_merge=E2=80=99:
-merge-ll.c:432:33: error: implicit declaration of function =E2=80=98_=E2=80=
-=99
-[-Wimplicit-function-declaration]
-  432 |                         warning(_("invalid marker-size '%s',
-expecting an integer"), check->items[1].value);
-      |                                 ^
-merge-ll.c:432:33: error: passing argument 1 of =E2=80=98warning=E2=80=99 m=
-akes
-pointer from integer without a cast [-Wint-conversion]
-  432 |                         warning(_("invalid marker-size '%s',
-expecting an integer"), check->items[1].value);
-      |
-^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                                 |
-      |                                 int
-In file included from merge-ll.c:9:
-git-compat-util.h:691:26: note: expected =E2=80=98const char *=E2=80=99 but=
- argument
-is of type =E2=80=98int=E2=80=99
-  691 | void warning(const char *err, ...) __attribute__((format
-(printf, 1, 2)));
-      |              ~~~~~~~~~~~~^~~
+Notes can be added to a commit using:
+	- "-m" to provide a message on the command line.
+	- -C to copy a note from a blob object.
+	- -F to read the note from a file.
+When these options are used, Git does not open an editor,
+it simply takes the content provided via these options and
+attaches it to the commit as a note.
+
+Improve flexibility to fine-tune the note before finalizing it
+by allowing the messages to be prefilled in the editor and edited
+after the messages have been provided through -[mF].
+
+Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+---
+    [Outreachy][RFC/PATCH] notes: teach the -e option to edit messages in
+    editor
+    
+    Notes can be added to a commit using the -m (message), -C (copy a note
+    from a blob object) or -F (read the note from a file) options. When
+    these options are used, Git does not open an editor, it simply takes the
+    content provided via these options and attaches it to the commit as a
+    note.
+    
+    Improve flexibility to fine-tune the note before finalizing it by
+    allowing the messages to be prefilled in the editor and edited after
+    they have been provided through -[mF].
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1817%2Fdevdekunle%2Fnotes_add_e_option-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1817/devdekunle/notes_add_e_option-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1817
+
+Range-diff vs v3:
+
+ 1:  8f80c61ec0d ! 1:  4ecf79e0766 notes: teach the -e option to edit messages in editor
+     @@ t/t3301-notes.sh: test_expect_success 'empty notes do not invoke the editor' '
+       
+      +test_expect_success 'git notes add with -m/-F invokes editor with -e' '
+      +	test_commit 19th &&
+     -+	MSG="Edited notes message" git notes add -m "Initial notes message" -e &&
+     -+	echo "Edited notes message" >expect &&
+     ++	echo "edited" >expect &&
+     ++	MSG="$(cat expect)" git notes add -m "initial" -e &&
+      +	git notes show >actual &&
+      +	test_cmp expect actual &&
+      +	git notes remove HEAD &&
+      +
+      +	# Add a note using -F and edit it
+     -+	echo "Note from file" >note_file &&
+     -+	MSG="Edited note from file" git notes add -F note_file -e &&
+     -+	echo "Edited note from file" >expect &&
+     ++	echo "initial" >note_file &&
+     ++	MSG="$(cat expect)" git notes add -F note_file -e &&
+      +	git notes show >actual &&
+      +	test_cmp expect actual
+      +'
+      +
+      +test_expect_success 'git notes append with -m/-F invokes the editor with -e' '
+      +	test_commit 20th &&
+     -+	git notes add -m "Initial note message" &&
+     -+	MSG="Appended edited note message" git notes append -m "New appended note" -e &&
+     -+
+     -+	# Verify the note content was appended and edited
+     -+
+      +	cat >expect <<-EOF &&
+     -+		Initial note message
+     ++		initial
+      +
+     -+		Appended edited note message
+     ++		edited
+      +	EOF
+     ++	git notes add -m "initial" &&
+     ++	MSG="edited" git notes append -m "appended" -e &&
+     ++
+     ++	# Verify the note content was appended and edited
+      +	git notes show >actual &&
+      +	test_cmp expect actual &&
+      +	git notes remove HEAD &&
+      +
+      +	# Append a note using -F and edit it
+     -+	echo "Note from file" >note_file &&
+     -+	git notes add -m "Initial note message" &&
+     -+	MSG="Appended edited note from file" git notes append -F note_file -e &&
+     ++	echo "note from file" >note_file &&
+     ++	git notes add -m "initial" &&
+     ++	MSG="edited" git notes append -F note_file -e &&
+      +
+      +	# Verify notes from file has been edited in editor and appended
+     -+	cat >expect <<-EOF &&
+     -+		Initial note message
+     -+
+     -+		Appended edited note from file
+     -+	EOF
+      +	git notes show >actual &&
+      +	test_cmp expect actual
+      +'
+     @@ t/t3301-notes.sh: test_expect_success 'empty notes do not invoke the editor' '
+      +	test_commit 21st &&
+      +	echo "foo-file-1" >note_1 &&
+      +	echo "foo-file-2" >note_2 &&
+     ++	echo "edited" >expect &&
+      +
+     -+	MSG="Collapsed edited notes" git notes append -F note_1 -m "message-1" -F note_2 -e &&
+     ++	MSG=$(cat expect) git notes append -F note_1 -m "message-1" -F note_2 -e &&
+      +
+      +	# Verify that combined messages from file and -m have been edited
+     -+
+     -+	echo "Collapsed edited notes" >expect &&
+      +	git notes show >actual &&
+      +	test_cmp expect actual
+      +'
 
 
->
-> Thanks,
-> Taylor
+ Documentation/git-notes.txt | 10 ++++--
+ builtin/notes.c             |  8 +++--
+ t/t3301-notes.sh            | 63 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 76 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index c9221a68cce..84022f99d76 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -9,9 +9,9 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git notes' [list [<object>]]
+-'git notes' add [-f] [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
++'git notes' add [-f] [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [-e] [<object>]
+ 'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
+-'git notes' append [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
++'git notes' append [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [-e] [<object>]
+ 'git notes' edit [--allow-empty] [<object>] [--[no-]stripspace]
+ 'git notes' show [<object>]
+ 'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
+@@ -67,7 +67,9 @@ add::
+ 	the existing notes will be opened in the editor (like the `edit`
+ 	subcommand). If you specify multiple `-m` and `-F`, a blank
+ 	line will be inserted between the messages. Use the `--separator`
+-	option to insert other delimiters.
++	option to insert other delimiters. You can use `-e` to edit and
++	fine-tune the message(s) supplied from `-m` and `-F` options
++	interactively (using an editor) before adding the note.
+ 
+ copy::
+ 	Copy the notes for the first object onto the second object (defaults to
+@@ -93,6 +95,8 @@ append::
+ 	an existing note, a blank line is added before each new
+ 	message as an inter-paragraph separator.  The separator can
+ 	be customized with the `--separator` option.
++	Edit the notes to be appended given by `-m` and `-F` options with
++	`-e` interactively (using an editor) before appending the note.
+ 
+ edit::
+ 	Edit the notes for a given object (defaults to HEAD).
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 8c26e455269..72c8a51cfac 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -32,9 +32,9 @@
+ static const char *separator = "\n";
+ static const char * const git_notes_usage[] = {
+ 	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
+-	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
++	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>] [-e]"),
+ 	N_("git notes [--ref <notes-ref>] copy [-f] <from-object> <to-object>"),
+-	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
++	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>] [-e]"),
+ 	N_("git notes [--ref <notes-ref>] edit [--allow-empty] [<object>]"),
+ 	N_("git notes [--ref <notes-ref>] show [<object>]"),
+ 	N_("git notes [--ref <notes-ref>] merge [-v | -q] [-s <strategy>] <notes-ref>"),
+@@ -489,6 +489,8 @@ static int add(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK_F('c', "reedit-message", &d, N_("object"),
+ 			N_("reuse and edit specified note object"), PARSE_OPT_NONEG,
+ 			parse_reedit_arg),
++		OPT_BOOL('e', "edit", &d.use_editor,
++			N_("edit note message in editor")),
+ 		OPT_CALLBACK_F('C', "reuse-message", &d, N_("object"),
+ 			N_("reuse specified note object"), PARSE_OPT_NONEG,
+ 			parse_reuse_arg),
+@@ -667,6 +669,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK_F('C', "reuse-message", &d, N_("object"),
+ 			N_("reuse specified note object"), PARSE_OPT_NONEG,
+ 			parse_reuse_arg),
++		OPT_BOOL('e', "edit", &d.use_editor,
++			N_("edit note message in editor")),
+ 		OPT_BOOL(0, "allow-empty", &allow_empty,
+ 			N_("allow storing empty note")),
+ 		OPT_CALLBACK_F(0, "separator", &separator,
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 99137fb2357..813dfd8db97 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -1567,4 +1567,67 @@ test_expect_success 'empty notes do not invoke the editor' '
+ 	git notes remove HEAD
+ '
+ 
++test_expect_success 'git notes add with -m/-F invokes editor with -e' '
++	test_commit 19th &&
++	echo "edited" >expect &&
++	MSG="$(cat expect)" git notes add -m "initial" -e &&
++	git notes show >actual &&
++	test_cmp expect actual &&
++	git notes remove HEAD &&
++
++	# Add a note using -F and edit it
++	echo "initial" >note_file &&
++	MSG="$(cat expect)" git notes add -F note_file -e &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git notes append with -m/-F invokes the editor with -e' '
++	test_commit 20th &&
++	cat >expect <<-EOF &&
++		initial
++
++		edited
++	EOF
++	git notes add -m "initial" &&
++	MSG="edited" git notes append -m "appended" -e &&
++
++	# Verify the note content was appended and edited
++	git notes show >actual &&
++	test_cmp expect actual &&
++	git notes remove HEAD &&
++
++	# Append a note using -F and edit it
++	echo "note from file" >note_file &&
++	git notes add -m "initial" &&
++	MSG="edited" git notes append -F note_file -e &&
++
++	# Verify notes from file has been edited in editor and appended
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git notes with a combination of -m, -F and -e invokes editor' '
++	test_commit 21st &&
++	echo "foo-file-1" >note_1 &&
++	echo "foo-file-2" >note_2 &&
++	echo "edited" >expect &&
++
++	MSG=$(cat expect) git notes append -F note_1 -m "message-1" -F note_2 -e &&
++
++	# Verify that combined messages from file and -m have been edited
++	git notes show >actual &&
++	test_cmp expect actual
++'
++test_expect_success 'git notes append aborts when editor fails with -e' '
++	test_commit 22nd &&
++	echo "foo-file-1" >note_1 &&
++
++	# Try to append a note with -F and -e, but make the editor fail
++	test_env GIT_EDITOR="false" test_must_fail git notes append -F note_1 -e &&
++
++	# Verify that no note was added due to editor failure
++	test_must_fail git notes show
++'
++
+ test_done
+
+base-commit: 15030f9556f545b167b1879b877a5d780252dc16
+-- 
+gitgitgadget
