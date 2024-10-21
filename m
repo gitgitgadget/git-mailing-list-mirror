@@ -1,109 +1,146 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2DD178395
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 16:51:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC901EABC2
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 16:53:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729529506; cv=none; b=UAuQ+VaMn+Z+76G9YG40VNi+REeIMU0PAzbkASrUyNA7/StGWohBbwCZ675GdIlh0jOxvd6jPR7NNa3ubFdStt/zXxPhYEBkQWMynEWz8ly6Q7NNnK32fzfbcfCOJgn8EqLxptvDnrNEWjb9v9kEG4mLmJv/IQ0dKxWSjX5/CVI=
+	t=1729529584; cv=none; b=C6wVOisNoLPJLtdsI40iPA3bYPOZAA6rhsszR0CvKO9fT6nJSJVg1h6/QPbZqzfY87ZW1AQ+z/HIE4z1A9C+fShi2mUBwSeTT5I4f5YR/6nBdCG+dQrVL0M5k5ohC3C82AzliURuhMhTvDkbwacR/Z0lUNr86IACkhBvvufmFYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729529506; c=relaxed/simple;
-	bh=iBng61c8UZ8v5fiU1ccK40LLDZjjjXYZtRIARccmDOE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=A2PUUP1nQOTHLHCV22rVruGjSEnEN3yxhad9CrRmteEiX6yCFUzC2/o1f3DSjFiS+czW4O4s72tZAqQaBiA6jzYLsD4D9n0E8hlsmr/TUplKNgDp5FvD1tsBsgmXfYNPkUEyQ7PEcm2uPSFB6KJNZh1A23ftdhkLxf9Pn0Y/MTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Hdx1Ze14; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W9LysrWk; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729529584; c=relaxed/simple;
+	bh=rRnrd00KOQKqSySPH8r/21cXEFDKRxSJdywSO1VrDT0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bz/owKz0TFq3jHA1EwqQ8+n7WKRPnAUleEcb/eK064C4+5Chx921edYX8lzhItSrnZ5sb3obldtu7Vrw42sUSKdGBJS+7JjPzib+c03c+/+DxaGlBPWNiyQMapkP/kEIHuT/dWV8BXz13Q3T/R3JgBo5GSNi6bYJu4DQiUj9yd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=b0ypWg76; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Hdx1Ze14";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W9LysrWk"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C6BFB25400C3;
-	Mon, 21 Oct 2024 12:51:43 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 21 Oct 2024 12:51:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729529503;
-	 x=1729615903; bh=QmAAyzBuSaAtBE/YzXC4lEhlcO3tBpxHbBRHDf8fDOA=; b=
-	Hdx1Ze14iB3nFIOHmLQtpUJdEVzIcHXFgM1Up20zsk6yR92X52kJSTqqu3dtBBK+
-	5QYadGeyeYxBQ7HPTTRW9nBVlTLZ0KITgth512mSNdCnzD5MEv+Z+8iHdTaJPgik
-	Jan+a8qRy48vhquA/9z59ba7egB2SyYQ7XjPBlf9pYYwfTXYN0vRWb+Ae5/kE13k
-	AX0XOqWKOnOyHR01ycQVzw+3I6r9arB6osv5ZEt1RcnPRpiOe3hyxgDunPVKYPCk
-	d018FvnYxnbfdwh6EPNRbEiQdPClbDbYc68BNVNJjuIhDV823T06+09P0eU9R9hx
-	k6CyuiGk31PFJa2gje68IA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729529503; x=
-	1729615903; bh=QmAAyzBuSaAtBE/YzXC4lEhlcO3tBpxHbBRHDf8fDOA=; b=W
-	9LysrWks3cO07QDiDB1rgAhZjv1Yhs80xKzGvtPuEtk75QKdLttX5IaKxryuJIj7
-	OIXGl+SBAFJ+8sQ39h59WUCXnWPI+dA4Cy0/5N5QEiTtTykOHNtn4SXL+GZYBUqn
-	WUnFG6AVU4dtZbKjEGMcfZyJOrbfxqIy6w78fZhlk2UkVFFu9EvdRjZWBZHNS72C
-	/lR9aYwITP+iqi8jYgw4KgTKu0H6GTM4NH7aco/CWRLWdi5IdL7zNS/fBPqiu2pG
-	Yq5Elix+CWiWP+HNUxn0uWx6GH8Y3mquJelBA+3J0MKe6xg1i1OifYWLLJDYQeEc
-	j/QHzuUGdqty1XPkqTizg==
-X-ME-Sender: <xms:n4YWZ-G5zgdBCjlpQ_cNqBLeY5ZX4j1voKMPq_maLcspi3QTmM7qntY>
-    <xme:n4YWZ_VmZ885bWtOFEgVC9qKyu6iL9_92ksOPj3IJDEzD7kZBWPuK5MRcS8fUEuL6
-    apwYmH1kMQZFloU2g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledguddtiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredt
-    tdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
-    rghtthgvrhhnpeffueeuieehheffjeegtdevfeehtdfhvedvgeduledtffehjedvhfejud
-    ffheegleenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihii
-    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgsh
-    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:n4YWZ4JMw4zqobmZUGnGHtFaD9k-1UiQQGGVzCJv2_XMDvS0BcDWIQ>
-    <xmx:n4YWZ4HLn-5pFesipH1mbyUW8LvA0uP6uL5CSQiDa1FHxrLwM1dl-g>
-    <xmx:n4YWZ0VQD-A-N0gwyFLK4efwXKS8_usafuingOUsuhzVgMibLdS2YQ>
-    <xmx:n4YWZ7PHJX_-UhCd1t8NvyYsbfUxj0JdW2Rb4PzBAk6eGTwpWm5SuQ>
-    <xmx:n4YWZxhBmJa36P6vfFPqS9cKnI33iTl5AIGExYTclguzX6OMt9ANU4lR>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 59EE278006A; Mon, 21 Oct 2024 12:51:43 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="b0ypWg76"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6e35bf59cf6so53105077b3.0
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 09:53:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729529581; x=1730134381; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=XtGMgAIoODTpC2Qkz6aKQwERf27kfbnX57NmGtD6IRo=;
+        b=b0ypWg76Ve7ESOmBXrLJtKv8IgKMOcfzREAXjGr3yAIFR2dg+HVACFMFbyI2P5Zfsu
+         i/4wEdf+MNCRVPK+xRDzL5U8/EkzlRDogouDMP7egtkREYVKHElwkuFf5IdGU2bwsXRN
+         Nysj95PZy2EWgSqKy2Om5q/9fixP6zkzFW7a/5skfMOEGfLSaPKq+DjJeTKREfp/Rs9d
+         7Pp1vAhpuMq6T0OG37r9GoooeHIKPKJSSdYJ99mxC+Mzx3guDGp9cxYT0Ktm3kfBERgo
+         RyfCqlnTEqAdpq4rzcZuh9+bdagBLEc+9vlECEuN5AFX8TzRDMFzHSVPaY8BOx5NzxmY
+         k0Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729529581; x=1730134381;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XtGMgAIoODTpC2Qkz6aKQwERf27kfbnX57NmGtD6IRo=;
+        b=Ez65mMLFb6OLaJmLV6JVlCAnvszh01E26NGcVyVKmuse+AzZI0oxPjI95hE7rb/NCo
+         q10soKWrXghWoaO+5OQAvYaBI9FUFa4JShBNTG5PzUA2lU0dAYfj29ke+TfqKWUPRGJ3
+         GwPJKb/A4Ld1czX8FY/X7LqarHrYlRtMP9bNemCvWp/3osrGQ13eY3eH53e0Pg4fosot
+         OEBg3XmcDflFHvLMpvDTkw2PKDuPYXMQBvcsvKd0hA7dD8SkwZaK3nLqWCGwrrepDBmb
+         gWtl8nbAOv7zf/5EDQLbpN+SsFhnNVcmPwsIJp+rg6Kaynz41PGPenIqlR2fv3kw6dTa
+         2UtA==
+X-Gm-Message-State: AOJu0YzwwhMS8e3f3JuoxcjIl9BWxQMFmDk3HyCe3Bl+oONto+30mqf5
+	grF3GaWBMNsVei8SwMFT4EhtKTatp/NM2S27yT+P/wxSezzuTnuZ1gL87dtWu9A=
+X-Google-Smtp-Source: AGHT+IGSgJKTlFai+tV663egRH2oHRzH9NsyR9MXubsxDv4kCGBoCfTTADhW2YfUDCW+PSAlWNawIw==
+X-Received: by 2002:a05:690c:30b:b0:6d6:5186:32b2 with SMTP id 00721157ae682-6e7d494597dmr3268227b3.21.1729529581088;
+        Mon, 21 Oct 2024 09:53:01 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5d2212asm7292187b3.129.2024.10.21.09.53.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2024 09:53:00 -0700 (PDT)
+Date: Mon, 21 Oct 2024 12:52:59 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Samuel Adekunle Abraham via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Junio C Hamano <gitster@pobox.com>,
+	Samuel Adekunle Abraham <abrahamadekunle50@gmail.com>
+Subject: Re: [PATCH v3] notes: teach the -e option to edit messages in editor
+Message-ID: <ZxaG67wuvjOXc5kr@nand.local>
+References: <pull.1817.v2.git.1729382580491.gitgitgadget@gmail.com>
+ <pull.1817.v3.git.1729521495497.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 21 Oct 2024 18:51:22 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Karthik Nayak" <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <aba3d76c-5234-4875-a1a7-b212bb27b266@app.fastmail.com>
-In-Reply-To: <20241021124145.636561-1-karthik.188@gmail.com>
-References: <20241021124145.636561-1-karthik.188@gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: discourage arbitrary suffixes in function names
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1817.v3.git.1729521495497.gitgitgadget@gmail.com>
 
-On Mon, Oct 21, 2024, at 14:41, Karthik Nayak wrote:
-> We often name functions with arbitrary suffixes like `_1` as an
-> extension of another existing function. This created confusion and
-> doesn't provide good clarity into the functions purpose. Let's document
-> good function naming etiquette in our CodingGuidelines.
+On Mon, Oct 21, 2024 at 02:38:15PM +0000, Samuel Adekunle Abraham via GitGitGadget wrote:
+> From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 >
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
+> Notes can be added to a commit using:
+> 	- "-m" to provide a message on the command line.
+> 	- -C to copy a note from a blob object.
+> 	- -F to read the note from a file.
+> When these options are used, Git does not open an editor,
+> it simply takes the content provided via these options and
+> attaches it to the commit as a note.
 >
-> This is mostly in response to an ongoing thread [1] where I ran into one of
-> these functions and it really took me a while to wrap my head around what the
-> function does.
+> Improve flexibility to fine-tune the note before finalizing it
+> by allowing the messages to be prefilled in the editor and edited
+> after the messages have been provided through -[mF].
 >
-> [1]:
-> https://lore.kernel.org/git/CAOLa=ZREg3xuaT6mbM8+Havn3regZDhK45kGy0+Fw8t56c7Mpg@mail.gmail.com/#R
+> Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 
-I was wondering whether it would make sense to use that link in this
-document for the context.  But I see that there is only one instance
-of that in the current document.
+Nicely described, this commit message is looking good. Let's take a look
+at the patch below...
+
+> diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+> index 99137fb2357..2827f592c66 100755
+> --- a/t/t3301-notes.sh
+> +++ b/t/t3301-notes.sh
+> @@ -1567,4 +1567,75 @@ test_expect_success 'empty notes do not invoke the editor' '
+>  	git notes remove HEAD
+>  '
+>
+> +test_expect_success 'git notes add with -m/-F invokes editor with -e' '
+> +	test_commit 19th &&
+> +	MSG="Edited notes message" git notes add -m "Initial notes message" -e &&
+> +	echo "Edited notes message" >expect &&
+
+Very nice use of the fake_editor script here.
+
+It is a little cumbersome to repeat the same message in MSG= and when
+populating the 'expect' file. Perhaps instead this could be written as:
+
+    echo "edited notes message" >expect &&
+    MSG="$(cat expect)" git notes -add -m "initial" -e
+
+> +	git notes show >actual &&
+> +	test_cmp expect actual &&
+> +	git notes remove HEAD &&
+> +
+> +	# Add a note using -F and edit it
+> +	echo "Note from file" >note_file &&
+> +	MSG="Edited note from file" git notes add -F note_file -e &&
+> +	echo "Edited note from file" >expect &&
+
+Same "note" here. ;-).
+
+> +	git notes show >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'git notes append with -m/-F invokes the editor with -e' '
+> +	test_commit 20th &&
+> +	git notes add -m "Initial note message" &&
+> +	MSG="Appended edited note message" git notes append -m "New appended note" -e &&
+
+It's fine to use shorter values for -m and $MSG here. I think "appended"
+and "edited" would be fine for each, respectively.
+
+Besides applying those suggestions throughout the patch's new tests
+(including the ones that I didn't explicitly comment on here), I think
+that this should be looking good after another round. Thanks for working
+on it.
+
+Thanks,
+Taylor
