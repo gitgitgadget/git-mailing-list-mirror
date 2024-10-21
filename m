@@ -1,147 +1,146 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3F41E201E
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 20:48:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD321CB304
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 20:48:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729543699; cv=none; b=A8F6c9QgBTVHrV6OlyhaCnxXU1Ro9OM1AbGZ0wb4tOZxdcHFhu+eEa3YN2zqNCxUezy9/tTMVTaumDeGWA8ur4k4llduo91tpwYGZG6a0xSR9226PS5PdpV2QzBOD66bKSww6CIg7IMHAlwAZTbE6KhSpMB/8NP9nay5A1NonY8=
+	t=1729543729; cv=none; b=qwFXoXB6d3GNAH6TQrpB9WYPn52FHjMcBxK8K9CJN/uxxmCr2UtdPOu5aehWX95If/ZOD+bCoLI7xbz+HhTW8pvzjJOdxigUp0YORhO+XTrs6bfMfv/GIAsSrZux7KKkrefEdjUaIiswsYXiYKctP9I65MjK409trOfx8fIqFmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729543699; c=relaxed/simple;
-	bh=l53XHY8ZLYBiYkJ2EMCs7r0TzULgKT/LpQf8xebPQVA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFssKg2gIo2O1LEXRwTd322FY5bnWXE1AGKKhL+sveb7B6//YFFoOTUGg+NrHvuIzJsAkFvHh1xjjXc9DSPKyXWeR5N50ANOz4ZGIwMX91pS0VFZ51RzuIzGIWG16S0Y3YHxLW7HIGmtQBygYCY0V6458rCFyhECLEPwsrjWP1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=QmKb9Ncb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pa8Yoz5h; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729543729; c=relaxed/simple;
+	bh=VngoWU0kb9UW73KWG5HneKfAusoj9ierkcpWNiiSMBw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=We4Qrupy1s2RgYzjrsAKIds+wzUcyrlyR26DgICyw8EjVZOfBleoQTgl7dNIBiYwf6iFMBj2/03E2GiLUt7fF8RZufIUERYhoqNE9XQ2o699b0+Pxefnl3jWZHLM8sN+9D4vsi1csytnVIiGH1UDnz6adzt4q7e5w2+pJfZOMvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=eMIKyaEO; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="QmKb9Ncb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pa8Yoz5h"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 370671380462;
-	Mon, 21 Oct 2024 16:48:17 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 21 Oct 2024 16:48:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1729543697; x=
-	1729630097; bh=QcxGRNP6B7dsX9oev89eC/C6hlDoXeyIADE61IYEK+Y=; b=Q
-	mKb9NcbGoU1aC1lOfXUEEHqFFQDTujHanORez2XTRfKE/4u/rDRg8vCxkuqxF4VS
-	BmROqv363gOKwU5nObaKArH+WIW0pcpQUterSXqlUK++nbqWMW1lafmR6dy99mNO
-	TXSjl5BYFvtwoDqRo/30KJGenhnmDIZgQXs4ILImKOjnIbNuhYqOaPH8uHzhzdhT
-	MnW0V3bWY+ZWY5Dk7V9/vMqg6Aw9WkZnYIBKEbX4I6AUcuesbU2zkhXijplf7JEr
-	NiV9A3/zxGj7so8OW8GI18viQ/CF+kyJGnMaFi3ZI968Mt6lIypMpuoWfovgFvGq
-	ImV4+s+b8DkxAfe1SV1cA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729543697; x=
-	1729630097; bh=QcxGRNP6B7dsX9oev89eC/C6hlDoXeyIADE61IYEK+Y=; b=P
-	a8Yoz5hs7+2YEBmfuAJS5MhJJDygPp9mSZggHy1wrP9xAcph1N16135CEs92RKNT
-	2PifkFzA52pxWf9w9QcoOmtZ1xpbiQdy8UCdMA4FXGyuMC6cTJC66EmAOhtvKKm/
-	t5fOd/nMXHHM9ARuWlAnOUwSNmhK1Zc3soczx7oD1W7+m2OXAkfqH97dFvqQOgMQ
-	rQqy3haszETgu6AbnwrbXSQ7NSsHzI061un5h/9WeUby8D+4RgYqgqor6i7PaUXB
-	cWKHCBtiqVH8lrxcOIpx7D9S0TRYueesdbCJiqmfQnmDYXdWt93rpkhy2UQvZvnp
-	q9O/jr0DwcocArlMWDL3Q==
-X-ME-Sender: <xms:Eb4WZ1LdGitNLtB4dxcQ0Z3Y79otLNLRu-lT69KxTnO5gd1zGpgvFJg>
-    <xme:Eb4WZxIE1ug4cjvSmQFLPIaaRk3mES1tpB5JEL9mSKvNZDO_WHFFgbxtm7-taF10B
-    zYCljcSs0_0r9MQ9A>
-X-ME-Received: <xmr:Eb4WZ9s_wL5B43QR4KA0adScCWPZpbmXjJDt5N6ROvWZstDyCo3uUxisPDaOk_yUtPHKzW84rrlIYBy4VRcXjMvJ93cPpUX7izb0Oq2Ej3KW3yKYSCJDRXeKug>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledgudehgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fufffkofgjfhgggfestdekredtredttdenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepfeehte
-    ekfedtieffvdejteeutefhuefgtefgtdevhefhveffuefftdehiedtfedunecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeek
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhr
-    tghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegsvghntggv
-    sehfvghrughinhgrnhguhidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeekse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
-    phhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
-X-ME-Proxy: <xmx:Eb4WZ2ZeAf6KFsLSGvM1S7SINSCy_vg9wYKt7Yri_SbyjanTRHvsdg>
-    <xmx:Eb4WZ8aZsBdELcEQW65K1dCWrcXB513i8xyJyTCQJRqdOqxJUZtRcw>
-    <xmx:Eb4WZ6D5x7cOlk05u-q_vvYVr9yFZTGy1deaJmqKflexZQAdcLTDhg>
-    <xmx:Eb4WZ6aaiDx68FdFXam-cfDb6xRodPZIArRTElvYcwCIP9UFBCpDOw>
-    <xmx:Eb4WZyPVOjZQG0DBxroffUbQHJdirT9VUz-FjTYSXanBHdJbfYtQ6X5f>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Oct 2024 16:48:14 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	phillip.wood@dunelm.org.uk,
-	gitster@pobox.com,
-	bence@ferdinandy.com,
-	karthik.188@gmail.com,
-	me@ttaylorr.com,
-	sunshine@sunshineco.com
-Subject: [PATCH v3 6/6] Documentation: mutually link update-ref and symbolic-ref
-Date: Mon, 21 Oct 2024 22:47:29 +0200
-Message-ID: <aa1ee4a8ee08f623b2b85f68a141f188364243f4.1729543007.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
-In-Reply-To: <cover.1729543007.git.code@khaugsbakk.name>
-References: <cover.1729367469.git.code@khaugsbakk.name> <cover.1729543007.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="eMIKyaEO"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6e5a5a59094so46669127b3.3
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 13:48:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729543727; x=1730148527; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=M3bu/Gi0hRdBxTxMo+cGUtUSSKfcJsr3N8iZ/Jo3hjw=;
+        b=eMIKyaEOdUA8oBkkFPnfDZCXOZskyGIYV6jMyWChP4VIimQaOC3kAWw1xaBQEA40oh
+         iN6hYr52Sewk2esZTfslRyh0n9qCDiLf4CFOq5xfhhS/DHc6DBkQhueA40hdAK3MV9ee
+         mGYm0TRSFbZrMpl5Che5vEM8iRRQ1LmVBFbEplo4nmrixP1h9BURl/SO4Za/03P5h+4W
+         HNjI6g/hSag5L6jN5gGR1/p5YbFXkyynNIAjf+eDZRU23adJmgyJnA8Brgwnu858IfiN
+         HDztI9UfruvjDTFwpbaNASOsVOdeqjeM7IhyY18huFbXMwPNlY/IBSr0mGVBnjr/+VzY
+         KQYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729543727; x=1730148527;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M3bu/Gi0hRdBxTxMo+cGUtUSSKfcJsr3N8iZ/Jo3hjw=;
+        b=VtVIYaWcNuMt6Vgf76zswuD+WQ/izhW4NJQSLT0yZtlNjH5SyMsHZ6iQbxq9Y8eENn
+         OSKJ1fuGbmde02YRpSg0N25liN29ZExW+ibAj8bmopHxd/JwFdT/fjjUuANbS8y6G2YR
+         5BYqcxcm96TlC8shvBotQ0zSx5R+0XnL4bfY69ZqwJ8bg8M5x66sbeRHFc9KIOvxS5JQ
+         GPykNK1HpBB8aBaPbKVAODu60RBDq50V8G3STgMEm+Noo7+x5LT21tHramWgI2Yqf3N7
+         x4+3D4SJhi1oOAnUcYfsmm2hyU6MWO/TUG7EuZR2JUUq/hNreJYrZkt1U5QU449vojoA
+         6ciw==
+X-Gm-Message-State: AOJu0Yy7M1YBxpBph5r+FbXczfXS7f0X2t0qCQ/FVZr1TUU4uIThjS+H
+	v/xyEDTurbcsiM5+7CHDxLvfwPG2R04VZJJBj6JiGRs71nE1a/nBEh7uy6fbqvnJhfNUDFdC4fC
+	g
+X-Google-Smtp-Source: AGHT+IFXWPNQ2qeMu60cQMvDsehFLMhluK8NRGtLhSfnaeJh9ouqsZzgMfoagLTm7Q0KiDCfJo4KnA==
+X-Received: by 2002:a05:690c:6706:b0:6e2:446f:422c with SMTP id 00721157ae682-6e5bf9ff55cmr126277427b3.21.1729543727040;
+        Mon, 21 Oct 2024 13:48:47 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f59f51easm8055057b3.25.2024.10.21.13.48.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2024 13:48:46 -0700 (PDT)
+Date: Mon, 21 Oct 2024 16:48:44 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2024, #09; Fri, 18)
+Message-ID: <Zxa+LH3qgbzwVsfE@nand.local>
+References: <ZxLI06smvMuf/cT2@nand.local>
+ <ZxZHmIJXLBvzoe3D@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Commit-Hash: aa1ee4a8ee08f623b2b85f68a141f188364243f4
-X-Previous-Commits: 9e775a65eb3ff49ded231aeeeddd59ccdce3c8a8 fd3c7585a0f84b26debcc216b86dc09acb219799
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZxZHmIJXLBvzoe3D@pks.im>
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Mon, Oct 21, 2024 at 02:22:48PM +0200, Patrick Steinhardt wrote:
+> On Fri, Oct 18, 2024 at 04:45:07PM -0400, Taylor Blau wrote:
+> > * ps/ref-filter-sort (2024-10-17) 1 commit
+> >  - ref-filter: format iteratively with lexicographic refname sorting
+> >
+> >  Teaches the ref-filter machinery to recognize and avoid cases where
+> >  sorting would be redundant.
+> >
+> >  Will merge to 'next'?
+> >  source: <e0daa6a2eac97c2b18a53399b7c124fc8d3d238d.1729141657.git.ps@pks.im>
+>
+> I think v3 should be ready to go.
 
-These two commands are similar enough to acknowledge each other on their
-documentation pages.
+Agreed, thanks!
 
-See the previous commit where we discussed that option-less update-ref
-does not support updating symbolic refs but symbolic-ref does.
+> [snip]
+> > * ps/cmake-clar (2024-10-15) 3 commits
+> >  - cmake: set up proper dependencies for generated clar headers
+> >  - cmake: fix compilation of clar-based unit tests
+> >  - Makefile: extract script to generate clar declarations
+> >
+> >  Buildfix for unit tests when using CMake.
+> >
+> >  source: <cover.1728985514.git.ps@pks.im>
+>
+> This one can be dropped, as I've merged it into ps/upgrade-clar in v2
+> now.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/git-symbolic-ref.txt | 4 ++++
- Documentation/git-update-ref.txt   | 4 ++++
- 2 files changed, 8 insertions(+)
+Good to know, I've dropped it and will push out new 'seen' and 'jch'
+branches before the end of the day (I hope).
 
-diff --git a/Documentation/git-symbolic-ref.txt b/Documentation/git-symbolic-ref.txt
-index 761b154bcbb..33ca381fde0 100644
---- a/Documentation/git-symbolic-ref.txt
-+++ b/Documentation/git-symbolic-ref.txt
-@@ -73,6 +73,10 @@ default.
- symbolic ref were printed correctly, with status 1 if the requested
- name is not a symbolic ref, or 128 if another error occurs.
- 
-+SEE ALSO
-+--------
-+linkgit:git-update-ref[1]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
-index 2e85f7ce3ee..8a4281cde9f 100644
---- a/Documentation/git-update-ref.txt
-+++ b/Documentation/git-update-ref.txt
-@@ -190,6 +190,10 @@ otherwise it will just try to read them and update them as a regular
- file (i.e. it will allow the filesystem to follow them, but will
- overwrite such a symlink to somewhere else with a regular filename).
- 
-+SEE ALSO
-+--------
-+linkgit:git-symbolic-ref[1]
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
--- 
-2.46.1.641.g54e7913fcb6
+> > * ps/platform-compat-fixes (2024-10-16) 10 commits
+> >  - http: fix build error on FreeBSD
+> >  - builtin/credential-cache: fix missing parameter for stub function
+> >  - t7300: work around platform-specific behaviour with long paths on MinGW
+> >  - t5500, t5601: skip tests which exercise paths with '[::1]' on Cygwin
+> >  - t3404: work around platform-specific behaviour on macOS 10.15
+> >  - t1401: make invocation of tar(1) work with Win32-provided one
+> >  - t/lib-gpg: fix setup of GNUPGHOME in MinGW
+> >  - t/lib-gitweb: test against the build version of gitweb
+> >  - t/test-lib: wire up NO_ICONV prerequisite
+> >  - t/test-lib: fix quoting of TEST_RESULTS_SAN_FILE
+> >
+> >  Various platform compatibility fixes split out of the larger effort
+> >  to use Meson as the primary build tool.
+> >
+> >  Will merge to 'next'?
+> >  source: <cover.1729060405.git.ps@pks.im>
+> >
+> > * ps/reftable-strbuf (2024-10-17) 10 commits
+> >  - reftable: handle trivial `reftable_buf` errors
+> >  - reftable/stack: adapt `stack_filename()` to handle allocation failures
+> >  - reftable/record: adapt `reftable_record_key()` to handle allocation failures
+> >  - reftable/stack: adapt `format_name()` to handle allocation failures
+> >  - t/unit-tests: check for `reftable_buf` allocation errors
+> >  - reftable/blocksource: adapt interface name
+> >  - reftable: convert from `strbuf` to `reftable_buf`
+> >  - reftable/basics: provide new `reftable_buf` interface
+> >  - reftable: stop using `strbuf_addf()`
+> >  - reftable: stop using `strbuf_addbuf()`
+> >
+> >  Implements a new reftable-specific strbuf replacement to reduce
+> >  reftable's dependency on Git-specific data structures.
+> >
+> >  Will merge to 'next'?
+> >  source: <cover.1729140565.git.ps@pks.im>
+>
+> These two are ready to go from my point of view, as well.
 
+Great. I had your ps/reftable-strbuf topic already queued for 'next' on
+my end, but wasn't sure the state of ps/platform-compat-fixes as the
+thread had gotten quiet. I'll merge that one down as well.
+
+Thanks,
+Taylor
