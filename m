@@ -1,100 +1,109 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353E710A3E
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 21:44:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A6719A28D
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 21:45:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729547069; cv=none; b=K5vf/5TrbsTjDIfIj12jlHe+zsTPRsP40D8V+cicyEEOU8ztl0N1F4rQgO26+k1C+Zhl8ViDNRUPLzdfZECiM7DQ2SgAiu8dUXsImphGIcXpiOdhmapOI/KhZL3NppKEhl4hc6lDX0NR90hMbTiOGjrSoMAiGQOjCsbMTpIHghM=
+	t=1729547161; cv=none; b=f7YSUQm4b5DV8xmZBs80bF9oHwQ0n+SGPfeEI5gG/D7fqDookJarGzh3kFpQ5/43TetC1KV5TjPj3VoYAr8WBOlm/+xdG+iKhlEK/HEtZHfaAWrCCq9FLOOmYciO9dCP1QcNAdXdDa+pLpaIdk1RBChrqPXR5NzgQOEGyGfZutE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729547069; c=relaxed/simple;
-	bh=fOHgzyGHr8qC8/3UkmSpaoWnge4VxS3W8c6Dcit4/FY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y0lkZifg8DtyD/fIP43lWjdiMKFMRi2CZzvdaSrAjvcP7Xlwl2uf5JHSJn9uNk3JPHqoGQay96GwLq7cZB5io4i1iPGMKwbi9ccny94s4f1hcUuHUylVDQsgYZ8pxHjquJ3SG/BKr7+8wXwmwzXhOsMst4v7ym9DmVOxq5EvZn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f3XmDRLf; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729547161; c=relaxed/simple;
+	bh=Ta6HnEGIDHMJJCvdsS1KHFcFErWjeN3n+klbtzpJYWQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wfs8HEpALzGE0AU5EP7O+WYbqrF20MskbNKmHaEaejx/lCRRw/TdtGGgH3M2Fa0upIqMjEhjlmhV+JToHc6Hic8NfC3DlW8yEdQ3NTHp4UF0nnxgvDo6Y2o0fv6j2SCB6v8sq5fBHrSMffFz8Uld+4uDJt/7x6nxeOGAl0rlMes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=eqq4r/GI; arc=none smtp.client-ip=209.85.128.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f3XmDRLf"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4315839a7c9so54639595e9.3
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 14:44:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="eqq4r/GI"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6e5ef7527deso20592477b3.0
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 14:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729547065; x=1730151865; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oSJGzj7cwFXP3YVip6riaYxot8ekV4OZF40mwtOJXGw=;
-        b=f3XmDRLfM67I7ASVFIoyUI9ToQ3cofwnx5P7kOPi3yTpLviftUzNiNjYz5oGELEK3M
-         cmPQD0DsF/GcHAP/u/08vKMdH+fu0d4pa1UAoTlW6+2xppdJp6VCVnQzYSpjJDlab8+J
-         mYixv2jwbUP362TgTXUidFrPXzKiriVl4PmBCAeYM/9+Q2pftANikGkzNjk6fnjOcgwe
-         9OMabk0wUZd7xhwr7bO511J6opUNtGX/I9PLvtgBjc4AgkCCpgE8gvO0Zg2myv7bZsGb
-         ATQp4j707OMUcUKpNAf3syL2Th5R/UnD0bz9QtF8U123VSWNnS3/wHfgzRVemybVx5Zk
-         FPIQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729547158; x=1730151958; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Ldb0JksbJOWydsdDg7UQBMHJTBMh/W7CQXsSDywcRXs=;
+        b=eqq4r/GIR2CLNvNMX8FAlWD65uigaOtuDUgRFYgQOPP4y7E+ShWVZJchNditXiauuv
+         YlvoE/MyOurKv9cZ1synCYqQgUPQIud/OrgqdygLc1g8VRmsdd61sHYNjKxCQk9awH30
+         ACyp9SCnPc8yeqQjUByExJzBWrp10ExL/qrnGOewpzTTZNVGaK1/Od9YDSUAz6yCzmOf
+         NKtTZ8aeEtw0nSuiRw8k6VlcrC34QECTk1Ni1RbpEcp37W7kMj+YGWKPawPwd9grm00l
+         6niF0J0z+D2dQxDO7PEk0YIKUoxpRynC2BSFVSvDjXukdoiHmmA3/DJH4+msqOFtxd43
+         YvJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729547065; x=1730151865;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oSJGzj7cwFXP3YVip6riaYxot8ekV4OZF40mwtOJXGw=;
-        b=F74AYeZ9yQjtnHpud3rI0LYUlukQZIl5WG7ng9oRC4k7pIE66XY4z19HYDpEDdceq4
-         6Dr2IIAme9+MHmuWdzPN2ENh327HwIgLtwVUMLlLfZiWaH1/i0G7Th49znNH9Nwdfg3n
-         c1s9LLobfGevwY9BWBGXCnhr/HYSLNvW8dy03IhxuuEZsLccA3zPvQrktPsx9EJWxeTK
-         0ktyGOl9/BfGxke3hNcG0RrlwiX3mf16PJaJc4EXwdBYO2ORksyjk88IGJAvUNhRcpjg
-         IdKGJoPzXaJ+6Mk2AjvwTdEc2ahTllfVZy2MAAOembX9yoduNtyTzjJOYwz4LCyigiie
-         v6Kg==
-X-Forwarded-Encrypted: i=1; AJvYcCWuk733AKvMK3h4XPzxw8KIseCrolcm2e9MFo1FWt49O4Esoko3TGA/Z3+cy22GHnBTEj4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8dSapUO9CAPidenghTUsQO8/p46cYErVIUPqPhbYZ1RdnRksq
-	dMPpnRcomBd0RxjYyMcwcgOnQht1GumxgDxEe5pohRrzt6t1D/tuqaZj8sLuFN+Da5QP0IrrRjr
-	YyWt3YlJGzO/NP3q7+Kz/PXVdZNw=
-X-Google-Smtp-Source: AGHT+IF8RhYVeed8scP7kcdf/3aw6HemRNu+S2DV5QBF2rhT76tsdvdPSDCeW8hXBGdm0dpnHEB51yE2dOvFiBEOgMQ=
-X-Received: by 2002:a05:600c:1d04:b0:431:1a98:cb40 with SMTP id
- 5b1f17b1804b1-43161667bddmr79195465e9.18.1729547065137; Mon, 21 Oct 2024
- 14:44:25 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729547158; x=1730151958;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ldb0JksbJOWydsdDg7UQBMHJTBMh/W7CQXsSDywcRXs=;
+        b=uILbnRuv/256tQrJ40gLdA4b60ru6QsUFUCoChcOYO4NF/7IK7lSumo/d+MgnML1Su
+         qvedBFfwNvozn+YTbZkSR2s1HTAfZtoDJ1l90rPndH1jDYOSl7BVFPp5AYggyBq0vB9L
+         auZjL8v1hYaykFwOUW30ySGIB4jWH4ihwACCouT+qtLKCXZHXoRgvy862A6i5PY8m4h+
+         byoFWgytEysdUJZf5H3rUuACB19avO1vKxwAMtJgVRsuq3GYf3exr8Fr2SlBWXnAGGbO
+         hU55A1ToHD+5iU2k9cE2Lbk4ZD2m7PwFbKt0/BKM9QJbr6d06MpqgK4t8pgoez4Gh4p3
+         mftQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWoW0ehgusssV/6G29FMBxOQfM0woR2k932afzS/ZOXOlO39+6bkBZjcAOipjY1Lauibkw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrG/pbduWAAitiwqv7jebw71WebHJvhZg5tOA18hhmq1+1modV
+	gr3+V+isDy0pig4ianIw6cilXupJSaj9tI5c6GTJaJ1JhLmzjkQRjbAoGaZCp9k=
+X-Google-Smtp-Source: AGHT+IFv6XtqrSrKgfbVXxbLYj6XeVb1oQjLUDOo8UI8vMFKzHgb+D45Ho5YAGTHG1usMRGtqzTo6A==
+X-Received: by 2002:a05:690c:91:b0:6e3:1e6:d9c2 with SMTP id 00721157ae682-6e7d82aa0camr5553847b3.33.1729547158399;
+        Mon, 21 Oct 2024 14:45:58 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5d142f4sm8372537b3.115.2024.10.21.14.45.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2024 14:45:57 -0700 (PDT)
+Date: Mon, 21 Oct 2024 17:45:56 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Andrew Kreimer <algonell@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t1016: clean up style
+Message-ID: <ZxbLlA0xbuhP7DJK@nand.local>
+References: <20241020121729.27032-1-algonell@gmail.com>
+ <98c5e44f-42c9-47c7-9fa1-e6cc3b35cdb4@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1817.v3.git.1729521495497.gitgitgadget@gmail.com>
- <pull.1817.v4.git.1729534340786.gitgitgadget@gmail.com> <ZxaxHmIP0iJZfvHr@nand.local>
-In-Reply-To: <ZxaxHmIP0iJZfvHr@nand.local>
-From: Samuel Abraham <abrahamadekunle50@gmail.com>
-Date: Mon, 21 Oct 2024 22:44:15 +0100
-Message-ID: <CADYq+fbHKf=YZvLYnWPyqctFeunz0dPxt_aw3t-J2Zd_-vpMfA@mail.gmail.com>
-Subject: Re: [PATCH v4] notes: teach the -e option to edit messages in editor
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Samuel Adekunle Abraham via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <98c5e44f-42c9-47c7-9fa1-e6cc3b35cdb4@app.fastmail.com>
 
-On Mon, 21 Oct 2024, 20:53 Taylor Blau, <me@ttaylorr.com> wrote:
+On Sun, Oct 20, 2024 at 02:46:18PM +0200, Kristoffer Haugsbakk wrote:
+> Hi
 >
-> On Mon, Oct 21, 2024 at 06:12:20PM +0000, Samuel Adekunle Abraham via GitGitGadget wrote:
-> > From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+> On Sun, Oct 20, 2024, at 14:17, Andrew Kreimer wrote:
+> > Use `test_config`.
 > >
-> > Notes can be added to a commit using:
-> >       - "-m" to provide a message on the command line.
-> >       - -C to copy a note from a blob object.
-> >       - -F to read the note from a file.
-> > When these options are used, Git does not open an editor,
-> > it simply takes the content provided via these options and
-> > attaches it to the commit as a note.
+> > Remove whitespace after redirect operator.
 > >
-> > Improve flexibility to fine-tune the note before finalizing it
-> > by allowing the messages to be prefilled in the editor and edited
-> > after the messages have been provided through -[mF].
-> >
-> > Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+> > Reported-by: Taylor Blau <me@ttaylorr.com>
+> > Signed-off-by: Andrew Kreimer <algonell@gmail.com>
+> > ---
+> > As discussed in:
+> >   - https://lore.kernel.org/git/ZxFyKXDCJkRZYYQY@nand.local/
+> > […]
+> > -		git config gpg.program $TEST_DIRECTORY/t1016/gpg &&
+> > -		echo "Hellow World!" > hello &&
+> > +		test_config gpg.program $TEST_DIRECTORY/t1016/gpg &&
+> > +		echo "Hellow World!" >hello &&
 >
-> Thanks, will queue.
+> What Taylor wrote:
 >
+> > Thanks, both. [Andrew] -- it's fine to do this in the same, or a
+> > separate patch in the new round. Thanks.
+>
+> You’ve posted a new, standalone patch.  But what Taylor asked for was a
+> new round on that typo patch where you either squash these changes into
+> the original patch or have the typo patch plus this one.
+>
+> At least that’s how I understand it.
 
-Thank you, Taylor, my Outreachy mentors Patrick and Phillip, Junio,
-and all the maintainers for your time and patience in reviewing
-my patches. It has been a good learning period. Thanks once again.
-Abraham Samuel
->
-> Thanks,
-> Taylor
+I said originally that either was fine, but then revised my statement
+after remembering that the original topic was already in 'next', so any
+further changes would have to be done on top.
+
+Thanks,
+Taylor
