@@ -1,75 +1,75 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6776E47A73
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 16:48:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2DD178395
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 16:51:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729529324; cv=none; b=gv+AMAlc+pnl2WukCZqmbAMYP2UK6d1xxV1/oLU7e4E4Wp1deatxJiyL7MDYhsjrjvjQJ/vD5e3XIjxjvRvX5XsLfMMJSJSDBoLvNMMxC8cBGd/BaRXbADwTzdfFkDdqKxTpNrXF/jcDwN4kucy3OnO/TIflDvtM/kD27ErrCok=
+	t=1729529506; cv=none; b=UAuQ+VaMn+Z+76G9YG40VNi+REeIMU0PAzbkASrUyNA7/StGWohBbwCZ675GdIlh0jOxvd6jPR7NNa3ubFdStt/zXxPhYEBkQWMynEWz8ly6Q7NNnK32fzfbcfCOJgn8EqLxptvDnrNEWjb9v9kEG4mLmJv/IQ0dKxWSjX5/CVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729529324; c=relaxed/simple;
-	bh=f94ClILKllFVGsJmt8h4merwc14F5dtBjDkpTTwLXg0=;
+	s=arc-20240116; t=1729529506; c=relaxed/simple;
+	bh=iBng61c8UZ8v5fiU1ccK40LLDZjjjXYZtRIARccmDOE=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=gp4uchCF2UZbWFKgXQATGFqeXJpLUtcXLdG30ISaw6uzT/2PBXOB8sTANC3NTLfUzWLsu/6P4aB7+FT8tsXl3o9USEIUp3zYkyDpH5eSNH34dYmvKEvcMC+1ebwQd2j5jejPvpoXp1MSiY7oZVPcxB+WZmiZ73T3wKWbPSGBh9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mWutuLTu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lzxTdNpO; arc=none smtp.client-ip=202.12.124.157
+	 Subject:Content-Type; b=A2PUUP1nQOTHLHCV22rVruGjSEnEN3yxhad9CrRmteEiX6yCFUzC2/o1f3DSjFiS+czW4O4s72tZAqQaBiA6jzYLsD4D9n0E8hlsmr/TUplKNgDp5FvD1tsBsgmXfYNPkUEyQ7PEcm2uPSFB6KJNZh1A23ftdhkLxf9Pn0Y/MTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Hdx1Ze14; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W9LysrWk; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mWutuLTu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lzxTdNpO"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Hdx1Ze14";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W9LysrWk"
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6176025400CA;
-	Mon, 21 Oct 2024 12:48:41 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C6BFB25400C3;
+	Mon, 21 Oct 2024 12:51:43 -0400 (EDT)
 Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 21 Oct 2024 12:48:41 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 21 Oct 2024 12:51:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729529321;
-	 x=1729615721; bh=zPPJJshDYebGj/KDYwfCRMYXHwLwaLc9eZHILl8r+jI=; b=
-	mWutuLTurtE+6yYD490/E6nJSKuEOmFUUrZq2LM1qbXfdr4bRJVDkE20GFMxWUqZ
-	TCc0gGsHI1m15RE4QCi2BuZxhCjYk9K+ADdj9BrhqYxuanZrVxWvKuRNdnS345MD
-	yTTNh/ALv1JAQYYSeT5IUNaCIuLIkjLmv1FmwHsFgHhqtae/PLyjL6qeHQ1LDY2O
-	FkPL0IVV3cK/8+vlpNeY0iZ4Cri+gfaWVeRCRJu20/2c9b7df26OVWq9ophSD3uL
-	bpeyzFaape1UJv71BgLmJ00fUeCzbKMlolrbDnYz/SZ4+6ekfZNky2KigcRFfLoq
-	00xZfBq54+OW6gHR/qbw6Q==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729529503;
+	 x=1729615903; bh=QmAAyzBuSaAtBE/YzXC4lEhlcO3tBpxHbBRHDf8fDOA=; b=
+	Hdx1Ze14iB3nFIOHmLQtpUJdEVzIcHXFgM1Up20zsk6yR92X52kJSTqqu3dtBBK+
+	5QYadGeyeYxBQ7HPTTRW9nBVlTLZ0KITgth512mSNdCnzD5MEv+Z+8iHdTaJPgik
+	Jan+a8qRy48vhquA/9z59ba7egB2SyYQ7XjPBlf9pYYwfTXYN0vRWb+Ae5/kE13k
+	AX0XOqWKOnOyHR01ycQVzw+3I6r9arB6osv5ZEt1RcnPRpiOe3hyxgDunPVKYPCk
+	d018FvnYxnbfdwh6EPNRbEiQdPClbDbYc68BNVNJjuIhDV823T06+09P0eU9R9hx
+	k6CyuiGk31PFJa2gje68IA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729529321; x=
-	1729615721; bh=zPPJJshDYebGj/KDYwfCRMYXHwLwaLc9eZHILl8r+jI=; b=l
-	zxTdNpO3vpiUV+lJjElK2I1ZwVrQRYuGTZpJ0Lni5pRT7vjPfoBRUAXWifFgst02
-	ez4+iN56Z9AJnCJImsvfH+8XoFTK16dKnugKqFz16aVmgUkZc8GmBwR5POJX2WXM
-	jgDikGnG4Fi5NBqtgC/xXnmIt53yylqs0m5wqi7jSCbljo/dP8BlWmf7ANmMSVs5
-	5zNj2NW71QtjGY5zskGUHZcjAbrvKx41SrzIJUQS8Di2eu3IsDp082e8WTrQaWxr
-	E6zveLyos71WNKMLbhZTN5U137C2/Um+SpZGXG4JE/9VLGuCBga21DbiGwGt/gUR
-	qy1bBrbnzdEeGy/egypNQ==
-X-ME-Sender: <xms:6IUWZ4QYUzwiDO92IgsvxsAIoyK6NcrHpuNiBqdDzyVBEjvmsXVdAk0>
-    <xme:6IUWZ1wkDrFzYrt04emLmcaiV7nQLgoz0HQs0nl111_YaKwfpDLzLKe4oLC6euCEH
-    fk0sKUZTao93_MARg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729529503; x=
+	1729615903; bh=QmAAyzBuSaAtBE/YzXC4lEhlcO3tBpxHbBRHDf8fDOA=; b=W
+	9LysrWks3cO07QDiDB1rgAhZjv1Yhs80xKzGvtPuEtk75QKdLttX5IaKxryuJIj7
+	OIXGl+SBAFJ+8sQ39h59WUCXnWPI+dA4Cy0/5N5QEiTtTykOHNtn4SXL+GZYBUqn
+	WUnFG6AVU4dtZbKjEGMcfZyJOrbfxqIy6w78fZhlk2UkVFFu9EvdRjZWBZHNS72C
+	/lR9aYwITP+iqi8jYgw4KgTKu0H6GTM4NH7aco/CWRLWdi5IdL7zNS/fBPqiu2pG
+	Yq5Elix+CWiWP+HNUxn0uWx6GH8Y3mquJelBA+3J0MKe6xg1i1OifYWLLJDYQeEc
+	j/QHzuUGdqty1XPkqTizg==
+X-ME-Sender: <xms:n4YWZ-G5zgdBCjlpQ_cNqBLeY5ZX4j1voKMPq_maLcspi3QTmM7qntY>
+    <xme:n4YWZ_VmZ885bWtOFEgVC9qKyu6iL9_92ksOPj3IJDEzD7kZBWPuK5MRcS8fUEuL6
+    apwYmH1kMQZFloU2g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredt
+    tdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
     hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
-    rghtthgvrhhnpefgleegffegkeehkedtgffgheeifedvgeekjedtvdeglefhjeegueelie
-    ffjeeuteenucffohhmrghinheplhhoghgrlhhlrhgvfhhuphgurghtvghsrdhhmhenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtoh
-    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthht
-    ohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghouggvsehkhhgruhhgsh
-    gsrghkkhdrnhgrmhgvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:6YUWZ1174FvpL---qHg4ktWNXoHvtDbw6I_YU9iKj77Uvi2KaE5R1A>
-    <xmx:6YUWZ8CACXIh3BQVML0ULcQM1LcHucGBpVoHPNCyEt0JzBDzokjwig>
-    <xmx:6YUWZxgW_IR9N4vh_QfMUz9VKwg_nzp2PCPaS5FJyefg-F_hWLQLKw>
-    <xmx:6YUWZ4qUNcqp7gtor6C6PT6eV7AY-mq9xEfObdMt5ACRLuZ12ks0qw>
-    <xmx:6YUWZ0vOeoxgFwKZWZ_JZ79fvpmEN9nlZOgAqyDeqzn9XVLKL8_C367z>
+    rghtthgvrhhnpeffueeuieehheffjeegtdevfeehtdfhvedvgeduledtffehjedvhfejud
+    ffheegleenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihii
+    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgsh
+    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:n4YWZ4JMw4zqobmZUGnGHtFaD9k-1UiQQGGVzCJv2_XMDvS0BcDWIQ>
+    <xmx:n4YWZ4HLn-5pFesipH1mbyUW8LvA0uP6uL5CSQiDa1FHxrLwM1dl-g>
+    <xmx:n4YWZ0VQD-A-N0gwyFLK4efwXKS8_usafuingOUsuhzVgMibLdS2YQ>
+    <xmx:n4YWZ7PHJX_-UhCd1t8NvyYsbfUxj0JdW2Rb4PzBAk6eGTwpWm5SuQ>
+    <xmx:n4YWZxhBmJa36P6vfFPqS9cKnI33iTl5AIGExYTclguzX6OMt9ANU4lR>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id E11EA780068; Mon, 21 Oct 2024 12:48:40 -0400 (EDT)
+	id 59EE278006A; Mon, 21 Oct 2024 12:51:43 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,67 +77,33 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 21 Oct 2024 18:48:20 +0200
+Date: Mon, 21 Oct 2024 18:51:22 +0200
 From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Message-Id: <d66936b8-d12b-4035-b563-328ae9fc4824@app.fastmail.com>
-In-Reply-To: <ZxZETN7WjbNiSRyF@pks.im>
-References: 
- <ab7d4c8d89c075de05bf04f1f9dc195145455964.1729439476.git.code@khaugsbakk.name>
- <ZxZETN7WjbNiSRyF@pks.im>
-Subject: Re: [PATCH] t1400: fix --no-create-reflog test and description
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: "Karthik Nayak" <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <aba3d76c-5234-4875-a1a7-b212bb27b266@app.fastmail.com>
+In-Reply-To: <20241021124145.636561-1-karthik.188@gmail.com>
+References: <20241021124145.636561-1-karthik.188@gmail.com>
+Subject: Re: [PATCH] CodingGuidelines: discourage arbitrary suffixes in function names
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 21, 2024, at 14:08, Patrick Steinhardt wrote:
->> [=E2=80=A6]
->> Notes (series):
->>     From the commit message:
->>
->>       =E2=80=9C The test itself is fine and does not hide a bug:
->>         `--no-create-reflog` is not supposed to override
->>
->>     A source for that: roundabout through git-branch(1):
->>
->>       =E2=80=9C The negated form --no-create-reflog only overrides an=
- earlier
->>         --create-reflog, but currently does not negate the setting of
->>         core.logAllRefUpdates.
+On Mon, Oct 21, 2024, at 14:41, Karthik Nayak wrote:
+> We often name functions with arbitrary suffixes like `_1` as an
+> extension of another existing function. This created confusion and
+> doesn't provide good clarity into the functions purpose. Let's document
+> good function naming etiquette in our CodingGuidelines.
 >
-> Hm. The "currently" reads as if this was a known shortcoming rather th=
-an
-> by design.
-
-I read it as =E2=80=9Cwe might change our minds here=E2=80=94watch out=E2=
-=80=9D.  ;)
-
-It feels very emphasized.  Like the documentation was expecting
-your surprise.
-
->>     I *suppose* that the same applies to update-ref since (I suppose)=
- they
->>     use the same underlying machinery.
->>
->>     See also git-tag(1) which says the same thing.
->>
->>     update-ref should document the same thing, then.  I have that mar=
-ked as
->>     a todo item.  The changes there are a bit too involved to implica=
-te in
->>     this submission.
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
 >
-> So I'm quite torn here. It's documented, even though the documentation
-> doesn't exactly feel like this was designed, but rather like it was a
-> side effect. The test also contradicts the documentation, even though =
-it
-> only worked by chance. And as mentioned above, everywhere else we
-> typically have a design where the command line option overrides the
-> config.
+> This is mostly in response to an ongoing thread [1] where I ran into one of
+> these functions and it really took me a while to wrap my head around what the
+> function does.
 >
-> Overall I'm rather leaning into the direction of making this work
-> properly. But that would of course be a backwards-incompatible change.
+> [1]:
+> https://lore.kernel.org/git/CAOLa=ZREg3xuaT6mbM8+Havn3regZDhK45kGy0+Fw8t56c7Mpg@mail.gmail.com/#R
 
-Good point.  It does feel inconsistent.  I agree that the conventional
-pattern (to my knowledge) is to have options override config when the
-options are given.
+I was wondering whether it would make sense to use that link in this
+document for the context.  But I see that there is only one instance
+of that in the current document.
