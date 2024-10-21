@@ -1,101 +1,100 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B325010A3E
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 21:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353E710A3E
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 21:44:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729547032; cv=none; b=k1C/K1EBl8pkPgdg/K1jKHjTo12th62z3xHDcRJDwk5rF+Lnr/CjRZqhcDrGIpGNEC1IrM3q0hoUjQ9wjip4OKRURceI3PEqOWDRsoYkV7zKu0turFWP6rDqzKNO8MGUKVj+iRNK1wqJikkmzrblH8kEhAn0e7urn5CgosoY478=
+	t=1729547069; cv=none; b=K5vf/5TrbsTjDIfIj12jlHe+zsTPRsP40D8V+cicyEEOU8ztl0N1F4rQgO26+k1C+Zhl8ViDNRUPLzdfZECiM7DQ2SgAiu8dUXsImphGIcXpiOdhmapOI/KhZL3NppKEhl4hc6lDX0NR90hMbTiOGjrSoMAiGQOjCsbMTpIHghM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729547032; c=relaxed/simple;
-	bh=isT/FtjiS59A4BsmrDgG2IepEP5XM4u/pWYY28SnnK8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RzNDwOjIFDEVE1c8KOAeePcF3zQBDwyakxbDG5XHeIV5PvYNdOKx8OXlmKCMP4yNuDGBN/aG79hP1Y+LIaOzQZ1c77vK0Yr6ylS+/0TV4AxpPHOKKiazRBzvLiTH5LC4kkJXCQZAjHwDSV0cv5YsRTL5c4IFmyO3bK3Wusu+JFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=VZFKazhs; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1729547069; c=relaxed/simple;
+	bh=fOHgzyGHr8qC8/3UkmSpaoWnge4VxS3W8c6Dcit4/FY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Y0lkZifg8DtyD/fIP43lWjdiMKFMRi2CZzvdaSrAjvcP7Xlwl2uf5JHSJn9uNk3JPHqoGQay96GwLq7cZB5io4i1iPGMKwbi9ccny94s4f1hcUuHUylVDQsgYZ8pxHjquJ3SG/BKr7+8wXwmwzXhOsMst4v7ym9DmVOxq5EvZn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f3XmDRLf; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="VZFKazhs"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6e3881042dcso44222127b3.0
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 14:43:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f3XmDRLf"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4315839a7c9so54639595e9.3
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 14:44:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729547029; x=1730151829; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OkVHxt75CXeLvBxL2jbbhmCnrSDpR12gn18sg5jakiM=;
-        b=VZFKazhsRNo96XTL2eK+h1L9C7WP5F2l0hGVhdaXt2BvZ+z71p2FH47EDJBapS3Irh
-         cQun0zQEm+awJcUepc0xI1GKXpVJmysoThURD5F/+dsXXMKaI9lvCh4GCGrWoODRCnEY
-         m12kTvvqYt2/bqngfDt6tjqRvGhnolJ7CTVGDccLTFGCilww0p/FGfZ7JCdvbJUxlgcz
-         Qub8aYgvipoW7ZrD8ZNU946vTOK3P3ljMgUQkdeaUDFJV4g1FcJKafob2ONxR0CsQFUi
-         GmvgnocEHX0s7qIyaPsUAZxpcW+K8fz8cGZZfDXsZ/Ed7l+Vb2CEt3+XkniIsA+ZbgRi
-         WmWA==
+        d=gmail.com; s=20230601; t=1729547065; x=1730151865; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=oSJGzj7cwFXP3YVip6riaYxot8ekV4OZF40mwtOJXGw=;
+        b=f3XmDRLfM67I7ASVFIoyUI9ToQ3cofwnx5P7kOPi3yTpLviftUzNiNjYz5oGELEK3M
+         cmPQD0DsF/GcHAP/u/08vKMdH+fu0d4pa1UAoTlW6+2xppdJp6VCVnQzYSpjJDlab8+J
+         mYixv2jwbUP362TgTXUidFrPXzKiriVl4PmBCAeYM/9+Q2pftANikGkzNjk6fnjOcgwe
+         9OMabk0wUZd7xhwr7bO511J6opUNtGX/I9PLvtgBjc4AgkCCpgE8gvO0Zg2myv7bZsGb
+         ATQp4j707OMUcUKpNAf3syL2Th5R/UnD0bz9QtF8U123VSWNnS3/wHfgzRVemybVx5Zk
+         FPIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729547029; x=1730151829;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OkVHxt75CXeLvBxL2jbbhmCnrSDpR12gn18sg5jakiM=;
-        b=mT7HtcWNd9K71WsKL4+1hdFJF8PhT1ndsxJAKiX4baekGe35v//zXGuBm0kjKOdibn
-         LdvT0t/Wl2+LxCZ5qaWvEMfwQkofsP/g7Suk4N+QkNt6eFE6/hhVGhpP7OESSwx7tq4B
-         4Ks/1UI+sEB1ULv/syoSiGYC94JohcS5y6+XNFwy5fASP9+QRkYlIC/0rw2BVzybqmPx
-         sBSCRdQTjhq82R1jru8wfsPjruFm6QrTnRRzeciyXX63EfyAGmqrcXP1R0r5AUgD9SeM
-         Wf0k/MZ9Z7QQNwczUXJYRANTE3zS8BMixImxEtEzIPOnwY7xJDKbdToLcGYFvGNweoZR
-         EqYg==
-X-Gm-Message-State: AOJu0Yw+oYvK+sFDXm0aVhTQ9BzwqliRQowcJ1+uxiRmVbsCAgp8Og/u
-	f7vw8IIEY4/9gV5WW5CuA/AKJVQIsI+F1u2ULk4m963LmMkNdfarwg9SDa0Mq40=
-X-Google-Smtp-Source: AGHT+IEHTrgfm8J6ygVF9LpzMO+l4IwV1EoHnMKYXVmoXtrGbWnRL0gXtkh749DhuseapAOQB3iQBQ==
-X-Received: by 2002:a05:690c:7446:b0:6e5:907a:5170 with SMTP id 00721157ae682-6e5bfee7accmr126667757b3.43.1729547029594;
-        Mon, 21 Oct 2024 14:43:49 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5d6f91csm8224977b3.140.2024.10.21.14.43.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 14:43:49 -0700 (PDT)
-Date: Mon, 21 Oct 2024 17:43:48 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-	peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
-	christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 00/17] pack-objects: add --path-walk option for better
- deltas
-Message-ID: <ZxbLFLDgCm6wLmB9@nand.local>
-References: <pull.1813.git.1728396723.gitgitgadget@gmail.com>
- <pull.1813.v2.git.1729431810.gitgitgadget@gmail.com>
+        d=1e100.net; s=20230601; t=1729547065; x=1730151865;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oSJGzj7cwFXP3YVip6riaYxot8ekV4OZF40mwtOJXGw=;
+        b=F74AYeZ9yQjtnHpud3rI0LYUlukQZIl5WG7ng9oRC4k7pIE66XY4z19HYDpEDdceq4
+         6Dr2IIAme9+MHmuWdzPN2ENh327HwIgLtwVUMLlLfZiWaH1/i0G7Th49znNH9Nwdfg3n
+         c1s9LLobfGevwY9BWBGXCnhr/HYSLNvW8dy03IhxuuEZsLccA3zPvQrktPsx9EJWxeTK
+         0ktyGOl9/BfGxke3hNcG0RrlwiX3mf16PJaJc4EXwdBYO2ORksyjk88IGJAvUNhRcpjg
+         IdKGJoPzXaJ+6Mk2AjvwTdEc2ahTllfVZy2MAAOembX9yoduNtyTzjJOYwz4LCyigiie
+         v6Kg==
+X-Forwarded-Encrypted: i=1; AJvYcCWuk733AKvMK3h4XPzxw8KIseCrolcm2e9MFo1FWt49O4Esoko3TGA/Z3+cy22GHnBTEj4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw8dSapUO9CAPidenghTUsQO8/p46cYErVIUPqPhbYZ1RdnRksq
+	dMPpnRcomBd0RxjYyMcwcgOnQht1GumxgDxEe5pohRrzt6t1D/tuqaZj8sLuFN+Da5QP0IrrRjr
+	YyWt3YlJGzO/NP3q7+Kz/PXVdZNw=
+X-Google-Smtp-Source: AGHT+IF8RhYVeed8scP7kcdf/3aw6HemRNu+S2DV5QBF2rhT76tsdvdPSDCeW8hXBGdm0dpnHEB51yE2dOvFiBEOgMQ=
+X-Received: by 2002:a05:600c:1d04:b0:431:1a98:cb40 with SMTP id
+ 5b1f17b1804b1-43161667bddmr79195465e9.18.1729547065137; Mon, 21 Oct 2024
+ 14:44:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1813.v2.git.1729431810.gitgitgadget@gmail.com>
+References: <pull.1817.v3.git.1729521495497.gitgitgadget@gmail.com>
+ <pull.1817.v4.git.1729534340786.gitgitgadget@gmail.com> <ZxaxHmIP0iJZfvHr@nand.local>
+In-Reply-To: <ZxaxHmIP0iJZfvHr@nand.local>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Mon, 21 Oct 2024 22:44:15 +0100
+Message-ID: <CADYq+fbHKf=YZvLYnWPyqctFeunz0dPxt_aw3t-J2Zd_-vpMfA@mail.gmail.com>
+Subject: Re: [PATCH v4] notes: teach the -e option to edit messages in editor
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Samuel Adekunle Abraham via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Oct 20, 2024 at 01:43:13PM +0000, Derrick Stolee via GitGitGadget wrote:
-> Updates in v2
-> =============
+On Mon, 21 Oct 2024, 20:53 Taylor Blau, <me@ttaylorr.com> wrote:
 >
-> I'm sending this v2 to request some review feedback on the series. I'm sorry
-> it's so long.
+> On Mon, Oct 21, 2024 at 06:12:20PM +0000, Samuel Adekunle Abraham via GitGitGadget wrote:
+> > From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+> >
+> > Notes can be added to a commit using:
+> >       - "-m" to provide a message on the command line.
+> >       - -C to copy a note from a blob object.
+> >       - -F to read the note from a file.
+> > When these options are used, Git does not open an editor,
+> > it simply takes the content provided via these options and
+> > attaches it to the commit as a note.
+> >
+> > Improve flexibility to fine-tune the note before finalizing it
+> > by allowing the messages to be prefilled in the editor and edited
+> > after the messages have been provided through -[mF].
+> >
+> > Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
 >
-> There are two updates in this version:
+> Thanks, will queue.
 >
->  * Fixed a performance issue in the presence of many annotated tags. This is
->    caught by p5313 when run on a repo with 10,000+ annotated tags.
->  * The Scalar config was previously wrong and should be pack.usePathWalk,
->    not push.usePathWalk.
 
-Thanks. I queued the new round. As an aside, I would like to find the
-time to review this series in depth, but haven't been able to do so
-while also trying to keep up with the volume of the rest of the list.
-
-I know that this topic was split out of a larger one. It may be worth
-seeing if there is a way to split this topic out into multiple series
-that are more easily review-able, but still sensible on their own.
-
-I haven't looked in enough depth to know myself whether such a cut
-exists, but it is worth thinking about if you haven't done so already.
-
-Thanks,
-Taylor
+Thank you, Taylor, my Outreachy mentors Patrick and Phillip, Junio,
+and all the maintainers for your time and patience in reviewing
+my patches. It has been a good learning period. Thanks once again.
+Abraham Samuel
+>
+> Thanks,
+> Taylor
