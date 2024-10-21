@@ -1,113 +1,115 @@
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C171E908C
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 13:44:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801A31FA261
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 13:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729518247; cv=none; b=jYCkwGVw8OrUtq6tIDPRG8wE7WulEH3GMyGMdRF8R5K5I8dbJQm0/KJjkbwb0mhkf8Jq3Dbmk1aMaNtZ87mkSwOVU3G62/W+RXzcMZ2s/v+UopzZsjOdvmK/h1ANd1MNTLh7h3vPqDKMIOcEhSOMqg6UjL4pwoeawmcKkKOOxO8=
+	t=1729518286; cv=none; b=LGjse0ftDF6B4Uh5qP/CiDEXzDMJmXR6snNXfn9NbIi8vvC1E57h7fOxsAt3ApoRIIV2PTahc5KUb33qZcBJUYUqDxye88Q1djuuQtmoIgaCT2eInjVU9ctAi1GENVgS+BmCzd884vXmyAPDdIPZbwwI4QRF8ySXjT6owc2QkJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729518247; c=relaxed/simple;
-	bh=yIL5B0+q/twhzRm6UZs07jB8n7MzugikkrllJ97LCyk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=duRrPUlamnRw/uG/6Rdf+Oa2dLHJSZ7WP3UJyHTbtTF3NJfZj1PmHYAt6LoxhBJ5hB1j7/tpkBplYknkLev31WS7qMO03WMT1dV/apPEA+9Zt3fVon1xqmmgnHoCgV5f/MTmuH5lA2FnhKI2Jy3BLoVXQc8fnPNHASYMQQSKRBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VQ9acyAH; arc=none smtp.client-ip=209.85.222.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729518286; c=relaxed/simple;
+	bh=eAXOtpa6NMJl6qAPu34YV/hIGn0EFneztIyqdiuBl9o=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=GyD0T53pdhe6Pa17wr3ICQqwK7+lgICXb0CxJmx5C54NII4U9Q7yrVieERFQwAUYCR+nZi2SrQzFYZZws0Y4ViSgs+99rfY+F+Vu7AeDSiZ9UD6mnbkzzjBiVXZg9ymw5v9v6WEo3ZVcKcjmolDNcMHoQfdKaxGf055NcXmF+Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=CbooMEvV; arc=none smtp.client-ip=192.29.178.127
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VQ9acyAH"
-Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-84fdf96b31aso1379722241.2
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 06:44:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729518244; x=1730123044; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GtZa+QkKHubAiAvcurtgNm6sIHnLhm8H5WgqriaTtEo=;
-        b=VQ9acyAH1bksoA9whzwkOv/6bm6aVAZvoKlSjGai9sW96tKQyHFFaXmzU7unoIAwxy
-         pnCWz5gjPAQt31izXrXp12Cur1TlTyjJ2Bu2GXlYWwHWNSB5xjeGnGoUjSAQCkgmoUyp
-         W/D9UkmOMtXDiJDLOKcvLYopzRRPH3IpI19yN0VXSa0h2Ug5b2gYYPITsHR9/Lt4f37T
-         CYIOfbOKiXvctu0+5Vo0wu8K1RR+LYaVSv6Lq5BhQ3tOv5B9ByG9n7qAHY3Y6rDdhniX
-         XR8syc0PBclemfsxsMle2ndxAZm1wcYgjvZPwMwFFlPoiF1YQxGbcE/qd/LjWyYZawsf
-         JQKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729518244; x=1730123044;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GtZa+QkKHubAiAvcurtgNm6sIHnLhm8H5WgqriaTtEo=;
-        b=E5vYF3mwYi/k616P5BnSrlc3ss1Eyo0z4Ss5VNfMORBTiKI+p+MeUQgFNabkq+Ivua
-         hC79zLQ9I/ztpNir7KQtJmo39BRdbu94kYLh4Bti8aT7p1RHFlxluOxFI/u3qwTDlGNj
-         MPwy3/IpJS8/6ya35DQLl8cz48PKolWzVgqiMGk9hR+f3vkfsMbgKfwk8ISKxYgPnblY
-         HWIgNYI7F9t6IQdVErSi1rlyoDXzCnIZNkPCpkZLTfimriVvno2LANaZ0S30C1lC/k4z
-         Jm6gpMFGzck8YxXOqBGvj5l/zJgcedj4sxahkNvSbjuUfpg+CBi5Az0YQeyslDgbmvp0
-         xLiw==
-X-Forwarded-Encrypted: i=1; AJvYcCW9uflIV6GNhwoSPJ3d0grN8cKf4qA99dtbs+8I205nu91DHVTq5ku0GT8HGPYWsBYX2YA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YznI4oafmEtqmByC6HH7kuIWxZrGpV6DfarY1AAWtmDevS2WCur
-	aLminRuUXLJ3XE4ja7O3reu4qfnWvtELg/uj/UtN11OAKbKzHqb1zVzSZ8PxmAGsOLKe4+wO1fY
-	r1BOPQ1z0puT0nFu/eRpnJ8l2Xfq+Vw1T
-X-Google-Smtp-Source: AGHT+IExKlaXBPTj1Q+n/js1j1khTbCCbqmJsL1Kr86e5JhLK2oqpMhn591XmFIKNumdhP/Q0UD5QTvE8a7WQiAUEGs=
-X-Received: by 2002:a05:6122:552:b0:50d:39aa:787b with SMTP id
- 71dfb90a1353d-50dd98d4f15mr9194320e0c.0.1729518243908; Mon, 21 Oct 2024
- 06:44:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="CbooMEvV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=2UegkU74oouWY58Y2kCPdOKL3cLfLwTDr/2EeB/Wcsk=;
+ b=CbooMEvVliRLw9Du+KnM3UgsfPzh6xMT/hjpkjm+tzSBT7isaAPoJcwEZvad8NmlLHhYoeI22BfC
+   yq3okUPXePToXJqf2byCymHXIkxk0jOxp6bvBWikSt4emzg0Of8rO8QCojcYaGoAU3OqYUItJdJi
+   EChMqiWGKdh3hhsbhdxh7zBJfLnLr3/9Vay0oLkiLVgZgNZfVCtcvkuOGHB1yo6OvHiJtE2gggY5
+   Nf72ZnPl1AQIbJoQwRYSjJQD8dZNu0cOO7fNpyziCu4MlsU1fpe+EolXQC+EXd/J25zA6R2k+X0T
+   qsq7nzLdo1Y3E9bIvh3p0G9Ro0JKxAj985Vh4Q==
+Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SLP00726KUCRM00@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Mon, 21 Oct 2024 13:44:36 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: =?UTF-8?q?F=C5=91v=C3=A1rosi=20V=C3=ADzm=C5=B1vek=20Zrt=2E?=
+ <noreply@vizmuvek.hu>,	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH v10 0/8] set-head/fetch remote/HEAD updates
+Date: Mon, 21 Oct 2024 15:36:57 +0200
+Message-id: <20241021134354.705636-1-bence@ferdinandy.com>
+In-reply-to: <1088915169.629942.1729445083543@FVRT-HAMMYAS-P.vizmuvek.hu>
+References: <1088915169.629942.1729445083543@FVRT-HAMMYAS-P.vizmuvek.hu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
- <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com> <a333d8a40134f4a06812fdbf85c2b011e9d3e472.1729259580.git.gitgitgadget@gmail.com>
- <ZxZHFY4cXQ1lA4QU@pks.im>
-In-Reply-To: <ZxZHFY4cXQ1lA4QU@pks.im>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Mon, 21 Oct 2024 13:43:53 +0000
-Message-ID: <CAPSxiM_+4ZaaiyvWDVwXf3tnt08otsx=1dcJJtQsL7h59dO8kQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] daemon: replace atoi() with strtoul_ui() and strtol_i()
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAGKQKp0eSHkB/MBfNPQLYFnMiOGBdGLhzF7U4/j75BiK9nU/kpGSfTnKXbeOE3M
+ ++x4+j0FghhrTN7ScZ0N+hHho01Zki0BZtTS38cBAr2wZz1T+tIvGurFjSE+B/xC
+ 9Q2hnJm4LhfKBlzdjIiQOvTlyViIvHljWPkWzE00gK2ByJCMkHWwui3a20NI2/YJ
+ gTDqZTBfughZvBTcnFgBOazxlSTGrEYE9hU4V5n91cJIioJYPwR8+LkRbemJftD6
+ czsmifuNzqsdYMP9yPBJr2Glk9fLTxW5XRo+3CS/obAEsbZZ7066/PmNzltnitGe
+ XR2zlj9cTSHuejzfR+GOmV3BnEgUoImTj20ALHWI45nECuTqPq/SiWUQ4YWI17QJ
+ eadcfA8Jl3iSTksSOSJPBVgA4YYpXfIL5Vs5q2CnUG+jZDOI5V5OjoCEPFnG8cfz
+ GE2Bgjv/77P0HG9Qt0XTdF041LA7se82l9CtYWwjA3ODluJQOFG4TSs=
 
-On Mon, Oct 21, 2024 at 1:36=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Fri, Oct 18, 2024 at 01:52:58PM +0000, Usman Akinyemi via GitGitGadget=
- wrote:
-> > diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-> > index c5f08b67996..c73c2196981 100755
-> > --- a/t/t5570-git-daemon.sh
-> > +++ b/t/t5570-git-daemon.sh
-> > @@ -1,6 +1,6 @@
-> >  #!/bin/sh
-> >
-> > -test_description=3D'test fetching over git protocol'
-> > +test_description=3D'test fetching over git protocol and daemon rejects=
- invalid options'
-> >  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
-> >  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> >
->
-> Hum. I think the test description can stay as-is, as we don't typically
-> mention all the exact details of what we test in a test suite. But I
-> also don't mind this too much.
-Ohh, noted. I just thought the test description does not have anything
-about merge.
->
-> > @@ -8,6 +8,31 @@ TEST_PASSES_SANITIZE_LEAK=3Dtrue
-> >  . ./test-lib.sh
-> >
-> >  . "$TEST_DIRECTORY"/lib-git-daemon.sh
-> > +
-> > +test_expect_success 'daemon rejects invalid --init-timeout values' '
-> > +     for arg in "3a" "-3"
-> > +     do
-> > +             test_must_fail git daemon --init-timeout=3D"$arg" 2>actua=
-l_error &&
-> > +             test_write_lines "fatal: invalid init-timeout '\''$arg'\'=
-', expecting a non-negative integer" >expected &&
->
-> You can use ${SQ} instead of '\'', also for the other two tests.
-Will make a change now.
->
-> Patrick
+Sorry for sending a v10 so soon after v9 without really waiting for feedback,
+but as I started digging into
+https://lore.kernel.org/git/D4ZAELFWJMKN.S88LJ6YK31LZ@ferdinandy.com/ I
+realized that the root cause is in fetch and not remote add, so the solution
+belongs to this series. I'll leave my overall comments for v9 in here for
+clarity.
+
+v10: added a new patch (8/8) on top of v9 to handle HEAD in mirrored bare
+repositories, rest of the patches are unchanged
+
+v9:
+the two most notable changes are
+- the new patch 1/7 which address
+  https://lore.kernel.org/git/Zw8IKyPkG0Hr6%2F5t@nand.local/, but see
+  https://lore.kernel.org/git/D4ZAELFWJMKN.S88LJ6YK31LZ@ferdinandy.com/
+- the refs_update_symref -> refs_update_symref_extended change in 2/7,
+  reflecting on Phillip's comments (see
+  https://lore.kernel.org/git/a7cb48e5-d8ba-44c1-9dbe-d1e8f8a63e3c@gmail.com/)
+
+Hopefully with 1/7 the series is ready to move back to seen :)
+
+Best,
+Bence
+
+Bence Ferdinandy (8):
+  t/t5505-remote: set default branch to main
+  refs: atomically record overwritten ref in update_symref
+  remote set-head: refactor for readability
+  remote set-head: better output for --auto
+  refs: add TRANSACTION_CREATE_EXISTS error
+  refs: add create_only option to refs_update_symref_extended
+  fetch: set remote/HEAD if it does not exist
+  fetch set_head: handle mirrored bare repositories
+
+ builtin/fetch.c                  |  90 ++++++++++++
+ builtin/remote.c                 |  52 +++++--
+ refs.c                           |  41 +++++-
+ refs.h                           |   8 +-
+ refs/files-backend.c             |  24 ++--
+ refs/reftable-backend.c          |   6 +-
+ t/t4207-log-decoration-colors.sh |   3 +-
+ t/t5505-remote.sh                |  83 ++++++++++-
+ t/t5510-fetch.sh                 | 229 ++++++++++++++++---------------
+ t/t5512-ls-remote.sh             |   2 +
+ t/t5514-fetch-multiple.sh        |  17 ++-
+ t/t5516-fetch-push.sh            |   3 +-
+ t/t5527-fetch-odd-refs.sh        |   3 +-
+ t/t7900-maintenance.sh           |   3 +-
+ t/t9210-scalar.sh                |   5 +-
+ t/t9211-scalar-clone.sh          |   6 +-
+ t/t9902-completion.sh            |  65 +++++++++
+ 17 files changed, 486 insertions(+), 154 deletions(-)
+
+-- 
+2.47.0.94.g8861098b6d
+
