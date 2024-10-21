@@ -1,53 +1,53 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E73C1F4288
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 12:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA72E1E8847
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 12:20:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729513254; cv=none; b=BsrUeSttLNySmHS0/NjomKzDcIokefik+5RnLfG5yQU0x//Yo0FvcgKqkFjOcLbX7ejVwGRCUBNzRVnR8olS6EiSw47RhXhAZ6UYuqY5oRj3ABaw2ccZ55PUeX/yXmApTraXYxKcmj1+BxNkSIahh4dOGt8DJO4HMiGHELqyarA=
+	t=1729513256; cv=none; b=tOewxHI6B7eC8WpcShDKcTHgz5C5yHZJbGCxQ2ckNTXfSRKCROUzQ1dM/TC85ko/I6XLprloAgtTkEg7XB8Wr60RrEpcntab8BavV/r6W/jKTWQmJTOR1BqIVjbG/eUXIPcGjYzgDCWUfVVbnHo7xjoGYm+RLX6E8eXU66mCmeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729513254; c=relaxed/simple;
-	bh=BrAQQAgNhqfHaShJ+98kcMbJ4CxSI3bdaYnZi+Bgw3I=;
+	s=arc-20240116; t=1729513256; c=relaxed/simple;
+	bh=N4lw5D6wC2Ubi4YTTb654tjn+Eedj/t57EoM9W56EZI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ePVeng885XcwPTmxQ9BZDKrOwdfoAbdspv9QKO+PXN1KBQ+1N2i1h6q9Cgle6iCI2ThgodUbTTAeV1gHnHAeiqHMmg4zHIF7/Zq51P3CZpWLcqCAb4gS8KxUqfpkuAhEnGRma7q0LqqCI85vWWgEEIU2QfUgGOGwp5NfkE1UNAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rNb2HoWb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fmwveLJN; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=P0odOeTHAoc2eQH2R+v5H5u3m0s70x/zrMQ7+CSbPfcAucFdm7EcdSEsfYlc+A1U1PlvfAuzrI0lZ3nJqIpDjKxVwgqOSpaFUQJ9FrpA5Dd9CYnCt0wINZnJoI76C6Kas279SJnm5NoVjXVx5tItTepJcdDOmAcf9hm2tcExW7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rBSulwdu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cEZrl6q9; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rNb2HoWb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fmwveLJN"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B4C1D114024B;
-	Mon, 21 Oct 2024 08:20:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rBSulwdu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cEZrl6q9"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id E877813806A3;
+	Mon, 21 Oct 2024 08:20:53 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 21 Oct 2024 08:20:51 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 21 Oct 2024 08:20:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1729513251; x=1729599651; bh=d6Sbm4aXNb
-	4W7IhOl1NI6e2jr/ZV4rI4jfLPc5muJDs=; b=rNb2HoWbTfFFl9OCMckQjVLqxg
-	8sz+zu0n/8RxvrbKwvrEtQ4r59OU6OmdFYNRdqdidbd4iyIVt/g7bXpM2uHuuNLY
-	M4Nlqm2FF83MbRDpfNtGt11gYrkh1ouY1rpABSHnOtzdM3WdUEDbYTKwJtZTWaUj
-	sjtKC09dTLBxiUObdHE7ibIKuAvxgg7aWmv/X0cFovVBILpQ6i1NcEpmXKXTZAVf
-	h5CTRxDxHy5LwK5vEe/2j2BQlk6z2OfkfdunW1v+R9XvC3EnYN9yZ7ntEc5Y3zGH
-	E2izzcYYGIeKyIw9o0g1MpmuJ6Vtxt20zKmSUALBxR4V0pxis7asRKbL+2Uw==
+	:subject:to:to; s=fm3; t=1729513253; x=1729599653; bh=FZQzc5ZgdI
+	jrMsF6lJaIlVREiqAupsQH46DQx+nlV40=; b=rBSulwduLZOMt0PcbSBEKlxJz6
+	kTUWuN1FVgQkZVsrAXG/Lyw1609AEQ/wKXZr2XiAdYAGjMHn0xZ/7HofiWBa8Z1q
+	p0VLU68BLFxzeFMJItvX/tUHs3wWZNJQH/pk0ias5xz6kzFHgCXvilF2vgVS6A3/
+	7SBnrwMIZALZL5GgWJ4Z0tnfpNKtURiop+8bW10uqlO8jd5wfGFlPL0CXrmMhzh3
+	31e2JG/LbeLgh+2kcnuB+S2tcoRQdhuvxNB86saoS4l9TmvaUNJaJeed1UDa+MjW
+	hVE8B5oWv3oBBl6Pq4JroIg5/eelxYeO+zrHfEb+g+uWjq6yW8N86heG6YMw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1729513251; x=1729599651; bh=d6Sbm4aXNb4W7IhOl1NI6e2jr/ZV
-	4rI4jfLPc5muJDs=; b=fmwveLJNeY8LdNTFTBmpbhW/tQYsRrRzcEj6/dUMt0yk
-	adxZxPA/KEZhylhfrHvzHO7Emahv5Tg9OQ70dlWZlcrfnk1edUNfMC5b5sAXItb0
-	uPgZ3Gnt1mMi7APQgS4d9iT0d4jPGc7kROGqqK7StvUfy3SEAovzo6NyZ0bX8i2+
-	uU4RA8dxRra+hbaivtnNCPOiT86fX6oS+mlMtFd95jsmiGs0w1StwsnlFIWkKhNO
-	5cthNwMVM6Bto/4mt5Bz95apW8kaChGWe1W+Uw5sNAyKb7bmzmwi/vFi/Lbf0ti4
-	OIDkwffBoFteEsaoxnFFEEtJYCEta13xV6qaa+95fg==
-X-ME-Sender: <xms:I0cWZ6ha0OAYPTJoOtJmord8480VOREH7ZpDIBsGwiPPjFyD3NWmXQ>
-    <xme:I0cWZ7Cl_3SmpVXSQ6MG4y8XpsJLF378JNFcOOdw05I0spuizJx5z1DJDkD1Rvvab
-    C4yHQh2-LaaZ-5h4w>
-X-ME-Received: <xmr:I0cWZyEEVtWRXwN8XqjkUsoPXL_YOb3YOIwvYoQnGpOWt7qYIE6r6u9XhV-m6SyhfaMikRNi2LdiaEamS6OHAsjjJcaNuWsEsFwRgtrQ8Dle>
+	fm3; t=1729513253; x=1729599653; bh=FZQzc5ZgdIjrMsF6lJaIlVREiqAu
+	psQH46DQx+nlV40=; b=cEZrl6q997wOJO6rtqx3pzgBaRFmqG8OkTMB+hRTfpCJ
+	MjmfMFSQNM2sFGNhnHBsllosXj61SSe3nEBLKJ81dwfKlTHPohF+AhvP6PT+s0ig
+	G/DYcZcNTMAtsRmA4bvq5m+rh507jyZ7oM10tXjBn2TI3wRfnDQjfToSjuHTPteC
+	ACLBUktoXswmo1ybN2tJVjL+K6hpx+8FnggCfQeyVP0OesOwmPnGCNnY02Euv1MF
+	NEtlOVelab+n19h/U7BKt82gA4eETm7Oc9wMeL4ls4n31zhhZE4vZcCxIypohNIB
+	EzL9iqUMwv9S7m8dSLe8P8XifC14NkltcEmUPvsd5w==
+X-ME-Sender: <xms:JUcWZzKGfPm-aTg_1fcWPfFNc3AZ_BlUGUdHo7ZguGKoRGVCP5ETyw>
+    <xme:JUcWZ3IrpHTlZvjeN3rl0wqldtL4IbMNfnvAoEECvefnPF3_HKSBYoRZB5UVj_brc
+    EEnTmSKdPW-K39j8w>
+X-ME-Received: <xmr:JUcWZ7tDZwlchq1oXZ5RWGsgGVRHuqtCB_lj9Wdv2v_VTx2g0ZtedoDi0dOFQzyuMoBY7u40nn8T98_D3kXDXqaJBiqGSqskDJKA-O5_Uu9s>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledgheduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,30 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledgheduucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgt
+    mhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
     phhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:I0cWZzTUpM600-krDW5g_-HNR3nnV6IZSjoJv6L1fmekQrB2-b26Fg>
-    <xmx:I0cWZ3zWCAdUZMI8Rt7LP9_BH7ce2-W1qIw13M4-KE0MoPMnb8kkDQ>
-    <xmx:I0cWZx5XrbJ5sHoLN9BdNUyaiW3RVea969osdbSfcvqbWFJdmpIyfQ>
-    <xmx:I0cWZ0ydWJYcCA3iBT9B5fTwfjMZa-u0_7vbH_xp9wKhqMhk_hN6zA>
-    <xmx:I0cWZ5sJDLCnkFIxLLs8nFdFB1u59SnFGesR_ixCF5CETQhuR7TS594c>
+X-ME-Proxy: <xmx:JUcWZ8ZEGafCpPD38glcyZJErQDgS6OZB_0F3wtG2U9Y4eUzB3C_8Q>
+    <xmx:JUcWZ6bwVzAsysfqAk25J58eA2SYVw0nvbALE8bO-pueuLr7F4mKnw>
+    <xmx:JUcWZwA3leXXyHPzOGdUwNrurjy8z4ybmdSnAlGHnMbHSqIA4rWYGw>
+    <xmx:JUcWZ4b8j_bRr2MZ2BUJYkSUFdG52uQv-4YZxhJ_5ojX3qUuoVu7Wg>
+    <xmx:JUcWZ6F8DR7LBPF0KYMLMnNr0nOIepvtGj3TZ311xSU19hs8zQ4Pc5EH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Oct 2024 08:20:50 -0400 (EDT)
+ 21 Oct 2024 08:20:52 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 76ce5bf5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 21 Oct 2024 12:19:22 +0000 (UTC)
-Date: Mon, 21 Oct 2024 14:20:47 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 605e550b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 21 Oct 2024 12:19:25 +0000 (UTC)
+Date: Mon, 21 Oct 2024 14:20:50 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Subject: Re: [PATCH v2 2/3] merge: replace atoi() with strtol_i() for marker
- size validation
-Message-ID: <ZxZHH-oHE7g09xIR@pks.im>
+Subject: Re: [PATCH v2 3/3] imap: replace atoi() with strtol_i() for
+ UIDVALIDITY and UIDNEXT parsing
+Message-ID: <ZxZHIk-gH0Onpt15@pks.im>
 References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
  <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
- <5d58c150efbed1a10e90dba10e18f8641d11a70f.1729259580.git.gitgitgadget@gmail.com>
+ <c09c7b3df0d7eac3069cee45cddc49a76da2503e.1729259580.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,57 +88,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5d58c150efbed1a10e90dba10e18f8641d11a70f.1729259580.git.gitgitgadget@gmail.com>
+In-Reply-To: <c09c7b3df0d7eac3069cee45cddc49a76da2503e.1729259580.git.gitgitgadget@gmail.com>
 
-On Fri, Oct 18, 2024 at 01:52:59PM +0000, Usman Akinyemi via GitGitGadget wrote:
+On Fri, Oct 18, 2024 at 01:53:00PM +0000, Usman Akinyemi via GitGitGadget wrote:
 > From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 > 
-> Replaced atoi() with strtol_i() for parsing conflict-marker-size to
-> improve error handling. Invalid values, such as those containing letters
-> now trigger a clear error message.
-> Updated the test to verify invalid input handling.
+> Replaced unsafe uses of atoi() with strtol_i() to improve error handling
+> when parsing UIDVALIDITY, UIDNEXT, and APPENDUID in IMAP commands.
+> Invalid values, such as those with letters,
+> now trigger error messages and prevent malformed status responses.
 
-When starting a new paragraph we typically have an empty line between
-the paragraphs. We also tend to write commit messages as if instructing
-the code to change. So instead of "Replaced atoi() with..." you'd say
-"Replace atoi() with", and instead of "Updated the test...", you'd say
-"Update the test ...".
+The line break after "letters," is a bit funny.
 
-The same applies to your other commits, as well.
-
-> 
-> diff --git a/merge-ll.c b/merge-ll.c
-> index 8e63071922b..52870226816 100644
-> --- a/merge-ll.c
-> +++ b/merge-ll.c
-> @@ -427,7 +427,8 @@ enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
->  	git_check_attr(istate, path, check);
->  	ll_driver_name = check->items[0].value;
->  	if (check->items[1].value) {
-> -		marker_size = atoi(check->items[1].value);
-> +		if (strtol_i(check->items[1].value, 10, &marker_size))
-> +			die("invalid marker-size '%s', expecting an integer", check->items[1].value);
->  		if (marker_size <= 0)
->  			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
->  	}
-> @@ -454,7 +455,8 @@ int ll_merge_marker_size(struct index_state *istate, const char *path)
->  		check = attr_check_initl("conflict-marker-size", NULL);
->  	git_check_attr(istate, path, check);
->  	if (check->items[0].value) {
-> -		marker_size = atoi(check->items[0].value);
-> +		if (strtol_i(check->items[0].value, 10, &marker_size))
-> +			die("invalid marker-size '%s', expecting an integer", check->items[0].value);
->  		if (marker_size <= 0)
->  			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
->  	}
-
-These are a bit curious. As your test demonstrates, we retrieve the
-values from the "gitattributes" file. And given that the file tends to be
-checked into the repository, you can now basically break somebody elses
-commands by having an invalid value in there.
-
-That makes me think that we likely shouldn't die here. We may print a
-warning, but other than that we should likely continue and use the
-DEFAULT_CONFLICT_MARKER_SIZE.
+It would also be nice to point out why this commit doesn't add any new
+tests. I guess the answer is that we don't have any tests for
+git-imap-send(1) at all, which is too bad, but a fair excuse and not a
+problem of your patch. So introducing such tests would be too much to
+ask.
 
 Patrick
