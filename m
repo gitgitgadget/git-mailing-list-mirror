@@ -1,53 +1,53 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AF01E2617
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 08:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931381E130D
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 08:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729500307; cv=none; b=pHOcLyDaRX1V6qr5tbjbmwr170i1UjMlvwgcWecuFHC6cj3/ZPdhnCz15Szvf8nL/YKLMsi46/RFwjbFjH7YEA0+53LydMUOASA0JA8WsusDgpgPftkd4QWErxk24OY65F7Y3BkNrwUD9jfLSQ0zXBv3FzuBtg0UR9/K0LoM6jc=
+	t=1729500311; cv=none; b=QoRBJcBbsJdtBKDKkrfMuJyFPn/ZtAgpVgDEtCC54vZZa4yy08TNz9j1EUbmHbMirYcsw8K6Pz+ne7u8fuikyZlxZlTKj4Ilq1ePRGPEULc7oviFV3Te5FF/YdmHVY3Hihi4Enk7S2tTT4+fv2G2CJ4syZ2J6VHJdNebUzGW4KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729500307; c=relaxed/simple;
-	bh=jb5eOAsDiaA7GbAnWKlON2Y+vIwAAeJRRfugUF8u/bI=;
+	s=arc-20240116; t=1729500311; c=relaxed/simple;
+	bh=qV0eQEfym+ndtdbVGjuT8VVyJgoOxpDSRrNzkY4J6r4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tRD3wgN35cSeRUV+OnFhpYMN7vw0r0/6L+6lq9JFU72Y8DfHJCx0KaO8UU6yfio1AKJuaGO8+4GVmwv7pCSYCl+fqYfz3byx4B8LHTA7e+6rS+XNoLOK78LvV/bSaCNr26TLivTsaS5SIitIyiH8wI0goYmtswWmJ30R1ZI3+vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=3z8rAfDA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KLDdakgX; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=vBZhQC9LgAq5BzfcDSE1WxDA/yLb1C4vsNZDPQ5TuBgWVZENDs30PfLVjUiy3VG99iHTMah8QNABMHfbpIVOIMt0w7z8Ikr1DN3etCAk0OkYCEsuvV2YbDqAHTWCXPfxFKawPi2VYbaSsH9DdDovd7CxtqeoXYag54/+X3G/aAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DgWsyaWw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GafA4QP8; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="3z8rAfDA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KLDdakgX"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 555BD114017E;
-	Mon, 21 Oct 2024 04:45:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DgWsyaWw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GafA4QP8"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B225C1140187;
+	Mon, 21 Oct 2024 04:45:08 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 21 Oct 2024 04:45:04 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 21 Oct 2024 04:45:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1729500304; x=1729586704; bh=2EPU62U/K2
-	eiDh+qut6kUQBm1V2vM11v7sX2nH/VF2o=; b=3z8rAfDAHUBdFHR6WbQV4AtpR9
-	xZJKncWZ9eUCFTpuhof4J0+xyfs6SAbm3x3jaDzrIINrvvxTpbV1RRDLl6S32fi4
-	HJqAhTRoLbLzcy26gVb5PhNI17VED2Johyp9K1uYdPBZ0FFXeKiis02M3CZfHHte
-	PPTplZFY35Wzfyurmp6bLYRe5AI0HZ4fqvsA7YcGONkpXnYJ9ZQVLkO3ORmIDF8s
-	1kYgKJLKLFjBz9F9N9mwHW0fRgEz+uly1Iefd5xeaPP7epgulTV9BsU0tkl/k2za
-	Dg+J1C/l48XSHwigI/Zgo6SxuJSaNd1TnbUYzVb9wL5oi1GD7I0TJb0UIs7g==
+	:subject:to:to; s=fm3; t=1729500308; x=1729586708; bh=R1Szpm3ul7
+	5JTgTIWuCF7lEcYlHBhw/UgIOF3Cs2BbU=; b=DgWsyaWwEJUgpNmbsWqBWTDj0k
+	IaRIacM1l/4sWLQ1mmp6V5to8DeB9JkvbNiTQIW4ksWUJeJNYVyLi52sjpC6k4iX
+	zEv+G9MATxdwOz5UA+gTn8HBjQil6xKzt7j9Wz0vsvboUicCk0SRlCDIzFoQyyjB
+	F/7YbNz0/fRw0/VGS98V34gSoDoc7bFl7s6lJgw+K20e2eSv30pJFR20INyrk60M
+	BRAGPJxaIm12w+N5aA3McGHsQY6IWLxruPQYqAv5Xac/pTutHjxTf75O5ockiHxG
+	yGpnm9ayZDAfVXyfpDERVewZNEH1XK5vcibq8CFoJKHuK0rVD1cyCsU+wFLg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1729500304; x=1729586704; bh=2EPU62U/K2eiDh+qut6kUQBm1V2v
-	M11v7sX2nH/VF2o=; b=KLDdakgXB4y9P7J7VIbHXA0fL945DLDz98cw+P8qYg2M
-	DFrs0DAzr4LoM1rNx6C26k7GLApt5rUk0SRQnMK1Zh8sx9uw0g99wB5roZ8aLyYd
-	0NQv7ajvntp+n4hFNJpfcfs2babvhurnWxM+UKBzFVz2yoPFifqT67XvBk5q+NjY
-	qMKN9H0wGxtMXOwLeK+p1CuhwN3smjFQRIcFGLv/8uAWsARKmspfE5HDYgY2BtJd
-	1Rm0eVrIy0CNm6xcF+ZIG3DvJ27R2nnXcoc9+8skHYywHaoa1Hci7S6Z4oY18jGh
-	mhRgtxyMQo0j65jVgXUGAbx4j+xXoUvv4mHgt9r2/g==
-X-ME-Sender: <xms:kBQWZ5_b6pBY_m68NosnnexZlHzswAJmVYS0DgfyHDFN3WXZAG763w>
-    <xme:kBQWZ9t42lUAk3c07m4z5gkgiF19B5DvBgot8jp9M4xYif4tibNDF78gSXuJVFb_d
-    GOhYu7_2uw8mtKU8w>
-X-ME-Received: <xmr:kBQWZ3CP3iEj0K1gcomnXfXeP5kQXnAqBKUGGhOAWwWXuUdgg4fZfMDDj7lvDOrTg8x4J2F-FAffPkLt-pNAeyxslSz856pMMIjvL9r1cANg>
+	fm3; t=1729500308; x=1729586708; bh=R1Szpm3ul75JTgTIWuCF7lEcYlHB
+	hw/UgIOF3Cs2BbU=; b=GafA4QP88N5vTtrp+sTrIKwT5LZgpWLVbeS7/opFODwX
+	Q/P6XSSePjlYNURH64yIPioeVKUymV2H6Q/QrcA3lQI2fMCrvoz84FuSvbC0Gk9h
+	cw1x5wr+4Z6vg7qEWRjkeXVj3VxONnq7kNjSK6FHUKu9Esau2GI02peBkjja6thk
+	wcrmcQcXtAQs7lGn4RuZCP0h4UWX/+DjnnFmtVO3HXWHXgPDpBGOJqg+RIEUK1mM
+	UCntpq1GMgeDsJX/hXXvEneHI3kqWwN5DlA7Pk0/465LzS3W9ybL9KnguDJACPyV
+	vDpHqHJb4hHMIpOiNk9WeijZ02bI4mtJRgjpP01j0A==
+X-ME-Sender: <xms:lBQWZ7lJmImgsVV2K55bkOa4Jl783KdNwsWQX8A0OJbULYvVinyHaA>
+    <xme:lBQWZ-21lRQaZhyoh3l6mJVRjqeSRlfyFpyBJ5JjUgo2aK6tf7FL5SKCbm7qNOHzH
+    LMhBKETXpg6TiD68g>
+X-ME-Received: <xmr:lBQWZxq8DXntR6cqw7up4jZGGXtX7vp3mtRbl35W_1oeIZbgf4CjUcXxPLtjf2VLKhG8RzaUnlPfkA9fhj8F7Gd8zfEnVINM8T6n6DDgoCWr>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledgtdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -58,27 +58,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledgtdekucetufdoteggod
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
     epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:kBQWZ9cexQD9s2pA2EP8mw3RlBH_NIYrki7DzmuNJny7ApInK971fg>
-    <xmx:kBQWZ-MPG4r1IbwmSDXwyfyyTNC9NDHqzUwyH9V12NfrbMuCBbwkaw>
-    <xmx:kBQWZ_lR9h35TsNRQjZyQedZfodXQddD4DrMgHPShMEDaSay5ftYEg>
-    <xmx:kBQWZ4susAFBr24Z6az-z1dPE6TRe8V2PlIYFH3X0zf72yr6X3Xbag>
-    <xmx:kBQWZ3YW9aFc6I9w20VkThHchlTEABAwyPn_rU5yeGYsdlpq3qjEKBZW>
+X-ME-Proxy: <xmx:lBQWZznfsxp9jeMw-ln7Gf74NL2699eNjP05pw8C8eFQgvm8P0fezw>
+    <xmx:lBQWZ50F82tAHeLQDViYVqrs5AClojaheU13vc2e4B98FTIKjHboxQ>
+    <xmx:lBQWZysOJyEKHys7nkYInPqOJKKcP9MyLf-BC9zal574HPaLYsyDVA>
+    <xmx:lBQWZ9U7nQA7SJYd6Nq84AoFjzqqXyzgAsxcir42fFPEHoxCZNipZw>
+    <xmx:lBQWZ3BJTOpGfSqME3bW0lrHuIqTZUS51bP0X6JR_qvB3vrGWrhuW-8a>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Oct 2024 04:45:03 -0400 (EDT)
+ 21 Oct 2024 04:45:07 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id dd935947 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 21 Oct 2024 08:43:36 +0000 (UTC)
-Date: Mon, 21 Oct 2024 10:45:01 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id ca12d0df (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 21 Oct 2024 08:43:40 +0000 (UTC)
+Date: Mon, 21 Oct 2024 10:45:04 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 20/21] builtin/merge: release outbut buffer after
- performing merge
-Message-ID: <ZxYUjY39ihqUEjH-@pks.im>
+Subject: Re: [PATCH 21/21] list-objects-filter-options: work around reported
+ leak on error
+Message-ID: <ZxYUkKAm0iBT8f5L@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
- <bc2206aa47e7e8be0642bb4540e7ddec22fbac91.1728624670.git.ps@pks.im>
- <877ca5d3dn.fsf@iotcl.com>
+ <6a2baf0d3e538e5f450c45c22248fbc3fefd77af.1728624670.git.ps@pks.im>
+ <875xppd3ct.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,27 +87,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <877ca5d3dn.fsf@iotcl.com>
+In-Reply-To: <875xppd3ct.fsf@iotcl.com>
 
-On Fri, Oct 18, 2024 at 02:03:48PM +0200, Toon Claes wrote:
+On Fri, Oct 18, 2024 at 02:04:18PM +0200, Toon Claes wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+> > index 00611107d20..fa72e81e4ad 100644
+> > --- a/list-objects-filter-options.c
+> > +++ b/list-objects-filter-options.c
+> > @@ -252,16 +252,14 @@ void parse_list_objects_filter(
+> >  	const char *arg)
+> >  {
+> >  	struct strbuf errbuf = STRBUF_INIT;
+> > -	int parse_error;
+> >  
+> >  	if (!filter_options->filter_spec.buf)
+> >  		BUG("filter_options not properly initialized");
+> >  
+> >  	if (!filter_options->choice) {
+> > +		if (gently_parse_list_objects_filter(filter_options, arg, &errbuf))
+> > +			die("%s", errbuf.buf);
+> >  		strbuf_addstr(&filter_options->filter_spec, arg);
+> > -
+> > -		parse_error = gently_parse_list_objects_filter(
+> > -			filter_options, arg, &errbuf);
+> >  	} else {
+> >  		struct list_objects_filter_options *sub;
+> >  
+> > @@ -271,18 +269,17 @@ void parse_list_objects_filter(
+> >  		 */
+> >  		transform_to_combine_type(filter_options);
+> >  
+> > -		strbuf_addch(&filter_options->filter_spec, '+');
+> > -		filter_spec_append_urlencode(filter_options, arg);
+> >  		ALLOC_GROW_BY(filter_options->sub, filter_options->sub_nr, 1,
+> >  			      filter_options->sub_alloc);
+> >  		sub = &filter_options->sub[filter_options->sub_nr - 1];
+> >  
+> >  		list_objects_filter_init(sub);
+> > -		parse_error = gently_parse_list_objects_filter(sub, arg,
+> > -							       &errbuf);
+> > +		if (gently_parse_list_objects_filter(sub, arg, &errbuf))
+> > +			die("%s", errbuf.buf);
 > 
-> > The `obuf` member of `struct merge_options` is used to buffer output in
-> > some cases. In order to not discard its allocated memory we only release
-> > its contents in `merge_finalize()` when we're not currently recursing
-> > into a subtree.
-> >
-> > This results in some situations where we seemingly do not release the
-> > buffer reliably. We thus have calls to `strbuf_release()` for this
-> > buffer scattered across the codebase. But we're missing one callsite in
-> > git-merge(1), which causes a memory leak.
-> >
-> > We should ideally refactor this interface so that callers don't have to
-> > know about any such internals. But for now, paper over the issue by
-> > adding one more `strbuf_release()` call.
-> 
-> Shall we mark this as #leftoverbits?
+> Do we actually have a test hitting this code path? I wanted to figure
+> out why `filter_options->sub` wasn't leaky (I assume that's what you're
+> talking about in your commit message), but I wasn't able to reproduce a
+> scenario where we should die here.
 
-I guess it is now marked as such :)
+You only refer to the second hunk, right? I couldn't find any code paths
+hitting this, so this is more of a "Let's massage this code in the same
+way" change. I don't want the next person to go through the same rabbit
+hole as I had to go through :)
 
 Patrick
