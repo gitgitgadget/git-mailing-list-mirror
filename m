@@ -1,62 +1,62 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F371C1E3DFC
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 09:58:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1651E3DFF
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 09:58:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729504691; cv=none; b=nWDebicGb+BkzPlSXGp5wt1MyMSrerAxcdj86GdlshrNk66snfFq+996QD7kxEfLzc8FH9OyOdtTIw3ceDLoqY8uvt2Sn2OFVOHkJ6EGraDeCW4a5g//dKgUdZE6hX1+xq2c/5TRvT9tLtzHA4RYwKzI8ObcVc8MW2TgN0sgMGc=
+	t=1729504691; cv=none; b=J4uqfwLwvuw1YH4eg9fBqv+O/RY6k6KdhsiAAKIEePIjDQoPsRILbPi7hz5zl9Z4lPgbfghtdqyYOpqI5eP6aLERzHNYgWXMt2CP4HjwiqpFln0iJ5XMq8QlDYcH6ge42AgR5WFx5Woft8UN9Q1wMBvL/cet6t1PL5ELdryfoQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1729504691; c=relaxed/simple;
-	bh=n28m+GQYfjSixgZq1JJew40wDnLGtMFxYB//OXbMhHQ=;
+	bh=+IPMFTYMJo4dFOAzUebck09p0MRxXOxEyROrJt08l0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RHQ4YEzJkKz/LtJ13vlaevcYTLQLUut6d9HH02+SKPCrWvPXI39HR/cPZbJoZkadtRLsmYYVV4/c8WIiTD7+bmp+P7NbnnaggJ8XqDSESjU+aJVRtGXKbBo+xq2uwcSRangkfkWyHjN9nHZh7e66t0bBG+pNWSk7f1/qkH9dyvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QFND+L2D; arc=none smtp.client-ip=209.85.218.49
+	 MIME-Version; b=i84VWE0Ko54WVFkoYFqyvGPfX3Z9AqFMtoIRH0hAEHZ5BGhuDvF9wB05N8j/I/8l4zb8nugLURumhWveNDD4TSHEmfRAPeo3hgJTArhMDaM90sTag3c1IK5zEg2FzkCe+Qi0dzA0Fzm2lJrvHf6yeW6a+ZnXlKSxr6LvI13WWGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YzvYYlPp; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QFND+L2D"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a99cc265e0aso620548766b.3
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 02:58:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YzvYYlPp"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a99f3a5a44cso493032766b.3
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 02:58:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729504687; x=1730109487; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729504688; x=1730109488; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HVYj84C5UlH3WT4p2T1nxT/NluhMqbJySawoGAMESzM=;
-        b=QFND+L2D6uHrBFOwm9SxmEVhoB8Lvts8CSgn159OesEMI2GsWyZsqlhpAjznEg1VCN
-         csY6I9BRL/Y7PEDZ5E/wD9Ld5wUyk3pypLv6eQ9vfXrGNqkJnOmuxHlXYku5QiGMeCz2
-         0C+wxaQYpnfEhf840cOH1KXTObxyi7Pg3VsQxB+Hq9I5FTbRYhj0+RkDp0o64bl7GFfa
-         FdxQxgPjaZzBI9vkDzRfF/osKiqzq5XZLeuqzD0S6zL0VrSQEKATKuf/NMfOkUHIvseL
-         F6g51Fq1zQw5nn10FgspL9h/6kpALnpdYh50tfSpPg5XooVdMbAzjjZravUA3Vo3igDG
-         6TdA==
+        bh=JZz+6XO0ODupHR0Vy4M57AZG1ytUr+sb/Wm3taRqKtI=;
+        b=YzvYYlPp8LiWnw5sKaeHoCr/lCQTA6oQcAmqQDLzSJiBZY5hCdfn2Ry/YtkH1thcVD
+         PCCX1koIYj1BJAXOGELTjvk3T/EuPDkRd/vp8QR74vTvL/gR7qd4nuCNabkw/WvKatEG
+         GvaJzQ1eTI7A338WwGbXAMPoYxoQMGnUdpCXPyfenefKlOz+yH+f/uRr68VNd6NFhBVl
+         hKnqimNMi5rhOr+BaX5jICwVi8HKj7BcP7GrIepfHun85ofnuHuE/e+Htv8vYRj3B6oN
+         yWouzKjaOUKGFQMBsQdCEiIh4ZecQn7y2MpFjsvF8s0pD3ByQFpsfzyA//VhxqDdn7DK
+         438g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729504687; x=1730109487;
+        d=1e100.net; s=20230601; t=1729504688; x=1730109488;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HVYj84C5UlH3WT4p2T1nxT/NluhMqbJySawoGAMESzM=;
-        b=xU3PBqcu0+wZ9W8frWmLgxROB6Sw+Avac2+423bL/67L+GSGPW0oqEMAfeQWElpbkT
-         MAn+KjyQbUwxZTijJYNPGhCo5vWRpzSQgW/wm3tXQjTRiJYngy0DKknhL3SQE73hZ5nC
-         y8C42mvBBIDbMbUcb3ZPJqlgYeReenck+XDE69uiO87VXu+dyFdZyucbjrlgSE4FMlfu
-         xHkSBpemkKbvLmpx0YuepP5WZDJQ8utPHNAfpDHqzQA+HXzG8lYpLS6sLJ5XW6Pck9W4
-         DhCgpvtJt1pmQmr7gDsQNt531yRllCBiMwSRT18lTJZhqqbxAax7Uijf5f6BsoJd3rWE
-         PQvg==
-X-Gm-Message-State: AOJu0YzvQ+1FwR4f7eTKPDeVJaLkffWfMUxSjo8YEG7yXCXl4a+FxDXJ
-	Bv43E+rt1IbiKX2W/IvdPsbrw3L9bHO+6eBTFgRzIjLgo4ufCWiv62yD90Q2
-X-Google-Smtp-Source: AGHT+IGq1oarNVrSY2w+XsaDMkmnQ8pXYstc46Wn4oQ2DmlkvBJlm1MI66IBxXjgaveq0Z+m8KLsPw==
-X-Received: by 2002:a17:907:94c8:b0:a99:fb75:3ed7 with SMTP id a640c23a62f3a-a9a69a69349mr1078075966b.17.1729504686828;
-        Mon, 21 Oct 2024 02:58:06 -0700 (PDT)
+        bh=JZz+6XO0ODupHR0Vy4M57AZG1ytUr+sb/Wm3taRqKtI=;
+        b=azSS8DJ7lgolI8TKqc2hmfqfHog8BrOfTwYR/91mQgnMQZUr2fZBiErmTvAHLZNpOv
+         IDR+AkoaAUx1pdNvm9d3hV8KYer5Coaz6W+wkLS4hKvzSTWoIzetD8evWwVGm3C847or
+         +SOhk8ImEltJNiiTE49vIOkTMs/f1lWUOCrX5FdpveHs/LyOPSLgkTsYO4BZohaSt/RK
+         DkBsT9j5LxkQTLTUNxOW+ihxL+nNKFHc0Xz0S98K/BmswegVymYE1rpBBbCDQIheOMAd
+         0x8UVqlTF2uTqM3bT4pRtTOFJKowFikumU5ht6jNDKPJTWBtXaVy9MPyIMFgOxcLzSn0
+         TEJw==
+X-Gm-Message-State: AOJu0YxsTpx8mJ7Z3bOciFX6RSb5U9hL6mFNRDma/PJxZv5hsEcdU9Ic
+	FKSVIBQ3whlWFoBl0JsYSU0gmaSn4S8DcA9ctgqgVULDWBKfca6sVGsusEzV
+X-Google-Smtp-Source: AGHT+IEAa8DpzGJYb9/p7G9G5NHW/zrSnsl5VZ/IdUlOJCF/XHZWhX2rme69Qr3ZmoT6tGcTcPcM2Q==
+X-Received: by 2002:a17:907:728b:b0:a8d:4631:83b0 with SMTP id a640c23a62f3a-a9a69969af5mr1222922866b.5.1729504687534;
+        Mon, 21 Oct 2024 02:58:07 -0700 (PDT)
 Received: from archlinux.fritz.box ([2a02:2455:825d:6a00:6bb4:436f:5699:ff21])
         by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a912d631dsm187122266b.17.2024.10.21.02.58.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 02:58:06 -0700 (PDT)
+        Mon, 21 Oct 2024 02:58:07 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org
-Subject: [PATCH 01/20] packfile: pass down repository to `odb_pack_name`
-Date: Mon, 21 Oct 2024 11:57:44 +0200
-Message-ID: <c8cc21c2eeb9d1e0bc261143e642eff38fe33888.1729504641.git.karthik.188@gmail.com>
+Subject: [PATCH 02/20] packfile: pass down repository to `unuse_one_window`
+Date: Mon, 21 Oct 2024 11:57:45 +0200
+Message-ID: <7ab2d08f354017ae20cc26c7078b7a38a7ab0ca5.1729504641.git.karthik.188@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1729504640.git.karthik.188@gmail.com>
 References: <cover.1729504640.git.karthik.188@gmail.com>
@@ -68,267 +68,227 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The function `odb_pack_name` currently relies on the global variable
+The function `unuse_one_window` currently relies on the global variable
 `the_repository`. To eliminate global variable usage in `packfile.c`, we
 should progressively shift the dependency on the_repository to higher
 layers. Let's remove its usage from this function and any related ones.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/fast-import.c    |  8 ++++----
- builtin/index-pack.c     |  4 ++--
- builtin/pack-redundant.c |  2 +-
- http.c                   | 15 +++++++++------
- packfile.c               | 27 ++++++++++++++-------------
- packfile.h               | 13 ++++++++-----
- 6 files changed, 38 insertions(+), 31 deletions(-)
+ builtin/pack-objects.c | 12 ++++++------
+ pack-check.c           |  6 +++---
+ packfile.c             | 25 +++++++++++++------------
+ packfile.h             |  3 ++-
+ streaming.c            |  2 +-
+ 5 files changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 1e7ab67f6e..7ad950627c 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -805,7 +805,7 @@ static char *keep_pack(const char *curr_index_name)
- 	struct strbuf name = STRBUF_INIT;
- 	int keep_fd;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 0fc0680b40..4dd6ada184 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -401,7 +401,7 @@ static int check_pack_inflate(struct packed_git *p,
+ 	memset(&stream, 0, sizeof(stream));
+ 	git_inflate_init(&stream);
+ 	do {
+-		in = use_pack(p, w_curs, offset, &stream.avail_in);
++		in = use_pack(the_repository, p, w_curs, offset, &stream.avail_in);
+ 		stream.next_in = in;
+ 		stream.next_out = fakebuf;
+ 		stream.avail_out = sizeof(fakebuf);
+@@ -424,7 +424,7 @@ static void copy_pack_data(struct hashfile *f,
+ 	unsigned long avail;
  
--	odb_pack_name(&name, pack_data->hash, "keep");
-+	odb_pack_name(the_repository, &name, pack_data->hash, "keep");
- 	keep_fd = odb_pack_keep(name.buf);
- 	if (keep_fd < 0)
- 		die_errno("cannot create keep file");
-@@ -813,11 +813,11 @@ static char *keep_pack(const char *curr_index_name)
- 	if (close(keep_fd))
- 		die_errno("failed to write keep file");
+ 	while (len) {
+-		in = use_pack(p, w_curs, offset, &avail);
++		in = use_pack(the_repository, p, w_curs, offset, &avail);
+ 		if (avail > len)
+ 			avail = (unsigned long)len;
+ 		hashwrite(f, in, avail);
+@@ -2071,7 +2071,7 @@ static void check_object(struct object_entry *entry, uint32_t object_index)
+ 		enum object_type type;
+ 		unsigned long in_pack_size;
  
--	odb_pack_name(&name, pack_data->hash, "pack");
-+	odb_pack_name(the_repository, &name, pack_data->hash, "pack");
- 	if (finalize_object_file(pack_data->pack_name, name.buf))
- 		die("cannot store pack file");
+-		buf = use_pack(p, &w_curs, entry->in_pack_offset, &avail);
++		buf = use_pack(the_repository, p, &w_curs, entry->in_pack_offset, &avail);
  
--	odb_pack_name(&name, pack_data->hash, "idx");
-+	odb_pack_name(the_repository, &name, pack_data->hash, "idx");
- 	if (finalize_object_file(curr_index_name, name.buf))
- 		die("cannot store index file");
- 	free((void *)curr_index_name);
-@@ -831,7 +831,7 @@ static void unkeep_all_packs(void)
+ 		/*
+ 		 * We want in_pack_type even if we do not reuse delta
+@@ -2105,7 +2105,7 @@ static void check_object(struct object_entry *entry, uint32_t object_index)
+ 		case OBJ_REF_DELTA:
+ 			if (reuse_delta && !entry->preferred_base) {
+ 				oidread(&base_ref,
+-					use_pack(p, &w_curs,
++					use_pack(the_repository, p, &w_curs,
+ 						 entry->in_pack_offset + used,
+ 						 NULL),
+ 					the_repository->hash_algo);
+@@ -2114,7 +2114,7 @@ static void check_object(struct object_entry *entry, uint32_t object_index)
+ 			entry->in_pack_header_size = used + the_hash_algo->rawsz;
+ 			break;
+ 		case OBJ_OFS_DELTA:
+-			buf = use_pack(p, &w_curs,
++			buf = use_pack(the_repository, p, &w_curs,
+ 				       entry->in_pack_offset + used, NULL);
+ 			used_0 = 0;
+ 			c = buf[used_0++];
+@@ -2574,7 +2574,7 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
  
- 	for (k = 0; k < pack_id; k++) {
- 		struct packed_git *p = all_packs[k];
--		odb_pack_name(&name, p->hash, "keep");
-+		odb_pack_name(the_repository, &name, p->hash, "keep");
- 		unlink_or_warn(name.buf);
- 	}
- 	strbuf_release(&name);
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 9d23b41b3a..97afc69625 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1479,7 +1479,7 @@ static void write_special_file(const char *suffix, const char *msg,
- 	if (pack_name)
- 		filename = derive_filename(pack_name, "pack", suffix, &name_buf);
- 	else
--		filename = odb_pack_name(&name_buf, hash, suffix);
-+		filename = odb_pack_name(the_repository, &name_buf, hash, suffix);
+ 	packing_data_lock(&to_pack);
+ 	w_curs = NULL;
+-	buf = use_pack(p, &w_curs, e->in_pack_offset, &avail);
++	buf = use_pack(the_repository, p, &w_curs, e->in_pack_offset, &avail);
+ 	used = unpack_object_header_buffer(buf, avail, &type, &size);
+ 	if (used == 0)
+ 		die(_("unable to parse object header of %s"),
+diff --git a/pack-check.c b/pack-check.c
+index e883dae3f2..e4636e9897 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -34,7 +34,7 @@ int check_pack_crc(struct packed_git *p, struct pack_window **w_curs,
  
- 	fd = odb_pack_keep(filename);
- 	if (fd < 0) {
-@@ -1507,7 +1507,7 @@ static void rename_tmp_packfile(const char **final_name,
- {
- 	if (!*final_name || strcmp(*final_name, curr_name)) {
- 		if (!*final_name)
--			*final_name = odb_pack_name(name, hash, ext);
-+			*final_name = odb_pack_name(the_repository, name, hash, ext);
- 		if (finalize_object_file(curr_name, *final_name))
- 			die(_("unable to rename temporary '*.%s' file to '%s'"),
- 			    ext, *final_name);
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 5809613002..60f806e672 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -688,7 +688,7 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
- 	pl = red = pack_list_difference(local_packs, min);
- 	while (pl) {
- 		printf("%s\n%s\n",
--		       sha1_pack_index_name(pl->pack->hash),
-+		       sha1_pack_index_name(the_repository, pl->pack->hash),
- 		       pl->pack->pack_name);
- 		pl = pl->next;
- 	}
-diff --git a/http.c b/http.c
-index d59e59f66b..309669c203 100644
---- a/http.c
-+++ b/http.c
-@@ -2388,7 +2388,7 @@ static char *fetch_pack_index(unsigned char *hash, const char *base_url)
- 	strbuf_addf(&buf, "objects/pack/pack-%s.idx", hash_to_hex(hash));
- 	url = strbuf_detach(&buf, NULL);
- 
--	strbuf_addf(&buf, "%s.temp", sha1_pack_index_name(hash));
-+	strbuf_addf(&buf, "%s.temp", sha1_pack_index_name(the_repository, hash));
- 	tmp = strbuf_detach(&buf, NULL);
- 
- 	if (http_get_file(url, tmp, NULL) != HTTP_OK) {
-@@ -2407,8 +2407,10 @@ static int fetch_and_setup_pack_index(struct packed_git **packs_head,
- 	char *tmp_idx = NULL;
- 	int ret;
- 
--	if (has_pack_index(sha1)) {
--		new_pack = parse_pack_index(sha1, sha1_pack_index_name(sha1));
-+	if (has_pack_index(the_repository, sha1)) {
-+		new_pack = parse_pack_index(the_repository, sha1,
-+					    sha1_pack_index_name(the_repository,
-+								 sha1));
- 		if (!new_pack)
- 			return -1; /* parse_pack_index() already issued error message */
- 		goto add_pack;
-@@ -2418,7 +2420,7 @@ static int fetch_and_setup_pack_index(struct packed_git **packs_head,
- 	if (!tmp_idx)
- 		return -1;
- 
--	new_pack = parse_pack_index(sha1, tmp_idx);
-+	new_pack = parse_pack_index(the_repository, sha1, tmp_idx);
- 	if (!new_pack) {
- 		unlink(tmp_idx);
- 		free(tmp_idx);
-@@ -2429,7 +2431,7 @@ static int fetch_and_setup_pack_index(struct packed_git **packs_head,
- 	ret = verify_pack_index(new_pack);
- 	if (!ret) {
- 		close_pack_index(new_pack);
--		ret = finalize_object_file(tmp_idx, sha1_pack_index_name(sha1));
-+		ret = finalize_object_file(tmp_idx, sha1_pack_index_name(the_repository, sha1));
- 	}
- 	free(tmp_idx);
- 	if (ret)
-@@ -2563,7 +2565,8 @@ struct http_pack_request *new_direct_http_pack_request(
- 
- 	preq->url = url;
- 
--	strbuf_addf(&preq->tmpfile, "%s.temp", sha1_pack_name(packed_git_hash));
-+	strbuf_addf(&preq->tmpfile, "%s.temp", sha1_pack_name(the_repository,
-+							      packed_git_hash));
- 	preq->packfile = fopen(preq->tmpfile.buf, "a");
- 	if (!preq->packfile) {
- 		error("Unable to open local file %s for pack",
+ 	do {
+ 		unsigned long avail;
+-		void *data = use_pack(p, w_curs, offset, &avail);
++		void *data = use_pack(the_repository, p, w_curs, offset, &avail);
+ 		if (avail > len)
+ 			avail = len;
+ 		data_crc = crc32(data_crc, data, avail);
+@@ -70,7 +70,7 @@ static int verify_packfile(struct repository *r,
+ 	r->hash_algo->init_fn(&ctx);
+ 	do {
+ 		unsigned long remaining;
+-		unsigned char *in = use_pack(p, w_curs, offset, &remaining);
++		unsigned char *in = use_pack(the_repository, p, w_curs, offset, &remaining);
+ 		offset += remaining;
+ 		if (!pack_sig_ofs)
+ 			pack_sig_ofs = p->pack_size - r->hash_algo->rawsz;
+@@ -79,7 +79,7 @@ static int verify_packfile(struct repository *r,
+ 		r->hash_algo->update_fn(&ctx, in, remaining);
+ 	} while (offset < pack_sig_ofs);
+ 	r->hash_algo->final_fn(hash, &ctx);
+-	pack_sig = use_pack(p, w_curs, pack_sig_ofs, NULL);
++	pack_sig = use_pack(the_repository, p, w_curs, pack_sig_ofs, NULL);
+ 	if (!hasheq(hash, pack_sig, the_repository->hash_algo))
+ 		err = error("%s pack checksum mismatch",
+ 			    p->pack_name);
 diff --git a/packfile.c b/packfile.c
-index df4ba67719..e4569ea29d 100644
+index e4569ea29d..b0a3bfcd72 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -25,26 +25,25 @@
- #include "pack-revindex.h"
- #include "promisor-remote.h"
- 
--char *odb_pack_name(struct strbuf *buf,
--		    const unsigned char *hash,
--		    const char *ext)
-+char *odb_pack_name(struct repository *repo, struct strbuf *buf,
-+		    const unsigned char *hash, const char *ext)
- {
- 	strbuf_reset(buf);
--	strbuf_addf(buf, "%s/pack/pack-%s.%s", repo_get_object_directory(the_repository),
-+	strbuf_addf(buf, "%s/pack/pack-%s.%s", repo_get_object_directory(repo),
- 		    hash_to_hex(hash), ext);
- 	return buf->buf;
+@@ -273,14 +273,14 @@ static void scan_windows(struct packed_git *p,
+ 	}
  }
  
--char *sha1_pack_name(const unsigned char *sha1)
-+char *sha1_pack_name(struct repository *repo, const unsigned char *sha1)
+-static int unuse_one_window(struct packed_git *current)
++static int unuse_one_window(struct repository *repo, struct packed_git *current)
  {
- 	static struct strbuf buf = STRBUF_INIT;
--	return odb_pack_name(&buf, sha1, "pack");
-+	return odb_pack_name(repo, &buf, sha1, "pack");
+ 	struct packed_git *p, *lru_p = NULL;
+ 	struct pack_window *lru_w = NULL, *lru_l = NULL;
+ 
+ 	if (current)
+ 		scan_windows(current, &lru_p, &lru_w, &lru_l);
+-	for (p = the_repository->objects->packed_git; p; p = p->next)
++	for (p = repo->objects->packed_git; p; p = p->next)
+ 		scan_windows(p, &lru_p, &lru_w, &lru_l);
+ 	if (lru_p) {
+ 		munmap(lru_w->base, lru_w->len);
+@@ -625,10 +625,9 @@ static int in_window(struct pack_window *win, off_t offset)
+ 		&& (offset + the_hash_algo->rawsz) <= (win_off + win->len);
  }
  
--char *sha1_pack_index_name(const unsigned char *sha1)
-+char *sha1_pack_index_name(struct repository *repo, const unsigned char *sha1)
+-unsigned char *use_pack(struct packed_git *p,
+-		struct pack_window **w_cursor,
+-		off_t offset,
+-		unsigned long *left)
++unsigned char *use_pack(struct repository *repo, struct packed_git *p,
++			struct pack_window **w_cursor,
++			off_t offset, unsigned long *left)
  {
- 	static struct strbuf buf = STRBUF_INIT;
--	return odb_pack_name(&buf, sha1, "idx");
-+	return odb_pack_name(repo, &buf, sha1, "idx");
- }
+ 	struct pack_window *win = *w_cursor;
  
- static unsigned int pack_used_ctr;
-@@ -237,14 +236,16 @@ static struct packed_git *alloc_packed_git(int extra)
- 	return p;
- }
+@@ -666,7 +665,7 @@ unsigned char *use_pack(struct packed_git *p,
+ 			win->len = (size_t)len;
+ 			pack_mapped += win->len;
+ 			while (packed_git_limit < pack_mapped
+-				&& unuse_one_window(p))
++				&& unuse_one_window(repo, p))
+ 				; /* nothing */
+ 			win->base = xmmap_gently(NULL, win->len,
+ 				PROT_READ, MAP_PRIVATE,
+@@ -1129,7 +1128,7 @@ unsigned long get_size_from_delta(struct packed_git *p,
  
--struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path)
-+struct packed_git *parse_pack_index(struct repository *repo,
-+				    unsigned char *sha1,
-+				    const char *idx_path)
+ 	git_inflate_init(&stream);
+ 	do {
+-		in = use_pack(p, w_curs, curpos, &stream.avail_in);
++		in = use_pack(the_repository, p, w_curs, curpos, &stream.avail_in);
+ 		stream.next_in = in;
+ 		/*
+ 		 * Note: the window section returned by use_pack() must be
+@@ -1185,7 +1184,7 @@ int unpack_object_header(struct packed_git *p,
+ 	 * the maximum deflated object size is 2^137, which is just
+ 	 * insane, so we know won't exceed what we have been given.
+ 	 */
+-	base = use_pack(p, w_curs, *curpos, &left);
++	base = use_pack(the_repository, p, w_curs, *curpos, &left);
+ 	used = unpack_object_header_buffer(base, left, &type, sizep);
+ 	if (!used) {
+ 		type = OBJ_BAD;
+@@ -1217,7 +1216,7 @@ off_t get_delta_base(struct packed_git *p,
+ 		     enum object_type type,
+ 		     off_t delta_obj_offset)
  {
--	const char *path = sha1_pack_name(sha1);
-+	const char *path = sha1_pack_name(repo, sha1);
- 	size_t alloc = st_add(strlen(path), 1);
- 	struct packed_git *p = alloc_packed_git(alloc);
+-	unsigned char *base_info = use_pack(p, w_curs, *curpos, NULL);
++	unsigned char *base_info = use_pack(the_repository, p, w_curs, *curpos, NULL);
+ 	off_t base_offset;
  
- 	memcpy(p->pack_name, path, alloc); /* includes NUL */
--	hashcpy(p->hash, sha1, the_repository->hash_algo);
-+	hashcpy(p->hash, sha1, repo->hash_algo);
- 	if (check_packed_git_idx(idx_path, p)) {
- 		free(p);
- 		return NULL;
-@@ -2151,10 +2152,10 @@ int has_object_kept_pack(const struct object_id *oid, unsigned flags)
- 	return find_kept_pack_entry(the_repository, oid, flags, &e);
- }
- 
--int has_pack_index(const unsigned char *sha1)
-+int has_pack_index(struct repository *repo, const unsigned char *sha1)
+ 	/* use_pack() assured us we have [base_info, base_info + 20)
+@@ -1264,7 +1263,8 @@ static int get_delta_base_oid(struct packed_git *p,
+ 			      off_t delta_obj_offset)
  {
- 	struct stat st;
--	if (stat(sha1_pack_index_name(sha1), &st))
-+	if (stat(sha1_pack_index_name(repo, sha1), &st))
+ 	if (type == OBJ_REF_DELTA) {
+-		unsigned char *base = use_pack(p, w_curs, curpos, NULL);
++		unsigned char *base = use_pack(the_repository, p, w_curs,
++					       curpos, NULL);
+ 		oidread(oid, base, the_repository->hash_algo);
  		return 0;
- 	return 1;
- }
+ 	} else if (type == OBJ_OFS_DELTA) {
+@@ -1636,7 +1636,8 @@ static void *unpack_compressed_entry(struct packed_git *p,
+ 
+ 	git_inflate_init(&stream);
+ 	do {
+-		in = use_pack(p, w_curs, curpos, &stream.avail_in);
++		in = use_pack(the_repository, p, w_curs, curpos,
++			      &stream.avail_in);
+ 		stream.next_in = in;
+ 		/*
+ 		 * Note: we must ensure the window section returned by
 diff --git a/packfile.h b/packfile.h
-index 0f78658229..507ac602b5 100644
+index 507ac602b5..90a1f2e1cf 100644
 --- a/packfile.h
 +++ b/packfile.h
-@@ -29,21 +29,22 @@ struct pack_entry {
-  *
-  * Example: odb_pack_name(out, sha1, "idx") => ".git/objects/pack/pack-1234..idx"
-  */
--char *odb_pack_name(struct strbuf *buf, const unsigned char *sha1, const char *ext);
-+char *odb_pack_name(struct repository *repo, struct strbuf *buf,
-+		    const unsigned char *sha1, const char *ext);
+@@ -110,7 +110,8 @@ uint32_t get_pack_fanout(struct packed_git *p, uint32_t value);
  
- /*
-  * Return the name of the (local) packfile with the specified sha1 in
-  * its name.  The return value is a pointer to memory that is
-  * overwritten each time this function is called.
-  */
--char *sha1_pack_name(const unsigned char *sha1);
-+char *sha1_pack_name(struct repository *repo, const unsigned char *sha1);
+ struct raw_object_store;
  
- /*
-  * Return the name of the (local) pack index file with the specified
-  * sha1 in its name.  The return value is a pointer to memory that is
-  * overwritten each time this function is called.
-  */
--char *sha1_pack_index_name(const unsigned char *sha1);
-+char *sha1_pack_index_name(struct repository *repo, const unsigned char *sha1);
+-unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
++unsigned char *use_pack(struct repository *repo, struct packed_git *,
++			struct pack_window **, off_t, unsigned long *);
+ void close_pack_windows(struct packed_git *);
+ void close_pack(struct packed_git *);
+ void close_object_store(struct raw_object_store *o);
+diff --git a/streaming.c b/streaming.c
+index 38839511af..58b3b3cff7 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -292,7 +292,7 @@ static ssize_t read_istream_pack_non_delta(struct git_istream *st, char *buf,
+ 		struct pack_window *window = NULL;
+ 		unsigned char *mapped;
  
- /*
-  * Return the basename of the packfile, omitting any containing directory
-@@ -51,7 +52,9 @@ char *sha1_pack_index_name(const unsigned char *sha1);
-  */
- const char *pack_basename(struct packed_git *p);
+-		mapped = use_pack(st->u.in_pack.pack, &window,
++		mapped = use_pack(the_repository, st->u.in_pack.pack, &window,
+ 				  st->u.in_pack.pos, &st->z.avail_in);
  
--struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
-+struct packed_git *parse_pack_index(struct repository *repo,
-+				    unsigned char *sha1,
-+				    const char *idx_path);
- 
- typedef void each_file_in_pack_dir_fn(const char *full_path, size_t full_path_len,
- 				      const char *file_name, void *data);
-@@ -193,7 +196,7 @@ int find_kept_pack_entry(struct repository *r, const struct object_id *oid, unsi
- int has_object_pack(const struct object_id *oid);
- int has_object_kept_pack(const struct object_id *oid, unsigned flags);
- 
--int has_pack_index(const unsigned char *sha1);
-+int has_pack_index(struct repository *repo, const unsigned char *sha1);
- 
- /*
-  * Return 1 if an object in a promisor packfile is or refers to the given
+ 		st->z.next_out = (unsigned char *)buf + total_read;
 -- 
 2.47.0
 
