@@ -1,67 +1,43 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34271F942E
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 19:02:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EDB1FCF65
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 19:03:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729537362; cv=none; b=kFDgM6uT9e2Xkmj6QfvagrkMBmNGVMpCrnccIgoKgVDExZwKmgpNHxIB55aHjhFqARoau+C1RRzL0pRbcUZwaZE2PTSkoQbC1A39d1JB8nKaWWUsB68e0S8eOYWb6vVBPw/Q2ZXGmCZ4BAdvSPRabT1P3EZNd3WSBRyyVUOwgD8=
+	t=1729537393; cv=none; b=M/GTxphup1wtuA4PTDkWDpmnAZygP/4JOZUglsuRPkCB8Xs2x5URHaQOTna6SYJOTzBl+l4MZzsej1VppxviSTUmqVj1lNmkWIPqxK9T6nZva/HWdNeBTxrpwbY6ULShQrbe3Xs8Q/p2Mo8M8I0S1OnfVoz5UvokdqlYGFea4sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729537362; c=relaxed/simple;
-	bh=avoVmZtZrCYBSLlMgMUelqMQsmaT2cmhOPxeO6xJJrc=;
+	s=arc-20240116; t=1729537393; c=relaxed/simple;
+	bh=3ELWmzqLCfS4qdQgCtrHznusHn8jqWkr//7cUn+u8zU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jwanKtuV1D2HBtEyw5TRgwMq/ftTJE3WYUV8SjwCvCDnEjhLIPFCA84/Sg1hUtnMaflcRwStAunhxcZJlbbcXDo3LKGWELXBb6tmy+jAVXU/s4AaWEZC6J/kRu35+MxGARHKM1UEOU9hwjaNO29bAWYV62lgVsNSJJfaNbShVT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=AnP2Kn6E; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=WHEwTbxaZg9o/kqFLmkxJ2Dxdj0DX3crb1RUpcbpo2NosSjvefs/+Y2t4nAlErOK5Q/9pDxZ5yLJ8/7XxAzmudQfmTVZg3vXs2+Vm22qaRo3mfXnO5JRL+EG4AfnrgmVOlGG9RKihcMbIf3YmHmL7dTiqU+1D/NfJqXL9JDOyjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fpZBRriq; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AnP2Kn6E"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e2918664a3fso4069631276.0
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 12:02:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729537360; x=1730142160; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=49B32nYMEJuIx8sKEgHeG3vDhExI3nl21socEBZbUbE=;
-        b=AnP2Kn6EEcS5TmuMP6fUDDJkl4iqDo9BQlqTwjjFecxik5TNx5YVtr9oDYf4oa/OFc
-         yROG6kn3UZcyj6ZvBInNc9Up/heW8Xx13o3I7ms6YOr/yHPoVLwvieJuNkUhsQopApJE
-         76bFvwKGDkHJjj66XKwGQ1SN/hRIsJNxEoFKcioRnIzNfgMklXAmdIxuNK25ExxAYzrN
-         pK35QTpiTYiqFxXlNUopoV1oJWaqs4Rl4vfTkKVLgliNNgPuX2f0rWYJxeJWjhmThg5C
-         CMH5UXueiZjQgbTwWbUFeh3BWuWx7G94VRp8rNkqJ0eJhVSckrffbkD54Dwa1SB9jUB2
-         I0ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729537360; x=1730142160;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=49B32nYMEJuIx8sKEgHeG3vDhExI3nl21socEBZbUbE=;
-        b=lMYWSzN8pT4rZK2gTBp6sWs1Kivu9fqsM/AlTLHIVpQkYmjsvtKrfpZFJB8h1oDpcQ
-         ec9tA2xKrdc1M5J8SSohJrKDGw3W8k8T903YmfK6f21DErOtTOY9swk7zNNHN6XTXvXx
-         xSlv9hhyAUJ8MsAi5FJIC1T2tquiNEHcKbhcyH93I4385UjLiNIwYIUDP98dTsUg6IFH
-         K8QUlzyTbHiuMnlyzNwJO9ZvDpC7qeUIgkRoqAytrH8nozlW0axgnvfxnUQ4lADyRDSr
-         7/6ZeDQZr8DW6uWi8HJc/J691Fxd8Vr++zMdINNE/DzeQXgdC5cBSLOByjy8y8tVtzmk
-         2YGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU38sttPxRoxESf3JlCLCUaK6gHarn0SD10CmLAj1kJZ+T+f1YJgaFwVv8DR4rmzv2JxIM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx1D9daSsDHTwpDYZLEVmozAQ2rury1jjmClJZoxUK7qrJxqNLt
-	pLCPiA2rLnYyD8u0FtmdwHupoGkbIS0HnTx8Xb/J192EOYQU36ahZK47a5IYhLI=
-X-Google-Smtp-Source: AGHT+IFq58zVc/hogNzSuoIpFcxlBtJoFP6bhZQrlZ0Euc8Dr4j+L5YqLvWU4+pm09nCPXcH+3c2qQ==
-X-Received: by 2002:a05:6902:98a:b0:e29:123f:49f with SMTP id 3f1490d57ef6-e2e242b9ce5mr707329276.0.1729537359729;
-        Mon, 21 Oct 2024 12:02:39 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdc9b1f05sm761155276.26.2024.10.21.12.02.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 12:02:39 -0700 (PDT)
-Date: Mon, 21 Oct 2024 15:02:38 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH] t1400: fix --no-create-reflog test and description
-Message-ID: <ZxalTgct8WhEmO0w@nand.local>
-References: <ab7d4c8d89c075de05bf04f1f9dc195145455964.1729439476.git.code@khaugsbakk.name>
- <ZxZETN7WjbNiSRyF@pks.im>
- <d66936b8-d12b-4035-b563-328ae9fc4824@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fpZBRriq"
+Received: (qmail 19305 invoked by uid 109); 21 Oct 2024 19:03:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=3ELWmzqLCfS4qdQgCtrHznusHn8jqWkr//7cUn+u8zU=; b=fpZBRriqSlargzNA0s/4pxQbO9w7TcnQLMkX2RALIGWWVw+yztliTg1rfB7TMyhT3VKjxJD5Yr7yaGhHzZh7QLFCIzuUcCA3x0ldSmVkM9L7pAM6NtdmYaGD2JOHrek+uXBXV0PmBNptrw+02ZpAuZw+T6ho75ltcm8jvLnF8fS1hb4abX+OwGgZEuL/conUWIl/3i8cLOwTsWDa4IlvmRhrMmaHGpUbqRyPg7thpyPS7aGPNpO8xrR8l6jB11Gl8CGKoV8XYnE+3Rd81d089AQ7Ht9OblHb1rBqF+zzmV+e06oCsAAbrJx9L6zw+HFgYGcVgyc9ltRSmKFWb8pr8A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Oct 2024 19:03:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31697 invoked by uid 111); 21 Oct 2024 19:03:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Oct 2024 15:03:09 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 21 Oct 2024 15:03:09 -0400
+From: Jeff King <peff@peff.net>
+To: Piotr Szlazak <piotr.szlazak@gmail.com>
+Cc: Piotr Szlazak via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2] doc: document how uploadpack.allowAnySHA1InWant
+ impact other allow options
+Message-ID: <20241021190309.GC1219228@coredump.intra.peff.net>
+References: <pull.1814.git.git.1729112794671.gitgitgadget@gmail.com>
+ <pull.1814.v2.git.git.1729355997353.gitgitgadget@gmail.com>
+ <72184384-07ff-4f74-91d7-280ca78407b5@gmail.com>
+ <fd5fab45-1363-41c8-915a-5578a35d219d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,66 +47,27 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <d66936b8-d12b-4035-b563-328ae9fc4824@app.fastmail.com>
+In-Reply-To: <fd5fab45-1363-41c8-915a-5578a35d219d@gmail.com>
 
-On Mon, Oct 21, 2024 at 06:48:20PM +0200, Kristoffer Haugsbakk wrote:
-> On Mon, Oct 21, 2024, at 14:08, Patrick Steinhardt wrote:
-> >> […]
-> >> Notes (series):
-> >>     From the commit message:
-> >>
-> >>       “ The test itself is fine and does not hide a bug:
-> >>         `--no-create-reflog` is not supposed to override
-> >>
-> >>     A source for that: roundabout through git-branch(1):
-> >>
-> >>       “ The negated form --no-create-reflog only overrides an earlier
-> >>         --create-reflog, but currently does not negate the setting of
-> >>         core.logAllRefUpdates.
-> >
-> > Hm. The "currently" reads as if this was a known shortcoming rather than
-> > by design.
->
-> I read it as “we might change our minds here—watch out”.  ;)
->
-> It feels very emphasized.  Like the documentation was expecting
-> your surprise.
->
-> >>     I *suppose* that the same applies to update-ref since (I suppose) they
-> >>     use the same underlying machinery.
-> >>
-> >>     See also git-tag(1) which says the same thing.
-> >>
-> >>     update-ref should document the same thing, then.  I have that marked as
-> >>     a todo item.  The changes there are a bit too involved to implicate in
-> >>     this submission.
-> >
-> > So I'm quite torn here. It's documented, even though the documentation
-> > doesn't exactly feel like this was designed, but rather like it was a
-> > side effect. The test also contradicts the documentation, even though it
-> > only worked by chance. And as mentioned above, everywhere else we
-> > typically have a design where the command line option overrides the
-> > config.
-> >
-> > Overall I'm rather leaning into the direction of making this work
-> > properly. But that would of course be a backwards-incompatible change.
->
-> Good point.  It does feel inconsistent.  I agree that the conventional
-> pattern (to my knowledge) is to have options override config when the
-> options are given.
+On Mon, Oct 21, 2024 at 07:55:06AM +0200, Piotr Szlazak wrote:
 
-I agree with you both that it feels inconsistent, but I feel somewhat
-uncomfortable changing the behavior here in a backwards incompatible
-way.
+> On the second look code changes will be needed, as at the moment final
+> result will differ between:
+> [uploadpack]
+>         allowTipSHA1InWant = true
+>         allowReachableSHA1InWant = true
+>         allowAnySHAInWant = false
+> 
+> and:
+> 
+> [uploadpack]
+>         allowAnySHAInWant = false
+>         allowTipSHA1InWant = true
+>         allowReachableSHA1InWant = true
 
-Even if the original documentation leaves the door open to changing the
-behavior, I think that probably a non-zero number of users has either
-(a) never read that documentation, or (b) come to rely on it, or (c)
-both ;-).
+I'd expect them to differ. The config is read in order with a "last one
+wins" rule. The thing that the documentation should be making clear is
+that the three overlap in what they are affecting, and so "last one" is
+not just a single key, but these three inter-related keys.
 
-I think if anything we might consider updating the documentation to more
-clearly capture the status-quo, but I'd be very hesitant to see a patch
-changing the behavior here.
-
-Thanks,
-Taylor
+-Peff
