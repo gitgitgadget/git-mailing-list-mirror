@@ -1,68 +1,66 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527E510A3E
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 21:30:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEC310A3E
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 21:32:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729546221; cv=none; b=m1dweVlo3xf2Qcm6+Muo0P3D2VNyEzY3qJ92ohsq7R3pcNkMLwf/TmP+VWB/MZv4sfOvAO358xAek9TiYfArhkbM7eiT6yX8X5US5cpaZ8rU8YfsfhuHV7ZccEDWhBcK5fjDpUrj6LKDs2Ija+kYy43EA6IsXBla6Cg06zYVHAU=
+	t=1729546332; cv=none; b=dd3OPXT7+C7Pka9ovC4F53nALAKvn+SuHU6wN8+5ePnmWA0FGXw9YG2trrDjSfKtYgcckzcyDZOXOppp6OrEUv2zlwaJkZME1Tqz7JP/gvCUvNh/CWITmyFxrGGrePgGcuGgCKo16Tq75djK7DDIUge0rAbtHs3Mna9UMgHmUjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729546221; c=relaxed/simple;
-	bh=mEOel7oG7a9EZJ4E/gkTRlWVLxZwFFXshqzN2aPC64o=;
+	s=arc-20240116; t=1729546332; c=relaxed/simple;
+	bh=1BghLOBLM4B+Ji+HRicfwXfFwjxgdcZ3WxQ2LqcyZvk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rpk0JyFVlLtpcHDiJBxWs4lSuNRXVjNT/6pJyw31FdVIDPKYBPCh7qsvAtQiwY9aSJIY92tw+Jo0CGvxbQuyNQXWw8l7QxyoYbDvqoCRQRA5bibxjcvflWwh0Tn4qstgCYGBVmlskFQM9jr2180DNnNuv02uyduVmGVWiaUEYm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=pNUXjaUz; arc=none smtp.client-ip=209.85.128.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=IlfjvmjQGTXn38oSSDjgTggVx8gEiINK77rdluvsE73QlC4CS68t/PJbTBAtsskK/zI9zPETEG+DE1oOVTgNnryNIu5Q19cu76KPI24aImc2DQ31zCplYwroBMM7OobSckhm3ZrTntmtO9770u3cbIXvJD/HpfN8J21Q/7tg9Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=z6SlgKcp; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="pNUXjaUz"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6e38fc62b9fso49425937b3.2
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 14:30:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="z6SlgKcp"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e3b7b3e9acso45374497b3.1
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 14:32:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729546219; x=1730151019; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729546330; x=1730151130; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=xl4CRo+wXlz5/8zABEocpe8gHjailD7+dgbhmLedABY=;
-        b=pNUXjaUzy7EvicnveTm0hCWzsz78gy7cKeE88D69klPmgLqhZorRvcgD9UcGiL1Kix
-         BeNMGSdioYZ7n4nZTrUiQTxoGTs0Iw50C4pzgLmMffBfLIf6O5B9zDGbZm/3l/XkBKN0
-         a12O8tNIJTXTA0eFuFXjX6qoL6BPIi77+VOvx3uyzX4dUQByDJgfOwxHmozP/w0KxcIL
-         fnZuiD/auVGAIzmt5elnG+VD6nd5xM9QHNmyltIAPTHWKhWL4/Io0CVASqFOSG9L8p8t
-         7El4FtSeL6L+ibqDaDH7/m0QBo5ivaIbIJrWXSbbLSDbvgWoM8fWEBBbNXD0vtbjeYQ5
-         UhvA==
+        bh=5L1EQDMc4fRwoyIwNGO360uwCOEd1dxj8MOU51h7Iok=;
+        b=z6SlgKcpi7nTd6ckmeJWomsVOfuNPvK2nCvzTOa3mqjh3XmpXarOf9nlAfoAU8kbkz
+         SfQFxOQDa2NKgoEqy7aUizUPqIZ8XFqE7U9yj1D4k5vwmquK9llkkR/w0KoJO4h/5buq
+         N4HE03yXdK+erTbkrtozuRyrinO2NczFP6/XPNLHjC8KPyLD8VcnpcdhWb+oLlYxqtRN
+         CYkyxU3v0LWRN5d1wtINYLdkPVeILx6DQMTmDQ6aNW1VXVy4a2q/3wmc818UUYefcnIS
+         96AOvZk/RqESTWYfxBcdIw1XGtjO0T7cEOCL1VMGtPiM4zwPvQGwX3hxcHJUcyp+Ko7V
+         qBeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729546219; x=1730151019;
+        d=1e100.net; s=20230601; t=1729546330; x=1730151130;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xl4CRo+wXlz5/8zABEocpe8gHjailD7+dgbhmLedABY=;
-        b=vYlWVSC4jvmhETiZfgyfNLEdofI8zdyxttufOLjwI2lp1aBgrZiBIuvRBIQ7ANbgR6
-         F4HX5d26REuuwvFUKdUlfhgMauL3ZKJSfZiZQkcU1ULBoLD7liyB1SO4WOu9JjCC/66+
-         1XsvWHnZVJvgLj3EeDtp74YgAwsRdg+4WEMeBizZtKb+gaF9kzXN+3fYpprVOzAq7yfR
-         nVD/xX6GEGqUZpuNqm1fyXE8Dlf4eZLlX5wQTYcnTJ9ICTJdPq5c/G8pvAXbwZ2TwZoU
-         Zg+u5pqUhRuSY32oHRtq1Y3Nr5qeVnDNsN69ORPo7zoX9LLkv2pTyBE4bSrn7Rg8hVLH
-         2VfQ==
-X-Gm-Message-State: AOJu0YzlgdPgD1nJloB6P4rPHDag0Pend1mtoT8PQyqEpukHHSo06AlT
-	pV/RQ40mAsA19gDKlRfhyx+bYynx+Me6qqjLE+SKG5MknZM8Cfj7IuhCQwli2b+EH+ih3cPu9pT
-	d
-X-Google-Smtp-Source: AGHT+IFz8e29b2IyhEx+JGTlV78XLT8I9qlsSeCeUKSR89l5rIrCqQ4OWmNUdaGQ/Wbyf3km0oo0pg==
-X-Received: by 2002:a05:690c:9c0a:b0:6e3:3521:88ff with SMTP id 00721157ae682-6e5bf9a725fmr125343627b3.18.1729546219349;
-        Mon, 21 Oct 2024 14:30:19 -0700 (PDT)
+        bh=5L1EQDMc4fRwoyIwNGO360uwCOEd1dxj8MOU51h7Iok=;
+        b=ZZ8V2I5NfYJQ6r+L54YcJHl6zJycKGiSynyu/sv4sd0Z/CdAEQpX/5SCeC+hRui722
+         caVyDhDp/e5wgyN0XEUOfllyMlM+0+NOWeLi00qK6cZ/8hBUMZShjTmCsHBzUI7XSNMj
+         zaE4Er2UEctGOIFYHtOErVnlKQRDtJY7/IvMKXSGXqWVfDdccdZu9mkIe4gfyfVIoJWp
+         JCUqvlxpejS2sG6ZXhDBve7iBwXjOoluh5MYok/pJwF/bPruqqKjISpPB39Pri06ki5C
+         b6w0DxhAi8Ab7hDlIHEB8SXLRuFO3rWm2yuBkLCxfDNgQQfEYWqIQ4lb74NC8xebrFdO
+         YCqA==
+X-Gm-Message-State: AOJu0YxG5eXnVLZKqqZ/2l8669aseLaRdCwZPQRpPrSUajipxlvUPctr
+	xZ00EJWoCpyi1ropfu9/U9n1zvMnzI+rZQCTgDYCFGhyz4MdNzB43ZMkQPrA3s0=
+X-Google-Smtp-Source: AGHT+IG4O/gmOcsxpufYJMUOw32xt98Qx5/HMYGXRSBSTgU4HMRcoMGBa1W3PFuswryn1/Sv+XyO8A==
+X-Received: by 2002:a05:690c:660c:b0:66a:ba89:d671 with SMTP id 00721157ae682-6e5bfe94d3emr104534467b3.35.1729546329841;
+        Mon, 21 Oct 2024 14:32:09 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5ccb795sm8341197b3.84.2024.10.21.14.30.18
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5ccb428sm8395927b3.78.2024.10.21.14.32.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 14:30:18 -0700 (PDT)
-Date: Mon, 21 Oct 2024 17:30:17 -0400
+        Mon, 21 Oct 2024 14:32:09 -0700 (PDT)
+Date: Mon, 21 Oct 2024 17:32:08 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 1/4] Documentation/git-bundle.txt: mention --all in
- Synopsis
-Message-ID: <ZxbH6ZktKRzzCA58@nand.local>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	avarab@gmail.com
+Subject: Re: [PATCH 2/4] Documentation/git-bundle.txt: mention full backup
+ example
+Message-ID: <ZxbIWEGS1UB3UIg+@nand.local>
 References: <cover.1729451376.git.code@khaugsbakk.name>
- <39bdc5941c7b53c432966984fa79b81fde978e86.1729451376.git.code@khaugsbakk.name>
- <0eb35890-6193-43e2-b3ac-7c26b2360a03@app.fastmail.com>
+ <f7d9aa89c953ca7d15b5047487b4347ef62e77a9.1729451376.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,24 +70,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0eb35890-6193-43e2-b3ac-7c26b2360a03@app.fastmail.com>
+In-Reply-To: <f7d9aa89c953ca7d15b5047487b4347ef62e77a9.1729451376.git.code@khaugsbakk.name>
 
-On Sun, Oct 20, 2024 at 09:33:39PM +0200, Kristoffer Haugsbakk wrote:
-> On Sun, Oct 20, 2024, at 21:14, kristofferhaugsbakk@fastmail.com wrote:
-> > prerequisites”.  It deserves to be mentioned as an alternative to
-> > `<git-rev-list-args>`.
+On Sun, Oct 20, 2024 at 09:15:00PM +0200, kristofferhaugsbakk@fastmail.com wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> git-rev-list-args huh.
+> Tell the user how to make a full backup of the repository right at the
+> start of the doc.
 >
-> git-rev-lists(1) has `--all`.  That must be were it comes from to begin
-> with.
+> This is a requested use-case.[1]  But the doc is a bit unassuming
+> about it:
 >
-> That’s why I kept looking for `--all` in all the wrong places.
+>   “ If you want to match `git clone --mirror`, which would include your
+>     refs such as `refs/remotes/*`, use `--all`.
 >
-> This patch should be dropped.
+> The user cannot be expected to formulate “I want a full backup” as “I
+> want to match `git clone --mirror`” for a bundle file or something.
+>
+> 🔗 1: https://stackoverflow.com/a/5578292/1725151
 
-I was going to say... <git-rev-list-args> is a superset of {--all}. But
-dropping this makes sense.
+We do not typically use emoji characters in commit messages on the Git
+project. The convention here would be to write this as
+
+    [1]: https://stackoverflow.com/a/5578292/1725151
+
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
+>  Documentation/git-bundle.txt | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+> index 7579dd309ac..bf0d448a736 100644
+> --- a/Documentation/git-bundle.txt
+> +++ b/Documentation/git-bundle.txt
+> @@ -26,6 +26,9 @@ They can be used to create both incremental and full backups of a
+>  repository, and to relay the state of the references in one repository
+>  to another.
+>
+> +You can use `git bundle create <file> --all` to create a full backup of
+> +your repository.
+> +
+
+Looks good, and could likely be combined with the previous paragraph
+instead of breaking and starting a new one.
+
+Now that you mention it here, does it make sense to drop the more subtle
+mention that you refer to in the patch message?
 
 Thanks,
 Taylor
