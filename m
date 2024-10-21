@@ -1,77 +1,66 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491091FCC52
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 19:41:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437FF145FE8
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 19:45:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729539705; cv=none; b=oaTueCenXeOwtKwO/Cuy/eL1kcdZxQPHXhyWp4HRaSLAM3yxIYpyQoGofEoV7cejU8HjihpKIuZEg7JB3lWmrms/bqhEuntPrEO/YvOE4AResrmTgYNV8OTLWhx9lDUvGv84FtHKKcY948IcdQf5fNJ35xIlN6HWX+YH2+j0CmQ=
+	t=1729539931; cv=none; b=TUHIPXEnUcvXj4wuXmvU3jHpyAN8g9Bok0QxofrYsDI47e1uHhUMIYUx+VJzhLdGu63t1kNmoFHZdBNlGQPwCWrQvBpe/E5UR60CY6G0DUYlnZF7O78bLmbOaQ3C2SLbD60HuMH9huFlJqGU8f/qdcFHR+PJB6YCGdP1dnBxUg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729539705; c=relaxed/simple;
-	bh=v5/kc6sDC0gQDRL03cVHSyzUYdPTFwHUDoKnPYzyoWw=;
+	s=arc-20240116; t=1729539931; c=relaxed/simple;
+	bh=ccEzQCneuZ8CyO4/X2bUTFyRoXS1UR4wDRwW0xgxWsE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WMNnaV72bo9dvGmR4k4DjA1Nt5ue7TR9vpblYFE3SPSnwizrXbKcBHGI93zHpkb42myKKR60/C5aPnsO+CfieecfucOuOqDJZZgttRJ4yC/GnkxN0URDo8+17KqA2mXsujQ/2BCJiLKHfQiavXzswtr3DvU6b7d/wCSUVp5lq/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=0RMdvQI9; arc=none smtp.client-ip=209.85.128.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=V5iAGU7rdTdjFf0ThgR08YRpb3IFG460nL2dCBJx+3siMig2N2xQQu3XgSFYpU8ZV4mDmpI6Db2/bA1GQf5FJLHOklmQQvU2PyLaLkMUxmgsNzJW9Ly77T8whOH9wZYHpUpgpNG794eL0Ut+fkmR2gBjWzzdSXEPxvZMsYLcV0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=aV0ChbOk; arc=none smtp.client-ip=209.85.219.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="0RMdvQI9"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6e3a97a6010so55615227b3.1
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 12:41:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="aV0ChbOk"
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e290d6d286eso3848435276.3
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 12:45:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729539702; x=1730144502; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729539928; x=1730144728; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=v5/kc6sDC0gQDRL03cVHSyzUYdPTFwHUDoKnPYzyoWw=;
-        b=0RMdvQI9SCBxapRS21P88BmZxKKlYHKjpfBHKPBx0tCwaBxzIvZWL84m8DLNYjK1OD
-         3e1RgONoV3xCmoDW4QQbZ0ee78x5LtioWnYNbSERv1vb2lQgB6MiV15BKZoU7MxC48S2
-         IOKj6zyouQG91q3OqulRzwiv9gljwuPdCVaOry11xFHsTwyNHxkjrJzFRllB6O3VDnak
-         8Yr7My3YxSV/KsE47J/2ZvvbSd044SUhuV9WI+OBmu0QtiFMcJ09P250rxu/l7gMiDnY
-         vNuuKXVA5QgjOGfkNmDeihiWYup7IgS/k6SaTqEgJU5JWrQ6yF7uyRuFzrucAR2haFwN
-         ahsQ==
+        bh=ccEzQCneuZ8CyO4/X2bUTFyRoXS1UR4wDRwW0xgxWsE=;
+        b=aV0ChbOks5CcdPl9xNOVnOSlvXUvJPKm5bhfH+Yh/lC8F9zqVKMNSZydwKcoKidRDh
+         yMjoky+UX4p5f/VLccflrthvPL7R6wcPiFcwLaZcNNabJuVgxfH6yaBwrhfaaZWT9NwN
+         2xFReDgUKYy26YMutk3M19xd1ZhAbqRC1URaUJSTzNZP58uCRQIVdJvbko1YmzKxSygT
+         k3r+iaGRTFLZhRpQ/ndjsVW2FYmhVkt7Si9iRzQCz/I+QSiHGTRFmpSoW1LoZK9yxgbj
+         Ai22C/pxvDJBYvprbhk5j22mNA0FAEV8cHtcCuH+AhVf1e7m0TwJ5TEUn5mVK9XW4JgP
+         O4pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729539702; x=1730144502;
+        d=1e100.net; s=20230601; t=1729539928; x=1730144728;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=v5/kc6sDC0gQDRL03cVHSyzUYdPTFwHUDoKnPYzyoWw=;
-        b=NB6PTuoZTHdVTtTmG3ej5Tu+1osqt/lUgFH1cYMJm8ZE3Whh1J/xtAG74u7ZzfHcuq
-         ICVPpfufmVW7/QiNkk/gpL7wQD1smU3ZDL1ssZeACxS58/y/GgXZ6EEpH09ceWDQbfZG
-         hfdC1sG80kktNKfAcnRGVL1WCMg/hjQoYBdQ97hwU+9Kxvp5kUDJ84rehZ79gUZvjAer
-         4TO1xfcph5Gu5is8VB5fiplhQMv4vL+xT9lQ6ec7lFlCk2MGNukTfEPcY2vcLwdJwuKH
-         gasw+/V4hUu6qIwYdYlo1PKNpGv9ulwtc8sCc5TQr+fOQBCxd1SCRN4kJVeDDNW6oSvU
-         OTMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX6PwalTCtIlyd5+J44M4EP57svX1RtwJecZLNuvIAx1kUwGPVGYW7dT7QQwEFk3+CvaVY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfWbvKhGUFNKdtvZGS81wuwtijPKohpo6TDU14v8vMCUorfkx/
-	nLeSAGrL/KlQaZB3Fa4u0yWfnkGv8bQsRJPuzevc3n4lHgPYwHM8pCdBvCr2VrE=
-X-Google-Smtp-Source: AGHT+IHeTKjUQPB5W5+cRc7dirUO+NFbaDSvMMi+2ZYlDuPN+r3ORjx+ckVqoTXmiHWCZm5xVqHUbw==
-X-Received: by 2002:a05:690c:d8a:b0:6e2:ef1:2558 with SMTP id 00721157ae682-6e5bfbdb7a2mr110501947b3.8.1729539702176;
-        Mon, 21 Oct 2024 12:41:42 -0700 (PDT)
+        bh=ccEzQCneuZ8CyO4/X2bUTFyRoXS1UR4wDRwW0xgxWsE=;
+        b=fDJzdlOqCgGsMEtn66K17WXR13kK2pYa5dTFfzuLiur8GF6SrfoBawHHi3CG32nOqb
+         eC6rjrFxAAA/VfeZIz5PQ01JzOCG8Hl3QnqwmTULtqMYzvgIRtdQ587Vls5prX/ueRVQ
+         yOwPYFaBalOxomb5/yA2IFtLATXRc6Aje5HXEG3Y2O5vugC2iEVYDgNAXVtkbxF5iO7a
+         rU6ZxvpIFMxpLDCmrsgK0fLcn82SFUfNi5tZ4Iq1vJL+P+AUAO32Hxb7Nk0Qf7+6DZBi
+         lk9EH1Ov/Jh06im4nt9PJDdFC4goNlZU+9KvJAHXvy90C4VwYWMwQxghNK9mwX0RmI7S
+         FUiA==
+X-Forwarded-Encrypted: i=1; AJvYcCVzUaZ4nmpsjnhm3jMwObn33UETkX1IHBG2UcfCwSE0lmgcpJb84FoToub/IiG3d37JUJs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwPPBRm3C22f3mfMQ5vRi8W7sHCel3OplkfPis/DXY8djNZFK9J
+	h6LmNVfuusPgCZ8odBj/20UOnmx4ZQS6q79GeucWnZfcsQi1lrXqpnqc5vYRdyU=
+X-Google-Smtp-Source: AGHT+IGZcBZA84qL0BKQHj1R0RhFBmWGAW0yU4GeX6oum+AHIMx/otLrGkrBVgx4sNLM8zSpkgdxCQ==
+X-Received: by 2002:a05:6902:2607:b0:e28:fc1c:eb4f with SMTP id 3f1490d57ef6-e2e2305b360mr1301244276.45.1729539928209;
+        Mon, 21 Oct 2024 12:45:28 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5cee7f6sm7797397b3.105.2024.10.21.12.41.41
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdc9b3471sm825114276.34.2024.10.21.12.45.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 12:41:41 -0700 (PDT)
-Date: Mon, 21 Oct 2024 15:41:40 -0400
+        Mon, 21 Oct 2024 12:45:27 -0700 (PDT)
+Date: Mon, 21 Oct 2024 15:45:26 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: clar unit testing framework FTBFS on uclibc systems (wchar_t
- unsupported)
-Message-ID: <ZxaudJWlJbEJ3LeO@nand.local>
-References: <ZxESP0xHV4cK64i0@pks.im>
- <ZxEXFI80i4Q_4NJT@pks.im>
- <ZxGN9zzt55GcL4Qj@tapette.crustytoothpaste.net>
- <20241018045155.GC2408674@coredump.intra.peff.net>
- <ZxHrIBCdnwdRdXAv@pks.im>
- <20241018052448.GD2408674@coredump.intra.peff.net>
- <ZxHylOLHaxP8crom@pks.im>
- <ZxLKLJCgiA3oY4Nr@nand.local>
- <ZxX4AsMRoC0Botcj@pks.im>
- <20241021193024.GF1219228@coredump.intra.peff.net>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org
+Subject: Re: [RFC PATCH] object-name: add @{upstreamhead} shorthand
+Message-ID: <ZxavVmjsshVHCPcL@nand.local>
+References: <20241020202507.2596990-1-bence@ferdinandy.com>
+ <1c056d39-950c-4965-89d6-85f0c2c1bccd@app.fastmail.com>
+ <D50YLOBHJTLS.367TMAOLKL019@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,47 +69,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241021193024.GF1219228@coredump.intra.peff.net>
+In-Reply-To: <D50YLOBHJTLS.367TMAOLKL019@ferdinandy.com>
 
-On Mon, Oct 21, 2024 at 03:30:24PM -0400, Jeff King wrote:
-> On Mon, Oct 21, 2024 at 08:44:01AM +0200, Patrick Steinhardt wrote:
->
-> > > Will it take us another 20 years to resolve all of the portability
-> > > issues which Clar suffers from (but git-compat-util.h doesn't)?
-> > > Probably not 20 years, but I don't think that it's on the complete other
-> > > end of the spectrum, either.
-> >
-> > My assumption is that we'll iron out the issues in this release. Our
-> > "git-compat-util.h" has grown _huge_, but that's mostly because it needs
-> > to support a ton of different things. The Git codebase is orders of
-> > magnitude bigger than the clar, so it is totally expected that it also
-> > exercises way more edge cases in C. Conversely, I expect that the compat
-> > headers in clar need to only be a fraction of what we have.
-> >
-> > I don't really understand where the claim comes from that this is such a
-> > huge pain. Sure, there's been a bit of back and forth now. But all of
-> > the reports I received were easy to fix, and I've fixed them upstream in
-> > a matter of days.
-> >
-> > I'd really like us to take a step back here and take things a bit more
-> > relaxed. If we see that this continues to be a major pain to maintain
-> > then yes, I agree, we should likely rope in our own compat headers. But
-> > from my point of view there isn't really indication that this is going
-> > to be the case.
->
-> I'm OK with that direction. Just to be clear, I think you've done a
-> great job (as you always do) of responding to the issue promptly and
-> keeping things moving forward. And you're right that there is a good
-> chance that we iron out this wrinkle and never worry about it again. If
-> that doesn't turn out to be the case, we can iterate from there.
+On Sun, Oct 20, 2024 at 11:42:38PM +0200, Bence Ferdinandy wrote:
+> But so the long story short here is that for
+> (origin|upstream)/(master|main|trunk) we can already have agnostic code with
+> HEAD for the second part and with a patch like this we could have agnostic code
+> for the whole thing.
 
-Yeah, to be clear on my own position, I agree with Peff here. I was
-merely suggesting that there might be more work here than we estimate,
-and that it would be nice to take advantage of the experience and years
-of work that have gone into git-compat-util.h if that were the case.
+I'm hesitant to pick this up because of what is said in this paragraph.
+When you write "(master|main|trunk)", I think you're really spelling
+"HEAD". And it's fine to write HEAD in a script when you want to resolve
+something to master/main/trunk/etc. without caring which and instead
+delegating that to whatever the remote HEAD is.
 
-Certainly you have done a great job at responding promptly to any
-breakages, which is greatly appreciated by myself and the project.
+But determining the upstream of a branch is already easy to do as Peff
+points out downthread. So this seems like a band-aid for scripts that do
+not care to perform such a resolution themselves.
 
 Thanks,
 Taylor
