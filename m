@@ -1,95 +1,133 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AA11EEE0
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 20:07:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD38912C499
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 20:10:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729541223; cv=none; b=k3m2uF0/QgicXHBugCtspsMKu+2ZzSMRM17s/2uRI6uLDTVX2wlEUdYhZojUpJ42eu7K7GJHL1twMZIj9M0pqzlCyYzUYcP0PmZU4O/DslS8Ltwj/W7aeamBqIYYmuTieHrw3gLWMJdwp4Lt7gmDr7o7jqoSZisBqL9OAFG8onY=
+	t=1729541412; cv=none; b=p1HkU+JM8YvzbKm3V6dmSyW55ECj8sm2qMSgAoGI3XhMgMH3nGEUOlVuiTsaA5yWk54GaiLGUUV9r06pLBm7pZNdBIDq/uUBwffUl74RZsq9kK+lNVUUaLcd0UE7RB9UFdAhudq/f92OzB0z2THR9m0DABZbroA2aFNn6JMaQJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729541223; c=relaxed/simple;
-	bh=2/A5ndUkd4pqcAHjwYFLrarn3iHR5gZXL18GTsFcunU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GmXSRnn2rjD2RNOvEkAoNaRAjPiJU/t+Omdfm+Acsnua+aqSbja1tS0p2fxLNCs5uV4WgTDtwje4KODZa2qVDoNsHSGOeNsg1sxr69NUIEkdlR+7X39NBHG3A3J0pHX/ToO4qCtmWmuIIY+Xq/KdWBNeTC4Mrw0IIId8/lnZba4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=AQHeDF2G; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1729541412; c=relaxed/simple;
+	bh=obegvUoCud/C5JsY2AGdQCzvHkPj3c/2k6V34bgiO9w=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=KhrS2EzZP2/Nzd265IGIcXl3wl3bzTz+XpLyu/YDVl1w0TcMUHEAoMy9n4AobHBKnoqE12ziwlmy7OnreRst51VVcBHLM+5jQEsfD56KgUFTanykw2CEgdx9IyeHTZ9HjHnNe/tBA3r4gs5YjLY2IwP0N01TcW6+JlEEOdb06vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=PN6d/P8Y; arc=none smtp.client-ip=192.29.178.126
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AQHeDF2G"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e290e857d56so4857487276.1
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 13:07:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729541221; x=1730146021; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2/A5ndUkd4pqcAHjwYFLrarn3iHR5gZXL18GTsFcunU=;
-        b=AQHeDF2GUbQu0gr7k6Vbvjd8rdEDFDfeCulpe2AILRYiXam8qDI1D7DnWQuIi2pZ/Q
-         0wA+5oEjtmNj6xwCJyE4ZNFe9QEoYJ7/RFVtyKKlrAI05Z4eOYKjbtylcZ3pE04epSpl
-         siD7VS1u6W2lyMbblDtOM2+Zq4gxe1E7L9ghZrVDh5i0gAJ2SysFCfWCOArmV7imVPM9
-         ATqUUM7E6K5iBFeJZ6Tn6r8vDIsbidf7lpzsHX3+PKn5Jmi1+WgfRl34OaMZej49QDJ9
-         T5kkujL0H66T2P9padzb+o4PYO2iN92XmcvrPHC8fZrNiVuIXHxYQfe0OiJ2WKK8Hyy6
-         bi5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729541221; x=1730146021;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2/A5ndUkd4pqcAHjwYFLrarn3iHR5gZXL18GTsFcunU=;
-        b=Mnm+vax/er29gpC04TFjOlMKDxJ2Tw/fyWwaf/+WdBw6M+iOqcEZ4gdIu/Blldi/9j
-         /l0/if6Unco0+40c4VDgLpIKsrXASlc5ew+Efm1ZRIhpgd5oXiaiBiXtmscXYCyw24gt
-         vqehe/sayueyd9HKjNA64uAHt8qzRhpAVXM7+POJZsw9UyYyyKPqKQXsEIQBds7tNDei
-         7a+CdRURZndAQlXX9q4BsIqkvx/+IcmwxkJKB8LHItrY2KOCaLqSnh3aDt5ZY84z+KKU
-         YOcs/GJKp//NSRnUlFlaMvqIpVVuuQ75A/Za7n2Af7rS80HRJOKrNP3brsvwKpM072b/
-         js5w==
-X-Forwarded-Encrypted: i=1; AJvYcCXcmEnTN4EdNP7UJeni6DbhKrJ/ize4RR+Dq6gbpfOp6f8q08/K9TIo8joHGb/WKESuL1s=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUNPUFpRul4RKEFYcvIclFlOhT5qVly6TvKCWWontFEh59NvWu
-	PXKEMJvhqB8c5hTSGtQxTZkU6ONzz0ZAd9VYXfjv7nV/f2VHzU+JVXtMKG2STYgLEYN3sor3MLZ
-	7
-X-Google-Smtp-Source: AGHT+IFGtPH+hLwzf4VbVLF8SLcgUjf23W6gnl+ycqcRkwG91tlPKtgMpt4ut19gvHhYxGI4xLcv1A==
-X-Received: by 2002:a05:690c:9a82:b0:6e3:10e7:b418 with SMTP id 00721157ae682-6e5bfeb26damr101118117b3.46.1729541221294;
-        Mon, 21 Oct 2024 13:07:01 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5cef92dsm8001467b3.113.2024.10.21.13.07.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 13:07:00 -0700 (PDT)
-Date: Mon, 21 Oct 2024 16:06:59 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: fox <fox.gbr@townlong-yak.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Taylor Blau <ttaylorr@github.com>,
-	Elijah Newren <newren@gmail.com>
-Subject: Re: Bug report: v2.47.0 cannot fetch version 1 pack indexes
-Message-ID: <Zxa0YwXfWt3qWWld@nand.local>
-References: <BA07EFA0-0793-420D-BED9-ACD7CEBE0112@townlong-yak.com>
- <CAPig+cRPAs85koyaQxN5eaV60-qyGka7HrDMuoMoWjT0CpS6SQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="PN6d/P8Y"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=ptDTDOnUk/LlPvC0msVqo0qAP/wJse58WQfs1KehRxI=;
+ b=PN6d/P8YFu7dWk0QELr1ReBy5VIuyGK/9u5YipC8fqX0EbvnVE/57dHMkbyxvBquupmDttVufHQE
+   0Rk9LiTyq5ln1gP8K2zIyUlF9d1VSWG67NMuQV2bjtiCa7Ylm1hjFwx5yyZoM3P1/8+HIhvkA2W1
+   EqdXQIbPTrH/gOMuTV3qTvIS1wbV8F85ORIyEs+CQLv96gPnPiwDyesXpwYVoOVXUSvgDYsUqsMH
+   nOB8xgsa8RjDeRwDzZ7VLV1eZsWimFe6KPjK9vNM5ENpa3RIZP6rN6QMXFSMBEHyn/P+p3CzFo/q
+   z3ADc83WGUDdGqw0VNqGY7CIxnaPoWlwVPoAKw==
+Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SLQ001EV2OQ7I70@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Mon, 21 Oct 2024 20:10:02 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cRPAs85koyaQxN5eaV60-qyGka7HrDMuoMoWjT0CpS6SQ@mail.gmail.com>
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Mon, 21 Oct 2024 22:09:38 +0200
+Message-id: <D51R90BTHJMY.1C1XY5P4CHTWG@ferdinandy.com>
+Subject: Re: [RFC PATCH] object-name: add @{upstreamhead} shorthand
+Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+ <git@vger.kernel.org>
+To: "Jeff King" <peff@peff.net>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <20241020202507.2596990-1-bence@ferdinandy.com>
+ <1c056d39-950c-4965-89d6-85f0c2c1bccd@app.fastmail.com>
+ <D50YLOBHJTLS.367TMAOLKL019@ferdinandy.com>
+ <20241021191441.GD1219228@coredump.intra.peff.net>
+In-reply-to: <20241021191441.GD1219228@coredump.intra.peff.net>
+Reporting-Meta:
+ AAEnPGpg7kOVOZ4tMYtz5EM84CBz9HqcVKzXcMjURRbySG/ilfbnoQDh0RCIG0XD
+ zNeu6MNdJX7p4SDQOrOizhKDK69c4TwfQAqPbDlKUvkcXzmEDOwP9FtOBXeGWajJ
+ cr6TdZY2BcS6w9Eb9L0poT7rtqbjFsxgrzswa5mXuHliqnnFTwf9VuN3cX1/tq5R
+ ux9V4ISKHPkPTdImeY9cmc3XYbJwDRwJU4LbCDcy/N/EIt4Fm9cE3meTkNfGZtU3
+ x/AJ/cw86F6OR0CV+0T1jDiUfqrt0OANbOJV4hkp4BIbdi200DSfUFhFMtyaLVhI
+ ohduA8CUrsT1YtOhxtJmWdJJgSCFaXymkB87folS7DHvqgR67nmX2iCdkqqEvU4i
+ F0c8hCh+NJ6CwEFedhHgYWLBjDTfZxDfhSKH9eAlYPJ3z2c7hLUhxIjGZXTXyAnO
+ LS2sUTOZlzYwBWiKFNXNMFVfir7p/8wO9d4HpR25KJZSUQ9wgqTIYDc=
 
-On Sat, Oct 19, 2024 at 08:37:08PM -0400, Eric Sunshine wrote:
-> On Sat, Oct 19, 2024 at 7:31 PM fox <fox.gbr@townlong-yak.com> wrote:
-> > What did you do before the bug happened? (Steps to reproduce your issue)
-> > 1. Run git clone https://www.townlong-yak.com/test.git
-> > Cloning into 'test'...
-> > error: files '/Users/me/test/.git/objects/pack/tmp_idx_WT81vv' and '/Users/me/test/.git/objects/pack/pack-427331d91391b00844273eeb3879cb479ce2c995.idx' differ in contents
-> > fatal: unable to rename temporary '*.idx' file to '/Users/me/test/.git/objects/pack/pack-427331d91391b00844273eeb3879cb479ce2c995.idx'
-> > error: Unable to find 6261a9d9f7704c02a5421ff733919ab18793aa7d under https://www.townlong-yak.com/test.git
-> > Cannot obtain needed object 6261a9d9f7704c02a5421ff733919ab18793aa7d
-> > error: fetch failed.
+
+On Mon Oct 21, 2024 at 21:14, Jeff King <peff@peff.net> wrote:
+> On Sun, Oct 20, 2024 at 11:42:38PM +0200, Bence Ferdinandy wrote:
 >
-> I can reproduce this problem.
+>> I basically use it for two things:
+>>=20
+>> - variations of `git log remote/HEAD..` for which I currently have an al=
+ias
+>>   with "origin" hardcoded. E.g. I'm on a feature branch I'm reviewing an=
+d
+>>   I want to know what commits are new compared to origin/(master|main|tr=
+unk),
+>>   but I use HEAD, because I never know (and don't really want to pay att=
+ention
+>>   to) what project uses what. And although "origin" is usually ok, but n=
+ot
+>>   always if there are forks in play, so @{upstreamhead} would make it ag=
+nostic
+>>   to the remote's name.
+>
+> I'm a little skeptical that this is useful. If a local branch has a
+> particular remote branch configured as its upstream, then shouldn't your
+> search for new commits be against that configured upstream branch, not
+> whatever that remote's HEAD happens to be?
+>
+> In many cases, of course, I'd expect that HEAD to also be the upstream
+> branch. But then you could just use @{upstream}.
+>
+> And in some cases, you really want to compare against a known base
+> point, regardless of the configured upstream. But then you should use
+> the full name of that base point, rather than the remote half of the
+> upstream config.
+>
+> It sounds more like a band-aid for scripts that are expected to be used
+> across repos that may use other names for what is effectively "origin".
+> In which case I question whether we really want new lookup syntax,
+> versus having those scripts learn to query the remote name.
+>
+> E.g., I think you could do:
+>
+>   upstream=3D$(git rev-parse --symbolic-full-name @{upstream})
+>   git log ${upstream%/*}/HEAD..
 
-Thanks for reproducing. This is definitely unintentional breakage, which
-I see that Peff has already diagnosed and proposed a fix for. Let's read
-on ...
+That particular one will break if you have something like
+refs/remotes/origin/foo/bar, but I get your point.
 
-Thanks,
-Taylor
+>
+> And possibly we could make it easier to just grab the remote name with a
+> single command.
+
+As I was running this patch through my head yesterday I sort of distilled m=
+y
+argument in favour to "writing remote agnostic scripts are unnecessarily
+complicated", but I do agree, that if there were a git command that could
+return the remote for a branch without any extra scripting hacks would easi=
+ly
+get you the same result, and may even be useful elsewhere.
+
+I'm not sure where this would be the best. Maybe:=20
+	git branch --show-current-remote
+?
+
+Thanks for the feedback!
+
+Best,
+Bence
+
+--=20
+bence.ferdinandy.com
+
