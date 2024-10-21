@@ -1,39 +1,67 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E992209B
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 19:00:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34271F942E
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 19:02:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729537255; cv=none; b=EpvKRaGI6SAfUuILLFCPthWBUotMdtxBkNZTY2clVNFSPzjxsTyJxg8PS67YipVHsAikt79xcaW7JTdFJJJKGuGIllU6lE8peqewQYzjqbJbK/f3aobxAW+lCL7WaltMBop/ehSfFmqodw2tddDWKmNhY0Vp0Awt5Jr8EGquzsY=
+	t=1729537362; cv=none; b=kFDgM6uT9e2Xkmj6QfvagrkMBmNGVMpCrnccIgoKgVDExZwKmgpNHxIB55aHjhFqARoau+C1RRzL0pRbcUZwaZE2PTSkoQbC1A39d1JB8nKaWWUsB68e0S8eOYWb6vVBPw/Q2ZXGmCZ4BAdvSPRabT1P3EZNd3WSBRyyVUOwgD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729537255; c=relaxed/simple;
-	bh=3wsl9i2PNvTjW9ebZ7muSa+TZqvvtyLSZHyJigv8lxc=;
+	s=arc-20240116; t=1729537362; c=relaxed/simple;
+	bh=avoVmZtZrCYBSLlMgMUelqMQsmaT2cmhOPxeO6xJJrc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=duW9pxUfjdTHEo5HBn7vWn5a6V48RE3XjoXuhZ0e6ug5c/WkcBvVj+nGs6YvKKghB9NvztYN9bw6HTCsLiO4HYrkHyHmxCAWig97Qjd7XyGiuGXe1ttu9wCPSJKjdtQgL5zhDaI3mn0QFtlBiGtJMJym0YVhpfKW7IY/a9gHg84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HulRpOVo; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=jwanKtuV1D2HBtEyw5TRgwMq/ftTJE3WYUV8SjwCvCDnEjhLIPFCA84/Sg1hUtnMaflcRwStAunhxcZJlbbcXDo3LKGWELXBb6tmy+jAVXU/s4AaWEZC6J/kRu35+MxGARHKM1UEOU9hwjaNO29bAWYV62lgVsNSJJfaNbShVT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=AnP2Kn6E; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HulRpOVo"
-Received: (qmail 19214 invoked by uid 109); 21 Oct 2024 19:00:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3wsl9i2PNvTjW9ebZ7muSa+TZqvvtyLSZHyJigv8lxc=; b=HulRpOVoXGVqOg0QbKKDcph6DlCq/10TpGge8qn6fAqmduAXB9y0n697wELPQ9zH6w2D5tW8NRokwhgWr3MsUstioGvJ6YZuc8q6D3CcC6MWFzLZrVljYkVjmfulsPFbCcPTXMyTu5JEpIh3Nh7aR4CG1gprQwAHOuvN5Cw716Xs2X0ZUPXL5nlKpoN7ClrzfJLNJ5zIGHTOLRffs4h4iXzQaD45ZVTKTNnPOUHq8FEsctLMEbYDQv7B0PmV5C/gxu7a2Inm6uhRFiGjoUTuerHqeG869l58MrHAJWt7i9Lp0gHNLcx3FL2/fBk27clr2J0z4Xj2TyPG7EAz7LAi3Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Oct 2024 19:00:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31688 invoked by uid 111); 21 Oct 2024 19:00:45 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Oct 2024 15:00:45 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 21 Oct 2024 15:00:45 -0400
-From: Jeff King <peff@peff.net>
-To: Philip Yung <y5c4l3@proton.me>
-Cc: Y5 via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] diff: setup pager only before diff contents truly ready
-Message-ID: <20241021190045.GB1219228@coredump.intra.peff.net>
-References: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
- <20241019211938.GA589728@coredump.intra.peff.net>
- <UZMh2lyzbLOgsf0PXfMnq6HnWVnCK3y36jY3IMKUykPi74ztNucf8bgywoeO0DdeApq31JDDGMZiEya99zAcI3l8y_zcVqiN8FpEnT1DRZU=@proton.me>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AnP2Kn6E"
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e2918664a3fso4069631276.0
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 12:02:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729537360; x=1730142160; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=49B32nYMEJuIx8sKEgHeG3vDhExI3nl21socEBZbUbE=;
+        b=AnP2Kn6EEcS5TmuMP6fUDDJkl4iqDo9BQlqTwjjFecxik5TNx5YVtr9oDYf4oa/OFc
+         yROG6kn3UZcyj6ZvBInNc9Up/heW8Xx13o3I7ms6YOr/yHPoVLwvieJuNkUhsQopApJE
+         76bFvwKGDkHJjj66XKwGQ1SN/hRIsJNxEoFKcioRnIzNfgMklXAmdIxuNK25ExxAYzrN
+         pK35QTpiTYiqFxXlNUopoV1oJWaqs4Rl4vfTkKVLgliNNgPuX2f0rWYJxeJWjhmThg5C
+         CMH5UXueiZjQgbTwWbUFeh3BWuWx7G94VRp8rNkqJ0eJhVSckrffbkD54Dwa1SB9jUB2
+         I0ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729537360; x=1730142160;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=49B32nYMEJuIx8sKEgHeG3vDhExI3nl21socEBZbUbE=;
+        b=lMYWSzN8pT4rZK2gTBp6sWs1Kivu9fqsM/AlTLHIVpQkYmjsvtKrfpZFJB8h1oDpcQ
+         ec9tA2xKrdc1M5J8SSohJrKDGw3W8k8T903YmfK6f21DErOtTOY9swk7zNNHN6XTXvXx
+         xSlv9hhyAUJ8MsAi5FJIC1T2tquiNEHcKbhcyH93I4385UjLiNIwYIUDP98dTsUg6IFH
+         K8QUlzyTbHiuMnlyzNwJO9ZvDpC7qeUIgkRoqAytrH8nozlW0axgnvfxnUQ4lADyRDSr
+         7/6ZeDQZr8DW6uWi8HJc/J691Fxd8Vr++zMdINNE/DzeQXgdC5cBSLOByjy8y8tVtzmk
+         2YGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU38sttPxRoxESf3JlCLCUaK6gHarn0SD10CmLAj1kJZ+T+f1YJgaFwVv8DR4rmzv2JxIM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx1D9daSsDHTwpDYZLEVmozAQ2rury1jjmClJZoxUK7qrJxqNLt
+	pLCPiA2rLnYyD8u0FtmdwHupoGkbIS0HnTx8Xb/J192EOYQU36ahZK47a5IYhLI=
+X-Google-Smtp-Source: AGHT+IFq58zVc/hogNzSuoIpFcxlBtJoFP6bhZQrlZ0Euc8Dr4j+L5YqLvWU4+pm09nCPXcH+3c2qQ==
+X-Received: by 2002:a05:6902:98a:b0:e29:123f:49f with SMTP id 3f1490d57ef6-e2e242b9ce5mr707329276.0.1729537359729;
+        Mon, 21 Oct 2024 12:02:39 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdc9b1f05sm761155276.26.2024.10.21.12.02.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2024 12:02:39 -0700 (PDT)
+Date: Mon, 21 Oct 2024 15:02:38 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH] t1400: fix --no-create-reflog test and description
+Message-ID: <ZxalTgct8WhEmO0w@nand.local>
+References: <ab7d4c8d89c075de05bf04f1f9dc195145455964.1729439476.git.code@khaugsbakk.name>
+ <ZxZETN7WjbNiSRyF@pks.im>
+ <d66936b8-d12b-4035-b563-328ae9fc4824@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,84 +70,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <UZMh2lyzbLOgsf0PXfMnq6HnWVnCK3y36jY3IMKUykPi74ztNucf8bgywoeO0DdeApq31JDDGMZiEya99zAcI3l8y_zcVqiN8FpEnT1DRZU=@proton.me>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d66936b8-d12b-4035-b563-328ae9fc4824@app.fastmail.com>
 
-On Mon, Oct 21, 2024 at 12:11:33AM +0000, Philip Yung wrote:
+On Mon, Oct 21, 2024 at 06:48:20PM +0200, Kristoffer Haugsbakk wrote:
+> On Mon, Oct 21, 2024, at 14:08, Patrick Steinhardt wrote:
+> >> […]
+> >> Notes (series):
+> >>     From the commit message:
+> >>
+> >>       “ The test itself is fine and does not hide a bug:
+> >>         `--no-create-reflog` is not supposed to override
+> >>
+> >>     A source for that: roundabout through git-branch(1):
+> >>
+> >>       “ The negated form --no-create-reflog only overrides an earlier
+> >>         --create-reflog, but currently does not negate the setting of
+> >>         core.logAllRefUpdates.
+> >
+> > Hm. The "currently" reads as if this was a known shortcoming rather than
+> > by design.
+>
+> I read it as “we might change our minds here—watch out”.  ;)
+>
+> It feels very emphasized.  Like the documentation was expecting
+> your surprise.
+>
+> >>     I *suppose* that the same applies to update-ref since (I suppose) they
+> >>     use the same underlying machinery.
+> >>
+> >>     See also git-tag(1) which says the same thing.
+> >>
+> >>     update-ref should document the same thing, then.  I have that marked as
+> >>     a todo item.  The changes there are a bit too involved to implicate in
+> >>     this submission.
+> >
+> > So I'm quite torn here. It's documented, even though the documentation
+> > doesn't exactly feel like this was designed, but rather like it was a
+> > side effect. The test also contradicts the documentation, even though it
+> > only worked by chance. And as mentioned above, everywhere else we
+> > typically have a design where the command line option overrides the
+> > config.
+> >
+> > Overall I'm rather leaning into the direction of making this work
+> > properly. But that would of course be a backwards-incompatible change.
+>
+> Good point.  It does feel inconsistent.  I agree that the conventional
+> pattern (to my knowledge) is to have options override config when the
+> options are given.
 
-> > errors will likewise go to the pager. E.g., try "git log --foo".
-> 
-> Hope that I didn't take it the wrong way, but I don't think `git log --foo`
-> starts a pager, where the routine `setup_pager()` is put after argv parsing.
-> (checked by `strace`)
+I agree with you both that it feels inconsistent, but I feel somewhat
+uncomfortable changing the behavior here in a backwards incompatible
+way.
 
-Hmm, this actually depends on config. If you have pager.log defined,
-we'll start it early in git.c, but otherwise not until the setup_pager()
-call.
+Even if the original documentation leaves the door open to changing the
+behavior, I think that probably a non-zero number of users has either
+(a) never read that documentation, or (b) come to rely on it, or (c)
+both ;-).
 
-I was mildly surprised that pager.diff would not have the same effect,
-even with your patch. But that's because we only handle pager config if
-RUN_SETUP is true, which it is not for diff (because we might be doing
-an out-of-repo --index diff). And the reason for that is mostly
-historical, as reading config early interferes with repo setup (though
-I'm even sure that's still the case, as check_pager_config() these days
-uses the "early" config mechanism which is supposed to address that).
+I think if anything we might consider updating the documentation to more
+clearly capture the status-quo, but I'd be very hesitant to see a patch
+changing the behavior here.
 
-What a horrid mess of inconsistency and hacks. ;)
-
-Likewise, any builtin that sets USE_PAGER in git.c will turn on the
-pager early. So "git shortlog --foo" will go through the pager, as will
-range-diff. I was somewhat surprised those are the only two these days.
-Looks like 1fda91b511 (Fix 'git log' early pager startup error case,
-2010-08-24) dropped many. And I think your patch is the spiritual
-successor to that.
-
-So I think in an ideal world we'd:
-
-  - convert those two commands to do the pager setup themselves and
-    retire the USE_PAGER flag entirely
-
-  - move configured pager handling down into more commands. So git-log
-    should set DELAY_PAGER_CONFIG and then call setup_auto_pager()
-    rather than setup_pager(). Ideally DELAY_PAGER_CONFIG would be the
-    default, but we can't do that until every builtin makes its own call
-    to setup_auto_pager() at the right moment.
-
-  - push calls to setup_pager() (or setup_auto_pager()) as far down
-    within commands as possible (right before we start generating
-    output). Your patch does that for git-diff, but there may be other
-    cases.
-
-  - consistently handle pager config whether USE_SETUP is set or not.
-    That means git-diff should set DELAY_PAGER_CONFIG, since it handles
-    the pager itself.
-
-And that would make things more consistent overall, and avoid pushing
-early errors into the pager (though of course it would still be possible
-to get some errors in the pager if they happen after we start it).
-
-I don't blame you if you don't want to start down that rabbit hole. :) I
-think it would probably be OK to peck away at it incrementally, and your
-patch does that.
-
-> > would be missing a spot that needed a new setup_diff_pager() call, and I
-> > suspect we don't have good test coverage here.
-> 
-> This is actually my concern as well when I was naively testing the coverage
-> using GDB, which turned out to be quite tedious. Would you consider it's fine to
-> add a pager consistency test for builtins, probably in another patch with regard
-> to `t7006-pager.sh` OR a new test `t7007`?
-
-TBH, I am not all that worried about adding tests just for your patch.
-You'd need to identify all of the possible diff code paths in order to
-add tests for them, which is the same thing you had to do to fix the
-code paths. I was mostly just commenting that we're not likely to be
-able to rely on existing tests to help us here.
-
-It might be worth adding a test that shows off your improved diff
-behavior, though I would be OK if it was a representative command and
-not exhaustive. I think adding to t7006 should be fine.
-
-If we fixed some of the bits I mentioned above, some of that should
-likewise be covered by tests.
-
--Peff
+Thanks,
+Taylor
