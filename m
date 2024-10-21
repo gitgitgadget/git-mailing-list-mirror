@@ -1,66 +1,71 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437FF145FE8
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 19:45:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF69B145FE8
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 19:47:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729539931; cv=none; b=TUHIPXEnUcvXj4wuXmvU3jHpyAN8g9Bok0QxofrYsDI47e1uHhUMIYUx+VJzhLdGu63t1kNmoFHZdBNlGQPwCWrQvBpe/E5UR60CY6G0DUYlnZF7O78bLmbOaQ3C2SLbD60HuMH9huFlJqGU8f/qdcFHR+PJB6YCGdP1dnBxUg0=
+	t=1729540066; cv=none; b=KC+TFI4Wb0/VgCr2mwPL5owUiZV8JwRz0tNSIElOGLMEH+7Mk02FDB8N+8aJsOIzfVyWJ4QsqLAl7btJXpcUIAt7xRq71+w+fsvXiCAYUbgDwcMRHDL9uREKhpJGk1qTyoDuDEBf5hLHs/P9e5JesOdN9z0LvjMNQQkgMhsHp7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729539931; c=relaxed/simple;
-	bh=ccEzQCneuZ8CyO4/X2bUTFyRoXS1UR4wDRwW0xgxWsE=;
+	s=arc-20240116; t=1729540066; c=relaxed/simple;
+	bh=28d8z+X6y49BRk3NhOIIYqj6cNpQrKM1aCHzgLk0zAc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V5iAGU7rdTdjFf0ThgR08YRpb3IFG460nL2dCBJx+3siMig2N2xQQu3XgSFYpU8ZV4mDmpI6Db2/bA1GQf5FJLHOklmQQvU2PyLaLkMUxmgsNzJW9Ly77T8whOH9wZYHpUpgpNG794eL0Ut+fkmR2gBjWzzdSXEPxvZMsYLcV0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=aV0ChbOk; arc=none smtp.client-ip=209.85.219.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=PoNYIPqmUxs8PXkXxJ0qtlx09E0XMAA827WcxHkHhDp+t2U8pS29kEkkAkEr6XJmTpI+xt9OL63Ulbibd3xYchnkopmSI4t8ly41tS9nDNTpYi+bPa21XIZSrPBZ1+EFrR78AUwUMY6NMmbzSDJ+sCpygVahZw0YCM/EKdBjqD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=HK4Kjxg/; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="aV0ChbOk"
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e290d6d286eso3848435276.3
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 12:45:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="HK4Kjxg/"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e330b7752cso41222277b3.1
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 12:47:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729539928; x=1730144728; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ccEzQCneuZ8CyO4/X2bUTFyRoXS1UR4wDRwW0xgxWsE=;
-        b=aV0ChbOks5CcdPl9xNOVnOSlvXUvJPKm5bhfH+Yh/lC8F9zqVKMNSZydwKcoKidRDh
-         yMjoky+UX4p5f/VLccflrthvPL7R6wcPiFcwLaZcNNabJuVgxfH6yaBwrhfaaZWT9NwN
-         2xFReDgUKYy26YMutk3M19xd1ZhAbqRC1URaUJSTzNZP58uCRQIVdJvbko1YmzKxSygT
-         k3r+iaGRTFLZhRpQ/ndjsVW2FYmhVkt7Si9iRzQCz/I+QSiHGTRFmpSoW1LoZK9yxgbj
-         Ai22C/pxvDJBYvprbhk5j22mNA0FAEV8cHtcCuH+AhVf1e7m0TwJ5TEUn5mVK9XW4JgP
-         O4pw==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729540064; x=1730144864; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=28d8z+X6y49BRk3NhOIIYqj6cNpQrKM1aCHzgLk0zAc=;
+        b=HK4Kjxg/jbUpQnCvUUDda15dsyPNYcLuANUESL+XzFkrvZXhehAtQIQeeFaELv1lIP
+         v3pzGHewOq34GjPV/LhKVULqygcDkVv5nhAdr9sJDZPlrYHqkaG7ryGhb/ARsI3QSijU
+         Bl6nZkUUM37gyB1osm6DS8eGvJCoMqnEu9TaDhoEJpzi+dhfN+kKVrXpVnjoNZNQNuwQ
+         vtnKXHOytWnMCJJbPSHUhXfFJyh44YoXwlE1m0rFa9YfVDYwHQWLa/a5hE1T4nl1VyNp
+         10CoUYrAwU7QvK8jlm/H+V31uKG6NN0kx6N0efqOlf84oLj4hk4wmFb9f1HezBH/NN9y
+         WApg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729539928; x=1730144728;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ccEzQCneuZ8CyO4/X2bUTFyRoXS1UR4wDRwW0xgxWsE=;
-        b=fDJzdlOqCgGsMEtn66K17WXR13kK2pYa5dTFfzuLiur8GF6SrfoBawHHi3CG32nOqb
-         eC6rjrFxAAA/VfeZIz5PQ01JzOCG8Hl3QnqwmTULtqMYzvgIRtdQ587Vls5prX/ueRVQ
-         yOwPYFaBalOxomb5/yA2IFtLATXRc6Aje5HXEG3Y2O5vugC2iEVYDgNAXVtkbxF5iO7a
-         rU6ZxvpIFMxpLDCmrsgK0fLcn82SFUfNi5tZ4Iq1vJL+P+AUAO32Hxb7Nk0Qf7+6DZBi
-         lk9EH1Ov/Jh06im4nt9PJDdFC4goNlZU+9KvJAHXvy90C4VwYWMwQxghNK9mwX0RmI7S
-         FUiA==
-X-Forwarded-Encrypted: i=1; AJvYcCVzUaZ4nmpsjnhm3jMwObn33UETkX1IHBG2UcfCwSE0lmgcpJb84FoToub/IiG3d37JUJs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPPBRm3C22f3mfMQ5vRi8W7sHCel3OplkfPis/DXY8djNZFK9J
-	h6LmNVfuusPgCZ8odBj/20UOnmx4ZQS6q79GeucWnZfcsQi1lrXqpnqc5vYRdyU=
-X-Google-Smtp-Source: AGHT+IGZcBZA84qL0BKQHj1R0RhFBmWGAW0yU4GeX6oum+AHIMx/otLrGkrBVgx4sNLM8zSpkgdxCQ==
-X-Received: by 2002:a05:6902:2607:b0:e28:fc1c:eb4f with SMTP id 3f1490d57ef6-e2e2305b360mr1301244276.45.1729539928209;
-        Mon, 21 Oct 2024 12:45:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729540064; x=1730144864;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=28d8z+X6y49BRk3NhOIIYqj6cNpQrKM1aCHzgLk0zAc=;
+        b=e4x3wEtTp6J9/eGmWgy7zPeHjAag+v3u/ltoD8t8Kf8wDeEQzsdRQ2hQbG3FgLJBiw
+         0NcnbzuvEV2Erc8aymt5EHgRkaeoYfNBle5FCB6BbjGJwZKBzN3S3aiBXAEXkiWXvc7y
+         Wydb3v1EkUvNHU0yvMV2ZJMeCEAWLHoZINxqW2NN8ncRTkq2sgVXvX22TICrJzcrDBOa
+         IfddkV5YubgnAihMTHz8KgCE5KtydwyOE1cwn4ChglIrKYhDKf2lf8TN4ZvRSYjOOcgt
+         eQeHncuZGElSiu5LaFd+MeNxNTJLv7t2zq6A94jx0P5bEBq1rBRwvTPtAmkUU9viy93t
+         ybTA==
+X-Forwarded-Encrypted: i=1; AJvYcCVCtoXgHvUK2Ae60KKFurZGrShj5HCagth+RnYEgS15uQOha2N7xt6sCaaZYSwyA4TX2/w=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwcrZ7dM5CH+9J2vZ2AlbVkqp+h9ko25tZRSfwUTYV/USsfKCH4
+	qX6hKGldukjOqTNDEai+70AnFHtU36SuaPfFo9SHOyQV8UGQAjlaTHea+GOEOFc=
+X-Google-Smtp-Source: AGHT+IG9shVEhSUJTM2juhYiONcO3wc39XQUEUIgt0AhlqRhpAqINOs7EBHkrio8eOP4906PnJqR3Q==
+X-Received: by 2002:a05:690c:7243:b0:6dd:b8ff:c29c with SMTP id 00721157ae682-6e7d48f7011mr7681457b3.17.1729540063725;
+        Mon, 21 Oct 2024 12:47:43 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdc9b3471sm825114276.34.2024.10.21.12.45.27
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5d5c702sm7892097b3.133.2024.10.21.12.47.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 12:45:27 -0700 (PDT)
-Date: Mon, 21 Oct 2024 15:45:26 -0400
+        Mon, 21 Oct 2024 12:47:43 -0700 (PDT)
+Date: Mon, 21 Oct 2024 15:47:42 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	git@vger.kernel.org
-Subject: Re: [RFC PATCH] object-name: add @{upstreamhead} shorthand
-Message-ID: <ZxavVmjsshVHCPcL@nand.local>
-References: <20241020202507.2596990-1-bence@ferdinandy.com>
- <1c056d39-950c-4965-89d6-85f0c2c1bccd@app.fastmail.com>
- <D50YLOBHJTLS.367TMAOLKL019@ferdinandy.com>
+To: Jeff King <peff@peff.net>
+Cc: Piotr Szlazak <piotr.szlazak@gmail.com>,
+	Piotr Szlazak via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] doc: document how uploadpack.allowAnySHA1InWant
+ impact other allow options
+Message-ID: <Zxav3sIyupyjTuCi@nand.local>
+References: <pull.1814.git.git.1729112794671.gitgitgadget@gmail.com>
+ <pull.1814.v2.git.git.1729355997353.gitgitgadget@gmail.com>
+ <72184384-07ff-4f74-91d7-280ca78407b5@gmail.com>
+ <fd5fab45-1363-41c8-915a-5578a35d219d@gmail.com>
+ <20241021190309.GC1219228@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,23 +74,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <D50YLOBHJTLS.367TMAOLKL019@ferdinandy.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241021190309.GC1219228@coredump.intra.peff.net>
 
-On Sun, Oct 20, 2024 at 11:42:38PM +0200, Bence Ferdinandy wrote:
-> But so the long story short here is that for
-> (origin|upstream)/(master|main|trunk) we can already have agnostic code with
-> HEAD for the second part and with a patch like this we could have agnostic code
-> for the whole thing.
+On Mon, Oct 21, 2024 at 03:03:09PM -0400, Jeff King wrote:
+> On Mon, Oct 21, 2024 at 07:55:06AM +0200, Piotr Szlazak wrote:
+>
+> > On the second look code changes will be needed, as at the moment final
+> > result will differ between:
+> > [uploadpack]
+> >         allowTipSHA1InWant = true
+> >         allowReachableSHA1InWant = true
+> >         allowAnySHAInWant = false
+> >
+> > and:
+> >
+> > [uploadpack]
+> >         allowAnySHAInWant = false
+> >         allowTipSHA1InWant = true
+> >         allowReachableSHA1InWant = true
+>
+> I'd expect them to differ. The config is read in order with a "last one
+> wins" rule. The thing that the documentation should be making clear is
+> that the three overlap in what they are affecting, and so "last one" is
+> not just a single key, but these three inter-related keys.
 
-I'm hesitant to pick this up because of what is said in this paragraph.
-When you write "(master|main|trunk)", I think you're really spelling
-"HEAD". And it's fine to write HEAD in a script when you want to resolve
-something to master/main/trunk/etc. without caring which and instead
-delegating that to whatever the remote HEAD is.
-
-But determining the upstream of a branch is already easy to do as Peff
-points out downthread. So this seems like a band-aid for scripts that do
-not care to perform such a resolution themselves.
+Agreed. I think the "last one wins" policy is well understood throughout
+Git's rules for how configuration layers are parsed, and not worth
+repeating purely for the purposes of this specific piece of the
+documentation.
 
 Thanks,
 Taylor
