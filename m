@@ -1,194 +1,158 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9221EE037
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 16:59:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B108E1C330C
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 17:12:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729529946; cv=none; b=jmbbkt+hMgICyRysPx+krrV4cwCmMHOpalhXXgPNtPzTEdoxqwv1ceaSzoajg1iLehzTaWKewDXkcty5YBzpePf/85o3+21SkpqGzWufCEKpS/8o0JBV/VndzB/oYss+/EuZDDdKgyZz5CbNQArPvIU0ERGU6myChE1RVEJUGEw=
+	t=1729530767; cv=none; b=qCm+ahk88j/+0fuEBi9bzX4nJEtavZuI2xKCRexmDiB3SmNUao+okN1hAWGlA5SSbTO62CiJJ+jEMsi7lYBY6ZrVEAWWoebPpXi6zrP0EAuNFn51uzV1ga4HO3q3rBCfNzWRyVwzvXXXQgZ8Fz7qYXPABxzubr6MYQmxemnSQcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729529946; c=relaxed/simple;
-	bh=+QB5gVwFbfowyWzdP/xczDDGBAs0O0nuo428Ju546gs=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=UrnsM/YGUKFz5ArYRUd+El3TAh+hDBXzZwAhw/lIAzagG/NrOY8zVxVEa2sCOjG6NAJO90gLSEVK41dYna2usRFzs11ALLQah9WcreS0HvuGvPjk6SLDFdsnsEktXi8hKmBBJJw7ONwoZGvOGuPuTCPTNa0Oe95nL1YflMOXygk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=island.io; spf=pass smtp.mailfrom=island.io; dkim=pass (2048-bit key) header.d=island.io header.i=@island.io header.b=kkNzjxHv; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=island.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=island.io
+	s=arc-20240116; t=1729530767; c=relaxed/simple;
+	bh=U6f4Cgd8k9EUMzGX3nJYZyBbUEovsCIEabMY6apUezw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=p+Ijw4yHQ0xmHR8Fk2M6qzvQMNwcTQg/TSQSkbtwr1Y8v9y//GvbWFrLXRyDiWcG8WV8WTnxVWnJiP424E/nwdVyZZQ/XQJSPv4WBV0ciu0sIMTvRh8ieV3OcHf3DvpM+nu7c1B1DgQNipCz+uy4vlhJDD/OCl5DTQJ07nfkZww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XmqCzRP5; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=island.io header.i=@island.io header.b="kkNzjxHv"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a99f1fd20c4so642651366b.0
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 09:59:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XmqCzRP5"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43152b79d25so45658625e9.1
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 10:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=island.io; s=google; t=1729529942; x=1730134742; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=0ycEUFb80Jb2CCJaGco1Qh8P3eHfPHr4RCkSsTIOVNE=;
-        b=kkNzjxHv5+pkzyWABIPttAEw2B0EG9Bp0uI8aPOkVWU8rsGsOV8QqZlfKs4OQOp7vz
-         aWN+mdv1DzjG+450nzQ8ORz2j2SzhuTD7Fb1FsO7UPL+/I60Qq4c1FIPLWa4rBModnQa
-         tnciki7NzNTiyck5X/d8UbcWtSk4YBTzQZSp8AMwWRwPeuMmdH5ffc/kU+avRHzUHSNK
-         2edMPG3skV7REYmrGoSzIXXsPd1uaMFIm4+PhFgE4r0CclOSPuBTlmWdng12pWttT9Aa
-         vgj0+Kh9EQza4uHVJrc2XAyKBx8ejRzsmPE+x7GW/BkammhvGmJ1SXzmL3HbEbXlned0
-         GTXQ==
+        d=gmail.com; s=20230601; t=1729530764; x=1730135564; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6imdJ8BySrDzxH24zhpt8IW4BhShbScn3HuNE+AqjBM=;
+        b=XmqCzRP5uMS9FWb7xsSoQZKmnROOEQqXHRFcq06XPPqS25GCedXwu544NRjjTrP8SG
+         cZDpF1BJUzc/UmJidUYXiF8f/5L7Q9ZPuD+GBLJ5JQ1N4yaWD+9oqCbM5Jc5YAUT1aDg
+         4og1XDPOebu/Iy8O+fnCCeO5typQWqjDbm0twVPo48KHPeWic9uLXrrOEESf3/QjaFoC
+         iqG7Az6qg9/neCztPU7I5AfQ8DjZCAPyN/Y1NYrqqDJjSnoirZO4SN6H3INMo94PqvDk
+         ydjO+NHbZxQEzIrALufvlakPWNBagT6LMgUMgd/Zpr4VmTZZEfhETIumymHSry4HlHqz
+         C/BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729529942; x=1730134742;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0ycEUFb80Jb2CCJaGco1Qh8P3eHfPHr4RCkSsTIOVNE=;
-        b=hYB1Dk/wrQJfOL/qkqY4iVVboPaffHQ9C+u5fJZpobBVT7F4xsitPc8fmeo+M49k1a
-         EEOxQqbQ+5M6qTW8aNwbDrG7ZSzxcPgGYtv1I1EPqUHg7IOspoostHbHcyTq2m49Oixp
-         Jl8mVQN9XuB5AJNpHKMstmZGFXLd1uj2mcLK+UAlaFuvO/hLntt15/og6ZRyllhMR3lI
-         2MLwEljpN6sFLVMKii2P3O9S6UStlpNzXxqCRDGcdT/EtcTMmB8AnMXoGE1/pzdO3hGd
-         i8D2HgYF1ejOJ9EYPJbT5aDBnlD2givrdBFYsCA0+Hvdm69kzSoIQScM48tp8Ix9W1Fs
-         R5bw==
-X-Gm-Message-State: AOJu0Yx/IR77VpfLuvlaArpa7k5DRUy0wb8C1soF8A8QodtEBPvHaHHV
-	ZPbKm2itwf9O3zD4MagY0X0b8H0liOq3vxcFOvvkLxziuRiM5AFDm+8G9kGFA477SA+9kZ9wlxS
-	EuWzQQbJwR43jffKdxwo05ZcORDcZqO+R31Z4lYb2O7tHFgAoL/I=
-X-Google-Smtp-Source: AGHT+IFcNTUfgfJcIDwWk/+BXMr0HGxpaTQ+UNzSTXSLLk8NI7lRI0mGZMrvTOxJ7qieHPFALChYxPOXXGcxJQX4HFY=
-X-Received: by 2002:a17:907:7d8e:b0:a9a:2afc:e4d9 with SMTP id
- a640c23a62f3a-a9a69ba5848mr1309241666b.29.1729529942280; Mon, 21 Oct 2024
- 09:59:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729530764; x=1730135564;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6imdJ8BySrDzxH24zhpt8IW4BhShbScn3HuNE+AqjBM=;
+        b=HW8Vfyc+t1t2GMF/UB4LGWjG1DCd6ToSJFaY/PZ/u/1fa/34piqQjhXLCkRtl/4KZE
+         6gXLq/8YgShrhZ+tP5iPesYCtfxag9PmDf/u2d74Hk78lWZ1ZqC7hr2Ilp5bCyHTnSRZ
+         h/PojDl6W8xx7y52/QMQ922M9bNqVS07zB0QpDJMX0Wd4w7rBej6XnCRZrlu9VIdqjf+
+         37IEzxMj/xTfjbRBvSG2vtb+d60vSTVq9vw3IksuVon3UXyFhw6uYSsUXZM9XB+KFs27
+         F/5GAt2+d9/GJQKqGSl8PiT/iIE+Y/5mf1FAufiJIc7imI1EeDHc4hnUyZnENxWJjLpQ
+         9kRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUiKwbRpelarQ2izwgqm8Qpvhdj/gnZjhCpmhNfpU/nTJrNBve0iy7KfHQ83gNAl4su+p8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwAmMi1U3hbZmDLh3AaIovkNrlp06pOiAzTU67j5GbsHmvpHY6u
+	wvSNobYE24WpnAkcACwlReLOAE7IcSsFI0OOvq5vBM3D8/PYKU+ebYe8KNUW3xwSp6C9z3AofsU
+	LcrUFrHaYX2mYj/enbmRuArnvyhQ=
+X-Google-Smtp-Source: AGHT+IEVvKKqprxvpnkwCG33MIONCWjQO3VCcybrUEb32GIh+0NEDjNgyhvWSjpAoyqXTZBtzn7Hdt/FT2jUP2TpfE4=
+X-Received: by 2002:a05:600c:3b9b:b0:42c:b037:5f9d with SMTP id
+ 5b1f17b1804b1-43161636f67mr94952925e9.3.1729530763616; Mon, 21 Oct 2024
+ 10:12:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Nikita Leshenko <nikita@island.io>
-Date: Mon, 21 Oct 2024 19:58:51 +0300
-Message-ID: <CAEXts1vjiFsMCL9ANsqnz-mwFCZQyM6S5u_qXz8v1P=z1o3gsQ@mail.gmail.com>
-Subject: Empty directory showing as untracked with untrackedCache (with
- reproduction script)
-To: git@vger.kernel.org
+References: <pull.1817.v2.git.1729382580491.gitgitgadget@gmail.com>
+ <pull.1817.v3.git.1729521495497.gitgitgadget@gmail.com> <ZxaG67wuvjOXc5kr@nand.local>
+In-Reply-To: <ZxaG67wuvjOXc5kr@nand.local>
+From: Samuel Abraham <abrahamadekunle50@gmail.com>
+Date: Mon, 21 Oct 2024 18:12:34 +0100
+Message-ID: <CADYq+fYERH=9_ZXq4JiwjE2_piP93u2=-9ii63SCA0r9p2==Ag@mail.gmail.com>
+Subject: Re: [PATCH v3] notes: teach the -e option to edit messages in editor
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Samuel Adekunle Abraham via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Summary: Enabling untrackedCache sometimes causes an empty directory to show as
-untracked (as if the directory contains content). This is racy but there's a
-script to reproduce it deterministically.
+On Mon, Oct 21, 2024 at 5:53=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> On Mon, Oct 21, 2024 at 02:38:15PM +0000, Samuel Adekunle Abraham via Git=
+GitGadget wrote:
+> > From: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+> >
+> > Notes can be added to a commit using:
+> >       - "-m" to provide a message on the command line.
+> >       - -C to copy a note from a blob object.
+> >       - -F to read the note from a file.
+> > When these options are used, Git does not open an editor,
+> > it simply takes the content provided via these options and
+> > attaches it to the commit as a note.
+> >
+> > Improve flexibility to fine-tune the note before finalizing it
+> > by allowing the messages to be prefilled in the editor and edited
+> > after the messages have been provided through -[mF].
+> >
+> > Signed-off-by: Abraham Samuel Adekunle <abrahamadekunle50@gmail.com>
+>
+> Nicely described, this commit message is looking good. Let's take a look
+> at the patch below...
+>
+> > diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+> > index 99137fb2357..2827f592c66 100755
+> > --- a/t/t3301-notes.sh
+> > +++ b/t/t3301-notes.sh
+> > @@ -1567,4 +1567,75 @@ test_expect_success 'empty notes do not invoke t=
+he editor' '
+> >       git notes remove HEAD
+> >  '
+> >
+> > +test_expect_success 'git notes add with -m/-F invokes editor with -e' =
+'
+> > +     test_commit 19th &&
+> > +     MSG=3D"Edited notes message" git notes add -m "Initial notes mess=
+age" -e &&
+> > +     echo "Edited notes message" >expect &&
+>
+> Very nice use of the fake_editor script here.
+>
+> It is a little cumbersome to repeat the same message in MSG=3D and when
+> populating the 'expect' file. Perhaps instead this could be written as:
+>
+>     echo "edited notes message" >expect &&
+>     MSG=3D"$(cat expect)" git notes -add -m "initial" -e
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-- Create repo with some content
-- Enable untrackedCache
-- git status, shows nothing
-- create aa/bb
-- git status, shows '?? aa/'
-- rm aa/bb (leaving aa/ empty)
-- git status
-
-What did you expect to happen? (Expected behavior)
-
-git status should show nothing.
-
-What happened instead? (Actual behavior)
-
-git status shows aa/ as having untracked content.
-
-Anything else you want to add:
-
-Here's a Python script to reproduce:
------------------------- >8 ------------------------
-import os
-from subprocess import check_output, check_call
-
-check_call(['git', 'init'])
-
-# Populate directory for some load, makes reproduction faster.
-for a in range(40):
-  os.mkdir(f'z_{a}')
-  for b in range(40):
-    os.mkdir(f'z_{a}/{b}')
-    for c in range(40):
-      with open(f'z_{a}/{b}/{c}', 'w') as f:
-        pass
-check_call(['git', 'add', '.'])
-check_call(['git', 'commit', '-m', '.', '-q'])
-
-# Enable untracked cache.
-check_call(['git', 'update-index', '--test-untracked-cache'])
-check_call(['git', 'config', 'core.untrackedCache', 'true'])
-
-# Repeatedly create/delete same file.
-for i in range(1, 1000):
-
-  s = check_output(['git', 'status', '--porcelain'])
-  assert not s, "Expected clean git status"
-
-  os.mkdir(f'aa')
-  with open('aa/bb', 'w') as f:
-    pass
-  s = check_output(['git', 'status', '--porcelain'])
-  assert s == b'?? aa/\n', "Expected aa dir to show up"
-
-  os.unlink('aa/bb')
-
-  s = check_output(['git', 'status', '--porcelain'])
-  if s:
-    print("\n\n=============== REPRODUCED! ===============\n")
-    print(f'Reproduced in {i} attempts')
-
-    print(f'\n$ ls -la aa/')
-    check_call(['ls', '-la', 'aa/'])
-
-    print(f'\n$ git status')
-    check_call(['git', 'status'])
-
-    print(f'\n$ git --version')
-    check_call(['git', '--version'])
-    break
-
-  os.rmdir(f'aa')
-
-else:
-  print('Failed to reproduce')
------------------------- >8 ------------------------
-
-Example output of this script:
------------------------- >8 ------------------------
-Initialized empty Git repository in /home/user/tmp/repro/.git/
-Testing mtime in '/home/user/tmp/repro' ...... OK
-
-
-=============== REPRODUCED! ===============
-
-Reproduced in 90 attempts
-
-$ ls -la aa/
-total 8
-drwxr-xr-x.  2 user user 4096 Oct 21 19:46 .
-drwxr-xr-x. 44 user user 4096 Oct 21 19:46 ..
-
-$ git status
-On branch master
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-aa/
-
-nothing added to commit but untracked files present (use "git add" to track)
-
-$ git --version
-git version 2.47.0.107.g34b6ce9b30
------------------------- >8 ------------------------
-
-This reproduced in the following Git versions:
-- Latest master (34b6ce9b30)
-- Latest shipping in Fedora (2.47.0)
-- Ubuntu 22 LTS (2.34.1)
-
-[System Info]
-git version:
-git version 2.47.0.107.g34b6ce9b30
-cpu: x86_64
-built from commit: 34b6ce9b30747131b6e781ff718a45328aa887d0
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 8.6.0
-OpenSSL: OpenSSL 3.2.2 4 Jun 2024
-zlib: 1.3.1.zlib-ng
-uname: Linux 6.11.3-200.fc40.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Oct 10
-22:31:19 UTC 2024 x86_64
-compiler info: gnuc: 14.2
-libc info: glibc: 2.39
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
+Concise! :-). Thank you very much Taylor.
+>
+> > +     git notes show >actual &&
+> > +     test_cmp expect actual &&
+> > +     git notes remove HEAD &&
+> > +
+> > +     # Add a note using -F and edit it
+> > +     echo "Note from file" >note_file &&
+> > +     MSG=3D"Edited note from file" git notes add -F note_file -e &&
+> > +     echo "Edited note from file" >expect &&
+>
+> Same "note" here. ;-).
+>
+> > +     git notes show >actual &&
+> > +     test_cmp expect actual
+> > +'
+> > +
+> > +test_expect_success 'git notes append with -m/-F invokes the editor wi=
+th -e' '
+> > +     test_commit 20th &&
+> > +     git notes add -m "Initial note message" &&
+> > +     MSG=3D"Appended edited note message" git notes append -m "New app=
+ended note" -e &&
+>
+> It's fine to use shorter values for -m and $MSG here. I think "appended"
+> and "edited" would be fine for each, respectively.
+>
+Okay. Noted
+> Besides applying those suggestions throughout the patch's new tests
+> (including the ones that I didn't explicitly comment on here), I think
+> that this should be looking good after another round. Thanks for working
+> on it.
+Thank you very much,
+Abraham Samuel
+>
+> Thanks,
+> Taylor
