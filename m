@@ -1,137 +1,106 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BAF193409
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 21:25:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D9A1E22F6
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 21:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729545950; cv=none; b=OhanC684VMp8Zd2OUG13f527yeLY/wVCdXl6bBgg3aeznN1Hxc33yhEQEA430bdV8XEHDLsy7uMSNYRT1cWMmn9hY9As5Hu/43p9uvaVEw2TqyB1Nc0K9n6e/QnpZCflWBqH1EJwwqiXL5u2bVxkFOqP3ygzixGEUW3hf9T1EBM=
+	t=1729546157; cv=none; b=Mn4t+LjJ0JbOqwgYsvywtRmiFomdJVC8vSg0xtql7T20C3hbaRZ+NI3W89mY1/uclmtkGIMSQ5ze52m2CWnNLKUqz93RxVuroUdkupawUkNLvcTacjBnMJwhRRxg5cv6+HAIV6/5r7XE0KrqHoLvEy4UrZ+I8BalwB7VSxDJPps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729545950; c=relaxed/simple;
-	bh=HBdr+DRIC9oF98jaQk9s6yb4ZG7zhxkRPyJzlOpflKc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=kujRrAoL/2LA2MTYqPvBgrQMh4Ytp2Gym9asuEAQ4yPf7tsZ8qQuxA08Cr6HhTsN+k56WCX/gfLsAVEh2ExOWKwIIyzqXFMOrbfB9Gj8TQv7HqljWZ9buCveKpK1G71bBtfL4cWK/TFuu2H9MZtBBsX9qG8lScALWAKdmkdrCBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=kcT+V0fc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UZ9R2CLQ; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729546157; c=relaxed/simple;
+	bh=KEArKMdA7y17wML826ZOsI2f5ySoB5r3FK5soGh4E6M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q6d+ZO8IsOnVJFnI5hUmAVL5E8p0C5Usuy4xwORGak0pE6ojJfbqSgnTehKJeX2NysFIjAuXSvl6A+e6olMegF6L0cbHtnY5uA00q1dUOJe517C6FGb90cP3zsT2nYXM7yXI/hGYAZPOYp3B/LRX8Y01xnz+tuvntwJMH4YdIF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=bBAzajpl; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="kcT+V0fc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UZ9R2CLQ"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id C738D13805F2;
-	Mon, 21 Oct 2024 17:25:47 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 21 Oct 2024 17:25:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729545947;
-	 x=1729632347; bh=DmPLMuv+qF0T1AJdyiB1A2tviv4DWnfamNcOW5LrVBE=; b=
-	kcT+V0fcp1sC4VEgjaGO0MJpk6MwvHjYWbznxAlzjpJ/l6awBW8sBimcrsHyiia8
-	aQvzuDjYeWt7liTAewilnWzjdQjrbsz7YOW3Qfscnqpv0MteySWVZ6K/Ysp30dYF
-	JVdYxKOz4oMxZqMsjz1XcgcLmgUXgsDO2VhWCB0+yXgPaN7zo1KO/xkcX6mp0vsL
-	wANsdV7PWbmXbkDEdyTkyKJ9FQGS3Gh+miOwrzR4N17UymbwgaCNGsjiXeo22VCc
-	gyr/1i0+yVb9y00hvJNXySw79w/pZLZGW17MsraU3y6rB33fhtjRxVBbKs4r5Nv1
-	sgF7S8osikSfkTrrgNWtYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729545947; x=
-	1729632347; bh=DmPLMuv+qF0T1AJdyiB1A2tviv4DWnfamNcOW5LrVBE=; b=U
-	Z9R2CLQkjxBfQWcogZcOwTDR1Jiy7jFuf/YW7OlzH70VLi4V1BaRaxYWmQtfaY5Z
-	v2loALfj5BRaB5B2DTlu9Uf9w8AZQLY08gkotkRvgdJ8oQjjlg98WMH1PlyH6SJk
-	EGrt4sP1gABrZoj0srHu7quPBzd9JhQCcIrfMk4VzTpy3z2I0pAqB4RIT0g8P51R
-	NpHP/XspRbylyU9kPgYxghJ+C9Y9GFkAU2wL2f2RFmeK382uwtQvgna+kDiLK1c9
-	50qtGxQMfnmJV7i/FL3ZL8/N2mrNITlN8mKgboTgCzvx2ykuUU9oAmaMwE+8bNJj
-	LpDGNBmMg02TtDc1rMfQg==
-X-ME-Sender: <xms:28YWZ5w9aMjoeU-p6tHWlbBTr3WLkNy48H_Etgux2imkGnVQgtKq3Ew>
-    <xme:28YWZ5R_glfgL3WfZrH7tE7lh0EEGI-Q0C7h9R_OzzSpAyto79yIolm1Z9zrXvkbX
-    4Wovxt0-ni5odxjXQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledgudeivdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
-    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
-    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
-    gspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghouggv
-    sehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepughsihhmihgtsehmrghnjh
-    grrhhordhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
-    phhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:28YWZzWi_2xa_GP_-I2UVTFA9nipYE936W2uMH6FBc4kmkA--5n3Ow>
-    <xmx:28YWZ7gaU9iqfu9t53edY6bXIJVUO2Tpp3a1G9Oyp9ljTZAMU-IlYw>
-    <xmx:28YWZ7B0RzOH1Ep9On_H2mw5uyIcIocNtZt8sORGWPYOXuo9adrBtQ>
-    <xmx:28YWZ0Jrabu0X2B0mSW-ScRZWjjAvdKhKypl4CARCpwK7zBGIcay3A>
-    <xmx:28YWZ2-LU3zopeeSUY5Zz4UT0N7A8dEmvd4uPVrX7y5Y0NBY9le5k5A2>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 43A04780068; Mon, 21 Oct 2024 17:25:47 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="bBAzajpl"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6e38fa1f82fso46654867b3.1
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 14:29:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729546153; x=1730150953; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WISFDU1syvaEWE2KOftWQXEWDQQFlLQKD8+Q3ttw42Q=;
+        b=bBAzajpljtejbWmXwYDoIfGt0CRoP3+3Onno0w5jIq3lnq692S/lpGL2uOchQzWeGz
+         wC4XmWn6CZUtjEfyb836FujTnrc1LmpSTz7k6zATyhW0pIONjjJXeo7+epaPhKaNcixg
+         fXW/e5mm2uxpIYvBIN7YIFMaOIDU0z1mXtII0yBwaFHscJlDVELIHjSL/A3qDqW4G5fb
+         /mOCfkHR8m0EH2gV7rv6bSLV0H2A8Y4JfBzLIFkIycvmcBwo8ZHCCcD4Kq4lJ/Z2kkiH
+         RM0R1Z+pv+ZgVw24aUFqxp4y87TUv9e3LMbW6sU5wt514CMZCbhP4ZUiGvTX6MzW4wdD
+         t9VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729546153; x=1730150953;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WISFDU1syvaEWE2KOftWQXEWDQQFlLQKD8+Q3ttw42Q=;
+        b=KimpWXjkKZrTKfKPMbjHZSB4bwXlaqyw2fpMpijnY38mjSM3BnFCM12FfbROKABKPl
+         0XLQGxZdPdZSAcgXPm1/UB6I1L7SmrbsKn0vBBwyfiMDbwZI/9q773+FoRLCQcVAWkZ1
+         7hpFyBPzkHBYNDxTRO6Ad+SK7HyGTCYlx4+kP6VhVO+g+V9yTX3Mp6Ua8aA40PD9hI3U
+         GlmA93leeAy57i2UIvnyarKn+FfhEcVXNDUaJvRqwWIgJ+s4JuEtBZfze9OV39a9Jdlm
+         RzLMU8Sd71gLaS3DHWy3YCHgvlqDLSZE+ZL10VqJRevHVXf4uquCxxIp8+XkjC9vIhal
+         rbYg==
+X-Gm-Message-State: AOJu0Yx2XmccJdue2Td7rOl8ptZ/e7YdmHgd9I/LDHp8D1MrHjAiFr0v
+	SZJRTd3+QIuUJJo5/d+gaO1PBA9YGRYIyUx6TyoKSbvCSw+eV8gaaJVDtrP3/VA=
+X-Google-Smtp-Source: AGHT+IHiEgHaelNy7L8/55iuqR1+vAlyDq1/qGUb1eOHZtaKglmDVtqv0GQgLnoY2qZYqwna4uMtXg==
+X-Received: by 2002:a05:690c:4c0b:b0:6e3:1869:8983 with SMTP id 00721157ae682-6e5bfd88803mr132367927b3.40.1729546153329;
+        Mon, 21 Oct 2024 14:29:13 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f59f5bf3sm8475907b3.5.2024.10.21.14.29.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2024 14:29:12 -0700 (PDT)
+Date: Mon, 21 Oct 2024 17:29:11 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Junio C Hamano <gitster@pobox.com>,
+	Dragan Simic <dsimic@manjaro.org>
+Subject: Re: [PATCH v2] t7001: add failure test which triggers assertion
+Message-ID: <ZxbHp9ndCIWj14xH@nand.local>
+References: <ce1b5ae24ed8356b9beed340fff61e96f7c1d549.1708259215.git.code@khaugsbakk.name>
+ <29d71db280c972c91174bd0a501af66be72643af.1729462326.git.code@khaugsbakk.name>
+ <ZxbF2xxqh3rTgXvN@nand.local>
+ <1f3b62bb-7c3a-4bac-8995-8df417228ed2@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 21 Oct 2024 23:25:26 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Taylor Blau" <me@ttaylorr.com>
-Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- "Junio C Hamano" <gitster@pobox.com>, "Dragan Simic" <dsimic@manjaro.org>
-Message-Id: <1f3b62bb-7c3a-4bac-8995-8df417228ed2@app.fastmail.com>
-In-Reply-To: <ZxbF2xxqh3rTgXvN@nand.local>
-References: 
- <ce1b5ae24ed8356b9beed340fff61e96f7c1d549.1708259215.git.code@khaugsbakk.name>
- <29d71db280c972c91174bd0a501af66be72643af.1729462326.git.code@khaugsbakk.name>
- <ZxbF2xxqh3rTgXvN@nand.local>
-Subject: Re: [PATCH v2] t7001: add failure test which triggers assertion
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1f3b62bb-7c3a-4bac-8995-8df417228ed2@app.fastmail.com>
 
-On Mon, Oct 21, 2024, at 23:21, Taylor Blau wrote:
-> On Mon, Oct 21, 2024 at 12:14:46AM +0200,
-> kristofferhaugsbakk@fastmail.com wrote:
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>
->> git-mv(1) gets very confused:
->>
->>     git: builtin/mv.c:506: cmd_mv: Assertion `pos >=3D 0' failed.
->>     Aborted (core dumped)
->>     test_must_fail: died by signal 6: git mv a/a.txt a b
->>     fatal: Unable to create '<path>.git/index.lock': File exists.
->>
->>     Another git process seems to be running in this repository, e.g.
->>     an editor opened by 'git commit'. Please make sure all processes
->>     are terminated then try again. If it still fails, a git process
->>     may have crashed in this repository earlier:
->>     remove the file manually to continue.
+On Mon, Oct 21, 2024 at 11:25:26PM +0200, Kristoffer Haugsbakk wrote:
+> On Mon, Oct 21, 2024, at 23:21, Taylor Blau wrote:
+> > On Mon, Oct 21, 2024 at 12:14:46AM +0200,
+> > kristofferhaugsbakk@fastmail.com wrote:
+> >> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> >>
+> >> git-mv(1) gets very confused:
+> >>
+> >>     git: builtin/mv.c:506: cmd_mv: Assertion `pos >= 0' failed.
+> >>     Aborted (core dumped)
+> >>     test_must_fail: died by signal 6: git mv a/a.txt a b
+> >>     fatal: Unable to create '<path>.git/index.lock': File exists.
+> >>
+> >>     Another git process seems to be running in this repository, e.g.
+> >>     an editor opened by 'git commit'. Please make sure all processes
+> >>     are terminated then try again. If it still fails, a git process
+> >>     may have crashed in this repository earlier:
+> >>     remove the file manually to continue.
+> >
+> > There was some good analysis of what the problem was in the earlier
+> > parts of this thread. I think it is probably worth capturing some of
+> > those here, too.
 >
-> There was some good analysis of what the problem was in the earlier
-> parts of this thread. I think it is probably worth capturing some of
-> those here, too.
+> I will try to incorporate Junio’s analysis into the commit message
+> tomorrow.  :)
 
-I will try to incorporate Junio=E2=80=99s analysis into the commit messa=
-ge
-tomorrow.  :)
+Thanks, I look forward to it!
 
->> +test_expect_failure 'nonsense mv triggers assertion failure at built=
-in/mv.c:502' '
->
-> Do we want to be so specific about the line number that the assertion
-> failure occurs on? The actual coredump triggered by this test will tell
-> us that information. But in the meantime this line is likely to go sta=
-le
-> as builtin/mv.c changes over time.
-
-You=E2=80=99re right, it=E2=80=99s overly specific/volatile.
-
-Thanks
-
---=20
-Kristoffer Haugsbakk
-
+Thanks,
+Taylor
