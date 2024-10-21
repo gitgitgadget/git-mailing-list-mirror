@@ -1,105 +1,111 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740A51953B9
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 09:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC161E1C25
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 09:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729504007; cv=none; b=oR30fYoY4g5PIHmcvm4nZ0nk/hqUeKUzzy2kqfuhRCuNTITVPIm3ydBoMaslMPje7BQBL2DOPkkK5bft4mHvp6IkytlDDNQ63FJzzbsG7Cs9TbBTJsdiN1Km4YFkB8UyzBPzQhzDdfZaSx9MNiMfRyFCPvIiEEXx1SBR6SO+15I=
+	t=1729504044; cv=none; b=ZIITaH24DTiUIgXNeR8fDIWiN61UWDqatjDPG0uHGhTvVy/sMVzcGODbHwWPsBqx4nZsklIaVeWk66LwFarjO1VQ44sYghBfDF7nDnWJ48IR2WDAXCmP0L0MBuFFkSQGKs0SPM47gBg4/amZYmd1xHg2p3yYz817mS/7lJ4PIoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729504007; c=relaxed/simple;
-	bh=6X2WVZEMg6/X0b6L0fFXoFZS2KJm+qWaivzZF/t+dA4=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=mVGXoqPFTh3MdVuLXqsCW+sxYXG7xYYVlw7FC3tB4QP1tbSs4YapCocOo0QN2od5BUCqRYmeIAubeLLtS29vZsnPMkLiqMWo25EN56mK2dPvoOT/7n23ni5r7eowl1v8/rhsUfepQ+SE49YNcqmABSoD22F+rbDDfYrJMpX4acc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=g5dcnmJY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KHwnVbPl; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729504044; c=relaxed/simple;
+	bh=vWtot6EOHL5VT41n/BxDgNLQGIP+wxa91BzH0+TvVDo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CuXrn2GlDjkQFtBwnqFGq7Fmteho485YsmOAaOM8geG/XZ9uz9QIdb/VIkPF5Ym/tAZNrRSA3EJ0Q64xlIo6KGEXSdi3TZOCTn4Ktun16VRHlQTOSAsHZ0Ge7P6u1NWJR6HiVhlzzLoXvpp3JrykccsDtNMuuvJ/WWL+DlpQV5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=w0AU0wWV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HMnRhV/F; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="g5dcnmJY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KHwnVbPl"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9FB3C1140155;
-	Mon, 21 Oct 2024 05:46:44 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 21 Oct 2024 05:46:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="w0AU0wWV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HMnRhV/F"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 227D71140155;
+	Mon, 21 Oct 2024 05:47:22 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 21 Oct 2024 05:47:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729504004;
-	 x=1729590404; bh=6X2WVZEMg6/X0b6L0fFXoFZS2KJm+qWaivzZF/t+dA4=; b=
-	g5dcnmJYiGEBIrSxRr/FKMZwdkcaw+LPPSM4vmMBCZ6B55SiVMwFM5V41NXqVkRc
-	GAkkYLNyrJtK4i8/lt1+E+dm6NkbwA4aszA+BcRkuOmf8zW3lX4A6CfKMpyns8Hu
-	DlJaCcGQtjUclGDaF8Sr4Sph2ozADwBFK/oul66WWRzK6SBXfB1hOrzmE0Aogbl9
-	q/Mnye9gKbyUN6iw7GU0Txz/R/BaPka31eXsYKENyi5dCXMH5v/K+XxIvJiOrWZO
-	9H5Pwf2emjjC6+ohe0AxU+Xtv7h39UD2bEeIBqX3s+CQNpWZuAm/Fu43tY34MRBn
-	UuO4eGi/NE4jtnuAzHAbJg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729504042;
+	 x=1729590442; bh=+Nenvm5lOQOZS8zTxgTKH9DO3IiTosJePsHtA1tk2MI=; b=
+	w0AU0wWVtB8rgsdhLzFehOm0Nh7gOTzx3Y9MtpdJgOUpb/rGdhwLggN0V9VuEtNC
+	y7BMddpexHW8CKuDPvaQ9N7t7hRUnDpo584dRFEeJlHCGWV8obF+aqCr1beQfPDm
+	2NdfAFd0+b2VXB6y3OL8U3ZwFdJ+fOLqfw4N8fWSbNrSVVnz2H5f92u15H0NPlhA
+	Lx+2aNJYyJds2u4w28XUu5qGB77iYFaoDn58k6OVEpvNhVkQwAeg3iCfidZy41Kg
+	BIG4eu44dwyLIMOiPMDjztrrYu8bTjU4ZTCpj9trYwb3vkaTaU2KAVH2TOxnR2tV
+	h4fZK3XSBOMQgoHOa46kSQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729504004; x=
-	1729590404; bh=6X2WVZEMg6/X0b6L0fFXoFZS2KJm+qWaivzZF/t+dA4=; b=K
-	HwnVbPlmiSfewS465qQVvyoWVfeuiFjdTU2HURHdGrLk4nTR7sqg8iiHs+WbVnD4
-	LWWdm0+GCE2j03MY8iK1iJEJxgMHY3x5jH5+qJNPBeaVEnai2Wx1eKjIYLfg0ZUt
-	L77PHnFzgS6TzrU45dagRAG/wR5yAbbCiGykS3XQTuzZucUl/ZgCTcfxaU/FshQ/
-	M+P23IoE5j1kdvjIWHO7wA3AMO3O4dMONf9rT3pLwP7OY1XRLOPaHp8X125E3RWD
-	9mP6zHo0DFvQozpBQBueTI93bf4F5kmhLtHvh/RPnbCB7kgt2wymgJ0QurN7xMoK
-	IDcA/8fkoPdqgvFo4ZgZw==
-X-ME-Sender: <xms:BCMWZ5XcUHcYkYyEdMnfOskbKiQuojiuevZVzLWLDNeHaH7jiInVRjo>
-    <xme:BCMWZ5nl7Up4wHf1XI4_WR_7Hnu_aeU6o1gxWnI8AfKcBQDpHk2yUEi_hFjco28Wc
-    s5zmPYbslYH8MR1jQ>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729504042; x=
+	1729590442; bh=+Nenvm5lOQOZS8zTxgTKH9DO3IiTosJePsHtA1tk2MI=; b=H
+	MnRhV/FhSZxlj45eFQkf3g1Pfv+QDG1Hx0vNb4gG9rlTsiDWrilIjtTiat1IjtLt
+	j5rk9ho8jTScphlaOMbCVVH3ifYrJHkQNyg7CXNzF+ntC3grfg3T7gGYA4TksGbM
+	SaGBpBhSEcX02tlYP55LFV5pcVfBBQbqwQ7kQJ1Fps96kOJMyqHJusFkK8Ld7I/m
+	5Z9iyElQWM/igI8gJ+fFuSYhW7yaGmTQZAz/ehizoM1WbAKbgdCKAF/MFUfruZCg
+	OQSMTzM/34kpkPCuCr9HmISLiu9GlcUyZm59b57c1AnPN9BqrdHS6M9C+Ooce3Rd
+	UfRYuA0PR36ZEcoNVorZA==
+X-ME-Sender: <xms:KSMWZ5b3FYI-5GYZtO3Xlucm5Yq-6_zcDaJDiPbhqLkQUkH65zUc9Q>
+    <xme:KSMWZwZLCbqBV9D3UhLSzFLMPVoWRHm1SYQTrIve-N1cyEMAjd_C0EGxQGvGkhipv
+    izOOPv2NrKpPqF9pA>
+X-ME-Received: <xmr:KSMWZ7-tRORnSTUkf4aTdYbxoTvlQg61v8m8mXGWeDruGns7qLIcEvMpNyjFhNbs5ORdSIpVDat1L7vyb2qqf_m_AeTzHy3tUIs3h1UpmryK>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofggfffhvffkjghfufgtgfesthhqredtredtjeen
-    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
-    thgvrhhnpedtgfffteetudelhfefkeehtefggeefjeevieekfeefieekkefhveeiledtke
-    fgueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspg
-    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhs
-    rdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:BCMWZ1aQ_vEgJ-ZbPxK2L_kQkUR54mAhMR3velSUwBIqQDSz5bQGkA>
-    <xmx:BCMWZ8UkPKcZe8Vkn3_p6HChXj_YItXhHWhWwDi9szzSOWkPedcimw>
-    <xmx:BCMWZzlqhDV-lmWPBVaAIU9oMDGYqOKP2KRDV-Bz0PtaBSji1o3Ftw>
-    <xmx:BCMWZ5cMQ5wB0We_Z5Vo4jRMAgFRBS9wNisyvyHc5EG_ib8zR_CqNA>
-    <xmx:BCMWZ7sjZ7CZKhykZHJKbjQC_6vDovp50Q0QWnXvsFKHzol--OgEmr0I>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 6419E780068; Mon, 21 Oct 2024 05:46:44 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeetheffvddtleettdetueeukedugeettedutdegueeu
+    keetheefueevvdeitddtveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
+    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepvg
+    hmrghilhestghsqdifrghrvgdruggvpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:KSMWZ3oAT_ibswr6YZZhon44VKi6GcZ3b4LFE56pIuxBFx-duYds3A>
+    <xmx:KSMWZ0qUzCxXPI6MQRLYKxoL-a__7AOzTnMKj8Tws8mWX60XNqak9g>
+    <xmx:KSMWZ9Q7dEFC0mE-y9kYnVKep3jVs5mAqdfdL_OKW5PySMrulRMQGQ>
+    <xmx:KSMWZ8qCS772G9OgmaDxYifpIUtgF6H-oYieFmrTuY9h_avcJIQN9g>
+    <xmx:KiMWZ_XHcNjp-0tCfjeu6yyy_NhQ3uB8ZQHuZ7zGEK-uEYlEB_Zkj7wU>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 21 Oct 2024 05:47:20 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id dcffe6a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 21 Oct 2024 09:45:50 +0000 (UTC)
+Date: Mon, 21 Oct 2024 11:47:13 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Sven Strickroth <email@cs-ware.de>, git@vger.kernel.org
+Subject: Re: [PATCH] Fix duplicate word typos
+Message-ID: <ZxYjISSiV-vlE96W@pks.im>
+References: <b50f9706-bb45-4bf0-8d32-59149615301b@mrtux-pc.local>
+ <e1ee980d-d8d2-4c9c-9a73-ba6af9009ba2@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 21 Oct 2024 11:46:23 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
-Message-Id: <015d0995-c7db-45c9-9ad5-d4ea75d8f792@app.fastmail.com>
-In-Reply-To: 
- <60af98cb2c7752edc7cd5c5fe8173dc5b2522a7b.1728624670.git.ps@pks.im>
-References: <cover.1728624670.git.ps@pks.im>
- <60af98cb2c7752edc7cd5c5fe8173dc5b2522a7b.1728624670.git.ps@pks.im>
-Subject: Re: [PATCH 06/21] diff-lib: fix leaking diffopts in `do_diff_cache()`
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e1ee980d-d8d2-4c9c-9a73-ba6af9009ba2@app.fastmail.com>
 
-On Fri, Oct 11, 2024, at 07:32, Patrick Steinhardt wrote:
-> In `do_diff_cache()` we initialize a new `rev_info` and then overwrite
-> its `diffopt` with a user-provided set of options. This can leak memory
-> because `repo_init_revisions()` may end up allocating memory for the
-> `diffopt` itself depending on the configuration. And as that field is
+On Sat, Oct 19, 2024 at 12:06:54PM +0200, Kristoffer Haugsbakk wrote:
+> Hi
+> 
+> I guess it was an intentional choice to not use an “area” in the commit
+> message?
+> 
+> I found this similar patch which used `*` as the area: abcb66c614c (*:
+> fix typos which duplicate a word, 2021-06-11); review here:
+> 
+> https://lore.kernel.org/git/CAPig+cTjjNrU9q8UPm+CRuTKq8_XNc+1z7-3F4bvetBi+NjKeQ@mail.gmail.com/
 
-s/as that/since that/
+I think many projects also use the "global:" prefix to denote changes
+all over the place. We also do this in Git, even though I should
+probably say that all patches that do have that prefix are from myself
+:P In any case, I don't have a strong opinion here.
 
-=E2=80=9Csince=E2=80=9D communicates causality better.
-
-> overwritten we won't ever free that.
-
-s/free that/free it/
-
---=20
-Kristoffer Haugsbakk
+Patrick
