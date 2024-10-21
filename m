@@ -1,150 +1,124 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5A31E7677
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 12:08:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72321EABBE
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 12:20:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729512535; cv=none; b=f50t/3Ke/gbktjayuQ8gv5GcJAOIL0z7zopWT3y+azBH0dh9nRfK8uU1RWO9BC0Shp1gTJTKVeQaGH9tvOj9zC8xKhtbxjlLQ2NxxWGVFVJDZAxydOFEyU3dOQ/3q0qG89by/yrgEqXjI8kjoH5Tsq2BmrPZtOpuH36z2EtbOXI=
+	t=1729513253; cv=none; b=TAtZ1HaEX6dLrrgUzMy91KcHbLECalJHq5IzHajn6glx0ih2Xo99zRp668J08BSVSctsS77NGxGjUzp8yks+zF0kIwN6o6zDF602KaixYIaZevZKpiTUqpSP2gcbts4kRyxqHc9+HYIn37jXBv6xrx66+giJCiJWaE8kFonpFs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729512535; c=relaxed/simple;
-	bh=mqfx0aDGghiLB5HZbNos9CSjIEkngXIUsgW2XAkmtvI=;
+	s=arc-20240116; t=1729513253; c=relaxed/simple;
+	bh=oqKFUND1ER1AUBUgpw8YwBeyc/4f1PNboPZ9t23j+8k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aAqfGhvA9aX8vxQt4G+b/mkxbiwWTryUEMeGsXVxJZxvSa07INzV73Z9SPOt0Fll7fcIb5AclZYrJiEjpz6Hvj0VJ89nTfQsSeche8Xa0Aa4WwIjCU7Ngtav1bGWymQepP8Ten0e3D5b47duOh/OHaANGYl2NYfbfxhT0J47Vyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Vv0G26kU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NZS9uvgx; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=TtigP5yh2xxHIEeHtfu0u5b2RwXdV5vDoOA0dnRCjUFFZ6P4nJqGIfeckYmvOETmoKhAcOsJ3MRIYaZTSs6JJi9XLm25DKwFD6vJxkYzCsTsKmizTOkkUJxVawTbHcsm2Es9A+U4CIZNwzij0sCjTqiMCjQNcC+bOHs5KePjUNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UJFaW4lU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ChiKRCZq; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Vv0G26kU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NZS9uvgx"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E7BBF114024B;
-	Mon, 21 Oct 2024 08:08:52 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 21 Oct 2024 08:08:52 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UJFaW4lU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ChiKRCZq"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id CFA1F13806A9;
+	Mon, 21 Oct 2024 08:20:50 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Mon, 21 Oct 2024 08:20:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729512532;
-	 x=1729598932; bh=VyJ5QpKqSHjuFffb5y96QvlpoLM/6n95s9XrRzKXeTc=; b=
-	Vv0G26kUvdXjcbwgWTP7ZDvGqa/GPorsZkxy/hSJq1fumF41cbVjGobL0f8tteDa
-	R2kmNthzUkLdGlUjKmbyfkxdX9TSJ2lXq1vmxKdzevgAjHmQQyUjSX+hK3+4d2ho
-	aG7+8S81pQZEpYjvEfie4VlFYho5N61Cy1K8eqIfj2Sb3WE60XsxYfIv7bsJJ8qW
-	jQ3d04CISB4gFokfE0Ilcjjjy/eMS5dBzUJPSheu9FwZuB2hNficC/GIHpfgswBC
-	blF+uR9SNj0XpAgP3TDcnQhA4An7PyTuN5AXxj64HVoO5fj3hRhk8qwS/F/99AAa
-	EfEFrj1pS0/GolSsL58RSA==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1729513250; x=1729599650; bh=e/EPc7wSPg
+	PGjigJ6itpxHZGD8pQ0x0W6wTmAiFEcqI=; b=UJFaW4lUNQ59/qbyj/SaLKUZzz
+	2QOySkniXCza6dwHxt6+z9PKaq40ylB4Conp1N6mKm875SpElvdZrxHj2DZv0wlo
+	4HELqGCsDjRM/19Brux25C6GBObeiPXfcOXX0s7izXx/6v8TWf7rTr6b/fuxIFC+
+	H70N12QwNm+25alQCAs1rK8Ui9dwc7s3WPthE+udVMKWglt6zinVBC02lgP9zDxL
+	efzLPkEMihp3fC9mXLs2GFsN8i83gZnWnXirY67DFBxEglwX9cO+JwiU0ERF0Hfn
+	icLGK94DpgIn0XtRtHjagePDmIb7RwRLZB7DQyWy5NaSSoOcqnIOamqk6h8g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729512532; x=
-	1729598932; bh=VyJ5QpKqSHjuFffb5y96QvlpoLM/6n95s9XrRzKXeTc=; b=N
-	ZS9uvgxLLIIJZkQp3SS7QfVciUS4NC+FKpifB+gIVx4EBa7jSWT45dFucrGlYcpH
-	Z4CAZF9hEbJZXVhwejUYifuf2YikcoWx5d5A0Ai8dCYmT426p3sRJt+/Im+H52F/
-	g694AA3SUmqgB3ypIW7ripKL+F4r6btm8PRG8xiL0k9XHTtWZa/tFAg5DEYOGEXP
-	U/W+6coaArHv1/eNfDeCGC0N+Pq8g+dlTP++FMmaCQ3dtEf1/AvNUvHjbl2VbuqA
-	zvfuHDBKPrA2N+eVQ83Zrf+pVeJXB3im6zMjSpdmFpQngRDt798R3BdALU0DZ9td
-	/mJaiUhsXjvbNy3Ji1LqA==
-X-ME-Sender: <xms:VEQWZ-uRb82I60CkdGJB_EQGUtFCXxp1vwU6exdKiMIToxNfb9UnFg>
-    <xme:VEQWZzdfNEzAiVkDLALIUY38thUAn45AlJBgyH9YwZQNdy6-ID3OigdLhQlFh3LrK
-    GVuqK2cBGoqR4hsfw>
-X-ME-Received: <xmr:VEQWZ5xM7O_u3Xe9zF-hmYgjF6_U6DNJfmMhM5nNBNTg78qvg0kmcszATuNOAnUodDBD-SZDJqyd7tsqO8oU6Odb26KLiiTCsBNc_LHzck37>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledggeelucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1729513250; x=1729599650; bh=e/EPc7wSPgPGjigJ6itpxHZGD8pQ
+	0x0W6wTmAiFEcqI=; b=ChiKRCZqfK7kznjpoY0RQsRCuUYXtyzm1gTb7fax9YSb
+	q3pLCwBsibjNw1voeDqCRGxrDb00oiWmxSH9H3GbXiPVaj+XSS41VlMAT5OSxePC
+	JbYjCugf3XiTXBv5qayryQDsHFS8Jr8FSpeJxcJVXCXsh9+YerTDdX0jI/D/eOz3
+	q2BRgqUsofCpnOLYDvsAndzT8ASdnlNFIkZH2mo8gQ7OIGNB6lMQxLLZWBR7YU/A
+	tM1DrQ62gJNrix5Lbs6Ug/0ljyuGGFWtJsr6KMnTM8MDFChdEr6seH2nzuv1Jj1B
+	1M3uwNGqkT5j0DlLsgChaNS+sbdS+sa9pLmkdtbBnA==
+X-ME-Sender: <xms:IkcWZ9QaJaoqMkTP8gySJLIjqop-X7S9C9RK6qZ54TpXV5WZ_pjybQ>
+    <xme:IkcWZ2wATaOsLxB5Uv7pXC_jfg5Q31VSdF5TDsYvXd0UR4qRrBx3ltgw39ODEFJV7
+    ibiG657-UnYYpXAWw>
+X-ME-Received: <xmr:IkcWZy2OGrmnUoxcl0_GYBkY_0hR2X4ZMg0YB1KNx-hmOeyfdjQammn0U7ia8VRWrzXcjY2JrashMlj-4sLJxyDN9ne50lWjogVqGq8mBwi3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehledghedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvedvfeegte
-    ffvdduuddutedvffdtkeejhefhfeeggfdtffdttdevieeuheekgffhnecuffhomhgrihhn
-    pehlohhgrghllhhrvghfuhhpuggrthgvshdrhhhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthht
-    ohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghouggvsehkhhgruhhgsh
-    gsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:VEQWZ5MyJKEVHU5CjWKw3ReTxf93zPgjQj8GTqeaWDIf5XXBFN94bw>
-    <xmx:VEQWZ-9eoXdaTSdP5Gd3mXX0ufRqiXev91jPiZ8eSwn4P5ZRYP5qrw>
-    <xmx:VEQWZxXCOjJxPP3hne66PObQ1kTVV__ez39mRfVYr8PJTdNgl-yltQ>
-    <xmx:VEQWZ3cSXcFV1mUYmul908G0oBCUspofl0itAMDf0tX0oSZjk-LATw>
-    <xmx:VEQWZ1Z1z_Utlx3MsrTTsH6xKzvCrr3f6tx9tuLY46UiMzB5sgSGog8z>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:IkcWZ1BjagghLqJSHbOhJywLCvcyC1gPIWAPJzaY7Fq3XoyfimIs8w>
+    <xmx:IkcWZ2jtiVTo9U0Dp1sUHGDwaZn6aw2eF_qJB7ssDBqfN_r_wagsTA>
+    <xmx:IkcWZ5ohzHYiWq_WN9ojU0O3aesQltvYLs7gKly3DcmUjidoKnOMPg>
+    <xmx:IkcWZxg8sPPSOt4pigNhslLyLM9AcB7yBTWkc23JUZOnXgzQ_Bg6ug>
+    <xmx:IkcWZ3tgGYAYTNXLFwmThQIEDYuiTSzXzilU0J2wzPCiINxAFaY_v_jg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Oct 2024 08:08:51 -0400 (EDT)
+ 21 Oct 2024 08:20:49 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fa24fba0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 21 Oct 2024 12:07:20 +0000 (UTC)
-Date: Mon, 21 Oct 2024 14:08:44 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 875f3217 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 21 Oct 2024 12:19:18 +0000 (UTC)
+Date: Mon, 21 Oct 2024 14:20:43 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH] t1400: fix --no-create-reflog test and description
-Message-ID: <ZxZETN7WjbNiSRyF@pks.im>
-References: <ab7d4c8d89c075de05bf04f1f9dc195145455964.1729439476.git.code@khaugsbakk.name>
+To: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
+Subject: Re: [PATCH v2 1/3] daemon: replace atoi() with strtoul_ui() and
+ strtol_i()
+Message-ID: <ZxZHFY4cXQ1lA4QU@pks.im>
+References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
+ <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
+ <a333d8a40134f4a06812fdbf85c2b011e9d3e472.1729259580.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ab7d4c8d89c075de05bf04f1f9dc195145455964.1729439476.git.code@khaugsbakk.name>
+In-Reply-To: <a333d8a40134f4a06812fdbf85c2b011e9d3e472.1729259580.git.gitgitgadget@gmail.com>
 
-On Sun, Oct 20, 2024 at 06:12:03PM +0200, kristofferhaugsbakk@fastmail.com wrote:
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> 
-> This test has had the wrong title since it was created.[1]  Use `always`
-> like the description says and negate the expected outcome.
-> 
-> The test works since `core.logAllRefUpdates` set to `true` does not
-> create a reflog for that ref namespace.  So the test is testing the
-> config variable, not the option.
-> 
-> The test itself is fine and does not hide a bug: `--no-create-reflog` is
-> not supposed to override `core.logAllRefUpdates`.
+On Fri, Oct 18, 2024 at 01:52:58PM +0000, Usman Akinyemi via GitGitGadget wrote:
+> diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+> index c5f08b67996..c73c2196981 100755
+> --- a/t/t5570-git-daemon.sh
+> +++ b/t/t5570-git-daemon.sh
+> @@ -1,6 +1,6 @@
+>  #!/bin/sh
+>  
+> -test_description='test fetching over git protocol'
+> +test_description='test fetching over git protocol and daemon rejects invalid options'
+>  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>  
 
-That's actually surprising to me, as command line options tend to
-override configuration.
+Hum. I think the test description can stay as-is, as we don't typically
+mention all the exact details of what we test in a test suite. But I
+also don't mind this too much.
 
-> † 1: 341fb286212 (refs: add option core.logAllRefUpdates = always,
->     2017-01-27)
-> 
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
-> 
-> Notes (series):
->     From the commit message:
->     
->       “ The test itself is fine and does not hide a bug:
->         `--no-create-reflog` is not supposed to override
->     
->     A source for that: roundabout through git-branch(1):
->     
->       “ The negated form --no-create-reflog only overrides an earlier
->         --create-reflog, but currently does not negate the setting of
->         core.logAllRefUpdates.
+> @@ -8,6 +8,31 @@ TEST_PASSES_SANITIZE_LEAK=true
+>  . ./test-lib.sh
+>  
+>  . "$TEST_DIRECTORY"/lib-git-daemon.sh
+> +
+> +test_expect_success 'daemon rejects invalid --init-timeout values' '
+> +	for arg in "3a" "-3"
+> +	do
+> +		test_must_fail git daemon --init-timeout="$arg" 2>actual_error &&
+> +		test_write_lines "fatal: invalid init-timeout '\''$arg'\'', expecting a non-negative integer" >expected &&
 
-Hm. The "currently" reads as if this was a known shortcoming rather than
-by design.
-
->     I *suppose* that the same applies to update-ref since (I suppose) they
->     use the same underlying machinery.
->     
->     See also git-tag(1) which says the same thing.
->     
->     update-ref should document the same thing, then.  I have that marked as
->     a todo item.  The changes there are a bit too involved to implicate in
->     this submission.
-
-So I'm quite torn here. It's documented, even though the documentation
-doesn't exactly feel like this was designed, but rather like it was a
-side effect. The test also contradicts the documentation, even though it
-only worked by chance. And as mentioned above, everywhere else we
-typically have a design where the command line option overrides the
-config.
-
-Overall I'm rather leaning into the direction of making this work
-properly. But that would of course be a backwards-incompatible change.
+You can use ${SQ} instead of '\'', also for the other two tests.
 
 Patrick
