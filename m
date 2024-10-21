@@ -1,81 +1,87 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E267B194AF6
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 18:23:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE8C1F427B
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 18:28:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729534987; cv=none; b=sUB3k4XU6hfHY8mn35oWK8AddvBjZYwJFJMWroM7wpnIdZcuKxtf9yuqL+U25kokPV8R99bNixEAFLyZrq/vlFSTjmVa2hX9UkuIcc/yG4N25PMtYTTIb9mLSe3aLjPlhAh7rmye1STtJ3pgqSdT1J5BgGNsjP2yvcOODv6sk7k=
+	t=1729535300; cv=none; b=VRnfNPF4HEfHzKjRu8DvhjwphZaPM6Km5/V8k9anO1KvU89FKLsT8vVYE//LG0lZDb0Nt0JXRvQm6oGZS+nBQRbfXsNUffioANmwCVOkxpGx5ww3CGuLqZYmcvtFrGErU7ifSBi7rv59QmEA0Bu4RXk2wOj4+loC8IqP+qQTvaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729534987; c=relaxed/simple;
-	bh=4Z/R8O00zgA7GF4Fgf3eQbEMHsNR0K9KoIq2xjWyuZQ=;
+	s=arc-20240116; t=1729535300; c=relaxed/simple;
+	bh=lO8tNV1PgdAbkHXO04XVLC6gKrdTTeFF0KSbO3bt/ec=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aG9sbASTRLn1w41qlO44UHj0X2WmL5YK4vP0cEIV44PzZMkIhwYWbcFNcC7F1BwcKZyr6ZEasAQqzdsBqSwnB8GI+P2P0F4Ya8k/3vth0+vqaDtSOlLsgQhLjIfwL8xgFsrIjMIyoXEo/yizx1G5Qd2ba0EX7SqCjQxeiDR0mpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.45
+	 To:Cc:Content-Type; b=sspda8ZDtlNtwNH12brxPVg434/UUckrpGyAttnv+Rk9biH6/+YZxIQmw98wzD51Lb+Hcf4Bux2EBEYrLTvNgerw+P81eiy6ORUmQUAaSbQ3pCos0VC49tvROiPZDdu2MXT1iTPJnh7MYr5MJ914iD4IDIE46yFO656RH8XSBGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6cbd12de220so6877466d6.3
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 11:23:04 -0700 (PDT)
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6cc04754326so2850166d6.0
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 11:28:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729534984; x=1730139784;
+        d=1e100.net; s=20230601; t=1729535296; x=1730140096;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UkxftTivdxwuhEH3eOQbzKwzELz+EwFzbdEvHTuuAQk=;
-        b=w3mRZ+UwON8xijYowiWrBVMHwGQCku+iz61vkWu27OAnuvJFJZt9rV9egw55csN6f3
-         t6HVQvKIr+CI/N4gDAZMErRuATAMIIVNnPfCihzBKG5wK7PW9Z2M3LsOphLhQM7yLyN7
-         fzBc2SkMA4CKJi/Qxtx8fVTOJLDkJLGh1WgcwaalO0AwTq+TXQ3/Lm7ZNAru5Wq+yJzs
-         VhDqHQbGNe8SblgdCDUnW6vjz5BEzPuzGswEvKvEMqAqs4cZR9AChV/TW3yAoL4HRDS4
-         F2TWUlMP0zs61hYXeJfj1GO7HyDp0+mDvK0o9L6pf8oKDrQolz2bnyrcHFYgjt+q7zJi
-         lT/A==
-X-Forwarded-Encrypted: i=1; AJvYcCV7D1mIkbINd/Fbb+LGE0WOVhfrfyfLhiro6ZjGht3SgyfBuIwwLIEVH6cfj26ihCEK8WM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWsvWz+fqNS44b2J+ixJ3BE+oemki95nmQYkvqoytQUElb5lWk
-	PralbpN4Hchp8pzK3Z2CNH/YcyFDSvr6M5yDYpNuSzsFgZHwkbUQGSRDBZ+DyFwQJP1hIgLIOoe
-	QRgKqpz14X0Y7eHIyZWF7Pp+C4d4=
-X-Google-Smtp-Source: AGHT+IEjCmmctKoPvsmquECAyMJmmEPMRVkAk0etZV9BCg4w3WwKumJm62pnaOWV7t1EXAcSeOFVo66szV7noWYWTyU=
-X-Received: by 2002:ad4:5c82:0:b0:6c5:bc1b:e20b with SMTP id
- 6a1803df08f44-6cde1604c2dmr80628156d6.8.1729534983276; Mon, 21 Oct 2024
- 11:23:03 -0700 (PDT)
+        bh=eActermqH5YCkKMjaIkEYYMWs4IPZTKeWTH7+9K7WWo=;
+        b=PgpK7lvoZA+4bdd/RaDDw4lGc/ARa2kWgN/bjZkByUQ9HjCgXvqfYpcjtL8+BPrfjn
+         0dWk+TjDgZbLCBEFp3qJzsbCzT+wDuHe2IhbsyHNZm3xBO+sSW2sNZHXT16oCVvC9MIc
+         Kc763UXQihFYPwuS63SrJzK+xVJv63Fd1Kx9w+ZHFCR97FPGt4xuO77NlD6dnT0VvHt7
+         kV5LUh5STZ9Ndh5oOzaSM7XERtw0yB+yNOI8psUNTWWx7adki3vd7q2LO0eSdjzRXj1k
+         E6yx18PtZR5Bg61ZUngC4X7zAYbIwKdqkgLainsAFpxcUi2xDsQ75baPWKjvTpOis+Em
+         LsjA==
+X-Forwarded-Encrypted: i=1; AJvYcCUvwUs483fn280n4ZBxsfERTfN+Gt/Yk7e0FsRCdQtSPODzYy/U59mQ1aHwo/7KTu2/Mlg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxfEmBqDJt5FsSkJsZG2g6QcgUgrewiRUb3FkotUZGczkKzVVL0
+	DUTmOrsHeox2ShSuotC1DYy+7aSnjYBlHtnhtwtQcZf3VqgYVaK/GPc5ZsrGwjiHs/brKG9p+gS
+	iSjh9P5x4UMHQ32MS42WvCKZ+rA7kTmOL
+X-Google-Smtp-Source: AGHT+IH1L+NP03HNXL44Ti5Wd4evEqG1sVYgWdP9qDUbpiv75WNm4H24nUiHda6O0h3sgWmR1Iy+nQy8aofAaJW8Bkg=
+X-Received: by 2002:a05:6214:2aab:b0:6cb:1fad:82b2 with SMTP id
+ 6a1803df08f44-6cde14fa109mr81359346d6.3.1729535296636; Mon, 21 Oct 2024
+ 11:28:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1817.git.1729296853800.gitgitgadget@gmail.com>
- <pull.1817.v2.git.1729382580491.gitgitgadget@gmail.com> <ZxZByGdre-lup2sO@pks.im>
-In-Reply-To: <ZxZByGdre-lup2sO@pks.im>
+References: <pull.1817.v2.git.1729382580491.gitgitgadget@gmail.com>
+ <pull.1817.v3.git.1729521495497.gitgitgadget@gmail.com> <ZxaG67wuvjOXc5kr@nand.local>
+In-Reply-To: <ZxaG67wuvjOXc5kr@nand.local>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 21 Oct 2024 14:22:52 -0400
-Message-ID: <CAPig+cSb-2c1kUfOQ0Qzdh7ZXfSeF2FoboSvwYUPfkXJ=56BZw@mail.gmail.com>
-Subject: Re: [PATCH v2] notes: teach the -e option to edit messages in editor
-To: Patrick Steinhardt <ps@pks.im>
+Date: Mon, 21 Oct 2024 14:28:05 -0400
+Message-ID: <CAPig+cSw_F97nBzO3Z7t2Zrv5TZwGnYiQLhpq2iKgLfxhhxvfQ@mail.gmail.com>
+Subject: Re: [PATCH v3] notes: teach the -e option to edit messages in editor
+To: Taylor Blau <me@ttaylorr.com>
 Cc: Samuel Adekunle Abraham via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
 	"brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Patrick Steinhardt <ps@pks.im>, 
 	Phillip Wood <phillip.wood@dunelm.org.uk>, Junio C Hamano <gitster@pobox.com>, 
 	Samuel Adekunle Abraham <abrahamadekunle50@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 21, 2024 at 8:00=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+On Mon, Oct 21, 2024 at 12:53=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrot=
 e:
-> On Sun, Oct 20, 2024 at 12:03:00AM +0000, Samuel Adekunle Abraham via Git=
+> On Mon, Oct 21, 2024 at 02:38:15PM +0000, Samuel Adekunle Abraham via Git=
 GitGadget wrote:
-> > +     echo "Initial note message" >expect &&
-> > +     echo "" >>expect &&
-> > +     echo "Appended edited note message" >>expect &&
+> > +     MSG=3D"Edited notes message" git notes add -m "Initial notes mess=
+age" -e &&
+> > +     echo "Edited notes message" >expect &&
 >
-> When you want to write multiple lines we typically use HERE docs. E.g.:
+> Very nice use of the fake_editor script here.
 >
->         cat >expect <<-EOF &&
->         Initial note message
+> It is a little cumbersome to repeat the same message in MSG=3D and when
+> populating the 'expect' file. Perhaps instead this could be written as:
 >
->         Appended edited note message
->         EOF
+>     echo "edited notes message" >expect &&
+>     MSG=3D"$(cat expect)" git notes -add -m "initial" -e
 
-Nit: Since there are no variable interpolations inside the heredoc
-body and we don't expect any, we'd normally indicate that by using
-\EOF rather than EOF:
+This suggested rewrite feels unusually roundabout and increases
+cognitive load for readers who now have to trace the message flow from
+script to file and back into script, and to consider how the loss of
+trailing newline caused by use of $(...) impacts the behavior. It also
+wastes a subprocess (which can be expensive on some platforms, such as
+Windows). If we're really concerned about this minor duplication of
+the message, we can instead do this:
 
-    cat >expect <<-\EOF &&
+    msg=3D"edited notes message" &&
+    echo "$msg" >expect &&
+    MSG=3D"$msg" git notes -add -m "initial" -e
