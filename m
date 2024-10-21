@@ -1,66 +1,71 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513C814A90
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 16:18:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2529C197531
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 16:24:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729527499; cv=none; b=TskESe8y0NzJ3eEwT3NIEwCu1z5XJDpTLhFU2F8wlWp7lWNsNIQ/NbaL9Ph7oebViiXOkGXLtLzYMyQo43iwuK/YlNods3j8BzYi7avp0XHajc+gFPIw4uiS/MVNBLPvebHR2X25f6PySowi/qCDff1bcrhcU1I/a+sjMybKYtQ=
+	t=1729527899; cv=none; b=TrEz7cfNMZdDYwZjobd2ig8tgyzTZK81bYoZs9a5zbt6Zq7c+zykarecguXqFu/rGgKNYrlRngP8htxL4EdHH1LJbF33brJZqgf7nNnxrLhX/Lb6T6WPm5FRXFrxtEfqVsLka9jb7Pcoqb0qXjzaMSD4X36sqNMmXm7ou3rLJ14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729527499; c=relaxed/simple;
-	bh=e+w2lg4bfBgrfLVOb8YRz3hYWfPo93oBC5K1eTroAlc=;
+	s=arc-20240116; t=1729527899; c=relaxed/simple;
+	bh=bjNLCuQJAPBLKuwEV82r+wJMMJQ0xsAZ5TPn7K0MHaE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BFe/lf8Q/BoyDclg/nCwigiTTA5Uw2DtauLkbHsyd4OspvFYgkGWSxySx9syTjM5cW7VisLtLxR5JPqoq1jrisJQriiAQWILc5SkPtj2bj0ZOkhXRt8wMW6jK5zu1B+nPrX/0wzFUF322k/yX82bul3rI/IApOJtXuI2Go9qr1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=lGqs8/zk; arc=none smtp.client-ip=209.85.128.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=KGgjahuj6KAYpmGRJkR/Lg1fhqJ7NETEU2g+osh1n7+lWRHJ5bOqfphsytnERtrra03AdzmAIP/KyypU//xBfgEmhfiClgl2eZQB/c1VTkU3b85mo54QSRZaHzrSyEhfQIKi00IsylKxkewK5f8Vskt6M8pp7CYwkq6i4iz4620=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=1KP/SJc6; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="lGqs8/zk"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6e3881042dcso41394267b3.0
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 09:18:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="1KP/SJc6"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e290d6d286eso3659163276.3
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 09:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729527496; x=1730132296; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729527896; x=1730132696; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DFn4KakdROBM9Vzh0TISwEbnonoVlLrSDqWNWKOoOKg=;
-        b=lGqs8/zkHRX3v7GGrLeQnA+anJfKwNTWwthG3laitrmtE7mZ9w/WrEV9SLq9CvsE0E
-         hoRTf57HV6nnEeUt12IF4Sqc9tgkAFT3+aKltzQNGRkChKNJExeaQ7e9BltKUEff6JRW
-         Vkt/uA+xWEEVHL5cCE4cXDv5cU+yvGSoEv+Ists4F9s6Jd2CPA++GpemTY26f9pkumJm
-         uPJIEuxna1z9+WvpQr6xcxC6vWxUTN7+U+aoLToftuPp6rpOgDCyVO4ljAtWK927BAfJ
-         TQjunrRNf8yXBkXxR26d9sVtpr2ldSK7O+L9a7iIg1FBDMOGf47OlMA65N4f8uQaF9Wt
-         NlgA==
+        bh=kCwdOo1FYbozbxbWDdKGRFuSfRH74lTjTxsCCZlJFho=;
+        b=1KP/SJc6CuhgltYq/R17XAaleqsOBRajFZ54lbjGrl/HcsZXa2oi0Ck9nn6Rx7H7p/
+         Ju4kFSGctDHtFshC2TSG704xbTzy1hHCsMONaFJsFi9cdQaxrRALa+SbG0N/SEZZiMQf
+         kOgoAn9s8a2havT4Ja2BdxBFVGiXs28crFoc/sASXXmpZA/z7uHTF3Cw+LSzjJ27h4S7
+         3ptWbN3yGd/0u6U+4XJ5+BWWjsKzH7XP94YKP5K3hUXjOMIJeiJu8c5nyhJa75c5Soj0
+         SwH4QvjF51hWe5SHM5zdZP8ITtJLQ9unPoYybASTpVke83RVaxWoW+7spWN/tgEWHC7l
+         L9YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729527496; x=1730132296;
+        d=1e100.net; s=20230601; t=1729527896; x=1730132696;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DFn4KakdROBM9Vzh0TISwEbnonoVlLrSDqWNWKOoOKg=;
-        b=qUCVU74jAtBf1joXrfvBAuHj1KzhHSSS9vT9I4hkg7I+d+E5CqamhgJVg7ZH46hVUk
-         fYdN8O0wjQcG7t5ce5aelmm9pw755Wz8GRjJyVigvyg6IfB+iiHlTRNp9rLBd1VMYgUu
-         BdXpMEO/emK3+JqixJmP3HnqHUEw7+//fPJ9BZv1kmg5lQdw3m2zilyZCqBesedsd+VG
-         46fQWqj2C/sKeyRJDObIKIoHgO/pyI0CIn/wJHnHgTjMk4jEKB6wit1zj7c2n/jGfle0
-         WP8GpInXuP6sGL2dovbg+f6U1smd5hlUsF6ki5nS1/xzI+q5du8ntJtbGrfVN9igcdKk
-         VIxQ==
-X-Gm-Message-State: AOJu0YzEkFAbO+MHUQSqzpvjXCJJ6aeIBfB9VGw3ssLLBYTBSlbsGe9r
-	KorSYzKeSqrMCiAcZJDGQwk0LvTCdLYHvp0wHgJ99BeM1RpMDRH1J7dDri0S0x6pJV9gREG3CIY
-	s
-X-Google-Smtp-Source: AGHT+IHPkBmvPrEcO+8JTZkGxg25BfTqEISaol3sQ7H0LRm9/xr/cmg9bBkaDQCKHq/hEio5/E5ePA==
-X-Received: by 2002:a05:690c:d8e:b0:6e3:3c7d:31eb with SMTP id 00721157ae682-6e5bfc419c8mr92692617b3.5.1729527496275;
-        Mon, 21 Oct 2024 09:18:16 -0700 (PDT)
+        bh=kCwdOo1FYbozbxbWDdKGRFuSfRH74lTjTxsCCZlJFho=;
+        b=ceCVgetNCGGxwj2CKRam9ugeiL43X1pvGKEc+ZVhcvqBbrcXR8QBYw3mS59AGOHHHF
+         auhJyHYAWJo8y6E8Mmf5lW5MCEqtupTmgP+/EM+0S7APkdG7NrerZKvs2hRr+d3OgmnH
+         vM8TqP3HXE8I/veNgiHownDslCOIqtbeBAMy2CXJqiFgZXvEvFHzVVUd4vmhh3+3c+sa
+         pw4V1zlogndSc4GxQfUSmkfxgtmCqqMF45nzboNJ51lnXHfJ+jhzWKfIe4TBK9ZG8QVM
+         khkzGpewglcvbk043ctEDmBftoJRtEAKeNX9qoaFQITpOG8LQlDLhQQ5UXwKFZ4ciuz/
+         M9dA==
+X-Forwarded-Encrypted: i=1; AJvYcCVkNrCDGGQ2ypxN0jOhw77TH8NdkZ8cTwAyDUvRdFuHxZcNoLOwiLE3R1G6op1a3mUrjuc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzw6VwtUgydkdyovxpYoaIQDppPWcaFwUFMwTHF/AGY/hnP1QcB
+	sNR9bUoKZY9Py1kzOOJpa9FKfhEWr7jlZiO/wZbF00xtGlcDhsD4PaHSY8oYT9H04yg+42fbhym
+	F
+X-Google-Smtp-Source: AGHT+IFw5T1/4zCy0ZHr+hf7ZAnsXsthrHK2XjR8AibBLwj0U2UPp+uWodtyj2JWH7pLQ3kV1SfKoA==
+X-Received: by 2002:a05:690c:6610:b0:6e2:1527:4447 with SMTP id 00721157ae682-6e7d3a93386mr4563527b3.1.1729527895944;
+        Mon, 21 Oct 2024 09:24:55 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5acc3d2sm7161357b3.58.2024.10.21.09.18.15
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5acfbe6sm7131407b3.64.2024.10.21.09.24.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 09:18:15 -0700 (PDT)
-Date: Mon, 21 Oct 2024 12:18:14 -0400
+        Mon, 21 Oct 2024 09:24:55 -0700 (PDT)
+Date: Mon, 21 Oct 2024 12:24:54 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 0/9] add ref content check for files backend
-Message-ID: <ZxZ+xteOnm0im5vC@nand.local>
-References: <Zvj-DgHqtC30KjJe@ArchLinux>
- <ZxZX5HDdq_R0C77b@ArchLinux>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] daemon: replace atoi() with strtoul_ui() and
+ strtol_i()
+Message-ID: <ZxaAVgJa1VCj/9Ge@nand.local>
+References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
+ <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
+ <a333d8a40134f4a06812fdbf85c2b011e9d3e472.1729259580.git.gitgitgadget@gmail.com>
+ <ZxZHFY4cXQ1lA4QU@pks.im>
+ <CAPSxiM_+4ZaaiyvWDVwXf3tnt08otsx=1dcJJtQsL7h59dO8kQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,38 +74,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZxZX5HDdq_R0C77b@ArchLinux>
+In-Reply-To: <CAPSxiM_+4ZaaiyvWDVwXf3tnt08otsx=1dcJJtQsL7h59dO8kQ@mail.gmail.com>
 
-On Mon, Oct 21, 2024 at 09:32:20PM +0800, shejialuo wrote:
-> shejialuo (9):
->   ref: initialize "fsck_ref_report" with zero
->   ref: check the full refname instead of basename
->   ref: initialize target name outside of check functions
->   ref: support multiple worktrees check for refs
->   ref: port git-fsck(1) regular refs check for files backend
->   ref: add more strict checks for regular refs
->   ref: add basic symref content check for files backend
->   ref: check whether the target of the symref is a ref
->   ref: add symlink ref content check for files backend
+On Mon, Oct 21, 2024 at 01:43:53PM +0000, Usman Akinyemi wrote:
+> > Hum. I think the test description can stay as-is, as we don't typically
+> > mention all the exact details of what we test in a test suite. But I
+> > also don't mind this too much.
 >
->  Documentation/fsck-msgids.txt |  35 +++
->  builtin/refs.c                |  12 +-
->  fsck.h                        |   6 +
->  refs.c                        |   7 +-
->  refs.h                        |   3 +-
->  refs/debug.c                  |   5 +-
->  refs/files-backend.c          | 187 ++++++++++++--
->  refs/packed-backend.c         |   8 +-
->  refs/refs-internal.h          |   5 +-
->  refs/reftable-backend.c       |   3 +-
->  t/t0602-reffiles-fsck.sh      | 457 +++++++++++++++++++++++++++++++++-
->  11 files changed, 693 insertions(+), 35 deletions(-)
+> Ohh, noted. I just thought the test description does not have anything
+> about merge.
 
-Great, thanks for the new round. Looking at the inter-diff, it looks
-like this round also needs a fresh review. I'm catching up on new
-threads from the weekend, so I'll put this on my review queue. But in
-the meantime, if your mentors can look at it, that would be much
-appreciated.
+Let's leave it as-is, unless you can come up with a new description that
+is a little shorter. Absent of that, I think the current description is
+fine as-is.
+
+> > > @@ -8,6 +8,31 @@ TEST_PASSES_SANITIZE_LEAK=true
+> > >  . ./test-lib.sh
+> > >
+> > >  . "$TEST_DIRECTORY"/lib-git-daemon.sh
+> > > +
+> > > +test_expect_success 'daemon rejects invalid --init-timeout values' '
+> > > +     for arg in "3a" "-3"
+> > > +     do
+> > > +             test_must_fail git daemon --init-timeout="$arg" 2>actual_error &&
+> > > +             test_write_lines "fatal: invalid init-timeout '\''$arg'\'', expecting a non-negative integer" >expected &&
+> >
+> > You can use ${SQ} instead of '\'', also for the other two tests.
+>
+> Will make a change now.
+
+Thanks. ${SQ} is much preferred here, and makes the resulting test much
+easier to read.
 
 Thanks,
 Taylor
