@@ -1,174 +1,87 @@
-Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274611CCEC6
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 15:56:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA5E17C224
+	for <git@vger.kernel.org>; Mon, 21 Oct 2024 16:09:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729526195; cv=none; b=Hh3+1AOpuBdXIlQ0kvndNmRo0lir7jt4WEQQvVpBPURzuNhD/oo8GoqLp736bq9PPQSZoGIkeMiDdEDE31EljrKB1lp7Zmzf4PtPPcZfbYL6Hup72yDXiRH598wOCV7a47FZjei9QLMYLG9yx7x6k/Yyu/a04aI95awe8cZMF+A=
+	t=1729526989; cv=none; b=OMBhUlX03VE8gNRMy2s7Hvvqeot74kciPiZJL4w2xoyOoR6ugk5odjt53Me+i7k3tySsIE7Nz+iNaxwD/TZVNes5nScCMy8iLcMEVsCjeX/GXBETIZ4V/kE867UAfiDb/qiMBRxHFwlFrflxlm2h1b3jHMnmHjeeYQ2yE0jvBOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729526195; c=relaxed/simple;
-	bh=9OoBnH/OWO95Ow0jtRi4HWkV9sc4uBm98voPWBauDGo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b6ZhH5e8ystE+OY/3VmbQBHpL3sAYJk2pU1bkPjOvxHoEgyJKDIx1vELZE/RteRN5ipYvcdkNuwLrCWx3afHhZT9Gd1EpiQzmiLyEahnLq2ekTAKAPFp/6UpY+Lny9DD/3D8OPEnyI/j+tw0rnTHR1wBju33JGklnr5qyfyti7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EKIYBb54; arc=none smtp.client-ip=209.85.217.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729526989; c=relaxed/simple;
+	bh=K8ECcYHBzsoN4QwIB4yxByiXXn2ulXqKYEJ8Ffqhdfs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MKRoO+xQnKBNf48oVN+jTUYzF2V5FjxJ7WPnIl6TodxwCgKbf/g+ncoeDMKK2V5EaRFFVdZSMBf1hL7TUbr+ok8IsmQzfKZhSJaX2JAk3eZsR3R1no06LgX+3s8Jx4M835vL9vpUdJCTbYm2W+7zZ/LpDCnNKiY6q78NBrA5WWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=2qsh+b2K; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EKIYBb54"
-Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4a482cb53bdso1524962137.3
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 08:56:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="2qsh+b2K"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6e39bf12830so32219097b3.1
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 09:09:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729526192; x=1730130992; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vfbNlPJ+lR/rxwqztYXmVq/8dK8ypU4Rw0hhh9A3NvE=;
-        b=EKIYBb54XQrqPk7UEm4EfCSfUmU7YKTBwaq418EPxW3do0Ua3szGiq+j3W8ojfyDtI
-         NC8gb6V2EGNQ5gVjU/9a5c4K2D9Vkuq8jKhg9JoRcFyJqWIphE014R1ERmRQzbk6siBD
-         KrdJutearMO1DYreYBzra8ownnfnAsOO8onOQ9a5we9qQxX2WUr0LcCbRH2iMNy0Y8nc
-         7IO6ZjSpmLdJYC/gzLQP4M4sced9M52ttiZkQu6L+7d/4KrNPv4FNQ1IGNb/u81iNATQ
-         rn5KVBr0GpoNJMDt7+Q57iVFIcuRNg6bcMEocpMbFGaK0pfChnFfYniJemOQzKj7qMdj
-         /vng==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729526986; x=1730131786; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hC1KcmlFMtJcaA/Gd/GTySgE/H44KkxHaG5ehI4F0QA=;
+        b=2qsh+b2KmPugY2kuF4zKPOqP01j0kvbedLRRlyFpBqlEQGFtUk1eKT8z2IXyIiaf9N
+         ua0OMTrsvwCh1L/WzvMYd4a/559WLFuyxocPpGrYnEVtq/i+djuFpYVqXx2pKIuI/HjH
+         lPdezOZsJ2iV4R+HhRHWQEIlEI93743GrmRZaDPAlJnnGzjvkXZq6huAuIsDFkSDkIZo
+         vrfIOvvC19pg4O6X26vg/qrtNuDELHrrte8LEXM34KtvngFb2Z6goU5VGBQPyxZxVQk9
+         4GxoGJP9MImvOYXIfbrwLng6re2n9eepydoLkWv32ETmgDGioDsSz5HaFYuqkBCI0tP4
+         es2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729526192; x=1730130992;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vfbNlPJ+lR/rxwqztYXmVq/8dK8ypU4Rw0hhh9A3NvE=;
-        b=m1ZglqaJBo8fuXLdPUZM5E3t3CayI78S2SiXGVnjx+bzp6KlQccMEm3ZE9M0bjr+NO
-         TP4qRInSNsyOv3OOPcLzU90nHkPkooGmUAphd048Rb6Uf65WlYhSbe8/pWOTX9iC/vxe
-         UGV0pv6sm0hQecCCK1wzs7JYLmKcbbeAXMJTFQQ2mIxrpjqL9Nhd1bcOK4r6exBog65w
-         RUL2w+q8V1UV+/h73eg45k3EkZSa0lEuss8bX9fJsGHrK+Wpht3I17lvNRq2FL+4VGBQ
-         JNxSoZvSlYS8STgFSUWSb6zMPT3qma46IVnMujNjn6gZL1cNoviCpPzYvav76Hlpx45s
-         ezrg==
-X-Forwarded-Encrypted: i=1; AJvYcCWiDyN3z0WO0mw/QHvc9yKzv4TaFsKvPASAVszxvdL0XEbGd/9PpWkz2SjJs9EETy7k6Go=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxxRUoIgaTevfuIPo9NBEab/rKTxzzRJCsaF6MBKXnnY0kR2pD1
-	LJ8SCNpiVV5+eE9cBfXMlpxNCXQp0OtP5AlgCKDPh+JlYrxK948Wfeu5eatq/o42vMOa4mv09gF
-	ZGCjwg+XRASq0+AvTyMMNFNmlMTQ=
-X-Google-Smtp-Source: AGHT+IGIstGl+EeZAOHRTZKGCssVK/5aHQX3To/Ev3b5uo8g2AujAWZbEhNS7z7Aqhek6LsklhUWkO0dNQQVorvjHso=
-X-Received: by 2002:a05:6102:2ac7:b0:4a3:cf4f:e19 with SMTP id
- ada2fe7eead31-4a5d6bebf88mr8044745137.24.1729526191974; Mon, 21 Oct 2024
- 08:56:31 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 21 Oct 2024 10:56:30 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <ZxZYcPwLB5oLTFUo@ArchLinux>
-References: <ZxZX5HDdq_R0C77b@ArchLinux> <ZxZYcPwLB5oLTFUo@ArchLinux>
+        d=1e100.net; s=20230601; t=1729526986; x=1730131786;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hC1KcmlFMtJcaA/Gd/GTySgE/H44KkxHaG5ehI4F0QA=;
+        b=T8JTHM2tajo5sISHv6Fyg6JbIA6bbMMj4RNjQPYykAbRefvrPp89AT+enPbRPeHWEM
+         7L4jkFcETqtLfH9c06DGep60GiUyF/CdHuzKPHBZuLIj3udiJbBq5beXyqC9kN7zu6aX
+         vgB9bZM104cUYYZTGJCtw7MtcW7ZPqYrbWSkKbBmy4unaSyfGD9K/PiNSPwi5kR/2ms9
+         huAntqfPjGteWaTgNAPweOx29hFkWyyf7ehYHPLO3zg1BBhhHj30jpTvW6cA+TEmHj5J
+         y5w4U9v+KYfj3+otRIHjnGGbOCJoBVEd6pwUr6quqhNeTfaevtmOXMqGz0p9Xc7j0e3+
+         5zcw==
+X-Gm-Message-State: AOJu0Yxe7I/Gdejz+BdCZdZs8yLNn7xrtOV2jlif0IlWuPaPDeRGsehN
+	LTzL9u1O9LI3K8GZWd79KPKVfOB9b2oiz5MFOzx4W0K+goiA3Oitt/DnM4h1Tqs=
+X-Google-Smtp-Source: AGHT+IE33yAiSh4TQ0RRiCI8yHc5U8GjI7ICFpS7JDBBdzvOeyaezgkfVtwOJLElDXg70eXCjHkYbg==
+X-Received: by 2002:a05:690c:708a:b0:6e2:2684:7f62 with SMTP id 00721157ae682-6e7d4582283mr1738787b3.8.1729526986006;
+        Mon, 21 Oct 2024 09:09:46 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5ccc4c7sm7196857b3.87.2024.10.21.09.09.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2024 09:09:45 -0700 (PDT)
+Date: Mon, 21 Oct 2024 12:09:44 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 0/9] add ref content check for files backend
+Message-ID: <ZxZ8yNBZWNEhLgND@nand.local>
+References: <Zvj-DgHqtC30KjJe@ArchLinux>
+ <ZxZX5HDdq_R0C77b@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 21 Oct 2024 10:56:30 -0500
-Message-ID: <CAOLa=ZSGuBsLxUaA_gvXrYzR=Abzno5PEMZZD+dAs_smcyoqLg@mail.gmail.com>
-Subject: Re: [PATCH v6 4/9] ref: support multiple worktrees check for refs
-To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="0000000000004d9be90624feb22a"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZxZX5HDdq_R0C77b@ArchLinux>
 
---0000000000004d9be90624feb22a
-Content-Type: text/plain; charset="UTF-8"
-
-shejialuo <shejialuo@gmail.com> writes:
-
-[snip]
-
-> diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-> index 0aee377439..6eb1385c50 100755
-> --- a/t/t0602-reffiles-fsck.sh
-> +++ b/t/t0602-reffiles-fsck.sh
-> @@ -105,4 +105,63 @@ test_expect_success 'ref name check should be adapted into fsck messages' '
->  	test_must_be_empty err
->  '
+On Mon, Oct 21, 2024 at 09:32:20PM +0800, shejialuo wrote:
+> Hi All:
 >
-> +test_expect_success 'ref name check should work for multiple worktrees' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +
-> +	cd repo &&
-> +	test_commit initial &&
-> +	git checkout -b branch-1 &&
-> +	test_commit second &&
-> +	git checkout -b branch-2 &&
-> +	test_commit third &&
-> +	git checkout -b branch-3 &&
-> +	git worktree add ./worktree-1 branch-1 &&
-> +	git worktree add ./worktree-2 branch-2 &&
-> +	worktree1_refdir_prefix=.git/worktrees/worktree-1/refs/worktree &&
-> +	worktree2_refdir_prefix=.git/worktrees/worktree-2/refs/worktree &&
-> +
-> +	(
-> +		cd worktree-1 &&
-> +		git update-ref refs/worktree/branch-4 refs/heads/branch-3
-> +	) &&
-> +	(
-> +		cd worktree-2 &&
-> +		git update-ref refs/worktree/branch-4 refs/heads/branch-3
-> +	) &&
-> +
-> +	cp $worktree1_refdir_prefix/branch-4 $worktree1_refdir_prefix/'\'' branch-5'\'' &&
-> +	cp $worktree2_refdir_prefix/branch-4 $worktree2_refdir_prefix/'\''~branch-6'\'' &&
-> +
-> +	test_must_fail git refs verify 2>err &&
-> +	cat >expect <<-EOF &&
-> +	error: worktrees/worktree-1/refs/worktree/ branch-5: badRefName: invalid refname format
-> +	error: worktrees/worktree-2/refs/worktree/~branch-6: badRefName: invalid refname format
-> +	EOF
-> +	sort err >sorted_err &&
-> +	test_cmp expect sorted_err &&
-> +
-> +	(
-> +		cd worktree-1 &&
-> +		test_must_fail git refs verify 2>err &&
-> +		cat >expect <<-EOF &&
-> +		error: worktrees/worktree-1/refs/worktree/ branch-5: badRefName: invalid refname format
-> +		error: worktrees/worktree-2/refs/worktree/~branch-6: badRefName: invalid refname format
-> +		EOF
-> +		sort err >sorted_err &&
-> +		test_cmp expect sorted_err
-> +	) &&
-> +
-> +	(
-> +		cd worktree-2 &&
-> +		test_must_fail git refs verify 2>err &&
-> +		cat >expect <<-EOF &&
-> +		error: worktrees/worktree-1/refs/worktree/ branch-5: badRefName: invalid refname format
-> +		error: worktrees/worktree-2/refs/worktree/~branch-6: badRefName: invalid refname format
-> +		EOF
-> +		sort err >sorted_err &&
-> +		test_cmp expect sorted_err
-> +	)
+> This new version updates the following things.
 
-These last three loops are the same, couldn't we loop?
+I am assuming that this new round was rebased onto the tip of 'master',
+since I could not apply it on top of its original base
 
-for dir in "." "worktree-1" "worktree-2"
-do
-    ...
-done
+  b3d175409d9 (Merge branch 'sj/ref-fsck', 2024-08-16)
 
-> +'
-> +
->  test_done
-> --
-> 2.47.0
+In the future, please indicate when you rebase your series so that I
+know what the correct base is for that round.
 
---0000000000004d9be90624feb22a
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: ca44b68f330815fa_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jV2Vhd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNG80Qy85RVVMMmUzS1dWc0RUNzdacW5IK1JNZ3M2TQpydzUvNnA5MlRW
-RXRKbnVmZjY3SDZhWWw4VmN4aFJSQXAvTm5uZnpKQzFrVTN4Y3FsVVNKOThTMDBmNHJTaVMxCkdi
-RWRnQzc5V29FLy92bXdwVWpmTHkyYlpOb3N2YzR5QVVwMWtvaXQyN056QVFkNjlNeGw3ZG5Nc3lw
-aElxd20KRjY4aDQwUDlkME1SWkZzVjUzQm56TkJUb003WW1CRTlkN1NiZXlvMzBxeDZzSkZUQWYz
-aXZqMXVCbzNxNTByWApQNlZaeXh1OVZiZGlwZHVlZGRBQVh2dVFsT0pGUloxN0FCZEZsUkFETjk1
-OEx5RFZqaG9VUG03d2JGVlg5cFVLCnRpZGR6TzZWaWRiSGF6R3Uvenp6Qk5JU1pLRlBtajRyTGRB
-S2JxSXZPN2hQQjBoTFlnUUFYZU1Hb1M4TVYydTMKcG1YRXBUUTY3dWxHL1E2NGZZMnR3TTNSbVRj
-U3NWdmIxb0dUWlJUVTdiNFYxWUhTVUR6WXpFSDZERzRsdGczSQpIM0Vjc3FDTUV1NGI5ai9BaU1z
-U0FHUkNWaWMva05ocnhYYzVpcW5qL0U4VUh6akZCaVV6TUlsYlZtSHB0dmJZCjZsbk1PeUwwT0R0
-TW5FcHh1UDQyMWhwZ1U1QnJDVllMaGZzaHZaST0KPU85TG8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004d9be90624feb22a--
+Thanks,
+Taylor
