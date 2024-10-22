@@ -1,143 +1,129 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A743C19D080
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 13:05:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10ABB1E495
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 13:13:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729602306; cv=none; b=By+EA++X0VdZSQURsLYP/4EXnBNYTsbAJA9xmFlj99jJBkWs8y+RwnZRIvItRIMjZQ9uiXY0zlMd8MobQEDVEfIPlHf+G0zw4pyb784aGjDKcLGRvL2uacTeXpwkGyL3qceBZDvU5uJsdYGVzziWiWSKL3UNzkxvfafCkcUPOnc=
+	t=1729602840; cv=none; b=m+7Uqd4AnKHoGovO088LhjvsA/EQq/YDqil9+Nvq7I0KiC7sMJiuFMgNcz8L8h9mxrN7/qj5jpmAixG8HJNK1h2CKAIj9rs9D/4z/hpalj63HnvoergRFkL6Td4MHGiPrLF4zXx2/0OPuYWJZMGg1OiVmM1co4EtpBJ43+zM7rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729602306; c=relaxed/simple;
-	bh=6xLa0yiB59fCnNMe+iz393gqK9xXj0FaAAa2IHBQkA8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=MZtLUvJCj5tKy00JxF4rXt4ORXn8nMxaFYfzDRb60BGzSfAciReZa/suqrRUNtZVC+d3AZxbC+iK+SRmwmnzCbSUF2HqMenYLjsct2/JHRSPPdGaluQejrzVutifgx0WTEbciB7Df3S1XU6FTwNNnkiUB3DbWBIIACx8cf/k1HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fireburn.co.uk; spf=none smtp.mailfrom=fireburn.co.uk; dkim=pass (2048-bit key) header.d=fireburn-co-uk.20230601.gappssmtp.com header.i=@fireburn-co-uk.20230601.gappssmtp.com header.b=aObtVWR6; arc=none smtp.client-ip=209.85.215.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fireburn.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=fireburn.co.uk
+	s=arc-20240116; t=1729602840; c=relaxed/simple;
+	bh=6Z7FOtuuw+77p54x2mbNxF3RhyvLBIy3I6/KyEyQERI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LAySEWX//GuMy4ahIsz2vrgfPL74FmIAJbl6qfd7VJjbsBnYiG+ubC3QdRoFCbwr4LNx9qJwNWfrCOCa5Hoc0+7fvDBOH+MzuhDTyhvQX9T8bqYscBEWY99ULU0+zCVEZxvD4/LAhg4JpPkoidkO8pqkxgUjBwp9JiK5gW68330=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=u3O6QR+Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m4jV6x+f; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fireburn-co-uk.20230601.gappssmtp.com header.i=@fireburn-co-uk.20230601.gappssmtp.com header.b="aObtVWR6"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-7ea12e0dc7aso3548598a12.3
-        for <git@vger.kernel.org>; Tue, 22 Oct 2024 06:05:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fireburn-co-uk.20230601.gappssmtp.com; s=20230601; t=1729602303; x=1730207103; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mXTj9yWy0CzYHAvm9Oi9r/rO7BKaQjPq8ULqxQVQmwY=;
-        b=aObtVWR6AfYAitFS8qjq8I7FAyrkwjmDtVQ8D8MO5ky2H/DS4GwIOliCsfC2ViCgDJ
-         wrfbaSxi75YDXKZ8HBRERaS9mOl1FnT5f+lgfHwZ17onujpkq1fUJwadUflewSJUcinE
-         q6FZdPlyIYlOPGPzCZmEC2Bh1BOeR/IOn8vVq19dQdLqU/syCsb2rfHHxobiFbxpO+0u
-         OCTHV4sdRZOFFhh9ax9A2OWNPyBZyr00oscESiHfNspVCmHf5z6HNGMGCunEmYkayiPc
-         TRdG54486+9b8NbdKlX2xhf8Tazdzwyyr2I7FrvQVppqV0UbXQjsuDVBfHb7b97AypDp
-         usOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729602303; x=1730207103;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mXTj9yWy0CzYHAvm9Oi9r/rO7BKaQjPq8ULqxQVQmwY=;
-        b=uWFR/7Pe+m6tK75g1x/X2/oOEsXYWqpJAku8a2zL18z/7sEPjarM8QP6/mdak/aeOy
-         /yniC7ZkH2K5A2NkprBLDUa9snH60Z2U7HMVhpzt64mNGNVkJiuUCmMsb47azXOEOUKq
-         Rvst3HbPDgdaLF8FxU9K4vlg9odaj2PIW1AW7nJH1wyh8quErmzyxLN7/WU2FmJzmMvW
-         +z9L77Co5U54K9HtmNP+Ws/9btZCxybSnaCNoAw36ifQ1Yb64Uh3VvE0kFLq3tX9DhDq
-         Luxin2yJ5ShXRQpVMf+nGVD7ZTfn6KxVI4V247aswC9qAIHLqe+RXiBWl1liHPNerujK
-         6JIw==
-X-Gm-Message-State: AOJu0YxKFeLOslJBRxdMszyS5cvgHOOQnzni1KErslSawkA7lJcI51Ru
-	CMD9RTp2GV80oIIrbXsUUgDS/la3zcjrbxGeajCWm2nOV/XkQE5YceZws7BmP+61hE+97AR79Ko
-	VOXJkr02M0sH2d7jLNtzfUn8vOD+Xupd18KOb12RwCx2N1NmYDHFb
-X-Google-Smtp-Source: AGHT+IF76yLG0ckUkh0WbJQD/WQGQWpZYSp3aBBCZhA1HxMPdjk9kouJWspny4+OPnCzaytRmQH8hFzsXHns2yPTGw4=
-X-Received: by 2002:a05:6a21:4006:b0:1d9:13ba:3eef with SMTP id
- adf61e73a8af0-1d92c50d4b9mr20275422637.26.1729602303414; Tue, 22 Oct 2024
- 06:05:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="u3O6QR+Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m4jV6x+f"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 267AF1140147;
+	Tue, 22 Oct 2024 09:13:57 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 22 Oct 2024 09:13:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729602837;
+	 x=1729689237; bh=YXnQZfDywt3VW0jdQhmukDqnIsEhBEAvM6faVLM037g=; b=
+	u3O6QR+Yvby42RjjyZH5x3pyAXYPJclGyl/MNu9pfnbADVqREXb/u0Q7UXG4hao+
+	/GbZKRV1mlDHrZejFVLLm3K8r4bg0hF34jr6d+iOhcQEeBruKUDadp81GyJ6qSL7
+	xlJ6c2f/P84S6Tl91uVASYFnoZeUmdco2RYbSE67jonzcONId6hbXDZoN3txmt+E
+	wbvjzdalWhFDAD6jrwTRQzrkLntnPL3EWOlNL3Ex73quKyBjPM7MjuJo5/Dr0plN
+	e1wBq0P8wT2wc9W+t5I8XGVZXWoNSQHtW/SalMP80YdozB8x9kWgfkqG8+X+mBIJ
+	YI6PBQEIY0ldaXgprUG80Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729602837; x=
+	1729689237; bh=YXnQZfDywt3VW0jdQhmukDqnIsEhBEAvM6faVLM037g=; b=m
+	4jV6x+f+ET/hSeKplSAIyWCp/E8lFioMf0r9SvWAPF1ePMcML1YoZqVDTPFQTi0a
+	vTd3ENHgm1yG1RUQfLnHnL3UnMgU0c2xboAOTlg8UYhLhoQwGqZUV4/3dMbUWAqu
+	TAVmP4kCXS+TeGVaXmzMl3RyQw0SJS4PIICoRAwv12PVsyfFBb9EemKL/dS9Vo12
+	Tgy5mM+KCQMe4sXsP5NUqivXWHJCo7ndRjbIL8vQSUJib6Mb/bm8+6vRm9tjxDDe
+	N3JC6qHy/8nvJqJAFlr/9PET7ptCKl79kL8qYr1KsBRU8GRlTmT9jdJeH7RzCAfZ
+	sFTClopOkWwTlkja50c1A==
+X-ME-Sender: <xms:FKUXZybnyifI73Xh9n1fKxkJQ7gangn111HKcqGIoNPNDNbVitEZjg>
+    <xme:FKUXZ1arDpCuB1HmWPDPntVgES6RLHtskEUAJgzxugVgHQXXCM0rR4bp41B0L2cq2
+    zJeNMwcUPPQ8m1Acg>
+X-ME-Received: <xmr:FKUXZ8-P1gLfVuqhjEhMs3zch5-JxFlh4QvqISvI5JcNWv55QSCvO88DuYdt3CEA2P2dt-OHIfh7cH0rxxaaqhWPOlghNNXKPIxWlOKfqykT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeihedgieduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
+    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:FKUXZ0qhRlTurkuYzl5BanHBDrLgzh6FucpqkciUM3x0fytjSNGzww>
+    <xmx:FKUXZ9rsdm_elQk5lCyI2YJexgWNyrzRJaryYIHJ9mLqmJQQjHc3EA>
+    <xmx:FKUXZyRRTTQMqqBZ3032hlQiFkn0yQ3fTuGiO3TKKXG7prvZLX6xsg>
+    <xmx:FKUXZ9p1nzMly0AKuOfJ73m7mjTFVRvW4XwAqLVoD1pvPIcL16Tmfg>
+    <xmx:FaUXZ0U3Ob_N9tUwgmcxzU_AKDyoKg5hIRcX6RDbk-Hg7fdzS1BZEej_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Oct 2024 09:13:55 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id d018a7d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 22 Oct 2024 13:12:23 +0000 (UTC)
+Date: Tue, 22 Oct 2024 15:13:47 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [Outreachy][RFC]: Final Applications expectations.
+Message-ID: <ZxelBccIFk1aXP3l@pks.im>
+References: <CAPSxiM-kf8U=vzp5MoD3tUuOtnNjcCgPhLdriyeQo5CGf=EhyQ@mail.gmail.com>
+ <ZxeWDTFHpHmVePdF@pks.im>
+ <CAPSxiM9WQMFu+qTgR9LPk9erVUFgPU5tqRBobTomOJhm-hiLAw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Mike Lothian <mike@fireburn.co.uk>
-Date: Tue, 22 Oct 2024 14:04:52 +0100
-Message-ID: <CAHbf0-GMV9VS7BAjvZiNENNOdZqV3jQ4+0k1kTZLkQhFT=6D-Q@mail.gmail.com>
-Subject: Build failure on RHEL7 with 2.47.0
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPSxiM9WQMFu+qTgR9LPk9erVUFgPU5tqRBobTomOJhm-hiLAw@mail.gmail.com>
 
-Hi
+On Tue, Oct 22, 2024 at 12:54:18PM +0000, Usman Akinyemi wrote:
+> On Tue, Oct 22, 2024 at 12:10 PM Patrick Steinhardt <ps@pks.im> wrote:
+> > On Tue, Oct 22, 2024 at 11:45:14AM +0000, Usman Akinyemi wrote:
+> Hi Patrick, thanks for your reply. As you may know, Outreachy has a
+> kind of form for submitting applications (they have some set of
+> questions someone has to provide answers to)not like GSOC where the
+> applicants do not fill any form for their proposal application. I am
+> guessing someone should add something  like self-presentation in
+> answer to one of the questions as there is not really any question
+> asking about someone personally. I think what is near to it is about
+> previous experience.
 
-I'm seeing build failures on RHEL7 when trying to build 2.47.0 - RHEL8
-seems to be fine
+I wasn't aware :) But agreed, previous experience sounds close enough to
+me.
 
+> Also, anything about applying to two projects ?
 
+That is a good question. The only thing I could find on this was the
+following statement:
 
-    CC t/unit-tests/clar/clar.o
-    CC t/unit-tests/unit-test.o
-t/unit-tests/clar/clar.c: In function =E2=80=98clar_time_now=E2=80=99:
-t/unit-tests/clar/clar.c:274:18: error: storage size of =E2=80=98tz=E2=80=
-=99 isn=E2=80=99t known
-  274 |  struct timezone tz;
-      |                  ^~
-t/unit-tests/clar/clar.c: In function =E2=80=98clar_parse_args=E2=80=99:
-t/unit-tests/clar/clar.c:543:47: warning: implicit declaration of
-function =E2=80=98strdup=E2=80=99; did you mean =E2=80=98strcmp=E2=80=99?
-[-Wimplicit-function-declaration]
-  543 |    _clar.summary_filename =3D *(argument + 2) ? strdup(argument
-+ 2) : NULL;
-      |                                               ^~~~~~
-      |                                               strcmp
-t/unit-tests/clar/clar.c:543:68: warning: pointer/integer type
-mismatch in conditional expression
-  543 |    _clar.summary_filename =3D *(argument + 2) ? strdup(argument
-+ 2) : NULL;
-      |                                                                    =
-^
-t/unit-tests/clar/clar.c: In function =E2=80=98clar_test_init=E2=80=99:
-t/unit-tests/clar/clar.c:569:26: warning: assignment to =E2=80=98char *=E2=
-=80=99 from
-=E2=80=98int=E2=80=99 makes pointer from integer without a cast [-Wint-conv=
-ersion]
-  569 |   _clar.summary_filename =3D strdup(summary_env);
-      |                          ^
-t/unit-tests/clar/clar.c:573:26: warning: assignment to =E2=80=98char *=E2=
-=80=99 from
-=E2=80=98int=E2=80=99 makes pointer from integer without a cast [-Wint-conv=
-ersion]
-  573 |   _clar.summary_filename =3D strdup("summary.xml");
-      |                          ^
-t/unit-tests/clar/clar.c: In function =E2=80=98clar__fail=E2=80=99:
-t/unit-tests/clar/clar.c:692:22: warning: assignment to =E2=80=98char *=E2=
-=80=99 from
-=E2=80=98int=E2=80=99 makes pointer from integer without a cast [-Wint-conv=
-ersion]
-  692 |   error->description =3D strdup(description);
-      |                      ^
-In file included from t/unit-tests/clar/clar.c:838:
-t/unit-tests/clar/clar/sandbox.h: In function =E2=80=98build_sandbox_path=
-=E2=80=99:
-t/unit-tests/clar/clar/sandbox.h:138:6: warning: implicit declaration
-of function =E2=80=98mkdtemp=E2=80=99 [-Wimplicit-function-declaration]
-  138 |  if (mkdtemp(_clar_path) =3D=3D NULL)
-      |      ^~~~~~~
-t/unit-tests/clar/clar/sandbox.h:138:26: warning: comparison between
-pointer and integer
-  138 |  if (mkdtemp(_clar_path) =3D=3D NULL)
-      |                          ^~
-In file included from t/unit-tests/clar/clar.c:92:
-t/unit-tests/clar/clar/fs.h: In function =E2=80=98fs_copy=E2=80=99:
-t/unit-tests/clar/clar/fs.h:446:16: warning: implicit declaration of
-function =E2=80=98lstat=E2=80=99; did you mean =E2=80=98fstat=E2=80=99?
-[-Wimplicit-function-declaration]
-  446 |  cl_must_pass_(lstat(source, &source_st), "Failed to stat copy sour=
-ce");
-      |                ^~~~~
-t/unit-tests/clar/clar.h:89:49: note: in definition of macro =E2=80=98cl_mu=
-st_pass_=E2=80=99
-   89 | #define cl_must_pass_(expr, desc) clar__assert((expr) >=3D 0,
-__FILE__, __func__, __LINE__, "Function call failed: " #expr, desc, 1)
-      |                                                 ^~~~
-make: *** [t/unit-tests/clar/clar.o] Error 1
-make: *** Waiting for unfinished jobs....
+    > You are welcome to apply to Outreachy multiple times. However, you
+    > can only be accepted as an Outreachy intern once.
 
-Have I done something silly or is it just too old?
+I'm not a 100% sure whether this means that you can apply to multiple
+projects or whether it means that you can apply to Outreachy multiple
+years until your proposal gets accepted.
 
-Thanks
+I've asked internally whteher this is okay and will get back to you once
+I've got an answer.
 
-Mike
+> I will start working on my final application to get enough feedback.
+
+Thanks!
+
+Patrick
