@@ -1,176 +1,165 @@
-Received: from redcrew.org (redcrew.org [37.157.195.192])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09771A2653
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 15:13:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.157.195.192
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7374A18
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 15:18:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729609986; cv=none; b=Pob3n1pTbdY6FtWeaepGlYQqXgsIenN0PcWYdpPhXuA6KuhplcbIVnJAnzDk5eQXmXm2dcRSS+kXEdvGWf2djuYXIS1M68K9PR4gW/6kJm+XIgvYx65gHcuJhW6U2kqokaJcSOJ8vHDthicWbELVFOeontwgR/0ddWVT9BzJq1A=
+	t=1729610321; cv=none; b=PHy+0Dae9RiXOqxUd81Ub11qhuk4Wfrg/8uL5SrAIbFxpNCiwsFl244/R1Rwl7aDeCuj6mu9gUWWg2UxfIzRxRDB+79c7wC76bUgSSKJAtzzqSWvcz71NYgYh6YS5pBv4hE7x00+/DfKSQWmBT+UK/mzrfEyXZ/kZRPHkEMpWmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729609986; c=relaxed/simple;
-	bh=3wYa+6G/BNOCBLTqBLUb8JxBGzvdYvNkNAOLp/a1V4w=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Subject; b=i0EnrxzuKghffkAjlEpwUupvcrtQfcWggBZuDoASV8KIxoI7cAmc9UsSnYCWiYreJaDBBebLF9tcp0/p9FIXs/1JwCPlmhliytbdwMM/k9UdxiQ6SvWg3YyA8T+yY6GsfYtBkSCY8fWecUsvbFlf3GhFbREkLE4Z99qJq9HCvqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=ES0gWtqO; arc=none smtp.client-ip=37.157.195.192
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
+	s=arc-20240116; t=1729610321; c=relaxed/simple;
+	bh=oGkYBPJy9/LCq49/n6xTlGBFhO0RNC7a0JgBNWs9Nv0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rO2FTcGxeN2CB26iKqFbQOvFvuY2DuwVcsbewn2lSAZInuPHfHdlB0tdpxPeRAnu8CHZozeCTCGvBI/LhTHUWT8P90hdTMGEVvy3OZQhvW31R+7vFSHrA0D9R/XN5qx0OKrfY2HCEfLeK6clYE4S/WwN1f+RkThzubZQoiutqQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Fvc3e/zO; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="ES0gWtqO"
-Received: from localhost (unknown [193.86.92.181])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by redcrew.org (Postfix) with ESMTPSA id 2A8A2C0AF
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 17:02:56 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 redcrew.org 2A8A2C0AF
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; s=default;
-	t=1729609376; bh=3wYa+6G/BNOCBLTqBLUb8JxBGzvdYvNkNAOLp/a1V4w=;
-	h=Date:From:To:Subject:From;
-	b=ES0gWtqOSO5H03rAdy3Q72kgzZe7hXbQoiUliMcE8goEXu0WUAeYn9cM/YRD7AJpd
-	 SPMBbKdKGL6yACPNYKFqMsbyk2yQqJ7RbxQE6afLtO9QYs4JjUn7hjIBvSiII7peun
-	 aLW3LjDNY7WRUEmGUFDylUmrJ9gqQyn2DGmIRzv8=
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Fvc3e/zO"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6e3b7b3e9acso53198667b3.1
+        for <git@vger.kernel.org>; Tue, 22 Oct 2024 08:18:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729610319; x=1730215119; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=F13KuzMumkwWEJtZIjq8jraZoRWXARqmUaW/swtek4o=;
+        b=Fvc3e/zOVRFq2F3mFgYiheKevXXt3O6HQExQwuThJ+3L9UD1NFje2dNngUJZTCWWx4
+         zWnnnV/yVSqNsiKp8+DjOdaqHQN1pYD0HFm3uxJ+0tUysjv2W7inm4NfoAPfc6CE0AM4
+         gdo6skWawFVcm7d4NoCpV+ahKnN9qHJUXdhDcpkiHDAsGswFd2OgdldZSCVpPd5wogov
+         rlgSjcj5H+OnYpwbAgQTjnSD2IRJD4ebfRis7JMmMxZ3eRAFCoilMoDcpV8gV7Dc+r+b
+         sPPD2l1+RDILGMZ6GCRehiVsR6Fx0jgzej+lnUkoqAAkEyG9YukYRzScQU2MIpnb2m6n
+         SQ7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729610319; x=1730215119;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F13KuzMumkwWEJtZIjq8jraZoRWXARqmUaW/swtek4o=;
+        b=pvMWfutOjFSnxX85WOukiLsEzjVr15fRoxaN1P6ml48Z6hr2J+HfdM8sOG19CgK9jh
+         JGnf4q29K3z8pCZAy1y1dUE+vSy51gA0dTTfRob9kjHrbIZhQvbWEY7aLcpvwr6lIdMG
+         TnP3h0tenMFLiHj3An7PKBSaFXPqro/LLpbbDIw+JrsnfQ0NDoXcHbVPKEYhwhs624I9
+         ZhegsdvjHkh0dt7klwDHfOnmiOdO2rnQK36KCDNLGtOzPU21ZvXYqL/ye2dQ6G+nJB+t
+         vMrDN5Dzl6YH567C+SjaS52Se97L0qaFv/RZgc6+fYAuIJH7vChFvG8RgLsV8ZLZzerK
+         BOHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVtF2iS6DwVXA3FwUpZ7zwbtX1307mXfWoB0vyKkfZ/m3N3oQi3AmOGaJYBszhepSH7xcU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhFTb6iqIXplcrW2RsZwDChJXJ1TdTgf4JWWJbvgNfolC3Ou0G
+	2NsfJrsGTWvfKxSpIgkkG8PCxZREI2kZqRJNAIp6qrvVCT+gSeQxDYe6pnRKZWMuKJnIqEreq+T
+	SJCWefA==
+X-Google-Smtp-Source: AGHT+IEpphsNL6hq14Cl/lHRkrslv0H3Qjg8e6kcDaEYbgD/Lx4EBTiLGC5p8Tx5P/yybbdz3Yaaew==
+X-Received: by 2002:a05:690c:dc7:b0:6e5:e6e8:d6b7 with SMTP id 00721157ae682-6e5e6e8dae9mr93161787b3.1.1729610318670;
+        Tue, 22 Oct 2024 08:18:38 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5d30bfesm10991697b3.128.2024.10.22.08.18.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2024 08:18:38 -0700 (PDT)
+Date: Tue, 22 Oct 2024 11:18:36 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: fox <fox.gbr@townlong-yak.com>, Eric Sunshine <sunshine@sunshineco.com>,
+	git@vger.kernel.org
+Subject: Re: Bug report: v2.47.0 cannot fetch version 1 pack indexes
+Message-ID: <ZxfCTO+COaoablPe@nand.local>
+References: <BA07EFA0-0793-420D-BED9-ACD7CEBE0112@townlong-yak.com>
+ <20241020012455.GA599236@coredump.intra.peff.net>
+ <20241020024022.GA615104@coredump.intra.peff.net>
+ <Zxa6ixwP2aOJdfmL@nand.local>
+ <20241022051402.GB1247135@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=61be3f791c05cf44a2965588faa7b70f732ef588f614d3180e4d5255d3a8;
- micalg=pgp-sha1; protocol="application/pgp-signature"
-Date: Tue, 22 Oct 2024 17:02:55 +0200
-Message-Id: <D52FCQ2F409N.1S5Q8XRAX5YU7@cepl.eu>
-From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
-To: <git@vger.kernel.org>
-Subject: bash prompt evaporates in subdirectories
-X-Mailer: aerc 0.18.2
-
---61be3f791c05cf44a2965588faa7b70f732ef588f614d3180e4d5255d3a8
-Content-Type: multipart/mixed;
- boundary=5f270faf7052d2f3936e1d25713322bc44d470b0bbd0b4b3c578d0c146d0
-
---5f270faf7052d2f3936e1d25713322bc44d470b0bbd0b4b3c578d0c146d0
-Content-Type: multipart/alternative;
- boundary=458d2e052272d805aa79160db4d2554d73e89dc3716a4685c1cd456d2bca
-
---458d2e052272d805aa79160db4d2554d73e89dc3716a4685c1cd456d2bca
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20241022051402.GB1247135@coredump.intra.peff.net>
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Tue, Oct 22, 2024 at 01:14:02AM -0400, Jeff King wrote:
+> > > +static char *pack_path_from_idx(const char *idx_path)
+> > > +{
+> > > +	size_t len;
+> > > +	if (!strip_suffix(idx_path, ".idx", &len))
+> > > +		BUG("idx path does not end in .idx: %s", idx_path);
+> > > +	return xstrfmt("%.*s.pack", (int)len, idx_path);
+> > > +}
+> > > +
+> > >  struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path)
+> > >  {
+> > > -	const char *path = sha1_pack_name(sha1);
+> > > +	char *path = pack_path_from_idx(idx_path);
+> >
+> > Huh. I would have thought we have such a helper function already. I
+> > guess we probably do, but that it's also defined statically because it's
+> > so easy to write.
+>
+> I thought so, too, but couldn't find one. We have pack_bitmap_filename()
+> (and so on for .rev and .midx files) that goes from .pack to those
+> extensions. But here we want to go from .idx to .pack. I think most
+> stuff goes from ".pack" because that's what we store in the packed_git
+> struct.
+>
+> There's also sha1_pack_index_name(), but that goes from a csum-file hash
+> to a filename.
+>
+> I grepped around and strip_suffix() seems to be par for the course in
+> similar situations within pack/repack code, so I think it's OK here.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-cd subdirectory/
+It would kind of be nice to have a convenient function like:
 
-What did you expect to happen? (Expected behavior)
-bash prompt would be still active and showing the status of my checkout (po=
-ssibly even limited to the current subdirectory, but it is not necessary)
+    const char *pack_ext_name(const struct packed_git *p,
+                              const char *ext);
 
-What happened instead? (Actual behavior)
-Part of the bash prompt related to git (e.g., current branch) evaporates
+in our codebase, but that is well outside the scope of this patch ;-).
 
-What's different between what you expected and what actually happened?
-I would like to have current branch and status even in subdirectories
+> > In any case, this looks like the right thing to do here. It would be
+> > nice to have a corresponding test here, since unlike the other
+> > finalize_object_file() changes, this one can be provoked
+> > deterministically.
+> >
+> > Would you mind submitting this as a bona-fide patch, which I can then
+> > pick up and start merging down?
+>
+> Yeah, the test is easy:
+>
+> diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+> index 58189c9f7d..50a7b98813 100755
+> --- a/t/t5550-http-fetch-dumb.sh
+> +++ b/t/t5550-http-fetch-dumb.sh
+> @@ -507,4 +507,14 @@ test_expect_success 'fetching via http alternates works' '
+>  	git -c http.followredirects=true clone "$HTTPD_URL/dumb/alt-child.git"
+>  '
+>
+> +test_expect_success 'dumb http can fetch index v1' '
+> +	server=$HTTPD_DOCUMENT_ROOT_PATH/idx-v1.git &&
+> +	git init --bare "$server" &&
+> +	git -C "$server" --work-tree=. commit --allow-empty -m foo &&
+> +	git -C "$server" -c pack.indexVersion=1 gc &&
+> +
+> +	git clone "$HTTPD_URL/dumb/idx-v1.git" &&
+> +	git -C idx-v1 fsck
+> +'
+> +
+>  test_done
 
-Anything else you want to add:
+Beautifully written. I wondered why you didn't use `test_commit -C
+$server`, but it's because that repository is bare, and so needs
+`--work-tree=.`, so what you wrote here makes sense.
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+> I raised some other more philosophical issues in the other part of the
+> thread, but assuming the answer is "no, let's do the simplest thing",
+> then I think this approach is OK.
+>
+> I'd also like to see if I can clean things up around parse_pack_index(),
+> whose semantics I'm changing here (and which violates all manner of
+> assumptions that we usually have about packed_git structs). It's used
+> only by the dumb-http code, and I think we want to refactor it a bit so
+> that nobody else is tempted to use it.
+>
+> I'll try to send something out tonight or tomorrow.
 
+Sounds all good. Thanks!
 
-[System Info]
-git version:
-git version 2.47.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 8.10.1
-OpenSSL: OpenSSL 3.1.4 24 Oct 2023
-zlib: 1.3.1
-uname: Linux 6.11.3-1-default #1 SMP PREEMPT_DYNAMIC Fri Oct 11 06:48:36 UT=
-C 2024 (7881e90) x86_64
-compiler info: gnuc: 14.2
-libc info: glibc: 2.40
-$SHELL (typically, interactive shell): /usr/bin/bash
-Bash version: GNU bash, version 5.2.37(1)-release (x86_64-suse-linux)
+> -Peff
 
-[Enabled Hooks]
-
---458d2e052272d805aa79160db4d2554d73e89dc3716a4685c1cd456d2bca--
-
---5f270faf7052d2f3936e1d25713322bc44d470b0bbd0b4b3c578d0c146d0
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=E09FEF25D96484AC.asc
-Content-Type: application/pgp-keys; charset=UTF-8
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUdpQkQyZzVUMFJCQUNaZG5H
-LzlUNEpTMm1seHNIZUZiZXgxS1d3ZUtQdVlUcG5idThGZTdyTllNV1ovQUtjCjlWbStSdW9WRXJt
-NEhHc2IwcEw1WlBubmNBK204MFc4RXpRbTJyczhQRDJtSE5zVWhET0duayswZm0rMjVXU1UKNllM
-emQ4bHR0eFBpYTc1QTVPcUJFQW1KbHlKVVNtb1dLakFLL3ExVGo1SFczKy83WHFXWVlDSnpBd0Nn
-alIyRAppcnc4UVA4R0NvVVVYeGVOcElPVHF6TUQvajY2VlRsbityeFlUMTJVNGp4TGxzT3M1WTBM
-VlFmVWJwREZFWXk5Cm1rV1g4aU5UVVpzeCttNnVoeWxhbW0zRWtOL2RXMGIyc1E0RDNvY1pla3Jp
-TFBEUi9YMFAxWFBVZGN5MjhhNm8KV1pvVkFLTjI2WCtQd3hTcTNKQ2lRRUpnUEplS3hpTGlFeGgz
-bERpdE55QVMwV1VEL3hRT3FyeUVGYjlrc0d4TApSOVVDQS85V1VRTXdnUXZFVWh1VkI3cVNuUkVv
-MytrczM0S2x0cDcxdVVqdU1qTGszeWtTcHR5bjhvVitYWmd4CnJ4UEFEK1dPSm41MXlGeGJvK09Q
-TmRINndHMlphWEZqNDdyWDZHUTlXNndJN0swUWhkeVFUcHM4S05sc0p1RFEKcHo3WE1FOThvYjhT
-c3pzdmtQUG0vZ1gwb1dkT0lxSGlwSG5NbEw2ODRqUkhDV0hWanJRZFRXRjBaV29nUTJWdwpiQ0E4
-YldGMFpXcEFZMlZ3Ykc5MmFTNWplajZJWUFRVEVRSUFJQUllQVFJWGdBSVpBUVVDUlNvV0FnWUxD
-UWdICkF3SUVGUUlJQXdRV0FnTUJBQW9KRU9DZjd5WFpaSVNzcjVzQW9JQXFzTmNzMVNsOWpybXF2
-N3ZKekw0UUc2OFYKQUo5KzMwTm1CQ2xRd3BtcW5BMjZuQ2E0K1dTNWFiUWJUV0YwWldvZ1EyVndi
-Q0E4WTJWd2JDNXRRRzVsZFM1bApaSFUraUdBRUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dD
-d2tJQndNQ0JCVUNDQU1FRmdJREFRQUtDUkRnCm4rOGwyV1NFckFVTEFKb0M4eXJwdE9nb29KT3pM
-em1MeERjMW16ZUdEQUNkRkJ3Wmx2RmNqMVQyZG1DUk5kbjUKY0VyUnlCZTBHMDFoZE1TYmFpQkRa
-WEJzSUR4dFkyVndiRUJqWlhCc0xtVjFQb2hpQkJNUkFnQWlCUUpRaXhwdwpBaHNEQmdzSkNBY0RB
-Z1lWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFLQ1JEZ24rOGwyV1NFckJNWUFKOWVRRXBpCmJMNlZt
-N3NVT2h1cHhEL1VzSGlXbFFDZEhZaStVTnB6QzFtS1l0RFNXYTFvY2ZPMVE3NjBIRTFoZEdWcUlF
-TmwKY0d3Z1BHTmxjR3h0UUhObGVtNWhiUzVqZWo2SVlBUVRFUUlBSUFJYkF3SWVBUUlYZ0FVQ1JT
-b1dDUVlMQ1FnSApBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklTc1AxNEFuaTZVODdoU1VY
-RFUrM1pUYURSWEl3YXNUdHRsCkFKMFFXaGpTbWFKVGRra3BmcW1SQjliUmk5cEFRYlFmVFdGMHhK
-dHFJRU5sY0d3Z1BHTmxjR3hBYzNWeVptSmwKYzNRdWJtVjBQb2hnQkJNUkFnQWdBaHNEQWg0QkFo
-ZUFCUUpGS2hZSkJnc0pDQWNEQWdRVkFnZ0RCQllDQXdFQQpDZ2tRNEovdkpkbGtoS3dCQndDYkJP
-b1RZNTJoWWVLbkt1VS91UmpPVHNVTWczSUFualRUclhZSEQ0OXh5THM4ClQvVnBzdWs2WlAvaHRD
-Rk5ZWFJsYWlCRFpYQnNJRHh0WVhSbGFpNWpaWEJzUUdkdFlXbHNMbU52YlQ2SVlBUVQKRVFJQUlB
-SWJBd0llQVFJWGdBVUNSU29XQ1FZTENRZ0hBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklT
-cwpraTBBbjBHdzFNalpKQVR0VnExMVN1MG1qZDNyRFFDaEFKMGVlUEUwYW1Td1lWR1NwU05iMjY0
-K1hqVW90clFzClRXRjBaV29nUTJWd2JDQW9VbVZrU0dGMElFTjZaV05vS1NBOGJXTmxjR3hBY21W
-a2FHRjBMbU52YlQ2SVlBUVQKRVFJQUlBVUNSU3ljaXdJYkF3WUxDUWdIQXdJRUZRSUlBd1FXQWdN
-QkFoNEJBaGVBQUFvSkVPQ2Y3eVhaWklTcwpieVFBbmlxdzFQWDI0QmxiQkQyMnpOcVl3emZJUERo
-d0FKNG0vM3l0dUp6c2Z4ckVhYzF0U29FYjIrSDl2clE1ClRXRjBaV29nUTJWd2JDQThZMlZ3YkMx
-YVR6UkdNRXR1YlVORVNHc3hkVTFLVTBKclVXMVJRSEIxWW14cFl5NW4KYldGdVpTNXZjbWMraUdB
-RUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dDd2tJQndNQ0JCVUNDQU1FRmdJRApBUUFLQ1JE
-Z24rOGwyV1NFckFuOUFKOWJPME5VcUxuTURUQ2NjaHRWeks2eUVPTGtDZ0NmWHdrdHkxdUVBelFJ
-CjVrdDlHZWM4eVFweERsaTBHazFoZEdWcUlFTmxjR3dnUEcxalpYQnNRSE4xYzJVdVpHVStpR01F
-RXhFQ0FDTUYKQWxyNjVDc0NHd01IQ3drSUJ3TUNBUVlWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFL
-Q1JEZ24rOGwyV1NFckhqTwpBSjQ3eUY5U1RYL0VzNHFzSlBqVzk2MUhlOUgzYmdDZEVzak9ndDdj
-ekU4N0d5MEQxS1hXV05UZFR0VzBHMDFoCmRHVnFJRU5sY0d3Z1BHMWpaWEJzUUhOMWMyVXVZMjl0
-UG9oakJCTVJBZ0FqQlFKYSt1US9BaHNEQndzSkNBY0QKQWdFR0ZRZ0NDUW9MQkJZQ0F3RUNIZ0VD
-RjRBQUNna1E0Si92SmRsa2hLd3NRUUNkR21HWFc3M082UTNUQjBWMAp4UDl5THdNakR0RUFuaktX
-RFc4UEtPOTBueDhJa1BvZHhyMW5DdkpidEJwTllYUmxhaUJEWlhCc0lEeHRZMlZ3CmJFQnpkWE5s
-TG1ONlBvaGpCQk1SQWdBakJRSmErdVJQQWhzREJ3c0pDQWNEQWdFR0ZRZ0NDUW9MQkJZQ0F3RUMK
-SGdFQ0Y0QUFDZ2tRNEovdkpkbGtoS3lLdFFDZEhEcG9sSGcvMXFEYXcvNENReVV6QWZOdkhrMEFu
-aUVZTDZCRgpyZHlvbmhnUWYvWlh6WGpuS3pTZXVRRU5CRDJnNVVFUUJBQ2Z4b3oybm16R0p6NnVl
-S0hrVGVYY1Fadks0V3pLClROL3VKSmhFbVN1UW1PS3ltYklrR0w2dkJRYitXNEt4dkxsMmxBYk5s
-ZklnTEdETENzMVlBd2ZTcEo0dlM0bXQKbGlQZ0EyT3RaNWoxV1NPcXB4ZWRRUEdWYmE1Z1ZvN0hO
-U09NVXRaS1R6N1ZzQ3ZSOTR2MDVjb21oTzFHb2s3NQpaeEh0WXlWSHVrNVY4d0FEQlFQL2Z0K1c0
-RjB0Y2N3c2x6ejhPL2M5L01qOEtaRFltZk15TmI3aWVsVDJXZVEzCmlGRjlBeE1UNk92T3hBUWJE
-SnZ1cmZLZVlseWRjWExzNmN5NGxLY2UxaEZhSjRpK01PRkxWVjFablpERENoUlAKcFE2S3JSQ0hM
-YittTFkrU1lEMzdPN3Awc3BRQSs5Z3NFRS90bW4rNXNXN0xFOGhxU09vUFZkZjdZNXlVRGo2SQpS
-Z1FZRVFJQUJnVUNQYURsUVFBS0NSRGduKzhsMldTRXJFVVNBSjQyVDFsLzJURnlrYlVMQnFxQXRu
-YkM2a1IwCnd3Q2RFblJsQ0dsdm5PNzhSMEZnS1hsdDNSeXpHdUU9Cj1zeG9XCi0tLS0tRU5EIFBH
-UCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
---5f270faf7052d2f3936e1d25713322bc44d470b0bbd0b4b3c578d0c146d0--
-
---61be3f791c05cf44a2965588faa7b70f732ef588f614d3180e4d5255d3a8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iGwEABECACwWIQSJ70vGKIq/QxurJcPgn+8l2WSErAUCZxe+oA4cbWNlcGxAY2Vw
-bC5ldQAKCRDgn+8l2WSErHH0AJ9S2MHQWRuVSwsSVoUs57kZQB6T8wCgg5ueY4T+
-9pHjSM33ShBuDT9oRR4=
-=VyAe
------END PGP SIGNATURE-----
-
---61be3f791c05cf44a2965588faa7b70f732ef588f614d3180e4d5255d3a8--
+Thanks,
+Taylor
