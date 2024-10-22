@@ -1,139 +1,327 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC5C1E04AB
-	for <git@vger.kernel.org>; Mon, 21 Oct 2024 22:56:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34822819
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 00:09:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.134
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729551415; cv=none; b=eASCt4ZCi6C9X6Q6nKSau6I+2TYTTRXShhupBPe4sjRMG4hgvQFKW+0w1tFnuRou4uJq1aERW0nErpB7bKT5M1gBQfrHXfiGdPDnTXbmWVAi3wp9rtLfs1IvXxjd3EYSksuqYOzNvlEx3QjRCG/39i2QRkJLlzAIbg5EUF9fvk8=
+	t=1729555747; cv=none; b=uCuWj/RfgmyxjZkmWo/V+hHSL/gPtaVtTjo3aY6V9YQaIsXM3W1Vy4FasK02pcaytyYlMR99MlLhAqqwmQ0c7gKZZIqxDTK8arf4G8YVzSRTZyeS3/hGxuGWyYHOujiuE9FJuihMmAY1Ww1Xb1blCwhlGvk0+ss3EYLN4qNCfXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729551415; c=relaxed/simple;
-	bh=s2DkwhjtM73YcCeWIbrGASKEIEeT8Hf7ZHU8P6Ga8hg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X+ZovB5HYoHo24IdEdEgnwpbs8OqgbdrQWXwd87ahxzqAaXHcu5IzR7rq2VN1iBgSQu0U8gYibxcSps8lZuB1SyERHeaaYjkljIWRGnQQSACdjkdU8cxbq5sqc8e49AsY+Iiak07VEvYp9N/CNA9yLWu0/gpK4IlKLdzYDE4HVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=M0gHlpTE; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1729555747; c=relaxed/simple;
+	bh=C1ofgxmbBlN3aUWcchxBZTQfMOnqFvuALoVreh9nGYA=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=P1KcnN/ZMpg+F0buRVz+3+TqOOcTQeWkHTpy7IEUHaFZXmJLqB7ekZntOWw67DMVm+kkmCi181QPJElFwknE/OooRcmEzleBIxczpj2rSsFNh28XH25YSzf0qHjo+AENLoQ7tRs93OyNnvjStwbUa5hrRg31CgmroEaxTtU07Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=ausbLTHe; arc=none smtp.client-ip=185.70.40.134
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="M0gHlpTE"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id 31KMtqGbPxile31KNtAidE; Mon, 21 Oct 2024 23:56:44 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1729551404; bh=TePJWvqXMtdU959tt7l7guYXfMuwlOz8CcUVCwSLE4s=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=M0gHlpTE5K698yS5CClq5R8+lsCidiPG/S2siyMDfVcJ4iXGMr9KCeLLKIUP+G5gk
-	 JlTK7YERoulf9j2bPGM8L8hf4iO53YGnOMNB5QY68d6TqgrCBlCgrV7OAocbL2USZI
-	 PsUErAxUk2O6hP3ZV1zC+pTS4fZCgnLOcWOMTfZWAvbr1vXXAnvT8LVr+a21gQrUGD
-	 r7A4HOJ+azp5dqEUBthXNh7HPIjPi5ErvY7q3TYlAIg/byALLZyjD4O//TNHpKBpsU
-	 dJVyhgUUoJxTGdWZa97zmy1E5luI/VneyRn22rhGEnq7ck8XqEXw5fWyeRI0E+hpM6
-	 n644QBjKCjRAQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=VaJUP0p9 c=1 sm=1 tr=0 ts=6716dc2c
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=mal0KrOvvYtf1J3j2dgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <b35b6f10-ebb5-4266-ab95-aafb67cfad22@ramsayjones.plus.com>
-Date: Mon, 21 Oct 2024 23:56:42 +0100
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="ausbLTHe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1729555737; x=1729814937;
+	bh=yqXFmbT8lGpiGEstCddn7trlUAVcTKvujgZBCGL4tzU=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=ausbLTHeK+AzEnlaOogvGLYeg3EgR/ybAshQPLaoChtMGNQZJlOWRNp2BdnVoUA0z
+	 cYd8GxhPHEyKWXAUk36H1ndOSGj82xldSa1AcEe8cxUcpbSwzp2PDqU54CgqTik9mK
+	 TiA2NhDzOoeEHjpvcQHM40LcIDGsSS9+vQKP3uqk/xqA37Mg76vDamjVtkNb9KPOa+
+	 po5rj5E1T/DR2cfDdkDnti0vRuRgXevyllgA+35TyuLIWbfhHxkTjCAvo4EDr2jMJD
+	 vh/4GrB0SvhprqxtOXFf+4mM8i3shoaQEr+/H9Hfp8jVwft3qBP4w5MMDe1ZLlIkx+
+	 SGqzc2VKwr1Jg==
+Date: Tue, 22 Oct 2024 00:08:49 +0000
+To: git@vger.kernel.org
+From: Caleb White <cdwhite3@pm.me>
+Cc: Junio C Hamano <gitster@pobox.com>, Caleb White <cdwhite3@pm.me>
+Subject: [PATCH] doc: consolidate extensions in git-config documentation
+Message-ID: <20241021-cleanup-extension-docs-v1-1-ab02cece3132@pm.me>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: fdacbd12a4784fa8e5da0a86ab20542691d09c71
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
-To: Eli Schwartz <eschwartz@gentoo.org>, Patrick Steinhardt <ps@pks.im>,
- git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im>
- <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
- <361e69ee-4491-4e2b-8edc-fdf4bcbb8532@gentoo.org>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <361e69ee-4491-4e2b-8edc-fdf4bcbb8532@gentoo.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfC3x5TjSdBqIvQNmn0M/4LSS4XD1CaHAlmDoGHWJQAsl1P/VcsmTyAniItwtH7ILR18fAJmiwPtnsZD+m+HsFtsBDuFQh8IXbVhp0ucCldAscTRTiEiJ
- PXAzMFHhvTF/oucHoanpOCOe1jsDYc8MahTIzh8Ba6r9ICffk4wZ8nBNXK7Goo5QboCEE8xRUGmDbrjEThRDfkkVwWZNZdXfLqw=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+The `technical/repository-version.txt` document originally served as the
+master list for extensions, requiring that any new extensions be defined
+there. However, the `config/extensions.txt` file was introduced later
+and has since become the de facto location for describing extensions,
+with several extensions listed there but missing from
+`repository-version.txt`.
 
+This consolidates all extension definitions into `config/extensions.txt`,
+making it the authoritative source for extensions. The references in
+`repository-version.txt` are updated to point to `config/extensions.txt`,
+and cross-references to related documentation such as
+`gitrepository-layout[5]` and `git-config[1]` are added.
 
-On 20/10/2024 09:51, Eli Schwartz wrote:
-> On 10/18/24 12:08 PM, Ramsay Jones wrote:
-[snip] 
-> possibly because due to ninja's juggling of pseudo ttys, the python
-> runtime for "meson test" thinks it is *not* running in a tty. I know
-> that ninja messes around with this in counterintuitive ways in general,
-> but I am not sure exactly how that interacts with the console pool. But
-> regardless of the reason -- if it is happening at the python level, then
-> exporting PYTHONUNBUFFERED=1 may help. It's something I've had to do
-> before for programs other than meson, at least.
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Caleb White <cdwhite3@pm.me>
+---
+This patch was based on v2.47.0.
+---
+ Documentation/config/core.txt                      |  2 +-
+ Documentation/config/extensions.txt                | 73 ++++++++++++++++--=
+----
+ Documentation/gitrepository-layout.txt             |  1 +
+ .../technical/hash-function-transition.txt         |  4 +-
+ Documentation/technical/partial-clone.txt          |  2 +-
+ Documentation/technical/repository-version.txt     | 44 +------------
+ 6 files changed, 62 insertions(+), 64 deletions(-)
 
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index 60ca9f2b6861063c0e78307edcbbd25a9104472f..8f6d8e77541261d67abac4f990f=
+36ebb29b568c6 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -366,7 +366,7 @@ default in a bare repository.
+=20
+ core.repositoryFormatVersion::
+ =09Internal variable identifying the repository format and layout
+-=09version.
++=09version. See linkgit:gitrepository-layout[5].
+=20
+ core.sharedRepository::
+ =09When 'group' (or 'true'), the repository is made shareable between
+diff --git a/Documentation/config/extensions.txt b/Documentation/config/ext=
+ensions.txt
+index f0a784447db09856639ec43b443681f13c17c966..5dc569d1c9c77c15e3244149328=
+9f9c9dd5e7f0b 100644
+--- a/Documentation/config/extensions.txt
++++ b/Documentation/config/extensions.txt
+@@ -1,17 +1,13 @@
+-extensions.objectFormat::
+-=09Specify the hash algorithm to use.  The acceptable values are `sha1` an=
+d
+-=09`sha256`.  If not specified, `sha1` is assumed.  It is an error to spec=
+ify
+-=09this key unless `core.repositoryFormatVersion` is 1.
++extensions.*::
++=09Unless otherwise stated, is an error to specify an extension if
++=09`core.repositoryFormatVersion` is not `1`. See
++=09linkgit:gitrepository-layout[5].
+ +
+-Note that this setting should only be set by linkgit:git-init[1] or
+-linkgit:git-clone[1].  Trying to change it after initialization will not
+-work and will produce hard-to-diagnose issues.
+-
+-extensions.compatObjectFormat::
+-
++--
++compatObjectFormat::
+ =09Specify a compatibility hash algorithm to use.  The acceptable values
+ =09are `sha1` and `sha256`.  The value specified must be different from th=
+e
+-=09value of extensions.objectFormat.  This allows client level
++=09value of `extensions.objectFormat`.  This allows client level
+ =09interoperability between git repositories whose objectFormat matches
+ =09this compatObjectFormat.  In particular when fully implemented the
+ =09pushes and pulls from a repository in whose objectFormat matches
+@@ -19,18 +15,55 @@ extensions.compatObjectFormat::
+ =09compatObjectFormat in addition to oids encoded with objectFormat to
+ =09locally specify objects.
+=20
+-extensions.refStorage::
++noop::
++=09This extension does not change git's behavior at all. It is useful only
++=09for testing format-1 compatibility.
+++
++For historical reasons, this extension is respected regardless of the
++`core.repositoryFormatVersion` setting.
++
++noop-v1::
++=09This extension does not change git's behavior at all. It is useful only
++=09for testing format-1 compatibility.
++
++objectFormat::
++=09Specify the hash algorithm to use.  The acceptable values are `sha1` an=
+d
++=09`sha256`.  If not specified, `sha1` is assumed.
+++
++Note that this setting should only be set by linkgit:git-init[1] or
++linkgit:git-clone[1].  Trying to change it after initialization will not
++work and will produce hard-to-diagnose issues.
++
++partialClone::
++=09When enabled, indicates that the repo was created with a partial clone
++=09(or later performed a partial fetch) and that the remote may have
++=09omitted sending certain unwanted objects.  Such a remote is called a
++=09"promisor remote" and it promises that all such omitted objects can
++=09be fetched from it in the future.
+++
++The value of this key is the name of the promisor remote.
+++
++For historical reasons, this extension is respected regardless of the
++`core.repositoryFormatVersion` setting.
++
++preciousObjects::
++=09If enabled, indicates that objects in the repository MUST NOT be delete=
+d
++=09(e.g., by `git-prune` or `git repack -d`).
+++
++For historical reasons, this extension is respected regardless of the
++`core.repositoryFormatVersion` setting.
++
++refStorage::
+ =09Specify the ref storage format to use. The acceptable values are:
+ +
+ include::../ref-storage-format.txt[]
+-+
+-It is an error to specify this key unless `core.repositoryFormatVersion` i=
+s 1.
++
+ +
+ Note that this setting should only be set by linkgit:git-init[1] or
+ linkgit:git-clone[1]. Trying to change it after initialization will not
+ work and will produce hard-to-diagnose issues.
+=20
+-extensions.worktreeConfig::
++worktreeConfig::
+ =09If enabled, then worktrees will load config settings from the
+ =09`$GIT_DIR/config.worktree` file in addition to the
+ =09`$GIT_COMMON_DIR/config` file. Note that `$GIT_COMMON_DIR` and
+@@ -40,7 +73,7 @@ extensions.worktreeConfig::
+ =09`config.worktree` file will override settings from any other
+ =09config files.
+ +
+-When enabling `extensions.worktreeConfig`, you must be careful to move
++When enabling this extension, you must be careful to move
+ certain values from the common config file to the main working tree's
+ `config.worktree` file, if present:
+ +
+@@ -48,15 +81,17 @@ certain values from the common config file to the main =
+working tree's
+   `$GIT_COMMON_DIR/config.worktree`.
+ * If `core.bare` is true, then it must be moved from `$GIT_COMMON_DIR/conf=
+ig`
+   to `$GIT_COMMON_DIR/config.worktree`.
++
+ +
+ It may also be beneficial to adjust the locations of `core.sparseCheckout`
+ and `core.sparseCheckoutCone` depending on your desire for customizable
+ sparse-checkout settings for each worktree. By default, the `git
+-sparse-checkout` builtin enables `extensions.worktreeConfig`, assigns
++sparse-checkout` builtin enables this extension, assigns
+ these config values on a per-worktree basis, and uses the
+ `$GIT_DIR/info/sparse-checkout` file to specify the sparsity for each
+ worktree independently. See linkgit:git-sparse-checkout[1] for more
+ details.
+ +
+-For historical reasons, `extensions.worktreeConfig` is respected
+-regardless of the `core.repositoryFormatVersion` setting.
++For historical reasons, this extension is respected regardless of the
++`core.repositoryFormatVersion` setting.
++--
+diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepo=
+sitory-layout.txt
+index 949cd8a31e9a9e896ccec63d5c7e2f23f740973a..fa8b51daf08775f3d666a910d9b=
+00486627e02af 100644
+--- a/Documentation/gitrepository-layout.txt
++++ b/Documentation/gitrepository-layout.txt
+@@ -298,6 +298,7 @@ SEE ALSO
+ --------
+ linkgit:git-init[1],
+ linkgit:git-clone[1],
++linkgit:git-config[1],
+ linkgit:git-fetch[1],
+ linkgit:git-pack-refs[1],
+ linkgit:git-gc[1],
+diff --git a/Documentation/technical/hash-function-transition.txt b/Documen=
+tation/technical/hash-function-transition.txt
+index ed574810891cad1024658920e0fa8ac550231534..7102c7c8f5d66de5574de459a0e=
+1136131a53004 100644
+--- a/Documentation/technical/hash-function-transition.txt
++++ b/Documentation/technical/hash-function-transition.txt
+@@ -148,8 +148,8 @@ Detailed Design
+ Repository format extension
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ A SHA-256 repository uses repository format version `1` (see
+-Documentation/technical/repository-version.txt) with extensions
+-`objectFormat` and `compatObjectFormat`:
++linkgit:gitrepository-layout[5]) with `extensions.objectFormat` and
++`extensions.compatObjectFormat` (see linkgit:git-config[1]) set to:
+=20
+ =09[core]
+ =09=09repositoryFormatVersion =3D 1
+diff --git a/Documentation/technical/partial-clone.txt b/Documentation/tech=
+nical/partial-clone.txt
+index cd948b00722cba5ae9f01b31f6a226f8d4497ea8..bf5ec5c82d9e0f2fedfec517a6a=
+86d9973f4f312 100644
+--- a/Documentation/technical/partial-clone.txt
++++ b/Documentation/technical/partial-clone.txt
+@@ -102,7 +102,7 @@ or commits that reference missing trees.
+ - On the client a repository extension is added to the local config to
+   prevent older versions of git from failing mid-operation because of
+   missing objects that they cannot handle.
+-  See "extensions.partialClone" in Documentation/technical/repository-vers=
+ion.txt"
++  See `extensions.partialClone` in linkgit:git-config[1].
+=20
+=20
+ Handling Missing Objects
+diff --git a/Documentation/technical/repository-version.txt b/Documentation=
+/technical/repository-version.txt
+index 47281420fc4a0c901d60b2854a8f0a6e8f70587a..b9bb81a81f9ea16830290dfabd0=
+839f1f05b1992 100644
+--- a/Documentation/technical/repository-version.txt
++++ b/Documentation/technical/repository-version.txt
+@@ -65,44 +65,6 @@ Note that if no extensions are specified in the config f=
+ile, then
+ provides no benefit, and makes the repository incompatible with older
+ implementations of git).
+=20
+-This document will serve as the master list for extensions. Any
+-implementation wishing to define a new extension should make a note of
+-it here, in order to claim the name.
+-
+-The defined extensions are:
+-
+-=3D=3D=3D=3D `noop`
+-
+-This extension does not change git's behavior at all. It is useful only
+-for testing format-1 compatibility.
+-
+-=3D=3D=3D=3D `preciousObjects`
+-
+-When the config key `extensions.preciousObjects` is set to `true`,
+-objects in the repository MUST NOT be deleted (e.g., by `git-prune` or
+-`git repack -d`).
+-
+-=3D=3D=3D=3D `partialClone`
+-
+-When the config key `extensions.partialClone` is set, it indicates
+-that the repo was created with a partial clone (or later performed
+-a partial fetch) and that the remote may have omitted sending
+-certain unwanted objects.  Such a remote is called a "promisor remote"
+-and it promises that all such omitted objects can be fetched from it
+-in the future.
+-
+-The value of this key is the name of the promisor remote.
+-
+-=3D=3D=3D=3D `worktreeConfig`
+-
+-If set, by default "git config" reads from both "config" and
+-"config.worktree" files from GIT_DIR in that order. In
+-multiple working directory mode, "config" file is shared while
+-"config.worktree" is per-working directory (i.e., it's in
+-GIT_COMMON_DIR/worktrees/<id>/config.worktree)
+-
+-=3D=3D=3D=3D `refStorage`
+-
+-Specifies the file format for the ref database. The valid values are
+-`files` (loose references with a packed-refs file) and `reftable` (see
+-Documentation/technical/reftable.txt).
++The defined extensions are given in the `extensions.*` section of
++linkgit:git-config[1]. Any implementation wishing to define a new
++extension should make a note of it there, in order to claim the name.
 
-Unfortunately, the 'PYTHONUNBUFFERED=1' idea didn't work. In fact nothing
-I have tried on cygwin has worked. For example, if I use meson to run just
-few tests, like so on Linux: 
+---
+base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
+change-id: 20241020-cleanup-extension-docs-f365868711bf
 
-  $ meson test --no-rebuild --print-errorlogs 't000*'
-  1/9 t0000-basic             OK              7.52s
-  2/9 t0001-init              OK              1.88s
-  3/9 t0002-gitfile           OK              0.37s
-  4/9 t0003-attributes        OK              1.35s
-  5/9 t0004-unwritable        OK              0.23s
-  6/9 t0005-signals           OK              0.16s
-  7/9 t0006-date              OK              0.73s
-  8/9 t0007-git-var           OK              0.40s
-  9/9 t0008-ignores           OK              3.09s
-  
-  Ok:                 9   
-  Expected Fail:      0   
-  Fail:               0   
-  Unexpected Pass:    0   
-  Skipped:            0   
-  Timeout:            0   
-  
-  Full log written to /home/ramsay/git/build/meson-logs/testlog.txt
-  $ 
-
-On cygwin it looks like:
-  
-  $ meson test --no-rebuild --print-errorlogs 't000*'
-  1/9 t0002-gitfile           OK             12.32s
-  [2-4/9] 🌖 t0003-attributes                12s
-
-Which actually looks nothing like what actually happens! The first line
-is actually the result of (*maybe*) running all 9 tests, but during that
-time the line started with '[1-4/9] ...' and they didn't run in sequence
-but jumped around ending with t0002. Then on the second line, it almost
-immediately hung, again with python hovering up all the cpu cycles. So
-I had to kill the task from a second terminal.
-
-Actually, I tell a lie, I did get a single test to work on cygwin:
-
-  $ meson test --no-rebuild --print-errorlogs 't0001*'
-  1/1 t0001-init        OK             32.95s
-  
-  Ok:                 1   
-  Expected Fail:      0   
-  Fail:               0   
-  Unexpected Pass:    0   
-  Skipped:            0   
-  Timeout:            0   
-  
-  Full log written to /home/ramsay/git/build/meson-logs/testlog.txt
-  $ 
-
-Notice that this took much longer, at 32.95s, than (what looked like) all
-nine tests above at 12.32s. (although via 'make test' t0000-basic.sh alone
-took 124.13s for v2.47.0!).
-
-Patrick, how do you run the tests on cygwin?
-
-ATB,
-Ramsay Jones
-
+Best regards,
+--=20
+Caleb White <cdwhite3@pm.me>
 
 
