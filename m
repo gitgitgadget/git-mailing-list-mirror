@@ -1,65 +1,43 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7B66EB7C
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 17:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A7A770FD
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 17:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.134
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729618181; cv=none; b=MdS2KEYPAEW4nymWR1VA1N3GckX/pRWvGaghecnalobMioT82ZsN4LnE2qB0kCl0l4BujNoVnqUAl8DnXZHLaS+aRkvQwy+tldzW6Dy67toOUtHAIptwUIjBM+L0seQkF65Kvf9hsxuO/wFQDkoXpAULRG+P+pukl1vjhs/tEhs=
+	t=1729618440; cv=none; b=DGyMALuAbPVmjhUm26ZiXzenL+k3lqu1j6KLZ8e9MrAjfmMk35zNy2cXPmclUTaiLvZ7vYUAXsBeJswWnMQAWf+M6q8BaoERCxUu+B7Gmi3yWV5YR3inq1W8m7yEi7eFQVkVhHSI6ALg7ZDCym04yirnyKAvtFZe5XRYuq0/xII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729618181; c=relaxed/simple;
-	bh=EyUHdT8KrAiYRhtBXvJvj6ZnCHHix24d4R3TmSuvvwM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d6ySLUd0sutq0F+veVze0Mf8Fw8b5VjgReuQoIThc4MBeGEcNg4XJSqUCvt7t3a+qR3vWUtV2aqwJ8TJkRl4YOZbFU8uEhVRG8wQZn2kXEhjHb68oRpslmPh+TwZXJDreU6YwElZftJH1Ql4U9bJQCp012PWi4Y3RCYlL9ZGOrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=i3tGK+nx; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1729618440; c=relaxed/simple;
+	bh=beMQaw1yj7WiMybY8vsAMIC5fKDSLGs6tF2lZJEbWRw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EmRKSJGyCcPZdm+HizORc2wsCk7HQd4qEh19ctl+RToq6DExuQiyiHnxWgxd3GlXd9Qq0UJYoCmqKsMv1hbNZluXE0P4nnM4gRk25gC5Y0niI4l1M1qyFPtA8ySLJ6avAIunzl5KzUXd+4Glvu3U05BpaNprMbrQ9R2Qq7bvHqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=d+uOmmOW; arc=none smtp.client-ip=185.70.40.134
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="i3tGK+nx"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6e390d9ad1dso54318407b3.3
-        for <git@vger.kernel.org>; Tue, 22 Oct 2024 10:29:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729618178; x=1730222978; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MPKry9Umb6ztjrWIwNa5jBjglFgxV+Gm086dKYq5AEU=;
-        b=i3tGK+nx8WF9jJK0h0IvGsHB2L4zdErr8XXD1o4CVLutlZCww9+DYQFX5KBGeFCcOZ
-         zVngSHwY6zzrY+T7fqMhXXBFmMku2+1Ya+twJjn2Xuc/AGUrdsHJMFrd+VRvqW2BFKwQ
-         DLHpfpm+RREIgkSIKafb/3hIW9Umjc7qvxl3UhhWG6XK4Pj3J31lBOACe/oxXZoAdiL7
-         ozb+eQ45jg5AAtLqDc+4QHC0xu9gMBz699m3EuXCKrZChEh+kTEBvaGqwirAnBzkFdZD
-         hFW1+/dSq88m+g26nTR3P4axwp02t/Z0h2zSmM44mf9R08qXq3qax7OSft3j2IiCx37p
-         OkrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729618178; x=1730222978;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MPKry9Umb6ztjrWIwNa5jBjglFgxV+Gm086dKYq5AEU=;
-        b=MkPRnzdT2kqhEcbPXzaV7b14yAunrL+nWnYSSznKg9D5G+l/ilx2v7aYw7cJX1eufD
-         PjDSUDRYbfzoNl8oYasBzK1oQB/r/lKldQ6XaQbbWc/kQI+dJrZfryzrEsalZc2ECxVe
-         YGFFduq9Lf44ZMTMfIZPlnS21VPibx9JXKciajPVlhi90im3ZdSqHK5XW94NGnhObQAr
-         DUdTeUX4w5+iSwDsFdooKmVd8Ad6stXWrk+5KR/KW0zprNWM0n5wQFxuTxFNa/WlARQB
-         hUb0ZsnskhK2f2BqnjIDqv4MKAKo6bnGg6Rt+O1OzyXqIxsW9t3urAQAQl01YpAwgngE
-         9xog==
-X-Gm-Message-State: AOJu0Yyoatsqs6tOKO4AhgtpzixscjnzqCpuQOV1MwhW2S5ksGDRxMXC
-	aj59rA/pJ9keYnJ5Vip670YQmlitLRjjP7hq1tDsGYYhsHY4OFMAuHNGaDQ4ePcPIvqY5ZmAuc3
-	3N00Whw==
-X-Google-Smtp-Source: AGHT+IEM2xONr4D+AoQsVVSC+Y1tXrkVx3wlMowG9dGPlgEiV7X2yGQwoPMNzvdcFJQUMT5ksDI6pg==
-X-Received: by 2002:a05:690c:91:b0:6e2:f61e:c53 with SMTP id 00721157ae682-6e7d82af29cmr34848107b3.29.1729618178378;
-        Tue, 22 Oct 2024 10:29:38 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5d1317esm11544957b3.127.2024.10.22.10.29.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2024 10:29:38 -0700 (PDT)
-Date: Tue, 22 Oct 2024 13:29:36 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	avarab@gmail.com
-Subject: Re: [PATCH 0/4] Documentation/git-bundle.txt: promote --all for full
- backup
-Message-ID: <ZxfhAAgNlbEq60VB@nand.local>
-References: <cover.1729451376.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="d+uOmmOW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1729618436; x=1729877636;
+	bh=zWaXI5iQ6OaBaa0z9rBUbm2U8YXjGNuqiO/rXEz+G9c=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=d+uOmmOWK4olubDdKSeBFef/PY9GdILOCdGf5u1eb/7SddKcZjXZt3p7J5KLZ3xfH
+	 tgJ2C89GFjbu+29OtDYbj9On4X0gND84dncPL7DHkQtn3u4uA+1DQ6d2jVYLYYfMtO
+	 GRrCbYkSItg86zt8X8FyZdvrS86zYjvtOkSd8D+NFvFpbivH65lLLQpqCDAY7ufUO7
+	 6S7cXx5Rw3osmShAlZ0RewD+n+K/MjLxwMPmgEzEnpTOr86zAyAECMjiV8jsv5dcBI
+	 3lV9m92tRHf4FLwJKQkJcMOrl88Rrk1gjBKUwzP//Of4yAJ/fjfypmOTDXuQ+SIIuF
+	 oEtp1rHemVgLw==
+Date: Tue, 22 Oct 2024 17:33:52 +0000
+To: Taylor Blau <me@ttaylorr.com>
+From: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] doc: consolidate extensions in git-config documentation
+Message-ID: <D52IK8WN7D0S.2SGBXWAEE2CBZ@pm.me>
+In-Reply-To: <ZxfdJs5+YbpHgpdv@nand.local>
+References: <20241021-cleanup-extension-docs-v1-1-ab02cece3132@pm.me> <ZxfdJs5+YbpHgpdv@nand.local>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: d75318d7b5c1bdf9d7fab1d206da864d6f2304bc
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,23 +45,43 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1729451376.git.code@khaugsbakk.name>
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 20, 2024 at 09:14:58PM +0200, kristofferhaugsbakk@fastmail.com wrote:
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Tue Oct 22, 2024 at 12:13 PM CDT, Taylor Blau wrote:
+> On Tue, Oct 22, 2024 at 12:08:49AM +0000, Caleb White wrote:
+>> -Note that this setting should only be set by linkgit:git-init[1] or
+>> -linkgit:git-clone[1].  Trying to change it after initialization will no=
+t
+>> -work and will produce hard-to-diagnose issues.
+>> -
+>> -extensions.compatObjectFormat::
+>> -
+>> +--
+>> +compatObjectFormat::
 >
-> The documentation for git-bundle(1) now properly covers `--all`, the
-> option that can be used to package all refs.  A "Discussions" section
-> has also been added to address the naive backup strategy of copying a
-> Git repository manually.
+> Should this be `extensions.compatObjectFormat` instead of
+> `compatObjectFormat`? I think the latter will produce awkward headings
+> when these all get merged into git-config(1).
 
-When applying to 'seen' last night, it looks like this topic caused some
-breakage here:
+No, I built the man pages and visually inspected the changes to ensure
+they were formatted correctly. This is modeled after the `advice.*`
+config section which has the sub-sections listed as an indented block
+under the main `advice` section. It looks like the following:
 
-    https://github.com/git/git/actions/runs/11449483611/job/31855169149#step:4:144
+    extensions.*
+        <description>
 
-Would you mind taking a look, Kristoffer?
+        compatObjectFormat
+            <description>
 
-Thanks,
-Taylor
+        <next extension>
+
+One thing we might could do is bold the sub-sections, but the `advice.*`
+section doesn't do that so I didn't do it here.
+
+> Otherwise, looking good. Thanks for working on this!
+
+Sure thing!
+
+Best,
+
