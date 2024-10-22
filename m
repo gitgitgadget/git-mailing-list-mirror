@@ -1,110 +1,105 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DAD1E481
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 13:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B1B1E481
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 13:44:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729604602; cv=none; b=sxNm9SlmBGxcMpV6FFq+vEcV8tQTLZmIPGAhlkZlDrsVBn4XqPapfulcyEH+p3RvuZ1RUikh8avAJvE/3mCZzz0bvE5Ph8u4eeRS21jsuEqHXX6QDobculWgPwmNCfL0DiWoyPayWueYvTugP2fBlSUQGXZgTX71QoUV9/5CPjk=
+	t=1729604648; cv=none; b=bpWVlgBxOBS1Af6C4Kfq07IZ1F1LAiC9TpzqloaftRZLbqw1YrkHMgCEqLHNMtJj6HM+Cr3zVpE1p5qOKvRqmB6NGCnXeSy5vVYL/j9fnBlGKmcZIRjo0zlCx6PdFnzebDGRAql6VkMfpB/tklRfylhMg2utI4UvI7SqSr3DJKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729604602; c=relaxed/simple;
-	bh=32of1ILU/UaMN+59e5CkvqAKV7ufbT1WVrnO5trgw4c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=G8MoWcptkOhpJH0+SF04IQP1OPGcHO9R7kn5limZhoYpSw9vEYMg/J7+GEwyyw+9wTVDniHhYGzKDQO//rgBItGh+fwzX26NnWXsycb6F9l1g5mLaG/RtaSNlVi+rzr3TLLD7WJUBR3YbDb43Hq5eeW2kGPWI8SfXVshjDJ49WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m8evFwaL; arc=none smtp.client-ip=209.85.222.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729604648; c=relaxed/simple;
+	bh=6+dZyWH/nP4My0VMFtmnEdRKzrR0RYxDWj342+4j+HU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bW77MKtZRVOO0pzcx93+QpyQET/r98uEWunfoiNpG3kJkBhhcPx7XJVQ1HZizD4cF5Z9/0RDKacs/b9C5KxVG3t1jxC7epa2rtxqZZt7Z+/F++NAuvK5j9AlnIfwkYeEnAQj3O9NyGI16xulRKwboZ8+8mSrmLxOGtKoBZ2ha3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kj1ugy3x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X/B6Iuzz; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m8evFwaL"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-84fd01c9defso1748862241.0
-        for <git@vger.kernel.org>; Tue, 22 Oct 2024 06:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729604599; x=1730209399; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=32of1ILU/UaMN+59e5CkvqAKV7ufbT1WVrnO5trgw4c=;
-        b=m8evFwaLSysG0qgmqiMr0wpl7Wifl3ta6oEjbFctZPAq21e7sZMDtoe+ON+65eB45h
-         Pr+G25og//HfZhCS3KR2rYMMdoSH0mG25exLCoo7OTy5nB5PpK4zDl+gtWhAN1/O4BkZ
-         mFdzUWEC3an7O9bRSJp50+xXAR1CdOzv/HldFt4fYn9t8rPGGPscyk/dyI72XDjmMyuq
-         YoyxIV3Y1gj0M9YW9RNSI0wO5BqDcAK4iq5O8fVF57feuTWGXYFWIG//dqMRpnIOnLep
-         UJT4wNV2WNWYjVD51rlbhBBr8MKAdzIn+vmBcogUNlEVGcjV6DwAhq+b4UJ8UdVPTEq6
-         ZJIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729604599; x=1730209399;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=32of1ILU/UaMN+59e5CkvqAKV7ufbT1WVrnO5trgw4c=;
-        b=P2KUw/3nqO3zR2Dy97+gBrT/PMEGUuG7Q/DQtbI1JcASZd5YgJsT8tRSz9JyuJvgom
-         MkKQHz9IDMIV3n2sW4gvTNILEHFswwnojNlJg5qzXfLnBpM7fiteBU/0ug280ZHUqHf9
-         Pu+6i2e4stmvNDShulY9F1KjugDVufyuNFwJ/MPosG4v4yX6kKPRgCS2dXQjjGcAQ6wa
-         ShNQG/2OERzF6/y59ATk38RWBTIDjp0u2qBjLeca2/qyr/pPWUTMh9jKZdsGmRLClfOM
-         Zu0Unep8jFEh1zoAVhJt5lEbfN2qsswmDyMXZvBiA4Ok/bQmWYqXd1ex5gtBruuw9vwU
-         ZVSw==
-X-Forwarded-Encrypted: i=1; AJvYcCUo0YQIcAQSZWJe5XSZMnX/5emAWYr3hrw85Tpz+Vtg903hCj6i0Yzd2b0FiqvtlNKdRco=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZJhJwCR1Y7XXnLlblzeYVksD2vmefNn2/MkKEyxpzq85tvdI0
-	XBIQNYTCbrSwrceesvMZ/rhpnzVOON+pQ3qF5XrOPhPrWKO03B8rC3ZL2bdKCzmAUQP+ajrwEze
-	ssgsa+DWjELscR18IH/F/RY8sOZc=
-X-Google-Smtp-Source: AGHT+IH/9gBdtZLQuhUrDspwsO0qtGN7Vb3g1+6UlA+qJSM5n4aUxdq3yoNnU8d5TcZRdVetqw9G5UPKZY2Ftn8wteM=
-X-Received: by 2002:a05:6122:468d:b0:50d:535b:a18a with SMTP id
- 71dfb90a1353d-50dda1d2d31mr11097836e0c.6.1729604599021; Tue, 22 Oct 2024
- 06:43:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kj1ugy3x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X/B6Iuzz"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6DFA111401B7;
+	Tue, 22 Oct 2024 09:44:05 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 22 Oct 2024 09:44:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1729604645; x=1729691045; bh=aGFOqzA/Ed
+	iLAI626XegR+yqVkUdXZErmvjtMLcSwzY=; b=kj1ugy3xkGjbHkTxYG93BIc1sn
+	kv8jwy7ng0fIHWwwCMWLoATUxPWLWe73ZZ1FndxuByApotq1692rn7Q2vagfL/De
+	DEA/ckbMWyAFzXQAbaq2KKHkGQNOEueERGNzDj2/HfAJInGNWl8B+zdq7/TqloUv
+	Yk201D7d83MnajTOCFSFz+JzrCWQAcTQYouEcKOqJ/IVw4JMmIYOm0tapIQoXLXa
+	wACucyWPtQngV2+QSV1DzFU006E/yjDFbB1t6gTdhB1Bs3jkgx1UL1PVYjBUnyjl
+	cbV/VvT3J05NwrsFEcz2pzd72/QKbW1tbs+PI413rA0RjNwQ2lvltjiV13IQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1729604645; x=1729691045; bh=aGFOqzA/EdiLAI626XegR+yqVkUd
+	XZErmvjtMLcSwzY=; b=X/B6IuzzVSX1F6/R9BU1bUz+nDC2CPDrUMIqRIJj7Aon
+	+DZ7i0xPNHu90Ks8UuIAmaCW18gfrLBtfepN9O0aJrGg1igvZVVY6laUJ8IDxI7u
+	ojGrbG4OQhza8hWIrubbAX2stX5bflbrorn4pKTDYJTAkcKlhUny56By3Afs558i
+	Dndnzlrj09jM22bLTuD548KfDahePN4p73PNH6X6FJuE8W7h3YF4vI6yUFtrddoP
+	lfY4y1SYMTYVrSu/YmXw+QHifKeAcEs3UWS9T3lqAnRTPQEIUX72MSA/o8OBprjd
+	JhjwIlksvxRQsxgsZ7iEBVUAGVDiaZZjsu0LbjiBTA==
+X-ME-Sender: <xms:JawXZwWC5v7s8REoU5_JENDjUH55Bgsc7RrVUmPwQAzPfOaQ-LoVFA>
+    <xme:JawXZ0n2hxtGkeK9Ta5dGbvmrpFeUfFWQLHg1rMHR9e1g8hHh_8Uz7zOyvmQ-lR4L
+    QJLTsnJtRYMkjnG4Q>
+X-ME-Received: <xmr:JawXZ0bL1TDRNVa5v6AM185VSkdqWjEyRa0dDPwoxutlKlJ8UXUQPeBdBt4vBo1z9W4wA9ayLwhixUzP85Tm4itNatdopQ18NQ5unv7GRIPo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeihedgieejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:JawXZ_XcEz0Q3UlxbZTRwT02CuL9VH9-hlR-jHCth8rKDRd2_4c-yA>
+    <xmx:JawXZ6n2GD54rjaVDB_IID1bcslqlB5Z2WODDXNmA3ULQLmIu2iOLg>
+    <xmx:JawXZ0d471B8q_1Kl1lr1YhFsLcfctIpcw-DroMcosJe4pnzoHuxGw>
+    <xmx:JawXZ8GRF4KpMfZrmgYJYzNsOWmWQxNDHiS-mkLOXEK8wESX0a5a7A>
+    <xmx:JawXZ8j_fYsdt0kTig9dFPVa-P2jCv13CdwECUeMQDRy4swXq9nIq_Yg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Oct 2024 09:44:04 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9d0a08f4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 22 Oct 2024 13:42:32 +0000 (UTC)
+Date: Tue, 22 Oct 2024 15:43:59 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [Outreachy][RFC]: Final Applications expectations.
+Message-ID: <ZxesG0kk3S7BBMWx@pks.im>
+References: <CAPSxiM-kf8U=vzp5MoD3tUuOtnNjcCgPhLdriyeQo5CGf=EhyQ@mail.gmail.com>
+ <ZxeWDTFHpHmVePdF@pks.im>
+ <CAPSxiM9WQMFu+qTgR9LPk9erVUFgPU5tqRBobTomOJhm-hiLAw@mail.gmail.com>
+ <ZxelBccIFk1aXP3l@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
- <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com> <c09c7b3df0d7eac3069cee45cddc49a76da2503e.1729259580.git.gitgitgadget@gmail.com>
- <ZxZHIk-gH0Onpt15@pks.im> <CAPSxiM-wLZfA1+1zvfjW-PN=Zpjrgy3KR9c_jrb=we7vhvoUYg@mail.gmail.com>
- <ZxZKQrc0Ch_YA1IV@pks.im>
-In-Reply-To: <ZxZKQrc0Ch_YA1IV@pks.im>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Tue, 22 Oct 2024 13:43:08 +0000
-Message-ID: <CAPSxiM9Ae4zK7R61=pByoaaaeA=4x77SufTmrsa-Huwsj7EQ-A@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] imap: replace atoi() with strtol_i() for
- UIDVALIDITY and UIDNEXT parsing
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZxelBccIFk1aXP3l@pks.im>
 
-On Tue, Oct 22, 2024 at 7:21=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Mon, Oct 21, 2024 at 12:27:05PM +0000, Usman Akinyemi wrote:
-> > On Mon, Oct 21, 2024 at 12:20=E2=80=AFPM Patrick Steinhardt <ps@pks.im>=
- wrote:
-> > >
-> > > On Fri, Oct 18, 2024 at 01:53:00PM +0000, Usman Akinyemi via GitGitGa=
-dget wrote:
-> > > > From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> > > >
-> > > > Replaced unsafe uses of atoi() with strtol_i() to improve error han=
-dling
-> > > > when parsing UIDVALIDITY, UIDNEXT, and APPENDUID in IMAP commands.
-> > > > Invalid values, such as those with letters,
-> > > > now trigger error messages and prevent malformed status responses.
-> > >
-> > > The line break after "letters," is a bit funny.
-> > I just noticed that I will change it.
-> > >
-> > > It would also be nice to point out why this commit doesn't add any ne=
-w
-> > > tests. I guess the answer is that we don't have any tests for
-> > > git-imap-send(1) at all, which is too bad, but a fair excuse and not =
-a
-> > > problem of your patch. So introducing such tests would be too much to
-> > > ask.
-> > I can try, but, why was it not introduced before, is there a reason ?
->
-> I think it's mostly that we'd have to have an IMAP server available to
-> test sending emails properly, so the test setup would be comparatively
-> involved. Nobody felt like doing that, and thus we don't have any tests
-> :)
->
-> Patrick
->
-I made all these changes in version 3 of the patch. Thank you.
+On Tue, Oct 22, 2024 at 03:13:52PM +0200, Patrick Steinhardt wrote:
+> I've asked internally whteher this is okay and will get back to you once
+> I've got an answer.
+
+Quoting the answer I got:
+
+    > Yes applicants are allowed to apply to multiple projects.
+    > 
+    > Though we recommend that applicants contribute to not more than
+    > two projects as it can be quite overwhelming to balance
+    > contributing to that many projects.
+
+Patrick
