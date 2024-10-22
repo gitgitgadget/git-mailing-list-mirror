@@ -1,162 +1,105 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4F4126C05
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 21:58:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98D91CDA2D
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 22:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729634342; cv=none; b=mN6mAHl6FaA1bx3FseEBDmAE4lpx9tPEM7qdyfrzGC2T3WByD8VGFjJTuGk6TfEQaziuFKKPM4luyH7xyOUcd5JgOT32OUYcIVo6LSY5NQg7bfACQmQbsRXkF9ZzRNQsKew4OH9VahdE32J0ofWsxr97qmNQGVDqNFvz/iq2FTQ=
+	t=1729634828; cv=none; b=E0kGbOdCvGq4fTRlS08KK3DrdGwL7lsbhffQAeWAyBfF6WhJ2OcXYeyevp3SKWEr853lqf4TcC9ftdrjxM+Z7kvym+vEQNIjWYrq/H6JUC/TfZ+HJFeaUwl1XAyRlq8ZfVQtZCvdbYReMf3OzxCeyej4Yz+AL51viNKec7zjbBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729634342; c=relaxed/simple;
-	bh=HpKXVmEf0kVUbLr9igP/POupZJYliUdhLQPplq2yWzU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G+f9Oi89tUM/PRtzl/iALRyd6f3bd2/2j0rAHHqwgj3Fc22HoVq4KI5wMxCZo5oM4BwxfpfnE34tZJgthVjHgpKULISxerzMqOhrBzd0aSI9VTpXfY/KYQI7ndvmj7hZq5bqmROuwN3gS8h44kIiTzw5TbEJXJ0DRZbwky989Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=znGSTS8G; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1729634828; c=relaxed/simple;
+	bh=nwcpla7i8KGaYx/MyeHjmv2Sv4t/bwWS+wRy6T/XYSc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q6xrlRm81zhcd/Cd4m2lgyd5zlp1VB3x3gGbeP+y3PZpmFK6YZSH0nPx+djRV2K6hArqLc9zZ1t8EZYPQTuP1BGJHYquKwxOoied0gLzuQH5gy1j15jkEgmt6DzrD3z8JWCB/v1s4jz97YKiTrUaimp54Y62opKkcELRLXkD+PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UeYgJd9W; arc=none smtp.client-ip=209.85.221.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="znGSTS8G"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1729634339;
-	bh=HpKXVmEf0kVUbLr9igP/POupZJYliUdhLQPplq2yWzU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=znGSTS8GSSHPfUUfva7clhdDtsijz6mX+exMu0icpjSK39eIRN5IvCemEWHOx3c7O
-	 QpW2dxiEkTZzoOVDvDdnRpOvV1bb/WgwuCtbB+MdEDdJ8O/OxACM1hXG+4woiXf2S0
-	 K4K8NlZHJqy8altHF6/0I7CwflBoIm3AsriasZVtCxgJdmhGg1fp5EMhC9Y+Ndlr7k
-	 +4H86DFoHajf5PhmPpIfT6wOEYUIvMjc49yERpaQt+gq9IHI0eMW+XPw0mo3utXRFI
-	 CWcWTanrpb+nRZsWeUAfkfNxyu2+AVN19hsxmQFYg4fgh9IF/1YpqD+s8vYvIBjTUx
-	 6+Z7JgL9DxdMQWxwt2qFffUYMj7uKY5MsspjkRjuj1Aeg84U/Or7XY2QVDiNRbW66p
-	 JrlT5bKY+ZxI4heS1B3syMDgvtU9uURSaUIvemcydqk7NFMh5Z6qNeQ1HlrTBLc9Wd
-	 2bDjBqYmWJ6bsn+XkMxWzs+Tga2cQ9jTu+YJtl88eK9j99PTYlM
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 047D820031;
-	Tue, 22 Oct 2024 21:58:59 +0000 (UTC)
-Date: Tue, 22 Oct 2024 21:58:57 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-Subject: Re: [PATCH 00/13] Update versions of libcurl and Perl
-Message-ID: <ZxggIfymo78PhXrz@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>
-References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
- <20241011074022.GC18010@coredump.intra.peff.net>
- <CAPig+cRmyZhq1qtomTFP7p7XMqrCP8-u7ah8D2+yUtrL880y7g@mail.gmail.com>
- <ZwmEDt7ftJabvMUH@tapette.crustytoothpaste.net>
- <66bb101c-eb9f-4824-8766-750e58cd422e@gentoo.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UeYgJd9W"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-50d4213c5f6so1852568e0c.3
+        for <git@vger.kernel.org>; Tue, 22 Oct 2024 15:07:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729634825; x=1730239625; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oeo9oLWNN2boHL3ie/35uMGNlZ6vD+jxwB2xuF/ZxsI=;
+        b=UeYgJd9Wxwbbyrv5cLHqicwidfWrqG2JKdFL7/RQv416TsD0hhHh7CQjqSKZvcm9ip
+         nqDdJxbb10QT5gde8iWNjsR3+09BNsOHaYh5w/9II8Yg28Cu59baMvgz33hiwUYHEOp6
+         DO9svQ++PsDlvdiuuek2e1miTI/rQzkJX05YA9LybUN+6KvfOHtX/zFRqnpApzhRT0Ip
+         eFhSA/31qh+FyD//Maj1G2tI/+koL95KYEvFA8/M3FZfBhwbzfMqnPE3Pv8dVjFvJKXi
+         GBbYgijY5kdQVIc2CGFnKF2gmjcH9NFylGo14BXJPc60HbwpcbhBLL0TJnvOSZSlZA5x
+         c4uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729634825; x=1730239625;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oeo9oLWNN2boHL3ie/35uMGNlZ6vD+jxwB2xuF/ZxsI=;
+        b=CAMsBqhuOBCFdPxa6FLx25Ey8m3BZ4sgoYEm5U6JAhXRKqlw3OR6PQdCEjqjVe0m3j
+         SVCHIS5qBDfPsFHcaLgO687rQ1296/HML1tRm/TlrTunMh7FHot0BUoFIglLNDo4/ojO
+         sCkLBgaYXShvMqP9UovspL1Q6aYIjuGpnf3Oi6R8/R/lyZQIOuxC48m2oJSY7y1OJXxQ
+         17E1g3p/CfkK2EUw2/ENW5+50myf6yE2NougXrYQfMzDoOinUviZBq4oyzzUhwYTldYu
+         yr9DRmr0wKJySJfi+v/C8UDvDHlylQuCZCsK6nu/3dmz3KvU3e3JuWnBG6YleIwvMQss
+         41aw==
+X-Forwarded-Encrypted: i=1; AJvYcCXjpBfv23X+FTg57lDKMQf9QoxL4IY2+ISWQ+UMDF1nBP8OLn54im5utBqYP9RvC8qSDLA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZjTnu0dm4IB2h3wv2uf0IxC9XISFJd1qj29jp1piAFA/O0PNk
+	XE4cmkuehHKPYrcTCl99evhYIJcvSlf3DlFr+ZBK/50kqgV1dmSQOetzuCBxo0PchL5CXb6aFf2
+	ARxNRECVQ4YfOMw7gWVRAi6HBpr8=
+X-Google-Smtp-Source: AGHT+IFhfbuaCbI6+0R148iddcW9roaiHfQ7ZYbn3tFaJJQSGUeNqWPGmlxNbBSbF/r50HLSB/t1ZpJm2ug5CBTj3WE=
+X-Received: by 2002:a05:6122:16a8:b0:50a:49d1:f1f with SMTP id
+ 71dfb90a1353d-50fd034ee98mr764121e0c.13.1729634825518; Tue, 22 Oct 2024
+ 15:07:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="RNGn6fv7pGSBOw35"
-Content-Disposition: inline
-In-Reply-To: <66bb101c-eb9f-4824-8766-750e58cd422e@gentoo.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---RNGn6fv7pGSBOw35
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
+ <pull.1810.v3.git.git.1729574624.gitgitgadget@gmail.com> <e292b82d6a1d46990477a043901fa9c56bc00023.1729574624.git.gitgitgadget@gmail.com>
+ <ZxfRIIcd2H4S3i3+@nand.local>
+In-Reply-To: <ZxfRIIcd2H4S3i3+@nand.local>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Tue, 22 Oct 2024 22:06:54 +0000
+Message-ID: <CAPSxiM_YbO_AamPb7kmMEK8icSQ2YqqupFoSLHeCMNXsjGtoEQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] daemon: replace atoi() with strtoul_ui() and strtol_i()
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-10-22 at 03:34:25, Eli Schwartz wrote:
-> Your general observation about respecting the platform support policy
-> and not making developers expend time working around ancient dependency
-> versions no one should be using... is something that I would say is a
-> better fit for, well, the platform support policy.
->=20
-> You could instead add a section to the platform support policy detailing
-> the minimum versions of dependencies which the git developers are
-> willing to spend time supporting. A developer working on changes which
-> would be onerous to backfill support for, would then have a simple,
-> documented, easy to find policy about when it is acceptable to bump the
-> version documented in ./INSTALL. The process would then look like:
-
-We already wrote this out.  If it's supported in a major LTS (not
-extended LTS) distribution, then we support it; otherwise, we don't.  I
-plan to add some specific CI jobs to cover common supported platforms in
-the future, so we actually test what we're supporting.
-
-> - Code a new feature.
->=20
-> - Check the version table to see if maybe it was added basically
->   yesterday in curl 8.7, or whether it is available in say, curl 7.75.
->=20
-> - Discover it was added in curl 7.59. Oh shoot! The ./INSTALL says we
->   still support versions before that, but it's also super decrepit and
->   nobody runs it anyway. But wait -- the platform support says we only
->   care about 7.61.
->=20
-> - Shrug and grin. First patch in the series now bumps ./INSTALL to say
->   the minimum required curl is 7.59, and if anyone disagrees then it's
->   fair game to respond with. "fite me. The platform support says I don't
->   have to care, we are making this change whether you like it or not".
-
-This is the approach we used to have, where we'd accept patches to
-support older systems if they weren't too invasive.  It involved lots of
-heated discussions on the list that were unproductive and never came to
-a conclusion, and they'd repeat with some frequency.  That's why we have
-the policy we have now: because it's clearer and more definitive and
-arguing extensively about what we were supporting was not in the
-interests of a healthy community for the project.  It is also more
-honest in that we're clearly communicating to users whether they can
-expect things to work out of the box or whether they'll need to carry
-custom patches on their own.
-
-Overall, people don't update the INSTALL documentation and it's
-routinely out of date.  Should they?  Yes, but practically they don't,
-and we don't test that, so we don't know if it's accurate.
-
-> The important distinction here is that in this model, the install
-> requirements aren't about what you want to spend time on supporting,
-> they are about truthfully communicating what *works* in point of fact.
-
-While this sounds nice in principle, it doesn't work in practice.  We
-don't test things like MIPS or UltraSPARC hardware because we don't have
-CI systems that use that hardware and they're extremely slow in
-emulation, but we do want to support them if they're on an otherwise
-supported OS.  Similarly, we probably do want to support NetBSD, but
-have no tests for it.
-
-We also don't have situations where, in general, people are willing to
-compile their own set of software from scratch.  For example, I'm not
-compiling an arbitrary libcurl version to test a problem on the list.
-With very few exceptions, the versions people use are tied to their
-distribution or vendor.  If someone asks to support libcurl 7.19, we
-either have to custom compile that to test or try to run CentOS 6, which
-no longer runs in a Docker container on a modern kernel and has no
-security support, so practically the answer is no.
-
-So we don't know for certain what does and does work, but we do know
-what we're willing to fix and support.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---RNGn6fv7pGSBOw35
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZxggIQAKCRB8DEliiIei
-gUBvAQDH40GnsxhOp6S8LBlk6aHawi/xm1XpE5g7zT3fv7KUPAEA8+/FJ7vjus+S
-JuovLfwjXUMsLHqUPqdfIJTNppWP+ww=
-=8lj/
------END PGP SIGNATURE-----
-
---RNGn6fv7pGSBOw35--
+On Tue, Oct 22, 2024 at 4:21=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> On Tue, Oct 22, 2024 at 05:23:41AM +0000, Usman Akinyemi via GitGitGadget=
+ wrote:
+> > diff --git a/daemon.c b/daemon.c
+> > index cb946e3c95f..09a31d2344d 100644
+> > --- a/daemon.c
+> > +++ b/daemon.c
+> > @@ -1308,17 +1308,20 @@ int cmd_main(int argc, const char **argv)
+> >                       continue;
+> >               }
+> >               if (skip_prefix(arg, "--timeout=3D", &v)) {
+> > -                     timeout =3D atoi(v);
+> > +                     if (strtoul_ui(v, 10, &timeout))
+> > +                             die("invalid timeout '%s', expecting a no=
+n-negative integer", v);
+>
+> The conversion you made to both (a) use warning() and (b) mark the
+> string for translation in the second patch were good, but I would have
+> expected to see them here as well.
+>
+> Perhaps leaving this one as a die() makes sense, because we are taking
+> direct input from the user, so invoking 'git daemon' with bogus options
+> should result in us dying. But these strings should be marked as
+> translate-able regardless.
+As you said, since the git daemon takes direct input from the user,
+compared to the other which takes input from .gitattributes leaving as
+die is okay here. I have marked it as translate-able in my fourth
+patch. Thank you very much for the review.
+Usman Akinyemi.
+>
+> Thanks,
+> Taylor
