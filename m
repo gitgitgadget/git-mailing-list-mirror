@@ -1,64 +1,64 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DAB126BE0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA4C12C552
 	for <git@vger.kernel.org>; Tue, 22 Oct 2024 05:23:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729574630; cv=none; b=KVcpCEVmdNXGWRHHMGeNhnIky4gKyrH1mAHkKikGFly9AhbCBguE5rlTR7AJAvcY8M1qS5Q+j/QWXomeSxcyLjRzXqI5egqC2NERymdrHV+e+mhPRilYSrI/PhcgcMmQcphjdaD4Kz35tic4X7HjscjH8aZpI9YXL5KNo0oShb0=
+	t=1729574630; cv=none; b=kkekg0ZxefvnaGZttGw+FY9ElqaUuAblCs8fhqZ3BVBNEs9NPxM/8Xhlc5TGkc5pp09Xz0CVGxO9MBHVVlnD6FqyhiMSMQJbGgI+Sy25PAi5CdveWsqqWt0FMtHK6k2NsyOj0BFjDHdEhzE/sMT0agIVwVTMDTMR/Yekf3uQDhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1729574630; c=relaxed/simple;
-	bh=aJkXRlrvthrfpq76DTf5fWqmXUIImKKrHoNoqH87o5c=;
+	bh=5GzF9PCgCy1dVVZT3Al79NQtBgiC3194rw0GgjPbASo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LOaLH7xZzGmq+swpA0FNOTqqqBZU6rHgmIU/k17abm8ugBp3iralP9f6gqSY3SqldPpjp10NCx02wSuB5Tf1t8B9TlUrN5LVf4ELP4AA0ep1rU+zyu0LWkFUSwxMEHaSUdkIs1R4vC7tJdt7Db2reU8PghEtfKydfNi4dzk4OMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j7UPekAs; arc=none smtp.client-ip=209.85.218.48
+	 MIME-Version:To:Cc; b=mBIDoduI7ELxHg6M0l19qBxgW/Ab8G733cGrorIv9vvC7vynQxIh+K+k+AgIoF49ja8c9qx8EbCjvaejxQlqmDjkjDNgfQTKygvQUfwtpS2e1+jVj1yBanBnqI+bGbxYqO2aAJgkpbIK+uUf6Fu4owU1CoJr+qzqnBunN5WiAXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dra2PO1V; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j7UPekAs"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a99e3b3a411so1007825666b.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dra2PO1V"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a86e9db75b9so669473666b.1
         for <git@vger.kernel.org>; Mon, 21 Oct 2024 22:23:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729574626; x=1730179426; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729574627; x=1730179427; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=58o1diBEQxwbnUeaVytDpHr+ZVC86+u7AGBQnzIAiGk=;
-        b=j7UPekAsNrhr4kGSyRINHa6HvER9b/QSBbbYGvRh1+UncP+8Ko5dHmN8CtzssoS/2h
-         Krr/drlHESyS8+OOYnKjI/fgkxhxgt1sshsf767bgrJ0Is+aivHicHlPxP/oP1ohK2OA
-         HpImkGDWJsFbbUHMvJMieB5bB9oj8rf2RcpS+MdCVclQJ1dXcEBCCxMfkISE+am3+Wnj
-         uWpDo0L4RzcliXYnYxH8WRCNCN6KsfU31PX077DBeQopvBkoIBFMexZcqSfV9SbUccu3
-         ai+pdIT/MJ6OW32oX9g0/Vztdtq82IkZZzCc3LPnmBTJ5KoqXJchEvBuEcz7mVYcPcxG
-         lYsQ==
+        bh=Nj2UQx1KomWHqTK06lThO2xY+it9ugdnkesFNhRwTqQ=;
+        b=dra2PO1VZmP48941IiPpgmXI56s9gV3/KJdjuvenW/daUb/U6u1P6lL+HPB6W4Y0tf
+         4nUOBpmXM1558mmV0kzRuEfmRqhsilaxrZOgjmqRvNv4pkcmcd5A1JMXTMrQjt9RzeSl
+         DizRo4Q29lv/5F+6SCfRCFrlDr+4j5gN3438pIXAMD1XuTFdrHPcylgBjlYYS6TFz2Ej
+         2IKv76WPqY2CU8G9fVPGUzsSRU+FiNKqxkTYKbW9/U5hL2Of+JL/w4jxcsVvh3zmHm9I
+         DKpiH4L83Sb/f8YSn1q6Z73FqBFmd9jLrM7TB8yk7/DEVLer5O/OeCOWlXVylcg6xo9a
+         t1Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729574626; x=1730179426;
+        d=1e100.net; s=20230601; t=1729574627; x=1730179427;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=58o1diBEQxwbnUeaVytDpHr+ZVC86+u7AGBQnzIAiGk=;
-        b=H5N0iKSf9gW/RnSynZIkrP0yr+AOC11tIX4omYOgAZUvRlnKtp4OCHEPju811tLT9h
-         KaUzWNECxvDhzutHjOVFxJ8+dJy16yHo9nvm1NtFdIUnCudSUJ7pOMNOysvqDDDi3hJL
-         w6+ODScXKCBY9ARVw22QJV2fjWujtUQiakEISOdrX7BMAsN+Wz710e4zJCMiCx1C3bqU
-         +Va9S7ntoWWYN1PuJk+/Ag0fxUUjWOVUYfDL7qzZy/OJLHi2pvEtpcaVJVoWEMb923Lw
-         uQjuTEdH+d/21j8J9NNjGNyRLhaeCkRXoVR5IEQ2D3Tt0wh6fK7h9n4QvnO7VsTVugHP
-         8kNA==
-X-Gm-Message-State: AOJu0YxhmUcURRIY8FmBhVlALZRg8500hRKmBEY1vLNB684BEDaGBhtR
-	lrCbPKh/OCRlwPuaQqFix+hgLjqAZEosZOlV0UkyXH0hY8Q3mFJvwGGjzQ==
-X-Google-Smtp-Source: AGHT+IFHbA0rcnKfOpkEip2IXadcta+SgNigYoebAFKUR1UGfg3CUFZkeG8ivVk3o2CPHdBo6tMAuA==
-X-Received: by 2002:a17:907:94d5:b0:a99:6958:a8ba with SMTP id a640c23a62f3a-a9aaa51a5c9mr191346866b.12.1729574626174;
+        bh=Nj2UQx1KomWHqTK06lThO2xY+it9ugdnkesFNhRwTqQ=;
+        b=g6W8JtPFPrKdw0lCMtAdlaZR4zo9ZcvwqfN0PnwQjjwplIYRtqFxCQGES04hwrwD21
+         ql4Zsg5A2h1F3Emm246G43jsj8nKZrEZll61SsVdMKleo3u+/w/aruuiJdL/BJpjeXIt
+         AS5apLJP+gMN8wEAtettWeWMHEGbNXxnEYA00YF8HH81hte4TCBD06jP0NSp8OT3tBxT
+         8oB2eRyEkoPSs2ToSV4XDhkJxkSo2Mcf/gGmucvL3gGE57r8jNIJPf7L4t0d59dK0UEE
+         ypfuiH1M6d2R9dUpqFOHBrtzWYCIRiXIaxAk8PnvRdHgfBr5UYH3W5gSNQWkmiR4pL/f
+         dZsw==
+X-Gm-Message-State: AOJu0Yyl24f1+WMN3XWib24yUc9Dqg9Y+RuOcVoc18OAvwpoNKOjEomt
+	chA2k0eJpoLw9x2Zysv3BSU0ROCwc18s2WsaJh0RcbI+MSr3IqRUT+tRGg==
+X-Google-Smtp-Source: AGHT+IFZMrHtrAKABb9A2NFdZ/E8EeQb2fvnpjEzioKE0ST4QdoVn6x6IuEotF6WOu4+tyab2+SzAQ==
+X-Received: by 2002:a17:907:7fa8:b0:a9a:478:2ee3 with SMTP id a640c23a62f3a-a9aad37718cmr121309466b.40.1729574626858;
         Mon, 21 Oct 2024 22:23:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a913705eesm290043566b.137.2024.10.21.22.23.45
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a912edfc5sm288872066b.70.2024.10.21.22.23.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 22:23:45 -0700 (PDT)
-Message-Id: <e292b82d6a1d46990477a043901fa9c56bc00023.1729574624.git.gitgitgadget@gmail.com>
+        Mon, 21 Oct 2024 22:23:46 -0700 (PDT)
+Message-Id: <2ad3b0faa058afeee5c6b86b4bce334e77993dac.1729574624.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1810.v3.git.git.1729574624.gitgitgadget@gmail.com>
 References: <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
 	<pull.1810.v3.git.git.1729574624.gitgitgadget@gmail.com>
 From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 22 Oct 2024 05:23:41 +0000
-Subject: [PATCH v3 1/3] daemon: replace atoi() with strtoul_ui() and
- strtol_i()
+Date: Tue, 22 Oct 2024 05:23:42 +0000
+Subject: [PATCH v3 2/3] merge: replace atoi() with strtol_i() for marker size
+ validation
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,84 +74,70 @@ Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
 
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 
-Replace atoi() with strtoul_ui() for --timeout and --init-timeout
-(non-negative integers) and with strtol_i() for --max-connections
-(signed integers). This improves error handling and input validation
-by detecting invalid values and providing clear error messages.
-Update tests to ensure these arguments are properly validated.
+Replace atoi() with strtol_i() for parsing conflict-marker-size to
+improve error handling. Invalid values, such as those containing letters
+now trigger a clear error message.
+Update the test to verify invalid input handling.
 
 Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 ---
- daemon.c              | 11 +++++++----
- t/t5570-git-daemon.sh | 26 ++++++++++++++++++++++++++
- 2 files changed, 33 insertions(+), 4 deletions(-)
+ merge-ll.c            | 11 +++++++++--
+ t/t6406-merge-attr.sh |  6 ++++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/daemon.c b/daemon.c
-index cb946e3c95f..09a31d2344d 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1308,17 +1308,20 @@ int cmd_main(int argc, const char **argv)
- 			continue;
- 		}
- 		if (skip_prefix(arg, "--timeout=", &v)) {
--			timeout = atoi(v);
-+			if (strtoul_ui(v, 10, &timeout))
-+				die("invalid timeout '%s', expecting a non-negative integer", v);
- 			continue;
- 		}
- 		if (skip_prefix(arg, "--init-timeout=", &v)) {
--			init_timeout = atoi(v);
-+			if (strtoul_ui(v, 10, &init_timeout))
-+				die("invalid init-timeout '%s', expecting a non-negative integer", v);
- 			continue;
- 		}
- 		if (skip_prefix(arg, "--max-connections=", &v)) {
--			max_connections = atoi(v);
-+			if (strtol_i(v, 10, &max_connections))
-+				die("invalid max-connections '%s', expecting an integer", v);
- 			if (max_connections < 0)
--				max_connections = 0;	        /* unlimited */
-+				max_connections = 0;  /* unlimited */
- 			continue;
- 		}
- 		if (!strcmp(arg, "--strict-paths")) {
-diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index c5f08b67996..722ddb8b7fa 100755
---- a/t/t5570-git-daemon.sh
-+++ b/t/t5570-git-daemon.sh
-@@ -8,6 +8,32 @@ TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+diff --git a/merge-ll.c b/merge-ll.c
+index 8e63071922b..62fc625552d 100644
+--- a/merge-ll.c
++++ b/merge-ll.c
+@@ -15,6 +15,7 @@
+ #include "merge-ll.h"
+ #include "quote.h"
+ #include "strbuf.h"
++#include "gettext.h"
  
- . "$TEST_DIRECTORY"/lib-git-daemon.sh
-+
-+test_expect_success 'daemon rejects invalid --init-timeout values' '
-+	for arg in "3a" "-3"
-+	do
-+		test_must_fail git daemon --init-timeout="$arg" 2>actual_error &&
-+		test_write_lines "fatal: invalid init-timeout ${SQ}$arg${SQ}, expecting a non-negative integer" >expected &&
-+		test_cmp actual_error expected || return 1
-+	done
-+'
-+
-+test_expect_success 'daemon rejects invalid --timeout values' '
-+	for arg in "3a" "-3"
-+	do
-+		test_must_fail git daemon --timeout="$arg" 2>actual_error &&
-+		test_write_lines "fatal: invalid timeout ${SQ}$arg${SQ}, expecting a non-negative integer" >expected &&
-+		test_cmp actual_error expected || return 1
-+	done
-+'
-+
-+test_expect_success 'daemon rejects invalid --max-connections values' '
-+	arg='3a' &&
-+	test_must_fail git daemon --max-connections=3a 2>actual_error &&
-+	test_write_lines "fatal: invalid max-connections ${SQ}$arg${SQ}, expecting an integer" >expected &&
-+	test_cmp actual_error expected
-+'
-+
- start_git_daemon
+ struct ll_merge_driver;
  
- check_verbose_connect () {
+@@ -427,7 +428,10 @@ enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
+ 	git_check_attr(istate, path, check);
+ 	ll_driver_name = check->items[0].value;
+ 	if (check->items[1].value) {
+-		marker_size = atoi(check->items[1].value);
++		if (strtol_i(check->items[1].value, 10, &marker_size)) {
++			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
++			warning(_("invalid marker-size '%s', expecting an integer"), check->items[1].value);
++		}
+ 		if (marker_size <= 0)
+ 			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+ 	}
+@@ -454,7 +458,10 @@ int ll_merge_marker_size(struct index_state *istate, const char *path)
+ 		check = attr_check_initl("conflict-marker-size", NULL);
+ 	git_check_attr(istate, path, check);
+ 	if (check->items[0].value) {
+-		marker_size = atoi(check->items[0].value);
++		if (strtol_i(check->items[0].value, 10, &marker_size)) {
++			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
++			warning(_("invalid marker-size '%s', expecting an integer"), check->items[0].value);
++		}
+ 		if (marker_size <= 0)
+ 			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+ 	}
+diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
+index 9bf95249347..c2a9cf03808 100755
+--- a/t/t6406-merge-attr.sh
++++ b/t/t6406-merge-attr.sh
+@@ -118,6 +118,12 @@ test_expect_success 'retry the merge with longer context' '
+ 	grep "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" actual
+ '
+ 
++test_expect_success 'invalid conflict-marker-size 3a' '
++    echo "text conflict-marker-size=3a" >>.gitattributes &&
++    git checkout -m text 2>error &&
++    test_grep "warning: invalid marker-size ${SQ}3a${SQ}, expecting an integer" error
++'
++
+ test_expect_success 'custom merge backend' '
+ 
+ 	echo "* merge=union" >.gitattributes &&
 -- 
 gitgitgadget
 
