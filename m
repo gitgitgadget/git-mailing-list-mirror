@@ -1,153 +1,157 @@
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E28319B3EE
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 12:54:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC14419D080
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 13:03:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729601673; cv=none; b=e0wOPNywmcYQoL5/J3QGzYOVB5A9vxltefMyAPVioyQc+29K7hRWzR0RalJw9jSbD3Bniq6LFdYaidAjfGF+VmsqDqORLoFFLkVQUh6JxxOgdvuhc11rSv7uzaVy0AWrmNX1JbXPChzRVq9epyTCE+eMMZ8VfXhQqVT+R1Xg+hI=
+	t=1729602210; cv=none; b=j7TICvl/0qD0jCPhctxWuTbFDf8ARCEi8hlyEAsY9laaT8FUzORzzzMTg8rluM6BuVjHv9eqztOhQf//JW9uzQqHls+oxUdpkYwDTsfPYshZ1GeYD0zfT9mUoGtQ7ETbqZqzss2L3JpqWENZ0dP9o/rM+8ryjAff6B/ZMMyExoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729601673; c=relaxed/simple;
-	bh=jLp1cOdwCU/9he2+/pzs+1mjDLkJr9MDcrUM1FyXWmI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UKtTMAo8QeVplC6Nh3y+3lwOXXZEdB0mY6sMnNOu2iqbep5XkcKdPiKL/u/Ts0glrZisgd3nBIrq+eOZ+EhOTrEzSFS09clt3qQRJ6nPWB1T7pDaO9VnXLYnRk2+BDPT+LFXAYDTRVgESv3XfgHBXmxZG3wy/7STPLIIO/yd2mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ReqxHbJa; arc=none smtp.client-ip=209.85.221.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729602210; c=relaxed/simple;
+	bh=Oig1bR2SPyDaXrlwopN+rLenaXy/mw6KTQdCGMN36oo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QEximECVwookSZkj9aCB3+j2rQyRfuN5+ap8VzWc57uwhO7ubC9QS7XDKLnem1/Od5v0axc0FtqJCZMbHfQqaMw51PMT5cQdJLxciziRFgGvvjHpjzvn728V2Kd+FLp5KoZqKTlSWBCQLZX9aFcCPcQBrmqb4X75bS51s0hwPLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F27cLgEp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HH1fkWJO; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ReqxHbJa"
-Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-50d3d4d2ad3so1825883e0c.0
-        for <git@vger.kernel.org>; Tue, 22 Oct 2024 05:54:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729601670; x=1730206470; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x68EEWf5bZ1GgZ8F5ljRbwiq17gUxx9B1zL0bDXwpRU=;
-        b=ReqxHbJaed02twt0XQT9rh17jKnwsyKSvoTass912yOQ2CSSYpLB1MAMfcBZ6m5r56
-         LtHtjBhxnfZvY+72Y7KwM06Mhn9a/8Wg3AdJ99lAKBDJkYjDG8ZBxvnTSF2nro6tJ1a/
-         bnqq1AN/hitAqRvVfzbJjyaKi+FGjFPUfVTSrDg05V24Xxcg6uqHr3RIG1JDT87GkGwC
-         IsZORa+y8zMbMi/0j2gRLN8tQgHYYY0rTFkOkd745ZFfkKWq2A87jfCeHItka1mnsZNF
-         o0R6sJ47hEs6MiA0Y8X+H4TFAJ7fFUfJKGEJTHrusi5PqJd2F1+GpcnB8TvoDerJQ0kd
-         cRXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729601670; x=1730206470;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=x68EEWf5bZ1GgZ8F5ljRbwiq17gUxx9B1zL0bDXwpRU=;
-        b=YXb1FaTPZkoSdJl3An8KUmLHsSzrm46X5HT6TKJjQyHA7rioEcVVWKYY6t8QXXTAp9
-         x0IzTE+c1LPY9RmPd8rN6UFB/HYLmUWpkiDyRYomtYXS0OxKGNH0vaFpObGFCdX4sqAa
-         wqI92Q2S3hBcjDzpQ4RegAmT0I4nEJqL+CzpErM0qWdl0OvSAZD1HC47JVTGWuQ5JGpt
-         RR+uXqYQCwRB9+/lUH+rdj/RsgqEXT24yg8q3u/4GfU0cJ4Siud7DH6VZ9DSeyxew3AN
-         c0iOh239AD06sG0VbxFcU7QVXcjaHqjFpOZDGFRex9mTHd1Zl+QHKGlLCdxobIR93bED
-         X9Fg==
-X-Gm-Message-State: AOJu0YxnKmMWW2Y6ORUfTXMMj8xEKMTrvka7vHvb5M8Gu6pCCRc3hDUw
-	zYs67Kd5ukP7g0aoJ4I1ulgsvMFKhVN88kVNmTvkGdD3vAhnpacB21eyry8YpTIcireElodnfG8
-	vEbTCphMEWp2T8YNCptF0mXfA3dg=
-X-Google-Smtp-Source: AGHT+IH51CDhaB4A22yjrFpfxZOdfezYlwuFWrvvKyJkKfZBqGYEuyLoEeLMNFwmNBN1I4riiUU1wu8zLa7QZc8Wb9k=
-X-Received: by 2002:a05:6122:a20:b0:50d:bfb2:4f2f with SMTP id
- 71dfb90a1353d-50dda165e77mr10596604e0c.2.1729601670116; Tue, 22 Oct 2024
- 05:54:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F27cLgEp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HH1fkWJO"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C809511401EB;
+	Tue, 22 Oct 2024 09:03:27 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Tue, 22 Oct 2024 09:03:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1729602207; x=1729688607; bh=Gxs4sWsxg8
+	NFuewtP+gjb0jK1e9wgw39QpeaM+lE3X0=; b=F27cLgEpCZ3Pvk+MighKvtm1bG
+	j3HD0O6+pqd85sxkMuPL9tR97GisMJHOtJWxhTj1mHHJ5yVA2wN1mb03qBaQydrd
+	LGUEBEW/StE/UbG8+OsqcM7b+X7e9+uifGcRz7hfPQyQFbFS0ytlpLNtNQUBx2qo
+	lM+D4rZkkSe5+AjShWbM3tutxIBo5JNP6ZXNK1hP1Pn1F3C8c+Bg5Z3doVMp2KhS
+	OcUoiWCr9BiPY2UNi6oSp0jfhXF8K1GzOBmAaGDNfthKfq6TLLeTH+8Z2peWgjum
+	s9XMVTUQj0PJrn7lZt5M8aG6dnimIjGJdtxV/RWCQ0QdYNZjc2DjDiKYe5PQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1729602207; x=1729688607; bh=Gxs4sWsxg8NFuewtP+gjb0jK1e9w
+	gw39QpeaM+lE3X0=; b=HH1fkWJODPYvtDG9sjJ5fsKgA87i6dm3p09RFHZS83oa
+	/WCCk6znhMdyqSwVrKWWrKZBnG6IxKP20XRcG8+g5jAkLoauwrwfKZp4qWssY9zO
+	8jI0OmE0KW29jZNrOa9eYvjTyDNACnr+4U68BAka2GoiCh/CIc+pPQosiAWUYdci
+	hwy6AI7ift02FI4GCIw4sU2qGyO4tA27305iOuHgzm9OZ9I3njR9nNsqV0cO+OzE
+	FZ9Q7dIJUCOlloTGeqO7iv8n38CFx+fjym4VGHsDz22GE1FjetsQRYwWwWl0BN86
+	ElrGYWZDOxgDVVUuj3/BQ94TknDzvyW5CjKuOJJoQw==
+X-ME-Sender: <xms:n6IXZ6uv6ZAxeJErWvfUqSFHSQIR73GUqIQRYNkA39NamIuwZX2UjQ>
+    <xme:n6IXZ_eJ7SrtJnxoayA11YRomvgEx2axrb2VI_G5WK5whQUaCJKjHDRtNZJp1-gJs
+    KlbGzYcu7bnlY8nvQ>
+X-ME-Received: <xmr:n6IXZ1wALAoTgqAVcWoMxUuMZOxy7nD8xImZNxsCp_ITJUDPUk2Ya0lUVqZVc_xSmpFyh3Gf_E1-ol05grjw4ZMaocCJjEhrV2JRygibRDcO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeihedgheekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepvghmrhgrshhssehgohhoghhlvgdrtghomhdprhgtph
+    htthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepvghmihhl
+    hihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopegtrghlvhhinhifrg
+    hnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhg
+X-ME-Proxy: <xmx:n6IXZ1M7wj6JXgC-2_iRUKbOUAGbry7eFWWgB4ZG34T5YmxhxTZbvw>
+    <xmx:n6IXZ6-YxyARHHLoadQiBGcvNatL91Rddvi_Mn46Y7jD-OY3Y7FVgA>
+    <xmx:n6IXZ9XYY0yaVMb-UCIIzNzxJHGmzeJcgOSdK7DKTdy_-xK1WRwIDQ>
+    <xmx:n6IXZzdCTEjlJK9eOEwtumokB9ZTXFYQXipiXYRWne9ZzqWLg8tejQ>
+    <xmx:n6IXZxk8IO9b_v4Jo2zyVadfHpbDbItVPQOtaUYxMNl0PWuGoBVNK6vv>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Oct 2024 09:03:26 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 81f82daf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 22 Oct 2024 13:01:54 +0000 (UTC)
+Date: Tue, 22 Oct 2024 15:03:21 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Calvin Wan <calvinwan@google.com>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Enrico Mrass <emrass@google.com>
+Subject: Re: Question about `git gc` locking files
+Message-ID: <ZxeilMDwq0Z3krhz@pks.im>
+References: <CAFySSZBCKUiY5DO3fz340a0dTb0zUDNKxaTYU0LAqsBD2RMwSg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPSxiM-kf8U=vzp5MoD3tUuOtnNjcCgPhLdriyeQo5CGf=EhyQ@mail.gmail.com>
- <ZxeWDTFHpHmVePdF@pks.im>
-In-Reply-To: <ZxeWDTFHpHmVePdF@pks.im>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Tue, 22 Oct 2024 12:54:18 +0000
-Message-ID: <CAPSxiM9WQMFu+qTgR9LPk9erVUFgPU5tqRBobTomOJhm-hiLAw@mail.gmail.com>
-Subject: Re: [Outreachy][RFC]: Final Applications expectations.
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFySSZBCKUiY5DO3fz340a0dTb0zUDNKxaTYU0LAqsBD2RMwSg@mail.gmail.com>
 
-On Tue, Oct 22, 2024 at 12:10=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
-te:
->
-> On Tue, Oct 22, 2024 at 11:45:14AM +0000, Usman Akinyemi wrote:
-> > Hello,
-> >
-> > I hope you're doing well. As the deadline for the final Outreachy
-> > application is approaching (Oct 29), I had a few questions regarding
-> > submitting the final application, specifically for Git projects:
-> >
-> > Is there a specific way we should record our contributions? For
-> > example, should we include a link to the public mailing list
-> > discussion of a patch?
->
-> Yes. In order to make it as easy as possible for us mentors I'd suggest
-> to provide a link to every patch series you have sent to the mailing
-> list in the context of Outreachy. It would also help us if you included
-> the current status, e.g. whether it has been merged to `master` or
-> `next`, as well as the commit ID with which things have been merged.
->
-> > Are there any community-specific questions or expectations we should
-> > be aware of?
->
-> We outline the details that should be included in your application at
-> [1]. The most important things are:
->
->   - Your self-presentation.
->
->   - An explanation of the project you want to tackle as well as a
->     rough timeline of how you want to tackle it.
->
->   - Links to the microprojects / other projects you have done during the
->     initial Outreachy phase.
->
-> It is encouraged that you send the proposal/application to the Git
-> mailing list so that we can provide feedback on it, which also allows
-> you to iterate on it before the deadline. You can search our mailing
-> list for examples -- most of the recent proposals in the context of GSoC
-> for example had a "[GSOC][PROPOSAL]" tag.
->
-> [1]: https://git.github.io/General-Application-Information/
->
-> > How should we go about detailing the project timeline in our applicatio=
-n?
->
-> We only expect a very rough timeline here. It should give you enough
-> ramp-up time to learn about the code area you'll be working in and then
-> give a rough idea for how things will be progressing. I'd recommend to
-> not be overeager -- it is fine if things take time, and Git is not the
-> fastest-moving project. Also, account for the time it will take you to
-> get knowledgeable in the area.
->
-> Of course, that timeline isn't binding at all. It rather serves as a
-> demonstration to us that you understand the project and what subtasks it
-> can be split into.
->
-> > Is there anything specific that mentors are looking for in the final
-> > application that we should take note of?
->
-> It would be nice if you mentioned anything that could conflict with the
-> internship up front. This includes things like you picking up a new job
-> during the internship, which may limit the time you have available to
-> work on projects.
->
-> Anything else should be mentioned in the link provided above, I guess.
->
-> > Thank you for your time and guidance!
->
-> Thanks, and please let me know in case you have further questions!
->
-> Patrick
-Hi Patrick, thanks for your reply. As you may know, Outreachy has a
-kind of form for submitting applications (they have some set of
-questions someone has to provide answers to)not like GSOC where the
-applicants do not fill any form for their proposal application. I am
-guessing someone should add something  like self-presentation in
-answer to one of the questions as there is not really any question
-asking about someone personally. I think what is near to it is about
-previous experience.
-Also, anything about applying to two projects ?
+On Mon, Oct 21, 2024 at 03:55:45PM -0700, Calvin Wan wrote:
+> Recently, after upgrading to 2.47.0, we had internal reports of users
+> erroring out with:
+> 
+> fatal: cannot lock ref 'HEAD': Unable to create
+> '<filepath>/.git/HEAD.lock': File exists.
+> 
+> We believe this is due to "(98077d06) run-command: fix detaching when
+> running auto maintenance", since we have neither `gc.autoDetach` nor
+> `maintenance.autoDetach` set.
 
-I will start working on my final application to get enough feedback.
+git-maintenance(1) detaches itself by default unless told not to via the
+config keys that you mention.
 
-Thank you.
+> When this bug was fixed, the maintenance runs that triggered during
+> usage of the external tool, repo[1], would lock the HEAD file in the
+> Android manifest repository thereby erroring out `repo`. Additionally,
+> long running maintenance tasks would also cause users to frequently
+> run into this issue when using git commands that are written to HEAD.
+
+It is a bit surprising that HEAD would need to be locked in the first
+place. As far as I am aware, the only step where we end up locking refs
+in the context of git-gc(1) would be when we decide to repack refs via
+git-pack-refs(1). And that command shouldn't ever end up packing the
+HEAD file, as that loose reference must exist
+
+Digging a bit deeper surfaces that it's `git reflog expire --all` that
+causes us to lock HEAD, which is... unfortunate. Seemingly, relfogs are
+locked by locking the corresponding reference.
+
+> We can fix this easily temporarily by pushing out config changes to
+> run in the foreground, however, I was under the impression that `git
+> gc`, whether invoked normally or through `git maintenance`, would be
+> able to run in parallel with other git commands and therefore not
+> lock. There is no mention of this in the documentation for `git gc`,
+> but I do see it in the `git maintenance` documentation. So should `git
+> gc` be locking the HEAD file in the first place? And if so, is there a
+> way for `git gc` to have less of a dependence on HEAD.lock?
+
+So what seems to be happening is that you have two processes racing with
+each other: one that is trying to expire entries from your "HEAD"
+reflog, and the one invoked by the user to update "HEAD". By default,
+Git will wait up to 100ms for the "HEAD" lock to be released, but it
+seems like expiring the reflog for your "HEAD" takes longer than that.
+You can work around that issue by increasing "core.filesRefLockTimeout".
+
+But this whole thing uncovers an issue with git-maintenance(1) itself.
+The above commit fixed how git-maintenance(1) behaves such that we
+detach at the correct point in time. But what it neglects is that some
+tasks are more special than others and should be run synchronously
+whereas others can be run asynchronously. Packing refs and expiring the
+reflog are tasks that should be run synchronously to minimize the impact
+on users.
+
+This all demonstrates that git-maintenance(1) needs to get some more
+love. You have uncovered this issue with git-gc(1) as configured task,
+but we have a similar fundamental issue with the git-pack-refs(1)
+subtask. So I guess we'll have to classify those subtasks into two
+categories, where one category needs to be executed before detaching
+itself and another category can be executed asynchronously after we have
+detached.
+
+Patrick
