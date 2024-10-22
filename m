@@ -1,63 +1,65 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A753136345
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 16:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227D5136345
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 16:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729615011; cv=none; b=WwzRUcT2UcG56zkk0+dffugbD89hTufjtFtK9qYDmpTdSromrijrhCwsMXKAB8D4XutqsjRP/31av9aU7ktNZe3uU2AGr2axph9N2wl7/Oyd2nzaFkkMH1rnrKkZOgm9mX/q7UHocufgRccVkxLMU7weGaeZ9W3zFBUP/vKEOwQ=
+	t=1729615081; cv=none; b=X1gwHeUGTZ3sNj/eGsz23FDl+sq/t66TT78PtPEZHxTNZTHAl8KO8AuHzJyuWIQGZhnIv4JfJ8WN1j82EqqjITh0cAqsyTfGUgNTmeW7cW6cd4SAWN7oNTfoROdoUoOUNOxDc3CyNECh5ufaGEpd8C/EBRPIL7xCkhdwYJsU1q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729615011; c=relaxed/simple;
-	bh=fDA7ZVtBlzCSLIgGiVZwnoo7UCQT28VbLEcHxupsAkU=;
+	s=arc-20240116; t=1729615081; c=relaxed/simple;
+	bh=H+qOr7xidLZTkS+CoBRBm6t52qcL4SLi3fPAGaihpeU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vx0a+wdURFOQNvehOf1S/x9KWSydTzMP4KJGU9GJ0Y305q0kOJ5FWbUgOqt/wA12LL7t2bE/hfycWR/QHlAfNHDYqXqLT/wfaEka0r5pC41avFHUAjH+VKccUbAqDuXDj8Iu75BP+G7JboHRKdwiQLONiPTpNGYH977pq2U+16s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=K5zj5FHH; arc=none smtp.client-ip=209.85.219.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=pnqHdJeNPFJjjM3ad1erqFAKCusqK4VPR0je/bGO6STMgtET9Mmt6+WSC5R7xhoS8n+LNNtcwWn91rIlOfAQFSh1YwnNwzJKaWft/XRJuj8ZUZyyRadHUc96tAXpM7NE/vkJ6cdMp27sGwl4gtAbwkjRTjZ6tCA5c+gZNYKSC2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=z4dy0hzO; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="K5zj5FHH"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e28fa2807eeso5459217276.1
-        for <git@vger.kernel.org>; Tue, 22 Oct 2024 09:36:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="z4dy0hzO"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e29327636f3so5808160276.2
+        for <git@vger.kernel.org>; Tue, 22 Oct 2024 09:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729615008; x=1730219808; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729615079; x=1730219879; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PJiJNo4cGgESpI+3ombar8HIqeZgJsVBeEYbEdZP168=;
-        b=K5zj5FHHb/gy8bZC/2dBQRgdojdt4nqFuOudEU87ecKv5bKa7D+GVkYmvHiSsmcU39
-         j+L43TFQ5z4f8uBdP+TWWIQwdW7rtkS0AdD/NQuf3mbduOUyn3DOi+NT7EPdIpA87RzQ
-         U0txi7hvhOHxRnrvqAeOZRmEaAnsLxsEQQmRi13Dm5tWgv42cVk6t2JfeEV+7r7dP8KK
-         9rKKQIWvfeTgGqN1z69Zjm/7sFmDdDVDyUHKr8tdXnqx+yo+/qNPlFC+xan/sg2TUeLU
-         UWfNj8qLQ5Gk0PiDNBzEiBrOBYbMKvjHrYJVDxMNkRiP9Vx/TrFNyu30o00Zm2CG5nnO
-         W8gg==
+        bh=iyeYd4ihNxQdZXSHpMF9YS7KrIUW94DmhLowzHy3VoQ=;
+        b=z4dy0hzOWylMpxtV0SP/a6wTqPtZ+SKahh6b3sXzWPJQw2rzJkUaLv0DUE5CtsCejB
+         CJ5hqADXl/u67IKYVMsbF+oYRQCbxhUzh4Mn3cEm7iit76aMZ8Iakemsb8W6z+jXHv8E
+         0vz+v9aH8W7RAUW7run1J5mEdgINfXaxQb/vUy0pedmKp8meuOO36CBU33ijH/EM+vHw
+         zX+8PEcS+50XvVl8NR+KPKYa8fU+uiRz5slISqNevFc1opT48k2GROXAPX4WJ88r4cdS
+         jGA970KlnIQpF39xG/rtLmqRwacy2kVB1e8876WpIWJCv5QtLglgZNLbIWx9FSqGAjne
+         ZdcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729615008; x=1730219808;
+        d=1e100.net; s=20230601; t=1729615079; x=1730219879;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PJiJNo4cGgESpI+3ombar8HIqeZgJsVBeEYbEdZP168=;
-        b=fqVTEUJlFUPaYhju4Q6cMN5H92RyBBSvjwNtg9eyEbhgG+pXH1xYPh/fkWKHFl2aM8
-         F00MWM1D7eO/euqeoWsrIkxlXw6v9ywwZ8jvqrYPBwag+3ViSfHwi62JP2K7/u7etJVN
-         rEzRnKkszGFjB36C0sErb1mu453uY3g9R8iFQ9ykU0zTdbwxwOe1FJ9ByAwAL0VPSSdJ
-         JzYTQZghBElrekl7/TbyZd7XQTk6Ti6IYKCOLUX+udbSanWDBa/RV1A/LDEPLwjOC4Bf
-         ALIBHzQj2/WUzcHIh+rF0GhN6Xq8SCbKHzITbFV4hLKqo8MVWCrCHLgMBmx6f0Ww3zvY
-         gMeA==
-X-Gm-Message-State: AOJu0YzbGXAooDD/cHP6nXdfjL94VT+poIt+mnfXsKV+oY0+7anDe1/M
-	iWyqq0S8RobFrVd2sBmc2UGITlevqZJVOiBVmnIUC1xuNhPXEV9cPAgJCzhKJf9i57lGqgEh19x
-	jp/njqw==
-X-Google-Smtp-Source: AGHT+IHps+MBiQN2s4A2ESCGz6aChazdMivixvIWiduq0gbAq94GZKRUMLuJ0S4EvAsxvVbNm8CmMg==
-X-Received: by 2002:a05:6902:1005:b0:e2b:cfb7:b0f0 with SMTP id 3f1490d57ef6-e2e271a21a3mr3399818276.29.1729615008324;
-        Tue, 22 Oct 2024 09:36:48 -0700 (PDT)
+        bh=iyeYd4ihNxQdZXSHpMF9YS7KrIUW94DmhLowzHy3VoQ=;
+        b=QqSQl0DgHWxjz6SACMD+lNChNXXtF6prjQVQ5u9mHjGXic6NC9raw3qzeOiU0clzvx
+         KNjFlYoYyVfcPZruxXA/EM61qcsfg2zykmML5Y4USEpd7VbwIXBX2mbNwYSJs6trYHDa
+         ltQetqPsor3USLrl6oyJ1VvZhqzlibb+aIZWG7UEf1UXPyzrHpNZwt6ErdMZfoBcJa67
+         WFdI7G4DeG16DFpLH8oFXoqqptBPeXD6M50RaUaW1fjk23D+15QUgamoYWGwsawGnaeN
+         b6dxSVnbFyieAl7D9j+JNhEV2+Le0aSwS1c4hkQnB3eaogrDnQ39YZvclsT1hoT3mjTG
+         QsCA==
+X-Gm-Message-State: AOJu0YyaW4cB0bS0CBZCPyY+qxyRU3cxCG0JQZ0Mj9zZsmMqHCJe3Cgz
+	NnmfvnUgGAYiOIiUIuIp6KCA2GDZpj8gE9gZc6ttFFeo6sRq0XeWf+bJ9JPgq+s=
+X-Google-Smtp-Source: AGHT+IEkzB96jV7NXaqZ1IW+CRwJ8q1EgzHr+zRLqEtqWwVqCGfmKQagT5AT8CS5opX89ZgBG85PIA==
+X-Received: by 2002:a05:690c:fc1:b0:6e5:e6e8:d6b7 with SMTP id 00721157ae682-6e7ef101965mr826247b3.1.1729615079114;
+        Tue, 22 Oct 2024 09:37:59 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdcb0356dsm1115395276.62.2024.10.22.09.36.47
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5ccbaf0sm11437437b3.75.2024.10.22.09.37.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2024 09:36:47 -0700 (PDT)
-Date: Tue, 22 Oct 2024 12:36:46 -0400
+        Tue, 22 Oct 2024 09:37:58 -0700 (PDT)
+Date: Tue, 22 Oct 2024 12:37:57 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Andrew Kreimer <algonell@gmail.com>
+To: karthik nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] t1016: clean up style
-Message-ID: <ZxfUngQKdGZq2dWf@nand.local>
-References: <20241022110730.7655-1-algonell@gmail.com>
+Subject: Re: [PATCH 01/20] packfile: pass down repository to `odb_pack_name`
+Message-ID: <ZxfU5c2fwD+HWtPf@nand.local>
+References: <cover.1729504640.git.karthik.188@gmail.com>
+ <c8cc21c2eeb9d1e0bc261143e642eff38fe33888.1729504641.git.karthik.188@gmail.com>
+ <ZxbCWvFo8ZdwPgJd@nand.local>
+ <CAOLa=ZQPH_rd65-zW6dRJAiAA747htXR---icS5aV9zupH2aGw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,53 +68,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241022110730.7655-1-algonell@gmail.com>
+In-Reply-To: <CAOLa=ZQPH_rd65-zW6dRJAiAA747htXR---icS5aV9zupH2aGw@mail.gmail.com>
 
-On Tue, Oct 22, 2024 at 02:07:30PM +0300, Andrew Kreimer wrote:
-> Use `test_config`.
+On Tue, Oct 22, 2024 at 04:51:04AM -0400, karthik nayak wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> Remove whitespace after redirect operator.
+> > On Mon, Oct 21, 2024 at 11:57:44AM +0200, Karthik Nayak wrote:
+> >> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+> >> index 5809613002..60f806e672 100644
+> >> --- a/builtin/pack-redundant.c
+> >> +++ b/builtin/pack-redundant.c
+> >> @@ -688,7 +688,7 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
+> >>  	pl = red = pack_list_difference(local_packs, min);
+> >>  	while (pl) {
+> >>  		printf("%s\n%s\n",
+> >> -		       sha1_pack_index_name(pl->pack->hash),
+> >> +		       sha1_pack_index_name(the_repository, pl->pack->hash),
+> >>  		       pl->pack->pack_name);
+> >>  		pl = pl->next;
+> >>  	}
+> >
+> > I am a little surprised to see sha1_pack_index_name() converted
+> > similarly here, as this patch promises only to touch the
+> > 'odb_pack_name()' function.
+> >
+> >> diff --git a/packfile.h b/packfile.h
+> >> index 0f78658229..507ac602b5 100644
+> >> --- a/packfile.h
+> >> +++ b/packfile.h
+> >
+> > Indeed, it looks like odb_pack_name(), sha1_pack_name(),
+> > sha1_pack_index_name(), parse_pack_index(), and has_pack_index() are all
+> > modified. Were these meant to go in separate patches?
+> >
 >
-> Reported-by: Taylor Blau <me@ttaylorr.com>
-> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
-> ---
-> v1:
->   - https://lore.kernel.org/all/20241020121729.27032-1-algonell@gmail.com/
+> Nope this is intentional, each commit tries to pick a base function and
+> modifies all layers above it (I should have explicitly specified my
+> approach in the cover).
 >
-> v2:
->   - Base on "ak/typofix":
->     - https://lore.kernel.org/all/20241017112835.10100-1-algonell@gmail.com/
->   - Tested:
->     - ubuntu-latest, GitHub Actions.
+> In this commit, we try to modify `odb_pack_name()` and therefore
+> sha1_pack_name(), sha1_pack_index_name(), parse_pack_index(), and
+> has_pack_index() too. Otherwise, we'd have a lot lot more commits.
+>
+> This simplies the review too, but yes, will add more instructions to the
+> next version.
 
-Thanks. In the future, it's preferred to send subsequent rounds in a
-reply to the initial round so that the discussion all happens in the
-same thread.
+Makes sense, thanks for clarifying. I agree that this would be good
+information to have in the patch message to avoid confusion.
 
-Regardless, thank you for this patch, I've queued it. It looks good to
-me, but perhaps others could chime in before we start merging this one
-down.
 
->  t/t1016-compatObjectFormat.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
-> index 92024fe51d..8341a2fe83 100755
-> --- a/t/t1016-compatObjectFormat.sh
-> +++ b/t/t1016-compatObjectFormat.sh
-> @@ -116,8 +116,8 @@ do
->  		git config core.repositoryformatversion 1 &&
->  		git config extensions.objectformat $hash &&
->  		git config extensions.compatobjectformat $(compat_hash $hash) &&
-> -		git config gpg.program $TEST_DIRECTORY/t1016/gpg &&
-> -		echo "Hello World!" > hello &&
-> +		test_config gpg.program $TEST_DIRECTORY/t1016/gpg &&
-> +		echo "Hello World!" >hello &&
->  		eval hello_${hash}_oid=$(git hash-object hello) &&
->  		git update-index --add hello &&
->  		git commit -m "Initial commit" &&
-> --
-> 2.39.5
->
 Thanks,
 Taylor
