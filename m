@@ -1,118 +1,117 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2BE130AF6
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 21:22:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE31130AF6
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 21:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729632153; cv=none; b=LT/8+vjSc7lCCT4qYPPih3eRmUJlX84QZBUdTU0L/T8IoWOP4FSB663flMm/cwCgisILo3BrSpC5BhTe4QFYNTlkAB3GNOnyPugDIjjjFxvWz6WCA8eJp9Qut3SYcm0PtS99tX/AqkizhVFa3gt9fscwEp8dNvj9XCTSpfDx9B0=
+	t=1729632486; cv=none; b=BoePHkxNMXzUywJZz8SQStb9Ngbk81jRyikBq9sg4BYuvqkQLH2v3OJ9rsMwAtic3ye8XZoBxhboiCzLJjk7kCd9aRlLRQ9RskoN9zFgbo7LJFIw2OhbJiUAiDSTLoF9PAlm16LfMYntzzJdH/8i/fQa2sXX+QmQJ+jJjp+AiHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729632153; c=relaxed/simple;
-	bh=Io/prdBs5RPkDRajs2xB0Hx6IoodK6ueM7GAvf/+DKM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=KXu2o6A3Gc+E8Q0MgrXpxNjdALKDXDqQ755mTSRx72J7bwq+GoJjay3J7vZsiO2CIa95gEXsDaFiBeOfp2iKBGM5tAR3kYWjxT+Qhk6dE7q3V9oCIGVLWIBXjFrpb3ae4Rg7HoVFOJKLLmOlWOrJKKAovnO0qgG7ysPV3bJXZT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RQEW3kvh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dSaevjYI; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729632486; c=relaxed/simple;
+	bh=+PNAzH28Ui4Pnq/oUKuTiXG9xzAR9LIzOAuR49bHXuw=;
+	h=Date:From:To:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=LdeR9Jmr5dY1ZRsc2c+W1KW3+BkCZRRQYPenAz4K+5Dly8k4zxnNf8wUb2KY6qxvvM/tG3SoZFBuB9zLHdI6QJAj0LRV8JXFcb6dw48THIeH9rOFJeqbHt/mFuDeIXrQm4Kzvgic4Xg/wx8hRqdd61GraHJm9tVhTQvj0pq2pn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=POFDKZA5; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RQEW3kvh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dSaevjYI"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DA0111140114;
-	Tue, 22 Oct 2024 17:22:30 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Tue, 22 Oct 2024 17:22:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729632150;
-	 x=1729718550; bh=OA+OfTeDnxb/QLPSQD5J9J2H5Q8zsJZmk1TAW/4LYzM=; b=
-	RQEW3kvhbSUWaYzl+S0DR64KzGfeTVD49dOBhgxFCWPdzpEMUzF3qRW6n7Qe0jQp
-	hCc9GAURNfmPKzBBqUnoRpN4yfj3ZDSxDvZBmE8aNHIjvyRyQfT7ETaoGG1yXyyb
-	G5Te4mkO95/Bjc9uuvuw2SDvokf+bfR9nquo8HhWf6FfEb7ib8euPLr6eWva40N4
-	q0E6zetd+5QOv2REF2OKNSceXhNWA0Nn4QKcdN8E76qOz5mRhbFPjzQ19Gc9iqo8
-	5VPonNbRUfzD/wN9W9LYDiVmS72YhMxwALGW79KNJ+ECvIfHRKn4QRNW57z4d2rh
-	CTXiYDYR0qfmppJY2djr2w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729632150; x=
-	1729718550; bh=OA+OfTeDnxb/QLPSQD5J9J2H5Q8zsJZmk1TAW/4LYzM=; b=d
-	SaevjYIhhxpKc3bKmUDhfeVpz2xzZXse+9SLvOcsxs/phPsiLTMHDRYcVVQzEop1
-	zQ883/QV2r8xA36MJWpqufOdYkSfghR7/Y8WwmqJhNF6HwzQmPq0u5GWJvgQHfpP
-	waXIizbzOX0Y7d9bkk3t2SKQ7lpLNYxiPre7lAfHV4jAVb3EdVbp3kEJhF8qWR5P
-	0ot50xaFAAS0k3itv9efOqFAqdyLbidFJFCP37E0r8OCd4FL0RuvWR58MUPvngYF
-	LrGOVF3naGg3OwjYIljMFN4BD48SPt55xUixCs1iJlgmAcNMAjnN7y1nx47Me41w
-	QdC7VQq6yZECuLTQhtRlA==
-X-ME-Sender: <xms:lhcYZ_ODV-zrpsmLatLVNvX65xMTf1M0yPKSaAeujCsyP5H6rl3TCiU>
-    <xme:lhcYZ5-cyec-2vutprI5q1fGU8zC74G3zNeo7y7wrcxFTacEQRk_JXcDTFc3VLSIJ
-    WymlsRoPTN33SiO0A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeihedgudeitdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
-    fhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghr
-    ucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepleefjedujeffgfeludehgeeh
-    ueeffeeftdfgfeefveduueelffegkedtleeukeeinecuffhomhgrihhnpehgihhthhhusg
-    drtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhs
-    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
-    eprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
-    rhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:lhcYZ-Thgg-aPPpIFKdxNW9AQUTlvaI8qhjM2jGhnPiGVDTsEGKgxQ>
-    <xmx:lhcYZztywGw3CnoH4UXWa--ZWmMr7Xmh4tAa4JerIxJSrfcPj733iQ>
-    <xmx:lhcYZ3dpOenK-lOk3dxziRirVAF9IlHZhmlVi0pCPNIwR6hMi_MHDA>
-    <xmx:lhcYZ_1tzc58GygGCxDdXv6jrN7PpSGxx3sbtz7hUMgAub-lze-Fpg>
-    <xmx:lhcYZz62BC5myTilK9wRlDmDwgd96eAvKfwrwkhnSBq_jxNLuaNR_uW4>
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id A3E2D780068; Tue, 22 Oct 2024 17:22:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="POFDKZA5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1729632482; x=1730237282;
+	i=johannes.schindelin@gmx.de;
+	bh=drfdRT+k1y81l2ayabJqySsWZcPDQR4gKkmsTxXNXFU=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=POFDKZA52mu/UaSpwrXl+a9Cqpp/6pIK6v9V3mqO0lqZ5cIJfDXA2PDF4DaWT6jS
+	 RmOrCcu7bcYXMv2s1I9RyH2fLYa4IkFw8uJqyBo6SH/ENAzhkyXnGnrJG4GiM2jvl
+	 Qms3vvnaKCPvPaUOyAgRbMj+S96nMQB0UzB/9HlLN/yo0NM9dw1lpozQKyqRNnUN7
+	 uf71vZuKa3hIBp4EkWjeSCWyQL5+Q1w2mPMapEkmTXFvDkq27vukuGo5mxRIqM+Sx
+	 l9dZPLhzNDeQCRsPJzK1Mfd8pKQzLC82FPfJb6iiQifDdsFLD4wYWqNRqSrDNrR7F
+	 IcMJBs8kkqNeZQGeeg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.215.102]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTiTt-1tT28l0SjN-00LWET for
+ <git@vger.kernel.org>; Tue, 22 Oct 2024 23:28:02 +0200
+Date: Tue, 22 Oct 2024 23:28:01 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git for Windows 2.47.0(2)
+In-Reply-To: <20241022105113.3259-1-johannes.schindelin@gmx.de>
+Message-ID: <f44861fb-10f4-b701-8385-4664965e4d02@gmx.de>
+References: <20241022105113.3259-1-johannes.schindelin@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 22 Oct 2024 23:22:10 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Taylor Blau" <me@ttaylorr.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org,
- =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>
-Message-Id: <ee292177-66ff-42be-bc87-11cee5d8b575@app.fastmail.com>
-In-Reply-To: <ZxfhAAgNlbEq60VB@nand.local>
-References: <cover.1729451376.git.code@khaugsbakk.name>
- <ZxfhAAgNlbEq60VB@nand.local>
-Subject: Re: [PATCH 0/4] Documentation/git-bundle.txt: promote --all for full backup
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wGdh5ML7fmefcoHFKCPBa9fE2C7rttmEW/Lqi+tqUhBF0yLH2LO
+ jrQ33m+igYr1IBAYv8iho/o8V/nZk4agZj4u6H+mJYEX4V3AfOjb0PIQ1WUV4MhOe/8LhkG
+ 3mT5FMdrGkUlIKzzw19fnzz1Jq1Cv0l8UmmIJHbbkT889a/EghKPOU60EjZGJHb49xf+/wD
+ 2LeKSA7DGfqX9Nn0FEd4g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:rpvPseUrCSA=;gAzqEgzCX7LonTunE2qibIYQ2ys
+ f9zFV3k+ShBKLkroWkz4HNUERlHODcg88KxnbTtHX6vvXpe/4OnxSUi7B7gxL9JnGBQqbEyAW
+ yK9Ec+Q67W2XE0HW9v1Hh165M7s9WBLKCpLryjHoQT38YU6KrhkY6K5vDFU4tHSW3UNQMVbez
+ H+lV/QGWVj4zP6JvmmGZa8AKP/PuNC/pzu3jkWRZSbJZxQj94GAo0mRznLIvW5MpJkWh+a3mL
+ NS6r9wQ26lJ6Z2d6SImwSC745g4BqsVe55DFP1y6J+IP60TF878i514Tue8VxdEEr8tCsDips
+ pdPyrdCY/w6QeYWQQ5fP3EIW8cPqfSQQkRAQb2jPNAZcH3yBVvsElcfoZ4Ae8oZon8MOdvR4i
+ 00WN20ZCCt0rfcT4nNXdMpCiBsqsuNWE2ZbG+KlnFySjIzxsSn9dewFnyfTEGpDLToxT7CwA1
+ LT80W5pf7t4ihEcn/OCTrrKKWmmpL+JfD7bKb41cDCh3qZJpgNyc8f8oH8BRYrdNatuLhk9Q2
+ /liiT7rnPdUjXHAD+WlJ0FLuW2rQYkwHorenNX1ewclWhdeB9LrLiK1RY5jpAOMhomTmp+rbY
+ 1w9fkqknN60IIFmubfUMXmFwRCsgiXMRmB2lhYGXkHQfefLSVFQ4BEBMBu3IXXmQtiuwamAbR
+ 8RD9lkPjNo+VPf0kMaY9X7j1IU/ygVSQO6NQZjsEcnQZVv7wYbFoGXn35KgufRZffMwijXHNb
+ O6WBXDUtgVckDe32LjuBhw52dyFkFvYVjwAndYnrS18XoW+avoJXRGG3cGKaQ7voRpT1g6/Ef
+ 8UlWqmS+5Ysjsg7QJUwk0FVg==
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 22, 2024, at 19:29, Taylor Blau wrote:
-> On Sun, Oct 20, 2024 at 09:14:58PM +0200,
-> kristofferhaugsbakk@fastmail.com wrote:
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>
->> The documentation for git-bundle(1) now properly covers `--all`, the
->> option that can be used to package all refs.  A "Discussions" section
->> has also been added to address the naive backup strategy of copying a
->> Git repository manually.
->
-> When applying to 'seen' last night, it looks like this topic caused so=
-me
-> breakage here:
->
->
-> https://github.com/git/git/actions/runs/11449483611/job/31855169149#st=
-ep:4:144
->
-> Would you mind taking a look, Kristoffer?
+*sigh* this email got rejected as spam by the Git mailing list.
 
-Ah, thanks for the heads up.  I=E2=80=99ll take a look at it.
+On Tue, 22 Oct 2024, Johannes Schindelin wrote:
 
-(=E2=80=99Tis a shame when we neglect to run five-second-run linters bef=
-ore
-sending out)
+> Dear Git users,
+>
+> I hereby announce that Git for Windows 2.47.0(2) is available from:
+>
+>     https://gitforwindows.org/
+>
+> Changes since Git for Windows v2.47.0 (October 8th 2024)
+>
+> Bug Fixes
+>
+>   * A regression in v2.47.0 where git maintenance start crashed
+>     immediately was fixed.
+>   * A regression where clones, fetches and pushes via SSH would
+>     dead-lock was fixed.
+>   * As of Git for Windows v2.47.0, Scalar was supposed to enable an
+>     optimized push algorithm, but for a typo didn't, which was fixed.
+>   * A few documentation and other, minor bug fixes from upstream Git
+>     were integrated into Git for Windows early.
+>
+> Git-2.47.0.2-64-bit.exe | 83c618dcc50b63f0f7afc86a7a125169bd59559ff68068=
+3f1d915c45e05ff4cc
+> Git-2.47.0.2-32-bit.exe | b798dc1ff11afe912994e0e7d0b538edbbd291e666fdc6=
+f34fa4cb19547aefc7
+> PortableGit-2.47.0.2-64-bit.7z.exe | c77368a8f6ccbd43bde0df0ab603133ce88=
+5407a018787d6f1971e040590f1ab
+> PortableGit-2.47.0.2-32-bit.7z.exe | 71d7de445ce2412c0344f5258dec4a51cac=
+3b4b536b0d68c8e753729d429d365
+> MinGit-2.47.0.2-64-bit.zip | c4a5d3a2adda98b25fe59349733fca56b3843360b96=
+2dba5535282a9d8120b31
+> MinGit-2.47.0.2-32-bit.zip | 59748b3193b6f27849e35ee76165d53f47a5a205a4c=
+d83e926800570aeaf5aa2
+> MinGit-2.47.0.2-busybox-64-bit.zip | 672aa54dd79d35baa75df934e2bb6faad5b=
+9f45a99339b1dbd5a1fb2f8b44348
+> MinGit-2.47.0.2-busybox-32-bit.zip | 94ff74c2c7f68a5093b57c527398fe17623=
+0adadb71c25722f0c43a5de611f7b
+> Git-2.47.0.2-64-bit.tar.bz2 | b6ca6dcd5c818396faa57e06e10489aed3e1639631=
+7475ca8e88e30e4eb2e3c5
+> Git-2.47.0.2-32-bit.tar.bz2 | d861cdef6ef1c93f412eb6e5fa766973a6eee5f8a0=
+8973ac4a396bb235c3d489
+>
+> Ciao,
+> Johannes
+>
