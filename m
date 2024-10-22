@@ -1,120 +1,99 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9038C16A92E
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 13:55:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35BD1A0718
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 13:56:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729605314; cv=none; b=MzSrjHPy31wuuoIp/k8Aei1PQzGw2axfnhAtVOkeh1PR/nTsPHSeNeWFO9Wl+etdAXGC3zc5OmVxNq8Ytrqr622kUP+FKI759PyDGnI/hGUrruMpXpPms05weJdCpYr07Umj0eKKE/73ddYOI+MSXiBL2xgsU183oZPvYX1IZmY=
+	t=1729605368; cv=none; b=Z5cPJVblTFeX9ROTlIDB9z+CV3LBMV6k7ArH9mF9kMl9umOYT2pZLYebtnxHEnLdJpmh+gFIlYAqn39jDwPO6MwKZzWPLRS8f682IOca0FiR2q6FxnE81wdE51Wv44rNnPX/MR9GF0o1eETkOJWNPwNMW8oqhlO/Jy1ErKnEaEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729605314; c=relaxed/simple;
-	bh=U4j8s3IiBqAqB+JlwWMzR/1PYPOpJGnwB/dA1Pr0c/E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iiOOCOP0e8jS/Y0BI8jDzFp5g7lJvX6SiFkLXnyZ+VxDNfNsSUI8ZyizmL2/Sy+E9fhuhD1ScuTSY7avcofZTyU/O3ZsxQV4eG0sxtuMEuspkxDNkvD0ezOCuLTysKtaA5BvNP9B08sxWNxQxo8I63qKS1F4UNXRvrWIOYX78+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iTUTT21P; arc=none smtp.client-ip=209.85.217.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729605368; c=relaxed/simple;
+	bh=k+J7LStBJbzbl195k4lecdIFo/pGfL1pCJHZ5OSCO7I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jUybhViggSqVqexPdaQ2d6h8Agi9I9RQ3t87Jgu+kIoce9w7Y9Iz5SZQrluMyDxLh/8ntCjwyuDG2OQ4z9VpFjXRojzHC/jgUAhBCHENZH9rtstAonilCATL0do2vLSGyzNEpWXfH749842jnz8kseiqzwsDHz6gYEg2+B5v7J0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=u5c5S974; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=glwdK06E; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iTUTT21P"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-4a47dc2ef46so1541649137.3
-        for <git@vger.kernel.org>; Tue, 22 Oct 2024 06:55:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729605311; x=1730210111; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CtMJySQWZYbM9O6JV8jgGLEGH3O4qiFLyRgQ3odTm2k=;
-        b=iTUTT21PCMPq8WebokPtMwLkRGR9k22aFlFQTnAv9GY/eUpmOAgJhfW0QKF2+NL0RU
-         0at70iPP9Fmk5+q4xeEmYNRA8VVieFEZrhg32py++sT1GATNhEHWXC6xZZyaXYftLdOf
-         0xikmnnGpv0zPLHeO42VRF777feXQhTqxdN9q4t2NZKHt6UmWl80A/dmjyfWPZR5pqU0
-         FOTnQmiWkv6IUuq9BKoOIpRgM42ohVu2lQLOoyA9Er1APMrLghtBzVB953mOWdhjpP4B
-         BhYd8o06fXlPCCefjp/O4L/P7gpDx4MS2FzFGFBoFUiRSBq7YJ0AZgwTwF4Oas0vlA3P
-         +BJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729605311; x=1730210111;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CtMJySQWZYbM9O6JV8jgGLEGH3O4qiFLyRgQ3odTm2k=;
-        b=fbWoa7lIZ/NxqUV/ayA3zctxzz+0iF3XIbC3QFM69ovGn5hXQ0aEa9PYtMi4gzzS+Q
-         iKxB6lBtIT8oSVhdXYVmu91s/2Eoq6e7UYLltcOt1g+9b7lWjuO/FrkFSpUS5T+CARdW
-         ktBTx0XdEq92EQ3Vt69vueIdAXlht5a5sJs35wnvma/o95Y7ltEf3/nK58rIUNQQ5f7T
-         T1t69GFHsTE5JxbLE08/CgJ4j8q+MA1bhYPVoDw3N19v39Ea1Xp/mnUPXfWFL03zPhdO
-         6fXZMdGzi7j9oOrEwmBbIHs1OS5SwtEkGYw4MD12JGLecGyOe1HRKi2i2dKFhGZjfzbR
-         OcYA==
-X-Gm-Message-State: AOJu0YySds8Fx/cmde8HkvGUURLivZKK0iq4ccpZWlWif53zy8e0ZQCh
-	mingPiqy7HIqC3Wb+9/hctaxyN+5GahxGm0Ui3GdRIiI5gm42vnZiC/80WJ1ybdSlLEUk8MRtr/
-	HYWKlIn10C5GftEL+wiH0Xx4n0uk=
-X-Google-Smtp-Source: AGHT+IHx7rld+ziI1XRTwmHMRfG9X4DdVbq/nfLWN26POHsidl1iGT6eZOe9dY3evTPHiZ+WEoiTaQxYDBUgkOsnReU=
-X-Received: by 2002:a05:6102:2921:b0:4a1:5415:19e4 with SMTP id
- ada2fe7eead31-4a5d6b9df37mr11802357137.25.1729605311388; Tue, 22 Oct 2024
- 06:55:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="u5c5S974";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="glwdK06E"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id B57A71380236;
+	Tue, 22 Oct 2024 09:56:05 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 22 Oct 2024 09:56:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1729605365; x=1729691765; bh=k+J7LStBJb
+	zbl195k4lecdIFo/pGfL1pCJHZ5OSCO7I=; b=u5c5S974oobL7J5lEqwBWlrWOI
+	ujVeb6XAQHYGFjCxZhkf/EtjEv5qN7GBQzYalOKCFtkV+RKD+1TcVW6LVTtDda65
+	MlFZaZcB4GIuKx7T+BkDih0z+awceYTMwY8vBOn/i4pt2Gl0vGYyiMcflb1SWcmr
+	a0AXQcTVeqq96XQpAgQq9lWcV/yqWgCejBnwOrPFw0FbbIw2ql2LCaKIxzc5D54B
+	S6lbg2UoZcfyZN7NLbJTTxLU8ia8c2FQsqQMLvB8bJV4EAtWHP26GpF2eZaYZAO6
+	Krl1SdOom7viQEUQUCC9y+T/os2U4mx0lALynDw8fg2oVvwjbz0HCshK1CJA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1729605365; x=1729691765; bh=k+J7LStBJbzbl195k4lecdIFo/pG
+	fL1pCJHZ5OSCO7I=; b=glwdK06EjwyD1lBtgxbZvPdlyaSdYGbIdPrRqPT8S1WA
+	7uoKwt1OFa5UgCECDU0MsSglcyqVL/XoBa8j0JnIzkeT0QuHi0TCUVFTgeeoTzEt
+	A2LrSCOl7WMg64iWKM2pUUF7v5YrB5dbsfjgbwY9w72Z5sunGAS6ZWjKWjZaUdmg
+	OyjdqMEkH30UrZin97d+cls8uyJUbAyqrYrlk1bguageLywxmBFuRI41SRgDh9Jh
+	KixkYZKgTIcbehr8l2ll359LtXcOLfcaI37PT6dWaDamMBgnDO7DinOqhCr0MwUs
+	Jr2K+qSGhBbWu/QgOwMgo/EhRYd3RnWGG+MeYldDhg==
+X-ME-Sender: <xms:9a4XZzOBw1lqPkdrE3SQdOUuF_nNOaCRHuPhaCZjJNBkCeyhJnBkrA>
+    <xme:9a4XZ9_wS3teBBkCc2udF5pF_G4yRmU5LYOUS0eeXU6zwmuWsHr9mxxukzhG2mu7i
+    a5RKml9AD54s6YWmA>
+X-ME-Received: <xmr:9a4XZyRBsiDg9TnB0D7MdhbcMe-Nvykd0m4dB-3YwP8a6EI2Nr2Kaz8R6QGHdVucYJjgPpDsfrLK2w7K2X5rHwLe8ecTwLzz9rUdVfc3RW5l>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeihedgjedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepjeevudeggfffffeigeethffgieekveeffeehvedvgeei
+    teegueejleeihfeitdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhikhgvsehfihhrvggs
+    uhhrnhdrtghordhukh
+X-ME-Proxy: <xmx:9a4XZ3uAf5wXHOxJM-fjUjhEEJ2B--8S4yTBetkSjuszYTzD7sW1jA>
+    <xmx:9a4XZ7f6X4dWxuuFHe9fxpjkhPa9jL3q6XgRay53rQmQG0nsR2rCTQ>
+    <xmx:9a4XZz3GuDJECkkj3NqIDfQ7g6jKQ6KlV_A3PzJy4dQ8XI8I7gn-jg>
+    <xmx:9a4XZ3_HoLMvnbcoMrD_8UwZv3ZGi1_1SA1xq--yeWU0cF0-gXbexQ>
+    <xmx:9a4XZ8oHVbJCMQyrqrlHeTWpWCurqNvBMu_IuMTCAQf5edRx4y5Cta0c>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Oct 2024 09:56:04 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5c38309d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 22 Oct 2024 13:54:31 +0000 (UTC)
+Date: Tue, 22 Oct 2024 15:55:56 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Mike Lothian <mike@fireburn.co.uk>
+Cc: git@vger.kernel.org
+Subject: Re: Build failure on RHEL7 with 2.47.0
+Message-ID: <Zxeu7GbcXa-kOzLf@pks.im>
+References: <CAHbf0-GMV9VS7BAjvZiNENNOdZqV3jQ4+0k1kTZLkQhFT=6D-Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPSxiM-kf8U=vzp5MoD3tUuOtnNjcCgPhLdriyeQo5CGf=EhyQ@mail.gmail.com>
- <ZxeWDTFHpHmVePdF@pks.im> <CAPSxiM9WQMFu+qTgR9LPk9erVUFgPU5tqRBobTomOJhm-hiLAw@mail.gmail.com>
- <ZxelBccIFk1aXP3l@pks.im> <CAPSxiM8bu9LErD8H13_qgb+MV224TbEFzkSr4f74YxEL3Sg7+Q@mail.gmail.com>
- <Zxesj10G3bn27d99@pks.im>
-In-Reply-To: <Zxesj10G3bn27d99@pks.im>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Tue, 22 Oct 2024 13:55:00 +0000
-Message-ID: <CAPSxiM-wn7x1PyXsAvT9n0P=E6jBgieVEswfrFX3kUU-HqyjZQ@mail.gmail.com>
-Subject: Re: [Outreachy][RFC]: Final Applications expectations.
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHbf0-GMV9VS7BAjvZiNENNOdZqV3jQ4+0k1kTZLkQhFT=6D-Q@mail.gmail.com>
 
-On Tue, Oct 22, 2024 at 1:46=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Tue, Oct 22, 2024 at 01:39:21PM +0000, Usman Akinyemi wrote:
-> > On Tue, Oct 22, 2024 at 1:13=E2=80=AFPM Patrick Steinhardt <ps@pks.im> =
-wrote:
-> > >
-> > > On Tue, Oct 22, 2024 at 12:54:18PM +0000, Usman Akinyemi wrote:
-> > > > On Tue, Oct 22, 2024 at 12:10=E2=80=AFPM Patrick Steinhardt <ps@pks=
-.im> wrote:
-> > > > > On Tue, Oct 22, 2024 at 11:45:14AM +0000, Usman Akinyemi wrote:
-> > > > Hi Patrick, thanks for your reply. As you may know, Outreachy has a
-> > > > kind of form for submitting applications (they have some set of
-> > > > questions someone has to provide answers to)not like GSOC where the
-> > > > applicants do not fill any form for their proposal application. I a=
-m
-> > > > guessing someone should add something  like self-presentation in
-> > > > answer to one of the questions as there is not really any question
-> > > > asking about someone personally. I think what is near to it is abou=
-t
-> > > > previous experience.
-> > >
-> > > I wasn't aware :) But agreed, previous experience sounds close enough=
- to
-> > > me.
-> > >
-> > > > Also, anything about applying to two projects ?
-> > >
-> > > That is a good question. The only thing I could find on this was the
-> > > following statement:
-> > >
-> > >     > You are welcome to apply to Outreachy multiple times. However, =
-you
-> > >     > can only be accepted as an Outreachy intern once.
-> > >
-> > > I'm not a 100% sure whether this means that you can apply to multiple
-> > > projects or whether it means that you can apply to Outreachy multiple
-> > > years until your proposal gets accepted.
-> > Applying to multiple projects is accepted by Outreachy I think, as
-> > someone can submit an application separately for each of the projects
-> > in a community. I am just curious if Git has anything regarding it.
->
-> Ah, our mails crossed. In any case, I don't think we have anything on
-> this in the Git project. But if you apply to multiple Git projects I'd
-> strongly recommend to state which of those projects you prefer to work
-> on so that we can make an informed decision here.
->
-> Patrick
-Noted with thanks.
+On Tue, Oct 22, 2024 at 02:04:52PM +0100, Mike Lothian wrote:
+> Have I done something silly or is it just too old?
+
+No, you haven't done anything silly. These are all getting fixed by the
+patch series posted at [1]. I'd be happy to hear whether those patches
+fix the issue for you.
+
+Patrick
+
+[1]: https://lore.kernel.org/git/cover.1729506329.git.ps@pks.im/
