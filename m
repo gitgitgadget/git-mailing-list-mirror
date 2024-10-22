@@ -1,65 +1,68 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2521A257C
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 16:21:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00C91B85C9
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 16:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729614116; cv=none; b=qntdt4/uQaGW6AtUg3CKw+FNPu/XzQF7suQi7Rp+5JGhf3T+izOnMSNITwN1DkMtP5gK0ty7Bm2cf+aWNpO8JMZHdXchYcVckDCommvTCIAplz01ql2nJa5vbwgPU52zy5l8AtyUe8h/ht3RnIluvyfbqa/Bx7c0TOY74RlHck4=
+	t=1729614804; cv=none; b=MLTpp3ueHuVVnlTZ66KtkR4+DVijrYEzwiFzTAPywUx/sPZtsbtqHOEZTy1ckU0ttMhsgPe0owkvCnMgcMz/V7vxwjnn3oOUpFj27Odz4HFE1xMfDzbB/MaQ8reXJZap0k3voPOkC/UuSbDMOYayTKPpq4SHo7j7Zn5v21JcS2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729614116; c=relaxed/simple;
-	bh=6leJJBWNsUy1B2n3lEF8OQFWKbeLNoFklmKZlsO+ABo=;
+	s=arc-20240116; t=1729614804; c=relaxed/simple;
+	bh=sxfhxPixS7SCmyVBFSI/pARit2hBvxsrgNJzmuegdWg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aU6EXj3upR7idpKiF9SDEtiBDldd9om4VDRHSOIl+I+KHcQ0uVW+/3HLl/HgwMZBexLfaucYP341+3nIJkURuI298PQrrL0zsRjFVpukHUbCKo3OFAErAM1gJDLHKv+7N/pJGjPhFemElSlGoqciCiZVKf3sLJ6ZMxeKFmLu248=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=LNBqZXar; arc=none smtp.client-ip=209.85.219.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=HgC4xxZfU7rYHmBqpkunEvEbgCkL4EG34Uzzzo5aoW0HgppmPI2rKuljdZ34C60/KDwHnKQbWLeuXzd+HcbEBd2Pbo5hDL8y+RWKoASdt+Sp0mebeQWzELYsJh1CMr7jKkIQiVniDD7DcGREcVSMkA4cT2HYvjdAK4z/GTul0oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=kMEmYd3T; arc=none smtp.client-ip=209.85.128.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="LNBqZXar"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e2e2d013f2dso819721276.1
-        for <git@vger.kernel.org>; Tue, 22 Oct 2024 09:21:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kMEmYd3T"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6e59a9496f9so66032627b3.0
+        for <git@vger.kernel.org>; Tue, 22 Oct 2024 09:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729614114; x=1730218914; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729614801; x=1730219601; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/RwVDRDDj9lS6u5OjfTY2F9US6olARz5uTJMnNoFufM=;
-        b=LNBqZXara+vzzvWuup1XX8+Vq5T+JlqKFn3r+NQhkq+pkNddJCuOdQe/CL14Z/zJek
-         5UEcjUWfbzlwN1hsF+P/YqC6b449NPRWm01S4iRu2LjHE6k5XpPa38IRyxLSaYDx7ywJ
-         03QKOh0Ed34Kp6CD5dEmq2bwQ0Ei15ZYdUL+ME6zxen9yIagAD60blQGHT+C5d5zC6DD
-         sOno8aGE0W765m4MiCEkNVWhgi4K2u0MkdKZbisRc1UkJxV1JirWnnb4lNCjBZufVRzi
-         PbXjGXMll2HwkXthEBQaRF/YanrBo8Kpj3I42tWgbtwQnu5wJGp5hbEtpzsVtiM0/CjY
-         kQEA==
+        bh=sxfhxPixS7SCmyVBFSI/pARit2hBvxsrgNJzmuegdWg=;
+        b=kMEmYd3T3/EFgJFh2Eb5hsyHd8xwa/U04U/DYA4/dpt/NUdjExjT855nFdNHL391NF
+         P+13wuMM+CVdciiYUw/CisJqf/ngB7KV4qeQ1bhXFqux7bRgssgdWS5l0KTi4FWFtubu
+         dvjF2M3eq+R2Zr3DmGKg7psBF3lV7n18FVp9gKWGqLRhj0vS4Q+VzwzY89Vdx30KWxUO
+         k6SQ8b1bcrqwwLInatlG9B3SU/FhmfOxq2Mkalc3NIc7q7w44gFNJDJjyTCMZ1q1jyaB
+         FTKerZtOBbJ5tIBIJb8ZS1xTI1n9aPXT6kTC5MdYs7nTV2fsOji2ukBbELo1KohVi9GY
+         s/IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729614114; x=1730218914;
+        d=1e100.net; s=20230601; t=1729614801; x=1730219601;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/RwVDRDDj9lS6u5OjfTY2F9US6olARz5uTJMnNoFufM=;
-        b=s2piKGbYXXD8NNES8HXUpnQ3lQrgbstEIp8uZFoK73QOpS6LtFqCOO0HfVUuHstBUa
-         mgWCbLABj9FdFtraUt7nGMCU9uHc8CWcCinHD0+L2xighieoxi06LDq8subQSmIq2olb
-         CkkWCLToDQGu/m0UF+t4rMSjUR+BnlLQsXnivA92i0HqYAY1fS61FgMw2PHxx9abnBob
-         7rFLbBtVSeqL8LjpAv+zVhEMsBQnldlm0W2VhEFEaOgOgPomQBeCbzQEN8r56bPPTjBo
-         CFHOhpCoHytvu3oUF/kGyJcBkJ9VP/R/fNbwfoFAvhJU8ooNdTyOhwA0dLtjhpZ6sw5d
-         2LCA==
-X-Gm-Message-State: AOJu0YwQzLpC0Bz6cygHHtWBWcHZQA8YlS1cHDm3x2Opu0Yl1d+yh0a0
-	eG2q+TvHsxcviVrRpA4900TQSRJO7KbRWGhXpfKW6r3MGJVyg/VegPO0qIjB0f0=
-X-Google-Smtp-Source: AGHT+IG4qKoxzTvcWNcPeNFdQS4kQrJiEhP1C4AZkjIm9iTaZFnEpEL08bhCNqhEtAtBELrPIVGj9A==
-X-Received: by 2002:a05:6902:2848:b0:e22:5db2:a950 with SMTP id 3f1490d57ef6-e2bb169062fmr12663354276.39.1729614113769;
-        Tue, 22 Oct 2024 09:21:53 -0700 (PDT)
+        bh=sxfhxPixS7SCmyVBFSI/pARit2hBvxsrgNJzmuegdWg=;
+        b=Byzqk3Vx8gVL+zSIdKcgB2gr7EeGAUmTnJRKfOpmkV9l3W0hA2jm4JqYZyIfxLvdVO
+         mwXSI7lCNTAS8a5qGqAeRN3FlrEp4NhTK2Wd4jLI2iQGW+e/J5llC8nWjEzN/jtqZXaU
+         9yPcQD4ppEyBSBNdyhAYQMLfC36jWdb3aL4nzxSf9QZUwJ8ch3xLc2vt9agfoUGmW3kF
+         ZTwNoY5SWyuTAEoPVhBGBa9LyShyEa48FvKQ7d+y26LvXuRU2N6GCBU2FdjVlYK6dS/H
+         oK+GF1PCJLSTyUlPFsAza+8DECglfzGVJBMVWkD48Xf4cFBqvx3YAp4+T0h5WYjBjp3O
+         WPig==
+X-Forwarded-Encrypted: i=1; AJvYcCUH0ogX5bPjVql8whMnkzLgf8h0p/RRUvJOCbzhDpwD7R4bI6ddl8K5FKlsopq74RMg1M8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6taGuB1MVleahlXKjj13qJzPWBNKGp6YpTQm3j5Yu6m4yB6hH
+	3EfdgEo5MXT0ayT8O3VeFERbUVDPKoUb2Nycs8OC0O/QTRuf+aJeRyYpxl0rmec=
+X-Google-Smtp-Source: AGHT+IHrk2TUB8NB/T5B2XdxmOLV93N+UlodlX6ja8PysyBpgu4/4iPSnxDR3IErtJaCsxIncRE3eQ==
+X-Received: by 2002:a05:690c:dd1:b0:6e2:ad08:491f with SMTP id 00721157ae682-6e7d81ceeecmr34650017b3.7.1729614801617;
+        Tue, 22 Oct 2024 09:33:21 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdcaebbb9sm1175300276.47.2024.10.22.09.21.53
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5cef92dsm11371557b3.113.2024.10.22.09.33.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2024 09:21:53 -0700 (PDT)
-Date: Tue, 22 Oct 2024 12:21:52 -0400
+        Tue, 22 Oct 2024 09:33:21 -0700 (PDT)
+Date: Tue, 22 Oct 2024 12:33:20 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Subject: Re: [PATCH v3 1/3] daemon: replace atoi() with strtoul_ui() and
- strtol_i()
-Message-ID: <ZxfRIIcd2H4S3i3+@nand.local>
-References: <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
- <pull.1810.v3.git.git.1729574624.gitgitgadget@gmail.com>
- <e292b82d6a1d46990477a043901fa9c56bc00023.1729574624.git.gitgitgadget@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Calvin Wan <calvinwan@google.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Emily Shaffer <emilyshaffer@google.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Enrico Mrass <emrass@google.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: Question about `git gc` locking files
+Message-ID: <ZxfT0J8FokQhSdQ2@nand.local>
+References: <CAFySSZBCKUiY5DO3fz340a0dTb0zUDNKxaTYU0LAqsBD2RMwSg@mail.gmail.com>
+ <ZxeilMDwq0Z3krhz@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,29 +71,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e292b82d6a1d46990477a043901fa9c56bc00023.1729574624.git.gitgitgadget@gmail.com>
+In-Reply-To: <ZxeilMDwq0Z3krhz@pks.im>
 
-On Tue, Oct 22, 2024 at 05:23:41AM +0000, Usman Akinyemi via GitGitGadget wrote:
-> diff --git a/daemon.c b/daemon.c
-> index cb946e3c95f..09a31d2344d 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -1308,17 +1308,20 @@ int cmd_main(int argc, const char **argv)
->  			continue;
->  		}
->  		if (skip_prefix(arg, "--timeout=", &v)) {
-> -			timeout = atoi(v);
-> +			if (strtoul_ui(v, 10, &timeout))
-> +				die("invalid timeout '%s', expecting a non-negative integer", v);
+On Tue, Oct 22, 2024 at 03:03:21PM +0200, Patrick Steinhardt wrote:
+> > When this bug was fixed, the maintenance runs that triggered during
+> > usage of the external tool, repo[1], would lock the HEAD file in the
+> > Android manifest repository thereby erroring out `repo`. Additionally,
+> > long running maintenance tasks would also cause users to frequently
+> > run into this issue when using git commands that are written to HEAD.
+>
+> It is a bit surprising that HEAD would need to be locked in the first
+> place. As far as I am aware, the only step where we end up locking refs
+> in the context of git-gc(1) would be when we decide to repack refs via
+> git-pack-refs(1). And that command shouldn't ever end up packing the
+> HEAD file, as that loose reference must exist
+>
+> Digging a bit deeper surfaces that it's `git reflog expire --all` that
+> causes us to lock HEAD, which is... unfortunate. Seemingly, relfogs are
+> locked by locking the corresponding reference.
 
-The conversion you made to both (a) use warning() and (b) mark the
-string for translation in the second patch were good, but I would have
-expected to see them here as well.
+Makes sense.
 
-Perhaps leaving this one as a die() makes sense, because we are taking
-direct input from the user, so invoking 'git daemon' with bogus options
-should result in us dying. But these strings should be marked as
-translate-able regardless.
+> > We can fix this easily temporarily by pushing out config changes to
+> > run in the foreground, however, I was under the impression that `git
+> > gc`, whether invoked normally or through `git maintenance`, would be
+> > able to run in parallel with other git commands and therefore not
+> > lock. There is no mention of this in the documentation for `git gc`,
+> > but I do see it in the `git maintenance` documentation. So should `git
+> > gc` be locking the HEAD file in the first place? And if so, is there a
+> > way for `git gc` to have less of a dependence on HEAD.lock?
+>
+> So what seems to be happening is that you have two processes racing with
+> each other: one that is trying to expire entries from your "HEAD"
+> reflog, and the one invoked by the user to update "HEAD". By default,
+> Git will wait up to 100ms for the "HEAD" lock to be released, but it
+> seems like expiring the reflog for your "HEAD" takes longer than that.
+> You can work around that issue by increasing "core.filesRefLockTimeout".
+>
+> But this whole thing uncovers an issue with git-maintenance(1) itself.
+> The above commit fixed how git-maintenance(1) behaves such that we
+> detach at the correct point in time. But what it neglects is that some
+> tasks are more special than others and should be run synchronously
+> whereas others can be run asynchronously. Packing refs and expiring the
+> reflog are tasks that should be run synchronously to minimize the impact
+> on users.
+>
+> This all demonstrates that git-maintenance(1) needs to get some more
+> love. You have uncovered this issue with git-gc(1) as configured task,
+> but we have a similar fundamental issue with the git-pack-refs(1)
+> subtask. So I guess we'll have to classify those subtasks into two
+> categories, where one category needs to be executed before detaching
+> itself and another category can be executed asynchronously after we have
+> detached.
+
+Perhaps Stolee (CC'd) has some thoughts here?
 
 Thanks,
 Taylor
