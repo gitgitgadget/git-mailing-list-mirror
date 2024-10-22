@@ -1,153 +1,133 @@
-Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B4514EC55
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 19:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C931411C8
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 19:54:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729626586; cv=none; b=FnSHhTIefwgzKbEgA6VGu/DulNrjwp2Ql2jtac7DRNbI2DBXp5y1jwmJ4uyOWhhTT2slnN6B80IV7yfbDiCavSlsHH0Oma3Szx0dWejr9b+uhCNfjrILWCXLXV/BfNjDJc6g68qxnBb3nfO/P4LAFiPGbQ8WI7jw7XI+S19XA0o=
+	t=1729626846; cv=none; b=CP1EkDwFTkhgra4ydPOMoHdxVaxGeAF3z62qV59tTmg5IlMnoPO+Kd+TfX67ohqt4WtnvI9InHAY//SYfDsKtJJcUJCEY05bG5UR73ym2sJiOlZGNBPImvRVLlorSj5UEWxLo8XIGBKnw6SdAmrEjCcatfdqwRHxbA+IyUWzS6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729626586; c=relaxed/simple;
-	bh=rAoegY0N8I1GgIYsvlRpjR4+uot64LI0uDAvvDfU53U=;
-	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
-	 MIME-version; b=Bdzl55fqyOtrjh7HbhB16F2bYC9FI85KhhQY1k3ILivo1cDB6UNDfvbb38LpBSE0DCgaYEN/Fl0Q6lfpwvRC1AwK0gwZABwQWFJ+A7scbNznQ45dGeT8eLQHOYxohFW6efy4KpVLW0Ug4enYveaok2xrxVPo/YVpcJESlNKZcrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=IHjZ12+L; arc=none smtp.client-ip=192.29.178.127
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1729626846; c=relaxed/simple;
+	bh=E/VgCkuNB54qP9WzeMBzAhe2hxMFlKAcACaUlDcNQmI=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=WTpW0j1ictJGDSC2jNNLCocPwL1pgRWCdwe0okrVm+/aMc5ho6GJ1FFKmNCIk9mv9M4fRzkgmnPo+dVJkMTgSslpvMyX8ubWvmPKjoF/NDXKxL5fgTWnYyyLlJaHlk0gjoi8L+K1VSoTEdgBRWnSoqG/j32v+ErPM4D9MA7jmIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Taax/oFY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DMiyyFhn; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="IHjZ12+L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=m4CrtxU9BBiXcF0zLhzLpmvg6VEP6ojE1ZctA+SPDR8=;
- b=IHjZ12+LXfsMaQM1+jFJr54qB7vPGJ0104hKpD+WKJF79YoqUtnZOcSEPazgrQsZjn2OCR6/bZQ2
-   PpVFLgapz/MCuw09NC90xZbSKM8mH/kEa35isYWWgXCSBAF8lg3OkuudZQvGFhstm4/OkD2Pd5EX
-   qP4GOaXreNxHktHv0zqGBfg4cwwrKiuNmihzOiOkDU9MeHO4zoEMGXA4hzXqW6RuhieNOcFtghCH
-   kSoLTDRoZeNWto2SRogCZ5nM+gvmDYkCn4KgyVO9csx+C/npoDalgat0FmNrtmLVwbJeApGR9RTc
-   92iuuSfC48+dysFW6n4Y7IZHHzUrX5zTMqNAHQ==
-Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SLR006PZWEOGZ90@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Tue, 22 Oct 2024 19:49:36 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-From: Bence Ferdinandy <bence@ferdinandy.com>
-To: git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,	karthik.188@gmail.com,
-	Taylor Blau <me@ttaylorr.com>,	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH v11 3/8] remote set-head: refactor for readability
-Date: Tue, 22 Oct 2024 21:45:40 +0200
-Message-id: <20241022194710.3743691-4-bence@ferdinandy.com>
-In-reply-to: <20241022194710.3743691-1-bence@ferdinandy.com>
-References: <43d44c82-b93d-4ac9-a5ac-ae5f70982cfd@ferdinandy.com>
- <20241022194710.3743691-1-bence@ferdinandy.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Taax/oFY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DMiyyFhn"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3F7BF11401C4;
+	Tue, 22 Oct 2024 15:54:03 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Tue, 22 Oct 2024 15:54:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729626843;
+	 x=1729713243; bh=UMnmuF+2HkozU4rqQLJCEGHSUC8QKxIiwnbFMhXedAY=; b=
+	Taax/oFY96VRFdIdXFpxI9i15jrAeRjLXImpQcBhcz9UEEUoEqk13zPpaHeK2vhs
+	JhCGlSrlujQwFNK4OrNhgOaatIcdcSIBFSYITJOvwyjE5d/Y8eyspXi7B0+fD72I
+	znGTC4Juqi9bE41TKSnF6ihZEdVaIoxmbcSp8k17ABo5g/nemwbzzO4n2OBz+0/0
+	CFtWqk5k9JGdowYCo3jQ6MK23e92jGtBZf6shV00fQl8gsLOnF7HA53GO2uVdHqv
+	01mrT55EEHpTil5h92EE7pV3gaP6AgI0EnG9wMUEwrYP8pkeVsCQh207LLdIjc+T
+	kQvc9jAgimK9SstntNyn1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729626843; x=
+	1729713243; bh=UMnmuF+2HkozU4rqQLJCEGHSUC8QKxIiwnbFMhXedAY=; b=D
+	MiyyFhncZ4zvkSnMHLXPpdwfhyJsXsSH7pK8VNc4zSm1gRFwCsXOvyRz0nDvu5PD
+	caCBmTDBRsDNr0Pvuo41zbMY4y/1LlMMFFj2kTM0EBXDtVmX+xRfmBrnrs8XUAoH
+	1PqhSRfGNop+t3NUit9cz6AuMgkFbOGVzHmRuQ0zkk6GvBfTnXWQe+JdEDyfLL3X
+	9gV2rDYVXR2Vnk6r5z0ZyCm6Yhj1sKJumbWTjPVv32SL7d7rkkABI2NlH9+W6orr
+	Q4Wm+L+8DPPmFfe0C5ehxH4AjA0+7YXqRaeihjlK3He1xAU3E+vJt8Ld7GTDPFcd
+	x5RQytmsImOQpoRsieixQ==
+X-ME-Sender: <xms:2gIYZ_wzYsow7EEaMrOZPn28MOse2Gj1QQtI6T6ALCcB5AawJnBD58g>
+    <xme:2gIYZ3SmyiJ1rfPMkQMym_xSbtAuHPtmkb_WNSE6vEm6u7a8-zSZv1M2OgRu8XxtQ
+    1r7w_ySAVZs6i1xrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeihedgudegfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredt
+    tdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
+    rghtthgvrhhnpeffueeuieehheffjeegtdevfeehtdfhvedvgeduledtffehjedvhfejud
+    ffheegleenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihii
+    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgsh
+    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrd
+    horhhgrdhukhdprhgtphhtthhopegsvghntggvsehfvghrughinhgrnhguhidrtghomhdp
+    rhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorh
+    hrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehlrdhsrdhrseifvggsrdguvg
+X-ME-Proxy: <xmx:2gIYZ5VvJeShf83bsrNzYeCnqsNOX66lpdpabnJ271Isb2QYg8VFqg>
+    <xmx:2gIYZ5jMbx4cOSgHULIBvoYerWD5scYf7hf1xvo3w0Q6hNPO8bqBvg>
+    <xmx:2gIYZxBxzg98tOiC87cZ7dczQfWd7Vw2ZSlJ0IYT_q5X7D2Qx_PaWA>
+    <xmx:2gIYZyIgIdDxtGsEd3GzL14AgyxZlWmwNjGuGV2nfYIWAFvV-zC3Vw>
+    <xmx:2wIYZ7C1ukkUQLe25Gfd0Tfa5M3gagpbukheGKcDRwmwEXzBuzogKioy>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 81612780068; Tue, 22 Oct 2024 15:54:02 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: 8bit
-Reporting-Meta:
- AAEaY43CsX4NS5gnX13mxeflHPj4BoTX7uiPTxCe+2EPNdQOKX973DeBaZxpBN4U
- b0AA7+5xFQF/if8asuoVYmPxeYf7X5xNvraYr1yGdgXU6EPwMwYfYQhiQUtGmawW
- kdUJ8wUrEZNwCuK2ad0/ZBcgQrf9kY3KGshYSewvI1eZFKXGNuG7RjX29Y2vtnXi
- IiAJikPbfoYa5jXnuZ6LqUGR+E9k8IGGiz7j5zP4bWBULjx7VkcAFNNVDlJyUkMv
- wIPGYccRDlqj1/BbeZ4K/nQJrSmSx4jBdWVMpulMh9ejmtLc9FdAp8EUtnSWA4M2
- wFa5D/yamLNOmQtKPONOCWVpNtS223c5b2iURlGDmorlyzWoATlzG9BMbTy6/WJY
- qAvTx74xMWxH+fKkVWyUm65RapZ8ApEN4OK7v/7OyJLbNWmrjZ6250+2+ntpW454
- ZO0AneUVNAPgGPl8+an9e4L3V4FyFUgQxETm/5FxA/TfHUGe4lMbkJoY
+MIME-Version: 1.0
+Date: Tue, 22 Oct 2024 21:53:41 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Bence Ferdinandy" <bence@ferdinandy.com>, git@vger.kernel.org
+Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ "Junio C Hamano" <gitster@pobox.com>,
+ "Karthik Nayak" <karthik.188@gmail.com>, "Taylor Blau" <me@ttaylorr.com>
+Message-Id: <79c9cd6d-7bcc-4014-91c0-149505f70136@app.fastmail.com>
+In-Reply-To: <20241022194710.3743691-2-bence@ferdinandy.com>
+References: <43d44c82-b93d-4ac9-a5ac-ae5f70982cfd@ferdinandy.com>
+ <20241022194710.3743691-1-bence@ferdinandy.com>
+ <20241022194710.3743691-2-bence@ferdinandy.com>
+Subject: Re: [PATCH v11 1/8] t/t5505-remote: set default branch to main
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Rename buf and buf2 to something more explanatory.
+On Tue, Oct 22, 2024, at 21:45, Bence Ferdinandy wrote:
+> Consider the bare repository called "mirror" in the test.  Running `git
+> remote add --mirror -f origin ../one` will not change HEAD, consequently
+> if init.defaultBranch is not the same as what HEAD in the remote
+> ("one"), HEAD in "mirror" will be pointing to a non-existent reference.
+> Hence if "mirror" is used as a remote by yet another repository,
+> ls-remote will not show HEAD. On the other hand, if init.defaultBranch
+> happens to match HEAD in "one", then ls-remote will show HEAD.
+>
+> Since the CI globally exports GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main,
+> there's a drift between how the test repositories are set up in the CI
+> and during local testing. This issue does not manifest currently, as the
+> test does not do any remote HEAD manipulation where this would come up,
+> but should such things be added, a locally passing test would break the
+> CI vice-versa.
+>
+> Set GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main in the test to be
+> consistent with the CI.
+> ---
+>
+> Notes:
+>     v9: - new patch
+>         - a bandaid for the CI issue noticed by Taylor (cf:
+>           https://lore.kernel.org/git/Zw8IKyPkG0Hr6%2F5t@nand.local/), 
+> but
+>           see
+>           
+> https://lore.kernel.org/git/D4ZAELFWJMKN.S88LJ6YK31LZ@ferdinandy.com/ 
+> for the root cause in detail
 
-Instead of calling get_main_ref_store(the_repository) multiple times,
-call it once and store in a new refs variable. Although this change
-probably offers some performance benefits, the main purpose is to
-shorten the line lengths of function calls using this variable.
-
-Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
----
-
-Notes:
-    v5: new patch (split from the next patch as a preparatory step)
-    
-    v6: no change
-    
-    v7: - change commit prefix to be more in line with project standards
-    
-    v8: no change
-    
-    v9: - further improve readability by renaming buf, and buf2 consistently
-          with how patch 6 was already done
-    
-    v10: no change
-    
-    v11: no change
-
- builtin/remote.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 76670ddd8b..1d68c5b2ba 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1402,8 +1402,9 @@ static int show(int argc, const char **argv, const char *prefix)
- static int set_head(int argc, const char **argv, const char *prefix)
- {
- 	int i, opt_a = 0, opt_d = 0, result = 0;
--	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
-+	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT;
- 	char *head_name = NULL;
-+	struct ref_store *refs = get_main_ref_store(the_repository);
- 
- 	struct option options[] = {
- 		OPT_BOOL('a', "auto", &opt_a,
-@@ -1415,7 +1416,7 @@ static int set_head(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options,
- 			     builtin_remote_sethead_usage, 0);
- 	if (argc)
--		strbuf_addf(&buf, "refs/remotes/%s/HEAD", argv[0]);
-+		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
- 
- 	if (!opt_a && !opt_d && argc == 2) {
- 		head_name = xstrdup(argv[1]);
-@@ -1434,25 +1435,25 @@ static int set_head(int argc, const char **argv, const char *prefix)
- 			head_name = xstrdup(states.heads.items[0].string);
- 		free_remote_ref_states(&states);
- 	} else if (opt_d && !opt_a && argc == 1) {
--		if (refs_delete_ref(get_main_ref_store(the_repository), NULL, buf.buf, NULL, REF_NO_DEREF))
--			result |= error(_("Could not delete %s"), buf.buf);
-+		if (refs_delete_ref(refs, NULL, b_head.buf, NULL, REF_NO_DEREF))
-+			result |= error(_("Could not delete %s"), b_head.buf);
- 	} else
- 		usage_with_options(builtin_remote_sethead_usage, options);
- 
- 	if (head_name) {
--		strbuf_addf(&buf2, "refs/remotes/%s/%s", argv[0], head_name);
-+		strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", argv[0], head_name);
- 		/* make sure it's valid */
--		if (!refs_ref_exists(get_main_ref_store(the_repository), buf2.buf))
--			result |= error(_("Not a valid ref: %s"), buf2.buf);
--		else if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote set-head"))
--			result |= error(_("Could not setup %s"), buf.buf);
-+		if (!refs_ref_exists(refs, b_remote_head.buf))
-+			result |= error(_("Not a valid ref: %s"), b_remote_head.buf);
-+		else if (refs_update_symref(refs, b_head.buf, b_remote_head.buf, "remote set-head"))
-+			result |= error(_("Could not setup %s"), b_head.buf);
- 		else if (opt_a)
- 			printf("%s/HEAD set to %s\n", argv[0], head_name);
- 		free(head_name);
- 	}
- 
--	strbuf_release(&buf);
--	strbuf_release(&buf2);
-+	strbuf_release(&b_head);
-+	strbuf_release(&b_remote_head);
- 	return result;
- }
- 
+Why no signoff?
 -- 
-2.47.0.94.gb64850d498
-
+Kristoffer Haugsbakk
