@@ -1,157 +1,143 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC14419D080
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 13:03:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A743C19D080
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 13:05:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729602210; cv=none; b=j7TICvl/0qD0jCPhctxWuTbFDf8ARCEi8hlyEAsY9laaT8FUzORzzzMTg8rluM6BuVjHv9eqztOhQf//JW9uzQqHls+oxUdpkYwDTsfPYshZ1GeYD0zfT9mUoGtQ7ETbqZqzss2L3JpqWENZ0dP9o/rM+8ryjAff6B/ZMMyExoU=
+	t=1729602306; cv=none; b=By+EA++X0VdZSQURsLYP/4EXnBNYTsbAJA9xmFlj99jJBkWs8y+RwnZRIvItRIMjZQ9uiXY0zlMd8MobQEDVEfIPlHf+G0zw4pyb784aGjDKcLGRvL2uacTeXpwkGyL3qceBZDvU5uJsdYGVzziWiWSKL3UNzkxvfafCkcUPOnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729602210; c=relaxed/simple;
-	bh=Oig1bR2SPyDaXrlwopN+rLenaXy/mw6KTQdCGMN36oo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QEximECVwookSZkj9aCB3+j2rQyRfuN5+ap8VzWc57uwhO7ubC9QS7XDKLnem1/Od5v0axc0FtqJCZMbHfQqaMw51PMT5cQdJLxciziRFgGvvjHpjzvn728V2Kd+FLp5KoZqKTlSWBCQLZX9aFcCPcQBrmqb4X75bS51s0hwPLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F27cLgEp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HH1fkWJO; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1729602306; c=relaxed/simple;
+	bh=6xLa0yiB59fCnNMe+iz393gqK9xXj0FaAAa2IHBQkA8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=MZtLUvJCj5tKy00JxF4rXt4ORXn8nMxaFYfzDRb60BGzSfAciReZa/suqrRUNtZVC+d3AZxbC+iK+SRmwmnzCbSUF2HqMenYLjsct2/JHRSPPdGaluQejrzVutifgx0WTEbciB7Df3S1XU6FTwNNnkiUB3DbWBIIACx8cf/k1HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fireburn.co.uk; spf=none smtp.mailfrom=fireburn.co.uk; dkim=pass (2048-bit key) header.d=fireburn-co-uk.20230601.gappssmtp.com header.i=@fireburn-co-uk.20230601.gappssmtp.com header.b=aObtVWR6; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fireburn.co.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=fireburn.co.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F27cLgEp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HH1fkWJO"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C809511401EB;
-	Tue, 22 Oct 2024 09:03:27 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 22 Oct 2024 09:03:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1729602207; x=1729688607; bh=Gxs4sWsxg8
-	NFuewtP+gjb0jK1e9wgw39QpeaM+lE3X0=; b=F27cLgEpCZ3Pvk+MighKvtm1bG
-	j3HD0O6+pqd85sxkMuPL9tR97GisMJHOtJWxhTj1mHHJ5yVA2wN1mb03qBaQydrd
-	LGUEBEW/StE/UbG8+OsqcM7b+X7e9+uifGcRz7hfPQyQFbFS0ytlpLNtNQUBx2qo
-	lM+D4rZkkSe5+AjShWbM3tutxIBo5JNP6ZXNK1hP1Pn1F3C8c+Bg5Z3doVMp2KhS
-	OcUoiWCr9BiPY2UNi6oSp0jfhXF8K1GzOBmAaGDNfthKfq6TLLeTH+8Z2peWgjum
-	s9XMVTUQj0PJrn7lZt5M8aG6dnimIjGJdtxV/RWCQ0QdYNZjc2DjDiKYe5PQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1729602207; x=1729688607; bh=Gxs4sWsxg8NFuewtP+gjb0jK1e9w
-	gw39QpeaM+lE3X0=; b=HH1fkWJODPYvtDG9sjJ5fsKgA87i6dm3p09RFHZS83oa
-	/WCCk6znhMdyqSwVrKWWrKZBnG6IxKP20XRcG8+g5jAkLoauwrwfKZp4qWssY9zO
-	8jI0OmE0KW29jZNrOa9eYvjTyDNACnr+4U68BAka2GoiCh/CIc+pPQosiAWUYdci
-	hwy6AI7ift02FI4GCIw4sU2qGyO4tA27305iOuHgzm9OZ9I3njR9nNsqV0cO+OzE
-	FZ9Q7dIJUCOlloTGeqO7iv8n38CFx+fjym4VGHsDz22GE1FjetsQRYwWwWl0BN86
-	ElrGYWZDOxgDVVUuj3/BQ94TknDzvyW5CjKuOJJoQw==
-X-ME-Sender: <xms:n6IXZ6uv6ZAxeJErWvfUqSFHSQIR73GUqIQRYNkA39NamIuwZX2UjQ>
-    <xme:n6IXZ_eJ7SrtJnxoayA11YRomvgEx2axrb2VI_G5WK5whQUaCJKjHDRtNZJp1-gJs
-    KlbGzYcu7bnlY8nvQ>
-X-ME-Received: <xmr:n6IXZ1wALAoTgqAVcWoMxUuMZOxy7nD8xImZNxsCp_ITJUDPUk2Ya0lUVqZVc_xSmpFyh3Gf_E1-ol05grjw4ZMaocCJjEhrV2JRygibRDcO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeihedgheekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvghmrhgrshhssehgohhoghhlvgdrtghomhdprhgtph
-    htthhopehsthgvrggumhhonhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepvghmihhl
-    hihshhgrfhhfvghrsehgohhoghhlvgdrtghomhdprhgtphhtthhopegtrghlvhhinhifrg
-    hnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhg
-X-ME-Proxy: <xmx:n6IXZ1M7wj6JXgC-2_iRUKbOUAGbry7eFWWgB4ZG34T5YmxhxTZbvw>
-    <xmx:n6IXZ6-YxyARHHLoadQiBGcvNatL91Rddvi_Mn46Y7jD-OY3Y7FVgA>
-    <xmx:n6IXZ9XYY0yaVMb-UCIIzNzxJHGmzeJcgOSdK7DKTdy_-xK1WRwIDQ>
-    <xmx:n6IXZzdCTEjlJK9eOEwtumokB9ZTXFYQXipiXYRWne9ZzqWLg8tejQ>
-    <xmx:n6IXZxk8IO9b_v4Jo2zyVadfHpbDbItVPQOtaUYxMNl0PWuGoBVNK6vv>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Oct 2024 09:03:26 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 81f82daf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 22 Oct 2024 13:01:54 +0000 (UTC)
-Date: Tue, 22 Oct 2024 15:03:21 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Calvin Wan <calvinwan@google.com>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Emily Shaffer <emilyshaffer@google.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Enrico Mrass <emrass@google.com>
-Subject: Re: Question about `git gc` locking files
-Message-ID: <ZxeilMDwq0Z3krhz@pks.im>
-References: <CAFySSZBCKUiY5DO3fz340a0dTb0zUDNKxaTYU0LAqsBD2RMwSg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=fireburn-co-uk.20230601.gappssmtp.com header.i=@fireburn-co-uk.20230601.gappssmtp.com header.b="aObtVWR6"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-7ea12e0dc7aso3548598a12.3
+        for <git@vger.kernel.org>; Tue, 22 Oct 2024 06:05:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fireburn-co-uk.20230601.gappssmtp.com; s=20230601; t=1729602303; x=1730207103; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mXTj9yWy0CzYHAvm9Oi9r/rO7BKaQjPq8ULqxQVQmwY=;
+        b=aObtVWR6AfYAitFS8qjq8I7FAyrkwjmDtVQ8D8MO5ky2H/DS4GwIOliCsfC2ViCgDJ
+         wrfbaSxi75YDXKZ8HBRERaS9mOl1FnT5f+lgfHwZ17onujpkq1fUJwadUflewSJUcinE
+         q6FZdPlyIYlOPGPzCZmEC2Bh1BOeR/IOn8vVq19dQdLqU/syCsb2rfHHxobiFbxpO+0u
+         OCTHV4sdRZOFFhh9ax9A2OWNPyBZyr00oscESiHfNspVCmHf5z6HNGMGCunEmYkayiPc
+         TRdG54486+9b8NbdKlX2xhf8Tazdzwyyr2I7FrvQVppqV0UbXQjsuDVBfHb7b97AypDp
+         usOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729602303; x=1730207103;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mXTj9yWy0CzYHAvm9Oi9r/rO7BKaQjPq8ULqxQVQmwY=;
+        b=uWFR/7Pe+m6tK75g1x/X2/oOEsXYWqpJAku8a2zL18z/7sEPjarM8QP6/mdak/aeOy
+         /yniC7ZkH2K5A2NkprBLDUa9snH60Z2U7HMVhpzt64mNGNVkJiuUCmMsb47azXOEOUKq
+         Rvst3HbPDgdaLF8FxU9K4vlg9odaj2PIW1AW7nJH1wyh8quErmzyxLN7/WU2FmJzmMvW
+         +z9L77Co5U54K9HtmNP+Ws/9btZCxybSnaCNoAw36ifQ1Yb64Uh3VvE0kFLq3tX9DhDq
+         Luxin2yJ5ShXRQpVMf+nGVD7ZTfn6KxVI4V247aswC9qAIHLqe+RXiBWl1liHPNerujK
+         6JIw==
+X-Gm-Message-State: AOJu0YxKFeLOslJBRxdMszyS5cvgHOOQnzni1KErslSawkA7lJcI51Ru
+	CMD9RTp2GV80oIIrbXsUUgDS/la3zcjrbxGeajCWm2nOV/XkQE5YceZws7BmP+61hE+97AR79Ko
+	VOXJkr02M0sH2d7jLNtzfUn8vOD+Xupd18KOb12RwCx2N1NmYDHFb
+X-Google-Smtp-Source: AGHT+IF76yLG0ckUkh0WbJQD/WQGQWpZYSp3aBBCZhA1HxMPdjk9kouJWspny4+OPnCzaytRmQH8hFzsXHns2yPTGw4=
+X-Received: by 2002:a05:6a21:4006:b0:1d9:13ba:3eef with SMTP id
+ adf61e73a8af0-1d92c50d4b9mr20275422637.26.1729602303414; Tue, 22 Oct 2024
+ 06:05:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFySSZBCKUiY5DO3fz340a0dTb0zUDNKxaTYU0LAqsBD2RMwSg@mail.gmail.com>
+From: Mike Lothian <mike@fireburn.co.uk>
+Date: Tue, 22 Oct 2024 14:04:52 +0100
+Message-ID: <CAHbf0-GMV9VS7BAjvZiNENNOdZqV3jQ4+0k1kTZLkQhFT=6D-Q@mail.gmail.com>
+Subject: Build failure on RHEL7 with 2.47.0
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 21, 2024 at 03:55:45PM -0700, Calvin Wan wrote:
-> Recently, after upgrading to 2.47.0, we had internal reports of users
-> erroring out with:
-> 
-> fatal: cannot lock ref 'HEAD': Unable to create
-> '<filepath>/.git/HEAD.lock': File exists.
-> 
-> We believe this is due to "(98077d06) run-command: fix detaching when
-> running auto maintenance", since we have neither `gc.autoDetach` nor
-> `maintenance.autoDetach` set.
+Hi
 
-git-maintenance(1) detaches itself by default unless told not to via the
-config keys that you mention.
+I'm seeing build failures on RHEL7 when trying to build 2.47.0 - RHEL8
+seems to be fine
 
-> When this bug was fixed, the maintenance runs that triggered during
-> usage of the external tool, repo[1], would lock the HEAD file in the
-> Android manifest repository thereby erroring out `repo`. Additionally,
-> long running maintenance tasks would also cause users to frequently
-> run into this issue when using git commands that are written to HEAD.
 
-It is a bit surprising that HEAD would need to be locked in the first
-place. As far as I am aware, the only step where we end up locking refs
-in the context of git-gc(1) would be when we decide to repack refs via
-git-pack-refs(1). And that command shouldn't ever end up packing the
-HEAD file, as that loose reference must exist
 
-Digging a bit deeper surfaces that it's `git reflog expire --all` that
-causes us to lock HEAD, which is... unfortunate. Seemingly, relfogs are
-locked by locking the corresponding reference.
+    CC t/unit-tests/clar/clar.o
+    CC t/unit-tests/unit-test.o
+t/unit-tests/clar/clar.c: In function =E2=80=98clar_time_now=E2=80=99:
+t/unit-tests/clar/clar.c:274:18: error: storage size of =E2=80=98tz=E2=80=
+=99 isn=E2=80=99t known
+  274 |  struct timezone tz;
+      |                  ^~
+t/unit-tests/clar/clar.c: In function =E2=80=98clar_parse_args=E2=80=99:
+t/unit-tests/clar/clar.c:543:47: warning: implicit declaration of
+function =E2=80=98strdup=E2=80=99; did you mean =E2=80=98strcmp=E2=80=99?
+[-Wimplicit-function-declaration]
+  543 |    _clar.summary_filename =3D *(argument + 2) ? strdup(argument
++ 2) : NULL;
+      |                                               ^~~~~~
+      |                                               strcmp
+t/unit-tests/clar/clar.c:543:68: warning: pointer/integer type
+mismatch in conditional expression
+  543 |    _clar.summary_filename =3D *(argument + 2) ? strdup(argument
++ 2) : NULL;
+      |                                                                    =
+^
+t/unit-tests/clar/clar.c: In function =E2=80=98clar_test_init=E2=80=99:
+t/unit-tests/clar/clar.c:569:26: warning: assignment to =E2=80=98char *=E2=
+=80=99 from
+=E2=80=98int=E2=80=99 makes pointer from integer without a cast [-Wint-conv=
+ersion]
+  569 |   _clar.summary_filename =3D strdup(summary_env);
+      |                          ^
+t/unit-tests/clar/clar.c:573:26: warning: assignment to =E2=80=98char *=E2=
+=80=99 from
+=E2=80=98int=E2=80=99 makes pointer from integer without a cast [-Wint-conv=
+ersion]
+  573 |   _clar.summary_filename =3D strdup("summary.xml");
+      |                          ^
+t/unit-tests/clar/clar.c: In function =E2=80=98clar__fail=E2=80=99:
+t/unit-tests/clar/clar.c:692:22: warning: assignment to =E2=80=98char *=E2=
+=80=99 from
+=E2=80=98int=E2=80=99 makes pointer from integer without a cast [-Wint-conv=
+ersion]
+  692 |   error->description =3D strdup(description);
+      |                      ^
+In file included from t/unit-tests/clar/clar.c:838:
+t/unit-tests/clar/clar/sandbox.h: In function =E2=80=98build_sandbox_path=
+=E2=80=99:
+t/unit-tests/clar/clar/sandbox.h:138:6: warning: implicit declaration
+of function =E2=80=98mkdtemp=E2=80=99 [-Wimplicit-function-declaration]
+  138 |  if (mkdtemp(_clar_path) =3D=3D NULL)
+      |      ^~~~~~~
+t/unit-tests/clar/clar/sandbox.h:138:26: warning: comparison between
+pointer and integer
+  138 |  if (mkdtemp(_clar_path) =3D=3D NULL)
+      |                          ^~
+In file included from t/unit-tests/clar/clar.c:92:
+t/unit-tests/clar/clar/fs.h: In function =E2=80=98fs_copy=E2=80=99:
+t/unit-tests/clar/clar/fs.h:446:16: warning: implicit declaration of
+function =E2=80=98lstat=E2=80=99; did you mean =E2=80=98fstat=E2=80=99?
+[-Wimplicit-function-declaration]
+  446 |  cl_must_pass_(lstat(source, &source_st), "Failed to stat copy sour=
+ce");
+      |                ^~~~~
+t/unit-tests/clar/clar.h:89:49: note: in definition of macro =E2=80=98cl_mu=
+st_pass_=E2=80=99
+   89 | #define cl_must_pass_(expr, desc) clar__assert((expr) >=3D 0,
+__FILE__, __func__, __LINE__, "Function call failed: " #expr, desc, 1)
+      |                                                 ^~~~
+make: *** [t/unit-tests/clar/clar.o] Error 1
+make: *** Waiting for unfinished jobs....
 
-> We can fix this easily temporarily by pushing out config changes to
-> run in the foreground, however, I was under the impression that `git
-> gc`, whether invoked normally or through `git maintenance`, would be
-> able to run in parallel with other git commands and therefore not
-> lock. There is no mention of this in the documentation for `git gc`,
-> but I do see it in the `git maintenance` documentation. So should `git
-> gc` be locking the HEAD file in the first place? And if so, is there a
-> way for `git gc` to have less of a dependence on HEAD.lock?
+Have I done something silly or is it just too old?
 
-So what seems to be happening is that you have two processes racing with
-each other: one that is trying to expire entries from your "HEAD"
-reflog, and the one invoked by the user to update "HEAD". By default,
-Git will wait up to 100ms for the "HEAD" lock to be released, but it
-seems like expiring the reflog for your "HEAD" takes longer than that.
-You can work around that issue by increasing "core.filesRefLockTimeout".
+Thanks
 
-But this whole thing uncovers an issue with git-maintenance(1) itself.
-The above commit fixed how git-maintenance(1) behaves such that we
-detach at the correct point in time. But what it neglects is that some
-tasks are more special than others and should be run synchronously
-whereas others can be run asynchronously. Packing refs and expiring the
-reflog are tasks that should be run synchronously to minimize the impact
-on users.
-
-This all demonstrates that git-maintenance(1) needs to get some more
-love. You have uncovered this issue with git-gc(1) as configured task,
-but we have a similar fundamental issue with the git-pack-refs(1)
-subtask. So I guess we'll have to classify those subtasks into two
-categories, where one category needs to be executed before detaching
-itself and another category can be executed asynchronously after we have
-detached.
-
-Patrick
+Mike
