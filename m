@@ -1,327 +1,386 @@
-Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34822819
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 00:09:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F0277104
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 01:27:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729555747; cv=none; b=uCuWj/RfgmyxjZkmWo/V+hHSL/gPtaVtTjo3aY6V9YQaIsXM3W1Vy4FasK02pcaytyYlMR99MlLhAqqwmQ0c7gKZZIqxDTK8arf4G8YVzSRTZyeS3/hGxuGWyYHOujiuE9FJuihMmAY1Ww1Xb1blCwhlGvk0+ss3EYLN4qNCfXs=
+	t=1729560440; cv=none; b=dY4w+5GocDlMAW9YCL6jhuNj3hiYwPllduULIMe12JiTwkN2Y/FQPO81HwlkaJ+wRycadhOCh0WbYQlex0hrnbFArWTkuYgzbuxo5gAPNHThMOa5Qj4QATa2qX33rv5UxmbWh5ziLi5MDYsDwD5vkU3fE5so+msXb5GUl2TwGa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729555747; c=relaxed/simple;
-	bh=C1ofgxmbBlN3aUWcchxBZTQfMOnqFvuALoVreh9nGYA=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=P1KcnN/ZMpg+F0buRVz+3+TqOOcTQeWkHTpy7IEUHaFZXmJLqB7ekZntOWw67DMVm+kkmCi181QPJElFwknE/OooRcmEzleBIxczpj2rSsFNh28XH25YSzf0qHjo+AENLoQ7tRs93OyNnvjStwbUa5hrRg31CgmroEaxTtU07Hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=ausbLTHe; arc=none smtp.client-ip=185.70.40.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1729560440; c=relaxed/simple;
+	bh=cXQ04x9daazv4dIU0uQqXFXCWZKPLfrBmNa1lna2hOU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ZZ2Lg2LL5WscfFgSgPwjjmKZfITDZWOS0u+qmILlTUWNF96Rrxu1zQbWGS4UNvk1jC+ECQHmDnuMrZf94Hwjvpi97P/wgiDgGOHzWCJdHn4axFKH7qCOTmK2r/+UuGDamjJY8En5P7TWmgsbRkDni86F+XnOVtSfwO2Ehz3LUCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EQQkqVcy; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="ausbLTHe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1729555737; x=1729814937;
-	bh=yqXFmbT8lGpiGEstCddn7trlUAVcTKvujgZBCGL4tzU=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=ausbLTHeK+AzEnlaOogvGLYeg3EgR/ybAshQPLaoChtMGNQZJlOWRNp2BdnVoUA0z
-	 cYd8GxhPHEyKWXAUk36H1ndOSGj82xldSa1AcEe8cxUcpbSwzp2PDqU54CgqTik9mK
-	 TiA2NhDzOoeEHjpvcQHM40LcIDGsSS9+vQKP3uqk/xqA37Mg76vDamjVtkNb9KPOa+
-	 po5rj5E1T/DR2cfDdkDnti0vRuRgXevyllgA+35TyuLIWbfhHxkTjCAvo4EDr2jMJD
-	 vh/4GrB0SvhprqxtOXFf+4mM8i3shoaQEr+/H9Hfp8jVwft3qBP4w5MMDe1ZLlIkx+
-	 SGqzc2VKwr1Jg==
-Date: Tue, 22 Oct 2024 00:08:49 +0000
-To: git@vger.kernel.org
-From: Caleb White <cdwhite3@pm.me>
-Cc: Junio C Hamano <gitster@pobox.com>, Caleb White <cdwhite3@pm.me>
-Subject: [PATCH] doc: consolidate extensions in git-config documentation
-Message-ID: <20241021-cleanup-extension-docs-v1-1-ab02cece3132@pm.me>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: fdacbd12a4784fa8e5da0a86ab20542691d09c71
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EQQkqVcy"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4314b316495so49124825e9.2
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 18:27:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729560436; x=1730165236; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fNjjUOQSTQ+YS7APbG51mUeeNP78IfgLftER2DUNNfE=;
+        b=EQQkqVcyvoXACG0sBS05fMCjl5grsUrjRw8Le7sKRyh800AhBk0jDEPpVgqpbYnYFs
+         fDRT7PLsvdnmDJAVohotGtpWseF1Mj5T6sE+hGgh0fyG1OvV3SIx30W810jxZMnFTTFx
+         plNy4Odo05FoF8Ylxsmy1BRSAr0rIl+Q+5H+igHhOlOgnFyVVuKEchn/yPWJLTc803i7
+         GiF35M0zq7GewUtQJ9MTdTLXlse6SoQh6fzEZBPLvqodTxCTDDYKfyuwQz0OPSk1OIVr
+         AzwZzyCAgBymqcYLwWcXRBmfFhAzEmuqSCinMCQ8Fvj7/NeBNol+O7ZRMLnmGltvJu1e
+         ShKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729560436; x=1730165236;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fNjjUOQSTQ+YS7APbG51mUeeNP78IfgLftER2DUNNfE=;
+        b=re3BsVGK0Q53dMmT6AEV7KB2Q59iVzADRNwL+gObnKdDYtB5MGzufWU0vkGmF94Epc
+         HIP7LQedPhw334ntv9I5ZXgjvQaVdl8acJqnn1MhtqEr2/pAWhNt/gAJLsme4BXeZnda
+         GGD/dRB1xgE8kLJkE1oTa9QJQf8t5QIibE78ti6yVOfyfX/+rvc7hImbIHzYa7bzid/p
+         aVC2ro64x2raD2NE7YYiIEHSbbbZ3lbvK1njQfN1mEiL93R+sM4lFPCNtUqnPPD99OL0
+         6OLXw67WL/+NqcbtCV3O4C/20EtwfuMt86qxfoB3WrPRJMH6xyE328et+yFBhD3wlBYn
+         8B0w==
+X-Gm-Message-State: AOJu0Yyi21Xj6kkRQ/BGsIvPRCYJ5jrsQ7awCz61DTo6qbrQJT0VyyJM
+	E73LS4lEbMflItoZE6TeezPS0bSiaiX0iCINRetMzQgbEDl07weZg/jvrrVF7t4=
+X-Google-Smtp-Source: AGHT+IEacM9sDs7Y8p8h4j7AbFeMz0wV19rsIWYs8sfS+vYcht6ufRfRQtVFD3RKd/COEFOzhD5O2g==
+X-Received: by 2002:a7b:cb04:0:b0:431:5a27:839c with SMTP id 5b1f17b1804b1-4317ca9159cmr7449195e9.5.1729560436018;
+        Mon, 21 Oct 2024 18:27:16 -0700 (PDT)
+Received: from zihco-Latitude-7390-2-in-1.. ([102.90.45.98])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4316f5709efsm74169685e9.10.2024.10.21.18.27.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2024 18:27:15 -0700 (PDT)
+From: chizobajames21@gmail.com
+To: chizobajames21@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	phillip.wood@dunelm.org.uk,
+	ps@pks.im,
+	sunshine@sunshineco.com
+Subject: [Outreachy][PATCH v7] t6050: avoid pipes with upstream Git commands
+Date: Tue, 22 Oct 2024 02:27:01 +0100
+Message-Id: <20241022012701.8959-1-chizobajames21@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241014152411.11052-1-chizobajames21@gmail.com>
+References: <20241014152411.11052-1-chizobajames21@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-The `technical/repository-version.txt` document originally served as the
-master list for extensions, requiring that any new extensions be defined
-there. However, the `config/extensions.txt` file was introduced later
-and has since become the de facto location for describing extensions,
-with several extensions listed there but missing from
-`repository-version.txt`.
+From: Chizoba ODINAKA <chizobajames21@gmail.com>
 
-This consolidates all extension definitions into `config/extensions.txt`,
-making it the authoritative source for extensions. The references in
-`repository-version.txt` are updated to point to `config/extensions.txt`,
-and cross-references to related documentation such as
-`gitrepository-layout[5]` and `git-config[1]` are added.
+In pipes, the exit code of a chain of commands is determined by
+the final command. In order not to miss the exit code of a failed
+Git command, avoid pipes instead write output of Git commands
+into a file.
+For better debugging experience, instances of "grep" were changed
+to "test_grep". "test_grep" provides more context in case of a
+failed "grep".
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Caleb White <cdwhite3@pm.me>
+Signed-off-by: Chizoba ODINAKA <chizobajames21@gmail.com>
 ---
-This patch was based on v2.47.0.
----
- Documentation/config/core.txt                      |  2 +-
- Documentation/config/extensions.txt                | 73 ++++++++++++++++--=
-----
- Documentation/gitrepository-layout.txt             |  1 +
- .../technical/hash-function-transition.txt         |  4 +-
- Documentation/technical/partial-clone.txt          |  2 +-
- Documentation/technical/repository-version.txt     | 44 +------------
- 6 files changed, 62 insertions(+), 64 deletions(-)
+What changed:
+- a typography error, excess whitespace
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 60ca9f2b6861063c0e78307edcbbd25a9104472f..8f6d8e77541261d67abac4f990f=
-36ebb29b568c6 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -366,7 +366,7 @@ default in a bare repository.
-=20
- core.repositoryFormatVersion::
- =09Internal variable identifying the repository format and layout
--=09version.
-+=09version. See linkgit:gitrepository-layout[5].
-=20
- core.sharedRepository::
- =09When 'group' (or 'true'), the repository is made shareable between
-diff --git a/Documentation/config/extensions.txt b/Documentation/config/ext=
-ensions.txt
-index f0a784447db09856639ec43b443681f13c17c966..5dc569d1c9c77c15e3244149328=
-9f9c9dd5e7f0b 100644
---- a/Documentation/config/extensions.txt
-+++ b/Documentation/config/extensions.txt
-@@ -1,17 +1,13 @@
--extensions.objectFormat::
--=09Specify the hash algorithm to use.  The acceptable values are `sha1` an=
-d
--=09`sha256`.  If not specified, `sha1` is assumed.  It is an error to spec=
-ify
--=09this key unless `core.repositoryFormatVersion` is 1.
-+extensions.*::
-+=09Unless otherwise stated, is an error to specify an extension if
-+=09`core.repositoryFormatVersion` is not `1`. See
-+=09linkgit:gitrepository-layout[5].
- +
--Note that this setting should only be set by linkgit:git-init[1] or
--linkgit:git-clone[1].  Trying to change it after initialization will not
--work and will produce hard-to-diagnose issues.
--
--extensions.compatObjectFormat::
--
-+--
-+compatObjectFormat::
- =09Specify a compatibility hash algorithm to use.  The acceptable values
- =09are `sha1` and `sha256`.  The value specified must be different from th=
-e
--=09value of extensions.objectFormat.  This allows client level
-+=09value of `extensions.objectFormat`.  This allows client level
- =09interoperability between git repositories whose objectFormat matches
- =09this compatObjectFormat.  In particular when fully implemented the
- =09pushes and pulls from a repository in whose objectFormat matches
-@@ -19,18 +15,55 @@ extensions.compatObjectFormat::
- =09compatObjectFormat in addition to oids encoded with objectFormat to
- =09locally specify objects.
-=20
--extensions.refStorage::
-+noop::
-+=09This extension does not change git's behavior at all. It is useful only
-+=09for testing format-1 compatibility.
-++
-+For historical reasons, this extension is respected regardless of the
-+`core.repositoryFormatVersion` setting.
-+
-+noop-v1::
-+=09This extension does not change git's behavior at all. It is useful only
-+=09for testing format-1 compatibility.
-+
-+objectFormat::
-+=09Specify the hash algorithm to use.  The acceptable values are `sha1` an=
-d
-+=09`sha256`.  If not specified, `sha1` is assumed.
-++
-+Note that this setting should only be set by linkgit:git-init[1] or
-+linkgit:git-clone[1].  Trying to change it after initialization will not
-+work and will produce hard-to-diagnose issues.
-+
-+partialClone::
-+=09When enabled, indicates that the repo was created with a partial clone
-+=09(or later performed a partial fetch) and that the remote may have
-+=09omitted sending certain unwanted objects.  Such a remote is called a
-+=09"promisor remote" and it promises that all such omitted objects can
-+=09be fetched from it in the future.
-++
-+The value of this key is the name of the promisor remote.
-++
-+For historical reasons, this extension is respected regardless of the
-+`core.repositoryFormatVersion` setting.
-+
-+preciousObjects::
-+=09If enabled, indicates that objects in the repository MUST NOT be delete=
-d
-+=09(e.g., by `git-prune` or `git repack -d`).
-++
-+For historical reasons, this extension is respected regardless of the
-+`core.repositoryFormatVersion` setting.
-+
-+refStorage::
- =09Specify the ref storage format to use. The acceptable values are:
- +
- include::../ref-storage-format.txt[]
--+
--It is an error to specify this key unless `core.repositoryFormatVersion` i=
-s 1.
-+
- +
- Note that this setting should only be set by linkgit:git-init[1] or
- linkgit:git-clone[1]. Trying to change it after initialization will not
- work and will produce hard-to-diagnose issues.
-=20
--extensions.worktreeConfig::
-+worktreeConfig::
- =09If enabled, then worktrees will load config settings from the
- =09`$GIT_DIR/config.worktree` file in addition to the
- =09`$GIT_COMMON_DIR/config` file. Note that `$GIT_COMMON_DIR` and
-@@ -40,7 +73,7 @@ extensions.worktreeConfig::
- =09`config.worktree` file will override settings from any other
- =09config files.
- +
--When enabling `extensions.worktreeConfig`, you must be careful to move
-+When enabling this extension, you must be careful to move
- certain values from the common config file to the main working tree's
- `config.worktree` file, if present:
- +
-@@ -48,15 +81,17 @@ certain values from the common config file to the main =
-working tree's
-   `$GIT_COMMON_DIR/config.worktree`.
- * If `core.bare` is true, then it must be moved from `$GIT_COMMON_DIR/conf=
-ig`
-   to `$GIT_COMMON_DIR/config.worktree`.
-+
- +
- It may also be beneficial to adjust the locations of `core.sparseCheckout`
- and `core.sparseCheckoutCone` depending on your desire for customizable
- sparse-checkout settings for each worktree. By default, the `git
--sparse-checkout` builtin enables `extensions.worktreeConfig`, assigns
-+sparse-checkout` builtin enables this extension, assigns
- these config values on a per-worktree basis, and uses the
- `$GIT_DIR/info/sparse-checkout` file to specify the sparsity for each
- worktree independently. See linkgit:git-sparse-checkout[1] for more
- details.
- +
--For historical reasons, `extensions.worktreeConfig` is respected
--regardless of the `core.repositoryFormatVersion` setting.
-+For historical reasons, this extension is respected regardless of the
-+`core.repositoryFormatVersion` setting.
-+--
-diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepo=
-sitory-layout.txt
-index 949cd8a31e9a9e896ccec63d5c7e2f23f740973a..fa8b51daf08775f3d666a910d9b=
-00486627e02af 100644
---- a/Documentation/gitrepository-layout.txt
-+++ b/Documentation/gitrepository-layout.txt
-@@ -298,6 +298,7 @@ SEE ALSO
- --------
- linkgit:git-init[1],
- linkgit:git-clone[1],
-+linkgit:git-config[1],
- linkgit:git-fetch[1],
- linkgit:git-pack-refs[1],
- linkgit:git-gc[1],
-diff --git a/Documentation/technical/hash-function-transition.txt b/Documen=
-tation/technical/hash-function-transition.txt
-index ed574810891cad1024658920e0fa8ac550231534..7102c7c8f5d66de5574de459a0e=
-1136131a53004 100644
---- a/Documentation/technical/hash-function-transition.txt
-+++ b/Documentation/technical/hash-function-transition.txt
-@@ -148,8 +148,8 @@ Detailed Design
- Repository format extension
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~
- A SHA-256 repository uses repository format version `1` (see
--Documentation/technical/repository-version.txt) with extensions
--`objectFormat` and `compatObjectFormat`:
-+linkgit:gitrepository-layout[5]) with `extensions.objectFormat` and
-+`extensions.compatObjectFormat` (see linkgit:git-config[1]) set to:
-=20
- =09[core]
- =09=09repositoryFormatVersion =3D 1
-diff --git a/Documentation/technical/partial-clone.txt b/Documentation/tech=
-nical/partial-clone.txt
-index cd948b00722cba5ae9f01b31f6a226f8d4497ea8..bf5ec5c82d9e0f2fedfec517a6a=
-86d9973f4f312 100644
---- a/Documentation/technical/partial-clone.txt
-+++ b/Documentation/technical/partial-clone.txt
-@@ -102,7 +102,7 @@ or commits that reference missing trees.
- - On the client a repository extension is added to the local config to
-   prevent older versions of git from failing mid-operation because of
-   missing objects that they cannot handle.
--  See "extensions.partialClone" in Documentation/technical/repository-vers=
-ion.txt"
-+  See `extensions.partialClone` in linkgit:git-config[1].
-=20
-=20
- Handling Missing Objects
-diff --git a/Documentation/technical/repository-version.txt b/Documentation=
-/technical/repository-version.txt
-index 47281420fc4a0c901d60b2854a8f0a6e8f70587a..b9bb81a81f9ea16830290dfabd0=
-839f1f05b1992 100644
---- a/Documentation/technical/repository-version.txt
-+++ b/Documentation/technical/repository-version.txt
-@@ -65,44 +65,6 @@ Note that if no extensions are specified in the config f=
-ile, then
- provides no benefit, and makes the repository incompatible with older
- implementations of git).
-=20
--This document will serve as the master list for extensions. Any
--implementation wishing to define a new extension should make a note of
--it here, in order to claim the name.
--
--The defined extensions are:
--
--=3D=3D=3D=3D `noop`
--
--This extension does not change git's behavior at all. It is useful only
--for testing format-1 compatibility.
--
--=3D=3D=3D=3D `preciousObjects`
--
--When the config key `extensions.preciousObjects` is set to `true`,
--objects in the repository MUST NOT be deleted (e.g., by `git-prune` or
--`git repack -d`).
--
--=3D=3D=3D=3D `partialClone`
--
--When the config key `extensions.partialClone` is set, it indicates
--that the repo was created with a partial clone (or later performed
--a partial fetch) and that the remote may have omitted sending
--certain unwanted objects.  Such a remote is called a "promisor remote"
--and it promises that all such omitted objects can be fetched from it
--in the future.
--
--The value of this key is the name of the promisor remote.
--
--=3D=3D=3D=3D `worktreeConfig`
--
--If set, by default "git config" reads from both "config" and
--"config.worktree" files from GIT_DIR in that order. In
--multiple working directory mode, "config" file is shared while
--"config.worktree" is per-working directory (i.e., it's in
--GIT_COMMON_DIR/worktrees/<id>/config.worktree)
--
--=3D=3D=3D=3D `refStorage`
--
--Specifies the file format for the ref database. The valid values are
--`files` (loose references with a packed-refs file) and `reftable` (see
--Documentation/technical/reftable.txt).
-+The defined extensions are given in the `extensions.*` section of
-+linkgit:git-config[1]. Any implementation wishing to define a new
-+extension should make a note of it there, in order to claim the name.
+Range-diff against v6:
+1:  aad95a1b96 ! 1:  14c677dd80 t6050: avoid pipes with upstream Git commands
+    @@ t/t6050-replace.sh: test_expect_success 'set up buggy branch' '
+     -	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
+     -	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
+     +	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 >actual &&
+    -+	test_grep "author A U Thor"  actual &&
+    ++	test_grep "author A U Thor" actual &&
+     +	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 >actual &&
+     +	test_grep "A U Thor" actual
+      '
 
----
-base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
-change-id: 20241020-cleanup-extension-docs-f365868711bf
+ t/t6050-replace.sh | 133 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 86 insertions(+), 47 deletions(-)
 
-Best regards,
---=20
-Caleb White <cdwhite3@pm.me>
-
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index d7702fc756..deba3ca430 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -98,30 +98,42 @@ test_expect_success 'set up buggy branch' '
+ '
+ 
+ test_expect_success 'replace the author' '
+-	git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	R=$(git cat-file commit $HASH2 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
+-	git cat-file commit $R | grep "author O Thor" &&
++	git cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor" actual &&
++	R=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
++	git cat-file commit $R >actual &&
++	test_grep "author O Thor" actual &&
+ 	git update-ref refs/replace/$HASH2 $R &&
+-	git show HEAD~5 | grep "O Thor" &&
+-	git show $HASH2 | grep "O Thor"
++	git show HEAD~5 >actual &&
++	test_grep "O Thor" actual &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual
+ '
+ 
+ test_expect_success 'test --no-replace-objects option' '
+-	git cat-file commit $HASH2 | grep "author O Thor" &&
+-	git --no-replace-objects cat-file commit $HASH2 | grep "author A U Thor" &&
+-	git show $HASH2 | grep "O Thor" &&
+-	git --no-replace-objects show $HASH2 | grep "A U Thor"
++	git cat-file commit $HASH2 >actual &&
++	test_grep "author O Thor" actual &&
++	git --no-replace-objects cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor" actual &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual &&
++	git --no-replace-objects show $HASH2 >actual &&
++	test_grep "A U Thor" actual
+ '
+ 
+ test_expect_success 'test GIT_NO_REPLACE_OBJECTS env variable' '
+-	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 | grep "A U Thor"
++	GIT_NO_REPLACE_OBJECTS=1 git cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor" actual &&
++	GIT_NO_REPLACE_OBJECTS=1 git show $HASH2 >actual &&
++	test_grep "A U Thor" actual
+ '
+ 
+ test_expect_success 'test core.usereplacerefs config option' '
+ 	test_config core.usereplacerefs false &&
+-	git cat-file commit $HASH2 | grep "author A U Thor" &&
+-	git show $HASH2 | grep "A U Thor"
++	git cat-file commit $HASH2 >actual &&
++	test_grep "author A U Thor" actual &&
++	git show $HASH2 >actual &&
++	test_grep "A U Thor" actual
+ '
+ 
+ cat >tag.sig <<EOF
+@@ -148,14 +160,18 @@ test_expect_success 'repack, clone and fetch work' '
+ 	git clone --no-hardlinks . clone_dir &&
+ 	(
+ 		cd clone_dir &&
+-		git show HEAD~5 | grep "A U Thor" &&
+-		git show $HASH2 | grep "A U Thor" &&
++		git show HEAD~5 >actual &&
++		test_grep "A U Thor" actual &&
++		git show $HASH2 >actual &&
++		test_grep "A U Thor" actual &&
+ 		git cat-file commit $R &&
+ 		git repack -a -d &&
+ 		test_must_fail git cat-file commit $R &&
+ 		git fetch ../ "refs/replace/*:refs/replace/*" &&
+-		git show HEAD~5 | grep "O Thor" &&
+-		git show $HASH2 | grep "O Thor" &&
++		git show HEAD~5 >actual &&
++		test_grep "O Thor" actual &&
++		git show $HASH2 >actual &&
++		test_grep "O Thor" actual &&
+ 		git cat-file commit $R
+ 	)
+ '
+@@ -169,13 +185,15 @@ test_expect_success '"git replace" listing and deleting' '
+ 	test_must_fail git replace --delete &&
+ 	test_must_fail git replace -l -d $HASH2 &&
+ 	git replace -d $HASH2 &&
+-	git show $HASH2 | grep "A U Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "A U Thor" actual &&
+ 	test -z "$(git replace -l)"
+ '
+ 
+ test_expect_success '"git replace" replacing' '
+ 	git replace $HASH2 $R &&
+-	git show $HASH2 | grep "O Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual &&
+ 	test_must_fail git replace $HASH2 $R &&
+ 	git replace -f $HASH2 $R &&
+ 	test_must_fail git replace -f &&
+@@ -186,7 +204,8 @@ test_expect_success '"git replace" resolves sha1' '
+ 	SHORTHASH2=$(git rev-parse --short=8 $HASH2) &&
+ 	git replace -d $SHORTHASH2 &&
+ 	git replace $SHORTHASH2 $R &&
+-	git show $HASH2 | grep "O Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "O Thor" actual &&
+ 	test_must_fail git replace $HASH2 $R &&
+ 	git replace -f $HASH2 $R &&
+ 	test_must_fail git replace --force &&
+@@ -209,10 +228,12 @@ test_expect_success '"git replace" resolves sha1' '
+ #
+ test_expect_success 'create parallel branch without the bug' '
+ 	git replace -d $HASH2 &&
+-	git show $HASH2 | grep "A U Thor" &&
++	git show $HASH2 >actual &&
++	test_grep "A U Thor" actual &&
+ 	git checkout $HASH1 &&
+ 	git cherry-pick $HASH2 &&
+-	git show $HASH5 | git apply &&
++	git show $HASH5 >actual &&
++	git apply actual &&
+ 	git commit --amend -m "hello: 4 more lines WITHOUT the bug" hello &&
+ 	PARA2=$(git rev-parse --verify HEAD) &&
+ 	git cherry-pick $HASH3 &&
+@@ -225,7 +246,8 @@ test_expect_success 'create parallel branch without the bug' '
+ 	git checkout main &&
+ 	cur=$(git rev-parse --verify HEAD) &&
+ 	test "$cur" = "$HASH7" &&
+-	git log --pretty=oneline | grep $PARA2 &&
++	git log --pretty=oneline >actual &&
++	test_grep $PARA2 actual &&
+ 	git remote add cloned ./clone_dir
+ '
+ 
+@@ -234,23 +256,30 @@ test_expect_success 'push to cloned repo' '
+ 	(
+ 		cd clone_dir &&
+ 		git checkout parallel &&
+-		git log --pretty=oneline | grep $PARA2
++		git log --pretty=oneline >actual &&
++		test_grep $PARA2 actual
+ 	)
+ '
+ 
+ test_expect_success 'push branch with replacement' '
+-	git cat-file commit $PARA3 | grep "author A U Thor" &&
+-	S=$(git cat-file commit $PARA3 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
+-	git cat-file commit $S | grep "author O Thor" &&
++	git cat-file commit $PARA3 >actual &&
++	test_grep "author A U Thor" actual &&
++	S=$(sed -e "s/A U/O/" actual | git hash-object -t commit --stdin -w) &&
++	git cat-file commit $S >actual &&
++	test_grep "author O Thor" actual &&
+ 	git replace $PARA3 $S &&
+-	git show $HASH6~2 | grep "O Thor" &&
+-	git show $PARA3 | grep "O Thor" &&
++	git show $HASH6~2 >actual &&
++	test_grep "O Thor" actual &&
++	git show $PARA3 >actual &&
++	test_grep "O Thor" actual &&
+ 	git push cloned $HASH6^:refs/heads/parallel2 &&
+ 	(
+ 		cd clone_dir &&
+ 		git checkout parallel2 &&
+-		git log --pretty=oneline | grep $PARA3 &&
+-		git show $PARA3 | grep "A U Thor"
++		git log --pretty=oneline >actual &&
++		test_grep $PARA3 actual &&
++		git show $PARA3 >actual &&
++		test_grep "A U Thor" actual
+ 	)
+ '
+ 
+@@ -260,14 +289,14 @@ test_expect_success 'fetch branch with replacement' '
+ 		cd clone_dir &&
+ 		git fetch origin refs/heads/tofetch:refs/heads/parallel3 &&
+ 		git log --pretty=oneline parallel3 >output.txt &&
+-		! grep $PARA3 output.txt &&
++		test_grep ! $PARA3 output.txt &&
+ 		git show $PARA3 >para3.txt &&
+-		grep "A U Thor" para3.txt &&
++		test_grep "A U Thor" para3.txt &&
+ 		git fetch origin "refs/replace/*:refs/replace/*" &&
+ 		git log --pretty=oneline parallel3 >output.txt &&
+-		grep $PARA3 output.txt &&
++		test_grep $PARA3 output.txt &&
+ 		git show $PARA3 >para3.txt &&
+-		grep "O Thor" para3.txt
++		test_grep "O Thor" para3.txt
+ 	)
+ '
+ 
+@@ -284,8 +313,8 @@ test_expect_success 'bisect and replacements' '
+ '
+ 
+ test_expect_success 'index-pack and replacements' '
+-	git --no-replace-objects rev-list --objects HEAD |
+-	git --no-replace-objects pack-objects test- &&
++	git --no-replace-objects rev-list --objects HEAD >actual &&
++	git --no-replace-objects pack-objects test- <actual &&
+ 	git index-pack test-*.pack
+ '
+ 
+@@ -319,7 +348,8 @@ test_expect_success '-f option bypasses the type check' '
+ '
+ 
+ test_expect_success 'git cat-file --batch works on replace objects' '
+-	git replace | grep $PARA3 &&
++	git replace >actual &&
++	test_grep $PARA3 actual &&
+ 	echo $PARA3 | git cat-file --batch
+ '
+ 
+@@ -344,7 +374,8 @@ test_expect_success 'test --format medium' '
+ 		echo "$PARA3 -> $S" &&
+ 		echo "$MYTAG -> $HASH1"
+ 	} | sort >expected &&
+-	git replace -l --format medium | sort >actual &&
++	git replace -l --format medium >output &&
++	sort output >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -356,7 +387,8 @@ test_expect_success 'test --format long' '
+ 		echo "$PARA3 (commit) -> $S (commit)" &&
+ 		echo "$MYTAG (tag) -> $HASH1 (commit)"
+ 	} | sort >expected &&
+-	git replace --format=long | sort >actual &&
++	git replace --format=long >output &&
++	sort output >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -374,12 +406,16 @@ test_expect_success 'setup fake editors' '
+ test_expect_success '--edit with and without already replaced object' '
+ 	test_must_fail env GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --force --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor" &&
++	git replace -l >actual &&
++	test_grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual &&
++	test_grep "A fake Thor" actual &&
+ 	git replace -d "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor"
++	git replace -l >actual &&
++	test_grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual &&
++	test_grep "A fake Thor" actual
+ '
+ 
+ test_expect_success '--edit and change nothing or command failed' '
+@@ -387,8 +423,10 @@ test_expect_success '--edit and change nothing or command failed' '
+ 	test_must_fail env GIT_EDITOR=true git replace --edit "$PARA3" &&
+ 	test_must_fail env GIT_EDITOR="./failingfakeeditor" git replace --edit "$PARA3" &&
+ 	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
+-	git replace -l | grep "$PARA3" &&
+-	git cat-file commit "$PARA3" | grep "A fake Thor"
++	git replace -l >actual &&
++	test_grep "$PARA3" actual &&
++	git cat-file commit "$PARA3" >actual &&
++	test_grep "A fake Thor" actual
+ '
+ 
+ test_expect_success 'replace ref cleanup' '
+@@ -468,7 +506,8 @@ test_expect_success GPG 'set up a merge commit with a mergetag' '
+ 	git checkout main &&
+ 	git merge -s ours test_tag &&
+ 	HASH10=$(git rev-parse --verify HEAD) &&
+-	git cat-file commit $HASH10 | grep "^mergetag object"
++	git cat-file commit $HASH10 >actual &&
++	test_grep "^mergetag object" actual
+ '
+ 
+ test_expect_success GPG '--graft on a commit with a mergetag' '
+-- 
+2.34.1
 
