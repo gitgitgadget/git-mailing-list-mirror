@@ -1,117 +1,138 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E32C1A269
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 08:47:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FC11A269
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 08:51:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729586843; cv=none; b=dCHq9YIsV9qALX6dlcbvp7+/q870cOQsf7WDhZo1dlxXw1B7S0daxXb2lb5XyTn781H2kurg6sxSigHJBrzr3XXBXMBfcqk225t8uVEXmtdh96fL7QFO1x+fSfp01HZioi5IqHR7I9f1KsbFvMuMk4u6JJjEIQ8K8m1ks8bOQiE=
+	t=1729587067; cv=none; b=kUaBUdpye6+G1zMiBOd3nNsXlX9WTMnHIuq/zd7dUAXe0LaTpw5miUX3wSpVJu8wdSQ0WyHWb1Q35gBX4Is5vTDSVKk2dHDvonNHRZ4w6SFzYdzLsCCINbLzXhd/MSgYSjhsPI42XL7Ve1biETztFCPvw3JE76HaqHCzlwLhzZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729586843; c=relaxed/simple;
-	bh=RUuqG4uRjqfyU+fyR3R6E3n0MD/os2rC8CAr0JkICjk=;
+	s=arc-20240116; t=1729587067; c=relaxed/simple;
+	bh=FCPNt+YLeOsM0O88Yi0zpC2CcGb9U0ytdI1BpMmfGRI=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OdwYIDNjBJhbHJBLTmdZ0fxeR+Li0W8fBzlXHfktl0uCYHcIJEz6OJxniA4mRVRXTtV9aHqWqs8xyEHnoqyDEh4Pegksh4AGRc2KpwV8ApHT6imMAZQHPgDJdb5/85LzZw4mj8dylPoJ5EkuVlHK2imVjfJRuhTvzo7K6G+mTw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H4lGJA80; arc=none smtp.client-ip=209.85.221.180
+	 To:Cc:Content-Type; b=mcDQ24cEtOKBGtUUBl/GUZcj2yInWrwhNqKoXSorQgcix9yucyvJ4A6NCBcMIx/c9dPbRKSGVpbe6zjJF3pnRRePivOe+SYuuWBXHVn6i10aLKBEVVPaPW7Kq08lV1bBK8v7G7GrvqNxpw/UyMUAdfMaOMjT22y+087n6xfGpNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PVJ5OqUp; arc=none smtp.client-ip=209.85.217.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H4lGJA80"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-50d4a333a87so1668791e0c.1
-        for <git@vger.kernel.org>; Tue, 22 Oct 2024 01:47:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PVJ5OqUp"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4a5ad828a0fso1455607137.2
+        for <git@vger.kernel.org>; Tue, 22 Oct 2024 01:51:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729586841; x=1730191641; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729587065; x=1730191865; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=suD48B6U4da+LZ243Je8R8wnB5EFgKieKKUvMJ8Aeuc=;
-        b=H4lGJA805Bamqa8g8aZAn0pC4hHYaXpkFUOndZghHvYKhZGEMVsA3UQfu6u1ewoGU+
-         SPb5fdJswba/eoyAIveQGVASzx6SfZHEoCW5bi/JnhDFgoo1NDj9XMU3MsjhFjc2GWxm
-         vjv4VmLLDDtzfLHonsHpXViGThOcjL24fYX73J5HNW+qt4Vrn2gIIFGlnh1jOu0GS8Pf
-         4WczV6gcz8Zhbq+zDTdZW0lB1vEWJ2yHCJwdizXL0DGOFRIbSiSpKiaqAzLGMMr8zyLy
-         zsTrCk0wveNTE6nNN9R/1W8XCWtlDG+5wRMidqqBoo41p9J1S0fZkjP5bb7Mb9zPbU6q
-         1Ukw==
+        bh=3h5mhWhfyF7FdxB74EzNnKCwRKESJvM1v+amGuE3yK8=;
+        b=PVJ5OqUpTzPNVeId2ZbS6tVgf/TkKIz0SOY1r9hPw6JChA1QD3ug7I9C2ZeTrQnzn6
+         wcc5HYwQXHoxE0cvmIBBNx67aswOi9WQJxhLLMb/miNvFQSZjMzr8xeuTzoNvEqraOB8
+         Qc/cDEsZRubhs7b2RIPXpaKUsf/KBnqVWzU8IyiVK7OqwIDXz8gLbD6asOr2pisuDnMw
+         Oedrt1Lxo2dJcq003FfVGeaApvaEIGbtAxA2pJTZkpXR6tZ0/OfxyPEtxKcxsktstRWp
+         3vG58pAzqSx94lxzcPHF3tQGonHWVF0TiypYY8WhoK+8pqilv5zxipqoflMtYN+GHnlz
+         yTew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729586841; x=1730191641;
+        d=1e100.net; s=20230601; t=1729587065; x=1730191865;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=suD48B6U4da+LZ243Je8R8wnB5EFgKieKKUvMJ8Aeuc=;
-        b=YfguN19vEkI1C1uaD3mUACmuGZUUV0jtySMpcFrSjpzMp0Pa9aHHz36/QeRc87yxMw
-         FK9r1Zm/O6ytlbONUAZZYABKRhn6HJt0JuswCp+w/5hZyxq2l8mHDksrZQf7BpM2oH3e
-         cIeaA7SzEl0Lj8gUJLPyxKl05Quvouky/UAL9l2KzSz/uywyKr3iuYORvAPaikwf90Bz
-         UPx8etRlgXREaNJ0Q8LwBkLrnf/QRwYK1X+f4j6jlo2HXsTAT4gVHEYOUQLbIxT0OsiH
-         T2DPmoXHN4HZj03ABB0OoG5eksWgkrzCsrRc52PEFqzhluqJNGEziTiI6kzVBiSanZGu
-         6uGg==
-X-Gm-Message-State: AOJu0YyBD2UOeS2mpE+XfKBQ3cgu482U1tQJ3rpOFRToop6vt0lzwvlo
-	0LJSxX2LCzxezj/jGK18euh3RCs0tfB2LPPqIG2YR49QIOEp1s3IaZLoIuxPkoVqtTGlTA0UWsA
-	7RpvV4lQ1FFZnGR2fxDHRkLQJ13s=
-X-Google-Smtp-Source: AGHT+IEdXKrYMkGNaM8EG34HLk0kjviDM8iOOdSEBgWoTbKV0Qo42YG4O0aTyYUBdd4Whc6JK7KUDKHWFi46vLK0hQ8=
-X-Received: by 2002:a05:6122:1790:b0:509:e7d:b7b2 with SMTP id
- 71dfb90a1353d-50dda025c30mr10725936e0c.2.1729586840831; Tue, 22 Oct 2024
- 01:47:20 -0700 (PDT)
+        bh=3h5mhWhfyF7FdxB74EzNnKCwRKESJvM1v+amGuE3yK8=;
+        b=BRmkaQxeft4EE3jvt2hZa4qwTOdazHra/cAx+wEj62/LI1B/hwZlxWm3jGq6DaG18b
+         sckYPSk5BLeAwYfNrR3iS5j29Qh3keovXQMSKfdvHXzgXtQ0a7283gEvyxVeDZLzheJq
+         Mpzi6LtgOVikaq8IiSXKpw/w1Hz6pkwX+jQYPTTty1wmgrrT33QyvTriwNwz0ZiK/um3
+         2VM9/I4SgW/nwDSQjpt6RqxNSG3zNTVH37srASUNdcqVFBRDBTo68hojBehx3AsRrMzs
+         6DZyTW8AbcaN3uAeGXHvl4lTMsJ0zqIE6o99K/yRwy1fWXHI6gK+4ohmQUnPVdcCjpLt
+         CMoA==
+X-Gm-Message-State: AOJu0Yyj0t2q0Z9dY0rdjhe6Yy7gBiLy9iEDGyHHHUEU8YUwSHCORjgS
+	CKQAwMON8ZP+t34lS2ZXkB8f1jT0lKKQRpW4cpy8lBRRz2zDgKCVVVOwiubeZsuayAcDgzkGjph
+	qxJRK3Hl7WCl37aoh0ennqQjBe/ET/UwY
+X-Google-Smtp-Source: AGHT+IG212LazcnEGuLBIbVcG5D/xBk6PmsmH+oAVq14lbDDmzsCGc9b9r4a/CPEukvwnDT3IuSXhTvsnht8llnr828=
+X-Received: by 2002:a05:6102:e0d:b0:493:bcbd:4633 with SMTP id
+ ada2fe7eead31-4a5d6a8c469mr13039794137.3.1729587065094; Tue, 22 Oct 2024
+ 01:51:05 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 22 Oct 2024 01:47:19 -0700
+ HTTPREST; Tue, 22 Oct 2024 04:51:04 -0400
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <aba3d76c-5234-4875-a1a7-b212bb27b266@app.fastmail.com>
-References: <20241021124145.636561-1-karthik.188@gmail.com> <aba3d76c-5234-4875-a1a7-b212bb27b266@app.fastmail.com>
+In-Reply-To: <ZxbCWvFo8ZdwPgJd@nand.local>
+References: <cover.1729504640.git.karthik.188@gmail.com> <c8cc21c2eeb9d1e0bc261143e642eff38fe33888.1729504641.git.karthik.188@gmail.com>
+ <ZxbCWvFo8ZdwPgJd@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 22 Oct 2024 01:47:19 -0700
-Message-ID: <CAOLa=ZSWTKzgep+r8Qk9rZM_W28WsOS-k=VF=R2PHNMHLR613g@mail.gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: discourage arbitrary suffixes in
- function names
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="00000000000041aff106250cd1a5"
+Date: Tue, 22 Oct 2024 04:51:04 -0400
+Message-ID: <CAOLa=ZQPH_rd65-zW6dRJAiAA747htXR---icS5aV9zupH2aGw@mail.gmail.com>
+Subject: Re: [PATCH 01/20] packfile: pass down repository to `odb_pack_name`
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000009faf9206250cdec8"
 
---00000000000041aff106250cd1a5
+--0000000000009faf9206250cdec8
 Content-Type: text/plain; charset="UTF-8"
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> On Mon, Oct 21, 2024, at 14:41, Karthik Nayak wrote:
->> We often name functions with arbitrary suffixes like `_1` as an
->> extension of another existing function. This created confusion and
->> doesn't provide good clarity into the functions purpose. Let's document
->> good function naming etiquette in our CodingGuidelines.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>
->> This is mostly in response to an ongoing thread [1] where I ran into one of
->> these functions and it really took me a while to wrap my head around what the
->> function does.
->>
->> [1]:
->> https://lore.kernel.org/git/CAOLa=ZREg3xuaT6mbM8+Havn3regZDhK45kGy0+Fw8t56c7Mpg@mail.gmail.com/#R
+> On Mon, Oct 21, 2024 at 11:57:44AM +0200, Karthik Nayak wrote:
+>> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+>> index 5809613002..60f806e672 100644
+>> --- a/builtin/pack-redundant.c
+>> +++ b/builtin/pack-redundant.c
+>> @@ -688,7 +688,7 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
+>>  	pl = red = pack_list_difference(local_packs, min);
+>>  	while (pl) {
+>>  		printf("%s\n%s\n",
+>> -		       sha1_pack_index_name(pl->pack->hash),
+>> +		       sha1_pack_index_name(the_repository, pl->pack->hash),
+>>  		       pl->pack->pack_name);
+>>  		pl = pl->next;
+>>  	}
 >
-> I was wondering whether it would make sense to use that link in this
-> document for the context.  But I see that there is only one instance
-> of that in the current document.
+> I am a little surprised to see sha1_pack_index_name() converted
+> similarly here, as this patch promises only to touch the
+> 'odb_pack_name()' function.
+>
+>> diff --git a/packfile.h b/packfile.h
+>> index 0f78658229..507ac602b5 100644
+>> --- a/packfile.h
+>> +++ b/packfile.h
+>
+> Indeed, it looks like odb_pack_name(), sha1_pack_name(),
+> sha1_pack_index_name(), parse_pack_index(), and has_pack_index() are all
+> modified. Were these meant to go in separate patches?
+>
 
-Yeah, there are a few such functions in our codebase. I'd be happy to
-make any improvements, but also think this is simple and clear at the
-moment.
+Nope this is intentional, each commit tries to pick a base function and
+modifies all layers above it (I should have explicitly specified my
+approach in the cover).
 
---00000000000041aff106250cd1a5
+In this commit, we try to modify `odb_pack_name()` and therefore
+sha1_pack_name(), sha1_pack_index_name(), parse_pack_index(), and
+has_pack_index() too. Otherwise, we'd have a lot lot more commits.
+
+This simplies the review too, but yes, will add more instructions to the
+next version.
+
+> Thanks,
+> Taylor
+
+Karthik
+
+--0000000000009faf9206250cdec8
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 5d41a77070d3c95c_0.1
+X-Attachment-Id: b89a64ae39234d76_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jWFpwVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMkJrREFDR3RYSllpbisxMlp3TVROTE00WUtnUXB4RgozelEzSDhWUDdW
-WWppN3hXZ1hFbG9FcS9LVUUxOFJRR1B1dWp5emdBc2ltcCs0MmgxVWtYNWJnVWdoc3BkeG1VClNK
-WW0vdFMwU2JibTh0SmNXeE85dUVuVGxHM2g1QTdWMWk2RmlGVDErcWQyZ2cvcGtZMURybG5Ub2pE
-VFJQdTUKdmFuMDBZeW43NlUveUszRUYzUjY4Wnc1ZzBGMGRkY29yYS8rOWNha3A0eUpabGlNczBj
-TS9oWmVSajR0dmdtWQpZUTRMTnc1aERDZGVsQlR5ZEZaUEUzN3Z1YncwK0pLTTdUaWJEdi9XUGI5
-cVlsUVZjSXA3MVNkVVNCTUhBTWxPCjhCU3pYUmVwU1R4S3BheXBxVlErTGdVam5VWkZ5WDFiZm1G
-TFZoVlpYNSszTi9nTy81azdLampPRXFYU0ViSU4Ka2h3V3ZkdTEzVXpwSGNyRC92YkJyOWxQeHZ4
-TTdCamtZNlJEYklNZExjemJNVENSVm84OFZ4R0w0SmVqYjZUdQpaRCtmVXhXaFNIRFhOblhFdGJz
-ZVNBM1NSTkVoMTNUcjlVK3lncG8yc1pFSlRQSzBwMmRqWVRTZ0RJa3p0bWFhClBnaEMySTZFNzda
-NDRSV2Nld1RFY1B3R0dDcUJQenprbmw4bXh2OD0KPUpOa24KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jWFozWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNXFGQy80enlkTlQyT1d0RUNsSWpzdnlxeExUNVl5SQpCcVY2aW41bmxW
+enVSVzc3N1FDTXlNZGpJTERkV1NRRjVSVmdjOHpxQjI3cnFvSzJOVEtxZGJacWJRMUpUb3RVCjRL
+cG5pVytNUTlhL3VRVVpKbDJ4QkFVQy9valF1OVh5RHN1TG45SjhkWjF2eHQ4R25KalZTa2ZwcHJn
+aU1WWDAKU2hOOG9wSW1PdGhQcVd3bFVUUE9YNEFrYUNZb1pGM0g2NjYvQlNBVkZ6VUVWNmpxcE1O
+VHNnd3BDOFpGTldmego5S2c3b1ZNNStKTnlDNFl5V0FocUZZd1FkalJOUEpTR0dLU2pNeWQ2WnNa
+S1Vrb0VDWExjOHZYd0NSanNieTVRCnNQUTByd0NRdmJwcm1TbXZyQUV2MXNIbXk3ZTNoSW9xQWFS
+VkExeHF5dytWWWlyVDdQd3RTaVAwMDVkNkk5M3MKZGVHNklnSkw2aU9XSXVtWFp2YnNudVM1MGd6
+UUFqTmZLRTRObkF6aGRPQldNR2NETlZLSkcxZU1BZXNHaDBKRwo3UXN3T3RhNEJOSVljc3FIS2pv
+THpPdU4zYjc1YXluQ0hJUW5oMFVpYUIxaDNQaEhUSWFxR0JKREQrSWh1czg5CkhubW5BU1BVdUth
+dERGMko3TC9RNFY5V0pPSktYVFN3U2xZQkwxcz0KPW1aMFcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000041aff106250cd1a5--
+--0000000000009faf9206250cdec8--
