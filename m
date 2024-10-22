@@ -1,132 +1,120 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6157913211C
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 05:23:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0EB28370
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 05:58:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729574632; cv=none; b=iQyt15pkofLnWDtpO87kjmijEhW9FW3goKQRZkhbUODeCAfPBN0TI0qsmkH/audHI1VkRN9LnZfva5K6Q+5YAn1VfawbYjJFm2VosXy3ODn2vfFUGpYXOVmcXAV4LBpnpZ6qWrMDG69TZ9gbRsDKTiOOwPDpUlAMBsLX5jaaTV8=
+	t=1729576725; cv=none; b=WC2M+XEzNSUAY/mV9CTpxfHO2awBJNwJtxQkd8xTbJNzvqGdYyV53AN8fEvdJZ5rbiHD640edgYIH9ykz5NF/ctf+y4UICEYer6cZpEQH0a9ywZtgL0halBDK2c67Gsc/wWyROtIVMgZLfw9QQZ2Mcj/LKzU/lZvgi7ksTRGOsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729574632; c=relaxed/simple;
-	bh=37eIvsVESLXLyoI6O5Hzp3/HE8UXk+PVlwfWePSa1M0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=S1w77xjWcdBysJ+R4tqnNn87JCEAUI45XSsNO10LjIkqKvUETQLQISan5fS6NKyoX4icthsTmKuX8XKiXVYJzkqcy9bc+J7LBcFjC4+4nEQXOC7luVc6pQGWEczwTGg7HXN+d6YCNDnlRdjEy6igJeCOUebDImOhv+kJNJbLqvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NlvTft9o; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729576725; c=relaxed/simple;
+	bh=gp9LU+Osp396WLI8FTLWMt5hLFJLutnuIyYSbZQYL+Y=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=HAygTGR/8RkYO4PoulBZ8vEwNme3NrHttsjPgnYMY+MrI1N4aAcK0q7FAOfOGO0sJl1PJ63ry3S8cnpmdEoAfvmOYlVN/CrZ5pYnrLUxtZ99nz0x3NqCDZJ8TV/vWE1Be21RYCd9Z1j4IBXsa7LwssNh/wzw7AhNfqzbTd0yP28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigma-star.at; spf=pass smtp.mailfrom=sigma-star.at; dkim=pass (2048-bit key) header.d=sigma-star.at header.i=@sigma-star.at header.b=a2JB/0pq; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigma-star.at
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sigma-star.at
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NlvTft9o"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5cb6ca2a776so1837270a12.0
-        for <git@vger.kernel.org>; Mon, 21 Oct 2024 22:23:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=sigma-star.at header.i=@sigma-star.at header.b="a2JB/0pq"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a9a0c40849cso817226266b.3
+        for <git@vger.kernel.org>; Mon, 21 Oct 2024 22:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729574628; x=1730179428; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=sigma-star.at; s=google; t=1729576720; x=1730181520; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ljjAwwc49VPeSHdsjTz8xOsjWNLz4b6qMHM1WZ0Hi1s=;
-        b=NlvTft9o296S/yR9DgTMDvlqO0ggo9ap7BKPMJSBDUxLcmUb0z50gC+9PlAboICw5W
-         6EG/DcYrvWDPdiTx3CfGWHAMoNSckUdrAR9Y0mj4HfKqybODlD+BPa50gGYi+i2e7gBN
-         zptQFfZ/67BQ6FdbduQtNRN+Z2X/43HHG4rZ5o8xfktKmW/hldy61CCJrQeSKXTJvSb5
-         jbd4vnW7DUDd1NCopYqIgon+visfTEeJXVDyzH8MYTblheDp7LCi7CgCZ06lDEeaCM6C
-         TC1JKx2c12Ku82SjtB3yGjU7wc1awtCj98VliPNmnb9fjRdMq6CGOEjr5ovioiUEKI3+
-         7Mhw==
+        bh=DwOCOn4Zu02rBLZW+cbN0Is02cKRpWoMK5jszRt0luw=;
+        b=a2JB/0pqJwNhyxMGiFpBKDMElk0JF6pMYes7BGsu4nbQm3OLkgBz8ybca91pujEHxu
+         rmybeqCsTWOWSGfG9/fmD6OlHOuKu46sTBifSBw2qov/hN6/uKOmSrM9nM8SYV7kU14D
+         WawaYnaRa70QY23TJNAI7z7YuNtH7moFHqqmDtTnEiHDbr4DHAGf+ZHIlTdD0q05+M0N
+         /ZaUvxHyhKTzkUOh7zyfFrfgxCK0FiEp0e8uFRB9NvR/voVdxh0HtP4EV+N96Y6vR6wJ
+         GC7DTrUZEdp9kngLWdOXOyfRWYOjtgZ1L5f88FizGfw6y+CQdlN2I0Ll+3aTgA3mzQq1
+         /0Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729574628; x=1730179428;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1729576720; x=1730181520;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ljjAwwc49VPeSHdsjTz8xOsjWNLz4b6qMHM1WZ0Hi1s=;
-        b=duooSTF8lfQ+pUanUkHUhXPKFoxBeqxAU/uYDn6jIqsDYZh3UnUZ8xTfyswiLj65mq
-         kS8eaiiIyW8eVwykKRYO8otyFq6ortbJiUMizb3QVECSpZ+7okrLkidhdedT29QnV5zm
-         +D1HMMuFiGM/Zoad9X+lUiN2hwE9El1p6s7zHZr80ndU3gfDKeVfS2YjnvOEUG8MxxRD
-         xCCjgnkgjl5knxRf4UetDr5H7g9wvszR4h1N104iY6GScEzK7DHJEwUBKNyOBdm8ICmF
-         ITchweN96ULT5EnEmIO05VXy6/MUHOlpk9aKTIrMoLfHRROlTFXSwwSKJg/fgXlTW2wD
-         y8SA==
-X-Gm-Message-State: AOJu0YwqvLvwRfOJjx1h87W6lZTYjwgH+KUyP/4gc24BKCFxw0sIy+HK
-	UO19B6oVWfgMTG3iyMW4v1100qVyYqbjxQdpXfaodClBXJ562Mx0JrlgyA==
-X-Google-Smtp-Source: AGHT+IGjJZr0knIiK6PR/nUMRVlAcGyy6jBng3s9nV7idVspOlABp0A2fBADI9coR+We4zYHqnd9Qg==
-X-Received: by 2002:a17:906:99c2:b0:a9a:238a:381d with SMTP id a640c23a62f3a-a9aa8a0608cmr175928566b.52.1729574628171;
-        Mon, 21 Oct 2024 22:23:48 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a91572113sm287995566b.168.2024.10.21.22.23.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 22:23:47 -0700 (PDT)
-Message-Id: <d0aa756d2d07f6fdb7450b9b6baddd2ea2c99a7b.1729574624.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1810.v3.git.git.1729574624.gitgitgadget@gmail.com>
-References: <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
-	<pull.1810.v3.git.git.1729574624.gitgitgadget@gmail.com>
-From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 22 Oct 2024 05:23:43 +0000
-Subject: [PATCH v3 3/3] imap: replace atoi() with strtol_i() for UIDVALIDITY
- and UIDNEXT parsing
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=DwOCOn4Zu02rBLZW+cbN0Is02cKRpWoMK5jszRt0luw=;
+        b=rjeZBFaBCmZVQdD2Q9QgF+7wgibDvi4YSJuS/XnWi9tZfRf/f3205Hg0/xPhWmM19s
+         VBN6Zs8CKL9nqL33JEXbN7JLwmfZHNpDoFP9kNZxQ5ugXdsscJaG4Na6T0iCKBt6Xan3
+         cYV0SMR5pxGyJ81xluJe3vnbCGOv12WD8J9NSBI6zlm5xd1K132seNVihTLRtO0wZIPw
+         CCElo7EeDSCk3uifYCDqtHUfnxuNqt48XRhgbactXfsOAbH1RGvZ405NpLbTgZZPkdje
+         qaWrmZOs9K/75TP37icc3L/cMuUM8U7Y4mV8lMYkBcrf5FgKpyzHmY2hFF2XRZhiQD8h
+         LkyA==
+X-Forwarded-Encrypted: i=1; AJvYcCWYsjR8fmkg2a+fJD+kB5E+avMvVVC7KHLfVIU2RfnJIpKwt39bPaUp11tjO8xRB1qefgY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0qEgvz3GDRj/nd1wl+bdkaX49yKKWc8D1zQJo2Z419RJqQqe0
+	rPohb2jbwqbN/rO3q89qB94sELnSLxeTWDDJWH9FrTYK6nSUxeIQUMF0RkRsY/2Lg+WKT2yeuSt
+	s
+X-Google-Smtp-Source: AGHT+IEhtT1PrSPtE3H/43UAlaD+aaydq0NOy47zgiGoLwHZ321f9MWSkDi3oPkRJdI2T0Qq16oGFA==
+X-Received: by 2002:a17:907:8691:b0:a9a:16b3:7dda with SMTP id a640c23a62f3a-a9aa890a2a1mr229422966b.19.1729576720082;
+        Mon, 21 Oct 2024 22:58:40 -0700 (PDT)
+Received: from smtpclient.apple (17-14-180.cgnat.fonira.net. [185.17.14.180])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a913704easm292691366b.107.2024.10.21.22.58.39
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Oct 2024 22:58:39 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3818.100.11.1.3\))
+Subject: Re: [PATCH] grep: disable lookahead on error
+From: David Gstir <david@sigma-star.at>
+In-Reply-To: <7a51a68e-5f9d-4444-a568-9ca180bc4c6b@web.de>
+Date: Tue, 22 Oct 2024 07:58:28 +0200
+Cc: Taylor Blau <me@ttaylorr.com>,
+ git@vger.kernel.org,
+ Richard Weinberger <richard@sigma-star.at>,
+ Jeff King <peff@peff.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <494E7060-B824-4663-B49D-A645A8A67711@sigma-star.at>
+References: <771C9C4E-45F1-4F71-B3A9-4E8E4A9CAC1F@sigma-star.at>
+ <Zw22sTxyWCbczZy8@nand.local> <0eaf6c1c-7205-4897-ba19-e5ba03194012@web.de>
+ <7a51a68e-5f9d-4444-a568-9ca180bc4c6b@web.de>
+To: =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+X-Mailer: Apple Mail (2.3818.100.11.1.3)
 
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Hi Ren=C3=A9,
 
-Replace unsafe uses of atoi() with strtol_i() to improve error handling
-when parsing UIDVALIDITY, UIDNEXT, and APPENDUID in IMAP commands.
-Invalid values, such as those with letters, now trigger error messages and
-prevent malformed status responses.
-I did not add any test for this commit as we do not have any test
-for git-imap-send(1) at this point.
+> On 20.10.2024, at 13:02, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>=20
+> regexec(3) can fail.  E.g. on macOS it fails if it is used with an =
+UTF-8
+> locale to match a valid regex against a buffer containing invalid =
+UTF-8
+> characters.
+>=20
+> git grep has two ways to search for matches in a file: Either it =
+splits
+> its contents into lines and matches them separately, or it matches the
+> whole content and figures out line boundaries later.  The latter is =
+done
+> by look_ahead() and it's quicker in the common case where most files
+> don't contain a match.
+>=20
+> Fall back to line-by-line matching if look_ahead() encounters an
+> regexec(3) error by propagating errors out of patmatch() and bailing =
+out
+> of look_ahead() if there is one.  This way we at least can find =
+matches
+> in lines that contain only valid characters.  That matches the =
+behavior
+> of grep(1) on macOS.
+>=20
+> pcre2match() dies if pcre2_jit_match() or pcre2_match() fail, but =
+since
+> we use the flag PCRE2_MATCH_INVALID_UTF it handles invalid UTF-8
+> characters gracefully.  So implement the fall-back only for regexec(3)
+> and leave the PCRE2 matching unchanged.
+>=20
+> Reported-by: David Gstir <david@sigma-star.at>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- imap-send.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+thanks for fixing this! I=E2=80=99ve tested it on my end and your patch =
+works. Feel free to add my Tested-By.
 
-diff --git a/imap-send.c b/imap-send.c
-index ec68a066877..8214df128e5 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -668,12 +668,12 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
- 		return RESP_BAD;
- 	}
- 	if (!strcmp("UIDVALIDITY", arg)) {
--		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg))) {
-+		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &ctx->uidvalidity) || !ctx->uidvalidity) {
- 			fprintf(stderr, "IMAP error: malformed UIDVALIDITY status\n");
- 			return RESP_BAD;
- 		}
- 	} else if (!strcmp("UIDNEXT", arg)) {
--		if (!(arg = next_arg(&s)) || !(imap->uidnext = atoi(arg))) {
-+		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &imap->uidnext) || !imap->uidnext) {
- 			fprintf(stderr, "IMAP error: malformed NEXTUID status\n");
- 			return RESP_BAD;
- 		}
-@@ -686,8 +686,8 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
- 		for (; isspace((unsigned char)*p); p++);
- 		fprintf(stderr, "*** IMAP ALERT *** %s\n", p);
- 	} else if (cb && cb->ctx && !strcmp("APPENDUID", arg)) {
--		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg)) ||
--		    !(arg = next_arg(&s)) || !(*(int *)cb->ctx = atoi(arg))) {
-+		if (!(arg = next_arg(&s)) || (strtol_i(arg, 10, &ctx->uidvalidity) || !ctx->uidvalidity) ||
-+			!(arg = next_arg(&s)) || (strtol_i(arg, 10, (int *)cb->ctx) || !cb->ctx)) {
- 			fprintf(stderr, "IMAP error: malformed APPENDUID status\n");
- 			return RESP_BAD;
- 		}
-@@ -773,7 +773,10 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
- 			if (!tcmd)
- 				return DRV_OK;
- 		} else {
--			tag = atoi(arg);
-+			if (strtol_i(arg, 10, &tag)) {
-+				fprintf(stderr, "IMAP error: malformed tag %s\n", arg);
-+				return RESP_BAD;
-+			}
- 			for (pcmdp = &imap->in_progress; (cmdp = *pcmdp); pcmdp = &cmdp->next)
- 				if (cmdp->tag == tag)
- 					goto gottag;
--- 
-gitgitgadget
+Thanks,
+David=
