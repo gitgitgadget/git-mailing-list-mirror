@@ -1,62 +1,64 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7827013B58A
-	for <git@vger.kernel.org>; Tue, 22 Oct 2024 22:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A09B1CCB50
+	for <git@vger.kernel.org>; Tue, 22 Oct 2024 22:09:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729634943; cv=none; b=Z5tXNEaFLkf2cA0jhkyz6ES49cbbUXRFRbizgLUqs8lb9327bPHkme5l14o5jts8EjAWvHDEyQU4A0NcxMsdaPLhRDTTcbpyaGIYTZw4tog4NELGb+HUw3TAyUMiUv5CQGKR0lFv7DTFdQfukGyq4E8NcU8GxwmvqK6+c6TJ9aU=
+	t=1729634944; cv=none; b=Q4AH2oTVg4bYuMr7fwNsVrS2NCsuvZgMIKue93K83OKmyTUX5MAAHgoWkw0toq0ca0XIOmcqNlCU642xZi5/Iz6vAkK7pzCGJOrAo6o4igXz2hOzg2zGYxt/Bh2fn7Cm8hnHhNw11ICxWYD3m1fBvTsOzA2VZYMs2uymPu0a5I4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729634943; c=relaxed/simple;
-	bh=Cx57wSbIAiVmMCbOflv53JYTPfUnUYecYnPdOqOxsmU=;
+	s=arc-20240116; t=1729634944; c=relaxed/simple;
+	bh=deKq+A9LnK+oqwjEPHhGiFvL8WASgJwQOit1fL5TJwA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KAYQ5+wArMJpXViSi54X2H1ybjK4B0z3PxYSgH8elNaSmiiFWbafkWy+HdSqXjrZ5ZTJBga4topwwlJYi+E5kaFTJ33YoZ3Cyfef7Bt10vYeEP6KWZ/5nj9CgSmpiCPlYOrLV7fY2OCwehICXiR4NopydUPxm9dB0zuGFpkct8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sw4Kxn/3; arc=none smtp.client-ip=209.85.218.52
+	 MIME-Version:To:Cc; b=dPnmAoH2XrnYPTqhr/ZaEk4V6g6B82jWR49O6VdiFIMkLRfDxvV0WikyRSyZcJ1vYDuKDNoUd8qcQGwfW6AfzzW2u2xQ+OniJ0XayoPbdSB02rs+6FdJpn+Qtp0QTsdNi5ET2OmduAbIXpqS0nabqnFdFPIOsO+j//nsgjxZdBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gkXCNZf6; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sw4Kxn/3"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a9a0cee600aso768188466b.1
-        for <git@vger.kernel.org>; Tue, 22 Oct 2024 15:09:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gkXCNZf6"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a99f629a7aaso47406266b.1
+        for <git@vger.kernel.org>; Tue, 22 Oct 2024 15:09:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729634939; x=1730239739; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729634940; x=1730239740; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Jxf8ou/QIRMFQ5uBn2OWYpeq4K6Qc+xCF2zKW1AA/Ck=;
-        b=Sw4Kxn/3XcyWK2+7wPrjeT8YjpuXrn3N9KSQiOC1KmUbXqk+1lVuljyptbaL7i84JU
-         TJWizLPZNwhYDRsk4PWKI9pqI7G/PRY2UZHoqeUpM+C7j8uHvzcWSk4t+DotoBrRQHUV
-         R+gqkAkYu5bH3nVxogFdi2u11wpaUN2wpXWNMfeaVD0XZduR+X8AuCDL/UUk9vryV9pq
-         E0pVygQx7onN1570MKpKmN+cmpkmIUVTuA7juM1Y328Dj7aUDvSXPuKDPwIL+4vGfPkK
-         Wy1fkqt/nEWDza65PRYOKVWijJQ44P7m9biMXJ/wwALjK0VZGi66jPWrgRJG983cSUCc
-         sJJA==
+        bh=z3kU7eI+PYLSlOBjI4sp2ao+VRlCLuTcWtBPICI1TrI=;
+        b=gkXCNZf6GYD7mxPM14vEAnle2u3wF9eJUnktLDVPK7gkdkLNcykC+Jrcl/o79JBthX
+         OWqziCGJHr2hFqvuONaG0jQ1pBRSnawOrD8LY4N0ulDPkj9/ib/yhfJt9DQPnNYYs5/p
+         Jp3rJ0QlZC2JL6gcElNt4BjDibQnxyK8xxivPRJbRLgVdHEKJyGJEnAXmxI7jhd0vIDH
+         hRif/Bemxjkc1Is4BgZ6mvAppO92fel72pHWILc4bniBpoJiH6JzfXzGzUqsGHYCzuHj
+         e1lfQZttESpMTdz6AWe24fV2zb52RuDq1xEU2uhvDPoKF3Df4t3QI+ryqG7efWONLc0z
+         bJJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729634939; x=1730239739;
+        d=1e100.net; s=20230601; t=1729634940; x=1730239740;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Jxf8ou/QIRMFQ5uBn2OWYpeq4K6Qc+xCF2zKW1AA/Ck=;
-        b=NLIbt/yP+UcDrjAhcA1+1wBGrNSgR1sbMuLGLlB9+TxaHNLILfZWPbdqayc0doEa1F
-         UgQR7T2nkJtZPEpvOxU1QS4Vd6udyMc491jCe5uB5LKIQdJ3tp3UwOv/PL1n9g6ogZjX
-         7bAsu64RGkpaDhnTqLyZvJrTXW3ra8nuGSzsh8lDvP2+nRod+Bh7TX5CqcNTV2AabUNg
-         STVuFGaoHqg+NEEvAJqf+DKcbVSYMkhe1qMJ3BBFzrjnFh9a54+e/RZX59TawUZ8SV49
-         F28zM8Ck0qKHjjzJbdPFLz7JEy7ziON+0AkzzNPeWrOMg0JObkUnzTAFzLpU1ryNxrQq
-         HN+w==
-X-Gm-Message-State: AOJu0Yyd5VP7oSNT2Pt+2tJZew4Xt5ZHYFlvhYtz2LDP7dIGv9DeTZOU
-	m3nI+U5V31Wf4sTyn6PvswNpwfjoTXzzTtait9WOgdq/fkhPlPwG0KidQQ==
-X-Google-Smtp-Source: AGHT+IEma2yauOP2OtmmDbdj0o8E7OzYs84e9ciGMbNd3Rb9WioDAhD9pec36R5Jfx9I6qU1L6iFVQ==
-X-Received: by 2002:a17:907:1c85:b0:a9a:13c2:2b07 with SMTP id a640c23a62f3a-a9abf8b7bcfmr38859666b.31.1729634939254;
-        Tue, 22 Oct 2024 15:08:59 -0700 (PDT)
+        bh=z3kU7eI+PYLSlOBjI4sp2ao+VRlCLuTcWtBPICI1TrI=;
+        b=M/XeZBZ/cmirV+e4Pfw0O5r/ymQJMAA2Ll9BaILI8HZcfOI+zdTwYIwUJAUZB0p6Tc
+         0/Gl4V8KRdmDhhCVaIK5jXyQPlGF+ymXV4WmRmQwFIidGFWtIUpS/sHQWnxIXBSQwXkt
+         Rl8n7HXb+Mleyh1/k/OlQsPY/FBUHF0+Frov1AKdU0Jf8w4cv0FSXsTXdAeyplbf6WDB
+         MAxJdoU4kF7SkyZahJqpG1ekMsTmFWAkfFBi/hubGy0CWVNk87EoyjSQlXK58CK1/8KE
+         cgYOYXQ55cJdL3r1Mr32X/DofhKYI0Q49PyRGu4fDGDuk9oug8ZvZi5zj/rgz5BQ3y54
+         1pYA==
+X-Gm-Message-State: AOJu0YzTBBYM9fOgIG9iZC6zrRsgF7OsAIUOMbqzXUWU/Iswu2WupkYE
+	8TZIP6SUQsnXGZGm2W6FJDOHgkW30eKFnXmYwt3F3QlDUu709DNd4jivUA==
+X-Google-Smtp-Source: AGHT+IHoBtiIdgpe+XFheADSxgd63nN7tbXuquEcJIlL9dYB4VgQYOtMDvS7R472n7+0TawRLfrpTQ==
+X-Received: by 2002:a17:907:1c20:b0:a9a:762a:d71 with SMTP id a640c23a62f3a-a9aaa4f4eb5mr434257966b.4.1729634940031;
+        Tue, 22 Oct 2024 15:09:00 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a912d6307sm392820166b.33.2024.10.22.15.08.58
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a915993basm389724766b.203.2024.10.22.15.08.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2024 15:08:58 -0700 (PDT)
-Message-Id: <pull.1810.v4.git.git.1729634937.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1810.v3.git.git.1729574624.gitgitgadget@gmail.com>
+        Tue, 22 Oct 2024 15:08:59 -0700 (PDT)
+Message-Id: <d9c997d7a9c8975ce845aa0cb4deaba22cbf3b94.1729634938.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1810.v4.git.git.1729634937.gitgitgadget@gmail.com>
 References: <pull.1810.v3.git.git.1729574624.gitgitgadget@gmail.com>
+	<pull.1810.v4.git.git.1729634937.gitgitgadget@gmail.com>
 From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 22 Oct 2024 22:08:54 +0000
-Subject: [PATCH v4 0/3] parse: replace atoi() with strtoul_ui() and strtol_i()
+Date: Tue, 22 Oct 2024 22:08:55 +0000
+Subject: [PATCH v4 1/3] daemon: replace atoi() with strtoul_ui() and
+ strtol_i()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,73 +70,97 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>,
+    Usman Akinyemi <usmanakinyemi202@gmail.com>,
     Usman Akinyemi <usmanakinyemi202@gmail.com>
 
-Changes from Version 3:
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 
- * Mark the error message strings as translate-able.
+Replace atoi() with strtoul_ui() for --timeout and --init-timeout
+(non-negative integers) and with strtol_i() for --max-connections
+(signed integers). This improves error handling and input validation
+by detecting invalid values and providing clear error messages.
+Update tests to ensure these arguments are properly validated.
 
-Usman Akinyemi (3):
-  daemon: replace atoi() with strtoul_ui() and strtol_i()
-  merge: replace atoi() with strtol_i() for marker size validation
-  imap: replace atoi() with strtol_i() for UIDVALIDITY and UIDNEXT
-    parsing
-
+Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+---
  daemon.c              | 12 ++++++++----
- imap-send.c           | 13 ++++++++-----
- merge-ll.c            | 11 +++++++++--
  t/t5570-git-daemon.sh | 26 ++++++++++++++++++++++++++
- t/t6406-merge-attr.sh |  6 ++++++
- 5 files changed, 57 insertions(+), 11 deletions(-)
+ 2 files changed, 34 insertions(+), 4 deletions(-)
 
-
-base-commit: 90fe3800b92a49173530828c0a17951abd30f0e1
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1810%2FUnique-Usman%2Fr_atoi-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1810/Unique-Usman/r_atoi-v4
-Pull-Request: https://github.com/git/git/pull/1810
-
-Range-diff vs v3:
-
- 1:  e292b82d6a1 ! 1:  d9c997d7a9c daemon: replace atoi() with strtoul_ui() and strtol_i()
-     @@ Commit message
-          Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-      
-       ## daemon.c ##
-     +@@
-     + #include "abspath.h"
-     + #include "config.h"
-     + #include "environment.h"
-     ++#include "gettext.h"
-     + #include "path.h"
-     + #include "pkt-line.h"
-     + #include "protocol.h"
-      @@ daemon.c: int cmd_main(int argc, const char **argv)
-       			continue;
-       		}
-       		if (skip_prefix(arg, "--timeout=", &v)) {
-      -			timeout = atoi(v);
-      +			if (strtoul_ui(v, 10, &timeout))
-     -+				die("invalid timeout '%s', expecting a non-negative integer", v);
-     ++				die(_("invalid timeout '%s', expecting a non-negative integer"), v);
-       			continue;
-       		}
-       		if (skip_prefix(arg, "--init-timeout=", &v)) {
-      -			init_timeout = atoi(v);
-      +			if (strtoul_ui(v, 10, &init_timeout))
-     -+				die("invalid init-timeout '%s', expecting a non-negative integer", v);
-     ++				die(_("invalid init-timeout '%s', expecting a non-negative integer"), v);
-       			continue;
-       		}
-       		if (skip_prefix(arg, "--max-connections=", &v)) {
-      -			max_connections = atoi(v);
-      +			if (strtol_i(v, 10, &max_connections))
-     -+				die("invalid max-connections '%s', expecting an integer", v);
-     ++				die(_("invalid max-connections '%s', expecting an integer"), v);
-       			if (max_connections < 0)
-      -				max_connections = 0;	        /* unlimited */
-      +				max_connections = 0;  /* unlimited */
- 2:  2ad3b0faa05 = 2:  da9ea10e4e1 merge: replace atoi() with strtol_i() for marker size validation
- 3:  d0aa756d2d0 = 3:  8982dca646d imap: replace atoi() with strtol_i() for UIDVALIDITY and UIDNEXT parsing
-
+diff --git a/daemon.c b/daemon.c
+index cb946e3c95f..a40e435c637 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -4,6 +4,7 @@
+ #include "abspath.h"
+ #include "config.h"
+ #include "environment.h"
++#include "gettext.h"
+ #include "path.h"
+ #include "pkt-line.h"
+ #include "protocol.h"
+@@ -1308,17 +1309,20 @@ int cmd_main(int argc, const char **argv)
+ 			continue;
+ 		}
+ 		if (skip_prefix(arg, "--timeout=", &v)) {
+-			timeout = atoi(v);
++			if (strtoul_ui(v, 10, &timeout))
++				die(_("invalid timeout '%s', expecting a non-negative integer"), v);
+ 			continue;
+ 		}
+ 		if (skip_prefix(arg, "--init-timeout=", &v)) {
+-			init_timeout = atoi(v);
++			if (strtoul_ui(v, 10, &init_timeout))
++				die(_("invalid init-timeout '%s', expecting a non-negative integer"), v);
+ 			continue;
+ 		}
+ 		if (skip_prefix(arg, "--max-connections=", &v)) {
+-			max_connections = atoi(v);
++			if (strtol_i(v, 10, &max_connections))
++				die(_("invalid max-connections '%s', expecting an integer"), v);
+ 			if (max_connections < 0)
+-				max_connections = 0;	        /* unlimited */
++				max_connections = 0;  /* unlimited */
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--strict-paths")) {
+diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+index c5f08b67996..722ddb8b7fa 100755
+--- a/t/t5570-git-daemon.sh
++++ b/t/t5570-git-daemon.sh
+@@ -8,6 +8,32 @@ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ . "$TEST_DIRECTORY"/lib-git-daemon.sh
++
++test_expect_success 'daemon rejects invalid --init-timeout values' '
++	for arg in "3a" "-3"
++	do
++		test_must_fail git daemon --init-timeout="$arg" 2>actual_error &&
++		test_write_lines "fatal: invalid init-timeout ${SQ}$arg${SQ}, expecting a non-negative integer" >expected &&
++		test_cmp actual_error expected || return 1
++	done
++'
++
++test_expect_success 'daemon rejects invalid --timeout values' '
++	for arg in "3a" "-3"
++	do
++		test_must_fail git daemon --timeout="$arg" 2>actual_error &&
++		test_write_lines "fatal: invalid timeout ${SQ}$arg${SQ}, expecting a non-negative integer" >expected &&
++		test_cmp actual_error expected || return 1
++	done
++'
++
++test_expect_success 'daemon rejects invalid --max-connections values' '
++	arg='3a' &&
++	test_must_fail git daemon --max-connections=3a 2>actual_error &&
++	test_write_lines "fatal: invalid max-connections ${SQ}$arg${SQ}, expecting an integer" >expected &&
++	test_cmp actual_error expected
++'
++
+ start_git_daemon
+ 
+ check_verbose_connect () {
 -- 
 gitgitgadget
+
