@@ -1,166 +1,80 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B468611E
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 18:01:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725F61D04A4
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 18:08:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729706482; cv=none; b=edlODsnaduiNdMduXMy2/Go0Tgez0fVK5wS5WQAWDMH7p40MFSM5xAf3YJ7SlWvCfFHIMkRpbJZWB0AwjQf8IGfCbeoTwAXojW5yV3YP+JMkXzmF4E6YucrxdoxgQfADBkx2mkEug4pzv8ea18BX6CYUuu4khT7PHpuwxSHNnCE=
+	t=1729706882; cv=none; b=H+KMkAWVqQ9eQMdEM8cR0eW6MsPkL/rks5CQUBdXns7rA7c+HlxaHEHodA6nBxJH5e/ONGjMiHhWr0VzqK23/wHI+IMungG5ckmHQMoYXtW6JSWYOxXvel+QmomlXarhtzDBc39oH4YC3M67kwyzLo4SUeiwy09vhjPKOwNwUdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729706482; c=relaxed/simple;
-	bh=bHoSI1QhTrVuH9X1hmejxjTsxANPf5dWyNRRDeT/YOI=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=tpZHNRvxfhl/bT6eW8wFk+kaSulZ7/WNqj8Z75xXOSg/GnSqy2k2yvoXdtMTOiug/UcnjX/d37adg1eKjPafVytswvwJtvLuWFWwmNdOHKPBmsfUNI5CWD6q4jtY9OcQNKl+I0lqtAXKmTR9gvk12qpVQJYDbXw1+Rol2e8RaMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=McJnTh3H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d9RDjzZU; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729706882; c=relaxed/simple;
+	bh=Yf1CxdOtOcmxmY64nnY0UFR8RU6Uc0U6G5uC7ZaY9y0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LM8Ja9nU7C91J4yOJF7KhIDwJoJN0auH8yn2gAGbL2m7KyVbOBxeES/Y0XqJg+rMnpjUqBuguKWrZJI5kbV/u+Y3HHlHHQRrlzNZW78l+6LZOzM7LdwyqP0qVLSbN4kCd9eJidLh6nfwvjKLXxRkuTNom+jyiGBSWFutGrrMKF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=T6bXOqzr; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="McJnTh3H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d9RDjzZU"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1D7DF13800D4;
-	Wed, 23 Oct 2024 14:01:19 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 23 Oct 2024 14:01:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729706479;
-	 x=1729792879; bh=iAsKzV6aXierCdCfWwtPZk8WKyaa9MVSX4rtUHQVwyc=; b=
-	McJnTh3Hr/yhbKtruAxyvaNBp4/WgDzpqHuiJlNlzm3xZK36TxkZnPtmzmunZMrB
-	1TvzPt6I1aS61OaSrivhlsZAZQVhJ90MfmnLxBwPWZ+Eb2mraD8m0bdg2rEwkTsP
-	ej+8+X7fXHOh+xyLnO9B7O9liKCFqIxiqs3a94tqyTxjViOBtJt/DMmiyNgHmpg2
-	NBVA9nHXdDgXF6a84EvPItmHi/P2khSPa63v1TyNc6eG046jsfe+EAdLK4lBQw4E
-	wbeKbSwWnTowPsT7W+YOX8RHAZVzHxzVcfIWW8fcEdbogbzGsX22VGPJGBzkRuBo
-	/3KGIV9gwsFktl2R4nvLrw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729706479; x=
-	1729792879; bh=iAsKzV6aXierCdCfWwtPZk8WKyaa9MVSX4rtUHQVwyc=; b=d
-	9RDjzZUmmND5hUJHgjvFzQe2SmwX/oHrLD6EfgxqUNOQNsrBNrHTC+I+ObHUhhBh
-	xt6eyl7X6cBi+mqsM6q0NotIDa6rJG1kvU8Soh0tPMioJOCrKyRYbn3KXZlYodD4
-	0nPkHtUfHXOUPjCK1Gu63qlP+U7DKzs/DqKVwU5x695BKwtQh6MeAGriAVAmpgsb
-	piZFqdshTIbk7HJDN1P6pGSkP+fVsr8z2/kLydQjagF1LNEwawgWgycwKxTbxQeL
-	j8hQqYY+dieOlZ3/mziMt6t/E41+ceoIv0AIWpc6hGkfqbbwsclKqg/jX7l/OI5B
-	FH3472KlFZDoLZBN0pAYg==
-X-ME-Sender: <xms:7jkZZxChvyZ37JysLG0o2R-ViBtrjK0t8geVWIXPhSl_RLpshPXZMqo>
-    <xme:7jkZZ_gPAk3vzJTTMIaYMDwwJwFyyKJoCoJfKld7dqk2dNNPJhE1AEe0iMwRf0O1Y
-    dH8nvmhaei4k2ueYA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedguddujecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
-    fhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcu
-    jfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpefghffhvdefleefuedvieffhfef
-    lefhvdeggfffuddtueelteekvdefleeuudfffeenucffohhmrghinhepmhgvrhhrihgrmh
-    dqfigvsghsthgvrhdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
-    mhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrg
-    hilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtoheprghlghhonhgvlhhlsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:7jkZZ8n0OWSNNKBBSq-rFA-m4-icBY3opF-E9o5wQkDyI5lNNZ3gKw>
-    <xmx:7jkZZ7w7yfrdITj4r2DJZnga7ObYhU7wdjdwZBXiA54zTtxmHk4huQ>
-    <xmx:7jkZZ2Qb7egdY9pC3CtCfOj3ZGwetrm0_GrZhTE-TZbBncBmibw30A>
-    <xmx:7jkZZ-Ydp6wxJXbD9NHPLtzAOlAHXJjKw5QRhMEMz0OEiWnCuf00BA>
-    <xmx:7zkZZ5KCjdE165OsBKQYsjLwCrCUH9MAxjAjIv-n8I4fyBxo4SF7iB4H>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id C87DE78006A; Wed, 23 Oct 2024 14:01:18 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="T6bXOqzr"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6e2e41bd08bso244637b3.2
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 11:08:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729706879; x=1730311679; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kATzDkxmkYVxO1o8Q7c0NUcnQZx/ICJwTgITx6SNcAQ=;
+        b=T6bXOqzry0MblRybka/VS49hB8yc9n7YmZkFH0/WNqS0wsJhHv4R3nmVIgIXqblJpT
+         Z0nt/kc320DuMOn826Cq/Bk1MSCBcXjfXn7gsRa4FBw0TgsGKD/iYZ4JnNV2p6eAnlPo
+         0BCXtWxXawmpxxKlcoEWfPV5vEYPPN0CuczZf6gtXT5KbbJWhLZHrOaxJxW57Wp+MTOI
+         IA47TfkBudDQ1KXhj98yks3dlXXbRQapGzVIdQdFjHp3hkrfQJGWFLSc9JMjKk2K4Q7H
+         pjioMl3qmP3iHY2uLIUGFriV1C0s+hYwObh6+9qAWkU6ngdqyAgHvE8zOetF9UkiQfdY
+         rDlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729706879; x=1730311679;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kATzDkxmkYVxO1o8Q7c0NUcnQZx/ICJwTgITx6SNcAQ=;
+        b=BlEwbSJsTLOkF483H4lzCKJKpw1x4ATw1SimvshMpHNJRYvVIdxpuKbMV3NlXjOEWW
+         xqw7FXzjHzvq6MHjBvJ+7//SWZwA+BIi4hHlhtWL6sx6dl8evSHG2+wEV/mgbu0qEDZB
+         f7nwlm1xos+85YdL2dPsGytMuBo2db8tP0EaH56HbfkiFD9qabkLmQubRJYB+D6J3+NQ
+         aIxnutQxZcwFme0FTZsM2DtNKB0fkI1jzg9D256Nz7KJNo5pJ4IBVHUU4w4gT/T4lrrf
+         UygDTRVwCOJMkz1UvrKd6i2KcSRX+fViN7+/A3BT8QMi0ArF5XiqhNdI3Wx3OzaXHfsy
+         pvcg==
+X-Gm-Message-State: AOJu0YwhxXck1yubUXdMstINGGOPbALQ5dERVoQOOpQf5DhjmMjwW1/S
+	S3JW4G/awrfAzzC/1hr1tw6spKLC45iNUJE1tFOrqNou57R6cHVdnAQWEUzxShdUvzMfJl8KPkU
+	H2c0=
+X-Google-Smtp-Source: AGHT+IGQp69dEGU4TMeyp2tMrV1SkXDVMTwcsDA/byMpzhR3hbibyAAFSr37IzzGrZEOM7wl2c4u7w==
+X-Received: by 2002:a05:690c:3347:b0:6e2:12e5:35b4 with SMTP id 00721157ae682-6e7f0c2d79fmr41736597b3.0.1729706879400;
+        Wed, 23 Oct 2024 11:07:59 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5cef92dsm16274527b3.113.2024.10.23.11.07.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2024 11:07:59 -0700 (PDT)
+Date: Wed, 23 Oct 2024 14:07:57 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] compat/mingw: allow deletion of most opened files
+Message-ID: <Zxk7ffCFJI2mGMhJ@nand.local>
+References: <cover.1729695349.git.ps@pks.im>
+ <3552feddb332b31744c2ab723b112b9b08926436.1729695349.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 23 Oct 2024 20:00:53 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Andrew Kreimer" <algonell@gmail.com>, git@vger.kernel.org
-Message-Id: <fa5d771b-5819-4ede-bc95-9d50c456c619@app.fastmail.com>
-In-Reply-To: <20241023170111.6638-1-algonell@gmail.com>
-References: <20241023170111.6638-1-algonell@gmail.com>
-Subject: Re: [PATCH] t: fix typos
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <3552feddb332b31744c2ab723b112b9b08926436.1729695349.git.ps@pks.im>
 
-All of the changes here look good.
+On Wed, Oct 23, 2024 at 05:05:00PM +0200, Patrick Steinhardt wrote:
+>  compat/mingw.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
 
-On Wed, Oct 23, 2024, at 19:01, Andrew Kreimer wrote:
-> Fix typos in documentation, comments, etc.
->
-> Via codespell.
->
-> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
-> [=E2=80=A6]
-> diff --git a/t/t5303-pack-corruption-resilience.sh
-> b/t/t5303-pack-corruption-resilience.sh
-> index e6a43ec9ae..b634bfb665 100755
-> --- a/t/t5303-pack-corruption-resilience.sh
-> +++ b/t/t5303-pack-corruption-resilience.sh
-> @@ -15,7 +15,7 @@ TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  # 1) blob_2 is a delta with blob_1 for base and blob_3 is a delta with
-> blob2
->  #    for base, such that blob_3 delta depth is 2;
->  #
-> -# 2) the bulk of object data is uncompressible so the text part remai=
-ns
-> +# 2) the bulk of object data is incompressible so the text part remai=
-ns
+Very well reasoned and explained. I am certainly not a Windows expert,
+but from what I read the changes look reasonable to me.
 
-Unusual word IME but makes sense here after googling:
-https://www.merriam-webster.com/dictionary/contiguous
-
-> [=E2=80=A6]
-> diff --git a/t/t5528-push-default.sh b/t/t5528-push-default.sh
-> index bc2bada34c..aecd03d69f 100755
-> --- a/t/t5528-push-default.sh
-> +++ b/t/t5528-push-default.sh
-> @@ -147,7 +147,7 @@ test_expect_success 'push from/to new branch fails
-> with upstream and simple ' '
->  #  - the default push succeeds
->  #
->  # A previous test expected this to fail, but for the wrong reasons:
-> -# it expected a fail becaause the branch is new and cannot be pushed,
-> but
-> +# it expected a fail because the branch is new and cannot be pushed,
-
-Also: s/a fail/a failure/ ?
-
-Perhaps =E2=80=9Cto fail=E2=80=9D.
-
-> [=E2=80=A6]
-> diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-> index cd05321e17..3816ed5058 100755
-> --- a/t/t5558-clone-bundle-uri.sh
-> +++ b/t/t5558-clone-bundle-uri.sh
-> @@ -945,7 +945,7 @@ test_expect_success 'creationToken heuristic with
-> failed downloads (clone)' '
->  		--bundle-uri=3D"$HTTPD_URL/bundle-list" \
->  		"$HTTPD_URL/smart/fetch.git" download-3 &&
->
-> -	# As long as we have continguous successful downloads,
-> +	# As long as we have contiguous successful downloads,
-
-Contiguous in the sense of =E2=80=9Cnext or near in time or sequence=E2=80=
-=9D.  Makes
-sense in this context.
-
-> [=E2=80=A6]
-> diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
-> index 06c1301222..2458e9d0eb 100755
-> --- a/t/t7064-wtstatus-pv2.sh
-> +++ b/t/t7064-wtstatus-pv2.sh
-> @@ -77,7 +77,7 @@ test_expect_success 'before initial commit, things
-> added (-z)' '
->  	test_cmp expect actual
->  '
->
-> -test_expect_success 'make first commit, comfirm HEAD oid and branch' '
-> +test_expect_success 'make first commit, confirm HEAD oid and branch' '
-
-Easy to mistake m/n in monospace font. :P
-
-> [=E2=80=A6]
+Thanks,
+Taylor
