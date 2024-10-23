@@ -1,173 +1,142 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7D3152517
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 09:49:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77001A08A6
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 09:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729676999; cv=none; b=h5CpLMJ/Um7JgsSj1oGT/Azgj/UEqQOJpIdP+wxdueDdaL32WZr70rzeJX0PSLGEx0896b9WWYxqbGUNa14nYMNhBtY/bbyR+4QLc4JB7SqM+QVfIj0uvnf1gLrqYlBBEt9B/FdjLjLNGVEljxLEK3I3sF+5X9o+hOzPJ0linds=
+	t=1729677341; cv=none; b=d1FIKIiLjWMdYyQVloWr+5a5VzKjGGUXCS8xcr5HBq95Fa1DeivFtNhA7Mvs4gWTYUAPRgzuALkb7iymeD6du5hyhi+LDVNnS+8X9nDXKiw48Zw0habkZH5uMRmhtuhiLiM1C8yOxxhodgSc8QglVQakcCAcQ48NdUf4S3OCHdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729676999; c=relaxed/simple;
-	bh=Nt0qEA4H9XOM4EMLOafKy6wtKnvvlv199GhPyI9/Kmk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d1p8AyW0OX70OAuhHjM6jiovX0mKqLoL1Vp14ze+4mpMRP0brEZxUpvGqH6gskzTIskzH8fg5ynlysDOY0BWvwddo1GmH1oC4rBqeChbw91KgBrXz3n0EY6y6s2m5Fz/PfjacbPhmZlIGphjHLvAZnbflhWY8EKP1ArUZJTkD7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L14GZEh2; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729677341; c=relaxed/simple;
+	bh=CP2ifTWMgu4l7Djzke5J8tIY290xb6jyPeb/0Mqk6Rg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CtaSBrpKN8fe2Z7rBS3AWEfWJS4sN88Napfivm1kGqMGQ1pbIqGb2snvz7FCLMcvaX8gEkMdVaY9hO/AynSN8FdwU6QuR3bCE29fvr67q56lRrjv/QzyCP5rYTsVS0o5xCUASrX2wWRF0YtyrKZ/FL3lzMXu1uMhBECJstaOxvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wDYU3cDZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SgdFL/8O; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L14GZEh2"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a99f1fd20c4so889777566b.0
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 02:49:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729676996; x=1730281796; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nvN66syVfvxoQz4bzQrsE5HNzpXW7UFjL8XeMIQlVlc=;
-        b=L14GZEh2COdFf6rB+ACxS2LsrJKkNusO0uYkUCpu6xVsM0zZabg8ugFQ17+/yCSMON
-         gxRn2LPzGbP9f2M5gmboVRszqIniKEewKC3J1FQGdbJ0Bqq6iziNdy0qIG0eW3PwewFN
-         LdPfGZfSX/hqb4LyAZ0ZJUsUumgnxv2GRLR5B7BgOFfIltQCTq6yTIBtsY2jgz8/1OHe
-         Is1ZbUBgHa7YlsSjr1gXdZAd2p5Kbw8DiDpBjcuhbytYyYW79kCAOQeXi5+ATZBQa4yc
-         Ae5ilD5a2otqgUjMylm7AVoZQ7YKrM6Jq9TvL53j3Bi4z2W2/UYW320PpbOjfSGN649C
-         QQkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729676996; x=1730281796;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nvN66syVfvxoQz4bzQrsE5HNzpXW7UFjL8XeMIQlVlc=;
-        b=VOUq0Jlf1rsA3eHQnX++j2BE0OAcE5HE3ABu1RCGTJbfCYWDulGlcVxWlj5nOjw3JN
-         uDJhYT2+20tBLLHYfJWCYXt75n3Y9Z5twxeMijX6ctMkoHGL9iviM46/GZyHkHrMmn3N
-         f7E8K4D9jqLIWeN6dFOmvxalUgU8PtWn85V4Z7bwaKIw3Jy4g9LJa5eVNe1kWEHxzdoa
-         mfDEGixO0pr4ss0sBt8O7XvhoLMHIFCgyDxkAm2ZnvoQ0w0iKM0LaYoBlAFtuvwCo/v1
-         iTdCqGQt9vA/KgT51udDQA9i09wklzXlFXM8kYI5TYGmLhDqr6w0pR8n5yA6WGep04pC
-         VUNw==
-X-Gm-Message-State: AOJu0YxS83Bh3/jQ7KOMs2/iwW5zd1oFDlcOy1LXPy1nXC8o6zron/nN
-	toNvKFd/yHBIiyp7b+h7x35H5QerarOUja86vviilr4YHP1TxcLpmgDUEkvZwTGitJm+WXhp2m/
-	gzcg3i9VHO6V6rtCb0vfXs9x8znQBRA==
-X-Google-Smtp-Source: AGHT+IGeVET06JtWjiI9cXUOvhO2P3vaSTjlWYoRpM8B9bl33iL1LgdBtJME3mwHlzc3OKCiupaZKo7GLHvzfv/ObBA=
-X-Received: by 2002:a17:907:9452:b0:a9a:3d5b:dc1a with SMTP id
- a640c23a62f3a-a9abf869709mr193450866b.15.1729676996033; Wed, 23 Oct 2024
- 02:49:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wDYU3cDZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SgdFL/8O"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id A141D1380766;
+	Wed, 23 Oct 2024 05:55:38 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Wed, 23 Oct 2024 05:55:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1729677338; x=1729763738; bh=lSfglfIek2
+	rYAgIWYjPrZBpPBeal/5vgkfzMdrl8zXY=; b=wDYU3cDZQsy/mrULIFe86x9C5B
+	SWShCHPJZt/8lJwvYt2bTw+2a8iBj+4taWBSj9JgSAyxYZj0C3JNqBc3D7dwtnZV
+	t4/rQNmrGKU2To8yffI8tq04qWzhHNXiCh4XVtlJ0YThoxoWGULGu6Lesj8lML18
+	jzdJQD9D4dZZlp/ujx8R0eLcPn7UEol5popqxLJiouxPI+kagvoMDFky0WY6BXqw
+	jMld+DbGy7MqZvGgGXYKXuzzjGjM3+waB5lmrQCinyV4FI25bU+b9T97WaMkGgsX
+	ZLRMykiSHQuehmu5pbwBl1fKCx6UZFQWhSPZ0P9o4Yz9PY3iPNQBUze0VGjQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1729677338; x=1729763738; bh=lSfglfIek2rYAgIWYjPrZBpPBeal
+	/5vgkfzMdrl8zXY=; b=SgdFL/8OwfrfY6tR79n/nhVv1dcmgc+q/oa4ULSNGDEF
+	RZOKR0kgGxOFcslw5P7gFWgqJx7ti5zixb1TIgwa1tOJ3wgIOSbC1HWmupzyQGfJ
+	Ehe7B21zjwcmjtyf81aq3W2OyLcAdE08y9BDJnE46/IT7Z/SgpKX/K6zqvHip9DG
+	6e9eX0JkjCKcVt4BoyA4nbPfO0qqef624TDc35rcuBdIDIYCuuMTVw4usTPsCXc8
+	pUags2Xclblm06nWPq4MTxYxIl8Et2hrsLNb2JC1wAaJPoBlMIpwDQOy/eZBQsuw
+	Lmb9P9IlQ0SfPY3syASXWZ/SC+8uiHWzgAvuDZY7dA==
+X-ME-Sender: <xms:GcgYZ3yCGTd-G3zEkAk8aXtRFf0wbbqJkLGy70U_DFnAppX9XZ65cQ>
+    <xme:GcgYZ_QSXnupM5_FLoOE8LbP9tw9p4gnbIYWBvsk8N5pEFb-6i4eZhXYsqP20Rdx-
+    rgX0CKj0sQAiuBO-w>
+X-ME-Received: <xmr:GcgYZxWiZRSIjQPbpPfFibdnmNkFekMorB3LDXEayKlRtgHtlNgqQTMS3Pc-2Pv8ve9fUZWN31DpTIVy2vyYAPMOddl5c2V9VN8VcRC0Z4zh>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgvdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepjeevudeggfffffeigeethffgieekveeffeehvedvgeei
+    teegueejleeihfeitdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfiho
+    ohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepmhgvsehtthgrhihlohhrrh
+    drtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
+    thhmrghilhdrtghomhdprhgtphhtthhopehkuhhfohhrihhjihelkeesghhmrghilhdrtg
+    homh
+X-ME-Proxy: <xmx:GcgYZxhNJOWwlj5DC6LKhR3UtPtBoA3f7-iFiVO6lEHxuH-dWD3exQ>
+    <xmx:GcgYZ5AnHEwS-dpbXk3PeFxh7KXsRThaiDI2BvXFsw5YYLpfNyNCrg>
+    <xmx:GcgYZ6LULo3k2oYmL2wtQE9mkJgmpB3TH_oCtCoam2BUsIerXVxyeQ>
+    <xmx:GcgYZ4Cm7yMAu0xH_xriFxclzW3GYiYfyruW4R1BL-o1R4A59xmScg>
+    <xmx:GsgYZ86ybXGo_T_KGyamXaBpor9ctzkDB8YsBh8kUlx270XqhLKlfi2K>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Oct 2024 05:55:36 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6b02185d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 23 Oct 2024 09:54:01 +0000 (UTC)
+Date: Wed, 23 Oct 2024 11:55:31 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Seyi Chamber <kuforiji98@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 Outreachy] t7011: ensure no whitespace after redirect
+Message-ID: <ZxjIC5W4HprJqUxB@pks.im>
+References: <20241019163439.274656-1-kuforiji98@gmail.com>
+ <cb88194a-15d2-4c3d-8768-189853572ac0@app.fastmail.com>
+ <ZxZDFyKxTn_D7c3o@pks.im>
+ <CAGedMteMtaOvyE2gX59bMudEUmCZw7nOh=MuDRi=7CbYm-gBDQ@mail.gmail.com>
+ <ZxaySpwA7jg7c1aw@nand.local>
+ <CAGedMtea3_65wuOc1c548TC1x=ThirB1gC8p6kTomwWf_VzDng@mail.gmail.com>
+ <ZxiC06eY4mMh1Xun@pks.im>
+ <CAGedMtdN8qRRALiYdCFso90ExGEm0zirnpLXuva_bc8ehsK+Xw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20240926013856.35527-1-eric.peijian@gmail.com> <20240926013856.35527-7-eric.peijian@gmail.com>
-In-Reply-To: <20240926013856.35527-7-eric.peijian@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 23 Oct 2024 11:49:44 +0200
-Message-ID: <CAP8UFD24jDT1yFNTp-T==-avccd4QjrwRtfJ_-wPx78H31VSiw@mail.gmail.com>
-Subject: Re: [PATCH v3 6/6] cat-file: add remote-object-info to batch-command
-To: Eric Ju <eric.peijian@gmail.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
-	jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGedMtdN8qRRALiYdCFso90ExGEm0zirnpLXuva_bc8ehsK+Xw@mail.gmail.com>
 
-On Thu, Sep 26, 2024 at 3:39=E2=80=AFAM Eric Ju <eric.peijian@gmail.com> wr=
-ote:
+On Wed, Oct 23, 2024 at 08:24:18AM +0100, Seyi Chamber wrote:
+> On Wed, 23 Oct 2024 at 06:00, Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > On Tue, Oct 22, 2024 at 06:11:17PM +0100, Seyi Chamber wrote:
+> > > On Mon, 21 Oct 2024 at 20:58, Taylor Blau <me@ttaylorr.com> wrote:
+> > > >
+> > > > On Mon, Oct 21, 2024 at 06:17:06PM +0100, Seyi Chamber wrote:
+> > > > > Yay!
+> > > > >
+> > > > > Thank you for the feedback @Patrick Steinhardt @Kristoffer Haugsbakk
+> > > >
+> > > > Thanks, all. Let's start merging this one down.
+> > > >
+> > > > Thanks,
+> > > > Taylor
+> > >
+> > > Thanks, Taylor!
+> > >
+> > > I've also discovered that the test script t9101-git-svn-props.sh also
+> > > requires the same update done in this patch.
+> > > Is this test script currently being worked on? @Patrick Steinhardt
+> >
+> > Not that I'd know of. I typically double check via lore by searching for
+> > the relevant subsystem [1]. This only surfaces your mail and the Meson
+> > patch series, so at least nobody else has communicated intent to work on
+> > it.
+> >
+> > Patrick
+> >
+> > [1]: https://lore.kernel.org/git/?q=t9101
+> 
+> Thanks, Patrick.
+> 
+> In the future, would you prefer I still run it by you before working
+> on a test script,
+> or should I apply the same strategy you mentioned in your reply?
 
-> And finally for --buffer mode `remote-object-info`:
->  - Receive and parse input from user
->  - Store respective function attached to command in a queue
->  - After flush, loop through commands in queue:
->     If command is `remote-object-info`:
->         - Get object info from remote
->         - Loop through and print each object info
->     Else:
->         - Call respective function attached to command
->         - Get object info, print object info
->
-> To summarize, `remote-object-info` gets object info from the remote and
-> then loop through the object info passed in, print the info.
+There's no need to run it by anybody, so please feel free to use the
+same strategy.
 
-Maybe: s/print the info/printing the info/
-
-> In order for remote-object-info to avoid remote communication overhead
-> in the non-buffer mode, the objects are passed in as such:
->
-> remote-object-info <remote> <oid> <oid> ... <oid>
->
-> rather than
->
-> remote-object-info <remote> <oid>
-> remote-object-info <remote> <oid>
-> ...
-> remote-object-info <remote> <oid>
-
-[...]
-
->  If no format is specified, the default format is `%(objectname)
-> -%(objecttype) %(objectsize)`.
-> +%(objecttype) %(objectsize)`, except for `remote-object-info` commands w=
-hich use
-> +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not sup=
-ported yet.
-> +When "%(objecttype)" is supported, default format should be unified.
-
-I think we should warn more clearly and strongly that users should
-take into account that the default format will change. So they should
-better not rely on the current format in their code.
-
-Maybe something like:
-
-`%(objectname) %(objectsize)` for now because "%(objecttype)" is not
-supported yet.
-WARNING: When "%(objecttype)" is supported, default format WILL be unified,=
- so
-DO NOT RELY on the current default format to stay the same!!!
-
->  If `--batch` is specified, or if `--batch-command` is used with the `con=
-tents`
->  command, the object information is followed by the object contents (cons=
-isting
-
-[...]
-
-> diff --git a/t/t1017-cat-file-remote-object-info.sh b/t/t1017-cat-file-re=
-mote-object-info.sh
-> new file mode 100755
-> index 0000000000..6826ff7a59
-> --- /dev/null
-> +++ b/t/t1017-cat-file-remote-object-info.sh
-> @@ -0,0 +1,750 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'git cat-file --batch-command with remote-object-info=
- command'
-> +
-> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
-> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +
-> +. ./test-lib.sh
-> +
-> +echo_without_newline () {
-> +    printf '%s' "$*"
-> +}
-> +
-> +echo_without_newline_nul () {
-> +    echo_without_newline "$@" | tr '\n' '\0'
-> +}
-> +
-> +strlen () {
-> +    echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
-> +}
-
-The above functions have been copied verbatim from t1006-cat-file.sh.
-I think this is worth a comment or a TODO before these functions
-saying that common code might want to be unified in the future.
-
-Maybe something like:
-
-# TODO: refactor these functions which were copied from
-t1006-cat-file.sh into a new common file, maybe "lib-cat-file.sh"
-
-Except the above nits and another one I found in patch 4/6, the rest
-of this patch series looks good to me.
-
-Thanks!
+Patrick
