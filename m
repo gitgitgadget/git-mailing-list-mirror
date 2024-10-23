@@ -1,86 +1,167 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D0D5D8F0
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 17:03:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443471C243C
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 17:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729703037; cv=none; b=HEzx9WW/hbJFAohJrjrmDfZlRWwCs4WA+O2t1NKnrAo06BMW704p69wuIt5FOAQ/KGVS7vYuEGZ0eLn+jAUaGax7+NxolRZb0e5qWJC5bX2cyqvBStw11CLZjfcitz2UEnWGOPPWrBUiA1XZOwUJS9JWpgTi1pYhrg+J5suJvPQ=
+	t=1729703268; cv=none; b=p+k8zJIFLwR/88IL0jRuuOmBLNILn2opg9DhrpRzX2hKtl9fbseF359WM7nXAn0vHWXsg4ujEe7A9KM/sJw7qQveF1H6dCCaPh7ixwjXhn/eRueu7Z0KHkBScoCtXvEgC6KpHcya+bNqeXBsB7rZQrfLo0pH7Z+N7HthzoCTnMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729703037; c=relaxed/simple;
-	bh=aWjgWd7VL1jM8F3cyNSORYX241cA/4ivUikXKDcJ2nk=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=X3dG+0FgUVE2QiPD7Yy7n3urPY2dC2cMLVaTtH8UOf3WcbMkoTcR/sobxmUkdnZ3rE26SUxwro0uPwlx5nu0YoenY9czKJYb+iZJ/e2GuFqYQwN++BtdcYjK8I9a+/YoCxv2i/yB5AzFYmb6pnJ1vKo06VEOkdN5mgV3GI44I6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PPh4dgN7; arc=none smtp.client-ip=209.85.219.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1729703268; c=relaxed/simple;
+	bh=TxMICiVG/385z3Iioj2gEgaUcRDEU5K+rUB/FTxeYfs=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=Q9coekWaLX/JT/ML1nbge3gI3UaFic5vk4hYUoaNlZMEiaDJtkE5o+xjf9YKMuaXKrJzVsiYU6wATlXIq8u867i5p/vdhXGnwESURIUlt3Xp743xVmjocuQPOpjPsmv1sFUEFyWhCf3JM89E/dTII7UKdG5mvNkVB0e76VjViW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=JSPVDJjy; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PPh4dgN7"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-e292d801e59so52857276.0
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 10:03:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1729703035; x=1730307835; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aWjgWd7VL1jM8F3cyNSORYX241cA/4ivUikXKDcJ2nk=;
-        b=PPh4dgN7rwtWV6UU0+hO0m1sRWX79GXIoyjpFhv/SguD2mm0FL/+WjpjD7cNpFxJiw
-         6uw0uboLSFcvAQUnGLw1PRw4I4TxZZvUGA6vLwC7XY2kv015qAvYXSN7pdTmBMFDgkj+
-         uFBQkd93xgcS4Te5ioTHHMUciLQ+DM7M30Lt282JF2ZZJ5oykBemjyS3SIWFGPJdXPBt
-         Wzhz0ZhrFmWf5DQfhIZ4MbwwsYG2WjwctQcU4O3bgyNGn0Xivdctco2Oev+EIrCus3W7
-         gfNioj+WFWi3yVyKYx5xAnamEXe2a304ent6yW6+86FUvSCf1Ofe2s3cq/MtvDBZ2ZJY
-         FW8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729703035; x=1730307835;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=aWjgWd7VL1jM8F3cyNSORYX241cA/4ivUikXKDcJ2nk=;
-        b=MElHqx7vgh1J5uvcVw4NFGoNJ80hll9zFMSXjFD0aXm//FF7UcW/ykGd1PrxInfv2b
-         mCNVAvzpEj0DyPNb4U6CJheZjzv3MmeGbY+PDJn9Qdqkacegnh06Q59+bm5Pm7GBK/xe
-         t5JtDiCrm7jnHCVB09dF65cUzlC1hraYGDRBy4X54bZF4+3HLcQIIXZVpoKYzrMXQ5Om
-         mnkCQL7m2meTefJ2OLL2Uf8YbmpjfZJmsHV4dKQzps6rSmA0rECVrOL1+fQrdMAC6jXh
-         R0Cx22Peu9qN3Gf+Np3c0PFGP/OZzJLGjc39PK0IoMOq5+eiX2K08JBylyQR+vX/muE/
-         Opjw==
-X-Forwarded-Encrypted: i=1; AJvYcCWCxIN2VbzNDkEjwW6R7C+9CS+EtI9uee9QVP1jsmTW0F6ISYz7+J7R42Ycr3SuzlREeIk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9L0CiOdn2EGxCHc7VEoeKpoS58lgvhCt1rehKCa9dTCGqV69S
-	oCRaURH6bzE4Ln2elOySm62cYjbrTq9WQL+YbhcWEpNriQ5zMceQvL1P8nEEKstyQxtW7Rax2Wi
-	8IpH+zpLlq641Du0TiTdIoB2ZuLQnDg==
-X-Google-Smtp-Source: AGHT+IGBeoBRnNAgY3FX4Zh93TzNz4pFLYRl4ILk0kpo9x8sAgUbFqRGzMetg38LomzHLhgSFsoc4RMmjRJ8NDaNtiNj
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:7952:f32:af76:662a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:aa46:0:b0:e28:e97f:538d with
- SMTP id 3f1490d57ef6-e2e3a6ccd06mr1595276.6.1729703034760; Wed, 23 Oct 2024
- 10:03:54 -0700 (PDT)
-Date: Wed, 23 Oct 2024 10:03:50 -0700
-In-Reply-To: <CAG1j3zGiNMbri8rZNaF0w+yP+6OdMz0T8+8_Wgd1R_p1HzVasg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="JSPVDJjy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=QWCNuKJWucYckNnCeHWT1ifgceilhNRgh6lmimzA124=;
+ b=JSPVDJjyjhg2FeL6MmMHkBtI3U59hoEn61fU+pdC3DPiVMZ8YBv/Zr/ZpMo0iUN1ZAYMuvjhtyme
+   SlTFzS/cytRUF4AH0ir7/NxewcuMu9UZCHFE18oeeo22upm3/RwaZ5fnqh+YNrRn8Ivw9GmqJr95
+   Czf8GBytReJ1hqYo0f58knDjuQ6d82S1g7InOZ33a0JpKyMSW/5gobiQZ5VmE4keh3jpfCDPc/aI
+   tHtH9A2EYNbTZTMAkzzNTKVjy77IlZbvVH4U4LjiiyqhEV+zzlICT1aisxDSx3Iw0+raQ73+mGIs
+   ByIRcV8gaeDJzexR2VYJfBK2F5iQffpJ+dEA4g==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SLT00G2DJKW6320@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Wed, 23 Oct 2024 17:07:44 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
-Message-ID: <20241023170351.2939502-1-jonathantanmy@google.com>
-Subject: Re: [External] [WIP 0/3] Repack on fetch
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Han Young <hanyang.tony@bytedance.com>
-Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Wed, 23 Oct 2024 19:07:06 +0200
+Message-id: <D53CMCABS8FO.374EKJJ6LN0MJ@ferdinandy.com>
+Subject: Re: [PATCH v12 7/8] fetch: set remote/HEAD if it does not exist
+Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ "Junio C Hamano" <gitster@pobox.com>, "Karthik Nayak" <karthik.188@gmail.com>,
+ "Taylor Blau" <me@ttaylorr.com>, <ferdinandy.bence@ttk.elte.hu>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+ <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <20241022194710.3743691-1-bence@ferdinandy.com>
+ <20241023153736.257733-1-bence@ferdinandy.com>
+ <20241023153736.257733-8-bence@ferdinandy.com>
+ <d715d76b-1dd2-46e7-a16b-b2cf30940470@app.fastmail.com>
+In-reply-to: <d715d76b-1dd2-46e7-a16b-b2cf30940470@app.fastmail.com>
+Reporting-Meta:
+ AAE3E2yj7RcntEa9ZQAgXIrjzU4XcukpfUYogdhY4k8jpoCTBWTGODvDlIz70Xjn
+ ssPa+a+P7IAcXylge90mhQyLXr6svSzJuZSx0pa93lPtR6+zwhS5mfEDg8SosCjo
+ hn+GibTJyK/faJiFY5EKRYrl1rqIfvhU6JejuKE28b5Rw4ZRZht8YHjzzB73qmYC
+ kOPbMCKD9BXEMSgxZ8Ih/WF2OoNNcHcH2bvewRT0tFzvadL9cioye7YoFYgT4pVo
+ Vr6Mb4AHf1UacY+8XZ7chPBWeGLZNVf78wFzmcMa4U9wfXPWbPXx332dr47CssVT
+ LX6uE4G4ADRTJHueIMom+nSuIDkWNf2xuwv5KRhM+YGtMJ/9lq9En8JzRwfcUs31
+ 8cxj/oJGEYYigJ/tXL/I8RZ0ajSuDm00Ij2ZEjSyPl2nz6hGSb9QddAEELTG/20n
+ RZCOoggrxngsypVrWQT+m8lPMdtKlOkPqQ9yR3M1EpAf555n24N4PCdi
 
-Han Young <hanyang.tony@bytedance.com> writes:
-> On Tue, Oct 22, 2024 at 6:29=E2=80=AFAM Jonathan Tan <jonathantanmy@googl=
-e.com> wrote:
-> > As you can see from the patches, some polishing still needs to be
-> > done, but I'm sending them out now to check if other people have
-> > opinions about the solution. In particular, Han Young reported that an
-> > alternative solution (repack on GC) takes too long [1], so I would be
-> > interested to see if the time taken by this solution is good enough for
-> > Han Young's use case.
->=20
-> Thanks, I've tested the patches on our internal repos, the fetching time
-> increase isn't noticeable.
 
-Ah, thanks. I'm looking into why the tests are failing now - I have a
-solution for t0410, but am still looking into the other two. I'll send
-out non-WIP patches once I have them.
+On Wed Oct 23, 2024 at 18:50, Kristoffer Haugsbakk <kristofferhaugsbakk@fas=
+tmail.com> wrote:
+> On Wed, Oct 23, 2024, at 17:36, Bence Ferdinandy wrote:
+>> If the user has remote/HEAD set already and it looks like it has changed
+>> on the server, then print a message, otherwise set it if we can.
+>> Silently pass if the user already has the same remote/HEAD set as
+>> reported by the server or if we encounter any errors along the way.
+>>
+>> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+>> ---
+>>
+>> Notes:
+>>     v3: - does not rely on remote set-head anymore so it only authentica=
+tes
+>>         once
+>>         - uses the new REF_CREATE_ONLY to atomically check if the ref ex=
+ists
+>>           and only write it if it doesn't
+>>         - in all other cases the maximum it does is print a warning
+>>
+>>     v4: - instead of the discarded REF_CREATE_ONLY, it uses the existing=
+,
+>>           but updated transaction api to request a silent create only
+>>         - it now uses the atomic before_target to determine reporting
+>>         - refactored for legibility
+>>
+>>     v5: - instead of printing a not too useful message, it now fails
+>>           silently, this in line with the objective to only set up
+>>           remote/HEAD automatically if the right thing is trivial, for
+>>           everything else there is remote set-head
+>>         - fixed all failing tests
+>>         - added two new tests, one for checking if remote/HEAD is set to=
+ the
+>>           correct one, and one to test that we do not override remote/HE=
+AD
+>>           if it has changed on the server from what we have locally
+>>
+>>     v6: - fixed style issues and unintended extra empty line
+>>         - updated function call with bool to int from previous patch's
+>>           change
+>>         - removed calls to error(...) inherited from builtin/remote.c so=
+ we
+>>           actually fail silently
+>>         - set the test for remote set-head --auto to the correct value h=
+ere,
+>>           which was previously erronously set in the remote set-head pat=
+ch
+>>
+>>     v7: - no change
+>>
+>>     v8: - changed logmsg in call to refs_update_symref from "remote
+>>           set-head" to "fetch"
+>>
+>>     v9: - follow through with refs_update_symref_extended
+>>         - fix test errors uncovered by the new patch
+>>
+>>     v10: no change
+>>
+>>     v11: fixed some memory leaks
+>>
+>>     v12: no change
+>
+> I think it would be better to reverse-order these patch changelog
+> comments so that the newest is on top/first.  (for next time)
+>
+> Thanks for the careful versioning here.
+
+Yeah, this works fine when you only go up to v3 and it all fits on a screen=
+ :D
+This is definitely the longest patch series I've made thus far, both in num=
+ber
+of commits and versions. I also noticed this today when I realized that I d=
+id the
+cover letter in reverse and how much better readable that was than some of =
+the
+patches ...
+
+One thing that would not be easy is that with so many patches, how I start =
+out
+the notes is
+
+	git rev-list HEAD~8..HEAD | xargs -i git notes append {} -m "v12: no chang=
+e"
+
+and there's no "git notes prepend". That could be another patch for another
+time :) It also bothers me, that the branch description that can be used to
+save cover letters is not a note, just a local configuration, but that's
+a third issue.
+
+Anyhow, thanks for calling it out, if we do come to a v13 I might just spen=
+d
+some time on reversing (or be lazy and just continue at the top ...).
+
+Best,
+Bence
+
+--=20
+bence.ferdinandy.com
+
