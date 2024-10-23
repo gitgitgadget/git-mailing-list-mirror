@@ -1,113 +1,121 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0697515746E
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 21:56:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F60C1990C4
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 23:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729720590; cv=none; b=h51CvWHOxx153gztQ6yL43Fc8ungbXHaKXkJAcdluSe9KWilGXjYVdYk98ufYZsjATS1h4140w4rAYqg8vXThCdfUYIS9NisjIFE+WhKt4opQWG4LmJLp3tV13+2P3AauY9+YzVFpmKKz+TdSNHDIy8kiFINlnGQAfJtvhpsGnM=
+	t=1729724923; cv=none; b=s2Xfoed5KD75EfgUu0FVKw0avOveLKhj5XIEj/8gd2hK+11XdN5Ogatdty2yESahvdgQMinAkrQoOEUmObKViBDP2oN70upeQ1pLxDdqPNMcbbIHj8EzD49rzPVYWi+UJtKCN3P6bb0V6G8RhNKGGkHt6AX59HGNB2bQV8YLHi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729720590; c=relaxed/simple;
-	bh=ycCYjhUglwCOziKLK+2OlL9FB6xhxuNsKQpEQEE9PQQ=;
+	s=arc-20240116; t=1729724923; c=relaxed/simple;
+	bh=PJUuH0A/nbEPiNJyRRil4P5xH4YOgHEK1b9r+RT3WLs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WrzX4+XcxefdYWSD/9TgKzkg07UH2qWln9UXj1ttghr3YlUVJHJG+tjadeb+tNk9ZVAVRjBqJWrZ+Zhci0hubVrEiwPEFMdhqbEc2LncWqdAafKdB8laOA8L1FcGRJOoikW8tfWyBrxsDe7miqZQR76y0HbDD85BO0XyETBmkSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=L2X7+OYy; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=SyA+mrELp+sfgxBUftDXYvdqEVPfa3fUb7D61SzTQvD4qrumsj/TRfbW+aZNKrzPDPY+5HtVGPEYlWe+L0JBVBTBlVgMqBymLcgSO5uesJ3dV+KjwrUExde8Vs1eJxoXiN3xcJ4e0PCmuM2J0hbyMWUDhW80Lx0KJX0rc4ZuaLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jwOXYlz5; arc=none smtp.client-ip=209.85.210.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="L2X7+OYy"
-Received: (qmail 16313 invoked by uid 109); 23 Oct 2024 21:56:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ycCYjhUglwCOziKLK+2OlL9FB6xhxuNsKQpEQEE9PQQ=; b=L2X7+OYymnWmYiSo7D7tS+2sfNWIfuNiISiQTBVn3+UlxHsjUIP3Nch3d7VofFelOMsvB6zmKE0HS4I2W+6Q9cRIQxQ4BTNIu/lHwEHlh4doHsbrjd5fNQoBLrgsnLaIH+LwQsaNbON1oRxgaaFEq9H2mGlDa+BSKDN2KkJ8mJpHdnd3yij2fux4euHwd6CAPecYHpj/ZYt8Gijdoc1A02Mc/nV00AmzsCLTv9jnaVzpcj7fxpXDSSB1YvXMnQIOpVzk+kA8gClef48KhDtmmBxpk44w8UkxPwpNRwaxfcH7soElleoHEXCAoJD4KP7GM8r38xC5Ya4BB0wC1wVBFA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 23 Oct 2024 21:56:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28520 invoked by uid 111); 23 Oct 2024 21:56:18 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 23 Oct 2024 17:56:18 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 23 Oct 2024 17:56:18 -0400
-From: Jeff King <peff@peff.net>
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	git@vger.kernel.org
-Subject: Re: [RFC PATCH] object-name: add @{upstreamhead} shorthand
-Message-ID: <20241023215618.GA821188@coredump.intra.peff.net>
-References: <20241020202507.2596990-1-bence@ferdinandy.com>
- <1c056d39-950c-4965-89d6-85f0c2c1bccd@app.fastmail.com>
- <D50YLOBHJTLS.367TMAOLKL019@ferdinandy.com>
- <20241021191441.GD1219228@coredump.intra.peff.net>
- <D51R90BTHJMY.1C1XY5P4CHTWG@ferdinandy.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jwOXYlz5"
+Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-718078c7f53so152363a34.1
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 16:08:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729724920; x=1730329720; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=n7L6ZBDuwH7iqqUmOzvNiN0EaIKqPDD19kAqDte8ZCU=;
+        b=jwOXYlz5cEw216qwOUsT/ylXsyUtv+8seFqhICNBJuAOvLg9BDl79IEuOE/U7zcOI/
+         JuAf1jEkbI3y4N+UoVhxeFQjurv4XIohWaArhxA1Hg/QK2N7Tr9gia8EZqNJRXv6p1H9
+         k0BDihPU86jes/Zo25H2XJ3LNbBX5Y7SLtyiX/evx4HZakYBiA4KN/1IR0UxbIVcFcWh
+         PkCKbbhUxswKf8REFwsVSFo/pMWvJ9zbY5eiq7XdRFfBUx9bUBjEMuHNlEtoWxwQJxx7
+         OeXLqdX5sgsIidg605C2apMGpVFj6Ok6+cDbQ+T3kNgQEn/BwTo4zl4x84e26WfizXeW
+         8xcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729724920; x=1730329720;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n7L6ZBDuwH7iqqUmOzvNiN0EaIKqPDD19kAqDte8ZCU=;
+        b=jhwV+umlaP18cGLbwxlOQuVXOLC9CZ8H4xs9sqs38POk2qIGN0BG+/jgfaUmBn6PnQ
+         n79o/e386oExcJ8+Y3toN7x2UsfOMjRQnvZhG2LiYP2t6PEd0shC6xc85Cf+LyAVmDdF
+         R3H4AMANRiTJchcbDfSjZ4nICOkPgimSUVB+mTnhaHApMbK2ohpzB/POm0Zb2fCtSGR/
+         QXyGupklU/gheI4um4qbOLXyJjuOZYWCMjAtzJ/YXp2ypjHXVqVe4OmeMQoaaZrq7DoH
+         sFYgLpzOWsKjNxHk2RHsLN24L6H/HE5Vu3lW3TTiBS2+Hovj6R/wPIdzfhtpRHyNvvKx
+         DTQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUE/aUXk5AWaAUiGtUbsRVTmyl5o6MjpEFlAsBB0XRsDjaCVIjsMO4VEc4VeEql03dt5nA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yykb7MWraECoi1I/jSo16TIYaGOpXD+cZCcgmvvi82Jup63eXB3
+	x8mA5GyyGpmzNqQIZ5zBAfoMNkIkfjmb9fZh2pJZ5YGJdYXrcrkv
+X-Google-Smtp-Source: AGHT+IG1J5OEAO5qnCfAeXHhWkgkoGwdjlzryvoeyur1ftmjuvoxXMrIZxZkCwJ51+ilsXmb/pLzbQ==
+X-Received: by 2002:a05:6830:7190:b0:709:41c4:6a5 with SMTP id 46e09a7af769-718588c0821mr56698a34.3.1729724920231;
+        Wed, 23 Oct 2024 16:08:40 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7182eb22187sm1912518a34.15.2024.10.23.16.08.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2024 16:08:39 -0700 (PDT)
+Date: Wed, 23 Oct 2024 18:07:08 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, ps@pks.im, 
+	kristofferhaugsbakk@fastmail.com
+Subject: Re: [PATCH v2] CodingGuidelines: discourage arbitrary suffixes in
+ function names
+Message-ID: <vshoz6xw3d3kghi7lsag6ldike6pdphkjbst5afxbuvjeyprxd@e4ectkxbh4v7>
+References: <20241021124145.636561-1-karthik.188@gmail.com>
+ <20241023075706.1393147-1-karthik.188@gmail.com>
+ <Zxld62svV9iDCcJJ@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <D51R90BTHJMY.1C1XY5P4CHTWG@ferdinandy.com>
+In-Reply-To: <Zxld62svV9iDCcJJ@nand.local>
 
-On Mon, Oct 21, 2024 at 10:09:38PM +0200, Bence Ferdinandy wrote:
-
-> > And possibly we could make it easier to just grab the remote name with a
-> > single command.
+On 24/10/23 04:34PM, Taylor Blau wrote:
+> On Wed, Oct 23, 2024 at 09:57:06AM +0200, Karthik Nayak wrote:
+> > + - Function names should be self-explanatory, clearly reflecting their
+> > +   purpose or behavior.
+> > +
+> > +   The '_1' suffix for function names has historically indicated:
+> > +
+> > +    - functions processing one of several elements that all need to be
+> > +      handled similarly.
+> > +
+> > +    - recursive functions that need to be separated from a setup stage.
+> > +
+> > +   To maintain clarity and avoid confusion, such arbitrary suffixes are
+> > +   discouraged, as they provide no meaningful insight into the function's
+> > +   role.
+> > +
 > 
-> As I was running this patch through my head yesterday I sort of distilled my
-> argument in favour to "writing remote agnostic scripts are unnecessarily
-> complicated", but I do agree, that if there were a git command that could
-> return the remote for a branch without any extra scripting hacks would easily
-> get you the same result, and may even be useful elsewhere.
-> 
-> I'm not sure where this would be the best. Maybe: 
-> 	git branch --show-current-remote
-> ?
+> I'm still not sold on the suggestion to discourage the use of '_1' in
+> the future, so we may want to further qualify this statement with cases
+> where it is OK (in the spirit of Patrick's "as long as this is loosely
+> applied" comment from earlier).
 
-I've been giving some thought to this.
+When I fist encountered the use of the '_1' suffix, I was also not
+immediately sure of the intent it was trying to communicate. If I
+remember correctly, there are also existing uses that don't really fit
+into the two examples mentioned above. One such use I found is
+`handle_revision_arg_1()`[1] where it seems we are just more generally
+factoring out a subset of the parent functions logic, but keeping the
+function name mostly the same. If this is also a usecase, maybe we
+should instead say something more generic along the lines of:
 
-You could argue it's about querying remotes, so "git remote". Although
-we don't really want to know anything about the remote except its name,
-so it's a little weird.
+"A function suffixed with '_1' indicates that a subset of logic from its
+corresponding parent function has been factored out and encapsulated in
+a separate function."
 
-Or as you note, we're querying info about a branch. So "git branch"
-makes sense.  But "--show-current-remote" feels kind of narrow there.
-Shouldn't we be able to ask about the configured remote for any branch?
+Regarding whether its use should be discouraged, if the convention is
+well understood and documented it probably isn't much of an issue, but
+for newcomers it may be another source of confusion as its meaning is
+not implicitly well understood. I do think its a good first step to
+improve the documentation here though. :)
 
-In which case it is really just a single "git config" lookup away:
+-Justin
 
-  git config branch.$branch.remote
+[1] https://gitlab.com/gitlab-org/git/-/blob/fd3785337beb285ed7fd67ce6fc3d3bed2097b40/revision.c#L2176
 
-You have to look up the current branch, of course. You can do that with
-symbolic-ref like:
 
-  git config "branch.$(git symbolic-ref --short HEAD).remote"
 
-You might get an error from symbolic-ref if we're on a detached HEAD, of
-course.  You can either ignore that (in which case the lookup of
-"branch..remote" would show nothing), or a script can actually
-distinguish the two cases ("not on a branch" versus "there is no
-configured remote").
-
-There's also another wrinkle we hadn't discussed: we have the concept of
-both an upstream remote for fetching and a push remote. And this would
-naturally extend there (you'd ask for .pushremote instead).
-
-And finally, there's yet another way to access this information. ;) The
-for-each-ref formatter (which is also used for "branch --format") knows
-how to show remote names (and much more). So:
-
-  git branch --list --format='%(upstream:remotename)' $branch
-
-also gets you what you want. I don't think there's a good way to ask
-that command to show just the branch pointed to by HEAD, though. We
-recently added --include-root-refs to for-each-ref, but that's not quite
-what you want (you want just HEAD, and you really want to dereference it
-to show details of the branch it points to).
-
-So I think rather than "branch --show-current-remote", we'd want
-some option to make "branch --list" show only the currently checked out
-branch, and then you could apply --format to it to get whatever
-information you wanted. Something like:
-
-  git branch --list --is-head --format='%(upstream:remotename)'
-
--Peff
