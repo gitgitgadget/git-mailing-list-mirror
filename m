@@ -1,115 +1,169 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFBA154C04
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 07:40:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C957155345
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 07:44:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729669261; cv=none; b=ArOqoLJ2mm38WUs/BeY2iUSbMncgrijyVG8uBaD4oNpY8qOxMp/gQ1vtdWwH2o9DQfgzzQvSVWZloOiGlTmGs1RBhW55Q8EWsoUCcVSvsnF4wWvNa/yqAxW/i3YA03zENK5bU+YRN+NjywRF26jgZm0cgmxT1fi0PSGcATStGOs=
+	t=1729669445; cv=none; b=mZzSQpLh2A3ucqzM0g0fHwc4AyZOjfMaYIoX5S1AofEYGcp85SrDD2iuZMGuv6rGT7MXxDvFjR1bkOZu9beTUPduY+iS3F2VQXtxY97nrEJ9Jaw7pW7bEQ+GGTkOP82OAj6CC2WGEZZjjDwz9RIotjQNZCcAIAFIhvg58TIvxqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729669261; c=relaxed/simple;
-	bh=2Br72MKLGRGJV5P7qZu9T4KHTLodT3v3V6wOWp4fIV4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Rjy4Bz8M6ZLgXKpxke16eZDcY1JtCtSB1MCNUpjb24zzCLnNfoANtu6QGos4dZNRsAhftg6TSO3/hedDkZokU7+3XxrRohJe4Qnr64y7yjATceXczg4nG1Csg6DZR8g0WREJOsb1rrYcDHZ9rzbYv9W4Fs25tXluHRDrNGHj2+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nl1/d8Xf; arc=none smtp.client-ip=209.85.221.181
+	s=arc-20240116; t=1729669445; c=relaxed/simple;
+	bh=xBS1BfUzUvRP/Wn0SwufVu1rRfQ+ufXO/NMGYIJ0yy4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oTllextWwwldvaMAXSOn5GucVKyYuYZT9426h2lqO3R0CmX4uwehC1pZT2B/RMW6V0r+S+dH9dssReaYuboXuKSbE2j9JZQISw0wSre9i2JAVSQnd04ua1gsMTE/I7SzL2TP5nOX0dSvqDowi2b0h94hZ3VXnZ13Kqyk3Cq8ODI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=InfvvGCQ; arc=none smtp.client-ip=209.85.221.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nl1/d8Xf"
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-50c9f4efd09so2021943e0c.2
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 00:40:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="InfvvGCQ"
+Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-50da1fceeacso2064621e0c.1
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 00:44:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729669259; x=1730274059; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MSCwKX0bVdNFKmQn8nP4Gv9TYQ865doMFqL8UMLbbCU=;
-        b=Nl1/d8XfzWNGbCS+zs0iJCwf7q2jY3Pjiys9bOW9s06NM3mi4GcvYS4dnzz1h5s8+D
-         wF7K3RnleZZh9NS5bSy8vq9U799ZcSjSBclpLiElgIYzr9Usiy9cEMI/6IZ3e0f+9Xnu
-         BAJ5zf87nCEn5CNphR8zoEyPXjhyRcp5rvZStnPIkVXeVMc6CYwcBH3gOaiLf6jo8QBV
-         dwxFYyG8NiVmEipy0x0Od1pLldQogsk7jmZ3BOqFVieypvyBUV2DTUl5GUnXVHXl1D5b
-         gGg2wJuI/EE7pURTw61tiXTAIrtVwUpYyD6IUrHnsQ5Mp/MtrNZkOpIlbbCRpQHM7C+a
-         5+xw==
+        d=gmail.com; s=20230601; t=1729669442; x=1730274242; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xBS1BfUzUvRP/Wn0SwufVu1rRfQ+ufXO/NMGYIJ0yy4=;
+        b=InfvvGCQiVslf1hHmtMwTY311OAofzgVhjfiEvp0VOwViJ7AuFkQ8DtChciXlHHLrb
+         UsGpVWTx5Lt93Nu7EjxTHLmiui1RiXzModup/GTatpctZobpNVI9j+wArwtDHzEGS2vR
+         iBVcTFDBm40CmF+FPLu9REcL7cLWKrH3ljvEGoj5c0sSTXe3qJTepYBWF2tpubVINFJv
+         b0JM0DBE9u4r3cVdrLxAdgEIDiLeNImSyYXSGSXPfp1fQBSkc69OQxY2WdQ4R25ytpCy
+         9QtTSq9PqooPJOODo9K4n+gFnRYIUPJpXPznFNg0t74sQprLRmuCTI7vXa3+keFJKL1Y
+         v91Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729669259; x=1730274059;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MSCwKX0bVdNFKmQn8nP4Gv9TYQ865doMFqL8UMLbbCU=;
-        b=Mgbjepey/q0BbEDDkZlQ34e2nGhI27aYZwRcT1XxonDos+lq5RCzIbl+4RFp9vFqWP
-         /3d5USGDFx6Wye92CwNv9nEO3KGI5wW7UiH510AajE5YUjfvuYekZdJmt6z8LSGs8wjb
-         CBSpEMEe08dzqRZEJYodEtAjE3gkDolugCV7px96U7Wz7VoNJMuc8fTzKPLibBhkNFc4
-         nR4s7mv+xGKV44BnSywV0wWPS6yfw+xRdd9WIhG7QhnWVoBYN1Io54tCh0ym9fiwn2Be
-         ulYr/SHaLZAcIGmLu3ka1f7YomTm9g9tEJ7QYNDrzseEkO/XwnuxMmaWgvKXUZQw7XjM
-         aylg==
-X-Forwarded-Encrypted: i=1; AJvYcCXD4ZSM580A5rEyGXUT9CpCxN+G7wkNTbHjqWAT+AHNxYEqUneA7IMmOulrCNopmoJOeqc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+q0OS5gVyd+VthNdDq4gb7iFAtR/C3MVVdG3pvet3IAtQWPpY
-	00/mab8sJKro4eNLrTK9K0lxGNZH61A0IP2e8rOrbsmkNQKI5M2R9caCs6+XoHD0AYd3Fp2hW+n
-	UfQb8Xl4ES69+qJINIP9+aPJQrXvxOtZ5
-X-Google-Smtp-Source: AGHT+IEr0owo3bLxqQVu/q1Iq0Bd4af3DoPUzMCspyThoDtm0PWTFA1JiGkHpomA0xq4kcKw+/o1BJSXOuWoifbDvzo=
-X-Received: by 2002:a05:6122:caa:b0:4f5:199b:2a61 with SMTP id
- 71dfb90a1353d-50fd0328c38mr2140961e0c.9.1729669258802; Wed, 23 Oct 2024
- 00:40:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729669442; x=1730274242;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xBS1BfUzUvRP/Wn0SwufVu1rRfQ+ufXO/NMGYIJ0yy4=;
+        b=ltVrJ6Z3h+uWxuxjuJUt8vKrVIKwZa3MBb00l2oiYckvq94Tgwzc2nW0bsFcYkkSTd
+         +7xnqtWg4DVILEYp7lGQeSv1Qnk0CN9R3/2EpPxs9iNYtlzC8IVo5rOp/uM4A4G3NEWj
+         qUXD1hu/0yfqG45OcPJq+zjpUxUr+8SB5FfipjGZXVS0K45fxyGkqEWVN0pzVFEMkwbk
+         25LNe+Sxbv5sT3twYEGUdBuclHa98f6PK6TkgJXxwmpIX6WjnhX5CXOgG/3ub8HF/ygx
+         kcbRwlzUy2y9QZ6ABtn+ULLCHEg0IQL6DDrB6rEEW9sqoi0XH1sPPR3pmsc8RLIZ9SUR
+         4TPg==
+X-Forwarded-Encrypted: i=1; AJvYcCXFzipR3oeR/bSOkmufCkNSasSjC9MdahdHJ0eabEPtBUj+9IvXWn5ITYImEh1v5kuKWuw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yws+pLjDSmRtKzfpbq4mZrivjK+oLFST7HWLEn8HhElJIbzpI2O
+	k+kSmt7aJrBzI9Kff0NTBdzZuJvq7p95Y2HklCFm4TS7Xv2lVKk5mpqyAkMdFE6gEEokRPJVQk/
+	TnvhjrNx8s2r8rihvyzsrF1DKOrxVCmCs
+X-Google-Smtp-Source: AGHT+IEqSCjyoU05uAOf1X/I8JR+KlaBXq6AIL4xp805vd+z44mr3YRA7lvJFof1k5euaLZ1ABTis9MG97wNIRul4G0=
+X-Received: by 2002:a05:6122:180a:b0:50d:35d9:ad60 with SMTP id
+ 71dfb90a1353d-50fd02052b7mr1960014e0c.5.1729669441716; Wed, 23 Oct 2024
+ 00:44:01 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 23 Oct 2024 00:44:00 -0700
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <ZxfVwQxMlcJbGt5D@nand.local>
+References: <20241021124145.636561-1-karthik.188@gmail.com>
+ <ZxZP01C-9RngukZy@pks.im> <ZxazVG65+W0qKLXh@nand.local> <CAOLa=ZSPmkdngn3=cksBM-syO94-zYANLk8FWBsQYpTR8XT9FA@mail.gmail.com>
+ <ZxfVwQxMlcJbGt5D@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1810.v3.git.git.1729574624.gitgitgadget@gmail.com>
- <pull.1810.v4.git.git.1729634937.gitgitgadget@gmail.com> <8982dca646db72f903bd4c20416d6118da1c210c.1729634938.git.gitgitgadget@gmail.com>
- <ZxiSIem-Gptk6Omi@pks.im>
-In-Reply-To: <ZxiSIem-Gptk6Omi@pks.im>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 23 Oct 2024 07:40:46 +0000
-Message-ID: <CAPSxiM8vTABv-ZPe=qCNu1yFKStqZ-eKyrwdxy1+7YMetQfECw@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] imap: replace atoi() with strtol_i() for
- UIDVALIDITY and UIDNEXT parsing
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Date: Wed, 23 Oct 2024 00:44:00 -0700
+Message-ID: <CAOLa=ZTSVmpDX-Os-0fs=-t4O5bN5H=aWSdxpMTSM1-UFFvfYQ@mail.gmail.com>
+Subject: Re: [PATCH] CodingGuidelines: discourage arbitrary suffixes in
+ function names
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000a7203d0625200c1b"
 
-On Wed, Oct 23, 2024 at 6:05=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+--000000000000a7203d0625200c1b
+Content-Type: text/plain; charset="UTF-8"
+
+Taylor Blau <me@ttaylorr.com> writes:
+
+> On Tue, Oct 22, 2024 at 03:45:38AM -0500, karthik nayak wrote:
+>> >> So, that being said, I agree that we shouldn't use arbitrary suffixes,
+>> >> as these are quite hard to understand indeed and typically don't really
+>> >> provide any context. So as long as we interpret this rule leniently I'm
+>> >> happy with it.
+>> >
+>> > I am not sure here... I think that using a "_1()" suffix means that the
+>> > function is processing one of a number of elements that all need to be
+>> > handled similarly, but where both the processing of an individual
+>> > element, and the handling of a group of elements are both complicated
+>> > enough to be placed in their own function.
+>>
+>> The crux here is that this meaning is internalized by people who know
+>> the code through in and out. But for anyone new to the project, this is
+>> not evident from the naming.
 >
-> On Tue, Oct 22, 2024 at 10:08:57PM +0000, Usman Akinyemi via GitGitGadget=
- wrote:
-> > @@ -686,8 +686,8 @@ static int parse_response_code(struct imap_store *c=
-tx, struct imap_cmd_cb *cb,
-> >               for (; isspace((unsigned char)*p); p++);
-> >               fprintf(stderr, "*** IMAP ALERT *** %s\n", p);
-> >       } else if (cb && cb->ctx && !strcmp("APPENDUID", arg)) {
-> > -             if (!(arg =3D next_arg(&s)) || !(ctx->uidvalidity =3D ato=
-i(arg)) ||
-> > -                 !(arg =3D next_arg(&s)) || !(*(int *)cb->ctx =3D atoi=
-(arg))) {
-> > +             if (!(arg =3D next_arg(&s)) || (strtol_i(arg, 10, &ctx->u=
-idvalidity) || !ctx->uidvalidity) ||
-> > +                     !(arg =3D next_arg(&s)) || (strtol_i(arg, 10, (in=
-t *)cb->ctx) || !cb->ctx)) {
-> >                       fprintf(stderr, "IMAP error: malformed APPENDUID =
-status\n");
-> >                       return RESP_BAD;
-> >               }
+> Right. I think that with that in mind, a good goal might be to document
+> that convention to make sure that newcomers to the project can easily
+> interpret what foo() and foo_1() mean. Another approach is the one you
+> pursue here, which is to change the existing convention in the name of
+> making the code more approachable for newcomers.
 >
-> Two last nits from my side, sorry that I didn't spot these earlier:
+> Both approaches meet the same end, but the former does not involve
+> changing existing conventions, but instead documenting them. That seems
+> like a more reasonable path to me.
 >
->   - The second line is indented incorrectly. When you have a multi-line
->     condition, subsequent lines should align with the opening brace like
->     this:
+
+I would disagree though. I think some conventions even though we've been
+using them for a while, should be changed. I guess a good middle ground
+is to document current behavior while also discouraging future use. I'll
+add that in and push a new version.
+
+>> > It's also a helpful convention when you have a recursive function that
+>> > does some setup during its initial call, but subsequent layers of
+>> > recursion don't need or want to repeat that setup.
+>> >
+>>
+>> I get the usecase of having such functions. I totally see the need, it's
+>> mostly the naming that I'm trying to change.
+>>
+>> Let's consider two of such functions:
+>>
+>> 1. mark_remote_island_1: This function is called to do _some_ work on a
+>> single remote island when iterating over a list.
+>> 2. find_longest_prefixes_1: This is a recursive function which is used
+>> to find the longest prefix.
+>>
+>> If you notice, both use the "_1" suffix and do different things (operate
+>> on a single instance from a list vs provide recursive behavior). So the
+>> user has to read the code to understand, which makes the "_1" a bit
+>> confusing.
+>>
+>> Second, this could have instead been named:
+>> 1. mark_single_remote_island: Which reads better, giving the idea that
+>> we are really working on a single remote island. Whereas having a "_1"
+>> doesn't easily imply the same.
+>> 2. find_longest_prefixes_recursively: Which also reads better, and gives
+>> a hint on how the function operates and why it is split out from the
+>> base function.
 >
->         if (something_something ||
->             something_else)
->                 frobnicate();
+> I don't disagree that writing "single" or "recursively" can be
+> considered clearer. I think that the convention to suffix such functions
+> with "_1()" is more terse, but saves characters and can avoid awkward
+> line wrapping.
 >
->   - The braces around `(strtol_i() || !ctx->uidvalidity)` are a bit
->     confusing and unnecessary.
-Thank you Patrick for bringing my attention to this.
-I fixed it now.
-Usman
->
-> Other than that I'm happy with this series, thanks!
->
-> Patrick
+
+But are those pros worth the ambiguity it brings?
+
+> Thanks,
+> Taylor
+
+- Karthik
+
+--000000000000a7203d0625200c1b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e231946a67fa9204_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jWXFUd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMkttQy80NTdoL0VMZTY3SlZ0WVZTa0RNdFZjVEFsUwp4WG1VcjVTKzU5
+ZnlRNjRoR2duNmluazhPWG5QaFJPQllJbnB0QlVNSzMvNWRoZXNZNXVtcWU2OTZUSU9wUGM5CnZx
+UEJyWGNpK2ZYTXhzNTdLSUoyN21raVNsUzdibXUzRTJaVllLeGltY0QrK2kvTDg2SmUreCtOYlhZ
+V2hWMHcKemdQY3FjSTNGeGJYcWdFalFQaWNBM2g0WU5yRWNWMFM4ejBkZ2ZGZUZvY3dXdStxYldH
+VEtLdFZTeHZSZDI5TgplM3laeVAxYWJHTGpDRUVtU0NTVXVWbDltU3hpSncrWUFHSjcxaE9MeUJW
+ajFMV2xLd3Q5YWM4T1BVT3h4K01JCmJvNWNyVTNsVURxWm9tWEk0anNzNDBqRFRiMXVNaUZFb0ow
+ZWFmZldRaEhNelpoalZJblZXUjNYSlR5S25pZW8KMEZEREZXdWUrRDBLQUlhUUtTWGpPUnNwdEhp
+WTBZWW9QVXpOMlV0VlRaZS9vSHVvVy9JMXhqSDg0V1hwaExOYQoybmxKRmR4TnR1NzhIZGNBVDdm
+Ui9iOTBGNE90bkhGNmZuWDF6T3dDRkxjSi9HMkR4c1A3b1V1UVRHZmUySXR6CnhnU0svOHN2S1Ir
+L2lLR0lHd1JEcXc0K3lPUFJLOVE4SmtaZ0Rpaz0KPUpTd3QKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000a7203d0625200c1b--
