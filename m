@@ -1,64 +1,67 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF2C154BE0
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:18:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA32154BE0
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729714734; cv=none; b=iuRTZSexA8KYBGxMqdHm2uAA2e046sQWatNr3c5lqmJoutMQJly0NCBOGtVW791/Wz3TvWtu5y/pLWtogO5CSjS/Kvpf05yXFJfNBDSJCKYB3e3qHIW5NVpSm1GsB0aHUux4GflmmGruQge47VEBVywVPdfMsZcOFKwi3mPgae4=
+	t=1729714824; cv=none; b=tMObdqe8n5rBJfIOZhHVhuuitrsiBdJaMRdrUX+lkEyT/qBslkr7g2GcVTSZUWhdPVHQ+0OPVUxoYpaw42iADmWz0QAsTdof9NMsZzShyZATuUqAdrACslL3ACcQibHEh4JcZA46HeBoKif48rAfAFna1ZG9GdIChHbvnCDJR/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729714734; c=relaxed/simple;
-	bh=8wwZ8hXWk4aJyR0ZJDdrakJjOTPB5RZqxEIqUWKy68s=;
+	s=arc-20240116; t=1729714824; c=relaxed/simple;
+	bh=MQ3wc9sjdz8z9/iwp1YpHT08l8+TQvAvNzB2UFmDCvc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gtlE8JeC+FWU3H1JbCq0gIcjpvgJRHGHCBGge6OAsPDWHycT03eyHw+AXKlNmecCQn0vHvF2BJRgJMzkW3O4iPjBIElQG3o6D+oILPJSdd6Aj/acJY1APZ6yPUzBLUayN3FywhP3rwksXmbDnAP7yAjCTopy3v8C5UinZs0rbR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=zHjKEpKn; arc=none smtp.client-ip=209.85.219.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=gPJ2zneJmVb6wl2y40FJ57bek5G4UJ5c8ZF5jItoCGSkJn83fxk+bZjW9oxk11A5DOncO1114HjfrMqWd+Oj+BGEWGjFdaKIQzutT9rmuxQ8L5cQ/qspmzcX7gXebBnRUh7fOggXBsXUvv/P8jZBSKs7VfOmZCOy/CHzaeP5+vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=kCcxVPH/; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="zHjKEpKn"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e28fa2807eeso232556276.1
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 13:18:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="kCcxVPH/"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6e5ef7527deso2052367b3.0
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 13:20:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729714731; x=1730319531; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729714822; x=1730319622; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pQNgVV9/mf9DK1tEVSlGK2zzGn15G95TyDLyHlBSEvc=;
-        b=zHjKEpKnW+pjlibnQQvjg88OV1WKcNwhIycZsa5W1ssu0zJ+5/ZOg8kp4wqJtAKp5p
-         +YI7FRg61R89WXNpp0GfYfsNnvF5PI6dB2CQiHIu44FdKpnxT045FJ8iEsAxhIwvaYvx
-         3vLrgIWmLyZhxkFbO5Qwck/v5syRjL7Wfu+txvz8Jf7nBIt4sbOfBXD6EF+sThAMXoNO
-         a3+vU+K+11TCf25PlOkL5kyn9LUTDWNFl9Ylu/Q0TgJFR836wIKoImONdPylU5RAZWPz
-         /sF5Qp7ctmR5u1KFm+BMkyG33FDaMsVgsnsIpSDjWQTxw51bJoJB9RJ6bmdC0Ax2My8C
-         sgXw==
+        bh=Zt6bVdm4oS/hmHyacpyBh7YCCvBTRjOPH0q+pQ/YmX4=;
+        b=kCcxVPH/PgoND+S7tKODNlvzUyJM2AziKCBszVjLoWy9ngJ/ffEP+OVhuALa+kCzkZ
+         sJnkBhKvb7JzSDUnaUMWrWR2AsN39eo1y05uZVOLaciFW6kI/Dl/75ChbIpVq5rGEpNG
+         2xwIZX9hKxWwh2rAeLBsU1BqujKnZClpf80WefjRm9F9ekW+HnFpNL4jTaekPb3UwWeR
+         XpkJQNeD40E7eotsP9iHdezvWrYBBaspi/TARp9gZhp1NwqEO9Ndjly7MY8NkZOlzBlw
+         kkENbFIko13aBjoy/g6z0438g91yjIFyp+gQrTBOFpOBzTQk5Hx3ZpPaixooaN1dWGsn
+         SJwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729714731; x=1730319531;
+        d=1e100.net; s=20230601; t=1729714822; x=1730319622;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pQNgVV9/mf9DK1tEVSlGK2zzGn15G95TyDLyHlBSEvc=;
-        b=vhPhJRCLP8jzH2XEKLmFXtaYlCIREfSd+cS3oXN1AIUDfoLDOoFss/FKcZd1902eCh
-         fsxVjkLU57JtszXNWHLkJ38za8cP980m//eAKUD1J1guAkQLtCmAk5yNPP5aIonzpMMW
-         qf//HnK/0ZEvMNtRX3JuY1CfDpE/dVEPS+awNy1WSaNgQkj/9RvBX98JU15kUaexfGgY
-         EJ8tUZLaIvVy9fifAjvX6mCVvaUV2QReDMF9n8YTyzKqLhnRniMZvEdXjuT78tcOeqWm
-         mZaCwrItvHnCiNJy97OEzcxZmKujrnw+77ONEMBk6tnW5Ap9hFszd8wSoD9py1lBSNB+
-         3qjA==
-X-Gm-Message-State: AOJu0YwznHK3dCM36lCQDDu0myrj1lWlwM23bQntjSFhT/YjU3fjLRl2
-	4semeKO2hfv01g2SX663adivPpu9aoXTMBuQfVXo0dORqZ1ZGY2EjELR1xZGhzz4hRgzMjq6R54
-	oQPg=
-X-Google-Smtp-Source: AGHT+IFKGHDozf/P8XzbeDeZbe+S7tvvODsRF6/f/Nu0MDQMZTZauFrCiPyHQkDctY8xBk4OXyjRnw==
-X-Received: by 2002:a05:6902:1602:b0:e29:1768:8c2e with SMTP id 3f1490d57ef6-e2e3a6e5cf1mr4437689276.49.1729714731547;
-        Wed, 23 Oct 2024 13:18:51 -0700 (PDT)
+        bh=Zt6bVdm4oS/hmHyacpyBh7YCCvBTRjOPH0q+pQ/YmX4=;
+        b=PK6BKrl7GnNEQ2yxhnxXcGg6rr+Buxgsl7zUX/SOM9X8eV5nNgtbyHfNIyYyZUyJqd
+         8lZXeFTj/Cg1iGYpvTvVpLmQ0GU3GpcCwDs2VbuWr+MMYEhJ85VV+QGPOq8EtomvclUc
+         aIXiVH8KTSJC4Byv5Sa1bqSqPrmO5rgn/bJQTxjR0kcexu0F3ulg39dwFELFtpG/mR7E
+         Zy+J8S0sFi8NxHa/sekhjB64RLcQSHgz2Tbg7Bun6tR84HBFGAD+XPSLWu0Z0e3k39CQ
+         5paHf3T8urUuYEmS7OVAgcYGyQFg6ts2f33Pb2abajipoEfddNjniSLQN1Nsb+cJwpmD
+         wQ/Q==
+X-Gm-Message-State: AOJu0YxHZCPaCpz1DqojNkTmYczlejp2T7fQi57Oow6suXfLfiDsJZfW
+	sulDcJxpEO/dYP3Rd91brPG+IngikeZsz/tCdgQqFerhuJW7PTUWGkGdhLL7KYM=
+X-Google-Smtp-Source: AGHT+IFMLEy2aua3XgduJWtQ3pdPyWOLbu5mEhrUrZ4swdqaKeTG9D1ObGVAPx+tDOULisDnHKBBfQ==
+X-Received: by 2002:a05:690c:d89:b0:6e7:f6f7:38f5 with SMTP id 00721157ae682-6e7f6f75fbfmr36949697b3.0.1729714822062;
+        Wed, 23 Oct 2024 13:20:22 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdc992c0esm1680000276.23.2024.10.23.13.18.51
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5a4d22fsm16754947b3.43.2024.10.23.13.20.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 13:18:51 -0700 (PDT)
-Date: Wed, 23 Oct 2024 16:18:50 -0400
+        Wed, 23 Oct 2024 13:20:21 -0700 (PDT)
+Date: Wed, 23 Oct 2024 16:20:20 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2024, #10; Tue, 22)
-Message-ID: <ZxlaKsIfh7KsqSaH@nand.local>
-References: <ZxgUocb5gH+zuKRw@nand.local>
- <ZxiU1mw1mbRaxoRO@pks.im>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	=?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>
+Subject: Re: [RFC PATCH] notes: add prepend command
+Message-ID: <ZxlahJygsRFcxDev@nand.local>
+References: <20241023201430.986389-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,47 +70,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZxiU1mw1mbRaxoRO@pks.im>
+In-Reply-To: <20241023201430.986389-1-bence@ferdinandy.com>
 
-On Wed, Oct 23, 2024 at 08:17:03AM +0200, Patrick Steinhardt wrote:
-> On Tue, Oct 22, 2024 at 05:09:53PM -0400, Taylor Blau wrote:
-> > * rj/cygwin-exit (2024-10-18) 1 commit
-> >  - credential-cache: treat ECONNABORTED like ECONNRESET
-> >
-> >  Treat ECONNABORTED the same as ECONNRESET in 'git credential-cache' to
-> >  work around a possible Cygwin regression. This resolves a race condition
-> >  caused by changes in Cygwin's handling of socket closures, allowing the
-> >  client to exit cleanly when encountering ECONNABORTED.
-> >
-> >  Will merge to 'next'?
-> >  source: <20241018052952.GE2408674@coredump.intra.peff.net>
+On Wed, Oct 23, 2024 at 10:14:24PM +0200, Bence Ferdinandy wrote:
+> When a note is detailing commit history, it makes sense to keep the
+> latest change on top, but unlike adding things at the bottom with
+> "git notes append" this can only be done manually. Add a
 >
-> I think this one should be ready to go.
+>     git notes prepend
 >
-> > * sa/notes-edit (2024-10-21) 1 commit
-> >  - notes: teach the -e option to edit messages in editor
-> >
-> >  Teach 'git notes add' and 'git notes append' a new '-e' flag,
-> >  instructing them to open the note in $GIT_EDITOR before saving.
-> >
-> >  Needs review.
-> >  source: <pull.1817.v4.git.1729534340786.gitgitgadget@gmail.com>
->
-> I've just reviewed this and think that the topic is ready to go, as
-> well.
->
-> > * ss/duplicate-typos (2024-10-21) 1 commit
-> >  - global: Fix duplicate word typos
-> >
-> >  Typofixes.
-> >
-> >  Will merge to 'next'?
-> >  source: <6ce47185-690d-415e-95c9-06a3b828be29e@cs-ware.de>
->
-> Looks ready to me.
+> command, which works exactly like the append command, except that it
+> inserts the text before the current contents of the note instead of
+> after.
 
-Thanks all around. I'll mark all three of those topics as ready to merge
-to 'next'.
+Hmmm. I am not sure that I see the widespread need for such a tool. If
+this is specific to your use-case, I think a custom script and
+`$GIT_EDITOR` would do the trick.
 
 Thanks,
 Taylor
