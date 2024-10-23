@@ -1,64 +1,75 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E1F1A0AF0
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 18:44:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982F14A3E
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 18:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729709099; cv=none; b=Xtlur5faoq5EdzwtlGa2Rq6SlElOxUkrfpjgoGynznGwZlItL6Vqp31b4IvpQKOWwBgyKVOuVweu8/3Ff97nWMqJAdlz2EqIleasDNQP+64hMe8fq0c146jSaBMkg3a6nrD7DV449bv4jZioARbPgDIExrO/HgPLNdXNXMI9phs=
+	t=1729709159; cv=none; b=QyyvrZURqdIG+loqN+LqbenCYiEr4uuq0ojeQb/ONDD6zw7is9Pp56j82bAbtkQZHbEaiMnr91M1aszIbFqllewXVGJf8SZgeebrf7OZ784ET+vEG/1GyBZqcGouROUmdSFiyR4glIndikQFEbwbCFQllIKWheAjvz+gCFI4mKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729709099; c=relaxed/simple;
-	bh=8l8ok+trWZ+ivqqufijIMk0Q3g/uHB8Lra6pSjygNAk=;
+	s=arc-20240116; t=1729709159; c=relaxed/simple;
+	bh=ULyfvdh8Zg/Rh/QH2ZifjQqFZxvP+flJs71IcOYGq/Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jdxJN4/R/fUz6dBt+vPFcx6GuC+Mq9k71imqEajRWhvPkGCVf8z37pgYysArlU7E+dSHMY0dC5qT4mm04DGyzlwJW0WxRL1WpeL0anKRHt8n6LLlJyaq3Ogv735ps/I76QUFZ0SdhsA3v9eVqKeRtxu5U9RccA/DHs/fYdYnMOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=w06Y+/7O; arc=none smtp.client-ip=209.85.128.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=om+C1aD90Znv7Q7GBpPzK3R72y1lTj0veM90LYlP+Z1tuZs+cTEs2dkn9/oj1XqIl2+pishww9aBDprCDKETLpWwtjgw6G8JjSkZFKfrHwsAXFQU6edVh18W/t8vWFBsPVL77+ayPxWGZjIusfqY3RWJGiO01OqDkbRPb1JPUJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=yYC1/agI; arc=none smtp.client-ip=209.85.219.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="w06Y+/7O"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6e2772f7df9so560077b3.2
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 11:44:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="yYC1/agI"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e2e32bc454fso125048276.2
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 11:45:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729709097; x=1730313897; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=njU8drYd+TFPYaeSjvAbBSUVHI0Cs1tf2Fw9CKTEinw=;
-        b=w06Y+/7ORRlbBX5ldgxTsu8+0qexP+GnnEtEt0OH1k1prZqP/L4RQ1jZdBoWRnpQhu
-         nA4TYHJsxfN1yftrb26o+vbMFtWPKVDUDhFGTLPTlnuMLqphnStIkJPagKDLwmboXke9
-         B90UjyuQ81G86I4WWsbxys7IqkSBvYJCcB/zY3K7ZQAS/SyEHkIsAriUPD13Uit5nFLa
-         pVxveN95C0ZFMrzXfeqCRUlKPoBmtB+aDuJkL82kYKbVcK7DsOxA634FxywtVF/Jxx2d
-         o958T147cF31m0liv/VJDzFd9q+VNjAvjQ5GLwTA0h8ZxDb3OmiaeGewVpAzpY5jaV9/
-         YJmw==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729709156; x=1730313956; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ULyfvdh8Zg/Rh/QH2ZifjQqFZxvP+flJs71IcOYGq/Q=;
+        b=yYC1/agItCYH2GKlT0PK6WeD9ObdlshFVz14y9wT/WFPal+oFXQBHTH5yvQtsd59Ay
+         kgsGFes4c3AIBSP0BHEk9c0aO7CC+EtFB2JHsxSMx6uPWKt6NhbrqQIbPZKYrlpNaWSo
+         ieyW7VlyISRSwjYQ0LRnAWk1uxmxbtCkaEiufFTY7eCKUV07Tt3CcOmqbQWxc8QA/CL6
+         d4JhI76eldGyUd2j8KIZ5zEdY1lyocZ3TVelvA5M45NXVqqw8T+WgGbWLndhNB9EthAW
+         eCR1hypzr6nOH7lDj4K1Q/JXw3g31d0E+OwDhNReEXk+9CHl6oLAYUuGml7W/s6B9/1j
+         wMVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729709097; x=1730313897;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=njU8drYd+TFPYaeSjvAbBSUVHI0Cs1tf2Fw9CKTEinw=;
-        b=XdH2Y5+h9+p8R+sknP2BGLx69VoVsiysJHHcSi1ae9aSy9QLEKspr5XMKKGcP4u1Jm
-         RG1KfacdKHx3VWhOQyjAwFtz8SrpOE+JBtG02SVOVv1Z2z2JsE7oJ4jpzTME8L8LJSHu
-         14ZhvMQbITC8YS3LqI8YWAqq9RmrnUCKdWgjS+9OHfvuP8Su/8/oWbZvCD/7Oc0ximYY
-         MpMpfntEmPzib9ITz3xGJw+DgWkCnYKwHcbcdoSRnewk3l+fYJDxv177AtQBXBEjkJkZ
-         QhiZlDpqDymFHDZqtYEzqZYzOxHjYDsLRIWJZkgxHbL1aXjNJDUAscFrqYsPJWgv5Vu1
-         1MtA==
-X-Gm-Message-State: AOJu0Yxyos8rEe0fGhy4eftD6i4ePUBY10hY3LQ8i5+O3X89904F3DwL
-	ntD25LX6ZTvXUSFcCJ4MblrmAmOqNb8kn8rEQz2ddTPliqj22mT7eZ5Kho/9Xbo=
-X-Google-Smtp-Source: AGHT+IFdkFdZnWYFUFrXyKEIAZLCGlCOQK1o5fQ3oWnnEYO8cIwZAPLgtwQ/l/0DLaHMCYTfdr6xSA==
-X-Received: by 2002:a05:690c:38b:b0:6e3:d688:e3e9 with SMTP id 00721157ae682-6e7f0fadd6amr32044067b3.31.1729709097108;
-        Wed, 23 Oct 2024 11:44:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729709156; x=1730313956;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ULyfvdh8Zg/Rh/QH2ZifjQqFZxvP+flJs71IcOYGq/Q=;
+        b=VMkoyjwxojsHOkrDI/mK5JeHa99J5fZy9Ma7ZLYb/g5zV8NRsM3bdueNgrgRn3qNZG
+         f7M/arjKttETJHDU7pTrjdYe1WxNHBog2xlt4RVEQfZYuot7yM2q1ApvWuCn4zSTxPrr
+         WsV6VMhl7FLENxOZAwdnmLmnDFZDd0hSZ57Xv+hZGrymYVB8yKDonZh6Xh2lGu16AQJi
+         9T/3d/mVa6kU/fkDB466CVrvg/SuflR3/xyTWYbYnBYH31VjmQtvHbI8mizk+uKJvjxm
+         I5vl9gjFjwxx1ChLmlYzowUnijJVsVMoVb8pTPpNaJS/FJx7nEQSw5QLwNVIIgfFbT1r
+         0fAg==
+X-Forwarded-Encrypted: i=1; AJvYcCWyt5hsMHDiU2ImInVOG0UihW+lYN2jnVduGCl3gX/ibCQKIn9dR/6I0ir4XNzm00M9gbk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyE4Yl6n6bxjogaYp0k4ZCKIBcaYpKzWYmzAYoFYPc8zDXR+bJb
+	oial1jvj8bp6VLpu/TCVJkYhmcd7P8nzuYYPZpQBETKCy2SLRd2ud13wsPUexVmsBjSBnFMabEK
+	biP4=
+X-Google-Smtp-Source: AGHT+IHDJzoeOyAxbkhjQHWGlf2XDLC/Sw/OVsbS6pGqMRr8Z4aUwtIqwNResQy0YQNbW3I62Oqf2A==
+X-Received: by 2002:a25:accd:0:b0:e2e:3210:da34 with SMTP id 3f1490d57ef6-e2e3a632fd6mr3024762276.20.1729709156481;
+        Wed, 23 Oct 2024 11:45:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f59f53b8sm16197937b3.20.2024.10.23.11.44.56
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdcb049ebsm1642754276.65.2024.10.23.11.45.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 11:44:56 -0700 (PDT)
-Date: Wed, 23 Oct 2024 14:44:55 -0400
+        Wed, 23 Oct 2024 11:45:55 -0700 (PDT)
+Date: Wed, 23 Oct 2024 14:45:54 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	stolee@gmail.com
-Subject: Re: [PATCH] sequencer: comment checked-out branch properly
-Message-ID: <ZxlEJ+44M8z03VOj@nand.local>
-References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v11 1/8] t/t5505-remote: set default branch to main
+Message-ID: <ZxlEYm3zb5K+gksy@nand.local>
+References: <43d44c82-b93d-4ac9-a5ac-ae5f70982cfd@ferdinandy.com>
+ <20241022194710.3743691-1-bence@ferdinandy.com>
+ <20241022194710.3743691-2-bence@ferdinandy.com>
+ <79c9cd6d-7bcc-4014-91c0-149505f70136@app.fastmail.com>
+ <D52LZ1W0FH29.1GVLRMGN80HPB@ferdinandy.com>
+ <ZxkRq3GNbrO1cqw3@nand.local>
+ <D53ANCP0WMJF.2PG371ZJS1F95@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,82 +78,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+In-Reply-To: <D53ANCP0WMJF.2PG371ZJS1F95@ferdinandy.com>
 
-On Wed, Oct 23, 2024 at 07:27:58PM +0200, kristofferhaugsbakk@fastmail.com wrote:
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Wed, Oct 23, 2024 at 05:34:23PM +0200, Bence Ferdinandy wrote:
+> > Alternatively, you could set it in your copy of git.git's own
+> > configuration in $GIT_DIR/config, so that it doesn't apply to work you
+> > do outside of that repository.
+> >
+> > Either way, I'm going to avoid queueing this round since it is missing
+> > the required Signed-off-by line.
 >
-> `git rebase --update-ref` does not insert commands for dependent/sub-
-> branches which are checked out.[1]  Instead it leaves a comment about
-> that fact.  The comment char is hard-coded (#).  In turn the comment
-> line gets interpreted as an invalid command when `core.commentChar`
-> is in use.
+> In that case I'll send a v12 with the S-o-b so the series can get back into
+> circulation.
 
-Nice find. My first thought when reading was that this was a regression
-from 8b311478ad (config: allow multi-byte core.commentChar, 2024-03-12).
-But thinking about it for a moment that is definitely not true, as this
-has probably never worked since core.commentChar was introduced, and has
-nothing to do with what range of value(s) it does or doesn't support.
-
-> † 1: 900b50c242 (rebase: add --update-refs option, 2022-07-19)
->
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->  sequencer.c       |  5 +++--
->  t/t3400-rebase.sh | 16 ++++++++++++++++
->  2 files changed, 19 insertions(+), 2 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 353d804999b..1b6fd86f70b 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -6382,8 +6382,9 @@ static int add_decorations_to_list(const struct commit *commit,
->  		/* If the branch is checked out, then leave a comment instead. */
->  		if ((path = branch_checked_out(decoration->name))) {
->  			item->command = TODO_COMMENT;
-> -			strbuf_addf(ctx->buf, "# Ref %s checked out at '%s'\n",
-> -				    decoration->name, path);
-> +			strbuf_commented_addf(ctx->buf, comment_line_str,
-> +					      "Ref %s checked out at '%s'\n",
-> +					      decoration->name, path);
-
-Makes sense, but the following command turns up a couple more results
-even after applying:
-
-    $ git grep -p 'strbuf_addf([^,]*, "#'
-    sequencer.c=static void update_squash_message_for_fixup(struct strbuf *msg)
-    sequencer.c:    strbuf_addf(&buf1, "# %s\n", _(first_commit_msg_str));
-    sequencer.c:    strbuf_addf(&buf2, "# %s\n", _(skip_first_commit_msg_str));
-
-I imagine that we would want similar treatment there as well, no?
-
-> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> index 09f230eefb2..f61a717b190 100755
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -456,4 +456,20 @@ test_expect_success 'rebase when inside worktree subdirectory' '
->  	)
->  '
->
-> +test_expect_success 'git rebase --update-ref with core.commentChar and branch on worktree' '
-> +	test_when_finished git branch -D base topic2 &&
-> +	test_when_finished git checkout main &&
-> +	test_when_finished git branch -D wt-topic &&
-> +	test_when_finished git worktree remove wt-topic &&
-> +	git checkout main &&
-> +	git checkout -b base &&
-> +	git checkout -b topic2 &&
-> +	test_commit msg2 &&
-> +	git worktree add wt-topic &&
-> +	git checkout base &&
-> +	test_commit msg3 &&
-> +	git checkout topic2 &&
-> +	git -c core.commentChar=% rebase --update-refs base
-> +'
-> +
-
-Seems quite reasonable.
+Thanks, will queue.
 
 Thanks,
 Taylor
