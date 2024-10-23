@@ -1,133 +1,134 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25393211C
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 15:58:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AB51CC174
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 16:19:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729699124; cv=none; b=hbep81lRIoWNbj0ZkZ5zxbyDmdb7S5Agt7uWFL0GEPn85NpkF19L+i1Xd0R3lL9tIsr6miXYKNTvfRPv1OPv2fLnHwxQ+O/FX3OdDyvjwZd89Yiepkh9GL9zdIFXFKv4TUm4j7Tek5MqYnRoz5splK+JwOhJwHPWeAmhveJe5zQ=
+	t=1729700362; cv=none; b=JRUhUU8TLf/cEXwDjpc/Z4Y5g2ZjT1tqPDvwRI6v1CUM0EO1ReSZYxhJG08lV83K5DpSvFgV7RVVJT2rQ1fs4bDakY4EqKdzewQoRbEzOjqlDpPsPv4kS1PQyKAkgJJEv8sN9fGTkliCy5a21WOE3TKFPTf/1AWyE4jtGrHfyPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729699124; c=relaxed/simple;
-	bh=wP5k6rN/2hhbSWm2rfQDJVJUBrIkXC5wgufh/MpAJeM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NgU2RQ01n5RnZBxJnnOTSd8B0FjELmUGYi/T2dAeh11L8frN7L9iCmgzhECrMasJXb44bSc7PFYxJvArl6jMv7CUXeC9p1xbhb7ayZgnadiEQR3LgSM6T9y34vx9FxPbQ2dYcYBpYDSZ6F90D6gJy8dKSHQU2ShmfmdL8XQOCEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Message-ID: <6883a8d4-7e2e-4988-b57f-89b7c0aacadc@gentoo.org>
-Date: Wed, 23 Oct 2024 11:58:38 -0400
+	s=arc-20240116; t=1729700362; c=relaxed/simple;
+	bh=/FYxpxMHocTakbxCm4JGl7PGRrZBE7ZREbPypH1Ra04=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=NdpwRiPqNFES1X8kZjuIrn+OdSq1Y9+59Fv8wxGP2r9nghbSgQkMEZWCihsdSBPaQam0lKxZnG3NpkrrMG7uuYrcJgby2xN7wEYer4BFfDn3BmuQDCNJlGx0SZ/yh4XNRjpdx0kdXAD2Zzb7Ynclyi16SQCWKCQiDy55w/YbZ3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=eR4oKDuH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m829/B32; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="eR4oKDuH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m829/B32"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id ABA5813801B7;
+	Wed, 23 Oct 2024 12:19:19 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 23 Oct 2024 12:19:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729700359;
+	 x=1729786759; bh=NTiZxKsepbJppFNc81rVG7+q8hzaCXS4RKngdMP3zpo=; b=
+	eR4oKDuH50E1etMSM4YJNuvwmsVTi6upCH/0EHonvGn5tZMmmYtoUWgePkQFKPX8
+	62+Gz75+IpoYJxQIBq0HhsXkpALAZTd0GuImYE2VtVaVau8mIPbHrfD01Esoi8L/
+	bfab7N5jEB8nvDRVPqpA0xdAec+iHZO6atdF4dz1+w83WST5HpNX3uWPpxHnZtW0
+	lNCp61g++DbO5AaAap3R8Of6q3Xouj/AL7eHMM5kvManxtVRO0k2RKtLrRCI/zef
+	E7zgV85Kxmp3QcDus6itNsFVGTL89mwEyzebpYnPID+5KIp2OER8Gn5KyFHroTkJ
+	y0t4zrn+fsqhYxOWTdzj1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729700359; x=
+	1729786759; bh=NTiZxKsepbJppFNc81rVG7+q8hzaCXS4RKngdMP3zpo=; b=m
+	829/B32uS/WfzGofFWcWEjzRsy/Kn0DbfKA+yrEBxxGEw+NomBMVGpOJXBVy9kvU
+	3KLoFVI5yR92RMlz8MgRKQF8APu3BfK9bnjTUTz9ac7liGCny46LIf6VJSaH4gOI
+	Q0UTNrbVpBtjWKh6n1WZXAG43LTGGWR3pIBT8TFPmD6sasCm9kNef3prQzR5sMnR
+	seH73O4lsT7eSYpt/AfY8GXQLemlaFdvvxxxdIbc99iFJLucOoI/wBqoeWgrcwU0
+	D2YrHp2wllAJsMBRtoHJsc1y9adC8m3XMiZ4QhIRvd5dBNcLAFevtnT91J3Peai4
+	zsFnDfB8s0rXcHot83xJg==
+X-ME-Sender: <xms:ByIZZ-CbJQLd-xqxppGyVOKoehILYQhTSDIw2mINuzPk7AYCS9fvhp8>
+    <xme:ByIZZ4i6hO7P5CNlokbyVjc0m_ku5o0N5qnLMqdjFpvw4qgv6av10veW5TJyramtS
+    -_ACR46_fjDQRhzMA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgleekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfe
+    ekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghn
+    nhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehpshesphhksh
+    drihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ByIZZxn02ap8U2FW6WwgYD2Q-Nh6yIeP-FqekPykMI4re1I8prCfsg>
+    <xmx:ByIZZ8zQCopPfF9ts0x_E6YUIkmwzNDFVwJqz5UIwTIar0Ip4aWfiQ>
+    <xmx:ByIZZzTzhR5-EpPxciqjP4JRdJWg51RRbolILgGYzFB_tW4n3xdjsw>
+    <xmx:ByIZZ3bhXyQNIPXq3dx5OsVbejD1s74I7rZtn_QZ5SD8qompZxMytQ>
+    <xmx:ByIZZ-eyoFCqe3YuXtq4xXmZO9WljERkOKDdipGYvDImGfmGoszZN8m7>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 6E08B780068; Wed, 23 Oct 2024 12:19:19 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im>
- <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
- <361e69ee-4491-4e2b-8edc-fdf4bcbb8532@gentoo.org>
- <b35b6f10-ebb5-4266-ab95-aafb67cfad22@ramsayjones.plus.com>
- <ZxjmTbATU7usHcqQ@pks.im>
- <c32a7dc3-cf9f-4d42-98da-80009f9df847@ramsayjones.plus.com>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <c32a7dc3-cf9f-4d42-98da-80009f9df847@ramsayjones.plus.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------kpi5mzgND0tZHeSk3HINOeIb"
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------kpi5mzgND0tZHeSk3HINOeIb
-Content-Type: multipart/mixed; boundary="------------2m4ONhba4yhUPh5d0cXk5SFV";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Message-ID: <6883a8d4-7e2e-4988-b57f-89b7c0aacadc@gentoo.org>
-Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
-References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im>
- <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
- <361e69ee-4491-4e2b-8edc-fdf4bcbb8532@gentoo.org>
- <b35b6f10-ebb5-4266-ab95-aafb67cfad22@ramsayjones.plus.com>
- <ZxjmTbATU7usHcqQ@pks.im>
- <c32a7dc3-cf9f-4d42-98da-80009f9df847@ramsayjones.plus.com>
-In-Reply-To: <c32a7dc3-cf9f-4d42-98da-80009f9df847@ramsayjones.plus.com>
-
---------------2m4ONhba4yhUPh5d0cXk5SFV
-Content-Type: text/plain; charset=UTF-8
+Date: Wed, 23 Oct 2024 18:18:58 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Message-Id: <b106fb4d-3488-4fef-aca8-32e49efd0124@app.fastmail.com>
+In-Reply-To: 
+ <907576d23d1dc39b679a323e74b6bfb227d6c17d.1729695349.git.ps@pks.im>
+References: <cover.1729695349.git.ps@pks.im>
+ <907576d23d1dc39b679a323e74b6bfb227d6c17d.1729695349.git.ps@pks.im>
+Subject: Re: [PATCH 1/3] compat/mingw: share file handles created via `CreateFileW()`
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On 10/23/24 10:38 AM, Ramsay Jones wrote:
-> Hmm, I could have sworn that this caused a complete rebuild for me
-> (even when having just built), hence the '--no-rebuild --print-errorlog=
-s'
-> parameters to meson test. (Oh, maybe that was just 'meson test' - so
-> how do you run *all* tests with meson - rather than 'ninja test').
+On Wed, Oct 23, 2024, at 17:04, Patrick Steinhardt wrote:
+> Unless told otherwise, Windows will keep other processes from reading,
+> writing and deleting files when one has an open handle that was created
+> via `CreateFileW()`. This behaviour can be altered via `FILE_SHARE_*`
+> flags such that other processes _can_ read and/or modify such a file.
+> This sharing mechanism is quite important in the context of Git, as we
+> assume POSIX semantics all over the place.
+>
+> There are two calls where we don't set up those flags though:
+>
+>   - We don't set `FILE_SHARE_DELETE` when creating a file for appending
+>     via `mingw_open_append()`. This makes it impossible to delete the
+>     file from another process or to replace it via an atomic rename.
+>
+>   - When opening a file such that we can change its access/modification
+>     times. This makes it impossible to perform any kind of operation
+>     on this file at all from another process. While we only open the
+>     file for a short amount of time to update its timestamps, this sti=
+ll
+>     opens us up for a race condition with another process.
+>
+> Adapt both of these callsites to pass all three sharing flags.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 
+(Reading back) By default Windows restricts other processes (so these
+files could be in use by other procesess) from reading, writing, and
+deleting them (presumably doing anything it looks like).  But it does
+provide flags if you need these permissions.
 
-"meson test" without --no-rebuild will first run "ninja" to verify that
-everything has been built, and build it if it hasn't been. When passing
-specific test names, it will filter for dependencies of that specific
-testcase, and only ensure *those* are up to date. Assuming those
-dependencies are accurate, of course. :D
+There are two calls/places where you need to expand the permissions:
 
-What do you mean by "complete rebuild"? Do you mean all binaries that
-were already built and up to date get marked stale and recreated?
+1. =E2=80=9CDelete=E2=80=9D for appending: need for deletion or replace =
+via
+   atomic rename
+2. When opening a file to modify the access/modification metadata.  The
+   current permissions are *likely* to work but you could run into race
+   conditions, so the current set of permissions are buggy.
 
-> BTW, I have been doing:
->=20
->   $ meson setup .. -Dprefix=3D$HOME
->=20
-> so that it matches the default prefix from the Makefile (not that I
-> have attempted to actually install yet!;) ). Can the default be set
-> in the meson.build file (with command-line override, of course)?
-
-
-project('git', 'c',
-  meson_version: '>=3D1.3.0',
-  # MSVC does not support GNU99, and C99 does not define __STDC_VERSION__=
-
-  # on MSVC. So we instead fall back to C11 there.
-  default_options: ['c_std=3Dgnu99,c11'],
-
-
-You can pass any command-line options in as default_options, including
-prefix. Defaulting to $HOME is somewhat unconventional regardless of
-whether it's done in a Makefile or a configure.ac or a meson.build or a
-CMakeLists.txt, but given the Makefile does indeed do that I suppose
-it's not incredibly bizarre to do it in meson.build as well. :)
-
+The commit seems well-explained to this na=C3=AFve reader.
 
 --=20
-Eli Schwartz
-
---------------2m4ONhba4yhUPh5d0cXk5SFV--
-
---------------kpi5mzgND0tZHeSk3HINOeIb
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZxkdLgUDAAAAAAAKCRCEp9ErcA0vVxTG
-AP9IPSvItcdaQh6h3TlVXpzmZWUAhyR5kLiOT/jNjA63eQEAk9+YPAbLalikE3zprzFqNXLFeLe/
-+2N8zihwwc70HAk=
-=Ps0K
------END PGP SIGNATURE-----
-
---------------kpi5mzgND0tZHeSk3HINOeIb--
+Kristoffer Haugsbakk
