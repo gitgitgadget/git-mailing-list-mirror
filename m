@@ -1,163 +1,135 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FBA1CB51D
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 14:38:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848B91CF7B2
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 15:05:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729694312; cv=none; b=SIXYv/jQ6edTeLfjK1WsC2fT8rGQgVnuOFjz97EtSGuEOrSmG7IV1ikRgG2wHr9U1CWRYTiV0UuXZritGCYgddd0qPvrXDlyCyDw3ehXaQObOpPKwyv5J6wNBdrC1zi3suXw3SEAuhQ88sQMhtsykEEEyN7171FMjFmtTiOWkIo=
+	t=1729695905; cv=none; b=msIkw4M7kLctwDeDBp24+xAtE2M1q0fVh1ajNZsvOtWk6IW8jEh9ZYg/VI0+bl37IcDOOs6dQaUguRMEmCZJVfwq6sv8uAwDEtL7m1nAYzBCBQ/ksH2eguFaVOsX1jd7POZc5xJp/Dhmz0F5QPjltQbNoal/50Y0xBPW/Ez/ti4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729694312; c=relaxed/simple;
-	bh=cDwqoO/hpnmht1FHNZCoijp2dYRPkquWCRbsjbVRaw4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JuBVdD55KkWRIOp6ZBYR/QJlqIfh64sT4xAhr1GLGc0MhhgpBalRFs/SJw1UVKPsH8Lbufv7NAVL0t7TwtdI9TTEIQh/AS2n3UjBYUVMO/Jtffy1WPYceJcY2KNH2wKeTdi58kJp1udGMcRdVewpx8Fr/fG9yjU01uYC5CtA/Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=G1mwkgIE; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1729695905; c=relaxed/simple;
+	bh=SJJn7zJEIJxi+cBL7LBZz49+l1xbADAbIY7AOp7CAts=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=JXpakzbc46tnBS7bYY6hw+i6XKVGxVmH3Mwo6AxiZqi5cjJWweiBEO4wehr6AMTkFchAYMhZZNqZIH4Wf0u+1tZXlyuib9e8cpCBPA8KHCAhESVgoueViEWuWE+lUk91PnIInl77nK1HsPs7mjT6Di+LNyhbO4UQcPH6jmkthZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RuPwQ37V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F6ajzKuP; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="G1mwkgIE"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id 3cV8tuCz4xile3cV9tBM7R; Wed, 23 Oct 2024 15:38:20 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1729694300; bh=J6CfMVNHSwE8ozyxd2TeNF9pj+LD+TeTX0f26TK/u0g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=G1mwkgIE8xqpEdK85iiOx+SBiHWwpRqbtUx84Iq6q0JVm31Ak2rV6S0U7fBuKwKLj
-	 b1jujb2zwSjErNGKmWC2QgHjOAl9uq1UWYKbq7TZb1m903dVSZZ3cUJTPqk3YYkBoJ
-	 vc98eX79gtlcDUdPzv4R/8yD+IQIG822PMsXrB+WatrQ87JXVnQ6p2MIK1cmIsPiyr
-	 acAxMgS2dMEn8QVzPz4YeNHLHaAmVDoam7SVJMIX1up6a+5NCIZzy6jgqFDKbiInRx
-	 qv/EBQW6Jo/sMeRMkD85o4iu5jfgVxflpU4rCFaTlvLB4ieURAzThenM78dHOy6o3x
-	 hY0dHHVmCD0UA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=VaJUP0p9 c=1 sm=1 tr=0 ts=67190a5c
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=VbVRBR47IsAMTv7IAQIA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <c32a7dc3-cf9f-4d42-98da-80009f9df847@ramsayjones.plus.com>
-Date: Wed, 23 Oct 2024 15:38:18 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RuPwQ37V";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F6ajzKuP"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7DECB114016A;
+	Wed, 23 Oct 2024 11:05:01 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Wed, 23 Oct 2024 11:05:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1729695901; x=1729782301; bh=auvPFnNdHAmfbmLCiWo33fXA3E9Q6Al6
+	jw/NO1hcc1o=; b=RuPwQ37V8Th/wfzDaMRnmNoSnA2zAGoubZVsfmEIq68aAegq
+	Kt00uQrm+FhpZwKVDITjio7bFbaKoYvR8IPdcoQN+J7SnMfuGkbnZlQyarxuv22S
+	6L6TJ0V3KeJqVNYzAj7FbV3ET1XRzyNUVNBEn9kFy2yApQRVHLhYCnFw5sSIad3l
+	i92IcErou8U82A3SRoG37UyFnUflzPA6A3++gzwluONR2wz/b5OuGccG+zLXR6xf
+	nsdMViNKXGcAgHvQtv28SjOUX2a7S19NgRnqFSf3AOeHQiBjoYqG2Q3t9iP4o/gC
+	qBVY+CBP93Pdr2dE1iYI8s+iMyIeeGy+Rv7Tdw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1729695901; x=1729782301; bh=auvPFnNdHAmfbmLCiWo33fXA3E9Q6Al6jw/
+	NO1hcc1o=; b=F6ajzKuPDG2prnLQ2jrLCPBAU/Ftmrxsko0qZfwdogthPSKOXlj
+	//Ew4jzmllkb6qoJv0S+2IwjwfqTECqGXqVXa3uCCOoYti1biWXvx7p9QXYDToZY
+	Frx1GmIabcyaEKM1ZtheTx+fk0MmkN1GHfBB6E/qOiGVzqBP0bq6/HDOsqnkTEfT
+	eSOxnuiHMSe3H2xqMp/g5TFSUPOFlyP4SG6YtbhPMi1oge+fSAavIXXV3TnqBknz
+	Q7ks3gSxSbdMx+iqPXMZHxlt1xm+mngHjtvHSgaCMB/RmJ4WOX59/fh8hBenXNRE
+	LNaCdYXxqsfXLraBGR/I2U8uvuI6ee+txUg==
+X-ME-Sender: <xms:nRAZZzWIOHtlP5Gb_u5MWqfTyDPakhQ1RgezUP_G8vXC34CNTps6nQ>
+    <xme:nRAZZ7m4QxD69g0S4uTD_nwc4XfreN39XMBNX-si5MvY482ejUYVLBdOE82oUCsMG
+    3n2pDsHpUbKmCGP-g>
+X-ME-Received: <xmr:nRAZZ_Y0uHSdaX-2w233WhkaKI-_c7LXgLvFJprkv-9LUYyret7nfLbUJHZ9N7bYsxUaOQjt5zf_Tztfc58CoNubX0qC--3_tbVgGdMLi3PD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgkedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkgggtugesthdtredttddtvdenucfh
+    rhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqne
+    cuggftrfgrthhtvghrnhepieeuvdfhteetlefghfehtddvheelhfdtfffhhffgleejfedv
+    teefveeltdeuiedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgi
+    druggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:nRAZZ-X8rp3AYphvLkNZsDLGjOvLE_PwZBGLZcqbG77ZvGfIFAxLMg>
+    <xmx:nRAZZ9kvF1BI5owzqaGz-VM_y3Xsamf96tXR_6IzpaXOf9BTlPprNw>
+    <xmx:nRAZZ7fxzrkdwof1IRUQpxgD57CGnStRqCFbHtcleRF3bAvI9uC6cQ>
+    <xmx:nRAZZ3HmmAOS-6D5qzuALHQXvUO2gGrCCcE1kZBo6ZRkJT1ldpuvBA>
+    <xmx:nRAZZyz_3CcaUSfytvLeYCxnlAlh7PIsAQbn_gr2hSEtqMu4SJILwtvX>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Oct 2024 11:05:00 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 572a5e0f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 23 Oct 2024 15:03:25 +0000 (UTC)
+Date: Wed, 23 Oct 2024 17:04:55 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 0/3] compat/mingw: implement POSIX-style atomic renames
+Message-ID: <cover.1729695349.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Eli Schwartz <eschwartz@gentoo.org>, git@vger.kernel.org,
- Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im>
- <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
- <361e69ee-4491-4e2b-8edc-fdf4bcbb8532@gentoo.org>
- <b35b6f10-ebb5-4266-ab95-aafb67cfad22@ramsayjones.plus.com>
- <ZxjmTbATU7usHcqQ@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <ZxjmTbATU7usHcqQ@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfBVhpJWhb/WIp6msy+QRTCEU2EJ5/67lXr5bO9s6V++5OVtBthgjeUayDrq6VDTMNlT12Xj7fiTi3uKyCt0rbfkXXTGXjL2WDn7c2ljz0CE2U6YwJeoX
- z2ZuykptJNB4NT6YhNLVjCP3Zb8nKlTXKD6xL1jZBURrWki13VqSlauqdaXTAkIEskwkvNNeeRHvRDS1GXb94TqN0TvgThQElHo=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+Hi,
 
+so after chatting with Johannes recently I decided to have another stab
+at the failures we've seen on Windows with the reftable backend. A quick
+refresher: reftables use a central "tables.lock" file that gets updated
+via renames such that the update itself is atomic. This causes issues on
+Windows when there are many concurrent readers/writers because Windows
+does not allow you to rename a file over another file that is held open
+by another process by default. This issue is surfaced by t0610, where we
+spawn a 100 concurrent git-update-ref(1) processes.
 
-On 23/10/2024 13:04, Patrick Steinhardt wrote:
-> On Mon, Oct 21, 2024 at 11:56:42PM +0100, Ramsay Jones wrote:
->> On 20/10/2024 09:51, Eli Schwartz wrote:
->>> On 10/18/24 12:08 PM, Ramsay Jones wrote:
->> [snip] 
+This patch series aims to fix the issue on Windows by implementing
+POSIX-style atomic renames. The first two patches refactor the code such
+that we use `FILE_SHARE_DELETE` to open files, which allows other
+processes to delete the file even while we have an open handle. This
+sharing mode is also important in the context of renames, which are
+treated like a deletion of the replaced file. The third patch then
+reimplements renames via `SetFileAttributesByHandle(FileRenameInfoEx)`,
+which has a flag `FILE_RENAME_FLAG_POSIX_SEMANTICS`. When set, Windows
+allows us to replace files during a rename which still have an open
+handle.
 
->> Patrick, how do you run the tests on cygwin?
-> 
-> I didn't have to do anything special here, so this is quite puzzling. In
-> a fully-updated Cygwin installation:
-> 
->     $ which meson
->     /usr/bin/meson
->     $ meson --version
->     1.3.2
->     $ python --version
->     3.9.16
->     $ mkdir build
->     $ meson setup ..
->     ... autoconfiguration logs ...
->     $ meson test 't000*'
+There's one catch: this is only supported in Windows 10 and newer. On
+one hand this means that we have to provide the required definitions
+ourselves, as we cannot bump the Windows SDK version. On the other hand
+we also have to support the case where older Windows versions now fail
+at runtime due to `FileRenameInfoEx` being unsupported. But overall this
+isn't too bad, I'd say. Johannes has also kindly tested the fallback
+logic for me on Windows 8.1.
 
-Hmm, I could have sworn that this caused a complete rebuild for me
-(even when having just built), hence the '--no-rebuild --print-errorlogs'
-parameters to meson test. (Oh, maybe that was just 'meson test' - so
-how do you run *all* tests with meson - rather than 'ninja test').
+With these changes t0610 now passes on my Windows 10 machine, but this
+may also have a positive impact on other parts of Git where we might
+have previously failed.
 
->     ninja: Entering directory `/home/Patrick Steinhardt/git/build'
->     [582/582] Linking target git-receive-pack.exe
->     1/9 t0005-signals           OK              4.17s
->     2/9 t0004-unwritable        OK              4.58s
->     3/9 t0002-gitfile           OK              6.95s
->     4/9 t0007-git-var           OK              8.15s
->     5/9 t0006-date              OK             15.42s
->     6/9 t0003-attributes        OK             26.84s
->     7/9 t0001-init              OK             29.09s
->     8/9 t0008-ignores           OK             57.17s
->     9/9 t0000-basic             OK             83.82s
-> 
->     Ok:                 9
->     Expected Fail:      0
->     Fail:               0
->     Unexpected Pass:    0
->     Skipped:            0
->     Timeout:            0
-> 
->     Full log written to /home/Patrick Steinhardt/git/build/meson-logs/testlog.txt
-> 
-> This is starting with a fresh repo, I executed `git clean -dfx`
-> beforehand.
+Thanks!
 
-Hmm, I have far to many 'precious' files to use 'git clean'!
-(perhaps I should clone the repo to get a totally clean slate).
+Patrick
 
-> 
-> Do any of the versions used maybe differ?
+Patrick Steinhardt (3):
+  compat/mingw: share file handles created via `CreateFileW()`
+  compat/mingw: allow deletion of most opened files
+  compat/mingw: support POSIX semantics for atomic renames
 
-Ah, yes, I should have noted the versions:
-
-  $ uname -a
-  CYGWIN_NT-10.0-19045 satellite 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64 Cygwin
-  $ 
-
-  $ which meson ninja python
-  /usr/bin/meson
-  /usr/bin/ninja
-  /usr/bin/python
-  $ 
-
-  $ meson --version
-  1.3.2
-  $ 
-
-  $ ninja --version
-  1.12.0
-  $ 
-
-  $ python --version
-  Python 3.9.18
-  $ 
-
-So, a slightly newer python - what versions of ninja and the cygwin
-'.dll' are you using? (the latter is more likely to cause an issue).
-
-BTW, I have been doing:
-
-  $ meson setup .. -Dprefix=$HOME
-
-so that it matches the default prefix from the Makefile (not that I
-have attempted to actually install yet!;) ). Can the default be set
-in the meson.build file (with command-line override, of course)?
-
-
-ATB,
-Ramsay Jones
-
-
+ compat/mingw.c             | 146 +++++++++++++++++++++++++++++++++++--
+ t/t0610-reftable-basics.sh |   8 +-
+ 2 files changed, 145 insertions(+), 9 deletions(-)
+-- 
+2.47.0.118.gfd3785337b.dirty
 
