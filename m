@@ -1,35 +1,35 @@
-Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+Received: from aib29agh123.zrh1.oracleemaildelivery.com (aib29agh123.zrh1.oracleemaildelivery.com [192.29.178.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5303A1C830E
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 15:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E1A1C9DE7
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 15:39:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729697941; cv=none; b=DQioJzWv85D80Y7kH5PMgyqsJd2L3McSusPZ8HixfdWHE73v3jZweNv9Wssz8nYdfSraq5cWoBbRsmpCky1SB+/qZ5L2fVgxCvPK7z2sliuQqhDuEQGLV6zFg20jfHWaLLTjzjF4hO+0rCZxZayS031torBKkdce0DZUuISlARM=
+	t=1729697943; cv=none; b=pBfZFs7+cj+JHB8XwWVBtjay1qCYwb3GTLPIR2hi/d9WsavlGgXkVNDxNdQqsXIeuYSaI5tu0jJlB0cwNG4iZADFnUJjEMoFWIrCEpUxSNoj+HfpVefBsDThsVrfCRqi2myZV+p1Zl/gmpD95qBEYKUyNqPw7tc2rXg3SvxKEok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729697941; c=relaxed/simple;
-	bh=bXvTZQGeUwj9IMtvaSAroD86iaieS3fX5TW8vkmZ+Vs=;
+	s=arc-20240116; t=1729697943; c=relaxed/simple;
+	bh=oRN5l0enCe8T/vhnByW8CC9iBKvfRQNqTujx9XYZ6lo=;
 	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
-	 MIME-version; b=qyh9NsmmlMgTQpxDDcxL8RTE/Xp9+y/ZnGydgq+MRFmdiFxMc1UhGfXczxv/H1eFJdI1ZaWfRg9SHX+QCMO4u+U3Tbr/2MXwY2Aj8IThqRFYOcpbacg/1S8Mcq3sXB2ilazGXm8YZ0uEGX+uJgDsZYXN8mL4dQZJBDWBuXGym6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=i2iehEZD; arc=none smtp.client-ip=192.29.178.125
+	 MIME-version; b=bfXo53bVBi2Qkh79Ozj9iJ3GnCYqRsdRwE1pj7hrd2sZIymR4SIPSKArDnET0yDJbj31c8GRW1gKAhanhpG7pqw5TF4msBGExiNoftZ0kPz0M1PcqNrzwOE1Uyzp9WDSk4mHsSH8P3ypbUFlrZPP3qITBRa3juBnP/JfZxP55C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=XYfpoeHh; arc=none smtp.client-ip=192.29.178.123
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="i2iehEZD"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="XYfpoeHh"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=r3YzIas3hXmT+W7GTGOkWh6FYVNENTVws6l8XQ3OJsw=;
- b=i2iehEZDBM+ePzOiikHd+ZyH85GO3t02n/8vVDc/oEsv9FPmypsvtrU/zl/0qRjrRb1kBR3V7XFX
-   9N+2/ciY6tgmYcqRtt8io6SQjAv58Qu7ctPqoZpypFVyKnsVMabl/jz79oqY3aIeOswgKC0lloKQ
-   TzWOnuCv+e6KBQlA5CNMGRuN7QNtZhqmB5dIw4O983gNl7SyBGM47p/5idovSu3elhMEO5cEXTtr
-   6iwe+WoNYjRsBGROCSYB7I+qxo3zYSjs1NDgIElkgN1+gJaRhxkSYcCrsc/zqf3uJdXW47/oOlHG
-   vP68YFaaxiaqYAgibehQAUkRdUBOOWgxFVlRSQ==
-Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ bh=sUXyCkoW6I3xLlLbllzZsapBRrWwE1OtNFCZxLzpM4w=;
+ b=XYfpoeHhRmL6SHhJNN5l09pTYh3zS7sEREcCTIsU3W5J/WM4FMutfcGSCt9W728qiur2EaGP9VFk
+   WHfPyiAmdzhGc0K8dRzFrO/NcY9fHmAkysIY22OcvpNa72acWRuJ+ofIk2FFMnqzQvMq0t6uRWRB
+   Xijwvzic2wl20WY06CG2jhFvvBpunfFfPKfi1qwOx6KhUZx2onpahEVQaDv8HBFI+fhdeSqrjs5Y
+   vppdnACwlI/sklR42iT3Xs6d5GNTRfnbb9ViE+1sYettvuu9yHWnCL9T/EgmVEK2ngek3x7pizVn
+   2P+7ErKQuCt3qeey8Gp/1sTsZsQVOZ23WXFb4g==
+Received: by omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
  2024))
- with ESMTPS id <0SLT00GJJFGX6310@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Wed, 23 Oct 2024 15:38:57 +0000 (GMT)
+ with ESMTPS id <0SLT00DSFFGZYL40@omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Wed, 23 Oct 2024 15:38:59 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
 From: Bence Ferdinandy <bence@ferdinandy.com>
 To: git@vger.kernel.org
@@ -38,10 +38,9 @@ Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Junio C Hamano <gitster@pobox.com>,	karthik.188@gmail.com,
 	Taylor Blau <me@ttaylorr.com>,	Bence Ferdinandy <bence@ferdinandy.com>,
 	ferdinandy.bence@ttk.elte.hu
-Subject: [PATCH v12 2/8] refs: atomically record overwritten ref in
- update_symref
-Date: Wed, 23 Oct 2024 17:36:36 +0200
-Message-id: <20241023153736.257733-3-bence@ferdinandy.com>
+Subject: [PATCH v12 3/8] remote set-head: refactor for readability
+Date: Wed, 23 Oct 2024 17:36:37 +0200
+Message-id: <20241023153736.257733-4-bence@ferdinandy.com>
 In-reply-to: <20241023153736.257733-1-bence@ferdinandy.com>
 References: <20241022194710.3743691-1-bence@ferdinandy.com>
  <20241023153736.257733-1-bence@ferdinandy.com>
@@ -53,47 +52,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
 Content-transfer-encoding: 8bit
 Reporting-Meta:
- AAHga5qOGorNuvmHmhapyIDcER9Z6VndegMy0EomVTfTJBTnv46W0LD2/CSnIxbl
- ivQOw8xmxZNpKyrgDZOWgjztUU8wcwrPJFhKnBnVQc2nq7Ns7g52CvnvqoPSKbn5
- Yp64hgkuFxkixlWyejjPR7Wdy1spP6taVZwhFdQD6K0TFwO5FOyyrrlI773+xxof
- UTjj3m34jL2PardQrkaarLudkpKXkxQ3zH0vs5FFChArdALf819HzH1Eo98lBjd/
- 1DTd2biMZGL4GdVjmIEL9phy4SgUdxWUlc3gwiq8kG5RqxHpgg81XAXfP2zNgM0S
- G3YWo+972+4XmmdAHNKroD0yeu2e1dAdSV5Igdm6VDR42G4N4czCp8NPVV91rXNo
- 03gRT1FYm0ToeYk5YC9JNK8PudmbmP1OldaStg/lopBRY8wRhXCb2IBiLkM0NgB6
- v08cm8PXZq8xAV8WLGMOIUKnx02vgfyjNZI7w2DLaCoMGYnTi422Kss=
+ AAE3E2yj7RcntEa9ZQAgXIrjzU4XcukpfUYogdhY4k8jpoCTBWTGODvDlIz70Xjn
+ ssPa+a+P7IAcXylge90pbAyLXr6svSzJuZSy318sDR54wau85TUHWd8cld6pbee9
+ oWKLtS0Owqto1vphDjt7YnCA0DOiMIKO+gPRcwn0L8F2v0jA0CMrgnh/32d9EI6H
+ d+DpM++MpinpyF5sfX3+Ww1i2jrldtO8XT/qa+5XcA2FL4Z5JFdT0u6PBjTJosZ3
+ W4C0DYJgTaYtWPo2wEsL33yXXDDbCFgmuT1os5zmMUtAVB7VjBoI/L7yPjUYjk2H
+ YxjfCK1Pm22CR3J/cnUehWeNFF9ouyufZcYOf1AjyMOdupbEAG0ui8sq0MBvwrNL
+ WS9fbbY6ZowuKZhKjK/fwOBPfKLOwNMsbbUjinRVLKIhcUIlZOy2XNkrJCzhXbZl
+ yrpDTMFhSex/IcQm3Q+/N1Jhqv74YTLmBZ4yZH4kTE9sH9xJUMZzYV4=
 
-When updating a symref with update_symref it's currently not possible to
-know for sure what was the previous value that was overwritten. Extend
-refs_update_symref under a new function name, to record the value after
-the ref has been locked if the caller of refs_update_symref_extended
-requests it via a new variable in the function call. Keep the original
-refs_update_symref function with the same signature, but now as
-a wrapper around refs_update_symref_extended.
+Rename buf and buf2 to something more explanatory.
+
+Instead of calling get_main_ref_store(the_repository) multiple times,
+call it once and store in a new refs variable. Although this change
+probably offers some performance benefits, the main purpose is to
+shorten the line lengths of function calls using this variable.
 
 Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
 ---
 
 Notes:
-    v4: new patch
+    v5: new patch (split from the next patch as a preparatory step)
     
-    v5: - added before_target to reftables backend
-        - added an extra safety check for transaction's existence in refs.c
+    v6: no change
     
-    v6: - no change
-    
-    v7: - remove the whole before_target concept from the backends and
-          handle checking it in refs.c instead (thanks Karthik)
-        - rename the before_target to referent which is how the same concept
-          is called in the backends
-        - change commit prefix to be more in line with project standards
+    v7: - change commit prefix to be more in line with project standards
     
     v8: no change
     
-    v9: - instead of adding parameters to refs_update_symref, rename what
-          was in v8 as refs_update_symref_extended and make refs_update_symref
-          a wrapper for that. This significantly reduces the number of files
-          that need to be touched, and avoids adding a lot of dummy NULL-s
-          in unrelated places.
+    v9: - further improve readability by renaming buf, and buf2 consistently
+          with how patch 6 was already done
     
     v10: no change
     
@@ -101,71 +89,68 @@ Notes:
     
     v12: no change
 
- refs.c | 19 ++++++++++++++++---
- refs.h |  4 ++++
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ builtin/remote.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 5f729ed412..24a4172cd2 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2115,6 +2115,13 @@ int peel_iterated_oid(struct repository *r, const struct object_id *base, struct
- 
- int refs_update_symref(struct ref_store *refs, const char *ref,
- 		       const char *target, const char *logmsg)
-+{
-+	return refs_update_symref_extended(refs, ref, target, logmsg, NULL);
-+}
-+
-+int refs_update_symref_extended(struct ref_store *refs, const char *ref,
-+		       const char *target, const char *logmsg,
-+		       struct strbuf *referent)
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 76670ddd8b..1d68c5b2ba 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1402,8 +1402,9 @@ static int show(int argc, const char **argv, const char *prefix)
+ static int set_head(int argc, const char **argv, const char *prefix)
  {
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
-@@ -2122,13 +2129,20 @@ int refs_update_symref(struct ref_store *refs, const char *ref,
+ 	int i, opt_a = 0, opt_d = 0, result = 0;
+-	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
++	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT;
+ 	char *head_name = NULL;
++	struct ref_store *refs = get_main_ref_store(the_repository);
  
- 	transaction = ref_store_transaction_begin(refs, &err);
- 	if (!transaction ||
--	    ref_transaction_update(transaction, ref, NULL, NULL,
-+		ref_transaction_update(transaction, ref, NULL, NULL,
- 				   target, NULL, REF_NO_DEREF,
- 				   logmsg, &err) ||
--	    ref_transaction_commit(transaction, &err)) {
-+		ref_transaction_prepare(transaction, &err)) {
- 		ret = error("%s", err.buf);
-+		goto cleanup;
+ 	struct option options[] = {
+ 		OPT_BOOL('a', "auto", &opt_a,
+@@ -1415,7 +1416,7 @@ static int set_head(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     builtin_remote_sethead_usage, 0);
+ 	if (argc)
+-		strbuf_addf(&buf, "refs/remotes/%s/HEAD", argv[0]);
++		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
+ 
+ 	if (!opt_a && !opt_d && argc == 2) {
+ 		head_name = xstrdup(argv[1]);
+@@ -1434,25 +1435,25 @@ static int set_head(int argc, const char **argv, const char *prefix)
+ 			head_name = xstrdup(states.heads.items[0].string);
+ 		free_remote_ref_states(&states);
+ 	} else if (opt_d && !opt_a && argc == 1) {
+-		if (refs_delete_ref(get_main_ref_store(the_repository), NULL, buf.buf, NULL, REF_NO_DEREF))
+-			result |= error(_("Could not delete %s"), buf.buf);
++		if (refs_delete_ref(refs, NULL, b_head.buf, NULL, REF_NO_DEREF))
++			result |= error(_("Could not delete %s"), b_head.buf);
+ 	} else
+ 		usage_with_options(builtin_remote_sethead_usage, options);
+ 
+ 	if (head_name) {
+-		strbuf_addf(&buf2, "refs/remotes/%s/%s", argv[0], head_name);
++		strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", argv[0], head_name);
+ 		/* make sure it's valid */
+-		if (!refs_ref_exists(get_main_ref_store(the_repository), buf2.buf))
+-			result |= error(_("Not a valid ref: %s"), buf2.buf);
+-		else if (refs_update_symref(get_main_ref_store(the_repository), buf.buf, buf2.buf, "remote set-head"))
+-			result |= error(_("Could not setup %s"), buf.buf);
++		if (!refs_ref_exists(refs, b_remote_head.buf))
++			result |= error(_("Not a valid ref: %s"), b_remote_head.buf);
++		else if (refs_update_symref(refs, b_head.buf, b_remote_head.buf, "remote set-head"))
++			result |= error(_("Could not setup %s"), b_head.buf);
+ 		else if (opt_a)
+ 			printf("%s/HEAD set to %s\n", argv[0], head_name);
+ 		free(head_name);
  	}
-+	if (referent)
-+		refs_read_symbolic_ref(refs, ref, referent);
  
-+	if (ref_transaction_commit(transaction, &err))
-+		ret = error("%s", err.buf);
-+
-+cleanup:
- 	strbuf_release(&err);
- 	if (transaction)
- 		ref_transaction_free(transaction);
-@@ -2948,4 +2962,3 @@ int ref_update_expects_existing_old_ref(struct ref_update *update)
- 	return (update->flags & REF_HAVE_OLD) &&
- 		(!is_null_oid(&update->old_oid) || update->old_target);
+-	strbuf_release(&buf);
+-	strbuf_release(&buf2);
++	strbuf_release(&b_head);
++	strbuf_release(&b_remote_head);
+ 	return result;
  }
--
-diff --git a/refs.h b/refs.h
-index 108dfc93b3..259191a485 100644
---- a/refs.h
-+++ b/refs.h
-@@ -573,6 +573,10 @@ int refs_copy_existing_ref(struct ref_store *refs, const char *oldref,
- int refs_update_symref(struct ref_store *refs, const char *refname,
- 		       const char *target, const char *logmsg);
  
-+int refs_update_symref_extended(struct ref_store *refs, const char *refname,
-+		       const char *target, const char *logmsg,
-+		       struct strbuf *referent);
-+
- enum action_on_err {
- 	UPDATE_REFS_MSG_ON_ERR,
- 	UPDATE_REFS_DIE_ON_ERR,
 -- 
 2.47.0.94.g1247fb88fd.dirty
 
