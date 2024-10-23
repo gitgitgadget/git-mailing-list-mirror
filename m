@@ -1,48 +1,48 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34374208A5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5648224B34
 	for <git@vger.kernel.org>; Wed, 23 Oct 2024 00:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729644369; cv=none; b=qYLEENYJv/gttIzDKub1E9lADyJeV6M0dQAIE3+z7MY9/gNkMevoSozl19hME9TkcUgcWLAq8Qk4B3SYjY9O/u3PjFCO7ulg8CU6qoWvj6xW0IF4Z8CYiSSLKG4DFoVqQxh1W6k6NB5qcHwvEcDAb+oC7yokLaxGvTccMcrgEA4=
+	t=1729644370; cv=none; b=PfF1Uf73THkNGcSjyMRov/7iqbiFWMlvgJlRyNjNC8+z/QCx9x4hSqbfqgyImVqNy4vz005OL2gYDTtZW3GHGOtc447/YNT8VnOHXPdVbDl+3CVJFlUNF8T39ftyv0lLofsZeoofsMyLvdLsaeRjBZOFqZAbaAZ+Fnv7r1vuP44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729644369; c=relaxed/simple;
-	bh=Yyx1/9ezc1jQ37JvF0zD81szsoSHY4VK/1sVGZmQ6ew=;
+	s=arc-20240116; t=1729644370; c=relaxed/simple;
+	bh=8w0UuLbT1GF7DW2uvm6+8bk6iPrUfl/xm0kSoWBbMtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u30yZX/a6VI/t0k8w4nYznh9lh+bdZb67/y5KCYQEERJIuL3CyWFp943QaGs8pLFEwQICqj7NtARngHT1saI3QPaF3cLDcATllwLLWionOJqXbkLOvq09Axbg4v6DQvN774WuC/V0mRd20YJizHC4c/bsF+IeOktPS9oh+T7Hks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=FCqxu+vs; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=OJr3VLpQ6168Jdk6Y8GtQPpebA5lzKsXdER4EVL7hlyfOExIuswuLT6jV6EjzxMubrFOrlLPjKCAj7i+RMqefF3fl2jZuC1oCnlCBvUOCKLCCM9LcB2XcmjjZKNTHCEIdLEy8ctBM95nU0CQIdbrt4mPFSAaO/zyOWSwl8SG7HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=acTiVAmg; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="FCqxu+vs"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="acTiVAmg"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1729644364;
-	bh=Yyx1/9ezc1jQ37JvF0zD81szsoSHY4VK/1sVGZmQ6ew=;
+	bh=8w0UuLbT1GF7DW2uvm6+8bk6iPrUfl/xm0kSoWBbMtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=FCqxu+vsRoFvpGZg1SAB89670WC+hO7v1D4uGdUJAJ6riKz+i3u8boM0B42vQ+XDX
-	 40jkKUlzKOf9uzrfx1VlpGXmN1zsFu6SYRFScLTym3zX5piB35vnhsO1ERgv7bUwLt
-	 0Zm/TwwWsvRiCIZXexUaDMBB9AhNlpi7e+roX9mI//C9eWVd2pkKo+PG//VWztKoSs
-	 1FahZ7ZMz7nSZ3ZH0q+TW/Wc3rksbHXFKwK/fs0hpKmXBT9GjqdsbYWTvrP/abtWo8
-	 3ypYZVEUC0jHJL/X1lor+eeJ3OAmB6lIvLvpKh4PeCoYgK1BIlCN6gy1pnrf0KAtgi
-	 3pAJvLm3sm0EGHKlwkDJiQ2Ug8IhshSpKzS6eUbysm20M4hYkG4z25vZYCYZSQoVdo
-	 +r3pMmS6z7vrete+S157sGRCspemOLOcyaYifUyw7DzzO4SWY4x/2eNPkihcvxLEER
-	 //kjnC4T93ikPaoTnTTrI98yC/oJb+pCMD3eIgCBhfPtyfthxlC
+	b=acTiVAmgr6GnK0VOOAhmn2kqOkT2c86v6OD/RYTefx24nW74kpiDyBW+tXv04FtS4
+	 QQ4kWhySmZpDED4h6V36dS53LZlVHwFMBFNUFlGljOEY+cnHpW6Av3zWWk79bTuhqP
+	 nquaCeUdYe+Ro/h+nosbnulKwav/DluKfregRaquwraxxZmqpc783V00T7RLwU1ajP
+	 gdTZkTe3xyrVDMjGGJruHCK5HSDTw9rHK6+JsS7u+o4CsXRWje8IkaTAfX+SfxWva0
+	 ie/0iqYe3ihcJ3gVRysIS6JNNZ2cQg6sXooUJxZOGrrwe6SpXxLhQssksX/Mq/aE54
+	 /qzaCv74+BQqpEk8/sZXLDp7/t6WGbMu4/m2HuadOKYMDwHokZ//ElI06oxvtINxXX
+	 iEB8HmGt39myNmQ6KKpvEEz175E0/CJCFLzfhWBujFfEaThLNEY5A+PnU0yf/FZcfZ
+	 Fjy2M+4fr9Nlf/wds2jCzcLpQNE7p0cjtS93a2CYwIlfT5cr71E
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 708BA200C2;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 79D60200C3;
 	Wed, 23 Oct 2024 00:46:04 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v2 08/12] git-curl-compat: remove check for curl 7.53.0
-Date: Wed, 23 Oct 2024 00:45:56 +0000
-Message-ID: <20241023004600.1645313-9-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 09/12] git-curl-compat: remove check for curl 7.56.0
+Date: Wed, 23 Oct 2024 00:45:57 +0000
+Message-ID: <20241023004600.1645313-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.45.2.753.g447d99e1c3b
 In-Reply-To: <20241023004600.1645313-1-sandals@crustytoothpaste.net>
 References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
@@ -55,11 +55,11 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-libcurl 7.53.0 was released in February 2017, which is over seven years
+libcurl 7.56.0 was released in September 2017, which is over seven years
 ago, and no major operating system vendor is still providing security
-support for it.  Debian 10 and Ubuntu 18.04, both of which are out of
-mainstream security support, have supported a newer version, and RHEL 8,
-which is still in support, also has a newer version.
+support for it.  Debian 10, which is out of mainstream security support,
+has supported a newer version, and Ubuntu 20.04 and RHEL 8, which are
+still in support, also have a newer version.
 
 Remove the check for this version and use this functionality
 unconditionally.
@@ -71,7 +71,7 @@ Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
  2 files changed, 10 deletions(-)
 
 diff --git a/git-curl-compat.h b/git-curl-compat.h
-index edee8f2ba0..65ba1ee0f8 100644
+index 65ba1ee0f8..703756ba85 100644
 --- a/git-curl-compat.h
 +++ b/git-curl-compat.h
 @@ -28,14 +28,6 @@
@@ -79,27 +79,33 @@ index edee8f2ba0..65ba1ee0f8 100644
   */
  
 -/**
-- * CURL_SSLVERSION_TLSv1_3 was added in 7.53.0, released in February
-- * 2017.
+- * CURLSSLSET_{NO_BACKENDS,OK,TOO_LATE,UNKNOWN_BACKEND} were added in
+- * 7.56.0, released in September 2017.
 - */
--#if LIBCURL_VERSION_NUM >= 0x073400
--#define GIT_CURL_HAVE_CURL_SSLVERSION_TLSv1_3 1
+-#if LIBCURL_VERSION_NUM >= 0x073800
+-#define GIT_CURL_HAVE_CURLSSLSET_NO_BACKENDS
 -#endif
 -
  /**
-  * CURLSSLSET_{NO_BACKENDS,OK,TOO_LATE,UNKNOWN_BACKEND} were added in
-  * 7.56.0, released in September 2017.
+  * Versions before curl 7.66.0 (September 2019) required manually setting the
+  * transfer-encoding for a streaming POST; after that this is handled
 diff --git a/http.c b/http.c
-index 24764f1272..c5fdf1cd4c 100644
+index c5fdf1cd4c..4d59f11ad2 100644
 --- a/http.c
 +++ b/http.c
-@@ -55,9 +55,7 @@ static struct {
- 	{ "tlsv1.0", CURL_SSLVERSION_TLSv1_0 },
- 	{ "tlsv1.1", CURL_SSLVERSION_TLSv1_1 },
- 	{ "tlsv1.2", CURL_SSLVERSION_TLSv1_2 },
--#ifdef GIT_CURL_HAVE_CURL_SSLVERSION_TLSv1_3
- 	{ "tlsv1.3", CURL_SSLVERSION_TLSv1_3 },
+@@ -1275,7 +1275,6 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 	free(normalized_url);
+ 	string_list_clear(&config.vars, 1);
+ 
+-#ifdef GIT_CURL_HAVE_CURLSSLSET_NO_BACKENDS
+ 	if (http_ssl_backend) {
+ 		const curl_ssl_backend **backends;
+ 		struct strbuf buf = STRBUF_INIT;
+@@ -1300,7 +1299,6 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 			break; /* Okay! */
+ 		}
+ 	}
 -#endif
- };
- static char *ssl_key;
- static char *ssl_key_type;
+ 
+ 	if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK)
+ 		die("curl_global_init failed");
