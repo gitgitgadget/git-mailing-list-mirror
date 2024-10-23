@@ -1,55 +1,55 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49EC136331
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 12:04:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A183A1AB50D
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 12:04:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729685076; cv=none; b=AOadS8vXzZK0kW/jYr1GnaXI+3bbkkj1BgtfaTZ97ZKSXmWpedL8isIlo7CqhwgKbbdjDsZ+mmbIGiMDFhSS9ShDxcU4IOw5Eb4yYsoNC0YwlMiIDBN4+kavnsWFP2A+3N7QrKvaszkimRQqhT/A0jLTgVecFIqECKBZOyrHNNs=
+	t=1729685086; cv=none; b=UdztTNz/hsOthiKO1LHDE3Cjs47m1K5p0FRmnzGppuffxOeEnjfd6Ljpkc+oSNd+/2A6WemWlDWGnr2uwwnTq7X8oB6lLE9Vttn68Zc8WcvHlvUu/RPm/iOR4UgfcQbtIQ1rmoSSss4JtysSqtJuOgVLvF6105jBo/1GXCHYK90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729685076; c=relaxed/simple;
-	bh=vLMV68g0tuHRKGZvVLcdaohH85VEH0j6E34YciZCdns=;
+	s=arc-20240116; t=1729685086; c=relaxed/simple;
+	bh=WqIEnudf8Iy6o6VhrB9115zYmAxbvnlPwKhw5sEDhWE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rNyM4XDvFNEWB0BWOXPTk3Makq36suyuhsNK9S0bzyf/S7g9os5469qsI0ohhiYGAYNzLhu1xuVS9CC1Vo8NBgPgPl5I5GjOCWijG6qRKh9+/hTCZrSX7loKqfGP8KAwIekB3GXc+1PbsOPHGbBvcnZNJj/TI7AGwpv6s4fYQGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=y0fwjdrg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G4Rl0cqO; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=hImdIr2bCi3VhIpALmn2KFyRqkiDAT/cooTA10gZ5VJe9OuyDAX5PKULKAOcAF4p4xn71XM3TnTlq0b6Wb3vrE2co5DX3egunnY4yxE4l/ND44h59oMOe/4VG4lT3sxiBYHHMbMUD+9KPofdyiYqKQCJyvMF7psWuRximVVqJJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O+B7hiuE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ppsuq6xm; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="y0fwjdrg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G4Rl0cqO"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 244E311400DE;
-	Wed, 23 Oct 2024 08:04:34 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O+B7hiuE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ppsuq6xm"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id C59A01380775;
+	Wed, 23 Oct 2024 08:04:43 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Wed, 23 Oct 2024 08:04:34 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 23 Oct 2024 08:04:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729685074;
-	 x=1729771474; bh=di+dwlff0rv++alj2UtMDRS0ikjBj1t/4xaRoKLuAVQ=; b=
-	y0fwjdrgSGyPFfycgTXzXuWO6bhiyPimeibtZS8Kr6vt1UJAiJ05uPGLBx/pXc1m
-	d5jWuYR+C8I6DiWEYcVYdahIEMLSRTWHjLsooGIDJC6EDlWcUOgWNMCYHBNyYBzP
-	JDYi6b8fIvqv89TMspVD/+pAxzJWC56D6wta/sqSC4UQUVQ568r9QX1HvWyJURWa
-	e3x8tnTmgxGpIrPOp85z4GAmVJzfg80nOqaEy9/Qjutkxj01UdpG9QrCFEBbtWfq
-	Gf2JtRPmOb76orAHI+Fv4L488uTmacA82xeBQAMiqpr5aG9bzggIzIsMAf+87nGt
-	xLLc3op6vYmAyATGeWSZmw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729685083;
+	 x=1729771483; bh=n1cHfLs7unERsb4ACInykbucYs6TcfsaKOeCaURUL6E=; b=
+	O+B7hiuEKBv7rEr3jGlamrw+mmk3I6zLPSN2ZmRMrALGVMxtjXszJ8ZJUIhtkKDd
+	Nfx+3Cs1cdxVSZByc5uBn9baeF+ewsmgw88wKVcqYsIt/si/pmWendux/0/tcjCS
+	O5cHJLp290YTP+l+ERrRCXT0smd2R0EI1gF6b1U0FIRby8eciuDbCS1NoAxWBh2Z
+	pOtaltkZot5Qp14E7B0mM4Sj9ZnhCYz19B63080ADvy+0WHdm3HislwUiMfXgSx1
+	lpCp2HfXjtTrYyPQuc3aesOJ2lEZQMTQZe5WTmkK/JRMkGGGpFSkpVdDDT9VaR6q
+	jEkKTNg85miYg2OqAvLNkQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729685074; x=
-	1729771474; bh=di+dwlff0rv++alj2UtMDRS0ikjBj1t/4xaRoKLuAVQ=; b=G
-	4Rl0cqOk5BzMEdXQEmt+ZVBaLA7NuhK3w/nrhdg4v8mdxWiSWq4J9gdmOMXMGcRE
-	H1iaL6MnAeCVfjX/AAspPhJxThcFPw/wXhEE5+bzKrDsuVQdnnkESlaotzSBrNJO
-	Q6hBLIUGO3OVyakpnQqvNbm/NYL7P+FIbCr4c3V3/oLbfUbnuMoV5kvHvkdT3kmT
-	hrZBSysvFLOZh0cdv9GLsnMTHepbSB83IHU7DKwUxwA36Bbu0whqBzIaHeuBBPJn
-	LyKWgD0XmZowDCdzBDxOoHXqVSRjmahotZ5L2gAETvcm5m0sJnJ92i0+pKn589ce
-	lCusJjqjERsuvgVzB1NVw==
-X-ME-Sender: <xms:UeYYZ2zAUenCQ-DdStd05a1ibw3eRK3Tgt14lkJXtJNoQ59kfwVCmA>
-    <xme:UeYYZyQSNh7tX19PUR55pCAcGMgNejl8lCuu1O2W-vnOoDR0n1hu7H9cQcD4WJj41
-    GUghgNnO1bvliDRYA>
-X-ME-Received: <xmr:UeYYZ4Vp4lk7orz11Zf4Usgxp6e0ERCo2Ch9X7H4NYDXqBCBVRVLNolGAPPA4Px7eZRHJjw2261K6cw5cXzrXKYg79vUtzDo5IrDYwWSFH0e>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729685083; x=
+	1729771483; bh=n1cHfLs7unERsb4ACInykbucYs6TcfsaKOeCaURUL6E=; b=P
+	psuq6xmdlBAMFWC1EN9kggTpNw9OhiWZwG4jj1QLN7jXBbqmxiu8z6dCjTLmcPfF
+	lBndBfkCGa16Uf5vyZHFGVc03iW7ixcHLA3Onr0/MCb1mOQRYXLd+QY5I4pZfh60
+	bzCUSjwrqSU7F9KRA5NHqhcyZQLIQnI8P/I7HIObiK7RJ9z5n1aaGbHz7exhdCrn
+	WSb9Yua3hSoiUae/wavJcluf0Hb4KaYt6qRzeesiYIXGWEl91l5ssqy0ErlTzavg
+	mnDhjbSsHY1TB3dHhwXH3800Bqi4+aOh06CjTzYzwWkkB3NxGvTkNRJBcAM4OP2h
+	CsTPiTB8FxyheHTf5GXBw==
+X-ME-Sender: <xms:W-YYZy3xGm39mTrN-pOOtly0xVYdDLbxOYUe0QoiofvLse8nFkHhfg>
+    <xme:W-YYZ1E6mUw1S6sj1YjeU05VekCALsunpjFD6sjEHc-3kLkYO9VzOecohu36p9GRg
+    WFfrWrWwy819lhfrg>
+X-ME-Received: <xmr:W-YYZ67yrj-KU--xBs9AvKDo5x7mthsJNBv4BP8NIDyedkn19TGN5mdv_NLix6LztCnNbx4JkhsjMfV3EEpNh1iPxLcr2aUyfa4aVwOT0SUH>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedggeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -58,37 +58,37 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedggeeiucetufdoteggod
     hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
     ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrgh
-    dprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhu
-    nhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:UeYYZ8jXs5HTO0A-Z6IautCHsmSvqoWGhpRSPvNIbO6KfvjmJVmxvw>
-    <xmx:UeYYZ4BUFDbkVxJwgcGz9Orhxeth_acVqo-O1Ty1FCxOkEBABAX0Qw>
-    <xmx:UeYYZ9KWebEKiZ-KROXze5utU7KFObB4169ea6V4x3zW0rtxUGknNA>
-    <xmx:UeYYZ_B0e2a_zY5inME000t-WxSRQYvujzw_-KUiWMRjJ5SRytrTYg>
-    <xmx:UuYYZ60YoD1E5l7E-806WGNCwGll09qsEd0fMElLv_wdsK_2DchCwHAe>
+    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    eprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtii
+    esghgvnhhtohhordhorhhg
+X-ME-Proxy: <xmx:W-YYZz0U0SzuHYjGXTiNQZVnpzxxxEbhpNMY9ujsXDZFmOAYzuWCiA>
+    <xmx:W-YYZ1EwtLdWycb-UslPGLZEnjOZRVNUJQxKXckepJ82NO0skc-YCg>
+    <xmx:W-YYZ8_0s2RS7diUwjAC12o8kE5DHyT9GKiiZagXqCcB2AOxxQN0Ug>
+    <xmx:W-YYZ6nHAjKVjVrnvHoTM90tnYkOLSYtQxBwFiA9WHa3QCgljGCD-w>
+    <xmx:W-YYZ677ir2B5Vr-5UvghhpCdSxq5OK0pBLQ0tX7yghszp8LIXpAjSep>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Oct 2024 08:04:32 -0400 (EDT)
+ 23 Oct 2024 08:04:42 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fd08a840 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 23 Oct 2024 12:03:01 +0000 (UTC)
-Date: Wed, 23 Oct 2024 14:04:29 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1b4b19b2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 23 Oct 2024 12:03:10 +0000 (UTC)
+Date: Wed, 23 Oct 2024 14:04:40 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Eli Schwartz <eschwartz@gentoo.org>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>,
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
 	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
-Message-ID: <ZxjmTbATU7usHcqQ@pks.im>
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [RFC PATCH v3 01/15] Makefile: use common template for
+ GIT-BUILD-OPTIONS
+Message-ID: <ZxjmWMJ5u5pHZh9L@pks.im>
 References: <cover.1727881164.git.ps@pks.im>
  <cover.1729254070.git.ps@pks.im>
- <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
- <361e69ee-4491-4e2b-8edc-fdf4bcbb8532@gentoo.org>
- <b35b6f10-ebb5-4266-ab95-aafb67cfad22@ramsayjones.plus.com>
+ <800fb080f45f48e248e1ed9c7b3e40cdfc526115.1729254070.git.ps@pks.im>
+ <CAPig+cR2QXmgFEpaQrvsAF1jV8nZavFjYQkMXp5zaYVER2CiSg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -98,116 +98,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b35b6f10-ebb5-4266-ab95-aafb67cfad22@ramsayjones.plus.com>
+In-Reply-To: <CAPig+cR2QXmgFEpaQrvsAF1jV8nZavFjYQkMXp5zaYVER2CiSg@mail.gmail.com>
 
-On Mon, Oct 21, 2024 at 11:56:42PM +0100, Ramsay Jones wrote:
-> On 20/10/2024 09:51, Eli Schwartz wrote:
-> > On 10/18/24 12:08 PM, Ramsay Jones wrote:
-> [snip] 
-> > possibly because due to ninja's juggling of pseudo ttys, the python
-> > runtime for "meson test" thinks it is *not* running in a tty. I know
-> > that ninja messes around with this in counterintuitive ways in general,
-> > but I am not sure exactly how that interacts with the console pool. But
-> > regardless of the reason -- if it is happening at the python level, then
-> > exporting PYTHONUNBUFFERED=1 may help. It's something I've had to do
-> > before for programs other than meson, at least.
+On Sat, Oct 19, 2024 at 01:00:46AM -0400, Eric Sunshine wrote:
+> On Fri, Oct 18, 2024 at 8:23 AM Patrick Steinhardt <ps@pks.im> wrote:
+> > Introduce a new "GIT-BUILD-OPTIONS.in" template to address this issue.
+> > This has multiple advantages:
+> > [...]
+> >   - Some build systems complain when not all variables could be
+> >     substituted, alerting us of mismatches. Others don't, but if we
+> >     forgot to substitute such variables we now have a bogus string that
+> >     will likely cause our tests to fail, if they have any meaning in the
+> >     first place.
 > 
-> Unfortunately, the 'PYTHONUNBUFFERED=1' idea didn't work. In fact nothing
-> I have tried on cygwin has worked. For example, if I use meson to run just
-> few tests, like so on Linux: 
+> Regarding the above...
 > 
->   $ meson test --no-rebuild --print-errorlogs 't000*'
->   1/9 t0000-basic             OK              7.52s
->   2/9 t0001-init              OK              1.88s
->   3/9 t0002-gitfile           OK              0.37s
->   4/9 t0003-attributes        OK              1.35s
->   5/9 t0004-unwritable        OK              0.23s
->   6/9 t0005-signals           OK              0.16s
->   7/9 t0006-date              OK              0.73s
->   8/9 t0007-git-var           OK              0.40s
->   9/9 t0008-ignores           OK              3.09s
->   
->   Ok:                 9   
->   Expected Fail:      0   
->   Fail:               0   
->   Unexpected Pass:    0   
->   Skipped:            0   
->   Timeout:            0   
->   
->   Full log written to /home/ramsay/git/build/meson-logs/testlog.txt
->   $ 
+> > +       @sed \
+> > +               -e "s|@SHELL_PATH@|\'$(SHELL_PATH_SQ)\'|" \
+> > +               -e "s|@TEST_SHELL_PATH@|\'$(TEST_SHELL_PATH_SQ)\'|" \
+> > +               [...]
+> > +               GIT-BUILD-OPTIONS.in >$@+
+> >         @if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+> >         @if test -f GIT-BUILD-DIR; then rm GIT-BUILD-DIR; fi
 > 
-> On cygwin it looks like:
->   
->   $ meson test --no-rebuild --print-errorlogs 't000*'
->   1/9 t0002-gitfile           OK             12.32s
->   [2-4/9] 🌖 t0003-attributes                12s
-> 
-> Which actually looks nothing like what actually happens! The first line
-> is actually the result of (*maybe*) running all 9 tests, but during that
-> time the line started with '[1-4/9] ...' and they didn't run in sequence
-> but jumped around ending with t0002. Then on the second line, it almost
-> immediately hung, again with python hovering up all the cpu cycles. So
-> I had to kill the task from a second terminal.
-> 
-> Actually, I tell a lie, I did get a single test to work on cygwin:
-> 
->   $ meson test --no-rebuild --print-errorlogs 't0001*'
->   1/1 t0001-init        OK             32.95s
->   
->   Ok:                 1   
->   Expected Fail:      0   
->   Fail:               0   
->   Unexpected Pass:    0   
->   Skipped:            0   
->   Timeout:            0   
->   
->   Full log written to /home/ramsay/git/build/meson-logs/testlog.txt
->   $ 
-> 
-> Notice that this took much longer, at 32.95s, than (what looked like) all
-> nine tests above at 12.32s. (although via 'make test' t0000-basic.sh alone
-> took 124.13s for v2.47.0!).
-> 
-> Patrick, how do you run the tests on cygwin?
+> ... can't we `grep` whether any unsubstituted variables remain in $@+
+> and complain if they do?
 
-I didn't have to do anything special here, so this is quite puzzling. In
-a fully-updated Cygwin installation:
+You mean with the new `GIT-BUILD-OPTIONS.in` template? Yes, we can.
+Meson generates such warnings automatically, but that of course does not
+help our Makefile.
 
-    $ which meson
-    /usr/bin/meson
-    $ meson --version
-    1.3.2
-    $ python --version
-    3.9.16
-    $ mkdir build
-    $ meson setup ..
-    ... autoconfiguration logs ...
-    $ meson test 't000*'
-    ninja: Entering directory `/home/Patrick Steinhardt/git/build'
-    [582/582] Linking target git-receive-pack.exe
-    1/9 t0005-signals           OK              4.17s
-    2/9 t0004-unwritable        OK              4.58s
-    3/9 t0002-gitfile           OK              6.95s
-    4/9 t0007-git-var           OK              8.15s
-    5/9 t0006-date              OK             15.42s
-    6/9 t0003-attributes        OK             26.84s
-    7/9 t0001-init              OK             29.09s
-    8/9 t0008-ignores           OK             57.17s
-    9/9 t0000-basic             OK             83.82s
-
-    Ok:                 9
-    Expected Fail:      0
-    Fail:               0
-    Unexpected Pass:    0
-    Skipped:            0
-    Timeout:            0
-
-    Full log written to /home/Patrick Steinhardt/git/build/meson-logs/testlog.txt
-
-This is starting with a fresh repo, I executed `git clean -dfx`
-beforehand.
-
-Do any of the versions used maybe differ?
+I'll add that.
 
 Patrick
