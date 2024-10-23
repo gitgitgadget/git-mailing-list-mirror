@@ -1,67 +1,65 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B482675809
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:33:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174061D14E4
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729715597; cv=none; b=FvuHikoo5i018hdW5AkXQlFURUA9eGrT+uVk6fmBE2H1cFD1XuoO8JyCSQjqgRVYFAGBo6TJ10+9u/w2udCtR7ReTt4dUMkgisf49Y/RaKgKK4QutwFE3d+wXGg0qNL7Qp+jsK1A320BC0K+sWrcXd8Eyk1RA2zVkSL+WmU8X0s=
+	t=1729715695; cv=none; b=UnCMEciM08CLy0t9h5jMiKYpYjo+SYXZG8KgvSbqmlcv0PAdArdNGEiE/eM9XVVW1MMNdpCjL1thDhkv/azULpzR7erc+AU7ODrx0kDgWBPnc8AvxevChULbzFFLt00wLDTg6ZmbU6FQj6RNIo2yD8XLHzXGe2W9uJ5cPh53Er0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729715597; c=relaxed/simple;
-	bh=kc+cLpjwVssx42QhqVN7mEChmBK81LY8uuOb4CI6vQ8=;
+	s=arc-20240116; t=1729715695; c=relaxed/simple;
+	bh=TSNzaivmzrD1IoiXRfDxS68wcTwELn8KUGNrrroK8xk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bMAyH0+g352/4Ywc/pI3D+MPcrcinerGLpZYdtcck4L6sc+Qx24Skr5/5WRcoUp2VoiXbLjtXL9Q7Na/zIUur/Uh3vx3nmzkRrNqWllEpUAaeEpGB9Pm8kPnGfgE4Zm6PwMM8uo1iC5IBeOH4ywQ8A6mZ/41y7Ma+r81wnQQZEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=XsS3e5HY; arc=none smtp.client-ip=209.85.219.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zz1vNRfuQpoPMtJSJllrmEX9ccLJv1+6MyMcVAOptU0+1TixcHMz0SAOFX+Aq9S345Pa0Q+i5bmB11lWDQ7ZkwSTtw2/OHTu87FwITT019iVhtpmLFLYfkVFnEvXsDh6nU01xUSzp5Je1EBPyXVvHiQEUpjUMtn/Pu+L/U3djEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=RboL//9y; arc=none smtp.client-ip=209.85.219.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="XsS3e5HY"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e290222fdd0so209196276.2
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 13:33:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="RboL//9y"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e28e4451e0bso252105276.0
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 13:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729715594; x=1730320394; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729715693; x=1730320493; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=K4RDydHzMGzaNtv937lOqrJ08z3ku4adQ+QHvx/OVOY=;
-        b=XsS3e5HYqf+90XJ+c2u3S0ut1cr94v/QkQK2XALl3WyLXKFO5yWsWbvGQQVZO53qZz
-         vWm4e4n7fiP34Bjb8t2JwhVNUll7rO8YwG6rSI6earaqYPPGLwQ5WU6xg5ayf8+yHSxI
-         HZ4AYbPCmHRnPrI2foJu7BASWFZAgsd4r+Q4MSlSjr6XWDlSpuIuekvEY7E0Rjg8T621
-         3qhBpwctHSRUlas+TrMyaPAszNxFxyQ00+pkk6Itme7es/P+fBZj1gNGYgL4zavPiL5I
-         aB2ILqc/o8Nxf71PhSP62pHkw3wq2/dlprk3ueRmy4TYLKr1ss76eZxGRDSsarRpC7nc
-         GQGw==
+        bh=+zNbdn5UWwhN+s0mylPYWeTJNQmmqHdQBALsd7rNs1k=;
+        b=RboL//9yBmowFfpdqk9dv8ijkOVNpD2wTVuZmgVVFQgI6gj0ZqZWknV9otLRqWZ1Dv
+         tpOQJpzhqg3iHjiLmbxS+U148v8FkDRzanlbD6+bSwXFYHNN5tuNsO/4QJ4du51RY3rI
+         3Slnlw+7I19YUCBe1QhZuAf7yBErfOppjGm412hFQaczm+WKyT/o+NrYqqtAkT6YXfUa
+         ixCYDyvpLOxV9qVkMZpGGLKGbjl9QhTnvPYsNziMg2EfL/3/h5QEqh3SLkw3tFV2LnKl
+         o9cG3Aswvc6DZxrtr6Uw//mJtJVTMlxBFSs9qi+4ZhOs9kQO+/e4aP6cJS3L7KlyI01k
+         vFjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729715594; x=1730320394;
+        d=1e100.net; s=20230601; t=1729715693; x=1730320493;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=K4RDydHzMGzaNtv937lOqrJ08z3ku4adQ+QHvx/OVOY=;
-        b=Ir8/S4bKufxt2XPK3n6n0c/1MX7fua/02riSJVkPBHkhtNTn3O1yeSSYlVecUDW+GE
-         fLopQWIBfCR93GPVRwt04+eEg3xEEkoGZSNdic1CT86xm7o+23YTFvWXdlR7niS6wGU5
-         Vz0ox8iDuAh2aOS/SH2O229xpQDuvBqv/NphmsVRqqiGLl36xO4UkwrK9XyTsFVfg88u
-         BAY6ghRyISKWvL+Jsw7NBxkYZCKy/nLg6TM/K4V2NfXhUqC8NwzqtbjPrL3Hr4v26kPu
-         p6C2BDImovXxOpO9g7L+rck0BEnX/Kbd60vgIwDMO9Aca1/fjq7D4F7Cw4eh/0e1Onsr
-         LDlg==
-X-Forwarded-Encrypted: i=1; AJvYcCVernmkoWQqMXTvJvGUvXrUodewG6oWW1oFl3MSNGOrHLFIj104mtaZC29p9m/vC+Tw994=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKbRwlnO/fDEspq660chU5zzdwXQDCY9rMJ8gYcHXgyx3xpWym
-	b6MOfjp0VIYgyEJ9iEjAYlqaSD/LxXThBHfXHQ/hWKV5vr6Dbfygx+vqkyQ2ex8=
-X-Google-Smtp-Source: AGHT+IHfTPBzlodpq8zhY3Vffkrh+GqpU/x/4rME+Q1V9ff7V1bWxT2HoWi1CgEDs3Ykd6ufscdwcA==
-X-Received: by 2002:a05:6902:2b92:b0:e29:44d6:5c0 with SMTP id 3f1490d57ef6-e2e3a6ccf7cmr4077323276.37.1729715594746;
-        Wed, 23 Oct 2024 13:33:14 -0700 (PDT)
+        bh=+zNbdn5UWwhN+s0mylPYWeTJNQmmqHdQBALsd7rNs1k=;
+        b=nakp1JgRW4t0Qd3pDfh+gRzfgXB8QTW0ZMBkA0Cg3O3YXPgaA+m+la/6goujW/+Tng
+         6UU8W9+ZAgmL1FrtD16TDXjazZ7uodI2WAawy/cGX2JaKGoaLu98JBQBj56Lrx5ZiZYZ
+         nQ2lzQAsZyqATEBfiYWbA9o6ra+rBpZor5+5OMJ/Xoh7isk0nTxG55H3kxM9jfCMZc5u
+         wwjTr8zpk4Z51iPGWHUNe1fT6Y0j71VOuUXIxepbU09mBxAdNruFjfl+f+oabniHPqtp
+         2YlRWPDbhw0ve9tlnD6Pd5Q2gyw1ISNytrmWUx8+q2J05zj8GWo+5yX5dF25L/AohZvY
+         RsHw==
+X-Gm-Message-State: AOJu0Yz2juiKO6fqOIUSJrWOm6zvWY1nEjgKPZFvGiye4unzQmSUmmaQ
+	aZzHVvbqjEyn2JsKL8nIitoEtICAdGnNS2oSiVsB8j+Iii588KkgHFfKHAlt2+JKgCZaIcogSeQ
+	mPrM=
+X-Google-Smtp-Source: AGHT+IHqVDBA4rV+oNhfqK/FVyjTUR8IP8UR5Dm+nbRubAKU/495payIuLuYOqTqY6CD/FboC5fw2Q==
+X-Received: by 2002:a05:6902:91d:b0:e29:629f:8a7f with SMTP id 3f1490d57ef6-e2e3a6ccf71mr4072519276.35.1729715692982;
+        Wed, 23 Oct 2024 13:34:52 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdc9926c0sm1689605276.17.2024.10.23.13.33.14
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdcb02b51sm1590929276.61.2024.10.23.13.34.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 13:33:14 -0700 (PDT)
-Date: Wed, 23 Oct 2024 16:33:13 -0400
+        Wed, 23 Oct 2024 13:34:52 -0700 (PDT)
+Date: Wed, 23 Oct 2024 16:34:51 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Usman Akinyemi <usmanakinyemi202@gmail.com>
-Subject: Re: [PATCH v5 0/3] parse: replace atoi() with strtoul_ui() and
- strtol_i()
-Message-ID: <ZxldiQVBxAWbXoT4@nand.local>
-References: <pull.1810.v4.git.git.1729634937.gitgitgadget@gmail.com>
- <pull.1810.v5.git.git.1729669220.gitgitgadget@gmail.com>
- <Zxi5TeHM9qD3lrbx@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, kristofferhaugsbakk@fastmail.com
+Subject: Re: [PATCH v2] CodingGuidelines: discourage arbitrary suffixes in
+ function names
+Message-ID: <Zxld62svV9iDCcJJ@nand.local>
+References: <20241021124145.636561-1-karthik.188@gmail.com>
+ <20241023075706.1393147-1-karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,21 +68,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zxi5TeHM9qD3lrbx@pks.im>
+In-Reply-To: <20241023075706.1393147-1-karthik.188@gmail.com>
 
-On Wed, Oct 23, 2024 at 10:52:36AM +0200, Patrick Steinhardt wrote:
-> On Wed, Oct 23, 2024 at 07:40:17AM +0000, Usman Akinyemi via GitGitGadget wrote:
-> > Changes from Version 4:
-> >
-> >  * Fix incorrect indentation and remove unnecessary braces to avoid
-> >    confusion.
->
-> Thanks, this version looks good to me!
+On Wed, Oct 23, 2024 at 09:57:06AM +0200, Karthik Nayak wrote:
+> + - Function names should be self-explanatory, clearly reflecting their
+> +   purpose or behavior.
+> +
+> +   The '_1' suffix for function names has historically indicated:
+> +
+> +    - functions processing one of several elements that all need to be
+> +      handled similarly.
+> +
+> +    - recursive functions that need to be separated from a setup stage.
+> +
+> +   To maintain clarity and avoid confusion, such arbitrary suffixes are
+> +   discouraged, as they provide no meaningful insight into the function's
+> +   role.
+> +
 
-Thanks for reviewing. This one is looking pretty close, and I've moved
-it to 'jch' in my tree, but I think there are still a few lingering
-comments that I'd like to see addressed in a subsequent round before we
-start merging this one down.
+I'm still not sold on the suggestion to discourage the use of '_1' in
+the future, so we may want to further qualify this statement with cases
+where it is OK (in the spirit of Patrick's "as long as this is loosely
+applied" comment from earlier).
+
+> +To maintain clarity and avoid confusion,
+> +   arbitrary suffixes such as _1 are discouraged, as they provide no
+> +   meaningful insight into the function's role.
+> +
+
+Stray diff from the first round?
 
 Thanks,
 Taylor
