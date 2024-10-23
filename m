@@ -1,80 +1,82 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848B91CF7B2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B221CF7C5
 	for <git@vger.kernel.org>; Wed, 23 Oct 2024 15:05:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729695905; cv=none; b=msIkw4M7kLctwDeDBp24+xAtE2M1q0fVh1ajNZsvOtWk6IW8jEh9ZYg/VI0+bl37IcDOOs6dQaUguRMEmCZJVfwq6sv8uAwDEtL7m1nAYzBCBQ/ksH2eguFaVOsX1jd7POZc5xJp/Dhmz0F5QPjltQbNoal/50Y0xBPW/Ez/ti4=
+	t=1729695905; cv=none; b=X2DXx1vCyl8ubMdha6/uiukdZ3HDMLqy6oUu/cVizIQAcLA5hSQMpJmb7RSyq2yT2ETlSt/C7EH79xZt7YpIdFePgwv9XVtW26ecWryvLJbKqb0q0mV1a6bivMo4ZcGH50RVLuy7DDsUyjGY+iV+pgC3DHWYmhsMEa470aZqTuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1729695905; c=relaxed/simple;
-	bh=SJJn7zJEIJxi+cBL7LBZz49+l1xbADAbIY7AOp7CAts=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=JXpakzbc46tnBS7bYY6hw+i6XKVGxVmH3Mwo6AxiZqi5cjJWweiBEO4wehr6AMTkFchAYMhZZNqZIH4Wf0u+1tZXlyuib9e8cpCBPA8KHCAhESVgoueViEWuWE+lUk91PnIInl77nK1HsPs7mjT6Di+LNyhbO4UQcPH6jmkthZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RuPwQ37V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F6ajzKuP; arc=none smtp.client-ip=103.168.172.158
+	bh=OBQF5/Zw0l8vl1W4cnKKiqkh211pA8HSqNYAiZaMXKQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mqe+gDNz4nHtvBCg6hSk97ZRCGr1Cm0sjICoIU+jvGg+2B07JyRbEWL1/9d2ixTc7Ukuwb9RUAiTVuRomXZPpd5RfRu7SnNDaYBjaheWuxaF+nypYhYKJiA8xeB8fDeC4Z+JVeZRGM5vVaWNJqWhYs5idEW/3fkZZq0afJwu0MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uyk4yjXp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gYU052H8; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RuPwQ37V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F6ajzKuP"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7DECB114016A;
-	Wed, 23 Oct 2024 11:05:01 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Wed, 23 Oct 2024 11:05:01 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uyk4yjXp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gYU052H8"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 581901380044;
+	Wed, 23 Oct 2024 11:05:02 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Wed, 23 Oct 2024 11:05:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1729695901; x=1729782301; bh=auvPFnNdHAmfbmLCiWo33fXA3E9Q6Al6
-	jw/NO1hcc1o=; b=RuPwQ37V8Th/wfzDaMRnmNoSnA2zAGoubZVsfmEIq68aAegq
-	Kt00uQrm+FhpZwKVDITjio7bFbaKoYvR8IPdcoQN+J7SnMfuGkbnZlQyarxuv22S
-	6L6TJ0V3KeJqVNYzAj7FbV3ET1XRzyNUVNBEn9kFy2yApQRVHLhYCnFw5sSIad3l
-	i92IcErou8U82A3SRoG37UyFnUflzPA6A3++gzwluONR2wz/b5OuGccG+zLXR6xf
-	nsdMViNKXGcAgHvQtv28SjOUX2a7S19NgRnqFSf3AOeHQiBjoYqG2Q3t9iP4o/gC
-	qBVY+CBP93Pdr2dE1iYI8s+iMyIeeGy+Rv7Tdw==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1729695902; x=1729782302; bh=os1gUgfcZ/
+	a8+G9DEKspZUPsoUvpq5IJQuB0oEakLXs=; b=uyk4yjXp1oISFPjYiWklRxG/eO
+	1aYYQByNmBqE87E4k5Qg2PNSk7jG1qJeD+VHgVCoLNKnQ6HFSHDwdDtzoPdRENlB
+	9bORiVZc7puODaZ+DAfPuIGUDaXKgFUC0R/C9aRgDNMqAZvyWxKQnuJo3+Qkg8tw
+	uHmc+Ps4wIAquU3icXnp/ss2d4l/1NiJLBWYS3BeQ4nhLL+lk0+nvq57I85YgpU2
+	5bXyfno9rbOv81br9JQZ6D7UWxB6rAl6ofm4e8A6fEK7kQGX8Bf+r9LnLo1IgvR2
+	UKpsZnlOerHnWMSBn1Vr6j8b1fMOtg6dKw0gc7B6AXans8RXrdWmqO092Wcw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1729695901; x=1729782301; bh=auvPFnNdHAmfbmLCiWo33fXA3E9Q6Al6jw/
-	NO1hcc1o=; b=F6ajzKuPDG2prnLQ2jrLCPBAU/Ftmrxsko0qZfwdogthPSKOXlj
-	//Ew4jzmllkb6qoJv0S+2IwjwfqTECqGXqVXa3uCCOoYti1biWXvx7p9QXYDToZY
-	Frx1GmIabcyaEKM1ZtheTx+fk0MmkN1GHfBB6E/qOiGVzqBP0bq6/HDOsqnkTEfT
-	eSOxnuiHMSe3H2xqMp/g5TFSUPOFlyP4SG6YtbhPMi1oge+fSAavIXXV3TnqBknz
-	Q7ks3gSxSbdMx+iqPXMZHxlt1xm+mngHjtvHSgaCMB/RmJ4WOX59/fh8hBenXNRE
-	LNaCdYXxqsfXLraBGR/I2U8uvuI6ee+txUg==
-X-ME-Sender: <xms:nRAZZzWIOHtlP5Gb_u5MWqfTyDPakhQ1RgezUP_G8vXC34CNTps6nQ>
-    <xme:nRAZZ7m4QxD69g0S4uTD_nwc4XfreN39XMBNX-si5MvY482ejUYVLBdOE82oUCsMG
-    3n2pDsHpUbKmCGP-g>
-X-ME-Received: <xmr:nRAZZ_Y0uHSdaX-2w233WhkaKI-_c7LXgLvFJprkv-9LUYyret7nfLbUJHZ9N7bYsxUaOQjt5zf_Tztfc58CoNubX0qC--3_tbVgGdMLi3PD>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgkedvucetufdoteggodetrfdotf
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1729695902; x=1729782302; bh=os1gUgfcZ/a8+G9DEKspZUPsoUvp
+	q5IJQuB0oEakLXs=; b=gYU052H89v30QuYZZ5GIBG2IDNgPbH10Jmu4RQmrsi+R
+	fr7GavnfhHAFQ6VZwhOc7pQQwAlhSaHbdSY2xY3Vc6FQt1csonlf/LByFq9g8C+1
+	WLWTpNDhvr30dkYRDrxxCOsnNRH30MnJJLaKrPh9Sm0n6cUaVze0sMnoNpSgw0Be
+	eJ+yED79tHacS6fET9fPP8y8KeTLoq5f9bfzI0FgTxhJdBI2CNmrMhK00XpHS5l0
+	/hnDSaY+v4K/CLdwQz900IOFgYYPuhO6F/DXvfU7zPtqKAm1pA3mjooLMBwmfit5
+	7niBy5PftRg4SdBjR7h4wEq7OXGXENx6OSwGJrv/mQ==
+X-ME-Sender: <xms:nhAZZ4yhttJXEupwGXlv-hFICupPobNipKKeIylxwXeBQBqzNaxAeA>
+    <xme:nhAZZ8Ss7Gk6bBbzRk9UCS4ZhDtdR8wsK3MAH8RUn2Vi1Jw1bLp9xuvH0f5Ylj-3Y
+    o-pXam-zsm-WjrHOA>
+X-ME-Received: <xmr:nhAZZ6X_DfHPiOaYroyhJR8IXECjBt-Cq39hnamkS8aDRuT1g_9UPJbFr0YQxA-xqgAAgK7ExfvmQ-Ja30IvTTm5yNhpVX4Ht4q-htAuNnsb>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgkeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkgggtugesthdtredttddtvdenucfh
-    rhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqne
-    cuggftrfgrthhtvghrnhepieeuvdfhteetlefghfehtddvheelhfdtfffhhffgleejfedv
-    teefveeltdeuiedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgi
-    druggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:nRAZZ-X8rp3AYphvLkNZsDLGjOvLE_PwZBGLZcqbG77ZvGfIFAxLMg>
-    <xmx:nRAZZ9kvF1BI5owzqaGz-VM_y3Xsamf96tXR_6IzpaXOf9BTlPprNw>
-    <xmx:nRAZZ7fxzrkdwof1IRUQpxgD57CGnStRqCFbHtcleRF3bAvI9uC6cQ>
-    <xmx:nRAZZ3HmmAOS-6D5qzuALHQXvUO2gGrCCcE1kZBo6ZRkJT1ldpuvBA>
-    <xmx:nRAZZyz_3CcaUSfytvLeYCxnlAlh7PIsAQbn_gr2hSEtqMu4SJILwtvX>
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
+    hmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:nhAZZ2iDoz32ch5ZyqHXnCOOJbCL6p9BH01wieqNjU2FWHoLf1lzVA>
+    <xmx:nhAZZ6An0raLAgET1u0XncAuYRdmFLcOayu_FUJLboBy26bUrw3X6g>
+    <xmx:nhAZZ3I7e2-Qt9yc0l5F-vFsHAM6GMcIX8EYHxt6uJG54cQFzKzEEA>
+    <xmx:nhAZZxBNlko2aYqiOc_2qOwPa-ocLgwM_wjQWFnl1fJvMjl6LVP4fg>
+    <xmx:nhAZZ9OInu6Uuob_Khagi0Oyw0mdD-ZwFED19zSycqTkXiTs2-d-lxw0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Oct 2024 11:05:00 -0400 (EDT)
+ 23 Oct 2024 11:05:01 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 572a5e0f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 23 Oct 2024 15:03:25 +0000 (UTC)
-Date: Wed, 23 Oct 2024 17:04:55 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 47b457d6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 23 Oct 2024 15:03:27 +0000 (UTC)
+Date: Wed, 23 Oct 2024 17:04:58 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 0/3] compat/mingw: implement POSIX-style atomic renames
-Message-ID: <cover.1729695349.git.ps@pks.im>
+Subject: [PATCH 1/3] compat/mingw: share file handles created via
+ `CreateFileW()`
+Message-ID: <907576d23d1dc39b679a323e74b6bfb227d6c17d.1729695349.git.ps@pks.im>
+References: <cover.1729695349.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,53 +85,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1729695349.git.ps@pks.im>
 
-Hi,
+Unless told otherwise, Windows will keep other processes from reading,
+writing and deleting files when one has an open handle that was created
+via `CreateFileW()`. This behaviour can be altered via `FILE_SHARE_*`
+flags such that other processes _can_ read and/or modify such a file.
+This sharing mechanism is quite important in the context of Git, as we
+assume POSIX semantics all over the place.
 
-so after chatting with Johannes recently I decided to have another stab
-at the failures we've seen on Windows with the reftable backend. A quick
-refresher: reftables use a central "tables.lock" file that gets updated
-via renames such that the update itself is atomic. This causes issues on
-Windows when there are many concurrent readers/writers because Windows
-does not allow you to rename a file over another file that is held open
-by another process by default. This issue is surfaced by t0610, where we
-spawn a 100 concurrent git-update-ref(1) processes.
+There are two calls where we don't set up those flags though:
 
-This patch series aims to fix the issue on Windows by implementing
-POSIX-style atomic renames. The first two patches refactor the code such
-that we use `FILE_SHARE_DELETE` to open files, which allows other
-processes to delete the file even while we have an open handle. This
-sharing mode is also important in the context of renames, which are
-treated like a deletion of the replaced file. The third patch then
-reimplements renames via `SetFileAttributesByHandle(FileRenameInfoEx)`,
-which has a flag `FILE_RENAME_FLAG_POSIX_SEMANTICS`. When set, Windows
-allows us to replace files during a rename which still have an open
-handle.
+  - We don't set `FILE_SHARE_DELETE` when creating a file for appending
+    via `mingw_open_append()`. This makes it impossible to delete the
+    file from another process or to replace it via an atomic rename.
 
-There's one catch: this is only supported in Windows 10 and newer. On
-one hand this means that we have to provide the required definitions
-ourselves, as we cannot bump the Windows SDK version. On the other hand
-we also have to support the case where older Windows versions now fail
-at runtime due to `FileRenameInfoEx` being unsupported. But overall this
-isn't too bad, I'd say. Johannes has also kindly tested the fallback
-logic for me on Windows 8.1.
+  - When opening a file such that we can change its access/modification
+    times. This makes it impossible to perform any kind of operation
+    on this file at all from another process. While we only open the
+    file for a short amount of time to update its timestamps, this still
+    opens us up for a race condition with another process.
 
-With these changes t0610 now passes on my Windows 10 machine, but this
-may also have a positive impact on other parts of Git where we might
-have previously failed.
+Adapt both of these callsites to pass all three sharing flags.
 
-Thanks!
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ compat/mingw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Patrick
-
-Patrick Steinhardt (3):
-  compat/mingw: share file handles created via `CreateFileW()`
-  compat/mingw: allow deletion of most opened files
-  compat/mingw: support POSIX semantics for atomic renames
-
- compat/mingw.c             | 146 +++++++++++++++++++++++++++++++++++--
- t/t0610-reftable-basics.sh |   8 +-
- 2 files changed, 145 insertions(+), 9 deletions(-)
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 0e851ecae29..e326c6fcd2d 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -502,7 +502,7 @@ static int mingw_open_append(wchar_t const *wfilename, int oflags, ...)
+ 	 * to append to the file.
+ 	 */
+ 	handle = CreateFileW(wfilename, FILE_APPEND_DATA,
+-			FILE_SHARE_WRITE | FILE_SHARE_READ,
++			FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,
+ 			NULL, create, FILE_ATTRIBUTE_NORMAL, NULL);
+ 	if (handle == INVALID_HANDLE_VALUE) {
+ 		DWORD err = GetLastError();
+@@ -1006,7 +1006,7 @@ int mingw_utime (const char *file_name, const struct utimbuf *times)
+ 
+ 	osfilehandle = CreateFileW(wfilename,
+ 				   FILE_WRITE_ATTRIBUTES,
+-				   0 /*FileShare.None*/,
++				   FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+ 				   NULL,
+ 				   OPEN_EXISTING,
+ 				   (attrs != INVALID_FILE_ATTRIBUTES &&
 -- 
 2.47.0.118.gfd3785337b.dirty
 
