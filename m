@@ -1,149 +1,102 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5CF14D6ED
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 07:57:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E461D17625C
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 08:52:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729670234; cv=none; b=aIpwFjg6GrTftjTnmKoIL6xXM/wu1VHHNsJ95cAmRD5KZXmfT+7Fl8gDvx6BApgDrr9Mt1+jIUEEx1sEUG00zre3BjDSBqNTae46Gjxu9dQ+yZq4+IFC2JaghayRtRvC1eD332U6hL9EVwOp5ddgXHzKpcGOYhBCLhiz5yIJuJE=
+	t=1729673564; cv=none; b=ktvwmcyCYzr4tYb6NmuljU7CKBRRIy2SD5BLOYdPx6jjb2uLJyNoj6W3Au3nTVYsLQGq9IjdhcUXJiZQRwXibeIH5gfWyHWGs52JUr+P8ThqOILJneM9khx307cKvSLIgPqbJS3XqaqxTMBlIn0jUdNyvqgeMRIR26c3kbgfo9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729670234; c=relaxed/simple;
-	bh=RosFX4kDn6/+n/eul7IfqL4bOCd9d1h7ZN5O3RXYl0s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUBuytTOuyMCDb3F+z6+GkCuqxOwPDoN1O8EwPxbEj2kRNvQG3dyvfHyevMwQFL634S+aiWVJHF8qAlAKRG4Ka9vpsV9GIWq3XMgUgm5SuO55MWEUqaA9Ak3PI5K7cPAXL4ZLw7N4AvuChO0uo0a1e2bO8cPqHn7j2Bg1ZTofLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pps8xOkB; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729673564; c=relaxed/simple;
+	bh=GpDSa13NLd8U5T950j8KF6p3wv/GtCE9BEXLqP1qAqw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cltw+Zdihk2klsn4XtE3Ol2b+BIh7efdRmdm23zpJL0IU6liyGgGI/wYxHa+N2/wwk6jBBr7ceQo6tmQIiW0qJUMzTm9p9iMyl6QIDpfO3suCnOsRSmhaSZJuF/F5MxoFyxTlnjEvsgXIBmCjpWKuIMHEdL6cGDhV/Aa0n8vUPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Glj6v4Qc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KHYImBi/; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pps8xOkB"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2fb59652cb9so64926681fa.3
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 00:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729670231; x=1730275031; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MDtuybacQMneCJc06GIioGymEOeeKMRrDlS8v97+T+c=;
-        b=Pps8xOkB2eii3og0DICyUeELNdQ+/85UVWMJH5ZaHS3fWC+iF4+kmWz1tRg3yaDuU0
-         SYOOzvBSZZ+CO4Ru/53OE+qnQ+6a0NXJ4sYH5cl7qt9IGQmcKHT9AOd0zVngw/TQ+Oef
-         vVFuNPaWx6X49vg6TaS4YZRQ+1i7kevH/RPR3lfIG2XTEepzBS3np6kWVbSHAR/k+sh3
-         miDUOf5My2ZQf7dVrdLh6Avbb/0Ir4jd+Oolr9p3W+y/GbZCxfZRIFrbM4TROxWmJKRF
-         5myXOUfPuG5d3RjOWSSQd2QVk58IhmMRzc9SH2B+o+uCQWrPbQlwK2qtzlsTZ0ziIgQO
-         sPMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729670231; x=1730275031;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MDtuybacQMneCJc06GIioGymEOeeKMRrDlS8v97+T+c=;
-        b=CGdv32VAPwBrg0fDe4+MeHCsoyjmUOOwYPTVqtZ5LdmNNcaB0iS9UeV5AFwC77hOiZ
-         u0p3LDAPL1Zg0LISPBHYZJBE2U0McIQzdKX3q3pdIFBnWxnGd/gTeXPQWg3AWUX4QMXN
-         qBd6LmdseFf+NZf7NpXEbKeBjGhaqKgMehCqhDU83YsnG72l98qNZi419kM6QOP4XI5E
-         DDzFjyezk+szG7Vq/8Gv3xUj1tuj0A36uP+YDlIvKrxnb5NphPpKYxK7TqssO+PGy0Tp
-         YX/uqjDOEINxjtTR4YtmgMxG914j+D1tcV6T1VkSJKRxP4R3eOi03Xi98qL71gSnskqh
-         oT6w==
-X-Gm-Message-State: AOJu0YzlhgiaGXshJ6Du8fGjkdmULFkVLKLoNvYJFX5+vrL2K/B+E3kP
-	aGHG5cALAO9clquWTb9n5LQE06957bJjyxRDkApnR3Ig3tzAZ+3k/4YneMqd
-X-Google-Smtp-Source: AGHT+IEN4kibGAddE/myCE13DTgF50Ztwck2erJHTjcTnkw2sJsys8KDqMomeKQE5Tyl50pzj5G5QQ==
-X-Received: by 2002:a05:651c:2223:b0:2fb:266b:e3b2 with SMTP id 38308e7fff4ca-2fc9d5e394emr7517331fa.36.1729670230404;
-        Wed, 23 Oct 2024 00:57:10 -0700 (PDT)
-Received: from archlinux.fritz.box ([2a02:2455:825d:6a00:6bb4:436f:5699:ff21])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cb66a653f5sm4068803a12.26.2024.10.23.00.57.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 00:57:09 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-To: karthik.188@gmail.com
-Cc: git@vger.kernel.org,
-	ps@pks.im,
-	me@ttaylorr.com,
-	kristofferhaugsbakk@fastmail.com
-Subject: [PATCH v2] CodingGuidelines: discourage arbitrary suffixes in function names
-Date: Wed, 23 Oct 2024 09:57:06 +0200
-Message-ID: <20241023075706.1393147-1-karthik.188@gmail.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241021124145.636561-1-karthik.188@gmail.com>
-References: <20241021124145.636561-1-karthik.188@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Glj6v4Qc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KHYImBi/"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EC5861140110;
+	Wed, 23 Oct 2024 04:52:41 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Wed, 23 Oct 2024 04:52:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1729673561; x=1729759961; bh=ZA/WZfhJuR
+	2NdcdjJc1l9Yo4fibLazDBh4h2WkOvO44=; b=Glj6v4QciyyV4hrX8eow1bwWR1
+	z1faOjEjB3vZ0p5Pz4MxFrRngyQKBv1MSaQP8nOoyaiGgLied67kqQIaVSQNPsE5
+	xlCUMcNJKVD9/cGmsf7pVAwq9dYLhldtjN9+LWxkb2qw0BLW4mUni1s2IXoUwQtj
+	O0ZADuPSXQ3+XFDCdNtWru1a+aqkm/v+gIxB8sX6RZ1yMajwosww2t2yWPdNGgU7
+	f3Bwr0CwV1ArCAC5s4VXS2Yc/WCBufeCGqprZXEjeY6gfHTGNgN8conP6ygkv76G
+	MnnVKED65LBHu+jIwhHFMWLDhokt8CavjtQX4i5m5tOeWf9mnfDm5UiDSldg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1729673561; x=1729759961; bh=ZA/WZfhJuR2NdcdjJc1l9Yo4fibL
+	azDBh4h2WkOvO44=; b=KHYImBi/I2Akt90p6shfauzLCCSCvIkQvOoY0Tsc0L5+
+	fbJA3O/ddBXLPUUydZakAdvLWgvUo1kGX7cpoNoIAX+bHmixzEhwjEjyv5HakD6O
+	N9wjGl4J1N2wnk4o46eYrFBKj3fl5xv3mDhGN/+RGSJUAb4D0A73JBFFdnjHTMEl
+	2nLxKyf6l5fboeCB9oLGE6X6yeQ7T4Ysgo/i3y8qpjy2Zr3gyR5vwbVFq7gXgCmd
+	Ri3DMUPdejhrc4H8R3nZY7vweU8hrewYSnr3+AV5Hsqll8NKKyMUNzBr+S0Pi8cu
+	H8OYyAJSELjo5nKDg+FDKDuyPEcRCXD+c0Qp17VECg==
+X-ME-Sender: <xms:WbkYZ4LRjyJGfOYztJYWAdm43WwE0uqixUDPOkszomX-QJvHpVGSVQ>
+    <xme:WbkYZ4IcRRULciQ3O39bc4wrPDqCi7fF6xyMgaYCJROvxVyYfmFpFShCL_EtrxAYG
+    PzSwKc8seCMtO8a8Q>
+X-ME-Received: <xmr:WbkYZ4tHQiEnEGX1Aq1-AkNKa5ZT4IqKH4Mbfwj816x1z8KpCukJvP-Oj-88LS77x5HqGQCe-M8QvDoF5KB5Xh9Z1OQrqZqkEzbGb60NpIbZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgtdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehushhm
+    rghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:WbkYZ1bEhng7AUgzEsN4JmjMNO4R3VkOtGw6OlopcqjYxdk4REFopA>
+    <xmx:WbkYZ_agUjXF5G_HEWLFAme3vPjM3xDWJtvP8xFb60JaZLX6sic-VQ>
+    <xmx:WbkYZxApeihnlN3UG2FOhq6WBjTGNlOZEr2RXZGUbUtJjgN-hc1pAQ>
+    <xmx:WbkYZ1ZtRSoELG-KYXC57A16H07Wtolwv7fUqb94cTHECNvBh6C9Zg>
+    <xmx:WbkYZ-UQOx6ua-_blsq1GNP_llKfvSt4InTvV8T-Xa8a2ABjaTfnsqwE>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Oct 2024 04:52:40 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id a6312b20 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 23 Oct 2024 08:51:06 +0000 (UTC)
+Date: Wed, 23 Oct 2024 10:52:36 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	Usman Akinyemi <usmanakinyemi202@gmail.com>
+Subject: Re: [PATCH v5 0/3] parse: replace atoi() with strtoul_ui() and
+ strtol_i()
+Message-ID: <Zxi5TeHM9qD3lrbx@pks.im>
+References: <pull.1810.v4.git.git.1729634937.gitgitgadget@gmail.com>
+ <pull.1810.v5.git.git.1729669220.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1810.v5.git.git.1729669220.gitgitgadget@gmail.com>
 
-We often name functions with arbitrary suffixes like `_1` as an
-extension of another existing function. This creates confusion and
-doesn't provide good clarity into the functions purpose. Let's document
-good function naming etiquette in our CodingGuidelines.
+On Wed, Oct 23, 2024 at 07:40:17AM +0000, Usman Akinyemi via GitGitGadget wrote:
+> Changes from Version 4:
+> 
+>  * Fix incorrect indentation and remove unnecessary braces to avoid
+>    confusion.
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/CodingGuidelines | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+Thanks, this version looks good to me!
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 30fda4142c..635d6f3a27 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -621,6 +621,24 @@ For C programs:
-     - `S_free()` releases a structure's contents and frees the
-       structure.
- 
-+ - Function names should be self-explanatory, clearly reflecting their
-+   purpose or behavior.
-+
-+   The '_1' suffix for function names has historically indicated:
-+
-+    - functions processing one of several elements that all need to be
-+      handled similarly.
-+
-+    - recursive functions that need to be separated from a setup stage.
-+
-+   To maintain clarity and avoid confusion, such arbitrary suffixes are
-+   discouraged, as they provide no meaningful insight into the function's
-+   role.
-+
-+To maintain clarity and avoid confusion,
-+   arbitrary suffixes such as _1 are discouraged, as they provide no
-+   meaningful insight into the function's role.
-+
- For Perl programs:
- 
-  - Most of the C guidelines above apply.
-
-Range-diff against v1:
-1:  0acdf6902c ! 1:  dd556a8029 CodingGuidelines: discourage arbitrary suffixes in function names
-    @@ Commit message
-         CodingGuidelines: discourage arbitrary suffixes in function names
-     
-         We often name functions with arbitrary suffixes like `_1` as an
-    -    extension of another existing function. This created confusion and
-    +    extension of another existing function. This creates confusion and
-         doesn't provide good clarity into the functions purpose. Let's document
-         good function naming etiquette in our CodingGuidelines.
-     
-    @@ Documentation/CodingGuidelines: For C programs:
-            structure.
-      
-     + - Function names should be self-explanatory, clearly reflecting their
-    -+   purpose or behavior. To maintain clarity and avoid confusion,
-    ++   purpose or behavior.
-    ++
-    ++   The '_1' suffix for function names has historically indicated:
-    ++
-    ++    - functions processing one of several elements that all need to be
-    ++      handled similarly.
-    ++
-    ++    - recursive functions that need to be separated from a setup stage.
-    ++
-    ++   To maintain clarity and avoid confusion, such arbitrary suffixes are
-    ++   discouraged, as they provide no meaningful insight into the function's
-    ++   role.
-    ++
-    ++To maintain clarity and avoid confusion,
-     +   arbitrary suffixes such as _1 are discouraged, as they provide no
-     +   meaningful insight into the function's role.
-     +
--- 
-2.47.0
-
+Patrick
