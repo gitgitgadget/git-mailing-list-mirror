@@ -1,118 +1,162 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC792AD20
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:15:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ECE1E2824
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:16:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729714516; cv=none; b=KVAxIZu6+WaM2G5GPYI4LdObcO7FTpySl/lMcMRy3AG6SA9nasOIzmtbFoY4LkTnfvODL0v/6He+irZg/c7Gur2ccAdx8WpQ0IL2DLH7KcdKE8LtFqBjjrQdiL2/yd92Ud+f2SMCpdsIFtPf8wqj4aCN7TW/vT4h4o7aTK4HksA=
+	t=1729714578; cv=none; b=kU2TyGpykuWOJrgNDEedOY7F3h+dhZNtJeb+pxxlSETEIvfSioJ0zLv1qMtMrzYpcL3j2gVKVXsKZZ8XkTzNOx+8b9OjqG1EgHqh2vjKcFnHga8pLB5djbx+0asuNac8Zoy0XJTrvwH9ApEXAvzKo0KeW6NgcDSnGSdg/Ltm3aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729714516; c=relaxed/simple;
-	bh=Jq3LPhvt8Gh8CQqc6OvD5nEYOwySWLQPL0w6zGljXPA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yk5AzH7BFuIhTlI2YdD+XclfBPeWXd1B2nOc6z1yDtTDLpKnzuM+yYed9suQpYHVIxGaoo7U6ttQDQD5+EcSj+MoaRx3cDl1FDNQQw2XpD+9Um/CYm4YXEx7g8wIKbsFsZCLpqeExDA1QDTB672qsC9wTBB47O+09IBseSPNyqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Kq+tENNo; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1729714578; c=relaxed/simple;
+	bh=FNJdbDcwe6sXRErTUOvJmtAJzVWzC+YoGDddTBdWJYM=;
+	h=From:To:Cc:Subject:Date:Message-id:MIME-version; b=Tz01oQzgpwtkoISvVq4/9hKul9ef8VXtxv7c/zLiKiXSie0hVBz8lt6V/+1snmPNOLiYU5HKd+C+BOFb6Thc9wsp3sbqwqYrzq0Q26obt27PKHkc5OS2n5ZT94Pzgkj5o3RGfUIT1f9jxAlJfR6QdvTVvCABJnVmZ6cv/6NuVOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=bTwgFSpN; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Kq+tENNo"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e5a5a59094so1394107b3.3
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 13:15:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729714514; x=1730319314; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fevQZDABbym91GGzVI8Ky5E44jzIGdXcXvgO/KVbVS0=;
-        b=Kq+tENNo9U0gTYQuJrGno0EXPVt5E9Cl5lIhzHjAMQplYAMy4nCyoBhtOryPA9B2uw
-         rKA5AUQtRKmGcCqi/DYAJkY4u/ms6vc4c3E0cLCMj5QQnqOzzgq4WQ9bCBK2qcyQvKnr
-         vXGTpDMkGj7/ARpfmqzvsRdhUmOGlT4yg0rp6OVH9fkCMmdpMAQDE+qhW8kl4hR5qnkP
-         4ZIntSMA5pRjZGAcR8WhcMmsg1XWdfCiXg1Kg3lPEzVPsmgWwXY2BUSo7GzCX/b1Ry04
-         pwGvbO1e9zsoYQpxXpdiPtKYYBEoQxqH3anV/Vm6M/q+3NIQfYoRMw+tC5U2VlUYAv7z
-         rGgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729714514; x=1730319314;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fevQZDABbym91GGzVI8Ky5E44jzIGdXcXvgO/KVbVS0=;
-        b=uoYPU1qLCvIU7bC3PJ5UngJCIgyxBspVbtFRMKruCuo6SurY7uk6qkv0Nj3nLAnNob
-         9rJbG36RfCViwdfSgixyjg2pmJPZqY/W9ZCJZjYD4RXA/uV6Bin1gLuOPtJjVs+SA8yA
-         K8ic9yIL6vfercQUU03laKANUIceucAsqt8Ap3ixiC/SjAJbtHRn40rLMSm/fRJPnKbp
-         78lfjvMfYInYl4OOYjqKDIq7uUGnkDX9zI7wLY0j8Fik+nqH1OfcfOCjTU0e2UT6XQud
-         jukYMpsLI8/wc6Ugsz1SZKHcqbEawxUBX+8yk8R4Cq3H2kZHS9ZOeAg20BR5MMzkECjv
-         ZNCg==
-X-Gm-Message-State: AOJu0YwB3bwyRVMPaMENIaIkCHHJMF1lwl89Z/Hmr9ksWxRE4QSs+VE5
-	Jppj70Rgj4TOF5nyCoQM2mT22GBjwRa46ITIYTWF0dg7OH37ow77bTmfxYQOMC4=
-X-Google-Smtp-Source: AGHT+IFbQLiCPXZm6363sZAxZxrjixiJzFsU7eyNK0fhwSPzsijeSFB98v7v4VL8/sufhgCaGXQsAg==
-X-Received: by 2002:a05:690c:b:b0:6e3:3275:8e5e with SMTP id 00721157ae682-6e7f0f79677mr43363307b3.33.1729714513903;
-        Wed, 23 Oct 2024 13:15:13 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5cee7f6sm16558727b3.105.2024.10.23.13.15.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 13:15:13 -0700 (PDT)
-Date: Wed, 23 Oct 2024 16:15:12 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="bTwgFSpN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=LoPF3pN5Io+/IcY1eyj+fbrUgCORYmpHLmHBY8zbMNk=;
+ b=bTwgFSpNTX/0e25nupN3kOLm0oeVxTyLOTbO0s6mwIQW3U6TSLH5PwzcSgpWdiod/TaBRv1wriv8
+   73BwS/Z/QXY37UrpJkAPtZQzzdO8pt15ZYSlZEUvOrGMy1gF9oSht84MgFf7rWlEF+XfoOMt4SV5
+   25/7/hYE9qoiOP0zeUHNMbiViOCOWafpHVue0eKv/1wwKBuwU3mFsQcbVtd0l31uA6fkxjDVdQDx
+   p2vQFT5gSqXs5Q4Vf9GKqwdGKAgBSfgzKbYpAo1ZNOjw50HDj0xUd9zfsjV+Jlw1g/lB1pUxx/RR
+   zsQjy+Qb3oMdI2vkEk3MdDgYenwbgfmeLRdBEw==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
+ 2024))
+ with ESMTPS id <0SLT00MWASAXXT20@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Wed, 23 Oct 2024 20:16:09 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Bence Ferdinandy <bence@ferdinandy.com>,
+	=?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
+ <congdanhqx@gmail.com>,	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
-Message-ID: <ZxlZUP5uZtjZxFoU@nand.local>
-References: <cover.1727881164.git.ps@pks.im>
- <cover.1729254070.git.ps@pks.im>
- <ZxLOlx69KQp9jXDF@nand.local>
- <ZxjmQQ3MxDlaJid7@pks.im>
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>
+Subject: [RFC PATCH] notes: add prepend command
+Date: Wed, 23 Oct 2024 22:14:24 +0200
+Message-id: <20241023201430.986389-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZxjmQQ3MxDlaJid7@pks.im>
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAHxVhgT40vmMneorwtbNskryHhsUvCLZftk3h6pVCWanQNRX98yPKGZOrF/i73v
+ sB6q645GudB+v8GRwsyK9F+XggPHZWY/6KfEeq8PYkOSPTsje32eVoYc7k23oWvl
+ Ifa6sFO4B8UrowFSYigk+GgqcsuNTgy7XJCSS9R7WCEekmuAHW/sSUsqanxIZaS4
+ 2oIqmydf3UjN3QHskQuJ7lRSjTjfSQ1WwcWO8SICoz2oMvr5BbgtmAY7pen7J3JX
+ Exvd1h33C9qmQPDXRzoiHkRZqFm8WVQo/s3S5SlVbBBHe4IKdaXSoIILo7we4G/C
+ 77PMhfAlWvL3hiyITmfUQ/q6cf+2jlT+3PBFznYgfQmXyZlkwXvbYScy83QHiHlX
+ aiGod//UkCFkBSmjI9lsURRBhG7QohyLRtUdS+xt8Ax5Pl80aQDkb2J2o5YrENXT
+ gWvjyHNCFJt1D0OKOKr2ShcbAf/x1P5cd6LLTLmYaWXl0YwrWDPFWu7q
 
-On Wed, Oct 23, 2024 at 02:04:17PM +0200, Patrick Steinhardt wrote:
-> On Fri, Oct 18, 2024 at 05:09:43PM -0400, Taylor Blau wrote:
-> > On Fri, Oct 18, 2024 at 02:23:47PM +0200, Patrick Steinhardt wrote:
-> > > This series is based on 15030f9556 (The second batch, 2024-10-15) and
-> > > has the following dependencies:
-> > >
-> > >   - ps/cmake-clar at c6d3e52c91 (cmake: set up proper
-> > >     dependencies for generated clar headers, 2024-10-15).
-> > >
-> > >   - ps/upgrade-clar at f3501edb0e (Makefile: adjust sed command for
-> > >     generating "clar-decls.h", 2024-10-14).
-> > >
-> > >   - ps/platform-compat-fixes at 80ebd91b83 (http: fix build error on
-> > >     FreeBSD, 2024-10-16).
-> > >
-> > > These deps are mostly just there to make tests pass on all platforms,
-> > > but I wouldn't want folks to go test things and discover breakage that
-> > > is not caused by Meson itself :) You can also find this version of the
-> > > patch series at [1], branch "pks-meson-v3". @Taylor, I'm fine with
-> > > keeping this out of "seen" if you prefer to wait for those dependencies
-> > > to land first.
-> >
-> > Of the three, only the last one is marked as "Will merge to 'next'?" in
-> > the next integration round[^1]. All three are in 'seen', so this should
-> > apply cleanly on top of those.
-> >
-> > What is the state of those first two topics? Are they ready to go, or
-> > are we expecting a new round for any of them?
->
-> These have been merged into a single topic now and should be ready to go
-> from my point of view. But they still require reviews.
+When a note is detailing commit history, it makes sense to keep the
+latest change on top, but unlike adding things at the bottom with
+"git notes append" this can only be done manually. Add a
 
-OK, so: ps/platform-compat-fixes is in 'next', and ps/cmake-clar has
-been folded into ps/upgrade-clar. Have all three have been combined into
-ps/build?
+    git notes prepend
 
-If so, should this topic be rebuilt on ps/upgrade-clar so that we don't
-see the same patches twice, perhaps? Or am I still missing something
-here?
+command, which works exactly like the append command, except that it
+inserts the text before the current contents of the note instead of
+after.
 
-Thanks,
-Taylor
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+---
+
+Notes:
+    RFC v1: Cf.
+        https://lore.kernel.org/git/20241023153736.257733-1-bence@ferdinandy.com/T/#m5b6644827590c2518089ab84f936a970c4e9be0f
+    
+        For that particular series I've used
+        git rev-list HEAD~8..HEAD | xargs -i git notes append {} -m "v12: no change"
+        for a quick-start on updating notes, when only 1 note needed to be
+        really edited with meaningful content, and for some of the patches
+        you now need to scroll a bit to actually find that "no change" text,
+        instead of seeing it right at the top.
+
+ builtin/notes.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 8c26e45526..cf158cab1c 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -35,6 +35,7 @@ static const char * const git_notes_usage[] = {
+ 	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
+ 	N_("git notes [--ref <notes-ref>] copy [-f] <from-object> <to-object>"),
+ 	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
++	N_("git notes [--ref <notes-ref>] prepend [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
+ 	N_("git notes [--ref <notes-ref>] edit [--allow-empty] [<object>]"),
+ 	N_("git notes [--ref <notes-ref>] show [<object>]"),
+ 	N_("git notes [--ref <notes-ref>] merge [-v | -q] [-s <strategy>] <notes-ref>"),
+@@ -644,7 +645,8 @@ static int copy(int argc, const char **argv, const char *prefix)
+ 	return retval;
+ }
+ 
+-static int append_edit(int argc, const char **argv, const char *prefix)
++
++static int append_prepend_edit(int argc, const char **argv, const char *prefix, int prepend)
+ {
+ 	int allow_empty = 0;
+ 	const char *object_ref;
+@@ -716,11 +718,18 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 
+ 		if (!prev_buf)
+ 			die(_("unable to read %s"), oid_to_hex(note));
+-		if (size)
+-			strbuf_add(&buf, prev_buf, size);
+-		if (d.buf.len && size)
+-			append_separator(&buf);
+-		strbuf_insert(&d.buf, 0, buf.buf, buf.len);
++		if (prepend) {
++			if (d.buf.len && size)
++				append_separator(&buf);
++			if (size)
++				strbuf_add(&buf, prev_buf, size);
++		} else {
++			if (size)
++				strbuf_add(&buf, prev_buf, size);
++			if (d.buf.len && size)
++				append_separator(&buf);
++		}
++		strbuf_insert(&d.buf, prepend ? d.buf.len : 0, buf.buf, buf.len);
+ 
+ 		free(prev_buf);
+ 		strbuf_release(&buf);
+@@ -745,6 +754,16 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
++static int prepend_edit(int argc, const char **argv, const char *prefix)
++{
++	return append_prepend_edit(argc, argv, prefix, 1);
++}
++
++static int append_edit(int argc, const char **argv, const char *prefix)
++{
++	return append_prepend_edit(argc, argv, prefix, 0);
++}
++
+ static int show(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *object_ref;
+@@ -1116,6 +1135,7 @@ int cmd_notes(int argc,
+ 		OPT_SUBCOMMAND("add", &fn, add),
+ 		OPT_SUBCOMMAND("copy", &fn, copy),
+ 		OPT_SUBCOMMAND("append", &fn, append_edit),
++		OPT_SUBCOMMAND("prepend", &fn, prepend_edit),
+ 		OPT_SUBCOMMAND("edit", &fn, append_edit),
+ 		OPT_SUBCOMMAND("show", &fn, show),
+ 		OPT_SUBCOMMAND("merge", &fn, merge),
+-- 
+2.47.0.119.g5b706304f7.dirty
+
