@@ -1,54 +1,54 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1F1152517
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 09:48:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7D3152517
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 09:49:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729676934; cv=none; b=raxokglWsEcHrXwu6JxtIWKAYxf6ftiCy9HqX8TzJwX00zF4KvbrVROVuEXI0A82b2cXSDCoEaAFY3UtRbbgny4F1Qjz5qbvq5etj0dmpUSrx3/RPwvhzi8MSb4PusMfa/BaUcNOR4I2pLOJB6TdkRGm8kLeeXqO7CNR2f6uFmw=
+	t=1729676999; cv=none; b=h5CpLMJ/Um7JgsSj1oGT/Azgj/UEqQOJpIdP+wxdueDdaL32WZr70rzeJX0PSLGEx0896b9WWYxqbGUNa14nYMNhBtY/bbyR+4QLc4JB7SqM+QVfIj0uvnf1gLrqYlBBEt9B/FdjLjLNGVEljxLEK3I3sF+5X9o+hOzPJ0linds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729676934; c=relaxed/simple;
-	bh=kpgWHUXEZSpnUxF9p08CJFS2404d+zx1ysrk3OnnLqw=;
+	s=arc-20240116; t=1729676999; c=relaxed/simple;
+	bh=Nt0qEA4H9XOM4EMLOafKy6wtKnvvlv199GhPyI9/Kmk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dtW/YFFROEv9V35b1FbLBf41YxJ1IRcOZvkhhbzx8DyEnBNzKmQhYp+hI2AsN/czoz+J9hf43jdbZcRw3sCEqoViW4mmWV4oh5djCpHEU0u26ylPgZCjao9VFBEJvrb5Vn/Xu8bZtqGO2ooWeI86hkoyW59NMWaCux/PH4DMkLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W+Uyh6MM; arc=none smtp.client-ip=209.85.208.47
+	 To:Cc:Content-Type; b=d1p8AyW0OX70OAuhHjM6jiovX0mKqLoL1Vp14ze+4mpMRP0brEZxUpvGqH6gskzTIskzH8fg5ynlysDOY0BWvwddo1GmH1oC4rBqeChbw91KgBrXz3n0EY6y6s2m5Fz/PfjacbPhmZlIGphjHLvAZnbflhWY8EKP1ArUZJTkD7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L14GZEh2; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W+Uyh6MM"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5cb6ca2a776so3641621a12.0
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 02:48:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L14GZEh2"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a99f1fd20c4so889777566b.0
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 02:49:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729676931; x=1730281731; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729676996; x=1730281796; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FohIKkJ3wjvo6MxAafmTbafPL+CKHfsf6Iyy0nRofo8=;
-        b=W+Uyh6MMfXyoq4tQLtuoVyy8qVdmCZx+VpKOeUxV93G9kSgvDGw5x+OL19VVhpisfY
-         UsyMgkDtMpMiutRl1Ee8IclQiUWqHKrf5/0kJPdxpTuaRcQRuSTmX4GQbC/uLsgGpahi
-         SaTpX1Zcp3GqPRWs9pz/b1hrYATfbe0F5H97Fs7eGsSvZcKgIvTHCsXPrJNu0+lSFdWn
-         FvuR0LkF2IZvaUkjOAH1Y4aVlRF5N+2U8zlw+bfTU5WWNWZmwbRa1SUrpQmCR0uXGYln
-         e0wEd7z/dfeCPuV1nhzeGDpM3FZ7SQRQcG9xTYYjyvdvXTsbJ3MB6jwRgbvvrwxMGE12
-         n3Zg==
+        bh=nvN66syVfvxoQz4bzQrsE5HNzpXW7UFjL8XeMIQlVlc=;
+        b=L14GZEh2COdFf6rB+ACxS2LsrJKkNusO0uYkUCpu6xVsM0zZabg8ugFQ17+/yCSMON
+         gxRn2LPzGbP9f2M5gmboVRszqIniKEewKC3J1FQGdbJ0Bqq6iziNdy0qIG0eW3PwewFN
+         LdPfGZfSX/hqb4LyAZ0ZJUsUumgnxv2GRLR5B7BgOFfIltQCTq6yTIBtsY2jgz8/1OHe
+         Is1ZbUBgHa7YlsSjr1gXdZAd2p5Kbw8DiDpBjcuhbytYyYW79kCAOQeXi5+ATZBQa4yc
+         Ae5ilD5a2otqgUjMylm7AVoZQ7YKrM6Jq9TvL53j3Bi4z2W2/UYW320PpbOjfSGN649C
+         QQkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729676931; x=1730281731;
+        d=1e100.net; s=20230601; t=1729676996; x=1730281796;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FohIKkJ3wjvo6MxAafmTbafPL+CKHfsf6Iyy0nRofo8=;
-        b=KJhj16Fihy9iaBgRcQFn6TRcmCYWtRod+2oBI+/URRdOCsGIibDSZrq53M8N2rntZn
-         wmfUtui9S/rzQ7rIdSIV2yJw42SgVDSe5vgY3kUahzdmtn+mFjjhwlDkuX83t1hiKDqG
-         VpcuKFcsQUIOdr9NWW9kQusLe38PvPUFql9iJuPz1cpNRKdEYdNHhHJ4cJQf/Y8BmiJW
-         TEZurMpYn6vcyqvTWFTDWSzIWOF3kcDQ2skl/NO+aE73xg3kgizf9XFYXyiq5aYhaDAA
-         nUSo3Hm+ynjsNBgBWGo/XnHm36sI51hR1YOevOnzLM6ppK2gBuhL/PUd4bb/UjEARb0t
-         1nWA==
-X-Gm-Message-State: AOJu0YwdPAt9Umo1PuI5HTPGaXMSIeqAzNhYo+FAe9OrDtN8AUNgHpcd
-	w2vOz6UzsFZ+7cCFV0tE4iMJMN5dPJbyxSaATzbb7N7GLUhmZtzH0j8H45bbwr176SQruB8ypHX
-	/os76gDRB9LZ6nEPZTyr0PWLiovc=
-X-Google-Smtp-Source: AGHT+IE2cQT/TiWkjf9QqA5lwfXOFAyNWLVT7NCT6Y0Dv1WnhpzXpaGp3aFhOmwbKIJVyTNyFZ/PRhtnTwbL6uVxar4=
-X-Received: by 2002:a17:907:ea0:b0:a99:4162:4e42 with SMTP id
- a640c23a62f3a-a9abf8ac2acmr148439966b.37.1729676930750; Wed, 23 Oct 2024
- 02:48:50 -0700 (PDT)
+        bh=nvN66syVfvxoQz4bzQrsE5HNzpXW7UFjL8XeMIQlVlc=;
+        b=VOUq0Jlf1rsA3eHQnX++j2BE0OAcE5HE3ABu1RCGTJbfCYWDulGlcVxWlj5nOjw3JN
+         uDJhYT2+20tBLLHYfJWCYXt75n3Y9Z5twxeMijX6ctMkoHGL9iviM46/GZyHkHrMmn3N
+         f7E8K4D9jqLIWeN6dFOmvxalUgU8PtWn85V4Z7bwaKIw3Jy4g9LJa5eVNe1kWEHxzdoa
+         mfDEGixO0pr4ss0sBt8O7XvhoLMHIFCgyDxkAm2ZnvoQ0w0iKM0LaYoBlAFtuvwCo/v1
+         iTdCqGQt9vA/KgT51udDQA9i09wklzXlFXM8kYI5TYGmLhDqr6w0pR8n5yA6WGep04pC
+         VUNw==
+X-Gm-Message-State: AOJu0YxS83Bh3/jQ7KOMs2/iwW5zd1oFDlcOy1LXPy1nXC8o6zron/nN
+	toNvKFd/yHBIiyp7b+h7x35H5QerarOUja86vviilr4YHP1TxcLpmgDUEkvZwTGitJm+WXhp2m/
+	gzcg3i9VHO6V6rtCb0vfXs9x8znQBRA==
+X-Google-Smtp-Source: AGHT+IGeVET06JtWjiI9cXUOvhO2P3vaSTjlWYoRpM8B9bl33iL1LgdBtJME3mwHlzc3OKCiupaZKo7GLHvzfv/ObBA=
+X-Received: by 2002:a17:907:9452:b0:a9a:3d5b:dc1a with SMTP id
+ a640c23a62f3a-a9abf869709mr193450866b.15.1729676996033; Wed, 23 Oct 2024
+ 02:49:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,12 +56,12 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20240926013856.35527-1-eric.peijian@gmail.com> <20240926013856.35527-5-eric.peijian@gmail.com>
-In-Reply-To: <20240926013856.35527-5-eric.peijian@gmail.com>
+ <20240926013856.35527-1-eric.peijian@gmail.com> <20240926013856.35527-7-eric.peijian@gmail.com>
+In-Reply-To: <20240926013856.35527-7-eric.peijian@gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 23 Oct 2024 11:48:37 +0200
-Message-ID: <CAP8UFD0-EPZkdWd8xbg-Yt+aSGfJQE1cFz62Oxwjm-8N1sQ2PQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] transport: add client support for object-info
+Date: Wed, 23 Oct 2024 11:49:44 +0200
+Message-ID: <CAP8UFD24jDT1yFNTp-T==-avccd4QjrwRtfJ_-wPx78H31VSiw@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] cat-file: add remote-object-info to batch-command
 To: Eric Ju <eric.peijian@gmail.com>
 Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
 	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
@@ -72,33 +72,102 @@ Content-Transfer-Encoding: quoted-printable
 On Thu, Sep 26, 2024 at 3:39=E2=80=AFAM Eric Ju <eric.peijian@gmail.com> wr=
 ote:
 
-> +       if (transport->smart_options
-> +               && transport->smart_options->object_info
-> +               && transport->smart_options->object_info_oids->nr > 0) {
-> +               struct ref *ref_itr =3D object_info_refs =3D alloc_ref(""=
-);
+> And finally for --buffer mode `remote-object-info`:
+>  - Receive and parse input from user
+>  - Store respective function attached to command in a queue
+>  - After flush, loop through commands in queue:
+>     If command is `remote-object-info`:
+>         - Get object info from remote
+>         - Loop through and print each object info
+>     Else:
+>         - Call respective function attached to command
+>         - Get object info, print object info
+>
+> To summarize, `remote-object-info` gets object info from the remote and
+> then loop through the object info passed in, print the info.
+
+Maybe: s/print the info/printing the info/
+
+> In order for remote-object-info to avoid remote communication overhead
+> in the non-buffer mode, the objects are passed in as such:
+>
+> remote-object-info <remote> <oid> <oid> ... <oid>
+>
+> rather than
+>
+> remote-object-info <remote> <oid>
+> remote-object-info <remote> <oid>
+> ...
+> remote-object-info <remote> <oid>
+
+[...]
+
+>  If no format is specified, the default format is `%(objectname)
+> -%(objecttype) %(objectsize)`.
+> +%(objecttype) %(objectsize)`, except for `remote-object-info` commands w=
+hich use
+> +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not sup=
+ported yet.
+> +When "%(objecttype)" is supported, default format should be unified.
+
+I think we should warn more clearly and strongly that users should
+take into account that the default format will change. So they should
+better not rely on the current format in their code.
+
+Maybe something like:
+
+`%(objectname) %(objectsize)` for now because "%(objecttype)" is not
+supported yet.
+WARNING: When "%(objecttype)" is supported, default format WILL be unified,=
+ so
+DO NOT RELY on the current default format to stay the same!!!
+
+>  If `--batch` is specified, or if `--batch-command` is used with the `con=
+tents`
+>  command, the object information is followed by the object contents (cons=
+isting
+
+[...]
+
+> diff --git a/t/t1017-cat-file-remote-object-info.sh b/t/t1017-cat-file-re=
+mote-object-info.sh
+> new file mode 100755
+> index 0000000000..6826ff7a59
+> --- /dev/null
+> +++ b/t/t1017-cat-file-remote-object-info.sh
+> @@ -0,0 +1,750 @@
+> +#!/bin/sh
 > +
-> +               if (!fetch_object_info(transport, data->options.object_in=
-fo_data))
-> +                       goto cleanup;
+> +test_description=3D'git cat-file --batch-command with remote-object-info=
+ command'
 > +
-> +               args.object_info_data =3D data->options.object_info_data;
-> +               args.quiet =3D 1;
-> +               args.no_progress =3D 1;
-> +               for (size_t i =3D 0; i < transport->smart_options->object=
-_info_oids->nr; i++) {
-> +                       ref_itr->old_oid =3D transport->smart_options->ob=
-ject_info_oids->oid[i];
-> +                       ref_itr->exact_oid =3D 1;
-> +                       if (i =3D=3D transport->smart_options->object_inf=
-o_oids->nr - 1)
-> +                               /* last element, no need to allocate to n=
-ext */
-> +                               ref_itr -> next =3D NULL;
+> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> +
+> +. ./test-lib.sh
+> +
+> +echo_without_newline () {
+> +    printf '%s' "$*"
+> +}
+> +
+> +echo_without_newline_nul () {
+> +    echo_without_newline "$@" | tr '\n' '\0'
+> +}
+> +
+> +strlen () {
+> +    echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
+> +}
 
-Space characters should be removed around "->".
+The above functions have been copied verbatim from t1006-cat-file.sh.
+I think this is worth a comment or a TODO before these functions
+saying that common code might want to be unified in the future.
 
-> +                       else
-> +                               ref_itr->next =3D alloc_ref("");
+Maybe something like:
 
-Here for example there are no spaces around "->".
+# TODO: refactor these functions which were copied from
+t1006-cat-file.sh into a new common file, maybe "lib-cat-file.sh"
+
+Except the above nits and another one I found in patch 4/6, the rest
+of this patch series looks good to me.
+
+Thanks!
