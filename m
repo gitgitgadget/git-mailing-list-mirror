@@ -1,279 +1,136 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961F81D0403
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 15:05:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62C312CD8B
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 15:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729695909; cv=none; b=P3ttvJjSsVR9Id4alFoYKSEic3H90PFQ0Qgztb3H6vNL3mST5qw58PUffpUYH16HR0GyEdzLV4SGAvC72+jyJ/emnTYzhDleIluxv0ROrMzXU6Pw5dD5VxXvGM9sYMlKSna4OQUgZ8wn+UwfL+F2gszx49JfYjg5D2Ycupzolc8=
+	t=1729696179; cv=none; b=Vkpj0DPl8osGk8r0jU1m/rjgMHAY3uPxFQIrNtGXbkEMMGxVvfDFNflbilPQZO0iMikG5C8jgG96msaMiIeqHzeAPt6bafSWKjTg2sBk91rMiCZ6V6ZI1mmiBT3hvDLCfid5prRk/0LeiIWSDe+LJrWCDqUd0IHsbk4L10P9FWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729695909; c=relaxed/simple;
-	bh=BU6R/188O6ogaucoEMeeOYOsrUNpPf0BkhJWtdfZA4M=;
+	s=arc-20240116; t=1729696179; c=relaxed/simple;
+	bh=SK5JmgZkJxmdMkN1cJ0x73QVtxJ+7oIlDkKWT9MK3sQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k2LVDPOwny868Ml5MYBU9mKJnMUFY3WXNP0FsJ26yw0fNI358XSt+8rl2NFANiw/jGIgLuWATLDUCyEdKri25ygC7/kVln/mhsYA1wZFvXpBJ7sdpRXtiLlSw0Ikk69rZC7MIajlVSSV3QScK0VbRgSPDkA+MRxbSZ3gTGSBgCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PCqFH03J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OfYiiKhM; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZIj4EJWhiSz0CgG+mTrWf3EHY+X+2TXpYvlqVw9vKYUijsu8OXUO6AM710OkIYmf6lYeAqAVLBYh74b7SiMhubCDw5CV/vcISB7fVbVyTuQPmBCrO/nRXFhiWg2hL8tszTEpnZZQA78pf9QZFViPZepnqoYui2UJ2VBy/DBPIFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Mz60ko+X; arc=none smtp.client-ip=209.85.219.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PCqFH03J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OfYiiKhM"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 968CB1140188;
-	Wed, 23 Oct 2024 11:05:06 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 23 Oct 2024 11:05:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1729695906; x=1729782306; bh=k376afiYp6
-	gcscbxb5r0/jAR7Mc9ye2cFjhPVSoruF0=; b=PCqFH03JA6Xu6K8Kkcr8AeIRjE
-	JhO4E8R07UiDDN59MvvAVcvF7qJQcMmxPH2d53HqNyioYFRm1vOVKH3Mkk37u8GP
-	qOu/OS9qm/WwxoBhK6IU0B7DCsvyBUMJbX6ZwHgMdqxIIWlLK4kQoEjUp48LQAUI
-	GDhMGtEDiuLU+pbch5mI3IFFbahKu73slLI5ZB6+POJotvWjsDvrFFtoLamh7LrQ
-	mfP6NN9nFRSgP7J48apds0fVFC64OmRymMwj+V1xv27yCXg0xilPRBAZstT6dej8
-	WdH3eVGeZKfvOnc3kUnOWGdXhDgbYj+dtI4ME+LoD4bQtNUeHnHLyg3MqrdA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1729695906; x=1729782306; bh=k376afiYp6gcscbxb5r0/jAR7Mc9
-	ye2cFjhPVSoruF0=; b=OfYiiKhMhCcz3bv5LQSVtAseUdJh+ySQr+8P+uGxcg3L
-	FAKo9frHYcvJO9osxX5zot9U5QXApabvsBfsY58KGUAhUht4gmWc5Pntso5Jox95
-	2Ci4jtb3wY8BEtnjQYSVJf0mK3jlye+/PoyiO6f+oDYdtXFAAEK9pJ85M9BJzeqx
-	gBJSUZffmVS2471V6x/easoO1SUUVQpL7bcR3UOFILz8wWRVa0rOZQYCeVZECLi0
-	hWniqqxrM8ohwVefe0H2QgfT84vHYcqy15Wn0C74gTxF6km6dm8U5lTAK25jARXc
-	1GFlZGhf7Rw1mKQlgJvahZtMQAQQ4Wvdcqm+jNPQSA==
-X-ME-Sender: <xms:ohAZZ9uxdmk5o2PC-Bkz2mKY6CBgls8fFAvfAhLEtMPQYn1TJmkx1A>
-    <xme:ohAZZ2eYLrMzIc-BKeQqKgcsyVcK5HbT267qciCZ6nmkvm18SprF6fCdbcZjAF-yT
-    qc39zZB_shpOBUN-w>
-X-ME-Received: <xmr:ohAZZwzGF_BO4lc0LVDlP3WJGm6T2sTnnFG0cVg9HdDr5GEJ3JeJ-4qs8C1ycJwZszR9fbaKow3Yer6Qb_pRWYpzzTGlq7XZAl4fyFfw10zv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgkeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepjeehffduffeufeeludelleeivedvffeludeuheeuuddt
-    udelgfetgeffffdukeegnecuffhomhgrihhnpehmihgtrhhoshhofhhtrdgtohhmnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
-    rdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:ohAZZ0OHAdZLo8WTclctOPbZQh6lMlgpX6kVx3ACSdVEika_hrd3Cw>
-    <xmx:ohAZZ9-NNIYFQVz5EqfWDwUsYqEuOXUQ0zl3pqpmCMk-sTyPEFqW2A>
-    <xmx:ohAZZ0VeUQhlNAfhrRZZWRe8lHkfCifDDVrP5z_SiKNXpXZN5c1iLQ>
-    <xmx:ohAZZ-eykNUh7Vqzkf43wvkQiLRO_FvU1ZWjBRZoCBGIrPSfA4xhwg>
-    <xmx:ohAZZ_LX6a-ONvNP9BMQLL1oDBH_fYCUQjyXhDqVvarFVsLZOiShzh9W>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Oct 2024 11:05:05 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f1c642c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 23 Oct 2024 15:03:33 +0000 (UTC)
-Date: Wed, 23 Oct 2024 17:05:03 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 3/3] compat/mingw: support POSIX semantics for atomic renames
-Message-ID: <d17ca1c7ce38e12fe113f15b078c12bc92e8f0aa.1729695349.git.ps@pks.im>
-References: <cover.1729695349.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Mz60ko+X"
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e290d48d3f7so6331738276.3
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 08:09:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729696176; x=1730300976; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PLEbGTXIa+R05MOv3ubfq02mRQKDRj6gbHeVcN1H1sE=;
+        b=Mz60ko+XLLbNbLLiBd8yrsRauoWp3YMP6NBUHIomSHdt5VW4GxZk4nw2RgXeTDZK8h
+         /uXrPRu42NK750C2D8bCNRQjzydF5awvm+Ur32pMB3eSCof7IDKb/n4mx+fXebL8hD2n
+         DTnzrjT08GAoPdrpOHLWeBcc4At1G/aYLAMf5G1JP0CJKCTQ6y1XV4fvgaBtEN9J35ke
+         ZDX31/5sWgvdywxdlmz3HuRIrdTrCTDr5dgcLos6SpS/NX8YBh5LImz4E+bT9I+8awxe
+         lX7YuzgQ9dkCdTUa57O+mqymfU/gV2pvrBfRntDcq5m95oFx/NsnpXzhpSIlSe+13mi0
+         j+ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729696176; x=1730300976;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PLEbGTXIa+R05MOv3ubfq02mRQKDRj6gbHeVcN1H1sE=;
+        b=j80ZO/Mfj7sm2i3N4Du85W5ULbuT384r1j3YPyQCv6wwxa4NbcJ6ouVSddfm4D5QOp
+         Yvy0RBr8NFP3B8p7uyooD2PpE4XD7atr9PSNzSkN3thB37sHPgKm9mhXdvjj/JpcL687
+         ivKPr2u0OFSY3a9uHNaz4z4H85f3sSNwlTYj0DDBxCsf3oDe9Yp9vLtBechTxZvGDl4t
+         ECg/n2TCdOr7I5mYQMR/6q1z+olpvfT+qMbxauzj8BCmKCCqOguoIed5qxaX6elTy01g
+         9mDA71bUqw9MklPF0CYPcZIKaJtcvHvjXWEyuBwCp7DlOQVABfMih5fZQ07YcFq5Tq2S
+         Eq8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXeyHfDXXF4r87KMx5CY0m267vcdEtUpCOOUD/yiVlrAVHqZ653fKE7iCFgvHUtTPxEHdY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTtz8QmMpxiGjdD2d2FVWJOZI6m0ybwP5Zpg7lX3kA6vqNqp0M
+	YjlIf9A0AOcUeVsLNhs0jWZKBEjiKsl6NeU+Mk1I6muKf+v4cD2Ng6JgF6aNfw+v/+0Exfn+VdL
+	pT2s=
+X-Google-Smtp-Source: AGHT+IFBYodB7UKYjhYWVpsKd3HRLVISo0PVq5eaYExXuwplFqYrjPvsHSGcFpW8/GQdKJEQ/7gaGQ==
+X-Received: by 2002:a05:6902:d43:b0:e29:f0e:e7c6 with SMTP id 3f1490d57ef6-e2e3a6e5351mr3330297276.53.1729696173536;
+        Wed, 23 Oct 2024 08:09:33 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2e33151354sm582005276.8.2024.10.23.08.09.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2024 08:09:32 -0700 (PDT)
+Date: Wed, 23 Oct 2024 11:09:31 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v11 1/8] t/t5505-remote: set default branch to main
+Message-ID: <ZxkRq3GNbrO1cqw3@nand.local>
+References: <43d44c82-b93d-4ac9-a5ac-ae5f70982cfd@ferdinandy.com>
+ <20241022194710.3743691-1-bence@ferdinandy.com>
+ <20241022194710.3743691-2-bence@ferdinandy.com>
+ <79c9cd6d-7bcc-4014-91c0-149505f70136@app.fastmail.com>
+ <D52LZ1W0FH29.1GVLRMGN80HPB@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1729695349.git.ps@pks.im>
+In-Reply-To: <D52LZ1W0FH29.1GVLRMGN80HPB@ferdinandy.com>
 
-By default, Windows restricts access to files when those files have been
-opened by another process. As explained in the preceding commits, these
-restrictions can be loosened such that reads, writes and/or deletes of
-files with open handles _are_ allowed.
+On Tue, Oct 22, 2024 at 10:14:12PM +0200, Bence Ferdinandy wrote:
+>
+> On Tue Oct 22, 2024 at 21:53, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com> wrote:
+> > On Tue, Oct 22, 2024, at 21:45, Bence Ferdinandy wrote:
+> >> Consider the bare repository called "mirror" in the test.  Running `git
+> >> remote add --mirror -f origin ../one` will not change HEAD, consequently
+> >> if init.defaultBranch is not the same as what HEAD in the remote
+> >> ("one"), HEAD in "mirror" will be pointing to a non-existent reference.
+> >> Hence if "mirror" is used as a remote by yet another repository,
+> >> ls-remote will not show HEAD. On the other hand, if init.defaultBranch
+> >> happens to match HEAD in "one", then ls-remote will show HEAD.
+> >>
+> >> Since the CI globally exports GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main,
+> >> there's a drift between how the test repositories are set up in the CI
+> >> and during local testing. This issue does not manifest currently, as the
+> >> test does not do any remote HEAD manipulation where this would come up,
+> >> but should such things be added, a locally passing test would break the
+> >> CI vice-versa.
+> >>
+> >> Set GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main in the test to be
+> >> consistent with the CI.
+> >> ---
+> >>
+> >> Notes:
+> >>     v9: - new patch
+> >>         - a bandaid for the CI issue noticed by Taylor (cf:
+> >>           https://lore.kernel.org/git/Zw8IKyPkG0Hr6%2F5t@nand.local/),
+> >> but
+> >>           see
+> >>
+> >> https://lore.kernel.org/git/D4ZAELFWJMKN.S88LJ6YK31LZ@ferdinandy.com/
+> >> for the root cause in detail
+> >
+> > Why no signoff?
+>
+> Because I always forget :( I've been thinking on making it by default, but
+> I didn't want to add it to all the work related commits, where I'd be the only
+> one doing it, but I just found the format.signoff setting, so I should be
+> covered for future patches.
+>
+> I'll wait some time before sending a fix for this :)
 
-While we set up those sharing flags in most relevant code paths now, we
-still don't properly handle POSIX-style atomic renames in case the
-target path is open. This is failure demonstrated by t0610, where one of
-our tests spawns concurrent writes in a reftable-enabled repository and
-expects all of them to succeed. This test fails most of the time because
-the process that has acquired the "tables.list" lock is unable to rename
-it into place while other processes are busy reading that file.
+Yeah, I was going to suggest format.signOff as well. If you don't want
+to add your S-o-b to work commits but do want to add it to patches you
+send to the Git list, you could just stop there (assuming that you don't
+use format-patch for work-related patches).
 
-Windows 10 has introduced the `FILE_RENAME_FLAG_POSIX_SEMANTICS` flag
-that allows us to fix this usecase [1]. When set, it is possible to
-rename a file over a preexisting file even when the target file still
-has handles open. Those handles must have been opened with the
-`FILE_SHARE_DELETE` flag, which we have ensured in the preceding
-commits.
+Alternatively, you could set it in your copy of git.git's own
+configuration in $GIT_DIR/config, so that it doesn't apply to work you
+do outside of that repository.
 
-Careful readers might have noticed that [1] does not mention the above
-flag, but instead mentions `FILE_RENAME_POSIX_SEMANICS`. This flag is
-not for use with `SetFileInformationByHandle()` though, which is what we
-use. And while the `FILE_RENAME_FLAG_POSIX_SEMANTICS` flag exists, it is
-not documented on [2] or anywhere else as far as I can tell.
+Either way, I'm going to avoid queueing this round since it is missing
+the required Signed-off-by line.
 
-Unfortuntaly, we still support Windows systems older than Windows 10
-that do not yet have this new flag. Our `_WIN32_WINNT` SDK version still
-targets 0x0600, which is Windows Vista and later. And even though that
-Windows version is out-of-support, bumping the SDK version all the way
-to 0x0A00, which is Windows 10 and later, is not an option as it would
-make it impossible to compile on Windows 8.1, which is still supported.
-Instead, we have to manually declare the relevant infrastructure to make
-this feature available and have fallback logic in place in case we run
-on a Windows version that does not yet have this flag.
-
-On another note: `mingw_rename()` has a retry loop that is used in case
-deleting a file failed because it's still open in another process. One
-might be pressed to not use this loop anymore when we can use POSIX
-semantics. But unfortuntaley, we have to keep it around due to our
-dependence on the `FILE_SHARE_DELETE` flag. While we know to set that
-sharing flag now, other applications may not do so and may thus still
-cause sharing violations when we try to rename a file.
-
-This fixes concurrent writes in the reftable backend as demonstrated in
-t0610, but may also end up fixing other usecases where Git wants to
-perform renames.
-
-[1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/ns-ntifs-_file_rename_information
-[2]: https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_rename_info
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- compat/mingw.c             | 87 ++++++++++++++++++++++++++++++++++++--
- t/t0610-reftable-basics.sh |  8 ++--
- 2 files changed, 88 insertions(+), 7 deletions(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index ce95f3a5968..df78f61f7f9 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2206,10 +2206,16 @@ int mingw_accept(int sockfd1, struct sockaddr *sa, socklen_t *sz)
- #undef rename
- int mingw_rename(const char *pold, const char *pnew)
- {
-+	static int supports_file_rename_info_ex = 1;
- 	DWORD attrs, gle;
- 	int tries = 0;
- 	wchar_t wpold[MAX_PATH], wpnew[MAX_PATH];
--	if (xutftowcs_path(wpold, pold) < 0 || xutftowcs_path(wpnew, pnew) < 0)
-+	int wpnew_len;
-+
-+	if (xutftowcs_path(wpold, pold) < 0)
-+		return -1;
-+	wpnew_len = xutftowcs_path(wpnew, pnew);
-+	if (wpnew_len < 0)
- 		return -1;
- 
- 	/*
-@@ -2220,11 +2226,84 @@ int mingw_rename(const char *pold, const char *pnew)
- 		return 0;
- 	if (errno != EEXIST)
- 		return -1;
-+
- repeat:
--	if (MoveFileExW(wpold, wpnew, MOVEFILE_REPLACE_EXISTING))
--		return 0;
-+	if (supports_file_rename_info_ex) {
-+		/*
-+		 * Our minimum required Windows version is still set to Windows
-+		 * Vista. We thus have to declare required infrastructure for
-+		 * FileRenameInfoEx ourselves until we bump _WIN32_WINNT to
-+		 * 0x0A00. Furthermore, we have to handle cases where the
-+		 * FileRenameInfoEx call isn't supported yet.
-+		 */
-+#define FILE_RENAME_FLAG_REPLACE_IF_EXISTS                  0x00000001
-+#define FILE_RENAME_FLAG_POSIX_SEMANTICS                    0x00000002
-+		FILE_INFO_BY_HANDLE_CLASS FileRenameInfoEx = 22;
-+		struct {
-+			/*
-+			 * This is usually an unnamed union, but that is not
-+			 * part of ISO C99. We thus inline the field, as we
-+			 * really only care for the Flags field anyway.
-+			 */
-+			DWORD Flags;
-+			HANDLE RootDirectory;
-+			DWORD FileNameLength;
-+			/*
-+			 * The actual structure is defined with a single-character
-+			 * flex array so that the structure has to be allocated on
-+			 * the heap. As we declare this structure ourselves though
-+			 * we can avoid the allocation and define FileName to have
-+			 * MAX_PATH bytes.
-+			 */
-+			WCHAR FileName[MAX_PATH];
-+		} rename_info = { 0 };
-+		HANDLE old_handle = INVALID_HANDLE_VALUE;
-+		BOOL success;
-+
-+		old_handle = CreateFileW(wpold, DELETE,
-+					 FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,
-+					 NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-+		if (old_handle == INVALID_HANDLE_VALUE) {
-+			errno = err_win_to_posix(GetLastError());
-+			return -1;
-+		}
-+
-+		rename_info.Flags = FILE_RENAME_FLAG_REPLACE_IF_EXISTS |
-+				    FILE_RENAME_FLAG_POSIX_SEMANTICS;
-+		rename_info.FileNameLength = wpnew_len * sizeof(WCHAR);
-+		memcpy(rename_info.FileName, wpnew, wpnew_len * sizeof(WCHAR));
-+
-+		success = SetFileInformationByHandle(old_handle, FileRenameInfoEx,
-+						     &rename_info, sizeof(rename_info));
-+		gle = GetLastError();
-+		CloseHandle(old_handle);
-+		if (success)
-+			return 0;
-+
-+		/*
-+		 * When we see ERROR_INVALID_PARAMETER we can assume that the
-+		 * current system doesn't support FileRenameInfoEx. Keep us
-+		 * from using it in future calls and retry.
-+		 */
-+		if (gle == ERROR_INVALID_PARAMETER) {
-+			supports_file_rename_info_ex = 0;
-+			goto repeat;
-+		}
-+
-+		/*
-+		 * In theory, we shouldn't get ERROR_ACCESS_DENIED because we
-+		 * always open files with FILE_SHARE_DELETE But in practice we
-+		 * cannot assume that Git is the only one accessing files, and
-+		 * other applications may not set FILE_SHARE_DELETE. So we have
-+		 * to retry.
-+		 */
-+	} else {
-+		if (MoveFileExW(wpold, wpnew, MOVEFILE_REPLACE_EXISTING))
-+			return 0;
-+		gle = GetLastError();
-+	}
-+
- 	/* TODO: translate more errors */
--	gle = GetLastError();
- 	if (gle == ERROR_ACCESS_DENIED &&
- 	    (attrs = GetFileAttributesW(wpnew)) != INVALID_FILE_ATTRIBUTES) {
- 		if (attrs & FILE_ATTRIBUTE_DIRECTORY) {
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index babec7993e3..eaf6fab6d29 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -450,10 +450,12 @@ test_expect_success 'ref transaction: retry acquiring tables.list lock' '
- 	)
- '
- 
--# This test fails most of the time on Windows systems. The root cause is
-+# This test fails most of the time on Cygwin systems. The root cause is
- # that Windows does not allow us to rename the "tables.list.lock" file into
--# place when "tables.list" is open for reading by a concurrent process.
--test_expect_success !WINDOWS 'ref transaction: many concurrent writers' '
-+# place when "tables.list" is open for reading by a concurrent process. We have
-+# worked around that in our MinGW-based rename emulation, but the Cygwin
-+# emulation seems to be insufficient.
-+test_expect_success !CYGWIN 'ref transaction: many concurrent writers' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
- 	(
--- 
-2.47.0.118.gfd3785337b.dirty
-
+Thanks,
+Taylor
