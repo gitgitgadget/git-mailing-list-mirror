@@ -1,167 +1,105 @@
-Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443471C243C
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 17:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9FB1D043F
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 17:23:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729703268; cv=none; b=p+k8zJIFLwR/88IL0jRuuOmBLNILn2opg9DhrpRzX2hKtl9fbseF359WM7nXAn0vHWXsg4ujEe7A9KM/sJw7qQveF1H6dCCaPh7ixwjXhn/eRueu7Z0KHkBScoCtXvEgC6KpHcya+bNqeXBsB7rZQrfLo0pH7Z+N7HthzoCTnMo=
+	t=1729704198; cv=none; b=SzQjC/SH62W6GKJ0Tu9pvetsJJmP80W0OKF6wMDe7ZsedLUUjAdzLYnJF6mzVfZ9KM36n1P5gQPeIiWD/eCNWWhHkf+DLiJn84wQFwpDKtv+QV5g/XBACcIdzUro04DbHyuSQdCOOkK9GkN+TvsT+7rhY4HtVzpzOv2gXedMwtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729703268; c=relaxed/simple;
-	bh=TxMICiVG/385z3Iioj2gEgaUcRDEU5K+rUB/FTxeYfs=;
-	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
-	 References:In-reply-to; b=Q9coekWaLX/JT/ML1nbge3gI3UaFic5vk4hYUoaNlZMEiaDJtkE5o+xjf9YKMuaXKrJzVsiYU6wATlXIq8u867i5p/vdhXGnwESURIUlt3Xp743xVmjocuQPOpjPsmv1sFUEFyWhCf3JM89E/dTII7UKdG5mvNkVB0e76VjViW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=JSPVDJjy; arc=none smtp.client-ip=192.29.178.125
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1729704198; c=relaxed/simple;
+	bh=f8Dv0Je5Yd+STgqodnpVMWYuWdGTirQ8GRIHIhd0flY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OMwPPdpgDnbRM7ESUev3qAzNZ3Lpi/9TENsScJpa8L2lxRQVowteI8lQDiLvoFwzlqqFIudjTtAGwERrmbwd9acFnFY1MMLldx/BntrY1ALAKkcx6Q7ulxk5+UzcY9vGss04BYvWWriWsZISaPDRZaj81AwioLusa91KsEP0P9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZMhYDRqQ; arc=none smtp.client-ip=209.85.210.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="JSPVDJjy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=QWCNuKJWucYckNnCeHWT1ifgceilhNRgh6lmimzA124=;
- b=JSPVDJjyjhg2FeL6MmMHkBtI3U59hoEn61fU+pdC3DPiVMZ8YBv/Zr/ZpMo0iUN1ZAYMuvjhtyme
-   SlTFzS/cytRUF4AH0ir7/NxewcuMu9UZCHFE18oeeo22upm3/RwaZ5fnqh+YNrRn8Ivw9GmqJr95
-   Czf8GBytReJ1hqYo0f58knDjuQ6d82S1g7InOZ33a0JpKyMSW/5gobiQZ5VmE4keh3jpfCDPc/aI
-   tHtH9A2EYNbTZTMAkzzNTKVjy77IlZbvVH4U4LjiiyqhEV+zzlICT1aisxDSx3Iw0+raQ73+mGIs
-   ByIRcV8gaeDJzexR2VYJfBK2F5iQffpJ+dEA4g==
-Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SLT00G2DJKW6320@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Wed, 23 Oct 2024 17:07:44 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZMhYDRqQ"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-715716974baso27233a34.1
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 10:23:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729704196; x=1730308996; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rpWSEBGLYjOOX1dUb54be1rkq/WpZNLltiR8svtWlZQ=;
+        b=ZMhYDRqQgAQpHsr+cFI3Ah5jg7AD33ejzTiy8UqimWhnQubtopTFGsBeXG7qzQCwwu
+         kJnySj4wyar8FNQhbJrXcDG5ZDw3CX9c5Iou53GNZEEWDPPtdhJAbBtzEx1jRFi4qnxe
+         WB6b9X4Fd2fLOan2GbpkKOkShr7lr4Iw310Uo5OmvvwAOLyooq67u7eFXFWekzXDV03+
+         cHPA6B+nlvJwfxmLS7On8iQ7lyzUz8dqcrVjZscaZf8TTJY9UOw2igx7PK57ZyC5GgO7
+         Jzxuy6wgAk/5ndtLQjcggsNI89vxp8YpQd80iq/T+Q8iGeoVPXH1jDxGUkREG2apYI+R
+         JB5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729704196; x=1730308996;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rpWSEBGLYjOOX1dUb54be1rkq/WpZNLltiR8svtWlZQ=;
+        b=JsEdJ41Vn8yRL6vGAtQiJLRFLeSffpDRBA3Un1PNg51j3VuTIEGyy4SQeDL7bUm46S
+         Dqu6YqYf0rO5il8IKSXIwPMI2bIqKzM5SQhCBhosV4zdMEy9Du4ulX8Z8l26C1+m12nj
+         f2VcG7gp8pPJDtwZvW3Uz8oqdmu9W1Pbr/KY+eWvOO1g4/P1z1K2e+MZ25LwPgVRnIi1
+         e5HHSwok96e3vbEBfdrIUEItxLCyPMcskTt/hQGYJaF1rB92nUYx+6zkgPPJx+QBwoZH
+         zXWdHnHa+9rM+wq9IFwqT802wHGkQPNccgn774eHZ6bipM9bUgUHJP27DpkUegVbxf0D
+         IckQ==
+X-Gm-Message-State: AOJu0YwplD3tCGDqvl0t/5XSNwkDiUc6jlQqI2MdOI2opq3kfYzDXflB
+	04SP0wHLwA82Z8V/gfxtO9CmGPZQI2OfQo+kjQgPY6VJSqOJzOaYFBCAzJy+E78=
+X-Google-Smtp-Source: AGHT+IGXpurU7AjdcaSO8W4Nlap0/wFLmj5Qxt0kdD6PbWgjrLHPTolykJV1mgHZchbvIX7KE6cIqA==
+X-Received: by 2002:a05:6830:2701:b0:718:41c6:821c with SMTP id 46e09a7af769-7184b3688e2mr4085360a34.5.1729704196096;
+        Wed, 23 Oct 2024 10:23:16 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ce00902ca1sm41403866d6.53.2024.10.23.10.23.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2024 10:23:15 -0700 (PDT)
+Date: Wed, 23 Oct 2024 13:23:14 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/3] compat/mingw: share file handles created via
+ `CreateFileW()`
+Message-ID: <ZxkxAvLeMtxstVdS@nand.local>
+References: <cover.1729695349.git.ps@pks.im>
+ <907576d23d1dc39b679a323e74b6bfb227d6c17d.1729695349.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Wed, 23 Oct 2024 19:07:06 +0200
-Message-id: <D53CMCABS8FO.374EKJJ6LN0MJ@ferdinandy.com>
-Subject: Re: [PATCH v12 7/8] fetch: set remote/HEAD if it does not exist
-Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>, "Karthik Nayak" <karthik.188@gmail.com>,
- "Taylor Blau" <me@ttaylorr.com>, <ferdinandy.bence@ttk.elte.hu>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-References: <20241022194710.3743691-1-bence@ferdinandy.com>
- <20241023153736.257733-1-bence@ferdinandy.com>
- <20241023153736.257733-8-bence@ferdinandy.com>
- <d715d76b-1dd2-46e7-a16b-b2cf30940470@app.fastmail.com>
-In-reply-to: <d715d76b-1dd2-46e7-a16b-b2cf30940470@app.fastmail.com>
-Reporting-Meta:
- AAE3E2yj7RcntEa9ZQAgXIrjzU4XcukpfUYogdhY4k8jpoCTBWTGODvDlIz70Xjn
- ssPa+a+P7IAcXylge90mhQyLXr6svSzJuZSx0pa93lPtR6+zwhS5mfEDg8SosCjo
- hn+GibTJyK/faJiFY5EKRYrl1rqIfvhU6JejuKE28b5Rw4ZRZht8YHjzzB73qmYC
- kOPbMCKD9BXEMSgxZ8Ih/WF2OoNNcHcH2bvewRT0tFzvadL9cioye7YoFYgT4pVo
- Vr6Mb4AHf1UacY+8XZ7chPBWeGLZNVf78wFzmcMa4U9wfXPWbPXx332dr47CssVT
- LX6uE4G4ADRTJHueIMom+nSuIDkWNf2xuwv5KRhM+YGtMJ/9lq9En8JzRwfcUs31
- 8cxj/oJGEYYigJ/tXL/I8RZ0ajSuDm00Ij2ZEjSyPl2nz6hGSb9QddAEELTG/20n
- RZCOoggrxngsypVrWQT+m8lPMdtKlOkPqQ9yR3M1EpAf555n24N4PCdi
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <907576d23d1dc39b679a323e74b6bfb227d6c17d.1729695349.git.ps@pks.im>
 
-
-On Wed Oct 23, 2024 at 18:50, Kristoffer Haugsbakk <kristofferhaugsbakk@fas=
-tmail.com> wrote:
-> On Wed, Oct 23, 2024, at 17:36, Bence Ferdinandy wrote:
->> If the user has remote/HEAD set already and it looks like it has changed
->> on the server, then print a message, otherwise set it if we can.
->> Silently pass if the user already has the same remote/HEAD set as
->> reported by the server or if we encounter any errors along the way.
->>
->> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
->> ---
->>
->> Notes:
->>     v3: - does not rely on remote set-head anymore so it only authentica=
-tes
->>         once
->>         - uses the new REF_CREATE_ONLY to atomically check if the ref ex=
-ists
->>           and only write it if it doesn't
->>         - in all other cases the maximum it does is print a warning
->>
->>     v4: - instead of the discarded REF_CREATE_ONLY, it uses the existing=
-,
->>           but updated transaction api to request a silent create only
->>         - it now uses the atomic before_target to determine reporting
->>         - refactored for legibility
->>
->>     v5: - instead of printing a not too useful message, it now fails
->>           silently, this in line with the objective to only set up
->>           remote/HEAD automatically if the right thing is trivial, for
->>           everything else there is remote set-head
->>         - fixed all failing tests
->>         - added two new tests, one for checking if remote/HEAD is set to=
- the
->>           correct one, and one to test that we do not override remote/HE=
-AD
->>           if it has changed on the server from what we have locally
->>
->>     v6: - fixed style issues and unintended extra empty line
->>         - updated function call with bool to int from previous patch's
->>           change
->>         - removed calls to error(...) inherited from builtin/remote.c so=
- we
->>           actually fail silently
->>         - set the test for remote set-head --auto to the correct value h=
-ere,
->>           which was previously erronously set in the remote set-head pat=
-ch
->>
->>     v7: - no change
->>
->>     v8: - changed logmsg in call to refs_update_symref from "remote
->>           set-head" to "fetch"
->>
->>     v9: - follow through with refs_update_symref_extended
->>         - fix test errors uncovered by the new patch
->>
->>     v10: no change
->>
->>     v11: fixed some memory leaks
->>
->>     v12: no change
+On Wed, Oct 23, 2024 at 05:04:58PM +0200, Patrick Steinhardt wrote:
+> Unless told otherwise, Windows will keep other processes from reading,
+> writing and deleting files when one has an open handle that was created
+> via `CreateFileW()`. This behaviour can be altered via `FILE_SHARE_*`
+> flags such that other processes _can_ read and/or modify such a file.
+> This sharing mechanism is quite important in the context of Git, as we
+> assume POSIX semantics all over the place.
 >
-> I think it would be better to reverse-order these patch changelog
-> comments so that the newest is on top/first.  (for next time)
+> There are two calls where we don't set up those flags though:
 >
-> Thanks for the careful versioning here.
+>   - We don't set `FILE_SHARE_DELETE` when creating a file for appending
+>     via `mingw_open_append()`. This makes it impossible to delete the
+>     file from another process or to replace it via an atomic rename.
+>
+>   - When opening a file such that we can change its access/modification
+>     times. This makes it impossible to perform any kind of operation
+>     on this file at all from another process. While we only open the
+>     file for a short amount of time to update its timestamps, this still
+>     opens us up for a race condition with another process.
+>
+> Adapt both of these callsites to pass all three sharing flags.
 
-Yeah, this works fine when you only go up to v3 and it all fits on a screen=
- :D
-This is definitely the longest patch series I've made thus far, both in num=
-ber
-of commits and versions. I also noticed this today when I realized that I d=
-id the
-cover letter in reverse and how much better readable that was than some of =
-the
-patches ...
+Interesting, and especially so noting that we *do* call CreateFileW()
+with the FILE_SHARE_DELETE flag in other functions like create_watch(),
+mingw_open_existing(), mingw_getcwd(), etc.
 
-One thing that would not be easy is that with so many patches, how I start =
-out
-the notes is
+Why didn't we call CreateFileW() with FILE_SHARE_DELETE in the below two
+functions? I assume Johannes Schindelin and/or Johannes Sixt (both CC'd)
+would know the answer. Regardless, it would be interesting and useful
+(IMHO) to include such a detail in the commit message.
 
-	git rev-list HEAD~8..HEAD | xargs -i git notes append {} -m "v12: no chang=
-e"
-
-and there's no "git notes prepend". That could be another patch for another
-time :) It also bothers me, that the branch description that can be used to
-save cover letters is not a note, just a local configuration, but that's
-a third issue.
-
-Anyhow, thanks for calling it out, if we do come to a v13 I might just spen=
-d
-some time on reversing (or be lazy and just continue at the top ...).
-
-Best,
-Bence
-
---=20
-bence.ferdinandy.com
-
+Thanks,
+Taylor
