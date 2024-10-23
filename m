@@ -1,91 +1,126 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC4D1CA81
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 01:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60034C79
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 05:00:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729646434; cv=none; b=rIGQCs40/3rp7P6XnnThwo1zMzO7RNua9y/nEp87hfxbCwB6wZCfwd220ZSf0gWDzbP6cYwfwzt4sZoWqQ59bsPlqAIo+Qb/yxFRPJ6+aNlP1qb6tnGSti1MXznKckY7y069TXk8vPPbHnxHUxOliF3oOn9DnwQi4kkc/muY5Q8=
+	t=1729659620; cv=none; b=X+3hbQUkPsuv1URSiP3SyGfFvLux9Vx3OEwOif7lS7AW8ePgviPpNTSK01UqwWHBNpc7t1T/5Lh7Q9y9he6FE9TThvo9V+OxmDrBw4Dp3lsgdhSmM88k6xqmjXUezBKcxGJbTXWRUCseJTraJM2tgEVG61JqU8ncZQi4qkKPE9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729646434; c=relaxed/simple;
-	bh=EYcszAra0N+6riI9rR7/mtweGZhc+ZIJnCauD5iiiuA=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=h9w7+LdR80miLAj9ekdOK2HaCJ+VVbp1GU8XAWCD9UIGFXwpmZSwLlsxhRjbOSj+WpmjAlghP1SHiVjV7X65+lB3FnNUyS+zkxNEZI56Ajyy8QJKOkE6XcMaMjoOzlc2XwliArx/hWLni1HkwfpeDVB/DIgy4NEokiKcRMt0YVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 49N1F7DS3000207
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 01:15:08 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'brian m. carlson'" <sandals@crustytoothpaste.net>, <git@vger.kernel.org>
-Cc: "'Junio C Hamano'" <gitster@pobox.com>, "'Taylor Blau'" <me@ttaylorr.com>
-References: <20241010235621.738239-1-sandals@crustytoothpaste.net> <20241023004600.1645313-1-sandals@crustytoothpaste.net> <20241023004600.1645313-12-sandals@crustytoothpaste.net>
-In-Reply-To: <20241023004600.1645313-12-sandals@crustytoothpaste.net>
-Subject: RE: [PATCH v2 11/12] Require Perl 5.26.0
-Date: Tue, 22 Oct 2024 21:15:02 -0400
-Organization: Nexbridge Inc.
-Message-ID: <010f01db24e9$00250e50$006f2af0$@nexbridge.com>
+	s=arc-20240116; t=1729659620; c=relaxed/simple;
+	bh=t3wtVarcYxdmDwkjGO26cdEJhxjWJctdXi7b3rQSGBk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t59JgpkZHeiTpx2b906TJCHyelNASzj3zPwRse1/lOjZX4gpgVTLCsBqxm1gZYpUza8jnjBWQJA+kxxSoxjl2T10er78t2ugJDzXfrYFc/bILf+RngNa2GSNqx/6Ic8famGccEvCPfteClQLB1wqBHImOg0vCrOK/vGL0kCyOSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KKmx2XQE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lFHcreoF; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KKmx2XQE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lFHcreoF"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AC091114018F;
+	Wed, 23 Oct 2024 01:00:15 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 23 Oct 2024 01:00:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1729659615; x=1729746015; bh=HU+hSIBJcZ
+	Dp+/kGFviQbWzTmo0q+V27ACgVcucTtuQ=; b=KKmx2XQEL/ZngAIZyeJ5FIuH6M
+	Cl/DS5hjMY/k485CslZ2EOtVHvuAKyVa5AbFSYGlSfj+hLauyQdpD4bJQl7avyPh
+	N3zXLI/gB3t05Clejg4gwJxCOrF3UkPPtSNj9wFr8oeqhvvEP55AvwHtI3F9DC4W
+	Xn/wWqLlnv+OyUV7Lq9wSA3SJ2Jf8uzJ4uI1c73ftsVJ/jCFq4J7Nej+/SShRbUP
+	N88B7A/3PpynAXyHX+9o7XsOCuwCnYNalUwrqVKbdV9OrsdjpD4Q5jLtAaYoKQb2
+	DDQ5z2R+91pBjroNvkRITRw66eh4KF7nH5z2IKRNGjXtJSrFd3LU1/yGGsrg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1729659615; x=1729746015; bh=HU+hSIBJcZDp+/kGFviQbWzTmo0q
+	+V27ACgVcucTtuQ=; b=lFHcreoFubKwYc8CWzRsNCryLQzAfr3Y4EcnV1msR7uT
+	3MV8hDdaGPWCUbJQvRTdR43xrzL64xLp+gbLLQU+kZN76kkfM5OoDUqzeEl39WfF
+	2bJXrD0W4pyOSV44+6iZUTh2UjxWGARYWzjH4eiS5f/j9feILahYE9qdK5tpDieu
+	gV/8mctcRQlkNh/6EjJucjYMEiw/Q/SEuU77EM9TbLmRgGAirYdWobLLyrRGTVH2
+	XK1/GmLOS8ssY3jIW+zbdcT1njErhKq2ulsJKnEhnQDx7Es3m38SFXC8+dhO5ETn
+	q/Cwj1b63uRpKipji9m7AUuHg7FgVjcV9Jsdee6RWw==
+X-ME-Sender: <xms:3oIYZ0e3-0u2sSsLYEkWBLtYgUfiCA_yvtDLMGxLizYHddzUY-Pk_w>
+    <xme:3oIYZ2PvQFA2DGYLOS7n2w9mekh6ai8uJPyF2g4nKDsRMSFp5mOSoV1HQRgZLAf-x
+    AGBvt3AyPpcrJ5NIw>
+X-ME-Received: <xmr:3oIYZ1g3XQPcSCW_vGti5ff72S8FEe_uN4UQ3SvFGcshL-36LGcLQvC4H3OZbYtz2RkdKv6uNusns6E10jOXaT6WvscmDEXI0l56ZQJRqb7p>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeiiedgledtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepjeevudeggfffffeigeethffgieekveeffeehvedvgeei
+    teegueejleeihfeitdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrh
+    hishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllh
+    hiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepmhgvsehtthgr
+    hihlohhrrhdrtghomhdprhgtphhtthhopehkuhhfohhrihhjihelkeesghhmrghilhdrtg
+    homh
+X-ME-Proxy: <xmx:3oIYZ58MbcgZt0PB3fP6zv-Rdo4KObOoWX7buRg_hnTJ1Yhxusdn1Q>
+    <xmx:3oIYZwv-nBBQOr-BLZomG2QVv-dR2N7PGiBNMFXRu8H9sOP6Fzpo_A>
+    <xmx:3oIYZwGpIFzKNdDbdrDqphHLWutTUkoNQefOTteC8pQJ39e8uCggcA>
+    <xmx:3oIYZ_NsSK9HrpcfHQGa1-o2lsX3eGFKyUipSopQ70KB1Y_u0C8Qbw>
+    <xmx:34IYZ6ULgHt-9w6iYOQWH-hiqkLgW-zFbCj1K7RSZhOBU5bB55ycho8W>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Oct 2024 01:00:13 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 00cb4741 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 23 Oct 2024 04:58:39 +0000 (UTC)
+Date: Wed, 23 Oct 2024 07:00:08 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Seyi Chamber <kuforiji98@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 Outreachy] t7011: ensure no whitespace after redirect
+Message-ID: <ZxiC06eY4mMh1Xun@pks.im>
+References: <20241019163439.274656-1-kuforiji98@gmail.com>
+ <cb88194a-15d2-4c3d-8768-189853572ac0@app.fastmail.com>
+ <ZxZDFyKxTn_D7c3o@pks.im>
+ <CAGedMteMtaOvyE2gX59bMudEUmCZw7nOh=MuDRi=7CbYm-gBDQ@mail.gmail.com>
+ <ZxaySpwA7jg7c1aw@nand.local>
+ <CAGedMtea3_65wuOc1c548TC1x=ThirB1gC8p6kTomwWf_VzDng@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHAnR9StMNONYzAAmwEURVcWfNXrQEiTVpAAko++0KyrTKVoA==
-Content-Language: en-ca
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGedMtea3_65wuOc1c548TC1x=ThirB1gC8p6kTomwWf_VzDng@mail.gmail.com>
 
-On October 22, 2024 8:46 PM, brian m. carlson wrote:
->Our platform support policy states that we require "versions of
-dependencies which
->are generally accepted as stable and supportable, e.g., in line with the
-version used
->by other long-term-support distributions".  Of Debian, Ubuntu, RHEL, and
-SLES, the
->four most common distributions that provide LTS versions, the version with
->mainstream long-term security support with the oldest Perl is 5.26.0 in
-SLES 15.6.
->
->This is a major upgrade, since Perl 5.8.1, according to the Perl
-documentation, was
->released in September of 2003.  It brings a lot of new features that we can
-choose
->to use, such as s///r to return the modified string, the postderef
-functionality, and
->subroutine signatures, although the latter was still considered
-experimental until
->5.36.
->
->This change was made with the following one-liner, which intentionally
-excludes
->modifying the vendored modules we include to avoid conflicts:
->
->    git grep -l 'use 5.008001' | grep -v 'LoadCPAN/' | xargs perl -pi -e
-'s/use
->5.008001/require v5.26/'
->
->Use require instead of use to avoid changing the behavior as the latter
-enables
->features and the former does not.
->
->Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+On Tue, Oct 22, 2024 at 06:11:17PM +0100, Seyi Chamber wrote:
+> On Mon, 21 Oct 2024 at 20:58, Taylor Blau <me@ttaylorr.com> wrote:
+> >
+> > On Mon, Oct 21, 2024 at 06:17:06PM +0100, Seyi Chamber wrote:
+> > > Yay!
+> > >
+> > > Thank you for the feedback @Patrick Steinhardt @Kristoffer Haugsbakk
+> >
+> > Thanks, all. Let's start merging this one down.
+> >
+> > Thanks,
+> > Taylor
+> 
+> Thanks, Taylor!
+> 
+> I've also discovered that the test script t9101-git-svn-props.sh also
+> requires the same update done in this patch.
+> Is this test script currently being worked on? @Patrick Steinhardt
 
-Please be aware that the most recent version of Perl available on NonStop is
-currently
-5.26.3. On the ia64 variant, we will not see a newer version *ever*. The x86
-platform
-Supports 5.30.3 and may evolve. By the end of 2025, the ia64 platform goes
-away, so
-as long as we can keep 5.26.x as a minimum, that would be acceptable.
+Not that I'd know of. I typically double check via lore by searching for
+the relevant subsystem [1]. This only surfaces your mail and the Meson
+patch series, so at least nobody else has communicated intent to work on
+it.
 
-Thanks,
-Randall
+Patrick
 
+[1]: https://lore.kernel.org/git/?q=t9101
