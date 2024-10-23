@@ -1,133 +1,181 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A183A1AB50D
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 12:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D27B1AB6F1
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 12:11:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729685086; cv=none; b=UdztTNz/hsOthiKO1LHDE3Cjs47m1K5p0FRmnzGppuffxOeEnjfd6Ljpkc+oSNd+/2A6WemWlDWGnr2uwwnTq7X8oB6lLE9Vttn68Zc8WcvHlvUu/RPm/iOR4UgfcQbtIQ1rmoSSss4JtysSqtJuOgVLvF6105jBo/1GXCHYK90=
+	t=1729685484; cv=none; b=Tg1qBd3L6eQyywyQIJQYbB8CQs39vDe6fd3zgaMG6jvD7c8BmbCd7aQTAwnE7iFZGERpWpcnTdhbdMR+vvu2WNoFbip/2XXaxcu8XZh0w+Bky/ecEjSRB+vZgm+wsSmwzfQDjstc7/x6nnbRtiTzuXcofNRGCiyO6l4KvICp884=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729685086; c=relaxed/simple;
-	bh=WqIEnudf8Iy6o6VhrB9115zYmAxbvnlPwKhw5sEDhWE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hImdIr2bCi3VhIpALmn2KFyRqkiDAT/cooTA10gZ5VJe9OuyDAX5PKULKAOcAF4p4xn71XM3TnTlq0b6Wb3vrE2co5DX3egunnY4yxE4l/ND44h59oMOe/4VG4lT3sxiBYHHMbMUD+9KPofdyiYqKQCJyvMF7psWuRximVVqJJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O+B7hiuE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ppsuq6xm; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1729685484; c=relaxed/simple;
+	bh=jXNRoXZxMh8m85UlmkzeYHWs92yFe3jAmJq8Zy2DWVE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QJqTO3Fdj2pHpoaytYAkRqS4KF9O9cZmsyuktEgl/SqSWMkWRGc/SET8i6bQGe0U4t6pRMcJq2VSUwQqYrKFVcAydLnCt29O6Qk4vlhA42uVmCp/LpFvsNZXRsjBOS6PgdwADqUvx3D6pDmMD16KGU+sDVGVWN8e4dDnru//QLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cEZbu2fy; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O+B7hiuE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ppsuq6xm"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id C59A01380775;
-	Wed, 23 Oct 2024 08:04:43 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 23 Oct 2024 08:04:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729685083;
-	 x=1729771483; bh=n1cHfLs7unERsb4ACInykbucYs6TcfsaKOeCaURUL6E=; b=
-	O+B7hiuEKBv7rEr3jGlamrw+mmk3I6zLPSN2ZmRMrALGVMxtjXszJ8ZJUIhtkKDd
-	Nfx+3Cs1cdxVSZByc5uBn9baeF+ewsmgw88wKVcqYsIt/si/pmWendux/0/tcjCS
-	O5cHJLp290YTP+l+ERrRCXT0smd2R0EI1gF6b1U0FIRby8eciuDbCS1NoAxWBh2Z
-	pOtaltkZot5Qp14E7B0mM4Sj9ZnhCYz19B63080ADvy+0WHdm3HislwUiMfXgSx1
-	lpCp2HfXjtTrYyPQuc3aesOJ2lEZQMTQZe5WTmkK/JRMkGGGpFSkpVdDDT9VaR6q
-	jEkKTNg85miYg2OqAvLNkQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729685083; x=
-	1729771483; bh=n1cHfLs7unERsb4ACInykbucYs6TcfsaKOeCaURUL6E=; b=P
-	psuq6xmdlBAMFWC1EN9kggTpNw9OhiWZwG4jj1QLN7jXBbqmxiu8z6dCjTLmcPfF
-	lBndBfkCGa16Uf5vyZHFGVc03iW7ixcHLA3Onr0/MCb1mOQRYXLd+QY5I4pZfh60
-	bzCUSjwrqSU7F9KRA5NHqhcyZQLIQnI8P/I7HIObiK7RJ9z5n1aaGbHz7exhdCrn
-	WSb9Yua3hSoiUae/wavJcluf0Hb4KaYt6qRzeesiYIXGWEl91l5ssqy0ErlTzavg
-	mnDhjbSsHY1TB3dHhwXH3800Bqi4+aOh06CjTzYzwWkkB3NxGvTkNRJBcAM4OP2h
-	CsTPiTB8FxyheHTf5GXBw==
-X-ME-Sender: <xms:W-YYZy3xGm39mTrN-pOOtly0xVYdDLbxOYUe0QoiofvLse8nFkHhfg>
-    <xme:W-YYZ1E6mUw1S6sj1YjeU05VekCALsunpjFD6sjEHc-3kLkYO9VzOecohu36p9GRg
-    WFfrWrWwy819lhfrg>
-X-ME-Received: <xmr:W-YYZ67yrj-KU--xBs9AvKDo5x7mthsJNBv4BP8NIDyedkn19TGN5mdv_NLix6LztCnNbx4JkhsjMfV3EEpNh1iPxLcr2aUyfa4aVwOT0SUH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedggeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
-    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    eprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtii
-    esghgvnhhtohhordhorhhg
-X-ME-Proxy: <xmx:W-YYZz0U0SzuHYjGXTiNQZVnpzxxxEbhpNMY9ujsXDZFmOAYzuWCiA>
-    <xmx:W-YYZ1EwtLdWycb-UslPGLZEnjOZRVNUJQxKXckepJ82NO0skc-YCg>
-    <xmx:W-YYZ8_0s2RS7diUwjAC12o8kE5DHyT9GKiiZagXqCcB2AOxxQN0Ug>
-    <xmx:W-YYZ6nHAjKVjVrnvHoTM90tnYkOLSYtQxBwFiA9WHa3QCgljGCD-w>
-    <xmx:W-YYZ677ir2B5Vr-5UvghhpCdSxq5OK0pBLQ0tX7yghszp8LIXpAjSep>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Oct 2024 08:04:42 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1b4b19b2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 23 Oct 2024 12:03:10 +0000 (UTC)
-Date: Wed, 23 Oct 2024 14:04:40 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [RFC PATCH v3 01/15] Makefile: use common template for
- GIT-BUILD-OPTIONS
-Message-ID: <ZxjmWMJ5u5pHZh9L@pks.im>
-References: <cover.1727881164.git.ps@pks.im>
- <cover.1729254070.git.ps@pks.im>
- <800fb080f45f48e248e1ed9c7b3e40cdfc526115.1729254070.git.ps@pks.im>
- <CAPig+cR2QXmgFEpaQrvsAF1jV8nZavFjYQkMXp5zaYVER2CiSg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cEZbu2fy"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4315eac969aso5739435e9.1
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 05:11:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729685480; x=1730290280; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=y4Gun0ThqNehbN78XjbxW/TVsq64QEsMTrLgiVcxt+8=;
+        b=cEZbu2fyeYkD9GJWpU6ANegfEnqYMGvHh/DASX9vLhrWnCVZleGj0/eRiqDAUmrPPm
+         ts4PNaK3p58xyO4ojTBp4FLN3v4pRO6Zp0CqvhtpVXpG+CZURV7Ixh/RRiioEwZTFWkL
+         JpUYFsuQN8aref6YAldE53xRNGBxzsG9vL+IcyDk+n7yxVTSos6TzO12CvY1ofO6nutv
+         NSmu0Rn4hlJNQ6XFzuf8wDIlmwqGPOmnT3ovrvzBFgIvY25szt5LKs6ADGBq8QzzF8I6
+         tHi/f53i/BepznSaKOdVoRfONQyo6iunKbbMF9VXSonbblTl/vVlh9YIVdni9bz/oaKI
+         c/uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729685480; x=1730290280;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y4Gun0ThqNehbN78XjbxW/TVsq64QEsMTrLgiVcxt+8=;
+        b=hgrUrEWp8G+4OTuDCPuvU0O1CTD7Hdi1s6MInb+lP/Wqm4WsXTnKlTqEmkWwuUJCFa
+         O6xe2JtBuOyJ2ZBGFegWBBBSZAj/QJ+umWIr0uW7N+pVdqzetjCB8AvHoloY2JKm9W0G
+         6gNgQr0jctkLXOl8FfH0YzRnvxHsn1DBWmKa5VhrAHJtxdv7PTLkPFX+razpdigVWmmU
+         u4EqMwSU60/kTNncaWcFn6dpwtu0fPd//QyJwUN+ujvH5/5eeXf5Z9O0jQsQOEcq2GOc
+         iFoh79Qxzx3tebe0iKo046XiKvYOuMSvn/JKw2WaNkQW3hT70nx+UB7vpjcFOXCuZ7DG
+         xF1w==
+X-Gm-Message-State: AOJu0YwWj6z5tnt+Y0GQKGR28YYkYzUT9mzXkIRDbsM5E2cNexJi6sYH
+	5yQ56jIXZGrxLBXrv/5jrGL2PfQTOZv3DwCU7D+cpdRfYz/AQjpnlCE46I9gmqir/Q==
+X-Google-Smtp-Source: AGHT+IGH79AU+/T83Z6RL9EWPoWTlrNdw1jvHYaODnWSHtSxTHcnLGcbkv8PdLDi9UNVFkXXU2hXLQ==
+X-Received: by 2002:a05:600c:4ec7:b0:42c:baf1:4c7 with SMTP id 5b1f17b1804b1-4317bd7701cmr41933765e9.4.1729685480219;
+        Wed, 23 Oct 2024 05:11:20 -0700 (PDT)
+Received: from localhost.localdomain ([154.118.59.16])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-37ee0b9bb42sm8713594f8f.98.2024.10.23.05.11.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2024 05:11:19 -0700 (PDT)
+From: Seyi Kuforiji <kuforiji98@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	kristofferhaugsbakk@fastmail.com,
+	me@ttaylorr.com,
+	Seyi Kuforiji <kuforiji98@gmail.com>
+Subject: [PATCH Outreachy] t9101: ensure no whitespace after redirect
+Date: Wed, 23 Oct 2024 13:11:12 +0100
+Message-ID: <20241023121113.915310-1-kuforiji98@gmail.com>
+X-Mailer: git-send-email 2.47.0.86.g15030f9556
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cR2QXmgFEpaQrvsAF1jV8nZavFjYQkMXp5zaYVER2CiSg@mail.gmail.com>
 
-On Sat, Oct 19, 2024 at 01:00:46AM -0400, Eric Sunshine wrote:
-> On Fri, Oct 18, 2024 at 8:23 AM Patrick Steinhardt <ps@pks.im> wrote:
-> > Introduce a new "GIT-BUILD-OPTIONS.in" template to address this issue.
-> > This has multiple advantages:
-> > [...]
-> >   - Some build systems complain when not all variables could be
-> >     substituted, alerting us of mismatches. Others don't, but if we
-> >     forgot to substitute such variables we now have a bogus string that
-> >     will likely cause our tests to fail, if they have any meaning in the
-> >     first place.
-> 
-> Regarding the above...
-> 
-> > +       @sed \
-> > +               -e "s|@SHELL_PATH@|\'$(SHELL_PATH_SQ)\'|" \
-> > +               -e "s|@TEST_SHELL_PATH@|\'$(TEST_SHELL_PATH_SQ)\'|" \
-> > +               [...]
-> > +               GIT-BUILD-OPTIONS.in >$@+
-> >         @if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
-> >         @if test -f GIT-BUILD-DIR; then rm GIT-BUILD-DIR; fi
-> 
-> ... can't we `grep` whether any unsubstituted variables remain in $@+
-> and complain if they do?
+This change updates the script to conform to the coding
+standards outlined in the Git project's documentation. According to the
+guidelines in Documentation/CodingGuidelines under "Redirection
+operators", there should be no whitespace after redirection operators.
 
-You mean with the new `GIT-BUILD-OPTIONS.in` template? Yes, we can.
-Meson generates such warnings automatically, but that of course does not
-help our Makefile.
+Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
+---
+ t/t9101-git-svn-props.sh | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-I'll add that.
+diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
+index 52046e60d5..b2ee626b9a 100755
+--- a/t/t9101-git-svn-props.sh
++++ b/t/t9101-git-svn-props.sh
+@@ -21,32 +21,32 @@ a_empty_cr=
+ a_empty_crlf=
+ 
+ cd import
+-	cat >> kw.c <<\EOF
++	cat >>kw.c <<\EOF
+ /* Somebody prematurely put a keyword into this file */
+ /* $Id$ */
+ EOF
+ 
+-	printf "Hello\r\nWorld\r\n" > crlf
++	printf "Hello\r\nWorld\r\n" >crlf
+ 	a_crlf=$(git hash-object -w crlf)
+-	printf "Hello\rWorld\r" > cr
++	printf "Hello\rWorld\r" >cr
+ 	a_cr=$(git hash-object -w cr)
+-	printf "Hello\nWorld\n" > lf
++	printf "Hello\nWorld\n" >lf
+ 	a_lf=$(git hash-object -w lf)
+ 
+-	printf "Hello\r\nWorld" > ne_crlf
++	printf "Hello\r\nWorld" >ne_crlf
+ 	a_ne_crlf=$(git hash-object -w ne_crlf)
+-	printf "Hello\nWorld" > ne_lf
++	printf "Hello\nWorld" >ne_lf
+ 	a_ne_lf=$(git hash-object -w ne_lf)
+-	printf "Hello\rWorld" > ne_cr
++	printf "Hello\rWorld" >ne_cr
+ 	a_ne_cr=$(git hash-object -w ne_cr)
+ 
+ 	touch empty
+ 	a_empty=$(git hash-object -w empty)
+-	printf "\n" > empty_lf
++	printf "\n" >empty_lf
+ 	a_empty_lf=$(git hash-object -w empty_lf)
+-	printf "\r" > empty_cr
++	printf "\r" >empty_cr
+ 	a_empty_cr=$(git hash-object -w empty_cr)
+-	printf "\r\n" > empty_crlf
++	printf "\r\n" >empty_crlf
+ 	a_empty_crlf=$(git hash-object -w empty_crlf)
+ 
+ 	svn_cmd import --no-auto-props -m 'import for git svn' . "$svnrepo" >/dev/null
+@@ -57,10 +57,10 @@ test_expect_success 'checkout working copy from svn' 'svn co "$svnrepo" test_wc'
+ test_expect_success 'setup some commits to svn' '
+ 	(
+ 		cd test_wc &&
+-		echo Greetings >> kw.c &&
++		echo Greetings >>kw.c &&
+ 		poke kw.c &&
+ 		svn_cmd commit -m "Not yet an Id" &&
+-		echo Hello world >> kw.c &&
++		echo Hello world >>kw.c &&
+ 		poke kw.c &&
+ 		svn_cmd commit -m "Modified file, but still not yet an Id" &&
+ 		svn_cmd propset svn:keywords Id kw.c &&
+@@ -75,7 +75,7 @@ test_expect_success 'fetch revisions from svn' 'git svn fetch'
+ name='test svn:keywords ignoring'
+ test_expect_success "$name" \
+ 	'git checkout -b mybranch remotes/git-svn &&
+-	echo Hi again >> kw.c &&
++	echo Hi again >>kw.c &&
+ 	git commit -a -m "test keywords ignoring" &&
+ 	git svn set-tree remotes/git-svn..mybranch &&
+ 	git pull . remotes/git-svn'
+@@ -106,8 +106,8 @@ done
+ 
+ 
+ cd test_wc
+-	printf '$Id$\rHello\rWorld\r' > cr
+-	printf '$Id$\rHello\rWorld' > ne_cr
++	printf '$Id$\rHello\rWorld\r' >cr
++	printf '$Id$\rHello\rWorld' >ne_cr
+ 	a_cr=$(printf '$Id$\r\nHello\r\nWorld\r\n' | git hash-object --stdin)
+ 	a_ne_cr=$(printf '$Id$\r\nHello\r\nWorld' | git hash-object --stdin)
+ 	test_expect_success 'Set CRLF on cr files' \
+@@ -126,7 +126,7 @@ b_ne_cr="$(git hash-object ne_cr)"
+ test_expect_success 'CRLF + $Id$' "test '$a_cr' = '$b_cr'"
+ test_expect_success 'CRLF + $Id$ (no newline)' "test '$a_ne_cr' = '$b_ne_cr'"
+ 
+-cat > show-ignore.expect <<\EOF
++cat >show-ignore.expect <<\EOF
+ 
+ # /
+ /no-such-file*
+@@ -153,7 +153,7 @@ no-such-file*
+ ' . &&
+ 		svn_cmd commit -m 'propset svn:ignore'
+ 	) &&
+-	git svn show-ignore > show-ignore.got &&
++	git svn show-ignore >show-ignore.got &&
+ 	cmp show-ignore.expect show-ignore.got
+ "
+ 
+-- 
+2.47.0.86.g15030f9556
 
-Patrick
