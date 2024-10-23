@@ -1,79 +1,111 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F397413D896
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 07:00:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF9913D896
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 07:24:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729666846; cv=none; b=WytEmWBnseic+tSYHucusjp2bS/HvTpVhNpNVXbz6H1uTXbwkqYeWhOKEMaa8E21Yi4qjTQg0DULskumkZZxN9abm08EDgLbrUB/l3hcoSNIfrNcEFwbNc+u+t1q+FCSVdr3koM+HQEZhd75u/KNI7qB723t8evnWaKZID2GlF4=
+	t=1729668273; cv=none; b=Oao9YFm93V88uMy42D4Wv3xAPU+lQV0KGQQfLdIOliAaeEr/jyelukK/9KeWwsgIdsqZk2Gc/0Je3DUz9mIpS+0EH85mpz9k3WriXwLnsQSUzU5XRD90JIcLo+dETFDlyyqhAJKSlue2sL1NHrFV5SYLwv0xzsU4iepP9/apWx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729666846; c=relaxed/simple;
-	bh=Gzi7NT4j0ON7tM7u275oB6iLbkyasH58D7VELWcteRY=;
+	s=arc-20240116; t=1729668273; c=relaxed/simple;
+	bh=Myr2tE51+aIaVrbrNvhiQo69RMRtPETE5Z+5LeaPlpE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XBonL7sP5M0UjjPTgex37DxhjHkKEZF/JKvZXKpxOCOdqbExY/kuQsGvzWPgoxHhmEG5SHkIBTCg1BnjpIN2mzqBE3hddgpjaJznH5/KYXtas5OkrMqnYnTdPHBwzn0pI+rznFDRyOehX45GgYbjWo3+Htey8QcIh+9k93ys5ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=hKu1Nnei; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	 To:Cc:Content-Type; b=OdqgUuAlh0sl9P3jGouHc33SXujaSMl5S2A1sgFoouj5a5jji3faY4SwE5jCBDqyKcI6rAW41I45W6H5R6EnJFg23SRQ5thHf6C78dkXgp41SlwtoVTjrPnSrXczvgGFg93HPeKJB5mDobSKqhT8cAVjPU5PhrYIPiOYyMvFWhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ymq67zTn; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="hKu1Nnei"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-20e6981ca77so49124195ad.2
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 00:00:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ymq67zTn"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6e5ef7527deso38218957b3.0
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 00:24:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1729666843; x=1730271643; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gzi7NT4j0ON7tM7u275oB6iLbkyasH58D7VELWcteRY=;
-        b=hKu1Nnei47M83ZZKQTae3sAb8/AW6/y9iOI1kK9J9vWRoojCbRxizo54CUAroEJvuC
-         klwmp8jbNd4JAkouD7mbThEHFjYhL9jbKdYdEzzfvI6n5lvAsBBks8uJzBwHaj46hcx2
-         34yQ1Cj4x3qWrfSkho6R8VwoR0wblfr2utbDImO3H3zk/hfl3rGbfC+LeoydBJFiDA7U
-         KdKW3nmfad1+rEjNBa/g7YAIiStx7dbhF6C3baF/xNfiLd87DjXU6/mmnwNHcU1RdzN1
-         ycLcV3Z2649WVX3FiSswAwDB7eMp2FaQSMce9/5ws0pQzRGhQnKgaB2J59BNw5x+PW9p
-         Vn9Q==
+        d=gmail.com; s=20230601; t=1729668270; x=1730273070; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Myr2tE51+aIaVrbrNvhiQo69RMRtPETE5Z+5LeaPlpE=;
+        b=Ymq67zTngl7EJ9RUbmubFaBGU8YGBhU4xppaIqRlfLRarR0fLlfDzNF5AhJwmTxBfV
+         iYWsucAnFPFEDb6slLmevsElJfrAYRsvPCbA8B+ZO1PyRAvsOxAjeWycLov0IKprEHBt
+         IPUPK53ejX+IfGOYqW/SZcb2DuPZNGSVSNVWqF8fN8v5Vkl2thuKYBeatpApd7S64a3E
+         p2Pun0RjwOG3goRInJqDCLxCN0/CZlYCivCRYikoM9TPzuJ/7RdjE10Jl6v2YshxcHRO
+         Hxqb0xLb5eRKykWrgCdcfRp0DVMMmJoVz9zqlNwPCWrdTzDOFIoGFcp//eLHmwPDVsDB
+         XHSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729666843; x=1730271643;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Gzi7NT4j0ON7tM7u275oB6iLbkyasH58D7VELWcteRY=;
-        b=Htdnnfy2okJwnItQW4yU+9GYv3c7VLvriRqlXyBx/ikim/Xl39PZ6nEORzORObuu3y
-         fX8gzIGq5T7+snS4+8DmcHbN1kAmHbaDQjbS0gsSc5tTJcYi22EFopBXcSSnhfrSAxAJ
-         uMuhLL2L+D7QsHX4uYfvaGmsga1p9YGMty6UnX/n1IcZN24kbDnC2a0S5D343Ea2D+tl
-         Z+DETWOKlpw/D8TX5tCN+6LMvDXNuDCWkxT4bZU9AXcIUsdse6071RsxtV8xJY/W8Sbj
-         ZbJ1Yi76bOzaLew0XlOIEYd3zuawRPoFiItSUJb7pV2rZN7KIxoaglTjlSaELf6d/LaJ
-         /cNg==
-X-Gm-Message-State: AOJu0Yyar5WyXu8wKszFAZC+OykmfHdesnmwJ/LRavVkGaixI4//D0a4
-	TstAD879OzUJD+JAWv6IfLAsQzIB/ym88Cb6zpg5MvyfkosdRWEUBf/3ztT3767k21SavrIw+np
-	UCAdiLN0M6lqWN38ZCvX8YD/Jdxixow4yz/2zOSNzcfM1qV8hEtc=
-X-Google-Smtp-Source: AGHT+IHTSxvIpydi8IBondKWWZfZmoBKWdalJCgR1BBLIAGxNF4eTnhMaw1vF1zQivqK8Od0voOEaZIkgCUmoWVJr3I=
-X-Received: by 2002:a17:902:dac9:b0:20c:83e7:ca54 with SMTP id
- d9443c01a7336-20fa9e5f0ccmr22473335ad.27.1729666843348; Wed, 23 Oct 2024
- 00:00:43 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729668270; x=1730273070;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Myr2tE51+aIaVrbrNvhiQo69RMRtPETE5Z+5LeaPlpE=;
+        b=R5vWwMzb8V02rt9yuubdlNIyP05JhF0P2Qk1TetPzzjPOkt9zn7MLerXcFt5VvwPp5
+         YakObQ69EGMhO8gcWh03p3dr8NQUt2KNKAsFEeVWulJydmaMJfU5fVthE9h06vSMgxpV
+         oxDS5E9a17ElAZ/taTC9V+2jiLK6OKYH/AT/AB3vU06JPqyfizCaAdAAV4FkmOXzhTZn
+         xipXAylMCihJMMIB3H7uHSgTxupmfTvF5MP4QftxTH3QZYKh4y3jrPvisEzKUqWL8SRJ
+         hVEgZsKzDBjuFxnS4v2qxFu9nMq0iXOzfVaL9JQVjif2MqBl1sebmOFyeZ7ZlNOvCkQy
+         yctw==
+X-Forwarded-Encrypted: i=1; AJvYcCW7xO6nzyKymvdp1729TmudAKX17gecGVewfM8sfJ7koMnMZW3HFMEcWtUXJj3wCgpoqBk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzH16uc2S/tUYgrlUL5EYk7yTJq9VI7xppTm04oi26AZsAzNYzz
+	RYefXKcY+gUN+MwgMhpedT0D8DvNltuT0dO0f5wYrAx2LjIHR4Zkpl0YzVXmJAP6wdYr+vlaCwE
+	X/pv1LVvbuog2ABGH0SQ329L6AEkYGoXepH5Mng==
+X-Google-Smtp-Source: AGHT+IH1BWXXvKMkg0u4rHd0DXnKC615UCSvpB1TCt/Ny/LR4J4+b64Qe0sX6KcDrlKeAohDhC+R/dQKpmmK8hiCA4Y=
+X-Received: by 2002:a05:690c:4f03:b0:6e3:36fd:d985 with SMTP id
+ 00721157ae682-6e7f0e44a6dmr12046887b3.23.1729668270311; Wed, 23 Oct 2024
+ 00:24:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241014032546.68427-1-hanyang.tony@bytedance.com> <cover.1729549127.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1729549127.git.jonathantanmy@google.com>
-From: Han Young <hanyang.tony@bytedance.com>
-Date: Wed, 23 Oct 2024 15:00:31 +0800
-Message-ID: <CAG1j3zGiNMbri8rZNaF0w+yP+6OdMz0T8+8_Wgd1R_p1HzVasg@mail.gmail.com>
-Subject: Re: [External] [WIP 0/3] Repack on fetch
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org
+References: <20241019163439.274656-1-kuforiji98@gmail.com> <cb88194a-15d2-4c3d-8768-189853572ac0@app.fastmail.com>
+ <ZxZDFyKxTn_D7c3o@pks.im> <CAGedMteMtaOvyE2gX59bMudEUmCZw7nOh=MuDRi=7CbYm-gBDQ@mail.gmail.com>
+ <ZxaySpwA7jg7c1aw@nand.local> <CAGedMtea3_65wuOc1c548TC1x=ThirB1gC8p6kTomwWf_VzDng@mail.gmail.com>
+ <ZxiC06eY4mMh1Xun@pks.im>
+In-Reply-To: <ZxiC06eY4mMh1Xun@pks.im>
+From: Seyi Chamber <kuforiji98@gmail.com>
+Date: Wed, 23 Oct 2024 08:24:18 +0100
+Message-ID: <CAGedMtdN8qRRALiYdCFso90ExGEm0zirnpLXuva_bc8ehsK+Xw@mail.gmail.com>
+Subject: Re: [PATCH v2 Outreachy] t7011: ensure no whitespace after redirect
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 22, 2024 at 6:29=E2=80=AFAM Jonathan Tan <jonathantanmy@google.=
-com> wrote:
-> As you can see from the patches, some polishing still needs to be
-> done, but I'm sending them out now to check if other people have
-> opinions about the solution. In particular, Han Young reported that an
-> alternative solution (repack on GC) takes too long [1], so I would be
-> interested to see if the time taken by this solution is good enough for
-> Han Young's use case.
+On Wed, 23 Oct 2024 at 06:00, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> On Tue, Oct 22, 2024 at 06:11:17PM +0100, Seyi Chamber wrote:
+> > On Mon, 21 Oct 2024 at 20:58, Taylor Blau <me@ttaylorr.com> wrote:
+> > >
+> > > On Mon, Oct 21, 2024 at 06:17:06PM +0100, Seyi Chamber wrote:
+> > > > Yay!
+> > > >
+> > > > Thank you for the feedback @Patrick Steinhardt @Kristoffer Haugsbakk
+> > >
+> > > Thanks, all. Let's start merging this one down.
+> > >
+> > > Thanks,
+> > > Taylor
+> >
+> > Thanks, Taylor!
+> >
+> > I've also discovered that the test script t9101-git-svn-props.sh also
+> > requires the same update done in this patch.
+> > Is this test script currently being worked on? @Patrick Steinhardt
+>
+> Not that I'd know of. I typically double check via lore by searching for
+> the relevant subsystem [1]. This only surfaces your mail and the Meson
+> patch series, so at least nobody else has communicated intent to work on
+> it.
+>
+> Patrick
+>
+> [1]: https://lore.kernel.org/git/?q=t9101
 
-Thanks, I've tested the patches on our internal repos, the fetching time
-increase isn't noticeable.
+Thanks, Patrick.
+
+In the future, would you prefer I still run it by you before working
+on a test script,
+or should I apply the same strategy you mentioned in your reply?
+
+Regards
+
+Seyi
