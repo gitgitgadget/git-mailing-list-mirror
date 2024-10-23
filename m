@@ -1,93 +1,97 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7917C6E6
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:44:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA68B13AA2B
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:51:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729716243; cv=none; b=bRvIjXVuqwQA/JF1/M+QF+dzHQzA3sQZJjUutxlDpgoSBUlH2ljp1nD7kAI0zxnrbE6Q79KcaeQjOcl72kuJQp9Fz+PEyO58LGkRzNmDH9zGi/g0Kps4ViIveqEJfaYl3DeXt4zXfaxxOI8Affrc0606XiF83VjgWdSZUsNiGG8=
+	t=1729716693; cv=none; b=pC18DFexAoOjUIR3o9PYgJttczeu44Nw+mL1fzRoPqbygPCiHAxowr8AxQULklpvZaBgxpyvT9ewDTh3qhBFXnGIu+qcPjgqvPlaF9ZhbYila7bEaDuIvtMhCZW72Hhi6GODWNkfS3b0W6lWLrbNNO5IUzZEvdQ3GGMO0Fo9jYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729716243; c=relaxed/simple;
-	bh=bx5jy179My4mFnoHm9tTeX0yUuVFz8yB6N4+QCsMDWM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cx3Fzm6sC4WjFA9m+ItP2Lm/2qJFAMl6zoKcfSuFbhsATgw1snX5IHdwgwHzMeukOA7pAkjXjZaEIIjL6AoIOR5uWxv9w+XPHM36RPxpeLpI6LqPcN8Nu03z/Lm/qqeM+9tSqVv4yTc9pI3oFHPBC92AMK74/nD3G7j1l6en/dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=SaCfwaT2; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1729716693; c=relaxed/simple;
+	bh=494g0TiMslNJAYqzAmhiZdNP7V5knDhGv5IJjKcrtRo=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=txRLBEBYDRSI7jsjOZ80Z5fNpCeyeINnvfuyplacVFx0cTpTK1qv7gys6NlCHmafIpZHZFdxd+z19cexuKRuT/bTA5Yo9e7p/Xw7pWeMM01PZa+UUHtFKFLSsYeYjWrKusYaqc0pwQXcOvy0Rtb9i69WggljaIUflLVOQceWo1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=SoTIgHEo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YjAXQXZv; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="SaCfwaT2"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e29267b4dc4so275294276.0
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 13:44:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729716240; x=1730321040; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IlSeaovl9Av6S+tu2+w2gxVOVGvZRwOFuOjItWD/a9Y=;
-        b=SaCfwaT22sMQZc/0p8Ds0cokofftrb6bXPV6uPB0P5ua2KPVK1I6mI26ea3zL4ervM
-         xmg2M2eVJw+JDk/2Gn4DCouzJib31oQgKtIA8tlv4204Zo8ibuI7xj7gUQZLVdqxMFVw
-         gCbq7KE7vvMbLTsEVfacT1iPHkiESp+YAzcrTK/Jbd1qLHkhovC9j0+tvs1ujxJUnDVK
-         x71Z0UfR7+i77rEg1sWk3SHbI3MNz0BHM1r0pnJcz/dlrZprtXdHxou6nbSFe+taCTXf
-         2W5wMKZq9EMscXxGJ4DL4aHXlZDXZRYoghPAsnRQed0mQszsSVprKUhboOaiZEfYCxdG
-         d3iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729716240; x=1730321040;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IlSeaovl9Av6S+tu2+w2gxVOVGvZRwOFuOjItWD/a9Y=;
-        b=eype7XfElnY3wftPLMumii21ZopzUUNV2BO15MSkTnyo7CHOYCsZ+d2fw1C+R7vkgp
-         GKZdZ5Nxa/sruiR8RWPvVYz7BEewRHez4mx7CX2ACCrJcLIUmI2Q8V/thK7EvY9Z2Hlv
-         aM9GiRUvxVbOI9r01rT+URb3e7W8KskgxQjf67Wkua2ozT/YXOFSSibEzFUVqALuabp5
-         41Nv1C5GX+jcgYL/IhGFeSDJlwVGInILU4c8gtD/H9Rcga0WAzf9UlOex6xB6Q/2rp3B
-         wYxD1H2sy40eCdKm28JeU5FLOOdK31Gjqwy+P0HZBaE8zMjrx7SFYAWn4WOsQWJb0FUX
-         JjPA==
-X-Gm-Message-State: AOJu0YyIM+sw7d/1hU8KgvwDrknKKDLACSOiNHhaNgxEmghgJqOwMIaT
-	rFPrMxCAyhjQ1z1DAUtWiy5VzqzZzyFqGthmi9v4A73swe6HSUx0r8MUT7Rd3r0=
-X-Google-Smtp-Source: AGHT+IH3jIwsVqd9Xaqye9lFH8Pz7mtyFEs3oumhc2wXf8PiljTwxq/OsqkBFuBmEZY2ixCkqTr1lw==
-X-Received: by 2002:a05:6902:2804:b0:e2e:3431:b754 with SMTP id 3f1490d57ef6-e2e3a6dc9ccmr3458911276.50.1729716240477;
-        Wed, 23 Oct 2024 13:44:00 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e2bdc992b1csm1686647276.22.2024.10.23.13.43.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 13:44:00 -0700 (PDT)
-Date: Wed, 23 Oct 2024 16:43:58 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	stolee@gmail.com
-Subject: Re: [PATCH] sequencer: comment checked-out branch properly
-Message-ID: <ZxlgDqZuBbwqXMch@nand.local>
-References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="SoTIgHEo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YjAXQXZv"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DBE931140162;
+	Wed, 23 Oct 2024 16:51:29 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 23 Oct 2024 16:51:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1729716689; x=1729803089; bh=494g0TiMslNJAYqzAmhiZdNP7V5knDhG
+	v5IJjKcrtRo=; b=SoTIgHEo/JW2GH+NHV75nkzr3kpU0Az9IznYIgfa1EP7Dbsf
+	oiFN1Z3P2Hcnsy0dJ2jAOfLQUw2zl+SfjMOCE2S7O0BANI8BzM74g5V9XP3RU4C/
+	cWoeb2zxJssuMZapnxlV4Tp6xQ1E7nGzYEjVoCvNpK3w5lPObel7eq4lFniwlwQ5
+	k9D9w1pXyJ65tHUJiUWb2qKpFVlnFj/caFSZ7I4n+bY2dHpOhFeKr+xPz+oD4cVF
+	RgZtMfEwf8/q9hj0Y/liJB1NjMiIqTBVwyZ8ZXx8cf0JQ8RemF412VLvc86qLvpK
+	2oU7R0QBGnqvIBwx84nbdRaJx6TypsTCzY9bEA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729716689; x=
+	1729803089; bh=494g0TiMslNJAYqzAmhiZdNP7V5knDhGv5IJjKcrtRo=; b=Y
+	jAXQXZvxNv4Rry7VisJ8mshwgYCDwxqMucWIfcIZ8O+bi1FT5ptJOkHhCCagUuvU
+	dROCb/k+h/8IpQ/pszRHj6o7J8REDGFwaB8q4N0HLBz+tga8b4o/HdYUwTV1spyh
+	gnlt+drwPpYEJGPJ9b7crXDZoqqMHUSa1xaRk3i8csTMdDjHkmhpTtwadsq1o/nw
+	n5wh0RnQ4y+57ubJj7bYAegxNXUIu3bh/0qcivt2rTUwimAFm6bAVFCVb5KPF0g8
+	pa3KRa4r74PcnjB/mrttdYQAJCKZws9g+JKmJ8C8Q1Y73M5a1ZtGc3qoesP1NvvP
+	PvxfDSq4CV1wFioNpAPZw==
+X-ME-Sender: <xms:0WEZZwWSwOHaGA8YgQl0ZVW_atPd7olzMx4Hye6bPYPAb861c-cqB0w>
+    <xme:0WEZZ0nGwFysKYu1ESOoiCFvGDfuUFAT6VNKSPFjIVWCJ2h71tbXfk7qpHDO4iyQp
+    DchidKSgfeoQ94uFQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgudehfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredt
+    tdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghoug
+    gvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeetkeefudeh
+    hfelfefgueeivdelledvjeegudejgfehjedttdevlefgleekieevveenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhs
+    sggrkhhkrdhnrghmvgdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpd
+    hrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
+    rdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:0WEZZ0Zb5sBOShAKNUJS1rlGsZnYz8zffnRe3yNN9wU0qqFOvE89Aw>
+    <xmx:0WEZZ_UsgTVU-TPkLGIOEt3VgRtjOEkAUoD3m54baf3OJ2jXxrigaA>
+    <xmx:0WEZZ6kGhPqwYX-zA_68wndEzaJhx9kzFlDjR6oUckkt1S2h0HfPmg>
+    <xmx:0WEZZ0dI5Xp972t-HLA7t2SFMeEbmEykA60Gw-QfbUKCNB2hyzqSvQ>
+    <xmx:0WEZZ8jPXbDyUL6KT5hFglL8jv_BnmpNeJYXI_oeK-8AZ4r0ZUJswK5m>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 87004780068; Wed, 23 Oct 2024 16:51:29 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+Date: Wed, 23 Oct 2024 22:51:09 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Taylor Blau" <me@ttaylorr.com>,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, "Derrick Stolee" <stolee@gmail.com>
+Message-Id: <a6fe12ca-1736-4d34-aa8a-d0cca0fa5516@app.fastmail.com>
+In-Reply-To: <ZxlgDqZuBbwqXMch@nand.local>
+References: 
+ <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+ <ZxlgDqZuBbwqXMch@nand.local>
+Subject: Re: [PATCH] sequencer: comment checked-out branch properly
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 23, 2024 at 07:27:58PM +0200, kristofferhaugsbakk@fastmail.com wrote:
->  sequencer.c       |  5 +++--
->  t/t3400-rebase.sh | 16 ++++++++++++++++
->  2 files changed, 19 insertions(+), 2 deletions(-)
+On Wed, Oct 23, 2024, at 22:43, Taylor Blau wrote:
+> Perhaps you may want to rebuild your topic on that one?
 
-I should have thought to mention this earlier, but this does not easily
-integrate into 'seen' because of 'jc/strbuf-commented-something', which
-turns, for e.g.:
-
-    strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_str);
-
-into:
-
-    strbuf_add_comment_lines(&cbuf, buf.buf, buf.len);
-
-Note that the function is both renamed, and already knows about
-comment_line_str, so it is not necessary to pass it in as an argument
-explicitly.
-
-Perhaps you may want to rebuild your topic on that one?
-
-Thanks,
-Taylor
+Sure thing, and thanks!
