@@ -1,122 +1,149 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6B11CFEC8
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 17:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8A81D014F
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 17:28:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729704334; cv=none; b=tNv/JyS/hITjyiZoqKmCgFZGzd19quyredAKAWSNDzfVxXF2XjXwmPhoqhxb0itYNTDzK2gqI1UjDy6MRGLL1U4X7Tphaen6X66CyKk8GD/Izd0r6AKpFvi8ewn6Y9Mim03WpfY8B4b6A7QEXuRUWu8+m08XyI5Vtpo5/wWBbVs=
+	t=1729704496; cv=none; b=goQsoyQDCIGEDd3ZlC2PIkKEu8Dp7tGKESet+ngfLx6rn0IcWuVkekeBV2v5SnX/DYTaX+Er3szZ1HRSkJEFhHwEvi+PONEiVQH+HkB0szXJY+FHjUJ4OTInZBBbt5RMfo3GlpKAj1M+tItPseBKMtUM0H0R60CNrI1kRhilVQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729704334; c=relaxed/simple;
-	bh=nh1KNuKPDxslJtVAwn3tFwzn8fD88o583n/j3WIjffQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ODPi5ovfFweveG1xK9A4QjYBUiPXExPG758GIPEaFw2ipxNHMhFwj96T1K4fmsqxe1MfAvBe6kNgdzTkOpjhDL3uFYpHKO8UBEQdCJWhN1N+rXxgS6GWWxZAMlKQd5BvH8U8SNgouo5WIrUUPd6Js6kwqNgi2UKphprJokVZGe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=FTpp9SxE; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1729704496; c=relaxed/simple;
+	bh=nqodCJ8XvbkiNOzs+O9UI2/BR/p4+GOx6SEodwORp9I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=D8wq5WMhvTl70waNcpO1D36ZCkN2JSLCk+LEgmeQUR8lV2JEUWWh/PJxv/3jMvt2I/mvCGjxo/4FGDS0YMKhyHWzJmk30FClgFmdkLL8yl21tu9tpiFTVNGjrCCt5XU63JyjzijdMXsO37EUK1WDIF6Gk+JPi+rfvQk41dOtvVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=fxbKexoG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TgIZsgAY; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="FTpp9SxE"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6e59a9496f9so80722527b3.0
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 10:25:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729704332; x=1730309132; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=up7XKql8ZwsAQtY2RqazWBJZN1tem8z8P5qdn6RqMFc=;
-        b=FTpp9SxEqaRGtwAKtKGcDG4bui5p5Gxb/7LfiTjq+nC+r4RDXRWjBDK0Mi/yD8pOUO
-         KYawAfEti60XdUuYZOURIBoaCSVkck95Urx7JPP6c+XfdvoZN4LsKCQagpCcTIR5mYIo
-         BaALfZ6j2UJjK69fTpdD82l8lnVmnpMZNNd4JRZrtOxWtI/3AVA/u8qf3MVM+C3iyEy8
-         6Dt4qrZDx3P4iWX6z4c7U3wBH7xRogBEgflVg4igSG9sotH4uYqX0WNJDkTrQAqBHLs1
-         9Lz2gQwIgfEsGFPLpxSHKCKB5+BAuN26QD7wHSnjUL6MkkiiARrrShLyYMai/I0yjFwB
-         1Qug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729704332; x=1730309132;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=up7XKql8ZwsAQtY2RqazWBJZN1tem8z8P5qdn6RqMFc=;
-        b=lWDLMj9kSGfIfp/hmxvAL64YHPqxU6U/RI+wNiS93ggmYlbhS+Fc9uo76nV1ILNYfM
-         2zVrrZO4+Hnwi2IJxyq1WkkTEKAU/gUt4VsZkhrAKyBhrgyBvxxUZ7uRFMGmDWhHVbw1
-         RNLDsNujSzO0vHyC04fxQontpVI7ub9x51KbaMf4nunMJ6OFd/rrcvXi+Fpk/PQIdPQU
-         NVNtHLbzdALD0W/azt9yzQKBpiUMg3G/qJzTmJ4VRrtsnlLypz9fk7/TzzvezRVXGKJf
-         yWw/HyrUejMEm24BzzWPdxd/wyqo7SAl7wiB2DUeSqPB+2AxFoPVBFW7mmPKv4UPLVSt
-         PLHA==
-X-Forwarded-Encrypted: i=1; AJvYcCVXumBPQNdpALlvg4qdyMevonWpUYRVUhoPOQ40HaWa9IMsJ1+dN+/nRII1PZwx91s4Pfg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyq9CLw0s8sM60fpsPDJZQhWsl8LoVPKy/Lb9z+qBwdbDCbIv+I
-	wQRSnUFO9qOb6t2rdvXtgqctFJ/Njm/gRxI7dVo1eAn7hul+I0U+2PvQCef0oL525K4C0/rUfto
-	/MRQ=
-X-Google-Smtp-Source: AGHT+IE5sCSzCHZ/0aQ5wNlT94TMohLo0FGRiOuELDUU+f5FYUm5OxIXIEnpTkQ8RgbSX0j3SbEAiQ==
-X-Received: by 2002:a05:690c:7090:b0:6e2:b263:104a with SMTP id 00721157ae682-6e7f0e30c6amr40518957b3.23.1729704332079;
-        Wed, 23 Oct 2024 10:25:32 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5d2e823sm16162617b3.114.2024.10.23.10.25.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 10:25:31 -0700 (PDT)
-Date: Wed, 23 Oct 2024 13:25:30 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] compat/mingw: share file handles created via
- `CreateFileW()`
-Message-ID: <Zxkxij1FThn7QoOg@nand.local>
-References: <cover.1729695349.git.ps@pks.im>
- <907576d23d1dc39b679a323e74b6bfb227d6c17d.1729695349.git.ps@pks.im>
- <b106fb4d-3488-4fef-aca8-32e49efd0124@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="fxbKexoG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TgIZsgAY"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 77F941140071;
+	Wed, 23 Oct 2024 13:28:13 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Wed, 23 Oct 2024 13:28:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm3; t=1729704493; x=1729790893; bh=fV
+	I71kmsk+Wj69cGeZBPq+gDMeolsgpS23Lb2zoFhWU=; b=fxbKexoGtjsFVSQXjR
+	9bKlpvJ3ubvVcUntfnOaTpCbbp+6FSpPip5+/l9g7jWKVzK9ELHSVdwGZdH8VRwt
+	glhJGN8hgtsWtcSMkZwMBAEGopzcJXXpUDMIz4OG/asOEtXnWLK/e0NEuB1b3AAm
+	MNAV9X2yNezdN7AqBo35bFOEhtl8Ain8/Csgvd/mJfZ4+hZ7EZF2S72SvhNW75Wl
+	enr/MIJan0BP3Ax81MKiWChi6YvwWlrv2lbJgLhzFUISKnZFl/ypT55Pevq3hNcN
+	CHEleidaWkPt13zFXoj3uqkBWd/ZWw5grjG77jH1t0V5uNch42Nq7nbKOWkWpvvp
+	QwLA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1729704493; x=1729790893; bh=fVI71kmsk+Wj6
+	9cGeZBPq+gDMeolsgpS23Lb2zoFhWU=; b=TgIZsgAYypgNbhf4LpdNyM46Zi2V6
+	2VRIDKXEFdm9MM7BLc5IkOOaq5zXfeTK1oa+AxFejwbCBwAfkLw73/pq2eqt3KQ4
+	S28RF79qP5oSYujLgJmnx/MKLFvsCFxBoghLWHWK7yg8pnj7NfIjK6W/+6AatY8y
+	DrqWssu5qOXXW4Twa8tmRP48iuymdoCUQRb7P2cr/77CmvmGOi9UmEnYKE76h8Cz
+	X6IRtySv9qaiktov/jbyLN4HRdzWolOYiBCt6RZzSB+ctQUc7k8oSy2wxsyk2tvS
+	mdBPBYQtv/waQFNnhYm6j7Dhr7yOYJeWiQr65EsShe5f5ScP3gQaAMz9w==
+X-ME-Sender: <xms:LTIZZ2fNQpc4Et76NC5J63tSgYdWVLPA01Z3eN3A-lm98VKRUDwrfbk>
+    <xme:LTIZZwMb5mB6QkIoLnByur9pMA_nvpf28i0JCv8Blrdu_DLaALyeSkm9dm2OKqMFJ
+    7C3hqT8xyb6O2r4ug>
+X-ME-Received: <xmr:LTIZZ3iKYnaqm2mQ9SXihaou0eDzuLcrDCNi97ARyWRXUwiF5qr2K8OBaFWyjpw6047Aiq1kTmfP2d6Xld4jtlwfePwSWWc5dAiOVOKWdw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgudduudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpeetgfekje
+    ffudeffeffgeekvefgvedvgeffueejjeelgeduhfdtffeikeelfefhgfenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrh
+    hhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgt
+    phhtthhopehsthholhgvvgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:LTIZZz8x4OuEgpB1VeBJt9uAAGG6Nj7XPHm8_2weiwavWx66D8mDHg>
+    <xmx:LTIZZytWCx8kg8onCqB8fAEXkhflAPRjJBacmWWMempbr7C5tLE5ww>
+    <xmx:LTIZZ6HuyKHghIz8wELRbSjexo3yj_iv4BwSlwIIUcDydj7PCSy_AA>
+    <xmx:LTIZZxPS-3WOhxcA7OWRSkLX49Ib3pktoZvSjQPZ9FanP9fxQ3Ze9A>
+    <xmx:LTIZZ2InCglYVA8Y5hw6-WnYnIisHhoNQ9yhgcZOsRh-L_rtV31TqIb7>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Oct 2024 13:28:11 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	stolee@gmail.com
+Subject: [PATCH] sequencer: comment checked-out branch properly
+Date: Wed, 23 Oct 2024 19:27:58 +0200
+Message-ID: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
+X-Commit-Hash: 5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b106fb4d-3488-4fef-aca8-32e49efd0124@app.fastmail.com>
 
-On Wed, Oct 23, 2024 at 06:18:58PM +0200, Kristoffer Haugsbakk wrote:
-> On Wed, Oct 23, 2024, at 17:04, Patrick Steinhardt wrote:
-> > Unless told otherwise, Windows will keep other processes from reading,
-> > writing and deleting files when one has an open handle that was created
-> > via `CreateFileW()`. This behaviour can be altered via `FILE_SHARE_*`
-> > flags such that other processes _can_ read and/or modify such a file.
-> > This sharing mechanism is quite important in the context of Git, as we
-> > assume POSIX semantics all over the place.
-> >
-> > There are two calls where we don't set up those flags though:
-> >
-> >   - We don't set `FILE_SHARE_DELETE` when creating a file for appending
-> >     via `mingw_open_append()`. This makes it impossible to delete the
-> >     file from another process or to replace it via an atomic rename.
-> >
-> >   - When opening a file such that we can change its access/modification
-> >     times. This makes it impossible to perform any kind of operation
-> >     on this file at all from another process. While we only open the
-> >     file for a short amount of time to update its timestamps, this still
-> >     opens us up for a race condition with another process.
-> >
-> > Adapt both of these callsites to pass all three sharing flags.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
->
-> (Reading back) By default Windows restricts other processes (so these
-> files could be in use by other procesess) from reading, writing, and
-> deleting them (presumably doing anything it looks like).  But it does
-> provide flags if you need these permissions.
->
-> There are two calls/places where you need to expand the permissions:
->
-> 1. “Delete” for appending: need for deletion or replace via
->    atomic rename
-> 2. When opening a file to modify the access/modification metadata.  The
->    current permissions are *likely* to work but you could run into race
->    conditions, so the current set of permissions are buggy.
->
-> The commit seems well-explained to this naïve reader.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Thanks for thinking aloud and summarizing your thoughts here. I found
-the read-back to be quite useful indeed.
+`git rebase --update-ref` does not insert commands for dependent/sub-
+branches which are checked out.[1]  Instead it leaves a comment about
+that fact.  The comment char is hard-coded (#).  In turn the comment
+line gets interpreted as an invalid command when `core.commentChar`
+is in use.
 
-Thanks,
-Taylor
+† 1: 900b50c242 (rebase: add --update-refs option, 2022-07-19)
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+ sequencer.c       |  5 +++--
+ t/t3400-rebase.sh | 16 ++++++++++++++++
+ 2 files changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 353d804999b..1b6fd86f70b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -6382,8 +6382,9 @@ static int add_decorations_to_list(const struct commit *commit,
+ 		/* If the branch is checked out, then leave a comment instead. */
+ 		if ((path = branch_checked_out(decoration->name))) {
+ 			item->command = TODO_COMMENT;
+-			strbuf_addf(ctx->buf, "# Ref %s checked out at '%s'\n",
+-				    decoration->name, path);
++			strbuf_commented_addf(ctx->buf, comment_line_str,
++					      "Ref %s checked out at '%s'\n",
++					      decoration->name, path);
+ 		} else {
+ 			struct string_list_item *sti;
+ 			item->command = TODO_UPDATE_REF;
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 09f230eefb2..f61a717b190 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -456,4 +456,20 @@ test_expect_success 'rebase when inside worktree subdirectory' '
+ 	)
+ '
+ 
++test_expect_success 'git rebase --update-ref with core.commentChar and branch on worktree' '
++	test_when_finished git branch -D base topic2 &&
++	test_when_finished git checkout main &&
++	test_when_finished git branch -D wt-topic &&
++	test_when_finished git worktree remove wt-topic &&
++	git checkout main &&
++	git checkout -b base &&
++	git checkout -b topic2 &&
++	test_commit msg2 &&
++	git worktree add wt-topic &&
++	git checkout base &&
++	test_commit msg3 &&
++	git checkout topic2 &&
++	git -c core.commentChar=% rebase --update-refs base
++'
++
+ test_done
+
+base-commit: 34b6ce9b30747131b6e781ff718a45328aa887d0
+-- 
+2.46.1.641.g54e7913fcb6
+
