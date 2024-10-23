@@ -1,55 +1,55 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095CF1C9DFE
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 16:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8121F1FCC51
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 16:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729702026; cv=none; b=ssM3r5k7YH/XitN5a7OAbRsGrP8HiYk9ywRPG8wP57yjfqXsw2BylA4tB/JtRBTT7zED4Lt3n5z+adyfSgS3RHGbkWGjTYZE0wHBn91cA4sSoSZSoqUMcVmQQiMhLdIBoiL4FfZi2Z8hlBotqeN/CVI1qMP6wd4CJVDqpZN0St8=
+	t=1729702235; cv=none; b=s2f1JF+r1yxhNFTQlBs9BN2c4KjWT/+0NQGkiEfa6GFgMO4gPaNv6EdaAFjtNe2afC3g7PQaR8QYNteXoAbpNG2yyAnJ7IJORNwzIM2LGrgnlUcUVA7ymZ3UgQfGDNHPHaNW5ez3JN+fJz1iod1Le5vxnIBiBxv5Ihrbh1iy9xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729702026; c=relaxed/simple;
-	bh=w75TR/3QHJAEjcrndOFMKT2p6VIzkbyQPbl1YiKt31g=;
+	s=arc-20240116; t=1729702235; c=relaxed/simple;
+	bh=KMHhrC/Y1C1UtO4sQ3EgTKs2ZIqeApv9yXFXwGGcrUo=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=HC+FueGtaT/JMsb6AyWq1IJAs1LqZWSyfqUBTju3OveiUDACpOQ1dvsGB8XzMsu8VuN1nd7g+2auHLfh8mPuKFw4FJD5q5oeoLJMo1oWq4DFqBUZiWlhF7Yh2srMKfi0QN55kEYmJLGVT3XIpZz0bx1DPBCG4tUB90GLgOE2vDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=sBlO0OMO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ofiJtJwb; arc=none smtp.client-ip=103.168.172.146
+	 Subject:Content-Type; b=tyVkzHn9mu1OZ0cZM1XlD2ffltvZCS/nKgFjxSsT+HNKQGRfGFJx5WXirtD84/lbFif+fg9KdntTY8TXU6KBciOngYm6puAX+PB+bGcmsYxy/49J10/eNy4VIvPSI/eNRJu8YbTWMXT+yg8go20BNaFaTV6eYpm8VrzaVquWdf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Zcx0XrD6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pw5JdbvN; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="sBlO0OMO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ofiJtJwb"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Zcx0XrD6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pw5JdbvN"
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0AE691380223;
-	Wed, 23 Oct 2024 12:47:04 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 839C81380280;
+	Wed, 23 Oct 2024 12:50:32 -0400 (EDT)
 Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 23 Oct 2024 12:47:04 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 23 Oct 2024 12:50:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729702024;
-	 x=1729788424; bh=Qwi6w0/PiJnz0DhKgas9n478yYxzexJ0OVtQgMHwPm0=; b=
-	sBlO0OMOJldm751rBajs0PG1W1P/4fWDOZ/RgH9BOjAE6L4TtM8UEbx/r6906cpj
-	hi3F3XnihFRMSl7cizt6XnrOblzShZQX/j8C96wK8YEyj5bDHwvzyikfHk48RZD8
-	jjnfiJlfDn7cz8m7zju6/Q5Fko+x31rgW3Rtp/iAg79twqn99q9/eO3JChSPHVVH
-	hX/sGXD8XjfjUcEsgKR9PZdQl7N69Xn20ThhZwJwvcIUsiD4ctNmBlvH01RRYGbF
-	gJKc480nxMoI8PZ0AtBBPoy2jmvZuiTPLi9YGcmyx3wUXav+dhK5TPZdJ68DqsHs
-	zmEpQPEv70knKFbBY70HnA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729702232;
+	 x=1729788632; bh=TLO6kqHEYRfv1KSr5i2kBWoY/+4/GO8f4Sb08c3S2FI=; b=
+	Zcx0XrD6vmfk0Cami0sCAos5174OgvT1rjL+QYrBEiE/mXtlXhVMSwtqwPm6Qu/Q
+	p7t15iKZ3QQOJp61SBIZC9jZaDFjfswJRYKV13pxm2BxRS8/KA06wfBvtDx73N6Q
+	JEn0UccjcSpbQxMZ3thXs7g0EDY+g2U0Cb8l37Rc1zLRwdk66cJEZvSKxkwnR9If
+	PzJ/fznsL5sQik0iC8Qc1LWMzI1dOGtdXng1eZJe0pTLGTCh3id6uuUsDMgYvnNJ
+	AEaqRCULpE4GdZ/aXSj+HcHGG+Cd6c6atBfX+Rdt2hWTN+KKOqF70ZNOzYEBIF2Z
+	DvgnNaGdBimcTZDXKOWoZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729702024; x=
-	1729788424; bh=Qwi6w0/PiJnz0DhKgas9n478yYxzexJ0OVtQgMHwPm0=; b=o
-	fiJtJwbulbq5fWl1kwgo/ggCh1r5Bbk66DuDz9rEI9cp/zmOlHgQBluuSWddD90V
-	IRwneZfsD7qhD9Ars4SnLFjdDHndva0r7ZDL52C0adyhA2cIEQLSsJ8MB17I8Fyg
-	0UAmPOIJ1y22SRRDPwyTievNBUFNHUFbqTaw0V3P+ZxqXv43pW46NM0+myhTP7dl
-	M+4nZwvH/A1wR+YaX23wy35ekZRfbedVh4cIxOzUyVEXJIBTQ7RAG0GSeX/SVKYF
-	jR9DAbwgZiOlKbDfh1H3xFixAMOA9IqDu6cPth9NHukcvWCvDYfnkdY4xyRWclKS
-	tPMkkVhdWWY68dNq1uHYg==
-X-ME-Sender: <xms:hygZZ9kc-NUWFG4ez3_NoHRtokocZ2NwxmJtIJNQkhnPpHZWxf9ApVQ>
-    <xme:hygZZ41akRIMVilF-FzmbaEDI-rkuPBx0V3Kfc9jYlmFJhSx1ROeu0lUcHlY7Xlxq
-    eZqKEOU3kYnd38c8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedguddtfecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729702232; x=
+	1729788632; bh=TLO6kqHEYRfv1KSr5i2kBWoY/+4/GO8f4Sb08c3S2FI=; b=P
+	w5JdbvNklh1h2BJ+NkPpkDkgs1YbZcjejSGs4FG4zh9ZpVVHjwkMBO5BXbJuZSF2
+	bMQNxz6J9FoYx2GYoeGso+CMEerUHexr5g5bWtttII8uNOK4SJhvEhYMUa/G7TJm
+	TZ2f4f3iV+ap7n/XW3/PmLWdoJYSF463yoGc0V9RqLnKV+NbPptmm77JxTNiplRu
+	hGCwd4i/sOAPJ9ARHxEMiZ4VOY68xo1K4Zhk/8BJIs36ObSaeC1Wwy+khei71Bs7
+	omK7YMZlegnWt9k0ys+0StPGsZyqwDFQyJpEw1rFmkv7RbnukAEEAouRyCemb76t
+	ggnZBtei94oyFKuCiTITw==
+X-ME-Sender: <xms:VykZZzgO1f43QTYlK5kjmz-lHDF3OpQkSxMkddl4qTr48Vw6vS8yX8U>
+    <xme:VykZZwB6E9-tlTN8uCNjaaTvfdHdRdVJ8D4bmES7VkQ4XbDSwnq92bfAgIQ030k2V
+    SoEGBZ5vnhbJCHSPA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedguddtgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredt
@@ -58,19 +58,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedguddtfecutefuodetgg
     rghtthgvrhhnpeegtdejieetgefhuedtuedttdeigfdvgeetkedtuedtudfgkeeluefgle
     etffejffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
     pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
-    gspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhl
-    lhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepkhhufhhorh
-    hijhhileeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgt
-    phhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:hygZZzqUmjbLN51qZey0E5jSecLb8CrmC9jLOO4l0l5zSyVO296xYA>
-    <xmx:hygZZ9mkWFf2CHDxQNwirjvi6llzFkA0et31PBFXStl0ZNsggm8afQ>
-    <xmx:hygZZ73qKDezur1vOPhaKqv0te4Eaabl2diuM94MsjX7220WFMQ0mQ>
-    <xmx:hygZZ8tcdAx80Yic9YpTL-0Vh6jmeIBSqvmPopoRXEkvbK9pACSyqA>
-    <xmx:iCgZZ2TutwC2d9lf_dMCCIIVTstMX7RMWfoncy6WQcfr_S2isdIsixPF>
+    gspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhl
+    lhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepsggvnhgtvg
+    esfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkees
+    ghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlih
+    hnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehfvghrughinh
+    grnhguhidrsggvnhgtvgesthhtkhdrvghlthgvrdhhuhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggv
+X-ME-Proxy: <xmx:VykZZzFKR-qrFWPYgz_-EMVQljn8z25ytav1wUAaYg19yOeqokBq3A>
+    <xmx:VykZZwQJEvWmo_cWFDMnHCbhsz6bqE9qRHAfymsgTfn2oySXR38AtQ>
+    <xmx:VykZZwwzu5Ck4YOJ6MElHp_gQ9W7oCwcyTbjsRlPN4yq2upVjWYZpA>
+    <xmx:VykZZ24giMfeH5p0XB71LaLrZcxi_3lmvi4jqWc3v5EozY7bWRK-4w>
+    <xmx:WCkZZ_kgkUC_TT7BdqEA_dzfhF3G5ab9NEft1qeL0r16WZ62zsSZ2uey>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 35250780068; Wed, 23 Oct 2024 12:47:03 -0400 (EDT)
+	id A2909780068; Wed, 23 Oct 2024 12:50:31 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,32 +81,80 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 23 Oct 2024 18:46:42 +0200
+Date: Wed, 23 Oct 2024 18:50:02 +0200
 From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Seyi Kuforiji" <kuforiji98@gmail.com>, git@vger.kernel.org
-Cc: "Patrick Steinhardt" <ps@pks.im>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>, "Taylor Blau" <me@ttaylorr.com>
-Message-Id: <97e5c9ec-28c7-4f37-9dae-26e4219f1f98@app.fastmail.com>
-In-Reply-To: <20241023121113.915310-1-kuforiji98@gmail.com>
-References: <20241023121113.915310-1-kuforiji98@gmail.com>
-Subject: Re: [PATCH Outreachy] t9101: ensure no whitespace after redirect
+To: "Bence Ferdinandy" <bence@ferdinandy.com>, git@vger.kernel.org
+Cc: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ "Junio C Hamano" <gitster@pobox.com>,
+ "Karthik Nayak" <karthik.188@gmail.com>, "Taylor Blau" <me@ttaylorr.com>,
+ ferdinandy.bence@ttk.elte.hu
+Message-Id: <d715d76b-1dd2-46e7-a16b-b2cf30940470@app.fastmail.com>
+In-Reply-To: <20241023153736.257733-8-bence@ferdinandy.com>
+References: <20241022194710.3743691-1-bence@ferdinandy.com>
+ <20241023153736.257733-1-bence@ferdinandy.com>
+ <20241023153736.257733-8-bence@ferdinandy.com>
+Subject: Re: [PATCH v12 7/8] fetch: set remote/HEAD if it does not exist
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-Hi
-
-On Wed, Oct 23, 2024, at 14:11, Seyi Kuforiji wrote:
-> This change updates the script to conform to the coding
-> standards outlined in the Git project's documentation. According to the
-> guidelines in Documentation/CodingGuidelines under "Redirection
-> operators", there should be no whitespace after redirection operators.
+On Wed, Oct 23, 2024, at 17:36, Bence Ferdinandy wrote:
+> If the user has remote/HEAD set already and it looks like it has changed
+> on the server, then print a message, otherwise set it if we can.
+> Silently pass if the user already has the same remote/HEAD set as
+> reported by the server or if we encounter any errors along the way.
 >
-> Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
+> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+> ---
+>
+> Notes:
+>     v3: - does not rely on remote set-head anymore so it only authenticates
+>         once
+>         - uses the new REF_CREATE_ONLY to atomically check if the ref exists
+>           and only write it if it doesn't
+>         - in all other cases the maximum it does is print a warning
+>
+>     v4: - instead of the discarded REF_CREATE_ONLY, it uses the existing,
+>           but updated transaction api to request a silent create only
+>         - it now uses the atomic before_target to determine reporting
+>         - refactored for legibility
+>
+>     v5: - instead of printing a not too useful message, it now fails
+>           silently, this in line with the objective to only set up
+>           remote/HEAD automatically if the right thing is trivial, for
+>           everything else there is remote set-head
+>         - fixed all failing tests
+>         - added two new tests, one for checking if remote/HEAD is set to the
+>           correct one, and one to test that we do not override remote/HEAD
+>           if it has changed on the server from what we have locally
+>
+>     v6: - fixed style issues and unintended extra empty line
+>         - updated function call with bool to int from previous patch's
+>           change
+>         - removed calls to error(...) inherited from builtin/remote.c so we
+>           actually fail silently
+>         - set the test for remote set-head --auto to the correct value here,
+>           which was previously erronously set in the remote set-head patch
+>
+>     v7: - no change
+>
+>     v8: - changed logmsg in call to refs_update_symref from "remote
+>           set-head" to "fetch"
+>
+>     v9: - follow through with refs_update_symref_extended
+>         - fix test errors uncovered by the new patch
+>
+>     v10: no change
+>
+>     v11: fixed some memory leaks
+>
+>     v12: no change
 
-I can confirmt that this patch, when applied, fixes all of the instances
-of this style violation.
+I think it would be better to reverse-order these patch changelog
+comments so that the newest is on top/first.  (for next time)
 
-Thanks!
+Thanks for the careful versioning here.
 
 -- 
 Kristoffer Haugsbakk
