@@ -1,80 +1,80 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA4A1A0BDB
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 09:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18D41A2C0E
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 09:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729677361; cv=none; b=mO4Q2NxthGz4UpkmaaiYNhZKEeCAzH7WWN1KL2XKLiImsSewlNNLqDTy8LQVheHL7a9mjpdK16YdqWW30pSYVWQmRHS6weGgNwW3EsrTdhLdL3aoIwyZL/Yoob5kdWGKjHD6T6i5vw5iE+npmzA3kjjeJtOCTNcu8xfSkACAqvI=
+	t=1729677364; cv=none; b=JnWlUHu83TTEnKpjFDODXHMaVzrdZR0zPgB6skIogyyeSa2o1FZm3Wvv+g97FIVYr+bWvLV2Ph4qaNbj9mzuv62ZMhzO+QlVEcGB3oqXPGEjAPczeXmSjWFRy3HB64EBA9Jc1iCfdNDaD1kp7fwWlhPZX/ByvB1ruUB7UP3lE6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729677361; c=relaxed/simple;
-	bh=ZvG0CTvviSi6MsKPeBrrV3ItUW/A6ugiRU3MTKkTLeA=;
+	s=arc-20240116; t=1729677364; c=relaxed/simple;
+	bh=jSqZnhrpGlgUpYW0OjxKjx4GyOcliOxuDr4zmHHwVKQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pd0Y+ToWY2lATUvmG0iMjqX0BxD+dsY3f2Ftw66D6aafaoioQtWKYrJRKWdWyu1xkEThHAkMYXiz0+Tx0ZqL0Vde1vU5/Gw9rJO3omX3q5QO1rbMs28zVCetlgPnh0FYADh+Etig8VudC8vuCxcr20zWv1t+RfvPyzssXYmvyhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SLlQogTL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jq6e+v67; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=c+aJTbtPZNKPFnSBYy5O74K1IBstqee+Wpw1yb1t7INFtEXMxlTHo1VCNm0L1sGApQS8ytIt5Hq21B8FFsZMVGeIVNfbT9nfbsbe+QwiGcaa4II/vRbMnVZ4V9W8wqCglHW1fto9u6AJB+dQRLnIyo2FljsIlTHcqC7Ww1QEifg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e27Og9Fe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ebTF4y/w; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SLlQogTL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jq6e+v67"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e27Og9Fe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ebTF4y/w"
 Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0FEFE13806D1;
-	Wed, 23 Oct 2024 05:55:59 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 18F9113800E4;
+	Wed, 23 Oct 2024 05:56:02 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Wed, 23 Oct 2024 05:55:59 -0400
+  by phl-compute-07.internal (MEProxy); Wed, 23 Oct 2024 05:56:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1729677359; x=1729763759; bh=xjBMqbWqrQ
-	466h5d+gECwSCcp/pHTI6IuQzDezNE9C4=; b=SLlQogTL6odGXurXcxIwpplwVs
-	aaMbWamAQRqK5sjEirMfIfWwgofy0ySu9Ccu1kX5TKlcr5vHwPxedSAkhM6ZhZR4
-	kz2+vc2HAXMU6HMUtkun81wx3UwHF6KjAX/b2zpfa/3+v+kS0QZP594/CuIfp1hj
-	DM8o+a+i3YA6LpqmfybDIagyNtLH5vOYgW7Mm1WvRCpEj1t+U8s+W55amZkVV/a/
-	G3HE96Bxf1qb9NGay547cTcMcyEpmSzeBOQ8/IV1OlHM7oolG5+2x9Xg9dx5YRCZ
-	z9sptlpG7V+W9ADwc+agLnmjwwwqXUhaN0FK7Ij52AJ7wxQ9tM5v1hz+EPpw==
+	:subject:to:to; s=fm3; t=1729677362; x=1729763762; bh=GRZxOjyw+a
+	GTiMxB8yKA5+hY+H3Yg+ZNigUod2shHEk=; b=e27Og9FerEBAVw315dxTAju68/
+	SC9qPkXw8FCwF2jm2LswmFV9poeOvgxJ9npEmbdrmyCoKUxaomkpxmskIfN557go
+	xR7EEfyAxP6DTyUjet+rVtkxlUlG5c4hwpC6UwhY9bY5BsnrTLe3fo/E+h/l5Heu
+	lDU9ijbnrfXetPfyJV/7lAtJR/L4COdlOL7ttl42HtXw4+56m0zPIDuSIoxKvxhU
+	JW0Vi1NSO+njm5+9uveqXwIAVUBTUST2LDmq0J/otzbSRryZkMoPz0D8A9sdZnA4
+	LDmUw8Yy3Qw1m3te3dwVCRafP6zacdXou/sU2+vEuOyw1gF/p6OtfBMlxISA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1729677359; x=1729763759; bh=xjBMqbWqrQ466h5d+gECwSCcp/pH
-	TI6IuQzDezNE9C4=; b=jq6e+v67VyrD0YBbH4p8EzZehYX2erdHMSnU8MCwOoIJ
-	qT/OkoRNXjb7B/xq7xApc6aYSdpIVf2NBjPWJ9oGQ9uDyAW7KLn23UUd3GQ50PNi
-	5oqp09USnkAwH+21bquFn88dy5iE4jzsIn138Q/GmLZleJBIYZwb8aiPiFqFYwJa
-	BH4r/PaL8AfP+QbmTH6fYby/yoOQV1xRJbVaje/RQE8BGVZOTXEswDt/PT3QoISM
-	2s2odmEaFjUa3HQ0Udgv9v/TWNnHmZcOchlUsnxKw4EHwJ1e0oDBWHyVtGB9TmJ7
-	q6D4SSNgdAmrpBKXa1hBYmoU1oJf3HQsEM6/V4bgzQ==
-X-ME-Sender: <xms:LsgYZ3bVvOe9AGDtJPCBae4bMZjhdoSfK7MMi4dJWwMePmd9gNsZ3A>
-    <xme:LsgYZ2YD7bebbpp-qD9oAnJL6uRENbhC0sv0yUcyyx4b7Mler4QG6c42l9aaEIcNV
-    oPTo247Nv7-bZRxkw>
-X-ME-Received: <xmr:LsgYZ59uYM7bxFqD2YWGjDkx1M3ubHqcW-zmW-iJmEaqRlPIfo56HXKA5W-1c5cS8JWUtpUF89FhDriJWJ5QVZ_wu4yVStmK7r61qJvcLo2i>
+	fm3; t=1729677362; x=1729763762; bh=GRZxOjyw+aGTiMxB8yKA5+hY+H3Y
+	g+ZNigUod2shHEk=; b=ebTF4y/w962Krt99lR0wVbJb+D3nnXfvwv2BoAVz2CC9
+	yK6dmJvaz+AthT+vOce7plFo+nrMW58t7kgk+0LIYxd1tHM9EOMmHeZLbaQAHHZE
+	hXDwu3xhZcV2DKKUAAHm6C/tzlNiF9RvkKMZhI3dvxqhwoHA2wqVgDDb0x//k297
+	K0NvwYt0t8TI3OgFdvqYC/nvJL+ihYB93q5FbzoG/k1GRkqxtpFYnw6p2Fj3xkp/
+	hwiR4zw1FDpWaFxjudDooCA/fGbDt9RFq6QMmXT9AjGzof4QQ0zYCNQI3gBmNxz8
+	g2A3rEhNpim2aZ2+t+P9rCNz1H2pORUBgXk0jscrWw==
+X-ME-Sender: <xms:McgYZxAiJzKTPW6WQlYdrGC6bsOSoOQWKCItW_CMZUTsoG6OfW-36g>
+    <xme:McgYZ_j8-REvYzO594uAmGJpOrBfPVWSQFUt-uodNXhlWunFh25NrpRNrwUaAbuA4
+    Oj1h2EcgB4JHwpr2w>
+X-ME-Received: <xmr:McgYZ8ndt3z1MAOX2n7udDndGAmmG98AZ4ACVQBwP4bOKRnM8LIlDoFBLh_2ezTGNYyz10dC_tV5iQSBujbfvfCdQ0Evxy0jhO4EnUAwQl41>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
     gtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomh
-X-ME-Proxy: <xmx:LsgYZ9pf6aNZKsfkZZyykYLj9VBQXALnJ5-bM8CKTiKKMgVnBy8Ljg>
-    <xmx:LsgYZypwtxs7vYZHHesU0Sgl2WCpcyKEAa7WxQwkGhyCyO92Z_QAsQ>
-    <xmx:LsgYZzQaf-9RZk54dXRlj5SjbNeHCj6B2sbFs2I0dLboPsiyijJ4EQ>
-    <xmx:LsgYZ6pxNt32LXLwnAfszPLbM8q2Qi93YeyrzCBhfiTvGmYwAT7BIw>
-    <xmx:L8gYZ52YLIrmAhqucZojMukScqvCY8wC0WNJY1WXWd1F7e3RmYHX89JF>
+X-ME-Proxy: <xmx:McgYZ7xwu1N-8V3OpCKyucAqOb9aKOFYa8Ef_pWjq_QvJhjocslujg>
+    <xmx:McgYZ2Ssqz-jYCOf-pPsbWy16AmD1cXE87L0qXdt8KhC56Qsaz3l4w>
+    <xmx:McgYZ-baEH5o0LE_SmrNRGjEImmqJ1uV-siYaSiwWuImEai291ALLw>
+    <xmx:McgYZ3RpfYQxYmqWaZRA35jpCH8QjMg6r18pBmc6_NTcol7xQHPV6g>
+    <xmx:MsgYZxdicpjT7cECw9aoypGo0kSD7VzixAiLzZkAZMjAuRpwQn1jEG4g>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Oct 2024 05:55:58 -0400 (EDT)
+ 23 Oct 2024 05:56:01 -0400 (EDT)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f1377b8d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 23 Oct 2024 09:54:27 +0000 (UTC)
-Date: Wed, 23 Oct 2024 11:55:56 +0200
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8e957251 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 23 Oct 2024 09:54:29 +0000 (UTC)
+Date: Wed, 23 Oct 2024 11:55:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>
-Subject: [PATCH 1/7] reftable/system: move "dir.h" to its only user
-Message-ID: <036cc8f9d602a817aa579092bdeaef5d1156214e.1729677003.git.ps@pks.im>
+Subject: [PATCH 2/7] reftable: explicitly handle hash format IDs
+Message-ID: <c1bd8e2b3c4c524a21f68e822812e41179827e4d.1729677003.git.ps@pks.im>
 References: <cover.1729677003.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,41 +86,111 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1729677003.git.ps@pks.im>
 
-We still include "dir.h" in "reftable/system.h" evne though it is not
-used by anything but by a single unit test. Move it over into that unit
-test so that we don't accidentally use any functionality provided by it
-in the reftable codebase.
+The hash format IDs are used for two different things across the
+reftable codebase:
+
+  - They are used as a 32 bit unsigned integer when reading and writing
+    the header in order to identify the hash function.
+
+  - They are used internally to identify which hash function is in use.
+
+When one only considers the second usecase one might think that one can
+easily change the representation of those hash IDs. But because those
+IDs end up in the reftable header and footer on disk it is important
+that those never change.
+
+Create separate constants `REFTABLE_FORMAT_ID_*` and use them in
+contexts where we read or write reftable headers. This serves multiple
+purposes:
+
+  - It allows us to more easily discern cases where we actually use
+    those constants for the on-disk format.
+
+  - It detangles us from the same constants that are defined in
+    libgit.a, which is another required step to convert the reftable
+    library to become standalone.
+
+  - It makes the next step easier where we stop using `GIT_*_FORMAT_ID`
+    constants in favor of a custom enum.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/system.h               | 1 -
- t/unit-tests/t-reftable-stack.c | 1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ reftable/basics.h |  7 +++++++
+ reftable/reader.c | 10 ++++++----
+ reftable/writer.c | 16 +++++++++++++++-
+ 3 files changed, 28 insertions(+), 5 deletions(-)
 
-diff --git a/reftable/system.h b/reftable/system.h
-index 5ec85833434..8564213475e 100644
---- a/reftable/system.h
-+++ b/reftable/system.h
-@@ -15,7 +15,6 @@ license that can be found in the LICENSE file or at
- #include "lockfile.h"
- #include "tempfile.h"
- #include "hash.h" /* hash ID, sizes.*/
--#include "dir.h" /* remove_dir_recursively, for tests.*/
+diff --git a/reftable/basics.h b/reftable/basics.h
+index 7aa46d7c30d..86141602e74 100644
+--- a/reftable/basics.h
++++ b/reftable/basics.h
+@@ -150,4 +150,11 @@ int common_prefix_size(struct reftable_buf *a, struct reftable_buf *b);
  
  int hash_size(uint32_t id);
  
-diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
-index 72f6747064f..1b4363a58fc 100644
---- a/t/unit-tests/t-reftable-stack.c
-+++ b/t/unit-tests/t-reftable-stack.c
-@@ -8,6 +8,7 @@ license that can be found in the LICENSE file or at
++/*
++ * Format IDs that identify the hash function used by a reftable. Note that
++ * these constants end up on disk and thus mustn't change.
++ */
++#define REFTABLE_FORMAT_ID_SHA1   ((uint32_t) 0x73686131)
++#define REFTABLE_FORMAT_ID_SHA256 ((uint32_t) 0x73323536)
++
+ #endif
+diff --git a/reftable/reader.c b/reftable/reader.c
+index 90dc950b577..64eb6938efe 100644
+--- a/reftable/reader.c
++++ b/reftable/reader.c
+@@ -109,16 +109,18 @@ static int parse_footer(struct reftable_reader *r, uint8_t *footer,
+ 	if (r->version == 1) {
+ 		r->hash_id = GIT_SHA1_FORMAT_ID;
+ 	} else {
+-		r->hash_id = get_be32(f);
+-		switch (r->hash_id) {
+-		case GIT_SHA1_FORMAT_ID:
++		switch (get_be32(f)) {
++		case REFTABLE_FORMAT_ID_SHA1:
++			r->hash_id = GIT_SHA1_FORMAT_ID;
+ 			break;
+-		case GIT_SHA256_FORMAT_ID:
++		case REFTABLE_FORMAT_ID_SHA256:
++			r->hash_id = GIT_SHA256_FORMAT_ID;
+ 			break;
+ 		default:
+ 			err = REFTABLE_FORMAT_ERROR;
+ 			goto done;
+ 		}
++
+ 		f += 4;
+ 	}
  
- #include "test-lib.h"
- #include "lib-reftable.h"
-+#include "dir.h"
- #include "reftable/merged.h"
- #include "reftable/reader.h"
- #include "reftable/reftable-error.h"
+diff --git a/reftable/writer.c b/reftable/writer.c
+index fd136794d5a..9aa45de6340 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -103,8 +103,22 @@ static int writer_write_header(struct reftable_writer *w, uint8_t *dest)
+ 	put_be64(dest + 8, w->min_update_index);
+ 	put_be64(dest + 16, w->max_update_index);
+ 	if (writer_version(w) == 2) {
+-		put_be32(dest + 24, w->opts.hash_id);
++		uint32_t hash_id;
++
++		switch (w->opts.hash_id) {
++		case GIT_SHA1_FORMAT_ID:
++			hash_id = REFTABLE_FORMAT_ID_SHA1;
++			break;
++		case GIT_SHA256_FORMAT_ID:
++			hash_id = REFTABLE_FORMAT_ID_SHA256;
++			break;
++		default:
++			return -1;
++		}
++
++		put_be32(dest + 24, hash_id);
+ 	}
++
+ 	return header_size(writer_version(w));
+ }
+ 
 -- 
 2.47.0.118.gfd3785337b.dirty
 
