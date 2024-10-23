@@ -1,109 +1,163 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A546C1AA795
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 12:34:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FBA1CB51D
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 14:38:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729686866; cv=none; b=RAqcHFshPU3wD49yCiQZFU6oUU8cX1sdjTXkcC9DrNZLNAt3GPg88A4ThHlyL7ENFTdLeRr6OLK+oFqdfu1LWCNDE/Mq9b/febbwk9aXwzr5x0/qfPw8xUO2sn/uF84Ch72k83za/lyNi08f3odQpVPWIstai3CYDf+zns6HMas=
+	t=1729694312; cv=none; b=SIXYv/jQ6edTeLfjK1WsC2fT8rGQgVnuOFjz97EtSGuEOrSmG7IV1ikRgG2wHr9U1CWRYTiV0UuXZritGCYgddd0qPvrXDlyCyDw3ehXaQObOpPKwyv5J6wNBdrC1zi3suXw3SEAuhQ88sQMhtsykEEEyN7171FMjFmtTiOWkIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729686866; c=relaxed/simple;
-	bh=jokUkA9hpy3u7AVb0SPOCGuO/rH5ZFvjBdemZCgygcY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HI9z6r5AwROG6JhgQePSln4gsktedJ1jMpr9s0iTN0u5yNVUgL5duwGYuW4vNRIs201UGzOmzwAaGhVYTsjmQYY6WXJ0nlQPyc977+T8HAx6R1fEkd+/Fsw7OcRTF4AzvyNm8lcB2HKJ8lS4zoJD4QHm2E5RG0ajDke7d9tM028=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=M9HGn/pH; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1729694312; c=relaxed/simple;
+	bh=cDwqoO/hpnmht1FHNZCoijp2dYRPkquWCRbsjbVRaw4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JuBVdD55KkWRIOp6ZBYR/QJlqIfh64sT4xAhr1GLGc0MhhgpBalRFs/SJw1UVKPsH8Lbufv7NAVL0t7TwtdI9TTEIQh/AS2n3UjBYUVMO/Jtffy1WPYceJcY2KNH2wKeTdi58kJp1udGMcRdVewpx8Fr/fG9yjU01uYC5CtA/Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=G1mwkgIE; arc=none smtp.client-ip=212.159.14.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="M9HGn/pH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1729686854; x=1730291654;
-	i=oswald.buddenhagen@gmx.de;
-	bh=V1hssme3xZvaSSxCh4UqkqlQWfkGuCCNqbAEbcgPmgY=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=M9HGn/pHjgrlNQkfEoBLstTVPdgI+EA1q3M65ZXf5Yma4hixdHQeR5hQG3+l2aOh
-	 wmB922JGuKfxrH8vcKCLYAiGYOf6wlnTHbhpkUX5d3IBraI5j5YMUQH9KodKUeIWT
-	 bhzy4Jg+5SerYNI9RbKpbzwt/rzLEawUwu9UdhOPVc9d1GIK2OGeH3dM0hpseDIUo
-	 ETmv3ybxaWRRW6wvMRJ07sLWoHDaSk0PGptzkpqMfXnVE6uO4LrvOboPIAthV4ros
-	 EBvsz22R1xEu2eRgb/U+GrI/cbS3PUqDXQLQ2FbnVkU/tcmgyG40BwfB/yBJwLsPV
-	 3R+0Nvx/WZwV7jtIdw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from ugly.fritz.box ([89.247.162.120]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MaJ7v-1tQs3U3nBV-00QS8Z; Wed, 23
- Oct 2024 14:34:13 +0200
-Received: by ugly.fritz.box (MasqMail 0.3.5-13-g85b6fce-plus, from userid 1000)
-	id 1t3aZ3-Llz-00; Wed, 23 Oct 2024 14:34:13 +0200
-Date: Wed, 23 Oct 2024 14:34:13 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 12/12] gitweb: make use of s///r
-Message-ID: <ZxjtRXf8IUrvn1tK@ugly>
-References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
- <20241023004600.1645313-1-sandals@crustytoothpaste.net>
- <20241023004600.1645313-13-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="G1mwkgIE"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 3cV8tuCz4xile3cV9tBM7R; Wed, 23 Oct 2024 15:38:20 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1729694300; bh=J6CfMVNHSwE8ozyxd2TeNF9pj+LD+TeTX0f26TK/u0g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=G1mwkgIE8xqpEdK85iiOx+SBiHWwpRqbtUx84Iq6q0JVm31Ak2rV6S0U7fBuKwKLj
+	 b1jujb2zwSjErNGKmWC2QgHjOAl9uq1UWYKbq7TZb1m903dVSZZ3cUJTPqk3YYkBoJ
+	 vc98eX79gtlcDUdPzv4R/8yD+IQIG822PMsXrB+WatrQ87JXVnQ6p2MIK1cmIsPiyr
+	 acAxMgS2dMEn8QVzPz4YeNHLHaAmVDoam7SVJMIX1up6a+5NCIZzy6jgqFDKbiInRx
+	 qv/EBQW6Jo/sMeRMkD85o4iu5jfgVxflpU4rCFaTlvLB4ieURAzThenM78dHOy6o3x
+	 hY0dHHVmCD0UA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=VaJUP0p9 c=1 sm=1 tr=0 ts=67190a5c
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=VbVRBR47IsAMTv7IAQIA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <c32a7dc3-cf9f-4d42-98da-80009f9df847@ramsayjones.plus.com>
+Date: Wed, 23 Oct 2024 15:38:18 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20241023004600.1645313-13-sandals@crustytoothpaste.net>
-X-Provags-ID: V03:K1:iDP4B+6gTVP72mB/6lXGzbUR8ISwrLVLXOjf8ZkLui82SU6fe/P
- V2gEUvo8F6Nv2eP08/V8FM2UVEAOz9CIDeRttzRGOruixNIFRVkmTOlXbEWXC7zwHpSFHDm
- qc+ui1vJVMsLP8BM62SaLJOLDku7El8PdviHFpAvEcOEykdQAiTVPo6oJRFIejn+1c0YP7D
- hrsbeSl86CFeGbRxpcKiQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:/gZmDQ34E6k=;mkSv/jF0fmUXNT0j18Ojc9OctA2
- DpyhuvqadY3kgoyMtFYgHJ0EpZKEQdGKcdkj4U33p7exXEtN1MXUk1rXChyWGj5AqazU2nxI6
- 77pghNoHSVQJOjieu6TISmnPvnp/TTptwdox7A4vfR2BDnM0JvZBZ3gtueVRrG4hNNrqs1cuC
- PuSL7iqL+HdPJkME7GPB43mbv8Mu2DDUKbNGfjsE954bJgBGNUuiQ4w2sjRc3zVZOqCO2VAJO
- 0eI09+woJ9s2BN0FWm5Wj8AsB7T7NB/7JWYgo51IfJAZLxw7y+gLExhg71AhsMAu7WFWLGzbs
- N1sidpUqYbuAw9ydITjgf00vhauBav0nmo510fzdmASx0N9YmGDgKPIhYRELcij5lvYS3dqJR
- LijrIJjfxmW3II16lY4E1xog8qzKCdAWsXMQE+pdHr7kz5lKwu/1WBWiVKPJFdPvd8pcvmATD
- Op+WGoiYtlXBw1XAhpKIpGiWk1kNAzl9p163Zu4Ws/XCk9t7JLIOPkEqkvCGEPS8kq54kcvSq
- 2wLC82H+znHJNmeTGr2bbqrOgvzZv2W2NDBMWTY5gXYua7n4dD55wYCSwuThj7+RqXlJFR9s9
- nsXdza0TWbSA+pwW3RVaifnsWvqv96N9se5024893tlYMIjJbZezcDHwb8Q+KsnaO4soW9P2a
- Gaipalm2RKNgOueeu6ARmipdw84iBdCdAB5jGSZlXVjPhpweSNjsCGwj8ZA5E11HPADK1Ghwd
- n+7eLn0Bzf+5FxnXKUEMJREVF9E11dg45TL9Q2irk5PqKC/ex7kx36lJUJZG+Bvm1Fjl/yExZ
- YZ+Kb69lpa9fTv3i/yloG9tQ==
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Eli Schwartz <eschwartz@gentoo.org>, git@vger.kernel.org,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im>
+ <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
+ <361e69ee-4491-4e2b-8edc-fdf4bcbb8532@gentoo.org>
+ <b35b6f10-ebb5-4266-ab95-aafb67cfad22@ramsayjones.plus.com>
+ <ZxjmTbATU7usHcqQ@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <ZxjmTbATU7usHcqQ@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfBVhpJWhb/WIp6msy+QRTCEU2EJ5/67lXr5bO9s6V++5OVtBthgjeUayDrq6VDTMNlT12Xj7fiTi3uKyCt0rbfkXXTGXjL2WDn7c2ljz0CE2U6YwJeoX
+ z2ZuykptJNB4NT6YhNLVjCP3Zb8nKlTXKD6xL1jZBURrWki13VqSlauqdaXTAkIEskwkvNNeeRHvRDS1GXb94TqN0TvgThQElHo=
 
-On Wed, Oct 23, 2024 at 12:46:00AM +0000, brian m. carlson wrote:
->In Perl 5.14, released in May 2011, the r modifier was added to the s///
->operator to allow it to return the modified string instead of modifying
->the string in place.
 
->This allows to write nicer, more succinct code in
->several cases, so let's do that here.
->
-"several" is a bit of an overstatement.
 
->+++ b/gitweb/gitweb.perl
->@@ -1188,7 +1188,7 @@ sub evaluate_and_validate_params {
->-				(my $error =3D $@) =3D~ s/ at \S+ line \d+.*\n?//;
->+				my $error =3D $@ =3D~ s/ at \S+ line \d+.*\n?//r;
->
-i'm a fan of "excess" parentheses where the syntax relies heavily on
-the binding and priority of operators:
+On 23/10/2024 13:04, Patrick Steinhardt wrote:
+> On Mon, Oct 21, 2024 at 11:56:42PM +0100, Ramsay Jones wrote:
+>> On 20/10/2024 09:51, Eli Schwartz wrote:
+>>> On 10/18/24 12:08 PM, Ramsay Jones wrote:
+>> [snip] 
 
-   my $error =3D ($@ =3D~ s/ at \S+ line \d+.*\n?//r);
+>> Patrick, how do you run the tests on cygwin?
+> 
+> I didn't have to do anything special here, so this is quite puzzling. In
+> a fully-updated Cygwin installation:
+> 
+>     $ which meson
+>     /usr/bin/meson
+>     $ meson --version
+>     1.3.2
+>     $ python --version
+>     3.9.16
+>     $ mkdir build
+>     $ meson setup ..
+>     ... autoconfiguration logs ...
+>     $ meson test 't000*'
 
-which is arguably semantically clearer than the old idiom, but not shorter=
-.
+Hmm, I could have sworn that this caused a complete rebuild for me
+(even when having just built), hence the '--no-rebuild --print-errorlogs'
+parameters to meson test. (Oh, maybe that was just 'meson test' - so
+how do you run *all* tests with meson - rather than 'ninja test').
 
->@@ -2700,7 +2700,7 @@ sub git_cmd {
->-		map { my $a =3D $_; $a =3D~ s/(['!])/'\\$1'/g; "'$a'" } @_ );
->+		map { my $a =3D $_ =3D~ s/(['!])/'\\$1'/gr; "'$a'" } @_ );
->
-i think
+>     ninja: Entering directory `/home/Patrick Steinhardt/git/build'
+>     [582/582] Linking target git-receive-pack.exe
+>     1/9 t0005-signals           OK              4.17s
+>     2/9 t0004-unwritable        OK              4.58s
+>     3/9 t0002-gitfile           OK              6.95s
+>     4/9 t0007-git-var           OK              8.15s
+>     5/9 t0006-date              OK             15.42s
+>     6/9 t0003-attributes        OK             26.84s
+>     7/9 t0001-init              OK             29.09s
+>     8/9 t0008-ignores           OK             57.17s
+>     9/9 t0000-basic             OK             83.82s
+> 
+>     Ok:                 9
+>     Expected Fail:      0
+>     Fail:               0
+>     Unexpected Pass:    0
+>     Skipped:            0
+>     Timeout:            0
+> 
+>     Full log written to /home/Patrick Steinhardt/git/build/meson-logs/testlog.txt
+> 
+> This is starting with a fresh repo, I executed `git clean -dfx`
+> beforehand.
 
-   map { "'".(s/(['!])/'\\$1'/gr)."'" } @_ );
+Hmm, I have far to many 'precious' files to use 'git clean'!
+(perhaps I should clone the repo to get a totally clean slate).
 
-should work, and is an actually significant improvement.
+> 
+> Do any of the versions used maybe differ?
+
+Ah, yes, I should have noted the versions:
+
+  $ uname -a
+  CYGWIN_NT-10.0-19045 satellite 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64 Cygwin
+  $ 
+
+  $ which meson ninja python
+  /usr/bin/meson
+  /usr/bin/ninja
+  /usr/bin/python
+  $ 
+
+  $ meson --version
+  1.3.2
+  $ 
+
+  $ ninja --version
+  1.12.0
+  $ 
+
+  $ python --version
+  Python 3.9.18
+  $ 
+
+So, a slightly newer python - what versions of ninja and the cygwin
+'.dll' are you using? (the latter is more likely to cause an issue).
+
+BTW, I have been doing:
+
+  $ meson setup .. -Dprefix=$HOME
+
+so that it matches the default prefix from the Makefile (not that I
+have attempted to actually install yet!;) ). Can the default be set
+in the meson.build file (with command-line override, of course)?
+
+
+ATB,
+Ramsay Jones
+
+
+
