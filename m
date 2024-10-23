@@ -1,162 +1,90 @@
-Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ECE1E2824
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:16:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF6314B077
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:17:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729714578; cv=none; b=kU2TyGpykuWOJrgNDEedOY7F3h+dhZNtJeb+pxxlSETEIvfSioJ0zLv1qMtMrzYpcL3j2gVKVXsKZZ8XkTzNOx+8b9OjqG1EgHqh2vjKcFnHga8pLB5djbx+0asuNac8Zoy0XJTrvwH9ApEXAvzKo0KeW6NgcDSnGSdg/Ltm3aY=
+	t=1729714623; cv=none; b=G13Eyxuv7uC3d/+Z26M8+zhxmdJRVe1pHYrgDbJ4PgzLffSMgvms10gr7G0ZqHYqNYJouTdoza3MQWKzQm9/ZOj5EQ5lcF50B1V5OaQNELExeaqrewOUSmGguQ5NNI+buOfHQUz3rfiyIE/LG+5oVM5+OEXpJgiahzAE6EmQmL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729714578; c=relaxed/simple;
-	bh=FNJdbDcwe6sXRErTUOvJmtAJzVWzC+YoGDddTBdWJYM=;
-	h=From:To:Cc:Subject:Date:Message-id:MIME-version; b=Tz01oQzgpwtkoISvVq4/9hKul9ef8VXtxv7c/zLiKiXSie0hVBz8lt6V/+1snmPNOLiYU5HKd+C+BOFb6Thc9wsp3sbqwqYrzq0Q26obt27PKHkc5OS2n5ZT94Pzgkj5o3RGfUIT1f9jxAlJfR6QdvTVvCABJnVmZ6cv/6NuVOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=bTwgFSpN; arc=none smtp.client-ip=192.29.178.125
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1729714623; c=relaxed/simple;
+	bh=1oexfcTHhgG95ZfbY2cChowJegQrKRtYv46EH0WqeGw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jnHMHWPV8t+wpYsIdH+OtleyfVUYCqXVDQD4v2iXlWUydM9RdRC3+WDIgefGP3vG2gSHa+zxcHkeYzfKBy7c/6J7VznL7dW7SrZZ3h5wRw0XLXmR5F9+fvxfvEZ+xoT9hw86/iLY188HcedzH9pxtf41G0+dXgzzhMOShq2MGHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=D+a/6m9o; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="bTwgFSpN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=LoPF3pN5Io+/IcY1eyj+fbrUgCORYmpHLmHBY8zbMNk=;
- b=bTwgFSpNTX/0e25nupN3kOLm0oeVxTyLOTbO0s6mwIQW3U6TSLH5PwzcSgpWdiod/TaBRv1wriv8
-   73BwS/Z/QXY37UrpJkAPtZQzzdO8pt15ZYSlZEUvOrGMy1gF9oSht84MgFf7rWlEF+XfoOMt4SV5
-   25/7/hYE9qoiOP0zeUHNMbiViOCOWafpHVue0eKv/1wwKBuwU3mFsQcbVtd0l31uA6fkxjDVdQDx
-   p2vQFT5gSqXs5Q4Vf9GKqwdGKAgBSfgzKbYpAo1ZNOjw50HDj0xUd9zfsjV+Jlw1g/lB1pUxx/RR
-   zsQjy+Qb3oMdI2vkEk3MdDgYenwbgfmeLRdBEw==
-Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20240911 64bit (built Sep 11
- 2024))
- with ESMTPS id <0SLT00MWASAXXT20@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Wed, 23 Oct 2024 20:16:09 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-From: Bence Ferdinandy <bence@ferdinandy.com>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Bence Ferdinandy <bence@ferdinandy.com>,
-	=?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
- <congdanhqx@gmail.com>,	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-	Teng Long <dyroneteng@gmail.com>
-Subject: [RFC PATCH] notes: add prepend command
-Date: Wed, 23 Oct 2024 22:14:24 +0200
-Message-id: <20241023201430.986389-1-bence@ferdinandy.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="D+a/6m9o"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6e35fb3792eso1465337b3.3
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 13:17:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729714620; x=1730319420; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pf1R1OYuXz/eJXkThT1I3MlwI225+nXn6WROczY7WuI=;
+        b=D+a/6m9ozYsgjTeu6S5EnWyezfAvLf1CaP6bvlPoQlKpnhoYzjYcEGetDTJ1vxBITV
+         DjDqkRAMy3Q+ah9WLung0920z06/MQATw7GNnL0Zx8jexB498UrXQ7nITC0WyPZoOj9v
+         MIhK7mJP8VFOv2MnJYkLByXslPRaxONraOxz6XPmfjg0zK62gLuNUl0hIb5QbnsBdx8U
+         D/PUER79uZasgiDNuXPaxGzkejzCfDh3B0EmaFJLOiugbQO++4ugh0ncX+gtWiQ13iHx
+         EVbV1wCY7EgaEwiNZUFsYIu11shJL1ddABR8l9hS+ucaJPyw7OItdtcVb7MsS1YhgmYU
+         TFbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729714620; x=1730319420;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Pf1R1OYuXz/eJXkThT1I3MlwI225+nXn6WROczY7WuI=;
+        b=l3WTKltntWLcCtxj3jjTe3m7ZkjFunXryVK4pH2H7W5HzhKPCPiHSaoxReVi7z1t3L
+         zAtSQZZ37DASPEe6YRwXVODGKM7gN7AfK3Cx161mF4nSyZ6P7jepJX4ibHp1BHmQPhlF
+         lpXmRCCy+lSDlaJmedvgR4cs3cZ9FV6tNkkRipThtkrLNzaa/gmIcxnK17FGhIt0w+v/
+         M5ETHrLmF3Va5msHccp/d0BiNl8WjZvudMfAcWbKB3rNnPfhdB+71kQz9eJi1azSnyRk
+         Tgi7PbBmvCduXhbZXXy7eXaYCnoC82QohKV8LA9zlVv7WDc5B9YDjY1C677SIlZAvhSl
+         cpfg==
+X-Gm-Message-State: AOJu0Yzs+xgE4wIMm2tS9KN7dZ9f/njQ6tOokpEAHMGanPjY9zdIzRqJ
+	RfIPAeeuU1HfuqxrwLmSni5EBiWcDGs/A8/h+9JvApPmDHgrd46B6Lhcj6t5FBoxa+oOkCHhihZ
+	3xyw=
+X-Google-Smtp-Source: AGHT+IHvhVwsxLZTgySDNb5FPl9UNbTiROhrodAV0Uch5PUNPzqlCjoos+RxXljqZrp41g1j5zSeag==
+X-Received: by 2002:a05:690c:fc6:b0:6e7:e76e:5852 with SMTP id 00721157ae682-6e7f0fa4112mr47680797b3.32.1729714620581;
+        Wed, 23 Oct 2024 13:17:00 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5d6f9ebsm16597117b3.144.2024.10.23.13.17.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2024 13:17:00 -0700 (PDT)
+Date: Wed, 23 Oct 2024 16:16:59 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/12] Update versions of libcurl and Perl
+Message-ID: <ZxlZuxllqjAZfAZm@nand.local>
+References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+ <20241023004600.1645313-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: 8bit
-Reporting-Meta:
- AAHxVhgT40vmMneorwtbNskryHhsUvCLZftk3h6pVCWanQNRX98yPKGZOrF/i73v
- sB6q645GudB+v8GRwsyK9F+XggPHZWY/6KfEeq8PYkOSPTsje32eVoYc7k23oWvl
- Ifa6sFO4B8UrowFSYigk+GgqcsuNTgy7XJCSS9R7WCEekmuAHW/sSUsqanxIZaS4
- 2oIqmydf3UjN3QHskQuJ7lRSjTjfSQ1WwcWO8SICoz2oMvr5BbgtmAY7pen7J3JX
- Exvd1h33C9qmQPDXRzoiHkRZqFm8WVQo/s3S5SlVbBBHe4IKdaXSoIILo7we4G/C
- 77PMhfAlWvL3hiyITmfUQ/q6cf+2jlT+3PBFznYgfQmXyZlkwXvbYScy83QHiHlX
- aiGod//UkCFkBSmjI9lsURRBhG7QohyLRtUdS+xt8Ax5Pl80aQDkb2J2o5YrENXT
- gWvjyHNCFJt1D0OKOKr2ShcbAf/x1P5cd6LLTLmYaWXl0YwrWDPFWu7q
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241023004600.1645313-1-sandals@crustytoothpaste.net>
 
-When a note is detailing commit history, it makes sense to keep the
-latest change on top, but unlike adding things at the bottom with
-"git notes append" this can only be done manually. Add a
+On Wed, Oct 23, 2024 at 12:45:48AM +0000, brian m. carlson wrote:
+> brian m. carlson (12):
+>   git-curl-compat: remove check for curl 7.21.5
+>   git-curl-compat: remove check for curl 7.25.0
+>   git-curl-compat: remove check for curl 7.34.0
+>   git-curl-compat: remove check for curl 7.39.0
+>   git-curl-compat: remove check for curl 7.43.0
+>   git-curl-compat: remove check for curl 7.44.0
+>   git-curl-compat: remove check for curl 7.52.0
+>   git-curl-compat: remove check for curl 7.53.0
+>   git-curl-compat: remove check for curl 7.56.0
+>   INSTALL: document requirement for libcurl 7.61.0
+>   Require Perl 5.26.0
+>   gitweb: make use of s///r
 
-    git notes prepend
+Thanks, queued.
 
-command, which works exactly like the append command, except that it
-inserts the text before the current contents of the note instead of
-after.
-
-Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
----
-
-Notes:
-    RFC v1: Cf.
-        https://lore.kernel.org/git/20241023153736.257733-1-bence@ferdinandy.com/T/#m5b6644827590c2518089ab84f936a970c4e9be0f
-    
-        For that particular series I've used
-        git rev-list HEAD~8..HEAD | xargs -i git notes append {} -m "v12: no change"
-        for a quick-start on updating notes, when only 1 note needed to be
-        really edited with meaningful content, and for some of the patches
-        you now need to scroll a bit to actually find that "no change" text,
-        instead of seeing it right at the top.
-
- builtin/notes.c | 32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 8c26e45526..cf158cab1c 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -35,6 +35,7 @@ static const char * const git_notes_usage[] = {
- 	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
- 	N_("git notes [--ref <notes-ref>] copy [-f] <from-object> <to-object>"),
- 	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-+	N_("git notes [--ref <notes-ref>] prepend [--allow-empty] [--[no-]separator|--separator=<paragraph-break>] [--[no-]stripspace] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
- 	N_("git notes [--ref <notes-ref>] edit [--allow-empty] [<object>]"),
- 	N_("git notes [--ref <notes-ref>] show [<object>]"),
- 	N_("git notes [--ref <notes-ref>] merge [-v | -q] [-s <strategy>] <notes-ref>"),
-@@ -644,7 +645,8 @@ static int copy(int argc, const char **argv, const char *prefix)
- 	return retval;
- }
- 
--static int append_edit(int argc, const char **argv, const char *prefix)
-+
-+static int append_prepend_edit(int argc, const char **argv, const char *prefix, int prepend)
- {
- 	int allow_empty = 0;
- 	const char *object_ref;
-@@ -716,11 +718,18 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 
- 		if (!prev_buf)
- 			die(_("unable to read %s"), oid_to_hex(note));
--		if (size)
--			strbuf_add(&buf, prev_buf, size);
--		if (d.buf.len && size)
--			append_separator(&buf);
--		strbuf_insert(&d.buf, 0, buf.buf, buf.len);
-+		if (prepend) {
-+			if (d.buf.len && size)
-+				append_separator(&buf);
-+			if (size)
-+				strbuf_add(&buf, prev_buf, size);
-+		} else {
-+			if (size)
-+				strbuf_add(&buf, prev_buf, size);
-+			if (d.buf.len && size)
-+				append_separator(&buf);
-+		}
-+		strbuf_insert(&d.buf, prepend ? d.buf.len : 0, buf.buf, buf.len);
- 
- 		free(prev_buf);
- 		strbuf_release(&buf);
-@@ -745,6 +754,16 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static int prepend_edit(int argc, const char **argv, const char *prefix)
-+{
-+	return append_prepend_edit(argc, argv, prefix, 1);
-+}
-+
-+static int append_edit(int argc, const char **argv, const char *prefix)
-+{
-+	return append_prepend_edit(argc, argv, prefix, 0);
-+}
-+
- static int show(int argc, const char **argv, const char *prefix)
- {
- 	const char *object_ref;
-@@ -1116,6 +1135,7 @@ int cmd_notes(int argc,
- 		OPT_SUBCOMMAND("add", &fn, add),
- 		OPT_SUBCOMMAND("copy", &fn, copy),
- 		OPT_SUBCOMMAND("append", &fn, append_edit),
-+		OPT_SUBCOMMAND("prepend", &fn, prepend_edit),
- 		OPT_SUBCOMMAND("edit", &fn, append_edit),
- 		OPT_SUBCOMMAND("show", &fn, show),
- 		OPT_SUBCOMMAND("merge", &fn, merge),
--- 
-2.47.0.119.g5b706304f7.dirty
-
+Thanks,
+Taylor
