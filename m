@@ -1,181 +1,109 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D27B1AB6F1
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 12:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A546C1AA795
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 12:34:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729685484; cv=none; b=Tg1qBd3L6eQyywyQIJQYbB8CQs39vDe6fd3zgaMG6jvD7c8BmbCd7aQTAwnE7iFZGERpWpcnTdhbdMR+vvu2WNoFbip/2XXaxcu8XZh0w+Bky/ecEjSRB+vZgm+wsSmwzfQDjstc7/x6nnbRtiTzuXcofNRGCiyO6l4KvICp884=
+	t=1729686866; cv=none; b=RAqcHFshPU3wD49yCiQZFU6oUU8cX1sdjTXkcC9DrNZLNAt3GPg88A4ThHlyL7ENFTdLeRr6OLK+oFqdfu1LWCNDE/Mq9b/febbwk9aXwzr5x0/qfPw8xUO2sn/uF84Ch72k83za/lyNi08f3odQpVPWIstai3CYDf+zns6HMas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729685484; c=relaxed/simple;
-	bh=jXNRoXZxMh8m85UlmkzeYHWs92yFe3jAmJq8Zy2DWVE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QJqTO3Fdj2pHpoaytYAkRqS4KF9O9cZmsyuktEgl/SqSWMkWRGc/SET8i6bQGe0U4t6pRMcJq2VSUwQqYrKFVcAydLnCt29O6Qk4vlhA42uVmCp/LpFvsNZXRsjBOS6PgdwADqUvx3D6pDmMD16KGU+sDVGVWN8e4dDnru//QLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cEZbu2fy; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729686866; c=relaxed/simple;
+	bh=jokUkA9hpy3u7AVb0SPOCGuO/rH5ZFvjBdemZCgygcY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HI9z6r5AwROG6JhgQePSln4gsktedJ1jMpr9s0iTN0u5yNVUgL5duwGYuW4vNRIs201UGzOmzwAaGhVYTsjmQYY6WXJ0nlQPyc977+T8HAx6R1fEkd+/Fsw7OcRTF4AzvyNm8lcB2HKJ8lS4zoJD4QHm2E5RG0ajDke7d9tM028=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=M9HGn/pH; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cEZbu2fy"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4315eac969aso5739435e9.1
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 05:11:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729685480; x=1730290280; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=y4Gun0ThqNehbN78XjbxW/TVsq64QEsMTrLgiVcxt+8=;
-        b=cEZbu2fyeYkD9GJWpU6ANegfEnqYMGvHh/DASX9vLhrWnCVZleGj0/eRiqDAUmrPPm
-         ts4PNaK3p58xyO4ojTBp4FLN3v4pRO6Zp0CqvhtpVXpG+CZURV7Ixh/RRiioEwZTFWkL
-         JpUYFsuQN8aref6YAldE53xRNGBxzsG9vL+IcyDk+n7yxVTSos6TzO12CvY1ofO6nutv
-         NSmu0Rn4hlJNQ6XFzuf8wDIlmwqGPOmnT3ovrvzBFgIvY25szt5LKs6ADGBq8QzzF8I6
-         tHi/f53i/BepznSaKOdVoRfONQyo6iunKbbMF9VXSonbblTl/vVlh9YIVdni9bz/oaKI
-         c/uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729685480; x=1730290280;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=y4Gun0ThqNehbN78XjbxW/TVsq64QEsMTrLgiVcxt+8=;
-        b=hgrUrEWp8G+4OTuDCPuvU0O1CTD7Hdi1s6MInb+lP/Wqm4WsXTnKlTqEmkWwuUJCFa
-         O6xe2JtBuOyJ2ZBGFegWBBBSZAj/QJ+umWIr0uW7N+pVdqzetjCB8AvHoloY2JKm9W0G
-         6gNgQr0jctkLXOl8FfH0YzRnvxHsn1DBWmKa5VhrAHJtxdv7PTLkPFX+razpdigVWmmU
-         u4EqMwSU60/kTNncaWcFn6dpwtu0fPd//QyJwUN+ujvH5/5eeXf5Z9O0jQsQOEcq2GOc
-         iFoh79Qxzx3tebe0iKo046XiKvYOuMSvn/JKw2WaNkQW3hT70nx+UB7vpjcFOXCuZ7DG
-         xF1w==
-X-Gm-Message-State: AOJu0YwWj6z5tnt+Y0GQKGR28YYkYzUT9mzXkIRDbsM5E2cNexJi6sYH
-	5yQ56jIXZGrxLBXrv/5jrGL2PfQTOZv3DwCU7D+cpdRfYz/AQjpnlCE46I9gmqir/Q==
-X-Google-Smtp-Source: AGHT+IGH79AU+/T83Z6RL9EWPoWTlrNdw1jvHYaODnWSHtSxTHcnLGcbkv8PdLDi9UNVFkXXU2hXLQ==
-X-Received: by 2002:a05:600c:4ec7:b0:42c:baf1:4c7 with SMTP id 5b1f17b1804b1-4317bd7701cmr41933765e9.4.1729685480219;
-        Wed, 23 Oct 2024 05:11:20 -0700 (PDT)
-Received: from localhost.localdomain ([154.118.59.16])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-37ee0b9bb42sm8713594f8f.98.2024.10.23.05.11.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 05:11:19 -0700 (PDT)
-From: Seyi Kuforiji <kuforiji98@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	kristofferhaugsbakk@fastmail.com,
-	me@ttaylorr.com,
-	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH Outreachy] t9101: ensure no whitespace after redirect
-Date: Wed, 23 Oct 2024 13:11:12 +0100
-Message-ID: <20241023121113.915310-1-kuforiji98@gmail.com>
-X-Mailer: git-send-email 2.47.0.86.g15030f9556
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="M9HGn/pH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1729686854; x=1730291654;
+	i=oswald.buddenhagen@gmx.de;
+	bh=V1hssme3xZvaSSxCh4UqkqlQWfkGuCCNqbAEbcgPmgY=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=M9HGn/pHjgrlNQkfEoBLstTVPdgI+EA1q3M65ZXf5Yma4hixdHQeR5hQG3+l2aOh
+	 wmB922JGuKfxrH8vcKCLYAiGYOf6wlnTHbhpkUX5d3IBraI5j5YMUQH9KodKUeIWT
+	 bhzy4Jg+5SerYNI9RbKpbzwt/rzLEawUwu9UdhOPVc9d1GIK2OGeH3dM0hpseDIUo
+	 ETmv3ybxaWRRW6wvMRJ07sLWoHDaSk0PGptzkpqMfXnVE6uO4LrvOboPIAthV4ros
+	 EBvsz22R1xEu2eRgb/U+GrI/cbS3PUqDXQLQ2FbnVkU/tcmgyG40BwfB/yBJwLsPV
+	 3R+0Nvx/WZwV7jtIdw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from ugly.fritz.box ([89.247.162.120]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MaJ7v-1tQs3U3nBV-00QS8Z; Wed, 23
+ Oct 2024 14:34:13 +0200
+Received: by ugly.fritz.box (MasqMail 0.3.5-13-g85b6fce-plus, from userid 1000)
+	id 1t3aZ3-Llz-00; Wed, 23 Oct 2024 14:34:13 +0200
+Date: Wed, 23 Oct 2024 14:34:13 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 12/12] gitweb: make use of s///r
+Message-ID: <ZxjtRXf8IUrvn1tK@ugly>
+References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+ <20241023004600.1645313-1-sandals@crustytoothpaste.net>
+ <20241023004600.1645313-13-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20241023004600.1645313-13-sandals@crustytoothpaste.net>
+X-Provags-ID: V03:K1:iDP4B+6gTVP72mB/6lXGzbUR8ISwrLVLXOjf8ZkLui82SU6fe/P
+ V2gEUvo8F6Nv2eP08/V8FM2UVEAOz9CIDeRttzRGOruixNIFRVkmTOlXbEWXC7zwHpSFHDm
+ qc+ui1vJVMsLP8BM62SaLJOLDku7El8PdviHFpAvEcOEykdQAiTVPo6oJRFIejn+1c0YP7D
+ hrsbeSl86CFeGbRxpcKiQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:/gZmDQ34E6k=;mkSv/jF0fmUXNT0j18Ojc9OctA2
+ DpyhuvqadY3kgoyMtFYgHJ0EpZKEQdGKcdkj4U33p7exXEtN1MXUk1rXChyWGj5AqazU2nxI6
+ 77pghNoHSVQJOjieu6TISmnPvnp/TTptwdox7A4vfR2BDnM0JvZBZ3gtueVRrG4hNNrqs1cuC
+ PuSL7iqL+HdPJkME7GPB43mbv8Mu2DDUKbNGfjsE954bJgBGNUuiQ4w2sjRc3zVZOqCO2VAJO
+ 0eI09+woJ9s2BN0FWm5Wj8AsB7T7NB/7JWYgo51IfJAZLxw7y+gLExhg71AhsMAu7WFWLGzbs
+ N1sidpUqYbuAw9ydITjgf00vhauBav0nmo510fzdmASx0N9YmGDgKPIhYRELcij5lvYS3dqJR
+ LijrIJjfxmW3II16lY4E1xog8qzKCdAWsXMQE+pdHr7kz5lKwu/1WBWiVKPJFdPvd8pcvmATD
+ Op+WGoiYtlXBw1XAhpKIpGiWk1kNAzl9p163Zu4Ws/XCk9t7JLIOPkEqkvCGEPS8kq54kcvSq
+ 2wLC82H+znHJNmeTGr2bbqrOgvzZv2W2NDBMWTY5gXYua7n4dD55wYCSwuThj7+RqXlJFR9s9
+ nsXdza0TWbSA+pwW3RVaifnsWvqv96N9se5024893tlYMIjJbZezcDHwb8Q+KsnaO4soW9P2a
+ Gaipalm2RKNgOueeu6ARmipdw84iBdCdAB5jGSZlXVjPhpweSNjsCGwj8ZA5E11HPADK1Ghwd
+ n+7eLn0Bzf+5FxnXKUEMJREVF9E11dg45TL9Q2irk5PqKC/ex7kx36lJUJZG+Bvm1Fjl/yExZ
+ YZ+Kb69lpa9fTv3i/yloG9tQ==
+Content-Transfer-Encoding: quoted-printable
 
-This change updates the script to conform to the coding
-standards outlined in the Git project's documentation. According to the
-guidelines in Documentation/CodingGuidelines under "Redirection
-operators", there should be no whitespace after redirection operators.
+On Wed, Oct 23, 2024 at 12:46:00AM +0000, brian m. carlson wrote:
+>In Perl 5.14, released in May 2011, the r modifier was added to the s///
+>operator to allow it to return the modified string instead of modifying
+>the string in place.
 
-Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
----
- t/t9101-git-svn-props.sh | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+>This allows to write nicer, more succinct code in
+>several cases, so let's do that here.
+>
+"several" is a bit of an overstatement.
 
-diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
-index 52046e60d5..b2ee626b9a 100755
---- a/t/t9101-git-svn-props.sh
-+++ b/t/t9101-git-svn-props.sh
-@@ -21,32 +21,32 @@ a_empty_cr=
- a_empty_crlf=
- 
- cd import
--	cat >> kw.c <<\EOF
-+	cat >>kw.c <<\EOF
- /* Somebody prematurely put a keyword into this file */
- /* $Id$ */
- EOF
- 
--	printf "Hello\r\nWorld\r\n" > crlf
-+	printf "Hello\r\nWorld\r\n" >crlf
- 	a_crlf=$(git hash-object -w crlf)
--	printf "Hello\rWorld\r" > cr
-+	printf "Hello\rWorld\r" >cr
- 	a_cr=$(git hash-object -w cr)
--	printf "Hello\nWorld\n" > lf
-+	printf "Hello\nWorld\n" >lf
- 	a_lf=$(git hash-object -w lf)
- 
--	printf "Hello\r\nWorld" > ne_crlf
-+	printf "Hello\r\nWorld" >ne_crlf
- 	a_ne_crlf=$(git hash-object -w ne_crlf)
--	printf "Hello\nWorld" > ne_lf
-+	printf "Hello\nWorld" >ne_lf
- 	a_ne_lf=$(git hash-object -w ne_lf)
--	printf "Hello\rWorld" > ne_cr
-+	printf "Hello\rWorld" >ne_cr
- 	a_ne_cr=$(git hash-object -w ne_cr)
- 
- 	touch empty
- 	a_empty=$(git hash-object -w empty)
--	printf "\n" > empty_lf
-+	printf "\n" >empty_lf
- 	a_empty_lf=$(git hash-object -w empty_lf)
--	printf "\r" > empty_cr
-+	printf "\r" >empty_cr
- 	a_empty_cr=$(git hash-object -w empty_cr)
--	printf "\r\n" > empty_crlf
-+	printf "\r\n" >empty_crlf
- 	a_empty_crlf=$(git hash-object -w empty_crlf)
- 
- 	svn_cmd import --no-auto-props -m 'import for git svn' . "$svnrepo" >/dev/null
-@@ -57,10 +57,10 @@ test_expect_success 'checkout working copy from svn' 'svn co "$svnrepo" test_wc'
- test_expect_success 'setup some commits to svn' '
- 	(
- 		cd test_wc &&
--		echo Greetings >> kw.c &&
-+		echo Greetings >>kw.c &&
- 		poke kw.c &&
- 		svn_cmd commit -m "Not yet an Id" &&
--		echo Hello world >> kw.c &&
-+		echo Hello world >>kw.c &&
- 		poke kw.c &&
- 		svn_cmd commit -m "Modified file, but still not yet an Id" &&
- 		svn_cmd propset svn:keywords Id kw.c &&
-@@ -75,7 +75,7 @@ test_expect_success 'fetch revisions from svn' 'git svn fetch'
- name='test svn:keywords ignoring'
- test_expect_success "$name" \
- 	'git checkout -b mybranch remotes/git-svn &&
--	echo Hi again >> kw.c &&
-+	echo Hi again >>kw.c &&
- 	git commit -a -m "test keywords ignoring" &&
- 	git svn set-tree remotes/git-svn..mybranch &&
- 	git pull . remotes/git-svn'
-@@ -106,8 +106,8 @@ done
- 
- 
- cd test_wc
--	printf '$Id$\rHello\rWorld\r' > cr
--	printf '$Id$\rHello\rWorld' > ne_cr
-+	printf '$Id$\rHello\rWorld\r' >cr
-+	printf '$Id$\rHello\rWorld' >ne_cr
- 	a_cr=$(printf '$Id$\r\nHello\r\nWorld\r\n' | git hash-object --stdin)
- 	a_ne_cr=$(printf '$Id$\r\nHello\r\nWorld' | git hash-object --stdin)
- 	test_expect_success 'Set CRLF on cr files' \
-@@ -126,7 +126,7 @@ b_ne_cr="$(git hash-object ne_cr)"
- test_expect_success 'CRLF + $Id$' "test '$a_cr' = '$b_cr'"
- test_expect_success 'CRLF + $Id$ (no newline)' "test '$a_ne_cr' = '$b_ne_cr'"
- 
--cat > show-ignore.expect <<\EOF
-+cat >show-ignore.expect <<\EOF
- 
- # /
- /no-such-file*
-@@ -153,7 +153,7 @@ no-such-file*
- ' . &&
- 		svn_cmd commit -m 'propset svn:ignore'
- 	) &&
--	git svn show-ignore > show-ignore.got &&
-+	git svn show-ignore >show-ignore.got &&
- 	cmp show-ignore.expect show-ignore.got
- "
- 
--- 
-2.47.0.86.g15030f9556
+>+++ b/gitweb/gitweb.perl
+>@@ -1188,7 +1188,7 @@ sub evaluate_and_validate_params {
+>-				(my $error =3D $@) =3D~ s/ at \S+ line \d+.*\n?//;
+>+				my $error =3D $@ =3D~ s/ at \S+ line \d+.*\n?//r;
+>
+i'm a fan of "excess" parentheses where the syntax relies heavily on
+the binding and priority of operators:
 
+   my $error =3D ($@ =3D~ s/ at \S+ line \d+.*\n?//r);
+
+which is arguably semantically clearer than the old idiom, but not shorter=
+.
+
+>@@ -2700,7 +2700,7 @@ sub git_cmd {
+>-		map { my $a =3D $_; $a =3D~ s/(['!])/'\\$1'/g; "'$a'" } @_ );
+>+		map { my $a =3D $_ =3D~ s/(['!])/'\\$1'/gr; "'$a'" } @_ );
+>
+i think
+
+   map { "'".(s/(['!])/'\\$1'/gr)."'" } @_ );
+
+should work, and is an actually significant improvement.
