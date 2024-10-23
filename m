@@ -1,256 +1,103 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4CA13AA2F
-	for <git@vger.kernel.org>; Wed, 23 Oct 2024 19:53:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169D4142623
+	for <git@vger.kernel.org>; Wed, 23 Oct 2024 20:11:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729713222; cv=none; b=Q2kPxJUKv4iO0w8TFxmiHFT71efK6lFMxOnz717fy+xlnFP7JtciTT2wgWpfkRn3/86WSYgz5VqU+hfdeRBR6JvlOMkKc19L/2cyGJqpKFY4siQ57Bzz/C9YR4P3ttUWoAxSA9N1HuHrNvBFZUl7UsOD1Fnb8mVntAOXf8Bw5b8=
+	t=1729714277; cv=none; b=HgqleeM+AFNyxt4yXsMcP97I9U2uBfyrD1f9TIUKgPMGRWFClkj1mCUOhJ/YG95gKm/+hJVafzWAkwJJlIcu6B9R79B09ozi9/vQ5Z7Kf/7wugQqeQ6Puje6AWGX7fo3fklS5g2jXOl40paIo1f7iF85GVgjPpm2j94HdeZcSOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729713222; c=relaxed/simple;
-	bh=bqCphRhg57We/ZJc5Ms/9oelnmjk9BowQDUbzza7bgM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=rQ5Mn6frpHNgMsVR3yEobBqaSG1ieEhJISa/ajcPwtrc/Tplxs0Xa6TqamjBbxQkgQ4L5Vj8sFRKX4/g5BCqNT0rAaNwZCkqCKX0sO5xW2Xll2I/BIz4etFpqS/xfUnImsjW7rhkyO46RMZ+y1MTI6c/5OQo1LL366D3dhczlRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Sf2s+vi3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ioEU5XBs; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1729714277; c=relaxed/simple;
+	bh=4SqE6qe26hELZj4meqI5jEeXhU+YSBBz9Kdu/cdAm+o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DDZTWq8sfia/Om/6Sk5EwpO3A+IwSiI2eTZskG62csr2Ly6J0oEg7u86Uo4n2+Z2WletdJywhzfL/jJRTtfZ4X3MHNjaIWKivZxXdFTWyZKYOQI5GNQgv9NtXbqJdhbXIXgE+OUIUr3iLmodo0B2G6vLUdZ2k3lySUVYJWo2iQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=xsYm6HIl; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Sf2s+vi3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ioEU5XBs"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6415713801F2;
-	Wed, 23 Oct 2024 15:53:39 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 23 Oct 2024 15:53:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729713219;
-	 x=1729799619; bh=VqBgidO/dQheUWX11iSvIQja4hlCwxTnBp5Kxx4+SyU=; b=
-	Sf2s+vi32xPG33PB7ADVSnze7Ps1kMEr5UiGkZ1255Pa4t/xQSypDTJCOm93b5Sj
-	jn+y778R3b8t2ZGvtNcJw837I5l+TbJzmhRtnVIMzftpJi+QgkVQQk2ppBVSEFOO
-	+FpJtFBhDCMwyO73gIk50x9tUhJPHWq/CpDpI774O0xfT4xJaN6iWCqVthjIX9eF
-	j6Zo0kZJv4RxTlQsXcyhhaiHuNjfCG5rOdav2XN9zMte6DIoPMBy+URc6zsOdp43
-	oHnGloIeya0vd3NM/SH+dw1wO1qSrYXNuLE4rPGfOfcxL5nJlobUnr3EEOFmySK+
-	BjNx6xHexgHJ8IiQEKgzig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729713219; x=
-	1729799619; bh=VqBgidO/dQheUWX11iSvIQja4hlCwxTnBp5Kxx4+SyU=; b=i
-	oEU5XBsm8CtAKZAAx1j0K5c6uc5ofo20225HFLrh6X8aZ2gXZQrWJtoFO2u98jH/
-	UoHu9cff5I3KDA5LLbd54zxhCvF/bSQafFiP94yzNfqfzSI+wk/lKNTvdiwuyjRB
-	/VvfRM4WtNGaSrTelMPcaTxBIXRwXaxS+66lPs/xx7K3TmDOmdd7yi6GZ6griZAJ
-	LL3kpKt1GAH1PBOmYS5i12en0E8yexxE7dS6xqA9iLAEOk75KZW+AcuwaEo9w3eL
-	l/swImQevkiuHwWVF2MfrybCs5JMP7hnGpsh2cjqbbu99WK2auNJnD4vkyfD7sx0
-	7H79UJjVgUCuaQlsmP2OQ==
-X-ME-Sender: <xms:Q1QZZ4NYnq6K-yojN_sYV8LsSM0aU3q2hXOA98_hMHFRiltfinU2-fg>
-    <xme:Q1QZZ-99qxeVWe22LEp9DCdXD4HFY-w5_Oyly0cV5n8mAZirB8UzoRfsW3HQ7HXV8
-    0enfjp29nEmoQE5rg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeijedgudegvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
-    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
-    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhs
-    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
-    rhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Q1QZZ_Sw3XhO_FoiOcWxuhDUP5B6CGGtq4_kHrlr6ORV6ABIwYJsVg>
-    <xmx:Q1QZZwv8MqF6lRKWthx6GkUc2yKF75zKyFSr5AJAdEaun85Ke7rxZw>
-    <xmx:Q1QZZwf3jpF9uumIXffeZ-0XKY1VwUYv40VapTApOE58U6QSV_Iyzg>
-    <xmx:Q1QZZ00UKrlKxquPsN47Tcr-oVxMm1zY2NZ7YYeNEWLs1wetYN5JuA>
-    <xmx:Q1QZZ47W0ajVq_YrVzR0ILDIuNDA9BbsRrHImU-9l5afteVTdmdPGpCm>
-Feedback-ID: i83a1424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 1E67F780068; Wed, 23 Oct 2024 15:53:39 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="xsYm6HIl"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6e377e4aea3so1300117b3.3
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 13:11:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729714275; x=1730319075; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=HxTY2kQY1Qcjpif7C/rA3++J7PWev0JmKPaeEwYF/qQ=;
+        b=xsYm6HIlmSRxpgRbQsSRiq/kizrXoeAzEg9P6aIXZDJG+D72Ga1DCFhrKWVd7qRgy0
+         YNXhV5MmejQRjupoqD7W7vDbRzqAk5PSvR2tSynZqVz5a98aQsgHg1laZCymTOCGToq1
+         ihuediDgm5Et7lfkYiJBBDEJNjRE8xMLpmiO9k/AXSo+NmW8yK0ouqWK7qgeMfU/Hdl+
+         8sY4UlpGffqKmrTZDCjpqJ99dBo/IGRCnt/13TrhCz9U9I7yW5cPKwqiJtsg+xKOCLDF
+         062iosRLYo5ruZ/0f+yHpyuXkHhIaLpNl8us/zURREskz1xSd2Jcm1GykSowCaoFdaiw
+         KMtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729714275; x=1730319075;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HxTY2kQY1Qcjpif7C/rA3++J7PWev0JmKPaeEwYF/qQ=;
+        b=qb1aPP0bNvqFzi0LwO3j2dyUJOKbXbfOQ1ljCS2Ht6uoTDdR1jKhdC3FXLtk/l8PqY
+         m8UWIibXru71CTiWu+4MGTjCD9r5Q2OhNk32B62BhekbiQqwhNLlB4M00Dl77ti9dwpO
+         Z/LLqOgLoFHB00DmwVdGBPI6/jU281flf1riGFgp9BZyBstE7ujAEZWZqEFcA73n9erB
+         pyCYADnj7mxsZ4EYBwRsb3fT5KuH5uifOVFFTw7D1aBlrJAZeyGKA68pKFu0C0XC1GCJ
+         mMB9EA+Nwi9fA/G+dc5M08W/TMY0HWQhrwK7rW1rrf5urErH5k2D04W3blm6IDfk9sce
+         TOSg==
+X-Gm-Message-State: AOJu0YyOZalSt7b0IfqQfV1hZcnrzApBxp7GWLhCsPs1MsX5uBhJFR/G
+	6IrBY86qe0pUvW334zGDe4ErYzNWMSTSweU13pl68MECaJPdlbqIzhghiT3WYOs=
+X-Google-Smtp-Source: AGHT+IEPiAtE3Khp9dGVxddJMt+JByWWR5DltyiWQAnHcvqZY7DH5dMCqfFUj2ySZRXMJyTRxeM1mg==
+X-Received: by 2002:a05:690c:f14:b0:6e2:ac0a:8926 with SMTP id 00721157ae682-6e7f0df5ac6mr39679567b3.9.1729714274970;
+        Wed, 23 Oct 2024 13:11:14 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f59f5c32sm16922687b3.18.2024.10.23.13.11.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2024 13:11:14 -0700 (PDT)
+Date: Wed, 23 Oct 2024 16:11:13 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Emily Shaffer <emilyshaffer@google.com>
+Cc: git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
+	Han Young <hanyang.tony@bytedance.com>,
+	Jonathan Tan <jonathantanmy@google.com>, sokcevic@google.com
+Subject: Re: [PATCH v2] fetch-pack: don't mark COMPLETE unless we have the
+ full object
+Message-ID: <ZxlYYQ9VULcqj/YT@nand.local>
+References: <20241003223546.1935471-1-emilyshaffer@google.com>
+ <20241023002806.367082-1-emilyshaffer@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 23 Oct 2024 21:53:18 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Taylor Blau" <me@ttaylorr.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, "Derrick Stolee" <stolee@gmail.com>
-Message-Id: <20cca28c-cc0f-4bfa-bc1c-6a3dd6bc25a8@app.fastmail.com>
-In-Reply-To: <ZxlEJ+44M8z03VOj@nand.local>
-References: 
- <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
- <ZxlEJ+44M8z03VOj@nand.local>
-Subject: Re: [PATCH] sequencer: comment checked-out branch properly
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20241023002806.367082-1-emilyshaffer@google.com>
 
-On Wed, Oct 23, 2024, at 20:44, Taylor Blau wrote:
-> Nice find. My first thought when reading was that this was a
-> regression from 8b311478ad (config: allow multi-byte core.commentChar,
-> 2024-03-12).  But thinking about it for a moment that is definitely
-> not true, as this has probably never worked since core.commentChar was
-> introduced, and has nothing to do with what range of value(s) it does
-> or doesn't support.
-
-Yeah, `%` turns out to be sufficient to reproduce (even though I use a
-multi-byte one myself, and when I found this).
-
->> [=E2=80=A6]
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -6382,8 +6382,9 @@ static int add_decorations_to_list(const struct=
- commit *commit,
->>  		/* If the branch is checked out, then leave a comment instead. */
->>  		if ((path =3D branch_checked_out(decoration->name))) {
->>  			item->command =3D TODO_COMMENT;
->> -			strbuf_addf(ctx->buf, "# Ref %s checked out at '%s'\n",
->> -				    decoration->name, path);
->> +			strbuf_commented_addf(ctx->buf, comment_line_str,
->> +					      "Ref %s checked out at '%s'\n",
->> +					      decoration->name, path);
+On Tue, Oct 22, 2024 at 05:28:05PM -0700, Emily Shaffer wrote:
+> This change is also still in RFC, for two reasons:
 >
-> Makes sense, but the following command turns up a couple more results
-> even after applying:
+> First, it's intermittently failing tests for me locally, in weirdly
+> flaky ways:
 >
->     $ git grep -p 'strbuf_addf([^,]*, "#'
->     sequencer.c=3Dstatic void update_squash_message_for_fixup(struct s=
-trbuf *msg)
->     sequencer.c:    strbuf_addf(&buf1, "# %s\n", _(first_commit_msg_st=
-r));
->     sequencer.c:    strbuf_addf(&buf2, "# %s\n", _(skip_first_commit_m=
-sg_str));
+> - t0410-partial-clone.sh fails when I run it from prove, but passes when
+>   I run it manually, every time.
+> - t5601-clone.sh and t5505-remote.sh fail nonsensically on `rm -rf` that
+>   should succeed (and does succeed if I stop the test with test_pause),
+>   which makes me think there's something else borked in my setup, but
+>   I'm not sure what.
+> - t5616-partial-clone.sh actually does fail in a way that I could see
+>   having to do with this change (since I guess we might download more
+>   packs than usual), but I was so confused by the other two errors I
+>   haven't looked closely yet.
 >
-> I imagine that we would want similar treatment there as well, no?
-
-Here is where I got confused.  I tried to make this test appended to
-`t/t3437-rebase-fixup-options.sh` yesterday in order to exercise this
-code:
-
-```
-test_expect_success 'sequence of fixup, fixup -C & squash --signoff work=
-s (but with commentChar)' '
-	git checkout --detach B3 &&
-	FAKE_LINES=3D"1 fixup 2 fixup_-C 3 fixup_-C 4 squash 5 fixup_-C 6" \
-		FAKE_COMMIT_AMEND=3Dsquashed \
-		FAKE_MESSAGE_COPY=3Dactual-squash-message \
-		git -c core.commentChar=3D% -c commit.status=3Dfalse rebase -ik --sign=
-off A &&
-	git diff-tree --exit-code --patch HEAD B3 -- &&
-	echo actual: &&
-	cat actual-squash-message
-'
-```
-
-And the output looked correct, i.e. all-`%`.[1]
-
-I didn=E2=80=99t understand that.  Maybe I exercised the wrong code.  Bu=
-t that=E2=80=99s
-the point where I dropped that lead yesterday.  Figured that there was
-some downstream string magic that I was unaware of.
-
-(I could just change those two and see if any tests blow up)
-
-However there is this one in `sequencer.c`:
-
-```
-		if (opts->commit_use_reference) {
-			strbuf_addstr(&ctx->message,
-				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-```
-
-And that line is supposed to be a comment line according to the commit
-(43966ab3156 (revert: optionally refer to commit in the "reference"
-format, 2022-05-26)).  But it does just output hardcoded `#` if you
-change comment char.  I=E2=80=99ll add that to the series.
-
->> [=E2=80=A6]
->> +test_expect_success 'git rebase --update-ref with core.commentChar a=
-nd branch on worktree' '
->> +	test_when_finished git branch -D base topic2 &&
->> +	test_when_finished git checkout main &&
->> +	test_when_finished git branch -D wt-topic &&
->> +	test_when_finished git worktree remove wt-topic &&
->> +	git checkout main &&
->> +	git checkout -b base &&
->> +	git checkout -b topic2 &&
->> +	test_commit msg2 &&
->> +	git worktree add wt-topic &&
->> +	git checkout base &&
->> +	test_commit msg3 &&
->> +	git checkout topic2 &&
->> +	git -c core.commentChar=3D% rebase --update-refs base
->> +'
->> +
+> And secondly, I didn't write tests verifying the breakage and that this
+> change fixes it yet, either.
 >
-> Seems quite reasonable.
+> I'm going to work on both those things in the background, but I wanted
+> to get the description and RFC out early so that folks could take a look
+> and we could decide which approach is best.
 
-In hindsight and with some `cat todo` it seems that the setup isn=E2=80=99t
-minimal.  I stumbled upon this by accident while not using worktrees.
-And the todo editor seems to comment out two lines, not just one.
+I am a little confused. Here you say that this patch is still in RFC,
+but the subject line dropped the RFC present in the first round. What is
+the state of this patch's readiness?
 
-Maybe detached `HEAD` would be more lean.
-
-=E2=80=A0 1:
-
-```
-% This is a combination of 6 commits.
-% This is the 1st commit message:
-
-B
-
-Signed-off-by: Rebase Committer <rebase.committer@example.com>
-
-% The commit message #2 will be skipped:
-
-% fixup! B
-
-% This is the commit message #3:
-
-% amend! B
-
-B
-
-edited 1
-
-Signed-off-by: Rebase Committer <rebase.committer@example.com>
-
-% This is the commit message #4:
-
-% amend! amend! B
-
-B
-
-edited 1
-
-edited 2
-
-Signed-off-by: Rebase Committer <rebase.committer@example.com>
-
-% This is the commit message #5:
-
-% squash! amend! amend! B
-
-edited squash
-
-% This is the commit message #6:
-
-% amend! amend! amend! B
-
-B
-
-edited 1
-
-edited 2
-
-edited 3
-squashed
-ok 13 - sequence of fixup, fixup -C & squash --signoff works (but with c=
-ommentChar)
-```
+Thanks,
+Taylor
