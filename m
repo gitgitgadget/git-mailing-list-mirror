@@ -1,64 +1,133 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC8E1E51D
-	for <git@vger.kernel.org>; Thu, 24 Oct 2024 04:18:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC54B17BD3
+	for <git@vger.kernel.org>; Thu, 24 Oct 2024 06:05:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729743508; cv=none; b=Rn+ByYPtTp6gwIBr1zGEs8bQGwPF1giMSSX/lYU8xbq4vTAWgcyaXNeBlhekBEzB7AEPCk6ShAk4CdJKnFAh0sRcAdhlZE9odVIeZ9A9udlmRMkr0d6QT7PVriTGw4Evy97tWGxQrj33G1VIZNQrzpkgJXEau9AiSwLk/YhGXDw=
+	t=1729749959; cv=none; b=ee2LbBTKMnUnMPhnlizfSZsKvdF8LnE09FugvB6LGHj0p867fp8npUOPKesD1IoyXZng1+H4hQ96K60fX970QDse3CueMoyA3HadxFDCp9jE/6KyIon+A/QuxTa2SZWJdL9NmgJqsZFFcJyOrR9qaaYEa5pB1z+FX7l8jOkS31A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729743508; c=relaxed/simple;
-	bh=SaLs9gdj9Lby3TeOM8R9ZZd+Juwk4c6+JFWEmi4hWBA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EIj8vJag6B0vZXFhIi36O9z3mz3oewyilr7lXzWcVKW/EiSBvt9llkihhhBpLKhcgZLelp6xjj1TePowHa7YqOQQBf4lSRZx5muZTja9c2caAhJY1yOQ2lt3hx8oEkDZ89iHkQPF2vZ4rdVee5w0702Vk/zXDgILjite0dUMlCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6cbdd42bdf3so985226d6.1
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 21:18:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729743504; x=1730348304;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SaLs9gdj9Lby3TeOM8R9ZZd+Juwk4c6+JFWEmi4hWBA=;
-        b=JtyViVPlAoelUcd760VE4N5Dset3qW2H/d0vlmH+I7/8ABtHGFPSuiH1RJaJ2n4E6s
-         IICegFruvFVknmpgbeN+mXow7UHfPVmcQ3kbVZRrAVB72QFkfsqF24cahO1SFHUmLSTG
-         gmpbRMqvHbqRMrcjVAt3jIm4TD/OSb3hbi8t4oi1jWdgELFHUycbTxsNHHrSjnVbsWSf
-         K6dpYpxrGjkDc3I1cQNMQcqnw4LxEkTIGR7KDVCImQOh2g0DVjk9zcL6V1HFSewtlm1f
-         2ijm7Tl7dfZvExIKkkmvHJuZ2fHxAHxk9fbiShPLNXaYzLoywplwZqicVBbo5iJdzbXO
-         ADLQ==
-X-Gm-Message-State: AOJu0YxXF4mu3R4M12t/1oeCQf6DcTMqginwwAgci19ltmubcQShTJS9
-	RVmBTtjx2qASXjjpbTHNJqmFUeHcHTatvu9CtTqF6p18MfJSQXr1uINm68LTXxf03GhwGDLsK46
-	NWY6D5nMqG3avvkjjeLWCaANPjO0=
-X-Google-Smtp-Source: AGHT+IFNHFRtC/F9S8dN8OfkhpPiWcq3CMUNKQvUse9mkLh7ZiWeuEw39Lfgk9FwOHFMb+Uc0Z+h9yYTSPM+FYnFLn4=
-X-Received: by 2002:a05:6214:ccc:b0:6c3:5dbd:449c with SMTP id
- 6a1803df08f44-6ce3413a69fmr30619716d6.1.1729743504582; Wed, 23 Oct 2024
- 21:18:24 -0700 (PDT)
+	s=arc-20240116; t=1729749959; c=relaxed/simple;
+	bh=VsYTmhOjy6iN3DG92bclOUMo64VO4HV0Tmcrb2tGN3s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cmLX4DLWsV6BHaq4ERRMjfeHOuVHs6ZoOE76wWyxxIBBtpnQ1baAwoFgJsPt+50Ie87Snn9/6xBy5e2SzGqA56zUDFD2a1LIA9vQo8yD6kvrFqYYrgqBIAM7SQaJnkl/VBeUVNtCHwLgXn+zxcpUodMwSqKVMFMi5/BPWbch/Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Lw0cl/bX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZfAWRNf9; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Lw0cl/bX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZfAWRNf9"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id D3339138028D;
+	Thu, 24 Oct 2024 02:05:55 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Thu, 24 Oct 2024 02:05:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1729749955; x=1729836355; bh=omC/Mp8+Ek
+	aC5+4ShfWrpl1Dy7lZXpIxdNohzL5ezCc=; b=Lw0cl/bXuPBlikKAb7jVVqxD/z
+	cBUNYXPMiglQd+tz1jAHf29LLUYeTuOXx8a4vCO8xC8TjBRH3sZ5GbR0FgCoY6Ga
+	a811e7LHOM0Z5/D2x3VHaV/gji0a3BJdEV49ilgRJ6eB7ef7Nzc4652WNIR9TOAw
+	VqTPhwSAVmr48B1R31FChNv+fh3flRaAaVJn5spwXhqT+EPVN5JQ7NBYXfTj6tdG
+	xrj+idqpGKU/sn4Oz0ArXbaqd28q5IXNsmOzInGt9pPLHIxZ/mU+rheWpdgf3ngG
+	U9qJ+gipvG12pzyYYN+tc+g8wR1BJy2Nrbd2y5Lk15qWQQoMOr15uSCijfcw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1729749955; x=1729836355; bh=omC/Mp8+EkaC5+4ShfWrpl1Dy7lZ
+	XpIxdNohzL5ezCc=; b=ZfAWRNf9WwFDq70kLsHEDs524yStbWX9YkF5+FpabIRl
+	rFy20QkLgziXlNrmkeP1ele858jo6u1Xw0hQE0P0izXAUy7Qc4wtfBYGz1RrqxVb
+	0yeaTDcNYPDjiVLaKpfYiWCJXaacZjYez4M0YGBZUGbFsVGzUU5LnEuPs6Rax3QM
+	pKkgGaf49YVYr2To3G4s23eYmxBtR0MQ4UeA2N4dnsJYXROWgmAHyhbdpTEow6Em
+	+ChxFK10QAAkBiv5c5HcTyN+V7FGUfMr9YKfV3ZvzArcZYhGjxxNSXP7cLSkLkYv
+	7+m597dx6T2++MLKDvAd0eCta8peG9IuD4LDF0eYSQ==
+X-ME-Sender: <xms:w-MZZ5noZPMXmOLA8B-2FaLE-wh0-kodTJJtBAZaEBmordj0PnFTXg>
+    <xme:w-MZZ02b8q1aLyIq0nKaVhDL3XTOt8htmeN4-EsjeRS87oQZLpmNbZpoMM6-zUUUM
+    mVxIwXZ_yZVSAkLIQ>
+X-ME-Received: <xmr:w-MZZ_qlL_DLcEr5kJ6ghBxwWh0a3wOZjsaRW-YfhzimdNP1dHtiy24GEQky7MwlDr2JWysSs6KEI-lXe7bb0E5MlbG3jXNDQGBoGpViNZgUqJGD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeikedguddtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
+    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvseht
+    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtoh
+    hothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:w-MZZ5mzwyYsc1c7V7XySbjrCoHuf3P83p90t50hCNSFYuG7ORsEzA>
+    <xmx:w-MZZ32y_s8yphG_OACklBGdxVwSznBSYOEHj3smQouN4G-b1w3daA>
+    <xmx:w-MZZ4vp8NWAfC6V5e5PuOOMbgRFiGgo1_BMbFfrAz7sR-1s1HxOpg>
+    <xmx:w-MZZ7XjJ9JUMtT1vpiPEJqJHD_TFmnDbg1W8p-cvxQg12-V4yiTmA>
+    <xmx:w-MZZyRUrIZLiyFQKYgekqMpkd2hm4qio__deelE8KENsTHkJC2wmPqq>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Oct 2024 02:05:54 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e5e98ce9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 24 Oct 2024 06:05:54 +0000 (UTC)
+Date: Thu, 24 Oct 2024 08:05:49 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/12] Update versions of libcurl and Perl
+Message-ID: <Zxnjt2QVwVTsYwvW@pks.im>
+References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
+ <20241023004600.1645313-1-sandals@crustytoothpaste.net>
+ <ZxlZuxllqjAZfAZm@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1729677003.git.ps@pks.im> <036cc8f9d602a817aa579092bdeaef5d1156214e.1729677003.git.ps@pks.im>
-In-Reply-To: <036cc8f9d602a817aa579092bdeaef5d1156214e.1729677003.git.ps@pks.im>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 24 Oct 2024 00:18:13 -0400
-Message-ID: <CAPig+cQH+Y47KdpjztSMkJOSHxZ3ZNXBWQutEQCfPO348FQr6g@mail.gmail.com>
-Subject: Re: [PATCH 1/7] reftable/system: move "dir.h" to its only user
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZxlZuxllqjAZfAZm@nand.local>
 
-On Wed, Oct 23, 2024 at 5:57=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
-> We still include "dir.h" in "reftable/system.h" evne though it is not
-> used by anything but by a single unit test. Move it over into that unit
-> test so that we don't accidentally use any functionality provided by it
-> in the reftable codebase.
+On Wed, Oct 23, 2024 at 04:16:59PM -0400, Taylor Blau wrote:
+> On Wed, Oct 23, 2024 at 12:45:48AM +0000, brian m. carlson wrote:
+> > brian m. carlson (12):
+> >   git-curl-compat: remove check for curl 7.21.5
+> >   git-curl-compat: remove check for curl 7.25.0
+> >   git-curl-compat: remove check for curl 7.34.0
+> >   git-curl-compat: remove check for curl 7.39.0
+> >   git-curl-compat: remove check for curl 7.43.0
+> >   git-curl-compat: remove check for curl 7.44.0
+> >   git-curl-compat: remove check for curl 7.52.0
+> >   git-curl-compat: remove check for curl 7.53.0
+> >   git-curl-compat: remove check for curl 7.56.0
+> >   INSTALL: document requirement for libcurl 7.61.0
+> >   Require Perl 5.26.0
+> >   gitweb: make use of s///r
+> 
+> Thanks, queued.
 
-s/evne/even/
+Note that this still breaks GitLab CI, as we exercise Ubuntu 16.04 there
+which doesn't have recent-enough versions of curl. This version has
+recently moved into Extended Security Maintenance mode, so the next LTS
+release would be Ubuntu 20.04.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+So if this gets merged we should add something like the below patch on
+top.
+
+Patrick
+
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index 4abfbc3e208..64f7ec5a2dd 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -28,7 +28,7 @@ test:linux:
+   parallel:
+     matrix:
+       - jobname: linux-old
+-        image: ubuntu:16.04
++        image: ubuntu:20.04
+         CC: gcc
+       - jobname: linux-sha256
+         image: ubuntu:latest
