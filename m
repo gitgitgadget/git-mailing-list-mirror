@@ -1,102 +1,188 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6259F1B3954
-	for <git@vger.kernel.org>; Thu, 24 Oct 2024 11:02:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C79D1CC8B9
+	for <git@vger.kernel.org>; Thu, 24 Oct 2024 11:19:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729767740; cv=none; b=aAF257SWChNqbMgHTbXmUi/zRKs0j+WZDRebkQANEvIK+qS+t6lM0xzdFYVjsXWo4EzATSz8n3fbnlkNxutM+XiSY1df/b8zePRoXJcFs8yM/eKnZJ4mM+SiaT6a0gtglKy2qD/NT5GdHx4TqogLBl71N27nN0NYgsMTaqD2tmM=
+	t=1729768760; cv=none; b=n2P7ttxUgiTvzCUMzAWJQh8fj6X0IANiStN94Z2VUOENcI1U0VLxnWRxU8auIamDgUNJtB5wlPWL/Cg/TLtJBR5r7MGCc/tsTcZx0xQbOLUtiioIGTumogoH05+VHDGxhZUsgXfeCUVh9Lko7YJDBbfJBA8NjH3OZp/hCZB/Su0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729767740; c=relaxed/simple;
-	bh=0sCymY1arof6YlFNCRVwreLh2JPPHW7T/reBVJ94H6M=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 Cc:Content-Type; b=psTWTYc+ioG9Gvz0pG9BHKGb5YnZyQr8EzkZnI823VUQvhWQiB1hqZ8+mkvWmUATTX/7tZ4soGtnwKsqBm0YhWY2Ezfz44r20KUzcNok4zJl183Goo5EspspZixLFJLS1Fm7MAXX5ZmbGeXoUfd7/lFZvasfLCqoxk6C4LhOTvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aCjeMbca; arc=none smtp.client-ip=209.85.216.47
+	s=arc-20240116; t=1729768760; c=relaxed/simple;
+	bh=XKhsoO3sXXkHd9YaOI6JXDKuqQROMDkPsPCe/7+QP5k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bl1f6e1BRaedjyUY3VQ7P01EkWFmNXrbz/Cr2m6VFFjZxI/eLlxUtlPkRDd4E9j9ZfoKsEewSO9jXaUEkXjJoW9ekpPtCwi+OWEtYwJZJkJX/l65reSmymFYBie1UtiE2SneEq6rP0aYX0dzB0A0ohZxLZAYnbB+zBmNZsRQP2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Whe3nU7a; arc=none smtp.client-ip=209.85.215.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aCjeMbca"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2e2bd347124so622011a91.1
-        for <git@vger.kernel.org>; Thu, 24 Oct 2024 04:02:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Whe3nU7a"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-7c1324be8easo1324299a12.1
+        for <git@vger.kernel.org>; Thu, 24 Oct 2024 04:19:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729767737; x=1730372537; darn=vger.kernel.org;
-        h=cc:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0sCymY1arof6YlFNCRVwreLh2JPPHW7T/reBVJ94H6M=;
-        b=aCjeMbcaPiyHufvID/Kfl4nnyOrUpdSV7ilx8eKiFyDrBVi/6cMT5IqT9N2of7R71b
-         Dp3Yx/84G7FfK79UV60285vx8AsmFC0m5KOQlKLCMQsofKV+MdwDts1IdrpKKGpiqj+0
-         kBfwh20ZGqiOSyQf/9Iy07gio6LVhivoSjw3ZDI+Qwh9nPrnpQVLlXTOhIvQAKtRJFR3
-         eKIMGtbs+6FCdyUf46WtBJo7WTPnQ2VDX89Qij2+ZZVeISKoyA/mNm61hWETJcFoTKrp
-         0OTYH24mVY0TF9y/0OsvVVeLtejRg6h7gWalMr9XK6WTD75VLE7q5w0aW16KGFvTkyZ+
-         qdqg==
+        d=gmail.com; s=20230601; t=1729768757; x=1730373557; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NzpqcM64Y5V+BehsY+crnnXc5gRN65YdCPvO8AGKqi0=;
+        b=Whe3nU7af4QWmwYh6r6qDDn7V0w/sfPZ9HrVsoY55h2yxrv9INyF+bVvjzHVVkhSmG
+         vWFob7tt4hyX0FTxRgdFzHxrfvUn8isn0ySGosqnNaMKYv+S5MGoU5NngMDqlzFAMYKu
+         m2GydTFMcUk5TAXMpBXzrONp1q53xLZqPAq2K6tITGPOGfFPSy5+OsygNi4DcIxpSXhZ
+         6PCf8O3qP/KiBeyp+4YtvuzEKIl2U+liDezECG13XDHl6qWtzP169JGKYbyJC0ze+ywV
+         BMPH9HHArfgS+Gbb2xAN1MbrbwlDukTyixVw3vIQtuxdAJkH7FdwwhX3eOznqfWagWWN
+         BLzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729767737; x=1730372537;
-        h=cc:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0sCymY1arof6YlFNCRVwreLh2JPPHW7T/reBVJ94H6M=;
-        b=Err8qpouk413S3vuNoLPe8nyVrKV20q5VSh7wm90lW58M3ED0r09aizCqdcsnJjram
-         W6PCC/lNO+rYLAVeX4CfmWKGSoLbgm052Jv9smdnrHLC4E7xOk67iJkq823tkA6WLGlD
-         DFWSc/mDs+obL8jWUUw0fU6jpwVe2ZN0zgD8Jj70pMaKxRqCZ3slHjx3+YyO37jvsSI0
-         cPCJPsAkxsNw4Jc9QYmF7eAZTeIwOiBfiBBvIYyLabK99ZFyprmG7IQDSthCg8RekwLt
-         lZVolp7NOtDGboTji4LeZ9P/3Dj1QMk5eEj13l9SXGu5lBQM6E4RPOFNTHLlIyGjM4WW
-         luJA==
-X-Gm-Message-State: AOJu0YzsEi/UtbyhhM+rDyQlIimxZJ8HFDuc5RepBqhyXIz6gbwjl4QT
-	PjZazBfw+xW1Jki3Wmx0sA0xyJQ85Vl5Pu0rMJ3c2ULO/xH9VF6HiWNzQrcTuScPsoAxk5SiUty
-	wXWTRfsYwvnmg+KHtJLqF4bGxmB8OUGvv
-X-Received: by 2002:a17:90a:5e4d:b0:2e2:d16e:8769 with SMTP id
- 98e67ed59e1d1-2e77f480426mt1434514a91.15.1729767736941; Thu, 24 Oct 2024
- 04:02:16 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 24 Oct 2024 04:02:15 -0700
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <20241024105357.2605168-1-karthik.188@gmail.com>
-References: <https://lore.kernel.org/r/20241021124145.636561-1-karthik.188@gmail.com>
- <20241024105357.2605168-1-karthik.188@gmail.com>
+        d=1e100.net; s=20230601; t=1729768757; x=1730373557;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NzpqcM64Y5V+BehsY+crnnXc5gRN65YdCPvO8AGKqi0=;
+        b=Lsml3Unyf8Xg90rmBo3jB0OX48BMtJ0liycv67Cd1rbUIVObEUBYgMFhmr+UMPsZ5I
+         npQOmwfX8thslmhX6QPwoPhv+5XChT7+ZqEC7igo96oVHiP5oqXtlBLEuuzQ4MqLxbFU
+         /JbFXABdyJ8Vf1Sp/J0dfpYovSYChnHmPc7iigAr8hILGCj1E80wvi3e8Tk3rhdHwUYl
+         cqQDrI3EG29KwksYLdSy3u91XRCwBs8ZqSce+nwLnyi1uBNzxNb0TG+hCzxHCHW5fxgb
+         u+WeDBKhal96MOeR55TddaaDXNzh3qMiDVmNdBR8jk001cdA+vzSl2JP7UcUCopQLIDu
+         Amgw==
+X-Gm-Message-State: AOJu0YwkeQoSaH3E+AMSJbEhPy6dZW9Caie9arXMY2eapTjWL0qAzVIq
+	FA1z21XlK7Ev6aADNJky6i+t9E+FATa4h6fvahiZ/MpxNeK/KGMw
+X-Google-Smtp-Source: AGHT+IEpAzcKib4kXuGpgu5sXRJNLwBqtVewNLFp1tJs3nTKcxhNUlzLBCfysmXWUIawKrZxf2nmqA==
+X-Received: by 2002:a17:90b:1e50:b0:2da:82d4:c63c with SMTP id 98e67ed59e1d1-2e77e58dd8fmr2721619a91.4.1729768757151;
+        Thu, 24 Oct 2024 04:19:17 -0700 (PDT)
+Received: from localhost ([14.191.221.237])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e77e4c89a5sm1210267a91.20.2024.10.24.04.19.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Oct 2024 04:19:16 -0700 (PDT)
+Date: Thu, 24 Oct 2024 18:19:13 +0700
+From: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>
+Subject: Re: [RFC PATCH] notes: add prepend command
+Message-ID: <ZxotMcKv5rEIMZ8q@danh.dev>
+References: <20241023201430.986389-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 24 Oct 2024 04:02:15 -0700
-Message-ID: <CAOLa=ZTJoUCMJhnak-tRpftN+3Txuz-B1_+pF6s8xtZ2BP3A5g@mail.gmail.com>
-Subject: Re: [PATCH v3] CodingGuidelines: discourage arbitrary suffixes in
- function names
-Cc: git@vger.kernel.org, ps@pks.im, me@ttaylorr.com, 
-	kristofferhaugsbakk@fastmail.com, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000830d79062536ef4d"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241023201430.986389-1-bence@ferdinandy.com>
 
---000000000000830d79062536ef4d
-Content-Type: text/plain; charset="UTF-8"
+On 2024-10-23 22:14:24+0200, Bence Ferdinandy <bence@ferdinandy.com> wrote:
+> -static int append_edit(int argc, const char **argv, const char *prefix)
+> +
+> +static int append_prepend_edit(int argc, const char **argv, const char *prefix, int prepend)
+>  {
+>  	int allow_empty = 0;
+>  	const char *object_ref;
+> @@ -716,11 +718,18 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+>  
+>  		if (!prev_buf)
+>  			die(_("unable to read %s"), oid_to_hex(note));
+> -		if (size)
+> -			strbuf_add(&buf, prev_buf, size);
+> -		if (d.buf.len && size)
+> -			append_separator(&buf);
+> -		strbuf_insert(&d.buf, 0, buf.buf, buf.len);
+> +		if (prepend) {
+> +			if (d.buf.len && size)
+> +				append_separator(&buf);
+> +			if (size)
+> +				strbuf_add(&buf, prev_buf, size);
+> +		} else {
+> +			if (size)
+> +				strbuf_add(&buf, prev_buf, size);
+> +			if (d.buf.len && size)
+> +				append_separator(&buf);
+> +		}
+> +		strbuf_insert(&d.buf, prepend ? d.buf.len : 0, buf.buf, buf.len);
+>  
+>  		free(prev_buf);
+>  		strbuf_release(&buf);
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Without prejudice about whether we should take this command.
+(I think we shouldn't, just like we shouldn't top-posting).
 
-> We often name functions with arbitrary suffixes like `_1` as an
-> extension of another existing function. This creates confusion and
-> doesn't provide good clarity into the functions purpose. Let's document
-> good function naming etiquette in our CodingGuidelines.
->
+I think this diff should be written like this for easier reasoning:
 
-I replied to the wrong ID, the previous versions can be found here:
-https://lore.kernel.org/git/20241021124145.636561-1-karthik.188@gmail.com/#t
+----- 8< -----------------
+@@ -711,19 +713,27 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 		/* Append buf to previous note contents */
+ 		unsigned long size;
+ 		enum object_type type;
+-		struct strbuf buf = STRBUF_INIT;
+ 		char *prev_buf = repo_read_object_file(the_repository, note, &type, &size);
+ 
+ 		if (!prev_buf)
+ 			die(_("unable to read %s"), oid_to_hex(note));
+-		if (size)
++		if (!size) {
++			// no existing notes, use whatever we have here
++		} else if (prepend) {
++			if (d.buf.len)
++				append_separator(&d.buf);
++			strbuf_add(&d.buf, prev_buf, size);
++		} else {
++			struct strbuf buf = STRBUF_INIT;
+ 			strbuf_add(&buf, prev_buf, size);
+-		if (d.buf.len && size)
+-			append_separator(&buf);
+-		strbuf_insert(&d.buf, 0, buf.buf, buf.len);
++			if (d.buf.len)
++				append_separator(&buf);
++			strbuf_addbuf(&buf, &d.buf);
++			strbuf_swap(&buf, &d.buf);
++			strbuf_release(&buf);
++		}
+ 
+ 		free(prev_buf);
+-		strbuf_release(&buf);
+ 	}
+ 
+ 	if (d.buf.len || allow_empty) {
+-------------- 8< --------------------
 
---000000000000830d79062536ef4d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: ea0006e9fc22a3b4_0.1
+Even if we don't take this subcommand, I think we should re-write the
+append part, so:
+- we can see the append logic better,
+- we can avoid the `strbuf_insert` which will require memmove/memcpy.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jYUtUTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNnpqQy8wVnNLS2hmK2UrcmxFdEdkOFRzWEJXR3BkOQp3WWxMK0drWGc0
-MzRSaFZyR1NIY1FzS1FiZXNUYUppaEYyM2w3b2pUcmp1eHBTb2oxWnhicGRIZ2grYWQrazVpCkdi
-MHhLUGVhWVNDbllkaGdJbEF4UVo4ZmVFbE9rV3psdERrajVKcFpYaGlDMnV4R3RIdUZWQnZqbGVh
-ekxCdlQKRGhFbDFJZnU0OHFENjFXT2JlZkxMR3pnU0RpMWFKVXNLcE9JNVpRMG1kOVRKTGJRc2di
-RU05TzVFTjludzdRbgplOVVzS1plUjRiV2RUVWozcnhGWUNhSWhZNXN5Y1hhTTJGMUE5cjB1L3Vt
-Vkg3M3dRQS9qcWkyVmNXSTVDY04vCjVpU1M1K0FRcFhSdDJGZ0NFY2J6MFFjbS9nR3UxcE9lcCtj
-WG9vRDZpcUlONW92TXYreUFtUmNYT0ZISWdUZTkKRE1DTHg0R2tQRG5OQmlteG9EVFRtbTBSTUdO
-SjdYdXIyY21KVkp5LzFWRll4ck5aU2RvL3ZmaGFVR3RSZHE2YQp4Q2l2TzZwMVR5ZnFPVnhMd1dO
-azhxbVF1dFIyZTllOHp2Lzdrb1dUYngwZVJzQXJrUFVKTjlnYXNtUWdFTklaCmNmK3kzckJaenFJ
-b0dIRys3MzR1UWp2OStxdXg5QUtMaWxxNk1haz0KPWVZQjYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000830d79062536ef4d--
+Well, the second point is micro-optimisation, so take it with a grain
+of salt.
+
+
+Also tests.
+-------------- 8< -----------------------
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 99137fb235731..5a7ad40fde6a8 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -558,6 +558,20 @@ test_expect_success 'listing non-existing notes fails' '
+ 	test_must_be_empty actual
+ '
+ 
++test_expect_success 'append: specify a separator with an empty arg' '
++	test_when_finished git notes remove HEAD &&
++	cat >expect <<-\EOF &&
++	notes-2
++
++	notes-1
++	EOF
++
++	git notes add -m "notes-1" &&
++	git notes prepend --separator="" -m "notes-2" &&
++	git notes show >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'append: specify a separator with an empty arg' '
+ 	test_when_finished git notes remove HEAD &&
+ 	cat >expect <<-\EOF &&
+----------- >8 --------------
+
+
+-- 
+Danh
