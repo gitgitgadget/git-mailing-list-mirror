@@ -1,152 +1,116 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2B518593A
-	for <git@vger.kernel.org>; Thu, 24 Oct 2024 06:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387751A0714
+	for <git@vger.kernel.org>; Thu, 24 Oct 2024 07:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729751458; cv=none; b=BVd8fT2pfshEOROGnQbxXy+u1X59yL+QOTELx4ZUihluV2Iz2Q5EX9/mhfhRg7zsOzl+6MHxKLfyQamJt0d/28Ku2zCFhVl4L6tZGvtx9cOZ1aK2xHyHSvBl0gPclo2eJDQNgGp6kYHWYt+uPWF44+4V6cKV/GnvNBN1Ge8YqZU=
+	t=1729754324; cv=none; b=NJ6NTDghQVYQSTDPaL/bmrOiDd7o4Ae335gYn+xqvK8g/wsE5WOnqABDc2C936Y62ABxz89KAKbFpP0+c3D0t/vabIJ3wEoY9Pl5VXKqXMkwpEy8Q62MG6jT4FoPrvS7rNV9FQCF+u7niW5enwtueLon2t8p8fmSa4Tzuh38I5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729751458; c=relaxed/simple;
-	bh=7tTqeMYTcbPZljVnagyJ3YACUzjbAHTj/z0cAMsqXS8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Af7X+DJUy75YDGzkXSJR5Z3MZZR6+J94gePx1oE3sqboypywMZuKzCyAdqW7Bc9RTa65XTm6VuRP4k1EeG9mJ747pjeoyMZrD/fKCxrMDI5HETT54PAgwCqENCuLi9yqsu2U+Oiqodi/ZJCltMakP6FKWS3HVu1hFA1fUtE+pU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=xaiCjUts; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kZ4dbX3y; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1729754324; c=relaxed/simple;
+	bh=YqMvmb71kjGrH6swJqzyHFAnRYT96/9Noy16BvemFBI=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=SqQZe+tCv4EYAh7sT2Gtv5A0i5Go3/5u/gJ4iu0+D1B2zy0Dpmk0wEpB9udpxatLrtnKGyrZAb5WV8US4RffOqQS4RJX/P7wWfqVn/AucEvcWGagaIsxy00bs67LBVIeWwp4G9pDWrf/meRTk1pCymorcK9DvWtZwlAqUfyjyYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LB9bnoOy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IWXeWjoJ; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="xaiCjUts";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kZ4dbX3y"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id CDC8A13805C9;
-	Thu, 24 Oct 2024 02:30:55 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Thu, 24 Oct 2024 02:30:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1729751455; x=1729837855; bh=SrKe1bE2qp
-	fTyKfbjpFeq3QGY9wN36am+aII9H/qCK8=; b=xaiCjUtsyNalpkKPD8mC8c0SNV
-	OZY76XZXjn5Nnue2AksmWahV6cIqLQf4vLJ00IIQbosKtQFPPB2rZhz+jvFegWpU
-	hMWf0SplRnHz2gI8FG2zKf27ICv8wpfL7O9RUunnMxO3OmO/bVlBaTMIeEmAgxRL
-	QpCa4rTg6qdKDXDJ89k8COil8snuxsWmpKjicv5YZK/u9u9sL8yCYl53KvvEBflL
-	hREzJQzw2XHXih0WkuQOxWrLmyzTrLFRpk0uQbiuyR6mxbhpTl31L/dfToIFt1AP
-	z+ghy+RH1Df72XwTsiRH7WvGlnGV5Qsw5XvdVT9XCql8PaDdRosnBmEL4Fkg==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LB9bnoOy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IWXeWjoJ"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 43B821380212;
+	Thu, 24 Oct 2024 03:18:39 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Thu, 24 Oct 2024 03:18:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729754319;
+	 x=1729840719; bh=zHZAvJ0SQxZ9gapX/eMwZv2UTPoEhS1NkGvH5Jj+4z8=; b=
+	LB9bnoOyS23clx1VX6k/W3e2gVzmWFnzVqaM2tIK22aM5+glYR8dcBDDzmVgmNd7
+	HyhXbCEV1NIyBnDmYAhebuWZQDuDKqbqoc6CJJ0hQsrAExfOAr2Uf1q0nvdomVfN
+	k3OUIJPsQfp9x7i2o8hgkTF+Uy4027azOyEClBQkeA241vDRm7mVxzW1Mi1mBvx6
+	wqrL/RG+tnb8ed5kS8ZbU9T4tTUzFLXr0WiXz4TIn4Med+s0PTRz5Gdca96MtZBC
+	HEBXErFa6aiu8IxR3SKiRcHBCdJf2ifLhkLOjllgUt7HX0ncPjKAmO9JKQrB9tfr
+	XaRby0bBS/X9zqLjeRkIFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1729751455; x=1729837855; bh=SrKe1bE2qpfTyKfbjpFeq3QGY9wN
-	36am+aII9H/qCK8=; b=kZ4dbX3yRYJuTZVpwC/NjGz/eoTzu5ARKG+aXh7gvXnm
-	9hOTMcWBqJnAvfDfjegVsIFTMhQOv6UNb1f5o4hIW1LrtD9/m3BZiMS7bF0ew9Wg
-	YkP08dudQLgrKY39xKW+O8x6bG8LFPGWWFwKxaHI9968jbaqMKnhdsP09lzlv6n0
-	uUaeXwWmoKe4/c6l5hoqGMJl1YWvVK/9zDnp+haeMCwVsFpaO2Wr64H//Dm5kwyV
-	Sdwcxd6uJoccCoP2fYXdl0qVcvpCF505PbPEzFwISbHKVpzNApXkjdgJWMcqZ9ek
-	lFRrbk865HqIzPGAR0rYbhlbp13ilvYnrB/nE11j+w==
-X-ME-Sender: <xms:n-kZZ8D6rRkfOTTZ_-k4JeIFgS0uWM2Sq4Xh9IlNAnkV-fFx-EC9AQ>
-    <xme:n-kZZ-hfUi943yZuhJbpo8VrMTl3ztwfckcXukou--22KbNiVoi6vO3J3GLTTaNny
-    l_vhm_DnzzUm2r1wQ>
-X-ME-Received: <xmr:n-kZZ_mdfbnnqhbIgfBEYMHFH4tczqrCXqpmTy-7oM2M5sawg8fGBNsYU8t0qUMr-_ys-UMp-aMsWqE0gA2BdVGmH4S0kE2-cpJ6BoqA48GXe5il>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeikedguddtlecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729754319; x=
+	1729840719; bh=zHZAvJ0SQxZ9gapX/eMwZv2UTPoEhS1NkGvH5Jj+4z8=; b=I
+	WXeWjoJuq7CLguXmEAhi01KUBIEK/TAyjJ/N3KeieFl5Hy5NfDWGsxMJI17bY4x5
+	a7qelcYPcMwSKdA9qercdR3H01d1mPwKCdgxks86KVMSHX9KJsebX8teL4mSUrgt
+	QyTOUr8ptSCYXRVAnYT0M4ERe5/GyKLDg65k3mAF2EVh13uvBKEiK6BVe4lsYgg4
+	6aBuOG6IzAc1J9hbxdE1XIowN3S+ItwFqwFjY42gwBhvAT3hxafZKnXlisuu4BMu
+	B2OLinT32J0ZTkD/PGLmgYFhAxMu3ck3/FWWNGXecys1x0Ox/XXWBBzaKd7u9X8p
+	ycpyiHtO4cY6slAxiLOOw==
+X-ME-Sender: <xms:z_QZZ5AuAdJ3nOgKWTwWH-rczgePMHSq9b6j9L2-v0FPaBtDN0SWbi4>
+    <xme:z_QZZ3hPDI-NumblV6gDpF3STw2DL-3ca5Q64gFg3lgIAwHvhotAezI5PAPivv_x4
+    eayxc3yIoDwFLVCTw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeikedguddulecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
-    rdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgi
-    druggv
-X-ME-Proxy: <xmx:n-kZZyxl2arcCDqEuU9WioSJassA3VYQCPIJZMRYu7KNmAmFv99Vnw>
-    <xmx:n-kZZxRgSbgtE1XElSlIcg7nJS1qIyVzZdvbhZAhKzMN7AZTy-ILkA>
-    <xmx:n-kZZ9Z85s4JirYGfHrJCAS-1u6pGq94t8Qq36Gqfq28Pj_T4aux1A>
-    <xmx:n-kZZ6T8MEghqePoihUw_g4NT3aTJH--W7UOKYu8xvU9H4J66i3RVg>
-    <xmx:n-kZZzdn1a21eSMjbnM0qVbB2EFVsN-7u6O3fEkWQruj6nBbAOU8yXE8>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Oct 2024 02:30:54 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3450c0b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 24 Oct 2024 06:30:57 +0000 (UTC)
-Date: Thu, 24 Oct 2024 08:30:52 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] compat/mingw: allow deletion of most opened files
-Message-ID: <ZxnpnLbETN2-DZsq@pks.im>
-References: <cover.1729695349.git.ps@pks.im>
- <3552feddb332b31744c2ab723b112b9b08926436.1729695349.git.ps@pks.im>
- <bc829d84-6696-4e16-9687-8ba611af29ff@app.fastmail.com>
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
+    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
+    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
+    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
+    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgr
+    nhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepphhssehpkh
+    hsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:z_QZZ0n-o0Gbn4WXkiE_IvHegN8DF2uYmR97n0lXk1_EVvmZ9a178g>
+    <xmx:z_QZZzxHeEevO_D-wysbQJEmnuKJmZ4XEWXNxwfNRNHzJUzRrq8SGw>
+    <xmx:z_QZZ-QAym3UkEqvhD40w2EQBM0HbHnMyVoFcJ9np90hod1fpRB-2w>
+    <xmx:z_QZZ2bV5Ua_4oYv_3JTmWYxLK90tSs1CjzyW09otmqvBPHSHKm4Jg>
+    <xmx:z_QZZ8dBkfrW0fQUw-Gz3CvmXx4KuPyJSVUDH5c5cUqDb0hYZHRI57FF>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id F3ABF780069; Thu, 24 Oct 2024 03:18:38 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bc829d84-6696-4e16-9687-8ba611af29ff@app.fastmail.com>
+Date: Thu, 24 Oct 2024 09:18:18 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: git@vger.kernel.org, "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ "Taylor Blau" <me@ttaylorr.com>
+Message-Id: <d6669573-d5cc-4ad9-b248-95bda089bc6c@app.fastmail.com>
+In-Reply-To: <ZxnpitkbPPNTLuGT@pks.im>
+References: <cover.1729695349.git.ps@pks.im>
+ <d17ca1c7ce38e12fe113f15b078c12bc92e8f0aa.1729695349.git.ps@pks.im>
+ <51b63d57-fa01-4a8c-95fa-770a62afd80f@app.fastmail.com>
+ <ZxnpitkbPPNTLuGT@pks.im>
+Subject: Re: [PATCH 3/3] compat/mingw: support POSIX semantics for atomic renames
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 23, 2024 at 06:17:15PM +0200, Kristoffer Haugsbakk wrote:
-> On Wed, Oct 23, 2024, at 17:05, Patrick Steinhardt wrote:
-> > While we have the same issue when calling open(3p) with `O_CREAT`,
-> 
-> s/O_CREAT/O_CREATE/ ?
+On Thu, Oct 24, 2024, at 08:30, Patrick Steinhardt wrote:
+>> s/FILE_RENAME_POSIX_SEMANICS/FILE_RENAME_FLAG_POSIX_SEMANTICS/
+>
+> No, this is actually intentional. There are two different flags:
+>
+>   - FILE_RENAME_POSIX_SEMANTICS is what ntifs.h exposes and what I've
+>     been linking for documentation. This flag cannot be used though wi=
+th
+>     `FileRenameInfoEx`.
+>
+>   - FILE_RENAME_FLAG_POSIX_SEMANTICS is what needs to be used with
+>     `FileRenameInfoEx`, but it is undocumented.
+>
 
-Yeah, you'd think that, but no, it's really `O_CREAT`.
+I made a copy=E2=80=93paste mistake. :P I should have just pointed out t=
+his
+(missing T):
 
-> > +static int mingw_open_existing(const wchar_t *filename, int oflags, ...)
-> > +{
-> > +	SECURITY_ATTRIBUTES security_attributes = {
-> > +	    .nLength = sizeof(security_attributes),
-> > +	    .bInheritHandle = !(oflags & O_NOINHERIT),
-> 
-> `clang-format` thinks that these two lines should be indented with tabs
-> instead (so two tabs in total).
-> 
-> (Ubuntu clang-format version 14.0.0-1ubuntu1.1)
+    _SEMANICS
 
-And they indeed should be.
-
-> > +	};
-> > +	HANDLE handle;
-> > +	int access;
-> > +	int fd;
-> > +
-> > +	/* We only support basic flags. */
-> > +	if (oflags & ~(O_ACCMODE | O_NOINHERIT))
-> > +		return errno = ENOSYS, -1;
-> 
-> This use of the comma operator is maybe an idiom to save space and avoid
-> a brace around the `if`?  This pattern is already in use in
-> `mingw_open_append`.  I see in `mingw.h` that it uses:
-> 
-> ```
-> static inline int symlink(const char *oldpath UNUSED, const char *newpath UNUSED)
-> { errno = ENOSYS; return -1; }
-> ```
-
-I basically copied this from other code, but don't care strongly about
-it either way.
-
-> > +	if (oflags & O_RDWR)
-> > +		access = GENERIC_READ | GENERIC_WRITE;
-> > +	else if (oflags & O_WRONLY)
-> > +		access = GENERIC_WRITE;
-> > +	else
-> > +		access = GENERIC_READ;
-> > +
-> > +	handle = CreateFileW(filename, access,
-> > +			     FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,
-> > +			     &security_attributes, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-> 
-> `clang-format` says that these two lines are too long.
-
-Might be. But the `FILE_SHARE_*` line cannot really be any shorter
-without hurting readability. And the second line just follows the first
-line then.
-
-Patrick
+So you wrote it the correct-looking way in your first bullet
+point here.
