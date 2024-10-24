@@ -1,56 +1,56 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110D3156C74
-	for <git@vger.kernel.org>; Thu, 24 Oct 2024 21:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584EC156C74
+	for <git@vger.kernel.org>; Thu, 24 Oct 2024 21:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729806741; cv=none; b=gSUhGVc37wkczFAwQgSaH2j3kMi1xMG6hjkq5GkUnQfDaNhOarf8fuGZf9HI9wPmoRBf6A/bQRMRcwJyKn/uMds5VbD+kdcUpQzsd+iRXtRQ+sgjamYFt4cwUUPSSgJFOkMOWTt0sF+fpZAbDDPXNMcjRGpn/gpPSXaUFZ0lMT0=
+	t=1729806802; cv=none; b=nShHHOgNKELhSXCWYI1P5ymrAZp8KKPcbOoDyzVANo1DsHxn5uXwG96Ad5FgrsoYdTi1+VR1zWgL5/rqK6FzQazx+mLsbp7NfgtVoelIdxOqG2EPAaQypYYzwe/FztyargFODO8vGhjBJzLsBK7szW9DVjtfZgzQm/L8Z4dJDH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729806741; c=relaxed/simple;
-	bh=0DbqMbljPiSB56gctp51WRqtEsx9BJrhSVEoArPKf5o=;
+	s=arc-20240116; t=1729806802; c=relaxed/simple;
+	bh=dMwPvxSBSw+9GRg5BTg6Nq+xVnJ/EtHKZI/AbHiPU7Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UHQ9Lncno3i8kT/1fbXlqeuWhNaofYo0MQVYJc4jXdNgsJNsKKXdgcBXHWrrurNf4ZfvzqNZMFVYaCdMyIhdyyB9qk4vDdiyqoYnV73TVeWfYQcY4znBzvSPVZcqjysGT4s/z+qZKiiEWJMbZ/MsQMRexRO91zmccuoxDc1nctY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zUl4B6t/; arc=none smtp.client-ip=172.105.7.114
+	 Content-Type:Content-Disposition:In-Reply-To; b=ueHALFHU3c26LjWQdDHrep5kY+9meGBdCzCEF5o5fqbfhVQIMdSYmSyxkMM4/PQnjAGGpIf0m1IcZxZVJPWKygZSAofbb42bFPrR56UQOe7yoaSr/OkpUHxF5mCnQioZjVVgMxvW4OJMpWzl91gIeXxu7pqVI9CnG97fSrECILM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=XbBwt27F; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zUl4B6t/"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XbBwt27F"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1729806730;
-	bh=0DbqMbljPiSB56gctp51WRqtEsx9BJrhSVEoArPKf5o=;
+	s=default; t=1729806798;
+	bh=dMwPvxSBSw+9GRg5BTg6Nq+xVnJ/EtHKZI/AbHiPU7Y=;
 	h=Date:From:To:Cc:Subject:References:Content-Type:
 	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
 	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
 	 Content-Type:Content-Disposition;
-	b=zUl4B6t/mJuGswOlnB2N4Egf4+keURGcofsYHra/nXkq/GD6mLNI8Q/m6iVdnga/U
-	 WvQpXL0RLbvt6km9fMIFdzFG8W+DaSR7XZDiJxTydefZyeRIPXcds46+AMNmk6i5su
-	 jgynCki0QIeRzU7SwCMc1gMCUm0bH1WjKkbuJO/zssgKobfbg3UZftPoKJ5pzr8pfC
-	 /K3SCaB1F5L8MreyXhBpNA51Ypnd12FrbJ4ewHgvcHI3+ISBcn18cY+bXiBgyWQBh+
-	 UG0/jDg00BBqyyje6dlPNjBTVSA+CrAvMvJFPy3gOsEEsRzIhi5la6NpgS0g+va0K+
-	 FddDtxlDmF/YwkoARgPutG4KpXqJQYN1mN11VX7VC6NWTz+21Ag45r673xjb734nC4
-	 ZZC+MLoe0XoPbR/eNy4Czx1cr5yxEEi7bafWK2X1vsayvRaxzlkseU5dXcFXFsTV2j
-	 mqZ1OqReC3R5rm3rFEXoMLqta/slLSCv6Bw9JyLFV/JS+Bt138g
+	b=XbBwt27FHA/j2o6YIjAFaWK9m38QCz3IrGBb8yE7Tdzn83SIhMGOySp7CB4OaHYfh
+	 Ah4fv0FWKu3cB9XTcCux5F63tevoYvEWJuvoQ3pz5HQBEaNwnuH2Vx1l7QDegyrvx0
+	 sw6TLCBiYuJRPPY+6jaQGru3Uz9EgijwtpJxHhuA/W1oEzDglbd9uK5JPdWUWxFJ3a
+	 dEck4DFnQz/8xN3dDaAqqRUnCaTdaQuFzyLaUI0kniCrQ+4RxqKQkmBgIN+kJ1XxRq
+	 W8VeP1K2zgPL73Svn5eCfLid6sN36H9XciIJLjB12DFsVqNGKd2+7cHo/CKl8HleYs
+	 kid8s/EB+72UHLybmte4szdF6DM4vO4FuWsfqfpBbuCUGre5ozJ8g9eLHfBCBIGklU
+	 77U3Dm0yyLlxFxUX67OHpWebZWM/Kl7uo7JJhYBer1eQi5zhBfrE04AiAApNf/D6O6
+	 VQx2t99t5D/IHpEa1OxJTwBuhJz0DxZB1RdDWa1l725zMZ+rnqs
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A6474200B1;
-	Thu, 24 Oct 2024 21:52:10 +0000 (UTC)
-Date: Thu, 24 Oct 2024 21:52:09 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 58999200B1;
+	Thu, 24 Oct 2024 21:53:18 +0000 (UTC)
+Date: Thu, 24 Oct 2024 21:53:17 +0000
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 12/12] gitweb: make use of s///r
-Message-ID: <ZxrBidBicBcipo5R@tapette.crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/12] Update versions of libcurl and Perl
+Message-ID: <ZxrBzT6lE47m_3Ia@tapette.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
+	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
  <20241023004600.1645313-1-sandals@crustytoothpaste.net>
- <20241023004600.1645313-13-sandals@crustytoothpaste.net>
- <ZxjtRXf8IUrvn1tK@ugly>
+ <ZxlZuxllqjAZfAZm@nand.local>
+ <Zxnjt2QVwVTsYwvW@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,74 +58,40 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tMFzUwigEF1GmBya"
+	protocol="application/pgp-signature"; boundary="/MM3aHcPnFyuNNiV"
 Content-Disposition: inline
-In-Reply-To: <ZxjtRXf8IUrvn1tK@ugly>
+In-Reply-To: <Zxnjt2QVwVTsYwvW@pks.im>
 User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
---tMFzUwigEF1GmBya
+--/MM3aHcPnFyuNNiV
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-10-23 at 12:34:13, Oswald Buddenhagen wrote:
-> On Wed, Oct 23, 2024 at 12:46:00AM +0000, brian m. carlson wrote:
-> > In Perl 5.14, released in May 2011, the r modifier was added to the s///
-> > operator to allow it to return the modified string instead of modifying
-> > the string in place.
->=20
-> > This allows to write nicer, more succinct code in
-> > several cases, so let's do that here.
-> >=20
-> "several" is a bit of an overstatement.
+On 2024-10-24 at 06:05:49, Patrick Steinhardt wrote:
+> Note that this still breaks GitLab CI, as we exercise Ubuntu 16.04 there
+> which doesn't have recent-enough versions of curl. This version has
+> recently moved into Extended Security Maintenance mode, so the next LTS
+> release would be Ubuntu 20.04.
 
-I can rephrase if a v3 is necessary.
-
-> > +++ b/gitweb/gitweb.perl
-> > @@ -1188,7 +1188,7 @@ sub evaluate_and_validate_params {
-> > -				(my $error =3D $@) =3D~ s/ at \S+ line \d+.*\n?//;
-> > +				my $error =3D $@ =3D~ s/ at \S+ line \d+.*\n?//r;
-> >=20
-> i'm a fan of "excess" parentheses where the syntax relies heavily on
-> the binding and priority of operators:
->=20
->   my $error =3D ($@ =3D~ s/ at \S+ line \d+.*\n?//r);
->=20
-> which is arguably semantically clearer than the old idiom, but not shorte=
-r.
-
-I don't think those are necessary.  It's obvious to people who use the
-s///r idiom what's meant here, and in my experience most Perl code using
-that idiom doesn't use them.
-
-> > @@ -2700,7 +2700,7 @@ sub git_cmd {
-> > -		map { my $a =3D $_; $a =3D~ s/(['!])/'\\$1'/g; "'$a'" } @_ );
-> > +		map { my $a =3D $_ =3D~ s/(['!])/'\\$1'/gr; "'$a'" } @_ );
-> >=20
-> i think
->=20
->   map { "'".(s/(['!])/'\\$1'/gr)."'" } @_ );
->=20
-> should work, and is an actually significant improvement.
-
-I'm sorry, I don't necessarily like that much better than what we have
-now.  It's not that I think it's awful, just that I don't think it's a
-significant improvement.  If I do a v3, I can omit the `$_ =3D~`, though.
+Yes, I think we should add that on top.  I don't believe we should be
+testing or supporting Ubuntu 16.04, so 20.04 would be the right version
+to choose.
 --=20
 brian m. carlson (they/them or he/him)
 Toronto, Ontario, CA
 
---tMFzUwigEF1GmBya
+--/MM3aHcPnFyuNNiV
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.4.4 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZxrBiAAKCRB8DEliiIei
-gZadAQCdW2TY9iqpBPnWYnawAQ2t4WIcw3wOSrFd0XS4EDKAPAEAr1xgPFvyeFTe
-9ljUV+fa8ESsNrFBbqxIEr2xvM0vkwo=
-=5r8p
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZxrBzQAKCRB8DEliiIei
+gWt7AP0UozypzaacEWVzdC2f1Ywzg5ErpCaqNLPm575iOLmReAEA4DlwdZFcDF8g
+Af76W4RIdCjJcwOnZjr6PqCoVMsB2QY=
+=TpNf
 -----END PGP SIGNATURE-----
 
---tMFzUwigEF1GmBya--
+--/MM3aHcPnFyuNNiV--
