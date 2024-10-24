@@ -1,134 +1,94 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31E38493
-	for <git@vger.kernel.org>; Thu, 24 Oct 2024 00:25:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2092122F11
+	for <git@vger.kernel.org>; Thu, 24 Oct 2024 00:25:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729729506; cv=none; b=RC/1/+1n28lxabOHoDWamL3vSNajPG5YsAdQyo0GDLecsAPPSCIQ7AvbjB3kvG7q7NCELRDGesqHY7aFqU+3MLYuEec7HcxtJQdqvSfJELOC/hmsnRKE/KLbl7ZJoPEVSdXGT8ImhcEG5/dVfpL/p+yZur0XAAms+enAo+osLqQ=
+	t=1729729523; cv=none; b=od/T7hXDdowS9oaFr1lquEm3G5skBqR3JE3u3ZZ1QNLNEdKrzTwddFYiHFRVWL6g9fRF8hMAkKxxi3LGQ8kpL8DVIOwIethUJPHi904brB3dObDQ8Q4uqcON8TpReiBWqJqY8Qr58rnjNOpVysuqb5mbFEf7RQgpDZ2iNFYUPpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729729506; c=relaxed/simple;
-	bh=+m7C0CcNl2NR3KoZZfHWLylLpvi2YgM1K5aK6Fqwk/g=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BXlm2ubFcNjg755jZ7zgXC92LaB5sqWVW6q5bMGXZ3gbiBEZi4T8ahNSyqxl3Ktp8P+IKYY8O1179E6QhERMNF7p+m+81VgsGACISN+ycQqkM2uyX3itYUcQEfhqdO9RNmBFKL9Sdz+Y+so94dFAlDxVq6Bn2NCwnNTO6XQY8Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bGrYdUOj; arc=none smtp.client-ip=209.85.208.49
+	s=arc-20240116; t=1729729523; c=relaxed/simple;
+	bh=zoOgNy3Yc9GEXftLC7+d8BjxZiGRrFxsdiVS75Gi3Go=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Hc/krXnIHzj8Mus+MUviCNO+yVcKMt4WsJxMB37ocEftXSkjpnDk552IYMzvc366CUCtb/Xp+H444uBt9BaHu5/AaNKN8Kp+u9tQggVmtAjA0BdKF5aXIIhrPkd0f+2XGzGsvKpOy33wy+tZEyidcks+YCsk6dcK2YBkWZSEbmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XQJKcHDk; arc=none smtp.client-ip=209.85.217.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGrYdUOj"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5cb72918bddso417325a12.3
-        for <git@vger.kernel.org>; Wed, 23 Oct 2024 17:25:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XQJKcHDk"
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-4a74cfa7671so769458137.0
+        for <git@vger.kernel.org>; Wed, 23 Oct 2024 17:25:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729729503; x=1730334303; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1729729521; x=1730334321; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4Rzv7AnOxuQovJ9pw7+5rvDkRMri4p78w2Bp8gd0vNA=;
-        b=bGrYdUOjx58BcFuZ8rvUjHS2pOv05oQvbKyVyDfeF8o4YbH4oPfSpDMvRM+dcd6Y1d
-         XBOUFIDXvqMIfji5v50TBcBZ7zsUfQZIGggPCWEPSPv5fLXAVzJ8yB8Za3Va99MUvCAr
-         sfI7UrN+y1eS8LVQG92sVAwaUxAf+E3cLkjpEWw5iHlyrVRLPCOFMlUXyC0fsgAwh6Rq
-         v7rQg+0EuzOkgFiX4uBOCy7GivSLkdIxVTdeFzuMcgR+BE7RYQ7yBwLCL/dg2nTEB38r
-         Bs4RGBuZsf4HOkBWKuCUj4QtOUoMJ4/IJri3rPrjvnP6SViwdZ50YW5lugoWXiixy9c6
-         vpOw==
+        bh=Na2YjBY9rFzU84Kux0fzRzp0rblhJ0Lfs0/mH2BbKFw=;
+        b=XQJKcHDkkCFKTa+efmxLH02hsENfpMlJpq+m7KlLYJCKuvom3AHUZ/g3HlYuKdNYV2
+         bMV+pXCUDv+cQuBghFQhZQ2bnjaxa+FObdbyv90XOfB/jxFzN9L4fIE2c7W1BM0HYKFV
+         W+LyoTypGchWvNPttgpY6sL94NOlTwFSkWIhl18Eo5HV1O0akWCHG1JeiFYce/ghpd1J
+         zossyrSq45wcvo1VBpMgnLiEHVMr/fmqaAtwKsRM9FB8uCu+lVpuncc1B9gCWJcPL/ZQ
+         jOX1eSlH6TfkLbOIoZ2YqRKVbd/L9kwV+3DoyhYw7C0NcuujIAW0kp+HnpukbuEPdqU2
+         FhhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729729503; x=1730334303;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1729729521; x=1730334321;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4Rzv7AnOxuQovJ9pw7+5rvDkRMri4p78w2Bp8gd0vNA=;
-        b=pLIJ7DikGhbWvf/B7Ia/GmuiTFxpFWt7wn90mrEoPY4Fk8NrdMysOu8o7tGQ5SIlIq
-         XoBkcbxrpLZgSUWxCKAbOzw6t+LJzTgzXERJrH4aWyA1QILttxiARt3iOl79GLFtHjlx
-         0lEFQtCKSZMhz3aAjIGG60hhBLulZ5TlCuLkp9rOQe+jXfojbCt7NBJCu4q4FRDt+ayb
-         0lG6blQKpVVyf2hWOqfLA16bf+to/hhy7iSRvfieZNgYJUh5TIjV/69clHz5zNYGon2F
-         lN6qgYXkBNPzgFEqTRr5U8lfvPF1kMfAhbJd6YzMWZi4QXjJS09Bun3eNpf8tqU5vPYG
-         fksA==
-X-Gm-Message-State: AOJu0Ywa5nKvVEo4dlVfaDDJ4blpVuDqjpEcGSgw+fOlYT9tMHBYdzSS
-	lQM07F95EoHRvFdNuWEOskaLuhifBMMTde0K6JISt8mArS/tYpa03dU8Pg==
-X-Google-Smtp-Source: AGHT+IHfZ/na2fJ4f5eVkUP/RAW0gBFCgTrH7TlQwIJ80oJfLqKoErRSCDQR6k7/T59GX0glX3xL8g==
-X-Received: by 2002:a05:6402:254d:b0:5c9:4281:4515 with SMTP id 4fb4d7f45d1cf-5cb8acb7b0amr3803671a12.17.1729729502632;
-        Wed, 23 Oct 2024 17:25:02 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cb66a6a555sm5031724a12.45.2024.10.23.17.25.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 17:25:02 -0700 (PDT)
-Message-Id: <17484df5200356c9cc17cde293e501a5a88a744a.1729729499.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1810.v6.git.git.1729729499.gitgitgadget@gmail.com>
-References: <pull.1810.v5.git.git.1729669220.gitgitgadget@gmail.com>
-	<pull.1810.v6.git.git.1729729499.gitgitgadget@gmail.com>
-From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 24 Oct 2024 00:24:58 +0000
-Subject: [PATCH v6 3/3] imap: replace atoi() with strtol_i() for UIDVALIDITY
- and UIDNEXT parsing
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=Na2YjBY9rFzU84Kux0fzRzp0rblhJ0Lfs0/mH2BbKFw=;
+        b=OYoceC1orleNPCeBMH2oz2z71K/X86p5wtpD7GAaz8tdfNa9DSbIbPLZ+1E2cM0rLD
+         7pBwPQ0qJpC+wRB8xGBlw/LQI2XhOUa+IwHE1Xo445ugb/l8hsytJfN7D7I/xElGNCC+
+         YJhMShb7rOy4kbJzIfNjEspskqAiCXjYy93zkGU0nhRwlh2w37y7FeUW49ets9uaMso1
+         rQ8WJv8DsaVhCxmyS+ewgBlq/JK36u0YG/KPDQNbgUcSZ2XBmgDup0GJrROUu4OSbuNl
+         dtQz2zjo7n3SrkDFubG7u1F0DQvBGiHLn81BAYLOarZmlaXIv3ZJU2RvfEvjCwxuVaC8
+         eUqA==
+X-Forwarded-Encrypted: i=1; AJvYcCVtjLsQVok8ZCK/7DjR6JkJrpTWh4aYQLvpyO7EbTK4OcDaZE+T3qOBWLsggMYCATyIcGs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4Zzv5gClMKFdWXfqGcTFNz9MXoYkde072IVBOh8MpOBail6X7
+	HUv9G9p8IBBK8CbTxmK4wxAXs5URaqF5zJLJERh7UNHcep0LMEzsOX+/enM6G9q0V5pn5VEeqAO
+	+ps9ErNVwf3IJtBE2oyXnQVdd58Q=
+X-Google-Smtp-Source: AGHT+IFdCmz0nIU5j6hAvnmEoL1Kmc912Zcf9MX0cLp+hv3Nnu/tJUUH6t1haf8IaObeZ4krRupYbfeDxyHdU9jJa78=
+X-Received: by 2002:a05:6102:1608:b0:4a4:97d1:ae99 with SMTP id
+ ada2fe7eead31-4a870e49620mr131152137.12.1729729520998; Wed, 23 Oct 2024
+ 17:25:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>
-
+References: <pull.1810.v4.git.git.1729634937.gitgitgadget@gmail.com>
+ <pull.1810.v5.git.git.1729669220.gitgitgadget@gmail.com> <Zxi5TeHM9qD3lrbx@pks.im>
+ <ZxldiQVBxAWbXoT4@nand.local>
+In-Reply-To: <ZxldiQVBxAWbXoT4@nand.local>
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Thu, 24 Oct 2024 00:25:10 +0000
+Message-ID: <CAPSxiM8KbpzQuOgTG1V9rsQJ33wZy-+mGn2pGq0kS7JNMv-Wog@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] parse: replace atoi() with strtoul_ui() and strtol_i()
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Replace unsafe uses of atoi() with strtol_i() to improve error handling
-when parsing UIDVALIDITY, UIDNEXT, and APPENDUID in IMAP commands.
-Invalid values, such as those with letters, now trigger error messages and
-prevent malformed status responses.
-I did not add any test for this commit as we do not have any test
-for git-imap-send(1) at this point.
-
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- imap-send.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/imap-send.c b/imap-send.c
-index ec68a066877..488c06e6139 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -668,12 +668,12 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
- 		return RESP_BAD;
- 	}
- 	if (!strcmp("UIDVALIDITY", arg)) {
--		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg))) {
-+		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &ctx->uidvalidity) || !ctx->uidvalidity) {
- 			fprintf(stderr, "IMAP error: malformed UIDVALIDITY status\n");
- 			return RESP_BAD;
- 		}
- 	} else if (!strcmp("UIDNEXT", arg)) {
--		if (!(arg = next_arg(&s)) || !(imap->uidnext = atoi(arg))) {
-+		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &imap->uidnext) || !imap->uidnext) {
- 			fprintf(stderr, "IMAP error: malformed NEXTUID status\n");
- 			return RESP_BAD;
- 		}
-@@ -686,8 +686,8 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
- 		for (; isspace((unsigned char)*p); p++);
- 		fprintf(stderr, "*** IMAP ALERT *** %s\n", p);
- 	} else if (cb && cb->ctx && !strcmp("APPENDUID", arg)) {
--		if (!(arg = next_arg(&s)) || !(ctx->uidvalidity = atoi(arg)) ||
--		    !(arg = next_arg(&s)) || !(*(int *)cb->ctx = atoi(arg))) {
-+		if (!(arg = next_arg(&s)) || strtol_i(arg, 10, &ctx->uidvalidity) || !ctx->uidvalidity ||
-+		    !(arg = next_arg(&s)) || strtol_i(arg, 10, (int *)cb->ctx) || !cb->ctx) {
- 			fprintf(stderr, "IMAP error: malformed APPENDUID status\n");
- 			return RESP_BAD;
- 		}
-@@ -773,7 +773,10 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
- 			if (!tcmd)
- 				return DRV_OK;
- 		} else {
--			tag = atoi(arg);
-+			if (strtol_i(arg, 10, &tag)) {
-+				fprintf(stderr, "IMAP error: malformed tag %s\n", arg);
-+				return RESP_BAD;
-+			}
- 			for (pcmdp = &imap->in_progress; (cmdp = *pcmdp); pcmdp = &cmdp->next)
- 				if (cmdp->tag == tag)
- 					goto gottag;
--- 
-gitgitgadget
+On Wed, Oct 23, 2024 at 8:33=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> On Wed, Oct 23, 2024 at 10:52:36AM +0200, Patrick Steinhardt wrote:
+> > On Wed, Oct 23, 2024 at 07:40:17AM +0000, Usman Akinyemi via GitGitGadg=
+et wrote:
+> > > Changes from Version 4:
+> > >
+> > >  * Fix incorrect indentation and remove unnecessary braces to avoid
+> > >    confusion.
+> >
+> > Thanks, this version looks good to me!
+>
+> Thanks for reviewing. This one is looking pretty close, and I've moved
+> it to 'jch' in my tree, but I think there are still a few lingering
+> comments that I'd like to see addressed in a subsequent round before we
+> start merging this one down.
+>
+Thanks to all the mentors, I really appreciate your time. I have sent
+another round.
+Usman.
+> Thanks,
+> Taylor
