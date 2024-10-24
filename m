@@ -1,128 +1,173 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A5117F7
-	for <git@vger.kernel.org>; Thu, 24 Oct 2024 00:50:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7842C9A
+	for <git@vger.kernel.org>; Thu, 24 Oct 2024 01:43:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729731024; cv=none; b=rK3fCpl9JmLAaphRjvzsg7QFlpPqXnKUf0FynHoI/Eipf8M00NkS2smT4ykmmozJimw7+IVFHZhXAnFNpPVreMRSrkn5wldcUfja4088skCYlKTNKk4+UHuSOIYZI8R3t/1d99kR3H1UTIxnOjDpjicdSFPxvS+6+BatPRgiM3w=
+	t=1729734234; cv=none; b=iAOHPSkWnvuT2tcfoyQo9IAaeMTQQEGIAxGt92GlmF7ptOJyTrSV4PB3dhPPL4QVRUgFXkUsRpbam0pzmysrwoP0yM4wQ5dejDFwLTUDJWZcBNqxxHm5tsu9/tHtmuYXvIZ+MeB2Vy9LNNcgmITDD2iHxk5QOlYYivgHN8eKVyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729731024; c=relaxed/simple;
-	bh=pNefYlRXPDGg+hAn+vr9xczQza6YS0zIDwxIacwSlko=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=syD0g1ytBiea03GxvwDIv5GqzkX7VVF+jNe7dYz0W6gkF4HHctkncn/55HvSrOy4tJoOOMHKScvbyjOKGyEijagT9Quc+o1Us3s2K0x8J5Rb5jMH/UBpVkjgFyrB2Oao2aRq2P89ciCt2DkNsR9lsGUmN6xrDwTKxE2n11bc9tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BZfSqDdP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YtLrD8WX; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1729734234; c=relaxed/simple;
+	bh=fhL2PH4jVVQ92EvAbhMfBdcpAi9OL+P8hupTNJa+qjs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ByeWkZt4kLTFxxLwksQbyfvWqkbvMmvnfHPse6HwCOn/ooAc7Gx3sGa214ykAgcF2gjUhQ+HrVd7Vq1hgm0o11a13Ng4NQq7rmQOsKuTPWG5H7ZKN8/XXkGYzXwvXpDv5W7r2jKYiqKB7M2OJVhsCmkV0q0gqfS1JaZkolzLxsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=XVq+sBvt; arc=none smtp.client-ip=84.93.230.250
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BZfSqDdP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YtLrD8WX"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id A1A21138028F;
-	Wed, 23 Oct 2024 20:50:19 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 23 Oct 2024 20:50:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1729731019; x=1729817419; bh=+dj926RhcN
-	BbKUzJM93I6eTmQDRN54GRQyEDQjuwj5c=; b=BZfSqDdPSFiGM+I2xAyE0L/4lG
-	s1ZUDF5NYAgAfTyCIqR+YNNqaJZyBt5kZsS4Oq4uQMOl07SPQ/0OBMjbZUH2Yolw
-	Ev2goK/OfoNxv8QhjfCXtefTRDtH+qrw5af/PTxgKoKjFJcIl1R2jKPXZFGG+4V6
-	9hNiV+stcZTODCdw15rL0DByrltNGHVCe+QYxizLC90yEIhRgeEBlhfazNPap3QH
-	iORXpbtqe+o5CPDZ4dEWyCwI68iNixiw/8SFnrbuLPASa/hn5eyy1NjcfZmj6cYF
-	A5Cyf14PajP3AK9xpnh1c19Q8oVY863NYSNggkukxbx6hXsOt4l2RSvob1tw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1729731019; x=1729817419; bh=+dj926RhcNBbKUzJM93I6eTmQDRN
-	54GRQyEDQjuwj5c=; b=YtLrD8WXU8IfKAUDpRdeUDGrhk8J8GNExucqico6sDDk
-	VhKGFgW/N62zPwfcXqfaaBXVlac/EubnfYLkn3LSJAlCJZAzb/5nf+Q64fTZy/7f
-	TaScIk5obVMJQ/5JtUMVdWmZCEmixdDz59AZdOch9JmHvwLaAHvOYuBNZOuX8LaH
-	9GHTZyDATqT7K6a3QGvf1t3fOv9Je5R7Sq4eZ6AVzmM4u0P3LysCt1/Ijw8ebumw
-	qpoA02G1b541BEILdm5v9DBW0SuFqTRhVLZPnTntulc36Ngh69KG2Ekp1iIdp2xj
-	8lOyM6j19cD8XZnDP5fCXAHypAd6uxl7U1sPuOCe4Q==
-X-ME-Sender: <xms:y5kZZ-FQLvinQhX2qPoBjCnyRYLPaCzkJzBgqnzDRyxvFIZ6xgOi9A>
-    <xme:y5kZZ_WxxD2nWJX21qDK4whkW0iiwML1f1PaWS4KN-c9iYlh1YoeQmA1HHaE7uAyk
-    4FaeWajv6mmAziQrw>
-X-ME-Received: <xmr:y5kZZ4I73n_91CW87PjiWfDTSdCT4R2OXArGYDbBZEFXJETyyX7fCZLP305Ij1iYtW_RN8J_jaCDk_VOVW2HiRka6Ij7iOARnkG8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeikedggeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihloh
-    hrrhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:y5kZZ4GO0fdpBjhLmKyXpc-ePFKKvz4TKq4Xk5DqIaS9LednDVenKQ>
-    <xmx:y5kZZ0VXcUM8J_PcHvT2wD-3L35Z08FgS0vW1UViRc975kVvi-OoVg>
-    <xmx:y5kZZ7PCLFYUB5UYmdqwAfyIA2d8lU7VBl-5ATQqMMWOr-GMiKONdQ>
-    <xmx:y5kZZ71JnREm2-eXfgew8xHq09FGbl0OktM5rPLYio660ka0I7QwkA>
-    <xmx:y5kZZ-eHtBC4UlkZP6SOMW7omOxrxi1eyUHiwriDXd_W81tu0rWpwxWg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Oct 2024 20:50:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: karthik nayak <karthik.188@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] CodingGuidelines: discourage arbitrary suffixes in
- function names
-In-Reply-To: <ZxfVwQxMlcJbGt5D@nand.local> (Taylor Blau's message of "Tue, 22
-	Oct 2024 12:41:37 -0400")
-References: <20241021124145.636561-1-karthik.188@gmail.com>
-	<ZxZP01C-9RngukZy@pks.im> <ZxazVG65+W0qKLXh@nand.local>
-	<CAOLa=ZSPmkdngn3=cksBM-syO94-zYANLk8FWBsQYpTR8XT9FA@mail.gmail.com>
-	<ZxfVwQxMlcJbGt5D@nand.local>
-Date: Wed, 23 Oct 2024 17:50:17 -0700
-Message-ID: <xmqqr086pbna.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="XVq+sBvt"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 3mt2tmuVsvENU3mt4tFu5Q; Thu, 24 Oct 2024 02:43:42 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1729734222; bh=wnC47Dq5Bbss0AV9j1THRRIyHrtQxhwirXHlMLrP1w0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=XVq+sBvt4us4i/Ffh7ZYVbpULfBhFdSrhTDweAqrfaEF7v5LkImT4/S0lsSxig4k0
+	 LyiYe1l3LHLm4ecF8S2YDJczAd3r3WHzLfIDc/4h8RE8FWIMfEZyuRGYPxdIJnHLUj
+	 4pcN99KZDQpfp4J7JhlXC7ivIl6Lh/v5xnEnnkO6jHSgcKc0NCuku4BYPdp0sp4xvM
+	 UmB0o8LbbMoBTAGsD87zyd8kbPs1m/6ooHVJKQg/9i3KvSlJ3CCzVG+0mkg11eqC0n
+	 zGhcf0AvV7mW1dDnpAof0Ss0zNlrHC7RHsbmYW2ujTVIRGxihAtx0nhU0AyItCySzU
+	 4eD4W4+dzGRWQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=T9svTOKQ c=1 sm=1 tr=0 ts=6719a64e
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=KwCzb0IITaSoCp1fxiUA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <b1ab6c1a-54ce-4adb-8977-ef376fdb48f1@ramsayjones.plus.com>
+Date: Thu, 24 Oct 2024 02:43:40 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
+To: Eli Schwartz <eschwartz@gentoo.org>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im>
+ <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
+ <361e69ee-4491-4e2b-8edc-fdf4bcbb8532@gentoo.org>
+ <b35b6f10-ebb5-4266-ab95-aafb67cfad22@ramsayjones.plus.com>
+ <ZxjmTbATU7usHcqQ@pks.im>
+ <c32a7dc3-cf9f-4d42-98da-80009f9df847@ramsayjones.plus.com>
+ <6883a8d4-7e2e-4988-b57f-89b7c0aacadc@gentoo.org>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <6883a8d4-7e2e-4988-b57f-89b7c0aacadc@gentoo.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfKd0jFyKQ2tzGI+LPPLEEbMXxaLB9F/+8Ft/XFteglANp/IHfSWzHsCabFsYOonHROZtcuSJ8gO+zTwpfF4LkGJNlh1iLvNZHe5I9/rFuJzV1qJHA7cC
+ mHuSkmK8E14V7HDuQKOIEnZ6ga/ki2e7TxbEcEgssPsCI3dlCIlkiOH8mxK7ft6jKLg+L0pNcpejWH/6HSFyvzWKSH6JNEI8kxk=
 
-Taylor Blau <me@ttaylorr.com> writes:
 
-> I don't disagree that writing "single" or "recursively" can be
-> considered clearer. I think that the convention to suffix such functions
-> with "_1()" is more terse, but saves characters and can avoid awkward
-> line wrapping.
 
-I am reasonably sure that I was the first user of the _1()
-convention, or at least I was one of them.  The reason for the
-choice of suffix was only because there wasn't anything suitable
-when refactoring an existing function foo() into a set-up part and
-its recursive body, so I just kept the set-up part and the single
-call into the new function in the original foo(), and had to give a
-name to the new function that holds the body of the original logic
-that was moved from foo().
+On 23/10/2024 16:58, Eli Schwartz wrote:
+> On 10/23/24 10:38 AM, Ramsay Jones wrote:
+>> Hmm, I could have sworn that this caused a complete rebuild for me
+>> (even when having just built), hence the '--no-rebuild --print-errorlogs'
+>> parameters to meson test. (Oh, maybe that was just 'meson test' - so
+>> how do you run *all* tests with meson - rather than 'ninja test').
+> 
+> 
+> "meson test" without --no-rebuild will first run "ninja" to verify that
+> everything has been built, and build it if it hasn't been. When passing
+> specific test names, it will filter for dependencies of that specific
+> testcase, and only ensure *those* are up to date. Assuming those
+> dependencies are accurate, of course. :D
 
-Neither foo_helper() or foo_recursive() were descriptive enough to
-warrant such longer suffixes than a simple _1().  They easily can
-get "help by doing what?" and "recursively doing what?" reaction,
-which is a sure sign that the suffixes are not descriptive enough.
+Heh, yes, I just tried it tonight, and it did just as you describe:
 
-That was the only reason why I picked that "short-and-sweet but
-cryptic" suffix.
+  $ meson test
+  ninja: Entering directory `/home/ramsay/new-git/build'
+  ninja: no work to do.
+  $ 
 
-Surely all of _1(), _helper(), _recursive() are meaningless.  If we
-were to replace existing uses of them, the replacement has to be 10x
-better.
+> What do you mean by "complete rebuild"? Do you mean all binaries that
+> were already built and up to date get marked stale and recreated?
 
-Having said all that, as an aspirational goal, I think it is good to
-encourage people to find a name that is descriptive when writing a
-new function.  I'd refrain from judging if it is way too obvious to
-be worth documenting (as I am officially on vacation and shouldn't
-be thinking too much about the project).
+My bad, I was a little loose in my language. Whatever it was that I typed
+(and I obviously can't remember what it was!), resulted in meson going
+through the configuration step again followed by compilation/linking of
+all binaries (or at least, that's what it looked like).
 
-Thanks.
+>> BTW, I have been doing:
+>>
+>>   $ meson setup .. -Dprefix=$HOME
+>>
+>> so that it matches the default prefix from the Makefile (not that I
+>> have attempted to actually install yet!;) ). Can the default be set
+>> in the meson.build file (with command-line override, of course)?
+> 
+> 
+> project('git', 'c',
+>   meson_version: '>=1.3.0',
+>   # MSVC does not support GNU99, and C99 does not define __STDC_VERSION__
+>   # on MSVC. So we instead fall back to C11 there.
+>   default_options: ['c_std=gnu99,c11'],
+
+Ah yes, this seems to work:
+
+  $ git diff
+  diff --git a/meson.build b/meson.build
+  index 7c7a59d7fb..23b6f0baa2 100644
+  --- a/meson.build
+  +++ b/meson.build
+  @@ -2,7 +2,7 @@ project('git', 'c',
+     meson_version: '>=1.3.0',
+     # MSVC does not support GNU99, and C99 does not define __STDC_VERSION__
+     # on MSVC. So we instead fall back to C11 there.
+  -  default_options: ['c_std=gnu99,c11'],
+  +  default_options: ['c_std=gnu99,c11', 'prefix=$HOME'],
+     version: 'v2.47.GIT',
+   )
+ 
+  $ 
+  $ meson setup .. --reconfigure
+  ...
+    User defined options
+      prefix: /home/ramsay
+
+  Found ninja-1.12.0 at /usr/bin/ninja
+  Cleaning... 0 files.
+  $ 
+
+Using the command-line to override also works:
+
+  $ meson setup .. --reconfigure -Dprefix=/usr/local
+  ...
+
+    User defined options
+      prefix: /usr/local
+
+  Found ninja-1.12.0 at /usr/bin/ninja
+  Cleaning... 0 files.
+  $ 
+
+> You can pass any command-line options in as default_options, including
+> prefix. Defaulting to $HOME is somewhat unconventional regardless of
+> whether it's done in a Makefile or a configure.ac or a meson.build or a
+> CMakeLists.txt, but given the Makefile does indeed do that I suppose
+> it's not incredibly bizarre to do it in meson.build as well. :)
+
+I don't have any strong feelings either way, it's just that people are
+used to doing a 'make install' and having the git build installed in
+their home directory (including me). But it is not a huge effort to
+add the '-Dprefix=$HOME', it simply needs to be documented.
+
+I think I need to go away and RTFM at this point and not annoy you (and
+others) with such noob questions! :)
+
+[For me ATM, meson works fine on Linux, but it simply doesn't work at all
+on cygwin as far as the tests are concerned (and I haven't tried installing
+yet). Patrick is not seeing any problems, so I would like to understand
+why we have such different results.]
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+
