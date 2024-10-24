@@ -1,111 +1,108 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164B21F4724
-	for <git@vger.kernel.org>; Thu, 24 Oct 2024 16:54:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077021DD0D9
+	for <git@vger.kernel.org>; Thu, 24 Oct 2024 17:07:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729788894; cv=none; b=DSpX44VINj5cLl/U3uqvGrIJuwo7Q0KLUicVrv/fAIUa9dLXk8dxKbavPnDNvOQKQYk0Rxr3uvO3THchs5HlIaWHCnsfKme6zW85/A6pwHgVOWAA5+ElhPNXgA4XYBJsJPoTbn3PVlGmlq+w9gcQJqp2+HIZ885P7sLU/PyXmn4=
+	t=1729789662; cv=none; b=pcnCuVljlbVHTGb21aDTVY6ZLIoIS5iXGRnJCWv2CX96oXpyFJFMz1eDSxqgj/1v3DWxGjd3wUctQSUmEMgw6PiBFdrKDtnPuSOCuugDtJXoyeMS5BGp1x2L9ehIRPfW51gvTc67QkK2HqLxHVbcPexysg9T8nnxuSg5BZOdLmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729788894; c=relaxed/simple;
-	bh=wyX83y0H4FN0YtL4mDzHnxOJNfTcwpagQL84z6rpZX4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l7plMdOYJp3A7jXP3luNFu25GU7KKRhu2abOh0ABnrC22J6YPruwPMH0fkPTDvTaCFgfxqvkgkjBkga81GNNhOln3QGDE5HpunnlR5Zsn0AhK+esuzuzd6fhqmvPvRIOoayIe7Yv3b1iC11PQ0TA+oEv0fTRd1o/WUsk2XieJDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=iBPPEkxC; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1729789662; c=relaxed/simple;
+	bh=JpXC34IaopANW2OT3E4GLyCYQwJ2Qlhb1I2nGeuFCVI=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=DTcgeVVY1IPFJLNisEp5SSjqLHTHvuSs39ceAuM82WFRtSFI4klw56oi1HtTGmEjp0zNeb3qge9GCcqRhSQohq5Bj0a6X4gZGXQ+/X7J+LCSFzjD4bnhA6kxeM9Eh8EXCS9IHXG3qJyZ7MAQZnvPe2q1xZJyJkcn8KxzoJFgNjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=rDytNow9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Owkfigxg; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="iBPPEkxC"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e3d97b8274so11220237b3.1
-        for <git@vger.kernel.org>; Thu, 24 Oct 2024 09:54:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729788891; x=1730393691; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wyX83y0H4FN0YtL4mDzHnxOJNfTcwpagQL84z6rpZX4=;
-        b=iBPPEkxCXcZUe5wJiDVy6yRu+f/FZx7qACVSnNBN4rc1HcLqYXi9VTBZt01MjKZQ3/
-         nEj0zwxUCOoma6q9MtkZXRzGZEwCtF3KtsLGMUSiiA+j1B3TCYYI6SeLu4tdzpJbejZC
-         I8stqVJmivHBMKOLnO00cX7IKos0UjBLlrVsxW/sUhUQn8nkFjgyahuu0BAG0ZQSDysX
-         3VMBhd6deeMJsmXIkyu5RtWl2w9lmKtmx5z5uho4vGGQZhEX8oL83/h1/0xAZSQpFYrL
-         eGkYC0XoJn2UuYq7iFz2qsbs/5z/i8HtMcxCDDlUEMdS0RGcH4O0NG4aUxwnz8fykQYp
-         GcIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729788891; x=1730393691;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wyX83y0H4FN0YtL4mDzHnxOJNfTcwpagQL84z6rpZX4=;
-        b=tVQaPMefqkSylGHJt+1ar7EfW+YU+OhV9uUj4ObhVvOxsxpGLLdWQkeCV/iZSB+4G5
-         sB3wHohvBHzsi/NFmIyV1V1fRrLXbw4oRttmuVNtvXBq8NlGkEDZnfdEclf0O85R6pqq
-         2y1NVJfKBjHwKXcNyZK0/bFJeDkI2LWBF1EzgN1h/QpDYCngBoy4gNK8AUPv/uS7i0G6
-         j7NQ3yC81296tixCWu7pkhGAukdLHTWFHP3CBRrs/iSUMjb8piX0BxWwR6iozn2QMyLH
-         W1spLrEtN8gE4mTJ0eRmLY1j/Tx+G5dLslpoREUB3Ern80pDpKdGzJBBBsfHiVEHKSnC
-         UALw==
-X-Gm-Message-State: AOJu0YxuMg00OERTunFkdT0DXhHwqWjI2jldpt7EQ1Jq6KBhmJNw2raZ
-	BEbjMW1NqADa0LbxgSf/azljv8L6Pj/V7x/n0UjKP/Ry/wTAm4Mr9WZlA9pSy+M=
-X-Google-Smtp-Source: AGHT+IG1aha4F+McdDfKmidc2++l3vFdgLJ0ZIO0qIrGQVFMkLXK5VJ0OZs/RxPPazvcuPzaCNf2Gg==
-X-Received: by 2002:a05:690c:4509:b0:6e5:bb93:4326 with SMTP id 00721157ae682-6e7f0fdb1f8mr80365237b3.39.1729788890921;
-        Thu, 24 Oct 2024 09:54:50 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e5f5a40551sm20482097b3.30.2024.10.24.09.54.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Oct 2024 09:54:50 -0700 (PDT)
-Date: Thu, 24 Oct 2024 12:54:49 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [QUESTION] Can I merge --continue with --no-verify
-Message-ID: <Zxp72aZ5U67pB4V7@nand.local>
-References: <7038bb3a-2aad-4bde-bd46-f2bd2ef659d1@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="rDytNow9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Owkfigxg"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0056D13802B8;
+	Thu, 24 Oct 2024 13:07:39 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Thu, 24 Oct 2024 13:07:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1729789658;
+	 x=1729876058; bh=hUaYiw/jfCX4qSVOvY8POt1tcMXDAwLlRLKGiRhMJNY=; b=
+	rDytNow9Va/DbLVPU8YAc0bJ3kv0Wrsk8FwXlHcx3nAtCqhDb0Hq6PKBhV8g8qcW
+	4t+botlvOA5PEGeXIkzTa3QfxUOY8uSye2kYy3uzCQ/xZkiWOrqnmiY78EvZTzC2
+	lHnQPJX+dMm5jqMOJqffhUmGHfSb4P3234Ly0t0qlnuulmHEcZrHOtO1UAR+ouic
+	1X7+DKGMhEC4jAHXRmQ7MrzX+nnURLn5KNVekTAVytyXEbFJMxqSr5UQwXiKcYVl
+	Cd/DY9aZzMQfppfORl8PRkundcM2CnZBItQLhx8Lxpjivo3o1kPl/az7u4y1ZHw4
+	9VmdIsDQrKXLT/Qg8Hv92g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729789658; x=
+	1729876058; bh=hUaYiw/jfCX4qSVOvY8POt1tcMXDAwLlRLKGiRhMJNY=; b=O
+	wkfigxgumEFUTIDfJBnuIf8Y1RucPYgutVCfd5LXOgVBzh2/FO5tluo9RbvsSzXa
+	BwE5UNWheLUiewt2HDCgPfrJjHtbVXShd4zI3QwydgxHv+hT4rwoX1NS6m2bRJ/t
+	kjs7xTAIUk7Satk9IaEvn+C7tBbFi5jJbTOdNpL/ZTWcpsjKIYNhEOpQvV3R9wD2
+	ceL68YfA9ni4QFLrrXmDGVAvfUSJbkUAARsOVWhXiWtURfM91etr1ukwZwUK6uCR
+	pTY2B2R2k5VIxnbnZWFdQbVuMVVKUQEhKDjpr+ouIt+UhLbdFMV3g2+Vw5X5UqMb
+	NYGt3A5U9nBFXXBXW+Zbw==
+X-ME-Sender: <xms:2n4aZ5_hliudw4NhataY12DKVv040IV--JfLBPuY4-HbRN1lzhywRAU>
+    <xme:2n4aZ9sGfUbMHq_eE-1yc9YUfLqcZ26x_coGbuL0T3RKXgRltny0FHzCQANl75UuU
+    OIS0LgWWIi5Qmr2zw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejtddgkeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
+    fvkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfj
+    rghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdfgffettedulefhfeekheetgfeg
+    feejveeikeeffeeikeekhfevieeltdekgfeunecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
+    fhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopegrlhhgohhnvghllhesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:2n4aZ3AFqYqENy3CK_ZXUalP9ZAZp7ulympBgBc4XJDFIYNEiTbmjg>
+    <xmx:2n4aZ9dc_Uxk0HZGXqaBRQMDqAQvrMzZH4jJvdGzpAdyFNReYSguig>
+    <xmx:2n4aZ-N1wa2f8vBWK26R9aLt4euSt3zkFxAhrahHRrAhz5xfy7PhPw>
+    <xmx:2n4aZ_m_c9Og1xmR5B5K2gV-ebzeJMF-7CdRQnnTrnwk0Nmv-5rejw>
+    <xmx:2n4aZw2MvFiiO6xQWuG5I5L8EUG1RCyBWGlAw_B8DNyDSen-s3YiSTON>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id ADFCF780068; Thu, 24 Oct 2024 13:07:38 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Thu, 24 Oct 2024 19:07:00 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Andrew Kreimer" <algonell@gmail.com>, git@vger.kernel.org
+Message-Id: <35e4259a-d442-4b8f-a986-412e04a64770@app.fastmail.com>
+In-Reply-To: <20241024114721.14270-1-algonell@gmail.com>
+References: <20241023170111.6638-1-algonell@gmail.com>
+ <20241024114721.14270-1-algonell@gmail.com>
+Subject: Re: [PATCH v2] t: fix typos
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7038bb3a-2aad-4bde-bd46-f2bd2ef659d1@gmail.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 24, 2024 at 01:29:21PM +0530, Abhijeet Sonar wrote:
-> I recently found myself wanting to continue a merge after resolving
-> conflicts without having the pre-commit hook run:
+On Thu, Oct 24, 2024, at 13:47, Andrew Kreimer wrote:
+> Fix typos and grammar in documentation, comments, etc.
 >
-> git merge --continue --no-verify
->
-> this fails and prints usage.
->
-> Digging the source, I can see that in builtin/merge.c:1378 we do:
->
->     if (continue_current_merge) {
->         [...]
->
->         if (orig_argc != 2)
->             usage_msg_opt(_("--continue expects no arguments"),   
->                   builtin_merge_usage, builtin_merge_options);
->
-> I see why we would want this - the --continue flag makes the merge command
-> perform an operation that is very different than what merge normally does
-> without this option and therefore the usual options do not apply.
+> Via codespell.
 
-Yeah, this looks like a bug to me. I wondered if '--no-verify --continue'
-would resolve the issue, but it won't, because we are comparing against
-orig_argc, which will be 2 in either case.
+Nice work here
 
-I suspect that this dates back to bc40ce4de6 (merge: --no-verify to
-bypass pre-merge-commit hook, 2019-08-07), likely as a result of
-042e290da6 (merge: ensure '--abort' option takes no arguments,
-2016-12-14), which came before it.
+> Reported-by: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
 
-Probably we should update the logic here to work around the issue.
+Just for future series, I think crediting people in the commit message
+for minor review work is overkill.  =E2=80=9CReported-by=E2=80=9D in par=
+ticular is often
+used for something more substantial like finding a bug.
 
-> However, I think it does make sense to allow --no-verify - it feels
-> very intuitive to use it when bypassing the pre-commit hook is desired
-> while continuing a merge.
+That=E2=80=99s my impression anyway, mainly from reading this list.
 
-Agreed.
+--=20
+Kristoffer Haugsbakk
 
-Thanks,
-Taylor
