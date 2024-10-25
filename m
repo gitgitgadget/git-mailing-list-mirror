@@ -1,151 +1,72 @@
-Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f194.google.com (mail-pf1-f194.google.com [209.85.210.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E871E501B
-	for <git@vger.kernel.org>; Fri, 25 Oct 2024 16:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7B220C302
+	for <git@vger.kernel.org>; Fri, 25 Oct 2024 17:17:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729874356; cv=none; b=Cgg7Sh4k9GE0w/vwxeHdS/yMwK6WNqubNBUal46kPY3LfXK8Ej+aGz8UGpbYBw9JhSfUCoAkMMrFEYy6zQ699v1AiXOcesKisYWdgRJGnTi/LFHotmbhYTXuJk8JNrKJECcu9NyFpvL2MRcB+XWq1dfsXxPTjOfHr8IH6l8NP+A=
+	t=1729876634; cv=none; b=jMLxJaeXrneb7oZpMOdrfpAuWSrNTD/uZFWK/SRyv3NQCe/amCyJJpOyG8IQodDclbPwRjSv2/Ts7og6zcRXzQMV6gNKcjKCweryGWGYrsWBwX+klb42SAJqcg7IAv8zOmyUqLxxUfnE6sQpNRyvuPhRAiyccGLQF3k1p0AsJf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729874356; c=relaxed/simple;
-	bh=A6lb3v4advHrMGi1ouZL07j2S9imH+QbDldZGE155rI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GLKMHry563RUkv3kdJGY5fG8ywZn+kHZDI+04wB1BPJNtWx55u9BQZSiln0/C91QK6yWiK/xLDGumsr4tHgPt5eItf/xtCoR3bmfn35CReadeyyXxTO9s2Mas2UxiuG49UOCoaFOsd9Cn9IQFSnqV7Rv0eZ1fRm/g7j/um6XB1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=c9FQwxE8; arc=none smtp.client-ip=212.159.14.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1729876634; c=relaxed/simple;
+	bh=OdDXVlVSuD7bbtK+/LaCQ8JSlo0lFo/SuY3hXdbU+s0=;
+	h=From:Message-ID:To:Subject:Date:MIME-Version:Content-Type; b=QEcnWqcTHKGEl9M5OaE+WVoA3iIwtvHnlS/44ncnkX8PZNowfwf0vTX3ZXdUi4mX3Uss5tpzacrBPBXsF1cXma1TIaACUnISQhyl7DCXBq6Sxd6OS7pmCs+AmlwSnzKmZWSAFpwZMDwGilNWa8nNyzrcx84V/zCB3h883mv2Huc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CGVrgyRW; arc=none smtp.client-ip=209.85.210.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="c9FQwxE8"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id 4NI9tiLReQyRx4NIAtJD1g; Fri, 25 Oct 2024 17:36:04 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1729874164; bh=35R2qhPxzCT7HAXk3bIONeAhnbDniCirdqNAoILgpm8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=c9FQwxE8ZQ5HjU9ilQ3Wz4AOpLDSLsk9jLDcb8OK4VWmpLt4SiJKVfK7VPIKknBwD
-	 +4B1pzzEs+V8mCale5MuQ/5pQSyAnr30hdlu/DnS1a7O44MJ/EObiZQmGRdbRrvQNM
-	 MTtEnKbb62HHRub8AvL7uR62tNzSzc2pge9GDqLP7cAhb4Ve/3Abws8xXMaOzXSWZp
-	 CGZKX9k/jCgYqgA+YLywpxKiNVG6XPkBTLv3vlixH6PF99EChPIzq8qm4d0QOElQYK
-	 +zTiI2DSLKX5qJkQycouWVe1GKB7YWwkR8PORD84HTJaNcFZC8GWq4wTjQruGAaiuz
-	 rP3O47ACaY64w==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=XaAqz555 c=1 sm=1 tr=0 ts=671bc8f4
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=Wmu4HWGzV4stCVdrErIA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <48a506c1-67a8-4ac1-9a2c-392125bb0944@ramsayjones.plus.com>
-Date: Fri, 25 Oct 2024 17:36:00 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CGVrgyRW"
+Received: by mail-pf1-f194.google.com with SMTP id d2e1a72fcca58-71e5a62031aso1617888b3a.1
+        for <git@vger.kernel.org>; Fri, 25 Oct 2024 10:17:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729876632; x=1730481432; darn=vger.kernel.org;
+        h=mime-version:date:subject:to:reply-to:message-id:from:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OdDXVlVSuD7bbtK+/LaCQ8JSlo0lFo/SuY3hXdbU+s0=;
+        b=CGVrgyRW54i/eM9R1+gfjnBhJfBVT0sVOgj7+cUlVSD1AMmZKycIBZxqb1M2KQFT1p
+         +m3Pf8VP0O8DrnSvBjlJZe/Aq0yHSm5hMoZtXXevvUr/BZ11BSEHKqeamRAyPOVTpT5K
+         K9zMCwpM8B64IOSR7VQahLIAW1Yx+MJBFLYpY/gVOJeH6fQ1piltXXi19VPXw/iYDZy2
+         5bmdU9SZHW8vO4KjhqEaywyQy/IDOOhN4DS6ay0TMjtJomqJhU5LFmWzuC92+kWFVgo7
+         DcT1r2h8d1hAdlZFbt5o+fysT4wzH2pJUAShW1RVxCUCp9ij1lHF0/vrFOezV69wzvux
+         o7/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729876632; x=1730481432;
+        h=mime-version:date:subject:to:reply-to:message-id:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OdDXVlVSuD7bbtK+/LaCQ8JSlo0lFo/SuY3hXdbU+s0=;
+        b=gfLt9iMI0ZbaqZtnOoEgmH2v54t+k6dkWvvH2DF96DlfGtgvCEd8mfBellJ1B+e2MZ
+         Al/PUKTfKu9KYNkH8nqx7cJjIR2mKEhKRhhUnLTLBSJaNzGx28c5SuYClY7tWwVhBqls
+         1UXk577uVseRgpcS+DeoTJUeZTnURk8aecpHgdfiJvtAQhzCWS4qBPJfoDb9pT6bA0R7
+         gko+biKHIPxxG5v+9Rd1kMsgfniHX+XQ2Ip/BQL8Oq1uQf7iA3dbrbyD+giB+kkBxIWK
+         9SYA/p68jhyJWbFG7KLUXWafbYah6ppWedkcmkE+3vD0eI+4y1MgW/nxarSS4yiB5RR9
+         /7Ng==
+X-Gm-Message-State: AOJu0YzZaXITl7WsJiIRORE76UqntVe67JaSb5jD4rsmHStwckiMDN3i
+	IlczPz2otXiVOjBTEr1rLBwiAkHa8N7ZQ96E8rTIwk0QVcegAleP7JlJov4o
+X-Google-Smtp-Source: AGHT+IFmo4cUFHozD4ftkdq4j0L4eCmfnNrS6xc2P3N4B71Nec5aUBvT15G4vVrHWd5xuidHJE+6Ww==
+X-Received: by 2002:a05:6a00:3a1a:b0:71e:2a0:b0b8 with SMTP id d2e1a72fcca58-72062f4becbmr323450b3a.1.1729876631346;
+        Fri, 25 Oct 2024 10:17:11 -0700 (PDT)
+Received: from [103.67.163.162] ([103.67.163.162])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72057935832sm1303695b3a.84.2024.10.25.10.17.10
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 25 Oct 2024 10:17:10 -0700 (PDT)
+From: Josey Swihart <marikoskacine26@gmail.com>
+X-Google-Original-From: Josey Swihart <joswihart@outlook.com>
+Message-ID: <2095118dfb4f88d71293a44127e6f63ecac083d621775a937128e000cab52d8a@mx.google.com>
+Reply-To: joswihart@outlook.com
+To: git@vger.kernel.org
+Subject: Yamaha Piano!
+Date: Fri, 25 Oct 2024 13:17:09 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Eli Schwartz <eschwartz@gentoo.org>, git@vger.kernel.org,
- Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im>
- <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
- <361e69ee-4491-4e2b-8edc-fdf4bcbb8532@gentoo.org>
- <b35b6f10-ebb5-4266-ab95-aafb67cfad22@ramsayjones.plus.com>
- <ZxjmTbATU7usHcqQ@pks.im>
- <c32a7dc3-cf9f-4d42-98da-80009f9df847@ramsayjones.plus.com>
- <Zxn1HWg7KxZwBy9h@pks.im>
- <787ef076-ba72-4a0d-bfd9-1f79de4f4039@ramsayjones.plus.com>
- <Zxsqr3X4FAWfy0HP@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <Zxsqr3X4FAWfy0HP@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfOLwSSCDRCvlY39jBizLY3ESUT7a3tOFU10E5u0KXeGUpuQ2sI4Vf0GwGxkEAcQrgRfvRcPXNb3Jq19CaEQCwtkkykB32Pa8OJM8s5j/1zYMkrMC8q1D
- lp8dzokwdNXFaxWa3up74zkxZd1zUfsfNuqEjljCBnIs8yJ5WmUUv6BJYfCAx1omBW89gzdEyMOErvmkv7tEDH+1y6TM1rh1ElM=
+Content-Type: text/plain; charset=us-ascii
 
+Hello,
 
+I am reaching out once more about my late husband?s Yamaha piano, which i am offering to anyone who would genuinely cherish it. If you or someone you know would be interested in receiving this instrument as a gift, please feel free to get in touch.
 
-On 25/10/2024 06:20, Patrick Steinhardt wrote:
-> On Thu, Oct 24, 2024 at 06:34:24PM +0100, Ramsay Jones wrote:
->> On 24/10/2024 08:19, Patrick Steinhardt wrote:
->> Having a quick squint at the failure, it '# failed 1 among 397 test(s)'
->> which was 'not ok 391 - correct handling of backslashes', which is the
->> only test marked with a '!CYGWIN' prerequisite! ;) So it seems that I
->> am doing something wrong, which results in the prerequisite not being
->> set.
-> 
-> The CYGWIN prerequisite is set depending on whether or not `uname -s`
-> contains "*CYGWIN*". Does your system maybe pick up the wrong uname(1)
-> binary somehow?
-
-
-Yep, I suspected that I knew what the problem was, I just had not looked
-to see if my hunch was correct yet! :) And indeed:
-
-  $ pwd
-  /home/ramsay/git
-  $ ls -l uname*
-  -rw-r--r-- 1 ramsay None  11K Jun 28  2019 uname.c
-  -rwxr-xr-x 1 ramsay None 167K Jun 28  2019 uname.exe*
-  $ ./uname -s
-  Windows
-  $ ./uname -a
-  Windows satellite 10.0 19045() AMD-64 Windows 10 Home
-  $ uname -a
-  CYGWIN_NT-10.0-19045 satellite 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64 Cygwin
-  $
-
-As you can see, many many moons ago (28 Jun 2019 was just the last time
-it was updated/built - I suspect it was first written in 2006), I had
-written my own version of uname. If memory serves, it was actually for
-the 'msys' version, not cygwin! ;)
-
-Anyway, when the test executes my PATH starts:
-
-    /home/ramsay/git/build/bin-wrappers:/home/ramsay/git:/usr/bin ...
-
-It is not immediately obvious why '/home/ramsay/git' is in there, but
-if I move my uname out of the way:
-
-  $ mv uname* ../src
-  $ ls -l uname*
-  ls: cannot access 'uname*': No such file or directory
-  $ 
-
-then everything works:
-
-  $ cd build
-  $ meson test 't000*'
-  ninja: Entering directory `/home/ramsay/git/build'
-  ninja: no work to do.
-  1/9 t0002-gitfile           OK             10.28s
-  2/9 t0004-unwritable        OK              6.70s
-  3/9 t0005-signals           OK              6.13s
-  4/9 t0003-attributes        OK             52.56s
-  5/9 t0006-date              OK             30.16s
-  6/9 t0001-init              OK             60.24s
-  7/9 t0007-git-var           OK             12.93s
-  8/9 t0008-ignores           OK             106.42s
-  9/9 t0000-basic             OK             192.99s
-  
-  Ok:                 9
-  Expected Fail:      0
-  Fail:               0
-  Unexpected Pass:    0
-  Skipped:            0
-  Timeout:            0
-  
-  Full log written to /home/ramsay/git/build/meson-logs/testlog.txt
-  $
-
-So, I just need to build the v4 version and test again (at some point
-I have to do a full (6 hour+) test run on cygwin!).
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
- 
+Warm regards,
+Josey
