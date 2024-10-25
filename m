@@ -1,97 +1,86 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584EC156C74
-	for <git@vger.kernel.org>; Thu, 24 Oct 2024 21:53:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB76A22B64B
+	for <git@vger.kernel.org>; Fri, 25 Oct 2024 02:39:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729806802; cv=none; b=nShHHOgNKELhSXCWYI1P5ymrAZp8KKPcbOoDyzVANo1DsHxn5uXwG96Ad5FgrsoYdTi1+VR1zWgL5/rqK6FzQazx+mLsbp7NfgtVoelIdxOqG2EPAaQypYYzwe/FztyargFODO8vGhjBJzLsBK7szW9DVjtfZgzQm/L8Z4dJDH4=
+	t=1729823953; cv=none; b=TRtSeK+AGzQkx6dGBTlMS6H/q5QR3u4q3jNX7W4Y02n04I6YMdB2op+8XmmR4bc2pDRhSWqRYr3XjM8ZdYRxbrzLMhq+GA5JM2eCsGDu8kbD64N2wsNgwBNhbLjAQCn3TETvFqBBTlwmXGps+vXUl4/O+dLuUGe0+4E5rQ5WUuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729806802; c=relaxed/simple;
-	bh=dMwPvxSBSw+9GRg5BTg6Nq+xVnJ/EtHKZI/AbHiPU7Y=;
+	s=arc-20240116; t=1729823953; c=relaxed/simple;
+	bh=CgrXWZQUm+gy79/bKdx9muJ6ms82gR5TX5KmLQRLGyg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ueHALFHU3c26LjWQdDHrep5kY+9meGBdCzCEF5o5fqbfhVQIMdSYmSyxkMM4/PQnjAGGpIf0m1IcZxZVJPWKygZSAofbb42bFPrR56UQOe7yoaSr/OkpUHxF5mCnQioZjVVgMxvW4OJMpWzl91gIeXxu7pqVI9CnG97fSrECILM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=XbBwt27F; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=fFObtICrBFrIRlmQLzrqKyy69G3/GrRpV7noY3sUqQskH5Bb6ZP/Qvbq3jLyrskgyi1wQGjIePvB1w7eSjNN2SeRyjKait3u8Mp5WfXImfw5ayHLNYR2v1lVDNIJOccXHaxA9l5ENaBDdc4ZV9nBWo8QHSv+nC3Fz5owZD5pg7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mUN1keLe; arc=none smtp.client-ip=209.85.167.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XbBwt27F"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1729806798;
-	bh=dMwPvxSBSw+9GRg5BTg6Nq+xVnJ/EtHKZI/AbHiPU7Y=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=XbBwt27FHA/j2o6YIjAFaWK9m38QCz3IrGBb8yE7Tdzn83SIhMGOySp7CB4OaHYfh
-	 Ah4fv0FWKu3cB9XTcCux5F63tevoYvEWJuvoQ3pz5HQBEaNwnuH2Vx1l7QDegyrvx0
-	 sw6TLCBiYuJRPPY+6jaQGru3Uz9EgijwtpJxHhuA/W1oEzDglbd9uK5JPdWUWxFJ3a
-	 dEck4DFnQz/8xN3dDaAqqRUnCaTdaQuFzyLaUI0kniCrQ+4RxqKQkmBgIN+kJ1XxRq
-	 W8VeP1K2zgPL73Svn5eCfLid6sN36H9XciIJLjB12DFsVqNGKd2+7cHo/CKl8HleYs
-	 kid8s/EB+72UHLybmte4szdF6DM4vO4FuWsfqfpBbuCUGre5ozJ8g9eLHfBCBIGklU
-	 77U3Dm0yyLlxFxUX67OHpWebZWM/Kl7uo7JJhYBer1eQi5zhBfrE04AiAApNf/D6O6
-	 VQx2t99t5D/IHpEa1OxJTwBuhJz0DxZB1RdDWa1l725zMZ+rnqs
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 58999200B1;
-	Thu, 24 Oct 2024 21:53:18 +0000 (UTC)
-Date: Thu, 24 Oct 2024 21:53:17 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/12] Update versions of libcurl and Perl
-Message-ID: <ZxrBzT6lE47m_3Ia@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <20241010235621.738239-1-sandals@crustytoothpaste.net>
- <20241023004600.1645313-1-sandals@crustytoothpaste.net>
- <ZxlZuxllqjAZfAZm@nand.local>
- <Zxnjt2QVwVTsYwvW@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mUN1keLe"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3e607556c83so952150b6e.1
+        for <git@vger.kernel.org>; Thu, 24 Oct 2024 19:39:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729823951; x=1730428751; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CgrXWZQUm+gy79/bKdx9muJ6ms82gR5TX5KmLQRLGyg=;
+        b=mUN1keLeRDlHaupqYvo7DM/QKASKM2OWSJMtNzql/LiwYhEP+W9hueHzJRNa1XYmox
+         Cmvtsri+2Z8RLuR5N1358bKbDlhTHvCs3SrSE9QfkB+S5Vm4zAHp/iRFf/DSX6I8bq3i
+         LqRa5YfFOFtaHglmOK5ZmwPWXxWR1M0HoI289babMxxze3tfogyW/HOLc41EU7CN/zGH
+         /K7azQYdkKLtVGuCdtOFuml/OTY9ajIzZnSB3gdm3b6Acj3fr+Ex+K2QAq+e0nb4C+Si
+         TakdFw6TKXAjNZGoaNpFkz51SzPWhFfECME04cgJ8j2w96GDnaCxVZqstV9l3GmFaMLK
+         gE+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729823951; x=1730428751;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CgrXWZQUm+gy79/bKdx9muJ6ms82gR5TX5KmLQRLGyg=;
+        b=lDpVGqtM7UcPmWzmgMe+EojC9E47zB+ITpDkRdgsNMoC4miEJGQAcSbfTL9WwkQ8Nf
+         BEZr1PW5AdBZs8WacCLQT4hDLiyJI7XzRU9Ym4T6gFCGjvlaqDZDUq/VFh//LfeBxq3n
+         Yk5IsnMA9dgXGoF7Lzr2Ll9bfK7CL6t7pUuCEGzpQmX9Pe7js22suWUESRGmUMuePKfc
+         1XEC3fQItwPnyrVOg0sS9ZIXdZQUk2Wtd+yv1ugs8oSLbz0O3rzmCPjcIFJtXaqukKac
+         ynwLUYvb04yspddP5cqb3lcBvohgSehUqyCpVpTzwqGjkkphRcaE8vCofD3XsLkh0tTy
+         S+Mg==
+X-Gm-Message-State: AOJu0YyfcabdWfeYpPa0H+vJnygzbN4AbfI+iiZCBuqagTfHC3O8GN29
+	t6wSc6bkssRfzRWYD2Vo2MtnQM8d4d/J6HSqd5TutFHX64O95/0o
+X-Google-Smtp-Source: AGHT+IHzJoVRQVP9Y/kVVOqh7326otwVJn+LPo4vGYhyGTTrWK7CSnmyW7P3n1efa0P0sKofQ0JorQ==
+X-Received: by 2002:a05:6871:708:b0:26f:ddfa:3571 with SMTP id 586e51a60fabf-28ced115c64mr3925074fac.2.1729823950663;
+        Thu, 24 Oct 2024 19:39:10 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-290363d15b7sm76982fac.33.2024.10.24.19.39.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Oct 2024 19:39:09 -0700 (PDT)
+Date: Thu, 24 Oct 2024 21:37:36 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, spectral@google.com
+Subject: Re: [PATCH v4 1/2] clang-format: re-adjust line break penalties
+Message-ID: <xefdxe2vctdtmfm3vfanstfz5q2bgcklj7ymio5bdutioyaxmo@ujixbc5jua6m>
+References: <cover.1729241030.git.karthik.188@gmail.com>
+ <a8c8df5d95b0defec672ee139acd366219ea3302.1729241030.git.karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/MM3aHcPnFyuNNiV"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zxnjt2QVwVTsYwvW@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <a8c8df5d95b0defec672ee139acd366219ea3302.1729241030.git.karthik.188@gmail.com>
 
+On 24/10/18 10:46AM, Karthik Nayak wrote:
+> In 42efde4c29 (clang-format: adjust line break penalties, 2017-09-29) we
+> adjusted the line break penalties to really fine tune what we care about
+> while doing line breaks. Modify some of those to be more inline with
+> what we care about in the Git project now.
 
---/MM3aHcPnFyuNNiV
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+From my understanding, the original motivation for these changes was to
+cut down on the noise from the clang-format CI job. These changes seem
+reasonable for that purpose, but affect the also formatter in general.
 
-On 2024-10-24 at 06:05:49, Patrick Steinhardt wrote:
-> Note that this still breaks GitLab CI, as we exercise Ubuntu 16.04 there
-> which doesn't have recent-enough versions of curl. This version has
-> recently moved into Extended Security Maintenance mode, so the next LTS
-> release would be Ubuntu 20.04.
+Out of curiousity, would it be possible to just configured clang-format
+for the CI job to behave in this manner? Ultimately, I'm not sure that
+would be good idea though because having a diverged set of rules may
+just cause more noise.
 
-Yes, I think we should add that on top.  I don't believe we should be
-testing or supporting Ubuntu 16.04, so 20.04 would be the right version
-to choose.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---/MM3aHcPnFyuNNiV
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZxrBzQAKCRB8DEliiIei
-gWt7AP0UozypzaacEWVzdC2f1Ywzg5ErpCaqNLPm575iOLmReAEA4DlwdZFcDF8g
-Af76W4RIdCjJcwOnZjr6PqCoVMsB2QY=
-=TpNf
------END PGP SIGNATURE-----
-
---/MM3aHcPnFyuNNiV--
+-Justin
