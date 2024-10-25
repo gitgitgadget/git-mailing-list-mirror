@@ -1,76 +1,91 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C6B1BF2B
-	for <git@vger.kernel.org>; Fri, 25 Oct 2024 06:04:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B40C18C92C
+	for <git@vger.kernel.org>; Fri, 25 Oct 2024 06:11:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729836275; cv=none; b=ikdY/F9AFrDbk+4FasJA9FcxvFxPnTFxa0HHO+7MSBHxNFp67WhVv3BQIYdVE4n5dsq1QvywLLrRVaJgzBa/bdtZaDlPLdQwtTwE7WLwkbPXhI8hEmGdnBDqNvX+uOK+gQsuncJwsY+IcqoIm2mb0V0qxIJjk1ZQiZ/rT668R1Y=
+	t=1729836680; cv=none; b=KAcs/RUvWAan9aEl0kfTXZTGoq9TVaX9qyH5M55yJYl1H6DiXYHALtwQr61Rv63bgP1wor6S4JBneKC13CPG0axasblcBJ1gf6k5182cvnRcZ+zSoqP0/fpTOzfryyj+MFui9uzWskw1dikbKS8n2yt9vavZdF+Rj9Fgdyj8TBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729836275; c=relaxed/simple;
-	bh=80N9QygPvcb61OwJthtsma0Qt9Tmg4YQoh19hmYdvj8=;
+	s=arc-20240116; t=1729836680; c=relaxed/simple;
+	bh=EwD/JTHT61grrLvk5SVjEl3DSHuOEChOw2+ZWO/ErLA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=V3K8tMo5HiKrDhl2Pc//NBpibgYcZjWNd4LLIS2BNHD7+p2gjkZRZFzWVSWkXY9htrwS32Cl8D56YnNfmZNF04/dEmjzxRh5US/xj5OAmAT9xlvHQ8uHhM9zVpChwbyLJq2CheC1FQslHOVssQ6DGlFaS0+IHAOsJDvaZmTGcAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=NY3+PtQM; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	 To:Cc:Content-Type; b=hvDFvOJkOBGgEvSA1rYPUDFbQHPoec/37ODraw7MAa5+JivDr7UB1btjDZi7jjO7YsFErHxW0xjQl8+b1MV3OScBsFMflHNp6KECmRUiwWImA1cHXyPmEJ4lcsCqEOVAOM2BSyZTlwaLEG9Za+t+ZRRirlev55V8n8hp7U/zD8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lj+ErUDc; arc=none smtp.client-ip=209.85.222.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="NY3+PtQM"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-7d4f85766f0so1106740a12.2
-        for <git@vger.kernel.org>; Thu, 24 Oct 2024 23:04:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lj+ErUDc"
+Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-851d2a36e6dso1418140241.0
+        for <git@vger.kernel.org>; Thu, 24 Oct 2024 23:11:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1729836272; x=1730441072; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729836677; x=1730441477; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=80N9QygPvcb61OwJthtsma0Qt9Tmg4YQoh19hmYdvj8=;
-        b=NY3+PtQMIXJxYqaHL0HKhsX+JxrY4nXHO+DMpnHW0Oxp0i2y5jh6jLFX3nDOflqrc2
-         Vq+KYdO7ATRvpQkWsTd/ScmR9fkwBZmSig794HZM/ecbshICb2XPqTgnr1hZWypT9qc1
-         AsxA0gWAWK04/H2ceZG6B32nmvxwCYEj3T/l78bcTBcZwR0sqFs1kdoD36DI9g9Jb8+g
-         bJ/5F1deDyeNw1jb9aRm5Bbk/MET5m4PISghLptV1FakzRb1xbXi5h7nQt+SVwmlD3sF
-         OoUyBdrApHOjR0akZ4gNRqOuH+CYBl9m1bum6MqZlO50ZOjSsEo6Iox02C2Y5EqT+aau
-         nqdQ==
+        bh=eo6fOWrYHBDzQK91fu3PRBv1whM7MIwA9whLgpBrhLg=;
+        b=Lj+ErUDci7WdV90XBEsZGy0aFk14sqKwNIAg+Po9j7G7GpS7rYQY94bMpQmn/Af15Q
+         CX4PDQmToYFptOS+LbTdwmCQpAV59LnTe0EPDjjbeOIUe/kJ3fUVFqfdyDwS1pKD9m1Z
+         zFVvj8wmmPGAAQTjwXzI3T4MS6Ooi51+LgZ06CgsALd+AAunI6sKgRY/RnIn7+F18PRA
+         pj8XP1UuK+SAsdItUIo7CRBoHN37AJ2UWvIPL1X0A8fAwImBrXtVZXdRbpXOtgQLTVxY
+         GAYp1kCVx23q1n/D3atI+FeAB8uu1qvP4BT7rUyzPDOrdMxrIvUyb8KpT+RmKXcPTdEs
+         qnkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729836272; x=1730441072;
+        d=1e100.net; s=20230601; t=1729836677; x=1730441477;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=80N9QygPvcb61OwJthtsma0Qt9Tmg4YQoh19hmYdvj8=;
-        b=dWIVCrELgnNAOYVpY2GYgz6ADyNlP6NB9Pr8fvmjvY1HlWfcqcBJO0Mg6te+gRalfT
-         Oqj3RBsRFjH9DfgPEJKOyi7Lb7Uc3OavyzxZn6YNgbxtARJ4J53oLVeqKVS0GBxtaSR+
-         CTZs7aaARROwMRrOeda8vb5i2vvu8MV202ZxFGg5IgPtKwpFV7i7L3NZAANC+eoIWUUi
-         u2RpySAZELIGKvPOOnIFvDg5c3BMp0dEw99FU2SYkOEmq8pnzNVsekyS1qX1ink2nZpK
-         GqbBz2juzPCyqiz4Ntx3lbI2s60bXJ18KlcEtwk2SxhOeFt1Gq9J/cOj/P7uf4eOSpzU
-         vNsw==
-X-Gm-Message-State: AOJu0YzSrb/ih1ePBqTeAWHnU8nO4ik2e+u8wDb5Q9zEjkGg+/Bemfkz
-	idUlOXHz+RLEWHffI9UgnUul00uiPPrRNQRrCUZRG84MpRRuUfcj0KbYDqWZCQrIVEkdJeewl1j
-	5g48p4hu6Xv4dGyFJOAheElOD4j9j/YQnDOWIhw==
-X-Google-Smtp-Source: AGHT+IGbvSvnk2k6poc0Kbwa+p1ImqYKPEreOAhuEczNJoOr+jmRxAMV033/kKgFzBcEp4Zv73rFqlNOKov7DmbZFlQ=
-X-Received: by 2002:a05:6a21:e8c:b0:1d9:69ca:6b24 with SMTP id
- adf61e73a8af0-1d978b2d8f1mr8858342637.23.1729836272661; Thu, 24 Oct 2024
- 23:04:32 -0700 (PDT)
+        bh=eo6fOWrYHBDzQK91fu3PRBv1whM7MIwA9whLgpBrhLg=;
+        b=HQUiJKCCx8B11knGSOqfwqyY0eLzUUO+VWRsCalgBtegJJfb5A7QiSjPSkfTgi3F3J
+         Dug8QvPSLnAOdK4RpDifwW5Emrw33hsBQZH5W8NnGASvVl6NTccnrAtgtPzKaOq2baiK
+         ONPyYxg3hkcSiaUdyCHHqIM9McKuPx5IxfBV1bfuhfYmzMuLNxXHBRbHXRVglJXdrinG
+         UuJmxTzUrQmZ8VN8Np9tb/p4wyz+t116y0pNeH8TAgBImRslpjnPUbBgIY2xJsvmC8+w
+         eaheq57mhBIE37XXUK4JCKRUYIxye6ZfK+sx9HeU9IF9pbhf7fKfpDP1p7LH109uwwa7
+         dTWg==
+X-Forwarded-Encrypted: i=1; AJvYcCU79xSic2LmCaVkW14jXHGOfjpvGbwB2rnklpI2Jfb3U+uG84t/ChIpQnqXrLAUNhdeqrg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhKwMKSOB4ReQFp7YWOctkQHLZYbsWDzH4oa/nKMOSApQYRqvJ
+	GhquuV4oKLoLEfnSj2Z3VHa7LIwskAqA2a55YwqzxGNHS0RLPVttrH8G+BjDbKwBnz+V9urDOah
+	ywr0A7L9+TD9TK9266km+Y8SIiK/iObk4
+X-Google-Smtp-Source: AGHT+IEaejMWyJ6rcXBLw5Iacgaly05x96niRQEQuva+LudiQ4TePnnqrQfFD6Ud5rMNBKp+LmOc8lyHRJTpVDeR7Bk=
+X-Received: by 2002:a05:6122:922:b0:50a:cbdb:b929 with SMTP id
+ 71dfb90a1353d-50feb3002ffmr4096409e0c.2.1729836677302; Thu, 24 Oct 2024
+ 23:11:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1729792911.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1729792911.git.jonathantanmy@google.com>
-From: Han Young <hanyang.tony@bytedance.com>
-Date: Fri, 25 Oct 2024 14:04:21 +0800
-Message-ID: <CAG1j3zHXThL_JXP=9xqvg=wg0R1wZYnA-okfFxqmcUQ9w0M36g@mail.gmail.com>
-Subject: Re: [External] [PATCH 0/5] When fetching from a promisor remote,
- repack local objects referenced
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org, calvinwan@google.com
+References: <pull.1810.v5.git.git.1729669220.gitgitgadget@gmail.com>
+ <pull.1810.v6.git.git.1729729499.gitgitgadget@gmail.com> <ZxqL4MId4ah+OmTW@nand.local>
+ <Zxsncryo3cdbgxu7@pks.im>
+In-Reply-To: <Zxsncryo3cdbgxu7@pks.im>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Fri, 25 Oct 2024 06:11:05 +0000
+Message-ID: <CAPSxiM-jFOjiX2QpJjLM-LD9ci0JMV_vvD0Y0QiPNkwS1GPfLg@mail.gmail.com>
+Subject: Re: [PATCH v6 0/3] parse: replace atoi() with strtoul_ui() and strtol_i()
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>, 
+	Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 25, 2024 at 2:09=E2=80=AFAM Jonathan Tan <jonathantanmy@google.=
-com> wrote:
+On Fri, Oct 25, 2024 at 5:07=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> This is a polished version of [1], also with all the test failures
-> debugged and addressed.
-
-Thanks! I think I can drop my "repack all" patches now. :)
+> On Thu, Oct 24, 2024 at 02:03:12PM -0400, Taylor Blau wrote:
+> > On Thu, Oct 24, 2024 at 12:24:55AM +0000, Usman Akinyemi via GitGitGadg=
+et wrote:
+> > > Usman Akinyemi (3):
+> > >   daemon: replace atoi() with strtoul_ui() and strtol_i()
+> > >   merge: replace atoi() with strtol_i() for marker size validation
+> > >   imap: replace atoi() with strtol_i() for UIDVALIDITY and UIDNEXT
+> > >     parsing
+> >
+> > Thanks, this new round looks quite good to me. Do others have thoughts
+> > on this, or are we ready to start merging it down?
+>
+> I'm happy with this version.
+>
+> Patrick
+Thanks to Patrick and Taylor, I really appreciate your time and mentorship.
