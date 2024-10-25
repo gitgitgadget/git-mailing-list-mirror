@@ -1,271 +1,254 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B2B18A93F
-	for <git@vger.kernel.org>; Fri, 25 Oct 2024 10:04:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA231D5ADD
+	for <git@vger.kernel.org>; Fri, 25 Oct 2024 10:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729850667; cv=none; b=hCaIC8SjgbnqX4j402A0PMEUQ9pzVGy76WdEIdBbT0U+tP5YI5sOL9jDbHHT7L6dudaTKzuEYNYctvxNnsvz4wEtJiUqcVxY5HE4XRr/s08RDqFyswdUa35WLcSYVJSOUSeDoWMYUPACJKMLHq9fF+9uiCJiVXU5dyKt38K+6gQ=
+	t=1729851185; cv=none; b=Sjlxw1Xb2qA6wr7wpyhzRW0JzE5ZwsvAkn/+sf3JL269QW7mV3+BBwENZwgGdAdQIitPnqXbkI50Hx9qimJNSJZhMNVqqaBWCQGQAGwNP4UEKsd14paB8ak4V26+37NTTG7gTOMtHL0K2y12wHVXX62elgwHahyTbRvLtN1KwaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729850667; c=relaxed/simple;
-	bh=vssGAHCK3WuP9V7+b8IV6zaa+zgwDvdG2GTTPKDlNGM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nzKpaMlVHeV8w6GpMcEY7fdgDzfXcYrlN46Ex0as/tD3g05DpvwH2byeE5HRJbU4/XEDCNkmL1ccxxRa6TKbcjt0lRWianioB8NEfQEG9B1yk1wAxd/xUmIMmgjX+KuIAS+xLbsG0tAn7FdtQ1JZNrn8X0pKzCea+slTP3i3fSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VTj+ssv9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QPkGoqTu; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1729851185; c=relaxed/simple;
+	bh=HOjrvMPSLxdSp7ZXGdR5fcGTyZYtNwgiGAKfbbdJCqE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q3sNBWkTcualSESEyC58NEiskGdGRbE7O08CcDSdjHHVundPDR0XWKEyIJ8WPALrysMVlYYqhItWO9eJErAjGHu/ZiyNAJs4bf3e/VngGSNQk0lx+5mrj3jOZqcIY43k4BggnSVas97IGfA2KY3TYwSn30+xlf+akeZLvEVwL7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bQnxV7BA; arc=none smtp.client-ip=209.85.222.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VTj+ssv9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QPkGoqTu"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6FAD5114012C;
-	Fri, 25 Oct 2024 06:04:22 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 25 Oct 2024 06:04:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1729850662;
-	 x=1729937062; bh=1rmV7kRcLouGDhR4cbI+4WcGU491tTLktWpWIkQjYfU=; b=
-	VTj+ssv9dM7prCKxsu2hcuty/FVQ7sL8M3Y9ZGURJtPpJUDYZ3bn11NuICcrPyOv
-	XoU1c67vPeKQDlGqULz1AHlPvyjnlS2aN1R7pnqoP2tyKC26WeHTdlLUzQVR44yY
-	Mj8dYvUsVt2ueGsV/iGnj/PtWI/Jgog3In+y+Rs8aWZDnlMYgsttc+OOK4Y36/fc
-	v7Gj2Mgx/kkwRoKDHbSBov8XSqFv35O5AmNBAmR+F44j9/4r8OrGY6cztD0YsAas
-	shjHXpvxp7PKNP9Io24JCIfumnYZBDr+qtziOzsYpaYPagRAMe3+k8GEwrRBeu8b
-	GsM6vmJSj7L95i67Lim4bw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1729850662; x=
-	1729937062; bh=1rmV7kRcLouGDhR4cbI+4WcGU491tTLktWpWIkQjYfU=; b=Q
-	PkGoqTu7vw7/XOZhqzm8rjfIknXrfhXGD8OFY6uRGGaeA17mAcM1dky6qOnaoIHG
-	Ka3xQFbeqe5O9vFJmtuvEKDEytHtRnVrlXyNXtB5LvA5YLaiqkbpIxvInn9TWf1S
-	nHdJLAchy6iU9h0NDUnoYZEQO7RUT4D+7BxULgOv21KVQYnNhY2DwKQ6YYZfmEL4
-	tmPRagWRZQvR716++QLH05QDFphsiS22s0XX3dfj8HiusUtGGWntsz7vrDXMxv9j
-	D45rTR1DyC2OIOSx1WE5lFdpDQaKPpn4lckKl8wjYVmQ7A7cEACCEawMAD/UBFG8
-	lTQULPf7H++dBLE3qlN9w==
-X-ME-Sender: <xms:JW0bZ1UiEMB_vUGB54pnmsAyT7GBLc0BC7tA_Xuef6QkDFunMsYziQ>
-    <xme:JW0bZ1kYCeqc7uDIXg8kWG7OZNNPxqeQDoweb0XabtIVX6PgA75BkEU3peysKlXwj
-    -jjI6eKA-9rtagx2w>
-X-ME-Received: <xmr:JW0bZxasK2kzcu0C9bSVyTEuWmhgUxRqjeowO_XUzUm9ElFiZ8OpHKQrghd046qUmqnYciyl_1FMuG0FsSjJ9Lf2MCpwESKYckse0z017adAzA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejvddgvdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpedufedufeegheefueegiefhveelueejfefhtedtuddu
-    ieegteegheetudfftdelieenucffohhmrghinhepmhgrrhhkughofihnghhuihguvgdroh
-    hrghdpohhuthhrvggrtghhhidrohhrghdpkhgvrhhnvghlrdhorhhgnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrsghrrghhrghmrgguvghkuh
-    hnlhgvhedtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorh
-    hgrdhukhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdr
-    tghomh
-X-ME-Proxy: <xmx:JW0bZ4V1XwHkYNPhQNN9xDdFd5v0XocmUp9CesXgdGeLjN6jk6pf-w>
-    <xmx:JW0bZ_lLGkIcfYB37W_X5EF5VJ66qPkgXg_WVvoILCMhvMxJjkfRoA>
-    <xmx:JW0bZ1er5j3ygQ3KqHzh-SsFzVpwcpFih5UKYIdPbGounJjy-7Wfmw>
-    <xmx:JW0bZ5Gv-HGH7DhSjGHJUVzAbWVOs1_GPSonQkxnWbBL7kjFoCNTtg>
-    <xmx:Jm0bZ6v_cJkTilrA0IUxFz6OcX03bD-z2WtuWbuiWlhBQMDh43q-X6uh>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Oct 2024 06:04:20 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a8486ed2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 25 Oct 2024 10:04:17 +0000 (UTC)
-Date: Fri, 25 Oct 2024 12:04:13 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Samuel Abraham <abrahamadekunle50@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	christian.couder@gmail.com
-Subject: Re: [Outreachy][proposal]: Convert unit tests to use the Clar
- testing framwork
-Message-ID: <ZxttGFtt5nnc7g9Z@pks.im>
-References: <CADYq+fZBGZiTQduQ+4KcQ7H2Hysb04pg8YR++8PWAkQOM76OPg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bQnxV7BA"
+Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-84fcd9f4e98so506112241.0
+        for <git@vger.kernel.org>; Fri, 25 Oct 2024 03:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729851182; x=1730455982; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MqoyQeSFiNWa/eRUcc+xq+/HYfUCyPKByoDkSjPm7aM=;
+        b=bQnxV7BAn/m/angGjCTj0Xmn3m1TLjqDEKzx/7QL+2NQg8OxcTiRsnuimFej951Rrj
+         REi2Q97xBh3M9YfkZDYoxImtj3Bv/CI9b8iikFidvQDDdIS/ADS6qay5Zair9DD/AGYx
+         lRo//GL20Ax1MOP1RxdiXHE+s9cxJULHl1wEx/PsT+QhafW9rsIjo39NYkhJ9HVBWuyL
+         /rSkDYOe10PDRde9oZ3mtnoXHhie5VjUZuaM5f2lp8hT94qu/Lm7qbtWTtf0TxqxNGXe
+         tuTcacSo76DgEpDkIlawWXIB/FQ/mdvyxVI5l97707gRdmSvo9cf0+GH0+GNHgdUUQok
+         gK2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729851182; x=1730455982;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MqoyQeSFiNWa/eRUcc+xq+/HYfUCyPKByoDkSjPm7aM=;
+        b=U/FhmnRwRo19GHl4tSoDc1OLm22dR0P/8MOhZM/dL3Ugt7ZwnC6NsaN95AOoiKp8Dm
+         XsAHd6AmuvqabLfRNmRcbfLJ8CbEdLU0i1hlhBjXSmn8R3E/Vzq9GxaTAZtvY5AfqtAz
+         mJ8e4DFgbmweIr4hE013m6VJMneJKC7SsMCTdI3sYgi5QavSiuFKhrsntwiHyH1yD+QS
+         b/9iPQAljlLWkrakGIfRt1IPZPSaK49PPjzXlRrMdkV7tkkJWBeHbFgwFsQDym+mb0Sg
+         6IM/P96qH7GjN8f3IdqHy2OkN+LuMBn53ZPIM3q6qxyRMWD9C6O5RxhD6Vpn9jpE56ay
+         MYKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUFjPz72FFrFL8cibjFxX5kSfSL9Olj/KZWrOVjX07z55gqiRsbBEhxLq6z5TGa+UUug/4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0iahTK+Y+IAjxL3aYvTp6Z20xzgDAG0QQnbiqbavUn9QrnTRA
+	D3ch6Qr3Rws7L2aq/+3fb3uqCJDbIm1i79I9x4ro0DEVuEcjEdvAZIzRr8aQYglj5FI8hq8NyEJ
+	iaH/eoGBew2qDPx/8IKTzjRzAbkA=
+X-Google-Smtp-Source: AGHT+IFDXRfnFEKOKdEmWcXuSRKrU7JAEfPKn7PzrrjMI3UrwSnazRnmM01MuDCp4Qsar/lRHO1fj7Tzppg+93k+5is=
+X-Received: by 2002:a05:6102:3a08:b0:4a3:fc62:3ea8 with SMTP id
+ ada2fe7eead31-4a751a8ca3amr12414782137.3.1729851181294; Fri, 25 Oct 2024
+ 03:13:01 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 25 Oct 2024 06:12:59 -0400
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <20241024205359.16376-5-eric.peijian@gmail.com>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20241024205359.16376-1-eric.peijian@gmail.com> <20241024205359.16376-5-eric.peijian@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CADYq+fZBGZiTQduQ+4KcQ7H2Hysb04pg8YR++8PWAkQOM76OPg@mail.gmail.com>
+Date: Fri, 25 Oct 2024 06:12:59 -0400
+Message-ID: <CAOLa=ZS4XLNBeXewQ8O7tpobQfF9C9LKP--MVYghVR52hcqgWA@mail.gmail.com>
+Subject: Re: [PATCH v4 4/6] transport: add client support for object-info
+To: Eric Ju <eric.peijian@gmail.com>, git@vger.kernel.org
+Cc: calvinwan@google.com, jonathantanmy@google.com, chriscool@tuxfamily.org, 
+	toon@iotcl.com, jltobler@gmail.com
+Content-Type: multipart/mixed; boundary="0000000000002d0e1a06254a5d9e"
 
-On Wed, Oct 23, 2024 at 10:45:52PM +0100, Samuel Abraham wrote:
+--0000000000002d0e1a06254a5d9e
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks for your application!
-
-> ## Project Overview - Convert unit test to use the Clar testing framework:
-> 
-> I understand that the Git project is in the process of converting its
-> unit tests to the Clar testing framework to improve test readability,
-> consistency and maintainability, a move away from homegrown unit test
-> frameworks such as t/helper/test-tool.h and t/unit-test/test-lib.h.
-
-Nit: we've basically moved away from test-tool for unit tests already,
-to the best of my knowledge. So this is more about the second part,
-moving away from our own test framework.
-
-> Clar provides a structured and efficient way to write and execute
-> tests and is well-suited for a project like Git where robust testing
-> is essential to maintain quality and stability.
-
-It would be nice to provide some pointers _why_ we think that clar is
-better suited ;) Hint: you may have a look at the patch series that
-introduced the clar for some ideas there.
+Eric Ju <eric.peijian@gmail.com> writes:
 
 [snip]
-> ## Project Plan:
 
-Formatting of this section is a bit funky, which makes it harder than
-necessary to figure out which parts belong together. I'd propose to
-first provide a high-level list of the steps you want to do with a
-bulleted list and then maybe put more detailed explanations into
-separate "### subsections". You may also want to convert links to use
-[Markdown syntax](https://www.markdownguide.org/basic-syntax/#links),
-which provides some structure aronud them.
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 800505f25f..1a9facc1c0 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -1347,7 +1347,6 @@ static void write_command_and_capabilities(struct strbuf *req_buf,
+>  	packet_buf_delim(req_buf);
+>  }
+>
+> -
 
-> The first steps to migrating existing tests to Clar would be studying
-> existing tests in the t/helper and t/unit-tests directory which will
-> enable me to determine those appropriate for conversion.
-> 
-> Liaise with mentors and community members to determine the viability
-> of converting the selected test for conversion.
-> 
-> Convert the selected test to Clar while in constant effective
-> communication with the mentors and Git community, implementing
-> feedback and review suggestions.
-> 
-> Properly test converted scripts to ensure validity and correctness.
-> 
-> Steps to converting the existing unit tests to the Clar Testing Framework
-> 
->  From the project description in the Outreachy Project Description page,
-> 
-> 
-> https://www.outreachy.org/outreachy-dec-2024-internship-cohort/communities/git/#convert-unit-tests-to-use-the-clar-testing-framewo,
-> the goal is to convert all Git’s existing unit tests to use the Clar
-> testing framework exclusively.
+Seems like this was introduced in Patch 1/6, including the function
+below which is not used in that patch.
 
-It might also make sense to plan some time to add missing features to
-the clar if we hit anything during the conversion.
+>  void send_object_info_request(int fd_out, struct object_info_args *args)
+>  {
+>  	struct strbuf req_buf = STRBUF_INIT;
+> @@ -1706,6 +1705,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  	if (args->depth > 0 || args->deepen_since || args->deepen_not)
+>  		args->deepen = 1;
+>
+> +	if (args->object_info)
+> +		state = FETCH_SEND_REQUEST;
+> +
+>  	while (state != FETCH_DONE) {
+>  		switch (state) {
+>  		case FETCH_CHECK_LOCAL:
 
-> The existing unit tests which would need to be converted to Clar are;
-> 
-> .c test files present in t/unit-tests: Tests in this directory use the
-> t/unit-tests/test-lib testing framework and are “.c” scripts,
-> converted from the shell-based testing which used the tests in
-> t/helper/ and corresponding t<number>-<name>.sh test files. Examples
-> of this conversion can be seen in the link below which references Achu
-> Luma’s work
-> 
-> https://lore.kernel.org/git/20240226143350.3596-1-ach.lumap@gmail.com/.
-> 
-> 
-> The link shows the work done in converting the test from
-> t/helper/test-sha1.c and test/helper/test-sha256.c to use
-> t/unit-tests/t-hash.c which uses the t/unit-tests/test-lib.h framework
-> 
-> 
-> The steps to convert files located in this directory include;
-> 
-> - Identify the test files to be converted.
-> 
-> Examples of such files are the t/unit-tests/t-hash.c, t/unit-tests/t-strbuf.c
-> 
-> - Rename the test file from t-<name>.c to <name>.c. This pattern
-> follows the style used by Patrick Steinhardt in his conversion of the
-> t-strvec.c and t-ctype.c files to use the clar framework.
-> 
-> https://lore.kernel.org/git/604303e31aad3a9e74f7bdddc84f11d4d137c864.1725459142.git.ps@pks.im/
-> and
-> 
-> https://lore.kernel.org/git/ba05b9f1eef8136e087846ee54a076558097a240.1725459142.git.ps@pks.im/
-> 
-> As a sample demonstration, we will convert the t/unit-tests/t-hash.c
-> to use Clar.
+[snip]
 
-I think the previous explanations are sufficient -- going into the
-technical details like you do below is appreciated, but ultimately not
-necessary in my opinion. What I'm after here is that you have a rough
-understanding of what needs to be done for each of the tests, and that
-is sufficiently demonstrated by a high-level explanation.
+>  /*
+>   * sought represents remote references that should be updated from.
+>   * On return, the names that were found on the remote will have been
+> @@ -106,4 +114,6 @@ int report_unmatched_refs(struct ref **sought, int nr_sought);
+>   */
+>  int fetch_pack_fsck_objects(void);
+>
+> +void send_object_info_request(int fd_out, struct object_info_args *args);
+> +
+>
 
-> The test scripts in the t/helper directory:
-> 
-> The tests in this directory are invoked by the corresponding shell
-> scripts which spawn processes to test the different unit tests in the
-> t/helper directory.
-> 
-> The process involved in converting these shell scripts to Clar
-> framework will typically follow the same steps as illustrated above
-> bar the following differences.
-> 
-> Identifying the tests to be converted to Clar
-> 
-> Create a new .c  file name which should be named appropriately to
-> illustrate what the file is testing.
-> 
-> However, the shell-based script which tests the functions in t/helper
-> will be studied for in-depth understanding and then refactored into a
-> .c file which follows the steps above in converting to use Clar.
+Nit: Would be nice to have a comment here explaining what the function does.
 
-As mentioned above, I thought we didn't have any such tests anymore. If
-we do, it might make sense to provide an example of such a thing that
-needs to be converted.
+>  #endif
+> diff --git a/transport-helper.c b/transport-helper.c
+> index 013ec79dc9..2ff9675984 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -709,8 +709,8 @@ static int fetch_refs(struct transport *transport,
+>
+>  	/*
+>  	 * If we reach here, then the server, the client, and/or the transport
+> -	 * helper does not support protocol v2. --negotiate-only requires
+> -	 * protocol v2.
+> +	 * helper does not support protocol v2. --negotiate-only and cat-file remote-object-info
 
-> Project Timeline:
-> 
-> Community Bonding (Present - November 26):
-> 
-> Continue making contributions to the Git codebase working on different
-> things within my capacity and getting more familiar with the codebase,
-> participating in patches review.
-> 
-> Conversion of tests begins (December 9 - December 23): Familiarize me
-> with the conversion process to further enhance my understanding,
-> identify files for conversion and start the conversion process, and
-> set up a blog for weekly updates on my conversion process.
+Nit: could we wrap this comment?
 
-Makes sense.
+> +	 * require protocol v2.
+>  	 */
+>  	if (data->transport_options.acked_commits) {
+>  		warning(_("--negotiate-only requires protocol v2"));
 
-> Implementation of community and mentor reviews (December 27 - January 31):
-> 
-> Continue with conversions while testing converted tests, communicating
-> with reviewers and implementing reviews.
-> 
-> Testing (February 1 - March 1): Continuously determine the correctness
-> of the converted tests by continuously testing and also liaising with
-> mentors constantly.
+[snip]
 
-For this one here'd I'd recommend to start more iteratively. What you
-have here sounds a bit like a waterfall model, where you first convert
-all tests and then eventually test and send things over to the mailing
-list.
+>  static struct ref *get_refs_via_connect(struct transport *transport, int for_push,
+>  					struct transport_ls_refs_options *options)
+>  {
+> @@ -418,6 +489,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+>  	struct ref *refs = NULL;
+>  	struct fetch_pack_args args;
+>  	struct ref *refs_tmp = NULL, **to_fetch_dup = NULL;
+> +	struct ref *object_info_refs = NULL;
+>
+>  	memset(&args, 0, sizeof(args));
+>  	args.uploadpack = data->options.uploadpack;
+> @@ -444,11 +516,36 @@ static int fetch_refs_via_pack(struct transport *transport,
+>  	args.server_options = transport->server_options;
+>  	args.negotiation_tips = data->options.negotiation_tips;
+>  	args.reject_shallow_remote = transport->smart_options->reject_shallow;
+> +	args.object_info = transport->smart_options->object_info;
+> +
+> +	if (transport->smart_options
+> +		&& transport->smart_options->object_info
+> +		&& transport->smart_options->object_info_oids->nr > 0) {
+> +		struct ref *ref_itr = object_info_refs = alloc_ref("");
+> +
+> +		if (!fetch_object_info(transport, data->options.object_info_data))
+> +			goto cleanup;
 
-In the Git community you will likely have more success if you work in
-smaller patches. E.g. pick a small set of tests to convert, convert
-them, polish the series and then send it to the mailing list. That cycle
-would then repeat several times until you have converted all of the
-tests.
+So if we were successful, we skip to the cleanup. Okay.
 
-> Availability:
-> 
->  I am not currently enrolled in any academic program or have any jobs,
-> and will be available to work on the project for a minimum of 45 hours
-> per week.
+> +		args.object_info_data = data->options.object_info_data;
+> +		args.quiet = 1;
+> +		args.no_progress = 1;
 
-You really shouldn't be working more than 40 hours per week ;) The
-[Outreachy Internship Guide](https://www.outreachy.org/docs/internship/)
-recommends 30 hours per week, and I don't expect any more of you,
-either.
+Not sure why we set quiet and no_progress here.
 
-Other than that this document looks good to me, thanks!
+> +		for (size_t i = 0; i < transport->smart_options->object_info_oids->nr; i++) {
+> +			ref_itr->old_oid = transport->smart_options->object_info_oids->oid[i];
+> +			ref_itr->exact_oid = 1;
+> +			if (i == transport->smart_options->object_info_oids->nr - 1)
+> +				/* last element, no need to allocate to next */
+> +				ref_itr->next = NULL;
+> +			else
+> +				ref_itr->next = alloc_ref("");
+>
+> -	if (!data->finished_handshake) {
+> -		int i;
+> +			ref_itr = ref_itr->next;
+> +		}
+> +
+> +		transport->remote_refs = object_info_refs;
+> +
+> +	} else if (!data->finished_handshake) {
+>  		int must_list_refs = 0;
+> -		for (i = 0; i < nr_heads; i++) {
+> +		for (int i = 0; i < nr_heads; i++) {
+>  			if (!to_fetch[i]->exact_oid) {
+>  				must_list_refs = 1;
+>  				break;
+> @@ -494,16 +591,26 @@ static int fetch_refs_via_pack(struct transport *transport,
+>  			  &transport->pack_lockfiles, data->version);
+>
+>  	data->finished_handshake = 0;
+> +	if (args.object_info) {
+> +		struct ref *ref_cpy_reader = object_info_refs;
+> +		for (int i = 0; ref_cpy_reader; i++) {
+> +			oid_object_info_extended(the_repository, &ref_cpy_reader->old_oid,
+> +				&args.object_info_data[i], OBJECT_INFO_LOOKUP_REPLACE);
+> +			ref_cpy_reader = ref_cpy_reader->next;
+> +		}
+> +	}
+> +
+>  	data->options.self_contained_and_connected =
+>  		args.self_contained_and_connected;
+>  	data->options.connectivity_checked = args.connectivity_checked;
+>
+> -	if (!refs)
+> +	if (!refs && !args.object_info)
+>  		ret = -1;
 
-Patrick
+This is because, now we don't necessary always fetch the refs, since
+sometimes we're just happy fetching the object info. Would be nice to
+have a comment here.
+
+>  	if (report_unmatched_refs(to_fetch, nr_heads))
+>  		ret = -1;
+>
+>  cleanup:
+> +	free_refs(object_info_refs);
+>  	close(data->fd[0]);
+>  	if (data->fd[1] >= 0)
+>  		close(data->fd[1]);
+
+
+[snip]
+
+--0000000000002d0e1a06254a5d9e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: c4651fa5c6c12c38_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jYmJ5Y1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meWJpQy9vQ0VBNCs2UDFvLzJUbVdCakxlUlllYTh5SQpyR1JDRjYvQW4x
+SVI0VlNyZCtDS1JsNmdtb2kyTjlKNVpEeHJSSHN2ODVnQzlrVEtiUmZtMlRZTTQyU3lsNjB5CkE3
+NkFoMm5qK0RFcThTRE1lUGZ0czZyaDZQMmJyV2I0dFZ1d0JaYkhlZVp2RDAyYkoxWlhraWpZaDll
+ZU5WdksKNHVNdkJiOGJvK1ZLV09FNFBVN0tVNVRZQTBFTEZkbmxTcWN2VVBNY0pJWEhBOTRPc0tZ
+VytxelFORFVoMjZ3YgpUaURLOXh1UEZlTlltK2xvYVFpVXR0V0pNOXE1c1VzNXNOWDJyWnRyUks2
+WFgwZDh4WU92bGtSdTdINGg5bWs3Cjk1aHJsT09qckNNcWYyWTZON2xaNU1lOGZKQm1aSGFEd3l2
+a3BJOUV1TGtvNkZ2SFZrZFQvSG5CUmlhVzVxYkoKbVhXMHQ1MkdGSUZQVk5sa2RvYksxdEM4UjZp
+RW5Qb20xWTVkQlJ2ZGpPbDM4Y0w0Mk92SzFLMTV6aGk3WlYxNApaVTFobHphbitLUXNHZm8rQ0Uw
+QlZMT0p4V084TUdDQkl4UlVKeXNtK2Z6VW1pZzd1SVhVK1FZbXdncmsxTmZaCkNwVUk3SGVDa1Vq
+bGk2ZnZYcW5ENlRHVWw4RFNrb3dDbkVpRkw3ND0KPUM4VlgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000002d0e1a06254a5d9e--
