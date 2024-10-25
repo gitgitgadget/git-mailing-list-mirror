@@ -1,150 +1,121 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3032E1F8189
-	for <git@vger.kernel.org>; Fri, 25 Oct 2024 10:53:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D55822B668
+	for <git@vger.kernel.org>; Fri, 25 Oct 2024 12:17:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729853605; cv=none; b=UK6rKrnfulpuxY59nw/+A5qDj+YIfhhDSjZvKAdZysbQqseKanhWCFzcpM+vDTCaFDvBG8Xg8NmSFY7GQNeGGahQ6c73AM5+kNRsiPNOZI0PaA6jCnyQRhOZvdT8u97QPvZbHNn5bFWoTEhm68Mbtu+mreHa+sD8KjfYbNSko6Y=
+	t=1729858675; cv=none; b=MOTmhYbeH8MkomXTQvIn/EyzK9KgtHtyv55ZsAkCZkjzk328Gcj6JJEJJcYBVtLzvgkAlhwrMbRm4BFnDp/a9DHBc2GmDdSWWCgW31u1vc37vpZqZGTxLH8fqbj5RtgM/cIlCb6wPEfLCge7xsYYNn9C2zKR2FlQKw6sv3XcaV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729853605; c=relaxed/simple;
-	bh=KqqoNUeIp2Wl/FHtNdz9rpb7TDcnDS2GliYjZ4eNhYw=;
+	s=arc-20240116; t=1729858675; c=relaxed/simple;
+	bh=TAI0lj3gvOC70Bd4chHXd6r5NE6OfKCwWEtA3AcGyNI=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mbyIH80s5Ar/wizk//PBAscJo8duEE04P+dgd6fIWik5PpVJyR/XNmfjsNWViqdfy5/qgKLlr6EUxOw5Vdn7pRmdJHAM6MqESdbC5GH0rjbzUodO0TIpmf50ycQRBD7ZGseamTse+hrB8xGbCYgJN1iPHWhWW6beaEZ4xaOU/uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kv2DcwLV; arc=none smtp.client-ip=209.85.222.54
+	 To:Cc:Content-Type; b=tozurIPxKe6gjcbyalEvb2q3BuSTkRwgKzvK7WRhH62JvOQHQ49tb1iobKkYXrnMXkLGB7KNIILreuJbquar2y1wDGLIc+pnJm8P6g6PHvi6rQicmkwf8yuNt+t4VrK08PG4LtmUmi2RZ1Rh6896oXuM/6VVtkkRBKmsTNWhq6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OT5TP/3D; arc=none smtp.client-ip=209.85.217.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kv2DcwLV"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-84fc21ac668so495263241.1
-        for <git@vger.kernel.org>; Fri, 25 Oct 2024 03:53:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OT5TP/3D"
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-4a74a77878dso623210137.0
+        for <git@vger.kernel.org>; Fri, 25 Oct 2024 05:17:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729853602; x=1730458402; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729858672; x=1730463472; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3769xZ4Tsq2TDYj7D/e7rVY9Va6G9JbJ/hK9He8X4uY=;
-        b=kv2DcwLVViJcooEJIFNyyH5qluwmBKxorS5o+9JeMKb2EWBV0sgc0VaPBPs0G6le5p
-         2qC1JpofeMPxnNRSKXM49UgeQTPCEvYsMW+hkZEIEYGC1nkaLY7FuidEFIFYVUWoz0xZ
-         lJvXHnMeAensw89AmQoWwxOIaz9nHVUnH/JDOoaKwodkGQxeSL3aUdvIYXLi+W9vJmk2
-         ZTif93/N78NH6VCUDPHHn8fHBkkLO5H0ygkwnO5bvysWYwkYXmJTIOXQarlHl0fXRp3Z
-         /WZ92SV4vCyLnD1hIMnCrrUF7wuED4XJezJm/RakVOEbsDNP/sWcAFdwGeYJNoXo1OU6
-         xs2A==
+        bh=+47OXbumwvT/Y16hcaTejlP1PaIjXq0ctbJlcwjp/OU=;
+        b=OT5TP/3DG1GAN+hL1sW+HNevXig1VO/hl4xzO4fiwSHbcD8NkBolAjSZzSO9AQGlZI
+         3ta0Mk5O6NAI3RDs22F92J7WlTOlX0eimwRUfC7dczo4xBX8hAVcPRnHurXh6UTMeIPX
+         stIUcwn8MYLHsneKG++eExy9SDQIDCacw7ltsaFsPlQWa9XxBuqaNXM3B7rYjN58EI/D
+         L3gNdZhRw17MQ91CeEQyLz/yPp39JRv9UFd8zb3VOlRZEG/ObURl7A3QObD3CXUM/ARx
+         v/k1j4EZf1YVdN15zww31WxvGfj63HRbNQbTmrvAZJFfcpMN3D7+q2pQVzlS+i2d+iP1
+         vSkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729853602; x=1730458402;
+        d=1e100.net; s=20230601; t=1729858672; x=1730463472;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3769xZ4Tsq2TDYj7D/e7rVY9Va6G9JbJ/hK9He8X4uY=;
-        b=lcS7tEIqaDW0pZbm5muUdiB0Dmf2iN7O6dF2eadRnYwoIbAjksYGo6/aumGXBpaZD2
-         ywdTyF4VsPB/WQH6U9UJAQHo5MI6Vg2LoqtfFrxjhQOsKuuuuI47VL6TncBC9n4pqOmH
-         yzQtb3K4qXtOFvW8hI+bHwDOh6BNx+rF7MNmoaOAN18W4fZG+PW1JGNeXhLqTM7W6x/O
-         x5fyGKHYXOrx16zckfUciwVaJiKfiXcH40V1A1U063eH6qtqx212iSbBGTHGw3CsoAAa
-         mIMH3a337DAp7xNr3V4nzprsjptTTbYSATkEpSFXkZHoj4qELEXyKh5/av6tYiHkMLfj
-         knrA==
-X-Forwarded-Encrypted: i=1; AJvYcCWmvCXT/3zHZLtycForii0FZPA/1jdGxKn37MFAe5XS3sFcdLBliHkqCcPgQJqiiG9zcv8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBF4i7qGFrUNsWmzYReBtoEdgF71RMA2nK/lxMShWyBxO6BPSU
-	cLxpXwiH4QxUeG8GEWV3/mvzd7bS59vHNqUIYZ9w/zHiurF57vKZPXR6KCvWNVD+RsqkwGQ90Pj
-	JR5Q3VRm9JV+5YQoC47lqeXc0KdQ=
-X-Google-Smtp-Source: AGHT+IEanIzES0msyC1ANHtTPTXhy0F0NLhLdFnO06asnNv6zh9BxrD92kv0Zyb0xrH4OhtDYk5gllmzzURRhmurkso=
-X-Received: by 2002:a05:6102:2acb:b0:4a4:849b:7616 with SMTP id
- ada2fe7eead31-4a8711df706mr6828190137.25.1729853601841; Fri, 25 Oct 2024
- 03:53:21 -0700 (PDT)
+        bh=+47OXbumwvT/Y16hcaTejlP1PaIjXq0ctbJlcwjp/OU=;
+        b=fdAJWKlzQixtgZozECGH3G1c55aeDaEihLWRRD6Q5q2ZD+7aIjMjmFEKE2h2fznX+U
+         pYGUS9UfeDHoplqyXQ2yWBTpa2RlJQAYFYJm2INPmcP5kVGqSoay1o00ojZv43kUZnGX
+         zNl1LJ2X0UtTG9zFiXDzHBuaElUIgeWeVDyA2I8k8RfJFU9MM+7QizwDVRoqmhJnlbXJ
+         0oQDFCIHi9oFj8JzVYkKqCKDBoliFEAwHiS5z04nbc+SJkdoViTJx64cpzKQ6K9HU4KY
+         pivB6kNY/MEa8+fe3qzrdWqJRzwKRKxF5vfGDigPeKgD3WuGgOsWLEsTzSVlDx+4kMoa
+         9yiQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVaon9HUT0HhAi2qwlnsVjZrBRxus076XYut0c8kbKudWGiBMq1Vh19DuDPcFoB70pelh4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0e3cW/ntYlWm63WO4iy5rjvY+zoSj9oDnTaLqURpwRHswyNp5
+	UmgketO55vQqQcYPvrq1HJvycE4QVDnSdZAagna177XP0g4E5UUs2VGOAVzvT0TEGIgoOIR6vid
+	bnrQZl7sDcdmEzvjmjhPuL8fmVZweS1M3
+X-Google-Smtp-Source: AGHT+IH0yVMhaG3A72on1Xo8y02tODUbeGc3EtiUWHrP9rN4nK/VAATpyfyoRoBdlAH7XlVxdSrBlm8/+48kKPZ9BF8=
+X-Received: by 2002:a05:6122:3196:b0:50d:35d9:ad5f with SMTP id
+ 71dfb90a1353d-50feafd4319mr6064899e0c.7.1729858671879; Fri, 25 Oct 2024
+ 05:17:51 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 25 Oct 2024 10:53:20 +0000
+ HTTPREST; Fri, 25 Oct 2024 14:17:50 +0200
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <20241024205359.16376-7-eric.peijian@gmail.com>
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20241024205359.16376-1-eric.peijian@gmail.com> <20241024205359.16376-7-eric.peijian@gmail.com>
+In-Reply-To: <cover.1729506329.git.ps@pks.im>
+References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
+ <cover.1729506329.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 25 Oct 2024 10:53:20 +0000
-Message-ID: <CAOLa=ZSVxOoS0iQ0Ku1LF2jwSw2uK8DMjFJYL77Bto98_sKMUg@mail.gmail.com>
-Subject: Re: [PATCH v4 6/6] cat-file: add remote-object-info to batch-command
-To: Eric Ju <eric.peijian@gmail.com>, git@vger.kernel.org
-Cc: calvinwan@google.com, jonathantanmy@google.com, chriscool@tuxfamily.org, 
-	toon@iotcl.com, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000739fc006254aed77"
+Date: Fri, 25 Oct 2024 14:17:50 +0200
+Message-ID: <CAOLa=ZR6cnhxy7K7TChxLafm7Ep0XUVFSK+LgNPtNX8yVLyWtA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] t/unit-tests: improve clar platform compatibility
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?= <asedeno@mit.edu>, 
+	Toon Claes <toon@iotcl.com>, Taylor Blau <me@ttaylorr.com>, Ed Reel <edreel@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Bagas Sanjaya <bagasdotme@gmail.com>, 
+	Edgar Bonet <bonet@grenoble.cnrs.fr>, Jeff King <peff@peff.net>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: multipart/mixed; boundary="000000000000a6504206254c1be0"
 
---000000000000739fc006254aed77
+--000000000000a6504206254c1be0
 Content-Type: text/plain; charset="UTF-8"
 
-Eric Ju <eric.peijian@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> Hi,
+>
+> this is the second version of my patch series that addresses some
+> platform compatibility issues with clar. Changes compared to v1:
+>
+>   - I've merged the CMake fixes at [1] into this patch series to avoid
+>     conflicts. @Taylor, please drop that other series, which is
+>     "ps/cmake-clar".
+>
+>   - I've fixed up the "generate-clar-decls.h" script.
+>
+>   - I've updated the clar such that it includes upstreamed changes for
+>     improved uClibc support when we lack support for `wchar_t`.
+>
+> Thanks!
+>
+
+I went through the patches, played around with it locally too, couldn't
+find any issues. So looks good to me!
+
 
 [snip]
 
-> @@ -314,7 +323,10 @@ newline. The available atoms are:
->  	line) are output in place of the `%(rest)` atom.
->
->  If no format is specified, the default format is `%(objectname)
-> -%(objecttype) %(objectsize)`.
-> +%(objecttype) %(objectsize)`, except for `remote-object-info` commands which use
-> +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not supported yet.
-> +WARNING: When "%(objecttype)" is supported, the default format WILL be unified, so
-> +DO NOT RELY on the current the default format to stay the same!!!
->
-
-This seems like a planned breakage, wouldn't it make more sense to
-implement %(objecttype) first?
-
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 5db55fabc4..714c182f39 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -24,6 +24,9 @@
->  #include "promisor-remote.h"
->  #include "mailmap.h"
->  #include "write-or-die.h"
-> +#include "alias.h"
-> +#include "remote.h"
-> +#include "transport.h"
->
->  enum batch_mode {
->  	BATCH_MODE_CONTENTS,
-> @@ -42,9 +45,12 @@ struct batch_options {
->  	char input_delim;
->  	char output_delim;
->  	const char *format;
-> +	int use_remote_info;
->  };
->
->  static const char *force_path;
-> +static struct object_info *remote_object_info;
-> +static struct oid_array object_info_oids = OID_ARRAY_INIT;
->
->  static struct string_list mailmap = STRING_LIST_INIT_NODUP;
->  static int use_mailmap;
-> @@ -528,7 +534,7 @@ static void batch_one_object(const char *obj_name,
->  	enum get_oid_result result;
->
->  	result = get_oid_with_context(the_repository, obj_name,
-> -				      flags, &data->oid, &ctx);
-> +								  flags, &data->oid, &ctx);
-
-Nit: we usually don't fix parts of code, which we're not explicitly
-modifying.
-
-[snip]
-
---000000000000739fc006254aed77
+--000000000000a6504206254c1be0
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: edcca7f9110d212_0.1
+X-Attachment-Id: 6769254c3a2644_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jYmVKd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNk9hQy80cjNDMVhDNHRMWi9GclIxY0NneWJOWHhUcQpXSlJpQ2Zod2RM
-Mk5meUFTK3M0WWNtcTlJcU9Ec0N2ZWxNMnVpc053MWw1OG5OeU5UYnhyMFFYd2s4emVROStjCndQ
-WmVtVkFKREJlK3FKamprazR1ZHYwYWc4TUNsckdIYkNPQ0hnL2wvdEVwR0srdGlrN2lmMzN5NmNU
-c2pXTW8KNkl5WXpsQ2tjT2VOME0yVXpJMWgvOWhhakVOOFd4VE1oYVVsWTQrSU1kd1hmUUpPOWJI
-MTFEaXZJVUxST0d3UQpHSnRGbVFqVm52Mmw2TndpOHUreXFYVVhzZ2MwWGRpeFNGaFNLV0xudmZw
-TGg4OW9HMFZXU205Y2tKRVhjYU91CjVhUjR6UmJXSzBxTG14S2J5OGZpaERxTjZFQ0JRQ3BWMEd6
-aEo0KytQK2s2QkFxZFBYTEFlQUpEREszb09BNzgKVTFwa0FKaWZuZ05BMEJxRzdOK1JsZlpvcG9l
-c0pzODY2QXNobmFINlBPTldOdGZQUXRrbGVUSGpYeENuVUZrWQpYY3AwNUNmQnhFZ3JRSUh2dUNU
-SkM4VkdOWnVLMWg5OWlqSFlkVmxrendxWjBGVVJ3ZW5pUkNHcVRwaXFJZms5CjVLUVN5TU0zd2pE
-THQ2SHRnT3oreUZHcE9pWEN5WWVnTTZaK2Nzbz0KPXpqK2UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jYmpHc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1memFWQy85NmVnWU5TUkdKdEl4aWZMdjZZVEw4M0pabgp4SXBWQkZaNEZi
+N1kzMXNhU3BDZk9FVkFuN0FHdHJKY3dlMDdVczE2bmdua1RSOW8yNEU1OWkrelJ0Y0FuTmR6CjJ2
+VnZaVFh0azJERngvMDlIM2l2RnNlNG1MN0NsN3MxVEJhZ3RNcERPSEpaRFU3UlduZTNaWForeERP
+b2JVUGUKaFVySE9SR25FL29UUWZnSnIxT2pHRlFucEhDMWhScHVERCsxWHdKNHRoeXdmcXB4cHp4
+OHBNRmg2a1RBYzRwcQpjdXh1K3UvUTcycTNlT0JucVd2WTRGcWNjT0g3M1o2bDA0VXdqNXZyR2hq
+c2lrRHdMVzRSTFcraE8yZ0wxbEljClJOai9tY0lPUTJtRDVqL0VtTmFRbFowVnU2SVUyWENCQlJ4
+NXFQdGlwbzAybysycWkrZk1zMzlkdmVJVjZEdEcKM3pXZzVCQVRCQk53OUE5VTdCeGFaWTFKOXBP
+QWdlK2FMUnVVN1pZUUxvUXZPcVJOWVNjRTliTVpFakhKSTNrVApZeTN0a2dFTzd6amFnSS9LM2U3
+U08vNUFhZS9nYzJBVUsrNitRcnJnTUJ2anFJM1dsQit1WWVOT0paMGdySjUyCitkVWFndjZhQit2
+WUhLUU5WNzk1b2JUUXhteGZyRHNZdUFiam1wQT0KPW95ajMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000739fc006254aed77--
+--000000000000a6504206254c1be0--
