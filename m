@@ -1,37 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A028E18C03C
-	for <git@vger.kernel.org>; Fri, 25 Oct 2024 07:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22EE67A0D
+	for <git@vger.kernel.org>; Fri, 25 Oct 2024 07:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729839826; cv=none; b=NvoGM9qnoYFoAWnedHjvtkd0oYzn4dAImsj27rPncm4NdJ7CFd4N2lO+or75l6UpuMFDZT196LDzXT/u208P4FjwV+Z00rlVE+EbuxwGI78EcO/klKK/J03Y/MCKMNjzinzN+/ZPXTHvIFBIAmNlhUk72iH2fKDF8myshP1jJbc=
+	t=1729839908; cv=none; b=EsYnnnkX93F44DHhDvIkPS8nsm63JFCp4nc0l4XPW/HGHpvNslZSl9Oqh23B9vwxBo11Jxf/OBON9T/u3cyc8hbGrsF8BxDoOzyHe13g56dTMUDpMEdRPOZ2rkFNRUTzVnjhNavpdj+rALzN27etEpWX78w9ZYs5aqdwt+a/b00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729839826; c=relaxed/simple;
-	bh=x51T6HYxO7B25wj82pfZK7lcgjg8rQfanLKBc1VA558=;
+	s=arc-20240116; t=1729839908; c=relaxed/simple;
+	bh=6zxf/GTRXiAvW8ycrg7/fZ5H9l/mjpXa/ODqMDj2Gik=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZpBojRKQnDWc+2hMR70FuUuzpcRJiqskW3soFFyNC5DbFa3c8jnhgDgF2iN2EwX01m4iB03mYRlUx2xLBKcoWC4fRIjg7YgqfVSl7E509lqL+RfGEjazjYy8z8Kn9VV2NDTKS3WAeY3turgUb6CB2UyusUCcTC5oTsnVl/12aLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SNhu2Z44; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=p6NUu1KGvjL4y9i23Mz7/jWBU/CvINdYYndepZwlfav6sB/NJkEwr/yNERVAqHFeRJs4gPA2iXUKasKKe58hYZU1ZwSrilseNKzBiuJy8eej+h48I9Y5tLo+4ik1eYH9lAMg1NkRPHx4kw1n4mLAFNKogWvhairGAs2DvGtExHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Vt0Wmdbq; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SNhu2Z44"
-Received: (qmail 552 invoked by uid 109); 25 Oct 2024 07:03:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=x51T6HYxO7B25wj82pfZK7lcgjg8rQfanLKBc1VA558=; b=SNhu2Z44fROv4UvCpNRPb9ewHdFDjNuFhUPS/qQtb7+PcEyYz5BZxJlMVOWORbP7sviAaxce3oJeSkEtbE1Esa29sTmBwNi74riVBhZy+n2Zi3UgcT6rkZJFZM6ZxQ5enxoxRg0/Ua2/FyzsstiQzGgzNnSu81PIet501x0WV3kT0xEIQN/qYtRQ0w1IxtTGraJnRb348we/rKCRl9yLcDSHfmbMJptFkCBqhaC21iX7N0JYIX+mfmRRYjoT89+T80pKuK2dCJvl9nRaylfu58TNsvyOkeoPLKLHEe2fTUi5xxRQtFN2NnMhv+lDGQRCBWR9xXQMjcS6Cy9hsNa2dQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Vt0Wmdbq"
+Received: (qmail 571 invoked by uid 109); 25 Oct 2024 07:05:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6zxf/GTRXiAvW8ycrg7/fZ5H9l/mjpXa/ODqMDj2Gik=; b=Vt0WmdbqFHm37ElhrIP9VHXdC892873DY14JIB9cbTSgG6AXgvrxIpWppB4UoZSl7Na5jMnOzRPSi4YmIZz6TiQp3KscGxfiTIFnCMuNEzgZkyWfwajCnpGyBrlWS6Na3SDF3MfdHj9s11+bXf4tQnjEIJpg/xVoeHIg74JNGYSAUOQ0k7G67mVZKxEeQWdfUmg7KzcLQYOMwVhXt52rawmbGzqNW55CB7qf2vzR/iiz/UvX/kxluGAZXckexrM6BMEGr8cu9f/O3opBXlcJj9U0pmzsXHB5lC9BdTWNO+IGDm4plE/qig/u1VaVdJA/4l+g9HXGQPWQwkgj7JVh/A==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Oct 2024 07:03:43 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Oct 2024 07:05:04 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12867 invoked by uid 111); 25 Oct 2024 07:03:43 -0000
+Received: (qmail 12940 invoked by uid 111); 25 Oct 2024 07:05:04 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Oct 2024 03:03:43 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Oct 2024 03:05:04 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 25 Oct 2024 03:03:42 -0400
+Date: Fri, 25 Oct 2024 03:05:03 -0400
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: fox <fox.gbr@townlong-yak.com>, Eric Sunshine <sunshine@sunshineco.com>,
 	git@vger.kernel.org
-Subject: [PATCH 08/11] http-walker: use object_id instead of bare hash
-Message-ID: <20241025070342.GH2110355@coredump.intra.peff.net>
+Subject: [PATCH 09/11] packfile: convert find_sha1_pack() to use object_id
+Message-ID: <20241025070503.GI2110355@coredump.intra.peff.net>
 References: <20241025064148.GA2110169@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -43,161 +43,140 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20241025064148.GA2110169@coredump.intra.peff.net>
 
-We long ago switched most code to using object_id structs instead of
-bare "unsigned char *" hashes. This gives us more type safety from the
-compiler, and generally makes it easier to understand what we expect in
-each parameter.
+The find_sha1_pack() function has a few problems:
 
-But the dumb-http code has lagged behind. And indeed, the whole "walker"
-subsystem interface has the same problem, though http-walker is the only
-user left.
+  - it's badly named, since it works with any object hash
 
-So let's update the walker interface to pass object_id structs (which we
-already have anyway at all call sites!), and likewise use those within
-the http-walker methods that it calls.
+  - it takes the hash as a bare pointer rather than an object_id struct
 
-This cleans up the dumb-http code a bit, but will also let us fix a few
-more commonly used helper functions.
+We can fix both of these easily, as all callers actually have a real
+object_id anyway.
+
+I also found the existence of this function somewhat confusing, as it is
+about looking in an arbitrary set of linked packed_git structs. It's
+good for things like dumb-http which are looking in downloaded remote
+packs, and not our local packs. But despite the name, it is not a good
+way to find the pack which contains a local object (it skips the use of
+the midx, the pack mru list, and so on).
+
+So let's also add an explanatory comment above the declaration that may
+point people in the right direction.
+
+I suspect the calls in fast-import.c, which use the packed_git list from
+the repository struct, could actually just be using find_pack_entry().
+But since we'd need to keep it anyway for dumb-http, I didn't dig
+further there. If we eventually drop dumb-http support, then it might be
+worth examining them to see if we can get rid of the function entirely.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- http-walker.c | 25 +++++++++++++------------
- walker.c      |  4 ++--
- walker.h      |  4 ++--
- 3 files changed, 17 insertions(+), 16 deletions(-)
+ builtin/fast-import.c | 6 ++----
+ http-push.c           | 4 ++--
+ http-walker.c         | 2 +-
+ packfile.c            | 6 +++---
+ packfile.h            | 9 +++++++--
+ 5 files changed, 15 insertions(+), 12 deletions(-)
 
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 1e7ab67f6e..76d5c20f14 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -966,8 +966,7 @@ static int store_object(
+ 	if (e->idx.offset) {
+ 		duplicate_count_by_type[type]++;
+ 		return 1;
+-	} else if (find_sha1_pack(oid.hash,
+-				  get_all_packs(the_repository))) {
++	} else if (find_oid_pack(&oid, get_all_packs(the_repository))) {
+ 		e->type = type;
+ 		e->pack_id = MAX_PACK_ID;
+ 		e->idx.offset = 1; /* just not zero! */
+@@ -1167,8 +1166,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
+ 		duplicate_count_by_type[OBJ_BLOB]++;
+ 		truncate_pack(&checkpoint);
+ 
+-	} else if (find_sha1_pack(oid.hash,
+-				  get_all_packs(the_repository))) {
++	} else if (find_oid_pack(&oid, get_all_packs(the_repository))) {
+ 		e->type = OBJ_BLOB;
+ 		e->pack_id = MAX_PACK_ID;
+ 		e->idx.offset = 1; /* just not zero! */
+diff --git a/http-push.c b/http-push.c
+index aad89f2eab..4d24e6b8d4 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -309,7 +309,7 @@ static void start_fetch_packed(struct transfer_request *request)
+ 	struct transfer_request *check_request = request_queue_head;
+ 	struct http_pack_request *preq;
+ 
+-	target = find_sha1_pack(request->obj->oid.hash, repo->packs);
++	target = find_oid_pack(&request->obj->oid, repo->packs);
+ 	if (!target) {
+ 		fprintf(stderr, "Unable to fetch %s, will not be able to update server info refs\n", oid_to_hex(&request->obj->oid));
+ 		repo->can_update_info_refs = 0;
+@@ -681,7 +681,7 @@ static int add_send_request(struct object *obj, struct remote_lock *lock)
+ 		get_remote_object_list(obj->oid.hash[0]);
+ 	if (obj->flags & (REMOTE | PUSHING))
+ 		return 0;
+-	target = find_sha1_pack(obj->oid.hash, repo->packs);
++	target = find_oid_pack(&obj->oid, repo->packs);
+ 	if (target) {
+ 		obj->flags |= REMOTE;
+ 		return 0;
 diff --git a/http-walker.c b/http-walker.c
-index fb2d86d5e7..36dd1f33c0 100644
+index 36dd1f33c0..43cde0ebe5 100644
 --- a/http-walker.c
 +++ b/http-walker.c
-@@ -147,14 +147,14 @@ static int fill_active_slot(void *data UNUSED)
- 	return 0;
- }
- 
--static void prefetch(struct walker *walker, unsigned char *sha1)
-+static void prefetch(struct walker *walker, const struct object_id *oid)
- {
- 	struct object_request *newreq;
- 	struct walker_data *data = walker->data;
- 
- 	newreq = xmalloc(sizeof(*newreq));
- 	newreq->walker = walker;
--	oidread(&newreq->oid, sha1, the_repository->hash_algo);
-+	oidcpy(&newreq->oid, oid);
- 	newreq->repo = data->alt;
- 	newreq->state = WAITING;
- 	newreq->req = NULL;
-@@ -422,7 +422,8 @@ static int fetch_indices(struct walker *walker, struct alt_base *repo)
- 	return ret;
- }
- 
--static int http_fetch_pack(struct walker *walker, struct alt_base *repo, unsigned char *sha1)
-+static int http_fetch_pack(struct walker *walker, struct alt_base *repo,
-+			   const struct object_id *oid)
- {
- 	struct packed_git *target;
- 	int ret;
-@@ -431,7 +432,7 @@ static int http_fetch_pack(struct walker *walker, struct alt_base *repo, unsigne
+@@ -432,7 +432,7 @@ static int http_fetch_pack(struct walker *walker, struct alt_base *repo,
  
  	if (fetch_indices(walker, repo))
  		return -1;
--	target = find_sha1_pack(sha1, repo->packs);
-+	target = find_sha1_pack(oid->hash, repo->packs);
+-	target = find_sha1_pack(oid->hash, repo->packs);
++	target = find_oid_pack(oid, repo->packs);
  	if (!target)
  		return -1;
  	close_pack_index(target);
-@@ -440,7 +441,7 @@ static int http_fetch_pack(struct walker *walker, struct alt_base *repo, unsigne
- 		fprintf(stderr, "Getting pack %s\n",
- 			hash_to_hex(target->hash));
- 		fprintf(stderr, " which contains %s\n",
--			hash_to_hex(sha1));
-+			oid_to_hex(oid));
- 	}
- 
- 	preq = new_http_pack_request(target->hash, repo->base);
-@@ -477,17 +478,17 @@ static void abort_object_request(struct object_request *obj_req)
- 	release_object_request(obj_req);
+diff --git a/packfile.c b/packfile.c
+index 0d4fd2737a..c51eab15a5 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2010,13 +2010,13 @@ int is_pack_valid(struct packed_git *p)
+ 	return !open_packed_git(p);
  }
  
--static int fetch_object(struct walker *walker, unsigned char *hash)
-+static int fetch_object(struct walker *walker, const struct object_id *oid)
+-struct packed_git *find_sha1_pack(const unsigned char *sha1,
+-				  struct packed_git *packs)
++struct packed_git *find_oid_pack(const struct object_id *oid,
++				 struct packed_git *packs)
  {
--	char *hex = hash_to_hex(hash);
-+	char *hex = oid_to_hex(oid);
- 	int ret = 0;
- 	struct object_request *obj_req = NULL;
- 	struct http_object_request *req;
- 	struct list_head *pos, *head = &object_queue_head;
+ 	struct packed_git *p;
  
- 	list_for_each(pos, head) {
- 		obj_req = list_entry(pos, struct object_request, node);
--		if (hasheq(obj_req->oid.hash, hash, the_repository->hash_algo))
-+		if (oideq(&obj_req->oid, oid))
- 			break;
+ 	for (p = packs; p; p = p->next) {
+-		if (find_pack_entry_one(sha1, p))
++		if (find_pack_entry_one(oid->hash, p))
+ 			return p;
  	}
- 	if (!obj_req)
-@@ -548,20 +549,20 @@ static int fetch_object(struct walker *walker, unsigned char *hash)
- 	return ret;
- }
+ 	return NULL;
+diff --git a/packfile.h b/packfile.h
+index ad393be9f1..3baffa940c 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -79,8 +79,13 @@ struct packed_git *get_all_packs(struct repository *r);
+  */
+ unsigned long repo_approximate_object_count(struct repository *r);
  
--static int fetch(struct walker *walker, unsigned char *hash)
-+static int fetch(struct walker *walker, const struct object_id *oid)
- {
- 	struct walker_data *data = walker->data;
- 	struct alt_base *altbase = data->alt;
+-struct packed_git *find_sha1_pack(const unsigned char *sha1,
+-				  struct packed_git *packs);
++/*
++ * Find the pack within the "packs" list whose index contains the object "oid".
++ * For general object lookups, you probably don't want this; use
++ * find_pack_entry() instead.
++ */
++struct packed_git *find_oid_pack(const struct object_id *oid,
++				 struct packed_git *packs);
  
--	if (!fetch_object(walker, hash))
-+	if (!fetch_object(walker, oid))
- 		return 0;
- 	while (altbase) {
--		if (!http_fetch_pack(walker, altbase, hash))
-+		if (!http_fetch_pack(walker, altbase, oid))
- 			return 0;
- 		fetch_alternates(walker, data->alt->base);
- 		altbase = altbase->next;
- 	}
--	return error("Unable to find %s under %s", hash_to_hex(hash),
-+	return error("Unable to find %s under %s", oid_to_hex(oid),
- 		     data->alt->base);
- }
+ void pack_report(void);
  
-diff --git a/walker.c b/walker.c
-index 807a7a3881..5ea7e5b392 100644
---- a/walker.c
-+++ b/walker.c
-@@ -157,7 +157,7 @@ static int process(struct walker *walker, struct object *obj)
- 	else {
- 		if (obj->flags & COMPLETE)
- 			return 0;
--		walker->prefetch(walker, obj->oid.hash);
-+		walker->prefetch(walker, &obj->oid);
- 	}
- 
- 	object_list_insert(obj, process_queue_end);
-@@ -186,7 +186,7 @@ static int loop(struct walker *walker)
- 		 * the queue because we needed to fetch it first.
- 		 */
- 		if (! (obj->flags & TO_SCAN)) {
--			if (walker->fetch(walker, obj->oid.hash)) {
-+			if (walker->fetch(walker, &obj->oid)) {
- 				stop_progress(&progress);
- 				report_missing(obj);
- 				return -1;
-diff --git a/walker.h b/walker.h
-index d40b016bab..25aaa3631c 100644
---- a/walker.h
-+++ b/walker.h
-@@ -6,8 +6,8 @@
- struct walker {
- 	void *data;
- 	int (*fetch_ref)(struct walker *, struct ref *ref);
--	void (*prefetch)(struct walker *, unsigned char *sha1);
--	int (*fetch)(struct walker *, unsigned char *sha1);
-+	void (*prefetch)(struct walker *, const struct object_id *oid);
-+	int (*fetch)(struct walker *, const struct object_id *oid);
- 	void (*cleanup)(struct walker *);
- 	int get_verbosely;
- 	int get_progress;
 -- 
 2.47.0.363.g6e72b256be
 
