@@ -1,63 +1,65 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F69217F2A
-	for <git@vger.kernel.org>; Fri, 25 Oct 2024 21:07:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23D1217F32
+	for <git@vger.kernel.org>; Fri, 25 Oct 2024 21:09:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729890452; cv=none; b=Bf2puSIb3oFBGbW40ig6XkF6ZGpWR+0Sq1Ts+G3xKOq3XsTBYm+g+x19aAKdI0owgilahkbnTTBgdYiFE6FUMjWpHuPf8ESgnSN/I1gkOq+EzSHRaK4qQ+Nvzs6gEXJei9Ng87Zw2SfpGp03mpvTjBeSihOXk7gBc/iPKXeo5t0=
+	t=1729890593; cv=none; b=S/OO/mBQ38ncK7C5ywwZxR8O0IEoc16U21ledEDLo/vZHo/CxxDAEqTx0r0COIcNVZa54sGx4CCRTuWCwx6PgLct3Zsg+s84FIsA43DynZB6ft4gmEQbsrVutW3HZrkUPk7QzUXa/UfJciSw1LfBh/KE25OqmvQ7KxQquu18ugU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729890452; c=relaxed/simple;
-	bh=JgwMG2yZbmWXKPZk2As9V+RzNcxH+in95QTiH7MpCwU=;
+	s=arc-20240116; t=1729890593; c=relaxed/simple;
+	bh=+kS1oxa01p2wxsVbCmVgn7344jWmVMVCsYtQk5BO8B0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pm23/mbkvXb5fFDHK2rhHmAmdzoY11MHmyXkUap6JwL/IXhB3U1Hei8iiqK+imWnxUD7srn72WGmQ2zTVTiF3tJEppdvVo6odZeBYfHp0ET+Ur0IuIVdHf+VJvfDwY1Yn5MCcoU8wCkBU2nSFy0XU5kw+rmnpxF2dxA3qrKOZIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=czywX7xy; arc=none smtp.client-ip=209.85.219.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=o9OVing7WhKaGdPdOURedjeT/ccQ0vgcnF7dGJHiDpyDv6B96vvLnXEfSFr39LEIXZfKfRw4toHy608rv1EPDjapnTHoGKWLpWE1IKXX9D3XNmg+9fFNgTmb+qtHJQrCyn5SCE+bO79JD6AIa0tz4wWmhI0M7XDwjIqjCJu5mdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=cWurU+m3; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="czywX7xy"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e0875f1e9edso2593225276.1
-        for <git@vger.kernel.org>; Fri, 25 Oct 2024 14:07:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="cWurU+m3"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6e2e508bd28so22821077b3.2
+        for <git@vger.kernel.org>; Fri, 25 Oct 2024 14:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729890449; x=1730495249; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1729890590; x=1730495390; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+/Das+LZODiHcJxZM4/gfCE4SXruN8bzi34z13SeS28=;
-        b=czywX7xyObTY9QKtyGkBjObN1JwZZO0ysBkriRHH2FvJ1i3oXwXFrjFtfePGyctqOm
-         Uq90Tl1Uj507F4WVs0Cl/CN6YPRPeYpbE035mxW4XP4y22zEcsZ7K5KDvJmRAquchbn/
-         l25Cip4HKbxbR7qSje3N6l0WZomniuwE7SXgSmCq00/ewDRW/vVX9fuFrhFfsmqBMaAk
-         xKFB/CjR5gB2PtuE43YdzlkxrR/dAAaakyzh+rvihwaTm9Ebk2WA4TPrL9ZYBnzJqknv
-         jxp4O96tjgJv97mTbwrCqBvDpDOxa1haP6bnoS/WflDtPzSacoEjmuNTHEBNkWZXVcI8
-         VIHw==
+        bh=X3yhxXGWOde5+yKnpkBCa6cTgSaUS6mjvVlGV+DCsq0=;
+        b=cWurU+m3NomVEJAIoiNhfh/riQ7TRfhW9tATw3lH/ankgw3PrzCBWITgL+hXgVf+Yv
+         VvFHVPEg0s6rg85XGVLpp4qkrrNFNmNY0sKUKql/Y9+G2dn3C9ckaGVKo0wx7An5IGQL
+         6MG4Lsny1viZoYR3BIEZB85ZISp+/AYtgefASTFQirPe485OebfjFOKZ0CdQs8a/nB5V
+         wuXGXk9mR2hGyVfvdIyL0vstrMkaTIcKpUCdC3j9JuLzWCs1oDLaPxItYcISqvY8Gt69
+         p5Dx5yD2LVP4OgJF4mw74yDTz6oQ8TPoqCdF53x/18Y79+VqNdjtkzHFWZPkXXsdJppq
+         glfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729890449; x=1730495249;
+        d=1e100.net; s=20230601; t=1729890590; x=1730495390;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+/Das+LZODiHcJxZM4/gfCE4SXruN8bzi34z13SeS28=;
-        b=dZcTVy3tEaSi88FD/C6TEwVUw5SJDocq86pScBSJMmVR7dPX6e2yU89HSFxt9AhEg5
-         f1vzE1qA4nqSQQIJXAsnTUSt+vWoYnFFlzdbHKjazdJnH36+h8nozZfmYNmieWVlKOcE
-         r/dxh0i6lbtotKk/GOWAOimn8JRYVSGpEDh9Yt36ZMa64k+XGlK8fJNtCHOf9YLavY/C
-         rLyNy4MDDHy9QVAxC2mByJSgw2qTnzTiT+WkERKkpI7AASK+jkVMdW2jfShZNPKHMl+8
-         qrzLn3+q1cL4NwNKt/vClKbpITIopCHHn4BqBip0H9HR7jkjLnESuNBRvRGoRJHVIZ4I
-         cgzA==
-X-Gm-Message-State: AOJu0YzdxmOIh1+rQiEckOz8ikbmgO3xMqSp3ddLOC6En/heeAk8Sgj1
-	JXEQFEQNxcbQhzAA3V1RyhLOrcxxl3+UKD8KDuY4B5/v1y7EmPdBCq8VBo4BwNE=
-X-Google-Smtp-Source: AGHT+IFb/gK784kAAPJcCegCMXTTyoa9Aa7QDAPYop1HDzpYHYGtzzANIiir5zqNsG7l3EPhpkZRRw==
-X-Received: by 2002:a05:690c:9a88:b0:6e3:2e50:8c0c with SMTP id 00721157ae682-6e9d8b52043mr12619797b3.41.1729890449538;
-        Fri, 25 Oct 2024 14:07:29 -0700 (PDT)
+        bh=X3yhxXGWOde5+yKnpkBCa6cTgSaUS6mjvVlGV+DCsq0=;
+        b=pg8+vCM4PkjheUcppeletad26nV5YldtchiVc4REt0bmV2ljGc7rjF0rN6mekxNf0T
+         EQcY4hsJaAIm5GRzQR7xzlDm8ln04hJOnkEeUN/INtdqRGrs4Sh5XiwZLCQ+P+0l8v8x
+         6I9LI33AkIf8HI5mO2uPKLqTzFsDCsZ3JQe/fOqrS+fxmtGIS1NrexW0N5akdCdVgKC/
+         VZVGIfMUK6jgqWha7Ibl+fthgOe5qVEb8i/ElDuwi5v1ZcOsOxetJNjma12DN5udHKW7
+         yOafl3zWzOJQdCf04tgFiJWQ4ABG26yQoGhOJzMdnahhyDEeHP5yDyeAdeCaYpX/5Rje
+         ZtWA==
+X-Forwarded-Encrypted: i=1; AJvYcCXSb1h5VKc9DTQNZL8weiW61S1/cVaF9PeGlBbtobfUWWxWmasFxlPOcjcvsgjkFwu5E/k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLjMFhRe5/6E2cKinyQIXwknJ5rQBLmfrZ6gnjEhGi6qL6ps4/
+	WVbXLYDTZb/P1BKP5WAb5ZkO5VUn/ZGSQBfSHaPyEcyAMjkRhH3/gXlssMNp4cg=
+X-Google-Smtp-Source: AGHT+IGHOJtC7cNRgEuPERTimBpzAwcIBX+nNfKFC2+8G7ApiVZnhQiQ4o38lbG7i8TyGlyV7955dQ==
+X-Received: by 2002:a05:690c:360f:b0:6db:c7a8:b0c8 with SMTP id 00721157ae682-6e9d893a668mr11462087b3.15.1729890590637;
+        Fri, 25 Oct 2024 14:09:50 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6c769fcsm4354297b3.78.2024.10.25.14.07.29
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6caf8b8sm4249727b3.140.2024.10.25.14.09.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Oct 2024 14:07:29 -0700 (PDT)
-Date: Fri, 25 Oct 2024 17:07:28 -0400
+        Fri, 25 Oct 2024 14:09:50 -0700 (PDT)
+Date: Fri, 25 Oct 2024 17:09:49 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, hanyang.tony@bytedance.com
-Subject: Re: [PATCH 0/5] When fetching from a promisor remote, repack local
- objects referenced
-Message-ID: <ZxwIkPJLuDDxfSgE@nand.local>
-References: <cover.1729792911.git.jonathantanmy@google.com>
+To: Jeff King <peff@peff.net>
+Cc: Derrick Stolee <stolee@gmail.com>, fox <fox.gbr@townlong-yak.com>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Subject: Re: [PATCH 01/11] midx: avoid duplicate packed_git entries
+Message-ID: <ZxwJHY/BQJvpGT1s@nand.local>
+References: <20241025064148.GA2110169@coredump.intra.peff.net>
+ <20241025064340.GA2110355@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,17 +68,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1729792911.git.jonathantanmy@google.com>
+In-Reply-To: <20241025064340.GA2110355@coredump.intra.peff.net>
 
-On Thu, Oct 24, 2024 at 11:08:39AM -0700, Jonathan Tan wrote:
-> Jonathan Tan (5):
->   pack-objects: make variable non-static
->   t0410: make test description clearer
->   t0410: use from-scratch server
->   t5300: move --window clamp test next to unclamped
->   index-pack: repack local links into promisor packs
+On Fri, Oct 25, 2024 at 02:43:40AM -0400, Jeff King wrote:
+> +cc Stolee here as the original midx author. I can't think of a good
+> reason we'd want to avoid this dup-detection here.
+>
+>  midx.c                        | 20 +++++++++++++++++---
+>  t/t5200-update-server-info.sh |  8 ++++++++
+>  2 files changed, 25 insertions(+), 3 deletions(-)
 
-Thanks, will queue.
+:-). I swear I have written this exact patch before. I think this was
+way back in the early days of MIDX bitmaps, and working around this bug
+was the reason that we don't generate the MIDX/bitmap at the end of a
+repack in the same process.
+
+I don't recall all of the details at the time (or even if the above
+rationale was what I was thinking back then or not), but I think the
+change below here is obviously correct.
 
 Thanks,
 Taylor
