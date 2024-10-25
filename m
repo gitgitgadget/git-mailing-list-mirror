@@ -1,149 +1,151 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0568970816
-	for <git@vger.kernel.org>; Fri, 25 Oct 2024 16:06:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E871E501B
+	for <git@vger.kernel.org>; Fri, 25 Oct 2024 16:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729872416; cv=none; b=ipZbpiwHTATUDOnwzqoguxzrAerR391gTaBOPTOWAhpZX7IxGYAiOHlHZLJaAtl7qbm1bU9UA4F8QWZx2QTJ3HqhDgELF7AMbzOT2f16/yQbQw5Jxt/acHolRCWouDpEIYeH5rOBCTYLdjOhE5RgSdGIdKUZhI4JzMdqFj9zbBc=
+	t=1729874356; cv=none; b=Cgg7Sh4k9GE0w/vwxeHdS/yMwK6WNqubNBUal46kPY3LfXK8Ej+aGz8UGpbYBw9JhSfUCoAkMMrFEYy6zQ699v1AiXOcesKisYWdgRJGnTi/LFHotmbhYTXuJk8JNrKJECcu9NyFpvL2MRcB+XWq1dfsXxPTjOfHr8IH6l8NP+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729872416; c=relaxed/simple;
-	bh=yhfokTeW8B5UBi5JIrlzRzrXsFuKJewnOFk4GQXCBRI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fWepTTIX138UZ1WdvZWwXlaZllNT/Dr1juNlYyypvdkDxnP0IzsojbXfWd7WmOLeFdoE7dRDEWbrYtpgNfR7Ynwqxcy2oo6JcVI39GRx2OmamJ4JaMK7Dp3llySmXtgrENe6CgCvtE8hpE0gqHqGApD1M99K+oQI4GfP2km/Lp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hC+MhFv/; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729874356; c=relaxed/simple;
+	bh=A6lb3v4advHrMGi1ouZL07j2S9imH+QbDldZGE155rI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GLKMHry563RUkv3kdJGY5fG8ywZn+kHZDI+04wB1BPJNtWx55u9BQZSiln0/C91QK6yWiK/xLDGumsr4tHgPt5eItf/xtCoR3bmfn35CReadeyyXxTO9s2Mas2UxiuG49UOCoaFOsd9Cn9IQFSnqV7Rv0eZ1fRm/g7j/um6XB1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=c9FQwxE8; arc=none smtp.client-ip=212.159.14.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hC+MhFv/"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e2918664a3fso2053775276.0
-        for <git@vger.kernel.org>; Fri, 25 Oct 2024 09:06:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729872414; x=1730477214; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W2AI8uAQC5c7ntsHiIRC3MRs85xm7eYjnx6gOdDOs1A=;
-        b=hC+MhFv/8YeUCDVIkqKkcY+/KaaSMH9CpU2OGwoTEZ27DUwuqgUa69WPR3aYRcQU20
-         twiyPBruq93GY4prW5Rt2PiRtUzSuQZ6gokbugmgKDCc0nQ+MbWlpnCx+fVYbHkLrkZK
-         lG7GG1H/eGkbQun81QHjbsBhBxlADV0FTuNAKrmCBfDqDsV0y29qeoRG9Q8dX/6AOORj
-         AmavECzYkkqUQ2GlzNeYO3rrpBgL8Fc24pUJN8uOYdsvNzGaidWcdotRVDaJiK6Xc6/1
-         OWUE3j0JERqauigESb/Y8GqfKzuoFdCdQyA7sBh8HP+RZKIMLNEMxt0Ixc+r2Gl3sFoA
-         etAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729872414; x=1730477214;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=W2AI8uAQC5c7ntsHiIRC3MRs85xm7eYjnx6gOdDOs1A=;
-        b=i4BN1A2rdPfHr4qXo3HJKQ9ifH6mx+TxQY0OeJT9GbYOkW/8W1CN5dOLxbZrWyz3DM
-         fsFxc1LvNiv3uz/Tn8LfAqo5pbLBdsxfFR8u6NG09w0Ose5Zeq8+lPoKObs4vGtijwWM
-         2BMgDoHdFQ8xm+krDsL3joknzz57/PFLLG/mRZHehofZxHdZxZUGzJp6GAXIathpB3Sd
-         erZDIcLbvPgpfetCdthRHKimBO/dqXoaNl2xT6dXq0XWvEqk3PNHR/xoov2iLDSJS/nc
-         0YmhG2BpFkKJdWl9HpsGCpa4vRYZlEASAAKUobRYGL35VPl41U47GRvU3ZwARL1/6rdg
-         Rt7Q==
-X-Gm-Message-State: AOJu0YwHSkjLv79frRSfRSWO4tGSjs8q3XCphyqap9onyq7XxkpZgXpP
-	YjdeuNyihLUHOoL2DxCjM73syf4qQfte18troCRTXP0i0kYXtxqfNWQ6gCEfFZiWxF+FeVlr7ty
-	sgfFC9wly3gLUv0WngUCJqWIALfk=
-X-Google-Smtp-Source: AGHT+IH7m+iC4oh0lkdzPI6xd/iJ4okSbst7ImpH/Fbr/qakk4u0IpPfU6a7aLb0jPlMGeHEWid1pojvJruu5m+XrLI=
-X-Received: by 2002:a05:6902:1587:b0:e20:2232:aaa4 with SMTP id
- 3f1490d57ef6-e30872d09demr55423276.19.1729872413875; Fri, 25 Oct 2024
- 09:06:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="c9FQwxE8"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 4NI9tiLReQyRx4NIAtJD1g; Fri, 25 Oct 2024 17:36:04 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1729874164; bh=35R2qhPxzCT7HAXk3bIONeAhnbDniCirdqNAoILgpm8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=c9FQwxE8ZQ5HjU9ilQ3Wz4AOpLDSLsk9jLDcb8OK4VWmpLt4SiJKVfK7VPIKknBwD
+	 +4B1pzzEs+V8mCale5MuQ/5pQSyAnr30hdlu/DnS1a7O44MJ/EObiZQmGRdbRrvQNM
+	 MTtEnKbb62HHRub8AvL7uR62tNzSzc2pge9GDqLP7cAhb4Ve/3Abws8xXMaOzXSWZp
+	 CGZKX9k/jCgYqgA+YLywpxKiNVG6XPkBTLv3vlixH6PF99EChPIzq8qm4d0QOElQYK
+	 +zTiI2DSLKX5qJkQycouWVe1GKB7YWwkR8PORD84HTJaNcFZC8GWq4wTjQruGAaiuz
+	 rP3O47ACaY64w==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=XaAqz555 c=1 sm=1 tr=0 ts=671bc8f4
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=Wmu4HWGzV4stCVdrErIA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <48a506c1-67a8-4ac1-9a2c-392125bb0944@ramsayjones.plus.com>
+Date: Fri, 25 Oct 2024 17:36:00 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20241024205359.16376-1-eric.peijian@gmail.com> <20241024205359.16376-2-eric.peijian@gmail.com>
- <CAOLa=ZSb6p_z8jJHSWCfqD6bdTNNXQw-Dq6DsQWt+o+cyQ3x9Q@mail.gmail.com>
-In-Reply-To: <CAOLa=ZSb6p_z8jJHSWCfqD6bdTNNXQw-Dq6DsQWt+o+cyQ3x9Q@mail.gmail.com>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Fri, 25 Oct 2024 12:06:42 -0400
-Message-ID: <CAN2LT1CEPdTAxCEpKtd+8-5zKYSnh0PMqEXgAZ++TTMPPKrD1g@mail.gmail.com>
-Subject: Re: [PATCH v4 1/6] fetch-pack: refactor packet writing
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, toon@iotcl.com, jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 00/15] Modernize the build system
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Eli Schwartz <eschwartz@gentoo.org>, git@vger.kernel.org,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729254070.git.ps@pks.im>
+ <86de131b-bdea-4c37-b512-68b8378f4343@ramsayjones.plus.com>
+ <361e69ee-4491-4e2b-8edc-fdf4bcbb8532@gentoo.org>
+ <b35b6f10-ebb5-4266-ab95-aafb67cfad22@ramsayjones.plus.com>
+ <ZxjmTbATU7usHcqQ@pks.im>
+ <c32a7dc3-cf9f-4d42-98da-80009f9df847@ramsayjones.plus.com>
+ <Zxn1HWg7KxZwBy9h@pks.im>
+ <787ef076-ba72-4a0d-bfd9-1f79de4f4039@ramsayjones.plus.com>
+ <Zxsqr3X4FAWfy0HP@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <Zxsqr3X4FAWfy0HP@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfOLwSSCDRCvlY39jBizLY3ESUT7a3tOFU10E5u0KXeGUpuQ2sI4Vf0GwGxkEAcQrgRfvRcPXNb3Jq19CaEQCwtkkykB32Pa8OJM8s5j/1zYMkrMC8q1D
+ lp8dzokwdNXFaxWa3up74zkxZd1zUfsfNuqEjljCBnIs8yJ5WmUUv6BJYfCAx1omBW89gzdEyMOErvmkv7tEDH+1y6TM1rh1ElM=
 
-On Fri, Oct 25, 2024 at 5:52=E2=80=AFAM karthik nayak <karthik.188@gmail.co=
-m> wrote:
->
-> Eric Ju <eric.peijian@gmail.com> writes:
->
-> [snip]
->
-> > +
-> > +void send_object_info_request(int fd_out, struct object_info_args *arg=
-s)
-> > +{
-> > +     struct strbuf req_buf =3D STRBUF_INIT;
-> > +
-> > +     write_command_and_capabilities(&req_buf, "object-info", args->ser=
-ver_options);
-> > +
-> > +     if (unsorted_string_list_has_string(args->object_info_options, "s=
-ize"))
-> > +             packet_buf_write(&req_buf, "size");
-> > +
-> > +     if (args->oids) {
-> > +             for (size_t i =3D 0; i < args->oids->nr; i++)
-> > +                     packet_buf_write(&req_buf, "oid %s", oid_to_hex(&=
-args->oids->oid[i]));
-> > +     }
-> > +
-> > +     packet_buf_flush(&req_buf);
-> > +     if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
-> > +             die_errno(_("unable to write request to remote"));
-> > +
-> > +     strbuf_release(&req_buf);
-> > +}
-> > +
->
-> Was this function meant to be added here? I mean, there is no reference
-> to it in the commit message or anywhere else.
->
 
-Thank you.
 
-The `send_object_info_request` function is used in `transport.c`
-`fetch_object_info()` in patch 4/6. Its functionality is similar to
-`send_fetch_request()`:  sending the object-info command along with
-sub-command (e.g. size) and arguments (e.g. oids) to the remote.
+On 25/10/2024 06:20, Patrick Steinhardt wrote:
+> On Thu, Oct 24, 2024 at 06:34:24PM +0100, Ramsay Jones wrote:
+>> On 24/10/2024 08:19, Patrick Steinhardt wrote:
+>> Having a quick squint at the failure, it '# failed 1 among 397 test(s)'
+>> which was 'not ok 391 - correct handling of backslashes', which is the
+>> only test marked with a '!CYGWIN' prerequisite! ;) So it seems that I
+>> am doing something wrong, which results in the prerequisite not being
+>> set.
+> 
+> The CYGWIN prerequisite is set depending on whether or not `uname -s`
+> contains "*CYGWIN*". Does your system maybe pick up the wrong uname(1)
+> binary somehow?
 
-I guess Clavin put it here because
-1. it has similar functionality as `send_fetch_request()`
-2. `write_command_and_capabilities()` is only visible within `fecth-pack.c`=
-.
 
-However, I believe your comment is valid. Adding everything to
-`fetch-pack.c` makes the file overly bloated with functionality
-unrelated to fetch-pack. For v5, I plan to address this by:
+Yep, I suspected that I knew what the problem was, I just had not looked
+to see if my hunch was correct yet! :) And indeed:
 
-I will:
-1. move `write_command_and_capabilities()` a level up to connect.c
-2. add a new file f`ecth-object-info.c` at the same level of
-`fetch-pack.c`. This new file contains the logic related to
-object-info command, i.e. `send_object_info_request()` and
-`fetch_object_info()`
-3. move `fetch_object_info()` away from `transport.c`
+  $ pwd
+  /home/ramsay/git
+  $ ls -l uname*
+  -rw-r--r-- 1 ramsay None  11K Jun 28  2019 uname.c
+  -rwxr-xr-x 1 ramsay None 167K Jun 28  2019 uname.exe*
+  $ ./uname -s
+  Windows
+  $ ./uname -a
+  Windows satellite 10.0 19045() AMD-64 Windows 10 Home
+  $ uname -a
+  CYGWIN_NT-10.0-19045 satellite 3.5.4-1.x86_64 2024-08-25 16:52 UTC x86_64 Cygwin
+  $
 
-The dependency WAS like this, as I pointed out in a previous reply at
-https://lore.kernel.org/git/CAN2LT1AM5rYpwjZ+rhYerxDkL6mbxr7iDc=3DwvuhvNKS8=
-VVXQ8w@mail.gmail.com/#t
+As you can see, many many moons ago (28 Jun 2019 was just the last time
+it was updated/built - I suspect it was first written in 2006), I had
+written my own version of uname. If memory serves, it was actually for
+the 'msys' version, not cygwin! ;)
 
-`transport.c`  -> `fetch-pack.c` -> `connect.c`,   where "->" means
-"depends on".
+Anyway, when the test executes my PATH starts:
 
-In v5, it would be like this:
+    /home/ramsay/git/build/bin-wrappers:/home/ramsay/git:/usr/bin ...
 
-`transport.c`  ->       `fetch-pack.c`         -> `connect.c`
-                      |                                      /
-                       -> fecth-object-info.c  ->
+It is not immediately obvious why '/home/ramsay/git' is in there, but
+if I move my uname out of the way:
 
-Let me know if that makes sense.
+  $ mv uname* ../src
+  $ ls -l uname*
+  ls: cannot access 'uname*': No such file or directory
+  $ 
 
-> [snip]
+then everything works:
+
+  $ cd build
+  $ meson test 't000*'
+  ninja: Entering directory `/home/ramsay/git/build'
+  ninja: no work to do.
+  1/9 t0002-gitfile           OK             10.28s
+  2/9 t0004-unwritable        OK              6.70s
+  3/9 t0005-signals           OK              6.13s
+  4/9 t0003-attributes        OK             52.56s
+  5/9 t0006-date              OK             30.16s
+  6/9 t0001-init              OK             60.24s
+  7/9 t0007-git-var           OK             12.93s
+  8/9 t0008-ignores           OK             106.42s
+  9/9 t0000-basic             OK             192.99s
+  
+  Ok:                 9
+  Expected Fail:      0
+  Fail:               0
+  Unexpected Pass:    0
+  Skipped:            0
+  Timeout:            0
+  
+  Full log written to /home/ramsay/git/build/meson-logs/testlog.txt
+  $
+
+So, I just need to build the v4 version and test again (at some point
+I have to do a full (6 hour+) test run on cygwin!).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ 
