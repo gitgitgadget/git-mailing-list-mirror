@@ -1,91 +1,70 @@
-Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B40C18C92C
-	for <git@vger.kernel.org>; Fri, 25 Oct 2024 06:11:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D1213049E
+	for <git@vger.kernel.org>; Fri, 25 Oct 2024 06:24:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729836680; cv=none; b=KAcs/RUvWAan9aEl0kfTXZTGoq9TVaX9qyH5M55yJYl1H6DiXYHALtwQr61Rv63bgP1wor6S4JBneKC13CPG0axasblcBJ1gf6k5182cvnRcZ+zSoqP0/fpTOzfryyj+MFui9uzWskw1dikbKS8n2yt9vavZdF+Rj9Fgdyj8TBI=
+	t=1729837490; cv=none; b=OL9/Cs1o0QYZHa1RYB7TDbQbGiMTWtij3oi2yeNfpyeqq9d5A6OaW/aoYYtDIRguPDpVPzQFVavhbwl13HnQb/4+t8Hs/gbxlptVAi3AzXUz8d9ji3zAxF+3U9SWRgeVVLZh5dXIlAys4d/TInhaBVY46BcBlEOb4VfPcxnnw44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729836680; c=relaxed/simple;
-	bh=EwD/JTHT61grrLvk5SVjEl3DSHuOEChOw2+ZWO/ErLA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hvDFvOJkOBGgEvSA1rYPUDFbQHPoec/37ODraw7MAa5+JivDr7UB1btjDZi7jjO7YsFErHxW0xjQl8+b1MV3OScBsFMflHNp6KECmRUiwWImA1cHXyPmEJ4lcsCqEOVAOM2BSyZTlwaLEG9Za+t+ZRRirlev55V8n8hp7U/zD8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lj+ErUDc; arc=none smtp.client-ip=209.85.222.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729837490; c=relaxed/simple;
+	bh=Ja26NbBNm57jXD3e0kAAkD2aq0HgqxJkFbnhoVOMcY0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mwb+yG+7FvPD64ThSA2+3+GPwU89FBkr05BFbhgNT7uROWQCGX5PXkZFHXprckDeBK6KG2auKwlExrfZGcLKUNo8hlSKOgAi5TObdrD0pzQXyMFN2inDK4H0QNV1ZsXZTLmNEMbFUJRCwGvuQa15IzT7wk4w6JXrAlfI2sBQC4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eF3UMvPW; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lj+ErUDc"
-Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-851d2a36e6dso1418140241.0
-        for <git@vger.kernel.org>; Thu, 24 Oct 2024 23:11:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729836677; x=1730441477; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eo6fOWrYHBDzQK91fu3PRBv1whM7MIwA9whLgpBrhLg=;
-        b=Lj+ErUDci7WdV90XBEsZGy0aFk14sqKwNIAg+Po9j7G7GpS7rYQY94bMpQmn/Af15Q
-         CX4PDQmToYFptOS+LbTdwmCQpAV59LnTe0EPDjjbeOIUe/kJ3fUVFqfdyDwS1pKD9m1Z
-         zFVvj8wmmPGAAQTjwXzI3T4MS6Ooi51+LgZ06CgsALd+AAunI6sKgRY/RnIn7+F18PRA
-         pj8XP1UuK+SAsdItUIo7CRBoHN37AJ2UWvIPL1X0A8fAwImBrXtVZXdRbpXOtgQLTVxY
-         GAYp1kCVx23q1n/D3atI+FeAB8uu1qvP4BT7rUyzPDOrdMxrIvUyb8KpT+RmKXcPTdEs
-         qnkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729836677; x=1730441477;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eo6fOWrYHBDzQK91fu3PRBv1whM7MIwA9whLgpBrhLg=;
-        b=HQUiJKCCx8B11knGSOqfwqyY0eLzUUO+VWRsCalgBtegJJfb5A7QiSjPSkfTgi3F3J
-         Dug8QvPSLnAOdK4RpDifwW5Emrw33hsBQZH5W8NnGASvVl6NTccnrAtgtPzKaOq2baiK
-         ONPyYxg3hkcSiaUdyCHHqIM9McKuPx5IxfBV1bfuhfYmzMuLNxXHBRbHXRVglJXdrinG
-         UuJmxTzUrQmZ8VN8Np9tb/p4wyz+t116y0pNeH8TAgBImRslpjnPUbBgIY2xJsvmC8+w
-         eaheq57mhBIE37XXUK4JCKRUYIxye6ZfK+sx9HeU9IF9pbhf7fKfpDP1p7LH109uwwa7
-         dTWg==
-X-Forwarded-Encrypted: i=1; AJvYcCU79xSic2LmCaVkW14jXHGOfjpvGbwB2rnklpI2Jfb3U+uG84t/ChIpQnqXrLAUNhdeqrg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyhKwMKSOB4ReQFp7YWOctkQHLZYbsWDzH4oa/nKMOSApQYRqvJ
-	GhquuV4oKLoLEfnSj2Z3VHa7LIwskAqA2a55YwqzxGNHS0RLPVttrH8G+BjDbKwBnz+V9urDOah
-	ywr0A7L9+TD9TK9266km+Y8SIiK/iObk4
-X-Google-Smtp-Source: AGHT+IEaejMWyJ6rcXBLw5Iacgaly05x96niRQEQuva+LudiQ4TePnnqrQfFD6Ud5rMNBKp+LmOc8lyHRJTpVDeR7Bk=
-X-Received: by 2002:a05:6122:922:b0:50a:cbdb:b929 with SMTP id
- 71dfb90a1353d-50feb3002ffmr4096409e0c.2.1729836677302; Thu, 24 Oct 2024
- 23:11:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eF3UMvPW"
+Received: (qmail 32695 invoked by uid 109); 25 Oct 2024 06:24:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Ja26NbBNm57jXD3e0kAAkD2aq0HgqxJkFbnhoVOMcY0=; b=eF3UMvPWouAb8iDxR0jWdlcdMRfCvN/Kz+zjg0qfgk6c4v4OEiOnpmqnoaXnYS4lKO4u4RH/wI0OyAdUioz8C1dhbbumqqocJuluUujjmAx7NkDzi/26MbEb6vne9eB7Gth9aFUrw/JGeF+Q9zUqSp+XTBEASODGh2hYSen74tbQHPgRwZdJeKNlUd8F2l1hv5LYWwNcfXNJ62ZLdMUzjhjaXihJtz4lxnj0XenR8zeRH7mIGX1JOqlooBqS5gV9os5HukV8j55UGa+m+uKQy6JBUIa88LSVDMzVgACNsXWfny2V50j6bAE9TLCrbNWmGahSYB9EjJexHzmPtOeJ7w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Oct 2024 06:24:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12509 invoked by uid 111); 25 Oct 2024 06:24:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Oct 2024 02:24:39 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 25 Oct 2024 02:24:38 -0400
+From: Jeff King <peff@peff.net>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org
+Subject: Re: [RFC PATCH] object-name: add @{upstreamhead} shorthand
+Message-ID: <20241025062438.GA2107756@coredump.intra.peff.net>
+References: <20241020202507.2596990-1-bence@ferdinandy.com>
+ <1c056d39-950c-4965-89d6-85f0c2c1bccd@app.fastmail.com>
+ <D50YLOBHJTLS.367TMAOLKL019@ferdinandy.com>
+ <20241021191441.GD1219228@coredump.intra.peff.net>
+ <D51R90BTHJMY.1C1XY5P4CHTWG@ferdinandy.com>
+ <20241023215618.GA821188@coredump.intra.peff.net>
+ <D549EIKDKGDS.2AETZLT4RTB44@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1810.v5.git.git.1729669220.gitgitgadget@gmail.com>
- <pull.1810.v6.git.git.1729729499.gitgitgadget@gmail.com> <ZxqL4MId4ah+OmTW@nand.local>
- <Zxsncryo3cdbgxu7@pks.im>
-In-Reply-To: <Zxsncryo3cdbgxu7@pks.im>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Fri, 25 Oct 2024 06:11:05 +0000
-Message-ID: <CAPSxiM-jFOjiX2QpJjLM-LD9ci0JMV_vvD0Y0QiPNkwS1GPfLg@mail.gmail.com>
-Subject: Re: [PATCH v6 0/3] parse: replace atoi() with strtoul_ui() and strtol_i()
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <me@ttaylorr.com>, 
-	Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <D549EIKDKGDS.2AETZLT4RTB44@ferdinandy.com>
 
-On Fri, Oct 25, 2024 at 5:07=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Thu, Oct 24, 2024 at 02:03:12PM -0400, Taylor Blau wrote:
-> > On Thu, Oct 24, 2024 at 12:24:55AM +0000, Usman Akinyemi via GitGitGadg=
-et wrote:
-> > > Usman Akinyemi (3):
-> > >   daemon: replace atoi() with strtoul_ui() and strtol_i()
-> > >   merge: replace atoi() with strtol_i() for marker size validation
-> > >   imap: replace atoi() with strtol_i() for UIDVALIDITY and UIDNEXT
-> > >     parsing
+On Thu, Oct 24, 2024 at 08:48:29PM +0200, Bence Ferdinandy wrote:
+
+> > So I think rather than "branch --show-current-remote", we'd want
+> > some option to make "branch --list" show only the currently checked out
+> > branch, and then you could apply --format to it to get whatever
+> > information you wanted. Something like:
 > >
-> > Thanks, this new round looks quite good to me. Do others have thoughts
-> > on this, or are we ready to start merging it down?
->
-> I'm happy with this version.
->
-> Patrick
-Thanks to Patrick and Taylor, I really appreciate your time and mentorship.
+> >   git branch --list --is-head --format='%(upstream:remotename)'
+> 
+> Thanks for running through this in such detail! This would be more widely
+> useful for sure. 
+> 
+> I'd probably call the flag something like "--current", "--current-only" rather
+> than "--is-head" though. "--is-head" sounds as if it would filter --list but
+> not necessarily end up with a single entry.
+
+Yeah, I think --current would be fine.
+
+-Peff
