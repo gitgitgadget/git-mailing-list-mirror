@@ -1,117 +1,91 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8451217F3B
-	for <git@vger.kernel.org>; Sat, 26 Oct 2024 12:09:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD99E217F3B
+	for <git@vger.kernel.org>; Sat, 26 Oct 2024 12:17:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729944600; cv=none; b=gYlt3eNbaTwTlpPYUEIH0BHX62kS+X/eCa1ifubUaW7P1AS24wkNaLFdBLHGsH+sVYYLgFhTXK+BBZcHn4PDkkncAWSnV3SGb+DGmTbPV6kwFq3IHEYN18TW1NYOf/+XTt5uxi3LJG1//hmt0xPkV1A1vV9s9w8jR4Rnw8JARUg=
+	t=1729945043; cv=none; b=kEfxouyZDZBMDNHNZYay/kTwaCh3f0IA0qJkG7VUqYR7BsQmbdLzAh9IEPfJLHvB3NQ5EhwajNu2CrmdaOengRia0KHj3rWJEVZzfbbGILrtdbaN2X5+BEVsJvUQzG2PPER/UpR8HBFizL5Gxezs2tHAfsNaZeGlDkmlQZEOzYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729944600; c=relaxed/simple;
-	bh=2d6AGL4hlOgjryKEqjrnq6s3MxmrazM7x915r0CH0rE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFd88G+/WxWFRoC56TxxvzGV4WTmRLowZXgLgIPv9RvHjf/9Rw39M5VlLWM0yZroaqBk7IjsrwAqXdHwitg1OMgwrYvF+6u2jVUiJJNy7VS4x8A9oEK4oAcYo0zxWcpHPG/Skk+W8CEADWTOZ7P+sMUwaYjnkGCuvKSs0RabE6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCMwd+d3; arc=none smtp.client-ip=209.85.210.171
+	s=arc-20240116; t=1729945043; c=relaxed/simple;
+	bh=7rU8ObmwS86Xy3JfKc0bkQeU/KwfmFtWMbZhi0RB5zE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nyNa8VAwRPW4YU1dMf+qz5H98rFrrcL3BUfjz4JNYCDDaS1NDS5zu+Mqr0OrUhXHYZdR/09m5/WIKhn3H9lMWahpyxDMHMu/QtR9F6xi6wdzXK/PInwBDm+c5xAx6mSlwbB9Xr5kSUhVh0SpZqxs1I7awY1KiMqyD3qfXX1MdOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GRND3dI4; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCMwd+d3"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-718e9c8bd83so2657562b3a.1
-        for <git@vger.kernel.org>; Sat, 26 Oct 2024 05:09:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GRND3dI4"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-20cbcd71012so29402235ad.3
+        for <git@vger.kernel.org>; Sat, 26 Oct 2024 05:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729944598; x=1730549398; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3+/LM9nE84hGYHBl0ix1MxajFrZkgJVIEW0gd+QoO6Y=;
-        b=RCMwd+d3HRsHL8uF0Q5NV3uybFlhQY9Nm1ZvqWMuAcvZpvClmx+ZutXiWqg8bClzJ5
-         rBy5DtX89N9Tz1Jtb+GPvMTknATSJK15tGUeKeTcJs22FN53DB3c6i37j7LNc0oKhj5P
-         kaSPJgpcnKkNQ24AJqublhLsG3hZGMQkJ8HGe1LkyGLwaHcwe4O2Pj5QFxnIcMR+WKzi
-         nJY5f/NZYNlCiuI9FoNDs5IoeWZ+qaaw0RCP10gFtHkhhcGjl5TLyC/Q1v1iKHMvNL5H
-         xpkNQ9wdEOW1yxHkhjPyhnI/jfttaFeDe9SDkTWBkpNxkqQnv0nYayadKasSNGgFtHWX
-         5+0w==
+        d=gmail.com; s=20230601; t=1729945041; x=1730549841; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EIZ2f53jp5xjDnH9r4EG3piKyvCjf/40PEeHzFkKey0=;
+        b=GRND3dI4X/hzTSyCNh7eTxXVV7QeY6B8LUgWnVe+GM5CTqBtv7LFup2W1RLjfCqtBD
+         V6MRMSXrhUeDiCFHWYJPQvcPhAT9SkSVSKa6MnBvoBPu3CIW/6JuM5/kIfHbviSrPKTh
+         TS/fUjGE89K04l+FSZoqxXEgzS6KPw9rMHoV5T9XKM/g9s1mDSZsOevuGNTF8Ui2Kvuc
+         2Cf3AiIz9LRrvHbRMTxSg+cGiqaJ+EZfsfbBBmYR3XoL+wUFmZxK0UYT3Q98T0wC7u5J
+         Xbei8jykPIKO9wHbSvq2LaauHgSj6qm3wj1GJAfUES6QufREXPFIaZCrBIMxqE0DDGvA
+         S+Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729944598; x=1730549398;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3+/LM9nE84hGYHBl0ix1MxajFrZkgJVIEW0gd+QoO6Y=;
-        b=QrDN0Y72agnSHV9AIWZNiPH35Muho4UkKm4I53qdhHHqp6YzqpMDucg/K3c892fez/
-         ritnAi7KeoVlLqn70Bx1CcJ8Azu/k38qMc+TZvMWNX097WWsvNNKRX6EIUsY8Fl3/0Xl
-         3r3OUeb/S7iXRSGyOlOknXJOERZ487IRr314sMhYj5Ad8JA9GlvoINabKPxRtrbSoWsC
-         1MRQLTXxcr0wPUQ1pw8pQUgkk4mpHz9nqsxRr9bxn+vChwEpQoqNYwGs3ZNQs1Z7Fl5Y
-         0bNKTjT7JS/eHx/EBjhZf8Zu1mtzmuqddJg6MCuemwoLzQx3LElw5D++6Os3r+AkCwws
-         zHEA==
-X-Forwarded-Encrypted: i=1; AJvYcCV2n0VozYgYJCBOySZ2VhARESRI2X8FVv52zX+VqfwhlY4LnN4pmuWde4sMOb55zDxPZPw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJd1GtAcbmIXesNmZbQaowmpXUu815xz1TFwBIbkaVQim0M2Ck
-	BO1qv1cu2+z8BYC2hOEi4It8XzW/PT3ODGxtVkDlqK0dW9xR9teSs1aqAYwl
-X-Google-Smtp-Source: AGHT+IFou6Fd4f6kGJJxqYCdOXEbFMs0/8hk71fJy8CUZ4zEA3I32QGsXS6mhkzWyygmEZiFf/gASA==
-X-Received: by 2002:a05:6a20:a121:b0:1d9:25e2:d908 with SMTP id adf61e73a8af0-1d9889cb97cmr13198059637.25.1729944597981;
-        Sat, 26 Oct 2024 05:09:57 -0700 (PDT)
-Received: from localhost.localdomain ([2409:40c2:1008:2f66:58f8:4a21:44e9:ec8d])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7edc86a8b37sm2666284a12.56.2024.10.26.05.09.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Oct 2024 05:09:57 -0700 (PDT)
-From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-To: gitster@pobox.com
-Cc: abhijeet.nkt@gmail.com,
-	git@vger.kernel.org,
-	sandals@crustytoothpaste.net
-Subject: [PATCH v3] show-index: fix uninitialized hash function
-Date: Sat, 26 Oct 2024 17:39:50 +0530
-Message-ID: <20241026120950.72727-1-abhijeet.nkt@gmail.com>
-X-Mailer: git-send-email 2.47.0.107.g34b6ce9b30
-In-Reply-To: <xmqqzfqi4oc6.fsf_-_@gitster.g>
-References: <xmqqzfqi4oc6.fsf_-_@gitster.g>
+        d=1e100.net; s=20230601; t=1729945041; x=1730549841;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EIZ2f53jp5xjDnH9r4EG3piKyvCjf/40PEeHzFkKey0=;
+        b=bz+3RLB1iLzdG3ftsNf2KYsnU+0v5YYgovoEf/tTNx/Kq4YdUXwy4uay6AMv1D1UmC
+         bXNJZ0++SjJHAzubZKl3kBs6sZyUiQ5iuZu71L5iYCVbVsBe9bv3rK6O68myoNeNwDAl
+         gUzPbMv6PIBAR4imck2u0M8woXcst6t7ha1qpH99FhcKC/6jwR7Igv2l+eSVfGBcGSK6
+         896TdCFe7QF/3zN/AEiTginQ3Xz31gZj6XnFm9LlQ2Jzhic/1Kb6tfFnl8KM5PYCcqKo
+         LLnSprGqEBjQCm8K4nPDc+u90vDKQVj3whnndS5fiu/cH2ZXoPHoqYo+SAGer3YwgB53
+         i+gg==
+X-Gm-Message-State: AOJu0Yw2fjFDqSmVC3v4E1OIdOIohRPi1GAD1+tYKxHRc+zbfrK4JaG9
+	IjVoWARttF4YgqSw5enbpQKLWcNkWXpNuMofpgwJhvv+WLC2klQ/SaRXqXD5
+X-Google-Smtp-Source: AGHT+IEyo48LPBGOyEOZjvSITY7NIeAJVdMJq+1cRzINShKRkL0VhQETogyyydKrgYcEqlgL3OaDEA==
+X-Received: by 2002:a17:902:f60d:b0:20c:ad30:6b97 with SMTP id d9443c01a7336-210c6c6c57cmr34404665ad.38.1729945040748;
+        Sat, 26 Oct 2024 05:17:20 -0700 (PDT)
+Received: from ?IPV6:2409:40c2:1008:2f66:58f8:4a21:44e9:ec8d? ([2409:40c2:1008:2f66:58f8:4a21:44e9:ec8d])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-210bc04b8bbsm23281715ad.244.2024.10.26.05.17.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 26 Oct 2024 05:17:20 -0700 (PDT)
+Message-ID: <03c602c4-8b53-485a-9a42-c989258acc57@gmail.com>
+Date: Sat, 26 Oct 2024 17:47:14 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: Re* [PATCH v2] show-index: fix uninitialized hash function
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <xmqqbk32oc7g.fsf@gitster.g>
+ <20240715102344.182388-1-abhijeet.nkt@gmail.com>
+ <xmqqzfqi4oc6.fsf_-_@gitster.g>
+Content-Language: en-US
+From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+In-Reply-To: <xmqqzfqi4oc6.fsf_-_@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-As stated in the docs, show-index should use SHA1 as the default hash algorithm
-when run outsize of a repository.  However, 'the_hash_algo' is currently left
-uninitialized if we are not in a repository and no explicit hash function is
-specified, causing a crash.  Fix it by falling back to SHA1 when it is found
-uninitialized. Also add test that verifies this behaviour.
+Please excuse the neco-bump.
 
-Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
----
- builtin/show-index.c   | 3 +++
- t/t5300-pack-object.sh | 4 ++++
- 2 files changed, 7 insertions(+)
+On 15/07/24 21:52, Junio C Hamano wrote:
 
-diff --git a/builtin/show-index.c b/builtin/show-index.c
-index f164c01bbe..978ae70470 100644
---- a/builtin/show-index.c
-+++ b/builtin/show-index.c
-@@ -38,6 +38,9 @@ int cmd_show_index(int argc,
- 		repo_set_hash_algo(the_repository, hash_algo);
- 	}
- 
-+	if (!the_hash_algo)
-+		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	hashsz = the_hash_algo->rawsz;
- 
- 	if (fread(top_index, 2 * 4, 1, stdin) != 1)
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 3b9dae331a..51fed26cc4 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -523,6 +523,10 @@ test_expect_success 'index-pack --strict <pack> works in non-repo' '
- 	test_path_is_file foo.idx
- '
- 
-+test_expect_success SHA1 'show-index works OK outside a repository' '
-+	nongit git show-index <foo.idx
-+'
-+
- test_expect_success !PTHREADS,!FAIL_PREREQS \
- 	'index-pack --threads=N or pack.threads=N warns when no pthreads' '
- 	test_must_fail git index-pack --threads=2 2>err &&
--- 
-2.47.0.107.g34b6ce9b30
+> With that, your patch would become like so:
+> 
+> ------------ >8 ----------------------- >8 ------------
+
+I misunderstood this as "I have made these changes to your patch on your
+behalf". But looking at how this was never queued and the commit does
+not appear in any upstream branch, I realised that I was supposed to
+send another iteration. Apologies.
+
+I have sent another iteration (v3) just before writing this.
+
+Thanks
 
