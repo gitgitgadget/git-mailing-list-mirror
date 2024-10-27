@@ -1,126 +1,182 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EA02BB1B
-	for <git@vger.kernel.org>; Sun, 27 Oct 2024 13:01:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7714685
+	for <git@vger.kernel.org>; Sun, 27 Oct 2024 13:17:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730034068; cv=none; b=BQ79hC8t2X6cz38XPcupYyyQaix+y3+2Q0VluI+Xfps6NQGdKCFxU8nILJ8lRxs205LG9DJxx631XTSCoOLqyRMJkIRRIY3eT1SZUf8UYMQR92fKWwJqUgCM+DJVHyj6moVXwJW5oMu9KgGGXOPPaaOptpjEQKVkCTOBhH8pqhc=
+	t=1730035074; cv=none; b=UnYeavpdWeRckJPDV0mpUT4z2zlcB2MS/hjfeckaBHX9VbEZYKRSm4s2HSVp1H9gUzvpAhJXihrTPdsHdoKT/DorqC4HgHV/F3Zdcc4JDgaxXWuwgJfejcEXw8+EG0U8oehaqxzTmbYZgJ0FSF0ED0ApV3YBjZFujCOY1D+BM+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730034068; c=relaxed/simple;
-	bh=wB8YGVCtLvmsVNaNmRiKe/LPguhDmYAiMqj+KxdyE6w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fbh02Awf9YtnELI4BEC4fbTooP16EOrAlRBO0AzXyd/j4ZXdwGvrkk3aOhefyTUyrS0CDdKriEogA0IxwNC2YHPxkhHJA2edhAcKIXY1EnQ+FBdVWHRpP2aHDk4p9LkR1segF/wIZbBS6LpkNtYI5F7/iph8OWGcqo6E0r4f4PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oiuPbzOt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f4xCUbUS; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oiuPbzOt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f4xCUbUS"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2D71611400C9;
-	Sun, 27 Oct 2024 09:01:03 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Sun, 27 Oct 2024 09:01:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730034063; x=1730120463; bh=1R1OIZgAyw
-	LG044JhGb7PBUxTzaWJUwvvDxCDQu24tE=; b=oiuPbzOt47hq4soBDW2DGk2z3k
-	Ac3VcD5u3bAxCLc1Tp1GS7H3ivimw7RgMMx9oPV4AUO8BlhDT8OV2yAF6NR+2XMA
-	nZ85BzNcm6JTzgHXEuHftTbivtkdr44gHPm7s7XrrFLVMGTIO8jqPTeuxnpWVBYM
-	K2yjWJVP8Cr5PdVuVYqJi7L7jy8Z1tnakk5HnCuw9iR2YQYGOPMwCPjQX9+zqSFH
-	6Z93WA/Dukvq8jD32GJOgNPskuu471zYFn6RHfqnKVeLNoRy6DhCoBBu4VzwD+5Q
-	DV0H1qJ7e57DWL0jmaOd0UFMGPNzVcqHqswrDaf/eL+BpW9nFs+IvrH5GZ1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1730034063; x=1730120463; bh=1R1OIZgAywLG044JhGb7PBUxTzaW
-	JUwvvDxCDQu24tE=; b=f4xCUbUS6xK30xuiKKRObJq1x+soiiI9BhzM8TJXfXEu
-	pRntDUVcFJQhWJk0qNdLjkzNI178C1LWEaIdv/uszkpgybAG225JyJvnRW687qtl
-	/1F+gi7Ny7xbukoJVt7K/5hj8FYF8eDsQ1oVPb79VjrQU4ADFXx8wcNfwjWRvWXl
-	wloKTWX209oZW68FFc+0Cr4MwgospnhqFQXLYVsFlPQvKFLSpV/67MKa6jZLkza0
-	uVjGnAJ0AGRelKptoziJG3A0rAJ48zKIKGNILzXfMv1MH7jxuf6m4ELvpzBnMjk7
-	0FUOKoBX7NxSMHclAfRKhfv7c62D5gJwzzqrRguhvg==
-X-ME-Sender: <xms:jTkeZ-G9bIEO5NoCjKFA6MZxL0URU64DJqTxvygGISmgvxQrL9C_bw>
-    <xme:jTkeZ_UaRz-EbqDeFHcR1uzZ5bppgIS070jR-kF5iOB_FEPM7icwm_Jhxm2ytgSHL
-    aExlUjNHYbk4qWH8w>
-X-ME-Received: <xmr:jTkeZ4LwuhpwNQgpYl5bxtDwtVSLpglmrNAdTnjzBgMjCjLcgejHpGJkVij1c826z64FQmMjDZfrRqFHBSv9JjFG4dy6yDz1_PYX4PqUwnjdig>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejiedggeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgih
-    lhhorhhrrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpth
-    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
-    ohepsghonhgvthesghhrvghnohgslhgvrdgtnhhrshdrfhhrpdhrtghpthhtoheprghsvg
-    guvghnohesmhhithdrvgguuhdprhgtphhtthhopegvughrvggvlhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopegsrghgrghsughothhmvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:jTkeZ4GfaA4kk_BOiR0xqHKYqlX30reA9iYJYTy27jIQc5Lq7srQsQ>
-    <xmx:jTkeZ0WUCUcQDT3ehEsWRUeT9s6-CYrNPCVP7WMBAhmDiK7AbroJxw>
-    <xmx:jTkeZ7O7zOAgU45L641cdUWQGp_F9-asDMmgBQkiW4J0BZI0nxcz0w>
-    <xmx:jTkeZ71OcF2Va2LNn8SgRZL6n4OC9vXzqrejp7Kp7tlV2dbwkIoKpw>
-    <xmx:jzkeZ9PBQbz1jDXRx4lwc9kFWBeMPxjuCA0Zw7Zg2y0iJ2rB4uYvbU35>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 27 Oct 2024 09:00:59 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e87482fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sun, 27 Oct 2024 13:00:52 +0000 (UTC)
-Date: Sun, 27 Oct 2024 14:01:17 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Bagas Sanjaya <bagasdotme@gmail.com>
-Cc: git@vger.kernel.org,
-	Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>,
-	Toon Claes <toon@iotcl.com>, Taylor Blau <me@ttaylorr.com>,
-	Ed Reel <edreel@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Edgar Bonet <bonet@grenoble.cnrs.fr>, Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 0/5] t/unit-tests: improve clar platform compatibility
-Message-ID: <Zx45nXPWdFIqVPTo@pks.im>
-References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
- <cover.1729506329.git.ps@pks.im>
- <Zxx3nmfp61DR6vvB@archie.me>
+	s=arc-20240116; t=1730035074; c=relaxed/simple;
+	bh=PFcIJeOBnq2646QNFNsC1Bg19mQMUvgxtjlue10q8pE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qFEMXC/O39dYH23W3kQxlHn+EWNdNCrR985EdZD/sqnYjNziVd3h6+xJGcHw2/Yfmb2s0PpUbeDfBW7EusCYC5PGQsxp/6/h2MERe9nQE5Cb5YQrxXvpbUIGdHruAXAj7flAUa/U7MALbDALFkdR+M/BC9ByhP8lw1orES2n0eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.108])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4Xbxs94kNjz5tlB
+	for <git@vger.kernel.org>; Sun, 27 Oct 2024 14:17:49 +0100 (CET)
+Received: from [192.168.0.100] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4Xbxry0jN2zRpKk;
+	Sun, 27 Oct 2024 14:17:37 +0100 (CET)
+Message-ID: <a769d5a6-0d0f-4df4-b581-539d00aacbc9@kdbg.org>
+Date: Sun, 27 Oct 2024 14:17:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zxx3nmfp61DR6vvB@archie.me>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] compat/mingw: allow deletion of most opened files
+Content-Language: en-US
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+ Taylor Blau <me@ttaylorr.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
+References: <cover.1729695349.git.ps@pks.im> <cover.1729770140.git.ps@pks.im>
+ <c308eafbbb5a7c853b8126750c4c44a8b8635192.1729770140.git.ps@pks.im>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <c308eafbbb5a7c853b8126750c4c44a8b8635192.1729770140.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, Oct 26, 2024 at 12:01:18PM +0700, Bagas Sanjaya wrote:
-> On Mon, Oct 21, 2024 at 12:56:30PM +0200, Patrick Steinhardt wrote:
-> > Hi,
-> > 
-> > this is the second version of my patch series that addresses some
-> > platform compatibility issues with clar. Changes compared to v1:
-> > 
-> >   - I've merged the CMake fixes at [1] into this patch series to avoid
-> >     conflicts. @Taylor, please drop that other series, which is
-> >     "ps/cmake-clar".
-> > 
-> >   - I've fixed up the "generate-clar-decls.h" script.
-> > 
-> >   - I've updated the clar such that it includes upstreamed changes for
-> >     improved uClibc support when we lack support for `wchar_t`.
-> > 
+Am 24.10.24 um 13:46 schrieb Patrick Steinhardt:
+> On Windows, we emulate open(3p) via `mingw_open()`. This function
+> implements handling of some platform-specific quirks that are required
+> to make it behave as closely as possible like open(3p) would, but for
+> most cases we just call the Windows-specific `_wopen()` function.
 > 
-> Git builds successfully on Buildroot (aarch64 uClibc with and without wchar,
-> aarch64 glibc).
+> This function has a major downside though: it does not allow us to
+> specify the sharing mode. While there is `_wsopen()` that allows us to
+> pass sharing flags, those sharing flags are not the same `FILE_SHARE_*`
+> flags as `CreateFileW()` accepts. Instead, `_wsopen()` only allows
+> concurrent read- and write-access, but does not allow for concurrent
+> deletions. Unfortunately though, we have to allow concurrent deletions
+> if we want to have POSIX-style atomic renames on top of an existing file
+> that has open file handles.
 > 
-> Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> Implement a new function that emulates open(3p) for existing files via
+> `CreateFileW()` such that we can set the required sharing flags.
+> 
+> While we have the same issue when calling open(3p) with `O_CREAT`,
+> implementing that mode would be more complex due to the required
+> permission handling. Furthermore, atomic updates via renames typically
+> write to exclusive lockfile and then perform the rename, and thus we
+> don't have to handle the case where the locked path has been created
+> with `O_CREATE`. So while it would be nice to have proper POSIX
+> semantics in all paths, we instead aim for a minimum viable fix here.
 
-Great, thanks a lot for verifying whether this fixes your issues!
+Agreed!
 
-Patrick
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  compat/mingw.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 58 insertions(+)
+> 
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index e326c6fcd2d..6c75fe36b15 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -532,6 +532,62 @@ static int mingw_open_append(wchar_t const *wfilename, int oflags, ...)
+>  	return fd;
+>  }
+>  
+> +/*
+> + * Ideally, we'd use `_wopen()` to implement this functionality so that we
+> + * don't have to reimplement it, but unfortunately we do not have tight control
+> + * over the share mode there. And while `_wsopen()` and friends exist that give
+> + * us _some_ control over the share mode, this family of functions doesn't give
+> + * us the ability to enable FILE_SHARE_DELETE, either. But this is a strict
+> + * requirement for us though so that we can unlink or rename over files that
+> + * are held open by another process.
+> + *
+> + * We are thus forced to implement our own emulation of `open()`. To make our
+> + * life simpler we only implement basic support for this, namely opening
+> + * existing files for reading and/or writing. This means that newly created
+> + * files won't have their sharing mode set up correctly, but for now I couldn't
+> + * find any case where this matters. We may have to revisit that in the future
+> + * though based on our needs.
+> + */
+> +static int mingw_open_existing(const wchar_t *filename, int oflags, ...)
+> +{
+> +	SECURITY_ATTRIBUTES security_attributes = {
+> +		.nLength = sizeof(security_attributes),
+> +		.bInheritHandle = !(oflags & O_NOINHERIT),
+> +	};
+> +	HANDLE handle;
+> +	int access;
+
+I would have made this variable DWORD or unsigned instead of plain int,
+because it receives a bit pattern and would match the parameter type of
+CreateFileW() better; but no big deal.
+
+> +	int fd;
+> +
+> +	/* We only support basic flags. */
+> +	if (oflags & ~(O_ACCMODE | O_NOINHERIT)) {
+> +		errno = ENOSYS;
+> +		return -1;
+> +	}
+> +
+> +	if (oflags & O_RDWR)
+> +		access = GENERIC_READ | GENERIC_WRITE;
+> +	else if (oflags & O_WRONLY)
+> +		access = GENERIC_WRITE;
+> +	else
+> +		access = GENERIC_READ;
+
+O_RDWR, O_WRONLY and O_RDONLY are not flags, but values occupying two
+bits of oflags. This must be:
+
+	if ((oflags & O_ACCMODE) == O_RDWR)
+		access = GENERIC_READ | GENERIC_WRITE;
+	else if ((oflags & O_ACCMODE) == O_WRONLY)
+		access = GENERIC_WRITE;
+	else
+		access = GENERIC_READ;
+
+or similar.
+
+> +
+> +	handle = CreateFileW(filename, access,
+> +			     FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,
+> +			     &security_attributes, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+> +	if (handle == INVALID_HANDLE_VALUE) {
+> +		DWORD err = GetLastError();
+> +		if (err == ERROR_INVALID_PARAMETER)
+> +			err = ERROR_PATH_NOT_FOUND;
+
+First I wondered what this is about, but then noticed that it is just
+copied from the mingw_open_append() implementation catering to some
+bogus network filesystems. Good.
+
+> +		errno = err_win_to_posix(err);
+> +		return -1;
+> +	}
+> +
+> +	fd = _open_osfhandle((intptr_t)handle, oflags | O_BINARY);
+> +	if (fd < 0)
+> +		CloseHandle(handle);
+> +	return fd;
+> +}
+> +
+>  /*
+>   * Does the pathname map to the local named pipe filesystem?
+>   * That is, does it have a "//./pipe/" prefix?
+> @@ -567,6 +623,8 @@ int mingw_open (const char *filename, int oflags, ...)
+>  
+>  	if ((oflags & O_APPEND) && !is_local_named_pipe_path(filename))
+>  		open_fn = mingw_open_append;
+> +	else if (!(oflags & ~(O_ACCMODE | O_NOINHERIT)))
+> +		open_fn = mingw_open_existing;
+>  	else
+>  		open_fn = _wopen;
+>  
+
+Makes sense!
+
+-- Hannes
+
