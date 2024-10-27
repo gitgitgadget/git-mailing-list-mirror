@@ -1,176 +1,156 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314AE1E517
-	for <git@vger.kernel.org>; Sun, 27 Oct 2024 17:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6B352F9B
+	for <git@vger.kernel.org>; Sun, 27 Oct 2024 21:23:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730050043; cv=none; b=FQqOEqOiaRi8U7b/YCUIG10CT9yKaoN4TQcSeNqzXfPkB+ftISho5rnK1XeZrjKB2P1Qs5NT1Agy0JO+8nbIpUrlLy/55TeCT3ENUeUthq8Wz9/sDANOMZG5Rxoo3PohGS26iL8bE5iynWs13QxD1ANvFZaLn32ogZj14iRDjpM=
+	t=1730064210; cv=none; b=TQ08gon8iYo3j8miLyMsXLJ/++TTA1UqJm6YDRfeXOREClZAb3Mxr/RTtbJb3GbRzWpi5hZSKVCVpnQfD5wMDXF9VD2dw7CeQx6K1JATyMfQkvhUK5rIFnUAmXEyM+9O04tXVQAj60vlmd//ifLXPAGA5O1f95/SgXrpwb2ycR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730050043; c=relaxed/simple;
-	bh=dWs65tMbHa+aEI87FMPXmPqGdBM0WRuQXYPDJdKweTE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pqtbpsRtqtnWkPa/nylk4cAWJ5nHKmnRS4KRoErY1q2asr3kU/5rn7B30P1GGwHXzuz8CTpxHfQ/wKnhpaRJoGielVZnq/Ph+voy3ARdj4ES5x5cVdwqFDqXlEnRtGvU8h2MiM69GT7iJ/9ElgqbLU+oGN+DRHF5EB4cAkEF0LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=4HCXpCdT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aqixyKV6; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1730064210; c=relaxed/simple;
+	bh=Ad8klYuT0eALYPUFz5WZoaXEgEsWfG/y/ivJ+r3YanI=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Uql2un06cc84TDVuSePCrs6OK/WT0e3sXqEvMiwvIAG+J+Ua7JYvPQoU/9CxATL8bk4i9OFbH0B8I8VQfeO7ZCGl6y7EbCOKpW63bx5hGvSshM1/Bo1yrIUOC2uhKV6yQhZEr6Kqs4DmCTooCVOwelPjMn2KMoHKHeLgbgFw+fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eMIVSAtm; arc=none smtp.client-ip=209.85.222.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="4HCXpCdT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aqixyKV6"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2259925400BF;
-	Sun, 27 Oct 2024 13:27:19 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Sun, 27 Oct 2024 13:27:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730050038; x=1730136438; bh=30rajleyaE
-	s8YqN1D6ijA1QCHv66leZ2PDbMX53YV0k=; b=4HCXpCdTtK8sfOXjvvS5iA5O9l
-	QObtBBEDHMPomxIoKUdFvRu3pmlBHDTQdzFxmyJxFAjM9eLCCklWYAJUbRWAIcU6
-	IjpjF6l7tG7JcGXtwTDs4sl78L1sWuwwfK3heeTScpRakZ9WVDwH4Si3EGClzFlk
-	6xEQjNKY6NQNIUh0IDNxtMLVIkcmUzWSQuq79/zLIcJq8wMacfaYNLnLeE60CIDD
-	WJYxVDJj4KvU6h5eMZgYk9JudqGqV7bvYClTTt4iOL04r8H5tUm5fwcIHRPdYuwi
-	5DCe6S24qlYiCGfu97LF4W/gKJYU+xJM/yp1j3G6J0x6IhRst8nEyhd5RQrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1730050038; x=1730136438; bh=30rajleyaEs8YqN1D6ijA1QCHv66
-	leZ2PDbMX53YV0k=; b=aqixyKV69CkQVscE7Wjpso5BMSrjWcr8hG12jS392sA+
-	KZoo57Sb5pv6HCkbXy03ETAO3TY2ATGUzxHFgSZWTm5GOhRhm6XwkyqGa2TA3Cmo
-	LIXXfuY/Cz+T7f8LO6RIL312kabM3+efR24vVH+5E0YFU03hEItEeZsNxFDdKDJo
-	oAWhHWgcENDclQ+B4e6SiDSbg0KQZPa/pYQqW6oP3p8/DJlKSZnz3GxtgxdTIsJ5
-	/HYPzuvehn2egiHe/rfutejiM74joM07dGFgjhISXC0WFaHK410NooI1B5MgSmrt
-	PVYtkwDJNJoBR1nxRdWHi/6NKC+Ykzw0x0GugjXWcQ==
-X-ME-Sender: <xms:9nceZzlfj-Il1WJlUQZ1bsKk_ywFhSHzFntW--qx-hhp-McrPjHlZg>
-    <xme:9nceZ23dGsUFlBDcuRR3guB1Om-PpaYDLX3vxsVmJGkHOy629JzdbTU_vHo6cCdKZ
-    w9izItoJci-Yn6Aow>
-X-ME-Received: <xmr:9nceZ5qNPK07o4WR6hlI65h8HHf_kiOULzH1CH5_EiILC0ubzQVGdLmOLdCdQ8xNDq65PeiNp6G9E74D8nt0YK4KxkDTxT8SO7kwaMp1Pi-Qug>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejiedguddtudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeejheffudffueefleduleelieevvdffleduueehuedu
-    tddulefgteegffffudekgeenucffohhmrghinhepmhhitghrohhsohhfthdrtghomhenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhk
-    shdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtth
-    hopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
-    rhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggv
-    lhhinhesghhmgidruggvpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:9nceZ7kS3IQ5HWA3ix7hmI4qk2NeVCX-8Dd16c__A9tbrarH71Boew>
-    <xmx:9nceZx3zVTcTWr-FroIM-sKw5NFIpOELFBfBvJXBh5ujTnWmElul3Q>
-    <xmx:9nceZ6stp412HHj3I2tJDsI5vDwSnzd-vhDxp7m0VppjmSAuuxKBdw>
-    <xmx:9nceZ1Wld1mCuACM1dAc9Szn4YqpSV7yoYyIoSPxaRZvJcYkREC1lQ>
-    <xmx:9nceZ59WZcflkDerL_jkeC10PjUVnQDaW_ou6rhCrKzKtT6hmdwYp4k->
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 27 Oct 2024 13:27:17 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7cc6869a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sun, 27 Oct 2024 17:27:10 +0000 (UTC)
-Date: Sun, 27 Oct 2024 18:27:35 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Taylor Blau <me@ttaylorr.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 3/3] compat/mingw: support POSIX semantics for atomic
- renames
-Message-ID: <Zx54B6FdGprtH0HV@pks.im>
-References: <cover.1729695349.git.ps@pks.im>
- <cover.1729770140.git.ps@pks.im>
- <ee1e92e593e35f3888e3e47b6f603c04a1652ec6.1729770140.git.ps@pks.im>
- <542b306a-523d-424b-bc9f-c63bb7040beb@kdbg.org>
- <Zx5eg2SkHMmNhQRh@pks.im>
- <49619b52-0fea-4179-a829-7ec4a6945055@kdbg.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eMIVSAtm"
+Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-84fd50f2117so1140109241.1
+        for <git@vger.kernel.org>; Sun, 27 Oct 2024 14:23:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730064205; x=1730669005; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ajZiuIWurscapi6w7u+Q2k9zrd/wqSE+Sg4vUPwu2jw=;
+        b=eMIVSAtm5bhyRvYrIfEZoX0OVfyiNIBnqtzHAtA+zfqJapIToafMASFcNASG2YSurV
+         kJ4C0sdAzb65tuByc3cKkxzKtTRqBFfi2P66vVuMFggeJJ/DEIwDD7tXwkyEMNf7+fhw
+         7QJtB1rvjAkhYoUuBWcAZ+O7AB/ymLuOvCSLCtKVEYFwrwcAItUe7oGLQ4UkQ7Rudhw/
+         CyUc5eI6/6bKD99JBMpi5RzgjgF5WTZlEDJd0G2kzpgUgIk90gBPKl46DHJM+jV/4vES
+         mWNCNsZYMJNEpYZFa2FMtWoJCzOKtT1hxsQJp7F8WNkIUSVYhbCHXpPeNZ4Mw9OFQdow
+         xUBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730064205; x=1730669005;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ajZiuIWurscapi6w7u+Q2k9zrd/wqSE+Sg4vUPwu2jw=;
+        b=RDLZlIJCJr7hcTHeEmgTtoMxaHEzgthcIz88LO4Wzt0gO3O5MPp+aB07EMNhJnpLYB
+         oEV64B6uedeRtzVMKm7Bk1F0fHMgxQS+HvVXtamMRklL8jCvT0tOE2fYgD4jjLK8CAiM
+         ZINEK62O4ipH0srtvuXua54OCk0eUL1HZpSsTlYiqVGIExqY8iijOEL5M1G7mdyR3igO
+         Ski0W4/1QOZhKM5zRw7jpOxy3+m8oi1zY03sk6nao9uvPWQw7ZeUEfRA8elr4cEUACla
+         9CBMHe7yFzkS5FO++6cwXpZd1k7ELwHDm+b8vAumYXDmoHupk3ApSX1hXgvnFMu5XdVH
+         Eh+g==
+X-Gm-Message-State: AOJu0YygI3IOOSD+Owo81IECb9U3uBMOetSgKyAAmmE2vuFWtaGpXIZ9
+	u1Aa/PTFTusrxYPodgc5Zrt6SqnI7KOEKKF8q1/nSqzBLR8jp1qNQHjtwesw6QVfAsKjaScVMvk
+	7CBUfvpcqqNeop33PrZJyX0UvD8jHe+7J
+X-Google-Smtp-Source: AGHT+IELU4VGTrJZXqotmHisexu3zBdsP6EpYY7tGNjGJ83RUWDcDHivqUykLZIGadQIkKaNz+VRqj5ZO+RoKc/8kWA=
+X-Received: by 2002:a05:6122:459c:b0:50d:60fa:183e with SMTP id
+ 71dfb90a1353d-5101535c8bcmr2884173e0c.11.1730064205232; Sun, 27 Oct 2024
+ 14:23:25 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 27 Oct 2024 17:23:24 -0400
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <ZxbBuyhfq1sFKBIU@nand.local>
+References: <cover.1729504640.git.karthik.188@gmail.com> <ZxbBuyhfq1sFKBIU@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <49619b52-0fea-4179-a829-7ec4a6945055@kdbg.org>
+Date: Sun, 27 Oct 2024 17:23:24 -0400
+Message-ID: <CAOLa=ZS3XjxdeYxbZCTCdaUzW4jko8ZLaKMvQsvzUnsan2Ho9Q@mail.gmail.com>
+Subject: Re: [PATCH 00/20] packfile: avoid using the 'the_repository' global variable
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Content-Type: multipart/mixed; boundary="0000000000006463c106257bf623"
 
-On Sun, Oct 27, 2024 at 05:31:00PM +0100, Johannes Sixt wrote:
-> Am 27.10.24 um 16:38 schrieb Patrick Steinhardt:
-> > On Sun, Oct 27, 2024 at 02:23:28PM +0100, Johannes Sixt wrote:
-> >> Am 24.10.24 um 13:46 schrieb Patrick Steinhardt:
-> >>> Windows 10 has introduced the `FILE_RENAME_FLAG_POSIX_SEMANTICS` flag
-> >>> that allows us to fix this usecase [1]. When set, it is possible to
-> >>> rename a file over a preexisting file even when the target file still
-> >>> has handles open. Those handles must have been opened with the
-> >>> `FILE_SHARE_DELETE` flag, which we have ensured in the preceding
-> >>> commits.
-> >>>> Careful readers might have noticed that [1] does not mention the above
-> >>> flag, but instead mentions `FILE_RENAME_POSIX_SEMANTICS`. This flag is
-> >>> not for use with `SetFileInformationByHandle()` though, which is what we
-> >>> use. And while the `FILE_RENAME_FLAG_POSIX_SEMANTICS` flag exists, it is
-> >>> not documented on [2] or anywhere else as far as I can tell.
-> >>
-> >> The Windows 10 SDK defines FILE_RENAME_FLAG_REPLACE_IF_EXISTS and
-> >> FILE_RENAME_FLAG_POSIX_SEMANTICS for SetFileInformationByHandle(). That
-> >> the documentation lacks "_FLAG_" in the names must be an error in the
-> >> documentation.
-> >>
-> >> I found the mention of FILE_RENAME_POSIX_SEMANTICS quite distracting,
-> >> because it is a flag to be used with CreateFileW() and basically only
-> >> has to do with case-sensitivity, but nothing with POSIX semantics of
-> >> renaming.
-> > 
-> > I'd still prefer to mention this, because otherwise an astute reader
-> > might notice that I'm using a different flag name than what is
-> > documented in the docs and figure out that I defined the wrong flag
-> > name.
-> 
-> Ah, I was confused twice here. First, the documentation that you cite[*]
-> mentions FILE_RENAME_POSIX_SEMANTICS, but the name does not exist at
-> all. There does exist FILE_RENAME_FLAG_POSIX_SEMANTICS. The
-> documentation is just wrong. And in my earlier comment I copied the
-> inexistent flag name.
-> 
-> But I meant to cite this flag: FILE_FLAG_POSIX_SEMANTICS (no "RENAME").
-> It exists and is for CreateFileW().
-> 
-> Perhaps you also meant cite the latter one as the flag that "is not for
-> use with `SetFileInformationByHandle()`"?
-> 
-> At any rate, the paragraph as written isn't correct.
+--0000000000006463c106257bf623
+Content-Type: text/plain; charset="UTF-8"
 
-I think I'm missing something. That's what the paragraph says:
+Taylor Blau <me@ttaylorr.com> writes:
 
-    Careful readers might have noticed that [1] does not mention the above
-    flag, but instead mentions `FILE_RENAME_POSIX_SEMANTICS`. This flag is
-    not for use with `SetFileInformationByHandle()` though, which is what we
-    use. And while the `FILE_RENAME_FLAG_POSIX_SEMANTICS` flag exists, it is
-    not documented on [2] or anywhere else as far as I can tell.
+> On Mon, Oct 21, 2024 at 11:57:43AM +0200, Karthik Nayak wrote:
+>> The `packfile.c` file uses the global variable 'the_repository' extensively
+>> throughout the code. Let's remove all usecases of this, by modifying the
+>> required functions to accept a 'struct repository' instead. This is to clean up
+>> usage of global state.
+>>
+>> The first 18 patches are mostly passing a `struct repository` to each of the
+>> functions within `packfile.c` from other files. The last two patches move some
+>> global config variables and make them local. I'm not too well versed with this
+>> section of the code, so would be nice to get some eyes here.
+>
+> I agree with the goal of this series, but I worry that as written it
+> will be quite disruptive to other topics on the list.
+>
 
-And I'd claim it is correct.
+I agree, that as it currently sits, this is very disruptive.
 
-`FILE_RENAME_POSIX_SEMANTICS` exists, this it is not a documentation
-error. It is at a lower level than `FILE_RENAME_FLAG_POSIX_SEMANTICS`,
-the documentation at [1] refers to "ntifs.h", which is part of the
-Windows Driver Kit interfaces. So it is not supposed to be used with
-`SetFileInformationByHandle()`, but with `FtlSetInformationFile()` [2],
-which _also_ has a separate `FILE_RENAME_INFO` structure that looks the
-same as `FILE_RENAME_INFO` defined for `SetFileInformationByHandle()`.
-The only difference as far as I can tell is that the flags used for
-these structures have slightly different names.
+> The standard way to avoid this disruption is to, for e.g. the first
+> change, do the following:
+>
+>   - Introduce a new function repo_odb_pack_name() that takes in a
+>     'struct repository *', and rewrite odb_pack_name() in terms of it
+>     (passing 'the_repository' in as the argument).
+>
+>   - Write a Coccinelle rule to replace all calls to odb_pack_name()
+>     with calls to repo_odb_pack_name().
+>
+>   - Submit those patches without adjusting any non-obvious callers or
+>     ones that are not contained to a single compilation unit that you
+>     are already touching.
+>
+>   - Wait until a new development cycle has begun, run spatch on the new
+>     rule to replace all other calls. Then optionally rename
+>     repo_odb_pack_name() to odb_pack_name().
+>
+> I think Patrick (CC'd) has done one of these transitions recently, so
+> I'll defer to him in case I got any of the details wrong.
+>
+> In the meantime, I'm going to hold this one out of seen as it may be
+> disruptive in the current state.
+>
+> Thanks,
+> Taylor
 
-Now I totally get your confusion -- I have been extremely confused by
-all of this, as well. It certainly is a documentation error that the
-respective `FILE_RENAME_FLAG_POSIX_SEMANTICS` is undocumented, but
-having proper docs for this is rather important such that the reader
-knows what its behaviour is. So I have no other choice than to link to
-the ntifs interfaces, as it documents the actual behaviour, even though
-it lives in a different part of the Windows APIs.
+While thinking about this over the last few days and also getting some
+advice from Patrick, I realized that we don't need to be this disruptive
+by simply adding the 'repository' variable to the already existing
+'packed_git' struct. This allows us to leverage this information more
+easily, since most of the functions already have access to the
+'packed_git' struct.
 
-Patrick
+This, plus the series by Jeff 'jk/dumb-http-finalize' which also removes
+some existing functions. We reduce the impact to only 3 functions being
+modified.
 
-[1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/ns-ntifs-_file_rename_information
-[2]: https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/fltkernel/nf-fltkernel-fltsetinformationfile
+I think with such low impact, it might make more sense to not go with
+the Coccinelle approach, since it is a lot simpler without it.
+
+I'll post a new version tomorrow showcasing this approach, but I'll
+leave the final decision to you whether it is still disruptive, and if
+the approach you mentioned would be better.
+
+Thanks
+
+--0000000000006463c106257bf623
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: eefc0eed9bbaebea_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jZXIwZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK2ZUQy80eTZtMjBsNllOakU0WU9GNU1aUGRScHF1MgphY2oxellTelkv
+cVQzQmwxV2d2Skp5VmF4NWRJbndUVjNDOW1jRU5RMjhlamxSU0hnajduZzl6dkYrQ1NjZ3I3Cmdq
+bUJFSHVCc2lsditEMTJldzIwQVhBNmY1aUdCWU54WC9XeGtaN2Y1bHZHeWhuSXM1TXNsZjRKakYv
+L1RGck4KbWJSYWxtVkdWdkV5ellRVi9YNklvOTFwMEM1SG9GRUxoQ1pSU2dhak44c2FibzRpUERp
+c2JmL2ZxYkY0UDN5Qwo5dWpoS2QwQ21Fb0ZteGZUMFdoTDMxN1dQaHdQSDhDaDRBdmRaSjVObmE2
+a0wydzhUV1lrSENEWE5jZVVVU3JvCjJmOUpZcFFtVjRNdjZQUUtoR1E5Y01VQ2VYSHU5N0NlVXZG
+NEZkT0Q4Z1F6WDJiMUdxdUlna0paK0p4c2lSdVoKRGJoMDZDTmt3TXJXQTZoazBzR0ZxMlEzNU5n
+T2R6dW8wUDFrdXRTZmg5NzlYL1phNFM0WE9tU05JRXZaTW1UWgpFWDVMZitPOVdxYTBCZCtQaHQz
+VWdhVWFwblhlWGM3YTVndU9yRlVSZ01nNXdpcjBqZTkzN1E0MWNrL1FRQVhVCnpwdzhnazZFV1BW
+TFRVOENFRXM2M2tDa0d4UXhNYjlRTFY4TVN3QT0KPU5UTG8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000006463c106257bf623--
