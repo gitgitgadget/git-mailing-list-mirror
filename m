@@ -1,24 +1,24 @@
-Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F954685
-	for <git@vger.kernel.org>; Sun, 27 Oct 2024 13:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E7B152E02
+	for <git@vger.kernel.org>; Sun, 27 Oct 2024 13:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730035688; cv=none; b=e7V1DMBnESx9xy+CljNNO99mqIWZF55aEMLIaUzzZSBE5Hjmhd2MH/dSYgozdmjQ96DqwzETCFcDeZjzPPcN8kTgK9okwNbNJ8aW9fE+BfsfnjsZvrUM2WQ/vwcMbDPpI2GViihJ8kl9I6+vMiKP7ttQKod0N5JM3EkdhGpxjzI=
+	t=1730036704; cv=none; b=kbOMaljPX67XepyEmZStnH5tN6i1METz/xmZPkLIt7bdeDaPsI0gAyR/jak/Pde9VIX36BO4zIrOFWQwWLyhhOigmJx6gh5jXE8/yMhOqUvn90Oozjyd4IlkjjKoqv0tF644PcAhq5BJxcr+AaYGuQzoYWp+NRyr1SvoktX0c6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730035688; c=relaxed/simple;
-	bh=eKGMpHqL0CK9fdXgo9/foRQWkPdy3d6DKNNuEGWTYR0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bJJR0CVpJ6kQ6moNOXwmox5b489WiZVWMNju9ToC5CwAHMyJatv83ZbH/anWA3NnpsWk31S7gRFP9kG2+EQ+Hkn9FzG5b7QAM8CbdYq46oplt1kNeRWBoEaJaZ4glSDYHfUgIy2TpESmLMymW9IL+YT10zbsKIB2ly61+tAiSLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.17
+	s=arc-20240116; t=1730036704; c=relaxed/simple;
+	bh=VtfivwGzCahEZKLRz6FxwkJ9QJcAUWg0JZaDAxrpDE4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=hEmp1ibCpmvhdzeKrvCD1AdStEwkRNz6QYhnCIIl3AhuFAxLX6Zekz7zR4uEBzL6Ig3txq6xaV74FGG8lQn0bemFA7K2rM0n+ysK0s8+6UIYXW+RVcaA4BeSIkxAddMmO8xoaGTqxixY4gZeeKp0jE4d9ODnkGSF2sUt9Y2zD68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
 Received: from [192.168.0.100] (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4Xby4w371QzRnmP;
-	Sun, 27 Oct 2024 14:27:59 +0100 (CET)
-Message-ID: <4931df84-6c5b-4f48-8917-eb7cc99134c2@kdbg.org>
-Date: Sun, 27 Oct 2024 14:27:59 +0100
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4XbySW0RK2zRnlK;
+	Sun, 27 Oct 2024 14:44:58 +0100 (CET)
+Message-ID: <3701837d-d9d3-422e-82f2-567a6f832dca@kdbg.org>
+Date: Sun, 27 Oct 2024 14:44:57 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -26,48 +26,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] compat/mingw: implement POSIX-style atomic renames
+Subject: Re: [BUG] spurious failure when adding tracked file in ignored
+ directory
 Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
- Taylor Blau <me@ttaylorr.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
-References: <cover.1729695349.git.ps@pks.im> <cover.1729770140.git.ps@pks.im>
+To: Christian Sattler <sattler.christian@gmail.com>
+References: <CALCpNBqfGRh3U6HpJDfUQyLOckz-hRJw2_2GRZfSFqXAyRY12g@mail.gmail.com>
 From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <cover.1729770140.git.ps@pks.im>
+Cc: git@vger.kernel.org
+In-Reply-To: <CALCpNBqfGRh3U6HpJDfUQyLOckz-hRJw2_2GRZfSFqXAyRY12g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Am 24.10.24 um 13:46 schrieb Patrick Steinhardt:
-> Hi,
+Am 26.10.24 um 01:30 schrieb Christian Sattler:
+> Adding a tracked file in an ignored directory causes a spurious warning and
+> exit code 1 failure (despite actually adding the file). Example on 2.47.0:
 > 
-> this is the second patch series that implements POSIX-style atomic
-> renames on Windows in order to fix concurrent writes with the reftable
-> backend.
+> git init
+> mkdir dir
+> touch dir/file
+> git add dir/file
+> echo dir >.gitignore
+> git add dir/file
 > 
-> Changes compared to v1:
+> The last command fails with exit code 1 and prints:
 > 
->   - Added some historic digging to the first commit message.
+>> The following paths are ignored by one of your .gitignore files:
+>> dir
+>> hint: Use -f if you really want to add them.
+>> hint: Disable this message with "git config advice.addIgnoredFile false"
 > 
->   - Fix various spelling mistakes.
-> 
->   - Fix indentation.
-> 
->   - Don't use the comma operator to assign `errno`.
-> 
-> Thanks!
-> 
-> Patrick
+> Suppose we change dir/file before the last command.  Then after the last
+> command, the change is in the index, despite what the warning indicates.
 
-Thank you for working on this.
-
-The patches look good in general, but I noticed that oflags handling in
-2/3 needs to be fixed.
-
-I ran the test suite on my Windows 10 box with this series, and it
-passed all tests (with my suggested oflags fix applied). I also
-cross-checked whether I would observe the failure that the series
-attempts to fix, and I do see the failure, and the series fixes it.
+I cannot reproduce your claim "despite actually adding the file": the
+file is not added. So, everything works as intended. What does `git
+status` tell after `git add`?
 
 -- Hannes
 
