@@ -1,156 +1,127 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6B352F9B
-	for <git@vger.kernel.org>; Sun, 27 Oct 2024 21:23:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD32D187550
+	for <git@vger.kernel.org>; Sun, 27 Oct 2024 21:26:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730064210; cv=none; b=TQ08gon8iYo3j8miLyMsXLJ/++TTA1UqJm6YDRfeXOREClZAb3Mxr/RTtbJb3GbRzWpi5hZSKVCVpnQfD5wMDXF9VD2dw7CeQx6K1JATyMfQkvhUK5rIFnUAmXEyM+9O04tXVQAj60vlmd//ifLXPAGA5O1f95/SgXrpwb2ycR4=
+	t=1730064372; cv=none; b=AsDYfQ2GAtMQq4EQLg0QK1o+zxYFg+mKIpc5jnVTxT/asO4L12Ar4sh7EPQYS0aMGkipNmDXLuCRB/JojtLLeczhJKSxTVG6E7Tr9OLMY4qCPQm3T1Biq7l1/dE7Z/63m2/rflfkNS/RK8Cj8FQFAkc+Z5ZyhwOffY6xqD8e780=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730064210; c=relaxed/simple;
-	bh=Ad8klYuT0eALYPUFz5WZoaXEgEsWfG/y/ivJ+r3YanI=;
+	s=arc-20240116; t=1730064372; c=relaxed/simple;
+	bh=P0CA+4MODqM7oZt81XD7QP94tw8smkQkIck5xK37PDo=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Uql2un06cc84TDVuSePCrs6OK/WT0e3sXqEvMiwvIAG+J+Ua7JYvPQoU/9CxATL8bk4i9OFbH0B8I8VQfeO7ZCGl6y7EbCOKpW63bx5hGvSshM1/Bo1yrIUOC2uhKV6yQhZEr6Kqs4DmCTooCVOwelPjMn2KMoHKHeLgbgFw+fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eMIVSAtm; arc=none smtp.client-ip=209.85.222.47
+	 To:Content-Type; b=Rb+1ITL8SP5uQhGEMjVhKY72KSuwL3sEno3GNTsMf3lgnw3H5xcWiDWGO5Pgo6ZIrJSIB5XbUMYNQbsP8IGYFPwkDOA123czuJUGD4Vy28a5R4NnC8d9G7MOFOi5k9rggODZ6aDuKWeHF+REgGubYUB1NptGEa/j4uCU2SmPCs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h4LYiULN; arc=none smtp.client-ip=209.85.217.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eMIVSAtm"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-84fd50f2117so1140109241.1
-        for <git@vger.kernel.org>; Sun, 27 Oct 2024 14:23:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h4LYiULN"
+Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-4a47fd930b8so1047698137.1
+        for <git@vger.kernel.org>; Sun, 27 Oct 2024 14:26:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730064205; x=1730669005; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ajZiuIWurscapi6w7u+Q2k9zrd/wqSE+Sg4vUPwu2jw=;
-        b=eMIVSAtm5bhyRvYrIfEZoX0OVfyiNIBnqtzHAtA+zfqJapIToafMASFcNASG2YSurV
-         kJ4C0sdAzb65tuByc3cKkxzKtTRqBFfi2P66vVuMFggeJJ/DEIwDD7tXwkyEMNf7+fhw
-         7QJtB1rvjAkhYoUuBWcAZ+O7AB/ymLuOvCSLCtKVEYFwrwcAItUe7oGLQ4UkQ7Rudhw/
-         CyUc5eI6/6bKD99JBMpi5RzgjgF5WTZlEDJd0G2kzpgUgIk90gBPKl46DHJM+jV/4vES
-         mWNCNsZYMJNEpYZFa2FMtWoJCzOKtT1hxsQJp7F8WNkIUSVYhbCHXpPeNZ4Mw9OFQdow
-         xUBA==
+        d=gmail.com; s=20230601; t=1730064370; x=1730669170; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3HPVNptbSuS8yWSZQyxzqXErzZL7aZKGPhRC6fj7b3w=;
+        b=h4LYiULN6mnslH4QsAq0y8MEiLqoh2UVhdfmFsyYgb9dCkIbbLjo8pZ8ePCWecOZ84
+         IAlKvSSPMYhsU3SNkWSX7tYU2sEU+WeB4M5eWY2e1S6PsPlrfJbTDzPpFA4rdf/onsX9
+         m4+6uCHc75AF35w9nTtNVgTvzaT+4dJ1M/zPSZa86xLPY5GMVquDZyK8K/bydyqqSqL/
+         oUeCJFsdjjAm+vSCUPo2xP7epBbF64Eh1og4g72c3Ukubr6OkkyWla/Ltc6lMeHYxqR8
+         OCVlpldlbhgvznHp2dZetDkU3B9HmGgWrVsUEshc1Mk1zFJmJlW5x6N7c4/ssL+6ufr8
+         jHUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730064205; x=1730669005;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ajZiuIWurscapi6w7u+Q2k9zrd/wqSE+Sg4vUPwu2jw=;
-        b=RDLZlIJCJr7hcTHeEmgTtoMxaHEzgthcIz88LO4Wzt0gO3O5MPp+aB07EMNhJnpLYB
-         oEV64B6uedeRtzVMKm7Bk1F0fHMgxQS+HvVXtamMRklL8jCvT0tOE2fYgD4jjLK8CAiM
-         ZINEK62O4ipH0srtvuXua54OCk0eUL1HZpSsTlYiqVGIExqY8iijOEL5M1G7mdyR3igO
-         Ski0W4/1QOZhKM5zRw7jpOxy3+m8oi1zY03sk6nao9uvPWQw7ZeUEfRA8elr4cEUACla
-         9CBMHe7yFzkS5FO++6cwXpZd1k7ELwHDm+b8vAumYXDmoHupk3ApSX1hXgvnFMu5XdVH
-         Eh+g==
-X-Gm-Message-State: AOJu0YygI3IOOSD+Owo81IECb9U3uBMOetSgKyAAmmE2vuFWtaGpXIZ9
-	u1Aa/PTFTusrxYPodgc5Zrt6SqnI7KOEKKF8q1/nSqzBLR8jp1qNQHjtwesw6QVfAsKjaScVMvk
-	7CBUfvpcqqNeop33PrZJyX0UvD8jHe+7J
-X-Google-Smtp-Source: AGHT+IELU4VGTrJZXqotmHisexu3zBdsP6EpYY7tGNjGJ83RUWDcDHivqUykLZIGadQIkKaNz+VRqj5ZO+RoKc/8kWA=
-X-Received: by 2002:a05:6122:459c:b0:50d:60fa:183e with SMTP id
- 71dfb90a1353d-5101535c8bcmr2884173e0c.11.1730064205232; Sun, 27 Oct 2024
- 14:23:25 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1730064370; x=1730669170;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3HPVNptbSuS8yWSZQyxzqXErzZL7aZKGPhRC6fj7b3w=;
+        b=TdMUezUsMr/RzKP1kDyykwAdEawI0laFO3KD2mhHtFIIN5WC4BSQbDvAS8iFxMHtMr
+         AsK1k+t8tF6o1ytp+cmPIYTpjqJXlPGVAJO7pdjdkQMQVirnpfJ4aKTi9D8NKqOufT90
+         Ug/M0JJC250WRY+X9S4zQOv7slYBN8nnxtaFhpMoeKME2XiNs3IkKpcrlN87FHSMuY3b
+         bQlqamZU2jadlQKJnS/mcwGLQdZ6k6l6ZfFxjLuVpcaT6UFDuV+JFdTzlniOOYEZkemX
+         7VF+pZkrF20OW/dj941hcGYNxQGgljewvVojoe+8JZYdGpPVqIJFK0ke9a9MewtOwfod
+         PsUA==
+X-Forwarded-Encrypted: i=1; AJvYcCWr5gc79Hx7dPERIsBF2uF6P1dIMigmuybtuB4hM5YduFqP7JAS6pZmbNQzSdAF21XxNVs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9CP4Z4Ad1AmsZ5Q3+xAcwEVq7e6OLrH40L3opYFPtaQ6lwl7I
+	9ER5nL2/MPwSv18AAI0f05ENLzV8x0Sk0NS4pI4QPwKMr1quAMX1dfhJIzcfcNVp1pi8e0y4o49
+	C9aVALIS/ar5437FGWbVI0WxQNuKvJOg2
+X-Google-Smtp-Source: AGHT+IHql/cCaQcn2a3GGu+MRNl4hMX9OfgIReoJYDJACmBvHKj69MgX4VLcyTzYWFqhBYU7Iq54rbZMKP0dOtCXZDY=
+X-Received: by 2002:a05:6102:3910:b0:4a3:e3a5:1ed7 with SMTP id
+ ada2fe7eead31-4a8cfd71209mr3864671137.28.1730064369646; Sun, 27 Oct 2024
+ 14:26:09 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 27 Oct 2024 17:23:24 -0400
+ HTTPREST; Sun, 27 Oct 2024 14:26:08 -0700
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <ZxbBuyhfq1sFKBIU@nand.local>
-References: <cover.1729504640.git.karthik.188@gmail.com> <ZxbBuyhfq1sFKBIU@nand.local>
+In-Reply-To: <Zxv0SgY0oajpst8s@nand.local>
+References: <Zxv0SgY0oajpst8s@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 27 Oct 2024 17:23:24 -0400
-Message-ID: <CAOLa=ZS3XjxdeYxbZCTCdaUzW4jko8ZLaKMvQsvzUnsan2Ho9Q@mail.gmail.com>
-Subject: Re: [PATCH 00/20] packfile: avoid using the 'the_repository' global variable
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="0000000000006463c106257bf623"
+Date: Sun, 27 Oct 2024 14:26:08 -0700
+Message-ID: <CAOLa=ZS3gqv6bB+gLxeYUmu70hJm3=8paJFWU5OLpG1dG9Zr5g@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2024, #11; Fri, 25)
+To: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000313af606257c001a"
 
---0000000000006463c106257bf623
+--000000000000313af606257c001a
 Content-Type: text/plain; charset="UTF-8"
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> On Mon, Oct 21, 2024 at 11:57:43AM +0200, Karthik Nayak wrote:
->> The `packfile.c` file uses the global variable 'the_repository' extensively
->> throughout the code. Let's remove all usecases of this, by modifying the
->> required functions to accept a 'struct repository' instead. This is to clean up
->> usage of global state.
->>
->> The first 18 patches are mostly passing a `struct repository` to each of the
->> functions within `packfile.c` from other files. The last two patches move some
->> global config variables and make them local. I'm not too well versed with this
->> section of the code, so would be nice to get some eyes here.
+Hello,
+
+[snip]
+
+> * kn/arbitrary-suffixes (2024-10-24) 1 commit
+>  - CodingGuidelines: discourage arbitrary suffixes in function names
 >
-> I agree with the goal of this series, but I worry that as written it
-> will be quite disruptive to other topics on the list.
+>  Update the project's CodingGuidelines to discourage naming functions
+>  with a "_1()" suffix.
+>
+>  Will merge to 'next'?
+>  source: <20241024105357.2605168-1-karthik.188@gmail.com>
 >
 
-I agree, that as it currently sits, this is very disruptive.
+I think we can probably merge this down. We can always iterate on it if
+needed.
 
-> The standard way to avoid this disruption is to, for e.g. the first
-> change, do the following:
->
->   - Introduce a new function repo_odb_pack_name() that takes in a
->     'struct repository *', and rewrite odb_pack_name() in terms of it
->     (passing 'the_repository' in as the argument).
->
->   - Write a Coccinelle rule to replace all calls to odb_pack_name()
->     with calls to repo_odb_pack_name().
->
->   - Submit those patches without adjusting any non-obvious callers or
->     ones that are not contained to a single compilation unit that you
->     are already touching.
->
->   - Wait until a new development cycle has begun, run spatch on the new
->     rule to replace all other calls. Then optionally rename
->     repo_odb_pack_name() to odb_pack_name().
->
-> I think Patrick (CC'd) has done one of these transitions recently, so
-> I'll defer to him in case I got any of the details wrong.
->
-> In the meantime, I'm going to hold this one out of seen as it may be
-> disruptive in the current state.
->
-> Thanks,
-> Taylor
+[snip]
 
-While thinking about this over the last few days and also getting some
-advice from Patrick, I realized that we don't need to be this disruptive
-by simply adding the 'repository' variable to the already existing
-'packed_git' struct. This allows us to leverage this information more
-easily, since most of the functions already have access to the
-'packed_git' struct.
+> * kn/ci-clang-format-tidy (2024-10-18) 2 commits
+>  - clang-format: align consecutive macro definitions
+>  - clang-format: re-adjust line break penalties
+>
+>  Updates the '.clang-format' to match project conventions.
+>
+>  Will merge to 'next'?
+>  source: <cover.1729241030.git.karthik.188@gmail.com>
+>
 
-This, plus the series by Jeff 'jk/dumb-http-finalize' which also removes
-some existing functions. We reduce the impact to only 3 functions being
-modified.
+Justin did leave a review, so we could probably merge this too.
 
-I think with such low impact, it might make more sense to not go with
-the Coccinelle approach, since it is a lot simpler without it.
+[snip]
 
-I'll post a new version tomorrow showcasing this approach, but I'll
-leave the final decision to you whether it is still disruptive, and if
-the approach you mentioned would be better.
+- Karthik
 
-Thanks
-
---0000000000006463c106257bf623
+--000000000000313af606257c001a
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: eefc0eed9bbaebea_0.1
+X-Attachment-Id: 38132b9b70cbfeb1_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jZXIwZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK2ZUQy80eTZtMjBsNllOakU0WU9GNU1aUGRScHF1MgphY2oxellTelkv
-cVQzQmwxV2d2Skp5VmF4NWRJbndUVjNDOW1jRU5RMjhlamxSU0hnajduZzl6dkYrQ1NjZ3I3Cmdq
-bUJFSHVCc2lsditEMTJldzIwQVhBNmY1aUdCWU54WC9XeGtaN2Y1bHZHeWhuSXM1TXNsZjRKakYv
-L1RGck4KbWJSYWxtVkdWdkV5ellRVi9YNklvOTFwMEM1SG9GRUxoQ1pSU2dhak44c2FibzRpUERp
-c2JmL2ZxYkY0UDN5Qwo5dWpoS2QwQ21Fb0ZteGZUMFdoTDMxN1dQaHdQSDhDaDRBdmRaSjVObmE2
-a0wydzhUV1lrSENEWE5jZVVVU3JvCjJmOUpZcFFtVjRNdjZQUUtoR1E5Y01VQ2VYSHU5N0NlVXZG
-NEZkT0Q4Z1F6WDJiMUdxdUlna0paK0p4c2lSdVoKRGJoMDZDTmt3TXJXQTZoazBzR0ZxMlEzNU5n
-T2R6dW8wUDFrdXRTZmg5NzlYL1phNFM0WE9tU05JRXZaTW1UWgpFWDVMZitPOVdxYTBCZCtQaHQz
-VWdhVWFwblhlWGM3YTVndU9yRlVSZ01nNXdpcjBqZTkzN1E0MWNrL1FRQVhVCnpwdzhnazZFV1BW
-TFRVOENFRXM2M2tDa0d4UXhNYjlRTFY4TVN3QT0KPU5UTG8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jZXIrOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMjZ0Qy80anYvZ0lEa3hOUzI3RTJ0SGczd3B1ZVVleQpuQ0pkRGxvQWpG
+T0pwc3pkQjgvam1pd3RXMkZqdkNsRGU5SFJSRVRKY2JVaFNYM3puVTk0a2J4QWV0NVhQbmwwCmJt
+UW0wNXpPRzFvL3VMZ0lDNlpWQk5NNERQYnNBbDVqK0l2a2M0bWFMeUVyNjVSTGRybTBKOWJ3cW5W
+ckp4bmwKT2tSemhET2JkRUM2RDFYbG1wek41TGhHbDlhQmVjREUvVm1Ha05vd0ZWREYzWnFrRzVq
+UUpJNFBDV3h0VWJFbQp4NzQvcjVDQmdnZjN3SHlrMmJIN1A1OUV4bEFsZDZmNHBVbHA4TXdMZVNk
+alRYZkdlRDV0LzF5L0VScHNZdG81Ckh1MlBFU0Q3YkRaMW5jS3pGNTJkQ2RxR1B0MGY5YkE3OEVu
+MThTc3c3djE3M2FoVmZlTitBcXBFZ016ZnNJenUKaDRld2E5KzRpQURLMS83MU9URU9ESDZyQVF4
+empTOW5EeWtrT2hYbERocitxM2M0UHhTbGlkay94UlJ0NXdMTQphWCsrbmxhSWJYT1haTzM1ejVN
+Nm9rZ2tndnl1Nkp0V1dBL1JWTEE0NGJqM1BHKzhrWnlYTldWTWF2WTNwSkZoClN3WGlXdUMzWjE5
+QlVCWWE2ZU80YzdWckFmc2tLdklCK3l1SE1vbz0KPVQza1oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000006463c106257bf623--
+--000000000000313af606257c001a--
