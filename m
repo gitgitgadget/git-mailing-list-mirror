@@ -1,301 +1,183 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A101DA5A
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 05:39:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6ED4685
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 05:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730093989; cv=none; b=rkhHN31QjvhZhrvj9UCIGqLU2AHXvL51mLFU+oEFuhuD2go8KO+Yx7yShL2hZVoN0QhcJTBu9y/ziPbemh/CRJcIwAqp7jN/A527AtACJbDj/KCVcxHjH++c0Hilhr5Aqpsl+pwZqj5jhrsbWB07ImMGZZZNkWqs9jy2SEzp5yQ=
+	t=1730094208; cv=none; b=NPBA1uTbuvJaiHNkiXiKhQGW8wd5i3q18VHolK9EdoYtwgprypW9XBPUHjwFR2cYS/XKVWAwwL0mK/ST8GRznxaU+idpFPTFtk1qu3oSxM88FZra+8vac2G6AIVRn8s/ur+urADTH/oMFg1CYjrzxYQmxux7ezYa0B2ZIX1/nGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730093989; c=relaxed/simple;
-	bh=aoJA/HG2VS41drW++JD7RBOAxOhd7jQLwsV3Jdj6TmU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PNNZH3vUMvtCMjHWHVg6Lv6kAh1n78UqEBR3CvxwcOrLh00qmS3LxSNpCpSHemMAjR0QIB5cpRs7QJMPngb7nyONiaUmNIKMMIoqLNKh0suASlYj+ZHqLenstYOtOcYsL4zGsuzvTuLQAjsiAfm5mfSeBbe+bw7ecCYK5lJrxz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AvYGDybR; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730094208; c=relaxed/simple;
+	bh=ruHMb87a/tzd8CRzrOwERNf44GqNexbI7TKFFg5wP9w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rkaHz+lBF3Yj4lQKCDU9AvkX+3aaApP12kYmosU5FjAHsHRUdyiFWNiVHhKjUbVa9EOBOgUegLxZR5efnupWUMWorXF9CC4rliT4lLSB5w/ZZVRniftyJx4JOfpbAd3d65KMJ86xjjNNT63BDCPZg0xMmXuzROFwD+q/JzSF/mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f14qzQLK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VPwRUNzY; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AvYGDybR"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e28fe3b02ffso3558709276.3
-        for <git@vger.kernel.org>; Sun, 27 Oct 2024 22:39:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730093986; x=1730698786; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RAyb1vLg5cJztPxolm+zaKoZJ79TRJNvlNAu31fKa9c=;
-        b=AvYGDybRz0kFUUQ+o4UihhSxaERT18KeWjM32OU19Q0JoFSAdk78oH5BU4dmWCPPTZ
-         QtKfbem5WRmTgP3nx+nty+NxxiigHwIFDr9x5pkaComIrg2gCQKt8QGcat0SuKCN5otb
-         W62q3SQ9y0W8uEIZ27Ggw+HpfoYZ1p8KScyy2MuFUqCYPPDujb5zCaB66leEmIk3T1zS
-         0ZqCLFFvJcxf1uVPC0w2u3wAogbu3bTu3VB2YmthCyoex0TECozcaNnk/RMIzy81dLzA
-         rnTCNBYFmXRLO3IAxtZix77m42+YupyZrtTTENPGKPknzeLJ5lCKaFeZ2Z2X1mgXoMkS
-         R7yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730093986; x=1730698786;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RAyb1vLg5cJztPxolm+zaKoZJ79TRJNvlNAu31fKa9c=;
-        b=kZhIv07w6qP4bY9EQ5jxkfLu7YRd5NcPT5KaKiWoH4A7YQjbO6tUd/vlOFYVS9Frgp
-         EbqcqdxCf1gasV4EEsnHXAvg2ymzmw3abV2td9Wu/+1l0GRyePes8ZdCtuEnTWT/rd7F
-         gyUocvniMWRA4OO62XQ7140I8nVUujIXCIhPrwvQ9EOliNTQY11yxbJJTlciPGk2x2L0
-         gSsjcHqlLJTCYgNerdCV19RB5WfL6ZF9m75IrODAV6drUQbdDxcs8KwsA8E9rBdCNj3m
-         rc+n2MYIjt5V4u3YtMf8oNQX6ro7tOwUbs3gXGUtbyYmkZPgCDxIKbGqf/4c2P9O8Fho
-         +LMw==
-X-Gm-Message-State: AOJu0YzrEg2WJGJAJIVrBM9Unb/PQskZAQdboHk2N+IkcDeQ4nWX+qxP
-	KqBaw7Oc2wtWuLE/Jwk3N/2E9nI49AhpqxknhCkfzTYhCyZaaxxuAhOJZN0p933XW7X4in3xolR
-	V0dtAULIomPB36SvWVKjrq/sGWHo=
-X-Google-Smtp-Source: AGHT+IEKrg2AMZHSdc69gMPZW0FwTPwplqO4jotgBxwgeLBmYwL3uIi27ytetN1O5/iVm2xiGFtZcwj0x+ty8lgL/BY=
-X-Received: by 2002:a05:6902:1685:b0:e28:e4bd:13f3 with SMTP id
- 3f1490d57ef6-e3087a6edc4mr5965849276.23.1730093985855; Sun, 27 Oct 2024
- 22:39:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f14qzQLK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VPwRUNzY"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id F3543114009F;
+	Mon, 28 Oct 2024 01:43:24 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Mon, 28 Oct 2024 01:43:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1730094204; x=1730180604; bh=ijAwB4uFw1
+	Bzit2Q2y4PKdxRAMiWdnZwTmXyHEhlBI4=; b=f14qzQLKYmhq3krXH6+S2mXrNP
+	X5npSnLX/zz2j9zFE5GIgqcYrc0M+mvQPWCf5DWhHpPyHLwdTMcBrjEzi8FGjlNs
+	sZTYHSLCND40lMzb6SbfcIONaNBjhqCjml5e8bobZz/nk/CInz2b22SJC5ohJJNS
+	sJrPj2u/qyfLJr6UldS6ApDNexWSdAqDIDrX+2WMQbUQf5OgvQWVDaLYH/kev/na
+	A6sboDIon5dx/pZFIFOHnyb9nJG6yLY6CuQ8rywsCv7ijP2RO87ipaKDyqfMwkgm
+	O0ViXvSQtG5Y/cQxw3ugQotls+R01bYQFd7qKgPPPWEJhEOEY+8huGlzRUbw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1730094204; x=1730180604; bh=ijAwB4uFw1Bzit2Q2y4PKdxRAMiW
+	dnZwTmXyHEhlBI4=; b=VPwRUNzYXRySoUt7TUJjr/blVibnIDSH9hThQP0Mx7bo
+	BLEyH8Kh7HPMz4sfLpt85nmcIz/OTrwk/jwi3TNy4eahRmtMwMjvVr/irhkKyYdx
+	AFNrIGJVj85Lsxg1BIP0876suHpWCmrcY3Mk4WuiJ7Zmb0G62QlboT570OFLxnxT
+	Hs8LUSzOJUY8KKWxJ24LPC4OWazaWET+SDJpI6cLlkJ+EE+IOyE/e46gzaykWf7u
+	S/0z1/J0mm6bbcNmj5Ip7tuVR1vCUGFmvkBcif9NUW9gmQ2N2PUUFBt/pCOcpVzi
+	Kl+wVLt2bs+yZRcKjR9sUrnSGf1aOL/XBexSRxLAYg==
+X-ME-Sender: <xms:fCQfZ4jCEFi0CwHQf1w32oHfKVky5WN96V09jcPOaeUvVv8eZt4amA>
+    <xme:fCQfZxAgPxscVVZ-46jJylZP6dce-Pgq6lPj4OedtFH4FOkKAKGNCBg5fOxwfka9s
+    NhNjsy5ekU1YxxfUQ>
+X-ME-Received: <xmr:fCQfZwFfz7YsALpNZS5gylgof-oQuTUO86TkDnci5cfYiUGZWfum-4tGKADmP6_RwDcMB33E3sI__Vg8HtpEDXkEYSWfdXVLigefFiGgZXdU-w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejjedgkeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpefhfefhfeehje
+    eivddvgeetfedtkeetlefggedvteelleehgfeffedvteetveegfeenucffohhmrghinhep
+    phhkshdrihhmpdihvghsthgvrhgurgihrdhpshenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
+    pedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:fCQfZ5TFdd0SNxrTDqnpgR0Qppag5jpcww3JU3PaDVIyDNcyhWBsJQ>
+    <xmx:fCQfZ1zcW9NrefKEP7ieq8cd4DimFbNLyddnGHbOJbSKPw1T5EoxmQ>
+    <xmx:fCQfZ34XzvNhd5RZ27ZWcOYoI8wsf_8YnI45tKRMfPk592vU9k6Zcg>
+    <xmx:fCQfZyzGoFYg4g7hCraUNABDziKQ_gQG0gZ8ntV-sPlRXKm80YMfHg>
+    <xmx:fCQfZw-ZywbwpYYj5ky5ROh0HAvYwBpY2er2h2S96mwLXWjczblLPZ-J>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Oct 2024 01:43:23 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5f7f1524 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 28 Oct 2024 05:43:16 +0000 (UTC)
+Date: Mon, 28 Oct 2024 06:43:16 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2024, #11; Fri, 25)
+Message-ID: <Zx8kbrQVmMyLV0-w@pks.im>
+References: <Zxv0SgY0oajpst8s@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20241024205359.16376-1-eric.peijian@gmail.com> <20241024205359.16376-5-eric.peijian@gmail.com>
- <CAOLa=ZS4XLNBeXewQ8O7tpobQfF9C9LKP--MVYghVR52hcqgWA@mail.gmail.com>
-In-Reply-To: <CAOLa=ZS4XLNBeXewQ8O7tpobQfF9C9LKP--MVYghVR52hcqgWA@mail.gmail.com>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Mon, 28 Oct 2024 01:39:35 -0400
-Message-ID: <CAN2LT1C1dh4oSO-3q71TX-BCy-JMoDXNXBSHA3P66_EjQ+0EKg@mail.gmail.com>
-Subject: Re: [PATCH v4 4/6] transport: add client support for object-info
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, toon@iotcl.com, jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zxv0SgY0oajpst8s@nand.local>
 
-On Fri, Oct 25, 2024 at 6:13=E2=80=AFAM karthik nayak <karthik.188@gmail.co=
-m> wrote:
->
-> Eric Ju <eric.peijian@gmail.com> writes:
->
-> [snip]
->
-> > diff --git a/fetch-pack.c b/fetch-pack.c
-> > index 800505f25f..1a9facc1c0 100644
-> > --- a/fetch-pack.c
-> > +++ b/fetch-pack.c
-> > @@ -1347,7 +1347,6 @@ static void write_command_and_capabilities(struct=
- strbuf *req_buf,
-> >       packet_buf_delim(req_buf);
-> >  }
-> >
-> > -
->
-> Seems like this was introduced in Patch 1/6, including the function
-> below which is not used in that patch.
->
+On Fri, Oct 25, 2024 at 03:40:58PM -0400, Taylor Blau wrote:
+> * ps/mingw-rename (2024-10-24) 3 commits
+>  - compat/mingw: support POSIX semantics for atomic renames
+>  - compat/mingw: allow deletion of most opened files
+>  - compat/mingw: share file handles created via `CreateFileW()`
+> 
+>  Teaches the MinGW compatibility layer to support POSIX semantics for
+>  atomic renames when other process(es) have a file opened at the
+>  destination path.
+> 
+>  Will merge to 'next'?
+>  source: <cover.1729770140.git.ps@pks.im>
 
-Thank you. As explained at
-https://lore.kernel.org/git/CAN2LT1CEPdTAxCEpKtd+8-5zKYSnh0PMqEXgAZ++TTMPPK=
-rD1g@mail.gmail.com/.
+I'd wait a couple of days for reviews on v3, which I have sent out
+yesterday.
 
-In Patch 1/6, I am moving `write_command_and_capabilities()` to connect.c.
-And I am moving `send_object_info_request()` to a new file
-fetch-object-info.c in patch 4/6 where it is used.
+> * ps/leakfixes-part-9 (2024-10-21) 22 commits
+>  - list-objects-filter-options: work around reported leak on error
+>  - builtin/merge: release outbut buffer after performing merge
+>  - dir: fix leak when parsing "status.showUntrackedFiles"
+>  - t/helper: fix leaking buffer in "dump-untracked-cache"
+>  - t/helper: stop re-initialization of `the_repository`
+>  - sparse-index: correctly free EWAH contents
+>  - dir: release untracked cache data
+>  - combine-diff: fix leaking lost lines
+>  - builtin/tag: fix leaking key ID on failure to sign
+>  - transport-helper: fix leaking import/export marks
+>  - builtin/commit: fix leaking cleanup config
+>  - trailer: fix leaking strbufs when formatting trailers
+>  - trailer: fix leaking trailer values
+>  - builtin/commit: fix leaking change data contents
+>  - upload-pack: fix leaking URI protocols
+>  - pretty: clear signature check
+>  - diff-lib: fix leaking diffopts in `do_diff_cache()`
+>  - revision: fix leaking bloom filters
+>  - builtin/grep: fix leak with `--max-count=0`
+>  - grep: fix leak in `grep_splice_or()`
+>  - t/helper: fix leaks in "reach" test tool
+>  - builtin/ls-remote: plug leaking server options
+> 
+>  More leakfixes.
+> 
+>  Needs review.
+>  source: <cover.1729502823.git.ps@pks.im>
 
+I'd be happy to get some eyes on this series. It's the second-last step
+to make Git leak-free, so there's only going to be one more such tedious
+series. And the last step is already waiting to be sent out :)
 
-> >  void send_object_info_request(int fd_out, struct object_info_args *arg=
-s)
-> >  {
-> >       struct strbuf req_buf =3D STRBUF_INIT;
-> > @@ -1706,6 +1705,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_=
-pack_args *args,
-> >       if (args->depth > 0 || args->deepen_since || args->deepen_not)
-> >               args->deepen =3D 1;
-> >
-> > +     if (args->object_info)
-> > +             state =3D FETCH_SEND_REQUEST;
-> > +
-> >       while (state !=3D FETCH_DONE) {
-> >               switch (state) {
-> >               case FETCH_CHECK_LOCAL:
->
-> [snip]
->
-> >  /*
-> >   * sought represents remote references that should be updated from.
-> >   * On return, the names that were found on the remote will have been
-> > @@ -106,4 +114,6 @@ int report_unmatched_refs(struct ref **sought, int =
-nr_sought);
-> >   */
-> >  int fetch_pack_fsck_objects(void);
-> >
-> > +void send_object_info_request(int fd_out, struct object_info_args *arg=
-s);
-> > +
-> >
->
-> Nit: Would be nice to have a comment here explaining what the function do=
-es.
->
+> * ps/platform-compat-fixes (2024-10-16) 10 commits
+>  (merged to 'next' on 2024-10-22 at 46b99d8301)
+>  + http: fix build error on FreeBSD
+>  + builtin/credential-cache: fix missing parameter for stub function
+>  + t7300: work around platform-specific behaviour with long paths on MinGW
+>  + t5500, t5601: skip tests which exercise paths with '[::1]' on Cygwin
+>  + t3404: work around platform-specific behaviour on macOS 10.15
+>  + t1401: make invocation of tar(1) work with Win32-provided one
+>  + t/lib-gpg: fix setup of GNUPGHOME in MinGW
+>  + t/lib-gitweb: test against the build version of gitweb
+>  + t/test-lib: wire up NO_ICONV prerequisite
+>  + t/test-lib: fix quoting of TEST_RESULTS_SAN_FILE
+>  (this branch is used by ps/build.)
+> 
+>  Various platform compatibility fixes split out of the larger effort
+>  to use Meson as the primary build tool.
+> 
+>  Will merge to 'master'.
+>  source: <cover.1729060405.git.ps@pks.im>
 
-Thank you. Added in v5.
+I've sent a fixup commit for t6006, which got subtly broken [1]. So
+let's first add that fixup and then continue merging down.
 
-> >  #endif
-> > diff --git a/transport-helper.c b/transport-helper.c
-> > index 013ec79dc9..2ff9675984 100644
-> > --- a/transport-helper.c
-> > +++ b/transport-helper.c
-> > @@ -709,8 +709,8 @@ static int fetch_refs(struct transport *transport,
-> >
-> >       /*
-> >        * If we reach here, then the server, the client, and/or the tran=
-sport
-> > -      * helper does not support protocol v2. --negotiate-only requires
-> > -      * protocol v2.
-> > +      * helper does not support protocol v2. --negotiate-only and cat-=
-file remote-object-info
->
-> Nit: could we wrap this comment?
->
+[1]: <ccb2d7cf817a181fab8fb083bdc9f1fed4671749.1730092261.git.ps@pks.im>
 
-Thank you, Fixed in v5.
+> * ps/upgrade-clar (2024-10-21) 5 commits
+>  - cmake: set up proper dependencies for generated clar headers
+>  - cmake: fix compilation of clar-based unit tests
+>  - Makefile: extract script to generate clar declarations
+>  - Makefile: adjust sed command for generating "clar-decls.h"
+>  - t/unit-tests: update clar to 206accb
+>  (this branch is used by ps/build.)
+> 
+>  Buildfix and upgrade of Clar to a newer version.
+> 
+>  Needs review.
+>  source: <cover.1729506329.git.ps@pks.im>
 
-> > +      * require protocol v2.
-> >        */
-> >       if (data->transport_options.acked_commits) {
-> >               warning(_("--negotiate-only requires protocol v2"));
->
-> [snip]
->
-> >  static struct ref *get_refs_via_connect(struct transport *transport, i=
-nt for_push,
-> >                                       struct transport_ls_refs_options =
-*options)
-> >  {
-> > @@ -418,6 +489,7 @@ static int fetch_refs_via_pack(struct transport *tr=
-ansport,
-> >       struct ref *refs =3D NULL;
-> >       struct fetch_pack_args args;
-> >       struct ref *refs_tmp =3D NULL, **to_fetch_dup =3D NULL;
-> > +     struct ref *object_info_refs =3D NULL;
-> >
-> >       memset(&args, 0, sizeof(args));
-> >       args.uploadpack =3D data->options.uploadpack;
-> > @@ -444,11 +516,36 @@ static int fetch_refs_via_pack(struct transport *=
-transport,
-> >       args.server_options =3D transport->server_options;
-> >       args.negotiation_tips =3D data->options.negotiation_tips;
-> >       args.reject_shallow_remote =3D transport->smart_options->reject_s=
-hallow;
-> > +     args.object_info =3D transport->smart_options->object_info;
-> > +
-> > +     if (transport->smart_options
-> > +             && transport->smart_options->object_info
-> > +             && transport->smart_options->object_info_oids->nr > 0) {
-> > +             struct ref *ref_itr =3D object_info_refs =3D alloc_ref(""=
-);
-> > +
-> > +             if (!fetch_object_info(transport, data->options.object_in=
-fo_data))
-> > +                     goto cleanup;
->
-> So if we were successful, we skip to the cleanup. Okay.
->
+Bagas has tested this series on the previously-broken platform [2] and I've
+got a review from Karthik [3]. So I'd think that it's mostly ready to go by
+now.
 
-Yes, that is right.
+[2]: <Zxx3nmfp61DR6vvB@archie.me>
+[3]: <CAOLa=ZR6cnhxy7K7TChxLafm7Ep0XUVFSK+LgNPtNX8yVLyWtA@mail.gmail.com>
 
-> > +             args.object_info_data =3D data->options.object_info_data;
-> > +             args.quiet =3D 1;
-> > +             args.no_progress =3D 1;
->
-> Not sure why we set quiet and no_progress here.
->
-
-Thank you.  If the code reaches here, it means we fall back to
-downloading the pack file with fetch_pack().
-Setting quiet and no_progress just wants to make fetch_pack less
-verbose and do its job quietly in the background.
-It is like calling `git fetch-pack -q ...`. I see setting quiet and
-no_progress is necessary here because:
-1. If the call git fetch-pack is from an internal command, we would
-better keep the call lean and efficient.
-2. If the user wants to do a verbose call, they have the choice to
-call git fetch-pack directly from the client.
-
-I add a comment in v5 to explain it, like this:
-" we can't retrieve object info in packets, so we will fall back to
-downland pack files. We set quiet and no_progress to be true, so that
-the internal call of fetch-pack is less verbose."
-
-
-
-> > +             for (size_t i =3D 0; i < transport->smart_options->object=
-_info_oids->nr; i++) {
-> > +                     ref_itr->old_oid =3D transport->smart_options->ob=
-ject_info_oids->oid[i];
-> > +                     ref_itr->exact_oid =3D 1;
-> > +                     if (i =3D=3D transport->smart_options->object_inf=
-o_oids->nr - 1)
-> > +                             /* last element, no need to allocate to n=
-ext */
-> > +                             ref_itr->next =3D NULL;
-> > +                     else
-> > +                             ref_itr->next =3D alloc_ref("");
-> >
-> > -     if (!data->finished_handshake) {
-> > -             int i;
-> > +                     ref_itr =3D ref_itr->next;
-> > +             }
-> > +
-> > +             transport->remote_refs =3D object_info_refs;
-> > +
-> > +     } else if (!data->finished_handshake) {
-> >               int must_list_refs =3D 0;
-> > -             for (i =3D 0; i < nr_heads; i++) {
-> > +             for (int i =3D 0; i < nr_heads; i++) {
-> >                       if (!to_fetch[i]->exact_oid) {
-> >                               must_list_refs =3D 1;
-> >                               break;
-> > @@ -494,16 +591,26 @@ static int fetch_refs_via_pack(struct transport *=
-transport,
-> >                         &transport->pack_lockfiles, data->version);
-> >
-> >       data->finished_handshake =3D 0;
-> > +     if (args.object_info) {
-> > +             struct ref *ref_cpy_reader =3D object_info_refs;
-> > +             for (int i =3D 0; ref_cpy_reader; i++) {
-> > +                     oid_object_info_extended(the_repository, &ref_cpy=
-_reader->old_oid,
-> > +                             &args.object_info_data[i], OBJECT_INFO_LO=
-OKUP_REPLACE);
-> > +                     ref_cpy_reader =3D ref_cpy_reader->next;
-> > +             }
-> > +     }
-> > +
-> >       data->options.self_contained_and_connected =3D
-> >               args.self_contained_and_connected;
-> >       data->options.connectivity_checked =3D args.connectivity_checked;
-> >
-> > -     if (!refs)
-> > +     if (!refs && !args.object_info)
-> >               ret =3D -1;
->
-> This is because, now we don't necessary always fetch the refs, since
-> sometimes we're just happy fetching the object info. Would be nice to
-> have a comment here.
->
-
-Thank you. Acutally, if the code reaches here, it means we fall back
-to downloading the pack file.
-I would expect there is no difference from the old logic, so
-`!args.object_info` might not be needed here.
-I am removing `!args.object_info` in v5.
-
-> >       if (report_unmatched_refs(to_fetch, nr_heads))
-> >               ret =3D -1;
-> >
-> >  cleanup:
-> > +     free_refs(object_info_refs);
-> >       close(data->fd[0]);
-> >       if (data->fd[1] >=3D 0)
-> >               close(data->fd[1]);
->
->
-> [snip]
+Patrick
