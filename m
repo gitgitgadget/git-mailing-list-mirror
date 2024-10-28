@@ -1,63 +1,63 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFB11DC19D
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 13:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6A11DE2A2
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 13:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730123040; cv=none; b=EDweoR/8Qo/ePcW50XKVt/mOEjVoKI6Yz4K5tHoHz19utAKK/CUirXBgjYmYeam7KVFTzHsa3cgmMsJXg+FlwLHrMte51dNnMr1nUqAl6HuyGwTC8SZDBIbEWhWvik0dCqXiVIlyGiw4Qvh4TTgvWTxPfSbqb5FapKp7wf9ZuVY=
+	t=1730123041; cv=none; b=dkfzT1pNvwSTULUWQJAjz/DnFJts1ei+KVp1g4bkJim/s77GmDyRGcVgsKwoGWNYMJDjFKWBZvO7EkdaQnvAWQdpXakA7JHFSFS/3QYn3d4t3SxJrPmvXLlyHw/Gdu61aG++RSQiWcWIAUqDNwGtPm3pXFfFa87yYkGhIWak2V8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730123040; c=relaxed/simple;
-	bh=29NktVRS7BDcJvAIZiQdLl+YUZxlxmUswIrWlokgpEs=;
+	s=arc-20240116; t=1730123041; c=relaxed/simple;
+	bh=4jsu2avaWsAOhlNRBCPJxT5dxsP7+A5hMtC4yVPBTI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Va6tyQIeqdcmQc0wBfKvzZY74uEIUJN3IKccF8cRVAepkIjePl+g3t5b3iOKCdMInhiu3SCFYGuRTEsKc2C7+8P8Yzl1cEe5bBhDwZNsUCAbzGmeh8W0lPGu0rQ66h2fNd2pwG53HPL4b4ToyiHBut8dhizOAmMyM7GKX5GydLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D9+jTRpN; arc=none smtp.client-ip=209.85.218.54
+	 MIME-Version; b=hsNHp3/fdG2cvM9LxFGnkBV6keMl3i6SwK7R7LlsuaoykoOcEV9SvjT9CaLfIa85V98wbMwMD3wUAhM1jMc8VVmqv3AYiTgmuD0WDwMjXsmKJ3ydkHNOCx4Y92erJKAdXfcF0Zvk5MQy2UNhczb40eyBTHuSw8sYUb44lYfOhOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VBGXK9KL; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D9+jTRpN"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a9a1b71d7ffso654631666b.1
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 06:43:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VBGXK9KL"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a9a1b71d7ffso654633666b.1
+        for <git@vger.kernel.org>; Mon, 28 Oct 2024 06:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730123035; x=1730727835; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730123037; x=1730727837; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RRCz/qV1QVQ6e9ttFF+c8lue0LbbnseeINmK7vY3E4E=;
-        b=D9+jTRpNS8NOs62rvXsGuWZ8E0fYsqVeDf6zCnUnIegcartDR9oDFlEMTuZk3CNO+z
-         qG1s/s9rB4yWu7sjYKdOujRtBF5b63Uq7zaoHtlV8Pe5ASLCgOIFrQHDmKLGP2V+1tHi
-         XFfmSi2iTOaxrhE48Rqdiwslarg/V5Y9S3JkZl1d429j83aFVosvCCO36b4lLco6adZ/
-         tXqA9XVZ58bCV9boTsCtrEgysLDk/MTkvpSwHxLlxg1fF1JNA5GRPBWyQD2H1uJPk3c+
-         nGdj1UFI/9GACcquBuDQW68H0aKdw3DhDsOR+kDXtgwW22+oXLIh+updWAIsRqwsL4yK
-         d1EQ==
+        bh=hwy5rCwOCC4gSFH82M192kCV5wclpRjQ6TNQvLmYnaE=;
+        b=VBGXK9KL9l5rP+c2EkdniQtfvG8bNn1orsaYzoINbngwWx87dzQZnTSkzF0kvey76P
+         QdApMiTqJY0UeMNnkZzfxeVWaohGLULhcJt9pZ08Uias+j7eSKoijvIPgRDuxvqyMi04
+         d9ZmDfo2sVsEF0DPE3+pMkoghIyYqW26eGq6PJcYRYGFHSJ0dvcooOhSbL0HHiEO7T/X
+         S3NuLfT+1F7shK6iqH3EQ5RKjl2B5D1CDNDdb9R/cKB+k2lLH2iQMzvEcyVkAzzFk473
+         +jGRs4lV3FkLnkjkSdr/PnrkN4+otUx/rvma1/+tJDv40ZmOq+u8Ffwy0yG3O4Kc6AJE
+         uJ6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730123035; x=1730727835;
+        d=1e100.net; s=20230601; t=1730123037; x=1730727837;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RRCz/qV1QVQ6e9ttFF+c8lue0LbbnseeINmK7vY3E4E=;
-        b=OQk7/VlFPMW9oyQLIjTUAXExdC0l3SDB8OFAmlzY4m0E5lsnUKCIohvdB+pcniVL63
-         5fMVj2leFT3qJIeuEl1n6FP117ehAEWV71agsnNemk9S239nk+TrszgCU6L7V/LGTHMs
-         6wtUyxt/PBr/atJNeXCIj8GSSAgwTT4UoHhlhO9GJbYb6cuxSdKyin/0LMk00ep9dEJm
-         955EHNUQnSWwaAIi88M1SKbtWuOUgipVThNj1Vmu5dDVcMfrDIKGUT6j/l+8EuWe00qY
-         qJsTMVQbs8KdMVT1wGkCKi0+YNfJKhg/pmFSZgfdsEhi6ikTArTiMpc/NTWWUvLXQz5F
-         oA9w==
-X-Gm-Message-State: AOJu0YzVz9xin+tPLnBHlnJKMU3r5kehvdtG4VRp2ctSF5GnGy44hOst
-	NlZ8qzkU0+91l7gc9OQDFOlhxpKYx1yGuUyTYKP5aysUO8odZ6SBAaIn0S8D
-X-Google-Smtp-Source: AGHT+IFdcYYU1Ra9poo2G8TDqSU/UoYzp7jnNJjzcjCUnZ3p+Jjse/R0nc3/lMb4u4y/yajBHempzg==
-X-Received: by 2002:a17:907:928b:b0:a9a:c769:5a5 with SMTP id a640c23a62f3a-a9de6157232mr784628266b.50.1730123035198;
-        Mon, 28 Oct 2024 06:43:55 -0700 (PDT)
+        bh=hwy5rCwOCC4gSFH82M192kCV5wclpRjQ6TNQvLmYnaE=;
+        b=rF+Om58cW+C6bD5pKGqM0wRmcF6kKzk4T+VcF6Xz+iGIldIBY2DvcDySHXYFPGyTGd
+         AkSoLk5fqeow7IMXwNZdQUEKCd0gDFxR/YcG3YPt6bsNNh11O7QNJImPCYsJIf/m5CA7
+         weimL5Hjx+aLO8Do9eEy1yTEaIi2lX3mRlleCaML4IqyBcssaqiUa2BLKVot4jBjwf17
+         OBhvnjD8HB+Y672AYloq4M9X+6mxlzKFVPPi4IGRqQG6k+nxoiixqmAxqVPs+SffRaO3
+         HZp2++4kclD75nj8DYurAX8hUZvRpxrazWenVDN4OEN+NMiXryjsFHeEujql0FrPc6hC
+         b0Lg==
+X-Gm-Message-State: AOJu0Yz++cvnifT0+R8q1Ad35MjwtYzukxva0d7ZVPXpr1de2hzRLK5d
+	1UGxZgbnFXJc1Q4snWUTd7ppoAyRBNG/9I6G5PoNWwzTk7a7qo4d
+X-Google-Smtp-Source: AGHT+IEShkCvfXVAep0kHdyPOQYYTTlXqXlnsFczZXxEZOxRvWF2a4ESXO89M5J7uufC1Bt02Q3S+w==
+X-Received: by 2002:a17:907:9449:b0:a99:f92a:7a66 with SMTP id a640c23a62f3a-a9de5d783e5mr789917066b.30.1730123036449;
+        Mon, 28 Oct 2024 06:43:56 -0700 (PDT)
 Received: from archlinux.fritz.box ([2a02:2455:825d:6a00:6bb4:436f:5699:ff21])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1f2971e8sm376647466b.125.2024.10.28.06.43.54
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1f2971e8sm376647466b.125.2024.10.28.06.43.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 06:43:54 -0700 (PDT)
+        Mon, 28 Oct 2024 06:43:55 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	me@ttaylorr.com
-Subject: [PATCH v2 6/8] packfile: pass down repository to `for_each_packed_object`
-Date: Mon, 28 Oct 2024 14:43:44 +0100
-Message-ID: <7c599e16f61993fbbcc2c05e58981e638cb96f27.1730122499.git.karthik.188@gmail.com>
+Subject: [PATCH v2 7/8] config: make `delta_base_cache_limit` a non-global variable
+Date: Mon, 28 Oct 2024 14:43:45 +0100
+Message-ID: <89ee3f48ce982236dd7841fa1a5cb15aa256b901.1730122499.git.karthik.188@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1730122499.git.karthik.188@gmail.com>
 References: <cover.1730122499.git.karthik.188@gmail.com>
@@ -69,374 +69,231 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The function `for_each_packed_object` currently relies on the global
-variable `the_repository`. To eliminate global variable usage in
-`packfile.c`, we should progressively shift the dependency on
-the_repository to higher layers. Let's remove its usage from this
-function and closely related function `is_promisor_object`.
+The `delta_base_cache_limit` variable is a global config variable used
+by multiple subsystems. Let's make this non-global, by adding this
+variable to the stack of each of the subsystems where it is used.
+
+In `gc.c` we add it to the `gc_config` struct and also the constructor
+function. In `index-pack.c` we add it to the `pack_idx_option` struct
+and its constructor. Finally, in `packfile.c` we dynamically retrieve
+this value from the repository config, since the value is only used once
+in the entire subsystem.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/cat-file.c     |  7 ++++---
- builtin/fsck.c         | 18 +++++++++++-------
- builtin/pack-objects.c |  7 +++++--
- builtin/repack.c       |  2 +-
- builtin/rev-list.c     |  2 +-
- commit-graph.c         |  2 +-
- fsck.c                 |  2 +-
- list-objects.c         |  4 ++--
- object-store-ll.h      |  4 ++--
- packfile.c             | 14 +++++++-------
- packfile.h             |  2 +-
- promisor-remote.c      |  2 +-
- reachable.c            |  2 +-
- revision.c             |  9 +++++----
- tag.c                  |  2 +-
- 15 files changed, 44 insertions(+), 35 deletions(-)
+ builtin/gc.c         |  5 ++++-
+ builtin/index-pack.c | 10 +++++++---
+ config.c             |  5 -----
+ environment.c        |  1 -
+ environment.h        |  1 -
+ pack-objects.h       |  3 ++-
+ pack-write.c         |  1 +
+ pack.h               |  1 +
+ packfile.c           | 13 +++++++++++--
+ 9 files changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index bfdfb51c7c..d67b101c20 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -827,15 +827,16 @@ static int batch_objects(struct batch_options *opt)
- 			cb.seen = &seen;
+diff --git a/builtin/gc.c b/builtin/gc.c
+index d52735354c..9a10eb58bc 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -138,6 +138,7 @@ struct gc_config {
+ 	char *repack_filter_to;
+ 	unsigned long big_pack_threshold;
+ 	unsigned long max_delta_cache_size;
++	unsigned long delta_base_cache_limit;
+ };
  
- 			for_each_loose_object(batch_unordered_loose, &cb, 0);
--			for_each_packed_object(batch_unordered_packed, &cb,
--					       FOR_EACH_OBJECT_PACK_ORDER);
-+			for_each_packed_object(the_repository, batch_unordered_packed,
-+					       &cb, FOR_EACH_OBJECT_PACK_ORDER);
+ #define GC_CONFIG_INIT { \
+@@ -153,6 +154,7 @@ struct gc_config {
+ 	.prune_expire = xstrdup("2.weeks.ago"), \
+ 	.prune_worktrees_expire = xstrdup("3.months.ago"), \
+ 	.max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE, \
++	.delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT, \
+ }
  
- 			oidset_clear(&seen);
- 		} else {
- 			struct oid_array sa = OID_ARRAY_INIT;
+ static void gc_config_release(struct gc_config *cfg)
+@@ -205,6 +207,7 @@ static void gc_config(struct gc_config *cfg)
  
- 			for_each_loose_object(collect_loose_object, &sa, 0);
--			for_each_packed_object(collect_packed_object, &sa, 0);
-+			for_each_packed_object(the_repository, collect_packed_object,
-+					       &sa, 0);
+ 	git_config_get_ulong("gc.bigpackthreshold", &cfg->big_pack_threshold);
+ 	git_config_get_ulong("pack.deltacachesize", &cfg->max_delta_cache_size);
++	git_config_get_ulong("core.deltabasecachelimit", &cfg->delta_base_cache_limit);
  
- 			oid_array_for_each_unique(&sa, batch_object_cb, &cb);
- 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index bb56eb98ac..0196c54eb6 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -150,7 +150,7 @@ static int mark_object(struct object *obj, enum object_type type,
- 		return 0;
- 	obj->flags |= REACHABLE;
- 
--	if (is_promisor_object(&obj->oid))
-+	if (is_promisor_object(the_repository, &obj->oid))
- 		/*
- 		 * Further recursion does not need to be performed on this
- 		 * object since it is a promisor object (so it does not need to
-@@ -270,7 +270,7 @@ static void check_reachable_object(struct object *obj)
- 	 * do a full fsck
+ 	if (!git_config_get_string("gc.repackfilter", &owned)) {
+ 		free(cfg->repack_filter);
+@@ -416,7 +419,7 @@ static uint64_t estimate_repack_memory(struct gc_config *cfg,
+ 	 * read_sha1_file() (either at delta calculation phase, or
+ 	 * writing phase) also fills up the delta base cache
  	 */
- 	if (!(obj->flags & HAS_OBJ)) {
--		if (is_promisor_object(&obj->oid))
-+		if (is_promisor_object(the_repository, &obj->oid))
- 			return;
- 		if (has_object_pack(the_repository, &obj->oid))
- 			return; /* it is in pack - forget about it */
-@@ -391,7 +391,10 @@ static void check_connectivity(void)
- 		 * traversal.
- 		 */
- 		for_each_loose_object(mark_loose_unreachable_referents, NULL, 0);
--		for_each_packed_object(mark_packed_unreachable_referents, NULL, 0);
-+		for_each_packed_object(the_repository,
-+				       mark_packed_unreachable_referents,
-+				       NULL,
-+				       0);
+-	heap += delta_base_cache_limit;
++	heap += cfg->delta_base_cache_limit;
+ 	/* and of course pack-objects has its own delta cache */
+ 	heap += cfg->max_delta_cache_size;
+ 
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index eaefb41761..23bfa45403 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1238,7 +1238,7 @@ static void parse_pack_objects(unsigned char *hash)
+  *   recursively checking if the resulting object is used as a base
+  *   for some more deltas.
+  */
+-static void resolve_deltas(void)
++static void resolve_deltas(struct pack_idx_option *opts)
+ {
+ 	int i;
+ 
+@@ -1254,7 +1254,7 @@ static void resolve_deltas(void)
+ 					  nr_ref_deltas + nr_ofs_deltas);
+ 
+ 	nr_dispatched = 0;
+-	base_cache_limit = delta_base_cache_limit * nr_threads;
++	base_cache_limit = opts->delta_base_cache_limit * nr_threads;
+ 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
+ 		init_thread();
+ 		work_lock();
+@@ -1604,6 +1604,10 @@ static int git_index_pack_config(const char *k, const char *v,
+ 		else
+ 			opts->flags &= ~WRITE_REV;
+ 	}
++	if (!strcmp(k, "core.deltabasecachelimit")) {
++		opts->delta_base_cache_limit = git_config_ulong(k, v, ctx->kvi);
++		return 0;
++	}
+ 	return git_default_config(k, v, ctx, cb);
+ }
+ 
+@@ -1930,7 +1934,7 @@ int cmd_index_pack(int argc,
+ 	parse_pack_objects(pack_hash);
+ 	if (report_end_of_input)
+ 		write_in_full(2, "\0", 1);
+-	resolve_deltas();
++	resolve_deltas(&opts);
+ 	conclude_pack(fix_thin_pack, curr_pack, pack_hash);
+ 	free(ofs_deltas);
+ 	free(ref_deltas);
+diff --git a/config.c b/config.c
+index a11bb85da3..728ef98e42 100644
+--- a/config.c
++++ b/config.c
+@@ -1515,11 +1515,6 @@ static int git_default_core_config(const char *var, const char *value,
+ 		return 0;
  	}
  
- 	/* Look up all the requirements, warn about missing objects.. */
-@@ -488,7 +491,7 @@ static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
- 						     refname, timestamp);
- 			obj->flags |= USED;
- 			mark_object_reachable(obj);
--		} else if (!is_promisor_object(oid)) {
-+		} else if (!is_promisor_object(the_repository, oid)) {
- 			error(_("%s: invalid reflog entry %s"),
- 			      refname, oid_to_hex(oid));
- 			errors_found |= ERROR_REACHABLE;
-@@ -531,7 +534,7 @@ static int fsck_handle_ref(const char *refname, const char *referent UNUSED, con
+-	if (!strcmp(var, "core.deltabasecachelimit")) {
+-		delta_base_cache_limit = git_config_ulong(var, value, ctx->kvi);
+-		return 0;
+-	}
+-
+ 	if (!strcmp(var, "core.autocrlf")) {
+ 		if (value && !strcasecmp(value, "input")) {
+ 			auto_crlf = AUTO_CRLF_INPUT;
+diff --git a/environment.c b/environment.c
+index a2ce998081..8e5022c282 100644
+--- a/environment.c
++++ b/environment.c
+@@ -51,7 +51,6 @@ enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
+ enum fsync_component fsync_components = FSYNC_COMPONENTS_DEFAULT;
+ size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
+ size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
+-size_t delta_base_cache_limit = 96 * 1024 * 1024;
+ unsigned long big_file_threshold = 512 * 1024 * 1024;
+ char *editor_program;
+ char *askpass_program;
+diff --git a/environment.h b/environment.h
+index 923e12661e..2f43340f0b 100644
+--- a/environment.h
++++ b/environment.h
+@@ -165,7 +165,6 @@ extern int zlib_compression_level;
+ extern int pack_compression_level;
+ extern size_t packed_git_window_size;
+ extern size_t packed_git_limit;
+-extern size_t delta_base_cache_limit;
+ extern unsigned long big_file_threshold;
+ extern unsigned long pack_size_limit_cfg;
+ extern int max_allowed_tree_depth;
+diff --git a/pack-objects.h b/pack-objects.h
+index b9898a4e64..3f6f504203 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -7,7 +7,8 @@
  
- 	obj = parse_object(the_repository, oid);
- 	if (!obj) {
--		if (is_promisor_object(oid)) {
-+		if (is_promisor_object(the_repository, oid)) {
- 			/*
- 			 * Increment default_refs anyway, because this is a
- 			 * valid ref.
-@@ -966,7 +969,8 @@ int cmd_fsck(int argc,
+ struct repository;
  
- 	if (connectivity_only) {
- 		for_each_loose_object(mark_loose_for_connectivity, NULL, 0);
--		for_each_packed_object(mark_packed_for_connectivity, NULL, 0);
-+		for_each_packed_object(the_repository,
-+				       mark_packed_for_connectivity, NULL, 0);
- 	} else {
- 		prepare_alt_odb(the_repository);
- 		for (odb = the_repository->objects->odb; odb; odb = odb->next)
-@@ -1011,7 +1015,7 @@ int cmd_fsck(int argc,
- 							   &oid);
+-#define DEFAULT_DELTA_CACHE_SIZE (256 * 1024 * 1024)
++#define DEFAULT_DELTA_CACHE_SIZE       (256 * 1024 * 1024)
++#define DEFAULT_DELTA_BASE_CACHE_LIMIT (96 * 1024 * 1024)
  
- 			if (!obj || !(obj->flags & HAS_OBJ)) {
--				if (is_promisor_object(&oid))
-+				if (is_promisor_object(the_repository, &oid))
- 					continue;
- 				error(_("%s: object missing"), oid_to_hex(&oid));
- 				errors_found |= ERROR_OBJECT;
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 2b2816c243..3635b2c84c 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3858,7 +3858,8 @@ static void show_object__ma_allow_promisor(struct object *obj, const char *name,
- 	 * Quietly ignore EXPECTED missing objects.  This avoids problems with
- 	 * staging them now and getting an odd error later.
+ #define OE_DFS_STATE_BITS	2
+ #define OE_DEPTH_BITS		12
+diff --git a/pack-write.c b/pack-write.c
+index 8c7dfddc5a..98a8c0e785 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -21,6 +21,7 @@ void reset_pack_idx_option(struct pack_idx_option *opts)
+ 	memset(opts, 0, sizeof(*opts));
+ 	opts->version = 2;
+ 	opts->off32_limit = 0x7fffffff;
++	opts->delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT;
+ }
+ 
+ static int sha1_compare(const void *_a, const void *_b)
+diff --git a/pack.h b/pack.h
+index 02bbdfb19c..1a33751565 100644
+--- a/pack.h
++++ b/pack.h
+@@ -58,6 +58,7 @@ struct pack_idx_option {
  	 */
--	if (!has_object(the_repository, &obj->oid, 0) && is_promisor_object(&obj->oid))
-+	if (!has_object(the_repository, &obj->oid, 0) &&
-+	    is_promisor_object(the_repository, &obj->oid))
- 		return;
+ 	int anomaly_alloc, anomaly_nr;
+ 	uint32_t *anomaly;
++	unsigned long delta_base_cache_limit;
+ };
  
- 	show_object(obj, name, data);
-@@ -3927,7 +3928,9 @@ static int add_object_in_unpacked_pack(const struct object_id *oid,
- 
- static void add_objects_in_unpacked_packs(void)
- {
--	if (for_each_packed_object(add_object_in_unpacked_pack, NULL,
-+	if (for_each_packed_object(the_repository,
-+				   add_object_in_unpacked_pack,
-+				   NULL,
- 				   FOR_EACH_OBJECT_PACK_ORDER |
- 				   FOR_EACH_OBJECT_LOCAL_ONLY |
- 				   FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS |
-diff --git a/builtin/repack.c b/builtin/repack.c
-index d6bb37e84a..96a4fa234b 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -404,7 +404,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
- 	 * {type -> existing pack order} ordering when computing deltas instead
- 	 * of a {type -> size} ordering, which may produce better deltas.
- 	 */
--	for_each_packed_object(write_oid, &cmd,
-+	for_each_packed_object(the_repository, write_oid, &cmd,
- 			       FOR_EACH_OBJECT_PROMISOR_ONLY);
- 
- 	if (cmd.in == -1) {
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index f62bcbf2b1..43c42621e3 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -121,7 +121,7 @@ static inline void finish_object__ma(struct object *obj)
- 		return;
- 
- 	case MA_ALLOW_PROMISOR:
--		if (is_promisor_object(&obj->oid))
-+		if (is_promisor_object(the_repository, &obj->oid))
- 			return;
- 		die("unexpected missing %s object '%s'",
- 		    type_name(obj->type), oid_to_hex(&obj->oid));
-diff --git a/commit-graph.c b/commit-graph.c
-index 83dd69bfeb..e2e2083951 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1960,7 +1960,7 @@ static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
- 		ctx->progress = start_delayed_progress(
- 			_("Finding commits for commit graph among packed objects"),
- 			ctx->approx_nr_objects);
--	for_each_packed_object(add_packed_commits, ctx,
-+	for_each_packed_object(ctx->r, add_packed_commits, ctx,
- 			       FOR_EACH_OBJECT_PACK_ORDER);
- 	if (ctx->progress_done < ctx->approx_nr_objects)
- 		display_progress(ctx->progress, ctx->approx_nr_objects);
-diff --git a/fsck.c b/fsck.c
-index 3756f52459..87ce999a49 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -1295,7 +1295,7 @@ static int fsck_blobs(struct oidset *blobs_found, struct oidset *blobs_done,
- 
- 		buf = repo_read_object_file(the_repository, oid, &type, &size);
- 		if (!buf) {
--			if (is_promisor_object(oid))
-+			if (is_promisor_object(the_repository, oid))
- 				continue;
- 			ret |= report(options,
- 				      oid, OBJ_BLOB, msg_missing,
-diff --git a/list-objects.c b/list-objects.c
-index 31236a8dc9..d11a389b3a 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -75,7 +75,7 @@ static void process_blob(struct traversal_context *ctx,
- 	 */
- 	if (ctx->revs->exclude_promisor_objects &&
- 	    !repo_has_object_file(the_repository, &obj->oid) &&
--	    is_promisor_object(&obj->oid))
-+	    is_promisor_object(ctx->revs->repo, &obj->oid))
- 		return;
- 
- 	pathlen = path->len;
-@@ -180,7 +180,7 @@ static void process_tree(struct traversal_context *ctx,
- 		 * an incomplete list of missing objects.
- 		 */
- 		if (revs->exclude_promisor_objects &&
--		    is_promisor_object(&obj->oid))
-+		    is_promisor_object(revs->repo, &obj->oid))
- 			return;
- 
- 		if (!revs->do_not_die_on_missing_objects)
-diff --git a/object-store-ll.h b/object-store-ll.h
-index 8b31072b09..6f9f4276e6 100644
---- a/object-store-ll.h
-+++ b/object-store-ll.h
-@@ -550,7 +550,7 @@ typedef int each_packed_object_fn(const struct object_id *oid,
- int for_each_object_in_pack(struct packed_git *p,
- 			    each_packed_object_fn, void *data,
- 			    enum for_each_object_flags flags);
--int for_each_packed_object(each_packed_object_fn, void *,
--			   enum for_each_object_flags flags);
-+int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
-+			   void *data, enum for_each_object_flags flags);
- 
- #endif /* OBJECT_STORE_LL_H */
+ void reset_pack_idx_option(struct pack_idx_option *);
 diff --git a/packfile.c b/packfile.c
-index c6d7ed38f6..74ac6d793b 100644
+index 74ac6d793b..93b0d6af31 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -2200,15 +2200,15 @@ int for_each_object_in_pack(struct packed_git *p,
- 	return r;
+@@ -24,6 +24,8 @@
+ #include "commit-graph.h"
+ #include "pack-revindex.h"
+ #include "promisor-remote.h"
++#include "config.h"
++#include "pack-objects.h"
+ 
+ char *odb_pack_name(struct repository *repo, struct strbuf *buf,
+ 		    const unsigned char *hash, const char *ext)
+@@ -1496,7 +1498,9 @@ void clear_delta_base_cache(void)
  }
  
--int for_each_packed_object(each_packed_object_fn cb, void *data,
--			   enum for_each_object_flags flags)
-+int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
-+			   void *data, enum for_each_object_flags flags)
+ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
+-	void *base, unsigned long base_size, enum object_type type)
++				 void *base, unsigned long base_size,
++				 unsigned long delta_base_cache_limit,
++				 enum object_type type)
  {
- 	struct packed_git *p;
- 	int r = 0;
- 	int pack_errors = 0;
+ 	struct delta_base_cache_entry *ent;
+ 	struct list_head *lru, *tmp;
+@@ -1697,6 +1701,9 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
+ 	struct unpack_entry_stack_ent *delta_stack = small_delta_stack;
+ 	int delta_stack_nr = 0, delta_stack_alloc = UNPACK_ENTRY_STACK_PREALLOC;
+ 	int base_from_cache = 0;
++	unsigned long delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT;
++
++	repo_config_get_ulong(r, "core.deltabasecachelimit", &delta_base_cache_limit);
  
--	prepare_packed_git(the_repository);
--	for (p = get_all_packs(the_repository); p; p = p->next) {
-+	prepare_packed_git(repo);
-+	for (p = get_all_packs(repo); p; p = p->next) {
- 		if ((flags & FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
- 			continue;
- 		if ((flags & FOR_EACH_OBJECT_PROMISOR_ONLY) &&
-@@ -2286,14 +2286,14 @@ static int add_promisor_object(const struct object_id *oid,
- 	return 0;
- }
+ 	write_pack_access_log(p, obj_offset);
  
--int is_promisor_object(const struct object_id *oid)
-+int is_promisor_object(struct repository *repo, const struct object_id *oid)
- {
- 	static struct oidset promisor_objects;
- 	static int promisor_objects_prepared;
+@@ -1878,7 +1885,9 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
+ 		 * before we are done using it.
+ 		 */
+ 		if (!external_base)
+-			add_delta_base_cache(p, base_obj_offset, base, base_size, type);
++			add_delta_base_cache(p, base_obj_offset, base,
++					     base_size, delta_base_cache_limit,
++					     type);
  
- 	if (!promisor_objects_prepared) {
--		if (repo_has_promisor_remote(the_repository)) {
--			for_each_packed_object(add_promisor_object,
-+		if (repo_has_promisor_remote(repo)) {
-+			for_each_packed_object(repo, add_promisor_object,
- 					       &promisor_objects,
- 					       FOR_EACH_OBJECT_PROMISOR_ONLY |
- 					       FOR_EACH_OBJECT_PACK_ORDER);
-diff --git a/packfile.h b/packfile.h
-index ac4f2210c5..c1883e60ef 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -201,7 +201,7 @@ int has_object_kept_pack(struct repository *repo, const struct object_id *oid,
-  * Return 1 if an object in a promisor packfile is or refers to the given
-  * object, 0 otherwise.
-  */
--int is_promisor_object(const struct object_id *oid);
-+int is_promisor_object(struct repository *repo, const struct object_id *oid);
- 
- /*
-  * Expose a function for fuzz testing.
-diff --git a/promisor-remote.c b/promisor-remote.c
-index 9345ae3db2..c714f4f007 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -283,7 +283,7 @@ void promisor_remote_get_direct(struct repository *repo,
- 	}
- 
- 	for (i = 0; i < remaining_nr; i++) {
--		if (is_promisor_object(&remaining_oids[i]))
-+		if (is_promisor_object(repo, &remaining_oids[i]))
- 			die(_("could not fetch %s from promisor remote"),
- 			    oid_to_hex(&remaining_oids[i]));
- 	}
-diff --git a/reachable.c b/reachable.c
-index 09d2c50079..ecf7ccf504 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -324,7 +324,7 @@ int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
- 	if (ignore_in_core_kept_packs)
- 		flags |= FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS;
- 
--	r = for_each_packed_object(add_recent_packed, &data, flags);
-+	r = for_each_packed_object(revs->repo, add_recent_packed, &data, flags);
- 
- done:
- 	oidset_clear(&data.extra_recent_oids);
-diff --git a/revision.c b/revision.c
-index d1d152a67b..45dc6d2819 100644
---- a/revision.c
-+++ b/revision.c
-@@ -390,7 +390,8 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
- 	if (!object) {
- 		if (revs->ignore_missing)
- 			return NULL;
--		if (revs->exclude_promisor_objects && is_promisor_object(oid))
-+		if (revs->exclude_promisor_objects &&
-+		    is_promisor_object(revs->repo, oid))
- 			return NULL;
- 		if (revs->do_not_die_on_missing_objects) {
- 			oidset_insert(&revs->missing_commits, oid);
-@@ -432,7 +433,7 @@ static struct commit *handle_commit(struct rev_info *revs,
- 			if (revs->ignore_missing_links || (flags & UNINTERESTING))
- 				return NULL;
- 			if (revs->exclude_promisor_objects &&
--			    is_promisor_object(&tag->tagged->oid))
-+			    is_promisor_object(revs->repo, &tag->tagged->oid))
- 				return NULL;
- 			if (revs->do_not_die_on_missing_objects && oid) {
- 				oidset_insert(&revs->missing_commits, oid);
-@@ -1211,7 +1212,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
- 			     revs->do_not_die_on_missing_objects;
- 		if (repo_parse_commit_gently(revs->repo, p, gently) < 0) {
- 			if (revs->exclude_promisor_objects &&
--			    is_promisor_object(&p->object.oid)) {
-+			    is_promisor_object(revs->repo, &p->object.oid)) {
- 				if (revs->first_parent_only)
- 					break;
- 				continue;
-@@ -3915,7 +3916,7 @@ int prepare_revision_walk(struct rev_info *revs)
- 		revs->treesame.name = "treesame";
- 
- 	if (revs->exclude_promisor_objects) {
--		for_each_packed_object(mark_uninteresting, revs,
-+		for_each_packed_object(revs->repo, mark_uninteresting, revs,
- 				       FOR_EACH_OBJECT_PROMISOR_ONLY);
- 	}
- 
-diff --git a/tag.c b/tag.c
-index d24170e340..beef9571b5 100644
---- a/tag.c
-+++ b/tag.c
-@@ -84,7 +84,7 @@ struct object *deref_tag(struct repository *r, struct object *o, const char *war
- 			o = NULL;
- 		}
- 	if (!o && warn) {
--		if (last_oid && is_promisor_object(last_oid))
-+		if (last_oid && is_promisor_object(r, last_oid))
- 			return NULL;
- 		if (!warnlen)
- 			warnlen = strlen(warn);
+ 		free(delta_data);
+ 		free(external_base);
 -- 
 2.47.0
 
