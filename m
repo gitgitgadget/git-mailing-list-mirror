@@ -1,108 +1,81 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD173A268
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 18:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2835E18C333
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 18:50:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730141040; cv=none; b=rr/TF1Jjdt8wUZkxLpJ6iCWVkKeEI3gqTOg1lg45nCkvmeqmUL1QMCxpydLXMSEy0WNQolas7JEPcxqEvTVZELIX0OQQ4mTpa/EK34nW3u3U1wVsfvxWmJV60D6oVcfeLMJkT/4WrkhM1YQ7QWHpid/zU2pFEFwz0VFcPErp840=
+	t=1730141426; cv=none; b=kbl6jGyzU3b6VpXQ0816LKXrjUX4M0wQD6WtdrBGaMUxwrCI30/e6EFp3C225Bkl/FX7PV/OXONxIItIU/u7JPWFoiyjW8Y0a+9kpEGkXEuET9YZcI6IYYE+PMiWiC4zk842x3RpqHRTAd1p0ofiAEL69EgBeVga1FfY0lFIbzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730141040; c=relaxed/simple;
-	bh=WBYQ41+0bCZh6Wx4W0uHCiU2yfSC8co2HUQmiSzpmEw=;
-	h=MIME-Version:Date:From:To:Message-Id:Subject:Content-Type; b=hfQUTK3DidGu2uWznnJv7XhrREVI+1KUlXvU6y3mY6kqSftNPC4RnJrWIBkjEEf4MXhi62Y0p7cCr+atSRZAEkJYyNClaiXEGXrIeneex0zS/Z2/NBceoDvqjp6VqSM0bt7DD/AsV6UZTpwYlbRI18yaOyy4sOf32q4ZFWE3fmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opensource.nslick.com; spf=none smtp.mailfrom=opensource.nslick.com; dkim=pass (2048-bit key) header.d=nslick.com header.i=@nslick.com header.b=UAQgPrfI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=baDtnQ0G; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opensource.nslick.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=opensource.nslick.com
+	s=arc-20240116; t=1730141426; c=relaxed/simple;
+	bh=7shfIita+UwARSnEW4LINgxbLc6qxk0hUgN3zQ0ej1U=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PGL07iEq9kjvD+K7jwC0FXAjwnOOHfn53OUdEn1S9d3AeCo2AZMJbnhW9hjmb0PFUASg895Fe6pGpyyn4vKMKj37ScVcRtU2Ize5B5ChabqWIE2kc5JDhdapUxwMcnOjMfXp8erntMB+XM6pcxd8WQk7sA1OsumomdncfEUYCiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=CZtcjAV2; arc=none smtp.client-ip=185.70.43.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nslick.com header.i=@nslick.com header.b="UAQgPrfI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="baDtnQ0G"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id B43ED13800F5
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 14:43:56 -0400 (EDT)
-Received: from phl-imap-11 ([10.202.2.101])
-  by phl-compute-11.internal (MEProxy); Mon, 28 Oct 2024 14:43:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nslick.com; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1730141036; x=1730227436; bh=WBYQ41+0bC
-	Zh6Wx4W0uHCiU2yfSC8co2HUQmiSzpmEw=; b=UAQgPrfIjdp+siL2jucQbHZ/9f
-	3eu67mr9jONxrW8KIhUYPEjQ1mktArH+cN8og+8deRfthiZY+1WMYkSscLstxUlc
-	UGxyvjas3W8oeaXNQ3UGM6CbEEB3MfcBbOhSszmmlltitMqN6WWOTFiPqKymhjnp
-	+D77qJEb6e9bpyauHZ5ilxndh5xL4Rlq6hsL0B9zmh3kumBH3ynNCQHsbqouRHHE
-	tLhUgIDHzCapFjxODQYX2nhEk6o596VwZHjzbf4PQAnFvbjpFVKyz05xedNajJhN
-	1vk/W9+PVHGLK+ahJCYe2Vl7CdJH8HKxkYhEBrVnhz29brOT+U7H9pGtp1WQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1730141036; x=1730227436; bh=WBYQ41+0bCZh6Wx4W0uHCiU2yfSC
-	8co2HUQmiSzpmEw=; b=baDtnQ0GXJ0JxH/6s0AfWtNdA1qQtWvvOuoOGsqVJARn
-	DGR0XYSMcA2TK7XGeXTahPGw7ACAONg/4KfKWbIHFBpQxgudNv+USx5Lxccv2f8D
-	OLXt5KVmhMFyl6HmkDJW2E8xQZjNCVG6z2JUYRoIXxUO4QPY5nys7Y8QHXutuhWT
-	YktH5MvJaKqk9Su/E898vqo09wtrnApXwrSMRKaxj19G7Nd5IMfT2em64gH2fZyU
-	2iGbZnp4f4DHZW9ALdh4S75LTAC1BWXrbX2vmLdF9B9QLio9j1a+eBrgUQeiQc8w
-	goyH/OQCTSLLaO3aS+A7AES58QCZ+7ssv8qpz7nDGg==
-X-ME-Sender: <xms:bNsfZ_nPwX-ssNo_JU8Kd6cSUPeOlC4MwbwbtP2GBa8-l3v4r0wyEg>
-    <xme:bNsfZy1f4XUcy3QAl-zIwHp5fFpTUWCTjatsSqjhO6n8pSe8Q5BI7YZw-LXAkBmaK
-    p4ZfWv9FhIKQWFdDK8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejledgkeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
-    fvkffutgfgsehtjeertdertddtnecuhfhrohhmpedfpfhitghhohhlrghsucfuihgvlhhi
-    tghkihdfuceovhhgvghrodhgihhtsehophgvnhhsohhurhgtvgdrnhhslhhitghkrdgtoh
-    hmqeenucggtffrrghtthgvrhhnpeelveevudfgffevjeevteffgeeviedtfeevtddvieet
-    udeuvdduhfejhfduteettdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehvghgvrhdoghhithesohhpvghnshhouhhrtggvrdhnshhlihgtkhdr
-    tghomhdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:bNsfZ1pMVGdtHm0k2xAor5ks5VLdrKU9PW2PaHsaWSDkMyuIvNJP6w>
-    <xmx:bNsfZ3nKWG88MA2l-8MgyKz7y-4BGiGnMX0sei8VpG74fv0smp6W0w>
-    <xmx:bNsfZ92vhgDDE_0yk1yk_yO4uUiFKJQyTECoBEjZjlZ7ntOWtbDIGg>
-    <xmx:bNsfZ2sL_IHoNunaW21j_IVB1GNcYKoLdvOIf9sSR2yDIFlmRASnGg>
-    <xmx:bNsfZ6hqb1DJo9sJ-mQy-5OouJcSg6Ujgl-D00I4nhaJY_tosl-OjCIZ>
-Feedback-ID: i78f146c6:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 429022220071; Mon, 28 Oct 2024 14:43:56 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="CZtcjAV2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1730141417; x=1730400617;
+	bh=7shfIita+UwARSnEW4LINgxbLc6qxk0hUgN3zQ0ej1U=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=CZtcjAV2MycscnRdwO0vE+oHiWUQJ1DoF/zhJdq20PLrEeZ6o7LTozpFJc87VDbiL
+	 vrb05ghAJWhqKe0lHxXuey4weBQ1ORg8huuvh4E51O8Rgjdx0D1K0Jgc8fYo7rqES6
+	 3WosGPyneuqocumnvDHb6NqzZEnb3EF9UsvuNAVS0Q7cmxfJ0/CWEy8BbrJNiKz7FE
+	 8KXWHLdxgQ840ISW/th9SG08l7fX57La0MQmdgclaRTNS2Ifq9PZiIZCb51rZHNy0q
+	 slTa9YyR9E2ueVMGYCWclXu5lgPFzZOgDqU4/6tlYkf6OixgNZd9+jF3O0wKWl/Ble
+	 rl0M86We5k6cg==
+Date: Mon, 28 Oct 2024 18:50:12 +0000
+To: Taylor Blau <me@ttaylorr.com>
+From: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>, Phillip Wood <phillip.wood123@gmail.com>, shejialuo <shejialuo@gmail.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH 1/2] worktree: add CLI/config options for relative path linking
+Message-ID: <D57NXXVF7BEW.2JASTW8099JUI@pm.me>
+In-Reply-To: <Zx/B3caIgAeAv6Kz@nand.local>
+References: <20241025-wt_relative_options-v1-0-c3005df76bf9@pm.me> <20241025-wt_relative_options-v1-1-c3005df76bf9@pm.me> <Zx7YFPE5tjr/bn2s@nand.local> <Zx7cKN9X56GrHrU/@nand.local> <D57L2P544W08.2MHA3Q38UBPEO@pm.me> <Zx/B3caIgAeAv6Kz@nand.local>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: b960047f0a7909d38b021a743a12cc386ac2d640
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 28 Oct 2024 11:43:35 -0700
-From: "Nicholas Sielicki" <vger+git@opensource.nslick.com>
-To: git@vger.kernel.org
-Message-Id: <ab71a27d-728e-425a-8729-8699c9369bca@app.fastmail.com>
-Subject: `cherry-pick -x' and git-interpret-trailers
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-If one uses `git cherry-pick -x' to apply a commit to a stable branch
-from elsewhere, git appends something like:
+On Mon Oct 28, 2024 at 11:54 AM CDT, Taylor Blau wrote:
+> On Mon, Oct 28, 2024 at 04:35:22PM +0000, Caleb White wrote:
+>> Thanks for catching this, the issue is that there's a bug in the
+>> `initialize_repository_version()` function when reinitializing a
+>> repository---the function doesn't check if there are other extensions
+>> in use before downgrading the repository version to 0.
+>>
+>> This is a rare edge case, but I'll work on a fix.
+>
+> I am confused... are you saying t0001.46 is flaky? I don't think that
+> it is, as it fails consistently for me with your patches applied when
+> ran in a loop.
 
-> Tested-by: Some Teammate <some.teammate@somedomain.com>
-> Signed-off-by: Some User <some.user@somedomain.com>
-> (cherry picked from commit 2efe13923d0ff714b1b0f3b7175e714f0e295727) <--- this
+No, the test is not flaky. Adding the extension just revealed a bug in
+the code that was not caught by the test suite. I've fixed the bug and
+will push v2 here shortly.
 
-IMO this is inconsistent in two ways:
+> I am definitely guilty of having sent broken patches to the list before
+> that fail CI, usually when I have amended something I thought was
+> trivial after already running the test suite on all patches, only to
+> realize that it wasn't trivial after all and instead broken something.
+>
+> But please do be careful to thoroughly vet your patches before sending
+> them to the list, as this sort of breakage can be disruptive.
 
-1. it's unclear to me why the cherry-pick metadata isn't emitted in
-trailer form, ie: `Cherry-Picked-From-Commit: <...>', making it work
-with `git-interpret-trailers'.
+The test suite was passing, I must've just forgotten to execute this
+again test after I added the extension. I'll be more careful in the
+future.
 
-2. I'm not sure if any tooling (external or otherwise) breaks because
-of this, but the existing trailers now have non-trailer content
-following them, so it's ambiguous whether they still qualify as
-trailers at first glance. (possibly, this is intentional?)
+Best,
+Caleb
 
-Realistically, the only thing worse than this^ would be to have a
-mixture of two formats in the same repository, which is to say,
-without a surefire way to to share repository config defaults, I can't
-imagine there's a backwards-compatible solution to changing the `-x'
-default behavior and git is stuck with it.
-
-It could be possible to extend the existing behavior with git-notes?
-Added benefit of that would be that you could mark both commits
-involved with `Cherry-Picked-By' and `Cherry-Picked-From'.
