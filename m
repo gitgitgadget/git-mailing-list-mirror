@@ -1,43 +1,43 @@
 Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C840C1DFE31
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 19:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106321E0DA7
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 19:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730142595; cv=none; b=WChYY5NEjAiRVg983YpuhS6REcrsk40th/wNtCJ0wAj6kOpirTmP224Whg4K3YroL4fbI2px8n4PwfQ42O9jEw+ov1GaLAjcpAfmb1wTmp2JdBrtPhuoyc0BFdBgFilgcYpXaoFTAL6RuWI1KV0w4MYz/YB0raP6SaIZzHGUmho=
+	t=1730142603; cv=none; b=ezv0sILvidy3lScc23eF5uYvq/lD/+PljOOwtdUMliB292NBzk63Hw3nVSkWEY4QAsY5OsYfzQBDzvigWN9Jf6rO7OQDjye5fH/Zn/5d5fbCPVRIYyT0tFwQBgXM2m0CiOTPOSxAgPFSnzeBXN2gZudSY/Ce6+LvxjPW2jXLwqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730142595; c=relaxed/simple;
-	bh=9nF3Pyd9e3xMvEEFiqr1c9LAEHRF3vBuKYz8RyrsAic=;
+	s=arc-20240116; t=1730142603; c=relaxed/simple;
+	bh=ziF2VJ90fCNJ1VJT5YlQtfUuks6wOfzfgDVLpvDJKiI=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pPELhOJEyfnNI9PVqYPnGFW5UuTk5GB3dyZa6EG3MOfwdcSSYJM4nTPNDU/Wvw+waYOBFv7Q76Uvn1L7Hc2BRUTrfl44fI4hze3D9p1HiDXwUwa+1IDUgTAFiLqlV3f+jmCNKiE/jyni+GP9tlUBqD9ni6N1O+cQ2hbdf93xBTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=AgZ31Szw; arc=none smtp.client-ip=185.70.43.16
+	 MIME-Version:Content-Type; b=JJ1gYecgqdx7xL3pjVw2Iv9EraNG2wJMH7Z4ITJO69RDBpGHb905yptlsILojP+ghRNcmeMm8b+QxCPMyJyVAt3zVpczCzXaPCnEBfGemlbbAIrZhVw4R1DNnNiEEtslG8a0Yqw4RW/5LAIcs5929yNWF3C04TPfeBlkM3em2dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=nKcjhPAn; arc=none smtp.client-ip=185.70.43.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="AgZ31Szw"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="nKcjhPAn"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1730142590; x=1730401790;
-	bh=7KbAd//3RgGnMgGvikf7YEKi24RqHlunISaqql35VIU=;
+	s=protonmail3; t=1730142598; x=1730401798;
+	bh=hbz/9E5sL0Y+heWiqGSRsXUjrzjF0gjDnw2r0eCuoPw=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=AgZ31SzwoAhkqlNUAVa/P2GKsC17Wjdtev07ERgUkKF+OA6Y47qJj+trERinN5KZm
-	 2cLK23aik8Y/HxbABLXW6RgaUMwnFn12uau6qVHwlI33ybX4mKWslHIJIO0JneMFdl
-	 uukIagc5B61JReG8SwckQSW47uwVHF4MocFf9Q5W6sdUPLv4eFPJYa9OLUrwoaa3P6
-	 qKLsCE5k0HdLiAF8FJPaAenHQhfV64X60da5rgRRJKKQCrDCDK9duapyiL84DyIqfW
-	 ctCuj1AXOQyQ7KlHi4YWMVY7OX+4clzbdc96wi5gkryMXwGvD7IcitQB+2PGjYLpuN
-	 EEDLgFLcqgU9Q==
-Date: Mon, 28 Oct 2024 19:09:44 +0000
+	b=nKcjhPAnaqcqk6PcjzenPTcbBI26XkSqF1obRXW9krwUXhXdCkvWyDsolltgpcDFX
+	 cwj9eT4/T5uLK6Upq3921zy8/iGaa68u47TQDXiiR915f+4yQwLCRUp812bdWBU3Sf
+	 eG8lK2WRSAxP1gwqIhkwAraDVkBOWMg85Q3z0TtjMifvqNiDu8zEG7Gqoc2OE0gwFl
+	 IR//V0E523Vs2L84bpdbsRPnCuxcW+9YX6bVjk9o/Eb3RdxB1CQG14YdCuGQ+4VYoS
+	 DOJaNsZ3V36OE0MoqlxXhDBbMVl1XmYmhhD5ezykqnPnDDqMAuRG1Arm0JFa5BmC0r
+	 Hd9Uzsoahh3qQ==
+Date: Mon, 28 Oct 2024 19:09:52 +0000
 To: git@vger.kernel.org
 From: Caleb White <cdwhite3@pm.me>
 Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>, Caleb White <cdwhite3@pm.me>
-Subject: [PATCH v2 2/5] worktree: add `write_worktree_linking_files` function
-Message-ID: <20241028-wt_relative_options-v2-2-33a5021bd7bb@pm.me>
+Subject: [PATCH v2 3/5] worktree: add tests for worktrees with relative paths
+Message-ID: <20241028-wt_relative_options-v2-3-33a5021bd7bb@pm.me>
 In-Reply-To: <20241028-wt_relative_options-v2-0-33a5021bd7bb@pm.me>
 References: <20241028-wt_relative_options-v2-0-33a5021bd7bb@pm.me>
 Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 8044d349f56f18f7e48c3bbbc23fbed925378edc
+X-Pm-Message-ID: 6e9ea7c974715680ac0984381c2590e8275ec700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,399 +47,253 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-A new helper function, `write_worktree_linking_files()`, centralizes
-the logic for computing and writing either relative or absolute
-paths, based on the provided configuration. This function accepts
-`strbuf` pointers to both the worktree=E2=80=99s `.git` link and the
-repository=E2=80=99s `gitdir`, and then writes the appropriate path to each=
-.
+This patch expands the test coverage by adding cases that specifically
+handle relative paths. These tests verify correct behavior in a variety
+of operations, including: adding, listing, pruning, moving, and
+repairing worktrees with relative paths configured.
 
-This also teachs `git worktree repair` to fix the linking files if
-there is an absolute/relative paths but the links are correct. E.g.,
-`git worktree repair` can be used to convert a valid worktree between
-absolute and relative paths.
+This also adds a test case for reinitializing a repository that has
+relative worktrees.
 
 Signed-off-by: Caleb White <cdwhite3@pm.me>
 ---
- builtin/worktree.c |  11 +----
- worktree.c         | 118 +++++++++++++++++++++++++++----------------------=
-----
- worktree.h         |  12 ++++++
- 3 files changed, 74 insertions(+), 67 deletions(-)
+ t/t0001-init.sh            | 17 +++++++++++++----
+ t/t2400-worktree-add.sh    | 41 +++++++++++++++++++++++++++++++++++++++++
+ t/t2401-worktree-prune.sh  |  3 ++-
+ t/t2402-worktree-list.sh   | 22 ++++++++++++++++++++++
+ t/t2403-worktree-move.sh   | 22 ++++++++++++++++++++++
+ t/t2406-worktree-repair.sh | 26 ++++++++++++++++++++++++++
+ 6 files changed, 126 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index c1130be5890c905c0b648782a834eb8dfcd79ba5..bb06830d6fe82aa97833c6e87f0=
-34115dfaa23bd 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -417,8 +417,7 @@ static int add_worktree(const char *path, const char *r=
-efname,
- =09=09=09const struct add_opts *opts)
- {
- =09struct strbuf sb_git =3D STRBUF_INIT, sb_repo =3D STRBUF_INIT;
--=09struct strbuf sb =3D STRBUF_INIT, sb_tmp =3D STRBUF_INIT;
--=09struct strbuf sb_path_realpath =3D STRBUF_INIT, sb_repo_realpath =3D ST=
-RBUF_INIT;
-+=09struct strbuf sb =3D STRBUF_INIT;
- =09const char *name;
- =09struct strvec child_env =3D STRVEC_INIT;
- =09unsigned int counter =3D 0;
-@@ -494,10 +493,7 @@ static int add_worktree(const char *path, const char *=
-refname,
-=20
- =09strbuf_reset(&sb);
- =09strbuf_addf(&sb, "%s/gitdir", sb_repo.buf);
--=09strbuf_realpath(&sb_path_realpath, path, 1);
--=09strbuf_realpath(&sb_repo_realpath, sb_repo.buf, 1);
--=09write_file(sb.buf, "%s/.git", relative_path(sb_path_realpath.buf, sb_re=
-po_realpath.buf, &sb_tmp));
--=09write_file(sb_git.buf, "gitdir: %s", relative_path(sb_repo_realpath.buf=
-, sb_path_realpath.buf, &sb_tmp));
-+=09write_worktree_linking_files(sb_git, sb);
- =09strbuf_reset(&sb);
- =09strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
- =09write_file(sb.buf, "../..");
-@@ -581,12 +577,9 @@ static int add_worktree(const char *path, const char *=
-refname,
-=20
- =09strvec_clear(&child_env);
- =09strbuf_release(&sb);
--=09strbuf_release(&sb_tmp);
- =09strbuf_release(&symref);
- =09strbuf_release(&sb_repo);
--=09strbuf_release(&sb_repo_realpath);
- =09strbuf_release(&sb_git);
--=09strbuf_release(&sb_path_realpath);
- =09strbuf_release(&sb_name);
- =09free_worktree(wt);
- =09return ret;
-diff --git a/worktree.c b/worktree.c
-index de5c5e53a5f2a758ddf470b5d6a9ad6c66247181..f4cee73d7a1edecafdff30b6d5e=
-2d9dd1365b93e 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -381,29 +381,24 @@ int validate_worktree(const struct worktree *wt, stru=
-ct strbuf *errmsg,
- void update_worktree_location(struct worktree *wt, const char *path_)
- {
- =09struct strbuf path =3D STRBUF_INIT;
--=09struct strbuf repo =3D STRBUF_INIT;
--=09struct strbuf file =3D STRBUF_INIT;
--=09struct strbuf tmp =3D STRBUF_INIT;
-+=09struct strbuf dotgit =3D STRBUF_INIT;
-+=09struct strbuf gitdir =3D STRBUF_INIT;
-=20
- =09if (is_main_worktree(wt))
- =09=09BUG("can't relocate main worktree");
-=20
--=09strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
-+=09strbuf_realpath(&gitdir, git_common_path("worktrees/%s/gitdir", wt->id)=
-, 1);
- =09strbuf_realpath(&path, path_, 1);
-+=09strbuf_addf(&dotgit, "%s/.git", path.buf);
- =09if (fspathcmp(wt->path, path.buf)) {
--=09=09strbuf_addf(&file, "%s/gitdir", repo.buf);
--=09=09write_file(file.buf, "%s/.git", relative_path(path.buf, repo.buf, &t=
-mp));
--=09=09strbuf_reset(&file);
--=09=09strbuf_addf(&file, "%s/.git", path.buf);
--=09=09write_file(file.buf, "gitdir: %s", relative_path(repo.buf, path.buf,=
- &tmp));
-+=09=09write_worktree_linking_files(dotgit, gitdir);
-=20
- =09=09free(wt->path);
- =09=09wt->path =3D strbuf_detach(&path, NULL);
- =09}
- =09strbuf_release(&path);
--=09strbuf_release(&repo);
--=09strbuf_release(&file);
--=09strbuf_release(&tmp);
-+=09strbuf_release(&dotgit);
-+=09strbuf_release(&gitdir);
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 0178aa62a41f1606f2382a4a10ab593ccf11e0e8..e21b9aa5e7f4599af8b20165b50=
+896c9a49ba7ea 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -435,6 +435,7 @@ sep_git_dir_worktree ()  {
+ =09test_when_finished "rm -rf mainwt linkwt seprepo" &&
+ =09git init mainwt &&
+ =09test_commit -C mainwt gumby &&
++=09git -C mainwt config worktree.useRelativePaths "$([ "$2" =3D "relative"=
+ ] && echo true || echo false)" &&
+ =09git -C mainwt worktree add --detach ../linkwt &&
+ =09git -C "$1" init --separate-git-dir ../seprepo &&
+ =09git -C mainwt rev-parse --git-common-dir >expect &&
+@@ -442,12 +443,20 @@ sep_git_dir_worktree ()  {
+ =09test_cmp expect actual
  }
 =20
- int is_worktree_being_rebased(const struct worktree *wt,
-@@ -582,9 +577,9 @@ static void repair_gitfile(struct worktree *wt,
- =09=09=09   worktree_repair_fn fn, void *cb_data)
- {
- =09struct strbuf dotgit =3D STRBUF_INIT;
-+=09struct strbuf gitdir =3D STRBUF_INIT;
- =09struct strbuf repo =3D STRBUF_INIT;
- =09struct strbuf backlink =3D STRBUF_INIT;
--=09struct strbuf tmp =3D STRBUF_INIT;
- =09char *dotgit_contents =3D NULL;
- =09const char *repair =3D NULL;
- =09int err;
-@@ -600,6 +595,7 @@ static void repair_gitfile(struct worktree *wt,
+-test_expect_success 're-init to move gitdir with linked worktrees' '
+-=09sep_git_dir_worktree mainwt
++test_expect_success 're-init to move gitdir with linked worktrees (absolut=
+e)' '
++=09sep_git_dir_worktree mainwt absolute
+ '
 =20
- =09strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
- =09strbuf_addf(&dotgit, "%s/.git", wt->path);
-+=09strbuf_addf(&gitdir, "%s/gitdir", repo.buf);
- =09dotgit_contents =3D xstrdup_or_null(read_gitfile_gently(dotgit.buf, &er=
-r));
-=20
- =09if (dotgit_contents) {
-@@ -617,18 +613,20 @@ static void repair_gitfile(struct worktree *wt,
- =09=09repair =3D _(".git file broken");
- =09else if (fspathcmp(backlink.buf, repo.buf))
- =09=09repair =3D _(".git file incorrect");
-+=09else if (use_relative_paths =3D=3D is_absolute_path(dotgit_contents))
-+=09=09repair =3D _(".git file absolute/relative path mismatch");
-=20
- =09if (repair) {
- =09=09fn(0, wt->path, repair, cb_data);
--=09=09write_file(dotgit.buf, "gitdir: %s", relative_path(repo.buf, wt->pat=
-h, &tmp));
-+=09=09write_worktree_linking_files(dotgit, gitdir);
- =09}
-=20
- done:
- =09free(dotgit_contents);
- =09strbuf_release(&repo);
- =09strbuf_release(&dotgit);
-+=09strbuf_release(&gitdir);
- =09strbuf_release(&backlink);
--=09strbuf_release(&tmp);
- }
-=20
- static void repair_noop(int iserr UNUSED,
-@@ -653,45 +651,30 @@ void repair_worktrees(worktree_repair_fn fn, void *cb=
-_data)
-=20
- void repair_worktree_after_gitdir_move(struct worktree *wt, const char *ol=
-d_path)
- {
--=09struct strbuf path =3D STRBUF_INIT;
--=09struct strbuf repo =3D STRBUF_INIT;
- =09struct strbuf gitdir =3D STRBUF_INIT;
- =09struct strbuf dotgit =3D STRBUF_INIT;
--=09struct strbuf olddotgit =3D STRBUF_INIT;
--=09struct strbuf tmp =3D STRBUF_INIT;
-=20
- =09if (is_main_worktree(wt))
- =09=09goto done;
-=20
--=09strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
--=09strbuf_addf(&gitdir, "%s/gitdir", repo.buf);
-+=09strbuf_realpath(&gitdir, git_common_path("worktrees/%s/gitdir", wt->id)=
-, 1);
-=20
--=09if (strbuf_read_file(&olddotgit, gitdir.buf, 0) < 0)
-+=09if (strbuf_read_file(&dotgit, gitdir.buf, 0) < 0)
- =09=09goto done;
-=20
--=09strbuf_rtrim(&olddotgit);
--=09if (is_absolute_path(olddotgit.buf)) {
--=09=09strbuf_addbuf(&dotgit, &olddotgit);
--=09} else {
--=09=09strbuf_addf(&dotgit, "%s/worktrees/%s/%s", old_path, wt->id, olddotg=
-it.buf);
-+=09strbuf_rtrim(&dotgit);
-+=09if (!is_absolute_path(dotgit.buf)) {
-+=09=09strbuf_insertf(&dotgit, 0, "%s/worktrees/%s/", old_path, wt->id);
- =09=09strbuf_realpath_forgiving(&dotgit, dotgit.buf, 0);
- =09}
-=20
- =09if (!file_exists(dotgit.buf))
- =09=09goto done;
-=20
--=09strbuf_addbuf(&path, &dotgit);
--=09strbuf_strip_suffix(&path, "/.git");
--
--=09write_file(dotgit.buf, "gitdir: %s", relative_path(repo.buf, path.buf, =
-&tmp));
--=09write_file(gitdir.buf, "%s", relative_path(dotgit.buf, repo.buf, &tmp))=
-;
-+=09write_worktree_linking_files(dotgit, gitdir);
- done:
--=09strbuf_release(&path);
--=09strbuf_release(&repo);
- =09strbuf_release(&gitdir);
- =09strbuf_release(&dotgit);
--=09strbuf_release(&olddotgit);
--=09strbuf_release(&tmp);
- }
-=20
- void repair_worktrees_after_gitdir_move(const char *old_path)
-@@ -766,13 +749,10 @@ void repair_worktree_at_path(const char *path,
- =09=09=09     worktree_repair_fn fn, void *cb_data)
- {
- =09struct strbuf dotgit =3D STRBUF_INIT;
--=09struct strbuf realdotgit =3D STRBUF_INIT;
- =09struct strbuf backlink =3D STRBUF_INIT;
- =09struct strbuf inferred_backlink =3D STRBUF_INIT;
- =09struct strbuf gitdir =3D STRBUF_INIT;
- =09struct strbuf olddotgit =3D STRBUF_INIT;
--=09struct strbuf realolddotgit =3D STRBUF_INIT;
--=09struct strbuf tmp =3D STRBUF_INIT;
- =09char *dotgit_contents =3D NULL;
- =09const char *repair =3D NULL;
- =09int err;
-@@ -784,25 +764,25 @@ void repair_worktree_at_path(const char *path,
- =09=09goto done;
-=20
- =09strbuf_addf(&dotgit, "%s/.git", path);
--=09if (!strbuf_realpath(&realdotgit, dotgit.buf, 0)) {
-+=09if (!strbuf_realpath(&dotgit, dotgit.buf, 0)) {
- =09=09fn(1, path, _("not a valid path"), cb_data);
- =09=09goto done;
- =09}
-=20
--=09infer_backlink(realdotgit.buf, &inferred_backlink);
-+=09infer_backlink(dotgit.buf, &inferred_backlink);
- =09strbuf_realpath_forgiving(&inferred_backlink, inferred_backlink.buf, 0)=
-;
--=09dotgit_contents =3D xstrdup_or_null(read_gitfile_gently(realdotgit.buf,=
- &err));
-+=09dotgit_contents =3D xstrdup_or_null(read_gitfile_gently(dotgit.buf, &er=
-r));
- =09if (dotgit_contents) {
- =09=09if (is_absolute_path(dotgit_contents)) {
- =09=09=09strbuf_addstr(&backlink, dotgit_contents);
- =09=09} else {
--=09=09=09strbuf_addbuf(&backlink, &realdotgit);
-+=09=09=09strbuf_addbuf(&backlink, &dotgit);
- =09=09=09strbuf_strip_suffix(&backlink, ".git");
- =09=09=09strbuf_addstr(&backlink, dotgit_contents);
- =09=09=09strbuf_realpath_forgiving(&backlink, backlink.buf, 0);
- =09=09}
- =09} else if (err =3D=3D READ_GITFILE_ERR_NOT_A_FILE) {
--=09=09fn(1, realdotgit.buf, _("unable to locate repository; .git is not a =
-file"), cb_data);
-+=09=09fn(1, dotgit.buf, _("unable to locate repository; .git is not a file=
-"), cb_data);
- =09=09goto done;
- =09} else if (err =3D=3D READ_GITFILE_ERR_NOT_A_REPO) {
- =09=09if (inferred_backlink.len) {
-@@ -815,11 +795,11 @@ void repair_worktree_at_path(const char *path,
- =09=09=09 */
- =09=09=09strbuf_swap(&backlink, &inferred_backlink);
- =09=09} else {
--=09=09=09fn(1, realdotgit.buf, _("unable to locate repository; .git file d=
-oes not reference a repository"), cb_data);
-+=09=09=09fn(1, dotgit.buf, _("unable to locate repository; .git file does =
-not reference a repository"), cb_data);
- =09=09=09goto done;
- =09=09}
- =09} else {
--=09=09fn(1, realdotgit.buf, _("unable to locate repository; .git file brok=
-en"), cb_data);
-+=09=09fn(1, dotgit.buf, _("unable to locate repository; .git file broken")=
-, cb_data);
- =09=09goto done;
- =09}
-=20
-@@ -841,39 +821,35 @@ void repair_worktree_at_path(const char *path,
- =09 * in the "copy" repository. In this case, point the "copy" worktree's
- =09 * .git file at the "copy" repository.
- =09 */
--=09if (inferred_backlink.len && fspathcmp(backlink.buf, inferred_backlink.=
-buf)) {
-+=09if (inferred_backlink.len && fspathcmp(backlink.buf, inferred_backlink.=
-buf))
- =09=09strbuf_swap(&backlink, &inferred_backlink);
--=09}
-=20
- =09strbuf_addf(&gitdir, "%s/gitdir", backlink.buf);
- =09if (strbuf_read_file(&olddotgit, gitdir.buf, 0) < 0)
- =09=09repair =3D _("gitdir unreadable");
-+=09else if (use_relative_paths =3D=3D is_absolute_path(olddotgit.buf))
-+=09=09repair =3D _("gitdir absolute/relative path mismatch");
- =09else {
- =09=09strbuf_rtrim(&olddotgit);
--=09=09if (is_absolute_path(olddotgit.buf)) {
--=09=09=09strbuf_addbuf(&realolddotgit, &olddotgit);
--=09=09} else {
--=09=09=09strbuf_addf(&realolddotgit, "%s/%s", backlink.buf, olddotgit.buf)=
-;
--=09=09=09strbuf_realpath_forgiving(&realolddotgit, realolddotgit.buf, 0);
-+=09=09if (!is_absolute_path(olddotgit.buf)) {
-+=09=09=09strbuf_insertf(&olddotgit, 0, "%s/", backlink.buf);
-+=09=09=09strbuf_realpath_forgiving(&olddotgit, olddotgit.buf, 0);
- =09=09}
--=09=09if (fspathcmp(realolddotgit.buf, realdotgit.buf))
-+=09=09if (fspathcmp(olddotgit.buf, dotgit.buf))
- =09=09=09repair =3D _("gitdir incorrect");
- =09}
-=20
- =09if (repair) {
- =09=09fn(0, gitdir.buf, repair, cb_data);
--=09=09write_file(gitdir.buf, "%s", relative_path(realdotgit.buf, backlink.=
-buf, &tmp));
-+=09=09write_worktree_linking_files(dotgit, gitdir);
- =09}
- done:
- =09free(dotgit_contents);
- =09strbuf_release(&olddotgit);
--=09strbuf_release(&realolddotgit);
- =09strbuf_release(&backlink);
- =09strbuf_release(&inferred_backlink);
- =09strbuf_release(&gitdir);
--=09strbuf_release(&realdotgit);
- =09strbuf_release(&dotgit);
--=09strbuf_release(&tmp);
- }
-=20
- int should_prune_worktree(const char *id, struct strbuf *reason, char **wt=
-path, timestamp_t expire)
-@@ -1034,3 +1010,29 @@ int init_worktree_config(struct repository *r)
- =09free(main_worktree_file);
- =09return res;
- }
+-test_expect_success 're-init to move gitdir within linked worktree' '
+-=09sep_git_dir_worktree linkwt
++test_expect_success 're-init to move gitdir within linked worktree (absolu=
+te)' '
++=09sep_git_dir_worktree linkwt absolute
++'
 +
-+void write_worktree_linking_files(struct strbuf dotgit, struct strbuf gitd=
-ir)
-+{
-+=09struct strbuf path =3D STRBUF_INIT;
-+=09struct strbuf repo =3D STRBUF_INIT;
-+=09struct strbuf tmp =3D STRBUF_INIT;
++test_expect_success 're-init to move gitdir with linked worktrees (relativ=
+e)' '
++=09sep_git_dir_worktree mainwt relative
++'
 +
-+=09strbuf_addbuf(&path, &dotgit);
-+=09strbuf_strip_suffix(&path, "/.git");
-+=09strbuf_realpath(&path, path.buf, 1);
-+=09strbuf_addbuf(&repo, &gitdir);
-+=09strbuf_strip_suffix(&repo, "/gitdir");
-+=09strbuf_realpath(&repo, repo.buf, 1);
-+
-+=09if (use_relative_paths) {
-+=09=09write_file(gitdir.buf, "%s/.git", relative_path(path.buf, repo.buf, =
-&tmp));
-+=09=09write_file(dotgit.buf, "gitdir: %s", relative_path(repo.buf, path.bu=
-f, &tmp));
-+=09} else {
-+=09=09write_file(gitdir.buf, "%s/.git", path.buf);
-+=09=09write_file(dotgit.buf, "gitdir: %s", repo.buf);
-+=09}
-+
-+=09strbuf_release(&path);
-+=09strbuf_release(&repo);
-+=09strbuf_release(&tmp);
-+}
-diff --git a/worktree.h b/worktree.h
-index 37e65d508ed23d3e7a29850bb938285072a3aaa6..5929089891c97318a8f5329f793=
-8264c717050d5 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -217,4 +217,16 @@ void strbuf_worktree_ref(const struct worktree *wt,
-  */
- int init_worktree_config(struct repository *r);
++test_expect_success 're-init to move gitdir within linked worktree (relati=
+ve)' '
++=09sep_git_dir_worktree linkwt relative
+ '
 =20
-+/**
-+ * Write the .git file and gitdir file that links the worktree to the repo=
-sitory.
-+ *
-+ * The `dotgit` parameter is the path to the worktree's .git file, and `gi=
-tdir`
-+ * is the path to the repository's `gitdir` file.
-+ *
-+ * Example
-+ *  dotgit: "/path/to/foo/.git"
-+ *  gitdir: "/path/to/repo/worktrees/foo/gitdir"
-+ */
-+void write_worktree_linking_files(struct strbuf dotgit, struct strbuf gitd=
-ir);
+ test_expect_success MINGW '.git hidden' '
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index cfc4aeb1798c6d023909cec771e5b74e983af5ea..630c13230b3cc762ce8d943e22b=
+e8891aa2b1871 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -1207,4 +1207,45 @@ test_expect_success '"add" with initialized submodul=
+e, with submodule.recurse se
+ =09git -C project-clone -c submodule.recurse worktree add ../project-5
+ '
+=20
++test_expect_success 'can create worktrees with relative paths' '
++=09test_when_finished "git worktree remove relative" &&
++=09git config worktree.useRelativePaths false &&
++=09git worktree add --relative-paths ./relative &&
++=09cat relative/.git >actual &&
++=09echo "gitdir: ../.git/worktrees/relative" >expect &&
++=09test_cmp expect actual &&
++=09cat .git/worktrees/relative/gitdir >actual &&
++=09echo "../../../relative/.git" >expect &&
++=09test_cmp expect actual
 +
- #endif
++'
++
++test_expect_success 'can create worktrees with absolute paths' '
++=09git config worktree.useRelativePaths true &&
++=09git worktree add ./relative &&
++=09cat relative/.git >actual &&
++=09echo "gitdir: ../.git/worktrees/relative" >expect &&
++=09test_cmp expect actual &&
++=09git worktree add --no-relative-paths ./absolute &&
++=09cat absolute/.git >actual &&
++=09echo "gitdir: $(pwd)/.git/worktrees/absolute" >expect &&
++=09test_cmp expect actual
++'
++
++test_expect_success 'move repo without breaking relative internal links' '
++=09test_when_finished rm -rf repo moved &&
++=09git init repo &&
++=09(
++=09=09cd repo &&
++=09=09git config worktree.useRelativePaths true &&
++=09=09test_commit initial &&
++=09=09git worktree add wt1 &&
++=09=09cd .. &&
++=09=09mv repo moved &&
++=09=09cd moved/wt1 &&
++=09=09git status >out 2>err &&
++=09=09test_must_be_empty err
++=09)
++'
++
+ test_done
+diff --git a/t/t2401-worktree-prune.sh b/t/t2401-worktree-prune.sh
+index 976d048e3efc74be9cd909ce76d552b3944d2e10..5eb52b9abbf29514dc082c260eb=
+b7a5e8e63aae0 100755
+--- a/t/t2401-worktree-prune.sh
++++ b/t/t2401-worktree-prune.sh
+@@ -120,11 +120,12 @@ test_expect_success 'prune duplicate (main/linked)' '
+ =09! test -d .git/worktrees/wt
+ '
+=20
+-test_expect_success 'not prune proper worktrees when run inside linked wor=
+ktree' '
++test_expect_success 'not prune proper worktrees inside linked worktree wit=
+h relative paths' '
+ =09test_when_finished rm -rf repo wt_ext &&
+ =09git init repo &&
+ =09(
+ =09    cd repo &&
++=09    git config worktree.useRelativePaths true &&
+ =09    echo content >file &&
+ =09    git add file &&
+ =09    git commit -m msg &&
+diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
+index 33ea9cb21ba07c9563530b54da06753eaa993fe2..780daa6cd6351f8fa9434619cc2=
+12aade8f01420 100755
+--- a/t/t2402-worktree-list.sh
++++ b/t/t2402-worktree-list.sh
+@@ -261,6 +261,7 @@ test_expect_success 'broken main worktree still at the =
+top' '
+ '
+=20
+ test_expect_success 'linked worktrees are sorted' '
++=09test_when_finished "rm -rf sorted" &&
+ =09mkdir sorted &&
+ =09git init sorted/main &&
+ =09(
+@@ -280,6 +281,27 @@ test_expect_success 'linked worktrees are sorted' '
+ =09test_cmp expected sorted/main/actual
+ '
+=20
++test_expect_success 'linked worktrees with relative paths are shown with a=
+bsolute paths' '
++=09test_when_finished "rm -rf sorted" &&
++=09mkdir sorted &&
++=09git init sorted/main &&
++=09(
++=09=09cd sorted/main &&
++=09=09test_tick &&
++=09=09test_commit new &&
++=09=09git worktree add --relative-paths ../first &&
++=09=09git worktree add ../second &&
++=09=09git worktree list --porcelain >out &&
++=09=09grep ^worktree out >actual
++=09) &&
++=09cat >expected <<-EOF &&
++=09worktree $(pwd)/sorted/main
++=09worktree $(pwd)/sorted/first
++=09worktree $(pwd)/sorted/second
++=09EOF
++=09test_cmp expected sorted/main/actual
++'
++
+ test_expect_success 'worktree path when called in .git directory' '
+ =09git worktree list >list1 &&
+ =09git -C .git worktree list >list2 &&
+diff --git a/t/t2403-worktree-move.sh b/t/t2403-worktree-move.sh
+index 901342ea09b51a8e832f1109fbb737df84283aa2..6ce9ed3f1e6b3f73d2a290e7702=
+33eec30221fe5 100755
+--- a/t/t2403-worktree-move.sh
++++ b/t/t2403-worktree-move.sh
+@@ -247,4 +247,26 @@ test_expect_success 'not remove a repo with initialize=
+d submodule' '
+ =09)
+ '
+=20
++test_expect_success 'move worktree with absolute path to relative path' '
++=09git config worktree.useRelativePaths false &&
++=09git worktree add ./absolute &&
++=09git worktree move --relative-paths absolute relative &&
++=09cat relative/.git >actual &&
++=09echo "gitdir: ../.git/worktrees/absolute" >expect &&
++=09test_cmp expect actual &&
++=09git config worktree.useRelativePaths true &&
++=09git worktree move relative relative2 &&
++=09cat relative2/.git >actual &&
++=09echo "gitdir: ../.git/worktrees/absolute" >expect &&
++=09test_cmp expect actual
++'
++
++test_expect_success 'move worktree with relative path to absolute path' '
++=09git config worktree.useRelativePaths true &&
++=09git worktree move --no-relative-paths relative2 absolute &&
++=09cat absolute/.git >actual &&
++=09echo "gitdir: $(pwd)/.git/worktrees/absolute" >expect &&
++=09test_cmp expect actual
++'
++
+ test_done
+diff --git a/t/t2406-worktree-repair.sh b/t/t2406-worktree-repair.sh
+index 7686e60f6ad186519b275f11a5e14064c905b207..84451e903b2ef3c645c0311faf0=
+55c846588baf6 100755
+--- a/t/t2406-worktree-repair.sh
++++ b/t/t2406-worktree-repair.sh
+@@ -216,4 +216,30 @@ test_expect_success 'repair copied main and linked wor=
+ktrees' '
+ =09test_cmp dup/linked.expect dup/linked/.git
+ '
+=20
++test_expect_success 'repair absolute worktree to use relative paths' '
++=09test_when_finished "rm -rf main side sidemoved" &&
++=09test_create_repo main &&
++=09test_commit -C main init &&
++=09git -C main worktree add --detach ../side &&
++=09echo "../../../../sidemoved/.git" >expect-gitdir &&
++=09echo "gitdir: ../main/.git/worktrees/side" >expect-gitfile &&
++=09mv side sidemoved &&
++=09git -C main worktree repair --relative-paths ../sidemoved &&
++=09test_cmp expect-gitdir main/.git/worktrees/side/gitdir &&
++=09test_cmp expect-gitfile sidemoved/.git
++'
++
++test_expect_success 'repair relative worktree to use absolute paths' '
++=09test_when_finished "rm -rf main side sidemoved" &&
++=09test_create_repo main &&
++=09test_commit -C main init &&
++=09git -C main worktree add --relative-paths --detach ../side &&
++=09echo "$(pwd)/sidemoved/.git" >expect-gitdir &&
++=09echo "gitdir: $(pwd)/main/.git/worktrees/side" >expect-gitfile &&
++=09mv side sidemoved &&
++=09git -C main worktree repair ../sidemoved &&
++=09test_cmp expect-gitdir main/.git/worktrees/side/gitdir &&
++=09test_cmp expect-gitfile sidemoved/.git
++'
++
+ test_done
 
 --=20
 2.47.0
