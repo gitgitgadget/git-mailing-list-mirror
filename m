@@ -1,56 +1,56 @@
 Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87141EE00F
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 20:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6A71EE02A
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 20:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730147723; cv=none; b=haswbg2Qg1UyUfK/2xhfyVY8rmyN5r0u4D8MTjCs0NsW+AhK3bgHwceiwsv3T3M1MfM0egGFCzi3usRRJs2iux5IYlm3SMk1+QFhokRL1jlVEVUZJAeQ2TwCBkkraWzUgFt91rMzYbfpysSDj+XH7n41cOe+Jzrlajo+8r5cag4=
+	t=1730147724; cv=none; b=tfd7PoMgU224iB7PbkzN/x1NB+d9S6aRTmQNRMmAlyDMm/E1JZ0WmOYPDrG+Zak+vD8K4LhDWHKGiNO44wFvHDhqRhBnZiCWnZ5PcHzeLFVgudVzg8DdoOpBPD5OMgahMDYD1tnaSgHsLjHJ7MmRdNg2rZYdUlbNnmNPYyjAp30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730147723; c=relaxed/simple;
-	bh=yjyz+Vz840lW2No3gACSbRZE3MV5qia5BFfczHhmR5Y=;
+	s=arc-20240116; t=1730147724; c=relaxed/simple;
+	bh=FMOM9jhFBpxYkrmdNgtvOsXn4xzPCnMWTBVYg03X7m8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C1EvTDhiTVIp4or+1p2SO8hIT49qZc8Gv/TM7+5F3+qSm0lzUoUUy8c0J84uEcbswb2CrcsnDJkFg83Pc6TqRAColdmtdNRZBE6LqMlw/trraLJ99y3n0GuehUI/7Fq84WCMdMPimYqNbWOckhP+jtOBOOrFKvydxx4IDYwal40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KUidnzfh; arc=none smtp.client-ip=209.85.160.177
+	 MIME-Version; b=bZl4cXXG1S2xNqVljTJf0L2FAgt1A7JzA9tSZFl6Y1F2fsedJxg54Kj6PrDMhqigdf6o62io4vyjc264W4LTSVLX0Y5ZLbKyqYyPh2bVYN6eApFd/qLJjxU8sWi4VnLF0GTcdVy/IPSOybEkH8Tc5pt++4xjs4fQ51EXS4n0oXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dY4E2zS/; arc=none smtp.client-ip=209.85.160.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUidnzfh"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-46094b68e30so35525311cf.0
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 13:35:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dY4E2zS/"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-460c2418e37so37421751cf.0
+        for <git@vger.kernel.org>; Mon, 28 Oct 2024 13:35:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730147719; x=1730752519; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730147721; x=1730752521; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0cpGIf3Q2e9lMZFbZTS9wWeKcb2Sr6a33QDERJUPy1w=;
-        b=KUidnzfhzdrG5Sgz+NnHie/IrMvFrRm1lboY7OylZgKaO+OUFzRBy+eh9fh8KnnQPq
-         9Xn1JtP7sEWVZpnpye7mDNm1hLRzcbpfdI6dwbJt3silA2xnrSM/zl7Gz10FvyaLiVHV
-         jdwxL6cVFrV8Hz8O9BCrPINL9+lVmL4zchPLNJxz69nui1duRwPw/5m6AygZoFjwNs3N
-         g1GrgRL6Ios0tvuxP632O4QlL4Gm8Urgj11EnyTK0rT4Oph4/nq07lfmrtJxidXa/mdI
-         2gt3/JEu70XZjbrFX0fEuKXBC5B5YPEZxoj9tbCZliRPFIP0EXySYdgD1tVBhGQlQ7aS
-         FQEQ==
+        bh=7bXXKwzFSC0TkD8Nt5yO4VGdeeX7EPsBU1Pyy8CMfhc=;
+        b=dY4E2zS/5EwBS0qXMgq01xNmmg1isrUJNBXVFYD9Bt5Q42yhWgQcftrfYwqVDu/ziz
+         8z1r6vGv87SXGil+FjWUGz3TxZZoOR8l5pHF/6leTOQ+CneMK1VLGuDVWk3C8Yzb3iRU
+         8hKUDMrt99/XiJ170xj7rloDlyzRjVZO/QUt6LnpXW64rlHYXHeiBxcg/0oI06Bb+C1j
+         62qUC57qwJKYSPyN+QKosdTAcQUcGROmAnWxM+0d93UOnGCuIXt+vrzXIoNA9bgqwwB1
+         Xmi3E8xSYgxacYtq9r0XU+QwC+m6lSJ3q258N5XvARogktNa4/Jhn7svwkFD80M3UI4w
+         1Vbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730147719; x=1730752519;
+        d=1e100.net; s=20230601; t=1730147721; x=1730752521;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0cpGIf3Q2e9lMZFbZTS9wWeKcb2Sr6a33QDERJUPy1w=;
-        b=LhkxIc5+yQ7tUsshK5lQBHbuFba7W4oeVEPcUkwxYih9V9TLbVgXBJDpeFKunTiRbY
-         J5F4pUxja/alAD1hMqkUKb+dK9n7r19C6CDjf+4TjVHXEZivCpwKagwwqWvfgEDjsUS/
-         zhqTG6g6hld9ibzXtjEY1igMaDYmfg0gGBBZw6WkDT5zucS82VyBIZNZBpLqFXWmd++T
-         8a+X7zOmodyFP5Y2GHHb2FSE5ASlaaBEa1KZitwD5zfKguPHmeq3DCMw4KdNKP6NQlyM
-         SCyXUmSbgNbdkVJ+vi9fjfApCyaPUG+QzQ0NqFXTTXOCn3OVNabvIkANGpEmt/QFhk8B
-         J7jA==
-X-Gm-Message-State: AOJu0YzyHmbfotb62eW5KiiwbjnLS853p2jnO0xvflePVqgkdVJ8Xiaq
-	o/hZGOikmiEJ0l/dQ8yDRJtSjCZHNsHtW8G9iDpBb6c9I9k1UyzVWJEh2ilq
-X-Google-Smtp-Source: AGHT+IELs9/Cl4VdSR328OBSZAXBdvmFSjElVJHlaSLTLyOJ+SKDJWRqCRm8rDGyIaB8B/x9+OuWMg==
-X-Received: by 2002:a05:622a:c5:b0:460:933a:f6c with SMTP id d75a77b69052e-4613c0303bfmr163867311cf.26.1730147719575;
-        Mon, 28 Oct 2024 13:35:19 -0700 (PDT)
+        bh=7bXXKwzFSC0TkD8Nt5yO4VGdeeX7EPsBU1Pyy8CMfhc=;
+        b=bLnIl/ZYVYSsOUAcZOh3TB4eTknS8QYCAE5J3fBAORZ+cZieFYQtvDezyKjoKiU+VJ
+         Yxypr4Z/1ywirhNlyz8vD5qzJ7CpdmrwVBGJoCazzg7p3FLQrErPibqzrdZz8fcVtH3d
+         /fFSqAxK8JNiH4fouduQs62+m54NChSvHV5/0F8ntMBnKxf/loEMK9/wnnfz8Xq9D3Wb
+         ZmWUnLdeodRPY9KHQOdRVnA73YfP5jdzb13sCNmQREEYNncX2hmSkIuvmH5EIAL1FuPK
+         YM8sw+5lYeMTksfvMTeFo75BwGjN8DLkUZx3GRAg7zfGkNabhCpPpzkdn701XtWaNCgy
+         nw9Q==
+X-Gm-Message-State: AOJu0YxYBhugySpQv13IK8NVMtyAzi2sw1kDO/viQg5SLxX8bQOQc80w
+	wmXutTS41wkuukwZM6Pw0vjChPHnvQXO4CKx4QjTjT+oFw4EAVp96l5OnaZD
+X-Google-Smtp-Source: AGHT+IGF5psGdRIG6wLW/pK4hvomWhXlY8RmPKHYlc2edfBbzkFa0MiDXXSPVwBiqU97+5hXWEkBJA==
+X-Received: by 2002:a05:622a:1181:b0:458:2622:808a with SMTP id d75a77b69052e-4613c00d122mr179171481cf.20.1730147721431;
+        Mon, 28 Oct 2024 13:35:21 -0700 (PDT)
 Received: from localhost.localdomain ([184.147.230.152])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4613228c099sm38215791cf.46.2024.10.28.13.35.18
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4613228c099sm38215791cf.46.2024.10.28.13.35.20
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 28 Oct 2024 13:35:19 -0700 (PDT)
+        Mon, 28 Oct 2024 13:35:21 -0700 (PDT)
 From: Eric Ju <eric.peijian@gmail.com>
 To: git@vger.kernel.org
 Cc: calvinwan@google.com,
@@ -60,9 +60,9 @@ Cc: calvinwan@google.com,
 	karthik.188@gmail.com,
 	toon@iotcl.com,
 	jltobler@gmail.com
-Subject: [PATCH v5 3/6] serve: advertise object-info feature
-Date: Mon, 28 Oct 2024 16:34:54 -0400
-Message-ID: <20241028203457.19715-4-eric.peijian@gmail.com>
+Subject: [PATCH v5 5/6] cat-file: add declaration of variable i inside its for loop
+Date: Mon, 28 Oct 2024 16:34:56 -0400
+Message-ID: <20241028203457.19715-6-eric.peijian@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028203457.19715-1-eric.peijian@gmail.com>
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
@@ -75,42 +75,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Calvin Wan <calvinwan@google.com>
+Some code declares variable i and only uses it
+in a for loop, not in any other logic outside the loop.
 
-In order for a client to know what object-info components a server can
-provide, advertise supported object-info features. This will allow a
-client to decide whether to query the server for object-info or fetch
-as a fallback.
+Change the declaration of i to be inside the for loop for readability.
 
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Helped-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Calvin Wan <calvinwan@google.com>
-Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
+Signed-off-by: Eric Ju <eric.peijian@gmail.com>
 ---
- serve.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ builtin/cat-file.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/serve.c b/serve.c
-index d674764a25..c3d8098642 100644
---- a/serve.c
-+++ b/serve.c
-@@ -70,7 +70,7 @@ static void session_id_receive(struct repository *r UNUSED,
- 	trace2_data_string("transfer", NULL, "client-sid", client_sid);
- }
- 
--static int object_info_advertise(struct repository *r, struct strbuf *value UNUSED)
-+static int object_info_advertise(struct repository *r, struct strbuf *value)
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index bfdfb51c7c..5db55fabc4 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -673,12 +673,10 @@ static void dispatch_calls(struct batch_options *opt,
+ 		struct queued_cmd *cmd,
+ 		int nr)
  {
- 	if (advertise_object_info == -1 &&
- 	    repo_config_get_bool(r, "transfer.advertiseobjectinfo",
-@@ -78,6 +78,8 @@ static int object_info_advertise(struct repository *r, struct strbuf *value UNUS
- 		/* disabled by default */
- 		advertise_object_info = 0;
- 	}
-+	if (value && advertise_object_info)
-+		strbuf_addstr(value, "size");
- 	return advertise_object_info;
- }
+-	int i;
+-
+ 	if (!opt->buffer_output)
+ 		die(_("flush is only for --buffer mode"));
+ 
+-	for (i = 0; i < nr; i++)
++	for (size_t i = 0; i < nr; i++)
+ 		cmd[i].fn(opt, cmd[i].line, output, data);
+ 
+ 	fflush(stdout);
+@@ -686,9 +684,7 @@ static void dispatch_calls(struct batch_options *opt,
+ 
+ static void free_cmds(struct queued_cmd *cmd, size_t *nr)
+ {
+-	size_t i;
+-
+-	for (i = 0; i < *nr; i++)
++	for (size_t i = 0; i < *nr; i++)
+ 		FREE_AND_NULL(cmd[i].line);
+ 
+ 	*nr = 0;
+@@ -714,7 +710,6 @@ static void batch_objects_command(struct batch_options *opt,
+ 	size_t alloc = 0, nr = 0;
+ 
+ 	while (strbuf_getdelim_strip_crlf(&input, stdin, opt->input_delim) != EOF) {
+-		int i;
+ 		const struct parse_cmd *cmd = NULL;
+ 		const char *p = NULL, *cmd_end;
+ 		struct queued_cmd call = {0};
+@@ -724,7 +719,7 @@ static void batch_objects_command(struct batch_options *opt,
+ 		if (isspace(*input.buf))
+ 			die(_("whitespace before command: '%s'"), input.buf);
+ 
+-		for (i = 0; i < ARRAY_SIZE(commands); i++) {
++		for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
+ 			if (!skip_prefix(input.buf, commands[i].name, &cmd_end))
+ 				continue;
  
 -- 
 2.47.0
