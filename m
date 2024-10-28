@@ -1,124 +1,102 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5396518EFF3
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 06:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDBF524C
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 07:28:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097509; cv=none; b=j6pHP8cVy1BYRDGcI+V3RO8z3k+opvemsfyc1t4fgSWnDFd4kLEX47+AkGmjsdJHkKGCFk3M5ZGs44Zszib1paoiTFf4GbBLLvniFHTnUbLST3AoEjLN2QhDlGPW4KxA2MZHI6GBYx19aWAv0vegccCxl+PFEgDQtruiCjgaDxg=
+	t=1730100534; cv=none; b=Swf4wokeFT3tN5RHEIbVPL5SVblMLBidx4WYJ2lIaF7Maj4x+I1tXUGRSOCRqkOW1SnBHViC8T7/OjHjhVOp3HA9UYDZzRgAYWwxKk46Yg3LCrZNres4DVQPSdiKbVc+JBcwXtr/hrh6upT06xUlg2Aw4Qqf3rIDW2J3NXI0R9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097509; c=relaxed/simple;
-	bh=dLJey6cCjZfOEGJp7a26x2//6GFZj9xG586JT0N7lfU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sDbD6tKS1uJG8tJxnbLqoRjaIZYWUqco0T9yg0p2O8Wkp/QnfOr1oskEI0eWQeX0wW37ToCBb4J0kEtWrDK3UGWQg89CnYZaglNUmUb8it4r4+NxnelBY1a/cuJOoZ0TTTyoE4NaWHhzhuXxwInSqcur6ltbu/BjyvzxUCIUx88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d2KyXHxA; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730100534; c=relaxed/simple;
+	bh=zZWqWJMObgNWM5KBZJsv12RDs2QXQT66y10vCyPxlvU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=txUPg08cNkNRqP05XEuZrr94NacFE1OEiC5IKmXbA9qhC9dHEvP30qH6fKcWfZJiHpv08cVbvAA5VOuGeTfndv6zQ/yYUzEAlkFZFGTLzfF0luhMdt56iSDyg71GEDhSz+RdyMP3CNG0Y+XEYBRTzc9mWUWfltPFchuGGMym7Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZpvdEYRl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IFCUrbOp; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d2KyXHxA"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a9a26a5d6bfso608972466b.1
-        for <git@vger.kernel.org>; Sun, 27 Oct 2024 23:38:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730097504; x=1730702304; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8+3zN8oYriDH2ik9kW2OZ31FHVwr7G5WD8ju79fj00k=;
-        b=d2KyXHxAs/sI8KncwGGFAXfyx2529jq2uW21qJlzYT94U1qIpkpqBhK4V4Y50mS/1l
-         dVLNgFiqmc/fvfHAB87fvV6QM3ftwbT8FXgxAf781cqkIJqvd6TSbH1I7tyaYBG6QPDr
-         icGiFqZbEfiMkfFfj5sXBo+gzi2dVnzVtPTmrAsJCDV43r7NB8FkC6baXkyOBhCTEclo
-         C44gEwjBwssqd+LBdcgB1F6ehfWTZVkYXOj0odlug8JhedBw2yMLTzhXBXlfi3+CBh5P
-         s1Blzx/bFN7/aBgSP2g//F1bT6zF02KjEFPaA/ypmrIedjljDAYCPebOfYZSnG3jczwc
-         lvgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730097504; x=1730702304;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8+3zN8oYriDH2ik9kW2OZ31FHVwr7G5WD8ju79fj00k=;
-        b=Zebobkwa+UqrQ1VxZuzb8Ak9ttOc7OiCE2Qf+ayg2fXWr3TZcrUDCfmhbr6wQvyHoU
-         XJiJZG96E5NFvFRkOUhNICJzAhyhcQd8DTwRCYEwenEb1zTLgMzIxkBt9EyU6ByGe8gi
-         I6JkjWmvn6zjYl2xU7lvb752C8AGWuDuOSRqiiI0yxJU0RjkQkBEkLc1xXq9qzX/4dKZ
-         8qY425qzV5sFLSj8oAAZdVGhgT6YXe2ZVVKftjv3bfw51Rc3i7ohFWA7CfoSiqxaTZcZ
-         WzYcyGASfN93VBv23Xp8FA0X5bn4lWufqA7Vbe4XIYyp/3nK3hLIyXYvD4JzAdsOq1L1
-         qQxw==
-X-Gm-Message-State: AOJu0YwM9u6rWyOSZx0v2lou2TrnJ2Dt226CgKoVfueVMZhPtWNwtlb6
-	LpJU9Le1kOFky9lG5hrbILuvLNo2pXLUbLo+PFu5Y/CZ7t3JNKHqzzwi3kO62Hwm/vQ+4K4TS65
-	7qxjreTUf6szj1RYetZgrStlt
-X-Google-Smtp-Source: AGHT+IG5KF/5R0pOJxWBlq4qOhxOBvZ1B8DXF3b4V9jngWahv1ym4Bze6xLNlITi6DIO1eYy+2OOxIeREZ8pKcbIImw=
-X-Received: by 2002:a17:907:7dac:b0:a9a:bcd:b726 with SMTP id
- a640c23a62f3a-a9de5d00417mr610932966b.25.1730097503992; Sun, 27 Oct 2024
- 23:38:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZpvdEYRl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IFCUrbOp"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2B0A111400E7;
+	Mon, 28 Oct 2024 03:28:51 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 28 Oct 2024 03:28:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1730100531; x=1730186931; bh=zZWqWJMObg
+	NWM5KBZJsv12RDs2QXQT66y10vCyPxlvU=; b=ZpvdEYRlM3pxDbkEBQsFPJKA4j
+	XJpdlYHhrOrJUitVIE6OZ+OGNuKV7Yi+nK0BMoORrKCaoy7FfzZRbywLTl7cx8vK
+	60JWHTtqlJ/IuJ8ctmJ1X8wCg/e9PAe9ix0wmOQUD3EL9Fe2pAHW1zCAj9886Z5j
+	jTTqRAUv+h8btRUHmT9lr7qbm2WE36vJvpHCsnb8ACbzsQdsfcI7+QiQ5+HXWO5r
+	Hg5ggki34PCZ2t3oDeotO/opfccCOjJB93SoxK03cvVYqVYSumn6MUFwdWrKyVlx
+	tZIYSuVXLmPHFZ64MikPKiQjxtfr9fLzI7vdodu4rymVz29rvOrJCBGl8+lg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1730100531; x=1730186931; bh=zZWqWJMObgNWM5KBZJsv12RDs2QX
+	QT66y10vCyPxlvU=; b=IFCUrbOpdkZgwl+R0o5i0ou30KK+D2uzzrihFrB6XWg0
+	kg5B6LC85AzxAvlqQzzG+u649aIJn06ePu9S//L8xMV+ifjyBYW7QMnViXTEyaGY
+	dNtnnE7W/r8vxB0yfLEwPbKw4xvmlG9m/Tw1y5kUabiGXqRiaRmBVzBTHe2J4YBw
+	i4XXP4vnfRIphGjTyudfcyDf8HMTby/vjja9IWQC1lARgWLUM1J10tbeQNiKArYf
+	RI5maV5+Hmgm4wMm5pqosYLSatrMIQO9AbcMa9lOOGyvugLSqSSgFc74G/2+hiR3
+	BllYyIFtKIeiW14zs6B5i9rjj7k/HGEM8WLBDfa4rw==
+X-ME-Sender: <xms:Mj0fZwwRQIUbQ9g-fXKX4a3rGBWl0BvvUTJz_o6ccRDpdwWjsJoKOQ>
+    <xme:Mj0fZ0QmnrLxvm96pdFHW9T9mxwV08Rfeey2krujUGuc6NVfTElXjjnkNavWN9g0X
+    HMFol3_7aLIztVYxw>
+X-ME-Received: <xmr:Mj0fZyW7x1l2483oMUHkhZWku4ZdxvSIsxp6FN4ffIHcgHHYGBj3Pmyp9ibeL6MQUNKnUcfVeBPDXIx8hgfVsMy2_1IdQAKR_r-Q9nSmFBQKGg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejjedguddtlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
+    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhiiihosggrjhgrmhgvsh
+    dvudesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughu
+    nhgvlhhmrdhorhhgrdhukh
+X-ME-Proxy: <xmx:Mj0fZ-hYLY013ARBzsLlSJQsjc3HIyfvmpPUEgtqaZhlMNSaNY37Sg>
+    <xmx:Mj0fZyAPUzzsXKzp1a-dGXU3o6OeIvgo9WXg5t8QOf0nKzcO1USkeA>
+    <xmx:Mj0fZ_LMWoFjAR-uQy_lf5bK2C0jSy1eIrsgkX4X8BpcUw4cXmzLxw>
+    <xmx:Mj0fZ5BAgOUa1m3Lc1CrZwSQOKTjZ4V82Rs3yHjGMVNtA92t9TZmMw>
+    <xmx:Mz0fZ9MeoeTBS9RLcKj7TY1UK6TSuPkaUYadNeuvdmfVodB2rLqQ_T1_>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Oct 2024 03:28:49 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id a273a4f7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 28 Oct 2024 07:28:41 +0000 (UTC)
+Date: Mon, 28 Oct 2024 08:28:39 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Chizoba ODINAKA <chizobajames21@gmail.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
+Subject: Re: [Outreachy] My Final Application
+Message-ID: <Zx89J7V4WLA-BIGX@pks.im>
+References: <CACwP9aqFY6kPOSzv2JWWZejwAiYbMEJJx2qxomEnyxnxKFvkvA@mail.gmail.com>
+ <Zx8ouGN5ln_VtsHw@pks.im>
+ <CACwP9aqXr8+VLEQFHmmbmCaXAyec=84+m+fO_W5JOZO9+CrcXw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CACwP9aqFY6kPOSzv2JWWZejwAiYbMEJJx2qxomEnyxnxKFvkvA@mail.gmail.com>
- <Zx8ouGN5ln_VtsHw@pks.im>
-In-Reply-To: <Zx8ouGN5ln_VtsHw@pks.im>
-From: Chizoba ODINAKA <chizobajames21@gmail.com>
-Date: Mon, 28 Oct 2024 07:38:12 +0100
-Message-ID: <CACwP9aqXr8+VLEQFHmmbmCaXAyec=84+m+fO_W5JOZO9+CrcXw@mail.gmail.com>
-Subject: Re: [Outreachy] My Final Application
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACwP9aqXr8+VLEQFHmmbmCaXAyec=84+m+fO_W5JOZO9+CrcXw@mail.gmail.com>
 
-Hi Patrick,
-Thanks for the review and correction.
+On Mon, Oct 28, 2024 at 07:38:12AM +0100, Chizoba ODINAKA wrote:
+> I would like to know if I need to send in a second version of this
+> proposal to the
+> public mailing list, where the changes are implemented, or will implementing
+> them on my final application on the Outreachy site suffice.
 
-On Mon, 28 Oct 2024 at 07:01, Patrick Steinhardt <ps@pks.im> wrote:
->
-> On Sun, Oct 27, 2024 at 11:48:39PM +0100, Chizoba ODINAKA wrote:
->
-> Thanks for your application! If you haven't done so, please don't forget
-> to also enter it online via Outreachy.
->
-> [snip]
-> > ## Timeline
-> >
-> > Phase 1  (December 9 - December 30)
-> > Community bonding. Talk with mentors. Read Documentation.
-> > Write backlog.
-> >
-> > Phase 2  (December 31 - January 27)
-> > Begin migrating unittests to use Clar framework. Send patches
-> > implementing the migration, get reviews, make changes based on
-> > mentors and community recommendations.
-> >
-> > Phase 3 (January 28 - February 25)
-> > Look at implement additional assert functions for Git-specific types
-> >
-> > Final phase (February 26 - March 7)
-> > Working with clar upstream to improve shortcomings discovered during
-> > the integration of Git with Clar.
->
-> It's somewhat funny that your timeline mentions backfilling missing
-> functionality _after_ migrating the unit tests. It's likely that some of
-> the unit tests will need to use such functionality. So you'll likely
-> have to:
->
->   - Investigate the next batch of unit tests to convert.
->
->   - Figure out whether these require functionality not yet present in
->     either clar or our wrappers thereof.
->
->   - Upstream potentially missing features.
->
->   - Migrate the tests.
->
->   - Send the patches for review and refine them based on feedback.
->
-> This would be the core cycle of your work, and you'd probably repeat it
-> multiple times.
->
-> Patrick
+It is not a requirement, but mostly done so that we can provide feedback
+and help you fill in the necessary details. So feel free to send or not
+send to the mailing list, as you wish.
 
-I would like to know if I need to send in a second version of this
-proposal to the
-public mailing list, where the changes are implemented, or will implementing
-them on my final application on the Outreachy site suffice.
-
-Thanks.
-Chizoba
+Patrick
