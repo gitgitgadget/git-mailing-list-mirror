@@ -1,71 +1,67 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCF013D297
-	for <git@vger.kernel.org>; Sun, 27 Oct 2024 23:56:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012BF645
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 00:01:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730073415; cv=none; b=GcR9/6/wXAg6tW3apizr0RXRZZNKDOB8RX6lLfctoqXZl5Pb3PqVCVPPL56MKHAqJ0r2DcUjOTTYzq0ZLjW0npaF4WvOkMW9j0Qf6ISODjURPqnwzSvJXf5vSCDP4TmcScrlb/ucVCujdTitPq4oPJVd2Yj7A6jvDDdvoMMbZyk=
+	t=1730073674; cv=none; b=SenS4aA9WRjVd+NnEbZWKDuo2r3ot6iWpc6uUTZ3lR6HpKVZ5wUvsXWfbL1FsmCuDLudEOJOUkOUng1jMW4Ae1PCyd9G6a9jFYbB9KfmLQ/IRBZmtJvv5eCsaN0sw9/y4a0pfUtufwPqhHFJaIiuq1z4ODBqPdGrVUChhCfm2tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730073415; c=relaxed/simple;
-	bh=KBdTlTX7jR44QRw7YMYoAJ4oM5/lbqoHCMltNq2Lkt8=;
+	s=arc-20240116; t=1730073674; c=relaxed/simple;
+	bh=LI8kftWjcj6dtoajEYN9axVPl3Oo1w5b7dInZ9TJroI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c+6rtgMDqP87VHuWG0+3Ko8EWIJIgijtpxuyjtXcQ56anOQO2Rj3frn/Wmn7cPD+IEcQ4X4IdG1yEfEFzwHGXwWCSdTESIcq31dzQvsJT7C5Xj44JI0Y1DR6Nl5lj9F0yWKFiiXrjXNzg3B0qd/WakmPcS7yEQMTUfGUGg30UMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Bth3lshT; arc=none smtp.client-ip=209.85.219.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=P4CG5A5GHmGC7j9wmZqAjIocYF5xyD6mGUxza/Pj8F16Utm9JGXHr+Tjv4qVJVzn9e+5kV65Yo69dViKfO9gPWoEWf+VvaN5bTKGfuXoHt+wJnN8pZAnjsdW5G3wBKZdTHaG6IYqR9xJyoDkZkxfUUA8Z9MdwpWMWFwitkGaLiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=uU+ZgAns; arc=none smtp.client-ip=209.85.219.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Bth3lshT"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e28fd83b5bbso3912474276.0
-        for <git@vger.kernel.org>; Sun, 27 Oct 2024 16:56:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="uU+ZgAns"
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e2e340218daso3756173276.0
+        for <git@vger.kernel.org>; Sun, 27 Oct 2024 17:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730073412; x=1730678212; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730073672; x=1730678472; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zoa1tjPTLq/RrW0aDF+T0uzjjjqH45576AWL9aRYYGM=;
-        b=Bth3lshTuIj7TV5N+wWdYC3r5qpm6kY3FgCrpRQpPgdCZrEqMfMBV5gxaC0vJOzu4e
-         MBdp6n6a/odPqNOkVtvCyIZ46SXiHKmhOwB3ku0UTlnpJcS0Uv6qKQuJKxjh15NSFrJW
-         WZH7ayixUB/momT32avTh5hxrX/Fqo1DpWZBmc+tWyvSw4Dhx29feo7CSpo7WPI0kHop
-         hbPqqWKEGYrBthnZdefk9lXZhqKQbBbuX07nU/df8Ag5/WkuQCieTV4mre1dQ6Bpv/qA
-         ZcM+gQdjS2H9jo3FC1QOWJLAm7fRvNZD06/htGEX3d01ZO3zUC67AsniOXRlXziDaVtD
-         xJ/w==
+        bh=LI8kftWjcj6dtoajEYN9axVPl3Oo1w5b7dInZ9TJroI=;
+        b=uU+ZgAnsg0spBaswvk1yXArDM3tPEFr2BoiYci+xHUZZ4S++mOeUcDo48nQvXRB503
+         9oXuAHkeAkl7CDSxWUXzKkcK0+LQbRerSial+fB1pNIgM/nMMgwk8eqxvUYNrVlsNbII
+         CyqUM10VY+qHEhbpS7/fyP8Hje9p8uOIHMyu/RRENDZifqmJTVHt3kyNfeoup0snXTmE
+         040QqoIWF4AN5rjx2SPXEQtF2MPUB+jgAFzKp+A+KmTwreiR7S1GKeZZue+mB7DhWi3h
+         +6GhctT3bm2h1dL8fMj9pE3cXqjwcTOan5MbB/3755cOETiRrSfXyHDbQiVD70dIdA+D
+         yAbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730073412; x=1730678212;
+        d=1e100.net; s=20230601; t=1730073672; x=1730678472;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zoa1tjPTLq/RrW0aDF+T0uzjjjqH45576AWL9aRYYGM=;
-        b=FNpR7AeUH/5iQW4TU9ZKTCnNco90f7NuOsilHXePVSK5RnxW4QzdjKwxC7zPo7AH9Z
-         4yiAha9QaRoEzmhZLZ8Czhej88PQqP4zJ/spULZi/xg5eYEYv+pGxNrn+qCZgMhsBBQC
-         fRxQIWDZL/OtXdK8tiaFWBT3uUm2tbtKLMShXZ+HeYC7VPAXQc9nQ2b825T/CHUBRwzh
-         UhCsvg4xC0CRbsrWigBqGDHjRURmgw/lrcXNzF0LF5XokEXG7HMFVmQbGWurvbxqhcgJ
-         4YMIMBe08R6uFWyk8XzBBqKkuFCnT8S/ZDPIYQviqvN0jscNxN5XLx3CCtNOPiklcbVB
-         bB5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUEr9TilaW/TGpCKxPwP3sBjgN+VjDXApskJxbaObEHk441gCSI6mTn4VbPC8GOZpcaeHs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YybfaGMGuKgsnli19qwYIMMlKw9Zh4uINQcbFVVpPwCZb9aZddq
-	2CUJOGnrVfbUH3VjUrVLR5qFMufHQhSBhqvSrk6KvfcoBco8Wrb9bGqp4igRARE=
-X-Google-Smtp-Source: AGHT+IGMdhp/5PZRHFOkXujGk4KKmlNHhivQoAHFGYcoEpOVjXmGLtiVRRVFTgvD/W4YxeFUf2Bq4g==
-X-Received: by 2002:a05:6902:1a47:b0:e2b:c732:345b with SMTP id 3f1490d57ef6-e3087b82c24mr4960806276.14.1730073412469;
-        Sun, 27 Oct 2024 16:56:52 -0700 (PDT)
+        bh=LI8kftWjcj6dtoajEYN9axVPl3Oo1w5b7dInZ9TJroI=;
+        b=HG7uMrHq9gwqAbDjA30X2GUXyF5vX5hR5UevlP5ZrgU9fI+q+ZANwTpxl9KNu7rPS2
+         ZBUiF5xVh2shnZH0YJ57CvnheigGpPeLNEC7H0e6F67x7x+La8Sst4aUe87Y5LK3Cqkk
+         WzQ5GqvR3ggMnMLV5wQHo8PUcLITCRQVYXq/JSe/HIQDGaLHJSuXl5DPavbRjgGVYw9o
+         uul5+JvZ7Z+3r52Ckoyc1w2lPdtfSxVRDkXUok5kPzOf05dz9tE9/D/0FMBrLrwcrSus
+         TIB4OfP5jgckL6znu2XCcbEy0BB7DddbFtyMNBXcoCi9BJ12yi3y4SslQ/+No9Xsobto
+         7eVA==
+X-Gm-Message-State: AOJu0Yzaxr20fSX5xYf18Q0ZzlR83rzuyqq6GqubIgMiAff3/ZJYjQ4g
+	p6yxQjyyKfr0xfgV1In/9P+thQw1nI7/bzC2tfeaQu3/2N7pfJAd/sesMr/wlko=
+X-Google-Smtp-Source: AGHT+IGWifDoiUIKHv2F8PSzIVwOBphZ+Vs9JtuWsDO8U8N8tn/f9HgW9x+2QP+Jm7rn/k6F1kzxgQ==
+X-Received: by 2002:a05:6902:2b0b:b0:e29:24c:1d82 with SMTP id 3f1490d57ef6-e3087bfc89emr6114632276.38.1730073671950;
+        Sun, 27 Oct 2024 17:01:11 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e3079d9c643sm1108779276.34.2024.10.27.16.56.51
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e307a03bf62sm1103775276.53.2024.10.27.17.01.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Oct 2024 16:56:51 -0700 (PDT)
-Date: Sun, 27 Oct 2024 19:56:49 -0400
+        Sun, 27 Oct 2024 17:01:11 -0700 (PDT)
+Date: Sun, 27 Oct 2024 20:01:09 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
-	Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>,
-	Toon Claes <toon@iotcl.com>, Ed Reel <edreel@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Edgar Bonet <bonet@grenoble.cnrs.fr>, Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 0/5] t/unit-tests: improve clar platform compatibility
-Message-ID: <Zx7TQXoOq38S5gPL@nand.local>
-References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
- <cover.1729506329.git.ps@pks.im>
- <Zxx3nmfp61DR6vvB@archie.me>
- <Zx45nXPWdFIqVPTo@pks.im>
+To: Peijian Ju <eric.peijian@gmail.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com,
+	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com,
+	jltobler@gmail.com
+Subject: Re: [PATCH v4 0/6] cat-file: add remote-object-info to batch-command
+Message-ID: <Zx7URU2twSW1G6VN@nand.local>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20241024205359.16376-1-eric.peijian@gmail.com>
+ <ZxwGAhWYm0tASMI3@nand.local>
+ <CAN2LT1CTi+7GWsDOYKDF+PEg6H3BFTfCVSwPvK5u5KnHi_AbZA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,34 +70,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zx45nXPWdFIqVPTo@pks.im>
+In-Reply-To: <CAN2LT1CTi+7GWsDOYKDF+PEg6H3BFTfCVSwPvK5u5KnHi_AbZA@mail.gmail.com>
 
-On Sun, Oct 27, 2024 at 02:01:17PM +0100, Patrick Steinhardt wrote:
-> On Sat, Oct 26, 2024 at 12:01:18PM +0700, Bagas Sanjaya wrote:
-> > On Mon, Oct 21, 2024 at 12:56:30PM +0200, Patrick Steinhardt wrote:
-> > > Hi,
-> > >
-> > > this is the second version of my patch series that addresses some
-> > > platform compatibility issues with clar. Changes compared to v1:
-> > >
-> > >   - I've merged the CMake fixes at [1] into this patch series to avoid
-> > >     conflicts. @Taylor, please drop that other series, which is
-> > >     "ps/cmake-clar".
-> > >
-> > >   - I've fixed up the "generate-clar-decls.h" script.
-> > >
-> > >   - I've updated the clar such that it includes upstreamed changes for
-> > >     improved uClibc support when we lack support for `wchar_t`.
-> > >
-> >
-> > Git builds successfully on Buildroot (aarch64 uClibc with and without wchar,
-> > aarch64 glibc).
-> >
-> > Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
->
-> Great, thanks a lot for verifying whether this fixes your issues!
+On Sat, Oct 26, 2024 at 11:54:03PM -0400, Peijian Ju wrote:
+> I probably rebase on the wrong master tip. I am working on a new v5 now.
+> Would you like to resend v4 or can we skip v4 and use v5?
 
-Thanks, both. Let's start merging this one down.
+Let's skip resending this round since I found a suitable base for it.
+Once you send v5, I can apply it onto any base that you specify as
+appropriate.
 
 Thanks,
 Taylor
