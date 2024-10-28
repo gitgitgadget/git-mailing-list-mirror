@@ -1,98 +1,119 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C1A18E05D
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 19:50:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA0418D65D
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 19:54:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730145033; cv=none; b=tvAH/1oW2K/c9CMfNOic4SrKMo/jtVUJdVIKSvAuqswx1Ne0/D2ggIDQh41ptjSBF9q1eqApN1j9bDschGfF+cKsJ7l8uydgBoSnJ6ZJmMVM39eeNW2P9dLnK3EkskBJve+zOD343LtQ5W1uQTb2wwGqYaalskwRC9OXHi3KPdU=
+	t=1730145249; cv=none; b=j5UHx5On6EBNrj/csx8Y6wgmRgbXbVJ2s3GL2maalD8PalgFBkK0IyUf7tjnNbRW2EiOQEZp0B66yC7axySWV1u5BW2Lg2tRNC5/XMbaFcj+3c8i35PM0lxY6kIK9PkuS2SwEIp1WlH09i8tmHVAJ3/O0aAgCLxzzMW6OINvi20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730145033; c=relaxed/simple;
-	bh=ThO9PbR3zluAJydLPWwU29JVMA62rL1NTo6f2n1D5uA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H6d6Lsk/+Ij/Zmhq8dQJIMzjlTdVvqF3LgsioOSCfUy1TVvepdi7gQziPOMDtEmLzTLH8ouV5z68srjR4+SBrEMa8Kjs1cfQzYB/Lc7VXSZyPQNGjffGZV3FIjRzgrRgyJgtdSdWmYgX1JuQtEOmoO7gn9Y6eZXSjYjP5o8RKs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZDo88gSU; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1730145249; c=relaxed/simple;
+	bh=WUwTzbVhMd+XsyzYGB9dd7Zz3sspES2Iq8BdeK5dObQ=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=jMJONIg84HWe86+F6id+6p7302/5WW7Ms9G2atvoTeT9s6fdEjTaPXb/XI5mm0SkGNPS3s7vC6Vn5psPTPajD2CbBxqzsvhIhtBx0dswRN/d5TCP0V/Eym1wGIxJfDlW8eM7k82PwXL6uWgJVbbelF4dpyS4IcMzBSKPFbXkd1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jL5SWivy; arc=none smtp.client-ip=209.85.219.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZDo88gSU"
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e29218d34f8so3568301276.1
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 12:50:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jL5SWivy"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e2971589916so8295494276.3
+        for <git@vger.kernel.org>; Mon, 28 Oct 2024 12:54:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730145030; x=1730749830; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ThO9PbR3zluAJydLPWwU29JVMA62rL1NTo6f2n1D5uA=;
-        b=ZDo88gSUfNmzkPFEeJhS4LJRwR5CJi9YXnjBVlvgs0KBeetOzyM02VFPezLyEL3aUM
-         z5XWxUC3wg02P1jwdCqTpeI2FJhuSStNt7ugngcLvcLvv0WsxoXPUZ5X8HD1DjwvLKPu
-         kn2WwU5zF8cShcu6paeLLKva9DaetFSN22j7ayQviWPhhNzGTE61uy9A9pHWdLd6EdQ2
-         6oZmbvqk7/KWebLMo7Xrd9UycaeO44Pzu+dG0xz3duAkgSZJdF4q2YJfuOMoggG1pxuL
-         lun6SRtmZ/y3o/Ytfni910vTfsVd1zAh8vcLS0iefzNnhGvZGWLsIh18ITiuZIL2odm6
-         fTAA==
+        d=google.com; s=20230601; t=1730145246; x=1730750046; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=D/bnOdvkkH9UpFIU+es07HmG9hPl4ONSTam0M1s4pvI=;
+        b=jL5SWivy2tMqGXJUSfkB6+NBgB0qbGKCQ4ySdtmEX1OeVsvVhw2HF3XPhe2MpgopDI
+         4/OhJTD4EC5yd60o9Ys3zwxEtjWwO1GYTOph7I9/DkYfuVovfBCzNTTZ3QSqYLmFisPU
+         iyAtI30iX25Io0vtZDmuuEJ+378XNLMah6Av0x/SO9m/56VEFH/y07idQEkGm558aDz8
+         0VA0ZqNuDVVVESwlsyUzB0COaH0r/GHAtQf0KiFQhgRGq5KlDeylx6I8P0XYKNWCgC6U
+         FM7pwXJ7n83QxZg8okwoDWKE8Ury8VFOzkGz00bu9fIGuniJMVKTkJ3YxhWWMFNI/mMc
+         AWXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730145030; x=1730749830;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ThO9PbR3zluAJydLPWwU29JVMA62rL1NTo6f2n1D5uA=;
-        b=bfxi/UpplhxOVGrY4Kywz1mMedFJJ0v56FaQbVpVuViTt+DWi0rfWSxNzpKgaylQsU
-         OuwEQVD5xLTT8lSEBYq/jsFW/tPJWYWGtdxDvQegDf8rvlMjh+TIlJhDUk01ensQadr8
-         c+AEWzI5sYeRVYQbybPgO/QMVcdTWBYLhaysTLSF28rCuTRLQ/aLq7AbTCVmRx5dEIeS
-         eMmc/ubp0JzViYuESCRLBiouzyJWlznh1AmEc+1K04ZvIpORsl8AY33efBhWZbRqRA3x
-         VRs1fAMriQCPmo0hEJIg26+tr54/kBdSk8kTHb3UkNrjxnFuF6c7NCTPAcKXhoAKWMJG
-         xGOg==
-X-Gm-Message-State: AOJu0YzpJm/xNk+092CeRyIiIEto7KFVE3BsPhRjhKMRL1CORJTSBrB2
-	P1tQmDYbBGvghUqS2ULl38eqDo/psl7sowUKRHkql/vfYxu4Y0BzTHuCRTy+4Qk=
-X-Google-Smtp-Source: AGHT+IGKVIGkfJgxwyyMKxVN3IQjwFANUeVskImcx43SYRi7BGbTkwQz9Ja/zbNHhpFl1gIV47bPYQ==
-X-Received: by 2002:a05:6902:2113:b0:e2e:2cf4:3eba with SMTP id 3f1490d57ef6-e30bc6a43eemr851529276.27.1730145029918;
-        Mon, 28 Oct 2024 12:50:29 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e307a03bf31sm1460149276.58.2024.10.28.12.50.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 12:50:29 -0700 (PDT)
-Date: Mon, 28 Oct 2024 15:50:20 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, hanyang.tony@bytedance.com,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 1/5] pack-objects: make variable non-static
-Message-ID: <Zx/q/HztQRT4eLMQ@nand.local>
-References: <Zx7bEq5DVG4CmokI@nand.local>
- <20241028193409.3648734-1-jonathantanmy@google.com>
+        d=1e100.net; s=20230601; t=1730145246; x=1730750046;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D/bnOdvkkH9UpFIU+es07HmG9hPl4ONSTam0M1s4pvI=;
+        b=gj1jbqPnEMTHB+VUpTh6bKrO61P5EzWiod1ugrdsocH1ZVX+udHlXCztKz8FZVR5Ts
+         b/JvXH5ZsUhYKQeAnbf1zpGKFUYhGqQIDYFrc9UgCzdTuz8dgFTmp7exu5tvVL4vYiXq
+         NmHNGdKeyhmyW5t470Kl/JKIlzfS2JhuNA52KMOWiKZjetYxS0vCnwO0AFvr/MLAB00w
+         zt7asYaKHsiW1HYc8q0cZkwOqXlPPBjQIbIyqiXS020KLuf+0x+ShE5CqOHQipoW82hO
+         inyow5nunuCiTevPfCJ4qK4Ue4Swipn3y2rUvR8bVg+h2H0xqFRQrdsxcqc7BsoSTbgG
+         lGUA==
+X-Forwarded-Encrypted: i=1; AJvYcCUk8PTYYbgRcp4Lu4a8EUVOHogkFQ5xwj9jt9yvHTCPmeFnC/DEiy6D38n6BCmVPJQFt6Y=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBkHeBblXv/p2b/FifH8Zrkhl9c5vnW5PSUgYqAfAXpibDfp/7
+	6JETqxWHiFy72Rn+GqU2NqOvKtDYp+rNAdXGfztfA2h3cuGx2Gi+kamzI0slNIw2HgV3O+P3t0y
+	wx8oWWwSrmRA/EM0wINmcafk1nwq9Cg==
+X-Google-Smtp-Source: AGHT+IHmq2Dhs59EoXmH2MvhZkja4xTXRWa44V0IVH0LAG9Or/sQmP1LdNPthkMtK0ha1P8JOD1I3eIH6ku1rubOWycd
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:ba9c:8d0f:d4f8:e6ca])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:908f:0:b0:e2e:2b70:598b with
+ SMTP id 3f1490d57ef6-e3087c247b5mr7113276.10.1730145246624; Mon, 28 Oct 2024
+ 12:54:06 -0700 (PDT)
+Date: Mon, 28 Oct 2024 12:54:04 -0700
+In-Reply-To: <f8ee11d3003e743affb39835ba3583dd2498e576.1728396724.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241028193409.3648734-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
+Message-ID: <20241028195404.4119175-1-jonathantanmy@google.com>
+Subject: Re: [PATCH 08/17] pack-objects: add --path-walk option
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, gitster@pobox.com, 
+	johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im, me@ttaylorr.com, 
+	johncai86@gmail.com, newren@gmail.com, christian.couder@gmail.com, 
+	kristofferhaugsbakk@fastmail.com, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 28, 2024 at 12:34:09PM -0700, Jonathan Tan wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
-> > This patch appears to conflict with ds/path-walk, which wants to read
-> > the exclude_promisor_objects variable from outside of cmd_pack_objects()
-> > (but elsewhere within the builtin/pack-objects.c compilation unit).
-> >
-> > Is this refactoring a necessary step, or just cleanup? If the former, it
-> > may be good for you and Stolee (CC'd) to work together to figure out how
-> > to eliminate the conflict from your two series. If the latter, it may be
-> > worth dropping this patch.
-> >
-> > Thanks,
-> > Taylor
->
-> It's just cleanup. I've dropped this patch in my local copy but will
-> wait for reviews before sending the next one (probably not worth sending
-> it now since it's a relatively trivial change).
->
-> I've also looked briefly at ds/path-walk - will reply with a few
-> comments on that email thread.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> This new walk is incompatible with some features and is ignored by
+> others:
+> 
+>  * Object filters are not currently integrated with the path-walk API,
+>    such as sparse-checkout or tree depth. A blobless packfile could be
+>    integrated easily, but that is deferred for later.
+> 
+>  * Server-focused features such as delta islands, shallow packs, and
+>    using a bitmap index are incompatible with the path-walk API.
+> 
+>  * The path walk API is only compatible with the --revs option, not
+>    taking object lists or pack lists over stdin. These alternative ways
+>    to specify the objects currently ignores the --path-walk option
+>    without even a warning.
 
-Great, thanks on both.
+It might be better to declare --path-walk as "internal use only" and
+only supporting what send-pack.c (used by "git push") and "git repack"
+needs. (From this list, it seems that there is a lot of incompatibility,
+some of which can happen without a warning to the user, so it sounds
+better to be up-front and say that we only support what send-pack.c
+needs. This also makes reviewing easier, as we don't have to think about
+the possible interactions with every other rev-list feature - only what
+is used by send-pack.c.)
 
-Thanks,
-Taylor
+Also from a reviewer perspective, it might be better to restrict this
+patch set to what send-pack.c needs and leave "git repack" for a future
+patch set. This means that we would not need features such as blob
+and tree exclusions, and possibly not even bitmap use or delta reuse
+(assuming that the user would typically push recently-created objects
+that have not been repacked).
 
-P.S.: it's good to see you back on the list again :-).
+> +		/* Skip objects that do not exist locally. */
+> +		if (exclude_promisor_objects &&
+> +		    oid_object_info_extended(the_repository, oid, &oi,
+> +					     OBJECT_INFO_FOR_PREFETCH) < 0)
+> +			continue;
+
+This functionality is typically triggered by --missing=allow;
+--exclude_promisor_objects means (among other things) that we allow
+a missing link only if that object is known to be a promisor object
+(because another promisor object refers to it) (see Documentation/
+rev-list-options.txt, and also get_reference() and elsewhere in
+revision.c - notice how is_promisor_object() is paired with it)
+
+Having said that, we should probably just fail outright on missing
+objects, whether or not we have exclude_promisor_objects. If we have
+computed that we need to push an object, that object needs to exist.
+(Same for repack.)
