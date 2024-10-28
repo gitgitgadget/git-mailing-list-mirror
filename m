@@ -1,144 +1,201 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544A21EF0B2
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 22:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43A21F80A8
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 22:59:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730156109; cv=none; b=aSnG8cOHfSvq2IgrlGkEDZV5iw8R4jOUZ5PEkFDe9HnTtpFq1eBCOemwXmVtrKQRC4nR/8ZtbQBosl4RCSyS/IWztic+hU84DMzJY7U3VvG4aZmtc64r3z9csDfRnmIFcCp1mAp1MH1FgjA3fX+j8ni7kQ3nGDyhYK39ry2mR3I=
+	t=1730156388; cv=none; b=PwVVnlUVmR2hjhsgr53g8EV0gb4p3KyjOUpJuR9TTdlJsgRQDgPuHKHkgkV4u9Ns5fXDlKib51YhTJiV140pFO0K7HV5pduvPVyZyxkbE+hQL+aVP3nZBYKYqSR4XVMAyFM8Thbnu7ZLkswQ1G8wZIPxy1cOCgnhvUHueH0/u/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730156109; c=relaxed/simple;
-	bh=WUZEzdtncN7n7nq9jynZylFydX/PLQvAfbnUP0Dcrf8=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=EvrjVHa9HoZ+yWzK8RIfKUC+RVgUA+7yFG1JYwpM9jN47bJ82NYjOYP61iNFTdqFNxxCZoMn75olSSWxi/NlMY570e/qTux2eVJ0noKjJj6nohOVqxeHMU3sMS48xqcFFZSrDsWdvP9H09NRu/daAtJuFlx02WmKTvjStXo8aSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eQLsS1AS; arc=none smtp.client-ip=209.85.128.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eQLsS1AS"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-6e6101877abso89905037b3.0
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 15:55:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1730156106; x=1730760906; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WK0v2NqUlsXKe0qI/F8c/VROn+QHv3Fix8YYeWjxX5E=;
-        b=eQLsS1ASikPY2jtsFIViPZeiqYv1ALuKtF/AhT5Qjpw6xx7GFvgh02U5O2Crq4uhFf
-         cY+j8SQ9+D4cHpfDY4dymODFXl3EDULGpb4TXgjMR3GO126gHD6+V8eW4AZfpw/4J94C
-         jDzbceKXcT+cR7cQArNMj60BIlcUJveW+YpuPlgA73ba61RjmJCp0VXstCab7b4AZ+8n
-         2gmpYYLAQcC4DVaS7Bp3JirgIAnquHX6377eNmBRKpxV0emVnlLc0sghyMoXqT/OrSmf
-         Fjx6gNugsWB5PuKxwxWNg2qc4RgBAgmQl+Q6oBZyjX0Rdnh2/P/u0YT4GGdY5ZnHdB+v
-         Mnpg==
+	s=arc-20240116; t=1730156388; c=relaxed/simple;
+	bh=j0C9N3bgy6jdJJJaf8Agp3TDi7lqWrn4lsRU97mU9Lc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BNM1DDjHD/LBrYVjDRYIuVk1TmAuGh5UCapYjwPsBs5XDRAhHWH2jLwNFUpYF0fYF6qfumOPQynALFyP0ffNmQU6v8z2WOoerHBNjd7aSYwY4/YObLj7/kX439Cf0F2XUQbWB90kfigAO0e2ZE6aVUuyz/+d2xNaFSNAggZzbFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3e600add5dcso2244721b6e.2
+        for <git@vger.kernel.org>; Mon, 28 Oct 2024 15:59:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730156106; x=1730760906;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WK0v2NqUlsXKe0qI/F8c/VROn+QHv3Fix8YYeWjxX5E=;
-        b=KEs8QNO48ac0uVPrzmC0yOQnxVFE0aL6bHC1En+DfKJGPYiaMknwKbakFbM6OY3NHu
-         GtE2GooOXEO9wLn06Of5UkYfWsUOltdrCrJ+oLRSDkRdfk59+xSw/8e+WkTr6QEe0zOL
-         Dp9HoZ2dOAN3DotTmM8ZnRfL+tzYRrcKiUxxjI7cf2uEOiS6JDALsQ7nTsCsHNGmnvC3
-         CDIJTnsAmKgPjP1h92hhzbMIeap0iG6b35btw7RS77hDo8qqQ5NqVoTRvkMFc4ppEGJM
-         Q7qZytYZvgsSY804RqbnReV/YCyWaYwYaD1mbxblllqgj1/NL753ySppzt/Gs+8YEqZl
-         Y8/w==
-X-Forwarded-Encrypted: i=1; AJvYcCWMPD3Reuq7YoFqIhanmH1Q+UsMhLKiLGAUOR1fFfbOzd4f/jK9wm1bUx4+kHiQ+93M7fc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoHoRj+a5Z1RrepVs9jcCacImI1QMIHWKcMitF/uLWRHUWjJ0a
-	6HF0nJfutZFqsATF+dqFSBb8NwVPfPZT7tCK0tdapKM/JQ0kVs+be0MIaY2iSlAbW9Rf0FYs0Sf
-	1uhVVfcow9xoWJVtcvDHFfnYDBtMiIQ==
-X-Google-Smtp-Source: AGHT+IGb1mdgzK5ypjQewtMZlvvwl2BFy3lj0KPnVaF3KMC34A5UPM6WuqSj0LhT5b8jD/c4geN0OtVuGFZmL9E2fqwh
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:ba9c:8d0f:d4f8:e6ca])
- (user=jonathantanmy job=sendgmr) by 2002:a25:8245:0:b0:e2e:2cba:ac10 with
- SMTP id 3f1490d57ef6-e3087c0fef6mr31811276.9.1730156106345; Mon, 28 Oct 2024
- 15:55:06 -0700 (PDT)
-Date: Mon, 28 Oct 2024 15:55:04 -0700
-In-Reply-To: <ZxlYYQ9VULcqj/YT@nand.local>
+        d=1e100.net; s=20230601; t=1730156385; x=1730761185;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0pCWdFGhuGf1qlL5efqs22cZklwfQqSelPHZ4hAeoHo=;
+        b=YYh14Ls9UhJDAmMgWtqC54fJE38/24k2fH8syNzDjRQJGY3LeFLGrd8IJXc+/QpGWp
+         2lVYr4VetebXRmlLdGufG+zIsSLWNrrfwOYjvKq8Iq3Hsk2Vi652xR6QWKcjKXZ7fCs5
+         O0QkLEbFOEjvUmiMNDfCGmzpchzjbLdk0AKSPiMkvh24kNEhfq3Gj2wIW0dC6k5mDuQX
+         HH/AQwhqZMrR9UfrV6aNhFeqf321FS0e0IBX7YPEGnkPPC6TarStrwFwlTYOwEKT/EVQ
+         0fzDbNCvhvrJQwR+Gx1kreRLcKSBbIdg7AYW5bdUmj+PZSFkRNuQL9lrTPcem2yZLpfu
+         fjJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVI/67LhRAXFFhArAcJkr0g5V4Q2WrtE5xCrYS0vHmgc+6ea9ntgGKuYSfkZY/OXlDBCJY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyjiawzcqFEAvnMVT1ergNGrA94RT9Fv98kk7I+BG1p1Lx1UzSi
+	GmRm98WdRZ/Wh3Ox2SYPFVeHU3Y0aqVeDZgF/B8VQJUwn0AefBFZE4EDpQKvMD2mVRthZwVfsrO
+	HSwHwmwG55JRsVYpGu8Hi7d1jw0Q=
+X-Google-Smtp-Source: AGHT+IHwFSJVd2S32ERY+dD3zAalV7MZRoIm7suOsxB+VngrAj62uSrstP1Uk0eeC+kRsIG7OmZl8LiRMimJ2c8F9Io=
+X-Received: by 2002:a05:6808:1a08:b0:3e6:951:8b3b with SMTP id
+ 5614622812f47-3e6384be77fmr8407959b6e.30.1730156384800; Mon, 28 Oct 2024
+ 15:59:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
-Message-ID: <20241028225504.4151804-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v2] fetch-pack: don't mark COMPLETE unless we have the
- full object
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Jonathan Tan <jonathantanmy@google.com>, Emily Shaffer <emilyshaffer@google.com>, 
-	git@vger.kernel.org, Calvin Wan <calvinwan@google.com>, 
-	Han Young <hanyang.tony@bytedance.com>, sokcevic@google.com
+MIME-Version: 1.0
+References: <CAExmRTbMCayh+vHW3g=2p=FMb=VKXomEbn7_0t+kK-eF79JnEA@mail.gmail.com>
+ <Zx/TwhuG4Ni7mf6F@nand.local> <CABPp-BFB+eG7WVJFm3EBfgKzuspAYn9KpDHodpgKuFmWefARBw@mail.gmail.com>
+ <d74232a4-126d-4bd8-8f60-a3fac80492d5@web.de>
+In-Reply-To: <d74232a4-126d-4bd8-8f60-a3fac80492d5@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Date: Tue, 29 Oct 2024 07:59:28 +0900
+Message-ID: <CAPc5daW+5=PPe3e=n3Erev4eNc7CGX1Pg5GXykua3FH9VuCVog@mail.gmail.com>
+Subject: Re: Inconsistent handling of corrupt patches based on line endings
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
+	=?UTF-8?Q?Peregi_Tam=C3=A1s?= <petamas@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Taylor Blau <me@ttaylorr.com> writes:
-> > I'm going to work on both those things in the background, but I wanted
-> > to get the description and RFC out early so that folks could take a look
-> > and we could decide which approach is best.
-> 
-> I am a little confused. Here you say that this patch is still in RFC,
-> but the subject line dropped the RFC present in the first round. What is
-> the state of this patch's readiness?
-> 
-> Thanks,
-> Taylor
+(On vacation, pardon GMail web client).
 
-As Emily said [1], I'll be taking over driving this patch.
+As POSIX.1 says
+https://pubs.opengroup.org/onlinepubs/9799919799/utilities/diff.html#tag_20=
+_34_10_07
+"""It is implementation-defined whether an empty unaffected line is
+written as an empty line or a line containing a single <space>
+character.""", it might be unfair to call it "GNU's eccentricity".
 
-The tl;dr is this patch is not ready, so I think you (the interim
-maintainer) can drop it.
+But I found that the POSIX text is fairly clear that the OP's
+CRLF-only line does not even qualify as an context line that is
+totally empty.
+So perhaps there is nothing to see here, and not just we and patch(1),
+but GNU diff is doing the right thing?
 
-This patch strives to avoid marking missing objects as COMPLETE by doing
-a check in mark_complete(), but deref_without_lazy_fetch() already makes
-such a check (note how it can return NULL; also its name implies that
-it knows something about missing objects, namely that it says it won't
-lazy fetch them) so the question should be: why doesn't it return NULL
-when an object is missing? It turns out that it first checks the commit
-graph file and if it's there, then it's considered to be present, so
-it does not fetch at all. However there are code paths during commit
-graph writing (executed after every fetch, in builtin/fetch.c) that
-access the object store directly without going through the commit graph
-file (search for "object_info" in commit-graph.c), and those functions
-perform lazy fetches when the object is missing. So there's an infinite
-loop of "commit graph writer reads X" -> "fetch X" (nothing gets
-fetched) -> "write new commit graph, as we always do after a fetch" ->
-"commit graph writer reads X" -> ...
 
-So my initial proposal to not mark objects as COMPLETE if they are
-missing does not work, because they are already not marked as COMPLETE
-if they are missing. One could say that we should check both the commit
-graph file and the object store (or, perhaps even better, only the
-object store) before stating that an object is present, but I think
-that Git already assumes in some places that a commit is present merely
-by its presence in the commit graph file, and it's not worth changing
-this design.
-
-One solution to fix this is to make the commit graph writer never
-lazy-fetch. This closes us off to being able to have missing commits
-in a partial clone (at least, if we also want to use the commit graph
-file). This might be a reasonable thing to do - at least, partial clone
-has been around for a few years and we've not made many concrete steps
-towards that - but I feel that we shouldn't close ourselves off if
-there's an alternative.
-
-The alternative I'm currently thinking of is to detect if we didn't
-fetch any packfiles, and if we didn't, don't write a commit graph
-(and don't GC), much like we do when we have --negotiate-only. (A
-packfile-less fetch still can cause refs to be rewritten and thus reduce
-the number of reachable objects, thus enabling a smaller commit graph to
-be written and some objects to be GC-ed, but I think that this situation
-still doesn't warrant commit graph writing and/or GC - we can just do
-those next time.) The main issue is that we don't always know whether
-a pack is written or not - in particular, if we use something other
-than "connect" or "stateless-connect" on a remote helper, we won't know
-if a packfile was sent. We can solve this by (1) only write the commit
-graph and GC if we know for sure that a packfile was sent, or (2) write
-the commit graph and GC unless we know for sure that a packfile was
-not sent. I'm leaning towards (1) because it seems more conceptually
-coherent even though it is a change of behavior (from auto commit graph
-and GC to no), because I think that the repos that need scalability
-the most already use protocol v2 during fetching (which does require
-"connect" or "stateless-connect" from remote helpers, so we're covered
-here), but am OK with (2) as well.
-
-Feel free to let me know if you have any ideas. In the meantime I'll
-look at (1).
-
-[1] https://lore.kernel.org/git/20241023002806.367082-1-emilyshaffer@google.com/
+2024=E5=B9=B410=E6=9C=8829=E6=97=A5(=E7=81=AB) 7:07 Ren=C3=A9 Scharfe <l.s.=
+r@web.de>:
+>
+> Am 28.10.24 um 19:39 schrieb Elijah Newren:
+> > On Mon, Oct 28, 2024 at 11:11=E2=80=AFAM Taylor Blau <me@ttaylorr.com> =
+wrote:
+> >>
+> >> On Mon, Oct 28, 2024 at 05:57:54PM +0100, Peregi Tam=C3=A1s wrote:
+> >>> Hi all,
+> >>>
+> >>> I might've found an inconsistency in how git-apply treats corrupt pat=
+ches
+> >>> (representing empty context lines with completely empty lines instead=
+ of
+> >>> lines containing a single space - usually a result of a "trim trailin=
+g
+> >>> whitespace" editor setting) based on whether the patch file uses
+> >>> Windows-style line endings (CRLF) or Unix-style line endings (LF only=
+).
+> >
+> > I believe this behavior was caused by:
+> >
+> > $ git log -1 b507b465f7831612b9d9fc643e3e5218b64e5bfa
+> > commit b507b465f7831612b9d9fc643e3e5218b64e5bfa
+> > Author: Linus Torvalds <torvalds@linux-foundation.org>
+> > Date:   Thu Oct 19 19:26:08 2006 -0700
+> >
+> >     git-apply: prepare for upcoming GNU diff -u format change.
+> >
+> >     The latest GNU diff from CVS emits an empty line to express
+> >     an empty context line, instead of more traditional "single
+> >     white space followed by a newline".  Do not get broken by it.
+> >
+> >     Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+> >     Signed-off-by: Junio C Hamano <junkio@cox.net>
+> >
+> > That code special-cased a line containing '\n' but not a line
+> > containing only '\r\n'.
+> >
+> > As to whether that's correct, personally I'd rather only special case
+> > workaround important existing clients.  Back in 2006, working with GNU
+> > diff was incredibly important, and I'd say is still important today.
+> > I can see Peregi's comment that this make line ending slightly
+> > inconsistent, but I feel like the blank-line handling is a workaround
+> > for an existing client we want to interoperate with and absent a
+> > similar important client with mis-behaving '\r\n'-only lines, I
+> > wouldn't be interested in adding support for it.  But that's just my
+> > off-the-cuff feeling and I don't feel strongly about it.  Further, all
+> > but one of my contributions above were mere header changes, so if
+> > others have other opinions, they should probably be weighted more
+> > heavily than mine on this topic.
+>
+> What would the patch(1) do?
+>
+> The first column is the exit code of the subsequent command (0: success,
+> 1: one or more rejected lines, 2: failure):
+>
+> 0 patch                     -p1 --dry-run original-unix.txt <corrupt-unix=
+.patch
+> 0 patch                     -p1 --dry-run original-unix.txt <intact-unix.=
+patch
+> 0 patch                     -p1 --dry-run original-win.txt  <intact-win.p=
+atch
+> 0 patch --ignore-whitespace -p1 --dry-run original-unix.txt <corrupt-unix=
+.patch
+> 0 patch --ignore-whitespace -p1 --dry-run original-unix.txt <intact-unix.=
+patch
+> 0 patch --ignore-whitespace -p1 --dry-run original-unix.txt <intact-win.p=
+atch
+> 0 patch --ignore-whitespace -p1 --dry-run original-win.txt  <corrupt-unix=
+.patch
+> 0 patch --ignore-whitespace -p1 --dry-run original-win.txt  <intact-unix.=
+patch
+> 0 patch --ignore-whitespace -p1 --dry-run original-win.txt  <intact-win.p=
+atch
+> 1 patch                     -p1 --dry-run original-unix.txt <intact-win.p=
+atch
+> 1 patch                     -p1 --dry-run original-win.txt  <corrupt-unix=
+.patch
+> 1 patch                     -p1 --dry-run original-win.txt  <intact-unix.=
+patch
+> 2 patch                     -p1 --dry-run original-unix.txt <corrupt-win.=
+patch
+> 2 patch                     -p1 --dry-run original-win.txt  <corrupt-win.=
+patch
+> 2 patch --ignore-whitespace -p1 --dry-run original-unix.txt <corrupt-win.=
+patch
+> 2 patch --ignore-whitespace -p1 --dry-run original-win.txt  <corrupt-win.=
+patch
+>
+> So basically the same as git apply?
+>
+>
+> What does current GNU diff do?
+>
+> diff -u                        <(printf 'a\n\n') <(printf 'b\n\n') | tail=
+ -1 | od -a
+> 0000000   sp  nl
+> 0000002
+> diff -u --suppress-blank-empty <(printf 'a\n\n') <(printf 'b\n\n') | tail=
+ -1 | od -a
+> 0000000   nl
+> 0000001
+> diff -u                        <(printf 'a\r\n\r\n') <(printf 'b\r\n\r\n'=
+) | tail -1 | od -a
+> 0000000   sp  cr  nl
+> 0000003
+> diff -u --suppress-blank-empty <(printf 'a\r\n\r\n') <(printf 'b\r\n\r\n'=
+) | tail -1 | od -a
+> 0000000   sp  cr  nl
+> 0000003
+>
+> So it omits the space only if --suppress-blank-empty is given and the
+> blank line ends with \n, not with \r\n.
+>
+>
+> Anyway, I agree with Elijah: The targeted support for GNU diff's
+> eccentricity is fine, and we're in good company with that.  We could
+> remove it, since it doesn't seem to be the default (anymore?), but I
+> don't see much of a benefit.  We could add support for blank context
+> lines that end in CRLF if there's a notable source of that kind of
+> that deviation from the original format.
+>
+> Ren=C3=A9
+>
+>
