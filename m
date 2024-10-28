@@ -1,41 +1,46 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080B018B492
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 05:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18AD18A943
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 05:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730093514; cv=none; b=AmlPkATMvQjU7kY30yowKTrqGEyCoIGiqnWTrdM18km1IT47Gs02hQ0PLvfLIsgo3GCAUdcMjWk4XAgVjP8z7FF4nQSkd7iZWG+NiM+3uJJyGNS0SXXqt1buvqe4UXAOMAaGHCOgcp84lkthNPM1/hVkgn1sLOYHGNBsUjfhP0I=
+	t=1730093599; cv=none; b=QPsaAlKkQ4wZoWuIdNJ3iXlUNrtp5TCs184QaMNzCtbs8llz5Vq/LJ+nKA11kV/SNVEOLRtzP0pQGvSvzW+M5WIt4+cIzCT2n6/b/NVw6wa00wqE8TPYvgMuoz0zp2P0q1L+jQBxq4Ry9Ij8nxE7evYUb5Azt6B1VCDliGh323c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730093514; c=relaxed/simple;
-	bh=SNU+poi6WUaU5vuAg9lesTQB5p89UOspmIWLtQtJMUE=;
+	s=arc-20240116; t=1730093599; c=relaxed/simple;
+	bh=AfAtzhGlhUzUKV53lk0IoDnLHA0R9pmu/5Y/2PoYuTc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BEd3nVS6zkDIlPK9HUG3M3WDDNQnrvUiNplwYlA4nupogSk7V3cg8H1X7NNr1+SDLWk5V3vMPbWhn1DVG9YwQIYnMvjKgvp2Nb9FYqDijYF4dKYQpcBhxQ01epSVhyhILrPly/jb0asxdbhR3brEKw1Hb3zewgY4xjfCdc+VERg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OoZPBHoy; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=CNCOjAagUuXQtuhOQC6+sO+KN/dzVZY9gIr2uOG3kgHoArHCJuLc4k/YpHtYThLtdF34HEzA3OqjKg5XYSBouwrJhPocOm56j7hurxYOd7InOxjpDyFTtTZp0WGntjxIgA5F89UXwvnV9ojMxEuOk7SiEVIG+JLyovRlAR0QXdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FsBPX725; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OoZPBHoy"
-Received: (qmail 3463 invoked by uid 109); 28 Oct 2024 05:31:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=SNU+poi6WUaU5vuAg9lesTQB5p89UOspmIWLtQtJMUE=; b=OoZPBHoyUQ4zYGjEDdwryMI7JjXXSm5ZtN9MASFmST5ra+fJnXYE00OECMI7DujkqpkL8SXn9pGl4qQu8cbwuU71nUKKtFzhj+9u656L6+9ZlxZnBepOBqhHLXqfMcpopyebE8TWLeeEQHPHnoV2VrbokfKhGeH+0KloZdfw3fRFgMBCkzRXY/lpdBJbLcTzJWFXeGRZbbsinN+lj0WhsgUwa8Ry0lRR4q9TnqCrkt0asLsrEiq+h6vCunfYns7oI0/DylSjdIPE0CcLsRyB2AJKdXWCW4jQxkV+l2CDY9tISyYW9jeI9edvWFTr3lqrFBiAzjU+OmQnFWDvwHsO6Q==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FsBPX725"
+Received: (qmail 3483 invoked by uid 109); 28 Oct 2024 05:33:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=AfAtzhGlhUzUKV53lk0IoDnLHA0R9pmu/5Y/2PoYuTc=; b=FsBPX7256z5ptRt2KU/3+K45y6JeuwLVPe6A8cpUhuZzleWE4QZSXsLHJd22clNfdLnT5TxjNYgv93mmTfaezvTYV0jVKCmZ0ei4MPUAvDQEvLB58CAZKTplqNuLGOR86yLdk2Nu37deF//TctMf8Jy6bfv3D2MWue764XX6XdXvmcX2GdUqmduGFBCQu3HRZQZ339cXj3SqDq0PDl9B3CpPye+swmVXH4iu3YT/Tk65RmKDEqEpTgFmB413vgOlVuvHMasnGHR4oH7QoBcr8P6Wvob1+8PltZjvdkwis477sykz6KBNWiCtvbq/NLjUa1mWaFN/52WSxDCWdlHs/Q==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 28 Oct 2024 05:31:45 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 28 Oct 2024 05:33:16 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16541 invoked by uid 111); 28 Oct 2024 05:31:41 -0000
+Received: (qmail 16560 invoked by uid 111); 28 Oct 2024 05:33:15 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Oct 2024 01:31:41 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Oct 2024 01:33:15 -0400
 Authentication-Results: peff.net; auth=none
-Date: Mon, 28 Oct 2024 01:31:40 -0400
+Date: Mon, 28 Oct 2024 01:33:15 -0400
 From: Jeff King <peff@peff.net>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 00/20] packfile: avoid using the 'the_repository' global
- variable
-Message-ID: <20241028053140.GA2827326@coredump.intra.peff.net>
-References: <cover.1729504640.git.karthik.188@gmail.com>
- <ZxbBuyhfq1sFKBIU@nand.local>
- <CAOLa=ZS3XjxdeYxbZCTCdaUzW4jko8ZLaKMvQsvzUnsan2Ho9Q@mail.gmail.com>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org
+Subject: Re: [RFC PATCH] object-name: add @{upstreamhead} shorthand
+Message-ID: <20241028053315.GA2827304@coredump.intra.peff.net>
+References: <20241020202507.2596990-1-bence@ferdinandy.com>
+ <1c056d39-950c-4965-89d6-85f0c2c1bccd@app.fastmail.com>
+ <D50YLOBHJTLS.367TMAOLKL019@ferdinandy.com>
+ <20241021191441.GD1219228@coredump.intra.peff.net>
+ <D51R90BTHJMY.1C1XY5P4CHTWG@ferdinandy.com>
+ <20241023215618.GA821188@coredump.intra.peff.net>
+ <D549EIKDKGDS.2AETZLT4RTB44@ferdinandy.com>
+ <20241025062438.GA2107756@coredump.intra.peff.net>
+ <D56XI8GBH2GF.3MP02MGQGP5M@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,39 +49,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZS3XjxdeYxbZCTCdaUzW4jko8ZLaKMvQsvzUnsan2Ho9Q@mail.gmail.com>
+In-Reply-To: <D56XI8GBH2GF.3MP02MGQGP5M@ferdinandy.com>
 
-On Sun, Oct 27, 2024 at 05:23:24PM -0400, karthik nayak wrote:
+On Sun, Oct 27, 2024 at 11:07:07PM +0100, Bence Ferdinandy wrote:
 
-> While thinking about this over the last few days and also getting some
-> advice from Patrick, I realized that we don't need to be this disruptive
-> by simply adding the 'repository' variable to the already existing
-> 'packed_git' struct. This allows us to leverage this information more
-> easily, since most of the functions already have access to the
-> 'packed_git' struct.
+> >> I'd probably call the flag something like "--current", "--current-only" rather
+> >> than "--is-head" though. "--is-head" sounds as if it would filter --list but
+> >> not necessarily end up with a single entry.
+> >
+> > Yeah, I think --current would be fine.
 > 
-> This, plus the series by Jeff 'jk/dumb-http-finalize' which also removes
-> some existing functions. We reduce the impact to only 3 functions being
-> modified.
+> I was looking through git branch and there is a --show-current option. I was
+> wondering, would it not be better to teach --show-current to also obey
+> --format? It would avoid having a "--current" that only works with "--list"
+> besides having a "--show-current".
 
-Yeah, I noticed while working on that topic that we were dropping some
-uses of the_repository. And FWIW I had the same notion, that packed_git
-should perhaps refer to the repository struct in which it resides.
+Yeah, that's perfect. I had almost suggested "--list-head" originally,
+but I didn't want to introduce yet another major-mode to git-branch. But
+if we already have it, that's not a problem. :)
 
-As Taylor noted this is a tiny bit weird with respect to alternates,
-which could exist in another repository (but don't have to! It could be
-a bare objects/ directory). But I think from the perspective of a
-particular process, we only have one repository struct that covers all
-of its alternates for the duration of this process. So it would be OK in
-practice. You might be able to get away with just storing a hash_algo
-pointer in packed_git, which would be less weird (and is enough for the
-bits I looked at, but perhaps not in the more general case).
-
-Looking at odb_pack_name(), it will still need to take a repository
-struct, since we sometimes form it before having a packed_git. But for
-most calls, I suspect you could have an alternate function that takes a
-packed_git and uses both its "hash" member and the algorithm.
-
-Anyway, just my two cents having worked in the area recently.
+And the patch should be quite short, I'd think.
 
 -Peff
