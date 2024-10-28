@@ -1,129 +1,108 @@
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BE51DF747
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 18:39:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD173A268
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 18:43:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730140802; cv=none; b=AM1yFpFpxzdxvbtWVKPG47Runcz4MQep+nIuMDRYJUxU4bFzpBLJl6eQEHuwko0Vip7cE0HAYOY+0J79pIjxPs99G61a4NMtloW2nGYrmhHx+IWUIN/fLUblT+4gw0FsfeswH0QRCphoINScxjjVNhpdNm8TDajePjCJRKpjjf8=
+	t=1730141040; cv=none; b=rr/TF1Jjdt8wUZkxLpJ6iCWVkKeEI3gqTOg1lg45nCkvmeqmUL1QMCxpydLXMSEy0WNQolas7JEPcxqEvTVZELIX0OQQ4mTpa/EK34nW3u3U1wVsfvxWmJV60D6oVcfeLMJkT/4WrkhM1YQ7QWHpid/zU2pFEFwz0VFcPErp840=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730140802; c=relaxed/simple;
-	bh=6eflgDwDg3eVoUKCJQPKVu6zLe3YzkVOuP/qu6Cu1yE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a/cP5lVuyyIFpR4inGV5U29zCF5VMi5K6Q4b2lmx9/N+HnBnH0pYkhBllixvEUM+2Qu1o+RMica6Pup0TJeSKn3lvS3YFDr3mJVAQDlzGTqZNoSFMif8S1ZnVYLRPkB6lDAm+Bz2IuULauvm60GizqNCC16rz4AJyz+G2vTL/q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GXYZ+sqf; arc=none smtp.client-ip=209.85.166.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730141040; c=relaxed/simple;
+	bh=WBYQ41+0bCZh6Wx4W0uHCiU2yfSC8co2HUQmiSzpmEw=;
+	h=MIME-Version:Date:From:To:Message-Id:Subject:Content-Type; b=hfQUTK3DidGu2uWznnJv7XhrREVI+1KUlXvU6y3mY6kqSftNPC4RnJrWIBkjEEf4MXhi62Y0p7cCr+atSRZAEkJYyNClaiXEGXrIeneex0zS/Z2/NBceoDvqjp6VqSM0bt7DD/AsV6UZTpwYlbRI18yaOyy4sOf32q4ZFWE3fmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opensource.nslick.com; spf=none smtp.mailfrom=opensource.nslick.com; dkim=pass (2048-bit key) header.d=nslick.com header.i=@nslick.com header.b=UAQgPrfI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=baDtnQ0G; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=opensource.nslick.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=opensource.nslick.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GXYZ+sqf"
-Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-83ab5b4b048so189159439f.2
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 11:39:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730140799; x=1730745599; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZyKQDCCSoi7GkGsTk4PFQY7+eZ8U0YPXJ0QSM13UnzA=;
-        b=GXYZ+sqfEh2GaczFaw1W9wOWFFVG6a6tQKRCko49y9bTA1G2KjqvC/W9SH7QIFnCMY
-         OfpKEJzKywlsXXd2DfCPJ59/+UZf+A65bEc6LZxS3lPrHSHh4mvJUKbX2eAM6akgK1vp
-         b1ez68UZXZ9djh2fWGHnTy0uWvlB/jup3JHMxBWubZxDaPrJP1LC6aRCst3jo465frE7
-         OdPhW60JS40m0B2XRLEXsi5sgV6xnrUGGNlEb3+cHkWBR8mOSJQooB1WGqsDOP7jXI46
-         AdoN9DAT0po3MXCLhQpzJMPHeRx7aoXQaQEElNuYTTVkv5ixCWOWWQ2WnNjKJwFbSzGl
-         EjOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730140799; x=1730745599;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZyKQDCCSoi7GkGsTk4PFQY7+eZ8U0YPXJ0QSM13UnzA=;
-        b=VxEtRNGqfKw1kRn8dciOXd68mfaIwdcKyqIUcipQpozHTP7v7oalyXBCiwczfBMFpR
-         YkcIxtsTGGuj4uxxf70kv5VJLPVeNPq6T8cccuig+in86lSrqhpSZSYwllkZ8xCYp4Iv
-         9D841VpeVgG3L2Q7WP9Csix/MeWNm0f9APH4jCE5618kvN+uYoeHlxGHgSgsbbdQywSW
-         9cgyqJCO8/qdXwZhnAocCrUc8xt677yHPhXV/7MZSUTjEjpLVkC4Pbuh2bseAnzgaC2U
-         Fp3fwXdla7UQlEn8CSHxIP9zoiWt3C/MxrDX8fEeOq0Y6tvqimj+6/hT8OpvFS44pDTf
-         NqIw==
-X-Forwarded-Encrypted: i=1; AJvYcCVX+J+k0R/c+kWqSfDm9i4tIb6R8KrkKLmo1+UK/diu/4NAnwEJtqpPkyoEGkGhoWLRI34=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzboq46c+jiJDOOJ0gV7MMLAkoEvsee3GtL1dBv1bmosWK8QUV6
-	fLVxOtCT4Gy25sEUXmhcqo1Y06lKIHvuRLM41rH4jCtC5ALu/FS3RwaUnppwzdmajZLPNZ3nw04
-	9CAiFHRb1qyKg+Q09GKa+Vl1gW8o=
-X-Google-Smtp-Source: AGHT+IGxYOhZktYgGhnXjj7NnnzRsjnEKmz9LjkigXUBvjzTZVkxsVIQ+O6IqKvuOdMm4C78pnwv5gmAbVlDV3w5d5s=
-X-Received: by 2002:a05:6602:6d12:b0:835:46cb:6747 with SMTP id
- ca18e2360f4ac-83b1c3da9f8mr827333139f.4.1730140799223; Mon, 28 Oct 2024
- 11:39:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=nslick.com header.i=@nslick.com header.b="UAQgPrfI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="baDtnQ0G"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id B43ED13800F5
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 14:43:56 -0400 (EDT)
+Received: from phl-imap-11 ([10.202.2.101])
+  by phl-compute-11.internal (MEProxy); Mon, 28 Oct 2024 14:43:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nslick.com; h=cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1730141036; x=1730227436; bh=WBYQ41+0bC
+	Zh6Wx4W0uHCiU2yfSC8co2HUQmiSzpmEw=; b=UAQgPrfIjdp+siL2jucQbHZ/9f
+	3eu67mr9jONxrW8KIhUYPEjQ1mktArH+cN8og+8deRfthiZY+1WMYkSscLstxUlc
+	UGxyvjas3W8oeaXNQ3UGM6CbEEB3MfcBbOhSszmmlltitMqN6WWOTFiPqKymhjnp
+	+D77qJEb6e9bpyauHZ5ilxndh5xL4Rlq6hsL0B9zmh3kumBH3ynNCQHsbqouRHHE
+	tLhUgIDHzCapFjxODQYX2nhEk6o596VwZHjzbf4PQAnFvbjpFVKyz05xedNajJhN
+	1vk/W9+PVHGLK+ahJCYe2Vl7CdJH8HKxkYhEBrVnhz29brOT+U7H9pGtp1WQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1730141036; x=1730227436; bh=WBYQ41+0bCZh6Wx4W0uHCiU2yfSC
+	8co2HUQmiSzpmEw=; b=baDtnQ0GXJ0JxH/6s0AfWtNdA1qQtWvvOuoOGsqVJARn
+	DGR0XYSMcA2TK7XGeXTahPGw7ACAONg/4KfKWbIHFBpQxgudNv+USx5Lxccv2f8D
+	OLXt5KVmhMFyl6HmkDJW2E8xQZjNCVG6z2JUYRoIXxUO4QPY5nys7Y8QHXutuhWT
+	YktH5MvJaKqk9Su/E898vqo09wtrnApXwrSMRKaxj19G7Nd5IMfT2em64gH2fZyU
+	2iGbZnp4f4DHZW9ALdh4S75LTAC1BWXrbX2vmLdF9B9QLio9j1a+eBrgUQeiQc8w
+	goyH/OQCTSLLaO3aS+A7AES58QCZ+7ssv8qpz7nDGg==
+X-ME-Sender: <xms:bNsfZ_nPwX-ssNo_JU8Kd6cSUPeOlC4MwbwbtP2GBa8-l3v4r0wyEg>
+    <xme:bNsfZy1f4XUcy3QAl-zIwHp5fFpTUWCTjatsSqjhO6n8pSe8Q5BI7YZw-LXAkBmaK
+    p4ZfWv9FhIKQWFdDK8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejledgkeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
+    fvkffutgfgsehtjeertdertddtnecuhfhrohhmpedfpfhitghhohhlrghsucfuihgvlhhi
+    tghkihdfuceovhhgvghrodhgihhtsehophgvnhhsohhurhgtvgdrnhhslhhitghkrdgtoh
+    hmqeenucggtffrrghtthgvrhhnpeelveevudfgffevjeevteffgeeviedtfeevtddvieet
+    udeuvdduhfejhfduteettdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehvghgvrhdoghhithesohhpvghnshhouhhrtggvrdhnshhlihgtkhdr
+    tghomhdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:bNsfZ1pMVGdtHm0k2xAor5ks5VLdrKU9PW2PaHsaWSDkMyuIvNJP6w>
+    <xmx:bNsfZ3nKWG88MA2l-8MgyKz7y-4BGiGnMX0sei8VpG74fv0smp6W0w>
+    <xmx:bNsfZ92vhgDDE_0yk1yk_yO4uUiFKJQyTECoBEjZjlZ7ntOWtbDIGg>
+    <xmx:bNsfZ2sL_IHoNunaW21j_IVB1GNcYKoLdvOIf9sSR2yDIFlmRASnGg>
+    <xmx:bNsfZ6hqb1DJo9sJ-mQy-5OouJcSg6Ujgl-D00I4nhaJY_tosl-OjCIZ>
+Feedback-ID: i78f146c6:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 429022220071; Mon, 28 Oct 2024 14:43:56 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAExmRTbMCayh+vHW3g=2p=FMb=VKXomEbn7_0t+kK-eF79JnEA@mail.gmail.com>
- <Zx/TwhuG4Ni7mf6F@nand.local>
-In-Reply-To: <Zx/TwhuG4Ni7mf6F@nand.local>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 28 Oct 2024 11:39:47 -0700
-Message-ID: <CABPp-BFB+eG7WVJFm3EBfgKzuspAYn9KpDHodpgKuFmWefARBw@mail.gmail.com>
-Subject: Re: Inconsistent handling of corrupt patches based on line endings
-To: Taylor Blau <me@ttaylorr.com>
-Cc: =?UTF-8?Q?Peregi_Tam=C3=A1s?= <petamas@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Date: Mon, 28 Oct 2024 11:43:35 -0700
+From: "Nicholas Sielicki" <vger+git@opensource.nslick.com>
+To: git@vger.kernel.org
+Message-Id: <ab71a27d-728e-425a-8729-8699c9369bca@app.fastmail.com>
+Subject: `cherry-pick -x' and git-interpret-trailers
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 28, 2024 at 11:11=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrot=
-e:
->
-> On Mon, Oct 28, 2024 at 05:57:54PM +0100, Peregi Tam=C3=A1s wrote:
-> > Hi all,
-> >
-> > I might've found an inconsistency in how git-apply treats corrupt patch=
-es
-> > (representing empty context lines with completely empty lines instead o=
-f
-> > lines containing a single space - usually a result of a "trim trailing
-> > whitespace" editor setting) based on whether the patch file uses
-> > Windows-style line endings (CRLF) or Unix-style line endings (LF only).
->
-> Let's see if any recent apply.c folks have thoughts...:
->
-> $ git shortlog -nse --no-merges --since=3D3.years.ago.. -- apply.c
->     21  Elijah Newren <newren@gmail.com>
->     12  Patrick Steinhardt <ps@pks.im>
->      7  =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->      5  Junio C Hamano <gitster@pobox.com>
->      4  Jeff King <peff@peff.net>
->      4  Ren=C3=A9 Scharfe <l.s.r@web.de>
+If one uses `git cherry-pick -x' to apply a commit to a stable branch
+from elsewhere, git appends something like:
 
-...and thus we learn why no one wanted to clean up the header files in
-git.git before me.  ;-)
+> Tested-by: Some Teammate <some.teammate@somedomain.com>
+> Signed-off-by: Some User <some.user@somedomain.com>
+> (cherry picked from commit 2efe13923d0ff714b1b0f3b7175e714f0e295727) <--- this
 
-I believe this behavior was caused by:
+IMO this is inconsistent in two ways:
 
-$ git log -1 b507b465f7831612b9d9fc643e3e5218b64e5bfa
-commit b507b465f7831612b9d9fc643e3e5218b64e5bfa
-Author: Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu Oct 19 19:26:08 2006 -0700
+1. it's unclear to me why the cherry-pick metadata isn't emitted in
+trailer form, ie: `Cherry-Picked-From-Commit: <...>', making it work
+with `git-interpret-trailers'.
 
-    git-apply: prepare for upcoming GNU diff -u format change.
+2. I'm not sure if any tooling (external or otherwise) breaks because
+of this, but the existing trailers now have non-trailer content
+following them, so it's ambiguous whether they still qualify as
+trailers at first glance. (possibly, this is intentional?)
 
-    The latest GNU diff from CVS emits an empty line to express
-    an empty context line, instead of more traditional "single
-    white space followed by a newline".  Do not get broken by it.
+Realistically, the only thing worse than this^ would be to have a
+mixture of two formats in the same repository, which is to say,
+without a surefire way to to share repository config defaults, I can't
+imagine there's a backwards-compatible solution to changing the `-x'
+default behavior and git is stuck with it.
 
-    Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
-
-That code special-cased a line containing '\n' but not a line
-containing only '\r\n'.
-
-As to whether that's correct, personally I'd rather only special case
-workaround important existing clients.  Back in 2006, working with GNU
-diff was incredibly important, and I'd say is still important today.
-I can see Peregi's comment that this make line ending slightly
-inconsistent, but I feel like the blank-line handling is a workaround
-for an existing client we want to interoperate with and absent a
-similar important client with mis-behaving '\r\n'-only lines, I
-wouldn't be interested in adding support for it.  But that's just my
-off-the-cuff feeling and I don't feel strongly about it.  Further, all
-but one of my contributions above were mere header changes, so if
-others have other opinions, they should probably be weighted more
-heavily than mine on this topic.
+It could be possible to extend the existing behavior with git-notes?
+Added benefit of that would be that you could mark both commits
+involved with `Cherry-Picked-By' and `Cherry-Picked-From'.
