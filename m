@@ -1,112 +1,172 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8885F18A939
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 16:08:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848CE1DED4F
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 16:11:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730131739; cv=none; b=HpASj9cG3jfRs3USH5rg1cqyf0PF5EipjyX7nEQIzf6MTpaKcjqsUHxeFSHnBzmNdMfE3xHd1i43i4+zJh9qWljm8sYFN5gl9MjQUSyqUStdPoIt95UrHgVSpnnV89d0RQ2fMtbPQQXVUWX7obWMbrFcC63+WxAoiqO7+iHaFTE=
+	t=1730131907; cv=none; b=PntGhGDw9jCIeLqIZTlxYpFW8WCRfa/NpzcryIgIPB0NMmbbbPfDuvIBEUM3vDCb7jP9yhbn4lvG2SaDmSHbhcXxQOuh2brCNaJTjRKIPmmGM9mT39nSl2H8Ymlxt7qnqjTiC2+N7BqvFnmLbDSORg53k6avNvHhhfEbklfoCr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730131739; c=relaxed/simple;
-	bh=yCjFjldUk78ntmbFOy3MffSqw0HTNMIF0251DTihqCw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XnLMzdB44ydnAaYswtvsOPDiu9r1EVr5xDePrNYWgZyuBmbuAK7y1gm1YElTz2N3/7OkfuR6A15BHUFGgUZuHpz5ZD4MkKGymPx7sLl23LYVldLSJF3HoiHYxzYaIwJosrkW2ZFkafS9w4pb5l98Wt7vbFHQ6ikbX5EXUs/BMUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=NJVnxHhU; arc=none smtp.client-ip=209.85.219.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1730131907; c=relaxed/simple;
+	bh=/TyrWD912+UhU+Mu83mBGGVltwOG+rMGsvqH0Hs6Yx0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=VfxW1cq334LLYzDwRK0J96L9ScDEQAx0QcT6NOmXOJHqTZgvpOSrhmWoy8mxrm0YgY3eLEq7z7zyqZxBlMv7IswBtQizNUTvo/0nJRlmcoWRa7D5zOnLNV+bZScb5x0Wli3VvT4rQTL514SvIWTRtvm2XYbovetLrPlLdloqvwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CxOx26uX; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NJVnxHhU"
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e2e444e355fso4049072276.1
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 09:08:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CxOx26uX"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a9a0472306cso615974566b.3
+        for <git@vger.kernel.org>; Mon, 28 Oct 2024 09:11:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730131736; x=1730736536; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=t3Lbe1lllJwwqrg1GjlCv48+2aNrjrrbEcohEQ1RSPs=;
-        b=NJVnxHhUBkzI4enefqiVSZkqdyt+5AVC7/+W6B+MfwA7314CTzTUuv3JJWH86FbvxO
-         XOLPvqp61SXEV5AQAKs9VSAj7lJsa4fKiX7XqvnD17NMVl7VjqMwJn+jkJPDW/TVUTbO
-         Wpks8+Kg9m6Cwwjpe4YTHI9jTngy2of2xIhZZAWM1vPqGBvS8FQSK68/geg1pdKX7OEE
-         2U049HzJPpimGhYUoc3FsLvQXS7pXwemJ0WQvO7TCmwXYIPMsyFyxdMTEQq23csbwMET
-         o4M7K0f6cyb61Ke0eZbuY+cmzcIxPkXlCVgO5+MIEOiVq0jvO1MpIOygDu5Sxp/GJorz
-         Ekvw==
+        d=gmail.com; s=20230601; t=1730131904; x=1730736704; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LANu2EwAIkDHqd975j1WITyJa6ot46CylJ82+mM3riU=;
+        b=CxOx26uX/8o6RxlvFb9YeuMRqJu1aiOrGAexPfmQz/6fAYIhFhtixLpCLtn5VGzCgi
+         YnOV+Lpr4zi5xZAJ12ezyg2jwAQQUicta5hK31JTM4hJJdMc0AEHhTx6XDqflvoAw5u0
+         Y6MS8nFtQH9+iYAs+WXYN2gI0xOyyTOM8WdkfZ82+37ssAe0DL+K3h1qSzMgldz7VWLV
+         ZUVuQxzA++bqkKN+5hwLTzc+EWOYFj9lHSeVtv0HmOhQ+g5oIf2/3SvMmG0tHBGSOnLA
+         QAxJjmkgh/jmw8JSiLR4Zb09Hd/S7NVo6Y9t9FK8dKZ1SFV1kWwEkH9uYNUV2v7AD2o+
+         3q5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730131736; x=1730736536;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=t3Lbe1lllJwwqrg1GjlCv48+2aNrjrrbEcohEQ1RSPs=;
-        b=HQqe8ZWjd5WSMduAajvvqf2vIaU/OZeHe0Tn/fo5pCh0yb+IPR6Buv/mX7nmRLOA0B
-         8CxqzgbqPGGARVmvtL+Q2Z7xGxJSB1ZgdfkQcaVVJ1hRImGwZqRZ2OO1n3nAxGG6sA/j
-         D9kyTKpguHuy9DjctCpjDLffYvaI/NKm8/QrVo1tULkL5lYiKhKy23d62+u4Qly+fQZ7
-         c7fcbBg1S69RR3xJ7aWF0CyokKhT+CDGKpzXmgsI3eTpqiuNwgB3998qBl+3ZYdGP6wm
-         FJ74b9JBjs3rNFARm/kNne9uGBTi/Hlj7wbpVoWr6PeCEGrG/vS6DhBkf/dEXtjA8dcY
-         7bNw==
-X-Gm-Message-State: AOJu0Yw1w6x2eeLr5bgduoJKJSc3OIzswZMasj3ugAVoqIvoA5jw5hs7
-	/y6zb5d3T2RPoi32t86/cUdjnypVJflSL/8urqLy4f/mBgNnXC8WYjuF5m1Nosk=
-X-Google-Smtp-Source: AGHT+IEHrLEVRi2wTttdMrnKBawyUqPHALyQUvQoJfs63QVtO0rrQ6owJQl8hJroNeg5Yr7ZMfl2wA==
-X-Received: by 2002:a05:6902:1147:b0:e2e:3301:6dd3 with SMTP id 3f1490d57ef6-e30bc64994fmr136320276.17.1730131736454;
-        Mon, 28 Oct 2024 09:08:56 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e307a01d539sm1472483276.49.2024.10.28.09.08.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 09:08:56 -0700 (PDT)
-Date: Mon, 28 Oct 2024 12:08:53 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/8] packfile: use `repository` from `packed_git`
- directly
-Message-ID: <Zx+3FZNzwe6V159m@nand.local>
-References: <cover.1730122499.git.karthik.188@gmail.com>
- <ca033556866cbb6cdff49507eb27ed5ef57cf44f.1730122499.git.karthik.188@gmail.com>
+        d=1e100.net; s=20230601; t=1730131904; x=1730736704;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LANu2EwAIkDHqd975j1WITyJa6ot46CylJ82+mM3riU=;
+        b=lHFJ0czBCm5pSyozRyZc0P9jiy/IhH0Ej55mMtcxcaK5trGh6Vt/Rx+QZ+OlWa15jq
+         rJ+iO89psYjWauJS0MXAG1WUec668Vmov58dgolRMUbewrFVqTcYLrv+w5bK/Uso1JF1
+         PMMC6kfs843hUPZ92bnp1EjCz3dMx3EB+r7ajp8UhTUy0l0/9rd+MlwlTZ8nxDIdDtkf
+         LYqU0qp3LVKoG07YQLx+o7NM/qyFdelqWeDpRBY4jrxkBq+MtNCRFA+T+DxwWEI4bv/a
+         zUwlOMahoSdtw9v2zckh0gCe7JnusgE6Y0xlsM3bunA47J80jXS653bXemvEYOUJHI5T
+         vM5A==
+X-Gm-Message-State: AOJu0YwYSVq96Yu+7ghCY/QnYje+6uLIl4cy/jUkCExz9pDsjFibGh9g
+	KkENiv62EasEJoHDKBVxhlTfsXdI2o+zu9fO6/FllgHBgcMeeefMm6zWJmGTeRN27GAcNDpuyF7
+	4pUyxzM4G0Ks+IKE5TJOtImF9Fcc7/szPG45tew==
+X-Google-Smtp-Source: AGHT+IEEGqtB+ibdA8oWFGBsDP0os2vkCk0YZdTZSu2wgXClGMWaawADJ+YdEO67bA6u5+xW9uDxnb9IDMRoSF+1cUg=
+X-Received: by 2002:a17:907:720e:b0:a9a:3cec:888c with SMTP id
+ a640c23a62f3a-a9de6334642mr763882566b.64.1730131903209; Mon, 28 Oct 2024
+ 09:11:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ca033556866cbb6cdff49507eb27ed5ef57cf44f.1730122499.git.karthik.188@gmail.com>
+From: Chizoba ODINAKA <chizobajames21@gmail.com>
+Date: Mon, 28 Oct 2024 17:11:31 +0100
+Message-ID: <CACwP9aokd-5gNEtgvHEOuFjHRCzvUEsFG4VNinP1p=GkEk0U8A@mail.gmail.com>
+Subject: [Outreachy][v2] My Final Application
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 28, 2024 at 02:43:40PM +0100, Karthik Nayak wrote:
-> In the previous commit, we introduced the `repository` structure inside
-> `packed_git`. This provides an alternative route instead of using the
-> global `the_repository` variable. Let's modify `packfile.c` now to use
-> this field wherever possible instead of relying on the global state.
-> There are still a few instances of `the_repository` usage in the file,
-> where there is no struct `packed_git` locally available, which will be
-> fixed in the following commits.
->
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  packfile.c | 50 +++++++++++++++++++++++++++-----------------------
->  1 file changed, 27 insertions(+), 23 deletions(-)
+Hi,
+This is my proposal for an internship position to participate in the Git
+project, "Convert Unit Tests To Use Clar Testing Framework" as listed
+in the Outreachy mentoring program.
+---
 
-Very nice, and indeed much less disruptive than the RFC version of these
-patches. All of the first few transformations look correct to me.
+# Convert unit tests to use Clar testing framework
 
-> @@ -751,9 +752,13 @@ struct packed_git *add_packed_git(struct repository *repo, const char *path,
->  	p->pack_size = st.st_size;
->  	p->pack_local = local;
->  	p->mtime = st.st_mtime;
-> -	if (path_len < the_hash_algo->hexsz ||
-> -	    get_hash_hex(path + path_len - the_hash_algo->hexsz, p->hash))
-> -		hashclr(p->hash, the_repository->hash_algo);
-> +	if (path_len < repo->hash_algo->hexsz ||
-> +	    get_oid_hex_algop(path + path_len - repo->hash_algo->hexsz, &oid,
-> +			      repo->hash_algo))
-> +		hashclr(p->hash, repo->hash_algo);
-> +	else
-> +		memcpy(p->hash, oid.hash, repo->hash_algo->rawsz);
+## Personal information
 
-This should be:
+Name: Chizoba James ODINAKA
+Email: chizobajames21@gmail.com
+Github: https://github.com/ZIHCO
 
-    hashcpy(p->hash, oid.hash, repo->hash_algo);
+## About Me
 
-instead of a bare memcpy().
+I was a teacher, with an interest in the tech industry, this interest
+drove me to building a career in the tech space. I had enrolled in a
+tech school to get the needed training. And recently, I completed a
+software engineering course that required a 70 hours weekly input.
+Upon the course completion, I stumbled on the Outreachy program,
+and I am amazed by how they have been giving the under-represented
+the opportunity to make their first contribution in the tech space.
 
-Everything else is looking good.
+Prior to my Outreachy application, I had made no contribution to any
+FOSS project, but I have used a ton of these softwares (Git was the
+version control I was taught software development with) and I love
+the spirit behind their development, "The open source spirit: To let a
+billion lemons go unsqueezed. To capture vanishingly less than you
+create. To marvel at a vast commons of software, offered with no
+strings attached, to any who might wish to build." I wish to contribute,
+and I hope the Git community gives me an opportunity to.
 
-Thanks,
-Taylor
+## Overview and background
+
+Referencing [1], there was a need to extend Git's home-grown unit
+testing framework to avoid code duplication. Clar was proposed as an
+alternative to enhancing Git owned test framework with macro, since
+it would be nicer to not bother with having to enhance and maintain
+the Git test framework.
+Clar is  "easy to test and make clear the quality of your code".
+
+### Potential goals
+
+- consolidate the homegrown unit test framework by migrating to clar
+framework
+- implement additional assert functions for Git-specific types
+- work with clar upstream to improve shortcomings discovered during
+the integration of Git with Clar
+
+## MicroProject
+
+[2]  t6050: avoid pipes with upstream Git commands
+Status: will merged into master
+Description:
+In pipes, the exit code of a chain of commands is determined by
+the final command. In order not to miss the exit code of a failed
+Git command, avoid pipes instead write output of Git commands
+into a file.
+For better debugging experience, instances of "grep" were changed
+to "test_grep". "test_grep" provides more context in case of  a
+failed "grep".
+
+## Learning the source code
+
+I will continue to study the source code especially as it relates to the
+task at hand, referring to previous works done by the two GSoC interns,
+who have previously worked on this task.
+
+## Timeline
+
+Phase 1  (December 9 - December 30)
+Community bonding. Talk with mentors. Read Documentation.
+Investigate the next batch of unit tests to convert.
+
+Phase 2  (December 31 - January 27)
+Figure out whether these require functionality are not yet present
+in either clar or Git's wrappers thereof.
+Upstream potentially missing features.
+
+Phase 3 (January 28 - March 7)
+Migrate tests. Send patches for review and refine them
+based on feedback.
+Iterate Phase 3
+
+## Availability
+
+I will be available to make a time commit of 30 hours weekly for the
+whole span of the internship, 13 weeks.
+
+## Giving back to the community
+
+I already love it here, and I will always come back to make contribution
+here, and If given the opportunity, post-Outreachy I would stay back in
+the community helping in grooming the next set of interns in the same
+open spirit with which I have been groomed.
+
+## Conclusion
+
+In conclusion, I want to say a big thank you to everyone that made a
+comment on my patch, your comment(s) had helped me to progress
+this far in this journey. Thank you. And to every member of Git
+community, thank you for sticking around and putting in the efforts,
+offering this great opportunity to any, with no strings attached, who
+might wish to build. Thank you.
+
+## References
+
+[1] https://lore.kernel.org/git/cover.1722415748.git.ps@pks.im/
+[2] https://lore.kernel.org/git/20241022012701.8959-1-chizobajames21@gmail.com/
