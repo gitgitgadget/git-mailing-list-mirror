@@ -1,156 +1,301 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BD718E02A
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 05:35:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A101DA5A
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 05:39:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730093728; cv=none; b=Ehw2LNBjcG8Wx/pi2D/enJSJv6JI9amRbZQtoFrVvvu2NWDDoThw5Dw/v8+yuSVna8uTX3p+l3viPZv73lPfCknW4jO/O5w1b3PV3kpiNJwvFPpYg80pmJQguPiA/ruCTP+vblFK5hQrTq2dMd6dFRDNvV4v2CuKZM0+iRXrEj8=
+	t=1730093989; cv=none; b=rkhHN31QjvhZhrvj9UCIGqLU2AHXvL51mLFU+oEFuhuD2go8KO+Yx7yShL2hZVoN0QhcJTBu9y/ziPbemh/CRJcIwAqp7jN/A527AtACJbDj/KCVcxHjH++c0Hilhr5Aqpsl+pwZqj5jhrsbWB07ImMGZZZNkWqs9jy2SEzp5yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730093728; c=relaxed/simple;
-	bh=4Dj1DVzOw6hsK1FNA7W765Hjxt962OWZ/p19f6Ci79M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uZUKAgkh/BzPpe/kv29GJbyTMO44Uao6ggjxkLXdAt7ZsXXTuH6g4S2XpwL67EPXb/yo44lfgc+J4jIeAzHmNF0Of9WxtjfoLPR3weLB2aa3lh0tdzogHPGB4W0kGFMIH50Lkt2hOMHnLDwfsViaj8zdMV4z2NtOLSH8gSc5XKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l009jyLs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fCSibw9E; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1730093989; c=relaxed/simple;
+	bh=aoJA/HG2VS41drW++JD7RBOAxOhd7jQLwsV3Jdj6TmU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PNNZH3vUMvtCMjHWHVg6Lv6kAh1n78UqEBR3CvxwcOrLh00qmS3LxSNpCpSHemMAjR0QIB5cpRs7QJMPngb7nyONiaUmNIKMMIoqLNKh0suASlYj+ZHqLenstYOtOcYsL4zGsuzvTuLQAjsiAfm5mfSeBbe+bw7ecCYK5lJrxz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AvYGDybR; arc=none smtp.client-ip=209.85.219.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l009jyLs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fCSibw9E"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 39AB525400F9;
-	Mon, 28 Oct 2024 01:35:24 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 28 Oct 2024 01:35:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730093724; x=1730180124; bh=XS5PGIITCc
-	zcPGik3GYpKV13FUuA+FHtY2T2EqQnApA=; b=l009jyLsRBo+lLU9fRTzBizRvz
-	1F5kyiVU0PI47JV9UoIMe1vY4BeDpallA4lrDaOOMpPOKK1J6LA4kBUdNXlrVZqY
-	4qq+yiQrmyNL3tjId2XtuKy2lR5z8WfPhrKyLF+8RkxcLjWWBkKYHNbc5OraiTe5
-	CNPisDvfgpRnvpVtGE6/zy1FBOPhkBparnNVqbgkcVmLfaPIkDgRC3UQb91mUymk
-	fJL582S/+fe+/5DyKwxSzVz3aa705GflnWGOzmxugsCA/xoTH57zgj9XC2AeOK6/
-	6B7eC0jIzUOnHaYVa+R2atHAkMfvBu41f25NZzTsZJmdnmNkP0VPv24MXCxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1730093724; x=1730180124; bh=XS5PGIITCczcPGik3GYpKV13FUuA
-	+FHtY2T2EqQnApA=; b=fCSibw9EHkjDXcKHIZO7iDOdjOGeK+GAMKz8+oat0xWF
-	BSsCh9K5+XxnvGBkzQLUBzWQwKSwRvl+VurjK6uTkKVoytdfFXqTlKPXN9CMVBVG
-	gmJJFfdSYdkSCglLgc1Pch61uwvMlGQRT89fVfGJgs3QIcZiThxDkjpQ+42grL+V
-	MOBpYIpTiu29+6NaXD2IYP/XTdwUlBiO1wkENncjD8FEZXW0EdLLG6drPwYYkyFH
-	3Tq4wcpy6po9b4AQXXbRHKyvmB446ijNs/MH4pTkhvTP17I8VAhWCFyjxAYObZph
-	o3tlUnv5zmOREPEAksOmo/npej6lFcf3B7wNhXYLLA==
-X-ME-Sender: <xms:myIfZ5NqvaDucJUBuatS7qIHvvUBbpgqTXJhGKile7uqLsYmBAQ7uQ>
-    <xme:myIfZ7-O4J91E80f9PGixMLuJ7_1GrxB8TjPK_IftH_QdqgZUpr39d3KXKJFEb2ia
-    0QafjdYDdNI9j6NAg>
-X-ME-Received: <xmr:myIfZ4S5UARmemffR6Fi7PXPNiMLxNppUQH4QGWI0Gc18S9TZGMczmfm351wae7taqttesjZpwWi9is-yxKK0cf_dg5KjcsedtUCqxrin106Zw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejjedgkeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthht
-    rgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdr
-    nhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
-    eprggshhhijhgvvghtrdhnkhhtsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:myIfZ1sBnx8mhEfURuxF2dXuFD1EGsJ3iUUmKQR8M9wYcVDS5vL5pg>
-    <xmx:myIfZxcaE7ibwVPuIXUq33DQ9pT9JzK3zeGvQUx4eAzggjfA6cmVLA>
-    <xmx:myIfZx1irQniwcy6GodanV0M8dcxdsj-Sa_P1VkVdROdOSGaR_dBZg>
-    <xmx:myIfZ99lUvB14-wDc1HFC0AYSsXg6rIzvU9p3sdpvFhSCKJttzbBZA>
-    <xmx:nCIfZ6GjCGwo3lWeGw1iQ_EsSTOGOOJS8f_RWnvYP1kqHRpzVkEyEDuh>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Oct 2024 01:35:22 -0400 (EDT)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ca3c2fd5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 28 Oct 2024 05:35:15 +0000 (UTC)
-Date: Mon, 28 Oct 2024 06:35:15 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org, sandals@crustytoothpaste.net
-Subject: Re: [PATCH v3] show-index: fix uninitialized hash function
-Message-ID: <Zx8ijtkn7y6eBQ-n@pks.im>
-References: <xmqqzfqi4oc6.fsf_-_@gitster.g>
- <20241026120950.72727-1-abhijeet.nkt@gmail.com>
- <Zx7WaEn6nvtjhs/B@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AvYGDybR"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e28fe3b02ffso3558709276.3
+        for <git@vger.kernel.org>; Sun, 27 Oct 2024 22:39:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730093986; x=1730698786; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RAyb1vLg5cJztPxolm+zaKoZJ79TRJNvlNAu31fKa9c=;
+        b=AvYGDybRz0kFUUQ+o4UihhSxaERT18KeWjM32OU19Q0JoFSAdk78oH5BU4dmWCPPTZ
+         QtKfbem5WRmTgP3nx+nty+NxxiigHwIFDr9x5pkaComIrg2gCQKt8QGcat0SuKCN5otb
+         W62q3SQ9y0W8uEIZ27Ggw+HpfoYZ1p8KScyy2MuFUqCYPPDujb5zCaB66leEmIk3T1zS
+         0ZqCLFFvJcxf1uVPC0w2u3wAogbu3bTu3VB2YmthCyoex0TECozcaNnk/RMIzy81dLzA
+         rnTCNBYFmXRLO3IAxtZix77m42+YupyZrtTTENPGKPknzeLJ5lCKaFeZ2Z2X1mgXoMkS
+         R7yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730093986; x=1730698786;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RAyb1vLg5cJztPxolm+zaKoZJ79TRJNvlNAu31fKa9c=;
+        b=kZhIv07w6qP4bY9EQ5jxkfLu7YRd5NcPT5KaKiWoH4A7YQjbO6tUd/vlOFYVS9Frgp
+         EbqcqdxCf1gasV4EEsnHXAvg2ymzmw3abV2td9Wu/+1l0GRyePes8ZdCtuEnTWT/rd7F
+         gyUocvniMWRA4OO62XQ7140I8nVUujIXCIhPrwvQ9EOliNTQY11yxbJJTlciPGk2x2L0
+         gSsjcHqlLJTCYgNerdCV19RB5WfL6ZF9m75IrODAV6drUQbdDxcs8KwsA8E9rBdCNj3m
+         rc+n2MYIjt5V4u3YtMf8oNQX6ro7tOwUbs3gXGUtbyYmkZPgCDxIKbGqf/4c2P9O8Fho
+         +LMw==
+X-Gm-Message-State: AOJu0YzrEg2WJGJAJIVrBM9Unb/PQskZAQdboHk2N+IkcDeQ4nWX+qxP
+	KqBaw7Oc2wtWuLE/Jwk3N/2E9nI49AhpqxknhCkfzTYhCyZaaxxuAhOJZN0p933XW7X4in3xolR
+	V0dtAULIomPB36SvWVKjrq/sGWHo=
+X-Google-Smtp-Source: AGHT+IEKrg2AMZHSdc69gMPZW0FwTPwplqO4jotgBxwgeLBmYwL3uIi27ytetN1O5/iVm2xiGFtZcwj0x+ty8lgL/BY=
+X-Received: by 2002:a05:6902:1685:b0:e28:e4bd:13f3 with SMTP id
+ 3f1490d57ef6-e3087a6edc4mr5965849276.23.1730093985855; Sun, 27 Oct 2024
+ 22:39:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zx7WaEn6nvtjhs/B@nand.local>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20241024205359.16376-1-eric.peijian@gmail.com> <20241024205359.16376-5-eric.peijian@gmail.com>
+ <CAOLa=ZS4XLNBeXewQ8O7tpobQfF9C9LKP--MVYghVR52hcqgWA@mail.gmail.com>
+In-Reply-To: <CAOLa=ZS4XLNBeXewQ8O7tpobQfF9C9LKP--MVYghVR52hcqgWA@mail.gmail.com>
+From: Peijian Ju <eric.peijian@gmail.com>
+Date: Mon, 28 Oct 2024 01:39:35 -0400
+Message-ID: <CAN2LT1C1dh4oSO-3q71TX-BCy-JMoDXNXBSHA3P66_EjQ+0EKg@mail.gmail.com>
+Subject: Re: [PATCH v4 4/6] transport: add client support for object-info
+To: karthik nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
+	chriscool@tuxfamily.org, toon@iotcl.com, jltobler@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 27, 2024 at 08:10:16PM -0400, Taylor Blau wrote:
-> On Sat, Oct 26, 2024 at 05:39:50PM +0530, Abhijeet Sonar wrote:
-> > diff --git a/builtin/show-index.c b/builtin/show-index.c
-> > index f164c01bbe..978ae70470 100644
-> > --- a/builtin/show-index.c
-> > +++ b/builtin/show-index.c
-> > @@ -38,6 +38,9 @@ int cmd_show_index(int argc,
-> >  		repo_set_hash_algo(the_repository, hash_algo);
-> >  	}
+On Fri, Oct 25, 2024 at 6:13=E2=80=AFAM karthik nayak <karthik.188@gmail.co=
+m> wrote:
+>
+> Eric Ju <eric.peijian@gmail.com> writes:
+>
+> [snip]
+>
+> > diff --git a/fetch-pack.c b/fetch-pack.c
+> > index 800505f25f..1a9facc1c0 100644
+> > --- a/fetch-pack.c
+> > +++ b/fetch-pack.c
+> > @@ -1347,7 +1347,6 @@ static void write_command_and_capabilities(struct=
+ strbuf *req_buf,
+> >       packet_buf_delim(req_buf);
+> >  }
 > >
-> > +	if (!the_hash_algo)
-> > +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+> > -
+>
+> Seems like this was introduced in Patch 1/6, including the function
+> below which is not used in that patch.
+>
 
-Let's add a todo-comment here. The behaviour with this patch is somewhat
-broken as you cannot inspect indices that use any other object hash than
-SHA256 outside of a repository. This is fine from my point of view and
-nothing that you have to fix here, as you simply fix up the broken
-behaviour. But in the future, we should either:
+Thank you. As explained at
+https://lore.kernel.org/git/CAN2LT1CEPdTAxCEpKtd+8-5zKYSnh0PMqEXgAZ++TTMPPK=
+rD1g@mail.gmail.com/.
 
-  - Add logic to detect the format of the passed-in index and set that
-    up as the hash algorithm.
+In Patch 1/6, I am moving `write_command_and_capabilities()` to connect.c.
+And I am moving `send_object_info_request()` to a new file
+fetch-object-info.c in patch 4/6 where it is used.
 
-  - If that is impossible, add a command line option to pick the hash
-    algo.
 
-> >  	hashsz = the_hash_algo->rawsz;
+> >  void send_object_info_request(int fd_out, struct object_info_args *arg=
+s)
+> >  {
+> >       struct strbuf req_buf =3D STRBUF_INIT;
+> > @@ -1706,6 +1705,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_=
+pack_args *args,
+> >       if (args->depth > 0 || args->deepen_since || args->deepen_not)
+> >               args->deepen =3D 1;
 > >
-> >  	if (fread(top_index, 2 * 4, 1, stdin) != 1)
-> > diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-> > index 3b9dae331a..51fed26cc4 100755
-> > --- a/t/t5300-pack-object.sh
-> > +++ b/t/t5300-pack-object.sh
-> > @@ -523,6 +523,10 @@ test_expect_success 'index-pack --strict <pack> works in non-repo' '
-> >  	test_path_is_file foo.idx
-> >  '
+> > +     if (args->object_info)
+> > +             state =3D FETCH_SEND_REQUEST;
+> > +
+> >       while (state !=3D FETCH_DONE) {
+> >               switch (state) {
+> >               case FETCH_CHECK_LOCAL:
+>
+> [snip]
+>
+> >  /*
+> >   * sought represents remote references that should be updated from.
+> >   * On return, the names that were found on the remote will have been
+> > @@ -106,4 +114,6 @@ int report_unmatched_refs(struct ref **sought, int =
+nr_sought);
+> >   */
+> >  int fetch_pack_fsck_objects(void);
 > >
-> > +test_expect_success SHA1 'show-index works OK outside a repository' '
-> > +	nongit git show-index <foo.idx
-> > +'
+> > +void send_object_info_request(int fd_out, struct object_info_args *arg=
+s);
+> > +
+> >
+>
+> Nit: Would be nice to have a comment here explaining what the function do=
+es.
+>
 
-So how does this behave with SHA256? Does it raise an error? Does it
-segfault?
+Thank you. Added in v5.
 
-I think it's okay to fail with SHA256 for now, but I'd like the
-failure behaviour to be cleanish. So I'd prefer to not skip the test
-completely, but adapt our expectations based on the hash algo. Or have
-two separate tests, one for each hash, that explicitly init the repo
-with `git init --ref-format=$hash`, and then exercise the behaviour for
-each of them.
+> >  #endif
+> > diff --git a/transport-helper.c b/transport-helper.c
+> > index 013ec79dc9..2ff9675984 100644
+> > --- a/transport-helper.c
+> > +++ b/transport-helper.c
+> > @@ -709,8 +709,8 @@ static int fetch_refs(struct transport *transport,
+> >
+> >       /*
+> >        * If we reach here, then the server, the client, and/or the tran=
+sport
+> > -      * helper does not support protocol v2. --negotiate-only requires
+> > -      * protocol v2.
+> > +      * helper does not support protocol v2. --negotiate-only and cat-=
+file remote-object-info
+>
+> Nit: could we wrap this comment?
+>
 
-> >  test_expect_success !PTHREADS,!FAIL_PREREQS \
-> >  	'index-pack --threads=N or pack.threads=N warns when no pthreads' '
-> >  	test_must_fail git index-pack --threads=2 2>err &&
-> > --
-> > 2.47.0.107.g34b6ce9b30
-> 
-> These all look reasonable and as-expected to me. Patrick (CC'd) has been
-> reviewing similar changes elsewhere, so I'd like him to chime in as well
-> on whether or not this looks good to go.
+Thank you, Fixed in v5.
 
-Ah, thanks. I've missed this topic somehow.
+> > +      * require protocol v2.
+> >        */
+> >       if (data->transport_options.acked_commits) {
+> >               warning(_("--negotiate-only requires protocol v2"));
+>
+> [snip]
+>
+> >  static struct ref *get_refs_via_connect(struct transport *transport, i=
+nt for_push,
+> >                                       struct transport_ls_refs_options =
+*options)
+> >  {
+> > @@ -418,6 +489,7 @@ static int fetch_refs_via_pack(struct transport *tr=
+ansport,
+> >       struct ref *refs =3D NULL;
+> >       struct fetch_pack_args args;
+> >       struct ref *refs_tmp =3D NULL, **to_fetch_dup =3D NULL;
+> > +     struct ref *object_info_refs =3D NULL;
+> >
+> >       memset(&args, 0, sizeof(args));
+> >       args.uploadpack =3D data->options.uploadpack;
+> > @@ -444,11 +516,36 @@ static int fetch_refs_via_pack(struct transport *=
+transport,
+> >       args.server_options =3D transport->server_options;
+> >       args.negotiation_tips =3D data->options.negotiation_tips;
+> >       args.reject_shallow_remote =3D transport->smart_options->reject_s=
+hallow;
+> > +     args.object_info =3D transport->smart_options->object_info;
+> > +
+> > +     if (transport->smart_options
+> > +             && transport->smart_options->object_info
+> > +             && transport->smart_options->object_info_oids->nr > 0) {
+> > +             struct ref *ref_itr =3D object_info_refs =3D alloc_ref(""=
+);
+> > +
+> > +             if (!fetch_object_info(transport, data->options.object_in=
+fo_data))
+> > +                     goto cleanup;
+>
+> So if we were successful, we skip to the cleanup. Okay.
+>
 
-Patrick
+Yes, that is right.
+
+> > +             args.object_info_data =3D data->options.object_info_data;
+> > +             args.quiet =3D 1;
+> > +             args.no_progress =3D 1;
+>
+> Not sure why we set quiet and no_progress here.
+>
+
+Thank you.  If the code reaches here, it means we fall back to
+downloading the pack file with fetch_pack().
+Setting quiet and no_progress just wants to make fetch_pack less
+verbose and do its job quietly in the background.
+It is like calling `git fetch-pack -q ...`. I see setting quiet and
+no_progress is necessary here because:
+1. If the call git fetch-pack is from an internal command, we would
+better keep the call lean and efficient.
+2. If the user wants to do a verbose call, they have the choice to
+call git fetch-pack directly from the client.
+
+I add a comment in v5 to explain it, like this:
+" we can't retrieve object info in packets, so we will fall back to
+downland pack files. We set quiet and no_progress to be true, so that
+the internal call of fetch-pack is less verbose."
+
+
+
+> > +             for (size_t i =3D 0; i < transport->smart_options->object=
+_info_oids->nr; i++) {
+> > +                     ref_itr->old_oid =3D transport->smart_options->ob=
+ject_info_oids->oid[i];
+> > +                     ref_itr->exact_oid =3D 1;
+> > +                     if (i =3D=3D transport->smart_options->object_inf=
+o_oids->nr - 1)
+> > +                             /* last element, no need to allocate to n=
+ext */
+> > +                             ref_itr->next =3D NULL;
+> > +                     else
+> > +                             ref_itr->next =3D alloc_ref("");
+> >
+> > -     if (!data->finished_handshake) {
+> > -             int i;
+> > +                     ref_itr =3D ref_itr->next;
+> > +             }
+> > +
+> > +             transport->remote_refs =3D object_info_refs;
+> > +
+> > +     } else if (!data->finished_handshake) {
+> >               int must_list_refs =3D 0;
+> > -             for (i =3D 0; i < nr_heads; i++) {
+> > +             for (int i =3D 0; i < nr_heads; i++) {
+> >                       if (!to_fetch[i]->exact_oid) {
+> >                               must_list_refs =3D 1;
+> >                               break;
+> > @@ -494,16 +591,26 @@ static int fetch_refs_via_pack(struct transport *=
+transport,
+> >                         &transport->pack_lockfiles, data->version);
+> >
+> >       data->finished_handshake =3D 0;
+> > +     if (args.object_info) {
+> > +             struct ref *ref_cpy_reader =3D object_info_refs;
+> > +             for (int i =3D 0; ref_cpy_reader; i++) {
+> > +                     oid_object_info_extended(the_repository, &ref_cpy=
+_reader->old_oid,
+> > +                             &args.object_info_data[i], OBJECT_INFO_LO=
+OKUP_REPLACE);
+> > +                     ref_cpy_reader =3D ref_cpy_reader->next;
+> > +             }
+> > +     }
+> > +
+> >       data->options.self_contained_and_connected =3D
+> >               args.self_contained_and_connected;
+> >       data->options.connectivity_checked =3D args.connectivity_checked;
+> >
+> > -     if (!refs)
+> > +     if (!refs && !args.object_info)
+> >               ret =3D -1;
+>
+> This is because, now we don't necessary always fetch the refs, since
+> sometimes we're just happy fetching the object info. Would be nice to
+> have a comment here.
+>
+
+Thank you. Acutally, if the code reaches here, it means we fall back
+to downloading the pack file.
+I would expect there is no difference from the old logic, so
+`!args.object_info` might not be needed here.
+I am removing `!args.object_info` in v5.
+
+> >       if (report_unmatched_refs(to_fetch, nr_heads))
+> >               ret =3D -1;
+> >
+> >  cleanup:
+> > +     free_refs(object_info_refs);
+> >       close(data->fd[0]);
+> >       if (data->fd[1] >=3D 0)
+> >               close(data->fd[1]);
+>
+>
+> [snip]
