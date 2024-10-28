@@ -1,68 +1,64 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D231DF728
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 17:42:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3826F21106
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 17:48:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730137368; cv=none; b=Og+zm+7TXerXO/Se0GrKJsvpQVBiYIxOD4hrNvJOZeeVGvf2KTEzNldwtD2c5K9McwhT1Tbi2bO/4XmHbGQWY0FouExtH49hYEE2srp6BfjOZ1iPZbJcRHrz/glYftkgdoVMku7Q1+iZlObh7/fTnU6COxB2gihvyRzdcrVuDpc=
+	t=1730137696; cv=none; b=iuROMU3DAfhJtmaKzprt4lK8LoUY2vEpNBFND61Q2WfbncxOB6GEADBX5uSryYvS8TE3Hxul0tuxRFZDFipDcZDAfmrN7te1WI8+kMYwYF/OjSOLbtWH+TI2RX+2zeAp7/xQzWP9creqZ9P3EPALIl6oY7KUorxuQwcBmaS05fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730137368; c=relaxed/simple;
-	bh=iwf/Cnh4kDMb/cRqXM7NDxI0+z5+/OmQ7Lzqt5pecNg=;
+	s=arc-20240116; t=1730137696; c=relaxed/simple;
+	bh=daPO0DEObFwZVWyhnjcEAQW3ZMZNSLeUrORSyBSwkiM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ul5l+VKB7CDLkjAIgiQi5lpWfwwiDu/7z+sU7OgRyJ+9OR6gfKyab7i727flBvzyXlCkaT4KXSvnvedhieO2zHQZuPfwTmMhFCqqM3c0flqukuij5dOXfrTbhL7f0xLSLBnxZC5sWX72IzBBVaLybWG/ifsptrXzJfl+nuK1M+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=sj6pMcOA; arc=none smtp.client-ip=209.85.128.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=J5hb4bZTaI9HR1w9KLvC5+DQgKstbditkz/ucGiY515iBQoo6GbFAJI9eimiNEN6opuWfzZeN5nRTcLHFimZNxmIRKbWClvQBfw1yUTzJfVtk8Ve/PL7FHRpy/EUdIOu1HoGeywlHhV6fjrm07C7hbEcBqDu8nKmCjECNsCjN3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=QP1nbXO1; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="sj6pMcOA"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6e8063533b5so44441657b3.1
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 10:42:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="QP1nbXO1"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6e38fa1f82fso41140047b3.1
+        for <git@vger.kernel.org>; Mon, 28 Oct 2024 10:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730137365; x=1730742165; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730137693; x=1730742493; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7VxR+UF8oQoTBjXQx3TUbZpiRr/9wRbMGmCdrK5/Prk=;
-        b=sj6pMcOA7sEDfoNhpKBLe9KPBJ/aL2MgmeP10PQ3VrBiVxhL4qp9h7eGpQczWAGekc
-         EUWpyrmUrZsuUgZ7HGm/2ue5c56jKJ2lTk0AmmqlTVG8CSoUpr9w4jyiUyOzuTxWpwY3
-         G3dIHo05cr91jrAv7L135Hohzy+I+Bg52/DxALVZiR9kgQU6tjBpznhvp19YgxSOxofl
-         /fkohU485QzliPW1iVOe9y/x5OLxnurdW2w524KyhepzvjFui6aXB7C10rpSw3Y3oVH2
-         6U8iMykyZH+JowhFnsivvsHYDhA/iKfgql7DJPFJpl/hyzGjQLB98g9wJfJ1esDMoH4O
-         UtTg==
+        bh=daPO0DEObFwZVWyhnjcEAQW3ZMZNSLeUrORSyBSwkiM=;
+        b=QP1nbXO1hYaXlJmYU7N/KEVKz1WTELiYVsGbKpDQF56HTYSMCVVMj0ji0R1M+0m4Py
+         143vK+JeKKwbysEcEEtagUEeie8rkDVfl2ZqHcASk0AB6vku54E5v0pgxiH/a8HijzLr
+         fxfsmIduRzh+gprbQoOwt1hc7yiDHOkvyJO1VKuN74HxtFJ2IRooS1/MPJhqJNN7CoEQ
+         C+p63yCvKeBPKftrgnBvEP00sbn55rs7lIcL8yNOEmqnbG37SaBrtfMfe0vBweZOq7eY
+         RmFgRJqMvEg2WJckLO2cdQVB0AV3UV1KWUcA0A8OAzPV9KzgvxYCgcp+25UTE4NCZiFQ
+         e2gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730137365; x=1730742165;
+        d=1e100.net; s=20230601; t=1730137693; x=1730742493;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7VxR+UF8oQoTBjXQx3TUbZpiRr/9wRbMGmCdrK5/Prk=;
-        b=A9+d5c1vpdonXU4sSc4avPbO/mvsgR3BdDLj0lVad0xzFg32/lxUWxLDJ4WELe+SAW
-         o9sUDmcVkKVIk8L0XqdwVR32GEZHd5Bs4J3RDxDkjjPgWonXxh5eEktXZjsHFvvTZsuX
-         poBmMd1kW+vNkfPAuLI5RkQ1MVgA+zbtkhG5mvBGHXLHiuay4sc+jvyE+1h/QjZt1Usg
-         5HtIrp0rXsTQQrQY/VB5o1tp9dthnZiVBK6wJ2gkhxuNpnaf/Jq0dg63xyJcrQY9FI7M
-         cETa8cZPIIqygUxAuYK0zFmGKBPrSFzGgvPUoi9DBlB2GFHHiMPkTaknjQNabHNM4Pww
-         /9tQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVMINNtznd8a197328JMi176TQWd7jxdA7TT9NgIvAGr/G1QuYBAqY8Iti1Xank6arw3vA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4QcP2N0641J2fcKBArk+k3kIL9mH2bC/ENx8aYHaFYg2t8Hks
-	LJCm/8Tqu0sk31Cwa6aMFbzcszUyrTzqPwoQknCZZQUKAQMVyg/vW9EwDWUc3w5lJfwbg30DGQM
-	axxg=
-X-Google-Smtp-Source: AGHT+IEtPyN2rj6SbduKZLNxJd5blM1XyYetSFORBiXPLkJT1cj/kDEFha3UqS0pra1uQdIiA2nq3A==
-X-Received: by 2002:a05:690c:2a8e:b0:6e6:1018:64c7 with SMTP id 00721157ae682-6e9d8b8dbadmr69015377b3.41.1730137365644;
-        Mon, 28 Oct 2024 10:42:45 -0700 (PDT)
+        bh=daPO0DEObFwZVWyhnjcEAQW3ZMZNSLeUrORSyBSwkiM=;
+        b=eoixVtURHkAenZsJl7jEMpt2fHl4CIy1OrKA2glurZm8KsDxkxwgv6j13B+ryC30Kg
+         Ys3Ohy8ncWPtlmyw0+jRLS7dRSgj7hI+GcQogDHIU+ghSy9sF8x9L/SiVxEPGQZNTD1o
+         tkO4DOnQ7OOBPRE0tUYkue+Hiwyqowe+yO292Vi67oHQApuqgrCop0ERfq93lHrn5b3m
+         T/9YcNqpUoVhF53FeQ0hcLoJYAWNnhPM/BzhL2EK2er4ESK8nNuWd7OVQ4PmVr8w3lW0
+         B+fYHa3AXcjMlbN4lTXE1fiCcozI5oEUtrrWKc+vwHjyaLL+Wq+M+616viV8v+i/TxYw
+         b/CQ==
+X-Gm-Message-State: AOJu0YwYc4WyycCitLJCOJefH/UaXScpx56p8agWs0lKkXdgaKEFNXaX
+	VMvtHUTkkALX8JljaWLw0inGbuX+jJE5Njl+aDekCWcnvNr0KyjY+mEFqAkxVPc=
+X-Google-Smtp-Source: AGHT+IHc5ZmhkBkQ0zQmMnpzsBKgJBTYJ1ZCTd9HNJUtLBGIrWpSKZ/kmyxwQrRRaJqL6/8ZN/IotA==
+X-Received: by 2002:a05:690c:2e04:b0:6dd:ba22:d946 with SMTP id 00721157ae682-6e9d89b4550mr72366227b3.13.1730137693124;
+        Mon, 28 Oct 2024 10:48:13 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6c97b27sm15386677b3.115.2024.10.28.10.42.45
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6c989f6sm15241677b3.130.2024.10.28.10.48.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 10:42:45 -0700 (PDT)
-Date: Mon, 28 Oct 2024 13:42:43 -0400
+        Mon, 28 Oct 2024 10:48:12 -0700 (PDT)
+Date: Mon, 28 Oct 2024 13:48:10 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org, sandals@crustytoothpaste.net
-Subject: Re: [PATCH v3] show-index: fix uninitialized hash function
-Message-ID: <Zx/NE/9HFNr9V2H7@nand.local>
-References: <xmqqzfqi4oc6.fsf_-_@gitster.g>
- <20241026120950.72727-1-abhijeet.nkt@gmail.com>
- <Zx7WaEn6nvtjhs/B@nand.local>
- <Zx8ijtkn7y6eBQ-n@pks.im>
+Cc: git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] t6006: fix prereq handling with `test_format ()`
+Message-ID: <Zx/OWlJ6N+tKbLMc@nand.local>
+References: <zod73s7j77gjj2f62clg3utxlxnclbyhjjz3yc74x7zyh35fzy@blwhzqefxyrs>
+ <ccb2d7cf817a181fab8fb083bdc9f1fed4671749.1730092261.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,26 +67,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zx8ijtkn7y6eBQ-n@pks.im>
+In-Reply-To: <ccb2d7cf817a181fab8fb083bdc9f1fed4671749.1730092261.git.ps@pks.im>
 
-On Mon, Oct 28, 2024 at 06:35:15AM +0100, Patrick Steinhardt wrote:
-> > >  test_expect_success !PTHREADS,!FAIL_PREREQS \
-> > >  	'index-pack --threads=N or pack.threads=N warns when no pthreads' '
-> > >  	test_must_fail git index-pack --threads=2 2>err &&
-> > > --
-> > > 2.47.0.107.g34b6ce9b30
-> >
-> > These all look reasonable and as-expected to me. Patrick (CC'd) has been
-> > reviewing similar changes elsewhere, so I'd like him to chime in as well
-> > on whether or not this looks good to go.
->
-> Ah, thanks. I've missed this topic somehow.
+On Mon, Oct 28, 2024 at 06:14:51AM +0100, Patrick Steinhardt wrote:
+> Oops, good catch. @Taylor, let's maybe queue this fix on top of
+> ps/platform-compat-fixes, which currently sits in next.
 
-Not a problem at all. Thanks for a very helpful review.
+Noted, thanks, and thanks also for hopping on the fix.
 
-Abhijeet: I've gone ahead and marked this in my notes as "expecting
-another round" to address the feedback from Patrick. I'll keep my eyes
-out for the new version of this patch. Thanks!
+I was wondering how to handle this situation with Junio's scripts, but
+applying the patch on top of ps/platform-compat-fixes and then
+re-building 'next' lands the patch in the expected fashion, without any
+additional cruft.
+
+I am not sure whether I will do a push-out on Tuesday (as has been my
+schedule since Junio went offline), or Wednesday morning. I suspect that
+the latter is more likely, but either way, that integration round will
+have the new patch applied down onto 'next'.
 
 Thanks,
 Taylor
