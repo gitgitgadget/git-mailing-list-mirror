@@ -1,271 +1,170 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB62F155A52
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 16:58:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEFC13AD11
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 17:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730134689; cv=none; b=htHnoFk7Eg7t97G64kkptlkrxMTzDJzeSr3mi4Lkgph6Dq+nLu9vKETmuBX1ZcG3FBmTwq4yc4d2dExsrqZBFXGWJQoijlBqee3/anqiOx3vkJes+seSpXMHaYoR+hc/zaG9d6gubW+teK3pKr1iPKvGIYSJ+vnblhxazPO6ha4=
+	t=1730135305; cv=none; b=ZshrIRSkoJyeG2AAsL/dZ1+kCkYm0n3oVTOnE0+/FfEAdVZpy3MhnuJq4sPPb2m79DKZva+KW7XiaHKHF4G/Owt3wLTT3Sll18HqnLedzmhdBNtuUVct6Yf59O75W+hmWd4t/lQ+bx+DVi2rPrQkF7xc8tPWUwit2LE0tZsDgUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730134689; c=relaxed/simple;
-	bh=kTrbvjfCDY3P4b/Hv+uxIInfsiBJ0uKO87q6+q3mdyE=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=YzuuqcdQaVOaRLoNqcgOuF2kWq0qEM0Fwz5wyd+EnqW9fpUT8TVsnUY4a4+LN+z1H4tE6ws27n+8LUlQi6p4Mxs+32AiSEoyx69i1onE/jRwRzXPYX67pEXHJviygTlN5nRqGLVnqpG/PkxaUS2VwV3wHa7fI/t+soESsX1dsm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mJW5bfyy; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730135305; c=relaxed/simple;
+	bh=PS+s5PRym9fAEnCGzZKthaPy750JvRY2YaSnPP/+8Sg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uLMg3nQLqk0YQPb+COE55l2zP5yDHyr8HGq/1XXSMcgS9UCdCpFJsG5dkLOQdxFODzzIJyTi/97iFcox2QLEYbeWJgPTHhFVveoCdenp3SxpVVXrNHax/pSazs5dOaunbVnJKAqxfA6bldYTNs7ubOPIZyqeQdtijpbEag7IEJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=BzGD0SZ7; arc=none smtp.client-ip=209.85.161.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mJW5bfyy"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2e31af47681so3596039a91.2
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 09:58:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="BzGD0SZ7"
+Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-5ebc0dbc65dso2697153eaf.1
+        for <git@vger.kernel.org>; Mon, 28 Oct 2024 10:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730134686; x=1730739486; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kTrbvjfCDY3P4b/Hv+uxIInfsiBJ0uKO87q6+q3mdyE=;
-        b=mJW5bfyycpJIvhtBWV9go6SeZmS3RwV6pWCf8H7BeiWHzFHFFuUL/PQREiOMKOivUq
-         g84NOebEHmV10+ukecKstOPUFUEoc340d1b7dGvHusNhitkNDqxGx49o6X0Hcu3SnIYM
-         skmaTgnzflDCA6K/2clWCbzatGuxXrwJg3p/SMOOhaX5N+JD/UheoZKpHBiJkuiskfKk
-         +CdPQw6QmxK5NyP5w6t/6taY0BTEalBgGNlQBbKf4so4TFa4gYrpNc2ZXgBBbU58sDj9
-         EaLwFxDBcXxTdpf4HF03BTNMs98zZ6+O2nRlxgHnWTNwUkZpuFcfRjtC6xYwRRHoOQmE
-         BUoA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730135302; x=1730740102; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YeDYszwbhJlyN4x3ZJuyJYZlgzKxKfR12pJvBivOeXw=;
+        b=BzGD0SZ7UszZ/a5PvsCioZWGHrlE7A+LNyMNEEP+cFPEUBUklgE6Kujs+2+KOsgREj
+         hNIPDQXFBc2hSyj9mTyz0UbQtMK4Ln5A8NwTwoBgP20cd+IXeokfHIXsMqOm9Mw5J0QM
+         ZfEhhTkXlk4IJeS4/WDUD7mx6E85gpvwafESLIauuBG9SNmMZ8r8vnYH461LuWMt5rHk
+         kpE1paYtWMBd0mjGlqHeczRXcM/OMrC84XQKfyM3KbOkBNpqF0riFkimml+K1arujVj4
+         NM0tj7rhRH9W9EuQ7HT7+OgpXboFRuZecVuls2WdkILx+Hozj43ptK5oT/0hQ3qhv9YA
+         t02Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730134686; x=1730739486;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kTrbvjfCDY3P4b/Hv+uxIInfsiBJ0uKO87q6+q3mdyE=;
-        b=iU3njqmTWy5pzF4jAvxiLbVAKSOtUleo2nmBfJt6omgUl/yGGeQllqo+RCwZ93P/A5
-         YDb7UAPzGElnDH43Om6e69TzQ+fWOqDx4Q5I2mdro6l+i8V5xveXJ3777PY0amNwMoSg
-         a8i0p5aKCK2X1eV/1c3mzxiQDV9u9U8lyHNVBd1Sx/ssrTzuWe53a/ExJOPfgpqwN/gR
-         7/SkBOZkrm5TLenZ2nne8Q/j9Z41fWy9Bs19Didy6hIg9pjlfZJ6D5FjYmLWgehq4HYN
-         OCg9l12imbxHdGb0pI7gyla+DxA3tiijSMgIH2ErHu7WOhlY1w+rFnH61kOFHS12p24C
-         hHjQ==
-X-Gm-Message-State: AOJu0Yy2tshwGtHqeOTu/VTkAEoYygABiDANxLCwpEGpbjcdaEc7tS5N
-	msTB27cBJTV5Ph++bBlxKFMEYZdUJI2Ex3aEYjdWfRMva4DiFUU3YZ2pkqkCgEz52hED3Jdphy2
-	ZK6UXoRuxAlHtwgcKPU41UGSoSMcakyiJ
-X-Google-Smtp-Source: AGHT+IHaAxd5dcaGegCOUuwWGtZBMLloqCmcSizKpEwSNUWOiF0uKPfZKMxqZ5E6RMP6zJzlryP4he5mO6WOfdZQ85c=
-X-Received: by 2002:a17:90a:6b0e:b0:2e2:ffb0:89f6 with SMTP id
- 98e67ed59e1d1-2e8f106ba6emr10773459a91.15.1730134685578; Mon, 28 Oct 2024
- 09:58:05 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1730135302; x=1730740102;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YeDYszwbhJlyN4x3ZJuyJYZlgzKxKfR12pJvBivOeXw=;
+        b=wbuEwzXa3uJ7Az/W+UQbKfZBR8gi9EVamvTT1wlsNavsfXxUIJ+l8XPz308suQ2Lhx
+         TXQxBBQ3HJWH6p/HM+qK7lq+Nbhc1UaUBRdIymJ+CQPecwuvGIDZEfMwji1U7qDU25hV
+         oIOOQZWeX406JJGapQBLXM/CHZvzDa7u+34VqWY52FuEQHcngUfbyCCJm+O9WJMJJojU
+         nubpk+NZYvOhnmgEK6uIkfsXpmH0RysVOA6GD7nYp4jFEcsHnxdN+XgpqmAwJzYpAfUu
+         tOhxIs1bAjb6GoEKXqx2lUrPRfBW7uzRuyzsKQRwY4E4QB1/kF7S6PoeaycBIUwy6iD/
+         X70A==
+X-Gm-Message-State: AOJu0YyrRBSp3VHRnVD4Jw5/IJdOspXpvzM3RN29C1Yyyjx/BFRnEHsV
+	74xNGcfN5pQJYuUTZqweHViQRqBC4NxqXtKbv5ldtnM7y9rZwxrnOumZ6adJDBKTHuQhUcViaHS
+	jRE0=
+X-Google-Smtp-Source: AGHT+IF8uxf3rxPYKH767zsWkixgWpcj3z42oZzuOn1YSDJFS8cPc15RsMkXZusDf0pc6eoz+j2kGQ==
+X-Received: by 2002:a05:6359:4c8b:b0:1c3:7070:4442 with SMTP id e5c5f4694b2df-1c3f9e87977mr233020655d.12.1730135301947;
+        Mon, 28 Oct 2024 10:08:21 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6bdbffesm15124637b3.38.2024.10.28.10.08.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Oct 2024 10:08:20 -0700 (PDT)
+Date: Mon, 28 Oct 2024 13:08:18 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	shejialuo <shejialuo@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH 2/2] worktree: add `relativeWorktrees` extension
+Message-ID: <Zx/FAoj2jcISsv0X@nand.local>
+References: <20241025-wt_relative_options-v1-0-c3005df76bf9@pm.me>
+ <20241025-wt_relative_options-v1-2-c3005df76bf9@pm.me>
+ <Zx7YxLPItxvFJK62@nand.local>
+ <D571HWYAD4MM.28JAS7D0Y6OI3@pm.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?Q?Peregi_Tam=C3=A1s?= <petamas@gmail.com>
-Date: Mon, 28 Oct 2024 17:57:54 +0100
-Message-ID: <CAExmRTbMCayh+vHW3g=2p=FMb=VKXomEbn7_0t+kK-eF79JnEA@mail.gmail.com>
-Subject: Inconsistent handling of corrupt patches based on line endings
-To: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000591ac106258c5fb0"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <D571HWYAD4MM.28JAS7D0Y6OI3@pm.me>
 
---000000000000591ac106258c5fb0
-Content-Type: multipart/alternative; boundary="000000000000591abe06258c5fae"
+On Mon, Oct 28, 2024 at 01:14:51AM +0000, Caleb White wrote:
+> On Sun Oct 27, 2024 at 7:20 PM CDT, Taylor Blau wrote:
+> > On Fri, Oct 25, 2024 at 10:29:47PM +0000, Caleb White wrote:
+> >> A new extension, `relativeWorktrees`, is added to indicate that at least
+> >> one worktree in the repository has been linked with relative paths. This
+> >> extension is automatically set when a worktree is created or repaired
+> >> using the `--relative-paths` option, or when the
+> >> `worktree.useRelativePaths` config is set to `true`.
+> >
+> > This approach feels like a very heavy hammer. I wonder if writing
+> > worktrees with relative paths by default was too aggressive of a step,
+> > and if we should instead make the new behavior opt-in rather than
+> > opt-out.
+>
+> The v4 series of the original round added the cli options and updated
+> the relative worktrees to be opt-in. This patch keeps the git default
+> behavior of writing worktrees with absolute paths, and users can opt-in
+> via the `--relative-paths` cli option or the `worktree.useRelativePaths`
+> config.
 
---000000000000591abe06258c5fae
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+OK, I think the mistake here is mine. I did not see
 
-Hi all,
+  https://lore.kernel.org/git/xmqqfrp4onjd.fsf@gitster.g/
 
-I might've found an inconsistency in how git-apply treats corrupt patches
-(representing empty context lines with completely empty lines instead of
-lines containing a single space - usually a result of a "trim trailing
-whitespace" editor setting) based on whether the patch file uses
-Windows-style line endings (CRLF) or Unix-style line endings (LF only).
+when triaging the list after Junio went offline for vacation. Had I not
+lost that email, I would not have merged the earlier round without more
+discussion.
 
-Regardless of whether I use LF or CRLF in original.txt, "git apply --check
---ignore-whitespace" will happily apply intact-win.patch (uncorrupted patch
-file with CRLF), intact-unix.patch (uncorrupted patch file with LF) and
-corrupt-unix.patch (corrupted patch file with LF), but reports "error:
-corrupt patch at line 6" for corrupt-win.patch (corrupted patch file with
-CRLF).
+That being said, it is still greatly appreciated when contributors can
+follow the WC reports when they have patches that are moving through the
+various integration branches. That way you can see my "Will merge to
+'next'" comment and say "please hold, I am working on a new round that
+is substantially different / uncovers some backwards incompatibility /
+etc." and we can wait appropriately.
 
-My intuition tells me git-apply should either fail for all corrupt patch
-files (regardless of EOL) or it should apply the corrupt patch to work
-around the issue caused by misconfigured text editors (regardless of EOL).
+Now we are in the rather unfortunate situation of having merged
+something to 'master' that (with the additional information that I
+missed earlier) it is not clear that I would have merged in its existing
+form at the time.
 
-Am I missing something, or is this a bug/inconsistency in
-git-apply's behaviour?
+But that's OK, and we can figure out a path forward here. I am just
+trying to say that this highlights the importance of following the WC
+reports regularly to catch cases where the maintainer missed some
+important piece of information.
 
-Thanks in advance: Tam=C3=A1s Peregi
+> > Saying that new worktrees are written with relative paths, and that
+> > creating a worktree with a new version of Git breaks reading the
+> > repository on older versions feels very unsatisfying to me.
+> >
+> >> The `relativeWorktrees` extension ensures older Git versions do not
+> >> attempt to automatically prune worktrees with relative paths, as they
+> >> would not not recognize the paths as being valid.
+> >
+> > This is the piece of information that I was missing in the earlier round
+> > when I merged that down. I think we need to take a step back and think
+> > about how to make this change safely in a way that doesn't break
+> > compatibility with older versions of Git.
+>
+> Adding the extension was the direction suggested by Junio in the
+> previous round. Git did not account for the possibility of the linking
+> files containing relative paths, so there's really no way to make this
+> change without breaking compatibility with older versions of Git. Git
+> had to be taught how to handle files that could contain either absolute
+> or relative paths.
 
-**What did you do before the bug happened? (Steps to reproduce your issue)*=
-*
+Yep, that makes sense. My preference here would be to make the new
+behavior opt *in*, rather than opt-out, so that:
 
-1. Rename either original-win.txt or original-unix.txt to original.txt
-2. Run the following commands:
-2.1. git apply --check --ignore-whitespace intact-unix.patch
-2.2. git apply --check --ignore-whitespace intact-win.patch
-2.3. git apply --check --ignore-whitespace corrupt-unix.patch
-2.4. git apply --check --ignore-whitespace corrupt-win.patch
+  - Users who do not experience problems with writing worktrees that
+    have absolute paths can continue to do so without any changes.
 
-**What did you expect to happen? (Expected behavior)**
+  - Users who use worktrees *and* do not write relative paths can
+    upgrade between successive versions without requiring a new
+    repository extension that would break older Git versions.
 
-I'd expect one of the following:
-- All 4 commands succeed.
-- 2.1 and 2.2 succeeds, 2.3 and 2.4 both fail with "error: corrupt patch at
-line 6"
+  - That we only add that extension to the repository's configuration if
+    and when the user has opted into the new behavior.
 
-In other words: corrupted patches should either be accepted or not,
-regardless of what EOL markers are used in the patch file.
+Reading this new series, I *think* that is the behavior that you settled
+on, which seems quite reasonable to me. Can you confirm that I'm reading
+this all correctly? Assuming so, I think that we are in a reasonable
+position[^1] to review this series instead of having to back out the new
+behavior.
 
-**What happened instead? (Actual behavior)**
+Thanks for bearing with me here, I am quite embarrassed to have missed
+Junio's mail that I mentioned earlier, but I appreciate your patience
+while we sort this out together.
 
-Only 2.4, i.e. applying corrupt-win.patch has failed.
+Thanks,
+Taylor
 
-**What's different between what you expected and what actually happened?**
-
-2.3 and 2.4 should have the same result.
-
-**Anything else you want to add:**
-
-While the example seems contrived, it has been encountered in the wild when
-I was copying a port from https://github.com/microsoft/vcpkg (set up with
-autocrlf=3Dfalse and all files treated as binaries in .gitattributes) to my
-company's repository (set up with autocrlf=3Dtrue and patch files treated a=
-s
-text). The patches and application worked in Microsoft's repo, then worked
-on my machine (Windows) in our repor, but failed in CI on Windows, and
-started failing on my machine after switching to a different branch and
-switching back due to "git checkout" converting the newline characters.
-
-I think these kind of corrupt patch files should fail to apply
-consistently, but being able to apply them is also acceptable. However, the
-current inconsistent behaviour (apply if patch is LF, but fail if patch is
-CRLF) is confusing, and causes "works on my machine" issues.
-
-
-[System Info]
-git version:
-git version 2.46.0.windows.1
-cpu: x86_64
-built from commit: 2e6a859ffc0471f60f79c1256f766042b0d5d17d
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.9.0
-OpenSSL: OpenSSL 3.2.2 4 Jun 2024
-zlib: 1.3.1
-uname: Windows 10.0 19045
-compiler info: gnuc: 14.1
-libc info: no libc information available
-$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.ex=
-e
-
---000000000000591abe06258c5fae
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi all,<br><br>I might&#39;ve found an inconsistency in ho=
-w git-apply treats corrupt patches (representing empty context lines with c=
-ompletely empty lines instead of lines containing a single space - usually =
-a result of a &quot;trim trailing whitespace&quot; editor setting) based on=
- whether the patch file uses Windows-style line endings (CRLF) or Unix-styl=
-e line endings (LF only).=C2=A0<div><br></div><div>Regardless of whether I =
-use LF or CRLF in original.txt, &quot;git apply --check --ignore-whitespace=
-&quot; will happily apply intact-win.patch (uncorrupted patch file with CRL=
-F), intact-unix.patch (uncorrupted patch file with LF) and corrupt-unix.pat=
-ch (corrupted patch file with LF), but reports &quot;error: corrupt patch a=
-t line 6&quot; for corrupt-win.patch (corrupted patch file with CRLF).<br><=
-br>My intuition tells me git-apply should either fail for all corrupt patch=
- files (regardless of EOL) or it should apply the corrupt patch to work aro=
-und the issue caused by misconfigured text editors (regardless of EOL).<br>=
-<br>Am I missing something, or is this a bug/inconsistency in git-apply&#39=
-;s=C2=A0behaviour?</div><div><br></div><div>Thanks in advance: Tam=C3=A1s P=
-eregi<br><br>**What did you do before the bug happened? (Steps to reproduce=
- your issue)**<br><br>1. Rename either original-win.txt or original-unix.tx=
-t to original.txt<br>2. Run the following commands:<br>2.1. git apply --che=
-ck --ignore-whitespace intact-unix.patch<br>2.2. git apply --check --ignore=
--whitespace intact-win.patch<br>2.3. git apply --check --ignore-whitespace =
-corrupt-unix.patch<br>2.4. git apply --check --ignore-whitespace corrupt-wi=
-n.patch<br><br>**What did you expect to happen? (Expected behavior)**<br><b=
-r>I&#39;d expect one of the following:<br>- All 4 commands succeed.<br>- 2.=
-1 and 2.2 succeeds, 2.3 and 2.4 both fail with &quot;error: corrupt patch a=
-t line 6&quot;<br><br>In other words: corrupted patches should either be ac=
-cepted or not, regardless of what EOL markers are used in the patch file.<b=
-r><br>**What happened instead? (Actual behavior)**<br><br>Only 2.4, i.e. ap=
-plying corrupt-win.patch has failed.<br><br>**What&#39;s different between =
-what you expected and what actually happened?**<br><br>2.3 and 2.4 should h=
-ave the same result.<br><br>**Anything else you want to add:**<br><br>While=
- the example seems contrived, it has been encountered in the wild when I wa=
-s copying a port from=C2=A0<a href=3D"https://github.com/microsoft/vcpkg">h=
-ttps://github.com/microsoft/vcpkg</a> (set up with autocrlf=3Dfalse and all=
- files treated as binaries in .gitattributes) to my company&#39;s repositor=
-y (set up with autocrlf=3Dtrue and patch files treated as text). The patche=
-s and application worked in Microsoft&#39;s repo, then worked on my machine=
- (Windows) in our repor, but failed in CI on Windows, and started failing o=
-n my machine after switching to a different branch and switching back due t=
-o &quot;git checkout&quot; converting the newline characters.</div><div><br=
-></div><div>I think these kind of corrupt patch files should fail to apply =
-consistently, but being able to apply them is also acceptable. However, the=
- current inconsistent behaviour (apply if patch is LF, but fail if patch is=
- CRLF) is confusing, and causes &quot;works on my machine&quot; issues.</di=
-v><div><br><br>[System Info]<br>git version:<br>git version 2.46.0.windows.=
-1<br>cpu: x86_64<br>built from commit: 2e6a859ffc0471f60f79c1256f766042b0d5=
-d17d<br>sizeof-long: 4<br>sizeof-size_t: 8<br>shell-path: D:/git-sdk-64-bui=
-ld-installers/usr/bin/sh<br>feature: fsmonitor--daemon<br>libcurl: 8.9.0<br=
->OpenSSL: OpenSSL 3.2.2 4 Jun 2024<br>zlib: 1.3.1<br>uname: Windows 10.0 19=
-045<br>compiler info: gnuc: 14.1<br>libc info: no libc information availabl=
-e<br>$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\ba=
-sh.exe</div></div>
-
---000000000000591abe06258c5fae--
---000000000000591ac106258c5fb0
-Content-Type: text/plain; charset="US-ASCII"; name="original-unix.txt"
-Content-Disposition: attachment; filename="original-unix.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_m2t8kfpv4>
-X-Attachment-Id: f_m2t8kfpv4
-
-YQoKYgpjCmQKZQoKZgo=
---000000000000591ac106258c5fb0
-Content-Type: application/octet-stream; name="intact-win.patch"
-Content-Disposition: attachment; filename="intact-win.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_m2t8kfpr3>
-X-Attachment-Id: f_m2t8kfpr3
-
-ZGlmZiAtLWdpdCBhL29yaWdpbmFsLnR4dCBiL29yaWdpbmFsLnR4dA0KaW5kZXggZTc1ODJiNy4u
-OTQwYjVhNiAxMDA2NDQNCi0tLSBhL29yaWdpbmFsLnR4dA0KKysrIGIvb3JpZ2luYWwudHh0DQpA
-QCAtMiw2ICsyLDcgQEAgYQ0KIA0KIGINCiBjDQorTkVXIExJTkUNCiBkDQogZQ0KIA0K
---000000000000591ac106258c5fb0
-Content-Type: application/octet-stream; name="intact-unix.patch"
-Content-Disposition: attachment; filename="intact-unix.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_m2t8kfpn2>
-X-Attachment-Id: f_m2t8kfpn2
-
-ZGlmZiAtLWdpdCBhL29yaWdpbmFsLnR4dCBiL29yaWdpbmFsLnR4dAppbmRleCBlNzU4MmI3Li45
-NDBiNWE2IDEwMDY0NAotLS0gYS9vcmlnaW5hbC50eHQKKysrIGIvb3JpZ2luYWwudHh0CkBAIC0y
-LDYgKzIsNyBAQCBhCiAKIGIKIGMKK05FVyBMSU5FCiBkCiBlCiAK
---000000000000591ac106258c5fb0
-Content-Type: application/octet-stream; name="corrupt-unix.patch"
-Content-Disposition: attachment; filename="corrupt-unix.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_m2t8kfpc0>
-X-Attachment-Id: f_m2t8kfpc0
-
-ZGlmZiAtLWdpdCBhL29yaWdpbmFsLnR4dCBiL29yaWdpbmFsLnR4dAppbmRleCBlNzU4MmI3Li45
-NDBiNWE2IDEwMDY0NAotLS0gYS9vcmlnaW5hbC50eHQKKysrIGIvb3JpZ2luYWwudHh0CkBAIC0y
-LDYgKzIsNyBAQCBhCgogYgogYworTkVXIExJTkUKIGQKIGUKCg==
---000000000000591ac106258c5fb0
-Content-Type: application/octet-stream; name="corrupt-win.patch"
-Content-Disposition: attachment; filename="corrupt-win.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_m2t8kfpg1>
-X-Attachment-Id: f_m2t8kfpg1
-
-ZGlmZiAtLWdpdCBhL29yaWdpbmFsLnR4dCBiL29yaWdpbmFsLnR4dA0KaW5kZXggZTc1ODJiNy4u
-OTQwYjVhNiAxMDA2NDQNCi0tLSBhL29yaWdpbmFsLnR4dA0KKysrIGIvb3JpZ2luYWwudHh0DQpA
-QCAtMiw2ICsyLDcgQEAgYQ0KDQogYg0KIGMNCitORVcgTElORQ0KIGQNCiBlDQoNCg==
---000000000000591ac106258c5fb0
-Content-Type: text/plain; charset="US-ASCII"; name="original-win.txt"
-Content-Disposition: attachment; filename="original-win.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_m2t8kfpz5>
-X-Attachment-Id: f_m2t8kfpz5
-
-YQ0KDQpiDQpjDQpkDQplDQoNCmYNCg==
---000000000000591ac106258c5fb0--
+[^1]: Making sure that it gets in before 2.48, and is not dropped,
+  though we still have quite a lot of time on that front.
