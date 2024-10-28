@@ -1,164 +1,179 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FB41E0B87
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 21:19:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EC91E0DB6
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 21:34:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730150356; cv=none; b=k2T03VNlO6NyMXUFfL8jCwzOAI9TYRDzFZNP4fxXxMlOnJzoNQj3GAxRWbXUFk4wv5UUmfFpHMQFh3xPtL6k1os3K6a+IOQjoyPRfxi3mCOktA8ZZgvcu2z1Vzccde+68+Cw3NiLENXKL6e+Rqu93nTAL2hv09xgPhPVfVwSFCI=
+	t=1730151280; cv=none; b=m8RRF3wt71ZQlch2Nwtq5fPIZlqdBRORvEZH481mw/vfBdAROliiiYpHm0kUHsK2fdVPJWE3mydB1M1GZbFuG084LDt1DIBh8T9F3j/4Y+/ETaxjRWiwwrxoxWktG4bktaCffWUn2LpFMMTcSGyodjh2Jk39Bz+T7L2lb3yqNrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730150356; c=relaxed/simple;
-	bh=T0nJE9r1St+c0QjZMMxvd9IQNSquJzonPYlP4MxOB44=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=aavQzXVCC31+ld8Y/rBS0jkJzd3tPr2Y7ltlwS15TVCh41WVsJ/C132afz0c8uDaVxd1B+eqQupKIwqju2buj36aMIH1t9XMRZ5c3BaytozbPVySaxabM6H8zLgItDxCmAsTv6rnluaNc7WgD/tRwh9VAlQY4/8/3JULAPBMZgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=N8t5otKa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WKoTEwac; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1730151280; c=relaxed/simple;
+	bh=rhB9/F/iUSMIwrx5BqYHWVIrK1UthxQ8K0KQLG5V+Ww=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jYD/AnJ6KrIAAS8vl76Ldl1ia33F+0mP/d/6BfSaeCLfXjU50c8ugqJ5rG2hnsORIReSx1UCSzliJJy/QlSSCNa3J6ZtbUTuGyfgudgbd9nIjaUsUX5tUfRsffMlqkY4L7Y/4zO1vDY4EIDj2lKsr9jVktBikaqp+R1UpI/42nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=L0KJRyKb; arc=none smtp.client-ip=212.159.14.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="N8t5otKa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WKoTEwac"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7B6A21140196;
-	Mon, 28 Oct 2024 17:19:12 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 28 Oct 2024 17:19:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1730150352;
-	 x=1730236752; bh=0YJ4v2JlaacAL47mfZ77DVkLxbGeb4jrZAYOTjotyg4=; b=
-	N8t5otKaeZKTkcB6p6QuQQdwsUWqd3duOaMhCc7kkw+L8P64AY9lHdL5avdWGtca
-	Fm/+EzO5s7txJ0ssw+t08ya10UsXldFoZqrtQrv0DNA5aTJO54d/I6M0EQflhnbJ
-	h9HpSBw4eDMj8uPqRrPcZIIQrL7ciyuRbelWO7VNLl1VDlkqa0+aUkEXT73iYs2Q
-	IxrNgb5iCO9FRhnc+7O+evYSfHKxTXxGFS9DXMtBpXcOfRdRjN3a5lILZfrMB8Eh
-	4qWmgzM6fQpdMOdViXjfyQxnarsOys3z3lVTQwIdv4q+K4lpFibnj9xfNeUEqubh
-	zr/kb6mEOVQH5ZELrRgFxw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1730150352; x=
-	1730236752; bh=0YJ4v2JlaacAL47mfZ77DVkLxbGeb4jrZAYOTjotyg4=; b=W
-	KoTEwac0uKzmXTDlrKbHd71p7T+DFgTnNO+G6jKGZeq7CAUgmnqsOOUvMHlOJ68T
-	kmBnvQrVg6uWeCi+jni4oEs587SxUmaZW3amvpDRZavQ+BViQpUxo/4O2B73+/EW
-	twnTdnKG3x4wZE/cyRhL5+6sJ6C2oO4rlJH2mFE/DImqkCgwwzZ2QzEUwEa0g6AV
-	K/o+9KhsSznKrZBQEqd3+f4Kdu8LEZwhBKMJIAfwUPBr2gU4DimxkROET82vly10
-	JbjjKMTnQkunwt7IeFAxUblC9BRsQbwRIf1lkH01H3MIyeVYWiTNzb5zwo0xdBHm
-	gs7b5BUH5BsbqcpfKZxng==
-X-ME-Sender: <xms:0P8fZ3Pd5D5gelzA5fN4PNXP7Nlx038Aqr2b2TZDLcCbJqtsPcybvTM>
-    <xme:0P8fZx-4YY77xPf9ziLwpeyShErZYJVQlnUlEph35ugX1sKheRp-et3uDFhkaeLsh
-    rrXgVE0q7L8D3PU-A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejledguddvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
-    fhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcu
-    jfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeffieeftefgheekgeeitedujefg
-    veehvdevieelfeeiiedttedtgfduhfejiefggfenucffohhmrghinhepkhgvrhhnvghlrd
-    horhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
-    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehvghgvrhdo
-    ghhithesohhpvghnshhouhhrtggvrdhnshhlihgtkhdrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:0P8fZ2SX-wBhwS-LhOk-G-OCzJTbkvq6Ryg71PFIJoyo7wxHS0uZsQ>
-    <xmx:0P8fZ7u5NgLXY-tJQpleBVNOMGvBWeulkXqXfRMvPy0yVKA_PwaMeA>
-    <xmx:0P8fZ_fa0rp4yrn6q2OKNgKxU1WxuNJwAD21ZehyXg5FW5FbC_KZrA>
-    <xmx:0P8fZ33BG4vVQaLUfePlxtHt6Pc5D1Tj72VQmXZW_odqxPKFPdGGJg>
-    <xmx:0P8fZ3Ehx16cUWpbHZlUkxUvleHkgClc_MpgOKFDyERl5azA941HUnxI>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 384CD780068; Mon, 28 Oct 2024 17:19:12 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="L0KJRyKb"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id 5XNZtqVE7QyRx5XNbtK6ow; Mon, 28 Oct 2024 21:34:28 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1730151268; bh=RWJUIF0dw1hX/QV/fq8xNx6ojaHec8RuWntgDUg/eJI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=L0KJRyKbr3+bt/e/AMUYlZZblS24mA2/NlEYiEOu1UuCCJZmJmQSKAIpM4WRzl3UF
+	 nh7BJocokbiAnyc1HHKgn4+PBaMZuxEqQfeyNO5wmTmLi193nUBZmMVpjwb9rKwJ77
+	 a3Vk7c3K3B16icB6KsGZkhqRwu1m3X7NQiOIn6L89f09moa9YDKXOgO9fGVK02dMzV
+	 M+DYRA/TxdDHJ/4JxkGxYw8gItF1jfTttGSYguduMTwJ5p3WLilEa3NCx9gpCKRLFK
+	 ZWHJb8leZJFrfazqV5/Eom8mGXurg/Vog04f1dNGKN3H3qkjNe8Xx6jptKKSRV/dzQ
+	 OL9TyULk66rXw==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=XaAqz555 c=1 sm=1 tr=0 ts=67200364
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=VI6--C4H1AsZNSsnjRUA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <bd6fe5c4-9c4c-4399-b44d-a57560c04d3e@ramsayjones.plus.com>
+Date: Mon, 28 Oct 2024 21:34:25 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 28 Oct 2024 22:18:44 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Nicholas Sielicki" <vger+git@opensource.nslick.com>, git@vger.kernel.org
-Message-Id: <c6f58024-45f5-4012-87a4-6b86ab2cd31b@app.fastmail.com>
-In-Reply-To: <ab71a27d-728e-425a-8729-8699c9369bca@app.fastmail.com>
-References: <ab71a27d-728e-425a-8729-8699c9369bca@app.fastmail.com>
-Subject: Re: `cherry-pick -x' and git-interpret-trailers
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Eli Schwartz <eschwartz@gentoo.org>,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+ <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <cover.1729771605.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfMcHVLaoxmO2Fn2hNOpowF44qfOu71umfWT1QwxWBfSrRHBllYlSKa+xgYW+mmWzxwAYxHBjQSgpSnboYQ7ZwRMsvBlIc6+DU3c0fk03KXdRN2ZlgoSQ
+ I9BYYUV0S8uQdBkkIFK+gxeIy5efRBTd38/djytfnZJb4hARTuTMmfmFPrgtZEn4vbcWu926X2Fh4GNCFLkfBzBo5uAxWxb5roo=
 
-On Mon, Oct 28, 2024, at 19:43, Nicholas Sielicki wrote:
-> If one uses `git cherry-pick -x' to apply a commit to a stable branch
-> from elsewhere, git appends something like:
->
->> Tested-by: Some Teammate <some.teammate@somedomain.com>
->> Signed-off-by: Some User <some.user@somedomain.com>
->> (cherry picked from commit 2efe13923d0ff714b1b0f3b7175e714f0e295727) =
-<--- this
->
-> IMO this is inconsistent in two ways:
->
-> 1. it's unclear to me why the cherry-pick metadata isn't emitted in
-> trailer form, ie: `Cherry-Picked-From-Commit: <...>', making it work
-> with `git-interpret-trailers'.
 
-I agree that would be better.  Modulo history and backwards
-compatibility concerns.
 
-> 2. I'm not sure if any tooling (external or otherwise) breaks because
-> of this, but the existing trailers now have non-trailer content
-> following them, so it's ambiguous whether they still qualify as
-> trailers at first glance. (possibly, this is intentional?)
+On 24/10/2024 13:39, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this is the fourth version of my patch series that modernizes our build
+> system. It refactors various parts of it to make it possible to perform
+> out-of-tree builds in theory and then wires up Meson.
 
-They still qualify.  See git-interpret-trailers(1)
+As Promised, I have tested this version on Linux and Cygwin (not full test
+on patches 1-18). When built on top of fd3785337b (The third batch) with
+the two branches merged (as indicated below) Linux (build+test) and cygwin
+(just build) work as expected.
 
-  =E2=80=9C Existing trailers are extracted from the input by looking fo=
-r a
-    group of one or more lines that (i) is all trailers, or (ii)
-    contains at least one Git-generated or user-configured trailer and
-    consists of at least 25% trailers.
+> Changes compared to v3:
+> 
+>   - Various typo fixes.
+> 
+>   - Our Makefile now detects unsubstituted build options in the newly-
+>     introduced "GIT-BUILD-OPTIONS.in" template.
+> 
+>   - I've wired up support for building and installing manpages. This was
+>     the last important bit missing to get a fully functioning Git
+>     installation. We generate the same set of manpages that our Makefile
+>     would and also render a subset of the HTML pages we generate. Not
+>     wired up are our technical docs, but doing those shouldn't be all
+>     that involved.
+> 
+>     Documentation is not built by default, but can be enabled by passing
+>     any combination of `-Ddocs=html,man`.
 
-That example would work even if you only had one existing trailer (50%
-at the end).
+I haven't tried this (yet).
 
-I don=E2=80=99t know what the significance of =E2=80=9Cuser-configured=E2=
-=80=9D is here.  I
-deleted all my configuration and tested with something made up and `git
-interpret-trailers --parse`.  Those novel-looking trailers still got
-output as trailers when placed before a cherry-pick line.
+>   - I've dropped the target names for `custom_target()` invocations.
+>     Those are auto-derived from the first output anyway, so they only
+>     add unnecessary noise.
+> 
+>   - The last patch is a compatibility patch for "seen". There are a
+>     couple of topics that interact with this series, and I didn't want
+>     to make all of them a strict dependency. So I've decided to just
+>     create a fixup-style commit that does the necessary changes in order
+>     to work with "seen". Like this, you can test without "seen" by
+>     simply dropping that last commit, and you can test with "seen" by
+>     merging it into this topic.
 
-> Realistically, the only thing worse than this^ would be to have a
-> mixture of two formats in the same repository, which is to say,
-> without a surefire way to to share repository config defaults, I can't
-> imagine there's a backwards-compatible solution to changing the `-x'
-> default behavior and git is stuck with it.
+I couldn't try this patch because (at the time) the 'seen' branch
+didn't build. :(
 
-Make a new option?  Like `--trailer`?
+>     @Taylor: I didn't really have a better idea than this. There are
+>     six additional topics that this branch interacts with, and building
+>     the branch with eight dependencies in total didn't feel sensible.
+>     Ideally, the topic branch itself shouldn't have the last commit, but
+>     once it gets merged into 'seen' we should have it. Let me know in
+>     case you have a better idea though.
+> 
+> This topic is built on top of fd3785337b (The third batch, 2024-10-22)
+> with the following two branches merged into it:
+> 
+>   - ps/upgrade-clar at 30bf9f0aaa (cmake: set up proper dependencies for
+>     generated clar headers, 2024-10-21). This is currently in 'seen'.
+> 
+>   - ps/platform-compat-fixes at 80ebd91b83 (http: fix build error on
+>     FreeBSD, 2024-10-16). This has been merged to 'next'.
 
-> It could be possible to extend the existing behavior with git-notes?
-> Added benefit of that would be that you could mark both commits
-> involved with `Cherry-Picked-By' and `Cherry-Picked-From'.
+As indicated above, this worked just fine.
 
-Why Notes?  A trailer (a proper one) seems more straightforward.
+Now that 'seen' builds again [92855bf61d ("Merge branch 'ps/build' into seen",
+2024-10-27)], I tested meson on Linux and Cygwin (build and *full* test this
+time).
 
-There was a =E2=80=9Ccrossreference=E2=80=9D patch series from 2018:
+On Linux, the result looks like:
 
-https://lore.kernel.org/git/20181211234909.2855638-1-tj@kernel.org/
+  $ tail meson-logs/testlog.txt
+  Summary of Failures:
+  
+   117/1035 t1017-cat-file-remote-object-info              FAIL            0.01s   exit status 2
+  
+  Ok:                 1034
+  Expected Fail:      0   
+  Fail:               1   
+  Unexpected Pass:    0   
+  Skipped:            0   
+  Timeout:            0   
+  $ 
+  
+It looks like a branch has been removed from 'seen'. :) (ie the t1017* test
+file does not exist).
 
-=E2=9D=A6
+On cygwin, the result looks like:
 
-You could emulate something like `git cherry-pick --trailer`:
+  $ tail -11 meson-logs/testlog.txt
+  Summary of Failures:
+  
+    23/1035 t-reftable-stack                               TIMEOUT        30.26s   killed by signal 15 SIGTERM
+   114/1035 t1017-cat-file-remote-object-info              FAIL            0.13s   exit status 127
+  
+  Ok:                 1033
+  Expected Fail:      0   
+  Fail:               1   
+  Unexpected Pass:    0   
+  Skipped:            0   
+  Timeout:            1   
+  $ 
 
-```
-#!/bin/sh
-# arg 1: commit
-set -u
-$ git config trailer.cherry.key Cherry-picked-from
-$ cat script
-#!/bin/sh
+The t-reftable-stack unit test took just over 75s on the v2.27.0 test run.
+I haven't looked into it yet, but plenty of other tests run for longer than
+the 30s, so I don't know why that test seems to be different.
 
-git showref "$1"
-$ git config trailer.cherry.cmd ./script
-$ git cherry-pick "$1" &&
-$ git commit --trailer=3D"cherry: $1" \
-    --amend --no-edit
-```
+Also, it is worth noting that the test ran for 2hr50min. Usually I have to
+wait 6hr approx. for 'make test' to finish because I don't like to use any
+'-j' parameters (You can't do anything else on the machine while it is
+cooking the cpu!). :)
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+
