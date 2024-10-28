@@ -1,198 +1,144 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1632F17D355
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 22:07:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544A21EF0B2
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 22:55:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730153259; cv=none; b=A/4omRcJDUl9P5+rKyGmaIi872nAs1qOLRAWAs7tz60AmRO2UFx8jgrLg3qEAm6z+t7ug/3saJ9m1pq0fMw/ksFhNHTwzWCMk/Tcjf7ITJoz0r/a3/GmTXsp6waWlqvQaPJ31lr4AXgWgiBlC/qI8bm8yIqn1kmbYVvTophB36Y=
+	t=1730156109; cv=none; b=aSnG8cOHfSvq2IgrlGkEDZV5iw8R4jOUZ5PEkFDe9HnTtpFq1eBCOemwXmVtrKQRC4nR/8ZtbQBosl4RCSyS/IWztic+hU84DMzJY7U3VvG4aZmtc64r3z9csDfRnmIFcCp1mAp1MH1FgjA3fX+j8ni7kQ3nGDyhYK39ry2mR3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730153259; c=relaxed/simple;
-	bh=NZjSgLR1Iwm0pNSaB0FZ+cOVcXAbYbYPrihFU+BGTVs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PjPSIqeArX810H2RUAtcRKGnbqSw/EEnTxFE47+DLl20oUbZ/pBYYosQDps2IHUnCnkOpVzFqXh87OsZTCQM0DCYBqvOz1mB4epQPyh+GmCIdybDJ66oHcgBvS8+g93VgDZy5/pwR/F4lkYcMsiwkVG653deOMF6gl+9SWIvpk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=S/bnYLJU; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1730156109; c=relaxed/simple;
+	bh=WUZEzdtncN7n7nq9jynZylFydX/PLQvAfbnUP0Dcrf8=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=EvrjVHa9HoZ+yWzK8RIfKUC+RVgUA+7yFG1JYwpM9jN47bJ82NYjOYP61iNFTdqFNxxCZoMn75olSSWxi/NlMY570e/qTux2eVJ0noKjJj6nohOVqxeHMU3sMS48xqcFFZSrDsWdvP9H09NRu/daAtJuFlx02WmKTvjStXo8aSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eQLsS1AS; arc=none smtp.client-ip=209.85.128.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="S/bnYLJU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1730153240; x=1730758040; i=l.s.r@web.de;
-	bh=xj//+jOUtZ2zBOfTbx0sxgi03aMuCPcUGiO8vT5f6PM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=S/bnYLJUYJS/qQs+jTuVDgwUmhx/77LAvWtkdVx0EX5MntTDJ0GL7YLJa9opt5mQ
-	 gK8HvvZ8PqyKpnDwnK5D1reL6bcN62NMmy1Xe30THpyPSpXnymsI8wWt5Bx/sYfxV
-	 lvAkNSVbBhVRqMxMF0/QrbvUD49j6Nlz6Mcab9+TsGY3zxf6jLHIfp08z1inwJiWV
-	 e3zYq7PndBKPRPtjadCcwNA0UsaI9LvLSbzZxkB9NoqXcmP5UJADT2qRs+1+jP2uS
-	 sweHTBP2QmvyPhjD9fK2ZZG+roa8LwKLev1XrParVYkwtY0bMILcLtlmbzBNpXnkg
-	 rl2WiL1S3GO5gnmWcw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.30.137]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MuF8x-1u07QD31zR-014Kl0; Mon, 28
- Oct 2024 23:07:20 +0100
-Message-ID: <d74232a4-126d-4bd8-8f60-a3fac80492d5@web.de>
-Date: Mon, 28 Oct 2024 23:07:19 +0100
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eQLsS1AS"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-6e6101877abso89905037b3.0
+        for <git@vger.kernel.org>; Mon, 28 Oct 2024 15:55:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1730156106; x=1730760906; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WK0v2NqUlsXKe0qI/F8c/VROn+QHv3Fix8YYeWjxX5E=;
+        b=eQLsS1ASikPY2jtsFIViPZeiqYv1ALuKtF/AhT5Qjpw6xx7GFvgh02U5O2Crq4uhFf
+         cY+j8SQ9+D4cHpfDY4dymODFXl3EDULGpb4TXgjMR3GO126gHD6+V8eW4AZfpw/4J94C
+         jDzbceKXcT+cR7cQArNMj60BIlcUJveW+YpuPlgA73ba61RjmJCp0VXstCab7b4AZ+8n
+         2gmpYYLAQcC4DVaS7Bp3JirgIAnquHX6377eNmBRKpxV0emVnlLc0sghyMoXqT/OrSmf
+         Fjx6gNugsWB5PuKxwxWNg2qc4RgBAgmQl+Q6oBZyjX0Rdnh2/P/u0YT4GGdY5ZnHdB+v
+         Mnpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730156106; x=1730760906;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WK0v2NqUlsXKe0qI/F8c/VROn+QHv3Fix8YYeWjxX5E=;
+        b=KEs8QNO48ac0uVPrzmC0yOQnxVFE0aL6bHC1En+DfKJGPYiaMknwKbakFbM6OY3NHu
+         GtE2GooOXEO9wLn06Of5UkYfWsUOltdrCrJ+oLRSDkRdfk59+xSw/8e+WkTr6QEe0zOL
+         Dp9HoZ2dOAN3DotTmM8ZnRfL+tzYRrcKiUxxjI7cf2uEOiS6JDALsQ7nTsCsHNGmnvC3
+         CDIJTnsAmKgPjP1h92hhzbMIeap0iG6b35btw7RS77hDo8qqQ5NqVoTRvkMFc4ppEGJM
+         Q7qZytYZvgsSY804RqbnReV/YCyWaYwYaD1mbxblllqgj1/NL753ySppzt/Gs+8YEqZl
+         Y8/w==
+X-Forwarded-Encrypted: i=1; AJvYcCWMPD3Reuq7YoFqIhanmH1Q+UsMhLKiLGAUOR1fFfbOzd4f/jK9wm1bUx4+kHiQ+93M7fc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxoHoRj+a5Z1RrepVs9jcCacImI1QMIHWKcMitF/uLWRHUWjJ0a
+	6HF0nJfutZFqsATF+dqFSBb8NwVPfPZT7tCK0tdapKM/JQ0kVs+be0MIaY2iSlAbW9Rf0FYs0Sf
+	1uhVVfcow9xoWJVtcvDHFfnYDBtMiIQ==
+X-Google-Smtp-Source: AGHT+IGb1mdgzK5ypjQewtMZlvvwl2BFy3lj0KPnVaF3KMC34A5UPM6WuqSj0LhT5b8jD/c4geN0OtVuGFZmL9E2fqwh
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:ba9c:8d0f:d4f8:e6ca])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:8245:0:b0:e2e:2cba:ac10 with
+ SMTP id 3f1490d57ef6-e3087c0fef6mr31811276.9.1730156106345; Mon, 28 Oct 2024
+ 15:55:06 -0700 (PDT)
+Date: Mon, 28 Oct 2024 15:55:04 -0700
+In-Reply-To: <ZxlYYQ9VULcqj/YT@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Inconsistent handling of corrupt patches based on line endings
-To: Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Cc: =?UTF-8?Q?Peregi_Tam=C3=A1s?= <petamas@gmail.com>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>
-References: <CAExmRTbMCayh+vHW3g=2p=FMb=VKXomEbn7_0t+kK-eF79JnEA@mail.gmail.com>
- <Zx/TwhuG4Ni7mf6F@nand.local>
- <CABPp-BFB+eG7WVJFm3EBfgKzuspAYn9KpDHodpgKuFmWefARBw@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CABPp-BFB+eG7WVJFm3EBfgKzuspAYn9KpDHodpgKuFmWefARBw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:kRP/sU2vp1PHCuyf2WzqEKkTY5NW5Odp1CrRVeZmI3Iu4fdJnOc
- Go0pkdsnBtmZY3em5VORj+wP6xlwg0ofzt0SAxoxxaJf3uwbUmOEdKrXovsiSLPrXC5Q/Qc
- 6WQrKtE4r0Vd8OOgUzhetWlsHx8zI/ofCkgZx/Cq8bW2NqZvDBEpIBJL60GlVJHj7Yrd1A8
- dixEprCxxPzflQVvEVPMA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:lnC0DRt/T9g=;ukbZY69lpuTcDG2gLTKEkLZBkb7
- /2bvl9/vdrF3VM0CNWa31eO7z1x3x8qUXIr6EOHtxYKEzJ20q2Oz59aVGVAtnhRwzt9In40ET
- LWRSXI4Xb2U9zr38xMzAcZNFdfGL++wSnYX1H+uFNviugM6K7EwN4yDeZhFeSmN/UwJLs+YXQ
- eBt2k7YckdB+T2a7Vfu97gDGHa/wn978ElNsDsImiGtjQ+QwLSL2K7X0NjyDm6vUNUUU+WwEO
- uLqRQZCGI58DChKDAHuv/2DyC9bXbg1ZL6JkzeuoSU1RWh1m0Vh5X3dqkl/0HLecqEhpYAecy
- LAZMRo5mCH46XcgMljU2bgNMGkWkB8eSFrzM6xnJtfpTTiEwzCBaVZDBBMByMx6s+lKaAy+Ik
- few57+/fcubeRzyMytiXB5eSicJlVy2A9lvrJ5P+TR6NA10OhIPzfSwS/LryxF7FXrzMaSlMs
- g6W/+/vAA99Ihbc1yV25z+jphSh9nBCpThHQLoMsNShtn6Jscy0IDjbdeupg/OTXwgddeaasy
- fzgGkDyadGBVGRkEjGRj8XAyQkqPxIPUL8i6ENUf6XGFLYq4tuJKvUOrKzhX7u1SE2o7xsvwB
- YolW4NHAPrO+PxuN3z2RFQhsl68nyzJSqTZwwIT0t11x3yAQFNwbEcDCVB9+SyFSpLQhGMnlT
- 14EcKbH2KzBrQXmXMcs8Bou/PIWaSbhD3Wbrybcxx18m3+Rj7WVGy3PRPdCySV8NtFtYMgzdA
- gpttay0ScJc7K/IDRhUVVr2noQgVf5NYr5JOZrbpEAZEjvLJJUBZqqW2OUxQ2+vg4i/GGXXX0
- QoDkOaavG55+nGKVJFJnNqQt0jCemAv6hDs0JjjwO2MarXwSZBqc1G+/ia/zXja1PrJtaLqsN
- eevE/PbFoyyBhgQ==
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
+Message-ID: <20241028225504.4151804-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2] fetch-pack: don't mark COMPLETE unless we have the
+ full object
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, Emily Shaffer <emilyshaffer@google.com>, 
+	git@vger.kernel.org, Calvin Wan <calvinwan@google.com>, 
+	Han Young <hanyang.tony@bytedance.com>, sokcevic@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-Am 28.10.24 um 19:39 schrieb Elijah Newren:
-> On Mon, Oct 28, 2024 at 11:11=E2=80=AFAM Taylor Blau <me@ttaylorr.com> w=
-rote:
->>
->> On Mon, Oct 28, 2024 at 05:57:54PM +0100, Peregi Tam=C3=A1s wrote:
->>> Hi all,
->>>
->>> I might've found an inconsistency in how git-apply treats corrupt patc=
-hes
->>> (representing empty context lines with completely empty lines instead =
-of
->>> lines containing a single space - usually a result of a "trim trailing
->>> whitespace" editor setting) based on whether the patch file uses
->>> Windows-style line endings (CRLF) or Unix-style line endings (LF only)=
-.
->
-> I believe this behavior was caused by:
->
-> $ git log -1 b507b465f7831612b9d9fc643e3e5218b64e5bfa
-> commit b507b465f7831612b9d9fc643e3e5218b64e5bfa
-> Author: Linus Torvalds <torvalds@linux-foundation.org>
-> Date:   Thu Oct 19 19:26:08 2006 -0700
->
->     git-apply: prepare for upcoming GNU diff -u format change.
->
->     The latest GNU diff from CVS emits an empty line to express
->     an empty context line, instead of more traditional "single
->     white space followed by a newline".  Do not get broken by it.
->
->     Signed-off-by: Linus Torvalds <torvalds@osdl.org>
->     Signed-off-by: Junio C Hamano <junkio@cox.net>
->
-> That code special-cased a line containing '\n' but not a line
-> containing only '\r\n'.
->
-> As to whether that's correct, personally I'd rather only special case
-> workaround important existing clients.  Back in 2006, working with GNU
-> diff was incredibly important, and I'd say is still important today.
-> I can see Peregi's comment that this make line ending slightly
-> inconsistent, but I feel like the blank-line handling is a workaround
-> for an existing client we want to interoperate with and absent a
-> similar important client with mis-behaving '\r\n'-only lines, I
-> wouldn't be interested in adding support for it.  But that's just my
-> off-the-cuff feeling and I don't feel strongly about it.  Further, all
-> but one of my contributions above were mere header changes, so if
-> others have other opinions, they should probably be weighted more
-> heavily than mine on this topic.
+Taylor Blau <me@ttaylorr.com> writes:
+> > I'm going to work on both those things in the background, but I wanted
+> > to get the description and RFC out early so that folks could take a look
+> > and we could decide which approach is best.
+> 
+> I am a little confused. Here you say that this patch is still in RFC,
+> but the subject line dropped the RFC present in the first round. What is
+> the state of this patch's readiness?
+> 
+> Thanks,
+> Taylor
 
-What would the patch(1) do?
+As Emily said [1], I'll be taking over driving this patch.
 
-The first column is the exit code of the subsequent command (0: success,
-1: one or more rejected lines, 2: failure):
+The tl;dr is this patch is not ready, so I think you (the interim
+maintainer) can drop it.
 
-0 patch                     -p1 --dry-run original-unix.txt <corrupt-unix.=
-patch
-0 patch                     -p1 --dry-run original-unix.txt <intact-unix.p=
-atch
-0 patch                     -p1 --dry-run original-win.txt  <intact-win.pa=
-tch
-0 patch --ignore-whitespace -p1 --dry-run original-unix.txt <corrupt-unix.=
-patch
-0 patch --ignore-whitespace -p1 --dry-run original-unix.txt <intact-unix.p=
-atch
-0 patch --ignore-whitespace -p1 --dry-run original-unix.txt <intact-win.pa=
-tch
-0 patch --ignore-whitespace -p1 --dry-run original-win.txt  <corrupt-unix.=
-patch
-0 patch --ignore-whitespace -p1 --dry-run original-win.txt  <intact-unix.p=
-atch
-0 patch --ignore-whitespace -p1 --dry-run original-win.txt  <intact-win.pa=
-tch
-1 patch                     -p1 --dry-run original-unix.txt <intact-win.pa=
-tch
-1 patch                     -p1 --dry-run original-win.txt  <corrupt-unix.=
-patch
-1 patch                     -p1 --dry-run original-win.txt  <intact-unix.p=
-atch
-2 patch                     -p1 --dry-run original-unix.txt <corrupt-win.p=
-atch
-2 patch                     -p1 --dry-run original-win.txt  <corrupt-win.p=
-atch
-2 patch --ignore-whitespace -p1 --dry-run original-unix.txt <corrupt-win.p=
-atch
-2 patch --ignore-whitespace -p1 --dry-run original-win.txt  <corrupt-win.p=
-atch
+This patch strives to avoid marking missing objects as COMPLETE by doing
+a check in mark_complete(), but deref_without_lazy_fetch() already makes
+such a check (note how it can return NULL; also its name implies that
+it knows something about missing objects, namely that it says it won't
+lazy fetch them) so the question should be: why doesn't it return NULL
+when an object is missing? It turns out that it first checks the commit
+graph file and if it's there, then it's considered to be present, so
+it does not fetch at all. However there are code paths during commit
+graph writing (executed after every fetch, in builtin/fetch.c) that
+access the object store directly without going through the commit graph
+file (search for "object_info" in commit-graph.c), and those functions
+perform lazy fetches when the object is missing. So there's an infinite
+loop of "commit graph writer reads X" -> "fetch X" (nothing gets
+fetched) -> "write new commit graph, as we always do after a fetch" ->
+"commit graph writer reads X" -> ...
 
-So basically the same as git apply?
+So my initial proposal to not mark objects as COMPLETE if they are
+missing does not work, because they are already not marked as COMPLETE
+if they are missing. One could say that we should check both the commit
+graph file and the object store (or, perhaps even better, only the
+object store) before stating that an object is present, but I think
+that Git already assumes in some places that a commit is present merely
+by its presence in the commit graph file, and it's not worth changing
+this design.
 
+One solution to fix this is to make the commit graph writer never
+lazy-fetch. This closes us off to being able to have missing commits
+in a partial clone (at least, if we also want to use the commit graph
+file). This might be a reasonable thing to do - at least, partial clone
+has been around for a few years and we've not made many concrete steps
+towards that - but I feel that we shouldn't close ourselves off if
+there's an alternative.
 
-What does current GNU diff do?
+The alternative I'm currently thinking of is to detect if we didn't
+fetch any packfiles, and if we didn't, don't write a commit graph
+(and don't GC), much like we do when we have --negotiate-only. (A
+packfile-less fetch still can cause refs to be rewritten and thus reduce
+the number of reachable objects, thus enabling a smaller commit graph to
+be written and some objects to be GC-ed, but I think that this situation
+still doesn't warrant commit graph writing and/or GC - we can just do
+those next time.) The main issue is that we don't always know whether
+a pack is written or not - in particular, if we use something other
+than "connect" or "stateless-connect" on a remote helper, we won't know
+if a packfile was sent. We can solve this by (1) only write the commit
+graph and GC if we know for sure that a packfile was sent, or (2) write
+the commit graph and GC unless we know for sure that a packfile was
+not sent. I'm leaning towards (1) because it seems more conceptually
+coherent even though it is a change of behavior (from auto commit graph
+and GC to no), because I think that the repos that need scalability
+the most already use protocol v2 during fetching (which does require
+"connect" or "stateless-connect" from remote helpers, so we're covered
+here), but am OK with (2) as well.
 
-diff -u                        <(printf 'a\n\n') <(printf 'b\n\n') | tail =
--1 | od -a
-0000000   sp  nl
-0000002
-diff -u --suppress-blank-empty <(printf 'a\n\n') <(printf 'b\n\n') | tail =
--1 | od -a
-0000000   nl
-0000001
-diff -u                        <(printf 'a\r\n\r\n') <(printf 'b\r\n\r\n')=
- | tail -1 | od -a
-0000000   sp  cr  nl
-0000003
-diff -u --suppress-blank-empty <(printf 'a\r\n\r\n') <(printf 'b\r\n\r\n')=
- | tail -1 | od -a
-0000000   sp  cr  nl
-0000003
+Feel free to let me know if you have any ideas. In the meantime I'll
+look at (1).
 
-So it omits the space only if --suppress-blank-empty is given and the
-blank line ends with \n, not with \r\n.
-
-
-Anyway, I agree with Elijah: The targeted support for GNU diff's
-eccentricity is fine, and we're in good company with that.  We could
-remove it, since it doesn't seem to be the default (anymore?), but I
-don't see much of a benefit.  We could add support for blank context
-lines that end in CRLF if there's a notable source of that kind of
-that deviation from the original format.
-
-Ren=C3=A9
-
+[1] https://lore.kernel.org/git/20241023002806.367082-1-emilyshaffer@google.com/
