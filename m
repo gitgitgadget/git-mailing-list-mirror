@@ -1,63 +1,63 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6A11DE2A2
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 13:43:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441EE1DD523
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 13:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730123041; cv=none; b=dkfzT1pNvwSTULUWQJAjz/DnFJts1ei+KVp1g4bkJim/s77GmDyRGcVgsKwoGWNYMJDjFKWBZvO7EkdaQnvAWQdpXakA7JHFSFS/3QYn3d4t3SxJrPmvXLlyHw/Gdu61aG++RSQiWcWIAUqDNwGtPm3pXFfFa87yYkGhIWak2V8=
+	t=1730123041; cv=none; b=bPax56E40YfBgZnGPxau3Jh3ojeANA00HoiE1K/hAp3+X/g8olVs7alDc3PJGb9NLQFOHXCDUsOD+Lt7t81oDqrBHipVj5QlahzQvFLIdbGl1JWfiBxFGTwsvTQ0fITLDaHGJymNs5WC8+ofn/KK8gFaK/t8WRrWpSHWQHCBJQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1730123041; c=relaxed/simple;
-	bh=4jsu2avaWsAOhlNRBCPJxT5dxsP7+A5hMtC4yVPBTI8=;
+	bh=+xYmEI/kPdSy/HBx54XisLXhJsgButGLCqzr7zcRIeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hsNHp3/fdG2cvM9LxFGnkBV6keMl3i6SwK7R7LlsuaoykoOcEV9SvjT9CaLfIa85V98wbMwMD3wUAhM1jMc8VVmqv3AYiTgmuD0WDwMjXsmKJ3ydkHNOCx4Y92erJKAdXfcF0Zvk5MQy2UNhczb40eyBTHuSw8sYUb44lYfOhOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VBGXK9KL; arc=none smtp.client-ip=209.85.218.44
+	 MIME-Version; b=Ks0w4Fy4ZZjZGMM9f/ScpDv/K/1uT9KM5hjCMOXw/oJl27sFPyiYRx1cWKKenDoelaMzLkwXsFdjWuYhkVPa09bOvhyHSVPvxyTSTWv6VMRPoXvntFTeLt+NglcoNz9srch5/qUH4KeQjfXoRYcXRIXnA8VWNEL3dETxjtdRdZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KeTpLAZB; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VBGXK9KL"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a9a1b71d7ffso654633666b.1
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 06:43:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KeTpLAZB"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a9a2209bd7fso644689766b.2
+        for <git@vger.kernel.org>; Mon, 28 Oct 2024 06:43:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730123037; x=1730727837; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730123038; x=1730727838; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hwy5rCwOCC4gSFH82M192kCV5wclpRjQ6TNQvLmYnaE=;
-        b=VBGXK9KL9l5rP+c2EkdniQtfvG8bNn1orsaYzoINbngwWx87dzQZnTSkzF0kvey76P
-         QdApMiTqJY0UeMNnkZzfxeVWaohGLULhcJt9pZ08Uias+j7eSKoijvIPgRDuxvqyMi04
-         d9ZmDfo2sVsEF0DPE3+pMkoghIyYqW26eGq6PJcYRYGFHSJ0dvcooOhSbL0HHiEO7T/X
-         S3NuLfT+1F7shK6iqH3EQ5RKjl2B5D1CDNDdb9R/cKB+k2lLH2iQMzvEcyVkAzzFk473
-         +jGRs4lV3FkLnkjkSdr/PnrkN4+otUx/rvma1/+tJDv40ZmOq+u8Ffwy0yG3O4Kc6AJE
-         uJ6w==
+        bh=LUv2dyMQ/e/SM+CHRcXtmVAQnljwMyN1ueTOhhsoklM=;
+        b=KeTpLAZBd43WqRW4l0i/di8m1r3tNd2JoCCZuhEcDM3ONLbfKbuuiw50d89hcjrpqc
+         aO3yfWFf4mKK8lim9vCAfb8vt33BUAAY7wXMa8YHoizBMLXEx2XEsnkJO50NkMCm3UgG
+         NhjiZCYQFSbEahLaXqnV9DehoDchm2ztqS5ZQnVq+DY3DyCKdXLNJwko+g3ulmgAOKeL
+         5F3C9W8VIZEsuPc7TTv1ui3qVebAdwTqHR8n27SDCH3gTPvui4vjNteFBbyEI6yI4R08
+         esL/r0CHBN8qOEql9Z+lfPILXs5TyqkuGGyMbofUxnG/FzMNsY2SR5cvauRwDoI27uXF
+         DYjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730123037; x=1730727837;
+        d=1e100.net; s=20230601; t=1730123038; x=1730727838;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hwy5rCwOCC4gSFH82M192kCV5wclpRjQ6TNQvLmYnaE=;
-        b=rF+Om58cW+C6bD5pKGqM0wRmcF6kKzk4T+VcF6Xz+iGIldIBY2DvcDySHXYFPGyTGd
-         AkSoLk5fqeow7IMXwNZdQUEKCd0gDFxR/YcG3YPt6bsNNh11O7QNJImPCYsJIf/m5CA7
-         weimL5Hjx+aLO8Do9eEy1yTEaIi2lX3mRlleCaML4IqyBcssaqiUa2BLKVot4jBjwf17
-         OBhvnjD8HB+Y672AYloq4M9X+6mxlzKFVPPi4IGRqQG6k+nxoiixqmAxqVPs+SffRaO3
-         HZp2++4kclD75nj8DYurAX8hUZvRpxrazWenVDN4OEN+NMiXryjsFHeEujql0FrPc6hC
-         b0Lg==
-X-Gm-Message-State: AOJu0Yz++cvnifT0+R8q1Ad35MjwtYzukxva0d7ZVPXpr1de2hzRLK5d
-	1UGxZgbnFXJc1Q4snWUTd7ppoAyRBNG/9I6G5PoNWwzTk7a7qo4d
-X-Google-Smtp-Source: AGHT+IEShkCvfXVAep0kHdyPOQYYTTlXqXlnsFczZXxEZOxRvWF2a4ESXO89M5J7uufC1Bt02Q3S+w==
-X-Received: by 2002:a17:907:9449:b0:a99:f92a:7a66 with SMTP id a640c23a62f3a-a9de5d783e5mr789917066b.30.1730123036449;
-        Mon, 28 Oct 2024 06:43:56 -0700 (PDT)
+        bh=LUv2dyMQ/e/SM+CHRcXtmVAQnljwMyN1ueTOhhsoklM=;
+        b=t4Bmtz8OeWuI3gF1a8XBVVtS1hBlIfuIK4ceMfjldmgFpFn09AVN1OEoAhq5q3CpyA
+         UWzXZN35yOp/Me2BN8B0BIaSMn16iFFhew8lnQP83K1Kex29QsVzWxaFq8mVAocMqJHB
+         qTKvv+/WoEslSTJQ5NC7kkwq37NTBPgcpWkk6uW44qWwPYly80dDCEpNsQ1F9Qd8Klx4
+         InXNdtuWkY2ghcmT18YLkOU81uZ92yXZcAeZeoKTz58tcsvuhdPH0Gugy7r5McbtaAy1
+         oZvPQ/xjL7N+xsaCHiIi8QWKxa786Y0JkLOae/LGJ9enpF7ZNfISXRxpfEBIcnhVqGr8
+         1U9A==
+X-Gm-Message-State: AOJu0YzRpGptUggAM/Y3Swgus6ROA7W12rkr0l0AkzcNJ9ObhiLa5jaJ
+	PXeZNWDmGR/ZEK6kDKgbuapzpK3JHV04HCuROJ/G1tnYguQpcqkXcuyOoi1i
+X-Google-Smtp-Source: AGHT+IHDNqARU8GTk9ab+kJjH1+LpWTFPlkPT29jFDGPqZVYam7N/h9OgksFW6hnADyFhP0oi7oKdw==
+X-Received: by 2002:a17:907:944f:b0:a9a:825:4c39 with SMTP id a640c23a62f3a-a9de5d00e3emr853515766b.20.1730123037559;
+        Mon, 28 Oct 2024 06:43:57 -0700 (PDT)
 Received: from archlinux.fritz.box ([2a02:2455:825d:6a00:6bb4:436f:5699:ff21])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1f2971e8sm376647466b.125.2024.10.28.06.43.55
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1f2971e8sm376647466b.125.2024.10.28.06.43.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 06:43:55 -0700 (PDT)
+        Mon, 28 Oct 2024 06:43:57 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	me@ttaylorr.com
-Subject: [PATCH v2 7/8] config: make `delta_base_cache_limit` a non-global variable
-Date: Mon, 28 Oct 2024 14:43:45 +0100
-Message-ID: <89ee3f48ce982236dd7841fa1a5cb15aa256b901.1730122499.git.karthik.188@gmail.com>
+Subject: [PATCH v2 8/8] config: make `packed_git_(limit|window_size)` non-global variables
+Date: Mon, 28 Oct 2024 14:43:46 +0100
+Message-ID: <e99b1dad549bb1e87011d8722b8582172390aa04.1730122499.git.karthik.188@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1730122499.git.karthik.188@gmail.com>
 References: <cover.1730122499.git.karthik.188@gmail.com>
@@ -69,118 +69,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The `delta_base_cache_limit` variable is a global config variable used
-by multiple subsystems. Let's make this non-global, by adding this
-variable to the stack of each of the subsystems where it is used.
+The variables `packed_git_window_size` and `packed_git_limit` are global
+config variables used in the `packfile.c` file. Since it is only used in
+this file, let's change it from being a global config variable to a
+local variable for the subsystem.
 
-In `gc.c` we add it to the `gc_config` struct and also the constructor
-function. In `index-pack.c` we add it to the `pack_idx_option` struct
-and its constructor. Finally, in `packfile.c` we dynamically retrieve
-this value from the repository config, since the value is only used once
-in the entire subsystem.
+We do this by introducing a new local `packfile_config` struct in
+`packfile.c` and also adding the required function to parse the said
+config. We then use this within `packfile.c` to obtain the variables.
+
+With this, we rid `packfile.c` from all global variable usage and this
+means we can also remove the `USE_THE_REPOSITORY_VARIABLE` guard from
+the file.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/gc.c         |  5 ++++-
- builtin/index-pack.c | 10 +++++++---
- config.c             |  5 -----
- environment.c        |  1 -
- environment.h        |  1 -
- pack-objects.h       |  3 ++-
- pack-write.c         |  1 +
- pack.h               |  1 +
- packfile.c           | 13 +++++++++++--
- 9 files changed, 26 insertions(+), 14 deletions(-)
+ builtin/fast-import.c |  4 +--
+ config.c              | 17 ------------
+ environment.c         |  2 --
+ packfile.c            | 60 +++++++++++++++++++++++++++++++++++++------
+ packfile.h            |  2 +-
+ 5 files changed, 55 insertions(+), 30 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index d52735354c..9a10eb58bc 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -138,6 +138,7 @@ struct gc_config {
- 	char *repack_filter_to;
- 	unsigned long big_pack_threshold;
- 	unsigned long max_delta_cache_size;
-+	unsigned long delta_base_cache_limit;
- };
- 
- #define GC_CONFIG_INIT { \
-@@ -153,6 +154,7 @@ struct gc_config {
- 	.prune_expire = xstrdup("2.weeks.ago"), \
- 	.prune_worktrees_expire = xstrdup("3.months.ago"), \
- 	.max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE, \
-+	.delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT, \
- }
- 
- static void gc_config_release(struct gc_config *cfg)
-@@ -205,6 +207,7 @@ static void gc_config(struct gc_config *cfg)
- 
- 	git_config_get_ulong("gc.bigpackthreshold", &cfg->big_pack_threshold);
- 	git_config_get_ulong("pack.deltacachesize", &cfg->max_delta_cache_size);
-+	git_config_get_ulong("core.deltabasecachelimit", &cfg->delta_base_cache_limit);
- 
- 	if (!git_config_get_string("gc.repackfilter", &owned)) {
- 		free(cfg->repack_filter);
-@@ -416,7 +419,7 @@ static uint64_t estimate_repack_memory(struct gc_config *cfg,
- 	 * read_sha1_file() (either at delta calculation phase, or
- 	 * writing phase) also fills up the delta base cache
- 	 */
--	heap += delta_base_cache_limit;
-+	heap += cfg->delta_base_cache_limit;
- 	/* and of course pack-objects has its own delta cache */
- 	heap += cfg->max_delta_cache_size;
- 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index eaefb41761..23bfa45403 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1238,7 +1238,7 @@ static void parse_pack_objects(unsigned char *hash)
-  *   recursively checking if the resulting object is used as a base
-  *   for some more deltas.
-  */
--static void resolve_deltas(void)
-+static void resolve_deltas(struct pack_idx_option *opts)
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index f4892d7f37..9056447bd0 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -3539,7 +3539,7 @@ static void parse_argv(void)
+ int cmd_fast_import(int argc,
+ 		    const char **argv,
+ 		    const char *prefix,
+-		    struct repository *repo UNUSED)
++		    struct repository *repo)
  {
- 	int i;
+ 	unsigned int i;
  
-@@ -1254,7 +1254,7 @@ static void resolve_deltas(void)
- 					  nr_ref_deltas + nr_ofs_deltas);
- 
- 	nr_dispatched = 0;
--	base_cache_limit = delta_base_cache_limit * nr_threads;
-+	base_cache_limit = opts->delta_base_cache_limit * nr_threads;
- 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
- 		init_thread();
- 		work_lock();
-@@ -1604,6 +1604,10 @@ static int git_index_pack_config(const char *k, const char *v,
- 		else
- 			opts->flags &= ~WRITE_REV;
+@@ -3660,7 +3660,7 @@ int cmd_fast_import(int argc,
+ 		fprintf(stderr, "       pools:    %10lu KiB\n", (unsigned long)((tree_entry_allocd + fi_mem_pool.pool_alloc) /1024));
+ 		fprintf(stderr, "     objects:    %10" PRIuMAX " KiB\n", (alloc_count*sizeof(struct object_entry))/1024);
+ 		fprintf(stderr, "---------------------------------------------------------------------\n");
+-		pack_report();
++		pack_report(repo);
+ 		fprintf(stderr, "---------------------------------------------------------------------\n");
+ 		fprintf(stderr, "\n");
  	}
-+	if (!strcmp(k, "core.deltabasecachelimit")) {
-+		opts->delta_base_cache_limit = git_config_ulong(k, v, ctx->kvi);
-+		return 0;
-+	}
- 	return git_default_config(k, v, ctx, cb);
- }
- 
-@@ -1930,7 +1934,7 @@ int cmd_index_pack(int argc,
- 	parse_pack_objects(pack_hash);
- 	if (report_end_of_input)
- 		write_in_full(2, "\0", 1);
--	resolve_deltas();
-+	resolve_deltas(&opts);
- 	conclude_pack(fix_thin_pack, curr_pack, pack_hash);
- 	free(ofs_deltas);
- 	free(ref_deltas);
 diff --git a/config.c b/config.c
-index a11bb85da3..728ef98e42 100644
+index 728ef98e42..2c295f7430 100644
 --- a/config.c
 +++ b/config.c
-@@ -1515,11 +1515,6 @@ static int git_default_core_config(const char *var, const char *value,
+@@ -1493,28 +1493,11 @@ static int git_default_core_config(const char *var, const char *value,
  		return 0;
  	}
  
--	if (!strcmp(var, "core.deltabasecachelimit")) {
--		delta_base_cache_limit = git_config_ulong(var, value, ctx->kvi);
+-	if (!strcmp(var, "core.packedgitwindowsize")) {
+-		int pgsz_x2 = getpagesize() * 2;
+-		packed_git_window_size = git_config_ulong(var, value, ctx->kvi);
+-
+-		/* This value must be multiple of (pagesize * 2) */
+-		packed_git_window_size /= pgsz_x2;
+-		if (packed_git_window_size < 1)
+-			packed_git_window_size = 1;
+-		packed_git_window_size *= pgsz_x2;
+-		return 0;
+-	}
+-
+ 	if (!strcmp(var, "core.bigfilethreshold")) {
+ 		big_file_threshold = git_config_ulong(var, value, ctx->kvi);
+ 		return 0;
+ 	}
+ 
+-	if (!strcmp(var, "core.packedgitlimit")) {
+-		packed_git_limit = git_config_ulong(var, value, ctx->kvi);
 -		return 0;
 -	}
 -
@@ -188,112 +147,136 @@ index a11bb85da3..728ef98e42 100644
  		if (value && !strcasecmp(value, "input")) {
  			auto_crlf = AUTO_CRLF_INPUT;
 diff --git a/environment.c b/environment.c
-index a2ce998081..8e5022c282 100644
+index 8e5022c282..8389a27270 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -51,7 +51,6 @@ enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
+@@ -49,8 +49,6 @@ int fsync_object_files = -1;
+ int use_fsync = -1;
+ enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
  enum fsync_component fsync_components = FSYNC_COMPONENTS_DEFAULT;
- size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
- size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
--size_t delta_base_cache_limit = 96 * 1024 * 1024;
+-size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
+-size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
  unsigned long big_file_threshold = 512 * 1024 * 1024;
  char *editor_program;
  char *askpass_program;
-diff --git a/environment.h b/environment.h
-index 923e12661e..2f43340f0b 100644
---- a/environment.h
-+++ b/environment.h
-@@ -165,7 +165,6 @@ extern int zlib_compression_level;
- extern int pack_compression_level;
- extern size_t packed_git_window_size;
- extern size_t packed_git_limit;
--extern size_t delta_base_cache_limit;
- extern unsigned long big_file_threshold;
- extern unsigned long pack_size_limit_cfg;
- extern int max_allowed_tree_depth;
-diff --git a/pack-objects.h b/pack-objects.h
-index b9898a4e64..3f6f504203 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -7,7 +7,8 @@
- 
- struct repository;
- 
--#define DEFAULT_DELTA_CACHE_SIZE (256 * 1024 * 1024)
-+#define DEFAULT_DELTA_CACHE_SIZE       (256 * 1024 * 1024)
-+#define DEFAULT_DELTA_BASE_CACHE_LIMIT (96 * 1024 * 1024)
- 
- #define OE_DFS_STATE_BITS	2
- #define OE_DEPTH_BITS		12
-diff --git a/pack-write.c b/pack-write.c
-index 8c7dfddc5a..98a8c0e785 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -21,6 +21,7 @@ void reset_pack_idx_option(struct pack_idx_option *opts)
- 	memset(opts, 0, sizeof(*opts));
- 	opts->version = 2;
- 	opts->off32_limit = 0x7fffffff;
-+	opts->delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT;
- }
- 
- static int sha1_compare(const void *_a, const void *_b)
-diff --git a/pack.h b/pack.h
-index 02bbdfb19c..1a33751565 100644
---- a/pack.h
-+++ b/pack.h
-@@ -58,6 +58,7 @@ struct pack_idx_option {
- 	 */
- 	int anomaly_alloc, anomaly_nr;
- 	uint32_t *anomaly;
-+	unsigned long delta_base_cache_limit;
- };
- 
- void reset_pack_idx_option(struct pack_idx_option *);
 diff --git a/packfile.c b/packfile.c
-index 74ac6d793b..93b0d6af31 100644
+index 93b0d6af31..cfbfcdc2b8 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -24,6 +24,8 @@
- #include "commit-graph.h"
- #include "pack-revindex.h"
- #include "promisor-remote.h"
-+#include "config.h"
-+#include "pack-objects.h"
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
  
+ #include "git-compat-util.h"
+ #include "environment.h"
+@@ -27,6 +26,17 @@
+ #include "config.h"
+ #include "pack-objects.h"
+ 
++struct packfile_config {
++	unsigned long packed_git_window_size;
++	unsigned long packed_git_limit;
++};
++
++#define PACKFILE_CONFIG_INIT \
++{ \
++	.packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE, \
++	.packed_git_limit = DEFAULT_PACKED_GIT_LIMIT,  \
++}
++
  char *odb_pack_name(struct repository *repo, struct strbuf *buf,
  		    const unsigned char *hash, const char *ext)
-@@ -1496,7 +1498,9 @@ void clear_delta_base_cache(void)
- }
- 
- static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
--	void *base, unsigned long base_size, enum object_type type)
-+				 void *base, unsigned long base_size,
-+				 unsigned long delta_base_cache_limit,
-+				 enum object_type type)
  {
- 	struct delta_base_cache_entry *ent;
- 	struct list_head *lru, *tmp;
-@@ -1697,6 +1701,9 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
- 	struct unpack_entry_stack_ent *delta_stack = small_delta_stack;
- 	int delta_stack_nr = 0, delta_stack_alloc = UNPACK_ENTRY_STACK_PREALLOC;
- 	int base_from_cache = 0;
-+	unsigned long delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT;
+@@ -48,15 +58,44 @@ static size_t pack_mapped;
+ #define SZ_FMT PRIuMAX
+ static inline uintmax_t sz_fmt(size_t s) { return s; }
+ 
+-void pack_report(void)
++static int packfile_config(const char *var, const char *value,
++			   const struct config_context *ctx, void *cb)
+ {
++	struct packfile_config *config = cb;
 +
-+	repo_config_get_ulong(r, "core.deltabasecachelimit", &delta_base_cache_limit);
++	if (!strcmp(var, "core.packedgitwindowsize")) {
++		int pgsz_x2 = getpagesize() * 2;
++		config->packed_git_window_size = git_config_ulong(var, value, ctx->kvi);
++
++		/* This value must be multiple of (pagesize * 2) */
++		config->packed_git_window_size /= pgsz_x2;
++		if (config->packed_git_window_size < 1)
++			config->packed_git_window_size = 1;
++		config->packed_git_window_size *= pgsz_x2;
++		return 0;
++	}
++
++	if (!strcmp(var, "core.packedgitlimit")) {
++		config->packed_git_limit = git_config_ulong(var, value, ctx->kvi);
++		return 0;
++	}
++
++	return git_default_config(var, value, ctx, cb);
++}
++
++
++void pack_report(struct repository *repo)
++{
++	struct packfile_config config = PACKFILE_CONFIG_INIT;
++	repo_config(repo, packfile_config, &config);
++
+ 	fprintf(stderr,
+ 		"pack_report: getpagesize()            = %10" SZ_FMT "\n"
+ 		"pack_report: core.packedGitWindowSize = %10" SZ_FMT "\n"
+ 		"pack_report: core.packedGitLimit      = %10" SZ_FMT "\n",
+ 		sz_fmt(getpagesize()),
+-		sz_fmt(packed_git_window_size),
+-		sz_fmt(packed_git_limit));
++		sz_fmt(config.packed_git_window_size),
++		sz_fmt(config.packed_git_limit));
+ 	fprintf(stderr,
+ 		"pack_report: pack_used_ctr            = %10u\n"
+ 		"pack_report: pack_mmap_calls          = %10u\n"
+@@ -652,20 +691,25 @@ unsigned char *use_pack(struct packed_git *p,
+ 				break;
+ 		}
+ 		if (!win) {
+-			size_t window_align = packed_git_window_size / 2;
++			struct packfile_config config = PACKFILE_CONFIG_INIT;
++			size_t window_align;
+ 			off_t len;
  
- 	write_pack_access_log(p, obj_offset);
++			repo_config(p->repo, packfile_config, &config);
++			window_align = config.packed_git_window_size / 2;
++
+ 			if (p->pack_fd == -1 && open_packed_git(p))
+ 				die("packfile %s cannot be accessed", p->pack_name);
  
-@@ -1878,7 +1885,9 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
- 		 * before we are done using it.
- 		 */
- 		if (!external_base)
--			add_delta_base_cache(p, base_obj_offset, base, base_size, type);
-+			add_delta_base_cache(p, base_obj_offset, base,
-+					     base_size, delta_base_cache_limit,
-+					     type);
+ 			CALLOC_ARRAY(win, 1);
+ 			win->offset = (offset / window_align) * window_align;
+ 			len = p->pack_size - win->offset;
+-			if (len > packed_git_window_size)
+-				len = packed_git_window_size;
++			if (len > config.packed_git_window_size)
++				len = config.packed_git_window_size;
+ 			win->len = (size_t)len;
+ 			pack_mapped += win->len;
+-			while (packed_git_limit < pack_mapped
++
++			while (config.packed_git_limit < pack_mapped
+ 				&& unuse_one_window(p))
+ 				; /* nothing */
+ 			win->base = xmmap_gently(NULL, win->len,
+diff --git a/packfile.h b/packfile.h
+index c1883e60ef..3409aef35d 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -89,7 +89,7 @@ unsigned long repo_approximate_object_count(struct repository *r);
+ struct packed_git *find_oid_pack(const struct object_id *oid,
+ 				 struct packed_git *packs);
  
- 		free(delta_data);
- 		free(external_base);
+-void pack_report(void);
++void pack_report(struct repository *repo);
+ 
+ /*
+  * mmap the index file for the specified packfile (if it is not
 -- 
 2.47.0
 
