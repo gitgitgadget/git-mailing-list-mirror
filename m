@@ -1,80 +1,136 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F0B1D1E64
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 23:04:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951B61E0B62
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 23:36:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730156659; cv=none; b=Ajp/Tentvz8cP4Znct/tb3Rhk/jWig2O3xBoemv5b3P37Ex/VZ+DmFJj9NqGPRIgb2i+w+knh1MOMsTLSpruTpKiY6ngnfUM84VU5tEUiUKhiaFfNIjehDUaXZbkrigcp77hrhWevVGPZ9qvGEerTZf6a07en/urSTENb0QFIWc=
+	t=1730158609; cv=none; b=jGMD3m15c+SrmXaa//Wntoe/U75rXr1hdmuEEpXH7jUPNdTMGvirtCFsWoddEf07kyPnr1j6WjYvU5rgIwVPZ0AlQMFMfRB+H1ovZR3vnB0O+b+VulMSgG9Z7B3cjQIkcHXZdVqgdxTMSv9CU30+5KQLfDHT36A7fr0q8INf7VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730156659; c=relaxed/simple;
-	bh=kMhhyjWOfmEQdqnRvew296dlQkVw/TOQRcOa+Xvwyr8=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=Yh4Mi49t/wp8Sdu8HbToy311VyKUvm6LRUfhZiseFV5FRsY+crjeC3Ypw3nks5uXRR5Ne+nf4LY5xQoGECQp3uwa0LYhi2UL64klicMXutiwO8P7fBE+LXxMF/CykyKj+fd6iZkMG70qGeBEvXkI1ZEn5Z5haS8YKYo70YKkbGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=quxlt9a9; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1730158609; c=relaxed/simple;
+	bh=AGInNZ+NhavbNoIgghuXMSaYw5ZhaYOb4jqsSZNtAJ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DwKcJTh78OPcRSsF2jToEnpyHSFXPz3k3i21QNOl4laAy7w6TALG07ADtAPwXmnOhxKp0p/+6OrLGO765lFRhOLcCjxlrp8563QnDSMWyFvNwy10ab/hfn12LUAG4k60qhuGzjYQ8q969/uud2nBU6QN1h5B5erYJ0J8SHiRNbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=vLJW15jy; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="quxlt9a9"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6e370139342so88880957b3.3
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 16:04:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="vLJW15jy"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6e38fc62b9fso42804407b3.2
+        for <git@vger.kernel.org>; Mon, 28 Oct 2024 16:36:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1730156653; x=1730761453; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=t6xJm4x/XwU1aESbnzfBY6o0t6CqRchsqszYWxvPelc=;
-        b=quxlt9a9vP/UxP2LSkAQBc+xnWIYsuF1P2rVloOe8gMn9fdIdR/FxJuqRfBVHS7LDE
-         lUOVgirzjnqAe3MhdVYdmWrf+YoOrWrXbQJmkNDvmn3pCi7R9qyWbSPmyb1SpbKpAepv
-         500if28G90Rdni9jbYmoJ5Km1snO/a335d1RWlT+Hkvdtbv1QQcs2EB4zwxMoVNAsXHi
-         Jd++DVS5FS6YH5PABlrf+4nwiOJYjiq4F0ufVzFiMYdFTdrMVaD55sa0WaVFG0HMdk19
-         QKW3QxuWmQiCptcOICMkL5qlhhMpNHs1TeicPiRJNT6+jxfOHN2nB3IBm8AS9US1T8Aa
-         K3Lw==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730158606; x=1730763406; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=va9rlzJQ4wVXbcF7uHdhfQO7Wb8K+rhIyJn90HDdBpI=;
+        b=vLJW15jyIF5ZgPSKp/oMVVZDW9vAfW8W79ahH/lP9KQJnO48JkpXIH6vFQ1QWlaWCA
+         yOmdKPNXdUxtGlgfHltSWVApVReUYirJkyfVlU3Lf8xN390e2CCUhfzzOENd9sWjV8zA
+         45rdQKeZxsYdIGnJwBqv1v7175OwIiFNxsCVfhwvSFX9Fdc7SM3+ZU8rsuHIGlPln7cK
+         3Czdc59+ZtSOO0BfkB/lC++tQEseXkhd/D0IOjuSJ2CmIcJo1l6cJgEQLTdboAujWZA1
+         NBR3pMcTo2uE+Rw8bNT3GvJwtbIW8VpFNmJ7h5MWrClH4GFooFKCRchIeuiZJhqeLIpG
+         8shw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730156653; x=1730761453;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t6xJm4x/XwU1aESbnzfBY6o0t6CqRchsqszYWxvPelc=;
-        b=nPaZOF/eu7XvJM1UUSZCM7qwVJ40ltr4Xfp/w+Ji+gUTJBOl9V9cqBSB8VbFjQyyOp
-         yvXI6u9YxdAORW5o46Fn0b3t5cxXL5JuiaUC2OFb9GuNfQpBCDO1g+NWppcQM8aNJZMa
-         WmLn0qcdoCw0muh14KgqBXV2iOHcMqKbI4vMLEXMYQF9u2PZLC6hGuc5l78SeqxWAA8R
-         mSqrIvUVm96VyoKo++uvHy5QLfMF7Kg5NekEx9SfNqeraEc2REINrfnh372ZrKPqCPP4
-         lEacq5M1+gbVEjGu0y/mSBxO12X3NSA2pVyHwF65i/0SW29sGoPcu4zgAEvKgFkc7s1Y
-         hGFA==
-X-Forwarded-Encrypted: i=1; AJvYcCXXlPnJr2vWr7WfVkW6198nJh4LjAaShEC6nn48wv/R5w2P4Pe/G2nYEm/gEWIp6zCQZBc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxASGZtPDDY3oplgsk8LZtpOntTpK1bKE+aTX+03F8xQy9jGg28
-	Rm8Yfh6yCfcMlZNl2Lg0On62SMOYV56qoWtS/15PmQEHpk+WsrLQZhyoMoEipC/n/qGH64hAGbs
-	9AsdlNXLvQwfzAnGDSDOP7DaWLcPr8w==
-X-Google-Smtp-Source: AGHT+IGRkI1mogQBgZFE6+Op3hjh2twf6vN12IF4fYVgzcw6Bd02RyBXO4zWx3Ar+MFN1Lv2yQObtnxk6CyTOQ+U79q7
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:ba9c:8d0f:d4f8:e6ca])
- (user=jonathantanmy job=sendgmr) by 2002:a5b:88a:0:b0:e1f:eaf1:2254 with SMTP
- id 3f1490d57ef6-e3087bfba87mr30529276.8.1730156652696; Mon, 28 Oct 2024
- 16:04:12 -0700 (PDT)
-Date: Mon, 28 Oct 2024 16:04:10 -0700
-In-Reply-To: <Zx/q/HztQRT4eLMQ@nand.local>
+        d=1e100.net; s=20230601; t=1730158606; x=1730763406;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=va9rlzJQ4wVXbcF7uHdhfQO7Wb8K+rhIyJn90HDdBpI=;
+        b=CS1fssMvwagXAlL3vsm57DPC5HZpOUkR1yAKlHPxqibXpo+ia8LPYOkC/jnHG1McHx
+         gdJsh3F6oYVj3TrrlR5FHIgih59RWnAxVHV0MqO4dURa5v6uI5+n/hcCZavhvApAY9Rr
+         yuIh5ycHqqquHxpl7/AfBxnu+mPL9QtNoL+NTUkPQDIdZcygw1Loyb7HqdRSm+22Prro
+         33A+qtaL9I11eChRWqnK4bMDV1lAoDqpn8yB3n2M/u9vMfE7iGiOOzyCMJ924/O47bot
+         UkgsDB8NZpfExQ9ETx2V5x1AFn5erYLbuA84DUnxiq4qzm/sEmyL//iKpweiT0CMVefd
+         o4oA==
+X-Gm-Message-State: AOJu0Yys72Kl99wpJxfpQ2LGpUxkA7z4w2smaWaXzJcf6nu98EGHVmDi
+	gRREwWaDKkcwT7nBwYKQzuYbEmig8JGMuj5zJEjvSwkaE2UWezjo+G+BzkuGDyc=
+X-Google-Smtp-Source: AGHT+IG+Xnzb/7WjDcR5WsCJSjKXOfnrXo9ho/4aDDo5D84ZBUe40QKWVFOOeZLPO6x62yALQ/cC0A==
+X-Received: by 2002:a05:690c:dd4:b0:6ea:258f:a4c4 with SMTP id 00721157ae682-6ea258fe620mr9190837b3.0.1730158606421;
+        Mon, 28 Oct 2024 16:36:46 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6c95c4asm16522077b3.105.2024.10.28.16.36.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Oct 2024 16:36:45 -0700 (PDT)
+Date: Mon, 28 Oct 2024 19:36:43 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	shejialuo <shejialuo@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH 2/2] worktree: add `relativeWorktrees` extension
+Message-ID: <ZyAgC1dRXIiLX9Vn@nand.local>
+References: <20241025-wt_relative_options-v1-0-c3005df76bf9@pm.me>
+ <20241025-wt_relative_options-v1-2-c3005df76bf9@pm.me>
+ <Zx7YxLPItxvFJK62@nand.local>
+ <D571HWYAD4MM.28JAS7D0Y6OI3@pm.me>
+ <Zx/FAoj2jcISsv0X@nand.local>
+ <D57O5LHGRN1M.WHYPYUEOUOFM@pm.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
-Message-ID: <20241028230410.4154271-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 1/5] pack-objects: make variable non-static
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, calvinwan@google.com, 
-	hanyang.tony@bytedance.com, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <D57O5LHGRN1M.WHYPYUEOUOFM@pm.me>
 
-Taylor Blau <me@ttaylorr.com> writes:
-> Great, thanks on both.
-> 
-> Thanks,
-> Taylor
+On Mon, Oct 28, 2024 at 07:00:11PM +0000, Caleb White wrote:
+> > But that's OK, and we can figure out a path forward here. I am just
+> > trying to say that this highlights the importance of following the WC
+> > reports regularly to catch cases where the maintainer missed some
+> > important piece of information.
+>
+> My apologies, this was my first patch submission to Git and I was not
+> exactly the process by which topics progressed from `seen` to `next` to
+> `master`. I will be sure to follow the reports more closely in the future.
 
-Thanks also for your work in coordinating the patches from various
-authors.
+It's not a problem, and I am glad that you have found an interest in
+contributing to the Git project. We'll figure this one out :-).
 
-> P.S.: it's good to see you back on the list again :-).
+> >> Adding the extension was the direction suggested by Junio in the
+> >> previous round. Git did not account for the possibility of the linking
+> >> files containing relative paths, so there's really no way to make this
+> >> change without breaking compatibility with older versions of Git. Git
+> >> had to be taught how to handle files that could contain either absolute
+> >> or relative paths.
+> >
+> > Yep, that makes sense. My preference here would be to make the new
+> > behavior opt *in*, rather than opt-out, so that:
+> >
+> >   - Users who do not experience problems with writing worktrees that
+> >     have absolute paths can continue to do so without any changes.
+> >
+> >   - Users who use worktrees *and* do not write relative paths can
+> >     upgrade between successive versions without requiring a new
+> >     repository extension that would break older Git versions.
+> >
+> >   - That we only add that extension to the repository's configuration if
+> >     and when the user has opted into the new behavior.
+> >
+> > Reading this new series, I *think* that is the behavior that you settled
+> > on, which seems quite reasonable to me. Can you confirm that I'm reading
+> > this all correctly? Assuming so, I think that we are in a reasonable
+> > position[^1] to review this series instead of having to back out the new
+> > behavior.
+>
+> Yes this is correct. The new behavior is opt-in and the extension is
+> only added to the repository configuration if the user creates
+> a worktree with relative paths.
 
-Thank you :)
+That is great. I'm glad that we're on the same page here, and that my
+understanding matches reality.
+
+> > Thanks for bearing with me here, I am quite embarrassed to have missed
+> > Junio's mail that I mentioned earlier, but I appreciate your patience
+> > while we sort this out together.
+>
+> No worries! I appreciate your feedback and I'm glad we're able to
+> sort this out.
+
+Not a problem, and again, I very much appreciate your patience and
+willingness to work on this.
+
+Thanks,
+Taylor
