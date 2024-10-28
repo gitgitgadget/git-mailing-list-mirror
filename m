@@ -1,63 +1,63 @@
 Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089731DDC30
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 13:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFB11DC19D
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 13:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730123039; cv=none; b=UVnczJTBrY9iwuHrIMicYL4W0Yxinz2717R84sIfjC3R9vlXoTVMDkW3kDGxLGP0IhLeBRL2j1A9ooNo+KAaLWEKwBNe+1LaVcQSy0804FreC7OZ47A+dumvObZG41Um/VpTcuvoCoW40s1XBFLitSskcVFCiBoacNCb61YITd8=
+	t=1730123040; cv=none; b=EDweoR/8Qo/ePcW50XKVt/mOEjVoKI6Yz4K5tHoHz19utAKK/CUirXBgjYmYeam7KVFTzHsa3cgmMsJXg+FlwLHrMte51dNnMr1nUqAl6HuyGwTC8SZDBIbEWhWvik0dCqXiVIlyGiw4Qvh4TTgvWTxPfSbqb5FapKp7wf9ZuVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730123039; c=relaxed/simple;
-	bh=YG8mlZ8SDnpplVSwdTcNtTMTQ7yEw2D/xuA540AaOFM=;
+	s=arc-20240116; t=1730123040; c=relaxed/simple;
+	bh=29NktVRS7BDcJvAIZiQdLl+YUZxlxmUswIrWlokgpEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gV1wHGfczxT5U4FbNklihVICPu3sBh+K0iBbr6//r1tYWYhjFYAnkH/d8lZTRXcYdx62YhFRSBhUgaaXfllHHpjHXmlV4elwd+gxxAzjughJEXlZ78l6sQbO4JkcTSwoHjgqtHvNrtPv+OdphpbWzzQ0kFzsYRB6RaNDEi8CzCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NBFiq6xj; arc=none smtp.client-ip=209.85.218.54
+	 MIME-Version; b=Va6tyQIeqdcmQc0wBfKvzZY74uEIUJN3IKccF8cRVAepkIjePl+g3t5b3iOKCdMInhiu3SCFYGuRTEsKc2C7+8P8Yzl1cEe5bBhDwZNsUCAbzGmeh8W0lPGu0rQ66h2fNd2pwG53HPL4b4ToyiHBut8dhizOAmMyM7GKX5GydLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D9+jTRpN; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NBFiq6xj"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a9a6b4ca29bso534595266b.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D9+jTRpN"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a9a1b71d7ffso654631666b.1
         for <git@vger.kernel.org>; Mon, 28 Oct 2024 06:43:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1730123035; x=1730727835; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rRLWMCvziaP1oOWGmB649amlajM49uqxp22hhOUUrJc=;
-        b=NBFiq6xjCTtvXtGC71HhaQ3DcpeiVOh6rKhVq/5Oi4biJ1TzsFG6S64Hu11PVdXZ5F
-         nfBilubAPtsBqM3RQ8VD/48qFY52j4E3a/z6t4Zd0SsjcOVQ+ZatV9o2xLl+7HvD/HKj
-         uBT1hdVtKJHUYF3DMJeFfy7bID7KgpW4ROVWL2Hbtd1BfFHdHEWGXXQHJE5dD4+nDAjx
-         9lCw9tfDK5jXRa6fvXOmlXXNbjStKnIkZoHaiSjzUcvITuM0XowlAZs/hWHsbpCYRmAg
-         0ADtqKO/5efSdAZAApZ72PuuUvvgdRG3s0sAG1n4C0x8CK1HDwSVLN6UMuHNQtdcwVwi
-         KixA==
+        bh=RRCz/qV1QVQ6e9ttFF+c8lue0LbbnseeINmK7vY3E4E=;
+        b=D9+jTRpNS8NOs62rvXsGuWZ8E0fYsqVeDf6zCnUnIegcartDR9oDFlEMTuZk3CNO+z
+         qG1s/s9rB4yWu7sjYKdOujRtBF5b63Uq7zaoHtlV8Pe5ASLCgOIFrQHDmKLGP2V+1tHi
+         XFfmSi2iTOaxrhE48Rqdiwslarg/V5Y9S3JkZl1d429j83aFVosvCCO36b4lLco6adZ/
+         tXqA9XVZ58bCV9boTsCtrEgysLDk/MTkvpSwHxLlxg1fF1JNA5GRPBWyQD2H1uJPk3c+
+         nGdj1UFI/9GACcquBuDQW68H0aKdw3DhDsOR+kDXtgwW22+oXLIh+updWAIsRqwsL4yK
+         d1EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1730123035; x=1730727835;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rRLWMCvziaP1oOWGmB649amlajM49uqxp22hhOUUrJc=;
-        b=HR7NzgNCwnDBu5b8HUtiUVKelVl36Nkyg99BaYUezdaBIT3iRDHTIrpvqjWUaFfqxm
-         UYgjpbtnhAaBnAQoEpweijxCO9lYwqWiM9XOFKjVq9Z3R5jl+ii+f/igABkPyEXTx/wp
-         SnkJAKUrV9KacJW3bxCFdc834Gw2F25NBG/IPDQwnb6IVxFSOb6Uhy5Lz1sGfu4RIovd
-         t3tXFQiczsrbzrBMo8EndTn7GdMxr9QPnx4QL3TaywDFSSU0Em7Fs0ouRD13q8HpbfRR
-         yeU9vGRcOvIHq5mYHDDl6jSRAYR4NEBMyzLNnHWYVtTEMf1OWNGBzUObuLEDqCoXpcZP
-         ydGw==
-X-Gm-Message-State: AOJu0YxC8iWrr+ar5lLXhK+dBv3gbooAFESbY91HMlmplZNp06dMYQvC
-	YDeSPK0kfSenoKcSveMP0nI2PEQzStLVqAm9glaWky9g6gorSyaS
-X-Google-Smtp-Source: AGHT+IGI4KDGqApdNFWppXA91HG9zBjjr6bonqCYZjwuoJo1lGedflz5idy/YyIGS35BwrvpMa3LkA==
-X-Received: by 2002:a17:907:ea4:b0:a9a:123d:3f1a with SMTP id a640c23a62f3a-a9de5ce2676mr891277866b.17.1730123033604;
-        Mon, 28 Oct 2024 06:43:53 -0700 (PDT)
+        bh=RRCz/qV1QVQ6e9ttFF+c8lue0LbbnseeINmK7vY3E4E=;
+        b=OQk7/VlFPMW9oyQLIjTUAXExdC0l3SDB8OFAmlzY4m0E5lsnUKCIohvdB+pcniVL63
+         5fMVj2leFT3qJIeuEl1n6FP117ehAEWV71agsnNemk9S239nk+TrszgCU6L7V/LGTHMs
+         6wtUyxt/PBr/atJNeXCIj8GSSAgwTT4UoHhlhO9GJbYb6cuxSdKyin/0LMk00ep9dEJm
+         955EHNUQnSWwaAIi88M1SKbtWuOUgipVThNj1Vmu5dDVcMfrDIKGUT6j/l+8EuWe00qY
+         qJsTMVQbs8KdMVT1wGkCKi0+YNfJKhg/pmFSZgfdsEhi6ikTArTiMpc/NTWWUvLXQz5F
+         oA9w==
+X-Gm-Message-State: AOJu0YzVz9xin+tPLnBHlnJKMU3r5kehvdtG4VRp2ctSF5GnGy44hOst
+	NlZ8qzkU0+91l7gc9OQDFOlhxpKYx1yGuUyTYKP5aysUO8odZ6SBAaIn0S8D
+X-Google-Smtp-Source: AGHT+IFdcYYU1Ra9poo2G8TDqSU/UoYzp7jnNJjzcjCUnZ3p+Jjse/R0nc3/lMb4u4y/yajBHempzg==
+X-Received: by 2002:a17:907:928b:b0:a9a:c769:5a5 with SMTP id a640c23a62f3a-a9de6157232mr784628266b.50.1730123035198;
+        Mon, 28 Oct 2024 06:43:55 -0700 (PDT)
 Received: from archlinux.fritz.box ([2a02:2455:825d:6a00:6bb4:436f:5699:ff21])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1f2971e8sm376647466b.125.2024.10.28.06.43.52
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1f2971e8sm376647466b.125.2024.10.28.06.43.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 06:43:53 -0700 (PDT)
+        Mon, 28 Oct 2024 06:43:54 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	me@ttaylorr.com
-Subject: [PATCH v2 4/8] packfile: pass down repository to `odb_pack_name`
-Date: Mon, 28 Oct 2024 14:43:42 +0100
-Message-ID: <73ba9945a7b7ec69e4ea29116c473b88e5c2a916.1730122499.git.karthik.188@gmail.com>
+Subject: [PATCH v2 6/8] packfile: pass down repository to `for_each_packed_object`
+Date: Mon, 28 Oct 2024 14:43:44 +0100
+Message-ID: <7c599e16f61993fbbcc2c05e58981e638cb96f27.1730122499.git.karthik.188@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1730122499.git.karthik.188@gmail.com>
 References: <cover.1730122499.git.karthik.188@gmail.com>
@@ -69,150 +69,374 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The function `odb_pack_name` currently relies on the global variable
-`the_repository`. To eliminate global variable usage in `packfile.c`, we
-should progressively shift the dependency on the_repository to higher
-layers.
+The function `for_each_packed_object` currently relies on the global
+variable `the_repository`. To eliminate global variable usage in
+`packfile.c`, we should progressively shift the dependency on
+the_repository to higher layers. Let's remove its usage from this
+function and closely related function `is_promisor_object`.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/fast-import.c    | 8 ++++----
- builtin/index-pack.c     | 4 ++--
- builtin/pack-redundant.c | 4 ++--
- http.c                   | 2 +-
- packfile.c               | 9 ++++-----
- packfile.h               | 3 ++-
- 6 files changed, 15 insertions(+), 15 deletions(-)
+ builtin/cat-file.c     |  7 ++++---
+ builtin/fsck.c         | 18 +++++++++++-------
+ builtin/pack-objects.c |  7 +++++--
+ builtin/repack.c       |  2 +-
+ builtin/rev-list.c     |  2 +-
+ commit-graph.c         |  2 +-
+ fsck.c                 |  2 +-
+ list-objects.c         |  4 ++--
+ object-store-ll.h      |  4 ++--
+ packfile.c             | 14 +++++++-------
+ packfile.h             |  2 +-
+ promisor-remote.c      |  2 +-
+ reachable.c            |  2 +-
+ revision.c             |  9 +++++----
+ tag.c                  |  2 +-
+ 15 files changed, 44 insertions(+), 35 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index ffee7d3abd..f4892d7f37 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -806,7 +806,7 @@ static char *keep_pack(const char *curr_index_name)
- 	struct strbuf name = STRBUF_INIT;
- 	int keep_fd;
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index bfdfb51c7c..d67b101c20 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -827,15 +827,16 @@ static int batch_objects(struct batch_options *opt)
+ 			cb.seen = &seen;
  
--	odb_pack_name(&name, pack_data->hash, "keep");
-+	odb_pack_name(the_repository, &name, pack_data->hash, "keep");
- 	keep_fd = odb_pack_keep(name.buf);
- 	if (keep_fd < 0)
- 		die_errno("cannot create keep file");
-@@ -814,11 +814,11 @@ static char *keep_pack(const char *curr_index_name)
- 	if (close(keep_fd))
- 		die_errno("failed to write keep file");
+ 			for_each_loose_object(batch_unordered_loose, &cb, 0);
+-			for_each_packed_object(batch_unordered_packed, &cb,
+-					       FOR_EACH_OBJECT_PACK_ORDER);
++			for_each_packed_object(the_repository, batch_unordered_packed,
++					       &cb, FOR_EACH_OBJECT_PACK_ORDER);
  
--	odb_pack_name(&name, pack_data->hash, "pack");
-+	odb_pack_name(the_repository, &name, pack_data->hash, "pack");
- 	if (finalize_object_file(pack_data->pack_name, name.buf))
- 		die("cannot store pack file");
+ 			oidset_clear(&seen);
+ 		} else {
+ 			struct oid_array sa = OID_ARRAY_INIT;
  
--	odb_pack_name(&name, pack_data->hash, "idx");
-+	odb_pack_name(the_repository, &name, pack_data->hash, "idx");
- 	if (finalize_object_file(curr_index_name, name.buf))
- 		die("cannot store index file");
- 	free((void *)curr_index_name);
-@@ -832,7 +832,7 @@ static void unkeep_all_packs(void)
+ 			for_each_loose_object(collect_loose_object, &sa, 0);
+-			for_each_packed_object(collect_packed_object, &sa, 0);
++			for_each_packed_object(the_repository, collect_packed_object,
++					       &sa, 0);
  
- 	for (k = 0; k < pack_id; k++) {
- 		struct packed_git *p = all_packs[k];
--		odb_pack_name(&name, p->hash, "keep");
-+		odb_pack_name(p->repo, &name, p->hash, "keep");
- 		unlink_or_warn(name.buf);
+ 			oid_array_for_each_unique(&sa, batch_object_cb, &cb);
+ 
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index bb56eb98ac..0196c54eb6 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -150,7 +150,7 @@ static int mark_object(struct object *obj, enum object_type type,
+ 		return 0;
+ 	obj->flags |= REACHABLE;
+ 
+-	if (is_promisor_object(&obj->oid))
++	if (is_promisor_object(the_repository, &obj->oid))
+ 		/*
+ 		 * Further recursion does not need to be performed on this
+ 		 * object since it is a promisor object (so it does not need to
+@@ -270,7 +270,7 @@ static void check_reachable_object(struct object *obj)
+ 	 * do a full fsck
+ 	 */
+ 	if (!(obj->flags & HAS_OBJ)) {
+-		if (is_promisor_object(&obj->oid))
++		if (is_promisor_object(the_repository, &obj->oid))
+ 			return;
+ 		if (has_object_pack(the_repository, &obj->oid))
+ 			return; /* it is in pack - forget about it */
+@@ -391,7 +391,10 @@ static void check_connectivity(void)
+ 		 * traversal.
+ 		 */
+ 		for_each_loose_object(mark_loose_unreachable_referents, NULL, 0);
+-		for_each_packed_object(mark_packed_unreachable_referents, NULL, 0);
++		for_each_packed_object(the_repository,
++				       mark_packed_unreachable_referents,
++				       NULL,
++				       0);
  	}
- 	strbuf_release(&name);
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index be2f99625e..eaefb41761 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1479,7 +1479,7 @@ static void write_special_file(const char *suffix, const char *msg,
- 	if (pack_name)
- 		filename = derive_filename(pack_name, "pack", suffix, &name_buf);
- 	else
--		filename = odb_pack_name(&name_buf, hash, suffix);
-+		filename = odb_pack_name(the_repository, &name_buf, hash, suffix);
  
- 	fd = odb_pack_keep(filename);
- 	if (fd < 0) {
-@@ -1507,7 +1507,7 @@ static void rename_tmp_packfile(const char **final_name,
+ 	/* Look up all the requirements, warn about missing objects.. */
+@@ -488,7 +491,7 @@ static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
+ 						     refname, timestamp);
+ 			obj->flags |= USED;
+ 			mark_object_reachable(obj);
+-		} else if (!is_promisor_object(oid)) {
++		} else if (!is_promisor_object(the_repository, oid)) {
+ 			error(_("%s: invalid reflog entry %s"),
+ 			      refname, oid_to_hex(oid));
+ 			errors_found |= ERROR_REACHABLE;
+@@ -531,7 +534,7 @@ static int fsck_handle_ref(const char *refname, const char *referent UNUSED, con
+ 
+ 	obj = parse_object(the_repository, oid);
+ 	if (!obj) {
+-		if (is_promisor_object(oid)) {
++		if (is_promisor_object(the_repository, oid)) {
+ 			/*
+ 			 * Increment default_refs anyway, because this is a
+ 			 * valid ref.
+@@ -966,7 +969,8 @@ int cmd_fsck(int argc,
+ 
+ 	if (connectivity_only) {
+ 		for_each_loose_object(mark_loose_for_connectivity, NULL, 0);
+-		for_each_packed_object(mark_packed_for_connectivity, NULL, 0);
++		for_each_packed_object(the_repository,
++				       mark_packed_for_connectivity, NULL, 0);
+ 	} else {
+ 		prepare_alt_odb(the_repository);
+ 		for (odb = the_repository->objects->odb; odb; odb = odb->next)
+@@ -1011,7 +1015,7 @@ int cmd_fsck(int argc,
+ 							   &oid);
+ 
+ 			if (!obj || !(obj->flags & HAS_OBJ)) {
+-				if (is_promisor_object(&oid))
++				if (is_promisor_object(the_repository, &oid))
+ 					continue;
+ 				error(_("%s: object missing"), oid_to_hex(&oid));
+ 				errors_found |= ERROR_OBJECT;
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 2b2816c243..3635b2c84c 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3858,7 +3858,8 @@ static void show_object__ma_allow_promisor(struct object *obj, const char *name,
+ 	 * Quietly ignore EXPECTED missing objects.  This avoids problems with
+ 	 * staging them now and getting an odd error later.
+ 	 */
+-	if (!has_object(the_repository, &obj->oid, 0) && is_promisor_object(&obj->oid))
++	if (!has_object(the_repository, &obj->oid, 0) &&
++	    is_promisor_object(the_repository, &obj->oid))
+ 		return;
+ 
+ 	show_object(obj, name, data);
+@@ -3927,7 +3928,9 @@ static int add_object_in_unpacked_pack(const struct object_id *oid,
+ 
+ static void add_objects_in_unpacked_packs(void)
  {
- 	if (!*final_name || strcmp(*final_name, curr_name)) {
- 		if (!*final_name)
--			*final_name = odb_pack_name(name, hash, ext);
-+			*final_name = odb_pack_name(the_repository, name, hash, ext);
- 		if (finalize_object_file(curr_name, *final_name))
- 			die(_("unable to rename temporary '*.%s' file to '%s'"),
- 			    ext, *final_name);
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index d2c1c4e5ec..7d6c47ffd9 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -589,7 +589,7 @@ static void load_all(void)
- 	}
- }
+-	if (for_each_packed_object(add_object_in_unpacked_pack, NULL,
++	if (for_each_packed_object(the_repository,
++				   add_object_in_unpacked_pack,
++				   NULL,
+ 				   FOR_EACH_OBJECT_PACK_ORDER |
+ 				   FOR_EACH_OBJECT_LOCAL_ONLY |
+ 				   FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS |
+diff --git a/builtin/repack.c b/builtin/repack.c
+index d6bb37e84a..96a4fa234b 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -404,7 +404,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+ 	 * {type -> existing pack order} ordering when computing deltas instead
+ 	 * of a {type -> size} ordering, which may produce better deltas.
+ 	 */
+-	for_each_packed_object(write_oid, &cmd,
++	for_each_packed_object(the_repository, write_oid, &cmd,
+ 			       FOR_EACH_OBJECT_PROMISOR_ONLY);
  
--int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, struct repository *repo UNUSED) {
-+int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, struct repository *repo) {
- 	int i; int i_still_use_this = 0; struct pack_list *min = NULL, *red, *pl;
- 	struct llist *ignore;
- 	struct strbuf idx_name = STRBUF_INIT;
-@@ -690,7 +690,7 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
- 	pl = red = pack_list_difference(local_packs, min);
- 	while (pl) {
- 		printf("%s\n%s\n",
--		       odb_pack_name(&idx_name, pl->pack->hash, "idx"),
-+		       odb_pack_name(repo, &idx_name, pl->pack->hash, "idx"),
- 		       pl->pack->pack_name);
- 		pl = pl->next;
- 	}
-diff --git a/http.c b/http.c
-index 7e5be05207..50d8811cea 100644
---- a/http.c
-+++ b/http.c
-@@ -2579,7 +2579,7 @@ struct http_pack_request *new_direct_http_pack_request(
+ 	if (cmd.in == -1) {
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index f62bcbf2b1..43c42621e3 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -121,7 +121,7 @@ static inline void finish_object__ma(struct object *obj)
+ 		return;
  
- 	preq->url = url;
+ 	case MA_ALLOW_PROMISOR:
+-		if (is_promisor_object(&obj->oid))
++		if (is_promisor_object(the_repository, &obj->oid))
+ 			return;
+ 		die("unexpected missing %s object '%s'",
+ 		    type_name(obj->type), oid_to_hex(&obj->oid));
+diff --git a/commit-graph.c b/commit-graph.c
+index 83dd69bfeb..e2e2083951 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1960,7 +1960,7 @@ static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
+ 		ctx->progress = start_delayed_progress(
+ 			_("Finding commits for commit graph among packed objects"),
+ 			ctx->approx_nr_objects);
+-	for_each_packed_object(add_packed_commits, ctx,
++	for_each_packed_object(ctx->r, add_packed_commits, ctx,
+ 			       FOR_EACH_OBJECT_PACK_ORDER);
+ 	if (ctx->progress_done < ctx->approx_nr_objects)
+ 		display_progress(ctx->progress, ctx->approx_nr_objects);
+diff --git a/fsck.c b/fsck.c
+index 3756f52459..87ce999a49 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -1295,7 +1295,7 @@ static int fsck_blobs(struct oidset *blobs_found, struct oidset *blobs_done,
  
--	odb_pack_name(&preq->tmpfile, packed_git_hash, "pack");
-+	odb_pack_name(the_repository, &preq->tmpfile, packed_git_hash, "pack");
- 	strbuf_addstr(&preq->tmpfile, ".temp");
- 	preq->packfile = fopen(preq->tmpfile.buf, "a");
- 	if (!preq->packfile) {
+ 		buf = repo_read_object_file(the_repository, oid, &type, &size);
+ 		if (!buf) {
+-			if (is_promisor_object(oid))
++			if (is_promisor_object(the_repository, oid))
+ 				continue;
+ 			ret |= report(options,
+ 				      oid, OBJ_BLOB, msg_missing,
+diff --git a/list-objects.c b/list-objects.c
+index 31236a8dc9..d11a389b3a 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -75,7 +75,7 @@ static void process_blob(struct traversal_context *ctx,
+ 	 */
+ 	if (ctx->revs->exclude_promisor_objects &&
+ 	    !repo_has_object_file(the_repository, &obj->oid) &&
+-	    is_promisor_object(&obj->oid))
++	    is_promisor_object(ctx->revs->repo, &obj->oid))
+ 		return;
+ 
+ 	pathlen = path->len;
+@@ -180,7 +180,7 @@ static void process_tree(struct traversal_context *ctx,
+ 		 * an incomplete list of missing objects.
+ 		 */
+ 		if (revs->exclude_promisor_objects &&
+-		    is_promisor_object(&obj->oid))
++		    is_promisor_object(revs->repo, &obj->oid))
+ 			return;
+ 
+ 		if (!revs->do_not_die_on_missing_objects)
+diff --git a/object-store-ll.h b/object-store-ll.h
+index 8b31072b09..6f9f4276e6 100644
+--- a/object-store-ll.h
++++ b/object-store-ll.h
+@@ -550,7 +550,7 @@ typedef int each_packed_object_fn(const struct object_id *oid,
+ int for_each_object_in_pack(struct packed_git *p,
+ 			    each_packed_object_fn, void *data,
+ 			    enum for_each_object_flags flags);
+-int for_each_packed_object(each_packed_object_fn, void *,
+-			   enum for_each_object_flags flags);
++int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
++			   void *data, enum for_each_object_flags flags);
+ 
+ #endif /* OBJECT_STORE_LL_H */
 diff --git a/packfile.c b/packfile.c
-index cc558f06cc..096a0cd6ba 100644
+index c6d7ed38f6..74ac6d793b 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -25,13 +25,12 @@
- #include "pack-revindex.h"
- #include "promisor-remote.h"
- 
--char *odb_pack_name(struct strbuf *buf,
--		    const unsigned char *hash,
--		    const char *ext)
-+char *odb_pack_name(struct repository *repo, struct strbuf *buf,
-+		    const unsigned char *hash, const char *ext)
- {
- 	strbuf_reset(buf);
--	strbuf_addf(buf, "%s/pack/pack-%s.%s", repo_get_object_directory(the_repository),
--		    hash_to_hex(hash), ext);
-+	strbuf_addf(buf, "%s/pack/pack-%s.%s", repo_get_object_directory(repo),
-+		    hash_to_hex_algop(hash, repo->hash_algo), ext);
- 	return buf->buf;
+@@ -2200,15 +2200,15 @@ int for_each_object_in_pack(struct packed_git *p,
+ 	return r;
  }
  
+-int for_each_packed_object(each_packed_object_fn cb, void *data,
+-			   enum for_each_object_flags flags)
++int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
++			   void *data, enum for_each_object_flags flags)
+ {
+ 	struct packed_git *p;
+ 	int r = 0;
+ 	int pack_errors = 0;
+ 
+-	prepare_packed_git(the_repository);
+-	for (p = get_all_packs(the_repository); p; p = p->next) {
++	prepare_packed_git(repo);
++	for (p = get_all_packs(repo); p; p = p->next) {
+ 		if ((flags & FOR_EACH_OBJECT_LOCAL_ONLY) && !p->pack_local)
+ 			continue;
+ 		if ((flags & FOR_EACH_OBJECT_PROMISOR_ONLY) &&
+@@ -2286,14 +2286,14 @@ static int add_promisor_object(const struct object_id *oid,
+ 	return 0;
+ }
+ 
+-int is_promisor_object(const struct object_id *oid)
++int is_promisor_object(struct repository *repo, const struct object_id *oid)
+ {
+ 	static struct oidset promisor_objects;
+ 	static int promisor_objects_prepared;
+ 
+ 	if (!promisor_objects_prepared) {
+-		if (repo_has_promisor_remote(the_repository)) {
+-			for_each_packed_object(add_promisor_object,
++		if (repo_has_promisor_remote(repo)) {
++			for_each_packed_object(repo, add_promisor_object,
+ 					       &promisor_objects,
+ 					       FOR_EACH_OBJECT_PROMISOR_ONLY |
+ 					       FOR_EACH_OBJECT_PACK_ORDER);
 diff --git a/packfile.h b/packfile.h
-index 344da905c2..48d058699d 100644
+index ac4f2210c5..c1883e60ef 100644
 --- a/packfile.h
 +++ b/packfile.h
-@@ -29,7 +29,8 @@ struct pack_entry {
-  *
-  * Example: odb_pack_name(out, sha1, "idx") => ".git/objects/pack/pack-1234..idx"
+@@ -201,7 +201,7 @@ int has_object_kept_pack(struct repository *repo, const struct object_id *oid,
+  * Return 1 if an object in a promisor packfile is or refers to the given
+  * object, 0 otherwise.
   */
--char *odb_pack_name(struct strbuf *buf, const unsigned char *sha1, const char *ext);
-+char *odb_pack_name(struct repository *repo, struct strbuf *buf,
-+		    const unsigned char *hash, const char *ext);
+-int is_promisor_object(const struct object_id *oid);
++int is_promisor_object(struct repository *repo, const struct object_id *oid);
  
  /*
-  * Return the basename of the packfile, omitting any containing directory
+  * Expose a function for fuzz testing.
+diff --git a/promisor-remote.c b/promisor-remote.c
+index 9345ae3db2..c714f4f007 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -283,7 +283,7 @@ void promisor_remote_get_direct(struct repository *repo,
+ 	}
+ 
+ 	for (i = 0; i < remaining_nr; i++) {
+-		if (is_promisor_object(&remaining_oids[i]))
++		if (is_promisor_object(repo, &remaining_oids[i]))
+ 			die(_("could not fetch %s from promisor remote"),
+ 			    oid_to_hex(&remaining_oids[i]));
+ 	}
+diff --git a/reachable.c b/reachable.c
+index 09d2c50079..ecf7ccf504 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -324,7 +324,7 @@ int add_unseen_recent_objects_to_traversal(struct rev_info *revs,
+ 	if (ignore_in_core_kept_packs)
+ 		flags |= FOR_EACH_OBJECT_SKIP_IN_CORE_KEPT_PACKS;
+ 
+-	r = for_each_packed_object(add_recent_packed, &data, flags);
++	r = for_each_packed_object(revs->repo, add_recent_packed, &data, flags);
+ 
+ done:
+ 	oidset_clear(&data.extra_recent_oids);
+diff --git a/revision.c b/revision.c
+index d1d152a67b..45dc6d2819 100644
+--- a/revision.c
++++ b/revision.c
+@@ -390,7 +390,8 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
+ 	if (!object) {
+ 		if (revs->ignore_missing)
+ 			return NULL;
+-		if (revs->exclude_promisor_objects && is_promisor_object(oid))
++		if (revs->exclude_promisor_objects &&
++		    is_promisor_object(revs->repo, oid))
+ 			return NULL;
+ 		if (revs->do_not_die_on_missing_objects) {
+ 			oidset_insert(&revs->missing_commits, oid);
+@@ -432,7 +433,7 @@ static struct commit *handle_commit(struct rev_info *revs,
+ 			if (revs->ignore_missing_links || (flags & UNINTERESTING))
+ 				return NULL;
+ 			if (revs->exclude_promisor_objects &&
+-			    is_promisor_object(&tag->tagged->oid))
++			    is_promisor_object(revs->repo, &tag->tagged->oid))
+ 				return NULL;
+ 			if (revs->do_not_die_on_missing_objects && oid) {
+ 				oidset_insert(&revs->missing_commits, oid);
+@@ -1211,7 +1212,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
+ 			     revs->do_not_die_on_missing_objects;
+ 		if (repo_parse_commit_gently(revs->repo, p, gently) < 0) {
+ 			if (revs->exclude_promisor_objects &&
+-			    is_promisor_object(&p->object.oid)) {
++			    is_promisor_object(revs->repo, &p->object.oid)) {
+ 				if (revs->first_parent_only)
+ 					break;
+ 				continue;
+@@ -3915,7 +3916,7 @@ int prepare_revision_walk(struct rev_info *revs)
+ 		revs->treesame.name = "treesame";
+ 
+ 	if (revs->exclude_promisor_objects) {
+-		for_each_packed_object(mark_uninteresting, revs,
++		for_each_packed_object(revs->repo, mark_uninteresting, revs,
+ 				       FOR_EACH_OBJECT_PROMISOR_ONLY);
+ 	}
+ 
+diff --git a/tag.c b/tag.c
+index d24170e340..beef9571b5 100644
+--- a/tag.c
++++ b/tag.c
+@@ -84,7 +84,7 @@ struct object *deref_tag(struct repository *r, struct object *o, const char *war
+ 			o = NULL;
+ 		}
+ 	if (!o && warn) {
+-		if (last_oid && is_promisor_object(last_oid))
++		if (last_oid && is_promisor_object(r, last_oid))
+ 			return NULL;
+ 		if (!warnlen)
+ 			warnlen = strlen(warn);
 -- 
 2.47.0
 
