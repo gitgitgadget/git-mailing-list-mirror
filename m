@@ -1,642 +1,164 @@
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9F5524C
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 01:56:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F1618C035
+	for <git@vger.kernel.org>; Mon, 28 Oct 2024 05:15:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730080613; cv=none; b=QGmb00eaPuPzJ7Skm+XQ9WnQAPWSyQgmo+SnxNIj2rWijHF/tqr33EsPJIcWH0L86dmeRHGUi+PWHrxLnxgFV9Ery8kiw+d2ieRm+0Y0cgTvJlbR75jGAqsdC9pRrmU2HQF/qbrj9b1fyOKnOHjEJK/9fzdnWOKIrJ04/3Lu4Dw=
+	t=1730092507; cv=none; b=mG4jBNe2UxSW8GMXGiKWYv3TyFWQn0ds9beb26hVeIJS7N02uhYnKl4cwpD9/9dHPKm4oU1BxwJY+i9PE56vENMqf3mHHnVHcFQOsGuXtPJvT70vrYtN/ZsmdJAv2tJ5GCQjxG999I+/Q7oIPhc6fKCzjgZrvzjq4yHlboWB+nU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730080613; c=relaxed/simple;
-	bh=hfWmxRuFSFp/lckqj0R5jubLrVqbBJ+DeSledMM0FGU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SGxHKtRCEs7PDB8SlMfrDnS1W4k8qqY1ld/C7tlpQwfE+CH34mdP3UeCNmQ/6o4hjQZXtXN694K07D0T7m26Ow/OLw12jrXy+7k6+dsATMFlJQSI+H7XmsA12gTKrrirDfLgNLIsDHid/O9E4LU1BDiUHQjSGZvDWbzmo9zytW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WiCvFJR1; arc=none smtp.client-ip=209.85.221.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730092507; c=relaxed/simple;
+	bh=Z/4qMw76+grCRJ8d/I8TkCfeO7Kw8DLRN8FazI38+LU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SN1yXhOyS4l5BGT2I6rnxnPi4AsAQ573bt5pABgkc2AB4U/jcQVpD/qvdg3SSMo/OyhDXrfbUsPhg6PQYFUBamgIlJFuEVnB5aCs21QNxPR+w3t4Deoe+grMvwdhnyvHhCK75fwdg4bmatZQTWhrM5ns3A2udJcAQU8AYfopwmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yVijD3X9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M6GAjh4W; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WiCvFJR1"
-Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-50fc0345155so2108425e0c.1
-        for <git@vger.kernel.org>; Sun, 27 Oct 2024 18:56:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730080608; x=1730685408; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PKbnn47Ly/JcFXlp6L2uvCvYhQqczuQ5dBjyyOKxEKQ=;
-        b=WiCvFJR1ehjThla4OtbLN1JDRC5WJwMly+6ZDQyKKI2TZCFam1Molrhh5Q15xQEMwG
-         iLLcubf3Ot88yGI0MBrVAmMBTHZFd7RjJXX1CCc8YjLYWojGhpo80FGLIPbY9W8CU8VS
-         nwLvJ4Lv+4o0N6Ef7uYR8qS9Se7wQIiwnadzl9ezPexqcm2RWezu0ETzclH1Jhu9F0rS
-         5nEILbJ3ZHM0/Ui9vUGouZG0Bl0G8o6pgPf7GfZcSRgwU1Ppy74tMknGtoYm+GY1AjUt
-         gKpeVamr9G+bWGZzJVRq1m03Tc/m0haBrASKA9ynm2+2Q7ixxmP/Tup99ITKWDC3kTOR
-         YXMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730080608; x=1730685408;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PKbnn47Ly/JcFXlp6L2uvCvYhQqczuQ5dBjyyOKxEKQ=;
-        b=Y0RFb2iQGP6I0PVWdyylk+ZcCtQ5tPkdtpj3+bEX2GZxFH3SrjhHZcwRIe8No19vgX
-         PxE6uUqjSFydZAVxEzzyGmNAMDXh1/5dP3ZeBHmkBchU6cFdIUqCLlTGYkqXzJjMFjHU
-         A/PyDk+EMP1hsE1oIF97RBFH/bYEWQ7qzXXNIvZlNB5E0kwVkVCbXkHYCI5R2RGFcKII
-         en/PsPLHvbXamunImg4mElmwEB2G6huYlvEz509b6+plGSr+uHLzmm5/2DzABxREJ5wx
-         QDlZ2PBOwvYEZGfbOlxMGeE6cKiBCR95uYZ83y9zqjSB0xDcR/kqRcfoTw7iLjqS+BrZ
-         N9yQ==
-X-Gm-Message-State: AOJu0YzStwEuNB6MVWrbY7ikOtZWebqjY3QVH3JKGqB+yAiWFTNkLDYg
-	pMOC2UaNHWsUrDV2NkMVttdkBgAuyqcaiGlsSVDtf1O8M8itebLzA4uIMGG+EhUWC+MBilJs8Bn
-	FTO2KtioWJdEvoiiUUMPgxoYBFJu8R6QUiaC5Zg==
-X-Google-Smtp-Source: AGHT+IGh0WxrJWqNJUlhJdtAcQfKnyYiC2ZZCZIMO95U2ZZNThWVmaA52DmSsevUNWv0DBF40aVXixdXKfwPXb4slfs=
-X-Received: by 2002:a05:6122:1788:b0:50d:6cfc:ac4d with SMTP id
- 71dfb90a1353d-5101387f24amr3989826e0c.5.1730080607493; Sun, 27 Oct 2024
- 18:56:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yVijD3X9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M6GAjh4W"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 059B311400E7;
+	Mon, 28 Oct 2024 01:15:02 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Mon, 28 Oct 2024 01:15:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1730092502; x=1730178902; bh=Yxz9faquWF
+	sj/DeEKMBuezAIsWimIQXLtWZGVw12WkU=; b=yVijD3X9NjUj6ZJL7WHDhrEMGp
+	s4F8yI9sfb6J1AIe8KF+eBg296DYQ00tCv0L2RoaVGMsyE7C9G1brg5Fa6V1za3C
+	inxCSmwdBpktr0EfqtuqO5HppV5sTWIU9SJNrclWU2HJwPLNqGeoQe4PD/sbs7VP
+	jh1b6M6eLDg9lYou4DODmyrudcfjgmx62kROR8FWD3OjLHTbaGUWrKbg6FQWwqr2
+	WSVpvAe3RDCmjIoqpQJWDJsEOW0J3Jk444zVrlEOQDXD0PwFIIEY3FjWEw36WNdd
+	DNx9MxTXEYCeIQn4zqMqpzv/CCWy3CDfIT+jQAQnZesySEhI1yNS8trfLftA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1730092502; x=1730178902; bh=Yxz9faquWFsj/DeEKMBuezAIsWim
+	IQXLtWZGVw12WkU=; b=M6GAjh4WQbiBEfYgP3U7b7YU04WM0okmCr6afqOzDvjg
+	MadjziVJLr2Wa9Tngl8SvgjtktBDp7dET0XIm2iiPVIYBi1LFvYz+ZCTK39yLZXj
+	Ic6IMOz3xcyd8X1lGuU5C1qOrrLv0TswISKpqSS87vxXDzRg2J4wr2Z/OzJGFu+N
+	jRQFva/yjkr7Ay11FyzGDpILWqhilcMqngAwWkGUIOyxP12HWxkytdPriTb0b++s
+	l+GISYUt7FBk8M0xJkqWgPxFSHSb1zcRe6R14Gkmbmgo6sg/KdRuDP4UCd2mJxk5
+	A7Ez46Te/0nFZ741QslFF3gfHRhTwr4hrkUSTNbxoA==
+X-ME-Sender: <xms:1h0fZ4EIVjjIKZ4U-Ns2MxchPDiYio6H6q-nyhE3q_d4G-lp52Tmrg>
+    <xme:1h0fZxWhJ0UX-zRl_ypWEGgzvPAXb5Hiho80ZR-qlSWAqTE6zDaiJMhXlw6UN-YvT
+    qRHn3qDULFoh_HYFQ>
+X-ME-Received: <xmr:1h0fZyLMVLmPrIcoYDX4gy1EKQzmDNxl14hXTnETKd97dm13PaGuuuSmAPOYYbPvWsRfa6wcwFB5tEmmNhOWNXIhzFD8OhRJZOwo57fe3AJi5Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdejjedgkeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprh
+    gtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepshhunhhshhhi
+    nhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:1h0fZ6HivAhqHWV7oJbLUUHQjfBX2zFcpzxfmSih9o4i8rxxcGWurA>
+    <xmx:1h0fZ-XouDIki0FwNWl4vxBp8GkYCwcxDGCMqaXQSUah6qL7201D_A>
+    <xmx:1h0fZ9OD-4O_lVyFn7Jd1TfwFOIx1f2P4dhP0cglpM_pGbPr56QZIA>
+    <xmx:1h0fZ11EqB2sSTiYMWMbX1CGd6tVUBxBbK8dsnZvXfXYzQGFydsGSw>
+    <xmx:1h0fZ8whiU5srEWmUsCMB_3TMGotcKAjhXfzX4Hl_T114dkZSOhRfCki>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Oct 2024 01:15:01 -0400 (EDT)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e60bb001 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 28 Oct 2024 05:14:53 +0000 (UTC)
+Date: Mon, 28 Oct 2024 06:14:51 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Josh Steadmon <steadmon@google.com>, Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] t6006: fix prereq handling with `test_format ()`
+Message-ID: <ccb2d7cf817a181fab8fb083bdc9f1fed4671749.1730092261.git.ps@pks.im>
+References: <zod73s7j77gjj2f62clg3utxlxnclbyhjjz3yc74x7zyh35fzy@blwhzqefxyrs>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPSxiM-4okXfiWZtSNArMjfXzja9wBrMaEayhqt1hvJpu-PHkQ@mail.gmail.com>
-In-Reply-To: <CAPSxiM-4okXfiWZtSNArMjfXzja9wBrMaEayhqt1hvJpu-PHkQ@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Mon, 28 Oct 2024 01:56:36 +0000
-Message-ID: <CAPSxiM-YAAMwOvH8KYO+qKahCBHgw-NDb-eHJKNCZyk8xtpeGQ@mail.gmail.com>
-Subject: Re: [Outreachy][proposal]: Finish adding a 'os-version' capability to
- Git protocol v2
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Phillip Wood Phillip Wood <phillip.wood@dunelm.org.uk>, 
-	Christian Couder <christian.couder@gmail.com>, Taylor Blau <me@ttaylorr.com>, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <zod73s7j77gjj2f62clg3utxlxnclbyhjjz3yc74x7zyh35fzy@blwhzqefxyrs>
 
-Hello,
+In df383b5842 (t/test-lib: wire up NO_ICONV prerequisite, 2024-10-16) we
+have introduced a new NO_ICONV prerequisite that makes us skip tests in
+case Git is not compiled with support for iconv. This change subtly
+broke t6006: while the test suite still passes, some of its tests won't
+execute because they run into an error.
 
-As I planned to submit a proposal for two projects, below is my
-proposal for "Conversion of Git Unit Tests to Clar Testing Framework".
-I would just go straight into the project proposals as the other
-necessary information is in the previous email. I would prefer to work
-on the "Finish adding a 'os-version' capability to Git protocol v2"
-project in case.
+    ./t6006-rev-list-format.sh: line 92: test_expect_%e: command not found
 
-Conversion of Git Unit Tests to Clar Testing Framework
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+The broken tests use `test_format ()`, and the mentioned commit simply
+prepended the new prerequisite to its arguments. But that does not work,
+as the function is not aware of prereqs at all and will now treat all of
+its arguments incorrectly.
 
-Project Overview
------------------------
+Fix this by making the function aware of prereqs by accepting an
+optional fourth argument. Adapt the callsites accordingly.
 
-This project aims to improve the Git codebase by migrating its unit
-tests to the Clar testing framework. Currently, Git employs a
-homegrown unit testing framework located in t/unit-test/test-lib.h,
-which, while functional, leads to duplication and lacks extensibility.
-Adopting Clar, an established testing framework used in projects like
-libgit2, will enhance test readability, reduce boilerplate code, and
-streamline testing consistency across Git's unit tests. The migration
-aligns with Git's quality standards, focusing on code maintainability
-and streamlined test management. The conversion was introduced by
-Patrick and it can be found in the public mailing list on
-https://lore.kernel.org/git/cover.1722415748.git.ps@pks.im/
+Reported-by: Josh Steadmon <steadmon@google.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
 
-Motivation for Migration
--------------------------------
-1. Avoid Duplication: Simplify test declaration by eliminating
-redundant test function wiring.
-2. Maintainability: Using Clar reduces the need for maintaining Git=E2=80=
-=99s
-custom testing framework.
-3. Extensibility: Clar can be extended easily with Git-specific
-functions, offering flexibility and scalability for future testing
-requirements.
-4. Structured Execution: Clar provides a robust structure and
-efficient testing workflow, essential for a large project like Git.
+Oops, good catch. @Taylor, let's maybe queue this fix on top of
+ps/platform-compat-fixes, which currently sits in next.
 
-Phases, Timeline & Detailed Steps
------------------------------------------------
+Thanks!
 
----- December 9 - December 22: Preparation & Initial Conversions ----
+Patrick
 
-- Identify Target Tests: Begin by listing the .c test files from
-t/unit-tests that are suitable for conversion. Consult mentors for any
-specific preferences.
-- First Test Conversion: Select a simple test file (e.g., t-hash.c)
-and convert it to the Clar format.
-- Initial Patch Submission: Submit the initial conversion patch to the
-mailing list for feedback. Document any unexpected obstacles and
-adjust methods accordingly.
+ t/t6006-rev-list-format.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
----- December 23 - February 10: Incremental Conversions & Feedback
-Integration -----
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index 2a01a62a2f..b0ec2fe865 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -75,7 +75,7 @@ test_expect_success 'setup' '
+ 	git config --unset i18n.commitEncoding
+ '
+ 
+-# usage: test_format [argument...] name format_string [failure] <expected_output
++# usage: test_format [argument...] name format_string [success|failure] [prereq] <expected_output
+ test_format () {
+ 	local args=
+ 	while true
+@@ -89,7 +89,7 @@ test_format () {
+ 		esac
+ 	done
+ 	cat >expect.$1
+-	test_expect_${3:-success} "format $1" "
++	test_expect_${3:-success} $4 "format $1" "
+ 		git rev-list $args --pretty=format:'$2' main >output.$1 &&
+ 		test_cmp expect.$1 output.$1
+ 	"
+@@ -218,7 +218,7 @@ Thu, 7 Apr 2005 15:13:13 -0700
+ 1112911993
+ EOF
+ 
+-test_format ICONV encoding %e <<EOF
++test_format encoding %e success ICONV <<EOF
+ commit $head2
+ $test_encoding
+ commit $head1
+@@ -394,7 +394,7 @@ test_expect_success 'setup complex body' '
+ 	head3_short=$(git rev-parse --short $head3)
+ '
+ 
+-test_format ICONV complex-encoding %e <<EOF
++test_format complex-encoding %e success ICONV <<EOF
+ commit $head3
+ $test_encoding
+ commit $head2
+-- 
+2.47.0.118.gfd3785337b.dirty
 
-- File Renaming: Rename test files from t-<name>.c to <name>.c
-following the structure outlined by prior contributions.
-- Clar Suite Integration: Add the module name to CLAR_TEST_SUITE in
-the Makefile to include the file in the Clar testing suite.
-- Conversion of Test Assertions: Replace the test assertions with
-Clar=E2=80=99s built-in functions (cl_assert, cl_assert_equal_s,
-cl_assert_equal_i, etc.), enhancing readability and functionality.
--  Patch Submission: Submit each converted test as an incremental
-patch to Git's mailing list following the Git contribution guidelines.
-This phased approach enables targeted feedback from the community.
-
-February 11 - March 6: Final Conversions & Project Wrap-Up
-- Finalize Remaining Conversions: Complete the conversion of any
-remaining tests, focusing on consistency across all tests.
-- Validation of Converted Tests: Conduct thorough testing on each
-converted file to confirm the expected behavior and functionality.
-Also, ensure the test works perfectly well on all platforms(Linux,
-Windows and Mac)
-- Feedback Integration: Implement community feedback on the submitted
-patches, resubmitting as needed to finalize the converted files.
-- Documentation and Blog Updates: Maintain an ongoing blog,
-documenting progress, challenges, and insights from the conversion
-process, fostering transparency and community engagement.
-
-Additional Goals and Extensions
---------------------------------------------
-- Custom Assertions for Git-Specific Needs: Develop Git-specific
-assertion functions as needed for future tests.
-- Upstream Collaboration: Coordinate with Clar=E2=80=99s maintainers to
-address any shortcomings discovered during integration with Git,
-potentially contributing back improvements.
-
-
-Thank you for your time.
-Usman Akinyemi
-
-On Sun, Oct 27, 2024 at 2:53=E2=80=AFPM Usman Akinyemi
-<usmanakinyemi202@gmail.com> wrote:
->
-> Hello Git Community,
->
-> I hope this mail finds you well.
->
-> This is my proposal for the project "Finish adding a 'os-version'
-> capability to Git protocol v2" for Outreachy internship program 2024.
->
-> I appreciate any feedback on this proposal.
->
-> ---------<8----------<8----------<8----------<8----------<8----------<8
->
-> Personal Information
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Full Name: Usman Akinyemi
-> Email: usmanakinyemi202@gmail.com
-> Personal Blog: https://uniqueusman.hashnode.dev/
-> Personal Website: https://uniqueusman.tech
-> GitHub: https://github.com/Unique-Usman
-> Degree: Bachelor of Technology (B.Tech) in Computer Science and
-> Artificial Intelligence
->
->
-> About Me
-> =3D=3D=3D=3D=3D=3D=3D=3D
->
-> I am Usman Akinyemi, I often like to refer to myself as a nomadic
-> computer programmer as I love the ability to work on interesting
-> projects without being restricted to a physical location. I love the
-> Linux Operating System and most people already alias my name to Linux
-> as I also preach it to everyone everyday. I learnt programming in
-> multiple places, in college,  ALX Software Engineering program and
-> also personal studying. I have decent experience in contributing to
-> OpenSource projects. I have contributed to systemd, Cpython
-> documentation, Canonical website,  pep8speaks and Open Science
-> Initiative for Perfusion Imaging (OSIPI). Being someone who is a
-> product of the community, I value community development so much. I
-> have always tried my best to contribute to the community in my own
-> way. One case is when I organized a month-long program(structured
-> webinar) aimed at exposing young Nigerians to opportunities in tech.
-> The program focuses on topics such as OpenSource contributions,
-> securing internships, career development, freelancing, datascience,
-> and introduction to Github and Linux([ Youtube Recording
-> ]https://www.youtube.com/watch?v=3DOrAThr-84t8&list=3DPLBW_HlYT-kP1tUqbza=
-vMAq-ZZQRhMkZH2&ab_channel=3DUsmanAkinyemi
-> ). I have also volunteered for different communities one of which is
-> DesignIT where we train Nigerian youth on technology.
->
->
-> Past Experience with Git
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> I have been a Git user for about three years now. I mainly use git for
-> personal projects, Group projects and OpenSource contributions. I have
-> also had the opportunity to introduce and teach people to Git. I am
-> really excited to be here in the Git community.
-> During the contribution stage, I have got more familiar with the
-> community and how to send patches to Git with the help of the Git
-> community. I have also learnt a couple of things, one of which is Git
-> contributor best practices.
->
->
-> Contributions to the Git Community
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
->
-> I joined the Git community after I got selected for Outreachy
-> Contribution Phase and I have been able to send some patches to the
-> Git codebase with the help of the Git community while also learning.
-> Below is the list of my contributions:
->
-> MICROPROJECT
-> ------------------------
-> - Link: https://public-inbox.org/git/pull.1805.git.git.1728192814.gitgitg=
-adget@gmail.com/T/#u
-> - Merge Commit: 6487b2b
-> - Status: merged into next/jch
->
-> + [PATCH v7 1/2] t3404: avoid losing exit status with focus on `git
-> show` and `git cat-file`
-> - Description: In the Git t3404 test script, I improved error
-> detection by restructuring command chains to ensure accurate exit
-> status handling, preventing missed errors from piped commands.
-> The exit code of the preceding command in a pipe is disregarded. So if
-> that preceding command is a Git command that fails, the test would not
-> fail. Instead, by saving the output of that Git command to a file, and
-> removing the pipe, we make sure the test will fail if that Git
-> command fails. This particular patch focuses on all `git show` and
-> some instances of `git cat-file`.
->
-> + [PATCH v7 2/2] t3404: replace test with test_line_count()
-> - Description: Refactor t3404 to replace instances of `test` with
-> `test_line_count()` for checking line counts. This improves
-> readability and aligns with Git's current test practices.
->
-> - Remarks: Through this process, I deepened my understanding of shell
-> scripting and command chaining, focusing on how exit statuses affect
-> testing accuracy. My mentors suggested keeping commands readable and
-> consistent with Git's scripting standards, emphasizing simplicity and
-> future maintainability. The result is a more robust, reliable test
-> script that better aligns with Git=E2=80=99s best practices, improving ov=
-erall
-> test suite integrity. Also, through this patch, I was able to
-> understand the workflow involved in submitting a patch to git which is
-> quite different from many other projects which I have worked on. This
-> is really an interesting learning experience.
-> I also learnt about the importance of following Git=E2=80=99s best practi=
-ces
-> and also How  to submit patches with multiple commits.
->
-> LeftOverbits
-> -----------------
-> - Link: https://public-inbox.org/git/pull.1810.v3.git.git.1729574624.gitg=
-itgadget@gmail.com/T/#t
-> - Merge Commit: cfd82c9
-> - Status: merged into next/jch
->
-> After completing the microproject, I wanted to gain a deeper
-> understanding of Git=E2=80=99s codebase and workflow. I began looking thr=
-ough
-> leftoverbits to work on and found a suitable one. Through this, I
-> learned how to add tests for my code additions, which helped me
-> understand the process of integrating and validating changes in the
-> codebase.
->
-> - General Description: In this series of patches, I replaced `atoi()`
-> with `strtoul_ui()` and `strtol_i()` across the daemon, merge, and
-> IMAP components to address the issue of inadequate error handling and
-> input validation. The use of `atoi()` could lead to undefined behavior
-> when parsing invalid inputs, such as letters, which might result in
-> incorrect program behavior. Now, invalid inputs trigger clear error
-> messages, ensuring safer parsing and preventing malformed responses. I
-> updated tests for the daemon and merged components to verify these
-> improvements, while IMAP changes didn't include tests since none
-> existed for `git-imap-send`. Overall, this update significantly
-> strengthens input validation and code reliability.
->
-> + [PATCH v6 1/3] daemon: replace atoi() with strtoul_ui() and strtol_i()
-> Replace atoi() with strtoul_ui() for --timeout and --init-timeout
-> (non-negative integers) and with strtol_i() for --max-connections
-> (signed integers). This improves error handling and input validation
-> by detecting invalid values and providing clear error messages.
->
-> + [PATCH v6 2/3] merge: replace atoi() with strtol_i() for marker size
-> validation
-> Replace atoi() with strtol_i() for parsing conflict-marker-size to
-> improve error handling. Invalid values, such as those containing
-> letters now trigger a clear error message.
->
-> + [PATCH v6 3/3] imap: replace atoi() with strtol_i() for UIDVALIDITY
-> and UIDNEXT
-> Replace unsafe uses of atoi() with strtol_i() to improve error handling
-> when parsing UIDVALIDITY, UIDNEXT, and APPENDUID in IMAP commands.
-> Invalid values, such as those with letters, now trigger error messages
-> and prevent malformed status responses.
->
-> - Remarks: In this patch series, I learnt a lot of things. The
-> importance of splitting large changes into Smaller changes for easy
-> review. I also learnt about how to submit multiple patches which are
-> not related by creating a new branch from origin/master. Also, I
-> learnt how to write better commit messages. And lastly, the importance
-> of asking for help and integrating suggestions from the community.
->
-> I also had the opportunity to review a patch and also answer doubt
-> from other outreachy applicant mate
-> https://public-inbox.org/git/CAEqABkKvbpo-8-gDpFtfNcpmiC8A5mJMkcDXfhcdNrp=
-wMvBsDA@mail.gmail.com/T/#u
-> https://public-inbox.org/git/CAPSxiM8SjJwb6x2bhCd4xsYLiNk+KhWYna7-rZhdNGp=
-YNV1tLg@mail.gmail.com/
->
->
-> Past experience with other communities
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
->
-> Systemd
-> ------------
->
-> - I Developed a new unit test framework with assertion macros which
-> enhanced debugging by providing detailed error reports with file
-> names, line numbers, and expression values upon failure, improving
-> issue identification and resolution
-> - I Updated approximately 22 existing unit test files by modifying 403
-> lines of code to incorporate the new assertion macros, resulting in
-> improved logging details and enhanced overall test coverage and
-> debugging efficiency.
-> - I Implemented the --json option for the bootctl status command and
-> updated the integration tests, enabling machine-readable JSON output
-> for comprehensive bootloader status information
->
-> PR Link:
-> https://github.com/systemd/systemd/pull/31873
-> https://github.com/systemd/systemd/pull/31853
-> https://github.com/systemd/systemd/pull/31819
-> https://github.com/systemd/systemd/pull/31700
-> https://github.com/systemd/systemd/pull/31678
-> https://github.com/systemd/systemd/pull/31669
-> https://github.com/systemd/systemd/pull/31666
-> https://github.com/systemd/systemd/pull/32035
->
-> Python Official Documentation
-> -----------------------------------------
-> - I have contributed to improving Python's official documentation,
-> enhancing my Python knowledge, technical writing, and collaboration
-> skills in open-source.
->
-> PR Link:
-> https://github.com/python/cpython/pull/109696
-> https://github.com/python/cpython/pull/111574
-> https://github.com/python/docs-community/pull/96
-> https://github.com/python/cpython/pull/113209
-> https://github.com/python/docs-community/pull/97
->
-> OSIPI (Open Science Initiative for Perfusion Imaging(OSIPI) organization)
-> -------------------------------------------------------------------------=
---------------------------
-> - Added a command-line interface to the existing 4D IVIM phantoms
-> generator, with detailed documentation for usage.
-> - Created a Python script for efficient reading and writing of NIfTI
-> images, improving data processing workflows.
-> - Dockerized the TF2.4_IVIM-MRI_CodeCollection project and implemented
-> a GitHub Action for automated Docker image building and testing,
-> ensuring consistent deployment and a streamlined CI/CD pipeline.
->
-> PR Link:
-> https://github.com/OSIPI/TF2.4_IVIM-MRI_CodeCollection/commit/92a80d61cfc=
-a322da49d126dcd598996fca92668
-> https://github.com/OSIPI/TF2.4_IVIM-MRI_CodeCollection/commit/163a187c5ea=
-ad33b55a0af0487bd9e19ca520828
-> https://github.com/OSIPI/TF2.4_IVIM-MRI_CodeCollection/commit/56ee7173c91=
-c7a1dd64412d3884a3167c7514665
-> https://github.com/OSIPI/TF2.4_IVIM-MRI_CodeCollection/commit/e6a47211410=
-ed57705e2ec32adb397ac6663d061
-> https://github.com/OSIPI/TF2.4_IVIM-MRI_CodeCollection/pull/60
-> https://github.com/OSIPI/TF2.4_IVIM-MRI_CodeCollection/pull/74
->
-> Canonical Docs Website
-> ---------------------------------
-> I developed a solution to integrate GitHub contributor information
-> into Sphinx documentation templates using the GitHub API, enhancing
-> documentation with contributor insights.
->
-> PR Link:
-> https://github.com/canonical/sphinx-docs-starter-pack/pull/203#issuecomme=
-nt-2018521984
->
-> LLVM
-> --------
-> I fixed a bug in Clang's Extract API for Objective-C JSON generation
-> and optimized the test suite within the LLVM Compiler Infrastructure.
-> https://github.com/Unique-Usman/llvm-project/commit/32b53cf9d0c8c0e01ce5b=
-0e7d5c717202a98cdf5
->
->
-> Experience As a user of OpenSource Software
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> As an avid user of open-source software, my experience has been
-> primarily with Linux distributions, particularly Arch, which serves as
-> my primary operating system. My past usage of Ubuntu has also
-> contributed to my understanding of different Linux environments.
-> In addition, I have extensively utilized various free software such as
-> MySQL for database management, LibreOffice for office productivity,
-> GCC and G++ for C and C++ programming, Python for scripting and
-> application development, React for web development, Clang for C/C++
-> compilation, Git for version control and many others. These
-> experiences have not only enriched my software knowledge but have also
-> deepened my understanding of the principles and benefits of
-> open-source development.
->
->
-> =E2=80=94--------------------------------- Project Overview
-> =E2=80=94--=E2=80=94--------------------------------
-> In June 2024, a patch series was submitted to the Git mailing list
-> aimed at adding a new 'os-version' capability to the Git protocol v2.
-> This capability is designed to allow Git clients and servers to
-> exchange information about the Operating System (OS) they are using,
-> which can aid in diagnosing issues and collecting statistical data.
-> Following the patch submission, discussions arose regarding the
-> necessary improvements and issues, particularly with Windows
-> compatibility.
-> The objective of this internship is to address these outstanding
-> issues, implement the required improvements, and ensure the successful
-> integration of the 'os-version' capability into the Git protocol.
->
-> =E2=80=94------- Internship objectives and plans  =E2=80=94-------
-> The goal of this internship is to finalize the implementation of the
-> 'os-version' capability in Git protocol v2, as proposed in the patch
-> series sent to the Git mailing list in June 2024. This enhancement
-> will allow Git clients and servers to advertise their operating
-> systems (OS), aiding in diagnostics and data collection.
->
-> Detailed Tasks and Steps
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Review the Current Patch Series
-> --------------------------------------------
-> 1. Examine the Patch: Thoroughly analyze the existing patch series
-> submitted to the Git mailing list. Understand its design and
-> functionality, focusing on:
->    -  How the OS information is gathered and transmitted.
->    -  Current configurations and their implications on data transmission.
-> 2. Feedback Analysis: Collect feedback from the Git mailing list
-> discussion regarding the patch. Identify key concerns, especially
-> related to:
->     - Privacy issues.
->     - Default behavior expectations.
->     - Cross-platform compatibility.
-> 3. Consider User-Agent Integration: Investigate the suggestion to
-> integrate the 'os-version' data into the existing user-agent string
-> rather than creating a new capability. Evaluate:
->     - The implications of combining this data with the user-agent.
->     - How this approach might address concerns about telemetry and user p=
-rivacy.
->
-> Implement Default Behavior for 'os-version'
-> ----------------------------------------------------------
-> 1. Modify Default Configuration: Adjust the implementation so that by
-> default, only the OS name (e.g., "Linux" or "Windows") is sent during
-> communications.
-> 2. Impact Assessment: Evaluate how this change impacts existing users
-> and any potential performance implications.
->
-> Introduce a Configuration Variable
-> ---------------------------------------------
-> 1. Define Configuration Options
->     - Disable Option: Allow users to disable the 'os-version'
-> capability entirely via configuration.
->     - Verbose Option: Enable a verbose mode that sends detailed OS
-> information (e.g., the output of the uname -srvm command).
->
-> 2. Documentation: Improve the documentation outlining how to enable,
-> disable, and configure the 'os-version' capability. Include examples
-> for:
->     - Basic usage (default OS name).
->     - Detailed usage (full OS version information).
-> 3. Implementation: Code the configuration settings and ensure they are
-> recognized by the Git system.
->
-> Fix Cross-Platform Tests
-> ---------------------------------
->
-> 1. Identify Issues and added tests for changes/addition: Investigate
-> existing test failures, particularly those occurring on Windows and .
->      - Review the test logs and identify the root causes of failures.
->      - Analyze differences in OS behaviors and how they affect the tests.
->      - Cross-platform tests to validate the functionality on Linux,
-> Windows, and macOS environments.
-> 2. Implement Fixes:
->       - Modify tests to ensure they run correctly on Windows,
-> addressing any compatibility issues with the test framework or Git
-> commands.
->       - Ensure all tests reflect the changes made to the OS reporting
-> capabilities.
->
-> Testing and Validation
-> ------------------------------
-> Ensure comprehensive test coverage=E2=80=94including default behavior,
-> configuration options, and edge cases=E2=80=94integrate tests into the Gi=
-t CI
-> pipeline for automatic execution, and share results with the community
-> for feedback on robustness and additional scenarios.
->
-> Documentation Updates
-> ---------------------------------
->
-> 1. User Documentation: Update the Git documentation to include:
->     - Instructions on how to configure the feature, with practical exampl=
-es.
->     - Best practices regarding data privacy when using the capability.
-> 2 Developer Documentation: Include comments in the code for
-> maintainability and understanding of how the 'os-version' capability
-> works internally.
->
->  Prepare for Merging
-> ----------------------------
-> 1. Final Review: Conduct a thorough review of all code, tests, and
-> documentation. Ensure everything aligns with Git=E2=80=99s contribution
-> standards.
-> 2. Engagement with Community: Present the finalized patch to the Git
-> mailing list, addressing any additional concerns raised during the
-> discussions.
-> 3. Merge Process: Coordinate with the maintainers for merging the
-> patch into the main branch, ensuring all feedback has been
-> incorporated.
->
->
-> =E2=80=94------------------------- Timeline =E2=80=94--------------------=
------------------
->
-> Community Feedback and Finalization
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-> Dates: November 26 - December 8
-> Engage with the Git community to gather input, especially on privacy
-> concerns and minimal data sharing. Determine default behavior (sharing
-> only OS name) and finalize whether to use "user-agent" or another
-> identifier in the protocol(os-version).
->
-> Minimal Default Implementation
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> Dates: December 9 - December 20
-> Implement the core feature to share only the OS name by default,
-> keeping data minimal as per feedback.
->
-> Configurable Options for OS Version
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
->
-> Dates: December 21 - December 30
-> Develop settings to allow users to disable OS data sharing or choose
-> verbose mode (e.g., uname -srvm output).
->
-> Cross-Platform Testing (Focus on Windows)
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Dates: December 31 - January 13
-> Conduct robust testing across platforms, addressing prior Windows
-> compatibility issues.
->
-> Beta Testing and Community Feedback
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-> Dates: January 14 - January 27
-> Release for beta testing, integrate feedback, and refine functionality
-> based on real-world use.
->
-> Documentation
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> Dates: January 28 - February 10
-> Document feature usage, configuration options, and setup instructions
-> for smooth adoption.
->
-> Final Review and Merge
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> Dates: February 11 - March 6
-> The final review phase will include presenting the completed work to
-> the Git community for a thorough final assessment. Any remaining
-> concerns or suggestions will be addressed before the patch is prepared
-> for merge. This stage will allow for further feedback, particularly
-> from stakeholders and maintainers who raised the initial questions,
-> ensuring the solution is acceptable to the broad Git community. Once
-> consensus is achieved, the patch will be merged into the Git mainline
-> codebase, concluding the project.
->
->
-> Availability
-> =3D=3D=3D=3D=3D=3D=3D=3D
-> I will be available to work for the required minimum of 30 hours
-> during the internship period and will be happy to extend if required.
->
-> Blogging
-> =3D=3D=3D=3D=3D=3D=3D
-> I also plan to keep writing blogs after two weeks, to track my
-> progress,  give updates about what I am currently working on and also
-> as a documentation for future contributors.
->
-> Post Outreachy Internship
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> One of my dreams is to be an active member of an open-source community
-> which I can proudly support and contribute to. Continuing my
-> contributions after the internship is a big part of making that dream
-> a reality. I=E2=80=99m committed to contributing to Git long-term, helpin=
-g to
-> improve the project and supporting new contributors along the way.
->
-> Appreciation
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> I really appreciate the support and guidance I got from the git
-> community. I also appreciate all the effort from the outreachy mentor.
-> Thanks for your time.
->
-> Thank you.
-> Usman Akinyemi.
