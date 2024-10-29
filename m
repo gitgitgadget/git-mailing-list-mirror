@@ -1,254 +1,306 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD7C1DCB2D
-	for <git@vger.kernel.org>; Tue, 29 Oct 2024 18:42:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AF319A2A2
+	for <git@vger.kernel.org>; Tue, 29 Oct 2024 20:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730227332; cv=none; b=lk7huAW+gmIGJuNCvSTwbutj7ke1UTIFpqkz8i/839U13UR4waJWZyCmOFQdMVoqw37mJTLRQR2CzlYlPTjx+qB2YUymb/V5JwGTi3cnECJVmXH65hoEbJKbfqAQhchf7OSLlaJL3Kewyi6eLjwUFSBFr5LXTYJXhbXJB0uFh8s=
+	t=1730234517; cv=none; b=N59gSOHSmJks4q3a0L9saMcV/ppCuumenH0q6Mvnj1+xJdubD32y7mQSJT8uT9RNCzxJmj9ZxUdXayVmdFakAMxi1QvGP9VTMZ4Qg3XCRw6n2CaE7F1UzS9oiSLhZFOKJBr0gZy+F1F/WyL+T6+03M6V4+OGU2o2oP7ibchfO9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730227332; c=relaxed/simple;
-	bh=GIPV8dEVzo4NnOaMN8M3zcjP7+D8yq+DqHThEQmHX4E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dDUCeRBTLc9kH+7ThRRGhW6mVrmTZLwmH7vJQpC+4pAPt+mAPtDQJIErwXEwAX5rp5DzIRSUZ2pSZpMdc7DrGJ8JKFzWNaFe/h7KdJH7MLDtdOFx++sPS82vYNhl0L/AMADSlpz0NE8F6pVH9rUP2IB08FqzHSivhKDi+opKnOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=L1C7sXwa; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1730234517; c=relaxed/simple;
+	bh=iXIvFRpORUSBlUDkQEEeblo9SGL6/GUWz7VSKVBisCY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=L9fOWSxjxKy+uwx0ts+Zu+tlvtlxwyECx6UuGQDbJX+TIs/ia44HtONmLTteDGAau5t2dSSGcDVU5+Cl25VjytKd1tIiidGKfENuY5u4sDDsUxNi03+6jwA4Hq6NL+h/zUIs5QVe3nH1grX5vlKbaxBESxxfsxWR7amX+rzYWgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=AAPiQv+K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rx/y+ic+; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="L1C7sXwa"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6e9f8dec3daso21433797b3.0
-        for <git@vger.kernel.org>; Tue, 29 Oct 2024 11:42:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730227329; x=1730832129; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/p6UefEvVoSxQI/Oz0w+RsRpFSij2MdzbZxFW75Kj2o=;
-        b=L1C7sXwaBBNO179ljpOUUtXTTNA5Qi5tCibStL6MZX39yp+tXSQ/Lw5uyaCuj+FjXL
-         Omsfer9gzyIH7xgEUISC3nfrd4Rlel29PrZqnL34ZVmZX2uRQZil2mXdT1/mz09snoea
-         bFhEPZYOpuuOHoQhMmqbNGF1zjTkGinSUhzgeisXjMDrS2NNnDaq6qRUh59RW7eC4S9K
-         X8+1PM629D3lwCga2c2mJnE9kK9dSVyQYUQCWkZzeYsaE/5owr5goEjMyZBFS/ttWKhv
-         5kZXdSn0egxQtlVuq3y51SrUxm/i9tknUMgmeUyM1N/Gz+voaY6fFBWRio+uzd+8G7kw
-         XY/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730227329; x=1730832129;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/p6UefEvVoSxQI/Oz0w+RsRpFSij2MdzbZxFW75Kj2o=;
-        b=eSqfJryMJlOqtMqzP1QBu2h60mlBG4ID7kZ2A49VaXaj0MWZEjO3Bbl/jY4n8PEwxx
-         LY8UxvknBxzDWJJF8hGwJMo9l5PIaAbLsmWlR7YQVnBacidEaQFzHNeXKYNv77MJdcTV
-         dzZpZ0qu3MJiX4opveO2BRK+ba0WxMG3H/N3SSD+HsxDV85y0GFXoGhnjUUtsnaLY+Py
-         IWHQgN35W6mloSVegUJqUYkZW0RcXJn5z83ivdQk1qlacf16r/sPRLnYwaidybDWn8jD
-         z9qASp2KkTjwkijqZCN5qmzBS+MDQ181VzuNnxbCgLFE3eMlrSr155vYe3jw7YFWg64e
-         s/1Q==
-X-Gm-Message-State: AOJu0Yx5wRRjY3mSRx6K6ON9KcDdL3QGO4dAP4Q+ip6ToX/zAcNhE8j5
-	TUQwQIJIl8EczwUySTSyd3P3l9H9ZTeTkscOOd4uMD0GyBHoWfpd/M/P48F7d4Y=
-X-Google-Smtp-Source: AGHT+IG9Vg2QCmfC2U1cLZTFtNBJ5cQUmiESQPoK6vhrpLLtYfJRGCUhXX96G09yDqv/CrBkp1THvA==
-X-Received: by 2002:a05:690c:45c7:b0:6e3:2508:43ca with SMTP id 00721157ae682-6e9d899cf9cmr124608837b3.27.1730227328851;
-        Tue, 29 Oct 2024 11:42:08 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6c77310sm20844287b3.82.2024.10.29.11.42.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Oct 2024 11:42:08 -0700 (PDT)
-Date: Tue, 29 Oct 2024 14:42:06 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/5] worktree: add CLI/config options for relative
- path linking
-Message-ID: <ZyEsfpcnAGCg+W6N@nand.local>
-References: <20241028-wt_relative_options-v2-0-33a5021bd7bb@pm.me>
- <20241028-wt_relative_options-v2-1-33a5021bd7bb@pm.me>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="AAPiQv+K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rx/y+ic+"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7A669138010C;
+	Tue, 29 Oct 2024 16:41:53 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Tue, 29 Oct 2024 16:41:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1730234513;
+	 x=1730320913; bh=DwCIzxCZm/0U8AzIVam3HzwtwGnJ+NhCne3p7urIlWc=; b=
+	AAPiQv+KT4CKgeRQnOYhcDGXex8TJI/AN8hlmxwtSv6ODg200EgGK60iy3sAQzsQ
+	NpGdY7E4T2na5vqFROFyzDKwtkEeRFIs+mxibti5j6ipgWQ1IiSGXYvsuj1XT5lX
+	h6GmAX38IT+ulLZlx2s8rkQXgipMndqkUXQMyLsjse2Bs5HneRZVCk5oOKleJuJ1
+	etKldxnT1U0ir10SfsLSGaAgXHINqJgFE4pCCch/2qFMOUA+q3qRmWgHtf/l4/jh
+	0q85CRo4Mbug0fz6u3IcESpv7a65Yq+ebWvP9gSJ1V+MpwDXOT4yJEtGhXrZhexJ
+	mhMYw6rLVkxPN0r/JCZSyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1730234513; x=
+	1730320913; bh=DwCIzxCZm/0U8AzIVam3HzwtwGnJ+NhCne3p7urIlWc=; b=R
+	x/y+ic+qWiA/+4+JRTwcgROYuhU7//mWY6aN58EftgTmYiFLm2JvXsTBLX/ftIV1
+	L/NJu3i+GALAeuyU3Qd6RkxpJOypz+9m9JVBWyvSYNKP9Pvi80+/iWV3ivdD/XbF
+	FcbQtHBy5S5G95AJQdu+d4y7FryIy4dtjYPvfCmk6bskj1CC4HO0dm/7OxgBFgiU
+	vLvNqgc/J/GxTXp9APf1JzdAa3htJW1rBzZKsau5lWOrl7FBgJd4dURf3ZS0pJbt
+	NWpFRyT293ovKylD+qbAdXnVeU+jp2Wi8SJWEIe9JlTtKNrLxQk2XOSLfr0ixYUx
+	Bk5aBggW1R/xwbYP90VXw==
+X-ME-Sender: <xms:kUghZ-exaN-F_PMhVKPji3NXP4BroXYW5OhfrkETvGhBuHkynI-j-wc>
+    <xme:kUghZ4NlU8oLKfPbj-GgPt46KWghL1E7zi1q-kbG3mKKl1S3SDZyJ8nsXTb7tBQHv
+    LA6h5yAAUcO-UW2hQ>
+X-ME-Received: <xmr:kUghZ_hC2jhujHJbjU3wUK5okQoDwaxf0xFzgT0acut4fNQvyAe40WuBwnMe7oQU2c-IzTM8wZv5xN27554kLvzte2LYiEvKWwa1Z1uOW2LayFzNJsWBMu_81w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekuddgudefhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhh
+    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpefhhf
+    evuddtledtleevudehvdfhfeeujeehveefgeekueevieeftefggefgkedthfenucffohhm
+    rghinhepshhtrggtkhhovhgvrhhflhhofidrtghomhdptggrnhgrlhhsohhophgvrhgrth
+    gvohhnsghunhgulhgvfhhilhgvshdrihhtpdhkvghrnhgvlhdrohhrghenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrh
+    hhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgt
+    phhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrg
+    ihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:kUghZ7-_nF6e3y3Zbjx4BPVpr7QQLAPxxYMg3CCOmC_GbNuETBRe-Q>
+    <xmx:kUghZ6sCW7-aUOUxXVn38juJU_QoUNViYk71nZm2PTo-ugcfM9-r8g>
+    <xmx:kUghZyFhsH5Ojym6J9E519JnnCbVfwD-OAs1pdFwHP-SgYdNwV_D6g>
+    <xmx:kUghZ5OSZgM1h2EW6jRu3i_Xq_8_p2rmt-rmVYMsTKf6GW_f4P7zQA>
+    <xmx:kUghZ8LAcva5AwKI6tbxurvqbHTPO_iA22aoIjE7Wf7GOwPCaRoeFWZK>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Oct 2024 16:41:51 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	avarab@gmail.com,
+	me@ttaylorr.com
+Subject: [PATCH v2 0/3] Documentation/git-bundle.txt: promote --all for full backup
+Date: Tue, 29 Oct 2024 21:41:43 +0100
+Message-ID: <cover.1730234365.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
+In-Reply-To: <cover.1729451376.git.code@khaugsbakk.name>
+References: <cover.1729451376.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241028-wt_relative_options-v2-1-33a5021bd7bb@pm.me>
+Content-Type: text/plain; charset=UTF-8
+X-Commit-Hash: c50f9d405f9043a03cb5ca1855fbf27f9423c759
+X-Previous-Commits: 63a431537b78e2d84a172b5c837adba6184a1f1b
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 28, 2024 at 07:09:37PM +0000, Caleb White wrote:
-> This patch introduces the `--[no-]relative-paths` CLI option for
-> `git worktree {add, move, repair}` commands, as well as the
-> `worktree.useRelativePaths` configuration setting. When enabled,
-> these options allow worktrees to be linked using relative paths,
-> enhancing portability across environments where absolute paths
-> may differ (e.g., containerized setups, shared network drives).
-> Git still creates absolute paths by default, but these options allow
-> users to opt-in to relative paths if desired.
->
-> Using the `--relative-paths` option with `worktree {move, repair}`
-> will convert absolute paths to relative ones, while `--no-relative-paths`
-> does the reverse. For cases where users want consistency in path
-> handling, the config option `worktree.useRelativePaths` provides
-> a persistent setting.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-This is great. This addresses the main concerns that you and I discussed
-in the earlier round of this series, which was making sure that the new
-behavior be opt-in, as it breaks backwards compatibility and thus
-requires a new extension to quarantine older Git versions from touching
-repositories that list their worktrees out with relative paths.
+The documentation for git-bundle(1) now properly covers `--all`, the
+option from git-rev-list(1) that can be used to package all refs.  A
+"Discussions" section has also been added to address the naive backup
+strategy of copying a Git repository manually with cp(1) or some other
+non-Git tool.
 
-This approach makes the most sense to me because it doesn't impose such
-a breakage between Git versions when the user doesn't explicitly opt-in
-to the new behavior, which is the right approach to take here IMO.
+---
 
-> In response to reviewer feedback from the initial patch series[1],
-> this revision includes slight refactoring for improved
-> maintainability and clarity in the code base.
+The part above was for the-topic-summary.
 
-Great :-).
+I was prompted by SO questions like this one:
 
-> diff --git a/Documentation/config/worktree.txt b/Documentation/config/worktree.txt
-> index 048e349482df6c892055720eb53cdcd6c327b6ed..44b783c2774dc5ff65e3fa232b0c25cd5254876b 100644
-> --- a/Documentation/config/worktree.txt
-> +++ b/Documentation/config/worktree.txt
-> @@ -7,3 +7,8 @@ worktree.guessRemote::
->  	such a branch exists, it is checked out and set as "upstream"
->  	for the new branch.  If no such match can be found, it falls
->  	back to creating a new branch from the current HEAD.
+    https://stackoverflow.com/questions/5578270/fully-backup-a-git-repo
 
-I would have thought there would be a blank line in between this and the
-section on worktree.guessRemote. ASCIIDoc doesn't require it because
-this is a labeled list, but it does improve the readability of the raw
-ASCIIDoc itself.
+I then compared VonC’s answer to the man page.  The first thing I
+noticed was that `--all` wasn’t in the synopsis.
 
-So not a big deal, but if you end up sending out another version of this
-series it would be nice to include.
++Cc is just `./contrib/contacts/git-contacts` minus Junio.  (Although he
+is inactive (from v1); keeping Cc on the series since it is customary)
 
-> +worktree.useRelativePaths::
-> +	If set to `true`, worktrees will be linked to the repository using
-> +	relative paths rather than using absolute paths. This is particularly
-> +	useful for setups where the repository and worktrees may be moved between
-> +	different locations or environments.
+Cheers
 
-This is a good start, but I have a few suggestions on top that I'm
-curious of your thoughts on. First: what is the default? Users
-should have some insight into what the default is. Likewise, they should
-know that that the default behavior does not introduce the repository
-extension, but that setting this configuration to 'true' does.
+§ Changes in v2
 
-Maybe something like the following on top?
+• Patch v1 1/4: drop
+• Patch v2 1/3: combine with previous paragraph and drop “mirror”
+  sentence
+• Patch v2 3/3: fix `make lint-docs` failure
 
---- 8< ---
-diff --git a/Documentation/config/worktree.txt b/Documentation/config/worktree.txt
-index 44b783c277..666cb3c190 100644
---- a/Documentation/config/worktree.txt
-+++ b/Documentation/config/worktree.txt
-@@ -7,8 +7,13 @@ worktree.guessRemote::
- 	such a branch exists, it is checked out and set as "upstream"
- 	for the new branch.  If no such match can be found, it falls
- 	back to creating a new branch from the current HEAD.
-+
- worktree.useRelativePaths::
--	If set to `true`, worktrees will be linked to the repository using
--	relative paths rather than using absolute paths. This is particularly
--	useful for setups where the repository and worktrees may be moved between
--	different locations or environments.
-+	Link worktrees using relative paths (when "true") or absolute
-+	paths (when "false"). This is particularly useful for setups
-+	where the repository and worktrees may be moved between
-+	different locations or environments. Defaults to "false".
-++
-+Note that setting `worktree.useRelativePaths` to "true" implies
-+enabling the "relativeWorktrees" repository extension, thus making it
-+incompatible with older versions of Git.
---- >8 ---
+Kristoffer Haugsbakk (3):
+  Documentation/git-bundle.txt: mention full backup example
+  Documentation/git-bundle.txt: mention --all in spec. refs
+  Documentation/git-bundle.txt: discuss naïve backups
 
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-> index 70437c815f13852bd2eb862176b8b933e6de0acf..975dc3c46d480480457ec4857988a6b8bc67b647 100644
-> --- a/Documentation/git-worktree.txt
-> +++ b/Documentation/git-worktree.txt
-> @@ -216,6 +216,18 @@ To remove a locked worktree, specify `--force` twice.
->  This can also be set up as the default behaviour by using the
->  `worktree.guessRemote` config option.
->
-> +--[no-]relative-paths::
-> +	Worktrees will be linked to the repository using relative paths
-> +	rather than using absolute paths. This is particularly useful for setups
-> +	where the repository and worktrees may be moved between different
-> +	locations or environments.
+ Documentation/git-bundle.txt | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-This paragraph is redundant with what you wrote in git-config(1). I
-think all we want to say is that it overrides the setting of that
-configuration variable, and refer users there with linkgit.
+Interdiff against v1:
+diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+index b5cc4746b45..7bffd2e4a05 100644
+--- a/Documentation/git-bundle.txt
++++ b/Documentation/git-bundle.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git bundle' create [-q | --quiet | --progress]
+-		    [--version=<version>] <file> (<git-rev-list-args> | --all)
++		    [--version=<version>] <file> <git-rev-list-args>
+ 'git bundle' verify [-q | --quiet] <file>
+ 'git bundle' list-heads <file> [<refname>...]
+ 'git bundle' unbundle [--progress] <file> [<refname>...]
+@@ -23,11 +23,8 @@ the "offline" transfer of Git objects without an active "server"
+ sitting on the other side of the network connection.
+ 
+ They can be used to create both incremental and full backups of a
+-repository, and to relay the state of the references in one repository
+-to another.
+-
+-You can use `git bundle create <file> --all` to create a full backup of
+-your repository.
++repository (`git bundle create <file> --all`), and to relay the state of
++the references in one repository to another.
+ 
+ Git commands that fetch or otherwise "read" via protocols such as
+ `ssh://` and `https://` can also operate on bundle files. It is
+@@ -206,8 +203,6 @@ It is okay to err on the side of caution, causing the bundle file
+ to contain objects already in the destination, as these are ignored
+ when unpacking at the destination.
+ 
+-If you want to match `git clone --mirror`, which would include your
+-refs such as `refs/remotes/*`, use `--all`.
+ If you want to provide the same set of refs that a clone directly
+ from the source repository would get, use `--branches --tags` for
+ the `<git-rev-list-args>`.
+@@ -335,7 +330,7 @@ some files at `<destination>` could be corrupted.
+ This is why it is recommended to use Git tooling for making repository
+ backups, either with this command or with e.g. linkgit:git-clone[1].
+ 
+-See also linkgit:gitfaq[1], section "TRANSFERS" for a discussion of the
++See also linkgit:gitfaq[7], section "TRANSFERS" for a discussion of the
+ problems associated with file syncing across systems.
+ 
+ FILE FORMAT
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index 6d610253575..127518c2a8d 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -17,7 +17,7 @@
+ 
+ #define BUILTIN_BUNDLE_CREATE_USAGE \
+ 	N_("git bundle create [-q | --quiet | --progress]\n" \
+-	   "                  [--version=<version>] <file> (<git-rev-list-args> | --all)")
++	   "                  [--version=<version>] <file> <git-rev-list-args>")
+ #define BUILTIN_BUNDLE_VERIFY_USAGE \
+ 	N_("git bundle verify [-q | --quiet] <file>")
+ #define BUILTIN_BUNDLE_LIST_HEADS_USAGE \
+Range-diff against v1:
+1:  39bdc5941c7 ! 1:  e9be866f33d Documentation/git-bundle.txt: mention --all in Synopsis
+    @@ Metadata
+     Author: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## Commit message ##
+    -    Documentation/git-bundle.txt: mention --all in Synopsis
+    +    Documentation/git-bundle.txt: mention full backup example
+     
+    -    `--all` is convenient for bundling all refs.  But it is only mentioned
+    -    once, halfway through the doc, under the demure section “Object
+    -    prerequisites”.  It deserves to be mentioned as an alternative to
+    -    `<git-rev-list-args>`.
+    +    Tell the user how to make a full backup of the repository right at the
+    +    start of the doc.
+    +
+    +    This is a requested use-case.[1]  But the doc is a bit unassuming
+    +    about it:
+    +
+    +      “ If you want to match `git clone --mirror`, which would include your
+    +        refs such as `refs/remotes/*`, use `--all`.
+    +
+    +    The user cannot be expected to formulate “I want a full backup” as “I
+    +    want to match `git clone --mirror`” for a bundle file or something.
+    +    Let’s drop this mention of `--all` later in the doc and frontload it.
+    +
+    +    † 1: E.g.:
+    +
+    +        • https://stackoverflow.com/questions/5578270/fully-backup-a-git-repo
+    +        • https://stackoverflow.com/questions/11792671/how-to-git-bundle-a-complete-repo
+     
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+     
+      ## Notes (series) ##
+    -    Long line in bundle.c now?
+    +    v2:
+    +    • Mention as a parenthetical on an existing paragraph (don’t create a
+    +      new sentence and paragraph)
+    +    • Remove the “mirror” mention
+    +
+    +      Link (both): https://lore.kernel.org/git/ZxbIWEGS1UB3UIg+@nand.local/
+     
+      ## Documentation/git-bundle.txt ##
+    -@@ Documentation/git-bundle.txt: SYNOPSIS
+    - --------
+    - [verse]
+    - 'git bundle' create [-q | --quiet | --progress]
+    --		    [--version=<version>] <file> <git-rev-list-args>
+    -+		    [--version=<version>] <file> (<git-rev-list-args> | --all)
+    - 'git bundle' verify [-q | --quiet] <file>
+    - 'git bundle' list-heads <file> [<refname>...]
+    - 'git bundle' unbundle [--progress] <file> [<refname>...]
+    -
+    - ## builtin/bundle.c ##
+    -@@
+    +@@ Documentation/git-bundle.txt: the "offline" transfer of Git objects without an active "server"
+    + sitting on the other side of the network connection.
+    + 
+    + They can be used to create both incremental and full backups of a
+    +-repository, and to relay the state of the references in one repository
+    +-to another.
+    ++repository (`git bundle create <file> --all`), and to relay the state of
+    ++the references in one repository to another.
+    + 
+    + Git commands that fetch or otherwise "read" via protocols such as
+    + `ssh://` and `https://` can also operate on bundle files. It is
+    +@@ Documentation/git-bundle.txt: It is okay to err on the side of caution, causing the bundle file
+    + to contain objects already in the destination, as these are ignored
+    + when unpacking at the destination.
+      
+    - #define BUILTIN_BUNDLE_CREATE_USAGE \
+    - 	N_("git bundle create [-q | --quiet | --progress]\n" \
+    --	   "                  [--version=<version>] <file> <git-rev-list-args>")
+    -+	   "                  [--version=<version>] <file> (<git-rev-list-args> | --all)")
+    - #define BUILTIN_BUNDLE_VERIFY_USAGE \
+    - 	N_("git bundle verify [-q | --quiet] <file>")
+    - #define BUILTIN_BUNDLE_LIST_HEADS_USAGE \
+    +-If you want to match `git clone --mirror`, which would include your
+    +-refs such as `refs/remotes/*`, use `--all`.
+    + If you want to provide the same set of refs that a clone directly
+    + from the source repository would get, use `--branches --tags` for
+    + the `<git-rev-list-args>`.
+2:  f7d9aa89c95 < -:  ----------- Documentation/git-bundle.txt: mention full backup example
+3:  33980a47d13 = 2:  f18f8ca453d Documentation/git-bundle.txt: mention --all in spec. refs
+4:  63a431537b7 ! 3:  c50f9d405f9 Documentation/git-bundle.txt: discuss naïve backups
+    @@ Commit message
+     
+     
+      ## Notes (series) ##
+    +    v2:
+    +    • Fix gitfaq(7) link
+    +
+    +      Link: https://lore.kernel.org/git/ZxfhAAgNlbEq60VB@nand.local/#t
+    +    v1:
+         Correct mention of the section?  All-caps seems to be the convention.
+     
+      ## Documentation/git-bundle.txt ##
+    @@ Documentation/git-bundle.txt: You can also see what references it offers:
+     +This is why it is recommended to use Git tooling for making repository
+     +backups, either with this command or with e.g. linkgit:git-clone[1].
+     +
+    -+See also linkgit:gitfaq[1], section "TRANSFERS" for a discussion of the
+    ++See also linkgit:gitfaq[7], section "TRANSFERS" for a discussion of the
+     +problems associated with file syncing across systems.
+     +
+      FILE FORMAT
 
-> ++
-> +With `repair`, the linking files will be updated if there's an absolute/relative
-> +mismatch, even if the links are correct.
+base-commit: 34b6ce9b30747131b6e781ff718a45328aa887d0
+-- 
+2.46.1.641.g54e7913fcb6
 
-This is worth keeping.
-
-> +This can also be set up as the default behaviour by using the
-> +`worktree.useRelativePaths` config option.
-> +
-
-This should get folded into my suggestion above.
-
-> diff --git a/t/t2408-worktree-relative.sh b/t/t2408-worktree-relative.sh
-> deleted file mode 100755
-> index a3136db7e28cb20926ff44211e246ce625a6e51a..0000000000000000000000000000000000000000
-> --- a/t/t2408-worktree-relative.sh
-> +++ /dev/null
-> @@ -1,39 +0,0 @@
-
-Was removing t2408 intentional here? I don't see the tests being
-re-added elsewhere in this patch (though they may be introduced
-elsewhere later in the series, I haven't read that far yet). Either way,
-it may be worth mentioning in the commit message to avoid confusing
-readers.
-
-> diff --git a/worktree.c b/worktree.c
-> index 77ff484d3ec48c547ee4e3d958dfa28a52c1eaa7..de5c5e53a5f2a758ddf470b5d6a9ad6c66247181 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -14,6 +14,8 @@
->  #include "wt-status.h"
->  #include "config.h"
->
-> +int use_relative_paths = 0;
-
-I wondered whether 'use_relative_paths' should be static, or if we need to extern it in
-from somewhere else in the tree. But we do, from worktree.[ch], which
-seems reasonable. It would be nice if there was some way to thread that
-into the worktree.h API, but I think that this is a reasonable measure
-to take for now.
-
-> +
->  void free_worktree(struct worktree *worktree)
->  {
->  	if (!worktree)
-> @@ -111,9 +113,9 @@ struct worktree *get_linked_worktree(const char *id,
->  	strbuf_strip_suffix(&worktree_path, "/.git");
->
->  	if (!is_absolute_path(worktree_path.buf)) {
-> -	    strbuf_strip_suffix(&path, "gitdir");
-> -	    strbuf_addbuf(&path, &worktree_path);
-> -	    strbuf_realpath_forgiving(&worktree_path, path.buf, 0);
-> +		strbuf_strip_suffix(&path, "gitdir");
-> +		strbuf_addbuf(&path, &worktree_path);
-> +		strbuf_realpath_forgiving(&worktree_path, path.buf, 0);
-
-Whitespace change?
-
->  	}
->
->  	CALLOC_ARRAY(worktree, 1);
-> @@ -725,12 +727,15 @@ static int is_main_worktree_path(const char *path)
->   * won't know which <repo>/worktrees/<id>/gitdir to repair. However, we may
->   * be able to infer the gitdir by manually reading /path/to/worktree/.git,
->   * extracting the <id>, and checking if <repo>/worktrees/<id> exists.
-> + *
-> + * Returns -1 on failure and strbuf.len on success.
->   */
->  static int infer_backlink(const char *gitfile, struct strbuf *inferred)
-
-Should this return an ssize_t instead, then? I don't think we're going
-to have worktree paths that are actually larger than INT_MAX, but it
-seems hygienic and good to prevent any accidental overflow issues.
-
-Thanks,
-Taylor
