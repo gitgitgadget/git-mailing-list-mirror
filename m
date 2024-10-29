@@ -1,66 +1,75 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BB72F56
-	for <git@vger.kernel.org>; Tue, 29 Oct 2024 17:48:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DDD1CC17A
+	for <git@vger.kernel.org>; Tue, 29 Oct 2024 18:02:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730224127; cv=none; b=T2H+UudODs+Ev6oABtHJxUrHc9msft1YJ3zvbas79LOTf0667F4aCyTfVE5f7MUEcjl0liq3Y7JwAmbnpAuNrEo+OdViBb67axN13uWiJflu0BPj6C+f5f5rngQ8oO1fJV+UGBUxnMWt0Ag3sEeg7IAGSVj4ovGDkGmZg93V03c=
+	t=1730224930; cv=none; b=bXTft1DbI10qTkN//8L+QN18niP8x4P8C0EhArkXnjtUD0eDGV2aI9CNMpwQR6wFVLuySmCMUIYXAC1S0qi+E1GsbmDNeWk+sdNDycZlJUD5zmnAUaBvHaRQMQw7KMt2umbZyUXmX/o4RBw+jOKicvjKVvVKlNjX5OefPwJ2p0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730224127; c=relaxed/simple;
-	bh=4tTe45CA91d0GbIgN0uTSZEf0cuRGuJTowk/DLz8tYM=;
+	s=arc-20240116; t=1730224930; c=relaxed/simple;
+	bh=niQpJ0CWRMVEqyiz1I2vyCbcA147omaAaC2FzDZFCiE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FAKpFZGQ1c+FeYznuh+UFx4DsPE5lIPKqhKUx62SzDNadLPa77B80sVwRylagUtpLV+UknGnDJxMLVtX2emW5h8POeKiY+pNkD8MxfVmKPgDjgh9ehn3dkwswwIFX+GzHLaMDci3glky0g4QUgYPCi0hI+F9ilZJcJ7NM3nDl7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=FS441aWm; arc=none smtp.client-ip=209.85.128.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=MEgY8EnSDAmtjxO5/bxtVZO2nLnP1YYNlhILQBQFcyMa+ZmE0geqG0DjWx2RP6GemqnKbcIqVqq17n4CITrl6ddqalaK+F4g7nz8vFYUiFgb/QtNQELOHBa0SxJ6oryvYBqUbBoYFeDePxrYxsVXCKAgO0EHQTiJ7wyz5zlWUvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=wek+eU8G; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="FS441aWm"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6e35f08e23eso52219687b3.2
-        for <git@vger.kernel.org>; Tue, 29 Oct 2024 10:48:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="wek+eU8G"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6e5a5a59094so49869337b3.3
+        for <git@vger.kernel.org>; Tue, 29 Oct 2024 11:02:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730224124; x=1730828924; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730224927; x=1730829727; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4tTe45CA91d0GbIgN0uTSZEf0cuRGuJTowk/DLz8tYM=;
-        b=FS441aWmtB5ZpSnJcuEl6DtM6QUV+9+IrBZ+TmOCY4lRHXN1P1iueBt+ljKICz+a20
-         B02xMv34cnvFHdV5uwpKgAD+rzt3z2ohJClA+wYgh7grlBJjeVFl4Cmfu5GNvnZXWSq0
-         YvJtu3Z8+DznKmziATcNkCGfpVPjHg174409BEMkt1IoAip3ZR5TVgRsxGcM6C4AcZT+
-         4MZNIH4zmLm9nypVPmytg7P0zEWCDNO5WE6rXIjvFDjoy3LorYYDqm1KL4pj2QMwXcMd
-         h8t1gkYHpF5FRb053eq8lO/P7Bhndc5BJ4CIP16RFkyjssPdEzeqohIsVpJMJo39Z5wn
-         p7Ag==
+        bh=NbXUNFMm73ttnHlynNv4SwLGxjssGSLPUcPmCVeeHPs=;
+        b=wek+eU8GPC7ak11QS8cYruvU7icThfVCyISi31EXNgsf2/04i3palQes7iYCvVookD
+         Nfzxv6YFO5C1kEj6xmUOlCJJZbTeVEdzvt0IN0apQYoVF3odmnuxOPOJZwJVGbgOiEN9
+         IUb23xaXD+E2gQ5It1gvVTG3+vU/Fk7LBjcdpfqyfh2olj9MkzonlZqvETw/XUPZndfI
+         dvVzoCKdquVHxYotems7LA9DpoO9ShsUHw+Mfqp4Yy+Q3rYmDFhv57mKjjCXRMS2gGAT
+         9Gnc7P5Iq3vd0vwjiXSOhraHfpiAM5gMiWzcy/ke8tzA97jVyDf0rSnrOQIT6EQ0fM/Z
+         9oOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730224124; x=1730828924;
+        d=1e100.net; s=20230601; t=1730224927; x=1730829727;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4tTe45CA91d0GbIgN0uTSZEf0cuRGuJTowk/DLz8tYM=;
-        b=U2zMDh7a57jKVOaouHjNDqo5lZcKRgtRSVm6KzAYl95QJVWVXPeM2OsQ3jO7T+Tj9x
-         6HagAWSQepHb1vq5Ft9dEH5SAJp8XTyNGy9Ea7AUBHkjJLIZeFsvoT2TovzhgikzAvlM
-         QNcLfZ3PW+tQ56DQEnreypKDP/ElGpd/iopileaoFPgPmSQ0EkQ4vNTk10SYt8BE6Yna
-         abMpB8sK6BnxT7GP8fLZqD3WlNDoKJntCSKg7Ru2ggUxC5LuuHaH0Jlh8QTEtGKk8G1O
-         OoaXtRzGU+gf+Vi5CHtb+mH4NK4kRoHNlfHtdZJKq0SUPucsrWKcv/e/Ad8cH/6pEkDp
-         FpOA==
-X-Gm-Message-State: AOJu0YyeuxsC6ayh6uLxTZve0VFAs+CS1qBTyfIDI66B2pB2cf0m5/lh
-	nhC/yif3ODxUqimZ/Uw5oKDN5/MuTPAIqgNzJtEgKJSg3X8zSjkdH1utI4AvfX0=
-X-Google-Smtp-Source: AGHT+IGgCi3Fo9y0L7O2lEayM3AR/2ILnuN913cm4VK72/NSE+sAPoa/XutZY1ZhqRUAlVer9RVV1g==
-X-Received: by 2002:a05:690c:89:b0:6ea:3313:fa2d with SMTP id 00721157ae682-6ea3313fd13mr23870527b3.39.1730224124688;
-        Tue, 29 Oct 2024 10:48:44 -0700 (PDT)
+        bh=NbXUNFMm73ttnHlynNv4SwLGxjssGSLPUcPmCVeeHPs=;
+        b=vc3EfGQSFSxh69UV4656YzvSZCoLkUbKKVLtZqncEximDNQEGxeAHdTxdbCrXBuIGP
+         aHPeE9qVGlsdC7GA6sGEbuP7zBA4v6BnUqAAuUxH17xbZ5SZjfvVfkJutAH6lkhJJtYA
+         D7FvRBLvX2pEdOyiNuZ1HX3hZsrF4aZC1cfSgSqJaJdJlUG7HOxEEMXBSaJA7Fr5MTsh
+         8dch8tiRSD+52tAj2u8ShEeKhEvmKrucURfCVD7OVVJdtRKjVIuqwuPL/jggwXQVz9/W
+         zy/LghYPYrb1J6WAhN/OPJ3LThwGEYBlAsevXWp1fhZrwMKO+oqPPAheM3+/1oMjVZbW
+         4SfA==
+X-Forwarded-Encrypted: i=1; AJvYcCXFHDPW+J+N16AOxYuA01NszeXYh5+5cwofd06rBCDTRGHIZOK/+XuM8WooTjpRSkEKYVk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWNmSQrx8u2SkCpg8LedbramHjz/lJCqk61aKeXWsFa3R1x+Ox
+	jfQNSp5vsRyFpKlq3DBJFOyCwjB7harN6VhAkJZUVINVaiGY8DPzps1HEtDOK4U=
+X-Google-Smtp-Source: AGHT+IEprEAdAO2FLQ/V0JwquEP4Afbw+XmPS8HImF3b/2FlWGs3kbmjBu9+OSCDuZlnPDekVmEySg==
+X-Received: by 2002:a05:690c:fcb:b0:6de:2ae:8138 with SMTP id 00721157ae682-6e9d891bcdamr110758367b3.5.1730224927079;
+        Tue, 29 Oct 2024 11:02:07 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6bda2b5sm20839127b3.33.2024.10.29.10.48.44
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6c18381sm20602817b3.58.2024.10.29.11.02.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Oct 2024 10:48:44 -0700 (PDT)
-Date: Tue, 29 Oct 2024 13:48:42 -0400
+        Tue, 29 Oct 2024 11:02:06 -0700 (PDT)
+Date: Tue, 29 Oct 2024 14:02:04 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 8/8] config: make `packed_git_(limit|window_size)`
- non-global variables
-Message-ID: <ZyEf+v54XuJCyQOV@nand.local>
-References: <cover.1730122499.git.karthik.188@gmail.com>
- <e99b1dad549bb1e87011d8722b8582172390aa04.1730122499.git.karthik.188@gmail.com>
- <Zx+/rEB8RklP359p@nand.local>
- <CAOLa=ZR5=Zf59Eu7VyZdiO=8LUmoEKMJk4Y1X+iog0VzLh2yqg@mail.gmail.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	peff@peff.net, johncai86@gmail.com, newren@gmail.com,
+	christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com
+Subject: Re: [PATCH v2 00/17] pack-objects: add --path-walk option for better
+ deltas
+Message-ID: <ZyEjHOcf9A4eMSFG@nand.local>
+References: <pull.1813.git.1728396723.gitgitgadget@gmail.com>
+ <pull.1813.v2.git.1729431810.gitgitgadget@gmail.com>
+ <ZxbLFLDgCm6wLmB9@nand.local>
+ <Zx8lHzDyqyBpzrAE@pks.im>
+ <Zx/AGrGTN2mQZqGs@nand.local>
+ <00d80855-0530-4384-8d2f-5370ace9c0d5@gmail.com>
+ <Zx/I+9icWGsRz11x@nand.local>
+ <85d3c75c-d7c2-498f-8afe-34c49337ba37@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,12 +78,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZR5=Zf59Eu7VyZdiO=8LUmoEKMJk4Y1X+iog0VzLh2yqg@mail.gmail.com>
+In-Reply-To: <85d3c75c-d7c2-498f-8afe-34c49337ba37@gmail.com>
 
-On Tue, Oct 29, 2024 at 12:09:09PM -0400, karthik nayak wrote:
-> Thanks for the thorough review. Appreciate it!
+On Mon, Oct 28, 2024 at 03:46:11PM -0400, Derrick Stolee wrote:
+> On 10/28/24 1:25 PM, Taylor Blau wrote:
+> > On Mon, Oct 28, 2024 at 01:13:15PM -0400, Derrick Stolee wrote:
+>
+> > > You are correct that this is not compatible with those features as-is.
+> > > _Maybe_ there is potential to integrate them in the future, but that
+> > > would require better understanding of whether the new compression
+> > > mechanism valuable in enough cases (final storage size or maybe even
+> > > in repacking time).
+> >
+> > I think the bitmap thing is not too big of a hurdle. The .bitmap file is
+> > the only spot we store name-hash values on-disk in the "hashcache"
+> > extension.
+> >
+> > Unfortunately, there is no easy way to reuse the format of the existing
+> > hashcache extension as-is to indicate to the reader whether they are
+> > recording traditional name-hash values, or the new --path-walk hash
+> > values.
+>
+> The --path-walk option does not mess with the name-hash. You're thinking
+> of the --full-name-hash feature [1] that was pulled out due to a lack of
+> interest (and better results with --path-walk).
+>
+> [1] https://lore.kernel.org/git/pull.1785.git.1725890210.gitgitgadget@gmail.com/
 
-Thanks for working on it!
+Ah, gotcha. Thanks for clarifying.
+
+What is the incompatibility between the two, then? Is it just that
+bitmaps give us the objects in pack- or pseudo-pack order, and we don't
+have a way to permute that back into the order that --path-walk would
+give us?
+
+If so, a couple of thoughts:
+
+  - You could consider storing the path information for each blob and
+    tree object in the bitmap using a trie-like structure. This would
+    give you enough information to reconstruct the path-walk order (I
+    think) at read-time, but at significant cost in terms of the on-disk
+    size of the .bitmap.
+
+  - Alternatively, if you construct the bitmap from a pack or packs that
+    were generated in path-walk order, then you could store a
+    permutation between pack order and path-walk order in the bitmap
+    itself.
+
+  - Alternatively still: if the actual pack *order* were dictated solely
+    by path-walk, then neither of these would be necessary.
+
+That all said, I'm still not sure that there is a compatibility blocker
+here. Is the goal is to ensure that packs generated with
+--use-bitmap-index are still compact in the same way that they would be
+with your new --path-walk option?
+
+If so, I think matching the object order in a pack to the path walk
+order would achieve that goal, since the chunks that you end up reusing
+verbatim as a result of pack-reuse driven by the bitmap would already be
+delta-ified according to the --path-walk rules, so the resulting pack
+would appear similarly.
+
+OTOH, the order in which we pack objects is extremely important to
+performance as you no doubt are aware of. So changing that order to more
+closely match the --path-walk option should be done with great care.
+
+Anyway. All of that is to say that I want to better understand what does
+and doesn't work together between bitmaps and path-walk. Given my
+current understanding, it seems there are a couple of approaches to
+unifying these two things together, so it would be nice to be able to
+do so if possible.
 
 Thanks,
 Taylor
