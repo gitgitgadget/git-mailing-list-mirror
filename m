@@ -1,71 +1,38 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951B61E0B62
-	for <git@vger.kernel.org>; Mon, 28 Oct 2024 23:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86347F9D6
+	for <git@vger.kernel.org>; Tue, 29 Oct 2024 05:50:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730158609; cv=none; b=jGMD3m15c+SrmXaa//Wntoe/U75rXr1hdmuEEpXH7jUPNdTMGvirtCFsWoddEf07kyPnr1j6WjYvU5rgIwVPZ0AlQMFMfRB+H1ovZR3vnB0O+b+VulMSgG9Z7B3cjQIkcHXZdVqgdxTMSv9CU30+5KQLfDHT36A7fr0q8INf7VY=
+	t=1730181051; cv=none; b=IFSJln9ahahPby6JnMZoSaY28KrklF+dZJg+kDqI4Je3rdtBjsJY5tNs70Mz8Q5pwYIVfQJFwgtjDFA0Rj1RjxTSJbroxC7hMMROiD0YV9BHL7zLZvXewG0v86OmMdZ9A5/jFSYhVo3gG/gBgk/ACNyV6GeDG5/lFTMEIO8Zjos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730158609; c=relaxed/simple;
-	bh=AGInNZ+NhavbNoIgghuXMSaYw5ZhaYOb4jqsSZNtAJ0=;
+	s=arc-20240116; t=1730181051; c=relaxed/simple;
+	bh=tKckatXPax6eTc8X0z9CKzIRoPxTaMeFdVqd5GPZoeo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DwKcJTh78OPcRSsF2jToEnpyHSFXPz3k3i21QNOl4laAy7w6TALG07ADtAPwXmnOhxKp0p/+6OrLGO765lFRhOLcCjxlrp8563QnDSMWyFvNwy10ab/hfn12LUAG4k60qhuGzjYQ8q969/uud2nBU6QN1h5B5erYJ0J8SHiRNbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=vLJW15jy; arc=none smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=kr4RhAuzCtXxvdnWcDcuTesTfl7OsG2WsJCzQfgfY3zYKezhNLFBHu5E+sgpslGAHL8AJ/nsLY2W1GN+gyDPNIW5NsgWOSGO9O0sNLIug7GT0pTKPwWzzYLTsSwmShWqzB3oes9hXb3/Lqyzn7XxKxi9CuOivVAixCdG6esR5b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=I26T1njE; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="vLJW15jy"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6e38fc62b9fso42804407b3.2
-        for <git@vger.kernel.org>; Mon, 28 Oct 2024 16:36:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730158606; x=1730763406; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=va9rlzJQ4wVXbcF7uHdhfQO7Wb8K+rhIyJn90HDdBpI=;
-        b=vLJW15jyIF5ZgPSKp/oMVVZDW9vAfW8W79ahH/lP9KQJnO48JkpXIH6vFQ1QWlaWCA
-         yOmdKPNXdUxtGlgfHltSWVApVReUYirJkyfVlU3Lf8xN390e2CCUhfzzOENd9sWjV8zA
-         45rdQKeZxsYdIGnJwBqv1v7175OwIiFNxsCVfhwvSFX9Fdc7SM3+ZU8rsuHIGlPln7cK
-         3Czdc59+ZtSOO0BfkB/lC++tQEseXkhd/D0IOjuSJ2CmIcJo1l6cJgEQLTdboAujWZA1
-         NBR3pMcTo2uE+Rw8bNT3GvJwtbIW8VpFNmJ7h5MWrClH4GFooFKCRchIeuiZJhqeLIpG
-         8shw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730158606; x=1730763406;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=va9rlzJQ4wVXbcF7uHdhfQO7Wb8K+rhIyJn90HDdBpI=;
-        b=CS1fssMvwagXAlL3vsm57DPC5HZpOUkR1yAKlHPxqibXpo+ia8LPYOkC/jnHG1McHx
-         gdJsh3F6oYVj3TrrlR5FHIgih59RWnAxVHV0MqO4dURa5v6uI5+n/hcCZavhvApAY9Rr
-         yuIh5ycHqqquHxpl7/AfBxnu+mPL9QtNoL+NTUkPQDIdZcygw1Loyb7HqdRSm+22Prro
-         33A+qtaL9I11eChRWqnK4bMDV1lAoDqpn8yB3n2M/u9vMfE7iGiOOzyCMJ924/O47bot
-         UkgsDB8NZpfExQ9ETx2V5x1AFn5erYLbuA84DUnxiq4qzm/sEmyL//iKpweiT0CMVefd
-         o4oA==
-X-Gm-Message-State: AOJu0Yys72Kl99wpJxfpQ2LGpUxkA7z4w2smaWaXzJcf6nu98EGHVmDi
-	gRREwWaDKkcwT7nBwYKQzuYbEmig8JGMuj5zJEjvSwkaE2UWezjo+G+BzkuGDyc=
-X-Google-Smtp-Source: AGHT+IG+Xnzb/7WjDcR5WsCJSjKXOfnrXo9ho/4aDDo5D84ZBUe40QKWVFOOeZLPO6x62yALQ/cC0A==
-X-Received: by 2002:a05:690c:dd4:b0:6ea:258f:a4c4 with SMTP id 00721157ae682-6ea258fe620mr9190837b3.0.1730158606421;
-        Mon, 28 Oct 2024 16:36:46 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6c95c4asm16522077b3.105.2024.10.28.16.36.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Oct 2024 16:36:45 -0700 (PDT)
-Date: Mon, 28 Oct 2024 19:36:43 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	shejialuo <shejialuo@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH 2/2] worktree: add `relativeWorktrees` extension
-Message-ID: <ZyAgC1dRXIiLX9Vn@nand.local>
-References: <20241025-wt_relative_options-v1-0-c3005df76bf9@pm.me>
- <20241025-wt_relative_options-v1-2-c3005df76bf9@pm.me>
- <Zx7YxLPItxvFJK62@nand.local>
- <D571HWYAD4MM.28JAS7D0Y6OI3@pm.me>
- <Zx/FAoj2jcISsv0X@nand.local>
- <D57O5LHGRN1M.WHYPYUEOUOFM@pm.me>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="I26T1njE"
+Received: (qmail 16838 invoked by uid 109); 29 Oct 2024 05:50:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=tKckatXPax6eTc8X0z9CKzIRoPxTaMeFdVqd5GPZoeo=; b=I26T1njEQRHkXqYKZbY9NY0dKU+VXx4pAsV1qFbVzwN0zZdlvLzdFuLEB04Q6BSodQS4NxFL/eajcRpNhoLoLsW0iidGEIs+tuJw4Xt0LA7XBZfM9xfhSDlkENKPbCJKwpfTWs/kjlnZN2TQ0AsL1qswDQMZQ6nfVSOax9T7rN5RLkzzND6rg04FQnHvuTnTxqKm/io3qYwJmUKqgzsqwuVEW0KdYf1lxDhCVFx2ye+ycWxYBbLXRuYJRYQBK7Tz8iNbUVaRsSZE2qQuX+V6JTgviEykCGEWmwXyc43/RL2ZyElyz4PeYVUigUurZbEBLvkELR/jAR+lMdyJVvIXzg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Oct 2024 05:50:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30020 invoked by uid 111); 29 Oct 2024 05:50:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Oct 2024 01:50:40 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 29 Oct 2024 01:50:39 -0400
+From: Jeff King <peff@peff.net>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, me@ttaylorr.com
+Subject: Re: [PATCH v2 4/8] packfile: pass down repository to `odb_pack_name`
+Message-ID: <20241029055039.GA2886077@coredump.intra.peff.net>
+References: <cover.1730122499.git.karthik.188@gmail.com>
+ <73ba9945a7b7ec69e4ea29116c473b88e5c2a916.1730122499.git.karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,63 +41,220 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <D57O5LHGRN1M.WHYPYUEOUOFM@pm.me>
+In-Reply-To: <73ba9945a7b7ec69e4ea29116c473b88e5c2a916.1730122499.git.karthik.188@gmail.com>
 
-On Mon, Oct 28, 2024 at 07:00:11PM +0000, Caleb White wrote:
-> > But that's OK, and we can figure out a path forward here. I am just
-> > trying to say that this highlights the importance of following the WC
-> > reports regularly to catch cases where the maintainer missed some
-> > important piece of information.
->
-> My apologies, this was my first patch submission to Git and I was not
-> exactly the process by which topics progressed from `seen` to `next` to
-> `master`. I will be sure to follow the reports more closely in the future.
+On Mon, Oct 28, 2024 at 02:43:42PM +0100, Karthik Nayak wrote:
 
-It's not a problem, and I am glad that you have found an interest in
-contributing to the Git project. We'll figure this one out :-).
+> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> index ffee7d3abd..f4892d7f37 100644
+> --- a/builtin/fast-import.c
+> +++ b/builtin/fast-import.c
+> @@ -806,7 +806,7 @@ static char *keep_pack(const char *curr_index_name)
+>  	struct strbuf name = STRBUF_INIT;
+>  	int keep_fd;
+>  
+> -	odb_pack_name(&name, pack_data->hash, "keep");
+> +	odb_pack_name(the_repository, &name, pack_data->hash, "keep");
 
-> >> Adding the extension was the direction suggested by Junio in the
-> >> previous round. Git did not account for the possibility of the linking
-> >> files containing relative paths, so there's really no way to make this
-> >> change without breaking compatibility with older versions of Git. Git
-> >> had to be taught how to handle files that could contain either absolute
-> >> or relative paths.
-> >
-> > Yep, that makes sense. My preference here would be to make the new
-> > behavior opt *in*, rather than opt-out, so that:
-> >
-> >   - Users who do not experience problems with writing worktrees that
-> >     have absolute paths can continue to do so without any changes.
-> >
-> >   - Users who use worktrees *and* do not write relative paths can
-> >     upgrade between successive versions without requiring a new
-> >     repository extension that would break older Git versions.
-> >
-> >   - That we only add that extension to the repository's configuration if
-> >     and when the user has opted into the new behavior.
-> >
-> > Reading this new series, I *think* that is the behavior that you settled
-> > on, which seems quite reasonable to me. Can you confirm that I'm reading
-> > this all correctly? Assuming so, I think that we are in a reasonable
-> > position[^1] to review this series instead of having to back out the new
-> > behavior.
->
-> Yes this is correct. The new behavior is opt-in and the extension is
-> only added to the repository configuration if the user creates
-> a worktree with relative paths.
+Why not pack_data->repo here? It's always going to be set to
+the_repository in this program, but I think minimizing the number of
+references to it still has value.
 
-That is great. I'm glad that we're on the same page here, and that my
-understanding matches reality.
+> @@ -814,11 +814,11 @@ static char *keep_pack(const char *curr_index_name)
+>  	if (close(keep_fd))
+>  		die_errno("failed to write keep file");
+>  
+> -	odb_pack_name(&name, pack_data->hash, "pack");
+> +	odb_pack_name(the_repository, &name, pack_data->hash, "pack");
+>  	if (finalize_object_file(pack_data->pack_name, name.buf))
+>  		die("cannot store pack file");
+>  
+> -	odb_pack_name(&name, pack_data->hash, "idx");
+> +	odb_pack_name(the_repository, &name, pack_data->hash, "idx");
 
-> > Thanks for bearing with me here, I am quite embarrassed to have missed
-> > Junio's mail that I mentioned earlier, but I appreciate your patience
-> > while we sort this out together.
->
-> No worries! I appreciate your feedback and I'm glad we're able to
-> sort this out.
+Likewise in both of these spots.
 
-Not a problem, and again, I very much appreciate your patience and
-willingness to work on this.
+>  	if (finalize_object_file(curr_index_name, name.buf))
+>  		die("cannot store index file");
+>  	free((void *)curr_index_name);
+> @@ -832,7 +832,7 @@ static void unkeep_all_packs(void)
+>  
+>  	for (k = 0; k < pack_id; k++) {
+>  		struct packed_git *p = all_packs[k];
+> -		odb_pack_name(&name, p->hash, "keep");
+> +		odb_pack_name(p->repo, &name, p->hash, "keep");
 
-Thanks,
-Taylor
+This one does use p->repo. Good.
+
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index be2f99625e..eaefb41761 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -1479,7 +1479,7 @@ static void write_special_file(const char *suffix, const char *msg,
+>  	if (pack_name)
+>  		filename = derive_filename(pack_name, "pack", suffix, &name_buf);
+>  	else
+> -		filename = odb_pack_name(&name_buf, hash, suffix);
+> +		filename = odb_pack_name(the_repository, &name_buf, hash, suffix);
+>  
+>  	fd = odb_pack_keep(filename);
+>  	if (fd < 0) {
+> @@ -1507,7 +1507,7 @@ static void rename_tmp_packfile(const char **final_name,
+>  {
+>  	if (!*final_name || strcmp(*final_name, curr_name)) {
+>  		if (!*final_name)
+> -			*final_name = odb_pack_name(name, hash, ext);
+> +			*final_name = odb_pack_name(the_repository, name, hash, ext);
+
+These two don't have a packed_git, so they use their own repo. Makes
+sense.
+
+> -int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, struct repository *repo UNUSED) {
+> +int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, struct repository *repo) {
+>  	int i; int i_still_use_this = 0; struct pack_list *min = NULL, *red, *pl;
+>  	struct llist *ignore;
+>  	struct strbuf idx_name = STRBUF_INIT;
+> @@ -690,7 +690,7 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
+>  	pl = red = pack_list_difference(local_packs, min);
+>  	while (pl) {
+>  		printf("%s\n%s\n",
+> -		       odb_pack_name(&idx_name, pl->pack->hash, "idx"),
+> +		       odb_pack_name(repo, &idx_name, pl->pack->hash, "idx"),
+>  		       pl->pack->pack_name);
+>  		pl = pl->next;
+>  	}
+
+This one is using the "repo" variable passed to the main function. That
+seems a little sketchy to me philosophically, though, because these
+packs all came from a call to get_all_packs(the_repository). I think
+the two will always be the same, but it feels like we should be using
+pl->pack->repo here for consistency.
+
+> diff --git a/http.c b/http.c
+> index 7e5be05207..50d8811cea 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -2579,7 +2579,7 @@ struct http_pack_request *new_direct_http_pack_request(
+>  
+>  	preq->url = url;
+>  
+> -	odb_pack_name(&preq->tmpfile, packed_git_hash, "pack");
+> +	odb_pack_name(the_repository, &preq->tmpfile, packed_git_hash, "pack");
+>  	strbuf_addstr(&preq->tmpfile, ".temp");
+>  	preq->packfile = fopen(preq->tmpfile.buf, "a");
+>  	if (!preq->packfile) {
+
+This one really ought to be using the packed_git we set up for the
+matching idx file, but we won't have passed it through. And it's not
+worth heavy refactoring just to get access to it, IMHO.
+
+
+Earlier I mentioned that another helper could simplify many of these
+sites a little. What I meant was this (on top of what's in your series):
+
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 9056447bd0..976cb1d77b 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -806,19 +806,19 @@ static char *keep_pack(const char *curr_index_name)
+ 	struct strbuf name = STRBUF_INIT;
+ 	int keep_fd;
+ 
+-	odb_pack_name(the_repository, &name, pack_data->hash, "keep");
++	pack_hashfile(pack_data, &name, "keep");
+ 	keep_fd = odb_pack_keep(name.buf);
+ 	if (keep_fd < 0)
+ 		die_errno("cannot create keep file");
+ 	write_or_die(keep_fd, keep_msg, strlen(keep_msg));
+ 	if (close(keep_fd))
+ 		die_errno("failed to write keep file");
+ 
+-	odb_pack_name(the_repository, &name, pack_data->hash, "pack");
++	pack_hashfile(pack_data, &name, "pack");
+ 	if (finalize_object_file(pack_data->pack_name, name.buf))
+ 		die("cannot store pack file");
+ 
+-	odb_pack_name(the_repository, &name, pack_data->hash, "idx");
++	pack_hashfile(pack_data, &name, "idx");
+ 	if (finalize_object_file(curr_index_name, name.buf))
+ 		die("cannot store index file");
+ 	free((void *)curr_index_name);
+@@ -832,7 +832,7 @@ static void unkeep_all_packs(void)
+ 
+ 	for (k = 0; k < pack_id; k++) {
+ 		struct packed_git *p = all_packs[k];
+-		odb_pack_name(p->repo, &name, p->hash, "keep");
++		pack_hashfile(p, &name, "keep");
+ 		unlink_or_warn(name.buf);
+ 	}
+ 	strbuf_release(&name);
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index 7d6c47ffd9..d3b5e7e112 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -690,7 +690,7 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
+ 	pl = red = pack_list_difference(local_packs, min);
+ 	while (pl) {
+ 		printf("%s\n%s\n",
+-		       odb_pack_name(repo, &idx_name, pl->pack->hash, "idx"),
++		       pack_hashfile(pl->pack, &idx_name, "idx"),
+ 		       pl->pack->pack_name);
+ 		pl = pl->next;
+G 	}
+diff --git a/packfile.c b/packfile.c
+index cfbfcdc2b8..d81a62eb84 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -46,6 +46,11 @@ char *odb_pack_name(struct repository *repo, struct strbuf *buf,
+ 	return buf->buf;
+ }
+ 
++char *pack_hashfile(struct packed_git *p, struct strbuf *out, const char *ext)
++{
++	return odb_pack_name(p->repo, out, p->hash, ext);
++}
++
+ static unsigned int pack_used_ctr;
+ static unsigned int pack_mmap_calls;
+ static unsigned int peak_pack_open_windows;
+diff --git a/packfile.h b/packfile.h
+index 3409aef35d..43c19d7bba 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -32,6 +32,9 @@ struct pack_entry {
+ char *odb_pack_name(struct repository *repo, struct strbuf *buf,
+ 		    const unsigned char *hash, const char *ext);
+ 
++/* Like odb_pack_name(), but pull repo and hash from existing packed_git. */
++char *pack_hashfile(struct packed_git *p, struct strbuf *out, const char *ext);
++
+ /*
+  * Return the basename of the packfile, omitting any containing directory
+  * (e.g., "pack-1234abcd[...].pack").
+
+
+While coming up with the name, though, I had some second thoughts. The
+interface implies that its the way you should derive a pack-related
+filename from a packed_git. But it really is mis-designed for that
+purpose! The packed_git struct has "foo.pack" or similar in its
+pack_name field, and the correct way to derive the .idx, .bitmap, .keep,
+etc, is by string substitution. While we do tend to name packs
+pack-$hash.pack, most of the code will happily work on
+"some-arbitrary-name.pack". And that's why we have so few
+odb_pack_name() calls in the first place.
+
+IMHO the ones in fast-import should probably be doing that suffix
+replacement instead (and probably we should have a decent helper to
+facilitate that; you can grep for strip_suffix.*pack to see places that
+could potentially use it).
+
+All that said, I don't think it's worth derailing your series to deal
+with that cleanup. That can come later if we want. And if we do that,
+then the pack_hashfile() I suggested above would have no callers,
+because it's the wrong approach.
+
+I do think it's probably worth changing your series to use the
+packed_git repo pointers we already have available, though (i.e., the
+cases I pointed out inline above).
+
+-Peff
