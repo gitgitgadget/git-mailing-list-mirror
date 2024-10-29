@@ -1,170 +1,213 @@
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6443234
-	for <git@vger.kernel.org>; Tue, 29 Oct 2024 16:07:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A1E3234
+	for <git@vger.kernel.org>; Tue, 29 Oct 2024 16:09:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730218063; cv=none; b=FuQKmJtkQuLYzfX/Hhx36aEz3SJPRQ3B8arM/SoDtfinxDLkZE0/tQTC95SbhqbqiMlL0X++/XQskp7xcSEOB3ROKNC1r1FSZI0jmXQ16x4g18G2QKBNw8SvTkytuPWn0/6S/YsPYiu5irPrrI58HdPK913ssS+6VhgB2OhXIS8=
+	t=1730218153; cv=none; b=UU1L94+yQ9wW/4F0ZWLya/lLVDtpmUjKddFP70QXxoc3kGVIzEwjx7eGdW54VkBV4dricqvkx094ZhjR0ojp7VfXYmhfRpjOUuzBNHaNyi90pJjF1z9uahMovyZg+Xfc/OaO01SWDu6S6ngVKXPChVJQzz1Z8uiretmRD3g2pJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730218063; c=relaxed/simple;
-	bh=fGARtvnfOQJlN5vDHMmInbxytwgJtl3/06+Ub1OdJro=;
+	s=arc-20240116; t=1730218153; c=relaxed/simple;
+	bh=LQtuqsCjtQ8lYm6ySiykUEoiDj9M7KiapjgPzeaMp4k=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DpzsieSkiVkHXeZSreFCG0+AFLk/KV1jCopY59NVtPzLGD9BGLXe/HWhG5KLWNjyxxHZWW+flRbsCHou9K7uwISODecC7j3hbFwMINBrp90MDNc6kn1icKo2p7L3FL4k9EyE2S7LdgL2SmSK6L3qeurQ0jKGaoe8k7h3eYmQolM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aIJXMJvP; arc=none smtp.client-ip=209.85.221.173
+	 To:Cc:Content-Type; b=Zx9AVLIuL5++a00+LEdSd16zdyZIlOcwDCO5oIkECFzSPZAiVManiGK4XaqHdN97kGrx6oXr7ebesLDh/RAQ+vgr49ZfU7PLQIZspZnuoqXrBDofR5Lq0b3KevnZTM9sMG1pclxcdElXzZYr3X1KGz7bHGCd3KZhdRkpP8qXMtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FEwXPF7L; arc=none smtp.client-ip=209.85.210.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aIJXMJvP"
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5101bd018ceso938955e0c.1
-        for <git@vger.kernel.org>; Tue, 29 Oct 2024 09:07:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FEwXPF7L"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-71806621d42so3250773a34.3
+        for <git@vger.kernel.org>; Tue, 29 Oct 2024 09:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730218061; x=1730822861; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730218150; x=1730822950; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IupSm3yg8xwSAa5l23rVM6B5fVOSNw4oJ5zB+EbEpSs=;
-        b=aIJXMJvP+kDoMlMt2WcEORmuj57lAdx5v/1SdfCiwAw5qXNQ7RqBAIyKqxvGdw7sVt
-         tL99rmu4te509vhmR92YJndPJ6r1eR2h6UuY+qj+tKs/5nTCggSbF1LHF4uvFwmXS+yY
-         3RiQRG6xKneHfPdu60Y0T+9cObWOwwt3wuIETnbqXDiCgwmnceFV0deKItepDw2QL3ob
-         6lV/p/K684pFWEQEm4k5dofSmuPxT1GskhF5ZdRicB6PETszuktxt1qI84vuzEORBPJD
-         75gUs6hjDsen6hZh39K6gtQvtd6+S3AgppcbWBCtDif7xz8NAaqNZM++LQxViHE7CoJi
-         Bv7Q==
+        bh=RZmFU8RSo3s6mrZt8uJWRKbZiaZ+EQdEbiyr/4JtTWI=;
+        b=FEwXPF7LV+acIxZaimO6SfetSDEfAV1Ts6xde7k357RIbpasSsD6LW7mNk5w4Pv8GF
+         uachRPpBsRWhLxw+zNrFv6Afb34weIjie11+XgzHi/3xlghe/5W2oPCJ5yYSwRfzxUBq
+         hko5M4ONSKMKNg89xzfFJjKChOwxkI70KA/KekSe+qY2GXHu+DNth3nvcQl0QTpWpmac
+         FtWb0RR08ETfNc+55R//GQJ+2bQoiOrsJiyf2m4jj22izRnICKNO1H+3dMmX6QvQX2qr
+         9+fgmVKarXb18JUYHNqsWXkpaW2Lt6jUL36aLCDGQUIBWL9bm6LSranJPdptVq6ZdRv2
+         lphA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730218061; x=1730822861;
+        d=1e100.net; s=20230601; t=1730218150; x=1730822950;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IupSm3yg8xwSAa5l23rVM6B5fVOSNw4oJ5zB+EbEpSs=;
-        b=dWLsWtlqtSzspYBV/8RolC8SAblvNr2KIvUx5ISZ45rLgDL5iqGGgp1CFdT2g0Qs2Y
-         jfQi+bV0DPX0UYLrzkV359cDj4m0mG6EehTg7TapccLEgycNQgjWlOtjezOpU+fWZ0t0
-         yXmwVtoo9x7a+0hAbxcpK5lNlWYnvusB/rjVrx6SHWFlkainacLYpSUkFRKzL4fhUqwl
-         QwPBg51K1XXcCrDYXULGPrtlp+g4L3K4KKOjw+FTD8uEMKEdWHWJSFnzW+QR9uBaI8OX
-         f8UFBiHbjOlba0nViRcjE3xa0nv0VGZG6FzwFVlSf7dMR5itGRVv2XAEA3FsxSIc8uHV
-         Yg4A==
-X-Gm-Message-State: AOJu0YxKyC3V4TrEtIRuUjq5BIfjI8CYpWv0K/ZBB14Xep9D9w4fyRsl
-	Qsxmuwh/mcFfXWLS2HLlpP61juZnl8eQnH7JzaCd6tfikysKnQ2w0SefdepaZeSglP61sqEbec3
-	5FYWzGvdpc97Dj6KYUgKd8NIiJ6I=
-X-Google-Smtp-Source: AGHT+IGdGrSeiIc+mLhAo3LaEj/FmAoUKQgHRtCNLY46rlVdLGAGnkqCllXXkhR7sNAOaupPr/wGgq80zbOWLCOSwxM=
-X-Received: by 2002:a05:6122:179c:b0:50d:4a9b:8f74 with SMTP id
- 71dfb90a1353d-5101538df17mr9731187e0c.13.1730218060460; Tue, 29 Oct 2024
- 09:07:40 -0700 (PDT)
+        bh=RZmFU8RSo3s6mrZt8uJWRKbZiaZ+EQdEbiyr/4JtTWI=;
+        b=SVPdb1H3dbYwi2XR4qy4UAbIM4SgnI6IyIMSp9tuxX/WEhnX7wZ9N8e4eh72ZKdx8D
+         +mOfgmWg/1DrnwpOa6dhytGjaXGLs62r5UHKFsalf5DOM/BsOyUTIlD42i7dKm3o7/7o
+         ik70h3mz0hNFQipF2OFzlGRwiiw+0u2uAVwEeSpRHQkThwyuH4adTo08x8DparPoh3pX
+         LUJuSDJbtT6yVjIYUPKcrWiYD6sM8TEXMII/AqeTY13YA1HAPfJGfCNafbKppHBodEJN
+         eTzwGRGEeQlRLG0B5O3Te8ba2CmzcMklibGgqtxIBjYQWXQayb3BmO6jPGXWNyAdjL9h
+         CnXQ==
+X-Gm-Message-State: AOJu0YxitxMettIMHG8gglCv68uLDiIcr/2hkZOjKqLzR1C9kRQizy8c
+	468XAAVT0q9GQ3318FBpRLhlJ9pRbsrChYGirX449DKBJExOoQiXPBWrqVrr8A+XQWUVTGEgwXM
+	L42kFvArQgh9qDdLb6c5bDAl998WBqyU2
+X-Google-Smtp-Source: AGHT+IHA6q+dT6zXbJKEm/dDBrN5+rT2IjgzhBF7kudsOYcNj7RSiplGvd0IeOC26fpkmrZfH0YcCmxEbsM7RCCyZ50=
+X-Received: by 2002:a05:6870:1689:b0:277:f9d5:e85 with SMTP id
+ 586e51a60fabf-29051c25f90mr10564026fac.22.1730218150051; Tue, 29 Oct 2024
+ 09:09:10 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 29 Oct 2024 12:07:39 -0400
+ HTTPREST; Tue, 29 Oct 2024 12:09:09 -0400
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <Zx+98PYOONmoA4A7@nand.local>
-References: <cover.1730122499.git.karthik.188@gmail.com> <89ee3f48ce982236dd7841fa1a5cb15aa256b901.1730122499.git.karthik.188@gmail.com>
- <Zx+98PYOONmoA4A7@nand.local>
+In-Reply-To: <Zx+/rEB8RklP359p@nand.local>
+References: <cover.1730122499.git.karthik.188@gmail.com> <e99b1dad549bb1e87011d8722b8582172390aa04.1730122499.git.karthik.188@gmail.com>
+ <Zx+/rEB8RklP359p@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 29 Oct 2024 12:07:39 -0400
-Message-ID: <CAOLa=ZRO9-ob6QrstLJJTrvnbJGpQAymYvLQh8Z5bFxGYJgiHw@mail.gmail.com>
-Subject: Re: [PATCH v2 7/8] config: make `delta_base_cache_limit` a non-global variable
-To: me@ttaylorr.com
+Date: Tue, 29 Oct 2024 12:09:09 -0400
+Message-ID: <CAOLa=ZR5=Zf59Eu7VyZdiO=8LUmoEKMJk4Y1X+iog0VzLh2yqg@mail.gmail.com>
+Subject: Re: [PATCH v2 8/8] config: make `packed_git_(limit|window_size)`
+ non-global variables
+To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000e0fabd06259fc823"
+Content-Type: multipart/mixed; boundary="00000000000038d21106259fce0b"
 
---000000000000e0fabd06259fc823
+--00000000000038d21106259fce0b
 Content-Type: text/plain; charset="UTF-8"
 
-me@ttaylorr.com writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> On Mon, Oct 28, 2024 at 02:43:45PM +0100, Karthik Nayak wrote:
->> The `delta_base_cache_limit` variable is a global config variable used
->> by multiple subsystems. Let's make this non-global, by adding this
->> variable to the stack of each of the subsystems where it is used.
+> On Mon, Oct 28, 2024 at 02:43:46PM +0100, Karthik Nayak wrote:
+>> The variables `packed_git_window_size` and `packed_git_limit` are global
+>> config variables used in the `packfile.c` file. Since it is only used in
+>> this file, let's change it from being a global config variable to a
+>> local variable for the subsystem.
 >>
->> In `gc.c` we add it to the `gc_config` struct and also the constructor
->> function. In `index-pack.c` we add it to the `pack_idx_option` struct
->> and its constructor. Finally, in `packfile.c` we dynamically retrieve
->> this value from the repository config, since the value is only used once
->> in the entire subsystem.
+>> We do this by introducing a new local `packfile_config` struct in
+>> `packfile.c` and also adding the required function to parse the said
+>> config. We then use this within `packfile.c` to obtain the variables.
+>>
+>> With this, we rid `packfile.c` from all global variable usage and this
+>> means we can also remove the `USE_THE_REPOSITORY_VARIABLE` guard from
+>> the file.
 >
-> OK. Perhaps I am not quite following why this change is necessary, at
-> least in the context of the rest of this series. But let's read on...
+> Ahh. Now the motivation of the previous patch is clearer. Have you
+> considered hinting at the motivation here in the previous commit message
+> (e.g., "this gets us part of the way towards ...")?
 >
 
-Ah, well, as you know by now, it is to cleanup the usage of the global
-config state in packfile.c. I think I brief over it in the cover letter
-but like you mentioned in the next patch, I'll amend and add some
-details here too.
+Indeed, will add.
 
->> @@ -1604,6 +1604,10 @@ static int git_index_pack_config(const char *k, const char *v,
->>  		else
->>  			opts->flags &= ~WRITE_REV;
+>> diff --git a/environment.c b/environment.c
+>> index 8e5022c282..8389a27270 100644
+>> --- a/environment.c
+>> +++ b/environment.c
+>> @@ -49,8 +49,6 @@ int fsync_object_files = -1;
+>>  int use_fsync = -1;
+>>  enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
+>>  enum fsync_component fsync_components = FSYNC_COMPONENTS_DEFAULT;
+>> -size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
+>> -size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
 >
-> Not a huge deal, and not the fault of your patch here, but the
-> if(!strcmp(k, "pack.writereverseindex")) block should terminate with a
-> "return 0".
+> Very satisfying :-).
 >
->> +	if (!strcmp(k, "core.deltabasecachelimit")) {
->> +		opts->delta_base_cache_limit = git_config_ulong(k, v, ctx->kvi);
+>> +struct packfile_config {
+>> +	unsigned long packed_git_window_size;
+>> +	unsigned long packed_git_limit;
+>> +};
+>> +
+>> +#define PACKFILE_CONFIG_INIT \
+>> +{ \
+>> +	.packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE, \
+>> +	.packed_git_limit = DEFAULT_PACKED_GIT_LIMIT,  \
+>
+> s/,  /, /
+>
+>> +static int packfile_config(const char *var, const char *value,
+>> +			   const struct config_context *ctx, void *cb)
+>>  {
+>> +	struct packfile_config *config = cb;
+>> +
+>> +	if (!strcmp(var, "core.packedgitwindowsize")) {
+>> +		int pgsz_x2 = getpagesize() * 2;
+>> +		config->packed_git_window_size = git_config_ulong(var, value, ctx->kvi);
+>> +
+>> +		/* This value must be multiple of (pagesize * 2) */
+>> +		config->packed_git_window_size /= pgsz_x2;
+>> +		if (config->packed_git_window_size < 1)
+>> +			config->packed_git_window_size = 1;
+>> +		config->packed_git_window_size *= pgsz_x2;
 >> +		return 0;
+>> +	}
+>> +
+>> +	if (!strcmp(var, "core.packedgitlimit")) {
+>> +		config->packed_git_limit = git_config_ulong(var, value, ctx->kvi);
+>> +		return 0;
+>> +	}
+>> +
+>> +	return git_default_config(var, value, ctx, cb);
+>> +}
 >
-> But here you do 'return 0;' at the end of handling the
-> 'core.deltabasecachelimit' configuration value. Good.
+> I get that this was copy/pasted from elsewhere, but it would be nice to
+> replace the "every if statement ends in 'return 0' to keep them mutually
+> exclusive" with else if statements instead:
 >
->> diff --git a/config.c b/config.c
->> index a11bb85da3..728ef98e42 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -1515,11 +1515,6 @@ static int git_default_core_config(const char *var, const char *value,
->>  		return 0;
->>  	}
->>
->> -	if (!strcmp(var, "core.deltabasecachelimit")) {
->> -		delta_base_cache_limit = git_config_ulong(var, value, ctx->kvi);
->> -		return 0;
->> -	}
->> -
->
-> This is safe to drop from git_default_core_config() because the static
-> variable from environment.h is gone, so nobody is accidentally reading
-> an zero'd value.
->
->> diff --git a/pack-objects.h b/pack-objects.h
->> index b9898a4e64..3f6f504203 100644
->> --- a/pack-objects.h
->> +++ b/pack-objects.h
->> @@ -7,7 +7,8 @@
->>
->>  struct repository;
->>
->> -#define DEFAULT_DELTA_CACHE_SIZE (256 * 1024 * 1024)
->> +#define DEFAULT_DELTA_CACHE_SIZE       (256 * 1024 * 1024)
->> +#define DEFAULT_DELTA_BASE_CACHE_LIMIT (96 * 1024 * 1024)
->
-> Adding DEFAULT_DELTA_BASE_CACHE_LIMIT makes sense, and I assume the
-> diff on the line above is clang-format noise to keep the two
-> declarations aligned or something?
+> --- 8< ---
+> diff --git a/packfile.c b/packfile.c
+> index cfbfcdc2b8..c8af29bf0a 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -72,15 +72,11 @@ static int packfile_config(const char *var, const char *value,
+>  		if (config->packed_git_window_size < 1)
+>  			config->packed_git_window_size = 1;
+>  		config->packed_git_window_size *= pgsz_x2;
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.packedgitlimit")) {
+> +	} else if (!strcmp(var, "core.packedgitlimit")) {
+>  		config->packed_git_limit = git_config_ulong(var, value, ctx->kvi);
+> -		return 0;
+> +	} else {
+> +		return git_default_config(var, value, ctx, cb);
+>  	}
+> -
+> -	return git_default_config(var, value, ctx, cb);
+>  }
+> --- >8 ---
 >
 
-Yup, indeed, that is the point.
+Thanks, will patch this in. I try and avoid such things to mostly make
+it easier to review code block movements. But here I think it is indeed
+nicer to change for the better.
+>> +
+>> +
+>
+> Extra newline here (after the definition of packfile_config())?
+>
 
-> The rest looks good.
+Oops!
+
+> The rest all looks good.
 >
 > Thanks,
 > Taylor
 
---000000000000e0fabd06259fc823
+Thanks for the thorough review. Appreciate it!
+Karthik
+
+--00000000000038d21106259fce0b
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 40303db24b632e59_0.1
+X-Attachment-Id: 571c6ed1cab8f231_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jaENFb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mLzdKQy80L2xPVGJ4RW81Ylpadmc5MXlTZTlWck5iZQptZG1vbTIwOGVZ
-bU1qVmxEQldpT2MrSCs3VDFNc0NvUFdvWlEwdElpRkZYdG5iZFB3UDJTbDc1WlREQzBYUlM0Ck1p
-R3U5L1VQTjIxb3dyRkxyRjdhZ0NLbzZDWlJTbVdCZy9tSEU0cjVLc2xORWJISlk0TStubUlNaGtS
-MTFGSGQKWC9tZmNtMGttR3JEMlFkZjlRZ1ZFSmtXcWhhcjNoYVlxMStlMFpybkxxZGJzYU9tMlBU
-QVBVenFGcXhDdUg4dQpqTlRSdTRuZ2Z3Y1ZiZFkvdVdGYmplKzA5dndHZEFVdENlNGRLanI2dmNC
-blZlb3lBWlp3Z00xZDVsOWJrN3grCkY3M1ZuZXMrY3lQMnJzQWsrMnRPZEdCWWFINWlLZ3EzcHZ3
-VWNseVMrMyt4aXBxT0xuUTM1amVzTVZGOUhkQzcKOVBxOG0vWjdNMlVTaTlvSGd3MzY5eWRRYzhl
-YVlvb0tpdnhvemVPZFFsZFNpZXN1RkVMT1pOUEdUQi9QOGJFRwpzdEVVWXVaSTFzTVY5ZGdZQm5Q
-eFdpTmg0Z1FPb2h0OUpZNGxMZ0Z4MkM1L1RHcG5xVE9lV09CSGE5c0dvWkRlCjNZdm5XK3YwWTk0
-ME10NVZSNFJDQVhndFZvVURCUVVSRmxpL2piND0KPURsaGMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jaENLTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOWpaQy85Y1FqRDdaVG5zRzlaaFRmQ01CcFVwNGY3NAoxMzBlYkVYTWll
+aE93WnprYXpqMjVRZ0JESkpZWDBKU01nNVNNRldxM1F1cEU3azdtd0FDd3NhS2xRSFdzWGdxCks1
+d3QrakU3QUdxUG4xOHluYnYwTjBrbXp4Z3BBb01VS2ltRGpLbE1URTNPV3lJM21zV3cvRy9sM3c5
+Tllwc0oKZ1JUbmk2aEJtR2doR0RRYXRhVmF5SEVTMENUR2F5WFdNcS92MVIzbnZrU250cEVWSnJq
+bWpYdGd6bXNObWtiaApxWnJlR1ZoR3lqczgwVTdnYW1hWmowYndaYyttZ3JLTHdkY2lNNGtzSzQy
+VlhKSy9LTUR0ejNpTFk1enVRNktMCnhBNUI2STgvMXVycWUxR3R2K3oyVnJKNDB6N05ENXo2Q3F2
+a2NjZHFvUTFLd1V4ODBSM0ZkcUZkSlpJeUtrdzUKYjVqSVFNSkM2Y1A1QTFEbWFWK0x6bWk1VlBD
+djE3Z1IxYUVWSi81MkFraVdId0ZUbFdoMG4xUzBOMU5FangzYwp4TGRvUkJmSXpHV2Q1NlJ0SkdP
+L1RCZzJLMlhuL1U5elNZS0Rsd2NHdlc4R25MbWZnZnRkaFhSNElkemlCUTRYCldpbUdKNnlJWGhL
+MzhNa1NhMU1XQ3cxTjZ6N0tjRVZONFhHR0JWZz0KPSs5ZXEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000e0fabd06259fc823--
+--00000000000038d21106259fce0b--
