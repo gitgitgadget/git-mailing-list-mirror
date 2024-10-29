@@ -1,69 +1,65 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830A4209F32
-	for <git@vger.kernel.org>; Tue, 29 Oct 2024 22:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1153A1F9406
+	for <git@vger.kernel.org>; Tue, 29 Oct 2024 23:00:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730242560; cv=none; b=PE2huU8mPf8q4AD3FFweqBBINhLrXrRHAEFe7+OMmlyB0d4VHeDRLM0Pek+H51v1GIL3uoaKalrluPJ1yNrwSj5yBXa3/k3xkTub458V76Ma6rTHfKPx08iVcROUftR0DEVKBmcobh5LLkrQntXii2kPS1LEEv0ymCydFR8azbM=
+	t=1730242815; cv=none; b=YNOZDZhbRV1D/JxC8Z8RNamCHePhcgfeHPmpBEXiwwTOSuUOB/7bmnlXg+moUELSzmNcdV9kNfzY8G+5iL2xlmLBdDgkYT8zHuFZXXnePDVCje6fau2K+vsPj82nfok66MDXnDWzkv5PA13nnNrPNm7VfgICIRwqxrR+gZz5CxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730242560; c=relaxed/simple;
-	bh=5VM7UvELs1SOLWUymtmuI7ysUryvHWRcgKFw/1b9l70=;
+	s=arc-20240116; t=1730242815; c=relaxed/simple;
+	bh=TDUcCoMpat4GBremlHXg39au2y0+VbDW7Uoq8mlih7A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lz5jdjmyniJta0qiCDhGv0H/QZlG9xPY4H8ZUx3gNCUZMmZ6kmrDt3AOOm8SYOFqkdSnnGdOx91VIhcoL3JLeAtGoK0TlKQPoZB+EsHDdUhhIQ38ukyc2X7O4j/DxkaL61BnmvXhgWaugnjbmpd5HnHoWyFPxsarm4I/Rv3TyFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=AzzFdFf6; arc=none smtp.client-ip=209.85.128.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ufa1TGhzqxw+gQKnf2AMchuOpYT+M+Jlmk5Qy7VrN0K/wr2Hsz1TM3FeoOxmv4tEfOZSjU1IkJQvzoxGMOyKlTlRhATcBFJcY8Om9cLU0YJtgupWZmYBKsYsMa2DVIxhA1ivJ+BMcdZllb+PQwgvAZcMRuYVfPAZuTENNSBLOTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=MfyUQtsq; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AzzFdFf6"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6e3b7b3e9acso57174257b3.1
-        for <git@vger.kernel.org>; Tue, 29 Oct 2024 15:55:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="MfyUQtsq"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6e35bf59cf6so3769417b3.0
+        for <git@vger.kernel.org>; Tue, 29 Oct 2024 16:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730242557; x=1730847357; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=5VM7UvELs1SOLWUymtmuI7ysUryvHWRcgKFw/1b9l70=;
-        b=AzzFdFf6PArUAVXtbM1nOGTsQiJ6rjpXgFsBLDaJSbV5uu+EoU2Ko2ei2RdDVzms/g
-         UG+5gymUZXSLIfzKgN0ozb+ryTIQeuRMsmIJIyHxufCT9wrSFozCxUbEJ9IYhEtZogxp
-         fJ2Ti2jOgfOJ5XbwAAH8SzMwQGh62SP8v4kizhmVMYw7qTHO0aAKgMatIjPD5NWfS71W
-         vRlhto1tb2mseRNZA12VFFHQZr7iWoPrV68yl3snCt8PkTqwz++280ZjX/bXekgduyKt
-         HQHfbetj0lt03zm0MLtjjTH+PYoUn+o6jijJZ8SqKflfJWyvsVUvrBpAQ3yMIUfruP8g
-         x5sw==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730242812; x=1730847612; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nBve7ag3g4F6WT91cy44vHfN62TujrRbAdXSDK6Dr4Y=;
+        b=MfyUQtsq1L2fKU8zaXX+uGqulpnovcGn8Gsi/N2pnwZG0pnMZecrJgYXcPJE/DD3J/
+         qFUKtqHgySMPqBrzJNGlGpyUAe3z6n+NZtK5dYRZMHZXfDtzD3cr46302cotjnawjgZ8
+         MXYVOstCKUvpXxsYSS2GqBH+AZY1/+oSw9pBjcRnXs1HJtBOiBoDR9NDslZWhhd0odEB
+         pocCHlb3fmAGGbtYv/19TlOtFNwkHWkswJJQaWwOn8KFtrX4Z4uGz9NMCol//yrXyhwn
+         VYNp6bePsryBiMdmp48O0lFxRX5xDDVnuEeEtH955iW582M6hrBVSRFfQIlf1lNw/1f6
+         EzgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730242557; x=1730847357;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5VM7UvELs1SOLWUymtmuI7ysUryvHWRcgKFw/1b9l70=;
-        b=ryMFUXroNne29Q2FNOB+vxAIW5elZepp5bGJDXqRPXngAgG1e+8XWqWI0wCcQZIcBR
-         1cceyOgPXjS/Qo5cSmlJpoGMX7KAgcOXYxteawR8nCMfTkyf8P7Q1ldsuo6lJTueqno5
-         EwugsvXb4sC+ITXXnECgzVjx2LEgfMiJMR+7Nb1ezK59XBbdgshxbp3XsqkBoZDEWq70
-         ZiJbp6plo61va16WNEFzTpnVEpX/5NumhPAvic6PXC4pbnxchmHmSCacgClPqsp4FX6d
-         OW8duBehyHB4Lu7J7XywuiDceRXG689E71QWhCL41jsKHM8Qn+wUWu49ELF+acIjS3Nq
-         DwwA==
-X-Forwarded-Encrypted: i=1; AJvYcCXmdHI2tj5sCPmi9V0o2y9d+gIzgoE+l8cMR7ytsmOVBjTQCtemvh+Y/HiP+hd4/ZVSIZE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUeA+TN38F0N2SXnCMOQdL7T8FRP3DjixZqG1ii8hl1r/NRTCu
-	mbOK5qYUtbEyn4JpdQf5mUUY2mGZtNchw6/pKq3AzEUs8n3FfsxzWudNK/zjBKU=
-X-Google-Smtp-Source: AGHT+IERss8Z4rJPMbjQQv18nfh18WFeMTgprAFpngAd5aUittmmglzkJayMUKAiS0o3SoN1xOMdZQ==
-X-Received: by 2002:a05:690c:f06:b0:6e2:ac0a:8926 with SMTP id 00721157ae682-6e9d88b8a54mr139496927b3.9.1730242557427;
-        Tue, 29 Oct 2024 15:55:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1730242812; x=1730847612;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nBve7ag3g4F6WT91cy44vHfN62TujrRbAdXSDK6Dr4Y=;
+        b=D6eB4vOHazFMjMXxU4XvwwWzjzjSwmWp882m4gL7PFi4N4E2cBAEY0sNmYMeJJdIpA
+         1crQDpUrj47914A8KGg1XMauwVn0Xo99ET3q2fpAk706+nfc+hDiryl3OQo2oYRDNqE/
+         htUsiUdRqprViN/GxgE1HjMtbBqpLIKcZHyAsIa7B/TPx67xglqQZjPDAbU0vaYTkGlH
+         VKhkB0vQgLwVqSlqpoPkBt9bast5C2eX5zRkLqKov8eW8KH8HOm811FnEF9urhuYLt83
+         dZ28tOuM5jvh554heV5pvx8MMkUvO24TX2EHBMg1Z4K8W6ogId6hH/gXNPG7rjrBvbQi
+         X82Q==
+X-Gm-Message-State: AOJu0YysOR0sEgeTQ29vqvPRrcfzcAl4naotKzZc3EyLyq0NCn4J3PO9
+	DqjIvvTJuRKwdSfNKBs14yjPXUtT7QFF+Ktml51jZSTLTqtuqVvk6PQhtvLjBIc=
+X-Google-Smtp-Source: AGHT+IGLENzLYsJhwtBZtyPXTYwGnTKddo2NWz5cNXGO6uCC9QpcTUG2UDDWC1ANLGzYUvF0/yEFdQ==
+X-Received: by 2002:a05:690c:2846:b0:6db:da0e:d166 with SMTP id 00721157ae682-6ea2bfa0a84mr25414377b3.12.1730242812020;
+        Tue, 29 Oct 2024 16:00:12 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6bafd18sm21665817b3.21.2024.10.29.15.55.56
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6c778a9sm21849537b3.84.2024.10.29.16.00.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Oct 2024 15:55:57 -0700 (PDT)
-Date: Tue, 29 Oct 2024 18:55:51 -0400
+        Tue, 29 Oct 2024 16:00:11 -0700 (PDT)
+Date: Tue, 29 Oct 2024 19:00:09 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: phillip.wood@dunelm.org.uk
-Cc: Caleb White <cdwhite3@pm.me>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 2/5] worktree: add `write_worktree_linking_files`
- function
-Message-ID: <ZyFn9xErajxzQo29@nand.local>
+Subject: Re: [PATCH v2 3/5] worktree: add tests for worktrees with relative
+ paths
+Message-ID: <ZyFo+e5Vj2TpXNyo@nand.local>
 References: <20241028-wt_relative_options-v2-0-33a5021bd7bb@pm.me>
- <20241028-wt_relative_options-v2-2-33a5021bd7bb@pm.me>
- <4a316a5f-9360-4f24-843f-bcbb5b3378c4@gmail.com>
+ <20241028-wt_relative_options-v2-3-33a5021bd7bb@pm.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,46 +68,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4a316a5f-9360-4f24-843f-bcbb5b3378c4@gmail.com>
+In-Reply-To: <20241028-wt_relative_options-v2-3-33a5021bd7bb@pm.me>
 
-On Tue, Oct 29, 2024 at 02:52:36PM +0000, Phillip Wood wrote:
-> Hi Caleb
+On Mon, Oct 28, 2024 at 07:09:52PM +0000, Caleb White wrote:
+> This patch expands the test coverage by adding cases that specifically
+> handle relative paths. These tests verify correct behavior in a variety
+> of operations, including: adding, listing, pruning, moving, and
+> repairing worktrees with relative paths configured.
 >
-> On 28/10/2024 19:09, Caleb White wrote:
-> > A new helper function, `write_worktree_linking_files()`, centralizes
-> > the logic for computing and writing either relative or absolute
-> > paths, based on the provided configuration. This function accepts
-> > `strbuf` pointers to both the worktree’s `.git` link and the
-> > repository’s `gitdir`, and then writes the appropriate path to each.
+> This also adds a test case for reinitializing a repository that has
+> relative worktrees.
 >
-> That sounds like a useful change. I think it would be better to pass an
-> extra parameter "use_relative_paths" rather than relying on a global
-> varibale in worktree.c. Thank you for adding some documentaion for the new
-> function.
-
-Good suggestion. I definitely agree that this is a useful direction.
-
-> > This also teachs `git worktree repair` to fix the linking files if
-> > there is an absolute/relative paths but the links are correct. E.g.,
-> > `git worktree repair` can be used to convert a valid worktree between
-> > absolute and relative paths.
+> Signed-off-by: Caleb White <cdwhite3@pm.me>
+> ---
+>  t/t0001-init.sh            | 17 +++++++++++++----
+>  t/t2400-worktree-add.sh    | 41 +++++++++++++++++++++++++++++++++++++++++
+>  t/t2401-worktree-prune.sh  |  3 ++-
+>  t/t2402-worktree-list.sh   | 22 ++++++++++++++++++++++
+>  t/t2403-worktree-move.sh   | 22 ++++++++++++++++++++++
+>  t/t2406-worktree-repair.sh | 26 ++++++++++++++++++++++++++
+>  6 files changed, 126 insertions(+), 5 deletions(-)
 >
-> This might be better as a separate step so that reviewers can concentrate on
-> the correctness of write_werktree_linking_files() when reviewing this patch.
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index 0178aa62a41f1606f2382a4a10ab593ccf11e0e8..e21b9aa5e7f4599af8b20165b50896c9a49ba7ea 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -435,6 +435,7 @@ sep_git_dir_worktree ()  {
+>  	test_when_finished "rm -rf mainwt linkwt seprepo" &&
+>  	git init mainwt &&
+>  	test_commit -C mainwt gumby &&
+> +	git -C mainwt config worktree.useRelativePaths "$([ "$2" = "relative" ] && echo true || echo false)" &&
 
-Indeed. This patch (even though the diffstat isn't overly large) is
-somewhat noisy just because of the number of spots that needed to be
-adjusted here.
+Can we avoid using '[' and perhaps split this out a little further.
+Perhaps:
 
-I wonder if another way to split this up (in addition to what you wrote
-above) might be to introduce the new function and convert one single
-caller in the first patch. Then subsequent patches can go one callsite
-at a time and convert them to use the new function.
+    if test "relative" = $2
+    then
+        git -C mainwt config worktree.useRelativePaths true
+    else
+        git -C mainwt config worktree.useRelativePaths false
+    fi
 
-That way, each patch is easy-ish to verify in isolation. I know that
-results in some more patches, but I think that the additional clarity I
-imagine we'll get is worth doing so.
+I think the duplication is more than worth the clarity here.
 
 Thanks,
 Taylor
