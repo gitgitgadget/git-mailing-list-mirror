@@ -1,116 +1,245 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BEA194ACA
-	for <git@vger.kernel.org>; Tue, 29 Oct 2024 15:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE94F194ACF
+	for <git@vger.kernel.org>; Tue, 29 Oct 2024 16:03:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730216602; cv=none; b=QIsvCVt7Q/UcKzvKdg1uP+8L/iPRt9S/KWbkvI13NDLI/pVtnPY1+rAI3ZBQoZftgWN6aSGZw1nll4vMkhjb3jCorISXCgFbr4MGzcKTPoUMUioNvByK28rdt5i+AzsaFCm6niYgGKrxvEsI0qxvHVgqHNFYNkhAdfC1j+J6wnE=
+	t=1730217828; cv=none; b=ocMiaYZiWXur5CBobQbRb8XuWMtZlmik8BNOme+Byigye/fGye9jUD4uWPH2HsaU5Gp4Jx/d/j6Iq4n9CZrI6btZ2pKdQcxKvqYvVPJXghEptjnLyhAPHoVmpOXf86Q7XkoYdtHXXBILNWbq8mElFEkbv7LwVIOY8mfsshmmhxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730216602; c=relaxed/simple;
-	bh=pEoTyHclaseTeLxDE4ko2eaFaFdzviJBk25/O56M/ko=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=qshIQ4NsJ+wnzpZMCtJyMXW8IZCKO3mr7+hLgf6njSRHL//H2O427qBjKQzxqndeG0l+pO6LopPCCN7hV8lL3nL8zZMk2bt3l8ic4CtS4zxTHKiipmKGBZzSKWcZxuzdFTIFqN2nSQkruyqBrbkJx1eiPKeY1HfmgGxX6H1FAho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KanDPxuK; arc=none smtp.client-ip=209.85.221.49
+	s=arc-20240116; t=1730217828; c=relaxed/simple;
+	bh=V3ToZ4nrMfK6WQIq/HvwNs3tooW3ofJ0a9H9M4vwdWk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=abNkxou41+Da+vlFEoNohiPanLx68qiEvh3+rNLxALghq4E5r+zpIHK+asYwVyfXqjV8dJIp1rBBUaHl9+cDaGj+xn6dPwX/H78E50egIBpf5C9+8Hh6oBrLZ93VPbaHndKNGiisyBaHmGOLgltX1eftBufA2iCycY52yD8mOOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ga3R6CmT; arc=none smtp.client-ip=209.85.217.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KanDPxuK"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-37d49ffaba6so3953884f8f.0
-        for <git@vger.kernel.org>; Tue, 29 Oct 2024 08:43:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ga3R6CmT"
+Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-4a484e9d537so1700433137.1
+        for <git@vger.kernel.org>; Tue, 29 Oct 2024 09:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730216599; x=1730821399; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pdALx6zZwWetaKlfO561WD9WHZCnO2pd2GmdjW7d4vs=;
-        b=KanDPxuKCXtvuqludd4ndAakBNyGEAVgkFrsy1frMjylnu/ytFSFs1V/M9ahZPeCi5
-         NyJZEfWz4WaAEa/HPpOYTgRv7L6FdoT7/ouQWGRSatDO1QeBElbcHNutcMuES4slW/LZ
-         uRGNkjS6f3BJzZxUdbKllbFx2e0GrI9ls1p/JiApGgiGe4t45xSM3rlRDFr+/Id/ILyE
-         fHGfM+EZ8V6AWhHf0huXrC6JUE9R8Mmb3UyVdpVAJkdXTuzHLXbnG26vu+cSJLiyDsEO
-         piHw4Wf5uUciDdYL8vHvLvztyfi7w9C6hEwVYO+skYGYzgqRNMNQvcd1KAIWbDlurKZH
-         MT6g==
+        d=gmail.com; s=20230601; t=1730217824; x=1730822624; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nchWBOJnBS7cutUzWqFliFVA/qi3PsLuGNDGuVlgLho=;
+        b=ga3R6CmTyVPqgQIY6mF61Ri81wztcu2EBBctngKTRGe8yvQ2Ik0w7064Q9NFvCJpxb
+         y4BswEg6QN15s5xL4hbS1AtTTivcm2rUa8EzRGjqM5TVt6vEwttuV6GfdPTGwjGLp6PI
+         ykew+RtJM2rdN/3AiLiYbHE/gRDV/bBiDHMuRC05DsL3RCQVluXv1Pr6hpaR3RHS5gTs
+         6BkiIyO2aZLcGiNCA/1n3p/SGJvAxme9gjhvVw4Oq9Ue7xdBI/sjtjwdkuNk4/Pg82F0
+         pPoIFQCjsPnqMWRv7pw+4leefGlOoJDFJ/0wFUYp0vJ2iE6CFEZFXKtw+oq9hYjuJdHX
+         CvVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730216599; x=1730821399;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pdALx6zZwWetaKlfO561WD9WHZCnO2pd2GmdjW7d4vs=;
-        b=dV+tllq/o5T88lHL+AbM0NIKi+sJdRXgwVvBPq4yVvLNDaAbHzGiMY/0FaMZNq472I
-         0cXQ1FZKg/tIimPN0qAYtHwcVkyn9UQGB8qjIlNCHoqjGA8Zhlz8jSvtAkn3IRy0xv2m
-         88+/kjOmB+0gAMhd8baiEPApzWKseIKkKqs4g2vC6rFI5YKXb31v1SN4hf1sU8WoFQzC
-         9sfUqSZ7JIEJf/UzEU/7/NKCuUrYwg/ZsX7encAtz9wAgkX1N8QhjnWed5nvL4mkzUr4
-         3RhXBuQZN5KMJOFnD8UmplPgIIe4r2RQ4Fb0evZ2SZgyVPiBUSO7E+Tfapo2r7MlHpyV
-         jVPg==
-X-Forwarded-Encrypted: i=1; AJvYcCW+uUsgbofOG0gttxXY5PJGZEobRSF/dtBHRLx/B6a/bhoR2P0jUKhfTS8fLe/gLzg3Xgw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHEwB+56GGt0vW+D/vao7obRSW6RGyv2AUmNvsBM/7H81mWL6P
-	R50oFZaqRYsJy0slWVUgOKgbe+185dsFl8mzzArR2NZ3XbwwJr5NXH99Dg==
-X-Google-Smtp-Source: AGHT+IFim+2LxhCrVBcVOdpVX/XQ2wj/hDQUMVaStk4e9vQUb4H2jvzIfZ4H28cO2JQEwyGQS3D6hA==
-X-Received: by 2002:a5d:6388:0:b0:374:c059:f2c5 with SMTP id ffacd0b85a97d-381b7076de7mr78365f8f.22.1730216598950;
-        Tue, 29 Oct 2024 08:43:18 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38058b4ad08sm12855766f8f.64.2024.10.29.08.43.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Oct 2024 08:43:18 -0700 (PDT)
-Message-ID: <aeec08e2-29da-4e5e-8a73-7ed7e3a79177@gmail.com>
-Date: Tue, 29 Oct 2024 15:43:17 +0000
+        d=1e100.net; s=20230601; t=1730217824; x=1730822624;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nchWBOJnBS7cutUzWqFliFVA/qi3PsLuGNDGuVlgLho=;
+        b=FGzffZNpUJUOOeFZW6IaYP+HK5PiYLLL2bgKgTXagIg5/gYwLAC9i9dX1Nd2gXbPz2
+         FdsLA2rw2szDetn/WSmbTH8hMPq0IpqHWhDRQYW3QRhOr3CvCrFDqRSMw60zeMqA2G7u
+         QkxsUy+sp1Hwkqv/c3f0weSEMaRdHrABhoo3/1C0UlOfpasopZ+4raMrgfHb5VY2cw7B
+         P/sGIBiKrZ1R9F/bFS8QSOTTAsGYmZ8PO01tZ3cdUqq8kkRt/v/+LiL/NZcYIM36TQhL
+         RXGxBFa252ZQbAOlx87mG8kPvrE4uH3meTT9v+jrpFBxpYGW9vd5F8Fnvmi0enRaacCT
+         Kkdw==
+X-Gm-Message-State: AOJu0YxJSJwA79ZUwywQvZYO/jC1PHnwOMiXc24zilA+9vvDGbF+d6nX
+	V6xc/UMEQc1grxRa7WOkffBN8AhnCwn023uAam34kSP847mTsm1yB6sQgNprK2FvsUtowteh+NH
+	h9rsdAG9cqn/7B8jWxGsdwi92VmXCdfuS
+X-Google-Smtp-Source: AGHT+IGYRToSQgctV0bcWXbpZf7du62liayT762qY2TS56LJ8hQvNXIyb5yYra/Mdc0kCLX6AXwOwrASKIlGY89NQ60=
+X-Received: by 2002:a05:6122:91e:b0:50d:2769:d741 with SMTP id
+ 71dfb90a1353d-5101511ccbamr10542263e0c.11.1730217824471; Tue, 29 Oct 2024
+ 09:03:44 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 29 Oct 2024 12:03:42 -0400
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <Zx+7wTYEkrKGIIR1@nand.local>
+References: <cover.1730122499.git.karthik.188@gmail.com> <4e883a4d1ccabb35cc6d122f23a475fca0d71ce1.1730122499.git.karthik.188@gmail.com>
+ <Zx+7wTYEkrKGIIR1@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/5] worktree: add tests for worktrees with relative
- paths
-To: Caleb White <cdwhite3@pm.me>, phillip.wood@dunelm.org.uk,
- git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
- Eric Sunshine <sunshine@sunshineco.com>
-References: <20241028-wt_relative_options-v2-0-33a5021bd7bb@pm.me>
- <20241028-wt_relative_options-v2-3-33a5021bd7bb@pm.me>
- <985646c7-8a16-4014-a379-644408157934@gmail.com>
- <D58DMTM9YPBE.8L5WT8ZNG1CU@pm.me>
-Content-Language: en-US
-In-Reply-To: <D58DMTM9YPBE.8L5WT8ZNG1CU@pm.me>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Tue, 29 Oct 2024 12:03:42 -0400
+Message-ID: <CAOLa=ZTYNpbgveEa=c7Hu6ePauzdG7U_0jDV3MjkFhV5SsC2yg@mail.gmail.com>
+Subject: Re: [PATCH v2 5/8] packfile: pass down repository to `has_object[_kept]_pack`
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000cff43a06259fba01"
 
-On 29/10/2024 14:58, Caleb White wrote:
-> On Tue Oct 29, 2024 at 9:52 AM CDT, Phillip Wood wrote:
->> Hi Caleb
+--000000000000cff43a06259fba01
+Content-Type: text/plain; charset="UTF-8"
+
+Taylor Blau <me@ttaylorr.com> writes:
+
+> On Mon, Oct 28, 2024 at 02:43:43PM +0100, Karthik Nayak wrote:
+>> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+>> index 0800714267..2b2816c243 100644
+>> --- a/builtin/pack-objects.c
+>> +++ b/builtin/pack-objects.c
+>> @@ -1529,7 +1529,7 @@ static int want_found_object(const struct object_id *oid, int exclude,
+>>  			return 0;
+>>  		if (ignore_packed_keep_in_core && p->pack_keep_in_core)
+>>  			return 0;
+>> -		if (has_object_kept_pack(oid, flags))
+>> +		if (has_object_kept_pack(the_repository, oid, flags))
+>
+> Do we want to use p->repo here instead of the_repository? I think the
+> answer is "yes" since in this function we are given a pack "p" and want
+> to determine if the given object contained in "p" is useful to pack. If
+> not, we want to search for it among other packs here, likely within the
+> same repository.
+>
+> (Again, probably a moot point here since this is all going to be
+> the_repository anyway, but just thinking aloud...).
+>
+
+I don't think it is a moot point at all. We do want to move up the
+layers and cleanup usage of global variables. Reducing the work
+required definitely gets us there faster.
+
+>>  	}
 >>
->> On 28/10/2024 19:09, Caleb White wrote:
->>> This patch expands the test coverage by adding cases that specifically
->>> handle relative paths. These tests verify correct behavior in a variety
->>> of operations, including: adding, listing, pruning, moving, and
->>> repairing worktrees with relative paths configured.
->>>
->>> This also adds a test case for reinitializing a repository that has
->>> relative worktrees.
+>> @@ -3627,7 +3627,7 @@ static void show_cruft_commit(struct commit *commit, void *data)
 >>
->> It's nice to see new tests being added. If they were added with the code
->> changes they test that would help reader understand the changes being
->> made I think.
-> 
-> I had received feedback that the original patch was too large, so I
-> was trying to split it up into smaller, more digestible pieces. 
+>>  static int cruft_include_check_obj(struct object *obj, void *data UNUSED)
+>>  {
+>> -	return !has_object_kept_pack(&obj->oid, IN_CORE_KEEP_PACKS);
+>> +	return !has_object_kept_pack(the_repository, &obj->oid, IN_CORE_KEEP_PACKS);
+>
+> Here we don't know what pack "obj" is contained in, which makes sense
+> since this is a traversal callback, not something that is iterating over
+> the contents of a particular pack or similar. So using the_repository is
+> right here.
+>
+> Although... should we be using to_pack->repo here over the_repository
+> (in builtin/pack-objects.c)? The rest of the code definitely does *not*
+> do that, but I think probably should.
 
-One way to do that would be to convert the "add", "move" and "repair" 
-subcommands in separate patches changing option handling and appropriate 
-tests in each one rather than changing all subcommands and their tests 
-at once.
+I think so too, I won't change existing code, but makes sense to do it
+in our patches. Will amend.
 
-Best Wishes
+>
+>>  static int cruft_include_check(struct commit *commit, void *data)
+>> diff --git a/diff.c b/diff.c
+>> index dceac20d18..1d483bdf37 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -4041,7 +4041,8 @@ static int reuse_worktree_file(struct index_state *istate,
+>>  	 * objects however would tend to be slower as they need
+>>  	 * to be individually opened and inflated.
+>>  	 */
+>> -	if (!FAST_WORKING_DIRECTORY && !want_file && has_object_pack(oid))
+>> +	if (!FAST_WORKING_DIRECTORY && !want_file &&
+>> +	    has_object_pack(the_repository, oid))
+>>  		return 0;
+>>
+>>  	/*
+>> diff --git a/list-objects.c b/list-objects.c
+>> index 985d008799..31236a8dc9 100644
+>> --- a/list-objects.c
+>> +++ b/list-objects.c
+>> @@ -41,7 +41,8 @@ static void show_object(struct traversal_context *ctx,
+>>  {
+>>  	if (!ctx->show_object)
+>>  		return;
+>> -	if (ctx->revs->unpacked && has_object_pack(&object->oid))
+>> +	if (ctx->revs->unpacked && has_object_pack(ctx->revs->repo,
+>> +						   &object->oid))
+>>  		return;
+>>
+>>  	ctx->show_object(object, name, ctx->show_data);
+>> diff --git a/pack-bitmap.c b/pack-bitmap.c
+>> index 4fa9dfc771..d34ba9909a 100644
+>> --- a/pack-bitmap.c
+>> +++ b/pack-bitmap.c
+>> @@ -1889,7 +1889,7 @@ static void filter_packed_objects_from_bitmap(struct bitmap_index *bitmap_git,
+>>  		bitmap_unset(result, i);
+>>
+>>  	for (i = 0; i < eindex->count; ++i) {
+>> -		if (has_object_pack(&eindex->objects[i]->oid))
+>> +		if (has_object_pack(the_repository, &eindex->objects[i]->oid))
+>
+> Interesting. I think the_repository in practice is fine here, but I
+> might have expected something like bitmap_git->p->repo, or the
+> equivalent for the MIDX case.
+>
+> So I was going to suggest something like:
+>
+>     static struct repository *bitmap_repo(const struct bitmap_index *bitmap_git)
+>     {
+>         if (bitmap_is_midx(bitmap_git))
+>             return bitmap_git->midx->repo;
+>         return bitmap_git->pack->repo;
+>     }
+>
+> and then rewriting this as:
+>
+>     if (has_object_pack(bitmap_repo(bitmap_git), &eindex->objects[i]->oid))
+>
+> , but we can't do that, because the MIDX structure does not know what
+> repository it belongs to, only the object_dir it resides in!
+>
 
-Phillip
+Exactly, I agree it should be achieved from `struct bitmap_index`.
+Unfortunately we can't with the current state as you noted.
 
-I could
-> go either way so it's really what the reviewers would prefer.
-> 
-> Best,
-> Caleb
-> 
+> And I think that causes wrinkles earlier in your series that I didn't
+> think of at the time when reviewing, because it seems odd in retrospect
+> that, e.g. we have something like:
+>
+>     load_multi_pack_index(the_repository->objects->odb->path, ...);
+>
+> where we pass in the object_dir path directly, but other functions like
+> prepare_midx_pack() that take in a 'struct repository *'.
+>
+> I wonder if we should be initializing the MIDX with a repository
+> pointer, so that it knows what repository it belongs to. I suspect that
+> we will still have to pass in a separate string indicating the
+> object_dir, likely because of the --object-dir quirk I mentioned
+> earlier.
+>
+> But my main thought here is that we should be able to infer from a
+> 'struct bitmap_index *' what repository it belongs to instead of using
+> 'the_repository' here directly.
+>
 
+I also think it makes sense to progress to the goal of removing global
+variables in a way where we primarily focus on a single file/subsystem
+at a time. And directionally between the bottom <> top levels.
+
+This patch series focuses on the `packfile.c` file, so we cleanup the
+file and remove associated usages of the global variable and try to also
+follow some form of cleanup as we go. But for other files, it is okay to
+still rely on the global variables. Slowly when the cleanup phase
+reaches those files, we can give our focus to those files.
+
+So here, it would be nice to have MIDX have a repository pointer too,
+but I think we'd be overshooting trying to refactor that in this series.
+So I'd leave it as is and focus on that when we get to cleaning up
+`pack-bitmap.c`.
+
+> The rest all looks quite reasonable to me.
+>
+> Thanks,
+> Taylor
+
+--000000000000cff43a06259fba01
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f87b46550405b262_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jaEIxd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOEgwQy85SnZnMmtJUzJFWWxRVXpoV3F1WW9lMTkxbQplMEE4REVKZ1dX
+UWVoY2xOYSt1dCs2MktrSkR0aDM4bUl6Z1M0UWVGTGJqYWpHZnU5Tkc4QmNPUDZLQXZ2dC84CmZH
+cW9zdkNmR1ZRVTY4R0I0YTJHU2VQTnJFRjN6ZTJXc1pOdGtDVC9mcUs5OFFZeStiQ3hMNFNYWk5Y
+alo1TXAKMXVzRUJCL0JydzUxa3dKaXNMaGVQeFFkQmJ3enNDSVhqRmcwcXpxeTh5WS9sVWkwUUsw
+SzhETEZnSFh5UzlOSApGVG1IbEFtV2tsVXV5MGU5Vit3NW9NQ2tvZ0cxSThpaFdUZjRCUXlRZEJa
+VlJoeE5BZGQyMU5HakdJRTRzSkZyCnora0RCcC9IWjFCR0RvOTVjR1gyQktTZ2dYYmtPQVNmYTd1
+THlYZC9xNHBYcFJ6QXpQbnlJS3FUUFI4ZjJwdzMKYTZBTG9CL3Qxd3Q4QThPOENWV2VFeEg5K2pL
+TE94MjN5VmNKZ1Vwd21ZL3FjTmV5TXF3Z0ZzNEY3cWUxcjI0LwpRdWQ0a2dOYUl5V0xQcXgvRnha
+STlFRVl2WjVkc3FYMDdvTkRLdk5Ub1RPMjVBYmwxWWFMOVZoNjcrZVMrUGxBClVja3FaeHNsV3hp
+YVZEL3FzK0FvbnB1RXd6VzRCdDdoL1NBT255ND0KPVRZM3YKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000cff43a06259fba01--
