@@ -1,275 +1,321 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9AF18A95A
-	for <git@vger.kernel.org>; Tue, 29 Oct 2024 08:19:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81615204036
+	for <git@vger.kernel.org>; Tue, 29 Oct 2024 09:13:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730189948; cv=none; b=eOp6Q5b/2ONoCbeReoq41eUrheCsBjZOeOGYrIWSt3r6saU3TPKvg6tOraauV/OUovFID4Z6l9BKuBWfXW/jUGE6stm4n2BnJpCP1G39hFixr+bcTnPI83YQNTysHeqGPC8J77bR18+LXmkDylUlG6FGeka3D8lhzi9hhVpPkYg=
+	t=1730193238; cv=none; b=nUyEJIoZOuQTK1+SrkY+t7ZLIo4w5/uxqT8oCyy3yhiqNqCKQnrfs6tvnYvkLvIRFFdcjdTJ98CHn8Xj82mcE9tFlUqpLYFKPKbu+94i4yc5tNYzzU9kaZIRq0X0+G/tTUVvepXR+o6M+ZA+i5tnOfpYOegi/iaT5YFCklCvRSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730189948; c=relaxed/simple;
-	bh=4zaN8ddhcJTDt/ZvmGS9H3biUQGdzdQIuCEEnbDRRb8=;
+	s=arc-20240116; t=1730193238; c=relaxed/simple;
+	bh=fS7k6OK2fS40jaTz4+LYrSD7cnlNMCWpKjummVypMm4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KyiznNDqDiWTqjOjBulPwy/tLBOGIdkUYmcwW4ftFxQkaj4Fk3ev+N5qohOB04q/X22rkEynI4A2Ngh+n+pMImFJY0FWwHfkWlPNWtujRcuGiF4mSQycMT1CLkDO++eNw2XxAGANDqv4Qaw3AEHp+NtVluVM6pH1wbnrhsyjsXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f9Klkr+a; arc=none smtp.client-ip=209.85.208.49
+	 To:Cc:Content-Type; b=K2LXIQwgL/sikqsqKB5WcEcrByuhvDREozNe9wRlXshQQieu+HP/OxwZeZpYA7tqg1hZydTH2FrQCCXqe8RNV2zg1AEByPu9j+WvY51H9jdicgTj/gYeioIPiuKR+zllG22LYhzJWKG08/vp0Q5cgYuhMo/ugz5Vsgx1hh/j81Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZMGc3gmr; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f9Klkr+a"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5c9850ae22eso6660643a12.3
-        for <git@vger.kernel.org>; Tue, 29 Oct 2024 01:19:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZMGc3gmr"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5cb615671acso3197593a12.1
+        for <git@vger.kernel.org>; Tue, 29 Oct 2024 02:13:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730189945; x=1730794745; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730193234; x=1730798034; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OdBtVYqr42f1DPsngATlsj35lqcthNrsGxUitwCrxGA=;
-        b=f9Klkr+aOUKt4ChFLUOqELYpGQ9Sh5UA+gmnPcrnwADz/83l3SD14I0wID7dej3apw
-         y2DRL3eRLcAZ1FQoXR7C+TYkNoA/WzI/n6J3FcXyUQwU8GghKZct6wo+xRL47Kg9v0IH
-         jG6ax7fFv3CgJE3O0+MWX+kBHDKrv7Debof9w1C7otIY4pSWP8PwFuNvxKrapN0yiGdn
-         XgbX/87fyvQZP6MevuEF88e6miH2b3TPSvNzxC0WUpHslbEJFWGhh6zl92S0vFyDB4cp
-         vsb/2RZFnHG0uGUvyv6tJzLCvOVR8OwSjB4bn0Ma0f5peh8PPa0K4KaMa0d2R0QIUhcl
-         fn9A==
+        bh=+YA+eVRZXUucdS/WZQOTZwmIEgQFxO/IcPLmriYLHtg=;
+        b=ZMGc3gmrRjww6lgZ8obTMQbi0+DRNV2FSz1iL3XX0Eit0T747/OeeYHhqF5+1XTKC+
+         uFe//SVcaL/ueVYhLBYnbEn6aiupEEhHcvqsrqs8YG/p0ycU7MrvuFHyugNGrfa0YkXa
+         o1pWM8kqUaNMGSVqjp9O9LMn8tit1C6DxZHZ9MXR2NVeg8uzvDQ2G3jpxvbMNMSKyTeV
+         HUlYKoXADHRE7Ntgqtjm/7ndCoXYm19G6h0QeZ9WxmYifKuEIbcoefcgeZyEVvV6CEan
+         zHkIR0i9AEwth6uzK024arNqJ5ikqOTEQ9bL5rf+IXFd8KVEHJh8KmwZMDTvWFR9N2NB
+         rFUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730189945; x=1730794745;
+        d=1e100.net; s=20230601; t=1730193234; x=1730798034;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OdBtVYqr42f1DPsngATlsj35lqcthNrsGxUitwCrxGA=;
-        b=dapxi59QGVi3BwpxRf4sV7Ne4/qRLFAdXGLHxFVN55CTrSPf7ZKm148/8ZSyWJBoYM
-         YgerJheVY9FAZRN6jJy74jkWd3XkGsw4ltXa1gH4lgUrJ8vKCuJTApP3KPz0dl8Lb0ii
-         80PXM2vZ+EZW+O+V26+mLbmbFTS5O9AQPunp26SaqUnauFFE/6Iw6f8Vki5ZRTZNcDCB
-         tCGmuw27jw3PmNj2BlTBeCXO5RGgOe4wEQhDW8v0u9meNdPq8IxxLnQGjjCvS4J5lTl7
-         VRHGikjXIBYalHbhzMnTN4s0LmEY8N0uc/uInGL2imNFuYUdGkQFegCYCCHexSM0W4Tv
-         Re7g==
-X-Gm-Message-State: AOJu0YxA9zmbHEkiU/g72GZb6tqcvLM1ZxAKcCl/+jemneiL8ida6MGk
-	otWYr3HMhZemPbzVWxLpBlefzPSLwZop2Wth+zO4GceEjJWZB4GG8s4wNObSlIhc6RpnUNPXblN
-	7GSeeoz9jiZoaDnuMUGEp+6dj4WvlRCn3
-X-Google-Smtp-Source: AGHT+IGdpIH1xS3PIYhGcLGBbd4RbMa//YP7wU0BIUXxH8mEJkz4L8ucMzn2fDpwFj7E4r829PAFxTwMv2Iq1DfHxfQ=
-X-Received: by 2002:a05:6402:4011:b0:5ca:18bb:6ad4 with SMTP id
- 4fb4d7f45d1cf-5cbbf9208cfmr8299368a12.27.1730189944211; Tue, 29 Oct 2024
- 01:19:04 -0700 (PDT)
+        bh=+YA+eVRZXUucdS/WZQOTZwmIEgQFxO/IcPLmriYLHtg=;
+        b=cdliEZgUcKcHT5Swq2xjVYPsbpLBqlVfdcjt4HBUNn3yyUneEaJRfuTr5IYok6Q1Gd
+         POd2qDMJc337SaQwzVGCanXejkYyIbNut3tp+ZpPO34iTx95ew3Pj1ybSfoYb3lVrAT6
+         oWLsJOJGkNRL2EsNYdwiLsdgi8Q9WedlAToeJ18ebhdb+6BYnVTn5ZPQU3SM6rEw8sLE
+         6MTWNLSeKsdyiB3gHqSEDcnhU6duWCKYHhvlOraqCNX5VhsCPYgvW+1xhGL/pZtTJw1W
+         QPvOOdcz6pY4oV5K3RaTbQgQHyJXt0QFsLoN06OslK/jBMLvDXmuzbBDoADE9aPVeP2O
+         1NuA==
+X-Gm-Message-State: AOJu0YyHjQSXw9D0Wskg2TUhZEiHt2TjIB9IW4pc8fJE++b81aW+N65K
+	h6u9wAGmunUtE4AfsooG9CxGcksEMecZ9A+Y3C8vA440gG1orbhpqd0vJuxjCiXGgCgY9+Q+dEw
+	5BTyPHI1tpSZlzqiP9Z4pi3HhFfCv/u8/
+X-Google-Smtp-Source: AGHT+IESmAUfl/QreLPRYTHl/7yJJ6hRAQ+ZSPr4lAHuKxXDicEhvTPul3Jf3Xfvku0vNoDIpHdfFYinhDKz5zHnZs8=
+X-Received: by 2002:a05:6402:5188:b0:5cb:f1d7:56ac with SMTP id
+ 4fb4d7f45d1cf-5cbf1d75726mr2658116a12.2.1730193233422; Tue, 29 Oct 2024
+ 02:13:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADYq+fYu-n_msHbFgfzN+i4Xxp+MpAPmgPZXYJzn5vs+kZCG3A@mail.gmail.com>
-In-Reply-To: <CADYq+fYu-n_msHbFgfzN+i4Xxp+MpAPmgPZXYJzn5vs+kZCG3A@mail.gmail.com>
+References: <CAPSxiM-4okXfiWZtSNArMjfXzja9wBrMaEayhqt1hvJpu-PHkQ@mail.gmail.com>
+ <CAP8UFD2pLppDC9b-JV-uQa8x8xmpeTSJ4szHOEPz1OfqzrOMPw@mail.gmail.com>
+ <CAPSxiM8NgFUK8R0TrE1nPctOYSD6M8cCe7=xJuniXWO2g-C6Nw@mail.gmail.com> <CAPSxiM-EorSBsStHCFAm845q2H+YNDtAvCkwON8cV4AyYvGz_w@mail.gmail.com>
+In-Reply-To: <CAPSxiM-EorSBsStHCFAm845q2H+YNDtAvCkwON8cV4AyYvGz_w@mail.gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 29 Oct 2024 09:18:52 +0100
-Message-ID: <CAP8UFD3RUxp0G+fYPxL0CeuZvVthAE0GPwdEhUt4cfPuwkvR2A@mail.gmail.com>
-Subject: Re: [Outreachy][proposal]: Finish Adding an os-version Capability to
- Git Protocol v2
-To: Samuel Abraham <abrahamadekunle50@gmail.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Date: Tue, 29 Oct 2024 10:13:41 +0100
+Message-ID: <CAP8UFD15F2bdQakdEK2K195FV5QrK+9Kw8Z2svysAjNGGL0Jmw@mail.gmail.com>
+Subject: Re: [Outreachy][proposal]: Finish adding a 'os-version' capability to
+ Git protocol v2
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Phillip Wood Phillip Wood <phillip.wood@dunelm.org.uk>, Taylor Blau <me@ttaylorr.com>, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Samuel,
+Hi,
 
+On Mon, Oct 28, 2024 at 10:27=E2=80=AFAM Usman Akinyemi
+<usmanakinyemi202@gmail.com> wrote:
 
-On Mon, Oct 28, 2024 at 9:07=E2=80=AFAM Samuel Abraham
-<abrahamadekunle50@gmail.com> wrote:
+> Review the Current Patch Series
+> --------------------------------------------
+> 1. Examine the Patch: Thoroughly analyze the existing patch series
+> submitted to the Git mailing list. Understand its design and
+> functionality, focusing on:
+>    -  How the OS information is gathered and transmitted.
+>    -  Current configurations and their implications on data transmission.
+> 2. Feedback Analysis: Collect feedback from the Git mailing list
+> discussion regarding the patch. Identify key concerns, especially
+> related to:
+>     - Privacy issues.
+>     - Default behavior expectations.
+>     - Cross-platform compatibility.
+> 3. Consider User-Agent Integration: Investigate the suggestion to
+> integrate the 'os-version' data into the existing user-agent string
+> rather than creating a new capability. Evaluate:
+>     - The implications of combining this data with the user-agent.
+>     - How this approach might address concerns about telemetry and user p=
+rivacy.
 >
-> Hello Git Community,
-> I hope you are doing well.
+> Implement Default Behavior for 'os-version'
+> ----------------------------------------------------------
+> 1. Modify Default Configuration: Adjust the implementation so that by
+> default, only the OS name (e.g., "Linux" or "Windows") is sent during
+> communications.
+> 2. Impact Assessment: Evaluate how this change impacts existing users
+> and any potential performance implications.
 >
-> ## Introduction:
-> My name is Abraham Samuel, I am participating in the December 2024
-> Outreachy internship program and
-> this is my proposal for the project "Finish adding os-version
-> capability to Git protocol v2".
->
-> ## Contribution to the Git Community:
->
-> I have participated in contributions to Git=E2=80=99s codebase after gett=
-ing
-> accepted into the contribution phase in October 2024, working on what
-> I found doable and within my reach. Below is the list of my
-> contributions:
->
-> - [PATCH v4] t7300-clean.sh: use test_path* helper functions for error lo=
-gging.
->
->        List thread:
-> https://lore.kernel.org/git/pull.1811.v4.git.1728498122419.gitgitgadget@g=
-mail.com/
->
->        Status: merged into master
->
->        Merge Commit: 77af53f56f100b49fdcf294f687b36064d16feca
->
->        Description: The patch converted instances of  =E2=80=9Ctest - [de=
-f]=E2=80=9D
-> in test cases to test_path_* functions to get error logs when the test
-> case fails when testing for the existence of a file or directory after
-> =E2=80=9Cgit clean=E2=80=9D or =E2=80=9Cgit clean -d=E2=80=9D is called a=
-s the case may be.
->
->
->
-> - [PATCH v4] notes: teach the -e option to edit messages in the editor
->
->        Status: integrated into Seen
+> Introduce a Configuration Variable
+> ---------------------------------------------
+> 1. Define Configuration Options
+>     - Disable Option: Allow users to disable the 'os-version'
+> capability entirely via configuration.
+>     - Verbose Option: Enable a verbose mode that sends detailed OS
+> information (e.g., the output of the uname -srvm command).
+>     - Custom Option: Allows users to specify components independently,
+> using variables such as $OS_NAME for OS, $DISTRO for Linux
+> distribution, and $ARCH for architecture.
+> For example:
+>     i. "OS: $OS_NAME, Distro: $DISTRO, Arch: $ARCH" might output "OS:
+> Linux, Distro: Fedora, Arch: x86_64".
+>     ii.  "Distro: $DISTRO Version, OS: $OS_NAME" could yield "Distro:
+> Ubuntu 22.04, OS: Linux"
 
-It looks like it has even been merged into 'next' and its status in
-the last "What's cooking in git.git ..." email is "Will merge to
-master?"
+Do you have ideas about how this configuration variable could be
+named? An example of what the doc for it could look like?
 
-It would be nice to give the branch name "sa/notes-edit" to make the
-topic easier to track.
+I haven't looked much into it, so I don't know what's best, but for a
+custom option, an alternative to using $OS_NAME, $DISTRO, $ARCH, etc,
+might be to use things like %(os_name), %(distro), %(arch), etc which
+are used in ref-filter formats (see git for-each-ref documentation).
 
->        List thread:
-> https://lore.kernel.org/git/pull.1817.git.1729296853800.gitgitgadget@gmai=
-l.com/
+> 2. Documentation: Improve the documentation outlining how to enable,
+> disable, and configure the 'os-version' capability. Include examples
+> for:
+>     - Basic usage (default OS name).
+>     - Detailed usage (full OS version information).
+> 3. Implementation: Code the configuration settings and ensure they are
+> recognized by the Git system.
 >
->        Description: The patch worked on a #leftover bit which added
-> the =E2=80=9C-e=E2=80=9D option to =E2=80=9Cgit notes add=E2=80=9D and =
-=E2=80=9Cgit notes append=E2=80=9D subcommands
-> when the message is supplied with the -F and/or -m options. The patch
-> enables fine-tuning the message by invoking the user=E2=80=99s default ed=
-itor
-> prefilling the message in the editor to allow editing the message to
-> the required taste before adding the note to the commit
+> Fix Cross-Platform Tests
+> ---------------------------------
 >
-> ## Project Overview:
-> This proposal outlines a plan to complete the work on the os-version capa=
-bility
-> patch series for Git's protocol v2. Initially introduced in June 2024,
-> this feature intends to enhance
-> communication by allowing Git clients and servers to share their
-> operating system (OS) information.
-> The capability aims to provide metadata that can improve issues
-> diagnosis and enable statistical insights.
->
-> This project will involve refining the original patch which already
-> started the process of adding this feature,
-> addressing Windows compatibility issues, and implementing
-> configuration options to customise how the OS is
-> shared.
->
-> ## Intern objectives:
-> The key objectives of this project are;
-> 1. Finalize 'os-version' Capability: Modify the existing patch series
-> to meet community requirements and improve
-> functionality, ensuring compatibility with different OS environments.
-> 2. Add configuration options: Create options that allow users to:
->     - Share only the OS name by default (eg, "Linux", "Windows")
->     - Disable OS information sharing completely
->     - Include a more verbose OS version display using commands like
-> uname -srvm on Linux
-
-Making it possible to customize what is shared, for example something
-like "OS: Linux, Arch: x86_64" might be nice too.
-
-> 3. Fix Windows Compatibility: Review and resolve issues with the
-> current tests on Windows, ensuring full cross-platform
-> support
-> 4. Ensure Tests Coverage and Reliability:  Create robust tests to
-> verify the feature's functionality across supported platforms,
-> incorporating community feedback to refine and improve the patch series.
->
-> ## Approach and Methodology
-> 1. Analyze and retrieve the existing patch series:
->     - Retrieve patches from the Git mailing list
->     - Review the current code and community feedback to understand
-> necessary improvements and privacy concerns
->
-> 2. Apply and test the patch on a new branch:
->     - Set up a new branch based on master to isolate the work on the
-> os-version feature
->     - Apply the patches and perform an initial round of tests to
-> determine specific errors and how to address them
->
-> 3. Address Community concerns and implement improvements
->     - Implement feedback on sending only the OS name (eg, "Windows")by
-> default using uname or equivalent method on different OSes
->     - Add configuration options for users to adjust the level of
-> detail in OS information sharing
->     - Allow toggling the feature off for privacy or preference
->     - Ensure that configuration changes are well-documented and user-frie=
-ndly
->
-> 4. Resolve Windows Compatibility issues:
->     - Address current test failures on Windows, working closely with
-> community inputs to meet compatibility standards
->     - Modify any OS-specific code or test as needed, to work across envir=
-onments
->
-> 5. Develop and refine tests:
->     - Ensure the test case covers all functionality: OS name  sharing,
-> version details and disabled state
->     - Conduct platform-specific tests on Linux, Windows and other
-> environments to confirm accuracy
+> 1. Identify Issues and added tests for changes/addition: Investigate
+> existing test failures, particularly those occurring on Windows and .
+>      - Review the test logs and identify the root causes of failures.
+>      - Analyze differences in OS behaviors and how they affect the tests.
+>      - Cross-platform tests to validate the functionality on Linux,
+> Windows, and macOS environments.
 
 It might be nice to explain how you plan to test on different platforms.
 
->     - Incorporate feedback from mentors and the community to finalize
-> the feature's functionality and robustness.
+> 2. Implement Fixes:
+>       - Modify tests to ensure they run correctly on Windows,
+> addressing any compatibility issues with the test framework or Git
+> commands.
+>       - Ensure all tests reflect the changes made to the OS reporting
+> capabilities.
 >
-> 6. Document the feature and prepare for submission:
->     - Write documentation and examples for configuring the os-version
-> capability, explaining options and use cases
->     - Prepare the final patch series, following Git's contribution
-> guidelines for submission to the Git mailing list
+> Testing and Validation
+> ------------------------------
+> Ensure comprehensive test coverage=E2=80=94including default behavior,
+> configuration options, and edge cases=E2=80=94integrate tests into the Gi=
+t CI
+> pipeline for automatic execution, and share results with the community
+> for feedback on robustness and additional scenarios.
 >
-> ## Timeline
-> 1. Community Onboarding: (Week 1 -2):
->     Tasks:
->         - Retrieve patches and create a dedicated branch
->         - Study past discussions and understand the improvements required
->         - Set up blog post to write about internship experience
-> 2. Initial Testing and Patching (Week 3 - 4):
->     Tasks:
->         - Apply Patches
->         - Run Initial tests
->         - Identify current issues, especially Windows compatibility
-> 3. Implement OS version configuration option (Week 5 - 7):
->     Tasks:
->         - Add options for OS name, detailed OS version and disabled state
->         - submit the initial patch series to the Git mailing list for rev=
-iew
-> 4. Windows Compatibility (Week 8 - 9):
->     Tasks:
->         - Review, debug and resolve Windows-specific issues
->         - Perform cross-platform testing and verify functionality
-> 5. Test Expansion (Week 9 - 11):
->     Tasks:
->         - Write comprehensive tests for OS version capabilities.
->         - Integrate tests to cover each configuration option.
->         - Submit initial patches for tests to the Git mailing list
->        - Implement community feedback and reviews on submitted test patch=
-es
-> 6. Finalizing and Documentation:( Week 12 - 14):
->     Tasks:
->        - Finalize code based on community inputs
->        - Prepare final patch patch submission with full documentation
->       - Complete my blog on internship experience
+> Documentation Updates
+> ---------------------------------
 >
-> ## Availability:
-> I will be available to work for a minimum of 30 hours per week and I
-> am not currently
-> enrolled in any academic activities or have any jobs.
+> 1. User Documentation: Update the Git documentation to include:
+>     - Instructions on how to configure the feature, with practical exampl=
+es.
+>     - Best practices regarding data privacy when using the capability.
+> 2 Developer Documentation: Include comments in the code for
+> maintainability and understanding of how the 'os-version' capability
+> works internally.
 >
-> ## Post Outreachy:
-> The Git community fosters proper and effective communication,
-> regardless of one=E2=80=99s level of experience. The patience, guidance a=
-nd
-> explanation of technical concepts shown by community members are
-> wonderful and this has made me grow not just technically but also
-> behaviorally. Due to this, I plan to continue actively participating
-> the in Git community and be part next generation of those saddled with
+>  Prepare for Merging
+> ----------------------------
+> 1. Final Review: Conduct a thorough review of all code, tests, and
+> documentation. Ensure everything aligns with Git=E2=80=99s contribution
+> standards.
+> 2. Engagement with Community: Present the finalized patch to the Git
+> mailing list, addressing any additional concerns raised during the
+> discussions.
+> 3. Merge Process: Coordinate with the maintainers for merging the
+> patch into the main branch, ensuring all feedback has been
+> incorporated.
+>
+>
+> =E2=80=94------------------------- Timeline =E2=80=94--------------------=
+-----------------
+>
+> Community Feedback and Finalization
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+> Dates: November 26 - December 8
+> Engage with the Git community to gather input, especially on privacy
+> concerns and minimal data sharing. Determine default behavior (sharing
+> only OS name) and finalize whether to use "user-agent" or another
+> identifier in the protocol(os-version).
+>
+> Minimal Default Implementation
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> Dates: December 9 - December 20
+> Implement the core feature to share only the OS name by default,
+> keeping data minimal as per feedback.
+> Send Patches for review from the Git community
+>
+> Configurable Options for OS Version
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+>
+> Dates: December 21 - December 30
+> Develop settings to allow users to disable OS data sharing or choose
+> verbose mode (e.g., uname -srvm output).
+> Send Patches for review from the Git community
 
-Nit: maybe s/part next/part of the next/
+My opinion is that disabling OS data sharing will be required from the
+start, while choosing a verbose mode or a custom mode could be
+developed afterwards. So I think steps like the following make more
+sense:
 
-> sustaining this great project and preserving its legacy.
+1. Implement the core feature to share only the OS name by default, as
+well as an option to disable that feature.
+2. Implement a verbose mode.
+3. Implement a custom mode.
+
+> Cross-Platform Testing (Focus on Windows)
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 >
-> ## Appreciation:
->  A special appreciation to everyone on the mailing list for reviewing
-> my patches, the mentorship and guidance
-> I am grateful to you all.
+> Dates: December 31 - January 13
+> Conduct robust testing across platforms, addressing prior Windows
+> compatibility issues.
+> Send Patches for review from the Git community
+
+My opinion is that testing on all the platforms will be required for
+each step, so that cannot be left for a later step. It should be
+integrated into each of the development steps.
+
+> Beta Testing and Community Feedback
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+> Dates: January 14 - January 27
+> Release for beta testing, integrate feedback, and refine functionality
+> based on real-world use.
+
+This should also be part of each of the development steps.
+
+Also new features often spend some time in the 'next' branch before
+being merged to master, which might be considered some kind of beta
+testing, but we don't call it "beta testing". Before a new release is
+tagged, we have a few rc0, rc1, etc releases, but they are not called
+"beta" releases either. They are actually called "rc" releases, "rc"
+meaning "Release Candidate". So overall, to avoid confusion, I think
+it's better to not use the "beta testing" term unless you explicitly
+say what you mean by it.
+
+> Documentation
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> Dates: January 28 - February 10
+> Document feature usage, configuration options, and setup instructions
+> for smooth adoption.
+> Send Patches for review from the Git community
+
+Documentation should also be part of each of the development steps.
+
+> Final Review and Merge
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> Dates: February 11 - March 6
+> The final review phase will include presenting the completed work to
+> the Git community for a thorough final assessment. Any remaining
+> concerns or suggestions will be addressed before the patch is prepared
+> for merge. This stage will allow for further feedback, particularly
+> from stakeholders and maintainers who raised the initial questions,
+> ensuring the solution is acceptable to the broad Git community. Once
+> consensus is achieved, the patch will be merged into the Git mainline
+> codebase, concluding the project.
+
+Not sure how things will go with reviews, but we prefer if development
+can be incremental. So I hope some initial patches will be merged well
+before the end of the internship.
+
+> Availability
+> =3D=3D=3D=3D=3D=3D=3D=3D
+> I will be available to work for the required minimum of 40hours per week
+> during the internship period and will be happy to extend if required.
+>
+> Blogging
+> =3D=3D=3D=3D=3D=3D=3D
+> I also plan to keep writing blogs after two weeks, to track my
+> progress,  give updates about what I am currently working on and also
+> as a documentation for future contributors.
+>
+> Post Outreachy Internship
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> One of my dreams is to be an active member of an open-source community
+> which I can proudly support and contribute to. Continuing my
+> contributions after the internship is a big part of making that dream
+> a reality. I=E2=80=99m committed to contributing to Git long-term, helpin=
+g to
+> improve the project and supporting new contributors along the way.
+>
+> Appreciation
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> I really appreciate the support and guidance I got from the Git
+> community. I also appreciate all the effort from the outreachy mentor.
+> Thanks for your time.
+
+Thanks for your application!
+
+> On Mon, Oct 28, 2024 at 9:09=E2=80=AFAM Usman Akinyemi
+> <usmanakinyemi202@gmail.com> wrote:
+> >
+> > On Mon, Oct 28, 2024 at 8:26=E2=80=AFAM Christian Couder
+> > <christian.couder@gmail.com> wrote:
+
+Please remove previous discussions you don't reply to at the bottom of
+your emails.
 
 Thanks,
 Christian.
