@@ -1,142 +1,102 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94ED20A5F8
-	for <git@vger.kernel.org>; Tue, 29 Oct 2024 20:42:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44237200BAA
+	for <git@vger.kernel.org>; Tue, 29 Oct 2024 20:53:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730234529; cv=none; b=LAYfLGtRuQHpMkbg6A3Gs0R7zS6q8gxssaCyAH0BVTE9RL6T1+BY1uvNws+vKKMZHPEqfbJsLnqwQRu2B60J3Jnq8Li62ky8iC07uMA1qpU3Wq7xhWTWdsGYC3NmL1sCOVgKZhutCQDxKk9bgxajo11ZpxD9vmjykRzJB3yYEAA=
+	t=1730235241; cv=none; b=eQldxVKMNT0B/AgbfY+kjBPnAcbTXuoxKUkiEMxbhpswsFLgqgTAAfF78pYhlINGeMVb7hcwamV4WvF9PlCvOM+XG0rtvXbPVuHUoV1ZtOTs7PBybVC2ggi+hg0YHog6BaioRpvHRKP4GPJsV/87rNXIADOFXO+OAR44bpOmSm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730234529; c=relaxed/simple;
-	bh=oR5oz57jViqRkFGVH0kcFg8bqjS6Xv08V/0RLBZNXAw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E7qrfLPq3lnY9QDyTWzON/UjMGghiTpZ3iWmFq2aSwPNWyWa59WA3Yn0ahLG7rO1PFh9KsbV6p8xBTtTmNI4Mv1r83voRTO30c8XBx90JLm/qHbyRAChkc4kTigezYS2pQ3Fs6GSvDQJwu5FwSoYCJFni80+grHbQ/VxOCHymtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=l4luyKOb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BtMEuRVr; arc=none smtp.client-ip=103.168.172.149
+	s=arc-20240116; t=1730235241; c=relaxed/simple;
+	bh=U8BdLXfbACqqspHm4QdApNgbOi2+yAN1+PPBUHOUbY0=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=hYeRr6J8qqD+b1rxb3HVMruQreyawmC2Qm+SsGV6MCk6pxeP2XuWD8dUwiltWG34r/9XBMcNbhW2uxhCnlwDeeDD1UJ7M9qLep8RfOEm/G2eGoLgqRPepvrnhTU7v1yQ6IsMIaMbRSZUtDbpMSrvPMdaPYaj6u8EsbsS8u4d1OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=TQAokfKf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f8opMqtI; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="l4luyKOb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BtMEuRVr"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id C718D138019D;
-	Tue, 29 Oct 2024 16:42:04 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 29 Oct 2024 16:42:04 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="TQAokfKf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f8opMqtI"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 63BF6114018C;
+	Tue, 29 Oct 2024 16:53:58 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Tue, 29 Oct 2024 16:53:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1730234524;
-	 x=1730320924; bh=XX1gm/ptQfCIzW0m/8BY7dIYEkLGI81LOv/KDky2eRk=; b=
-	l4luyKObo0t1Zf184W95qyyahImiqZ/6cj/ORRS/gPAwl/VA4xCjFzGK+t4Ge8P1
-	FDaOy73/KqVSHO7BRoAX79jVEk3II7Hv+5QLDFdU+rUPVvRIaTijPxTm+qqtPiA0
-	ZoZZpJZ/L0oIobO67lWkz1xjm6joWoFiBtg9/Gzrl/VynY4j1IHwyEV62kHIeIvg
-	AHS6Wq/R02SpCu2/5Q37A9SJXLMoDOIKCvJNPne5RWp8PDKB23WOSnL6GD/gqcPL
-	epH00x+p1hH9bIDe5NFzC+Bf/dYhRoKTYKuiUt8vgpfgg8QsIoBVwGqfx7EDaOir
-	6SACY9er1tMJiqOkvfd66A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
+	cc:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1730234524; x=
-	1730320924; bh=XX1gm/ptQfCIzW0m/8BY7dIYEkLGI81LOv/KDky2eRk=; b=B
-	tMEuRVrg+zFs9AD57EyNNovlfLnM6x2hImdeahhVEFn6NhlO7g31rujQ5ZDqKGQu
-	KhnWPxSMymxwkWz/6gL6ItKCBVc0bjApddE7VUIXra39gHAJRX8PhYLfvJm9Xs4+
-	R91DB2390bU/5WRkULjzzJJP3in5nmyx3cuhfnftxF1P+al6yFrruRw4GNrAABZD
-	sdXdZ+8W0X53Owxiai7pQzUFXLo+/c644bjfUmD9HeyaFwTo++xB3s0e3D9fUV9m
-	8a3E+T11FVc9pd3ZyqCZ8XGSjE7EmFyrbQLNV+ZbX5e9A1ffHXfNd1UjgCCKrKNr
-	Qpdly6/iltmmL3K4W/7lw==
-X-ME-Sender: <xms:nEghZw967ggMENrv99M3qXX7XkWPrn3p2THxiXLR6NJ1-aa1-NWG76M>
-    <xme:nEghZ4uO_d4TJx1i2PW-XN8MYcRpdc2GdejudBCaSkpGc0lYZRySwR2w7m5SCdrjT
-    ls9v6bV1SQ0DGYPjA>
-X-ME-Received: <xmr:nEghZ2DriqnnTIXTOeX6FjabPMlDbPG8DdmqzFUfc2z34tBTccCkDyS0jZH6BGHWvBVf4rssZBO05Q0FqGrQX_6j6MoixEY9bBoBI-zDSK76JJfg4b8ssK5p_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekuddgudefhecutefuodetggdotefrod
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1730235238;
+	 x=1730321638; bh=BqQu095fVOKHPd8NEHeLIhgcIfCFt68o6Eyn/LfJFhg=; b=
+	TQAokfKfOKxJebkkv8i4DN5Z2xSZ7l7NYKEtwPOrL4wpqlhjRw8vxMMKQpjEbEIJ
+	YZMCDcMtroIM4VZea6ZF6cxiUDOXzRWE1jofZB9+x26CUCzcGJeAjGeB1qwRW6li
+	oeld7eciOtyIEkfKZnNSo9u3tRJ28C43/5br0EzZY+gy07OJNVZEAdz+ZumyHEF2
+	RmOTWFx/VdshX+nM6335sgEj/UgSszl3HPG/XNvooX25z7r1ouFydXO9ci3OgULx
+	B0jVOZlnSaKvJwdwBpvKagyj6ZWQGyWjvYqZv3D4YjDH9JkrXH/D2nACcGqgkmQL
+	6Wu+2guff8w/gIxlFB0Oig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1730235238; x=1730321638; bh=B
+	qQu095fVOKHPd8NEHeLIhgcIfCFt68o6Eyn/LfJFhg=; b=f8opMqtIIrGweHq7F
+	AY0iqAQrzKSVXpuHHqBTE17/+6sMtOF0hI0P2nU0DzTe3RJ2zRaBqZv+5EyX//Ce
+	YVceD1xvRFypH3GkafRbjZGnvdt2KUg2iIqQGLFi+BFbHe2BdAT9ACBicIOm+2YD
+	w3mWC8+ZKC0EUmzBIU8Q0h2Q8fvHw021+zvTV4bP9lFzD897Oxtd9Nz1FtruYx5N
+	28AMb3+ZG26ID9MzIHvR9so0TU4VrrKsbnMcYFv48p/lss1KFUBoW7Q5Y+Fwrx0X
+	rGothvtfnHPeOqnazAX9clKszfp/MVutT18zqg53vWbfq22aq0Qv2gSIEltmagXB
+	c/6Vw==
+X-ME-Sender: <xms:ZkshZ0SdP_pSbdpMxKYMjFHQ5emGKGUSEKs4kSjSOjbKakj5vJqcjaI>
+    <xme:ZkshZxwqB-9FSKwpr7zQ3XxjXY2iIiWtIUEdi6hqY7k_UOgTC5KMiPyMmw8IV1_6O
+    Epg-FOpVWfyoO_ppw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekuddgudefjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhh
-    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpedule
-    fgueeiueetkeelieefgedufeehteekhfejffekvdeuhedtvefhkeeikefhgfenucffohhm
-    rghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptgho
-    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtoheprghvrghrrggssehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:nEghZwfkAYFifN0RioWCd1dEiqa46MdXBMaqfocQgEtnScnbj6Jjyg>
-    <xmx:nEghZ1MlZCUsPL4e42YPiXcxJcsPH9cvT9GzOX8_wRO9yoTOFjBHyQ>
-    <xmx:nEghZ6kSl8iPqRtrpc8UJVgB3Tsdd_LbFa-qOXBtKYmUzC48tv3xjg>
-    <xmx:nEghZ3tZgFdjNcLc11m4sKneXRSgkCRBY5mrG1uEbKWYUIgxebhjWA>
-    <xmx:nEghZ6p816fn6LpuTvAr86RoM0HqLXbwf5OhQB1MUB9m3OiNKhb75HfW>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
+    fhvffkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcu
+    jfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    htmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedvieegtdfgteeghfffteetledu
+    veehteefkeffheehfeeihedukeevleevfffhjeenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
+    sehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ZkshZx1uEkeNzJb4LuDewjwA8v6KxHOdlbyug6au_JPWZi1dqfQ35g>
+    <xmx:ZkshZ4BcZr8MZ6p-1Gsmk2MZDxBLLghXgu5yeis7KfWtdnZSInDd0Q>
+    <xmx:ZkshZ9gm9PfvkRhjMPaORiuZOU5Uj_1U2pEU0i13tbkLCUIKH0uIbA>
+    <xmx:ZkshZ0o24Y1glHjbC6TVW3WuwrtNVUUqCrJTuGlHmjl7Bo_PW7bVqA>
+    <xmx:ZkshZ9Z3fDkxxKbKY7rQ9icHI0NT22a-6vA5tR4HehkpOGxaRDIRhA_D>
 Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Oct 2024 16:42:03 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	avarab@gmail.com,
-	me@ttaylorr.com
-Subject: [PATCH v2 3/3] =?UTF-8?q?Documentation/git-bundle.txt:=20discuss?= =?UTF-8?q?=20na=C3=AFve=20backups?=
-Date: Tue, 29 Oct 2024 21:41:46 +0100
-Message-ID: <c50f9d405f9043a03cb5ca1855fbf27f9423c759.1730234365.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.46.1.641.g54e7913fcb6
-In-Reply-To: <cover.1730234365.git.code@khaugsbakk.name>
-References: <cover.1729451376.git.code@khaugsbakk.name> <cover.1730234365.git.code@khaugsbakk.name>
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 327AD780068; Tue, 29 Oct 2024 16:53:58 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Commit-Hash: c50f9d405f9043a03cb5ca1855fbf27f9423c759
-X-Previous-Commits: 63a431537b78e2d84a172b5c837adba6184a1f1b
-Content-Transfer-Encoding: 8bit
+Date: Tue, 29 Oct 2024 21:53:37 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <7a0520b4-2530-4660-a858-1def0c8d6de2@app.fastmail.com>
+In-Reply-To: <20240912205301.1809355-3-gitster@pobox.com>
+References: <20240912205301.1809355-1-gitster@pobox.com>
+ <20240912205301.1809355-3-gitster@pobox.com>
+Subject: Re: [PATCH 2/2] strbuf: retire strbuf_commented_lines()
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Thu, Sep 12, 2024, at 22:53, Junio C Hamano wrote:
+> The API allows the caller to pass any string as the comment prefix,
+> but in reality, everybody passes the comment_line_str from the
+> environment.
+>
+> Replace this overly flexible API with strbuf_comment_lines() that
+> does not allow customization of the comment_line_str (usually '#'
+> but can be configured via the core.commentChar).
 
-It might be naïve to think that those who need this education would end
-up here in the first place.  But I think it’s good to mention this
-high-level concept here on a command which provides a backup strategy.
+core.commentChar or core.commentString.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    v2:
-    • Fix gitfaq(7) link
-    
-      Link: https://lore.kernel.org/git/ZxfhAAgNlbEq60VB@nand.local/#t
-    v1:
-    Correct mention of the section?  All-caps seems to be the convention.
-
- Documentation/git-bundle.txt | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index bce62bc8309..7bffd2e4a05 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -319,6 +319,20 @@ You can also see what references it offers:
- $ git ls-remote mybundle
- ----------------
- 
-+DISCUSSION
-+----------
-+
-+A naive way to make a full backup of a repository is to use something to
-+the effect of `cp -a <repo> <destination>`.  This is discouraged since
-+the repository could be written to during the copy operation.  In turn
-+some files at `<destination>` could be corrupted.
-+
-+This is why it is recommended to use Git tooling for making repository
-+backups, either with this command or with e.g. linkgit:git-clone[1].
-+
-+See also linkgit:gitfaq[7], section "TRANSFERS" for a discussion of the
-+problems associated with file syncing across systems.
-+
- FILE FORMAT
- -----------
- 
 -- 
-2.46.1.641.g54e7913fcb6
+Kristoffer Haugsbakk
 
