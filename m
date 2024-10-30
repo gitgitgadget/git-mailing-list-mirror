@@ -1,139 +1,95 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B35BA4A
-	for <git@vger.kernel.org>; Wed, 30 Oct 2024 20:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AB11D1308
+	for <git@vger.kernel.org>; Wed, 30 Oct 2024 20:11:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730318412; cv=none; b=kSt/PWlEb7Lg9jIySO4KZNV3BM6tesTX3Wk0XZwBp3klG+dJU3hdwzwu097WwbjgZrGQGfwboiRYkqgRLzGYjR1XO3v+pTOYMNzzEH0gJoCv6SiJaB1JLT947xa9KEExL6waOiAumQ1LstzEqistxMtLx9BbWohpB70E8vW7E40=
+	t=1730319116; cv=none; b=ARRJYusAQTh/8aExjwEGY9ZGFneNVRMI8sAfdbiDbLtu/CCsciHeoEbOthGPVE1cVifenQEQs+wLp029rNYZWMeQfKLb177heYRN79Siq9pmujjbjrsJdj9dYwk2WfU/rdsUKU/5VHlBOQoda0HxeBnqLhnm14QKna7x2Nz0xko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730318412; c=relaxed/simple;
-	bh=NsYRPZkD8unyxmGUWZNwWrIQS/RE7Vx7TKI3QcX2qHw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M6Lr0RoCfliwlLgYvxzwHPNdj44ozZCvX3Pp8SrctpqdPS74gxRtH5p8L2n3tbayLU8pfcZniFDBorG7llr27AFBC+BpMrpbr8aZDUe2d950zey2KMqwjpodIM4s9ydon8Fw3VRBz2Ec0ZZTNnF8lJ5qIAIWzZTkHCGN4tUbweg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=2BRrF1MK; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1730319116; c=relaxed/simple;
+	bh=+EkGG+J860F2nuK3TCQB9ladgcQyBKLY7/6QMIjPO0g=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=q9An83ECfaleUGIEe5UbicBoPbwx2fDWL2JIPT8bElPv7KOQwSyMkeFbvmeMMuniNtoe4KesbGTQP2IPiflwik0/rNYt5sgadPGSax1BJl0kdyheccvgnDJ93IUcnZR2lcEazULhExTVShR1X4kvXgAsUioB7qVyUrySBmE9/aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q1Kd/ILn; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="2BRrF1MK"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6e330b7752cso9689107b3.1
-        for <git@vger.kernel.org>; Wed, 30 Oct 2024 13:00:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q1Kd/ILn"
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2fb5a9c7420so1712961fa.3
+        for <git@vger.kernel.org>; Wed, 30 Oct 2024 13:11:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730318409; x=1730923209; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=islfsC50RsqFZecxCGkeBx3PNlRvHd/OHbmPXyl5doE=;
-        b=2BRrF1MKrb80CwrFkUnPgW/KbS+Ua0vt/UcQneAxCpIvrjAay2vhPpgZw/1/VQcdEN
-         JsTWVS6VD0p9f9ROlG314Gk+w8t43PCTGbihfT5WFOuFMxmemn6q2bdjSEtHAKR9jlJq
-         dQ+xzHWohW/iM9/9PHQBny1tceAXg/hVssTbe4NINOtOR56SE7DLlRRpoO+VZ/Fh45oG
-         Tf7odNd1TmUD8MoaWI2SJx3pFQ4qA1rx08Z7uimtXzHLWZdvGFnLKwsayC8Ljfr2U5fC
-         WI/3Ib7DD0ECFKyf3oM5VoNa3wec9MQTuz+XBCIm+wTqjGU2MCd5rXNN+0ZLBfqUu/2X
-         YtdA==
+        d=gmail.com; s=20230601; t=1730319111; x=1730923911; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=hI7WRB1CRyZ+OBubS5jZRPyuNFsjPqKWXdFe6AcBmnQ=;
+        b=Q1Kd/ILnhvxjkjNJcGwW/iSknmbH72ZwhmLqe49Pfu7Mut8kYpIHs0sijVyMXHW6ul
+         sBH20uIgXegYoFOnO1YU2TPPd6fXsCOeeWFf2MqcQ9kIftMCCZjWvK21iD+tnBitTHE2
+         6hojDRWt0pkuuzeiuw+kigu8X/h8+7fjwwxmbmjXcvvMbOtXaeCntR+X1EbC/o3EWPPn
+         ZH6Zk/eqYOfg2F6sU/4Ys79jLWpNcLTHwaSp8eC3fL/cXUXwejds0pLrDXxJl21WiWfp
+         sQtWyqYnoyzVBbevbfsqsq+3sHS7mWwf9quP3bc3I+AnuL04GyC99H1Ftxnd7inJOsoB
+         cMlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730318409; x=1730923209;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=islfsC50RsqFZecxCGkeBx3PNlRvHd/OHbmPXyl5doE=;
-        b=IgF9H6hdorCtkwYV8X1xSFlGldK0jJDtmAH2yg0eOCHIyCqI+d8wY6CCEn4tauTGIG
-         M+/Jcd/C5rIkrMMvJxbvduX1tecBGeIxdRkw6zhSi/kM3aWHFh8pJHd347BaQYPOyJrS
-         tW8NNJth6QHZOpFEgZYdLq0gzZkX1G3XZX/Yt+sFCC0owY9fu4UxelXgrNNXvEJLfYuG
-         wVBPHzWq/Y5PrJWNf3AViIBALWxZp0bgP2B+Dzjj9Uo5lLyioiQynK1B5UxsM1urCvyI
-         M8APFeBtxrmOuUXamJV1VZTUdrXsG3z/4hGG+mFaQnblXnnyz7S7gCpV/wMoLAnKrA2C
-         /eEQ==
-X-Gm-Message-State: AOJu0YywqgpOajKnOg/VG371JFDn/2l+wMYEXpuCloGru87yluHIViRn
-	tmeE2SsVXAtsk1DiX/2P+Gv5jfBtNS13fWQfNSzHdH7Af2rQSH2gT5bGbFF25oE=
-X-Google-Smtp-Source: AGHT+IEHE2DjVM6wnesJHCaWVe4mohDyhYIgi3WCz7kZzI6nqSN0RSaYEdgd0vSKgYuIARwBu9AeRQ==
-X-Received: by 2002:a05:690c:4a07:b0:6d4:72b7:177e with SMTP id 00721157ae682-6ea3e7527e1mr30883067b3.5.1730318408607;
-        Wed, 30 Oct 2024 13:00:08 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6e9c6cb004fsm25703127b3.145.2024.10.30.13.00.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Oct 2024 13:00:08 -0700 (PDT)
-Date: Wed, 30 Oct 2024 16:00:06 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v3 1/9] packfile: add repository to struct `packed_git`
-Message-ID: <ZyKQRu+1v6IJjbSR@nand.local>
-References: <cover.1730297934.git.karthik.188@gmail.com>
- <5afb9af0afdf6062b16dea2d1347170485e7d73e.1730297934.git.karthik.188@gmail.com>
+        d=1e100.net; s=20230601; t=1730319111; x=1730923911;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hI7WRB1CRyZ+OBubS5jZRPyuNFsjPqKWXdFe6AcBmnQ=;
+        b=DrtQm9x0kCxzoagOIjcOOZQA11QdFzqooJbZDNuCjJpbu8Ku5S/duNkf3UKaQtQvkm
+         dzWxM9yBRMawQjS4eJMdSo/dQXj1k7yuuWLt9gAocpRt4flIDVz8fiQVnOXYDmiwuWpi
+         n83OYv+d+Lby0k6M1Whivg0Q8GgCcGaevnCwJGFRyS32eR9iSiw8MRIyCTtEyfWT+bTB
+         qs7Fw/Ia1gyiiY+WdDhAznsurCEgWu9mdxDAMj1U2nszMXo/Mj/aq+reqO8QD36Qkeut
+         LxHKgIqo2s+AiAp7OoM2Cjv1Dz3m6bnDnX5tAD1xI9ryrhhEDEQGyLqvg7DJ2bQaG7RS
+         UwhA==
+X-Gm-Message-State: AOJu0Yzmek99/jyZsrPs8KR+C3pWFAfM+LKuPtCLFAB7wuasOVT1m+Zy
+	C8PXmnOVQepyqRwaPumrEqMXg/9naj0Tm9h5EZn0/snVyLTy8Au2PFQXKvk6bdoc/WI7JwhKTUu
+	My2+/G+zkAAO5vjlueGNBw+fvmQ8pUyJR
+X-Google-Smtp-Source: AGHT+IH57dIoqqF59KOU47JQOZAbTkw5ytrvbOD+PCQSOJ5zSi4nJJ5UoJZt9AKTmJU2+2ADrt/oUqI9wPxQX4R/62E=
+X-Received: by 2002:a2e:a7c1:0:b0:2fb:8df3:2291 with SMTP id
+ 38308e7fff4ca-2fcbdfa73f4mr84402961fa.16.1730319111095; Wed, 30 Oct 2024
+ 13:11:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5afb9af0afdf6062b16dea2d1347170485e7d73e.1730297934.git.karthik.188@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 30 Oct 2024 21:11:38 +0100
+Message-ID: <CAP8UFD0jeG=8qEcvyQUDOLTh0Ab7W=icOTsQPAfUPJ92dZjxNQ@mail.gmail.com>
+Subject: Draft of Git Rev News edition 116
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Matt Liberty <mliberty@precisioninno.com>, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>, Chandra Pratap <chandrapratap3519@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Oct 30, 2024 at 03:32:26PM +0100, Karthik Nayak wrote:
-> [...]
->
-> We do need to consider that a pack file could be part of the alternates
-> of a repository, but considering that we only have one repository struct
-> and also that we currently anyways use 'the_repository'. We should be
-> OK with this change.
+Hi everyone,
 
-Nicely explained.
+A draft of a new Git Rev News edition is available here:
 
-> diff --git a/object-store-ll.h b/object-store-ll.h
-> index 53b8e693b1..e8a22ab5fc 100644
-> --- a/object-store-ll.h
-> +++ b/object-store-ll.h
-> @@ -10,6 +10,7 @@
->  struct oidmap;
->  struct oidtree;
->  struct strbuf;
-> +struct repository;
->
->  struct object_directory {
->  	struct object_directory *next;
-> @@ -135,6 +136,10 @@ struct packed_git {
->  	 */
->  	const uint32_t *mtimes_map;
->  	size_t mtimes_size;
-> +
-> +	/* repo dentoes the repository this packed file belongs to */
-> +	struct repository *r;
-> +
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-116.md
 
-Hmm. What I meant in my earlier suggestion was that we should leave the
-member of the struct called "repo", but change the name only in function
-arguments.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-Sorry to split hairs, but I am somewhat opposed to having such a short
-variable name in a struct. In either event, the comment should be made
-consistent with the variable name.
+  https://github.com/git/git.github.io/issues/732
 
->  	/* something like ".git/objects/pack/xxxxx.pack" */
->  	char pack_name[FLEX_ARRAY]; /* more */
->  };
-> diff --git a/packfile.c b/packfile.c
-> index 9560f0a33c..1423f23f57 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -217,11 +217,12 @@ uint32_t get_pack_fanout(struct packed_git *p, uint32_t value)
->  	return ntohl(level1_ofs[value]);
->  }
->
-> -static struct packed_git *alloc_packed_git(int extra)
-> +static struct packed_git *alloc_packed_git(struct repository *r, int extra)
+You can also reply to this email.
 
-This spot I would leave alone.
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
 
->  {
->  	struct packed_git *p = xmalloc(st_add(sizeof(*p), extra));
->  	memset(p, 0, sizeof(*p));
->  	p->pack_fd = -1;
-> +	p->r = r;
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
 
-And this spot I would change to:
-
-    p->repo = r;
-
-The rest is looking good.
+Jakub, Markus, Kaartic and I plan to publish this edition on
+Friday November 1st, 2024.
 
 Thanks,
-Taylor
+Christian.
