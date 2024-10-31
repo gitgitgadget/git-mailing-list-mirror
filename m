@@ -1,37 +1,43 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mail2.viabit.com (mail2.viabit.com [65.246.80.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A4E19ABBF
-	for <git@vger.kernel.org>; Thu, 31 Oct 2024 11:47:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82999197A98
+	for <git@vger.kernel.org>; Thu, 31 Oct 2024 12:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.246.80.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730375255; cv=none; b=kokoD/u55s8UNxGBLgfOwSsDXTJMH+HdOVSSNOIQTCjOHZpHnaGMxH6d1OfE2Ap4VgwmnIeHXQhGG8g/COT3B3SpgBwBNTMBDl0hVabpYmenBZgEU/gay+0H2JmYmhidVlkzxlqMvP5Kql0rTiFE4BdrQrAObRu9H4pxI4vlZfs=
+	t=1730376930; cv=none; b=rfpCRh/or2Uq4K3iIaVIia1wfrIW8eN7Y0F8gsti/4uYP573r9s5pLUZ+V1f0iIfXJKOA2iVWmXV7bBK3Y1MYlyIGox9HH5judEQY/sqFNXk+RMBshHIlRxaaM99SgxQEABmjGM8QvoB6p1VXyn6FQcEjJmXCWvlP2baVqsKfH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730375255; c=relaxed/simple;
-	bh=G4eCeIJ+UOd1X/vsioLxzedbDP1Rj3/+/YxhGS1GzC0=;
+	s=arc-20240116; t=1730376930; c=relaxed/simple;
+	bh=LsxCTp2AfVEm8godqlqumGPdG/3BLVNQr8LtgwCuRjc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XDViXfp+YY6ZzplnUeFbYVSd2/2nnTaU24HN4DfeNW7024+1pzp0owEK6py9Nm0gFzglktLIspcORwE9I3aozbuEdYO94ivYi2p8wPFwSdjsixI15vayY41/5R/FyxEoP1J6xauyIthop7KnV3GG1mRn/WAbddsrmUyhR45DyjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HWYGJCjK; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=iOT/bZAkQHJc3wuIPN8yR4KfVcedpiZtt2QBQPWhmkfX9sBt8wY0UqSxk9q3cWcg7GRk8LKHEaomvj0S6UKFDHAnyQDkY64tKBYZ3lUMgOfdfrGHgrz2akR8SPNhQs+WY17a8y7CLO0IDHl+8SXj/MZoCRPlqn33kK3LzCvnEFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=orlitzky.com; spf=pass smtp.mailfrom=orlitzky.com; dkim=pass (1024-bit key) header.d=orlitzky.com header.i=@orlitzky.com header.b=qNtfdDWh; arc=none smtp.client-ip=65.246.80.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=orlitzky.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=orlitzky.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HWYGJCjK"
-Received: (qmail 18612 invoked by uid 109); 31 Oct 2024 11:47:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=G4eCeIJ+UOd1X/vsioLxzedbDP1Rj3/+/YxhGS1GzC0=; b=HWYGJCjKr+2PukrUstmXBdc4z6dg5woGnMSKBpYHboYCIkNJngiQOnszLF3yfP7r4v/cF0bgpWuGWjdaq7ZJNUZ4I4TDySx6aytX3uOpo13+RQC4Co7ahLOnMPhj7XQ5f0BQoPFV8AI+MEx78CBfPSs2XKzyakOiPdrkzuhBws6kDoun+Bsqip1gJEJ+VvFAdYJMTufDhTLrt9Ebago8OTa8DjIWBbD7berE4ZvOefRCwxP629RGx8olpnJg3omjBf4e7HrxMQvrEE5aMn38PTYbSKQ/kytK/GNSeciupnva0aDds4GIkoB5fHlflvcVzRzfU9GD/AgSOyaS8BhjJQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Oct 2024 11:47:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31803 invoked by uid 111); 31 Oct 2024 11:47:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Oct 2024 07:47:31 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 31 Oct 2024 07:47:31 -0400
-From: Jeff King <peff@peff.net>
-To: Josh Poimboeuf <jpoimboe@kernel.org>
+	dkim=pass (1024-bit key) header.d=orlitzky.com header.i=@orlitzky.com header.b="qNtfdDWh"
+Received: from mertle.michael.orlitzky.com (vpn1.metro-data.com [65.213.236.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail2.viabit.com (Postfix) with ESMTPSA id 4XfNHJ6wh7z3wnl;
+	Thu, 31 Oct 2024 08:15:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1730376925; bh=LsxCTp2AfVEm8godqlqumGPdG/3BLVNQr8LtgwCuRjc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=qNtfdDWh2rLoe1FtUGAImNWN8Q2PNuVs4CWLz/eBXZHhh3dBEBKC7TCaBP0tZsqQt
+	 EQyWs8ym0sKj2lEySLvAVO6OVEOAZFZ0Z3lBtefPhrElb6HiuSIpxDD0X2/XIpUkBF
+	 FHsDzl7Psep7Op7EboEkdgBFCaijgMuMxeZw4KG8=
+Received: by mertle.michael.orlitzky.com (Postfix, from userid 1000)
+	id 7D34512C258E; Thu, 31 Oct 2024 08:15:24 -0400 (EDT)
+Date: Thu, 31 Oct 2024 08:15:24 -0400
+From: Michael Orlitzky <michael@orlitzky.com>
+To: Caleb White <cdwhite3@pm.me>
 Cc: git@vger.kernel.org
-Subject: Re: [BUG] "git describe --match" performance
-Message-ID: <20241031114731.GA608553@coredump.intra.peff.net>
-References: <20241030044322.b5n3ji2n6gaeo5u6@treble.attlocal.net>
+Subject: Re: safe.directory warnings for root-owned repositories
+Message-ID: <ZyN03D8os53XJGDo@mertle>
+References: <ZyMGKHTnZDQ5JVuo@mertle>
+ <D59QZ1P3KSNB.ZXDHUA5HGC97@pm.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,43 +46,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241030044322.b5n3ji2n6gaeo5u6@treble.attlocal.net>
+In-Reply-To: <D59QZ1P3KSNB.ZXDHUA5HGC97@pm.me>
 
-On Tue, Oct 29, 2024 at 09:43:22PM -0700, Josh Poimboeuf wrote:
-
-> $ time git describe --match=v6.10-rc7 --debug
-> describe HEAD
-> No exact match on refs or tags, searching to describe
-> finished search at d8470b7c13e11c18cf14a7e3180f0b00e715e4f0
->  annotated       1844 v6.10-rc7
-> traversed 1282750 commits
-> v6.10-rc7-1844-gc61e41121036
+On 2024-10-31 05:38:00, Caleb White wrote:
 > 
-> real	0m9.243s
-> user	0m8.940s
-> sys	0m0.268s
+> The dubious ownership check simply reports that the directory is owned by
+> someone other than the user running the command, with no special handling
+> for the root user. While the error might not make the most sense in this
+> context, I'm not sure that it's worth special-casing the root user
+> (really the user with id = 0 as it might not be named `root`) in the
+> implementation.
 > 
-> $ time git describe
-> v6.10-rc7-1844-gc61e41121036
-> 
-> real	0m0.149s
-> user	0m0.111s
-> sys	0m0.036s
+> Why would you initialize a repository as `root` in the first place?
 
-There's more discussion of the actual solution in the nearby thread from
-Rasmus. But I did want to note one thing here: when I initially tried to
-reproduce your problem, my "slow" case was a lot less bad.
+To avoid the dubious ownership warning, obviously :)
 
-The reason is that I had a commit graph file to speed up traversal. So
-independent of the git-describe fix, you might want to try:
+These are shared repositories that I and my coworkers push to over
+SSH. Write access is granted via ACLs, with ownership being mostly
+irrelevant. (This is still "unsafe," but not for the stated reason.)
 
-  git commit-graph write --reachable
-
-That reduces the slow case for me by a factor of 10. And likewise other
-traversal operations should get faster.
-
-I think we'll build the commit graph file by default these days when you
-run "git gc". But we don't build it immediately after cloning. Perhaps
-we should change that.
-
--Peff
+I don't necessarily have a problem with adding O(m*n) safe.directory
+entries, but every once in a while someone will ask me about it, and I
+don't have a good answer for why it's not safe to push to a repository
+that's owned by root. I guess it's just more annoying to have to
+override the warning when the warning is wrong. Though if it was
+changed to "dubious repository writability," I wouldn't be able to
+complain any more.
