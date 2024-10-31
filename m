@@ -1,65 +1,70 @@
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554771CC8B3
-	for <git@vger.kernel.org>; Thu, 31 Oct 2024 20:59:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8194313A87C
+	for <git@vger.kernel.org>; Thu, 31 Oct 2024 21:02:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730408369; cv=none; b=jqf93aNSsVLp03Em50qK+4GsMI7W5JCfRwGRpbFPuLZ2vIeGvQm/VbCR4XMuJrpdFRxZ4WXB7rZqBQMU6IFAd418zonsgV5+Aii8Wyb+soxDisf8jqRBXouDOwbtb4gTuSFtfo+poJsVRC5PPWK+H6eQ9QMHVOJNon/QadK8vlg=
+	t=1730408539; cv=none; b=KYYOAbBDuCMgA1a/Cujs7Rsk2lR7fz36DO21IODgFRf93FL8MS4rjqaM0j43w3a+fryHaVKa8tfQrCmVXpDRxdr8K+Y/9PIyxpT3xdW9d6dfNYFQXnH6BGU6SLhYn+ZDM1gmChYOHbT2q9CEMSIgDC0/VNpKBmXbGjmb93/9FIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730408369; c=relaxed/simple;
-	bh=W6oRFCpkKkw6BVEZBV48Pd6ttNM46JvDvedzudOBuw8=;
+	s=arc-20240116; t=1730408539; c=relaxed/simple;
+	bh=69DDyiXoPD3fG3zYSRS0VkZbF5UxwNI8gtW5BY9ersw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QkCFKG5ErpQosgBM9qqjjevnFUhTJs6E1u8FvyAdT+oGedrHiRZiJIKmLXfVh0QM8Y74norJfn/oGmhSWOkVMbh6rawfjPuA+s+DK0tUyD1M+7g2ymJCCb/MnjqE8gIO081ma3K1Bc8Fx5A9HFc1isV7JnlM+ke7hMHYn0H5qI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=WhmTOA8J; arc=none smtp.client-ip=209.85.219.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=DiwLNH5/IFV6GPQOKrn88kS0OeWkHLngYWpH/WFvDXdqlFy4jDFiPVk021KTD14Zr+E913oXawlxqY0Ss/qldGStVWNE6QTKpOUA9PdUCFcqDnn3nJ6F5ZNZGeUJMCZ2r/ZiwZCAwvixuzYmXtKl6RaYMcgaUlG9RMiQw6FCTY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=m1QlEUh+; arc=none smtp.client-ip=209.85.219.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="WhmTOA8J"
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e30cef4ac5dso1283255276.0
-        for <git@vger.kernel.org>; Thu, 31 Oct 2024 13:59:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="m1QlEUh+"
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e292926104bso1258910276.0
+        for <git@vger.kernel.org>; Thu, 31 Oct 2024 14:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730408362; x=1731013162; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730408532; x=1731013332; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wkBnu3RmvAItPnvxS38ilONvfBCe0kp+EUK2jiu7g2Q=;
-        b=WhmTOA8J6cSaWwiPjaRN/5UiCjjxQs1+GthrvtNq6bzYIT1SCmVy+uHOR/IxeZT9jS
-         W1HKgpqvsKFZZ+C40I37K4XL7BQLiMulRINg995VmzBJja4Cd/OG6QPaxRrxBertot20
-         etA4bOf3AvWhXb7pAI+GrhxJtC6f2ZGedr30HMA363+cSmkNHjCIv9A+sVyM5jaRHs0t
-         JBxlMZ2QF9YhAn87wEuSNxSd1aLSnJ6XD6Ti5irf3nX6D5dMEZ+rbl2oecNzNYwfN1tk
-         NiaZFWVxv8K6R0hDZb8+9ZdwqOQyUOuHifYBNkd5VZwerpWKWIkMkDOj1IMqWC+uZdKM
-         nycg==
+        bh=69DDyiXoPD3fG3zYSRS0VkZbF5UxwNI8gtW5BY9ersw=;
+        b=m1QlEUh+aZcq3o4qcQWIIvQt+VdT6X8HZQYtaV+xzfBBCkIgDgMYuZmHphrbremK+W
+         88JKSYp4VkfMMQPr7/B08q8DvS48SaOSd6ZR9VafGDz38RrkwclT13Th29/kiXWoxIPi
+         PZ0JXUKt6081YsvLPDewdJHCVJ8z7iUQ3t9TJuLhJc+taOB/rt0+YlhA5sH+5rdRtZiy
+         8+nfbUjdEQipy4ZvJi/uX0OZB4ksVFsfxhAYfiO54gDRMvO1IJX4AJkQry9zicI7Hnvn
+         uNUMijK70PxzzKzycnQB79vdOHZE7zb77EAEZoOW/FQYjpMhvcrSRs8jfNP06DDElQU0
+         dovg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730408362; x=1731013162;
+        d=1e100.net; s=20230601; t=1730408532; x=1731013332;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wkBnu3RmvAItPnvxS38ilONvfBCe0kp+EUK2jiu7g2Q=;
-        b=chZfCdvPj6+L2fnFOtodkMKaCzx9fmdU42S2gUp3mpJ2U7ltf5vJdg1OTf+wHOG78M
-         hsqj6y9kDjU+2nDy9xx16Vmr0WfNWzRnkUQIRvyjn5SsxH2X6OrzyCDXQ/1ykbgJeT/D
-         oiitAGEUMlE+xtuVMAGTPhJPN90zQNrO9wlbnQjvJ11iWMqfL+ALKMjUVluYLIaW9WZ8
-         e4GI98FORdUhm4pheZ2IpjuAdg6JVwfZKEw8yqtYFhEn9cCVjGYbUkLg7aD3So/S+Ck0
-         NgUiwLAHvgblNO7Zt8EPvVyH86GfqNmtfStv2glT1dP+p5QHSo8y/iF+Iu+81fqcusRr
-         7z1w==
-X-Gm-Message-State: AOJu0Yxa19urvf+Z91chGbMK00q74tASLLZ9odpIH9Hk4eNlmb3eA1ci
-	nZLk+st6Madf8FD3XlHh6woL1tnZtwsrO6eiu81oTJPFAOaRY+9two6Cgn/kCV55wkt6zQNA1K5
-	Ug7g=
-X-Google-Smtp-Source: AGHT+IEGNagBx0/EmaGXacTRXAQqNJBircNTGJSbxVa8zK8Ud104XNjnjJemyf8gNVORmeXnylHnwA==
-X-Received: by 2002:a05:6902:2384:b0:e2b:d505:86a9 with SMTP id 3f1490d57ef6-e30cf3e5b5cmr8599934276.4.1730408362026;
-        Thu, 31 Oct 2024 13:59:22 -0700 (PDT)
+        bh=69DDyiXoPD3fG3zYSRS0VkZbF5UxwNI8gtW5BY9ersw=;
+        b=qOdAdoTqsv2ZE5UO0TEzAOe9ImgDgyPlK6M6Q/2oE4ULaNoIvJ1vH2KbekMhL0d8FC
+         9mEOpsSVvLjPGCpVO6pcFSCkh9t42aE8P0GFaWwcDY3edU3qBAKt+LTVB90CCze4mOyU
+         N4qvKBpDDMDDAejkRhqL9jDzPXh5QtVo37ZTI5BavbQO1tysjgJxESrqUcZUHzeYJ7pf
+         lW+RUJ/DEd2XXmVeHQOUC4yqfSjhyXkacyr9+kTIq6R+aVgbGBMTfe6yxX8CneqwdvNJ
+         yFHnvNgNNMtmZbzyllW3LwyWClqovCEJrlgvY40AsZb++Ld5ELEf5OQWIw0P5mp9/nwe
+         vG0A==
+X-Forwarded-Encrypted: i=1; AJvYcCWx1Swwu83TV+e5v01UROJm3z+Ik2SK1SaGtXH5zE4QofoiwTupeHu0zcettnyfSr7aHhY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQZ4F5JPPhCX1oHP/fJ1XNYSHUVTuVc1KbM/fmIYF/Iad47Bpw
+	UxTpMpC9PG2Kh/euvleKoljPm2DSFG8Y54nXoS6xI3zD7QgjQ80ruO5vHYh1Vdo=
+X-Google-Smtp-Source: AGHT+IG1AOc5xKn2+GryfrNtKykGU33Dj0LYvLr7Tr6HR6X/VUSJJhMH0jDglX5A7+ukqmvVGf5Z6w==
+X-Received: by 2002:a05:6902:1607:b0:e2b:d7e4:e5b4 with SMTP id 3f1490d57ef6-e3087c34e5fmr21172564276.51.1730408532474;
+        Thu, 31 Oct 2024 14:02:12 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e30e8a7caccsm432214276.23.2024.10.31.13.59.21
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e30e8a92847sm434660276.31.2024.10.31.14.02.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2024 13:59:21 -0700 (PDT)
-Date: Thu, 31 Oct 2024 16:59:20 -0400
+        Thu, 31 Oct 2024 14:02:11 -0700 (PDT)
+Date: Thu, 31 Oct 2024 17:02:10 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] fetch-pack: warn if in commit graph but not obj db
-Message-ID: <ZyPvqPK1s5lUtH+N@nand.local>
-References: <20241003223546.1935471-1-emilyshaffer@google.com>
- <cover.1730235646.git.jonathantanmy@google.com>
- <1027ff2cb7d9af5cc9ce6b653d28150457db8703.1730235646.git.jonathantanmy@google.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>,
+	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
+	christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com
+Subject: Re: [PATCH 08/17] pack-objects: add --path-walk option
+Message-ID: <ZyPwUmYI59Ov0peR@nand.local>
+References: <f8ee11d3003e743affb39835ba3583dd2498e576.1728396724.git.gitgitgadget@gmail.com>
+ <20241028195404.4119175-1-jonathantanmy@google.com>
+ <ZyEkWyB/C/lGb36b@nand.local>
+ <1dd36099-1f3f-4078-9009-6c142723430c@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,148 +73,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1027ff2cb7d9af5cc9ce6b653d28150457db8703.1730235646.git.jonathantanmy@google.com>
+In-Reply-To: <1dd36099-1f3f-4078-9009-6c142723430c@gmail.com>
 
-On Tue, Oct 29, 2024 at 02:11:05PM -0700, Jonathan Tan wrote:
-> When fetching, there is a step in which sought objects are first checked
-> against the local repository; only objects that are not in the local
-> repository are then fetched. This check first looks up the commit graph
-> file, and returns "present" if the object is in there.
-
-OK.
-
-> However, the action of first looking up the commit graph file is not
-> done everywhere in Git, especially if the type of the object at the time
-> of lookup is not known. This means that in a repo corruption situation,
-> a user may encounter an "object missing" error, attempt to fetch it, and
-> still encounter the same error later when they reattempt their original
-> action, because the object is present in the commit graph file but not in
-> the object DB.
-
-I think the type of repository corruption here may be underspecified.
-
-You say that we have some object, say X, whose type is not known. So we
-don't load the commit-graph, realize that X is missing, and then try and
-fetch it. In this scenario, is X actually in the commit-graph, but not
-in the object database? Further, if X is in the commit-graph, I assume
-we do not look it up there because we first try and find its type, which
-fails, so we assume we don't have it (despite it appearing corruptly in
-the commit-graph)?
-
-I think that matches the behavior you're describing, but I want to make
-sure that I'm not thinking of something else.
-
-> This was discovered when a lazy fetch of a missing commit completed with
-> nothing actually fetched, and the writing of the commit graph file after
-> every fetch then attempted to read said missing commit, triggering a
-> lazy fetch of said missing commit, resulting in an infinite loop with no
-> user-visible indication (until they check the list of processes running
-> on their computer).
-
-Yuck :-).
-
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->  fetch-pack.c | 22 +++++++++++++++++++---
->  object.h     |  2 +-
->  2 files changed, 20 insertions(+), 4 deletions(-)
+On Wed, Oct 30, 2024 at 10:14:08PM -0400, Derrick Stolee wrote:
+> On 10/29/24 2:07 PM, Taylor Blau wrote:
+> > On Mon, Oct 28, 2024 at 12:54:04PM -0700, Jonathan Tan wrote:
 >
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 6728a0d2f5..5a0020366b 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -57,6 +57,7 @@ static struct string_list uri_protocols = STRING_LIST_INIT_DUP;
->  #define ALTERNATE	(1U << 1)
->  #define COMMON		(1U << 6)
->  #define REACH_SCRATCH	(1U << 7)
-> +#define COMPLETE_FROM_COMMIT_GRAPH	(1U << 8)
->
->  /*
->   * After sending this many "have"s if we do not get any new ACK , we
-> @@ -123,15 +124,18 @@ static void for_each_cached_alternate(struct fetch_negotiator *negotiator,
->  }
->
->  static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
-> -					       int mark_tags_complete)
-> +					       int mark_additional_complete_information)
->  {
->  	enum object_type type;
->  	struct object_info info = { .typep = &type };
->  	struct commit *commit;
->
->  	commit = lookup_commit_in_graph(the_repository, oid);
-> -	if (commit)
-> +	if (commit) {
-> +		if (mark_additional_complete_information)
-> +			commit->object.flags |= COMPLETE_FROM_COMMIT_GRAPH;
->  		return commit;
-> +	}
->
->  	while (1) {
->  		if (oid_object_info_extended(the_repository, oid, &info,
-> @@ -143,7 +147,7 @@ static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
->
->  			if (!tag->tagged)
->  				return NULL;
-> -			if (mark_tags_complete)
-> +			if (mark_additional_complete_information)
->  				tag->object.flags |= COMPLETE;
->  			oid = &tag->tagged->oid;
->  		} else {
-> @@ -809,6 +813,14 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
->  	save_commit_buffer = old_save_commit_buffer;
->  }
->
-> +static void warn_in_commit_graph_only(const struct object_id *oid)
-> +{
-> +	warning(_("You are attempting to fetch %s, which is in the commit graph file but not in the object database."),
-> +		oid_to_hex(oid));
-> +	warning(_("This is probably due to repo corruption."));
-> +	warning(_("If you are attempting to repair this repo corruption by refetching the missing object, use 'git fetch --refetch' with the missing object."));
-> +}
-> +
->  /*
->   * Returns 1 if every object pointed to by the given remote refs is available
->   * locally and reachable from a local ref, and 0 otherwise.
-> @@ -830,6 +842,10 @@ static int everything_local(struct fetch_pack_args *args,
->  				      ref->name);
->  			continue;
->  		}
-> +		if (o->flags & COMPLETE_FROM_COMMIT_GRAPH) {
-> +			if (!has_object(the_repository, remote, 0))
-> +				warn_in_commit_graph_only(remote);
+> > Is the thinking there that we care mostly about 'git push' and 'git
+> > repack' on the client-side?
+> >
+> > I don't think it's unreasonable necessarily, but I would add that
+> > client-side users definitely do use bitmaps (though not delta islands),
+> > either when working in a bare repository (where bitmaps are the default)
+> > or when using 'git gc' (and/or through 'git maintenance') when
+> > 'repack.writeBitmaps' is enabled.
+> I suppose some users do use bitmaps, but in my experience, client-side
+> pushes are slower with bitmaps because a typical target branch is
+> faster to compute by doing a commit walk, at least when the bitmaps are
+> older than the new commits in the topic branch. This may be outdated by
+> now, as it has been a few years since I did a client-side test of
+> bitmaps.
 
-You discuss this a little bit in your commit message, but I wonder if we
-should just die() here. I feel like we're trying to work around a
-situation where the commit-graph is obviously broken because it refers
-to commit objects that don't actually exist in the object store.
-
-A few thoughts in this area:
-
-  - What situation provokes this to be true? I could imagine there is
-    some bug that we don't fully have a grasp of. But I wonder if it is
-    even easier to provoke than that, say by pruning some objects out of
-    the object store, then not rewriting the commit-graph, leaving some
-    of the references dangling.
-
-  - Does 'git fsck' catch this case within the commit-graph?
-
-  - Are the other areas of the code that rely on the assumption that all
-    entries in the commit-graph actually exist on disk? If so, are they
-    similarly broken?
-
-Another thought about this whole thing is that we essentially have a
-code path that says: "I found this object from the commit-graph, but
-don't know if I actually have it on disk, so mark it to be checked later
-via has_object()".
-
-I wonder if it would be more straightforward to replace the call to
-lookup_commit_in_graph() with a direct call to has_object() in the
-deref_without_lazy_fetch() function, which I think would both (a)
-eliminate the need for a new flag bit to be allocated, and (b) prevent
-looking up the object twice.
-
-Thoughts?
+All true, though it's hard to estimate the size of "some". I share your
+intuition that bitmaps are often a drag on performance for the
+client-side because doing a pure commit walk is often faster, especially
+if the client has a reasonably up-to-date commit graph.
 
 Thanks,
 Taylor
