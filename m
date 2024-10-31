@@ -1,118 +1,237 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFF513A87C
-	for <git@vger.kernel.org>; Thu, 31 Oct 2024 21:07:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF4813C9C0
+	for <git@vger.kernel.org>; Thu, 31 Oct 2024 21:19:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730408879; cv=none; b=ub8XX0XQq03IhXxa8QpCmKSzT275w67WPbqK6v+0kJcmpeTdShiEHCAq4qV9KXay5ZgYTjceQEcWXkefokVNdYlOLGqL6iafIehmLKMza25bZyFOdaw/cIBwCUJ7E5nGT5z2EY9x+zARPwnhH8faE6pJCpqvHIGTSfkVxNBTkgA=
+	t=1730409552; cv=none; b=QH8uKfCEcNUo0hKYjfx76Yz72ZFzNkp62NA3WdNM0YprlyDrQ4cVmY0GeRTyF/ZvCcdmETFzjzYeROCaw5Lw1BTioHPxMr/KGoAuIzJq5PMLsoSozXeSuTA1VB3TGiV4KO3hKwE8PXHbRYkphZKjE6KZR5HODMVbjmn3PiSi1LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730408879; c=relaxed/simple;
-	bh=lSYLEQSRN3czv9snxIjSOZNb7ePEgBZPm8SrMny3dW4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cSRTZs75h2JlnladK/Yqi0Ml8zYTWk8eyPaVhRCvhatj1AtmiPlrstSIzJDTryqELvy3EtI+a8q+rjiDlrxU5kEC/gELskGBBnCrbgtTidj3JlEi063jTPBTXMAxbNdJTekVy/6bnKTIV7V2LgT9UQUEmj1+rzQQlHTfkh5L54A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=eVtOSyV0; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1730409552; c=relaxed/simple;
+	bh=Cf5OPCpHZm1KLv/OEDZla0WLUl6T9WBKYAg5T/0lgoQ=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=ou2vbbDt+NCUjFAiJaSHaxXugHEP0Av+Z9cUGCTGvTzJpST2saVb7bdcM8JQlb+SLjzkzOSFMzCveqI387G+BefaE1O4/o5M7XTlA2WrVMToXTFR94E9eUWeSnAmIk0ZzCpUDhCZVmlq6MDn8eKzVL/WrXMj5AoG6V7SXNRjQY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rv+AxUTt; arc=none smtp.client-ip=209.85.219.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="eVtOSyV0"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e28fea0f5b8so1276307276.1
-        for <git@vger.kernel.org>; Thu, 31 Oct 2024 14:07:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rv+AxUTt"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e28ef71f0d8so2801736276.0
+        for <git@vger.kernel.org>; Thu, 31 Oct 2024 14:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730408872; x=1731013672; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lSYLEQSRN3czv9snxIjSOZNb7ePEgBZPm8SrMny3dW4=;
-        b=eVtOSyV066c9qwwRKrinFaTbr3LfWQCkJipryxGlGnIof2kS2JkRIE/CDKpTYMxeBR
-         l10pVYJJUaHWzwHxAdlaH3bTdF4yuzxIO4cDyMnRtRiSNVnz9cWPorohq+Wvc/CP7eH6
-         7H57hEJZQlKnjwTmPrRrYUWTvWk6BVmEGEnDLtv/kgYfJoK/BaiFsh3UtO1vYx+r/cUM
-         jgJdNZ2T4kngMJ76cUMPIwQE8Rp94+xYj0/fe+2ckLMM5aP5JlVXCSFKA+ba6AkNSvoJ
-         VFloPkLKymIf6CsT830r4CsRUDPfc5gYOOMYCUCfjnXjuyvwFgYYmYEBmn1OZ8mgiymo
-         dyIg==
+        d=google.com; s=20230601; t=1730409545; x=1731014345; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=03e1Z5/EZLOXnqH4j4bUOHX/qQ8kt1qPHdjzRPNsrlU=;
+        b=rv+AxUTtA44Ou7HrpTLtmJ2K0mkCP4TqGSEl4s76y4P73vccBbLC9LnNiHrIy0hwId
+         R6dKRPMAdXD2ohsRBai6cr6K/OlSCTjldOgWaVbjtnxu7qfsE29iW61bO1mscUUZ6tCF
+         jWpjJRzh8DffKks0ApR6OgW1jxgYaZeqJXGrapSrV/xzwnm/LpHiJsB1ez0lY1qSET35
+         7od1H8jZeItyEQCogWpM71TN47b3of/LudJnsLKv0BcFYQA8jqRfIgZBk/SmWPvdDKFv
+         2X1ekCJLTu9Hpg8hg39ews8han1S+dz6uGidefrAXAsTc6PGb4gp15LxT0E7Usn+dOPe
+         UGXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730408872; x=1731013672;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lSYLEQSRN3czv9snxIjSOZNb7ePEgBZPm8SrMny3dW4=;
-        b=epzxrR7Ha6sDSpv8f7JrJC8Ks9z7LzdizSqkiOu9judvcZCYk9tChi/YDhE8Pc+zsp
-         3aOOtAe9puWL/AWq93gR5+vyxTIAUNnUuQhqAY04VapJkaH1VVjIW8kohd0qxHaW+u1E
-         4HOtU7vCwp6Cojmjvl8Q86lQMqs4hkkSI4fUiehuuGpsUMkDVw+ZbNyvRo5BSaix3XS7
-         X14DS18Yk+V3CReHXjMvHiEM1xfAUcXWFbJIy21pWxbh8leAc+g+D5KKoAqntyYDpPps
-         PDluJpW4OTLbZQTzBcHPGSLKSG+m0CawW2WSXtyIGtioXAHtadiFrDRuHg1kMnMQm/bh
-         rMzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVzSwI5LaB9BTdxIbznZliHD4ZkC5RGGOM4L6Vszvb4BP3RqWB4fSeRefODjihM8i5Dnog=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxq88+Z+cWOceeGEeWk/q8Kib+ts+xU8NDJz1o55U4C3nC66nRf
-	yro6JMI88ySb6kjz9iE6bArxnrsb/l+nar5SovcnpglBN28xhDU2xg5zXZM6ob4=
-X-Google-Smtp-Source: AGHT+IHiq2QQiXSZB8V4Oprm/SMY9SFo7ZYOGPj2OlHl/aIZHo3jtxqfQhPLq6Ns1gG29MUQV7nE1Q==
-X-Received: by 2002:a05:6902:723:b0:e2b:cd24:4b7d with SMTP id 3f1490d57ef6-e3087a6b88amr21027912276.23.1730408872236;
-        Thu, 31 Oct 2024 14:07:52 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e30e8acc47esm452618276.43.2024.10.31.14.07.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2024 14:07:51 -0700 (PDT)
-Date: Thu, 31 Oct 2024 17:07:50 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-	peff@peff.net, johncai86@gmail.com, newren@gmail.com,
-	christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com
-Subject: Re: [PATCH v2 00/17] pack-objects: add --path-walk option for better
- deltas
-Message-ID: <ZyPxprSncGa1CKep@nand.local>
-References: <pull.1813.git.1728396723.gitgitgadget@gmail.com>
- <pull.1813.v2.git.1729431810.gitgitgadget@gmail.com>
- <ZxbLFLDgCm6wLmB9@nand.local>
- <Zx8lHzDyqyBpzrAE@pks.im>
- <Zx/AGrGTN2mQZqGs@nand.local>
- <00d80855-0530-4384-8d2f-5370ace9c0d5@gmail.com>
- <Zx/I+9icWGsRz11x@nand.local>
- <85d3c75c-d7c2-498f-8afe-34c49337ba37@gmail.com>
- <ZyEjHOcf9A4eMSFG@nand.local>
- <9aa2471b-0850-4707-9733-d3b33609f5f2@gmail.com>
+        d=1e100.net; s=20230601; t=1730409545; x=1731014345;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=03e1Z5/EZLOXnqH4j4bUOHX/qQ8kt1qPHdjzRPNsrlU=;
+        b=fwBp9jHbaMrTOgZncna1woY0vsWcMNVpxNhFEr6Ja0EK60P/wakA7HyRbPrwnf3avu
+         Qvmtwlk+oR2tfXg04r1nP2vWJQlwa5W29S0t4gsEh9q1eL/17AfbU4tXzaWe8dKt+dgQ
+         k/s7+kLqOQJJtNLBGVOPiuxntVCF1MwMHIanh6QqgpIitJx3xp/taxNH0mFNXVHuTDaE
+         RaVFt7d2HGJoY7Vo+aHwfvrSr4CdJOIKXPYQY13FP1dxd63sQ/yZfENT77A0BiNE8sRi
+         wlxw8ezJvxuff5c/OOROqTOcuUanu69ihYBa9kz/rQo7gNLOrCGKA0ToR6wky9IAp4XF
+         K4mQ==
+X-Gm-Message-State: AOJu0YyZGXdll8X4U87EkrarKP9Mbl/DWCZaQawY6GA7sx9sZrH8oLMk
+	gz0G5BO7YvOXf91G6GXQ1OQVdZXfi6lGNoL5PjIURKVVswUBBBb438PlxuiQxLbSjnEYoDe6WSm
+	uHnay2DJTSLXa0ytnaRUZ4+/hT3WfVW1xMruzZPWDryfEks6Jcvy6L/xI5S8amR05VSk3DKn9mI
+	s3mxx/PTDFGrWDUfzAJ74rNK+qmfaeGe2ttWEO6QlfSU7GGNxdJWQ936MCaUrBM0Cgdg==
+X-Google-Smtp-Source: AGHT+IEsOy9WW3YbxGRBohn+vRUy6/81YiMOaN65U+vMZoFGoNicHQ5sXhnzGVOfQT60Hn9n5Ky55GOZJZQUBcOTs4dp
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:1f26:d3e7:169a:dbab])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:b324:0:b0:e1c:ed3d:7bb7 with
+ SMTP id 3f1490d57ef6-e330253c596mr710276.1.1730409544883; Thu, 31 Oct 2024
+ 14:19:04 -0700 (PDT)
+Date: Thu, 31 Oct 2024 14:18:59 -0700
+In-Reply-To: <cover.1730235646.git.jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <9aa2471b-0850-4707-9733-d3b33609f5f2@gmail.com>
+Mime-Version: 1.0
+References: <cover.1730235646.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
+Message-ID: <cover.1730409376.git.jonathantanmy@google.com>
+Subject: [PATCH v2 0/2] When fetching, die if in commit graph but not obj db
+From: Jonathan Tan <jonathantanmy@google.com>
+To: git@vger.kernel.org
+Cc: Jonathan Tan <jonathantanmy@google.com>, steadmon@google.com, me@ttaylorr.com, 
+	hanxin.hx@bytedance.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Oct 30, 2024 at 10:28:22PM -0400, Derrick Stolee wrote:
-> On 10/29/24 2:02 PM, Taylor Blau wrote:
-> > On Mon, Oct 28, 2024 at 03:46:11PM -0400, Derrick Stolee wrote:
-> >> On 10/28/24 1:25 PM, Taylor Blau wrote:
-> >>> Unfortunately, there is no easy way to reuse the format of the existing
-> >>> hashcache extension as-is to indicate to the reader whether they are
-> >>> recording traditional name-hash values, or the new --path-walk hash
-> >>> values.
-> >>
-> >> The --path-walk option does not mess with the name-hash. You're thinking
-> >> of the --full-name-hash feature [1] that was pulled out due to a lack of
-> >> interest (and better results with --path-walk).
-> >>
-> >> [1] https://lore.kernel.org/git/pull.1785.git.1725890210.gitgitgadget@gmail.com/
-> >
-> > Ah, gotcha. Thanks for clarifying.
-> >
-> > What is the incompatibility between the two, then? Is it just that
-> > bitmaps give us the objects in pack- or pseudo-pack order, and we don't
-> > have a way to permute that back into the order that --path-walk would
-> > give us?
->
-> The incompatibility of reading bitmaps and using the path-walk API is
-> that the path-walk API does not check a bitmap to see if an object is
-> already discovered. Thus, it does not use the reachability information
-> from the bitmap at all and would parse commits and trees to find the
-> objects that should be in the pack-file.
+Thanks everyone for your review comments. I've updated the patch 1
+commit message as Josh requested. I'll reply individually to comments on
+patch 2.
 
-Sure, I think what I'm trying to understand here is whether this
-"incapability" is a fundamental one, or just that we haven't implemented
-checking bitmaps in the path-walk API yet.
+Jonathan Tan (2):
+  Revert "fetch-pack: add a deref_without_lazy_fetch_extended()"
+  fetch-pack: warn if in commit graph but not obj db
 
-Thanks,
-Taylor
+ fetch-pack.c                               | 42 +++++++++++-----------
+ t/t5330-no-lazy-fetch-with-commit-graph.sh |  2 +-
+ 2 files changed, 23 insertions(+), 21 deletions(-)
+
+Range-diff against v1:
+1:  4dea8933cf ! 1:  34e87b8388 Revert "fetch-pack: add a deref_without_lazy_fetch_extended()"
+    @@ Commit message
+     
+         This reverts commit a6e65fb39caf18259c660c1c7910d5bf80bc15cb.
+     
+    +    This revert simplifies the next patch in this patch set.
+    +
+         The commit message of that commit mentions that the new function "will
+         be used for the bundle-uri client in a subsequent commit", but it seems
+         that eventually it wasn't used.
+2:  1027ff2cb7 ! 2:  631b9a8677 fetch-pack: warn if in commit graph but not obj db
+    @@ Commit message
+         action, because the object is present in the commit graph file but not in
+         the object DB.
+     
+    -    Therefore, detect when this occurs and print a warning. (Note that
+    -    we cannot proceed to include this object in the list of objects to
+    -    be fetched without changing at least the fetch negotiation code:
+    -    what would happen is that the client will send "want X" and "have X"
+    -    and when I tested at $DAYJOB with a work server that uses JGit, the
+    -    server reasonably returned an empty packfile. And changing the fetch
+    -    negotiation code to only use the object DB when deciding what to report
+    -    as "have" would be an unnecessary slowdown, I think.)
+    +    Therefore, make it a fatal error when this occurs. (Note that we cannot
+    +    proceed to include this object in the list of objects to be fetched
+    +    without changing at least the fetch negotiation code: what would happen
+    +    is that the client will send "want X" and "have X" and when I tested
+    +    at $DAYJOB with a work server that uses JGit, the server reasonably
+    +    returned an empty packfile. And changing the fetch negotiation code to
+    +    only use the object DB when deciding what to report as "have" would be
+    +    an unnecessary slowdown, I think.)
+     
+         This was discovered when a lazy fetch of a missing commit completed with
+         nothing actually fetched, and the writing of the commit graph file after
+         every fetch then attempted to read said missing commit, triggering a
+         lazy fetch of said missing commit, resulting in an infinite loop with no
+         user-visible indication (until they check the list of processes running
+    -    on their computer). With this fix, at least a warning message will be
+    -    printed. Note that although the repo corruption we discovered was caused
+    -    by a bug in GC in a partial clone, the behavior that this patch teaches
+    -    Git to warn about applies to any repo with commit graph enabled and with
+    -    a missing commit, whether it is a partial clone or not.
+    +    on their computer). With this fix, there is no infinite loop. Note that
+    +    although the repo corruption we discovered was caused by a bug in GC in
+    +    a partial clone, the behavior that this patch teaches Git to warn about
+    +    applies to any repo with commit graph enabled and with a missing commit,
+    +    whether it is a partial clone or not.
+    +
+    +    t5330, introduced in 3a1ea94a49 (commit-graph.c: no lazy fetch in
+    +    lookup_commit_in_graph(), 2022-07-01), tests that an interaction between
+    +    fetch and the commit graph does not cause an infinite loop. This patch
+    +    changes the exit code in that situation, so that test had to be changed.
+     
+         Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+     
+      ## fetch-pack.c ##
+    -@@ fetch-pack.c: static struct string_list uri_protocols = STRING_LIST_INIT_DUP;
+    - #define ALTERNATE	(1U << 1)
+    - #define COMMON		(1U << 6)
+    - #define REACH_SCRATCH	(1U << 7)
+    -+#define COMPLETE_FROM_COMMIT_GRAPH	(1U << 8)
+    - 
+    - /*
+    -  * After sending this many "have"s if we do not get any new ACK , we
+     @@ fetch-pack.c: static void for_each_cached_alternate(struct fetch_negotiator *negotiator,
+    + 		cb(negotiator, cache.items[i]);
+      }
+      
+    ++static void die_in_commit_graph_only(const struct object_id *oid)
+    ++{
+    ++	die(_("You are attempting to fetch %s, which is in the commit graph file but not in the object database.\n"
+    ++	      "This is probably due to repo corruption.\n"
+    ++	      "If you are attempting to repair this repo corruption by refetching the missing object, use 'git fetch --refetch' with the missing object."),
+    ++	      oid_to_hex(oid));
+    ++}
+    ++
+      static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
+     -					       int mark_tags_complete)
+    -+					       int mark_additional_complete_information)
+    ++					       int mark_tags_complete_and_check_obj_db)
+      {
+      	enum object_type type;
+      	struct object_info info = { .typep = &type };
+    @@ fetch-pack.c: static void for_each_cached_alternate(struct fetch_negotiator *neg
+      	commit = lookup_commit_in_graph(the_repository, oid);
+     -	if (commit)
+     +	if (commit) {
+    -+		if (mark_additional_complete_information)
+    -+			commit->object.flags |= COMPLETE_FROM_COMMIT_GRAPH;
+    ++		if (mark_tags_complete_and_check_obj_db) {
+    ++			if (!has_object(the_repository, oid, 0))
+    ++				die_in_commit_graph_only(oid);
+    ++		}
+      		return commit;
+     +	}
+      
+    @@ fetch-pack.c: static struct commit *deref_without_lazy_fetch(const struct object
+      			if (!tag->tagged)
+      				return NULL;
+     -			if (mark_tags_complete)
+    -+			if (mark_additional_complete_information)
+    ++			if (mark_tags_complete_and_check_obj_db)
+      				tag->object.flags |= COMPLETE;
+      			oid = &tag->tagged->oid;
+      		} else {
+    -@@ fetch-pack.c: static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
+    - 	save_commit_buffer = old_save_commit_buffer;
+    - }
+    - 
+    -+static void warn_in_commit_graph_only(const struct object_id *oid)
+    -+{
+    -+	warning(_("You are attempting to fetch %s, which is in the commit graph file but not in the object database."),
+    -+		oid_to_hex(oid));
+    -+	warning(_("This is probably due to repo corruption."));
+    -+	warning(_("If you are attempting to repair this repo corruption by refetching the missing object, use 'git fetch --refetch' with the missing object."));
+    -+}
+    -+
+    - /*
+    -  * Returns 1 if every object pointed to by the given remote refs is available
+    -  * locally and reachable from a local ref, and 0 otherwise.
+    -@@ fetch-pack.c: static int everything_local(struct fetch_pack_args *args,
+    - 				      ref->name);
+    - 			continue;
+    - 		}
+    -+		if (o->flags & COMPLETE_FROM_COMMIT_GRAPH) {
+    -+			if (!has_object(the_repository, remote, 0))
+    -+				warn_in_commit_graph_only(remote);
+    -+		}
+    - 		print_verbose(args, _("already have %s (%s)"), oid_to_hex(remote),
+    - 			      ref->name);
+    - 	}
+     
+    - ## object.h ##
+    -@@ object.h: void object_array_init(struct object_array *array);
+    - /*
+    -  * object flag allocation:
+    -  * revision.h:               0---------10         15               23------27
+    -- * fetch-pack.c:             01    67
+    -+ * fetch-pack.c:             01    6-8
+    -  * negotiator/default.c:       2--5
+    -  * walker.c:                 0-2
+    -  * upload-pack.c:                4       11-----14  16-----19
+    + ## t/t5330-no-lazy-fetch-with-commit-graph.sh ##
+    +@@ t/t5330-no-lazy-fetch-with-commit-graph.sh: test_expect_success 'fetch any commit from promisor with the usage of the commit
+    + 	test_commit -C with-commit any-commit &&
+    + 	anycommit=$(git -C with-commit rev-parse HEAD) &&
+    + 	GIT_TRACE="$(pwd)/trace.txt" \
+    +-		git -C with-commit-graph fetch origin $anycommit 2>err &&
+    ++		test_must_fail git -C with-commit-graph fetch origin $anycommit 2>err &&
+    + 	! grep "fatal: promisor-remote: unable to fork off fetch subprocess" err &&
+    + 	grep "git fetch origin" trace.txt >actual &&
+    + 	test_line_count = 1 actual
+-- 
+2.47.0.163.g1226f6d8fa-goog
+
