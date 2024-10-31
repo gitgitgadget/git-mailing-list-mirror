@@ -1,123 +1,100 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F461BD4E4
-	for <git@vger.kernel.org>; Thu, 31 Oct 2024 16:30:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E171BD020
+	for <git@vger.kernel.org>; Thu, 31 Oct 2024 17:05:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730392258; cv=none; b=ASYTVdoyWt8NiKiC7oPuEcl3nc/CtBDGDWIcFMG8Q39GgNpPVmyJHcwvw2Y15tqyeo7am8L/VQPSuRnZ19vaSD/f4HWCWl7CpeBmUwCHUPxH/ed8vxYXMlwlQuMPuxrKoPXF+t/l6EuR+s0GRlLVju2vZ6gcVc2UajoXb4Ktt0Q=
+	t=1730394330; cv=none; b=enic3qfsPTSvNRoYRJ6auF1DO8uUc7DfrKoH+64A0zRQBh/14YQdEL461V+1SHjpQK3nwMn5dlGMb0vpOt259YY/gvMxo7kT/x55Xj03xBka4fZmG9OdsFa3YxWh5cpheMTZJF5dZqf+sDOz9JNkFi7I2rUBapQyB/lY+ZnFnuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730392258; c=relaxed/simple;
-	bh=nYaz40sXFX4H14MrAIkerjN7jNNwBUj/k4Esj9pJYyg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=qDEFjBl4vZ8j+2it20TcEfZrBjkoXZpZv0AA2/0wmVnI+Y/0mpNLxBvntGK8SsYECNYdUqxixDUmSBcWBfPPxDWCuZp11QFZo+9WPJijHjPgfo/sDLx5iabrws+q+/+neYKkYki7m9nHcNLrKrFUzm/fOyitvnZt90kqx5Cgwu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FZjljeXj; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730394330; c=relaxed/simple;
+	bh=ZA0DyZVL9/HpchpQxGxnbBZSL6SgfXFz+GHU0CNT7IU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RlVrcfwmp+7Mh8KmmfN0vD06RUzOsnVMcZmnmfhAekFED5YKPFCAK7SViZiXF5nN714Etw9QdjbouAFOtx27rP9FuHr+VAvH3Bv0r6icDBf3HVOtd7EIrsgS2pAzKrdSt3o7IkD9xBjGUKuRlgUAwmkHG8CmrhBG18j9w5U/ogU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=iJmTrGH1; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FZjljeXj"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4315c1c7392so9522745e9.1
-        for <git@vger.kernel.org>; Thu, 31 Oct 2024 09:30:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730392254; x=1730997054; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1U+DiEem18+2/FBeorOkwRWUASFLAR+WOmovrLrDvOY=;
-        b=FZjljeXjn5n0QWiuIcVBP5ukEPFXJ+/cYQghBOT/HQghR9Fo8Y9CR1CucE3yMDgxoO
-         rmgkzX0YisBktzmkVWxzVBRYGf9OCypxUyyMn2T44Lj2eoLOAsn67Fc4zPTDVCWyKDss
-         CZhYgppkKLo7a8bQuwqwsgtyMBP3KCjkJ+h2NFVQ7mti3qb+cQ++l9+71cCrD4HSUALV
-         GWqteRPYj6m6IyLnSSfu7AawTGk7McvSs3uy9rlbVHCRVIX1/AvwynycEdrjcgAH39K3
-         iz7rW9ewJ/MJulHLQZhlJBK/AjIiNXduQG8oTX5Ml2SsrZsOAuCqQ9VleqpCiO5qARls
-         kURA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730392254; x=1730997054;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1U+DiEem18+2/FBeorOkwRWUASFLAR+WOmovrLrDvOY=;
-        b=AVp0B3fLmG//Tw7QEZFRc4KegeX2bHhjVFhdS0Vbrujd6VmXLAJbVvv1wkNstwBYV6
-         p1dznZ224addHhsQZGuBPutjOCZTaNNQMuMhDSifDUFqkHwTRvR2vU+/zWCd1UrDsPw5
-         Wfk1ghPdTZvZpVIUM8VeQYMHIxnrqpQWzc72y6fMZ4FVfZOKuSyV6rxjnGU3zQA2tpOJ
-         JJk10D61e4Okf67ZpICv86FrLYHDy7ulHYAdZ2LSGikSzWypQpjbLaQ3SkwCcyejKvpW
-         784zPDSo5yahWkg9jbsntU8ILCpLCilJMud/MP3LZtKo5RGhOfqWU2QP0aiOSydGXUv7
-         h5+Q==
-X-Gm-Message-State: AOJu0YxBhHR+PoS3ZGbugdcdCjM1lykSwU6rnRgHPhFMJbvgTL3/KKx2
-	fuf95EbnIRZGfG4RLp1mxIBgcYYjxXcPi+ODofzCUn+kyrmZJJrj
-X-Google-Smtp-Source: AGHT+IGhYEHbbfS7oiH7hrWD8V6M+RI/HKSolyndoSY1rys5dSHcNqmDCf58IEaXnR5XwWlKACccdg==
-X-Received: by 2002:a05:600c:450d:b0:431:5ba1:a529 with SMTP id 5b1f17b1804b1-4328324b343mr3727065e9.14.1730392254102;
-        Thu, 31 Oct 2024 09:30:54 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c10d42adsm2598232f8f.40.2024.10.31.09.30.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 31 Oct 2024 09:30:53 -0700 (PDT)
-Message-ID: <e1928475-7e11-4e74-92da-fe6768ccabca@gmail.com>
-Date: Thu, 31 Oct 2024 16:30:52 +0000
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="iJmTrGH1"
+Received: (qmail 20181 invoked by uid 109); 31 Oct 2024 17:05:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ZA0DyZVL9/HpchpQxGxnbBZSL6SgfXFz+GHU0CNT7IU=; b=iJmTrGH1vcRI9JlvE95VOqB1b6pH34CTActhl6ctr4V59UQC0MA/iCngQnbmwUaH1DdLSUdTEVPT1wMSuF/5S3nHg5/+M7XLVaQ7GwZmUwxo1JO1zJpUJMXl3NgSVvxC36yXWpDUlwoay1ZRQ/MJUHiAkqoRkT2t7Gg9Zv1miyNHAzTySRAYoWFsjT9UdE3m49e3Y2gRuZcsDnJuZH32R56HxRVK1TuWgTxsTdjTcrKYRDeY3gEfgQeu3I3E5GBD2RmA6L72DdHae0Ff5MTfG7CMpLgT3TnBwzvygw3BosfUvyi+EKqE2+eABGZXpbrUf8d8hJasfbi6mnPKk1BznQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Oct 2024 17:05:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3711 invoked by uid 111); 31 Oct 2024 17:05:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Oct 2024 13:05:26 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 31 Oct 2024 13:05:26 -0400
+From: Jeff King <peff@peff.net>
+To: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] "git describe --match" performance
+Message-ID: <20241031170526.GA2277590@coredump.intra.peff.net>
+References: <20241030044322.b5n3ji2n6gaeo5u6@treble.attlocal.net>
+ <20241031114731.GA608553@coredump.intra.peff.net>
+ <20241031151000.svsa7d2ogcdz7hf6@jpoimboe>
+ <20241031153143.GA2275115@coredump.intra.peff.net>
+ <20241031162522.3qcolxhgxe4g2zmu@jpoimboe>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sequencer: comment checked-out branch properly
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>, Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
- Derrick Stolee <stolee@gmail.com>
-References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
- <ZxlEJ+44M8z03VOj@nand.local>
- <c05e603f-1fd4-4ad2-ba03-21269f464ed2@gmail.com>
- <9c29cb98-541b-4a18-9936-81477c7c13ab@app.fastmail.com>
-Content-Language: en-US
-In-Reply-To: <9c29cb98-541b-4a18-9936-81477c7c13ab@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241031162522.3qcolxhgxe4g2zmu@jpoimboe>
 
-Hi Kristoffer
+On Thu, Oct 31, 2024 at 09:25:22AM -0700, Josh Poimboeuf wrote:
 
-On 31/10/2024 10:07, Kristoffer Haugsbakk wrote:
-> On Thu, Oct 31, 2024, at 10:58, Phillip Wood wrote:
->> On 23/10/2024 19:44, Taylor Blau wrote:
->>> On Wed, Oct 23, 2024 at 07:27:58PM +0200, kristofferhaugsbakk@fastmail.com wrote:
->>>> @@ -6382,8 +6382,9 @@ static int add_decorations_to_list(const struct commit *commit,
->>>>    		/* If the branch is checked out, then leave a comment instead. */
->>>>    		if ((path = branch_checked_out(decoration->name))) {
->>>>    			item->command = TODO_COMMENT;
->>>> -			strbuf_addf(ctx->buf, "# Ref %s checked out at '%s'\n",
->>>> -				    decoration->name, path);
->>>> +			strbuf_commented_addf(ctx->buf, comment_line_str,
->>>> +					      "Ref %s checked out at '%s'\n",
->>>> +					      decoration->name, path);
->>>
->>> Makes sense, but the following command turns up a couple more results
->>> even after applying:
->>>
->>>       $ git grep -p 'strbuf_addf([^,]*, "#'
->>>       sequencer.c=static void update_squash_message_for_fixup(struct strbuf *msg)
->>>       sequencer.c:    strbuf_addf(&buf1, "# %s\n", _(first_commit_msg_str));
->>>       sequencer.c:    strbuf_addf(&buf2, "# %s\n", _(skip_first_commit_msg_str));
->>
->> Good find - it's surprising that those have survived so long without
->> anyone complaining. There is also
->>
->> 	"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***",
->>
->> in do_pick_commit()
+> But my real development repo, which has many branches and remotes plus
+> the historical git repo grafted, still takes 10+ seconds.
+
+If grafts are present, the use of the commit-graph is disabled, because
+the point of the commit-graph is precomputing and caching various
+properties of commits. Which, absent grafting, are immutable.
+
+I think we talked long ago about computing commit-graphs over the
+grafted state, and then using those graphs as long as the graft state
+remained the same. But I don't think we ever implemented anything.
+
+Another possibility (that I don't recall we've ever discussed) is
+partially using commit graphs. Some commit properties, like generation
+numbers, depend on other commits. So a graft at the bottom of history is
+going to rewrite the generations for all of the descendants. But we
+could still use the graph information to load the parents and trees of
+all of the non-grafted commits. Those are still valid even in a grafted
+situation, and that's what's providing most of the speed up in this case
+(without it, we're literally zlib inflating each commit we traverse in
+order to find its parents, versus an integer lookup via the
+commit-graph).
+
+That might not be _too_ hard to implement. In theory, anyway. :)
+
+> Note the commit it finishes at is from almost 20 years ago (I have
+> historical Linux git history grafted in which goes back to 1991):
 > 
-> I’m including an update to “say why” in the next version.
+> commit d8470b7c13e11c18cf14a7e3180f0b00e715e4f0
+> Author: Karsten Keil <kkeil@suse.de>
+> Date:   Thu Apr 21 08:30:30 2005 -0700
 > 
-> Those others look correct to me: https://lore.kernel.org/git/c05e603f-1fd4-4ad2-ba03-21269f464ed2@gmail.com/T/#mf299f1ac7bdb772b396068200d32b5fac669fb55
-
-Oh, sorry I'd missed that message.
-
-Best Wishes
-
-Phillip
-
-> Cheers :)
+>     [PATCH] fix for ISDN ippp filtering
 > 
-> Kristoffer
+>     We do not longer use DLT_LINUX_SLL for activ/pass filters but
+>     DLT_PPP_WITHDIRECTION witch need 1 as outbound flag.
+> 
+>     Signed-off-by: Karsten Keil <kkeil@suse.de>
+>     Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+> 
+> 
+> Presumably only one candidate matches the "v6.12-rc5" glob (which is an
+> exact string, not a wildcard) so it tries to find 9 more but never finds
+> any?
+> 
+> Since it's not a wildcard pattern, I would expect it to stop immediately
+> when it reaches the exact match.
 
+Yeah, I think this is just the same issue we've been discussing.
+
+-Peff
