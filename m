@@ -1,191 +1,104 @@
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCE019CC1D
-	for <git@vger.kernel.org>; Thu, 31 Oct 2024 12:21:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D97E198A0E
+	for <git@vger.kernel.org>; Thu, 31 Oct 2024 12:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730377290; cv=none; b=so6lL2Ut5Iga5GlTuCbFWq9ksUleHct+J8+fhhqqFGBIlHf+Mo7ImC8C9ZLbl0YhRHBR8XbW2XDdxrzvdKwdvkQEiVU3Zfbj+u2mPTxzZx6xo4NxDrOFElt0hCL4lvOP1JFY/ldLzO+yeI7HBPc/w6cUW/8PonVZVya1RnXWjy4=
+	t=1730377500; cv=none; b=ops/S14ihTwZZzYObWiVgXldl4vYZ58coEKvwJDqZcJGEmoshesTKWfpHo+drZ2fV/OcskY8xrWWQ9RyyJzihK7E+iMk1/80U1OX8hCCqX34T3oqrl3dLPQLdGwTJWrDJdzxgU1Q23AnUS+fqmdan1pKby3lNR5RCDgM5XCL8LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730377290; c=relaxed/simple;
-	bh=n7XNRJTlPnLJtMcGmXXFEKwk9jeHhfoSBDlI0MHaCcw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GcyiEA6pEgwCzXBF/cIpg6H25h0+08IKWxAlFgl6uRnJiw0mf1wl54RH7bpsc4rxw4Tr6XTiU98rIK8AE3f4PYD5F9qdtpKIOKCm4dU6wpSA7wRftQP71MUyPEuMJ/ILZc/EfE0ctGfvkACtwbKtR9cXleJWOPTu6GZohGZP0pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gooeyh4N; arc=none smtp.client-ip=209.85.217.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730377500; c=relaxed/simple;
+	bh=uuDgNKO6THZE3AKJ2QqsvwkGs+0CTZ9ihmdonQAshIA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uHQ6v2APP2e4HtsYtrO2MQmFkAYwpYW0sL9vKj07yJqJ/IluhTsJ0U/3JeA6ZI0mHaF76i+YX4QN7ErCPc3qmJZPew5uzf3sshcJZxcjlIiUHfFk8TlOsji+5jPHCdr84EpHKKNH3NsgHzHUrsPJeu8XVC8jJmhStOwKsphbQg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Bq2d1mL5; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gooeyh4N"
-Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-4a5c4d8ee99so261901137.1
-        for <git@vger.kernel.org>; Thu, 31 Oct 2024 05:21:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730377287; x=1730982087; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X9+dp+H+mB3EFi9rOF/7s/pY01AxJ8xrR22ZsHjTOjw=;
-        b=Gooeyh4NLDAL8Lo+M9urxRDGtVIcjqyN9wI9ou2GENXlib4DoPeE3aRB95WFS5x5Be
-         10QxiR5iBzkLbRBWsUcl00zwztEPn1eF0Kt90k47IbMFJ+CGmUbgZNFzptzEc54T3CBr
-         bfsSrSPY400PTI4OlI464G+8pFN/Jo1gjB11wd3Z3X5kxYshYP3W6yp2TpbGjA5DSGg6
-         JDtqKISlv13VQMhvJxtqnUUXuk3FGTRj1S7gsLiQLc+/qDzD8AKf5hQ036IkEyvhmOE/
-         KJC0SQKZdCP/qzOU/Qowd4j0Z67V6tTY93vnFYn62ZtV4HMUjxwQz0N5uIucb4Bw0PRn
-         0gAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730377287; x=1730982087;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=X9+dp+H+mB3EFi9rOF/7s/pY01AxJ8xrR22ZsHjTOjw=;
-        b=vGfoAejMjr25AfIFp53L8x/1CgINNjwV35RRsm6Tm76He9W/YJDvM18+S4Zkp6OzY2
-         hqAgdM62aNrLM7+Q5nh2AOQMtPQLf2ty41lsKJjcqroDYScwzbFDy1nRYk7A49KYC6+w
-         6O557hF6IuYFCnyieXywVsFeeFRyvXDfrvEZfuldKSocDWAqyY0qS2GhNsITCh6GdeOt
-         xIBGK2cEM+rilu/4R9M2+LCB5vLCzcD8su9DLKJVzekrondUrZ1Ek4P3M2Q4tzDqeAxM
-         Ge8e88BGCtFbHO9eqPzvAGF8nfjGDpH3eF4EGvDAU64wJOgvZvw+kSJG6chx1/0C272z
-         NPGg==
-X-Forwarded-Encrypted: i=1; AJvYcCWFKHeMkVoV0KgTOOIvrmuDxLWajJTqLufmp0xyXHEcwD2eDUMlbV4CwBLRNfKTaCLhcwA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYYEa+GlYu1pJNVIIxjprbRbH3bmMl27TUVaCeCNvfEN0G6uBI
-	7xDWLFlCKqseRlH/bCTPnXo4pgJo7ewG7ejAxmttjaGvpBHafl5MGZmKzk48v7/0Sw7FwC6Ar90
-	C3cPDwHu2kzNDwhAd1Yc5JYZg1LE=
-X-Google-Smtp-Source: AGHT+IG2hzov1S1JIQjfE7jPiZSIj0q7Gzbh1TY6UdwVeH2u9Z8Sdz40nurAWibPy31Gg/VSCdDQSdKVqE8d3rP2awo=
-X-Received: by 2002:a05:6102:3584:b0:4a5:b5db:ec5e with SMTP id
- ada2fe7eead31-4a90108f45cmr8932985137.27.1730377287271; Thu, 31 Oct 2024
- 05:21:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Bq2d1mL5"
+Received: (qmail 18815 invoked by uid 109); 31 Oct 2024 12:24:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uuDgNKO6THZE3AKJ2QqsvwkGs+0CTZ9ihmdonQAshIA=; b=Bq2d1mL5U95zbc9uyy9e3vXwjPW91GdgtNC4UhYA7aRFxR4O5lBpccEJIGZf8RqpNllue1uzYNoX6HjLEvTvnBnAlNZoxOZVID6kdPFlBUPL/cMHgBe9div6SnWIFyAFu3t+9KcjVdVRbaXMFLGdR28tYsVc1l/koAGOMD8GMiOQIDumS1fFVLCzmVXRI3akk2f+Kwo49KAFw3BHwEExQvVhGnjN477oxgCtQYZ+ZE4Y/rMTPfq7GJc9BaymptvyC4EaPPQLXWnP4+kOqOLeMpikRxZuTBjjX4L4SJNkQB1EOw9LtzTWSWllFU3aEQwqJwh7hx15zDBLTVWfAqWZNg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 31 Oct 2024 12:24:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32452 invoked by uid 111); 31 Oct 2024 12:24:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 31 Oct 2024 08:24:56 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 31 Oct 2024 08:24:56 -0400
+From: Jeff King <peff@peff.net>
+To: Rasmus Villemoes <ravi@prevas.dk>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org,
+	git@vger.kernel.org
+Subject: Re: [PATCH] setlocalversion: Add workaround for "git describe"
+ performance issue
+Message-ID: <20241031122456.GB593548@coredump.intra.peff.net>
+References: <309549cafdcfe50c4fceac3263220cc3d8b109b2.1730337435.git.jpoimboe@kernel.org>
+ <87bjz0k17c.fsf@prevas.dk>
+ <20241031114210.GA593548@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
- <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com> <5d58c150efbed1a10e90dba10e18f8641d11a70f.1729259580.git.gitgitgadget@gmail.com>
- <ZxZHH-oHE7g09xIR@pks.im> <e4a70501-af2d-450a-a232-4c7952196a74@gmail.com>
- <CAPSxiM-X3gk4tsVSJ_dFP2EGWX_dvFnqRp0rTYvhPxqYsUeijg@mail.gmail.com> <3c081d3c-3f6f-45ff-b254-09f1cd6b7de5@gmail.com>
-In-Reply-To: <3c081d3c-3f6f-45ff-b254-09f1cd6b7de5@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Thu, 31 Oct 2024 12:21:15 +0000
-Message-ID: <CAPSxiM8u8CdeipatHRJ8Fq_8hKHDqyTm8OCh7sR49_Bh6Ps8uQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] merge: replace atoi() with strtol_i() for marker
- size validation
-To: phillip.wood@dunelm.org.uk
-Cc: Patrick Steinhardt <ps@pks.im>, Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241031114210.GA593548@coredump.intra.peff.net>
 
-On Thu, Oct 31, 2024 at 9:58=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> Hi Usman
->
-> On 30/10/2024 16:19, Usman Akinyemi wrote:
-> > On Wed, Oct 30, 2024 at 3:20=E2=80=AFPM Phillip Wood <phillip.wood123@g=
-mail.com> wrote:
-> >> On 21/10/2024 13:20, Patrick Steinhardt wrote:
-> >>> On Fri, Oct 18, 2024 at 01:52:59PM +0000, Usman Akinyemi via GitGitGa=
-dget wrote:
-> >>>> From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> >>> These are a bit curious. As your test demonstrates, we retrieve the
-> >>> values from the "gitattributes" file. And given that the file tends t=
-o be
-> >>> checked into the repository, you can now basically break somebody els=
-es
-> >>> commands by having an invalid value in there.
-> >>>
-> >>> That makes me think that we likely shouldn't die here. We may print a
-> >>> warning, but other than that we should likely continue and use the
-> >>> DEFAULT_CONFLICT_MARKER_SIZE.
-> >>
-> >> I think using a warning here is a good idea, we should probably fix th=
-e
-> >> whitespace attributes to do the same. If you have
-> >>
-> >>       * whitespace=3Dindent-with-non-tab,tab-in-indent
-> >>
-> >> in .gitattributes then "git diff" dies with
-> >>
-> >>       fatal: cannot enforce both tab-in-indent and indent-with-non-tab
-> >>
-> >> Anyway that's not really related to this series but I thought I'd add =
-it
-> >> as #leftoverbits for future reference.
-> >>
-> >> Thanks for working on this Usman, what is queued in next looks good to=
- me.
-> >
-> > I just checked it. I will be glad to work on it.
->
-> If you want to work on this that's great, but please don't feel any
-> obligation to do so.
->
-> > I also noticed that the test used for testing used a different
-> > approach(test_must_fail) compared to the one I wrote which used
-> > test_grep. Should I change the test also ?
->
-> I'm not sure which test you are looking at but I assume it is using
-> test_must_fail because the command being tested is expected to die. If
-> we change the code to print a warning instead then we'd need to capture
-> stderr and use test_grep or test_cmp. Note that we only want to print a
-> warning when parsing .gitattributes, the other callers of
-> parse_whitespace_rule() still want to die. Also we should decide what
-> value to use when the user provides both - neither indent-with-non-tab
-> or tab-in-indent are on by default so it's not clear exactly what we
-> should do.
-Hi Philip,
+On Thu, Oct 31, 2024 at 07:42:10AM -0400, Jeff King wrote:
 
-I understand, we will have to pick one if we are to use a warning in this c=
-ase,
-indent-with-non-tab seems to be a good candidate as it is not excluded
-by default.
+> That works, but I have a feeling that figured out what the heck is going
+> on with gave_up_on might produce a more elegant solution.
 
-We can have something like this
+OK, I think I might have made some sense of this.
 
-    if (rule & WS_TAB_IN_INDENT && rule & WS_INDENT_WITH_NON_TAB) {
-        warning(_("cannot enforce both tab-in-indent and
-indent-with-non-tab, removing tab-in-indent"));
-        rule &=3D ~WS_TAB_IN_INDENT;
-    }
-and this for default
-#define WS_DEFAULT_RULE (WS_TRAILING_SPACE | WS_SPACE_BEFORE_TAB |
-WS_INDENT_WITH_NON_TAB | 8)
+In finish_depth_computation(), we traverse down "list" forever, passing
+flags up to our parents, until we find a commit that is marked with the
+same "within" flag as our candidate. And then if everything left has
+that same "within" flag set, we can bail.
 
-or just leave the WS_DEFAULT_RULE as it is and remove WS_TAB_IN_INDENT
-in case both are set.
+So I _think_ the point is to basically count up what we'd get from this
+traversal:
 
-what do you think ?
+  $tag..$commit
 
-Thank you.
-Usman
+where "$tag" is the candidate tag we found, and "$commit" is what we're
+trying to describe (so imagine "git describe --match=$tag $commit").
+
+We can't just use the depth we found while traversing down to $tag,
+because there might be side branches we need to count up, too. And we
+don't start a new traversal, because we'd be repeating the bits we
+already went over when finding $tag in the first place.
+
+And we feed that "list" from the original traversal state. So if we
+break out of the traversal early but don't set gave_up_on, then we have
+nothing in that state that holds the "within" flag. So we just walk all
+of the commits down to the root, because nobody is propagating the flag
+to them.
+
+We have to feed at least one commit with the "within" flag into the
+traversal so that it can let us end things. But I don't think it really
+matters if that commit is the one we found, or if it's a parent of one
+that we happened to pass "within" bits down to.
+
+So I think we can just set "gave_up_on" to the final element we found
+(whether from max_candidates or from finding every possible name). I.e.,
+what I showed earlier, or what you were proposing.
 
 
->
-> > Also, when should someone redirect a warning/failure into a file then
-> > use test_grep or just used test_must_fail ?
->
-> You must use test_must_fail if you expect a git command to fail, if you
-> expect the command to print a warning but exit successfully you should
-> not use test_must_fail. So if you expect a command to fail and print an
-> error or warning then you'd do
->
->      test_must_fail git my failing command 2>err &&
->      test_grep "error message" err
->
-> test_must_fail checks that the command fails, but reports an error if
-> the command is killed by a signal such as SIGSEV.
-Thanks for the explanation. I understand it well now.
->
-> Best Wishes
->
-> Phillip
->
-> > Thank you
-> > Usman Akinyemi
-> >>
-> >> Best Wishes
-> >>
-> >> Phillip
-> >>
-> >>
-> >>> Patrick
-> >>>
-> >>
-> >
->
+I was also a bit puzzled how this works when there are multiple tags.
+We feed only one "best" candidate to finish_depth_computation(), but
+gave_up_on does not necessarily have its flag set. But I think that case
+the point is that _some_ commit in the list does, and we literally add
+every commit to that list.
+
+I'm actually a bit skeptical that any of this is faster than simply
+starting over a new traversal of $tag..$commit to find the depth, since
+we are considering each commit anew. And there's a bunch of accidentally
+quadratic bits of finish_depth_computation(). But frankly I'm somewhat
+afraid to touch any of this more than necessary.
+
+-Peff
