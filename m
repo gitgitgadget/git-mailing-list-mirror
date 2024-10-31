@@ -1,211 +1,161 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CF7195F17
-	for <git@vger.kernel.org>; Thu, 31 Oct 2024 09:46:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC1A881E
+	for <git@vger.kernel.org>; Thu, 31 Oct 2024 09:58:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730367972; cv=none; b=ShA83ovwh73LPiXfDbFV4xwXLVGj4KLC8xDOqo0j02t3GjE/pINcTWBeH0NwC3DjyNDWKo5FB3YBowir2S2jYilbhfv4PNEN0zO0hFMeZQZLhpHjvJN+He/SeexRWPXGSEskCpLr8gaYj7/uQH6FplEnOCIbyRZOjZtkSelEaLg=
+	t=1730368720; cv=none; b=trdoiPyg/FUwdXdR8ZLw3B17jRfmDVvgEgBl8D0gdxXxCe9QaiJYbap3BWfY2ZEb4lx80/Y0YhK2/BOI1kap/HMVP529syMLi2GpchLckfo6VEa6GwG+TYiUHCrJad8i1tcQ2CbBDYa9KaWrGlD9rsnB+/6h8mki9tTLqjtER/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730367972; c=relaxed/simple;
-	bh=pckznnRcluQUP6DSKh/PVYFv11LZuTMSdbELeZfTTyo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=D/F3LFYqMJ4Mb4TRNLERXfXzKsbQTNSbnybWkxMHeKbM6p+tf3XxCCj3sMn50k1WKyakTFKg8d77CuX557cMwr18kxx0YA7EjiXi3vM6SU4MYglb53L2kuz+TlkueiSmzY/PCWgvkyBdWR+4TXCUHWe19DUJIG7IFkZqMeWFFiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mASj3XGa; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1730368720; c=relaxed/simple;
+	bh=G/nr5xQlR6j1GMF/d0i/IphVyNVt2sdS56YqlaNorPo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UIwiKro8sqLuaEHDD+sXOySZqp/LB1TRUqEfVEziCEo8THTfwjLmns3q3m0MeFnnjeQSDhL43xaSt5thEcJeUlZn3fGZYRmqO3NhM3DplW+LhriWGBXMCex1w5J3cjv8LwCV1RwXh7/13Nv8MCked4R/ZHcSRnrRCCJRpMnglaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GFn4P6XX; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mASj3XGa"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a9a0f198d38so109757266b.1
-        for <git@vger.kernel.org>; Thu, 31 Oct 2024 02:46:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GFn4P6XX"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43155abaf0bso6118045e9.0
+        for <git@vger.kernel.org>; Thu, 31 Oct 2024 02:58:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730367968; x=1730972768; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=D2tQKXVruoheor86m/Ttwxt1F2OBeRSpBGTHemUPNvc=;
-        b=mASj3XGak/kpn3vP6PXzoef8nARX+h45l7QSQSguW8/LdCt7qOuNS0qJfgKBEdz1gC
-         wnuZ6jYn8TtiC/3QNDAITMFyn6FjDB9b2Sh2kUIBEHZoE9zVeTzZUBPCTyL0P51J3xqX
-         U9HuVgVU0Reb+I4c3cOIWcAHLnACwPoNXBpK6PIu/PlMjpHEcEtNNsRBWffAh7bXzZxt
-         tSdTQaQ+61pOha+u4GhRd8hvMt6EDLc1bw3wsM7DbO0lROpYMim6M/FMBXSJ7uQM0LwS
-         ViP60rzsfoP+xQV2Inwt/4tHYu0LvxU1mIhWGm5lx+iTdceufx+gtm4bajxw/QXLepbu
-         xmxw==
+        d=gmail.com; s=20230601; t=1730368717; x=1730973517; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yY4LFYy6ozSQMKOwX4EFdlh2VPvj9avNGuxw14OagYI=;
+        b=GFn4P6XXIydQn5jXXkVOewRuuz6Tk5hA5AnMWw4H07y3JAAZKTWI9EwVIogArbijQF
+         EqXSCbaxV1GWFGD4eS6bmzJOx2vnItzx448UaRgc+yedXKSBX26TSBZrWgaDxwxqO7L/
+         /GJp8FLoUFG2pIyN5t53hcS1atKyV/2vSMxhRGEW6QBbH5Ygkwv6k7Ac3f/N02rr8IWJ
+         OV66+/R+3+k4n6c0o3rEx3DSH0zoPlxUtsuE1TD0VDUQ3H/pt/PqIkGphaaABKbbAiXv
+         ZdVWGL13xZbnuNU8uTynafljAYDoAOeaUDyyenYAOFW9UxElDmUlwLoZDtk0Id+od6UC
+         neEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730367968; x=1730972768;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1730368717; x=1730973517;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=D2tQKXVruoheor86m/Ttwxt1F2OBeRSpBGTHemUPNvc=;
-        b=PahK2VH0Qn16ZnfqvkoJLZrzU6kNU4BCP/i86VYKIF/Iaoe/EVFjP+02bUNMfJyzah
-         1/wTUEjySBPr/ks7c9+tb+QsZXQfJAylmwX0Tif1NLUYtEndpzx0Ekb4KAJfSF7PJiwf
-         CExrfpLJlkyufiKtPOX3WGEEZ26+35Kr0+9ayeAMlwgK52xJGF7VRc72ZKY18XaMXY/i
-         BwXdqfxRxN9FURCHQVdpSTusTjN72yPt550YRn2qhrUKpw0bVpXjp02gGgPBSP4r21tn
-         3u778alcrqNy5MXFQzJcd9VLrWCxlLN9fwmDkVNXwSYc3oabYu8u0ep98zGGdkWFWveW
-         LWoA==
-X-Gm-Message-State: AOJu0YwaQJLGYj1WdN6EG0wW46V9IBttI8Ng5ZI+kqhQFa7ents8kgAA
-	jwvcOCVU4AtnKUmxb2bvG3iusRcD+NB4FRy/TiR3q+gx8rlhwLWAs55aSODOrRGV5w==
-X-Google-Smtp-Source: AGHT+IEi86lT3pOGI7bfTsamE0EKXFe5Fy1ttpP/KwDofYTZlcnwDhoCB9XTd/1bUlFfi1R0NI7cYw==
-X-Received: by 2002:a17:906:c112:b0:a99:40e6:157c with SMTP id a640c23a62f3a-a9de5cfea69mr1915131766b.4.1730367967594;
-        Thu, 31 Oct 2024 02:46:07 -0700 (PDT)
-Received: from localhost.localdomain ([41.217.65.66])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a9e56684988sm46239166b.215.2024.10.31.02.46.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Oct 2024 02:46:07 -0700 (PDT)
-From: Seyi Kuforiji <kuforiji98@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	phillip.wood@dunelm.org.uk,
-	kristofferhaugsbakk@fastmail.com,
-	me@ttaylorr.com,
-	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH] t9101: Refactor test_expect_success format
-Date: Thu, 31 Oct 2024 10:45:53 +0100
-Message-ID: <20241031094554.68916-1-kuforiji98@gmail.com>
-X-Mailer: git-send-email 2.47.0.86.g15030f9556
+        bh=yY4LFYy6ozSQMKOwX4EFdlh2VPvj9avNGuxw14OagYI=;
+        b=SAyWGdsDB7//86+luIaFC1Uf6brwBfHMAOPS4I4TrahC6kmm/FnwA6g7ZnlpGELn9Q
+         cDEur3Us9cDAhB0MZuSZe1dJXWfbjhiUeg8G5W7n57NKcjcK6HuTJwvllb7oQk8+cshs
+         pVpY3Ryfpxi8dzgNvpbQG1OJAP/2mYL7mIZME1hOkCu7hMl9o5s+ZQMzIwtmrFSCn7vs
+         GpEXi/RqoEZVnx7rYzjqyCrSS40fE/fE8Wc0ruI7RBUgI1aiZq2oW4qgq+enPkXCGIVk
+         W9ggiaBNw1k6SCiyLzWwr8SpxlVOaKFFdbQb0g6c5uAcFvBM0GBVUp8hvB80BFDqKm5j
+         rhYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWuR539zScfZ0r5Hs3Dw8DQreWzOetAb0ouKCmXd18CjV1vbFgMBj4nWQ9FtcQGYXfmGmc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVPWaV2QJjasvDZxmkT9ZzlzqYtdYF23xEqSsK5BrVNymz2Vqf
+	SlxCZmqahmCiOZzope8XsYAvp7P50PID3Tv2yEdvzEM1Q/d/csPJ
+X-Google-Smtp-Source: AGHT+IElgZLcafD1Nz85iUVQWFWSsJrWb8L14XsqSPl26+VUxOtPeJ3sId2rW4bU3+Ecanx7CPBSSQ==
+X-Received: by 2002:a05:600c:358e:b0:431:52f5:f497 with SMTP id 5b1f17b1804b1-4319ac956fdmr158540435e9.9.1730368716855;
+        Thu, 31 Oct 2024 02:58:36 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a? ([2a0a:ef40:6ac:1101:589c:aac1:dc59:c13a])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c10d49d4sm1624383f8f.34.2024.10.31.02.58.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Oct 2024 02:58:36 -0700 (PDT)
+Message-ID: <3c081d3c-3f6f-45ff-b254-09f1cd6b7de5@gmail.com>
+Date: Thu, 31 Oct 2024 09:58:35 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/3] merge: replace atoi() with strtol_i() for marker
+ size validation
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: Patrick Steinhardt <ps@pks.im>,
+ Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+References: <pull.1810.git.git.1728774574.gitgitgadget@gmail.com>
+ <pull.1810.v2.git.git.1729259580.gitgitgadget@gmail.com>
+ <5d58c150efbed1a10e90dba10e18f8641d11a70f.1729259580.git.gitgitgadget@gmail.com>
+ <ZxZHH-oHE7g09xIR@pks.im> <e4a70501-af2d-450a-a232-4c7952196a74@gmail.com>
+ <CAPSxiM-X3gk4tsVSJ_dFP2EGWX_dvFnqRp0rTYvhPxqYsUeijg@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAPSxiM-X3gk4tsVSJ_dFP2EGWX_dvFnqRp0rTYvhPxqYsUeijg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-The current script uses an outdated formatting style for
-test_expect_success blocks, where each argument is separated by a
-backslash and newline. This style can lead to readability issues and
-makes it harder to maintain the script.
+Hi Usman
 
-The modern style consolidates
-the multi-line command arguments into a single quoted block, which
-improves readability, maintainability, and aligns the code with current
-coding standards.
+On 30/10/2024 16:19, Usman Akinyemi wrote:
+> On Wed, Oct 30, 2024 at 3:20 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> On 21/10/2024 13:20, Patrick Steinhardt wrote:
+>>> On Fri, Oct 18, 2024 at 01:52:59PM +0000, Usman Akinyemi via GitGitGadget wrote:
+>>>> From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+>>> These are a bit curious. As your test demonstrates, we retrieve the
+>>> values from the "gitattributes" file. And given that the file tends to be
+>>> checked into the repository, you can now basically break somebody elses
+>>> commands by having an invalid value in there.
+>>>
+>>> That makes me think that we likely shouldn't die here. We may print a
+>>> warning, but other than that we should likely continue and use the
+>>> DEFAULT_CONFLICT_MARKER_SIZE.
+>>
+>> I think using a warning here is a good idea, we should probably fix the
+>> whitespace attributes to do the same. If you have
+>>
+>>       * whitespace=indent-with-non-tab,tab-in-indent
+>>
+>> in .gitattributes then "git diff" dies with
+>>
+>>       fatal: cannot enforce both tab-in-indent and indent-with-non-tab
+>>
+>> Anyway that's not really related to this series but I thought I'd add it
+>> as #leftoverbits for future reference.
+>>
+>> Thanks for working on this Usman, what is queued in next looks good to me.
+> 
+> I just checked it. I will be glad to work on it.
 
-Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
----
- t/t9101-git-svn-props.sh | 48 ++++++++++++++++++++++------------------
- 1 file changed, 26 insertions(+), 22 deletions(-)
+If you want to work on this that's great, but please don't feel any 
+obligation to do so.
 
-diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
-index b2ee626b9a..792f7896e4 100755
---- a/t/t9101-git-svn-props.sh
-+++ b/t/t9101-git-svn-props.sh
-@@ -73,12 +73,13 @@ test_expect_success 'initialize git svn' 'git svn init "$svnrepo"'
- test_expect_success 'fetch revisions from svn' 'git svn fetch'
- 
- name='test svn:keywords ignoring'
--test_expect_success "$name" \
--	'git checkout -b mybranch remotes/git-svn &&
-+test_expect_success "$name" '
-+	git checkout -b mybranch remotes/git-svn &&
- 	echo Hi again >>kw.c &&
- 	git commit -a -m "test keywords ignoring" &&
- 	git svn set-tree remotes/git-svn..mybranch &&
--	git pull . remotes/git-svn'
-+	git pull . remotes/git-svn
-+'
- 
- expect='/* $Id$ */'
- got="$(sed -ne 2p kw.c)"
-@@ -94,10 +95,11 @@ test_expect_success "propset CR on crlf files" '
- 	 )
- '
- 
--test_expect_success 'fetch and pull latest from svn and checkout a new wc' \
--	'git svn fetch &&
--	 git pull . remotes/git-svn &&
--	 svn_cmd co "$svnrepo" new_wc'
-+test_expect_success 'fetch and pull latest from svn and checkout a new wc' '
-+	git svn fetch &&
-+	git pull . remotes/git-svn &&
-+	svn_cmd co "$svnrepo" new_wc
-+'
- 
- for i in crlf ne_crlf lf ne_lf cr ne_cr empty_cr empty_lf empty empty_crlf
- do
-@@ -110,15 +112,17 @@ cd test_wc
- 	printf '$Id$\rHello\rWorld' >ne_cr
- 	a_cr=$(printf '$Id$\r\nHello\r\nWorld\r\n' | git hash-object --stdin)
- 	a_ne_cr=$(printf '$Id$\r\nHello\r\nWorld' | git hash-object --stdin)
--	test_expect_success 'Set CRLF on cr files' \
--	'svn_cmd propset svn:eol-style CRLF cr &&
--	 svn_cmd propset svn:eol-style CRLF ne_cr &&
--	 svn_cmd propset svn:keywords Id cr &&
--	 svn_cmd propset svn:keywords Id ne_cr &&
--	 svn_cmd commit -m "propset CRLF on cr files"'
-+	test_expect_success 'Set CRLF on cr files' '
-+		svn_cmd propset svn:eol-style CRLF cr &&
-+		svn_cmd propset svn:eol-style CRLF ne_cr &&
-+		svn_cmd propset svn:keywords Id cr &&
-+		svn_cmd propset svn:keywords Id ne_cr &&
-+		svn_cmd commit -m "propset CRLF on cr files"
-+	'
- cd ..
--test_expect_success 'fetch and pull latest from svn' \
--	'git svn fetch && git pull . remotes/git-svn'
-+test_expect_success 'fetch and pull latest from svn' '
-+	git svn fetch && git pull . remotes/git-svn
-+'
- 
- b_cr="$(git hash-object cr)"
- b_ne_cr="$(git hash-object ne_cr)"
-@@ -141,7 +145,7 @@ cat >show-ignore.expect <<\EOF
- /deeply/nested/directory/no-such-file*
- EOF
- 
--test_expect_success 'test show-ignore' "
-+test_expect_success 'test show-ignore' '
- 	(
- 		cd test_wc &&
- 		mkdir -p deeply/nested/directory &&
-@@ -155,7 +159,7 @@ no-such-file*
- 	) &&
- 	git svn show-ignore >show-ignore.got &&
- 	cmp show-ignore.expect show-ignore.got
--"
-+'
- 
- cat >create-ignore.expect <<\EOF
- /no-such-file*
-@@ -170,7 +174,7 @@ cat >create-ignore-index.expect <<EOF
- 100644 $expectoid 0	deeply/nested/directory/.gitignore
- EOF
- 
--test_expect_success 'test create-ignore' "
-+test_expect_success 'test create-ignore' '
- 	git svn fetch && git pull . remotes/git-svn &&
- 	git svn create-ignore &&
- 	cmp ./.gitignore create-ignore.expect &&
-@@ -179,7 +183,7 @@ test_expect_success 'test create-ignore' "
- 	cmp ./deeply/nested/directory/.gitignore create-ignore.expect &&
- 	git ls-files -s >ls_files_result &&
- 	grep gitignore ls_files_result | cmp - create-ignore-index.expect
--	"
-+'
- 
- cat >prop.expect <<\EOF
- 
-@@ -207,7 +211,7 @@ test_expect_success 'test propget' '
- 	test_propget svn:ignore nested/ ../prop.expect &&
- 	test_propget svn:ignore ./nested ../prop.expect &&
- 	test_propget svn:ignore .././deeply/nested ../prop.expect
--	'
-+'
- 
- cat >prop.expect <<\EOF
- Properties on '.':
-@@ -225,12 +229,12 @@ Properties on 'nested/directory/.keep':
-   svn:entry:uuid
- EOF
- 
--test_expect_success 'test proplist' "
-+test_expect_success 'test proplist' '
- 	git svn proplist . >actual &&
- 	cmp prop.expect actual &&
- 
- 	git svn proplist nested/directory/.keep >actual &&
- 	cmp prop2.expect actual
--	"
-+'
- 
- test_done
--- 
-2.47.0.86.g15030f9556
+> I also noticed that the test used for testing used a different
+> approach(test_must_fail) compared to the one I wrote which used
+> test_grep. Should I change the test also ?
+
+I'm not sure which test you are looking at but I assume it is using 
+test_must_fail because the command being tested is expected to die. If 
+we change the code to print a warning instead then we'd need to capture 
+stderr and use test_grep or test_cmp. Note that we only want to print a 
+warning when parsing .gitattributes, the other callers of 
+parse_whitespace_rule() still want to die. Also we should decide what 
+value to use when the user provides both - neither indent-with-non-tab 
+or tab-in-indent are on by default so it's not clear exactly what we 
+should do.
+
+> Also, when should someone redirect a warning/failure into a file then
+> use test_grep or just used test_must_fail ?
+
+You must use test_must_fail if you expect a git command to fail, if you 
+expect the command to print a warning but exit successfully you should 
+not use test_must_fail. So if you expect a command to fail and print an 
+error or warning then you'd do
+
+     test_must_fail git my failing command 2>err &&
+     test_grep "error message" err
+
+test_must_fail checks that the command fails, but reports an error if 
+the command is killed by a signal such as SIGSEV.
+
+Best Wishes
+
+Phillip
+
+> Thank you
+> Usman Akinyemi
+>>
+>> Best Wishes
+>>
+>> Phillip
+>>
+>>
+>>> Patrick
+>>>
+>>
+> 
 
