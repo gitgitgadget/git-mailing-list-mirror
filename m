@@ -1,78 +1,87 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F19510F4
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 17:45:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3DB10F4
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 17:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730483152; cv=none; b=adCYGrkhdCtcXt8pyNlp/UNW/Pmm/gsG18tON/dwYjNuAg/lLkXIjIC2DXk07uxwPcMvuxNkMMGyJwAWjA8LggGss0/DuMQO0saL5heunMuOJE+PTjVhFqi0yvtmSwEYvfs6sPKKxvIp9rCJoPyWb0tibJy2gZncv5wtHTmVi8k=
+	t=1730483211; cv=none; b=Y4VVrhPrkkIFO3oiK/LHduz4XRt/Xodbr9g/Y9JrjK3Vz6SRzxE/visASTN7hkaXZ8k2VGfayLM3lAdWW4VyoPFFW7D2z6TG08kwJKK3Odf+5JNsNuDV8AzGbqTSiVhOhK1kMVSEeaxELUsQnzdwnPbWUTvc961wS12SVOz4qQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730483152; c=relaxed/simple;
-	bh=0YqHBWzKIuJ4nxeNw+uRDZpzv6uQS2kMth+DGg0UEfA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l6qSAABubOiOEWq4iFmcpziKsRZGZ5T4bkYFMv5abwnKN4g9SzCPjT3JsISJj5jZj/WPZDfxnBTfHRXcU5wriMHjHzAnCIuB4j2hD5dbAI0cEHk/ltmnzaFEpCbNKSm07dMn0Nva0UQcAtO9cXrFEufeImmmkOSE6wO0VW+tXJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=AVvuor+G; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1730483211; c=relaxed/simple;
+	bh=ZKugPeTrsjvXBQLKk/V+q3m3NmYPBSUpFHMyAPYdhtk=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=KKMiKjrB+hyVK9m5wfEGNyAbf7prg+l2VCNrgAIap78Gyvg8ZGsAf0944sHV/TtmtrI6r4XIAtKMrpO6UQrrDAaNTIbWv6lT1uEIQuZTiyrPiHIKoo6gU01S8wNrClOW4fM3nr0SqJwayYjhaJ980yhrA2bZnelt5J+YUbkvWZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LnnJOVP1; arc=none smtp.client-ip=209.85.219.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="AVvuor+G"
-Received: (qmail 31350 invoked by uid 109); 1 Nov 2024 17:45:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0YqHBWzKIuJ4nxeNw+uRDZpzv6uQS2kMth+DGg0UEfA=; b=AVvuor+Gjq4XgnSPinm4/grVBFT/SARR9h0MHxCUmORhknZAAMAZE3kHUogj5bERlJWxgyrZ97EYLHXDQR97TYFPYsIpEiowlA+WlF5ueheYVv6uV8u8iYsIwuT3lXkmZLyflQC3XpR09Yjlbs2AD+Kl3DFNdqY5teVCe3Xo1hLmW2Bbi8JnsGuui4MMFWuf4v+AO6ARahRIFl+nw4ybx9IDgf8C29Xn4UMa5dh6DlWQ5KXLWW1OHvpudPMZ92jR7FJsMmqVgOFo1FzvgwEDQCFxvKXK8a9/XqT5rNJvHxSN+nyCB4kkqa2/M5pDL71usZGDfyL8RfNbSpiF5+sjTw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 01 Nov 2024 17:45:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15493 invoked by uid 111); 1 Nov 2024 17:45:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 Nov 2024 13:45:47 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 1 Nov 2024 13:45:47 -0400
-From: Jeff King <peff@peff.net>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, me@ttaylorr.com
-Subject: Re: [PATCH v4 8/9] config: make `packed_git_(limit|window_size)`
- non-global variables
-Message-ID: <20241101174547.GB2337295@coredump.intra.peff.net>
-References: <cover.1730366765.git.karthik.188@gmail.com>
- <5bbdc7124d58526a7a2d7b3bdc807ddd204a6df1.1730366765.git.karthik.188@gmail.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LnnJOVP1"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-e290b8b69f8so4264346276.2
+        for <git@vger.kernel.org>; Fri, 01 Nov 2024 10:46:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1730483209; x=1731088009; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9qUj5kTLlEpcuj5nONWXBCkZ3J866fcc0jKy/3yAj+E=;
+        b=LnnJOVP1XLelGiJ1GoElh7+xKOyJ2E7ACseoC8zAKYwsuAVapzV5Vd1ouilyueh/x0
+         CUMJ+De4zd4B1UKKYy+mUy2/ku8JK5Wqfdpc+3aFMDPEV0uvzcTYvj9EF0LhJmsp/Fav
+         pW70SPCzLlEOKGSbXaIJ8tX9U/eoUoe9qTxL/+WnGZAQLMjsRk9uUBynbZGW42+Oh4ma
+         dTm86QSLRxKmzsPCBx4EdxkvWvj72R0Ik2cBOh8a69+05TKPJFkpYhvBcqK3YgjiVRt1
+         2qjkd/y9EFBj/Sa5wssrfk/CA5hqzxPRk180mdwZCwjGyp5j6SXO0+B4uwjVeX+wE941
+         qagA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730483209; x=1731088009;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9qUj5kTLlEpcuj5nONWXBCkZ3J866fcc0jKy/3yAj+E=;
+        b=U8qMbvoqAtcWIGnM4fGKlWspltjF6oQWonK3UVimF82CbfSMjgiFtYtgCGMyZ1tcbO
+         UslMKKQ7uaP4yCNxpWRNF6Xrh8zKynsf5iiNc/ZVspJHpg6AxVpBrjjr9iLY1Pi9Z3Vw
+         Dm7vahduO7R4xQAI1meAOq+09TrAbPu62QBgmUgLoW8jkt525yE9nxfoXuFldz5ym4fp
+         ySUr5fmkYrC7+HnVYKHl+J2N13sfvgam+je5rMyhHvaEk1/O2OeKRngyF9V/fow5HeT7
+         RJK0c6IY83cEXQBFzFFcGE9X1A5gTGs9p/yp+bPcTr7b9eBT/LMiuQ8znOFoRywEmyXh
+         WP7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXRd2JMZmuJTbeO+m1SrkUBPz/gI6gJiykffxoXt3WzskjsIRvxgihfW1Az7xGDHGpvpLQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwSOjNz/dbFdmAIkrMNUO2a6TqsHuVwZUbJezkF4II0yORyJeoc
+	4cxz+fN0V1QvikC6WodRvaoZi2G0cp2r68OWtBovtpUm0PaFiTA8EpSSGzWHtyrhnls+0ec8jJC
+	6B1Z59GCfjL5s3VvKYOElXoiNCoPCkg==
+X-Google-Smtp-Source: AGHT+IGSkwpVMgnBISQryQDiCBwYmXrS0QzDTJFBpgaY/SQRkCOvnxSFO8nbjw8OV/uEjrxQL/0e8DWgLwJEi+O8fotz
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:87c0:a56e:d0ff:807f])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:d682:0:b0:e33:1794:4c53 with
+ SMTP id 3f1490d57ef6-e3317944df7mr183276.11.1730483208915; Fri, 01 Nov 2024
+ 10:46:48 -0700 (PDT)
+Date: Fri,  1 Nov 2024 10:46:46 -0700
+In-Reply-To: <CAKgqsWWo2r37nsxeYErXjEgrSepBgFpdde9bXuYDTfu4MC3+Ag@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5bbdc7124d58526a7a2d7b3bdc807ddd204a6df1.1730366765.git.karthik.188@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
+Message-ID: <20241101174646.685790-1-jonathantanmy@google.com>
+Subject: Re: [External] Re: [PATCH v2 2/2] fetch-pack: warn if in commit graph
+ but not obj db
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Han Xin <hanxin.hx@bytedance.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	steadmon@google.com, me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Oct 31, 2024 at 10:39:51AM +0100, Karthik Nayak wrote:
+Han Xin <hanxin.hx@bytedance.com> writes:
+> Although the scenario I faked in t/t5330-no-lazy-fetch-with-commit-graph.sh
+> usually does not occur, if we are unfortunate enough to encounter this issue,
+> I hope it can automatically fix the problem as much as possible without
+> relying on me to take an extra action.
+> 
+> Thanks.
 
-> @@ -652,20 +688,25 @@ unsigned char *use_pack(struct packed_git *p,
->  				break;
->  		}
->  		if (!win) {
-> -			size_t window_align = packed_git_window_size / 2;
-> +			struct packfile_config config = PACKFILE_CONFIG_INIT;
-> +			size_t window_align;
->  			off_t len;
->  
-> +			repo_config(p->repo, packfile_config, &config);
-> +			window_align = config.packed_git_window_size / 2;
-> +
+Note that unfortunately the user will still need to take an extra
+action.
 
-Parsing config like this is somewhat expensive (remember we're going to
-hit your callback for every single config key in the system, user, and
-repo-level config files).
-
-And use_pack() is a relatively hot code path, as we call it any time we
-need to access bytes from a mapped pack! This "!win" conditional isn't
-quite as hot, as it only triggers when we establish a new window for a
-pack. But that still happens at least once per pack, more if we need to
-move the window around in a big pack, and lots more if we are under
-memory pressure and need to open/close windows a lot.
-
-I think we need to parse these values once and then store them somewhere
-with cheaper access. Can we grab them in prepare_repo_settings(), for
-example, which would cache them? We need a repo struct, but we have one
-(the same packed_git->repo you are using to call repo_config()).
-
--Peff
+My goal at first was to try to teach Git to fetch the commit (in the
+commit graph file but not in the object DB) anyway, so that (as you
+said) the problem will fix itself, but that requires not only a change
+in the part of the code that emits "want", but also the part that emits
+"have" (the fetch negotiation code). At that point, I decided that it's
+better to stop early and warn the user (it was not a fatal error in the
+original version of the code, but I have changed it).
