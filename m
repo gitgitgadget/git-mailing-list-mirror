@@ -1,83 +1,86 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD6414F126
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 07:05:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471375D8F0
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 07:14:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730444760; cv=none; b=VDKFQUSLN9sYOmDoBPnsqlKTgj32Pi+a972ZLoSgj2gqKnXhmrLCvadpPfrx7d4mdh5oTnKFn6U/aDEvDEUCubU3coVD7vvOe5pz3ZLbCscDHUk/mcreYFeJoIf1Z4JMF3LiCb1G7FGECoZhs9zvbPwyLZ7YUMcLlsTWD8dnKgo=
+	t=1730445255; cv=none; b=qYqnIsDleWmeWTqiox1sLuT0t5iJCsP/EBw1LA3A4c/4lPOBRJXlAQ6xaHmU87RUbYS+RIRuKoOcErQTqhOQhAe1h0m9W2jzjRZGCh91t1KxQBjQrqw4sqYFIjpZymi9r6aNC0e7KoeVA4CwFNXyutaMiGugm6EucVNzCrf0Itg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730444760; c=relaxed/simple;
-	bh=T+uAGp+nzs/IAuZKPcePA9QCxu+7zQzSINXg7bGauwk=;
+	s=arc-20240116; t=1730445255; c=relaxed/simple;
+	bh=plYInlro3TixhKeKIp5QYIMNMrH9jPK8TQ3+j/lUzn0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Yt/SyICI3ZTTCfKsU1tJASF8S1gKgSXRZTP9686XyobGS/913QsNoIg91BA0hc7wdaLhYonBbSVOZSE45ev6m5z2SXSNo5HVV4cQR3MQs4cHb9jSUCgUIC37KMFghU36bOeCuZKYlEraJEFXddcVn7M4dsWhnaKENy60p7qq2f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lblh3rX7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C3PSasL/; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=aP97apwVXgN1Nqf7NAbudB6s2T444LKIMaAzct044mFF4fyEInjdnX3R2MMz+SXcqSwz3O9UnzUnKVgtrLf4tMZIEEPyRvmuK+UEFHws4+03MIJuy9kJwlRTHQNBU8qdQoL9OuLPcka8x83lEvNlvAfGbdj4iRfA2foZpcaEeJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DviUmtgR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ke7bGq/+; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lblh3rX7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C3PSasL/"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id AC1691140114;
-	Fri,  1 Nov 2024 03:05:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DviUmtgR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ke7bGq/+"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0BD112540123;
+	Fri,  1 Nov 2024 03:14:12 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 01 Nov 2024 03:05:56 -0400
+  by phl-compute-11.internal (MEProxy); Fri, 01 Nov 2024 03:14:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730444756; x=1730531156; bh=goBANmtbnC
-	bteMuhUUxZXkvL59eGSwj6laED7daYFFk=; b=Lblh3rX7ZEAgFIwTi7jM14Q8Zz
-	O360V3yed6BwRtV3GO+sdXKxObbJQVThvbVlwqVKy9YjeeEgELzCDqYkSD72oDXo
-	XPTjgexPoQxU7RVwhaG/WyQq5HJ4NuWiUdVFc2623vh5EMeyGXqOGcGkP/JxwUoF
-	xFWUrQZgZSzrfgAsGjSbAIVU3qqAnRtvucw3YEJF9614EnDOhDPSwopRzxIp/3cW
-	vumhG213xxvuJsutxWY6TGvuTNVNj4hq48lRQJu1JrZ+6JY9PUvSBvP6f7I93arC
-	uRwKi/rmFaUeSRq3RmNQrdOZ1MGfCx1s+M72OGikbodz1AJJNEsRlDsTmxjQ==
+	:subject:to:to; s=fm2; t=1730445251; x=1730531651; bh=wPoi/tmyUe
+	cpJY3n2FeKVirsjJ/piVJVVNgFGYpj7qM=; b=DviUmtgRL7N1VgYgDPFEpe56wk
+	XKt1otojhjunATlWS+uHIAFPBjeFs32yK6cVQqib4mXKJffHWY/St6RSc6JEj6Fh
+	GaEBcwtzhQURU1cW8knPqSvjC1M2Cx/3/e8/7+JgJ1wO9FnR8zMeSrZSgx7iEXqR
+	+lUGFMjg5pY2TmD0PaSKe3FHdwESt+jWUSoPawkOUkrJvJYx2pmCmdfYxo8CS08F
+	xTqILyhUTihhtFqP2HLXfjVc+AFervz/ASMVHRM9dgkj8pc4nNSfbD0zVmDN7fM2
+	xX/6xYoqxAnxMJA8GX0F9C5goLZN/OI2haa9LRhT9FMOj+Qe902tywx/2DiQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730444756; x=1730531156; bh=goBANmtbnCbteMuhUUxZXkvL59eGSwj6laE
-	D7daYFFk=; b=C3PSasL/Q0dPwtHmLoT288x33EG/+GTROWRvq0qyRvVbx58OhM+
-	YBCGvK+ElT5N3S3QG5yMihPDYNOoWTgW1h1l7lSGtpyZaM7H+cavfTgSylRK0jwz
-	5tA7I268HtYfTEAhspmhjaJhDgqjRpVCq1GmwJotpaGBrgZ+TQAEB21mk5pB+vaP
-	5l4iC6ZJsRwq7BDau7buosyOAyW1YCdhy0CKECaijrWnLwYT7lWpRGwNPX+3KCB6
-	j5qytx/qu/Op81Air4HE3/xjUeahfw9XpnCA3AptRZmQjxrq1Tdnn5WtHWjr4pqf
-	6Eo6e87IS65UureijBtVfqzVghCkaWk6iwQ==
-X-ME-Sender: <xms:1H0kZwD5SVZn7rLyShr91_F2fW0rdQtZbWjr_oedEn_8l69fX92DOg>
-    <xme:1H0kZyghKwcZ3U_nyz22egsY_7qxOZ4Vm7QgQdis40Cvk4vTGnSaE3b5gAYGWPA2K
-    5M3LySiNWCSNeq46w>
-X-ME-Received: <xmr:1H0kZzlmZwXDAvQ1SDQwQmflVWrcho3UiLvFmYf_CA7_kNYfMnAG1i2sfcn3bRtRmVMA3U6JcRHg-e7qymqYj6tYYw6yRAGRUfL1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekkedguddttdcutefuodetggdotefrod
+	1730445251; x=1730531651; bh=wPoi/tmyUecpJY3n2FeKVirsjJ/piVJVVNg
+	FGYpj7qM=; b=ke7bGq/+avUxG8k1HQnni6o9eKit6h9gFKjOcbeDe1gJo1PzAFn
+	N4eTUW/BbgpwuIOunCXY0r1WSD95QIiVoe9BDjrJKOGvDxSruDuh1adqyj8cM3qC
+	w6/ULEJu8calPakkxjQi+29ub8wZmyczTokqpb0c0YZ4dFsIdrOLIVVBXgG1vpvB
+	1lP6x9OjPZxKPJxwWbwMZxJieJIda13RTAAZwcTfZ7SsvvR03j7X+C0MqGMXiTH5
+	pGV7FZqV+ErkFGnyiNUuKNnPq8Hzi5XK2DliGuzpPcqFtFXkpU2xamt8PHOy4676
+	wImiTAFJDjwLl29MrYqAJJBF/z+IoGFOUUw==
+X-ME-Sender: <xms:w38kZ0P324wTs6DiPC3ZA9_Uj2Zmj1ehqHW38JVQSrTzt6KQIHj1WQ>
+    <xme:w38kZ6-ViO2Isq_oylvr6Nfo8jrg46Ds9-VU9Tx-CBbG4pwBPgDdcwNYFOXxB1sT1
+    cHuo9ZUEkCBrj8GrQ>
+X-ME-Received: <xmr:w38kZ7RNV5A75976FQ-QtAWsYOFjYaRmsy41zuYeeNNkhiaInAFrqW-Ej14fij71IFRrDACuVrkgX7Nqc6Cs2BnYIe-lP9vteHXX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekkedguddtvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
-    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepihgrghhoqdhlihhtohestghlvggsrdhiohdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:1H0kZ2woTSL4XXBoMaKifwAopxFEuUc88k7aqIlR-GXhw8G3lSltVQ>
-    <xmx:1H0kZ1QC_xQWo0BJfMq7Gr_9bLQwv5kuxYkSYMtX6A9dr5FxXDU_UQ>
-    <xmx:1H0kZxYSAouOJ3P6ORmJpz0Sjd7etNIyoMGMJuY66OA-CgV93-DwLQ>
-    <xmx:1H0kZ-QIBz_DX12tfkCnn2kMiyEv0Q3D-DgteYTBtkWLRnzHqRWYtA>
-    <xmx:1H0kZ3dkVmGSV00H5eW0qvBK8cLq0o8G1NVmS-d5iq44aSIO0ZbY8i7Q>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtugifhhhithgvfe
+    esphhmrdhmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgv
+    sehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:w38kZ8s5z-MqzUOwZyhI_VJxm2-bY8GYt3u4jzutNoY6OrKXTG1BvA>
+    <xmx:w38kZ8fBj7oVKIKj9RTZXzWkZqDC4SZzxf2qnJLfHfmKcMnDUsLoTg>
+    <xmx:w38kZw3oqE3l_qkEDpEzWiaeFLnqA6JaNpVFyy-6Hpjirs8HzJC1Hg>
+    <xmx:w38kZw8NAHbYk34lPWUw4QW-p-Wh2cNoPKu8A-wHHGEDE4QnHJH3Og>
+    <xmx:w38kZ0SzkVGRxPcjahVGOCTLdqMteB7sIsX-2COas2mduaOlO1ZRZpEs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Nov 2024 03:05:55 -0400 (EDT)
+ 1 Nov 2024 03:14:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Iago-lito <iago-lito@cleb.io>
-Cc: git@vger.kernel.org
-Subject: Re: `git apply -p` doesn't remove source prefix in 'rename' diff
- entries.
-In-Reply-To: <3af246eb-3473-4964-9aed-ecff62b215b7@cleb.io>
-	(iago-lito@cleb.io's message of "Fri, 1 Nov 2024 01:17:20 +0100
-	(GMT+01:00)")
-References: <3af246eb-3473-4964-9aed-ecff62b215b7@cleb.io>
-Date: Fri, 01 Nov 2024 00:05:54 -0700
-Message-ID: <xmqq4j4r4enh.fsf@gitster.g>
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 0/8] Allow relative worktree linking to be configured
+ by the user
+In-Reply-To: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me> (Caleb
+	White's message of "Fri, 01 Nov 2024 04:38:15 +0000")
+References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
+Date: Fri, 01 Nov 2024 00:14:10 -0700
+Message-ID: <xmqqzfmj2zp9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,82 +90,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Iago-lito <iago-lito@cleb.io> writes:
+Caleb White <cdwhite3@pm.me> writes:
 
-> Hello,
->
-> I have troubles understanding the behaviour of `git apply` with respect to renames in a `--no-index` context.
->
-> Let us craft a toy folder:
-> ```sh
-> $ mkdir x
-> $ echo a > x/a # To be modified.
-> $ echo b > x/b # To be renamed.
-> ```
->
-> Duplicate it twice to get three identical folders `x = y = z`.
->
-> ```sh
-> $ cp -r x y
-> $ cp -r x z
-> ```
->
-> Modify `y`:
-> ```sh
-> $ echo newline >> y/a # Edit.
-> $ mv y/b y/c # Rename.
-> ```
->
-> Now I would like to use git as a "better GNU patch".
-> Calculate the diff from `x` to `y`:
-> ```sh
-> $ git diff --no-prefix x y | tee patch
-> diff --git x/a y/a
-> index 7898192..4030aa5 100644
-> --- x/a
-> +++ y/a
-> @@ -1 +1,2 @@
-> a
-> +newline
-> diff --git x/b y/c
-> similarity index 100%
-> rename from x/b
-> rename to y/c
-> ```
+> The base for this patch series is obtained by applying the following
+> patch onto 6a11438f43:
+> - cw/config-extensions topic (doc: consolidate extensions in git-config
+>   documentation, 2024-10-22, <20241021-cleanup-extension-docs-v1-1-ab02cece3132@pm.me>)
 
-Interesting.  I think "git diff --no-index" is "wrong" here, but
-"wrong" is not in the sense that it is _incorrect_, but in the sense
-that it merely is incompatible with what you are trying to achieve.
+I am slowing getting back to speed, but with the above I noticed two
+things.
 
-If you had files a and b, modified a in place and renamed b to c,
-and if you did this in a repository with tracked files, you would
-have seen
+ - Do not encourage people to _apply_ random patches before your
+   series when the official tree has the same patches.  In this
+   case, you even know the branch the official tree uses
+   (i.e. cw/config-extensions), so tell readers to _merge_ the
+   topic before applying your series instead.
 
-   $ git diff --src-prefix=x --dst-prefix=y
-   diff --git x/a y/a
-   index ...
-   --- x/a
-   +++ y/a
-   ...
-   diff --git x/b y/c
-   similarity index 100%
-   rename from b
-   rename to c
+ - The notes/amlog I snarfed from the broken-out repository of
+   Taylor does not seem to record the message ID
+   <20241021-cleanup-extension-docs-v1-1-ab02cece3132@pm.me> Perhaps
+   I was looking at a wrong repository?
 
-Notice how "rename from" and "rename to" information is different in
-the "real" git-diff output, as opposed to "git diff --no-index"
-output you have?
-
-At least when comparing two directories, "git diff --no-index X Y"
-could be interpreted as a request to treat as if X and Y were
-checkouts from two Git commits X and Y, and by comparing them the
-output should be identical to the result of comparing the contents
-of commits X and Y.
-
-But feeding "git apply" however may not be the only reason why
-people are using "diff --no-index X Y", and there may be a
-legitimate reason why peole want to see "from x/b to y/c" in the
-output, so unconditionally changing the output may very likely break
-workflows of other people.
-
-
+Thanks.
