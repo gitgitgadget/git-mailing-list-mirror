@@ -1,62 +1,66 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E8C1A4F12
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 14:40:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD361A7273
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 14:42:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730472045; cv=none; b=hxrNAJX1caA/StTGovvVsHQfQ1iELZ7BBA/FFxJnbrmCD8weAoSrzASYJHF4Ihzr2SzaNsv6qwfMFyXQ2YWUczV0N9EVCM+HgYBuoiPD6zcu8de5JEHNDSOfEwBGm8OgufG0g0Ec4iYQh90g5YkTNhgnrK9JQ2KY+b9xogIPEow=
+	t=1730472155; cv=none; b=PTpeZP2deOp9H/wZ509NsXIygc9dgE4P8HT+32ossN+g7vtVZDTyk6hd+rjwXJULkX3g5VtjiUZfwsPE/UkOcPOU/ukI3IwFNHEnkVDLbGea/keqYAeM52r/zEH/DkJ0yTQmzEFKWbnaFwjLhATHJ19Y3e2r2f/L548KzKiezbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730472045; c=relaxed/simple;
-	bh=q7K/T1oujU7xNDeU1VWk6ZvHNEy/pvIzWhzUwndwS8s=;
+	s=arc-20240116; t=1730472155; c=relaxed/simple;
+	bh=aEzQN641hpB+maOUdSspnH0iKT/Bfjq7XWlRPvMtPMU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=saMwf2Mu8kwLmgTGvr90szHgHU/ANFufLgq6MmurEX23u7EjzEnkVMU2+V6fIaMO8CHWI20dI+1WxW3WmGt6mDNjkmPMgAALRoGvOZLHo5Dy4EO2TVGImp8+g6xaH87iTeVr+wxfb/KgnN/zeYnKqewxPdnBayBSRkpIqNHkigU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=o23dqQ3y; arc=none smtp.client-ip=209.85.222.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=KDxX7s7mcCpIqF9o887988eK4Dma774X+l2AVHh0T5OxCMIQNGzd+jSHADnTWZcUus6e3JYjL5wqV8ZiGOvB821rcAILM2dHfJ+rfnHLguz+xsoIX5pHWPO8j1+gfwgRWJVaGLMHyK8W7ZzLKfPjlQrFH8Hf2strSm3mNPzcsNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ILoifKWs; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="o23dqQ3y"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7b15467f383so145419385a.3
-        for <git@vger.kernel.org>; Fri, 01 Nov 2024 07:40:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ILoifKWs"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6e330b7752cso21616057b3.1
+        for <git@vger.kernel.org>; Fri, 01 Nov 2024 07:42:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730472043; x=1731076843; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730472152; x=1731076952; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ro4I/tttpfF/8eO8SOP4phaXHGVvPpcj/IP1G2EAXLk=;
-        b=o23dqQ3yfppCDBUluCNLQkomtMvtIXqDYOE0sjEjwU/YVfwK9Z1r7UzHYfToqeGzVa
-         n+we8UHuIUPUU1spSQJEdcO89iih+4rVN2sWksrdv3xJNkHD7P+N1E+n4kIiEYxRgRuq
-         NePpekmtFYL69jRiAIVb0dMqCKSSn18PPdypB+cwQSwlq84wBDr0HWwx/h8kA3V9mDay
-         gpe2qRE+ye1DI/I/vKpQgqHxvawwGAvaEkirwYwtz6MjaqB3OnkHs7XQR/SQYk1QBcL1
-         h2qsxIQy9FOwRPYQwwL9A+KJOw6/iQaORfDfdrl26zMLA6ZB8KOolX3MmE7j6gc3368R
-         c4bw==
+        bh=qrVMj64JQq0Xw/xuUC8DvQTecyxIvftjlt9o82FyNXs=;
+        b=ILoifKWskpiAMAW9LEnQMl8PH1VBneiZHfS2AvrYIFKKL41B7dT77wO2wvu2YbbU/g
+         iXCXbB6CpPXNf0zIhHrF/YTaOlAa9f/vOaAdSpfG5gsFRMRMcnNIoeh8f0nDs5/uSXGQ
+         tm4qDQIUU0Zxq0I6biEhz2cNVH9wv9g/tF944eHEhpCbhOdfbnY5x4KZO3Q9sTqG4l/r
+         YvifrPGMZS4gnae68dDlQwy3f1ILHBk9Vp40nlY0vd6s7Hc10q+yvsKsyfgP6JzEKSMf
+         k2wIE7//cTBRQ+F/S52VQcn9E3zB/orlMDb3ke+wsXWCYCS8HHbDN2iAFYpH77gOX5nO
+         3isA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730472043; x=1731076843;
+        d=1e100.net; s=20230601; t=1730472152; x=1731076952;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ro4I/tttpfF/8eO8SOP4phaXHGVvPpcj/IP1G2EAXLk=;
-        b=bxtrTup6LYt4+dQ5fWK3xW80L0vBZ59aOx9vNh5mfSarZQNuflEqASeC44s01tZ2Ls
-         Mhr3WaCVuOMtnOpxBz7B235kQi/AB/XrpcG+Tr7Tvsx/55e7owriq9bbebuNbPZQwJNA
-         MZvl2pknX18oqXpk2etfA82OZEoO3EBJMKlEh4f+65o2cJnIfZ0wgzICTINatE7EVM56
-         t8lbC7NgD2R2UxHc486cGXBjhiJe9yzB5C9yT5yvXVzmq6C4HAooRvT9AuAxttnt97sb
-         kcrqZKJR773b9fqCUQLd8WcHIML60CJ801vkNqySzCqEyY1TcPuDYLI3ScDvb81+08qJ
-         h2dw==
-X-Gm-Message-State: AOJu0YwaUpdZyVp9qA+6ltSRxiZMaILR6dypfoTw4u3F6O+70H8QiiwX
-	uXFGQKOUoP9r5EgHTEqDUWtMObCI7mad8sl6gmAu2BxqGmJfx3+zrUsk7TfZ0Hs=
-X-Google-Smtp-Source: AGHT+IHXz9HJhEeVYl/KXNmOe6wfsrpI7+Z7C4MOuNnVEPS/6BianO/+2hqE5G58Ei3kDeyIKA2fsg==
-X-Received: by 2002:a05:620a:244a:b0:7b1:5504:2772 with SMTP id af79cd13be357-7b2f2551291mr1000404385a.55.1730472042834;
-        Fri, 01 Nov 2024 07:40:42 -0700 (PDT)
+        bh=qrVMj64JQq0Xw/xuUC8DvQTecyxIvftjlt9o82FyNXs=;
+        b=EhuquuVvBY7T/yEoJkxK3PzZDHS2KgtrZyjVN9BLATy6Wiwb5l65KEN5TjadP+JkmV
+         PN0aUs1gbuskUKR7dDNrfR2lo/2yJs/kXWkkEUFnKizuBVh3umOxOoMthxDnqgfeNIAK
+         Ow/zTREbtU6IojYXblVbDbOtAO5L8cHSSOOeiPhUxJ76G2Bar4qk5VmtqstmzdpN4CV/
+         85Ghq7gV4tK7j3xN+fCWIfYNUW9c+xHk2irXsRgWH6SpUNT39FRdVD4z6Pqs4iGPlCis
+         UfupojFOpsTjVGqzCEjma8bwnJSGbp2cfDkI/lYJqOFXIDiUMadSjbP7ux+Z5fBXnJFk
+         vCoQ==
+X-Gm-Message-State: AOJu0YzvxNtyYIw2kiGKWbZqS8zaJNGV5UMhbAHLUCiSZsC053lCQH/l
+	ppS4TbaOvscPNOc9qy2OHA2Q03FYEPf1UhCk4Oif8YP5ZoSGsAW8m7FAlpHNm/vAOVv1FM3oH3w
+	4a7Y=
+X-Google-Smtp-Source: AGHT+IEdEa8T2PIfgQ7LKKwL7NFBNEMk2hV0bAEOFhkZgwWuViDD2gxAWjw8VBp2gEzsCts9PkHVXA==
+X-Received: by 2002:a05:690c:7281:b0:6e3:6a76:ce45 with SMTP id 00721157ae682-6ea643283e4mr31522857b3.13.1730472152180;
+        Fri, 01 Nov 2024 07:42:32 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b2f3a6fef2sm176770085a.79.2024.11.01.07.40.42
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea55cd398esm6993847b3.139.2024.11.01.07.42.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Nov 2024 07:40:42 -0700 (PDT)
-Date: Fri, 1 Nov 2024 10:40:41 -0400
+        Fri, 01 Nov 2024 07:42:31 -0700 (PDT)
+Date: Fri, 1 Nov 2024 10:42:30 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] rev-list: skip bitmap traversal for --left-right
-Message-ID: <ZyToaRxR7upLg0IE@nand.local>
-References: <20241101121606.GA2327410@coredump.intra.peff.net>
+To: Seyi Chamber <kuforiji98@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, phillip.wood@dunelm.org.uk,
+	kristofferhaugsbakk@fastmail.com
+Subject: Re: [PATCH] t9101: Refactor test_expect_success format
+Message-ID: <ZyTo1lQaEVvZ1Eor@nand.local>
+References: <20241031094554.68916-1-kuforiji98@gmail.com>
+ <ZyPlYkwsFrxH+JwE@nand.local>
+ <CAGedMteyi0_C4PhfCXcD5gHe38px_g4hbxuG63o8tCSHdLcfGg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,23 +69,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241101121606.GA2327410@coredump.intra.peff.net>
+In-Reply-To: <CAGedMteyi0_C4PhfCXcD5gHe38px_g4hbxuG63o8tCSHdLcfGg@mail.gmail.com>
 
-On Fri, Nov 01, 2024 at 08:16:06AM -0400, Jeff King wrote:
->  builtin/rev-list.c      |  7 +++++++
->  t/t5310-pack-bitmaps.sh | 12 ++++++++++++
->  2 files changed, 19 insertions(+)
+On Fri, Nov 01, 2024 at 08:51:11AM +0100, Seyi Chamber wrote:
+> On Thu, 31 Oct 2024 at 21:15, Taylor Blau <me@ttaylorr.com> wrote:
+> >
+> > On Thu, Oct 31, 2024 at 10:45:53AM +0100, Seyi Kuforiji wrote:
+> > > The current script uses an outdated formatting style for
+> > > test_expect_success blocks, where each argument is separated by a
+> > > backslash and newline. This style can lead to readability issues and
+> > > makes it harder to maintain the script.
+> > >
+> > > The modern style consolidates
+> > > the multi-line command arguments into a single quoted block, which
+> >
+> > Strange line wrapping?
+> >
+>
+> That error probably occurred while I was editing the message. Should I
+> edit and send an updated patch?
 
-Nice find, and well explained (not just why it doesn't work today but
-could in the future, but why making it work in the future with bitmaps
-does not necessarily a clear performance improvement).
+Please do so, thanks.
 
-Probably you and I should think more about other rev-list options that
-*don't* work with --use-bitmap-index. I share your feeling there that
-there probably exist such options which silently do nothing (or the
-wrong thing) in the presence of '--use-bitmap-index'.
+> > > improves readability, maintainability, and aligns the code with current
+> > > coding standards.
+> > >
+> > > Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
+> > > ---
+> > >  t/t9101-git-svn-props.sh | 48 ++++++++++++++++++++++------------------
+> > >  1 file changed, 26 insertions(+), 22 deletions(-)
+> >
+> > This does not apply cleanly on 'master', so I assume that you wanted it
+> > based on sk/t9101-cleanup. That's fine, but please let me know in the
+> > future in case it's every less obvious :-).
+> >
+> > The changes themselves all look quite sensible, though.
+> >
+> > Thanks,
+> > Taylor
+>
+> Thanks, Taylor for pointing out this issue. I have rebased my change
+> onto the latest master branch and resolved the conflicts for future
+> updates.
 
-Let's merge this one down.
+There is no specific need to rebase on top of current 'master' unless
+failing to do so will cause the maintainer to see a conflicted state
+when applying.
+
+Unless told otherwise, I will apply new rounds of existing patch series
+onto top of their original base.
 
 Thanks,
 Taylor
