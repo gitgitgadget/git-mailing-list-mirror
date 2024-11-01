@@ -1,43 +1,43 @@
-Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF241482E9
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 04:38:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4C1146D45
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 04:38:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730435914; cv=none; b=NrJzvX+VrOeX5nmumoPtAqtBJj8ggS8u6LTDgm48unSfn09x48Yos++3P2HoiMcvn7q4S0e7Ct5jdM6K5f8R2HRG0VFsEZ1tR/zZYMZzsBdE4cCJDJVoRPV6GxjPjj/Ik6wDktPBYdBKdatolGjRT9t4mvrUWPl4QabhMM3+xI0=
+	t=1730435925; cv=none; b=G+xLWhaEryftz0l5LM0wxVd1XZUwl/HDyjLgadJ8EBt68SgQwaGIYtkmPU4l7a6h/EufDv5JxOeh/o3t34fUj/Kuw3NoyhLATh5brPnwUx1W1ye+axa4K7IoawApLb3ryGvjMs5jE2Bsc8FEhU+pySAYx4eAHOf7l2w8Z/OdaN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730435914; c=relaxed/simple;
-	bh=8MxPZdn1L5978tfqkhcficZ+8i6hBfaQ8ew5JQtRmOM=;
+	s=arc-20240116; t=1730435925; c=relaxed/simple;
+	bh=/Se9OEAa8Z5ULWhKCgQOxmzssQTQloBNxRN/a/DiHvE=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g/gKUUucCF8vnr9dLmiE0XKTaHX4bYE+czIv/AB+d9st07+btxRc2thEGm16McFQJQxdRf/gnBEpYdz0GLeTXxctFlDfa0UHrhG6mVFYyrs+Ny7U26uMqbRFxlflJ/+XkBtdKxzL7jsogBFse4+/agwA3HrZkMfuVZey+LcQeMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=DnuInHjh; arc=none smtp.client-ip=185.70.40.134
+	 MIME-Version:Content-Type; b=A7NUo8i3mmlpPymKZcJj0q5+uhnfG9dGKH9220LqRcMYMYMIC/5HUE6FsOORgoGivubIoTptex2hZ/i5uLOuxDUhsC5J2j4dy7nERVnMvfNXFeaSIrXn7AK/BY/b+zuRV4Qj2YfK5oBsBi9VR9qaLIwODJH9v2kSHrZ9UFZJGvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=KVBti3M9; arc=none smtp.client-ip=185.70.43.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="DnuInHjh"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="KVBti3M9"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1730435909; x=1730695109;
-	bh=nMqMaP/mEzs1WtgxDUhbCeyuGGDh1Au4R56Bq4fXY+g=;
+	s=protonmail3; t=1730435916; x=1730695116;
+	bh=I4JVVGWtkHbLhQbETsc5Fv8E4IGvq+MC12C3u0SKQBk=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=DnuInHjhhTGVAh0ZtvPLPYFkeSjNSp45L2NbKe4oR4IXaV40vdo3fvq5weIfFYzPs
-	 qwwgiTGHnjlkWE0Dz1J3KXKud3tW9Pp30W4aj4fZ1dCjROlmw5KGU/gcdEWAeajYkX
-	 8swLAttw+KNleMAxH+F3YQLul393yuvEAoiWL7tKBF33L8vhsCJ0lRdxpTQ7LnT84Q
-	 VIgMB2qKdoMJ+7DLXKRUsKLV5LQXjbkp6dpvi+PLlhfiyJpjD03tj7Bp8B+wRljDtl
-	 irp0+w5VP8BcBUy5iHVKaoVch9Yekjek18W6LLFW0GrvbZUISo/T82GIDoW3HeKq+U
-	 EqFWQfP+8q+OA==
-Date: Fri, 01 Nov 2024 04:38:27 +0000
+	b=KVBti3M9tQTZ++29xi5Em30EHz16jLjHMMdyBntR4uq2SmPk0sXd4/Ga8j+XrkrbW
+	 YnKi9nlvaw+ySckQ7Lc2gs4nC5aCpKaizNbU9DjOqhLzW8TYYbEEqdXNbqBkJYsNoh
+	 oBBwpwKvysFPIuQxjobFZyR6hqLiE0/0SwlZOmeXHLvKnPmj8Ui0XGIZe+p01m5o3h
+	 mJj1m7N0IvZcfPGC4KvN0fZP12vx8sSnxCk/Znk8k8pGevuoZ+uREBlptFymtrPaER
+	 +fFImoHA4POwhP2A+gvGAHphWGFP3fTfEo2C0v041W7dHlVKCgOZfixmAzFmHdUajW
+	 RrlyqtJLxDuTA==
+Date: Fri, 01 Nov 2024 04:38:32 +0000
 To: git@vger.kernel.org
 From: Caleb White <cdwhite3@pm.me>
 Cc: Taylor Blau <me@ttaylorr.com>, Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>, Caleb White <cdwhite3@pm.me>
-Subject: [PATCH v4 2/8] worktree: add `relativeWorktrees` extension
-Message-ID: <20241031-wt_relative_options-v4-2-07a3dc0f02a3@pm.me>
+Subject: [PATCH v4 3/8] worktree: refactor infer_backlink return
+Message-ID: <20241031-wt_relative_options-v4-3-07a3dc0f02a3@pm.me>
 In-Reply-To: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
 References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
 Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 933f1609f5f503c82f6b2a8fa4dac8d8390fc77b
+X-Pm-Message-ID: 5db6c801399f7fdf4af234d942ea99845ec99f65
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,119 +47,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-A new extension, `relativeWorktrees`, is added to indicate that at least
-one worktree in the repository has been linked with relative paths.
-This ensures older Git versions do not attempt to automatically prune
-worktrees with relative paths, as they would not not recognize the
-paths as being valid.
+The previous round[1] was merged a bit early before reviewer feedback
+could be applied. This correctly indents a code block and updates the
+`infer_backlink` function to return `-1` on failure and strbuf.len on
+success.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
+[1]: https://lore.kernel.org/git/20241007-wt_relative_paths-v3-0-622cf18c45=
+eb@pm.me
+
 Signed-off-by: Caleb White <cdwhite3@pm.me>
 ---
- Documentation/config/extensions.txt | 6 ++++++
- repository.c                        | 1 +
- repository.h                        | 1 +
- setup.c                             | 7 +++++++
- setup.h                             | 1 +
- 5 files changed, 16 insertions(+)
+ worktree.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/config/extensions.txt b/Documentation/config/ext=
-ensions.txt
-index 5dc569d1c9c77c15e32441493289f9c9dd5e7f0b..5cb4721a0e0ae1ed64f90492c0d=
-c18b96473cb33 100644
---- a/Documentation/config/extensions.txt
-+++ b/Documentation/config/extensions.txt
-@@ -63,6 +63,12 @@ Note that this setting should only be set by linkgit:git=
--init[1] or
- linkgit:git-clone[1]. Trying to change it after initialization will not
- work and will produce hard-to-diagnose issues.
+diff --git a/worktree.c b/worktree.c
+index 77ff484d3ec48c547ee4e3d958dfa28a52c1eaa7..9346d51c438cbd029e9e57591ed=
+d8c9f30cc7638 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -111,9 +111,9 @@ struct worktree *get_linked_worktree(const char *id,
+ =09strbuf_strip_suffix(&worktree_path, "/.git");
 =20
-+relativeWorktrees::
-+=09If enabled, indicates at least one worktree has been linked with
-+=09relative paths. Automatically set if a worktree has been created or
-+=09repaired with either the `--relative-paths` option or with the
-+=09`worktree.useRelativePaths` config set to `true`.
-+
- worktreeConfig::
- =09If enabled, then worktrees will load config settings from the
- =09`$GIT_DIR/config.worktree` file in addition to the
-diff --git a/repository.c b/repository.c
-index f988b8ae68a6a29792e7f2c980a02bd0e388a3b9..1a6a62bbd03a5dc4fdade3eb45e=
-a2696968abc23 100644
---- a/repository.c
-+++ b/repository.c
-@@ -283,6 +283,7 @@ int repo_init(struct repository *repo,
- =09repo_set_compat_hash_algo(repo, format.compat_hash_algo);
- =09repo_set_ref_storage_format(repo, format.ref_storage_format);
- =09repo->repository_format_worktree_config =3D format.worktree_config;
-+=09repo->repository_format_relative_worktrees =3D format.relative_worktree=
-s;
-=20
- =09/* take ownership of format.partial_clone */
- =09repo->repository_format_partial_clone =3D format.partial_clone;
-diff --git a/repository.h b/repository.h
-index 24a66a496a6ff516ce06d47b7329b3d36eb701ca..c4c92b2ab9c9e3b425dc2974636=
-e33d1f4089c69 100644
---- a/repository.h
-+++ b/repository.h
-@@ -150,6 +150,7 @@ struct repository {
-=20
- =09/* Configurations */
- =09int repository_format_worktree_config;
-+=09int repository_format_relative_worktrees;
-=20
- =09/* Indicate if a repository has a different 'commondir' from 'gitdir' *=
-/
- =09unsigned different_commondir:1;
-diff --git a/setup.c b/setup.c
-index 1e5c2eacb19eb6b230d7c9954f66fc7ae0b05631..39ff48d9dc5d67b16159c6cca66=
-ff2663bbba6cf 100644
---- a/setup.c
-+++ b/setup.c
-@@ -683,6 +683,9 @@ static enum extension_result handle_extension(const cha=
-r *var,
- =09=09=09=09     "extensions.refstorage", value);
- =09=09data->ref_storage_format =3D format;
- =09=09return EXTENSION_OK;
-+=09} else if (!strcmp(ext, "relativeworktrees")) {
-+=09=09data->relative_worktrees =3D git_config_bool(var, value);
-+=09=09return EXTENSION_OK;
+ =09if (!is_absolute_path(worktree_path.buf)) {
+-=09    strbuf_strip_suffix(&path, "gitdir");
+-=09    strbuf_addbuf(&path, &worktree_path);
+-=09    strbuf_realpath_forgiving(&worktree_path, path.buf, 0);
++=09=09strbuf_strip_suffix(&path, "gitdir");
++=09=09strbuf_addbuf(&path, &worktree_path);
++=09=09strbuf_realpath_forgiving(&worktree_path, path.buf, 0);
  =09}
- =09return EXTENSION_UNKNOWN;
- }
-@@ -1854,6 +1857,8 @@ const char *setup_git_directory_gently(int *nongit_ok=
+=20
+ =09CALLOC_ARRAY(worktree, 1);
+@@ -725,12 +725,15 @@ static int is_main_worktree_path(const char *path)
+  * won't know which <repo>/worktrees/<id>/gitdir to repair. However, we ma=
+y
+  * be able to infer the gitdir by manually reading /path/to/worktree/.git,
+  * extracting the <id>, and checking if <repo>/worktrees/<id> exists.
++ *
++ * Returns -1 on failure and strbuf.len on success.
+  */
+-static int infer_backlink(const char *gitfile, struct strbuf *inferred)
++static ssize_t infer_backlink(const char *gitfile, struct strbuf *inferred=
 )
- =09=09=09=09=09=09    repo_fmt.ref_storage_format);
- =09=09=09the_repository->repository_format_worktree_config =3D
- =09=09=09=09repo_fmt.worktree_config;
-+=09=09=09the_repository->repository_format_relative_worktrees =3D
-+=09=09=09=09repo_fmt.relative_worktrees;
- =09=09=09/* take ownership of repo_fmt.partial_clone */
- =09=09=09the_repository->repository_format_partial_clone =3D
- =09=09=09=09repo_fmt.partial_clone;
-@@ -1950,6 +1955,8 @@ void check_repository_format(struct repository_format=
- *fmt)
- =09=09=09=09    fmt->ref_storage_format);
- =09the_repository->repository_format_worktree_config =3D
- =09=09fmt->worktree_config;
-+=09the_repository->repository_format_relative_worktrees =3D
-+=09=09fmt->relative_worktrees;
- =09the_repository->repository_format_partial_clone =3D
- =09=09xstrdup_or_null(fmt->partial_clone);
- =09clear_repository_format(&repo_fmt);
-diff --git a/setup.h b/setup.h
-index e496ab3e4de580c2d9f95a7ea0eaf90e0d41b070..18dc3b73686ce28fac2fe04282c=
-e95f8bf3e6b74 100644
---- a/setup.h
-+++ b/setup.h
-@@ -129,6 +129,7 @@ struct repository_format {
- =09int precious_objects;
- =09char *partial_clone; /* value of extensions.partialclone */
- =09int worktree_config;
-+=09int relative_worktrees;
- =09int is_bare;
- =09int hash_algo;
- =09int compat_hash_algo;
+ {
+ =09struct strbuf actual =3D STRBUF_INIT;
+ =09const char *id;
+=20
++=09strbuf_reset(inferred);
+ =09if (strbuf_read_file(&actual, gitfile, 0) < 0)
+ =09=09goto error;
+ =09if (!starts_with(actual.buf, "gitdir:"))
+@@ -741,18 +744,16 @@ static int infer_backlink(const char *gitfile, struct=
+ strbuf *inferred)
+ =09id++; /* advance past '/' to point at <id> */
+ =09if (!*id)
+ =09=09goto error;
+-=09strbuf_reset(inferred);
+ =09strbuf_git_common_path(inferred, the_repository, "worktrees/%s", id);
+ =09if (!is_directory(inferred->buf))
+ =09=09goto error;
+=20
+ =09strbuf_release(&actual);
+-=09return 1;
+-
++=09return inferred->len;
+ error:
+ =09strbuf_release(&actual);
+ =09strbuf_reset(inferred); /* clear invalid path */
+-=09return 0;
++=09return -1;
+ }
+=20
+ /*
 
 --=20
 2.47.0
