@@ -1,97 +1,139 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF031C729B
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 15:18:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A9D186E40
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 16:07:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730474303; cv=none; b=HHssFYRvlsf6ZWpvm7q4S8jKTEFmpe6P5dgJolVN/5bxiph/8ySfo+uIXmYf+1OFHzrZBAI03BZarTDpbynZ4EvdvHLneTHO6mmQGxRGy55Oy3JhhRDrJllaovHYtmzwNHrpazb8yKgSkUGh6aWpS4bipetrnHhSGvvoot1W4Mk=
+	t=1730477272; cv=none; b=Sf9Y6DwmaN7FTP2LxTdvlgSouXuqthQdCtfYv0yx44AaoPeLCuhzIThotk4LPxJRFun7S22AXP5i2iqPz+Gi5jKKhB8TN4Xors31XpYhnexGvhQPe6BwonU7JGNLe5DCcpLxbB9OAr9Bosn5omhKgdIKpCYYYWXm8oO+q+DtYC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730474303; c=relaxed/simple;
-	bh=udZHwex3blDcOjqLbTZTzYAJvl6haW2kqymKsy5Esic=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DO9STookasmheDJIoZwpMccjx0ZNttbeZTlNsg/n2gmnHyKichcz0EuuCgAhTTM/YWdquJUNQaPKfc3LCV5VYw0vlPNvH3cWTAtGROvRx4/PFTD6QBZOYzmDjjp4tfqtTvfSwoe1ff/IgJtMrfVn9wloiEV7FHqF+mC/keSwGYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=BeMGsDcZ; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1730477272; c=relaxed/simple;
+	bh=nMfD9kPLToxyNYgRwk3MiWmarziPcsYPeh46rDUrpBk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qyl2oARYz2Gl6tpn6vwIPld3rFh/HKcOIQtY+63Sz8XzXXGBciOKgxKxO0/9K7aetgbkR0wrC3KCZ8iQ/Kzr0LdpTY13/z62cfYqBhBvVk3KO0uSQWzv976km4Lns4djMmPzjruutXOPaVIPWSELg5uRAY3CYlrmy+ydbrezHCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ggJjoxo2; arc=none smtp.client-ip=209.85.167.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="BeMGsDcZ"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6e38fa1f82fso17225397b3.1
-        for <git@vger.kernel.org>; Fri, 01 Nov 2024 08:18:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ggJjoxo2"
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3e5fbc40239so1270942b6e.3
+        for <git@vger.kernel.org>; Fri, 01 Nov 2024 09:07:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730474298; x=1731079098; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mTq3zEl0x96KFtuIT4zfBr6B/hCXbSSxmzyztG4PcSM=;
-        b=BeMGsDcZ6SAniTSivuppgclMPqMLzmx5iQy21/kPCAfFnoj6GEb0F7yKMoG8bLzXQk
-         ydNSriPOUFBnI/3RSaZCiXi6Y6vy5e/fif7L6K1lZToYn8ikYPm3GlBzL6wfr1a5KeLO
-         VT/clW/G13jDjDRjjheAPdAJPeoEvxR6EOxpp15/0IslVMMa4fpW+KI2sdn2FeiCyTsg
-         uRuyD2Um8no9sCxuqUUJ7WjqBRFe2f3vO1dKZmP/9Yb/fMwua0i6ly2AXtWWXl80Yssp
-         aW4x8D4zjg+GERglf8+WD63OYR1XmrzQyCCdOYhVgsqedM8osUxFF8jFjCPGStBB4UR7
-         XqoA==
+        d=gmail.com; s=20230601; t=1730477270; x=1731082070; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EXeA2UeYImSI/z6vSUJ8liG0SStvIrcFlR9F9VPf4ds=;
+        b=ggJjoxo20nlsYzxAAggTBGGJDBWZ158HG62x2iwcHBDwtpYVo8xzYCHS+2wpQkFfch
+         akzNAogtCMI5EeFljijPvw7LexGG+6MZ8wtPgVMJwdvNYM5v7aWdWF+/KWknmjnsvAg0
+         jV2cQozJEIRRTlbs5IiHxpvfgYuY71DJsfOmWhzGjA7pwFf4h+ZasMMC9KLqaAmXbHQH
+         KlgUBRNs/80MvGEf1KOz3GEd9VZ5zwDExrs/WCDUW8pkvnLeYtXyXzkYSlg5pBfKkfhf
+         UrzPqdI5HR7kC/T/GYChPQ12Yo1cmxcrYh2rRYSl+WLecYBxUZq6NmDu+UZo6kis4jKl
+         E85Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730474298; x=1731079098;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mTq3zEl0x96KFtuIT4zfBr6B/hCXbSSxmzyztG4PcSM=;
-        b=Jwu4xcqpWN7jN5ki7tXngnXnUFX/l2z9dhVaI/wm00EGRAooDApt1wp2TotiqlQMD+
-         N7U2aftQlDWgi3fxHkZg7Gi9crVxnlGiZwTQBEYbIC1DcJYz+lRjwtzxevWqobh8qhnx
-         7SZG/2Vzgphl3CBEl2ClIwq479/lHIk1xOlvnqOsQzxmiLaO0EUpOoS/q7ySxaxNrzH5
-         ry5yk/sgp0cZatN6YSKwxwzrGiesbm5Vopy9s80PdRYDR/g8AXv2AUtQ28PK++0COeXe
-         got0oGIFPXfZJXPW8KZwiH+6e4S6PTFuJ61Gm0TqsjY7t4Qmr8wT5+3WKwc7oHy1RVUt
-         mwcA==
-X-Gm-Message-State: AOJu0YznSLsm+flWyTdi9XMUks6ZawpdHDsDLEdxmtKISAG86xoX7T/d
-	J/b167VyeKwghz0+Ie9M5o476qlNRLS70cJQaybYEkqM8KuXHHViIUHjSZ7ojbc=
-X-Google-Smtp-Source: AGHT+IEak1VpPvZ4uEcT2XHKPiSpLcuJ2MwXGX1IfuTzGQJihwC0HBQLo9wX158Tg4vdYExV98lEwA==
-X-Received: by 2002:a05:690c:23c2:b0:6e3:156e:a917 with SMTP id 00721157ae682-6e9d89b12b9mr251080347b3.14.1730474297716;
-        Fri, 01 Nov 2024 08:18:17 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea55ce7324sm7060567b3.146.2024.11.01.08.18.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Nov 2024 08:18:17 -0700 (PDT)
-Date: Fri, 1 Nov 2024 11:18:15 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org, steadmon@google.com, hanxin.hx@bytedance.com
-Subject: Re: [PATCH v2 2/2] fetch-pack: warn if in commit graph but not obj db
-Message-ID: <ZyTxNwZgeOy/+05b@nand.local>
-References: <cover.1730235646.git.jonathantanmy@google.com>
- <cover.1730409376.git.jonathantanmy@google.com>
- <631b9a86778f15b7086e5f17fe850ffa151dd341.1730409376.git.jonathantanmy@google.com>
+        d=1e100.net; s=20230601; t=1730477270; x=1731082070;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EXeA2UeYImSI/z6vSUJ8liG0SStvIrcFlR9F9VPf4ds=;
+        b=Hc9+KUxe9zsy5ituU+tJD2a9mJ1TMbKlOIY93DNR9AaUM8FNbgu/5T2LqibXz7vFT9
+         atqKxu7LdJKehZ9NStwtjJFGrBlNhPj+hBZSpH6STSaiqi/wEn5aHd+VyWZpuMWuKGq/
+         jffmgJuehNnD0QYilpbqMI5cTNqnor2vSPNWBtP1LVFK1/6RNHo335ymILq++gAIgvQ2
+         CkyQ2ebOBl7RBG40WFfIT2PPFIk6lzq9GBumoDrjjTAbOBvKRigbeYQeBh0xsN5qiQsF
+         9+F3RDF6Sz01v3NsyIg+juj3pT+OZN0kcovikZ+x9zoEbzieZTZieKur8SoeJe6EkqyF
+         LDUQ==
+X-Gm-Message-State: AOJu0YyYVw3MSpNK6Te9c0kojmyrHXuT0HxyTaVwYTCUab7vPVQbDYPx
+	MIANQkrs81KInRM6weNZYC2yvE6kdXBWfDg9yzk8Hd9Be4+xuAxFzn4fm8Rkey+e2fWd8gjFTT3
+	lsapmtYplZhXU+uE482KtganPxgfOnmnO
+X-Google-Smtp-Source: AGHT+IEoNIiOD6bbvPon7bB7+Nj3HitAjdfYrqn0qjdVctsda9/vZrtmz4+zmStIu9ChmUFsT6JDlBvg8PD26woaLq0=
+X-Received: by 2002:a05:6358:b58b:b0:1bc:583b:a173 with SMTP id
+ e5c5f4694b2df-1c5f98f227dmr251839155d.10.1730477269631; Fri, 01 Nov 2024
+ 09:07:49 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 1 Nov 2024 11:07:48 -0500
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <ZyTnhrBLuvesK1yB@nand.local>
+References: <cover.1729504640.git.karthik.188@gmail.com> <cover.1730366765.git.karthik.188@gmail.com>
+ <ZyPjJKYZzeFGLxin@nand.local> <ZyTnhrBLuvesK1yB@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <631b9a86778f15b7086e5f17fe850ffa151dd341.1730409376.git.jonathantanmy@google.com>
+Date: Fri, 1 Nov 2024 11:07:48 -0500
+Message-ID: <CAOLa=ZTp=QqD0P2zhGunrOfmAebwvLJ20bQq9Tog3eLaO9pwoA@mail.gmail.com>
+Subject: Re: [PATCH v4 0/9] packfile: avoid using the 'the_repository' global variable
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, peff@peff.net
+Content-Type: multipart/mixed; boundary="000000000000f3cd860625dc2260"
 
-On Thu, Oct 31, 2024 at 02:19:01PM -0700, Jonathan Tan wrote:
-> diff --git a/t/t5330-no-lazy-fetch-with-commit-graph.sh b/t/t5330-no-lazy-fetch-with-commit-graph.sh
-> index 5eb28f0512..feccd58324 100755
-> --- a/t/t5330-no-lazy-fetch-with-commit-graph.sh
-> +++ b/t/t5330-no-lazy-fetch-with-commit-graph.sh
-> @@ -39,7 +39,7 @@ test_expect_success 'fetch any commit from promisor with the usage of the commit
->  	test_commit -C with-commit any-commit &&
->  	anycommit=$(git -C with-commit rev-parse HEAD) &&
->  	GIT_TRACE="$(pwd)/trace.txt" \
-> -		git -C with-commit-graph fetch origin $anycommit 2>err &&
-> +		test_must_fail git -C with-commit-graph fetch origin $anycommit 2>err &&
+--000000000000f3cd860625dc2260
+Content-Type: text/plain; charset="UTF-8"
 
-It appears that this line breaks CI:
+Taylor Blau <me@ttaylorr.com> writes:
 
-    https://github.com/ttaylorr/git/actions/runs/11631453312/job/32392591229
+> On Thu, Oct 31, 2024 at 04:05:56PM -0400, Taylor Blau wrote:
+>> Hi Karthik,
+>>
+>> On Thu, Oct 31, 2024 at 10:39:43AM +0100, Karthik Nayak wrote:
+>> > Range-diff against v3:
+>>
+>> Skimming the range-diff, this new version looks good to me. It would be
+>> nice to hear from another reviewer or two before we start merging it
+>> down, but I think that this is looking good to me.
+>
+> Hmmph. I spoke too soon, this new version appears to break CI on
+> Windows, and thus broke the builds of 'jch' (and 'seen', by extension).
+>
+>     https://github.com/ttaylorr/git/actions/runs/11602969593/job/32309061019
+>
+> Can you have a look?
+>
+> In the meantime, I'm going to move this out of 'jch' to let CI run there
+> again.
+>
 
-because you're using a one-shot environment variable assignment before
-calling a shell function.
+Thanks for letting me know, I think the fix is simply
 
-This should instead be:
+diff --git a/packfile.c b/packfile.c
+index f626d38071..737cd60377 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -27,8 +27,8 @@
+ #include "pack-objects.h"
 
-    test_must_fail env GIT_TRACE="$(pwd)/trace.txt" \
-      git -C with-commit-graph fetch origin $anycommit 2>err &&
+ struct packfile_config {
+-	unsigned long packed_git_window_size;
+-	unsigned long packed_git_limit;
++	unsigned long long packed_git_window_size;
++	unsigned long long packed_git_limit;
+ };
 
-Thanks,
-Taylor
+ #define PACKFILE_CONFIG_INIT \
+
+Tested it on GitLab's CI too this time.
+https://gitlab.com/gitlab-org/git/-/jobs/8248707713
+
+Will send in a new version including the fix tomorrow!
+
+Karthik
+
+--000000000000f3cd860625dc2260
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: b2b23fd0cbfd3f90_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jay9OTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meU5lQy85OTRMQUwybVpreTVUZ25CWnljU1R3ZnFKbgpMVGQxdE9uWHh3
+M2FrbmpmaEpib2hCUEtQYXNOMjI0VVdKR1VtNWw5TlRzYktpKzVlS0I1RERIZkJ0S1VoN0hRCk5k
+bG8zbmNiaUU1RGdQckw5SnZObnNPWXR0c3JudjFLZzRETXJrVUY1ZGZOS3ZRenJDNnQzeE1MbUpj
+WUFOUGUKVFJVZDdVbHNZZFJzeE1TaW5TZ3BRQ2g5MTg1RHUxcnN5Wk9qTC9uOGp4UzRSYWlHTmVM
+d040Z005YXBnb0l0QQphMmV5WG5PR08ybFl1RW90STNsMTBWNW5HWHRsMkQyNVR4NmtQUEVOUnZv
+ZWxZSENkSDhBd2NJdmw2OUtWUnRECjc5TEpvcDBFSXlYcXJLSUJGN2tKZlNhN1d2eTJHSXFoL2NI
+elA1Znk2Z2pTZWs5Z3Frc01teFVVUU5zMlg5d3YKTTI1NUZBSm5KaVVvWG1UOWJCblVCQXBmaDBB
+R25mNmdPZ0IrblFIMmRISVA1Z05HYWhkWXNndzF0eVF1dW9GbQpDbGtITmFqRVlUYkR4VTNPRVhE
+bUxEYXZlRmxWem9lSnRQTFpiR0hMczlyS2VZK2NxaDF3Z1hQU2xJRVBYYlMvCm9TeWtvRmUyU2JS
+YnhDZmlzQVNtK3k4eTFkOVlZd2JRZEU4QVNLdz0KPVV6eEgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f3cd860625dc2260--
