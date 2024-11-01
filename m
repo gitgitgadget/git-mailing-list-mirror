@@ -1,166 +1,134 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D537819BBC
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 13:46:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6905F1A264A
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 14:25:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730468776; cv=none; b=bUuCiGx5YHbj+ot7oZK1pShsyBZ27656JtiLhtEGYVKZxhXOgGURJ43iVSpgR66zbtcLPNlWiHOFcWIgmO51+2Ykzet+S2JhcIZyBRghKSv1+eC/7v01ZNdSBqEes7cvPbLnDgctrUxNGGUAa9271jtUXAqetGWqigkGdQafMf4=
+	t=1730471143; cv=none; b=MLxWZvjph0cRJyGaARG4XwffVntquND93zDX+UElYPnwHXp3NlcGwMfVbYdO7qZHS5DeYMr0iBroVSVEtf4a+HQ9dJmYQXtJfIpSTgHokDUuprXdIX79gIA2pGp2BZc24RduXIl52kpvUx+8KEIlEr7bIY1jIGfOLVKWOnBRzZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730468776; c=relaxed/simple;
-	bh=Dt3QvnmaMn/w5ujQICkzTvmakyz0BjA1LRNKbb7AfPE=;
+	s=arc-20240116; t=1730471143; c=relaxed/simple;
+	bh=M7oLKUU+e5jh3VBjDVS7ZhUICRoPnAqbS55h65yNt/0=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cRz1kfrcMhSjZMCnoTm85yIvm0nBEIMu/WEcW/IepaaaSrHh4XdOx2mQMGxWXkLr8VFKZGclJAXgpMSZ8KhF+I8Alb43ZV8aLPNElrjv1y0oujid0XNQve6duHtX+gxPcm9EuGURv+qP3TAFH+ivkVWc9LxV7KXCdiuhmM+GQJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fBOL6Ukv; arc=none smtp.client-ip=209.85.221.170
+	 To:Cc:Content-Type; b=Wxg77cZ+wkyV2pFLrLODzYMdRy6yDEmtJ9HHo4r0WwERdBWgqBgW2nFZ4h4gO0nwVo65CuN8iDO1wB1XWVSid2gx7KLBi6nf3wjBkjh+h0w+wd6IhgbM81CKjAXfQ9xCXt+G1yN2yzsNaHcKtevDML8BWjJO7wXT/iFcWRv35ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CN2sb+mY; arc=none smtp.client-ip=209.85.161.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fBOL6Ukv"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-50d487a93a5so583634e0c.3
-        for <git@vger.kernel.org>; Fri, 01 Nov 2024 06:46:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CN2sb+mY"
+Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-5daa93677e1so972346eaf.3
+        for <git@vger.kernel.org>; Fri, 01 Nov 2024 07:25:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730468774; x=1731073574; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730471139; x=1731075939; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=m6hgC+hhLr4LiUzzhDk0hBaPvGHKvxoRfyNbVGHDh14=;
-        b=fBOL6UkvSKVF5Pe+bR4leo7bDTrPkZB5bKqr5Oxlf81gze1w7+vuQbzi2NCUgTLnqY
-         xVbITmbbR+o8IuvXLK8dVPQgYOTDayNK3QM5JNEnqMYp98PD4W0J9h9kJXA6AHKpRXS6
-         PDwToWJaNOqV2l+Wy5xHVGu1cMrZmlG+/rxQkYxCOOjqk3K1H+Ht5GjGCBKqUXvV/ag0
-         eTT9y9dXNdw21cqOwP2QF7occz6oBBSbwMsVqJvVhItq6sq8ksqr2osj+2fa4oQXLHie
-         z1+3F6zLReo7aOJHvmWB3SZ0eomVsIquq5y/YwQzetoNtQYvfiUlckguz9oj1S6qR8/2
-         CreQ==
+        bh=r42/G5bHuG9mU6zfSfACvLj+BTVHfk9aS83c34tsJZo=;
+        b=CN2sb+mYtr1+hmJHfQjpcx9DWKmIfheYMuDXVeiU/ODCQg5UIUCv0aUSqBHQIO4idn
+         XQucM8dVt7mllTTD4lgJ72z7qHX5nlWUkeLrJYbI9MivBSm2M9VMj3hfIAq8NqH6Insw
+         u3ahAV1kP8Xfg/i5R3YqHQNJDwnYOLkS6QtYANR+/sbWSHQtTnxeomt4D4Xjf/F8eW4q
+         czPSdDNYcJ08EOnhzZeSF6dKLnsAn4LqjzChzyJTVlyaKCXYakZERWDdDBeGWXnU6Hg+
+         JGD+io7G6r7OaBpJE82kA4uAH5miE39wtPJhMvfrOZSVyPLgiPuiNywBBd6un+pOQkrK
+         zoUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730468774; x=1731073574;
+        d=1e100.net; s=20230601; t=1730471139; x=1731075939;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m6hgC+hhLr4LiUzzhDk0hBaPvGHKvxoRfyNbVGHDh14=;
-        b=M/2oaU0nlJQmy/ZxZPlj8GtcIVR66MauLPKMo/sWUbCRRP37rBu1GYD5sXG7mbz9VY
-         o/Q+G3PwYaMxSvapJmNxJSzH93LBDDrFYPkKPsUUTwdLw2zi8iDEdxw3ufApDczAno3i
-         9PY9DV1Tb6npkuAwvOX8d/G0V5MLfG/lr51CGRVXFEHEj/Uk32nHS+ST9mdFdypd8e+Y
-         m0lBH6uT2IOv13dQuuaIur+YmawvvQuVblgF4j6XGpzojjxoa7jmfRBS1XocCUSuMlDb
-         20yg3cVKfSAIVNduPioSHY52WCYWAOsG+TU1zRFB7j/6qCbyszX7PJn9y9vLmgK6Q1oO
-         m/xg==
-X-Forwarded-Encrypted: i=1; AJvYcCUSqU4wiiQ341KWX1jclAG2yG/LP/ettOZJZfklX7xpNm4NmNl9/BEISsNp46V4q6ZAbL8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwOfICSJAI+GmHVgmlEHkSji+1SBaWR5O2I72MET185gSVm38Pi
-	iRFfsRKs1fN3o9OLPYK70lGfSV/IAm0sqTXS0WXHxnf4KmdK1M+A6dcpIHKhcfaMC6vL61pxKEy
-	/4oOVk8SuLJ/N49IRIm0LKsAYYGA=
-X-Google-Smtp-Source: AGHT+IFokmef0lLMbXwkci+ow6eXXk2zRwfusfrTXtc6resGmfwRtbuB+3POm3NjNPAreLALcG96dPi8Se10Uz+afcc=
-X-Received: by 2002:a05:6122:200d:b0:507:90d1:e91e with SMTP id
- 71dfb90a1353d-510150e465dmr21139071e0c.10.1730468773546; Fri, 01 Nov 2024
- 06:46:13 -0700 (PDT)
+        bh=r42/G5bHuG9mU6zfSfACvLj+BTVHfk9aS83c34tsJZo=;
+        b=AZx9J+DGqDXNraBjGZYT/L2o+mM3LGMZuqTUUwpHfirk8Q0/TBmIcD99Vf5ckScdiW
+         v+VolDYOQ3cwmT0488T+/6E/sdwku9ZBOSQYi0TDrIxsf35lFuJBbi7ETqIaRYfaZbTq
+         L8QYHRZOvc0UYtenzFNcnceVIiAjgg2o9M/nAuwvtgyF0aZ+XePcmuAAZdZUfeVVSXc5
+         Blzj1v6OIVT7YIQIxYHcT5mq0LWmjKMFLxqw3fQJziNvkr454PHGqXlNgDbe5eBVt5jp
+         evmXBTiq2MfyD4AzMDrohgMIi834ROV2R5e+B5+YrEqC9AQGeNwdrNybZujmkpQ/uyVe
+         B+wg==
+X-Forwarded-Encrypted: i=1; AJvYcCW91raqqJjToWpzcScS5iuSoXtH+DznuTdxHVV9GrsWch7/biRhEDg8UjGqMPe6eqePx/M=@vger.kernel.org
+X-Gm-Message-State: AOJu0YylXQIALsLqenzm+4ifqnqguDRJuJqeTRZqrWm5w9CSLmhuw15/
+	fPeBNdobE5SlYUHXOOQBWVdNNrugae+wNmE0yZIyMrAF8YMp+cqzWumNEUBvqo2fxFzwHFHYN3o
+	Gn030Ta7ut96sE8YBi90xn92cB60=
+X-Google-Smtp-Source: AGHT+IEXx+zyTQ/ZL6/ga6T+2WpV3Sksy8plTbS/7tI8NgYiCF2qfQnWtloG/tpfElWSu53t5kbLowvofuV2nRtNWek=
+X-Received: by 2002:a05:6359:4105:b0:1b1:acd5:dd98 with SMTP id
+ e5c5f4694b2df-1c3f9dfd566mr1201923455d.7.1730471139280; Fri, 01 Nov 2024
+ 07:25:39 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 1 Nov 2024 08:46:11 -0500
+ HTTPREST; Fri, 1 Nov 2024 07:25:38 -0700
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <6f93dff88e7cf81800c8f2c8d39175d962a0576f.1730356023.git.gitgitgadget@gmail.com>
-References: <pull.1818.git.1730356023.gitgitgadget@gmail.com> <6f93dff88e7cf81800c8f2c8d39175d962a0576f.1730356023.git.gitgitgadget@gmail.com>
+In-Reply-To: <3dc27658526784edf46f67661d1161a8eea3ea0a.1730356023.git.gitgitgadget@gmail.com>
+References: <pull.1818.git.1730356023.gitgitgadget@gmail.com> <3dc27658526784edf46f67661d1161a8eea3ea0a.1730356023.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 1 Nov 2024 08:46:11 -0500
-Message-ID: <CAOLa=ZQfcroHv_V7YOD0MeTSvbedJvLNMR2RVQ-dWRe8ERpzdw@mail.gmail.com>
-Subject: Re: [PATCH 3/6] t6601: add helper for testing path-walk API
+Date: Fri, 1 Nov 2024 07:25:38 -0700
+Message-ID: <CAOLa=ZR1BjKzujxpA2icAfJHin-krqwkxTf5VPeGg14AVr-TcQ@mail.gmail.com>
+Subject: Re: [PATCH 5/6] path-walk: visit tags and cached objects
 To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Cc: gitster@pobox.com, johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im, 
 	me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com, 
 	christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com, 
 	jonathantanmy@google.com, Derrick Stolee <stolee@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000008af7380625da2849"
+Content-Type: multipart/mixed; boundary="0000000000008e05ba0625dab52c"
 
---0000000000008af7380625da2849
+--0000000000008e05ba0625dab52c
 Content-Type: text/plain; charset="UTF-8"
 
 "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
+> From: Derrick Stolee <stolee@gmail.com>
+>
+> The rev_info that is specified for a path-walk traversal may specify
+> visiting tag refs (both lightweight and annotated) and also may specify
+> indexed objects (blobs and trees). Update the path-walk API to walk
+> these objects as well.
+>
+> When walking tags, we need to peel the annotated objects until reaching
+> a non-tag object. If we reach a commit, then we can add it to the
+> pending objects to make sure we visit in the commit walk portion. If we
+
+Nit: s/in/it in/
+
 [snip]
 
-> diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-> new file mode 100755
-> index 00000000000..1f277b88291
-> --- /dev/null
-> +++ b/t/t6601-path-walk.sh
-> @@ -0,0 +1,118 @@
-> +#!/bin/sh
-> +
-> +test_description='direct path-walk API tests'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup test repository' '
-> +	git checkout -b base &&
-> +
-> +	mkdir left &&
-> +	mkdir right &&
-> +	echo a >a &&
-> +	echo b >left/b &&
-> +	echo c >right/c &&
-> +	git add . &&
-> +	git commit -m "first" &&
-> +
-> +	echo d >right/d &&
-> +	git add right &&
-> +	git commit -m "second" &&
-> +
-> +	echo bb >left/b &&
-> +	git commit -a -m "third" &&
-> +
-> +	git checkout -b topic HEAD~1 &&
-> +	echo cc >right/c &&
-> +	git commit -a -m "topic"
-> +'
-> +
+> +		case OBJ_BLOB:
+> +			if (!info->blobs)
+> +				continue;
+> +			if (pending->path) {
+> +				struct type_and_oid_list *list;
+> +				char *path = pending->path;
+> +				if (!(list = strmap_get(&ctx->paths_to_lists, path))) {
+> +					CALLOC_ARRAY(list, 1);
+> +					list->type = OBJ_BLOB;
+> +					strmap_put(&ctx->paths_to_lists, path, list);
+> +				}
+> +				oid_array_append(&list->oids, &obj->oid);
+> +			} else {
+> +				/* assume a root tree, such as a lightweight tag. */
 
-Nit: Since the root level tree is already special cased out, we only
-check one level of path here, would be nice to add another level of tree
-to this.
+Shouldn't this comment be for tagged blobs?
 
-> +test_expect_success 'all' '
-> +	test-tool path-walk -- --all >out &&
-> +
-> +	cat >expect <<-EOF &&
-> +	TREE::$(git rev-parse topic^{tree})
-> +	TREE::$(git rev-parse base^{tree})
-> +	TREE::$(git rev-parse base~1^{tree})
-> +	TREE::$(git rev-parse base~2^{tree})
-> +	TREE:left/:$(git rev-parse base:left)
-> +	TREE:left/:$(git rev-parse base~2:left)
-> +	TREE:right/:$(git rev-parse topic:right)
-> +	TREE:right/:$(git rev-parse base~1:right)
-> +	TREE:right/:$(git rev-parse base~2:right)
-> +	trees:9
-> +	BLOB:a:$(git rev-parse base~2:a)
-> +	BLOB:left/b:$(git rev-parse base~2:left/b)
-> +	BLOB:left/b:$(git rev-parse base:left/b)
-> +	BLOB:right/c:$(git rev-parse base~2:right/c)
-> +	BLOB:right/c:$(git rev-parse topic:right/c)
-> +	BLOB:right/d:$(git rev-parse base~1:right/d)
-> +	blobs:6
-> +	EOF
-> +
-> +	test_cmp_sorted expect out
-> +'
+> +				oid_array_append(&tagged_blobs->oids, &obj->oid);
+> +			}
+> +			break;
 
-Isn't the order deterministic? Why do we need to sort it?
+[snip]
 
---0000000000008af7380625da2849
+--0000000000008e05ba0625dab52c
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: c5c7cd9b87cbca9_0.1
+X-Attachment-Id: a4977b06d5cd6fa8_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jazI2SVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL29RQy85aitZY1AxODdWNG1WTlZXdEIvSUsvVmZRVwpCZWxheU1rMG5N
-QW94bk90TUdKUFRuMGtoNDkyVUxNNTZjV001VVVicFV6UVdKT1hnQzRwalkrdDlRK3d5RE5uCnhm
-Y0NuOU1NQXFBTWNDVjk1d3FiRWZsekQvUFFjUFhBT2NnSXdRY09xSFhsZCtWcUhXMWU5a0lGbkN0
-UmJ1aGEKclEvY1VtLys4QUFBRjFNaFVGaVlKWVBUcExmbEE1OHRjT1BnTTNuL1IyNXdCdTFjempj
-VGhrZGpOMlFrRVRjTwpmVGMzeUVKRkxjRU9TTTVzTFVMUHU4R1hoR3pjcUpibkMyM1hzSW0xamZR
-QjR5MjlCakJSeEdqakU3YmNqRTZkClo0NWhpb1FjU2N4eTNib05DM3lVZUxFcWtaREJNOU9rdDhs
-b0pwUXdGK1JsSWNlZVNwMlIvajlNVEZQU2hYOWIKVjVlRHo4OGNDZ0pxWDJFdmZWQXErRUxXYU1I
-VVh6ZHpxV3h3VXNrSFZsTGtFc3dZSUVtc2k4UTZhWVZNSnNGUAp4bEYrZVdRZGl5bHFqS2REckU3
-QTgzZ0VaTEkwOEFpeUhCREN2RnR3T3pwSDR1MWZtZHdLR1RkelNwMmFnWlRpCmJEZkpKQ3AxMlMx
-QkxBMHpnaUVtOXFVenFrb2xqSElCcWZNQnhPMD0KPUY3VlYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jazVONFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mdzZ6Qy85c09LczBvL1RrT21XNlhmVEVITk1JK1RoaApKbno0UUk2RnFK
+UTNCNlpMRlNIK1pjK2dvNXBLYTVKTmNoTXA3b0NUajlIWEEvUFVPMHlCdGplU1ZMSkdrOEI2Ckdp
+UDdBbmF3MmNmNkJUMmRxWHNDWmhOd2hNY1grK0QwRms5VEFBS3ErdWdwbG1FVEhPZFJvNUVzbUFl
+cCt5Uk0KT1lrN3haUm0zZ0M2dE9XODYyRXp1UFFNczc5bWJZbndLSGZ0a2tyZ0gzVHZYL3pWR2dH
+ckROY0o4TFh1aksvagpGYmVQVmw1ekRBdWVTNzNPbVRhNFJsa2ZpUGpFdjNDeHFCZHRaRHhIQ3hx
+c1RZVGZncXRya0VJQkZ4bVJNZ0FICktSQXRLQXVia09tRjZJSU1tVWJHYW5VMWcrRVY2YmxhU2ow
+UFp1azEyNWx0cGJBR0E5YlRyZ0pFV1NQaWR6QmwKRWV2TjJ2OTNNeWlZVzVqTGhCbGFXOGtsTDVH
+ZUhuVUFaMHFEdFZVSU4xdmdzdFoybDFpcmZVOVg4dUxyZ25ySQpoWWxnMDVDRFprK05Tc3dLZDUr
+SmJmL2Yra3dtWllHblV5akhRTUFtZFZNckw5YnNyVEVwNDNJSllLTDBGV0RDCjRYUjdnaGN0RGJ3
+amxXS2U3VGJlVEJaYUJVaGNjNmZRQzdxcjcwYz0KPU5pRTQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000008af7380625da2849--
+--0000000000008e05ba0625dab52c--
