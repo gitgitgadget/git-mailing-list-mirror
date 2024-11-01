@@ -1,67 +1,65 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA38145324
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 19:00:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682921CF5F8
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 19:23:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730487647; cv=none; b=YVTejYEYRz0hJo0KtsggwoPod0XETSX86/6gGmYaa5m6uNPHi+iX0Gn6BnghmFIa98GK3GE0tixlrl61Eg+aisG8Tq1I6mJ2a0BsSxmT9FGbN659bVDa5+HJI7FGUkY8PIESKKOy7yhiAZUYh1FpA1cyT5M9dufgUmq3bivuRkQ=
+	t=1730489012; cv=none; b=pWqqxrmAt7bqj7pVpIexvECqfnXhepnGHyBarYy8ZWz165z9fFw3zJQ2PdRVutwPG/Yg90SoeUokiROt04KWrYrattuQ5hDfX7dN++HBaFzMgnKmOO1acS39VXcClXDTih4zmORdRZEqY58Zg4ul0i7sPq//xrSgNt0k3HZZ3+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730487647; c=relaxed/simple;
-	bh=sHAVVANFHhKqwz2ODhH87TxaVQIcvfR5wJv4dQU9Thk=;
+	s=arc-20240116; t=1730489012; c=relaxed/simple;
+	bh=vEXoc3haJB+a0kj4Qz/63H9ZV2Q7sZqZmsZrQaLoWjY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OaKoQqpxKKMvsvUG7kYxH9sXWfmyHcHVNeo3g8T1s4JHf85Y3vAUot6TvB5i+OVmeIPnqjOlOIO10BSLplNTJmO8k2U6Z3nPoWcO5Njhofoa6Ce5++WrmVNa51m0lH8rTj3NbqXV+0XJh64y9QLV1wWaPDpmvOpqRfftnecNbdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=zgxIPS7G; arc=none smtp.client-ip=209.85.128.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=IIZz9a1SebXO+TpVUfT9cdSqXU4NNxryd6BuLWHBFc0QTjUjef/dnW/uLaAJ4a4frwejsNuOUCMuiIFRE7GOJ23wJIyyO22vyde7+5YLsVqQDTADVZeQ7/oAjb5okAY+rovqrAa95YWxOux/7yaKPyCbgSMdkYI3X2TnLO1vGgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=CDK+D8by; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="zgxIPS7G"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e5a5a59094so21492527b3.3
-        for <git@vger.kernel.org>; Fri, 01 Nov 2024 12:00:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="CDK+D8by"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6e390d9ad1dso19970887b3.3
+        for <git@vger.kernel.org>; Fri, 01 Nov 2024 12:23:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730487644; x=1731092444; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730489009; x=1731093809; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OSFNWrI5Wex963NsjRS9ZngxcbJJPb+qHMuXGCY71D8=;
-        b=zgxIPS7GNPzDIgnFjpvrrMB6OkEqyP25mNZvxfsgRmKoXJsA/TTvSSkvOBFl+XSwbD
-         +enU0HBUOC72TYlvfMvy8OY/CqvOYkLvXSnbseU+pfsHSLqAOVcWAjR8UtMkDmxaIS2C
-         tB4ff1CpgKt5uJz+r81S7yw8nsRCGJhrYy+cZyfDpNKDJEPa2dKUrQPJdx3hQuG6CVY0
-         yYagG8IwhL9IkZxm67hPDorPiBOxIZYEQTEwUEvBa3h+bcinw8nDIH+WBc0Dujy04BZt
-         m//Pgtt3w85olONbtw4i0wIvnedD77KmNT398iAAt8Ql2M/hE+IribCniCQOSsf5Vf1F
-         mB4w==
+        bh=4VmSSkP1Nk7rB4X4DfjYEhyQUTQULnByqe9CBVRCcXQ=;
+        b=CDK+D8byWPc6yVswwiHCT2A9jP7z9IYgtBgytTVFYidnV480v+Wx6I5mf08dmNPPCr
+         qyLHQxEbZwnyDD4PNaJUSzZDfkwNPk7mczkJo43oNubdCNUAiSHkpyqUwvwaaw2jnzd0
+         46cvAZNzJ3GHIkxubNUnYb73autqJGnhabnxgwPW1d9xXx2BfjzNVvyS9SqmSayapx5q
+         bLsR1yhgifK8sXjtbydDvSpJhIPmgX/52c60aZej0anqyX8BEehNNMmmrWORloxJtlTO
+         n6oQIlQN0Z3ggKaWOnQByHP718hZYkdK4l4WtPMydVLNg0mlDMDkV2j00ECpxF3DIEzM
+         Yo3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730487644; x=1731092444;
+        d=1e100.net; s=20230601; t=1730489009; x=1731093809;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OSFNWrI5Wex963NsjRS9ZngxcbJJPb+qHMuXGCY71D8=;
-        b=SkQTzItpGvedk7wFpvV7RL+zTaCHbZv2ZTBCA21GOnRJnXk69DjFtqkwndVNf2fsrG
-         /cy0cJ6tdwIOp9ULZQrVNa1qQpTyotCHaHceXkLp1AqxkOgb+If1dpsv889w1bS1Neil
-         v1wDK1brKH3PyPZ0m0iD8ebOHvDLW2tOJgQ520TvKjYK3fSzsQkHqFQzh7LBLmS80lEh
-         /GNiJNqDLgEvsU9pirTbQklrY9nU+X1jBB4aWfbIf28/mlVj4NKCDFDEYPUOHnTg+Qr5
-         utVzeEXtw4g5wCLk6pwfWclf75WrlPlP5IDr4bqp1u3fFB8GE1LLXl0i4xWeUCbscos6
-         Tu6A==
-X-Forwarded-Encrypted: i=1; AJvYcCVDKnw3omby5mBPFjowD3rNcCFOyYx3ffqgjrv6Ek/Ca+lOt9H2WoFhHnuUViwagvO+J7g=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKSu1MfhWWCJoa5D1RE3v5867O5ZWkc9ESpVEjy43pW0hv29Z/
-	52f+Ef4fB2PQ+k53oJr9yAXDsRV/0z8JY8YknnQf1lu1emuVD2L/d88GXr47383rPuyJhFU/yDu
-	3/TA=
-X-Google-Smtp-Source: AGHT+IHzZAURWZ9nU8y/DJXx1zpE+bAb5B9HzKeUExNrpZJbMOT7TVOKggOIzamNwgLjff24iKOyaA==
-X-Received: by 2002:a05:690c:64c8:b0:6e3:16da:e74 with SMTP id 00721157ae682-6ea64acace0mr57800037b3.16.1730487644335;
-        Fri, 01 Nov 2024 12:00:44 -0700 (PDT)
+        bh=4VmSSkP1Nk7rB4X4DfjYEhyQUTQULnByqe9CBVRCcXQ=;
+        b=KuZ+dwZ1zWApTy5CvgSWMd1G1iqtQqe4l0OO7x/jExVHNR6iqytnmAw0WeDXqVd722
+         oI4pMn7erEC9y84N+MgTrH0WsbRGmmo4EvI4pk/pXIYNfGJAfVxzqz6oe0+vL2SPQ99l
+         IvECpRHa49tviOjifzhMD89ujZfm8npb4h47ZAXTECACfxTAbqbtckHW1gFy6vUHYmaz
+         BZoXbcC7Xfr1AhJHNzTdu6ecsmP2eAVCzceZVC91qapHTERephIFd0KK7u3bkj5Zi2qM
+         U4dR8+Ca4OAJIviscyKzoCaJlVEEPmRhBNDBV6+bPLo85ymzBcHBIBS5YRhUSHOCgHvw
+         n1ew==
+X-Gm-Message-State: AOJu0YyzVTjbe64aVLnXjy5iLDYsuyMtE3FKZIgOJfOcosjc5phqSYx0
+	dFR7A9tL85NHhS4NWSV42c9E8p2Xu35ARJPXaLSusXJ7E9wRwQTr/eg4ePPxLT0=
+X-Google-Smtp-Source: AGHT+IEXqxvusToE5qj+PC/9YKVl6LJ6yyVFxaAyECjod3hUDuNdVXTRxR88ImgYTJKKnmPzxTAJYg==
+X-Received: by 2002:a0d:c603:0:b0:6ea:7950:e75 with SMTP id 00721157ae682-6ea79500fbamr13613807b3.24.1730489009267;
+        Fri, 01 Nov 2024 12:23:29 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea55c4de6csm7868367b3.77.2024.11.01.12.00.43
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea557be7c9sm7964857b3.0.2024.11.01.12.23.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Nov 2024 12:00:43 -0700 (PDT)
-Date: Fri, 1 Nov 2024 15:00:37 -0400
+        Fri, 01 Nov 2024 12:23:28 -0700 (PDT)
+Date: Fri, 1 Nov 2024 15:23:27 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v4 8/9] config: make `packed_git_(limit|window_size)`
- non-global variables
-Message-ID: <ZyUlVZTYEiIQkC3u@nand.local>
-References: <cover.1730366765.git.karthik.188@gmail.com>
- <5bbdc7124d58526a7a2d7b3bdc807ddd204a6df1.1730366765.git.karthik.188@gmail.com>
- <20241101174547.GB2337295@coredump.intra.peff.net>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
+	christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com,
+	jonathantanmy@google.com, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 0/6] PATH WALK I: The path-walk API
+Message-ID: <ZyUqr/wb5K4Og9j9@nand.local>
+References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,45 +68,109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241101174547.GB2337295@coredump.intra.peff.net>
+In-Reply-To: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
 
-On Fri, Nov 01, 2024 at 01:45:47PM -0400, Jeff King wrote:
-> On Thu, Oct 31, 2024 at 10:39:51AM +0100, Karthik Nayak wrote:
->
-> > @@ -652,20 +688,25 @@ unsigned char *use_pack(struct packed_git *p,
-> >  				break;
-> >  		}
-> >  		if (!win) {
-> > -			size_t window_align = packed_git_window_size / 2;
-> > +			struct packfile_config config = PACKFILE_CONFIG_INIT;
-> > +			size_t window_align;
-> >  			off_t len;
-> >
-> > +			repo_config(p->repo, packfile_config, &config);
-> > +			window_align = config.packed_git_window_size / 2;
-> > +
->
-> Parsing config like this is somewhat expensive (remember we're going to
-> hit your callback for every single config key in the system, user, and
-> repo-level config files).
->
-> And use_pack() is a relatively hot code path, as we call it any time we
-> need to access bytes from a mapped pack! This "!win" conditional isn't
-> quite as hot, as it only triggers when we establish a new window for a
-> pack. But that still happens at least once per pack, more if we need to
-> move the window around in a big pack, and lots more if we are under
-> memory pressure and need to open/close windows a lot.
->
-> I think we need to parse these values once and then store them somewhere
-> with cheaper access. Can we grab them in prepare_repo_settings(), for
-> example, which would cache them? We need a repo struct, but we have one
-> (the same packed_git->repo you are using to call repo_config()).
+Hi Stolee,
 
-Oh, wow, I can't believe that I missed this in my earlier reviews. Yes,
-we should definitely *not* be calling an expensive function which
-computes the same value every time in a hot path like 'use_pack()'.
+On Thu, Oct 31, 2024 at 06:26:57AM +0000, Derrick Stolee via GitGitGadget wrote:
+>
+> Introduction and relation to prior series
+> =========================================
+>
+> This is a new series that rerolls the initial "path-walk API" patches of my
+> RFC [1] "Path-walk API and applications". This new API (in path-walk.c and
+> path-walk.h) presents a new way to walk objects such that trees and blobs
+> are walked in batches according to their path.
+>
+> This also replaces the previous version of ds/path-walk that was being
+> reviewed in [2]. The consensus was that the series was too long/dense and
+> could use some reduction in size. This series takes the first few patches,
+> but also makes some updates (which will be described later).
+>
+> [1]
+> https://lore.kernel.org/git/pull.1786.git.1725935335.gitgitgadget@gmail.com/
+> [RFC] Path-walk API and applications
+>
+> [2]
+> https://lore.kernel.org/git/pull.1813.v2.git.1729431810.gitgitgadget@gmail.com/
+> [PATCH v2 00/17] pack-objects: add --path-walk option for better deltas
 
-Thanks for spotting.
+I apologize for not having a better place to start discussing a topic
+which pertains to more than just this immediate patch series, but I
+figure here is as good a place as any to do so.
+
+From our earlier discussion, it seems to stand that the path-walk API
+is fundamentally incompatible with reachability bitmaps and
+delta-islands, making the series a non-starter in environments that
+rely significantly one or both of those features. My understanding as a
+result is that the path-walk API and feature are more targeted towards
+improving client-side repacks and push performance, where neither of the
+aforementioned two features are used quite as commonly.
+
+I was discussing this a bit off-list with Peff (who I hope will join the
+thread and share his own thoughts), but I wonder if it was a mistake to
+discard your '--full-name-hash' idea (or something similar, which I'll
+discuss in a bit below) from earlier.
+
+(Repeating a few things that I am sure are obvious to you out loud so
+that I can get a grasp on them for my own understanding):
+
+It seems that the problems you've identified which result in poor repack
+performance occur when you have files at the same path, but they get
+poorly sorted in the delta selection window due to other paths having
+the same final 16 characters, so Git doesn't see that much better delta
+opportunities exist.
+
+Your series takes into account the full name when hashing, which seems
+to produce a clear win in many cases. I'm sure that there are some cases
+where it presents a modest regression in pack sizes, but I think that's
+fine and probably par for the course when making any changes like this,
+as there is probably no easy silver bullet here that uniformly improves
+all cases.
+
+I suspect that you could go even further and intern the full path at
+which each object occurs, and sort lexically by that. Just stringing
+together all of the paths in linux.git only takes 3.099 MiB on my clone.
+(Of course, that's unbounded in the number of objects and length of
+their pathnames, but you could at least bound the latter by taking only
+the last, say, 128 characters, which would be more than good enough for
+the kernel, whose longest path is only 102 characters).
+
+Some of the repositories that you've tested on I don't have easy access
+to, so I wonder if either doing (a) that, or (b) using some fancier
+context-sensitive hash (like SimHash or MinHash) would be beneficial.
+
+I realize that this is taking us back to an idea you've already
+presented to the list, but I think (to me, at least) the benefit and
+simplicity of that approach has only become clear to me in hindsight
+when seeing some alternatives. I would like to apologize for the time
+you spent reworking this series back and forth to have the response be
+"maybe we should have just done the first thing you suggested". Like I
+said, I think to me it was really only clear in hindsight.
+
+In any event, the major benefit to doing --full-name-hash would be that
+*all* environments could benefit from the size reduction, not just those
+that don't rely on certain other features.
+
+Perhaps just --full-name-hash isn't quite as good by itself as the
+--path-walk implementation that this series starts us off implementing.
+So in that sense, maybe we want both, which I understand was the
+original approach. I see a couple of options here:
+
+  - We take both, because doing --path-walk on top represents a
+    significant enough improvement that we are collectively OK with
+    taking on more code to improve a more narrow (but common) use-case.
+
+  - Or we decide that either the benefit isn't significant enough to
+    warrant an additional and relatively complex implementation, or in
+    other words that --full-name-hash by itself is good enough.
+
+Again, I apologize for not having a clearer picture of this all to start
+with, and I want to tell you specifically and sincerely that I
+appreciate your patience as I wrap my head around all of this. I think
+the benefit of --full-name-hash is much clearer and appealing to me now
+having had both more time and seeing the series approached in a couple
+of different ways. Let me know what you think.
 
 Thanks,
 Taylor
