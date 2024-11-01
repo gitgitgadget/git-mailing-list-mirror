@@ -1,78 +1,123 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F811E231B
-	for <git@vger.kernel.org>; Thu, 31 Oct 2024 23:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D8617C8D
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 00:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730418944; cv=none; b=fXUKhcU+LicZ4AMoq8PwvfOv+AyHimb96jlnBDZOTNW6OwGDhbSoAQ5Zfocfk8wIuhkVvYNHBonif92JmnQDDN0r+P6AJh4R0CwkdBgov1S2sQHTlsfg06/qhNkFgrIdNmsV81UH8yq85zsRRXS+zm1gBTl8M8HDp3zccivHbGY=
+	t=1730421266; cv=none; b=gUFuL3zEqt+iSCFCwk2MRfxY0nTBycKpOUnK89UAM2tP8kb6Vqh3+dvA4wlJXUaregZzRbTy9+BNcUpUh54DFOya1J/O7fad7Wb/rRABVmyHO2slAB/9BNdPtIrPn3uvH/w1cllyNF1VRnfOneeqe7r8bW/B1zQrslEHp/E2SGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730418944; c=relaxed/simple;
-	bh=3qDsvh6GP9RTlfwsVzgRvuFSNUjW8IlaBILzWfvjWsU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=c4mfixS6LHtHJQuoMfkWGVolUd8hIE6ub8Vytg/r5AbjzvNXwE6sdkOSFvgn2EJXuipkWO2Y1LizAUs81ihwh+XfFySaHSglUWuInonPrrFv2RgKyan/btofKkga6Hzrnal6vja8Lx+tAmdIfuNNIPaC8cjx1R1oYYt8RsQnhp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=gbbU+T1X; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1730421266; c=relaxed/simple;
+	bh=0XdFKNZo4z67IpvTqf4nGExxmFT3XBgLAHF73vKV2OY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Zj7/Q5Jo5ka9I808oT2mFP5GG3FOiebWtFpRdAy+eBPVj+Y9lD3bG00TMAOCCI5PLNneaqFBDtJL9bLwjpg+p+/7dVQ51w7o4lTdyIOakzAOfOhdInDWMyj8PkPEpITDqYNiJ92+yp2UBYvucT4hmE1ox0jrIAMPvcvXkHBwcBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f0K4JRD1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T3/nuumk; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="gbbU+T1X"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1730418579;
-	bh=3qDsvh6GP9RTlfwsVzgRvuFSNUjW8IlaBILzWfvjWsU=;
-	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=gbbU+T1XWa1+N6EgU37rzbwr/6jCqYnhGH4KXzm3DF2MNREDxuTrrSOzvCWCfTvMs
-	 CK8Zciyf0p/eMyJEcyDPp2jfqMLqfnzeCBk81y7C7lmbaZzhJPH7PXxUtH3D4Bu+a1
-	 s1fT9qDWteNV5MYwUjDNVvXYksHQZQ+CW83bnlBo012d35pQQbGzOKTVL7T0fKOxMk
-	 KTSVXWqsMF48xKc9JSYyvsql9XiTS7hLL8MEUnVd4KBAcEPCSSpYILZmllkOc8SvD8
-	 bMtNZaJBUuh+wo1BhYmbdU+bZW6zHbVYppLaJR6Kl9rIWxuf9jl48Tpe/s8iq0uJC0
-	 cdym34hmAQiLto175ZLlbj3rdvhwV2Tp7C6S+hxtbM9dexuC8GOnEdYNTY7TR+jE5U
-	 Sk3nW6bdkKf+EumiyB74tzBKhUnw4g5CNQuZL6BO5TgseJVBXJ4x+MAm64kq0adysh
-	 EG2XSmK3xZUV+JJwTj61JMXvNkEypgqniicPETU6ToyknAyljOM
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D52A9200B7;
-	Thu, 31 Oct 2024 23:49:39 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Taylor Blau <me@ttaylorr.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/3] Improve CI testing of older systems
-Date: Thu, 31 Oct 2024 23:49:31 +0000
-Message-ID: <20241031234934.3451390-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.45.2.753.g447d99e1c3b
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f0K4JRD1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T3/nuumk"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 440D02540160;
+	Thu, 31 Oct 2024 20:34:17 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 31 Oct 2024 20:34:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1730421257; x=1730507657; bh=mVEgOasqxy
+	RNUqpDM0+MUMLWaMaaqha30ZR97XoaJa4=; b=f0K4JRD1JY3AzSZmnn9C+Uhe+0
+	SDoHub4ppLbebj5x0xo/1l2J7+i7KSlS5Jkb4D8ajd8W371DMungrh5rbImSX0mn
+	in3hsSlBkoZI/UOvb3qX6eQosPvCXWKHNC/Hu6GZg6YwLGX2AAX7UtFXHVaVSB+k
+	EYvD9kupUL54/UPTW/4k/ysNSOizu6LWb4ypX4ZtkNvhXyiK6rTpQ6LPzvh7KDtE
+	a+OhRehwHk8EkzPNJs6iNQCA5XXNaEmoZxXcsz42XhWpn8vexrX/0ZQ/bn9/+n8t
+	bMDvhzDgWNH7maRRZp1KLdflC5rkCYtfNcx7fmKLdHk9WEMnDaMxxxSnSe5w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1730421257; x=1730507657; bh=mVEgOasqxyRNUqpDM0+MUMLWaMaaqha30ZR
+	97XoaJa4=; b=T3/nuumk3Ubrcljku6iJ3/5+qSnSjmo8K7rJr3Nn6Bv9fF0Go1B
+	1E+YjLaAWZvR7fsMYRrUH6ukmtQ9P9NZUGot87SYSz6aPpqda48AOf9r82Z6wmbw
+	Vz/9X4U/prDcZgOuX0L0AwpqTTQxA3pYMyNjWLxUzLD6cCYYxPiPgFBgXv78REp8
+	y2SjquBcnJkgPL5RtbMa1/wEt3RPOXwovphuCnEMn0If4/GtcUOfS1yM8CGNaWKC
+	eTmjb2m9PXBk9pgqwqS4+5fsvKxw5QwOo5JatpqHq7TcylfEthlD7Pe1q0PqyNAa
+	1JXOAbOcwVRnoWH3roDIIKjdTnsexa6H/Zg==
+X-ME-Sender: <xms:CCIkZwKLEp5znBLhGAhj-i_cyvIuz53jDSTsPsaoC1i3kyggq6T2cQ>
+    <xme:CCIkZwIYlyBZOluWUMxPPDrB4YIdwOT7KwZop6YvkHfrEmv_aojM1Jyn67mcj6AUY
+    yhledtSVpZ_csxEPg>
+X-ME-Received: <xmr:CCIkZwtdH3V_a_6s8v9h64889-daTKdczl5VOlM9A_ZpxYII85CGFYHVCEh1eww8ouC5W448b6pXku270i2D6fWadZARIv1uv-qM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekkedgvddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestg
+    hruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpd
+    hrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:CCIkZ9br-aCeFrkdKhA-tAPOryiL23-4MPZ88IwbWqZMNUY6XF7eyg>
+    <xmx:CCIkZ3Zy101LGyCB3aZcAvR-7ZZeGAzo1tnnhG0F7djkJSXBSyABXw>
+    <xmx:CCIkZ5BcQA9E2h56z6XXIIpexk72xMXwFdpPB8wtENbFYSah0_witA>
+    <xmx:CCIkZ9Za7vj1ugDDgz8mgvr5vsCfyHC97VUpx5bUSX1w8CN0fy-vqw>
+    <xmx:CSIkZyx12z9oh853rfXK5NnctZSnJ5mBgm6vLEWA2iHayPqgFhRkk8dV>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 31 Oct 2024 20:34:16 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Taylor Blau <me@ttaylorr.com>,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 2/3] ci: remove clause for Ubuntu 16.04
+In-Reply-To: <20241031234934.3451390-3-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 31 Oct 2024 23:49:33 +0000")
+References: <20241031234934.3451390-1-sandals@crustytoothpaste.net>
+	<20241031234934.3451390-3-sandals@crustytoothpaste.net>
+Date: Thu, 31 Oct 2024 17:34:14 -0700
+Message-ID: <xmqqv7x74ws9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-In many cases, we're not testing some of the older Linux distributions
-that we support.  However, we _are_ testing some old Linux distributions
-that we _don't_ support.  That means that it's presently difficult for
-us to make sure our code works on all the systems we want it to and that
-we're not accidentally requiring newer versions of dependencies than we
-claim to support.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-The first patch removes Ubuntu 16.04, which is out of regular LTS
-support.  The second removes the clause in the CI job for that OS.  The
-third adds several new CI jobs to make sure we're adequately supporting
-older Debian and RHEL-compatible distros, and documents the dates at
-which they lose support (so it's easy to know if we need to update
-them).
+> We're no longer testing this version and it's well beyond regular LTS
+> support now, so remove the stanza for it from the case statement in our
+> CI code.
 
-brian m. carlson (3):
-  gitlab-ci: switch from Ubuntu 16.04 to 20.04
-  ci: remove clause for Ubuntu 16.04
-  Add additional CI jobs to avoid accidental breakage
+Something like "we replaced it with 20.04 which does not need the
+corresponding special casing" would be necessary to explain why this
+is a good change, as opposed to an equally plausible-looking patch
+that replaces 16.04 with 20.04 and otherwise keeps the "stanza".
 
- .github/workflows/main.yml |  9 +++++++++
- .gitlab-ci.yml             |  2 +-
- ci/install-dependencies.sh | 19 ++++++++++---------
- 3 files changed, 20 insertions(+), 10 deletions(-)
-
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  ci/install-dependencies.sh | 5 -----
+>  1 file changed, 5 deletions(-)
+>
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index 126e570eb4..d30ae53a18 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -55,11 +55,6 @@ ubuntu-*|ubuntu32-*)
+>  		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
+>  
+>  	case "$distro" in
+> -	ubuntu-16.04)
+> -		# Does not support JGit, but we also don't really care about
+> -		# the others. We rather care whether Git still compiles and
+> -		# runs fine overall.
+> -		;;
+>  	ubuntu-*)
+>  		mkdir --parents "$CUSTOM_PATH"
+>  
